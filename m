@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE08D6B086
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AC9D6B084
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUad-0000Fe-Db; Thu, 29 Jan 2026 11:09:51 -0500
+	id 1vlUb0-0001Ms-F0; Thu, 29 Jan 2026 11:10:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaR-00005k-0R
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:39 -0500
+ id 1vlUat-0000ms-44
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:07 -0500
 Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaO-0006bT-Cj
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:38 -0500
+ id 1vlUaq-0006tm-Eh
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:06 -0500
 Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-42fb2314eb0so1043827f8f.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:35 -0800 (PST)
+ ffacd0b85a97d-42fb6ce71c7so1085748f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702974; x=1770307774; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769703003; x=1770307803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bcuFNIgtAmUa4zoyaYJellTHjqr2qi6wGu1/tr6ixAc=;
- b=yPEkW9MmDeE1aao4H5e0okz2Zk8HbrAXlGyia1VElcwuAe1D4/A8f7EA8c1dZFfcLZ
- o4IBnX6CVU7zNzqzDBvOKfY8971Sxck0T1RgbeFVkGVMpM77aoO4Fix1z51JP4sND6gM
- ALgEM9b+pYwr3fE34E+d3QCUxtdJ73U/RTBLS5jcUPw69z5BuDqHoX4gPL4Nekff3/mq
- FrTmYHHjb6IKZncwQkwcA9WM5R1L2Sycor4rAoc1u9k2SPg69h6/907ua3DohDEHZk3m
- qqRsQzxg3aq9izOcr0HND+DKSxL/Gwq2Vqot3VyLIHVCxNsI5Slpv7dQOt/JSbT83EOx
- X8Dg==
+ :reply-to; bh=DUXXViwauWLkh3b067d+qkCc8ZKPqxtPhuKZgFQ3Zck=;
+ b=wLRATYbCCU3cnYBik7NPC/wS4sEhdu26GdBCTycmXNsVlZmAbQoUpjPQRzp8SpP6zk
+ Xhgu0X5PfI3HMVo4RPSPNTxgJAhdQfWB3OReb9tmeHFOUkXTVTD2sBVjNu350/2ROOFK
+ Cb98xe9blK3rrx0eNAid82wvZ++znHg6yeeMJU78Gxe0OqlPL1yImNgdsPAV5yIHS9yk
+ zzJW+uQ/poKweshP0gECsnlzrhO5SXB6myj8P6rVkeG95ZELAroLQv2Al4uGYc+oUXzx
+ UQD3CJtsw66WlLnAUa2QAUCKwqdmQljLCIB+xUQZkRGdcR/NG4fVXqYA7nNLeK+cVwRr
+ U6fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702974; x=1770307774;
+ d=1e100.net; s=20230601; t=1769703003; x=1770307803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=bcuFNIgtAmUa4zoyaYJellTHjqr2qi6wGu1/tr6ixAc=;
- b=mPMmgKKofyEgBNfdhmgtSWY7DZL4gzIRsmR2g0cK6FFy+tdDH3EnjHZvMXNmBuk78E
- XOab+UTAsNj28rSb6c56G1qD8s0SksMfeaY6rrDgx253Yt0ch+PK4KQy3kRbMKQVMqP+
- /m4p+HBHjfFju32AtuChwIqnWFKI85liO34st5tJeY1ByA1VwkQh8L9OuAmDxFLkLdq0
- kzbmnfgliytoTGhQ3rDtOHEQ/iGldx1i8zyMOegtiyzesCNjvKekXyc0dJXXGEzZ5Df5
- WO6BTE4RbXL6HgImMyCczA8fMFup2bTaewMG+d6aBg/EgqRIDi1AH+LBOw/9UaTYoCsc
- GRyA==
-X-Gm-Message-State: AOJu0YzLOZ5fq+tTnGSiWRqxON7Av+eDoJitWMLQOME7/fPY5Od1Sjsq
- 4gVeYoKviK7GVmUNOsEv7SAZ4QfdexHiJINo/H77CYSqAilmXEMf6ofRHnYi5HXFHQTuifqg4yC
- SCFxqFLA=
-X-Gm-Gg: AZuq6aL5h6GFd4PtBo93Kw7UEAOc3Xtob6/a/2Hq/HW2RVtzEHfyKDq2dw+3Uu58rj7
- Bk8ZUgAUatRuGP5L9O58YWGDnd9IMBeMYO6Vlvl8cWmNJWvQlwu2xxO3g3c7ml1SuEHzfwMqUKS
- d/RycZDMz1pi99Kf6fPFi5kcyiOKmjWDE95eOX62HHm7T0lWxopk8jFaU3CITZ3vtgh3bCepyaj
- WwZ7J7YloCKE4zvJyjCR4OId75Msl4IoEAnPRGCwQUo2G4/DFdniPkV9Zebf3EQtHI9vyEAqN7L
- 3MnHjfVZ0a3qnf3wBO/7bUFxj5rgGoyEth1C+PDVjSH90IDEUrSAYMSjJtfB3jwo94u7Evkq5gI
- nte5aXy+iUiMFU3FSdwr1sIjPg3oN2GN6ZzaqlikuxAP2Rkqj2KpzQEe0ldCiIAP4gfStQiF3oU
- Qii0pnex5voT8bol707cJyqKy5aczlUA==
-X-Received: by 2002:a05:6000:4205:b0:433:1d30:44c with SMTP id
- ffacd0b85a97d-435f3aac3cdmr129466f8f.43.1769702974141; 
- Thu, 29 Jan 2026 08:09:34 -0800 (PST)
+ bh=DUXXViwauWLkh3b067d+qkCc8ZKPqxtPhuKZgFQ3Zck=;
+ b=OsF1y60cEtxEXX2P4ELHWOVD2X9wg4MzuC5lsfLOCpFDwjhP6SaRFu01h0+2zLl94O
+ 7qwtD1HEMPl8ru5Wazee4tXiCR6/bmYJdNjxWpMyLCCiYQ+2TH74UjNPw3nB/uhIhV7b
+ vu7ylCDrP54oE3c+TffXsvN0I+FeqYmKzNe93KSS04gf+J+DMkruG5oHgsVDBDtfO6mx
+ 30S6VCwAxdRM2yHjYQf7dpkdfCngiFaVim9Qu3Z9nm/rVe9HO5tt0LFmZXTHjnIXZzCh
+ r9R+mkbpmJ2BvODYIvXzRoAXRyQESZV4UV7RRYANjBh6O2m0nsk2ACJTZQAVNRWoy7nj
+ Kzsg==
+X-Gm-Message-State: AOJu0Yyxhe138Cvn7leSWGBrMvwesExk4ukgZ9MXgCSzPYOTskpfPxKV
+ DizL4TCRIiGT1TXbtQg0GwryhPSwt3Zs3/+an3yZcnAu3UwKFcsbPL6J/EhrNsggLwRAjbCr9mY
+ zwoo/BNU=
+X-Gm-Gg: AZuq6aJtWDfa3btKaqXqrLtT0GZy6yimo2ImLdbN0/XsrRZTugb8Fxislt3JfFMsMpg
+ CwpzGR6qatoy4vwGqKYFXAFh4MUKiDTUxVRVY3FgVY4i7FcgOl23Rod+Am6HPq1DMA1mVzoHUn6
+ NYxpH2TsXYWCb0T3ruoR3ebvnMjtprsnr6F3fv0ib4oydW820xfWEwGQ5rzeggxPqJJ7kZnte6L
+ dVmB6jwCcazPmooaN3Heqs4nYcrGViIO+1V1VCJDP9cgix6cPymcByNF8DHo86cGEztHhycLN1W
+ CU3L1r1P11av0miCpZxQXxdXi36SAMhhCQXCiOqxrtQMiVpuuBQ/hCPK+zS9ySiKmoJhxXDd+pP
+ r3ZOid5U0gTmnmdxPulzQfGuwBbVhIRQkIyi/qF3zf8xk2MsgO06/f51v5eV0kk5sbiH9qKia3l
+ gxepjmB2hhMzzI0TCCqVwg/6mZXAD5JA==
+X-Received: by 2002:a05:6000:2004:b0:430:f9c2:8500 with SMTP id
+ ffacd0b85a97d-435f3aae815mr144730f8f.43.1769703002868; 
+ Thu, 29 Jan 2026 08:10:02 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.32
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.10.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:33 -0800 (PST)
+ Thu, 29 Jan 2026 08:10:02 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/43] hw/arm/smmuv3-accel: Add set/unset_iommu_device callback
-Date: Thu, 29 Jan 2026 16:08:46 +0000
-Message-ID: <20260129160917.1415092-13-peter.maydell@linaro.org>
+Subject: [PULL 37/43] hw/arm/smmuv3-accel: Make SubstreamID support
+ configurable
+Date: Thu, 29 Jan 2026 16:09:11 +0000
+Message-ID: <20260129160917.1415092-38-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
  envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
@@ -100,347 +100,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Implement the VFIO/PCI callbacks to attach and detach a HostIOMMUDevice
-to a vSMMUv3 when accel=on,
+QEMU SMMUv3 currently reports no SubstreamID support, forcing SSID to
+zero. This prevents accelerated use cases such as Shared Virtual
+Addressing (SVA), which require multiple Stage-1 context descriptors
+indexed by SubstreamID.
 
- - set_iommu_device(): attach a HostIOMMUDevice to a vIOMMU
- - unset_iommu_device(): detach and release associated resources
+Add a new "ssidsize" property to explicitly configure the number of bits
+used for SubstreamIDs. A value greater than zero enables SubstreamID
+support and advertises PASID capability to the vIOMMU.
 
-In SMMUv3 accel=on mode, the guest SMMUv3 is backed by the host SMMUv3 via
-IOMMUFD. A vIOMMU object (created via IOMMU_VIOMMU_ALLOC) provides a per-VM,
-security-isolated handle to the physical SMMUv3. Without a vIOMMU, the
-vSMMUv3 cannot relay guest operations to the host hardware nor maintain
-isolation across VMs or devices. Therefore, set_iommu_device() allocates
-a vIOMMU object if one does not already exist.
+The requested SSIDSIZE is validated against host SMMUv3 capabilities and
+is only supported when accel=on.
 
-There are two main points to consider in this implementation:
-
-1) VFIO core allocates and attaches a S2 HWPT that acts as the nesting
-   parent for nested HWPTs(IOMMU_DOMAIN_NESTED). This parent HWPT will
-   be shared across multiple vSMMU instances within a VM.
-
-2) A device cannot attach directly to a vIOMMU. Instead, it attaches
-   through a proxy nested HWPT (IOMMU_DOMAIN_NESTED). Based on the STE
-   configuration,there are three types of nested HWPTs: bypass, abort,
-   and translate.
-    -The bypass and abort proxy HWPTs are pre-allocated. When SMMUv3
-     operates in global abort or bypass modes, as controlled by the GBPA
-     register, or issues a vSTE for bypass or abort we attach these
-     pre-allocated nested HWPTs.
-    -The translate HWPT requires a vDEVICE to be allocated first, since
-     invalidations and events depend on a valid vSID.
-    -The vDEVICE allocation and attach operations for vSTE based HWPTs
-     are implemented in subsequent patches.
-
-In summary, a device placed behind a vSMMU instance must have a vSID for
-translate vSTE. The bypass and abort vSTEs are pre-allocated as proxy
-nested HWPTs and is attached based on GBPA register. The core-managed
-nesting parent S2 HWPT is used as parent S2 HWPT for all the nested
-HWPTs and is intended to be shared across vSMMU instances within the
-same VM.
-
-set_iommu_device():
-  - Reuse an existing vIOMMU for the same physical SMMU if available.
-    If not, allocate a new one using the nesting parent S2 HWPT.
-  - Pre-allocate two proxy nested HWPTs (bypass and abort) under the
-    vIOMMU and install one based on GBPA.ABORT value.
-  - Add the device to the vIOMMU’s device list.
-
-unset_iommu_device():
-  - Re-attach device to the nesting parent S2 HWPT.
-  - Remove the device from the vIOMMU’s device list.
-  - If the list is empty, free the proxy HWPTs (bypass and abort)
-    and release the vIOMMU object.
-
-Introduce struct SMMUv3AccelState, representing an accelerated SMMUv3
-instance backed by an iommufd vIOMMU object, and storing the bypass and
-abort proxy HWPT IDs.
-
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-13-skolothumtho@nvidia.com
+Message-id: 20260126104342.253965-38-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-accel.c          | 156 +++++++++++++++++++++++++++++++++
- hw/arm/smmuv3-accel.h          |  18 ++++
- hw/arm/trace-events            |   4 +
- include/hw/arm/smmuv3-common.h |   3 +
- include/hw/arm/smmuv3.h        |   1 +
- 5 files changed, 182 insertions(+)
+ hw/arm/smmuv3-accel.c          | 25 ++++++++++++++++++++++++-
+ hw/arm/smmuv3.c                | 22 ++++++++++++++++++++--
+ include/hw/arm/smmuv3-common.h |  1 +
+ include/hw/arm/smmuv3.h        |  1 +
+ 4 files changed, 46 insertions(+), 3 deletions(-)
 
 diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index be09cf8b73..9c2b917a11 100644
+index 342944da23..f5cd4df336 100644
 --- a/hw/arm/smmuv3-accel.c
 +++ b/hw/arm/smmuv3-accel.c
-@@ -8,6 +8,7 @@
+@@ -76,6 +76,16 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+         return false;
+     }
  
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "trace.h"
- 
- #include "hw/arm/smmuv3.h"
- #include "hw/core/iommu.h"
-@@ -15,6 +16,7 @@
- #include "hw/pci-host/gpex.h"
- #include "hw/vfio/pci.h"
- 
-+#include "smmuv3-internal.h"
- #include "smmuv3-accel.h"
- 
- /*
-@@ -43,6 +45,157 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
-     return accel_dev;
- }
- 
-+static uint32_t smmuv3_accel_gbpa_hwpt(SMMUv3State *s, SMMUv3AccelState *accel)
-+{
-+    return FIELD_EX32(s->gbpa, GBPA, ABORT) ?
-+           accel->abort_hwpt_id : accel->bypass_hwpt_id;
-+}
-+
-+static bool
-+smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-+                          Error **errp)
-+{
-+    SMMUv3AccelState *accel = s->s_accel;
-+    struct iommu_hwpt_arm_smmuv3 bypass_data = {
-+        .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
-+    };
-+    struct iommu_hwpt_arm_smmuv3 abort_data = {
-+        .ste = { SMMU_STE_VALID, 0x0ULL },
-+    };
-+    uint32_t s2_hwpt_id = idev->hwpt_id;
-+    uint32_t viommu_id, hwpt_id;
-+    IOMMUFDViommu *viommu;
-+
-+    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-+                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-+                                      s2_hwpt_id, &viommu_id, errp)) {
++    /* Check SSIDSIZE value opted-in is compatible with Host SMMUv3 SSIDSIZE */
++    if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
++                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
++        error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible "
++                   "(host=%u, QEMU=%u)",
++                   FIELD_EX32(info->idr[1], IDR1, SSIDSIZE),
++                   FIELD_EX32(s->idr[1], IDR1, SSIDSIZE));
 +        return false;
 +    }
 +
-+    viommu = g_new0(IOMMUFDViommu, 1);
-+    viommu->viommu_id = viommu_id;
-+    viommu->s2_hwpt_id = s2_hwpt_id;
-+    viommu->iommufd = idev->iommufd;
-+
-+    /*
-+     * Pre-allocate HWPTs for S1 bypass and abort cases. These will be attached
-+     * later for guest STEs or GBPAs that require bypass or abort configuration.
-+     */
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
-+                                    0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-+                                    sizeof(abort_data), &abort_data,
-+                                    &accel->abort_hwpt_id, errp)) {
-+        goto free_viommu;
-+    }
-+
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
-+                                    0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-+                                    sizeof(bypass_data), &bypass_data,
-+                                    &accel->bypass_hwpt_id, errp)) {
-+        goto free_abort_hwpt;
-+    }
-+
-+    /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
-+    hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
-+        goto free_bypass_hwpt;
-+    }
-+    accel->viommu = viommu;
-+    return true;
-+
-+free_bypass_hwpt:
-+    iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
-+free_abort_hwpt:
-+    iommufd_backend_free_id(idev->iommufd, accel->abort_hwpt_id);
-+free_viommu:
-+    iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
-+    g_free(viommu);
-+    return false;
-+}
-+
-+static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-+                                          HostIOMMUDevice *hiod, Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
+     /* User can disable QEMU SMMUv3 Range Invalidation support */
+     if (FIELD_EX32(info->idr[3], IDR3, RIL) <
+                 FIELD_EX32(s->idr[3], IDR3, RIL)) {
+@@ -652,7 +662,14 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
+      * The real HW nested support should be reported from host SMMUv3 and if
+      * it doesn't, the nesting parent allocation will fail anyway in VFIO core.
+      */
+-    return VIOMMU_FLAG_WANT_NESTING_PARENT;
++    uint64_t flags = VIOMMU_FLAG_WANT_NESTING_PARENT;
 +    SMMUState *bs = opaque;
 +    SMMUv3State *s = ARM_SMMUV3(bs);
-+    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
-+    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
 +
-+    if (!idev) {
-+        return true;
++    if (s->ssidsize) {
++        flags |= VIOMMU_FLAG_PASID_SUPPORTED;
 +    }
++    return flags;
+ }
+ 
+ static const PCIIOMMUOps smmuv3_accel_ops = {
+@@ -680,6 +697,12 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+     if (s->oas == SMMU_OAS_48BIT) {
+         s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+     }
 +
-+    if (accel_dev->idev) {
-+        if (accel_dev->idev != idev) {
-+            error_setg(errp, "Device already has an associated idev 0x%x",
-+                       idev->devid);
++    /*
++     * By default QEMU SMMUv3 has no SubstreamID support. Update IDR1 if user
++     * has enabled it.
++     */
++    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, s->ssidsize);
+ }
+ 
+ /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index cb02184d2d..c08d58c579 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -611,9 +611,11 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+         }
+     }
+ 
+-    if (STE_S1CDMAX(ste) != 0) {
++    /* Multiple context descriptors require SubstreamID support */
++    if (!s->ssidsize && STE_S1CDMAX(ste) != 0) {
+         qemu_log_mask(LOG_UNIMP,
+-                      "SMMUv3 does not support multiple context descriptors yet\n");
++                "SMMUv3: multiple S1 context descriptors require SubstreamID support. "
++                "Configure ssidsize > 0 (requires accel=on)\n");
+         goto bad_ste;
+     }
+ 
+@@ -1954,6 +1956,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+             error_setg(errp, "OAS must be 44 bits when accel=off");
+             return false;
+         }
++        if (s->ssidsize) {
++            error_setg(errp, "ssidsize can only be set if accel=on");
 +            return false;
 +        }
-+        return true;
-+    }
-+
-+    if (s->s_accel->viommu) {
-+        goto done;
-+    }
-+
-+    if (!smmuv3_accel_alloc_viommu(s, idev, errp)) {
-+        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
-+                          idev->devid);
+         return true;
+     }
+ 
+@@ -1968,6 +1974,11 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+         error_setg(errp, "OAS can only be set to 44 or 48 bits");
+         return false;
+     }
++    if (s->ssidsize > SMMU_SSID_MAX_BITS) {
++        error_setg(errp, "ssidsize must be in the range 0 to %d",
++                   SMMU_SSID_MAX_BITS);
 +        return false;
 +    }
-+
-+done:
-+    accel_dev->idev = idev;
-+    accel_dev->s_accel = s->s_accel;
-+    QLIST_INSERT_HEAD(&s->s_accel->device_list, accel_dev, next);
-+    trace_smmuv3_accel_set_iommu_device(devfn, idev->devid);
-+    return true;
-+}
-+
-+static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-+                                            int devfn)
-+{
-+    SMMUState *bs = opaque;
-+    SMMUPciBus *sbus = g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus);
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    SMMUv3AccelDevice *accel_dev;
-+    SMMUv3AccelState *accel;
-+    SMMUDevice *sdev;
-+
-+    if (!sbus) {
-+        return;
-+    }
-+
-+    sdev = sbus->pbdev[devfn];
-+    if (!sdev) {
-+        return;
-+    }
-+
-+    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-+    idev = accel_dev->idev;
-+    accel = accel_dev->s_accel;
-+    /* Re-attach the default s2 hwpt id */
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, idev->hwpt_id, NULL)) {
-+        error_report("Unable to attach the default HW pagetable: idev devid "
-+                     "0x%x", idev->devid);
-+    }
-+
-+    accel_dev->idev = NULL;
-+    accel_dev->s_accel = NULL;
-+    QLIST_REMOVE(accel_dev, next);
-+    trace_smmuv3_accel_unset_iommu_device(devfn, idev->devid);
-+
-+    if (QLIST_EMPTY(&accel->device_list)) {
-+        iommufd_backend_free_id(accel->viommu->iommufd, accel->bypass_hwpt_id);
-+        iommufd_backend_free_id(accel->viommu->iommufd, accel->abort_hwpt_id);
-+        iommufd_backend_free_id(accel->viommu->iommufd,
-+                                accel->viommu->viommu_id);
-+        g_free(accel->viommu);
-+        accel->viommu = NULL;
-+    }
-+}
-+
- /*
-  * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
-  * endpoints can sit downstream. Accelerated SMMUv3 requires a vfio-pci
-@@ -145,6 +298,8 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
-     .supports_address_space = smmuv3_accel_supports_as,
-     .get_address_space = smmuv3_accel_find_add_as,
-     .get_viommu_flags = smmuv3_accel_get_viommu_flags,
-+    .set_iommu_device = smmuv3_accel_set_iommu_device,
-+    .unset_iommu_device = smmuv3_accel_unset_iommu_device,
+ 
+     return true;
+ }
+@@ -2096,6 +2107,7 @@ static const Property smmuv3_properties[] = {
+     DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
+     DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
+     DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
++    DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
  };
  
- static void smmuv3_accel_as_init(SMMUv3State *s)
-@@ -168,6 +323,7 @@ void smmuv3_accel_init(SMMUv3State *s)
- {
-     SMMUState *bs = ARM_SMMU(s);
- 
-+    s->s_accel = g_new0(SMMUv3AccelState, 1);
-     bs->iommu_ops = &smmuv3_accel_ops;
-     smmuv3_accel_as_init(s);
+ static void smmuv3_instance_init(Object *obj)
+@@ -2129,6 +2141,12 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+     object_class_property_set_description(klass, "oas",
+         "Specify Output Address Size (for accel=on). Supported values "
+         "are 44 or 48 bits. Defaults to 44 bits");
++    object_class_property_set_description(klass, "ssidsize",
++        "Number of bits used to represent SubstreamIDs (SSIDs). "
++        "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
++        "Valid range is 0-20, where 0 disables SubstreamID support. "
++        "Defaults to 0. A value greater than 0 is required to enable "
++        "PASID support.");
  }
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index 0dc6b00d35..efb631db4f 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -10,10 +10,28 @@
- #define HW_ARM_SMMUV3_ACCEL_H
  
- #include "hw/arm/smmu-common.h"
-+#include "system/iommufd.h"
-+#ifdef CONFIG_LINUX
-+#include <linux/iommufd.h>
-+#endif
- #include CONFIG_DEVICES
- 
-+/*
-+ * Represents an accelerated SMMU instance backed by an iommufd vIOMMU object.
-+ * Holds bypass and abort proxy HWPT IDs used for device attachment.
-+ */
-+typedef struct SMMUv3AccelState {
-+    IOMMUFDViommu *viommu;
-+    uint32_t bypass_hwpt_id;
-+    uint32_t abort_hwpt_id;
-+    QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-+} SMMUv3AccelState;
-+
- typedef struct SMMUv3AccelDevice {
-     SMMUDevice sdev;
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    QLIST_ENTRY(SMMUv3AccelDevice) next;
-+    SMMUv3AccelState *s_accel;
- } SMMUv3AccelDevice;
- 
- #ifdef CONFIG_ARM_SMMUV3_ACCEL
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index f3386bd7ae..2aaa0c40c7 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -66,6 +66,10 @@ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s
- smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
- smmu_reset_exit(void) ""
- 
-+#smmuv3-accel.c
-+smmuv3_accel_set_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
-+smmuv3_accel_unset_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
-+
- # strongarm.c
- strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
- strongarm_ssp_read_underrun(void) "SSP rx underrun"
+ static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
 diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-index f644618f38..153310248d 100644
+index abe3565357..67a23fbeaa 100644
 --- a/include/hw/arm/smmuv3-common.h
 +++ b/include/hw/arm/smmuv3-common.h
-@@ -100,6 +100,9 @@ REG32(STE_7, 28)
- #define STE_CFG_ABORT(config)      (!(config & 0x4))
- #define STE_CFG_BYPASS(config)     (config == 0x4)
+@@ -311,6 +311,7 @@ REG32(IDR1,                0x4)
+     FIELD(IDR1, TABLES_PRESET, 30, 1)
+     FIELD(IDR1, ECMDQ,        31, 1)
  
-+#define SMMU_STE_VALID      (1ULL << 0)
-+#define SMMU_STE_CFG_BYPASS (1ULL << 3)
-+
- /* Update STE fields */
- #define STE_SET_VALID(ste, v)                                                 \
-     ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, VALID, (v)))
++#define SMMU_SSID_MAX_BITS 20
+ #define SMMU_IDR1_SIDSIZE 16
+ #define SMMU_CMDQS   19
+ #define SMMU_EVENTQS 19
 diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index bb7076286b..e54ece2d38 100644
+index d488a39cd0..26b2fc42fd 100644
 --- a/include/hw/arm/smmuv3.h
 +++ b/include/hw/arm/smmuv3.h
-@@ -66,6 +66,7 @@ struct SMMUv3State {
- 
-     /* SMMU has HW accelerator support for nested S1 + s2 */
-     bool accel;
-+    struct SMMUv3AccelState *s_accel;
+@@ -72,6 +72,7 @@ struct SMMUv3State {
+     bool ril;
+     bool ats;
+     uint8_t oas;
++    uint8_t ssidsize;
  };
  
  typedef enum {
