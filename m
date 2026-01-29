@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCAFD6B087
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB4BD6B084
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUax-0001BZ-6U; Thu, 29 Jan 2026 11:10:11 -0500
+	id 1vlUaJ-0008SD-7R; Thu, 29 Jan 2026 11:09:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUae-0000JJ-Qm
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:53 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1vlUaG-0008Qt-L9
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:28 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUac-0006eG-LU
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:52 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-432d2c7a8b9so1159783f8f.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:44 -0800 (PST)
+ id 1vlUaC-0006Ub-UB
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:27 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43591b55727so1042309f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702984; x=1770307784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702963; x=1770307763; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8J4eY9wxv1cYUuMQ9c6DeC3OQdL9/UJSVtl7VAJyfKI=;
- b=Az96hfw43lFu6Ug1d+QxrcQZEUdRvx1fYUbronjAIuzO9kc7kvwr6SnPwU/ovNbg10
- tc8i7NimXSdCKu1TSF2hjUcPxYkGUHkexPu6/xE1SqvqohRcrPaBvgO9zaWpdhpLwY2x
- UOBiKqpI742or8cj0RPEVNOFRuN05BJw4KQaqfWpzpanHFplb7EBX5hXBl1P3uBOUApx
- BZBjclJjvtxW77BNkFfS8efuDQPo90CJCgS5x5OFzUfaNakG+nqZ11b8o0eTzy3T0ZcE
- 7Tdi9g6s1SNQ9/lHOw/Xg9xmflFWxtcFYi16LBGE9ZXPUUpDsgd5nSlnF59oipDmWJZ/
- SQNA==
+ :reply-to; bh=tOHeTTSLqbsAURnZwmNj8yFq/wlmRq5J+W/kAsI1onY=;
+ b=oriCjVY5uUeASIApWZXNjQHLWEDZQDaS7neR6PP6zj0m/JUzOx9XWC1SdFd6AftqmW
+ eneF+009st2YaxzzPBLqWEB6rQE7tlgi5cEHM55Q4iqkh2tGPaJ3+2w/5+jiNAMs1/rf
+ ls4PuxKuASmDZPO3a3Dh+kvkhelL2haVX4XiIWIZRyITuGvDVvXGgszUxwYGuatBdZPK
+ vu9G2scRYczsX7dyJx7j7yGhIj0l/8q/ibGiWUaQmXXYieLviIE3H1msQbHA3E7f5Pp+
+ VpWxp9kE63IPeio5XGtmyI/fB3x7dhdSCTNlaTpEBju1OVxFH7EUS2NoYn87L8tyAc1W
+ SmgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702984; x=1770307784;
+ d=1e100.net; s=20230601; t=1769702963; x=1770307763;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8J4eY9wxv1cYUuMQ9c6DeC3OQdL9/UJSVtl7VAJyfKI=;
- b=pgqXrmCVa4kD0hSflWMN5/1oavX1t0gOxVBfirkvZ0rp/ToAS3X3PggRChZ4l5CNwh
- TaWikHtQyu7b6A+KzvrZGIVchvX42kCf3Z9pSh1h6aaPp74gAm4GMFi2V49EVg57Rd+0
- ZU+dwb80AluZB8eh2hToBP7M6rhu95TlpZgQz5U2T/5ctvcEV1ieDQuPtF8JRX06XEyw
- lPJ3MLg9G8R6zLFJ+kZlPB2GnWxz7ROccdX9p2HxJeHC9+PAQP5MnsnTx/sZCTHocKLA
- ykimz/xVUqAxVvS5ELKpeKZZyOsrIrVLNaIFUOxmComSgeHv72TG+nP+JPkkL9sNcIAi
- hyNw==
-X-Gm-Message-State: AOJu0YyMulYFoHKhlccG9jyFodEIbCV5WeXevPsnH3WSC7aEOM4tC+Jz
- U3xlq1DdcagExVHhLTdPAqg8NLzAhB/Hg5DPa+udyq60nM6F7BsHbFTk3enoURvboK0Lnzx3PfB
- GvLIxa/I=
-X-Gm-Gg: AZuq6aJPeSbcSfmV+4w+yELP478CJtrpSoZdqszXWu+GtboSvxNNkg4qiL+cy2Zbn5d
- NwhFdxbdNdy7ZCMNo2ip21XFbwact3oz8IfIMPxC5JDqLIBhzMS7L/3yUlznepldap9Vvh3VGjl
- +kqiV0YLl8RGBW0KS4oF94+ymXMJhiFjQvDUFhnj5p3rwUap55LDfYLXnyqeUWV3MkN/PWna4Ls
- 0aCgzYJrsSBJCFWnG311Ma8qhsktXDQ7nOAvHROmyuUvO4CneJcOCDOnk881Co20LwYhTp9aeSd
- vkLkoX1ByZ2C5O2xiAhG1HJQfTmVkw7yuUr30Sj5ML8JuPWYBwQc872ZuCqDlCffxjTENQSZ+/v
- x80hB7LhCYm7ZBWlGV21KFUx5hC7SJT7DdyKdcOQd1/P+iJDGEI7uTcbhPaKVSDq0PxW/CbVFst
- j6pRABlNcUUiEOmwnwhcBHxqQqWeAVsA==
-X-Received: by 2002:a5d:5d06:0:b0:435:e450:f05e with SMTP id
- ffacd0b85a97d-435f3abb7d7mr126369f8f.63.1769702983580; 
- Thu, 29 Jan 2026 08:09:43 -0800 (PST)
+ bh=tOHeTTSLqbsAURnZwmNj8yFq/wlmRq5J+W/kAsI1onY=;
+ b=SlHSBG6NGEU9C6cpyHFRDGbpddJzAc4/0kFWSuviM0JtN40BI7H/zJbbe05LrydTLu
+ v53DryK1qfprDXzeyaCgkVF/AHYamGdOpJWVVanR4hz4q7CMfNKDwHaiNZedVoFx/eQV
+ Pvli9/8Mo8qOhPDxkAoBFPzyvGKQxkahHTKr4nuNP6/Hpwy6jWjTU9tMC87Vb/keXu7m
+ t6kOaPQ4ekdotvjECPHIisJN4SBjS9OBKb1TXsZXO4C+BQHvohvjJcnhrfyYeB5tIa9b
+ ZKCuI69aeGsfJunYQTlRqW7znQjQIPod6g11Qd11JbqAZaTydS4H9EbhFeID90IXTBEG
+ 1EXg==
+X-Gm-Message-State: AOJu0YwEftHWTar/IEdeAjqeSZJ6ENwYTj+JjTUTMtfXuVtFiD3Rku8n
+ Arn0P3MFtNa/Z5XEORBH879ph+wmy0EwpIIRHCHf9z1iNi7H+9/RyhzjDbNlZA6hensoVDwCY+Z
+ s2efeY6k=
+X-Gm-Gg: AZuq6aLN8l6kMEoMkkJqvvqZllnO0sSpVKi5FUCAr6K9w0VG3Du9IJQr3XLDa9R+lTV
+ jeGhwVsX37sc00oVBJr1v4+wZFPIH4oIkgjY/qEN0uJbuCAC0H1O3NiAyl+bWK2A8i0gCnOmroq
+ Z8+bhGacJnLf2n6idTpnEfptjy++zpn+zkJR8XnrB/1UMyy4D+OJ1uR052ypC4ivsq7AYwGN3AX
+ r/QdnInKMLXoaRG7qHznhdboU46wBbKU9RuF8HGeOC12Hh2UUYn+C0cZXCJt/sRWst8nkNVLLNh
+ 1VBD50gHvJqKZis9iUHRrCUNHVkusZUtcPvGls5JuEIXbPD1VQRdYKChPc0QA8H5AFs9147qjp7
+ fg3DiYI9o/Zpnc0mifDGdvKQKDbPr32A7Bk3Knpk5Iy9dVTNBZq6iyPOJOLnhHV4AL89IYiMwSw
+ 4NDw5xlZCGTtMYxIS9JLzsZwIxFC3rgw==
+X-Received: by 2002:a05:6000:1ac7:b0:42f:b707:56f0 with SMTP id
+ ffacd0b85a97d-435f3aaa42fmr144381f8f.37.1769702963384; 
+ Thu, 29 Jan 2026 08:09:23 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.42
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:42 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:22 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/43] hw/arm/smmuv3: Initialize ID registers early during
- realize()
-Date: Thu, 29 Jan 2026 16:08:54 +0000
-Message-ID: <20260129160917.1415092-21-peter.maydell@linaro.org>
+Subject: [PULL 03/43] hw/arm/smmu-common: Factor out common helper functions
+ and export
+Date: Thu, 29 Jan 2026 16:08:37 +0000
+Message-ID: <20260129160917.1415092-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,79 +102,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Factor out ID register init into smmuv3_init_id_regs() and call it from
-realize(). This ensures ID registers are initialized early for use in the
-accelerated SMMUv3 path and will be utilized in subsequent patch.
+Factor out common helper functions and export. Subsequent patches for
+smmuv3 accel support will make use of this.
 
-Other registers remain initialized in smmuv3_reset().
-
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Tested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-21-skolothumtho@nvidia.com
+Message-id: 20260126104342.253965-4-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ hw/arm/smmu-common.c         | 44 +++++++++++++++++++++---------------
+ include/hw/arm/smmu-common.h |  6 +++++
+ 2 files changed, 32 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 4efef73373..e301bb467d 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -258,7 +258,12 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
-     info->recorded = true;
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index cdcfb1343d..1492d7dd95 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -847,12 +847,24 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+     return NULL;
  }
  
--static void smmuv3_init_regs(SMMUv3State *s)
-+/*
-+ * Called during realize(), as the ID registers will be accessed early in the
-+ * SMMUv3 accel path for feature compatibility checks. The remaining registers
-+ * are initialized later in smmuv3_reset().
-+ */
-+static void smmuv3_init_id_regs(SMMUv3State *s)
+-static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
++void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn)
  {
-     /* Based on sys property, the stages supported in smmu will be advertised.*/
-     if (s->stage && !strcmp("2", s->stage)) {
-@@ -298,7 +303,11 @@ static void smmuv3_init_regs(SMMUv3State *s)
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, 1);
-+    s->aidr = 0x1;
+-    SMMUState *s = opaque;
+-    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+-    SMMUDevice *sdev;
+     static unsigned int index;
++    g_autofree char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn,
++                                            index++);
++    sdev->smmu = s;
++    sdev->bus = bus;
++    sdev->devfn = devfn;
++
++    memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
++                             s->mrtypename, OBJECT(s), name, UINT64_MAX);
++    address_space_init(&sdev->as, MEMORY_REGION(&sdev->iommu), name);
++    trace_smmu_add_mr(name);
 +}
- 
-+static void smmuv3_reset(SMMUv3State *s)
++
++SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus)
 +{
-     s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
-     s->cmdq.prod = 0;
-     s->cmdq.cons = 0;
-@@ -310,7 +319,6 @@ static void smmuv3_init_regs(SMMUv3State *s)
++    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
  
-     s->features = 0;
-     s->sid_split = 0;
--    s->aidr = 0x1;
-     s->cr[0] = 0;
-     s->cr0ack = 0;
-     s->irq_ctrl = 0;
-@@ -1903,7 +1911,7 @@ static void smmu_reset_exit(Object *obj, ResetType type)
-         c->parent_phases.exit(obj, type);
+     if (!sbus) {
+         sbus = g_malloc0(sizeof(SMMUPciBus) +
+@@ -861,23 +873,19 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+         g_hash_table_insert(s->smmu_pcibus_by_busptr, bus, sbus);
      }
  
--    smmuv3_init_regs(s);
-+    smmuv3_reset(s);
-     smmuv3_accel_reset(s);
- }
++    return sbus;
++}
++
++static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
++{
++    SMMUState *s = opaque;
++    SMMUPciBus *sbus = smmu_get_sbus(s, bus);
++    SMMUDevice *sdev;
++
+     sdev = sbus->pbdev[devfn];
+     if (!sdev) {
+-        char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
+-
+         sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
+-
+-        sdev->smmu = s;
+-        sdev->bus = bus;
+-        sdev->devfn = devfn;
+-
+-        memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+-                                 s->mrtypename,
+-                                 OBJECT(s), name, UINT64_MAX);
+-        address_space_init(&sdev->as,
+-                           MEMORY_REGION(&sdev->iommu), name);
+-        trace_smmu_add_mr(name);
+-        g_free(name);
++        smmu_init_sdev(s, sdev, bus, devfn);
+     }
  
-@@ -1935,6 +1943,7 @@ static void smmu_realize(DeviceState *d, Error **errp)
-     sysbus_init_mmio(dev, &sys->iomem);
+     return &sdev->as;
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index b49b2f27fa..f5060cf36f 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -184,6 +184,12 @@ OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
+ /* Return the SMMUPciBus handle associated to a PCI bus number */
+ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
  
-     smmu_init_irq(s, dev);
-+    smmuv3_init_id_regs(s);
- }
- 
- static const VMStateDescription vmstate_smmuv3_queue = {
++/* Return the SMMUPciBus handle associated to a PCI bus */
++SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus);
++
++/* Initialize SMMUDevice handle associated to a SMMUPciBus */
++void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn);
++
+ /* Return the stream ID of an SMMU device */
+ static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
+ {
 -- 
 2.43.0
 
