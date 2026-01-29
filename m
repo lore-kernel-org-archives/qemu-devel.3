@@ -4,110 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457D6D6B084
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CDFD6B084
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUZK-00082f-Nz; Thu, 29 Jan 2026 11:08:30 -0500
+	id 1vlUaE-0008QJ-Mj; Thu, 29 Jan 2026 11:09:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vlUYu-00080u-2T
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:08:07 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vlUaB-0008Q6-FU
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:24 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vlUYr-0005lo-AD
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:08:03 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b86ed375d37so165445266b.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:08:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769702879; cv=none;
- d=google.com; s=arc-20240605;
- b=NGxyOLCsawJ/hZ/5ynfzGbm/eAcVtSjL4xG61Qi/eSqV7hjkNTEAgr89JR9gXbvcCi
- om0yYlA6/J/X7wYDkNn/klrvj378j+Xxj2gZb1jXZD7HfDNmGYvtbQuRrA3yuApUjSiQ
- 9zaPA5R/xG6AbWDjPNE8uthAG9jCgImaJWEKBrJT6atELn/h159MjD4qGE5k6A6uj0DB
- K52PPutY55RJ4ZcX4If6FBlcX42InKC+U9pZXh2OW3muwz0FYbuf6jaKHtg+kGKWwTO/
- iBTTkolhsWoJ48cLk8ewMTn7+SDmp5W7JNoIrIR3tvWIFLhrJ0D/Oh0qRlill5qT4CR2
- UESw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ubO353VrK03mwgeRuiFAyDJQ5LeVR8CK3RRfmgIQfaI=;
- fh=qgMSDp1GIKp4D6vsPjQ29xEx89U6W5DcqQ9El26JEOU=;
- b=jZj+UVoY1kUQ/5JZL5IzUPpad6/vDgGPBmYylM7Qx/seTu2sPffTb3fP8HFuH/a4Kv
- K21bZjA3knKTISW/nO6rYz2KEBwGph8cdYeXXS0pvfodbSuJOCAfs/htgVSgewlsx11Q
- y+P6rZTJCvIKfp7wu9cXH31gA5foABwkudRzoT3RH+w/D/8HNWC2RSb//5cBPOko+BKM
- PDpCS/pyPAi2cTBgHGwfMipVglKdFVcbH5Pl833Eq3JXH6Lnmk+Huo55o7mwWy5u0Mef
- 6rdS3ImKL9A9QD6J6roV6P3ZEIY//YvsqjWHtIp9rH0+y9b6ePzquiHCAA8awdD8FZzz
- BfQA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vlUa9-0006Sr-6H
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:23 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4358fb60802so717429f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769702879; x=1770307679; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ubO353VrK03mwgeRuiFAyDJQ5LeVR8CK3RRfmgIQfaI=;
- b=EbQ1qXvLTw6yt+kgsTyCePqvZ5xJ07HQu7pgpJv7sc8jtisb49tLxzL/H4+DXPUzOe
- 0JEOQAK0ieCzc6sfDVD8Bk4x6abDD+NfUZ60DNjv2qdkNyQNT5i5f358WkZ2cfUHwrkU
- t5LpyUOwkn090YqTpu4XdG4NvwY8CZcxFmv5tIGumm9Tu/aFTWB9/fN/6ma4dSBO/nB0
- DHZLd0oYYpQRJHrGbeXR5ThSfOENR6j35hbtXFbnyf+6fLKEWKZ1PoZ3WXG5Lv/CEjfW
- HVPg7juZJBs9GJzaXNlSO6DoVub9oRZGk8BSQxgJnP1tWTUF6pvwn+oliTUDsvD7p7XA
- L78g==
+ d=linaro.org; s=google; t=1769702959; x=1770307759; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=70QiH5LNvGrYzYQCRcyOnyTaR27zdflGq4/lYfVhjIo=;
+ b=pb7ijeJrwdibaWp5rN6SwcmZVUthXOTDOLRWfkFtIbXH4vgo2vJYBL5YFBL6K2yoHT
+ O7Np/mvxl0rNK4oUnXElkx1OQyfZidOxrDCY0XFs1YE8IBciQd0GNf6xtGOwNMiwxH4r
+ wCBu3Tlrup7dFh7eLc/tnRXTYp+8zSIacbZEkm/b0SUd0v6y7BZNlTuvhK4U76tFa3/A
+ aCncibGWWbM72ec9VuYzFIoiRdvKocLQ0do5hYwu5F9iohuSmnRsgLfhbYri7RAB6nMF
+ dHcriO8erePPlhpQFN5k9TFbqIuJMofTGQKZTfW8VUPvlw+L7+dIp2wKfme2W2OpUe1+
+ A80A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702879; x=1770307679;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ubO353VrK03mwgeRuiFAyDJQ5LeVR8CK3RRfmgIQfaI=;
- b=K61qft2eCIN1FZBrucKroP7/XbPJtVY22SdKSzZaRg7xcgxkPjdoqosmNIAA6Xu4Bo
- Va+nGDDgV35Z8mWmT4QkoNYXZsUEfcSLcewUATyJl3AKLHxTc+cUXFnXc7eec0HWOkJH
- CJyZLo+hjbeNjokVuralq1TWbzuDbZSRITJlo7fnAmVWVmq2VEGuyx99lOBt1PL7o/6Z
- ciOxBUYTW0CMK7pldM4GMCrx3sWYdEQH2ufcU0nxQ/iA914EPCENsjXYGckuDyGn/f+m
- K0go9oOaWdhCwbw++sPaPCyI3R9Hzq3sxpkEH6HnAVB1A6aPXow3waeIaNfLNGO8f9k8
- 2TWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzfck6F+EkGe+YoxWuMFZeKANWxzEVqvk3L65nsm3cF1BeAMDt04EQpBdfgeD7BJCBDhR/UbP2c3e2@nongnu.org
-X-Gm-Message-State: AOJu0YwWtepCqNbbrP7Da3jJLgorjn9lJnPguyt6nOqcZhM9h6iyNLzJ
- ijwf3+ZPa0huhhPno9Fbg0mgYn+P6wK+i1JqS/c+f2h+5GVLZK1I7s7uavdRuW43uitV6ymBlD1
- p5OZoDxQ8x8a6fETnz92VsXk5IOv1oSI=
-X-Gm-Gg: AZuq6aJypcRgBxHwN/afaD1VWIgHq8468gx4QqEwJG3OtYJfm1SYSYrkaVBJPkuhUdX
- 9NAYOx4F8UK942xwGrK86lXaae5nPEAcFEalgMoTNhpPtt3wei3NhxYnTwrv3024SQ1+SEmX3cW
- OCokGvQwW+YfSObTqLTW6j530PsOcT+i5MVq7OGFlptfo74zj3ghV7e798Pc3SICxZKOTOjcCon
- v5ywFWuczPENZ/PDmu6B8FPUfv1GFRk6/DKtfUHpItvVvoh7Ss+RRx1ofJtG9JDErk3qT10
-X-Received: by 2002:a17:907:3f9e:b0:b8a:fa35:989f with SMTP id
- a640c23a62f3a-b8dab3048d3mr594891366b.38.1769702878711; Thu, 29 Jan 2026
- 08:07:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769702959; x=1770307759;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=70QiH5LNvGrYzYQCRcyOnyTaR27zdflGq4/lYfVhjIo=;
+ b=X8srzHL04Mv/2D2E8ZLcfiFQ6YWBR3cN+3rK7Qj7ijVL6o0Y4InBgvMeHjdEX1g7Dy
+ SsyA8PVOB9jmB7+JCBuArjhEgCHTmjBPX9bA6bYlZiu0weqnHiamkbsgsJDbNo+qro8E
+ Rw2pupUvYs/+h0cd5BM6N4MEYRCl2djdcIBueUwa7TEsC/F8XBt2HeGUpn7Z+lX+Rxfo
+ 5pKiSFu7SNnq/oPza+r8hsAnRIAgI6/f7+6MzfAXZGLGHQVspbqHVudTK4DbXbpWANAw
+ 18G4pZkmaML8KbkM6GK6/BhuaffHjL1EkM75oCW1c9LaK2DyBw3gm7BR56wU5V5oEV+k
+ ON7w==
+X-Gm-Message-State: AOJu0YywhTvxJCn50/Tx1KVunOsv6wk3bypkUGYZu1fJo2/ML8uy9frD
+ YNV1rEsmKwcaVW4bdOmWtyPXvqU4K0OfQTkICKnuSEMmhHK23x4LEpgXsPf81N7UW/+Clr70D9f
+ sPkvAGYI=
+X-Gm-Gg: AZuq6aJuSwMAFMvWfrn700VlRu8duzhCVO2dyhtXLWk+zQJ/94vxmCLaZpHjY7ya8/W
+ xo0WVAI1zQc7AZeW1nmlZqzcGNWotmXSbzsDbAAEnFDXMsWtJapKcZabKgYwPsC8PFk/iq8TGrX
+ NBa0mriNj6DMmB1ThxdL083pSB6PYNroZydvbcsSy23t+4bEH8Vt8/sx7Cbpk3r8OhtUHcTq3fV
+ tiU7DlfgGNvFPc6IHr6VaLhntSTyjRiHvNPEJX1RCL1+prbXue9jKY+PWQujei60TyPsz/9gdDm
+ 9yzVc9cT0CGcITeMUCU+IXJ9MLbQQKdyNofAkpt1Sch1dE+DLLczbmdKKhSLgXImbvb9j8dthJ8
+ MJ/7ewYER4588Ko4nrY02Dei4tRu44TEV94UIk7znrgM5v/o2t1FfeajS0ldtJ75Q9+tdEP4mDM
+ iLlel0kevUcpceDNhWWVWQJ08279xIPw==
+X-Received: by 2002:a05:6000:288b:b0:435:b674:c9b1 with SMTP id
+ ffacd0b85a97d-435ea09cd57mr5569205f8f.11.1769702959109; 
+ Thu, 29 Jan 2026 08:09:19 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Jan 2026 08:09:18 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/43] target-arm queue
+Date: Thu, 29 Jan 2026 16:08:34 +0000
+Message-ID: <20260129160917.1415092-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260127140316.4187221-1-jmarcin@redhat.com>
- <20260127140316.4187221-5-jmarcin@redhat.com>
- <CACGkMEtO93AjdUMD7tGzyLH2Q-PVewxMgxxTgKBpnR-bTwOd9w@mail.gmail.com>
- <fpo57gscqhtcpdomfrwadexd3ierhmax4dqflqzfsuazo2secu@2em7v5gw7vmr>
- <CACGkMEsh8eLAeGcbitWrx-bAvx-Ek_-DNFtn9=k3JTcXfcZtTw@mail.gmail.com>
-In-Reply-To: <CACGkMEsh8eLAeGcbitWrx-bAvx-Ek_-DNFtn9=k3JTcXfcZtTw@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 30 Jan 2026 00:07:18 +0800
-X-Gm-Features: AZwV_QgkmByuMPYON6vFJQPoU85-W1gUiR4mRnejliHry337GPfKyoE3bNh3FOo
-Message-ID: <CAK3tnv+R0Y92rnhBXgWyfJpQZML0zK02Uk-x97Lb71ZH7Yq9=Q@mail.gmail.com>
-Subject: Re: [PATCH 4/4] migration: Pass network packets received during
- switchover to dest VM
-To: Jason Wang <jasowang@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Cindy Lu <lulu@redhat.com>, eperezma <eperezma@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x632.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,222 +98,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 29, 2026 at 9:06=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> On Wed, Jan 28, 2026 at 9:49=E2=80=AFPM Juraj Marcin <jmarcin@redhat.com>=
- wrote:
-> >
-> > Hi Jason,
-> >
-> > On 2026-01-28 10:55, Jason Wang wrote:
-> > > On Tue, Jan 27, 2026 at 10:04=E2=80=AFPM Juraj Marcin <jmarcin@redhat=
-.com> wrote:
-> > > >
-> > > > From: Juraj Marcin <jmarcin@redhat.com>
-> > > >
-> > > > During migration switchover both the source and the destination mac=
-hines
-> > > > are paused (compute downtime). During this period network still rou=
-tes
-> > > > network packets to the source machine, as this is the last place wh=
-ere
-> > > > the recipient MAC address has been seen. Once the destination side
-> > > > starts and sends network announcement, all subsequent frames are ro=
-uted
-> > > > correctly. However, frames delivered to the source machine are neve=
-r
-> > > > processed and lost. This causes also a network downtime with roughl=
-y the
-> > > > same duration as compute downtime.
-> > > >
-> > > > This can cause problems not only for protocols that cannot handle p=
-acket
-> > > > loss, but can also introduce delays in protocols that can handle th=
-em.
-> > > >
-> > > > To resolve this, this feature instantiates a network filter for eac=
-h
-> > > > network backend present during migration setup on both migration si=
-des.
-> > > > On the source side, this filter caches all packets received from th=
-e
-> > > > backend during switchover. Once the destination machine starts, all
-> > > > cached packets are sent through the migration channel and the respe=
-ctive
-> > > > filter object on the destination side injects them to the NIC attac=
-hed
-> > > > to the backend.
-> > > >
-> > > > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > > > ---
-> > > >  include/migration/vmstate.h |   6 +
-> > > >  include/net/net.h           |   5 +
-> > > >  migration/meson.build       |   1 +
-> > > >  migration/migration.c       |  49 ++++++-
-> > > >  migration/migration.h       |   2 +
-> > > >  migration/netpass.c         | 246 ++++++++++++++++++++++++++++++++=
-++++
-> > > >  migration/netpass.h         |  14 ++
-> > > >  migration/options.c         |  21 +++
-> > > >  migration/options.h         |   1 +
-> > > >  migration/savevm.c          |  37 ++++++
-> > > >  migration/savevm.h          |   2 +
-> > > >  migration/trace-events      |   9 ++
-> > > >  net/net.c                   |  11 ++
-> > > >  net/tap.c                   |  11 +-
-> > > >  qapi/migration.json         |   7 +-
-> > > >  15 files changed, 418 insertions(+), 4 deletions(-)
-> > > >  create mode 100644 migration/netpass.c
-> > > >  create mode 100644 migration/netpass.h
-> > > >
-> > > > diff --git a/include/migration/vmstate.h b/include/migration/vmstat=
-e.h
-> > > > index 62d7e9fe38..7987e6c85a 100644
-> > > > --- a/include/migration/vmstate.h
-> > > > +++ b/include/migration/vmstate.h
-> > > > @@ -200,6 +200,12 @@ typedef enum {
-> > > >       * save_setup() in VMSD structures.
-> > > >       */
-> > > >      VMS_PHASE_EARLY_SETUP,
-> > > > +    /*
-> > > > +     * Specifies a netpass VMSD, these devices are copied right af=
-ter the
-> > > > +     * destination is started regardless of precopy/postcopy. Fail=
-ure in this
-> > > > +     * phase does not fail the migration in case of precopy.
-> > > > +     */
-> > > > +    VMS_PHASE_NETPASS,
-> > > >  } VMStateSavePhase;
-> > > >
-> > > >  struct VMStateDescription {
-> > > > diff --git a/include/net/net.h b/include/net/net.h
-> > > > index 45bc86fc86..510908845b 100644
-> > > > --- a/include/net/net.h
-> > > > +++ b/include/net/net.h
-> > > > @@ -82,6 +82,7 @@ typedef void (NetAnnounce)(NetClientState *);
-> > > >  typedef bool (SetSteeringEBPF)(NetClientState *, int);
-> > > >  typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, E=
-rror **);
-> > > >  typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
-> > > > +typedef void (NetpassEnabledNotify)(NetClientState *nc, void *opaq=
-ue);
-> > > >
-> > > >  typedef struct NetClientInfo {
-> > > >      NetClientDriver type;
-> > > > @@ -130,6 +131,9 @@ struct NetClientState {
-> > > >      bool is_netdev;
-> > > >      bool do_not_pad; /* do not pad to the minimum ethernet frame l=
-ength */
-> > > >      bool is_datapath;
-> > > > +    bool netpass_enabled;
-> > > > +    NetpassEnabledNotify *netpass_enabled_notify;
-> > > > +    void *netpass_enabled_notify_opaque;
-> > > >      QTAILQ_HEAD(, NetFilterState) filters;
-> > > >  };
-> > > >
-> > >
-> > > Adding Cindy, Eugenio can Chen.
-> > >
-> > > I think we can simple reuse the existing filters:
-> > >
-> > > redirector: which can redirect traffic from the source to the
-> > > destination via chardev
-> > > buffer: which can hold the packets until the destination is released
-> > >
-> > > And let the libvirt install/uninstall those filters at the correct ti=
-me.
-> > >
-> > > Which means:
-> > >
-> > > On the source: there would be a redirector that can be enabled when v=
-m
-> > > is paused, and it redirect the traffic to a socket/chardev
-> > > On the destination: there would be a redirector as well as the buffer=
-,
-> > > redirector receives packets from the socket and send it to buffer,
-> > > buffer will hold those packets until VM in the destination is resumed=
-.
-> > >
-> > > The current filters need some tweaks (e.g letting filters (redirector=
-)
-> > > work when VM is paused). The advantages of this are:
-> >
-> > I tested the idea of filters for the forwarding using the existing
-> > filters first and it does work with mentioned tweaks, however this
-> > requires additional channel between chardevs attached to filters.
->
-> It requires some changes in the redirector. One of the major but
-> trivial changes is to make it work when the VM is paused.
+Hi; the bulk of this arm pullreq is Shameer's SMMUv3 acceleration
+series; there are a few other minor items in here also.
 
-Actually, current netfilter doesn't depend on the running or paused
-state of the virtual machine. It just handle packet in qemu side.
+thanks
+-- PMM
 
->
-> >
-> > In my opinion it was better to reuse already existing migration channel=
-,
-> > so there are no necessary changes in higher layers. Furthermore, by
-> > implementing this directly in QEMU, this feature can be used anywhere,
-> > even if libvirt is not used.
->
-> This requires more thought, leaving the policy to the upper may give
-> us flexibility.
+The following changes since commit 65fb9de4888f9bf32bc4f60c880da3dff04c4fd9:
 
-Agree, the use cases for this series is very similar to COLO project.
-https://wiki.qemu.org/Features/COLO
+  Merge tag 'pr-build_fix-20260128' of https://gitlab.com/pbo-linaro/qemu into staging (2026-01-29 13:29:33 +1100)
 
-We handled network related issue by introduce the qemu network filters.
-It's even possible to transparently modify TCP packet headers without
-the virtual machine being aware of it.
-https://github.com/qemu/qemu/blob/master/docs/colo-proxy.txt
+are available in the Git repository at:
 
->
-> >
-> > >
-> > > 1) reuse the existing filters
-> > > 2) don't need to care about the vhost support on the source as vhost
-> > > is disabled, for vDPA we can reuse shadow virtqueue
-> >
-> > Can you elaborate more on vhost being disabled? IUUC QEMU net filters
-> > don't support vhost=3Don, including the redirector filter.
->
-> We only need the filter work when vm is paused, in this case vhost is
-> disabled. We can use packet socket to read or inject packet to tap.
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260129
 
-Agree, COLO proxy use the filter-redirctor inject network packet to dest VM=
-.
-By the way, COLO is a HA/FT project in QEMU, based on our previous practica=
-l
-experience, the VM stop time will handled by netfilter and TCP/IP retransmi=
-ssion
-mechanism, for the stateless protocol like UDP, the application will
-handle it by default.
-The only difference with COLO is the normal live migration need
-filter-buffer in dest side.
-And the filter-buffer and VM paused time can also cause problems with
-network transmission.
-Another issue is when VM paused time became longer, filter-redirector
-still running,
-but the source side QEMU read packet from tap device path need to be
-double checked.
-You can know how the multiple network filters co-work in the COLO-proxy doc=
-s.
+for you to fetch changes up to 5252c077467a5570bf3b6b6278d206c46f51f9b8:
 
-Thanks
-Chen
+  arm: add DCZID_EL0 to idregs array (2026-01-29 13:45:39 +0000)
 
->
-> >
-> > > 3) for the destination we can install a redirector to packet socket t=
-o
-> > > let vhost works like socket -> redirector -> buffer -> redirector ->
-> > > packet socket.
-> > >
-> > > Thanks
-> > >
-> >
->
-> Thanks
->
+----------------------------------------------------------------
+target-arm queue:
+ * Support SMMUv3 acceleration
+ * A few other minor cleanups and fixes
+
+----------------------------------------------------------------
+Alex Bennée (2):
+      MAINTAINERS: add emulation.rst to ARM TCG CPUs
+      docs/system: update FEAT_BBML[12] references
+
+Cornelia Huck (2):
+      arm: add {get,set}_dczid_bs helpers
+      arm: add DCZID_EL0 to idregs array
+
+Eric Auger (2):
+      hw/pci-host/gpex: Allow to generate preserve boot config DSM #5
+      hw/arm/virt-acpi-build: Add IORT RMR regions to handle MSI nested binding
+
+Nicolin Chen (4):
+      backends/iommufd: Introduce iommufd_backend_alloc_viommu
+      backends/iommufd: Introduce iommufd_backend_alloc_vdev
+      hw/arm/smmuv3-accel: Add set/unset_iommu_device callback
+      hw/arm/smmuv3-accel: Add nested vSTE install/uninstall support
+
+Philippe Mathieu-Daudé (2):
+      target/arm/hvf: Move hvf_sysreg_[read, write]_cp() functions around
+      target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
+
+Shameer Kolothum (31):
+      hw/arm/smmu-common: Factor out common helper functions and export
+      hw/arm/smmu-common: Make iommu ops part of SMMUState
+      hw/arm/smmuv3-accel: Introduce smmuv3 accel device
+      hw/arm/smmuv3-accel: Initialize shared system address space
+      hw/pci/pci: Move pci_init_bus_master() after adding device to bus
+      hw/pci/pci: Add optional supports_address_space() callback
+      hw/pci-bridge/pci_expander_bridge: Move TYPE_PXB_PCIE_DEV to header
+      hw/arm/smmuv3-accel: Restrict accelerated SMMUv3 to vfio-pci endpoints with iommufd
+      hw/arm/smmuv3: Implement get_viommu_cap() callback
+      hw/arm/smmuv3: propagate smmuv3_cmdq_consume() errors to caller
+      hw/arm/smmuv3-accel: Install SMMUv3 GBPA based hwpt
+      hw/pci/pci: Introduce a callback to retrieve the MSI doorbell GPA directly
+      hw/arm/smmuv3-accel: Implement get_msi_direct_gpa callback
+      hw/arm/virt: Set msi-gpa property
+      hw/arm/smmuv3-accel: Add support to issue invalidation cmd to host
+      hw/arm/smmuv3: Initialize ID registers early during realize()
+      hw/arm/smmuv3-accel: Get host SMMUv3 hw info and validate
+      hw/arm/virt: Set PCI preserve_config for accel SMMUv3
+      tests/qtest/bios-tables-test: Prepare for IORT revison upgrade
+      tests/qtest/bios-tables-test: Update IORT blobs after revision upgrade
+      hw/arm/smmuv3: Block migration when accel is enabled
+      hw/arm/smmuv3: Add accel property for SMMUv3 device
+      hw/arm/smmuv3-accel: Add a property to specify RIL support
+      hw/arm/smmuv3-accel: Add support for ATS
+      hw/arm/smmuv3-accel: Add property to specify OAS bits
+      backends/iommufd: Retrieve PASID width from iommufd_backend_get_device_info()
+      backends/iommufd: Add get_pasid_info() callback
+      hw/pci: Add helper to insert PCIe extended capability at a fixed offset
+      hw/pci: Factor out common PASID capability initialization
+      hw/vfio/pci: Synthesize PASID capability for vfio-pci devices
+      hw/arm/smmuv3-accel: Make SubstreamID support configurable
+
+ MAINTAINERS                                     |   1 +
+ backends/iommufd.c                              |  76 ++-
+ backends/trace-events                           |   2 +
+ docs/system/arm/emulation.rst                   |   3 +-
+ hw/arm/Kconfig                                  |   5 +
+ hw/arm/meson.build                              |   3 +-
+ hw/arm/smmu-common.c                            |  51 +-
+ hw/arm/smmuv3-accel.c                           | 768 ++++++++++++++++++++++++
+ hw/arm/smmuv3-accel.h                           |  88 +++
+ hw/arm/smmuv3-internal.h                        |   1 +
+ hw/arm/smmuv3.c                                 | 227 +++++--
+ hw/arm/trace-events                             |   6 +
+ hw/arm/virt-acpi-build.c                        | 131 +++-
+ hw/arm/virt.c                                   |  39 +-
+ hw/pci-bridge/pci_expander_bridge.c             |   1 -
+ hw/pci-host/gpex-acpi.c                         |  29 +-
+ hw/pci/pci.c                                    |  43 +-
+ hw/pci/pcie.c                                   |  88 ++-
+ hw/vfio/iommufd.c                               |   6 +-
+ hw/vfio/pci.c                                   |  75 +++
+ hw/vfio/pci.h                                   |   1 +
+ hw/vfio/trace-events                            |   1 +
+ include/hw/arm/smmu-common.h                    |   7 +
+ include/hw/arm/smmuv3-common.h                  |  27 +-
+ include/hw/arm/smmuv3.h                         |  10 +
+ include/hw/arm/virt.h                           |   1 +
+ include/hw/core/iommu.h                         |   1 +
+ include/hw/pci-host/gpex.h                      |   1 +
+ include/hw/pci/pci.h                            |  36 ++
+ include/hw/pci/pci_bridge.h                     |   1 +
+ include/hw/pci/pcie.h                           |   4 +
+ include/system/host_iommu_device.h              |  20 +
+ include/system/iommufd.h                        |  29 +-
+ target/arm/cpu-sysregs.h.inc                    |   1 +
+ target/arm/cpu.c                                |   2 +-
+ target/arm/cpu.h                                |  14 +-
+ target/arm/cpu64.c                              |   4 +-
+ target/arm/helper.c                             |   5 +-
+ target/arm/hvf/hvf.c                            | 167 +++---
+ target/arm/kvm.c                                |  18 +-
+ target/arm/tcg/cpu64.c                          |  22 +-
+ target/arm/tcg/helper-a64.c                     |   2 +-
+ target/arm/tcg/mte_helper.c                     |   4 +-
+ target/arm/tcg/translate-a64.c                  |   2 +-
+ target/arm/tcg/translate.h                      |   2 +-
+ tests/data/acpi/aarch64/virt/IORT               | Bin 128 -> 128 bytes
+ tests/data/acpi/aarch64/virt/IORT.its_off       | Bin 172 -> 172 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 364 -> 364 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 276 bytes
+ 49 files changed, 1829 insertions(+), 196 deletions(-)
+ create mode 100644 hw/arm/smmuv3-accel.c
+ create mode 100644 hw/arm/smmuv3-accel.h
 
