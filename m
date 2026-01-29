@@ -4,110 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E930ED73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 22:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485D4D73E87
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 23:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlauK-0003oF-Lv; Thu, 29 Jan 2026 17:54:36 -0500
+	id 1vlbEq-0008Qb-6a; Thu, 29 Jan 2026 18:15:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vlauF-0003hm-Nt; Thu, 29 Jan 2026 17:54:31 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vlauE-0001RZ-2O; Thu, 29 Jan 2026 17:54:31 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEPYEL022812;
- Thu, 29 Jan 2026 22:54:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+LbFa3
- d6uPQerJugAAIhVuStUwJwRW9Ak6bnaC5NYPo=; b=GmZYwPX/7FLGv3xMxfQHt4
- 5RkCWzRvOiHJ5jgxF25pIOexwG9utL79mYE2Du24FYTgZBcev6ckOfM9rLDjUorX
- OVpiYPri31AwHU7G+Qw5abRhi9S/fYSDLFOpL7eQM6+CP5e6JQHzLo8xdKyS3trD
- SfFi9Qgdp5o1Ni/p4coOU9CjDW5YzDYbxdmV/C1o81G+l9C9KxQdGyZCUGdQNX73
- Y9LuJgoZv6Fz8Vt6dh02TU59LheLUEXeS7Po6eJ6YVVVsUi7DmNNoiV/cY/Kaze1
- OubXC764Q3HqGyB/PN77Df6yAivnzokc45O29j+PzzSFpqO3w1j34biugwUL586Q
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgn0nfw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 22:54:28 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TJV2GY026805;
- Thu, 29 Jan 2026 22:54:27 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkkxy1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 22:54:27 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TMsQBv30475000
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Jan 2026 22:54:26 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1A7D458052;
- Thu, 29 Jan 2026 22:54:26 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62FB758056;
- Thu, 29 Jan 2026 22:54:25 +0000 (GMT)
-Received: from [9.61.243.220] (unknown [9.61.243.220])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Jan 2026 22:54:25 +0000 (GMT)
-Message-ID: <2494fe74-23bb-429c-b750-4fa674a67712@linux.ibm.com>
-Date: Thu, 29 Jan 2026 14:54:24 -0800
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1vlbEh-0008Mf-Kf
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:15:40 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1vlbEf-0006Iz-79
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:15:39 -0500
+Received: by mail-wr1-f68.google.com with SMTP id
+ ffacd0b85a97d-42fb2314eb0so1309308f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 15:15:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769728535; x=1770333335;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:cc:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1Ga29pGtW0g69PcOEe+rqY7Q6ZVSWV71Fiea6pHEfK8=;
+ b=RZdG/7JqPDL05qu8sahHBnKAvoR8Bd9RJpSJedomajKyU6e5JzDq8/t7qSvISy+xVR
+ x0zR6EeVoKj5V7TTAZPTA3yMAlHOzqhDe5clI41MBZHj5O0cHUz1ysmmB9iuepCr49zR
+ LJpD9qt6IEfkRpV04aRuUL1565rUd3NfbJkjxmvOZ/tWDd88qo6DRIqpF88Ey9jLX3aN
+ zNw+bu1wnldrPUMpIdLosBfONY/K0QNzV7eIC4QA+aUYdiGpK7Vzip8XS7n6BQpqn5ze
+ Oob8o6G7kEPo4k3vwTr8nOGt0Bp7az430NhJhJS58SbN5hUaPXohwpemOL+tXCdOSAzk
+ P8Bw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUnzI3DKpHML9thG1CE8HOrNjRHS0pzdEfnKSgsUDYnjtN2mL/NQCxvixsAWdk0U7MwpPyysdxnaS5@nongnu.org
+X-Gm-Message-State: AOJu0YyY2xq55kmqJyhCnmiEgmolh5s4QxhLE3CZNLt+bZ18rnxUyDKo
+ Y0Ti544c8CM1jBuzrbNbpxS/V9oCEQOyIsXgGTeZ5anFw4Mr7C6naRtP
+X-Gm-Gg: AZuq6aKasmIiNrPQJl1h35Sv8Ha+GUpnjPGiSxomLKGm6ovEnRhw4tBz9uzus/0rF9A
+ 93+idO6PkmRdN67rmO3MDXU/8YUOVB6D0o5s4E6JVNiqIt9M4VxoePUx83tQNK3iupSqEMM/OkD
+ YJOmABfiWvoxuLqNcjNpBoMUafm1PLARRDvNzeGXPMYaBwDTbv5igsnYepCUrNVXf7EVxJEec5a
+ sK1x2jgCZ85tLDFYwa3u8h/ZUfSQn/iKQnW0IhpSCgdclG1F/1oXXRDpUw3yhdtyIyE/k/yT09i
+ JWf+lz5cZFG6vHmHWC16KNRW8NopbakqlXrlIwMbECIvz0ZJtZ8AN8Mn2Sbv4KVAbwJXzO/WnWG
+ L24BLTdFcXUOevQQR/KaMcIme+dPEsdTcdAzunMtcfpuXKg+27yPwD56kddPImphZGjFb9lTMBg
+ 7WFExfGGMFv9rBRAC1E0OwwMlO7S3cGW6fNzoU3HpQET5CGC4=
+X-Received: by 2002:a05:6000:2384:b0:42f:b581:c69a with SMTP id
+ ffacd0b85a97d-435f3a63467mr1768124f8f.5.1769728534773; 
+ Thu, 29 Jan 2026 15:15:34 -0800 (PST)
+Received: from [192.168.88.241] (89-24-32-126.nat.epc.tmcz.cz. [89.24.32.126])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10f82aesm19318860f8f.19.2026.01.29.15.15.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 15:15:34 -0800 (PST)
+Message-ID: <c3bfb469-330f-4f61-9062-c877f29e2f5a@ovn.org>
+Date: Fri, 30 Jan 2026 00:15:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/14] pc-bios/s390-ccw: Introduce CLP Architecture
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-8-jrossi@linux.ibm.com>
+Cc: i.maximets@ovn.org, qemu-devel@nongnu.org, bchaney@akamai.com,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
+Subject: Re: [PATCH v2 01/12] net/af-xdp: fix type overflow
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com
+References: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
+ <20260129213215.1405459-2-vsementsov@yandex-team.ru>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260127161547.459443-8-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ilya Maximets <i.maximets@ovn.org>
+Autocrypt: addr=i.maximets@ovn.org; keydata=
+ xsFNBF77bOMBEADVZQ4iajIECGfH3hpQMQjhIQlyKX4hIB3OccKl5XvB/JqVPJWuZQRuqNQG
+ /B70MP6km95KnWLZ4H1/5YOJK2l7VN7nO+tyF+I+srcKq8Ai6S3vyiP9zPCrZkYvhqChNOCF
+ pNqdWBEmTvLZeVPmfdrjmzCLXVLi5De9HpIZQFg/Ztgj1AZENNQjYjtDdObMHuJQNJ6ubPIW
+ cvOOn4WBr8NsP4a2OuHSTdVyAJwcDhu+WrS/Bj3KlQXIdPv3Zm5x9u/56NmCn1tSkLrEgi0i
+ /nJNeH5QhPdYGtNzPixKgPmCKz54/LDxU61AmBvyRve+U80ukS+5vWk8zvnCGvL0ms7kx5sA
+ tETpbKEV3d7CB3sQEym8B8gl0Ux9KzGp5lbhxxO995KWzZWWokVUcevGBKsAx4a/C0wTVOpP
+ FbQsq6xEpTKBZwlCpxyJi3/PbZQJ95T8Uw6tlJkPmNx8CasiqNy2872gD1nN/WOP8m+cIQNu
+ o6NOiz6VzNcowhEihE8Nkw9V+zfCxC8SzSBuYCiVX6FpgKzY/Tx+v2uO4f/8FoZj2trzXdLk
+ BaIiyqnE0mtmTQE8jRa29qdh+s5DNArYAchJdeKuLQYnxy+9U1SMMzJoNUX5uRy6/3KrMoC/
+ 7zhn44x77gSoe7XVM6mr/mK+ViVB7v9JfqlZuiHDkJnS3yxKPwARAQABzSJJbHlhIE1heGlt
+ ZXRzIDxpLm1heGltZXRzQG92bi5vcmc+wsGUBBMBCAA+AhsDBQsJCAcCBhUKCQgLAgQWAgMB
+ Ah4BAheAFiEEh+ma1RKWrHCY821auffsd8gpv5YFAmfB9JAFCQyI7q0ACgkQuffsd8gpv5YQ
+ og/8DXt1UOznvjdXRHVydbU6Ws+1iUrxlwnFH4WckoFgH4jAabt25yTa1Z4YX8Vz0mbRhTPX
+ M/j1uORyObLem3of4YCd4ymh7nSu++KdKnNsZVHxMcoiic9ILPIaWYa8kTvyIDT2AEVfn9M+
+ vskM0yDbKa6TAHgr/0jCxbS+mvN0ZzDuR/LHTgy3e58097SWJohj0h3Dpu+XfuNiZCLCZ1/G
+ AbBCPMw+r7baH/0evkX33RCBZwvh6tKu+rCatVGk72qRYNLCwF0YcGuNBsJiN9Aa/7ipkrA7
+ Xp7YvY3Y1OrKnQfdjp3mSXmknqPtwqnWzXvdfkWkZKShu0xSk+AjdFWCV3NOzQaH3CJ67NXm
+ aPjJCIykoTOoQ7eEP6+m3WcgpRVkn9bGK9ng03MLSymTPmdINhC5pjOqBP7hLqYi89GN0MIT
+ Ly2zD4m/8T8wPV9yo7GRk4kkwD0yN05PV2IzJECdOXSSStsf5JWObTwzhKyXJxQE+Kb67Wwa
+ LYJgltFjpByF5GEO4Xe7iYTjwEoSSOfaR0kokUVM9pxIkZlzG1mwiytPadBt+VcmPQWcO5pi
+ WxUI7biRYt4aLriuKeRpk94ai9+52KAk7Lz3KUWoyRwdZINqkI/aDZL6meWmcrOJWCUMW73e
+ 4cMqK5XFnGqolhK4RQu+8IHkSXtmWui7LUeEvO/OwU0EXvts4wEQANCXyDOic0j2QKeyj/ga
+ OD1oKl44JQfOgcyLVDZGYyEnyl6b/tV1mNb57y/YQYr33fwMS1hMj9eqY6tlMTNz+ciGZZWV
+ YkPNHA+aFuPTzCLrapLiz829M5LctB2448bsgxFq0TPrr5KYx6AkuWzOVq/X5wYEM6djbWLc
+ VWgJ3o0QBOI4/uB89xTf7mgcIcbwEf6yb/86Cs+jaHcUtJcLsVuzW5RVMVf9F+Sf/b98Lzrr
+ 2/mIB7clOXZJSgtV79Alxym4H0cEZabwiXnigjjsLsp4ojhGgakgCwftLkhAnQT3oBLH/6ix
+ 87ahawG3qlyIB8ZZKHsvTxbWte6c6xE5dmmLIDN44SajAdmjt1i7SbAwFIFjuFJGpsnfdQv1
+ OiIVzJ44kdRJG8kQWPPua/k+AtwJt/gjCxv5p8sKVXTNtIP/sd3EMs2xwbF8McebLE9JCDQ1
+ RXVHceAmPWVCq3WrFuX9dSlgf3RWTqNiWZC0a8Hn6fNDp26TzLbdo9mnxbU4I/3BbcAJZI9p
+ 9ELaE9rw3LU8esKqRIfaZqPtrdm1C+e5gZa2gkmEzG+WEsS0MKtJyOFnuglGl1ZBxR1uFvbU
+ VXhewCNoviXxkkPk/DanIgYB1nUtkPC+BHkJJYCyf9Kfl33s/bai34aaxkGXqpKv+CInARg3
+ fCikcHzYYWKaXS6HABEBAAHCwXwEGAEIACYCGwwWIQSH6ZrVEpascJjzbVq59+x3yCm/lgUC
+ Z8H0qQUJDIjuxgAKCRC59+x3yCm/loAdD/wJCOhPp9711J18B9c4f+eNAk5vrC9Cj3RyOusH
+ Hebb9HtSFm155Zz3xiizw70MSyOVikjbTocFAJo5VhkyuN0QJIP678SWzriwym+EG0B5P97h
+ FSLBlRsTi4KD8f1Ll3OT03lD3o/5Qt37zFgD4mCD6OxAShPxhI3gkVHBuA0GxF01MadJEjMu
+ jWgZoj75rCLG9sC6L4r28GEGqUFlTKjseYehLw0s3iR53LxS7HfJVHcFBX3rUcKFJBhuO6Ha
+ /GggRvTbn3PXxR5UIgiBMjUlqxzYH4fe7pYR7z1m4nQcaFWW+JhY/BYHJyMGLfnqTn1FsIwP
+ dbhEjYbFnJE9Vzvf+RJcRQVyLDn/TfWbETf0bLGHeF2GUPvNXYEu7oKddvnUvJK5U/BuwQXy
+ TRFbae4Ie96QMcPBL9ZLX8M2K4XUydZBeHw+9lP1J6NJrQiX7MzexpkKNy4ukDzPrRE/ruui
+ yWOKeCw9bCZX4a/uFw77TZMEq3upjeq21oi6NMTwvvWWMYuEKNi0340yZRrBdcDhbXkl9x/o
+ skB2IbnvSB8iikbPng1ihCTXpA2yxioUQ96Akb+WEGopPWzlxTTK+T03G2ljOtspjZXKuywV
+ Wu/eHyqHMyTu8UVcMRR44ki8wam0LMs+fH4dRxw5ck69AkV+JsYQVfI7tdOu7+r465LUfg==
+In-Reply-To: <20260129213215.1405459-2-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=697be524 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=0cF1dDw_mijGlTfD0moA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: d36h3kiQaxwOSnqFl-2wfbNwVlwHqD2r
-X-Proofpoint-ORIG-GUID: d36h3kiQaxwOSnqFl-2wfbNwVlwHqD2r
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE2NyBTYWx0ZWRfX7RrawalqWfjh
- QHbJEX2eXpIBhliAou1165fuJGo5km9Qb8+btRELmom+pvi54SqB0QP3+mR302jBuDmA3WWPc3Y
- bUx3YN7io4S2LjKekrCIvns3XN/z3FXNpun0a1jKW0uzHIoW5FxozIGhOSEkvQ5r8Bj3+9yZ5cF
- 46XXcgEgVq2rVU7kLwX4vacAwrIFOd/zHofVztg70kw2H2ryb3Yjk7qe6kP/XB6QeRZykn/np00
- KZiHTB7guhCiU6kGi+u3GxcT0u7qTMqJ+L5pW3ti7nV4caXc+7/4c5bjFHhoQIzrgEN8YuOhMTZ
- sqaMJhvK6Cx5phNJonhexzibI49aoEaKjh/66F0cgPT7ZvgzlDb2mO/tbWQmt5dzmDZW1uh9+3y
- 3WT/4UWdHdSXMgLOeK4WDjW0KdvUVriJoyaVgILz7Rqbp5BCIb7w+e7KNG+G4zs7sboj10dE3Z1
- UfGcxVr29q3NV6MwpBA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
- impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601290167
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=209.85.221.68;
+ envelope-from=i.maximets.ovn@gmail.com; helo=mail-wr1-f68.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,83 +140,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 1/27/2026 8:15 AM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->
-> Call Logical Processor (CLP) Architecture is used for managing PCI functions on
-> s390x. Define and include the structures and routines needed to interact with
-> PCI devices during IPL.
->
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+On 1/29/26 10:32 PM, Vladimir Sementsov-Ogievskiy wrote:
+> In for-loop in net_init_af_xdp, we do nc->queue_index = i,
+> where is is int64_t for 0 to queues-1, and nc->queue_index is
+> unsigned int.
+> 
+> Also in parse_socket_fds, g_strv_length() returns guint which
+> is equivalent to unsigned int.
+> 
+> Let's simply use unsigned int type for queues, and update
+> the check appropriately.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   pc-bios/s390-ccw/Makefile |  2 +-
->   pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/clp.h    | 24 ++++++++++
->   3 files changed, 121 insertions(+), 1 deletion(-)
->   create mode 100644 pc-bios/s390-ccw/clp.c
->   create mode 100644 pc-bios/s390-ccw/clp.h
->
-> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-> index 259cff09db..9c29548f84 100644
-> --- a/pc-bios/s390-ccw/Makefile
-> +++ b/pc-bios/s390-ccw/Makefile
-> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
->   
->   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
->   	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
-> -	  virtio-ccw.o
-> +	  virtio-ccw.o clp.o
->   
->   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
->   
-> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
-> new file mode 100644
-> index 0000000000..2a14bb9b73
-> --- /dev/null
-> +++ b/pc-bios/s390-ccw/clp.c
-> @@ -0,0 +1,96 @@
-> +/*
-> + * Call Logical Processor (CLP) architecture
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+>  net/af-xdp.c | 17 +++++++++--------
+>  1 file changed, 9 insertions(+), 8 deletions(-)
+> 
+> diff --git a/net/af-xdp.c b/net/af-xdp.c
+> index 14f302ea21..bb7a7d8e33 100644
+> --- a/net/af-xdp.c
+> +++ b/net/af-xdp.c
+> @@ -442,14 +442,14 @@ static NetClientInfo net_af_xdp_info = {
+>  };
+>  
+>  static int *parse_socket_fds(const char *sock_fds_str,
+> -                             int64_t n_expected, Error **errp)
+> +                             unsigned n_expected, Error **errp)
+>  {
+>      gchar **substrings = g_strsplit(sock_fds_str, ":", -1);
+> -    int64_t i, n_sock_fds = g_strv_length(substrings);
+> +    unsigned i, n_sock_fds = g_strv_length(substrings);
+>      int *sock_fds = NULL;
+>  
+>      if (n_sock_fds != n_expected) {
+> -        error_setg(errp, "expected %"PRIi64" socket fds, got %"PRIi64,
+> +        error_setg(errp, "expected %u socket fds, got %u",
+>                     n_expected, n_sock_fds);
+>          goto exit;
+>      }
+> @@ -484,7 +484,7 @@ int net_init_af_xdp(const Netdev *netdev,
+>      unsigned int ifindex;
+>      uint32_t prog_id = 0;
+>      g_autofree int *sock_fds = NULL;
+> -    int64_t i, queues;
+> +    unsigned i, queues;
+>      Error *err = NULL;
+>      AFXDPState *s;
+>      bool inhibit;
+> @@ -496,13 +496,14 @@ int net_init_af_xdp(const Netdev *netdev,
+>          return -1;
+>      }
+>  
+> -    queues = opts->has_queues ? opts->queues : 1;
+> -    if (queues < 1) {
+> +    if (opts->has_queues && (opts->queues < 0 || opts->queues > UINT_MAX)) {
+
+Not a full review, but this changes the logic.  Zero is not a valid number
+of queues.
+
+>          error_setg(errp, "invalid number of queues (%" PRIi64 ") for '%s'",
+> -                   queues, opts->ifname);
+> +                   opts->queues, opts->ifname);
+>          return -1;
+>      }
+>  
+> +    queues = opts->has_queues ? opts->queues : 1;
 > +
-> +#include "clp.h"
-> +#include <stdio.h>
-> +#include <string.h>
-> +
-> +int clp_pci(void *data)
-> +{
-> +    struct { uint8_t _[2048]; } *req = data;
+>      inhibit = opts->has_inhibit && opts->inhibit;
+>      if (inhibit && !opts->sock_fds && !opts->map_path) {
+>          error_setg(errp, "'inhibit=on' requires 'sock-fds' or 'map-path'");
+> @@ -537,7 +538,7 @@ int net_init_af_xdp(const Netdev *netdev,
+>  
+>      for (i = 0; i < queues; i++) {
+>          nc = qemu_new_net_client(&net_af_xdp_info, peer, "af-xdp", name);
+> -        qemu_set_info_str(nc, "af-xdp%"PRIi64" to %s", i, opts->ifname);
+> +        qemu_set_info_str(nc, "af-xdp%u to %s", i, opts->ifname);
+>          nc->queue_index = i;
+>  
+>          if (!nc0) {
 
-The architecture specifies that size of the request + response block 
-size can be maximum of 8192 bytes. If I understand correctly I think 
-QEMU (similar to kernel) uses CLP_BLK_SIZE when calculating the 
-CLP_FH_LIST_NR_ENTRIES, so it assumes that the request + response block 
-is 4096. So we can return more than 2048 bytes here and overflow.
-
-I think we should use at least CLP_BLK_SIZE here instead of 2048 or set 
-this to the maximum possible value of 8192.
-
-Thanks
-
-Farhan
-
-> +    int cc = 3;
-> +
-> +    asm volatile (
-> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "+d" (cc), "+m" (*req)
-> +        : [req] "a" (req)
-> +        : "cc");
-> +    return cc;
-> +}
-> +
->
 
