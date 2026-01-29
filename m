@@ -4,78 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F579D73E84
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B62D73E84
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlXKE-0000xa-88; Thu, 29 Jan 2026 14:05:06 -0500
+	id 1vlXNm-0002qR-DT; Thu, 29 Jan 2026 14:08:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3WK97aQQKCvcqjhqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--rkir.bounces.google.com>)
- id 1vlXKC-0000wS-N8
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:05:04 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3WK97aQQKCvcqjhqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--rkir.bounces.google.com>)
- id 1vlXK9-0001vj-FO
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:05:04 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-2a7d7b87977so11721385ad.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 11:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1769713497; x=1770318297; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jZN+xAue/0WQh7ROD9dIfdA7rBuA6+EwxwBSz2DMGUo=;
- b=185dI89VrIohhRAhvXwgbcDJALPOCGJEzAhBsgFBsh0WnnB8XtPKJzuUJ58qlw0iy4
- QL2VsCv4tmlfn+ayejriHiB7nd1ERcwr6AFuQJl3y5jwW3bQiwCiuKa0mJcV0fGyFp5C
- HmIWLeZ2BCq/J9PIGo44FP0/9I5JS1jHQVBYSiE4s7tHJgK8ePGfegVcvnet6VSPGNjZ
- HI4hBz/yMfDk6xrLiHySaUXm8SDhjjXZCvAQ6YjwFdSUHtnSP9gFs1+OT/7rDo8X0C+e
- Keq3PONWIjx9cxJn3SifCFzFIm34xM4tyiMgBzw0QdZji0TVbkn18hNzKE47Xtp2u6VS
- hpUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769713497; x=1770318297;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jZN+xAue/0WQh7ROD9dIfdA7rBuA6+EwxwBSz2DMGUo=;
- b=Mh75I1dKeKLaMZmjrf+dRHyWyV75CIDpQAjpueaYe6psSKRcCq4ngciqIJSZIPcJpH
- 261jiAKzcsLLtM5wmP+9hmn6K6Q03JjUrum9vGUwGOWWCk3M9VwkysaqvfaFU6EV0epi
- LOkzToHWIkH16wVe065rv5Jq80FxOeHd7wUyQYRax1WjjtH7eXPNw/pIe0uZgmt+RIPS
- BnyYQ/LdCGDYTR+o7mj47oU/CJ+uAZHzBrpNmZDuPEqFuheDUFU3jL27ebeO/sKje6XK
- 9oLj/bO6dvFUYca6dx60hk8G2o5a9wpinfY+5xIu2odSD1F+U5dFvEzTWMIHYFXWfAUk
- F21w==
-X-Gm-Message-State: AOJu0YxcNyqcNgq/T20oF5J80TnEryfmUHcRpbbNDJI6zVivt3MY9rHe
- oKYL1v+eO4X6UjfV96cPEz2Nrs3imce4PwOYdfH/6Fp6QXvHCKP4sjt54u8qXX5cnh77n275lXx
- 7jQenafnZhQoL7iIBdnkr8lsCD4Cu7qM9ReZ1DDcd1TPdR/dKKizmwuHgNxOkagcQ6fEiz/qsgu
- z3AxY3I6CQJy9brN/ACElwdbcZ
-X-Received: from pllh8.prod.google.com ([2002:a17:902:7488:b0:29f:25b4:4dc4])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:3b8f:b0:2a5:8d30:58f7
- with SMTP id d9443c01a7336-2a8d7edc348mr3417685ad.17.1769713496818; Thu, 29
- Jan 2026 11:04:56 -0800 (PST)
-Date: Thu, 29 Jan 2026 19:04:44 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.53.0.rc1.225.gd81095ad13-goog
-Message-ID: <20260129190444.225306-1-rkir@google.com>
-Subject: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-From: Roman Kiryanov <rkir@google.com>
-To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru, whollins@google.com, jansene@google.com, 
- jpcottin@google.com, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3WK97aQQKCvcqjhqfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--rkir.bounces.google.com;
- helo=mail-pl1-x64a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vlXNl-0002pN-8N
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:08:45 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vlXNj-00037q-4n
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:08:45 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B9144596A29;
+ Thu, 29 Jan 2026 20:08:38 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id FQ-2Z4fDhbUk; Thu, 29 Jan 2026 20:08:36 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A7E2E596A0B; Thu, 29 Jan 2026 20:08:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A5CDA5969F2;
+ Thu, 29 Jan 2026 20:08:36 +0100 (CET)
+Date: Thu, 29 Jan 2026 20:08:36 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/4] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
+In-Reply-To: <CAFEAcA9htbxy0fHZAvdX6Rneina-r_a1ajN3w3FHUL=hykcyug@mail.gmail.com>
+Message-ID: <69ca374e-960f-89a7-0f74-b42977a51d3e@eik.bme.hu>
+References: <cover.1769703287.git.balaton@eik.bme.hu>
+ <b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu>
+ <CAFEAcA9+sKLXmzXz98rfnEqVBE4WwVcFsMqiXSx6KfK1=PDfKA@mail.gmail.com>
+ <31362eca-9cd5-8b6b-a3a1-4ddb8dc3e762@eik.bme.hu>
+ <CAFEAcA9htbxy0fHZAvdX6Rneina-r_a1ajN3w3FHUL=hykcyug@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,41 +74,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch fixes the C++ compilation error:
+On Thu, 29 Jan 2026, Peter Maydell wrote:
+> On Thu, 29 Jan 2026 at 17:20, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>> On Thu, 29 Jan 2026, Peter Maydell wrote:
+>>> On Thu, 29 Jan 2026 at 16:21, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>> This is a migration compatibility break, because the
+>>> memory_region_init_rom() function registers the MR
+>>> for migration via vmstate_register_ram(), which picks
+>>> an ID string for the memory that includes the path
+>>> of the device, whereas vmstate_register_ram_global()
+>>> picks an ID string for the memory that does not include
+>>> the path of any device. It is this difference that is the
+>>> reason why they're still using the _nomigrate functions.
+>>
+>> I thought it might be the case but wasn't sure. How was this handled in
+>> all other machines where they were converted to not use _nomigrate? Only
+>> some Sun machines still seem to use this and this may be a good
+>> opportunity to bring them inline with all other machines.
+>
+> If I remember correctly, we converted all the machines where
+> we were happy at the time to have a compat break. The remainder
+> are not only Sun machines -- you can see in your patch 4 that xtensa
+> and vga are also affected.
 
-ISO C++ forbids forward references to 'enum' types
+Well, almost all of the usages are because of the Sun machines and those 
+could be easily converted accepting one time migration break. The VGA one 
+seems to be because of isa cards which may not have been QOM'ified so 
+could not be converted before but maybe could be now but I haven't checked 
+and I have no idea about xtensa but if only those few are left that's much 
+better. There's one more _nomigrate in hw/m68k/next-cube.c which seems to 
+be some shared memory region (not sure why it can't be migrated) and the 
+one in backends/hostmem-ram.c which may be the only real place that needs 
+this. But those could be taken care of later, converting the Sun machines 
+would only leave 2 or 3 usages.
 
-Signed-off-by: Will Hollins <whollins@google.com>
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- include/ui/kbd-state.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+>>> I think it's reasonable to accept a compat break for the purposes
+>>> of cleaning up the codebase, because these are used on sparc machine
+>>> types and we don't version those, but the commit message needs to
+>>> note that this is a compat break.
+>>
+>> If we accept that then the other memory_region_init_ram_nomigrate usages
+>> in Sun machines could also be converted. If Mark is not open to that I'm
+>> inclined to convert these two rom_nomigrate usages to
+>> memory_region_init_ram_flags_nomigrate + memory_region_set_readonly
+>> instead
+>
+> My preference would be to convert all these Sun devices. I think
+> we're a bit more clear these days that migration compat matters
+> for versioned machine types but can be (cleanly) broken for
+> non-versioned machine types: back then it was a bit less of a
+> well-defined rule.
 
-diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
-index 1f37b932eb..3522ebe51b 100644
---- a/include/ui/kbd-state.h
-+++ b/include/ui/kbd-state.h
-@@ -9,9 +9,7 @@
- 
- #include "qapi/qapi-types-ui.h"
- 
--typedef enum QKbdModifier QKbdModifier;
--
--enum QKbdModifier {
-+typedef enum QKbdModifier {
-     QKBD_MOD_NONE = 0,
- 
-     QKBD_MOD_SHIFT,
-@@ -23,7 +21,7 @@ enum QKbdModifier {
-     QKBD_MOD_CAPSLOCK,
- 
-     QKBD_MOD__MAX
--};
-+} QKbdModifier;
- 
- typedef struct QKbdState QKbdState;
- 
--- 
-2.53.0.rc1.225.gd81095ad13-goog
+I agree but wait for the maintainer's opinion (and maybe some more review 
+on other patches) before doing a v2. (Mark may have some reason like old 
+savevm files he may use for testing and does not want to redo them or 
+similar to want to keep this but if that's the only reason for using this 
+old stuff it might be time to refresh those testing images.)
 
+Regards,
+BALATON Zoltan
 
