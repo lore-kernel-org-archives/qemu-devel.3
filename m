@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93701D73E8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C44D73E8C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZcr-0001W3-FB; Thu, 29 Jan 2026 16:32:29 -0500
+	id 1vlZcs-0001Wm-CM; Thu, 29 Jan 2026 16:32:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZco-0001U9-Tp
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:26 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vlZcr-0001W4-Ch
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:29 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZcm-00018o-Ir
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:26 -0500
+ id 1vlZcn-000193-Qs
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:29 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 2AC8680825;
- Fri, 30 Jan 2026 00:32:23 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 843CB8082A;
+ Fri, 30 Jan 2026 00:32:24 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:b74::1:d])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id IWrbZO5AAOs0-3ZXUz4Kh; Fri, 30 Jan 2026 00:32:22 +0300
+ ESMTPSA id IWrbZO5AAOs0-Tay6iODv; Fri, 30 Jan 2026 00:32:24 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769722342;
- bh=zkwUUASolEhVxvg1YgpDo8GiYqPwUnrSrAAlmje9B6M=;
+ s=default; t=1769722344;
+ bh=BDiEM5hFQxkhlp+sUNQkEBGuisXIqaX1d5OB08sKy8A=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Ao6f1w+c7YKzH8QUUARhwPy6eO1f7LJ6hpejuAkixwebJcsY1giR5aaEevTrBNUVE
- 7MyD0ANH+CPbdNKTbqHgl/pMoiocwyOI/+UR7cguEp4CiBE1yaKZ3EAcMpUgEp9dTX
- 9XcqPi7OIkBp79wg5mywWgwRB7hOvByF2hfnK8Bk=
+ b=DJg5ySPzjMdoyYWx5HQ3MfGS4sV3nu3O/+mFMBOQJYDEMNGeVGM/PPtv79wclw9Qk
+ tErakkMlLojAsUkJM7zayfddzxywKQOpYqeCZjPrS/UZ6TY6BmckW4yvsMkeMkoJOR
+ dT42GieYzopPGUQQfmUKbddBhx71tQArZ6lx6EV4=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,22 +44,23 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v2 05/12] net/tap: net_init_tap(): common fail label
-Date: Fri, 30 Jan 2026 00:32:07 +0300
-Message-ID: <20260129213215.1405459-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 07/12] net/tap: net_init_tap_one(): drop model parameter
+Date: Fri, 30 Jan 2026 00:32:09 +0300
+Message-ID: <20260129213215.1405459-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
 References: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,208 +75,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add common failure label. This:
-
-- simplifies failure paths in the function
-- get rid of unusual free_fail: in the middle of the function
-- simplify further refactoring
+It could be simply derived from tap parameter. And this change
+simplifies further refactoring.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 84 ++++++++++++++++++++++++-------------------------------
- 1 file changed, 37 insertions(+), 47 deletions(-)
+ net/tap.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 331a779585..2eb8a2caeb 100644
+index 2c5f8e73fe..db3fe380a4 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -820,10 +820,12 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                  NetClientState *peer, Error **errp)
+@@ -704,12 +704,13 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+ #define MAX_TAP_QUEUES 1024
+ 
+ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+-                             const char *model, const char *name,
++                             const char *name,
+                              const char *ifname, const char *script,
+                              const char *downscript, int vhostfd,
+                              int vnet_hdr, int fd, Error **errp)
  {
-     const NetdevTapOptions *tap;
--    int fd, vnet_hdr = 0, i = 0, queues;
-+    int fd = -1, vnet_hdr = 0, i = 0, queues;
-     /* for the no-fd, no-helper case */
-     char ifname[128];
--    int ret = 0;
-+    char **fds = NULL, **vhost_fds = NULL;
-+    int nfds = 0, nvhosts = 0;
-+
- 
-     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
-     tap = &netdev->u.tap;
-@@ -867,31 +869,24 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     if (tap->fd) {
-         fd = monitor_fd_param(monitor_cur(), tap->fd, errp);
-         if (fd == -1) {
--            return -1;
-+            goto fail;
+-    TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
++    TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
++                                  name, fd, vnet_hdr);
+     bool sndbuf_required = tap->has_sndbuf;
+     int sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+@@ -883,7 +884,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             goto fail;
          }
  
-         if (!qemu_set_blocking(fd, false, errp)) {
--            close(fd);
--            return -1;
-+            goto fail;
-         }
- 
-         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-         if (vnet_hdr < 0) {
--            close(fd);
--            return -1;
-+            goto fail;
-         }
- 
-         if (!net_init_tap_one(tap, peer, "tap", name, NULL,
+-        if (!net_init_tap_one(tap, peer, "tap", name, NULL,
++        if (!net_init_tap_one(tap, peer, name, NULL,
                                NULL, NULL,
-                               tap->vhostfd, vnet_hdr, fd, errp)) {
--            close(fd);
--            return -1;
-+            goto fail;
-         }
-     } else if (tap->fds) {
--        char **fds;
--        char **vhost_fds;
--        int nfds = 0, nvhosts = 0;
--
-         fds = g_new0(char *, MAX_TAP_QUEUES);
-         vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
- 
-@@ -901,77 +896,58 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             if (nfds != nvhosts) {
-                 error_setg(errp, "The number of fds passed does not match "
-                            "the number of vhostfds passed");
--                ret = -1;
--                goto free_fail;
-+                goto fail;
-             }
-         }
- 
-         for (i = 0; i < nfds; i++) {
-             fd = monitor_fd_param(monitor_cur(), fds[i], errp);
-             if (fd == -1) {
--                ret = -1;
--                goto free_fail;
-+                goto fail;
+                               vhostfd, vnet_hdr, fd, errp)) {
+             goto fail;
+@@ -934,7 +935,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+                 goto fail;
              }
  
-             if (!qemu_set_blocking(fd, false, errp)) {
--                ret = -1;
--                goto free_fail;
-+                goto fail;
-             }
- 
-             if (i == 0) {
-                 vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-                 if (vnet_hdr < 0) {
--                    ret = -1;
--                    goto free_fail;
-+                    goto fail;
-                 }
-             } else if (vnet_hdr != tap_probe_vnet_hdr(fd, NULL)) {
-                 error_setg(errp,
-                            "vnet_hdr not consistent across given tap fds");
--                ret = -1;
--                goto free_fail;
-+                goto fail;
-             }
- 
-             if (!net_init_tap_one(tap, peer, "tap", name, ifname,
+-            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
++            if (!net_init_tap_one(tap, peer, name, ifname,
                                    NULL, NULL,
-                                   tap->vhostfds ? vhost_fds[i] : NULL,
+                                   vhostfd,
                                    vnet_hdr, fd, errp)) {
--                ret = -1;
--                goto free_fail;
-+                goto fail;
-             }
-         }
--
--free_fail:
--        for (i = 0; i < nvhosts; i++) {
--            g_free(vhost_fds[i]);
--        }
--        for (i = 0; i < nfds; i++) {
--            g_free(fds[i]);
--        }
--        g_free(fds);
--        g_free(vhost_fds);
--        return ret;
-     } else if (tap->helper) {
-         fd = net_bridge_run_helper(tap->helper,
-                                    tap->br ?: DEFAULT_BRIDGE_INTERFACE,
-                                    errp);
-         if (fd == -1) {
--            return -1;
-+            goto fail;
+@@ -957,7 +958,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             goto fail;
          }
  
-         if (!qemu_set_blocking(fd, false, errp)) {
--            return -1;
-+            goto fail;
-         }
-         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-         if (vnet_hdr < 0) {
--            close(fd);
--            return -1;
-+            goto fail;
-         }
- 
-         if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
-                               NULL, NULL, tap->vhostfd,
+-        if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
++        if (!net_init_tap_one(tap, peer, name, ifname,
+                               NULL, NULL, vhostfd,
                                vnet_hdr, fd, errp)) {
--            close(fd);
--            return -1;
-+            goto fail;
-         }
-     } else {
-         g_autofree char *script =
-@@ -989,14 +965,13 @@ free_fail:
-             fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? NULL : script,
-                               ifname, sizeof ifname, queues > 1, errp);
-             if (fd == -1) {
--                return -1;
-+                goto fail;
-             }
- 
-             if (queues > 1 && i == 0 && !tap->ifname) {
-                 if (tap_fd_get_ifname(fd, ifname)) {
-                     error_setg(errp, "Fail to get ifname");
--                    close(fd);
--                    return -1;
-+                    goto fail;
+             goto fail;
+@@ -988,7 +989,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
                  }
              }
  
-@@ -1004,13 +979,28 @@ free_fail:
+-            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
++            if (!net_init_tap_one(tap, peer, name, ifname,
                                    i >= 1 ? NULL : script,
                                    i >= 1 ? NULL : downscript,
-                                   tap->vhostfd, vnet_hdr, fd, errp)) {
--                close(fd);
--                return -1;
-+                goto fail;
-             }
-         }
-     }
- 
-     return 0;
-+
-+fail:
-+    close(fd);
-+    if (vhost_fds) {
-+        for (i = 0; i < nvhosts; i++) {
-+            g_free(vhost_fds[i]);
-+        }
-+        g_free(vhost_fds);
-+    }
-+    if (fds) {
-+        for (i = 0; i < nfds; i++) {
-+            g_free(fds[i]);
-+        }
-+        g_free(fds);
-+    }
-+    return -1;
- }
- 
- int tap_enable(NetClientState *nc)
+                                   vhostfd, vnet_hdr, fd, errp)) {
 -- 
 2.52.0
 
