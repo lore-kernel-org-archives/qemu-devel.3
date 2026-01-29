@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB34D6B086
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16861D6B086
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUav-0000x0-0M; Thu, 29 Jan 2026 11:10:09 -0500
+	id 1vlUb4-0001bH-5w; Thu, 29 Jan 2026 11:10:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaV-000096-S8
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:44 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vlUap-0000bK-MS
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:05 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaU-0006dA-4n
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:43 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-435a11957f6so972533f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:41 -0800 (PST)
+ id 1vlUan-0006oT-A4
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:03 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47ee07570deso9935305e9.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:10:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702980; x=1770307780; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702999; x=1770307799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=g7u4vFyrJCbAlZ8RKPYksrp2vL/fqFoBrZQZKiBf15A=;
- b=veu4X71E374WXEvR1FyrvPyjKNZUT45/dMAZGGqic7TakcPdIOMZobzDr2Sr3HW79f
- 5aeGCy4yvZYwX9g01OOdBTCr26EYzyNBd9/EJ0zZyd6N1/DX15euUIInPbuzcXYD8AxB
- 8VbgmTcE0KTOlXUYTlVGkKICat5+EwkiPxVM4WdH4avlUHvQQW0VrUnGJrcoLLl+6hTa
- 4lTuV9n3nKUeVAmm8kyQD1nbfxjcW+4xzo69cQkHMfYN9nKwarg7NC5dLlj0M+ZBzOU0
- 474L+uQWFEnKBEU25auH8c2XkDFI1HhJWkqbPyvYHUbzyZ3UaqvC2s9MF09Zq+r6gHtA
- A7nA==
+ :reply-to; bh=veysRNauk8VXncuyC7/h3gsWbA6jttORlD+vMEjZXSs=;
+ b=idRjtUezipt7uuQuAxMtSYPBybyU1PX3cM6idE8mwmDZBMWYNf53lgHa702uIaWWMg
+ C7zJMFMm3toQBnaG1tq0HhjgEynvpY9CUI/8j9SoEus+YAEOtg1up/pndew+AqUQcTiC
+ eFqZOMCDZTETpz+IqGbJHFkBnAAv3/4Sg6nISh03QpNKMKv+oEwzsMOhNJTOUWDrR+lH
+ eupuGOwfvdRLFoDVxflXmldA32QO/UUGL6DAWjPQd6T+sA/Lo5pcKMkjPZh/4v+T9rVG
+ 43XL4V8mnqfwb6WGA4ovy5CDgMK3oZMEmkXbrWXS2GfY39rYIDErcQ4A24Y9IdYoUxyz
+ e8ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702980; x=1770307780;
+ d=1e100.net; s=20230601; t=1769702999; x=1770307799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=g7u4vFyrJCbAlZ8RKPYksrp2vL/fqFoBrZQZKiBf15A=;
- b=ShivfiklzsNoxFyqh/OOgimAGmcAO7gi3g72eXlnDVQAMOit088o+IAH0mInJrtAjp
- zynqzeOhzGc1LgYnsn5TfaxgAFCIiXlv6kZgpFgvam8ND0tk1MjShrGC/JL7gfvHMHff
- rEzAxcF7xlA5cq90Hs2LNCuJOw5ki3EEqjhY4Ck0r2A9kkD+6/VRXUGX1RGQNvJlLfHr
- +AnuLKa/3lXDWFQbzv5VKV5BQaPcHQ7NuySKTSkKZG1quB/at7EIMUUf09XUMA8V14zR
- 1hUfuaW3AJYXdNBrxjynq3ha9cG7thxNz1P5Kl1Up2TCuO/uoSfrJYp6Pt1S2BrIE35F
- MlZw==
-X-Gm-Message-State: AOJu0YwfFN7Tgarg/H6vMY3X4SLvH5NjRn5na9UlZRto+SspvPToueLJ
- ORDbfT+LCRC1dwdjEo6bBv5/Z7GFhZP9z4WC1CUII+9Yd1sWVOO8K+JVQ7F7hV5oOWNp4PdogLo
- 3sJgbQmE=
-X-Gm-Gg: AZuq6aK1jPJWr+ChFNL8QRxDmnHsCCwOY5ODV5Bp3tR9Gri0bSeShL5v9AaARvF8h9i
- hCjyR414GPJj6s2VKOzYdq9bt4UsSmhPCc0Q8FrUPq6UnpTvc7CNqUsYjDYZl6Mf7PwL2gyOfYo
- eCkDtdyoXs4vzb1QHt9YKGAhKRzC3uqQ+XaIndmOZgqy/I/R8AKiEFvamjxNKsohh+E7yK4q3W1
- jVOdHhiY6UNgyID4dAaL1AnHlm6XajVXUy+FrH9WybhFqNH61gGzq1XEvBpUISKpGqHFCjUZZI/
- t/GPdBeePH7uupHBSZeWBVxnyYX406A7BpLYizMpjrSwBNnkLJhk/sF0qCduybGoar3c8Jxaq/0
- pm1VHX0uAM73U7G0ET5iT1d/ybwWxPEq9/j2WB3HNNQNO50aCH/L/yI9z4f+cxrRd2izRPlv4Ib
- MZX7Kv3mZpqc1F/7szxLtZIjo1xEhBaw==
-X-Received: by 2002:a5d:5e01:0:b0:435:95c9:687a with SMTP id
- ffacd0b85a97d-435f3a6b95fmr178387f8f.4.1769702980220; 
- Thu, 29 Jan 2026 08:09:40 -0800 (PST)
+ bh=veysRNauk8VXncuyC7/h3gsWbA6jttORlD+vMEjZXSs=;
+ b=KudNK5FodWy6fIUnoaZImFlJBxo6sBf+jexmkSC9fEEUyp25FvDepgFbR8J0jangy7
+ NXJaDv3F7vYZx7ZwzoDg5wUyrV9oTSzGOweH1IKR7Y73rgMCpzJ+FuwxbOutvmDgz8Fm
+ uDay+1jqL8nWchgmuLLJY8l/VCIN4Oj04Sr5fd5foCvZu394gXRLSzf4xJ4EbbqGOnJh
+ 5X1acuCM8LcXIN1B+otnXywpOxc+Tws2Bxx0dTekwElEiICqO+XaQItnkJcUSs64bAMU
+ bu0FU8dCEOgQiYPIYzOvmMGxuaEbSITc3E4iM7UW8odCpeIjCGx5x0u84qB0bzn2piqn
+ KeUw==
+X-Gm-Message-State: AOJu0YyiUEcUf+LRHECNoWcYA+iUNksNOGHmpODAzw8xkY8DXJMJJS5+
+ zGV6YdLW81th/XtS6x08YR/dRkpp+ucO+T5wX0984ye1PHTo7UDDwtSV7Jln640MkoDbyP7tJ/D
+ 254oamsA=
+X-Gm-Gg: AZuq6aIZQ/nVv6XmsVL1ogNkiaqp6hupRtY3me2zo9LKfHrO/FYhXGKJFqyx0jSx6/t
+ NBbnkMqQcv3iVqXTuMasr7PSdQGV9+244nBoSsCYJqyx5jRc2EZ2zTV33phoH1JrBnYKUA0+upD
+ jx4EF92lvOemNndzov6JxTH332qPzu/E4NYbEgqrz1uOFXGR+7jprRAvBK8bTWcXp8eNp0rueyx
+ CDc6Rg14x51M8ak3Gscsp+eK6s24ozS6jjAsaw9/3NvqDaB9XSzLEaC5cWH/jXMljmGIfAlcmwq
+ qxLoLs0txYP/SFIY26qlb8GI1/NFEB6R/PmH62XyqJ7WmyCE9pmHIt5BFgIj2EGNIpxeJEXxDT1
+ WV35Fwe2hUdm44gdXi3FrGHQW+HzxhOHJ13ROQxhe8ILl6uOHzk5hmqD5mRBdsePHePu0THw0+Y
+ KAuiacziGsz8a1B1eXEN39hbhEQGEQqA==
+X-Received: by 2002:a05:600c:4e90:b0:477:582e:7a81 with SMTP id
+ 5b1f17b1804b1-48069c2a907mr103774265e9.4.1769702999460; 
+ Thu, 29 Jan 2026 08:09:59 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.39
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:39 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:58 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/43] hw/arm/smmuv3-accel: Implement get_msi_direct_gpa
- callback
-Date: Thu, 29 Jan 2026 16:08:51 +0000
-Message-ID: <20260129160917.1415092-18-peter.maydell@linaro.org>
+Subject: [PULL 34/43] hw/pci: Add helper to insert PCIe extended capability at
+ a fixed offset
+Date: Thu, 29 Jan 2026 16:09:08 +0000
+Message-ID: <20260129160917.1415092-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,87 +102,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Accelerated SMMUv3 instances rely on the physical SMMUv3 for nested
-translation (guest Stage-1, host Stage-2). In this mode, the guest Stage-1
-tables are programmed directly into hardware, and QEMU must not attempt to
-walk them for translation, as doing so is not reliably safe. For vfio-pci
-endpoints behind such a vSMMU, the only translation QEMU needs to perform
-is for the MSI doorbell used during KVM MSI setup.
+Add pcie_insert_capability(), a helper to insert a PCIe extended
+capability into an existing extended capability list at a caller
+specified offset.
 
-Implement the callback so that kvm_arch_fixup_msi_route() can retrieve the
-MSI doorbell GPA directly, instead of attempting a software walk of the
-guest translation tables.
+Unlike pcie_add_capability(), which always appends a capability to the
+end of the list, this helper preserves the existing list ordering while
+allowing insertion at an arbitrary offset.
 
-Also introduce an SMMUv3 device property to carry the MSI doorbell GPA.
-This property will be set by the virt machine in a subsequent patch.
+The helper only validates that the insertion does not overwrite an
+existing PCIe extended capability header, since corrupting a header
+would break the extended capability linked list. Validation of overlaps
+with other configuration space registers or capability-specific
+register blocks is left to the caller.
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-18-skolothumtho@nvidia.com
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-id: 20260126104342.253965-35-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-accel.c   | 10 ++++++++++
- hw/arm/smmuv3.c         |  2 ++
- include/hw/arm/smmuv3.h |  1 +
- 3 files changed, 13 insertions(+)
+ hw/pci/pcie.c         | 69 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/pci/pcie.h |  2 ++
+ 2 files changed, 71 insertions(+)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index c125974d12..c6ee123cdf 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -393,6 +393,15 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-     }
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index b302de6419..aa9024e532 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1050,6 +1050,75 @@ static void pcie_ext_cap_set_next(PCIDevice *dev, uint16_t pos, uint16_t next)
+     pci_set_long(dev->config + pos, header);
  }
  
-+static uint64_t smmuv3_accel_get_msi_gpa(PCIBus *bus, void *opaque, int devfn)
++/*
++ * Insert a PCIe extended capability at a given offset.
++ *
++ * This helper only validates that the insertion does not overwrite an
++ * existing PCIe extended capability header, as corrupting a header would
++ * break the extended capability linked list.
++ *
++ * The caller must ensure that (offset, size) does not overlap with other
++ * registers or capability-specific register blocks. Overlaps with
++ * capability-specific registers are not checked and are considered a
++ * user-controlled override.
++ *
++ * Note: Best effort helper. The PCIe spec does not require extended
++ * capabilities to be ordered, but most devices use a forward-linked list.
++ * Devices that do not consistently use a forward-linked list may cause
++ * insertion to fail.
++ */
++bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
++                            uint16_t offset, uint16_t size)
 +{
-+    SMMUState *bs = opaque;
-+    SMMUv3State *s = ARM_SMMUV3(bs);
++    uint16_t pos = PCI_CONFIG_SPACE_SIZE, prev = 0;
++    uint32_t header;
 +
-+    g_assert(s->msi_gpa);
-+    return s->msi_gpa;
++    assert(pci_is_express(dev));
++
++    if (!QEMU_IS_ALIGNED(offset, PCI_EXT_CAP_ALIGN) ||
++        size < 8 ||
++        offset < PCI_CONFIG_SPACE_SIZE ||
++        offset >= PCIE_CONFIG_SPACE_SIZE ||
++        offset + size > PCIE_CONFIG_SPACE_SIZE) {
++        return false;
++    }
++
++    header = pci_get_long(dev->config + pos);
++    if (!header) {
++        /* No extended capability present, insertion must be at the ECAP head */
++        if (offset != pos) {
++            return false;
++        }
++        pci_set_long(dev->config + pos, PCI_EXT_CAP(cap_id, cap_ver, 0));
++        goto out;
++    }
++
++    while (header && pos && offset >= pos) {
++        uint16_t next = PCI_EXT_CAP_NEXT(header);
++
++        /* Reject insertion inside an existing ECAP header (4 bytes) */
++        if (offset < pos + PCI_EXT_CAP_ALIGN) {
++            return false;
++        }
++
++        prev = pos;
++        pos = next;
++        header = pos ? pci_get_long(dev->config + pos) : 0;
++    }
++
++    pci_set_long(dev->config + offset, PCI_EXT_CAP(cap_id, cap_ver, pos));
++    if (prev) {
++        pcie_ext_cap_set_next(dev, prev, offset);
++    }
++
++out:
++    /* Make capability read-only by default */
++    memset(dev->wmask + offset, 0, size);
++    memset(dev->w1cmask + offset, 0, size);
++    /* Check capability by default */
++    memset(dev->cmask + offset, 0xFF, size);
++    return true;
 +}
-+
  /*
-  * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
-  * endpoints can sit downstream. Accelerated SMMUv3 requires a vfio-pci
-@@ -497,6 +506,7 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
-     .get_viommu_flags = smmuv3_accel_get_viommu_flags,
-     .set_iommu_device = smmuv3_accel_set_iommu_device,
-     .unset_iommu_device = smmuv3_accel_unset_iommu_device,
-+    .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
- };
+  * Caller must supply valid (offset, size) such that the range wouldn't
+  * overlap with other capability or other registers.
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index c880ae1e04..d68bfa6257 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -133,6 +133,8 @@ uint16_t pcie_find_capability(PCIDevice *dev, uint16_t cap_id);
+ void pcie_add_capability(PCIDevice *dev,
+                          uint16_t cap_id, uint8_t cap_ver,
+                          uint16_t offset, uint16_t size);
++bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
++                            uint16_t offset, uint16_t size);
+ void pcie_sync_bridge_lnk(PCIDevice *dev);
  
- /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 7a32afd800..6ed9914b1e 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1998,6 +1998,8 @@ static const Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    /* GPA of MSI doorbell, for SMMUv3 accel use. */
-+    DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
- };
- 
- static void smmuv3_instance_init(Object *obj)
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index e54ece2d38..5616a8a2be 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -67,6 +67,7 @@ struct SMMUv3State {
-     /* SMMU has HW accelerator support for nested S1 + s2 */
-     bool accel;
-     struct SMMUv3AccelState *s_accel;
-+    uint64_t msi_gpa;
- };
- 
- typedef enum {
+ void pcie_acs_init(PCIDevice *dev, uint16_t offset);
 -- 
 2.43.0
 
