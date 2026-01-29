@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3014D73E8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F347BD73E8D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZRa-0005Q1-Nb; Thu, 29 Jan 2026 16:20:50 -0500
+	id 1vlZRZ-0005PU-8x; Thu, 29 Jan 2026 16:20:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vlZRZ-0005Pa-LG
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:20:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vlZRX-0005O8-Kg
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:20:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vlZRY-00063Q-3E
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:20:49 -0500
+ id 1vlZRV-00062F-Sj
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:20:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769721647;
+ s=mimecast20190719; t=1769721644;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TkILmiJQdkYLAtvznkxkJeL7qB7WKa4fKOqLfIQTCdU=;
- b=BmL+VWGhJVYCCTkh+T6TQiJ88DGLaKXCZL0JhBJzj4rk4J3PM5Q+FfljzpSJWAEu0i3bUN
- 3WpR52fMnRKYJyAZjyPUgCg1KwRP/MHjVOy13uxOh6TUNylglM0pMo1+mwfI7EJruiOhyA
- DvT1nCUDXDn3wbas2ZWibgzoJOO/XE8=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0S1bhHb76vC6vTkMRlo/g6UJHiYJGMNEDB0Yx9MtVdQ=;
+ b=aov1ocvl3bvYGLQU1PWB/a6To+UEqKbLkhcAVwHLPomKlIiaN84JKmc009aJInrpyGh/Sy
+ 9VN7Qolv+esrpq9w5r1bcFV8hls/AK4L0LP1YyhOKPuOq+kyYLixDa1dR4n69Hjmv74NtY
+ pXN2GesLQebFkuNNYy7Rpg+WPmnJz+4=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-vCvVtDD1NuiKK4IecyL_nA-1; Thu,
- 29 Jan 2026 16:20:43 -0500
-X-MC-Unique: vCvVtDD1NuiKK4IecyL_nA-1
-X-Mimecast-MFC-AGG-ID: vCvVtDD1NuiKK4IecyL_nA_1769721642
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-KpDX4pr6PUm6qzOaPcfa0w-1; Thu,
+ 29 Jan 2026 16:20:41 -0500
+X-MC-Unique: KpDX4pr6PUm6qzOaPcfa0w-1
+X-Mimecast-MFC-AGG-ID: KpDX4pr6PUm6qzOaPcfa0w_1769721639
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97F3718005A7; Thu, 29 Jan 2026 21:20:41 +0000 (UTC)
+ id D156518003FD; Thu, 29 Jan 2026 21:20:38 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.153])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A7EA3000218; Thu, 29 Jan 2026 21:20:39 +0000 (UTC)
+ id 5D07C3000218; Thu, 29 Jan 2026 21:20:37 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
@@ -58,24 +57,23 @@ Cc: qemu-block@nongnu.org,
  Hannes Reinecke <hare@suse.de>, pkrempa@redhat.com,
  Eduardo Habkost <eduardo@habkost.net>, Alberto Faria <afaria@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v3 1/5] scsi: generalize scsi_SG_IO_FROM_DEV() to scsi_SG_IO()
-Date: Thu, 29 Jan 2026 16:20:31 -0500
-Message-ID: <20260129212035.219676-2-stefanha@redhat.com>
-In-Reply-To: <20260129212035.219676-1-stefanha@redhat.com>
-References: <20260129212035.219676-1-stefanha@redhat.com>
+Subject: [PATCH v3 0/5] scsi: persistent reservation live migration
+Date: Thu, 29 Jan 2026 16:20:30 -0500
+Message-ID: <20260129212035.219676-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,103 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a direction argument so that scsi_SG_IO() can be used for
-SG_DXFER_FROM_DEV and SG_DXFER_TO_DEV transfers.
+v3:
+- Use warn_report_err() instead of suppressing errors [Daniel Berrangé]
+- Wrap lines exceeding 80 characters
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- include/hw/scsi/scsi.h |  4 ++--
- hw/scsi/scsi-disk.c    |  4 ++--
- hw/scsi/scsi-generic.c | 18 ++++++++++--------
- 3 files changed, 14 insertions(+), 12 deletions(-)
+v2:
+- Add user documentation [Paolo]
+- Send PREEMPT on the source if migration fails. This rollback operation
+  ensures the source regains access to the LUN even if migration fails after
+  the destination issues its own PREEMPT.
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index d26f1127bb..670c477e38 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -236,8 +236,8 @@ void scsi_device_report_change(SCSIDevice *dev, SCSISense sense);
- void scsi_device_unit_attention_reported(SCSIDevice *dev);
- void scsi_generic_read_device_inquiry(SCSIDevice *dev);
- int scsi_device_get_sense(SCSIDevice *dev, uint8_t *buf, int len, bool fixed);
--int scsi_SG_IO_FROM_DEV(BlockBackend *blk, uint8_t *cmd, uint8_t cmd_size,
--                        uint8_t *buf, uint8_t buf_size, uint32_t timeout);
-+int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd, uint8_t cmd_size,
-+               uint8_t *buf, uint8_t buf_size, uint32_t timeout);
- SCSIDevice *scsi_device_find(SCSIBus *bus, int channel, int target, int lun);
- SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
- 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 0f896c27f4..97ae535a27 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -2748,8 +2748,8 @@ static int get_device_type(SCSIDiskState *s)
-     cmd[0] = INQUIRY;
-     cmd[4] = sizeof(buf);
- 
--    ret = scsi_SG_IO_FROM_DEV(s->qdev.conf.blk, cmd, sizeof(cmd),
--                              buf, sizeof(buf), s->qdev.io_timeout);
-+    ret = scsi_SG_IO(s->qdev.conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                     buf, sizeof(buf), s->qdev.io_timeout);
-     if (ret < 0) {
-         return -1;
-     }
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 6acaf8831a..61511cf945 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -525,8 +525,9 @@ static int read_naa_id(const uint8_t *p, uint64_t *p_wwn)
-     return -EINVAL;
- }
- 
--int scsi_SG_IO_FROM_DEV(BlockBackend *blk, uint8_t *cmd, uint8_t cmd_size,
--                        uint8_t *buf, uint8_t buf_size, uint32_t timeout)
-+int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
-+               uint8_t cmd_size, uint8_t *buf, uint8_t buf_size,
-+               uint32_t timeout)
- {
-     sg_io_hdr_t io_header;
-     uint8_t sensebuf[8];
-@@ -534,7 +535,7 @@ int scsi_SG_IO_FROM_DEV(BlockBackend *blk, uint8_t *cmd, uint8_t cmd_size,
- 
-     memset(&io_header, 0, sizeof(io_header));
-     io_header.interface_id = 'S';
--    io_header.dxfer_direction = SG_DXFER_FROM_DEV;
-+    io_header.dxfer_direction = direction;
-     io_header.dxfer_len = buf_size;
-     io_header.dxferp = buf;
-     io_header.cmdp = cmd;
-@@ -574,8 +575,8 @@ static void scsi_generic_set_vpd_bl_emulation(SCSIDevice *s)
-     cmd[2] = 0x00;
-     cmd[4] = sizeof(buf);
- 
--    ret = scsi_SG_IO_FROM_DEV(s->conf.blk, cmd, sizeof(cmd),
--                              buf, sizeof(buf), s->io_timeout);
-+    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                     buf, sizeof(buf), s->io_timeout);
-     if (ret < 0) {
-         /*
-          * Do not assume anything if we can't retrieve the
-@@ -610,8 +611,8 @@ static void scsi_generic_read_device_identification(SCSIDevice *s)
-     cmd[2] = 0x83;
-     cmd[4] = sizeof(buf);
- 
--    ret = scsi_SG_IO_FROM_DEV(s->conf.blk, cmd, sizeof(cmd),
--                              buf, sizeof(buf), s->io_timeout);
-+    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                     buf, sizeof(buf), s->io_timeout);
-     if (ret < 0) {
-         return;
-     }
-@@ -662,7 +663,8 @@ static int get_stream_blocksize(BlockBackend *blk)
-     cmd[0] = MODE_SENSE;
-     cmd[4] = sizeof(buf);
- 
--    ret = scsi_SG_IO_FROM_DEV(blk, cmd, sizeof(cmd), buf, sizeof(buf), 6);
-+    ret = scsi_SG_IO(blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                     buf, sizeof(buf), 6);
-     if (ret < 0) {
-         return -1;
-     }
+Live migration does not work for SCSI Persistent Reservations acquired on
+scsi-block devices. This patch series migrates the reservation key and
+reservation type so that the destination QEMU can take over the persistent
+reservation with the PREEMPT service action upon live migration.
+
+The approach involves snooping PERSISTENT RESERVE OUT replies and tracking the
+scsi-block device's current reservation key and reservation type. In most cases
+this involves no additional SCSI commands. This approach isn't perfect: if
+another machine modifies the reservation on the physical LUN, then QEMU's state
+becomes stale. Persistent reservations are inherently cooperative, so this is
+acceptable as long as real applications don't run into problems.
+
+I am also working on a test suite called pr-tests that runs sg_persist(8)
+commands across multiple machines in order to exercise various scenarios:
+https://gitlab.com/stefanha/pr-tests
+
+Stefan Hajnoczi (5):
+  scsi: generalize scsi_SG_IO_FROM_DEV() to scsi_SG_IO()
+  scsi: add error reporting to scsi_SG_IO()
+  scsi: track SCSI reservation state for live migration
+  scsi: save/load SCSI reservation state
+  docs: add SCSI migrate-pr documentation
+
+ docs/system/device-emulation.rst        |   1 +
+ docs/system/devices/scsi/index.rst      |  10 +
+ docs/system/devices/scsi/migrate-pr.rst |  54 +++++
+ include/hw/scsi/scsi.h                  |  15 +-
+ include/scsi/constants.h                |  21 ++
+ hw/core/machine.c                       |   4 +-
+ hw/scsi/scsi-bus.c                      |   3 +
+ hw/scsi/scsi-disk.c                     |  90 +++++++-
+ hw/scsi/scsi-generic.c                  | 291 +++++++++++++++++++++++-
+ hw/scsi/trace-events                    |   2 +
+ 10 files changed, 476 insertions(+), 15 deletions(-)
+ create mode 100644 docs/system/devices/scsi/index.rst
+ create mode 100644 docs/system/devices/scsi/migrate-pr.rst
+
 -- 
 2.52.0
 
