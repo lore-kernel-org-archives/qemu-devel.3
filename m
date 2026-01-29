@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D01D73E80
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC45D73E81
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyV-0004tf-MF; Thu, 29 Jan 2026 12:38:35 -0500
+	id 1vlVyO-0004Xj-2y; Thu, 29 Jan 2026 12:38:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyU-0004sl-Ao
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:34 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vlVyM-0004Ub-0Y
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:26 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyS-0000gR-NW
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:34 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-81e9d0cd082so1020373b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:32 -0800 (PST)
+ id 1vlVyK-0000e6-4T
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:25 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c626bd75628so431512a12.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708311; x=1770313111; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769708302; x=1770313102; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OEbiu3ITH77U1iqg2asi27fIJJqEuaVmbpyfWlkTbSg=;
- b=NE5K/Kgfsrxg3o9DmgJ6MRWZtIEzSZGJ7MdtI7whf9zidu2WMnW8PGQd//s5K8GZGA
- De4wOM6QrWSWFtTKDN606ncBBKf+nrE6AfcX/ivTKPyPe/hc71oLarc73g7sGpQWsj67
- 04/1xj1SNZSI+W98L1+q6dEuRep0URvATIM8sEUB03VlS5y0vK86VyJIyh3gXWP+dKwB
- nEK6Yo4MP0vkKRbc+vwdmm/nxEKdEg978TSDjhdSZ7R/39RRrDVrgSZqxNX6biCSsnh+
- JvhSpzAjano5i1EKarXGvfzmGU+vJHiZ/uFshhrF+xN1+F3rlIcVURATAFMqs1RJrKhy
- qYSg==
+ bh=lkr6OhmguPw2oxi7sD8m2/kHKNvzaRIhXU0XNXX+ZdA=;
+ b=iIy4ty7RPnDZImnVusUFpWL8UWcAXgkpjTX2vJ9DNo6lL2Stxyqy59RQJEH7vBArZL
+ 3oTXk6wV7sXrrWZqcu/GnNAoPz6ng4RYu+ksj7zKVbj+NSudbgrhFmlklzDRdUfDK7sP
+ A185lOVofpyLBn1Pv1F3hD38Ixn8o3i4IzYC8yR96HIZD8way3sqhsf2A4DWwSzjAGTR
+ iwH2teK0ASkzmtLgmiRXdsCUmBQaevYf9SLc3UI9Hl0X2Pns7/KAA2D938Ctor4f0GpB
+ 7pPZcVvbdhlikwuHZgggcwnG5poDGrNSG4Lst4JSIqSL7xh++5Eon35zpSViENufsZRs
+ NFOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708311; x=1770313111;
+ d=1e100.net; s=20230601; t=1769708302; x=1770313102;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OEbiu3ITH77U1iqg2asi27fIJJqEuaVmbpyfWlkTbSg=;
- b=kpHWWGXMzKtUo0Lq2yYyjzipBkoBZTVaHrX31Rvz7CEDI/eKEtMPkpZx4YHOWtwFvE
- e3u0g3XH3cOHy2lXrz34YtkQM4s85UrtpYYFxIEBTHyoDuqj29trLnQSWJHyiHk/m7VC
- ACktsoZftnCqnKtfTzosEz3aQbRS1tgzDfHBGnvse8cvlxoIimi4x1I9BrPHLZVlMoqH
- DEaimOxwdDXbe9lFE8fHh54MjP9RWapz2fzeVaOwt7SMi91iCnxVYElJKneZghRiAhLS
- AIVbUXbEcKuPBneWmYciTJKUWtoBSpMu8bNhEL3jG73mjODsgDumuIx32vd5VolLmtgx
- cuZQ==
-X-Gm-Message-State: AOJu0YwxTE4wqioNK+iZIs9McnbFAICwOQLmMvB2ASCFtePnWtPGhrjE
- +bd+xwMcioNObkjKfWkfvGqpkm+bLBYhYG7zMjLnLSkSej6t1VuTdqW3K+NY/tpLuAInfFNSSsN
- 5y1Ab
-X-Gm-Gg: AZuq6aKXIhAM3/ffIhf6DYwqet+n1NOC5F3VPAg24Zj1s3y51tJ1UPG82amKP+taxIK
- HgV61gxL+BBakoti32JRl7qAnqK+u9LApkKL/61ATU0o5P4cg8XDXcoRvjEQfnjSQyOdymLJq4o
- Btra2yXRYlDRFHUQVip9iY8kbZuOO2h8vH0/hfVcKHY0WvUr0lW4TYXfbYnKASGU6jYQXjIVrGZ
- DTyrx6IaLM+uVXMTQAB+PLiU2c869tsfIWaPbmTIrVwPv2OxZbp+0cDgkd/BRYE4HExBTmYRIzd
- XcZ1qTbmMMdkgwd+D2pZ6VJlZ8+P6ccSoxYyikB4AUqt4VWZgnapTLMduCpJT5T/uiI8fbnb3P3
- 6iPW04icHxd4DzTtBDG3yNHTq6ZAtq9QrHHFNt6SKzm7mWVUUkh/boWNevOC6OFe9urdo6+KjlF
- qdkBgp44Yb6p/UnOGa2ftUW3bGKkRRV8Dsd1awaXptnTQ8ZXNpUl+lnZcIANQGLuT+
-X-Received: by 2002:a05:6a00:17a0:b0:823:1580:7914 with SMTP id
- d2e1a72fcca58-823692d2efdmr7982192b3a.50.1769708311053; 
- Thu, 29 Jan 2026 09:38:31 -0800 (PST)
+ bh=lkr6OhmguPw2oxi7sD8m2/kHKNvzaRIhXU0XNXX+ZdA=;
+ b=lRMww2zqAX+kSDuUb5TXIypN4hnzqv0CIS3WQFnjD5z5g2lPAIGjXRPdVF4uXypOew
+ ZPuEaMykzKeJWlNTxejsflIq5Gi/bkrI00Qkw8jFGTqluOmknCUqXcUtkyfi++OhrzSY
+ kK81h7YW9WLf39sSBGQRLYic5LclWfXpgAI31B4jNnmU+M5eWBUDiWEhSptS+QqAVDvr
+ 0U9Ap3EfDJs8XPqWHShpZBofBHzzSFE1hFKU4oPBR+RnLVnOvSzi971vtRucbrW06ri3
+ aHtJ2ZaVJmrSdOD6cyZG4MBdWLFVECY0SAAQIjJlfD8EFtaErplM5NB/42c2uXBbTFeb
+ e3PQ==
+X-Gm-Message-State: AOJu0Yzz4NCaoX0M+/+c/gg/MrMBZLe9O2NHJc/6VeJN6M+sgwXhRc0W
+ pFC047gn1FXx99XwZvpD0Mc24IfKMxmd/Wal6DZazRayJXgOVu6tlMJ0ESBTJuCSkSROz2rg3B3
+ 2EQFu
+X-Gm-Gg: AZuq6aLKaQ6xfSsbs6IfCfXBaKF6A1HtGKGirpN3ISpPVSQZSUd9jmxXQ35ZZM6uC/8
+ fZlzNAmqu+88XmgFU+TD55C+K1M8Ss9YFE/1pBxUwZGyJeR/6m/XGLLz9lUjMeokC0uAFaC+9pL
+ MOpr1OR+1IyjxW+E1LWiUaIvHS+OoeFJ8uZCU/1pnHybSvD+SFH3lfNiNYyZjD62XehVab9gFsz
+ 6PosVzKj6EyegdWXEYfJqk8k0bxW7sISl8UyFVW22/ceiSypjUGcsJPIwU+ctqUlrJlzBiXMfs8
+ OJv1zQT25E2pdkDrSxBKyMRMIYH6r4xTbhEmesp+TWFX78NZLVQBTbtOU+YRG7lsxElthObsNrA
+ mWrChHrtc+hy2hlGgP3EgaljXU+sddrE/s+uuT9GEEDsuef1qphVR2Fm7s0QRl8F/glADe4wrKq
+ geVSUYuMhqcZF8kwF3lHCw57nRqqQxiuT3JPfZZdqR1TZUMm5jlZImfMt8bxNE9jxz
+X-Received: by 2002:a17:90b:5587:b0:34c:7182:cf9d with SMTP id
+ 98e67ed59e1d1-3543b3d64f2mr202462a91.25.1769708302268; 
+ Thu, 29 Jan 2026 09:38:22 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.30
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:30 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:21 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 17/21] meson: enable cpp (optionally) for plugins
-Date: Thu, 29 Jan 2026 09:38:03 -0800
-Message-ID: <20260129173811.138036-18-pierrick.bouvier@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 06/21] linux-user: move user/syscall-trace.h to
+ linux-user/syscall.c
+Date: Thu, 29 Jan 2026 09:37:52 -0800
+Message-ID: <20260129173811.138036-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,28 +103,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260124182921.531562-9-pierrick.bouvier@linaro.org
+For now, only linux-user supports plugin syscall API, so restrict the
+scope of these functions to linux-user/syscall.c
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260129013134.3956938-7-pierrick.bouvier@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/user/syscall-trace.h  | 43 -----------------------------------
+ bsd-user/freebsd/os-syscall.c |  1 -
+ linux-user/syscall.c          | 20 +++++++++++++++-
+ 3 files changed, 19 insertions(+), 45 deletions(-)
+ delete mode 100644 include/user/syscall-trace.h
 
-diff --git a/meson.build b/meson.build
-index ad8550d9e97..149655058a9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -77,7 +77,8 @@ python = import('python').find_installation()
+diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
+deleted file mode 100644
+index 9bd7ca19c84..00000000000
+--- a/include/user/syscall-trace.h
++++ /dev/null
+@@ -1,43 +0,0 @@
+-/*
+- * Common System Call Tracing Wrappers for *-user
+- *
+- * Copyright (c) 2019 Linaro
+- * Written by Alex Bennée <alex.bennee@linaro.org>
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#ifndef SYSCALL_TRACE_H
+-#define SYSCALL_TRACE_H
+-
+-#include "user/abitypes.h"
+-#include "gdbstub/user.h"
+-#include "qemu/plugin.h"
+-#include "trace/trace-root.h"
+-
+-/*
+- * These helpers just provide a common place for the various
+- * subsystems that want to track syscalls to put their hooks in. We
+- * could potentially unify the -strace code here as well.
+- */
+-
+-static inline void record_syscall_start(CPUState *cpu, int num,
+-                                        abi_long arg1, abi_long arg2,
+-                                        abi_long arg3, abi_long arg4,
+-                                        abi_long arg5, abi_long arg6,
+-                                        abi_long arg7, abi_long arg8)
+-{
+-    qemu_plugin_vcpu_syscall(cpu, num,
+-                             arg1, arg2, arg3, arg4,
+-                             arg5, arg6, arg7, arg8);
+-    gdb_syscall_entry(cpu, num);
+-}
+-
+-static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
+-{
+-    qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
+-    gdb_syscall_return(cpu, num);
+-}
+-
+-
+-#endif /* SYSCALL_TRACE_H */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index ca2f6fdb66e..4c1191b8f47 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -31,7 +31,6 @@
  
- cc = meson.get_compiler('c')
- all_languages = ['c']
--if host_os == 'windows' and add_languages('cpp', required: false, native: false)
-+enable_cpp = host_os == 'windows' or get_option('plugins')
-+if enable_cpp and add_languages('cpp', required: false, native: false)
-   all_languages += ['cpp']
-   cxx = meson.get_compiler('cpp')
- endif
+ #include "qemu.h"
+ #include "signal-common.h"
+-#include "user/syscall-trace.h"
+ 
+ /* BSD independent syscall shims */
+ #include "bsd-file.h"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3944004568f..b4b551ad148 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -132,6 +132,7 @@
+ #include "uname.h"
+ 
+ #include "qemu.h"
++#include "gdbstub/user.h"
+ #include "user-internals.h"
+ #include "strace.h"
+ #include "signal-common.h"
+@@ -142,7 +143,6 @@
+ #include "user/signal.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/selfmap.h"
+-#include "user/syscall-trace.h"
+ #include "special-errno.h"
+ #include "qapi/error.h"
+ #include "fd-trans.h"
+@@ -14334,6 +14334,24 @@ static bool sys_dispatch(CPUState *cpu, TaskState *ts)
+     return true;
+ }
+ 
++static void record_syscall_start(CPUState *cpu, int num,
++                                 abi_long arg1, abi_long arg2,
++                                 abi_long arg3, abi_long arg4,
++                                 abi_long arg5, abi_long arg6,
++                                 abi_long arg7, abi_long arg8)
++{
++    qemu_plugin_vcpu_syscall(cpu, num,
++                             arg1, arg2, arg3, arg4,
++                             arg5, arg6, arg7, arg8);
++    gdb_syscall_entry(cpu, num);
++}
++
++static void record_syscall_return(CPUState *cpu, int num, abi_long ret)
++{
++    qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
++    gdb_syscall_return(cpu, num);
++}
++
+ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+                     abi_long arg2, abi_long arg3, abi_long arg4,
+                     abi_long arg5, abi_long arg6, abi_long arg7,
 -- 
 2.47.3
 
