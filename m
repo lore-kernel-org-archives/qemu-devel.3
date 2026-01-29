@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1028BD358C8
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 06:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C545D358C8
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 06:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlLlb-0001kK-4k; Thu, 29 Jan 2026 01:44:35 -0500
+	id 1vlLmP-0002AH-5U; Thu, 29 Jan 2026 01:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vlLlW-0001iX-GF
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 01:44:31 -0500
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1vlLmI-000277-Ei
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 01:45:18 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vlLlS-0004Tv-Gk
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 01:44:30 -0500
+ id 1vlLmF-0004rD-IU
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 01:45:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769669067; x=1801205067;
+ t=1769669116; x=1801205116;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=Zw218QlyX/DvnGtbgW9DEhI1Pq+Vd9FeNDdDzy6cewo=;
- b=MTLay6yGQjq/a30WcBuqhEcqbmyVDbnSEUU82Fn1pFs4DgH/ULVAOyT3
- THMgR1EQE/H9J9qvJdP8obTgjejVlY7MRi511zcEt7ZQfekHZq5OAHR8i
- I5kgDXwQ0Gkj3GcS8rEJOZBDXfv+iuYg2UryAsRaNG4iirt7JX165G33s
- 6sAcnsnh5Tm2TCGRT1o83zq6VrN7kyJckYUPNfWIqCg5NBnD7NGnnC2fI
- eVd5l12DWpafmEuBER3TceDpZSDC9e2aUdJaHQMsCkK6CDcyvPPYh4jMk
- YBlwUQnETmgjouOTuHhOXKxB2PeYAL9jeoyo7S5zmQP7T/8tWkq/YAgc3 g==;
-X-CSE-ConnectionGUID: DSsacUuJTHiUuULwNvy6PA==
-X-CSE-MsgGUID: 9t1WDTf1RM2LD/LGgQGa6Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="70612844"
-X-IronPort-AV: E=Sophos;i="6.21,260,1763452800"; d="scan'208";a="70612844"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 22:44:23 -0800
-X-CSE-ConnectionGUID: 2a3FMw5ARk+b2ZjWhalgbA==
-X-CSE-MsgGUID: 2DIiHLTSRHavBE9vRDp/vA==
+ bh=yoFuMRKr5ffkW84PzaSHE6tvFOZtG39IKhN1J+wqUtE=;
+ b=Gr6TQO+MbCKF4vbiNKVfBWpP3oPLzh8F5vYJd6ffEGrEFoL1ngvtCDv3
+ EvmyBYjNptk0dqOmrjlkpud9GXv0mTnRF0eOuqpCUEw8R3FfPOUADvD9q
+ ZUx8o2V+52ASP2A0Lm70AptYr9l66EYgFA6fDgn8GGTKXa2Au7vL+WzQk
+ BhG5bveaN35ycYd6O2oSfHB5IOcuzrlgwpynDRFoijU9eXGvpGYvgGupS
+ nZF+4/b+2B4wvAa+cMyjxK89EevSHPbpqIRe0tS04rjO4LNvXsLFFpdbn
+ 0Ojx5TwAqXXA0Flpj3T9RIbcqixMZDaChrMva9aORHDt1BQuphTsENsS1 w==;
+X-CSE-ConnectionGUID: 1J7nNeB1RBqxED5qtjujEg==
+X-CSE-MsgGUID: E/mj/zpnTEi82y0YJfPZKQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="74520703"
+X-IronPort-AV: E=Sophos;i="6.21,260,1763452800"; d="scan'208";a="74520703"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2026 22:45:14 -0800
+X-CSE-ConnectionGUID: cz6HjiU0Q4i6gP/0AjDnMw==
+X-CSE-MsgGUID: Tllrp0TFT7akH/3/LOg84g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,260,1763452800"; d="scan'208";a="239738851"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 22:44:21 -0800
+X-IronPort-AV: E=Sophos;i="6.21,260,1763452800"; d="scan'208";a="213454960"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2026 22:45:14 -0800
 Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 28 Jan 2026 22:44:21 -0800
+ 15.2.2562.35; Wed, 28 Jan 2026 22:45:13 -0800
 Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
  ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Wed, 28 Jan 2026 22:44:21 -0800
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.52) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.2562.35 via Frontend Transport; Wed, 28 Jan 2026 22:45:13 -0800
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.20)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 28 Jan 2026 22:44:20 -0800
+ 15.2.2562.35; Wed, 28 Jan 2026 22:45:13 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E/2NS/+lVVJgGutKKhJyomwsMqekEQgo+Qq7rTKL0fGvN12D4rxyKwRWOwEVLf2+2zpwWZV0+Num1NV9DpYrFFbr9Hh0vT5nG3yhaf3PGsLa8xBXnuLwBFyVFk3+0tbNc6enJ84klx4pfGl1Up7ZybF61ao7rXgIxtYUEi5ILBJboEDS8o+7WoUhLzXpBj8P75awQvNx3OT4nQicXS2svvq47MgysHMJ74D8brcgv6QY6Q/H1Ad/9lsyIRzlzmhi6AbedCjuERwpbiYoSAVTfQSfZU5oUxIZazyi3JkQToNzHk7Z5ip2Ubpj4p+2McscaF3UgBKu/95+gH9i38FhzQ==
+ b=PIfsmrAP/zZ6ESXxsZvB+eUk/hrwX8Tt0m+Mg83qU5QcoPtl5ICxe9MHV2E+rfq2RWkZzN2fCEBW+4zemtbT8UfigfViSIfbAHAoKPJYPHvHSN9EP4JQbaDS6LHxdBqE+vopTlInnvNOXCIxN5o1+PA2nLINGbdcDzCsehVx+FTc5XG7oKHZuE1mFhUomueaYUR8biuDY1FbdBUTLLIe0gJHNCeksJX6JSVdHhP2WOgyV3cNYl7kBtBCnODSSffnogkWliW5kfrZrF1ZmdVcAmNd8XN1/LUifOVmMju3Y2saiOSJRdk62t9bx1tpoJV0we9uqZCfpUAf7ugnfucCyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wQnXIYTCM/6p0ZuP0xUvNyMf+/cXLazAksrn9zLsh6g=;
- b=OK6eTo3PYg/WMxm0jFmLU69tZalS1gTLyFt+Sq70+GtdHrkh0k5trpXyQlng1BSQO8EmiFXQSKt9foFgYYmPROw279IFPjPcxHYYRMQ4ipEpn4dC4EqcGi/9s84XAMeCfBrHMEP4g+Yi8pQDv4qEcMV315pIDECDDTTRRudBJlirkGsV75QO73Rz5BB2vXntk9fvULX4XiBPThsuCACAHXsyr0cfnCubD9cZntc4B77rTkc61T75yer0xBBpzvg7NQSjfCdtnxfo6pnLtN6X3Jhr2o5pV2h7GOcF0zoqHR0J/vpkuEgAgOfW7JpdcXZvK4ni+ETGNeLWQ0RvhYkRHg==
+ bh=S6jNSRG70YcyH2cKmcpBi7QY1rhBXsdbZYgmw8CWWk8=;
+ b=iHTO43mCMAG/RdHQuYrxqJ92C91YasR14UDFEqLaJV8gGcjyh1Y4OZp+EjkMpFpOwdA+4IJuKPpI6BEcD2t2muMBabGXR1qM4KWkirCbUAq0IOTI4O/y1Sysk0rDTqaXwKxKFFTcGTHUPtgZ9F/k09H+Mh+Zx9ZsfPsZCMYg71znSzqodGd15QXL/7WB4V3JvNS5VCtIMRcoFdf2yrHG4JD5XnxUhN7h5XM2Mk89FX9QsLbU0heKyfWo2i37LHFGR+7qeca3v8/sm0xiqwIIwyaOlfi1bwlow+FlEnbNTMgm3WhzsW48qQhrQAY5AbgOCLQfgNH//VVOyGVIb/4OKQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by DM3PPF027BB0053.namprd11.prod.outlook.com (2603:10b6:f:fc00::f05)
+ by MW4PR11MB5799.namprd11.prod.outlook.com (2603:10b6:303:181::17)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Thu, 29 Jan
- 2026 06:44:19 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.8; Thu, 29 Jan
+ 2026 06:45:10 +0000
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9564.006; Thu, 29 Jan 2026
- 06:44:18 +0000
+ 06:45:09 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -84,19 +84,19 @@ CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
  <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: RE: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Topic: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Index: AQHcjDCeQw49HQKsGE+uYIqUk8vykLVfT2SAgAW++RCAAfXNgIABdJJw
-Date: Thu, 29 Jan 2026 06:44:18 +0000
-Message-ID: <IA0PR11MB7185A50C661BB777686D16A4F89EA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v4 8/8] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Topic: [PATCH v4 8/8] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Index: AQHcjDCjL5JILwxhKUSESHcm3Ev6grVfTecAgAXcUACAAdOngIABg9Gg
+Date: Thu, 29 Jan 2026 06:45:09 +0000
+Message-ID: <IA0PR11MB718557F2C06B8F0F3ED9089CF89EA@IA0PR11MB7185.namprd11.prod.outlook.com>
 References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
- <20260123062042.568703-3-vivek.kasireddy@intel.com>
- <0d57e3df-3ae6-496f-b621-8d979e2ab3f8@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185FE7AA93FDB21AE6F8D14F890A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <2883c714-f03b-4381-920a-959a98380c23@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <2883c714-f03b-4381-920a-959a98380c23@rsg.ci.i.u-tokyo.ac.jp>
+ <20260123062042.568703-9-vivek.kasireddy@intel.com>
+ <ef2f5779-a23b-44dc-b467-0da00e6b1243@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB718584261475341CB7958A8FF890A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <0c2d8d6b-f93a-4548-ad3d-21253cce6fc4@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <0c2d8d6b-f93a-4548-ad3d-21253cce6fc4@rsg.ci.i.u-tokyo.ac.jp>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -104,89 +104,89 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|DM3PPF027BB0053:EE_
-x-ms-office365-filtering-correlation-id: e3283ded-5d3d-40c5-e763-08de5f01d3e3
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|MW4PR11MB5799:EE_
+x-ms-office365-filtering-correlation-id: 2e3912fa-75e8-4e23-99a1-08de5f01f24f
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?3FktO9zF7VYafcSOxM4UA9UjEd88p38M2y9fFzYZlPHhu8tqSumSozrEfz?=
- =?iso-8859-1?Q?bQ3HxiZDG7Ys/iENJWaMuhcYcr/3/M5kW1YNsXwCxRuffsCR44ICI6wcpZ?=
- =?iso-8859-1?Q?VYSlEnQZGq8Hk7dPj8tnk/YPb2KCqJLYvQ4/ggkhI8YANQ4M4UrfaCHQQn?=
- =?iso-8859-1?Q?F2P/He578MCac37REFmnj4W9R6Btstrtt88iR+o+nmFilsGh7O2IsWttgK?=
- =?iso-8859-1?Q?yiMJpUTpdbuF6AOL/pIccvAJTS/QefEnO9cmI2d059F3oh41Kvb+i+XXzm?=
- =?iso-8859-1?Q?sIQwl7KYemdMNp3BorAPdtQIXlvdvJRViSKjJ4qQAvLiaeKaVQY9U+T2/f?=
- =?iso-8859-1?Q?J2IJxq1KJ5Ndn4F4fDEAuTSmReMSJ91lytL7G9eIFSf2xVAOnEIb5NDH9O?=
- =?iso-8859-1?Q?RTbPt3j+86khk3MrJEKe6q44OotZAkV/1hO/pgeNqkyFwEhOsSWQrhsnh7?=
- =?iso-8859-1?Q?cdnrTCjgbAQuwp/rWEKc3TGdVexDu2O1q7LAZhOJ047HEevwiYzGY0J/JW?=
- =?iso-8859-1?Q?Z0OnqzdEV2O2qegEEAYeXlJojri0of+n4V7vq4XG6uSy3mt/txz1MsjGM+?=
- =?iso-8859-1?Q?Gm+LA0rJuHupPPrUL4agfGjvGP99UNEzaURNmhmySiudQ8wKOD0XuD0qDC?=
- =?iso-8859-1?Q?/frw39ZvFrjAcyUV9hqw2HKcXRhKwzo1U13MGC+Gdh14vJSxDdJ7T+Oeg2?=
- =?iso-8859-1?Q?z3iBSvLMqGYgu6lThXG4q+4H7yZ/KeYXfPsA4+e6U1Xs44qYvLm42BbLhq?=
- =?iso-8859-1?Q?v70ZIa2+ngRUu3evE86IyuP+mkMKEyj7Dt2GYCdtLJzZOXHvYyZbHFgubk?=
- =?iso-8859-1?Q?SV/q3Nt640rZ6+8kz+mWz6LZdUlUBp5x+mkyetNXrUXnvIMOsVytFWU8Db?=
- =?iso-8859-1?Q?6poMtJjnAxoc+vq2QdVIXOVTBKuKrM/VkJq2Lq8eJT39Fb5B+ijGXs7h1E?=
- =?iso-8859-1?Q?DdbMc13gmzIGDY/mxcZ41cbj1HMrAabMB2lFZpF8pvuE8SnckeenIx2luC?=
- =?iso-8859-1?Q?DWxX564/2/zJC7v99cXDT30tYNpzKCtNI3lia6fru1r05JKRhHm2bWtJUC?=
- =?iso-8859-1?Q?qlFsa/Akt4Iden3o4hnwE5/54FyCEPcKBBNrWJ0KpYcLjb3MKFrDgX7TDl?=
- =?iso-8859-1?Q?ck71vJuB06gUOpYnEoMcjhjVGQyg7FVnuGR71iZzYr4vu6lqCqT3XyFg56?=
- =?iso-8859-1?Q?gn8XxeiUBurRdhdavHwVNf66YW0KLnZmyHBaaDAtP27umHJiO43Iwg3Ofz?=
- =?iso-8859-1?Q?9NFG2deAg/CZxUrZMj+K9SrQ3hUj/TG37PKUUZ7LkwIhXW5V+4n6tyTzGT?=
- =?iso-8859-1?Q?E0uO0BtZK63j73r+vuxYauXWybhesO/4LQCGhxw2kQtRzKU2bc4HAdTmMw?=
- =?iso-8859-1?Q?4LMJl8+HSvJTE2FulAn/wX5AyzGDpH4tdHAu6rbSFfn7sAJV5G+XPXBXJy?=
- =?iso-8859-1?Q?orVuxwHoNSIAPD14PheXWbl+hICoW/Ye8kvDaSsGWWo3G5U34fGP6aclR8?=
- =?iso-8859-1?Q?7HU+zyyLOzzReFhMwLuL0tRjhvk+OFE5lh0e7BPBswX/vDiutnfX4kUMra?=
- =?iso-8859-1?Q?+haWHTMYtsUsr3i8o2vYEmTnwXU1Qj61lM0Bk93a182defBvjV38DV9j2p?=
- =?iso-8859-1?Q?IqHwVIQRCXY0UYxd/YPTzVSGhH/v/PXjZ3reL3RCPU3yJirY4xQncfmkXs?=
- =?iso-8859-1?Q?56/bRfycjPUr8jQ7n4Y=3D?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?KZYfEdkNnUPb0KbYQNB/1o1NAQOo/jM6jCyS1PS4Fl38AMqIWBzKuEvJRm?=
+ =?iso-8859-1?Q?7mXDf2+KtT6hQtEO9Zr0eLtl5AyPOadKDYx2pQDv8vI/GMgQbpToLigvku?=
+ =?iso-8859-1?Q?5CfxuXbrKFt2o4CAg3AmscjFExNOToWHSHEtlgyv+Oyjj7jFyibkMuFDM6?=
+ =?iso-8859-1?Q?qB1wxkIUhUIh23l8/VvNvj8b41drOMQG9WFt7lG60+wle6xNai6IrMycTo?=
+ =?iso-8859-1?Q?QFtk+2HgWA5iY4mhvzc4Sq4njZp+Gik2em6hfhU5jLC6NFmjXmI4L1qSBx?=
+ =?iso-8859-1?Q?6sc7/PSeB92JWzfcxIkGiB+MypaayinDPyMEo1ChdvNHeYh+bjqsFZp8Ub?=
+ =?iso-8859-1?Q?d/f5SamykccT06DFunYqBcyTOWZoh+/GpHBKqQFx4Fr+9wmeGyjI54saYb?=
+ =?iso-8859-1?Q?scuhiddAYRdxfzK1/fRdvMWkM1opjmw2DjtSpxLuMBztiw5m9ozbddwRnf?=
+ =?iso-8859-1?Q?Q6XBwa4GrKEXnTFDhPEnR6greu3o+rxFRDYPHgUyk7LvH/mwDUlNexYudt?=
+ =?iso-8859-1?Q?ghGouwumcUK2los36NzYELG2yTxktAKU1LOoVlDfrQfVymk3j0Pc5EI9tz?=
+ =?iso-8859-1?Q?GqddEd7p2/rqM8sf8Ffokb3ir8rhXsW4/cjMh5YEVPGXqpPe+CUF2GwQVI?=
+ =?iso-8859-1?Q?nXcoC7fVZ3PkmP7IYwWzwa94ZbfzWRWf0mtgvi0iv97K5Y94k0Tu51Q1TG?=
+ =?iso-8859-1?Q?fyx5K64MEBdU+cjMf+0+m82rq6lphNhUV4+glFH/rUq2yNcryEbPoIW+a4?=
+ =?iso-8859-1?Q?sGnO5XPlYBMqdX1X2sw7Ci79rkWtAIxF3GYmU5pf7v5InRu6YqxQzv4HjC?=
+ =?iso-8859-1?Q?UbamcdKGy48RPeQ+jc1BQotRABA/FfLZC185koy+aqxC1S/l7nKLjky8Ql?=
+ =?iso-8859-1?Q?ZzrpAri9PT3vAW4f2NPSTeslLWVi4p1OpG9kKb9nEStlssl7//3bQxu+qN?=
+ =?iso-8859-1?Q?XYM+1W/nZn4ByFbgm7RoEijUPi0yZ2ZCP7IaOq9Yb3ZdTeWGQ4/gdug3Wm?=
+ =?iso-8859-1?Q?YWUM1uBZRqUrHD75RmAlemxfiMQl+knIy+6NTbL3t6HLxdRmUtfDx9Ldtf?=
+ =?iso-8859-1?Q?BcdebTvENDSKujW1xyxOxgCsZ8KwvXA+S5Jq53vI/F9lRVctNA0mCBuVFN?=
+ =?iso-8859-1?Q?UcfircCXZov/O9egrA8q+5hl5Up5vJ73G6wX190wymWybXtJLKcPHFpBz6?=
+ =?iso-8859-1?Q?ofyUqaBId6Q0Ku70HR9xWHxu+RSzAqE0ASGNqyf7m+5O61z/vwHxstz5+1?=
+ =?iso-8859-1?Q?8I4SLqHPkrvhQwAwkKoGUEdSGEUpTuCGO48cDZtenNjQnoB+XcR2tGDB7Z?=
+ =?iso-8859-1?Q?7RWhoSnW82cbUNCidqnmaLDX2Ib1/594FNuKypPvhx/ousNan/Wtpfwub5?=
+ =?iso-8859-1?Q?Uasy7Qowq3UtyXIiQv9HP3D8RinhoUXfZYipCWyY1QEHhz70xquhtO+0vA?=
+ =?iso-8859-1?Q?Q2RAQV6HxKVmbSxqxjlq2cqYL7oG9n3uxqz3qEYY4nbxg2U+YjwUVpVNje?=
+ =?iso-8859-1?Q?/184YCyvEOS9Hef9NdWjC7V3a8TsHVxSjKfH+WfpyVrbFBdf1VFqyT4lcF?=
+ =?iso-8859-1?Q?w1N50+hxYsSQoon0v3V1xQur8/CzTOKVtp1RxeRd+IXOr6ChMko7eweKnu?=
+ =?iso-8859-1?Q?cbYoXI9j4zweDBTpko5od0N/UK2ZkTn6nJZyWNSOFK2C/cxZ+E25kzEsq1?=
+ =?iso-8859-1?Q?Caa5cZlYCKaf6xcWhjc=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hh93v+wSO26w6oizVTOo0jWxCnlA85sgz7H7wMNnvMnX4SPsqvt38EEjxE?=
- =?iso-8859-1?Q?kzLgPx/tND8CkJcJ0u4u5N+pU3pbaM2CVCx/Sc1fsy1ipyWUZfW2WReEUg?=
- =?iso-8859-1?Q?h5bsEP9Wb8+SacLayw86Xiq8YCzBK57aJC+cgM5f94hI1dJWfJllwMxl3U?=
- =?iso-8859-1?Q?M2Ti5U+9LrNsJHY2FyQNoyGnHNCb0l0Yu0HvK61y79dcIw5pWaxadsciiq?=
- =?iso-8859-1?Q?jpqaODkDAB/ehB+DVNnNS7dqmigtjfl7DX/jJLrgZJhdU0dbeEzDfaF3UG?=
- =?iso-8859-1?Q?LZ7vZaUzTnuDOgqGZvM7dbsMitX8FecmDEP+oOVFxIMEk34MCnLIUdd3BR?=
- =?iso-8859-1?Q?Y0ptpJ1YdZ9Rj1OsueKwjMr17P5VNzVZmoJ+gXuI9l0zy3abziiyyZfAYJ?=
- =?iso-8859-1?Q?B/kSBkoLI5PsQu+RAuHByWVNRGllUyAf4Tb78+g1m1plSVaK2Za9JKDKcp?=
- =?iso-8859-1?Q?iQxoDz5lz4UWNzbpr0si7DwSkbpNEulYIFcePvgE6rRD8cB55mjxWAl2iJ?=
- =?iso-8859-1?Q?RYn/7ftOXJT9n0ooG+Gr9rMtQQ9psizClhhVg10GteYRAs/PU/vasC513D?=
- =?iso-8859-1?Q?xQv5b6rhbUFCPUmFkF2E9rxrO1JFZCj2s6VjyOGbADYvYcAimStHsszqLp?=
- =?iso-8859-1?Q?zhq36LlRCUIfcJtyBxu7Fq6MVlp3XERPiwS1ggQOyLNCi1tzXLq8FhHOLH?=
- =?iso-8859-1?Q?cbHAaETZ16sh1PE96mWUcUkY+THvw3UbG5rcOUu4zBnAqzGs8R0FYtQo/D?=
- =?iso-8859-1?Q?vGEgVdyXHIcaAwXkIrmALad8YVmZa/4H8qWvu2QaJPGFlyxWGjW/dLX2/r?=
- =?iso-8859-1?Q?E9mk11rqXLKWT7uXYPdsNebMgOwKDlxcR5OLWEjFy3xl5aZRGvGLHt8vRb?=
- =?iso-8859-1?Q?joj+LnrfQCsvk/Xrr34looi0pvDIdu4oH35dcGZH2ShPtHLJl0m0I++zV1?=
- =?iso-8859-1?Q?m/Z/2cNK+sfET9bsg6jRqL9+yof2ZpSTBHib9ECutXd+7pLVszxD/Lkwx7?=
- =?iso-8859-1?Q?8AxUJQaoKcQhSNdYNWRFfueIdhGL5vfdLutqcJHG6Sy+65BAsAPnar5lCx?=
- =?iso-8859-1?Q?yD1GxzpS9Jh5YTIrv/dOevnSArigumXuL1TOWIFG30GbASi6/Ba0U7r1s8?=
- =?iso-8859-1?Q?vnNCi1ltCSTsNh5z4KOQvFX/fRneZNZv034tyQ8Ezo7ba6U2gk/NTNa/37?=
- =?iso-8859-1?Q?e9cTqcZO/iftL/Ug+tsEDFW945dDFoH+ZpFErfic5Vbg1KeDxK21JGGdwl?=
- =?iso-8859-1?Q?iUp5HzmE4VaGNo3BGAdWv5icog3eqiu+f5iTODkHXA68pGFINcuh/1O39y?=
- =?iso-8859-1?Q?9r+I6TyfSbTivs7O7MfGeOoe6e32Vsk8+JYJBOVOBPm/Lx8Cq82eJVZmms?=
- =?iso-8859-1?Q?y0KS3ZdPOzc4q79eW6rUUXp1lb5jiEtpxiDf9tuC6tsxOswtS6lRR463Gw?=
- =?iso-8859-1?Q?/Hgmoi6kuttG5RwHQWBr3GjWGDcByXfF9JD+SfrksKrJhAnGpO1nVTi18b?=
- =?iso-8859-1?Q?iGZW2HUrfcCxvebCvjW5XK9wxY8yC7a4TajGlvNhUUAbjZRDkI6nIWb3Gb?=
- =?iso-8859-1?Q?5prnjD5fzsYtlVXGDpD8KTzSoIXdh5hXKQ8OkL40gisBKrl6hjSO1LzTx/?=
- =?iso-8859-1?Q?KK9u3mLjpW3X6C44BOZa6ko6yWqtxOhmaFRpDHJ685/A5eYl9rzL+doFvb?=
- =?iso-8859-1?Q?gLpq4jQgqqyYxXvX+HB0G+uWL6DKpoJ4Rzz6vh4Xm+wA5her4dF4MP2MWx?=
- =?iso-8859-1?Q?8ztEJsnpkgD2PWvWyrey0YZB4HbtysX9VsElAdjlFekTkyUcmGlcecK/yj?=
- =?iso-8859-1?Q?MvZNwMbXYw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?bfkgLb6I7Zv71mVOkjkn2+b4kcaiduqmXr+MBINAtamQWXdaXCRrzxcyM5?=
+ =?iso-8859-1?Q?90r1p3vEYX1C4dtdw7EaW73O04u1gBUfVR4EyTEN4BJ7757qqSntbW9q27?=
+ =?iso-8859-1?Q?N8JhyrOR7Wp5a6UGsN7wJQElJKFSQK8iW2MSch/ugSQ4qFcBCaFupnm7sn?=
+ =?iso-8859-1?Q?AcIx4TxFHrpQoQRJdrusMTHPZQLMvceJ9ivSCoWzmS4nLYN5/VU0XL3Bm0?=
+ =?iso-8859-1?Q?lpzmQ9YH73v57c2G0D5WzeK8qBk3bSfWAz2qvaF4rbS8OIaqOW/toY4jIP?=
+ =?iso-8859-1?Q?uwtmsvM3VCi/iqMoPZgdh7/5ZDw+eOrztK8LTWnufJKZ8tKXMT5Z2FOYqm?=
+ =?iso-8859-1?Q?vIVSF8HWYQUhYDDlrdypwEfq6JWlnc9e4RQv35vRITnpATui2VCnupHk+C?=
+ =?iso-8859-1?Q?wCpaLcVluDNgwbpSZ+CHd1v3LEaWEeD6bL6BnGM6Rf5ZEwxsu2myOovhvs?=
+ =?iso-8859-1?Q?BwZ2iFyUUhvdlugRCtppCsJYN2YM5PIydTzWIx9FI9/reQ4gw7WvIT4wa0?=
+ =?iso-8859-1?Q?7Evl19mqC8g0Veskcdv6KXIfrvknPr/HDtYXMT7TVXT0BfP/d+Nyn5c4sP?=
+ =?iso-8859-1?Q?LZ0TvUNH/GPjzz/2QaUcyj3Fw0xXsBxta0HeNBGJDYlUzy1lpLvmLKTgcx?=
+ =?iso-8859-1?Q?SYJcZGIN+vu94wBiIgS9EJxW4hF1wukQvGBWfP7kNANwjDuCBD255LNrvq?=
+ =?iso-8859-1?Q?RRXdYT4u2AWYBNm0qMGnSSqdKy49iID89ETYgkhJP2U92rJRFuwX+4khaF?=
+ =?iso-8859-1?Q?ECPGWnEqsxe6nBpkBTuaw1nybG5Acp2q6rT7In4Kbdsc/dTctqkNVk4W7d?=
+ =?iso-8859-1?Q?yGZXf7I54ggl70YZLC4Lp4Mqa86rACy8om+ExbGm9BctSJmjq6NVz36M5s?=
+ =?iso-8859-1?Q?tLTYCb5sLUctisoGxql0y8KV0P373o0R68nrnAFzq9qa7qM6AZcfH4AehS?=
+ =?iso-8859-1?Q?vp6hw5xTz/bP5GZwaQhOoUeYF7ZtMGf+xWfJe8XhzYtkn4pfiCIthi2afh?=
+ =?iso-8859-1?Q?MH8L1d7RTfPBIMowVu1q2hncBoZmd53KpVt1VrY/udE2w+K8iEdkIW/q6c?=
+ =?iso-8859-1?Q?VSHLK7a4IeDzT0nk/YrDf/O7cLGnBtZOT0+bdh4Gqk7Scdsw7R0EdLw/AZ?=
+ =?iso-8859-1?Q?lNabk1jMoLXEpkOPZgyjhA/4QOZPOOaociKmFvqry/OazMTNDpwMHJF4Cb?=
+ =?iso-8859-1?Q?OwPqbjlCCy46iE8eh+dnjGgFnTit1VAV+bOUATxVHUuI9v8942EO4ClLOH?=
+ =?iso-8859-1?Q?8urRgDjhiocXVeDo4Et0MIolZs1/8lgOGs2A9mvlUVEjmV2hpDnw08b7cs?=
+ =?iso-8859-1?Q?0Vtd0ZDIDlN7PmpagMQZDVb0KOHTr/FNaBGzmUFfStp3YxYkNO/oFDnDbN?=
+ =?iso-8859-1?Q?/WoOW/uqmDejMpr4jcMRItAMqrplJqFC+9KxkMhd3RnyHnyVqiJ8TEe9QR?=
+ =?iso-8859-1?Q?u3CqC6gb/XDj9awz/JYuF1VCGwhoyJ+yzGPBNnKh/JliE4R7mTfC6y5/xs?=
+ =?iso-8859-1?Q?5VUSANwCQ36utHKHh3dpGqvXJF8CR9dYE3xuAXtHKi4GQERTrcmdxaEZoD?=
+ =?iso-8859-1?Q?AXk6p4+UStlM0OH1yP3BJ+nLs2vpCir/X9+rb/i+WyqxSMnrEuRpJTK0G1?=
+ =?iso-8859-1?Q?h/BO8VIn6IOxvdA+QZXaTs82s7i4i0x4J6XcdDP3lviDqNVNui8u++jOCQ?=
+ =?iso-8859-1?Q?F9FKQPyr321eje2AFw+MajhixQqv1C2jwX7CFhkNHmBIRQOAmmGF5PemNX?=
+ =?iso-8859-1?Q?el/UuwqsHECOA6lFOOeAB6UHGOMW1VjcPcA6GmkYUQw0mbTw9KgPB1OQtP?=
+ =?iso-8859-1?Q?uuRwbxz3/g=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e3283ded-5d3d-40c5-e763-08de5f01d3e3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jan 2026 06:44:18.7174 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e3912fa-75e8-4e23-99a1-08de5f01f24f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jan 2026 06:45:09.8044 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FFtbz+UhQ+y0Yw7i3NPxt34EVGc5yOLEL5jRk5j/k/h8zbxOYXhzZ791AwqeFzqlneRZ3t3UM3kIpSLj/b5AGwl4nX1DYrtFvt+/FzP5RFI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF027BB0053
+X-MS-Exchange-CrossTenant-userprincipalname: fX5XynnZ+NTlQI7UBeR2rRp5wKo54Pj0DysqxptDQunJgzB3HJwCU+uHZuTzbJ2SdWe/+7muHcyGNNnhGPYYvpvVrpmkKiR/NCXHshfpjeQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB5799
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.20;
+Received-SPF: pass client-ip=198.175.65.15;
  envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -213,108 +213,295 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Akihiko,
 
-> Subject: Re: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
-> associated with a ram device
->=20
-> >>
-> >> On 2026/01/23 15:17, Vivek Kasireddy wrote:
-> >>> If the Guest provides a DMA address that is associated with a ram
-> >>> device (such as a PCI device region and not its system memory),
-> >>> then we can obtain the hva (host virtual address) by invoking
-> >>> address_space_translate() followed by
-> memory_region_get_ram_ptr().
+> Subject: Re: [PATCH v4 8/8] virtio-gpu-dmabuf: Create dmabuf for blobs
+> associated with VFIO devices
+> >>> In addition to memfd, a blob resource can also have its backing
+> >>> storage in a VFIO device region. Since, there is no effective way
+> >>> to determine where the backing storage is located, we first try to
+> >>> create a dmabuf assuming it is in memfd. If that fails, we try to
+> >>> create a dmabuf assuming it is in VFIO device region.
 > >>>
-> >>> This is because the ram device's address space is not accessible
-> >>> to virtio-gpu directly and hence dma_memory_map() cannot be used.
+> >>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+> >>> backing storage is located in a memfd or not. If it is not, we call
+> >>> vfio_create_dmabuf() which identifies the right VFIO device and
+> >>> eventually invokes the vfio_device_create_dmabuf_fd() API to have
+> >>> a dmabuf fd created.
+> >>>
+> >>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
+> >>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+> >>> use the VFIO device fd directly to create the CPU mapping.
+> >>>
+> >>> While at it, remove the unnecessary rcu_read_lock/rcu_read_unlock
+> >>> from virtio_gpu_create_udmabuf() and also replace warn_report()
+> >>> with qemu_log_mask().
+> >>>
+> >>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> >>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
+> >>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> >>> Cc: Alex Williamson <alex@shazbot.org>
+> >>> Cc: C=E9dric Le Goater <clg@redhat.com>
+> >>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> >>> ---
+> >>>    hw/display/Kconfig             |   5 ++
+> >>>    hw/display/virtio-gpu-dmabuf.c | 117
+> >> ++++++++++++++++++++++++++++++---
+> >>>    2 files changed, 113 insertions(+), 9 deletions(-)
+> >>>
+> >>> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> >>> index 1e95ab28ef..0d090f25f5 100644
+> >>> --- a/hw/display/Kconfig
+> >>> +++ b/hw/display/Kconfig
+> >>> @@ -106,6 +106,11 @@ config VIRTIO_VGA
+> >>>        depends on VIRTIO_PCI
+> >>>        select VGA
+> >>>
+> >>> +config VIRTIO_GPU_VFIO_BLOB
+> >>> +    bool
+> >>> +    default y
+> >>> +    depends on VFIO
+> >>> +
+> >>>    config VHOST_USER_GPU
+> >>>        bool
+> >>>        default y
+> >>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+> >> dmabuf.c
+> >>> index c34d4c85bc..2dfe70d7eb 100644
+> >>> --- a/hw/display/virtio-gpu-dmabuf.c
+> >>> +++ b/hw/display/virtio-gpu-dmabuf.c
+> >>> @@ -18,6 +18,7 @@
+> >>>    #include "ui/console.h"
+> >>>    #include "hw/virtio/virtio-gpu.h"
+> >>>    #include "hw/virtio/virtio-gpu-pixman.h"
+> >>> +#include "hw/vfio/vfio-device.h"
+> >>>    #include "trace.h"
+> >>>    #include "system/ramblock.h"
+> >>>    #include "system/hostmem.h"
+> >>> @@ -27,6 +28,38 @@
+> >>>    #include "standard-headers/linux/udmabuf.h"
+> >>>    #include "standard-headers/drm/drm_fourcc.h"
+> >>>
+> >>> +static void vfio_create_dmabuf(struct virtio_gpu_simple_resource
+> >> *res)
+> >>> +{
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +    VFIODevice *vbasedev;
+> >>> +    RAMBlock *first_rb;
+> >>> +    ram_addr_t offset;
+> >>> +
+> >>> +    first_rb =3D qemu_ram_block_from_host(res->iov[0].iov_base, fals=
+e,
+> >> &offset);
+> >>> +    if (!first_rb) {
+> >>> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                      "%s: Could not find ramblock\n", __func__);
+> >>> +        return;
+> >>> +    }
+> >>> +
+> >>> +    vbasedev =3D vfio_device_lookup(first_rb->mr);
+> >>> +    if (!vbasedev) {
+> >>> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                      "%s: No VFIO device found to create dmabuf fro=
+m\n",
+> >>> +                      __func__);
+> >>> +        return;
+> >>> +    }
+> >>> +
+> >>> +    res->dmabuf_fd =3D vfio_device_create_dmabuf_fd(vbasedev,
+> >>> +                                                  res->iov, res->iov=
+_cnt);
+> >>> +    if (res->dmabuf_fd < 0) {
+> >>> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
+> >>> +                      __func__, strerror(errno));
+> >>> +    }
 > >>
-> >> This description is a bit confusing.
-> > I agree; the description does seem ambiguous.
+> >> This API design of vfio_device_create_dmabuf_fd() has some room of
+> >> improvements.
+> >>
+> >> First, this function requires to pass VFIODevice * which is derived fr=
+om
+> >> res->iov[0]. Since it is getting res->iov[0] anyway, such a parameter =
+is
+> >> redundant. vfio_device_create_dmabuf_fd() can call
+> >> vfio_device_lookup()
+> >> itself instead.
+> > Yeah, I agree. I'll move the call to lookup into
+> vfio_device_create_dmabuf_fd().
 > >
 > >>
-> >> The first problem is with the phrase "the ram device's address space".
-> >> The address space we are dealing with is always
-> >> VIRTIO_DEVICE(g)->dma_as. More precisely it is a memory region, not
-> >> address space.
+> >> The second problem is the error handling. The error may not be caused
+> by
+> >> VFIO_DEVICE_FEATURE_DMA_BUF but may be caused by the guest
+> >> passing
+> >> regions that do not belong to one VFIO device. The two cases should
+> be
+> >> distinguished for a correct message.
+> > Ok, I'll add separate error messages.
+> >
 > >>
-> >> The second problem is that it says the ram device's memory region is
-> not
-> >> directly accessible. It is usually true, but here we are directly
-> >> accessing it anyway because the guest knows how to do so.
-> > Does this look better:
-> >     "virtio-gpu: Find hva for Guest's DMA addr associated with a ram
-> device
+> >>> +#endif
+> >>> +}
+> >>> +
+> >>>    static void virtio_gpu_create_udmabuf(struct
+> >> virtio_gpu_simple_resource *res)
+> >>>    {
+> >>>        struct udmabuf_create_list *list;
+> >>> @@ -43,10 +76,7 @@ static void virtio_gpu_create_udmabuf(struct
+> >> virtio_gpu_simple_resource *res)
+> >>>                         sizeof(struct udmabuf_create_item) * res->iov=
+_cnt);
+> >>>
+> >>>        for (i =3D 0; i < res->iov_cnt; i++) {
+> >>> -        rcu_read_lock();
+> >>>            rb =3D qemu_ram_block_from_host(res->iov[i].iov_base, fals=
+e,
+> >> &offset);
+> >>> -        rcu_read_unlock();
+> >>> -
+> >>>            if (!rb || rb->fd < 0) {
+> >>>                g_free(list);
+> >>>                return;
+> >>> @@ -62,17 +92,84 @@ static void virtio_gpu_create_udmabuf(struct
+> >> virtio_gpu_simple_resource *res)
+> >>>
+> >>>        res->dmabuf_fd =3D ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+> >>>        if (res->dmabuf_fd < 0) {
+> >>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+> >>> -                    strerror(errno));
+> >>> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                      "%s: UDMABUF_CREATE_LIST: %s\n",
+> >>> +                      __func__, strerror(errno));
+> >>>        }
+> >>>        g_free(list);
+> >>>    }
+> >>
+> >> These changes of virtio_gpu_create_udmabuf() are independent so
+> >> should
+> >> go into separate patches with explanation.
+> > I called these out in the commit message and included them as they
+> were
+> > trivial but I guess I could move them into separate patches.
+>=20
+> As docs/devel/submitting-a-patch.rst says,
+>  > A commit message that mentions "Also, ..." is often a good candidate
+>  > for splitting into multiple patches.
+>=20
+> I think there will be another round of review so I suggest taking the
+> chance to do so.
+Ok, I'll split them into separate patches.
+
+>=20
 > >
-> >      If the Guest provides a DMA address that is associated with a ram
-> >      device (such as a PCI device region and not its system memory),
-> >      then we can obtain the hva (host virtual address) by invoking
-> >      address_space_translate() followed by
-> memory_region_get_ram_ptr().
+> >>
+> >>>
+> >>> +static void *vfio_dmabuf_mmap(struct virtio_gpu_simple_resource
+> >> *res)
+> >>> +{
+> >>> +    struct vfio_region_info *info =3D NULL;
+> >>> +    VFIODevice *vbasedev =3D NULL;
+> >>> +    ram_addr_t offset, len =3D 0;
+> >>> +    RAMBlock *first_rb, *rb;
+> >>> +    void *map, *submap;
+> >>> +    int i, ret =3D -1;
+> >>> +
+> >>> +    first_rb =3D qemu_ram_block_from_host(res->iov[0].iov_base, fals=
+e,
+> >> &offset);
+> >>> +    if (!first_rb) {
+> >>> +        return MAP_FAILED;
+> >>> +    }
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +    vbasedev =3D vfio_device_lookup(first_rb->mr);
+> >>> +#endif
+> >>> +    if (!vbasedev) {
+> >>> +        return MAP_FAILED;
+> >>> +    }
+> >>> +
+> >>> +    /*
+> >>> +     * We first reserve a contiguous chunk of address space for the
+> entire
+> >>> +     * dmabuf, then replace it with smaller mappings that correspond
+> to
+> >> the
+> >>> +     * individual segments of the dmabuf.
+> >>> +     */
+> >>> +    map =3D mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+> >> vbasedev->fd, 0);
+> >>
+> >> It should have PROT_NONE instead of PROT_READ to prevent
+> accidental
+> >> accesses to the placeholder mapping.
+> >> Likewise, -1 should be passed instead of vbasedev->fd so that the
+> >> placeholder mapping won't result in a mapping to real device.
+> > I am OK with both suggestions. However, I don't see any problem if the
+> > placeholder mapping is associated with the real device. In other words,
+> > what specific problem do you see if we keep vbasedev->fd instead of -1?
+>=20
+> These two suggestions are to avoid accidents. If the code is right,
+> there will be no accesses to the head of the device memory. But if there
+> is something wrong with it, these two changes will be safe guards. In
+> other words, with these two changes, you will not have such an
+> accidental access unless all of the following three happen:
+> 1) Accidentally accessing the mapped page.
+> 2) The protection is set something else PROT_NONE.
+> 3) The mapping points to the device.
+>=20
+> Each of these conditions make accidents rarer to occur.
+Sounds good. I'll add these two suggestions.
+
+>=20
 > >
-> >      We cannot use dma_memory_map() in this case to get the hva
-> because
-> >      it can only be used with addresses that are associated with the
-> >      system (or physical) memory region. Therefore, in order to handle
-> >      addresses associated with ram devices, we need to use the
-> >      address_space_translate() API to first identify the right memory
-> >      region and the appropriate offset within that region and then use
-> >      memory_region_get_ram_ptr() to get the hva. This approach also
-> >      works for addresses associated with the system memory region.
+> >>
+> >>> +    if (map =3D=3D MAP_FAILED) {
+> >>> +        return map;
+> >>> +    }
+> >>> +
+> >>> +    for (i =3D 0; i < res->iov_cnt; i++) {
+> >>> +        rb =3D qemu_ram_block_from_host(res->iov[i].iov_base, false,
+> >> &offset);
+> >>> +        if (rb !=3D first_rb) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +        ret =3D vfio_get_region_index_from_mr(rb->mr);
+> >>> +        if (ret < 0) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +
+> >>> +        ret =3D vfio_device_get_region_info(vbasedev, ret, &info);
+> >>
+> >> This function can take rb->mr and call vfio_device_lookup() and
+> >> vfio_get_region_index_from_mr() internally to simplify the API as
+> >> similar can be done for vfio_device_create_dmabuf_fd().
+> > Right, but vfio_device_get_region_info() is an already existing API
+> > that is called from various places that I am trying to leverage. I coul=
+d
+> > create another API to wrap the calls to
+> vfio_get_region_index_from_mr()
+> > and vfio_device_get_region_info() but not sure if that makes sense
+> given
+> > that it would only have one caller.
 >=20
-> Sorry but I don't think it's improved much. It still contains a phrase
-> not well-established ("system (or physical) memory region").
-I think it is well-established given this line in include/system/memory.h:
-/* address_space_map: map a physical memory region into a host virtual addr=
-ess
-and considering the fact that address_space_map() is called by
-dma_memory_map().
-
+> vfio_device_get_region_info() should be regarded as an internal function
+> of VFIO.
 >=20
-> The description of what the logic does is expanded, but it's not really
-> useful; it says the logic is to add the offset and the retrieved
-> pointer, but it's obvious if you read the code. So let's focus on "why"
-> the logic is added instead of what the logic does.
+> Thinking of that, the current API design that relies on
+> vfio_device_lookup() to expose VFIODevice * is not optimal. We never
+> want virtio-gpu or anyone else VFIO to mess up with it using functions
+> declared in include/hw/vfio/vfio-device.h. Likewise, exposing
+> vbasedev->fd introduces bunch of hazards.
 >=20
-> Below is my analysis on "why":
-> First, let's stick to the phrase "direct access"; its meaning is
-> established in include/system/memory.h.
->=20
-> With the concept of "direct access", the underlying problem being solved
-> can be understood as follows: dma_memory_map() automatically
-> determines
-> what is directly accessible, and VFIO devices are considered not
-> directly accessible because such accesses may be part of MMIO. But
-> virtio-gpu is not doing MMIO, which leads to a disagreement with the
-> function and virtio-gpu.
-Here is another try:
-    "virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
-
-    If the Guest provides a DMA address that is associated with a ram
-    device (such as a VFIO PCI device region and not its system memory),
-    then we can obtain the hva (host virtual address) by invoking
-    address_space_translate() followed by memory_region_get_ram_ptr().
-
-    We cannot use dma_memory_map() in this case to get the hva because
-    it can only be used with addresses that are associated with memory
-    regions that support direct access. Since VFIO device regions are
-    not considered directly accessible (because they are mostly MMIO based)=
-,
-    dma_memory_map() would fail to return the hva for such addresses
-    when invoked by virtio-gpu.
-
-    Therefore, in order to handle addresses associated with VFIO devices,
-    we need to use the address_space_translate() API to first identify
-    the right memory region and the appropriate offset within that
-    region and then use memory_region_get_ram_ptr() to get the hva.
-    This approach also works for addresses associated with the system
-    memory region.
-
-    Note that, although we take an explicit reference on the memory
-    region, we would still rely on dma_memory_unmap() to drop that
-    reference when the dma mapping is eventually unmapped."
+> I think this entire function is better moved to VFIO for better
+> encapsulation. I also think it should be placed close to
+> vfio_device_create_dmabuf_fd(). These functions are quite similar so are
+> better reviewed togather. Any future event to change either of the
+> function is also likely to require a change to the other, so placing
+> them nearby will be convenient.
+Ok, I'll try to rename and move this function to VFIO.
 
 Thanks,
 Vivek
-
 
 >=20
 > Regards,
