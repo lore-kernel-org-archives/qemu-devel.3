@@ -4,104 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57D0E6BF20
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98B3E6BF2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 17:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlrQO-0000vI-09; Fri, 30 Jan 2026 11:32:48 -0500
+	id 1vlrv0-0000dF-1v; Fri, 30 Jan 2026 12:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1vlrQI-0000rV-F8
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:32:42 -0500
-Received: from mail-yx1-xb141.google.com ([2607:f8b0:4864:20::b141])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlruy-0000cn-4i
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:04:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1vlrQF-00037K-Qr
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:32:41 -0500
-Received: by mail-yx1-xb141.google.com with SMTP id
- 956f58d0204a3-64997a5c93bso2568464d50.3
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:32:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769790758; cv=none;
- d=google.com; s=arc-20240605;
- b=fJ179itnrgl9XLBmd4Uvge0eWWL4fCEBL1uhR2438KveDn7bdj74cY+hyfRZzmxz2u
- UAR1qaZ3XIqzzaqqrvkyztoThWEpqqNHLBLgG3Uy2aGLDOkZFyfEXppvjbL3MR2Y/t1A
- GoQgkOZGKg+r3tmIMf2FD+I1RCl+x48UvjAGgasGrL04el7dK6RQ6VmRoB7StGm98+r2
- GNXror1fV4OXHnzZskSUIURHc477V7sSWGO1I917kpu/wKI9u62NFt07s1f3JNxnsJ0m
- axiahivDoF1adKEU82uBXg3Rdknapl/WC1JQcuVnQcc+TPDdUH/ZmcVDXsGpKW4F2FWQ
- IqAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ibP/kmHcueSVH84qlwvIzotCmdpzyPBb0fuLvkjQ2qs=;
- fh=UZYLJHTUIoslW2kTQ1Vod6LVgXuRv4joMPEhgPIUkCE=;
- b=Dv6FGrobc30ujjZrEE66eHuM/LBG2lBSLp/H8Ar8iSsJaVQniZ+w36wSsEhJchSCsE
- 0VB7RXHxO7mEc3f5PzvokMVOIP9ncBUlWHVf/sUGDtpo1p3B9vcnXWML7anYzgsT2MK6
- V51lC/tRpFqROC6l5Aq3y+jN5ZJRjUHQoDYUFbtvTcegID1kTuA/dmCtie1ih7zaPZ8R
- GodGXTaGVIu3+h4fbfuuaHDwCfhWQsn39vbsI8HxFoic5uGXZwNfTRtaRxC0v8WWBIiz
- yZMwhy+eMojNrYe5GXEGw5ptJ55fv43sTXar0jysJA4nQ0aaJRXb31Zd+YU5TGbbR/GQ
- h3NQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlruw-0001ee-L3
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:04:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47edffe5540so28937445e9.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 09:04:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769790758; x=1770395558; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ibP/kmHcueSVH84qlwvIzotCmdpzyPBb0fuLvkjQ2qs=;
- b=Ygx1Dl1Y/9jlkQY3N0l3CNUsnbgJk/Aty4NP6r93gI0Ud2rQfBqT1KpUUlScuHLUFt
- 2pYmDgEWJULLxNIpoTNTr8FHvlIVXMO0FWG6eUgm916SeK4BA0w0ZxiS8Xi910WJbJin
- ZX2FBTp2X6NSKYUHtCa+GIdLhP1CgmXPm+As+/aSkXmivCCcoxAkNtmKhQ0BsxC/CvSZ
- sQOyJL6J2fCFWMOS11yBXJfyk5TH8udWkc/rWp7Yyn+FENYmkKH61YDFpSHTY9KWWbIP
- 3ZUERxq8XsY7IsgOtwuPDZQm5s1W3KbAWjsI2KyDB1E/wWoN4uO321I8/fuOzYZ32JzP
- JWjg==
+ d=linaro.org; s=google; t=1769792660; x=1770397460; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=B8Hont5tixHg2oWVfo0xPPJVEtyg01oiNDYCCFLI6yE=;
+ b=Mmv0osY6YGSd3pdoLRqIL4INm1k4NTeNtZ8vmzOdG/7aoXzXEBVqCx/qeJPJOG9pQd
+ /zaeUNFcNENpBBmK7wRhGjktNzhUz8GcaRsZOK1Wtdoeq4vO4rt6NjxJNr0A9MlGEsZN
+ 8lp66R8hdqL5GATl3z/RgvegY7eFAnILCPwpzFJEX42ToGWVwi+9yqobeLxirmBNaLBR
+ OFJ43aHeFSN6tbPYEA4jpmSbQaaHrxWt3hVgE6nDkgREEUjtaR4o1xphg/IpMsV09Dm8
+ T99iWxMSATyBXF1BE0JwCTmtYv3TPo08JhmLxNXqkPkj73O76etP5gGsyHZm5OIUXjXH
+ WoNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769790758; x=1770395558;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ibP/kmHcueSVH84qlwvIzotCmdpzyPBb0fuLvkjQ2qs=;
- b=P2BEEsK19sloOxDnTQnkCIfLtCX7MMS+SZMIB7T0UciCqgsC++WwATaEazCupGDwz1
- I4aiVcDASzfHOX4uy1pdsIVmPCxtH8aO1ySJ4vYFN5B70mSXPeCrIPSUC/8UhG/C2w+5
- fW/HbVUUa2Z97x8Ncr6/Uw3IzaNrocvDaDZDqlYsMnwHzn5GtC+KMqrHxroPz9vZQAso
- 8WFvJkJu/FwtZYvBrLXZlqhRtYsXeiALolyWOzN78I4Oip8fIMqOaiJlroaIFxWQwMHH
- /beehQz01/9PQzdPRlHu4sSY+b2JeLWZl/mimMGSYKki9WoZ9dBWpIRZ9SK/VlAKz5lR
- Z0iQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW34/WRkm9FDyk93NVC7xsh/kv3V3Y7jM+J6EFCIH/wLP4CPMJL/6HVUXGjVEG1kxsX/yPhnYw4fWK7@nongnu.org
-X-Gm-Message-State: AOJu0YwAvhlTEmkpGrdNvDvpPiK94KutpHMLba0l19Xn141jSmLaud0Q
- s5+el3IJPDBYAGauaN35iU1pfCaA1GtOdlX8YjaKdC6YmaWwofmSAo/G1Np/DVZ/oQv5GibjlIh
- IO9/FMZOwZYU4PJsR3EIN8R+/ZrEOP2s=
-X-Gm-Gg: AZuq6aJiQAK4F3NWIcMz69gicmGys5Y7R76Nbjy5pz4JpSqybnTM5dZqTc3gXGrh/d3
- JhDNI+ysN5OISzThHq8zMB2HH3xisk3gICBvE0eG/7a0G611Fj5ii3XDwqJKGPU6QYJAE4qJIi8
- CpZNS0eaSBsveIl5D7rIskoqmuAxYCp5CJElgptYUCJQYva6P5coWIZI0kZbDVHcqYrFiext1Zk
- MQRCic/MQ6O/IWck88+WTVWqPkNAIGpwVX3IJGtSQBj1Sj8HZ8pvVlK9dfv8hQ5LJgvCbk=
-X-Received: by 2002:a05:690c:2909:b0:794:7184:a60d with SMTP id
- 00721157ae682-7949dfa9030mr24922427b3.38.1769790758006; Fri, 30 Jan 2026
- 08:32:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769792660; x=1770397460;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B8Hont5tixHg2oWVfo0xPPJVEtyg01oiNDYCCFLI6yE=;
+ b=uDqAivX+h4R9Ju7Y0VGqs8Z4nsGt+cQ7cx1MQ5uvKrmc5M161VmyY53WbqLtz+cvpF
+ izhxURXMdCPrXfKfRXfONPQnrRjD0oNlauySvJtjleQdW9Nmdhoo04KUrj++DhRcflvc
+ sh0PYaJXsK403uWDFM/APKR9o1OApi7+EVqmrcAtBcYyKIYdDzcpu3wdmulce47Liwqg
+ a2mMDvZVoOifdq563+EbAWbZh50k75GxgJPV/bf2wExiugScF4GLtN7Gt5YpmHtRG912
+ ePb41wriUSOiNUTvcKa1NFHJl7wYt/QDopzHCSTM8jBdvTaHhaGItSu59K+6dF8R7JZq
+ E3BQ==
+X-Gm-Message-State: AOJu0YyBiD+28Lqj9uht/DlBmbce2hIKn+AxsmXlYjiie0IxI9sDf22w
+ Qhyfj2/hLCEz6401Vaa+CcLJDYmizeDXHm+ZTeBE+mLAXfbZzJJdqsTwZxQZBx9Rp9LTjFiyNnN
+ IhdEwvKY=
+X-Gm-Gg: AZuq6aIomO3iHoHACRjrM2aJkKUnqsIK9LAC7tBRaOqGhPLbJeQ5sGJAbgehqQVRQX6
+ XYp/NphGJHFnc6e73LQDyBEcgcDHsSLP695+gdlYEVmSBOliwCHyfJhqDzmCHTiLaIW4iCpFHeO
+ tLn/b3Myv8zZDz1jlBo36Eoi+ftmdg2sLpDSCcbdkY6AZ2KcmMY3JI9kgUmCzzINo96h+hnpxPT
+ P2HQAtJ/T3IcbA2f39VQ0Ao0hIzoY6pRlEZ5xAoFb3XqkePqApDOie0uBUcauyEs4r1mFYdLH8L
+ DG/SLs/POvxCngXjKzgTSR0VfKEAv9QwNKrs5FqHIg4+ZGC6jsdYY/ZmUNQTDtRUX8jPx9t9yF9
+ 8Conl5byFjaT2DsB29hrEqjBCuqWtAiD6Bt7ATDT0nALvBJNOkn0zFQMy128oJmA7/OZANncpRO
+ e3GcP2j3hLNWJpjI3nvVGVbolcK4miLQOXF9AiqNyY/wMitVhrku4SPQezR6S2
+X-Received: by 2002:a05:600c:3b13:b0:476:4efc:8ed4 with SMTP id
+ 5b1f17b1804b1-482db460298mr41949235e9.11.1769792659483; 
+ Fri, 30 Jan 2026 09:04:19 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10edfccsm22552686f8f.17.2026.01.30.09.04.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 30 Jan 2026 09:04:18 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Roman Kiryanov <rkir@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Will Hollins <whollins@google.com>, jpcottin@google.com, jansene@google.com
+Subject: [PATCH 0/2] bulk: Stop forward-declaring enum typedefs
+Date: Fri, 30 Jan 2026 18:04:15 +0100
+Message-ID: <20260130170417.43356-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-References: <CAHhgW4UH=_65pZJEACBXh7J0XN1SH1HFS_e_FCN8Zm2sKa1sww@mail.gmail.com>
- <CAHhgW4X-R-Pm1ZV20UuBPbCtnSmp5r1HkwMjWMZ7KuVX0Cp63w@mail.gmail.com>
- <e0b9fcf2-d4f2-40ae-90f4-221268364501@linaro.org>
- <CAFEAcA-QAuiNH1RdkqsxiqKSungGfbPGgi+eAESyd5fU7AyFJQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA-QAuiNH1RdkqsxiqKSungGfbPGgi+eAESyd5fU7AyFJQ@mail.gmail.com>
-From: Yodel Eldar <yodel.eldar@gmail.com>
-Date: Fri, 30 Jan 2026 10:32:27 -0600
-X-Gm-Features: AZwV_QivfBKFKfAQS-2gFn4nwyZXyJ0H9RP6tb3XlCJuIK79DCNoAHFSiPWihSE
-Message-ID: <CAHhgW4Uop7MgGAytSyM_GFYYnzSyGzTBGpswnTmSHW5Mwmpx7w@mail.gmail.com>
-Subject: Re: Wiki Account Request
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b141;
- envelope-from=yodel.eldar@gmail.com; helo=mail-yx1-xb141.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,48 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 30, 2026 at 10:23=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
->
-> On Fri, 30 Jan 2026 at 16:12, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
-> >
-> > Hi Yodel,
-> >
-> > On 1/30/26 3:03 AM, Yodel Eldar wrote:
-> > > On Thu, Jan 22, 2026 at 1:30=E2=80=AFAM Yodel Eldar <yodel.eldar@gmai=
-l.com> wrote:
-> > >>
-> > >> Hi,
-> > >>
-> > >> Can an existing wiki user please create an account for me?
-> > >>
-> > >> username: yodel
-> > >>
-> > >> Thanks,
-> > >> Yodel
-> > >
-> > > Ping?
-> > >
-> >
-> > you might have better chances asking directly to one of the maintainer
-> > with who you contributed previously, and that knows and trusts you.
+The C99 standard chapter §6.7.2.2 point 4 mentions:
 
-Hi, Pierrick,
-Thanks for bringing this up, so that it caught Peter's eye.
+  Each enumerated type shall be compatible with char, a signed
+  integer type, or an unsigned integer type. The choice of type
+  is implementation-defined, but shall be capable of representing
+  the values of all the members of the enumeration.
 
->
-> I think this just dropped through the cracks -- our wiki's
-> "somebody needs to create an account for you" rule is not intended to
-> require a high trust burden; it's only there to distinguish
-> real humans from spam bots, who were previously overwhelming it.
->
-> I've created an account for Yodel.
->
-> -- PMM
+Align with that recommendation by defining the typedef
+along with the enum.
 
-Hi, Peter,
-Thanks for creating the account on my behalf. I've changed the password.
+Philippe Mathieu-Daudé (2):
+  bulk: Stop forward-declaring enum typedefs
+  docs/devel: Mention enum typedefs forward-declaration is not allowed
 
-Yodel
+ docs/devel/style.rst                 | 11 +++++++++++
+ hw/riscv/riscv-iommu-bits.h          |  4 ++--
+ hw/riscv/riscv-iommu.h               |  2 --
+ include/hw/misc/auxbus.h             | 11 ++++-------
+ include/hw/pci/pci_device.h          |  5 ++---
+ include/hw/ssi/ssi.h                 |  6 ++----
+ include/hw/xen/interface/io/xenbus.h |  5 ++---
+ include/io/channel.h                 | 11 ++++-------
+ include/system/replay.h              | 10 ++++------
+ include/ui/clipboard.h               | 15 ++++++---------
+ include/ui/kbd-state.h               |  6 ++----
+ pc-bios/s390-ccw/virtio.h            |  5 ++---
+ tests/qtest/libqos/qgraph_internal.h | 10 ++++------
+ hw/core/loader.c                     |  5 ++---
+ hw/display/xlnx_dp.c                 | 11 ++++-------
+ hw/dma/xlnx_dpdma.c                  | 10 ++++------
+ qapi/opts-visitor.c                  |  7 ++-----
+ qapi/string-output-visitor.c         |  6 ++----
+ tests/unit/check-qom-proplist.c      |  6 ++----
+ 19 files changed, 61 insertions(+), 85 deletions(-)
+
+-- 
+2.52.0
+
 
