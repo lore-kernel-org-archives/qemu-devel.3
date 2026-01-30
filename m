@@ -4,57 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D99E6BF10
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 21:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD908E6BF10
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 21:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlw65-0004wn-0x; Fri, 30 Jan 2026 16:32:09 -0500
+	id 1vlwDu-0007TZ-8d; Fri, 30 Jan 2026 16:40:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlw5x-0004va-Ci
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 16:32:03 -0500
+ id 1vlwDt-0007T5-65; Fri, 30 Jan 2026 16:40:13 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlw5t-0008U0-K7
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 16:32:00 -0500
+ id 1vlwDq-0001t5-RE; Fri, 30 Jan 2026 16:40:12 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 28CE55969FD;
- Fri, 30 Jan 2026 22:31:54 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A7F73596A0A;
+ Fri, 30 Jan 2026 22:40:07 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id XR3e6ZALuGuL; Fri, 30 Jan 2026 22:31:51 +0100 (CET)
+ id ycRjXAJzDHHe; Fri, 30 Jan 2026 22:40:05 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 252DF5969F6; Fri, 30 Jan 2026 22:31:51 +0100 (CET)
+ id 9CC175969F2; Fri, 30 Jan 2026 22:40:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1F6E15969F2;
- Fri, 30 Jan 2026 22:31:51 +0100 (CET)
-Date: Fri, 30 Jan 2026 22:31:51 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9B51F5969F6;
+ Fri, 30 Jan 2026 22:40:05 +0100 (CET)
+Date: Fri, 30 Jan 2026 22:40:05 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-In-Reply-To: <0652ec1f-2861-4550-9174-2183cc78ad87@ilande.co.uk>
-Message-ID: <ab964514-2424-50c4-cc9b-860b5b79d9eb@eik.bme.hu>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
- <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
- <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
- <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
- <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
- <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
- <b5721fa1-e613-889a-03de-77c46aa01da4@eik.bme.hu>
- <d83ac948-afb4-4128-9e23-44aa8a8e31c4@rsg.ci.i.u-tokyo.ac.jp>
- <0652ec1f-2861-4550-9174-2183cc78ad87@ilande.co.uk>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, qemu-devel-bounces+chad=jablonski.xyz@nongnu.org
+Subject: Re: [PATCH v5 11/12] ati-vga: Implement HOST_DATA register writes
+In-Reply-To: <DG255L1QLG9F.K2BWVSSGYRHG@jablonski.xyz>
+Message-ID: <5c4b7cd5-2467-4c1d-9bc7-23c7d9140f61@eik.bme.hu>
+References: <20260116024258.1487173-1-chad@jablonski.xyz>
+ <20260116024258.1487173-12-chad@jablonski.xyz>
+ <3d1cf407-dd57-edff-25fe-1dd56c1b5052@eik.bme.hu>
+ <DG255L1QLG9F.K2BWVSSGYRHG@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
@@ -79,183 +65,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 Jan 2026, Mark Cave-Ayland wrote:
-> On 29/01/2026 04:41, Akihiko Odaki wrote:
->> On 2026/01/29 0:46, BALATON Zoltan wrote:
->>> On Wed, 28 Jan 2026, Peter Maydell wrote:
->>>> On Wed, 28 Jan 2026 at 11:40, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>>>> OK I try to summarise the motivation again:
->>>>> 
->>>>> 1. Documentation in docs/devel/memory.rst says that memory regions'
->>>>> lifecycle is managed by QOM and they are freed with their owner or when
->>>>> nothing else uses them. This is also already implemented for a long time
->>>>> as described but cannot be used because the only constructors available
->>>>> kill this feature when calling object_initialize that clears the free
->>>>> function added by object_new. (The life time management is implemented
->>>>> through adding memory regions as children to the owner and unparenting
->>>>> them on freeing the owner which decreases ref count of the memory region
->>>>> and will free it when nothing else references it as far as I can tell.)
->>>> 
->>>> If we have leaks because of our very common pattern of "embed
->>>> a MemoryRegion struct in the device state struct" then we must
->>>> fix those, because there's no way we're going to convert all
->>>> that existing code to a new set of APIs. But I was under the
->>>> impression we had already dealt with those, because MRs track
->>>> their owner's refcount, and don't have their own independent one ?
->>> 
->>> I'm not sure if all those leaks are resolved as there were some patches 
->>> and discussion about this recently but I think that problem or the need to 
->>> use the owner's ref count to circumwent it instead of using the memory 
->>> region's own ref count may also come from that there's currently no way to 
->>> allocate memory regions that are ref counted and automatically freed as it 
->>> should work with QOM and the documentation implies. (Only the constuctor 
->>> is missing that is all this series adds, the mechanism is already there 
->>> and implemented.) There may still be a problem with circular references if 
->>> the memory region needs the owner so the owner can't be freed until the 
->>> memory region is also freed but the memory region is not freed until the 
->>> owner is freed but if both the owner and memory region used their own ref 
->>> count things may become a bit less confusing and could be easier to find a 
->>> way to break circular reference (e.g. by owner unparent child regions on 
->>> unrealize but isn't freed until memory regions unref owner in their free 
->>> method).
->>> 
->>>>> These are my motivation for this change. What is the motivation for 
->>>>> using
->>>>> embedded memory regions instead and against this change?
->>>> 
->>>> Simply that it's a consistent pattern we use in a lot of the codebase:
->>>> the device embeds a lot of the structs it uses, rather than allocating
->>>> memory for them and keeping pointers to that allocated memory. We
->>> 
->>> You mix in the issue of SoCs and complex devices using other devices in 
->>> which case the recommendation was to embed those in the parent device so 
->>> they don't have to be freed or kept track of by a pointer but won't be 
->>> leaked. This series does not mean to change that, it's only limited to 
->>> memory regions. (Although that problem may also stem from similar issue 
->>> with object_initialize_child not allowing creating reference counted 
->>> objects only initializing preallocated instances but that's not something 
->>> this series touches.)
->>> 
->>> We can say that memory regions are like other embedded objects but they 
->>> are often used for sysbus and PCI devices only to be registered in the 
->>> parent device that already has pointers in their state to track these so 
->>> there's no need to keep track of them in the subclass if we can rely on 
->>> QOM freeing them when not needed any more and this is already implemented 
->>> and documented that way. So even if we keep embedding other child devices 
->>> into complex parent devices that I think does not directly apply to memory 
->>> regions and we could use what the documentation and implementation already 
->>> allows and says for memory regions at least.
->>> 
->>>> still have also various older device models that use the previous
->>>> pattern of "allocate memory and have pointers" too, but most new
->>>> code doesn't do that. I think we should for preference write code
->>>> in one pattern, not two, and "embed structs" seems to be what
->>>> we have mostly settled on for new code.
->>>> 
->>>> There is an argument to be made that the pointer model would
->>>> fit better with a possible future world of "the user can wire
->>>> configurably wire up their own board model from devices", and
->>>> that it works better in a part-Rust-part-C world where the two
->>>> different languages don't have convenient access to the exact
->>>> size of structs defined in the other language. But that future
->>>> model is not something anybody has yet really fleshed out in any
->>>> detail, so it's still a bit speculative.
->>> 
->>> You keep mentioning pointers but the point of ref counts and regisrering 
->>> memory region as child of an owner is to avoid needing a pointer or 
->>> embedding it in the subclass state as the relationship and lifecycle 
->>> management are then handled by QOM. If we don't use that we could remove 
->>> this from QOM and memory regions to simplify it but if it's already there 
->>> and makes the device state simpler I think we better use it.
->>> 
->>>> I'm not actually opposed to the idea of making a design decision
->>>> that this struct-embedding is no longer what we want to do, and defining
->>>> that something else is our new best practice for how to write devices.
->>>> But I think we would need to start by reaching a consensus that that
->>>> *is* what we want to do, and documenting that "best practice" somewhere
->>>> in docs/devel/. Then we can examine proposed new APIs and all be
->>>> on the same page about the design patterns we want and it will
->>>> be clearer to reviewers whether the new APIs fit into those
->>>> patterns or not.
->>> 
->>> I think we're in that discussion now in this thread. I don't propose to 
->>> change the struct-embedding for sub devices used in SoC or south bridge or 
->>> other complex devices but only propose to not embed memory regions that 
->>> are already documented as and handled by QOM and simply allocate them and 
->>> let QOM handle them so we only need to reference them in the devices state 
->>> unless they are needed for some reason by the device methods which is 
->>> rarely the case. So this is limited to memory regions and the series only 
->>> seems to add a lot of lines because of the extensive documentation 
->>> comments. The actual change is just factoring out actual memory region 
->>> init from memory_region_init functions then add a memory_region_new 
->>> variant that does object_new; do_init and keep the memory_region_init do 
->>> object_initializel do_init. Nothing else is changed, the way to manage and 
->>> free regions based on ref counting is already there this series just 
->>> enables them to be actually used becase currently despite what the docs 
->>> say memory regions are either leaked or must be embedded.
->> 
->> I actually think deprecating struct-embedding for all QOM objects is a good 
->> idea.
->> 
->> The problem initially stated in this thread is that embedding requires 
->> having extra field, but people see the benefit is too small. There is no 
->> real logic involved in having such fields so it does not reduce code 
->> complexity much; it saves some lines and that's it.
->> 
->> However, I see another problem in struct embedding; it breaks object_ref(). 
->> When embedding, the child object effectively takes the reference to the 
->> storage of the parent object, but this reference is not counted, so 
->> use-after-free can happen if someone takes a reference to the child object 
->> with object_ref(). That is why the wrapper of object_ref() in 
->> rust/qom/src/qom.rs needs to be marked unsafe. Memory regions workaround 
->> this with memory_region_ref(), but it's not perfect since it relies on 
->> object_ref() in the end.
->> 
->> For this reason I think object_initialize(), object_initialize_child(), and 
->> the like are better to be noted as deprecated in
->> include/qom/object.h. Then memory_region_init() can be deprecated referring 
->> to them.
+On Fri, 30 Jan 2026, Chad Jablonski wrote:
+>>> +static void ati_host_data_reset(ATIHostDataState *hd)
+>>> +{
+>>> +    hd->next = 0;
+>>> +    hd->row = 0;
+>>> +    hd->col = 0;
+>>> +}
+>>
+>> I wonder where the real chip keeps track of these. Isn't this where the
+>> dst_x dst_y would be updated? Or it may have some internal state not
+>> exposed as registers? Maybe if you can dump registers you could compare
+>> their values during blits after each host data reg write and check how
+>> they change to reveal if any of them are updated? (But only if you're
+>> curious; it would do for emulation using this approach with a separate
+>> state as well.)
 >
-> FWIW this is something I've been thinking about for some time: possibly I had 
-> a chat with Phil about it at some point? Once example could be if you want to 
-> have a reference to a parent type like PCIDevice that can change at runtime 
-> e.g. it could be PCINE2000State or PCIPCNetState then you can never embed it, 
-> because you don't know the size at compile time. So then why not use 
-> object_property_add_child() everywhere so there is just a single way of doing 
-> things?
->
-> For memory regions it's a bit trickier because as per the virtio-gpu issues 
-> you've been looking at, it is possible for the memory region to exist outside 
-> of its parent device until it is destroyed later by the RCU thread. Is this 
-> something that can be solved by manipulating the refcount?
+> So far it's looking to me like this is internal state not exposed
+> through the registers. I do see one register that increments after every
+> host_data* write but it's in the PM4/CCE range (0x07e8) and is completely
+> undocumented. It _is_ a bit surprising to see changes in that range given CCE
+> is disabled. But nothing really obvious or conclusive yet, unfortunately.
 
-I think if memory regions could use their own ref count instead of their 
-parents' this could become simpler and these memory_region_new functions 
-allow us to create memory regions that are ref counted and free'd by QOM 
-so this could help but I don't know the details of that problem.
+OK thanks for checking. The M6 Register reference says 0x7ec is reserved 
+for future debug so it could be the one before is also some kind of debug 
+register but it's not documented so no idea just guessing.
 
-> I do agree with Peter too that we don't want to add yet another way of doing 
-> things: if we decide to change the way memory regions work, we should go 
-> all-in and update all callers to reflect the new API and remove the old one. 
-> Having one easily understood way of modelling things makes life much easier 
-> for contributors and reviewers alike.
-
-That can be a goal but this would happen gradually and not all in this 
-series. I want to use memory_region_new as much as I can in devices I 
-maintain and a few more I come across but I certainly won't change every 
-device and that should not be required as it's not feasible for me to 
-change stuff I don't even know anything about and do all that in my free 
-time.
-
-I'm not proposing a completely new API and don't change how memory regions 
-work. All I propose is to allow QOM to manage memory regions as is already 
-documented by adding memory_region_new functions corresponding to 
-memory_region_init functions that work exactly the same with the only 
-difference that memory regions created with memory_region_init have to be 
-managed by the caller while memory regions allocated with 
-memory_region_new is managed by QOM and will be automatically freed when 
-the last reference goes away. That's all, this should not be that hard to 
-understand for contributors and reviewers.
+So you also verified that not only host data but normal rectangular blits 
+don't update dst and src position either? Then don't know why it comes up 
+in documentation.
 
 Regards,
 BALATON Zoltan
