@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5881ED73EB7
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 03:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B633D73EB8
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 03:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlfTO-0005Dy-Rn; Thu, 29 Jan 2026 22:47:06 -0500
+	id 1vlfVm-0002Um-48; Thu, 29 Jan 2026 22:49:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vlfTK-000569-RD; Thu, 29 Jan 2026 22:47:04 -0500
-Received: from zg8tmty1ljiyny4xntqumjca.icoremail.net ([165.227.154.27])
+ id 1vlfVi-0002DR-CF; Thu, 29 Jan 2026 22:49:31 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vlfTI-0007sZ-Hh; Thu, 29 Jan 2026 22:47:02 -0500
+ id 1vlfVg-00081e-0I; Thu, 29 Jan 2026 22:49:30 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAXHCSpKXxpkdZ_Aw--.36154S2;
- Fri, 30 Jan 2026 11:46:49 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXcqg7Knxpn6aNBg--.87S2;
+ Fri, 30 Jan 2026 11:49:15 +0800 (CST)
 Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX7eqiKXxpF7YXAA--.26907S2;
- Fri, 30 Jan 2026 11:46:43 +0800 (CST)
-Message-ID: <2bb4ad3f-790f-438f-b2b3-60a8c91837e3@phytium.com.cn>
-Date: Fri, 30 Jan 2026 11:46:42 +0800
+ by mail (Coremail) with SMTP id AQAAfwB3z+w3KnxpRLYXAA--.42069S2;
+ Fri, 30 Jan 2026 11:49:12 +0800 (CST)
+Message-ID: <47268fe5-32cd-4d97-bdcd-2d349d3bfc2a@phytium.com.cn>
+Date: Fri, 30 Jan 2026 11:49:11 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/2] tests/qtest/libqos: Add RISC-V IOMMU helper
- library
+Subject: Re: [RFC PATCH v2 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
 To: Chao Liu <chao.liu.zevorn@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -39,29 +38,29 @@ To: Chao Liu <chao.liu.zevorn@gmail.com>,
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  hust-os-kernel-patches@googlegroups.com
 References: <cover.1769678103.git.chao.liu.zevorn@gmail.com>
- <fff44d1db25e4a727c40048357059a58fcc58097.1769678103.git.chao.liu.zevorn@gmail.com>
+ <7cc1e085432336463dd19e11212cda516b97a33e.1769678103.git.chao.liu.zevorn@gmail.com>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <fff44d1db25e4a727c40048357059a58fcc58097.1769678103.git.chao.liu.zevorn@gmail.com>
+In-Reply-To: <7cc1e085432336463dd19e11212cda516b97a33e.1769678103.git.chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAfwCX7eqiKXxpF7YXAA--.26907S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAKBWl6bYMGHQABsp
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwB3z+w3KnxpRLYXAA--.42069S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAKBWl6bYMGHQACsq
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGF43JF43KFWxKr4xuFWDCFg_yoW5CryxpF
- 1FkanYkayxt3WSqrnxWw12kF1rtan2kF1Uury3AF15Zryavr4jqFnrt340vrn3XaykXr4S
- vwsYgrn3Wr1Yqr7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Cr1DCF13tr18Cr4kKw15Jwb_yoW5JF1rpa
+ 4kCr1Skr4vyr1xW3WfXr1ayF1rWa1kCF4j9rW2qr15ZrWaqr40yrnFg348W3s7Jay8Xr4F
+ kas2kF4fCr4FvrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=165.227.154.27;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmty1ljiyny4xntqumjca.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,64 +79,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hi Chao,
 
 On 2026/1/29 17:39, Chao Liu wrote:
-> Introduce a libqos helper module for RISC-V IOMMU testing with
-> iommu-testdev. The helper provides routines to:
+> Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
+> The test exercises bare, S-stage, G-stage, and nested translation paths
+> using iommu-testdev and the qos-riscv-iommu helpers.
 >
-> - Build device contexts (DC) and 3-level page tables for SV39/SV39x4
-> - Program command queue (CQ), fault queue (FQ), and DDTP registers
->    following the RISC-V IOMMU specification
-> - Execute DMA translations and verify results
+> The test validates:
+> - Device context (DC) configuration
+> - SV39 page table walks for S-stage translation
+> - SV39x4 page table walks for G-stage translation
+> - Nested translation combining both stages
+> - FCTL register constraints
 >
-> The current implementation supports SV39 for S-stage and SV39x4 for
-> G-stage translation. Support for SV48/SV48x4/SV57/SV57x4 can be added
-> in future patches.
+> This provides regression coverage for the RISC-V IOMMU implementation
+> without requiring a full guest OS boot.
 >
 > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
->   MAINTAINERS                          |   1 +
->   tests/qtest/libqos/meson.build       |   2 +-
->   tests/qtest/libqos/qos-riscv-iommu.c | 405 +++++++++++++++++++++++++++
->   tests/qtest/libqos/qos-riscv-iommu.h | 164 +++++++++++
->   4 files changed, 571 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
->   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
+>   MAINTAINERS                    |   1 +
+>   tests/qtest/iommu-riscv-test.c | 279 +++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build        |   5 +-
+>   3 files changed, 284 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/iommu-riscv-test.c
 >
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index dccdf47888..830f56376b 100644
+> index 830f56376b..73daaad841 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -3584,6 +3584,7 @@ M: Tao Tang <tangtao1634@phytium.com.cn>
->   S: Maintained
->   F: tests/qtest/libqos/qos-iommu*
->   F: tests/qtest/libqos/qos-smmuv3*
-> +F: tests/qtest/libqos/qos-riscv-iommu*
+> @@ -349,6 +349,7 @@ F: common-user/host/riscv*
+>   F: tests/functional/riscv32
+>   F: tests/functional/riscv64
+>   F: tests/tcg/riscv64/
+> +F: tests/qtest/iommu-riscv-test.c
 >   
->   Device Fuzzing
->   M: Alexander Bulekov <alxndr@bu.edu>
-> diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-> index b4daec808f..4a69acad0d 100644
-> --- a/tests/qtest/libqos/meson.build
-> +++ b/tests/qtest/libqos/meson.build
-> @@ -71,7 +71,7 @@ if have_virtfs
->   endif
->   
->   if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
-> -  libqos_srcs += files('riscv-iommu.c')
-> +  libqos_srcs += files('riscv-iommu.c', 'qos-riscv-iommu.c')
->   endif
->   if config_all_devices.has_key('CONFIG_TPCI200')
->     libqos_srcs += files('tpci200.c')
-> diff --git a/tests/qtest/libqos/qos-riscv-iommu.c b/tests/qtest/libqos/qos-riscv-iommu.c
+>   RISC-V XThead* extensions
+>   M: Christoph Muellner <christoph.muellner@vrull.eu>
+> diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
 > new file mode 100644
-> index 0000000000..6c60889eeb
+> index 0000000000..5a86b18db9
 > --- /dev/null
-> +++ b/tests/qtest/libqos/qos-riscv-iommu.c
-> @@ -0,0 +1,405 @@
+> +++ b/tests/qtest/iommu-riscv-test.c
+> @@ -0,0 +1,279 @@
 > +/*
-> + * QOS RISC-V IOMMU Module
+> + * QTest testcase for RISC-V IOMMU with iommu-testdev
 > + *
-> + * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
-> + * encapsulating RISC-V IOMMU setup, and assertions.
+> + * This QTest file is used to test the RISC-V IOMMU with iommu-testdev so that
+> + * we can test RISC-V IOMMU without any guest kernel or firmware.
 > + *
 > + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
 > + *
@@ -145,17 +131,13 @@ On 2026/1/29 17:39, Chao Liu wrote:
 > + */
 > +
 > +#include "qemu/osdep.h"
-> +#include "qemu/bitops.h"
+> +#include "libqtest.h"
+> +#include "libqos/pci.h"
 
 
-This include is unnecessary: hw/misc/iommu-testdev.h (pulled in by 
-qos-riscv-iommu.h) already includes hw/pci/pci.h, and hw/pci/pci.h 
-itself includes bitops.h.
-
-> +#include "hw/riscv/riscv-iommu-bits.h"
-> +#include "tests/qtest/libqos/pci.h"
-
-Same. qos-iommu-testdev.h has included tests/qtest/libqos/pci.h.
+libqtest.h and libqos/pci.h are redundant because they are already 
+pulled in by libqos/generic-pcihost.h (libqos/pci.h itself includes 
+libqtest.h)
 
 
 Besides
@@ -167,9 +149,13 @@ Thanks,
 
 Tao
 
-
-> +#include "qos-iommu-testdev.h"
-> +#include "qos-riscv-iommu.h"
+> +#include "libqos/generic-pcihost.h"
+> +#include "hw/pci/pci_regs.h"
+> +#include "hw/misc/iommu-testdev.h"
+> +#include "hw/riscv/riscv-iommu-bits.h"
+> +#include "libqos/qos-riscv-iommu.h"
+> +#include "libqos/riscv-iommu.h"
 > +
+> +#define DMA_LEN           4
 
 
