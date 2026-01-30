@@ -4,166 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CBAD49C90
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 09:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DC6D49C92
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 10:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlkxt-0000Jk-Qy; Fri, 30 Jan 2026 04:38:57 -0500
+	id 1vllg7-00069g-Vd; Fri, 30 Jan 2026 05:24:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vlkxs-0000J3-6g
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 04:38:56 -0500
-Received: from mail-westusazon11012070.outbound.protection.outlook.com
- ([52.101.43.70] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vllg7-00069V-5A
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 05:24:39 -0500
+Received: from mout.web.de ([212.227.15.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vlkxq-0003Tl-ET
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 04:38:55 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NCO4O6M723/FeXCdtyIXhTCMwV+yeYSVJ4ijNVnFlnHjLDoaJsf9pUld0mrpn/XiunFsuvnJ8eGQgM2OcssnkE3xiQFU9plPXewG7ZPQQgPihmkP1105t7g1s587L48inpzkhf+qw6MJnWNjp7q7I7Pcoai0tlug496Gbiwyx34Q44/0Z5Qyp/l7szk7UBR69Z751aCiHeRujAG7cLsrio5AjXYaXes34zZgNSRBc3s5mlAybkcjKwnztiw71ZBAxrBkYrP+6ir6WsWC5tFsSbXVIzqiekH6NnJ8lwFMnfi46CxVrTjp/eK3gEF2xzW1qvCQJ2iBi8qyXnLHEQI8QQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Lvw38nO8Bs9DqU1R8P4HsebHLwNKftwkR7qTSb6f49w=;
- b=xMq3jEudKhH7/dVvnI0J2LwOO3EfbEhL6TlsH2V4j17J6JqKd0jF76paKwBDLvms1v52vD+FvLDer3L8+dYosVLIxZx+1a/tYaCXPBG+dHfrKgEBiMByMRnlBm9VcEjvJUdBJWr/vTCzIIQ8S95p4mvDcZiE+6mqhrlOUi6LimsWEW0Pj68yzE+hY61THbWrOiJNZgFYfx/ICHZ3LoipBYrPtDcQvmqm3KxWbRHrrqml+2qvgHDnvgGUOpj0GX5xmKNHQRtq0jmc4PyGs6m+AI36kjBUZ4i+hDdKsqUa1V61lMfv7sVNOAKbceLZBmGXTg7n8V6nhj/R3IM7B7QUhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Lvw38nO8Bs9DqU1R8P4HsebHLwNKftwkR7qTSb6f49w=;
- b=bWxw2r5/YfTa4Xm14x5r6JbF5sVuUYmEakqXhP9oNtfUXMzUnfNH9CPyGohHBefutxIrriwperlJLnj0pKhIx44d3j62gLaOMd8Qbw/+opSjr6+klDiO2t0P636CiTRIncTKo7ps7yUDbtKqdru9XqwfOHUlpuqiWQUKyvH0ZlVhzXwl7C/5Ecr17dcLdfWHuWHfP7o8jgZidG88Mkv0NbDWMSHIxCn7cnfOed+/HMeEzNeGZn8j++4MB7TDBe4R6LCi3qSG8pQf3xxZ7uousjaXBTIqsh3gI/xyLKY0+7efoexIs+5gdB8DgnUaw+JrLnVEzlzfxfU77KT2pZD+oA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by PH7PR12MB5734.namprd12.prod.outlook.com (2603:10b6:510:1e1::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Fri, 30 Jan
- 2026 09:33:45 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9564.010; Fri, 30 Jan 2026
- 09:33:44 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Ankit Agrawal <ankita@nvidia.com>, Vikram Sethi <vsethi@nvidia.com>, Jason
- Gunthorpe <jgg@nvidia.com>, "alex@shazbot.org" <alex@shazbot.org>,
- "clg@redhat.com" <clg@redhat.com>
-CC: Aniket Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti
- Wankhede <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)"
- <targupta@nvidia.com>, Zhi Wang <zhiw@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: RE: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions by
- offset
-Thread-Topic: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions by
- offset
-Thread-Index: AQHckZ3nrHQ4F/cjtkOQhcOTrPnznbVqcsAw
-Date: Fri, 30 Jan 2026 09:33:44 +0000
-Message-ID: <CH3PR12MB7548F8415F5FF9EED90FA376AB9FA@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260130040649.42485-1-ankita@nvidia.com>
- <20260130040649.42485-2-ankita@nvidia.com>
-In-Reply-To: <20260130040649.42485-2-ankita@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|PH7PR12MB5734:EE_
-x-ms-office365-filtering-correlation-id: c427115f-a79a-4676-81cb-08de5fe2a95e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|38070700021|7053199007; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?Hx0kFALQ+f6O1tSvmusDRYtzfUBQ8jy8Gs4Rh9K98NT+VSTCmzXwChQbrplt?=
- =?us-ascii?Q?hlWg6kR6G2+DPw+2tU7aOgxrSITEW0g2/ZixrWmOkJZEbp/IVKwhN1bi9wZ1?=
- =?us-ascii?Q?Pw5VLnYDvd497nZwnsPlCOquVTMA+7ywHwaJeSz3p+Y2RuQSgPbOEBqhQBRn?=
- =?us-ascii?Q?0K5ttEuaZaPf83xNE5W3QOe/fPWocAR0OTx053iDGLbDr8EzTJMfb5X7YDbo?=
- =?us-ascii?Q?DqDSZjkAnq4rfi/3WWb34K4zQ+luTohEm6btsGatOObZAHt8Rwa0Esy8H3UE?=
- =?us-ascii?Q?MgL/7nbd97Wf0yEDI5gmT3ocEEufRpabCI/sm9OXvTzVyaCBnuM8WJn9vW4p?=
- =?us-ascii?Q?wN/cWdziHCY1kxesMkwUzj0NnU7Ud+myUnKebDiUPlr6zVU8NWHgl1EjJyXB?=
- =?us-ascii?Q?2VD3gonazbVyjMXKqz3Q4FnBzA3Vn5LNrm2tgLZo7lwxaRtk8FBe6zB1zrcR?=
- =?us-ascii?Q?+w6Sm/iI8ad5Mpn6eYMRW8mpStftNnhm7n8sYoyyDK/ngl8IgVAdFPGgJu2a?=
- =?us-ascii?Q?ndKtykW3Qt/4FkwslkAcvNAjpnocHuBpJoQt9OuUUjZbTrCj4SZRqiCo2s0z?=
- =?us-ascii?Q?mJfG24Hv8vf8ghE+Yjo8n3DB2J3prpEi6F7psPe4s4uR7KlVub7YWnNgjEZK?=
- =?us-ascii?Q?gVmfWO5UqVICTRXvRRsUXkf6dMtAvYq9jSS1Chn8FLXcjAaQ2aY22NIML12x?=
- =?us-ascii?Q?10mnC6Nfruvzqmhge8e499uZUXU9mfs44qZIorJEqykD4X428mjhZ0epXuLi?=
- =?us-ascii?Q?+wDfe6xfqiH4ZQN8YiwodyXDn9BYz8dsOHh3pdc/Vo6HygcPDBxByqaLmxy1?=
- =?us-ascii?Q?R9JemZD6Q8CfmbhxhWZTrmC1VG07+ZLYF37GKqCXZ8RJIwhPPZpIM6SRgtFS?=
- =?us-ascii?Q?w+kzCkkOm0gxaz1LyZ9zEWIjL3//U3iXk+47bglCBmdC/4g8ffNkG+1vjpox?=
- =?us-ascii?Q?afmTmKyqwAkDR+pOe3VsgAAuWBPfUEWXwzjLrd0KZBCbK6fW5aH+gtTucaw7?=
- =?us-ascii?Q?XuT6kbuk1xZ9s7G+UMEKEHpA3ITAoDh1+v3ETiiQZnsrzr2QlT13y4KKVGSG?=
- =?us-ascii?Q?Tv8sbfzGaqGU0zOJEDkNz/PXCcWRjZqDc24FEErIgXAuTS3esowwON8SOXA0?=
- =?us-ascii?Q?Np8xdde3tj60wiBcJePGJlT07kjAeG+B+XBo92USwOrxQGvr0Doq7fbQ/9I1?=
- =?us-ascii?Q?OU87pPWmOM6UAryvk29B/M1CrxIm3Xojis2f/wGiomv/QO8jBppkM2DdyNVv?=
- =?us-ascii?Q?Ja8nAysHW9p5+hG7AdV73CcR8ryCuWP5Gp8VfeU8p+YM7SUrMPNyZFkcwVl5?=
- =?us-ascii?Q?6F7IRa9UR2oDPjsRTsE7UkhIx/MamY0zI+WsVpm3hUj/T8J3o5KXV3U76x6i?=
- =?us-ascii?Q?IOtEAQfhhYvNgwGWsU0Q28zYIrP/aw4uwXq17XRv/tlAt+2RnK/M9X78gxl0?=
- =?us-ascii?Q?IPqbclqhDygxK1L3YGkoVgPAaT4lgeLS78T1B/D5ZPbws13MxqtYOtZHKhcd?=
- =?us-ascii?Q?kFrytEw0nCveZpqKtQV82E6MZrXPndEXFRGQS1VBggIUnMVANIstx5rn40FV?=
- =?us-ascii?Q?R1O8Abca/hX0WaQdgszPKps861FLTHw+Qe82P2tR3D60RZ7rz7mcsM79Qf6c?=
- =?us-ascii?Q?wkda5QoIhQBQ0P5tac4d3Ak=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(7053199007); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?W8ZpsMYst755dKQ33N+UAh1O2G0pVWXsw5F0ObAZRm90iGHRwCd6seK45atW?=
- =?us-ascii?Q?T7PgbFBHInuGwlR4/+IhL0PNgDivszQ9LxSGguM5+kQ7aH7N9L/jrVdYJ3r8?=
- =?us-ascii?Q?Q23CLXqs/o+ZLwQrxG8CvefoFXx79d4knh1iim5LCkcCedVzTRHJ5zg7FFAx?=
- =?us-ascii?Q?WHNmfXmPoCKcc9kRVKvkMQ9De47WFtd1h4eulN4r1bPoGGnBgPtM1ysMeC/r?=
- =?us-ascii?Q?BtILXRonUrqqzB0IrkI5hhOTqvmLRb9yTVnTFJDbMR7CEFenyI/btnTyQvOe?=
- =?us-ascii?Q?3ckleLbnkATcwqwQZQqFkxsceXeeWvP81gZk3uu3S5si5VPcQsrFgmpIAOxW?=
- =?us-ascii?Q?aEIIJcdbWLYWMlIazZ0gTsg7rfg0Jf6+4ZzxagxSzmSyM5UWUXCpk7+TB2eG?=
- =?us-ascii?Q?tsNMqveNRtzCnIDB+bU3dW7w0RAvQ0iYSSFldrOpKYD+Y9OLre4byAn8g447?=
- =?us-ascii?Q?4nGKNnObcl71d5Fol9N8epFuoopDEsZWVkIL20pMOW5HfRiUssTpUigcNIyv?=
- =?us-ascii?Q?cZ/gI5/AoFLDaacmdSUZCQZdQoeHLU6HZ7R/QuQmOc4AmP+jR+xLZgXs5TIm?=
- =?us-ascii?Q?Cj9e+FS5C5+xo8qt+/ZhKmQhAESNseCXPwWLVZF7qx7/sr6nMAhEAnvy7qXH?=
- =?us-ascii?Q?vGmt8YoNwhbXp5AIZlnhPIgSEU3GF/lJ6/bHK8bPar7ImCSW21mUeahKshjC?=
- =?us-ascii?Q?SRlcdAyRC0BiwdIIQW+XxKoNcoEOl5fuQQPcRl8/mMEGLaLInCbuziQzzsu9?=
- =?us-ascii?Q?lGcJ2cmu7NRqcqSCjByxNQjxExeCHw+o1J1RGAbYX3/celsirA3iSrB5OvZJ?=
- =?us-ascii?Q?wCIisp/nXb5Jvzv6rPUKhA5C+xRC+JIo5X8/Dxxk5+9Trb5Fo0rLcXHCsDXK?=
- =?us-ascii?Q?jdfS4g7tzhz0oF082zey6Dnm3xdo0aVhWsHTNGdb5RZmLXUnICSTOSmFzJiz?=
- =?us-ascii?Q?3yLnUdWfcxX4+9WyM5Mv+57pkRKYdwgO/B9Pqw1HO1LtypaxtypZKq+cLc0v?=
- =?us-ascii?Q?AdUecQDUCyGiF6YWYel76Xy5cjLo+Jj+2shUL5KP+T/T/pvk4m5jtZlzGXzQ?=
- =?us-ascii?Q?mLu2uPzCoa/BMijQVmV+Y1LCnBmtyvhRnthWcln2Fou80/XE6LVtW9rR58wu?=
- =?us-ascii?Q?pVtT5r76lfnTLsbWrqU8m3ta/kSaNXFW6996fhXzjgYFYx6aSATZWMpyyDdd?=
- =?us-ascii?Q?zCXX0gpn3G1zPHFyhDGZfv7Xz18ez8TLWWm2qWZm+iQWNXfzKOxqES+TJ20t?=
- =?us-ascii?Q?5Tdughp5AHz1NGJpOt/r/oel5LlhRgoCcr3EoyDrxOnLuMre9BEah5d35oZ5?=
- =?us-ascii?Q?USYtMgfFEW3Cw4ulHIVw8MT4cscfCKOTLwN6/TrLRmapFybbXk4aFHjqF8Ov?=
- =?us-ascii?Q?mz+tm8i2viKdl9jmZGGnnTjviKVrNC8W+m6Lqzie5vz8ooXt4hjgHZUEIzoP?=
- =?us-ascii?Q?JOtBThF/iPBlXMU+E7w/F+BTQFjs+6HZ3lRMPaA9f6qLNztPiB5walhaCqNN?=
- =?us-ascii?Q?e3K+s7Rtne3BuIcg1LFZm6/Uz+DaQ8HCAxCle/NsnU162xOUZPPBVJRNpWGD?=
- =?us-ascii?Q?KYaMg5fhZKq8yGNH9kfDNeM2XSMVEJWnF9mooXe7MMNrpAN1rkFUZzpt8cRc?=
- =?us-ascii?Q?+MBQaiIRanft6qq5hpj0sDEaK2pvUjUBeoLKHlKa8aYCzl2sUbdQ3t6cxKoW?=
- =?us-ascii?Q?9YY1JDNaUVdBKhONF+EeUJqLbTMd+pTIHBJ3gmZQCcf1Fln0CG/2ihOjflUq?=
- =?us-ascii?Q?U3aeaVI2Zg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vllg5-0004Gt-Bg
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 05:24:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1769768668; x=1770373468; i=lukasstraub2@web.de;
+ bh=n0r4ZR5UZs/SqWpE2j3Uk2nBR2bIS4mnFVmERR85t44=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=SnJbP/FfSZ73RO/ADiw40L0wcCDFAR0HygUX+n02yhA2oHIAuU+IVSszfhac/kLa
+ oicfxNwMg+Tq2SnGSOq82lFqq73KiQY+bDpylvh34NLfNGw5R8hZlOSheeyK2/ZYK
+ icBJdzP9g+ql7tqiqcbu6aytsD42R9tZ47p5eptxZufLps7+nZwhX6aB2D92lwRMA
+ mTKJah++ui1naZ0XC6K2QivGI6yRPXpCwvKhSxFdWfExCIYwV0ssDZtn3O71mElJw
+ 32mtpRLe5RiV3A33IrdohHDpA29k6AQNSMIcy7hyRRWExfmu1GhYgsPRz5mjwOTEp
+ VSvY+H4v4J5FD8sGTw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from penguin ([217.247.97.172]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N45xt-1vuoBR2b1V-00wlhZ; Fri, 30
+ Jan 2026 11:24:28 +0100
+Date: Fri, 30 Jan 2026 11:24:02 +0100
+From: Lukas Straub <lukasstraub2@web.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Zhang Chen
+ <zhangckid@gmail.com>, Hailiang Zhang <zhanghailiang@xfusion.com>, Markus
+ Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>, "Dr.
+ David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 06/10] migration-test: Add COLO migration unit test
+Message-ID: <20260130112402.2c008707@penguin>
+In-Reply-To: <aXkk22x1M0k4qZoo@x1.local>
+References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
+ <20260125-colo_unit_test_multifd-v3-6-ae926ccd8eae@web.de>
+ <aXkk22x1M0k4qZoo@x1.local>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c427115f-a79a-4676-81cb-08de5fe2a95e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jan 2026 09:33:44.1211 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WkGKVoYLHO3csv8jVBWP+p3SRxpBUYI7cWGmM0mLI2udztvVVmccmUrVUKnbrDbvOW3eOzD7w05KzYTXBRcqHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5734
-Received-SPF: permerror client-ip=52.101.43.70;
- envelope-from=skolothumtho@nvidia.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: multipart/signed; boundary="Sig_/s9UH4v4u_POl2IeqDdUQzFp";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:nM0aIa2KA+DmfT9dxMymEqa7mmTvx8IhZaZJ2vHWqcgLqX6f5FF
+ lTPiCmrfwNdtg92q/Uo/AFNBATuqjgGFTzf8emuSZIzNGlflW7GCnf+rSwC0NRZaZ6x5XdS
+ UF8wdgLJHFHCUtP6Pkes4vAoTN96O+TYg/FjqXOFTfqzP6fQkalwHEo3Yl4h9ZAS2Qp8mwY
+ I6AtBjBWQD/hNwAMrqtgA==
+UI-OutboundReport: notjunk:1;M01:P0:vJrUnSFdh+w=;C0Ui7NmNtDXfMFWkGEQttDRcTWk
+ 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
+ 9X7po9pKPVD
+Received-SPF: pass client-ip=212.227.15.3; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,135 +160,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--Sig_/s9UH4v4u_POl2IeqDdUQzFp
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, 27 Jan 2026 15:49:31 -0500
+Peter Xu <peterx@redhat.com> wrote:
 
-> -----Original Message-----
-> From: Ankit Agrawal <ankita@nvidia.com>
-> Sent: 30 January 2026 04:07
-> To: Ankit Agrawal <ankita@nvidia.com>; Vikram Sethi <vsethi@nvidia.com>;
-> Jason Gunthorpe <jgg@nvidia.com>; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; alex@shazbot.org; clg@redhat.com
-> Cc: Aniket Agashe <aniketa@nvidia.com>; Neo Jia <cjia@nvidia.com>; Kirti
-> Wankhede <kwankhede@nvidia.com>; Tarun Gupta (SW-GPU)
-> <targupta@nvidia.com>; Zhi Wang <zhiw@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Krishnakant Jaju <kjaju@nvidia.com>; qemu-
-> devel@nongnu.org
-> Subject: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions by
-> offset
+> On Sun, Jan 25, 2026 at 09:40:11PM +0100, Lukas Straub wrote:
+> > +void migration_test_add_colo(MigrationTestEnv *env)
+> > +{
+> > +    if (!env->has_kvm) {
+> > +        g_test_skip("COLO requires KVM accelerator");
+> > +        return;
+> > +    } =20
 >=20
-> From: Ankit Agrawal <ankita@nvidia.com>
+> I'm OK if you want to explicitly bypass others, but could you explanation
+> why?
 >=20
-> Sort sparse mmap regions by offset during region setup to ensure
-> predictable mapping order, avoid overlaps and a proper handling
-> of the gaps between sub-regions.
+> Thanks,
 >=20
-> Add validation to detect overlapping sparse regions early during
-> setup before any mapping operations begin.
->=20
-> The sorting is performed on the subregions ranges during
-> vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
-> mapping code can rely on subregions being in ascending offset order.
->=20
-> This is preparatory work for alignment adjustments needed to support
-> hugepfnmap on systems where device memory (e.g., Grace-based systems)
-> may have non-power-of-2 sizes.
->=20
-> cc: Alex Williamson <alex@shazbot.org>
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-> ---
->  hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 44 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index ab39d77574..7622ae5683 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops =3D {
->      },
->  };
->=20
-> +static int vfio_mmap_compare_offset(const void *a, const void *b)
-> +{
-> +    const VFIOMmap *mmap_a =3D a;
-> +    const VFIOMmap *mmap_b =3D b;
-> +
-> +    if (mmap_a->offset < mmap_b->offset) {
-> +        return -1;
-> +    } else if (mmap_a->offset > mmap_b->offset) {
-> +        return 1;
-> +    }
-> +    return 0;
-> +}
-> +
->  static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->                                            struct vfio_region_info *info)
->  {
-> @@ -182,6 +195,34 @@ static int
-> vfio_setup_region_sparse_mmaps(VFIORegion *region,
->      region->nr_mmaps =3D j;
->      region->mmaps =3D g_realloc(region->mmaps, j * sizeof(VFIOMmap));
->=20
-> +    /*
-> +     * Sort sparse mmaps by offset to ensure proper handling of gaps
-> +     * and predictable mapping order in vfio_region_mmap().
-> +     */
-> +    if (region->nr_mmaps > 1) {
-> +        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
-> +              vfio_mmap_compare_offset);
-> +
-> +        /*
-> +         * Validate that sparse regions dont overlap after sorting.
-> +         */
-> +        for (i =3D 1; i < region->nr_mmaps; i++) {
-> +            off_t prev_end =3D region->mmaps[i - 1].offset +
-> +                             region->mmaps[i - 1].size;
-> +            if (prev_end > region->mmaps[i].offset) {
-> +                error_report("%s: overlapping sparse mmap regions detect=
-ed "
-> +                             "in region %d: [0x%lx-0x%lx] overlaps with =
-[0x%lx-0x%lx]",
-> +                             __func__, region->nr, region->mmaps[i - 1].=
-offset,
-> +                             prev_end - 1, region->mmaps[i].offset,
-> +                             region->mmaps[i].offset + region->mmaps[i].=
-size - 1);
-> +                g_free(region->mmaps);
-> +                region->mmaps =3D NULL;
-> +                region->nr_mmaps =3D 0;
-> +                return -EINVAL;
-> +            }
-> +        }
-> +    }
-> +
->      return 0;
->  }
->=20
-> @@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice
-> *vbasedev, VFIORegion *region,
->=20
->              ret =3D vfio_setup_region_sparse_mmaps(region, info);
->=20
-> -            if (ret) {
-> +            if (ret =3D=3D -ENODEV) {
->                  region->nr_mmaps =3D 1;
->                  region->mmaps =3D g_new0(VFIOMmap, region->nr_mmaps);
->                  region->mmaps[0].offset =3D 0;
->                  region->mmaps[0].size =3D region->size;
-> +            } else {
-> +                return ret;
->              }
 
-Is this now returns without the trace_xxx , right?
+It used to hang with TCG. Now it crashes, since
+migration_bitmap_sync_precopy assumes bql is held. Something for later.
 
-With that fixed:
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+#6  0x00007ffff7471517 in __assert_fail
+    (assertion=3Dassertion@entry=3D0x555555f17aee "bql_locked() !=3D locked=
+", file=3Dfile@entry=3D0x555555f17ab0 "../system/cpus.c", line=3Dline@entry=
+=3D535, function=3Dfunction@entry=3D0x55555609bfd0 <__PRETTY_FUNCTION__.9> =
+"bql_update_status") at ./assert/assert.c:105
+#7  0x0000555555b09f1e in bql_update_status (locked=3Dlocked@entry=3Dfalse)=
+ at ../system/cpus.c:535
+#8  0x0000555555ec60e7 in qemu_mutex_pre_unlock (mutex=3D0x555557166700 <bq=
+l>, file=3D0x555555efe1dc "../cpu-common.c", line=3D164) at ../util/qemu-th=
+read-common.h:57
+#9  qemu_mutex_pre_unlock (line=3D164, file=3D0x555555efe1dc "../cpu-common=
+.c", mutex=3D0x555557166700 <bql>) at ../util/qemu-thread-common.h:48
+#10 qemu_cond_wait_impl (cond=3D0x5555571442c0 <qemu_work_cond>, mutex=3D0x=
+555557166700 <bql>, file=3D0x555555efe1dc "../cpu-common.c", line=3D164) at=
+ ../util/qemu-thread-posix.c:224
+#11 0x000055555589e6c8 in do_run_on_cpu (cpu=3D<optimized out>, func=3D<opt=
+imized out>, data=3D..., mutex=3D0x555557166700 <bql>) at ../cpu-common.c:1=
+64
+#12 0x0000555555b17a06 in memory_global_after_dirty_log_sync () at ../syste=
+m/memory.c:2938
+#13 0x0000555555b55b47 in migration_bitmap_sync (rs=3D0x7fffe8001340, last_=
+stage=3Dlast_stage@entry=3Dtrue) at ../migration/ram.c:1157
+#14 0x0000555555b56721 in migration_bitmap_sync_precopy (last_stage=3Dlast_=
+stage@entry=3Dtrue) at ../migration/ram.c:1195
+#15 0x0000555555b59f8a in ram_save_complete (f=3D0x5555575db620, opaque=3D<=
+optimized out>) at ../migration/ram.c:3381
+#16 0x0000555555b5e4f5 in qemu_savevm_complete (se=3Dse@entry=3D0x5555574c0=
+d80, f=3Df@entry=3D0x5555575db620) at ../migration/savevm.c:1521
+#17 0x0000555555b60437 in qemu_savevm_state_complete_precopy_iterable (f=3D=
+f@entry=3D0x5555575db620, in_postcopy=3Din_postcopy@entry=3Dfalse) at ../mi=
+gration/savevm.c:1627
+#18 0x0000555555b60a4f in qemu_savevm_state_complete_precopy (iterable_only=
+=3Dtrue, f=3D0x5555575db620) at ../migration/savevm.c:1719
+#19 qemu_savevm_live_state (f=3D0x5555575db620) at ../migration/savevm.c:18=
+55
+#20 0x0000555555b65ed9 in colo_do_checkpoint_transaction (fb=3D<optimized o=
+ut>, bioc=3D<optimized out>, s=3D0x5555574c0070) at ../migration/colo.c:474
+#21 colo_process_checkpoint (s=3D0x5555574c0070) at ../migration/colo.c:592
+#22 migrate_start_colo_process (s=3D0x5555574c0070) at ../migration/colo.c:=
+655
+#23 0x0000555555b4971e in migration_iteration_finish (s=3D0x5555574c0070) a=
+t ../migration/migration.c:3297
+#24 migration_thread (opaque=3Dopaque@entry=3D0x5555574c0070) at ../migrati=
+on/migration.c:3584
+#25 0x0000555555ec58c0 in qemu_thread_start (args=3D0x5555576583e0) at ../u=
+til/qemu-thread-posix.c:393
+#26 0x00007ffff74d2aa4 in start_thread (arg=3D<optimized out>) at ./nptl/pt=
+hread_create.c:447
+#27 0x00007ffff755fc6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/cl=
+one3.S:78
 
-Thanks,
-Shameer
+--Sig_/s9UH4v4u_POl2IeqDdUQzFp
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
->          }
->      }
-> --
-> 2.34.1
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAml8hsIACgkQNasLKJxd
+sliFKhAAtRGNJVq0N9Du4DFIBxuFtknrKUk+8nPY6BbasUnToOriGJPnFss7phde
+zN3rBR/XyjSReHaGqF1AMkcisIl3qBWrHRP5Homd3qpHePltXaccb0jf5rc5L5HL
+Gx1BrvbL+ZdkH5V5NQOfyq5t9F+XdKmzmRmQvDVovZ6yvpyT7pxerMlwB3d7poXo
+1XviHfdDb3+SUCRfYTjkifzen+bzLPxLwvEwo96DNFp+n1n7aEzFeP/8UEDY42Hy
+iTtk+F39316bb1W5cryhUwZKcVpGW0vbd7YceHL25sWWEMc2z5MASrtamPIc5CCE
+bbolPkxV6OMo1MZCh/PEwauabfC8hROWrBMrBVSrQZRBRgB48O0TV8CDW3sM/gQX
+SZyCMyiZhAbyCFCjkc5uzk0GezAyX8c+gMSWXOQQvISKfCTvW1KblMycrS4sThWg
+z1SMWYtA9vrRtTJgJCznjCSInR+di0vXyI/hHNMWWQyggJcRuZtmBdtebY7lOiQ1
+PrdWSxzyHfDnbTCJSMF/3U0jss5foWCMiganv/MtT6+tYRhcIDIxIdQ/ixeaM3nb
+/jyxAjSmtHmTKeu5fKfI+sV0hjhO5njrTwv4kHRnvsZgVCHp2qtVE9aH4Nm06qBr
+0Bs9fM492Ek47W5WlEEc6Zld+l93+Mfycue3EwCbtXXqP0jsF1Q=
+=u9q8
+-----END PGP SIGNATURE-----
+
+--Sig_/s9UH4v4u_POl2IeqDdUQzFp--
 
