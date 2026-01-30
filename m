@@ -4,94 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A98D49C65
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 07:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33869D49C65
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 07:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlioZ-0004dH-Jj; Fri, 30 Jan 2026 02:21:11 -0500
+	id 1vliv1-0001IK-Ej; Fri, 30 Jan 2026 02:27:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vlioX-0004bh-Bq
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 02:21:09 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vlioV-0006xN-2d
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 02:21:09 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-81c72659e6bso1716666b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 23:21:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vliuz-0001Gp-6Z
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 02:27:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vliuw-0008Ui-Ug
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 02:27:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769758065;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CIEnhJ4elPsh6TVbrczi0RhKjJP1KalCLjATSeONf8c=;
+ b=CPR0a0dIyI53zOyFAu+eIHQrJww83ppqcUcqqjTGvuZTgAgiO0QqGnyDQjdBCZ/XiZcVsE
+ WagljglRAn0y5Clq0pe2T2hGI2h0D/jPEqYoPzU1w+j3qYyDLjVTHAOTCgL0/6dM4E/NFc
+ DcRo+wHT/p/qWao8Q68iTMKnOCRz37Y=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-ZutHmj-GOz2e5QVqJg2Nlw-1; Fri, 30 Jan 2026 02:27:43 -0500
+X-MC-Unique: ZutHmj-GOz2e5QVqJg2Nlw-1
+X-Mimecast-MFC-AGG-ID: ZutHmj-GOz2e5QVqJg2Nlw_1769758062
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4806cfffca6so17877675e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 23:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769757665; x=1770362465; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PQbPsewlCGfsgCgzGUwxP2mFRZKg5vAUTgFQRRA3ukw=;
- b=GiWpNJhVEgHyxOPqPVBFMtYJdMREM8oqlTV38SjUrDmLsj2mqfbOs6IInk8Z/+NAjs
- rSsgfaHHGvqnhec1TNMHiC7CkGA8Berhn5IopNIrCChnwJtpbZqMsxKzGA0dmAm9/rWi
- 09U4piidp8KT9WXem0pFfuMYCg25m5Dc4+jhtCkEs2izL49EBUmfmgzfHVqvexPqb5yk
- 0UxyEPJSuxj7P/RYp0ei6OEArtX/5qV33KPcNanOZu7TBpajUp4HcNxgzfRFJsN3nJJu
- qo2tAa3CaWg9lVHdSaGABqSTZIRNTqLkAP/j2rbNUPrrM6Q+WRQF8zQA4PiUWjO/SPz/
- tldQ==
+ d=redhat.com; s=google; t=1769758062; x=1770362862; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=CIEnhJ4elPsh6TVbrczi0RhKjJP1KalCLjATSeONf8c=;
+ b=pfHRFv8FTUxr3hKOAi52R1GeVx8ANatxgN5Zs6fv2YarzxrFIBpSz3E9XQDAnuvR6S
+ 8NRR6rqxvINVbZyR36GSYrm52cSfeoNZicsDO+RUiZbs5Mg5sAvfhaWsI9GKfhP/Migc
+ QQO0ykUPno7ah4Ca28fTIUc23SNsk/WZLo3d00agSbIlMAyONespZexaoFcS4pFQwugi
+ +pY3FTFUNr1xl/jnnvyI/TVde9l8WMc817ETGsOi3exyKvQiBCWJPSsOmoOtaso3yJWO
+ Fn5xipv+89tntJmMfjbZ4XUFktXpSgOALxhijAQg4KdvEQblUoPIJEMY/AwOFNdCF3Ck
+ GOtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769757665; x=1770362465;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PQbPsewlCGfsgCgzGUwxP2mFRZKg5vAUTgFQRRA3ukw=;
- b=BBZKr1zeIN1chZ2t0piatZjkFEAo7wJRzkNKTlHbMsJeeqFdwAtsFsZzJKmIoKLTqt
- 77iOfgbtFWOFYa6No3+YZ+flUmiplXZvTF/cfXHOeqSTvTGPBjQqgeNKFHKv2/lOTrqC
- ca4u0wBgl9zFgivpD+drx+ls7xmZJCaOuQ2Ai+yMlGb6aE5Kyq1l/o2zj8LPyxvWScqB
- HTWSAaFx53lwjBXv0Rx1tY/Hhc9udQewDVS1G2t7bdxCEZIB2dxfebcaZ139ArsQqGrH
- OH5N2eR/n1kB1R03stu6VXSKjtMJOJZbkSZVN13LTQNHUrjBVjgY3AE/HB17UtN3sHXX
- Knaw==
-X-Gm-Message-State: AOJu0Yw1RrCMGAUW8ANRZYdGdu7GpRofQNC1KPZOKcCrW540zHqRrHzo
- bkrx7GQHOfb6AizC78W4wOorua8abdOO2Lnd1Pc8WmLyDQI9Q3Fh8PTN
-X-Gm-Gg: AZuq6aIbBlTFcGKG7VVucU6AKVIq1my8GzahD3ULASa3Lb8mbHgJS5TAwhIEiLS3MOq
- t4qV7ZbBWNX65Cu9LSOM8ACJp4YfZojw+lASeHQij/oEfHq5RrndymiI2NDOwhX/xfdc/Si1FdR
- RBz/IOLGVe6MQ4nNrcq26rgj/bPW3K46/1GdMLohCWuAVEwOc9HfJT6rvVxXd3HQyCIEALBsIWq
- Bz5/sDYLiB/6WetYLOOtcjWGr/1hp60FDWbwhlTgzDB1ImLBqiJSlwJ6kOELac2H9101nPy4zDx
- dfTQfk8BEQIiaXYmMBBkOhFPA4AHtlGKB01Daitmh6Lq/oXvdH46ptUZSykY6SxvGqzajSGB3Pn
- DfIR5b1qHnfKUXcFINuxI8LnBcGgnRyIOp5HUiJWmz4XiZsW/k+eSglyS45M/1fGm4Hi4ObT/DF
- S9Pom8ZhYRiu7k3hBp/FkgEZ5Tug6M3bNrlqB3sGIm6eEzoPUwrUnnNOUA6dM=
-X-Received: by 2002:a05:6a00:3d0a:b0:821:afd6:c6e5 with SMTP id
- d2e1a72fcca58-823ab643b32mr1946447b3a.5.1769757663949; 
- Thu, 29 Jan 2026 23:21:03 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([183.195.20.181])
+ d=1e100.net; s=20230601; t=1769758062; x=1770362862;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CIEnhJ4elPsh6TVbrczi0RhKjJP1KalCLjATSeONf8c=;
+ b=mQqSYve/AwXxl38gwKF5YCVeJO+uCtHGARST6zESv0fVJ83umiDsd9F2at2e+Kg9EP
+ qX9tPXOqF0ZHjDzpHHJisP74LITUVeZpvoUEQyxFoOfaEOydbwqr7eY0dL2IsRXAXsE7
+ 0/O+cSERWkwTC7P78BusUco2XB81Ng7W1CIXZSpPYBFm8/9cfk6GCqM+tty3LAitGaD3
+ 1trL0SuefJNvgbS4FXTA9/BzcpEkRrRlWu4urA22HZ9SUXL32CZ2BgMHog5B16pukMD4
+ zBmXNbG1to2LantIl/4w9o3G0eGKMzJjrd2jdyRcBANOsv1STcrxsyX7TIaKqA4OKog3
+ Evzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVna+0tp16NSP1wequ5CeBoq5FVnAwNybCYtsLOFzBQYD7FPmCDLbiacrnf8CP504by1kggRx35BWgc@nongnu.org
+X-Gm-Message-State: AOJu0YwkKc8Fv/LxAYJgKMp6IxoD28svaY9ZihwHVdw+i9T/KKzUGD1q
+ 9Knmq/DpJK5JC+oVS7VE2+sfsO5/lvEMBSoX8c/bLfUER2fAJWXzYKqq5VBT4yx58+JLlWRiiDf
+ /5hoJ6k/f88vkTjdK9PyIKWgt69oD9NxcnK2U2HpAIuvO0pwktF7Bcjot
+X-Gm-Gg: AZuq6aISJ7Je7NTShe6rzWIIIlNCN6TzvR8Kf6M40wywiQ2nEZavTmu5J7ey9gX4wp2
+ P2iyaO3XvnDW9H3A6xG8z39Rz/VPogTTTTpz2Koi24zNijlybrGi+4dFMY0l8dT/BrkCoBr8xrs
+ fa9XnwezPJUuF4pR9fwQp4cxnO5yuMT39vRTdEFmIAnP7PcnaZK7aTU2UR5+4KuGiU0v3IGCxJf
+ CM36W4XGg3DarCh2R89NxMpkWrmNIQ3WvCGtUyCuqyRVRogfRyMJpZ2ULbrf/TwklgAGAvn97lg
+ O1NyZzYYeUqO4CjuFbxyDFpR/1+CLI7oDXf6SpDUO1Jb3kaEApwMHz0XSsndBLrBlvVLDTLuXef
+ ig610PYI=
+X-Received: by 2002:a05:600c:4ec7:b0:47b:da85:b9ef with SMTP id
+ 5b1f17b1804b1-482db463c13mr20769795e9.16.1769758062129; 
+ Thu, 29 Jan 2026 23:27:42 -0800 (PST)
+X-Received: by 2002:a05:600c:4ec7:b0:47b:da85:b9ef with SMTP id
+ 5b1f17b1804b1-482db463c13mr20769565e9.16.1769758061774; 
+ Thu, 29 Jan 2026 23:27:41 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c227c2sm7269905b3a.53.2026.01.29.23.21.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 23:21:03 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- hust-os-kernel-patches@googlegroups.com, Chao Liu <chao.liu@zevorn.cn>,
- Mig Yang <temashking@foxmail.com>
-Subject: [PATCH v5 4/5] tests/qtest: add test for K230 watchdog
-Date: Fri, 30 Jan 2026 15:19:42 +0800
-Message-ID: <a8ae9e811d66201397b064e8573dac9f7e379823.1769757064.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1769757064.git.chao.liu.zevorn@gmail.com>
-References: <cover.1769757064.git.chao.liu.zevorn@gmail.com>
+ 5b1f17b1804b1-482e047e644sm8261545e9.2.2026.01.29.23.27.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 23:27:41 -0800 (PST)
+Message-ID: <3701a9f4-dc26-4f00-9aa7-7c5f6dc73f57@redhat.com>
+Date: Fri, 30 Jan 2026 08:27:40 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] target/s390x: Dump Floating-Point-Control Register
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260129190902.196262-1-iii@linux.ibm.com>
+ <20260129190902.196262-2-iii@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260129190902.196262-2-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x441.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,254 +167,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu@zevorn.cn>
+On 29/01/2026 19.57, Ilya Leoshkevich wrote:
+> Knowing the value of this register is very useful for debugging
+> floating-point code.
+> 
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>   target/s390x/cpu-dump.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
+> index 869d3a4ad54..5b852928031 100644
+> --- a/target/s390x/cpu-dump.c
+> +++ b/target/s390x/cpu-dump.c
+> @@ -63,6 +63,7 @@ void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>                                (i % 4) == 3 ? '\n' : ' ');
+>               }
+>           }
+> +        qemu_fprintf(f, "FPC=%08" PRIx32 "\n", env->fpc);
+>       }
 
-Testing the Basic Functions of K230 WDT:
-1. Reset Function
-2. Timeout Check
-3. Interrupt Function
-
-Signed-off-by: Mig Yang <temashking@foxmail.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- MAINTAINERS                 |   1 +
- tests/qtest/k230-wdt-test.c | 199 ++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build     |   3 +-
- 3 files changed, 202 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-wdt-test.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 64a5f3b986..84c980d252 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1765,6 +1765,7 @@ F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
-+F: tests/qtest/k230-wdt-test.c
- 
- RX Machines
- -----------
-diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
-new file mode 100644
-index 0000000000..2550cebd10
---- /dev/null
-+++ b/tests/qtest/k230-wdt-test.c
-@@ -0,0 +1,199 @@
-+/*
-+ * QTest testcase for K230 Watchdog
-+ *
-+ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Provides a board compatible with the kendryte K230 SDK
-+ *
-+ * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ *
-+ * For more information, see <https://www.kendryte.com/en/proDetail/230>
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/timer.h"
-+#include "qemu/bitops.h"
-+#include "libqtest.h"
-+#include "hw/watchdog/k230_wdt.h"
-+
-+/* K230 WDT0 base address */
-+#define K230_WDT0_BASE 0x91106000
-+#define K230_WDT1_BASE 0x91106800
-+
-+/* Test WDT0 by default */
-+#define WDT_BASE K230_WDT0_BASE
-+
-+static void test_register_read_write(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* Test Control Register (CR) read/write */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
-+    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), ==,
-+                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-+                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-+
-+    /* Test Timeout Range Register (TORR) read/write */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-+    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), ==,
-+                    K230_WDT_TORR_TOP_MASK);
-+
-+    /* Test Protection Level Register read/write */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
-+    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), ==, 0x7);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_counter_restart(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* Enable watchdog and set timeout */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-+    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP = 5 */
-+
-+    /* Read current counter value */
-+    uint32_t initial_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-+    g_assert_cmpuint(initial_count, >, 0);
-+
-+    /* Restart counter with magic value */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
-+
-+    /* Wait for time */
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-+
-+    /* Counter should be reset to timeout value */
-+    uint32_t new_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-+    g_assert_cmpuint(new_count, >, 0);
-+    g_assert_cmpuint(new_count, !=, initial_count);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_interrupt_mode(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230 --trace k230_*,file=k230.log");
-+
-+    /* Set interrupt mode and enable watchdog */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
-+                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-+    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
-+
-+    /* Wait for timeout to trigger interrupt */
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
-+
-+    /* Check interrupt status */
-+    uint32_t stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-+    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, K230_WDT_STAT_INT);
-+
-+    /* Clear interrupt */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
-+    stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-+    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_reset_mode(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230 -no-reboot");
-+
-+    /* Set reset mode and enable watchdog */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-+    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
-+
-+    /* Wait for timeout to trigger reset */
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-+
-+    /* In reset mode, the system should reset */
-+    /* This test verifies that reset mode is properly configured */
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timeout_calculation(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* Test different timeout values */
-+    for (uint32_t top = 0; top <= 15; top++) {
-+        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
-+        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-+
-+        /* Read current counter value */
-+        uint32_t count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-+        g_assert_cmpuint(count, >, 0);
-+
-+        /* Disable watchdog for next iteration */
-+        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_wdt1_registers(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* Test WDT1 registers (second watchdog) */
-+    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
-+    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), ==,
-+                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-+                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-+
-+    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-+    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), ==,
-+                    K230_WDT_TORR_TOP_MASK);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_enable_disable(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* Initially disabled */
-+    uint32_t cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-+    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
-+
-+    /* Enable watchdog */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-+    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-+    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, K230_WDT_CR_WDT_EN);
-+
-+    /* Disable watchdog */
-+    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-+    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-+    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-wdt/register_read_write", test_register_read_write);
-+    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
-+    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
-+    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
-+    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calculation);
-+    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
-+    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 0f053fb56d..54c3ba5dea 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -283,7 +283,8 @@ qtests_riscv32 = \
-   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
- 
- qtests_riscv64 = ['riscv-csr-test'] + \
--  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
-+  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
- 
- qos_test_ss = ss.source_set()
- qos_test_ss.add(
--- 
-2.52.0
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
