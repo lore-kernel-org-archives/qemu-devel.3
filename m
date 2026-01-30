@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE459D49C9B
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 11:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107A7D49C92
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 11:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlmED-0006H1-Bp; Fri, 30 Jan 2026 05:59:53 -0500
+	id 1vlmHs-00025j-AW; Fri, 30 Jan 2026 06:03:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vlmEA-0006GI-1i
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 05:59:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vlmE8-0003kn-Ca
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 05:59:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769770786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LZM1ucTgT0GURbBfuxyhpnjEWNgwIL9W/G7RUWEvU4w=;
- b=UktUYz0Ja2lyJVLBqy3mlNkDJzUsPK1UtN+N2/NVTmBbcsB7tO1PqaG2X0U8ISplYnyEyQ
- LzpRjRpfgP4yzQcL2tBXD764JJmio65/XVnYcnXL0CEYW9ySwPB209GnoK/4C/m6jRqupz
- dJmBqDnZbBE+VUK2jJSlHzKLH3JDe64=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-_rLxg-z1MK6k0knWuDoyLQ-1; Fri,
- 30 Jan 2026 05:59:43 -0500
-X-MC-Unique: _rLxg-z1MK6k0knWuDoyLQ-1
-X-Mimecast-MFC-AGG-ID: _rLxg-z1MK6k0knWuDoyLQ_1769770781
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36DB91956080; Fri, 30 Jan 2026 10:59:41 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9E1EE19560A2; Fri, 30 Jan 2026 10:59:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2E06A21E692D; Fri, 30 Jan 2026 11:59:37 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Roman
- Kiryanov <rkir@google.com>,  qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  mjt@tls.msk.ru,  whollins@google.com,
- jansene@google.com,  jpcottin@google.com,  Eric Blake
- <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-In-Reply-To: <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
- (Peter Maydell's message of "Fri, 30 Jan 2026 09:19:32 +0000")
-References: <20260129190444.225306-1-rkir@google.com>
- <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
- <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
- <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
- <0954062c-c032-42be-ad0d-df2559360963@linaro.org>
- <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
-Date: Fri, 30 Jan 2026 11:59:37 +0100
-Message-ID: <87sebnfjs6.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
+ id 1vlmHo-000242-VD
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 06:03:36 -0500
+Received: from mail-yw1-x1141.google.com ([2607:f8b0:4864:20::1141])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
+ id 1vlmHn-0004VA-EJ
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 06:03:36 -0500
+Received: by mail-yw1-x1141.google.com with SMTP id
+ 00721157ae682-78fdb90b670so18237657b3.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 03:03:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769771014; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lV3A7+Qf9GkxMcSA865IFVIfRUCUxbI9BT5jrOvpj+RPxW9BCi34+PTNFxUfAe0/w2
+ mpASTdT1t3nyV6ZwbeWiODbAzK3Vty0CIjsXldXV0egMKFR0m+/oDWT5ysU+x80iXU4u
+ uIvBlVPjuGSqcSPrwFv2jUMWvKzJwVB7M3HpLOLo964jMuSAppLiF5tM0h2+GSKjr+7j
+ 3d/FfXpojNCyYpJYb8BP0Jx3VZ7FfKuJv+kRxq8gLkJ2xNhQ6MWJEz4xrXu7prAuqVRv
+ jlrEvSHteb6U5PtQFAp8c63C9PYuFm1gXN42YlhlezHHLpIiOGS+2DNDp7SvQzvPlvDc
+ eZhQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=bPK3XofH6l8W+BXoYHETOkHyF+6BUZl/toK3hKE7jc8=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=d32dh41Qt3QfPMQOZzTPMGGBjju3B1aVAO5ttduk+Dkbd8ELgsj2G3u5V5tsd5amlE
+ Auvtie9LbProJ2vOZeUjAh8DnspK3lHd8dqYiF+d+nx4+6nMChoa+7vj5DhcpcURsbWz
+ 6qndySJB6bTpx7mF0G3IcLuYeKP8yntkm1wnkh9XpPG5U35kpQ43ddq0yk5vkHHFSpRa
+ 4KyOX5j1V37oNtCtu2io8FEva0lkPv9ZZhZ34gsVFtOgI0fCWfIQU6/STw7+MRGV04hK
+ EwlG/r/gq3gDLbDcHKKFlonmN2cQctz6RVP2Yuo0ddRE90HZ/1EKfieh1d8Gz//XmEk8
+ ccaw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769771014; x=1770375814; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bPK3XofH6l8W+BXoYHETOkHyF+6BUZl/toK3hKE7jc8=;
+ b=R8kOE2H6WYPIELJBrnb72mw5kObQiEJAZRVSEPaqlDt81UtJM9w6GIMf9TcARMT4Zj
+ 71z8NsmfBfVM3UPtj9Scq5aASTnS/vjJi3kHvCfeYH8WcCuurM0SCuAqp4wijJRdQV0p
+ 9p81GPuFfaXjUjfBkDcunxG1N4a/h17XzwXlkFuyXjbXl7ibrVwwjZzOdOpkON68MBhR
+ LlBWBEX7Rb2kdrzJtqtGhqRHD4+dDgm29At2rAbqXSXLMHY86pZr33v2AYoJ2nCDOU5c
+ TDpgAc15wiWsYjMenA8tsXZFZjxNR0BxYO238pR8QQ/fekKFNYFQ87bZItxat6aNYQKE
+ 1DXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769771014; x=1770375814;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bPK3XofH6l8W+BXoYHETOkHyF+6BUZl/toK3hKE7jc8=;
+ b=bkiuJdB68upVCstAh9abyK6AqJTouiaI8keQ+bIkZ4BqeELl2XQtxaFidwZDXZoeCt
+ WwgbdXUi0ZEVxEJQyEZbBJDbjoZC0s/ibyLDqImEJKXza4xl1YNXlFO1aUXSXKnqkmiu
+ bi54VtVLo+YHnwpix74PoaTH1DEUk5GIszcNsaTOSNKvGgwADsL67qKR6E18h4UOLOM/
+ A2eqEENN0h+k5vxVvdrae4+JD80xrUdD2u9W0R6jj4BZ1mrz9bNbBDhAAFR52OBsvFvu
+ pJl4W0sfD7PDR2PaxgHjM7sw0HLGTlgHgmCybhiIGafGtl0iPph+eaVs+U5lMn+ihViB
+ iWiQ==
+X-Gm-Message-State: AOJu0Yym2HHV3y1rwsXiPxBZhraqQjmPYVqvYMjGWPg49a+4nOQj/wQY
+ M8SSrTlU0CCDlGQsxTaqm3XBlfUw+Ph2jjOifhh9JVcxAqJrEKQe64ZSGlEUNVJmGp5OZOilfeJ
+ /FsRNg7bU61Q8iJ8dxplue27Yj9FTNAFaUPgS
+X-Gm-Gg: AZuq6aK37CMwsoSHt1kf44UyyQdbfCJJ6F2T765z6g1tpoSzAyKIFVnB5zRtD2tFvN0
+ D3oDHNQjxD5jJgmXTH+JvjSy/hxHvoBPbZJkPWUIs3/5ybsjXg8ncHs/B6b79TUCCGqnR76s9pv
+ rK+968xRTCbwApcH2AP1l4GWyp2oYNGi+bn3keV7mD0lEmcFit3aJJ1tSm0v53XbBY/3He70WCB
+ UHkceVNfyz00R/w0OpCJknrLrmB4+Kk+kc4IbPTovKs8PvG2fbE4ykJ38DXe7s1An9Ru7A=
+X-Received: by 2002:a05:690e:4089:b0:63f:abf6:1cc with SMTP id
+ 956f58d0204a3-649a83a5768mr2063820d50.13.1769771013794; Fri, 30 Jan 2026
+ 03:03:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAHhgW4UH=_65pZJEACBXh7J0XN1SH1HFS_e_FCN8Zm2sKa1sww@mail.gmail.com>
+In-Reply-To: <CAHhgW4UH=_65pZJEACBXh7J0XN1SH1HFS_e_FCN8Zm2sKa1sww@mail.gmail.com>
+From: Yodel Eldar <yodel.eldar@gmail.com>
+Date: Fri, 30 Jan 2026 05:03:23 -0600
+X-Gm-Features: AZwV_QjD_4P6xcpWcUaDdkr8FFvFvnSt8N6rivTFCr3HVOw2YmPOB44PCXxzZu0
+Message-ID: <CAHhgW4X-R-Pm1ZV20UuBPbCtnSmp5r1HkwMjWMZ7KuVX0Cp63w@mail.gmail.com>
+Subject: Re: Wiki Account Request
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1141;
+ envelope-from=yodel.eldar@gmail.com; helo=mail-yw1-x1141.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,56 +113,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Thu, Jan 22, 2026 at 1:30=E2=80=AFAM Yodel Eldar <yodel.eldar@gmail.com>=
+ wrote:
+>
+> Hi,
+>
+> Can an existing wiki user please create an account for me?
+>
+> username: yodel
+>
+> Thanks,
+> Yodel
 
-> On Thu, 29 Jan 2026 at 21:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
-org> wrote:
->>
->> Hi Peter,
->>
->> (+Paolo / Eric)
->>
->> On 29/1/26 21:31, Peter Maydell wrote:
->> >
->> > What are we trying to achieve here, and why does it benefit
->> > us as an upstream project ?
->> >
->> > cf previous email thread from 2024
->> > https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
->> > about "drip-feeding" of this kind of patch with no clear take
->> > on what the end state is or how much churn it's going to induce.
->>
->> I clearly know QEMU is not a C++ project. Now I don't see why we should
->> be reluctant to have headers being usable by a C++ compiler, as long as
->> it doesn't make our project worst to maintain.
->
-> Every bit of code that is written by some downstream in C++ is
-> some thing that will essentially then never be upstreamed without
-> a big rewrite. So making it easier for downstreams to use C++
-> reduces our chances of seeing them contribute what they do back to us.
->
-> It's also extra work for us (for instance in this thread you
-> proposed adding a CI job, which is more CI minutes cost to
-> the project, more work for maintainers when something that
-> builds fine locally falls over in the CI, and so on).
->
-> Each individual fix might be trivial, but they add up.
-> So it matters whether this one is "this is the only thing
-> we tripped over since 2024" or "we just rebased to a new
-> QEMU version and are going to be submitting dozens of these
-> over the next few weeks".
->
->> See for example non-invasive commit 7246c4cc470 ("exec: don't use void*
->> in pointer arithmetic in headers"):
->
->> or commit 17c7df806b3 ("exec: avoid using C++ keywords in function
->> parameters"):
->
-> For the record, I wasn't really enthusiastic about those changes
-> either, for essentially the same reasons.
-
-+1
-
-[...]
-
+Ping?
 
