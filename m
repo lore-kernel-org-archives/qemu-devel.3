@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C885D73EBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 06:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E09D358D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 06:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlhZV-0004lE-DL; Fri, 30 Jan 2026 01:01:33 -0500
+	id 1vlhZN-0004cZ-5G; Fri, 30 Jan 2026 01:01:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vlhZS-0004ib-IZ
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:30 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1vlhZL-0004Ys-Ap
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:23 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vlhZQ-0000pm-NW
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:30 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-2a07fac8aa1so12262205ad.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 22:01:28 -0800 (PST)
+ id 1vlhZJ-0000oT-MK
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:23 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-2a0834769f0so11547505ad.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 22:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769752887; x=1770357687; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769752880; x=1770357680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O7WkHiVNJCD9TWHbxn4o1h9ogKNZelcybfMD61+3Zog=;
- b=I1aywIW646BWwifIpMCVG5pjIQ3zQrmFCAE/GGRQNW97WogFrYQafOXtfpIGPmOpnG
- 1wOaZOVFAmy7e1xtniUkknJWWBIMP56cgBxcZqbEE6IEI67o7WMzVEEKHEJ1N+qEuSlD
- Hh6Ess7UVYtf2Qx6WYmyrv0he6ZKQeAUaiwPU1bddNdfGKD7xGEYDf2d/ox2r3hnl3Dk
- 6JrUNlZoq7ZLkrBgTvgf00Hb4OQX5Yg3Y3OL43NqlOxOYUBDGxGYwAqkG8kBjOnzGtLO
- 05vemSPvkJb7RVKHPY4EcPojC5k2enkRIUaXtxvpm3ht7m3neyOIeKFt34zNP7bUn8E9
- LsHQ==
+ bh=NFvnzx92PgL7+xgM0KCt+ExUTmfmTtdDt4IgVzTSlKk=;
+ b=I00HhMZ+zEUHatZ2zmjTcSCQ1RXP2Kfkmx05IsBQTtxIhyvqizZwZuVM0Y8X/3u+e6
+ 2l1jKwY21kvgg0QRjyN2H++xPRnHgG8m0QB/DlXgYv8M+YKgyccrk5b4KNoFbUb+kDhu
+ ytcK33C8spdFml0sZiLmLKVnoloHt6+MTPDKaZycY/n1BrMECGRWx+DKjUISxBHZn+qE
+ w5rA8lHJ74xMiVkTgJ5LU4KMwb93ddWzoao6JCVDcbDzZZ68y+w+DNlQbzA74RGUl9yb
+ 3eNC34jJBvTybrvKxxa+g5BR9WfGtOCRVSdSmf88K44makOeLOjEhKdK9u0KCPaK0+WM
+ guSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769752887; x=1770357687;
+ d=1e100.net; s=20230601; t=1769752880; x=1770357680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=O7WkHiVNJCD9TWHbxn4o1h9ogKNZelcybfMD61+3Zog=;
- b=jA4T+nYciNJ4Zlw7dRFoBt1GJa8DauJ7zPP/tTZ80xupQXdFJulpY98X9hWJsehwo1
- HQWryXfbYjBCZVYzD7Ox0Zy+gNKxVcTpiz39Db1QwSlsaEBo+6ETSWbcIxzGVNCZr2CF
- B1tFdQlqWmaOg4htcZvvH3CyuI7DqCOGbQEIpNsxCapTRKVFVXGd96UBTt8v4Bx6aM88
- VoNKSdEFtZ1rhewUmOaefhgKKuM9AwcRfOukE7Pj3uh1K5L70BmxfuS/+1O48lruZEou
- GwEMOFe7rXke0PBz10KcG3v+sz9D+AtqdrKXqLJ8TZJ/CdMjqqmElMpWDCHjAJ75zqKe
- QJsw==
-X-Gm-Message-State: AOJu0YymPlAbGkA6Q44Egz8MXSUSzZr6ZV9s35O+Bu5SUL3dgEq+cE14
- LGWuZhPOU0CUFNiPJ2azjf6nrebBeX2IxEKUS2XvGboF3/5C6nnGPr+G
-X-Gm-Gg: AZuq6aJsNFS/l/fxBSEBAIOmed9yh5V1IxR/2vkyZNIWceZ2fgGoh28wMo0/UPc2VNy
- XIsbZc6McAie+KqwncLwOls6SnwQ594JrWmjLrUlvB3esUC0j7u/KBgXuDbQGplJeOaZhf9lqAa
- QodFvsNxFfr7qAJ9q/rzOFzJ8p/+UJUqK7pGbJ8BamxSNehdEYgFjWq8+m5Dx+f8E09BJYy4Pg1
- aqeNStDYwGDd4zTiiQlwsTcvB3mVDb1wrTsC20CeF/b35x3NN/Kq54nhXtXtFs3DVL9xL0TzhmU
- IcYt1kwYqqy6A1QYE2D3ZWzU2akuBS5Dr5alFIQUu9fWWU8S/VyljaQOv52+curi8BHx79NPNrS
- XFfoagk3AfvauJ/uGUU27W/xli0GG+nlGrVmZMMD7QjP3XmUDJ50HImTjm9h64znzzDICIEj/SO
- kZDTEHdS4yjBgHsAZiSCSfVnKTeD2h3TJHUfcTstTyprGr6I/Xt0XZBUwu0OE=
-X-Received: by 2002:a17:903:41d2:b0:2a0:ccef:a5d3 with SMTP id
- d9443c01a7336-2a8d7eb531amr24043985ad.3.1769752887362; 
- Thu, 29 Jan 2026 22:01:27 -0800 (PST)
+ bh=NFvnzx92PgL7+xgM0KCt+ExUTmfmTtdDt4IgVzTSlKk=;
+ b=gTxF0w98XgcKFjRm6PRdNQc/G5qEy7i69/0BC78mZYO9JyeeuA+aEHrB3ZV6gkHYBF
+ oGUBjefjVpLYVT9csAUKksumapT7ZDqdPJ4HVrYJ31K+6mnE/lgsTVnfGlxFGiotbiJZ
+ 4cIGticlmbwti/abcGWNqO1Q6JsiOuN0D4K6uzpmdBn2M5FLJ8F6D7TnfqwEOtY+1JSJ
+ MV28SuQbDBXTk6ctJGXSbpmB3wkk3JPWTNtcsmDYZLpTbTMHRYRumRO5KAnsO2cJk5Sa
+ ThMMYy/5yfBAaiQshP+ODPeVNtmietjmDZHVhjmUIv86e66itWNNkjVe98lBmv/xBbMC
+ 1KKw==
+X-Gm-Message-State: AOJu0Yx0TIf9EhR9NWhBo8JyTw8lQmAYPDkD4/BSpGdOZrQ6fhpNuz1t
+ aYjR+V8bnSSlBNtH9/gvuAn7qmoXzdB2Sg9dqjYLE6MJMYx8qPKSJqCJDmTGFBOn
+X-Gm-Gg: AZuq6aJPipu2EoVz7T70pi9kOfosf0NX82LCsFhhxymgZX5NjCOiA1NEUaF07R1kolU
+ AcqtmxzT17DCfpMCzy0TwUwtTVi8OqtOC113AhIOswpimEKCXum4YPTM44hYWnwlgNDmRbg13hs
+ TwBs/iGc/NMMYFoABq54Lnu9Pu10el2+zc7L/TLqaVsyzCsfl72n9x377HQrCqdSBjtNgzSKT4B
+ 93Um74qkwLE+Zjj+pUQNgG7NPBtezGcGlv8kBgVss06UGUj9Fyfr98lskkQqv2llcMLJ3ENlmIM
+ Gh1Kv2BmLQ/5HDxEE+a7eTgwXvX4oaxNSqkNtBufMdbOhhAiQ26DAwR3wKsdBg5HvSIYGZn2UVw
+ hzoGtQVvu5klw8Dv8/aSQprfVk2FyYMhP3TSLlXqXUcgcAxznkZsk1OKJ4R5mWSwsEoDkIPCyqk
+ EWDnpCKrhfp8H2HT7C59xyqkuHGzvBd7R/FsW7q/5AVGoXiwR+VldLv4V+nIs=
+X-Received: by 2002:a17:903:15c7:b0:2a7:f369:4de8 with SMTP id
+ d9443c01a7336-2a8d99291ecmr18007995ad.42.1769752880378; 
+ Thu, 29 Jan 2026 22:01:20 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([183.195.20.181])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b3f6d77sm66274585ad.2.2026.01.29.22.01.24
+ d9443c01a7336-2a88b3f6d77sm66274585ad.2.2026.01.29.22.01.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 22:01:26 -0800 (PST)
+ Thu, 29 Jan 2026 22:01:19 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -72,16 +72,16 @@ To: Alistair Francis <alistair.francis@wdc.com>,
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  hust-os-kernel-patches@googlegroups.com, wangjingwei@iscas.ac.cn,
  devel@lists.libvirt.org, Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [RFC PATCH v4 7/7] target/riscv: add sdtrig trigger action=debug mode
-Date: Fri, 30 Jan 2026 14:00:06 +0800
-Message-ID: <8fe531a24703eb426a66618822649bf5ee78697f.1769751489.git.chao.liu.zevorn@gmail.com>
+Subject: [RFC PATCH v4 5/7] target/riscv: add sdext enter Debug Mode on ebreak
+Date: Fri, 30 Jan 2026 14:00:04 +0800
+Message-ID: <92dad2c97a34c3d691919253a162ed5be5406e09.1769751489.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
 References: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,138 +107,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 RISC-V Debug Specification:
 https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
-trigger hits, enter Debug Mode with cause=trigger and stop with
-EXCP_DEBUG.
-
-Also report inst-count triggers in tinfo and read their action field.
+Route EBREAK via helper_sdext_ebreak. If Sdext is enabled and the
+matching dcsr.ebreak* bit is set, enter Debug Mode with cause=ebreak
+and stop with EXCP_DEBUG. Otherwise keep the normal breakpoint trap.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- target/riscv/debug.c | 53 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 2 deletions(-)
+ target/riscv/helper.h                         |  1 +
+ .../riscv/insn_trans/trans_privileged.c.inc   |  6 ++++
+ target/riscv/op_helper.c                      | 34 +++++++++++++++++++
+ 3 files changed, 41 insertions(+)
 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5877a60c50..4e30d42905 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -110,6 +110,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
-         action = (tdata1 & TYPE6_ACTION) >> 12;
-         break;
-     case TRIGGER_TYPE_INST_CNT:
-+        action = tdata1 & ITRIGGER_ACTION;
-+        break;
-     case TRIGGER_TYPE_INT:
-     case TRIGGER_TYPE_EXCP:
-     case TRIGGER_TYPE_EXT_SRC:
-@@ -280,6 +282,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 6140b6340d..acff73051b 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -141,6 +141,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
+ DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
+ /* Native Debug */
+ DEF_HELPER_1(itrigger_match, void, env)
++DEF_HELPER_2(sdext_ebreak, void, env, tl)
+ #endif
  
- static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
- {
-+    CPUState *cs = env_cpu(env);
-     trigger_action_t action = get_trigger_action(env, trigger_index);
- 
-     switch (action) {
-@@ -289,6 +292,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
-         riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
-         break;
-     case DBG_ACTION_DBG_MODE:
-+        if (!env_archcpu(env)->cfg.ext_sdext) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
-+        }
-+        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
-+        /*
-+         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
-+         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
-+         */
-+        if (cs->exception_index != EXCP_DEBUG) {
-+            cs->exception_index = EXCP_DEBUG;
-+            cpu_loop_exit_restore(cs, GETPC());
-+        }
-+        break;
-     case DBG_ACTION_TRACE0:
-     case DBG_ACTION_TRACE1:
-     case DBG_ACTION_TRACE2:
-@@ -441,6 +459,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
- {
-     target_ulong val;
-     uint32_t size;
-+    uint32_t action;
- 
-     /* validate the generic part first */
-     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
-@@ -448,11 +467,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
-     /* validate unimplemented (always zero) bits */
-     warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
-     warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
--    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
-     warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
-     warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
-     warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
- 
-+    action = (ctrl & TYPE2_ACTION) >> 12;
-+    if (action == DBG_ACTION_BP) {
-+        val |= ctrl & TYPE2_ACTION;
-+    } else if (action == DBG_ACTION_DBG_MODE) {
-+        if (env_archcpu(env)->cfg.ext_sdext) {
-+            val |= ctrl & TYPE2_ACTION;
-+        } else {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+        }
-+    } else {
-+        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
-+                      action);
-+    }
-+
-     /* validate size encoding */
-     size = type2_breakpoint_size(env, ctrl);
-     if (access_size[size] == -1) {
-@@ -569,6 +602,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
- {
-     target_ulong val;
-     uint32_t size;
-+    uint32_t action;
- 
-     /* validate the generic part first */
-     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
-@@ -576,11 +610,25 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
-     /* validate unimplemented (always zero) bits */
-     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
-     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
--    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
-     warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
-     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
-     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
- 
-+    action = (ctrl & TYPE6_ACTION) >> 12;
-+    if (action == DBG_ACTION_BP) {
-+        val |= ctrl & TYPE6_ACTION;
-+    } else if (action == DBG_ACTION_DBG_MODE) {
-+        if (env_archcpu(env)->cfg.ext_sdext) {
-+            val |= ctrl & TYPE6_ACTION;
-+        } else {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+        }
-+    } else {
-+        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
-+                      action);
-+    }
-+
-     /* validate size encoding */
-     size = extract32(ctrl, 16, 4);
-     if (access_size[size] == -1) {
-@@ -919,6 +967,7 @@ target_ulong tinfo_csr_read(CPURISCVState *env)
- {
-     /* assume all triggers support the same types of triggers */
-     return BIT(TRIGGER_TYPE_AD_MATCH) |
-+           BIT(TRIGGER_TYPE_INST_CNT) |
-            BIT(TRIGGER_TYPE_AD_MATCH6);
+ /* Hypervisor functions */
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index f8641b1977..84f0c77513 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -68,9 +68,15 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
+         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
+     } else {
++#ifndef CONFIG_USER_ONLY
++        gen_update_pc(ctx, 0);
++        gen_helper_sdext_ebreak(tcg_env, tcg_constant_tl(ebreak_addr));
++        ctx->base.is_jmp = DISAS_NORETURN;
++#else
+         tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
+                       offsetof(CPURISCVState, badaddr));
+         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
++#endif
+     }
+     return true;
+ }
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 99736bbebb..b6417b4b0b 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -470,6 +470,40 @@ target_ulong helper_dret(CPURISCVState *env)
+ #endif
  }
  
++void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
++{
++    CPUState *cs = env_cpu(env);
++    bool enter_debug = false;
++
++    if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode) {
++        if (env->virt_enabled) {
++            if (env->priv == PRV_S) {
++                enter_debug = env->dcsr & DCSR_EBREAKVS;
++            } else if (env->priv == PRV_U) {
++                enter_debug = env->dcsr & DCSR_EBREAKVU;
++            }
++        } else {
++            if (env->priv == PRV_M) {
++                enter_debug = env->dcsr & DCSR_EBREAKM;
++            } else if (env->priv == PRV_S) {
++                enter_debug = env->dcsr & DCSR_EBREAKS;
++            } else if (env->priv == PRV_U) {
++                enter_debug = env->dcsr & DCSR_EBREAKU;
++            }
++        }
++    }
++
++    env->badaddr = pc;
++
++    if (enter_debug) {
++        riscv_cpu_enter_debug_mode(env, pc, DCSR_CAUSE_EBREAK);
++        cs->exception_index = EXCP_DEBUG;
++        cpu_loop_exit_restore(cs, GETPC());
++    }
++
++    riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, GETPC());
++}
++
+ target_ulong helper_mnret(CPURISCVState *env)
+ {
+     target_ulong retpc = env->mnepc;
 -- 
 2.52.0
 
