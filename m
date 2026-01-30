@@ -4,112 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F71D73EAA
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 01:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB0AD73EAA
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 01:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vldex-0007W5-22; Thu, 29 Jan 2026 20:50:55 -0500
+	id 1vldji-0000dD-Sp; Thu, 29 Jan 2026 20:55:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vldev-0007VC-9O; Thu, 29 Jan 2026 20:50:53 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vldjh-0000cl-2y
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 20:55:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vldet-0001k6-Ls; Thu, 29 Jan 2026 20:50:53 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEtDJ5024531;
- Fri, 30 Jan 2026 01:50:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dj7zvB
- 3OpZw6pmEXLr8tGZ/mNzbsF64b8wgevn5HPJg=; b=QTp/RQPYCjBV62vcQYjOYk
- ktPF0Hw225f7oOLxNstKwL4qG/Q+O9mz7dpVPk16vpQfDPgKF2kIdmzTQA9JfRjV
- Mgf+8pKw8Mwqr+yVXxlfgl4VfwHp51q0FYhZKxyOWKsEQXHlAu7kdJh12FQJ8LwO
- MVb2K1OiQJ4/eH8hlvEpmJ5zRrMsVys2/bJPj+XgK0ZCn75tMK2HaOZbtkUKowKT
- 8cbC0Zm3fLv0A8S6AzLVMwcR8XLbepagSzYE9eiBaHy1utaHrX6C+Z4DV/2mnXXz
- qrAHUu1Dh95NNcaD4oIDE9+O7WRSQfjCu0HZNibGgqRIaCZmIH5fvVA/4/keHORw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrtuqg4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 01:50:48 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60U06Uwp019653;
- Fri, 30 Jan 2026 01:50:47 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9dnceju-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 01:50:47 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60U1ojSn64225720
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Jan 2026 01:50:46 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B839658055;
- Fri, 30 Jan 2026 01:50:45 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC6255804B;
- Fri, 30 Jan 2026 01:50:44 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.76.202]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 30 Jan 2026 01:50:44 +0000 (GMT)
-Message-ID: <9afdd5c9af9540609542814d9a583437589db4bf.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 06/14] include/hw/s390x: Move CLP definitions for
- easier BIOS access
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-Date: Thu, 29 Jan 2026 20:50:44 -0500
-In-Reply-To: <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-7-jrossi@linux.ibm.com>
- <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vldjf-0002P5-JK
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 20:55:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769738144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DDbR0+m0j6FfL91NbORL+AQy+tvqB4jmhP8gP8ZDIHk=;
+ b=ZPx3EqxwE1ioUMVOUzHMNKxn9Ov0E/bVjjX3pe9hQRQDRR2GzzwFCYlGNLIDq4ZFf2kguL
+ pGMQDMglNKxoo1gdk2/LsXulYbWQhj9tmMh7BGt+aycv35igiWA110gcOmZg46Q3xh4xDo
+ bH6N6+jgzxkia7mH2zuqbceqvJOYI78=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-UeCiwG90MfmOmiIVHCeS6Q-1; Thu, 29 Jan 2026 20:55:42 -0500
+X-MC-Unique: UeCiwG90MfmOmiIVHCeS6Q-1
+X-Mimecast-MFC-AGG-ID: UeCiwG90MfmOmiIVHCeS6Q_1769738141
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-34c43f8ef9bso2598316a91.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 17:55:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769738141; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ECBX6e3necyQRaa0jKiue6Fv0a+6fbxJCqjurwmgMxkk3SzATF2oxmO9fhSxbfvqPK
+ qvMXzNA9fgCAA8yssZkjJHbpO//fPIqrj/bQ7DomyRR7/y0HAPge11jKj4e7qmj5vClB
+ o13dsPqIdprPoDGRmA5CeoAkkoDQCwNNo9YbfjCGCiP0gc55nzgROAEqNlkbwe8nCucP
+ FkeWDZMkVStEEjYY49U5lZClEgGB8C5eapI9uKYxyLR8CloB/F2+xYoiTq3jz4AlmtNG
+ yiFS+HAfT9iqc/UHV81beLQfx4MskQLgd1nOYmxdbH7f/LLecVzQDGtuniWHfzEcrPOf
+ Ye8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=DDbR0+m0j6FfL91NbORL+AQy+tvqB4jmhP8gP8ZDIHk=;
+ fh=gy8fdH3+lk3Twu6PS/F4/DPKzFeI1rELOHwIjaKAg1M=;
+ b=XJxeL61XtaO3efMqZEz5ErFfFjxh6fJmDA16f+jrn0GJVJUz9ZgjHqPTShjKj9fROw
+ m1o94lxVgP8Voh44nXsQCAYuckqaFddoMhlSf/Pv5GLdD+E/ufmo+4aXLP7d4aI6u0VX
+ Z38ZbiMAxgry5rUfXPsNS5PLpTOIUDkTqL+rBMTc3HN/z8OdOhamcOWdQUWsXnA6fLLN
+ KREsRjn3kllzPm1j8NhcOxxlFj3fORKLUojVCmfg29cuFSst4TfpnnARgLdJKUEGbwlU
+ t65WFXzMqg4kss207UuXjppsGYFlhgn4YvRGPPxwVPp5J5jaZV4EWtDNOfw7L22VMRB1
+ AkaA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769738141; x=1770342941; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DDbR0+m0j6FfL91NbORL+AQy+tvqB4jmhP8gP8ZDIHk=;
+ b=eLex9BTjrzHX5k60xObjNfxBO7UGhTQWBK6IOShwjHaJpvmCNbxyy6pHzRjresPfro
+ zQcJhd2ibHw8QCmZRJ7kiOSAUw2ggY1uHfFzZPgxeDu4v9wphrBcp7QT6q96MvS8+1yW
+ EF3CnmtcM4SmvCmH3HMfhI3amCLjkCrOHzKcVQjDQ/Y9CacrKThc/WPe8qiztgFWXLof
+ +NYa35w1mIfaSLF/xvODpZp8Zrx+odYolo1gkaMKeb86snNR20xnevFPbFDYp1y92vTN
+ PXRT27yhz7Ry5jfneu4IkeQecLPnCMHMPpVUYnv00kp0wFm0AWz6Tgz2eCmH9aeQcdlC
+ 6DgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769738141; x=1770342941;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DDbR0+m0j6FfL91NbORL+AQy+tvqB4jmhP8gP8ZDIHk=;
+ b=LTDEfDJWhyNRmXITsum93sev0UKh0tK+cJAoty0LSfXlXAG1WxvprjjOCvU1FKuK0W
+ PzEGmN+H7sO5jdAnV6w+MVGRPyJxPyKlNHw+rGYULT1+dS5fL1MU5agseWFhvNuTNd2f
+ dqtOeU+qH7NG4I7V6Oxd2KgnJzVS0/5a/zqHtQYghqrTj7YeK9i0O8kCGciM5cW9lf5X
+ 50dj/t+z7gmqv9foMpax6exaXBr+LvygEnkODpG+UCS2hmUUjHNx7ATUPxRakVLdjqUk
+ xwGd+JVqMPFTEsMdI7Gm3KS2bLXno7h2/HCtlGoXVLqq6tUAjiI6Hhile1sXHVc7v4Dt
+ yhPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7Ur9HUfv6aO+3dC47A3kBFXiI7EgJT7d+nfL8zfL0fgaMLDeZ3RgB5VI5Z18IdQ/A4+a2CxtuU2Oc@nongnu.org
+X-Gm-Message-State: AOJu0YzOc75HW5hKXNb7TswqIG+w+Il2a9aGgDn7ma6oyNDkCNM7t5Cd
+ j04df/ZjN/oJw5hIQisJfbbKHoQCSKyvET5Z6K2mOl/E+9zXmwU9O0MQpBKozbzBWA6iT3YYG7l
+ VDslFmMApo7u/Whl3tx3QgTLkghQfN1zy32CbKw17PWd7CXoAp82P6UpsLlr3jPEdfFZHNhfZNv
+ 07bNTG6aB19vRJLtajLzBvj+q9o0fUf+8=
+X-Gm-Gg: AZuq6aLYZXPsqjLrFh8BgFB0X7GINaaIMaQZClpHSwl0/iOAiXmt+bxldVZZ+AnnU7v
+ 4ANeSO+vx+7LoFbu7GVpBEYTIN7PVv55q5A8KJmcGH1270gi/6y9zhXe4BI/eUoQD6i/LEv1+t5
+ Ceob+/tawUsmBXnV4xDqVZffchdXAZAa4627SzEDi7tvTzJrDRcSEJAWDb3ef7Kopz
+X-Received: by 2002:a17:90b:1c0e:b0:340:8d99:49d4 with SMTP id
+ 98e67ed59e1d1-354299f24a8mr4242254a91.1.1769738140917; 
+ Thu, 29 Jan 2026 17:55:40 -0800 (PST)
+X-Received: by 2002:a17:90b:1c0e:b0:340:8d99:49d4 with SMTP id
+ 98e67ed59e1d1-354299f24a8mr4242249a91.1.1769738140477; Thu, 29 Jan 2026
+ 17:55:40 -0800 (PST)
+MIME-Version: 1.0
+References: <20251113071711.349651-1-vsementsov@yandex-team.ru>
+ <CACGkMEv=UYKjc5jZRSQCzgzCe6Bdz8OGMHYA5F-5OkRVrRom9g@mail.gmail.com>
+ <a8a29f4e-ebc2-40ed-ad2d-4573a007d994@yandex-team.ru>
+In-Reply-To: <a8a29f4e-ebc2-40ed-ad2d-4573a007d994@yandex-team.ru>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 30 Jan 2026 09:55:27 +0800
+X-Gm-Features: AZwV_QjFMWNKAM7yYg8EEPjKvVtq4zg9sGsEv_yYlicOSNVmnBZ49Es1ti5nR0E
+Message-ID: <CACGkMEvkV_mc8AsykSn1J_2RUG8Q2NwAucGZf6eE0eM6nnbLiw@mail.gmail.com>
+Subject: Re: [PATCH v6] qapi: net: deprecate vhostforce option
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: devel@lists.libvirt.org, eblake@redhat.com, armbru@redhat.com, 
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 33GEq0F9DzWmJWKN1EYOyvkRERqOgn6V
-X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=697c0e78 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=RLiWjzvH3RyVQvlK388A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 33GEq0F9DzWmJWKN1EYOyvkRERqOgn6V
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDAxMiBTYWx0ZWRfX38GT3igzisi0
- zEBGIcwdWc8WcL4ukOewMRsVInMuz8hrHOzk/aUmUDtkQ4p4/wVEcwxm14KjV0NlwDyclB57WbX
- 6uZK/7jYRakmL+kyfTKIpmtj2vDmQKPcehurmOW04hhHR+E/vR4lIV/1DPWHc7KYu22AIBU/Dc4
- 4NHouyS7YRKd+U+sEYDUhSyi4cd6CVrySnVBZSl1PDY2KPaJkKsV6L+ivFC4yvsjBFqA1eqj+CN
- 6ftUoISzU2fmn8u22sfvQ6vvQKm6H91vDD11/gyXbIbDMqFNne3OoYQPwKZSAwxhe3N7+s4ayiK
- JzIK1iu3rlp9rV/jpVGEcz9fiEqKP4Sb0paqsChLjITqjmGQkC+zExMibJ//1acsGDOyv9tmx48
- w+ljB4bnm4L7larBx3nEfsG3yVPGwxvU5lJamM2rQdfLIUpRbZhLm9FQnFv5NpsTf8FIcUR3N2N
- 2e2BWfWhO9vgBFTrKnQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601300012
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,28 +140,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-01-29 at 16:46 -0500, Eric Farman wrote:
-> On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
-> > From: Jared Rossi <jrossi@linux.ibm.com>
-> >=20
-> > Move the s390-pci-clp definitions into the "ipl" sub-directory, which i=
-s visible
-> > to the s390-bios.  This allows the bios to reuse the architected defini=
-tions and
-> > prevents code duplication.
-> >=20
-> > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> > ---
-> >  hw/s390x/s390-pci-vfio.c                  | 2 +-
-> >  include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h | 0
-> >  include/hw/s390x/s390-pci-bus.h           | 2 +-
-> >  3 files changed, 2 insertions(+), 2 deletions(-)
-> >  rename include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h (100%)
->=20
-> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+On Fri, Jan 30, 2026 at 5:21=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 14.11.25 04:34, Jason Wang wrote:
+> > On Thu, Nov 13, 2025 at 3:17=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+> > <vsementsov@yandex-team.ru> wrote:
+> >>
+> >> This option for tap and vhost-user netdevs doesn't make sense
+> >> since long ago (10 years!), starting from commits:
+> >>
+> >>   1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
+> >>   24f938a682d934 ("vhost user:support vhost user nic for non msi guest=
+s")
+> >>
+> >> Prior these commits, to enable kernel vhost-net, or vhost-user-net for
+> >> some specific kind of guests (that don't have MSI-X support), you shou=
+ld
+> >> have set vhostforce=3Don.
+> >>
+> >> Now guest type doesn't matter, all guests are equal for these
+> >> options logic.
+> >>
+> >> For tap the current logic is:
+> >>    vhost=3Don / vhost=3Doff : vhostforce ignored, doesn't make sense
+> >>    vhost unset : vhostforce counts, enabling vhost
+> >>
+> >> So you may enable vhost for tap several ways:
+> >> - vhost=3Don
+> >> - vhostforce=3Don
+> >> - vhost=3Don + vhostforce=3Don
+> >> - and even vhost=3Don + vhostforce=3Doff
+> >>
+> >> - they are all equal.
+> >>
+> >> For vhost-user we simply ignore the vhostforce option at all in the
+> >> code.
+> >>
+> >> Let's finally deprecate the extra options.
+> >>
+> >> Also, fix @vhostforce documentation everywhere to show the real pictur=
+e,
+> >> and update vhost-user test to not use deprecated option.
+> >>
+> >> While updating command line options, drop "experimental" word from
+> >> "experimental in kernel accelerator". vhost-net is in production for
+> >> years.
+> >>
+> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru=
+>
+> >> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> >> ---
+> >>
+> >> v6: - update numbers 10.2 -> 11.0
+> >>      - add r-b by Markus
+> >
+> > I've queued this for 11.0.
+> >
+> > Thanks.
+> >
+>
+> Hi! Isn't this forgotten? You've recently pulled some my commits, but thi=
+s one is still not in master..
 
-Actually, small nit that popped into my head on the drive home... Could you=
- update MAINTAINERS so
-that we don't lose the PCI CLP header file from the S390 PCI group?
+Apologize, this falls through the cracks.
+
+Thanks
+
+>
+> --
+> Best regards,
+> Vladimir
+>
+
 
