@@ -4,120 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134A3E6BF1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 15:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0CCE6BF1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 15:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlqVJ-0007ff-34; Fri, 30 Jan 2026 10:33:49 -0500
+	id 1vlqbx-00033I-7c; Fri, 30 Jan 2026 10:40:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vlqVH-0007fR-8M; Fri, 30 Jan 2026 10:33:47 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vlqbp-00032z-3x
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:40:33 -0500
+Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vlqVF-0004S7-HL; Fri, 30 Jan 2026 10:33:47 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60U2HJ4B022808;
- Fri, 30 Jan 2026 15:33:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UaMJQr
- HTT/lDL63OOQbqhkIszjiyQqNXrhG20Etkzsw=; b=lSSuofj7TBZY08lhqvfGbp
- vVdnvXIGacixJs4WsE9i/hZt3MINfY5Llb7EfwS57NkM9yx1ceFyCX18dMYtUvW7
- mmf+Bd/7p1kJGyBGv64c52HHG8Xahct6P6OeKhEhEXMfkjYy+P9cOxnlgDcPVc+6
- vkKRfdz7BguvQT/K8uoFvN5UwlGok1GjOgYEcxF8D5EZtcbTAQxFQCcycjmbI1wG
- uuoPNed3GTHXQbkGz9p/YAh2SPxt+zoMTPfp2seo+c5SS0jjK7Ua7NT3V4vX5oWv
- bgyCAVMA1jaEJHRaLtrwOi/vc5ijd5SaiL1Rail75RxR+l5VTnSDYBITICbyl+XA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgn3hk8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 15:33:40 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60UB5uIl026384;
- Fri, 30 Jan 2026 15:33:40 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkpnud-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 15:33:40 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60UFXcOj18350816
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Jan 2026 15:33:38 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD8BF5805C;
- Fri, 30 Jan 2026 15:33:38 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7E7AF58051;
- Fri, 30 Jan 2026 15:33:37 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.188.113]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 30 Jan 2026 15:33:37 +0000 (GMT)
-Message-ID: <28313ff2e6fc34f45304ba19b8b9380fc4ba167d.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 08/23] virtio: move common part of
- _set_guest_notifier to generic code
-From: Eric Farman <farman@linux.ibm.com>
-To: Halil Pasic <pasic@linux.ibm.com>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net,
- qemu-devel@nongnu.org, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich	 <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Thomas Huth	 <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, "open list:virtio-ccw" <qemu-s390x@nongnu.org>
-Date: Fri, 30 Jan 2026 10:33:37 -0500
-In-Reply-To: <20260126230026.2664d565.pasic@linux.ibm.com>
-References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
- <20260119185228.203296-9-vsementsov@yandex-team.ru>
- <20260124000624.1bd7c9c1.pasic@linux.ibm.com>
- <26198787-a1da-4858-8656-f5006d153d6e@yandex-team.ru>
- <20260126230026.2664d565.pasic@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vlqbn-0005nE-2N
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:40:32 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id D08FA1D000C4;
+ Fri, 30 Jan 2026 10:40:27 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Fri, 30 Jan 2026 10:40:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1769787627;
+ x=1769874027; bh=fDUtyewaz756uH9RVoMWF/n7sIINqFRKK4K+YV3NZpU=; b=
+ eQohq5JesHWqxMU9DKv/5Tqijdutm9/9hfDU9epDXiDgvM5vnq+Igwfj9Yf5HvNP
+ iT9a55wfAH97wKg2rjQnPA1VtInXQvd0U5l62xP0NV5fTpmRCK2OXx/gsYiGHwNW
+ NMWYOmG7LgfyTYYuSxlmOIF42jp+8UePQ+EJpOygzQa5Z+7xJdSKOgSzZRmtL92o
+ feXAWoF/vXFLgfVoOmvkn765JCWIUWirRB0dbs3UjOBtSvccJ01V3jppKlF6yVtO
+ jv+hvNcWs6K/ydo/iMfAE90mUy3QJTFrs8wPreY3Y/xE1FAvH+hJkB22N55/Et5Q
+ 0OntCVa1lZz5OHCGtwkkEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769787627; x=
+ 1769874027; bh=fDUtyewaz756uH9RVoMWF/n7sIINqFRKK4K+YV3NZpU=; b=G
+ aionXWPDGw2ngMnht0v5cMuj5wyQDviCGVQWWx0Bfn1jaSl3Pt/axTK02Zkb6Bnl
+ 6tvDjUUd93gkWrkIH3FRPQWmJhg8vVlG+vlYl/hvOXimJ+2sfw6jP/H+qj78Rklf
+ oNqWnW6ZovBhjrbGAas5YqSFNz3LOIvMQm+/hkYdgFAUnYYKk0faX/bWTR1BN3t5
+ ZibnisciJhAIEcbd+XLU56iQ+4JSw9MK9Av6JMCz3T3bFeVobuZupoboHRtWEw6j
+ noaCHJQV1TQaaUKWTwdcg8l/sX1b4hIGTnlEqPEXcOFailR/3P9ViApr4O5JWeNa
+ HvzchZZ+oz6FlMDNOWaqA==
+X-ME-Sender: <xms:69B8aWFHTdC00Lt19iS47oZuhR6HDUwVTUwXNHTaToiiiaPta_Owjw>
+ <xme:69B8afdbczXNo_rdgSp1hO2VFfzOCBn0dlctpVx4MoDHh_vZC8Wl5C9MsVTT0oC1P
+ f_Q7629fBZvh3qm_PzdhXGz-7O6rnrEveN5jmIkQbVLx4O5-bBs6A>
+X-ME-Received: <xmr:69B8afofCyr3O1kGQ5uyNYIdADtWSAsnGVeHC6OFWzeGos-fe-6uglnE7EY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelgedvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkjghfofggtgfgsehtjeertdertddvnecuhfhrohhmpeetlhgvgicu
+ hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
+ htthgvrhhnpedvkeefjeekvdduhfduhfetkedugfduieettedvueekvdehtedvkefgudeg
+ veeuueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepudefpdhmohguvgep
+ shhmthhpohhuthdprhgtphhtthhopehskhholhhothhhuhhmthhhohesnhhvihguihgrrd
+ gtohhmpdhrtghpthhtoheprghnkhhithgrsehnvhhiughirgdrtghomhdprhgtphhtthho
+ pehvshgvthhhihesnhhvihguihgrrdgtohhmpdhrtghpthhtohepjhhgghesnhhvihguih
+ grrdgtohhmpdhrtghpthhtoheptghlghesrhgvughhrghtrdgtohhmpdhrtghpthhtohep
+ rghnihhkvghtrgesnhhvihguihgrrdgtohhmpdhrtghpthhtoheptghjihgrsehnvhhiug
+ hirgdrtghomhdprhgtphhtthhopehkfigrnhhkhhgvuggvsehnvhhiughirgdrtghomhdp
+ rhgtphhtthhopehtrghrghhuphhtrgesnhhvihguihgrrdgtohhm
+X-ME-Proxy: <xmx:69B8aQC4WX5XbPwLOAc0EC2TC2AyOGTFWfcz4SIp3tDOMPkTEiM1Fg>
+ <xmx:69B8aYd5c4QkJinrRiBZQbqGKLDwUxq9TPLk7vR3BcnMZpBjo7ZG_g>
+ <xmx:69B8aQuoO6SkvU44rONWHx-XJqD3mFS-lTxH9yhB4CRBXkuXJyT4GQ>
+ <xmx:69B8aXh5bpPx-H1yitQRa4Yu3FP-UeDyoLDoVkzfBVKSFunT7fiycg>
+ <xmx:69B8abxoOHFKN81dBwOqAmv1lwxKzE36tgUmXKzljaHxinWqUQGeg8Ae>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 Jan 2026 10:40:26 -0500 (EST)
+Date: Fri, 30 Jan 2026 08:40:24 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Cc: Ankit Agrawal <ankita@nvidia.com>, Vikram Sethi <vsethi@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, "clg@redhat.com" <clg@redhat.com>, Aniket
+ Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Zhi
+ Wang <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions
+ by offset
+Message-ID: <20260130084024.5b32d910@shazbot.org>
+In-Reply-To: <CH3PR12MB7548F8415F5FF9EED90FA376AB9FA@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260130040649.42485-1-ankita@nvidia.com>
+ <20260130040649.42485-2-ankita@nvidia.com>
+ <CH3PR12MB7548F8415F5FF9EED90FA376AB9FA@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=697ccf54 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=mkMtH7XpAAAA:8 a=6R7veym_AAAA:8 a=eel-Nh6MelB4_e8R7-IA:9 a=QEXdDO2ut3YA:10
- a=WtO8poqlptoA:10 a=I9Slk6e--tAXHahELIuT:22 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-GUID: cbAzQL0-5fQYaET-8f15tkBMxyyyx2Ub
-X-Proofpoint-ORIG-GUID: cbAzQL0-5fQYaET-8f15tkBMxyyyx2Ub
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDEyNSBTYWx0ZWRfXwHC+gkj6jf+F
- q5BwaCqqJ8IkY4qFjjMaE99toFXFyKakMC/HXdOS4DJw0sLukcsOg7Vz5mW+cqY1c23Xymn78M2
- WLnP7EOmuH1eC7o8rAHvoXbUU0aM3fZlNpMh2De2cENeQB5UEd6JvQqnjt5r2lDB4Q9ModOjZrO
- LMSnZhvT4tL1kR4pgEXef6L8rMfE0wrototlZXNnw/yHY38KDxhN9Fw343ukVTpo3XdlbogcYW0
- qVhFu4iIQx9quqN4Lt5TfflduGJXKx89A5rrF/doadBzdeGgVgsUrfLtMoKnjhqmgWSHScBxrVC
- MTY9CbxIZ7IadqU9wzsQIrqpdtRjDT4nn+PMuVbN5N8NSycMHko2do5g5690o70Kim1ggkiNBvT
- pVsS2sq6tq+hDJj92HYaAgRblVZYHQPleWGdIMv7t33b9O4ABRPN82ScydVF56oimrLAz29LEpq
- Mu02Eg8WVlqIxpsjdhw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-30_02,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
- impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601300125
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.12.124.147; envelope-from=alex@shazbot.org;
+ helo=fout-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,60 +119,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-01-26 at 23:00 +0100, Halil Pasic wrote:
-> On Mon, 26 Jan 2026 19:40:09 +0300
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> wrote:
->=20
-> > > > +/**
-> > > > + * virtio_queue_set_guest_notifier - set/unset queue or config gue=
-st
-> > > > + *     notifier
-> > > > + *
-> > > > + * @vdev: the VirtIO device
-> > > > + * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notife=
-r =20
-> > >=20
-> > > Semantically are mixing queue numbers and interrupt indexes here. =
-=20
-> >=20
-> > That's preexisting logic in virtio_pci_set_guest_notifier_fd_handler().
-> >=20
-> > But, you are right, that's doesn't answer the question, is it good to s=
-hare
-> > the logic with mmio and ccw.
-> >=20
-> > Is config notifier only pci specific, or similar feature may appear in =
-future
-> > for mmio and/or ccw?
->=20
-> AFAIR there is no  notifier for ccw. A possible explanation for
-> that is, that AFAIK that config space notifications (device -> driver)
-> are always classic I/O interrupts while queue indicators can be so called
-> adapter I/O interrupts and irqfd is only available for adapter I/O
-> interrupts.=20
->=20
-> If you like you can have a look at=20
-> "4.3.2.6 Setting Up Indicators" in
-> https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.ht=
-ml#x1-1940003
->=20
-> I see no reason why virtio_config_guest_notifier_read() based, i.e
-> !irqfd virtio config notifier should not exist or would not work. And I
-> guess it is needed for certain vhost things. But nevertheless, I can't
-> find the place where a virtio-ccw config notifier is set up.
->=20
-> Eric, what is your opinion on this? My current thinking is that
-> virtio-ccw not having a config notifier is basically a bug.
+On Fri, 30 Jan 2026 09:33:44 +0000
+Shameer Kolothum Thodi <skolothumtho@nvidia.com> wrote:
 
-(Sorry that I missed this; thanks for the ping, Halil)
+> > -----Original Message-----
+> > From: Ankit Agrawal <ankita@nvidia.com>
+> > Sent: 30 January 2026 04:07
+> > To: Ankit Agrawal <ankita@nvidia.com>; Vikram Sethi <vsethi@nvidia.com>;
+> > Jason Gunthorpe <jgg@nvidia.com>; Shameer Kolothum Thodi
+> > <skolothumtho@nvidia.com>; alex@shazbot.org; clg@redhat.com
+> > Cc: Aniket Agashe <aniketa@nvidia.com>; Neo Jia <cjia@nvidia.com>; Kirti
+> > Wankhede <kwankhede@nvidia.com>; Tarun Gupta (SW-GPU)
+> > <targupta@nvidia.com>; Zhi Wang <zhiw@nvidia.com>; Matt Ochs
+> > <mochs@nvidia.com>; Krishnakant Jaju <kjaju@nvidia.com>; qemu-
+> > devel@nongnu.org
+> > Subject: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions by
+> > offset
+> > 
+> > From: Ankit Agrawal <ankita@nvidia.com>
+> > 
+> > Sort sparse mmap regions by offset during region setup to ensure
+> > predictable mapping order, avoid overlaps and a proper handling
+> > of the gaps between sub-regions.
+> > 
+> > Add validation to detect overlapping sparse regions early during
+> > setup before any mapping operations begin.
+> > 
+> > The sorting is performed on the subregions ranges during
+> > vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
+> > mapping code can rely on subregions being in ascending offset order.
+> > 
+> > This is preparatory work for alignment adjustments needed to support
+> > hugepfnmap on systems where device memory (e.g., Grace-based systems)
+> > may have non-power-of-2 sizes.
+> > 
+> > cc: Alex Williamson <alex@shazbot.org>
+> > Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> > ---
+> >  hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 44 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> > index ab39d77574..7622ae5683 100644
+> > --- a/hw/vfio/region.c
+> > +++ b/hw/vfio/region.c
+> > @@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
+> >      },
+> >  };
+> > 
+> > +static int vfio_mmap_compare_offset(const void *a, const void *b)
+> > +{
+> > +    const VFIOMmap *mmap_a = a;
+> > +    const VFIOMmap *mmap_b = b;
+> > +
+> > +    if (mmap_a->offset < mmap_b->offset) {
+> > +        return -1;
+> > +    } else if (mmap_a->offset > mmap_b->offset) {
+> > +        return 1;
+> > +    }
+> > +    return 0;
+> > +}
+> > +
+> >  static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> >                                            struct vfio_region_info *info)
+> >  {
+> > @@ -182,6 +195,34 @@ static int
+> > vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> >      region->nr_mmaps = j;
+> >      region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+> > 
+> > +    /*
+> > +     * Sort sparse mmaps by offset to ensure proper handling of gaps
+> > +     * and predictable mapping order in vfio_region_mmap().
+> > +     */
+> > +    if (region->nr_mmaps > 1) {
+> > +        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
+> > +              vfio_mmap_compare_offset);
+> > +
+> > +        /*
+> > +         * Validate that sparse regions dont overlap after sorting.
+> > +         */
+> > +        for (i = 1; i < region->nr_mmaps; i++) {
+> > +            off_t prev_end = region->mmaps[i - 1].offset +
+> > +                             region->mmaps[i - 1].size;
+> > +            if (prev_end > region->mmaps[i].offset) {
+> > +                error_report("%s: overlapping sparse mmap regions detected "
+> > +                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
+> > +                             __func__, region->nr, region->mmaps[i - 1].offset,
+> > +                             prev_end - 1, region->mmaps[i].offset,
+> > +                             region->mmaps[i].offset + region->mmaps[i].size - 1);
+> > +                g_free(region->mmaps);
+> > +                region->mmaps = NULL;
+> > +                region->nr_mmaps = 0;
+> > +                return -EINVAL;
+> > +            }
+> > +        }
+> > +    }
+> > +
+> >      return 0;
+> >  }
+> > 
+> > @@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice
+> > *vbasedev, VFIORegion *region,
+> > 
+> >              ret = vfio_setup_region_sparse_mmaps(region, info);
+> > 
+> > -            if (ret) {
+> > +            if (ret == -ENODEV) {
+> >                  region->nr_mmaps = 1;
+> >                  region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
+> >                  region->mmaps[0].offset = 0;
+> >                  region->mmaps[0].size = region->size;
+> > +            } else {
+> > +                return ret;
+> >              }  
+> 
+> Is this now returns without the trace_xxx , right?
+> 
+> With that fixed:
+> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Yeah, we don't have have such a config notifier and I don't recall the hist=
-ory behind it.
-But I don't know that it's a bug; spec points out config notifications for =
-ccw come as unsolicited
-interrupts versus config notifier, so not having one is fine by me as far a=
-s this refactoring goes.
-I'll add it to a list of things to play around with, though.
+Right, I think this was probably meant to be 'else if (ret)' so the
+newly added -EINVAL generates an error w/o trace while the non-error
+path should fall through.  Thanks,
 
-Thanks, Eric
+Alex
 
