@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED15AE6BF18
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 14:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DD8E6BF18
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 14:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlppN-0004hl-0T; Fri, 30 Jan 2026 09:50:29 -0500
+	id 1vlppR-0004lB-Ug; Fri, 30 Jan 2026 09:50:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppK-0004gP-VB
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:26 -0500
-Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
+ id 1vlppO-0004ir-3q
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:30 -0500
+Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppI-00036A-3i
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:26 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 131AB1D0012B;
- Fri, 30 Jan 2026 09:50:22 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Fri, 30 Jan 2026 09:50:22 -0500
+ id 1vlppL-00038T-D6
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:29 -0500
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 265937A0167;
+ Fri, 30 Jan 2026 09:50:26 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Fri, 30 Jan 2026 09:50:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1769784621; x=
- 1769871021; bh=ABtiVlaCZkrAUapG4ZkghRtl4BtewIcQLfaOOoKZZwo=; b=b
- VVTvuXOUXUnYVPKejFB/c5dj3zdDz5gHdL3NZFYQujstvyHkSJlscdISrFWV9RWq
- a4doi8hR3Mh2niEV+9FUdMNDKc1+TcnT5duUew/ZE2HLn9mUljMjCdmgPSN7Jrp+
- 0PT6keKMMZDrtJ6pKR8SdpVKM56xgif8MdUst8UhjxjTiE3ixoLwaKpJHgmtUxTC
- AuiTGGtTU9btQJCcTbYZcqacOTnK468ycG8k0dUjNfE8aF8bFQhPaY2kmE+JkLVJ
- Gt4E9vOLGLzPY1qm/lTHIwNpPejIgxL8iLmmlDeK0i9QMDE0Nl/UMg+x4T5zowN5
- W6J1LZj6rv888IlPNfpLg==
+ :reply-to:subject:subject:to:to; s=fm2; t=1769784626; x=
+ 1769871026; bh=KRvjY95S9WC5R7utng58A1IuUIjwKpupOAaLfYpwcTM=; b=k
+ C6Q8pllQmcTh/ZUGkl6xNKcS3nJUXKAo6+byqh1Xh55BoL3sPYvd9RtBV67Qhto/
+ WEJIXmaq3upqXIDN8hH26QWbJTVBYs/eslFoNfkzFL5gKJ0Rj9fBfmgYNuTagakk
+ evYHcIokFjHHMbjsHkejIJl5PXCWPVHdIcCkV6c1XTrU0wgW/FV81XDqJsQOFNXN
+ s5dEv+BGVt/QZMf/23YUXkuoi1VOK4FtiMpfFmaX7YCguxh/Wk8GPAEecRPbAwsd
+ P0LW6Bk9aulEPH3HXeeHzaY0F4J9HzJTHU8I1/pOxw2rLCuZpVGUlqbAo2ljMpyH
+ pqEbluOG5lgvni/PR3xhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1769784621; x=1769871021; bh=A
- BtiVlaCZkrAUapG4ZkghRtl4BtewIcQLfaOOoKZZwo=; b=Yr/zfXvuBIBQH/uVo
- /i+V9Lto3lYW3/WG47n7x4uHe/UztvAoIpPoV+9QTKTNCC18kLG5r6gRUK2x0IxR
- xpqRp9YIMx+lVDTbyhp0VUMtHIX6zPNl31BhAt00QKt8YAguy9eJQmEp6S5y8z2g
- LhnCBv1yAzCV28ZGW3eRmew3iCHHuMPDXNbwcwmo7eLRDIbVhM5z5PEA1v7iD8ex
- YEahy6o2LvDbKEBtCKkHVPO9VQKrqxn8b27MrGj4N0pT6U0tWFVGC7PxS4hUGWHb
- zyUrNIJvb7wZa6e8e3trF0wGAqxjCEtBMPbchZVCW4FoN9/426jh4AtWxH1524cH
- evr/w==
-X-ME-Sender: <xms:LcV8ad5Vv7dZoTfA_4hpp1gMjJ3qR0WLXCsXepdRZKev7kwDn_PR8Q>
- <xme:LcV8aSX7FoJAGV_PUUQy4isS_w5Mp50x0xUdhurgJWnf0Yvs-kdpy_edscNNG8w3O
- rpdJobFLzI4rLWkB6rnxwWPq1iUGyBRthj2p62oNEtbl-l9EFovzPk>
-X-ME-Received: <xmr:LcV8aR01BtoD8rEjQdoc3zQCFz1vX3BM_GRt6Q3k6EM1zY6chM0hb2F0295g>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1769784626; x=1769871026; bh=K
+ RvjY95S9WC5R7utng58A1IuUIjwKpupOAaLfYpwcTM=; b=vmRAu1z0LsHmkTkfi
+ bW84OIN8Tk/oUUhd/IaaQ8Ky8o4sXY9Zqfsj9LUoZ1TgiCn5fRWA5Fn5XyDCmwk8
+ VTB+DOj58gOyi1UQy4T5s3Ebl6V+fhXIHMPAFqVFF5rMAPhZlzomGoyIBb3VTk92
+ BAS08SlR2BKf7A1vCS0wrpEt3jbsPLHr4eHBm3Pq1IwntUWZ1fHuT3oDy36B8eFp
+ u5EsQQtyGVbxul5ZG5Mu0KFrpMgsr9AiwCqybhGYN1dPBMgU+qIUJfYYqcdI5S7y
+ IP/3q11F7PL6q78UKb5/XRPrvB8DU4RZjugVAJ+9fJhVmySy9Z4zPKAAsT2+e8oD
+ 47KTg==
+X-ME-Sender: <xms:McV8aTFOdIQTAQjaplSNPdHsK82tV3lWiwFFcCeGPm3ga5ZaG49uvQ>
+ <xme:McV8aXxIwyhfN0GXhmZ9VcOFlZbbiLJxCdUsWNpy9AY5OaOD4TOiMux9dooiW4imZ
+ apANjFExAjDnkfrr9yEeqwcQJ0OBAQBlnnFEhFU7xx4LcHUZdjBJUs>
+X-ME-Received: <xmr:McV8aShNE10hmznuy-r6rIVH5o4M0DjOy0rWo2R6HMO4iHZczkZXqcxuSBp4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelfedvucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
@@ -61,34 +61,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelfedvucetufdote
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
  uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:LcV8af0u422V53r4zMFAn2HD9DpfJeinIZbxbs44N28hw9ARB5V3TA>
- <xmx:LcV8aU_Ljwcm1NfCcaNY3JXph0i7YosXZAVopQivD9skMT6nUcGOKw>
- <xmx:LcV8ac0LSGI046f_aTpmeYc4FxpmvenNyyoRYmRp5dLXLT4xhpLa_A>
- <xmx:LcV8aR8-FqgT1zMfJHCWwbVLtaqdxuGiYaxIUWmvbIJgHsWyqJK00w>
- <xmx:LcV8aTh8Jm7gD0DdekSByg4a_5Un_PlUsvoJPXf-JD8lavG6qSZUdYe1>
+ thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
+ gsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgv
+ lhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:McV8aaxNNLI24Hk3WtR7amSSTVuxELrbjkegd2ORdiGSknFM40kVjw>
+ <xmx:McV8adIV_woRthx7GVH3iQ-Nv21-Ifycc8ddPil6YOcD-s9HeVHCLw>
+ <xmx:McV8aZR3YCCfYggoUayvc-TN-gudNTxLEG_MB8t-lMqKg9n7EB19iw>
+ <xmx:McV8adrrxHZ3NS0KbVyt5Ud_p2Vwz_d69975IoN9Mb45qSZZoxtOYQ>
+ <xmx:MsV8aVcyxaD1_jBg1M0FDhAtZZSLwnXKsQHAb0icJn9-reFv8ZDHA7dy>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 09:50:21 -0500 (EST)
+ 30 Jan 2026 09:50:25 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id cef9835d;
+ by chomposaur (OpenSMTPD) with ESMTPA id a8f1f6eb;
  Fri, 30 Jan 2026 14:50:19 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v6 02/20] ati-vga: Fix DST_PITCH and SRC_PITCH reads
-Date: Fri, 30 Jan 2026 09:49:47 -0500
-Message-ID: <20260130145005.731129-3-chad@jablonski.xyz>
+Subject: [PATCH v6 15/20] ati-vga: Extract ati_set_dirty helper function
+Date: Fri, 30 Jan 2026 09:50:00 -0500
+Message-ID: <20260130145005.731129-16-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260130145005.731129-1-chad@jablonski.xyz>
 References: <20260130145005.731129-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.147; envelope-from=chad@jablonski.xyz;
- helo=fout-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.153; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b2-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -113,39 +113,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reading DST_PITCH and SRC_PITCH on the Rage 128 is broken. The read
-handlers attempt to construct the value from pitch and tile bits in
-the register state but mistakenly AND them instead of ORing them. This
-means the pitch is always zero on read.
+This is done in preparation for the removal of the ATIVGAState *s
+parameter. It will also be used by the HOST_DATA implementation.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/display/ati_2d.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 8438a77de0..777a6b0a2e 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -438,7 +438,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-     case DST_PITCH:
-         val = s->regs.dst_pitch;
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--            val &= s->regs.dst_tile << 16;
-+            val |= s->regs.dst_tile << 16;
-         }
-         break;
-     case DST_WIDTH:
-@@ -468,7 +468,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-     case SRC_PITCH:
-         val = s->regs.src_pitch;
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--            val &= s->regs.src_tile << 16;
-+            val |= s->regs.src_tile << 16;
-         }
-         break;
-     case DP_BRUSH_BKGD_CLR:
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 39ea67aeb7..5c15c3ec70 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -64,6 +64,19 @@ typedef struct {
+     const uint8_t *src_bits;
+ } ATI2DCtx;
+ 
++static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
++{
++    DisplaySurface *ds = qemu_console_surface(vga->con);
++    unsigned dst_offset = ctx->dst_bits - vga->vram_ptr;
++    if (ctx->dst_bits >= vga->vram_ptr + vga->vbe_start_addr &&
++        ctx->dst_bits < vga->vram_ptr + vga->vbe_start_addr +
++        vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
++        memory_region_set_dirty(&vga->vram, vga->vbe_start_addr +
++                                dst_offset + ctx->dst.y * surface_stride(ds),
++                                ctx->dst.height * surface_stride(ds));
++    }
++}
++
+ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+ {
+     ctx->bpp = ati_bpp_from_datatype(s);
+@@ -105,14 +118,12 @@ static void ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx, uint8_t use_pixman)
+ {
+     /* FIXME it is probably more complex than this and may need to be */
+     /* rewritten but for now as a start just to get some output: */
+-    DisplaySurface *ds = qemu_console_surface(s->vga.con);
+     bool use_pixman_fill = use_pixman & BIT(0);
+     bool use_pixman_blt = use_pixman & BIT(1);
+     DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
+             s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
+             surface_bits_per_pixel(ds),
+             ctx->rop3 >> 16);
+-    unsigned dst_offset = s->regs.dst_offset;
+     if (!ctx->bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+         return;
+@@ -261,14 +272,6 @@ static void ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx, uint8_t use_pixman)
+                       ctx->rop3 >> 16);
+         return;
+     }
+-
+-    if (ctx->dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
+-        ctx->dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
+-        s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
+-        memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
+-                                dst_offset + ctx->dst.y * surface_stride(ds),
+-                                ctx->dst.height * surface_stride(ds));
+-    }
+ }
+ 
+ void ati_2d_blt(ATIVGAState *s)
+@@ -276,4 +279,5 @@ void ati_2d_blt(ATIVGAState *s)
+     ATI2DCtx ctx;
+     setup_2d_blt_ctx(s, &ctx);
+     ati_2d_do_blt(s, &ctx, s->use_pixman);
++    ati_set_dirty(&s->vga, &ctx);
+ }
 -- 
 2.52.0
 
