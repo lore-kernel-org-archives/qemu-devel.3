@@ -4,102 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB38D73EB7
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 05:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60F5D73EBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 06:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlhW2-00089y-SI; Fri, 30 Jan 2026 00:57:58 -0500
+	id 1vlhZ6-0004KG-M3; Fri, 30 Jan 2026 01:01:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vlhVx-000845-ND
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:57:54 -0500
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vlhZ3-0004IS-Ur
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:05 -0500
+Received: from mail-pg1-x541.google.com ([2607:f8b0:4864:20::541])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vlhVw-00008e-96
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:57:53 -0500
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-79088484065so15969367b3.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 21:57:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769752671; cv=none;
- d=google.com; s=arc-20240605;
- b=OT/pDOpfqo9TQ+no2jJkvDE9NEZnD74211bmiEd6ZR2zjchTsHw6sHgtKQLed8TzV0
- BRWJO/Zy1kobPTqJL3v/hXNWNu+JuReUTAFVVuovd6XmlKb1DjRu6im8Ke2NRMHRTlRh
- pDFoRhT5ZpcwTm1mEdXAVgOgOw5ZJbhIiZZ/G8c+smkEjmyb2asiHFvM8jdVznNkBJ+t
- kxJ47xZ1wNPYgrQLSReH5h6OMDDm3mJsVr6nUuk+K2ksTFQ7Fa1OoEM7rerhIm4BcAFn
- g7Jml0/Zv9kPX9QyzzqVkcfi7Wd7YTaqOPOAbWFaROUMWKmbK+k/MKw9cZQx4WclzCQU
- O4NA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cy8OpmMAlqouikF5v13/yxmPYiikxszf0wEYu+dAl3Q=;
- fh=Z/ChBmagr0Yunxz3rPKeskrqrJshrQ1YmuVp9/a/R7E=;
- b=YmGQtfxLPg+am7nbAoLbK7ITd5ZfevAE906dtUXVScEyfSRqUUhtQLgvT/r1/aKAvz
- kCcqsynWlqe2zlYjR2YpHOPNb9nvO+7Ka7FUoh66sk2GmR89OUL6UvuJs9e/yGzmm7Cn
- afDIO+J4EXTTou0aVCQsCeGpwl6Ji3+oJ44S+4krHYNRn/KYV4Be3Z9LGU2Wjr6UnhMG
- kzaDk5AHJ2RwacTbgi9veau6fFOqdAdcIKmWVhRPClNAkJ0FemkhlOgHtl/LtjtAG/oJ
- Y0GqzHeiSK5MixHqo7+sukCXQmMeNZl2v0Gow4mqK6p5yGsboNl9S6B3DVEmuFmDoqTh
- 0dBg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vlhZ2-0000lU-4s
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 01:01:05 -0500
+Received: by mail-pg1-x541.google.com with SMTP id
+ 41be03b00d2f7-c2dd0c24e5cso664308a12.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 22:01:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769752671; x=1770357471; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cy8OpmMAlqouikF5v13/yxmPYiikxszf0wEYu+dAl3Q=;
- b=nFnMOyKj245rHMp5nAzxytvGljiU23MxPUASvSb64MSDOCQVGUHtLa1DmopgVJvqN5
- vK25VVbysUUfcdE0tcTYAVmD6BwIwdaCAaDPeevh8TmtSnHfwoqk2/0jUyphywGvSNai
- u40Y7pN6q97sbSZsWbglne0QTdEVfQHPJLcQevrq28myfw5qFExS7zrvDxPGdi/GBK7F
- 7SoB+806k1/xzFND24XFi/rjwaOd36QMuWM3436wZr25eieGGInMY5NDBbK6xCX7DO2m
- 9KfTq8b9o03OATYSojFFY9Ea2tzpHKGxGKV3JzFW668fS3bsvM7+4gbCk05G3zM6aeCp
- gtfQ==
+ d=gmail.com; s=20230601; t=1769752862; x=1770357662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cZH7sJoSfMg2kzFmgDFkKMsPHtxwaJe2y2r2z/2QQsE=;
+ b=CyGFYoFZhVhHfJwtlkvZsdkxoJ2fBmD6dp9YnmMNzs7EjI+A9wEybAbmsV78fImRlN
+ rWBtaUoUmBb3TchmnlbphJFGN8vLYWlgc3f5ohmWCqJeqO7N+CTTiUeO2DURxfDRuHnr
+ Q5jpUIQaj+R309aZb3OxccO3L3LENwtjQOzMXxrBDh/NRGqgh73sDeeemP5SjUL0ehOK
+ HZNVX2hQ5efhMZrXNJpVQbp8vqaWw8zF9Ah+hSNB/gsN3EgPAmXvBVmog6IgIy7PhMws
+ 7W1Nr/ihO0jnUEW8+BEcG43JlrkviJDPtJOhItUMT8S1s+W5c4vF08/1g3SA1jXeRtdP
+ Eqcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769752671; x=1770357471;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cy8OpmMAlqouikF5v13/yxmPYiikxszf0wEYu+dAl3Q=;
- b=areQKaSRNRiSofr2J7ZQEWo7aKsbIa0NMNB06nPVBZKP6KdW9LJzrZqqrvlBB8Mdc8
- tnwy8VGnPQB1wB/EDout4u2B3vtItQBW8fHQ0Q5rLIDDlTjCCSkdgriEWMAEwH3cyzgq
- qhxnsCh8An5vScgo5qmMBr7dRSSCXWLs+OgaDpP8Api5jUE24E3Anc4BxAjDXgnlr5e3
- qJ5GOLu1wl1XTm/L5W2SVvPrHRORwy/ajeLstgwpA50b5VL7c44ct5W0tyFTOMNeCczy
- 8o5OF7Ns1Plu5CK/AnRVyIRjVmcNNvefbzy0/k2UPPWp/0Y+j1Ats/AVQDaPMM/6wGZa
- aIrg==
-X-Gm-Message-State: AOJu0YwrfYfXzFAxQkRUyt+iMsC2DJiC6i+7PMK7w0iJ62WG4yy2ahJe
- zOO04nDpr08NQ6ON/65sUB27ErCizQ883HTG4gu4yVydFjOTxfX01d88MUQdUiq1OTV1rgsX3Pr
- 5Tn5CWAZjRNWEbKw/GItVVMNqoiL0RAO9/cQC6JSdjQ==
-X-Gm-Gg: AZuq6aL3NGBvh5Kw2uOrjf9ZMF+EKYv8f20p/1twI5CHt2Gx1erg1WT8er9jAmXt6v+
- Vjio49SjxfhYXgv8F1vrss6gpgz8TT9roST1ai6STIicnplC0AxKDclbb/CnV7guPh2vrWcggev
- 6ORjGPAqOWYRGnN4EWLsLWXRJe8CImhvtCcCVSZQ5+aDKQsxYRbfcWzjGzxDSlXlAp4W0GbDmNG
- A+JaeltF0UbImXjTNaVNdqUlknrH15Miu2IeXSbSgTw7zqhva59aT7UXKIYAsX9DoUQE1wC3S4=
-X-Received: by 2002:a05:690c:1e:b0:794:8f4a:4027 with SMTP id
- 00721157ae682-7949df246demr38647497b3.27.1769752670702; Thu, 29 Jan 2026
- 21:57:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769752862; x=1770357662;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cZH7sJoSfMg2kzFmgDFkKMsPHtxwaJe2y2r2z/2QQsE=;
+ b=kNSVB5smZutOKCPPEkVVnYXarOSUIJfY0UwLITiLLqB7f9B9YvT2InqSUlbm5PEdKu
+ 5PbZY9x7vzy2aKIjOhuGvhMSxNY1EQY+fhuSzK2U+NeNv+OJY1LqRrAFl7aXnEJK/dRu
+ yZKSvV6Gy6mgohuRBzF5DQkg2accLLWUp8w10bUvukCgeFxEyPLDKSNYAoajWA9yUjaP
+ iSif98F1yiMzJEIttNGOCuxx1AynxE/Kbr/Wjelv2+kyWw3lgMk147rYMPb5/HQkmMh1
+ 1lKQtFfdpN1i2fJALNc1ZcUx2KhAmdO8BTD2czCMm58Is4FqGZaLp5zlVYz6zGvzPRzW
+ 9A3A==
+X-Gm-Message-State: AOJu0YwNuPA9o/79W00LX6z+v8bRSOVrNbIZsTvxlnObwbSUn3Gq4Mdd
+ BBsZL/ZcFa1hxEmzFCtoOs9xjUw8GTRNrvPR26SQvVU9RWCb3KoYFiyK
+X-Gm-Gg: AZuq6aJcOb8QE5a1L7Wp1A+HdEdD6XnAIVYQNYu2vZ2MoE0je3sPrE9zM+8zIGyhWUK
+ oUnC1vnV/r6es7ef3u6zSGuguYLRL3Nta8JAxkwsTo/xC+pdS0AO5yL28aHNmUuLbd3RBJIhIu9
+ H38IQU5V2Z1gC61ob3lL9Z37KjIXUGMuZKFSK6GTQEYfhppQl9mFLRMIyqJy/tFFK9QtRZwIbJJ
+ qOk8/OlV0prS2uj/2R759qlUA/fML9VcfPpHKIJchArhQzvQj5HMNHwOCouWkZjNgYsaTvMkQR0
+ uZFbxqgKxUG7lsKSeAxLQ9Z0gydgC6cR+v/M1omaN4pSWfsaFNrlrwnchIZxEnyBMvLZDntRLyu
+ 9evV67rqn2DVniK1eg6ABvdoWRQqbv0EzH7tKpmMLgKUKcn4KDlcHXbFOZ3dP3Ur+L6p22qQ7MF
+ E7dREvzShfg1liB/k+sFqj2RlAImJ2PR8hjdVUohSQjElb8LVRHbcdbBznUwE=
+X-Received: by 2002:a05:6a20:2d11:b0:371:53a7:a4aa with SMTP id
+ adf61e73a8af0-392e005bbdemr1746518637.29.1769752862001; 
+ Thu, 29 Jan 2026 22:01:02 -0800 (PST)
+Received: from ZEVORN-PC.bbrouter ([183.195.20.181])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a88b3f6d77sm66274585ad.2.2026.01.29.22.00.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Jan 2026 22:01:01 -0800 (PST)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com, wangjingwei@iscas.ac.cn,
+ devel@lists.libvirt.org, Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [RFC PATCH v4 0/7] riscv: add initial sdext support
+Date: Fri, 30 Jan 2026 13:59:59 +0800
+Message-ID: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-References: <CAOkKuiMh4A-7Jo2Zg98Js7cOpXCd7N_B1RUGUr7-=x-tU+=UYg@mail.gmail.com>
-In-Reply-To: <CAOkKuiMh4A-7Jo2Zg98Js7cOpXCd7N_B1RUGUr7-=x-tU+=UYg@mail.gmail.com>
-From: Choon Keong Teo <ckeong.teo17@gmail.com>
-Date: Fri, 30 Jan 2026 13:57:39 +0800
-X-Gm-Features: AZwV_QhKhggScIVzVn5pqyTgaNCNCXfSWFLJ28jYcDK5UhShzxDYtsplnxvlF9M
-Message-ID: <CAOkKuiMD3t81fYr1OK_9RgkEB-myJydtj3K-A1L9Z4f6rEM+ig@mail.gmail.com>
-Subject: Re: [Bite-Sized Task] Volunteer to Fix Issue #3193
-To: qemu-devel@nongnu.org
-Cc: "jsnow@redhat.com" <jsnow@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=ckeong.teo17@gmail.com; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::541;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pg1-x541.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,29 +101,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apologies, I had a typo in John's email address in the previous
-thread. Adding the correct address now.
+Hi,
 
-On Fri, Jan 30, 2026 at 1:52=E2=80=AFPM Choon Keong Teo <ckeong.teo17@gmail=
-.com> wrote:
->
-> My name is Choon Keong (please feel free to call me CK), and I am
-> currently a university student. I have been following the Bite-Sized
-> Tasks page and would like to volunteer to work on Issue #3193.
->
-> I have reviewed the mailing list archives and didn=E2=80=99t find any rec=
-ent
-> patches addressing this issue. I found that the property in question
-> was converted to a machine property in a previous refactor, but it was
-> not assigned a description string in hw/i386/pc.c, as noted by Peter
-> in the comments.
->
-> I am currently preparing a patch to add the missing description using
-> object_class_property_set_description. If possible, I would appreciate
-> being assigned this issue on GitLab.
->
-> Thank you for your time and guidance. I look forward to contributing!
->
-> Best regards,
-> Choon Keong.
+Per Daniel's review feedback, this v4 series is based on Alistair's
+riscv-to-apply.next branch [3]. It depends on patches 1-5 of Max Chou's
+"Add Zvfbfa extension support" v2 series (not included; apply them
+first) [2].
+
+It is based on RISC-V Debug Specification 1.0 [1].
+
+It introduces the sdext/sdtrig config bits, DCSR/DPC/DSCRATCH state,
+Debug Mode enter/leave helpers, DRET, EBREAK entry, single-step, and
+trigger action=debug mode.
+
+To reduce review load, this series focuses on the Sdext features first.
+The Debug Module (DM) and related flows will follow in a later series.
+
+Changes in v4:
+- Fixed linux-user build errors: moved debug_mode/dcsr/dpc/dscratch
+  fields inside #ifndef CONFIG_USER_ONLY block in cpu.h, and wrapped
+  all code using these fields with proper guards. (Daniel)
+- Updated dependency from single patch (patch 5 only) to patches 1-5
+  of Max Chou's "Add Zvfbfa extension support" v2 series to avoid
+  compilation errors.
+
+Changes in v3:
+- Rebase onto Alistair's riscv-to-apply.next branch.
+- Depend on Max Chou's patch "target/riscv: Use the tb->cs_bqse as
+  the extend tb flags." (not included; apply it first) [2].
+- Patch 2: default sdext to false in riscv_cpu_extensions[].
+
+Changes in v2:
+- Drop the RHCT expected AML update from this series.
+- Replace the split sdext/sdtrig config bits patch with deprecating the
+  'debug' CPU property.
+- Rebase and update patch subjects to target/riscv prefix.
+
+Changes in v1:
+- Debug Mode entry/exit updates DCSR/DPC and restores execution via DRET.
+- EBREAK honors DCSR ebreak bits and enters Debug Mode when enabled.
+- Single-step uses DCSR.STEP with a TB flag and a helper at TB exit.
+  It references Max Chou's patch "target/riscv: Use the tb->cs_bqse as
+  the extend tb flags." [2].
+- Sdtrig supports action=debug mode for mcontrol/mcontrol6 and reports
+  inst-count triggers in tinfo.
+
+Differences vs Debug Spec (known gaps):
+- No Debug Module (no DMI, dmcontrol/dmstatus, haltreq/resumereq).
+- No debug ROM, program buffer, abstract commands, or SBA.
+- Resume is modeled by leaving Debug Mode at cpu_exec_enter.
+- Step/exception ordering is simplified: if the stepped instruction
+  traps, the normal exception is taken and Debug Mode is not forced.
+- Several DCSR fields are not fully modeled (stopcount/stoptime, etc).
+
+Roadmap (next stage, DM focus):
+1) Add a DM core with DMI access and hart state tracking.
+2) Implement halt/resume handshake and move Debug Mode transitions
+   under DM control.
+3) Add debug ROM, program buffer, and abstract commands for GPR/CSR
+   and memory access.
+4) Add SBA if required by tooling.
+5) Tighten ordering rules for step/exception/trigger priorities.
+
+References:
+[1] https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+[2] https://lore.kernel.org/qemu-devel/20260108132631.9429-1-max.chou@sifive.com/
+[3] https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+
+Thanks,
+Chao
+
+Chao Liu (6):
+  target/riscv: add sdext debug CSRs state
+  target/riscv: add sdext Debug Mode helpers
+  target/riscv: add dret instruction
+  target/riscv: add sdext enter Debug Mode on ebreak
+  target/riscv: add sdext single-step support
+  target/riscv: add sdtrig trigger action=debug mode
+
+Daniel Henrique Barboza (1):
+  target/riscv: deprecate 'debug' CPU property
+
+ docs/about/deprecated.rst                     |   7 +
+ include/exec/translation-block.h              |   4 +-
+ target/riscv/cpu.c                            |  62 ++++++++-
+ target/riscv/cpu.h                            |   9 ++
+ target/riscv/cpu_bits.h                       |  33 +++++
+ target/riscv/cpu_cfg_fields.h.inc             |   3 +-
+ target/riscv/cpu_helper.c                     |  90 ++++++++++++
+ target/riscv/csr.c                            | 128 +++++++++++++++++-
+ target/riscv/debug.c                          |  58 +++++++-
+ target/riscv/helper.h                         |   3 +
+ target/riscv/insn32.decode                    |   1 +
+ .../riscv/insn_trans/trans_privileged.c.inc   |  24 ++++
+ target/riscv/machine.c                        |  44 ++++--
+ target/riscv/op_helper.c                      |  70 ++++++++++
+ target/riscv/tcg/tcg-cpu.c                    |  21 ++-
+ target/riscv/translate.c                      |  16 ++-
+ 16 files changed, 548 insertions(+), 25 deletions(-)
+
+-- 
+2.52.0
+
 
