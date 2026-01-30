@@ -4,93 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B85E6BF1E
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 15:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134A3E6BF1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 15:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlqDO-0001tA-4Q; Fri, 30 Jan 2026 10:15:18 -0500
+	id 1vlqVJ-0007ff-34; Fri, 30 Jan 2026 10:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlqDH-0001sR-1I
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:15:11 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlqDF-0001Gi-CW
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:15:10 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-42fbc305914so2056827f8f.0
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 07:15:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769786106; x=1770390906; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HkBTfguhU+3qx3gphjq7Uj0bsYZ9SMsR6FjiXMeW6l4=;
- b=SNDbyBVYQf8tFWTiiGmu1AlMmQ78S1GqgPeQ8yzNb15GmiCm7qCi2t7IJgbJDVwqeE
- bXytzErqDtghoZZqmuzPF+EA144eB2+9GqP5lSZB5rj3Ftu8paPaQdrICQ1hTCDScj7L
- ZPaWsq/qitharaSMu39GnpqokJBJxnfPjgr26LX+2T+IahIIhP1n2bKg4/l6/CIrc5Jj
- z2fHGcyjiZF6YzPBNCaQROK4hoAWoE8EWzi7P0nrYlA3GqWBwKaOJ+Qh+t6pYc5SHLTc
- 0MuOnv/93YbnYAXenV2R76MR4pEX0hUEPjjIrOzdJvBa2ryVnFL1K8AiVBXhwxBdCPRB
- 8gvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769786106; x=1770390906;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HkBTfguhU+3qx3gphjq7Uj0bsYZ9SMsR6FjiXMeW6l4=;
- b=V4zj7aDa8HDq7EY0SbtixUN+BNU7lYG+tzbMddMKFVrfMecQF3wcUUJBEdhlU+02+h
- LkRK9SWWOzPNiorQj0aNYnTBsimKeoCLCZ94YW+bRjIN1zgs//tiA0yH8tCsa3FrLOYQ
- 4t8mugYTwJOxUgNhZYYVEt8YIyVzYqubEw2IJMrLJJg64swfvr2cTMrFp3cWU0MsBVi0
- lxDn3FfmJM4J4PMVfGNNWFGL8BToqQrcZ2WflkeiroAeiMVGTHmPJAFVwXB7EbTx8y9+
- g5mnLjozQxbs2l6MeZCcwR+v/6JiZQ3LYk8Vo+LSgKyVAEucb8axB4EuLu4vUkSQCO7R
- a1ww==
-X-Gm-Message-State: AOJu0Yy3BMyb2Fi/A7XUGjZEh8zhEmEz9G7fXaWxiMEtz10UtIMi+qhq
- JMQPDMiWiQea5IJhNKJAH9MDkcEJrlOByy+UPyEPCl2l8X4Z1L6DHph7MXjqAjqFk4I=
-X-Gm-Gg: AZuq6aKG/PuKagsw8fefVo6rN+KSvvRcTpxNtiPX1sSf5xKVnmv9V3D86dQzSCMi9rl
- +P0Tm1XrO7Ea00VdP31JLAmj68awxUV1uMnZDGOXrgxkaC+ACwU4NOJwm2j6lxhuPlaZ6EC1i80
- RiHpf0Fwv9kL1Vcbmlp6UzSGEwj4Qwg98FoSNXCIJrsI/UjmqDkxZx/SMVfPW1sbDWBEH8EqpMJ
- wPsRfiflJKTVHwSN7nIEQsEqro13hF2o6To8S3xpnChakFqiYleEkRQV8I6G7kXVRAxcDz5HaS6
- C8dloo0qhYLve0iS12YODZ/LNBzSNm3yzk+GGN6ZvYI3MGbO8zFB0GdH0JyRVhO9/kzcO+58+qQ
- tTxNRUCsQBoZGfJOuX3JAXxdclM6PqVga59N1aeqjzv1s7W2VZwzcon1qhP38ta2fNW3YaLpfw3
- 8z/EpIddLmcOM=
-X-Received: by 2002:a5d:64c6:0:b0:430:f7ae:af3e with SMTP id
- ffacd0b85a97d-435f3ab21bamr5667893f8f.32.1769786106197; 
- Fri, 30 Jan 2026 07:15:06 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e1354d43sm24640195f8f.43.2026.01.30.07.15.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 Jan 2026 07:15:05 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 80D995F898;
- Fri, 30 Jan 2026 15:15:04 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 1/2] tests/docker: rename wasm cross container
-Date: Fri, 30 Jan 2026 15:15:03 +0000
-Message-ID: <20260130151504.550929-2-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260130151504.550929-1-alex.bennee@linaro.org>
-References: <20260130151504.550929-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vlqVH-0007fR-8M; Fri, 30 Jan 2026 10:33:47 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vlqVF-0004S7-HL; Fri, 30 Jan 2026 10:33:47 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60U2HJ4B022808;
+ Fri, 30 Jan 2026 15:33:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=UaMJQr
+ HTT/lDL63OOQbqhkIszjiyQqNXrhG20Etkzsw=; b=lSSuofj7TBZY08lhqvfGbp
+ vVdnvXIGacixJs4WsE9i/hZt3MINfY5Llb7EfwS57NkM9yx1ceFyCX18dMYtUvW7
+ mmf+Bd/7p1kJGyBGv64c52HHG8Xahct6P6OeKhEhEXMfkjYy+P9cOxnlgDcPVc+6
+ vkKRfdz7BguvQT/K8uoFvN5UwlGok1GjOgYEcxF8D5EZtcbTAQxFQCcycjmbI1wG
+ uuoPNed3GTHXQbkGz9p/YAh2SPxt+zoMTPfp2seo+c5SS0jjK7Ua7NT3V4vX5oWv
+ bgyCAVMA1jaEJHRaLtrwOi/vc5ijd5SaiL1Rail75RxR+l5VTnSDYBITICbyl+XA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgn3hk8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 30 Jan 2026 15:33:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60UB5uIl026384;
+ Fri, 30 Jan 2026 15:33:40 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkpnud-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 30 Jan 2026 15:33:40 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60UFXcOj18350816
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 30 Jan 2026 15:33:38 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD8BF5805C;
+ Fri, 30 Jan 2026 15:33:38 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E7AF58051;
+ Fri, 30 Jan 2026 15:33:37 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.188.113]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 30 Jan 2026 15:33:37 +0000 (GMT)
+Message-ID: <28313ff2e6fc34f45304ba19b8b9380fc4ba167d.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 08/23] virtio: move common part of
+ _set_guest_notifier to generic code
+From: Eric Farman <farman@linux.ibm.com>
+To: Halil Pasic <pasic@linux.ibm.com>, Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net,
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich	 <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, Thomas Huth	 <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, "open list:virtio-ccw" <qemu-s390x@nongnu.org>
+Date: Fri, 30 Jan 2026 10:33:37 -0500
+In-Reply-To: <20260126230026.2664d565.pasic@linux.ibm.com>
+References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ <20260119185228.203296-9-vsementsov@yandex-team.ru>
+ <20260124000624.1bd7c9c1.pasic@linux.ibm.com>
+ <26198787-a1da-4858-8656-f5006d153d6e@yandex-team.ru>
+ <20260126230026.2664d565.pasic@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=697ccf54 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=mkMtH7XpAAAA:8 a=6R7veym_AAAA:8 a=eel-Nh6MelB4_e8R7-IA:9 a=QEXdDO2ut3YA:10
+ a=WtO8poqlptoA:10 a=I9Slk6e--tAXHahELIuT:22 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-GUID: cbAzQL0-5fQYaET-8f15tkBMxyyyx2Ub
+X-Proofpoint-ORIG-GUID: cbAzQL0-5fQYaET-8f15tkBMxyyyx2Ub
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDEyNSBTYWx0ZWRfXwHC+gkj6jf+F
+ q5BwaCqqJ8IkY4qFjjMaE99toFXFyKakMC/HXdOS4DJw0sLukcsOg7Vz5mW+cqY1c23Xymn78M2
+ WLnP7EOmuH1eC7o8rAHvoXbUU0aM3fZlNpMh2De2cENeQB5UEd6JvQqnjt5r2lDB4Q9ModOjZrO
+ LMSnZhvT4tL1kR4pgEXef6L8rMfE0wrototlZXNnw/yHY38KDxhN9Fw343ukVTpo3XdlbogcYW0
+ qVhFu4iIQx9quqN4Lt5TfflduGJXKx89A5rrF/doadBzdeGgVgsUrfLtMoKnjhqmgWSHScBxrVC
+ MTY9CbxIZ7IadqU9wzsQIrqpdtRjDT4nn+PMuVbN5N8NSycMHko2do5g5690o70Kim1ggkiNBvT
+ pVsS2sq6tq+hDJj92HYaAgRblVZYHQPleWGdIMv7t33b9O4ABRPN82ScydVF56oimrLAz29LEpq
+ Mu02Eg8WVlqIxpsjdhw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-30_02,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601300125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,54 +133,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we are 64 bit only there is no need to keep the generic name. This
-also fixes a check failure in the weekly container build which was
-checking containers based on the expansion of DOCKER_IMAGES which is
-based of the dockerfile names.
+On Mon, 2026-01-26 at 23:00 +0100, Halil Pasic wrote:
+> On Mon, 26 Jan 2026 19:40:09 +0300
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> wrote:
+>=20
+> > > > +/**
+> > > > + * virtio_queue_set_guest_notifier - set/unset queue or config gue=
+st
+> > > > + *     notifier
+> > > > + *
+> > > > + * @vdev: the VirtIO device
+> > > > + * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notife=
+r =20
+> > >=20
+> > > Semantically are mixing queue numbers and interrupt indexes here. =
+=20
+> >=20
+> > That's preexisting logic in virtio_pci_set_guest_notifier_fd_handler().
+> >=20
+> > But, you are right, that's doesn't answer the question, is it good to s=
+hare
+> > the logic with mmio and ccw.
+> >=20
+> > Is config notifier only pci specific, or similar feature may appear in =
+future
+> > for mmio and/or ccw?
+>=20
+> AFAIR there is no  notifier for ccw. A possible explanation for
+> that is, that AFAIK that config space notifications (device -> driver)
+> are always classic I/O interrupts while queue indicators can be so called
+> adapter I/O interrupts and irqfd is only available for adapter I/O
+> interrupts.=20
+>=20
+> If you like you can have a look at=20
+> "4.3.2.6 Setting Up Indicators" in
+> https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.ht=
+ml#x1-1940003
+>=20
+> I see no reason why virtio_config_guest_notifier_read() based, i.e
+> !irqfd virtio config notifier should not exist or would not work. And I
+> guess it is needed for certain vhost things. But nevertheless, I can't
+> find the place where a virtio-ccw config notifier is set up.
+>=20
+> Eric, what is your opinion on this? My current thinking is that
+> virtio-ccw not having a config notifier is basically a bug.
 
-Remove the DOCKERFILE bits that were added to handle multiple
-containers from the same dockerfile.
+(Sorry that I missed this; thanks for the ping, Halil)
 
-Fixes: 4203ea0247f (gitlab-ci: Add build tests for wasm64)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260128105839.3487840-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Yeah, we don't have have such a config notifier and I don't recall the hist=
+ory behind it.
+But I don't know that it's a bug; spec points out config notifications for =
+ccw come as unsolicited
+interrupts versus config notifier, so not having one is fine by me as far a=
+s this refactoring goes.
+I'll add it to a list of things to play around with, though.
 
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index d7ae57fb1f5..2a0cea6ce1a 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -78,4 +78,3 @@ wasm64-emsdk-cross-container:
-   extends: .container_job_template
-   variables:
-     NAME: emsdk-wasm64-cross
--    DOCKERFILE: emsdk-wasm-cross
-diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
-index 6eaa2f804df..8c7311cca57 100644
---- a/.gitlab-ci.d/container-template.yml
-+++ b/.gitlab-ci.d/container-template.yml
-@@ -10,14 +10,12 @@
-     - export COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
-     - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
-     - until docker info; do sleep 1; done
--    - export DOCKERFILE_NAME=${DOCKERFILE:-$NAME}
-   script:
-     - echo "TAG:$TAG"
-     - echo "COMMON_TAG:$COMMON_TAG"
-     - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
-       --build-arg BUILDKIT_INLINE_CACHE=1
--      $BUILD_ARGS
--      -f "tests/docker/dockerfiles/$DOCKERFILE_NAME.docker" "."
-+      -f "tests/docker/dockerfiles/$NAME.docker" "."
-     - docker push "$TAG"
-   after_script:
-     - docker logout
-diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-similarity index 100%
-rename from tests/docker/dockerfiles/emsdk-wasm-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm64-cross.docker
--- 
-2.47.3
-
+Thanks, Eric
 
