@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEEBE6BF22
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23DC8E6BF1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlr4M-0003iT-7D; Fri, 30 Jan 2026 11:10:02 -0500
+	id 1vlr6G-00068e-Tn; Fri, 30 Jan 2026 11:12:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlr4K-0003Wx-C2
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:10:00 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vlr6F-00068V-FP
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:11:59 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlr4H-0006Bp-W8
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:10:00 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a0c09bb78cso19146865ad.0
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:09:57 -0800 (PST)
+ id 1vlr6D-0006sk-Sq
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:11:59 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a12ebe4b74so25778515ad.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:11:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769789396; x=1770394196; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1769789516; x=1770394316; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D2DV/PkOGhxgV6dRDamboeuiBvQG7mEsNvJJrHuJVl4=;
- b=tv9h+DDNVk0xNhC+N5SRb4wMcePrxKdDjOn1ZhfSoFFTWbCWCn7Tu4XVPTa7fMseX5
- yDnvuIhjP1smpr8DPERl4XreTIs2y3T/+fEXg9eCg3mpbXIHC22E7R7U5M4UKbQI9Pkg
- fWKHlvICytJ34T67wdz+LzrD/KLWwJ/0Y613nt1z5e7Rc1X2O9BvsVvaguKLX5uYQfLN
- 4T79VFOkqOt/mD9HWnPOlHTQi1KuQJPfCGGfNGztocVraH80nRCmXW3f6worsynvK3Py
- c2ZJrhZmw4/VnBrWhnEa+4WK1AV+6yEugZXWaguGIgFtoR6L0y9lhJh+sWNIK0SrXsJR
- pRGQ==
+ bh=D7FjK6mp6p2UH/8/+ym7uYihdg41xVIxuIPvnXdBiIw=;
+ b=nIzQEtwldmCMew+fPHGRfYkIo2djMA0YREDSlhWEPsBTJ8TI+V6ZTBWriogTddCUIk
+ fZzf7G8Fbe7xg7HJwYJ7ioMpIAMIFOBB5vqYQyuCOT/WXd027tIxSlsGfzxpQXQBIjLz
+ gZSEGrfy40vfyF2lujlHYq/4eQ+hnbFLo+Ot/6154rpGz7dohN1MIiAVbBbA8jDi+Crk
+ Dh3YWyq1YuHw6+Q3qj1EOA9+H6k9u5MX0JcSMF+S4md7TdRm1wOOgIfRpAYv6Og+JsZr
+ 4pw2xcbjO4/Oq54ZKgTIeTkr9qhNaWN6GUTf3hQTgsr9SVaFM1EJd6v92czfjwc4b5ed
+ J7FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769789396; x=1770394196;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1769789516; x=1770394316;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D2DV/PkOGhxgV6dRDamboeuiBvQG7mEsNvJJrHuJVl4=;
- b=cMj9cm//fb+GgE8rWegC4Je4Lju2Kp1O9JkLcmLsfiEnv6p3IdbOQroBlwwCM8Iik/
- pLaVWtC5ge1AEq3xHYvPKBdSWuHOwSJ2S6mTbDl3dSmg4TkFInXApfGOtOTA2twDceAJ
- iShScCbVN1H2DBMq4ghIsdS9BW8wJFOb4b6srC6+2mWOFnKLPZgmf7B+Quk7irNxPg7x
- H4ZifhjOJsTgWzN9PxWiyNlw58DlJFxl7TZNxEZFFP9dCE/f0UpXDLs2rofyL7rpt8Kp
- HXjl2NnFSg468s7ZQ5Vwy+r+PDuWw/B9ohdQ8sbpsixfBC+xMq0U3529hXQq7WZWB+xN
- mAZw==
+ bh=D7FjK6mp6p2UH/8/+ym7uYihdg41xVIxuIPvnXdBiIw=;
+ b=LANuCOkiHEfk5UV/KmGfepHm4Tr2f97f26xszqOiCM4rRyVLUmiAeit1DT3SRcnmbK
+ m5kz0IUUSuPzW+Wv37QzESx/y0SQyPwsA30aTP2i4vZWH2CVGTZzJ9AvTsKgro090FQN
+ D1d9sUO1uHwenDmJrET4HouGGbclVN1Ky7lZ+dZwyYNQSD96Kk/fFvlDa1yxNbc4jua4
+ awjzOeZRHXOO6GaupCe5vbO/1L2LNq6mKBW3l5q/05X8EKQJBlt0fYDxG8qGQ2vSS4H4
+ 9hjG7uVVHIuF90Ewmm0ilenHANcRVuN+yPtyrqA4HcK7OQynxEVEwUU/E/T2ig1iLBu+
+ eKNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQCKBAf2yu15MhBmYY20n7Dnr3Hq2pt4KLlA9AjBL/acrozYgi42UmD/fboI/FUQU2hxTKdw/K0zTp@nongnu.org
-X-Gm-Message-State: AOJu0YzNgrVW9LDE1CPrQqOEcRQRspEwko6zP+6Sy8KXw5YvrFLbEnVE
- zTbTolLlkpLDfh+aiyh/iGMTdd/TFziSAD5+T1swmk29DcyWFjbZyXOaKuiml1rh19A=
-X-Gm-Gg: AZuq6aJCita3De0BlrTinkMgyF9lfjYpuL99fjTj7/nbq/vqHcDepCv3BFdcVqH1suR
- uTf9XuLBoi3L4c0nmM0iXlw7Dqm/Cy1rESZ65fng4odYWKD6I4jmyuLBHJKrP4YSSxCSOYdW4dy
- 1FY73jmWIbqTv0LjSoWa0FULDuPnQgofClHQH54SPpGbUzKFUdi654Sv1UZIC04Pal7dkF3LlBA
- f9C3m15BFJOIxWCqPBCoS+M5Lx2U/h17BEQBz6fsvybGZtYItwGwAhh65lLJpNo1WXpmQhrnSmI
- /dKCoelHkflI8JpBZ2wAKhlZab594Q9pjnl7G+Q0bEI1KOURCggTU3ar7vX09hOE5nXKDZYkLJY
- C1Zlh8qGI3q39RGKC4omFOkU8pqf1/3Qg0p8/XgYX6XB96YqPG1B9uwAvd7J+7msr8HjaHHgsYg
- Tc++4FrHM6jLjQeEjKqPWWVPJVIa+iRu567HFTtHpyu1KuRzGXpbM+SXJU
-X-Received: by 2002:a17:902:f686:b0:2a7:cb46:7069 with SMTP id
- d9443c01a7336-2a8bd51b6cfmr68441765ad.25.1769789395722; 
- Fri, 30 Jan 2026 08:09:55 -0800 (PST)
+ AJvYcCUZTarrz1BoVwCcQUs1LqQgddB2TLrECHd3XEBMhLpl1ZeTNxnulQSkwwCC+4BOpg2HQON9dpFqfN5I@nongnu.org
+X-Gm-Message-State: AOJu0Yy6Jfwg982q7Dn3RZ8NR2dcWizGP4gxRII5TpLcOCJbPg5bNPQG
+ 95plhOZKS2mLYVVDv7tKOa2VvBENRfPSmgZvy0O4BzouKfMoyFxDRH+UrTbge8MWuNk=
+X-Gm-Gg: AZuq6aLeg4Axi49EXUqAajmMV8dFXwHQgBlhKoy57+R8vJsCYbug2FiGJvxQbk1owLu
+ FRpfZWEVTsGAh5mnUdpbsZNAVsX9UKBs/B7YKwCcP0EeLcgSQWlrlWDidYyzZrm9m3OAMcU71Dj
+ XibTzFav1ulFLaAytH3UAMfctMztnoZZpBF1e7BKZ/+wyiMI3ry3SdfuRWiHsx++ZdYwFJCt98Y
+ h5seOaKx8EShBaZI4jHFGfvV9HOHXwG1PIAHQdlWZGpLeAUhK2dqQkZsffAlZwZSRnAgCNGAHRu
+ 3vp8tT/8xreD8VqujS+RvIKISKZeU4VkklYPw3V9PxDIllVXaAx9PxDQ0b5j8q7bBXMPU9nTNhk
+ euKy7FV4VkwFAY0tmUk2PHNhnGCNa1O0LBFcT7AmvBb95ayKFnF/iue6DFLs+lDhgWXuISnYcAq
+ 8eTCzY5xf/zxb9rSDKcMGM4/wd5KtiPvBhISB8aZ8HKRdqU94HWZXHnoq/dR46O/qz+F0=
+X-Received: by 2002:a17:902:e996:b0:295:9b73:b15c with SMTP id
+ d9443c01a7336-2a8d9a57c7emr22605805ad.42.1769789516244; 
+ Fri, 30 Jan 2026 08:11:56 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b4154fcsm78654985ad.36.2026.01.30.08.09.55
+ d9443c01a7336-2a88b4153c6sm80216165ad.37.2026.01.30.08.11.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Jan 2026 08:09:55 -0800 (PST)
-Message-ID: <06fa7871-dce7-458d-a01c-f720424b1832@linaro.org>
-Date: Fri, 30 Jan 2026 08:09:53 -0800
+ Fri, 30 Jan 2026 08:11:55 -0800 (PST)
+Message-ID: <e0b9fcf2-d4f2-40ae-90f4-221268364501@linaro.org>
+Date: Fri, 30 Jan 2026 08:11:54 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi/net: deprecate TAP fd and vhostfd options
+Subject: Re: Wiki Account Request
 Content-Language: en-US
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com
-Cc: eblake@redhat.com, armbru@redhat.com, devel@lists.libvirt.org,
- qemu-devel@nongnu.org
-References: <20260129215338.1422004-1-vsementsov@yandex-team.ru>
+To: Yodel Eldar <yodel.eldar@gmail.com>, qemu-devel@nongnu.org
+References: <CAHhgW4UH=_65pZJEACBXh7J0XN1SH1HFS_e_FCN8Zm2sKa1sww@mail.gmail.com>
+ <CAHhgW4X-R-Pm1ZV20UuBPbCtnSmp5r1HkwMjWMZ7KuVX0Cp63w@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +111,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260129215338.1422004-1-vsementsov@yandex-team.ru>
+In-Reply-To: <CAHhgW4X-R-Pm1ZV20UuBPbCtnSmp5r1HkwMjWMZ7KuVX0Cp63w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,34 +138,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
+Hi Yodel,
 
-On 1/29/26 1:53 PM, Vladimir Sementsov-Ogievskiy wrote:
-> They are the same as fds and vhostfds, except they accept only
-> one fd. Let's deprecate redundant options.
+On 1/30/26 3:03 AM, Yodel Eldar wrote:
+> On Thu, Jan 22, 2026 at 1:30 AM Yodel Eldar <yodel.eldar@gmail.com> wrote:
+>>
+>> Hi,
+>>
+>> Can an existing wiki user please create an account for me?
+>>
+>> username: yodel
+>>
+>> Thanks,
+>> Yodel
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
-> 
-> Hi all!
-> 
-> after "[PATCH v2 00/12] net: refactoring and fixes" options fd
-> and vhostfd becomes redundant, fds and vhostfds may be used instead.
-> 
-> this patch also based on
-> "[PATCH v6] qapi: net: deprecate vhostforce option", that's why
-> it's sent separately.
-> 
-> Based-on: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
-> Based-on: <20251113071711.349651-1-vsementsov@yandex-team.ru>
-> 
->   docs/about/deprecated.rst | 6 ++++++
->   qapi/net.json             | 9 +++++----
->   2 files changed, 11 insertions(+), 4 deletions(-)
+> Ping?
 > 
 
-I'll let you pull this, including doc changes, in case you're ok with 
-the series.
+you might have better chances asking directly to one of the maintainer 
+with who you contributed previously, and that knows and trusts you.
 
 Regards,
 Pierrick
