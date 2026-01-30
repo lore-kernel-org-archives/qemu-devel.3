@@ -4,173 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9746AE6BF31
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 17:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030F1E6BF31
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 17:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vls8s-00048L-7Z; Fri, 30 Jan 2026 12:18:46 -0500
+	id 1vlsQU-0001eE-LT; Fri, 30 Jan 2026 12:36:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1vls8p-00045d-Og; Fri, 30 Jan 2026 12:18:43 -0500
-Received: from mail-northeuropeazon11022082.outbound.protection.outlook.com
- ([52.101.66.82] helo=DUZPR83CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1vls8o-0004qh-1x; Fri, 30 Jan 2026 12:18:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aKqI5RTtHNdeN6cJxDd517bm1Ar3iNFkw2S0aEGzkK9/PqpI1ZKRza1H3/5hITKOpkryVR8AfxVBTk8rdTDJDf9n6M3SkjOjydKWY6gHZeeabmMd1KPtp+cbjdcOEpURHmJkNFOF8HBDgAtjCFyGcDgxqSyPTAKdz1X76WyJpt9LH8RuWByCyWtT5Il+GCTZ43VG5Y1dHaE/4IDc49QYK5i/fhs0QvpmX4/rOuod46OtXRc1mUoo653JgnwvLi9DRnXVW2q3CCu4PxK5mm8H6JcnDW29tPV2+yfzqwM8DN9TcO3bHA5mck9VqI4ES8bYfmBWL6pEB6hMixEbcuQ6NQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l3t1vf99HwH7yaBxFlROZEWeLVNbhC/VC+CL4t6PJZ4=;
- b=sFACbWwp0KsVEInoGyzdbhGmoJi2uC5X1+/DPYRpOPMEeuYIv2tgpJwcWlNsK+77fdOfNEVhFIE9x/kZ3zy9WOOdsjr5TjAx9X2tw3imkyMX8OxVg3X5NHNJPSgBMV2AqLPFU2Uw3qD8NUC43otNeMZ/K/lhfx6ZsMMJejD/6rkALKjTBrPdkPxOu1OpGO/cqLHspQ3g1mdk6upPdo5SkTSWiqUMLNWt0DSstf3eXaIJwg3TvL0IeXjtbpU1TfPI6TOwvF6osxxxeMvnTxzN/fLtG20XFsJj2B6tx1nkCyO3Vls5NW7vbiOzaB8K2P1smpidEK+x9j8d9B7jP53hJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l3t1vf99HwH7yaBxFlROZEWeLVNbhC/VC+CL4t6PJZ4=;
- b=Phsg3/1Se9SJuDKy+ahlzZAMO3W4S2a6XnF8AmCK4RlStN43b3JrazV/vpmMEf5XHX8G0gFfpildDO/d5aDHEaqZ0nRzCYHt31tgUvdEdWsr8OJq5O78Fui5azwENw56dJa74RJJusKU1PMPgYQBu2HXWhMDjzK+V1T0j2ORkSuSvuCEqSBn/38AHVQeecse5ryklrxtIfGBLZNcobUjtL3Qi9I0jVYrxyBY+ZmaF+SN9O9JDmJlEzv2dVA+ACOQ18xieyDkvMQusI+NzgDCGDzDhwADcPzHILKwMZFKzIFEek3Wv6O7SJOCzMG8m0jO403y9rHjCvA19DrX+OgpQQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by PAWPR08MB11160.eurprd08.prod.outlook.com (2603:10a6:102:46e::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Fri, 30 Jan
- 2026 17:13:36 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%4]) with mapi id 15.20.9564.006; Fri, 30 Jan 2026
- 17:13:36 +0000
-Message-ID: <00d3a841-dc8a-49d5-8342-8a9dd20f90fb@virtuozzo.com>
-Date: Fri, 30 Jan 2026 18:13:34 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] block: move bdrv_advance_flush_gen() earlier from
- bdrv_co_write_req_finish
-To: Hanna Czenczek <hreitz@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20251229161740.758800-1-den@openvz.org>
- <20251229161740.758800-3-den@openvz.org>
- <f3736856-2dc8-45b0-9c20-b49799aa8d35@redhat.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <f3736856-2dc8-45b0-9c20-b49799aa8d35@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1PR04CA0054.eurprd04.prod.outlook.com
- (2603:10a6:802:2::25) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlsQT-0001e5-O1
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:36:57 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlsQS-0000SB-36
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:36:57 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso21324435ad.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 09:36:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769794614; x=1770399414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=deAY+imuz/KLXjNs7gkzSIa4a5AQdjL5/KX/fQLtLJA=;
+ b=Gjch9BHM3ffgWcG5TbwqSZENrQ4y7Odrxdso9LKDZncA5zFOAB9bR3nczsmh8Ad7bR
+ 7F1Io5yzx3x0naQgvYqV6BnSaHIWkub5+1YX39O8ORFU7HMzKOG/PSDs4JZeSo4wxr48
+ dUSjXT2zTk4CP9GTGnOBbL6Rt2y+O1XqMDILJIjrX0RpP6p2GJannnSIlF26/CHGmpiC
+ E4a28dT9htR77CNBBFc2MzcoHXDCl6EbciaSmjfQ5Qf2Q1IIaY4fDxGKnmjol0qmNhDu
+ Q+XSxQR1YAV98urBYBr2x7xaHaQo0ver3JdckrQwjWRws4yTv8ymihf1Gv44Sv70GPHm
+ KtIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769794614; x=1770399414;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=deAY+imuz/KLXjNs7gkzSIa4a5AQdjL5/KX/fQLtLJA=;
+ b=LoUyFCBsk9ncnsGhgWWJ5Iq1nOXcwy9sa8LUYt0BNrKhLPlgmkVRETgbEaOVGQPPDr
+ 4tDm1M9c820vWnAovHGCu2ri5ZkjRfDZgIUukqvH5sBLmKJv15GFSKKQlbH7Xdwmmv/v
+ mLGhcP6hvmeOWRTKsUaiM7yikO/pdZ1ofIsII3R5UN888HMdZOBT7gP2GRTzht/X/De5
+ i/5EB0gdCnw2di01Aj/DveRLc13mvLOchs91f57n7KaITsLNLkJgP2461WM4TeFZQMq2
+ 6PC0JAIeR6ZEybURPw3xlH24EofoFam66kDlWq2KiAi8s3X5hZ9+NJqnA9HntvZgYCX7
+ Jy6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoZuD3kXyRvuBgmGVqPTRWZvo8fMxHKFcKzZWnXxfD8hywYxE9jKaHQ4jXolzRCJVznvMJk0VRdR9G@nongnu.org
+X-Gm-Message-State: AOJu0YxVYKtEeTjJ+BLNESlyNqMtdutJUk1YSuCDFNRnhWoG0pt6YkEV
+ U35W8hwMhUlClVQkcPNpm8C7UZi7Q7QoXROhbyq+zlCbbT+eSlQ80D+gFwX0KvmCmyM=
+X-Gm-Gg: AZuq6aI2Ol4GFfR4AfUXpFt3yP9MZYKqkmjBjCTez9buz+Fxj+VhSnGeIsSpeewiiob
+ HiJQfKtzO3SAVvPEjupacZ/do5vyQ1QZ1VNFafvHEgSq3zmqU4nKB1GLmuCdtYNYaCsyhfyFH16
+ NrdbVg8iXA4mUhwWhSYl/ZlRdZPP4RlC59wRyZ5Ysz8XGehFNXatfAvndVIUf4S5NtCgat5asrm
+ Zd+o4Y6W021boSBWlscwHS83BtBwm4o1thuOSbqllFh7px8pZYbTv/NbAIua/Dg0DrgZc/d2FxH
+ xb25DXd9zPMiV/edVJ+50xruPgSITo4UqUFSu3Bcs6CA+Ll+0Jhb0LqNbWSlDBYIra27NZXw3DR
+ mEGB73zyE+/E3l99ObTH7FJKHzHm/XhF7uhoPuAfg4HGm/MNBAN/wRl72aTSNWA9WJPHoJgvt6A
+ CXHkujItdHvPWhpqDMEDzv91+0sDXWGuCdtcVftpVTTHuJipzDgWLIZFmU
+X-Received: by 2002:a17:903:1547:b0:2a7:af02:2fb9 with SMTP id
+ d9443c01a7336-2a8d9919538mr40130785ad.36.1769794614176; 
+ Fri, 30 Jan 2026 09:36:54 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a88b413c1asm72863355ad.28.2026.01.30.09.36.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 30 Jan 2026 09:36:53 -0800 (PST)
+Message-ID: <4246c42d-fe85-4deb-850e-c3c3a011c6fe@linaro.org>
+Date: Fri, 30 Jan 2026 09:36:52 -0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAWPR08MB11160:EE_
-X-MS-Office365-Filtering-Correlation-Id: 23774535-455f-4608-a5e0-08de6022e766
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ajkwVkFxLzYrdWdsaFcwZURnNlNUbTRrcDdKK0FuakpEMWR5Ti93aGZqclRN?=
- =?utf-8?B?aWNKTGZ4TEMxVFlZaGk1YnhacFVDb0dDZVUwWjZjMXRqNWFTMjBVTWNubkFK?=
- =?utf-8?B?YlgxbzUwdlM4SzM1SEMwYlpyTXhwV3JWbGxXMHFVbWoxSkVLMW1BMDJEdVky?=
- =?utf-8?B?OUk4ZEtmZk9UdDZTc1dSRDM4ZUpwRUMrNElCSnRjem9oRUlKU21IWFdackha?=
- =?utf-8?B?azNRTVJyOW5JM0d4bHg1U0hIQzlNOEJUTG5iZ2V0b0huSmpVWGMxZVJKcXJa?=
- =?utf-8?B?THN0SzBXbFZvY1MyU3dzWlFjRlBlMG9wTHlYaE5lTU9mek5OYkM5eHA1bVJS?=
- =?utf-8?B?SHhaMUdPbkVOd2hpZllkTVJtQmNTdWI1V1pPTEs4NHFBUjdlZ1VtWnZuazdB?=
- =?utf-8?B?cW16Q2FSVGxFV2lKT1VWSEpQTE5lb09BT2ZiQ3kyUXRiZ1BOaTF4Tk9uOEdV?=
- =?utf-8?B?cTZENU96dHhjOUdSbTlsSGRtQjhrOTNiSXhQVk5OQUtSUUdPNEY1eGptdmk2?=
- =?utf-8?B?MUoxc1U5WkhNMy9TVnM2dVRNM1Q2Q21LZi8zM1F4RTU0OXlRWE1qRTAwNVQw?=
- =?utf-8?B?V29oM1FLOXJjQ1ZNZWVVTzRsVThhL2dhc3gzem9IcEgxSW1YaWxXbnU5RE5G?=
- =?utf-8?B?YmV3SkRpVHpVU1RuMGxzcWNEQmJJSk9DaCtPQ3JqZUg2M3ROTUFkQjBuUzdE?=
- =?utf-8?B?b3F4cWFFb1RHUlN2MjUwOTRlRjRUNHpWT0llK3FQL0x2L0xiZVFqYm5obW9F?=
- =?utf-8?B?TjdUZFlQY0RacUVpb2h4aVhIVmpVNmxoYk4yYkFNOHdvOGcxOC9HeTM2TEJV?=
- =?utf-8?B?c2RHWDNBV29CMzh1bDBUWm5uM2tIYldBYkkvcmJINUIrVDdiQWNWMXNvK0dI?=
- =?utf-8?B?UmRoUmhpZUIvalJnS1ppSXRWSFY1SHgrakE0aFMzRDgxQVBSSk0vcmpSYTdQ?=
- =?utf-8?B?Z0dpQWwwSjhNbmNtQlBnUzU2cTdvYTBaa3lDaU5sMW9ZMEdCSjRHeHJJTjNr?=
- =?utf-8?B?Tk5NQnFtcW1nN0xxMXZ1b0tFUVFQd2dvNGt3WklUcE1xc0lkdFJTMlV6UFVR?=
- =?utf-8?B?ZmRkNnFBZk0zOUQycm93U3dwSXZXZEM2ejFIY2xkYVJwTFdOUE1rcjlDeFFi?=
- =?utf-8?B?ODVyQVZkTW1yckZUNFRGaXNuT2VpSGZscURVS1dYbDZIR3Q2eDd0RWtOU2Qw?=
- =?utf-8?B?YmhqRWIySmVWTWZEWE5EOHNWd3ZkSWhLbWdCcGJvSUoxVE9KWlE0QW1MYmcy?=
- =?utf-8?B?TERmOEFoZTlMSENOa29EYjZ5enhSbVhBZDQ4VnhvZmw4MGtndS9tR1JZR2xw?=
- =?utf-8?B?Yk45NG9oVElGbjUzQzErY1hCSDI4U1BoWkxsUHlRUnFjZEZNN1lHV3ZrNTR1?=
- =?utf-8?B?S2VaWU5aTkdJWTROTGxIR3NJR1BGdko0Tnhzc3BZckhsb04rNlhYdGhIMENH?=
- =?utf-8?B?MVlWdFpyRDY2V0JvY1RkWTZiM3BkMlpueWlWR3BTZEZ6bjVVb0pTemFCK1RQ?=
- =?utf-8?B?MEVBaHFTUkhpeXdMdE9LVC9jRkJjWlhQWUIxMlhZd01WWjN1SDJoTm5kMm91?=
- =?utf-8?B?UDJWV21TVWNseWN0dk9UK2FrS3o3SWczS1dhZ2pZUGlSUTZYdHBhREM0QlMr?=
- =?utf-8?B?M21YWXQyOVNHU2dyVEtiTDBDWDB5WjRNUkdCT2ZScFRNMVNNQ3l5NkZVdkli?=
- =?utf-8?B?cUg5cDJ0R1M3djQ3cmEvOUl6bXJCcjRiZENWQms4ZXBzam82UnZacFFyQWdL?=
- =?utf-8?B?VkdEZDd3Qm1yN2JLdmVrUE1BUVZlM1ZIeHV4Y2hZZVNiVVYyWGVNRXNKQ2hy?=
- =?utf-8?B?MWNEeDJBUXVZZnJiZy8wWU5WbDdGM1BKN1VickU4L0UrL3ZycDBVWGJyTHFD?=
- =?utf-8?B?Y0s0Vk5kMlBsakp3OElWOHFmK0YxZXNMV0ViU0U2R2V0LzRadHlXcnZ6MmQ5?=
- =?utf-8?B?dlZqcU9LUXgxWjkzdUJTdk50OWdsZ2NKeEVKVStNZWY2SXdXTlI3Wm1zK2hi?=
- =?utf-8?B?dmlMMDdwMmQvUzNoUDRzTFdROHpBRGZGTThiUWVPRDJmc0ZEQzlXZkIwS0x5?=
- =?utf-8?B?V3pwNEJXOWxUcmZ3dDZvQ0E5L1FUZ1gyKzVIUFlKaW0xQ3M4eEJ6eEM5VUFH?=
- =?utf-8?Q?vXmw=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aS9PdlhLWFVhOVNDVkVlaVdQdWtWTUo0Y1JYOUp4STNxUlN0T1k3WkdERVpa?=
- =?utf-8?B?a1hZSWx2YTl3QzA1aXZvOVhrTk9uR0J1NlFYNUVxbmxQMGMyMVF5MlZJalB1?=
- =?utf-8?B?Wlc3R085QUl6bElKbFpEa3RWN1pLYWJFQUsxWEIvMmNVZVQ3UW1jSlBySE9Z?=
- =?utf-8?B?RE0zMmxyVEpscnVML2N6dnR6Y2szWDJwSDVqT0g0QmlMZmVSRU1iOWpNaUYz?=
- =?utf-8?B?RURUa2J0QXBGLzBYaUgyWDZ4SFJ3Q0VWWUtCQWJEWFFZOTd0MlI2RGxQVUVn?=
- =?utf-8?B?YzJQekVYcmVoVlREQkowNWZueEtpNmR3Tlo3ZlBrblI5SXFHUEIwdjV3REMw?=
- =?utf-8?B?MnQ4RGVybWozcUtVZk93NXY2TlovRXFLQnhwV09yK3BuanI4ZkNmdzVJaHB2?=
- =?utf-8?B?ZTNIYmU3SFNldlRRWW1SbUNxbDdOYWZ0MkFXM0d0ZHVubWV4RnFGNFl0THpL?=
- =?utf-8?B?cTMvMCtwWTdZWHlKdVRCaWtEa0l6MHNnMi9UVjBUUVkvYlI3NXlQaG9Tb1pU?=
- =?utf-8?B?aGtJMDROUjc1RGdKNmtROE9hQ1V0eDAyQW5NblczR1M2bWFzRnM0L040b2pv?=
- =?utf-8?B?alpWcU12ak5WemNpbUhKQkNIN3N6MERyMWUzdmk3S2NtWkJZYnp4TmM1ZEVB?=
- =?utf-8?B?WjdkV1dGS00weXdaMlVtVVFCL3phaVowc1A3OWNwdXQ5azJmNkk1Y0N6aUFF?=
- =?utf-8?B?R2ZNekVXZHBUNHRIaGtxOWNIYXUyMGFxKzZnRFJja3d1TnpkQ3F4RkdhazdH?=
- =?utf-8?B?ZWoxTTZvZU9rSml2dUNxbFdQdlI3Z3VHZjYwa3A4SUdMVWxnSU1jeHZNRy9G?=
- =?utf-8?B?d2JnNmRiNFFkVHpGSVNaazB6R3JqSDYxUmxNeThMcVc5K1Y4ZVRUclVyRFcy?=
- =?utf-8?B?ZmswMTFtdjhIQ1hKVVBvVWhDbzF5Q25QSDNEUXVXMlBEOHlTT2ZhUU45eis3?=
- =?utf-8?B?ZEZUUm9PYXV0aTltb05TdHhhMUF4ZDdjT0JuQm9IRS8wUnA0UTArODJBRVZI?=
- =?utf-8?B?YllxVWdSYVVlKzc4T0xtcTNXYWlVRE9YVUZaQ3dRbitiK1hZQVZ5bVZUbzda?=
- =?utf-8?B?L1RzcFRNY0kwem1CVWN2SUlqRVJza2E5b0lOVU1FRFZkTmNOMENlL2tqSlFV?=
- =?utf-8?B?ZlFkcWFmS29SeVlYSy9iYk94UE5NWmNZMkZjS042emJySkdPZS9vN25YVVNK?=
- =?utf-8?B?NWhSb1lOdEN2OG4yQUZkMGFSR2QzYUc5Ly9xZTdSWHNUYXlDa3BqZTk4Q2Ux?=
- =?utf-8?B?Zm5vdkxXdDBLN2pwVzJoTEFmSXo1bnJmQkQyY2ROZ3ZxRnFrWlBadUVHYWIz?=
- =?utf-8?B?RnA3c1lqTnZ2UXlNSk1BbDFEcmo0dFAxNjhzMjNSUnhDTnBnSmpUR2tvN0FL?=
- =?utf-8?B?a3J2NWFCdm1DL1JVU3VQZXJsN00ybzBzUW9sMlAxQjNKUWExMnJxaGNNdjJD?=
- =?utf-8?B?UHJPSmZRU1VsZG0wMllqWGRudjg5SUpZSk1mbUt5S0lXVDh1WEcwVy8wTDFv?=
- =?utf-8?B?aXIvcVgrUXNYZUc2K1ZLdTlpQllCN3NmV0tUK2NiVG5CdHJ4bmdZZDRuU1Rh?=
- =?utf-8?B?VGVoMkVBWnJEbDFKQm5ma1ROaUpVS2JkTUVmUnpZZUpGaElKYzBYdUEyempu?=
- =?utf-8?B?M04vaHB2RmRqMGdERzJra1l5dDV3R0VVQkNXNjJ5U3hIK1BOdndBMlQ2dE9q?=
- =?utf-8?B?YVJJVjdrOUVJUkJ2cmVvZFNRMFExbE90MDBmVlRlbDdFcXpLNkloUnlNS1pN?=
- =?utf-8?B?ZlVwK0RPeUFJZDg1Uk1GaUREcEVuSVNYMVZJdlZoUXRLRU96eHhaa3c3U3VP?=
- =?utf-8?B?bDFFVzFSTFhldjBjNi9Tc3p4QmhvUjdtMTFpeG1ncmdaTVo2c21yd2JXcEYz?=
- =?utf-8?B?VGFnQXlHYmZjL2ZaOVRUT214VWgvTjZWV2RzV1JsN3BUYXVyNlkzdE1kNGtH?=
- =?utf-8?B?MWNZMG9INFc5TkdsdUtodzJ5Y0hzM1l0S2dZdldlOCttMHlGT1lBRldpa01D?=
- =?utf-8?B?VWdSb3dxdlJZclNhN3dWVzVERXhubzhMV1RYRVNMckE5M3NzVWpINThsZEw5?=
- =?utf-8?B?QlV3THVVK0dDODVNbXp2NEZHYjNzRDJmdmlhaGRRNG42OWJvQmptU0dLd2Rn?=
- =?utf-8?B?cERGM0U0SnVxMDMzZ1BmUzlSM3UzVDgyNmQ3YmppYXpEbFZyNEpVT1pKVW05?=
- =?utf-8?B?RUk1cHl1Rm12SUp0aWpTaTdmcU5wYUFXZXJUdGQ5eEpFWStDc00xNmw2d3gw?=
- =?utf-8?B?R2hlSjZZR3kyMVhkMmtmTFlYZWdqZTZIbXhEbDJ5M2xKZDJHUklGcWRkSFBR?=
- =?utf-8?Q?EdkJveDzfQ/hFw8IPj?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23774535-455f-4608-a5e0-08de6022e766
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2026 17:13:36.2348 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QOqUdKEt+tOukXYjIFqTi0uXf8PW2tSia91wvPXcoXs04KWfBMvaYly0jbj2imr0ts1wyAmEEW+W/6KlU4hhPg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB11160
-Received-SPF: pass client-ip=52.101.66.82; envelope-from=den@virtuozzo.com;
- helo=DUZPR83CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] bulk: Stop forward-declaring enum typedefs
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Roman Kiryanov <rkir@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Will Hollins <whollins@google.com>, jpcottin@google.com, jansene@google.com
+References: <20260130170417.43356-1-philmd@linaro.org>
+ <20260130170417.43356-2-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260130170417.43356-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,72 +143,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/26 16:07, Hanna Czenczek wrote:
-> On 29.12.25 17:07, Denis V. Lunev wrote:
->> This helper is mandatory to be called before bdrv_co_flush(). In the
->> other case bdrv_co_flush() will be noop. This helper should be called
->> after actual write is completed for subsequent flush to perform some
->> work.
->>
->> Actually this change is important, without it BDRV_REQ_FUA semantics is
->> broken completely. flush() is not called. This smells like potential
->> data loss if somebody relies on BDRV_REQ_FUA.
->>
->> Signed-off-by: Denis V. Lunev <den@openvz.org>
->> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> CC: Kevin Wolf <kwolf@redhat.com>
->> CC: Hanna Reitz <hreitz@redhat.com>
->> ---
->>   block/io.c | 20 ++++++++++++++------
->>   1 file changed, 14 insertions(+), 6 deletions(-)
-> Definitely an improvement, but if possible, I would still prefer keeping 
-> the increment it in bdrv_co_write_req_finish(), because that is where 
-> all write requests eventually end up in, and that’s also where dirty 
-> bitmaps are handled.  It seems slightly error-prone to manually have to 
-> call this every time the BDS data is modified.
->
-> Can we maybe instead pull the FUA emulation out into 
-> bdrv_aligned_pwritev(), after bdrv_co_write_req_finish()?
->
-> I think we can only pull out the flush, not the FUA emulation detection 
-> because for write-zeroes, we have to check either supported_zero_flags 
-> or supported_write_flags, depending on whether we fall back or not.  But 
-> bdrv_driver_pwritev() and bdrv_co_do_pwrite_zeroes() could return an 
-> need_emulate_fua flag via pointer parameter, and if set, 
-> bdrv_aligned_pwritev() can then do the flush after 
-> bdrv_co_write_req_finish().  (This would also allow dropping both “only 
-> flush once at the end” blocks.)
->
-> Maybe it would then also make sense to move the bdrv_co_flush() into 
-> bdrv_co_write_req_finish(), and add a need_flush parameter to it, so 
-> that it can see whether the whole request (write + flush) was successful.
->
-> Hanna
->
-I have tried to think about this problem in a this and that way
-and found yet another missed place in the code. This has
-frustrated me even more.
+On 1/30/26 9:04 AM, Philippe Mathieu-Daudé wrote:
+> The C99 standard chapter §6.7.2.2 point 4 mentions:
+> 
+>    Each enumerated type shall be compatible with char, a signed
+>    integer type, or an unsigned integer type. The choice of type
+>    is implementation-defined, but shall be capable of representing
+>    the values of all the members of the enumeration.
+> 
+> Align with that recommendation by defining the typedef
+> along with the enum.
+> 
+> For information, building with -Werror=pedantic was reporting:
+> 
+>    In file included from ../../ui/kbd-state.c:10:
+>    include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to 'enum' types [-Werror,-Wpedantic]
+>       12 | typedef enum QKbdModifier QKbdModifier;
+>          |              ^
+>    ...
+> 
+> Reported-by: Roman Kiryanov <rkir@google.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/riscv/riscv-iommu-bits.h          |  4 ++--
+>   hw/riscv/riscv-iommu.h               |  2 --
+>   include/hw/misc/auxbus.h             | 11 ++++-------
+>   include/hw/pci/pci_device.h          |  5 ++---
+>   include/hw/ssi/ssi.h                 |  6 ++----
+>   include/hw/xen/interface/io/xenbus.h |  5 ++---
+>   include/io/channel.h                 | 11 ++++-------
+>   include/system/replay.h              | 10 ++++------
+>   include/ui/clipboard.h               | 15 ++++++---------
+>   include/ui/kbd-state.h               |  6 ++----
+>   pc-bios/s390-ccw/virtio.h            |  5 ++---
+>   tests/qtest/libqos/qgraph_internal.h | 10 ++++------
+>   hw/core/loader.c                     |  5 ++---
+>   hw/display/xlnx_dp.c                 | 11 ++++-------
+>   hw/dma/xlnx_dpdma.c                  | 10 ++++------
+>   qapi/opts-visitor.c                  |  7 ++-----
+>   qapi/string-output-visitor.c         |  6 ++----
+>   tests/unit/check-qom-proplist.c      |  6 ++----
+>   18 files changed, 50 insertions(+), 85 deletions(-)
+> 
 
-For the reference:
+This looks good!
 
-raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-           QEMUIOVector *qiov, int type, int flags)
-{
-    ...
-    assert(qiov->size == bytes);
-    ret = raw_thread_pool_submit(handle_aiocb_rw, &acb);
-    if (ret == 0 && (flags & BDRV_REQ_FUA)) {
-        /* TODO Use pwritev2() instead if it's available */
-        ret = bdrv_co_flush(bs);
-    }
-    goto out; /* Avoid the compiler err of unused label */
-
-This definitely states that the code is cumbersome and you
-right that I need to try harder to move FUA emulation out
-into generic code.
-
-I'll invest more here.
-
-Thank you for the point,
-    Den
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
