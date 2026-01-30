@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1D1E6BF18
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E667BE6BF13
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 14:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlppM-0004hd-QX; Fri, 30 Jan 2026 09:50:28 -0500
+	id 1vlppQ-0004kB-NY; Fri, 30 Jan 2026 09:50:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppL-0004gR-2h
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:27 -0500
+ id 1vlppN-0004hv-72
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:29 -0500
 Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppI-00036k-1K
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:26 -0500
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
- by mailfout.stl.internal (Postfix) with ESMTP id 1202A1D00067;
- Fri, 30 Jan 2026 09:50:23 -0500 (EST)
+ id 1vlppK-00037x-5j
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:28 -0500
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+ by mailfout.stl.internal (Postfix) with ESMTP id 6A9AF1D00141;
+ Fri, 30 Jan 2026 09:50:25 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-10.internal (MEProxy); Fri, 30 Jan 2026 09:50:23 -0500
+ by phl-compute-07.internal (MEProxy); Fri, 30 Jan 2026 09:50:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1769784622; x=
- 1769871022; bh=t09fhcpWk+aZIQ1AgyqKwCgGRfq7HEmlcpbHugFS7Os=; b=j
- WcNRSa3FmOOkBZFNZZC13NCBWk36pP1o0YCd5dkFM2deS2ObNjPCaGp8KECQppM5
- h5geBU7y3Iz7gEHJYL4zi2/NL4gRMEhPU92L9Oqa1YgJnGkdwrqSkXDqyo5U3HPE
- C1wxJ83LuH+afqpoomBDEsnuw/ZTPE5PUipjI5BEzOQtYTQV+hFpJusdpjAJhXQI
- kQD/SNJln3RC9n73ZlVAtgJYjYqy6ccOLX6IubY2Vuu5uPwfUXDgDATAl0oeDCGb
- 9AuxaVCuzHB/pjYgGEiMTTTcqJpDXJu3ZLdTQ5EIEUPFFuUJDw6D/fb43H8vS8VK
- AXwNP0pNTTT54mbFxaF5Q==
+ :reply-to:subject:subject:to:to; s=fm2; t=1769784625; x=
+ 1769871025; bh=aEAVs8nhWZjUQGIGcxn8VMbeYHw0sDTZNSguZo7+NUY=; b=J
+ dQ4Y12EPiQbop73WVUUSLkr6j43Db/Le20nwir63eVeM7Pm8sytpwm9/JXsNDBbJ
+ ljSIpcL6/9QudbVqf4Rl/5h0IeuII/gxS7YPOlAIQjFhyQHlRLEmCPwJJe81V7WS
+ DwZuaQv8PS0izm82lns5ezIxaKzrSTtXdNr5/BtwHsaElKPhrCBVBKJs/XTanMBr
+ PecixTQZF6Cbk3ZKm1mig4Gubxl5SRc+5/GP7qIF3gDuQk7czt/088F4TgF+/SP1
+ 7LPovjnBwFIw3I3a/z62E2kDPwzBhTE0h2dI8Ze9+NKXBRqHqNsqbeEqay39T9g7
+ 3IH/d/AzxWDrTiY5ZWsuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1769784622; x=1769871022; bh=t
- 09fhcpWk+aZIQ1AgyqKwCgGRfq7HEmlcpbHugFS7Os=; b=NJa8WJsf5JsDdNi9k
- WHAEx9YfkKTLFjIPuwDl4SJEVQ+5FUeaoJlx0HQBUMZlZ6hv9OUO396LaF6eltlL
- /N5WWqfD2qC0KsuW7640egwsZhVXwRA+2jYdmGsBjiK0MbhPGOWQqq50VUlNxmMO
- K97zXvSEfTd+gPGaYvEzds6/BiBLmrrifY8zxYGFLDuJHOUtQbPyzdMsd2/MnGvt
- nQ19BanmdPHnZKsT62sdI69F7bNt1BpfXnY7b0mn+cqiXJ3A7c4wlae/E7fUTRcy
- oRSw6uKbICHHYZOgemJLvrlu8HLL/bBKAOA0FdSm4O4akCBQyRR/GhUFgx9WeF82
- s91Dw==
-X-ME-Sender: <xms:LsV8aaSyK0GhlKWEVwf5Nh3QK1pBGrZLEucwb1GY0X7L6w7AhCaECQ>
- <xme:LsV8aXNfHJszb7cDPBzygWmGckG4KjJPo7Z8VGJ4X6R_9H6a1Sb_CLfupylKLje5c
- nm5CUh_v2LVVFneQ68OFdJ54UO85Q7L_PfGyy8ZeZPPAHGiCVV6SJo>
-X-ME-Received: <xmr:LsV8aVP-V3UQ_Hl19CYVP1ad0j1M646UAfgOwK6qGBtRKcPlz59SHoXmuAoW>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1769784625; x=1769871025; bh=a
+ EAVs8nhWZjUQGIGcxn8VMbeYHw0sDTZNSguZo7+NUY=; b=t7BQydrRLxsduMMPu
+ O+bD0dyUDlp6iaQwzKM7U4kt8ddEVCFkHBdlL4zRbky9i6qhGkcyX5QI5hg+iOv/
+ BRBhbJnjW1ya/iwGsmIRxy8wSaL7e/YhbYGxZ01yMnkYpH2NbnETY38XB6a1FzUo
+ MTW4sWW36T+wMjwliMyTjSMZ7kUIdwhycklIfZRK6QmfqHRYhyR/Bsj7OMaNy6Hw
+ PA5eYorFIpD4nbGW/YlTH6l+K14NhJ8IZPMQ2WEr/8Fkb99v62peql8nR5kQjjYK
+ 8c1Z4BqkdTBfMt7wveAz182OryTTSopW/PuSVSMBCc7guX+iCJc7qjds6SCarEhN
+ Y/gxg==
+X-ME-Sender: <xms:McV8aZlCKegfn_JMA9kVceOsVBuR7mTRb38GO3WAkpu6Z3wQngy5bw>
+ <xme:McV8acTIRLDgGpUYcuTY0-xIpcfrQQUyx0jgwJH1ONzLtpyUGusIIt5h2GoMicB7y
+ 8OJsKon_Bdf3VLm4ZXttAdNzxpQ74hrGQlfdKWOLS5Pxv2xIt5XInY>
+X-ME-Received: <xmr:McV8adCb1xqX5c5-qgK_bSiCVlsz_KYsWujwwlf2JTmvdM2OpBNgBlfdWfcD>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelfeefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
  ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
  thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
  gsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgv
  lhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:LsV8afteRFwHuz0tzsJbq_NZyudUvHXpejpsZChUkLkn-qdqGginyQ>
- <xmx:LsV8aXVuN1p1MjFXIN10VR7cwPw4ZP4BiJS17eSgh5q1XL9F5Wa-vw>
- <xmx:LsV8afumRIsOFGvKvH3K8jZsPXhxOn_gQudE-RWv1EV4MAZtKmzn2w>
- <xmx:LsV8abWkdwH4IE7YEOKrJ2h-mDIa-j2767WNvvrLd3EoQq8YLYiQzg>
- <xmx:LsV8aRY1NhbNe1dFPFT3q-Vjk_Ic4MrkloVJmxR15uoOEF6HsPk4_AjE>
+X-ME-Proxy: <xmx:McV8aTS7VBD3Urd-qAR0I8A2TRWRco19i4TnWAu_AA3W6ofq5vtTzQ>
+ <xmx:McV8abrolSoGQVAZvv4rEjmvTn6hzQOVRsNkh1gNwSofgA71HN-ysQ>
+ <xmx:McV8aVy09LLmJdYRvN60viJCoGKYFC9LeA-R7-X0b-RpqjLyT5FkvQ>
+ <xmx:McV8aQJ93oZEiURKdqtca456htTFpCpHCA6E_vuwmjBY8VGgwbIZ5Q>
+ <xmx:McV8aV-UkcdDS8osCixrG7f2p_i_6bTbGXuaanWByTA0nLWNNElnHywY>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 09:50:22 -0500 (EST)
+ 30 Jan 2026 09:50:24 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 4e74fcbd;
+ by chomposaur (OpenSMTPD) with ESMTPA id 973266c4;
  Fri, 30 Jan 2026 14:50:19 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v6 05/20] ati-vga: Implement foreground and background color
- register writes
-Date: Fri, 30 Jan 2026 09:49:50 -0500
-Message-ID: <20260130145005.731129-6-chad@jablonski.xyz>
+Subject: [PATCH v6 12/20] ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
+Date: Fri, 30 Jan 2026 09:49:57 -0500
+Message-ID: <20260130145005.731129-13-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260130145005.731129-1-chad@jablonski.xyz>
 References: <20260130145005.731129-1-chad@jablonski.xyz>
@@ -114,33 +113,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are straightforward 32-bit register write handlers. They're
-necessary for a future patch which will use them for color expansion
-from monochrome host data transfers.
+setup_2d_blt_ctx is responsible for knowing how to retrieve the state
+needed by ati_2d_blt from the registers and assigning it to the ATI2DCtx.
+This will be useful in a future patch when HOST_DATA needs to make small
+modifications to the ctx.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/display/ati_2d.c | 71 +++++++++++++++++++++++++--------------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index ce23e5e48b..26fc74b19b 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -924,6 +924,12 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DP_CNTL:
-         s->regs.dp_cntl = data;
-         break;
-+    case DP_SRC_FRGD_CLR:
-+        s->regs.dp_src_frgd_clr = data;
-+        break;
-+    case DP_SRC_BKGD_CLR:
-+        s->regs.dp_src_bkgd_clr = data;
-+        break;
-     case DP_DATATYPE:
-         s->regs.dp_datatype = data & 0xe0070f0f;
-         break;
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index bc41ad37f6..4c55898e9a 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -25,7 +25,7 @@
+  * possible.
+  */
+ 
+-static int ati_bpp_from_datatype(ATIVGAState *s)
++static int ati_bpp_from_datatype(const ATIVGAState *s)
+ {
+     switch (s->regs.dp_datatype & 0xf) {
+     case 2:
+@@ -64,6 +64,43 @@ typedef struct {
+     const uint8_t *src_bits;
+ } ATI2DCtx;
+ 
++static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
++{
++    ctx->bpp = ati_bpp_from_datatype(s);
++    ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
++    ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
++    ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
++    ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
++    ctx->palette = s->vga.palette;
++    ctx->vram_end = s->vga.vram_ptr + s->vga.vram_size;
++
++    /* dst */
++    ctx->dst.width = s->regs.dst_width;
++    ctx->dst.height = s->regs.dst_height;
++    ctx->dst.x = (ctx->left_to_right ?
++                 s->regs.dst_x : s->regs.dst_x + 1 - ctx->dst.width);
++    ctx->dst.y = (ctx->top_to_bottom ?
++                 s->regs.dst_y : s->regs.dst_y + 1 - ctx->dst.height);
++    ctx->dst_stride = s->regs.dst_pitch;
++    ctx->dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        ctx->dst_bits += s->regs.crtc_offset & 0x07ffffff;
++        ctx->dst_stride *= ctx->bpp;
++    }
++
++    /* src */
++    ctx->src.x = (ctx->left_to_right ?
++                 s->regs.src_x : s->regs.src_x + 1 - ctx->dst.width);
++    ctx->src.y = (ctx->top_to_bottom ?
++                 s->regs.src_y : s->regs.src_y + 1 - ctx->dst.height);
++    ctx->src_stride = s->regs.src_pitch;
++    ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        ctx->src_bits += s->regs.crtc_offset & 0x07ffffff;
++        ctx->src_stride *= ctx->bpp;
++    }
++}
++
+ void ati_2d_blt(ATIVGAState *s)
+ {
+     /* FIXME it is probably more complex than this and may need to be */
+@@ -72,40 +109,21 @@ void ati_2d_blt(ATIVGAState *s)
+     bool use_pixman_fill = s->use_pixman & BIT(0);
+     bool use_pixman_blt = s->use_pixman & BIT(1);
+     ATI2DCtx ctx;
+-    ctx.rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
+-    ctx.left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
+-    ctx.top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
+-    ctx.frgd_clr = s->regs.dp_brush_frgd_clr;
+-    ctx.palette = s->vga.palette;
++    setup_2d_blt_ctx(s, &ctx);
+     DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
+             s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
+             surface_bits_per_pixel(ds),
+             ctx.rop3 >> 16);
+     unsigned dst_offset = s->regs.dst_offset;
+-    ctx.dst.width = s->regs.dst_width;
+-    ctx.dst.height = s->regs.dst_height;
+-    ctx.dst.x = (ctx.left_to_right ?
+-                s->regs.dst_x : s->regs.dst_x + 1 - ctx.dst.width);
+-    ctx.dst.y = (ctx.top_to_bottom ?
+-                s->regs.dst_y : s->regs.dst_y + 1 - ctx.dst.height);
+-    ctx.bpp = ati_bpp_from_datatype(s);
+     if (!ctx.bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+         return;
+     }
+-    ctx.dst_stride = s->regs.dst_pitch;
+     if (!ctx.dst_stride) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
+         return;
+     }
+-    ctx.dst_bits = s->vga.vram_ptr + dst_offset;
+-
+-    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-        ctx.dst_bits += s->regs.crtc_offset & 0x07ffffff;
+-        ctx.dst_stride *= ctx.bpp;
+-    }
+     int dst_stride_words = ctx.dst_stride / sizeof(uint32_t);
+-    ctx.vram_end = s->vga.vram_ptr + s->vga.vram_size;
+     if (ctx.dst.x > 0x3fff || ctx.dst.y > 0x3fff || ctx.dst_bits >= ctx.vram_end
+         || ctx.dst_bits + ctx.dst.x
+          + (ctx.dst.y + ctx.dst.height) * ctx.dst_stride >= ctx.vram_end) {
+@@ -123,21 +141,10 @@ void ati_2d_blt(ATIVGAState *s)
+     case ROP3_SRCCOPY:
+     {
+         bool fallback = false;
+-        ctx.src.x = (ctx.left_to_right ?
+-                    s->regs.src_x : s->regs.src_x + 1 - ctx.dst.width);
+-        ctx.src.y = (ctx.top_to_bottom ?
+-                    s->regs.src_y : s->regs.src_y + 1 - ctx.dst.height);
+-        ctx.src_stride = s->regs.src_pitch;
+         if (!ctx.src_stride) {
+             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
+             return;
+         }
+-        ctx.src_bits = s->vga.vram_ptr + s->regs.src_offset;
+-
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            ctx.src_bits += s->regs.crtc_offset & 0x07ffffff;
+-            ctx.src_stride *= ctx.bpp;
+-        }
+         int src_stride_words = ctx.src_stride / sizeof(uint32_t);
+         if (ctx.src.x > 0x3fff || ctx.src.y > 0x3fff
+             || ctx.src_bits >= ctx.vram_end
 -- 
 2.52.0
 
