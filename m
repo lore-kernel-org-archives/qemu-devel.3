@@ -4,115 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8F0E6BF10
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 21:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEC0E6BF10
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 21:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlvkf-0005Ng-7R; Fri, 30 Jan 2026 16:10:02 -0500
+	id 1vlvpD-0006ua-Ac; Fri, 30 Jan 2026 16:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vlvkW-0005LG-H5; Fri, 30 Jan 2026 16:09:52 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vlvpA-0006uB-Ua
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 16:14:40 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vlvkR-00046e-RA; Fri, 30 Jan 2026 16:09:52 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60UJWxof012136;
- Fri, 30 Jan 2026 21:09:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=a2p2TI
- za6ZsveZrd7+o5JKkjy2NldIaK1jhBxx2Oo3s=; b=T+IAocbP4ibQJaavQKR5ds
- UONhYXCmNrh29vsjMB+wFVQx2ZPFS/Zdrhd8qrOSF4OYeVUxcQ3J7sLSfjPopWFF
- Rbl8bxkHCQMM2kcOSyBv7CFBW/5LBqXDaKy2WYlhaHWFq2zOqwEIBys8vqlE4LmA
- cpzekcf1jEIZ75z568N8Bfk4xteG5u29kMQGG5FWioB52gUQrkwMFJDiwsrWaAja
- 1JyZR25eM9e02V0mfG8PuB7ohUZLCXR9NBop1GTcWcvAxhg2pEDhVN3EPx3z70R7
- Fs72MeDOmSYw//cX2N4XZHe8r9sp3oW503+VVXIbvk1iZsiUJ59HPvhOKcpGubfA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr6mefh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 21:09:43 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60UK46bC026384;
- Fri, 30 Jan 2026 21:09:43 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkqs2x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Jan 2026 21:09:43 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60UL9f3C16188030
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Jan 2026 21:09:42 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D324258059;
- Fri, 30 Jan 2026 21:09:41 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E07558055;
- Fri, 30 Jan 2026 21:09:40 +0000 (GMT)
-Received: from [9.61.171.247] (unknown [9.61.171.247])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 30 Jan 2026 21:09:40 +0000 (GMT)
-Message-ID: <dda2b9a9-d5d0-4634-9284-85502de84af8@linux.ibm.com>
-Date: Fri, 30 Jan 2026 16:09:39 -0500
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vlvp8-0004gC-T3
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 16:14:40 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 469345969FD;
+ Fri, 30 Jan 2026 22:14:35 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id FkCUMGT4R3qH; Fri, 30 Jan 2026 22:14:33 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 28BFB5969F6; Fri, 30 Jan 2026 22:14:33 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1FCF35969F2;
+ Fri, 30 Jan 2026 22:14:33 +0100 (CET)
+Date: Fri, 30 Jan 2026 22:14:33 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/4] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
+In-Reply-To: <a4344aef-8eb7-42f4-bb2e-ab87fbd21f97@ilande.co.uk>
+Message-ID: <dd23e078-c377-9e04-bd94-62698ede3b9f@eik.bme.hu>
+References: <cover.1769703287.git.balaton@eik.bme.hu>
+ <b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu>
+ <CAFEAcA9+sKLXmzXz98rfnEqVBE4WwVcFsMqiXSx6KfK1=PDfKA@mail.gmail.com>
+ <31362eca-9cd5-8b6b-a3a1-4ddb8dc3e762@eik.bme.hu>
+ <CAFEAcA9htbxy0fHZAvdX6Rneina-r_a1ajN3w3FHUL=hykcyug@mail.gmail.com>
+ <69ca374e-960f-89a7-0f74-b42977a51d3e@eik.bme.hu>
+ <CAFEAcA_wdHO80SpoCNk6tgyKmN2s=Tk_hOVbcef8+v17H=xhFg@mail.gmail.com>
+ <a4344aef-8eb7-42f4-bb2e-ab87fbd21f97@ilande.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/29] pc-bios/s390-ccw: Add additional security checks
- for secure boot
-To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
- berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- brueckner@linux.ibm.com
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-22-zycai@linux.ibm.com>
- <e252ec06-3b19-441a-8fa2-72b45c451e62@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <e252ec06-3b19-441a-8fa2-72b45c451e62@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDE3MSBTYWx0ZWRfXyNFjeB92z+Oa
- i4IiScHEaMDDZVRakMExYsLLfSfe9EFxDLhhTpLjwogd4L83T3pulmCwQpZhjFuZLqefwNZmyMA
- dFp6EtrEA7nISAJqGxOnXx0EI8aDyqFvEk2BoqyGq6PxV7kIGCQnPvYz+3yNU0uHegKOdb1rxJ6
- 6OQs5fCDM7aSphNs30NrOtqaL/K6ofVRpb1x6kxHxxFaBJwNx1om/Ks7xfhEnLeKukKUi3yRRFi
- bS/sfuaIKCPLIzIsM2uVQBVWOvJTYweeEYjR29J5aB/4kqoVfPT+idSMyCXoU/DNLdrh1UJcic0
- HkIpiALvOYIg6hMl3YKoGDNZUB1Yo6sYcRLzx464sgntC1Xg1TjTqY2oHjrha97IrAmKS3t6ffS
- PMeKR7v90IT6udJiB2D2AJdMy2oOMtN/sO2N5njKC/Ptz0+TFmt/9iO+oxcvm/VztA631nEbYm4
- E3dgyALelYF3DpkVZJw==
-X-Proofpoint-GUID: hvgniIf22bZymnIupwWClXWh8RF29mQ8
-X-Proofpoint-ORIG-GUID: hvgniIf22bZymnIupwWClXWh8RF29mQ8
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697d1e18 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=_nH7b7cg9WtrSqelw0cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-30_03,2026-01-30_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601300171
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,806 +76,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/26 5:11 PM, Collin Walling wrote:
-> On 12/8/25 16:32, Zhuoying Cai wrote:
->> Add additional checks to ensure that components do not overlap with
->> signed components when loaded into memory.
->>
->> Add additional checks to ensure the load addresses of unsigned components
->> are greater than or equal to 0x2000.
->>
->> When the secure IPL code loading attributes facility (SCLAF) is installed,
->> all signed components must contain a secure code loading attributes block
->> (SCLAB).
->>
->> The SCLAB provides further validation of information on where to load the
->> signed binary code from the load device, and where to start the execution
->> of the loaded OS code.
->>
->> When SCLAF is installed, its content must be evaluated during secure IPL.
->> However, a missing SCLAB will not be reported in audit mode. The SCALB
->> checking will be skipped in this case.
->>
->> Add IPL Information Error Indicators (IIEI) and Component Error
->> Indicators (CEI) for IPL Information Report Block (IIRB).
->>
->> When SCLAF is installed, additional secure boot checks are performed
->> during zipl and store results of verification into IIRB.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>  pc-bios/s390-ccw/iplb.h       |  26 ++-
->>  pc-bios/s390-ccw/s390-ccw.h   |   1 +
->>  pc-bios/s390-ccw/sclp.c       |   8 +
->>  pc-bios/s390-ccw/sclp.h       |   1 +
->>  pc-bios/s390-ccw/secure-ipl.c | 422 +++++++++++++++++++++++++++++++++-
->>  pc-bios/s390-ccw/secure-ipl.h |  55 +++++
->>  6 files changed, 508 insertions(+), 5 deletions(-)
->>
->> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
->> index a0f58d125c..94c8da1772 100644
->> --- a/pc-bios/s390-ccw/iplb.h
->> +++ b/pc-bios/s390-ccw/iplb.h
->> @@ -32,11 +32,19 @@ struct IplInfoReportBlockHeader {
->>  };
->>  typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
->>  
->> +#define S390_IPL_INFO_IIEI_NO_SIGNED_COMP      0x8000 /* bit 0 */
->> +#define S390_IPL_INFO_IIEI_NO_SCLAB            0x4000 /* bit 1 */
->> +#define S390_IPL_INFO_IIEI_NO_GLOBAL_SCLAB     0x2000 /* bit 2 */
->> +#define S390_IPL_INFO_IIEI_MORE_GLOBAL_SCLAB   0x1000 /* bit 3 */
->> +#define S390_IPL_INFO_IIEI_FOUND_UNSIGNED_COMP 0x800 /* bit 4 */
->> +#define S390_IPL_INFO_IIEI_MORE_SIGNED_COMP    0x400 /* bit 5 */
-> 
-> What about shorthanding these to just S390_IIEI_*
-> 
-> Then add a comment above giving the longhand /* IPL Info Error Indicators */
-> 
->> +
->>  struct IplInfoBlockHeader {
->>      uint32_t len;
->>      uint8_t  ibt;
->>      uint8_t  reserved1[3];
->> -    uint8_t  reserved2[8];
->> +    uint16_t iiei;
->> +    uint8_t  reserved2[6];
->>  };
->>  typedef struct IplInfoBlockHeader IplInfoBlockHeader;
->>  
->> @@ -60,13 +68,27 @@ typedef struct IplSignatureCertificateList IplSignatureCertificateList;
->>  #define S390_IPL_COMPONENT_FLAG_SC  0x80
->>  #define S390_IPL_COMPONENT_FLAG_CSV 0x40
->>  
->> +#define S390_IPL_COMPONENT_CEI_INVALID_SCLAB             0x80000000 /* bit 0 */
->> +#define S390_IPL_COMPONENT_CEI_INVALID_SCLAB_LEN         0x40000000 /* bit 1 */
->> +#define S390_IPL_COMPONENT_CEI_INVALID_SCLAB_FORMAT      0x20000000 /* bit 2 */
->> +#define S390_IPL_COMPONENT_CEI_UNMATCHED_SCLAB_LOAD_ADDR 0x10000000 /* bit 3 */
->> +#define S390_IPL_COMPONENT_CEI_UNMATCHED_SCLAB_LOAD_PSW  0x8000000  /* bit 4 */
->> +#define S390_IPL_COMPONENT_CEI_INVALID_LOAD_PSW          0x4000000  /* bit 5 */
->> +#define S390_IPL_COMPONENT_CEI_NUC_NOT_IN_GLOBAL_SCLA    0x2000000  /* bit 6 */
->> +#define S390_IPL_COMPONENT_CEI_SCLAB_OLA_NOT_ONE         0x1000000  /* bit 7 */
->> +#define S390_IPL_COMPONENT_CEI_SC_NOT_IN_GLOBAL_SCLAB    0x800000   /* bit 8 */
->> +#define S390_IPL_COMPONENT_CEI_SCLAB_LOAD_ADDR_NOT_ZERO  0x400000   /* bit 9 */
->> +#define S390_IPL_COMPONENT_CEI_SCLAB_LOAD_PSW_NOT_ZERO   0x200000   /* bit 10 */
->> +#define S390_IPL_COMPONENT_CEI_INVALID_UNSIGNED_ADDR     0x100000   /* bit 11 */
-> 
-> Similar to above, what about S390_CEI_* and a comment.
-> 
->> +
->>  struct IplDeviceComponentEntry {
->>      uint64_t addr;
->>      uint64_t len;
->>      uint8_t  flags;
->>      uint8_t  reserved1[5];
->>      uint16_t cert_index;
->> -    uint8_t  reserved2[8];
->> +    uint32_t cei;
->> +    uint8_t  reserved2[4];
->>  };
->>  typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
->>  
->> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
->> index c2ba40d067..6d51d07c90 100644
->> --- a/pc-bios/s390-ccw/s390-ccw.h
->> +++ b/pc-bios/s390-ccw/s390-ccw.h
->> @@ -69,6 +69,7 @@ void sclp_setup(void);
->>  void sclp_get_loadparm_ascii(char *loadparm);
->>  bool sclp_is_diag320_on(void);
->>  bool sclp_is_sipl_on(void);
->> +bool sclp_is_sclaf_on(void);
->>  int sclp_read(char *str, size_t count);
->>  
->>  /* virtio.c */
->> diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
->> index 0b03c3164f..16f973dde8 100644
->> --- a/pc-bios/s390-ccw/sclp.c
->> +++ b/pc-bios/s390-ccw/sclp.c
->> @@ -157,6 +157,14 @@ bool sclp_is_sipl_on(void)
->>      return fac_ipl & SCCB_FAC_IPL_SIPL_BIT;
->>  }
->>  
->> +bool sclp_is_sclaf_on(void)
->> +{
->> +    uint16_t fac_ipl = 0;
->> +
->> +    sclp_get_fac_ipl(&fac_ipl);
->> +    return fac_ipl & SCCB_FAC_IPL_SCLAF_BIT;
->> +}
->> +
->>  int sclp_read(char *str, size_t count)
->>  {
->>      ReadEventData *sccb = (void *)_sccb;
->> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
->> index cf147f4634..3441020d6b 100644
->> --- a/pc-bios/s390-ccw/sclp.h
->> +++ b/pc-bios/s390-ccw/sclp.h
->> @@ -52,6 +52,7 @@ typedef struct SCCBHeader {
->>  #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
->>  #define SCCB_FAC134_DIAG320_BIT 0x4
->>  #define SCCB_FAC_IPL_SIPL_BIT 0x4000
->> +#define SCCB_FAC_IPL_SCLAF_BIT 0x1000
->>  
->>  typedef struct ReadInfo {
->>      SCCBHeader h;
->> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
->> index c1c5bc682a..8733254cfb 100644
->> --- a/pc-bios/s390-ccw/secure-ipl.c
->> +++ b/pc-bios/s390-ccw/secure-ipl.c
->> @@ -206,6 +206,12 @@ static bool secure_ipl_supported(void)
->>          return false;
->>      }
->>  
->> +    if (!sclp_is_sclaf_on()) {
->> +        puts("Secure IPL Code Loading Attributes Facility is not supported by"
->> +             " the hypervisor!");
->> +        return false;
->> +    }
->> +
->>      return true;
->>  }
->>  
->> @@ -218,6 +224,402 @@ static void init_lists(IplDeviceComponentList *comps, IplSignatureCertificateLis
->>      certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
->>  }
->>  
->> +static bool is_comp_overlap(SecureIplCompAddrRange *comp_addr_range,
->> +                            int addr_range_index,
->> +                            uint64_t start_addr, uint64_t end_addr)
->> +{
->> +    /* neither a signed nor an unsigned component can overlap with a signed component */
->> +    for (int i = 0; i < addr_range_index; i++) {
->> +        if ((comp_addr_range[i].start_addr <= end_addr - 1 &&
->> +            start_addr <= comp_addr_range[i].end_addr - 1) &&
->> +            comp_addr_range[i].is_signed) {
->> +            return true;
->> +       }
->> +    }
->> +
->> +    return false;
->> +}
->> +
->> +static void comp_addr_range_add(SecureIplCompAddrRange *comp_addr_range,
->> +                                int addr_range_index, bool is_signed,
->> +                                uint64_t start_addr, uint64_t end_addr)
->> +{
->> +    if (addr_range_index > MAX_CERTIFICATES - 1) {
->> +        printf("Warning: Ignoring component address range index [%d]"
->> +               " because it's over %d index\n",
->> +               addr_range_index, MAX_CERTIFICATES);
->> +        return;
->> +    }
->> +
->> +    comp_addr_range[addr_range_index].is_signed = is_signed;
->> +    comp_addr_range[addr_range_index].start_addr = start_addr;
->> +    comp_addr_range[addr_range_index].end_addr = end_addr;
->> +}
->> +
->> +static void check_unsigned_addr(uint64_t load_addr, IplDeviceComponentList *comps,
->> +                                int comp_index)
->> +{
-> 
-> Is load_addr the same as comps->device_entries[comp_index].addr?  Also,
-> can this function just be passed comps->device_entries[comp_index] instead?
+On Fri, 30 Jan 2026, Mark Cave-Ayland wrote:
+> On 29/01/2026 20:22, Peter Maydell wrote:
+>> On Thu, 29 Jan 2026 at 19:08, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>> 
+>>> On Thu, 29 Jan 2026, Peter Maydell wrote:
+>>>> On Thu, 29 Jan 2026 at 17:20, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>>> On Thu, 29 Jan 2026, Peter Maydell wrote:
+>>>>>> On Thu, 29 Jan 2026 at 16:21, BALATON Zoltan <balaton@eik.bme.hu> 
+>>>>>> wrote:
+>>>>>> This is a migration compatibility break, because the
+>>>>>> memory_region_init_rom() function registers the MR
+>>>>>> for migration via vmstate_register_ram(), which picks
+>>>>>> an ID string for the memory that includes the path
+>>>>>> of the device, whereas vmstate_register_ram_global()
+>>>>>> picks an ID string for the memory that does not include
+>>>>>> the path of any device. It is this difference that is the
+>>>>>> reason why they're still using the _nomigrate functions.
+>>>>> 
+>>>>> I thought it might be the case but wasn't sure. How was this handled in
+>>>>> all other machines where they were converted to not use _nomigrate? Only
+>>>>> some Sun machines still seem to use this and this may be a good
+>>>>> opportunity to bring them inline with all other machines.
+>>>> 
+>>>> If I remember correctly, we converted all the machines where
+>>>> we were happy at the time to have a compat break. The remainder
+>>>> are not only Sun machines -- you can see in your patch 4 that xtensa
+>>>> and vga are also affected.
+>>> 
+>>> Well, almost all of the usages are because of the Sun machines and those
+>>> could be easily converted accepting one time migration break. The VGA one
+>>> seems to be because of isa cards which may not have been QOM'ified so
+>>> could not be converted before but maybe could be now but I haven't checked
+>> 
+>> We can't change the the vga usage, because it's a migration compat
+>> break, and you can use vga on x86 PC machines, where we do care
+>> about not breaking migration.
 >
+> Yeah. Whilst we don't necessarily guarantee Sun machine migration between 
+> QEMU versions, I'd still like to keep it if possible. If the Sun machines 
+> were the last holdout here then I'd say let's just accept the break: however 
+> given that it's impossible to remove these functions because of VGA then the 
+> reasons for breaking migration compatibility become much less compelling.
 
-comps->device_entries[comp_index].addr is not initialized at this point,
-so load_addr is required here. Passing comps->device_entries[comp_index]
-should still work.
+The Sun machines are pretty much the last ones using these. The 
+memory_region_init_rom_nomigrate() function is only used by cg3 and tcx 
+and nothing else so if we remove those we already have a migration break 
+for these devices so it would be a good time to also convert the Sun 
+machines now. The memory_region_init_ram_nomigrate() function is used by 
+cg3, tcx, sun4m, sun4u, xtfpga and vga so most of the usage is in Sun 
+machines and related devices. I think we could also convert xtfpga used by 
+xtensa as that's also not versioned so no migration guarantee but I know 
+nothing about that so I'm waiting for some opinion from the maintainers of 
+that machine.
 
->> +    uint32_t flag;
->> +    bool valid;
->> +
->> +    /* unsigned load address must be greater than or equal to 0x2000 */
->> +    valid = load_addr >= 0x2000;
->> +    if (!valid) {
->> +        flag = S390_IPL_COMPONENT_CEI_INVALID_UNSIGNED_ADDR;
->> +        set_cei_with_log(comps, comp_index, flag,
->> +                         "Load address is less than 0x2000");
->> +    }
->> +}
->> +
->> +static void addr_overlap_check(SecureIplCompAddrRange *comp_addr_range,
->> +                               int *addr_range_index,
->> +                               uint64_t start_addr, uint64_t end_addr, bool is_signed)
->> +{
->> +    bool overlap;
->> +
->> +    overlap = is_comp_overlap(comp_addr_range, *addr_range_index,
->> +                              start_addr, end_addr);
->> +    if (!overlap) {
->> +        comp_addr_range_add(comp_addr_range, *addr_range_index, is_signed,
->> +                            start_addr, end_addr);
->> +        *addr_range_index += 1;
->> +    } else {
->> +        zipl_secure_handle("Component addresses overlap");
->> +    }
->> +}
-> 
-> Is the address-range / comp-overlap stuff part of the SCLAF?  Is it
-> possible some of these checks are moved over to a separate patch so that
-> this code can be isolated?
-> 
->> +
->> +static bool check_sclab_presence(uint8_t *sclab_magic,
->> +                                 IplDeviceComponentList *comps, int comp_index)
->> +{
->> +    /* identifies the presence of SCLAB */
->> +    if (!magic_match(sclab_magic, ZIPL_MAGIC)) {
->> +        comps->device_entries[comp_index].cei |= S390_IPL_COMPONENT_CEI_INVALID_SCLAB;
->> +
->> +        /* a missing SCLAB will not be reported in audit mode */
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->> +static void check_sclab_length(uint16_t sclab_len,
->> +                               IplDeviceComponentList *comps, int comp_index)
->> +{
->> +    uint32_t flag;
->> +    bool valid;
->> +
->> +    /* minimum SCLAB length is 32 bytes */
->> +    valid = sclab_len >= 32;
-> 
-> #define this length somewhere and then get rid of the comment.
-> 
->> +    if (!valid) {
->> +        flag = S390_IPL_COMPONENT_CEI_INVALID_SCLAB_LEN |
->> +               S390_IPL_COMPONENT_CEI_INVALID_SCLAB;
->> +        set_cei_with_log(comps, comp_index, flag, "Invalid SCLAB length");
->> +    }
->> +}
->> +
->> +static void check_sclab_format(uint8_t sclab_format,
->> +                               IplDeviceComponentList *comps, int comp_index)
->> +{
->> +    uint32_t flag;
->> +    bool valid;
->> +
->> +    /* SCLAB format must set to zero, indicating a format-0 SCLAB being used */
->> +    valid = sclab_format == 0;
->> +    if (!valid) {
->> +        flag = S390_IPL_COMPONENT_CEI_INVALID_SCLAB_FORMAT;
->> +        set_cei_with_log(comps, comp_index, flag,
->> +                         "Format-0 SCLAB is not being use");
->> +    }
->> +}
->> +
->> +static void check_sclab_opsw(SecureCodeLoadingAttributesBlock *sclab,
->> +                             SecureIplSclabInfo *sclab_info,
->> +                             IplDeviceComponentList *comps, int comp_index)
->> +{
->> +    const char *msg;
->> +    uint32_t flag;
->> +    bool is_opsw_set;
->> +    bool valid;
->> +
->> +    is_opsw_set = is_sclab_flag_set(sclab->flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
->> +    if (!is_opsw_set) {
->> +        /* OPSW = 0 - Load PSW field in SCLAB must contain zeros */
->> +        valid = sclab->load_psw == 0;
->> +        if (!valid) {
->> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_LOAD_PSW_NOT_ZERO;
->> +            msg = "Load PSW is not zero when Override PSW bit is zero";
->> +            set_cei_with_log(comps, comp_index, flag, msg);
->> +        }
->> +    } else {
->> +        /* OPSW = 1 indicating global SCLAB */
->> +        sclab_info->global_count += 1;
->> +        if (sclab_info->global_count == 1) {
->> +            sclab_info->load_psw = sclab->load_psw;
->> +            sclab_info->flags = sclab->flags;
->> +        }
->> +
->> +        /* OLA must set to one */
->> +        valid = is_sclab_flag_set(sclab->flags, S390_SECURE_IPL_SCLAB_FLAG_OLA);
->> +        if (!valid) {
->> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_OLA_NOT_ONE;
->> +            msg = "Override Load Address bit is not set to one in the global SCLAB";
->> +            set_cei_with_log(comps, comp_index, flag, msg);
->> +        }
->> +    }
->> +}
->> +
->> +static void check_sclab_ola(SecureCodeLoadingAttributesBlock *sclab,
->> +                            uint64_t load_addr, IplDeviceComponentList *comps,
->> +                            int comp_index)
->> +{
->> +    const char *msg;
->> +    uint32_t flag;
->> +    bool is_ola_set;
->> +    bool valid;
->> +
->> +    is_ola_set = is_sclab_flag_set(sclab->flags, S390_SECURE_IPL_SCLAB_FLAG_OLA);
->> +    if (!is_ola_set) {
->> +        /* OLA = 0 - Load address field in SCLAB must contain zeros */
->> +        valid = sclab->load_addr == 0;
->> +        if (!valid) {
->> +            flag = S390_IPL_COMPONENT_CEI_SCLAB_LOAD_ADDR_NOT_ZERO;
->> +            msg = "Load Address is not zero when Override Load Address bit is zero";
->> +            set_cei_with_log(comps, comp_index, flag, msg);
->> +        }
->> +
->> +    } else {
->> +        /* OLA = 1 - Load address field must match storage address of the component */
->> +        valid = sclab->load_addr == load_addr;
->> +        if (!valid) {
->> +            flag = S390_IPL_COMPONENT_CEI_UNMATCHED_SCLAB_LOAD_ADDR;
->> +            msg = "Load Address does not match with component load address";
->> +            set_cei_with_log(comps, comp_index, flag, msg);
->> +        }
->> +    }
->> +}
->> +
->> +static void check_sclab_nuc(uint16_t sclab_flags, IplDeviceComponentList *comps,
->> +                            int comp_index)
->> +{
->> +    const char *msg;
->> +    uint32_t flag;
->> +    bool is_nuc_set;
->> +    bool is_global_sclab;
->> +
->> +    is_nuc_set = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_NUC);
->> +    is_global_sclab = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
->> +    if (is_nuc_set && !is_global_sclab) {
->> +        flag = S390_IPL_COMPONENT_CEI_NUC_NOT_IN_GLOBAL_SCLA;
->> +        msg = "No Unsigned Components bit is set, but not in the global SCLAB";
->> +        set_cei_with_log(comps, comp_index, flag, msg);
->> +    }
->> +}
->> +
->> +static void check_sclab_sc(uint16_t sclab_flags, IplDeviceComponentList *comps,
->> +                           int comp_index)
->> +{
->> +    const char *msg;
->> +    uint32_t flag;
->> +    bool is_sc_set;
->> +    bool is_global_sclab;
->> +
->> +    is_sc_set = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_SC);
->> +    is_global_sclab = is_sclab_flag_set(sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_OPSW);
->> +    if (is_sc_set && !is_global_sclab) {
->> +        flag = S390_IPL_COMPONENT_CEI_SC_NOT_IN_GLOBAL_SCLAB;
->> +        msg = "Single Component bit is set, but not in the global SCLAB";
->> +        set_cei_with_log(comps, comp_index, flag, msg);
->> +    }
->> +}
->> +
->> +static bool is_psw_valid(uint64_t psw, SecureIplCompAddrRange *comp_addr_range,
->> +                         int range_index)
->> +{
->> +    uint32_t addr = psw & 0x7fffffff;
->> +
->> +    /* PSW points within a signed binary code component */
->> +    for (int i = 0; i < range_index; i++) {
->> +        if (comp_addr_range[i].is_signed &&
->> +            addr >= comp_addr_range[i].start_addr &&
->> +            addr <= comp_addr_range[i].end_addr - 2) {
->> +            return true;
->> +       }
->> +    }
->> +
->> +    return false;
->> +}
->> +
->> +static void check_load_psw(SecureIplCompAddrRange *comp_addr_range,
->> +                           int addr_range_index, uint64_t sclab_load_psw,
->> +                           uint64_t load_psw, IplDeviceComponentList *comps,
->> +                           int comp_index)
->> +{
->> +    uint32_t flag;
->> +    const char *msg;
->> +    bool valid;
->> +
->> +    valid = is_psw_valid(sclab_load_psw, comp_addr_range, addr_range_index) &&
->> +            is_psw_valid(load_psw, comp_addr_range, addr_range_index);
->> +    if (!valid) {
->> +        flag = S390_IPL_COMPONENT_CEI_INVALID_LOAD_PSW;
->> +        msg = "Invalid PSW";
->> +        set_cei_with_log(comps, comp_index, flag, msg);
->> +    }
->> +
->> +    /* compare load PSW with the PSW specified in component */
->> +    valid = sclab_load_psw == load_psw;
->> +    if (!valid) {
->> +        flag = S390_IPL_COMPONENT_CEI_UNMATCHED_SCLAB_LOAD_PSW;
->> +        msg = "Load PSW does not match with PSW in component";
->> +        set_cei_with_log(comps, comp_index, flag, msg);
->> +    }
->> +}
->> +
->> +static void check_nuc(uint16_t global_sclab_flags, int unsigned_count,
->> +                      IplDeviceComponentList *comps)
->> +{
->> +    uint16_t flag;
->> +    const char *msg;
->> +    bool is_nuc_set;
->> +
->> +    is_nuc_set = is_sclab_flag_set(global_sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_NUC);
->> +    if (is_nuc_set && unsigned_count > 0) {
->> +        flag = S390_IPL_INFO_IIEI_FOUND_UNSIGNED_COMP;
->> +        msg = "Unsigned components are not allowed";
->> +        set_iiei_with_log(comps, flag, msg);
->> +    }
->> +}
->> +
->> +static void check_sc(uint16_t global_sclab_flags, int signed_count,
->> +                     IplDeviceComponentList *comps)
->> +{
->> +    uint16_t flag;
->> +    const char *msg;
->> +    bool is_sc_set;
->> +
->> +    is_sc_set = is_sclab_flag_set(global_sclab_flags, S390_SECURE_IPL_SCLAB_FLAG_SC);
->> +    if (is_sc_set && signed_count != 1) {
->> +        flag = S390_IPL_INFO_IIEI_MORE_SIGNED_COMP;
->> +        msg = "Only one signed component is allowed";
->> +        set_iiei_with_log(comps, flag, msg);
->> +    }
-> 
-> I believe this error is meant to indicate that only a single binary
-> component which is also signed is allowed in the component table, not
-> "only one component in the table should be signed".
-> 
-> Might need clarification since the internal doc is a little confusing on
-> this one.
-> 
+In vga the memory_region_init_ram_nomigrate function is used only to keep 
+compatibility for old machines based on the global-vmstate property which 
+is recognised by VGA, vmware-svga, cirrus-vga and qxl but defaults to 
+false for all of these so all machines where we care about migration 
+already use the new way and would not break when we converted vga to 
+memory_region_init_ram. The global-vmstate property is only set to true in 
+hw_compat_2_12 (which probably can be removed because due to auto 
+deprecation and Philippe's previous work the oldest visible pc and q35 
+machine is currently 5.1). Apart from that global-vmstate is also set to 
+true by isa-vga, isa-cirrus-vga and vga-mmio (the last of which is used by 
+mips/jazz machine) so we don't have any machines with migration 
+compatibility requirement that would prevent removing the usage from vga 
+as well if we accept migration break for isa-pc and mips/jazz which I 
+think we could but I'd leave that for later to untangle this after at 
+least the old no longer needed hw_compat settings are removed from 
+hw/core/machine.c.
 
-I think you are correct. After revisiting the internal doc, my
-understanding is that the component table must contain exactly one
-component, and that component must be signed.
+So besides the vga and xtensa which I think could also be converted all 
+remaining usages are in the Sun machines and their display devices and 
+converting those are easy that I'm willing to do in this series. In light 
+of that would you accept the migration break for the Sun machines to 
+remove most of the still active usages of these functions? If I hear back 
+from xtensa I can convert that too and vga could be done separately 
+afterwards as I think that does not fit the scope of this series but 
+there's nothing that makes it impossible to do as no active versioned 
+machines still depend on this feature of vga.
 
-If more than one component exist in the component table, signed or
-unsigned, the IPL will terminate.
+Do you know about anybody using migration with these Sun machines that 
+would be affected by this change? As we make no guarantee about migration 
+compatibility for these it would still not prevent us from changing it but 
+if we don't even know about any active users then it's even less critical 
+to keep to the old way for these machines when all other machines were 
+long converted.
 
->> +}
->> +
->> +void check_global_sclab(SecureIplSclabInfo sclab_info,
->> +                        SecureIplCompAddrRange *comp_addr_range,
->> +                        int addr_range_index, uint64_t load_psw,
->> +                        int unsigned_count, int signed_count,
->> +                        IplDeviceComponentList *comps, int comp_index)
->> +{
->> +    uint16_t flag;
->> +    const char *msg;
->> +
->> +    if (sclab_info.count == 0) {
->> +        return;
->> +    }
->> +
->> +    if (sclab_info.global_count == 0) {
->> +        flag = S390_IPL_INFO_IIEI_NO_GLOBAL_SCLAB;
->> +        msg = "Global SCLAB does not exists";
->> +        set_iiei_with_log(comps, flag, msg);
->> +        return;
->> +    }
->> +
->> +    if (sclab_info.global_count > 1) {
->> +        flag = S390_IPL_INFO_IIEI_MORE_GLOBAL_SCLAB;
->> +        msg = "More than one global SCLAB";
->> +        set_iiei_with_log(comps, flag, msg);
->> +        return;
->> +    }
->> +
->> +    if (sclab_info.load_psw) {
->> +        /* Verify PSW from the final component entry with PSW from the global SCLAB */
->> +        check_load_psw(comp_addr_range, addr_range_index,
->> +                          sclab_info.load_psw, load_psw,
->> +                          comps, comp_index);
->> +    }
->> +
->> +    if (sclab_info.flags) {
->> +        /* Unsigned components are not allowed if NUC flag is set in the global SCLAB */
->> +        check_nuc(sclab_info.flags, unsigned_count, comps);
->> +
->> +        /* Only one signed component is allowed is SC flag is set in the global SCLAB */
->> +        check_sc(sclab_info.flags, signed_count, comps);
->> +    }
->> +}
->> +
->> +static void check_signed_comp(int signed_count, IplDeviceComponentList *comps)
->> +{
->> +    uint16_t flag;
->> +    const char *msg;
->> +
->> +    if (signed_count > 0) {
->> +        return;
->> +    }
->> +
->> +    flag =  S390_IPL_INFO_IIEI_NO_SIGNED_COMP;
->> +    msg = "Secure boot is on, but components are not signed";
->> +    set_iiei_with_log(comps, flag, msg);
->> +}
->> +
->> +static void check_sclab_count(int count, IplDeviceComponentList *comps)
->> +{
->> +    uint16_t flag;
->> +    const char *msg;
->> +
->> +    if (count > 0) {
->> +        return;
->> +    }
-> 
-> I *think* the condition for setting this error indicator is suppose to
-> be if _any_ component is missing a SCLAB?  So perhaps this check could
-> be done during check_sclab?  Further, I think this would be the same
-> check as check_sclab_presence?
-> 
-
-My understanding is that the IPL-Information Error Indicators (IIEI) are
-set only after all components have been loaded, since they are part of
-the IPL Device Component List header. Errors related to a specific
-component’s SCLAB should instead be reported through that component’s
-Component Error Indicators (CEI).
-
-This bit indicates that no recognizable SCLAB was found across all
-components. For example, if an earlier component lacks a SCLAB but a
-later one contains one, setting this bit too early would not reflect the
-actual condition.
-
->> +
->> +    flag = S390_IPL_INFO_IIEI_NO_SCLAB;
->> +    msg = "No recognizable SCLAB";
->> +    set_iiei_with_log(comps, flag, msg);
->> +}
-> 
-> Most functions above this point follow the same formula:
-> 
-> // check condition
-> // if false: set flag and log message
-> 
-> Which is the perfect setup for an assert-style function.  Something like
-> 
-> `sclab_handle(condition, comp, "message", FLAG);`
-> 
-> ...or maybe a different name, since all checks aren't directly related
-> to SCLAF and some need to set cei or iiei.
-> 
-> This would reduce the code in this patch considerably and make things
-> far easier to understand.
-> 
->> +
->> +static void check_unsigned_comp(uint64_t comp_addr, IplDeviceComponentList *comps,
->> +                                int comp_index, int cert_index, uint64_t comp_len)
->> +{
->> +    check_unsigned_addr(comp_addr, comps, comp_index);
->> +
->> +    comp_list_add(comps, comp_index, cert_index, comp_addr, comp_len, 0x00);
->> +}
->> +
->> +static void check_sclab(uint64_t comp_addr, IplDeviceComponentList *comps,
->> +                        uint64_t comp_len, int comp_index, SecureIplSclabInfo *sclab_info)
-> 
-> An IplDeviceComponentList contains an IplDeviceComponentEntry which has
-> addr and len fields.  Could those fields be used instead of comp_addr
-> and comp_len?
-> 
-> Additionally, it looks like only one component is used inside this
-> function.  Just pass to this function the component that needs to be
-> inspected: `comps[index]`.
-> 
-> Instead of a SecureIplSclabInfo struct, what about just using a
-> SecureCodeLoadingAttributesBlock to represent the global SCLAB?  When
-> the OPSW flag is detected, check if global_sclab is NULL and set it.
-> Otherwise, throw an error right away as another global sclab was found.
-> 
-> The function call could look as simple as:
-> 
-> `check_sclab(comps[index], &global_sclab);`
-> 
-> The global_sclab can later be passed to `check_global_sclab` :)
-> 
->> +{
->> +    SclabOriginLocator *sclab_locator;
->> +    SecureCodeLoadingAttributesBlock *sclab;
->> +    bool exist;
->> +    bool valid;
->> +
->> +    sclab_locator = (SclabOriginLocator *)(comp_addr + comp_len - 8);
-> 
-> Add a comment describing what this is doing.
-> 
->> +
->> +    /* return early if sclab does not exist */
->> +    exist = check_sclab_presence(sclab_locator->magic, comps, comp_index);
->> +    if (!exist) {
->> +        return;
->> +    }
-> 
-> Shouldn't SCLAB missing in secure mode be an error?
-> 
-
-Yes, it is handled in check_sclab_presence().
-
->> +
->> +    check_sclab_length(sclab_locator->len, comps, comp_index);
->> +
->> +    /* return early if sclab is invalid */
->> +    valid = (comps->device_entries[comp_index].cei &
->> +             S390_IPL_COMPONENT_CEI_INVALID_SCLAB) == 0;
->> +    if (!valid) {
->> +        return;
->> +    }
-> 
-> Same here?
-> 
-
-In secure mode, the IPL will terminate and won't reach this point. In
-audit mode, the IPL could continue, and this function returns early to
-avoid further SCLAB checks once the SCLAB is determined to be invalid.
-
->> +
->> +    sclab_info->count += 1;
->> +    sclab = (SecureCodeLoadingAttributesBlock *)(comp_addr + comp_len -
->> +                                                 sclab_locator->len);
->> +
->> +    check_sclab_format(sclab->format, comps, comp_index);
->> +    check_sclab_opsw(sclab, sclab_info, comps, comp_index);
->> +    check_sclab_ola(sclab, comp_addr, comps, comp_index);
->> +    check_sclab_nuc(sclab->flags, comps, comp_index);
->> +    check_sclab_sc(sclab->flags, comps, comp_index);
->> +}
->> +
->>  static uint32_t zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
->>  {
->>      uint32_t sig_len;
->> @@ -284,7 +686,11 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
->>       */
->>      int cert_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1};
->>      int rc;
->> +    SecureIplCompAddrRange comp_addr_range[MAX_CERTIFICATES];
->> +    int addr_range_index = 0;
->>      int signed_count = 0;
->> +    int unsigned_count = 0;
->> +    SecureIplSclabInfo sclab_info = { 0 };
->>  
->>      if (!secure_ipl_supported()) {
->>          return -1;
->> @@ -314,10 +720,18 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
->>                  goto out;
->>              }
->>  
->> +            addr_overlap_check(comp_addr_range, &addr_range_index,
->> +                               comp_addr, comp_addr + comp_len, sig_len > 0);
->> +
->>              if (!sig_len) {
->> +                check_unsigned_comp(comp_addr, &comps,
->> +                                    comp_entry_idx, cert_entry_idx, comp_len);
->> +                unsigned_count += 1;
->> +                comp_entry_idx++;
->>                  break;
->>              }
->>  
->> +            check_sclab(comp_addr, &comps, comp_len, comp_entry_idx, &sclab_info);
->>              verified = verify_signature(comp_len, comp_addr, sig_len, (uint64_t)sig,
->>                                          &cert_len, &cert_table_idx);
->>  
->> @@ -363,9 +777,11 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
->>          }
->>      }
->>  
->> -    if (signed_count == 0) {
->> -        zipl_secure_handle("Secure boot is on, but components are not signed");
->> -    }
->> +    check_signed_comp(signed_count, &comps);
->> +    check_sclab_count(sclab_info.count, &comps);
->> +    check_global_sclab(sclab_info, comp_addr_range, addr_range_index,
->> +                       entry->compdat.load_psw, unsigned_count, signed_count,
->> +                       &comps, comp_entry_idx);
->>  
->>      if (update_iirb(&comps, &certs)) {
->>          zipl_secure_handle("Failed to write IPL Information Report Block");
->> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
->> index a6fc1ac8de..6ff4f0382c 100644
->> --- a/pc-bios/s390-ccw/secure-ipl.h
->> +++ b/pc-bios/s390-ccw/secure-ipl.h
->> @@ -16,6 +16,42 @@
->>  VCStorageSizeBlock *zipl_secure_get_vcssb(void);
->>  int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
->>  
->> +#define S390_SECURE_IPL_SCLAB_FLAG_OPSW    0x8000
->> +#define S390_SECURE_IPL_SCLAB_FLAG_OLA     0x4000
->> +#define S390_SECURE_IPL_SCLAB_FLAG_NUC     0x2000
->> +#define S390_SECURE_IPL_SCLAB_FLAG_SC      0x1000
->> +
->> +struct SecureCodeLoadingAttributesBlock {
->> +    uint8_t  format;
->> +    uint8_t  reserved1;
->> +    uint16_t flags;
->> +    uint8_t  reserved2[4];
->> +    uint64_t load_psw;
->> +    uint64_t load_addr;
->> +    uint64_t reserved3[];
->> +} __attribute__ ((packed));
->> +typedef struct SecureCodeLoadingAttributesBlock SecureCodeLoadingAttributesBlock;
->> +
->> +struct SclabOriginLocator {
->> +    uint8_t reserved[2];
->> +    uint16_t len;
->> +    uint8_t magic[4];
->> +} __attribute__ ((packed));
->> +typedef struct SclabOriginLocator SclabOriginLocator;
->> +
->> +typedef struct SecureIplCompAddrRange {
->> +    bool is_signed;
->> +    uint64_t start_addr;
->> +    uint64_t end_addr;
->> +} SecureIplCompAddrRange;
->> +
->> +typedef struct SecureIplSclabInfo {
->> +    int count;
->> +    int global_count;
->> +    uint64_t load_psw;
->> +    uint16_t flags;
->> +} SecureIplSclabInfo;
->> +
->>  static inline void zipl_secure_handle(const char *message)
->>  {
->>      switch (boot_mode) {
->> @@ -27,6 +63,25 @@ static inline void zipl_secure_handle(const char *message)
->>      }
->>  }
->>  
->> +static inline bool is_sclab_flag_set(uint16_t sclab_flags, uint16_t flag)
->> +{
->> +    return (sclab_flags & flag) != 0;
->> +}
-> Since this is just comparing the two parameters in one line, it would
-> look a lot cleaner if the check was just done inline instead of calling
-> a function to do the check.
-> 
->> +
->> +static inline void set_cei_with_log(IplDeviceComponentList *comps, int comp_index,
->> +                                    uint32_t flag, const char *message)
->> +{
->> +    comps->device_entries[comp_index].cei |= flag;
->> +    zipl_secure_handle(message);
->> +}
-> 
-> Same here.
-> 
->> +
->> +static inline void set_iiei_with_log(IplDeviceComponentList *comps, uint16_t flag,
->> +                                     const char *message)
->> +{
->> +    comps->ipl_info_header.iiei |= flag;
->> +    zipl_secure_handle(message);
->> +}
-> 
-> And for here.  Just keep these few lines of code in-line on the function
-> invoking them.
-> 
->> +
->>  static inline uint64_t diag320(void *data, unsigned long subcode)
->>  {
->>      register unsigned long addr asm("0") = (unsigned long)data;
-> 
-> Overall for the larger patches in this series, the biggest request would
-> be to find a way reduce the number of parameters passed around to each
-> function.  It makes following the logic very tricky.
-> 
-> 
-
+Regards,
+BALATON Zoltan
 
