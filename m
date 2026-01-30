@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B079D73EB8
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 04:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E6FD73EBA
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 04:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlfmq-0000lY-BD; Thu, 29 Jan 2026 23:07:12 -0500
+	id 1vlfrf-00023M-KK; Thu, 29 Jan 2026 23:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vlfmn-0000kd-Do
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 23:07:09 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vlfrd-0001zq-Ux
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 23:12:10 -0500
+Received: from mail-westus3azon11011045.outbound.protection.outlook.com
+ ([40.107.208.45] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vlfml-0002r6-8t
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 23:07:09 -0500
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vlfrc-0003Oh-4v
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 23:12:09 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tNbSMMhMZVFD/uT/HQZs2kTH6yyyUXFvFyzGKxjduDScAOvBwIZGBZdfq8qF/CGub58DAZRTmkU4aRD2d+GVrmub93RJ0Y9fDjwUE7oEOq6udUtNMCEZHNkonbdH/XUb47TRv8JDXJ+3BPusMsiCAm/fIOsFeevQZWzOdoWwLEamb+Xb1bcZeed7VnOYejiOnmu5yUxPDMRb1pvTNIfumiM93NS1grPl9qXupdS07e8ErR1mXAVsdkOkmCs/YjJjQVvrADZmpennZN6BMK0OD1fEu2OpX7ihTWHwDxBKBPe2I+P8kxPjUpMZYVQih6CHycGwbqvGwimah2PiJjXg/Q==
+ b=j0OnA8iWGXgfgSbhquiUQ4uYDBJ4ZeSum7bJs3rqEcEnFsmeEh695UIM/i1Q5eVFNzR7LsrugDApNmrArVi0rFsFhSfMfx7JPTnGTGZgO/yi/I4i5DO7IoujOHUyMCaOdRIqC4xzwt3WApH9xw+pOfNIu0L1eFJ2F988V0k3bYTY0t19jd5+JFhl89GYHBmWpedviwqO5XXkNpzkpdSQnWnyWyAaPxRUufq1AULdHnZg3bL2c2Mg/JFNKnPwLJurTVAxmt6QNGElqgiUurxJoKGNLWswjm4nQbwujsu/JmQspnFs9XHTUZfibNAir/o2dj+NQZIhKquibfsAothYzg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nilA26uQ9HOXscVqW3LzJpCr1kOlJHJK8FaD/R4e7uQ=;
- b=KDA/RNAOddeJ5kKgt8KwF8pUm4TYkhSklftuxg2GqE60DzQASNoTBiMNPr8HbdRxMVXUmiIiQeSVMilZ/dSzKUqpyV1wuoNJ3vaKNNwxT4MosOG/RI8TuARjJFL69lN/BhUg0l3aZbQoB/nhFFbwS+zK7YnqZkDluqi/4F5ULilMaVlCut/Bd+2u+P7zI+Yd1inNCK3qBH7BM5H8d6+F+45R/kSeJ6/bvksMcJl2tpHCRLdxYopBY4D/JQypEEMqvEvGW9nme1lXCvAJvW0UYrkg35dbgq12R2654RDtCqORru2dApY0cO4m0HPD3YiPXMXD8mjROCesl0X35Qo8BQ==
+ bh=mVelI0owxiPUdx5tFBGcQ683JAyyxDhxb9qoq21lM2Q=;
+ b=ux+K+nZ1ParXdbvKsUdKi96WvWo6thV6M8JS/floLpwd3IIvF8lB/75AhGSMmwHHRxJGNEKtMFzSFf1fzxvirMT5CXx13KSzZdyTQ3Ry/gFomAMQZUhl0AjaUnS3fQOmlfyncrdq/lulc1UrnFucqHZFCPNE+6cyeDD97CVrnL4Qps4+ifNeCtIhWz/gKf2cwYjKTwipRVypIdiH89MXTY0o7V0UZfxVrZINs+nuksftcGgs315TRT5FE0670KMd0Ci+57XWO1dY2jYLanKncQZD32OLRzNNB6CM2EUmv+ZYRTy5814dzzshMFt5vR6qZF/b76j/BLA9WPvLNFSACg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
+ 216.228.118.232) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nilA26uQ9HOXscVqW3LzJpCr1kOlJHJK8FaD/R4e7uQ=;
- b=RN3mYb5CglyegpYnAtX8/+i1jYjDBqU/XO9u0hd8d2PO8i0bfPpWp1CexVrSOTcQCWmDS2+8en+gn8xdpPbimjmdYCmaTynZR+gAtBpR4LtQjiov3jwUdMx/zV4hgpzYLqiKlvHzzF/HxKOlwvxARzchh1g/w8JZIF8rgG0LqEafAaqUIFhvd2Rjf9+AddM45Y1f3BcDDUV1Ve0RuNRlPBjUXWI07Om+DXvNXBCsa34TguKC4w9AZ1Jl1pFtcGC3mYCW9H3YZg8PfuI4jvoTa2iSM+FVy59h4rHbR/Wc24Ha1m3hvsgeKpJKotBTno89KOJVz4oeHm/sAZCAk7L/yQ==
-Received: from BN0PR04CA0042.namprd04.prod.outlook.com (2603:10b6:408:e8::17)
- by DS0PR12MB9347.namprd12.prod.outlook.com (2603:10b6:8:193::19) with
+ bh=mVelI0owxiPUdx5tFBGcQ683JAyyxDhxb9qoq21lM2Q=;
+ b=eJHLvISrSOSVThFt1l0LurGeK99R9MIoQp6QXndCyZQSBRcIYc/Xi5Pf7JBMRMX4+HA8RT7p5SQLX/wgfVvJyv93EF0bLBi9D9Pf2zcCYGa+2Se9zvDGAp6TL5zjacuNSBKu1QAgKV3sh+0cOwmDn+TRD4j1mhpVNaXvViqtXFiMvIne00brvTq3Bpd+/qHHfIZJXg2k+80b1R/NZtW5WsvRv0RtE9wdVp/FNYiWO/rOokYiEwoOiYlj28vl9wlKIhkCq/30yalTVxYsC/CijcOjeW/BCOmfsAh8nCcdchgtD7T6Apvla3dp+LtMAjni3/vk8sBl1NCEv3VwBaCj9g==
+Received: from DS7P220CA0008.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:1ca::15) by
+ LV2PR12MB5871.namprd12.prod.outlook.com (2603:10b6:408:174::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Fri, 30 Jan
- 2026 04:07:02 +0000
-Received: from BN1PEPF00005FFC.namprd05.prod.outlook.com
- (2603:10b6:408:e8:cafe::e1) by BN0PR04CA0042.outlook.office365.com
- (2603:10b6:408:e8::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.11 via Frontend Transport; Fri,
- 30 Jan 2026 04:06:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ 2026 04:07:01 +0000
+Received: from DS1PEPF0001709B.namprd05.prod.outlook.com
+ (2603:10b6:8:1ca:cafe::10) by DS7P220CA0008.outlook.office365.com
+ (2603:10b6:8:1ca::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.7 via Frontend Transport; Fri,
+ 30 Jan 2026 04:07:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BN1PEPF00005FFC.mail.protection.outlook.com (10.167.243.228) with Microsoft
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ DS1PEPF0001709B.mail.protection.outlook.com (10.167.18.105) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9564.3 via Frontend Transport; Fri, 30 Jan 2026 04:07:02 +0000
+ 15.20.9564.3 via Frontend Transport; Fri, 30 Jan 2026 04:07:00 +0000
 Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 29 Jan
  2026 20:06:50 -0800
 Received: from drhqmail201.nvidia.com (10.126.190.180) by
  drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 29 Jan 2026 20:06:50 -0800
+ 15.2.2562.20; Thu, 29 Jan 2026 20:06:49 -0800
 Received: from localhost.nvidia.com (10.127.8.12) by mail.nvidia.com
  (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
@@ -74,80 +74,79 @@ To: <ankita@nvidia.com>, <vsethi@nvidia.com>, <jgg@nvidia.com>,
 CC: <aniketa@nvidia.com>, <cjia@nvidia.com>, <kwankhede@nvidia.com>,
  <targupta@nvidia.com>, <zhiw@nvidia.com>, <mochs@nvidia.com>,
  <kjaju@nvidia.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH v1 1/2] hw/vfio: sort and validate sparse mmap regions by
- offset
-Date: Fri, 30 Jan 2026 04:06:48 +0000
-Message-ID: <20260130040649.42485-2-ankita@nvidia.com>
+Subject: [PATCH v1 0/2] hw/vfio: Enable hugepfnmap for non-power-of-2 device
+ memory regions
+Date: Fri, 30 Jan 2026 04:06:47 +0000
+Message-ID: <20260130040649.42485-1-ankita@nvidia.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260130040649.42485-1-ankita@nvidia.com>
-References: <20260130040649.42485-1-ankita@nvidia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFC:EE_|DS0PR12MB9347:EE_
-X-MS-Office365-Filtering-Correlation-Id: e84a07e8-8156-45eb-ace3-08de5fb505ac
+X-MS-TrafficTypeDiagnostic: DS1PEPF0001709B:EE_|LV2PR12MB5871:EE_
+X-MS-Office365-Filtering-Correlation-Id: 061e72ca-72ed-44c8-230e-08de5fb504f7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|1800799024|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?kUi7zo2UZhgtcjDr4bbrm5uJiDZiuNyrM3k2n/6ARKrd41OfCx5CS3kqts9q?=
- =?us-ascii?Q?OD+JalWg37FXkKwmUnvrHDt533cp4dI1xqGY7uaQNDhnbezfZZGnn6kZr3em?=
- =?us-ascii?Q?uIOLVzg4lKy2j2tZGVFdJRVYERAIg/3scO0dRKmPE/3J2M6dB2hvUALz19qx?=
- =?us-ascii?Q?m2HhYJCQ6Mjm4P+B9VrsxlMkNvP9lVlVir+oGVW7ninl+d0zc/5XtgXw2Ofl?=
- =?us-ascii?Q?lWRMJnHJ6d3JAViQXLDBRnWZdWo7n3AKhYlOHYO9VRSU44IYuB/5m87X/HzJ?=
- =?us-ascii?Q?jCuLXaWIvZf82Uc+Zi4ar173QqdLjKeuQksI+R4TlpJdJjwrP26raphckBJt?=
- =?us-ascii?Q?mm5KEf+5q7zshpQmg//hziWoFUBzauAmBhFrrHeBqhh2hx4HU0iQkQTl31h8?=
- =?us-ascii?Q?c8QxER18RuqXXMPP01M+/V9qNTSrVi2vpzpMkyMFD+LerrAoFaNIFET7lgb6?=
- =?us-ascii?Q?0zJ16V4vLu7oj6MUuybvhqqvEUUTNOZJGxpVmvaryO0ZsyOajW+B+BnE9bNx?=
- =?us-ascii?Q?vGUVeDe1jh02Hm6KdwSPFv+A7nLg5GeG0AAIyoNpWlQe6G3NMGv9b943RQtw?=
- =?us-ascii?Q?gSmq+eeGN+Xv1PD7jCx+428hssocXQuXSllDnoTvEYN/sFYEBOTQki6T+YT8?=
- =?us-ascii?Q?qd20e0nSl/60eZ0JeFt76qgnujl2oIpVbM0SiglUWhcja3w+C3R4Sbl+jXI4?=
- =?us-ascii?Q?Kkt61JzQyztQcybvKEU1UkmAa+p0he03i+JnAA/jAreHnHJMMY04zqxLJTAh?=
- =?us-ascii?Q?OVcl4i5YVdqvnrMfCym9ZfQbbTBzahjsX7IE+D30/lgg7Nmqp6JRSpzKaXYU?=
- =?us-ascii?Q?jTqaq5vg6SobqKbYtR9Ls2Vq+3fq0H6722TvwQFm2w8lSooo+T5IQG4zTV0B?=
- =?us-ascii?Q?GIGS295BM6baWLUiPK4Kc6xSGUitwl954eX122f4k74TPP4QJ+Yde9qtt5Hx?=
- =?us-ascii?Q?8ZOBR4fw3mZaVElaq+RDirgb7vbPBymoyf6mNh2dpblgNII0Z8RoJQlC8B7x?=
- =?us-ascii?Q?lbuUvv2TEviEVK5bSjYxDYIJgtJmukudsDojDRExES3oNCkSjtLnhmaPe2gm?=
- =?us-ascii?Q?KSPLlM/CoBqusSnM3au5mSFvFBfWllgCBJwfuflcGDSW5/+Lhz8lF8THJ3JH?=
- =?us-ascii?Q?YztuuqiJhCksWi04q3l5rsLy51BVj8MxZdOlxREeBz/t+w2TEhMN4wUHNgGa?=
- =?us-ascii?Q?nmb8ny+evZvUl9zKVtAB8un/L/qyAoE8osYEOwbbRwri24BUFMFmgKeGZ0JB?=
- =?us-ascii?Q?y1cpYGdds1qzDOzGw/ydRdpCkjN0NK9KMnZT2uM48EvtA8qawFGtbHv4iy6x?=
- =?us-ascii?Q?XQGblzSTxr7VVu6v16V3gNg6EMhUMpBOgloH0rTjGPJMkwg2NrwmY39+Z4ot?=
- =?us-ascii?Q?GQ+ZvrZhj/XqXMyrYK4vGdDwIb5T4aOiRkhH/c5dS3e7ZnWtLuJUGZl9I/OF?=
- =?us-ascii?Q?qijmeGS6UZCUWRY5sdSJngy5PJhePIS8BvZ3Hesjiedlb0szlbgm5v21YM0q?=
- =?us-ascii?Q?vqTqGlzkipJsYb4yFy4SpqZ1L9ke6ZaJP7go5kt/3T2ZvG3BnaBBlF3+tKxZ?=
- =?us-ascii?Q?xbN5cKAM7KipD67icQ9YM0v/3+1rgKViOMIkRP8vhIIwmev3qJfFNiruRUxH?=
- =?us-ascii?Q?V10lQb3VU5k6OwTckwWIFFXWjVx4TdCXzBJIKen5EQZ38I6pQ8Pl0V1zws/3?=
- =?us-ascii?Q?fw67FA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(1800799024)(82310400026)(7053199007);
- DIR:OUT; SFP:1101; 
+ ARA:13230040|1800799024|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?5cxTbybg3k6SHFZnfBO55mdTwaZqZnRvOjmpO0AFElpfVRttI1mAUd86Hix5?=
+ =?us-ascii?Q?V5eU50hSS2cuRuBtSgMZBLf2F7jaiiYDxwVH6CSYirfZaN/UQ6QBm0hHVcLk?=
+ =?us-ascii?Q?FsTeMRlY/ORRjnmyC4yKQxY62PlvIVI2ZZUmxpvXRj/uiOwJexvJYlcE75Z5?=
+ =?us-ascii?Q?sFxqNbRjqbGOoLhBkH/Os+4+7rE135GxdB3QpqwgUMySHdf/kW4Rc7zh1Ihf?=
+ =?us-ascii?Q?r/RD1oYZQuA2LkMGjv9YsRU15PEYjVkL6DLA8oPmD4pHGVJ8PyKMbL3SvsXp?=
+ =?us-ascii?Q?Qapa6wHUJKVDx7DYkibcE7rf/5jqBFgk7Ik1Im0S4P12bBf2zGcepbDO/MRS?=
+ =?us-ascii?Q?aciu8sv9OkRdsBbZUP1dx06lOqpKGhgbLsBz1RZ2whrcvU6uDvO7KMd50Vgt?=
+ =?us-ascii?Q?DtRrMrQRlwHouWSAvdYyAJnyzJGn4AJWXKP3KRXlHVvlyV3Jn5Jfi1YjChKU?=
+ =?us-ascii?Q?XhquaEGyLikSvy0TM6NtUgufsDmypSWgnVZLLzVvy7SpInAHjGVSJPT5WBar?=
+ =?us-ascii?Q?ELJ1U3u+4BagNKgz7Patoq87Thi6eePqq4cRJzM5qJtmmYTT/ZLxT/HcHVQk?=
+ =?us-ascii?Q?yCesZkokQMUl53EiQT8siWdNXsY5lGoT+j23I1pzVYUqPUilB9dJ1SKmyVsP?=
+ =?us-ascii?Q?1kM3C/u2Pulwk7RtHstbAaGxTS8UfgVyUwaLQ9ADtJb3vRjuTMso0sugSthu?=
+ =?us-ascii?Q?QMHI/zsx+kIlNj3r6W9zSqJ5n/JEs9U8BJhLiZOoP1dI6blEWpWik3Jibirx?=
+ =?us-ascii?Q?gs0HuVOpN6Gw95ZwCu27qa6kQ+E+NR7GRERoPtAZNApAVDeq8Q7KsD++Eze+?=
+ =?us-ascii?Q?ym3J2UKvDz7XL2lRDepP8ZRefIamGi/DQS7lXIPZalZmLjRLl7j2zgPGs++g?=
+ =?us-ascii?Q?8a1+1VcsHbvfccVcsYgyGEaIPXAM8QkZtnsV+UfMNAGgVYr9cvYuKgyREjbU?=
+ =?us-ascii?Q?WRjzNMKJJmjaEHML2Pe8Xgi9TOc3/h/raKdnZSSY4CKu0e4G7nwTPBWmVpdA?=
+ =?us-ascii?Q?cIS6xglqwrH25rEwJVfBV/3+hOMVgTZAqlXbmnS8X8ieXY+NOYO2y8psVR/2?=
+ =?us-ascii?Q?vPGEm4T80PAHiihin8o4oJEEtqYGhYnmemkJxI4FaJ5R2nhnOlqQaj8XfOnd?=
+ =?us-ascii?Q?uF0v4iDSnP/X8ZD5wzwSStYCA13OYYzaZv3ernFKYpFzLWnLqY4xrQUHoP5B?=
+ =?us-ascii?Q?8eV1GOkHL7PRJcH2Q0B/VNC+vP33upZz9oSJ8qZ5bSYVk0hHpXSnxyfQ4rQr?=
+ =?us-ascii?Q?VWNCG/1qaPBAHifFxW+y4eOpGZnFIoecr03mnF2+D8iKC5NnDYUUOG5Y7lAX?=
+ =?us-ascii?Q?g2UertXAcESZqIFIh+rtJ14QnRTXN+1+ZRA6x9zmVryaImC45+g2stH3oITN?=
+ =?us-ascii?Q?7m/+wQE7bM/GVQ9avk8WdzW5ajLpigMQDCGg5/jwQ6A/Vo6MI2vwrUh1YgWJ?=
+ =?us-ascii?Q?0r/IZPaLkCFfPIZWGlEMJWn2yzJeq1ewTAO/aQraERlHU1fnJwqQbt70fmm3?=
+ =?us-ascii?Q?y2+mSL3ZjA/u/qOf0z3lmzu2f4VXQ7nlllvKqNPOt4NOp8KxkL8jvc96VCXQ?=
+ =?us-ascii?Q?GP03s4Ocj7Vtjr0WkEJoGWaibccBsHgVK0kKs+x7vY/5K9occQrfTlTtAwUq?=
+ =?us-ascii?Q?PyBW8BnNeJuouLB71vHa/37DvC4K4wRR4urEvHpIrVVN1cPJ07JP2MDuP95L?=
+ =?us-ascii?Q?Syh0ZA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: d2gcWe8wquPu+QRrG8cDWnr2HydhUgLh6+XQ7cD7NCTt4PZIg3epWyEn9cDV4b+r1TatnshheFJBqcBIB/vExXwIX6gLZhKdCyt6SBUaUy8dWdTOmMdsgAr/7vMbk9VSDpbm63MqMLg9XMNpquhKX5jwbkX8r0+hz3XLckPLd0sH5R5C0V1GSsFlSmI7XXy2aHxzaCkeNLIU85Vh64sS0fAqXy0A3vf5fKJqLzWyzGqikuhjl/UkNGu5ex/bz/pzOsjCI2uyeun7KQ7+rgvXM5utL0xvc7n14cso9jHsb26ttJNdqsVXT4J3f8/g42nzAQjUu8C0TuGuZiOCTi3CGLF9qJkzvoR8Zzjbeg/DF3GGekD3n6BCjjLxJ9YraWQvnEuVxIKt7n6/oUhRcS4Jd29VMIpry2PRgLb/K8sqZbZoRq30S+g7xLm4p2DJAbI/
+X-MS-Exchange-AntiSpam-MessageData-0: jWT8Mmf0dVPOrCBW802i7xSJIGR9CQlgTZ3ia5iTHHCb0hKjxedg5PJXPyIOdgfs2J0zilcxgdWqmjIE9gfG6MH3AiusARb4spHR7kwQezO8jLU9djj9FKMBIhb8mwLClHVrAlp/T1Fvceg8bjHjEOQdvhAXW0HWlGSx36Y4WmcIQZ+xQLzKomva8M424Zw2N9gimtl2GodcdQ0rJJzFJBcioYMZkNL5aHGwUxf7012s7SPqbZ45HrT2eA6ptRfZvVcHCfqlVmDTCnYgDM0liYkF/si/N6p8TIdCxtHXa3rFmSS2U3dHLPXk7A8s5H1UdITd1W/wP3mS5PPjV5xywomRChAVBXAvnpZfz6HFOO6v2GpkV96Rvyqijr54TeGH4BG8Oj5uLVQTN1maQlFtW5JfzcMGLvKStjTJCMLW/qWTAuZ2hnUzSxvmiv7BsYXV
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2026 04:07:02.0386 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e84a07e8-8156-45eb-ace3-08de5fb505ac
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2026 04:07:00.8854 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 061e72ca-72ed-44c8-230e-08de5fb504f7
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFC.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0001709B.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9347
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5871
+Received-SPF: permerror client-ip=40.107.208.45;
  envelope-from=ankita@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,101 +164,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ankit Agrawal <ankita@nvidia.com>
 
-Sort sparse mmap regions by offset during region setup to ensure
-predictable mapping order, avoid overlaps and a proper handling
-of the gaps between sub-regions.
+This series enables hugepfnmap support in QEMU for VFIO device memory
+regions that have non-power-of-2 sizes. This specifically addresses the
+needs of Grace-based systems (GB200) where device memory is exposed
+as a BAR.
 
-Add validation to detect overlapping sparse regions early during
-setup before any mapping operations begin.
+## Problem
 
-The sorting is performed on the subregions ranges during
-vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
-mapping code can rely on subregions being in ascending offset order.
+On Grace-based systems, device memory regions can have sizes like
+0x2F00F00000 (not power-of-2). The current QEMU VFIO mapping code
+aligns each sparse mmap area independently using the trailing zeros
+of its size (ctz64), which results in suboptimal alignment for the
+overall VMA.
 
-This is preparatory work for alignment adjustments needed to support
-hugepfnmap on systems where device memory (e.g., Grace-based systems)
-may have non-power-of-2 sizes.
+This prevents the kernel from using hugepfnmap that enables huge
+page mappings for device memory. Without proper alignment, the
+mapping falls back to PTE, significantly impacting performance
+due to increased TLB pressure and page table overhead for large
+memory regions.
 
-cc: Alex Williamson <alex@shazbot.org>
-Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
----
- hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+## Solution
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index ab39d77574..7622ae5683 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
-     },
- };
- 
-+static int vfio_mmap_compare_offset(const void *a, const void *b)
-+{
-+    const VFIOMmap *mmap_a = a;
-+    const VFIOMmap *mmap_b = b;
-+
-+    if (mmap_a->offset < mmap_b->offset) {
-+        return -1;
-+    } else if (mmap_a->offset > mmap_b->offset) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
- static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-                                           struct vfio_region_info *info)
- {
-@@ -182,6 +195,34 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-     region->nr_mmaps = j;
-     region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
- 
-+    /*
-+     * Sort sparse mmaps by offset to ensure proper handling of gaps
-+     * and predictable mapping order in vfio_region_mmap().
-+     */
-+    if (region->nr_mmaps > 1) {
-+        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
-+              vfio_mmap_compare_offset);
-+
-+        /*
-+         * Validate that sparse regions dont overlap after sorting.
-+         */
-+        for (i = 1; i < region->nr_mmaps; i++) {
-+            off_t prev_end = region->mmaps[i - 1].offset +
-+                             region->mmaps[i - 1].size;
-+            if (prev_end > region->mmaps[i].offset) {
-+                error_report("%s: overlapping sparse mmap regions detected "
-+                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
-+                             __func__, region->nr, region->mmaps[i - 1].offset,
-+                             prev_end - 1, region->mmaps[i].offset,
-+                             region->mmaps[i].offset + region->mmaps[i].size - 1);
-+                g_free(region->mmaps);
-+                region->mmaps = NULL;
-+                region->nr_mmaps = 0;
-+                return -EINVAL;
-+            }
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
- 
-             ret = vfio_setup_region_sparse_mmaps(region, info);
- 
--            if (ret) {
-+            if (ret == -ENODEV) {
-                 region->nr_mmaps = 1;
-                 region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
-                 region->mmaps[0].offset = 0;
-                 region->mmaps[0].size = region->size;
-+            } else {
-+                return ret;
-             }
-         }
-     }
+Patch 1: Sort sparse mmap regions by offset during setup and validate
+         that they don't overlap. This ensures predictable mapping
+         order and enables gap detection.
+
+Patch 2: Change the alignment strategy from per-sparse-region to
+         whole-region alignment using pow2ceil(region->size). Create
+         a single aligned base mapping for the entire region, then
+         overlay sparse areas with MAP_FIXED. Gaps between sparse
+         regions are explicitly unmapped.
+
+Ankit Agrawal (2):
+  hw/vfio: sort and validate sparse mmap regions by offset
+  hw/vfio: align mmap to power-of-2 of region size for hugepfnmap
+
+ hw/vfio/region.c | 126 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 98 insertions(+), 28 deletions(-)
+
 -- 
 2.34.1
 
