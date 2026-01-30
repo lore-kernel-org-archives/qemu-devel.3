@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403EED73EA7
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 23:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F71D73EAA
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 01:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlbSA-0006c6-K7; Thu, 29 Jan 2026 18:29:34 -0500
+	id 1vldex-0007W5-22; Thu, 29 Jan 2026 20:50:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlbS9-0006aa-Ao
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:29:33 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlbS7-0007qF-KX
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:29:32 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-481188b7760so9492085e9.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 15:29:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769729369; x=1770334169; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y354yoYAYkBybuOQv3USi7eqSN6jn8tk7Mw6/eJsjzY=;
- b=bwH5em1dY7oWdP09jqz/KQFuHKYLaWc7akLpX11Z5kexxIL/eXcV4HMSnuBP09Ztax
- qfFEc37m7Kv97wvqeiJsl12eMfb6WlYwhVGSFsVtjCXLeXGSFW2s+icbLKoCrVt1ZV4p
- beQGD6VElgs7OskaqoiiwSTBRkmHdtibdyG0wKUKqmIMr8Ojjfjudir2g028IbI8iqsu
- LBhhPl5Fx+/ZWzvDpcOCsj5+JfcsnuCF9xvjKFswKSSB5Yc9r0pP/7SNu9i+lwIMzjuv
- pLOwkep5DS3mCt6jpAFbCur6njay+EHZ0xnMxFBPlDmnrPZ8JuW2IIi4M1i20Of8qE6x
- D1+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769729369; x=1770334169;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y354yoYAYkBybuOQv3USi7eqSN6jn8tk7Mw6/eJsjzY=;
- b=eacXgtHxHDrt6o1eTNQwefTqr98Z2Ruf0qTI73Hb9QjYD+6CgeoXP0fqz8RX6v2O/l
- SqlBx2XdFv+ytxxLDf/t5mJAtuFDoouYBW/MYIn1r36GaHtNOpzH6zIaLNfAnWqrUbdu
- LOS4q+/ia0YT4VSv/LP3v7ue9EPNFnu2Eu/SqgUKSHVf/jUdhWM65JrV6ksKul7PeKVq
- HYZP9HHUFXVF39SxHK9X3ZGJfLoGN3QYaNwn/PRIT7fNW/3bCjopZD5M/L1rnsuldhcA
- sLOb38BBziVNuxPbi7CMHZqxLfw2WX/O4AD+kGIW4DuPRnqv9GXibt5cbiiAqawVWROb
- Xe/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdFimO7Qf2FGWrcyRuOg3wb3DG4TwMHDgjK+1bN9eIW5z0XtkIm8AUriO1+zq4kUmSBdR4sEGC7mgs@nongnu.org
-X-Gm-Message-State: AOJu0YzVegsjE8dBiesXHS5e7MWzfo8qJO6rWKM/OtKPtvPQq9zX3Apm
- fjndaVr94hdjBfte7HqM8cxMxjF48+fXs21kj6ySuoYjYcudF99+2yJVbRouh894hxI=
-X-Gm-Gg: AZuq6aK8CquQHl+m1IUYe1Pg3QlDcbYXD/81cug32Jss11viHevyW3aFMlKx2d3iP/4
- W/HTa6iHImz1Jc1AhyR3qXf9EfD8n7tghCXw4/gIMmqVRu4QwiIyFkj2Msb51WY5iiKeueQxtcv
- amul6XlBbfEM2UwQa9oMdyOP9qWvXib5iyWWgaXGRKNlskIZkZMJK1Oxr+RHU0YG2F1ohwm1qmZ
- 667XefyvSMfNm7ihnL/uEgteMOUsdY9fn+evfTUPvxrrMSlvAPFP4Wc8w4DxBrI2Mabk3KilMdu
- rwcxvfr/gb/cnLCRgkBm+4GQDHT8/1+DarINdDGxv6tAhpL38lU/Ms4c+NnbxZ2iE1pyzCeb/Kl
- uvpQ2YI+qlTgTL9zDuYNy5+DLGStA/fCp8zf90VC+NZ5BwKO7mFABDpgUWQnc5Ke15I/SmfKjoC
- WYSwoR/6VqggtR54ylhpnF8V3Ryd2Rxs1FfEX+Tc0/xXxpTUhxCspHKw==
-X-Received: by 2002:a05:600c:a00d:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-482db465e44mr8021125e9.14.1769729369314; 
- Thu, 29 Jan 2026 15:29:29 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-482dbc75e13sm5409295e9.1.2026.01.29.15.29.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 15:29:28 -0800 (PST)
-Message-ID: <7a99451d-adfa-4d1a-8c74-4072607d9714@linaro.org>
-Date: Fri, 30 Jan 2026 00:29:27 +0100
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vldev-0007VC-9O; Thu, 29 Jan 2026 20:50:53 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vldet-0001k6-Ls; Thu, 29 Jan 2026 20:50:53 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEtDJ5024531;
+ Fri, 30 Jan 2026 01:50:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dj7zvB
+ 3OpZw6pmEXLr8tGZ/mNzbsF64b8wgevn5HPJg=; b=QTp/RQPYCjBV62vcQYjOYk
+ ktPF0Hw225f7oOLxNstKwL4qG/Q+O9mz7dpVPk16vpQfDPgKF2kIdmzTQA9JfRjV
+ Mgf+8pKw8Mwqr+yVXxlfgl4VfwHp51q0FYhZKxyOWKsEQXHlAu7kdJh12FQJ8LwO
+ MVb2K1OiQJ4/eH8hlvEpmJ5zRrMsVys2/bJPj+XgK0ZCn75tMK2HaOZbtkUKowKT
+ 8cbC0Zm3fLv0A8S6AzLVMwcR8XLbepagSzYE9eiBaHy1utaHrX6C+Z4DV/2mnXXz
+ qrAHUu1Dh95NNcaD4oIDE9+O7WRSQfjCu0HZNibGgqRIaCZmIH5fvVA/4/keHORw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrtuqg4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 30 Jan 2026 01:50:48 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60U06Uwp019653;
+ Fri, 30 Jan 2026 01:50:47 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9dnceju-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 30 Jan 2026 01:50:47 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60U1ojSn64225720
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 30 Jan 2026 01:50:46 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B839658055;
+ Fri, 30 Jan 2026 01:50:45 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC6255804B;
+ Fri, 30 Jan 2026 01:50:44 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.76.202]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 30 Jan 2026 01:50:44 +0000 (GMT)
+Message-ID: <9afdd5c9af9540609542814d9a583437589db4bf.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 06/14] include/hw/s390x: Move CLP definitions for
+ easier BIOS access
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Thu, 29 Jan 2026 20:50:44 -0500
+In-Reply-To: <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-7-jrossi@linux.ibm.com>
+ <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] memory: Remove
- memory_region_init_rom_device_nomigrate()
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>
-References: <cover.1769703287.git.balaton@eik.bme.hu>
- <87d6eafa7c7f7f62de0e82dd5c70cd0d0a4f59b8.1769703287.git.balaton@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87d6eafa7c7f7f62de0e82dd5c70cd0d0a4f59b8.1769703287.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 33GEq0F9DzWmJWKN1EYOyvkRERqOgn6V
+X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=697c0e78 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=RLiWjzvH3RyVQvlK388A:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 33GEq0F9DzWmJWKN1EYOyvkRERqOgn6V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDAxMiBTYWx0ZWRfX38GT3igzisi0
+ zEBGIcwdWc8WcL4ukOewMRsVInMuz8hrHOzk/aUmUDtkQ4p4/wVEcwxm14KjV0NlwDyclB57WbX
+ 6uZK/7jYRakmL+kyfTKIpmtj2vDmQKPcehurmOW04hhHR+E/vR4lIV/1DPWHc7KYu22AIBU/Dc4
+ 4NHouyS7YRKd+U+sEYDUhSyi4cd6CVrySnVBZSl1PDY2KPaJkKsV6L+ivFC4yvsjBFqA1eqj+CN
+ 6ftUoISzU2fmn8u22sfvQ6vvQKm6H91vDD11/gyXbIbDMqFNne3OoYQPwKZSAwxhe3N7+s4ayiK
+ JzIK1iu3rlp9rV/jpVGEcz9fiEqKP4Sb0paqsChLjITqjmGQkC+zExMibJ//1acsGDOyv9tmx48
+ w+ljB4bnm4L7larBx3nEfsG3yVPGwxvU5lJamM2rQdfLIUpRbZhLm9FQnFv5NpsTf8FIcUR3N2N
+ 2e2BWfWhO9vgBFTrKnQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
+ phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601300012
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,73 +125,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/1/26 17:20, BALATON Zoltan wrote:
-> This function is never used, remove it.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   docs/devel/memory.rst                         |  1 -
->   include/system/memory.h                       | 27 ------------
->   .../memory-region-housekeeping.cocci          |  8 ----
->   system/memory.c                               | 41 ++++++-------------
->   4 files changed, 13 insertions(+), 64 deletions(-)
+On Thu, 2026-01-29 at 16:46 -0500, Eric Farman wrote:
+> On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
+> > From: Jared Rossi <jrossi@linux.ibm.com>
+> >=20
+> > Move the s390-pci-clp definitions into the "ipl" sub-directory, which i=
+s visible
+> > to the s390-bios.  This allows the bios to reuse the architected defini=
+tions and
+> > prevents code duplication.
+> >=20
+> > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> > ---
+> >  hw/s390x/s390-pci-vfio.c                  | 2 +-
+> >  include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h | 0
+> >  include/hw/s390x/s390-pci-bus.h           | 2 +-
+> >  3 files changed, 2 insertions(+), 2 deletions(-)
+> >  rename include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h (100%)
+>=20
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-
-> -bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
-> -                                             Object *owner,
-> -                                             const MemoryRegionOps *ops,
-> -                                             void *opaque,
-> -                                             const char *name,
-> -                                             uint64_t size,
-> -                                             Error **errp)
-> -{
-> -    Error *err = NULL;
-> -    assert(ops);
-> -    memory_region_init(mr, owner, name, size);
-> -    mr->ops = ops;
-> -    mr->opaque = opaque;
-> -    mr->terminates = true;
-> -    mr->rom_device = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
-> -    if (err) {
-> -        mr->size = int128_zero();
-> -        object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
-> -        return false;
-> -    }
-> -    return true;
-> -}
-> -
->   void memory_region_init_iommu(void *_iommu_mr,
->                                 size_t instance_size,
->                                 const char *mrtypename,
-> @@ -3802,9 +3776,20 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
->                                      Error **errp)
->   {
->       DeviceState *owner_dev;
-> +    Error *err = NULL;
->   
-> -    if (!memory_region_init_rom_device_nomigrate(mr, owner, ops, opaque,
-> -                                                 name, size, errp)) {
-> +    assert(ops);
-> +    memory_region_init(mr, owner, name, size);
-> +    mr->ops = ops;
-> +    mr->opaque = opaque;
-> +    mr->terminates = true;
-> +    mr->rom_device = true;
-> +    mr->destructor = memory_region_destructor_ram;
-> +    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
-> +    if (err) {
-> +        mr->size = int128_zero();
-> +        object_unparent(OBJECT(mr));
-> +        error_propagate(errp, err);
->           return false;
->       }
->       /* This will assert if owner is neither NULL nor a DeviceState.
-
-The code is actually inlined, not removed. With that clarified:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Actually, small nit that popped into my head on the drive home... Could you=
+ update MAINTAINERS so
+that we don't lose the PCI CLP header file from the S390 PCI group?
 
