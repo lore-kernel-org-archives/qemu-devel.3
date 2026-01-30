@@ -4,105 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF22E6BF25
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6240E6BF20
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlrHW-0005yu-T2; Fri, 30 Jan 2026 11:23:39 -0500
+	id 1vlrP2-0000My-73; Fri, 30 Jan 2026 11:31:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlrHV-0005yK-4H
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:23:37 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlrHT-0000ru-Ju
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:23:36 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-79492a2a57bso21822427b3.2
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:23:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769790213; cv=none;
- d=google.com; s=arc-20240605;
- b=Zfudxt/AgzoD9FoGDycSNaXY+5/PqHvNGmTzTyxAuPvDOhaIp4fyqrVZ9Cri3qwAGN
- DE+dh0C7bMQFZ/JJAFfZl6aN1QlwCkNJ+HGxu2ReMKG/BogetKywZDyaII/eZ4qHFixG
- 4Da1XgulpSisUVZCW/Uf7iepQC2SM5MlU8gbMxmGcs5G/MSdG4dYvgRvykVjtSz17rIc
- FqKDawUg2MitmwZIJWLjGF1n3Lq/CGurT6deTYyjPIIDfP5dL2j97kvE8q0dbcyKVC+p
- 9GXko8G76mu0+2PYrwDlsmgVjxE/ElX2SeH+mQjDm3bA7/81EQbs6gQn+1SQxgvr3P/W
- BRPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=qEwa/WyQGTWAW+FMrIdjEWhMp0kgJZJQQgEPoAK1UWg=;
- fh=J3PzjybaugvUOwx1lkMPY42EeM2OdVcmCsTlfmGJYCs=;
- b=MzRXTK7at4VvJY9GuILaTQ99UwhGbwrKrUXLwjOtnF/n1uSiZHI3jIHcsyaT3tsjvc
- Xfc7BqTOBPhOsJ2KLEjI7a5/5YryQn0JiN7cCk+/bCZz6U4axbrajeZfC7WuWAM4JNR0
- TH6O7WPacvnWct+hrV2hpo65G1T398aGkqq8xwH1PIlmy/JAkIMiA2wiqIElR/9W3yfJ
- MB2xbOOOTz3Nzv/Wzly7457AroXV44Eq1yxuyueE/ITJO9Vm2B5fdDxu32BjdTt4zgO9
- aKjrKcjwbR+ZjY/ea13JEjsc+SKx9UelJKW4i69fXjM9trEljsxLU0udeTXVm3DVZkNz
- Ts4Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769790213; x=1770395013; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qEwa/WyQGTWAW+FMrIdjEWhMp0kgJZJQQgEPoAK1UWg=;
- b=wrQ1gtmomCbyYIRLULhQbTm+PLcSiiKXfsEJ/PvDPapPrV0HhyArEwOs33EhdZroba
- HGazh11u9K/s2nNuC3X9a54rdg9NlUzFJ6NVxSJcDYm6VtTYw7zCWWO1nXWunxvPfh1f
- OWg/CqYyqYPyYYLskwZfLgMo5YyKvPPNXCj6tY6Xt6uNhSFbHwif8Zne/q0DRVGR3bRX
- siVWdYQUbnrmRR5s3vecF0xZSrNdV8/qB2ZQYyXdF/NbLW6ooaoz7ERQzP5agYzNmd/t
- VPIXr3f2fmaHkzm1TFYIMJ+/BTxaFSYHqCtUaMJBJ1g49HU9wD1Jnc4ibqZIR+tErvj2
- krSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769790213; x=1770395013;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qEwa/WyQGTWAW+FMrIdjEWhMp0kgJZJQQgEPoAK1UWg=;
- b=FLClbR68iQicNhHUJZuhPxEJStxFAxhuFOi3/Vwg1P3/kity5NokCTvYS8PANXrowE
- DMCYUKuMwmUerOvzWExJTYILM/hFhQc+wctXrCeCy14g4Y//6VWjVSAYxRnCqlr3DRZx
- KoprI4Gt7GfJ6rJJIIJGwtNz3bY4mKf5vLF43HL+vAd6+0FHULcYOXUKTzfCIxr0bsyI
- vzLGeau8SM/RebkVX0ivcT7K7ZV9j0DFT2qGNOct1TJbMkGMTxPkwzVec6Njhk6Nr/Xs
- RFHZdlMiAAExZKeQ5CJRsOMbxVHidQJOCGOSkcu3Wnq6RWzh53U1ZrYG7lUcjBw5hvu4
- JvZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVN8yHqO/f5GxzJ7Nmg0DFwX8HwxcT4QJFYnZMXKTKpdmmpbmMRaOLBakw1xxn8KwRRwlNA+SHwqziC@nongnu.org
-X-Gm-Message-State: AOJu0Yzc7/MqLguoB1xGW+D4q9DvsF7mR4b3sf16dGENuwz+96zSsuwE
- 1IdjZtkSNe9sgrXW4QJBnt8EoD2KK6pkAOF1zwlkT02oh4W9xPEjEkJyYcGjFKHym3wJT7pLfPN
- gqomRzba94WIUDaHiJfDEk4ba0AcqtGaD+a6joB9bOQ==
-X-Gm-Gg: AZuq6aJLKZ0GRtpBPi6IXle0qhy7zIXoBka/jY7QnFVkQEiqUSGjxTn7gvD/FTQN4PG
- wxelWT37YI/LfjGqjISWfq3KAgGrkazmzq0NMMSixiozKo5cCsAD49XQR45RQp64154/DbANz+A
- 4EwGdpkChLmN7LlCDjyUbVi6tahBPN6f7PD+UlfdImVsRTlZ2oEFw/EueUrXx5MR8AyPs0SDL2d
- CrSrd5BLq+6jkvOWPEKkEFqqs27rqYzRpY6urfOGTVZXaL3tWTSRzeS3hrAeqKOX8WG/Q==
-X-Received: by 2002:a05:690c:f08:b0:794:8603:3b2e with SMTP id
- 00721157ae682-7949de65372mr31523467b3.4.1769790212789; Fri, 30 Jan 2026
- 08:23:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vlrP1-0000MZ-1W
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:31:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vlrOz-0002r3-A6
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:31:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769790679;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uguVw0yt3k8Yqmho+aUHZfZwdBpUHFvQMCdDRkTXfGY=;
+ b=Ul5f+UM4a2DkG7v1w77HWgNgcv//0CVd9qIbqm0/mFyowFJgIbUhZdJu/bkPQLRORDEBwC
+ wAyudsnPtY06dmZSvzkKGnhhpvVmFvn5SHBaq9BQ88pbrgZTgON3EJFTecC5VFR/FmnmM2
+ W9ZPTYUdbHJSXlE7t3SeV2YX5Ziug4Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-6HhriAfnPcOD-C_aH9ZbiQ-1; Fri,
+ 30 Jan 2026 11:31:15 -0500
+X-MC-Unique: 6HhriAfnPcOD-C_aH9ZbiQ-1
+X-Mimecast-MFC-AGG-ID: 6HhriAfnPcOD-C_aH9ZbiQ_1769790673
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C89E71800451; Fri, 30 Jan 2026 16:31:12 +0000 (UTC)
+Received: from localhost (unknown [10.67.32.74])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C336619560A2; Fri, 30 Jan 2026 16:31:09 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net,
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
+ Richard Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, Thomas Huth
+ <thuth@redhat.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, "open list:virtio-ccw"
+ <qemu-s390x@nongnu.org>
+Subject: Re: [PATCH v4 08/23] virtio: move common part of
+ _set_guest_notifier to generic code
+In-Reply-To: <28313ff2e6fc34f45304ba19b8b9380fc4ba167d.camel@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ <20260119185228.203296-9-vsementsov@yandex-team.ru>
+ <20260124000624.1bd7c9c1.pasic@linux.ibm.com>
+ <26198787-a1da-4858-8656-f5006d153d6e@yandex-team.ru>
+ <20260126230026.2664d565.pasic@linux.ibm.com>
+ <28313ff2e6fc34f45304ba19b8b9380fc4ba167d.camel@linux.ibm.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Fri, 30 Jan 2026 17:31:04 +0100
+Message-ID: <87ecn7t647.fsf@redhat.com>
 MIME-Version: 1.0
-References: <CAHhgW4UH=_65pZJEACBXh7J0XN1SH1HFS_e_FCN8Zm2sKa1sww@mail.gmail.com>
- <CAHhgW4X-R-Pm1ZV20UuBPbCtnSmp5r1HkwMjWMZ7KuVX0Cp63w@mail.gmail.com>
- <e0b9fcf2-d4f2-40ae-90f4-221268364501@linaro.org>
-In-Reply-To: <e0b9fcf2-d4f2-40ae-90f4-221268364501@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 30 Jan 2026 16:23:21 +0000
-X-Gm-Features: AZwV_QgdUAywXsDNDJaoCeNv4_aLk8hfjZ652gmU1_uYD_bwibeUd0AQg_1TIIU
-Message-ID: <CAFEAcA-QAuiNH1RdkqsxiqKSungGfbPGgi+eAESyd5fU7AyFJQ@mail.gmail.com>
-Subject: Re: Wiki Account Request
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Yodel Eldar <yodel.eldar@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,36 +99,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 Jan 2026 at 16:12, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> Hi Yodel,
->
-> On 1/30/26 3:03 AM, Yodel Eldar wrote:
-> > On Thu, Jan 22, 2026 at 1:30=E2=80=AFAM Yodel Eldar <yodel.eldar@gmail.=
-com> wrote:
-> >>
-> >> Hi,
-> >>
-> >> Can an existing wiki user please create an account for me?
-> >>
-> >> username: yodel
-> >>
-> >> Thanks,
-> >> Yodel
-> >
-> > Ping?
-> >
->
-> you might have better chances asking directly to one of the maintainer
-> with who you contributed previously, and that knows and trusts you.
+On Fri, Jan 30 2026, Eric Farman <farman@linux.ibm.com> wrote:
 
-I think this just dropped through the cracks -- our wiki's
-"somebody needs to create an account for you" rule is not intended to
-require a high trust burden; it's only there to distinguish
-real humans from spam bots, who were previously overwhelming it.
+> On Mon, 2026-01-26 at 23:00 +0100, Halil Pasic wrote:
+>> On Mon, 26 Jan 2026 19:40:09 +0300
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> wrote:
+>> 
+>> > > > +/**
+>> > > > + * virtio_queue_set_guest_notifier - set/unset queue or config guest
+>> > > > + *     notifier
+>> > > > + *
+>> > > > + * @vdev: the VirtIO device
+>> > > > + * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notifer  
+>> > > 
+>> > > Semantically are mixing queue numbers and interrupt indexes here.  
+>> > 
+>> > That's preexisting logic in virtio_pci_set_guest_notifier_fd_handler().
+>> > 
+>> > But, you are right, that's doesn't answer the question, is it good to share
+>> > the logic with mmio and ccw.
+>> > 
+>> > Is config notifier only pci specific, or similar feature may appear in future
+>> > for mmio and/or ccw?
+>> 
+>> AFAIR there is no  notifier for ccw. A possible explanation for
+>> that is, that AFAIK that config space notifications (device -> driver)
+>> are always classic I/O interrupts while queue indicators can be so called
+>> adapter I/O interrupts and irqfd is only available for adapter I/O
+>> interrupts. 
+>> 
+>> If you like you can have a look at 
+>> "4.3.2.6 Setting Up Indicators" in
+>> https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html#x1-1940003
+>> 
+>> I see no reason why virtio_config_guest_notifier_read() based, i.e
+>> !irqfd virtio config notifier should not exist or would not work. And I
+>> guess it is needed for certain vhost things. But nevertheless, I can't
+>> find the place where a virtio-ccw config notifier is set up.
+>> 
+>> Eric, what is your opinion on this? My current thinking is that
+>> virtio-ccw not having a config notifier is basically a bug.
+>
+> (Sorry that I missed this; thanks for the ping, Halil)
+>
+> Yeah, we don't have have such a config notifier and I don't recall the history behind it.
 
-I've created an account for Yodel.
+Adapter interrupts were not a thing for virtio-ccw in the beginning (we
+only added the airq infrastructure later IIRC, so all interrupts were
+"classic" subchannel-based interrupts.)
 
--- PMM
+> But I don't know that it's a bug; spec points out config notifications for ccw come as unsolicited
+> interrupts versus config notifier, so not having one is fine by me as far as this refactoring goes.
+> I'll add it to a list of things to play around with, though.
+
+I think I agree.
+
+(Although my brain is already more than halfway into the weekend...)
+
 
