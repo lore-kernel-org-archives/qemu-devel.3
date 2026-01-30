@@ -4,57 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73C7D73EB7
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 03:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5881ED73EB7
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 03:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlf45-0006fK-Kw; Thu, 29 Jan 2026 22:20:57 -0500
+	id 1vlfTO-0005Dy-Rn; Thu, 29 Jan 2026 22:47:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vlf43-0006ew-G4; Thu, 29 Jan 2026 22:20:55 -0500
-Received: from mail-05.mail-europe.com ([85.9.206.169])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vlf3w-0002Ud-2b; Thu, 29 Jan 2026 22:20:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
- s=protonmail2; t=1769743229; x=1770002429;
- bh=kzUUR2QYb5BHyWwd+ng6OUyhVFYjakkzLpOlG2A7BQE=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=1FXjvc31jIkqGlFwyWOSSAtKc1MUa7gtOxScMNoABXjW0DwIG3Bd5bsid7/ha5nrA
- lEA60dAZotwOVPV0XuTW3wMldguQrE01QaNE9Sra6/o8DLsCqiSjSFm4EDCg7i3zEJ
- 4xvG3lJtK4GrclSQcfRc2Oir9y3dIFr8O76WvFNrlxAeH8SDK9lRIbEYhS19iosvsG
- b0j+C5WETxOyr+xYGpdrPF3xqLdo3j6A/jOpcReJUpPrfMwjfJ4npzhGwCPtHpa0+D
- i1j/8EFvTi2s2JawkXlzCbm/JQqacVWkxXpBh3tNeihaBbv1FIpF3jvcSHmJ0bDKbj
- qaJUo7ZgSkzKg==
-Date: Fri, 30 Jan 2026 03:20:26 +0000
-To: bug-hurd@gnu.org
-From: Damien Zammit <damien@zamaudio.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
- stefanb@linux.ibm.com, peter.maydell@linaro.org, kwolf@redhat.com,
- berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
-Subject: [PATCH v3 2/4 qemu] Add GNU/Hurd host_os=gnu
-Message-ID: <20260130031954.1661880-3-damien@zamaudio.com>
-In-Reply-To: <20260130031954.1661880-1-damien@zamaudio.com>
-References: <20260130031954.1661880-1-damien@zamaudio.com>
-Feedback-ID: 43209410:user:proton
-X-Pm-Message-ID: 586449f9b91c96d7527242c2c179205708f5ef9c
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vlfTK-000569-RD; Thu, 29 Jan 2026 22:47:04 -0500
+Received: from zg8tmty1ljiyny4xntqumjca.icoremail.net ([165.227.154.27])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vlfTI-0007sZ-Hh; Thu, 29 Jan 2026 22:47:02 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAXHCSpKXxpkdZ_Aw--.36154S2;
+ Fri, 30 Jan 2026 11:46:49 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCX7eqiKXxpF7YXAA--.26907S2;
+ Fri, 30 Jan 2026 11:46:43 +0800 (CST)
+Message-ID: <2bb4ad3f-790f-438f-b2b3-60a8c91837e3@phytium.com.cn>
+Date: Fri, 30 Jan 2026 11:46:42 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=85.9.206.169; envelope-from=damien@zamaudio.com;
- helo=mail-05.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 1/2] tests/qtest/libqos: Add RISC-V IOMMU helper
+ library
+To: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com
+References: <cover.1769678103.git.chao.liu.zevorn@gmail.com>
+ <fff44d1db25e4a727c40048357059a58fcc58097.1769678103.git.chao.liu.zevorn@gmail.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <fff44d1db25e4a727c40048357059a58fcc58097.1769678103.git.chao.liu.zevorn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAfwCX7eqiKXxpF7YXAA--.26907S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAKBWl6bYMGHQABsp
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxGF43JF43KFWxKr4xuFWDCFg_yoW5CryxpF
+ 1FkanYkayxt3WSqrnxWw12kF1rtan2kF1Uury3AF15Zryavr4jqFnrt340vrn3XaykXr4S
+ vwsYgrn3Wr1Yqr7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=165.227.154.27;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmty1ljiyny4xntqumjca.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,28 +77,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use same value for host_os as meson for GNU/Hurd.
+Hi Chao,
 
-Signed-off-by: Damien Zammit <damien@zamaudio.com>
----
- configure | 2 ++
- 1 file changed, 2 insertions(+)
+On 2026/1/29 17:39, Chao Liu wrote:
+> Introduce a libqos helper module for RISC-V IOMMU testing with
+> iommu-testdev. The helper provides routines to:
+>
+> - Build device contexts (DC) and 3-level page tables for SV39/SV39x4
+> - Program command queue (CQ), fault queue (FQ), and DDTP registers
+>    following the RISC-V IOMMU specification
+> - Execute DMA translations and verify results
+>
+> The current implementation supports SV39 for S-stage and SV39x4 for
+> G-stage translation. Support for SV48/SV48x4/SV57/SV57x4 can be added
+> in future patches.
+>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> ---
+>   MAINTAINERS                          |   1 +
+>   tests/qtest/libqos/meson.build       |   2 +-
+>   tests/qtest/libqos/qos-riscv-iommu.c | 405 +++++++++++++++++++++++++++
+>   tests/qtest/libqos/qos-riscv-iommu.h | 164 +++++++++++
+>   4 files changed, 571 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
+>   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index dccdf47888..830f56376b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3584,6 +3584,7 @@ M: Tao Tang <tangtao1634@phytium.com.cn>
+>   S: Maintained
+>   F: tests/qtest/libqos/qos-iommu*
+>   F: tests/qtest/libqos/qos-smmuv3*
+> +F: tests/qtest/libqos/qos-riscv-iommu*
+>   
+>   Device Fuzzing
+>   M: Alexander Bulekov <alxndr@bu.edu>
+> diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+> index b4daec808f..4a69acad0d 100644
+> --- a/tests/qtest/libqos/meson.build
+> +++ b/tests/qtest/libqos/meson.build
+> @@ -71,7 +71,7 @@ if have_virtfs
+>   endif
+>   
+>   if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
+> -  libqos_srcs += files('riscv-iommu.c')
+> +  libqos_srcs += files('riscv-iommu.c', 'qos-riscv-iommu.c')
+>   endif
+>   if config_all_devices.has_key('CONFIG_TPCI200')
+>     libqos_srcs += files('tpci200.c')
+> diff --git a/tests/qtest/libqos/qos-riscv-iommu.c b/tests/qtest/libqos/qos-riscv-iommu.c
+> new file mode 100644
+> index 0000000000..6c60889eeb
+> --- /dev/null
+> +++ b/tests/qtest/libqos/qos-riscv-iommu.c
+> @@ -0,0 +1,405 @@
+> +/*
+> + * QOS RISC-V IOMMU Module
+> + *
+> + * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
+> + * encapsulating RISC-V IOMMU setup, and assertions.
+> + *
+> + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/bitops.h"
 
-diff --git a/configure b/configure
-index 4b61fd3bbf..fae4d06352 100755
---- a/configure
-+++ b/configure
-@@ -372,6 +372,8 @@ elif check_define __APPLE__; then
- elif check_define EMSCRIPTEN ; then
-   host_os=3Demscripten
-   cross_compile=3D"yes"
-+elif check_define __GNU__; then
-+  host_os=3Dgnu
- else
-   # This is a fatal error, but don't report it yet, because we
-   # might be going to just print the --help text, or it might
---=20
-2.51.0
 
+This include is unnecessary: hw/misc/iommu-testdev.h (pulled in by 
+qos-riscv-iommu.h) already includes hw/pci/pci.h, and hw/pci/pci.h 
+itself includes bitops.h.
+
+> +#include "hw/riscv/riscv-iommu-bits.h"
+> +#include "tests/qtest/libqos/pci.h"
+
+Same. qos-iommu-testdev.h has included tests/qtest/libqos/pci.h.
+
+
+Besides
+
+Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+
+
+Thanks,
+
+Tao
+
+
+> +#include "qos-iommu-testdev.h"
+> +#include "qos-riscv-iommu.h"
+> +
 
 
