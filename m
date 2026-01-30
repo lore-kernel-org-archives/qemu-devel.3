@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD908E6BF10
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 21:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBEBE6BF10
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 22:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlwDu-0007TZ-8d; Fri, 30 Jan 2026 16:40:14 -0500
+	id 1vlwa9-0005OW-IV; Fri, 30 Jan 2026 17:03:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlwDt-0007T5-65; Fri, 30 Jan 2026 16:40:13 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vlwa7-0005O3-IY
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 17:03:11 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlwDq-0001t5-RE; Fri, 30 Jan 2026 16:40:12 -0500
+ id 1vlwa5-0006KS-Sp
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 17:03:11 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A7F73596A0A;
- Fri, 30 Jan 2026 22:40:07 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AC5445969FD;
+ Fri, 30 Jan 2026 23:03:06 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id ycRjXAJzDHHe; Fri, 30 Jan 2026 22:40:05 +0100 (CET)
+ id 8oiTyf2YuFXG; Fri, 30 Jan 2026 23:03:04 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9CC175969F2; Fri, 30 Jan 2026 22:40:05 +0100 (CET)
+ id 7B9E5596A0A; Fri, 30 Jan 2026 23:03:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9B51F5969F6;
- Fri, 30 Jan 2026 22:40:05 +0100 (CET)
-Date: Fri, 30 Jan 2026 22:40:05 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7A1DE5969F6;
+ Fri, 30 Jan 2026 23:03:04 +0100 (CET)
+Date: Fri, 30 Jan 2026 23:03:04 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, qemu-devel-bounces+chad=jablonski.xyz@nongnu.org
-Subject: Re: [PATCH v5 11/12] ati-vga: Implement HOST_DATA register writes
-In-Reply-To: <DG255L1QLG9F.K2BWVSSGYRHG@jablonski.xyz>
-Message-ID: <5c4b7cd5-2467-4c1d-9bc7-23c7d9140f61@eik.bme.hu>
-References: <20260116024258.1487173-1-chad@jablonski.xyz>
- <20260116024258.1487173-12-chad@jablonski.xyz>
- <3d1cf407-dd57-edff-25fe-1dd56c1b5052@eik.bme.hu>
- <DG255L1QLG9F.K2BWVSSGYRHG@jablonski.xyz>
+cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 03/20] ati-vga: Read aliased values from
+ DP_GUI_MASTER_CNTL
+In-Reply-To: <20260130145005.731129-4-chad@jablonski.xyz>
+Message-ID: <08291270-5fe9-2f9f-e1db-300e9934c12c@eik.bme.hu>
+References: <20260130145005.731129-1-chad@jablonski.xyz>
+ <20260130145005.731129-4-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,35 +68,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 30 Jan 2026, Chad Jablonski wrote:
->>> +static void ati_host_data_reset(ATIHostDataState *hd)
->>> +{
->>> +    hd->next = 0;
->>> +    hd->row = 0;
->>> +    hd->col = 0;
->>> +}
->>
->> I wonder where the real chip keeps track of these. Isn't this where the
->> dst_x dst_y would be updated? Or it may have some internal state not
->> exposed as registers? Maybe if you can dump registers you could compare
->> their values during blits after each host data reg write and check how
->> they change to reveal if any of them are updated? (But only if you're
->> curious; it would do for emulation using this approach with a separate
->> state as well.)
+> DP_GUI_MASTER_CNTL aliases several fields from DP_DATATYPE and DP_MIX.
+> These were being written correctly but not returned on a read of
+> DP_GUI_MASTER_CNTL.
 >
-> So far it's looking to me like this is internal state not exposed
-> through the registers. I do see one register that increments after every
-> host_data* write but it's in the PM4/CCE range (0x07e8) and is completely
-> undocumented. It _is_ a bit surprising to see changes in that range given CCE
-> is disabled. But nothing really obvious or conclusive yet, unfortunately.
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 
-OK thanks for checking. The M6 Register reference says 0x7ec is reserved 
-for future debug so it could be the one before is also some kind of debug 
-register but it's not documented so no idea just guessing.
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-So you also verified that not only host data but normal rectangular blits 
-don't update dst and src position either? Then don't know why it comes up 
-in documentation.
-
-Regards,
-BALATON Zoltan
+> ---
+> hw/display/ati.c      | 8 +++++++-
+> hw/display/ati_regs.h | 5 +++++
+> 2 files changed, 12 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 777a6b0a2e..028efd13e1 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -460,7 +460,13 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+>         val = s->regs.dst_y;
+>         break;
+>     case DP_GUI_MASTER_CNTL:
+> -        val = s->regs.dp_gui_master_cntl;
+> +        /* DP_GUI_MASTER_CNTL aliases fields from DP_MIX and DP_DATATYPE */
+> +        val = s->regs.dp_gui_master_cntl |
+> +              ((s->regs.dp_datatype & DP_BRUSH_DATATYPE) >> 4) |
+> +              ((s->regs.dp_datatype & DP_DST_DATATYPE) << 8) |
+> +              ((s->regs.dp_datatype & DP_SRC_DATATYPE) >> 4) |
+> +              (s->regs.dp_mix & DP_ROP3) |
+> +              ((s->regs.dp_mix & DP_SRC_SOURCE) << 16);
+>         break;
+>     case SRC_OFFSET:
+>         val = s->regs.src_offset;
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index d7127748ff..0a0825db04 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -386,6 +386,9 @@
+> #define DST_16BPP                               0x00000004
+> #define DST_24BPP                               0x00000005
+> #define DST_32BPP                               0x00000006
+> +#define DP_DST_DATATYPE                         0x0000000f
+> +#define DP_BRUSH_DATATYPE                       0x00000f00
+> +#define DP_SRC_DATATYPE                         0x00030000
+>
+> #define BRUSH_SOLIDCOLOR                        0x00000d00
+>
+> @@ -437,6 +440,8 @@
+> #define DP_SRC_RECT                             0x00000200
+> #define DP_SRC_HOST                             0x00000300
+> #define DP_SRC_HOST_BYTEALIGN                   0x00000400
+> +#define DP_SRC_SOURCE                           0x00000700
+> +#define DP_ROP3                                 0x00ff0000
+>
+> /* LVDS_GEN_CNTL constants */
+> #define LVDS_BL_MOD_LEVEL_MASK                  0x0000ff00
+>
 
