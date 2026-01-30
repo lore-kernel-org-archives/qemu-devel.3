@@ -4,49 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2D4E6BF35
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 19:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A23C3E6BF39
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 20:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vluBu-0000fs-As; Fri, 30 Jan 2026 14:30:02 -0500
+	id 1vlunC-000870-At; Fri, 30 Jan 2026 15:08:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vluBs-0000eh-Id; Fri, 30 Jan 2026 14:30:00 -0500
+ id 1vlunB-00086p-Jm
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 15:08:33 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vluBq-0005k2-ER; Fri, 30 Jan 2026 14:30:00 -0500
+ id 1vlun9-0006sT-KX
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 15:08:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=NkZA/WwDApVyA2GSTaoOKWs7bM2FnAlw6b6Zuylie78=; b=nhWUet+jMDErlFpSmsXCo7ubUf
- dExuOnJ65d6MIvkeDh+Wv45RRYVf/6Abf3LBJE//yoTJkxMuwTRkRUNLh04XtFwyW0sB2E3JDfp50
- E3LCEiMVyPLbcbqJ5acazzWIUjG3csNZQU4hMBsUc/MRu3eV6O6BnjR19cmK6hZIEMJWznj1P5pPN
- E0JVaBjh2ucBmB8PUzo1rKaI1guBwVEYNISyC1zsw69hmxAhyAgAQ/slpet7ZRM3lfKytWeyoHU/9
- 33AVO7nd1zU8ySoOkqxRVjKBJMkuwOiMbVbaxzrLbj62dOXtvu68hapeH+iVp13vrvoFqukAexgo0
- /kybOzqeNQywRwIGTytjaEr/eb4XUVjAY39tF0j6YmPPfoeut0fFw0LGW774mJ6gKzJ86Waqrz6xr
- 7tQN4TBtXufzTKyk1gmXnRd4js3P9CKRCO0RMvquK8QVy6oZP68IoX+rwoNF7w/4PfpUHC0rlJXzC
- uiTrsihDYjfVo4gdz25xdSTYlDKksErFa1hfS/Yyjjmx3dUHkyFuBjXcgZ1BDOxjyPoWWlIDpYLBe
- ycBMwySDZXkrvVuFFo878KhPEaoR9n4WVgtqTsyX9uLfdP+9puZ04bo71w//9tykq4mmdGxYNfpNy
- yFzJDvyHzRdg9zlG7J2gBPFkSv3mUOcEeKiLv1MWU=;
+ bh=sMCz0cdm6QpMZgKf2sROd4yl0XbaShEK/qXZhfSxHFY=; b=IOjYozwne7QdEFv3x6Ex2xPPWi
+ hW0UUBXz9WXxZDkJxdQp0GckRdskG8Z17GDIzk2pwPPOqkIRe6H07EbXZL0QqfXcuCgVm5MIkaBZN
+ YZ7DXTksl2w4URaxeAOSStQLUtHsOuvQg7c+0Nper5t7mNWyawXbwLl1oC3lwxDnH75AA2EkFNt3i
+ iK2GqMALCmYcZp3zbAbTXAaI+jQw5qHlVMDen7LPvq8/YLxqL0E9HC9okErxZDF+2yQBScjnUQx66
+ a9TCgd5PVAp2NAOPkcFdWxR2gkcGlgsoSjZjqakF3nxfevEmGtHMIlR852lQN9TZnkIjJLxxiB6D1
+ YJQg2uXICSrDAAGySQRfiPz6q+azFg7XV5IEWI1kyNPZx60fA7G2aIptjp3Nj/C8/V8Ig1EI9nHU1
+ 2aLE7RJA62muCHKvhXppqMv2Pl/3QuvsbdztZlf0bEtkvgnnP0FW5DnyTiLHRCykinOU34FDxpSlr
+ eoXdE1xiEZLzU+vmdamxJ5NvIWPXuWILfjmY2o1yDe6VnzxQTQvdg3WuXaVOXDZEtOwwLNAXdSUUq
+ p6lIDVkPASL83pa85j+VZ5EexTNi9YgdIGj0huYY7ba0j1KjhmK2lC2oY2Iea7KqWLKbyt82Yl00J
+ e2KoQaIeNUpuNIb0ruDIxI95VS7kOpEUX0vohuLQo=;
 Received: from [2a02:8012:2f01:0:627e:3663:264b:92cd]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vlu94-0007Jf-KB; Fri, 30 Jan 2026 19:27:10 +0000
-Message-ID: <5d69f1a3-f709-4bc1-86ae-a2c183efc445@ilande.co.uk>
-Date: Fri, 30 Jan 2026 19:29:49 +0000
+ id 1vlukO-0007f3-EI; Fri, 30 Jan 2026 20:05:40 +0000
+Message-ID: <0652ec1f-2861-4550-9174-2183cc78ad87@ilande.co.uk>
+Date: Fri, 30 Jan 2026 20:08:24 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-References: <20260129164039.58472-1-philmd@linaro.org>
- <20260129164039.58472-6-philmd@linaro.org>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <cover.1769362313.git.balaton@eik.bme.hu>
+ <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+ <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
+ <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
+ <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
+ <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
+ <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
+ <b5721fa1-e613-889a-03de-77c46aa01da4@eik.bme.hu>
+ <d83ac948-afb4-4128-9e23-44aa8a8e31c4@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +85,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260129164039.58472-6-philmd@linaro.org>
+In-Reply-To: <d83ac948-afb4-4128-9e23-44aa8a8e31c4@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:627e:3663:264b:92cd
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v5 5/9] monitor: Have MonitorDef::get_value() return an
- unsigned type
+Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -105,302 +116,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/01/2026 16:40, Philippe Mathieu-Daudé wrote:
+On 29/01/2026 04:41, Akihiko Odaki wrote:
 
-> All implementations of the get_value() handler return an
-> unsigned type:
+> On 2026/01/29 0:46, BALATON Zoltan wrote:
+>> On Wed, 28 Jan 2026, Peter Maydell wrote:
+>>> On Wed, 28 Jan 2026 at 11:40, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>> OK I try to summarise the motivation again:
+>>>>
+>>>> 1. Documentation in docs/devel/memory.rst says that memory regions'
+>>>> lifecycle is managed by QOM and they are freed with their owner or when
+>>>> nothing else uses them. This is also already implemented for a long time
+>>>> as described but cannot be used because the only constructors available
+>>>> kill this feature when calling object_initialize that clears the free
+>>>> function added by object_new. (The life time management is implemented
+>>>> through adding memory regions as children to the owner and unparenting
+>>>> them on freeing the owner which decreases ref count of the memory region
+>>>> and will free it when nothing else references it as far as I can tell.)
+>>>
+>>> If we have leaks because of our very common pattern of "embed
+>>> a MemoryRegion struct in the device state struct" then we must
+>>> fix those, because there's no way we're going to convert all
+>>> that existing code to a new set of APIs. But I was under the
+>>> impression we had already dealt with those, because MRs track
+>>> their owner's refcount, and don't have their own independent one ?
+>>
+>> I'm not sure if all those leaks are resolved as there were some patches and 
+>> discussion about this recently but I think that problem or the need to use the 
+>> owner's ref count to circumwent it instead of using the memory region's own ref 
+>> count may also come from that there's currently no way to allocate memory regions 
+>> that are ref counted and automatically freed as it should work with QOM and the 
+>> documentation implies. (Only the constuctor is missing that is all this series 
+>> adds, the mechanism is already there and implemented.) There may still be a problem 
+>> with circular references if the memory region needs the owner so the owner can't be 
+>> freed until the memory region is also freed but the memory region is not freed 
+>> until the owner is freed but if both the owner and memory region used their own ref 
+>> count things may become a bit less confusing and could be easier to find a way to 
+>> break circular reference (e.g. by owner unparent child regions on unrealize but 
+>> isn't freed until memory regions unref owner in their free method).
+>>
+>>>> These are my motivation for this change. What is the motivation for using
+>>>> embedded memory regions instead and against this change?
+>>>
+>>> Simply that it's a consistent pattern we use in a lot of the codebase:
+>>> the device embeds a lot of the structs it uses, rather than allocating
+>>> memory for them and keeping pointers to that allocated memory. We
+>>
+>> You mix in the issue of SoCs and complex devices using other devices in which case 
+>> the recommendation was to embed those in the parent device so they don't have to be 
+>> freed or kept track of by a pointer but won't be leaked. This series does not mean 
+>> to change that, it's only limited to memory regions. (Although that problem may 
+>> also stem from similar issue with object_initialize_child not allowing creating 
+>> reference counted objects only initializing preallocated instances but that's not 
+>> something this series touches.)
+>>
+>> We can say that memory regions are like other embedded objects but they are often 
+>> used for sysbus and PCI devices only to be registered in the parent device that 
+>> already has pointers in their state to track these so there's no need to keep track 
+>> of them in the subclass if we can rely on QOM freeing them when not needed any more 
+>> and this is already implemented and documented that way. So even if we keep 
+>> embedding other child devices into complex parent devices that I think does not 
+>> directly apply to memory regions and we could use what the documentation and 
+>> implementation already allows and says for memory regions at least.
+>>
+>>> still have also various older device models that use the previous
+>>> pattern of "allocate memory and have pointers" too, but most new
+>>> code doesn't do that. I think we should for preference write code
+>>> in one pattern, not two, and "embed structs" seems to be what
+>>> we have mostly settled on for new code.
+>>>
+>>> There is an argument to be made that the pointer model would
+>>> fit better with a possible future world of "the user can wire
+>>> configurably wire up their own board model from devices", and
+>>> that it works better in a part-Rust-part-C world where the two
+>>> different languages don't have convenient access to the exact
+>>> size of structs defined in the other language. But that future
+>>> model is not something anybody has yet really fleshed out in any
+>>> detail, so it's still a bit speculative.
+>>
+>> You keep mentioning pointers but the point of ref counts and regisrering memory 
+>> region as child of an owner is to avoid needing a pointer or embedding it in the 
+>> subclass state as the relationship and lifecycle management are then handled by 
+>> QOM. If we don't use that we could remove this from QOM and memory regions to 
+>> simplify it but if it's already there and makes the device state simpler I think we 
+>> better use it.
+>>
+>>> I'm not actually opposed to the idea of making a design decision
+>>> that this struct-embedding is no longer what we want to do, and defining
+>>> that something else is our new best practice for how to write devices.
+>>> But I think we would need to start by reaching a consensus that that
+>>> *is* what we want to do, and documenting that "best practice" somewhere
+>>> in docs/devel/. Then we can examine proposed new APIs and all be
+>>> on the same page about the design patterns we want and it will
+>>> be clearer to reviewers whether the new APIs fit into those
+>>> patterns or not.
+>>
+>> I think we're in that discussion now in this thread. I don't propose to change the 
+>> struct-embedding for sub devices used in SoC or south bridge or other complex 
+>> devices but only propose to not embed memory regions that are already documented as 
+>> and handled by QOM and simply allocate them and let QOM handle them so we only need 
+>> to reference them in the devices state unless they are needed for some reason by 
+>> the device methods which is rarely the case. So this is limited to memory regions 
+>> and the series only seems to add a lot of lines because of the extensive 
+>> documentation comments. The actual change is just factoring out actual memory 
+>> region init from memory_region_init functions then add a memory_region_new variant 
+>> that does object_new; do_init and keep the memory_region_init do object_initializel 
+>> do_init. Nothing else is changed, the way to manage and free regions based on ref 
+>> counting is already there this series just enables them to be actually used becase 
+>> currently despite what the docs say memory regions are either leaked or must be 
+>> embedded.
 > 
-> - target/i386/monitor.c
+> I actually think deprecating struct-embedding for all QOM objects is a good idea.
 > 
->    monitor_get_pc() -> target_ulong eip;
+> The problem initially stated in this thread is that embedding requires having extra 
+> field, but people see the benefit is too small. There is no real logic involved in 
+> having such fields so it does not reduce code complexity much; it saves some lines 
+> and that's it.
 > 
-> - target/ppc/ppc-qmp-cmds.c
+> However, I see another problem in struct embedding; it breaks object_ref(). When 
+> embedding, the child object effectively takes the reference to the storage of the 
+> parent object, but this reference is not counted, so use-after-free can happen if 
+> someone takes a reference to the child object with object_ref(). That is why the 
+> wrapper of object_ref() in rust/qom/src/qom.rs needs to be marked unsafe. Memory 
+> regions workaround this with memory_region_ref(), but it's not perfect since it 
+> relies on object_ref() in the end.
 > 
->    monitor_get_ccr() -> uint64_t ppc_get_cr(const CPUPPCState *env);
-> 
->    monitor_get_xer() -> target_ulong cpu_read_xer(const CPUPPCState *env);
-> 
->    monitor_get_decr() -> target_ulong cpu_ppc_load_decr(CPUPPCState *env);
-> 
->    monitor_get_tbu() -> uint32_t cpu_ppc_load_tbu(CPUPPCState *env);
-> 
->    monitor_get_tbl() -> uint64_t cpu_ppc_load_tbl(CPUPPCState *env);
-> 
-> - target/sparc/monitor.c
-> 
->    monitor_get_psr() -> target_ulong cpu_get_psr(CPUSPARCState *env1);
-> 
->    monitor_get_reg() -> target_ulong *regwptr;
-> 
-> Convert the MonitorDef::get_value() handler to return unsigned.
-> 
-> Rename the MD_I32/MD_TLONG definitions mechanically doing:
-> 
->   $ sed -i -e s/MD_I32/MD_U32/g $(git grep -lw MD_I32)
->   $ sed -i -e s/MD_TLONG/MD_TULONG/g $(git grep -lw MD_TLONG)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> ---
->   include/monitor/hmp-target.h |  7 ++---
->   monitor/hmp-target.c         | 12 ++++----
->   target/i386/monitor.c        |  8 ++---
->   target/m68k/monitor.c        | 60 ++++++++++++++++++------------------
->   target/ppc/ppc-qmp-cmds.c    | 25 +++++++--------
->   target/sparc/monitor.c       | 10 +++---
->   6 files changed, 59 insertions(+), 63 deletions(-)
-> 
-> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-> index 5167d17d41d..6d6653aee6e 100644
-> --- a/include/monitor/hmp-target.h
-> +++ b/include/monitor/hmp-target.h
-> @@ -32,14 +32,13 @@ typedef struct MonitorDef MonitorDef;
->   struct MonitorDef {
->       const char *name;
->       int offset;
-> -    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
-> -                             int val);
-> +    uint64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int val);
->       int type;
->   };
->   #endif
->   
-> -#define MD_TLONG 0
-> -#define MD_I32   1
-> +#define MD_TULONG 0
-> +#define MD_U32    1
->   
->   const MonitorDef *target_monitor_defs(void);
->   int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
-> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-> index 420969bd6eb..1600666ee92 100644
-> --- a/monitor/hmp-target.c
-> +++ b/monitor/hmp-target.c
-> @@ -67,7 +67,6 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
->   {
->       const MonitorDef *md = target_monitor_defs();
->       CPUState *cs = mon_get_cpu(mon);
-> -    void *ptr;
->       uint64_t tmp = 0;
->       int ret;
->   
-> @@ -81,13 +80,14 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
->                   *pval = md->get_value(mon, md, md->offset);
->               } else {
->                   CPUArchState *env = mon_get_cpu_env(mon);
-> -                ptr = (uint8_t *)env + md->offset;
-> +                void *ptr = (uint8_t *)env + md->offset;
-> +
->                   switch(md->type) {
-> -                case MD_I32:
-> -                    *pval = *(int32_t *)ptr;
-> +                case MD_U32:
-> +                    *pval = *(uint32_t *)ptr;
->                       break;
-> -                case MD_TLONG:
-> -                    *pval = *(target_long *)ptr;
-> +                case MD_TULONG:
-> +                    *pval = *(target_ulong *)ptr;
->                       break;
->                   default:
->                       *pval = 0;
-> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-> index 99b32cb7b0f..427f1990399 100644
-> --- a/target/i386/monitor.c
-> +++ b/target/i386/monitor.c
-> @@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
->       }
->   }
->   
-> -static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
-> -                                  int val)
-> +static uint64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
-> +                               int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       return env->eip + env->segs[R_CS].base;
-> @@ -602,9 +602,9 @@ static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
->   
->   const MonitorDef monitor_defs[] = {
->   #define SEG(name, seg) \
-> -    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_I32 },\
-> +    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_U32 },\
->       { name ".base", offsetof(CPUX86State, segs[seg].base) },\
-> -    { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_I32 },
-> +    { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_U32 },
->   
->       { "eax", offsetof(CPUX86State, regs[0]) },
->       { "ecx", offsetof(CPUX86State, regs[1]) },
-> diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-> index 6d101c75df0..1bb5012da91 100644
-> --- a/target/m68k/monitor.c
-> +++ b/target/m68k/monitor.c
-> @@ -24,36 +24,36 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
->   }
->   
->   static const MonitorDef monitor_defs[] = {
-> -    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
-> -    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
-> -    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
-> -    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
-> -    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
-> -    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
-> -    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
-> -    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
-> -    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
-> -    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
-> -    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
-> -    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
-> -    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
-> -    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
-> -    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
-> -    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
-> -    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
-> -    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
-> -    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
-> -    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
-> -    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
-> -    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_I32 },
-> -    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_I32 },
-> -    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_I32 },
-> -    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_I32 },
-> -    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_I32 },
-> -    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_I32 },
-> -    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_I32 },
-> -    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_I32 },
-> -    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_I32 },
-> +    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_U32 },
-> +    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_U32 },
-> +    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_U32 },
-> +    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_U32 },
-> +    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_U32 },
-> +    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_U32 },
-> +    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_U32 },
-> +    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_U32 },
-> +    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_U32 },
-> +    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_U32 },
-> +    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_U32 },
-> +    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_U32 },
-> +    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_U32 },
-> +    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_U32 },
-> +    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_U32 },
-> +    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_U32 },
-> +    { "pc", offsetof(CPUM68KState, pc), NULL, MD_U32 },
-> +    { "sr", offsetof(CPUM68KState, sr), NULL, MD_U32 },
-> +    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_U32 },
-> +    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_U32 },
-> +    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_U32 },
-> +    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_U32 },
-> +    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_U32 },
-> +    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_U32 },
-> +    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_U32 },
-> +    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_U32 },
-> +    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_U32 },
-> +    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_U32 },
-> +    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_U32 },
-> +    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_U32 },
->       { NULL },
->   };
->   
-> diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
-> index 7022564604f..07938abb15f 100644
-> --- a/target/ppc/ppc-qmp-cmds.c
-> +++ b/target/ppc/ppc-qmp-cmds.c
-> @@ -33,26 +33,23 @@
->   #include "cpu-models.h"
->   #include "cpu-qom.h"
->   
-> -static target_long monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
-> +                               int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
-> -    unsigned int u;
->   
-> -    u = ppc_get_cr(env);
-> -
-> -    return u;
-> +    return ppc_get_cr(env);
->   }
->   
-> -static target_long monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
-> +                                int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       return cpu_read_xer(env);
->   }
->   
-> -static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
-> -                                    int val)
-> +static uint64_t monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
-> +                                 int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       if (!env->tb_env) {
-> @@ -61,8 +58,8 @@ static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
->       return cpu_ppc_load_decr(env);
->   }
->   
-> -static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
-> +                                int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       if (!env->tb_env) {
-> @@ -71,8 +68,8 @@ static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
->       return cpu_ppc_load_tbu(env);
->   }
->   
-> -static target_long monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
-> +                                int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       if (!env->tb_env) {
-> diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
-> index 73f15aa272d..378967f8164 100644
-> --- a/target/sparc/monitor.c
-> +++ b/target/sparc/monitor.c
-> @@ -40,8 +40,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
->   }
->   
->   #ifndef TARGET_SPARC64
-> -static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
-> +                                int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->   
-> @@ -49,8 +49,8 @@ static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
->   }
->   #endif
->   
-> -static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
-> -                                   int val)
-> +static uint64_t monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
-> +                                int val)
->   {
->       CPUArchState *env = mon_get_cpu_env(mon);
->       return env->regwptr[val];
-> @@ -154,7 +154,7 @@ const MonitorDef monitor_defs[] = {
->       { "otherwin", offsetof(CPUSPARCState, otherwin) },
->       { "wstate", offsetof(CPUSPARCState, wstate) },
->       { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
-> -    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_I32 },
-> +    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_U32 },
->   #endif
->       { NULL },
->   };
+> For this reason I think object_initialize(), object_initialize_child(), and the like 
+> are better to be noted as deprecated in
+> include/qom/object.h. Then memory_region_init() can be deprecated referring to them.
 
-For SPARC:
+FWIW this is something I've been thinking about for some time: possibly I had a chat 
+with Phil about it at some point? Once example could be if you want to have a 
+reference to a parent type like PCIDevice that can change at runtime e.g. it could be 
+PCINE2000State or PCIPCNetState then you can never embed it, because you don't know 
+the size at compile time. So then why not use object_property_add_child() everywhere 
+so there is just a single way of doing things?
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+For memory regions it's a bit trickier because as per the virtio-gpu issues you've 
+been looking at, it is possible for the memory region to exist outside of its parent 
+device until it is destroyed later by the RCU thread. Is this something that can be 
+solved by manipulating the refcount?
+
+I do agree with Peter too that we don't want to add yet another way of doing things: 
+if we decide to change the way memory regions work, we should go all-in and update 
+all callers to reflect the new API and remove the old one. Having one easily 
+understood way of modelling things makes life much easier for contributors and 
+reviewers alike.
 
 
 ATB,
