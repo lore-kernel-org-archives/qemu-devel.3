@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A43D73EBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 05:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051F5D73EBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 05:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlhM3-00023M-AM; Fri, 30 Jan 2026 00:47:39 -0500
+	id 1vlhMi-0003F3-3J; Fri, 30 Jan 2026 00:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vlhM0-00020e-Lx
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:47:36 -0500
+ id 1vlhMf-00039q-RT
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:48:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vlhLz-0005SG-6U
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:47:36 -0500
+ id 1vlhMe-0005W0-F6
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 00:48:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769752054;
+ s=mimecast20190719; t=1769752095;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pKeoqLnw94ekV3SKkVoM9wLZ2GlZHZ0eY7j3K1tcDgA=;
- b=g6e0hMBHS9l4Aipgc2Z4MLMyKLOX/AHplBD3kxj8WZ8TsAE3+fyP7glows3c9eJ4dqc3Zj
- dxQ3nw7hnH+QnLW8aRts3Gl7ARCC+uO/ujEbN5pcf9als4rURfUs44tg9PpDbPUtNnBr35
- RmS9gERVrmxYnLTOwWrTlNd6DGR0sLY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Si/Kii2ggAVTdYuNl9bX4xHdx4QI2ldGNdtiEINfNJw=;
+ b=feIlyZJ5Hx9HIM1EF1E2qPDtfx1AKyh98noDfT75FU/JeALR5gm8kAqfj6JHw2lKrQqlwu
+ MAKVG5yL+5NWkuzT5oWokviAkwcpqz5N6ruF5luYoSOykzCvsYpW9Xwai8wZIHhESXJ98O
+ /k6+Wk0QMGjzTW8+jW8To6tFZX97wPQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-Xg4ZZ5_KOomfVzHsx3HC0A-1; Fri,
- 30 Jan 2026 00:47:30 -0500
-X-MC-Unique: Xg4ZZ5_KOomfVzHsx3HC0A-1
-X-Mimecast-MFC-AGG-ID: Xg4ZZ5_KOomfVzHsx3HC0A_1769752049
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-Y7buGfhxNJSIuN5A_xWpfA-1; Fri,
+ 30 Jan 2026 00:48:11 -0500
+X-MC-Unique: Y7buGfhxNJSIuN5A_xWpfA-1
+X-Mimecast-MFC-AGG-ID: Y7buGfhxNJSIuN5A_xWpfA_1769752090
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA21F1956054; Fri, 30 Jan 2026 05:47:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78BC0195608E; Fri, 30 Jan 2026 05:48:10 +0000 (UTC)
 Received: from osteffen-thinkpadx1carbongen12.rmtde.csb (unknown
  [10.45.226.150])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E72619560A2; Fri, 30 Jan 2026 05:47:22 +0000 (UTC)
+ id 672B719560A2; Fri, 30 Jan 2026 05:48:04 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -59,9 +59,9 @@ Cc: Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Joerg Roedel <joerg.roedel@amd.com>, Luigi Leonardi <leonardi@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH v6 1/9] hw/acpi: Make acpi_checksum() public
-Date: Fri, 30 Jan 2026 06:47:06 +0100
-Message-ID: <20260130054714.715928-2-osteffen@redhat.com>
+Subject: [PATCH v6 8/9] igvm: Only build stubs if igvm is enabled
+Date: Fri, 30 Jan 2026 06:47:13 +0100
+Message-ID: <20260130054714.715928-9-osteffen@redhat.com>
 In-Reply-To: <20260130054714.715928-1-osteffen@redhat.com>
 References: <20260130054714.715928-1-osteffen@redhat.com>
 MIME-Version: 1.0
@@ -92,43 +92,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the ACPI table checksum calculation function (in core.c) public so
-it can be reused in other parts of the ACPI code.
+Change meson script to only include the IGVM stubs file if the IGVM
+feature is enabled. It is used to handle architecture specific
+differences within the IGVM backend, not to provide stubs of the backend
+itself.
 
 Signed-off-by: Oliver Steffen <osteffen@redhat.com>
 ---
- hw/acpi/core.c         | 5 ++++-
- include/hw/acpi/acpi.h | 3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ stubs/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-index d9979b0da9..6b65e587f2 100644
---- a/hw/acpi/core.c
-+++ b/hw/acpi/core.c
-@@ -83,7 +83,10 @@ bool acpi_builtin(void)
-     return true;
- }
- 
--static int acpi_checksum(const uint8_t *data, int len)
-+/* Calculate the ACPI checksum value so that if used in the corresponding
-+ * header field, the ACPI checksum verification will be successful.
-+ */
-+int acpi_checksum(const uint8_t *data, int len)
- {
-     int sum, i;
-     sum = 0;
-diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
-index 4b8ee094c4..b036116dfb 100644
---- a/include/hw/acpi/acpi.h
-+++ b/include/hw/acpi/acpi.h
-@@ -203,4 +203,7 @@ struct AcpiSlicOem {
- };
- int acpi_get_slic_oem(AcpiSlicOem *oem);
- 
-+/* core.c */
-+int acpi_checksum(const uint8_t *data, int len);
-+
- #endif /* QEMU_HW_ACPI_H */
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 2b5fd8a88a..8a07059500 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -71,7 +71,9 @@ if have_system
+   stub_ss.add(files('dump.c'))
+   stub_ss.add(files('cmos.c'))
+   stub_ss.add(files('fw_cfg.c'))
+-  stub_ss.add(files('igvm.c'))
++  if igvm.found()
++    stub_ss.add(files('igvm.c'))
++  endif
+   stub_ss.add(files('target-get-monitor-def.c'))
+   stub_ss.add(files('target-monitor-defs.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
 -- 
 2.52.0
 
