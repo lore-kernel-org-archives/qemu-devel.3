@@ -4,101 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5960EE6BF18
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 14:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D50E6BF1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 15:15:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlppP-0004jP-Kj; Fri, 30 Jan 2026 09:50:31 -0500
+	id 1vlqDS-0001uU-VL; Fri, 30 Jan 2026 10:15:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppM-0004hg-O2
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:28 -0500
-Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vlppJ-00037c-NL
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 09:50:28 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id E9D4A7A014F;
- Fri, 30 Jan 2026 09:50:24 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Fri, 30 Jan 2026 09:50:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1769784624; x=
- 1769871024; bh=xzOsuUawMO2+Y1RPHsk+AIZj06ef1x1Nb5hWiRi2MKU=; b=Y
- RxzX/I28wluPPdmY9QTkDv1hsTS9RsNV8epeVWj8/a8CNzfTCSVh51RTmaw/6KkB
- mU1r2r+UfMfNHFTKWFbGvZd/IKhAPcMhFA8xkC19KKNU9EazfAH3BhA4RGlu36hS
- 9DO/H+MxJ6oV8j1x6hLCUstojs+sN9SEhcH76O3y194tFh1XHeSNOk8HQxzubott
- GOxVUNdL723mDDeZ2RuwrUOrebNBC9gJ25gq3duf2zlzH4q2tR6TVRY4wM+myXD/
- 8CKDylSo9f3zd7PWDmZUfC2OxmlffFuAuwj1XNbXZgORNu7h/QRtXsts/E1o3j8K
- NANeHgRojHXfuE6h4a/6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1769784624; x=1769871024; bh=x
- zOsuUawMO2+Y1RPHsk+AIZj06ef1x1Nb5hWiRi2MKU=; b=lqpAq0t/eIGyDqlwb
- huZCdukM1JMXBEDqKZLciSJA2clvvcjrbjeeseyrPnNfUk48wHB9CrlJMjh/pe+5
- zM5Ywg/afHeKkkyYYZDxFwhF4hjlErgifyRbARKrQCVDcEe3In3MmYLfv/J1Yk+s
- /ZNFonpeZmGAqxYeZaBVy1e5Yu5rSNnJcpwv3slXntkfdS5Lls11sH01lUv7jbAW
- NWG2p9/yUtJ8rBUBAjxVZdoUU1tdrVas8wZC0I1cJUmoCB9j0LN3OYhtito6VZ6i
- wOOz1ovt9A7OylLT8E+yrpS9bfeEY4mGDCAATgJ9WOvU/zYxZd2XXl3Gz8Uyv7xq
- gRGkA==
-X-ME-Sender: <xms:MMV8aXXBEV6yvFb7M0nfdd5Z6CTmMaOs0xin9zvEC1085co2ZsKvxw>
- <xme:MMV8aXB0DIGpr9ZhFA_s29HgD4gjvB5deuNr9QlG7ol31ccRZcmF0KjiFOx5OaafL
- oMkFZUgpis1rWlc7XAmzBZEvAD_7woxM8v89dhDAqzfmIFZrDG_XWg>
-X-ME-Received: <xmr:MMV8aQw8qM6IpwPU4BoqGhuE0odkA_ygG_pNNrTMuhZGryg5RUUU3LKSKQU7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieelfedvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:MMV8acDcbs_PN1ltdqBuWNRZy0wPhfe53S1gNJD6Nj19EJ_2Xrt10w>
- <xmx:MMV8aVb56VczfZkniFALu7VbU-1flPTegt_1P4eqmMhXyMbrdHSMCw>
- <xmx:MMV8acjuex4kiMHzHQOCbQDKyeWSUADpZ2B-fJvVXhyx-UAX6Vt0hg>
- <xmx:MMV8af5kf1GeEE8aYCIv4NMJd6VtfklLCQt5KkePXg4Q1E2LslEsAQ>
- <xmx:MMV8aavYYWYz2CgRrZXIOwf3465VOA4R7CeLcJbXDXck3sTdpL4gIWJ6>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jan 2026 09:50:24 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id dd6e8917;
- Fri, 30 Jan 2026 14:50:19 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vlqDH-0001sZ-FV
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:15:12 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vlqDF-0001Gt-F2
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 10:15:11 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-432d2c96215so2037956f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 07:15:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769786107; x=1770390907; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+rjBPJgdUrswncn16/fJ7N+9sZAh70oa0q47Le06XK8=;
+ b=ZMb4+lQz3uxJNxF5ZJeuDyKe5sEUmUV9PuK9PH19RSQrrqAXjN1p/w4hrPnls9Yj+k
+ jEYGkkPriVu77TKxwuXa4olKRRF7ecG0OfgB3KrTShO15LF2BztIbOMwcGBhz2hsRCLY
+ hFMXTVef9fWrTq7BFwbsSfRsC7CBgV53cesTtIR5EjTBE3JBqtCoTI4gDHY7+zFonxh7
+ isXr/DJJB6s/Y28+w84+6KzS6ON67R8Qq8ninl6FIRLCp2OSllfHe87Xo+lDo3pggWY3
+ BFGSbTlPK3gmBr8bSXzx0HmDy3OeGWMnOTMXyKP+jUWTRNme2kJV3/6D1AEYovMS09w/
+ pGfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769786107; x=1770390907;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+rjBPJgdUrswncn16/fJ7N+9sZAh70oa0q47Le06XK8=;
+ b=QEzZWAfTX5eOrnJEcUQS7zdW0DXmwe2jVl81Q9AupFj7j3RZOV45jEG7ta4SqlTbZf
+ tLIQT7t4Iq2IpdzCF59I2XfDwIHFf+GZyxskfSD7Z322MrXHjyZAi2iM8DSq47MGveLY
+ xKDAK2U7hVG68IXxZlxvioxkZm6drJM3cqTMMnL1zMEQFsghiWQVJlj6qFxaIsrwRLDI
+ 77KDHkFmBgUzF138fsqiBk66AYdFeKYNpfYW0XV1+vS8vre1A+R2DU92SDAbyKjuAg6k
+ 8vChO3g17d7dpEGlLyHGpf3GFv0TSOFceQvJC2SOWx0bqFwi88wVkQXeE+p2u2vEgd/S
+ 8Q3Q==
+X-Gm-Message-State: AOJu0YwNWV6wYSAenJAti//nQtMI97oLrUPrA8foDtBE/4lqg1w6pFyS
+ ADffZhN9HYWUudbITQMnQzuz7GLH99aeFMzdY5JZ93btvn2nzkyEZeBQ1dJytyZWO2gFLXJiJq9
+ T0Rzdzf0=
+X-Gm-Gg: AZuq6aKIM7odjERgFu5IonCGGtAkYeCzxZQJb8gyW/qfA65msr0HFG5QjFTGEYQsSB3
+ m2RCtDsE4KeAKPPBxVUvLwDw/cIaeYJ/HSWj1epbmQKaaiy/3vHx5vo+t05BQviFzdAdXu6TyuH
+ ZfbIARBLd1vNw387a/Wrz6CIe+Hq8Iox3OVgPQ1TMQjX74Tv4Lm2PquNFbd8K9WEYRhI6E9EwXu
+ wjVZbM5JNhrsZQLlkI2NXnddlveJDkooIKYCP+5UYkWAxHV/lMEGqAIIpYfyAiWv+yVZ51aC2RM
+ 56HR/SvopCvkejB/VogjoPS2FubLQyTLWV1PkMBDbR151tWCTXxMxZJrbb9+712SRkqrXdGGHlP
+ ddUzJKxTd6GDfI+2a7JLv1pv1cxXp3hB8H5td7Q4xuH8wR/H5E2wlXrfr+BmIKWC199PG8YQ6bd
+ uGCnCr5Rwyv2dI5Uv1JmrCnA==
+X-Received: by 2002:a05:6000:184d:b0:432:da3b:5941 with SMTP id
+ ffacd0b85a97d-435f3a7b8camr4932213f8f.21.1769786107315; 
+ Fri, 30 Jan 2026 07:15:07 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e1322f40sm22297265f8f.34.2026.01.30.07.15.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Jan 2026 07:15:05 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 988395F89A;
+ Fri, 30 Jan 2026 15:15:04 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu,
-	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v6 10/20] ati-vga: Use local variables for register values in
- ati_2d_blt
-Date: Fri, 30 Jan 2026 09:49:55 -0500
-Message-ID: <20260130145005.731129-11-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260130145005.731129-1-chad@jablonski.xyz>
-References: <20260130145005.731129-1-chad@jablonski.xyz>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ qemu-arm@nongnu.org (open list:SBSA-REF)
+Subject: [PULL 2/2] tests/functional: migrate sbsa_ref test images
+Date: Fri, 30 Jan 2026 15:15:04 +0000
+Message-ID: <20260130151504.550929-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260130151504.550929-1-alex.bennee@linaro.org>
+References: <20260130151504.550929-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.153; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b2-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,236 +109,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ati_2d_blt uses a mixture of locals and direct register access of needed
-state. This assigns all values derived from register state to local
-variables. It prepares the function for a larger refactor that removes
-the dependency on the full device and direct register access entirely.
+As the builds in codelinaro.org are going away migrate the binaries to
+share.linaro.org. As the hotlinks don't encode the filename we need to
+explicitly tell uncompress how to handle the files.
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
----
- hw/display/ati_2d.c | 104 ++++++++++++++++++++++++--------------------
- 1 file changed, 57 insertions(+), 47 deletions(-)
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260128105839.3487840-3-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 310b3067b4..a368950182 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -48,14 +48,24 @@ void ati_2d_blt(ATIVGAState *s)
-     /* FIXME it is probably more complex than this and may need to be */
-     /* rewritten but for now as a start just to get some output: */
-     DisplaySurface *ds = qemu_console_surface(s->vga.con);
-+    bool use_pixman_fill = s->use_pixman & BIT(0);
-+    bool use_pixman_blt = s->use_pixman & BIT(1);
-+    int rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
-+    bool left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
-+    bool top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-+    uint32_t frgd_clr = s->regs.dp_brush_frgd_clr;
-+    uint8_t *palette = s->vga.palette;
-     DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
-             s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
-             surface_bits_per_pixel(ds),
--            (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
--    unsigned dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
--                      s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
--    unsigned dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
--                      s->regs.dst_y : s->regs.dst_y + 1 - s->regs.dst_height);
-+            rop3 >> 16);
-+    unsigned dst_offset = s->regs.dst_offset;
-+    unsigned dst_width = s->regs.dst_width;
-+    unsigned dst_height = s->regs.dst_height;
-+    unsigned dst_x = (left_to_right ?
-+                     s->regs.dst_x : s->regs.dst_x + 1 - dst_width);
-+    unsigned dst_y = (top_to_bottom ?
-+                     s->regs.dst_y : s->regs.dst_y + 1 - dst_height);
-     int bpp = ati_bpp_from_datatype(s);
-     if (!bpp) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-@@ -66,7 +76,7 @@ void ati_2d_blt(ATIVGAState *s)
-         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
-         return;
-     }
--    uint8_t *dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
-+    uint8_t *dst_bits = s->vga.vram_ptr + dst_offset;
+diff --git a/tests/functional/aarch64/test_sbsaref.py b/tests/functional/aarch64/test_sbsaref.py
+index d3402f5080a..3ff674039e6 100755
+--- a/tests/functional/aarch64/test_sbsaref.py
++++ b/tests/functional/aarch64/test_sbsaref.py
+@@ -31,10 +31,10 @@ def fetch_firmware(test):
+     """
  
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-         dst_bits += s->regs.crtc_offset & 0x07ffffff;
-@@ -76,25 +86,25 @@ void ati_2d_blt(ATIVGAState *s)
-     uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
-     if (dst_x > 0x3fff || dst_y > 0x3fff || dst_bits >= end
-         || dst_bits + dst_x
--         + (dst_y + s->regs.dst_height) * dst_stride >= end) {
-+         + (dst_y + dst_height) * dst_stride >= end) {
-         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-         return;
-     }
-     DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
--            s->regs.src_offset, s->regs.dst_offset, s->regs.default_offset,
--            s->regs.src_pitch, s->regs.dst_pitch, s->regs.default_pitch,
-+            s->regs.src_offset, dst_offset, s->regs.default_offset,
-+            s->regs.src_pitch, dst_stride, s->regs.default_pitch,
-             s->regs.src_x, s->regs.src_y, dst_x, dst_y,
--            s->regs.dst_width, s->regs.dst_height,
--            (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ? '>' : '<'),
--            (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ? 'v' : '^'));
--    switch (s->regs.dp_mix & GMC_ROP3_MASK) {
-+            dst_width, dst_height,
-+            (left_to_right ? '>' : '<'),
-+            (top_to_bottom ? 'v' : '^'));
-+    switch (rop3) {
-     case ROP3_SRCCOPY:
-     {
-         bool fallback = false;
--        unsigned src_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
--                       s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
--        unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
--                       s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
-+        unsigned src_x = (left_to_right ?
-+                         s->regs.src_x : s->regs.src_x + 1 - dst_width);
-+        unsigned src_y = (top_to_bottom ?
-+                         s->regs.src_y : s->regs.src_y + 1 - dst_height);
-         int src_stride = s->regs.src_pitch;
-         if (!src_stride) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-@@ -109,7 +119,7 @@ void ati_2d_blt(ATIVGAState *s)
-         int src_stride_words = src_stride / sizeof(uint32_t);
-         if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
-             || src_bits + src_x
--             + (src_y + s->regs.dst_height) * src_stride >= end) {
-+             + (src_y + dst_height) * src_stride >= end) {
-             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-             return;
-         }
-@@ -117,30 +127,28 @@ void ati_2d_blt(ATIVGAState *s)
-         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
-                 src_bits, dst_bits, src_stride_words, dst_stride_words,
-                 bpp, bpp, src_x, src_y, dst_x, dst_y,
--                s->regs.dst_width, s->regs.dst_height);
-+                dst_width, dst_height);
- #ifdef CONFIG_PIXMAN
--        if ((s->use_pixman & BIT(1)) &&
--            s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT &&
--            s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-+        if (use_pixman_blt && left_to_right && top_to_bottom) {
-             fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst_bits,
-                                    src_stride_words, dst_stride_words, bpp, bpp,
-                                    src_x, src_y, dst_x, dst_y,
--                                   s->regs.dst_width, s->regs.dst_height);
--        } else if (s->use_pixman & BIT(1)) {
-+                                   dst_width, dst_height);
-+        } else if (use_pixman_blt) {
-             /* FIXME: We only really need a temporary if src and dst overlap */
--            int llb = s->regs.dst_width * (bpp / 8);
-+            int llb = dst_width * (bpp / 8);
-             int tmp_stride = DIV_ROUND_UP(llb, sizeof(uint32_t));
-             uint32_t *tmp = g_malloc(tmp_stride * sizeof(uint32_t) *
--                                     s->regs.dst_height);
-+                                     dst_height);
-             fallback = !pixman_blt((uint32_t *)src_bits, tmp,
-                                    src_stride_words, tmp_stride, bpp, bpp,
-                                    src_x, src_y, 0, 0,
--                                   s->regs.dst_width, s->regs.dst_height);
-+                                   dst_width, dst_height);
-             if (!fallback) {
-                 fallback = !pixman_blt(tmp, (uint32_t *)dst_bits,
-                                        tmp_stride, dst_stride_words, bpp, bpp,
-                                        0, 0, dst_x, dst_y,
--                                       s->regs.dst_width, s->regs.dst_height);
-+                                       dst_width, dst_height);
-             }
-             g_free(tmp);
-         } else
-@@ -150,17 +158,17 @@ void ati_2d_blt(ATIVGAState *s)
-         }
-         if (fallback) {
-             unsigned int y, i, j, bypp = bpp / 8;
--            for (y = 0; y < s->regs.dst_height; y++) {
-+            for (y = 0; y < dst_height; y++) {
-                 i = dst_x * bypp;
-                 j = src_x * bypp;
--                if (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-+                if (top_to_bottom) {
-                     i += (dst_y + y) * dst_stride;
-                     j += (src_y + y) * src_stride;
-                 } else {
--                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_stride;
--                    j += (src_y + s->regs.dst_height - 1 - y) * src_stride;
-+                    i += (dst_y + dst_height - 1 - y) * dst_stride;
-+                    j += (src_y + dst_height - 1 - y) * src_stride;
-                 }
--                memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
-+                memmove(&dst_bits[i], &src_bits[j], dst_width * bypp);
-             }
-         }
-         break;
-@@ -171,35 +179,37 @@ void ati_2d_blt(ATIVGAState *s)
-     {
-         uint32_t filler = 0;
+     # Secure BootRom (TF-A code)
+-    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0)
++    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0, format="xz")
  
--        switch (s->regs.dp_mix & GMC_ROP3_MASK) {
-+        switch (rop3) {
-         case ROP3_PATCOPY:
--            filler = s->regs.dp_brush_frgd_clr;
-+            filler = frgd_clr;
-             break;
-         case ROP3_BLACKNESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(s->vga.palette[0],
--                     s->vga.palette[1], s->vga.palette[2]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[0],
-+                                                   palette[1],
-+                                                   palette[2]);
-             break;
-         case ROP3_WHITENESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(s->vga.palette[3],
--                     s->vga.palette[4], s->vga.palette[5]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[3],
-+                                                   palette[4],
-+                                                   palette[5]);
-             break;
-         }
+     # Non-secure rom (UEFI and EFI variables)
+-    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1)
++    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1, format="xz")
  
-         DPRINTF("pixman_fill(%p, %d, %d, %d, %d, %d, %d, %x)\n",
-                 dst_bits, dst_stride_words, bpp, dst_x, dst_y,
--                s->regs.dst_width, s->regs.dst_height, filler);
-+                dst_width, dst_height, filler);
- #ifdef CONFIG_PIXMAN
--        if (!(s->use_pixman & BIT(0)) ||
-+        if (!use_pixman_fill ||
-             !pixman_fill((uint32_t *)dst_bits, dst_stride_words,
-                          bpp, dst_x, dst_y,
--                         s->regs.dst_width, s->regs.dst_height, filler))
-+                         dst_width, dst_height, filler))
- #endif
-         {
-             /* fallback when pixman failed or we don't want to call it */
-             unsigned int x, y, i, bypp = bpp / 8;
--            for (y = 0; y < s->regs.dst_height; y++) {
-+            for (y = 0; y < dst_height; y++) {
-                 i = dst_x * bypp + (dst_y + y) * dst_stride;
--                for (x = 0; x < s->regs.dst_width; x++, i += bypp) {
-+                for (x = 0; x < dst_width; x++, i += bypp) {
-                     stn_he_p(&dst_bits[i], bypp, filler);
-                 }
-             }
-@@ -208,7 +218,7 @@ void ati_2d_blt(ATIVGAState *s)
-     }
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unimplemented ati_2d blt op %x\n",
--                      (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-+                      rop3 >> 16);
-         return;
-     }
+     for path in [fs0_path, fs1_path]:
+         with open(path, "ab+") as fd:
+@@ -54,15 +54,13 @@ class Aarch64SbsarefMachine(QemuSystemTest):
  
-@@ -216,7 +226,7 @@ void ati_2d_blt(ATIVGAState *s)
-         dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
-         s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
-         memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
--                                s->regs.dst_offset + dst_y * surface_stride(ds),
--                                s->regs.dst_height * surface_stride(ds));
-+                                dst_offset + dst_y * surface_stride(ds),
-+                                dst_height * surface_stride(ds));
-     }
- }
+     timeout = 180
+ 
+-    ASSET_FLASH0 = Asset(
+-        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
+-         '20241122-189881/edk2/SBSA_FLASH0.fd.xz'),
+-        '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
++    # SBSA_FLASH0.fd.xz
++    ASSET_FLASH0 = Asset('https://share.linaro.org/downloadFile?id=kyoMLGC9zXa4oA7',
++                         '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
+ 
+-    ASSET_FLASH1 = Asset(
+-        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
+-         '20241122-189881/edk2/SBSA_FLASH1.fd.xz'),
+-        'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
++    # SBSA_FLASH1.fd.xz
++    ASSET_FLASH1 = Asset('https://share.linaro.org/downloadFile?id=Dj1HRXnDnKtU6Nj',
++                         'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
+ 
+     def test_sbsaref_edk2_firmware(self):
+ 
 -- 
-2.52.0
+2.47.3
 
 
