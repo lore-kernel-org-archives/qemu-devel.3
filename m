@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030F1E6BF31
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 17:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 114E5E6BF30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 17:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlsQU-0001eE-LT; Fri, 30 Jan 2026 12:36:58 -0500
+	id 1vlsRr-0002Y6-5t; Fri, 30 Jan 2026 12:38:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlsQT-0001e5-O1
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:36:57 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1vlsRl-0002Xp-1b
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:38:17 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlsQS-0000SB-36
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:36:57 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a0c20ee83dso21324435ad.2
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 09:36:55 -0800 (PST)
+ id 1vlsRj-0000n9-Be
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 12:38:16 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-81e8a9d521dso1366534b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 09:38:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769794614; x=1770399414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769794693; x=1770399493; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=deAY+imuz/KLXjNs7gkzSIa4a5AQdjL5/KX/fQLtLJA=;
- b=Gjch9BHM3ffgWcG5TbwqSZENrQ4y7Odrxdso9LKDZncA5zFOAB9bR3nczsmh8Ad7bR
- 7F1Io5yzx3x0naQgvYqV6BnSaHIWkub5+1YX39O8ORFU7HMzKOG/PSDs4JZeSo4wxr48
- dUSjXT2zTk4CP9GTGnOBbL6Rt2y+O1XqMDILJIjrX0RpP6p2GJannnSIlF26/CHGmpiC
- E4a28dT9htR77CNBBFc2MzcoHXDCl6EbciaSmjfQ5Qf2Q1IIaY4fDxGKnmjol0qmNhDu
- Q+XSxQR1YAV98urBYBr2x7xaHaQo0ver3JdckrQwjWRws4yTv8ymihf1Gv44Sv70GPHm
- KtIg==
+ bh=iJA5OpBpy4yzfAls2pTQGQg6WkhuLKumDAOPsaVWFJw=;
+ b=PbKZ6w0FaXfJD7/xB3yLwmeMqNWHrCJlKnd9wntkiowkjFBY3LJdY04kba7aC/G2uA
+ q8hHQ1tfvEfV081n4HRmtSVdjvZF4IPykhsFO1IJlV2h7hrbWfaMAzfhEj1u9TFYTniM
+ UoXcYO8G5E81uwah2QCWRnRudW4sIcpxXeo42ZmyMXx4diiuEM6YfnN+nSuOG3aRSL37
+ M8kZ+xqGyKHLqBdAg/oLhDmpJKVJ4RuQ+Muwql2pa8XDjKoBNtAKTYxnL6Ttp71gE5u6
+ XGsp2rdP8XLuyCoPuqIeCWsg8tmd/wflHADxO+V643FBXPuUIBi0F3iGqlGjcav5OE6W
+ A2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769794614; x=1770399414;
+ d=1e100.net; s=20230601; t=1769794693; x=1770399493;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=deAY+imuz/KLXjNs7gkzSIa4a5AQdjL5/KX/fQLtLJA=;
- b=LoUyFCBsk9ncnsGhgWWJ5Iq1nOXcwy9sa8LUYt0BNrKhLPlgmkVRETgbEaOVGQPPDr
- 4tDm1M9c820vWnAovHGCu2ri5ZkjRfDZgIUukqvH5sBLmKJv15GFSKKQlbH7Xdwmmv/v
- mLGhcP6hvmeOWRTKsUaiM7yikO/pdZ1ofIsII3R5UN888HMdZOBT7gP2GRTzht/X/De5
- i/5EB0gdCnw2di01Aj/DveRLc13mvLOchs91f57n7KaITsLNLkJgP2461WM4TeFZQMq2
- 6PC0JAIeR6ZEybURPw3xlH24EofoFam66kDlWq2KiAi8s3X5hZ9+NJqnA9HntvZgYCX7
- Jy6w==
+ bh=iJA5OpBpy4yzfAls2pTQGQg6WkhuLKumDAOPsaVWFJw=;
+ b=FPPveDR1wpP6J4ARqmN76VitH2cFGFtJ/RCpCD415M/RRpEldsSzsU91hJ5IsHAuEU
+ VyZIDm6SXRRvH6LVY99FkrC5Q/m0m1zfE6Zd5x3XmRDgrnCkieSmLZeliBybg9jc1wvO
+ 6j6G9ZO2p2EcZSQoHl9K4dKh/4oQJHoMy1nJ0PgncFiu+QZ8SYI5Lu7ofJWTh6DjTHUQ
+ upHnhq330YJmXsfX5Ztg2u3Of5qqbbNErLPbIklml6jwQILPchU3eIi5IROWib1BPC4Y
+ f3hZm5tlhcU2xCpgRpAwtGoX12Drydsg+cBjYBn4yfE89ZSAYqBHMN4b1IilvKl3nP1U
+ /Z4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoZuD3kXyRvuBgmGVqPTRWZvo8fMxHKFcKzZWnXxfD8hywYxE9jKaHQ4jXolzRCJVznvMJk0VRdR9G@nongnu.org
-X-Gm-Message-State: AOJu0YxVYKtEeTjJ+BLNESlyNqMtdutJUk1YSuCDFNRnhWoG0pt6YkEV
- U35W8hwMhUlClVQkcPNpm8C7UZi7Q7QoXROhbyq+zlCbbT+eSlQ80D+gFwX0KvmCmyM=
-X-Gm-Gg: AZuq6aI2Ol4GFfR4AfUXpFt3yP9MZYKqkmjBjCTez9buz+Fxj+VhSnGeIsSpeewiiob
- HiJQfKtzO3SAVvPEjupacZ/do5vyQ1QZ1VNFafvHEgSq3zmqU4nKB1GLmuCdtYNYaCsyhfyFH16
- NrdbVg8iXA4mUhwWhSYl/ZlRdZPP4RlC59wRyZ5Ysz8XGehFNXatfAvndVIUf4S5NtCgat5asrm
- Zd+o4Y6W021boSBWlscwHS83BtBwm4o1thuOSbqllFh7px8pZYbTv/NbAIua/Dg0DrgZc/d2FxH
- xb25DXd9zPMiV/edVJ+50xruPgSITo4UqUFSu3Bcs6CA+Ll+0Jhb0LqNbWSlDBYIra27NZXw3DR
- mEGB73zyE+/E3l99ObTH7FJKHzHm/XhF7uhoPuAfg4HGm/MNBAN/wRl72aTSNWA9WJPHoJgvt6A
- CXHkujItdHvPWhpqDMEDzv91+0sDXWGuCdtcVftpVTTHuJipzDgWLIZFmU
-X-Received: by 2002:a17:903:1547:b0:2a7:af02:2fb9 with SMTP id
- d9443c01a7336-2a8d9919538mr40130785ad.36.1769794614176; 
- Fri, 30 Jan 2026 09:36:54 -0800 (PST)
+ AJvYcCXO0yz4l0CcKGkr502dP2npca9bzKE9jDIhPFvoooCW5GRRc5M0L//7pK7IcLFVWutSHr99GcuwYJx8@nongnu.org
+X-Gm-Message-State: AOJu0YzJJHel7OedvuE1wuQ79cQpre6UbVQk5KikZ+J35TTdStjQlBB7
+ sIRX47YrHngFuRbpOAg+TrfkMjGnQDanqaWok3CywqE5QYav6vnSI8CYGzisera3stE=
+X-Gm-Gg: AZuq6aKjS9TP5sJMM21UifKwgAEVPqBORZBeNQZT7wFSjHlhHPZZN8UHNYdkfOaUBGy
+ bxFA0ySimMBxnTlaQOP8nG1h+Wnum/xR3wXTCh9ZXPLi7jM9geNZQ2VvAA0RVyK5CYs3L5aO9/+
+ gp1uupBHrFflZe9qm3zy/ueYGr/YH1mEgFLzEsa3n7rl6LPjRaH3dO6ErakZLjhAZxOLFLa3gpP
+ OWf+YYc1YO4lkdedPGVLGtLfkrsY3bf2TigZbUVwbxRUNl/6WHgxaGHqbVO179qEIy1zxxfXTBx
+ EjR/JDuf7yl5yj/Doo4MzpST/LtEa/DafNV95j1QBEeG/T9joyTzYZsxXLNN5jNtCMI3+9NMsuI
+ BRA/es1yQy2SPQFZ59Wg/ri0ASiUZvNLXZufaF/MWCKSm+qJxhbpdVQR+aFSogYUJiEu65SwHCD
+ AeIogwIo+SJ3XUOP4OItMTgD1bBjmJ+EZ856fxAphKYqsV8qo3ovt3lFvf
+X-Received: by 2002:a05:6a21:4603:b0:347:6c59:c728 with SMTP id
+ adf61e73a8af0-392dfffb9a3mr4059750637.8.1769794693496; 
+ Fri, 30 Jan 2026 09:38:13 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b413c1asm72863355ad.28.2026.01.30.09.36.53
+ 41be03b00d2f7-c642afc045dsm8216553a12.35.2026.01.30.09.38.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Jan 2026 09:36:53 -0800 (PST)
-Message-ID: <4246c42d-fe85-4deb-850e-c3c3a011c6fe@linaro.org>
-Date: Fri, 30 Jan 2026 09:36:52 -0800
+ Fri, 30 Jan 2026 09:38:13 -0800 (PST)
+Message-ID: <b0493553-8c26-475d-98ba-fca17d1f9ea0@linaro.org>
+Date: Fri, 30 Jan 2026 09:38:12 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] bulk: Stop forward-declaring enum typedefs
+Subject: Re: [PATCH 2/2] docs/devel: Mention enum typedefs forward-declaration
+ is not allowed
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -80,7 +81,7 @@ Cc: Markus Armbruster <armbru@redhat.com>, Roman Kiryanov <rkir@google.com>,
  <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
  Will Hollins <whollins@google.com>, jpcottin@google.com, jansene@google.com
 References: <20260130170417.43356-1-philmd@linaro.org>
- <20260130170417.43356-2-philmd@linaro.org>
+ <20260130170417.43356-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260130170417.43356-2-philmd@linaro.org>
+In-Reply-To: <20260130170417.43356-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,49 +145,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/30/26 9:04 AM, Philippe Mathieu-Daudé wrote:
-> The C99 standard chapter §6.7.2.2 point 4 mentions:
+> Do not allow enum typedef forward-declaration to comply with C99
+> standard chapter §6.7.2.2 point 4:
 > 
 >    Each enumerated type shall be compatible with char, a signed
 >    integer type, or an unsigned integer type. The choice of type
 >    is implementation-defined, but shall be capable of representing
 >    the values of all the members of the enumeration.
 > 
-> Align with that recommendation by defining the typedef
-> along with the enum.
-> 
-> For information, building with -Werror=pedantic was reporting:
-> 
->    In file included from ../../ui/kbd-state.c:10:
->    include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to 'enum' types [-Werror,-Wpedantic]
->       12 | typedef enum QKbdModifier QKbdModifier;
->          |              ^
->    ...
-> 
-> Reported-by: Roman Kiryanov <rkir@google.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/riscv/riscv-iommu-bits.h          |  4 ++--
->   hw/riscv/riscv-iommu.h               |  2 --
->   include/hw/misc/auxbus.h             | 11 ++++-------
->   include/hw/pci/pci_device.h          |  5 ++---
->   include/hw/ssi/ssi.h                 |  6 ++----
->   include/hw/xen/interface/io/xenbus.h |  5 ++---
->   include/io/channel.h                 | 11 ++++-------
->   include/system/replay.h              | 10 ++++------
->   include/ui/clipboard.h               | 15 ++++++---------
->   include/ui/kbd-state.h               |  6 ++----
->   pc-bios/s390-ccw/virtio.h            |  5 ++---
->   tests/qtest/libqos/qgraph_internal.h | 10 ++++------
->   hw/core/loader.c                     |  5 ++---
->   hw/display/xlnx_dp.c                 | 11 ++++-------
->   hw/dma/xlnx_dpdma.c                  | 10 ++++------
->   qapi/opts-visitor.c                  |  7 ++-----
->   qapi/string-output-visitor.c         |  6 ++----
->   tests/unit/check-qom-proplist.c      |  6 ++----
->   18 files changed, 50 insertions(+), 85 deletions(-)
+>   docs/devel/style.rst | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
 > 
 
-This looks good!
+Shall we modify checkpatch as well, to make sure it doesn't come back? 
+It's easy to detect with a single line regexp.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
