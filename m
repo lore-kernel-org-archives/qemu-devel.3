@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A01E6BF22
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEEBE6BF22
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 16:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlr2l-0001hf-7H; Fri, 30 Jan 2026 11:08:23 -0500
+	id 1vlr4M-0003iT-7D; Fri, 30 Jan 2026 11:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlr2j-0001ec-Dt
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:08:21 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1vlr4K-0003Wx-C2
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:10:00 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlr2h-0005xZ-5b
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:08:20 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c6541e35fc0so1278059a12.3
- for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:08:17 -0800 (PST)
+ id 1vlr4H-0006Bp-W8
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 11:10:00 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a0c09bb78cso19146865ad.0
+ for <qemu-devel@nongnu.org>; Fri, 30 Jan 2026 08:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769789296; x=1770394096; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=i3pL1/PynuP4gfyxWe4TkKgkiqGssqkl3rdkqBnv0QM=;
- b=UyKf2RXI1xQZnw90Yp5j5usXaWJYWV8MFQ2WgiK6hjqTwQTTCOQuJIGE0cMWN8UIFI
- byJQVWT0Fs3GLkJoLWY2IYRfCvYtLaQi8Jbf1tQx0iLYGCIzkJ0IgDr8JsDKdrg3hpjt
- uM6K0aD2AEQY9e9Ldh+q3DAJTZ83M50R1qUn7JhtuCcpd0dFheX8Ufvy0utA0fmMkHv0
- 7nFHNvmwdn5PlWhJlE4W/GgN25SrCS0hdPF9hFOzz6IzFenasVG+lcLJ59WSuzpV4V2N
- xpkaqber4KjPoZ9t5VxAePsdS/0DSJGGISsU0E1bJ8aJnGeRdi0KFtj63ZsTdKrmQtBv
- fQPg==
+ d=linaro.org; s=google; t=1769789396; x=1770394196; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D2DV/PkOGhxgV6dRDamboeuiBvQG7mEsNvJJrHuJVl4=;
+ b=tv9h+DDNVk0xNhC+N5SRb4wMcePrxKdDjOn1ZhfSoFFTWbCWCn7Tu4XVPTa7fMseX5
+ yDnvuIhjP1smpr8DPERl4XreTIs2y3T/+fEXg9eCg3mpbXIHC22E7R7U5M4UKbQI9Pkg
+ fWKHlvICytJ34T67wdz+LzrD/KLWwJ/0Y613nt1z5e7Rc1X2O9BvsVvaguKLX5uYQfLN
+ 4T79VFOkqOt/mD9HWnPOlHTQi1KuQJPfCGGfNGztocVraH80nRCmXW3f6worsynvK3Py
+ c2ZJrhZmw4/VnBrWhnEa+4WK1AV+6yEugZXWaguGIgFtoR6L0y9lhJh+sWNIK0SrXsJR
+ pRGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769789296; x=1770394096;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i3pL1/PynuP4gfyxWe4TkKgkiqGssqkl3rdkqBnv0QM=;
- b=ftMVCFyBCDnkUAKTRuWEvLVyaVv+lKrReD00SGW6Z5Xywtd6htEcf4oeE6Rj3UaBX+
- 2GDgM+LuOgkrPX/T47gFnklARS1zthL/EZMP10iipukuwnTrTMaMBnTw30dyGM+9bWos
- qVz3IK/TFbg5BWuy9wSwsAfi941mM8mHaaMXNmAPb4VFIArzmQKZL67QlKfL/Ba4hMpV
- pcUn5v/FEMgKCiC33aZC2nLqdVkaalD2H0/8IW091CG4lBXcSFkOCb3sfPnix0gcUTzk
- KWXFhKaVN94zjHtGJm7aVaQsxKEj/cb4CYAtR2MIp0yRUFAN7Klo1NeD5tO8goLhWurp
- RnOQ==
+ d=1e100.net; s=20230601; t=1769789396; x=1770394196;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D2DV/PkOGhxgV6dRDamboeuiBvQG7mEsNvJJrHuJVl4=;
+ b=cMj9cm//fb+GgE8rWegC4Je4Lju2Kp1O9JkLcmLsfiEnv6p3IdbOQroBlwwCM8Iik/
+ pLaVWtC5ge1AEq3xHYvPKBdSWuHOwSJ2S6mTbDl3dSmg4TkFInXApfGOtOTA2twDceAJ
+ iShScCbVN1H2DBMq4ghIsdS9BW8wJFOb4b6srC6+2mWOFnKLPZgmf7B+Quk7irNxPg7x
+ H4ZifhjOJsTgWzN9PxWiyNlw58DlJFxl7TZNxEZFFP9dCE/f0UpXDLs2rofyL7rpt8Kp
+ HXjl2NnFSg468s7ZQ5Vwy+r+PDuWw/B9ohdQ8sbpsixfBC+xMq0U3529hXQq7WZWB+xN
+ mAZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfU4TThq+hWvbr4djvFRl+z+tAaJ83PPI0wFv4dc9x5zEsa3mnxNO44MxZr5KbQ9ZG6hfujRcL3Dzg@nongnu.org
-X-Gm-Message-State: AOJu0YxjEXK2U+HXOS9FEwMBJ3T+dSzgjuBvv9urOosTiX2PejRnhGIO
- L090Z0t6bcHOV+yeFMP8kM2AJzr2ZeTXNNJtu3XXe72AkARnyfJjqV0AlQEr3EB944M=
-X-Gm-Gg: AZuq6aKy9yajoiNAEVpPx93uNGz1qtPfQ4pauUcWLXYBsnOzcV7QiWHY9EP2LacMLXo
- kPEU+NUDciJpzHHyGYmhuqKv0LRTZuGk5vc4qs++GdFVe7pE8btXzOecx8xMVa5WGo0G8XHntMP
- KXal2P347rVpKW2y+auzQqx8VFMKfrwEfDUV62ziTCEAd0L1saZcXkdLdMnhf/4gZuNrGXR98Wp
- HcwuHRDl/WLbiqBQLkqGFq9Ffq4OWfkuTHMJVq/K32B2+QPpDPcQLilIcMMOSmyNhOiF+H0Uy4n
- o5OaGyFQMHFcQpausmxvaB+38qIsIylj2d/URjLqFCWU2RJ3/LmuBuaNyqUgcf4SU7l6gt24IeY
- cQ4BqDFqxZVFOt1fMjPcqLT51d0vGc3eDdadjVOXWTuppZw6PshiiH9n4FXlMLijBZyxi3e0R2r
- WhZgVyGE43kbnHHffyupLfD0kAvX+EqQRP9NSc8W67nHiOecCXBWoW9YDq+qyQlEeAYls=
-X-Received: by 2002:a17:903:19c8:b0:2a7:6474:6e48 with SMTP id
- d9443c01a7336-2a8d9a628f8mr32043495ad.51.1769789296049; 
- Fri, 30 Jan 2026 08:08:16 -0800 (PST)
+ AJvYcCWQCKBAf2yu15MhBmYY20n7Dnr3Hq2pt4KLlA9AjBL/acrozYgi42UmD/fboI/FUQU2hxTKdw/K0zTp@nongnu.org
+X-Gm-Message-State: AOJu0YzNgrVW9LDE1CPrQqOEcRQRspEwko6zP+6Sy8KXw5YvrFLbEnVE
+ zTbTolLlkpLDfh+aiyh/iGMTdd/TFziSAD5+T1swmk29DcyWFjbZyXOaKuiml1rh19A=
+X-Gm-Gg: AZuq6aJCita3De0BlrTinkMgyF9lfjYpuL99fjTj7/nbq/vqHcDepCv3BFdcVqH1suR
+ uTf9XuLBoi3L4c0nmM0iXlw7Dqm/Cy1rESZ65fng4odYWKD6I4jmyuLBHJKrP4YSSxCSOYdW4dy
+ 1FY73jmWIbqTv0LjSoWa0FULDuPnQgofClHQH54SPpGbUzKFUdi654Sv1UZIC04Pal7dkF3LlBA
+ f9C3m15BFJOIxWCqPBCoS+M5Lx2U/h17BEQBz6fsvybGZtYItwGwAhh65lLJpNo1WXpmQhrnSmI
+ /dKCoelHkflI8JpBZ2wAKhlZab594Q9pjnl7G+Q0bEI1KOURCggTU3ar7vX09hOE5nXKDZYkLJY
+ C1Zlh8qGI3q39RGKC4omFOkU8pqf1/3Qg0p8/XgYX6XB96YqPG1B9uwAvd7J+7msr8HjaHHgsYg
+ Tc++4FrHM6jLjQeEjKqPWWVPJVIa+iRu567HFTtHpyu1KuRzGXpbM+SXJU
+X-Received: by 2002:a17:902:f686:b0:2a7:cb46:7069 with SMTP id
+ d9443c01a7336-2a8bd51b6cfmr68441765ad.25.1769789395722; 
+ Fri, 30 Jan 2026 08:09:55 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a8ea985c48sm10218925ad.22.2026.01.30.08.08.15
+ d9443c01a7336-2a88b4154fcsm78654985ad.36.2026.01.30.08.09.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 30 Jan 2026 08:08:15 -0800 (PST)
-Message-ID: <4268fecd-4460-4fe2-b0f4-579a171ffb6a@linaro.org>
-Date: Fri, 30 Jan 2026 08:08:13 -0800
+ Fri, 30 Jan 2026 08:09:55 -0800 (PST)
+Message-ID: <06fa7871-dce7-458d-a01c-f720424b1832@linaro.org>
+Date: Fri, 30 Jan 2026 08:09:53 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] python: fix msys64 wheel directory specification
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-References: <20260130050518.517688-1-jsnow@redhat.com>
- <20260130050518.517688-2-jsnow@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] qapi/net: deprecate TAP fd and vhostfd options
 Content-Language: en-US
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com
+Cc: eblake@redhat.com, armbru@redhat.com, devel@lists.libvirt.org,
+ qemu-devel@nongnu.org
+References: <20260129215338.1422004-1-vsementsov@yandex-team.ru>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -113,11 +113,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260130050518.517688-2-jsnow@redhat.com>
+In-Reply-To: <20260129215338.1422004-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,31 +140,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/26 9:05 PM, John Snow wrote:
-> In python3.14, fixes were made to the file URI parsing [1] such that
-> file URIs that used to work but were technically out of spec are now
-> broken.
+Hi Markus,
+
+On 1/29/26 1:53 PM, Vladimir Sementsov-Ogievskiy wrote:
+> They are the same as fds and vhostfds, except they accept only
+> one fd. Let's deprecate redundant options.
 > 
-> As a result, our msys2 GitLab CI tests began failing.
-> 
-> Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
-> fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
-> 
-> [1] https://docs.python.org/3/whatsnew/3.14.html#urllib
-> Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   python/scripts/mkvenv.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Hi all!
+> 
+> after "[PATCH v2 00/12] net: refactoring and fixes" options fd
+> and vhostfd becomes redundant, fds and vhostfds may be used instead.
+> 
+> this patch also based on
+> "[PATCH v6] qapi: net: deprecate vhostforce option", that's why
+> it's sent separately.
+> 
+> Based-on: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
+> Based-on: <20251113071711.349651-1-vsementsov@yandex-team.ru>
+> 
+>   docs/about/deprecated.rst | 6 ++++++
+>   qapi/net.json             | 9 +++++----
+>   2 files changed, 11 insertions(+), 4 deletions(-)
 > 
 
-Thanks for this patch John!
-I can confirm it solved the problem on my side as well, and works on 
-windows/macos/linux/netbsd/freebsd.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I'll let you pull this, including doc changes, in case you're ok with 
+the series.
 
 Regards,
 Pierrick
