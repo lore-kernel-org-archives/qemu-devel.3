@@ -4,63 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C89CE6BF06
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 12:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF59E6BF09
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 Jan 2026 12:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlnXR-0004Tn-Rf; Fri, 30 Jan 2026 07:23:49 -0500
+	id 1vlnfA-0007kc-0W; Fri, 30 Jan 2026 07:31:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlnXN-0004Ta-Sn
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 07:23:45 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vlnf6-0007kP-Af
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 07:31:45 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlnXL-0003Ti-BD
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 07:23:45 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B5C3F80762;
- Fri, 30 Jan 2026 15:23:38 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:37::1:8] (unknown [2a02:6bf:8080:37::1:8])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id bNjQY06Ap0U0-hqEz1eA9; 
- Fri, 30 Jan 2026 15:23:38 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769775818;
- bh=oabX0SKGce24Tz+k1tpr4wdumhEh/UYjmRfkP4Zp2jQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=BTq0c7JFRTyyJ02PdotGBVH8Aa7UgDmxXPAZ4IvPIpFCP8jOoXxf0TsbMd9/5+QD8
- joqlZnuhqK1vSGFIaCAzwxVdEo9X4LE+q+DIDiyMJjxp/ZCgeIZOwutDepLgBZ5URu
- sWhHhCymkWjBl3No6GDWH6WOdp7ndFpnPFzi9S4E=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <97eb0bac-03a3-4edf-b3a6-2aa517ca0aac@yandex-team.ru>
-Date: Fri, 30 Jan 2026 15:23:37 +0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vlnf2-0005SJ-Gz
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 07:31:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f2b2J5BZBzHnH4l;
+ Fri, 30 Jan 2026 20:30:32 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2E12740565;
+ Fri, 30 Jan 2026 20:31:24 +0800 (CST)
+Received: from localhost (10.122.19.247) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 30 Jan
+ 2026 12:31:23 +0000
+Date: Fri, 30 Jan 2026 12:31:22 +0000
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <arpit.sysdev@gmail.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v4 0/2] FM-API Physical Switch Command Set Support
+Message-ID: <20260130123122.0000105e@huawei.com>
+In-Reply-To: <20260130120350.n7ngrvla5mfkwllo@test-PowerEdge-R740xd>
+References: <CGME20250916080757epcas5p2db403c9648f7818b22413d90acb4fdd4@epcas5p2.samsung.com>
+ <20250916080736.1266083-1-arpit1.kumar@samsung.com>
+ <20260127152350.00006447@huawei.com>
+ <20260130120350.n7ngrvla5mfkwllo@test-PowerEdge-R740xd>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi/net: deprecate TAP fd and vhostfd options
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: jasowang@redhat.com, pierrick.bouvier@linaro.org, eblake@redhat.com,
- armbru@redhat.com, devel@lists.libvirt.org, qemu-devel@nongnu.org
-References: <20260129215338.1422004-1-vsementsov@yandex-team.ru>
- <aXyZrBIb77Gh_s7X@angien.pipo.sk>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aXyZrBIb77Gh_s7X@angien.pipo.sk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,95 +71,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.01.26 14:44, Peter Krempa wrote:
-> On Fri, Jan 30, 2026 at 00:53:38 +0300, Vladimir Sementsov-Ogievskiy wrote:
->> They are the same as fds and vhostfds, except they accept only
->> one fd. Let's deprecate redundant options.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> Hi all!
->>
->> after "[PATCH v2 00/12] net: refactoring and fixes" options fd
->> and vhostfd becomes redundant, fds and vhostfds may be used instead.
->>
->> this patch also based on
->> "[PATCH v6] qapi: net: deprecate vhostforce option", that's why
->> it's sent separately.
->>
->> Based-on: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
->> Based-on: <20251113071711.349651-1-vsementsov@yandex-team.ru>
->>
->>   docs/about/deprecated.rst | 6 ++++++
->>   qapi/net.json             | 9 +++++----
->>   2 files changed, 11 insertions(+), 4 deletions(-)
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index e8ff478583..9010f8ab07 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -451,6 +451,12 @@ TAP ``vhostforce`` (since 11.0)
->>   The ``vhostforce`` option is redundant with the ``vhost`` option.
->>   If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
->>   
->> +TAP ``fd`` and ``vhostfd`` (since 11.0)
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +Use ``fds`` and ``vhostfds`` correspondingly, each set with one fd
->> +instead of ``fd`` and ``vhsotfd``.
+On Fri, 30 Jan 2026 17:33:50 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+
+> On 27/01/26 03:23PM, Jonathan Cameron wrote:
+> >On Tue, 16 Sep 2025 13:37:34 +0530
+> >Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+> >  
+> >> This patch series refactor existing support for Identify Switch Device
+> >> and Get Physical Port State by utilizing physical ports (USP & DSP)
+> >> information stored during enumeration.  
+> >
+> >Hi Arpit.
+> >
+> >So I came back to this series to try and tweak it into being in a state
+> >for upstreaming.  I made some fairly heavy changes (to push the
+> >data down to the individual ports where to me it more logically sits)
+> >but it became apparent to me during this that there is a fundamental
+> >problem.  This stuff isn't static because it needs to reflect port
+> >retraining and hotplug events etc.  If we want to store cached
+> >data we are going to have to deal with updating it from a significant
+> >number of different places. The perst one you have covered in patch 2
+> >is an example but there are others.
+> >
+> >Now we definitely can do the generation in a neater way, but I've
+> >come to the conclusion that caching it really doesn't make sense.
+> >
+> >Maybe we can do that for the USP, but definitely not DSPs.
+> >
+> >Given I did a bunch of refactoring I might as well share it even though
+> >I'm currently thinking it might not be worth doing:
+> >
+> >From 40a8a36f22a6eb053c965231a698c8054d417049 Mon Sep 17 00:00:00 2001
+> >From: Arpit Kumar <arpit1.kumar@samsung.com>
+> >Date: Tue, 16 Sep 2025 13:37:35 +0530
+> >Subject: [PATCH] hw/cxl: Refactored Identify Switch Device & Get Physical Port
+> > State
+> >
+> >Store the physical port info for the USP on reset but refresh
+> >it on demand for the DSPs as they are hotplug capable.
+> >
+> >Enables common data to be used for both of:
+> >* Identify Switch Device (Opcode 5100h)
+> >* Get Physical Port State (Opcode 5101h) physical switch FM-API command set.
+> >
+> >Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+> >Co-developed: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >
+> >---
+> >Added a Co-dev as I have modified this a lot from Arpit's v4.
+> >v5:
+> >- Create a new header to avoid importing all of cxl_device.h into
+> >the upstream port emulation.
+> >- Move the call that caches state to the cxl_upstream_port reset
+> >  to ensure downstream ports are in place before it is called.
+> >  Also will make it available from whatever CCI.  If we ever support
+> >  multiple VCS switches this will need to move an appropriate structure
+> >  representing whole switch information. With only one USP that is
+> >  a reasonable place to put full switch info.
+> >- Downstream ports have more dynamic state (as devices can be
+> >  hotplugged below them).  As such, only fill in the data at time
+> >  of request.  
 > 
-> Does this replacement apply/work on all versions supporting vhostfds/fd?
-> 
-> I'm asking because libvirt does have code to format the singlular vs
-> plural but none of the versions we support are lacking support for the
-> plural forms so we could replace this unconditionally if it works with
-> older versions.
-> 
+> Hi Jonathan,
+> Thanks for the update! The changes look good to me. I do concede that
+> it requires more dynamic approach. This would help in future command 
+> support like multiple VCS, MLD etc. I intially refrained from making changes
+> to individual ports but it does logically fits there and would
+> optimize the command support.
 
-Unfortunately, before "[PATCH v2 00/12] net: refactoring and fixes",
-some things will not work, if use fds/vhostfds instead of fd/vhostfd
-for one-queue TAP. Still, probably these cases are not used in Libvirt?
+My current thinking is this major refactor is justified. There isn't
+a strong reason not to do what the original code does and built it directly
+in the command handler.
 
-1. Prior the series, tap.c code has check:
+I'm preparing some cleanup of that though, such as using the defines
+you added so it is more obvious what values are set.
 
-     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
-      * For -netdev, peer is always NULL. */
-     if (peer && (tap->has_queues || tap->fds || tap->vhostfds)) {
-         error_setg(errp, "Multiqueue tap cannot be used with hubs");
-         return -1;
-     }
+The Physical Port Controls stuff can then drop in on top of that.
 
-This is too restrictive: obviously queues may be set to 1, and fds/vhostfds
-may contain only one FD, but QEMU doesn't check it.
+Once all that is in place we can reconsider if a refactor like the
+one in the code below is worth doing.
 
-So, this case require fd/vhostfd options, if you want to pass some fds.
+We might also need a few more updates to keep track of things like flit
+mode control patches.
 
-What this "hub" actually is? As I can see, it's -net cmdline option except for nic:
+Anyhow, I'll throw something together in the next day or two to share.
 
-static int net_client_init1(const Netdev *netdev, bool is_netdev, Error **errp)
-{
-     ...
-         /* Do not add to a hub if it's a nic with a netdev= parameter. */
-         if (netdev->type != NET_CLIENT_DRIVER_NIC ||
-             !netdev->u.nic.netdev) {
-             peer = net_hub_add_port(0, NULL, NULL);
-         }
-     ...
-}
+Jonathan
 
 
 
-2. Prior the series, you may pass vhostfds only together with fds. If you want
-to pass vhostfd for cases without fds, you have to use only vhostfd option.
-Even for the case when you pass queues > 0, you can't provide vhostfds but only
-vhostfd (and QEMU will try to reuse it for all queues, which (as I understand)
-is a bug in current QEMU.
-
--- 
-Best regards,
-Vladimir
 
