@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84175D79767
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 11:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7082DD79773
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 15:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vm9al-00064o-50; Sat, 31 Jan 2026 06:56:43 -0500
+	id 1vmCf2-0005XO-Bz; Sat, 31 Jan 2026 10:13:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vm9ak-00064H-DF
- for qemu-devel@nongnu.org; Sat, 31 Jan 2026 06:56:42 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vm9ai-0002wf-Qf
- for qemu-devel@nongnu.org; Sat, 31 Jan 2026 06:56:42 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6505d141d02so4223362a12.3
- for <qemu-devel@nongnu.org>; Sat, 31 Jan 2026 03:56:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769860598; x=1770465398; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tTQnyXkt6mPVo9KR5GxpqCjbhjPBX727ATjE1sQOZSc=;
- b=tISLVktp8byO6jQoC2GJcjRhV0PMmdr9Y03gE/F4eTW/KHOmyRcNf837UI8sfMP2FV
- Ck4/VZN+if4H/rRQCOGbawRkx1JdaFM0dHPTVFeHSvYlSK1Ge8Xb+bzxkvIPnzIF5wEw
- IMT/h8/vHwQcSEXIZf/xmfAWixs3ObSF5uqCa/h7qxgJUkhw9onPpYIRhymGHdwYHrqA
- 0UpMfCUtlAidtb7/nOs73oO7LGuCp373f0CZGbDbdPdFD6z52a3TV/citNiZN/zbCgmh
- 0zo+NRE4pZx2r6uXLp+U4KN7BPlLRujSCdYqRs7cpkIkQW9YNov7f+Jdd6cXcpoo4FVV
- GjqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769860598; x=1770465398;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tTQnyXkt6mPVo9KR5GxpqCjbhjPBX727ATjE1sQOZSc=;
- b=l/ZxEo3joLeMQ0DBka87+BipkZFQq/ti7e0iIP5pyxaFbwBuRL0XqNsC+crqGmFDeA
- RSNsvIkXs5V2T+Ns75xeqv+/ihtPy7Oa3FTWrbGdoAlc1mNhe2eg5Fz4YlRJpxnS3RW4
- y9bmVB+TPgbRc2qLlQEgTg9VDukMsU12fcKTturY+KDjy/O5gIJ/Gf2I70tYB1CNaidu
- IG4Am/9cFgLvpBzafJbYx3KkgLun+8pSV8QiRf2kYj1TXY/rQ0xs2SOZ0g73krFuw4Qe
- KToU2/Nx8b1diHNpeq19dSSu9yC0/v+LeJo+h63SPzIzanvvl+SyE7Eaa1H7jiLD1PB9
- Be2A==
-X-Gm-Message-State: AOJu0Yz86WDd9N84MhqwnXht78oUdgvg/J0yGPmfYUf4MZCrPOGarDBY
- SBkp4glVHAU1GORCb8Yn4FpGKyK8coAzGiK0jaxxjxhK/mKleqVXD52fG/K8jjgT8CE=
-X-Gm-Gg: AZuq6aLwJEYe1yzqisp4qeqaihzBkLLA3/SUelk230MIpgUzM4df6ElpYYcewPK5Lwi
- yls/ePItKtdWhCRMG+LYlOBuaI8yyS0fdE7NGDTbBZ/FOXATcEvbGZDqRpn7Misek+rIjKjyy24
- ih/UzijAdli5oj8Dtkoa6NX+ArqtzBUugCm403Qn1Yr/a1Jrrm+AmhYAwcy4D+2q8tEPpK/2Ea8
- ZFqyUN4fLlOnpDyeW4r6XIfxMQZKOrYd5LeG6xC9qvqMdgxc3vEiHvvklDzqdXD9UubUacH37Sk
- Qfx5VjbLOQOjkKv5cwLg9VVChp7YeL0fO5iNlPUe4TUW+UVkbpYqQWuiegrW2I0rbRFF+ma4Lj7
- Qn6wUsGRyxZPwIWuJ4avxmrrda36zXVKcaLW2AW/+uoc6FfKVGrYrp/AhKgXoqGU13WvZ7L46pn
- e2DSb71cQ2ZqQ=
-X-Received: by 2002:a17:907:3d43:b0:b87:6f58:a845 with SMTP id
- a640c23a62f3a-b8dff667670mr334444866b.36.1769860598187; 
- Sat, 31 Jan 2026 03:56:38 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8dbeff5629sm566720166b.27.2026.01.31.03.56.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 31 Jan 2026 03:56:37 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A36295F747;
- Fri, 30 Jan 2026 18:16:53 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH] target/arm: implement FEAT_E2H0
-Date: Fri, 30 Jan 2026 18:16:48 +0000
-Message-ID: <20260130181648.628364-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1vmCer-0005Wz-Cr
+ for qemu-devel@nongnu.org; Sat, 31 Jan 2026 10:13:10 -0500
+Received: from out-183.mta1.migadu.com ([95.215.58.183])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1vmCeo-0003Z2-9t
+ for qemu-devel@nongnu.org; Sat, 31 Jan 2026 10:13:09 -0500
+Message-ID: <92a63a78-2ab8-481a-8b78-3a86fa130fe8@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1769872381;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Nqitm0bP7TAMKoIoe3qotBuPZzBazxOlPp+ap/keNKA=;
+ b=xKIWeMAvVw/PGMnRla+iS9kFWC/PkxJcO2v6zsL8Bt6Z9+IB1xl/9RbB5lzhjATfFHLN9A
+ CY7eJTiZinW0XiR55chC8/iDicZWrWJBonQsMJA7Pa6LTFftRiCrfCkRa1uwtMSmbNpOjd
+ Oxup0M/zPd4SfTOJtweUVZa/aTk31h4=
+Date: Sat, 31 Jan 2026 23:12:53 +0800
 MIME-Version: 1.0
+Subject: Re: [PULL 20/30] accel/hvf: Implement WFI without using pselect()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260116111807.36053-1-philmd@linaro.org>
+ <20260116111807.36053-21-philmd@linaro.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: qemu-devel@nongnu.org
+In-Reply-To: <20260116111807.36053-21-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.183; envelope-from=zenghui.yu@linux.dev;
+ helo=out-183.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,99 +70,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_E2H0 is a formalisation of the existing behaviour of HCR_EL2.E2H
-being programmable to switch between EL2 host mode and the
-"traditional" nVHE EL2 mode. This implies at some point we might want
-to model CPUs without FEAT_E2H0 which will always have EL2 host mode
-enabled.
+On 1/16/26 7:17 PM, Philippe Mathieu-Daudé wrote:
+> Return to the main loop where we'll be waken again.
+> This avoid a tricky race with signals introduced in
+> commit 219c101fa7f ("Add HVF WFI handler").
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Message-ID: <20260112103034.65310-14-philmd@linaro.org>
+> ---
+>  include/system/hvf_int.h  |  1 -
+>  accel/hvf/hvf-accel-ops.c |  2 --
+>  target/arm/hvf/hvf.c      | 74 +++------------------------------------
+>  3 files changed, 5 insertions(+), 72 deletions(-)
+> 
+> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+> index d842d4b2b99..c8e407a1463 100644
+> --- a/include/system/hvf_int.h
+> +++ b/include/system/hvf_int.h
+> @@ -47,7 +47,6 @@ struct AccelCPUState {
+>  #ifdef __aarch64__
+>      hv_vcpu_exit_t *exit;
+>      bool vtimer_masked;
+> -    sigset_t unblock_ipi_mask;
+>      bool guest_debug_enabled;
+>  #endif
+>  };
+> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+> index d931412975c..ffcfe9663b5 100644
+> --- a/accel/hvf/hvf-accel-ops.c
+> +++ b/accel/hvf/hvf-accel-ops.c
+> @@ -135,8 +135,6 @@ static int hvf_init_vcpu(CPUState *cpu)
+>      sigaction(SIG_IPI, &sigact, NULL);
+>  
+>  #ifdef __aarch64__
+> -    pthread_sigmask(SIG_BLOCK, NULL, &cpu->accel->unblock_ipi_mask);
+> -    sigdelset(&cpu->accel->unblock_ipi_mask, SIG_IPI);
+>      cpu->accel->guest_debug_enabled = false;
+>  
+>      r = hv_vcpu_create(&cpu->accel->fd,
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index d74703a3d55..b936098d257 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -301,7 +301,7 @@ void hvf_arm_init_debug(void)
+>  #define TMR_CTL_IMASK   (1 << 1)
+>  #define TMR_CTL_ISTATUS (1 << 2)
+>  
+> -static void hvf_wfi(CPUState *cpu);
+> +static int hvf_wfi(CPUState *cpu);
+>  
+>  static uint32_t chosen_ipa_bit_size;
+>  
+> @@ -1703,81 +1703,17 @@ static uint64_t hvf_vtimer_val_raw(void)
+>      return mach_absolute_time() - hvf_state->vtimer_offset;
+>  }
+>  
+> -static uint64_t hvf_vtimer_val(void)
+> +static int hvf_wfi(CPUState *cpu)
+>  {
+> -    if (!runstate_is_running()) {
+> -        /* VM is paused, the vtimer value is in vtimer.vtimer_val */
+> -        return vtimer.vtimer_val;
+> -    }
+> -
+> -    return hvf_vtimer_val_raw();
+> -}
+> -
+> -static void hvf_wait_for_ipi(CPUState *cpu, struct timespec *ts)
+> -{
+> -    /*
+> -     * Use pselect to sleep so that other threads can IPI us while we're
+> -     * sleeping.
+> -     */
+> -    qatomic_set_mb(&cpu->thread_kicked, false);
+> -    bql_unlock();
+> -    pselect(0, 0, 0, 0, ts, &cpu->accel->unblock_ipi_mask);
+> -    bql_lock();
+> -}
+> -
+> -static void hvf_wfi(CPUState *cpu)
+> -{
+> -    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> -    struct timespec ts;
+> -    hv_return_t r;
+> -    uint64_t ctl;
+> -    uint64_t cval;
+> -    int64_t ticks_to_sleep;
+> -    uint64_t seconds;
+> -    uint64_t nanos;
+> -    uint32_t cntfrq;
+> -
+>      if (cpu_has_work(cpu)) {
+>          /*
+>           * Don't bother to go into our "low power state" if
+>           * we would just wake up immediately.
+>           */
+> -        return;
+> +        return 0;
+>      }
+>  
+> -    r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &ctl);
+> -    assert_hvf_ok(r);
+> -
+> -    if (!(ctl & 1) || (ctl & 2)) {
+> -        /* Timer disabled or masked, just wait for an IPI. */
+> -        hvf_wait_for_ipi(cpu, NULL);
+> -        return;
+> -    }
+> -
+> -    r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, &cval);
+> -    assert_hvf_ok(r);
+> -
+> -    ticks_to_sleep = cval - hvf_vtimer_val();
+> -    if (ticks_to_sleep < 0) {
+> -        return;
+> -    }
+> -
+> -    cntfrq = gt_cntfrq_period_ns(arm_cpu);
+> -    seconds = muldiv64(ticks_to_sleep, cntfrq, NANOSECONDS_PER_SECOND);
+> -    ticks_to_sleep -= muldiv64(seconds, NANOSECONDS_PER_SECOND, cntfrq);
+> -    nanos = ticks_to_sleep * cntfrq;
+> -
+> -    /*
+> -     * Don't sleep for less than the time a context switch would take,
+> -     * so that we can satisfy fast timer requests on the same CPU.
+> -     * Measurements on M1 show the sweet spot to be ~2ms.
+> -     */
+> -    if (!seconds && nanos < (2 * SCALE_MS)) {
+> -        return;
+> -    }
+> -
+> -    ts = (struct timespec) { seconds, nanos };
+> -    hvf_wait_for_ipi(cpu, &ts);
+> +    return EXCP_HLT;
+>  }
+>  
+>  /* Must be called by the owning thread */
+> @@ -1967,7 +1903,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>      case EC_WFX_TRAP:
+>          advance_pc = true;
+>          if (!(syndrome & WFX_IS_WFE)) {
+> -            hvf_wfi(cpu);
+> +            ret = hvf_wfi(cpu);
+>          }
+>          break;
+>      case EC_AA64_HVC:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Running a Linux guest on M1 (macOS Sequoia 15.7.2) results in a high CPU
+utilization - from host's perspective. The guest itself is almost idle.
 
----
-comment: I've left a fixme? for HCR_EL2.NV1, I await guidance on if
-I'm reading the spec wrong.
----
- docs/system/arm/emulation.rst |  1 +
- target/arm/cpu-features.h     |  6 ++++++
- target/arm/helper.c           | 14 +++++++++++++-
- 3 files changed, 20 insertions(+), 1 deletion(-)
+I traced hvf_wfi() and noticed that the frequency of WFI traps is
+extremely high. I *guess* that the vcpus are being woken up frequently,
+which is unnecessary most of the time.
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 3f30ea5a30e..74359f3e844 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -53,6 +53,7 @@ the following architecture extensions:
- - FEAT_DotProd (Advanced SIMD dot product instructions)
- - FEAT_DoubleFault (Double Fault Extension)
- - FEAT_E0PD (Preventing EL0 access to halves of address maps)
-+- FEAT_E2H0 (Programming of HCR_EL2.E2H)
- - FEAT_EBF16 (AArch64 Extended BFloat16 instructions)
- - FEAT_ECV (Enhanced Counter Virtualization)
- - FEAT_EL0 (Support for execution at EL0)
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index a7ca410dcb4..b6ef328fe0a 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -347,6 +347,7 @@ FIELD(ID_AA64MMFR3, ADERR, 56, 4)
- FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
- 
- FIELD(ID_AA64MMFR4, ASID2, 8, 4)
-+FIELD(ID_AA64MMFR4, E2H0, 24, 4)
- 
- FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
- FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
-@@ -1376,6 +1377,11 @@ static inline bool isar_feature_aa64_asid2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) != 0;
- }
- 
-+static inline bool isar_feature_aa64_e2h0(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR4, E2H0) == 0;
-+}
-+
- static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) != 0;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 655ce73ee1b..27b5fb01827 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3773,7 +3773,8 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-     }
- 
-     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
--        if (cpu_isar_feature(aa64_vh, cpu)) {
-+        if (cpu_isar_feature(aa64_vh, cpu) &&
-+            cpu_isar_feature(aa64_e2h0, cpu)) {
-             valid_mask |= HCR_E2H;
-         }
-         if (cpu_isar_feature(aa64_ras, cpu)) {
-@@ -3797,6 +3798,11 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-         if (cpu_isar_feature(aa64_rme, cpu)) {
-             valid_mask |= HCR_GPF;
-         }
-+        /*
-+         * FIXME? HCR_EL2.NV1 is only meant to be RES0 if
-+         * FEAT_E2H0 is not implemented with 0b1110 although the Arm
-+         * ARM doesn't explicitly state it is RES1 with 0b1111.
-+         */
-         if (cpu_isar_feature(aa64_nv, cpu)) {
-             valid_mask |= HCR_NV | HCR_NV1 | HCR_AT;
-         }
-@@ -3820,6 +3826,12 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-         value |= HCR_RW;
-     }
- 
-+    /* Strictly E2H is RES1 unless FEAT_E2H0 relaxes the requirement */
-+    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
-+        !cpu_isar_feature(aa64_e2h0, cpu)) {
-+        value |= HCR_E2H;
-+    }
-+
-     /*
-      * These bits change the MMU setup:
-      * HCR_VM enables stage 2 translation
--- 
-2.47.3
+I'm not sure if this is expected.
 
+Thanks,
+Zenghui
 
