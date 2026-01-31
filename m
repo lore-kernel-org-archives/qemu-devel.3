@@ -4,68 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F339EE6BF3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D408EE6BF3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vm0Mi-0002tu-2T; Fri, 30 Jan 2026 21:05:36 -0500
+	id 1vm0TS-0006pg-DH; Fri, 30 Jan 2026 21:12:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1vm0MY-0002mk-LD; Fri, 30 Jan 2026 21:05:29 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
+ id 1vm0Sq-0006Rg-7Y; Fri, 30 Jan 2026 21:11:59 -0500
+Received: from mail-4318.protonmail.ch ([185.70.43.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1vm0MW-00010C-7x; Fri, 30 Jan 2026 21:05:25 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 05C1360008;
- Sat, 31 Jan 2026 02:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C886C4CEF7;
- Sat, 31 Jan 2026 02:05:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769825121;
- bh=rUvM+mJVQvGOdfCVg7KC2IpoeDqIFA3BYeOqe2gZSN8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=jZsdrkJOTKChyCBiPb4Zmnq3e0kfU3udIhISB54fiJ+hQprEA/A7t7FcewTDIJvmv
- 4wAivAa5z2ntYPqwC9vCWTbd3P+DFskp3mpkpMhIxDNAJxt9gPbruGp6b59DtcIbRF
- MuIWlNd5cBnaP2NwTQ/sRdDz4qITTWRSCtHeT4fjyqwh66gLZH506Vtt5E0ft6yVrE
- AyouQ+orMp6xFdfE+7bUuxo5NUvYredcuiV51lHr2iKGhyc8AWHN5OvXKQrXaz/h8E
- ldNmvXLHF1rnBo7KvJBuzYHNfmFP0jCSj1JMajH0yUrTLdjvmR7tWxQZhVNtc5Ut3D
- GxETJLB6/iRjA==
-Date: Fri, 30 Jan 2026 19:05:19 -0700
-From: Keith Busch <kbusch@kernel.org>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Alex Williamson <alex@shazbot.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: Re: [PATCH 5/5] hw/nvme: Fix bootindex suffix use-after-free
-Message-ID: <aX1jX-JZ8V0BhQum@kbusch-mbp>
-References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <d74ef37a-b423-457a-b2c1-31989243b1a8@linaro.org>
- <aXpUD4s7LrC9-AMa@AALNPWKJENSEN.aal.scsc.local>
- <aX1cx3mR-s4pKdDP@kbusch-mbp>
+ (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
+ id 1vm0So-000254-Th; Fri, 30 Jan 2026 21:11:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
+ s=protonmail2; t=1769825512; x=1770084712;
+ bh=OZJgORl8cEThdrHDzYfVgvq5hw8RqcPt05THMARuhgM=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=niATWecKJU7rsWRP7qO4a8iS9fsDUKTksbYV4btGNFERZFNLW4nnBu5QG++q8sHTh
+ LgEdlVqmk9eQf8OL755uZGGXwDffKkGI5IAY2PDhyaIdzMEh2ePbpOoP9frPzfoQcx
+ R9LPYladu23vYeYALqZe32xywZmNIgkOUU2IkLQxubnDojqbFU9ZT+acvGqY1jx4t3
+ 34Gz0MMCukAK3/qMfRRYEQYNxi5pp98TdLFUnWLhQPKX4Ppx3jN0u1yKzCDw8+rOej
+ aJCpGef/hHR9lcuJghCRELZcAv3SrmR6c+sxemb0Y6jzgLx9SFdCQztMJYQqckab1r
+ SqTBVj2PXt/gg==
+Date: Sat, 31 Jan 2026 02:11:49 +0000
+To: bug-hurd@gnu.org
+From: Damien Zammit <damien@zamaudio.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
+ pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
+ kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
+Subject: [PATCH v4 1/5 qemu] Include new arbitrary limits if not already
+ defined
+Message-ID: <20260131021116.1717230-2-damien@zamaudio.com>
+In-Reply-To: <20260131021116.1717230-1-damien@zamaudio.com>
+References: <20260131021116.1717230-1-damien@zamaudio.com>
+Feedback-ID: 43209410:user:proton
+X-Pm-Message-ID: ac86e7566529c92422c52b192536cf1553755e58
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aX1cx3mR-s4pKdDP@kbusch-mbp>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=kbusch@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.43.18; envelope-from=damien@zamaudio.com;
+ helo=mail-4318.protonmail.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,33 +71,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 30, 2026 at 06:37:11PM -0700, Keith Busch wrote:
-> On Wed, Jan 28, 2026 at 10:23:11AM -0800, Klaus Jensen wrote:
-> > On Jan 25 17:56, Philippe Mathieu-Daudé wrote:
-> > > On 25/1/26 07:42, Akihiko Odaki wrote:
-> > > > The bootindex suffix can be used as long as the property is alive.
-> > > 
-> > > True, so:
-> > > 
-> > > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > 
-> > > But maybe it shouldn't (we should g_strdup it like other QOM fields).
-> > > 
-> > 
-> > Do you mean that device_add_bootindex_property() should g_strdup the
-> > suffix? And then free it in property_release_bootindex()? That would
-> > make sense to me.
-> 
-> Doesn't it already do that? 
-> 
->   device_add_bootindex_property
->     object_property_add
->       object_property_try_add
->         g_strdup
-> 
-> ?
+From: Manolo de Medici <manolodemedici@gmail.com>
 
-Sorry, nevermind. I was tracking the "name", not the "suffix", in which
-case I agree with Klaus. If only for consistency between the two "const
-char *" parameters.
+Although GNU/Hurd supports unlimited path lengths
+only bounded by available memory, for now we can use
+an arbitrary limit on PATH_MAX that matches what POSIX requires.
+We don't have bandwidth to fix this properly right now.
+
+Author: Manolo de Medici <manolo.demedici@gmail.com>
+Signed-off-by: Damien Zammit <damien@zamaudio.com>
+---
+ include/qemu/osdep.h | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index b384b5b506..2e67d75042 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -385,6 +385,17 @@ void QEMU_ERROR("code path is reachable")
+ #define TIME_MAX TYPE_MAXIMUM(time_t)
+ #endif
+=20
++#ifndef PATH_MAX
++#define PATH_MAX 1024
++#endif
++
++/*
++ * Use the same value as Linux for now.
++ */
++#ifndef IOV_MAX
++#define IOV_MAX 1024
++#endif
++
+ /* Mac OSX has a <stdint.h> bug that incorrectly defines SIZE_MAX with
+  * the wrong type. Our replacement isn't usable in preprocessor
+  * expressions, but it is sufficient for our needs. */
+@@ -661,10 +672,6 @@ struct iovec {
+     void *iov_base;
+     size_t iov_len;
+ };
+-/*
+- * Use the same value as Linux for now.
+- */
+-#define IOV_MAX 1024
+=20
+ ssize_t readv(int fd, const struct iovec *iov, int iov_cnt);
+ ssize_t writev(int fd, const struct iovec *iov, int iov_cnt);
+--=20
+2.51.0
+
+
 
