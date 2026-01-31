@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F288D73EB1
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9878FE6BF3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vm0Tb-0007EI-Lu; Fri, 30 Jan 2026 21:12:43 -0500
+	id 1vm0Ta-0007Aw-Ik; Fri, 30 Jan 2026 21:12:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vm0TR-0006wA-7B
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:34 -0500
-Received: from mail-10626.protonmail.ch ([79.135.106.26])
+ id 1vm0T5-0006hF-OV
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:11 -0500
+Received: from mail-106117.protonmail.ch ([79.135.106.117])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vm0TM-00027v-L7
- for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:30 -0500
+ id 1vm0T1-00026G-9t
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
- s=protonmail2; t=1769825545; x=1770084745;
- bh=v+3r1FrmqevCgJnc8NlPIs5RUlRvtA5aa2esuxBc84k=;
+ s=protonmail2; t=1769825522; x=1770084722;
+ bh=5U0l3wVgWK9kNowZyYZcgvlLBninOUWPPo60jfcc9Hc=;
  h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
  Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
  Message-ID:BIMI-Selector;
- b=dy4kV1C+XgPsHdXIGAJ4PKvOO7tcj3w3gG/Hkatw/srimbQLOtQLu6yFW4rA1YA7j
- qZQt31SAuiXKFkxi4T0xbLMQBsjEwLGH0AdiO4EFYHvfQI+PBJchf5HybocSW7sQgK
- 1mfBYOMHHw7HQikU0zLYoa7YEYZTwsVbDStw7RBba2iqXI/FrRZDF6+U2UHXDoQUF9
- OS6l9DC0gG0FG7wl7Ggk5kxqgjGmYFROIZarcavIgV+O92LVUrHw64eSx/4IdNR4kt
- 1KVi1yD4uxjn3x/cW8LwC9rtetKpqkGNoq3shX94gHSGolMfuM/SIdJlepYph4Lfri
- i0gg9/d1rwpSg==
-Date: Sat, 31 Jan 2026 02:12:20 +0000
+ b=bt+jIQ3y+ucXqSAkjrzEampZeid38uSY8JTk86lqwGVCMn3r/VNgObEaj8XjJ0dGv
+ K0+cDKImzV9wo79GLhDPLdkWxg3Wtz0mbnIZaZA1hY8DwRafoM+nndNNQquMskpj0W
+ m4kbUjizgXA88k4t/bYbT9X/EHI3H4LdYEuVTrZkRoJfjIOIsZFvRGktJHO5fd9H4x
+ x+Bly1j1A3BWsbrkWT/A3FZhYR59JUoB/VySrOWM0gbYAXXqukMufyjMW0KyjRv85U
+ 2c/oNYwnnPRdGvy+nj2IHCrBGzIlWcYFtq3u68sMDsyrXgxbXjnbDwvyUplDrSktBA
+ m5v33GHQ2AU3Q==
+Date: Sat, 31 Jan 2026 02:11:58 +0000
 To: bug-hurd@gnu.org
 From: Damien Zammit <damien@zamaudio.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
  pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
  kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
-Subject: [PATCH v4 4/5 qemu] block/file-posix: Clean up sys/ioctl import
-Message-ID: <20260131021116.1717230-5-damien@zamaudio.com>
+Subject: [PATCH v4 2/5 qemu] Add GNU/Hurd host_os=gnu
+Message-ID: <20260131021116.1717230-3-damien@zamaudio.com>
 In-Reply-To: <20260131021116.1717230-1-damien@zamaudio.com>
 References: <20260131021116.1717230-1-damien@zamaudio.com>
 Feedback-ID: 43209410:user:proton
-X-Pm-Message-ID: bb61cb6876f646ce576f0f6c948f549ae6c24f5e
+X-Pm-Message-ID: b7dbf1bd7058a82e960822b2a2df847c0df01e0b
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=79.135.106.26; envelope-from=damien@zamaudio.com;
- helo=mail-10626.protonmail.ch
+Received-SPF: pass client-ip=79.135.106.117; envelope-from=damien@zamaudio.com;
+ helo=mail-106117.protonmail.ch
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -72,76 +72,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since all platforms except sun include this header,
-clean up the ifdefs.
-
 Signed-off-by: Damien Zammit <damien@zamaudio.com>
 ---
- block/file-posix.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ configure | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 6265d2e248..8a3ba5eecb 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -43,9 +43,11 @@
- #include "scsi/constants.h"
- #include "scsi/utils.h"
-=20
--#if defined(__APPLE__) && (__MACH__)
-+#ifndef __sun__
- #include <sys/ioctl.h>
--#if defined(HAVE_HOST_BLOCK_DEVICE)
-+#endif
-+
-+#if defined(__APPLE__) && (__MACH__) && defined(HAVE_HOST_BLOCK_DEVICE)
- #include <paths.h>
- #include <sys/param.h>
- #include <sys/mount.h>
-@@ -57,7 +59,6 @@
- //#include <IOKit/storage/IOCDTypes.h>
- #include <IOKit/storage/IODVDMedia.h>
- #include <CoreFoundation/CoreFoundation.h>
--#endif /* defined(HAVE_HOST_BLOCK_DEVICE) */
- #endif
-=20
- #ifdef __sun__
-@@ -65,7 +66,6 @@
- #include <sys/dkio.h>
- #endif
- #ifdef __linux__
--#include <sys/ioctl.h>
- #include <sys/param.h>
- #include <sys/syscall.h>
- #include <sys/vfs.h>
-@@ -95,27 +95,20 @@
- #endif
-=20
- #ifdef __OpenBSD__
--#include <sys/ioctl.h>
- #include <sys/disklabel.h>
- #include <sys/dkio.h>
- #endif
-=20
- #ifdef __NetBSD__
--#include <sys/ioctl.h>
- #include <sys/disklabel.h>
- #include <sys/dkio.h>
- #include <sys/disk.h>
- #endif
-=20
- #ifdef __DragonFly__
--#include <sys/ioctl.h>
- #include <sys/diskslice.h>
- #endif
-=20
--#ifdef EMSCRIPTEN
--#include <sys/ioctl.h>
--#endif
--
- /* OS X does not have O_DSYNC */
- #ifndef O_DSYNC
- #ifdef O_SYNC
+diff --git a/configure b/configure
+index 4b61fd3bbf..fae4d06352 100755
+--- a/configure
++++ b/configure
+@@ -372,6 +372,8 @@ elif check_define __APPLE__; then
+ elif check_define EMSCRIPTEN ; then
+   host_os=3Demscripten
+   cross_compile=3D"yes"
++elif check_define __GNU__; then
++  host_os=3Dgnu
+ else
+   # This is a fatal error, but don't report it yet, because we
+   # might be going to just print the --help text, or it might
 --=20
 2.51.0
 
