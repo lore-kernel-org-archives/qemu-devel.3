@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D408EE6BF3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE44E6BF3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 Jan 2026 02:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vm0TS-0006pg-DH; Fri, 30 Jan 2026 21:12:37 -0500
+	id 1vm0TX-00070X-75; Fri, 30 Jan 2026 21:12:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vm0Sq-0006Rg-7Y; Fri, 30 Jan 2026 21:11:59 -0500
-Received: from mail-4318.protonmail.ch ([185.70.43.18])
+ id 1vm0TC-0006mP-2M
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:20 -0500
+Received: from mail-24420.protonmail.ch ([109.224.244.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1vm0So-000254-Th; Fri, 30 Jan 2026 21:11:56 -0500
+ id 1vm0TA-000272-9Q
+ for qemu-devel@nongnu.org; Fri, 30 Jan 2026 21:12:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
- s=protonmail2; t=1769825512; x=1770084712;
- bh=OZJgORl8cEThdrHDzYfVgvq5hw8RqcPt05THMARuhgM=;
+ s=protonmail2; t=1769825533; x=1770084733;
+ bh=YLX4rEU/4UQfYgFlUOjCqILj5bUwSlvUloseNXbbe98=;
  h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
  Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
  Message-ID:BIMI-Selector;
- b=niATWecKJU7rsWRP7qO4a8iS9fsDUKTksbYV4btGNFERZFNLW4nnBu5QG++q8sHTh
- LgEdlVqmk9eQf8OL755uZGGXwDffKkGI5IAY2PDhyaIdzMEh2ePbpOoP9frPzfoQcx
- R9LPYladu23vYeYALqZe32xywZmNIgkOUU2IkLQxubnDojqbFU9ZT+acvGqY1jx4t3
- 34Gz0MMCukAK3/qMfRRYEQYNxi5pp98TdLFUnWLhQPKX4Ppx3jN0u1yKzCDw8+rOej
- aJCpGef/hHR9lcuJghCRELZcAv3SrmR6c+sxemb0Y6jzgLx9SFdCQztMJYQqckab1r
- SqTBVj2PXt/gg==
-Date: Sat, 31 Jan 2026 02:11:49 +0000
+ b=dn18NKSvC7Q+7T14gRQQrS0Ho0grJkArmHHtuZyJTnNoclruM79ko7LLZpl6207xu
+ LaV0GwxOhIkzTFE6aM4QVVTYsDGe0At37qcHWckNGoUKdrufJLgANtlYBY/pUtD7NW
+ /Yopoe4gWyIT2bIcYYKnTzqxrLcjVOCR25IhzUxYBNugQp9lSJUivTzLKHBjm4qfdJ
+ GvhAfh0Ni32sodG3C6s+gBypNdYYQShEBAmYSSONdd/N1E3q/uowhz8jZFEUVxERRW
+ PQMm/W0cLbM7o5emHx10QURz9PzgtgU49y4/hO8tCDmuL2u3G71J9auMnlCK0JvpC2
+ 6SsztLAVwHMBQ==
+Date: Sat, 31 Jan 2026 02:12:09 +0000
 To: bug-hurd@gnu.org
 From: Damien Zammit <damien@zamaudio.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
  pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
  kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
-Subject: [PATCH v4 1/5 qemu] Include new arbitrary limits if not already
- defined
-Message-ID: <20260131021116.1717230-2-damien@zamaudio.com>
+Subject: [PATCH v4 3/5 qemu] tpm: Remove unused ioctl enum and includes
+Message-ID: <20260131021116.1717230-4-damien@zamaudio.com>
 In-Reply-To: <20260131021116.1717230-1-damien@zamaudio.com>
 References: <20260131021116.1717230-1-damien@zamaudio.com>
 Feedback-ID: 43209410:user:proton
-X-Pm-Message-ID: ac86e7566529c92422c52b192536cf1553755e58
+X-Pm-Message-ID: c295d1bb183d18484a0b92b2c748a11f0106124f
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.43.18; envelope-from=damien@zamaudio.com;
- helo=mail-4318.protonmail.ch
+Received-SPF: pass client-ip=109.224.244.20; envelope-from=damien@zamaudio.com;
+ helo=mail-24420.protonmail.ch
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,50 +74,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manolo de Medici <manolodemedici@gmail.com>
 
-Although GNU/Hurd supports unlimited path lengths
-only bounded by available memory, for now we can use
-an arbitrary limit on PATH_MAX that matches what POSIX requires.
-We don't have bandwidth to fix this properly right now.
+On GNU/Hurd, compilation fails due to missing _IO*
+symbols.  As these are unused, remove them.
 
-Author: Manolo de Medici <manolo.demedici@gmail.com>
 Signed-off-by: Damien Zammit <damien@zamaudio.com>
 ---
- include/qemu/osdep.h | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ backends/tpm/tpm_ioctl.h | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b384b5b506..2e67d75042 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -385,6 +385,17 @@ void QEMU_ERROR("code path is reachable")
- #define TIME_MAX TYPE_MAXIMUM(time_t)
+diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
+index ee2dd15d35..74c6e1bd27 100644
+--- a/backends/tpm/tpm_ioctl.h
++++ b/backends/tpm/tpm_ioctl.h
+@@ -12,15 +12,6 @@
+ # define __USE_LINUX_IOCTL_DEFS
  #endif
 =20
-+#ifndef PATH_MAX
-+#define PATH_MAX 1024
-+#endif
-+
-+/*
-+ * Use the same value as Linux for now.
-+ */
-+#ifndef IOV_MAX
-+#define IOV_MAX 1024
-+#endif
-+
- /* Mac OSX has a <stdint.h> bug that incorrectly defines SIZE_MAX with
-  * the wrong type. Our replacement isn't usable in preprocessor
-  * expressions, but it is sufficient for our needs. */
-@@ -661,10 +672,6 @@ struct iovec {
-     void *iov_base;
-     size_t iov_len;
- };
--/*
-- * Use the same value as Linux for now.
-- */
--#define IOV_MAX 1024
+-#ifndef _WIN32
+-#include <sys/uio.h>
+-#include <sys/ioctl.h>
+-#endif
+-
+-#ifdef HAVE_SYS_IOCCOM_H
+-#include <sys/ioccom.h>
+-#endif
+-
+ /*
+  * Every response from a command involving a TPM command execution must ho=
+ld
+  * the ptm_res as the first element.
+@@ -285,30 +276,6 @@ typedef struct ptm_lockstorage ptm_lockstorage;
+ #define PTM_CAP_SEND_COMMAND_HEADER (1 << 15)
+ #define PTM_CAP_LOCK_STORAGE       (1 << 16)
 =20
- ssize_t readv(int fd, const struct iovec *iov, int iov_cnt);
- ssize_t writev(int fd, const struct iovec *iov, int iov_cnt);
+-#ifndef _WIN32
+-enum {
+-    PTM_GET_CAPABILITY     =3D _IOR('P', 0, ptm_cap),
+-    PTM_INIT               =3D _IOWR('P', 1, ptm_init),
+-    PTM_SHUTDOWN           =3D _IOR('P', 2, ptm_res),
+-    PTM_GET_TPMESTABLISHED =3D _IOR('P', 3, ptm_est),
+-    PTM_SET_LOCALITY       =3D _IOWR('P', 4, ptm_loc),
+-    PTM_HASH_START         =3D _IOR('P', 5, ptm_res),
+-    PTM_HASH_DATA          =3D _IOWR('P', 6, ptm_hdata),
+-    PTM_HASH_END           =3D _IOR('P', 7, ptm_res),
+-    PTM_CANCEL_TPM_CMD     =3D _IOR('P', 8, ptm_res),
+-    PTM_STORE_VOLATILE     =3D _IOR('P', 9, ptm_res),
+-    PTM_RESET_TPMESTABLISHED =3D _IOWR('P', 10, ptm_reset_est),
+-    PTM_GET_STATEBLOB      =3D _IOWR('P', 11, ptm_getstate),
+-    PTM_SET_STATEBLOB      =3D _IOWR('P', 12, ptm_setstate),
+-    PTM_STOP               =3D _IOR('P', 13, ptm_res),
+-    PTM_GET_CONFIG         =3D _IOR('P', 14, ptm_getconfig),
+-    PTM_SET_DATAFD         =3D _IOR('P', 15, ptm_res),
+-    PTM_SET_BUFFERSIZE     =3D _IOWR('P', 16, ptm_setbuffersize),
+-    PTM_GET_INFO           =3D _IOWR('P', 17, ptm_getinfo),
+-    PTM_LOCK_STORAGE       =3D _IOWR('P', 18, ptm_lockstorage),
+-};
+-#endif
+-
+ /*
+  * Commands used by the non-CUSE TPMs
+  *
 --=20
 2.51.0
 
