@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1D9E65275
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 14:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477DBE6527D
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 14:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmYKF-0004lo-VS; Sun, 01 Feb 2026 09:21:19 -0500
+	id 1vmYQd-00071G-VY; Sun, 01 Feb 2026 09:27:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYKE-0004lK-4b
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:21:18 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYQb-00070T-P4
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:27:54 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYKC-0003zs-Js
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:21:17 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-435a517be33so2137415f8f.0
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 06:21:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYQZ-00066u-EW
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:27:53 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42fb2314eb0so3055382f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 06:27:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769955675; x=1770560475; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769956069; x=1770560869; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bXdsDxmkWCnNh1bgz3LKjzyhFdoc4oSja/dbdkx5rZQ=;
- b=EpVqw8fdO12kBrJQ6EtmMA5JdEW/z429m48M/+ftvzbHV3oYBYIcYqwBboq9GCjwsg
- giXUmQ4YhlrPyuZQRjeFaxlJYQKv63LJQx6r1hddGhTedvQmhjwX1TZjcLBLw/1jElTv
- FCGICqlZjiynMnkD5ttWQINpxw9rxH3voESumZL4AeYIXdMHXqNY2nfZMIpf/63rATHq
- tyYykmkSGWCBlCOOvDP79Tol914MUhDHtxRaOymS0BMR0zCO8DDnnYq7ddT1CyOOnNlf
- cVck9fHGXr3DRQhPqSON3vxR3+v0+yKd4IEIM6dZ7n0L3B3p5Q6GdsS4VmFsgo6v9FQl
- YUgA==
+ bh=1cEY5hd55vJSlo36RYqQKjeHZFEKX033NGVp/UYRj/8=;
+ b=tBnoU2VVBzi5V5K+tZR98x0MXZwSKvirl2bSxjIKc0KXtqnQbvh+yKeaCi9nddSGJh
+ Kma9jnSojkICY74FsAgLnA1WGSQRqDeIXmmJ0/nKauZbR28VXKNFmy5KD6P69tCl5w9J
+ m/dw7dY0B0JwWxIWaHLhzvjj2lsbk2y8szp2dC0wFUVaRnQmAgexi3l0vlmAjKpfXgjR
+ ACf1g5F5msHzyCnkf9fYBw68faRJg4rrXylz3VHoys3Qy9sxyr35Ha+R3W98cUVTtZRU
+ fVugJ/3A1A3hFMov2umP3Gl2zgnvLIC5FiaNoIx6071JyPP6zz3gH+Pg5HaCDwi1eoEK
+ BU8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769955675; x=1770560475;
+ d=1e100.net; s=20230601; t=1769956069; x=1770560869;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bXdsDxmkWCnNh1bgz3LKjzyhFdoc4oSja/dbdkx5rZQ=;
- b=D8ZKZ0gPGwSCPRLTNH2rnx70RDAA/DS452pTQL+LISkIdbSrfzDRtKxg9r6gcJbIRy
- W2ZVUFFwznBgjZe0wTo+UBEpGrF60tFw18V8arL+mm3L8AU3wQakgOAGWy910xUAs8CG
- zWTp0N4OpvAUEuPa63/t22/Yc9ix6HRYaCQRRBNjOqsvBlks3aUTB9LMJ1OmTBXTmhIb
- I6RxEL/ino3HfFpztiajBJn+W3WOBivnFzt4J03c4PyAghGUap9VMgBViNzNfPeazyvy
- RmIpN0sNBZ/BGhr2A3PdKyf1UIoZ7SkATu0VPXTa7tf1eg2Tt7UZ5KT2fFtuXJDlbvR8
- 5GMw==
+ bh=1cEY5hd55vJSlo36RYqQKjeHZFEKX033NGVp/UYRj/8=;
+ b=gJ/kB2njaJ/r6pCyKyjqbn6G9TRlvUjySqtAa9Ze0BQfer/DmeXROijRPDIF4RgLpK
+ HH+ckYCQ4ZkeRMdWD6pex+EPBO8qJnuN7khUeHmuEupf91PXmHmysAkWUbqS410r4/gm
+ AyaG3SbzomqeSrpxfJ6Y8wfT+dgEQEtDbfq26xZxdZv4idEFlB4urX8wM07sx8Re1qmq
+ QFJv6GGNAuZZxFKp+oXX8fkn6b6Ac/ikBmcnBSJjI8HfEtull7yZ5KlymNJPe61gMl2Y
+ 59fDR2/hFUkZZ8lFhXJf1bZivgpym0j+iXHwSyqi6wo6LnBEVb2vwWcJLcdSQST8RYuC
+ 5vHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXK4Pr3kdXDhaF+fBgKAou694ni/p/Ipkqkb+vCJEBp0c6cGhMIyPYSQH1u5O1mNZn12+zjaSXSIr4d@nongnu.org
-X-Gm-Message-State: AOJu0Yw2bF+7jFdEPMfQmWhI+xj4B4H+ohrllgTlpE2w9O3xoTQoRt/9
- zapV8pTWK35RtD9FgUDUIVf2HNah8Ty534NlMmuVNxWMEN6TMIC7+YxSgTgXFdK6aa0=
-X-Gm-Gg: AZuq6aL+zfQBZVmVtELyRWB0D8FgwDEJryUW/eMjZhF8QBX+Kx9PXFlMzaud/P2OFO0
- sdFI73ggp6qf/hfbEiNKpzHfqxG52GCglNOHVfSJBl2aANRkpC3XnXGZsTVSqQ8AXE0lVs/qTaM
- yS6FFmJUduf3HAEp93p01LrtpEp8IccMA5WiKqXZVmxrmVeg6CoQNYZWqEalcq7v7j/9ALbKHGL
- 8SUMsFwTwMn2pcJbHFhT3O2+lXqSQ2tbJLkU3XfwawYYHd6gzdmUg/DiNd5LE3qqifrAW6+qQyr
- 96SEQs3NAuw4n7yp0iw+AhzQ/IS09z00BnqxnJ8KS6GgHA7nd7efcHBaGpLTPB7vMpi2H7Hh+VX
- SifOAE6MDufXq0tug8qGrMZO6y8gjjSY764dKgTDJSNEnsSf5mVvzriDrpdyOsLljHwuOddYTbu
- lELLfjxXS54V/8Odpx9zzUe+rT07u/soU7a+09eVrClWUvriumNFoNLA==
-X-Received: by 2002:a05:6000:2dc7:b0:430:f58d:40da with SMTP id
- ffacd0b85a97d-435f3a691fcmr12095241f8f.10.1769955674866; 
- Sun, 01 Feb 2026 06:21:14 -0800 (PST)
+ AJvYcCXHb29OJS4ijQdVhJNSU2tHnuMMkv+H87CcWBhLKLTwh5cLEalQMriRKmI2eqCSjWtCeABQhnwtXS8g@nongnu.org
+X-Gm-Message-State: AOJu0Yy9HwkPbRhw/HdslJGgtuLUlR7CsH/JMgIi3BICgRVjKgwk/X/Q
+ 47nqJuMyGgtJgD82LszScf39RZ9edK3gJdmF1o+89p1s2JruZUFHAWpCZB7ZrSx9g6I=
+X-Gm-Gg: AZuq6aJOA8JxGkjtUc7dIhlHB3igdeGX0noSm1Le212/4c47YKU7pG/BnvtO71Crpy1
+ Yv11YVUezH1K8P9BLsjEj8I5I0DcrX+lKZCW5Q1OCcThgUYgZcRCR++7PBkaONoNh+UfDkU8uVA
+ 8Oqsr2ouyTSmBHnBkXSOAocX2omckfqs/6YfnQO+dgpb+caPm6I4/3oI90sbi7O6AifljGvjv+A
+ qghC+l1XxNFezI7sXMIXbXR/KLi7iuufRAHwgW7K9CSFFwZNf+QRqFkxqIeU/9Iqu97FBjmPuvY
+ QOz8AH7Ebfh5CXn1RcGQt3Ibuszh1LJKYx8G3TPZoHj41xPX0sK2UC01Mj7tHhgJpPxdAO+D5tO
+ AxFCvVfch/ueCVush87u5tsrUV3aCDo4d4ao8OLfP5/LxXDk+fk7mdnVYw3uyznOgAltcrY3OcZ
+ pzVC94w6rUaEs2tKgqsGN6+7fg0zhKbAmztIAfrI04lL3wi/p2vL0U5Q==
+X-Received: by 2002:a05:6000:4312:b0:431:907:f324 with SMTP id
+ ffacd0b85a97d-435f3ab3f55mr13360335f8f.61.1769956068677; 
+ Sun, 01 Feb 2026 06:27:48 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10ed952sm37744071f8f.10.2026.02.01.06.21.13
+ ffacd0b85a97d-435e132303fsm37210513f8f.36.2026.02.01.06.27.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 06:21:14 -0800 (PST)
-Message-ID: <a9a6d7a8-31d4-48bc-958e-e35342dbde92@linaro.org>
-Date: Sun, 1 Feb 2026 15:21:13 +0100
+ Sun, 01 Feb 2026 06:27:48 -0800 (PST)
+Message-ID: <479166c0-8135-4c99-a2bb-0532633d384d@linaro.org>
+Date: Sun, 1 Feb 2026 15:27:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rutabaga: improve error handling, fix potential crash
- during init
+Subject: Re: [PATCH] hw/i386/vmmouse: Fix hypercall clobbers
 Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260127122400.100384-1-marcandre.lureau@redhat.com>
+To: Josh Poimboeuf <jpoimboe@kernel.org>, qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Justin Forbes <jforbes@fedoraproject.org>,
+ Alexey Makhalov <alexey.makhalov@broadcom.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <ae0b8f2c574abe8053e742260c794adcaeda975a.1769110562.git.jpoimboe@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260127122400.100384-1-marcandre.lureau@redhat.com>
+In-Reply-To: <ae0b8f2c574abe8053e742260c794adcaeda975a.1769110562.git.jpoimboe@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,26 +109,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/1/26 13:24, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> When virtio_gpu_rutabaga_get_num_capsets() returns 0, virtio_init()
-> isn't called and the device later crashes during realize.
-> ==72545==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x556ad6f7ba9e bp 0x7ffe6958f810 sp 0x7ffe6958f7e0 T0)
-> ==72545==The signal is caused by a READ memory access.
-> ==72545==Hint: address points to the zero page.
-> #0 0x556ad6f7ba9e in virtio_memory_listener_commit ../hw/virtio/virtio.c:4034
-> #1 0x556ad6a24c96 in listener_add_address_space ../system/memory.c:3128
-> #2 0x556ad6a25d15 in memory_listener_register ../system/memory.c:3216
-> #3 0x556ad6f7bf11 in virtio_device_realize ../hw/virtio/virtio.c:4075
-> 
-> Rework error handling of the function to set Error appropriately. 0
-> capset may be ok now.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/display/virtio-gpu-rutabaga.c | 19 +++++++++----------
->   1 file changed, 9 insertions(+), 10 deletions(-)
+Hi,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 22/1/26 20:36, Josh Poimboeuf wrote:
+> Fedora QA reported the following panic:
+> 
+>    BUG: unable to handle page fault for address: 0000000040003e54
+>    #PF: supervisor write access in kernel mode
+>    #PF: error_code(0x0002) - not-present page
+>    PGD 1082ec067 P4D 0
+>    Oops: Oops: 0002 [#1] SMP NOPTI
+>    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.19.0-0.rc4.260108gf0b9d8eb98df.34.fc43.x86_64 #1 PREEMPT(lazy)
+>    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20251119-3.fc43 11/19/2025
+>    RIP: 0010:vmware_hypercall4.constprop.0+0x52/0x90
+>    Code: 48 83 c4 20 5b e9 69 f0 fc fe 8b 05 a0 c1 b2 01 85 c0 74 23 b8 68 58 4d 56 b9 27 00 00 00 31 d2 bb 04 00 00 00 66 ba 58 56 ed <89> 1f 89 0e 41 89 10 5b e9 3c f0 fc fe 6a 00 49 89 f9 45 31 c0 31
+>    RSP: 0018:ff5eeb3240003e40 EFLAGS: 00010046
+>    RAX: 0000000000000000 RBX: 000000000000ffca RCX: 000000000000ffac
+>    RDX: 0000000000000000 RSI: 0000000040003e58 RDI: 0000000040003e54
+>    RBP: ff1e05f3c1204800 R08: ff5eeb3240003e5c R09: 000000009d899c41
+>    R10: 000000000000003d R11: ff5eeb3240003ff8 R12: 0000000000000000
+>    R13: 00000000000000ff R14: ff1e05f3c02f9e00 R15: 000000000000000c
+>    FS:  0000000000000000(0000) GS:ff1e05f489e40000(0000) knlGS:0000000000000000
+>    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>    CR2: 0000000040003e54 CR3: 000000010841d002 CR4: 0000000000771ef0
+>    PKRU: 55555554
+>    Call Trace:
+>     <IRQ>
+>     vmmouse_report_events+0x13e/0x1b0
+>     psmouse_handle_byte+0x15/0x60
+>     ps2_interrupt+0x8a/0xd0
+>     ...
+> 
+> The panic was triggered by dereferencing a bad pointer (RDI) immediately
+> after a VMware hypercall for VMWARE_CMD_ABSPOINTER_DATA in the vmmouse
+> driver:
+> 
+>    ffffffff82135070 <vmware_hypercall4.constprop.0>:
+>    ...
+>    ffffffff821350ac:       b8 68 58 4d 56          mov    $0x564d5868,%eax
+>    ffffffff821350b1:       b9 27 00 00 00          mov    $0x27,%ecx
+>    ffffffff821350b6:       31 d2                   xor    %edx,%edx
+>    ffffffff821350b8:       bb 04 00 00 00          mov    $0x4,%ebx
+>    ffffffff821350bd:       66 ba 58 56             mov    $0x5658,%dx
+>    ffffffff821350c1:       ed                      in     (%dx),%eax	<-- hypercall
+>    ffffffff821350c2:       89 1f                   mov    %ebx,(%rdi)	<-- crash
+> 
+> Reading the disassembly shows that RDI should contain the value of a
+> valid kernel stack address here (0xff5eeb3240003e54).  Instead it
+> contains 0x40003e54, suggesting the hypervisor cleared the upper 32
+> bits.
+> 
+> And indeed, Alexey discovered that QEMU's vmmouse_get_data() and
+> vmmouse_set_data() are only saving/restoring the lower 32 bits, while
+> clearing the upper 32.  Fix that by changing the type of the saved data
+> array from uint32_t to target_ulong.
+> 
+> Fixes: 548df2acc6fc ("VMMouse Emulation, by Anthony Liguori.")
+> Reported-by: Justin Forbes <jforbes@fedoraproject.org>
+> Debugged-by: Alexey Makhalov <alexey.makhalov@broadcom.com>
+> Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+> ---
+>   hw/i386/vmmouse.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
+> index 2ae7f3a242..3bba221d5f 100644
+> --- a/hw/i386/vmmouse.c
+> +++ b/hw/i386/vmmouse.c
+> @@ -72,7 +72,7 @@ struct VMMouseState {
+>       ISAKBDState *i8042;
+>   };
+>   
+> -static void vmmouse_get_data(uint32_t *data)
+> +static void vmmouse_get_data(target_ulong *data)
+>   {
+>       X86CPU *cpu = X86_CPU(current_cpu);
+>       CPUX86State *env = &cpu->env;
+> @@ -82,7 +82,7 @@ static void vmmouse_get_data(uint32_t *data)
+>       data[4] = env->regs[R_ESI]; data[5] = env->regs[R_EDI];
+>   }
+>   
+> -static void vmmouse_set_data(const uint32_t *data)
+> +static void vmmouse_set_data(const target_ulong *data)
+>   {
+>       X86CPU *cpu = X86_CPU(current_cpu);
+>       CPUX86State *env = &cpu->env;
+> @@ -197,7 +197,7 @@ static void vmmouse_disable(VMMouseState *s)
+>       vmmouse_remove_handler(s);
+>   }
+>   
+> -static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
+> +static void vmmouse_data(VMMouseState *s, target_ulong *data, uint32_t size)
+>   {
+>       int i;
+>   
+> @@ -221,7 +221,7 @@ static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
+>   static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
+>   {
+>       VMMouseState *s = opaque;
+> -    uint32_t data[6];
+> +    target_ulong data[6];
+
+Could we use uint64_t instead (also in the callees) and let
+the implicit 32-bit truncation when assigning env->regs[] on
+32-bit guests?
+
+>       uint16_t command;
+>   
+>       vmmouse_get_data(data);
+> @@ -247,7 +247,7 @@ static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
+>               vmmouse_request_absolute(s);
+>               break;
+>           default:
+> -            printf("vmmouse: unknown command %x\n", data[1]);
+> +            printf("vmmouse: unknown command " TARGET_FMT_lx "\n", data[1]);
+>               break;
+>           }
+>           break;
+
 
