@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EDEE65298
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 22:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2C9D172A6
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 22:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmg39-0008BD-5d; Sun, 01 Feb 2026 17:36:11 -0500
+	id 1vmg6S-0000rF-E7; Sun, 01 Feb 2026 17:39:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmg37-0008AD-VR
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:36:09 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmg6Q-0000pU-Rr
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:39:34 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmg36-00017H-Eq
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:36:09 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4806ce0f97bso32121185e9.0
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 14:36:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmg6P-0001a9-Fp
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:39:34 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4806bf39419so29051475e9.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 14:39:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769985367; x=1770590167; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sZCyTFYJKZANSahEQCJ/7qHpG+80EEP4gqA8iJAJZ1c=;
- b=SaICWB00Pa1xEwYvK5klcNiHy4fUVXKeQCsAaKqHhC3nztLFtM/2K8jlVUC9pKZi+3
- 4tuRrEVjY95X93TQr2gUulUxLKRgcn34Wk2zNGta7BmARWwT+y2xlCx+X0HTUcfimN4D
- OWDG+haB56feVi2S3Y10cv8JQtRnGZB6acNZtBZSWkVfaYEAD+PMwqzpaOomQDiNJ+aD
- Dqj6zVb2CHm8acQo1J6jaXoAG6kNWUkZdooDpvoDoKvaO9WfsyDINxeQen9ePKVnE7TX
- U+IivgfPZ5DeScBzu0CG7MocyFknPSCBXj/ZZWB2ghd6pXswcnO0gOpj2Cofyl2GgeB2
- +UFQ==
+ d=linaro.org; s=google; t=1769985571; x=1770590371; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=APsWugfr3D0j2QnkBk0zIOt7OhNfgoHHys78AHDV+Pg=;
+ b=iK8wal7DaFllENJrXOuyJOh8EqJtIfbELk63kJzbApGiJZD71saNvasfMiKgEdLAVD
+ 3AUsTDxMZFFcBCxgKvfc84HPtvv00ISOw9g7z8paT+0P5fnftjD20UoIDR4soZUeF1Kx
+ l7649fv5GOj1n5KWKVYVfNthXo6qjEwG/ub8MlAwkXuot6izMH79LiUm5+tbKFS2eoEJ
+ TGrV9HphcJo3DxKQzQp98A6aZzvnPbelkURmqfetZyE4uNCn9fFWLuBXQabZG13l1c79
+ kxZTFtgpmeihtwlY+chyj5Jiq2/gysI3iGaTDzHuUHr05Q1SH1RcL3LJjLQMbZhTCcIS
+ lZow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769985367; x=1770590167;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sZCyTFYJKZANSahEQCJ/7qHpG+80EEP4gqA8iJAJZ1c=;
- b=s+gjzrTf5cB8lAxR0xCjCeELVYQmICcDN6l4UTurdat1jFfu0Cmb5UlFGNqZqrA2ku
- GJPNHAJ5OYkgIn/PT9e6vJ+nLgnHaGF4toLcFDv+eXwHz7CxYkzmgSel4P1wPzr5YacC
- D6ac9fcIMWG25MOX/XYayQ1kR0pgIA6HpQAecz8N+h1ff5jYv5IjF5R4KTiU26TEDQ+b
- mar2elojeX1vjNjHuhgZ6OxlL/A6hJaTZ2OJXoWE9GV4vcz4xaWfUycIAn6su+21TSmy
- /dX0p5RNpBbyyhouZHyaKn0ocZa1nGgSe5eGL4FY7zhaTKcBwnG51BDtMjYlcFumz8/Y
- dszA==
-X-Gm-Message-State: AOJu0YyiYspyUjkeUNyoWBXeD2wtECig5iafWhxPo7CtIUuSeMxmcAgQ
- GNEVIfq0cuOJsdvua48bHG0NgmESmkARG219oiwEngrv54061sAlt1qhKWcXIhWz3zU=
-X-Gm-Gg: AZuq6aKwKykkt5p6ZKDr2I8z7OvpE+ttZ024hC1qvoAJ/VJ8en0yBcIhSw16h/33lsC
- bs32HeEtVFzZaxrBPwJQAScWeRwDFBr1WVMJ7FTDNHdfzKQD1X31dEQSKuwnLEO0LkBBfvlf+q8
- fPg4sanhQFUnm+rsu9kczBbXQMdf6mlwdhLqFozY38qN9zGNhptERzaAiIuuI+b+ucOaPorYlYp
- GXGpYkOxAhQN1deWsSzDhqdK32gahTdIS9hWq2fsIkGPkroK8NNIZzfEyDymWLBgm4bWQ8FWSAM
- wGNByb5X2VlAe6yyx+5BVX+XyZgnlHxuaSU40nFb3npUnbESubqfZxRDZObgEm5iXlmosefk/OE
- nWlD96ksadUbF8DSv9ikOdycLG75vsy++Fc0kGyDWu1wL3orhVCxJ8P2DPnvdVcoAdsZsbPLr2s
- Ju/8S4XZNiVyJuNY/NPJ7xAiq2RES6sKdbkuI0CvqtNwvNgEpnDiK5WA==
-X-Received: by 2002:a05:600c:474f:b0:480:6ab1:ed0d with SMTP id
- 5b1f17b1804b1-482db452587mr123358635e9.9.1769985366800; 
- Sun, 01 Feb 2026 14:36:06 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1769985571; x=1770590371;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=APsWugfr3D0j2QnkBk0zIOt7OhNfgoHHys78AHDV+Pg=;
+ b=vjPWYqAPkt9Lj6qRie/oiQ1f4MhwANyNP7jCJfgpotrQDO07PYtUncau+YuPSFxqeS
+ nCOAqoC6kRciX0nKofnKHatSCpvpc5NMwL7BGbBx2j8+QJRIsbdm5cMI2sf/PRVRxDRq
+ PCqG/eCkHWDu4A5FANfI1sAYxHNer6EZtpO82n5AbPebyK9e65UKMPWgDjV2t5VfpR9M
+ e9yH0VIc0zfVsbw/3EiqoaJUQaRdmISe0t+cSRH3uwN14VOJL4poDCn14pLkG24xQiK9
+ n1//Tf0lB5Da6jq5dnGh8dXkDWHlP5/aS49t/s4oHHvkA5rmkoqajUcbLXee+cd2w7kx
+ 7ABw==
+X-Gm-Message-State: AOJu0YxWSHPZIvKawhoSSg5awtSpyqRh2PL9syKXOFIfVnPx6f4V5oAL
+ 38l4C7aRMc6nmDvmKS1vUBCmeLNoXUroxDFmotni62sNDUPqhjfvFEhbD7yQIYXTT4744A9QBhi
+ 2q1vd2j01qQ==
+X-Gm-Gg: AZuq6aIgWsDQgfSSMJN+7NhPoEPU8s5JTW6H1oEBMYyIWlJ/mqR2nspuSoQiLB59z1Z
+ z3ftKz0GTHG97mbfxmXQcUtG8wwkitMZK3aVmNlHfSm/WrnCu8cV6e6ghGmV69uUFTSATFGB3b3
+ g77PY5VmilXcCEPG6efZQidcMPHahrsu7mFWvBl7bYO9bvZi3KJ6Dk8OUf+6oNCMi3cNPZgPPjd
+ SjfuIGbo0cc1M8BJlMUYe/UWObEFRGLzs+zrgZ9UoxnaE64iO2Wc8wgIcAwslNp8hLgUrrtoiaA
+ xmlR1EQvPL3IOnlXNK1r7qClR8a+vIaAmaG7EAFyKEOic4bfc8333aATH79b9zf9dHjPhbLTbYC
+ z7qzO98VYLgSsbgyHEw0ln4ZFLLLMyP+JAXEuz+REJotJjiZZoF1ndKbxh7SsBA0yfKUSU1roUo
+ LCyEf4i56mY6bbYdqGbSOePndCgOnK6t6BQw7Y74WCHqGnKXX1/5eaREuEa7ht
+X-Received: by 2002:a05:600c:470b:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-482db2591f5mr130094395e9.3.1769985571123; 
+ Sun, 01 Feb 2026 14:39:31 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-482dbd3953esm92250955e9.4.2026.02.01.14.36.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 14:36:06 -0800 (PST)
-Message-ID: <299f59f7-62c3-42f4-99c4-b7c7cfb111c2@linaro.org>
-Date: Sun, 1 Feb 2026 23:36:04 +0100
+ 5b1f17b1804b1-482db623407sm96821295e9.0.2026.02.01.14.39.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 01 Feb 2026 14:39:30 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/virtio: Pass VirtIODevice pointer to virtio_reset()
+Date: Sun,  1 Feb 2026 23:39:29 +0100
+Message-ID: <20260201223929.78790-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] include/hw/virtio/virtio-access.h: remove target
- specifics define
-Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
- <20260131020100.1115203-3-pierrick.bouvier@linaro.org>
- <20260131124842-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260131124842-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,16 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/1/26 18:48, Michael S. Tsirkin wrote:
-> On Fri, Jan 30, 2026 at 06:00:56PM -0800, Pierrick Bouvier wrote:
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> Performance impact?
-> 
-> the reason we have these is for performance ...
+virtio_reset() expects a VirtIODevice pointer, which
+is what the single caller - virtio_bus_reset - pass.
+Promote the opaque argument to a plain VirtIODevice.
 
-If this is a worry, we can declare the virtio LD/ST helpers in
-VirtIODevice and set them in virtio_reset(); the call chain will
-be even simpler than doing that check on every calls.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/virtio/virtio.h | 2 +-
+ hw/virtio/virtio.c         | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 27cd98d2fe1..fcaa9b03b4a 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -370,7 +370,7 @@ void virtio_queue_set_vector(VirtIODevice *vdev, int n, uint16_t vector);
+ int virtio_queue_set_host_notifier_mr(VirtIODevice *vdev, int n,
+                                       MemoryRegion *mr, bool assign);
+ int virtio_set_status(VirtIODevice *vdev, uint8_t val);
+-void virtio_reset(void *opaque);
++void virtio_reset(VirtIODevice *vdev);
+ void virtio_queue_reset(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_update_irq(VirtIODevice *vdev);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 3dc9423eae9..86fc0e262f7 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3233,9 +3233,8 @@ int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
+     return ret;
+ }
+ 
+-void virtio_reset(void *opaque)
++void virtio_reset(VirtIODevice *vdev)
+ {
+-    VirtIODevice *vdev = opaque;
+     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+     uint64_t features[VIRTIO_FEATURES_NU64S];
+     int i;
+-- 
+2.52.0
 
 
