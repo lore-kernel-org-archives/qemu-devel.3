@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A278E6529D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FFAE65296
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 17:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmbF1-0006Ej-9w; Sun, 01 Feb 2026 12:28:08 -0500
+	id 1vmbF3-0006FN-6k; Sun, 01 Feb 2026 12:28:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmbEs-0006DD-7D
+ id 1vmbEs-0006DE-8K
  for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:27:59 -0500
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmbEo-0001IX-Jw
+ id 1vmbEo-0001Io-Jh
  for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:27:57 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D9920C0157;
- Sun, 01 Feb 2026 20:27:48 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 45816C015B;
+ Sun, 01 Feb 2026 20:27:51 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:765::1:3b])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id lRqPDK1ApmI0-927DpPAq; Sun, 01 Feb 2026 20:27:48 +0300
+ ESMTPSA id lRqPDK1ApmI0-NeaLWHnO; Sun, 01 Feb 2026 20:27:50 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769966868;
- bh=l9Ws7/con5qGwExhfqNpO74ATT2WRhRyicuXZnIFvF4=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=WGQwvJglha4nNEWSrX4P/U86pbg2FT60v6hD5er95oBoZjNC/7k2fJ5t/Igiz6nSB
- Fjnqssau41rS+hObi4XlIUnbTWC9XWoqEuNByWePUhQMrkITtGyzMkBiQETrfmd4mt
- ixljgQMKcOXpj2orWx3YL68Ahe0Y5MD3PfMjro9A=
+ s=default; t=1769966870;
+ bh=Cigj110d2UgIT0XpGz4tB2+q+GOBy+tRTiVbB0csHfg=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=LdLhVS8YTPvaliSPR+7F+CulZkHVU3odNb9DS7a1p2YoB9Zr3xdOTBpyzPUP4XZBJ
+ zK5rSB6luLP6jS83YKsx3GIFDAXWdmb5iZlSLru1cFKWN4n19OHtqzc6fANO8/J36e
+ zECx9uiC7Dkl7GMYkngSTt7/ZBJrVLE5DeVyl9rg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: stefanb@linux.vnet.ibm.com
 Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com,
- vsementsov@yandex-team.ru
-Subject: [PATCH v2 0/3] follow-up for tpm_emulator errp story
-Date: Sun,  1 Feb 2026 20:27:43 +0300
-Message-ID: <20260201172746.404481-1-vsementsov@yandex-team.ru>
+ vsementsov@yandex-team.ru, Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v2 3/3] tpm_emulator: tpm_emulator_set_state_blobs(): move to
+ boolean return
+Date: Sun,  1 Feb 2026 20:27:46 +0300
+Message-ID: <20260201172746.404481-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260201172746.404481-1-vsementsov@yandex-team.ru>
+References: <20260201172746.404481-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.72;
@@ -73,24 +76,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+The returned error is only used to check for success, so no reason
+to use specific errno values.
 
-Here are fix and small enhancements, following comments on
-already merged "tmp_emulator: improve and fix use of errp"
-by Markus.
+Also, this is the only function with -errno contract in the file,
+so converting it simplifies the whole file from three types of
+contract (0/-1, 0/-errno, true/false) to only two (0/-1, true/false).
 
-v2:
-- add r-bs
-- rebase on master
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+---
+ backends/tpm/tpm_emulator.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-Vladimir Sementsov-Ogievskiy (3):
-  tpm_emulator: print error on error-ignore path
-  tpm_emulator: drop direct use of errno variable
-  tpm_emulator: tpm_emulator_set_state_blobs(): move to boolean return
-
- backends/tpm/tpm_emulator.c | 58 +++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
-
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 79f3e6b1f2..3c62bfa3ed 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -885,10 +885,8 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+ 
+ /*
+  * Set all the TPM state blobs.
+- *
+- * Returns a negative errno code in case of error.
+  */
+-static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
++static bool tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+ {
+     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+     TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
+@@ -897,7 +895,7 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+ 
+     if (tpm_emulator_stop_tpm(tb, errp) < 0) {
+         trace_tpm_emulator_set_state_blobs_error("Could not stop TPM");
+-        return -EIO;
++        return false;
+     }
+ 
+     if (tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_PERMANENT,
+@@ -909,12 +907,12 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+         tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_SAVESTATE,
+                                     &state_blobs->savestate,
+                                     state_blobs->savestate_flags, errp) < 0) {
+-        return -EIO;
++        return false;
+     }
+ 
+     trace_tpm_emulator_set_state_blobs_done();
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static int tpm_emulator_pre_save(void *opaque)
+@@ -959,8 +957,7 @@ static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+     TPMBackend *tb = opaque;
+     int ret;
+ 
+-    ret = tpm_emulator_set_state_blobs(tb, errp);
+-    if (ret < 0) {
++    if (!tpm_emulator_set_state_blobs(tb, errp)) {
+         return false;
+     }
+ 
 -- 
 2.52.0
 
