@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665BCE6529D
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 16:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8435FE65298
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 16:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmaBV-0001Cu-Ci; Sun, 01 Feb 2026 11:20:25 -0500
+	id 1vmaBU-0001By-3S; Sun, 01 Feb 2026 11:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBO-0001AZ-C2
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:18 -0500
+ id 1vmaBO-0001BG-Qf
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:20 -0500
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBJ-0005YT-Pr
+ id 1vmaBM-0005Z5-Ct
  for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:18 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3D302807DC;
- Sun, 01 Feb 2026 19:20:12 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1F45A80818;
+ Sun, 01 Feb 2026 19:20:15 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:765::1:3b])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4Kp2C46Aq8c0-gTbaFVOH; Sun, 01 Feb 2026 19:20:11 +0300
+ ESMTPSA id 4Kp2C46Aq8c0-yWITa1ib; Sun, 01 Feb 2026 19:20:13 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769962811;
- bh=SwD49Svyd1/6kpEmGERECJwjoVPTQ54wE2SU9wfUGPo=;
+ s=default; t=1769962813;
+ bh=lJn8sPo65PFunVLi3WT+r54D/oVubZHAgxhDA907cCA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Vih7Kftq2FvUwEhSJrFBnmY8ZYDWm4yXRpJdMMxwXzqCkMX3021gTH4H5sjlYdQa2
- +zuXzBr1KCCxOHCgBkRP+8B8ML22ogrEpBylqlb4OxDGA2rju1upjAEWm8cc3VVCwm
- inYJm6Zyn3fu3Ar4JNrtzYbGfHMDEf9PAwpAnol4=
+ b=qjZCi5rTqQaw3xgLQcKsOnWeGS0myah9OxeBBksNmcvji1s7bHnnlGGUMx1CsCZ20
+ qYNicViDpqG7U//zPnZ8pQA8eP34aHJWEjGGqmdIyMCGko7iINlLBFZcg1fRHHG01h
+ qrG31mIFK4+jyb5k44xpB6GmTrKMPOmIDFcoZdmk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -49,9 +49,9 @@ Cc: pbonzini@redhat.com, berrange@redhat.com, thuth@redhat.com,
  davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru, leiyang@redhat.com,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: [PATCH v10 5/8] virtio-net: support backend-transfer migration
-Date: Sun,  1 Feb 2026 19:19:57 +0300
-Message-ID: <20260201162001.296328-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v10 8/8] tests/functional: add test_tap_migration
+Date: Sun,  1 Feb 2026 19:20:00 +0300
+Message-ID: <20260201162001.296328-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260201162001.296328-1-vsementsov@yandex-team.ru>
 References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
@@ -80,291 +80,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add virtio-net option backend-transfer, which is true by default,
-but false for older machine types, which doesn't support the feature.
-
-For backend-transfer migration, both global migration parameter
-backend-transfer and virtio-net backend-transfer option should be
-set to true.
-
-With the parameters enabled (both on source and target, of-course), and
-with unix-socket used as migration-channel, we do "migrate" the
-virtio-net backend - TAP device, with all its fds.
-
-This way management tool should not care about creating new TAP, and
-should not handle switching to it. Migration downtime become shorter.
-
-Support for TAP will come in the next commit.
+Add test for a new backend-transfer migration of virtio-net/tap, with fd
+passing through unix socket.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/core/machine.c              |   4 +-
- hw/net/virtio-net.c            | 137 ++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-net.h |   2 +
- include/net/net.h              |   2 +
- 4 files changed, 143 insertions(+), 2 deletions(-)
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_tap_migration.py | 401 ++++++++++++++++++
+ 2 files changed, 402 insertions(+)
+ create mode 100644 tests/functional/x86_64/test_tap_migration.py
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 6411e68856..cc99287232 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,7 +38,9 @@
- #include "hw/acpi/generic_event_device.h"
- #include "qemu/audio.h"
- 
--GlobalProperty hw_compat_10_2[] = {};
-+GlobalProperty hw_compat_10_2[] = {
-+    { TYPE_VIRTIO_NET, "backend-transfer", "false" },
-+};
- const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
- 
- GlobalProperty hw_compat_10_1[] = {
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 512a7c02c9..9e3f75031a 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -38,8 +38,10 @@
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
-+#include "system/runstate.h"
- #include "system/replay.h"
- #include "trace.h"
- #include "monitor/qdev.h"
-@@ -3061,7 +3063,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     n->multiqueue = multiqueue;
-     virtio_net_change_num_queues(n, max * 2 + 1);
- 
--    virtio_net_set_queue_pairs(n);
-+    /*
-+     * virtio_net_set_multiqueue() called from set_features(0) on early
-+     * reset, when peer may wait for incoming (and is not initialized
-+     * yet).
-+     * Don't worry about it: virtio_net_set_queue_pairs() will be called
-+     * later form virtio_net_post_load_device(), and anyway will be
-+     * noop for local incoming migration with live backend passing.
-+     */
-+    if (!n->peers_wait_incoming) {
-+        virtio_net_set_queue_pairs(n);
-+    }
- }
- 
- static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-@@ -3090,6 +3102,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
- 
-     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-+    if (n->peers_wait_incoming) {
-+        /*
-+         * Excessive feature set is OK for early initialization when
-+         * we wait for local incoming migration: actual guest-negotiated
-+         * features will come with migration stream anyway. And we are sure
-+         * that we support same host-features as source, because the backend
-+         * is the same (the same TAP device, for example).
-+         */
-+        return;
-+    }
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index f78eec5e6c..d23b0cc727 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -36,4 +36,5 @@ tests_x86_64_system_thorough = [
+   'vfio_user_client',
+   'virtio_balloon',
+   'virtio_gpu',
++  'tap_migration',
+ ]
+diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
+new file mode 100644
+index 0000000000..0263843fd0
+--- /dev/null
++++ b/tests/functional/x86_64/test_tap_migration.py
+@@ -0,0 +1,401 @@
++#!/usr/bin/env python3
++#
++# Functional test that tests TAP local migration
++# with fd passing
++#
++# Copyright (c) Yandex Technologies LLC, 2026
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-     if (!peer_has_vnet_hdr(n)) {
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-@@ -3181,6 +3204,18 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-     }
- }
- 
-+static bool virtio_net_update_host_features(VirtIONet *n, Error **errp)
-+{
-+    ERRP_GUARD();
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++import os
++import time
++import subprocess
++from subprocess import run
++import signal
++from typing import Tuple
 +
-+    peer_test_vnet_hdr(n);
++from qemu_test import (
++    LinuxKernelTest,
++    Asset,
++    exec_command_and_wait_for_pattern,
++)
++from qemu_test.decorators import skipWithoutSudo
 +
-+    virtio_net_get_features(vdev, &vdev->host_features, errp);
++GUEST_IP = "10.0.1.2"
++GUEST_IP_MASK = f"{GUEST_IP}/24"
++GUEST_MAC = "d6:0d:75:f8:0f:b7"
++HOST_IP = "10.0.1.1"
++HOST_IP_MASK = f"{HOST_IP}/24"
++TAP_ID = "tap0"
++TAP_ID2 = "tap1"
++TAP_MAC = "e6:1d:44:b5:03:5d"
 +
-+    return !*errp;
-+}
 +
- static int virtio_net_post_load_device(void *opaque, int version_id)
- {
-     VirtIONet *n = opaque;
-@@ -3302,6 +3337,9 @@ struct VirtIONetMigTmp {
-     uint16_t        curr_queue_pairs_1;
-     uint8_t         has_ufo;
-     uint32_t        has_vnet_hdr;
++def ip(args, check=True) -> None:
++    """Run ip command with sudo"""
++    run(["sudo", "ip"] + args, check=check)
 +
-+    NetClientState *ncs;
-+    uint32_t max_queue_pairs;
- };
- 
- /* The 2nd and subsequent tx_waiting flags are loaded later than
-@@ -3571,6 +3609,57 @@ static const VMStateDescription vhost_user_net_backend_state = {
-     }
- };
- 
-+static bool virtio_net_is_backend_transfer(void *opaque, int version_id)
-+{
-+    VirtIONet *n = opaque;
 +
-+    return migrate_backend_transfer() && n->backend_transfer;
-+}
++def del_tap(tap_name: str = TAP_ID) -> None:
++    ip(["tuntap", "del", tap_name, "mode", "tap", "multi_queue"], check=False)
 +
-+static int virtio_net_nic_pre_save(void *opaque)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
 +
-+    tmp->ncs = tmp->parent->nic->ncs;
-+    tmp->max_queue_pairs = tmp->parent->max_queue_pairs;
++def init_tap(tap_name: str = TAP_ID, with_ip: bool = True) -> None:
++    ip(["tuntap", "add", "dev", tap_name, "mode", "tap", "multi_queue"])
++    if with_ip:
++        ip(["link", "set", "dev", tap_name, "address", TAP_MAC])
++        ip(["addr", "add", HOST_IP_MASK, "dev", tap_name])
++    ip(["link", "set", tap_name, "up"])
 +
-+    return 0;
-+}
 +
-+static int virtio_net_nic_pre_load(void *opaque)
-+{
-+    /* Reuse the pointer setup from save */
-+    virtio_net_nic_pre_save(opaque);
++def switch_network_to_tap2() -> None:
++    ip(["link", "set", TAP_ID2, "down"])
++    ip(["link", "set", TAP_ID, "down"])
++    ip(["addr", "delete", HOST_IP_MASK, "dev", TAP_ID])
++    ip(["link", "set", "dev", TAP_ID2, "address", TAP_MAC])
++    ip(["addr", "add", HOST_IP_MASK, "dev", TAP_ID2])
++    ip(["link", "set", TAP_ID2, "up"])
 +
-+    return 0;
-+}
 +
-+static int virtio_net_nic_post_load(void *opaque, int version_id)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
-+    Error *local_err = NULL;
++def parse_ping_line(line: str) -> float:
++    # suspect lines like
++    # [1748524876.590509] 64 bytes from 94.245.155.3 \
++    #      (94.245.155.3): icmp_seq=1 ttl=250 time=101 ms
++    spl = line.split()
++    return float(spl[0][1:-1])
 +
-+    if (!virtio_net_update_host_features(tmp->parent, &local_err)) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
 +
-+    return 0;
-+}
++def parse_ping_output(out) -> Tuple[bool, float, float]:
++    lines = [x for x in out.split("\n") if x.startswith("[")]
 +
-+static const VMStateDescription vmstate_virtio_net_nic = {
-+    .name      = "virtio-net-nic",
-+    .pre_load  = virtio_net_nic_pre_load,
-+    .pre_save  = virtio_net_nic_pre_save,
-+    .post_load  = virtio_net_nic_post_load,
-+    .fields    = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(ncs, struct VirtIONetMigTmp,
-+                              max_queue_pairs, 0, vmstate_net_peer_backend,
-+                              NetClientState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
++    try:
++        first_no_ans = next(
++            (ind for ind in range(len(lines)) if lines[ind][20:26] == "no ans")
++        )
++    except StopIteration:
++        return False, parse_ping_line(lines[0]), parse_ping_line(lines[-1])
 +
- static const VMStateDescription vmstate_virtio_net_device = {
-     .name = "virtio-net-device",
-     .version_id = VIRTIO_NET_VM_VERSION,
-@@ -3602,6 +3691,9 @@ static const VMStateDescription vmstate_virtio_net_device = {
-          * but based on the uint.
-          */
-         VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
-+        VMSTATE_WITH_TMP_TEST(VirtIONet, virtio_net_is_backend_transfer,
-+                              struct VirtIONetMigTmp,
-+                              vmstate_virtio_net_nic),
-         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
-                          vmstate_virtio_net_has_vnet),
-         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
-@@ -3866,6 +3958,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
- }
- 
-+static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
-+                                                 Error **errp)
-+{
-+    bool has_waiting = false;
-+    bool has_not_waiting = false;
++    last_no_ans = next(
++        ind
++        for ind in range(len(lines) - 1, -1, -1)
++        if lines[ind][20:26] == "no ans"
++    )
 +
-+    for (int i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *peer = n->nic->ncs[i].peer;
-+        if (!peer) {
-+            continue;
++    return (
++        True,
++        parse_ping_line(lines[first_no_ans]),
++        parse_ping_line(lines[last_no_ans]),
++    )
++
++
++def wait_migration_finish(source_vm, target_vm):
++    migr_events = (
++        ("MIGRATION", {"data": {"status": "completed"}}),
++        ("MIGRATION", {"data": {"status": "failed"}}),
++    )
++
++    source_e = source_vm.events_wait(migr_events)["data"]
++    target_e = target_vm.events_wait(migr_events)["data"]
++
++    source_s = source_vm.cmd("query-status")["status"]
++    target_s = target_vm.cmd("query-status")["status"]
++
++    assert (
++        source_e["status"] == "completed"
++        and target_e["status"] == "completed"
++        and source_s == "postmigrate"
++        and target_s == "paused"
++    ), f"""Migration failed:
++    SRC status: {source_s}
++    SRC event: {source_e}
++    TGT status: {target_s}
++    TGT event:{target_e}"""
++
++
++@skipWithoutSudo()
++class TAPFdMigration(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        (
++            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
++            "/31/Server/x86_64/os/images/pxeboot/vmlinuz"
++        ),
++        "d4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129",
++    )
++
++    ASSET_INITRD = Asset(
++        (
++            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
++            "/31/Server/x86_64/os/images/pxeboot/initrd.img"
++        ),
++        "277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b",
++    )
++
++    ASSET_ALPINE_ISO = Asset(
++        (
++            "https://dl-cdn.alpinelinux.org/"
++            "alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
++        ),
++        "96d1b44ea1b8a5a884f193526d92edb4676054e9fa903ad2f016441a0fe13089",
++    )
++
++    def setUp(self):
++        super().setUp()
++
++        init_tap()
++
++        self.outer_ping_proc = None
++        self.shm_path = None
++
++    def tearDown(self):
++        try:
++            del_tap(TAP_ID)
++            del_tap(TAP_ID2)
++
++            if self.outer_ping_proc:
++                self.stop_outer_ping()
++
++            if self.shm_path:
++                os.unlink(self.shm_path)
++        finally:
++            super().tearDown()
++
++    def start_outer_ping(self) -> None:
++        assert self.outer_ping_proc is None
++        self.outer_ping_log = self.scratch_file("ping.log")
++        with open(self.outer_ping_log, "w") as f:
++            self.outer_ping_proc = subprocess.Popen(
++                ["ping", "-i", "0", "-O", "-D", GUEST_IP],
++                text=True,
++                stdout=f,
++            )
++
++    def stop_outer_ping(self) -> str:
++        assert self.outer_ping_proc
++        self.outer_ping_proc.send_signal(signal.SIGINT)
++
++        self.outer_ping_proc.communicate(timeout=5)
++        self.outer_ping_proc = None
++
++        with open(self.outer_ping_log) as f:
++            return f.read()
++
++    def stop_ping_and_check(self, stop_time, resume_time):
++        ping_res = self.stop_outer_ping()
++
++        discon, a, b = parse_ping_output(ping_res)
++
++        if not discon:
++            text = (
++                f"STOP: {stop_time}, RESUME: {resume_time}," f"PING: {a} - {b}"
++            )
++            if a > stop_time or b < resume_time:
++                self.fail(f"PING failed: {text}")
++            self.log.info(f"PING: no packets lost: {text}")
++            return
++
++        text = (
++            f"STOP: {stop_time}, RESUME: {resume_time},"
++            f"PING: disconnect: {a} - {b}"
++        )
++        self.log.info(text)
++        eps = 0.01
++        if a < stop_time - eps or b > resume_time + eps:
++            self.fail(text)
++
++    def one_ping_from_guest(self, vm) -> None:
++        exec_command_and_wait_for_pattern(
++            self,
++            f"ping -c 1 -W 1 {HOST_IP}",
++            "1 packets transmitted, 1 packets received",
++            "1 packets transmitted, 0 packets received",
++            vm=vm,
++        )
++        self.wait_for_console_pattern("# ", vm=vm)
++
++    def one_ping_from_host(self) -> None:
++        run(["ping", "-c", "1", "-W", "1", GUEST_IP])
++
++    def setup_shared_memory(self):
++        self.shm_path = f"/dev/shm/qemu_test_{os.getpid()}"
++
++        try:
++            with open(self.shm_path, "wb") as f:
++                f.write(b"\0" * (1024 * 1024 * 1024))  # 1GB
++        except Exception as e:
++            self.fail(f"Failed to create shared memory file: {e}")
++
++    def prepare_and_launch_vm(
++        self, shm_path, vhost, incoming=False, vm=None, backend_transfer=True
++    ):
++        if not vm:
++            vm = self.vm
++
++        vm.set_console()
++        vm.add_args("-accel", "kvm")
++        vm.add_args("-device", "pcie-pci-bridge,id=pci.1,bus=pcie.0")
++        vm.add_args("-m", "1G")
++
++        vm.add_args(
++            "-object",
++            f"memory-backend-file,id=ram0,size=1G,mem-path={shm_path},share=on",
++        )
++        vm.add_args("-machine", "memory-backend=ram0")
++
++        vm.add_args(
++            "-drive",
++            f"file={self.ASSET_ALPINE_ISO.fetch()},media=cdrom,format=raw",
++        )
++
++        vm.add_args("-S")
++
++        if incoming:
++            vm.add_args("-incoming", "defer")
++
++        vm_s = "target" if incoming else "source"
++        self.log.info(f"Launching {vm_s} VM")
++        vm.launch()
++
++        if not backend_transfer:
++            tap_name = TAP_ID2 if incoming else TAP_ID
++        else:
++            tap_name = TAP_ID
++
++        self.add_virtio_net(vm, vhost, tap_name, backend_transfer, incoming)
++
++        self.set_migration_capabilities(vm, backend_transfer)
++
++    def add_virtio_net(self, vm, vhost: bool, tap_name: str,
++                       backend_transfer: bool, incoming: bool):
++        incoming_fds = backend_transfer and incoming
++        netdev_params = {
++            "id": "netdev.1",
++            "vhost": vhost,
++            "type": "tap",
++            "ifname": tap_name,
++            "queues": 4,
++            "vnet_hdr": True,
++            "incoming-fds": incoming_fds,
 +        }
 +
-+        if (peer->info->is_wait_incoming &&
-+            peer->info->is_wait_incoming(peer)) {
-+            has_waiting = true;
-+        } else {
-+            has_not_waiting = true;
-+        }
++        if not incoming_fds:
++            netdev_params["script"] = "no"
++            netdev_params["downscript"] = "no"
 +
-+        if (has_waiting && has_not_waiting) {
-+            error_setg(errp, "Mixed peer states: some peers wait for incoming "
-+                       "migration while others don't");
-+            return false;
-+        }
-+    }
++        vm.cmd("netdev_add", netdev_params)
 +
-+    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
-+        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
-+                   "migration.");
-+        return false;
-+    }
++        vm.cmd(
++            "device_add",
++            driver="virtio-net-pci",
++            romfile="",
++            id="vnet.1",
++            netdev="netdev.1",
++            mq=True,
++            vectors=18,
++            bus="pci.1",
++            mac=GUEST_MAC,
++            disable_legacy="off",
++            backend_transfer=backend_transfer,
++        )
 +
-+    *waiting = has_waiting;
-+    return true;
-+}
++    def set_migration_capabilities(self, vm, backend_transfer=True):
++        vm.cmd("migrate-set-capabilities", { "capabilities": [
++            {"capability": "events", "state": True},
++            {"capability": "x-ignore-shared", "state": True},
++        ]})
++        vm.cmd("migrate-set-parameters", {
++            "backend-transfer": backend_transfer
++        })
 +
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4003,6 +4131,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         n->nic->ncs[i].do_not_pad = true;
-     }
- 
-+    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
-+                                              errp)) {
-+        virtio_cleanup(vdev);
-+        return;
-+    }
++    def setup_guest_network(self) -> None:
++        exec_command_and_wait_for_pattern(self, "ip addr", "# ")
++        exec_command_and_wait_for_pattern(
++            self,
++            f"ip addr add {GUEST_IP_MASK} dev eth0 && "
++            "ip link set eth0 up && echo OK",
++            "OK",
++        )
++        self.wait_for_console_pattern("# ")
 +
-     peer_test_vnet_hdr(n);
-     if (peer_has_vnet_hdr(n)) {
-         n->host_hdr_len = sizeof(struct virtio_net_hdr);
-@@ -4314,6 +4448,7 @@ static const Property virtio_net_properties[] = {
-                                host_features_ex,
-                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
-                                true),
-+    DEFINE_PROP_BOOL("backend-transfer", VirtIONet, backend_transfer, true),
- };
- 
- static void virtio_net_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 5b8ab7bda7..14a5c7c77b 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -231,6 +231,8 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    bool peers_wait_incoming;
-+    bool backend_transfer;
- };
- 
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/include/net/net.h b/include/net/net.h
-index aa34043b1a..d4cf399d4a 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -82,6 +82,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
- typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
-+typedef bool (IsWaitIncoming)(NetClientState *);
- typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
- 
- typedef struct NetClientInfo {
-@@ -110,6 +111,7 @@ typedef struct NetClientInfo {
-     NetAnnounce *announce;
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-+    IsWaitIncoming *is_wait_incoming;
-     GetVHostNet *get_vhost_net;
-     const VMStateDescription *backend_vmsd;
- } NetClientInfo;
++    def do_test_tap_fd_migration(self, vhost, backend_transfer=True):
++        self.require_accelerator("kvm")
++        self.set_machine("q35")
++
++        socket_dir = self.socket_dir()
++        migration_socket = os.path.join(socket_dir.name, "migration.sock")
++
++        self.setup_shared_memory()
++
++        # Setup second TAP if needed
++        if not backend_transfer:
++            del_tap(TAP_ID2)
++            init_tap(TAP_ID2, with_ip=False)
++
++        self.prepare_and_launch_vm(
++            self.shm_path, vhost, backend_transfer=backend_transfer
++        )
++        self.vm.cmd("cont")
++        self.wait_for_console_pattern("login:")
++        exec_command_and_wait_for_pattern(self, "root", "# ")
++
++        self.setup_guest_network()
++
++        self.one_ping_from_guest(self.vm)
++        self.one_ping_from_host()
++        self.start_outer_ping()
++
++        # Get some successful pings before migration
++        time.sleep(0.5)
++
++        target_vm = self.get_vm(name="target")
++        self.prepare_and_launch_vm(
++            self.shm_path,
++            vhost,
++            incoming=True,
++            vm=target_vm,
++            backend_transfer=backend_transfer,
++        )
++
++        target_vm.cmd("migrate-incoming", {"uri": f"unix:{migration_socket}"})
++
++        self.log.info("Starting migration")
++        freeze_start = time.time()
++        self.vm.cmd("migrate", {"uri": f"unix:{migration_socket}"})
++
++        self.log.info("Waiting for migration completion")
++        wait_migration_finish(self.vm, target_vm)
++
++        # Switch network to tap1 if not using backend transfer
++        if not backend_transfer:
++            switch_network_to_tap2()
++
++        target_vm.cmd("cont")
++        freeze_end = time.time()
++
++        self.vm.shutdown()
++
++        self.log.info("Verifying PING on target VM after migration")
++        self.one_ping_from_guest(target_vm)
++        self.one_ping_from_host()
++
++        # And a bit more pings after source shutdown
++        time.sleep(0.3)
++        self.stop_ping_and_check(freeze_start, freeze_end)
++
++        target_vm.shutdown()
++
++    def test_tap_fd_migration(self):
++        self.do_test_tap_fd_migration(False)
++
++    def test_tap_fd_migration_vhost(self):
++        self.do_test_tap_fd_migration(True)
++
++    def test_tap_new_tap_migration(self):
++        self.do_test_tap_fd_migration(False, backend_transfer=False)
++
++    def test_tap_new_tap_migration_vhost(self):
++        self.do_test_tap_fd_migration(True, backend_transfer=False)
++
++
++if __name__ == "__main__":
++    LinuxKernelTest.main()
 -- 
 2.52.0
 
