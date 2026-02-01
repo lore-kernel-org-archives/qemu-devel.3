@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0759E6529E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 16:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA01E65298
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 16:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmaBO-0001A7-Ap; Sun, 01 Feb 2026 11:20:18 -0500
+	id 1vmaBS-0001Bq-Oy; Sun, 01 Feb 2026 11:20:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBL-00019R-Fq
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:15 -0500
+ id 1vmaBO-0001AT-64
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:18 -0500
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBI-0005XE-Go
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:15 -0500
+ id 1vmaBK-0005Ye-8V
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:17 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C1299807BA;
- Sun, 01 Feb 2026 19:20:07 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E7CA8807F6;
+ Sun, 01 Feb 2026 19:20:12 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:765::1:3b])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4Kp2C46Aq8c0-OCOkfOSe; Sun, 01 Feb 2026 19:20:05 +0300
+ ESMTPSA id 4Kp2C46Aq8c0-ufP40ES0; Sun, 01 Feb 2026 19:20:12 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769962805;
- bh=gOApMt0ao51SCjGtaGgLfykJeGe4viRGJu22sKRZEb4=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=jIWAUGJyeiR8tHuM0BNMZe6p2DdC6a+NCHPdl/k2fkiefZfAxDBY+MLpu4CbE+9JN
- sueQuEhyyK109W8/vmFKPx3nB9kRcTBcvS3+IQIGQg+/0Hw3U7aZmmfgx46XdtwlBK
- 06K3HCeqTTgb2OI03ZXPu7ZkxhMr+PcLo8JFCdt0=
+ s=default; t=1769962812;
+ bh=P1HaemTso6fzJD5byCYPxAqcpX9YE+ug+soY+b3svcs=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=b3TWEPpZeTlsTYgHvsbKfDPZeiEsb6RrhPwzHmqqD1P5iRy/krROqaOMMSbRJcEmj
+ ww0oE1D2h5wWh/3DkBQFfYwJt2g/OviyLVtNkKiTNazjsDW4BVKIezLzs5dEzs9Rdt
+ pYXeuMAkz7RxAXVNH51C6lSJ3aVYA5m+AvEcffxM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -49,12 +49,13 @@ Cc: pbonzini@redhat.com, berrange@redhat.com, thuth@redhat.com,
  davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru, leiyang@redhat.com,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: [PATCH v10 0/8] virtio-net: live-TAP local migration
-Date: Sun,  1 Feb 2026 19:19:52 +0300
-Message-ID: <20260201162001.296328-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v10 6/8] net/tap: support backend-transfer migration
+Date: Sun,  1 Feb 2026 19:19:58 +0300
+Message-ID: <20260201162001.296328-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260201162001.296328-1-vsementsov@yandex-team.ru>
+References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -79,89 +80,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+Support transferring of TAP state (including open fd) through
+migration stream.
 
-Here is a new migration parameter backend-transfer, which allows to
-enable local migration of TAP virtio-net backend (and maybe other
-devices and backends in future), including its properties and open
-fds.
+Add new option, incoming-fds, which should be set to true to
+trigger new logic.
 
-With this new option, management software doesn't need to initialize
-new TAP and do a switch to it. Nothing should be done around
-virtio-net in local migration: it just migrates and continues to use
-same TAP device. So we avoid extra logic in management software, extra
-allocations in kernel (for new TAP), and corresponding extra delay in
-migration downtime.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ net/tap.c     | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ qapi/net.json |  6 +++-
+ 2 files changed, 92 insertions(+), 2 deletions(-)
 
-v10:
-
-reworked interface:
-
-1. backend-transfer migration parameter - simple boolean
-
-2. backend-transfer option for virtio-net device - in combination with
-[1] it enables the feature for concrete virtio-net device
-
-3. incoming-fds option for TAP - to skip any open() calls and setting
-up the fd, and instead wait for incoming FD.
-
-Why we need [1]? To be able to simply choose between local and remote
-migration, not touching device options.
-
-Why we need [2]? Because otherwise we have to significantly complicate
-migration paremeter (to be a list of QOM paths of devices to enable
-backend-transfer for), which doesn't look good architectural design
-(we don't want to end with migration parameters like
-
-feature1 = [list of QOM paths],
-feature2 = [list of QOM paths]k,
-...
-
-Why we need [3]? To avoid complicated logic of postponing the whole
-initialization of TAP up to pre-incoming point (see
-"[PATCH v9 0/9] net/tap: postpone connect"), and to make the whole
-feature more reliable: with such a parameter user is sure, that
-backend code will not do any open()/connect(), etc, which may
-influence running source vm. Automatic logic of 3 stage postponing
-in v9 (first, we postpone initialization up to attaching to frontend,
-then, if it's a virtio-net, it take ownership and postpone initializing
-of backend up to pre-incoming point (where we know migration
-parameters), and finally if it's a backend-transfer, postpone it up
-to post-load) can't be so reliable. Misconfiguration on target may
-lead to breaking source vm. And with separate parameter, everything
-becomes a lot simpler and reliable.
-
-
-The series is based on
-"[PATCH v2 00/12] net: refactoring and fixes"
-Based-on: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
-
-Vladimir Sementsov-Ogievskiy (8):
-  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
-  net/tap: move vhost initialization to tap_setup_vhost()
-  qapi: add backend-transfer migration parameter
-  net: introduce vmstate_net_peer_backend
-  virtio-net: support backend-transfer migration
-  net/tap: support backend-transfer migration
-  tests/functional: add skipWithoutSudo() decorator
-  tests/functional: add test_tap_migration
-
- hw/core/machine.c                             |   4 +-
- hw/net/virtio-net.c                           | 137 +++++-
- include/hw/virtio/virtio-net.h                |   2 +
- include/migration/misc.h                      |   2 +
- include/net/net.h                             |   6 +
- migration/options.c                           |  18 +-
- net/net.c                                     |  47 ++
- net/tap.c                                     | 185 ++++++--
- qapi/migration.json                           |  13 +-
- qapi/net.json                                 |   6 +-
- tests/functional/qemu_test/decorators.py      |  16 +
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 401 ++++++++++++++++++
- 13 files changed, 792 insertions(+), 46 deletions(-)
- create mode 100644 tests/functional/x86_64/test_tap_migration.py
-
+diff --git a/net/tap.c b/net/tap.c
+index bd19c71c42..57d4d2d9f8 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -393,6 +393,65 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+     return s->vhost_net;
+ }
+ 
++static bool tap_is_wait_incoming(NetClientState *nc)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->fd == -1;
++}
++
++static int tap_pre_load(void *opaque)
++{
++    TAPState *s = opaque;
++
++    if (s->fd != -1) {
++        error_report(
++            "TAP is already initialized and cannot receive incoming fd");
++        return -EINVAL;
++    }
++
++    return 0;
++}
++
++static bool tap_setup_vhost(TAPState *s, Error **errp);
++
++static int tap_post_load(void *opaque, int version_id)
++{
++    TAPState *s = opaque;
++    Error *local_err = NULL;
++
++    tap_read_poll(s, true);
++
++    if (s->fd < 0) {
++        return -1;
++    }
++
++    if (!tap_setup_vhost(s, &local_err)) {
++        error_prepend(&local_err,
++                      "Failed to setup vhost during TAP post-load: ");
++        error_report_err(local_err);
++        return -1;
++    }
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_tap = {
++    .name = "net-tap",
++    .pre_load = tap_pre_load,
++    .post_load = tap_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_FD(fd, TAPState),
++        VMSTATE_BOOL(using_vnet_hdr, TAPState),
++        VMSTATE_BOOL(has_ufo, TAPState),
++        VMSTATE_BOOL(has_uso, TAPState),
++        VMSTATE_BOOL(has_tunnel, TAPState),
++        VMSTATE_BOOL(enabled, TAPState),
++        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ /* fd support */
+ 
+ static NetClientInfo net_tap_info = {
+@@ -412,7 +471,9 @@ static NetClientInfo net_tap_info = {
+     .set_vnet_le = tap_set_vnet_le,
+     .set_vnet_be = tap_set_vnet_be,
+     .set_steering_ebpf = tap_set_steering_ebpf,
++    .is_wait_incoming = tap_is_wait_incoming,
+     .get_vhost_net = tap_get_vhost_net,
++    .backend_vmsd = &vmstate_tap,
+ };
+ 
+ static TAPState *net_tap_fd_init(NetClientState *peer,
+@@ -907,6 +968,14 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
++    if (tap->incoming_fds &&
++        (tap->fd || tap->fds || tap->helper || tap->script ||
++         tap->downscript)) {
++        error_setg(errp, "incoming-fds is incompatible with "
++                   "fd=, fds=, helper=, script=, downscript=");
++        return -1;
++    }
++
+     queues = tap_parse_fds_and_queues(tap, &fds, errp);
+     if (queues < 0) {
+         return -1;
+@@ -925,7 +994,24 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         goto fail;
+     }
+ 
+-    if (fds) {
++    if (tap->incoming_fds) {
++        for (i = 0; i < queues; i++) {
++            NetClientState *nc;
++            TAPState *s;
++
++            nc = qemu_new_net_client(&net_tap_info, peer, "tap", name);
++            qemu_set_info_str(nc, "incoming");
++
++            s = DO_UPCAST(TAPState, nc, nc);
++            s->fd = -1;
++            if (vhost_fds) {
++                s->vhostfd = vhost_fds[i];
++                s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++            } else {
++                s->vhostfd = -1;
++            }
++        }
++    } else if (fds) {
+         for (i = 0; i < queues; i++) {
+             if (i == 0) {
+                 vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+diff --git a/qapi/net.json b/qapi/net.json
+index 118bd34965..79f5ce9f43 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -355,6 +355,9 @@
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# @incoming-fds: do not open/connnect any resources, instead wait for
++#     TAP state from incoming migration stream.  (Since 11.0)
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -373,7 +376,8 @@
+     '*vhostfds':   'str',
+     '*vhostforce': 'bool',
+     '*queues':     'uint32',
+-    '*poll-us':    'uint32'} }
++    '*poll-us':    'uint32',
++    '*incoming-fds': 'bool' } }
+ 
+ ##
+ # @NetdevSocketOptions:
 -- 
 2.52.0
 
