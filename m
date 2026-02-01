@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4616DE65268
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 14:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1D9E65275
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 14:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmYGt-00031m-Cx; Sun, 01 Feb 2026 09:17:51 -0500
+	id 1vmYKF-0004lo-VS; Sun, 01 Feb 2026 09:21:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYGs-000314-Bo
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:17:50 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYKE-0004lK-4b
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:21:18 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYGq-0003Be-Hz
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:17:49 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-48068127f00so30378955e9.3
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 06:17:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmYKC-0003zs-Js
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 09:21:17 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-435a517be33so2137415f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 06:21:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769955466; x=1770560266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1769955675; x=1770560475; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1ByKVHzSQ9zHFazuT6oztAMja4HE91ec5VQ+otD7rQM=;
- b=HCCF+qD83Cp8ycUJaaxY5C9kaPCuCHVMIWXW52WpEio596Q9ka9oblaU0VR74Bmysv
- /qe9EA7uaO/K2LDpK+g7K3cfGAU2qt7DOuD113fcIzldiDFB8wuerdVKANLItq0YZdgc
- B9X0uHgg1IXphxPT+Rr6POS7+jj9daaoyEKpgThRDAZqohhbX92Q9quXb2YzbqLJTrKu
- yxPf2zkBiH/Dy0FMZGs3Y01poFmPzSEW8Ui0YMDmwvzXrD/Qb5dq98v09aVyRFpVdQ9g
- lco9s5T1/qt5ZEUkBVoBIlxsemBEzVTIHh/qUhjswaL+AEIeOKQA12W1p4ttq9RXISk+
- u0Ww==
+ bh=bXdsDxmkWCnNh1bgz3LKjzyhFdoc4oSja/dbdkx5rZQ=;
+ b=EpVqw8fdO12kBrJQ6EtmMA5JdEW/z429m48M/+ftvzbHV3oYBYIcYqwBboq9GCjwsg
+ giXUmQ4YhlrPyuZQRjeFaxlJYQKv63LJQx6r1hddGhTedvQmhjwX1TZjcLBLw/1jElTv
+ FCGICqlZjiynMnkD5ttWQINpxw9rxH3voESumZL4AeYIXdMHXqNY2nfZMIpf/63rATHq
+ tyYykmkSGWCBlCOOvDP79Tol914MUhDHtxRaOymS0BMR0zCO8DDnnYq7ddT1CyOOnNlf
+ cVck9fHGXr3DRQhPqSON3vxR3+v0+yKd4IEIM6dZ7n0L3B3p5Q6GdsS4VmFsgo6v9FQl
+ YUgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769955466; x=1770560266;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1769955675; x=1770560475;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1ByKVHzSQ9zHFazuT6oztAMja4HE91ec5VQ+otD7rQM=;
- b=bmFN3eKXaM7WFoO8NTgH3e3sCg1AG9r7z5ac/n0MdPzzTc4J/L3orhCfNR52xzdMWi
- ZvP+bfqn5WB4a0dMD3iESzowaImtUpG2zz9uA/3cLw9mjJARzIRo+TdFAOygLijbpalF
- F9tEaUpCSFBXEIoHiJz2e8Npx+McY5RAfJlhPxVPZC0lLeIa3P+yzJT2akPkL7et6CAx
- jRn084fuYDx6VI+stOZamNDDQFPllZvKqca1XVBq+mB5jJhRGM2hZNB+1uDdfyOz53Xu
- AJqwUNp0mPb7NMjRQgk/i3p0Phr0gj4gENTmmXw1xFVIFB9EHRnM9XNwA9HwgUdPOPTK
- aznA==
+ bh=bXdsDxmkWCnNh1bgz3LKjzyhFdoc4oSja/dbdkx5rZQ=;
+ b=D8ZKZ0gPGwSCPRLTNH2rnx70RDAA/DS452pTQL+LISkIdbSrfzDRtKxg9r6gcJbIRy
+ W2ZVUFFwznBgjZe0wTo+UBEpGrF60tFw18V8arL+mm3L8AU3wQakgOAGWy910xUAs8CG
+ zWTp0N4OpvAUEuPa63/t22/Yc9ix6HRYaCQRRBNjOqsvBlks3aUTB9LMJ1OmTBXTmhIb
+ I6RxEL/ino3HfFpztiajBJn+W3WOBivnFzt4J03c4PyAghGUap9VMgBViNzNfPeazyvy
+ RmIpN0sNBZ/BGhr2A3PdKyf1UIoZ7SkATu0VPXTa7tf1eg2Tt7UZ5KT2fFtuXJDlbvR8
+ 5GMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUq+iMriQWJdG4OHw0ZuIiVskqjZoZTTvlEFgTP9+43mrGEt8Os4/KLDkd2jVdxcrHETrYPK4FKNr5u@nongnu.org
-X-Gm-Message-State: AOJu0Yz+lW5UvL0RsLgXEnkBcr31lVx/I4LQJFr1SEln/il+cboMdmWu
- mo+LDfAcc8SAjnYqKTW4ruINzf1J9hPOjSZabfuzVqTkZXq7e0Rx/ffgVYTAAKwP9YM=
-X-Gm-Gg: AZuq6aJU2/W+1nMTz9g5G5HBJbFCC67wo4DyFx2Hg5/ZZP9zprqRp8776oUgsVYWQ79
- oFbknTEwRBEjhmrobc+K5M60agWnilEr05PvFTMW3ZBLNmNrnmF4sEYbEOzIMPZquxyWl99lI6d
- W6+VfiQEIf+6JmJoMAy+rbNtLJuun75nOxWnPJe01II3YeghkekBdoxjO5Ug2bzfXB4JUr3VVz4
- WfC+AebUV5fdkydUWtMBh1t2JzbWnT+yJiD5HzcE36QSg4OrOAtffry44ioy0+hYfG9yHbTcndn
- ZzJHPcwauevBargnjn60471wIqMRJ70/h86Ytm6sqKeZiTSneaZpPkoxqV2jud1qfXXw2x0/rnC
- KoGKVMsvXApRmBkob5udFCnAvhmpnDmpahubewdV0p6KVaklAkyhuRow1K4K2GtHVFKSj0iVOo8
- ANaYbXdtd4w60+PosQ7+B9h2xjd9zuADCpmcQU1sqtZ87HNAelx7uhMg==
-X-Received: by 2002:a05:600c:8b61:b0:477:a36f:1a57 with SMTP id
- 5b1f17b1804b1-482db456a60mr114746505e9.3.1769955466056; 
- Sun, 01 Feb 2026 06:17:46 -0800 (PST)
+ AJvYcCXK4Pr3kdXDhaF+fBgKAou694ni/p/Ipkqkb+vCJEBp0c6cGhMIyPYSQH1u5O1mNZn12+zjaSXSIr4d@nongnu.org
+X-Gm-Message-State: AOJu0Yw2bF+7jFdEPMfQmWhI+xj4B4H+ohrllgTlpE2w9O3xoTQoRt/9
+ zapV8pTWK35RtD9FgUDUIVf2HNah8Ty534NlMmuVNxWMEN6TMIC7+YxSgTgXFdK6aa0=
+X-Gm-Gg: AZuq6aL+zfQBZVmVtELyRWB0D8FgwDEJryUW/eMjZhF8QBX+Kx9PXFlMzaud/P2OFO0
+ sdFI73ggp6qf/hfbEiNKpzHfqxG52GCglNOHVfSJBl2aANRkpC3XnXGZsTVSqQ8AXE0lVs/qTaM
+ yS6FFmJUduf3HAEp93p01LrtpEp8IccMA5WiKqXZVmxrmVeg6CoQNYZWqEalcq7v7j/9ALbKHGL
+ 8SUMsFwTwMn2pcJbHFhT3O2+lXqSQ2tbJLkU3XfwawYYHd6gzdmUg/DiNd5LE3qqifrAW6+qQyr
+ 96SEQs3NAuw4n7yp0iw+AhzQ/IS09z00BnqxnJ8KS6GgHA7nd7efcHBaGpLTPB7vMpi2H7Hh+VX
+ SifOAE6MDufXq0tug8qGrMZO6y8gjjSY764dKgTDJSNEnsSf5mVvzriDrpdyOsLljHwuOddYTbu
+ lELLfjxXS54V/8Odpx9zzUe+rT07u/soU7a+09eVrClWUvriumNFoNLA==
+X-Received: by 2002:a05:6000:2dc7:b0:430:f58d:40da with SMTP id
+ ffacd0b85a97d-435f3a691fcmr12095241f8f.10.1769955674866; 
+ Sun, 01 Feb 2026 06:21:14 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce70sm38253704f8f.27.2026.02.01.06.17.44
+ ffacd0b85a97d-435e10ed952sm37744071f8f.10.2026.02.01.06.21.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 06:17:45 -0800 (PST)
-Message-ID: <c2a851eb-1164-403f-a1b1-c03edb4cfc8f@linaro.org>
-Date: Sun, 1 Feb 2026 15:17:44 +0100
+ Sun, 01 Feb 2026 06:21:14 -0800 (PST)
+Message-ID: <a9a6d7a8-31d4-48bc-958e-e35342dbde92@linaro.org>
+Date: Sun, 1 Feb 2026 15:21:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ide, scsi-disk: Fix typo on the rotation_rate
- documentation
-To: Alberto Garcia <berto@igalia.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260128102548.224237-1-berto@igalia.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] rutabaga: improve error handling, fix potential crash
+ during init
 Content-Language: en-US
-In-Reply-To: <20260128102548.224237-1-berto@igalia.com>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260127122400.100384-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260127122400.100384-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/1/26 11:25, Alberto Garcia wrote:
-> Correct values according to the Medium Rotation Rate field from the
-> Block Device Characteristics VPD page (B1h) of the SCSI specification.
+On 27/1/26 13:24, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Signed-off-by: Alberto Garcia <berto@igalia.com>
+> When virtio_gpu_rutabaga_get_num_capsets() returns 0, virtio_init()
+> isn't called and the device later crashes during realize.
+> ==72545==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x556ad6f7ba9e bp 0x7ffe6958f810 sp 0x7ffe6958f7e0 T0)
+> ==72545==The signal is caused by a READ memory access.
+> ==72545==Hint: address points to the zero page.
+> #0 0x556ad6f7ba9e in virtio_memory_listener_commit ../hw/virtio/virtio.c:4034
+> #1 0x556ad6a24c96 in listener_add_address_space ../system/memory.c:3128
+> #2 0x556ad6a25d15 in memory_listener_register ../system/memory.c:3216
+> #3 0x556ad6f7bf11 in virtio_device_realize ../hw/virtio/virtio.c:4075
+> 
+> Rework error handling of the function to set Error appropriately. 0
+> capset may be ok now.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/scsi/scsi-disk.c      | 2 +-
->   include/hw/ide/ide-dev.h | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   hw/display/virtio-gpu-rutabaga.c | 19 +++++++++----------
+>   1 file changed, 9 insertions(+), 10 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
