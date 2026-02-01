@@ -4,113 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15339E65298
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 22:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B33E65298
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 22:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmfX8-0002ya-S9; Sun, 01 Feb 2026 17:03:06 -0500
+	id 1vmfhK-0006DQ-BE; Sun, 01 Feb 2026 17:13:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vmfX7-0002xh-EI; Sun, 01 Feb 2026 17:03:05 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vmfX5-000293-TO; Sun, 01 Feb 2026 17:03:05 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 611HUQ6Z017333;
- Sun, 1 Feb 2026 22:03:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FZMyIe
- FSC+HCQRCxbBG0fzgFdRcieo6d8mSrYiM/h1c=; b=WjoA06hKt1RrdTLbiYo2vI
- guLBLTnqqXxKMPQOuyDaG5mt626c1unszVx9H+O5CjSC5EGiQz4BYhsUh89tnk1c
- CUwdZW83ptPeyX2Cq/YJEtfNqk+Dpzz3NjJK+YBLWSwSGOS77krLowyacJOwjOmE
- GXe8gLrJ2nWEiwPBl0Hj9u7E2zoOMfDnT3RopXLoCOc3yD6bOhABxFJwacABQlkZ
- 4VHsEFbvdnv2ADHRkdDxtGU2Wro6n4PtTHE7ufyYTFBHxen4O2IRUQRcM9eeJFVq
- h5m4HXjTcvNTB6UbIAc/QArMgE0WCUJDErdlK0+HXy0X8P1RDCkgbrfgnI/vNaPQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dswnh6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 01 Feb 2026 22:03:02 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 611L47Wc009600;
- Sun, 1 Feb 2026 22:03:01 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1vextsth-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 01 Feb 2026 22:03:01 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 611M2enJ25035300
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 1 Feb 2026 22:02:40 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C2EA45805D;
- Sun,  1 Feb 2026 22:02:59 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D610758043;
- Sun,  1 Feb 2026 22:02:58 +0000 (GMT)
-Received: from [9.61.23.27] (unknown [9.61.23.27])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Sun,  1 Feb 2026 22:02:58 +0000 (GMT)
-Message-ID: <6a749f07-1cca-4a64-b94a-a104bc0c825d@linux.ibm.com>
-Date: Sun, 1 Feb 2026 17:02:57 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmfhG-0006Cs-TU
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:13:34 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmfhE-0005Cl-Pf
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 17:13:34 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48068ed1eccso34397825e9.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 14:13:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769984010; x=1770588810; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i2muGDusqrWiBIG6l++L1ff+SQpmgD2b8FN8pciW0VA=;
+ b=A3ObdL1mz/v3P4pZZH7d9LcVus7FTgms3DXQ+0mkadYkGhyddst7n6nEtFiF6KwmQ8
+ u9mGGfDAVT6sbdmbp940lONVZU3tnMT3QF20/UGSRdAivWTY7OiO1eGdIhng3Kx10Puk
+ dRPHYi5fO7PS9qoUfGpwLy1UB8IA18jNN9Xy17ZFNlHnarXhmxl+pflrOTJG8rffSbZX
+ PGYqOnnPC23TnqdTntvp+PXszGaAtRsrOAXL0kch7xqCgKJ6zr1eHRlpFevijI3ls/bm
+ qYgizbZN5IBwxSC7BAKe2yluNj219wJnVz4tXHPv0AcFPsSz9A9XQTBeeW1g/m7ZB+tV
+ T2Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769984010; x=1770588810;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i2muGDusqrWiBIG6l++L1ff+SQpmgD2b8FN8pciW0VA=;
+ b=TVFuw0VeiCOvXi7rCDThG6Z2wcKURO3AYNrV+kl6lx0zjcxQiLShu1d6r29VnEh2aw
+ 9eVYDiU8T/E8fWQVkklzhOlae9G/HtBgFn8eKLOkVu3ZfHSrxETBc1eGetGmWcPF+3bS
+ Nswe1/ZMkz3QrZk1XIayzeE/AQ4UliK/IC1xu5sfdvlWygUFKbeozEauxwdE7PCmqe9l
+ EKGODiOyZMmxbSW0KBPs1x46h8Z/ET882qido2nXmpgrZa38B3wftsgDWJjuNHKbtyFk
+ TsX+z4RCSiquUaAGhnNXnLcsFDzIlo3ujIjvvN7GGfw3eheDyHR5xnfaOCQEbDQ38CR0
+ G0sg==
+X-Gm-Message-State: AOJu0YwnUmodwFPmvFQyyq+8Dil9T11PgXi5FHhVFXD8qt5ZhF8+tf/n
+ F6fclDBIZ17fcLgp0l3kMotZjvxZmcpjNsyahVBubR9ocNLSAyl7yPjSB35HTG7M9WIrPEYaH+I
+ Jf1rLiM4=
+X-Gm-Gg: AZuq6aLYLpk/PGZ2OcQsnZSNijlAhQRpR6lBUlsRFeOEaZZXFwFwZLsDGEgxbr2a6RJ
+ lzgfSoKve6zIVvUjoqilBOqgm9Z2YvTOWAap0WjAznK56VolJpxHI4Q1i0b0JsJB21jnhdzKEkH
+ prf1jA2xqhg1WvsS37+ii/lw6KsCMjQKZ4zrR6U8jjtgLxaN7r1kW8CmcPnS9M+LCYzi2M3SIcD
+ CoFrXkZeJ9nu1TApAalHgMGgktuihPHrVbR4WYByCoL6qxhn5vA789INTqMcxqZXI+bX+E/5P+e
+ R5MlqtGmCUr1kIDszHP8Bb234abhTSt61MFBHfXm3NoPezeYvpAt4leHyDXWQ57mDMnaX7ali7H
+ NPFw5LQg2RxCZqrWwHpdZ4CeuCd85iN2QJT/GFUvG5XEr1rABx0x0+reAUqa10ZHMs/hzJLF9S7
+ LZI1Pjgzm5Agqmv5oiifVg3DdmbI6PLGD0Gf588HPwx+0bD5dme2iPLSgtlMmKLkqZ0zuSx14=
+X-Received: by 2002:a05:600c:a00e:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-482db481bffmr132247215e9.17.1769984010535; 
+ Sun, 01 Feb 2026 14:13:30 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4806ce56068sm342289455e9.13.2026.02.01.14.13.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 01 Feb 2026 14:13:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6] tests/unit: add unit test for qemu_hexdump()
+Date: Sun,  1 Feb 2026 23:13:28 +0100
+Message-ID: <20260201221328.72111-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/14] include/hw/s390x: Move CLP definitions for
- easier BIOS access
-To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-7-jrossi@linux.ibm.com>
- <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
- <9afdd5c9af9540609542814d9a583437589db4bf.camel@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <9afdd5c9af9540609542814d9a583437589db4bf.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAxMDE4OCBTYWx0ZWRfXzRgfd+uN5kAZ
- mAYc7N0GJs7T+3kvx21lieECRUpjqUoF2vFdDvlD5ayGLdui0UJ85JYSaYIyZ5Ijz6NCr4LDBp7
- tXdo09gh1PuljC9f3/Eh3EmmT3NfqIPldq6gxltTR5eG331MfYpUVnIuZSLNXMlSX8yvTBOhjAN
- 2CARxQOTohhr7+3XFqgVuR4unlHSa2dURIWf3JJFmwG+EqRtTHnmjzBLJJWVnIbVarTXdqBUb8n
- wZV6MzSN78zfj/88/taLedwqRFZ9LXtgRvr1YP3wZhY/KLkwJEGojZaC7qsiqFMlEOGaQcb6xEF
- u0Bj98eMRtESQesvvHyt03BLnfRyKr4GFqxgInpNcNR7N3OcqGsPzyVGy+3JtF9hTcEEtm+DAk1
- LG6qzuFI91JOPno0Yd61WoPBJZ8lwcUPewUF8aeti+9KvsI/VMcMS2RMTW4djJ75bCQ/QvuGvR7
- 4KGQSF4kBgR20FClhtA==
-X-Proofpoint-GUID: pczTJS7DaRwBwe6oxsQ3g-Z6WoWKX8TN
-X-Proofpoint-ORIG-GUID: pczTJS7DaRwBwe6oxsQ3g-Z6WoWKX8TN
-X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=697fcd96 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=bttWFdE6PSH9UWTk3ogA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-01_07,2026-01-30_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602010188
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,31 +97,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
+Test that the fix in commit 20aa05edc2c ("util/hexdump: fix
+QEMU_HEXDUMP_LINE_WIDTH logic") make sense.
 
-On 1/29/26 8:50 PM, Eric Farman wrote:
-> On Thu, 2026-01-29 at 16:46 -0500, Eric Farman wrote:
->> On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
->>> From: Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> Move the s390-pci-clp definitions into the "ipl" sub-directory, which is visible
->>> to the s390-bios.  This allows the bios to reuse the architected definitions and
->>> prevents code duplication.
->>>
->>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->>> ---
->>>   hw/s390x/s390-pci-vfio.c                  | 2 +-
->>>   include/hw/s390x/{ => ipl}/s390-pci-clp.h | 0
->>>   include/hw/s390x/s390-pci-bus.h           | 2 +-
->>>   3 files changed, 2 insertions(+), 2 deletions(-)
->>>   rename include/hw/s390x/{ => ipl}/s390-pci-clp.h (100%)
->> Reviewed-by: Eric Farman <farman@linux.ibm.com>
-> Actually, small nit that popped into my head on the drive home... Could you update MAINTAINERS so
-> that we don't lose the PCI CLP header file from the S390 PCI group?
+To not break compilation when we build without 'block', move
+hexdump.c out of "if have_block" in meson.build.
 
-Sure thing, will do.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+v6:
+- mention commit 20aa05edc2c in desc
+- wrap long lines for checkpatch.pl
+- use g_file_open_tmp()
+---
+ tests/unit/test-cutils.c | 67 ++++++++++++++++++++++++++++++++++++++++
+ util/meson.build         |  2 +-
+ 2 files changed, 68 insertions(+), 1 deletion(-)
 
-Thanks again for the reviews,
-Jared Rossi
+diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
+index 75fae29003a..d70218ad1c1 100644
+--- a/tests/unit/test-cutils.c
++++ b/tests/unit/test-cutils.c
+@@ -3626,6 +3626,68 @@ static void test_si_prefix(void)
+     g_assert_cmpstr(si_prefix(18), ==, "E");
+ }
+ 
++static void test_qemu_hexdump_alignment(void)
++{
++    /*
++     * Test that ASCII part is properly aligned for incomplete lines.
++     * This test catches the bug that was fixed in previous commit
++     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
++     *
++     * We use data that is not aligned to 16 bytes, so last line
++     * is incomplete.
++     */
++    static const uint8_t data[] = {
++        /* First line: 16 bytes */
++        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
++        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
++        /* Second line: 5 bytes (incomplete) */
++        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
++    };
++    char *fname = NULL;
++    int fd;
++    g_autofree char *output = NULL;
++    size_t size, bytes_read;
++    FILE *f;
++
++    fd = g_file_open_tmp("test-qemu-hexdump-alignment-XXXXXX", &fname, NULL);
++    g_assert(fd >= 0);
++    g_assert_nonnull(fname);
++    f = fdopen(fd, "w+");
++
++    g_assert_nonnull(f);
++
++    qemu_hexdump(f, "test", data, sizeof(data));
++
++    size = ftell(f);
++    fseek(f, 0, SEEK_SET);
++
++    output = g_malloc(size + 1);
++    bytes_read = 0;
++    while (bytes_read < size) {
++        size_t chunk = fread(output + bytes_read, 1, size - bytes_read, f);
++        if (chunk == 0) {
++            break;
++        }
++        bytes_read += chunk;
++    }
++    g_assert_cmpuint(bytes_read, ==, size);
++    output[size] = '\0';
++
++    fclose(f);
++    close(fd);
++    unlink(fname);
++    g_free(fname);
++
++    /* We expect proper alignment of "s is" part on the second line */
++    static const char *expected =
++        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 54 68 69   "
++            "Hello World! Thi\n"
++        "test: 0010: 73 20 69 73  20                                      "
++            "s is \n";
++
++    g_assert_cmpstr(output, ==, expected);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -3995,5 +4057,10 @@ int main(int argc, char **argv)
+                     test_iec_binary_prefix);
+     g_test_add_func("/cutils/si_prefix",
+                     test_si_prefix);
++
++    /* qemu_hexdump() test */
++    g_test_add_func("/cutils/qemu_hexdump/alignment",
++                    test_qemu_hexdump_alignment);
++
+     return g_test_run();
+ }
+diff --git a/util/meson.build b/util/meson.build
+index a0cfdc30ba6..7c9445615d7 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -33,6 +33,7 @@ endif
+ util_ss.add(files('defer-call.c'))
+ util_ss.add(files('envlist.c', 'path.c', 'module.c'))
+ util_ss.add(files('event.c'))
++util_ss.add(files('hexdump.c'))
+ util_ss.add(files('host-utils.c'))
+ util_ss.add(files('bitmap.c', 'bitops.c'))
+ util_ss.add(files('fifo8.c'))
+@@ -90,7 +91,6 @@ if have_block
+   util_ss.add(files('buffer.c'))
+   util_ss.add(files('bufferiszero.c'))
+   util_ss.add(files('hbitmap.c'))
+-  util_ss.add(files('hexdump.c'))
+   util_ss.add(files('iova-tree.c'))
+   util_ss.add(files('iov.c'))
+   util_ss.add(files('nvdimm-utils.c'))
+-- 
+2.52.0
+
 
