@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8361E65298
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E107D172AA
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmhDC-0003qD-I4; Sun, 01 Feb 2026 18:50:38 -0500
+	id 1vmhKl-0005gb-PW; Sun, 01 Feb 2026 18:58:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmhD9-0003pV-GV
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:50:36 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmhD7-0006RK-Rv
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:50:35 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4801eb2c0a5so37094055e9.3
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 15:50:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769989831; x=1770594631; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7kZ/74JHqcCI4/WSZhC/+nPp2AOaIwL1ztkTSGfbg0g=;
- b=r4/AAUPruQegD0VNl+qhkuv+Dq1D3ZFGBd+FgQTIysmCNEGTmB9YaO3x6HS3TNrZ6W
- 1oikVX8R1auadAlqt2730556QP1Kdvo6px9MgSB8LYL91x5o56GzAKVOu3Hi1MxFrDBW
- s7+TvV2Z7tHRBYwU0ilKEYGmekRVm/Vf7ffeopYU+WF12BWerhQrlR6aY2FRF3lrpB5y
- vf4kW7ka9DR7fCGO+qehzXKN/8fTnwGP8yINuFXUEoLAtL1I1JJkJTTMeJefmsaHT9is
- F/qsF5XO3YBQnSf7i8sfCDUlVKwf17+FnYc8bQwHA2oD23emVvdwpIQmrsEXlrNTWbEy
- bZvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769989831; x=1770594631;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7kZ/74JHqcCI4/WSZhC/+nPp2AOaIwL1ztkTSGfbg0g=;
- b=NP4rVxmhgfgcWtbxbHg/ctqSWCzvsyzehKlOuvT06J3cdlwXecFmpGXUFsHb86IuvI
- idgRxy0Ebk6JM/EVJ/etF3ZMB/u0qgWwcUJYbU3bj00hFi+GTnv8q5IUFxiANUdMX3F4
- rEQavkF1Tn+2TnKAKlaDsdAXhxD97Ynq9nmk9OmJkJbPQWmu9u8dP2KA6/waLtIXy2Tb
- YmLZBnIKVNs5GGyCOuQoiuv4qzBKIbtJDChnkIz0+UvbmpbqsfcEa8SOxsvbualPm46S
- 4GLBtyd9Qwa6HZPTxSAdLhOvrJ6pxlzyds3IjYdanOEcW1oAwbdjsdg22mL9ILzmU71m
- Hr0g==
-X-Gm-Message-State: AOJu0YwrFMkvpiX9gE0QXo+l8WLfqUbmd3VLWNHr8rU+rz0bsNGUh4IJ
- pRW75eABdQsvJzo8qdUh/hUybwIZmBqnGxcuIHSQM0Y56HKmjEK4ca7eVt/xFk34YcpTxCnukgp
- /nuoC7tA=
-X-Gm-Gg: AZuq6aKOpSIeVS5O77pdPy7iaW0fqp0+3m1+sZ8ooMa6HE/m4ADisMoMsB/f0blPxEH
- 7MqFp5SgjnUeY77JeH8S4Ajy4HvEFuaavFAPGFcZobKf/0JFmlMiRqd552G2FlQtCMNa9YnNC5k
- WqcdSx13xR5nVSCH7eSBBHq+8ijiGwdpGt4ZBaNKDKSkCUGW4sd2ZrVusHm/MAUZjBKCl483KL9
- 9cw3uxDS1j/Z+Q1F2HW5RpT6B2UrRQehE8eO8kWlj5A2ybraSUzzzfY1m7bTb+dDQFXuDCG/9AU
- LeYNoVCYlOq4BtttVC53Z3er6Zx+OeDfGwBhBT+o7LWJTdZ43A9GgWKs5a03csxY2hxN+QTWrkv
- UH1xF8+RXlFmHUcC2MbbkXo5Mm5ruBGcR/UeAZ/ut/o2593OGmtU11FOzOtOTG7tQCMUInvmifS
- UBVqperSm01xfct5Yzmn3zrh41tcQX3k6RSNKjom41fLetf9r+7wCqrg==
-X-Received: by 2002:a05:600c:530f:b0:47d:3690:7490 with SMTP id
- 5b1f17b1804b1-482db45ba1cmr125660515e9.9.1769989830718; 
- Sun, 01 Feb 2026 15:50:30 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e13235f5sm38513068f8f.29.2026.02.01.15.50.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 15:50:30 -0800 (PST)
-Message-ID: <93bb5be9-32d9-4ebf-97dd-63c148a80c97@linaro.org>
-Date: Mon, 2 Feb 2026 00:50:29 +0100
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vmhKk-0005fQ-7C; Sun, 01 Feb 2026 18:58:26 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vmhKi-0007lG-0X; Sun, 01 Feb 2026 18:58:25 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 28956443B8;
+ Sun,  1 Feb 2026 23:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40FEC2BC87;
+ Sun,  1 Feb 2026 23:58:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769990295;
+ bh=JieCMwyS0dmjhE3hJJyzeCoQ/1nKVfDaK15QBXDcDVQ=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=ADN1FRkHiOPIsI+sGayZ19c/j98FvC7yyp8wkLqCugnqgeciUi+WWHvGXfrLRbayv
+ 2qzMSCAZAwmnW/tXG2FeOUb13i8sgL/kzrc8JLR5FZPMLOUpjwgNHklM5oFQYr3w+e
+ ppEUuWYZI/hzObDgMO0mwb/SR9bz7JVPK056Hv0gl2MBvtrYDpEasYAQ5AOUTCjjgU
+ q0hUGkAd6vL6wsj5OpDE6PYF4i7o9X4Edr+Tnx34m5UCjQgE3XEzpWgxQn8pFKbACY
+ Wst9RAJ4SHu9mgkYINdAeH8/jYXrULANC0WqjiLuuv8oC0TVnHMoM0vFG07XvRZc3/
+ r1f9cu9FhELXw==
+From: Drew Fustini <fustini@kernel.org>
+Date: Sun, 01 Feb 2026 15:58:11 -0800
+Subject: [PATCH v5 5/6] hw/riscv: add CBQRI to Kconfig and build if enabled
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/11] hw/virtio: Introduce
- VirtIODevice::access_is_big_endian boolean field
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260201-riscv-ssqosid-cbqri-v5-5-273ea4a21703@kernel.org>
+References: <20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org>
+In-Reply-To: <20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-References: <20260201232924.93399-1-philmd@linaro.org>
- <20260201232924.93399-4-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260201232924.93399-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>, 
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
+ Atish Kumar Patra <atishp@rivosinc.com>, 
+ Atish Patra <atish.patra@linux.dev>, 
+ Vasudevan Srinivasan <vasu@rivosinc.com>, 
+ =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>, 
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
+ guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
+ Drew Fustini <fustini@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1382; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=kehPvMBHTRUHu6S9Q2DPtFbCgSRsdDVPdSLNBUBFc4s=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWTWv5iiaHQtSralKJ1ZLT5vRT4TU3+/ZOMx0ZvJTIXpE
+ hcnZit0lLIwiHExyIopsmz6kHdhiVfo1wXzX2yDmcPKBDKEgYtTACayupmR4WZf26070icMI+RV
+ b7QfbPdVlf7tWfIzcsXFbQorHqxlEGD47/4kYf5MA6G2JSZHN0sdM8vhf/A+sE1nv+XUTVYbdpj
+ /ZgEA
+X-Developer-Key: i=fustini@kernel.org; a=openpgp;
+ fpr=1B6F948213EA489734F3997035D5CD577C1E6010
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,47 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 00:29, Philippe Mathieu-Daudé wrote:
-> VirtIODevice::access_is_big_endian boolean field, initialized on
-> device reset, represents whether load/store accesses are ordered
-> using big endianness.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/virtio/virtio.h | 5 +++++
->   hw/virtio/virtio.c         | 1 +
->   2 files changed, 6 insertions(+)
-> 
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index 17b105c146d..7a4f7de7475 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -154,6 +154,11 @@ struct VirtIODevice
->       VMChangeStateEntry *vmstate;
->       char *bus_name;
->       uint8_t device_endian;
-> +    /**
-> +     * @access_is_big_endian: whether load/store memory accesses are ordered
-> +     * using big endianness. Might change during device resets.
-> +     */
-> +    bool access_is_big_endian;
->       /**
->        * @user_guest_notifier_mask: gate usage of ->guest_notifier_mask() callback.
->        * This is used to suppress the masking of guest updates for
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 86fc0e262f7..242c207a591 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3247,6 +3247,7 @@ void virtio_reset(VirtIODevice *vdev)
->           /* System reset */
->           vdev->device_endian = virtio_default_endian();
+From: Nicolas Pitre <npitre@baylibre.com>
 
-IIUC vdev->device_endian is only used in vhost_needs_vring_endian().
+Add boolean property for CBQRI and imply it should be enabled for the
+RISC-V virt machine. Build the CBQRI controllers when RISC-V CBQRI is
+enabled.
 
->       }
-> +    vdev->access_is_big_endian = virtio_access_is_big_endian(vdev);
->   
->       if (k->get_vhost) {
->           struct vhost_dev *hdev = k->get_vhost(vdev);
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
+---
+ hw/riscv/Kconfig     | 4 ++++
+ hw/riscv/meson.build | 1 +
+ 2 files changed, 5 insertions(+)
+
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index fc9c35bd981e..663cb78b813c 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,3 +1,6 @@
++config RISCV_CBQRI
++    bool
++
+ config RISCV_IOMMU
+     bool
+ 
+@@ -68,6 +71,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    imply RISCV_CBQRI
+ 
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 2a8d5b136cc4..79e15514b797 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -14,5 +14,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
+ riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+ riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_CBQRI', if_true: files('cbqri_capacity.c', 'cbqri_bandwidth.c'))
+ 
+ hw_arch += {'riscv': riscv_ss}
+
+-- 
+2.43.0
 
 
