@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3982EE65298
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 17:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB84E65298
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 17:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmbNM-0001o3-JS; Sun, 01 Feb 2026 12:36:45 -0500
+	id 1vmbNN-0001o4-35; Sun, 01 Feb 2026 12:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmbNK-0001nC-T0
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:36:42 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1vmbNJ-0001ma-K0
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:36:41 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmbNH-000464-98
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:36:42 -0500
+ id 1vmbNH-000466-1h
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 12:36:41 -0500
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B43E9C0157;
- Sun, 01 Feb 2026 20:36:35 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 566F5C0159;
+ Sun, 01 Feb 2026 20:36:36 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:765::1:3b])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id YaqAY06Af8c0-l9OKlPwc; Sun, 01 Feb 2026 20:36:35 +0300
+ ESMTPSA id YaqAY06Af8c0-3i7WUPmN; Sun, 01 Feb 2026 20:36:35 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
  s=default; t=1769967395;
- bh=tOGT9EmizAFzw+POVYYJb1jU4AJ1ilMmFX/PM+QhhmY=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=umkokwO0rZwLFRa9EnZ1QTuZhNL5G0B9bSHly3idUPAHQa6GPee2l+41CwQO9y3vl
- CDFxvzCJT1h+8voHtecmEDfG4sD35iZXfsbQ/QFqc64rgGU45phc1jlUQoUB8zNSr3
- mZWxMLbSeOBrJLNkF/w2RR4wBzbr43oO0m5yhKPQ=
+ bh=LBZEDE4oMrNvlkBqDXOL06KsEgH+YdKtU7Cw3h8P8dE=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=AbKv6fY8xU7DROpli/MOHFn5gT19JMw1IUKfw53mwWReWcAV5fJ/Epu/lzRE2ZDAo
+ EksQbkedt6wNkS3sUOCMPgCUo4mNHYIM49giDC421Mqy1Qez+lm9MeI71vKv7jn3+X
+ 0okt0ShGg2XjtG2XBhfdmxDP+6UlpE54eMplEdaQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,21 +45,23 @@ To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, armbru@redhat.com, eblake@redhat.com,
  berrange@redhat.com, vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, qemu-devel@nongnu.org, philmd@linaro.org
-Subject: [PATCH v3 0/3] char: add option to inject timestamps into logfile
-Date: Sun,  1 Feb 2026 20:36:28 +0300
-Message-ID: <20260201173633.413934-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 1/3] char: qemu_chr_write_log() use qemu_write_full()
+Date: Sun,  1 Feb 2026 20:36:29 +0300
+Message-ID: <20260201173633.413934-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260201173633.413934-1-vsementsov@yandex-team.ru>
+References: <20260201173633.413934-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,27 +77,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+logfd is blocking, so we don't need to care about EAGAIN.
+Let's simply use qemu_write_full().
 
-The ability to correlate the QEMU log and the guest log can be useful
-for investigating problems. So, I suggest an option to inject timestimps
-into logfile while writing it.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ chardev/char.c | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
-v3:
-02: fix s/Returns/Return, add r-b by Markus
-
-Vladimir Sementsov-Ogievskiy (3):
-  char: qemu_chr_write_log() use qemu_write_full()
-  error-report: make real_time_iso8601() public
-  chardev: add logtimestamp option
-
- chardev/char.c              | 73 +++++++++++++++++++++++++++++--------
- include/chardev/char.h      |  2 +
- include/qemu/error-report.h |  6 +++
- qapi/char.json              |  6 ++-
- util/error-report.c         |  3 +-
- 5 files changed, 71 insertions(+), 19 deletions(-)
-
+diff --git a/chardev/char.c b/chardev/char.c
+index 3e432195a5..64006a3119 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -82,29 +82,17 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
+     CHARDEV_GET_CLASS(s)->chr_be_event(s, event);
+ }
+ 
+-/* Not reporting errors from writing to logfile, as logs are
+- * defined to be "best effort" only */
+ static void qemu_chr_write_log(Chardev *s, const uint8_t *buf, size_t len)
+ {
+-    size_t done = 0;
+-    ssize_t ret;
+-
+     if (s->logfd < 0) {
+         return;
+     }
+ 
+-    while (done < len) {
+-    retry:
+-        ret = write(s->logfd, buf + done, len - done);
+-        if (ret == -1 && errno == EAGAIN) {
+-            g_usleep(100);
+-            goto retry;
+-        }
+-
+-        if (ret <= 0) {
+-            return;
+-        }
+-        done += ret;
++    if (qemu_write_full(s->logfd, buf, len) < len) {
++        /*
++         * qemu_write_full() is defined with G_GNUC_WARN_UNUSED_RESULT,
++         * but logging is best‑effort, we do ignore errors.
++         */
+     }
+ }
+ 
 -- 
 2.52.0
 
