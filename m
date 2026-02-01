@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C585E65298
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0759E6529E
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 16:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmaBN-00019y-Hx; Sun, 01 Feb 2026 11:20:18 -0500
+	id 1vmaBO-0001A7-Ap; Sun, 01 Feb 2026 11:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBL-00019Q-Er
+ id 1vmaBL-00019R-Fq
  for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:15 -0500
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vmaBI-0005YB-Hd
+ id 1vmaBI-0005XE-Go
  for qemu-devel@nongnu.org; Sun, 01 Feb 2026 11:20:15 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C468D807CC;
- Sun, 01 Feb 2026 19:20:10 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C1299807BA;
+ Sun, 01 Feb 2026 19:20:07 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:765::1:3b])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4Kp2C46Aq8c0-MSCfCKtD; Sun, 01 Feb 2026 19:20:10 +0300
+ ESMTPSA id 4Kp2C46Aq8c0-OCOkfOSe; Sun, 01 Feb 2026 19:20:05 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769962810;
- bh=AIepM3J8V/vaTzwRFdY0iEBThQ1LNyZOI1AMBNNUhgc=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=VfIMG6ILbdqIu9i6xu6aisGwmFuWk19tx6DY4N+HmiaRMjdHBRWLgLq6OtYTgGD4I
- uGLxlQ9SqTqPYeTWATO3MYS2EMMluwUCbafMh8xy29+K53wbEmZQlKctIbKqMRAIAb
- pFyzYosjVLwsYaxW+aCSSdpipYMAFY3w091Nj5xU=
+ s=default; t=1769962805;
+ bh=gOApMt0ao51SCjGtaGgLfykJeGe4viRGJu22sKRZEb4=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=jIWAUGJyeiR8tHuM0BNMZe6p2DdC6a+NCHPdl/k2fkiefZfAxDBY+MLpu4CbE+9JN
+ sueQuEhyyK109W8/vmFKPx3nB9kRcTBcvS3+IQIGQg+/0Hw3U7aZmmfgx46XdtwlBK
+ 06K3HCeqTTgb2OI03ZXPu7ZkxhMr+PcLo8JFCdt0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -49,13 +49,12 @@ Cc: pbonzini@redhat.com, berrange@redhat.com, thuth@redhat.com,
  davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru, leiyang@redhat.com,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
-Date: Sun,  1 Feb 2026 19:19:55 +0300
-Message-ID: <20260201162001.296328-4-vsementsov@yandex-team.ru>
+Subject: [PATCH v10 0/8] virtio-net: live-TAP local migration
+Date: Sun,  1 Feb 2026 19:19:52 +0300
+Message-ID: <20260201162001.296328-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260201162001.296328-1-vsementsov@yandex-team.ru>
-References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -80,135 +79,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement backend-transfer feature: some devices
-will be able to transfer their backend through migration stream
-for local migration through UNIX domain socket. For example,
-virtio-net will migrate its attached TAP netdev, with all its
-connected file descriptors.
+Hi all!
 
-In this commit we introduce a migration parameter, which enables
-the feature, for supporting devices (no one at the moment).
+Here is a new migration parameter backend-transfer, which allows to
+enable local migration of TAP virtio-net backend (and maybe other
+devices and backends in future), including its properties and open
+fds.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- include/migration/misc.h |  2 ++
- migration/options.c      | 18 +++++++++++++++++-
- qapi/migration.json      | 13 +++++++++++--
- 3 files changed, 30 insertions(+), 3 deletions(-)
+With this new option, management software doesn't need to initialize
+new TAP and do a switch to it. Nothing should be done around
+virtio-net in local migration: it just migrates and continues to use
+same TAP device. So we avoid extra logic in management software, extra
+allocations in kernel (for new TAP), and corresponding extra delay in
+migration downtime.
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index e26d418a6e..f23a4d8b59 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -152,4 +152,6 @@ bool multifd_device_state_save_thread_should_exit(void);
- void multifd_abort_device_state_save_threads(void);
- bool multifd_join_device_state_save_threads(void);
- 
-+bool migrate_backend_transfer(void);
-+
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index 1ffe85a2d8..a4c9e68457 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -24,6 +25,7 @@
- #include "migration/colo.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "qemu-file.h"
-@@ -336,6 +338,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
- 
-+bool migrate_backend_transfer(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.backend_transfer;
-+}
-+
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1047,7 +1055,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_cpr_exec_command,
-+        &p->has_cpr_exec_command, &p->has_backend_transfer,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1386,6 +1394,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     if (params->has_cpr_exec_command) {
-         dest->cpr_exec_command = params->cpr_exec_command;
-     }
-+
-+    if (params->has_backend_transfer) {
-+        dest->backend_transfer = params->backend_transfer;
-+    }
- }
- 
- static void migrate_params_apply(MigrationParameters *params)
-@@ -1514,6 +1526,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_backend_transfer) {
-+        s->parameters.backend_transfer = params->backend_transfer;
-+    }
- }
- 
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index f925e5541b..cbe88f0c91 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -828,7 +828,8 @@
-            'mode',
-            'zero-page-detection',
-            'direct-io',
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           'backend-transfer'] }
- 
- ##
- # @migrate-set-parameters:
-@@ -1004,6 +1005,13 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @backend-transfer: Enable backend-transfer feature for devices that
-+#     supports it.  In general that means that backend state and its
-+#     file descriptors are passed to the destination in the migraton
-+#     channel (which must be a UNIX socket).  Individual devices
-+#     declare the support for backend-transfer by per-device
-+#     backend-transfer option.  (Since 11.0)
-+#
- # Features:
- #
- # @unstable: Members @x-checkpoint-delay and
-@@ -1043,7 +1051,8 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*backend-transfer': 'bool' } }
- 
- ##
- # @query-migrate-parameters:
+v10:
+
+reworked interface:
+
+1. backend-transfer migration parameter - simple boolean
+
+2. backend-transfer option for virtio-net device - in combination with
+[1] it enables the feature for concrete virtio-net device
+
+3. incoming-fds option for TAP - to skip any open() calls and setting
+up the fd, and instead wait for incoming FD.
+
+Why we need [1]? To be able to simply choose between local and remote
+migration, not touching device options.
+
+Why we need [2]? Because otherwise we have to significantly complicate
+migration paremeter (to be a list of QOM paths of devices to enable
+backend-transfer for), which doesn't look good architectural design
+(we don't want to end with migration parameters like
+
+feature1 = [list of QOM paths],
+feature2 = [list of QOM paths]k,
+...
+
+Why we need [3]? To avoid complicated logic of postponing the whole
+initialization of TAP up to pre-incoming point (see
+"[PATCH v9 0/9] net/tap: postpone connect"), and to make the whole
+feature more reliable: with such a parameter user is sure, that
+backend code will not do any open()/connect(), etc, which may
+influence running source vm. Automatic logic of 3 stage postponing
+in v9 (first, we postpone initialization up to attaching to frontend,
+then, if it's a virtio-net, it take ownership and postpone initializing
+of backend up to pre-incoming point (where we know migration
+parameters), and finally if it's a backend-transfer, postpone it up
+to post-load) can't be so reliable. Misconfiguration on target may
+lead to breaking source vm. And with separate parameter, everything
+becomes a lot simpler and reliable.
+
+
+The series is based on
+"[PATCH v2 00/12] net: refactoring and fixes"
+Based-on: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
+
+Vladimir Sementsov-Ogievskiy (8):
+  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
+  net/tap: move vhost initialization to tap_setup_vhost()
+  qapi: add backend-transfer migration parameter
+  net: introduce vmstate_net_peer_backend
+  virtio-net: support backend-transfer migration
+  net/tap: support backend-transfer migration
+  tests/functional: add skipWithoutSudo() decorator
+  tests/functional: add test_tap_migration
+
+ hw/core/machine.c                             |   4 +-
+ hw/net/virtio-net.c                           | 137 +++++-
+ include/hw/virtio/virtio-net.h                |   2 +
+ include/migration/misc.h                      |   2 +
+ include/net/net.h                             |   6 +
+ migration/options.c                           |  18 +-
+ net/net.c                                     |  47 ++
+ net/tap.c                                     | 185 ++++++--
+ qapi/migration.json                           |  13 +-
+ qapi/net.json                                 |   6 +-
+ tests/functional/qemu_test/decorators.py      |  16 +
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_tap_migration.py | 401 ++++++++++++++++++
+ 13 files changed, 792 insertions(+), 46 deletions(-)
+ create mode 100644 tests/functional/x86_64/test_tap_migration.py
+
 -- 
 2.52.0
 
