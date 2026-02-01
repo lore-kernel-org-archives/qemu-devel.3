@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76693E6529E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06771D172A9
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmgbc-0001Fj-0N; Sun, 01 Feb 2026 18:11:48 -0500
+	id 1vmgbT-000191-BO; Sun, 01 Feb 2026 18:11:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgba-0001CX-4C
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:11:46 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgbQ-00016b-3R
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:11:36 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgbY-0007UM-L8
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:11:45 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4806f9e61f9so18411975e9.1
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 15:11:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgbN-0007TW-MU
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:11:35 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43601e96f72so495444f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 15:11:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769987503; x=1770592303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769987492; x=1770592292; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9+af2AYfBOaayRMRjFnKyM/rQuJd1PVpNgpOLykWVI4=;
- b=ul6RG96O7uHRYjhcBN5ZwPsDugsBZCweVwDMyXiyrfKRJ5ns9Bj8mnsNqlFIhgCf8Q
- JBgT/ETsF7fmwzPfivlD74cqUJFkZxJd53FgwrXJpEwmFL04I0Fvw8SWHfmGuxiyZs44
- 2LML7JBq+pO3AgJ/pVKGPy5xQfeBWLG7knbmUmT59LlBjMNfXT1P1Bbrg41uExzkBtC7
- E1d/YpJM2GuSoL34HUuYekMvq2cBmiJvFKKwXIxQzqTUk56a1mk93MirFtEWl+l9g+sN
- M0UZcmXbejaId+Q+0wu+KJ97+y8yHcBDKBUOrbEIhnYrtJN/jVGkyCD225jSi7MQmTqB
- 18Wg==
+ bh=IhT57lbT1XrzWbazZxkEnTkfOo+NYSNCrXJcD2VLp54=;
+ b=JdQVNlfLAvI3lueIQnpqhN2JmmPtL4Xbtzkd4lOLil0e8737/MrhaJQOkwB4T71BnI
+ 0yXa/cuT+ZnTwtb9d6iNQ1EcczBMPcpusRBxCU9Vr5u6018W4Jq22+oHxrwrsNcHm3ls
+ wM8iSoA+RzfwvkfJ9dA0FKQ+yVJGP9glInqtr7aM/yocy3vKJ/qn6rtGYNh88OjkM+x1
+ HQJoW54FxPq6EWyQGCy/fAJ2hfPTEoGKJI0tsFbronbjY3pepJvC8Df46rPm6R+hGkXh
+ w+ybCVfP4MOaEuBLB01qkdQ0lTeTwuceVxq/LB/wTb/9xBMcu5oSHZKoywXVKHFCnh/6
+ 3pjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769987503; x=1770592303;
+ d=1e100.net; s=20230601; t=1769987492; x=1770592292;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9+af2AYfBOaayRMRjFnKyM/rQuJd1PVpNgpOLykWVI4=;
- b=M3DnYgnIKgrKDv3ivSZgWitPXsht8zmiotFsY+mv2Wzh1Vd//cM1BScgNnhX8oXWld
- mV2wPxgJRrnCr8lEwK7DoajIn02J7QjBz/2aR4sDStZ1ghNhMH/6+KkPmwaVGXpxPsif
- 7rYc3PvDsbhaQ+m6iyV3X8r/2YiKNrEODQMMnzP4DNHC27My3FKGMn8wuapzuiAjT7GP
- z3TDTXjrzrGhQorIWBKG2PcCE2tjjka/NLi2CV1EoXWCaiNJPU2yMJO4bqxaTQ93Ce2D
- 8SfaaZnxEQFRxJZjLJa84BO1eNrC8n8h1qdDVKsZSCx9J6y+6itht5bDWou7A5AeAMpF
- a6Cg==
+ bh=IhT57lbT1XrzWbazZxkEnTkfOo+NYSNCrXJcD2VLp54=;
+ b=NqBxRdyObvFzcXeHsQN7jNPl1nTvfnHOBCkglOrKqbv7giscKOi5CDSD3wuaHWaOmK
+ oxSAhjfG19LCzbrYlUzBIZbvGjolC8TRxoCFqHDkx3xmw5leb51X2uLWmJdBvQh8z36b
+ rx4zWQjZkvGgvNlgisWCLfP4I50zGzw+MH1T9Uc2aaYo+cOujr+JwoehgxjwUVYUWVsd
+ Aioe8lwNcrQNVjr0wKOoCrKcbxjoNdsY5AbQJQoV2TYVQV7zJ10pY9K4a2xm280zf+W9
+ 6AD958Ss5sdwl/jYP5wOYmwPKMp9bG0KJPi7ErIUhske1zKmCcrfftPefbfeo5+f9VDD
+ t0Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1+6fCrewgsy1bDII+jU8bqolp4N+gF5W4dMMKFgoen4A1g9acky04wc1Fxfv7q+sFsLPM5pvaAyJt@nongnu.org
-X-Gm-Message-State: AOJu0YwWre9Vx2XaTGnIY+nMr+0ofpG9rkPB1g1XiSahepCBg6PBtmdW
- kIcuti6QqAI+VTlpF26rfWHBA0wpOJbfwPJ/cz88LTkTczaZpwycHXhNRRCIo1F5Lxc=
-X-Gm-Gg: AZuq6aJpQ3fSPKknnOcXQEFfxlIiyKLqxI1sSD17QoFoQcJmCpREnAXcGiCifFqTAKG
- QCslLFueCpAclDLrf0Z6wD7mFXdopG/RKFEmLUe8K7CxPgzkNIQ+Q3sUscNABfC/X7515GHVnZq
- VfaMehsU0kVMInnHHRR0YmxDB6znS1fCxKpf8MxsfE7M2JrjZSktQd81eE0i/BH0EvkonHo4u7D
- zpj2txfmkZYdN0HIL1Oq9RT/aCdCe2sbyJNPHrVsKBnGbgfLcaKsQfmc5luWb+1G64bnMrwWCeb
- F3aufmT9Mmob9ZDHWS9x0qXFKsQOQVTbfmCZCH58fvshl4qT2dmZW+e/KycR/tymeDA+TFL0gus
- sLWBA9ag4Jg3ZJudrHws9iqmEOtUrOmrhR9vEVVpaRF42lQwdqYAqRPN3yE3spzNJKGhUVQQKmj
- kjDKkElsvnIhxzmKD4xwHz1WqcryZyDEgG7qfIHlSIKlb1N9/yjMNjfw==
-X-Received: by 2002:a05:600c:8b65:b0:47e:e61d:b8d2 with SMTP id
- 5b1f17b1804b1-482db486ee9mr133909915e9.27.1769987502911; 
- Sun, 01 Feb 2026 15:11:42 -0800 (PST)
+ AJvYcCVXg0U2XSn+gWbIQb7cY2Ci/QQRpSFVnAgccC3E62pMx3YQkOkTPUz2+JRJ5d6H1HvQt3wABNWGABd9@nongnu.org
+X-Gm-Message-State: AOJu0YwniMPYK6RcpoNohbQv2q0pXZgU8gmM1BqVMcU2rrn+zJpY4bHZ
+ S06uRG9jeAt6s4vV1m0KE37yJoYDFYBFkjxmpFYVQLB4ZMhtz6ZYoxyxzP5MKaWCYz0=
+X-Gm-Gg: AZuq6aJBOmyNAar3bxBxcrwJ5QQqer6JfU5XKIFHZyW7AOER8gAZF3XVmmbBIM7cOa0
+ o+ieW+JIEtSHRp2atQZGUzqTcZWTIrCwgz5p22gSmlFu7dYUtUas9ZKo5K/mmI/t6GLceKHw3UQ
+ dqmaYRsok9tNjwB3cnX7ONiG/xBM5JHW1ZAL/WGiIxr3VV5zeMsc/X5+vQwCI1n0eEnEPWBaXtn
+ B78iRQ02JwFbI9VyTOO1+kg5y/pELFMN0u1Ye5F6wGM1F7v9mPj2ilJQsEypUD47gc0NLQHfEM/
+ GfruAZ82z32vily8zWR4D+N8+RkKWgSfe5voArZ2sktJQgIQ1QmpNWCaIG85gf02Nel1Ltl4j9P
+ uevsVgF1iqSXdZOOGtO/rhO8mJ+be5V4wdOmI+qG0suz5YpzO0xIp8OIS7r375GSZirWbjOExwS
+ /fUSHRz/Hx6kSFXrlRi/9gZfotzmGZBeNBheJWQLvVi7hM12s7IGGmhw==
+X-Received: by 2002:a05:6000:1acc:b0:435:e451:2f93 with SMTP id
+ ffacd0b85a97d-435f3ab4f75mr13383401f8f.60.1769987492103; 
+ Sun, 01 Feb 2026 15:11:32 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066bee687sm629472255e9.5.2026.02.01.15.11.41
+ ffacd0b85a97d-435e135422csm41333353f8f.40.2026.02.01.15.11.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 15:11:42 -0800 (PST)
-Message-ID: <fe229361-765f-49f3-9c48-f44b76e3eec2@linaro.org>
-Date: Mon, 2 Feb 2026 00:11:41 +0100
+ Sun, 01 Feb 2026 15:11:31 -0800 (PST)
+Message-ID: <f6f43ce1-7a29-4a28-a4cb-0358b485fcd7@linaro.org>
+Date: Mon, 2 Feb 2026 00:11:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] hw/virtio/virtio-qmp: make compilation unit common
+Subject: Re: [PATCH 4/6] hw/virtio/vhost-user: make compilation unit common
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
- <20260131020100.1115203-6-pierrick.bouvier@linaro.org>
+ <20260131020100.1115203-5-pierrick.bouvier@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260131020100.1115203-6-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260131020100.1115203-5-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,20 +106,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 31/1/26 03:00, Pierrick Bouvier wrote:
-> All compile time conditionals have no impact at runtime, since they are
-> representing only possible features for devices present at runtime.
+> PPC architectures use a custom value for VHOST_USER_MAX_RAM_SLOTS (32
+> instead of 512).
 > 
-> In case they are not present, associated features table will never be
-> used. In case they are present but some features are not, matching bits
-> will never be enabled, so those entries will be unused.
-> 
-> Thus, simply expose everything and call it a day.
+> vhost_user struct and several functions use VHOST_USER_MAX_RAM_SLOTS to
+> define stack allocated buffers. To avoid changing all functions to use
+> heap allocated buffers, we keep this max, and simply add a
+> target_base_ppc() conditional for the single place where size really
+> matters.
 > 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/virtio/virtio-qmp.c | 70 ------------------------------------------
->   hw/virtio/meson.build  |  2 +-
->   2 files changed, 1 insertion(+), 71 deletions(-)
+>   hw/virtio/vhost-user.c | 11 ++++-------
+>   hw/virtio/meson.build  |  3 +--
+>   2 files changed, 5 insertions(+), 9 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
