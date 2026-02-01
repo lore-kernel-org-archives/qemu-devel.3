@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19088E6529E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAC9D172A9
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmgsk-0003Kw-Ii; Sun, 01 Feb 2026 18:29:30 -0500
+	id 1vmgsy-0003TN-35; Sun, 01 Feb 2026 18:29:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgsj-0003KP-FH
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:29:29 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgsw-0003Qv-LZ
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:29:42 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgsh-0002R5-QR
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:29:29 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so42271545e9.2
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 15:29:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmgsv-0002Yc-B4
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 18:29:42 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43590777e22so2368907f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 15:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769988566; x=1770593366; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PzpxPYgrDKqbPfDNtViXKCEGCov6rxUV/r7gNJjWVyY=;
- b=J9hYYXtUAiK/paGi2sa4iNp7aarI0B7EyAvj3X4MmgHWQuFQwJ1u+aYA+UZ2YBOjDw
- 6liAbREV9subR+VSQmm1G1nFhvSfX9egf8XKwZfi7vyiTCr8+Z/i3P1BwVCELpnIYDjt
- iwAOlQF78YhV0LlPcoTKR9S630qfeVO/5xNJ+j+qJK4bMecD1/UJedGoh8cJTiubPAEd
- Zc1PP9Kf63KY8qBVxRFMmC4j+SpKgXe35o0kUBnVXp1JWpDoEcUWxQagqgrRROscTKl2
- vZjWi+BkDN9I/4h163Bmgz5yMr/kWJM4praQslBWB2qYzQ3w49m1P6x74ksiR0y/Mdff
- nt9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769988566; x=1770593366;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769988579; x=1770593379; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PzpxPYgrDKqbPfDNtViXKCEGCov6rxUV/r7gNJjWVyY=;
- b=oQyBZtZ2MYaEJmGScZUB4BgRtSl4qitPFZtF0rIyAZEEqrg6FMV3rdM4TMdTI6KllM
- obRYQUwmzwx0dXoOkqcuPDIFIwweudahTRpm37Kz6XBqejNmnj06B1l1uIZ+fPk328MU
- L6zwTJuBXQNOKf8CG/gyCUEbTG6pNv/jeHRjGl2WAeAdeEyl+zuXnFOp5NYDSQqtzay+
- bh9jfvEgXvzj+Tas/fUW6hxIkeEr4K+MgWAfjglq6Ro3wF307Qd/VI0JpkwEf5nFrdGW
- /3mjxszrG5g/bzsW40SoUZY44t81q17JdvDxMxY2nECsidZD4rXklbvc34pHYtI2MQoj
- yk3w==
-X-Gm-Message-State: AOJu0YyyKeMPJDgoDUSubOfio45nSjwHHmCVoXChsfDNAMSNpMCDuaG5
- haZEasYF+guPmCjANRxSUY6EYwHS9CUJBPIAhLaD/5fSPzIi95INM459GLtyrWoOhQB93dQAtO2
- F8gcdT0M=
-X-Gm-Gg: AZuq6aKZoIWw7ft5vbCOAErceJig/Cikx3HGUEYmYz2lKCKoI3okPhT+Avxz8+FyM2p
- 9X2c45U+dcl0OsMsOKtKf19kS8xuCGfMWHh34+8reeWXYN3p5pVjf3EkPoHTKl6pLynhvLcNrRu
- InWAjR6YlsVFmOP45lL6mMqF5G7L8Pse+91bn4pzlo7ca+F2b4GE0jWg/zZkUbwuQ0FqiqfpG8g
- JyESd0YqqwGugh5nyheWPPHhscK6/3on5p9jusU9loAuWJiZJWJ/vXINfkebMLy75B7HtU3SL6o
- 3IUCRQu+HAvGDZxHdlxnS2I+Q22kZeqBv+rofOp9ya6cmDmmz62YXJTOp4/ZhN9AnZjNVmiU0j7
- ZkRnhBSIyOGZMnA8g6wgZyCFq6RjfpZu2pldeSJuUrBP5BhUXz4JdhtBDcTkh6ks3FFCnRbhD8J
- nUQJEMrDuWnjMTZ4fuuG1XZBHFsCqtFAQsqnNd/j+A+yRMgRxhJfKH4DSo8DwPPH5vtFuZfTU=
-X-Received: by 2002:a05:600c:b99:b0:480:19ed:7efa with SMTP id
- 5b1f17b1804b1-482db4a8ba1mr130679575e9.36.1769988565889; 
- Sun, 01 Feb 2026 15:29:25 -0800 (PST)
+ bh=+h8fxES7OJzZ8FiNM/iLx0nwAq7x7TFBCRMWBp9kdf4=;
+ b=HwRjuDdXMSYrK5iYbnqoMWPQIx0Gd/kXa7l1TTiDA+ict5lip8BZo1sGkmWeystFqD
+ 9nMKGXveyebuA1Ec7JZiwq4XCkTNp+ZdgK27jt9Z+/uXn7JVf9sIY1IJzwxN0bxtBEht
+ o8RZ1wwmtZGQABH8/utp8IuAfT4cCuLAcMInwGc5GxQBe5ylBpCoSDvPyOdg3aqRR6uJ
+ f5NwRUrCHcPfj9OIco6tAelPYxRdltMGOIgWCCkqpii4vsBEuIg66TdikASAmpgT5TnQ
+ 548/9rehHUsD6JDJ9Y83UQBMhIyncrPvk2jb+tdzy1ZMbfYXop/SOlufy/toWfcnjOQM
+ LSzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769988579; x=1770593379;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+h8fxES7OJzZ8FiNM/iLx0nwAq7x7TFBCRMWBp9kdf4=;
+ b=VIxmGXpCOwafxcPRdRTUhPGL32E99jhe1pRdUSHOLvaDhwoTV5qdQCGQkiIOgHz42+
+ W3227eekYBQI28MxSywZhrqooQfMFq3KIl0Ozo06O87AfPTXpxvj+y0oP97kjOPUQx41
+ y/Yy1+QH5oEPz9McIBxtNkY8Ww78nHJrQUt0JvcguWY3zfBVB+8m8WHP1OUjzY/7jtg3
+ AWZRGdRtBLghxrt/BCM33CS0PNZUKaHOMBm7tQOI9HF1y552Mt3iWhE/2RwVkhEzFynS
+ GcOacop2qu5NTOvh04Ou9J1S17SABcGwni/6rV3Q6jbhyEkgfLlAaEQR6F+aDfhTXYo5
+ 1UcQ==
+X-Gm-Message-State: AOJu0Yzvr5He3a9xC+WYPk8jo34L6wJgidhzXHhJPrK17qxYVMRE5IFi
+ ahVLWDlruiCqMepCeeNAEbxcZTAVq0uGjmCYgg20zWaefurLcH5ulRRsoSwDSi7PV7yYPWYUNcg
+ NbcQtN+Q=
+X-Gm-Gg: AZuq6aIng0PendLTUEz8RNdjdLYBsQElm/3ufueDnu3LM9GDr8j/j+sspo5ALIak8t3
+ pc/V16pMbet7640bP/KgYQRelxl0TA6Ab5uS7sFCzjsf/ims0NqMRuujbgvRCK2bPvyGH+tCrV7
+ 4KLAUdTKPou4qhbAK8REy9eDAtkpLEHxJXXNkjQC6+HVEZYZP1duX8WN4bBFpXrUNOdJ9TYtPVk
+ Yz8YZUihbyTCaqLcHQV6GJgm6oHp7eb83WniG9Mi6tr3sqavtuMa+KQl2M3+ybIiv8mGB1Y94xc
+ HPcS4vFc2LRJLU72KqA1AGL4QGT3LwlNfqINw0tNHmdRSHYuhj19ywjs3AQnIwd55s24P74Lc6s
+ PM3oajSSYQgQ50onqPA6aogWHcnza4SwLc9Am5xNMetziSKPBexYvebvRoAafYEmlp5n0vMqhX/
+ jnG9qnVT9u2AGfWDXlPCbzglQDRc8EX1jJqGh+Py/XdtF+FM3EEo3NtigSLcRG
+X-Received: by 2002:a5d:5d13:0:b0:435:a160:4480 with SMTP id
+ ffacd0b85a97d-435f3aa9270mr16179455f8f.29.1769988579445; 
+ Sun, 01 Feb 2026 15:29:39 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066aaf235sm400535915e9.0.2026.02.01.15.29.24
+ ffacd0b85a97d-435e10e48a6sm38436771f8f.8.2026.02.01.15.29.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 01 Feb 2026 15:29:25 -0800 (PST)
+ Sun, 01 Feb 2026 15:29:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -70,15 +71,17 @@ Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH v3 00/11] single-binary: hw/virtio
-Date: Mon,  2 Feb 2026 00:29:12 +0100
-Message-ID: <20260201232924.93399-1-philmd@linaro.org>
+Subject: [PATCH v3 02/11] hw/virtio: Constify virtio_is_big_endian() argument
+Date: Mon,  2 Feb 2026 00:29:14 +0100
+Message-ID: <20260201232924.93399-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260201232924.93399-1-philmd@linaro.org>
+References: <20260201232924.93399-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,44 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series eliminates target specifics in hw/virtio and replace them
-with runtime functions where needed.
+VirtIODevice argument is accessed read-only, make it const.
 
-v3:
-- include missing SPAPR_MAX_RAM_SLOTS patch
-v2:
-- Reduce runtime calls for performance
-v1:
-https://lore.kernel.org/qemu-devel/20260131020100.1115203-1-pierrick.bouvier@linaro.org/
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/virtio/virtio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Philippe Mathieu-Daudé (6):
-  hw/virtio: Constify virtio_is_big_endian() argument
-  hw/virtio: Introduce VirtIODevice::access_is_big_endian boolean field
-  hw/virtio: Use VirtIODevice::access_is_big_endian field
-  hw/virtio: Reduce virtio_access_is_big_endian() scope
-  hw/virtio: Check target supports legacy bi-endianness at runtime
-  hw/virtio: Replace TARGET_BIG_ENDIAN -> target_big_endian()
-
-Pierrick Bouvier (5):
-  target-info: add target_base_ppc, target_ppc and target_ppc64
-  hw/ppc/spapr: extract SPAPR_MAX_RAM_SLOTS in a new header
-  hw/virtio/vhost-user: make compilation unit common
-  hw/virtio/virtio-qmp: make compilation unit common
-  hw/virtio: make all compilation units common
-
- include/hw/ppc/spapr.h            |  8 +---
- include/hw/ppc/spapr_common.h     | 17 ++++++++
- include/hw/virtio/virtio-access.h | 46 ++++++--------------
- include/hw/virtio/virtio.h        |  7 +++-
- include/qemu/target-info.h        | 21 ++++++++++
- hw/virtio/vhost-user.c            | 11 ++---
- hw/virtio/virtio-qmp.c            | 70 -------------------------------
- hw/virtio/virtio.c                | 25 ++++++++++-
- target-info.c                     | 21 ++++++++++
- hw/virtio/meson.build             | 17 ++++----
- 10 files changed, 113 insertions(+), 130 deletions(-)
- create mode 100644 include/hw/ppc/spapr_common.h
-
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index fcaa9b03b4a..17b105c146d 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -468,7 +468,7 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+     return virtio_has_feature(vdev->host_features, fbit);
+ }
+ 
+-static inline bool virtio_is_big_endian(VirtIODevice *vdev)
++static inline bool virtio_is_big_endian(const VirtIODevice *vdev)
+ {
+     if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+         assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
 -- 
 2.52.0
 
