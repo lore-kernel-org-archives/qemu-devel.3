@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839ADE7FDCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2911AE7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwP-0006S6-3L; Mon, 02 Feb 2026 14:50:33 -0500
+	id 1vmzur-0003eo-Be; Mon, 02 Feb 2026 14:48:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvi-0005Bo-C2; Mon, 02 Feb 2026 14:49:54 -0500
+ id 1vmzuq-0003a2-Cq; Mon, 02 Feb 2026 14:48:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvf-0003Yx-7d; Mon, 02 Feb 2026 14:49:49 -0500
+ id 1vmzuo-0003SB-6U; Mon, 02 Feb 2026 14:48:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 344CB1850B5;
- Mon, 02 Feb 2026 22:46:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9468C1850AD;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA0AB35B297;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C39335B28F;
  Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 35/69] target/i386/tcg: allow VEX in 16-bit protected
- mode
-Date: Mon,  2 Feb 2026 22:45:58 +0300
-Message-ID: <20260202194638.939438-35-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 27/69] linux-user: fix mremap unmapping adjacent region
+Date: Mon,  2 Feb 2026 22:45:50 +0300
+Message-ID: <20260202194638.939438-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -61,44 +60,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Matthew Lugg <mlugg@mlugg.co.uk>
 
-VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
-it for some unfathomable reason.
+This typo meant that calls to `mremap` which shrink a mapping by some N
+bytes would, when the virtual address space was pre-reserved (e.g.
+32-bit guest on 64-bit host), unmap the N bytes following the *original*
+mapping.
 
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ed88bdcfbdcf9d411607cd690f93f915feff6a5b)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
+(cherry picked from commit aaed9ca1797d70a507371aea688c5cd60b074e2d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index ca9e70dcad..3cb709f78f 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2608,20 +2608,16 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     case 0xc5: /* 2-byte VEX */
-     case 0xc4: /* 3-byte VEX */
-         /*
--         * VEX prefixes cannot be used except in 32-bit mode.
--         * Otherwise the instruction is LES or LDS.
-+         * Bits 6-7 of the first byte must be set except in 64-bit mode.
-+         * Otherwise the instruction is LES or LDS.  Not allowed in real mode.
-          */
--        if (CODE32(s) && !VM86(s)) {
-+        if (PE(s) && !VM86(s)) {
-             static const int pp_prefix[4] = {
-                 0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
-             };
-             int vex3, vex2 = x86_ldub_code(env, s);
- 
-             if (!CODE64(s) && (vex2 & 0xc0) != 0xc0) {
--                /*
--                 * 4.1.4.6: In 32-bit mode, bits [7:6] must be 11b,
--                 * otherwise the instruction is LES or LDS.
--                 */
-                 s->pc--; /* rewind the advance_pc() x86_ldub_code() did */
-                 break;
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index d1f36e6f16..703f8ca3cd 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1169,7 +1169,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+                     errno = ENOMEM;
+                     host_addr = MAP_FAILED;
+                 } else if (reserved_va && old_size > new_size) {
+-                    mmap_reserve_or_unmap(old_addr + old_size,
++                    /* Re-reserve pages we just shrunk out of the mapping */
++                    mmap_reserve_or_unmap(old_addr + new_size,
+                                           old_size - new_size);
+                 }
              }
 -- 
 2.47.3
