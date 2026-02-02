@@ -4,106 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0F5E73157
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 10:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F151E73157
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 10:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmrTL-00060W-SG; Mon, 02 Feb 2026 05:47:59 -0500
+	id 1vmrUH-0006Bi-Jt; Mon, 02 Feb 2026 05:48:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vmrTK-00060D-KI
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 05:47:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmrUF-0006BB-QL
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 05:48:55 -0500
+Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vmrTH-0002NK-Dz
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 05:47:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770029273;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3lrK6r24AtpzLHL+icv/GbDJkO6WUSggAxRpo++ir6E=;
- b=dwYXTDIVlh1kD8aLiZ+TdavJQrTSwlM3kReBbLIJv9ufn6vE6O69XirtI6CSOLqctQ8DZR
- hRXf6ozIHD6ESsVqc5dtQXK/4/oE4BLBuj3zNKYKDAkUG09nkbLpLYTxKDw/bmKZLLzDqP
- nNESnTdfGw/i1c8MjpeIxIvnYxp6Gyw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-QsAN6whIMqGbZyRngSwsKg-1; Mon, 02 Feb 2026 05:47:52 -0500
-X-MC-Unique: QsAN6whIMqGbZyRngSwsKg-1
-X-Mimecast-MFC-AGG-ID: QsAN6whIMqGbZyRngSwsKg_1770029271
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4359d70faa2so2488114f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 02:47:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770029271; x=1770634071;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3lrK6r24AtpzLHL+icv/GbDJkO6WUSggAxRpo++ir6E=;
- b=b/py7OKamTP7PRJvl14pZt3d056K8pbnCBhtEJPhfLluwqeUu5PqUCFYPoDfXuUBLo
- 0e6T9Eo4tIexYe9qvr+2/1raff6l01gUauqfEM8w+qzRoXvkomw2VrEDQ4xsXTvIezQt
- T3dgI+AA3XL5ODQXJ44FUKss5OK83J2CoJtsStt/CVGwa5/hrKpKZwvhWVx7ZySTO24y
- ZIGNGqvqgpNz8G8yI1xk/PU9o/WnMCOkhdJyMFAhVouXFuBSp7VP7YRWWUYdQK0DRtfP
- gr29OrmdTvQ2RBirs9TkKDp9J7QQCH+UdPu0zA2ACmzNGF8cbH4csEFJr2FnEh2S2PJX
- FPzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFtP/WzDwL3yadumUdqhPPy6neAL91voylrOxDP0tNWSF1AeSuUDQIow7nCBA299aWhkBNA9piofTN@nongnu.org
-X-Gm-Message-State: AOJu0Ywc/OFYVjrbQTvpyz4hnyd1oX5H2DuAFU5TFGUX8a9+geXeRIEO
- NjqGillSEl3fRAqR0dDp2ZOFupAvy4sS615sjSFN2DTxnlKnJLljo1UNFKpqbmKcSgRovcWorzg
- CYi+OGI3ffFlPhkO9VhJQGwVeBUI2MRyQ46uLPUV/8Vk/wv8OBba/2wh6
-X-Gm-Gg: AZuq6aIsMHs3D4tlOFpzAWCqdjX4lI55tswrxhLTVCvgE+/n7WkUdD5LtP39UPpWaRr
- 9jGYfXMwoOd8xR81gG5AkwPhhCMuXvce5/OxZw+spNVghxEezwlm0WDkUt8famjYvLSIYZfCuPh
- k+umCtQKhkL1XctvSD7UXpuADe6bNAWUoeKEZ/oHQw42s4OAS+dC1GBKtOO77xWcNQS/adKC/lV
- u6RDwnpHu38oT4vmW8mGYEK40DOEgPBEv4LFzIDe6To+exwzLJATc4pjWIjc/t5q01Sks9edZOu
- 25WBO+4cT85361fLu7i26xFpr6aGcVuHame7dkKH4VKvfDDAmIw0ju5CyEqFTNl7LDs/E7f30/1
- Z68Iv8kb1CCgkvOUlWR7uXsJvKqiklMhIADwWbfAZ5SGhcQTq8BItoUi79w==
-X-Received: by 2002:a5d:5848:0:b0:431:397:4c45 with SMTP id
- ffacd0b85a97d-435f3ab501emr13590531f8f.59.1770029270789; 
- Mon, 02 Feb 2026 02:47:50 -0800 (PST)
-X-Received: by 2002:a5d:5848:0:b0:431:397:4c45 with SMTP id
- ffacd0b85a97d-435f3ab501emr13590484f8f.59.1770029270282; 
- Mon, 02 Feb 2026 02:47:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm47231853f8f.13.2026.02.02.02.47.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 02:47:49 -0800 (PST)
-Message-ID: <9515e511-172b-4994-b5c3-b4f7606fbc27@redhat.com>
-Date: Mon, 2 Feb 2026 11:47:47 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmrUD-0002RA-FU
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 05:48:55 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.52])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f4NdZ0sRPz5w1Q;
+ Mon,  2 Feb 2026 10:48:50 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Mon, 2 Feb
+ 2026 11:48:49 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-98R0029dff3ce2-9fd0-4734-98de-e9695cc14381,
+ 7652E71065C1D671F0F2B67E69D7E7AF66B0F117) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <57fcf2ba-fd8c-4978-af29-18c5dcc7a152@kaod.org>
+Date: Mon, 2 Feb 2026 11:48:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20260127103328.255382-1-skolothumtho@nvidia.com>
- <20260127103328.255382-3-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260127103328.255382-3-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
+ remap
+To: Kane Chen <kane_chen@aspeedtech.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
+ Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
+ <20260120092939.2708302-5-jamin_lin@aspeedtech.com>
+ <588fa41c-a5ff-455d-b64d-b36b986ee781@kaod.org>
+ <TYPPR06MB8206FD6566DFDE3BA513FBFDFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <TYPPR06MB8206F928E28C7FE78BA9E3BEFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <TYPPR06MB8206F3CB33A135C5AC246E2CFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <SI6PR06MB763182A3E4BC0C6ADC0555CEF79AA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <05782501-e775-4065-820e-1b599674f478@kaod.org>
+ <SI6PR06MB763184DBA59EA9E61B97C3A5F79AA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI6PR06MB763184DBA59EA9E61B97C3A5F79AA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: ac19688e-42c7-4289-801a-548b245a03f5
+X-Ovh-Tracer-Id: 9300496181729332146
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF8OkvuyA96IadqD1vu1jr4kCD10OkEyit592JuuLvTCh63YN4ehE+mk6MYZAaNuu7tISsx/b8L4KU4m/8lm3d2cfZhWXavofEgMe72Kvo6+L7os8Rjnmlzye1ny3rRuHSKQTuPG5CqEAPs6rZ5aB/tuYtxMFPhHYMJrDaQ1R9d3RtP/aVwIGRbAQCe48tVSIz4WtMbZXXDP2FwBxmEw7+x+hh0iU/nRzYje/xi1Ol9ZW57vvAMqarYQ77VBaHtV8n9hkuvDR56/bAt4nv5LSmPZBwvua2s89v8pcP2aEeAG42YCjpDyM+Ao0j6aJlm055yV/Odm9QAKBFGfYwAbTTOBL7+kt/mGmykR817aXwezz3NkdeaIfiClVwZSrpFRXi++4x+5Vpc69exB8znr3uuQg/+31c4eepySXQWKX4WmquJkWenZV6tZOzP4db+6zCu1w45FZr5FK9FdZsbuq2XSYo/J5FyaVdK6l/cCLizDUqVw6OIhwtg1uys0mFBkbrwSrmQCVVlhm42FCmu7bTfFmJnOQul4VoooVvDZPv7RApDGPI+A1bIIrhow3LmMK0Tr+PijdbZuvDoKMP5UMe6LCzNGfA6ahaIwqf2mgIJRUQk6z1/Jh+CmxUJgPuGqdr+ctfQleuFaTWiZrP4BS9OCp25LKWT56nsHIyFuzJd5Q
+DKIM-Signature: a=rsa-sha256; bh=JbQmnnfA1aQ1N/b0i3Q2V3vIPZpwurIiHcxxu/oHJ3M=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770029330; v=1;
+ b=Jucpm1HKx5XOACnnUJgqJTSiHJpCc192VYMlEQDsm/v6kqPl4sgnPGmcZnyJlZTbJW/K+kVQ
+ a62XXJ7XQVSracfXtKrfOPatrqMalbnaZvs7A1PaJ+2dcKhEAFSCI+NYYb6PXTH/Dais95Eoss3
+ FLgx1CASAkK3M2GTegzfvddpwH//bvStDFS5VH0Y81JEupRQyVrcVRxG7og2EtCny4EBZk9qfD2
+ vSKchX9sH9gaNxxt6uVFMT54xSWu3uVMfhO8Xd+t0DkVya3Axz6GVMokcxS086hbYtot3yQ+q1U
+ XDsYwiUgetujFbap5IjgOkXQUn/CtSslMzGcJPeOf2McQ==
+Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
+ helo=5.mo552.mail-out.ovh.net
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,196 +136,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/2/26 10:46, Kane Chen wrote:
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Monday, February 2, 2026 5:34 PM
+>> To: Kane Chen <kane_chen@aspeedtech.com>; Jamin Lin
+>> <jamin_lin@aspeedtech.com>; Peter Maydell <peter.maydell@linaro.org>;
+>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>;
+>> Andrew Jeffery <andrew@codeconstruct.com.au>; Joel Stanley
+>> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>> list:All patches CC here <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP
+>> SDRAM remap
+>>
+>> Hi,
+>>
+>>> Working with our IT team, we've transitioned to a Microsoft mail
+>>> server to ensure DKIM is correctly included. Could you please confirm
+>>> if you've received the below patch series?
+>>>
+>>>
+>> https://patchew.org/QEMU/SE3PR06MB8199F4B0069F9326034585D6FC9AA
+>> @SE3PR0
+>>> 6MB8199.apcprd06.prod.outlook.com/
+>>
+>> I did. Although, the series is not threaded. Probably due to the way it was sent.
+>>
+>> Thanks,
+>>
+>> C.
+> 
+> Hi Cédric,
+> 
+> Thanks for the confirmation.
+> 
+> It's possible that the threading issue was related to some extra 'From' info in the
+> mail body. I've updated the script to remove it, so we'll see if that fixes the issue in
+> the next version.
+
+OK. I can not fetch the series with b4. So you will have to resend.
 
 
-On 1/27/26 11:33 AM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> When the guest enables the Event Queue and a vIOMMU is present, allocate a
-> vEVENTQ object so that host-side events related to the vIOMMU can be
-> received and propagated back to the guest.
->
-> For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is created
-> before the guest boots. In this case, the vEVENTQ is allocated when the
-> guest writes to SMMU_CR0 and sets EVENTQEN = 1.
->
-> If no cold-plugged device exists at boot (i.e. no vIOMMU initially), the
-> vEVENTQ is allocated when a vIOMMU is created, i.e. during the first
-> device hot-plug.
->
-> Event read and propagation will be added in a later patch.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 65 +++++++++++++++++++++++++++++++++++++++++--
->  hw/arm/smmuv3-accel.h |  6 ++++
->  hw/arm/smmuv3.c       |  4 +++
->  3 files changed, 73 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index f5cd4df336..e8028d4be5 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -390,6 +390,58 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
->                     sizeof(Cmd), &entry_num, cmd, errp);
->  }
->  
-> +static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
-> +{
-> +    IOMMUFDVeventq *veventq = accel->veventq;
-> +
-> +    if (!veventq) {
-> +        return;
-> +    }
-I guess the close(fd) should already be here, no?
+What about the v6 of "hw/arm/aspeed: AST1700 LTPI support and device
+hookups". Do you plan to resend soon ?
 
-Eric
-> +    iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
-> +    g_free(veventq);
-> +    accel->veventq = NULL;
-> +}
-> +
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-> +{
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +    IOMMUFDVeventq *veventq;
-> +    uint32_t veventq_id;
-> +    uint32_t veventq_fd;
-> +
-> +    if (!accel->viommu) {
-> +        return true;
-> +    }
-> +
-> +    if (accel->veventq) {
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Per Arm SMMUv3 specification (IHI0070 G.b, 6.3.26), the Event Queue
-> +     * is enabled only after its base and size registers are programmed.
-> +     * EVENTQEN is checked before allocating the vEVENTQ.
-> +     */
-> +    if (!smmuv3_eventq_enabled(s)) {
-> +        return true;
-> +    }
-> +
-> +    if (!iommufd_backend_alloc_veventq(accel->viommu->iommufd,
-> +                                       accel->viommu->viommu_id,
-> +                                       IOMMU_VEVENTQ_TYPE_ARM_SMMUV3,
-> +                                       1 << s->eventq.log2size, &veventq_id,
-> +                                       &veventq_fd, errp)) {
-> +        return false;
-> +    }
-> +
-> +    veventq = g_new(IOMMUFDVeventq, 1);
-> +    veventq->veventq_id = veventq_id;
-> +    veventq->veventq_fd = veventq_fd;
-> +    veventq->viommu = accel->viommu;
-> +    accel->veventq = veventq;
-> +    return true;
-> +}
-> +
->  static bool
->  smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->                            Error **errp)
-> @@ -415,6 +467,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->      viommu->viommu_id = viommu_id;
->      viommu->s2_hwpt_id = s2_hwpt_id;
->      viommu->iommufd = idev->iommufd;
-> +    accel->viommu = viommu;
->  
->      /*
->       * Pre-allocate HWPTs for S1 bypass and abort cases. These will be attached
-> @@ -434,14 +487,20 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->          goto free_abort_hwpt;
->      }
->  
-> +    /* Allocate a vEVENTQ if guest has enabled event queue */
-> +    if (!smmuv3_accel_alloc_veventq(s, errp)) {
-> +        goto free_bypass_hwpt;
-> +    }
-> +
->      /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
->      hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
->      if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
-> -        goto free_bypass_hwpt;
-> +        goto free_veventq;
->      }
-> -    accel->viommu = viommu;
->      return true;
->  
-> +free_veventq:
-> +    smmuv3_accel_free_veventq(accel);
->  free_bypass_hwpt:
->      iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
->  free_abort_hwpt:
-> @@ -449,6 +508,7 @@ free_abort_hwpt:
->  free_viommu:
->      iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
->      g_free(viommu);
-> +    accel->viommu = NULL;
->      return false;
->  }
->  
-> @@ -549,6 +609,7 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
->      trace_smmuv3_accel_unset_iommu_device(devfn, idev->devid);
->  
->      if (QLIST_EMPTY(&accel->device_list)) {
-> +        smmuv3_accel_free_veventq(accel);
->          iommufd_backend_free_id(accel->viommu->iommufd, accel->bypass_hwpt_id);
->          iommufd_backend_free_id(accel->viommu->iommufd, accel->abort_hwpt_id);
->          iommufd_backend_free_id(accel->viommu->iommufd,
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index a8a64802ec..92048bb674 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -22,6 +22,7 @@
->   */
->  typedef struct SMMUv3AccelState {
->      IOMMUFDViommu *viommu;
-> +    IOMMUFDVeventq *veventq;
->      uint32_t bypass_hwpt_id;
->      uint32_t abort_hwpt_id;
->      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> @@ -50,6 +51,7 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp);
->  bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
->                                  Error **errp);
->  void smmuv3_accel_idr_override(SMMUv3State *s);
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
->  void smmuv3_accel_reset(SMMUv3State *s);
->  #else
->  static inline void smmuv3_accel_init(SMMUv3State *s)
-> @@ -80,6 +82,10 @@ smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
->  static inline void smmuv3_accel_idr_override(SMMUv3State *s)
->  {
->  }
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-> +{
-> +    return true;
-> +}
->  static inline void smmuv3_accel_reset(SMMUv3State *s)
->  {
->  }
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index c08d58c579..210ac038fe 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1605,6 +1605,10 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          s->cr0ack = data & ~SMMU_CR0_RESERVED;
->          /* in case the command queue has been enabled */
->          smmuv3_cmdq_consume(s, &local_err);
-> +        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available */
-> +        if (local_err == NULL) {
-> +            smmuv3_accel_alloc_veventq(s, &local_err);
-> +        }
->          break;
->      case A_CR1:
->          s->cr[1] = data;
+Thanks,
+
+C.
+
 
 
