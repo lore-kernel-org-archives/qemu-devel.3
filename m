@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3BAE7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31378E7FDC2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmztf-0000Vn-Sg; Mon, 02 Feb 2026 14:47:44 -0500
+	id 1vmztT-0000Oi-C1; Mon, 02 Feb 2026 14:47:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztV-0000QN-WE; Mon, 02 Feb 2026 14:47:34 -0500
+ id 1vmztO-0000MJ-V0; Mon, 02 Feb 2026 14:47:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztT-0003Fp-Gv; Mon, 02 Feb 2026 14:47:32 -0500
+ id 1vmztN-0003ER-HD; Mon, 02 Feb 2026 14:47:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8C1EF1850A0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5957E18509D;
  Mon, 02 Feb 2026 22:46:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3DC2435B282;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0AD9735B27F;
  Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 14/69] qga: Fix ubsan warning
-Date: Mon,  2 Feb 2026 22:45:37 +0300
-Message-ID: <20260202194638.939438-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 11/69] block: Fix BDS use after free during shutdown
+Date: Mon,  2 Feb 2026 22:45:34 +0300
+Message-ID: <20260202194638.939438-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,59 +60,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-When compiling QEMU with --enable-ubsan there is a undefined behavior
-warning when running "make check":
+During shutdown, blockdev_close_all_bdrv_states() drops any block node
+references that are still owned by the monitor (i.e. the user). However,
+in doing so, it forgot to also remove the node from monitor_bdrv_states
+(which qmp_blockdev_del() correctly does), which means that later calls
+of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
+the node.
 
- .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
- #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
+Usually there is no such call after this point, but in some cases it can
+happen. In the reported case, there was an ongoing migration, and the
+migration thread wasn't shut down yet: migration_shutdown() called by
+qemu_cleanup() doesn't actually wait for the migration to be shut down,
+but may just move it to MIGRATION_STATUS_CANCELLING. The next time
+migration_iteration_finish() runs, it sees the status and tries to
+re-activate all block devices that migration may have previously
+inactivated. This is where bdrv_first()/bdrv_next() get called and the
+access to the already freed node happens.
 
-Fix it by avoiding the additional pointer variable here and use an
-"offset" integer variable instead.
+It is debatable if migration_shutdown() should really return before
+migration has settled, but leaving a dangling pointer in the list of
+monitor-owned block nodes is clearly a bug either way and fixing it
+solves the immediate problem, so fix it.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250730072709.27077-1-thuth@redhat.com
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-(cherry picked from commit 83f6dceb8f5c0a1efe806a9a4905cbc743a8a378)
+Cc: qemu-stable@nongnu.org
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251215150714.130214-1-kwolf@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 307bc43095b8ab1765fd66c26003d5da06681c05)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 9dc0c82503..4a09ddc760 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
-                                            Error **errp)
- {
-     unsigned int pci[4], host, hosts[8], tgt[3];
--    int i, nhosts = 0, pcilen;
-+    int i, offset, nhosts = 0, pcilen;
-     GuestPCIAddress *pciaddr = disk->pci_controller;
-     bool has_ata = false, has_host = false, has_tgt = false;
--    char *p, *q, *driver = NULL;
-+    char *p, *driver = NULL;
-     bool ret = false;
+diff --git a/blockdev.c b/blockdev.c
+index 1d1f27cfff..d4b36fa7a9 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -685,6 +685,7 @@ void blockdev_close_all_bdrv_states(void)
  
-     p = strstr(syspath, "/devices/pci");
-@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
- 
-     p = strstr(syspath, "/ata");
-     if (p) {
--        q = p + 4;
-+        offset = 4;
-         has_ata = true;
-     } else {
-         p = strstr(syspath, "/host");
--        q = p + 5;
-+        offset = 5;
+     GLOBAL_STATE_CODE();
+     QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
++        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
+         bdrv_unref(bs);
      }
--    if (p && sscanf(q, "%u", &host) == 1) {
-+    if (p && sscanf(p + offset, "%u", &host) == 1) {
-         has_host = true;
-         nhosts = build_hosts(syspath, p, has_ata, hosts,
-                              ARRAY_SIZE(hosts), errp);
+ }
 -- 
 2.47.3
 
