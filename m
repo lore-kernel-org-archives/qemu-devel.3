@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FEFE7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D448E7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11x-0007jT-D7; Mon, 02 Feb 2026 16:00:21 -0500
+	id 1vn11J-0004Ut-7D; Mon, 02 Feb 2026 15:59:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11v-0007dU-9v; Mon, 02 Feb 2026 16:00:19 -0500
+ id 1vn112-00047m-3W; Mon, 02 Feb 2026 15:59:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11s-0003vt-I2; Mon, 02 Feb 2026 16:00:18 -0500
+ id 1vn110-0003pU-4f; Mon, 02 Feb 2026 15:59:23 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 11F8C18519E;
- Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 71B82185196;
+ Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD41335B315;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 39AD135B30D;
  Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 18/74] gdbstub: Fix const qualifier build errors with
- recent glibc
-Date: Mon,  2 Feb 2026 23:57:29 +0300
-Message-ID: <20260202205833.941615-18-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 10/74] nvme: Note in which AioContext some functions
+ run
+Date: Mon,  2 Feb 2026 23:57:21 +0300
+Message-ID: <20260202205833.941615-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,40 +61,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-A recent change in glibc 2.42.9000 [1] changes the return type of
-strstr() and other string functions to be 'const char *' when the
-input is a 'const char *'. This breaks the build in :
+Sprinkle comments throughout block/nvme.c noting for some functions
+(where it may not be obvious) that they require a certain AioContext, or
+in which AioContext they do happen to run (for callbacks, BHs, event
+notifiers).
 
-../gdbstub/user.c:322:21: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-  322 |     pid_placeholder = strstr(path, "%d");
-      |                     ^
-Fix this by changing the type of the variables that store the result
-of these functions to 'const char *'.
-
-[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251215101937.281722-5-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit d7e1df769910da9d832dda86b01fe1363e4f4a3c)
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20251110154854.151484-10-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit ac3520f599fedee05945ce06bb0f71820a7b2ffc)
+(Mjt: pick this comments-only, no-code-changes commit to 10.1.x
+ so the next change applies cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 67403e5a25..27d3df6c74 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -319,7 +319,7 @@ static bool gdb_accept_socket(int gdb_fd)
- static int gdbserver_open_socket(const char *path, Error **errp)
- {
-     g_autoptr(GString) buf = g_string_new("");
--    char *pid_placeholder;
-+    const char *pid_placeholder;
+diff --git a/block/nvme.c b/block/nvme.c
+index b8262ebfd9..919e14cef9 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -65,6 +65,7 @@ typedef struct {
+ } NVMeQueue;
  
-     pid_placeholder = strstr(path, "%d");
-     if (pid_placeholder != NULL) {
+ typedef struct {
++    /* Called from nvme_process_completion() in the BDS's main AioContext */
+     BlockCompletionFunc *cb;
+     void *opaque;
+     int cid;
+@@ -84,6 +85,7 @@ typedef struct {
+     uint8_t     *prp_list_pages;
+ 
+     /* Fields protected by @lock */
++    /* Coroutines in this queue are woken in their own context */
+     CoQueue     free_req_queue;
+     NVMeQueue   sq, cq;
+     int         cq_phase;
+@@ -92,7 +94,7 @@ typedef struct {
+     int         need_kick;
+     int         inflight;
+ 
+-    /* Thread-safe, no lock necessary */
++    /* Thread-safe, no lock necessary; runs in the BDS's main context */
+     QEMUBH      *completion_bh;
+ } NVMeQueuePair;
+ 
+@@ -206,11 +208,13 @@ static void nvme_free_queue_pair(NVMeQueuePair *q)
+     g_free(q);
+ }
+ 
++/* Runs in the BDS's main AioContext */
+ static void nvme_free_req_queue_cb(void *opaque)
+ {
+     NVMeQueuePair *q = opaque;
+ 
+     qemu_mutex_lock(&q->lock);
++    /* qemu_co_enter_next() wakes the coroutine in its own AioContext */
+     while (q->free_req_head != -1 &&
+            qemu_co_enter_next(&q->free_req_queue, &q->lock)) {
+         /* Retry waiting requests */
+@@ -281,7 +285,7 @@ fail:
+     return NULL;
+ }
+ 
+-/* With q->lock */
++/* With q->lock, must be run in the BDS's main AioContext */
+ static void nvme_kick(NVMeQueuePair *q)
+ {
+     BDRVNVMeState *s = q->s;
+@@ -308,7 +312,10 @@ static NVMeRequest *nvme_get_free_req_nofail_locked(NVMeQueuePair *q)
+     return req;
+ }
+ 
+-/* Return a free request element if any, otherwise return NULL.  */
++/*
++ * Return a free request element if any, otherwise return NULL.
++ * May be run from any AioContext.
++ */
+ static NVMeRequest *nvme_get_free_req_nowait(NVMeQueuePair *q)
+ {
+     QEMU_LOCK_GUARD(&q->lock);
+@@ -321,6 +328,7 @@ static NVMeRequest *nvme_get_free_req_nowait(NVMeQueuePair *q)
+ /*
+  * Wait for a free request to become available if necessary, then
+  * return it.
++ * May be called in any AioContext.
+  */
+ static coroutine_fn NVMeRequest *nvme_get_free_req(NVMeQueuePair *q)
+ {
+@@ -328,20 +336,21 @@ static coroutine_fn NVMeRequest *nvme_get_free_req(NVMeQueuePair *q)
+ 
+     while (q->free_req_head == -1) {
+         trace_nvme_free_req_queue_wait(q->s, q->index);
++        /* nvme_free_req_queue_cb() wakes us in our own AioContext */
+         qemu_co_queue_wait(&q->free_req_queue, &q->lock);
+     }
+ 
+     return nvme_get_free_req_nofail_locked(q);
+ }
+ 
+-/* With q->lock */
++/* With q->lock, may be called in any AioContext */
+ static void nvme_put_free_req_locked(NVMeQueuePair *q, NVMeRequest *req)
+ {
+     req->free_req_next = q->free_req_head;
+     q->free_req_head = req - q->reqs;
+ }
+ 
+-/* With q->lock */
++/* With q->lock, may be called in any AioContext */
+ static void nvme_wake_free_req_locked(NVMeQueuePair *q)
+ {
+     if (!qemu_co_queue_empty(&q->free_req_queue)) {
+@@ -350,7 +359,7 @@ static void nvme_wake_free_req_locked(NVMeQueuePair *q)
+     }
+ }
+ 
+-/* Insert a request in the freelist and wake waiters */
++/* Insert a request in the freelist and wake waiters (from any AioContext) */
+ static void nvme_put_free_req_and_wake(NVMeQueuePair *q, NVMeRequest *req)
+ {
+     qemu_mutex_lock(&q->lock);
+@@ -381,7 +390,7 @@ static inline int nvme_translate_error(const NvmeCqe *c)
+     }
+ }
+ 
+-/* With q->lock */
++/* With q->lock, must be run in the BDS's main AioContext */
+ static bool nvme_process_completion(NVMeQueuePair *q)
+ {
+     BDRVNVMeState *s = q->s;
+@@ -451,6 +460,7 @@ static bool nvme_process_completion(NVMeQueuePair *q)
+     return progress;
+ }
+ 
++/* As q->completion_bh, runs in the BDS's main AioContext */
+ static void nvme_process_completion_bh(void *opaque)
+ {
+     NVMeQueuePair *q = opaque;
+@@ -481,6 +491,7 @@ static void nvme_trace_command(const NvmeCmd *cmd)
+     }
+ }
+ 
++/* Must be run in the BDS's main AioContext */
+ static void nvme_kick_and_check_completions(void *opaque)
+ {
+     NVMeQueuePair *q = opaque;
+@@ -490,6 +501,7 @@ static void nvme_kick_and_check_completions(void *opaque)
+     nvme_process_completion(q);
+ }
+ 
++/* Runs in nvme_submit_command()'s AioContext */
+ static void nvme_deferred_fn(void *opaque)
+ {
+     NVMeQueuePair *q = opaque;
+@@ -502,6 +514,7 @@ static void nvme_deferred_fn(void *opaque)
+     }
+ }
+ 
++/* May be run in any AioContext */
+ static void nvme_submit_command(NVMeQueuePair *q, NVMeRequest *req,
+                                 NvmeCmd *cmd, BlockCompletionFunc cb,
+                                 void *opaque)
+@@ -523,6 +536,7 @@ static void nvme_submit_command(NVMeQueuePair *q, NVMeRequest *req,
+     defer_call(nvme_deferred_fn, q);
+ }
+ 
++/* Put into NVMeRequest.cb, so runs in the BDS's main AioContext */
+ static void nvme_admin_cmd_sync_cb(void *opaque, int ret)
+ {
+     int *pret = opaque;
+@@ -530,6 +544,7 @@ static void nvme_admin_cmd_sync_cb(void *opaque, int ret)
+     aio_wait_kick();
+ }
+ 
++/* Must be run in the BDS's or qemu's main AioContext */
+ static int nvme_admin_cmd_sync(BlockDriverState *bs, NvmeCmd *cmd)
+ {
+     BDRVNVMeState *s = bs->opaque;
+@@ -638,6 +653,7 @@ out:
+     return ret;
+ }
+ 
++/* Must be run in the BDS's main AioContext */
+ static void nvme_poll_queue(NVMeQueuePair *q)
+ {
+     const size_t cqe_offset = q->cq.head * NVME_CQ_ENTRY_BYTES;
+@@ -660,6 +676,7 @@ static void nvme_poll_queue(NVMeQueuePair *q)
+     qemu_mutex_unlock(&q->lock);
+ }
+ 
++/* Must be run in the BDS's main AioContext */
+ static void nvme_poll_queues(BDRVNVMeState *s)
+ {
+     int i;
+@@ -669,6 +686,7 @@ static void nvme_poll_queues(BDRVNVMeState *s)
+     }
+ }
+ 
++/* Run as an event notifier in the BDS's main AioContext */
+ static void nvme_handle_event(EventNotifier *n)
+ {
+     BDRVNVMeState *s = container_of(n, BDRVNVMeState,
+@@ -722,6 +740,7 @@ out_error:
+     return false;
+ }
+ 
++/* Run as an event notifier in the BDS's main AioContext */
+ static bool nvme_poll_cb(void *opaque)
+ {
+     EventNotifier *e = opaque;
+@@ -745,6 +764,7 @@ static bool nvme_poll_cb(void *opaque)
+     return false;
+ }
+ 
++/* Run as an event notifier in the BDS's main AioContext */
+ static void nvme_poll_ready(EventNotifier *e)
+ {
+     BDRVNVMeState *s = container_of(e, BDRVNVMeState,
+@@ -1050,7 +1070,7 @@ static int nvme_probe_blocksizes(BlockDriverState *bs, BlockSizes *bsz)
+     return 0;
+ }
+ 
+-/* Called with s->dma_map_lock */
++/* Called with s->dma_map_lock, may be run in any AioContext */
+ static coroutine_fn int nvme_cmd_unmap_qiov(BlockDriverState *bs,
+                                             QEMUIOVector *qiov)
+ {
+@@ -1061,13 +1081,17 @@ static coroutine_fn int nvme_cmd_unmap_qiov(BlockDriverState *bs,
+     if (!s->dma_map_count && !qemu_co_queue_empty(&s->dma_flush_queue)) {
+         r = qemu_vfio_dma_reset_temporary(s->vfio);
+         if (!r) {
++            /*
++             * Queue access is protected by the dma_map_lock, and all
++             * coroutines are woken in their own AioContext
++             */
+             qemu_co_queue_restart_all(&s->dma_flush_queue);
+         }
+     }
+     return r;
+ }
+ 
+-/* Called with s->dma_map_lock */
++/* Called with s->dma_map_lock, may be run in any AioContext */
+ static coroutine_fn int nvme_cmd_map_qiov(BlockDriverState *bs, NvmeCmd *cmd,
+                                           NVMeRequest *req, QEMUIOVector *qiov)
+ {
+@@ -1180,6 +1204,7 @@ typedef struct {
+     int ret;
+ } NVMeCoData;
+ 
++/* Put into NVMeRequest.cb, so runs in the BDS's main AioContext */
+ static void nvme_rw_cb(void *opaque, int ret)
+ {
+     NVMeCoData *data = opaque;
 -- 
 2.47.3
 
