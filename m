@@ -4,51 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4CBE7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A982E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2Vq-0005zf-Dr; Mon, 02 Feb 2026 17:35:18 -0500
+	id 1vn2bg-0007WN-JA; Mon, 02 Feb 2026 17:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vn2Vn-0005vc-JA
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:35:15 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vn2Vl-0007l5-9K
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:35:15 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9C95F5969F6;
- Mon, 02 Feb 2026 23:35:09 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id z3Ct3Vuun3SZ; Mon,  2 Feb 2026 23:35:07 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2E2D75969F3; Mon, 02 Feb 2026 23:35:07 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2A6285969F2;
- Mon, 02 Feb 2026 23:35:07 +0100 (CET)
-Date: Mon, 2 Feb 2026 23:35:07 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/16] Misc HW & Memory API patches for 2026-02-02
-In-Reply-To: <20260202212019.94205-1-philmd@linaro.org>
-Message-ID: <7795aaf6-74dd-cbd8-d825-a6cfa0d068bb@eik.bme.hu>
-References: <20260202212019.94205-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bf-0007UQ-C6
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:19 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bd-0000lw-KQ
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 120B05BCC3;
+ Mon,  2 Feb 2026 22:41:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770072075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
+ b=D2q+yo8cAqr+2JIcoh8bPW+FL0g5uqAWxr0z4CicI1WhyKCIRLW4QeCxmV+fuCegrum9yg
+ uG3Z6EK+qYo+3SSvxyN9inz6qlkfLQYk0z41RJASMw2UNJR/sBpijMfFLUTeQMvtfzHV28
+ L5w5BV4eZO6wKMvD3vfkMo59fIwEE5Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770072075;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
+ b=WyNtTSQhbsRP5qObUmoHOmRIxlLTdbBsDtLtOQqme5tBIvAf9d4MVBqX+CmHwyWdMCCCFQ
+ 7wzzVzqmc2hWBLDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=D2q+yo8c;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WyNtTSQh
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770072075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
+ b=D2q+yo8cAqr+2JIcoh8bPW+FL0g5uqAWxr0z4CicI1WhyKCIRLW4QeCxmV+fuCegrum9yg
+ uG3Z6EK+qYo+3SSvxyN9inz6qlkfLQYk0z41RJASMw2UNJR/sBpijMfFLUTeQMvtfzHV28
+ L5w5BV4eZO6wKMvD3vfkMo59fIwEE5Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770072075;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
+ b=WyNtTSQhbsRP5qObUmoHOmRIxlLTdbBsDtLtOQqme5tBIvAf9d4MVBqX+CmHwyWdMCCCFQ
+ 7wzzVzqmc2hWBLDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E6DA3EA62;
+ Mon,  2 Feb 2026 22:41:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cMBMAAkogWl8XgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 22:41:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, armbru@redhat.com, ppandit@redhat.com,
+ Michael Roth <michael.roth@amd.com>
+Subject: [PATCH v2 4/9] qapi: Implement qapi_dealloc_present_visitor
+Date: Mon,  2 Feb 2026 19:40:56 -0300
+Message-ID: <20260202224101.20568-5-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260202224101.20568-1-farosas@suse.de>
+References: <20260202224101.20568-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1353027304-1770071707=:53350"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_COUNT_TWO(0.00)[2]; ARC_NA(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 120B05BCC3
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,115 +125,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Implement a visitor that frees the pointer members of the visited QAPI
+object in the same way that qapi_dealloc_visitor does, but similarly
+to qobject_input_visitor, takes an input QObject that will dictate
+which members get freed and which don't. Members not present in the
+input QObject will be left unchanged in the visited QAPI object.
 
---3866299591-1353027304-1770071707=:53350
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+This is useful to free memory just before perfoming a visit with
+qobject_input_visitor on a pre-existing, non-null QAPI object. If the
+same QObject is passed to both visitors, the pointers overwritten by
+the input visitor match the ones that are freed by the dealloc
+visitor.
 
-On Mon, 2 Feb 2026, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d:
->
->  python: fix msys64 wheel directory specification (2026-02-02 16:46:40 +1000)
->
-> are available in the Git repository at:
->
->  https://github.com/philmd/qemu.git tags/hw-misc-20260202
->
-> for you to fetch changes up to d8316b64dfbb4fdb706f20c3b42fd9bcf70b0cdc:
->
->  monitor: Reduce target-specific methods (2026-02-02 22:14:51 +0100)
->
-> Ignoring this checkpatch.pl error:
->
->  ERROR: unnecessary whitespace before a quoted newline
->  #85: FILE: tests/unit/test-cutils.c:3685:
->  +            "s is \n";
->
-> ----------------------------------------------------------------
-> Misc HW & memory API patches
->
-> - Add unit test for qemu_hexdump()
-> - Remove legacy native endianness API uses on the Alpha target
-> - Remove unused memory_region_init_rom_device_nomigrate()
-> - Fix use-after-free in NvmeNamespace "bootindex" suffix
-> - Correct documentation of SCSI Rotation Rate field
-> - Make iotlb_to_section() work with non-CPU AddressSpaces
-> - Reduce few monitor target-specific methods
-> ----------------------------------------------------------------
->
-> Akihiko Odaki (1):
->  hw/nvme: Fix bootindex suffix use-after-free
->
-> Alberto Garcia (1):
->  hw/ide, scsi-disk: Fix typo on the rotation_rate documentation
->
-> BALATON Zoltan (2):
->  memory: Remove memory_region_init_rom_device_nomigrate()
->  memory: Add internal memory_region_set_ops helper function
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ include/qapi/dealloc-visitor.h |   6 ++
+ qapi/qapi-dealloc-visitor.c    | 173 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 178 insertions(+), 1 deletion(-)
 
-Thanks. You could have also picked up (rtl8139: Remove ineffective 
-parameter) and meanwhile Mark gave R-b to (hw/display/{cg3,tcx}: Do not 
-use memory_region_init_rom_nomigrate()) so that could also be merged.
+diff --git a/include/qapi/dealloc-visitor.h b/include/qapi/dealloc-visitor.h
+index c36715fdf3..96c7bf35c3 100644
+--- a/include/qapi/dealloc-visitor.h
++++ b/include/qapi/dealloc-visitor.h
+@@ -25,4 +25,10 @@ typedef struct QapiDeallocVisitor QapiDeallocVisitor;
+  */
+ Visitor *qapi_dealloc_visitor_new(void);
+ 
++/*
++ * Like qapi_dealloc_visitor_new but visits a QObject and only frees
++ * present members.
++ */
++Visitor *qapi_dealloc_present_visitor_new(QObject *);
++
+ #endif
+diff --git a/qapi/qapi-dealloc-visitor.c b/qapi/qapi-dealloc-visitor.c
+index 57a2c904bb..90b017cc93 100644
+--- a/qapi/qapi-dealloc-visitor.c
++++ b/qapi/qapi-dealloc-visitor.c
+@@ -14,14 +14,146 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/dealloc-visitor.h"
++#include "qemu/queue.h"
++#include "qobject/qdict.h"
++#include "qobject/qlist.h"
+ #include "qobject/qnull.h"
+ #include "qapi/visitor-impl.h"
+ 
++typedef struct QStackEntry {
++    QObject *obj;               /* QDict or QList being visited */
++    void *qapi;
++    const QListEntry *entry;    /* If @obj is QList: unvisited tail */
++    QSLIST_ENTRY(QStackEntry) node;
++} QStackEntry;
++
+ struct QapiDeallocVisitor
+ {
+     Visitor visitor;
++    QObject *root;
++    QSLIST_HEAD(, QStackEntry) stack;
+ };
+ 
++static void qapi_dealloc_pop(Visitor *v, void **obj)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
++
++    assert(se && se->qapi == obj);
++    QSLIST_REMOVE_HEAD(&qdv->stack, node);
++    g_free(se);
++}
++
++static void qapi_dealloc_push(Visitor *v, QObject *obj, void *qapi)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QStackEntry *se = g_new0(QStackEntry, 1);
++
++    assert(obj);
++    se->obj = obj;
++    se->qapi = qapi;
++
++    if (qobject_type(obj) == QTYPE_QLIST) {
++        se->entry = qlist_first(qobject_to(QList, obj));
++    }
++
++    QSLIST_INSERT_HEAD(&qdv->stack, se, node);
++}
++
++static QObject *qapi_dealloc_try_get_object(QapiDeallocVisitor *qdv, const char *name)
++{
++    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
++    QObject *qobj;
++    QObject *ret = NULL;
++
++    if (!se) {
++        assert(qdv->root);
++        return qdv->root;
++    }
++
++    qobj = se->obj;
++    assert(qobj);
++
++    if (qobject_type(qobj) == QTYPE_QDICT) {
++        assert(name);
++        ret = qdict_get(qobject_to(QDict, qobj), name);
++    } else {
++        assert(qobject_type(qobj) == QTYPE_QLIST);
++        assert(!name);
++        if (se->entry) {
++            ret = qlist_entry_obj(se->entry);
++        }
++    }
++
++    return ret;
++}
++
++static bool qapi_dealloc_present_start_struct(Visitor *v, const char *name,
++                                              void **obj, size_t size,
++                                              Error **errp)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
++
++    if (!qobj) {
++        return false;
++    }
++    assert(qobject_type(qobj) == QTYPE_QDICT);
++    qapi_dealloc_push(v, qobj, obj);
++    return true;
++}
++
++static void qapi_dealloc_present_end_struct(Visitor *v, void **obj)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
++
++    assert(qobject_type(se->obj) == QTYPE_QDICT);
++    qapi_dealloc_pop(v, obj);
++
++    if (obj) {
++        g_free(*obj);
++    }
++}
++
++static bool qapi_dealloc_present_start_list(Visitor *v, const char *name,
++                                            GenericList **list, size_t size,
++                                            Error **errp)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
++
++    if (!qobj) {
++        return false;
++    }
++    assert(qobject_type(qobj) == QTYPE_QLIST);
++    qapi_dealloc_push(v, qobj, list);
++    return true;
++}
++
++static void qapi_dealloc_present_end_list(Visitor *v, void **obj)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
++
++    assert(qobject_type(se->obj) == QTYPE_QLIST);
++    qapi_dealloc_pop(v, obj);
++}
++
++static void qapi_dealloc_present_free(Visitor *v)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++
++    while (!QSLIST_EMPTY(&qdv->stack)) {
++        QStackEntry *se = QSLIST_FIRST(&qdv->stack);
++
++        QSLIST_REMOVE_HEAD(&qdv->stack, node);
++        g_free(se);
++    }
++    qobject_unref(qdv->root);
++    g_free(qdv);
++}
++
+ static bool qapi_dealloc_start_struct(Visitor *v, const char *name, void **obj,
+                                       size_t unused, Error **errp)
+ {
+@@ -35,6 +167,21 @@ static void qapi_dealloc_end_struct(Visitor *v, void **obj)
+     }
+ }
+ 
++static bool qapi_dealloc_start_alternate(Visitor *v, const char *name,
++                                         GenericAlternate **obj, size_t size,
++                                         Error **errp)
++{
++    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
++    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
++
++    if (!qobj) {
++        return false;
++    }
++    assert(*obj);
++    (*obj)->type = qobject_type(qobj);
++    return true;
++}
++
+ static void qapi_dealloc_end_alternate(Visitor *v, void **obj)
+ {
+     if (obj) {
+@@ -117,13 +264,14 @@ static void qapi_dealloc_free(Visitor *v)
+     g_free(container_of(v, QapiDeallocVisitor, visitor));
+ }
+ 
+-Visitor *qapi_dealloc_visitor_new(void)
++static QapiDeallocVisitor *qapi_dealloc_visitor_new_base(void)
+ {
+     QapiDeallocVisitor *v;
+ 
+     v = g_malloc0(sizeof(*v));
+ 
+     v->visitor.type = VISITOR_DEALLOC;
++
+     v->visitor.start_struct = qapi_dealloc_start_struct;
+     v->visitor.end_struct = qapi_dealloc_end_struct;
+     v->visitor.end_alternate = qapi_dealloc_end_alternate;
+@@ -139,5 +287,28 @@ Visitor *qapi_dealloc_visitor_new(void)
+     v->visitor.type_null = qapi_dealloc_type_null;
+     v->visitor.free = qapi_dealloc_free;
+ 
++    return v;
++}
++
++Visitor *qapi_dealloc_visitor_new(void)
++{
++    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
++
++    return &v->visitor;
++}
++
++Visitor *qapi_dealloc_present_visitor_new(QObject *obj)
++{
++    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
++
++    v->visitor.start_alternate = qapi_dealloc_start_alternate;
++    v->visitor.start_list = qapi_dealloc_present_start_list;
++    v->visitor.end_list = qapi_dealloc_present_end_list;
++    v->visitor.start_struct = qapi_dealloc_present_start_struct;
++    v->visitor.end_struct = qapi_dealloc_present_end_struct;
++    v->visitor.free = qapi_dealloc_present_free;
++
++    v->root = qobject_ref(obj);
++
+     return &v->visitor;
+ }
+-- 
+2.51.0
 
-Regards,
-BALATON Zoltan
-
-> Jim Shu (3):
->  accel/tcg: Send the CPUTLBEntryFull struct into io_prepare()
->  accel/tcg: Fix iotlb_to_section() for different AddressSpace
->  system/physmem: Remove the assertion of page-aligned section number
->
-> Philippe Mathieu-Daudé (8):
->  target/alpha: Use explicit little-endian LD/ST API
->  target/alpha: Inline translator_ldl()
->  configs/targets: Forbid Alpha to use legacy native endianness APIs
->  target/alpha: Replace legacy ld_phys() -> address_space_ld()
->  target/i386: Include missing 'svm.h' header in 'sev.h'
->  monitor: Reduce target-specific declarations
->  monitor: Add hmp_cmds_for_target() helper
->  monitor: Reduce target-specific methods
->
-> Vladimir Sementsov-Ogievskiy (1):
->  tests/unit: add unit test for qemu_hexdump()
->
-> docs/devel/memory.rst                         |  1 -
-> configs/targets/alpha-linux-user.mak          |  2 +
-> configs/targets/alpha-softmmu.mak             |  2 +
-> .../memory-region-housekeeping.cocci          |  8 ---
-> hw/nvme/nvme.h                                |  1 +
-> include/accel/tcg/iommu.h                     | 15 -----
-> include/exec/cputlb.h                         |  4 +-
-> include/hw/core/cpu.h                         | 17 ++---
-> include/hw/ide/ide-dev.h                      |  2 +-
-> include/hw/misc/mos6522.h                     |  2 -
-> include/monitor/hmp-target.h                  | 14 ----
-> include/monitor/hmp.h                         | 13 ++++
-> include/system/memory.h                       | 27 --------
-> monitor/monitor-internal.h                    |  9 ++-
-> target/i386/sev.h                             |  2 +
-> accel/tcg/cputlb.c                            | 32 +++++----
-> hw/i386/sgx-stub.c                            |  1 +
-> hw/i386/sgx.c                                 |  1 +
-> hw/nvme/ns.c                                  |  7 +-
-> hw/scsi/scsi-disk.c                           |  2 +-
-> monitor/hmp-cmds.c                            |  1 +
-> monitor/hmp-target.c                          | 66 ++-----------------
-> monitor/hmp.c                                 | 63 +++++++++++++++++-
-> system/memory.c                               | 56 +++++++---------
-> system/physmem.c                              | 31 ---------
-> target/alpha/helper.c                         | 28 ++++----
-> target/alpha/translate.c                      |  2 +-
-> target/i386/cpu-apic.c                        |  1 +
-> target/i386/sev-system-stub.c                 |  1 +
-> target/i386/sev.c                             |  1 +
-> target/m68k/monitor.c                         |  1 +
-> target/riscv/monitor.c                        |  1 +
-> tests/unit/test-cutils.c                      | 66 +++++++++++++++++++
-> util/meson.build                              |  2 +-
-> 34 files changed, 239 insertions(+), 243 deletions(-)
->
->
---3866299591-1353027304-1770071707=:53350--
 
