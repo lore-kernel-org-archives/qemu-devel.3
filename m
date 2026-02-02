@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C84E7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE04E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn13L-000222-Ok; Mon, 02 Feb 2026 16:01:48 -0500
+	id 1vn143-0003v9-Dm; Mon, 02 Feb 2026 16:02:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12Z-0000eQ-8D; Mon, 02 Feb 2026 16:01:07 -0500
+ id 1vn131-0001RH-DE; Mon, 02 Feb 2026 16:01:32 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12V-0004K2-Ri; Mon, 02 Feb 2026 16:00:57 -0500
+ id 1vn12y-0004Qf-OH; Mon, 02 Feb 2026 16:01:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C277E1851A7;
- Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 15AE21851AB;
+ Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BE7835B31E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2BC635B322;
  Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 27/74] tcg/optimize: Do use affected bits
-Date: Mon,  2 Feb 2026 23:57:38 +0300
-Message-ID: <20260202205833.941615-27-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 31/74] linux-user: fix mremap errors for invalid ranges
+Date: Mon,  2 Feb 2026 23:57:42 +0300
+Message-ID: <20260202205833.941615-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -60,39 +60,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Matthew Lugg <mlugg@mlugg.co.uk>
 
-We inadvertently disabled affected bits optimizations on operations
-that use fold_masks_zosa.  These happen relatively often in x86 code
-for extract/sextract; for example given the following:
+If an address range given to `mremap` is invalid (exceeds addressing
+bounds on the guest), we were previously returning `ENOMEM`, which is
+not correct. The manpage and the Linux kernel implementation both agree
+that if `old_addr`/`old_size` refer to an invalid address, `EFAULT` is
+returned, and if `new_addr`/`new_size` refer to an invalid address,
+`EINVAL` is returned.
 
-   mov %esi, %ebp
-   xor $0x1, %ebp
-
-the optimizer is able to simplify the "extract_i64 rbp,tmp0,$0x0,$0x20"
-produced by the second instruction to a move.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 932522a9ddc ("tcg/optimize: Fold and to extract during optimize")
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251223163720.985578-1-pbonzini@redhat.com>
-(cherry picked from commit 23b53ec3a8a279cb5acd5e022b464a4272fe9f8c)
+Message-ID: <20251117170954.31451-3-mlugg@mlugg.co.uk>
+(cherry picked from commit 2422884ec5a12037d2378f45ca1411d3f37c7081)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index db1d89396b..5ae26e4a10 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1103,7 +1103,7 @@ static bool fold_masks_zosa_int(OptContext *ctx, TCGOp *op,
- static bool fold_masks_zosa(OptContext *ctx, TCGOp *op, uint64_t z_mask,
-                             uint64_t o_mask, int64_t s_mask, uint64_t a_mask)
- {
--    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, -1);
-+    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, a_mask);
-     return true;
- }
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 7a5f7c3660..131c6374bc 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1109,12 +1109,15 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+     int prot;
+     void *host_addr;
+ 
+-    if (!guest_range_valid_untagged(old_addr, old_size) ||
+-        ((flags & MREMAP_FIXED) &&
++    if (((flags & MREMAP_FIXED) &&
+          !guest_range_valid_untagged(new_addr, new_size)) ||
+         ((flags & MREMAP_MAYMOVE) == 0 &&
+          !guest_range_valid_untagged(old_addr, new_size))) {
+-        errno = ENOMEM;
++        errno = EINVAL;
++        return -1;
++    }
++    if (!guest_range_valid_untagged(old_addr, old_size)) {
++        errno = EFAULT;
+         return -1;
+     }
  
 -- 
 2.47.3
