@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DCC4E7FDE2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABEDE7FDEE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn1Nh-0005Zz-GI; Mon, 02 Feb 2026 16:22:49 -0500
+	id 1vn1YQ-0004w8-Gv; Mon, 02 Feb 2026 16:33:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1Mw-000572-8f
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:22:04 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1YP-0004vu-J8
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:33:53 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1Mu-0007cd-Fa
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:22:02 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47ee937ecf2so1504175e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:22:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1YO-0001uF-4Q
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:33:53 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so49608945e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770067318; x=1770672118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=u5Ye71+xXX+oIQeSRnGD+1875IhK3YEl0jQp6kUTrts=;
- b=m0mBP/9vCuNoNaTBc6owj+ZbcUFukgW3mqWbxBa127DiEecmHjNnv4rWv5yWUTwhCf
- 0wGVAe2zlvD0TNZr+HO47uJU7vqaKAtyulklKWN+anzjZku1wd4oEeaK6H/WbG4AOHoC
- kmDxnu2p0rkEIqPbd7uo0CU3ij05fM7N8UtSSv3PeBsl6wk7oB6yeG8R6YE/CCtFsqAN
- vne1GCYE0dD02GIXjjarr4hSD/8Xamj1zOLAA4DDF8BTows+8FsPKHaRiLlDg8cNLZc6
- ZvP/acQHLyU+xqYyjXQzhYMHZ50gkxE83dfMoEK/hyXGj5MdK+WeBuoz3UY+rJ7JzK2B
- xJ9g==
+ d=linaro.org; s=google; t=1770068030; x=1770672830; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ncliO2Y2RM1oHZsROrtZDG+hcxy9e4ipUfraRWJKNj4=;
+ b=mkod/vNq4YZMNmDK+ZyzPCjy+BEhAj/DJYz5CWyuCd4zK4ayfVJDqvuXcGG+ij8cZv
+ hM2VAIftTo1BTqt17MJqMyYK30ZNrSoiNkw14v/mW6SA/AcglwUOC5qnheXcoqCjgV4f
+ sew/EBgRPcYcy2bAd/xKIF0cIMuhqChQo3pmTTmAiqR3PINX+waybFkufZS/VQE03b2F
+ D45pdIL6+ba1h9ZfBQ7dbDTc2NWabCzRf3B3/Jz1fKguXPlO+UdRNpEv2t0bbRpebQlx
+ kAuF9F10ZOtPogD7dt48atXUNGijaqc40upAuWvm3XMsVMNkGmCHVGKiSZyO0NZvx0W/
+ oAjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770067318; x=1770672118;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=u5Ye71+xXX+oIQeSRnGD+1875IhK3YEl0jQp6kUTrts=;
- b=ejRQ/jhfd5aqkI35JfVATXRVVHePoLrxYguoP/AIUpjHlGfcUU3ivL29wtbo/1XgGN
- ms7jGLNLWhdGmERruti9smgGrqEBjlmNumKvt6aQZQ+EsA2BnXArAUEMMDMHy/IE29Mj
- PdyyHLDQjsd/4L+0BoGZNYDM03nTn+2VYJwHhLr8mLipVC5+WVHCVus+jXZO/E445OVc
- nK3cKFZFDWNO5H8nmqwFAbZJgGaInNpHPSIAfxJ13UcIfs+PlJb1OYGaS4WK3Q37dym0
- 1uyoMGD/5vf3WfS+pMke2cxG6K/rJi+wzlsZ28Zjbt93F0LBbL1hcZ6aJUEbD7vea5A4
- qfSQ==
-X-Gm-Message-State: AOJu0YyiMHENj3sQVwm9ydBnbwLshbcPZSJN0+F/9AdllQQItiSEXfc8
- l1tV8GFzsOz0SfC3eZY97bek/0rikZ5QVjhr2VnMiZMSanw5CTb2DTTbAdezw5ni1gP6O9gOeY3
- 0XWHKZp4=
-X-Gm-Gg: AZuq6aKii/SDYihasj04eQvAlezJKrbhaIOEmM9OwhSUcp28cCaXrrHpAusGKUliTZ+
- Ugg7R9couT8KkgE36EfRkoQqfLt2cGUM7hqZIkQLQGbGSnnumA9qMWxwjzGC4Eogx/ACfupgCrn
- hBNgiMKynuiFnO64O68kK5eM/BTZt65hbjJQlAN/cpScWi1BjDqsFFEr0dLXOwWxsDnXu/8kO3j
- QQUtGikMGwjVGzlY2DLn0VkRAwg6jtx6tKO7krp0oNgUBjL0d8FK0g42pNaEGuxrPO7t6PWvol3
- +ScMydR+6wu7mzFQI2AY0GaMCug1H93CFstHwCgr40e/T9Q3nz/iL4I9NhQ+K+fguxm52WT7Jd8
- JVNGFLbFd1OiItVyUGdBahZe1IBcpNNhmXRIcftattgd5Se/51gc2e4OYfxpZH0dGz98pxc+jwv
- fg0rMf4NSogzIv6CcQlYf8gwRxiPaQfMOolhyZuQ/MECbKp3aVoQ/ex/4zJc7I
-X-Received: by 2002:a05:600c:4743:b0:477:a289:d854 with SMTP id
- 5b1f17b1804b1-483051371f9mr14562495e9.5.1770067318488; 
- Mon, 02 Feb 2026 13:21:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770068030; x=1770672830;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ncliO2Y2RM1oHZsROrtZDG+hcxy9e4ipUfraRWJKNj4=;
+ b=eRK8vsD9Gne2/PoiO7pLq9EdJs5NCAwKKxy/fj/8E57LvrQ03W1tdw8czTu23xaDlP
+ KNciR/WsaWykZujAvPkgn9v2ndLrYivsZxQx8/CywMS9XSdQZP7CNUqaDZLOFlrz4+1H
+ tkukIjn3f52V1cSOuuK9fwAk/kKMuAGZUsO1f8yG2MSF98UTEXmPc9t1L3uUhcEmJZEN
+ n9tie9r3owDjZHrnFyeIyS3T8Yr4XRL9DsjWErF0TcFjVu0XEmb06DUz2ER/rzy8DFc3
+ eBSwya2I1IMd+J8vrt1LrAulcZJjRtqTOJJLSmBQLvSRTVVwcyvWC1Uy+C35eKTQrP6y
+ 1SiQ==
+X-Gm-Message-State: AOJu0Yw4yoVGx+/yospHwAkK9ghg9S7ZG+EidjFnpljZFTKiVp1JYwYN
+ EF5n7kNTiWaxT4zAwR3VINfMF7aB2pNeUZFKBHpcWaAgBiwpAtFvInZnK8eEH6mGSshitXh9g7t
+ BJiqWHy8=
+X-Gm-Gg: AZuq6aJ0QVpRlGALK9LtHDz1kGTj//w4E/+i/FvvZlxFXvBWsQiUMLAPeWquAZgNOtG
+ SvCqEWNgFFTgnj0uKFIyK2MomGKRmN9O54UjgvPFOw67QBfA4MECVMq4YBWftyEPDzYoJHnsX5I
+ 4saXc9vVq9LeI2otY5ffoVyAiFNw6IBQ1bFpZoWwPhpcjjkmPNzv+QKNi5E4mAcTnhWo+1v/Qj9
+ 13kDo0nW9c7UURlZdQOjX0h9FChlXCcKU6f8pjEuu2J4N0q3YlbtZRQfMUV5i1sHJ6b/JeMab0h
+ sGleDI1zBzZtsdiT6bxTFYkwPmC2ylcDHn2vtwKrAzjAGTWe8gFtszMrCmy08kZZWWIiQVFZJUh
+ aoYju3KDrZbKTo7NhSPj7b86apVSSpFr4OoGNsm7K730kzHwgmf3RAUaw3npU/9VSEcpHpnVZay
+ wRBRzSbMEcnRfZT7RvXBlR5EqC0NFpOZVT0UBj3yCMk1Jip5ja3JpEZdxoesI8
+X-Received: by 2002:a05:6000:2dc9:b0:435:a287:82c with SMTP id
+ ffacd0b85a97d-435f3a81d83mr19077055f8f.1.1770068030227; 
+ Mon, 02 Feb 2026 13:33:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483051287cfsm25232975e9.6.2026.02.02.13.21.57
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-435e10edfccsm44915286f8f.17.2026.02.02.13.33.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 13:21:57 -0800 (PST)
+ Mon, 02 Feb 2026 13:33:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/16] monitor: Reduce target-specific declarations
-Date: Mon,  2 Feb 2026 22:20:17 +0100
-Message-ID: <20260202212019.94205-15-philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/i386: Inline translator_ld[uw,l,q]() calls
+Date: Mon,  2 Feb 2026 22:33:48 +0100
+Message-ID: <20260202213348.96754-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260202212019.94205-1-philmd@linaro.org>
-References: <20260202212019.94205-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,189 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some declarations do not depend on target-specific types,
-move them out of "monitor/hmp-target.h" to "monitor/hmp.h".
+In preparation of removing the translator_ld[uw,l,q]() methods,
+inline them for the x86 targets, expanding MO_TE -> MO_LE since
+the architecture uses little endian order.
 
-Commit 409e9f7131e ("mos6522: add "info via" HMP command
-for debugging") declared hmp_info_via() is declared twice.
-Remove the one in "hw/misc/mos6522.h" otherwise we get:
+Mechanical change using the following Coccinelle 'spatch' script:
 
-  In file included from ../hw/misc/mos6522.c:33:
-  include/monitor/hmp.h:43:6: error: redundant redeclaration of 'hmp_info_via' [-Werror=redundant-decls]
-     43 | void hmp_info_via(Monitor *mon, const QDict *qdict);
-        |      ^~~~~~~~~~~~
-  In file included from ../hw/misc/mos6522.c:29:
-  include/hw/misc/mos6522.h:175:6: note: previous declaration of 'hmp_info_via' with type 'void(Monitor *, const QDict *)'
-    175 | void hmp_info_via(Monitor *mon, const QDict *qdict);
-        |      ^~~~~~~~~~~~
+    @@
+    expression env, db, pc, do_swap;
+    @@
+    (
+    - translator_lduw(env, db, pc)
+    + translator_lduw_end(env, db, pc, MO_LE)
+    |
+    - translator_ldl(env, db, pc)
+    + translator_ldl_end(env, db, pc, MO_LE)
+    |
+    - translator_ldq(env, db, pc)
+    + translator_ldq_end(env, db, pc, MO_LE)
+    )
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260129164039.58472-3-philmd@linaro.org>
 ---
- include/hw/misc/mos6522.h     |  2 --
- include/monitor/hmp-target.h  | 14 --------------
- include/monitor/hmp.h         | 13 +++++++++++++
- hw/i386/sgx-stub.c            |  1 +
- hw/i386/sgx.c                 |  1 +
- monitor/hmp-cmds.c            |  1 +
- target/i386/cpu-apic.c        |  1 +
- target/i386/sev-system-stub.c |  1 +
- target/i386/sev.c             |  1 +
- target/m68k/monitor.c         |  1 +
- target/riscv/monitor.c        |  1 +
- 11 files changed, 21 insertions(+), 16 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
-index 150e30a2c11..82838d09106 100644
---- a/include/hw/misc/mos6522.h
-+++ b/include/hw/misc/mos6522.h
-@@ -172,6 +172,4 @@ extern const VMStateDescription vmstate_mos6522;
- uint64_t mos6522_read(void *opaque, hwaddr addr, unsigned size);
- void mos6522_write(void *opaque, hwaddr addr, uint64_t val, unsigned size);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 086a3bcec18..bc105aab9ea 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -315,18 +315,18 @@ static inline uint8_t x86_ldub_code(CPUX86State *env, DisasContext *s)
  
--void hmp_info_via(Monitor *mon, const QDict *qdict);
--
- #endif /* MOS6522_H */
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index b679aaebbff..5167d17d41d 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -47,18 +47,4 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
- CPUArchState *mon_get_cpu_env(Monitor *mon);
- CPUState *mon_get_cpu(Monitor *mon);
+ static inline uint16_t x86_lduw_code(CPUX86State *env, DisasContext *s)
+ {
+-    return translator_lduw(env, &s->base, advance_pc(env, s, 2));
++    return translator_lduw_end(env, &s->base, advance_pc(env, s, 2), MO_LE);
+ }
  
--void hmp_info_mem(Monitor *mon, const QDict *qdict);
--void hmp_info_tlb(Monitor *mon, const QDict *qdict);
--void hmp_mce(Monitor *mon, const QDict *qdict);
--void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
--void hmp_info_sev(Monitor *mon, const QDict *qdict);
--void hmp_info_sgx(Monitor *mon, const QDict *qdict);
--void hmp_info_via(Monitor *mon, const QDict *qdict);
--void hmp_memory_dump(Monitor *mon, const QDict *qdict);
--void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
--void hmp_info_registers(Monitor *mon, const QDict *qdict);
--void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
--void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
--void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
--
- #endif /* MONITOR_HMP_TARGET_H */
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 83721b5ffc6..e222bea60cd 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -180,5 +180,18 @@ void hmp_info_mtree(Monitor *mon, const QDict *qdict);
- void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
- void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
- void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
-+void hmp_info_mem(Monitor *mon, const QDict *qdict);
-+void hmp_info_tlb(Monitor *mon, const QDict *qdict);
-+void hmp_mce(Monitor *mon, const QDict *qdict);
-+void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
-+void hmp_info_sev(Monitor *mon, const QDict *qdict);
-+void hmp_info_sgx(Monitor *mon, const QDict *qdict);
-+void hmp_info_via(Monitor *mon, const QDict *qdict);
-+void hmp_memory_dump(Monitor *mon, const QDict *qdict);
-+void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
-+void hmp_info_registers(Monitor *mon, const QDict *qdict);
-+void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
-+void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
-+void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
+ static inline uint32_t x86_ldl_code(CPUX86State *env, DisasContext *s)
+ {
+-    return translator_ldl(env, &s->base, advance_pc(env, s, 4));
++    return translator_ldl_end(env, &s->base, advance_pc(env, s, 4), MO_LE);
+ }
  
+ #ifdef TARGET_X86_64
+ static inline uint64_t x86_ldq_code(CPUX86State *env, DisasContext *s)
+ {
+-    return translator_ldq(env, &s->base, advance_pc(env, s, 8));
++    return translator_ldq_end(env, &s->base, advance_pc(env, s, 8), MO_LE);
+ }
  #endif
-diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
-index d295e54d239..1dd8d9afbfa 100644
---- a/hw/i386/sgx-stub.c
-+++ b/hw/i386/sgx-stub.c
-@@ -1,5 +1,6 @@
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "hw/i386/pc.h"
- #include "hw/i386/sgx-epc.h"
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index e2801546ad6..5e792e8e6e9 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -16,6 +16,7 @@
- #include "hw/mem/memory-device.h"
- #include "monitor/qdev.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 5a673cddb2a..bad034937a9 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -21,6 +21,7 @@
- #include "gdbstub/enums.h"
- #include "monitor/hmp.h"
- #include "qemu/help_option.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "monitor/monitor-internal.h"
- #include "qapi/error.h"
-diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
-index eeee62b52a2..f7ad7b51394 100644
---- a/target/i386/cpu-apic.c
-+++ b/target/i386/cpu-apic.c
-@@ -10,6 +10,7 @@
- #include "qobject/qdict.h"
- #include "qapi/error.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "system/hw_accel.h"
- #include "system/kvm.h"
-diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
-index 7c5c02a5657..fb84aee94d2 100644
---- a/target/i386/sev-system-stub.c
-+++ b/target/i386/sev-system-stub.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "qapi/error.h"
- #include "sev.h"
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 1d70f96ec1f..fef9f441c61 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -36,6 +36,7 @@
- #include "migration/blocker.h"
- #include "qom/object.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "qapi/qapi-commands-misc-i386.h"
- #include "confidential-guest.h"
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index 161f41853ec..6d101c75df0 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -7,6 +7,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "monitor/monitor.h"
- 
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index 8a77476db93..478fd392ac6 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "cpu_bits.h"
- #include "monitor/monitor.h"
-+#include "monitor/hmp.h"
- #include "monitor/hmp-target.h"
- #include "system/memory.h"
  
 -- 
 2.52.0
