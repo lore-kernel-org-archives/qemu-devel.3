@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABEDE7FDEE
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A49C7E7FDEE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn1YQ-0004w8-Gv; Mon, 02 Feb 2026 16:33:54 -0500
+	id 1vn1ce-00065D-T7; Mon, 02 Feb 2026 16:38:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1YP-0004vu-J8
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:33:53 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1cd-00064u-N2
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:38:15 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1YO-0001uF-4Q
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:33:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4806cc07ce7so49608945e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:33:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1cc-0002l3-5w
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:38:15 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47ee07570deso41104965e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770068030; x=1770672830; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770068292; x=1770673092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ncliO2Y2RM1oHZsROrtZDG+hcxy9e4ipUfraRWJKNj4=;
- b=mkod/vNq4YZMNmDK+ZyzPCjy+BEhAj/DJYz5CWyuCd4zK4ayfVJDqvuXcGG+ij8cZv
- hM2VAIftTo1BTqt17MJqMyYK30ZNrSoiNkw14v/mW6SA/AcglwUOC5qnheXcoqCjgV4f
- sew/EBgRPcYcy2bAd/xKIF0cIMuhqChQo3pmTTmAiqR3PINX+waybFkufZS/VQE03b2F
- D45pdIL6+ba1h9ZfBQ7dbDTc2NWabCzRf3B3/Jz1fKguXPlO+UdRNpEv2t0bbRpebQlx
- kAuF9F10ZOtPogD7dt48atXUNGijaqc40upAuWvm3XMsVMNkGmCHVGKiSZyO0NZvx0W/
- oAjQ==
+ bh=2S81V/4tr5nwqUUmJ1CeXS0wHIUdiHnIFbf5Q+wPrK0=;
+ b=KyBG65JcfI1tlkuVenthD+DfYiCd4un7gJSED/+2IFWTu8WS0dpJdtSzmYJ5zrAGWM
+ J4rjDuSMwsuIhy3/jSAUCn2V1ZCu/HfjfClnbj1T4+WFhrCYZh4kHff/JoQk+AG2CdN1
+ o/yyHEdThzQwW7E7wvgVa/YAEpE+LUQXbqSBcTm4UzRHEVRo8ijCfOX/tKv7LK3MkdaM
+ 0RtoqmTs7WDtvZRmkBVKUnrwjhys960amhjKBAxuPwzUYmsNBKtffPo1xtZhk9JoqbqY
+ CEHwLOJxRwNf3KDS5bIIxkQP1GprVLqyngVmNDtIIXAtoHF/ujPxUiJfn/6Jti8ycmeM
+ EgNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770068030; x=1770672830;
+ d=1e100.net; s=20230601; t=1770068292; x=1770673092;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ncliO2Y2RM1oHZsROrtZDG+hcxy9e4ipUfraRWJKNj4=;
- b=eRK8vsD9Gne2/PoiO7pLq9EdJs5NCAwKKxy/fj/8E57LvrQ03W1tdw8czTu23xaDlP
- KNciR/WsaWykZujAvPkgn9v2ndLrYivsZxQx8/CywMS9XSdQZP7CNUqaDZLOFlrz4+1H
- tkukIjn3f52V1cSOuuK9fwAk/kKMuAGZUsO1f8yG2MSF98UTEXmPc9t1L3uUhcEmJZEN
- n9tie9r3owDjZHrnFyeIyS3T8Yr4XRL9DsjWErF0TcFjVu0XEmb06DUz2ER/rzy8DFc3
- eBSwya2I1IMd+J8vrt1LrAulcZJjRtqTOJJLSmBQLvSRTVVwcyvWC1Uy+C35eKTQrP6y
- 1SiQ==
-X-Gm-Message-State: AOJu0Yw4yoVGx+/yospHwAkK9ghg9S7ZG+EidjFnpljZFTKiVp1JYwYN
- EF5n7kNTiWaxT4zAwR3VINfMF7aB2pNeUZFKBHpcWaAgBiwpAtFvInZnK8eEH6mGSshitXh9g7t
- BJiqWHy8=
-X-Gm-Gg: AZuq6aJ0QVpRlGALK9LtHDz1kGTj//w4E/+i/FvvZlxFXvBWsQiUMLAPeWquAZgNOtG
- SvCqEWNgFFTgnj0uKFIyK2MomGKRmN9O54UjgvPFOw67QBfA4MECVMq4YBWftyEPDzYoJHnsX5I
- 4saXc9vVq9LeI2otY5ffoVyAiFNw6IBQ1bFpZoWwPhpcjjkmPNzv+QKNi5E4mAcTnhWo+1v/Qj9
- 13kDo0nW9c7UURlZdQOjX0h9FChlXCcKU6f8pjEuu2J4N0q3YlbtZRQfMUV5i1sHJ6b/JeMab0h
- sGleDI1zBzZtsdiT6bxTFYkwPmC2ylcDHn2vtwKrAzjAGTWe8gFtszMrCmy08kZZWWIiQVFZJUh
- aoYju3KDrZbKTo7NhSPj7b86apVSSpFr4OoGNsm7K730kzHwgmf3RAUaw3npU/9VSEcpHpnVZay
- wRBRzSbMEcnRfZT7RvXBlR5EqC0NFpOZVT0UBj3yCMk1Jip5ja3JpEZdxoesI8
-X-Received: by 2002:a05:6000:2dc9:b0:435:a287:82c with SMTP id
- ffacd0b85a97d-435f3a81d83mr19077055f8f.1.1770068030227; 
- Mon, 02 Feb 2026 13:33:50 -0800 (PST)
+ bh=2S81V/4tr5nwqUUmJ1CeXS0wHIUdiHnIFbf5Q+wPrK0=;
+ b=REM+L79FKsGYu2YO07p7aJWekm6iLdTMzyb5ir9Lz1g2MNBXWk2KJFbxzPzepdtGGs
+ mIBUKuoDTa2/KAsVLDYHr5chn97C8IXcFF7t+Qh/N/97WjFxlp0MNvjfysqyp/Ipcggk
+ kwmakiJCgQrPFCQatfe2LNnafiimdBqWemUJ0af75SG/oXlYhHpnQQAmS25SOeycvR7+
+ P/QwJWwV7V6FbqK1sPTe2m5bwnNcVNnObdpf9fLs1hkPh69PfZlk/p1Iv8xb2xHUfQXT
+ e3Bwrk3FbBA2olGpWUHYjj1fmbM93c3VWKYBmwPELw96mhwtaret8JfL+dk/apzCQd1w
+ S8AQ==
+X-Gm-Message-State: AOJu0YxnoF8l+jhHJ8/RlvCNYSH9IxaMXa06yVbRQDg9uKOe0/1GXvGv
+ OeTwGJI3hmhrzaIxph7Su/syBgcN3OLbShOgsn391cmbMSoBw7iCI6+zgBJ1FvA6KimcFt5FZq4
+ nKLA0YfE=
+X-Gm-Gg: AZuq6aI+42/qepdRcJIdXjfbou97UylYc8DeSEfBfVLRW/zjkysqALiB/vsBX+q8rYU
+ 8X8EEKgkPHBHIZNMtvRUMz4r9V3tmseuZ5Vdn6Kgr7O2EjJvLAVinLtL7Zf5N2gHZ65o7Ux05Qr
+ 5r5JhkZqsjjgwMoqSwO0MhfqiuAquBeviOPFT76Dxtild8ZsMOlAfeQjbL+Z4I0poPMzxbdxenR
+ lz66ADm6ESAtfT2biNCoHfe/d8i/uCYytlqsVOWaY9j6RYjI9Y6ouSDgr/dXA1rPUbvIo1KbnBd
+ KudFVgnz/VwkR21X/69AevxGgVATw/e9xQ02Wrf4qr4BL9dSpsDEwpPykEBcu3Y+cJ1XIJLAWjw
+ dpa2tFzUXeZShronWpSUsACFb7CjXWWL9N14IL9Pgr3n5XpsAmpMDqvj+OCIHH+eFORlwBlLFa2
+ CRCA28VMQ+FLL4WA5JKwQOjCIHCQofGOcZg82d8uXqD/uoCv2U19026zbxbspsAYK9SfN/2ik=
+X-Received: by 2002:a05:600c:4ec7:b0:47d:586e:2fea with SMTP id
+ 5b1f17b1804b1-482db46b38dmr175629635e9.15.1770068292353; 
+ Mon, 02 Feb 2026 13:38:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edfccsm44915286f8f.17.2026.02.02.13.33.49
+ 5b1f17b1804b1-4830511c049sm25780365e9.1.2026.02.02.13.38.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 13:33:49 -0800 (PST)
+ Mon, 02 Feb 2026 13:38:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+Cc: qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/i386: Inline translator_ld[uw,l,q]() calls
-Date: Mon,  2 Feb 2026 22:33:48 +0100
-Message-ID: <20260202213348.96754-1-philmd@linaro.org>
+Subject: [PATCH] target/riscv: Inline translator_ld[uw,l,q]() calls
+Date: Mon,  2 Feb 2026 22:38:10 +0100
+Message-ID: <20260202213810.97141-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,8 +102,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 In preparation of removing the translator_ld[uw,l,q]() methods,
-inline them for the x86 targets, expanding MO_TE -> MO_LE since
-the architecture uses little endian order.
+inline them for the RISC-V targets, using mo_endian(ctx) -- which
+we introduced in commit 504f7f304ff -- instead of MO_TE.
 
 Mechanical change using the following Coccinelle 'spatch' script:
 
@@ -109,46 +112,65 @@ Mechanical change using the following Coccinelle 'spatch' script:
     @@
     (
     - translator_lduw(env, db, pc)
-    + translator_lduw_end(env, db, pc, MO_LE)
+    + translator_lduw_end(env, db, pc, mo_endian(ctx))
     |
     - translator_ldl(env, db, pc)
-    + translator_ldl_end(env, db, pc, MO_LE)
+    + translator_ldl_end(env, db, pc, mo_endian(ctx))
     |
     - translator_ldq(env, db, pc)
-    + translator_ldq_end(env, db, pc, MO_LE)
+    + translator_ldq_end(env, db, pc, mo_endian(ctx))
     )
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/tcg/decode-new.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/riscv/translate.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 086a3bcec18..bc105aab9ea 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -315,18 +315,18 @@ static inline uint8_t x86_ldub_code(CPUX86State *env, DisasContext *s)
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index f687c75fe43..d8261aeb662 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1253,13 +1253,16 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
+          * real one is 2 or 4 bytes. Instruction preload wouldn't trigger
+          * additional page fault.
+          */
+-        opcode = translator_ldl(env, &ctx->base, ctx->base.pc_next);
++        opcode = translator_ldl_end(env, &ctx->base, ctx->base.pc_next,
++                                    mo_endian(ctx));
+     } else {
+         /*
+          * For unaligned pc, instruction preload may trigger additional
+          * page fault so we only load 2 bytes here.
+          */
+-        opcode = (uint32_t) translator_lduw(env, &ctx->base, ctx->base.pc_next);
++        opcode = (uint32_t) translator_lduw_end(env, &ctx->base,
++                                                ctx->base.pc_next,
++                                                mo_endian(ctx));
+     }
+     ctx->ol = ctx->xl;
  
- static inline uint16_t x86_lduw_code(CPUX86State *env, DisasContext *s)
- {
--    return translator_lduw(env, &s->base, advance_pc(env, s, 2));
-+    return translator_lduw_end(env, &s->base, advance_pc(env, s, 2), MO_LE);
- }
+@@ -1279,8 +1282,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
+         if (!pc_is_4byte_align) {
+             /* Load last 2 bytes of instruction here */
+             opcode = deposit32(opcode, 16, 16,
+-                               translator_lduw(env, &ctx->base,
+-                                               ctx->base.pc_next + 2));
++                               translator_lduw_end(env, &ctx->base,
++                                                   ctx->base.pc_next + 2,
++                                                   mo_endian(ctx)));
+         }
+         ctx->opcode = opcode;
  
- static inline uint32_t x86_ldl_code(CPUX86State *env, DisasContext *s)
- {
--    return translator_ldl(env, &s->base, advance_pc(env, s, 4));
-+    return translator_ldl_end(env, &s->base, advance_pc(env, s, 4), MO_LE);
- }
+@@ -1395,7 +1399,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
  
- #ifdef TARGET_X86_64
- static inline uint64_t x86_ldq_code(CPUX86State *env, DisasContext *s)
- {
--    return translator_ldq(env, &s->base, advance_pc(env, s, 8));
-+    return translator_ldq_end(env, &s->base, advance_pc(env, s, 8), MO_LE);
- }
- #endif
+             if (page_ofs > TARGET_PAGE_SIZE - MAX_INSN_LEN) {
+                 uint16_t next_insn =
+-                    translator_lduw(env, &ctx->base, ctx->base.pc_next);
++                    translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
++                                        mo_endian(ctx));
+                 int len = insn_len(next_insn);
  
+                 if (!translator_is_same_page(&ctx->base, ctx->base.pc_next + len - 1)) {
 -- 
 2.52.0
 
