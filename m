@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F2EE7FDF7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A27E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn27O-0006Ng-Aj; Mon, 02 Feb 2026 17:10:02 -0500
+	id 1vn273-0005X5-IN; Mon, 02 Feb 2026 17:09:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn26H-0004zB-G3; Mon, 02 Feb 2026 17:08:57 -0500
+ id 1vn25r-0004qJ-LZ; Mon, 02 Feb 2026 17:08:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn26G-0002c2-39; Mon, 02 Feb 2026 17:08:53 -0500
+ id 1vn25p-0002aL-LJ; Mon, 02 Feb 2026 17:08:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B6B0C1852B9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 582A11852B4;
  Tue, 03 Feb 2026 01:07:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A8D335B3CC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B76F35B3C7;
  Tue, 03 Feb 2026 01:08:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 12/56] linux-user: fix mremap unmapping adjacent region
-Date: Tue,  3 Feb 2026 01:07:17 +0300
-Message-ID: <20260202220805.945271-12-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 07/56] tcg/optimize: Fix a_mask computation for orc
+Date: Tue,  3 Feb 2026 01:07:12 +0300
+Message-ID: <20260202220805.945271-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -60,34 +60,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Lugg <mlugg@mlugg.co.uk>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This typo meant that calls to `mremap` which shrink a mapping by some N
-bytes would, when the virtual address space was pre-reserved (e.g.
-32-bit guest on 64-bit host), unmap the N bytes following the *original*
-mapping.
+In computing a_mask, for or, we remove the bits from t1->o_mask
+which are known to be zero.  For orc, the bits known to be zero
+are the inverse of those known to be one.
 
-Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: cc4033ee47c ("tcg/optimize: Build and use zero, one and affected bits in fold_orc")
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
-(cherry picked from commit aaed9ca1797d70a507371aea688c5cd60b074e2d)
+(cherry picked from commit 08b12bfb8f532dbc62e35c31d081ede1aa12098b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 423c77856a..ef3833a2bb 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1171,7 +1171,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-                     errno = ENOMEM;
-                     host_addr = MAP_FAILED;
-                 } else if (reserved_va && old_size > new_size) {
--                    mmap_reserve_or_unmap(old_addr + old_size,
-+                    /* Re-reserve pages we just shrunk out of the mapping */
-+                    mmap_reserve_or_unmap(old_addr + new_size,
-                                           old_size - new_size);
-                 }
-             }
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 1f95da487b..db1d89396b 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2360,7 +2360,7 @@ static bool fold_orc(OptContext *ctx, TCGOp *op)
+     s_mask = t1->s_mask & t2->s_mask;
+ 
+     /* Affected bits are those not known one, masked by those known one. */
+-    a_mask = ~t1->o_mask & t2->o_mask;
++    a_mask = ~t1->o_mask & ~t2->o_mask;
+ 
+     return fold_masks_zosa(ctx, op, z_mask, o_mask, s_mask, a_mask);
+ }
 -- 
 2.47.3
 
