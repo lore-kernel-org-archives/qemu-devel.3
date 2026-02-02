@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337ADE7DEF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE2FE7DEE3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmuv6-0003HO-AD; Mon, 02 Feb 2026 09:28:52 -0500
+	id 1vmuv7-0003Ha-Jw; Mon, 02 Feb 2026 09:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vmuui-0003Fi-DY
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:28:31 -0500
+ id 1vmuub-0003Em-32
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:28:26 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vmuuf-0006YR-RY
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:28:28 -0500
+ id 1vmuuY-0006TX-I0
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:28:20 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6DFCC596A42;
- Mon, 02 Feb 2026 15:28:19 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3D5DB596E9B;
+ Mon, 02 Feb 2026 15:28:15 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id thLwYXVjrKuf; Mon,  2 Feb 2026 15:28:17 +0100 (CET)
+ id NNA2T7CmCfTC; Mon,  2 Feb 2026 15:28:13 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 62F22596E98; Mon, 02 Feb 2026 15:28:17 +0100 (CET)
-Message-ID: <e938355d877a0f8645ca51f863517f8a73febe2c.1770042013.git.balaton@eik.bme.hu>
+ id 391E5596E8D; Mon, 02 Feb 2026 15:28:13 +0100 (CET)
+Message-ID: <6a048a559776406d1bb5095f103e453165849e3d.1770042013.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1770042013.git.balaton@eik.bme.hu>
 References: <cover.1770042013.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 6/7] memory: Factor out common ram region initialization
+Subject: [PATCH v2 2/7] hw/display/{cg3,tcx}: Do not use
+ memory_region_init_rom_nomigrate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -44,7 +45,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Mon, 02 Feb 2026 15:28:17 +0100 (CET)
+Date: Mon, 02 Feb 2026 15:28:13 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -68,211 +69,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce internal memory_region_do_init_ram() function to remove
-duplicated code from different memory_region_init_*ram functions.
+We could simply convert these to use memory_region_init_rom but that
+would be a migration compatibility break so preserve current behaviour
+for now.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- system/memory.c | 123 ++++++++++++++++--------------------------------
- 1 file changed, 41 insertions(+), 82 deletions(-)
+ hw/display/cg3.c | 6 ++++--
+ hw/display/tcx.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index e15f931a8a..96a09d7cf3 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1579,19 +1579,12 @@ void memory_region_init_io(MemoryRegion *mr,
-     memory_region_set_ops(mr, ops, opaque);
- }
+diff --git a/hw/display/cg3.c b/hw/display/cg3.c
+index 568d6048a6..44966e7586 100644
+--- a/hw/display/cg3.c
++++ b/hw/display/cg3.c
+@@ -282,8 +282,10 @@ static void cg3_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     CG3State *s = CG3(obj);
  
--bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
--                                            Object *owner,
--                                            const char *name,
--                                            uint64_t size,
--                                            uint32_t ram_flags,
--                                            Error **errp)
-+static bool memory_region_do_init_ram(MemoryRegion *mr,
-+                                      Error *err, Error **errp)
- {
--    Error *err = NULL;
--    memory_region_init(mr, owner, name, size);
-     mr->ram = true;
-     mr->terminates = true;
-     mr->destructor = memory_region_destructor_ram;
--    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
-     if (err) {
-         mr->size = int128_zero();
-         object_unparent(OBJECT(mr));
-@@ -1601,6 +1594,17 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-     return true;
- }
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_ram_flags_nomigrate(&s->rom, obj, "cg3.prom",
++                                           FCODE_MAX_ROM_SIZE, 0,
++                                           &error_fatal);
++    memory_region_set_readonly(&s->rom, true);
+     sysbus_init_mmio(sbd, &s->rom);
  
-+bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
-+                                            const char *name, uint64_t size,
-+                                            uint32_t ram_flags, Error **errp)
-+{
-+    Error *err = NULL;
-+
-+    memory_region_init(mr, owner, name, size);
-+    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
-+    return memory_region_do_init_ram(mr, err, errp);
-+}
-+
- bool memory_region_init_resizeable_ram(MemoryRegion *mr,
-                                        Object *owner,
-                                        const char *name,
-@@ -1612,108 +1616,66 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
-                                        Error **errp)
- {
-     Error *err = NULL;
-+
-     memory_region_init(mr, owner, name, size);
--    mr->ram = true;
--    mr->terminates = true;
--    mr->destructor = memory_region_destructor_ram;
--    mr->ram_block = qemu_ram_alloc_resizeable(size, max_size, resized,
--                                              mr, &err);
--    if (err) {
--        mr->size = int128_zero();
--        object_unparent(OBJECT(mr));
--        error_propagate(errp, err);
--        return false;
--    }
--    return true;
-+    mr->ram_block = qemu_ram_alloc_resizeable(size, max_size, resized, mr,
-+                                              &err);
-+    return memory_region_do_init_ram(mr, err, errp);
- }
+     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 36cad82abd..87fe7216ba 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -756,8 +756,10 @@ static void tcx_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     TCXState *s = TCX(obj);
  
- #if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
--bool memory_region_init_ram_from_file(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      uint64_t align,
--                                      uint32_t ram_flags,
--                                      const char *path,
--                                      ram_addr_t offset,
-+bool memory_region_init_ram_from_file(MemoryRegion *mr, Object *owner,
-+                                      const char *name, uint64_t size,
-+                                      uint64_t align, uint32_t ram_flags,
-+                                      const char *path, ram_addr_t offset,
-                                       Error **errp)
- {
-     Error *err = NULL;
-+
-     memory_region_init(mr, owner, name, size);
--    mr->ram = true;
-     mr->readonly = !!(ram_flags & RAM_READONLY);
--    mr->terminates = true;
--    mr->destructor = memory_region_destructor_ram;
-     mr->align = align;
--    mr->ram_block = qemu_ram_alloc_from_file(size, mr, ram_flags, path,
--                                             offset, &err);
--    if (err) {
--        mr->size = int128_zero();
--        object_unparent(OBJECT(mr));
--        error_propagate(errp, err);
--        return false;
--    }
--    return true;
-+    mr->ram_block = qemu_ram_alloc_from_file(size, mr, ram_flags, path, offset,
-+                                             &err);
-+    return memory_region_do_init_ram(mr, err, errp);
- }
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "tcx.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_ram_flags_nomigrate(&s->rom, obj, "tcx.prom",
++                                           FCODE_MAX_ROM_SIZE, 0,
++                                           &error_fatal);
++    memory_region_set_readonly(&s->rom, true);
+     sysbus_init_mmio(sbd, &s->rom);
  
--bool memory_region_init_ram_from_fd(MemoryRegion *mr,
--                                    Object *owner,
--                                    const char *name,
--                                    uint64_t size,
--                                    uint32_t ram_flags,
--                                    int fd,
--                                    ram_addr_t offset,
--                                    Error **errp)
-+bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
-+                                    const char *name, uint64_t size,
-+                                    uint32_t ram_flags, int fd,
-+                                    ram_addr_t offset, Error **errp)
- {
-     Error *err = NULL;
-+
-     memory_region_init(mr, owner, name, size);
--    mr->ram = true;
-     mr->readonly = !!(ram_flags & RAM_READONLY);
--    mr->terminates = true;
--    mr->destructor = memory_region_destructor_ram;
-     mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
-                                            offset, false, &err);
--    if (err) {
--        mr->size = int128_zero();
--        object_unparent(OBJECT(mr));
--        error_propagate(errp, err);
--        return false;
--    }
--    return true;
-+    return memory_region_do_init_ram(mr, err, errp);
- }
- #endif
- 
--void memory_region_init_ram_ptr(MemoryRegion *mr,
--                                Object *owner,
--                                const char *name,
--                                uint64_t size,
--                                void *ptr)
-+void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-+                                const char *name, uint64_t size, void *ptr)
- {
-     memory_region_init(mr, owner, name, size);
--    mr->ram = true;
--    mr->terminates = true;
--    mr->destructor = memory_region_destructor_ram;
--
-     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-     assert(ptr != NULL);
-     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-+    memory_region_do_init_ram(mr, NULL, NULL);
- }
- 
--void memory_region_init_ram_device_ptr(MemoryRegion *mr,
--                                       Object *owner,
--                                       const char *name,
--                                       uint64_t size,
-+void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-+                                       const char *name, uint64_t size,
-                                        void *ptr)
- {
-     memory_region_init(mr, owner, name, size);
--    mr->ram = true;
--    mr->ram_device = true;
-     memory_region_set_ops(mr, &ram_device_mem_ops, mr);
--    mr->destructor = memory_region_destructor_ram;
--
-     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-     assert(ptr != NULL);
-     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-+    memory_region_do_init_ram(mr, NULL, NULL);
-+    mr->ram_device = true;
- }
- 
- void memory_region_init_alias(MemoryRegion *mr,
-@@ -3764,15 +3726,12 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
-     assert(ops);
-     memory_region_init(mr, owner, name, size);
-     memory_region_set_ops(mr, ops, opaque);
--    mr->rom_device = true;
--    mr->destructor = memory_region_destructor_ram;
-     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
--    if (err) {
--        mr->size = int128_zero();
--        object_unparent(OBJECT(mr));
--        error_propagate(errp, err);
-+    if (!memory_region_do_init_ram(mr, err, errp)) {
-         return false;
-     }
-+    mr->ram = false;
-+    mr->rom_device = true;
-     /* This will assert if owner is neither NULL nor a DeviceState.
-      * We only want the owner here for the purposes of defining a
-      * unique name for migration. TODO: Ideally we should implement
+     /* 2/STIP : Stippler */
 -- 
 2.41.3
 
