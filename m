@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116D3E7FDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FA6E7FDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn27f-0008Gf-RW; Mon, 02 Feb 2026 17:10:20 -0500
+	id 1vn27h-0008N7-00; Mon, 02 Feb 2026 17:10:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn27B-0005s3-8b; Mon, 02 Feb 2026 17:09:50 -0500
+ id 1vn27b-0007vh-7Y; Mon, 02 Feb 2026 17:10:17 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn279-0002ic-Q8; Mon, 02 Feb 2026 17:09:49 -0500
+ id 1vn27Z-0002lZ-LK; Mon, 02 Feb 2026 17:10:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5906E1852C2;
+ by isrv.corpit.ru (Postfix) with ESMTP id ACAD11852C6;
  Tue, 03 Feb 2026 01:07:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 37FA835B3D5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F74635B3D9;
  Tue, 03 Feb 2026 01:08:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 21/56] target/i386/tcg: allow VEX in 16-bit protected
- mode
-Date: Tue,  3 Feb 2026 01:07:26 +0300
-Message-ID: <20260202220805.945271-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 25/56] target/loongach: Fix some exceptions failure in
+ updating CSR_BADV
+Date: Tue,  3 Feb 2026 01:07:30 +0300
+Message-ID: <20260202220805.945271-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -61,45 +60,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Song Gao <gaosong@loongson.cn>
 
-VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
-it for some unfathomable reason.
+According to Volume 1 Manual 7.4.8 ,exception,SYS,BRK,INE,IPE,PPD
+FPE,SXD,ASXD are need't update CSR_BADV, this patch correct it.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ed88bdcfbdcf9d411607cd690f93f915feff6a5b)
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+(cherry picked from commit 70cf9b7bf7aff47f8d85ccce35b688dd91335cf0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 31aad730fc..24dcf222f3 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2613,20 +2613,16 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     case 0xc5: /* 2-byte VEX */
-     case 0xc4: /* 3-byte VEX */
-         /*
--         * VEX prefixes cannot be used except in 32-bit mode.
--         * Otherwise the instruction is LES or LDS.
-+         * Bits 6-7 of the first byte must be set except in 64-bit mode.
-+         * Otherwise the instruction is LES or LDS.  Not allowed in real mode.
-          */
--        if (CODE32(s) && !VM86(s)) {
-+        if (PE(s) && !VM86(s)) {
-             static const int pp_prefix[4] = {
-                 0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
-             };
-             int vex3, vex2 = x86_ldub_code(env, s);
- 
-             if (!CODE64(s) && (vex2 & 0xc0) != 0xc0) {
--                /*
--                 * 4.1.4.6: In 32-bit mode, bits [7:6] must be 11b,
--                 * otherwise the instruction is LES or LDS.
--                 */
-                 s->pc--; /* rewind the advance_pc() x86_ldub_code() did */
-                 break;
-             }
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 9d077c56d9..ab247e82ec 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -121,8 +121,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     case EXCCODE_FPE:
+     case EXCCODE_SXD:
+     case EXCCODE_ASXD:
+-        env->CSR_BADV = env->pc;
+-        QEMU_FALLTHROUGH;
+     case EXCCODE_BCE:
+     case EXCCODE_ADEM:
+     case EXCCODE_PIL:
 -- 
 2.47.3
 
