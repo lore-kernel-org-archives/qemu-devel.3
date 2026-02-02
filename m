@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C51E7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CB8E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwL-0005xF-Ug; Mon, 02 Feb 2026 14:50:30 -0500
+	id 1vmzsx-0000Bc-Ls; Mon, 02 Feb 2026 14:47:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvn-0005G7-DB; Mon, 02 Feb 2026 14:50:02 -0500
+ id 1vmzsl-0000Ac-No; Mon, 02 Feb 2026 14:46:47 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvl-0003bS-LB; Mon, 02 Feb 2026 14:49:55 -0500
+ id 1vmzsh-0003AC-Ti; Mon, 02 Feb 2026 14:46:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A67D41850B8;
- Mon, 02 Feb 2026 22:46:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2E841185092;
+ Mon, 02 Feb 2026 22:45:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 57E8835B29A;
- Mon, 02 Feb 2026 22:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B296735B274;
+ Mon, 02 Feb 2026 22:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 38/69] hw/loongarch/virt: Fix irq allocation failure
- with pci device from fdt
-Date: Mon,  2 Feb 2026 22:46:01 +0300
-Message-ID: <20260202194638.939438-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 00/69] Patch Round-up for stable 10.0.8,
+ freeze on 2026-02-10
+Date: Mon,  2 Feb 2026 22:45:23 +0300
+Message-ID: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
-References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,127 +59,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xianglai Li <lixianglai@loongson.cn>
+The following patches are queued for QEMU stable v10.0.8:
 
-When we use the -kernel parameter to start an elf format kernel relying on
-fdt, we get the following error:
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
-pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.0: enabling device (0000 -> 0003)
-pcieport 0000:00:01.0: PME: Signaling with IRQ 19
-pcieport 0000:00:01.0: AER: enabled with IRQ 19
-pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.1: enabling device (0000 -> 0003)
-pcieport 0000:00:01.1: PME: Signaling with IRQ 20
-pcieport 0000:00:01.1: AER: enabled with IRQ 20
-pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.2: enabling device (0000 -> 0003)
-pcieport 0000:00:01.2: PME: Signaling with IRQ 21
-pcieport 0000:00:01.2: AER: enabled with IRQ 21
-pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.3: enabling device (0000 -> 0003)
-pcieport 0000:00:01.3: PME: Signaling with IRQ 22
-pcieport 0000:00:01.3: AER: enabled with IRQ 22
-pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
+Patch freeze is 2026-02-10, and the release is planned for 2026-02-12:
 
-This is because  the description of interrupt-cell is missing in the pcie
-irq map.  And there is a lack of a description of the interrupt trigger
-type.  Now it is corrected and the correct interrupt-cell is added in the
-pcie irq map.
+  https://wiki.qemu.org/Planning/10.0
 
-Refer to the implementation in arm and add some comments.
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit ff54394eed148c642f83b45753c7898acdbd5ddb)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
-diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-index d00e974d4e..b61977808a 100644
---- a/hw/loongarch/virt-fdt-build.c
-+++ b/hw/loongarch/virt-fdt-build.c
-@@ -322,6 +322,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
-     uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
-     uint32_t *irq_map = full_irq_map;
-     const MachineState *ms = MACHINE(lvms);
-+    uint32_t pin_mask;
-+    uint32_t devfn_mask;
- 
-     /*
-      * This code creates a standard swizzle of interrupts such that
-@@ -334,37 +336,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
-      */
- 
-     for (dev = 0; dev < PCI_NUM_PINS; dev++) {
--        int devfn = dev * 0x8;
-+        int devfn = PCI_DEVFN(dev, 0);
- 
-         for (pin = 0; pin < PCI_NUM_PINS; pin++) {
--            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-+            int irq_nr = VIRT_DEVICE_IRQS + \
-+                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-             int i = 0;
- 
--            /* Fill PCI address cells */
--            irq_map[i] = cpu_to_be32(devfn << 8);
--            i += 3;
--
--            /* Fill PCI Interrupt cells */
--            irq_map[i] = cpu_to_be32(pin + 1);
--            i += 1;
--
--            /* Fill interrupt controller phandle and cells */
--            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
--            irq_map[i++] = cpu_to_be32(irq_nr);
-+            uint32_t map[] = {
-+                devfn << 8, 0, 0,             /* devfn */
-+                pin + 1,                      /* PCI pin */
-+                *pch_pic_phandle,             /* interrupt controller handle */
-+                irq_nr,                       /* irq number */
-+                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
- 
-             if (!irq_map_stride) {
--                irq_map_stride = i;
-+                irq_map_stride = sizeof(map) / sizeof(uint32_t);
-             }
-+
-+            /* Convert map to big endian */
-+            for (i = 0; i < irq_map_stride; i++) {
-+                irq_map[i] = cpu_to_be32(map[i]);
-+            }
-+
-             irq_map += irq_map_stride;
-         }
-     }
- 
--
-     qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
-                      PCI_NUM_PINS * PCI_NUM_PINS *
-                      irq_map_stride * sizeof(uint32_t));
-+
-+    /* Only need to match the pci slot bit */
-+    devfn_mask = PCI_DEVFN((PCI_NUM_PINS - 1), 0) << 8;
-+    /* The pci interrupt only needs to match the specified low bit */
-+    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
-+
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
--                     0x1800, 0, 0, 0x7);
-+                           devfn_mask, 0, 0,  /* address cells */
-+                           pin_mask);
- }
- 
- static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-@@ -401,6 +411,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-                                  2, base_mmio, 2, size_mmio);
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
-                            0, *pch_msi_phandle, 0, 0x10000);
-+
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
-     fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
-     g_free(nodename);
- }
--- 
-2.47.3
+Thanks!
 
+/mjt
+
+--------------------------------------
+01 c8958b7eb494 Paolo Bonzini:
+   tests/vm: bump FreeBSD image to 14.3
+02 7e71b8e7f2f6 Michael Tokarev:
+   gitlab-ci.d/cirrus: Update the FreeBSD job to v14.3
+03 eafc5f69e621 Alex Bennée:
+   gitlab: move custom runners to Ubuntu 24.04
+04 408c8629105f Alex Bennée:
+   tests/docker: add --arch-only to qemu deps for all-test-cross
+05 6da616bb1700 Alex Bennée:
+   tests/docker: handle host-arch selection for all-test-cross
+06 61432e805e50 Alex Bennée:
+   tests/docker: fix debian-all-test-cross
+07 41706d3e72d6 Richard Henderson:
+   tcg: Zero extend 32-bit addresses for TCI
+08 dd77ef99aa02 Alex Bennée:
+   target/arm: handle unaligned PC during tlb probe
+09 46228925edd5 Hanna Czenczek:
+   vhost: Always initialize cached vring data
+10 e742b7bdc244 Stefan Weil:
+   scripts/nsis.py: Tell makensis that WoA is 64 bit
+11 307bc43095b8 Kevin Wolf:
+   block: Fix BDS use after free during shutdown
+12 ac3520f599fe Hanna Czenczek:
+   nvme: Note in which AioContext some functions run
+13 b002acacc1d7 Hanna Czenczek:
+   Revert "nvme: Fix coroutine waking"
+14 83f6dceb8f5c Thomas Huth:
+   qga: Fix ubsan warning
+15 326e620fc014 Cédric Le Goater:
+   Fix const qualifier build errors with recent glibc
+16 2f5c96d53409 Cédric Le Goater:
+   i386: Fix const qualifier build errors with recent glibc
+17 e37a0d514a17 Cédric Le Goater:
+   tests/vhost-user-bridge.c: Fix const qualifier build errors with recent 
+   glibc
+18 dfe87815ba45 Cédric Le Goater:
+   monitor: Fix const qualifier build errors with recent glibc
+19 d7e1df769910 Cédric Le Goater:
+   gdbstub: Fix const qualifier build errors with recent glibc
+20 00829ae3845f Zesen Liu:
+   qdev: fix error handling in set_uint64_checkmask
+21 60efba3c1bff Andrew Cooper:
+   target/i386: Fix #GP error code for INT instructions
+22 0db1b556e4bc Paolo Bonzini:
+   target/i386/tcg: ignore V3 in 32-bit mode
+23 3fbadbb3927a Alano Song:
+   hw/i2c/imx: Fix trace func name error
+24 e714f1a3d4d1 Jie Song:
+   monitor/qmp: cleanup SocketChardev listener sources early to avoid fd 
+   handling race
+25 af6db3b71310 Richard Henderson:
+   tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
+26 82ae60c8b5cb Jean-Christian CÎRSTEA:
+   linux-user: allow null `pathname` for statx()/fstatat()
+27 aaed9ca1797d Matthew Lugg:
+   linux-user: fix mremap unmapping adjacent region
+28 2422884ec5a1 Matthew Lugg:
+   linux-user: fix mremap errors for invalid ranges
+29 81ceab30492e Matthew Lugg:
+   linux-user: fix reserved_va page leak in do_munmap
+30 9290c10ae9d0 Matthew Lugg:
+   tests: add tcg coverage for fixed mremap bugs
+31 894c8bd56ff1 Paolo Bonzini:
+   configs: use default prefix for Windows compilation
+32 11dac41f2e83 Laurent Vivier:
+   m68k: fix CAS2 writeback when Dc1==Dc2
+33 73dd6e4a36dd Paolo Bonzini:
+   target/i386/tcg: do not mark all SSE instructions as unaligned
+34 5e3572ef2e94 Paolo Bonzini:
+   target/i386/tcg: mask addresses for VSIB
+35 ed88bdcfbdcf Paolo Bonzini:
+   target/i386/tcg: allow VEX in 16-bit protected mode
+36 c7504ba2a560 Vulnerability Report:
+   hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
+37 47de28a0b7fb Xianglai Li:
+   hw/loongarch/virt: Modify the interrupt trigger type in fdt table
+38 ff54394eed14 Xianglai Li:
+   hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
+39 70cf9b7bf7af Song Gao:
+   target/loongach: Fix some exceptions failure in updating CSR_BADV
+40 e4f0ef58d53e Song Gao:
+   target/loongarch: Fix exception BCE missing to update CSR_BADV
+41 a7be2e0a3f7d Song Gao:
+   target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
+42 49ee001a5b83 Yao Zi:
+   hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
+43 7cf096d609e6 Alex Bennée:
+   tests/functional: migrate aspeed_rainier image
+44 8da52b8401af Peter Maydell:
+   target/arm: Don't specify ID_PFR1 accessfn twice
+45 205ca535abac Peter Maydell:
+   target/arm: Correctly honour HCR.TID3 for v7A cores
+46 b67a35622f9a Peter Maydell:
+   target/arm: Correctly trap HCR.TID1 registers in v7A
+47 1c11aa180714 Philippe Mathieu-Daudé:
+   tests/functional: Mark the MIPS replay tests as flaky
+48 290e4e7de7a5 Philippe Mathieu-Daudé:
+   tests/functional: Mark another MIPS replay test as flaky
+49 83017c4aaa9e Pierrick Bouvier:
+   linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE 
+   definition
+50 214f79fdfb43 Bernhard Beschow:
+   hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
+51 369c1ba2b7c7 Richard Henderson:
+   bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
+52 f0de58ccf656 Pierrick Bouvier:
+   bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
+53 cf10273aff81 Alex Bennée:
+   hw/intc: avoid byte swap fiddling in gicv3 its path
+54 e9a8a10e84c1 Luca Bonissi:
+   linux-user: Add termios2 support
+55 8d8c6aeee859 Luca Bonissi:
+   linux-user: Add termios2 support to alpha target
+56 edc741710ace Luca Bonissi:
+   linux-user: Add termios2 support to hppa target
+57 edf9184f4feb Luca Bonissi:
+   linux-user: Add termios2 support to mips target
+58 afbe0ff81c29 Luca Bonissi:
+   linux-user: Add termios2 support to sh4 target
+59 947b971cad90 Luca Bonissi:
+   linux-user: Add termios2 support to sparc target
+60 4f22fcb5c67f Vivian Wang:
+   linux-user: Add missing termios baud rates
+61 d68f0e2e9069 Icenowy Zheng:
+   linux-user: fixup termios2 related things on PowerPC
+62 2eb8d9734355 Paolo Bonzini:
+   target/i386/tcg: fix a few instructions that do not support VEX.L=1
+63 e4f1a9b1dacb Thomas Huth:
+   pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
+64 d9ca273f8f31 Alex Bennée:
+   tests/functional: migrate sbsa_ref test images
+65 289e6a3edf50 Jeuk Kim:
+   hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
+66 ed621cc8e2a6 Jeuk Kim:
+   hw/ufs: fix CQE endianness and UPIU length
+67 f78762a3cc81 Ilia Levi:
+   hw/ufs: Fix mcq completion queue wraparound
+68 94e72135d4d6 Ilia Levi:
+   tests/qtest/ufs-test: Add test for mcq completion queue wraparound
+69 587f4a1805c8 John Snow:
+   python: fix msys64 wheel directory specification
 
