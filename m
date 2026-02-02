@@ -4,119 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F2B2D172CC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC785D172CC
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmmUz-0008Vx-UR; Mon, 02 Feb 2026 00:29:22 -0500
+	id 1vmmXW-00011o-PS; Mon, 02 Feb 2026 00:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmmUy-0008VZ-2l
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:29:20 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vmmXV-00011Z-Vh
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:31:58 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmmUw-0001Xs-Gy
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:29:19 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-81e8b1bdf0cso2465098b3a.3
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:29:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vmmXT-00021O-GC
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:31:57 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a79998d35aso26333195ad.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:31:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770010156; x=1770614956; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770010314; x=1770615114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QgqVfR1bNGuRQUWbBAdWA9UmhTzj3B2hpLOHKByyZgI=;
- b=hbUSGxswIr3bkvHJqtwEj2Zv/tMJvqoDbtIVXQlz64qopMM5wipF+9rJh3pZwQuBzp
- BmZa6GF3BfPSmJM10Q3G4FS3GxjNYJ91g6QgtfWa2Yl5upYrP1NaVThK/ZB8wyKi2EaF
- THkzu0kZt8pdTb9Epq6BaQrHYFwwZX1FT04mi0Oz9A7GR0FKsuDbFC7lcQ1nwX6J/BXk
- X3UvUU1xQBWFkviNGdie1soqFoAXjgiMHrRWVpUURXuMaWaZa6W9RfL7FlG+RzIxN9Gl
- Fc+dJgV8E63IbC0TCXtjXmqz5DY2XvF51F3AepLPXobj3ML5BuaSjTNZgoyTdVBb7oq/
- 49zA==
+ bh=CqKoG0fr4WfEnP2W5Lj3XJSEkPExh+sgkX2Y2O03PJc=;
+ b=sYVmNbA4y/8jcpqWGVWnkA/DOEggNrHg8UZkVSvmRO8egRccQQELm1D65J9mX223RI
+ DLFk2rw7FpajI5XDEtYorFiBIAjL4lbE8LF1s2uOCHjqzd1w07P5YOOhOibVByftSkUa
+ kKDEe1BbIfYP2VLQ6pgEEsfDh/Zoc5vfnt9rJ0yvFpzccH7EViTcUDxc3rqaORN32nZu
+ PV2aaoPEYPvEcs83MI3x5SQYEPhRYQzKJBHLXBNowbFMkssSzprp5W1Ihah1TZ4ox9BC
+ ctnwB9xhAqXe5E1LNtLVxPlZtZgBNaCkgBz/VeDL5ZBCuNtIqn6KqRENm8CmUk0neLto
+ NAOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770010156; x=1770614956;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770010314; x=1770615114;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QgqVfR1bNGuRQUWbBAdWA9UmhTzj3B2hpLOHKByyZgI=;
- b=P4huRXSMMueiSWoVs3MUB0MweFzThjC/8UUFuxd0jKF2sqk0TEWbGeFgBLRM/ElSUd
- KDX96w8kpP+ffoMuKh+/N1FMOOPomzwjtjwHrh9HGo+oP0tlY2AU9ayIFj9wQCbqkDnP
- WlYOcOPeXfOkRH0YVmn460YnfVJoyxQ+9E8pu4RIwH8LHOesEPajx+tdsc/zYy2Bj9Gl
- yZeoBvNyVASb9MTG8witDx+57OwqOFSPlj0DzfAFzRyHlfPWz4hPCtfwMP4+XZr0uk++
- UQTZkkkplv1zM66BFLsoI1poWklHFrG+Ho+ed8OEaM76wpeX/fxBJ5sHPAw2ki8iDP42
- QYlA==
+ bh=CqKoG0fr4WfEnP2W5Lj3XJSEkPExh+sgkX2Y2O03PJc=;
+ b=pdHCqdT5TDVQ83YKLwRRguxs05m0Y2/UXrAb12A+FtQeFC3ThdW2e539RqR5+SJij+
+ RinLZrh0WAnJ3OxcuRuhmxkVnl46wgjWS8Mx48/BooHCbOuabBow7HNo9pE1ukdmo5YO
+ BRj6jxc8J7l6nib+LdzI8Ht2W3+27I5P4Q2Uwtx9ZgRXmb4QethWZMQwS8Hhzgi1t5wY
+ NmKTnEW2L1J+UAggE3/dpI7cfn/fNwO3S+d484oqyCUtsVeQ8wjegj74PY2xLxzJFMpQ
+ GBfOX8cgQuxmwqJSKAetJi+tM+QJAzYTiQJNOgMjId1yPCsmWXl+oaP7y1kzlbaaBQFh
+ wi8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzdmE0pKcpBsEThJ276k+8G3ZiNktsV5bNokHBvtGzw2aMUA53aKvGUMYvfwB06trfwJu2iwDkxEu5@nongnu.org
-X-Gm-Message-State: AOJu0YwqY34Zs3wEc5RdHDjUvG553jdbwr2BClAIAwc7THnUSPYUTe8l
- LTCGuHI+XQfgZErrgJad3PpICPo70hRAj33Mwdt9MniaOghpUbb2qNsnetauOV6K9gU=
-X-Gm-Gg: AZuq6aK8TNyV8U87YGqeK6JNSXf4P36bi23Or+kkyHhxoLKUUNKQwIUyAPBuPGmtbHY
- WUksjJsXL0ErFkTY4BnFBa0YoDtW8Wwe332vRvgsf+2rTwNCyT4cK5yMbW5gkA7laIu/HIzH1Vt
- 2Zcz4r/mHl/FFG5zSNhdWTFLlA2Rtro4N0s3jvPYW7qruotzdaxAiXxeMEMcR3zUiPPwZ0cVGgO
- 5Spby4VGiHh4UplKhBbZf6nhexGrQamoRfqiY15/TCWFT+sT7PD3ZdeTMn0OYmAwlklioBGHMMF
- 1ROP+jNfyKzjcVqOeVu2bejvAqmIfCNLTFl4NRT8SnoB28ZRFvHXldzZ6yY0VW3emynqIuagFnl
- Wj27v0cgIuScwMaDfhdkJzLyY/05etswRmDrfrfMA851oH/INEzuLaTlCKlbV4ojki6L8JbV2Zj
- /x+Pv0JUCWE3CO2+hW6fIbEGnkjBzyYXSNV1CnjMI7T5X7sH6QGa6vfNKC
-X-Received: by 2002:a05:6a20:1582:b0:361:4fa2:9757 with SMTP id
- adf61e73a8af0-392e0130cb6mr9524234637.55.1770010155679; 
- Sun, 01 Feb 2026 21:29:15 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ AJvYcCUxk8gJ1DBhxAsywEe7lkxKZPr/xvOu5xT0YEUozN0xLh33/PK1l6PCLn2wBhXodIEfbsFSUheVo6w5@nongnu.org
+X-Gm-Message-State: AOJu0Ywx5mtm9rB5V4q/2x4cNCnrMrX0LdmMQjOZVYoA6LtQvtreQOcP
+ xTp8yXbsND0LO5DNp7j+V2mxp0xcAEtG28ick6OzL8hug6QcFBDNTxNZ+O8n+V4E28o=
+X-Gm-Gg: AZuq6aKl6twsOH2bx66Melf0UmhALjK/r0YxlOzWrBSzgxNyNC8HvjPfLa/1bwfdtg2
+ KM875hFZa2YhN6AfXmg3NB5LMfznOXTF71G+y3p1MaA0nvEmLQFmekGCKd/cuOkzFOf0Wm+mrkI
+ rEeWNRjT6PzauDm5MW8UFslfNdUmmb5NVtEQiuMhLcuw4DEvO/TM1AK/pjuwKG8lKKX3rUBnYEd
+ SGKMjfoynXItUFrfYSAGGy4PnqX8wy2Ln47Kdi69HXXhzrfwaKyz9k/amgseCe+V4+87Oh9OsrQ
+ pnN7Dn2zqK0XGx/sobNbKuYFLF2X0AIvx8CmmpqmwvN+AOj+69DI2tEjSwKnQcPOlxz1WHiTtLC
+ n3VzgK4fPaMyU9WpD1zfeZa9Mp+Z/R4yL0P5dcCSjgtTOYU/U5bcrOQ06oZEOhwNYlqpODxTu6K
+ tIKvg2sNDZEWNpCpN8xUt0H+6A6pPzI4L2F+h4NmnKyjhitn4l2NfWPhpKwmAbYkqN36u7YVsxy
+ x1HQ2d6WX8UzjfHErjWdGD+m+/g1P+eXJTNAyhA8A==
+X-Received: by 2002:a17:902:d54e:b0:2a7:561e:690d with SMTP id
+ d9443c01a7336-2a8d9943d4bmr93549805ad.46.1770010314017; 
+ Sun, 01 Feb 2026 21:31:54 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:e524:51ca:ff85:53b9?
+ (bg30dj08q4s9ql12qb2z.ip6.superloop.au.
+ [2401:d002:dc0f:2100:e524:51ca:ff85:53b9])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c64276efb16sm13266762a12.4.2026.02.01.21.29.14
+ d9443c01a7336-2a8c3a23e40sm106004955ad.90.2026.02.01.21.31.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 21:29:15 -0800 (PST)
-Message-ID: <3470106d-2be5-4c73-aaf6-111dd70a3bd9@linaro.org>
-Date: Sun, 1 Feb 2026 21:29:14 -0800
+ Sun, 01 Feb 2026 21:31:53 -0800 (PST)
+Message-ID: <d4488d15-6c94-4296-84f6-2d8de2464f6f@linaro.org>
+Date: Mon, 2 Feb 2026 15:31:43 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] contrib/plugins/hotblocks: Minor bug fixes and add
- limit argument
+Subject: Re: [PATCH v2 3/6] target/arm: Handle SME-only CPUs in
+ sve_vqm1_for_el_sm()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260129113455.1283266-1-peter.maydell@linaro.org>
+ <20260129113455.1283266-4-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Alex Bradbury <asb@igalia.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com
-References: <cover.1753857212.git.asb@igalia.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <cover.1753857212.git.asb@igalia.com>
+In-Reply-To: <20260129113455.1283266-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,36 +110,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/25 11:41 PM, Alex Bradbury wrote:
-> This series contains one minor feature addition and a series of small
-> bugfixes/improvements. The addition that motivates the submission is to add a
-> limit argument for the hotblocks plugin, allowing you to control how many
-> blocks are printed rather than being hardcoded to the 20 most executed.
-> Setting limit=0 and dumping information about all executed blocks is
-> incredibly helpful for an analysis script I have downstream.
+On 1/29/26 21:34, Peter Maydell wrote:
+> In sve_vqm1_for_el_sm(), we implicitly assume that the CPU has SVE:
+> if called with sm == false for non-streaming mode, we try to return a
+> vector length from svq_vq.  This hits the "assert(sm)" at the bettom
+> of the function in an SME-only CPU where sve_vq.map is zero.
 > 
-> This is my first contribution to QEMU. I've attempted to follow all of the
-> guidance in the "Submitting a Patch" guide, but apologies if I missed
-> anything.
+> Add code to handle the "SME-only CPU not in streaming mode" case: we
+> report an effective VL of 128 bits, which is what the architecture
+> rule R_KXKNK says should be used when SVE instructions are disabled
+> or trapped but floating point instructions are enabled.
 > 
-> Alex Bradbury (5):
->    contrib/plugins/hotblocks: Correctly free sorted counts list
->    contrib/plugins/hotblocks: Fix off by one error in iteration of sorted
->      blocks
->    contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than
->      PRId64
->    docs/about/emulation: Add documentation for hotblocks plugin arguments
->    contrib/plugins/hotblocks: Allow limit to be set as a command line
->      argument
-> 
->   contrib/plugins/hotblocks.c | 20 ++++++++++++++------
->   docs/about/emulation.rst    | 12 ++++++++++++
->   2 files changed, 26 insertions(+), 6 deletions(-)
-> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/helper.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 
-This was merged into master (a8e6997ef).
-Thank you for your contribution!
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Regards,
-Pierrick
+r~
 
