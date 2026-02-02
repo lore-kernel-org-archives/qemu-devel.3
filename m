@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0862E7FDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B646BE7FDF5
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn25n-0004mw-HS; Mon, 02 Feb 2026 17:08:23 -0500
+	id 1vn27M-0006L3-Pj; Mon, 02 Feb 2026 17:10:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25i-0004m4-5R; Mon, 02 Feb 2026 17:08:18 -0500
+ id 1vn26o-0005Ml-55; Mon, 02 Feb 2026 17:09:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25g-0002YB-BY; Mon, 02 Feb 2026 17:08:17 -0500
+ id 1vn26m-0002i0-Ax; Mon, 02 Feb 2026 17:09:25 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F4801852AE;
- Tue, 03 Feb 2026 01:07:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3AD9F1852C0;
+ Tue, 03 Feb 2026 01:07:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C8F635B3C1;
- Tue, 03 Feb 2026 01:08:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 199AA35B3D3;
+ Tue, 03 Feb 2026 01:08:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 01/56] target/i386: Fix #GP error code for INT
- instructions
-Date: Tue,  3 Feb 2026 01:07:06 +0300
-Message-ID: <20260202220805.945271-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 19/56] target/i386/tcg: do not mark all SSE
+ instructions as unaligned
+Date: Tue,  3 Feb 2026 01:07:24 +0300
+Message-ID: <20260202220805.945271-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -60,41 +61,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-While the (intno << shift) expression is correct for indexing the IDT based on
-whether Long Mode is active, the error code itself was unchanged with AMD64,
-and is still the index with 3 bits of metadata in the bottom.
+If the vex_special field was not initialized, it was considered to be
+X86_VEX_SSEUnaligned (whose value was zero).  Add a new value to
+fix that.
 
-Found when running a Xen unit test, all under QEMU.  The unit test objected to
-being told there was an error with IDT index 256 when INT $0x80 (128) was the
-problem instruction:
-
-  ...
-  Error: Unexpected fault 0x800d0802, #GP[IDT[256]]
-  ...
-
-Fixes: d2fd1af76777 ("x86_64 linux user emulation")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Link: https://lore.kernel.org/r/20250312000603.3666083-1-andrew.cooper3@citrix.com
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3160
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 60efba3c1bff0d78632d45c2dc927c5bc7a17ba8)
+(cherry picked from commit 73dd6e4a36dd8d85548292f382a4d479e2810371)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
-index 263f59937f..28bbef1bba 100644
---- a/target/i386/tcg/user/seg_helper.c
-+++ b/target/i386/tcg/user/seg_helper.c
-@@ -63,7 +63,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
-         cpl = env->hflags & HF_CPL_MASK;
-         /* check privilege if software int */
-         if (dpl < cpl) {
--            raise_exception_err(env, EXCP0D_GPF, (intno << shift) + 2);
-+            raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
-         }
-     }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index dfaffec599..31aad730fc 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -944,15 +944,15 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
+     static const X86OpEntry opcodes_0F11_reg[4] = {
+-        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPS */
+-        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPD */
++        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
++        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
+         X86_OP_ENTRY3(VMOVSS,  W,x,  H,x,       V,x, vex5),
+         X86_OP_ENTRY3(VMOVLPx, W,x,  H,x,       V,q, vex5), /* MOVSD */
+     };
+ 
+     static const X86OpEntry opcodes_0F11_mem[4] = {
+-        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPS */
+-        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPD */
++        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
++        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
+         X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
+         X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
+     };
+@@ -2382,6 +2382,9 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+     X86OpEntry *e = &decode->e;
+ 
+     switch (e->vex_special) {
++    case X86_VEX_None:
++        break;
++
+     case X86_VEX_REPScalar:
+         /*
+          * Instructions which differ between 00/66 and F2/F3 in the
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 7f23d373ea..9282296900 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -242,6 +242,8 @@ typedef enum X86InsnSpecial {
+  * section of the manual.
+  */
+ typedef enum X86VEXSpecial {
++    X86_VEX_None,
++
+     /* Legacy SSE instructions that allow unaligned operands */
+     X86_VEX_SSEUnaligned,
  
 -- 
 2.47.3
