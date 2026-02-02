@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C280BE7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD1FE7FDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn29O-0006az-Cw; Mon, 02 Feb 2026 17:12:07 -0500
+	id 1vn2AW-00009p-CE; Mon, 02 Feb 2026 17:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28c-0005SW-Uj; Mon, 02 Feb 2026 17:11:22 -0500
+ id 1vn2A0-0007mx-Ch; Mon, 02 Feb 2026 17:12:47 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28Z-0003HV-Oi; Mon, 02 Feb 2026 17:11:18 -0500
+ id 1vn29y-0003UH-1t; Mon, 02 Feb 2026 17:12:43 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AAC1E1852D1;
- Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B7DD81852E0;
+ Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E46F35B3E4;
- Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9511535B3F3;
+ Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 36/56] hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement
- sd-spec-version 3 by default
-Date: Tue,  3 Feb 2026 01:07:41 +0300
-Message-ID: <20260202220805.945271-36-mjt@tls.msk.ru>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 51/56] tests/functional: migrate sbsa_ref test images
+Date: Tue,  3 Feb 2026 01:07:56 +0300
+Message-ID: <20260202220805.945271-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -62,41 +63,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Fixes TYPE_FSL_IMX6UL, TYPE_FSL_IMX7, and TYPE_FSL_IMX8MP to implement
-version 3 of the SD specification.
+As the builds in codelinaro.org are going away migrate the binaries to
+share.linaro.org. As the hotlinks don't encode the filename we need to
+explicitly tell uncompress how to handle the files.
 
-Note that TYPE_FSL_IMX6 already had "sd-spec-version" set accordingly and
-that TYPE_FSL_IMX25 correctly sets the same property to version 2 since the
-real hardware is an eSDHC which is the uSDHC's predecessor.
-
-Fixes: fd1e5c817964 ("sdhci: Add i.MX specific subtype of SDHCI")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260112145418.220506-2-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 214f79fdfb43e92f6c06efb76c3ad8e932b035f8)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260128105839.3487840-3-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit d9ca273f8f31acb22d3f5aca5f063b94fb962e19)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 89b595ce4a..09e9ebfe09 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1884,9 +1884,11 @@ static const MemoryRegionOps usdhc_mmio_ops = {
- static void imx_usdhc_init(Object *obj)
- {
-     SDHCIState *s = SYSBUS_SDHCI(obj);
-+    DeviceState *dev = DEVICE(obj);
+diff --git a/tests/functional/aarch64/test_sbsaref.py b/tests/functional/aarch64/test_sbsaref.py
+index d3402f5080..3ff674039e 100755
+--- a/tests/functional/aarch64/test_sbsaref.py
++++ b/tests/functional/aarch64/test_sbsaref.py
+@@ -31,10 +31,10 @@ def fetch_firmware(test):
+     """
  
-     s->io_ops = &usdhc_mmio_ops;
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    qdev_prop_set_uint8(dev, "sd-spec-version", 3);
- }
+     # Secure BootRom (TF-A code)
+-    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0)
++    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0, format="xz")
  
- /* --- qdev Samsung s3c --- */
+     # Non-secure rom (UEFI and EFI variables)
+-    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1)
++    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1, format="xz")
+ 
+     for path in [fs0_path, fs1_path]:
+         with open(path, "ab+") as fd:
+@@ -54,15 +54,13 @@ class Aarch64SbsarefMachine(QemuSystemTest):
+ 
+     timeout = 180
+ 
+-    ASSET_FLASH0 = Asset(
+-        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
+-         '20241122-189881/edk2/SBSA_FLASH0.fd.xz'),
+-        '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
++    # SBSA_FLASH0.fd.xz
++    ASSET_FLASH0 = Asset('https://share.linaro.org/downloadFile?id=kyoMLGC9zXa4oA7',
++                         '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
+ 
+-    ASSET_FLASH1 = Asset(
+-        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
+-         '20241122-189881/edk2/SBSA_FLASH1.fd.xz'),
+-        'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
++    # SBSA_FLASH1.fd.xz
++    ASSET_FLASH1 = Asset('https://share.linaro.org/downloadFile?id=Dj1HRXnDnKtU6Nj',
++                         'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
+ 
+     def test_sbsaref_edk2_firmware(self):
+ 
 -- 
 2.47.3
 
