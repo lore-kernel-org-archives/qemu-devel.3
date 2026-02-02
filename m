@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733B1E7FDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05B7E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn29X-00077x-EF; Mon, 02 Feb 2026 17:12:16 -0500
+	id 1vn2Ab-0000qb-FH; Mon, 02 Feb 2026 17:13:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn294-0006Ai-KL; Mon, 02 Feb 2026 17:11:48 -0500
+ id 1vn2AO-00087J-QI; Mon, 02 Feb 2026 17:13:08 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn292-0003Ls-9q; Mon, 02 Feb 2026 17:11:46 -0500
+ id 1vn2AM-0003Uo-5P; Mon, 02 Feb 2026 17:13:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05A341852D5;
+ by isrv.corpit.ru (Postfix) with ESMTP id DDBBA1852E2;
  Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D72DF35B3E8;
- Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BDFCC35B3F5;
+ Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
- Helge Deller <deller@gmx.de>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 40/56] linux-user: Add termios2 support
-Date: Tue,  3 Feb 2026 01:07:45 +0300
-Message-ID: <20260202220805.945271-40-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 53/56] hw/ufs: fix CQE endianness and UPIU length
+Date: Tue,  3 Feb 2026 01:07:58 +0300
+Message-ID: <20260202220805.945271-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -61,239 +59,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-Link: https://lore.kernel.org/qemu-devel/745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-(cherry picked from commit e9a8a10e84c1bf6e2e8be000e4dd5c83ba0d8470)
+Round-trip UTRD fields through cpu_to_le/ le_to_cpu when building MCQ CQEs to
+keep BE hosts correct. Also avoid double BE conversion of response
+data_segment_length and document the LE round-trip.
+
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit ed621cc8e2a6dab2663ffb02e875f896f521bee2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 2f62fd2cb9..6ecfe6306e 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -1,5 +1,11 @@
-      /* emulated ioctl list */
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 2d8ffd72c5..3f3c9589ce 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -53,8 +53,7 @@ static void ufs_build_scsi_response_upiu(UfsRequest *req, uint8_t *sense,
+         response = UFS_COMMAND_RESULT_FAIL;
+     }
  
-+#ifdef TARGET_TCGETS2
-+     IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+#endif
-      IOCTL(TCGETS, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETS, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETSF, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 758c5d32b6..18bc6c800c 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1935,6 +1935,75 @@ print_termios(void *arg)
-     qemu_log("}");
+-    data_segment_length =
+-        cpu_to_be16(sense_len + sizeof(req->rsp_upiu.sr.sense_data_len));
++    data_segment_length = sense_len + sizeof(req->rsp_upiu.sr.sense_data_len);
+     ufs_build_upiu_header(req, UFS_UPIU_TRANSACTION_RESPONSE, flags, response,
+                           status, data_segment_length);
  }
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 58099a554e..128e2b1ea8 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -449,15 +449,24 @@ static void ufs_mcq_process_cq(void *opaque)
+     {
+         ufs_dma_write_rsp_upiu(req);
  
-+#ifdef TARGET_TCGETS2
-+void
-+print_termios2(void *arg)
-+{
-+    const struct target_termios2 *target = arg;
+-        req->cqe.utp_addr =
+-            ((uint64_t)req->utrd.command_desc_base_addr_hi << 32ULL) |
+-            req->utrd.command_desc_base_addr_lo;
+-        req->cqe.utp_addr |= req->sq->sqid;
+-        req->cqe.resp_len = req->utrd.response_upiu_length;
+-        req->cqe.resp_off = req->utrd.response_upiu_offset;
+-        req->cqe.prdt_len = req->utrd.prd_table_length;
+-        req->cqe.prdt_off = req->utrd.prd_table_offset;
+-        req->cqe.status = req->utrd.header.dword_2 & 0xf;
++        /* UTRD/CQE are LE; round-trip through host to keep BE correct. */
++        uint64_t ucdba =
++            ((uint64_t)le32_to_cpu(req->utrd.command_desc_base_addr_hi)
++             << 32ULL) |
++            le32_to_cpu(req->utrd.command_desc_base_addr_lo);
++        uint16_t resp_len = le16_to_cpu(req->utrd.response_upiu_length);
++        uint16_t resp_off = le16_to_cpu(req->utrd.response_upiu_offset);
++        uint16_t prdt_len = le16_to_cpu(req->utrd.prd_table_length);
++        uint16_t prdt_off = le16_to_cpu(req->utrd.prd_table_offset);
++        uint8_t status = le32_to_cpu(req->utrd.header.dword_2) & UFS_MASK_OCS;
 +
-+    target_tcflag_t iflags = tswap32(target->c_iflag);
-+    target_tcflag_t oflags = tswap32(target->c_oflag);
-+    target_tcflag_t cflags = tswap32(target->c_cflag);
-+    target_tcflag_t lflags = tswap32(target->c_lflag);
-+
-+    qemu_log("{");
-+
-+    qemu_log("c_iflag = ");
-+    print_flags(termios_iflags, iflags, 0);
-+
-+    qemu_log("c_oflag = ");
-+    target_tcflag_t oflags_clean =  oflags & ~(TARGET_NLDLY | TARGET_CRDLY |
-+                                               TARGET_TABDLY | TARGET_BSDLY |
-+                                               TARGET_VTDLY | TARGET_FFDLY);
-+    print_flags(termios_oflags, oflags_clean, 0);
-+    if (oflags & TARGET_NLDLY) {
-+        print_enums(termios_oflags_NLDLY, oflags & TARGET_NLDLY, 0);
-+    }
-+    if (oflags & TARGET_CRDLY) {
-+        print_enums(termios_oflags_CRDLY, oflags & TARGET_CRDLY, 0);
-+    }
-+    if (oflags & TARGET_TABDLY) {
-+        print_enums(termios_oflags_TABDLY, oflags & TARGET_TABDLY, 0);
-+    }
-+    if (oflags & TARGET_BSDLY) {
-+        print_enums(termios_oflags_BSDLY, oflags & TARGET_BSDLY, 0);
-+    }
-+    if (oflags & TARGET_VTDLY) {
-+        print_enums(termios_oflags_VTDLY, oflags & TARGET_VTDLY, 0);
-+    }
-+    if (oflags & TARGET_FFDLY) {
-+        print_enums(termios_oflags_FFDLY, oflags & TARGET_FFDLY, 0);
-+    }
-+
-+    qemu_log("c_cflag = ");
-+    if (cflags & TARGET_CBAUD) {
-+        print_enums(termios_cflags_CBAUD, cflags & TARGET_CBAUD, 0);
-+    }
-+    if (cflags & TARGET_CSIZE) {
-+        print_enums(termios_cflags_CSIZE, cflags & TARGET_CSIZE, 0);
-+    }
-+    target_tcflag_t cflags_clean = cflags & ~(TARGET_CBAUD | TARGET_CSIZE);
-+    print_flags(termios_cflags, cflags_clean, 0);
-+
-+    qemu_log("c_lflag = ");
-+    print_flags(termios_lflags, lflags, 0);
-+
-+    qemu_log("c_ispeed = ");
-+    print_raw_param("%u", tswap32(target->c_ispeed), 0);
-+
-+    qemu_log("c_ospeed = ");
-+    print_raw_param("%u", tswap32(target->c_ospeed), 0);
-+
-+    qemu_log("c_cc = ");
-+    qemu_log("\"%s\",", target->c_cc);
-+
-+    qemu_log("c_line = ");
-+    print_raw_param("\'%c\'", target->c_line, 1);
-+
-+    qemu_log("}");
-+}
-+#endif
-+
- #undef UNUSED
++        ucdba |= req->sq->sqid;
++        req->cqe.utp_addr = cpu_to_le64(ucdba);
++        req->cqe.resp_len = cpu_to_le16(resp_len);
++        req->cqe.resp_off = cpu_to_le16(resp_off);
++        req->cqe.prdt_len = cpu_to_le16(prdt_len);
++        req->cqe.prdt_off = cpu_to_le16(prdt_off);
++        req->cqe.status = status;
+         req->cqe.error = 0;
  
- #ifdef TARGET_NR_accept
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index ee7c34027e..93ac285c5e 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -86,6 +86,7 @@
- #endif
- 
- #define termios host_termios
-+#define termios2 host_termios2
- #define winsize host_winsize
- #define termio host_termio
- #define sgttyb host_sgttyb /* same as target */
-@@ -5888,6 +5889,89 @@ static const StructEntry struct_termios_def = {
-     .print = print_termios,
+         ret = ufs_addr_write(u, cq->addr + tail, &req->cqe, sizeof(req->cqe));
+diff --git a/include/block/ufs.h b/include/block/ufs.h
+index a3ee62b027..22dc379eaa 100644
+--- a/include/block/ufs.h
++++ b/include/block/ufs.h
+@@ -645,7 +645,7 @@ enum UtpOcsCodes {
  };
  
-+#ifdef TARGET_TCGETS2
-+static void target_to_host_termios2 (void *dst, const void *src)
-+{
-+    struct host_termios2 *host = dst;
-+    const struct target_termios2 *target = src;
-+
-+    host->c_iflag =
-+        target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag =
-+        target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag =
-+        target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag =
-+        target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+    host->c_line = target->c_line;
-+    host->c_ispeed = tswap32(target->c_ispeed);
-+    host->c_ospeed = tswap32(target->c_ospeed);
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VSWTC] = target->c_cc[TARGET_VSWTC];
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+}
-+
-+static void host_to_target_termios2 (void *dst, const void *src)
-+{
-+    struct target_termios2 *target = dst;
-+    const struct host_termios2 *host = src;
-+
-+    target->c_iflag =
-+        tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag =
-+        tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag =
-+        tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag =
-+        tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+    target->c_line = host->c_line;
-+    target->c_ispeed = tswap32(host->c_ispeed);
-+    target->c_ospeed = tswap32(host->c_ospeed);
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VSWTC] = host->c_cc[VSWTC];
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+}
-+
-+static const StructEntry struct_termios2_def = {
-+    .convert = { host_to_target_termios2, target_to_host_termios2 },
-+    .size = { sizeof(struct target_termios2), sizeof(struct host_termios2) },
-+    .align = { __alignof__(struct target_termios2), __alignof__(struct host_termios2) },
-+    .print = print_termios2,
-+};
-+#endif
-+
- /* If the host does not provide these bits, they may be safely discarded. */
- #ifndef MAP_SYNC
- #define MAP_SYNC 0
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index 6dd7a80ce5..ac45705acf 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -1,4 +1,7 @@
- STRUCT_SPECIAL(termios)
-+#ifdef TARGET_TCGETS2
-+STRUCT_SPECIAL(termios2)
-+#endif
+ enum {
+-    UFS_MASK_OCS = 0x0F,
++    UFS_MASK_OCS = 0xFF,
+ };
  
- STRUCT(winsize,
-        TYPE_SHORT, TYPE_SHORT, TYPE_SHORT, TYPE_SHORT)
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 7099349ec8..067c02bb93 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -129,6 +129,9 @@ static inline uint64_t target_offset64(uint64_t word0, uint64_t word1)
- #endif /* TARGET_ABI_BITS != 32 */
- 
- void print_termios(void *arg);
-+#ifdef TARGET_TCGETS2
-+void print_termios2(void *arg);
-+#endif
- 
- /* ARM EABI and MIPS expect 64bit types aligned even on pairs or registers */
- #ifdef TARGET_ARM
+ /*
 -- 
 2.47.3
 
