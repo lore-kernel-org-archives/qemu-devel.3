@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FADE73164
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6C6E73164
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:08:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtbz-0000Cx-9B; Mon, 02 Feb 2026 08:05:03 -0500
+	id 1vmtfO-0001y7-4T; Mon, 02 Feb 2026 08:08:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vmtbx-0000A0-G7
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:05:01 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1vmtfL-0001xF-A2
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:08:31 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vmtbv-00041V-N0
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:05:01 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-653780e9eb3so5916605a12.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:04:59 -0800 (PST)
+ id 1vmtfJ-0004W6-FS
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:08:31 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-658b511573cso7673070a12.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770037498; x=1770642298; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770037708; x=1770642508; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=muv298YAIKY8NJLq/ySiFM7aiROkT93W5+Hbce1MpZE=;
- b=drCvrc5frVz/eRqZ0V7YOLDaznA0uYUvkHrlqj91RiQHwMxajuXewPAonIbkm3Asd9
- J/SZ9XgZ3NpodZLiiF0N1q3umW97jepn5PTjI+Av+QjQ0oMdAYE1HtWriDSIdl1sGXvN
- zAofdWrn476V7bf3iG0mbQ5u5VPR3ZpIdLi3R/R+iCGGA+kpBf5MyVnNYdEknUBVnXOa
- jjAYDlDC37DEXQKPGApxmeAQUXBcDPtTuRXyUlT8AbeHacrEKCe4R8JsLNkgxOQ7m/yT
- YHFKwKZ4nq4djASqU0jFYVRUfdY0VaaVdF4jxZeFJtE/UAgVO7igYzSA5+5WX11dHOEE
- BEQQ==
+ bh=I5XuamzPMf5gNGonDxQXtnb4F0tu5CCW5TI2UtzedW0=;
+ b=Az3T9yoK/ystfa20BgkMz6lctW3ruvik89Gd811AWEOW0ILyj5eICKIBzyaoxYzRxU
+ q64ULNP7EUOWJcHUqKgpEY43vwTIpkGVTVyD7Ufum1R+ZIyw5Hib/Vbgur044Pk8wilD
+ obNNBY5cYzYh9RS7pStBGKyOZyoyabCexXflo5lLd/GuvlD2D8utDRT7l5tyfFl1ZcRe
+ oPa4kga1NHJ5ETvKlTDxylF03lVqGRxjo48dFjduVXHr8kHQsiC+DH9RFbzm9JCw+HtO
+ tQIPVQNLZKmfvpecdMQlk2ziRHN902KPnKJfeXfFHQzDHRa4iJktFlov2CV0JExjXXvk
+ QD6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770037498; x=1770642298;
+ d=1e100.net; s=20230601; t=1770037708; x=1770642508;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=muv298YAIKY8NJLq/ySiFM7aiROkT93W5+Hbce1MpZE=;
- b=AlCxcNPrMvCxCq6XlJmHv0ciOmrn68rxFqVRy+/iwpad/o/AoGhdtaeL3O+79l6eXj
- lKMvncNp0r2EU2EfaX2fUiyG+S7XUuiDs+692PEldCnScm0bOW2ccoltkqbvkIW31Ekg
- 2R/hJRNJHq0zGGXRZ2xmPAFJi2V3CxmmiwD6dK6NDJqKZKNKkftO4t31t/1ufdlMm8NM
- qUWN89MSM0imP2uVPQxHp2Tpy/p8z4EtrawJ3ntrtdD4BI9Rc/FeIQ6RmzBdVhwLaRZe
- L+zGkbeG7rLB5Ap2KZ2G2L7AVVtZG+ygvViSy1WS5qFpPR3aGNVbp6axloY418ckEPHD
- wXWQ==
-X-Gm-Message-State: AOJu0YzOHEEFSf6vfTWBNS76GS6qe+pzutky1FRWzTPY01x34/TkbA4Q
- j7ZQcBgpaLQHGailtOZXLEz1RbtfjNprvvYNKWN4DMrVjYm6b7X6RvVhm7RjKR8KJ9Q=
-X-Gm-Gg: AZuq6aIcPgct/+nVzBWAHqtVkYW4mHMjvmTWAjBf3jpXJIMUktTkmDLHp1+B9NcF1zu
- slhlCVZs/RmU5eWY+tVSY+akDu32jQ7E0qgIoz/2YtndY1trN0G4GcFVRXU1l4yQvv5uSewLywT
- GruQthFDTj4XnzS5NJcyuKgVUQX+4+PUPxt9W+dtcoPSVxqmGPHaAV1NSdjGjD78Q5w856mWWLZ
- VmarQ9fWAFTDxeUFv46QJdmGp8jRaGCt4jtazq3VbOBkHXGMAU3IIhoom1HkhyxaS28PamEiN4J
- yiqX5J9QmWYX5qtYh7eWdSwcQ/Zd5vFYLiPjpva0gGHEqILHMbZyTioFyS8YemilwJ6po5Z4oAO
- fD8CFttnmHz9/VfAAWzJUvIvTAcEi3uFDkB5Rzlye4EVFA83dmwjB44fm66E5J1L/veKHqDminx
- gS5xDIVBw0mFQ=
-X-Received: by 2002:a17:907:da17:b0:b87:9d1d:ec6b with SMTP id
- a640c23a62f3a-b8dff228764mr684230366b.0.1770037497687; 
- Mon, 02 Feb 2026 05:04:57 -0800 (PST)
+ bh=I5XuamzPMf5gNGonDxQXtnb4F0tu5CCW5TI2UtzedW0=;
+ b=hWvnBFRSPJskfz+3NQdgVmLkzb3cy0IX152HKhgtjanVMzhCrPVg1U5gRUj1brl1g9
+ 7J3krE0wHnPK2AAaIr6Ar1GlaWY6eJXSGaGizvg7VpVCVyv5nq1FdDHbus1KrVb+d26O
+ 1kAsVnpJE4Dfng0Tc2ZozCPUXFLXlimq5MnqKNYVrwGvFzehPeSNgW62SkGNUnjng580
+ S4EgiFhHUwSDVnksP5p5Xb00jGn89pMdFmMy5omn5i74F5s6eQndKl/AT10yrl0/FspF
+ T/Jmz0Zdl9+ajxKb2MYTzD3vQV2pdkByUjAW2VpvXNKTwhP300od8Hg6kGnmpcBS6QMS
+ w7aQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWilqq6KTAyfX0P2cc2ZHrGsbZHWvIlzgty4Ygls+cZ6LNrT3Rxdvk9CAZykUZKbDWJZCGPRZb+U5IY@nongnu.org
+X-Gm-Message-State: AOJu0YzBTh4Z8tGzDMaVglt0zg5DtS2MEonbQiCozVqz66rBDIRUtQjX
+ rEUNAbe7xHewdI63gSCE/3E+aFKy2C96mECVcZD9ZjGhGc/b3VBh2vS8+RhMwQgw7BA=
+X-Gm-Gg: AZuq6aLGGZs2gt1nzvkH/hGO+AU++/+5Au/wbvB8KdnMaFm+eC7oomxBbqLPn5/8Tu7
+ tEGY2dXciHf1fE5j8JIKIPZdOwrjz0g4X4xbYuROoAC0j3BiNFWgIde/TteBRQhqCOarDy/4hZq
+ kRmN43QTwy/pEe5CFvqAn9DRWMgCwJKV3jBqDszsEi5nXnNoAjUddeMRY3yI/rwIca6o0BZ0lXV
+ juU/MPF8PFKPI9wmg9mSMOffgPTFwmJVfsY+uTX/rs/zXk00anwP/WYZFK4CUIAz9h0WMe1rFFj
+ LvSpMjh1YDNzlhMjhMbD0aJMjgfUhixowLA4dPe86d957v3/TAtoC3jMxzYM/XrOy9/4FJgpXbc
+ +XOGFTBkD2FuFKz3oLIQxuLJFKN0MAhnYIPmlGING5NGoknBy18Xzi8vlxM+3RSOQS2wbR26wqc
+ OMb+smHZ/lfCA=
+X-Received: by 2002:a05:6402:51d3:b0:658:b99f:ae60 with SMTP id
+ 4fb4d7f45d1cf-658de552653mr6914628a12.11.1770037707666; 
+ Mon, 02 Feb 2026 05:08:27 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8dbefc69ebsm877860466b.20.2026.02.02.05.04.56
+ 4fb4d7f45d1cf-658b4691d15sm7614708a12.19.2026.02.02.05.08.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Feb 2026 05:04:56 -0800 (PST)
+ Mon, 02 Feb 2026 05:08:27 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CB7785F7D8;
- Mon, 02 Feb 2026 13:04:55 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 291255F7D8;
+ Mon, 02 Feb 2026 13:08:25 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  jpcottin@google.com,  Markus Armbruster
- <armbru@redhat.com>,  Roman Kiryanov <rkir@google.com>,  Will Hollins
- <whollins@google.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  jansene@google.com,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v2 1/2] bulk: Stop forward-declaring enum typedefs
-In-Reply-To: <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 2 Feb 2026 13:05:33
- +0100")
-References: <20260130211746.46667-1-philmd@linaro.org>
- <20260130211746.46667-2-philmd@linaro.org>
- <87ms1rpdnw.fsf@draig.linaro.org>
- <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,  Stefano Garzarella
+ <sgarzare@redhat.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,  qemu-ppc@nongnu.org
+Subject: Re: [PATCH v3 04/11] hw/virtio: Use
+ VirtIODevice::access_is_big_endian field
+In-Reply-To: <20260202024316-mutt-send-email-mst@kernel.org> (Michael S.
+ Tsirkin's message of "Mon, 2 Feb 2026 02:45:53 -0500")
+References: <20260201232924.93399-1-philmd@linaro.org>
+ <20260201232924.93399-5-philmd@linaro.org>
+ <20260202024316-mutt-send-email-mst@kernel.org>
 User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Mon, 02 Feb 2026 13:04:55 +0000
-Message-ID: <87h5rzpa88.fsf@draig.linaro.org>
+Date: Mon, 02 Feb 2026 13:08:25 +0000
+Message-ID: <87bji7pa2e.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,95 +112,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> On 2/2/26 12:50, Alex Benn=C3=A9e wrote:
->> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+> On Mon, Feb 02, 2026 at 12:29:16AM +0100, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+>> Endianness access is constant between device resets.
+>> Use the field instead of calling the same function.
+>
+> yes but the function was inlined and often a NOP. worth mentioning.
+>
 >>=20
->>> The C99 standard chapter =C2=A76.7.2.2 point 4 mentions:
->>>
->>>    Each enumerated type shall be compatible with char, a signed
->>>    integer type, or an unsigned integer type. The choice of type
->>>    is implementation-defined, but shall be capable of representing
->>>    the values of all the members of the enumeration.
->>>
->>> Align with that recommendation by defining the typedef
->>> along with the enum.
->>>
->>> For information, building with -Werror=3Dpedantic was reporting:
->>>
->>>    In file included from ../../ui/kbd-state.c:10:
->>>    include/ui/kbd-state.h:12:14: error: ISO C forbids forward reference=
-s to 'enum' types [-Werror,-Wpedantic]
->>>       12 | typedef enum QKbdModifier QKbdModifier;
->>>          |              ^
->>>    ...
->>>
->>> Reported-by: Roman Kiryanov <rkir@google.com>
->>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>   hw/riscv/riscv-iommu-bits.h          |  4 ++--
->>>   hw/riscv/riscv-iommu.h               |  2 --
->>>   include/hw/misc/auxbus.h             | 11 ++++-------
->>>   include/hw/pci/pci_device.h          |  5 ++---
->>>   include/hw/ssi/ssi.h                 |  6 ++----
->>>   include/hw/xen/interface/io/xenbus.h |  5 ++---
->>>   include/io/channel.h                 | 11 ++++-------
->>>   include/system/replay.h              | 10 ++++------
->>>   include/ui/clipboard.h               | 15 ++++++---------
->>>   include/ui/kbd-state.h               |  6 ++----
->>>   pc-bios/s390-ccw/virtio.h            |  5 ++---
->>>   tests/qtest/libqos/qgraph_internal.h | 10 ++++------
->>>   hw/core/loader.c                     |  5 ++---
->>>   hw/display/xlnx_dp.c                 | 11 ++++-------
->>>   hw/dma/xlnx_dpdma.c                  | 10 ++++------
->>>   qapi/opts-visitor.c                  |  7 ++-----
->>>   qapi/string-output-visitor.c         |  6 ++----
->>>   tests/unit/check-qom-proplist.c      |  6 ++----
->>>   18 files changed, 50 insertions(+), 85 deletions(-)
->>>
->>> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
->>> index 47fe01bee58..281afa7bc3f 100644
->>> --- a/hw/riscv/riscv-iommu-bits.h
->>> +++ b/hw/riscv/riscv-iommu-bits.h
->>> @@ -96,11 +96,11 @@ struct riscv_iommu_pq_record {
->>>   #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
->>>   #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
->>>   -enum riscv_iommu_igs_modes {
->>> +typedef enum riscv_iommu_igs_modes {
->>>       RISCV_IOMMU_CAP_IGS_MSI =3D 0,
->>>       RISCV_IOMMU_CAP_IGS_WSI,
->>>       RISCV_IOMMU_CAP_IGS_BOTH
->>> -};
->>> +} riscv_iommu_igs_mode;
->> mode vs modes.
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> ---
+>>  include/hw/virtio/virtio-access.h | 24 ++++++++++++------------
+>>  hw/virtio/virtio.c                |  4 ++--
+>>  2 files changed, 14 insertions(+), 14 deletions(-)
+>>=20
+>> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virti=
+o-access.h
+>> index cd17d0c87eb..f3b4d0075b5 100644
+>> --- a/include/hw/virtio/virtio-access.h
+>> +++ b/include/hw/virtio/virtio-access.h
+>> @@ -42,7 +42,7 @@ static inline bool virtio_access_is_big_endian(VirtIOD=
+evice *vdev)
+>>=20=20
+>>  static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t=
+ v)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          stw_be_p(ptr, v);
+>>      } else {
+>>          stw_le_p(ptr, v);
 >
-> Pre-existing...
 >
->> It seems very clumsy to have the type at the front and
->> back of the declaration. The only real reason to have the tag ahead of
->> the struct/enum was if there are references in the structure.
->> IOW this does feel like a lot of churn.
+> So this is the main extra cost: on an LE host, we now have this branch on=
+ every
+> access where previously it was all optimized out.
 >
-> Well I got it clear old-school maintainers are very reluctant
-> to open the project to more contributors, even if changes
-> required are only cosmetics, and less invasive than Rust ones.
+> Is it measureable? It is worth testing.
 
-Is this opening up to more contributors? As far as I can tell this seems
-to be trying to make life easier for downstream for something we don't
-want contributed to the upstream (C++).=20
+I suspect not given this is a well predicted branch on the control
+plane. But we can certainly try an measure it. Do we have any virtio
+performance benchmarks?
 
-> I won't put more energy to this now. Maybe in 10 years from
-> now if the project still exists, and we get more inclusive.
+We only have a few in meson:
 
-I'm all for improving inclusively and lowering barriers to entry for
-contributors upstream but I'm not sure how this does that.=20
+  ./pyvenv/bin/meson test --benchmark --list
+  bufferiszero-bench
+  benchmark-crypto-hash
+  benchmark-crypto-hmac
+  benchmark-crypto-cipher
+  benchmark-crypto-akcipher
 
 >
-> Regards,
 >
-> Phil.
+>
+>> @@ -51,7 +51,7 @@ static inline void virtio_stw_p(VirtIODevice *vdev, vo=
+id *ptr, uint16_t v)
+>>=20=20
+>>  static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t=
+ v)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          stl_be_p(ptr, v);
+>>      } else {
+>>          stl_le_p(ptr, v);
+>> @@ -60,7 +60,7 @@ static inline void virtio_stl_p(VirtIODevice *vdev, vo=
+id *ptr, uint32_t v)
+>>=20=20
+>>  static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t=
+ v)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          stq_be_p(ptr, v);
+>>      } else {
+>>          stq_le_p(ptr, v);
+>> @@ -69,7 +69,7 @@ static inline void virtio_stq_p(VirtIODevice *vdev, vo=
+id *ptr, uint64_t v)
+>>=20=20
+>>  static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          return lduw_be_p(ptr);
+>>      } else {
+>>          return lduw_le_p(ptr);
+>
+> and this one.
+>
+>
+>> @@ -78,7 +78,7 @@ static inline int virtio_lduw_p(VirtIODevice *vdev, co=
+nst void *ptr)
+>>=20=20
+>>  static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          return ldl_be_p(ptr);
+>>      } else {
+>>          return ldl_le_p(ptr);
+>> @@ -87,7 +87,7 @@ static inline int virtio_ldl_p(VirtIODevice *vdev, con=
+st void *ptr)
+>>=20=20
+>>  static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          return ldq_be_p(ptr);
+>>      } else {
+>>          return ldq_le_p(ptr);
+>> @@ -97,9 +97,9 @@ static inline uint64_t virtio_ldq_p(VirtIODevice *vdev=
+, const void *ptr)
+>>  static inline uint16_t virtio_tswap16(VirtIODevice *vdev, uint16_t s)
+>>  {
+>>  #if HOST_BIG_ENDIAN
+>> -    return virtio_access_is_big_endian(vdev) ? s : bswap16(s);
+>> +    return vdev->access_is_big_endian ? s : bswap16(s);
+>>  #else
+>> -    return virtio_access_is_big_endian(vdev) ? bswap16(s) : s;
+>> +    return vdev->access_is_big_endian ? bswap16(s) : s;
+>>  #endif
+>>  }
+>>=20=20
+>> @@ -111,9 +111,9 @@ static inline void virtio_tswap16s(VirtIODevice *vde=
+v, uint16_t *s)
+>>  static inline uint32_t virtio_tswap32(VirtIODevice *vdev, uint32_t s)
+>>  {
+>>  #if HOST_BIG_ENDIAN
+>> -    return virtio_access_is_big_endian(vdev) ? s : bswap32(s);
+>> +    return vdev->access_is_big_endian ? s : bswap32(s);
+>>  #else
+>> -    return virtio_access_is_big_endian(vdev) ? bswap32(s) : s;
+>> +    return vdev->access_is_big_endian ? bswap32(s) : s;
+>>  #endif
+>>  }
+>>=20=20
+>> @@ -125,9 +125,9 @@ static inline void virtio_tswap32s(VirtIODevice *vde=
+v, uint32_t *s)
+>>  static inline uint64_t virtio_tswap64(VirtIODevice *vdev, uint64_t s)
+>>  {
+>>  #if HOST_BIG_ENDIAN
+>> -    return virtio_access_is_big_endian(vdev) ? s : bswap64(s);
+>> +    return vdev->access_is_big_endian ? s : bswap64(s);
+>>  #else
+>> -    return virtio_access_is_big_endian(vdev) ? bswap64(s) : s;
+>> +    return vdev->access_is_big_endian ? bswap64(s) : s;
+>>  #endif
+>>  }
+>>=20=20
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 242c207a591..1dc60d37cb4 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -220,7 +220,7 @@ static inline uint16_t virtio_lduw_phys_cached(VirtI=
+ODevice *vdev,
+>>                                                 MemoryRegionCache *cache,
+>>                                                 hwaddr pa)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          return lduw_be_phys_cached(cache, pa);
+>>      }
+>>      return lduw_le_phys_cached(cache, pa);
+>> @@ -230,7 +230,7 @@ static inline void virtio_stw_phys_cached(VirtIODevi=
+ce *vdev,
+>>                                            MemoryRegionCache *cache,
+>>                                            hwaddr pa, uint16_t value)
+>>  {
+>> -    if (virtio_access_is_big_endian(vdev)) {
+>> +    if (vdev->access_is_big_endian) {
+>>          stw_be_phys_cached(cache, pa, value);
+>>      } else {
+>>          stw_le_phys_cached(cache, pa, value);
+>> --=20
+>> 2.52.0
 
 --=20
 Alex Benn=C3=A9e
