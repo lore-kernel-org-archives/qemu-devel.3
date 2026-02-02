@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A51E7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741CBE7FDF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn25c-0004lJ-Pl; Mon, 02 Feb 2026 17:08:13 -0500
+	id 1vn25w-0004rw-AP; Mon, 02 Feb 2026 17:08:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25b-0004l0-B1; Mon, 02 Feb 2026 17:08:11 -0500
+ id 1vn25r-0004qL-Pz; Mon, 02 Feb 2026 17:08:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25Z-0002Wd-6J; Mon, 02 Feb 2026 17:08:11 -0500
+ id 1vn25q-0002ae-A1; Mon, 02 Feb 2026 17:08:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 199671852AD;
- Tue, 03 Feb 2026 01:07:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 650CD1852B5;
+ Tue, 03 Feb 2026 01:07:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AF99E35B3C0;
- Tue, 03 Feb 2026 01:08:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4527735B3C8;
+ Tue, 03 Feb 2026 01:08:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 00/56] Patch Round-up for stable 10.2.1,
- freeze on 2026-02-10
-Date: Tue,  3 Feb 2026 01:07:05 +0300
-Message-ID: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 08/56] tcg/optimize: Do use affected bits
+Date: Tue,  3 Feb 2026 01:07:13 +0300
+Message-ID: <20260202220805.945271-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
+References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,137 +60,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.2.1:
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.2
+We inadvertently disabled affected bits optimizations on operations
+that use fold_masks_zosa.  These happen relatively often in x86 code
+for extract/sextract; for example given the following:
 
-Patch freeze is 2026-02-10, and the release is planned for 2026-02-12:
+   mov %esi, %ebp
+   xor $0x1, %ebp
 
-  https://wiki.qemu.org/Planning/10.2
+the optimizer is able to simplify the "extract_i64 rbp,tmp0,$0x0,$0x20"
+produced by the second instruction to a move.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Cc: qemu-stable@nongnu.org
+Fixes: 932522a9ddc ("tcg/optimize: Fold and to extract during optimize")
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251223163720.985578-1-pbonzini@redhat.com>
+(cherry picked from commit 23b53ec3a8a279cb5acd5e022b464a4272fe9f8c)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index db1d89396b..5ae26e4a10 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1103,7 +1103,7 @@ static bool fold_masks_zosa_int(OptContext *ctx, TCGOp *op,
+ static bool fold_masks_zosa(OptContext *ctx, TCGOp *op, uint64_t z_mask,
+                             uint64_t o_mask, int64_t s_mask, uint64_t a_mask)
+ {
+-    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, -1);
++    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, a_mask);
+     return true;
+ }
+ 
+-- 
+2.47.3
 
-Thanks!
-
-/mjt
-
---------------------------------------
-01 60efba3c1bff Andrew Cooper:
-   target/i386: Fix #GP error code for INT instructions
-02 0db1b556e4bc Paolo Bonzini:
-   target/i386/tcg: ignore V3 in 32-bit mode
-03 3fbadbb3927a Alano Song:
-   hw/i2c/imx: Fix trace func name error
-04 75bcfb98a13d Cédric Le Goater:
-   tests/functional: Fix URL of gb200nvl-bmc image
-05 e714f1a3d4d1 Jie Song:
-   monitor/qmp: cleanup SocketChardev listener sources early to avoid fd 
-   handling race
-06 7d2d577de0c7 Richard Henderson:
-   tcg/optimize: Save o_mask in fold_masks_zosa_int
-07 08b12bfb8f53 Richard Henderson:
-   tcg/optimize: Fix a_mask computation for orc
-08 23b53ec3a8a2 Paolo Bonzini:
-   tcg/optimize: Do use affected bits
-09 af6db3b71310 Richard Henderson:
-   tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
-10 82ae60c8b5cb Jean-Christian CÎRSTEA:
-   linux-user: allow null `pathname` for statx()/fstatat()
-11 c333f9c4ee21 Jim MacArthur:
-   linux-user/elfload.c: Correction to HWCAP2 accessor
-12 aaed9ca1797d Matthew Lugg:
-   linux-user: fix mremap unmapping adjacent region
-13 2422884ec5a1 Matthew Lugg:
-   linux-user: fix mremap errors for invalid ranges
-14 81ceab30492e Matthew Lugg:
-   linux-user: fix reserved_va page leak in do_munmap
-15 9290c10ae9d0 Matthew Lugg:
-   tests: add tcg coverage for fixed mremap bugs
-16 628bda1ab759 Fabiano Rosas:
-   target/ppc: Fix env->quiesced migration
-17 894c8bd56ff1 Paolo Bonzini:
-   configs: use default prefix for Windows compilation
-18 11dac41f2e83 Laurent Vivier:
-   m68k: fix CAS2 writeback when Dc1==Dc2
-19 73dd6e4a36dd Paolo Bonzini:
-   target/i386/tcg: do not mark all SSE instructions as unaligned
-20 5e3572ef2e94 Paolo Bonzini:
-   target/i386/tcg: mask addresses for VSIB
-21 ed88bdcfbdcf Paolo Bonzini:
-   target/i386/tcg: allow VEX in 16-bit protected mode
-22 c7504ba2a560 Vulnerability Report:
-   hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
-23 47de28a0b7fb Xianglai Li:
-   hw/loongarch/virt: Modify the interrupt trigger type in fdt table
-24 ff54394eed14 Xianglai Li:
-   hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
-25 70cf9b7bf7af Song Gao:
-   target/loongach: Fix some exceptions failure in updating CSR_BADV
-26 e4f0ef58d53e Song Gao:
-   target/loongarch: Fix exception BCE missing to update CSR_BADV
-27 a7be2e0a3f7d Song Gao:
-   target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
-28 49ee001a5b83 Yao Zi:
-   hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
-29 c5712ad83fa4 Philippe Mathieu-Daudé:
-   hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
-30 7cf096d609e6 Alex Bennée:
-   tests/functional: migrate aspeed_rainier image
-31 8da52b8401af Peter Maydell:
-   target/arm: Don't specify ID_PFR1 accessfn twice
-32 205ca535abac Peter Maydell:
-   target/arm: Correctly honour HCR.TID3 for v7A cores
-33 b67a35622f9a Peter Maydell:
-   target/arm: Correctly trap HCR.TID1 registers in v7A
-34 7be4256281f4 Philippe Mathieu-Daudé:
-   accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
-35 83017c4aaa9e Pierrick Bouvier:
-   linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE 
-   definition
-36 214f79fdfb43 Bernhard Beschow:
-   hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
-37 369c1ba2b7c7 Richard Henderson:
-   bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
-38 f0de58ccf656 Pierrick Bouvier:
-   bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
-39 cf10273aff81 Alex Bennée:
-   hw/intc: avoid byte swap fiddling in gicv3 its path
-40 e9a8a10e84c1 Luca Bonissi:
-   linux-user: Add termios2 support
-41 8d8c6aeee859 Luca Bonissi:
-   linux-user: Add termios2 support to alpha target
-42 edc741710ace Luca Bonissi:
-   linux-user: Add termios2 support to hppa target
-43 edf9184f4feb Luca Bonissi:
-   linux-user: Add termios2 support to mips target
-44 afbe0ff81c29 Luca Bonissi:
-   linux-user: Add termios2 support to sh4 target
-45 947b971cad90 Luca Bonissi:
-   linux-user: Add termios2 support to sparc target
-46 4f22fcb5c67f Vivian Wang:
-   linux-user: Add missing termios baud rates
-47 d68f0e2e9069 Icenowy Zheng:
-   linux-user: fixup termios2 related things on PowerPC
-48 2eb8d9734355 Paolo Bonzini:
-   target/i386/tcg: fix a few instructions that do not support VEX.L=1
-49 815567b4ea35 Daniel P. Berrangé:
-   gitlab: preserve base rules for container template
-50 e4f1a9b1dacb Thomas Huth:
-   pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
-51 d9ca273f8f31 Alex Bennée:
-   tests/functional: migrate sbsa_ref test images
-52 289e6a3edf50 Jeuk Kim:
-   hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
-53 ed621cc8e2a6 Jeuk Kim:
-   hw/ufs: fix CQE endianness and UPIU length
-54 f78762a3cc81 Ilia Levi:
-   hw/ufs: Fix mcq completion queue wraparound
-55 94e72135d4d6 Ilia Levi:
-   tests/qtest/ufs-test: Add test for mcq completion queue wraparound
-56 587f4a1805c8 John Snow:
-   python: fix msys64 wheel directory specification
 
