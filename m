@@ -4,38 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61848E7FDC6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCAFE7FDC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmztg-0000bl-Ov; Mon, 02 Feb 2026 14:47:44 -0500
+	id 1vmzud-0001zR-Ex; Mon, 02 Feb 2026 14:48:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztY-0000Sw-Gx; Mon, 02 Feb 2026 14:47:37 -0500
+ id 1vmzuP-0001Je-Hw; Mon, 02 Feb 2026 14:48:32 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztW-0003G8-25; Mon, 02 Feb 2026 14:47:36 -0500
+ id 1vmzuO-0003N9-2p; Mon, 02 Feb 2026 14:48:29 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9ED0A1850A1;
- Mon, 02 Feb 2026 22:46:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4926F1850A9;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4E26735B283;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E434635B28B;
  Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Alano Song <AlanoSong@163.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 15/69] Fix const qualifier build errors with recent
- glibc
-Date: Mon,  2 Feb 2026 22:45:38 +0300
-Message-ID: <20260202194638.939438-15-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 23/69] hw/i2c/imx: Fix trace func name error
+Date: Mon,  2 Feb 2026 22:45:46 +0300
+Message-ID: <20260202194638.939438-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -65,142 +61,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Alano Song <AlanoSong@163.com>
 
-A recent change in glibc 2.42.9000 [1] changes the return type of
-strstr() and other string functions to be 'const char *' when the
-input is a 'const char *'.
-
-This breaks the build in various files with errors such as :
-
-  error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-    208 |         char *pidstr = strstr(filename, "%");
-        |                        ^~~~~~
-
-Fix this by changing the type of the variables that store the result
-of these functions to 'const char *'.
-
-[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alano Song <AlanoSong@163.com>
+Fixes: e589c0ea9c9 ("hw/i2c/imx_i2c: Convert DPRINTF() to trace events")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251209174328.698774-1-clg@redhat.com>
+Message-ID: <20251218141144.51001-1-AlanoSong@163.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 326e620fc0145686124f754194cdc6d0d9b3400d)
+(cherry picked from commit 3fbadbb3927a92db1932baee0c1188b05c0ac6b1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
-index 09a6abf02d..fd37a871b7 100644
---- a/backends/tpm/tpm_passthrough.c
-+++ b/backends/tpm/tpm_passthrough.c
-@@ -211,7 +211,7 @@ static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
- static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
+diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
+index f33ca93c3e..9047845d96 100644
+--- a/hw/i2c/imx_i2c.c
++++ b/hw/i2c/imx_i2c.c
+@@ -151,8 +151,8 @@ static void imx_i2c_write(void *opaque, hwaddr offset,
  {
-     int fd = -1;
--    char *dev;
-+    const char *dev;
-     char path[PATH_MAX];
+     IMXI2CState *s = IMX_I2C(opaque);
  
-     if (tpm_pt->options->cancel_path) {
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 2adec49912..5a53c4624a 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1089,7 +1089,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
- static int vmdk_parse_description(const char *desc, const char *opt_name,
-         char *buf, int buf_size)
- {
--    char *opt_pos, *opt_end;
-+    const char *opt_pos, *opt_end;
-     const char *end = desc + strlen(desc);
+-    trace_imx_i2c_read(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
+-                       offset, value);
++    trace_imx_i2c_write(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
++                        offset, value);
  
-     opt_pos = strstr(desc, opt_name);
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 91d69b3cc8..7dcded6da8 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1826,7 +1826,7 @@ cluster_was_modified(BDRVVVFATState *s, uint32_t cluster_num)
+     value &= 0xff;
  
- static const char* get_basename(const char* path)
- {
--    char* basename = strrchr(path, '/');
-+    const char *basename = strrchr(path, '/');
-     if (basename == NULL)
-         return path;
-     else
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 282e13e163..95c82d7e08 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -361,7 +361,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
-      * qXfer:features:read:ANNEX:OFFSET,LENGTH'
-      *                     ^p    ^newp
-      */
--    char *term = strchr(p, ':');
-+    const char *term = strchr(p, ':');
-     *newp = term + 1;
-     len = term - p;
- 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 4a09ddc760..c639a60a94 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -403,7 +403,8 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
-     int i, offset, nhosts = 0, pcilen;
-     GuestPCIAddress *pciaddr = disk->pci_controller;
-     bool has_ata = false, has_host = false, has_tgt = false;
--    char *p, *driver = NULL;
-+    const char *p;
-+    char *driver = NULL;
-     bool ret = false;
- 
-     p = strstr(syspath, "/devices/pci");
-@@ -543,7 +544,7 @@ static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
-                                                  Error **errp)
- {
-     unsigned int tgt[3];
--    char *p;
-+    const char *p;
- 
-     if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
-         g_debug("Unsupported virtio device '%s'", syspath);
-@@ -575,7 +576,7 @@ static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
-                                            Error **errp)
- {
-     unsigned int cssid, ssid, subchno, devno;
--    char *p;
-+    const char *p;
- 
-     p = strstr(syspath, "/devices/css");
-     if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
-diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
-index 980a8bbc51..6c93d452c9 100644
---- a/ui/ui-hmp-cmds.c
-+++ b/ui/ui-hmp-cmds.c
-@@ -418,7 +418,7 @@ err_out:
- void sendkey_completion(ReadLineState *rs, int nb_args, const char *str)
- {
-     int i;
--    char *sep;
-+    const char *sep;
-     size_t len;
- 
-     if (nb_args != 2) {
-diff --git a/util/log.c b/util/log.c
-index b87d399e4c..adab3149b1 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -185,7 +185,7 @@ static ValidFilenameTemplateResult
- valid_filename_template(const char *filename, bool per_thread, Error **errp)
- {
-     if (filename) {
--        char *pidstr = strstr(filename, "%");
-+        const char *pidstr = strstr(filename, "%");
- 
-         if (pidstr) {
-             /* We only accept one %d, no other format strings */
 -- 
 2.47.3
 
