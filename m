@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25026E7FDCD
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B4EE7FDD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn0qh-0008VH-J3; Mon, 02 Feb 2026 15:48:44 -0500
+	id 1vn0qZ-00083D-Kk; Mon, 02 Feb 2026 15:48:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0q5-0007Kz-IN
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:07 -0500
-Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
+ id 1vn0q3-0007IS-8j
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:03 -0500
+Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0q2-0001p2-6N
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:04 -0500
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 33D487A0085;
- Mon,  2 Feb 2026 15:48:01 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-10.internal (MEProxy); Mon, 02 Feb 2026 15:48:01 -0500
+ id 1vn0pz-0001nw-Ml
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:02 -0500
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id D5C901D00061;
+ Mon,  2 Feb 2026 15:47:56 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Mon, 02 Feb 2026 15:47:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770065281; x=
- 1770151681; bh=yF27HNX02Ru9Co1eGRAH4G56t9l9sU85B21tcUxK7cQ=; b=K
- tnm2nzNNd5zLC+AmSpRbzlHmQRIn0lbBrleLXJcnHzL/aM8Tq4unwCZaUCT/KbNK
- vXAkp3qvWLEqy2NElkp3x1zMD71ewCfeCIg64WrPiuKEqlgFp0T4qOYbuyNcCRgT
- 8V5M+eyXZFekczm7lCqfC/xJoz+UlYVT6uLovn//cifHFLnUycogATVcDnRThbux
- OBzNccg191HugvgEqDV9mDkmXTgQ3+Lm1Miu1SOCNFRaMqyGK/6IG7TAyi7Kk2EC
- Gc7eMma8V0MElUf1hNk0yFnkCF4DIgwqPJBlB2DJBjtIsSOlgVa6/Op1ZIAFqXsN
- a/R1sr1lYYYLsPNo2d6cg==
+ :reply-to:subject:subject:to:to; s=fm2; t=1770065276; x=
+ 1770151676; bh=ABtiVlaCZkrAUapG4ZkghRtl4BtewIcQLfaOOoKZZwo=; b=g
+ I4Ygmf+0CTUmhPgGU98DLsZyMmoH1wdm79tRXtk0v2dzKYlyn0RotqNlLHQ+R/yn
+ FyUzkMvgaEHK92V2ZKAUI5PuXJnoADS0ypCaLszgH7pCIL7Ib3OQ15fatokwiBBe
+ raMj1+yjsFoi91cx6b+rJ+5w++ZNrs0PA5xDhc++ESUAPQZ2dZd5d/TaPVlrtmbv
+ GGnOOREYH9ScDsM2WK0QZc/6ypBFS1QIHH4CeTkKinRsPUqhYrLehxMRS+JDjXPI
+ OzOkRP96tqi8FG/+B23xVEhGDNq9I5yd9/Z+BssPO2A8fJX8XqDe9/m8lQbts+lt
+ e6M+exgXi0tbUIwbIEY+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770065281; x=1770151681; bh=y
- F27HNX02Ru9Co1eGRAH4G56t9l9sU85B21tcUxK7cQ=; b=wCKmP7wU43C7HcsI5
- oiqseIi5j3wXLHYLDoHuqLf6EG+CyYV0eiPAKtOkZYYyMhowq/Y4EZ8aWLRvZZru
- V+iedBy8bE+z6lKuapJeKEXY10uHNQnpb2b/KUQRvjD2dV7aWP3GoNkZ8P9Bo9DY
- CPBxtq9H+Ed76P3jnnslIuMLxLr6I+CankpBxZ4w/kEYg/VcnIBHZ9EEPbzBXKHg
- ZLt74RxtWG1Owg8jyIow8Efcrjjrm+RbuCgBpjyKFfLAo/cQli0OhDnHZ6bdWJ+5
- acnPFYhdOcNA5XCAkT4jNYNTlR6ZL+CntdVZajiXt2WphdDkymvwp7EWtaaOq6WZ
- P+RTQ==
-X-ME-Sender: <xms:gA2BadkXnkk-HliMMZhF21QrV7ftZyUyD2w5GGKPeDhNR6Y6nUyR3A>
- <xme:gA2BaQQVmz2QlCbiKg4kh61sYsc1bPeZ-bNR0ZNVG4y3Fo7pzLazt796TcjPEWZqQ
- kV3mWBBWrRwJoIi5wwX2n3SlgKOAqUpp-C5kPzYQxASdMQQIBEyv1Q>
-X-ME-Received: <xmr:gA2BaRCTF5x7ZFTdFCvBAMILvMsOG9kGWjYE7oSUB9sW0-y0YksqzZOiywLO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieefucetufdoteggodetrf
+ :x-me-sender:x-sasl-enc; s=fm3; t=1770065276; x=1770151676; bh=A
+ BtiVlaCZkrAUapG4ZkghRtl4BtewIcQLfaOOoKZZwo=; b=R6rHz9jqb+8HQcC86
+ kyKEKv9Gz9GlQhsaDudLyiSmoN2w/oriBUWqUk5uMm+f20dC9iHzHlHGvgQLBlil
+ RvNpg9RMUV/ns2dkKcEQ902K+h8oUyPyn7sFQkWWkNThzv/kOIhf55irTJu/t87c
+ KA5vhLcOyypfVUKUV12NnUDTE3srkeoYaYjW/3jDBx8vNUDk8MDp2Co4HnBWkVKU
+ FcYUjm5oexRmPiwRbrfEXrM/02hcMxqAHaResXg/wM7E5D2yLdU+vn8BmCEsNAtq
+ wGnvf65J4Q3YBiB8wsj2Wcpstt/xzN/r+xijY6hapFCA9z2dPnTZzAl7lJgvTNtt
+ RhPVA==
+X-ME-Sender: <xms:fA2BacUutsRYP7DIqfXKMaHdh1SHg-8QfUaOThMS6BULcDYsAqb8JA>
+ <xme:fA2BaYDfBBV4XjhQI6aKBQJVy2BSxiSXiFd-1NCNi1aEaSbuZi17xp5DN2Bt-f68D
+ yZcEJQjGoyWfO0mgklghhsgGGKwDWdxtmMLAqtrFECSShmTr0vRoQwu>
+X-ME-Received: <xmr:fA2BadwxXpL4RfWfGL0G_TELD9yqNL7nAZydiMOhAtYoQXF0dEqUFnajRGQO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieegucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
@@ -62,33 +62,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieefucetufdote
  uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
  thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:gA2BaXSBtP_v98_qMGPQhSvoUFZS0Ee0yeTPeX96xAVu3JYm07Sh1A>
- <xmx:gA2BafrRemVC0jlE10BIrkmPICP66UpU0Hbvx3RZRvppqiJAGF4J5Q>
- <xmx:gA2BaZyE-_ZFm_9Ej8VNe7vugUnN3lwcTbdMTnBN4N1OGQy-yzcvIw>
- <xmx:gA2BaUKo3hdKvmf3Fg1t4kbbr5hyw3QniVMewDhSaXbmERhxW8m-Xg>
- <xmx:gQ2BaZ-eAXXswt73NK3u6wVDTDpNCXNNSTvN50ndO49RxIQP-lneljAe>
+ htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
+ nhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:fA2BaVBmgZr1R3p_8QS3kwrE_HyFg_n6ABcvEnjcDPNsi41rocroOA>
+ <xmx:fA2BaabrJSdcOed9XR6Nx4YftvzjVhYqNthApJmuoX15uiuPru1U0g>
+ <xmx:fA2Badj6dfjc7MA925a6LftdD9PhONUB07xcRgT7kmwpABBWcYWl7w>
+ <xmx:fA2Bac7njMY2AIOQ5ljshGWhL59T7_7z0r2Xz8fnWrog6PcZvBL-vA>
+ <xmx:fA2BaTvz9UKj8CBzjMjtLEDyRM6RgovXOAJ82Ykyi7LWKCqbFO3k17kI>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 15:48:00 -0500 (EST)
+ 2 Feb 2026 15:47:56 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 733c1c8b;
+ by chomposaur (OpenSMTPD) with ESMTPA id d5c083bb;
  Mon, 2 Feb 2026 20:47:53 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v7 18/19] ati-vga: Implement HOST_DATA register writes
-Date: Mon,  2 Feb 2026 15:47:36 -0500
-Message-ID: <20260202204738.3080092-19-chad@jablonski.xyz>
+Subject: [PATCH v7 02/19] ati-vga: Fix DST_PITCH and SRC_PITCH reads
+Date: Mon,  2 Feb 2026 15:47:20 -0500
+Message-ID: <20260202204738.3080092-3-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260202204738.3080092-1-chad@jablonski.xyz>
 References: <20260202204738.3080092-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.153; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b2-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.147; envelope-from=chad@jablonski.xyz;
+ helo=fout-b4-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -113,174 +113,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Writing to any of the HOST_DATA0-7 registers pushes the written data
-into a 128-bit accumulator. When the accumulator is full a flush is
-triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
-will also initiate a flush. The flush itself is left for the next patch.
-
-Unaligned HOST_DATA* writes result in, from what I can tell, undefined
-behavior on real hardware. A well-behaved driver shouldn't be doing this
-anyway. For that reason they are not handled here at all.
+Reading DST_PITCH and SRC_PITCH on the Rage 128 is broken. The read
+handlers attempt to construct the value from pitch and tile bits in
+the register state but mistakenly AND them instead of ORing them. This
+means the pitch is always zero on read.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c      | 32 ++++++++++++++++++++++++++++++++
- hw/display/ati_dbg.c  |  9 +++++++++
- hw/display/ati_int.h  |  8 ++++++++
- hw/display/ati_regs.h |  9 +++++++++
- 4 files changed, 58 insertions(+)
+ hw/display/ati.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 6cf243bcf9..fd717044b0 100644
+index 8438a77de0..777a6b0a2e 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -561,6 +561,13 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
-     }
- }
- 
-+static void ati_host_data_reset(ATIHostDataState *hd)
-+{
-+    hd->next = 0;
-+    hd->row = 0;
-+    hd->col = 0;
-+}
-+
- static void ati_mm_write(void *opaque, hwaddr addr,
-                            uint64_t data, unsigned int size)
- {
-@@ -836,6 +843,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+@@ -438,7 +438,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DST_PITCH:
+         val = s->regs.dst_pitch;
+         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val &= s->regs.dst_tile << 16;
++            val |= s->regs.dst_tile << 16;
+         }
          break;
      case DST_WIDTH:
-         s->regs.dst_width = data & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
+@@ -468,7 +468,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case SRC_PITCH:
+         val = s->regs.src_pitch;
+         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val &= s->regs.src_tile << 16;
++            val |= s->regs.src_tile << 16;
+         }
          break;
-     case DST_HEIGHT:
-@@ -886,6 +894,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_HEIGHT_WIDTH:
-         s->regs.dst_width = data & 0x3fff;
-         s->regs.dst_height = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case DP_GUI_MASTER_CNTL:
-@@ -916,6 +925,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case SRC_X_Y:
-@@ -929,6 +939,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_WIDTH_HEIGHT:
-         s->regs.dst_height = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case DST_HEIGHT_Y:
-@@ -1024,6 +1035,25 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case SRC_SC_BOTTOM:
-         s->regs.src_sc_bottom = data & 0x3fff;
-         break;
-+    case HOST_DATA0:
-+    case HOST_DATA1:
-+    case HOST_DATA2:
-+    case HOST_DATA3:
-+    case HOST_DATA4:
-+    case HOST_DATA5:
-+    case HOST_DATA6:
-+    case HOST_DATA7:
-+        s->host_data.acc[s->host_data.next++] = data;
-+        if (s->host_data.next >= 4) {
-+            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+            s->host_data.next = 0;
-+        }
-+        break;
-+    case HOST_DATA_LAST:
-+        s->host_data.acc[s->host_data.next] = data;
-+        qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+        ati_host_data_reset(&s->host_data);
-+        break;
-     default:
-         break;
-     }
-@@ -1129,6 +1159,8 @@ static void ati_vga_reset(DeviceState *dev)
-     /* reset vga */
-     vga_common_reset(&s->vga);
-     s->mode = VGA_MODE;
-+
-+    ati_host_data_reset(&s->host_data);
- }
- 
- static void ati_vga_exit(PCIDevice *dev)
-diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
-index 3ffa7f35df..5c799d540a 100644
---- a/hw/display/ati_dbg.c
-+++ b/hw/display/ati_dbg.c
-@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
-     {"MC_SRC1_CNTL", 0x19D8},
-     {"TEX_CNTL", 0x1800},
-     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
-+    {"HOST_DATA0", 0x17c0},
-+    {"HOST_DATA1", 0x17c4},
-+    {"HOST_DATA2", 0x17c8},
-+    {"HOST_DATA3", 0x17cc},
-+    {"HOST_DATA4", 0x17d0},
-+    {"HOST_DATA5", 0x17d4},
-+    {"HOST_DATA6", 0x17d8},
-+    {"HOST_DATA7", 0x17dc},
-+    {"HOST_DATA_LAST", 0x17e0},
-     {NULL, -1}
- };
- 
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 98f57ca5fa..ef474e366e 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -95,6 +95,13 @@ typedef struct ATIVGARegs {
-     uint32_t default_tile;
- } ATIVGARegs;
- 
-+typedef struct ATIHostDataState {
-+    uint32_t row;
-+    uint32_t col;
-+    uint32_t next;
-+    uint32_t acc[4];
-+} ATIHostDataState;
-+
- struct ATIVGAState {
-     PCIDevice dev;
-     VGACommonState vga;
-@@ -112,6 +119,7 @@ struct ATIVGAState {
-     MemoryRegion io;
-     MemoryRegion mm;
-     ATIVGARegs regs;
-+    ATIHostDataState host_data;
- };
- 
- const char *ati_reg_name(int num);
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 3999edb9b7..48f15e9b1d 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -252,6 +252,15 @@
- #define DP_T12_CNTL                             0x178c
- #define DST_BRES_T1_LNTH                        0x1790
- #define DST_BRES_T2_LNTH                        0x1794
-+#define HOST_DATA0                              0x17c0
-+#define HOST_DATA1                              0x17c4
-+#define HOST_DATA2                              0x17c8
-+#define HOST_DATA3                              0x17cc
-+#define HOST_DATA4                              0x17d0
-+#define HOST_DATA5                              0x17d4
-+#define HOST_DATA6                              0x17d8
-+#define HOST_DATA7                              0x17dc
-+#define HOST_DATA_LAST                          0x17e0
- #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
- #define SCALE_OFFSET_0                          0x1998
- #define SCALE_PITCH                             0x199c
+     case DP_BRUSH_BKGD_CLR:
 -- 
 2.52.0
 
