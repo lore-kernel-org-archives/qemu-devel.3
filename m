@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9262FE7FDD8
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DE0E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11E-0004PO-Td; Mon, 02 Feb 2026 15:59:37 -0500
+	id 1vn11a-0006D3-Pj; Mon, 02 Feb 2026 15:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10y-00046R-Ln; Mon, 02 Feb 2026 15:59:22 -0500
+ id 1vn11Z-0005zh-7d; Mon, 02 Feb 2026 15:59:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10x-0003oc-0r; Mon, 02 Feb 2026 15:59:20 -0500
+ id 1vn11X-0003vf-HG; Mon, 02 Feb 2026 15:59:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 52CF0185194;
- Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 013AE18519D;
+ Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 12E6735B30B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BCDC435B314;
  Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 08/74] scripts/nsis.py: Tell makensis that WoA is 64
- bit
-Date: Mon,  2 Feb 2026 23:57:19 +0300
-Message-ID: <20260202205833.941615-8-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 17/74] monitor: Fix const qualifier build errors with
+ recent glibc
+Date: Mon,  2 Feb 2026 23:57:28 +0300
+Message-ID: <20260202205833.941615-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -62,31 +64,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Weil <sw@weilnetz.de>
+From: Cédric Le Goater <clg@redhat.com>
 
-This fixes some settings like the default installation path
-for the QEMU installation on Windows on ARM (WoA).
+A recent change in glibc 2.42.9000 [1] changes the return type of
+strchr() and other string functions to be 'const char *' when the
+input is a 'const char *'. This breaks the build in :
 
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
+../monitor/hmp.c:589:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+  589 |     p = strchr(type, ':');
+      |       ^
+
+Fix this by changing the type of the variables that store the result
+of these functions to 'const char *'.
+
+[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251209130212.764443-1-sw@weilnetz.de>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit e742b7bdc244499761a21bc1965580c6261a74bf)
+Link: https://lore.kernel.org/qemu-devel/20251215101937.281722-4-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit dfe87815ba450228811f3abc633d7dc02757922e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/nsis.py b/scripts/nsis.py
-index 8f469634eb..33069f4a86 100644
---- a/scripts/nsis.py
-+++ b/scripts/nsis.py
-@@ -114,7 +114,7 @@ def main():
-             "-DSRCDIR=" + args.srcdir,
-             "-DBINDIR=" + destdir + prefix,
-         ]
--        if args.cpu == "x86_64":
-+        if args.cpu == "aarch64" or args.cpu == "x86_64":
-             makensis += ["-DW64"]
-         makensis += ["-DDLLDIR=" + dlldir]
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 34e2b8f748..a3ee02e52c 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -577,10 +577,11 @@ static const char *get_command_name(const char *cmdline,
+  * Read key of 'type' into 'key' and return the current
+  * 'type' pointer.
+  */
+-static char *key_get_info(const char *type, char **key)
++static const char *key_get_info(const char *type, char **key)
+ {
+     size_t len;
+-    char *p, *str;
++    const char *p;
++    char *str;
  
+     if (*type == ',') {
+         type++;
 -- 
 2.47.3
 
