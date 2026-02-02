@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6299E7FDF5
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095B5E7FDF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2Ad-00017j-LQ; Mon, 02 Feb 2026 17:13:23 -0500
+	id 1vn29J-0006MW-In; Mon, 02 Feb 2026 17:12:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn29v-0007lq-UM; Mon, 02 Feb 2026 17:12:42 -0500
+ id 1vn28Y-0005PB-H5; Mon, 02 Feb 2026 17:11:21 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn29u-0003TX-GF; Mon, 02 Feb 2026 17:12:39 -0500
+ id 1vn28X-0003E3-2e; Mon, 02 Feb 2026 17:11:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8BEFF1852DE;
- Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 780ED1852CF;
+ Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6B06835B3F1;
- Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4B00535B3E2;
+ Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
-Subject: [Stable-10.2.1 49/56] gitlab: preserve base rules for container
- template
-Date: Tue,  3 Feb 2026 01:07:54 +0300
-Message-ID: <20260202220805.945271-49-mjt@tls.msk.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 34/56] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+Date: Tue,  3 Feb 2026 01:07:39 +0300
+Message-ID: <20260202220805.945271-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -62,44 +63,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-When extending the container template to allow scheduled pipelines in
-upstream context, we must ensure that all the existing rules defined
-by .base_job_template are preserved.
+Fix typo to avoid the following build failure:
 
-Fortunately since the new rule for scheduled pipelines can come at
-the head of all other rules, not in the middle, we can just the obscure
-'!reference' syntax to pull in all the pre-existing rules as a single
-block.
+  target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
+  target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
+    988 |     qcpu->vcpu_dirty = true;
+        |         ^~
 
-This fixes
-
- * stable branches using the wrong tag name in container images
- * pushes to forks unconditionally running container builds
-
-Fixes: 8bec7b9874235e60f14172618121c60fdbd39302
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Michael Tokarev <mjt@tls.msk.ru>
-Fixes: 8bec7b987423 ("gitlab: add a weekly container building job")
-Message-ID: <20260119135528.2738108-1-berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 815567b4ea35176a8f92c5f25bfb335c1cac274e)
+Cc: qemu-stable@nongnu.org
+Reported-by: Thomas Huth <thuth@redhat.com>
+Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260113203924.81560-1-philmd@linaro.org>
+(cherry picked from commit 7be4256281f430f726366c92ffdea0b72651de8a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
-index 82c1b69e8d..8c7311cca5 100644
---- a/.gitlab-ci.d/container-template.yml
-+++ b/.gitlab-ci.d/container-template.yml
-@@ -21,6 +21,5 @@
-     - docker logout
-   rules:
-     # because we want to enable this for scheduled runs we also have to replicate the normal rules
--    - if: '$CI_PIPELINE_SOURCE == "schedule"'
--    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH =~ /^staging/'
--    - if: '$QEMU_CI && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
-+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM'
-+    - !reference [.base_job_template, rules]
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index b9bd9ed985..f808828d49 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -985,7 +985,7 @@ nvmm_init_vcpu(CPUState *cpu)
+         }
+     }
+ 
+-    qcpu->vcpu_dirty = true;
++    cpu->vcpu_dirty = true;
+     cpu->accel = qcpu;
+ 
+     return 0;
 -- 
 2.47.3
 
