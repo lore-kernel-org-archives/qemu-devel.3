@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC41FD172AA
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Feb 2026 23:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EF6E65298
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 00:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmhKm-0005hF-UD; Sun, 01 Feb 2026 18:58:28 -0500
+	id 1vmhn2-0005MU-WD; Sun, 01 Feb 2026 19:27:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vmhKl-0005g5-3R; Sun, 01 Feb 2026 18:58:27 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vmhKh-0007l8-QU; Sun, 01 Feb 2026 18:58:26 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id E246F60008;
- Sun,  1 Feb 2026 23:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131D4C4CEF7;
- Sun,  1 Feb 2026 23:58:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769990293;
- bh=UaVzgF3u0n/OEyZHbgmU9AM4dR6+G7QcZIs6cdB+84k=;
- h=From:Subject:Date:To:Cc:From;
- b=CEOqwno59XKsoHJ2EZzyYXb4j0hCkEKEhRoV7KTP+mH49cMxrEIkKz8da29bD0SoD
- +lsHEKnf1y2g8O/ql9HP9FYP0M7pGVLcnYUSr7cjC1tPc3Vuu6TRrTDWLiW7ZXE4YL
- lNftZheLn8CO4SYkLK+WLmC89R+nmtCTsHFGvpDT61MCBaOT5jC0MpSzS4QeQaUiqo
- gdo+x1QoZflrpv9ahcpDmpJJMn1MnYNp77t148a/e/kmEHJrFRmtdpqlE14P+EMx2n
- CAPi65i1Bq2TlPcz7jDOf9Jcm995Jn7tkUtXwMUf2vaOkj3gCtLQPqLeRR3qvBlmqN
- S9AfCUxaVXpzA==
-From: Drew Fustini <fustini@kernel.org>
-Subject: [PATCH v5 0/6] riscv: implement Ssqosid extension and CBQRI
- controllers
-Date: Sun, 01 Feb 2026 15:58:06 -0800
-Message-Id: <20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org>
+ (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
+ id 1vmhn1-0005KZ-8Z
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 19:27:39 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
+ id 1vmhmz-0006Hy-Ba
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 19:27:39 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso42122695e9.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 16:27:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769992054; x=1770596854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=p1+LFFgediVqSbtW22vNmZU5Ty82hJ5bagPiF3+If3U=;
+ b=bpSzeCyTkQonXNZ1/G6OI0QGJhCSvhmfiuEBSFWCDoOUeYQGIf1wl+VjmrVyZkCpn7
+ FHh7+kGw5Ml5g9n0N/+lniDB3cB0VSUahlg+KzqxDMB2Lsa/Ta+E0BKQlz886fQsG3CT
+ H+XESPxUmXZYYyFVqCWNQc5HljkhpkSixiyrYqQLqjekBJYi8KtvwZZ+e3eNrSP9y7xb
+ cwSQwD7+9NBw/32oT0ew77pzMuVsky/4loXEV1UU7sz6jJ7oDXXjgbYUSNu/AcqsxNcN
+ cfSTv2OCbi1yShxrdTBQ6YGFdAm8OLrBh3flHTFZgodHRuImHcfD1BLHXMKLVzsq6qAu
+ WyLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769992054; x=1770596854;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p1+LFFgediVqSbtW22vNmZU5Ty82hJ5bagPiF3+If3U=;
+ b=gTB+vzSs8WleOI9m6p+A436/XvTqpB1i7cvZkocmYFcqTMrew9mnA3pBZB5ziZ3pTv
+ 1ky2dfMJeTzCnS3hqQVe9nHoyF/aAgr6W80GanSq9Y5PkF91rel9A5w3FLqk26ZxbW+R
+ 15cGk3CRqiLCs+I9nLclAAnaomk4n/hnYmErqFnuo8cygkKLARhJHpJuPMXH9Q7m2erm
+ AmJSZdnHT25/a08I7D9gLt1B6RWAO1B3zuNIcKBFGh+EvnyFGApthHV1szyUhzqI5r+Q
+ byLBihBuyaXjd3PxZNLM7+JdZG2RWo7ekplwvC3gOf2XxCmEFsY/M9Q7X8aHpuu8hu+G
+ UmNw==
+X-Gm-Message-State: AOJu0YwH3tpFqAmbd+bQHskzavR3B2my2n+oNs1mBX+SChHwRlxo1Wx5
+ nre6eNv1J+bpGasa3rzoB8ZmlnLIRYY3z8HB9sbf/mSEUTXVQWKSBZJj0PPXuA==
+X-Gm-Gg: AZuq6aJ+hdN2WTVK/fDqCEi0rleiTyyRpYJEVdKcrYDUVEtKCEGj10OFqpmikMLwoZD
+ z8Yqfevh7Hynf+a+Zq497T6rxk/82t3Ko2s+U8wuUtj372tcJkpQWStQc6lQ0zDxlxePKJDEuPC
+ RjtmAG0Bd6FFtnhKXwK2TNs1Ecv+8TlHRSMLoxPwfFij2s5+iHKfA6vbNphDbMeTj/ssLmrnj6j
+ va5l8MSkKXAclrs033vZlRy8cVr1ZFQOhk5EMN3KMndfmG2GqjqStsoInkUVymYVySzJITFnGYl
+ TA9dubvlflkMY9pyHNew8Dc0tyfPwfjdhYm48ETNW0+bn0m/8af5XNrj56DcbpGnLLdGm3AL3Sl
+ SyLAZ9xEfMTya3E+hCZFgK9UN4AfBGFpFdgatnncATOOdn4L3weGqUX/xeWQoxfdy9yzfwGmFAs
+ AANuhlHrfKj6tIWySdrKKwYNBT4YNc
+X-Received: by 2002:a05:600c:474f:b0:47b:de05:aa28 with SMTP id
+ 5b1f17b1804b1-482db45927bmr139628955e9.2.1769992053660; 
+ Sun, 01 Feb 2026 16:27:33 -0800 (PST)
+Received: from localhost.localdomain ([92.180.8.65])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48066c40e04sm431791005e9.13.2026.02.01.16.27.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Feb 2026 16:27:33 -0800 (PST)
+From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+To: qemu-devel@nongnu.org,
+	laurent@vivier.eu,
+	razvanghiorghe16@gmail.com
+Subject: [PATCH] linux-user: Fix zero_bss for RX PT_LOAD segments
+Date: Mon,  2 Feb 2026 02:24:46 +0200
+Message-ID: <20260202002615.27441-1-razvanghiorghe16@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAI7of2kC/22NQQ6CMBBFr0JmbU1bKRVX3sOwQDrARENlxjQaw
- t0trF2+l/z3FxBkQoFLsQBjIqE4ZXCHArqxnQZUFDKD1dYZa2vFJF1SInMUCqq7z0yqRbTWG3e
- yfQ95+WLs6bNXb03mkeQd+bufpHKzW6/SRru/vVQqreo2+MqbENCfrw/kCZ/HyAM067r+AFEL1
- Za3AAAA
-X-Change-ID: 20251229-riscv-ssqosid-cbqri-aee2271532ff
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>, 
- =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
- Atish Kumar Patra <atishp@rivosinc.com>, 
- Atish Patra <atish.patra@linux.dev>, 
- Vasudevan Srinivasan <vasu@rivosinc.com>, 
- =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>, 
- yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
- guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
- Drew Fustini <fustini@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13466; i=fustini@kernel.org;
- h=from:subject:message-id; bh=UaVzgF3u0n/OEyZHbgmU9AM4dR6+G7QcZIs6cdB+84k=;
- b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWTWv5hyRlBQx3LGpwvnD0V3XOG8lqdbGMSbuUNF6k8yS
- 4JBerp9RykLgxgXg6yYIsumD3kXlniFfl0w/8U2mDmsTCBDGLg4BWAi/aWMDC9Wzf6Zwh6195NI
- hvs5E7ul/XL6ZVzH3rSfu/AodNtDbTaG/34aGRpLGdIzHSwZZlRI9aX9tJ0a5p2bXTfhje7sPYL
- GPAA=
-X-Developer-Key: i=fustini@kernel.org; a=openpgp;
- fpr=1B6F948213EA489734F3997035D5CD577C1E6010
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=razvanghiorghe16@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,284 +99,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements the RISC-V Quality-of-Service Identifiers
-(Ssqosid) extension [1] which adds the srmcfg register. It also
-implements the RISC-V Capacity and Bandwidth Controller QoS Register
-Interface (CBQRI) specification [2]. Quality of Service (QoS) in this
-context is concerned with shared resources on an SoC such as cache
-capacity and memory bandwidth.
+zero_bss() incorrectly assumed that any PT_LOAD containing .bss must be
+writable, rejecting valid ELF binaries where .bss overlaps the tail of
+an RX file-backed page.
 
-Sssqosid srmcfg CSR
--------------------
-The srmcfg CSR configures a hart with two identifiers:
+Instead of failing, temporarily enable write access on the overlapping
+page to zero the fractional bss range, then restore the original page
+permissions once initialization is complete.
 
- - Resource Control ID (RCID)
- - Monitoring Counter ID (MCID)
+To validate the correctness of the modified zero_bss() implementation,
+two targeted test cases were constructed, designed to exercise the edge cases where
+the .bss segment overlaps a partially filled virtual memory page belonging to a
+R_X region. The test binaries were intentionally built without a main() function
+and instead defined a custom ELF entry-point via the _start symbol.
+This approach bypasses CRT, dynamic loader, libc initialization etc. ensuring that
+execution begins immediately after QEMU completes ELF loading and memory mapping.
 
-These identifiers accompany each request issued by the hart to shared
-resource controllers. This allows the capacity and bandwidth resources
-used by a software workload (e.g. a process or a set of processes) to be
-controlled and monitored.
+The first binary defines a minimal _start routine and immediately terminates
+via a system call, without ever referencing the .bss symbol. Although a .bss section
+is present in the ELF, it is not accessed at runtime, and the resulting PT_LOAD
+mapping can be established without triggering any writes to a file-backed RX page.
+In this configuration, QEMU successfully loads the binary, and the loader reaches
+the zero_bss() path, validating that the fractional .bss region is correctly zeroed
+without violating the original segment permissions.
 
-CBQRI controllers
------------------
-CBQRI defines operations to configure resource usage limits, in the form
-of capacity or bandwidth, for an RCID. CBQRI also defines operations to
-configure counters to track the resource utilization per MCID.
+The second binary explicitly reads from the global .bss symbol (x) at program entry.
+This forces the linker to materialize the .bss region within the same PT_LOAD
+segment as the RX code, yielding a segment with p_filesz < p_memsz and flags R|X.
+In this case, QEMU correctly fails during the initial file-backed mmap() of the PT_LOAD
+segment, returning EINVAL. This behavior is consistent with the Linux kernel’s ELF
+loader semantics, which prohibit mapping a file-backed segment as RX when it (logically)
+contains writable memory. Consequently, this failure occurs before zero_bss()
+is reached (behaviour expected and correct).
 
-This series implements an CBQRI capacity controller and an CBQRI
-bandwidth controller which can be configured from the command line:
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3179
+Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+---
+ linux-user/elfload.c | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-  $ qemu-system-riscv64 -M virt ... \
-      -device riscv.cbqri.capacity,mmio_base=0x04828000[,...] \
-      -device riscv.cbqri.bandwidth,mmio_base=0x04829000[,...]
-    
-The mmio_base option is mandatory, the others are optional.
-                           
-As many -device arguments as wanted can be provided as long as their
-mmio regions don't conflict.
-
-To see all possible options:
-
-  $ qemu-system-riscv64 -device riscv.cbqri.capacity,help
-  riscv.cbqri.capacity options:
-    alloc_op_config_limit=<bool> -  (default: true)
-    alloc_op_flush_rcid=<bool> -  (default: true)
-    alloc_op_read_limit=<bool> -  (default: true)
-    at_code=<bool>         -  (default: true)
-    at_data=<bool>         -  (default: true)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)   
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> -  (default: true)
-    mon_evt_id_occupancy=<bool> -  (default: true)
-    mon_op_config_event=<bool> -  (default: true)
-    mon_op_read_counter=<bool> -  (default: true)
-    ncblks=<uint16>        -  (default: 16)
-    target=<str>
-   
-  $ qemu-system-riscv64 -device riscv.cbqri.bandwidth,help
-  riscv.cbqri.bandwidth options:
-    alloc_op_config_limit=<bool> -  (default: true)
-    alloc_op_read_limit=<bool> -  (default: true)
-    at_code=<bool>         -  (default: true)
-    at_data=<bool>         -  (default: true)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> -  (default: true)
-    mon_evt_id_rdonly_count=<bool> -  (default: true)
-    mon_evt_id_rdwr_count=<bool> -  (default: true)
-    mon_evt_id_wronly_count=<bool> -  (default: true)
-    mon_op_config_event=<bool> -  (default: true)
-    mon_op_read_counter=<bool> -  (default: true)
-    nbwblks=<uint16>       -  (default: 1024)
-    target=<str>
-
-Boolean options correspond to hardware capabilities that can be disabled
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 35471c0c9a..fa3f7cda69 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -449,18 +449,11 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
+ {
+     abi_ulong align_bss;
  
-Example SoC for CBQRI
----------------------
-An example SoC with the following CBQRI controller configuration can be
-used to test the implementation:
-
-  - L2 cache controllers
-    - Resource type: Capacity
-    - Number of capacity blocks (NCBLKS): 12
-    	- In the context of a set-associative cache, the number of
-	  capacity blocks can be thought of as the number of ways
-    - Number of access types: 2 (code and data)
-    - Usage monitoring not supported
-    - Capacity allocation operations: CONFIG_LIMIT, READ_LIMIT
-
-  - Last-level cache (LLC) controller
-    - Resource type: Capacity
-    - Number of capacity blocks (NCBLKS): 16
-    - Number of access types: 2 (code and data)
-    - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
-    - Event IDs supported: None, Occupancy
-    - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
-
-  - Memory controllers
-    - Resource type: Bandwidth
-    - Number of bandwidth blocks (NBWBLKS): 1024
-       - Bandwidth blocks do not have a unit but instead represent a
-         portion of the total bandwidth resource. For NWBLKS of 1024,
-	 each block represents about 0.1% of the bandwidth resource.
-    - Maximum reserved bandwidth blocks (MRBWB): 819 [80% of NBWBLKS]
-    - Number of access types: 1 (no code/data differentiation)
-    - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
-    - Event IDs supported: None, Total read/write byte count, Total
-                           read byte count, Total write byte count
-    - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
-
-The memory map used for the example SoC:
-
-  Base addr  Size
-  0x4820000  4KB  Cluster 0 L2 cache controller
-  0x4821000  4KB  Cluster 1 L2 cache controller
-  0x4828000  4KB  Memory controller 0
-  0x4829000  4KB  Memory controller 1
-  0x482a000  4KB  Memory controller 2
-  0x482b000  4KB  Shared LLC cache controller
-
-This configuration is meant to provide a "concrete" example for software
-(like Linux) to test against. It represents just one of many possible
-ways for hardware to implement the CBQRI spec.
-
-The example SoC configuration is created with the following:
-
-  qemu-system-riscv64 \
-        -M virt \
-        -nographic \
-        -smp 8 \
-        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04820000 \
-        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04821000 \
-        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=16,mmio_base=0x0482B000 \
-        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04828000 \
-        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04829000 \
-        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x0482a000
-
-In addition, please note that this series only implements the register
-interface that CBQRI specifies. It does not attempt to emulate the
-performance impact of configuring limits on shared resources like cache
-and memory bandwidth. Similarly, the code does not attempt to emulate
-cache and memory bandwidth utilization, like what would be observed on a
-real hardware system implementing CBQRI.
-
-There is a Linux kernel patch series [3] which adds support for Ssqosid
-and CBQRI along with resctrl integration. It is also available as a
-branch named ssqosid-cbqri-rfc-v1 [4].
-
-RQSC note: my plan is to post a new series on top of this one which
-implemenets support for the ACPI RQSC table. There is a work-in-progress
-branch named b4/riscv-rqsc [5].
-
-[1] https://github.com/riscv/riscv-ssqosid/releases/tag/v1.0
-[2] https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
-[3] https://lore.kernel.org/all/20260119-ssqosid-cbqri-v1-0-aa2a75153832@kernel.org/
-[4] https://git.kernel.org/pub/scm/linux/kernel/git/fustini/linux.git/log/?h=ssqosid-cbqri-rfc-v1
-[5] https://github.com/tt-fustini/qemu/tree/b4/riscv-rqsc
-
-Changes since v4:
- - Add read and write wrappers to support 32-bit access size as the spec
-   states that "CBQRI registers are defined so that software can perform
-   two individual 4 byte accesses". Thanks to Radim for suggesting this
-   solution.
- - Link to v4: https://lore.kernel.org/qemu-devel/20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org
-
-Changes since v3:
- - NOTE: I should have used version v3 for the previous version posted
-   on Nov 19, 2025 given there was already v1/v2 back in 2023. Therefore
-   I am using v4 in this new revision.
- - Rebase on current master as of Dec 29 (942b0d378a1d) and update
-   include paths for qdev-properties.h and sysbus.h
- - Add Rb tags from Daniel 
- - Squash the Kconfig and meson.build patches together per Daniel
- - Use riscv_cpu_cfg() instead of env_archcpu() in check_srmcfg()
- - Add check for mstateen0.SRMCFG in check_srmcfg()
- - Increase ISA_EXT_DATA_ENTRY() for ssqosid from PRIV_VERSION_1_12_0
-   to PRIV_VERSION_1_13_0 as it was added in Privileged Arch 1.13
- - Calculate the size of the capacity controller MMIO space based on 
-   on cc->ncblks and roundup to be aligned to the 4KB page boundary.
- - Remove rpfx, p and cunits properties that were added in the previous
-   revision as I have decided to not support those optional features in
-   this capacity controller implementation.
- - Update riscv_cbqri_cc_read to set 0 for RPFX, P and CUNITS in
-   cc_capabilities. This indicates that this capacity controller
-   implementation does not support RCID-prefixed mode and nor does it
-   support capacity unit limits.
- - Add cc_cunits register after cc_block_mask register in the
-   alloc_blockmasks array and adjust logic in get_blockmask_offset,
-   riscv_cbqri_cc_read, riscv_cbqri_cc_write. Since capacity units is
-   not supported, the cc_cunits register will always be 0.
- - Only assign capacity for rcid 0 in riscv_cbqri_cc_reset and do not
-   touch allocation for other rcid values as they are unspecified
-   following a reset.
- - Change CC_ALLOC_OP_FLUSH_RCID to be a no-op instead of calling
-   alloc_blockmask_init() as the spec states that the configured
-   capacity block allocation or the capacity unit limit is not
-   changed by the flush operation.
- - Add comment to explain that, while the spec only requires the busy
-   field to be reset to 0, the entire contents of the cc->cc_mon_ctl
-   abd cc->cc_alloc_ctl registers are set to 0 simplify the code in
-   riscv_cbqri_cc_reset().
- - Simplify the access type logic for blockmask initialization in
-   riscv_cbqri_cc_reset().
- - Add static inline helpers get_bmw() and get_slots().
- - Add check to bandwidth_config() that rbwb is not greater than mrbwb.
- - Link to v3: https://lore.kernel.org/qemu-devel/20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org
-
-Changes since v2:
- - NOTE: I should have used version v3 for this version posted on Nov 19
-   as there were already v1 and v2 back in 2023.
- - Rebase on master which is currently at version v10.1.50
- - Add fields that were not in the draft used for the proof of concept
-   and introduced in final CBQRI 1.0 spec: capacity units (cunits) and
-   RCID-prefixed mode (RPFX) along with parameter P (prefixed bits)
- - Fix check_srmcfg() to check if virtualization is enabled, and if so,
-   return virt instruction fault, otherwise return smode()
- - Fix indentation in read_srmcfg()
- - Add SPDX headers
- - Add MAINTAINERS enteries
- - Link to v2: https://lore.kernel.org/qemu-devel/20230425203834.1135306-1-dfustini@baylibre.com/ 
-
-Changes since v1:
- - Rebase on current master (8.0.50) instead of 8.0.0-rc4
- - Configure CBQRI controllers based on device properties in command
-   line arguments instead of a fixed example SoC configuration.
- - Move TYPE_RISCV_CBQRI_BC and TYPE_RISCV_CBQRI_CC into header so that
-   machines may use it (suggested by Alistair).
- - Change 'select RISC_CBQRI' to 'imply RISCV_CBQRI' for RISCV_VIRT.
- - Patches 8/9 could be dropped as they are not needed for the CBQRI
-   proof-of-concept to work. They are only meant to serve as an example
-   for those implementing new machines.
- - Link to v1: https://lore.kernel.org/qemu-devel/20230416232050.4094820-1-dfustini@baylibre.com/
-
-Signed-off-by: Drew Fustini <fustini@kernel.org>
----
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-riscv@nongnu.org
-Cc: Nicolas Pitre <npitre@baylibre.com>
-Cc: Drew Fustini <fustini@kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-
----
-Kornel Dulęba (1):
-      riscv: implement Ssqosid extension and srmcfg CSR
-
-Nicolas Pitre (5):
-      hw/riscv: define capabilities of CBQRI controllers
-      hw/riscv: implement CBQRI capacity controller
-      hw/riscv: implement CBQRI bandwidth controller
-      hw/riscv: add CBQRI to Kconfig and build if enabled
-      hw/riscv: add CBQRI controllers to virt machine
-
- MAINTAINERS                       |   9 +
- disas/riscv.c                     |   1 +
- hw/riscv/Kconfig                  |   4 +
- hw/riscv/cbqri_bandwidth.c        | 638 +++++++++++++++++++++++++++++++++
- hw/riscv/cbqri_capacity.c         | 733 ++++++++++++++++++++++++++++++++++++++
- hw/riscv/meson.build              |   1 +
- hw/riscv/virt.c                   |   3 +
- include/hw/riscv/cbqri.h          |  82 +++++
- target/riscv/cpu.c                |   2 +
- target/riscv/cpu.h                |   3 +
- target/riscv/cpu_bits.h           |   9 +
- target/riscv/cpu_cfg_fields.h.inc |   1 +
- target/riscv/csr.c                |  37 ++
- 13 files changed, 1523 insertions(+)
----
-base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
-change-id: 20251229-riscv-ssqosid-cbqri-aee2271532ff
-
-Best regards,
+-    /* We only expect writable bss; the code segment shouldn't need this. */
+-    if (!(prot & PROT_WRITE)) {
+-        error_setg(errp, "PT_LOAD with non-writable bss");
+-        return false;
+-    }
+-
+     align_bss = TARGET_PAGE_ALIGN(start_bss);
+     end_bss = TARGET_PAGE_ALIGN(end_bss);
+ 
+     if (start_bss < align_bss) {
+         int flags = page_get_flags(start_bss);
+-
+         if (!(flags & PAGE_RWX)) {
+             /*
+              * The whole address space of the executable was reserved
+@@ -472,20 +465,35 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
+              */
+             align_bss -= TARGET_PAGE_SIZE;
+         } else {
++            abi_ulong start_page_aligned = start_bss & TARGET_PAGE_MASK;
+             /*
+-             * The start of the bss shares a page with something.
+-             * The only thing that we expect is the data section,
+-             * which would already be marked writable.
+-             * Overlapping the RX code segment seems malformed.
++             * The logical OR between flags and PAGE_WRITE works because
++             * in include/exec/page-protection.h they are defined as PROT_*
++             * values, matching mprotect().
++             * Temporarily enable write access to zero the fractional bss.
++             * target_mprotect() handles TB invalidation if needed.
+              */
+             if (!(flags & PAGE_WRITE)) {
+-                error_setg(errp, "PT_LOAD with bss overlapping "
+-                           "non-writable page");
+-                return false;
++                if (target_mprotect(start_page_aligned,
++                                    TARGET_PAGE_SIZE,
++                                    prot | PAGE_WRITE) == -1) {
++                    error_setg_errno(errp, errno,
++                                    "Error enabling write access for bss");
++                    return false;
++                }
+             }
+ 
+-            /* The page is already mapped and writable. */
++            /* The page is already mapped and now guaranteed writable. */
+             memset(g2h_untagged(start_bss), 0, align_bss - start_bss);
++
++            if (!(flags & PAGE_WRITE)) {
++                if (target_mprotect(start_page_aligned,
++                                    TARGET_PAGE_SIZE, prot) == -1) {
++                    error_setg_errno(errp, errno,
++                                    "Error restoring bss first permissions");
++                    return false;
++                }
++            }
+         }
+     }
+ 
 -- 
-Drew Fustini <fustini@kernel.org>
+2.43.0
 
 
