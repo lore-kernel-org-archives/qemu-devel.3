@@ -4,135 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B27AE73176
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC4FE73176
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmuJU-0003Rv-HA; Mon, 02 Feb 2026 08:50:00 -0500
+	id 1vmuLU-0004Sw-Ow; Mon, 02 Feb 2026 08:52:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vmuJT-0003Qd-BS
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:49:59 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vmuJR-0005Se-PI
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:49:59 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-790b7b3e594so45155007b3.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:49:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770040196; cv=none;
- d=google.com; s=arc-20240605;
- b=YId//2THYK6l2q9o8VO+5KPj5tRzie2Lm0/QSNuaKDmICYTJoRGBKgcPhFYuO2WYaB
- EXY3svx/DWTq5w76q3W7U080Mv3hPvwfNNPTZqGvClPTLcJ82v9ocBbLq+060HIpcUuR
- FZl5tbhkFvnoBYRkQcw7+MSoi4UbdA9/N+jUMW/arq87FGbRcvd21NttP5EKBN4WbMGl
- v3e8PAzH52p/VGflVZL/aKIhppIiLTRDNr5/1rU10zj/j8VJa/55CvjMkBgrvqwuqccJ
- mqL3PH0RT/jIzpzooACVDNs17hlJWkW343Lh8mWBnD6zgY6gxgK9D2/kuL+/bXZfDaB3
- yk0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xrZIpAFZGquKXWnjZgf/7sOBNHczMZ1kA3U/EQOXnVU=;
- fh=/0pxUU20+D2p0KPLzhwUcKnxMiOCqX3YUFX40lJIjsM=;
- b=erJCplUcVDD8n+l4KJ+Yr1sJJtKEHiGcB1UypAxvWSXb9YIwnm7ttkdYf+om+YsQni
- +/DDyYofV37cfhJKrDQ/XNJZXNRoYLcpXmVTUKDfRWMhOdH6Jv+2q240migAg1gScHDv
- 3MICuFW0mQTtYdU4aQK4RqIRtUy2bndZbdAT0ZYwTtL8uOO2KS+Dr7ww8YYi6wLhsJ+W
- mhKDMAih0v2ydG2dFiLDUzIs3YqZuSwSNMmaa8VZKDI/f4s8ywtXxxlfaAMsBqyLMqKV
- V3nMpFDihQEZVZq/HJaWK18G7So9sHpV4G9UnMAfN5vSF4BLW/QogDsgMWx2HTXiV7A2
- QJLQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770040196; x=1770644996; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xrZIpAFZGquKXWnjZgf/7sOBNHczMZ1kA3U/EQOXnVU=;
- b=e6fTi9El5jWsQV878zAa9RJ6Q5cdxr/z6LyioSAwfuRM4ARpF96bwmH8ytcj55vzry
- eTQm3DfvUhqth41wnyQqVLrBfKko8jMBwFoQn5WiYqdxS7WvL7VARwLOwc3fJ8kc6QkZ
- MDOEEQDPXNv6CrEjTbCOdfcNUfYGXaSKSex4MVmG+1r5E1hWgmMTdv7qzdp6IzcMb5on
- HY1mjNDFM1dMtsSZW37/txXK0yZvfbYfoafSEbIVSW/6xWLTtQ2DMgQ41dWgPsTPca13
- OXq/8+2fBX1npXxXaRSUTo+4QyNKw72Pg5QtYkomm7ouA5fSRFqcY1kyAZ498SbKrj6B
- NQaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770040196; x=1770644996;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xrZIpAFZGquKXWnjZgf/7sOBNHczMZ1kA3U/EQOXnVU=;
- b=hFPvzcnDjwTpPkY3351PuPEQ0ChqDxOgdfi6cbsCkjnJ4mmY6vB+Rtp9fB+NaAz7hs
- QllkDpoppnNzMpdDLttq/HpQVPncv8mvfSK54wKzo2cW9WvSTkJiAmHyqS2kZvcmI30k
- l3tzlc5DLy1Xesq3MPo9dNJCVnCsdjmP7rlojKQc3oMeCs7obeMJLKDgnB0RQcoBf+/n
- y6BQslZWnM7PAuWOPe1j8yLyM9qyNyRE6ZOVHwKhTL0gM3KFQmNMyyUd2BBrO31oYSQX
- yqpBR2X1W8kr+Wc94WGWNeAJx926nc2lwBCNuUxsOm10Ji3ZsFqnxyTh2irMV3Pjh5BT
- Wnbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXY5XFHpJZ9DcUx/upH64zzHJ90QNJCg74Q/Z8hpdIwUHFogeFOYmF64ngbY4b8oGK4uo8+6/plh7rT@nongnu.org
-X-Gm-Message-State: AOJu0YzTQYRuqjloXbFiUsHtB2ru7NiVklY1EVxWN1vCmBCcTbfc2h4u
- 0Xdg4YvI2gECelJRbUgnC21FtrZVQKmJHjI3IFmNkwQGzOmQROKHRuEDZKNtvDNQ0AAHej2zWRE
- MFYYAisNHcPLem82qbYwCb4+xHxR6M2NkARuSaJ5Zzg==
-X-Gm-Gg: AZuq6aJpAfeKXrmGLWrLez3J4NVggxwuD/pTFIMndFd5fy/k8rYCybAatdYfTq4i3Qt
- /Zyr6nNWME3Cuon/YN2XhWEuelGT/9PPXouil2fnESoN7QSsCyX/ex9td85hmDNT6fNiEZnMJaZ
- i0dAStnuWTd9zJEgEhQCOCrTCDdPh0wgZZU9jZzMSdpVlXMUibfsnzvoGD0qJkN6LLUcE9wMpK/
- zS8zDcQ8StRQcfszdkVCuENvRAyBorocbQPTHNxL9VGVe7/qAJluCCQYu/P7kRCStDYXw==
-X-Received: by 2002:a05:690c:fd2:b0:78c:64c1:c021 with SMTP id
- 00721157ae682-7949de7f1fcmr93236017b3.7.1770040196194; Mon, 02 Feb 2026
- 05:49:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vmuLS-0004Sj-5F; Mon, 02 Feb 2026 08:52:02 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vmuLO-0005y4-Jq; Mon, 02 Feb 2026 08:52:01 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8D1C0184FAA;
+ Mon, 02 Feb 2026 16:51:13 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9CCC35B0DB;
+ Mon, 02 Feb 2026 16:51:54 +0300 (MSK)
+Message-ID: <0af3ad65-3b16-43de-a4ea-36318df8b81d@tls.msk.ru>
+Date: Mon, 2 Feb 2026 16:51:54 +0300
 MIME-Version: 1.0
-References: <875x8fpa0x.fsf@draig.linaro.org>
- <2946621b-3d00-40dd-a80f-3f301a2e9564@redhat.com>
-In-Reply-To: <2946621b-3d00-40dd-a80f-3f301a2e9564@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 2 Feb 2026 13:49:45 +0000
-X-Gm-Features: AZwV_QhrOITpFuPZPNrHR_h7o4h-PmEsOtBmkJCd8YaiPcYoXep1w7Tp7eYeMt4
-Message-ID: <CAFEAcA8rsJc_+JZY=TT96NAt0yskvwatvvMSHgwT+Zf5Y4=Daw@mail.gmail.com>
-Subject: Re: KVM/QEMU Community call (3/2/26) agenda items?
-To: eric.auger@redhat.com
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>, 
- Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, 
- Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org, 
- demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, 
- eblot@rivosinc.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, felipe@nutanix.com, 
- Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, 
- Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, 
- Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>, 
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
- Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com, "Ho, Nelson" <nelson.ho@windriver.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, 
- Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
- wei.w.wang@intel.com, 
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
- Sebastian Ott <sebott@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] python: fix msys64 wheel directory specification
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260130050518.517688-1-jsnow@redhat.com>
+ <20260130050518.517688-2-jsnow@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260130050518.517688-2-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,37 +106,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Feb 2026 at 13:29, Eric Auger <eric.auger@redhat.com> wrote:
->
-> Hi Alex,
-> On 2/2/26 2:09 PM, Alex Benn=C3=A9e wrote:
-> > Hi,
-> >
-> > The KVM/QEMU community call is at:
-> >
-> > https://meet.jit.si/kvmcallmeeting
-> > @
-> > 03/02/2026 14:00 UTC
-> >
-> > Are there any agenda items for the sync-up?
-> >
-> I would be interested in discussing RH aarch64 cross kernel migration
-> issues.
->
-> [PATCH v6 00/11] Mitigation of "failed to load
-> cpu:cpreg_vmstate_array_len" migration failures <https://lore.kernel.org/=
-all/20260126165445.3033335-1-eric.auger@redhat.com/#r>
-> (https://lore.kernel.org/all/20260126165445.3033335-1-eric.auger@redhat.c=
-om/)
-> and
-> [PATCH v4 0/2] arm: add kvm-psci-version vcpu property <https://lore.kern=
-el.org/all/20251202160853.22560-1-sebott@redhat.com/#r>
-> (https://lore.kernel.org/all/20251202160853.22560-1-sebott@redhat.com/)
+On 1/30/26 08:05, John Snow wrote:
+> In python3.14, fixes were made to the file URI parsing [1] such that
+> file URIs that used to work but were technically out of spec are now
+> broken.
+> 
+> As a result, our msys2 GitLab CI tests began failing.
+> 
+> Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
+> fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
+> 
+> [1] https://docs.python.org/3/whatsnew/3.14.html#urllib
 
-FWIW, that set of patches are in some sense on my to-review queue,
-but the area is complex enough that I have not yet made time to
-try to understand it and have enough of an opinion to review them.
+I'm picking this up for current stable series too.
+Please let me know if I shouldn't.
 
-thanks
--- PMM
+Thanks,
+
+/mjt
 
