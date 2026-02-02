@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349BEE7FDEF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C9AE7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:53:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn1hc-0007M2-C8; Mon, 02 Feb 2026 16:43:24 -0500
+	id 1vn1qz-0000UP-1q; Mon, 02 Feb 2026 16:53:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1ha-0007LQ-Ay
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:43:23 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1hY-00045L-V4
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:43:22 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4807068eacbso41407805e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:43:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770068599; x=1770673399; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nxQiPZT5UD27d36G9e1jm2zCp7hGnuyHF/hoh1rkDRI=;
- b=OF2LH6gq1ZMcj6oiYVQw5Bl57UGnderZA3cxNIdwX2KWyEFgvpbSUUX8c+m4OcmavM
- inJXqj/cneL+WxNfLbdqpzUkU5pbj8L+jOh8fyD/vKIX56uRGBFHvR5Jikfis6bG+XLV
- S2A25O/zO8hBvtx8KIpyROihh83ifBkhTRRtr661P2anOkJwsCPNVxCYw5yV2iChXaxW
- 9tWhHyHqblQwQdzbdAUEMeKGXl1W6IDdqvn5ZB/vAmmYjq3PL8SibpVZmQIZfLtNOPi5
- c5ItwwQ5cB4aqsIIjoe6UQ97JFweDqH8AxA+eXVq1wdy7OsnYAPT3tn+DAwGfKIqPRek
- C2RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770068599; x=1770673399;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nxQiPZT5UD27d36G9e1jm2zCp7hGnuyHF/hoh1rkDRI=;
- b=U+lYHFBnSW/g7MyYS5vfhCJVzwSvKnV+xVmUz0T04kHvG3aYLZdFoTgNB5Fs1xZdV4
- idTpHL8O9kG4PQQpB/zezABKfDydCD3cjfG3CnWdbt0Q04QFg0z1SW+n2kPGBsaNWa1z
- UHJI57G2bcXqzBOnMrJTCEGBqKdNLrtdC0zwNLvED1Yi7+c+jE+IR0BPZEaFNG1i7DvV
- Hv6mPoIWHarJis/z9Q6y0t1u+BNFJkOJ+pXSqTlwqP7RcalvoKwnZrwdejeCM+80H+hO
- xi5tQ67W6OCdM2ZdWLWvWj2HUr7ceBk9c6+GU84yfslV6KLaVNyBaCZ0urx0NsYWu2pV
- XSIg==
-X-Gm-Message-State: AOJu0YyhHeosR2hj63xjaHLK75Jb/5LH0o1bqZycvaarW1GcWbJg+QY4
- EtQfDiT8NUnrwloMoyakQJU/LOT14OicJPDBc47+oGv+a3Ug0LUG/jTcmIo9vq+oYiEEKWvS8E4
- MFtTuODM=
-X-Gm-Gg: AZuq6aLwffIpHwjRoy+uiJGaTyd+oRdEq3mSp4CmnbxxPNPpa+RXvih1BLF2QFzLny2
- WPBfvT2MM6q5XQ3sZKZ1sNn97l8KYOjV8BiJVg2rBufKIFWY/KxSBJdWsqNrWQXTCw0ikTn4o1G
- KmJP00TJ/eYdeOpHfuT5Z1vep92Bg8KwFahK1EW+dGZQ5jIKRmKtDPA6wBhvgRZatLh5ExARyDO
- 3tgKHC18zOD9s0Qxxn5x76oOw99ytTTY4QRV20z6pnh8FauKerBJo7/y2hECLfn9yjkkJkES5Po
- rr8t04eImZaItF3VI6wEGD1y2oxzuLO6+F9QaLd1jWSsObiEeoBZuFODkz+l/ta55xGQi7WnHH4
- 3az4Z+9QznrUl9MsFdeil6+2kGRyFF5xRWdRwP0HW9wqp6/4vipb4uUloZOWdzOlOUP/M8cumMv
- zUsmO6LmfRbnKRr1WjCyspgbpxwAG+llfqXdQJbUIozQS1HNmgO5UDg0MlhmTG
-X-Received: by 2002:a05:600c:4e56:b0:480:1b1a:551d with SMTP id
- 5b1f17b1804b1-482db47cf43mr162933085e9.18.1770068599022; 
- Mon, 02 Feb 2026 13:43:19 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cefdsm47773030f8f.23.2026.02.02.13.43.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 13:43:18 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/riscv: Inline cpu_ld[lq]_code() calls
-Date: Mon,  2 Feb 2026 22:43:17 +0100
-Message-ID: <20260202214317.99090-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn1qx-0000To-Nd; Mon, 02 Feb 2026 16:53:03 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn1qv-00072s-PN; Mon, 02 Feb 2026 16:53:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1B56A185297;
+ Tue, 03 Feb 2026 00:52:16 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id DC67E35B3B0;
+ Tue, 03 Feb 2026 00:52:57 +0300 (MSK)
+Message-ID: <4968cec7-93a3-4835-a5e2-1486e9f502a8@tls.msk.ru>
+Date: Tue, 3 Feb 2026 00:52:57 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/elfload.c: use get_elf_hwcap2 to fix regression
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Qi.Chen@windriver.com, qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260202054537.2538899-1-Qi.Chen@windriver.com>
+ <b283d771-98e9-45e6-9700-f45d98d01e81@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <b283d771-98e9-45e6-9700-f45d98d01e81@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,65 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ldl_code() and cpu_ldq_code()
-wrappers, inline them.
+On 2/2/26 18:53, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 2/2/26 06:45, Qi.Chen@windriver.com wrote:
+>> From: Chen Qi <Qi.Chen@windriver.com>
+>>
+>> In commit fcac98d0b (linux-user: Remove ELF_HWCAP2), the following
+>> macro is removed:
+>>
+>> However, in place of the original ELF_HWCAP2, get_elf_hwcap instead
+>> of the original get_elf_hwcap2 was used.
+>>
+>> This caused serious regression for at least ppc64 user mode. The
+>> error message is like below:
+>>
+>>    Fatal glibc error: CPU lacks ISA 3.00 support (POWER9 or later 
+>> required)
+>>
+>> This patch restores to use get_elf_hwcap2.
+>>
+>> Signed-off-by: Chen Qi <Qi.Chen@windriver.com>
+>> ---
+>>   linux-user/elfload.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+>> index 0002d5be2f..35471c0c9a 100644
+>> --- a/linux-user/elfload.c
+>> +++ b/linux-user/elfload.c
+>> @@ -708,7 +708,7 @@ static abi_ulong create_elf_tables(abi_ulong p, 
+>> int argc, int envc,
+>>       NEW_AUX_ENT(AT_EXECFN, info->file_string);
+>>       if (HAVE_ELF_HWCAP2) {
+>> -        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap(thread_cpu));
+>> +        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap2(thread_cpu));
+>>       }
+> 
+> This is the correct fix. It was committed recently:
+> https://gitlab.com/qemu-project/qemu/-/commit/ 
+> c333f9c4ee212297f3b9a8a6ef62396a63c48e61
+> 
+> We forgot to Cc qemu-stable. Michael, could you include this
+> commit for v10.2.x stable series?
 
-Since RISC-V instructions are always stored in little-endian order
-(see "Volume I: RISC-V Unprivileged ISA" document, chapter
-'Instruction Encoding Spaces and Prefixes': "instruction fetch
-in RISC-V is little-endian"), replace MO_TE -> MO_LE.
+Yeah, it's been applied to 10.2.x for quite some time,  - I picked
+it up on Jan-13.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/translate.c  | 3 ++-
- target/riscv/zce_helper.c | 8 ++++++--
- 2 files changed, 8 insertions(+), 3 deletions(-)
+Now I wonder - why did I pick it up? :)
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d8261aeb662..cb4f4436018 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1181,8 +1181,9 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-     CPUState *cpu = ctx->cs;
-     CPURISCVState *env = cpu_env(cpu);
-+    MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cpu, true));
- 
--    return cpu_ldl_code(env, pc);
-+    return cpu_ldl_code_mmu(env, pc, oi, 0);
- }
- 
- #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
-diff --git a/target/riscv/zce_helper.c b/target/riscv/zce_helper.c
-index 55221f5f375..15bf0a99c8a 100644
---- a/target/riscv/zce_helper.c
-+++ b/target/riscv/zce_helper.c
-@@ -23,6 +23,8 @@
- 
- target_ulong HELPER(cm_jalt)(CPURISCVState *env, uint32_t index)
- {
-+    unsigned mmu_index = cpu_mmu_index(env_cpu(env), true);
-+    MemOpIdx oi;
- 
- #if !defined(CONFIG_USER_ONLY)
-     RISCVException ret = smstateen_acc_ok(env, 0, SMSTATEEN0_JVT);
-@@ -43,11 +45,13 @@ target_ulong HELPER(cm_jalt)(CPURISCVState *env, uint32_t index)
-     }
- 
-     if (xlen == 32) {
-+        oi = make_memop_idx(MO_LEUL, mmu_index);
-         t0 = base + (index << 2);
--        target = cpu_ldl_code(env, t0);
-+        target = cpu_ldl_code_mmu(env, t0, oi, 0);
-     } else {
-+        oi = make_memop_idx(MO_LEUQ, mmu_index);
-         t0 = base + (index << 3);
--        target = cpu_ldq_code(env, t0);
-+        target = cpu_ldq_code_mmu(env, t0, oi, 0);
-     }
- 
-     return target & ~0x1;
--- 
-2.52.0
+But it's there, at least.
 
+Thanks,
+
+/mjt
 
