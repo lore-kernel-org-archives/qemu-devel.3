@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B82E5E7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CFDE7FDDB
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn14U-0006je-Ma; Mon, 02 Feb 2026 16:02:58 -0500
+	id 1vn154-0007yf-3E; Mon, 02 Feb 2026 16:03:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn14S-0006g7-QJ; Mon, 02 Feb 2026 16:02:56 -0500
+ id 1vn14x-0007PV-4A; Mon, 02 Feb 2026 16:03:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn14R-0004h0-7G; Mon, 02 Feb 2026 16:02:56 -0500
+ id 1vn14v-0004ld-9W; Mon, 02 Feb 2026 16:03:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 381261851BA;
+ by isrv.corpit.ru (Postfix) with ESMTP id B4B961851C0;
  Mon, 02 Feb 2026 23:57:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 002D835B331;
- Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7CB2735B337;
+ Mon, 02 Feb 2026 23:58:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yao Zi <me@ziyao.cc>,
- Bibo Mao <maobibo@loongson.cn>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 46/74] hw/loongarch/virt: Don't abort on access to
- unimplemented IOCSR
-Date: Mon,  2 Feb 2026 23:57:57 +0300
-Message-ID: <20260202205833.941615-46-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 52/74] tests/functional: Mark the MIPS replay tests as
+ flaky
+Date: Mon,  2 Feb 2026 23:58:03 +0300
+Message-ID: <20260202205833.941615-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -63,71 +64,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Zi <me@ziyao.cc>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since commit f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface
-for misc ops") which adds a call to g_assert_not_reached() in the path
-of handling unimplemented IOCSRs, QEMU would abort when the guest
-accesses unimplemented IOCSRs.
+MIPS test_replay.py often times out (likely hang) under GitLab CI:
 
-This is too serious since there's nothing fatal happening in QEMU
-itself, and the guest could probably continue running if we give zero as
-result for these reads, which also matches the behavior observed on
-3A5000M real machine.
+  2/21 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-replay   TIMEOUT   180.12s   killed by signal 15 SIGTERM
 
-Replace the assertion with qemu_log_mask(LOG_UNIMP, ...), it's still
-possible to examine unimplemented IOCSR access through "-d unimp"
-command line arguments.
+The console.log file is empty, and recording.logs only shows:
 
-Fixes: f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface for misc ops")
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 49ee001a5b8378e9a9b3db8cbf61e7eda970ecd2)
-(Mjt: trivial context fix for 10.1)
+  qemu-system-mips64el: terminating on signal 15 from pid 344
+
+Since this is a long term issue affecting our CI, disable the tests.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251031094118.28440-2-philmd@linaro.org>
+(cherry picked from commit 1c11aa180714e8fb1df87923b6ddd0b17aa26204)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index b15ada2078..46d7d9c863 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -46,6 +46,7 @@
- #include "hw/block/flash.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
+diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
+index 26a6ccff3f..05cc585f85 100755
+--- a/tests/functional/test_mips64el_replay.py
++++ b/tests/functional/test_mips64el_replay.py
+@@ -5,6 +5,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-                               void *opaque, Error **errp)
-@@ -553,8 +554,15 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
-                           EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-                           features, attrs, NULL);
-         break;
-+    case VERSION_REG:
-+    case FEATURE_REG:
-+    case VENDOR_REG:
-+    case CPUNAME_REG:
-+        break;
-     default:
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-     }
+ from qemu_test import Asset, skipUntrustedTest
++from qemu_test import skipFlakyTest
+ from replay_kernel import ReplayKernelBase
  
-     return MEMTX_OK;
-@@ -605,7 +613,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         }
-         break;
-     default:
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-     }
  
-     *data = ret;
+@@ -16,6 +17,7 @@ class Mips64elReplay(ReplayKernelBase):
+          'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
+         '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
+ 
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips64el_malta(self):
+         self.set_machine('malta')
+         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
+diff --git a/tests/functional/test_mips_replay.py b/tests/functional/test_mips_replay.py
+index 4327481e35..747835bf00 100755
+--- a/tests/functional/test_mips_replay.py
++++ b/tests/functional/test_mips_replay.py
+@@ -5,6 +5,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset, skipSlowTest
++from qemu_test import skipFlakyTest
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+@@ -16,6 +17,7 @@ class MipsReplay(ReplayKernelBase):
+          'linux-image-2.6.32-5-4kc-malta_2.6.32-48_mips.deb'),
+         '16ca524148afb0626f483163e5edf352bc1ab0e4fc7b9f9d473252762f2c7a43')
+ 
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips_malta(self):
+         self.set_machine('malta')
+         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
 -- 
 2.47.3
 
