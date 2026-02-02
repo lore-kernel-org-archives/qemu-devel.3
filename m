@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C34DE7DF1F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CB3E7316F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzLY-00078D-0F; Mon, 02 Feb 2026 14:12:28 -0500
+	id 1vmzYM-0002Tx-3H; Mon, 02 Feb 2026 14:25:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmzLS-000770-Va
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 14:12:25 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1vmzYH-0002TJ-S7
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 14:25:37 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmzLR-0005sA-Df
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 14:12:22 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c648bc954c6so1892495a12.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 11:12:20 -0800 (PST)
+ id 1vmzYE-0007wK-UC
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 14:25:37 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81f47610542so2720383b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 11:25:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770059539; x=1770664339; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770060332; x=1770665132; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=swEwytuanK3e9KMtcyuefNUeQNlL++JBFqKUT/OPaOU=;
- b=R7HSq57rqlmvA+NUPRRJYTTPI5R2xmwukeSx7fswC623E5uQ5LFrvUnZIRH6VtPUIo
- Q+K8FDleo+Qy5pPUUe2wzIKE3JxrEzMnq0t/+MT+U3EIiuWvYJKI4Uiy2s7+uRLppd0x
- nzRcb/BvXX7PIiZ60tiaAE9VRl1yXsEv4+e7hsSq9+eubzn/HN5VOHXRq1Jc055lH2GH
- QQ/0i2BHyvlsNHq007FnhfwZYqVquArq6514+rYbQExSeU2IHWxyiXJrOq+6TpHVVEXi
- e74OnUAaJ3eXCQUw2vjB9tXtWeMa6SEOArQcWY6Os7/i+KMj5qOKqHOCwKIMMixXGkYy
- n5+A==
+ bh=tgmIg8CHlbflvgtbtHYViZvtDdcqbe/zymjmD66yAAY=;
+ b=cnAEQhFNwhh+RR7s/4gP7/P30U9B5ZntYImzvHuCVAle9CYCpQUxoxJp/j/d5uVstK
+ wEPIqUM9iB4PYSv0rS5kJhqh/b0ApfafNkC7zpEWgoizRen8Ks+fbGac1THedj47EHm/
+ io+0odaCp/sZ8p2AOC7aEmlCxvLrVYD+Sg1D5IShNTwuG8DUm/F6bDF+r5nsK69CYfG/
+ KbKmmM208/F/ELDX8hmAU05Qd3dvlzA67+xySbNJa+xbin39JVfUWxRkhawBQ+VaxYZp
+ H6/InY8Yx9Afh5y3gWcHbxxxtkW2eDpL1SLRnpf16SkwHTuYlujDJozXosVGh0xJqbUU
+ 4Jwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770059539; x=1770664339;
+ d=1e100.net; s=20230601; t=1770060332; x=1770665132;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=swEwytuanK3e9KMtcyuefNUeQNlL++JBFqKUT/OPaOU=;
- b=lcbm4xQrC4AbiSMGqBRSwlQasxD13IUDC4zdLDKtd/10Q10obEyYRBNoTcPJe84S5E
- 8xyE8MeMqbCDUInx5YZgrRzTTFvIwp5Pia0eF+g5vkWSBZYPONenDL5KaxmbKvSRbI/I
- OSFOJLnDnr137uhESVZtpfNkI+pw8Rv0J5f2KjzNzL3tksVlefvLBGfVh0cUfhfbfxNq
- Yz4P14EWDuEieJok6HatcjG6v9VaPh0GI5rbST9Zs5BbLw0vcnccVo7/lFShhULn0cgd
- RdU7UGPsVt8CwqEFDqsMCmHBYvrPZn2n8a00EeuO18/OB2cFFKSAjwvQ3p8CyL5iKvdS
- /U3Q==
-X-Gm-Message-State: AOJu0Yznm2hxG2aaPLcGqyMGwUTIxmaDqwH2u6d9Z9ifXYC5w7LGcMnj
- tchUU61isCOu+XTUrKpNPtDu6qigfFuP6VBvW1AzNkoxT9XJBuA0eRmGp8F3WwC2q04=
-X-Gm-Gg: AZuq6aI4zYQ9Cd8JYPCJ9IFGKNi9d3ByE4y3Yr8nL7HPKEWunLD6ysKzN0FkQATDSt5
- W400lcih+66YrjRUPasx0npQpE6RWg4gZFcKJKUsZlyoCb8BP7FW7MRnhzDO8sdPzW2zFaepuT5
- vaQWtaq07DajFLFmI8JKSLM2XR09iMRfV54OXnEhWJCA830H+dv4tHKRAzQ3oDauhv+OGSJxSj7
- NZSyLqeNotgHW/O6h2/ZI03efkHW7Bb65boMG3S01j79ExCm3WFHbpZFwZ7rBDge4zXb01WzGBl
- FaWmq+sp9JD1ibxmqJ5s6YTy3Nz/zEifhitRHBRI0TU7dHJGSN20xCNUl7y2/94x8bWXrdMCIE7
- 4i7iwmLeffxn/axbVoQgoGY5F63WCwbgC9SryRX6s8y7jP50LBkCgEbBPgslY+dQohLAomuP+q8
- I1PcjCgMU5R5Mzoh2rj6mC18vJNqWoN6OsTnkJpSDyemV3wm9brvYMsTgv
-X-Received: by 2002:a17:903:2ca:b0:295:20b8:e104 with SMTP id
- d9443c01a7336-2a8d9a73ed9mr128871735ad.58.1770059539354; 
- Mon, 02 Feb 2026 11:12:19 -0800 (PST)
+ bh=tgmIg8CHlbflvgtbtHYViZvtDdcqbe/zymjmD66yAAY=;
+ b=OJtTQRHYS0qYrpDley/BLZLzbFQ85l5rSssqF4ofEuvJRaky2+jX3A92UChGgTaOKc
+ +06OmL19Hn6TYYpCxLe5bmB6G8u90fO1BTCVxwfvAskvyMmLplCbIQJZiPyxw6meEl6p
+ fu/dgkAlDKRYH5PhvKkf5Cvii1XzUj0ZhlxrAi/54zRyVRkhB/PAjjjEtoQFzSMbzrCH
+ zoIATuJn5lPSqFAE2yTkeqV2GQ1QE1hnKqCpomRNHtnUPTQnDxaPgLCj8ub66EyuBrwh
+ X33A+fftqXS631dnD5pJvn80w2M67b1NEj9/QdYaiUdG5NcPuTU/aukL7KFgdH7PHzRX
+ 4I3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5aSrwYBw7IKfCTZSkF+FydnSL3M2JFUNFQ/yMIHyCEUodn6LSlt5mt6tWe8oDvYcvbM3drZhW1u1I@nongnu.org
+X-Gm-Message-State: AOJu0Yxmhxcl3aCG10SIBh3d291uogVarBqgTe95v5o3dm5fRR9mIGkJ
+ ECXwRh9jjo0X7RhorUbqFrRvcZUxshHAz9PcOo2FyfSwY9uEovOLH1kKTUEfymn4Rgk=
+X-Gm-Gg: AZuq6aLi1c2vGt3wQ06oN/aWo05F62HONHmWhpdQ2e2QqseB6CCeqfmTQuUKpd58XYb
+ fRiFk9EuGQoi7rI+jhVF8IYTvlR1SxNSQDIqss17f5vHScDKO6WsPTD/usZdvyEIvYGOrzyvbPc
+ Hh1+0qai9Uej+4fhTEeyYZZ42VX3t/ybFIimCpr1G4licbTev8f6LiyQBab/cIbOaLL5+yGJUn+
+ z3ZRshrpCFwNz25If4SRxdp4hs2OWpp9m4MB5inXAFNRg+jVYg0/3x5NFr/4P9s95AP9ZUn2Js0
+ diGcY1c62rNJ34oddt+kdvt/xTpFgSw+2g398pseYUGZjH+6UfnbQxyrFqSNmlw43uokdnduTY/
+ AV2WHXOPSQdyS7q9OlKCfDAFczoXa2957msIpRvnbnF+v+/6J5nhIFuiQwDWFcac0i74pGM9Y6k
+ TcUJmdSc4cdeBKoC5ahjT1hH7j7VRU3KvUcsriWVWNmG/PxcQFA8IJR5E6
+X-Received: by 2002:a05:6a00:bd93:b0:81f:8084:7ea0 with SMTP id
+ d2e1a72fcca58-823ab65ead5mr11295738b3a.7.1770060332234; 
+ Mon, 02 Feb 2026 11:25:32 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a8b47f4717sm145801895ad.18.2026.02.02.11.12.18
+ d2e1a72fcca58-82379c64b4esm16366070b3a.69.2026.02.02.11.25.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 11:12:18 -0800 (PST)
-Message-ID: <b609f633-6821-47bf-8345-c1d36c34ffda@linaro.org>
-Date: Mon, 2 Feb 2026 11:12:18 -0800
+ Mon, 02 Feb 2026 11:25:31 -0800 (PST)
+Message-ID: <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+Date: Mon, 2 Feb 2026 11:25:31 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] include/hw/virtio/virtio-access.h: remove target
- specifics define
+Subject: Re: [PATCH v3 04/11] hw/virtio: Use
+ VirtIODevice::access_is_big_endian field
 Content-Language: en-US
 To: Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin"
  <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
- <20260131020100.1115203-3-pierrick.bouvier@linaro.org>
- <20260131124842-mutt-send-email-mst@kernel.org>
- <095a1def-1548-4764-84d2-87ffb642bb8e@linaro.org>
- <20260202024813-mutt-send-email-mst@kernel.org>
- <20260202180056.GB405548@fedora>
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
+ <npiggin@gmail.com>, qemu-ppc@nongnu.org
+References: <20260201232924.93399-1-philmd@linaro.org>
+ <20260201232924.93399-5-philmd@linaro.org>
+ <20260202024316-mutt-send-email-mst@kernel.org>
+ <87bji7pa2e.fsf@draig.linaro.org>
+ <20260202105847-mutt-send-email-mst@kernel.org>
+ <20260202185233.GC405548@fedora>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -120,11 +122,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260202180056.GB405548@fedora>
+In-Reply-To: <20260202185233.GC405548@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -147,28 +149,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 10:00 AM, Stefan Hajnoczi wrote:
-> On Mon, Feb 02, 2026 at 02:50:28AM -0500, Michael S. Tsirkin wrote:
->> On Sun, Feb 01, 2026 at 05:24:03PM -0800, Pierrick Bouvier wrote:
->>> On 1/31/26 9:48 AM, Michael S. Tsirkin wrote:
->>>> On Fri, Jan 30, 2026 at 06:00:56PM -0800, Pierrick Bouvier wrote:
->>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>
->>>> Performance impact?
->>>>
->>>> the reason we have these is for performance ...
->>>>
->>>
->>> I would be very happy to run any benchmark that you might judge critical.
->>>
->>> Should we run a disk read/write sequence with a virtio disk, or a download
->>> with a virtio interface? Any other idea?
->>
->> block for sure, people who care about network perf go the vhost or
->> vhost user path.
->>
->> So I CC'd Stefan Hajnoczi. Stefan do you feel this needs a test and what
->> kind of test do you suggest as the most representative of I/O overhead?
+On 2/2/26 10:52 AM, Stefan Hajnoczi wrote:
 > 
 > This command-line lets you benchmark virtio-blk without actual I/O
 > slowing down the request processing:
@@ -199,11 +180,32 @@ On 2/2/26 10:00 AM, Stefan Hajnoczi wrote:
 > This is just a single vCPU, but it should be enough to see if there is
 > any difference in I/O Operations Per Second (IOPS) or efficiency
 > (IOPS/CPU utilization).
-> 
-> Stefan
+>
+Thanks very much for the info Stefan. I didn't even know null-co 
+blockdev, so it definitely would have taken some time to find all this.
 
-I'll reply on v3 to keep conversation there.
+For what it's worth, I automated the benchmark here (need podman for 
+build), so it can be reused for future changes:
+https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
 
-Thanks,
+./build.sh && ./run.sh path/to/qemu-system-x86_64
+
+My initial testing showed a 50% slow down, which was more than 
+surprising. After profiling, the extra time is spent here:
+https://github.com/qemu/qemu/blob/587f4a1805c83a4e1d59dd43cb14e0a834843d1d/target-info.c#L30
+
+When we merged target-info, there have been several versions over a long 
+time, and I was 100% sure we were updating the target_info structure, 
+instead of reparsing the target_name every time. Unfortunately, that's 
+not the case. I'll fix that.
+
+With that fix, there is no difference in performance (<1%).
+
+I'll respin a v4 with the target info fix, initial v1 changes and 
+benchmark results.
+
+Thanks for pointing the performance issue, there was one for sure.
+
+Regards,
 Pierrick
 
