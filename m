@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18399E7FDC8
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41381E7FDCC
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzxN-0000k5-D4; Mon, 02 Feb 2026 14:51:33 -0500
+	id 1vmzuc-0001qE-9x; Mon, 02 Feb 2026 14:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxC-0000KY-6p; Mon, 02 Feb 2026 14:51:25 -0500
+ id 1vmzuR-0001Lz-4Q; Mon, 02 Feb 2026 14:48:32 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzx9-0003ww-Kh; Mon, 02 Feb 2026 14:51:21 -0500
+ id 1vmzuP-0003NN-DH; Mon, 02 Feb 2026 14:48:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1468E1850C4;
- Mon, 02 Feb 2026 22:46:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 59E371850AA;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AC50135B2A6;
- Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B8CB35B28C;
+ Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 50/69] hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement
- sd-spec-version 3 by default
-Date: Mon,  2 Feb 2026 22:46:13 +0300
-Message-ID: <20260202194638.939438-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jie Song <songjie_yewu@cmss.chinamobile.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 24/69] monitor/qmp: cleanup SocketChardev listener
+ sources early to avoid fd handling race
+Date: Mon,  2 Feb 2026 22:45:47 +0300
+Message-ID: <20260202194638.939438-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -62,41 +62,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Jie Song <songjie_yewu@cmss.chinamobile.com>
 
-Fixes TYPE_FSL_IMX6UL, TYPE_FSL_IMX7, and TYPE_FSL_IMX8MP to implement
-version 3 of the SD specification.
+When starting a dummy QEMU process with virsh version, monitor_init_qmp()
+enables IOThread monitoring of the QMP fd by default. However, a race
+condition exists during the initialization phase: the IOThread only removes
+the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
+which may be delayed under high system load.
 
-Note that TYPE_FSL_IMX6 already had "sd-spec-version" set accordingly and
-that TYPE_FSL_IMX25 correctly sets the same property to version 2 since the
-real hardware is an eSDHC which is the uSDHC's predecessor.
+This creates a window between monitor_qmp_setup_handlers_bh() and
+qio_net_listener_set_client_func_full() where both the main thread and
+IOThread are simultaneously monitoring the same fd and processing events.
+This race can cause either the main thread or the IOThread to hang and
+become unresponsive.
 
-Fixes: fd1e5c817964 ("sdhci: Add i.MX specific subtype of SDHCI")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260112145418.220506-2-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 214f79fdfb43e92f6c06efb76c3ad8e932b035f8)
+Fix this by proactively cleaning up the listener's IO sources in
+monitor_init_qmp() before the IOThread initializes QMP monitoring,
+ensuring exclusive fd ownership and eliminating the race condition.
+
+Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20251125140706.114197-1-mail@jiesong.me>
+(cherry picked from commit e714f1a3d4d1e66b9a3ff4be1ff999c32bbef29e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 69baf73ae9..bebbf6e5e0 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1888,9 +1888,11 @@ static const MemoryRegionOps usdhc_mmio_ops = {
- static void imx_usdhc_init(Object *obj)
+diff --git a/chardev/char-io.c b/chardev/char-io.c
+index 3be17b51ca..beac5cd245 100644
+--- a/chardev/char-io.c
++++ b/chardev/char-io.c
+@@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len)
  {
-     SDHCIState *s = SYSBUS_SDHCI(obj);
-+    DeviceState *dev = DEVICE(obj);
- 
-     s->io_ops = &usdhc_mmio_ops;
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    qdev_prop_set_uint8(dev, "sd-spec-version", 3);
+     return io_channel_send_full(ioc, buf, len, NULL, 0);
+ }
++
++void remove_listener_fd_in_watch(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++    if (cc->chr_listener_cleanup) {
++        cc->chr_listener_cleanup(chr);
++    }
++}
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 2f842f9f88..b81d6905fb 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1581,6 +1581,15 @@ char_socket_get_connected(Object *obj, Error **errp)
+     return s->state == TCP_CHARDEV_STATE_CONNECTED;
  }
  
- /* --- qdev Samsung s3c --- */
++static void tcp_chr_listener_cleanup(Chardev *chr)
++{
++    SocketChardev *s = SOCKET_CHARDEV(chr);
++    if (s->listener) {
++        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
++                                              NULL, chr->gcontext);
++    }
++}
++
+ static void char_socket_class_init(ObjectClass *oc, void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -1598,6 +1607,7 @@ static void char_socket_class_init(ObjectClass *oc, void *data)
+     cc->chr_add_client = tcp_chr_add_client;
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
++    cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
+ 
+     object_class_property_add(oc, "addr", "SocketAddress",
+                               char_socket_get_addr, NULL,
+diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
+index ac379ea70e..540131346d 100644
+--- a/include/chardev/char-io.h
++++ b/include/chardev/char-io.h
+@@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
+ int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
+                          int *fds, size_t nfds);
+ 
++void remove_listener_fd_in_watch(Chardev *chr);
++
+ #endif /* CHAR_IO_H */
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 429852f8d9..c57f4b7329 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -307,6 +307,8 @@ struct ChardevClass {
+ 
+     /* handle various events */
+     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
++
++    void (*chr_listener_cleanup)(Chardev *chr);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 2f46cf9e49..ef47ecef20 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -536,6 +536,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          * e.g. the chardev is in client mode, with wait=on.
+          */
+         remove_fd_in_watch(chr);
++        /*
++         * Clean up listener IO sources early to prevent racy fd
++         * handling between the main thread and the I/O thread.
++         */
++        remove_listener_fd_in_watch(chr);
+         /*
+          * We can't call qemu_chr_fe_set_handlers() directly here
+          * since chardev might be running in the monitor I/O
 -- 
 2.47.3
 
