@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11069E7FDEE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F03AEE7FDE4
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn1LP-0004Pc-4I; Mon, 02 Feb 2026 16:20:27 -0500
+	id 1vn1M6-0004X3-CD; Mon, 02 Feb 2026 16:21:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1LN-0004PU-N8
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:20:25 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1M4-0004Wd-EK
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:21:08 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1LL-0007Jf-6Z
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:20:24 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4327555464cso3480468f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:20:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn1M2-0007Lz-Iq
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:21:08 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4805ef35864so42032015e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:21:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770067221; x=1770672021; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PKWo4T6xQay6H9OZBCowoxb2Fy6j0kq83QtmpitMS4U=;
- b=QHe0FIVfBdmTQqYyo2HKtH6nbI5NTpEzT7Kfg6DKaEz+duB8Y6pF0O94vaymu0vSDe
- /G6j4XVfQFzdTfiXx8/jm5cJRMBPZllchLfjHiE4AUUnyrM/IVVNexMX7MJSZ/Cg4I2b
- Jr43OXcnfAy94P6fDygQHckY3pzrEKasqJosooFxaT5H1wiEmXiCn8D+zjPcJg2lZ9Y2
- HGm1TuCBI/Q+uhWi4mxhSRy8MwEb226u/HKJAq/qq89UM+RPx1YbgQfaIn5z1vyxW44n
- bOFH7P0G8gpE1ypKVCqtXDUSwJ/KwutViDDXf98/6jXYwGx2lb2PZfvnJF6YKLhpycYu
- 8tGQ==
+ d=linaro.org; s=google; t=1770067261; x=1770672061; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=legVcGNyjRa2lR5kbPRfIkXIuqxbddQOaBVHlXWvfIY=;
+ b=odf/hVMPd4Jrgl+txLoZL+uvpKOpmJXJtbZfOE5S9kBuNKSltxWPpR5syGHblTmumM
+ rH2QedjOyJsYbHPy5A2g/wfql7lBx2PSOD8oxIXqt6MKbCgYBl5B44FUpyk8EyTzpn8o
+ 44UnKGSCFBJI88W1jVvK8Ab6Hq9AL5Jvw/fH5qKqOriq/pLxrxcZAas0pYlw5OkKSmRm
+ QR1kKK6ns7qU6yu9pGHBBxy1Umhq51Jb2bRkHBpPJmvvVb6Wp6v8eMBTxnBsCf4enhgs
+ jM5I9yniwIWGAShv9p341GlMiiOemlrJybOakK7cPhRyDFGuFrHtoHydVE0Vpo0/ryH2
+ 9RaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770067221; x=1770672021;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PKWo4T6xQay6H9OZBCowoxb2Fy6j0kq83QtmpitMS4U=;
- b=j8QbGVdNADkDOCQ8QK/2xfZhznZo1Ijg+pOsDf2t8CRFMIn3vX2FNi0yYz9bcrnpKb
- 2Ju889XOhCOagUKBvpeBfgu/yLdb1HsBS9VPJ2KJ2guEnwG9nPEV5C7BRk3eP+O1Sdyb
- fZ15zrdUUzjuwdaw6ONa77SJw8ua8+SRqmawViPnLuAgw2GZEFC8HKhfimpNDarSEJIR
- ZSFrgN1XJRd76GCVM87C8Ers3gBIqgwVZPq7QtY2L4AlxRX0Y2TUHlnNZX5GYMCEXHsP
- owsSiANu+uyBr/5mhsoka2JJ4SqFI1YRqlmF/cipXYayJWorYfQrsUiD8AAduooyUow6
- rQhA==
-X-Gm-Message-State: AOJu0Ywymq0hP2ambUCGEg8OHYlzU8nfm4LCkccnMiaJmUNzZ7YOPbFV
- xs5/AWite0XlFn08XIJ5VZE5GZCb393I/X9ZTZ6Fv1/saDTpupYTyd0JzONvd+wz1QqigneCdk9
- zmn6PXMQ=
-X-Gm-Gg: AZuq6aLxbDx2/73sRwTZ9Dvpq2Uo7xeoD+MZ3qCsQt3xXR5iQmA8tffT33VEvuDFJpx
- 00AreASJ3zIUpVJzekftQnUFUTCuZ/2+VxDmyIk+W8lbrAn2f79FTJxpBccPcNzsqviVXxDSuD2
- 5+pvlKDwjVyzdUrbB50yoNEinoTryGydXLH95o/goN2PfeD9k9iBJisalHTA/FQ4OYGKTFS15aR
- uHjBF19RrNfuvROCUNnk1RdKWFN7u/hEwHCvjuJzk6jXHttb/iiV/8gjxtkYn43qMyUgw2pukhc
- PKufyc3VgS76CsuTgKNirZvhWsjV5xghpSme+gu1BjxH9uhk627piNci1gVWHJmDUiR2+XCIHbJ
- JsIHznTof4igd6CcdLbf09ngxQQHcMX5YIEuVARZ0SXF84ib1GzvNo4p76l8sVGg+4BhfYwrILN
- QbCrA61JrK5/CwZnpjIIUQkJlPI/CDd97uoFAb6l2EIop3D1Tht2JJXzmcDIH4
-X-Received: by 2002:a05:6000:2586:b0:435:e486:af82 with SMTP id
- ffacd0b85a97d-435f3aaf47cmr18134537f8f.45.1770067220970; 
- Mon, 02 Feb 2026 13:20:20 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770067261; x=1770672061;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=legVcGNyjRa2lR5kbPRfIkXIuqxbddQOaBVHlXWvfIY=;
+ b=koq6qVS4MUJsTcbGQj5P3i+AkQgIttP0ePEa6DlYmm2Fm8QGCu018lOPWYZqKddoax
+ sH/k9Q0XemcRpZNN6dyNVb29jrbywfoOVEMOnJXAq9xEzKGgN731U/D6VUttmwi39sPI
+ 1sWvLMlJmn59sA7xsw42k5bunpczR6dYWZTnTCyW20BEp7BhSMCh6QQa5WNZHL+00v+v
+ COpBpQKQ24cal3zRKq7v3nPof32TtYhYm/Qr24GNhWejTTXE0Yhwh9s+gaM2hIv5YwkI
+ GVA72s/LVqMxd3P/TPazY2Mkc3JDKp2Zix/WvDo84f0gmhSjIggPwmHR74M0yGhlN9dB
+ D8wA==
+X-Gm-Message-State: AOJu0YwSBRdowN38Yys6Mqs1fwu4ZKj4zD3hFdm5N/CiHZSRNAfGXrvW
+ lWucbFl904PNU/DIEiIQYVeOOxTsUV2zkPDddxmELcQESc5h5gROCCruMDh/OyY9iyIXFsc9ama
+ NiXdCbKU=
+X-Gm-Gg: AZuq6aJB5BY3AluEtyIVikfE7PorfXXERWvS4zRETHqs6TbLWHt/2nNAn5IcOe7fbw5
+ HeuB5s1qbhljG0Gs5pQrnXvWnATs3XUIWrxte7FWH16MKywrFQbaT/+yxuSTZoFAEZTSnBsoFp0
+ 2yRyDESDYFA2KqCR6xb6Pxk7zEabLPs4ZrS8ovnGF+dpJ49TQQHVrgucJm9e6ZvY1BoVq8iFg8u
+ mqZ3fv+hRXvCPhLyphPLL2e4aRp36ZSG1wWO5/hVbVE2eKY5yJSvCg4mILSfxl6tJ96ghaknvK7
+ YEINouJRqrHh77pjf60S78xUQsswJmpA+lcWpP0B1+kUgy3CBjP21IvCOoxdFE8HKH6BTOggYUp
+ HfeaNdVVwPnPIgVqeZsUZznn5abDQK3b7L79J/FZFLKmxFw4zrNMhS6DjBYYZXDjYUbXasY9NUD
+ ZBZXgq8ZXaueUt0P9HlUKn4hd3vochMCv6njldErJX0CQUNYosVE5u2RM4S51b
+X-Received: by 2002:a05:600c:3e1b:b0:477:afc5:fb02 with SMTP id
+ 5b1f17b1804b1-482db47cd93mr140204285e9.21.1770067260906; 
+ Mon, 02 Feb 2026 13:21:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10ee078sm46567200f8f.16.2026.02.02.13.20.19
+ 5b1f17b1804b1-4830511ccd0sm13520285e9.1.2026.02.02.13.21.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 13:20:20 -0800 (PST)
+ Mon, 02 Feb 2026 13:21:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/16] Misc HW & Memory API patches for 2026-02-02
-Date: Mon,  2 Feb 2026 22:20:03 +0100
-Message-ID: <20260202212019.94205-1-philmd@linaro.org>
+Subject: [PULL 06/16] memory: Remove memory_region_init_rom_device_nomigrate()
+Date: Mon,  2 Feb 2026 22:20:09 +0100
+Message-ID: <20260202212019.94205-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260202212019.94205-1-philmd@linaro.org>
+References: <20260202212019.94205-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,100 +98,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d:
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-  python: fix msys64 wheel directory specification (2026-02-02 16:46:40 +1000)
+This function is not used outside of memory_region_init_rom_device()
+which is its only caller. Inline it there and remove it.
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20260202
-
-for you to fetch changes up to d8316b64dfbb4fdb706f20c3b42fd9bcf70b0cdc:
-
-  monitor: Reduce target-specific methods (2026-02-02 22:14:51 +0100)
-
-Ignoring this checkpatch.pl error:
-
-  ERROR: unnecessary whitespace before a quoted newline
-  #85: FILE: tests/unit/test-cutils.c:3685:
-  +            "s is \n";
-
-----------------------------------------------------------------
-Misc HW & memory API patches
-
-- Add unit test for qemu_hexdump()
-- Remove legacy native endianness API uses on the Alpha target
-- Remove unused memory_region_init_rom_device_nomigrate()
-- Fix use-after-free in NvmeNamespace "bootindex" suffix
-- Correct documentation of SCSI Rotation Rate field
-- Make iotlb_to_section() work with non-CPU AddressSpaces
-- Reduce few monitor target-specific methods
-----------------------------------------------------------------
-
-Akihiko Odaki (1):
-  hw/nvme: Fix bootindex suffix use-after-free
-
-Alberto Garcia (1):
-  hw/ide, scsi-disk: Fix typo on the rotation_rate documentation
-
-BALATON Zoltan (2):
-  memory: Remove memory_region_init_rom_device_nomigrate()
-  memory: Add internal memory_region_set_ops helper function
-
-Jim Shu (3):
-  accel/tcg: Send the CPUTLBEntryFull struct into io_prepare()
-  accel/tcg: Fix iotlb_to_section() for different AddressSpace
-  system/physmem: Remove the assertion of page-aligned section number
-
-Philippe Mathieu-Daudé (8):
-  target/alpha: Use explicit little-endian LD/ST API
-  target/alpha: Inline translator_ldl()
-  configs/targets: Forbid Alpha to use legacy native endianness APIs
-  target/alpha: Replace legacy ld_phys() -> address_space_ld()
-  target/i386: Include missing 'svm.h' header in 'sev.h'
-  monitor: Reduce target-specific declarations
-  monitor: Add hmp_cmds_for_target() helper
-  monitor: Reduce target-specific methods
-
-Vladimir Sementsov-Ogievskiy (1):
-  tests/unit: add unit test for qemu_hexdump()
-
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <e6f973ff3c243fe1780bf01c3e67c9e019b08fa9.1770042013.git.balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  docs/devel/memory.rst                         |  1 -
- configs/targets/alpha-linux-user.mak          |  2 +
- configs/targets/alpha-softmmu.mak             |  2 +
- .../memory-region-housekeeping.cocci          |  8 ---
- hw/nvme/nvme.h                                |  1 +
- include/accel/tcg/iommu.h                     | 15 -----
- include/exec/cputlb.h                         |  4 +-
- include/hw/core/cpu.h                         | 17 ++---
- include/hw/ide/ide-dev.h                      |  2 +-
- include/hw/misc/mos6522.h                     |  2 -
- include/monitor/hmp-target.h                  | 14 ----
- include/monitor/hmp.h                         | 13 ++++
- include/system/memory.h                       | 27 --------
- monitor/monitor-internal.h                    |  9 ++-
- target/i386/sev.h                             |  2 +
- accel/tcg/cputlb.c                            | 32 +++++----
- hw/i386/sgx-stub.c                            |  1 +
- hw/i386/sgx.c                                 |  1 +
- hw/nvme/ns.c                                  |  7 +-
- hw/scsi/scsi-disk.c                           |  2 +-
- monitor/hmp-cmds.c                            |  1 +
- monitor/hmp-target.c                          | 66 ++-----------------
- monitor/hmp.c                                 | 63 +++++++++++++++++-
- system/memory.c                               | 56 +++++++---------
- system/physmem.c                              | 31 ---------
- target/alpha/helper.c                         | 28 ++++----
- target/alpha/translate.c                      |  2 +-
- target/i386/cpu-apic.c                        |  1 +
- target/i386/sev-system-stub.c                 |  1 +
- target/i386/sev.c                             |  1 +
- target/m68k/monitor.c                         |  1 +
- target/riscv/monitor.c                        |  1 +
- tests/unit/test-cutils.c                      | 66 +++++++++++++++++++
- util/meson.build                              |  2 +-
- 34 files changed, 239 insertions(+), 243 deletions(-)
+ .../memory-region-housekeeping.cocci          |  8 ----
+ include/system/memory.h                       | 27 ------------
+ system/memory.c                               | 41 ++++++-------------
+ 4 files changed, 13 insertions(+), 64 deletions(-)
 
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index f22146e56ce..8558f70a421 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -114,7 +114,6 @@ the backing memory yourself, you can call the functions:
+ 
+ - memory_region_init_ram_nomigrate()
+ - memory_region_init_rom_nomigrate()
+-- memory_region_init_rom_device_nomigrate()
+ 
+ which only initialize the MemoryRegion and leave handling
+ migration to the caller.
+diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
+index 29651ebde90..7f89e9712ec 100644
+--- a/scripts/coccinelle/memory-region-housekeeping.cocci
++++ b/scripts/coccinelle/memory-region-housekeeping.cocci
+@@ -97,14 +97,6 @@ expression NAME;
+ expression SIZE;
+ expression ERRP;
+ @@
+--memory_region_init_rom_device_nomigrate(MR, NULL, OPS, OPAQUE, NAME, SIZE, ERRP);
+-+memory_region_init_rom_device(MR, NULL, OPS, OPAQUE, NAME, SIZE, ERRP);
+- ...
+--vmstate_register_ram_global(MR);
+-
+-
+-// Device is owner
+-@@
+ typedef DeviceState;
+ identifier device_fn, dev, obj;
+ expression E1, E2, E3, E4, E5;
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 8f8725ea2d5..0562af31361 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1614,33 +1614,6 @@ bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
+                                       uint64_t size,
+                                       Error **errp);
+ 
+-/**
+- * memory_region_init_rom_device_nomigrate:  Initialize a ROM memory region.
+- *                                 Writes are handled via callbacks.
+- *
+- * Note that this function does not do anything to cause the data in the
+- * RAM side of the memory region to be migrated; that is the responsibility
+- * of the caller.
+- *
+- * @mr: the #MemoryRegion to be initialized.
+- * @owner: the object that tracks the region's reference count
+- * @ops: callbacks for write access handling (must not be NULL).
+- * @opaque: passed to the read and write callbacks of the @ops structure.
+- * @name: Region name, becomes part of RAMBlock name used in migration stream
+- *        must be unique within any device
+- * @size: size of the region.
+- * @errp: pointer to Error*, to store an error if it happens.
+- *
+- * Return: true on success, else false setting @errp with error.
+- */
+-bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
+-                                             Object *owner,
+-                                             const MemoryRegionOps *ops,
+-                                             void *opaque,
+-                                             const char *name,
+-                                             uint64_t size,
+-                                             Error **errp);
+-
+ /**
+  * memory_region_init_iommu: Initialize a memory region of a custom type
+  * that translates addresses
+diff --git a/system/memory.c b/system/memory.c
+index 4bf00d82bcf..a9032fb2cfe 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1748,32 +1748,6 @@ bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
+     return true;
+ }
+ 
+-bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
+-                                             Object *owner,
+-                                             const MemoryRegionOps *ops,
+-                                             void *opaque,
+-                                             const char *name,
+-                                             uint64_t size,
+-                                             Error **errp)
+-{
+-    Error *err = NULL;
+-    assert(ops);
+-    memory_region_init(mr, owner, name, size);
+-    mr->ops = ops;
+-    mr->opaque = opaque;
+-    mr->terminates = true;
+-    mr->rom_device = true;
+-    mr->destructor = memory_region_destructor_ram;
+-    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+-    if (err) {
+-        mr->size = int128_zero();
+-        object_unparent(OBJECT(mr));
+-        error_propagate(errp, err);
+-        return false;
+-    }
+-    return true;
+-}
+-
+ void memory_region_init_iommu(void *_iommu_mr,
+                               size_t instance_size,
+                               const char *mrtypename,
+@@ -3802,9 +3776,20 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+                                    Error **errp)
+ {
+     DeviceState *owner_dev;
++    Error *err = NULL;
+ 
+-    if (!memory_region_init_rom_device_nomigrate(mr, owner, ops, opaque,
+-                                                 name, size, errp)) {
++    assert(ops);
++    memory_region_init(mr, owner, name, size);
++    mr->ops = ops;
++    mr->opaque = opaque;
++    mr->terminates = true;
++    mr->rom_device = true;
++    mr->destructor = memory_region_destructor_ram;
++    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
++    if (err) {
++        mr->size = int128_zero();
++        object_unparent(OBJECT(mr));
++        error_propagate(errp, err);
+         return false;
+     }
+     /* This will assert if owner is neither NULL nor a DeviceState.
 -- 
 2.52.0
 
