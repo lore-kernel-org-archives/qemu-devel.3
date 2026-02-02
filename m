@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D8DD172CC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536BFD172CE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmmU1-0007HV-OD; Mon, 02 Feb 2026 00:28:21 -0500
+	id 1vmmUN-0007d5-31; Mon, 02 Feb 2026 00:28:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmmTz-0007Gr-Ma
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:28:19 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vmmUM-0007ct-9l
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:28:42 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmmTx-0001LV-Vb
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:28:19 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-81f4dfa82edso2179789b3a.0
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:28:17 -0800 (PST)
+ id 1vmmUK-0001Te-Og
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:28:42 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a8a7269547so38632475ad.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770010096; x=1770614896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770010119; x=1770614919; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dnllqSj09UDgDaJYj+cSDe6h8/TH92XBjQZvGCWBZz4=;
- b=u7256yU1173/5GeoYJCfEFKvgk4PNcPDJaeyALXvOzpousSPi0jk1GPqB0P3H0ZRfQ
- OPZqaVSQFYVpHlDQ55Day1qp5MS680vYC+v6nStV7390T1tekvXbe0hJIUq7dEhog93C
- mTioqNmOvQkn2eTzV9MErOc/Tl87T4hRj0LDeuJF4Khfu4K2Ua9BPn6Y+9Mj692f4avK
- hlXlMvGHuzlJvTNONHJEUlf8O4+ttFgEwddoNWb6Z5OQv65eKErVCaSSlmRWm0feeHhM
- hyRMrXp3H/ohRHwbHq/66YQRaqlRst4aQiC+JqURARJDUWxMQ7nPcAjfPjIO4zOXzZkA
- SEFQ==
+ bh=IwTJUG6uDs+BW9ibE0GqELeNkUa0TuzobgOA0VlLkfE=;
+ b=C4avzE2egncDx2sAURC8dKJ7Xp/UfMxpTnKUeF6gSmHWNaHW5VDO18pHuXvCm/240r
+ cVx01Rnpbn2xVxGgL5Ok0/Eoqpd6s8POeMtpaFXL4P8y7Mjli7WXfwPfjFZHpQawdp8p
+ IOSLN0aDNgUqc1IC62DxQUTMyTWcJq2TCPmbp+96HspLZ+NZRCWHUr8OKY/X7Eq+T5Wo
+ yRme0WjAL3ngaGgcMXIZQL2PwaFtx40bGW3ay1/kAevmwidDLTxxvhVbAbdZpydRPA1/
+ gh25xFq9my4dW8TpWUCse8tp7ZndjEAMRFRHSZjOyK2eN49xX1sZv/KozE+YyKSW9FyF
+ bUZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770010096; x=1770614896;
+ d=1e100.net; s=20230601; t=1770010119; x=1770614919;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dnllqSj09UDgDaJYj+cSDe6h8/TH92XBjQZvGCWBZz4=;
- b=YHIvYZFh6UatdIuIdfZD+qS5ja5WUNLQuSXI2WeK2erMWTqomVZMb+cSYm2M2BaDSJ
- x37Xng1VUs8cB0OvrY4Twe8OM8sgEocpeNGD/HrfOxVt55S62PjNVGpYJarWVELRRnCu
- i5Pb7kimzqqyg0rszhb3yMyNufpu+CZuEiMUWodPyRsW2A5RvV3z9KXqcZzWJIFEixiV
- 3esYQ0HJMtN6IBfMPfUH58t5C9nKGXGxpzR79HUQ+LO0T8pwgDhe+wAi+G7TmnBtcy2r
- 30ulDcwGZ2+yxjzUoz9XHO6ZtGGV9m0eETG/r3ySuMc5melkbOtZ15mQWUv3UI1yftk1
- jIFg==
-X-Gm-Message-State: AOJu0Yxf4YuTmIhjjlF5b5ZvZz/2OtYkRNPDj5B0jLnrqg8jjgN3HVrA
- uepMLtmQOvxjQVazeLHt6ywVYVQ2uW8H1bQLL+TaWh0kF774nvbbgsNg590Pe5m5M1e0rDewcKe
- pt2HT
-X-Gm-Gg: AZuq6aL8HVjNyR/YIH9Wfkld0/UElUWsBSXXVlhLhnNbLYyuJGn9IhEhw7u7bqPdcdP
- jucPKVqz9yZbGfu6flrhXuspkdwkFhA0i4KNvXx86+yOqa9wJ8yi7pl7+n7vXaHbbN051RTNMjw
- iY917Tj+skbpI+xy/P1hMiLDJHdOg4qFardK6/jOPP9eUa1C7HT/aN6HicbBf7o8QYyPyfY3K6p
- IYW4JKn5qzTuHtXniWWLTN+RZzWudu+Xi2MXDNMniqMxINvDwPNH0R26vMS8gGziKKlloDPYuYe
- JaiVEHEZSebI/74OtIi+m8Zl9VJ3WakwoimTCSMyg6dsYOdEseRA60qyIlXo3HPinTc5tvzQKNt
- 0D9s29744JNov7RmJn3vHiG+LXaGaei9lerIjiqLqUH3rC4qfX4HFGRCoaTpQJryNAKT7IrdeJm
- /8tjwRRqmY+SP/NM5m3GOKrPkxH75z+qy9zBuQYxcJa8Lz+r2AIVBCj/MC
-X-Received: by 2002:a05:6a00:3990:b0:801:eee2:45b6 with SMTP id
- d2e1a72fcca58-823aa62e75dmr10751870b3a.24.1770010096514; 
- Sun, 01 Feb 2026 21:28:16 -0800 (PST)
+ bh=IwTJUG6uDs+BW9ibE0GqELeNkUa0TuzobgOA0VlLkfE=;
+ b=WPIPanhjW/pnZQgf3OHrwl5vQ8jOlpU0aQFUuCzhmJUQikxBU7t+vewUH/dphCjYQ2
+ 8CcpvWWDlTUYmiSwOAxXTAriOxeOZm3X9liszVpTKgbylAvOWCuOth51L8AzeHAr5ToE
+ tZSAZ9ZPqqUR6MNoOZDX19+tzXphPRBNO1eF+koLF51o+MVoHP8saQSKnFzUIQ4sguT3
+ hwDUS+bl2nqus5xZqbAtdNJdqEuzE/g5JoVoefxl6B4xKesQhpItusdUfx0vzAjYDttU
+ ghpyd/ALuEb7Cetr9PTNmE3hxaUKbvuq0XDpaGTyj/AX0Q2tHCzni38NmnL22iR3v3t5
+ INJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqdiLqe3tuEY85lYdNfkI+0imItkUk8SBCPjL4rVGxyt8JXLMfaypluVifJm7oR5C/c2uTlkj5dWEm@nongnu.org
+X-Gm-Message-State: AOJu0YxSQWkZ5zePRw21jDyqoAV1pu8xMtSiiz3eO9LYm4izZFnwhhKL
+ DPJod+05740QyG7gdKPTz/XvR+jgYL55l+jy6Cg/OwNOYcEH2f/gCLwj26IH+QauL1jNGWiBQdo
+ XdLBB
+X-Gm-Gg: AZuq6aJpgIFIWv7oy3NxPpI+t0rpHLz45DEHUh84TYtZ40axXnECWjxUn2/G8/GE/jp
+ +KlWFxIi/LzaHMc2hV1n9W1Tj+UBWSSR3ykMp8QfhRdRJXpZ8NBJU0gC5LbDZkH5ZMeWVakvnDS
+ E80IRndh6kdhK11K1iSCWmtpA3eDbjudkHgVuwJmoP2xGU6cb4sGYtwkfV0RPdWCu7NdEhpEoum
+ 30zRVwEc+QMrOBdMOI6FxZzt6WJ8mGCBtl9UJQLM0o2XmxFurdaGzpv5LKa2iIdLvkBOqOCb6kN
+ pO7QV/ZuPOdDNTCPu0mWxVjsamce4ZAcXnxlnVESzGSUfbe7KAk+07wvYpDbjNu74Pts6fwvG2e
+ BNM+BxPn9GUh1EhfWUkMIV3RIi3Zq7+EOH2UvJYBKBO/2+9GxWGvKlDx8GNdBPuYdnMSCCaLlRd
+ KSnMZn2SMapZXdAMsext/hc8ry7VIRX88D4WJMqBFQMfbz+QgN13LCRUoE
+X-Received: by 2002:a17:903:2f8e:b0:2a0:abba:a2ee with SMTP id
+ d9443c01a7336-2a8d959c483mr94152515ad.5.1770010119050; 
+ Sun, 01 Feb 2026 21:28:39 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379bfd729sm13804878b3a.44.2026.02.01.21.28.15
+ d9443c01a7336-2a88b7f6c7csm139858545ad.98.2026.02.01.21.28.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 21:28:15 -0800 (PST)
-Message-ID: <fbcd2b53-d563-486b-87aa-368d7262d11b@linaro.org>
-Date: Sun, 1 Feb 2026 21:28:15 -0800
+ Sun, 01 Feb 2026 21:28:38 -0800 (PST)
+Message-ID: <9df0664b-152f-4702-82e9-abce37b8d3e6@linaro.org>
+Date: Sun, 1 Feb 2026 21:28:37 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/11] plugins: enable C++ plugins
+Subject: Re: [PATCH v4 0/2] linux-user: introduce syscall-filter plugin API
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Michael Roth <michael.roth@amd.com>,
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20251214144620.179282-1-functioner@sjtu.edu.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -121,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20251214144620.179282-1-functioner@sjtu.edu.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -148,83 +144,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/26 10:29 AM, Pierrick Bouvier wrote:
-> Writing plugins in C can be sometimes tedious, especially when using Glib to
-> keep track of execution state. We can directly use the same C API but write our
-> plugin in C++, benefiting from its great standard library offering strings,
-> smart pointers, data structures and synchronization mechanisms.
+On 12/14/25 6:46 AM, Ziyang Zhang wrote:
+> We choose a smaller magic syscall number to avoid the illegal instruction
+> exception [1] on qemu-arm.
 > 
-> It's common for downstream QEMU forks to provide C++ for plugins, like this:
-> - https://github.com/panda-re/panda/tree/dev/panda/plugins
-> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
+> PATCH v4:
+>    1. Modify some comments
 > 
-> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
-> their contribution back and help to develop plugins ecosystem upstream directly.
+> PATCH v3:
+>    1. Change to a smaller magic syscall number and add comments
+>    2. Set register flags out of the for-loop
 > 
-> This series first cleans up build system for plugins, factorizing details
-> between contrib/plugins and tests/tcg/plugins folders.
-> Then, we perform codebase cleanups to fix conflicts between existing headers
-> and C++ headers.
-> After that, we can update the C++ standard used by QEMU, to benefit fully
-> from latest updates of the language.
-> Finally, we define an empty C++ plugin, making sure we can keep track of
-> possible regression in qemu-plugin header.
+> PATCH v2:
+>    1. Rebased on newest version of master
 > 
-> Note: This series is *not* a trojan horse to bring C++ in QEMU
-> codebase, nor to define an alternative C++ API for plugins. It's just enabling
-> more users to get the most out of existing C plugin API.
+> PATCH v1:
+>    1. Format the code
 > 
-> CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2242427013
+> RFC v2:
+>    1. Simplify the syscall filter mechanism and remove fork-cpu
+>    2. Add QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER enum
 > 
-> v4
-> --
+> RFC v1:
+>    1. Add syscall filter registry
+>    2. Add fork-cpu interface to re-enter cpu_loop when handling syscalls
 > 
-> rebase on top of master (new conflict with ./scripts/clean-includes)
+> Ziyang Zhang (2):
+>    linux-user: add plugin API to filter syscalls
+>    tcg tests: add a test to verify the syscall filter plugin API
 > 
-> v3
-> --
-> 
-> - fix indentation in patch 2
-> 
-> v2
-> --
-> 
-> - drop coroutine.h rename patch as it's not needed
-> - drop ctype.h rename patch, and move qemu-plugin.h to include/plugins
-> - fix mem.c to not depend on other QEMU headers
-> 
-> Pierrick Bouvier (11):
->    plugins: move win32_linker.c file to plugins directory
->    plugins: factorize plugin dependencies and library details
->    plugins: use complete filename for defining plugins sources
->    plugins: define plugin API symbols as extern "C" when compiling in C++
->    tests/tcg/plugins/mem.c: remove dependency on qemu headers
->    plugins: move qemu-plugin.h to include/plugins/
->    meson: fix supported compiler arguments in other languages than C
->    meson: enable cpp (optionally) for plugins
->    qga/vss-win32: fix clang warning with C++20
->    meson: update C++ standard to C++23
->    contrib/plugins: add empty cpp plugin
-> 
->   docs/devel/tcg-plugins.rst                  |   4 +-
->   meson.build                                 |  26 +++--
->   include/{qemu => plugins}/qemu-plugin.h     |  11 +-
->   include/qemu/plugin.h                       |   2 +-
->   plugins/core.c                              |   2 +-
->   {contrib/plugins => plugins}/win32_linker.c |   0
->   tests/tcg/plugins/mem.c                     |  59 ++++------
->   contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
->   contrib/plugins/meson.build                 |  25 ++--
->   plugins/meson.build                         |  17 ++-
->   qga/vss-win32/requester.cpp                 |   6 +-
->   tests/tcg/plugins/meson.build               |  18 +--
->   12 files changed, 203 insertions(+), 86 deletions(-)
->   rename include/{qemu => plugins}/qemu-plugin.h (99%)
->   rename {contrib/plugins => plugins}/win32_linker.c (100%)
->   create mode 100644 contrib/plugins/cpp.cpp
+>   include/qemu/plugin-event.h                   |  1 +
+>   include/qemu/plugin.h                         | 33 ++++++++++++-----
+>   include/qemu/qemu-plugin.h                    | 32 ++++++++++++++++
+>   include/user/syscall-trace.h                  | 17 +++++++++
+>   linux-user/syscall.c                          |  7 +++-
+>   plugins/api.c                                 |  7 ++++
+>   plugins/core.c                                | 37 +++++++++++++++++++
+>   tests/tcg/multiarch/Makefile.target           |  4 +-
+>   .../multiarch/test-plugin-syscall-filter.c    | 35 ++++++++++++++++++
+>   tests/tcg/plugins/syscall.c                   | 19 ++++++++++
+>   10 files changed, 180 insertions(+), 12 deletions(-)
+>   create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
 > 
 
 This was merged into master (a8e6997ef).
+Thank you for your contribution!
 
 Regards,
 Pierrick
