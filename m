@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCAFE7FDC6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6E5E7FDC2
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzud-0001zR-Ex; Mon, 02 Feb 2026 14:48:43 -0500
+	id 1vmzt2-0000Ev-6B; Mon, 02 Feb 2026 14:47:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzuP-0001Je-Hw; Mon, 02 Feb 2026 14:48:32 -0500
+ id 1vmzst-0000CR-P4; Mon, 02 Feb 2026 14:46:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzuO-0003N9-2p; Mon, 02 Feb 2026 14:48:29 -0500
+ id 1vmzsq-0003CY-5H; Mon, 02 Feb 2026 14:46:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4926F1850A9;
- Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B650C185095;
+ Mon, 02 Feb 2026 22:46:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E434635B28B;
- Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6408B35B277;
+ Mon, 02 Feb 2026 22:46:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alano Song <AlanoSong@163.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 23/69] hw/i2c/imx: Fix trace func name error
-Date: Mon,  2 Feb 2026 22:45:46 +0300
-Message-ID: <20260202194638.939438-23-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 03/69] gitlab: move custom runners to Ubuntu 24.04
+Date: Mon,  2 Feb 2026 22:45:26 +0300
+Message-ID: <20260202194638.939438-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -61,31 +63,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alano Song <AlanoSong@163.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Signed-off-by: Alano Song <AlanoSong@163.com>
-Fixes: e589c0ea9c9 ("hw/i2c/imx_i2c: Convert DPRINTF() to trace events")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251218141144.51001-1-AlanoSong@163.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 3fbadbb3927a92db1932baee0c1188b05c0ac6b1)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20251001170947.2769296-7-alex.bennee@linaro.org>
+(cherry picked from commit eafc5f69e621725dcdcedcc1955d820af7abfc82)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
-index f33ca93c3e..9047845d96 100644
---- a/hw/i2c/imx_i2c.c
-+++ b/hw/i2c/imx_i2c.c
-@@ -151,8 +151,8 @@ static void imx_i2c_write(void *opaque, hwaddr offset,
- {
-     IMXI2CState *s = IMX_I2C(opaque);
+diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+index 1aa3c60efe..f6330c1614 100644
+--- a/.gitlab-ci.d/custom-runners.yml
++++ b/.gitlab-ci.d/custom-runners.yml
+@@ -29,6 +29,6 @@
+       junit: build/meson-logs/testlog.junit.xml
  
--    trace_imx_i2c_read(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
--                       offset, value);
-+    trace_imx_i2c_write(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
-+                        offset, value);
+ include:
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+similarity index 78%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+index 8727687e2b..75029c9187 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
  
-     value &= 0xff;
+-ubuntu-22.04-aarch32-all:
++ubuntu-24.04-aarch32-all:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch32
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+similarity index 89%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+index ca2f140471..d26c7827f4 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
  
+-ubuntu-22.04-aarch64-all-linux-static:
++ubuntu-24.04-aarch64-all-linux-static:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -23,12 +23,12 @@ ubuntu-22.04-aarch64-all-linux-static:
+  - make check-tcg
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-all:
++ubuntu-24.04-aarch64-all:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -45,12 +45,12 @@ ubuntu-22.04-aarch64-all:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-without-defaults:
++ubuntu-24.04-aarch64-without-defaults:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -67,12 +67,12 @@ ubuntu-22.04-aarch64-without-defaults:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-alldbg:
++ubuntu-24.04-aarch64-alldbg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -86,12 +86,12 @@ ubuntu-22.04-aarch64-alldbg:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-clang:
++ubuntu-24.04-aarch64-clang:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -108,11 +108,11 @@ ubuntu-22.04-aarch64-clang:
+  - make --output-sync -j`nproc --ignore=40`
+  - make --output-sync -j`nproc --ignore=40` check
+ 
+-ubuntu-22.04-aarch64-tci:
++ubuntu-24.04-aarch64-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -128,12 +128,12 @@ ubuntu-22.04-aarch64-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc --ignore=40`
+ 
+-ubuntu-22.04-aarch64-notcg:
++ubuntu-24.04-aarch64-notcg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - aarch64
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+similarity index 88%
+rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+index ca374acb8c..6f6bea41cf 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-22.04 jobs should run successfully in an environment
++# All ubuntu-24.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 22.04"
++# "Install basic packages to build QEMU on Ubuntu 24.04"
+ 
+-ubuntu-22.04-s390x-all-linux:
++ubuntu-24.04-s390x-all-linux:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -21,12 +21,12 @@ ubuntu-22.04-s390x-all-linux:
+  - make --output-sync check-tcg
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-all-system:
++ubuntu-24.04-s390x-all-system:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  timeout: 75m
+  rules:
+@@ -40,12 +40,12 @@ ubuntu-22.04-s390x-all-system:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-alldbg:
++ubuntu-24.04-s390x-alldbg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -63,12 +63,12 @@ ubuntu-22.04-s390x-alldbg:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-clang:
++ubuntu-24.04-s390x-clang:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -85,11 +85,11 @@ ubuntu-22.04-s390x-clang:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-tci:
++ubuntu-24.04-s390x-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -105,12 +105,12 @@ ubuntu-22.04-s390x-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+ 
+-ubuntu-22.04-s390x-notcg:
++ubuntu-24.04-s390x-notcg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_22.04
++ - ubuntu_24.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
 -- 
 2.47.3
 
