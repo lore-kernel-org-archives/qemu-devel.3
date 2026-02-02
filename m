@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8D6E7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC49E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11Y-0005r4-6x; Mon, 02 Feb 2026 15:59:56 -0500
+	id 1vn120-0007th-1T; Mon, 02 Feb 2026 16:00:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11V-0005YL-VO; Mon, 02 Feb 2026 15:59:53 -0500
+ id 1vn11w-0007id-Ot; Mon, 02 Feb 2026 16:00:20 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11T-0003ub-UD; Mon, 02 Feb 2026 15:59:53 -0500
+ id 1vn11u-0003wU-Oy; Mon, 02 Feb 2026 16:00:20 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D274418519B;
- Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1FE8118519F;
+ Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99CDB35B312;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDCF035B316;
  Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 15/74] i386: Fix const qualifier build errors with
- recent glibc
-Date: Mon,  2 Feb 2026 23:57:26 +0300
-Message-ID: <20260202205833.941615-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zesen Liu <ftyghome@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 19/74] qdev: fix error handling in set_uint64_checkmask
+Date: Mon,  2 Feb 2026 23:57:30 +0300
+Message-ID: <20260202205833.941615-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,41 +59,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Zesen Liu <ftyghome@gmail.com>
 
-A recent change in glibc 2.42.9000 [1] changes the return type of
-strstr() and other string functions to be 'const char *' when the
-input is a 'const char *'. This breaks the build in :
+When specifying lbr_fmt=VALUE in cpu options with an invalid VALUE, error_setg() gets triggered twice, causing an assertion failure in error_setv() which requires *errp to be NULL, preventing meaningful error messages from being displayed.
 
-  ../hw/i386/x86-common.c:827:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-  827 |     vmode = strstr(kernel_cmdline, "vga=");
-      |           ^
+Fix this by checking visit_type_uint64()'s return value and returning early on failure, consistent with other property setters like set_string().
 
-Fix this by changing the type of the variables that store the result
-of these functions to 'const char *'.
-
-[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251215101937.281722-2-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 2f5c96d53409160b11f031b22f2d947f75ab06ab)
+Fixes: 18c22d7112a7 (qdev-properties: Add a new macro with bitmask check for uint64_t property)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Zesen Liu <ftyghome@gmail.com>
+Message-ID: <20251217-qdev-fix-v1-1-bd33ea463220@gmail.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[Add Fixes: and Cc:]
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+(cherry picked from commit 00829ae3845fd11e56239390924e3e74c3a4c144)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 4b14be98c2..176673fffc 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -654,7 +654,7 @@ void x86_load_linux(X86MachineState *x86ms,
-     uint8_t header[8192], *setup, *kernel;
-     hwaddr real_addr, prot_addr, cmdline_addr, initrd_addr = 0;
-     FILE *f;
--    char *vmode;
-+    const char *vmode;
-     MachineState *machine = MACHINE(x86ms);
-     struct setup_data *setup_data;
-     const char *kernel_filename = machine->kernel_filename;
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index b7e8a89ba5..e685300a6c 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -494,7 +494,9 @@ static void set_uint64_checkmask(Object *obj, Visitor *v, const char *name,
+     const Property *prop = opaque;
+     uint64_t *ptr = object_field_prop_ptr(obj, prop);
+ 
+-    visit_type_uint64(v, name, ptr, errp);
++    if (!visit_type_uint64(v, name, ptr, errp)) {
++        return;
++    }
+     if (*ptr & ~prop->bitmask) {
+         error_setg(errp, "Property value for '%s' has bits outside mask '0x%" PRIx64 "'",
+                    name, prop->bitmask);
 -- 
 2.47.3
 
