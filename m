@@ -4,205 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E826E7DEE3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A864CE7DEE3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmujj-0006g2-6f; Mon, 02 Feb 2026 09:17:07 -0500
+	id 1vmusd-00022W-QN; Mon, 02 Feb 2026 09:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=6493f4f895=qi.chen@windriver.com>)
- id 1vmmGV-0004sl-Oq
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:14:23 -0500
-Received: from mx0b-0064b401.pphosted.com ([205.220.178.238])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vmusY-00021q-G3
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:26:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=6493f4f895=qi.chen@windriver.com>)
- id 1vmmGT-00078x-EB
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:14:23 -0500
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
- by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6123wPmK141598
- for <qemu-devel@nongnu.org>; Mon, 2 Feb 2026 05:14:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
- h=cc:content-type:date:from:message-id:mime-version:subject:to;
- s=PPS06212021; bh=Sq+prl8Q5vit3YDJ1oAkbqMJO/e2h5sBm4JVNg7Nsco=; b=
- RUd8ORRvS3vspTGARoA9PDJ4Bwjv0jlSqDimfVKbVDgJp+StxzEG/8UQz+nYVG/+
- EIbifvJKHH4rTvFKdlJCQpdlin21l1ibUFGgcdvFwMnYGfJWQO5UwIYwi1Gw9X5U
- +ygxhRUzUgnaEcT340I+TGkQAkvGHi9pYydHEY2b2GvzCNrsVPMANgzSRElXc9WO
- R24yFrd2gPOJUtC3qJyTOxOnt2OwfFzLPbAU+9INbA6kFcDLDpFhjubidXsdQYGu
- /jimyMiKEUCLCl5xylOI1G0HwHH5OQFgjijdrg0cPq5n+Yknrdi5iN6TdRrhrwHZ
- Mt6idPnuQ92WjswOPcjFDw==
-Received: from dm5pr21cu001.outbound.protection.outlook.com
- (mail-centralusazon11011038.outbound.protection.outlook.com [52.101.62.38])
- by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4c18q3smcg-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:14:17 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hhsJUTRpUDFKreDdzRFZWo85F9dTAsIBsQw5TnyRUBwMqjZAmJR0xBZk0L68eHw7zVAmw+aIkQayRX/F0xu3PKpR+l5J4C0ymsMzP3V4yDmONk+s+1B1pWXXFDQ8oZk4RviisQr0/AGiB0jImG/lSmLdcWvoGl1siYLNos9TgXWfYxSa2J5naX+dFJAQ9jJAbD3M6EbnJa4a3cpDmyCWooHqn8quR0i3xWZCZhd65oKaSJDk+A8BzPEWZqzZnbyvFbZ0cNkdC0gb+iEXIMMjqlOe1rbVd7fXXL0Lh6NFsILckS7JWHzgOGmlCvoB7s2XyNM+316zHjZtVstlmloyew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Sq+prl8Q5vit3YDJ1oAkbqMJO/e2h5sBm4JVNg7Nsco=;
- b=yxLBKj0/4EJ5HIGOvxEOEIAgkr/NwnN/fV6aodhffECQxb9A1XibgAaQyxeerKMgmEoXfT6IK9y9zybYthcd3rQkxPSZb/aS+UDBXTbZVeulgfR8dutrOXnFXSB83ZpYgO/RQBFaWe82GgK6KjSK1bPC4L9WdJcQPgjtQhhSXaM14JPt59eY/PS9Uggvl15GDIrmrCx9iasmiMDRDQGc7ozM9/3PHGTmpZMWJFJT8ZngwZ0vurXdy3ci4SSDNjWd0go6JSh5VGIl60fp/XnhCVKuqvES198qKQhkzpp3lcM6NJmqWoBRrTFybvdO+/ycNbF2xex4p5RisizumKCF0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=windriver.com; dmarc=pass action=none
- header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
-Received: from CO6PR11MB5602.namprd11.prod.outlook.com (2603:10b6:303:13a::5)
- by DS0PR11MB7878.namprd11.prod.outlook.com (2603:10b6:8:f6::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Mon, 2 Feb
- 2026 05:14:15 +0000
-Received: from CO6PR11MB5602.namprd11.prod.outlook.com
- ([fe80::5ad6:8f90:b01d:2c62]) by CO6PR11MB5602.namprd11.prod.outlook.com
- ([fe80::5ad6:8f90:b01d:2c62%4]) with mapi id 15.20.9564.016; Mon, 2 Feb 2026
- 05:14:14 +0000
-Content-Type: multipart/alternative;
- boundary="------------cZKTSOdP1iBl6Nb0xD0qpgwk"
-Message-ID: <7b2aa99d-8d3b-4d75-9328-e2d6a7ac0cb4@windriver.com>
-Date: Mon, 2 Feb 2026 13:14:10 +0800
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: qemu-devel@nongnu.org, ChenQi <Qi.Chen@windriver.com>
-Cc: ChenQi <Qi.Chen@windriver.com>
-From: ChenQi <Qi.Chen@windriver.com>
-Subject: qemu 10.2.0 user mode has regression on ppc64le
-X-ClientProxiedBy: TYCP286CA0134.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:2b6::16) To CO6PR11MB5602.namprd11.prod.outlook.com
- (2603:10b6:303:13a::5)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vmusW-0004lz-Sa
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:26:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770042371;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U/5w9drX3tzG/anYr9Kv0P5u6Nf3b2AYC44Ox/DM1DQ=;
+ b=KQ+8mIAlJ5Uez9cC3llzM8MA61fTOF01w3oaqQmO3nL30GzWfKMGZB/NlE8LeERBJNCFw+
+ yBnuMg4+PDSzz9jHgjCW1A7BmqzbgAZDr7rFeYlhwwdUqHdEFXNOczxHh7QbXX1hOS1Gkt
+ tEBaAqdJ0G5dZ6HCaZypycGUs2uIlLU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-53-20_yTBFhNA2gFNAY2-0OwQ-1; Mon, 02 Feb 2026 09:26:09 -0500
+X-MC-Unique: 20_yTBFhNA2gFNAY2-0OwQ-1
+X-Mimecast-MFC-AGG-ID: 20_yTBFhNA2gFNAY2-0OwQ_1770042369
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8c71304beb4so1046699385a.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 06:26:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770042369; x=1770647169; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/5w9drX3tzG/anYr9Kv0P5u6Nf3b2AYC44Ox/DM1DQ=;
+ b=kw96pah6b5ADufp7Hv9iH98+STD3WD9ZRobWkPSmol2ggpN6j3tsJlJ3TDLOpHSub8
+ MS18mvBhsavUJLMhMBG4+M/ynCWzyTqy0eRDeeKdqR/vYJN5h9gFD2WdwEcMvV6AXYU9
+ 7B3GCkGge3Oy5JSJsj0p1LKYXf8gAJ/qPv8Bsu3nMGySy4NnP6I1ltSTp7+DsFqAvgkv
+ LrCe7Rp20tLU964h8Xf6B6ddUY34u9wN1pTV+flYYoZZqGVqD/sbm/gtFE+w8fpkLXhh
+ ZGcj5C54SqLCczurPPsk+xXC4BwkpdkO7tVkYZpKY0zSydXls1zug+J8jExmr7fjFTKm
+ RR1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770042369; x=1770647169;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U/5w9drX3tzG/anYr9Kv0P5u6Nf3b2AYC44Ox/DM1DQ=;
+ b=X2RCGGZxpIH0ddSvaevKbXfJTz4B6P63zesmx5tn2Yo3EtvpPKk+ytL5QAAU5oz12a
+ RPcmxFjn8E6ppWCAOfzINyavPsKmr5muuGsmS1YmI9i+LDsr8uPl2eC0/0QaCpm5fZ9v
+ B0chbCTHiT6DdQjhD5si8oR6AVQcqrsD9lQcB7suFM4Nie4ZWcCS4xUr7HiZ5H9aEMfH
+ kiSoKQsMnILtjtGkp9ox+LSpu2w3i4Rf+iraI5Kh4qQ19rEEXAVC3MoLXl0fZYOhlJl2
+ FrUO1Po2v0pFOQ5QwLYpvvyrck/v/C7RcaPpiT21/edLivsbvpVv60qOUm6fcc6h8R7X
+ tLbw==
+X-Gm-Message-State: AOJu0YyYbvtW2gIwvRnTDZQE+af19ME2p1/YYUkTZXP/lk48x28jpkhl
+ 7wY78MkdDwEN+rDoHakqKqLwD1dspags5zU4SzlhEHOVz+sS+m0Lfg2D+SdfKOp2sDRaH+zRMLm
+ tNczMFidHXDbLDkcoXAoUm+rGd3x5drV+0lZ7zjJF+muzysHBGVuWyctC
+X-Gm-Gg: AZuq6aKJU8aVjIjWnhFP6XRD/CDs5xY2ulABKigrPIgKs+sts8zUCGlussK48OVzhwO
+ UEpRkuVlcduUOOoa+Fq5I0LAGK8dcQaqvW/EYCas3/DRbYNlMHI88ooX55jx4eiDp36eoKAFX9D
+ AmldqhbIcmP417unx6WDcbW5yZu6/Ey6lxQZDeBo8t8L7h8Z44spdpk6aAzv8nzL+tkdhYRVuog
+ O0Bd/m0h3mJIfBo1/JOPWnhVjnjoHpwnvVDpMFKlUQEMiQx4VgcSdnrB0XL5dD6/QAxHQvmQx0q
+ +C+geya2Vd/4tpEIwOa+yqOcvQCDsRxOOUkaXM37ZSFjuG/NTi+CQTO7yi9cQxFeYSF0l88qM4Y
+ DTTU=
+X-Received: by 2002:a05:620a:4149:b0:8c6:b45b:9e2e with SMTP id
+ af79cd13be357-8c9eb28e99cmr1460783685a.38.1770042369223; 
+ Mon, 02 Feb 2026 06:26:09 -0800 (PST)
+X-Received: by 2002:a05:620a:4149:b0:8c6:b45b:9e2e with SMTP id
+ af79cd13be357-8c9eb28e99cmr1460779585a.38.1770042368623; 
+ Mon, 02 Feb 2026 06:26:08 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c711b95e43sm1244098485a.17.2026.02.02.06.26.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Feb 2026 06:26:08 -0800 (PST)
+Date: Mon, 2 Feb 2026 09:26:06 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 06/10] migration-test: Add COLO migration unit test
+Message-ID: <aYCz_se6Ji2g5d_L@x1.local>
+References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
+ <20260125-colo_unit_test_multifd-v3-6-ae926ccd8eae@web.de>
+ <aXkk22x1M0k4qZoo@x1.local> <20260130112402.2c008707@penguin>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR11MB5602:EE_|DS0PR11MB7878:EE_
-X-MS-Office365-Filtering-Correlation-Id: 97b90529-36d3-4df3-611a-08de6219e868
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|8096899003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y2FWTTc3eUZSMmtZOGNCYUpqbGxiRmVqN3oySjhqMXpTVmUxY0RXajR4aE9t?=
- =?utf-8?B?K2dsMnpYUkJHOGU0SGhtUHF0Q2hIRTJFaW53UXhkQmVvaHR1YVIrdFhnZXhv?=
- =?utf-8?B?TmtxY3FqbGswZkdzTWxFNkp4bTR5NG9hTmczNnVJekdCQXgzUkwrMmZ1T0Zq?=
- =?utf-8?B?ckZEVWFsdE4zUWw0VFplZWo0Y2kvMmFadG5vY0E4eGdKT1RCcmNZUHBXRDc4?=
- =?utf-8?B?WU1pdUxWQWorY293VURNeGpDTDZQRUxLL0hvRnJ6dWsvRkZqSnNuU0ZMb0tj?=
- =?utf-8?B?OWNpVEQyZkZGMVNVVTNDUTBtandIRkJ1d0MrN2MrRWxQWVZOZUN3dU1kUm01?=
- =?utf-8?B?MUd2OW1JUWlKTk4reTg2UThwRWY3SkpqdUtIOXVwUXZUV3BSUk9kNHIrK0dy?=
- =?utf-8?B?blFHQnN6T1Q4ZENMdXd2cnBiQ3l2Qi9lZjcwKzFtRlhpNmlVbTJxcE02ckRU?=
- =?utf-8?B?K3c2U3JSMFVNNjl3MWJBSk94ejFGN0RpbXVFSmsrVFV0VHVJZFlHMXdpTW1O?=
- =?utf-8?B?UGIzMzNhWjZxSUNXTnZCV2l2dll6dU4vQnpDbmZRemd0U3I5WUJRYzJVdFhs?=
- =?utf-8?B?L0tITGFtMGp0WTYvUytRUUpIalBVUW1EQVFIcDBLSGlOVEF0cTN2MzcwdC9k?=
- =?utf-8?B?SGEyS3lBSWxiNzNCRWRDQTJITTZwYnJPUjJjUTBYT2l1eW1uTFQyZ21sb1hv?=
- =?utf-8?B?K3Q3bVNKTmt3SzRVcXVmRnJZTi91MW5vdnlDRGxTMjQwMUt5eWJ2MTFwajFG?=
- =?utf-8?B?aDZmRmExNnRJbWh3aER6eHFwemZxajJNeHBTU1daT1JSYmdQZUNTNkw0cmFM?=
- =?utf-8?B?OWx1NTFwNDVnbDBmMUIvR0EvSThnOHpTNWxQRldka3d0WkR0RldlaVkzSktO?=
- =?utf-8?B?U0ZFWkhhYStxSGtQcjZRckFXRlUzR3pvdHNpd3N0d2t3VVJBN1BFWndwL2Zp?=
- =?utf-8?B?MnUvaGRKNDUzbzBQdXFvVWoxbk0xbWZRby9yU0VrZCs3KzV2b1VkODdkVUMv?=
- =?utf-8?B?M0hmc21uRC9KVnFLaU81YmNWSUxvUFhuWlJaY1NLSHhPNk9jSDJheWRnL2Vl?=
- =?utf-8?B?R1hpbzdOY2lSVVRkT0hyMHhNOFNCcTFRb2pSQ3NZMkZWZUljUENJUEVicm5P?=
- =?utf-8?B?NlUrZjZLZU96ZGNSWHg5MzMyWjVHenlveExyOFNMVGI0OEgzUUVTbithVm5L?=
- =?utf-8?B?S2ZTTlE2SUV3WndkM0lsOGkzNWtQdlRKbEwwZ1htMTlEdWREcDBoZUlCZi94?=
- =?utf-8?B?VDZCZEJhRGd1cVhWZHFob1RpLzlQS01UOHNPVFdISGxKS3VDeFJXNjF6b1dD?=
- =?utf-8?B?N3ZlNXJ4YTRBeTRENTArMjlZcTNaaW1rcFpCTUlHUFlhR1BkQ0ZicVNXSDlY?=
- =?utf-8?B?N0REbWo1NmEzQWxrZjc0ZTFWZW5WdytDMmRLaFBIV0t4NUNiQnZsTU12cGVn?=
- =?utf-8?B?OW9wZGFTR2RKb0htaUk0K216TzN1Qk9RakJqbWo4SENoTXhjZkgwdVo3ajBT?=
- =?utf-8?B?WENzdWRWeUZjcnlHcXBCblNzZGRneVVhT2Z4R09qVjA1cGZUMXc4ZUNxSHUr?=
- =?utf-8?B?QkRIWjBucEg5RVBsY2kwNlZ1bVFKc1FSM05NN2pNRjBENXVxQzU5bjZkMUd6?=
- =?utf-8?B?RXBLMzRFTVZwRXI4Ym1Ma1NzRzFueDNlWUEzQ24rNERVMmFMcGVUV2ZiM0lE?=
- =?utf-8?B?T0N3R3cwOEt6WGx6VW5oQ1MzTnZjZVNpeUR0MUpaRUk2dEl4QjlwbEZtbnNB?=
- =?utf-8?B?Zk5Jc1llUW51SEdUVi9NdFBrbWtLMG9LSXZoNXZDVkIrZnQ4THAwT2lxWFRX?=
- =?utf-8?B?VkZGQnQ3NnBZdExVTklyRnI0Unl6ZEo5RDNHbElBSmJOaU5OWVB0QjlwWXBH?=
- =?utf-8?B?MkwzUHZCQksrZ3RXL0E4V2VBSkVmZW5uV003ekRmWFVPL1Ayb3paZWFVRTdG?=
- =?utf-8?B?eTUrdWNzZjIvSlJwTTY3dE9wUStSbFZFT1RsbDNubUxHbWVTNFNmZ2R2WTJB?=
- =?utf-8?B?REpYZzMzOE51TEFwdjZGaGc1bHRtRk5IdjBTUVFEaTN1WEQ3dWtEZlR5Q3ho?=
- =?utf-8?B?c3dFaW0xNVFTYmdSSHZRazNyT3IyVkdNRmJBMUZyVkxrMUtDV3JIRml1Wi9h?=
- =?utf-8?Q?FOp4=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO6PR11MB5602.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(8096899003); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MmNkZzVwYkQwSEdDSjc5UHdpYmVCMllpQVY1NHF1cnlaMllkd09oNmg0SlUx?=
- =?utf-8?B?VTVaTW5mYlh4bGNmVGszeWd0ck1jZlpxY3FPNldCWUxhN3BpSUgveEo2bjN5?=
- =?utf-8?B?NnFxYjhZUmptYVdtTlRnWkozWk15VzhOVzlQL1ZOL1VKTk93MzBVL3M0MHJW?=
- =?utf-8?B?WmZvWGhUMkRGSlQySERYakhCWGZQdkE4RDk4TU5DemlKS3hLejhCQ2g4RGpL?=
- =?utf-8?B?Tjlsd29Mb3RWNkMxUGxVdldBV0c4SmR4OGJ4UlJDUjlJUlVDZjJaMXhrTUhB?=
- =?utf-8?B?Q0ZNYW5yLzhaWWw3OURVLzVlV3B0YnJlYXBlOGxwR3dyOEFqeWZUUjl2VTdT?=
- =?utf-8?B?a2h0UHVQS2NwZlN1UnNubThEcXF4MVU2MEVjcHRURXZPV3VOdzlJWGI5RTlH?=
- =?utf-8?B?Ym5vNkJMQU5IbytCWmo2dlN3MytPVEZUZVNqZjdYOVJqQ251OXNvNU9SZ0p0?=
- =?utf-8?B?bVZLMXh1Vk9jZTYvUk5MS2JlQWxuRTc5VzZEL3FzUkNCcXI2S1hmRHdWWW85?=
- =?utf-8?B?c3FBcmRIVE5rOW8yZjgzejluT3hVWW1USzRUT1BrT1NPQ0xoYmRoVmc2VEQx?=
- =?utf-8?B?TmVzcU10MklPQkh6eFNDNW5lWEExUHJmeEdreVhxbURMdFFHZzI2WGg3dFZR?=
- =?utf-8?B?aVRHSk54dy8yRW9BdDNFOUFiV1BRSVIrV3k1UUZxckszY2k2MGdkZlM2VU9B?=
- =?utf-8?B?b1l3Yk9HYWlLWlF1TE5NUzdwL0gwdGRqcThDM2ZKN1U5TXdKeVp2K0s1ODU1?=
- =?utf-8?B?eHRIOVQwblNDd3d0aDNFSnl4c2ZCdEx0VDI1c3R3NkUyRzY4NjVzeTFvRnZN?=
- =?utf-8?B?ZUlvVHdFVzRLV0hGbXpVaE5jTFltQXpEWlYyTGs0VlJpa0NuNXZJZGlTT21Z?=
- =?utf-8?B?WkowVWdwV3p3TWxSTGxqU3d4RituRnhBTDkvcHp4OXdCT0M1enlrZEVGWWRZ?=
- =?utf-8?B?SWZ3QTczMUJJRGlpb1d2NEtibXJpdFpyWm16NGdrTy9vNUhIYWVPYWJGamVB?=
- =?utf-8?B?aXNTdDhoSVhNemhKVzB2eFgwcUxFbHZrYmw4NVpFWXo5b0p2clcvREFMczM2?=
- =?utf-8?B?RklHdkc2eURYWmE0LzVRMmxWdmo3aXBJNUt0eS9WeWRLZ0YzbEtiU1BlcFBh?=
- =?utf-8?B?VUNtRlFoUkh4TmtHbUZUakg1NUR4aFFiUXpxTlZMMms4aEhydFIya2VFNGpy?=
- =?utf-8?B?TlVyTE9adXArUFZtb0R6UDRWNWt3MzZOVHdXNmJsR2VaWFIzSW5WdmV2R0Fy?=
- =?utf-8?B?dE9WMHUxYXhZQzVsemJCaHJheGpIYjNtUFFKQWYyUTMvaWpEOW8xTlo0SWJr?=
- =?utf-8?B?OVhHRGZLSTlVNWJ3eHlrWS9mR3VLRnN4czVsMndkT2Z5VXdrb3NCek5xWWl2?=
- =?utf-8?B?VFNjaUs0dnVRdzlZS1hTNnF3UHU2andKTDUzWnJ3WmdtbG9BVVlScVNhVThH?=
- =?utf-8?B?QS9kaTMxQ0c5RktJTTVkaFhqNkhGYVFNSWErc3pLamt1enBYRDhjZlI4b25N?=
- =?utf-8?B?T3J2QnREVzB4bDlPNHBoM3JOckVBcUFqOVU3ZllUamo2Z2dKQmpZY1dMS3lD?=
- =?utf-8?B?S1ZrV0pobHdDb0xZRCs4cGkwdTZISVZNbmJMbEdvS0tFUXlELzJzV0RWYUtN?=
- =?utf-8?B?OGlKb0p6dHpudDhHRTZlQnhlNitzOEIzanFzc1R2cFRxUGNid2srZVpjakdH?=
- =?utf-8?B?SU0xZStqUEdFL0NRWnloeExBdFNtNVdhWnB3MmgycDVkMEo1YVRKTTBQWWpD?=
- =?utf-8?B?ZFk2K0dEZkJINUN4WWdYZnFmN3BWZ21mNWpBTlNjT3FIOEowdVZGOFV5bXFQ?=
- =?utf-8?B?YzVDS01CaTVsbys0TUZWRXJYVVVLSnJyaE5DbFBJV2tGdCtSOFJhMjFGTUhs?=
- =?utf-8?B?QXllVVFoTjJCRnJBeDViUmpDcnFOOEdQYm9McXZOajMwQWc3NWMyMkszbDRS?=
- =?utf-8?B?QzFQRzliei9vZ3pvWXo1WGxPKzY4N0psMEY2M3V5ZnVDQjFxZytKQ00zcmNa?=
- =?utf-8?B?WTc4b2FJK3l2V3UrUll1YnpIdUY0R2tZV2JRa25oT1pJc25Vd1hYVTQxYkkx?=
- =?utf-8?B?QmIwM1V0b3VQYjZ4TDNGRGkrbzNUb3F1aU10cHhBSitKclg3MllWRFdIWDhp?=
- =?utf-8?B?bzVrSVVBbWRvQ0d3dDUvN1N2VjZ6STdtOUd5VUJ6elpreHU1NFI5S0NiOUZy?=
- =?utf-8?B?QXlJeEllRmhOSkxLaDhubE1GUFArZnNxTnpWT2FDbEwvUVFSOUlIM1phZjNw?=
- =?utf-8?B?dDRRMjZCNVlYNVMwNjM4YTRSeE5wOG4zdHdRY20xYUpBT2xHZFB0aVNxa2cz?=
- =?utf-8?B?NFBvQjJ3TU10Sm5ROXNBMWo2clBEbUt6eEdvc2tMQWFnM1NPdlg3QT09?=
-X-OriginatorOrg: windriver.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97b90529-36d3-4df3-611a-08de6219e868
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR11MB5602.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 05:14:14.7404 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eBzn9TMGW/qlzzOx2HoHwOW3mAx1uneT5sHPGwoDRbTWNCC8MY09zrSH6n9rXYOa5yQFxrJHan0rA0PlOdgBWQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7878
-X-Proofpoint-GUID: oJSa4d8Nn9A2SVKbScrKLzARERzH0TYX
-X-Authority-Analysis: v=2.4 cv=Au7jHe9P c=1 sm=1 tr=0 ts=698032a9 cx=c_pps
- a=5I5pDAtSp800fId2YpAiPg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=2XKOcvmy7GU5hsJYr2QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=VHa3aG9DZJzOR-ytK0UA:9 a=njagI3Ucau7jja9t:21 a=_W_S_7VecoQA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDA0MyBTYWx0ZWRfX6sxuadZzu/V5
- Vg1HswDpqryHjwOLanF6cMPAWeu3r38ze5VmkO390Id2ZeUV5mYnfjog3lZ58sVPdrzXqtmARZo
- 95ta97G49UAHIJn4TDYWbVVSCCq+VXRsyKZrLBG1Yvl4GaupRSPFyxFRzrBfJEhaPlctN8hZez5
- mtYk0WkakGikczY5RPa34CikkgYSIsj3YUdzzbgHtQFCjHk7d8SXsET1brmd4ezdd7qky+zgj56
- RJTnp3n8iruoQyTRJepRGtgr4KSXHtclf7dwy2KomwXtu7/NUdTRNoJP5PWhMS0kIrnOjstY6KI
- JlbpkpUJ1qa2Sd+zKlm74tYeYgGyBPQtGXzM7Cir8KOIAqtmNJAaMMh/InaA9QGSMU1tU72l7Wc
- HPKjEOsKJ+UYL13L+QkEwfKa4HP4FGmxdK7ynhiYCVN/OhdvHH7VU3l0yJQAYh0AjeRvrQFbvIQ
- kYYgGiVQqNeWW7tUmWQ==
-X-Proofpoint-ORIG-GUID: oJSa4d8Nn9A2SVKbScrKLzARERzH0TYX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-02_01,2026-01-30_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1011 bulkscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602020043
-Received-SPF: pass client-ip=205.220.178.238;
- envelope-from=prvs=6493f4f895=qi.chen@windriver.com;
- helo=mx0b-0064b401.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260130112402.2c008707@penguin>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 02 Feb 2026 09:17:05 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -217,138 +121,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------cZKTSOdP1iBl6Nb0xD0qpgwk
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Fri, Jan 30, 2026 at 11:24:02AM +0100, Lukas Straub wrote:
+> On Tue, 27 Jan 2026 15:49:31 -0500
+> Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Sun, Jan 25, 2026 at 09:40:11PM +0100, Lukas Straub wrote:
+> > > +void migration_test_add_colo(MigrationTestEnv *env)
+> > > +{
+> > > +    if (!env->has_kvm) {
+> > > +        g_test_skip("COLO requires KVM accelerator");
+> > > +        return;
+> > > +    }  
+> > 
+> > I'm OK if you want to explicitly bypass others, but could you explanation
+> > why?
+> > 
+> > Thanks,
+> > 
+> 
+> It used to hang with TCG. Now it crashes, since
+> migration_bitmap_sync_precopy assumes bql is held. Something for later.
 
-Hi qemu developers,
+If we want to keep COLO around and be serious, let's try to make COLO the
+same standard we target for migration in general whenever possible.  We
+shouldn't randomly workaround bugs.  We should fix it.
 
-I'm working on Yocto project. With recent qemu upgrade from 10.1.3 to 
-10.2.0, I found that qemu-ppc64le has a serious regression. It cannot 
-run binaries built out with "-mcpu=power9".
+It looks to me there's some locking issue instead.
 
-The error message is like below:
-"""
-../sources/which-2.23/meson.build:6:0: ERROR: Executables created by c 
-compiler powerpc64le-poky-linux-gcc -mlittle-endian -mhard-float 
--maltivec -m64 -mcpu=power9 -fstack-protector-strong -O2 
--D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security 
---sysroot=xxx
-...........
-Sanity check: 
-`/PATH/TO/build/tmp/work/ppc64p9le-poky-linux/which/2.23/meson-qemuwrapper 
-/PATH/TO/build/tmp/work/ppc64p9le-poky-linux/which/2.23/build/meson-private/sanitycheckc_cross.exe` 
--> 127
-stderr:
-*Fatal glibc error: CPU lacks ISA 3.00 support (POWER9 or later required)*
-"""
-The meson-qemuwrapper is a wrapper around qemu-ppc64le.
+Iterator's complete() requires BQL.  Would a patch like below makes sense
+to you?
 
-I can confirm that qemu 10.1.3 has no such problem.
+diff --git a/migration/colo.c b/migration/colo.c
+index db783f6fa7..b3ea137120 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -458,8 +458,8 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+     /* Note: device state is saved into buffer */
+     ret = qemu_save_device_state(fb);
+ 
+-    bql_unlock();
+     if (ret < 0) {
++        bql_unlock();
+         goto out;
+     }
+ 
+@@ -473,6 +473,9 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+      */
+     qemu_savevm_live_state(s->to_dst_file);
+ 
++    /* Save live state requires BQL */
++    bql_unlock();
++
+     qemu_fflush(fb);
+ 
+     /*
 
-I used 'git bisect' to find the first bad commit. It's 
-fcac98d0ba8b5f4c311c1059d897d74d1276af9d (linux-user: Remove ELF_HWCAP2).
+> 
+> #6  0x00007ffff7471517 in __assert_fail
+>     (assertion=assertion@entry=0x555555f17aee "bql_locked() != locked", file=file@entry=0x555555f17ab0 "../system/cpus.c", line=line@entry=535, function=function@entry=0x55555609bfd0 <__PRETTY_FUNCTION__.9> "bql_update_status") at ./assert/assert.c:105
+> #7  0x0000555555b09f1e in bql_update_status (locked=locked@entry=false) at ../system/cpus.c:535
+> #8  0x0000555555ec60e7 in qemu_mutex_pre_unlock (mutex=0x555557166700 <bql>, file=0x555555efe1dc "../cpu-common.c", line=164) at ../util/qemu-thread-common.h:57
+> #9  qemu_mutex_pre_unlock (line=164, file=0x555555efe1dc "../cpu-common.c", mutex=0x555557166700 <bql>) at ../util/qemu-thread-common.h:48
+> #10 qemu_cond_wait_impl (cond=0x5555571442c0 <qemu_work_cond>, mutex=0x555557166700 <bql>, file=0x555555efe1dc "../cpu-common.c", line=164) at ../util/qemu-thread-posix.c:224
+> #11 0x000055555589e6c8 in do_run_on_cpu (cpu=<optimized out>, func=<optimized out>, data=..., mutex=0x555557166700 <bql>) at ../cpu-common.c:164
+> #12 0x0000555555b17a06 in memory_global_after_dirty_log_sync () at ../system/memory.c:2938
+> #13 0x0000555555b55b47 in migration_bitmap_sync (rs=0x7fffe8001340, last_stage=last_stage@entry=true) at ../migration/ram.c:1157
+> #14 0x0000555555b56721 in migration_bitmap_sync_precopy (last_stage=last_stage@entry=true) at ../migration/ram.c:1195
+> #15 0x0000555555b59f8a in ram_save_complete (f=0x5555575db620, opaque=<optimized out>) at ../migration/ram.c:3381
+> #16 0x0000555555b5e4f5 in qemu_savevm_complete (se=se@entry=0x5555574c0d80, f=f@entry=0x5555575db620) at ../migration/savevm.c:1521
+> #17 0x0000555555b60437 in qemu_savevm_state_complete_precopy_iterable (f=f@entry=0x5555575db620, in_postcopy=in_postcopy@entry=false) at ../migration/savevm.c:1627
+> #18 0x0000555555b60a4f in qemu_savevm_state_complete_precopy (iterable_only=true, f=0x5555575db620) at ../migration/savevm.c:1719
+> #19 qemu_savevm_live_state (f=0x5555575db620) at ../migration/savevm.c:1855
+> #20 0x0000555555b65ed9 in colo_do_checkpoint_transaction (fb=<optimized out>, bioc=<optimized out>, s=0x5555574c0070) at ../migration/colo.c:474
+> #21 colo_process_checkpoint (s=0x5555574c0070) at ../migration/colo.c:592
+> #22 migrate_start_colo_process (s=0x5555574c0070) at ../migration/colo.c:655
+> #23 0x0000555555b4971e in migration_iteration_finish (s=0x5555574c0070) at ../migration/migration.c:3297
+> #24 migration_thread (opaque=opaque@entry=0x5555574c0070) at ../migration/migration.c:3584
+> #25 0x0000555555ec58c0 in qemu_thread_start (args=0x5555576583e0) at ../util/qemu-thread-posix.c:393
+> #26 0x00007ffff74d2aa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+> #27 0x00007ffff755fc6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
 
-Unfortunately, I found this commit is part of a series of about 100 
-patches. See commands and outputs below:
-"""
-$ git log --oneline v10.1.3..v10.2.0 -- linux-user/elfload.c   | wc -l
-98
-$ git log --oneline v10.1.3..v10.2.0 -- linux-user/elfload.c   | grep -C 
-5 HWCAP2
-f10c3d9084 linux-user: Remove ELF_PLATFORM
-eaf983e04b linux-user/hppa: Create get_elf_platform
-084b3247a0 linux-user/loongarch64: Create get_elf_platform
-d6b8c5dbd9 linux-user: Move get_elf_platform to arm/elfload.c
-3c907dec45 linux-user: Move get_elf_platform to {i386,x86_64}/elfload.c
-fcac98d0ba linux-user: Remove ELF_HWCAP2
-0dbb0ba870 linux-user: Remove ELF_HWCAP
-50e59ad0b7 linux-user: Move get_elf_hwcap to riscv/elfload.c
-1d4774b60e linux-user: Move hwcap functions to s390x/elfload.c
-92c9983c06 linux-user: Move get_elf_hwcap to sh4/elfload.c
-48004ab058 linux-user: Move get_elf_hwcap to mips/elfload.c
-"""
 
-So it looks like that the code refactoring for linux-user caused some 
-regression for ppc64.
 
-Could someone help check it? Or is there some suggestion how to debug 
-this problem?
+-- 
+Peter Xu
 
-P.S.
-If qemu-devel is not the correct mailing list for this email. Please let 
-me know.
-
-Regards,
-Qi
-
---------------cZKTSOdP1iBl6Nb0xD0qpgwk
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p>Hi qemu developers,</p>
-    <p>I'm working on Yocto project. With recent qemu upgrade from
-      10.1.3 to 10.2.0, I found that qemu-ppc64le has a serious
-      regression. It cannot run binaries built out with &quot;-mcpu=power9&quot;.<br>
-    </p>
-    <p>The error message is like below:<br>
-      &quot;&quot;&quot;<br>
-      ../sources/which-2.23/meson.build:6:0: ERROR: Executables created
-      by c compiler powerpc64le-poky-linux-gcc -mlittle-endian
-      -mhard-float -maltivec -m64 -mcpu=power9 -fstack-protector-strong
-      -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security
-      -Werror=format-security --sysroot=xxx<br>
-      ...........<br>
-      Sanity check:
-`/PATH/TO/build/tmp/work/ppc64p9le-poky-linux/which/2.23/meson-qemuwrapper
-/PATH/TO/build/tmp/work/ppc64p9le-poky-linux/which/2.23/build/meson-private/sanitycheckc_cross.exe`
-      -&gt; 127<br>
-      stderr:<br>
-      <b>Fatal glibc error: CPU lacks ISA 3.00 support (POWER9 or later
-        required)</b><br>
-      &quot;&quot;&quot;<br>
-      The meson-qemuwrapper is a wrapper around qemu-ppc64le.</p>
-    <p>I can confirm that qemu 10.1.3 has no such problem.</p>
-    <p>I used 'git bisect' to find the first bad commit. It's
-      fcac98d0ba8b5f4c311c1059d897d74d1276af9d (linux-user: Remove
-      ELF_HWCAP2).</p>
-    <p>Unfortunately, I found this commit is part of a series of about
-      100 patches. See commands and outputs below:<br>
-      &quot;&quot;&quot;<br>
-      $ git log --oneline v10.1.3..v10.2.0 -- linux-user/elfload.c&nbsp;&nbsp; |
-      wc -l<br>
-      98<br>
-      $ git log --oneline v10.1.3..v10.2.0 -- linux-user/elfload.c&nbsp;&nbsp; |
-      grep -C 5 HWCAP2<br>
-      f10c3d9084 linux-user: Remove ELF_PLATFORM<br>
-      eaf983e04b linux-user/hppa: Create get_elf_platform<br>
-      084b3247a0 linux-user/loongarch64: Create get_elf_platform<br>
-      d6b8c5dbd9 linux-user: Move get_elf_platform to arm/elfload.c<br>
-      3c907dec45 linux-user: Move get_elf_platform to
-      {i386,x86_64}/elfload.c<br>
-      fcac98d0ba linux-user: Remove ELF_HWCAP2<br>
-      0dbb0ba870 linux-user: Remove ELF_HWCAP<br>
-      50e59ad0b7 linux-user: Move get_elf_hwcap to riscv/elfload.c<br>
-      1d4774b60e linux-user: Move hwcap functions to s390x/elfload.c<br>
-      92c9983c06 linux-user: Move get_elf_hwcap to sh4/elfload.c<br>
-      48004ab058 linux-user: Move get_elf_hwcap to mips/elfload.c<br>
-      &quot;&quot;&quot;</p>
-    <p>So it looks like that the code refactoring for linux-user caused
-      some regression for ppc64.</p>
-    <p>Could someone help check it? Or is there some suggestion how to
-      debug this problem?</p>
-    <p>P.S.<br>
-      If qemu-devel is not the correct mailing list for this email.
-      Please let me know.</p>
-    <p>Regards,<br>
-      Qi<br>
-    </p>
-  </body>
-</html>
-
---------------cZKTSOdP1iBl6Nb0xD0qpgwk--
 
