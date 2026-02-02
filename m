@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E1BE7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121C5E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn13a-0002eT-Lu; Mon, 02 Feb 2026 16:02:03 -0500
+	id 1vn11T-0005GJ-OT; Mon, 02 Feb 2026 15:59:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12x-000168-EB; Mon, 02 Feb 2026 16:01:23 -0500
+ id 1vn11S-000598-EO; Mon, 02 Feb 2026 15:59:50 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12v-0004Px-QN; Mon, 02 Feb 2026 16:01:23 -0500
+ id 1vn11Q-0003rQ-Kl; Mon, 02 Feb 2026 15:59:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 069411851AA;
- Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AF4A1185199;
+ Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B8E0735B321;
- Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 75E0B35B310;
+ Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 30/74] linux-user: fix mremap unmapping adjacent region
-Date: Mon,  2 Feb 2026 23:57:41 +0300
-Message-ID: <20260202205833.941615-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 13/74] qga: Fix ubsan warning
+Date: Mon,  2 Feb 2026 23:57:24 +0300
+Message-ID: <20260202205833.941615-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,34 +61,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Lugg <mlugg@mlugg.co.uk>
+From: Thomas Huth <thuth@redhat.com>
 
-This typo meant that calls to `mremap` which shrink a mapping by some N
-bytes would, when the virtual address space was pre-reserved (e.g.
-32-bit guest on 64-bit host), unmap the N bytes following the *original*
-mapping.
+When compiling QEMU with --enable-ubsan there is a undefined behavior
+warning when running "make check":
 
-Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
-(cherry picked from commit aaed9ca1797d70a507371aea688c5cd60b074e2d)
+ .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
+ #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
+
+Fix it by avoiding the additional pointer variable here and use an
+"offset" integer variable instead.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250730072709.27077-1-thuth@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit 83f6dceb8f5c0a1efe806a9a4905cbc743a8a378)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 002e1e668e..7a5f7c3660 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1170,7 +1170,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-                     errno = ENOMEM;
-                     host_addr = MAP_FAILED;
-                 } else if (reserved_va && old_size > new_size) {
--                    mmap_reserve_or_unmap(old_addr + old_size,
-+                    /* Re-reserve pages we just shrunk out of the mapping */
-+                    mmap_reserve_or_unmap(old_addr + new_size,
-                                           old_size - new_size);
-                 }
-             }
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 9dc0c82503..4a09ddc760 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int pci[4], host, hosts[8], tgt[3];
+-    int i, nhosts = 0, pcilen;
++    int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *q, *driver = NULL;
++    char *p, *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+ 
+     p = strstr(syspath, "/ata");
+     if (p) {
+-        q = p + 4;
++        offset = 4;
+         has_ata = true;
+     } else {
+         p = strstr(syspath, "/host");
+-        q = p + 5;
++        offset = 5;
+     }
+-    if (p && sscanf(q, "%u", &host) == 1) {
++    if (p && sscanf(p + offset, "%u", &host) == 1) {
+         has_host = true;
+         nhosts = build_hosts(syspath, p, has_ata, hosts,
+                              ARRAY_SIZE(hosts), errp);
 -- 
 2.47.3
 
