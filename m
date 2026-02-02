@@ -4,133 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27848D172AB
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 01:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F40D172C4
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 04:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmih8-00040b-Jl; Sun, 01 Feb 2026 20:25:38 -0500
+	id 1vmlAb-00072T-FH; Sun, 01 Feb 2026 23:04:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmih7-0003zf-1G
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 20:25:37 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vmlAW-000725-U8
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 23:04:09 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmih5-0007XU-C8
- for qemu-devel@nongnu.org; Sun, 01 Feb 2026 20:25:36 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a7bceb6cd0so27442695ad.1
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 17:25:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vmlAU-0001La-8d
+ for qemu-devel@nongnu.org; Sun, 01 Feb 2026 23:04:08 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-352f60d6c2fso2604265a91.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 20:04:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769995534; x=1770600334; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YcOvSkdqnIic07DbpsiIPjitrzYi2jwAtikQO7awDA4=;
- b=tPup1RnGNcD2ieuE97jum8ek1Qlo+v9jLAH4ARqOo4yd9BAK9PikfdejftOyTU0tPW
- 0sSg2xSIV2NZowvMLhjuIWDKbapdeLN2+8v/ByP0AWX7tjDCoQEQ0uBDnJrWj19IQ5gV
- xpZF9q4uUQaV3CiAMZPudBEU2hX+1ptHoQnJDcJ3qmMwoLHb+O5FPHaGQTyXOVwlMhnh
- uB1yto6MoPehpjjzs3146wFA6pM7Qd3PtQ2pEO5cZIG17wJjUJto4uBH2qXtSvZmkA+l
- pe/xpkqogfORlOwXLR+rXLAojkp7HrkzPCqQVyCiWMlEECWAJHDdVhaTXVAbCBQDhduQ
- EVZA==
+ d=linaro.org; s=google; t=1770005044; x=1770609844; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0QfoEGxMsIuEzYlDvBzapUpsFyjX75R5u1DkPg0u/6U=;
+ b=P9c77h5Dp26KLBvUgV/oeC9UWjYMvvUZ6Qr/u2LCPU2GkytM1cuKBog+p/D3zqvH+T
+ U3Q9Q/kWfFRVJnf9DpZcgb8UkU7LVeXW5R8KLY9+kIpXVzkmpkw2M9BgEP6S2KAgyT1p
+ JHZ1pf7YAswNboOyZDAcb73E+xYNdc4Z2dglGfpXTvU5AuCH9S2npGg4P5s6O5bhR4GI
+ 48E2g9B3IikDbjrDVHtUU/5YeUmM4RbNrenIUrd/bNKaYadzL7C5OG+WZZBuEm6BPsSU
+ 6KnOYfwS+0noS/CxoloDa14F+w5gyWGT+HQyz02mtZDa9MPT0LiGj4Fnsq4ZT/QSUshR
+ aaCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769995534; x=1770600334;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770005044; x=1770609844;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YcOvSkdqnIic07DbpsiIPjitrzYi2jwAtikQO7awDA4=;
- b=HM47bTrJOGkloNXM7fOxNn3KpD/yIi99EjOxBeNIi4utjsP0yqgNznom5vyqPRCHzC
- rTCim8YXatjVGnYkyIy/203cP/oSgshoug/TbbiNa/HrE4wqtVbYci4vWLxPLwF11GPE
- g4wQDeCmxJOBjcm9Apaqki+Ic9iR2FjBQ19TGLOuNK2HtTc6Zs/6dZm1RFNmApyrDbBu
- j5gmuj7TAyBIZhrHNhdNl0BGz+vzDIH+QcekASgiZv2gNhGXMq1maOfdKjSvw5NpoHZU
- h163cb2vLPCXVtct148sf+xig2rvhurY0InSAr7qQwaLZ45C+/XkPOc6cc/Rm4MWdNbW
- E+7A==
-X-Gm-Message-State: AOJu0YyNldoiaVB4LilhGBubzPrYwfYUq5GesxpkRbo86H1RGVRFwVGW
- GYaX/sQvkdvk5R0DYbLAzam53b8cApFbqjT2Z8Hn6v919ScKld1i8YkJcTejGZUveIU=
-X-Gm-Gg: AZuq6aIcFl43i1inaJE9mnf9MbaQFuPvsVTf97plgMgLx+JZmOb/c9NkyTbNsrljRib
- urDyg8HN7rpXt2WbSuSzq4kfK1sUHJO7yskmOJew/jiXO3a4Hj85ynuFyt72JJvdEuAkTotnnWk
- AyAexGTcVf5P7PMs2hdDnlMMqW9Tscnet89HAGs7fLppwMnnZ+WWiaphpB+KpS6o6J/DvATT+8l
- KQllSyodWSYoCibyetRPl9KPZzDg/NXXdj+auykGO+jfY32/3fUcR28h91Jirr7ZqRmRaDDIkFO
- yXeTrS+O3sYg5m9VqS8RXhcl9WLPm+94egghMxO3cBplYbx8RXULZOs/FlBb1VUK+OLKB3yxTpf
- DF7jsINne8eNna2pNzT/Ntyn+kYaGgTzNox7c7zXycSwC/uPQ0nwYBq3x01FLPR7LamMXhR34C/
- RwKysguqXx0uQBtQiY47rdFe/uPmlSK+Qe0ukp9/vYRcvIvg5Kpk/3tHKp
-X-Received: by 2002:a17:903:2ec8:b0:2a1:388c:ca63 with SMTP id
- d9443c01a7336-2a8d9919665mr95916225ad.31.1769995533613; 
- Sun, 01 Feb 2026 17:25:33 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ bh=0QfoEGxMsIuEzYlDvBzapUpsFyjX75R5u1DkPg0u/6U=;
+ b=jT3wCshlNJxzqh8AJJU3V9mlY+QNxMhqZYtVkYDBLY7po4ecdG/jCBGEEYE0NCe7um
+ PXt12Mk+Yh3yyFxzymw+PQLfoYcS/hhQqdiC5mBHaj26f80geLUkuIC+4eslXpZdOm1z
+ KJChwMdB0tiOkZPX6Jywkfg2KCvjGBoZOqzd55JQaSMMHt/fAr97/lB+10hUQop8sd7S
+ eCFkDrbMoj8Z1OjQx076aSeLKums643Qu2kGChGJr/NQUzpMdIUHvrW3uWn5CIc4mIW/
+ a9wp2GuwjBkmvKNKzUzD/B+Zu7wXOF9TvWJQACIpd9HPIU6hH/3Y+1+52Vwrd8637h1K
+ hxqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdHB0P9oxEVlq0h3hHOyBRP8cBZL2hxv2LqaPfHoV5IMoAfG95fhKSV9eO3yXpOwmyg2aL0/kCjvci@nongnu.org
+X-Gm-Message-State: AOJu0Yz3JClLjLNQL6ndWwHF1c/Q9ReVg+qfZojuPO5g3p5Ik2HOFOA9
+ URI/rDScFL5QVHAGvh23puA7CXqq/oy1vt4JXC6j3e1aYoJAdUKYL4R3rc4ME9+MWx4=
+X-Gm-Gg: AZuq6aIqzL70jjWJT3c5E90pN6UrkMUgY8sxlFxeKX9EIgZW6mmOk++PgLh6mr89tgE
+ cisw/CuPWYjOgiBe3LCVT7fpntIgo4kimlgh2UFfRA4tQaehVejuiqsTQIAzTQg+BJS38pFI2s/
+ n55pjp0rDDd7lDpoXqYGvJ9K4HiDXRKL5Tz/QF4lJywkWN3FJjDp8/iQmkTMKmoLjjJx8nnzR22
+ LZvkA2hFne29JKZ7VjJP3t/kWlbnf7k4OGtdEaLWJZmOHbdAncl5pDOmwdNtXbGoLW5irbPl5df
+ Mksr28qpGSWfYTcwkGmNvBcF+YNuRs/JFb5bZEvy7l/HoX9/cyaMufwZpJN+JIH0Iq8hk/8YAxM
+ bqpADAMa+gQL9Stsy8k2ZKJnzsrihZcQtgpmWHQXQaZ67q17P1ZHvvvTMwHPgCNG9OW/gRz4BDl
+ HC4y9YHtR6psKDRsEC7Rhbxa4Prw5cFOUDOSG1+5injVPHHIx1O3+H3LO8eelRX2dNgFD1wzkjL
+ GhFo16ZacDkRclLuxb67e8EldbVQJw9+pdxLLssGA==
+X-Received: by 2002:a17:90a:e704:b0:340:ca7d:936a with SMTP id
+ 98e67ed59e1d1-3543b394145mr10586105a91.18.1770005043856; 
+ Sun, 01 Feb 2026 20:04:03 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:f104:411e:690f:7d65?
+ (bg30dj09str9vbyq0vvw.ip6.superloop.au.
+ [2401:d002:dc0f:2100:f104:411e:690f:7d65])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b4c3dd4sm127494945ad.65.2026.02.01.17.25.32
+ 41be03b00d2f7-c642aaecd19sm13377597a12.29.2026.02.01.20.04.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Feb 2026 17:25:33 -0800 (PST)
-Message-ID: <e19ad12b-ba3c-432a-9152-59bb63186d6a@linaro.org>
-Date: Sun, 1 Feb 2026 17:25:32 -0800
+ Sun, 01 Feb 2026 20:04:03 -0800 (PST)
+Message-ID: <7ac8fe1f-8098-4417-a97b-1a82c0fd23ca@linaro.org>
+Date: Mon, 2 Feb 2026 15:03:53 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] include/hw/virtio/virtio-access.h: remove target
- specifics define
+Subject: Re: [PULL 00/21] Plugins patches for 2026-01-29
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
+ <2d69de6e-da9f-4f90-b805-9553bb72c78d@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
- <20260131020100.1115203-3-pierrick.bouvier@linaro.org>
- <20260131124842-mutt-send-email-mst@kernel.org>
- <299f59f7-62c3-42f4-99c4-b7c7cfb111c2@linaro.org>
- <3417f499-f5ac-41c5-8d40-33c5c1c10e50@linaro.org>
- <cf73175f-0616-4830-af38-bcb7d21d31c0@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <cf73175f-0616-4830-af38-bcb7d21d31c0@linaro.org>
+In-Reply-To: <2d69de6e-da9f-4f90-b805-9553bb72c78d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,32 +107,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/26 3:20 PM, Philippe Mathieu-Daudé wrote:
-> On 1/2/26 23:41, Philippe Mathieu-Daudé wrote:
->> On 1/2/26 23:36, Philippe Mathieu-Daudé wrote:
->>> On 31/1/26 18:48, Michael S. Tsirkin wrote:
->>>> On Fri, Jan 30, 2026 at 06:00:56PM -0800, Pierrick Bouvier wrote:
->>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>
->>>> Performance impact?
->>>>
->>>> the reason we have these is for performance ...
->>>
->>> If this is a worry, we can declare the virtio LD/ST helpers in
->>> VirtIODevice and set them in virtio_reset(); the call chain will
->>> be even simpler than doing that check on every calls.
+On 1/30/26 04:41, Pierrick Bouvier wrote:
+> On 1/29/26 9:37 AM, Pierrick Bouvier wrote:
+>> The following changes since commit 65fb9de4888f9bf32bc4f60c880da3dff04c4fd9:
 >>
->> Or just have a VirtIODevice::access_is_big_endian boolean
->> field (re)initialized in virtio_reset(), and drop this
->> virtio_access_is_big_endian() method.
+>>    Merge tag 'pr-build_fix-20260128' of https://gitlab.com/pbo-linaro/qemu into staging 
+>> (2026-01-29 13:29:33 +1100)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260129
+>>
+>> for you to fetch changes up to bed25f00d306bbbcc85d068b6469fc00aeecbd11:
+>>
+>>    plugins: reduce source conflicts in plugins list (2026-01-29 09:34:14 -0800)
+>>
+>> ----------------------------------------------------------------
+>> Changes:
+>> - contrib/plugins/hotblocks: Minor bug fixes and add limit argument (Alex Bradbury 
+>> <asb@igalia.com>)
+>> - linux-user: introduce syscall-filter plugin API (Ziyang Zhang <functioner@sjtu.edu.cn>)
+>> - plugins: return bool from register r/w API (Florian Hofhammer 
+>> <florian.hofhammer@fhofhammer.de>)
+>> - plugins: enable C++ plugins (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+>> - plugins: reduce source conflicts in plugins list (Pierrick Bouvier 
+>> <pierrick.bouvier@linaro.org>)
+>>
+>> ----------------------------------------------------------------
+>> Alex Bradbury (5):
+>>        contrib/plugins/hotblocks: Correctly free sorted counts list
+>>        contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+>>        contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
+>>        docs/about/emulation: Add documentation for hotblocks plugin arguments
+>>        contrib/plugins/hotblocks: Allow limit to be set as a command line argument
+>>
+>> Florian Hofhammer (1):
+>>        plugins: return bool from register r/w API
+>>
+>> Pierrick Bouvier (13):
+>>        linux-user: move user/syscall-trace.h to linux-user/syscall.c
+>>        plugins: move win32_linker.c file to plugins directory
+>>        plugins: factorize plugin dependencies and library details
+>>        plugins: use complete filename for defining plugins sources
+>>        plugins: define plugin API symbols as extern "C" when compiling in C++
+>>        tests/tcg/plugins/mem.c: remove dependency on qemu headers
+>>        plugins: move qemu-plugin.h to include/plugins/
+>>        meson: fix supported compiler arguments in other languages than C
+>>        meson: enable cpp (optionally) for plugins
+>>        qga/vss-win32: fix clang warning with C++20
+>>        meson: update C++ standard to C++23
+>>        contrib/plugins: add empty cpp plugin
+>>        plugins: reduce source conflicts in plugins list
+>>
+>> Ziyang Zhang (2):
+>>        linux-user: add plugin API to filter syscalls
+>>        tcg tests: add a test to verify the syscall filter plugin API
+>>
+>>   docs/about/emulation.rst                         |  12 +++
+>>   docs/devel/tcg-plugins.rst                       |   4 +-
+>>   meson.build                                      |  26 ++---
+>>   include/{qemu => plugins}/qemu-plugin.h          |  62 +++++++++---
+>>   include/qemu/plugin-event.h                      |   1 +
+>>   include/qemu/plugin.h                            |  35 +++++--
+>>   include/user/syscall-trace.h                     |  43 --------
+>>   bsd-user/freebsd/os-syscall.c                    |   1 -
+>>   contrib/plugins/execlog.c                        |  14 +--
+>>   contrib/plugins/hotblocks.c                      |  20 ++--
+>>   contrib/plugins/uftrace.c                        |   8 +-
+>>   linux-user/syscall.c                             |  44 ++++++++-
+>>   plugins/api.c                                    |  36 ++++---
+>>   plugins/core.c                                   |  39 +++++++-
+>>   {contrib/plugins => plugins}/win32_linker.c      |   0
+>>   tests/tcg/multiarch/test-plugin-syscall-filter.c |  39 ++++++++
+>>   tests/tcg/plugins/insn.c                         |   4 +-
+>>   tests/tcg/plugins/mem.c                          |  59 +++++------
+>>   tests/tcg/plugins/syscall.c                      |  19 ++++
+>>   contrib/plugins/cpp.cpp                          | 119 +++++++++++++++++++++++
+>>   contrib/plugins/meson.build                      |  38 +++++---
+>>   plugins/meson.build                              |  17 +++-
+>>   qga/vss-win32/requester.cpp                      |   6 +-
+>>   tests/tcg/multiarch/Makefile.target              |   7 +-
+>>   tests/tcg/plugins/meson.build                    |  27 ++---
+>>   25 files changed, 497 insertions(+), 183 deletions(-)
+>>   rename include/{qemu => plugins}/qemu-plugin.h (95%)
+>>   delete mode 100644 include/user/syscall-trace.h
+>>   rename {contrib/plugins => plugins}/win32_linker.c (100%)
+>>   create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
+>>   create mode 100644 contrib/plugins/cpp.cpp
 > 
-> Implemented as v2:
-> https://lore.kernel.org/qemu-devel/20260201231959.88559-1-philmd@linaro.org/
+> v2
+> -- 
+> 
+> - Delete syscall-trace header and move functions to linux-user/syscall.c
+> 
+> Note: There is a regression upstream with native windows builds where:
+> 
+> $ ./configure
+> Looking in links: file://C:/GitLab-Runner/builds/qemu/python/wheels
+> WARNING: Location 'file://C:/GitLab-Runner/builds/qemu/python/wheels' is
+> ignored: it is neither a file nor a directory.
+> ERROR: Could not find a version that satisfies the requirement
+> meson==1.10.0 (from versions: none)
+> 
+> This is not related to this series, and seems like an MSYS bug. It can be avoiding by 
+> *not* updating core packages (pacman -Syu). Hopefully will be solved upstream before 
+> updating becomes mandatory.
+> 
+> This series has been tested on Windows with changes described above and it works as expected.
+> 
+> Regards,
+> Pierrick
+> 
 
-Let's go one step at a time.
-The refactoring you propose is worth investigating, but the current 
-approach can be done first and effective now.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
-Regards,
-Pierrick
+r~
 
