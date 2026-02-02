@@ -4,58 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C3EE7DEF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B97E7DEEE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmvi9-0003g5-BY; Mon, 02 Feb 2026 10:19:33 -0500
+	id 1vmvra-0005MU-4o; Mon, 02 Feb 2026 10:29:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1vmvi6-0003fP-1l; Mon, 02 Feb 2026 10:19:30 -0500
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vmvrY-0005Kx-9V
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:29:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1vmvi4-0000lA-IN; Mon, 02 Feb 2026 10:19:29 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GdOljKWk+ZCSnkbwfJ6PmmbQQWZ05EayK0S9KugfxXGdVjqqBRKj9VRdCYmmA0Jv8Tt/dDX1KSmokYJ3WxGRd7u3v4FToVVKP7rXVj5AmvyglrpbEK5pqX7EQ5j1/IG3vSzEV4/mpeLznIWJMs905C8oZyH5KNhjRXPKrwA1eT4HmK0q2Fqmuh3MfPy6M5EZ+AwjtDpAbt/WCBhVleHrgwowo20pFEy5zDZcMfoZZPqp+QewVA2nyIRpWSkZWpWXZQ7XzptPElXbI5jI1p1wAgGb793Nf66Eydp2tzTyIKP/ogoCQNN2DEdU+Rc9Ui7LCENdsscKhSZURjZLmlLdFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iuDJARtSTMo/HQIiLzFrJOfkXhAOs0e3kY9YRunFhkc=;
- b=IUrDOp8Y4hY3jf84YXI0WXFtEiCv2/sM/OBUfKBmJRbeUWdyEbrGARjLTjbtPJRhHbgfY8ArtDSoz+82vlA0egX3FTa18Tp1NyfBBDvQElUuHRXwAfGs77bq+grkoK7lyKKWzZ4maZ97EV+izb/S/NMZQ8uHqge1Vq7O36D5T3YIhJN3K/7RGUAUX3yuLRjFW4uH9mqmbAcG3t7xIk4Mw6CWNR6njAi3iNeQKHizkKEpbqcmVqob/zgyuTgf9OCPO/Bx9fBW9+0ss5Qhwtg1bdGG5nVBVK297uDHYxX4jNYN3Lf3Dyy6QA74104kaaJ83QqdDzdjtjFNZ9CX3peVgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iuDJARtSTMo/HQIiLzFrJOfkXhAOs0e3kY9YRunFhkc=;
- b=GisXYg/8w8VzMLSNZ9B7SwkQk3xXbUWmthI9iNayqdyJEgzD52qplga2801Rb+Hviia598vVGYbVXir7iFMEL2s88j4PvWNLaASoyjzcH2ksVA7bXqwzNbWH23vEgsyza5F6f4TD9FEfELPke+HzTKroOwDkdTaP7KnAgAFrwIqi0cqPPCiDSjwyUb70gGg7OnM2lSNgG4OFZ8o8ys67vnOp1CaHdxS3ncDthnQGd1gSQpyOyUWbK1icA0M7jq82wC8vV47bD+rhrNMcDqPkQcP89HsF5Whc+png+vjHuVZnfrq0D4KDBu6mz1FyQHf4lDgknqExARwevqdX5S+yyQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS2PR12MB9616.namprd12.prod.outlook.com (2603:10b6:8:275::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Mon, 2 Feb
- 2026 15:19:18 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9564.016; Mon, 2 Feb 2026
- 15:19:18 +0000
-Date: Mon, 2 Feb 2026 11:19:17 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vmvrW-0003eA-GB
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:29:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770046153;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bgFb6mKmuQCNDjBz/M8/sot3Bf4WvQrdgrbuBx+xG/A=;
+ b=K3rsb23UYlOMMxQRUB0ybwDZq/U3NINpwYbn69wnd2xl3Usu3AKleYwlHpdvZFm+acwHif
+ MDV4hGeFUkSUlSUX8uHJThjIrrLCBfROdjrXipPQfw9fiXNpXy7NIVn2OF5oLpI0Cwzgv/
+ kQyqJGpXnu6M71HGkKozJLo3CjGi+Uw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-IAgDXflBPD26f8nAnnePWQ-1; Mon, 02 Feb 2026 10:29:12 -0500
+X-MC-Unique: IAgDXflBPD26f8nAnnePWQ-1
+X-Mimecast-MFC-AGG-ID: IAgDXflBPD26f8nAnnePWQ_1770046151
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430ffc4dc83so4801617f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 07:29:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770046151; x=1770650951;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bgFb6mKmuQCNDjBz/M8/sot3Bf4WvQrdgrbuBx+xG/A=;
+ b=XUFfe0UnZuR65pMbbvfxQqfblYJUxa9hiCKt4Sb2fQ8kwJrBDhXC7vIFiYmvKNAteu
+ smoFLeaUPyy88bTOJFQdssMrtyTCKcp3yehUeiBXK0BZ0vubZkZSWfKEcxTGrorXjneG
+ 04PtyH4bKrmGwYFr08Q9ihKEjst3RbpnIF26oW8yMVGvuciarPVAkF3q2G7RQ3ytpK2Q
+ 6i9JSx1Wwve+K5PckhyaQT5087mkn3MEXZyPY9M3mtHtem+5EY3WFPgu8evNWay9um9s
+ x+NLJMJGAUC3PTxp/TuVC6iNClxCDW2lFg+K5kHHR2+mNRk9kRPvx6FIBz74Yk6Hu7Ua
+ 5Wxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4glyjd7ZVLE4c2gPxHJncvumqzk8dLUeNM0XB4Z/hAC3ixCVZD9odfOcDAlIOcXZaMAPxdUCaFGTP@nongnu.org
+X-Gm-Message-State: AOJu0YxSt/kbYpaFzm1X04zwC1MvjQW5KSWDcYtXDm/WBSmcNVMyyZnI
+ 63LXtIiiY/sLfrFaOGDcVxuPQqZxCyOEzhO/5y6uExP5Fswy8dSt67WQI6W2Z2nGhQylL06B6rf
+ IBxobpUSwvueMp8Z8FtR7jQLy0PdS7Prhgep6d+WEkwVxUrH8nOTjF5xN
+X-Gm-Gg: AZuq6aLPujI2Np3D6Fx82rKUf8Nqei3rrkKHNprbiOA8Yz5gBTekA/uQ6coFpwMfQJS
+ 7aFNc/TzJ4B3Asyo6b7vvH7lzjPXAwn2BoKVNUrwMk9uPKtoSVA2WkcdTPAKKYWLbRfrwWCOtam
+ WtbUnxuTGkb09clUvuJCcp9aHJCr/8rglybrtjVphQ9fBJvS9+CnBOSN52FpqxKSduxeJLaYY9k
+ G2hWru1CjTsLHZ1g16Sdw3tXUx8wyI/+BEePIGZI8vj0QvZ/kXILfctKSpZeUskCgzdmnBvwfHw
+ pW9bcBB5I3d39e9u3BKC9xwHaMv4Mkrc9sG3x9wfbPzm6E7QE+3SjX7zk5zhdlBXtWnnvfLB6c4
+ 79EQcGF4jVlZSCLVagnzGdyasTW+p+0dyEJrGyAWVpz5TnncPs0028PNYaw==
+X-Received: by 2002:a05:6000:310c:b0:435:9770:9ec8 with SMTP id
+ ffacd0b85a97d-435f3aa9ec7mr17720818f8f.32.1770046150677; 
+ Mon, 02 Feb 2026 07:29:10 -0800 (PST)
+X-Received: by 2002:a05:6000:310c:b0:435:9770:9ec8 with SMTP id
+ ffacd0b85a97d-435f3aa9ec7mr17720694f8f.32.1770046149771; 
+ Mon, 02 Feb 2026 07:29:09 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e132368csm41755900f8f.31.2026.02.02.07.29.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 07:29:09 -0800 (PST)
+Message-ID: <afd46d73-a823-4952-b5b2-d5cd4085e7ba@redhat.com>
+Date: Mon, 2 Feb 2026 16:29:07 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to specify OAS
+ bits
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Nicolin Chen <nicolinc@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
  "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ "berrange@redhat.com" <berrange@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
  Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
  "smostafa@google.com" <smostafa@google.com>,
  "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
@@ -65,106 +100,24 @@ Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>,
  "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
  "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
  Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to specify
- OAS bits
-Message-ID: <20260202151917.GO2223369@nvidia.com>
 References: <20260126104342.253965-1-skolothumtho@nvidia.com>
  <20260126104342.253965-32-skolothumtho@nvidia.com>
  <d9192ae6-a94f-479a-b19f-734cc52a6be0@redhat.com>
  <CH3PR12MB754867E986856DC7718D4051AB9AA@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <CH3PR12MB754867E986856DC7718D4051AB9AA@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-ClientProxiedBy: MN2PR07CA0029.namprd07.prod.outlook.com
- (2603:10b6:208:1a0::39) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS2PR12MB9616:EE_
-X-MS-Office365-Filtering-Correlation-Id: 910c65f9-eed4-475f-bdc4-08de626e6f42
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?uXjJW1YmqNjqHCJndZVMFpFOHJQTJpktvhSyZU9fFjFxg7l3NH82+3R2hsVx?=
- =?us-ascii?Q?H4JERqcsfLfDNTm51g56ae1ISMjONnbzizAvw5RsZM48J5SR/YNjYCHPToO6?=
- =?us-ascii?Q?YRorD98bUh1l+3tVzcfTBlMFsFNkBrHCX+B+iX1Gby1fFpw20ZB9qyBNgnTu?=
- =?us-ascii?Q?djLM7oQh36+emS9uqHqmhkY77/f1BmaF/BQQjbe9DRwMTbvCn7rMzvT4oDfC?=
- =?us-ascii?Q?wn4u05diuyuhd0q22sqzqyeExdBY3nA/roP+n4ggbvfS3Ttn6n9Nk4MmWHGD?=
- =?us-ascii?Q?7G78x0ligTKZEpBk6Wjv7LLC0IrOJMgQ2NE5JmGQ5HrpGJ6BUr9/St4fMLwA?=
- =?us-ascii?Q?QuP4JIcXMoLRgo87ZBdA7XsOFQ2gclRZ8lJpQuqhavXwY+uHSs7ESN4OwK/r?=
- =?us-ascii?Q?nS7c0rHCp8p570waXWh6DrcB0mvfN9lvpmkhrW6w8+MJC9ktO0gP1jElqLNm?=
- =?us-ascii?Q?sSS8meovOSDBkY5V+zxmwdJSue9+bvJUfvtB0+xjrMzwOMnN8iCP1dUQwZ/L?=
- =?us-ascii?Q?tesMf3X0Eftz9v9vdC8i1kOFBhepD7eLhUyQ/n7TvjpKYx8jZ1saMkHyGU06?=
- =?us-ascii?Q?n3DO4pW1+LPWQ7bgg/LC3cWTFXtAKMQ9BvNiiDc1D1CE+04Wm2zYGlGXYAaF?=
- =?us-ascii?Q?AL6cYHLtTi4rO2QeXept+MC5IugaYoWKGUgvRGdSApW8ovpVLLYAGik1M1Xs?=
- =?us-ascii?Q?wQ2z/EHiKp7PSGhPWXRQ0FuL47Z7Y9+AXUjlkZd15EzJd6r2RoEgJrVDzBQd?=
- =?us-ascii?Q?H/ZIMB8a/9XyFvQDyYQsJrOagvnqSbbhMAHQxGWTze98gosMBoOiELLJ37k4?=
- =?us-ascii?Q?VvcuGM90FQQpfz/V1kMsGiXO5oQerdeDJG9J0EZVo7CmNfAtFVpQLwIKNTtc?=
- =?us-ascii?Q?a2Yfike7WjfP6naFNR8z8Bm1PkzloB+ozndTrQoaiarDKfwSqJbNRx7b2BTt?=
- =?us-ascii?Q?ly8KBBaC50t3r6UVKiRjKa8AkK+Hgmsg05kOTGtX0aoVr/pDvUmLpr4gWwe1?=
- =?us-ascii?Q?u2ILhFGONDVQDGw0p1pYVqWlOpYocoHeLrlmF6lReMz9ZFweLSe2POKt12aP?=
- =?us-ascii?Q?Q+XlZssZ9hEuXGh536LP5KvfjCRBKteo2pvCq3OUOWYfuHnQKSJb28jKMf0v?=
- =?us-ascii?Q?7qKUDxLNPI7qeF8vWt24PnQaXYnr8qCYMHPF9Rw12MHmH6hEWpxeHgvuDrnZ?=
- =?us-ascii?Q?d3fRCZ9Id8B4hU0e/ozo8QpCDH8Xt6RROKkoyiMhbMJNu3F+4SxLjxwnnvno?=
- =?us-ascii?Q?NoyHQHYlRzRdiUl0F0zhiwWD1ovxdoR5u6V3Rlf/gBzlyMH51VuEulQyT0jz?=
- =?us-ascii?Q?X0rMbHWN5radAtu6MsVhIb7OC7SU+T7W9KAOKM6URb0Jnnbvf3NjY2Z4pOqZ?=
- =?us-ascii?Q?AgPKGRj7Qk0sKiT+ZwDa4U7K2jRncAqYj7WOAO5GXx2RoiQKcYUfXz6jU68D?=
- =?us-ascii?Q?AfKi7sznI339hjg9rNacAM5Oc/CCDV9gctsYvKOdixopSa3zXGQhPCDQQKtu?=
- =?us-ascii?Q?ywRiQIsPIdN11dy1JYkI13YCaE/JEJQVKpmxH7deQLo7RaHkOqqi3XEaZZZc?=
- =?us-ascii?Q?VtYtZpQ4LufHf//2VFM=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR12MB9620.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?j1t8Rz19/9TYcvEgFr/kA3XcjeWHMl81bOPjhxI/vWW3iTbL19ZquHO5NXPE?=
- =?us-ascii?Q?aD8v8zePSfELVX8/m7DdTCFoKccUpNzxx/BIBpVa7xYtBDLbwpAjX+77ZVB4?=
- =?us-ascii?Q?feCjs7XTVDfzchM8sIbFQTjk+xUIGo79+ltQLeVBzFUkHFscblhJ/qnWqNoy?=
- =?us-ascii?Q?KT8tgc3Sr7EJtVqBc/c2o77Pkts9LcKyW7skmOla1Ql0ayjzjTU6vNoFs7qe?=
- =?us-ascii?Q?aPP3A2BsbU9r59y5j7+Ir6VxrBFPcrtSUXtBCEnaGh0AsbpBXp8nA82JuN7B?=
- =?us-ascii?Q?lM6At7MRr7M2jqlS9kRaS+gBhjledV8/DocVFIKuqzcBOrydEKiu9mokkwEe?=
- =?us-ascii?Q?pMh/1w0VnW2ud+CBHXiBh+MzO4qxrQQqelEDv3w+lgqMXzskttQmgpH99Q44?=
- =?us-ascii?Q?KzfayuXrAgGRIy5Jnf1qOoleEcSYC2EWeiiB2CJEpYQktjqbH5ah1sMAYafu?=
- =?us-ascii?Q?54RfKKU+sJ3ngR69+W4nUvZoEg9NI7dj5asQU1i4VH+Turz1SWcqIFRYcaz4?=
- =?us-ascii?Q?Yd1jPXGVQ9q66GSKBzq11cMt/gBLC7T1b2CeIW8/AE40ZR0xHY4lS/eQkBY5?=
- =?us-ascii?Q?LrqfFBBCG3cCW0jsmIC62WaJxH928w12ew7MEDVOjZk3Ov4eUpLx2s7HtKq/?=
- =?us-ascii?Q?yHD7vHB9f1kTwll7jbFHFmQ1qQE6V4LjpGXLA22UJq0uBaF0fETiiz51T1X5?=
- =?us-ascii?Q?Dxp9Vq5jf8EmxiGkC70G0+iKZubHmmfjbS6o9dGZRyEiFV+g6x8Cef5tg9j7?=
- =?us-ascii?Q?6RagJ4CfH0QjAeteblyWD4agJwpb7E5ctVvWBbi6qqOc+5TCKSR638phNBLQ?=
- =?us-ascii?Q?KoiBoIUykbV7yBEDM81i7iN5daTQvtJ9ic5NeqvM3OyHHyWheMwnEwA3RAgv?=
- =?us-ascii?Q?9n9OCSFx5r3inTz76tvIat+Eo6reMlB+qBpQGMJy9ysUM4ayo4dQv4UaIbAO?=
- =?us-ascii?Q?zLSAQzZvCS3wtC+cbS7hnlzsPyVeCqSOuBLHWm9gQmAbY/V/l3W6FvrUabmj?=
- =?us-ascii?Q?Tvy2E+OvX3UxZRpKRPRDXbeMTVb36Uw0Y7ox+DJ+IMGdX78lQepBAeSR3Vje?=
- =?us-ascii?Q?XuLwyu7AuKgj991Xp7HFH317otF3Pc08yJonEeqF/Sbvhqy3pNKPJY3pSzl3?=
- =?us-ascii?Q?7hlzpx1D8CQoxVg3Gt1QRy+U+DfKVY2tvIU8hD2GSJgBn4afI10i7sQZKrRR?=
- =?us-ascii?Q?7jRcf/UsRFNFMug6874nveG864Lx/uoybxZcj+8p54oVupaRfKeGJQvOdNwM?=
- =?us-ascii?Q?a/n2OXCsv7vyAQH/bmvO+J6d7dfYcRxzrqOUomK0j9YqJTD8H/1kM1bkSPA/?=
- =?us-ascii?Q?CoCcUw1phckANHv8uThM3ZcEMEM+pSzCtoSnVFdehzhDoBjkYrBO8lXe7+tS?=
- =?us-ascii?Q?Fe/p17YH50gipVXkGrv/ujy/19qTX6H8wJur1p5xXTpC4aPCVyTQJsi9fuN1?=
- =?us-ascii?Q?/eK0hBxx92OXyY34p/LO2vm22ZYp2eJrYsZIaVKI2alkg1zdQH99LWlbxcem?=
- =?us-ascii?Q?QYme0ETPz2AlZJ7cVXRGxzrrK3qAYf4EcNvP6nhCNVOm6SwtLMhYiD6E0tpl?=
- =?us-ascii?Q?qh7PEnr5dBeE5eioijZYsKxppRzzPBsuPiN0NIGkyaU4Mh7CGZaMgbvuCl+k?=
- =?us-ascii?Q?CHZfTXghhgwPChnOcJEnSxwqj1PN8jpIet5Bu/GOCmAtkIGOeW7ytiy0X/At?=
- =?us-ascii?Q?zSSBLusZ+6woh7MX89+e7Rg2gBOQjqZJHnFzl78R2f2yuIPe?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 910c65f9-eed4-475f-bdc4-08de626e6f42
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 15:19:18.7840 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mhwBxgm+MuNC4Uj04Rgpf8DmL7X020JPuOD9xO1ef1RReMEOa5oo8ZtTVCN5qJ7Q
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9616
-Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
- envelope-from=jgg@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,27 +130,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 02, 2026 at 03:11:28PM +0000, Shameer Kolothum Thodi wrote:
-> > RIL is in IDR3
-> > ssidsize in IDR1
-> > OAS in IDR5
-> > ATS may be more touchy but maybe this can be introspected too?
-> 
+
+
+On 2/2/26 4:11 PM, Shameer Kolothum Thodi wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 02 February 2026 14:40
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> clg@redhat.com; alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>;
+>> Matt Ochs <mochs@nvidia.com>; smostafa@google.com;
+>> wangzhou1@hisilicon.com; jiangkunkun@huawei.com;
+>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>> zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
+>> <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to
+>> specify OAS bits
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hi Shameer, Nicolin,
+>> On 1/26/26 11:43 AM, Shameer Kolothum wrote:
+>>> QEMU SMMUv3 currently sets the output address size (OAS) to 44 bits.
+>>> With accelerator mode enabled, a device may use SVA, where CPU page
+>> tables
+>>> are shared with the SMMU, requiring an OAS at least as large as the
+>>> CPU’s output address size. A user option is added to configure this.
+>>>
+>>> However, the OAS value advertised by the virtual SMMU must remain
+>>> compatible with the capabilities of the host SMMUv3. In accelerated
+>>> mode, the host SMMU performs stage-2 translation and must be able to
+>>> consume the intermediate physical addresses (IPA) produced by stage-1.
+>>>
+>>> The OAS exposed by the virtual SMMU defines the maximum IPA width that
+>>> stage-1 translations may generate. For AArch64 implementations, the
+>>> maximum usable IPA size on the host SMMU is determined by its own OAS.
+>>> Check that the configured OAS does not exceed what the host SMMU
+>>> can safely support.
+>> After discussion with Kubevirt guys, the management of current RIL,
+>> ssidsize, ats and oas options look touchy because it is tricky for them
+>> to introspect the host values.
+> I may be wrong, but it looks like Kubevirt actually makes use of libvirt. Or
+> is it independent?
+yes they do? The problem is they don't know how to set the values for
+those props besides definiting a kind of hardcoded profile. They are
+unused to do that. The best would be to let qemu guess the right values
+by introspection through the kernel uapi.
+>
+> The reason I am asking is Nathan is already working on the libvirt changes 
+> for this here:
+> https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/5GG76AQTTDUHW5KRANPY3QUII4ZOEYRP/
+>
+> And the _AUTO suggestion might impact that as well.
+sure. That's why I discuss it tight now.
+>  
+>> In cold plug case at least it looks feasible to use IOMMU_GET_HW_INFO()
+>> to retrieve host info:
+>>
+>> RIL is in IDR3
+>> ssidsize in IDR1
+>> OAS in IDR5
+>> ATS may be more touchy but maybe this can be introspected too?
 > Yeah. ATS might require some kernel plumbing as BIOS can override it.
+agreed
+>
+>> I would advocate to turn those options into _AUTO options to give a
+>> chance to the user to ask for host derived values.
+>>
+>> Currently in include/hw/qdev-properties.h we have
+>> DEFINE_PROP_ON_OFF_AUTO for a bool and
+>> DEFINE_PROP_ON_OFF_AUTO_BIT64 for a 64b
+>>
+>> RIL can match bool.
+>> Others may need a new DEFINE_PROP_ON_OFF_AUTO_* one.
+>>
+>> Note such kind of auto property was introduced for virtio-iommu
+>> (DEFINE_PROP_GRANULE_MODE)
+>>
+>> What do you think? Most probably this has been dicussed in the past but
+>> I do not necessarily remember the outputs.
+> IIRC, the only conclusion was that the user has to specify the SMMUv3
+> parameters.  Don't think the _AUTO option was discussed previously.
+> If this is a very useful thing to have, I can take a look.
+If this sounds feasible, I think this would be a more relevant approach.
+The default values could be kept as is for now and we would let kubevirt
+set AUTO value until the default gets changed.
 
-We can treat ATS as a per-PCIe device property.. I think it would be
-fine to tell the SMMU that it always has ATS support, it will never do
-anything with it unless it sees a PCIe device with an ATS cap, and the
-physical STE generated by the hypervisor should sanitize the EATS.
+Eric
 
-BIOS overriding it should be reflected as the devices being reported
-as not supporting ATS, qemu should have a per-device flag to disable
-ATS.
+>
+> Thanks,
+> Shameer
 
-Not sure that helps libvirt side though..
-
-Jason
 
