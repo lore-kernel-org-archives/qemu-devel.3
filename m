@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31378E7FDC2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BF93E7FDC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmztT-0000Oi-C1; Mon, 02 Feb 2026 14:47:31 -0500
+	id 1vmzuZ-0001Sv-RB; Mon, 02 Feb 2026 14:48:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztO-0000MJ-V0; Mon, 02 Feb 2026 14:47:27 -0500
+ id 1vmzuN-0001J1-Ua; Mon, 02 Feb 2026 14:48:30 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztN-0003ER-HD; Mon, 02 Feb 2026 14:47:26 -0500
+ id 1vmzuM-0003LA-Cx; Mon, 02 Feb 2026 14:48:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5957E18509D;
- Mon, 02 Feb 2026 22:46:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2E5C81850A8;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0AD9735B27F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C94D035B28A;
  Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 11/69] block: Fix BDS use after free during shutdown
-Date: Mon,  2 Feb 2026 22:45:34 +0300
-Message-ID: <20260202194638.939438-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 22/69] target/i386/tcg: ignore V3 in 32-bit mode
+Date: Mon,  2 Feb 2026 22:45:45 +0300
+Message-ID: <20260202194638.939438-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -60,53 +60,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-During shutdown, blockdev_close_all_bdrv_states() drops any block node
-references that are still owned by the monitor (i.e. the user). However,
-in doing so, it forgot to also remove the node from monitor_bdrv_states
-(which qmp_blockdev_del() correctly does), which means that later calls
-of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
-the node.
-
-Usually there is no such call after this point, but in some cases it can
-happen. In the reported case, there was an ongoing migration, and the
-migration thread wasn't shut down yet: migration_shutdown() called by
-qemu_cleanup() doesn't actually wait for the migration to be shut down,
-but may just move it to MIGRATION_STATUS_CANCELLING. The next time
-migration_iteration_finish() runs, it sees the status and tries to
-re-activate all block devices that migration may have previously
-inactivated. This is where bdrv_first()/bdrv_next() get called and the
-access to the already freed node happens.
-
-It is debatable if migration_shutdown() should really return before
-migration has settled, but leaving a dangling pointer in the list of
-monitor-owned block nodes is clearly a bug either way and fixing it
-solves the immediate problem, so fix it.
+From the manual: "In 64-bit mode all 4 bits may be used. [...]
+In 32-bit and 16-bit modes bit 6 must be 1 (if bit 6 is not 1, the
+2-byte VEX version will generate LDS instruction and the 3-byte VEX
+version will ignore this bit)."
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251215150714.130214-1-kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 307bc43095b8ab1765fd66c26003d5da06681c05)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 0db1b556e4bcd7a51f222cda9e14850f88fe3f88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/blockdev.c b/blockdev.c
-index 1d1f27cfff..d4b36fa7a9 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -685,6 +685,7 @@ void blockdev_close_all_bdrv_states(void)
- 
-     GLOBAL_STATE_CODE();
-     QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
-+        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
-         bdrv_unref(bs);
-     }
- }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 61303232b7..0e981af9e4 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2657,7 +2657,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+                     goto unknown_op;
+                 }
+             }
+-            s->vex_v = (~vex3 >> 3) & 0xf;
++            s->vex_v = (~vex3 >> 3) & (CODE64(s) ? 15 : 7);
+             s->vex_l = (vex3 >> 2) & 1;
+             s->prefix |= pp_prefix[vex3 & 3] | PREFIX_VEX;
+         }
 -- 
 2.47.3
 
