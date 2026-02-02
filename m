@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1663E73158
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9A4E73159
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmrgO-00016R-2m; Mon, 02 Feb 2026 06:01:29 -0500
+	id 1vmriI-0001oQ-F6; Mon, 02 Feb 2026 06:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmrg7-00014Y-6h
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:01:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmrg3-00059Y-Sq
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:01:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770030064;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pj1CeRTAaeba+nvh1GQipHzWpN3ryDEHohZMu44CJPw=;
- b=ZJL7hG51sfenzsBaXPUedB+D1YFMJXd6ZQEV+9tO6EAJ2iC+v4pbru3Cs1feSkZbqCs8KF
- iHTTWMPrVEDUtKzabqYFN/lrffQQAqdkkcgWfSV/yUHQ/GUgBb7IWarb+kpEMqezrDSqdA
- bRJ0FXzqBdn4I2evvA2+d20+jE/E6pY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-nkAXeax6PuGxTWw4nmrl9A-1; Mon,
- 02 Feb 2026 06:01:01 -0500
-X-MC-Unique: nkAXeax6PuGxTWw4nmrl9A-1
-X-Mimecast-MFC-AGG-ID: nkAXeax6PuGxTWw4nmrl9A_1770030059
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46E8E18005B2; Mon,  2 Feb 2026 11:00:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.68])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B52618007D2; Mon,  2 Feb 2026 11:00:54 +0000 (UTC)
-Date: Mon, 2 Feb 2026 11:00:50 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, mjt@tls.msk.ru,
- whollins@google.com, jansene@google.com, jpcottin@google.com,
- Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-Message-ID: <aYCD4g7x8DDH4tyW@redhat.com>
-References: <20260129190444.225306-1-rkir@google.com>
- <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
- <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
- <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
- <0954062c-c032-42be-ad0d-df2559360963@linaro.org>
- <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmriD-0001nn-TO
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:03:22 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmriA-0005xu-LW
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:03:21 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-432d256c2e6so3483658f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 03:03:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770030197; x=1770634997; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=61gX/YNU5twM4llr/nuqeNbAvrW89PukQmH5iqd9uY4=;
+ b=Nhlc5AMc8wV7DRKJF+YgwLtnit3Pw4ttSXBNofaUW9djv94Pb9+W+Jqm6kA2LU9VWU
+ kvqT1x8SmZlJq3QBOJA5NvuMTI1i96WzkyFhP5xatch0syUaRzL3r7MXJH9p7NZuw300
+ VqEOPtabLoPLbsnSU8705zqGx8ZMUTMwfDsirhTDwEZudamN11CuIyh40lZWwALrzq2D
+ YoVQJSSNJx1Sm5dmsaaHtdVfGqo7f1iXGyFlSKD4gqIllJ191U3AjkcCUtEJP8SCk53r
+ y8hXPiFjHUqVocWPMrb/yFCf84vS6Ppu4wki3KmZ9yIW1cqrz1JXqmgVi3fKzjbzYtPG
+ Uk7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770030197; x=1770634997;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=61gX/YNU5twM4llr/nuqeNbAvrW89PukQmH5iqd9uY4=;
+ b=FwYjzuiPOrL3LINOtZIF9sJ40PcnuqiQlr442pq43AR7KPIdYHAY4OdRyH+PyAVkbf
+ ev21HKCzuJ9/XT+2D0P5itT2W8RBsZdjD41QoHORfhnYs0d/9J/MQv//y1beu/VEXW6b
+ 5aTyao2m1+i59WPDIU75GbfX8Jm38PhZymIcUe80NkNkCcJJhRYl/7l4bBcnVv5VaVhh
+ pFOk69+1hHlrovqpvridED98V3aDvK5XTZHSAPZBu6pCIvRoXUjnRcrwV1HLwgbr2MHl
+ 5EuH7+ASAd78m18ek6gz0CW3+NTLCrwkxsh2W+n7837m6NmbacUox6ttBpH71ZH1S8lX
+ Cpiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSin6K5keYuJ9WUN+CqGlJs5dZl0Qz5QQb9X00n5pgMhwjBmyg3U69aiqDNyImOeu0jRxyjCsgxr5B@nongnu.org
+X-Gm-Message-State: AOJu0YwwBPDBkPGwBx1MUmVPiVckp5/rtjWT9Vir1zhgfKoOj71Fse9p
+ S6CrEiVbgQicXihLaSKUf4ZtWVCtfMhPpwKV6VY8J9Rqldy8YzcA4lGENoxdc2rSzbA9khNhAwI
+ pAEso5SU=
+X-Gm-Gg: AZuq6aISPR20OxUm8IOzBjhH8Fqm3QTc/WC9Ln29GcVqPUI7CIRerdepvHKLqIAIE3d
+ MWgGDNJdTC7qPhVKkFNYKhJqpPYcL7KrwzhF4NA7/k0AGl75qo136uStVFHWdSGbqklpzxIo5Lj
+ u3l0X7T0DE64zBxN9MxPecrL3ZL9svrdjiTCE5EPx5c3/q9BzjdogXrMNrNEuAAw1gtLPln5G2J
+ eIJIODc8BxqTX7hF44zGorWjLPmjOhMfPSzMQyCZZBYECvy1VSwdYe/VxDqYaRW+vcQNM7H9Vo0
+ 3RkFbWp9ATYg4L1CYw4l/YQXx8e3r0ZGp8Pn33fe5gS9V7VmOR33T3Qy97lHsQzd4O/ks6mEGaQ
+ HijluUxfPpqi6Zkym6spwh/0clWh0I755i5JF5GyPrX6v/huoIH84dWPJgIESutJ2VulDPv50Lr
+ WNQz247PgofCqo2oq/PPXL3zhRbHcB6IUDhQbGDVDWq+fZ3wpicEiucg==
+X-Received: by 2002:a05:6000:659:10b0:436:d9b:cd02 with SMTP id
+ ffacd0b85a97d-4360d9bce02mr1302863f8f.0.1770030196837; 
+ Mon, 02 Feb 2026 03:03:16 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4360ef9e804sm1996343f8f.41.2026.02.02.03.03.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 03:03:16 -0800 (PST)
+Message-ID: <b40614d3-ef55-49b2-a1b9-3ecee3d406c6@linaro.org>
+Date: Mon, 2 Feb 2026 12:03:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] include/hw/virtio/virtio-access.h: remove target
+ specifics define
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
+ <20260131020100.1115203-3-pierrick.bouvier@linaro.org>
+ <20260131124842-mutt-send-email-mst@kernel.org>
+ <299f59f7-62c3-42f4-99c4-b7c7cfb111c2@linaro.org>
+ <20260202023914-mutt-send-email-mst@kernel.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260202023914-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,98 +108,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 30, 2026 at 09:19:32AM +0000, Peter Maydell wrote:
-> On Thu, 29 Jan 2026 at 21:44, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> >
-> > Hi Peter,
-> >
-> > (+Paolo / Eric)
-> >
-> > On 29/1/26 21:31, Peter Maydell wrote:
-> > >
-> > > What are we trying to achieve here, and why does it benefit
-> > > us as an upstream project ?
-> > >
-> > > cf previous email thread from 2024
-> > > https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
-> > > about "drip-feeding" of this kind of patch with no clear take
-> > > on what the end state is or how much churn it's going to induce.
-> >
-> > I clearly know QEMU is not a C++ project. Now I don't see why we should
-> > be reluctant to have headers being usable by a C++ compiler, as long as
-> > it doesn't make our project worst to maintain.
+On 2/2/26 08:40, Michael S. Tsirkin wrote:
+> On Sun, Feb 01, 2026 at 11:36:04PM +0100, Philippe Mathieu-Daudé wrote:
+>> On 31/1/26 18:48, Michael S. Tsirkin wrote:
+>>> On Fri, Jan 30, 2026 at 06:00:56PM -0800, Pierrick Bouvier wrote:
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>
+>>> Performance impact?
+>>>
+>>> the reason we have these is for performance ...
+>>
+>> If this is a worry, we can declare the virtio LD/ST helpers in
+>> VirtIODevice and set them in virtio_reset(); the call chain will
+>> be even simpler than doing that check on every calls.
 > 
-> Every bit of code that is written by some downstream in C++ is
-> some thing that will essentially then never be upstreamed without
-> a big rewrite. So making it easier for downstreams to use C++
-> reduces our chances of seeing them contribute what they do back to us.
-> 
-> It's also extra work for us (for instance in this thread you
-> proposed adding a CI job, which is more CI minutes cost to
-> the project, more work for maintainers when something that
-> builds fine locally falls over in the CI, and so on).
-> 
-> Each individual fix might be trivial, but they add up.
-> So it matters whether this one is "this is the only thing
-> we tripped over since 2024" or "we just rebased to a new
-> QEMU version and are going to be submitting dozens of these
-> over the next few weeks".
-> 
-> > See for example non-invasive commit 7246c4cc470 ("exec: don't use void*
-> > in pointer arithmetic in headers"):
-> 
-> > or commit 17c7df806b3 ("exec: avoid using C++ keywords in function
-> > parameters"):
-> 
-> For the record, I wasn't really enthusiastic about those changes
-> either, for essentially the same reasons.
-> 
-> > In this particular case, I always have been confused about what would be
-> > the size of forward-declared enums. The C99 standard chapter §6.7.2.2
-> > point 4 mentions:
-> >
-> >    Each enumerated type shall be compatible with char, a signed
-> >    integer type, or an unsigned integer type. The choice of type
-> >    is implementation-defined, but shall be capable of representing
-> >    the values of all the members of the enumeration.
-> >
-> > When compiling this file with -Werror=pedantic we get:
-> >
-> > In file included from ../../ui/kbd-state.c:10:
-> > include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to
-> > 'enum' types [-Werror,-Wpedantic]
-> >     12 | typedef enum QKbdModifier QKbdModifier;
-> >        |              ^
-> >
-> > So arguably this could be fixed for C.
-> 
-> Yes, I actually like the specific change in the patch
-> on style grounds.
+> Would make them indirect calls though, no?
 
-The *current* code style, however, matches the style we use for the
-struct declaration & typedefs, and it is natural to be consistent
-in this way.
+Currently I count 3 indirect calls; such approach would have only 1.
 
-Even within this one file we have this example:
+Anyway I posted a v3 which should be even better.
 
-  typedef enum QKbdModifier QKbdModifier;
-  typedef struct QKbdState QKbdState;
-
-And so personally I think the current code is preferrable to this patch.
-
-IMHO, if downstream users/developers of a fork really strongly don't want
-to be writing new devices in C, then the focus should be on Rust as the
-next generation language, not the C++.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+> So I suspect the performance of this needs to be tested, anyway.
+> 
 
 
