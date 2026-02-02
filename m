@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B31E73158
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B45E73158
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vms6b-0000KA-B7; Mon, 02 Feb 2026 06:28:33 -0500
+	id 1vmsSD-00053j-Cy; Mon, 02 Feb 2026 06:50:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vms6a-0000Jt-CA
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:28:32 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vmsSB-00053J-K2
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:50:51 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vms6Y-0004EM-Jm
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:28:32 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4806fbc6bf3so46348395e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 03:28:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vmsS7-0007iC-G3
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:50:51 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6581327d6baso6196642a12.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 03:50:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770031708; x=1770636508; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8S74Wzl0i9P/za3Xu286f2tD0emvsrMYLtpoufvR6J0=;
- b=h5Ww+I6EwLtJR/bPrNmbSr82oK4RPLpQrMOKZfABo0O6s65IY0Ah2VSz0cXNA2/tbp
- Ng08lluKTGHh0lkO+5X3J/eILFZp8vFDKwmXEXOGrLx7qv+ewTBrIRHfqiRIJMt635W5
- /3LfDcMzDbozDL8P02xBlbJdPMFL8Y+GobX+8yGtC1+S/aFGq40wCj3fnbJ2w7ZmGry4
- lfprw9rITk9Vz0Kt4Kh3+Dm09oUT8nNsOT2MYYx19JRbkN0ACvbc6AV/pqGh/rFrCUaM
- +1SjUZkwne8LvphUODFGz3NCxDpzxDobtg/wore5zpjafGTIDiZEuf0ByZnVr1WPfklH
- K5QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770031708; x=1770636508;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1770033045; x=1770637845; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8S74Wzl0i9P/za3Xu286f2tD0emvsrMYLtpoufvR6J0=;
- b=JMP+HKRU0/mZcc5upjkJ89dYwGdXsDvT6EfdoqCMDVTVoy4PAAkIFnhf+VZ0d2jtHP
- bXKEzZlWwMH8/ti5S37MvmW58GPVkBGSf8U5cP0TcVNAhz4lsEdBrt94qsGou3vJqswL
- WXmYV2NTDwhSgPJgdY5TMxD+BSBbotlBhVsUKABgd0Z2opPv+dHlRPW8Equ62FMvWybD
- QRaRuVvRHPEUYX7AIBO+1Qe2yv09EPJD9OI4Wx1mCxQdwuJAx7i2Xs8o34HCnXsr4XKt
- gpkibzY6Ldp51HescAgUPA+zYb6LDWT6UCVtiMCzMVt5lAt6lVV+XmVt3akk4g0EZe+e
- c4WQ==
-X-Gm-Message-State: AOJu0YzHYu0bZDpM19I9hkc/eP0BftTRS5+BFEvSkRyNiTzBmEWjKnAq
- 5Aiyrw9fMnLlHYiOzsgTD9nDjsbqXdImFzdNxR4AMDnZkOcb4yKebyEnU4xRo/lhnqCColsSg2+
- RrDj0xQM=
-X-Gm-Gg: AZuq6aKUid4NPf6BrlNom4aabPy78jnGwU7PX+VaNTwosfiqCUYdt3JsnpsOp4a9PB0
- 0Z8fyBR4BqqwRq0RY1m4H0mBa5AqRcQBRpVSMvH19RnuD2Av4ypadGUp7hIvew5JgWzlHReoYrv
- Q7gn1RBHBowv3J2kWV4LBoAyFN1+qkM8Rx+SdrfyNmP8BIQ22E+S0fdBmlQTyQLO2Ow9cUL2PjT
- i/6Y4TXQSlQ76QDfd/9Z/g+ocUJh8edWv/Z/xJil0tL11V5PpgSqxxZxPrxTw6J5E469GS8+H3h
- KfYWQcH6rXjcbGF5baIKNzoJdsM8XJ5hlUri06AAOuQ3IknZIHR2eQSdrTrR7BsX6a2bcAxhrMc
- yhvFz8BX8+8hXDOGCdnNwcTxpQXg+cuJZLDO7MSfVCmRobeSIH5Ruip+0DNvQ2e8KMe7X6UJ50v
- yXxYAQLcpAxb11zueeJhZXepalM+z/8BMgx4VF0xkgPIKbI7spfKqiu8mFrjjt
-X-Received: by 2002:a05:600c:3f0d:b0:480:1e9e:f9d with SMTP id
- 5b1f17b1804b1-482db45deccmr135725885e9.8.1770031708406; 
- Mon, 02 Feb 2026 03:28:28 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10e483asm41558788f8f.3.2026.02.02.03.28.27
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 03:28:27 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v7] tests/unit: add unit test for qemu_hexdump()
-Date: Mon,  2 Feb 2026 12:28:26 +0100
-Message-ID: <20260202112826.38018-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ bh=ZmNq+gcRxh67J+CfhYevPdCYklKWhthrUBRqzvaBhAk=;
+ b=QvkFDVCGdoG6GJcSP+Hby5zVU7TBAGmDZ5DEvWCFz8voGcInka1DdqOZvtegN+33Bz
+ OxyJTsymZHALr8QMqbaW5+f3r0W6shF+t5sqoWsGzlHsUw5ZM0tvM+z09xvmNCPTIiZC
+ rKwwtZcWtMTDSmgEXltgs5MJxwXTveYNPyjaD1Agl46WaSl848Jw96ys/6KyKGyLHDSf
+ MAAGfuBYCRBkl/XsXba7yRP8dfCw6QFNFZ0ULy2/NoPJeFPZvjpeoW6Oc6Vd94OU9krT
+ f4QDMkhjiSPgnHd4ivWrwtAFZDPoPVckM5RH45NNRDFYlfDwl4zEQr+4yMstuPPazKCW
+ kgUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770033045; x=1770637845;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZmNq+gcRxh67J+CfhYevPdCYklKWhthrUBRqzvaBhAk=;
+ b=I0i6QfJjfldeGO6/7meMyhdlU9IS+jXu598ozmjt2OvQXZlYsWG14bsF0SEpXqF9xq
+ W1NHzvYQeIZz4px/PC4Xq/Uia8yb0lyKQHXf/3xcDhTFR5Riik/ZeirIonQKoILBr/q1
+ ETv2NJhM/OnDY8JEFqdtlZ9rqyOE9eFPtqtco0SjFQ92gOIgIPC6P2gbYs2mI/hl4Je9
+ EX+htqTunefuqsOe9J6GDn6Sl0247tcL+sYEaaRYjqpAklUM7LAmuWVENS5LXiNhRzRQ
+ GzFW8JtrJih+LRaF/7zmaMI2UXfqG5M9aMoXtscA0Sux4DngrYwFYg/N2D+JL8o7UKtU
+ /7Xw==
+X-Gm-Message-State: AOJu0Yy9r0qKfqZs92d3x2k+r+BKqTv5YWCEE0sEmzTgVL11zv8jbwds
+ L7+BtJOa/pttkcd+SY3nwjuJzGKW9UsJPKSytMWKgGv0P4iAMNrRFXeHB+MI6JqtMQM=
+X-Gm-Gg: AZuq6aKl4uwtKQWrb+gfatHIQPgsc6n8iNKvXnhH7O1ZpfEtuStagdqC/+DQ1zWjnTJ
+ KBg0zBPO04NerJBOmKxDaOqwflYxZmJDqboRy1kEXuerAYTNUNwdiFC5nbOwnaPQdkfUD/7o7V2
+ jYsyMJMk1FRiEfpSGvEhDMU++YE7SmJuCnX/tkzaURWli/WtPKM+VWv/zpTKVSr4c7qSUi7N0FJ
+ nWiS5OEagiY+yjkQmvw9zVrGVnxWwTN7YyxFnHHSIkVRASvGzh9tnuiEAqCzvAGZUaqkztM3IGD
+ Ali6MwIiZ2t0wMqCLWmJZTy+uJz/R6wcE1SMasUH8pZxOyTtZFPMvAzf/qswKx624rpBR84UBtb
+ ov9O3u1nfN6RsSto9mofdMOkmQ/LCv1q7Y15OGNpedc6zhx2HAVU7qrKZgFv0IXXcsYjPs6Arq1
+ OaBG3EiMlxHWQ=
+X-Received: by 2002:a17:907:9494:b0:b87:34e3:a79e with SMTP id
+ a640c23a62f3a-b8dff56a919mr628316566b.12.1770033045231; 
+ Mon, 02 Feb 2026 03:50:45 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8dbf2ed6edsm873483366b.68.2026.02.02.03.50.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Feb 2026 03:50:44 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7AA1B5F841;
+ Mon, 02 Feb 2026 11:50:43 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  jpcottin@google.com,  Markus Armbruster
+ <armbru@redhat.com>,  Roman Kiryanov <rkir@google.com>,  Will Hollins
+ <whollins@google.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  jansene@google.com,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v2 1/2] bulk: Stop forward-declaring enum typedefs
+In-Reply-To: <20260130211746.46667-2-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 30 Jan 2026 22:17:45
+ +0100")
+References: <20260130211746.46667-1-philmd@linaro.org>
+ <20260130211746.46667-2-philmd@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Mon, 02 Feb 2026 11:50:43 +0000
+Message-ID: <87ms1rpdnw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,132 +109,576 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Test that the fix in commit 20aa05edc2c ("util/hexdump: fix
-QEMU_HEXDUMP_LINE_WIDTH logic") make sense.
+> The C99 standard chapter =C2=A76.7.2.2 point 4 mentions:
+>
+>   Each enumerated type shall be compatible with char, a signed
+>   integer type, or an unsigned integer type. The choice of type
+>   is implementation-defined, but shall be capable of representing
+>   the values of all the members of the enumeration.
+>
+> Align with that recommendation by defining the typedef
+> along with the enum.
+>
+> For information, building with -Werror=3Dpedantic was reporting:
+>
+>   In file included from ../../ui/kbd-state.c:10:
+>   include/ui/kbd-state.h:12:14: error: ISO C forbids forward references t=
+o 'enum' types [-Werror,-Wpedantic]
+>      12 | typedef enum QKbdModifier QKbdModifier;
+>         |              ^
+>   ...
+>
+> Reported-by: Roman Kiryanov <rkir@google.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  hw/riscv/riscv-iommu-bits.h          |  4 ++--
+>  hw/riscv/riscv-iommu.h               |  2 --
+>  include/hw/misc/auxbus.h             | 11 ++++-------
+>  include/hw/pci/pci_device.h          |  5 ++---
+>  include/hw/ssi/ssi.h                 |  6 ++----
+>  include/hw/xen/interface/io/xenbus.h |  5 ++---
+>  include/io/channel.h                 | 11 ++++-------
+>  include/system/replay.h              | 10 ++++------
+>  include/ui/clipboard.h               | 15 ++++++---------
+>  include/ui/kbd-state.h               |  6 ++----
+>  pc-bios/s390-ccw/virtio.h            |  5 ++---
+>  tests/qtest/libqos/qgraph_internal.h | 10 ++++------
+>  hw/core/loader.c                     |  5 ++---
+>  hw/display/xlnx_dp.c                 | 11 ++++-------
+>  hw/dma/xlnx_dpdma.c                  | 10 ++++------
+>  qapi/opts-visitor.c                  |  7 ++-----
+>  qapi/string-output-visitor.c         |  6 ++----
+>  tests/unit/check-qom-proplist.c      |  6 ++----
+>  18 files changed, 50 insertions(+), 85 deletions(-)
+>
+> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+> index 47fe01bee58..281afa7bc3f 100644
+> --- a/hw/riscv/riscv-iommu-bits.h
+> +++ b/hw/riscv/riscv-iommu-bits.h
+> @@ -96,11 +96,11 @@ struct riscv_iommu_pq_record {
+>  #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
+>  #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
+>=20=20
+> -enum riscv_iommu_igs_modes {
+> +typedef enum riscv_iommu_igs_modes {
+>      RISCV_IOMMU_CAP_IGS_MSI =3D 0,
+>      RISCV_IOMMU_CAP_IGS_WSI,
+>      RISCV_IOMMU_CAP_IGS_BOTH
+> -};
+> +} riscv_iommu_igs_mode;
 
-To not break compilation when we build without 'block', move
-hexdump.c out of "if have_block" in meson.build.
+mode vs modes. It seems very clumsy to have the type at the front and
+back of the declaration. The only real reason to have the tag ahead of
+the struct/enum was if there are references in the structure.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v7:
-- no need for close(fd) (implicit via fdclose)
-v6:
-- mention commit 20aa05edc2c in desc
-- wrap long lines for checkpatch.pl
-- use g_file_open_tmp()
----
- tests/unit/test-cutils.c | 66 ++++++++++++++++++++++++++++++++++++++++
- util/meson.build         |  2 +-
- 2 files changed, 67 insertions(+), 1 deletion(-)
+IOW this does feel like a lot of churn.
 
-diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
-index 75fae29003a..61f53a0c393 100644
---- a/tests/unit/test-cutils.c
-+++ b/tests/unit/test-cutils.c
-@@ -3626,6 +3626,67 @@ static void test_si_prefix(void)
-     g_assert_cmpstr(si_prefix(18), ==, "E");
- }
- 
-+static void test_qemu_hexdump_alignment(void)
-+{
-+    /*
-+     * Test that ASCII part is properly aligned for incomplete lines.
-+     * This test catches the bug that was fixed in previous commit
-+     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
-+     *
-+     * We use data that is not aligned to 16 bytes, so last line
-+     * is incomplete.
-+     */
-+    static const uint8_t data[] = {
-+        /* First line: 16 bytes */
-+        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
-+        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
-+        /* Second line: 5 bytes (incomplete) */
-+        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
-+    };
-+    char *fname = NULL;
-+    int fd;
-+    g_autofree char *output = NULL;
-+    size_t size, bytes_read;
-+    FILE *f;
-+
-+    fd = g_file_open_tmp("test-qemu-hexdump-alignment-XXXXXX", &fname, NULL);
-+    g_assert(fd >= 0);
-+    g_assert_nonnull(fname);
-+    f = fdopen(fd, "w+");
-+
-+    g_assert_nonnull(f);
-+
-+    qemu_hexdump(f, "test", data, sizeof(data));
-+
-+    size = ftell(f);
-+    fseek(f, 0, SEEK_SET);
-+
-+    output = g_malloc(size + 1);
-+    bytes_read = 0;
-+    while (bytes_read < size) {
-+        size_t chunk = fread(output + bytes_read, 1, size - bytes_read, f);
-+        if (chunk == 0) {
-+            break;
-+        }
-+        bytes_read += chunk;
-+    }
-+    g_assert_cmpuint(bytes_read, ==, size);
-+    output[size] = '\0';
-+
-+    fclose(f);
-+    unlink(fname);
-+    g_free(fname);
-+
-+    /* We expect proper alignment of "s is" part on the second line */
-+    static const char *expected =
-+        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 54 68 69   "
-+        "Hello World! Thi\n"
-+        "test: 0010: 73 20 69 73  20                                      "
-+        "s is \n";
-+
-+    g_assert_cmpstr(output, ==, expected);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-@@ -3995,5 +4056,10 @@ int main(int argc, char **argv)
-                     test_iec_binary_prefix);
-     g_test_add_func("/cutils/si_prefix",
-                     test_si_prefix);
-+
-+    /* qemu_hexdump() test */
-+    g_test_add_func("/cutils/qemu_hexdump/alignment",
-+                    test_qemu_hexdump_alignment);
-+
-     return g_test_run();
- }
-diff --git a/util/meson.build b/util/meson.build
-index a0cfdc30ba6..7c9445615d7 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -33,6 +33,7 @@ endif
- util_ss.add(files('defer-call.c'))
- util_ss.add(files('envlist.c', 'path.c', 'module.c'))
- util_ss.add(files('event.c'))
-+util_ss.add(files('hexdump.c'))
- util_ss.add(files('host-utils.c'))
- util_ss.add(files('bitmap.c', 'bitops.c'))
- util_ss.add(files('fifo8.c'))
-@@ -90,7 +91,6 @@ if have_block
-   util_ss.add(files('buffer.c'))
-   util_ss.add(files('bufferiszero.c'))
-   util_ss.add(files('hbitmap.c'))
--  util_ss.add(files('hexdump.c'))
-   util_ss.add(files('iova-tree.c'))
-   util_ss.add(files('iov.c'))
-   util_ss.add(files('nvdimm-utils.c'))
--- 
-2.52.0
+>=20=20
+>  /* 5.4 Features control register (32bits) */
+>  #define RISCV_IOMMU_REG_FCTL            0x0008
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 2dabd86941b..fbf70fb81e1 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -25,8 +25,6 @@
+>  #include "hw/riscv/iommu.h"
+>  #include "hw/riscv/riscv-iommu-bits.h"
+>=20=20
+> -typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
+> -
+>  struct RISCVIOMMUState {
+>      /*< private >*/
+>      DeviceState parent_obj;
+> diff --git a/include/hw/misc/auxbus.h b/include/hw/misc/auxbus.h
+> index 5bfdd05e152..11f1a87d44f 100644
+> --- a/include/hw/misc/auxbus.h
+> +++ b/include/hw/misc/auxbus.h
+> @@ -29,16 +29,13 @@
+>  #include "hw/core/qdev.h"
+>  #include "qom/object.h"
+>=20=20
+> -typedef enum AUXCommand AUXCommand;
+> -typedef enum AUXReply AUXReply;
+> -
+>  #define TYPE_AUXTOI2C "aux-to-i2c-bridge"
+>  OBJECT_DECLARE_SIMPLE_TYPE(AUXTOI2CState, AUXTOI2C)
+>=20=20
+>  #define TYPE_AUX_SLAVE "aux-slave"
+>  OBJECT_DECLARE_SIMPLE_TYPE(AUXSlave, AUX_SLAVE)
+>=20=20
+> -enum AUXCommand {
+> +typedef enum AUXCommand {
+>      WRITE_I2C =3D 0,
+>      READ_I2C =3D 1,
+>      WRITE_I2C_STATUS =3D 2,
+> @@ -46,15 +43,15 @@ enum AUXCommand {
+>      READ_I2C_MOT =3D 5,
+>      WRITE_AUX =3D 8,
+>      READ_AUX =3D 9
+> -};
+> +} AUXCommand;
+>=20=20
+> -enum AUXReply {
+> +typedef enum AUXReply {
+>      AUX_I2C_ACK =3D 0,
+>      AUX_NACK =3D 1,
+>      AUX_DEFER =3D 2,
+>      AUX_I2C_NACK =3D 4,
+>      AUX_I2C_DEFER =3D 8
+> -};
+> +} AUXReply;
+>=20=20
+>  #define TYPE_AUX_BUS "aux-bus"
+>  OBJECT_DECLARE_SIMPLE_TYPE(AUXBus, AUX_BUS)
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index 88ccea50113..85e57fa5ca1 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -43,13 +43,12 @@ struct PCIDeviceClass {
+>      bool sriov_vf_user_creatable;
+>  };
+>=20=20
+> -enum PCIReqIDType {
+> +typedef enum PCIReqIDType {
+>      PCI_REQ_ID_INVALID =3D 0,
+>      PCI_REQ_ID_BDF,
+>      PCI_REQ_ID_SECONDARY_BUS,
+>      PCI_REQ_ID_MAX,
+> -};
+> -typedef enum PCIReqIDType PCIReqIDType;
+> +} PCIReqIDType;
+>=20=20
+>  struct PCIReqIDCache {
+>      PCIDevice *dev;
+> diff --git a/include/hw/ssi/ssi.h b/include/hw/ssi/ssi.h
+> index 6d6d8ccb3d4..d576e8cb061 100644
+> --- a/include/hw/ssi/ssi.h
+> +++ b/include/hw/ssi/ssi.h
+> @@ -16,19 +16,17 @@
+>  #include "hw/core/qdev.h"
+>  #include "qom/object.h"
+>=20=20
+> -typedef enum SSICSMode SSICSMode;
+> -
+>  #define TYPE_SSI_PERIPHERAL "ssi-peripheral"
+>  OBJECT_DECLARE_TYPE(SSIPeripheral, SSIPeripheralClass,
+>                      SSI_PERIPHERAL)
+>=20=20
+>  #define SSI_GPIO_CS "ssi-gpio-cs"
+>=20=20
+> -enum SSICSMode {
+> +typedef enum SSICSMode {
+>      SSI_CS_NONE =3D 0,
+>      SSI_CS_LOW,
+>      SSI_CS_HIGH,
+> -};
+> +} SSICSMode;
+>=20=20
+>  /* Peripherals.  */
+>  struct SSIPeripheralClass {
+> diff --git a/include/hw/xen/interface/io/xenbus.h b/include/hw/xen/interf=
+ace/io/xenbus.h
+> index 9cd0cd7c670..3fe2f53c22c 100644
+> --- a/include/hw/xen/interface/io/xenbus.h
+> +++ b/include/hw/xen/interface/io/xenbus.h
+> @@ -16,7 +16,7 @@
+>   * the state of the connection between the driver and the kernel's device
+>   * layers.
+>   */
+> -enum xenbus_state {
+> +typedef enum xenbus_state {
+>      XenbusStateUnknown       =3D 0,
+>=20=20
+>      XenbusStateInitialising  =3D 1,
+> @@ -47,8 +47,7 @@ enum xenbus_state {
+>      XenbusStateReconfiguring =3D 7,
+>=20=20
+>      XenbusStateReconfigured  =3D 8
+> -};
+> -typedef enum xenbus_state XenbusState;
+> +} XenbusState;
+>=20=20
+>  #endif /* _XEN_PUBLIC_IO_XENBUS_H */
+>=20=20
+> diff --git a/include/io/channel.h b/include/io/channel.h
+> index 1b02350437d..fb6ec407a91 100644
+> --- a/include/io/channel.h
+> +++ b/include/io/channel.h
+> @@ -38,9 +38,8 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
+>  #define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
+>  #define QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING 0x4
+>=20=20
+> -typedef enum QIOChannelFeature QIOChannelFeature;
+>=20=20
+> -enum QIOChannelFeature {
+> +typedef enum QIOChannelFeature {
+>      QIO_CHANNEL_FEATURE_FD_PASS,
+>      QIO_CHANNEL_FEATURE_SHUTDOWN,
+>      QIO_CHANNEL_FEATURE_LISTEN,
+> @@ -48,16 +47,14 @@ enum QIOChannelFeature {
+>      QIO_CHANNEL_FEATURE_READ_MSG_PEEK,
+>      QIO_CHANNEL_FEATURE_SEEKABLE,
+>      QIO_CHANNEL_FEATURE_CONCURRENT_IO,
+> -};
+> +} QIOChannelFeature;
+>=20=20
+>=20=20
+> -typedef enum QIOChannelShutdown QIOChannelShutdown;
+> -
+> -enum QIOChannelShutdown {
+> +typedef enum QIOChannelShutdown {
+>      QIO_CHANNEL_SHUTDOWN_READ =3D 1,
+>      QIO_CHANNEL_SHUTDOWN_WRITE =3D 2,
+>      QIO_CHANNEL_SHUTDOWN_BOTH =3D 3,
+> -};
+> +} QIOChannelShutdown;
+>=20=20
+>  typedef gboolean (*QIOChannelFunc)(QIOChannel *ioc,
+>                                     GIOCondition condition,
+> diff --git a/include/system/replay.h b/include/system/replay.h
+> index f8715ca9feb..ed34256d8bb 100644
+> --- a/include/system/replay.h
+> +++ b/include/system/replay.h
+> @@ -19,17 +19,16 @@
+>  #include "qemu/audio.h"
+>=20=20
+>  /* replay clock kinds */
+> -enum ReplayClockKind {
+> +typedef enum ReplayClockKind {
+>      /* host_clock */
+>      REPLAY_CLOCK_HOST,
+>      /* virtual_rt_clock */
+>      REPLAY_CLOCK_VIRTUAL_RT,
+>      REPLAY_CLOCK_COUNT
+> -};
+> -typedef enum ReplayClockKind ReplayClockKind;
+> +} ReplayClockKind;
+>=20=20
+>  /* IDs of the checkpoints */
+> -enum ReplayCheckpoint {
+> +typedef enum ReplayCheckpoint {
+>      CHECKPOINT_CLOCK_WARP_START,
+>      CHECKPOINT_CLOCK_WARP_ACCOUNT,
+>      CHECKPOINT_RESET_REQUESTED,
+> @@ -40,8 +39,7 @@ enum ReplayCheckpoint {
+>      CHECKPOINT_INIT,
+>      CHECKPOINT_RESET,
+>      CHECKPOINT_COUNT
+> -};
+> -typedef enum ReplayCheckpoint ReplayCheckpoint;
+> +} ReplayCheckpoint;
+>=20=20
+>  typedef struct ReplayNetState ReplayNetState;
+>=20=20
+> diff --git a/include/ui/clipboard.h b/include/ui/clipboard.h
+> index 62a96ce9ff5..2704434ded9 100644
+> --- a/include/ui/clipboard.h
+> +++ b/include/ui/clipboard.h
+> @@ -20,9 +20,6 @@
+>   * is supported for now.
+>   */
+>=20=20
+> -typedef enum QemuClipboardType QemuClipboardType;
+> -typedef enum QemuClipboardNotifyType QemuClipboardNotifyType;
+> -typedef enum QemuClipboardSelection QemuClipboardSelection;
+>  typedef struct QemuClipboardPeer QemuClipboardPeer;
+>  typedef struct QemuClipboardNotify QemuClipboardNotify;
+>  typedef struct QemuClipboardInfo QemuClipboardInfo;
+> @@ -36,10 +33,10 @@ extern const VMStateDescription vmstate_cbinfo;
+>   * @QEMU_CLIPBOARD_TYPE_TEXT: text/plain; charset=3Dutf-8
+>   * @QEMU_CLIPBOARD_TYPE__COUNT: type count.
+>   */
+> -enum QemuClipboardType {
+> +typedef enum QemuClipboardType {
+>      QEMU_CLIPBOARD_TYPE_TEXT,
+>      QEMU_CLIPBOARD_TYPE__COUNT,
+> -};
+> +} QemuClipboardType;
+>=20=20
+>  /* same as VD_AGENT_CLIPBOARD_SELECTION_* */
+>  /**
+> @@ -50,12 +47,12 @@ enum QemuClipboardType {
+>   * @QEMU_CLIPBOARD_SELECTION_SECONDARY: secondary selection (dunno).
+>   * @QEMU_CLIPBOARD_SELECTION__COUNT: selection count.
+>   */
+> -enum QemuClipboardSelection {
+> +typedef enum QemuClipboardSelection {
+>      QEMU_CLIPBOARD_SELECTION_CLIPBOARD,
+>      QEMU_CLIPBOARD_SELECTION_PRIMARY,
+>      QEMU_CLIPBOARD_SELECTION_SECONDARY,
+>      QEMU_CLIPBOARD_SELECTION__COUNT,
+> -};
+> +} QemuClipboardSelection;
+>=20=20
+>  /**
+>   * struct QemuClipboardPeer
+> @@ -81,10 +78,10 @@ struct QemuClipboardPeer {
+>   *
+>   * Clipboard notify type.
+>   */
+> -enum QemuClipboardNotifyType {
+> +typedef enum QemuClipboardNotifyType {
+>      QEMU_CLIPBOARD_UPDATE_INFO,
+>      QEMU_CLIPBOARD_RESET_SERIAL,
+> -};
+> +} QemuClipboardNotifyType;
+>=20=20
+>  /**
+>   * struct QemuClipboardNotify
+> diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
+> index 1f37b932eb6..3522ebe51b9 100644
+> --- a/include/ui/kbd-state.h
+> +++ b/include/ui/kbd-state.h
+> @@ -9,9 +9,7 @@
+>=20=20
+>  #include "qapi/qapi-types-ui.h"
+>=20=20
+> -typedef enum QKbdModifier QKbdModifier;
+> -
+> -enum QKbdModifier {
+> +typedef enum QKbdModifier {
+>      QKBD_MOD_NONE =3D 0,
+>=20=20
+>      QKBD_MOD_SHIFT,
+> @@ -23,7 +21,7 @@ enum QKbdModifier {
+>      QKBD_MOD_CAPSLOCK,
+>=20=20
+>      QKBD_MOD__MAX
+> -};
+> +} QKbdModifier;
+>=20=20
+>  typedef struct QKbdState QKbdState;
+>=20=20
+> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+> index 5c5e808a500..67fd0da9fd2 100644
+> --- a/pc-bios/s390-ccw/virtio.h
+> +++ b/pc-bios/s390-ccw/virtio.h
+> @@ -173,13 +173,12 @@ struct VirtioBlkConfig {
+>  } __attribute__((packed));
+>  typedef struct VirtioBlkConfig VirtioBlkConfig;
+>=20=20
+> -enum guessed_disk_nature_type {
+> +typedef enum guessed_disk_nature_type {
+>      VIRTIO_GDN_NONE     =3D 0,
+>      VIRTIO_GDN_DASD     =3D 1,
+>      VIRTIO_GDN_CDROM    =3D 2,
+>      VIRTIO_GDN_SCSI     =3D 3,
+> -};
+> -typedef enum guessed_disk_nature_type VirtioGDN;
+> +} VirtioGDN;
+>=20=20
+>  VirtioGDN virtio_guessed_disk_nature(void);
+>  void virtio_assume_eckd(void);
+> diff --git a/tests/qtest/libqos/qgraph_internal.h b/tests/qtest/libqos/qg=
+raph_internal.h
+> index 87fab1f9f0d..e2e740a59db 100644
+> --- a/tests/qtest/libqos/qgraph_internal.h
+> +++ b/tests/qtest/libqos/qgraph_internal.h
+> @@ -27,8 +27,6 @@
+>  #include "qgraph.h"
+>=20=20
+>  typedef struct QOSGraphMachine QOSGraphMachine;
+> -typedef enum QOSEdgeType QOSEdgeType;
+> -typedef enum QOSNodeType QOSNodeType;
+>=20=20
+>  /* callback called when the walk path algorithm found a
+>   * valid path
+> @@ -36,19 +34,19 @@ typedef enum QOSNodeType QOSNodeType;
+>  typedef void (*QOSTestCallback) (QOSGraphNode *path, int len);
+>=20=20
+>  /* edge types*/
+> -enum QOSEdgeType {
+> +typedef enum QOSEdgeType {
+>      QEDGE_CONTAINS,
+>      QEDGE_PRODUCES,
+>      QEDGE_CONSUMED_BY
+> -};
+> +} QOSEdgeType;
+>=20=20
+>  /* node types*/
+> -enum QOSNodeType {
+> +typedef enum QOSNodeType {
+>      QNODE_MACHINE,
+>      QNODE_DRIVER,
+>      QNODE_INTERFACE,
+>      QNODE_TEST
+> -};
+> +} QOSNodeType;
+>=20=20
+>  /* Graph Node */
+>  struct QOSGraphNode {
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 5cbfba0a86d..5b6f022428c 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -1688,15 +1688,14 @@ HumanReadableText *qmp_x_query_roms(Error **errp)
+>      return human_readable_text_from_str(buf);
+>  }
+>=20=20
+> -typedef enum HexRecord HexRecord;
+> -enum HexRecord {
+> +typedef enum HexRecord {
+>      DATA_RECORD =3D 0,
+>      EOF_RECORD,
+>      EXT_SEG_ADDR_RECORD,
+>      START_SEG_ADDR_RECORD,
+>      EXT_LINEAR_ADDR_RECORD,
+>      START_LINEAR_ADDR_RECORD,
+> -};
+> +} HexRecord;
+>=20=20
+>  /* Each record contains a 16-bit address which is combined with the uppe=
+r 16
+>   * bits of the implicit "next address" to form a 32-bit address.
+> diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+> index a24e95f0a73..1ab2375625c 100644
+> --- a/hw/display/xlnx_dp.c
+> +++ b/hw/display/xlnx_dp.c
+> @@ -212,7 +212,7 @@
+>  #define DP_GRAPHIC_DMA_CHANNEL              (3)
+>  #define DP_VIDEO_DMA_CHANNEL                (0)
+>=20=20
+> -enum DPGraphicFmt {
+> +typedef enum DPGraphicFmt {
+>      DP_GRAPHIC_RGBA8888 =3D 0 << 8,
+>      DP_GRAPHIC_ABGR8888 =3D 1 << 8,
+>      DP_GRAPHIC_RGB888 =3D 2 << 8,
+> @@ -225,9 +225,9 @@ enum DPGraphicFmt {
+>      DP_GRAPHIC_2BPP =3D 9 << 8,
+>      DP_GRAPHIC_1BPP =3D 10 << 8,
+>      DP_GRAPHIC_MASK =3D 0xF << 8
+> -};
+> +} DPGraphicFmt;
+>=20=20
+> -enum DPVideoFmt {
+> +typedef enum DPVideoFmt {
+>      DP_NL_VID_CB_Y0_CR_Y1 =3D 0,
+>      DP_NL_VID_CR_Y0_CB_Y1 =3D 1,
+>      DP_NL_VID_Y0_CR_Y1_CB =3D 2,
+> @@ -254,10 +254,7 @@ enum DPVideoFmt {
+>      DP_NL_VID_YV16CL_420_10BPC =3D 23,
+>      DP_NL_VID_YV16CL2_420_10BPC =3D 24,
+>      DP_NL_VID_FMT_MASK =3D 0x1F
+> -};
+> -
+> -typedef enum DPGraphicFmt DPGraphicFmt;
+> -typedef enum DPVideoFmt DPVideoFmt;
+> +} DPVideoFmt;
+>=20=20
+>  static const VMStateDescription vmstate_dp =3D {
+>      .name =3D TYPE_XLNX_DP,
+> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+> index 32f56036a4c..ef5488b3eca 100644
+> --- a/hw/dma/xlnx_dpdma.c
+> +++ b/hw/dma/xlnx_dpdma.c
+> @@ -122,15 +122,15 @@
+>=20=20
+>  #define DPDMA_FRAG_MAX_SZ                     (4096)
+>=20=20
+> -enum DPDMABurstType {
+> +typedef enum DPDMABurstType {
+>      DPDMA_INCR =3D 0,
+>      DPDMA_FIXED =3D 1
+> -};
+> +} DPDMABurstType;
+>=20=20
+> -enum DPDMAMode {
+> +typedef enum DPDMAMode {
+>      DPDMA_CONTIGOUS =3D 0,
+>      DPDMA_FRAGMENTED =3D 1
+> -};
+> +} DPDMAMode;
+>=20=20
+>  struct DPDMADescriptor {
+>      uint32_t control;
+> @@ -153,8 +153,6 @@ struct DPDMADescriptor {
+>      uint32_t crc;
+>  };
+>=20=20
+> -typedef enum DPDMABurstType DPDMABurstType;
+> -typedef enum DPDMAMode DPDMAMode;
+>  typedef struct DPDMADescriptor DPDMADescriptor;
+>=20=20
+>  static bool xlnx_dpdma_desc_is_last(DPDMADescriptor *desc)
+> diff --git a/qapi/opts-visitor.c b/qapi/opts-visitor.c
+> index 3d1a28b4191..66b1b931a31 100644
+> --- a/qapi/opts-visitor.c
+> +++ b/qapi/opts-visitor.c
+> @@ -20,8 +20,7 @@
+>  #include "qapi/visitor-impl.h"
+>=20=20
+>=20=20
+> -enum ListMode
+> -{
+> +typedef enum ListMode {
+>      LM_NONE,             /* not traversing a list of repeated options */
+>=20=20
+>      LM_IN_PROGRESS,      /*
+> @@ -58,9 +57,7 @@ enum ListMode
+>                             * No more QemuOpt instance in the list.
+>                             * The traversal has been completed.
+>                             */
+> -};
+> -
+> -typedef enum ListMode ListMode;
+> +} ListMode;
+>=20=20
+>  struct OptsVisitor
+>  {
+> diff --git a/qapi/string-output-visitor.c b/qapi/string-output-visitor.c
+> index 5115536b153..5d175773356 100644
+> --- a/qapi/string-output-visitor.c
+> +++ b/qapi/string-output-visitor.c
+> @@ -17,7 +17,7 @@
+>  #include <math.h>
+>  #include "qemu/range.h"
+>=20=20
+> -enum ListMode {
+> +typedef enum ListMode {
+>      LM_NONE,             /* not traversing a list of repeated options */
+>      LM_STARTED,          /* next_list() ready to be called */
+>=20=20
+> @@ -48,9 +48,7 @@ enum ListMode {
+>      LM_UNSIGNED_INTERVAL,/* Same as above, only for an unsigned interval=
+. */
+>=20=20
+>      LM_END,              /* next_list() called, about to see last elemen=
+t. */
+> -};
+> -
+> -typedef enum ListMode ListMode;
+> +} ListMode;
+>=20=20
+>  struct StringOutputVisitor
+>  {
+> diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-propl=
+ist.c
+> index ee3c6fb32b1..6f3dbc4407a 100644
+> --- a/tests/unit/check-qom-proplist.c
+> +++ b/tests/unit/check-qom-proplist.c
+> @@ -40,15 +40,13 @@ typedef struct DummyObjectClass DummyObjectClass;
+>  DECLARE_INSTANCE_CHECKER(DummyObject, DUMMY_OBJECT,
+>                           TYPE_DUMMY)
+>=20=20
+> -typedef enum DummyAnimal DummyAnimal;
+> -
+> -enum DummyAnimal {
+> +typedef enum DummyAnimal {
+>      DUMMY_FROG,
+>      DUMMY_ALLIGATOR,
+>      DUMMY_PLATYPUS,
+>=20=20
+>      DUMMY_LAST,
+> -};
+> +} DummyAnimal;
+>=20=20
+>  const QEnumLookup dummy_animal_map =3D {
+>      .array =3D (const char *const[]) {
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
