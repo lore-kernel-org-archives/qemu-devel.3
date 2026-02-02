@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741E9E7DEE3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0988E7DEEE
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmv7T-000222-Tv; Mon, 02 Feb 2026 09:41:39 -0500
+	id 1vmv7g-00029j-Oc; Mon, 02 Feb 2026 09:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv7P-00020m-R9
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:41:37 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv7e-00028w-Eg
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:41:50 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv7L-00017v-Sk
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:41:34 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv7d-0001B0-4n
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:41:50 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 901283E746;
- Mon,  2 Feb 2026 14:41:29 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 69F7C5BCEC;
+ Mon,  2 Feb 2026 14:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770043289; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770043307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DsN+duw/xvf8JIRJksJxe6GVWPbypqEy2F5fJeSHsLQ=;
- b=XrDgMilrXMTgVLeXnGrj6Gw0G1h1vD3SyYaDAIs8/qWrCBnF7lwW6ALiIWNVDWOaV7sJDu
- Nig1an8/+jWXVazg5ci5jDhgbXkvrgBzzKKh6MhpQTNPCFZhWryvpf/g0Vgwr0AViqN0ky
- 3moscveB4k8jDXgjdUw2wWCTJCMuV88=
+ bh=yYyYJjNHQXtcUyw0GCJcxM6v5p+rkSW8TAKCaxAY+Vo=;
+ b=lYWpkO+SdHDLZlYqrqQ8ngLzhI3Qvpb7S4dqn63t796PnzDU+kmBD98oFPyRERLy4ZlKNQ
+ cBitHuUQ8Qgn/eaTFIj3jz20s2iz276WYxI/du4YL025fPfXnlFtV6QYPCMfGQoD8P+3+x
+ xti6QvtRvWmiHaHt+SAD9UZI23/IEsQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770043289;
+ s=susede2_ed25519; t=1770043307;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DsN+duw/xvf8JIRJksJxe6GVWPbypqEy2F5fJeSHsLQ=;
- b=7RimTlLHve6wIqCECoJYxgfRB6w/xktvljG4DksouHcJ4cWC9uxZrWP0ph2//xfiRfIfRh
- nIxUVLS6BdMFIeDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XrDgMilr;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7RimTlLH
+ bh=yYyYJjNHQXtcUyw0GCJcxM6v5p+rkSW8TAKCaxAY+Vo=;
+ b=S6X+Uyx1FMPSUnEQ46Amu25/9TucaDWAw0IzWDF95DK/2lvvphY1abd9qqqi72R2mmoih2
+ MW/W7Nm0NYDXCcBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770043289; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770043307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DsN+duw/xvf8JIRJksJxe6GVWPbypqEy2F5fJeSHsLQ=;
- b=XrDgMilrXMTgVLeXnGrj6Gw0G1h1vD3SyYaDAIs8/qWrCBnF7lwW6ALiIWNVDWOaV7sJDu
- Nig1an8/+jWXVazg5ci5jDhgbXkvrgBzzKKh6MhpQTNPCFZhWryvpf/g0Vgwr0AViqN0ky
- 3moscveB4k8jDXgjdUw2wWCTJCMuV88=
+ bh=yYyYJjNHQXtcUyw0GCJcxM6v5p+rkSW8TAKCaxAY+Vo=;
+ b=lYWpkO+SdHDLZlYqrqQ8ngLzhI3Qvpb7S4dqn63t796PnzDU+kmBD98oFPyRERLy4ZlKNQ
+ cBitHuUQ8Qgn/eaTFIj3jz20s2iz276WYxI/du4YL025fPfXnlFtV6QYPCMfGQoD8P+3+x
+ xti6QvtRvWmiHaHt+SAD9UZI23/IEsQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770043289;
+ s=susede2_ed25519; t=1770043307;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DsN+duw/xvf8JIRJksJxe6GVWPbypqEy2F5fJeSHsLQ=;
- b=7RimTlLHve6wIqCECoJYxgfRB6w/xktvljG4DksouHcJ4cWC9uxZrWP0ph2//xfiRfIfRh
- nIxUVLS6BdMFIeDg==
+ bh=yYyYJjNHQXtcUyw0GCJcxM6v5p+rkSW8TAKCaxAY+Vo=;
+ b=S6X+Uyx1FMPSUnEQ46Amu25/9TucaDWAw0IzWDF95DK/2lvvphY1abd9qqqi72R2mmoih2
+ MW/W7Nm0NYDXCcBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EFD3F3EA62;
- Mon,  2 Feb 2026 14:41:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CBC063EA62;
+ Mon,  2 Feb 2026 14:41:46 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 9fS+K5i3gGk0MgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 14:41:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +A0bI6q3gGn4NgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 14:41:46 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
@@ -76,41 +74,33 @@ Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
  Zhang <zhanghailiang@xfusion.com>, Markus Armbruster <armbru@redhat.com>,
  Li Zhijian <lizhijian@fujitsu.com>, "Dr. David Alan Gilbert"
  <dave@treblig.org>, Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH v4 03/16] colo: Setup ram cache in normal migration path
-In-Reply-To: <20260130-colo_unit_test_multifd-v4-3-7115ab6f0e77@web.de>
+Subject: Re: [PATCH v4 04/16] colo: Replace
+ migration_incoming_colo_enabled() with migrate_colo()
+In-Reply-To: <20260130-colo_unit_test_multifd-v4-4-7115ab6f0e77@web.de>
 References: <20260130-colo_unit_test_multifd-v4-0-7115ab6f0e77@web.de>
- <20260130-colo_unit_test_multifd-v4-3-7115ab6f0e77@web.de>
-Date: Mon, 02 Feb 2026 11:41:26 -0300
-Message-ID: <87qzr3ryw9.fsf@suse.de>
+ <20260130-colo_unit_test_multifd-v4-4-7115ab6f0e77@web.de>
+Date: Mon, 02 Feb 2026 11:41:44 -0300
+Message-ID: <87o6m7ryvr.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[web.de,nongnu.org];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_TO(0.00)[web.de,nongnu.org];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
  FREEMAIL_CC(0.00)[redhat.com,gmail.com,xfusion.com,fujitsu.com,treblig.org,web.de];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[11]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Queue-Id: 901283E746
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ RCPT_COUNT_SEVEN(0.00)[11]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -143,8 +133,6 @@ Lukas Straub <lukasstraub2@web.de> writes:
 > So migration_incoming_colo_enabled() and migrate_colo() are equivalent
 > with migrate_colo() being easier to reason about since it is always true
 > during the whole migration.
->
-> Use migrate_colo() to initialize the ram cache in the normal migration path.
 >
 > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
