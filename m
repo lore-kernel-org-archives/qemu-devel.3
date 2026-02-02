@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58768E7DEEE
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B1FE7DEF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmvTK-0003dz-3x; Mon, 02 Feb 2026 10:04:14 -0500
+	id 1vmvV4-0004NB-I5; Mon, 02 Feb 2026 10:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1vmvTH-0003db-7e; Mon, 02 Feb 2026 10:04:12 -0500
+ id 1vmvV2-0004Mx-AS; Mon, 02 Feb 2026 10:06:00 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1vmvTD-0005kw-Mw; Mon, 02 Feb 2026 10:04:10 -0500
+ id 1vmvV1-0006BW-2w; Mon, 02 Feb 2026 10:06:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=SR0Vb6M8x8fTK/4+yKWeK2uN6UB7sb3GhIKOJnTSc4M=; b=Psv2/MGRI/JnHME
- p8l3aqfMjdc6WboFwb/8HxLeesJgSn43R4Sx6nDj+ZoKNLier1invIcts3tTW48HQqsZq00IsZozN
- ++zzMUSUw7naCKivyK0EHsN0BvO3XGMDFOjb9Sna1cvKrWHg+nxtXABJIUuLbjzrN5MT7j7VhQUvz
- /M=;
-Date: Mon, 2 Feb 2026 16:07:39 +0100
+ List-Help; bh=JbuhJRwMM/ef/9gln8lAh3Xu6IF/wR9GoyfK/GVJgNw=; b=WmuskRM/2hELpya
+ NT0QE8jlQEFvLH57M+5M7gSXv2D58Axs9SPl2g3GNiKEB2N7t+RQRhCGfl0YjTVyhTmnURmyh58R6
+ glp3kocE4TaLeGe09FZcAnuCBcTqOaCyYWBckc4LvqsbynWui+Q6xmAiiM7nPjHoObiGthXg1l3N4
+ ts=;
+Date: Mon, 2 Feb 2026 16:09:27 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v5 08/11] target/ppc: Check endianness via env in
- ppc_disas_set_info()
-Message-ID: <aYC9tejfuJrzTBQu@hive.localdomain>
+Subject: Re: [PATCH v5 09/11] target/ppc: Introduce
+ ppc_env_is_little_endian() helper
+Message-ID: <aYC-EbocUoU2XcWw@hive.localdomain>
 References: <20260122221106.57184-1-philmd@linaro.org>
- <20260122221106.57184-9-philmd@linaro.org>
+ <20260122221106.57184-10-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260122221106.57184-9-philmd@linaro.org>
+In-Reply-To: <20260122221106.57184-10-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -70,13 +70,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/01/26, Philippe Mathieu-Daudé wrote:
-> disas_set_info() shouldn't bother with env->hflags,
-> access env->msr directly.
+> Centralize endianness check on MSR via a common helper.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/ppc/cpu_init.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/ppc/internal.h   | 5 +++++
+>  target/ppc/cpu_init.c   | 9 +++------
+>  target/ppc/gdbstub.c    | 2 +-
+>  target/ppc/mem_helper.c | 8 ++++----
+>  4 files changed, 13 insertions(+), 11 deletions(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
