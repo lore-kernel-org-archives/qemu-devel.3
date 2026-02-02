@@ -4,100 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097F6E7FDCD
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73438E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn0rC-00012m-Es; Mon, 02 Feb 2026 15:49:19 -0500
+	id 1vn10R-0003mO-0r; Mon, 02 Feb 2026 15:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0q5-0007Ky-H9
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:07 -0500
-Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn10L-0003jX-MN; Mon, 02 Feb 2026 15:58:41 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0q2-0001p3-W6
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:04 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id A62AB1D0012B;
- Mon,  2 Feb 2026 15:48:00 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Mon, 02 Feb 2026 15:48:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770065280; x=
- 1770151680; bh=gx3Da9YMvZQEvf4t7Zwfk28zoTGZPSETN0NVxxGKBm8=; b=n
- vppRLbXlPfOA6NTn3IqjMAAwIanI4tTifJNHzxj6E3q3jfPqNsP5mIZycXX7YRW8
- G1qDgKT6c5JSxBQknbI36jaszRUKIBYuUg1j4HyIbED3It2TvNUaEJCbjQeQJ+Wa
- xwVwxLJXdAJSuSZCSsENbiEMBL4Km6uldm8o7P+FdAqqNnpfVx9WXhcLmnsHOef+
- y7wVrKh32ngxWgIa6LpBz5zJ12np3JsHriu4BlSWmMVGBWXKLTuARvVdjwtOE82s
- TcZPPpZeGFyQMABy69odlRmNCtQCN12R2i/PVE6RvTT6Mn69eZmc4LjMEzkKl8QM
- qkCDSxYIHwbf0Y4JHY3Vg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770065280; x=1770151680; bh=g
- x3Da9YMvZQEvf4t7Zwfk28zoTGZPSETN0NVxxGKBm8=; b=MnykO9WIYlA7KxnTm
- pb7dSBGXFzfgPet2Rdyb6dj749oekkHn6vuPiJetFYoWnPRd0zqZWAsVkPyOrp7f
- N8CjNdy35SHM4mY8cmU8OubC7BNOsa/0bgV6UdHtebLntqnrbZtmknOFuNddL2My
- gscvgv8FCR5Lk2JL6CoKUja0DAtDDChuZmOsB+jbUwT1KAvB2YahLbgbKyFoLM3o
- ginb/x1DJpsaY/3ha7t9BNo97kQPVj0rncjxWHgwIICkdeLNQXoG9UScuU1m9Qpv
- gaF2MvQABgMbnAIpGAAvFQJBWdxclFlUMOZXROmgRCxG9J0+kf3Y+pF4OJQuufW3
- bHSXQ==
-X-ME-Sender: <xms:gA2BafMs3_nxt2e35JKG4UYG0CBFWRzt3eVWoa0m5DNYIM4pul5pFw>
- <xme:gA2BaRZtPsJ7oVAnN4Y2DlBymSFLT4nLv_G1fOrZbPRJ5ev5wafJpeeEmfPIzm9ly
- 8cdgzzcqSkyDNzO0ZdOzTSD2MXtU8ACwGOOqWmytmH4hrMic6L3HoY>
-X-ME-Received: <xmr:gA2Babo-XKPdlCHmb0gGAtJO8VhN-FXQc5kVM6K1GhtjV7pQspHlYeFhsNQE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieegucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
- nhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:gA2BadZU5HaprGakK2nQp82NvaQdOcJqb63jROKNPQFUVgklYisL3Q>
- <xmx:gA2BabTeGfe9efXNcrWZ0x7rHzm833E1nCej4x_gllKF0XAekSyYDQ>
- <xmx:gA2Bac4Lm-ReQgeA2SFrdG3A8BixCsCafgXmBnGHBNxDGekZSSTotw>
- <xmx:gA2BaYwkWpbUg26vN3a6z55eRiX-G5eTlPLXfmVh9w_9yd2VX-cJ1Q>
- <xmx:gA2BaSHvG-SffMkcttnLHT5sMMlqnUl5CAlnNCGGo1SQxDCG8R6dDdCX>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Feb 2026 15:48:00 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 8f18439c;
- Mon, 2 Feb 2026 20:47:53 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn10I-0003kP-Eq; Mon, 02 Feb 2026 15:58:40 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B733518518D;
+ Mon, 02 Feb 2026 23:57:51 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F0EA35B304;
+ Mon, 02 Feb 2026 23:58:33 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu,
-	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v7 16/19] ati-vga: Move source bounds validation to ati_2d_blt
-Date: Mon,  2 Feb 2026 15:47:34 -0500
-Message-ID: <20260202204738.3080092-17-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260202204738.3080092-1-chad@jablonski.xyz>
-References: <20260202204738.3080092-1-chad@jablonski.xyz>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 01/74] file-posix: Handle suspended dm-multipath
+ better for SG_IO
+Date: Mon,  2 Feb 2026 23:57:12 +0300
+Message-ID: <20260202205833.941615-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
+References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.147; envelope-from=chad@jablonski.xyz;
- helo=fout-b4-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,50 +60,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A call to ati_2d_blt implies that the source will be vram. Checking
-bounds is useful in that case. Other sources (HOST_DATA) will not make
-sense to check against vram bounds.
+From: Kevin Wolf <kwolf@redhat.com>
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
----
- hw/display/ati_2d.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+When introducing DM_MPATH_PROBE_PATHS, we already anticipated that
+dm-multipath devices might be suspended for a short time when the DM
+tables are reloaded and that they return -EAGAIN in this case. We then
+wait for a millisecond and retry.
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index e1e48ac81f..4b16265733 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -152,14 +152,6 @@ static void ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-             return;
-         }
-         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
--        if (ctx->src.x > 0x3fff || ctx->src.y > 0x3fff
--            || ctx->src_bits >= ctx->vram_end
--            || ctx->src_bits + ctx->src.x
--             + (ctx->src.y + ctx->dst.height)
--             * ctx->src_stride >= ctx->vram_end) {
--            qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
--            return;
--        }
- 
-         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
-                 ctx->src_bits, ctx->dst_bits,
-@@ -275,6 +267,14 @@ void ati_2d_blt(ATIVGAState *s)
+However, meanwhile it has also turned out that libmpathpersist (which is
+used by qemu-pr-helper) may need to perform more complex recovery
+operations to get reservations back to expected state if a path failure
+happened in the middle of a PR operation. In this case, the device is
+suspended for a longer time compared to the case we originally expected.
+
+This patch changes hdev_co_ioctl() to treat -EAGAIN separately so that
+it doesn't result in an immediate failure if the device is suspended for
+more than 1ms, and moves to incremental backoff to cover both quick and
+slow cases without excessive delays.
+
+Buglink: https://issues.redhat.com/browse/RHEL-121543
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251128221440.89125-1-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 2c3165a1a61c299b4a3ae30899e1cc738d20e004)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 827ffa77a5..d7f489a40b 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -4300,25 +4300,8 @@ hdev_open_Mac_error:
+ static bool coroutine_fn sgio_path_error(int ret, sg_io_hdr_t *io_hdr)
  {
-     ATI2DCtx ctx;
-     setup_2d_blt_ctx(s, &ctx);
-+    if (ctx.src.x > 0x3fff || ctx.src.y > 0x3fff
-+        || ctx.src_bits >= ctx.vram_end
-+        || ctx.src_bits + ctx.src.x
-+         + (ctx.src.y + ctx.dst.height)
-+         * ctx.src_stride >= ctx.vram_end) {
-+        qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-+        return;
+     if (ret < 0) {
+-        switch (ret) {
+-        case -ENODEV:
+-            return true;
+-        case -EAGAIN:
+-            /*
+-             * The device is probably suspended. This happens while the dm table
+-             * is reloaded, e.g. because a path is added or removed. This is an
+-             * operation that should complete within 1ms, so just wait a bit and
+-             * retry.
+-             *
+-             * If the device was suspended for another reason, we'll wait and
+-             * retry SG_IO_MAX_RETRIES times. This is a tolerable delay before
+-             * we return an error and potentially stop the VM.
+-             */
+-            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
+-            return true;
+-        default:
+-            return false;
+-        }
++        /* Path errors sometimes result in -ENODEV */
++        return ret == -ENODEV;
+     }
+ 
+     if (io_hdr->host_status != SCSI_HOST_OK) {
+@@ -4387,6 +4370,7 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
+ {
+     BDRVRawState *s = bs->opaque;
+     RawPosixAIOData acb;
++    uint64_t eagain_sleep_ns = 1 * SCALE_MS;
+     int retries = SG_IO_MAX_RETRIES;
+     int ret;
+ 
+@@ -4415,9 +4399,37 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
+         },
+     };
+ 
+-    do {
+-        ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
+-    } while (req == SG_IO && retries-- && hdev_co_ioctl_sgio_retry(&acb, ret));
++retry:
++    ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
++    if (req == SG_IO && s->use_mpath) {
++        if (ret == -EAGAIN && eagain_sleep_ns < NANOSECONDS_PER_SECOND) {
++            /*
++             * If this is a multipath device, it is probably suspended.
++             *
++             * This can happen while the dm table is reloaded, e.g. because a
++             * path is added or removed. This is an operation that should
++             * complete within 1ms, so just wait a bit and retry.
++             *
++             * There are also some cases in which libmpathpersist must recover
++             * from path failure during its operation, which can leave the
++             * device suspended for a bit longer while the library brings back
++             * reservations into the expected state.
++             *
++             * Use increasing delays to cover both cases without waiting
++             * excessively, and stop after a bit more than a second (1023 ms).
++             * This is a tolerable delay before we return an error and
++             * potentially stop the VM.
++             */
++            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, eagain_sleep_ns);
++            eagain_sleep_ns *= 2;
++            goto retry;
++        }
++
++        /* Even for ret == 0, the SG_IO header can contain an error */
++        if (retries-- && hdev_co_ioctl_sgio_retry(&acb, ret)) {
++            goto retry;
++        }
 +    }
-     ati_2d_do_blt(&ctx, s->use_pixman);
-     ati_set_dirty(&s->vga, &ctx);
+ 
+     return ret;
  }
 -- 
-2.52.0
+2.47.3
 
 
