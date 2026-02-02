@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13482D172CC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D688D172D2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 05:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmmh3-0003wC-Vs; Mon, 02 Feb 2026 00:41:50 -0500
+	id 1vmmh3-0003wA-AY; Mon, 02 Feb 2026 00:41:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vmmgx-0003to-1h
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:41:44 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1vmmgz-0003uK-S7
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:41:46 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vmmgv-0003z5-Cb
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:41:42 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-3530715386cso2863061a91.2
- for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:41:41 -0800 (PST)
+ id 1vmmgy-0003zd-5q
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 00:41:45 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a9004e4239so4775205ad.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Feb 2026 21:41:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770010899; x=1770615699; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770010902; x=1770615702; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vCHQR4xlgTSLYVszeaZ7g5UbfvlQ1I5qPfGO9QKrVmk=;
- b=E3pLOzibcUxC0e7GOU1Zk1W2L2hR27t5rv7nvl9pusRp3htu0iXfceWYmB5kCLEWlT
- s+4uih19KNVueomeCsKbWFWVGhbpWjzn69Cd/elk0glVLIF10AIz4gZQaG1M9NxW/mmL
- SCRd6rdTJMV6/Q/Cp8mvf9NCX76TkUK/GsGzpMoPRU4GVaKJmSJE3M85zVVtB+OULrw2
- SN7LZrUr0wUJuSFWVB7B6AGJd2Er1LxN+pLVOh5ufHY4b9hVGQM4K9WX380NVqWUhwfr
- xDqFSCaXh9u8P7j2rkPzpjHHnzDThXZvcJOZGtzcC997wPzpf+WPMCvx4mHDFqVi0pQs
- 5LLg==
+ bh=+iDOixNWGXe//eYSxb/EkDkyE8fD6B5hJmT9PeOp5xY=;
+ b=Y8DvHY21yTLZU+qwjSzqBWhfjFnoz/SAi6d/c0gOjtbHowCP1R4rKQjFnls2II1Zaj
+ 0515Jek73rz0RmVMtkakGi5sJ+V9zO+JYxwmGjQLOGUSk1YpbxMw9L+gFyZ3yQs2BF4v
+ PKzd8IZnKXXmm6eLTurlSNZktvqY3TMwYwRQANK6qEzE6t67Yppze+w3OZtnsIlz40NK
+ sOEYHyR6Qml7mp9nSEOd4fTXRvgEUhaaJlt27F/tqksm3ylIbP3/qC9A4B+FMiLyUeSx
+ zXJMqnPQRa9KIOzjz1/Zg1BjliiBE8PRlrLZ80ntUT6x9Crdltb/A0FtehWvvqCPARI/
+ ZNLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770010899; x=1770615699;
+ d=1e100.net; s=20230601; t=1770010902; x=1770615702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vCHQR4xlgTSLYVszeaZ7g5UbfvlQ1I5qPfGO9QKrVmk=;
- b=oDMx//QDJA/6joNL9QoDaAtRjK6QpAVyKFfea2E8JqHvea5p10SNvzBlyBsDJL26ba
- bLkgZt0EgKPS6S/LImEWg4j8KV19nOK0vtCBfzKBvzMdLFxAgbtOVbY6SQsR//P2vMBT
- KLhDLTeOI4+9YEm8mSvCwlkFMCorKkBwt7V6RWpGmzuDRQvRsOKT6sXkO4fAWHw112/O
- YY/rwS4fQbntfGSINMWhaKtYwXxUuUDxQwLpnd0NRaQmW86Z1GDZFkjP1jQ/fRbAEO6J
- rRm3hzDEyTGYof5IAZCzrW99WU+S2J5Y5MXCrE8ZkKkjflJA/pQOuzQ1Ns0G7zbC4Q5Q
- ys7w==
-X-Gm-Message-State: AOJu0YzFM/GsUK6mbehtwbNWWFun+EjLt7hukpWXVe4EmlNT2rE22NX6
- 7UledBecVMaem4TcvX3PU8J1Z07X2aN+onZBBZrsixcH8bc58x3w/ysH+/EDZQ==
-X-Gm-Gg: AZuq6aK9+/murb8IBy9oN/VuTrnnZ/7jujnez3f5Bm/EtmrCyrQjP1d+CAimz0RCQpV
- BC86OP4Rp6tdTJwFkeRSRYWV0d7iW0pH8nluzs1OWX0euPmGPSyUZ2uxA2d8CWKTP4oSbiZbbaT
- 3wie+7JBB/tgtq6bifnzSCa2AMOyyR37fNMXvEn2eEDn2FRHHi3YGn8WLwUDhWiUKWM4vVOr8a+
- IWKaqYvgkPw3KmaZns7I5cxjbBiD+GzF/dRTSgNztct9VPFmCU9iTWhZSEbDcz8OGyaCMF/wVEk
- 72jcP/D7fdL9YJSZGRa0ZEx5D8vDLP2BGA6h/k1L+n7iaUi8gWu3NbLllPMUPWqBUz+KynRXukq
- LsAIHkFRIwt/9t274+0/4hvtZFnnau8uT0Tg2KY4H0Kxu2jeuk3ccJbAS0N19Aokz9nsFtJ4pCT
- A/swdmO8ZtSF1yQCe5Zp7pepxt
-X-Received: by 2002:a17:90a:fc4f:b0:32e:a5ae:d00 with SMTP id
- 98e67ed59e1d1-3543b30827emr9777357a91.13.1770010899526; 
- Sun, 01 Feb 2026 21:41:39 -0800 (PST)
+ bh=+iDOixNWGXe//eYSxb/EkDkyE8fD6B5hJmT9PeOp5xY=;
+ b=W7/CwHwFWJZU87Lnhqj/b8h6TjzP6NnAUrHw0kP6cL0h6UWZBqYVeXmn/QbEgeQe2F
+ jt/VVC9VCyQ8m0PSY6TnOqC6gGljh8lUJcPwT/mJkwYj17yPVWd4AHNW2pzWaITYPSqG
+ xG9ZDC0MLrnfV9HbB2HitM5M9kjIS4Taa276rw3rh8phi2VARK3EIgxXhDaQuSDgBqvX
+ o/1pCWxl0KVSDEln8p7MSa+35I7g9y0PTicY5wrI3sWHvywTSTc+RqffvfenfgP1yKkU
+ iiUJWPUYSgVbpS94kyikMwh+Emaeg0SzSyNSnsM+51bpQ3hizSyOMgMl0YnF7jYjSygj
+ 4t3g==
+X-Gm-Message-State: AOJu0YzCKy8t1t6u6y4CiV7ZcLq936e0Mcqp62f8t6jTQafpGJ/Kg3w0
+ OfWkUGtLJ8ZI23SByyblZmasG7Ot/8GqkI9gSNFKn45QvKgby1EL0qo/avt63w==
+X-Gm-Gg: AZuq6aLG5WPeNCRLab9nx4mPLRE/8KASfUqYJWRPyFhZ7+ojCH/9ZD2hqMiNNoyMGnU
+ RDgUOJEROP8okl3kZ41nXUolYWmdbKhEm8uTQ43rAkayM6jJOKgUGh7Rcd/sw8eJwkVYgFIFaSL
+ 7UFGVLxkM18/xZCH+4PoYxuGiqBjb7kufTcH7HQFMM5i+edAbKvC0od94vyIP8rTnPhSUCxXPKH
+ 8cH7IvOTfmvZlFz+HbRBiQskjtLV3lewq0aGFr3gP9uesCYDzFFL5y9QbIU9utwU9YHFC0OA1Dl
+ sc95CIpR5Hwnkpa+fU+oos/lBMdbcMMNk3PwQfo9oNqVpccLr8D+Jom6Co97mwr2Hrgj4Mq2aew
+ m/rSLlYDRCvgHB57UR7y27l94Dvr7hRALPu4OboGi9t8+0U0s/bxOazJc9l48mC0GJDazr8vL5C
+ leduKDt+p/DyTxpw==
+X-Received: by 2002:a17:903:3b51:b0:2a7:80bf:3131 with SMTP id
+ d9443c01a7336-2a8d9a7b928mr72828965ad.58.1770010901607; 
+ Sun, 01 Feb 2026 21:41:41 -0800 (PST)
 Received: from jeuk-MS-7D42.. ([175.119.5.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f610266esm17804018a91.4.2026.02.01.21.41.37
+ 98e67ed59e1d1-353f610266esm17804018a91.4.2026.02.01.21.41.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Feb 2026 21:41:39 -0800 (PST)
+ Sun, 01 Feb 2026 21:41:41 -0800 (PST)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, jeuk20.kim@samsung.com,
  qemu-block@nongnu.org, j-young.choi@samsung.com,
- Ilia Levi <ilia.levi@intel.com>
-Subject: [PULL v2 3/4] hw/ufs: Fix mcq completion queue wraparound
-Date: Mon,  2 Feb 2026 14:41:13 +0900
-Message-ID: <f78762a3cc81ca9842907a5fc1b2280083ac51ba.1770010668.git.jeuk20.kim@samsung.com>
+ Ilia Levi <ilia.levi@intel.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL v2 4/4] tests/qtest/ufs-test: Add test for mcq completion queue
+ wraparound
+Date: Mon,  2 Feb 2026 14:41:14 +0900
+Message-ID: <94e72135d4d657d672561b1ae02a5854421616a7.1770010668.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1770010668.git.jeuk20.kim@samsung.com>
 References: <cover.1770010668.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,87 +104,187 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilia Levi <ilia.levi@intel.com>
 
-Currently, ufs_mcq_process_cq() writes to the CQ without checking whether
-there is available space. This can cause CQ entries to be discarded and
-overwritten. The solution is to stop writing when CQ is full and exert
-backpressure on the affected SQs. This is similar to how NVMe CQs operate.
+Added a test that sends 32 NOP Out commands asynchronously. Since the CQ
+has 31 entries by default, this tests the scenario where CQ processing
+needs to wait for space to become available.
+
+Additionally, added two minor fixes to existing tests:
+* advance CQ head after reading from CQ
+* initialize command descriptor slots bitmap in ufs_init()
 
 Signed-off-by: Ilia Levi <ilia.levi@intel.com>
+Acked-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
 Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- hw/ufs/ufs.c | 20 +++++++++++++++++++-
- hw/ufs/ufs.h |  9 +++++++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ tests/qtest/ufs-test.c | 126 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 126 insertions(+)
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 9cf7eab9b0..cb74cb56bc 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -447,6 +447,10 @@ static void ufs_mcq_process_cq(void *opaque)
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 8cfdc41d3c..7f99944155 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -167,6 +167,7 @@ __ufs_send_transfer_request_mcq(QUfs *ufs, uint8_t lun,
+     cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
+     cqentry_addr = ufs->cqlba[TEST_QID] + cqhp;
+     qtest_memread(ufs->dev.bus->qts, cqentry_addr, &cqentry, sizeof(cqentry));
++    cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
+     ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
  
-     QTAILQ_FOREACH_SAFE(req, &cq->req_list, entry, next)
-     {
-+        if (ufs_mcq_cq_full(u, cq->cqid)) {
+     return cqentry.status;
+@@ -209,6 +210,81 @@ static enum UtpOcsCodes ufs_send_nop_out(QUfs *ufs, UtpUpiuRsp *rsp_out)
+     return ret;
+ }
+ 
++static bool ufs_mcq_sq_has_space(QUfs *ufs)
++{
++    uint32_t sqhp = ufs_rreg(ufs, ufs->sqdao[TEST_QID]);
++    uint32_t sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
++    uint32_t next_sqtp =
++        (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
++    return next_sqtp != sqhp;
++}
++
++static void
++__ufs_send_transfer_request_mcq_async(QUfs *ufs, uint8_t lun,
++                                      const UtpTransferReqDesc *utrd)
++{
++    uint32_t sqtp;
++    uint64_t utrd_addr;
++
++    /* Wait for SQ space */
++    while (!ufs_mcq_sq_has_space(ufs)) {
++        qtest_clock_step(ufs->dev.bus->qts, 100);
++    }
++
++    sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
++    utrd_addr = ufs->sqlba[TEST_QID] + sqtp;
++    qtest_memwrite(ufs->dev.bus->qts, utrd_addr, utrd, sizeof(*utrd));
++    sqtp = (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
++    ufs_wreg(ufs, ufs->sqdao[TEST_QID] + 0x4, sqtp);
++}
++
++static int ufs_mcq_send_nop_out_async(QUfs *ufs)
++{
++    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
++    uint64_t req_upiu_addr =
++        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++
++    /* Build up request upiu */
++    UtpUpiuReq req_upiu = { 0 };
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
++    req_upiu.header.task_tag = cmd_desc_slot;
++    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
++                   sizeof(req_upiu));
++
++    /* Build up utp transfer request descriptor */
++    UtpTransferReqDesc utrd =
++        ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
++
++    /* Send Transfer Request */
++    __ufs_send_transfer_request_mcq_async(ufs, 0, &utrd);
++
++    return cmd_desc_slot;
++}
++
++static int ufs_mcq_poll_cq(QUfs *ufs, UfsCqEntry *cqe, uint16_t n_cqe)
++{
++    uint32_t cqhp, cqtp;
++    uint64_t cqe_addr;
++    int ix = 0;
++
++    cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
++    cqtp = ufs_rreg(ufs, ufs->cqdao[TEST_QID] + 0x4);
++
++    while (cqhp != cqtp && ix < n_cqe) {
++        /* read completion entry */
++        cqe_addr = ufs->cqlba[TEST_QID] + cqhp;
++        qtest_memread(ufs->dev.bus->qts, cqe_addr, &cqe[ix], sizeof(cqe[ix]));
++
++        /* advance completion queue head pointer */
++        cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
++        ix++;
++    }
++
++    ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
++
++    return ix;
++}
++
+ static enum UtpOcsCodes ufs_send_query(QUfs *ufs, uint8_t query_function,
+                                        uint8_t query_opcode, uint8_t idn,
+                                        uint8_t index, uint8_t selector,
+@@ -417,6 +493,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
+     ufs_wreg(ufs, A_UTRIACR, 0);
+ 
+     /* Enable transfer request */
++    bitmap_zero(ufs->cmd_desc_bitmap, UFS_MAX_CMD_DESC);
+     ufs->cmd_desc_addr =
+         guest_alloc(alloc, UFS_MAX_CMD_DESC * UTP_COMMAND_DESCRIPTOR_SIZE);
+     ufs->data_buffer_addr =
+@@ -680,6 +757,53 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
++static void ufstest_mcq_cq_wraparound(void *obj, void *data,
++                                      QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    UfsCqEntry cqe[QUEUE_SIZE];
++    const int num_requests = QUEUE_SIZE;
++    int i, completed = 0;
++
++    ufs_init(ufs, alloc);
++
++    /* Ensure MCQ is supported */
++    g_assert_true(ufs->support_mcq);
++
++    for (i = 0; i < num_requests; ++i) {
++        ufs_mcq_send_nop_out_async(ufs);
++    }
++
++    while (completed != num_requests) {
++        int n_cqe = ufs_mcq_poll_cq(ufs, cqe, ARRAY_SIZE(cqe));
++        if (!n_cqe) {
 +            break;
 +        }
 +
-         ufs_dma_write_rsp_upiu(req);
- 
-         /* UTRD/CQE are LE; round-trip through host to keep BE correct. */
-@@ -478,6 +482,12 @@ static void ufs_mcq_process_cq(void *opaque)
-         tail = (tail + sizeof(req->cqe)) % (cq->size * sizeof(req->cqe));
-         ufs_mcq_update_cq_tail(u, cq->cqid, tail);
- 
-+        if (QTAILQ_EMPTY(&req->sq->req_list) &&
-+            !ufs_mcq_sq_empty(u, req->sq->sqid)) {
-+            /* Dequeueing from SQ was blocked due to lack of free requests */
-+            qemu_bh_schedule(req->sq->bh);
++        for (i = 0; i < n_cqe; ++i) {
++            uint64_t ucdba;
++            uint64_t rsp_upiu_addr;
++            UtpUpiuRsp rsp_upiu;
++            uint8_t tag;
++
++            g_assert_cmpuint(cqe[i].status, ==, UFS_OCS_SUCCESS);
++
++            ucdba = le64_to_cpu(cqe[i].utp_addr) & MAKE_64BIT_MASK(7, 57);
++            rsp_upiu_addr = ucdba + UTP_RESPONSE_UPIU_OFFSET;
++            qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
++                          sizeof(rsp_upiu));
++
++            tag = rsp_upiu.header.task_tag;
++            release_cmd_desc_slot(ufs, tag);
 +        }
 +
-         ufs_clear_req(req);
-         QTAILQ_INSERT_TAIL(&req->sq->req_list, req, entry);
-     }
-@@ -787,10 +797,18 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-         }
-         opr->sq.tp = data;
-         break;
--    case offsetof(UfsMcqOpReg, cq.hp):
-+    case offsetof(UfsMcqOpReg, cq.hp): {
-+        UfsCq *cq = u->cq[qid];
-+
-+        if (ufs_mcq_cq_full(u, qid) && !QTAILQ_EMPTY(&cq->req_list)) {
-+            /* Enqueueing to CQ was blocked because it was full */
-+            qemu_bh_schedule(cq->bh);
-+        }
-+
-         opr->cq.hp = data;
-         ufs_mcq_update_cq_head(u, qid, data);
-         break;
++        completed += n_cqe;
 +    }
-     case offsetof(UfsMcqOpReg, cq_int.is):
-         opr->cq_int.is &= ~data;
-         break;
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 3799d97f30..13d964c5ae 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -200,6 +200,15 @@ static inline bool ufs_mcq_cq_empty(UfsHc *u, uint32_t qid)
-     return ufs_mcq_cq_tail(u, qid) == ufs_mcq_cq_head(u, qid);
- }
- 
-+static inline bool ufs_mcq_cq_full(UfsHc *u, uint32_t qid)
-+{
-+    uint32_t tail = ufs_mcq_cq_tail(u, qid);
-+    uint16_t cq_size = u->cq[qid]->size;
 +
-+    tail = (tail + sizeof(UfsCqEntry)) % (sizeof(UfsCqEntry) * cq_size);
-+    return tail == ufs_mcq_cq_head(u, qid);
++    g_assert_cmpint(completed, ==, num_requests);
++    ufs_exit(ufs, alloc);
 +}
 +
- #define TYPE_UFS "ufs"
- #define UFS(obj) OBJECT_CHECK(UfsHc, (obj), TYPE_UFS)
- 
+ static void ufstest_query_flag_request(void *obj, void *data,
+                                        QGuestAllocator *alloc)
+ {
+@@ -1130,6 +1254,8 @@ static void ufs_register_nodes(void)
+     qos_add_test("init", "ufs", ufstest_init, NULL);
+     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
+     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
++    qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
++                 &mcq_test_opts);
+     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
+                  &io_test_opts);
+     qos_add_test("query-attribute", "ufs", ufstest_query_attr_request,
 -- 
 2.43.0
 
