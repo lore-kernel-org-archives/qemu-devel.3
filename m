@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F268E7FDCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B51E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzzH-0007LF-EG; Mon, 02 Feb 2026 14:53:33 -0500
+	id 1vmzwr-00089P-3I; Mon, 02 Feb 2026 14:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzz7-00075l-B8; Mon, 02 Feb 2026 14:53:21 -0500
+ id 1vmzwj-0007G5-EJ; Mon, 02 Feb 2026 14:50:53 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzz5-0004LV-Mb; Mon, 02 Feb 2026 14:53:21 -0500
+ id 1vmzwh-0003vC-QC; Mon, 02 Feb 2026 14:50:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E6A141850D7;
- Mon, 02 Feb 2026 22:46:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A38F21850C0;
+ Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 96ECA35B2B9;
- Mon, 02 Feb 2026 22:46:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 550B535B2A2;
+ Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 69/69] python: fix msys64 wheel directory specification
-Date: Mon,  2 Feb 2026 22:46:32 +0300
-Message-ID: <20260202194638.939438-69-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 46/69] target/arm: Correctly trap HCR.TID1 registers
+ in v7A
+Date: Mon,  2 Feb 2026 22:46:09 +0300
+Message-ID: <20260202194638.939438-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,42 +63,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In python3.14, fixes were made to the file URI parsing [1] such that
-file URIs that used to work but were technically out of spec are now
-broken.
+In v7A HCR.TID1 is defined to trap for TCMTR, TLBTR, REVIDR and AIDR.
+We incorrectly use an accessfn for REVIDR and AIDR that only traps on
+v8A cores.  Fix this by collapsing access_aa64_tid1() and
+access_aa32_tid1() together and never doing a check for v8 vs v7.
 
-As a result, our msys2 GitLab CI tests began failing.
+The accessfn is also used for SMIDR_EL1, which is fine as this
+register is AArch64 only.
 
-Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
-fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
-
-[1] https://docs.python.org/3/whatsnew/3.14.html#urllib
-
-Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260130050518.517688-2-jsnow@redhat.com>
-(cherry picked from commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20251231170858.254594-4-peter.maydell@linaro.org
+(cherry picked from commit b67a35622f9a816544ec094132d8af0debfac7f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 9aed266df1..826c4ad58d 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -675,7 +675,7 @@ def pip_install(
-     if not online:
-         full_args += ["--no-index"]
-     if wheels_dir:
--        full_args += ["--find-links", f"file://{str(wheels_dir)}"]
-+        full_args += ["--find-links", str(wheels_dir)]
-     full_args += list(args)
-     subprocess.run(
-         full_args,
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 002d5701b0..9df41f7248 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1863,8 +1863,8 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return ret;
+ }
+ 
+-static CPAccessResult access_aa64_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
+-                                       bool isread)
++static CPAccessResult access_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
++                                  bool isread)
+ {
+     if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TID1)) {
+         return CP_ACCESS_TRAP_EL2;
+@@ -1873,16 +1873,6 @@ static CPAccessResult access_aa64_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
+     return CP_ACCESS_OK;
+ }
+ 
+-static CPAccessResult access_aa32_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
+-                                       bool isread)
+-{
+-    if (arm_feature(env, ARM_FEATURE_V8)) {
+-        return access_aa64_tid1(env, ri, isread);
+-    }
+-
+-    return CP_ACCESS_OK;
+-}
+-
+ static const ARMCPRegInfo v7_cp_reginfo[] = {
+     /* the old v6 WFI, UNPREDICTABLE in v7 but we choose to NOP */
+     { .name = "NOP", .cp = 15, .crn = 7, .crm = 0, .opc1 = 0, .opc2 = 4,
+@@ -2068,7 +2058,7 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+     { .name = "AIDR", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 1, .crn = 0, .crm = 0, .opc2 = 7,
+       .access = PL1_R, .type = ARM_CP_CONST,
+-      .accessfn = access_aa64_tid1,
++      .accessfn = access_tid1,
+       .fgt = FGT_AIDR_EL1,
+       .resetvalue = 0 },
+     /*
+@@ -6740,7 +6730,7 @@ static const ARMCPRegInfo sme_reginfo[] = {
+       .writefn = smcr_write, .raw_writefn = raw_write },
+     { .name = "SMIDR_EL1", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 1, .crn = 0, .crm = 0, .opc2 = 6,
+-      .access = PL1_R, .accessfn = access_aa64_tid1,
++      .access = PL1_R, .accessfn = access_tid1,
+       /*
+        * IMPLEMENTOR = 0 (software)
+        * REVISION    = 0 (implementation defined)
+@@ -8648,7 +8638,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             { .name = "REVIDR_EL1", .state = ARM_CP_STATE_BOTH,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 0, .opc2 = 6,
+               .access = PL1_R,
+-              .accessfn = access_aa64_tid1,
++              .accessfn = access_tid1,
+               .fgt = FGT_REVIDR_EL1,
+               .type = ARM_CP_CONST, .resetvalue = cpu->revidr },
+         };
+@@ -8672,7 +8662,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             { .name = "TCMTR",
+               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 2,
+               .access = PL1_R,
+-              .accessfn = access_aa32_tid1,
++              .accessfn = access_tid1,
+               .type = ARM_CP_CONST, .resetvalue = 0 },
+         };
+         /* TLBTR is specific to VMSA */
+@@ -8680,7 +8670,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .name = "TLBTR",
+               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 3,
+               .access = PL1_R,
+-              .accessfn = access_aa32_tid1,
++              .accessfn = access_tid1,
+               .type = ARM_CP_CONST, .resetvalue = 0,
+         };
+         /* MPUIR is specific to PMSA V6+ */
 -- 
 2.47.3
 
