@@ -4,48 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF454E7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1A2E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn143-0003uo-DK; Mon, 02 Feb 2026 16:02:31 -0500
+	id 1vn13c-0002mx-Al; Mon, 02 Feb 2026 16:02:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn13P-0002HN-FM; Mon, 02 Feb 2026 16:01:51 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn13M-0004VQ-T2; Mon, 02 Feb 2026 16:01:50 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 494721851AE;
- Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0F62435B325;
- Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn12v-0000uj-Oh
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:21 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn12r-0004PT-L6
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:20 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43601e96f72so1244259f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:01:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770066076; x=1770670876; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ezUyjTdJ4WpRBMli8LXI8bKZQUV8vKPEmVQPuIYa6Dc=;
+ b=FqG6fVEIawE+vDsvU4UsNpSBi+Yvcd8Wr/6PdcfdBtH5t/jOAquVYnxiReAiFXZuo0
+ 1MwQmoWjUXimxhqEGRMCX6EF6pgn8yX0cwmS3wG0XnmgPXVI+BelYEHjxNusYwqH1ofe
+ O2HwJ3VIF8Sb5OTMJ6Iaakn1WRng/xTo/B96WZQnPd2dykZ7IrQDHOV7CHVd7rPcY6nt
+ TnnUv5LyUiMXa0VU49qwjZ/DGmekbXjU2REdsGXx9rKoU71op2p4B632WXNlRREnsjNJ
+ PrnTkG0p/YdeMO1ZFgMOQUuWoPYvHCCqajXFJt8Y7Muzv70qV1DxVxNzXiWI9aGCb7XV
+ FkAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770066076; x=1770670876;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ezUyjTdJ4WpRBMli8LXI8bKZQUV8vKPEmVQPuIYa6Dc=;
+ b=bHpfz5xzF0EOosTFPh6nyhKHUj0oxruKCfyzUvzXoZ2FxYjs4KEEqZ/7ayEF1vC+bI
+ 54C9kQe3GtQEkz2S/u0GeaGYmze7aCiupSbec0YNf5xc5jo7zaPUsuBXxAV1bKKgd2Kr
+ 60wq5XMvZRQ8jUsb4TGQDy1X3qWqs29sl7CY00Nkt3tZEmSrYQAsEk9en12P2MNchVrz
+ AOFjRrY82Ew3vLy5UdtU8RA9THEOrY9Ca1pwbJLPSZaFeIYjzexHaRrf0PbH7wxNZ/AK
+ rIBYjFRlUFv1kDlyO0nYYZkMQP0c5E5f2EOhwLe8pkWROnl+NPvxoi8+Y077ChwG6D6m
+ tyhQ==
+X-Gm-Message-State: AOJu0YzsxPElh4U3CmPMWo7iWLacqYXTo7s+qVxj/KrjKs7DddUyf5AZ
+ lvM0ZdGhYc79Y8ko0b978hFMfrn6+UTWPi2GhVZyKTPxXD+R9X15mofuN/ARDnwjuatjq2g+q80
+ /qmPElVw=
+X-Gm-Gg: AZuq6aKQkWJKSlCxZXJilhDYhhSXx2/rihC+1BiSQUvyNmdtskHyofgpc6iKEuSEULs
+ dlnRyWUFhIz8ZjngiYS0R6tG0BJkgBeKzU0UI8mtu6/XynjmELq74+lAVW9204yZ4DGrEXwE5p7
+ oNcBYwoQpC9zXFDGykWbpEVPbI7ilJCmRb3+FB90vbzMfz5ArWd3fRR5s945yYZ5VjVrwM2w9Ku
+ qkpOuzCa1p6HM16d8qoccrNoe6lMEvdBSJfVDtgQPqyxs56foyQfqy5jZEhKk/U17AWd/AV3YfI
+ 1C4GT+qh7XM8kP+2P5x6DrGw1yujbbo4PP/fwK2JoBu9uCn+VdRiGAbaLAgNOLtuK2FfPazMaPt
+ SlqC9JvvQ+n8hIBnZ9CQTVvbtJ3+8M1mUGO7KUVIlEzCGTnZZEbNbQ7Gt6k6YMw5ruz081PhacW
+ bovk7KFcS9NPF826+VM1wera3JXkhYpjipwk4BztyhBqlPrtSlafhAdrFGZtyx
+X-Received: by 2002:a05:6000:1786:b0:430:fd84:317a with SMTP id
+ ffacd0b85a97d-435f3aa90acmr20512163f8f.38.1770066075642; 
+ Mon, 02 Feb 2026 13:01:15 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10e4757sm48274822f8f.5.2026.02.02.13.01.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 02 Feb 2026 13:01:15 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Fabian Vogt <fvogt@suse.de>, Chinmay Rath <rathc@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 34/74] target/ppc: Fix env->quiesced migration
-Date: Mon,  2 Feb 2026 23:57:45 +0300
-Message-ID: <20260202205833.941615-34-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
+Cc: Anton Johansson <anjo@rev.ng>, Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 01/11] target/ppc: Inline cpu_ldl_data_ra() calls in ICBI
+ helpers
+Date: Mon,  2 Feb 2026 22:00:55 +0100
+Message-ID: <20260202210106.93257-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260202210106.93257-1-philmd@linaro.org>
+References: <20260202210106.93257-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,195 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Inline the cpu_ldl_data_ra() call in preparation of
+removing it. Since the returned value is discarded,
+don't bother to set the access endianness.
 
-The commit referenced (from QEMU 10.0) has changed the way the pseries
-machine marks a cpu as quiesced. Previously, the cpu->halted value
-from QEMU common cpu code was (incorrectly) used. With the fix, the
-env->quiesced variable starts being used, which improves on the
-original situation, but also causes a side effect after migration:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+---
+ target/ppc/mem_helper.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-The env->quiesced is set at reset and never migrated, which causes the
-destination QEMU to stop delivering interrupts and hang the machine.
-
-To fix the issue from this point on, start migrating the env->quiesced
-value.
-
-For QEMU versions < 10.0, sending the new element on the stream would
-cause migration to be aborted, so add the appropriate compatibility
-property to omit the new subsection.
-
-Independently of this patch, all migrations from QEMU versions < 10.0
-would result in a hang since the older QEMU never migrates
-env->quiesced. This is bad because it leaves machines already running
-on the old QEMU without a migration path into newer versions.
-
-As a workaround, use a few heuristics to infer the new value of
-env->quiesced based on cpu->halted, LPCR and PSSCR bits that are
-usually set/cleared along with quiesced.
-
-Note that this was tested with -cpu power9 and -machine ic-mode=xive
-due to another bug affecting migration of XICS guests. Tested both
-forward and backward migration and savevm/loadvm from 9.2 and 10.0.
-
-Also tested loadvm of a savevm image that contains a mix of cpus both
-halted and not halted.
-
-Reported-by: Fabian Vogt <fvogt@suse.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3079
-Fixes: fb802acdc8b ("ppc/spapr: Fix RTAS stopped state")
-Acked-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/qemu-devel/20260109123519.28703-2-farosas@suse.de
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-(cherry picked from commit 628bda1ab7596a7cceb1c5356d23a92001c7a8c5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 9e63671ece..1700457524 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4779,8 +4779,14 @@ DEFINE_SPAPR_MACHINE_AS_LATEST(10, 1);
-  */
- static void spapr_machine_10_0_class_options(MachineClass *mc)
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 7318b02c46a..636ad769a93 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -320,22 +320,27 @@ void helper_dcbzl(CPUPPCState *env, target_ulong addr)
+ 
+ void helper_icbi(CPUPPCState *env, target_ulong addr)
  {
-+    static GlobalProperty spapr_compat_10_0[] = {
-+        { TYPE_POWERPC_CPU, "rtas-stopped-state", "false" },
-+    };
++    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
++    MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, mmu_idx);
 +
-     spapr_machine_10_1_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-+    compat_props_add(mc->compat_props, spapr_compat_10_0,
-+                     G_N_ELEMENTS(spapr_compat_10_0));
+     addr &= ~(env->dcache_line_size - 1);
+     /*
+      * Invalidate one cache line :
+      * PowerPC specification says this is to be treated like a load
+      * (not a fetch) by the MMU. To be sure it will be so,
+-     * do the load "by hand".
++     * do the load "by hand". As the returned data is not consumed,
++     * endianness is irrelevant.
+      */
+-    cpu_ldl_data_ra(env, addr, GETPC());
++    cpu_ldl_mmu(env, addr, oi, GETPC());
  }
  
- DEFINE_SPAPR_MACHINE(10, 0);
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0e26e4343d..1c4af15cb5 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1470,6 +1470,7 @@ struct ArchCPU {
-     void *machine_data;
-     int32_t node_id; /* NUMA node this CPU belongs to */
-     PPCHash64Options *hash64_opts;
-+    bool rtas_stopped_state;
- 
-     /* Those resources are used only during code translation */
-     /* opcode handlers */
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index a0e77f2673..4380c6eb14 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -55,6 +55,11 @@
- /* #define PPC_DEBUG_SPR */
- /* #define USE_APPLE_GDB */
- 
-+static const Property powerpc_cpu_properties[] = {
-+    DEFINE_PROP_BOOL("rtas-stopped-state", PowerPCCPU,
-+                      rtas_stopped_state, true),
-+};
-+
- static inline void vscr_init(CPUPPCState *env, uint32_t val)
+ void helper_icbiep(CPUPPCState *env, target_ulong addr)
  {
-     /* Altivec always uses round-to-nearest */
-@@ -7525,6 +7530,8 @@ static void ppc_cpu_class_init(ObjectClass *oc, const void *data)
-                                       &pcc->parent_unrealize);
-     pcc->pvr_match = ppc_pvr_match_default;
+ #if !defined(CONFIG_USER_ONLY)
++    MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, PPC_TLB_EPID_LOAD);
+     /* See comments above */
+     addr &= ~(env->dcache_line_size - 1);
+-    cpu_ldl_mmuidx_ra(env, addr, PPC_TLB_EPID_LOAD, GETPC());
++    cpu_ldl_mmu(env, addr, oi, GETPC());
+ #endif
+ }
  
-+    device_class_set_props(dc, powerpc_cpu_properties);
-+
-     resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
-                                        &pcc->parent_phases);
- 
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index d72e5ecb94..49cfdc6d67 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -257,6 +257,45 @@ static int cpu_post_load(void *opaque, int version_id)
-         ppc_store_sdr1(env, env->spr[SPR_SDR1]);
-     }
- 
-+    if (!cpu->rtas_stopped_state) {
-+        /*
-+         * The source QEMU doesn't have fb802acdc8 and still uses halt +
-+         * PM bits in LPCR to implement RTAS stopped state. The new (this)
-+         * QEMU will have put the secondary vcpus in stopped state,
-+         * waiting for the start-cpu RTAS call. That call will never come
-+         * if the source cpus were already running. Try to infer the cpus
-+         * state and set env->quiesced accordingly.
-+         *
-+         * env->quiesced = true  ==> the cpu is waiting to start
-+         * env->quiesced = false ==> the cpu is running (unless halted)
-+         */
-+
-+        /*
-+         * Halted _could_ mean quiesced, but it could also be cede,
-+         * confer_self, power management, etc.
-+         */
-+        if (CPU(cpu)->halted) {
-+            PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
-+            /*
-+             * Both the PSSCR_EC bit and LPCR PM bits set at cpu reset
-+             * and rtas_stop and cleared at rtas_start, it's a good
-+             * heuristic.
-+             */
-+            if ((env->spr[SPR_PSSCR] & PSSCR_EC) &&
-+                (env->spr[SPR_LPCR] & pcc->lpcr_pm)) {
-+                env->quiesced = true;
-+            } else {
-+                env->quiesced = false;
-+            }
-+        } else {
-+            /*
-+             * Old QEMU sets halted during rtas_stop_self. Not halted,
-+             * therefore definitely not quiesced.
-+             */
-+            env->quiesced = false;
-+        }
-+    }
-+
-     post_load_update_msr(env);
- 
-     if (tcg_enabled()) {
-@@ -649,6 +688,28 @@ static const VMStateDescription vmstate_reservation = {
-     }
- };
- 
-+static bool rtas_stopped_needed(void *opaque)
-+{
-+    PowerPCCPU *cpu = opaque;
-+
-+    return cpu->rtas_stopped_state;
-+}
-+
-+static const VMStateDescription vmstate_rtas_stopped = {
-+    .name = "cpu/rtas_stopped",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = rtas_stopped_needed,
-+    .fields = (const VMStateField[]) {
-+        /*
-+         * "RTAS stopped" state, independent of halted state. For QEMU
-+         * < 10.0, this is taken from cpu->halted at cpu_post_load()
-+         */
-+        VMSTATE_BOOL(env.quiesced, PowerPCCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- #ifdef TARGET_PPC64
- static bool bhrb_needed(void *opaque)
- {
-@@ -715,6 +776,7 @@ const VMStateDescription vmstate_ppc_cpu = {
-         &vmstate_tlbmas,
-         &vmstate_compat,
-         &vmstate_reservation,
-+        &vmstate_rtas_stopped,
-         NULL
-     }
- };
 -- 
-2.47.3
+2.52.0
 
 
