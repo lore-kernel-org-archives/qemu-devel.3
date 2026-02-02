@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9033E7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF2AE7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn17S-0007nh-GY; Mon, 02 Feb 2026 16:06:02 -0500
+	id 1vn13A-0001PD-2J; Mon, 02 Feb 2026 16:01:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn179-0007Kq-3j; Mon, 02 Feb 2026 16:05:44 -0500
+ id 1vn12t-0000sC-OD; Mon, 02 Feb 2026 16:01:21 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn176-0005Hm-RK; Mon, 02 Feb 2026 16:05:42 -0500
+ id 1vn12q-0004K9-5T; Mon, 02 Feb 2026 16:01:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4A0C31851D5;
- Mon, 02 Feb 2026 23:57:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D1C341851A8;
+ Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1168935B34C;
- Mon, 02 Feb 2026 23:58:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9A9D935B31F;
+ Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilia Levi <ilia.levi@intel.com>,
- Fabiano Rosas <farosas@suse.de>, Jeuk Kim <jeuk20.kim@samsung.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Zhijin Zeng <zengzhijin@linux.spacemit.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 73/74] tests/qtest/ufs-test: Add test for mcq
- completion queue wraparound
-Date: Mon,  2 Feb 2026 23:58:24 +0300
-Message-ID: <20260202205833.941615-73-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 28/74] tcg/riscv: Fix TCG_REG_TMP0 clobber in
+ tcg_gen_dup{m, i}
+Date: Mon,  2 Feb 2026 23:57:39 +0300
+Message-ID: <20260202205833.941615-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -61,188 +61,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Added a test that sends 32 NOP Out commands asynchronously. Since the CQ
-has 31 entries by default, this tests the scenario where CQ processing
-needs to wait for space to become available.
+TCG_REG_TMP0 may be used by set_vtype* to load the vtype
+parameter, so delay any other use of TCG_REG_TMP0 until
+the correct vtype has been installed.
 
-Additionally, added two minor fixes to existing tests:
-* advance CQ head after reading from CQ
-* initialize command descriptor slots bitmap in ufs_init()
-
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 94e72135d4d657d672561b1ae02a5854421616a7)
+Cc: qemu-stable@nongnu.org
+Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
+Reported-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit af6db3b71310ea63a018d517ba7d79e4e014db62)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 4867ccf08a..ff9835735c 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -166,6 +166,7 @@ __ufs_send_transfer_request_mcq(QUfs *ufs, uint8_t lun,
-     cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-     cqentry_addr = ufs->cqlba[TEST_QID] + cqhp;
-     qtest_memread(ufs->dev.bus->qts, cqentry_addr, &cqentry, sizeof(cqentry));
-+    cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-     ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
- 
-     return cqentry.status;
-@@ -208,6 +209,81 @@ static enum UtpOcsCodes ufs_send_nop_out(QUfs *ufs, UtpUpiuRsp *rsp_out)
-     return ret;
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index 31b9f7d87a..0967a445a3 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -1074,7 +1074,7 @@ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
  }
  
-+static bool ufs_mcq_sq_has_space(QUfs *ufs)
-+{
-+    uint32_t sqhp = ufs_rreg(ufs, ufs->sqdao[TEST_QID]);
-+    uint32_t sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    uint32_t next_sqtp =
-+        (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    return next_sqtp != sqhp;
-+}
-+
-+static void
-+__ufs_send_transfer_request_mcq_async(QUfs *ufs, uint8_t lun,
-+                                      const UtpTransferReqDesc *utrd)
-+{
-+    uint32_t sqtp;
-+    uint64_t utrd_addr;
-+
-+    /* Wait for SQ space */
-+    while (!ufs_mcq_sq_has_space(ufs)) {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+    }
-+
-+    sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    utrd_addr = ufs->sqlba[TEST_QID] + sqtp;
-+    qtest_memwrite(ufs->dev.bus->qts, utrd_addr, utrd, sizeof(*utrd));
-+    sqtp = (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    ufs_wreg(ufs, ufs->sqdao[TEST_QID] + 0x4, sqtp);
-+}
-+
-+static int ufs_mcq_send_nop_out_async(QUfs *ufs)
-+{
-+    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
-+    uint64_t req_upiu_addr =
-+        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+
-+    /* Build up request upiu */
-+    UtpUpiuReq req_upiu = { 0 };
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
-+    req_upiu.header.task_tag = cmd_desc_slot;
-+    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
-+                   sizeof(req_upiu));
-+
-+    /* Build up utp transfer request descriptor */
-+    UtpTransferReqDesc utrd =
-+        ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
-+
-+    /* Send Transfer Request */
-+    __ufs_send_transfer_request_mcq_async(ufs, 0, &utrd);
-+
-+    return cmd_desc_slot;
-+}
-+
-+static int ufs_mcq_poll_cq(QUfs *ufs, UfsCqEntry *cqe, uint16_t n_cqe)
-+{
-+    uint32_t cqhp, cqtp;
-+    uint64_t cqe_addr;
-+    int ix = 0;
-+
-+    cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-+    cqtp = ufs_rreg(ufs, ufs->cqdao[TEST_QID] + 0x4);
-+
-+    while (cqhp != cqtp && ix < n_cqe) {
-+        /* read completion entry */
-+        cqe_addr = ufs->cqlba[TEST_QID] + cqhp;
-+        qtest_memread(ufs->dev.bus->qts, cqe_addr, &cqe[ix], sizeof(cqe[ix]));
-+
-+        /* advance completion queue head pointer */
-+        cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-+        ix++;
-+    }
-+
-+    ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
-+
-+    return ix;
-+}
-+
- static enum UtpOcsCodes ufs_send_query(QUfs *ufs, uint8_t query_function,
-                                        uint8_t query_opcode, uint8_t idn,
-                                        uint8_t index, uint8_t selector,
-@@ -416,6 +492,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
-     ufs_wreg(ufs, A_UTRIACR, 0);
- 
-     /* Enable transfer request */
-+    bitmap_zero(ufs->cmd_desc_bitmap, UFS_MAX_CMD_DESC);
-     ufs->cmd_desc_addr =
-         guest_alloc(alloc, UFS_MAX_CMD_DESC * UTP_COMMAND_DESCRIPTOR_SIZE);
-     ufs->data_buffer_addr =
-@@ -679,6 +756,53 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_mcq_cq_wraparound(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    UfsCqEntry cqe[QUEUE_SIZE];
-+    const int num_requests = QUEUE_SIZE;
-+    int i, completed = 0;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Ensure MCQ is supported */
-+    g_assert_true(ufs->support_mcq);
-+
-+    for (i = 0; i < num_requests; ++i) {
-+        ufs_mcq_send_nop_out_async(ufs);
-+    }
-+
-+    while (completed != num_requests) {
-+        int n_cqe = ufs_mcq_poll_cq(ufs, cqe, ARRAY_SIZE(cqe));
-+        if (!n_cqe) {
-+            break;
-+        }
-+
-+        for (i = 0; i < n_cqe; ++i) {
-+            uint64_t ucdba;
-+            uint64_t rsp_upiu_addr;
-+            UtpUpiuRsp rsp_upiu;
-+            uint8_t tag;
-+
-+            g_assert_cmpuint(cqe[i].status, ==, UFS_OCS_SUCCESS);
-+
-+            ucdba = le64_to_cpu(cqe[i].utp_addr) & MAKE_64BIT_MASK(7, 57);
-+            rsp_upiu_addr = ucdba + UTP_RESPONSE_UPIU_OFFSET;
-+            qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
-+                          sizeof(rsp_upiu));
-+
-+            tag = rsp_upiu.header.task_tag;
-+            release_cmd_desc_slot(ufs, tag);
-+        }
-+
-+        completed += n_cqe;
-+    }
-+
-+    g_assert_cmpint(completed, ==, num_requests);
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufstest_query_flag_request(void *obj, void *data,
-                                        QGuestAllocator *alloc)
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                   TCGReg dst, TCGReg src)
++                            TCGReg dst, TCGReg src)
  {
-@@ -1129,6 +1253,8 @@ static void ufs_register_nodes(void)
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
-+    qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
-+                 &mcq_test_opts);
-     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
-                  &io_test_opts);
-     qos_add_test("query-attribute", "ufs", ufstest_query_attr_request,
+     set_vtype_len_sew(s, type, vece);
+     tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, src);
+@@ -1082,29 +1082,34 @@ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+ }
+ 
+ static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                    TCGReg dst, TCGReg base, intptr_t offset)
++                             TCGReg dst, TCGReg base, intptr_t offset)
+ {
++    /* Note set_vtype* may clobber TMP0, so do that first. */
++    set_vtype_len_sew(s, type, vece);
+     tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
+-    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
++    tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
++    return true;
+ }
+ 
+ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                    TCGReg dst, int64_t arg)
++                             TCGReg dst, int64_t arg)
+ {
+     /* Arg is replicated by VECE; extract the highest element. */
+     arg >>= (-8 << vece) & 63;
+ 
++    /* Note set_vtype* may clobber TMP0, so do that first. */
++    if (arg == 0 || arg == -1) {
++        set_vtype_len(s, type);
++    } else {
++        set_vtype_len_sew(s, type, vece);
++    }
++
+     if (arg >= -16 && arg < 16) {
+-        if (arg == 0 || arg == -1) {
+-            set_vtype_len(s, type);
+-        } else {
+-            set_vtype_len_sew(s, type, vece);
+-        }
+         tcg_out_opc_vi(s, OPC_VMV_V_I, dst, 0, arg);
+-        return;
++    } else {
++        tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
++        tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
+     }
+-    tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
+-    tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
+ }
+ 
+ static void tcg_out_br(TCGContext *s, TCGLabel *l)
 -- 
 2.47.3
 
