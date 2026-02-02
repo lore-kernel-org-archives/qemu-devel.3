@@ -4,82 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90FBE7316F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE6AE7316A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtsy-0002og-S2; Mon, 02 Feb 2026 08:22:36 -0500
+	id 1vmtwv-00020O-1Q; Mon, 02 Feb 2026 08:26:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmtsu-0002mf-QX
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:22:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmtss-0008On-PH
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:22:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770038549;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pLUPhQlXmPpps65dt3t5XQhfRLXskdsELvV8I8fMCAQ=;
- b=ivVMVYiiqg7RzmWXXMRZYXtjzZqIY/SI/svLpsQ8HgUz09Gi5ox2zt/V75KIpnpLJf80pt
- BFBluZdUcM9n8Hg3CIRkbAaAHBSrsGzbj+pDHInA5q9O+ipM4z5n+bOhGLMYHKS9AVefpH
- CIoj/V5N/XS+dAcxLWMHxe2VFg3pXwg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-YpxtBxibOdC6R7Tcbzs6Cw-1; Mon,
- 02 Feb 2026 08:22:26 -0500
-X-MC-Unique: YpxtBxibOdC6R7Tcbzs6Cw-1
-X-Mimecast-MFC-AGG-ID: YpxtBxibOdC6R7Tcbzs6Cw_1770038544
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9647F180060D; Mon,  2 Feb 2026 13:22:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.68])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA4781800285; Mon,  2 Feb 2026 13:22:20 +0000 (UTC)
-Date: Mon, 2 Feb 2026 13:22:16 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, jpcottin@google.com,
- Markus Armbruster <armbru@redhat.com>, Roman Kiryanov <rkir@google.com>,
- Will Hollins <whollins@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, jansene@google.com,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 1/2] bulk: Stop forward-declaring enum typedefs
-Message-ID: <aYClCOwYfr1xXRTM@redhat.com>
-References: <20260130211746.46667-1-philmd@linaro.org>
- <20260130211746.46667-2-philmd@linaro.org>
- <87ms1rpdnw.fsf@draig.linaro.org>
- <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vmtwp-0001zN-Gk
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:26:36 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vmtwo-0001fA-1y
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:26:35 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-79430ef54c3so40869267b3.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:26:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770038792; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bTtCx6w/ZD32uBTUPQnyJayWR1eyOAO+G/4IJAUA5Fo3Kc9o+f7r3coRXBWkrV46QC
+ kzvnC5NtpJ5lJSjZzAP+eZhoF+guDQ4fN4TJGTuA3pYGeNq7Luy+aKI7JOWUuIH3aUxl
+ Mg3av4a0r9ZjlP/Fwyp795VRst74BLjoDCbcUsVxcfqSOzHrxFPtIOaCeDw3KkPWdZpo
+ PsXNttZjtogr8NdSY37f8cE2G4vhuDekz7PJXoqDzt+6P8+vtuUtbphwkCEo1JOMoWhL
+ 84QuGciQdi1wjEyzrqbG5/zRFHJyBuXvRuATg5KFIBPJmih+UxHLShH6l1xC/Ssl5frG
+ KSyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xUr2iLqj0bG6Qv5DjBsBK+LbeYrLOtHNrqUPsHTb2rY=;
+ fh=ekUqqrjZvs3EiCbmM+uxXnDTDwuxrXCI5rm0DRfrGAQ=;
+ b=H+RtsspXfZGbfaNAOwQP6m0kVoH0RXYMv8SS6OiwtSMKCJzyn2eDU8s+ltIWa1SJds
+ F0bpGYvnce19ILMlF1Gf/BMwPN6XPvrAq5DhK5mYVBQigumhReTL6Z/QRkdzg5ltLsgp
+ o6igB3BVoWGj50c/Ru5L1axzDu3adulpL+vakN8Pw1SvTOYhBW18+v56GOfYdke2U2Hd
+ kQ8eW8B0MgKA9PSZ3OhHUb6yejgpzGhEAiYRxm9e+LM09uHX7mXAh0krqSsctQ2MU8M1
+ YEEswAUqkPza44QjY6SE19wY/Kn4zVIZARW3ATwrDgMHf9j0uDyleO4JvsW8JxycKK7e
+ 1eew==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770038792; x=1770643592; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xUr2iLqj0bG6Qv5DjBsBK+LbeYrLOtHNrqUPsHTb2rY=;
+ b=HfM41Kaq4vciN74eHcBBD0/vrhxJiRs7ifB6EEr0xC9j5RZ+fnKSu4soP8yWXJ2cki
+ 2WsuD//v1DAzt+VCtlIW7/gkHIWWEfI2a5MWp4g+aM/kBPNc1MC+OqQdlvOIk9qkjy6d
+ BmvxbPAuAaL+D3uRRP4HRjx+TYksBelfmmRGq2IMRDkb9mLtyFqvfmUO0g7gx9IhlQLM
+ VL69uolK+0Z0xw6NUUMYwVBK2NZIS0WJ8ODt22b/pUh4z3CMVfw6rTLFNUqjinJmnQl5
+ oobBfjypQF3GX5I3ZQCQ+KWZihAxoa9u4gO5VT1YeoNoX5acQuLis3W1pTA8VJFaCetD
+ 4iDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770038792; x=1770643592;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xUr2iLqj0bG6Qv5DjBsBK+LbeYrLOtHNrqUPsHTb2rY=;
+ b=K1MCV/YeJHMluS/dw4SQAkS/c7x0hLjMAdQMLiwNGQzXr0T9sdrjjgbKZVgI+1R0E1
+ tJ041n28YM9HiJAjdaoAWB3ChysbvhYrdSbNlVWOicHAm8ck2eezzV2AfB/Ffh8Qa9S8
+ tHk4TgrcprFD94WSY+/QowSNd3+rlKHnA4xbMf7Y1U9ygqrfxK8W2ac8ClYFOYsxclja
+ fo7APVJaFFG4gaj9ufbNLa7q2M2NQ4mF4ebOW9p81UgzkuuhTVv7HC36wvXtFnniItB+
+ pg8HVoIGxdIJethxB+aAAxqpKhDk8LISQ0xoOj24q7Z0zg2oFCRwdoaOt9z3Dk6Rp9PF
+ JfRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUADe/FUSpL4md+OUxqaojxkUEn2JrWIlEjUgfSxBcId4OhnK5pmkH9btTqDFIaHtJL/eGWkNTgcjlF@nongnu.org
+X-Gm-Message-State: AOJu0YwZkZF3/bN1YKpggJrV6kORspmdgKFmFwVJP6NGRadI8gV7xHRv
+ 2Rrg/zADfeLb6y2lbNo1yPZffEotrwUhM1ek/yDzVdJmgLYB63J1GSXsc2Ns7M1BtqUuKxln7ju
+ ZlsXOQCbklY9zWZjWR7ly4Hd9eDREPIGbe4a082TB7g==
+X-Gm-Gg: AZuq6aLFXKV71Y7O05z3r9dTj/Tngwre1m4avUpkZgFl4S8X5Rl2ehBYA57x93e9UJ9
+ nUzRsulAT3TrGVhNJQn38C14Q0zPLP63+IeeT0IHP1gYU/p1NKhLtHnSGzQzcExddLsC9IogaTA
+ NPpkq9NDdYNlfX9pc86KJME2J5EPYJ2rNztsPB6W5WqKxwpImRohrceRwqZQBaOnZ+Ks9vOzsap
+ GPa0KxfyoCjMNKUE4wKnWFryB0VoL7T9m+3wb1nutNrsgQnBsJxqLxEfHpbIwZHSUKp9w==
+X-Received: by 2002:a05:690c:9692:b0:78c:3320:9c5d with SMTP id
+ 00721157ae682-7949dfa9ff2mr93275907b3.42.1770038791676; Mon, 02 Feb 2026
+ 05:26:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
+ <2d69de6e-da9f-4f90-b805-9553bb72c78d@linaro.org>
+ <7ac8fe1f-8098-4417-a97b-1a82c0fd23ca@linaro.org>
+In-Reply-To: <7ac8fe1f-8098-4417-a97b-1a82c0fd23ca@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 2 Feb 2026 13:26:19 +0000
+X-Gm-Features: AZwV_QjmPfV_0BPiQ4U9qR2i7rZOVdX7rE2sNQBCGpdtBQffq4DK8DyS0xJzE7A
+Message-ID: <CAFEAcA_zghZeA0PzivCY9vCcFk6rVLwvP3in35rA=bF8yrdeyQ@mail.gmail.com>
+Subject: Re: [PULL 00/21] Plugins patches for 2026-01-29
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,106 +113,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 02, 2026 at 01:05:33PM +0100, Philippe Mathieu-Daudé wrote:
-> On 2/2/26 12:50, Alex Bennée wrote:
-> > Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> > 
-> > > The C99 standard chapter §6.7.2.2 point 4 mentions:
-> > > 
-> > >    Each enumerated type shall be compatible with char, a signed
-> > >    integer type, or an unsigned integer type. The choice of type
-> > >    is implementation-defined, but shall be capable of representing
-> > >    the values of all the members of the enumeration.
-> > > 
-> > > Align with that recommendation by defining the typedef
-> > > along with the enum.
-> > > 
-> > > For information, building with -Werror=pedantic was reporting:
-> > > 
-> > >    In file included from ../../ui/kbd-state.c:10:
-> > >    include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to 'enum' types [-Werror,-Wpedantic]
-> > >       12 | typedef enum QKbdModifier QKbdModifier;
-> > >          |              ^
-> > >    ...
-> > > 
-> > > Reported-by: Roman Kiryanov <rkir@google.com>
-> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > > ---
-> > >   hw/riscv/riscv-iommu-bits.h          |  4 ++--
-> > >   hw/riscv/riscv-iommu.h               |  2 --
-> > >   include/hw/misc/auxbus.h             | 11 ++++-------
-> > >   include/hw/pci/pci_device.h          |  5 ++---
-> > >   include/hw/ssi/ssi.h                 |  6 ++----
-> > >   include/hw/xen/interface/io/xenbus.h |  5 ++---
-> > >   include/io/channel.h                 | 11 ++++-------
-> > >   include/system/replay.h              | 10 ++++------
-> > >   include/ui/clipboard.h               | 15 ++++++---------
-> > >   include/ui/kbd-state.h               |  6 ++----
-> > >   pc-bios/s390-ccw/virtio.h            |  5 ++---
-> > >   tests/qtest/libqos/qgraph_internal.h | 10 ++++------
-> > >   hw/core/loader.c                     |  5 ++---
-> > >   hw/display/xlnx_dp.c                 | 11 ++++-------
-> > >   hw/dma/xlnx_dpdma.c                  | 10 ++++------
-> > >   qapi/opts-visitor.c                  |  7 ++-----
-> > >   qapi/string-output-visitor.c         |  6 ++----
-> > >   tests/unit/check-qom-proplist.c      |  6 ++----
-> > >   18 files changed, 50 insertions(+), 85 deletions(-)
-> > > 
-> > > diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> > > index 47fe01bee58..281afa7bc3f 100644
-> > > --- a/hw/riscv/riscv-iommu-bits.h
-> > > +++ b/hw/riscv/riscv-iommu-bits.h
-> > > @@ -96,11 +96,11 @@ struct riscv_iommu_pq_record {
-> > >   #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
-> > >   #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
-> > > -enum riscv_iommu_igs_modes {
-> > > +typedef enum riscv_iommu_igs_modes {
-> > >       RISCV_IOMMU_CAP_IGS_MSI = 0,
-> > >       RISCV_IOMMU_CAP_IGS_WSI,
-> > >       RISCV_IOMMU_CAP_IGS_BOTH
-> > > -};
-> > > +} riscv_iommu_igs_mode;
-> > 
-> > mode vs modes.
-> 
-> Pre-existing...
-> 
-> > It seems very clumsy to have the type at the front and
-> > back of the declaration. The only real reason to have the tag ahead of
-> > the struct/enum was if there are references in the structure.
-> > 
-> > IOW this does feel like a lot of churn.
-> 
-> Well I got it clear old-school maintainers are very reluctant
+On Mon, 2 Feb 2026 at 04:04, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 1/30/26 04:41, Pierrick Bouvier wrote:
+> > On 1/29/26 9:37 AM, Pierrick Bouvier wrote:
+> >>        contrib/plugins: add empty cpp plugin
 
-This kind of personally directed language is unhelpful.
+Hi; this fails to build for me on Linux (Ubuntu 24.04) with clang:
 
-> to open the project to more contributors, even if changes
-> required are only cosmetics, and less invasive than Rust ones.
+In file included from ../../contrib/plugins/cpp.cpp:33:
+/usr/bin/../lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/coroutine:38:3:
+error: "the <coroutine> header requires -fcoroutines"
+   38 | # error "the <coroutine> header requires -fcoroutines"
+      |   ^
+1 error generated.
 
-The project as a whole has debated C++ multiple times over the years, and
-there were of course different opinions. Eventually the consensus for making
-QEMU sustainable & interesting to new contributors over the long term was
-to focus on Rust.
-
-Consensus does not imply unanimous, so there are doubtless still people,
-(whether upstream or dealing with forks) whom have a preference for C++.
-Given the decision to focus on Rust, however, work that facilitates or
-encourages use C++ at is sending people down a dead end path, and is a
-distraction for upstream reviewers/maintainers. It may look like an
-"quick win" but IMHO it is unhelpful (perhaps even harmful) over the
-longer time.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
