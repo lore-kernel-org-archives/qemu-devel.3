@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A808D172D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E48D172CE
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 06:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmnHg-0005wb-EJ; Mon, 02 Feb 2026 01:19:40 -0500
+	id 1vmnHj-0005yN-7q; Mon, 02 Feb 2026 01:19:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vmnHe-0005uw-6d; Mon, 02 Feb 2026 01:19:38 -0500
+ id 1vmnHg-0005wf-Fw; Mon, 02 Feb 2026 01:19:40 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vmnHb-0003N7-6T; Mon, 02 Feb 2026 01:19:37 -0500
+ id 1vmnHe-0003N7-Vn; Mon, 02 Feb 2026 01:19:40 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m9OhCc+WWo8n9/gi43he2dCiU/1ExPD48yTPVsW5gnUUmAKJPqWWwgzd+LTJpMe8efnasVLnfXs7d9yLK/iUSngX1X7Y4Z3nlxDDyf6ihpOClli//+5LtKNo2tyzfjDa0Ph9ivB3EzyfkY0Av8MzrUXV0Bb6XQ2u1cnTUtgVj+/Rmqlc6jZ7LFOwoe3DehdzYr86Y6JKomC1iF1Bt63sghlPxw/KmuG4crVTdvyhJeJfDVVDjEz63Ye+rr1Rq6rnWScJGZddBXFcyrJ3+ug+AeXa6Ih6WVsqZSDSDDMWaSDN85LbTxPNabyTFtPpGlW6jRq2WX1qfjyA6VUm2IqhrA==
+ b=LDg13I89K1UFM7x43ihPHGk95lLDWPWPLOzjLoqcLaDVJ9ScbFZSjoPkYkU4lqPbNqdBohTOuDXM/Dfw8qUwbCUEgsAivJIkr2zKtWHDjU6TROepGnMVTxEO2m/ik3UDjz2V82Smn9U7MZ+qtGU0zsnlhf7/OWBxpOmTvUGIZUdro/7GONB1nNhs7ak0UOfRlupQBwbHrGXb51AX9kMCeFeVi4JPbYSuSmFrNz3Froj9G30R3GHusF/CbdrwsGCIhWl3qyNoVM4I//KZ8PZlm+D4BkbrZMzHgMr/590OG0f4Ky/U6Feu3fPVh20yXXQG40znDYrY7wnpunb+0UDr7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=40eJHEAnNO4/KhDvGuDybS07SXtOUudu0jexI12FZoE=;
- b=UHVMyISbNu9a6YDd6oxGq7Hc0DuudC2OTbNoVa8BBiWMP3hpCfB/e5cvLKmzWuKXFLmU9HFNdV1jv6qdSBdFXb7TRm2pbY5p5tUL84RwsZxSUw/yCkg4AmswWmSRC5j5oNyrX9Fzljo93Dd2CYEJ2VzUFSO1aVquw8r33apFkd8OhtDsblifOZQdxYgzmCyjAVz8um4CQzDDOTzcxJlcpl9tWRKiJsr+l093Ilbu2Req8vmDodRqLFlbYU35eegxZuK6lYJc6/t43/GengwF8EQgAZYrz5A6Uc+/YKZzy10bPhRgbm6EyYYOGK8MFV4zN3JqG3p5snTCTRH2IQ6VPw==
+ bh=UMuE1ew+9lvWsuLvgP9ujlL+8ZAok+NQ4YRrTk6SKkA=;
+ b=QIK0iifJ05f0bJ5snDrUXOtF7ZhiQ3rHHEDLknDVU5MggZxFiPsiHC4YK41vba22wUDAAqb+S3h/xaYYejb850mTVt5rTw45899Wj6bVS3iVUNbicmJ14TYuiXVTEb3PI+Hkh+OIXOJSy13h6OkQLikNmyepIm6f3FvyyueeHXDnokHspaDSFqz5JWP9kLBzVgk/jBbjFAtVxPMPqaAvjVo1O/HC+hItPZQ/5gewu6K8JqkCKyUuuMBCaQ77N0hWBe9+NZbd47NR6tF8j0apkmh78TNwkJStjwlgXxwdcvFKWU2h/85anglsNvn8p9BaHlFK2TlACMv4uZCPiN4vUw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=40eJHEAnNO4/KhDvGuDybS07SXtOUudu0jexI12FZoE=;
- b=VmXO8gfnVfNu1iOjfM72Z9N0oKZfoELmuX1lhP3AxNfELhHev6Mzpxi/tBmB3N7vP2sjb74uHHnIjQH1aQCD60mowhptCpSg7dyDcQ0RqBx3rDkEqv2XxD/NTwZnouqHNadKKIyJX+kPbxQiFkU8hvUGPN/wvHcoXzWmFuWgBgcX1ETJumcaHkaImjd0Hb+BFM1NT6m3p/Owubd3P9/96ICXW5vRUs+sNhkTR8ltSFlfPrTloLW8wZHZimgRkHybjwqyRH51y5zmyuGD2rhHeNZ/8vICtLagvGrMSuDr3kDgyfRqH5Ee5w8YiKRqsCG/EW/go2aq5Lz8C7/KKhYiBw==
+ bh=UMuE1ew+9lvWsuLvgP9ujlL+8ZAok+NQ4YRrTk6SKkA=;
+ b=c6xdCIzzpnD7me3BQjQKvD4Fbg2/kQ9vldwfB3hBnT29WGE85cDXqYmzum0I1z5hcCZlBR88QVLc0g0kbsfmjlNP+pyvyUGukNnv39OoiNm1vlb939T9O+/nIEVnuVTkgYhCDZ25GVYhusNn9SDmvfHukUysYd8rCMalTzxsVimhTyG1PQDwZYsG0o5nl8GshZTSopaAKX0GNqnG6EaGWTtpeJBeZ66TbTNkAgRMSgygPVLBu3PMd8ghf0lY4yswa6fgOr1mWgfIIc79cnyb93MWmKQJRPfwk9gis/1PQPf00kKmE0TIq+5qnQcTXuGVa9CbpTqBsE7nEGA8HXNf0w==
 Received: from SE3PR06MB8199.apcprd06.prod.outlook.com (2603:1096:101:2f0::5)
  by SEZPR06MB5142.apcprd06.prod.outlook.com (2603:1096:101:40::9) with
  Microsoft SMTP Server (version=TLS1_2,
@@ -53,13 +53,11 @@ To: "clg@kaod.org" <clg@kaod.org>, "peter.maydell@linaro.org"
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 4/8] hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect
- address
-Thread-Topic: [PATCH v1 4/8] hw/i2c/aspeed_i2c: Fix DMA moving data into
- incorrect address
-Thread-Index: AQHclAvhZfSqfvuQwEmD3qWsKzD5mw==
-Date: Mon, 2 Feb 2026 06:19:26 +0000
-Message-ID: <SE3PR06MB8199EB45E8CB0A531B796C6BFC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
+Subject: [PATCH v1 3/8] hw/arm/aspeed_ast27x0: Sort SSP and TSP IRQ maps
+Thread-Topic: [PATCH v1 3/8] hw/arm/aspeed_ast27x0: Sort SSP and TSP IRQ maps
+Thread-Index: AQHclAvg8k5KSOVzQU2YNpnzlXTD1w==
+Date: Mon, 2 Feb 2026 06:19:24 +0000
+Message-ID: <SE3PR06MB819906A48EA635CEB8DAAE7BFC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -68,86 +66,86 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SE3PR06MB8199:EE_|SEZPR06MB5142:EE_
-x-ms-office365-filtering-correlation-id: 6e7d2507-67c9-4d2e-56ac-08de62230565
+x-ms-office365-filtering-correlation-id: ce40233e-17e4-42c8-8867-08de62230546
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|921020|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?q+vDg9dN64LLB/nbQaEoRxLKfZpHmW28RfAWlZbir57eIN7XPWiTdIz1Te1h?=
- =?us-ascii?Q?/vwdhsWzPxnMXigJjwBVQN4NOn0AqqoQfijZRi7jO1upGKzyi7QvKzTa7scE?=
- =?us-ascii?Q?1/mXpHiV5xFCZNrWJ5lMtTU/IwPbW6SRgLxaqeNvoaT92M7vxCF98rRyEaRX?=
- =?us-ascii?Q?4QRf2vwGj1bm6RqXqEZb55j7zI4LeHCEiDU9EuJeGf2f109Sr2M3IKxwSnlk?=
- =?us-ascii?Q?3n/D88yTAjvkQ4nu8ocAQ98x6I3FPUwSAdMDCCPU0p+7sLTAcRbpZqV3xxbS?=
- =?us-ascii?Q?5flg/WQhdKvXR7d6/KWCHEB8PfTZae6LiJS8j193nW6vtU5hxwriJTTXUIZv?=
- =?us-ascii?Q?YPCN41l7vmpU/MrZrYyeTo1IMJbeSZ5CjncI2h0FOWHiwa/hGaSHtMfkdX7W?=
- =?us-ascii?Q?XGSSpF7lkDrCUWb99zup4fSx1nzYjw0FYs6sOBkUsmim1R9t325Lzi7ftrrU?=
- =?us-ascii?Q?VG9NiyDePsZJDfXcMgfRp5Svh4ME7Ze2wgo21rzMo4zS0P1jMF8BJXcLLcB+?=
- =?us-ascii?Q?p6chXuWSuPgmXw8c/EW0AUHhUOAkKN+L7pStts5XEhBdwPoA9BC8NuVfSh2Z?=
- =?us-ascii?Q?oucaopz96o7q1/arn8Tf2SCOv3y3Fg4uEUj1MGTP93yzE0CRAw3CsX0Khukn?=
- =?us-ascii?Q?JNyaWwueTm1NvQKeHs947uGXsDMLhlDenjpsnZ8RzkxXAN9B/I6nBjNUkFFZ?=
- =?us-ascii?Q?O+GXm6w0n0gvUBunZ1/QaNrEWNc4UVLehzYelK7niRzO6nPiuR7O6tqYlyxG?=
- =?us-ascii?Q?/V5Tp2KzR3GMUtD3VgtMdUyuo2i/mQv1dJZY14+se6GJfsrMii/mQvwEvMef?=
- =?us-ascii?Q?6WaISDbq0RaDyGqdTa9pjUbNK76TeYbJY3VOjA49Ju04vtmHjRjtLCs+zmZ2?=
- =?us-ascii?Q?SiJmM1M3NQ/TbQ2dKn411F/9z3GSQjlt1wCyIR+sFl5f5JvBx1bLONuWgUSk?=
- =?us-ascii?Q?WA3Cc66zuzJ88fFsXA0oR9LoABz2cSAELTR8IVerXx9erAxjXXK+SwwIR6Zd?=
- =?us-ascii?Q?Jh9C5T63eWfL6Lk1vS1pSuFuyx6fUuZavQ/DenwezY2Dr4ZZ4HOLBjGSPorx?=
- =?us-ascii?Q?ynckLK0h0fY3ZTDXyuijGHtnxS9c6P1tN60bb1wFwX4CX+L94hnlOWsZn21L?=
- =?us-ascii?Q?u0tnxKxkzyKipZ7WVGU4PiDHLmj2UMSkW+j27qUxI6oeJh3Wv7kaHi/JVFBa?=
- =?us-ascii?Q?xRcAODH89Xeu2xTwZqUroNeniKD9HcXX7Szj/5UXSTUgwKJi9Kd+9w7sT1f0?=
- =?us-ascii?Q?KRr8L3o4mYcJvWvdU+aXQu9HecsewR7W+dP5FrCM2jHC9wlC+dHMPB+PBMOl?=
- =?us-ascii?Q?GCWjKVevvm4FhlPIrSviOgO8o6Vx6XFptDF/7uRyu8+6K2js+1P8yNlZF6Pl?=
- =?us-ascii?Q?w3VP79rn7d1fztz2R3jPYOCfGLJxaKrP0Y+8dyYUT1c4iYEt7xD/p598LR0b?=
- =?us-ascii?Q?8gG0uhRL7BIw+YX4fjSLd+WcBkR9NenXAz0Jbjvyh9HUsJoT+Hc75+Y18P9I?=
- =?us-ascii?Q?dSyyeYYEPAaw64mOngP3RbnO7UVCNnSFNU5HgKfoQBy0BXhPg0C6yDD8dWrx?=
- =?us-ascii?Q?D/qavAIjevXFZhUIbCJ/Xue95FLYcw2XtHiTNF6XJgWfDZabJWsIt8C/ZTqF?=
- =?us-ascii?Q?CC5eQALhy2Qk33dgd4jwKD4I4PpSZtDWIXISZTipJIVj?=
+x-microsoft-antispam-message-info: =?us-ascii?Q?VO+IxU7SlleIICnaPJTTfHX1NrswMNm6GwQIdThVu+73SPSHxuR6gqfCGY3m?=
+ =?us-ascii?Q?/JNNQeFPJYeyp2w00cOZENV4dIvxdH0dQHHcQ0BxzzXyGC39tNKxO9/jqaZA?=
+ =?us-ascii?Q?EsBxfUi37NHUtHI1Rk3lg8+Y7kNupGEApqQOThaORv6KdINvu5pH+5nxF8kv?=
+ =?us-ascii?Q?OnQN5EnBOGnUN4/nrWLj+joK0Am54RsHQx5GXX+PScso/+hucwyLVdiS90QF?=
+ =?us-ascii?Q?9wGAVXaVutd8pQQST497YsfbkVb0YfUVbYE/n0/o+m6E0jx3e4cBqBzaRDvU?=
+ =?us-ascii?Q?fBajN4T2+dkJ/U6WnQyJ8etC3R+bmRcD61ea9HywUZTlaLiRwkz60l7Fu17Y?=
+ =?us-ascii?Q?evgcX3RxLwg6FP8ADcsW0YbzGZmTEt8YGbM5AFdabI+3LLZkWEwocvhYv7TU?=
+ =?us-ascii?Q?QgdZAsNWIZAdvL+pqzjjMBO5ZQcUYvsvCR1vrzaBFSeWa9k1BBUJMZPGZhM7?=
+ =?us-ascii?Q?AK/vAJUgrcYAQv2zmuQqNkdYM0lvQzbRTBpWSpqZWmHOgaQUhoemetK1uQ0Y?=
+ =?us-ascii?Q?ndP89079i/TIpgMazd85T7pDdh+jG1ETp61aYtHdEj/oiYdccXAl3PnN2Q92?=
+ =?us-ascii?Q?CKFDD/a491tU7nKaHzBiYWHJ4mQwnkhGUr8AP014VzyFM0pW1YaF6ARnvqFl?=
+ =?us-ascii?Q?ZoHPQ72hjPrZXzgH7ScBgfDldcUesLvqS0y70uiQ5c9MQJROVRS4DbLTXOCJ?=
+ =?us-ascii?Q?/gqqZH2LWeOj7ie881FoMbGedRQ3aOVQd5eYbNjfkN3TS6RndGJmK10XIM0S?=
+ =?us-ascii?Q?4PXEITZ8/ZvJHb8r8UR1Eo6Gp1zDSms8uw6G8dZE21P91Q8xY91dB0we4Ejz?=
+ =?us-ascii?Q?RUON2SiHsToA/WmuS4g8+1eKczUAl1L2HMc7LgxcFprCc91/zoJhs1J25QPS?=
+ =?us-ascii?Q?+9Jc3bhylgtUjsxRhOEgeg84KkoAwa0pO2DsJu/rkZ5Jm1EaNAzoejvSqk0W?=
+ =?us-ascii?Q?nu+tXpsWgklcgkvVAl+Gs4hmx+9TBmvw1FA/ZCYjzYQ8/xaNATan7MV1+V8W?=
+ =?us-ascii?Q?E44tE1dy47o4F3/+LdQZBcUA1u13MSVuHbwc/qpTd+Ss5cKpK2rEPPLJA/KM?=
+ =?us-ascii?Q?FJaZNaOe7MQFEvoUEjbi3g6patQvhQFhwa6IfP7tBHWvFAWQhRthelkSHFwN?=
+ =?us-ascii?Q?sKm+0EfPVfJpPbhWwJ/QL+Vmotqy1+vuqwwHRIeEXj72clvcWoDi+XtXwvwl?=
+ =?us-ascii?Q?MUCiwLmcGeIEPqa0wE0Qgo93Ncg4IDr0JhXZZeiVCXuK46XDXyw8HYEdm3DM?=
+ =?us-ascii?Q?L9eV0uyieIRsbH91GckOQAoS6iBHzhwJs7qnlkbk7bNXm9Z0245U5vaWqwkS?=
+ =?us-ascii?Q?eU7YuRwQsgO1Ez5Ey/nOPsOHaTHFpkS39r888vR/wCTsiMPH8EeSLsGCKWii?=
+ =?us-ascii?Q?mKbnWDQQ/nchIGLaP1tgMC7BM0xyGu8WTbKIyWhChiRJnFMmWAT0j1jibZXS?=
+ =?us-ascii?Q?VxoIOdy6wi+hAxAzSR8KXE5wh+63ZPdEAMlg+Gr/TtbLe3tLbouQXapculKJ?=
+ =?us-ascii?Q?9EDZLL6o36+t0DL8PQ0O432jPqhyfUsoXuO0/yiAm8iOyoQoxGsR3m5bpQ5O?=
+ =?us-ascii?Q?fNX1qvBoDxfcW0wqhz4+49FrMfEYOdChlqfvOgHQQsmihwrR2PTxua0yX/Xs?=
+ =?us-ascii?Q?Ld6LL6GZ1Ne9N/GZHcdJuErechVsDVCMIM/13B9pAzOk?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SE3PR06MB8199.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(921020)(38070700021); DIR:OUT;
  SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?zAU4Dw5BwaC7FidSy7PBCr+nxv1N8g+Ldm+DJTbtoPcOXQQr4vA7Tzf6xkzr?=
- =?us-ascii?Q?CqJt/dzFcRRm4KV/VnjOjJst5EaWI3DfqUHfvWo0FLcPy3MAn5ATc6z9IyD3?=
- =?us-ascii?Q?4R/e5f11qkxibVdzEGfKqUfhNeaqkbTGUVQ0TR4RwzDrUE9EiyYehJy2kWbZ?=
- =?us-ascii?Q?t2ejUCifG9S0L5zY8iwLzWPU/VFD82miweaa/7xLADnA4Msghee/q46GzkqB?=
- =?us-ascii?Q?TU99OgecnwUiXyrDHLHChfoBeZA0uGRM+pbWt5aI7wGLsXqD0SJ6pPJ1pd9i?=
- =?us-ascii?Q?OPZe9miN5vJoa3q83sY0APOYO0ZgMGfN9TBDOOq1E1uebuBGubdwgoIgpO/w?=
- =?us-ascii?Q?ez/2HrhxKACevUqxLmWuxLVrtw2A5RAWzXu6GIan3OtCElPl3MOjQr0G/PbS?=
- =?us-ascii?Q?EDbP7qB1NmpSJFrPZ3yQj/4zb9JniEN2a+tdStc5UAhHIxTcD5+KzNyu4a9T?=
- =?us-ascii?Q?79YaTw7SnlfEVKsfSRcGXkxglX/5jw837M2DYOcnv6jAoGKkkxi1xC2Mqymu?=
- =?us-ascii?Q?jbhePbVFXJOsC+As4TfoKl3G4UkxSEAHylTGtx0YQjmR/tT48JWUtTOTPaot?=
- =?us-ascii?Q?P7cHL8/zbt07+5EqF52c+192hp3zC1dFM9BnkSoAntD2pLf/aSVQBS06p5mb?=
- =?us-ascii?Q?qe5IF6IYdouFpOzUKoOnxelab7e03qvQYEDrisXy8qi5TpQOBjffikcJ9TRD?=
- =?us-ascii?Q?cTPt6/K1iYIkJaTnwL6HbtvtAWw8RxPbunBzrsTgey8e64nH0uuEkfqdhA3K?=
- =?us-ascii?Q?K/kCq41wgPuEcJPPWMk626Tm3C8GxBA04w/hUUpyVtx5U2+TZZ5HHpfCgozc?=
- =?us-ascii?Q?oLRb1+OwXBoVwoQTkE9zQ8L0nxEXlTbnYbdNiamlSZDQZSuCtU205Tnj9uDn?=
- =?us-ascii?Q?kLuDwH8oiUnMGmA8XsRItKsE9l2OBAEnDOd68+vp1W7XZ5SJEpQ9IFR5wGUu?=
- =?us-ascii?Q?sMzi2crC0rATSFVP3AnLU/5aPKnrTmm1A2hs+/MWXMZvFoO5SR3Dt1/c03ui?=
- =?us-ascii?Q?1AwLvmHP58HODcHssZaIQJe5RXXbG270TKjWwsfPcW54EuYZ5f+NWnHjjxZq?=
- =?us-ascii?Q?Mh3Aj3A4o43C0LJ4/wEJoTL6+3J0pUkBIOCIecZBkRM/MSnaKFnGD6GeCzqH?=
- =?us-ascii?Q?jpPW5GjpF6AxXIFKhsOYMR9qav8730Vgmk40UyY994LegACTDTer/JMnvTku?=
- =?us-ascii?Q?3o0TadIf1FAmzftRJyUjDAKgOkHjugfJSoUoLO5hoMez72W+dL4U6SAUmFEk?=
- =?us-ascii?Q?Kr8jHgghNeuBexjThMlCkj/N6gfaZa42ic2BvZRrukBOp2t+3c3AGnTTZ+F7?=
- =?us-ascii?Q?ZNzwzVSaqJBPt0/tzvoVeVAh7yoM5F1RsbVlbZeqH45Fg62bmdGmUDsNyAtX?=
- =?us-ascii?Q?D9EzFMxzmfgQYqmUHxdO/+6PwvbwFF882si2YSJXSxlWEed3Hx+m9M/B2HkN?=
- =?us-ascii?Q?SFjLBfMknPc1z242PT9+aqlc3sjOBZOIb1ynTE9hDwIeJoWFXJOQdef3IEsf?=
- =?us-ascii?Q?ResY4oarvqJrHPtXkMCq6zRuhSTNCVsoX+P/b4CcEhCS+KsCe2+wbeqwOS4e?=
- =?us-ascii?Q?ovm73E636U2Z2+bjPP7G20P5uxNk7BQbsLtAJfVRehzBSa69oZpt+ZTjzKyf?=
- =?us-ascii?Q?ZjAzR24zFhQZLSYndZwn8Y3W6tpvc39wGjWZCOUyBATxLULtXbNqb/3xJ6q6?=
- =?us-ascii?Q?uUFj14/fUMM3MSDnERDdLvoD43mr6PXRkQ5/IfgXIv5OKRHZOElyNf0uDhPV?=
- =?us-ascii?Q?DQY7hovSZw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?JfobSKZWyGQlOUVPBJmA3+/xyFdRBmY1Qz9a7nJI+0fYr9vTodJcsdXrM4R+?=
+ =?us-ascii?Q?fgArC2ZnaJxmR1zV8UJaB77yeD/KuemSiQkd7ajeQdOzVQPC61NDA7W1ylfh?=
+ =?us-ascii?Q?+cn6yGpDqnhwZ34HmiDo8OvuAtijr7QJ6zqCS46lvVeCicHYCGYCjmMFL35f?=
+ =?us-ascii?Q?LC9LkvaUWseuiVYBpRk4wjdevrDt94j5N4UZsA1OBQT4nsvehWLom/bN/tfO?=
+ =?us-ascii?Q?4Pg4ALw7LTizy6seg/OgnkWrZXsPkEsCkWaA5yCtHQWrxuOoeeYNrB5Lp2Hh?=
+ =?us-ascii?Q?CHB9T42gUL3mQBefm2qg2NGHTFRowA509A/KnK5sA9ItHzBkOBg5s3vOzfxg?=
+ =?us-ascii?Q?mxhgrhUsLWAqsSoY7j3lD6UFTV9SUduIpq4Vtq892hOSq0qGGOCcUnbmy6FQ?=
+ =?us-ascii?Q?PiTgzYYqD5jeckPBf7Bc/04T8dJft27ydWxie9MhXQZ2V5WOIQx3+Dw4ENxU?=
+ =?us-ascii?Q?ST6gLPh5SrA0WXJk5H50FXZegnDA+eo5ydu2Zuy7v794+M/RMVief6APcQNj?=
+ =?us-ascii?Q?yzBr640WRnVdjLB1dZ0gsoXRWFOlEIlXLb14KWmq0VccmQoKRJWNVIucc24j?=
+ =?us-ascii?Q?om/AM6ucWSKhG2LzS/OSRXLMadoxNDY3gN3fu+C4fZZjKeKav/ymQ/X7+6VR?=
+ =?us-ascii?Q?eI4gPgWRBFAYAwGbMKI0Xyn5BF7ScskGTtbhdWNQ3oL5lf7EJGAb+vVKwEqU?=
+ =?us-ascii?Q?67SdFnhqzywbyCsuPev4zRNWILG+9y7zSle/8/96ncx1Jeo0L7IhFxLG/MKr?=
+ =?us-ascii?Q?smzAmiIypsAtIl4ZUZtW0aq8bZ1Ft+mFGRRUpZlsUrgM1HAyPel1d9bFQXyN?=
+ =?us-ascii?Q?kPi8zz+tQSnRPlu9b/YfczcJ5vaiSx042M36wMDOCKWqTgoWRhGxjkrZ4tZ7?=
+ =?us-ascii?Q?w31nPTbtcwQ8FrSQmZXgWjduWRNg//tx1Gs9vW4Jup0pW95yn5A2FUYg5Y3M?=
+ =?us-ascii?Q?VXFs5uYPSz6UntG88iVqckEBdiyvTIhwDI34fCBi6/cYDZoi0M/rXDE8xMJt?=
+ =?us-ascii?Q?++b+NVLbRP0z1Z2WaAbSC38x8IfbOh7IeemSDj84s+fMjOM2jMZTGBB0MH5I?=
+ =?us-ascii?Q?hwpqWdusxVFkEWso+cdHPOKlJZP2AKkdMdzqv4taNX2MqFLyHz04Nz8g07zz?=
+ =?us-ascii?Q?7GHH2UX2V9RhxWC+OCEqLo0YEi8ntnhWhFzrpVEmEoagqaIcNUic0eH4Qd5V?=
+ =?us-ascii?Q?H9CYlzXd+++VjuCW+Md4XufOT83JGbTAfFsuALxCk9J8YDlrBD7IdYEft7Uv?=
+ =?us-ascii?Q?uuaI2ppvqHDWvmJNaVu/fUD+t1vhTlAfgpXw5WZLfXEVF3B8eXqwIRK+8zhB?=
+ =?us-ascii?Q?rIBKloVvjJYMsouVTQspkuP1Rqm/jB6ZswgOpXjzPT6a77NbEfS2Ni18z+Sc?=
+ =?us-ascii?Q?uM4FvXZ0Gxfvqvjk0eOiFH5yz5AzUv/dwpy67D0iGwdxtfULvFK0QDsFu4t2?=
+ =?us-ascii?Q?qt0mnzwpc3+V7QcX5diPdhUs/pajnwGw9kujVuMjeGv9uSsgBKokyzl+1RWO?=
+ =?us-ascii?Q?a4TPUCyfAmx7WagbH3SxpZ68o4m2mHxBbRcjl4p2Dy1q8xsiSMwAq5U3Ay39?=
+ =?us-ascii?Q?0596RZxdxmnAIPq/X/ulujl8CqPT4ep2p6xNewUi+nmDw9mBx4DOafyUbUw7?=
+ =?us-ascii?Q?EVAw8T0rIF+hGORUEHDQSguAQw2o4hR8R2aOdbLCyX3yLg0SycEhpIEopcV7?=
+ =?us-ascii?Q?WlQRVQJpLmeb2zLwPKIlO1/iU1tGMzH2FjtkUcvuIKD7TgkDTe3Z2dNYCuba?=
+ =?us-ascii?Q?8vZVt90DdQ=3D=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SE3PR06MB8199.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e7d2507-67c9-4d2e-56ac-08de62230565
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Feb 2026 06:19:26.2312 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce40233e-17e4-42c8-8867-08de62230546
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Feb 2026 06:19:25.0043 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CTioJ+a8d2Yd9P0B4dHucFJcff8rCpLwTfWkL4TSO2SopFJb85vF6KRzI7hJUzYL7afuwfx8CSppO6q3friFBKX0DbVlG1YZieF/Q5kKGnQ=
+X-MS-Exchange-CrossTenant-userprincipalname: ZOm5m4Q1r4oDM/NNz1YpfmIeofuZC0den1fjUcFRSmA+wDqcqcp53Fm95u5FAyIJP9f0PoWYJVvBNEansYSU0mcsdcjFxFpWjDrgmVDejv8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5142
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -175,220 +173,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 =0A=
-In the previous design, the I2C model updated dma_dram_offset only when=0A=
-firmware programmed the RX/TX DMA buffer address registers. The firmware=0A=
-used to rewrite these registers before issuing each DMA command.=0A=
+Sort the SSP and TSP IRQ map tables to improve readability and make the=0A=
+definitions easier to maintain.=0A=
 =0A=
-The firmware driver behavior has changed to program the DMA address=0A=
-registers only once during I2C initialization. As a result, the I2C model=
-=0A=
-no longer refreshes dma_dram_offset, causing DMA to move data into an=0A=
-incorrect DRAM address.=0A=
-=0A=
-Fix this by introducing helper functions to update dma_dram_offset from=0A=
-the DMA address registers, and invoke them right before handling TX/RX=0A=
-DMA operations. This guarantees DMA always uses the correct buffer=0A=
-address even if the registers are programmed only once.=0A=
+No functional change.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/i2c/aspeed_i2c.c | 87 +++++++++++++++++++++++++++++++--------------=0A=
- 1 file changed, 61 insertions(+), 26 deletions(-)=0A=
+ hw/arm/aspeed_ast27x0-ssp.c | 4 ++--=0A=
+ hw/arm/aspeed_ast27x0-tsp.c | 4 ++--=0A=
+ 2 files changed, 4 insertions(+), 4 deletions(-)=0A=
 =0A=
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c=0A=
-index 1ee73a8f5e..fb3d6a5600 100644=0A=
---- a/hw/i2c/aspeed_i2c.c=0A=
-+++ b/hw/i2c/aspeed_i2c.c=0A=
-@@ -116,8 +116,6 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *b=
-us, hwaddr offset,=0A=
-             value =3D -1;=0A=
-             break;=0A=
-         }=0A=
--=0A=
--        value =3D extract64(bus->dma_dram_offset, 0, 32);=0A=
-         break;=0A=
-     case A_I2CD_DMA_LEN:=0A=
-         if (!aic->has_dma) {=0A=
-@@ -221,6 +219,64 @@ static uint8_t aspeed_i2c_get_state(AspeedI2CBus *bus)=
-=0A=
-     return SHARED_ARRAY_FIELD_EX32(bus->regs, R_I2CD_CMD, TX_STATE);=0A=
- }=0A=
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+index e4bcf0fa2a..9b12ba6743 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-ssp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+@@ -44,12 +44,13 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] =3D =
+{=0A=
+ };=0A=
  =0A=
-+/*=0A=
-+ * The AST2700 support the maximum DRAM size is 8 GB.=0A=
-+ * The DRAM offset range is from 0x0_0000_0000 to=0A=
-+ * 0x1_FFFF_FFFF and it is enough to use bits [33:0]=0A=
-+ * saving the dram offset.=0A=
-+ * Therefore, save the high part physical address bit[1:0]=0A=
-+ * of Tx/Rx buffer address as dma_dram_offset bit[33:32].=0A=
-+ */=0A=
-+static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2CBus *bus)=0A=
-+{=0A=
-+    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
-+    uint32_t value;=0A=
-+=0A=
-+    assert(aic->has_dma);=0A=
-+=0A=
-+    if (aspeed_i2c_is_new_mode(bus->controller)) {=0A=
-+        value =3D bus->regs[R_I2CM_DMA_TX_ADDR];=0A=
-+        bus->dma_dram_offset =3D=0A=
-+            deposit64(bus->dma_dram_offset, 0, 32,=0A=
-+                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));=0A=
-+        if (!aic->has_dma64) {=0A=
-+            value =3D bus->regs[R_I2CM_DMA_TX_ADDR_HI];=0A=
-+            bus->dma_dram_offset =3D=0A=
-+                deposit64(bus->dma_dram_offset, 32, 32,=0A=
-+                          extract32(value, 0, 2));=0A=
-+        }=0A=
-+    } else {=0A=
-+        value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
-+        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
-+                                         value & 0x3ffffffc);=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2CBus *bus)=0A=
-+{=0A=
-+    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
-+    uint32_t value;=0A=
-+=0A=
-+    assert(aic->has_dma);=0A=
-+=0A=
-+    if (aspeed_i2c_is_new_mode(bus->controller)) {=0A=
-+        value =3D bus->regs[R_I2CM_DMA_RX_ADDR];=0A=
-+        bus->dma_dram_offset =3D=0A=
-+            deposit64(bus->dma_dram_offset, 0, 32,=0A=
-+                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));=0A=
-+        if (!aic->has_dma64) {=0A=
-+            value =3D bus->regs[R_I2CM_DMA_RX_ADDR_HI];=0A=
-+            bus->dma_dram_offset =3D=0A=
-+                deposit64(bus->dma_dram_offset, 32, 32,=0A=
-+                          extract32(value, 0, 2));=0A=
-+        }=0A=
-+    } else {=0A=
-+        value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
-+        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
-+                                         value & 0x3ffffffc);=0A=
-+    }=0A=
-+}=0A=
-+=0A=
- static int aspeed_i2c_dma_read(AspeedI2CBus *bus, uint8_t *data)=0A=
- {=0A=
-     MemTxResult result;=0A=
-@@ -270,6 +326,7 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)=0A=
-         if (aspeed_i2c_is_new_mode(bus->controller)) {=0A=
-             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, TX_LEN, 0);=0A=
-         }=0A=
-+        aspeed_i2c_set_tx_dma_dram_offset(bus);=0A=
-         while (bus->regs[reg_dma_len]) {=0A=
-             uint8_t data;=0A=
-             ret =3D aspeed_i2c_dma_read(bus, &data);=0A=
-@@ -335,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
-             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, 0);=0A=
-         }=0A=
+ static const int aspeed_soc_ast27x0ssp_irqmap[] =3D {=0A=
++    [ASPEED_DEV_UART4]     =3D 8,=0A=
+     [ASPEED_DEV_SCU]       =3D 12,=0A=
++    [ASPEED_DEV_TIMER1]    =3D 16,=0A=
+     [ASPEED_DEV_UART0]     =3D 164,=0A=
+     [ASPEED_DEV_UART1]     =3D 164,=0A=
+     [ASPEED_DEV_UART2]     =3D 164,=0A=
+     [ASPEED_DEV_UART3]     =3D 164,=0A=
+-    [ASPEED_DEV_UART4]     =3D 8,=0A=
+     [ASPEED_DEV_UART5]     =3D 164,=0A=
+     [ASPEED_DEV_UART6]     =3D 164,=0A=
+     [ASPEED_DEV_UART7]     =3D 164,=0A=
+@@ -58,7 +59,6 @@ static const int aspeed_soc_ast27x0ssp_irqmap[] =3D {=0A=
+     [ASPEED_DEV_UART10]    =3D 164,=0A=
+     [ASPEED_DEV_UART11]    =3D 164,=0A=
+     [ASPEED_DEV_UART12]    =3D 164,=0A=
+-    [ASPEED_DEV_TIMER1]    =3D 16,=0A=
+ };=0A=
  =0A=
-+        aspeed_i2c_set_rx_dma_dram_offset(bus);=0A=
-         while (bus->regs[reg_dma_len]) {=0A=
-             MemTxResult result;=0A=
+ /* SSPINT 164 */=0A=
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+index 68683a15d8..e39d1dc171 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-tsp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+@@ -44,12 +44,13 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] =3D =
+{=0A=
+ };=0A=
  =0A=
-@@ -401,6 +459,7 @@ static uint8_t aspeed_i2c_get_addr(AspeedI2CBus *bus)=
-=0A=
-     } else if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, TX_DMA_EN)) {=
-=0A=
-         uint8_t data;=0A=
+ static const int aspeed_soc_ast27x0tsp_irqmap[] =3D {=0A=
++    [ASPEED_DEV_UART4]     =3D 8,=0A=
+     [ASPEED_DEV_SCU]       =3D 12,=0A=
++    [ASPEED_DEV_TIMER1]    =3D 16,=0A=
+     [ASPEED_DEV_UART0]     =3D 164,=0A=
+     [ASPEED_DEV_UART1]     =3D 164,=0A=
+     [ASPEED_DEV_UART2]     =3D 164,=0A=
+     [ASPEED_DEV_UART3]     =3D 164,=0A=
+-    [ASPEED_DEV_UART4]     =3D 8,=0A=
+     [ASPEED_DEV_UART5]     =3D 164,=0A=
+     [ASPEED_DEV_UART6]     =3D 164,=0A=
+     [ASPEED_DEV_UART7]     =3D 164,=0A=
+@@ -58,7 +59,6 @@ static const int aspeed_soc_ast27x0tsp_irqmap[] =3D {=0A=
+     [ASPEED_DEV_UART10]    =3D 164,=0A=
+     [ASPEED_DEV_UART11]    =3D 164,=0A=
+     [ASPEED_DEV_UART12]    =3D 164,=0A=
+-    [ASPEED_DEV_TIMER1]    =3D 16,=0A=
+ };=0A=
  =0A=
-+        aspeed_i2c_set_tx_dma_dram_offset(bus);=0A=
-         aspeed_i2c_dma_read(bus, &data);=0A=
-         return data;=0A=
-     } else {=0A=
-@@ -657,16 +716,10 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bu=
-s, hwaddr offset,=0A=
-     case A_I2CM_DMA_TX_ADDR:=0A=
-         bus->regs[R_I2CM_DMA_TX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_TX_AD=
-DR,=0A=
-                                                    ADDR);=0A=
--        bus->dma_dram_offset =3D=0A=
--            deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));=0A=
-         break;=0A=
-     case A_I2CM_DMA_RX_ADDR:=0A=
-         bus->regs[R_I2CM_DMA_RX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_RX_AD=
-DR,=0A=
-                                                    ADDR);=0A=
--        bus->dma_dram_offset =3D=0A=
--            deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));=0A=
-         break;=0A=
-     case A_I2CM_DMA_LEN:=0A=
-         w1t =3D FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||=0A=
-@@ -748,15 +801,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus=
-, hwaddr offset,=0A=
-         qemu_log_mask(LOG_UNIMP, "%s: Slave mode DMA TX is not implemented=
-\n",=0A=
-                       __func__);=0A=
-         break;=0A=
--=0A=
--    /*=0A=
--     * The AST2700 support the maximum DRAM size is 8 GB.=0A=
--     * The DRAM offset range is from 0x0_0000_0000 to=0A=
--     * 0x1_FFFF_FFFF and it is enough to use bits [33:0]=0A=
--     * saving the dram offset.=0A=
--     * Therefore, save the high part physical address bit[1:0]=0A=
--     * of Tx/Rx buffer address as dma_dram_offset bit[33:32].=0A=
--     */=0A=
-     case A_I2CM_DMA_TX_ADDR_HI:=0A=
-         if (!aic->has_dma64) {=0A=
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",=
-=0A=
-@@ -766,8 +810,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus,=
- hwaddr offset,=0A=
-         bus->regs[R_I2CM_DMA_TX_ADDR_HI] =3D FIELD_EX32(value,=0A=
-                                                       I2CM_DMA_TX_ADDR_HI,=
-=0A=
-                                                       ADDR_HI);=0A=
--        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 32, 32,=
-=0A=
--                                         extract32(value, 0, 2));=0A=
-         break;=0A=
-     case A_I2CM_DMA_RX_ADDR_HI:=0A=
-         if (!aic->has_dma64) {=0A=
-@@ -778,8 +820,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus,=
- hwaddr offset,=0A=
-         bus->regs[R_I2CM_DMA_RX_ADDR_HI] =3D FIELD_EX32(value,=0A=
-                                                       I2CM_DMA_RX_ADDR_HI,=
-=0A=
-                                                       ADDR_HI);=0A=
--        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 32, 32,=
-=0A=
--                                         extract32(value, 0, 2));=0A=
-         break;=0A=
-     case A_I2CS_DMA_TX_ADDR_HI:=0A=
-         qemu_log_mask(LOG_UNIMP,=0A=
-@@ -795,8 +835,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus,=
- hwaddr offset,=0A=
-         bus->regs[R_I2CS_DMA_RX_ADDR_HI] =3D FIELD_EX32(value,=0A=
-                                                       I2CS_DMA_RX_ADDR_HI,=
-=0A=
-                                                       ADDR_HI);=0A=
--        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 32, 32,=
-=0A=
--                                         extract32(value, 0, 2));=0A=
-         break;=0A=
-     default:=0A=
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\=
-n",=0A=
-@@ -887,9 +925,6 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus,=
- hwaddr offset,=0A=
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func=
-__);=0A=
-             break;=0A=
-         }=0A=
--=0A=
--        bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                                         value & 0x3ffffffc);=0A=
-         break;=0A=
- =0A=
-     case A_I2CD_DMA_LEN:=0A=
+ /* TSPINT 164 */=0A=
 -- =0A=
 2.43.0=0A=
 =0A=
