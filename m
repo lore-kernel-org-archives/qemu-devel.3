@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAF8E7DF11
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C923E7DF11
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmxwm-0001IZ-Cy; Mon, 02 Feb 2026 12:42:48 -0500
+	id 1vmxxL-00026c-Fe; Mon, 02 Feb 2026 12:43:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vmxwj-0001G9-EP
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:42:45 -0500
-Received: from mail-qk1-x741.google.com ([2607:f8b0:4864:20::741])
+ id 1vmxxJ-00024A-Nc
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:43:22 -0500
+Received: from mail-qv1-xf42.google.com ([2607:f8b0:4864:20::f42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vmxwh-0005Qu-Ep
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:42:45 -0500
-Received: by mail-qk1-x741.google.com with SMTP id
- af79cd13be357-8c710439535so380696185a.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:42:42 -0800 (PST)
+ id 1vmxxH-0005bF-5M
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:43:21 -0500
+Received: by mail-qv1-xf42.google.com with SMTP id
+ 6a1803df08f44-894674a4c4aso85045546d6.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1770054162; x=1770658962; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1770054198; x=1770658998; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nmbJnU/umBk6a+eACe5jmRu8A1rWAaTd3asImXe7Fdc=;
- b=QFp8yJGTG2zxXBGjl+dx0XqFF2RJFQyoQFWrz9CI0OK7MpwYrSWjIHsCs1hQLeFjLH
- d7xEldZZw2s52Q5EVnHg8JngwVaMJBM637EITojng4H3gCV++MrjzCvjOkkJJO1G0VRl
- fmQxyUzdig0n7toc8CK2It41numSpQpZ5ehUaQB0V9E+3ju9K1+JVOKUksraeJifaesH
- 3dnKAh8F6OoNE4hcW3o6V1uilYGmt+c0HPpHATL5AlDiKlu+1XRuPrq0AYWb4fR01lU6
- DE+0sE9e5QHrBkmbHSxauk8DFDaKMKPntza767yBxNSX/k1idTOSXB8x1gW4yZFo505D
- 2SAw==
+ bh=/aI170ezDLKtlscnDkXKjbopbC62GikRHeSjoYSJg4U=;
+ b=BsLy8EXkKCnetyvaWMssdAQD3tgycn/ZZeVntEskYlpL9bxttSJ/ScLKDOrEjsZPdE
+ aPlVtFKt5J7UzfMiE26/YZlP8UIATTMWd5mjpS6JOaE9P55y8kxCFZNTfldJGlB2S9D2
+ /6rxDKxgYStmbct5zJGKg6Lnrkom1OLlCSVSeHMjDsMiWCi4puSz0hvnpIwmOnfBghwp
+ Ni+VsimwxrMQ6w4OA0DzDCWzYRK0Ku/AuFwajANDUApH2oboFgBiPRxnDvPPshJRAmo/
+ BmrB7JOadBaaIkeUXq966juJcwXKmgexeNgW9xRU5yiDBhWAIbtk/zgSYg+jn/ziBz8i
+ Lq2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770054162; x=1770658962;
+ d=1e100.net; s=20230601; t=1770054198; x=1770658998;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nmbJnU/umBk6a+eACe5jmRu8A1rWAaTd3asImXe7Fdc=;
- b=MmNhoD2oQf4gSILtmzqqsN+7MpehAppMNTJ86QJ7+L+cED5oNuyoEw5ZhuYJ7yfE0e
- 8wCqluOv6ToyfflomociD6PJvDG3jJ6V/IePBujDBVQuOOy/lKTi3n/NstfZfJcTElw5
- fyhKtQchKPyG9KyPLgr/zW4mBkYGfr6fAeilshuCqm2/hnYVTyf4qx+k5BaI40dDtudC
- ZP5FzSXkTSZIYjgcmauPYs/VskTT3n6pyIvmpNpglm7FroWXulF3a7cNHtXlh7ZqrBta
- HTWwQYTlZ1GX0wtyYqHZ1tNcZqJdG8K3HdA17zDZZoqedprU5DGgL+O9txzWa3p8SGb2
- QfPg==
-X-Gm-Message-State: AOJu0YyEv2XVEdnDhm5snJ1U8Z/Rnckg/l8V6LdIYMEqIYty0B+tjEtc
- NtkOW5OVR9KpnZ0GN5mKs1au5eaQz+1+GC4voS1hL/vRfvhvo8qePyO8XpxI6RT5JBU=
-X-Gm-Gg: AZuq6aL1TYESlnv2AsEVx9N3IgBL4Ik/tz/s73FCLL2kNm7B+qvGe6dN2VLpV04sDM6
- i/vZSqkFJ5R82/eNei+MQqfx5H2x8PCkTsBN7mx0YZiZ0J7VjiBPHy6wUnQgTCsH1dE8CnxpbpB
- A18qQAUJEtn7tjnfbJxUV6cN9Qtp2GoXHXslN8t3ipz1fFbIB+vaZLea0KmyCFV7AEd2/s21WAb
- agHFPETGMseU4PVr9L7W/ncQe9HsN8/Gims/mizIgttt0yC1tfRgzCYqM9wzKyHEc9n44A9rUr8
- 2VGbFfqsndzt37WmxhspJI6FBnqSVmD4u1jiXkCGKGmHK1XDjed8ly1r/9oKmoJmwiMhbrIDEfq
- BbeHgpqz1COTcdlYbMpCnyyQa5A3mcgP0t6Sd/YPkw0mDro4Q5nc0DxtJVS4yviNlZnAFrWMlZz
- BmSWos5Yl16ahE5zREpvDTQXrRsUk41EELH/nBOl+VWzcHcR8cG+AY0Fz58vxBEzxbnfSfTUmtK
- A==
-X-Received: by 2002:a05:620a:690d:b0:8c9:ea4f:b402 with SMTP id
- af79cd13be357-8c9eb2faf8dmr1516758485a.50.1770054161772; 
- Mon, 02 Feb 2026 09:42:41 -0800 (PST)
+ bh=/aI170ezDLKtlscnDkXKjbopbC62GikRHeSjoYSJg4U=;
+ b=YLNzpW5T95Lmdwy526mFOD9KeYdTY7hvrDtFtv9AcI0pdM76MIcDiPhjqrMe/qm9xf
+ VJ/efSZb5ias6c3PJQXB0fvm+SjyAr3cI6ynXry4nKIbErA2edmXtFqOw5MfrBHig2ku
+ N2R/8G5RtwbX4xXmqf7so+9zcO2Am5EnMyGxxPq3mC0vILt6tVhWXRcDI0e64nT5NmOX
+ PJQi1UKTgNY/E1JiBlKmPrDjw4sXQ3361tQ9/Oy2pCfv/TCTmwvca95HcCtWDW751c4u
+ RLn4H3D5rcs1Ce22plfoLU51xGjiWEQ3mu61FB3tsXOntye4XfF5izSIO+k45lAkU3gn
+ PN6w==
+X-Gm-Message-State: AOJu0YznddqybJqC62FSd876BiZUXt93mTW7nGhq3yqU2cvE6ck3bcsv
+ 8wRAy+k8N0MLVOsX8M6Qh716+C8VsJme7jT15Ad31r6FxRcuZaKgtDvahkFHK12mPA0=
+X-Gm-Gg: AZuq6aLyYq8Z+oxtvA1pivH9x/BOB7+Zq2GKGnzpo1uvLscoCNeCm5+apNBI9vlE89C
+ THB5SFBtUK2ZUi33XC9b2d8yyVCMmK3bR/VFHnmyKK5lJS5s0A7HcFwmdvWDRNYUU7P1vOG2Og9
+ Y3wXBJc90IWjE5wHQgT4pTxenKsDhX/wSFBX3cTVIeglOd+OcGs99dgCU8/g4tLeByDmeOhsieA
+ L7REDvxoNUDsAeuFsC/CQqOtgiA2yU9eCO1PWYH3Wy7br20F+lvKKjXjjXLvOSVu761aX9XHn1Y
+ 3H9kH1AD/QsWpkb9x4QlCTG1s0OW0qEmDvhbYB8QuawIzuJsUhN3j2AQF07D6d7UUC5vBPp81m8
+ Y6aCGkxpuXCAnlQKv1zbPSIx25ZKbnWLfMZdim7Pklvy6sPSHrgnvir2QFMmtimfeAzYcVeImXz
+ IKQUA6nJFcsbDGthlI0Y5EuKHVatI75QdQCvBzWmB1s2raFiZo3ac5LydXdVOxOQ5LT8YXZwGTK
+ Q==
+X-Received: by 2002:a05:622a:103:b0:501:4b96:466d with SMTP id
+ d75a77b69052e-505d226cd9fmr150990971cf.50.1770054198193; 
+ Mon, 02 Feb 2026 09:43:18 -0800 (PST)
 Received: from [192.168.68.103] (200-206-229-25.dsl.telesp.net.br.
  [200.206.229.25]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894d375b62asm124136196d6.41.2026.02.02.09.42.39
+ 6a1803df08f44-894d36a9bdbsm115412566d6.11.2026.02.02.09.43.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 09:42:41 -0800 (PST)
-Message-ID: <78d5bb4d-f937-44c4-a303-00bbe468c208@ventanamicro.com>
-Date: Mon, 2 Feb 2026 14:42:38 -0300
+ Mon, 02 Feb 2026 09:43:17 -0800 (PST)
+Message-ID: <dc4bd280-a827-450c-adbe-659c1a20eb59@ventanamicro.com>
+Date: Mon, 2 Feb 2026 14:43:14 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 5/7] target/riscv: add sdext enter Debug Mode on
- ebreak
+Subject: Re: [RFC PATCH v4 6/7] target/riscv: add sdext single-step support
 To: Chao Liu <chao.liu.zevorn@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
@@ -80,21 +79,21 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  hust-os-kernel-patches@googlegroups.com, wangjingwei@iscas.ac.cn,
  devel@lists.libvirt.org
 References: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
- <92dad2c97a34c3d691919253a162ed5be5406e09.1769751489.git.chao.liu.zevorn@gmail.com>
+ <4e1808a3ec0e99dcad9c8b5f4ef44ea5d5b00527.1769751489.git.chao.liu.zevorn@gmail.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <92dad2c97a34c3d691919253a162ed5be5406e09.1769751489.git.chao.liu.zevorn@gmail.com>
+In-Reply-To: <4e1808a3ec0e99dcad9c8b5f4ef44ea5d5b00527.1769751489.git.chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::741;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x741.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f42;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf42.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,97 +115,211 @@ On 1/30/2026 3:00 AM, Chao Liu wrote:
 > RISC-V Debug Specification:
 > https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 > 
-> Route EBREAK via helper_sdext_ebreak. If Sdext is enabled and the
-> matching dcsr.ebreak* bit is set, enter Debug Mode with cause=ebreak
-> and stop with EXCP_DEBUG. Otherwise keep the normal breakpoint trap.
+> Use a TB flag when dcsr.step is set (and we are not in Debug Mode).
+> When the flag is on, build 1-insn TBs and do not chain to the next TB.
+> Add a TB-exit helper that enters Debug Mode with cause=step and sets
+> dpc to the next pc, then stops with EXCP_DEBUG.
+> 
+> If dcsr.stepie is 0, do not take interrupts while stepping. Treat WFI
+> as a nop so the hart does not sleep during a step.
+> 
+> PS: This patch references Max Chou's handling of ext_tb_flags.
+> https://lore.kernel.org/qemu-devel/20260108132631.9429-6-max.chou@sifive.com/
 > 
 > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
 
+
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-
->   target/riscv/helper.h                         |  1 +
->   .../riscv/insn_trans/trans_privileged.c.inc   |  6 ++++
->   target/riscv/op_helper.c                      | 34 +++++++++++++++++++
->   3 files changed, 41 insertions(+)
+>   include/exec/translation-block.h |  4 ++--
+>   target/riscv/cpu.h               |  2 ++
+>   target/riscv/cpu_helper.c        |  6 ++++++
+>   target/riscv/helper.h            |  1 +
+>   target/riscv/op_helper.c         | 20 ++++++++++++++++++++
+>   target/riscv/tcg/tcg-cpu.c       |  5 +++++
+>   target/riscv/translate.c         | 16 ++++++++++++++--
+>   7 files changed, 50 insertions(+), 4 deletions(-)
 > 
+> diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+> index 40cc699031..ee15608c89 100644
+> --- a/include/exec/translation-block.h
+> +++ b/include/exec/translation-block.h
+> @@ -64,8 +64,8 @@ struct TranslationBlock {
+>        * x86: the original user, the Code Segment virtual base,
+>        * arm: an extension of tb->flags,
+>        * s390x: instruction data for EXECUTE,
+> -     * sparc: the next pc of the instruction queue (for delay slots).
+> -     * riscv: an extension of tb->flags,
+> +     * sparc: the next pc of the instruction queue (for delay slots),
+> +     * riscv: an extension of tb->flags.
+>        */
+>       uint64_t cs_base;
+>   
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 62732957a4..0d6b70c9f0 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -712,6 +712,8 @@ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+>   
+>   FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
+>   FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
+> +/* sdext single-step needs a TB flag to build 1-insn TBs */
+> +FIELD(EXT_TB_FLAGS, SDEXT_STEP, 33, 1)
+>   
+>   #ifdef TARGET_RISCV32
+>   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 0e266ff3a9..a0874f4e23 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -635,6 +635,12 @@ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>       if (interrupt_request & mask) {
+>           RISCVCPU *cpu = RISCV_CPU(cs);
+>           CPURISCVState *env = &cpu->env;
+> +
+> +        if (cpu->cfg.ext_sdext && !env->debug_mode &&
+> +            (env->dcsr & DCSR_STEP) && !(env->dcsr & DCSR_STEPIE)) {
+> +            return false;
+> +        }
+> +
+>           int interruptno = riscv_cpu_local_irq_pending(env);
+>           if (interruptno >= 0) {
+>               cs->exception_index = RISCV_EXCP_INT_FLAG | interruptno;
 > diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 6140b6340d..acff73051b 100644
+> index acff73051b..0b709c2b99 100644
 > --- a/target/riscv/helper.h
 > +++ b/target/riscv/helper.h
 > @@ -141,6 +141,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
 >   DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
 >   /* Native Debug */
 >   DEF_HELPER_1(itrigger_match, void, env)
-> +DEF_HELPER_2(sdext_ebreak, void, env, tl)
+> +DEF_HELPER_1(sdext_step, void, env)
+>   DEF_HELPER_2(sdext_ebreak, void, env, tl)
 >   #endif
 >   
->   /* Hypervisor functions */
-> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-> index f8641b1977..84f0c77513 100644
-> --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> @@ -68,9 +68,15 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
->       if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
->           generate_exception(ctx, RISCV_EXCP_SEMIHOST);
->       } else {
-> +#ifndef CONFIG_USER_ONLY
-> +        gen_update_pc(ctx, 0);
-> +        gen_helper_sdext_ebreak(tcg_env, tcg_constant_tl(ebreak_addr));
-> +        ctx->base.is_jmp = DISAS_NORETURN;
-> +#else
->           tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
->                         offsetof(CPURISCVState, badaddr));
->           generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-> +#endif
->       }
->       return true;
->   }
 > diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index 99736bbebb..b6417b4b0b 100644
+> index b6417b4b0b..e7878d7aa4 100644
 > --- a/target/riscv/op_helper.c
 > +++ b/target/riscv/op_helper.c
-> @@ -470,6 +470,40 @@ target_ulong helper_dret(CPURISCVState *env)
+> @@ -470,6 +470,22 @@ target_ulong helper_dret(CPURISCVState *env)
 >   #endif
 >   }
 >   
-> +void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
+> +void helper_sdext_step(CPURISCVState *env)
 > +{
+> +#ifndef CONFIG_USER_ONLY
 > +    CPUState *cs = env_cpu(env);
-> +    bool enter_debug = false;
 > +
-> +    if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode) {
-> +        if (env->virt_enabled) {
-> +            if (env->priv == PRV_S) {
-> +                enter_debug = env->dcsr & DCSR_EBREAKVS;
-> +            } else if (env->priv == PRV_U) {
-> +                enter_debug = env->dcsr & DCSR_EBREAKVU;
-> +            }
-> +        } else {
-> +            if (env->priv == PRV_M) {
-> +                enter_debug = env->dcsr & DCSR_EBREAKM;
-> +            } else if (env->priv == PRV_S) {
-> +                enter_debug = env->dcsr & DCSR_EBREAKS;
-> +            } else if (env->priv == PRV_U) {
-> +                enter_debug = env->dcsr & DCSR_EBREAKU;
-> +            }
-> +        }
+> +    if (!riscv_cpu_cfg(env)->ext_sdext || env->debug_mode ||
+> +        !(env->dcsr & DCSR_STEP)) {
+> +        return;
 > +    }
 > +
-> +    env->badaddr = pc;
-> +
-> +    if (enter_debug) {
-> +        riscv_cpu_enter_debug_mode(env, pc, DCSR_CAUSE_EBREAK);
-> +        cs->exception_index = EXCP_DEBUG;
-> +        cpu_loop_exit_restore(cs, GETPC());
-> +    }
-> +
-> +    riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, GETPC());
+> +    riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_STEP);
+> +    cs->exception_index = EXCP_DEBUG;
+> +    cpu_loop_exit_restore(cs, GETPC());
+> +#endif
 > +}
 > +
->   target_ulong helper_mnret(CPURISCVState *env)
+>   void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
 >   {
->       target_ulong retpc = env->mnepc;
+>       CPUState *cs = env_cpu(env);
+> @@ -602,6 +618,10 @@ void helper_wfi(CPURISCVState *env)
+>                  (prv_u || (prv_s && get_field(env->hstatus, HSTATUS_VTW)))) {
+>           riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
+>       } else {
+> +        if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode &&
+> +            (env->dcsr & DCSR_STEP)) {
+> +            return;
+> +        }
+>           cs->halted = 1;
+>           cs->exception_index = EXCP_HLT;
+>           cpu_loop_exit(cs);
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index f80e3413f8..53d862080c 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -193,6 +193,11 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+>       flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>   
+>       ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
+> +#ifndef CONFIG_USER_ONLY
+> +    if (cpu->cfg.ext_sdext && !env->debug_mode && (env->dcsr & DCSR_STEP)) {
+> +        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, SDEXT_STEP, 1);
+> +    }
+> +#endif
+>   
+>       return (TCGTBCPUState){
+>           .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index f687c75fe4..c222b4bb06 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -110,6 +110,8 @@ typedef struct DisasContext {
+>       bool ztso;
+>       /* Use icount trigger for native debug */
+>       bool itrigger;
+> +    /* Enter Debug Mode after next instruction (sdext single-step). */
+> +    bool sdext_step;
+>       /* FRM is known to contain a valid value. */
+>       bool frm_valid;
+>       bool insn_start_updated;
+> @@ -284,6 +286,9 @@ static void lookup_and_goto_ptr(DisasContext *ctx)
+>       if (ctx->itrigger) {
+>           gen_helper_itrigger_match(tcg_env);
+>       }
+> +    if (ctx->sdext_step) {
+> +        gen_helper_sdext_step(tcg_env);
+> +    }
+>   #endif
+>       tcg_gen_lookup_and_goto_ptr();
+>   }
+> @@ -294,6 +299,9 @@ static void exit_tb(DisasContext *ctx)
+>       if (ctx->itrigger) {
+>           gen_helper_itrigger_match(tcg_env);
+>       }
+> +    if (ctx->sdext_step) {
+> +        gen_helper_sdext_step(tcg_env);
+> +    }
+>   #endif
+>       tcg_gen_exit_tb(NULL, 0);
+>   }
+> @@ -307,7 +315,8 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx,
+>         * Under itrigger, instruction executes one by one like singlestep,
+>         * direct block chain benefits will be small.
+>         */
+> -    if (translator_use_goto_tb(&ctx->base, dest) && !ctx->itrigger) {
+> +    if (translator_use_goto_tb(&ctx->base, dest) &&
+> +        !ctx->itrigger && !ctx->sdext_step) {
+>           /*
+>            * For pcrel, the pc must always be up-to-date on entry to
+>            * the linked TB, so that it can use simple additions for all
+> @@ -1302,6 +1311,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+>       RISCVCPU *cpu = RISCV_CPU(cs);
+>       uint32_t tb_flags = ctx->base.tb->flags;
+> +    uint64_t ext_tb_flags = ctx->base.tb->cs_base;
+>   
+>       ctx->pc_save = ctx->base.pc_first;
+>       ctx->priv = FIELD_EX32(tb_flags, TB_FLAGS, PRIV);
+> @@ -1338,6 +1348,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->bcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, BCFI_ENABLED);
+>       ctx->fcfi_lp_expected = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_EXPECTED);
+>       ctx->fcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_ENABLED);
+> +    ctx->sdext_step = FIELD_EX64(ext_tb_flags, EXT_TB_FLAGS, SDEXT_STEP);
+>       ctx->zero = tcg_constant_tl(0);
+>       ctx->virt_inst_excp = false;
+>       ctx->decoders = cpu->decoders;
+> @@ -1388,7 +1399,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+>   
+>       /* Only the first insn within a TB is allowed to cross a page boundary. */
+>       if (ctx->base.is_jmp == DISAS_NEXT) {
+> -        if (ctx->itrigger || !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
+> +        if (ctx->itrigger || ctx->sdext_step ||
+> +            !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
+>               ctx->base.is_jmp = DISAS_TOO_MANY;
+>           } else {
+>               unsigned page_ofs = ctx->base.pc_next & ~TARGET_PAGE_MASK;
 
 
