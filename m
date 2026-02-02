@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3DCE7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD70E7FDC8
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzxw-0002QS-1g; Mon, 02 Feb 2026 14:52:08 -0500
+	id 1vmzwM-00069J-OX; Mon, 02 Feb 2026 14:50:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxj-0001Ek-FV; Mon, 02 Feb 2026 14:51:58 -0500
+ id 1vmzvi-0005Bp-EK; Mon, 02 Feb 2026 14:49:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxf-00041x-4J; Mon, 02 Feb 2026 14:51:54 -0500
+ id 1vmzvg-0003b3-UH; Mon, 02 Feb 2026 14:49:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C5571850C8;
- Mon, 02 Feb 2026 22:46:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 869A21850B6;
+ Mon, 02 Feb 2026 22:46:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1BBB535B2AA;
- Mon, 02 Feb 2026 22:46:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EB28335B298;
+ Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
- Helge Deller <deller@gmx.de>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+Cc: qemu-stable@nongnu.org, Vulnerability Report <vr@darknavy.com>,
+ David Woodhouse <dwmw@amazon.co.uk>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 54/69] linux-user: Add termios2 support
-Date: Mon,  2 Feb 2026 22:46:17 +0300
-Message-ID: <20260202194638.939438-54-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 36/69] hw/i386/kvm: fix PIRQ bounds check in
+ xen_physdev_map_pirq()
+Date: Mon,  2 Feb 2026 22:45:59 +0300
+Message-ID: <20260202194638.939438-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -61,239 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
+From: Vulnerability Report <vr@darknavy.com>
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-Link: https://lore.kernel.org/qemu-devel/745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-(cherry picked from commit e9a8a10e84c1bf6e2e8be000e4dd5c83ba0d8470)
+Reject pirq == s->nr_pirqs in xen_physdev_map_pirq().
+
+Fixes: aa98ee38a5 ("hw/xen: Implement emulated PIRQ hypercall support")
+Fixes: CVE-2026-0665
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Vulnerability Report <vr@darknavy.com>
+Link: https://lore.kernel.org/r/13FE03BE60EA78D6+20260109023548.4047-1-vr@darknavy.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit c7504ba2a560fd884557f6e5142f03b491aad0c7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 2f62fd2cb9..6ecfe6306e 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -1,5 +1,11 @@
-      /* emulated ioctl list */
- 
-+#ifdef TARGET_TCGETS2
-+     IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+#endif
-      IOCTL(TCGETS, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETS, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETSF, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 85b956fdfb..13c88dd0bb 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1929,6 +1929,75 @@ print_termios(void *arg)
-     qemu_log("}");
- }
- 
-+#ifdef TARGET_TCGETS2
-+void
-+print_termios2(void *arg)
-+{
-+    const struct target_termios2 *target = arg;
-+
-+    target_tcflag_t iflags = tswap32(target->c_iflag);
-+    target_tcflag_t oflags = tswap32(target->c_oflag);
-+    target_tcflag_t cflags = tswap32(target->c_cflag);
-+    target_tcflag_t lflags = tswap32(target->c_lflag);
-+
-+    qemu_log("{");
-+
-+    qemu_log("c_iflag = ");
-+    print_flags(termios_iflags, iflags, 0);
-+
-+    qemu_log("c_oflag = ");
-+    target_tcflag_t oflags_clean =  oflags & ~(TARGET_NLDLY | TARGET_CRDLY |
-+                                               TARGET_TABDLY | TARGET_BSDLY |
-+                                               TARGET_VTDLY | TARGET_FFDLY);
-+    print_flags(termios_oflags, oflags_clean, 0);
-+    if (oflags & TARGET_NLDLY) {
-+        print_enums(termios_oflags_NLDLY, oflags & TARGET_NLDLY, 0);
-+    }
-+    if (oflags & TARGET_CRDLY) {
-+        print_enums(termios_oflags_CRDLY, oflags & TARGET_CRDLY, 0);
-+    }
-+    if (oflags & TARGET_TABDLY) {
-+        print_enums(termios_oflags_TABDLY, oflags & TARGET_TABDLY, 0);
-+    }
-+    if (oflags & TARGET_BSDLY) {
-+        print_enums(termios_oflags_BSDLY, oflags & TARGET_BSDLY, 0);
-+    }
-+    if (oflags & TARGET_VTDLY) {
-+        print_enums(termios_oflags_VTDLY, oflags & TARGET_VTDLY, 0);
-+    }
-+    if (oflags & TARGET_FFDLY) {
-+        print_enums(termios_oflags_FFDLY, oflags & TARGET_FFDLY, 0);
-+    }
-+
-+    qemu_log("c_cflag = ");
-+    if (cflags & TARGET_CBAUD) {
-+        print_enums(termios_cflags_CBAUD, cflags & TARGET_CBAUD, 0);
-+    }
-+    if (cflags & TARGET_CSIZE) {
-+        print_enums(termios_cflags_CSIZE, cflags & TARGET_CSIZE, 0);
-+    }
-+    target_tcflag_t cflags_clean = cflags & ~(TARGET_CBAUD | TARGET_CSIZE);
-+    print_flags(termios_cflags, cflags_clean, 0);
-+
-+    qemu_log("c_lflag = ");
-+    print_flags(termios_lflags, lflags, 0);
-+
-+    qemu_log("c_ispeed = ");
-+    print_raw_param("%u", tswap32(target->c_ispeed), 0);
-+
-+    qemu_log("c_ospeed = ");
-+    print_raw_param("%u", tswap32(target->c_ospeed), 0);
-+
-+    qemu_log("c_cc = ");
-+    qemu_log("\"%s\",", target->c_cc);
-+
-+    qemu_log("c_line = ");
-+    print_raw_param("\'%c\'", target->c_line, 1);
-+
-+    qemu_log("}");
-+}
-+#endif
-+
- #undef UNUSED
- 
- #ifdef TARGET_NR_accept
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 77bdbf20ae..7baea2bb96 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -87,6 +87,7 @@
- #endif
- 
- #define termios host_termios
-+#define termios2 host_termios2
- #define winsize host_winsize
- #define termio host_termio
- #define sgttyb host_sgttyb /* same as target */
-@@ -5889,6 +5890,89 @@ static const StructEntry struct_termios_def = {
-     .print = print_termios,
- };
- 
-+#ifdef TARGET_TCGETS2
-+static void target_to_host_termios2 (void *dst, const void *src)
-+{
-+    struct host_termios2 *host = dst;
-+    const struct target_termios2 *target = src;
-+
-+    host->c_iflag =
-+        target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag =
-+        target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag =
-+        target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag =
-+        target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+    host->c_line = target->c_line;
-+    host->c_ispeed = tswap32(target->c_ispeed);
-+    host->c_ospeed = tswap32(target->c_ospeed);
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VSWTC] = target->c_cc[TARGET_VSWTC];
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+}
-+
-+static void host_to_target_termios2 (void *dst, const void *src)
-+{
-+    struct target_termios2 *target = dst;
-+    const struct host_termios2 *host = src;
-+
-+    target->c_iflag =
-+        tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag =
-+        tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag =
-+        tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag =
-+        tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+    target->c_line = host->c_line;
-+    target->c_ispeed = tswap32(host->c_ispeed);
-+    target->c_ospeed = tswap32(host->c_ospeed);
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VSWTC] = host->c_cc[VSWTC];
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+}
-+
-+static const StructEntry struct_termios2_def = {
-+    .convert = { host_to_target_termios2, target_to_host_termios2 },
-+    .size = { sizeof(struct target_termios2), sizeof(struct host_termios2) },
-+    .align = { __alignof__(struct target_termios2), __alignof__(struct host_termios2) },
-+    .print = print_termios2,
-+};
-+#endif
-+
- /* If the host does not provide these bits, they may be safely discarded. */
- #ifndef MAP_SYNC
- #define MAP_SYNC 0
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index 6dd7a80ce5..ac45705acf 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -1,4 +1,7 @@
- STRUCT_SPECIAL(termios)
-+#ifdef TARGET_TCGETS2
-+STRUCT_SPECIAL(termios2)
-+#endif
- 
- STRUCT(winsize,
-        TYPE_SHORT, TYPE_SHORT, TYPE_SHORT, TYPE_SHORT)
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 4aa253b566..ccbd495cc1 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -128,6 +128,9 @@ static inline uint64_t target_offset64(uint64_t word0, uint64_t word1)
- #endif /* TARGET_ABI_BITS != 32 */
- 
- void print_termios(void *arg);
-+#ifdef TARGET_TCGETS2
-+void print_termios2(void *arg);
-+#endif
- 
- /* ARM EABI and MIPS expect 64bit types aligned even on pairs or registers */
- #ifdef TARGET_ARM
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index 9b8b092bc2..4618daaa30 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1877,7 +1877,7 @@ int xen_physdev_map_pirq(struct physdev_map_pirq *map)
+             return pirq;
+         }
+         map->pirq = pirq;
+-    } else if (pirq > s->nr_pirqs) {
++    } else if (pirq >= s->nr_pirqs) {
+         return -EINVAL;
+     } else {
+         /*
 -- 
 2.47.3
 
