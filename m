@@ -4,119 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F19E7DEE3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CABE7DEF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmv9Z-000446-Pq; Mon, 02 Feb 2026 09:43:49 -0500
+	id 1vmvCv-0005FM-Nl; Mon, 02 Feb 2026 09:47:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv9X-00042m-1B
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:43:47 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmv9U-0001Jh-Ku
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:43:46 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 739655BCEC;
- Mon,  2 Feb 2026 14:43:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770043422; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UioXiewlJhwoSFksak03OUuKuSjFwu1Abw4IC3KWLgY=;
- b=J0Tsu/+EADyRZz6BM4Ahb5aYvEPe3//nUDrDqdarTfFST8nFF9Us8vvB7eC/sBP4yUeScc
- LNJxD7ayLr/ZyuyHdk0F6+Wy2yEQaK0QWbCHfQS87Zols2TNIKdfNRxZVjmYWfeR79XFY8
- faUFpUR7oiY2Ivgbq/IFLBE/1NujsO8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770043422;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UioXiewlJhwoSFksak03OUuKuSjFwu1Abw4IC3KWLgY=;
- b=OWfruoKfsu9P/WyEGiXdsXYJrcVJ9nKL0uXU9AAznqo12q9pHOPryVxV746ln67jPeIP5l
- awGIfD6R5Cg4E+Bg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="J0Tsu/+E";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=OWfruoKf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770043422; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UioXiewlJhwoSFksak03OUuKuSjFwu1Abw4IC3KWLgY=;
- b=J0Tsu/+EADyRZz6BM4Ahb5aYvEPe3//nUDrDqdarTfFST8nFF9Us8vvB7eC/sBP4yUeScc
- LNJxD7ayLr/ZyuyHdk0F6+Wy2yEQaK0QWbCHfQS87Zols2TNIKdfNRxZVjmYWfeR79XFY8
- faUFpUR7oiY2Ivgbq/IFLBE/1NujsO8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770043422;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UioXiewlJhwoSFksak03OUuKuSjFwu1Abw4IC3KWLgY=;
- b=OWfruoKfsu9P/WyEGiXdsXYJrcVJ9nKL0uXU9AAznqo12q9pHOPryVxV746ln67jPeIP5l
- awGIfD6R5Cg4E+Bg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DDD9E3EA62;
- Mon,  2 Feb 2026 14:43:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LDpSJx24gGnaVAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 14:43:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Hailiang
- Zhang <zhanghailiang@xfusion.com>, Markus Armbruster <armbru@redhat.com>,
- Li Zhijian <lizhijian@fujitsu.com>, "Dr. David Alan Gilbert"
- <dave@treblig.org>, Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH v4 07/16] ram: Remove colo special-casing
-In-Reply-To: <20260130-colo_unit_test_multifd-v4-7-7115ab6f0e77@web.de>
-References: <20260130-colo_unit_test_multifd-v4-0-7115ab6f0e77@web.de>
- <20260130-colo_unit_test_multifd-v4-7-7115ab6f0e77@web.de>
-Date: Mon, 02 Feb 2026 11:43:39 -0300
-Message-ID: <87fr7jrysk.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vmvCt-0005El-3h; Mon, 02 Feb 2026 09:47:15 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vmvCr-0002or-C2; Mon, 02 Feb 2026 09:47:14 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 611MidE9026786;
+ Mon, 2 Feb 2026 14:47:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=nwAyPK9ljXUJeXhUzXfBbB2sQwsTRuQG3zHGfjaCJ
+ OM=; b=FmHUSPrY4VbwBYd7wUUIoG3PtGqD+H0G+TuNOOz/B+7xacPs36gM6NoVJ
+ 4Oq+unhbKWV6OwlJjaJ6w/k73KPLOzsKr30W81gpc+h+WtRwtFYJpiASHdrUZEU0
+ NzOMC9bCLDlpvLjIE4JTqwFeOvmQaZ4S7YbomFSRm1Doqq83H2pJZFFPWOAWjBGZ
+ zHyn0lyns3AsevUMpZUca9ybrf8SO8hduq0d5+lqALR6DmEe+XXe8mSMjqXyCIoc
+ nHGZWhW2ZP6lB4eKFomJ8S5ZLVCLQPnz3yhuWSfS1zZgxd0EbnY10IVePIKgIUP1
+ r50+d1YZ52fJlimLrRqL5sI5Jbbog==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19cvya07-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Feb 2026 14:47:09 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 612Dosd7009600;
+ Mon, 2 Feb 2026 14:47:07 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1vexwhb8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Feb 2026 14:47:07 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 612El3Gi61473028
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Feb 2026 14:47:03 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 996202004B;
+ Mon,  2 Feb 2026 14:47:03 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 899FE20043;
+ Mon,  2 Feb 2026 14:47:03 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  2 Feb 2026 14:47:03 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
+ id 61043E0B7E; Mon, 02 Feb 2026 15:47:03 +0100 (CET)
+From: Eric Farman <farman@linux.ibm.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>, 
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH] MAINTAINERS: Replace backup for s390 PCI
+Date: Mon,  2 Feb 2026 15:47:02 +0100
+Message-ID: <20260202144702.1783102-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[web.de,nongnu.org];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,xfusion.com,fujitsu.com,treblig.org,web.de];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[11]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:mid, suse.de:dkim, suse.de:email]
-X-Rspamd-Queue-Id: 739655BCEC
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDEwOSBTYWx0ZWRfX57SFWq9R/f/l
+ U90iEgYDSdj5AKRiCZIT6eAMJkVWutLFTQpMRy0x8ihQpFp8+8znk4ZnrIqBHtEnsEHaqZxhrW7
+ IwO4zkUJmq+lWAjqdkC7q1cCsQ4olcn/D/woJ3OaXVBx0qGrXQzFsgMlKGe/ZwfWR+Nm089vqOf
+ 8/hv3ctWoBQ0qNw6HWtTUe3do3BNqlM0rtqZio21+tTnU16lpvPYZGwzFCSlVUNkGp3uuNjQ6x0
+ dky524xuEgm0RX6JKwL9K0SU3GHCuKZcTH/TyMvoZLjxx9I9BO4sAEv+OOh4krSCyXhvV2SCHQ4
+ UkqLJ51S7FG2SIQh7QiCu1ZiWPjHfX6yCxpfFG61ToB9Y5j24MX8gqOAUgM6a/skiazyaQtxq7/
+ keg5MJ+hnwYL0LR6xthIVfS8gk+i63d5NjE2GzLIhypqM23/lJ6OPdv6xyFvkNJyPV0Zst4pfzj
+ dfgVVKEwzSkUQEcy+FQ==
+X-Authority-Analysis: v=2.4 cv=UuRu9uwB c=1 sm=1 tr=0 ts=6980b8ed cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=oNv3vKmlw4bC7Cr8AvsA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: iklZMmmLYQWKJykbccjnSSenepcRDjbo
+X-Proofpoint-GUID: iklZMmmLYQWKJykbccjnSSenepcRDjbo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-02_04,2026-01-30_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 adultscore=0 clxscore=1015 phishscore=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602020109
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,38 +121,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Lukas Straub <lukasstraub2@web.de> writes:
+Farhan has been doing a masterful job coming on in the
+s390 PCI space, and my own attention has been lacking.
+Let's make MAINTAINERS reflect reality.
 
-> We only enter colo state after the precopy migration is finished
-> so this if is always taken.
->
-> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-> ---
->  migration/ram.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/migration/ram.c b/migration/ram.c
-> index aebf77aa0b861e00516d6f1090aebefdd0d97e54..979751f61b30d6c4b878866b5011507e7c519176 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3116,12 +3116,12 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
->      RAMBlock *block;
->      int ret, max_hg_page_size;
->  
-> -    /* migration has already setup the bitmap, reuse it. */
-> -    if (!migration_in_colo_state()) {
-> -        if (ram_init_all(rsp, errp) != 0) {
-> -            return -1;
-> -        }
-> +    assert(!migration_in_colo_state());
-> +
-> +    if (ram_init_all(rsp, errp) != 0) {
-> +        return -1;
->      }
-> +
->      (*rsp)->pss[RAM_CHANNEL_PRECOPY].pss_channel = f;
->  
->      /*
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+---
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9b7ed4fccb..32d60dd673 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1862,7 +1862,8 @@ L: qemu-s390x@nongnu.org
+ 
+ S390 PCI
+ M: Matthew Rosato <mjrosato@linux.ibm.com>
+-M: Eric Farman <farman@linux.ibm.com>
++M: Farhan Ali <alifm@linux.ibm.com>
++R: Eric Farman <farman@linux.ibm.com>
+ S: Supported
+ F: hw/s390x/s390-pci*
+ F: include/hw/s390x/s390-pci*
+-- 
+2.51.0
+
 
