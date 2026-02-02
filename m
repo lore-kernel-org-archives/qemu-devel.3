@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E6AEE7DF08
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 16:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CC8E7DF0A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 16:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmxAj-0000IE-33; Mon, 02 Feb 2026 11:53:09 -0500
+	id 1vmxAW-0000CW-0D; Mon, 02 Feb 2026 11:52:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmxAg-0000HY-9a
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:53:06 -0500
-Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmxAU-0000Bq-5H
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:52:54 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmxAe-0003NS-Kh
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:53:06 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.195])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f4Xjm6QGfz5vyX;
- Mon,  2 Feb 2026 16:53:00 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vmxAS-0003Lp-HI
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:52:53 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.58.201])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f4XjX1bkHz5w8Q;
+ Mon,  2 Feb 2026 16:52:47 +0000 (UTC)
+Received: from kaod.org (37.59.142.110) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Mon, 2 Feb
- 2026 17:53:00 +0100
+ 2026 17:52:46 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G0019fa674b8-6ea9-446c-91f5-7d7cbea2aebc,
+ (GARM-110S0044fd98c8d-10d4-438a-9ea3-7f7694cc1397,
  7652E71065C1D671F0F2B67E69D7E7AF66B0F117) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3a192654-b0bf-48c1-a662-0ba52a218a0c@kaod.org>
-Date: Mon, 2 Feb 2026 17:52:59 +0100
+Message-ID: <c0d6aa65-26fc-4426-8231-21e58cae38e3@kaod.org>
+Date: Mon, 2 Feb 2026 17:52:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/8] hw/arm/aspeed_ast27x0: Sort SSP and TSP IRQ maps
+Subject: Re: [PATCH v1 2/8] hw/arm/aspeed_ast27x0: Sort SSP and TSP memmap
+ tables by address
 To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
  "leetroy@gmail.com" <leetroy@gmail.com>, "andrew@codeconstruct.com.au"
@@ -42,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <SE3PR06MB819906A48EA635CEB8DAAE7BFC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
+References: <SE3PR06MB81994C77A1BFA4816C9DF699FC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SE3PR06MB819906A48EA635CEB8DAAE7BFC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
+In-Reply-To: <SE3PR06MB81994C77A1BFA4816C9DF699FC9AA@SE3PR06MB8199.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.110]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 4625b06f-2056-455b-a857-de77daf29702
-X-Ovh-Tracer-Id: 15450724422160452597
+X-Ovh-Tracer-GUID: 926469c2-a56c-48d2-8fbd-1e63cbaf4ae0
+X-Ovh-Tracer-Id: 15447065247797054453
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTES8iLIQoMSAa1oS5sLlY6noRBT4nPmQYVbWa79LoLrpgUoZKXsOLh/i5BFcuUuN0FK198fmFw3Nt8yGW3NFiPxsmCqi1jcA84DZrU/u0IVJcyzeBvK3W2YF3FyGLKyuVJnfpIIZw3rS/lp/ndhBhLWfOA7bhGuILBweeR1HmAox5ikR1Hmtw5g0tW91Jf5eieNTcHW3bpLI234sOQFgQbtw+LHjsF/wC2OW25T3gSGxx/TZqZOpZ9mCvbKRispSXOQXBErU8cox+cbvVgGEyBOqnd6wOVo7e7tagBSSpp9H+YnWwxh0k8i+XgBwboFrbtNN80dhEtvuzmjRGq9WiH4obsvJRsG2nfrqH5QfQcqVUgFQbAzz8GiEAupSandwz4DvaliJbo1dFpjPLfnw0RPiZjyVlBOVKfFRY5hTU7H8vgLs1DwACXL+5EFqVH69+VCz1nMvlNfIRUkC3Y97YVBCNbDkuHcRwT4cBNhoeSL+ax2gcoDfxMOyptoGRPHIqsWTdi+aZ7HLvhjAjIpKtj/KlwK+m4ftukRNP6rZDN3AMqnglbVfasjYZudX5AKsxJ9hFGOrbee5lAJpXchj20lCVZGtw1xpv3+smRkBdboaSyz0TzN0bI8ddJbZMQ+ewemvBPa/9rsDLnhlnaBPuwNkmrNDiLO7F3bRgvbx7+q7g
-DKIM-Signature: a=rsa-sha256; bh=uPS6+0EvxWPy1Ovx+kHX2fWlP7dlz4xpCyBOixLMLgo=; 
+X-VR-SPAMCAUSE: dmFkZTGjYNU9F+R37DBqJtNbngTFudZCqpozIsBJi0ofqdmc3tv9GNKF323Trsbm741ugcjV6XwFdP7OL1OZ2yHmvQl36/nGxmszdQT5Ghi9oIH9GgSIp4vVBDZb3n+qJfVuXXFe/0el71+RMimcdqW1aCdItU93kKoXrOoTV+6Dwc/xSz4vt0D3T0BoJZ4dZHln3NtIGDu5JWMgehlg2LBp1vH5VvYKvPdeVEYs8EmYU0lJ+judPBdLAAaHOaUk+B8AaYWL6j0Akk/yGPjqERMmRmZW37prWO+IjNWJ5aZV85Jf0QIB/YB0LtIaXtCytCGMiwoEBgKawajCM1JFZcvbdNaRA8GYhKc3U+cH0pmfZ1hitzdRBf/yh997uHiE9kqO9RiouyTITVdmZZEBFLit3oCiEc6CcUw0S8lzm1xxXnT/bEMF17QFPXpr2f4OdeTBIpsPo0h8twnmW6sC2lruNV4AX5L2Co0Lczqpy+gldTS0IeGlE98WfsNqALDyVzkCVP1jkk1pR2Ygdt171kNuOJ+hcvV9ZxS6ikiZktlXlQswt6NGdTlVPWAdwSyKcUq+G+2SCWm6IMDEvCPT6KrDZrZsPNBa2E8RFuBhhqcQMucQDN/5ovdnDcUb/uKQf+5uPAYPzfp6YFY0Zmer/X19PxPrO127J7ZIcqoyBq1AuU+8aw
+DKIM-Signature: a=rsa-sha256; bh=+f8veBBlwpxxbirs2CEP7uwXPxRCQwgg42fasLNG0hs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770051181; v=1;
- b=cWuMM4PRhi4xzt1Bs5B4Th7B06SUwCcXapWYdt0J+33JnCG32I1dMdRHcCA45BwbTOz/Ksx9
- MwKtsibbVn0nylS08SfQXdiC/Di03wqi/O82H5vztHabak03bjopRfZ5WHZfpK44iet4vvoIvWa
- YB7z/o/nbZHsGNS1nvdh4x9i4imRQGI8Yx69Uh8kXIiBbbo1y2waJwGy9cmdvOmqIlmbM0s3AAf
- IZ258Sm8ZL7eZrDJgJkCmbEbkLl6/jmXjwRC+UoGYCTP9N16Kat+aQNIRTfZVhoJwPDdH2cDHZF
- O7toJp9mySCxoB4UlW1n+WEp81r+/3BfI3uAXxlYoIbXg==
-Received-SPF: pass client-ip=178.33.254.192; envelope-from=clg@kaod.org;
- helo=3.mo552.mail-out.ovh.net
+ t=1770051169; v=1;
+ b=EoDLF13JSZ+DgxscGleJYi6KcQp+p5KPauWtCN3SzxCUDQawEXhoplmu01g+Doo4+RYgs/Uh
+ YWBNejSid+CrlCO7MipkYsPsMkBgQg4n2vG8kGePA3fw3oKgGyPlqxMCYAAcvWF224AmZp69+Ts
+ LurLHkIJgyNIHuEDVYFBg3GEah9gs9ubKmF8+3KCamEEyqjJlWx6lqdojfclrWkihaTbbBSDBhr
+ SHQz3C98TeZXftgtQKKAVKFOQ79EoWiy53PwYsIiGSiAcPi8Py/tV8BGkH4eyvVUos5oeelkHF6
+ 7ahZWqkqxHpkhxyiIdZ18roGTIUDpBSd1cTQSrAC47y4g==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,71 +135,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/2/26 07:19, Jamin Lin wrote:
 > From: Jamin Lin <jamin_lin@aspeedtech.com>
 > 
-> Sort the SSP and TSP IRQ map tables to improve readability and make the
-> definitions easier to maintain.
+> Sort the SSP and TSP memmap tables to improve readability and
+> make the definitions easier to maintain.
 > 
 > No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-ssp.c | 4 ++--
->   hw/arm/aspeed_ast27x0-tsp.c | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   hw/arm/aspeed_ast27x0-ssp.c | 10 +++++-----
+>   hw/arm/aspeed_ast27x0-tsp.c | 10 +++++-----
+>   2 files changed, 10 insertions(+), 10 deletions(-)
 > 
 > diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-> index e4bcf0fa2a..9b12ba6743 100644
+> index cee937b37e..e4bcf0fa2a 100644
 > --- a/hw/arm/aspeed_ast27x0-ssp.c
 > +++ b/hw/arm/aspeed_ast27x0-ssp.c
-> @@ -44,12 +44,13 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+> @@ -23,15 +23,15 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+>       [ASPEED_DEV_SRAM]      =  0x70000000,
+>       [ASPEED_DEV_INTC]      =  0x72100000,
+>       [ASPEED_DEV_SCU]       =  0x72C02000,
+> +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +    [ASPEED_DEV_UART4]     =  0x72C1A000,
+> +    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+>       [ASPEED_DEV_SCUIO]     =  0x74C02000,
+> +    [ASPEED_DEV_INTCIO]    =  0x74C18000,
+>       [ASPEED_DEV_UART0]     =  0x74C33000,
+>       [ASPEED_DEV_UART1]     =  0x74C33100,
+>       [ASPEED_DEV_UART2]     =  0x74C33200,
+>       [ASPEED_DEV_UART3]     =  0x74C33300,
+> -    [ASPEED_DEV_UART4]     =  0x72C1A000,
+> -    [ASPEED_DEV_INTCIO]    =  0x74C18000,
+> -    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+> -    [ASPEED_DEV_IPC1]      =  0x74C39000,
+>       [ASPEED_DEV_UART5]     =  0x74C33400,
+>       [ASPEED_DEV_UART6]     =  0x74C33500,
+>       [ASPEED_DEV_UART7]     =  0x74C33600,
+> @@ -40,7 +40,7 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+>       [ASPEED_DEV_UART10]    =  0x74C33900,
+>       [ASPEED_DEV_UART11]    =  0x74C33A00,
+>       [ASPEED_DEV_UART12]    =  0x74C33B00,
+> -    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +    [ASPEED_DEV_IPC1]      =  0x74C39000,
 >   };
 >   
 >   static const int aspeed_soc_ast27x0ssp_irqmap[] = {
-> +    [ASPEED_DEV_UART4]     = 8,
->       [ASPEED_DEV_SCU]       = 12,
-> +    [ASPEED_DEV_TIMER1]    = 16,
->       [ASPEED_DEV_UART0]     = 164,
->       [ASPEED_DEV_UART1]     = 164,
->       [ASPEED_DEV_UART2]     = 164,
->       [ASPEED_DEV_UART3]     = 164,
-> -    [ASPEED_DEV_UART4]     = 8,
->       [ASPEED_DEV_UART5]     = 164,
->       [ASPEED_DEV_UART6]     = 164,
->       [ASPEED_DEV_UART7]     = 164,
-> @@ -58,7 +59,6 @@ static const int aspeed_soc_ast27x0ssp_irqmap[] = {
->       [ASPEED_DEV_UART10]    = 164,
->       [ASPEED_DEV_UART11]    = 164,
->       [ASPEED_DEV_UART12]    = 164,
-> -    [ASPEED_DEV_TIMER1]    = 16,
->   };
->   
->   /* SSPINT 164 */
 > diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-> index 68683a15d8..e39d1dc171 100644
+> index 9c11c016ca..68683a15d8 100644
 > --- a/hw/arm/aspeed_ast27x0-tsp.c
 > +++ b/hw/arm/aspeed_ast27x0-tsp.c
-> @@ -44,12 +44,13 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+> @@ -23,15 +23,15 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+>       [ASPEED_DEV_SRAM]      =  0x70000000,
+>       [ASPEED_DEV_INTC]      =  0x72100000,
+>       [ASPEED_DEV_SCU]       =  0x72C02000,
+> +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +    [ASPEED_DEV_UART4]     =  0x72C1A000,
+> +    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+>       [ASPEED_DEV_SCUIO]     =  0x74C02000,
+> +    [ASPEED_DEV_INTCIO]    =  0x74C18000,
+>       [ASPEED_DEV_UART0]     =  0x74C33000,
+>       [ASPEED_DEV_UART1]     =  0x74C33100,
+>       [ASPEED_DEV_UART2]     =  0x74C33200,
+>       [ASPEED_DEV_UART3]     =  0x74C33300,
+> -    [ASPEED_DEV_UART4]     =  0x72C1A000,
+> -    [ASPEED_DEV_INTCIO]    =  0x74C18000,
+> -    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+> -    [ASPEED_DEV_IPC1]      =  0x74C39000,
+>       [ASPEED_DEV_UART5]     =  0x74C33400,
+>       [ASPEED_DEV_UART6]     =  0x74C33500,
+>       [ASPEED_DEV_UART7]     =  0x74C33600,
+> @@ -40,7 +40,7 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+>       [ASPEED_DEV_UART10]    =  0x74C33900,
+>       [ASPEED_DEV_UART11]    =  0x74C33A00,
+>       [ASPEED_DEV_UART12]    =  0x74C33B00,
+> -    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +    [ASPEED_DEV_IPC1]      =  0x74C39000,
 >   };
 >   
 >   static const int aspeed_soc_ast27x0tsp_irqmap[] = {
-> +    [ASPEED_DEV_UART4]     = 8,
->       [ASPEED_DEV_SCU]       = 12,
-> +    [ASPEED_DEV_TIMER1]    = 16,
->       [ASPEED_DEV_UART0]     = 164,
->       [ASPEED_DEV_UART1]     = 164,
->       [ASPEED_DEV_UART2]     = 164,
->       [ASPEED_DEV_UART3]     = 164,
-> -    [ASPEED_DEV_UART4]     = 8,
->       [ASPEED_DEV_UART5]     = 164,
->       [ASPEED_DEV_UART6]     = 164,
->       [ASPEED_DEV_UART7]     = 164,
-> @@ -58,7 +59,6 @@ static const int aspeed_soc_ast27x0tsp_irqmap[] = {
->       [ASPEED_DEV_UART10]    = 164,
->       [ASPEED_DEV_UART11]    = 164,
->       [ASPEED_DEV_UART12]    = 164,
-> -    [ASPEED_DEV_TIMER1]    = 16,
->   };
->   
->   /* TSPINT 164 */
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
