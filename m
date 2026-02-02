@@ -4,91 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6BBE7FDDB
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFABE7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn146-0004HM-Cy; Mon, 02 Feb 2026 16:02:34 -0500
+	id 1vn14O-0006Ur-Q1; Mon, 02 Feb 2026 16:02:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn13D-0001n7-JZ
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:45 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn13C-0004TP-4R
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:39 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42fed090e5fso3903985f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770066096; x=1770670896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZVuCsHVaLMzFjACHbSaALeEzWdGEbdUIemaoG00K/Fk=;
- b=NBBl4hE7CapzCQP1OUCNAjaAMDLjW/50JNIsf+vrymA7YNYZXhoX7ib6PxxXT1nvwf
- R8Cq7v112rMwZPLWSHTKZ1p2eSt7EE3GZEsAhNOJzaiaHGkKwEJIQZoAOns2ehKiehUX
- 5m6hn997EBPsdMAhRu1hSU6rMxwqL5v3HUR0cn5mcHFBYZIDNcpyz4DRdF2fyt3fg770
- 7C9VV76Dlu/USAgfGiaofoIFmXeIpTkNIHXbrXb5BDFdrco1ZQV5XY1RC0YWC3rwm/kX
- F1AaAOFcHI2OdKG/ToK3KMJdvm3FnhISLN3eEFvI0Lfy3qFZtji3QrkNXkh4Ur7pl6qd
- 7CUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770066096; x=1770670896;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZVuCsHVaLMzFjACHbSaALeEzWdGEbdUIemaoG00K/Fk=;
- b=ZiBwji2pbYEUgVP8MUfIY3sdk2tvL3Lg4JE7ZvHheFFzrFr5q7kEIszRgzo10Hp7c3
- 1W8DJAKAq04UTX0+QIkY/H48JWXXrLmtpuIsRiVhNyesbNoZkrl+7hcRncNQZ9srhfpK
- Q9pIMAAa2oT36JUp6iEr9V+FcFd19O7i0oZVU29IEMVuwN0t9h5lGkXShuIFi1y7K9rV
- loQorjR6OGCVHAhn0XyVWnSlB6E4tdvAN03lhuH+rCJSQ5q/y8lmE2QipIA+/aYF5bXh
- IoUQ42CkPoKAzOvUi6q99DcNpd/pUYopamt5ONUN06wbOzVFRiT5wnhwqmJ1K4qs08CB
- T9xw==
-X-Gm-Message-State: AOJu0Yy+5k/Y/Hx7cLPb0Kp2yqPy0M6h1qkHiwUKkGVYvzvzkPIhhOBR
- xcE+n4GCyAB+baDvnWkkjBNDb8M8JcMRE6kFJvU1g8lZ4hAg54LR63zqCVcRUi0mnRXNvHvDz3x
- IHsMT9GE=
-X-Gm-Gg: AZuq6aL49MzDq7JLDPjmDJRpJ2AUVxRaVRQETR0nb//tm01Wd/q2DpJ0sHnU3VxgL7Z
- SpTM1vCnWNacnmfFHJoigLZaIvtK0ijrdZvLvVD3SDWX712+1ievSemSdkZSDyptcslRuAR+8Sb
- oey6Cc8oLzzTWMzA6UgEjUIw77oGrobf7kRfR30h6U+l6+jpcRxtDHVkCzP/9FA8KPXo4vqVGCn
- NbfG6f12aTslJ9TfzLvOCv7GlCCw4cYyKIvuvWxKz5UHdzFRcCeEsoiEwhMdyIeY9KHJOu+UiQv
- 2RuJ3wn1NnfRYMWvVXiXUiOvnCGTYSub6veESscu8bXH51lVBrLkwD50chgx2+c/ol8T8NC0b80
- rbkkW9PLk7x24gIfCxXnmgihDBrr3YdSa8Ny75QF+yBPKlB15vDE8X0sTze6iT51u6/ZQICcPO3
- TJQoao2GMD8IFPw5r+TEymF9WTHLD2+V33bIqOgUk44OSLDFeGDfVAx5S5AflF
-X-Received: by 2002:a05:6000:1ac8:b0:430:f790:99d7 with SMTP id
- ffacd0b85a97d-435f3a9a9c5mr20909260f8f.27.1770066096283; 
- Mon, 02 Feb 2026 13:01:36 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e1354114sm49168105f8f.42.2026.02.02.13.01.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 13:01:35 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn14M-0006Is-Hc; Mon, 02 Feb 2026 16:02:50 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vn14K-0004cV-NO; Mon, 02 Feb 2026 16:02:50 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D1B8F1851B6;
+ Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9AF7F35B32D;
+ Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 04/11] target/ppc: Expect page translation hash addresses
- to be aligned
-Date: Mon,  2 Feb 2026 22:00:58 +0100
-Message-ID: <20260202210106.93257-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260202210106.93257-1-philmd@linaro.org>
-References: <20260202210106.93257-1-philmd@linaro.org>
+Cc: qemu-stable@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 42/74] hw/loongarch/virt: Fix irq allocation failure
+ with pci device from fdt
+Date: Mon,  2 Feb 2026 23:57:53 +0300
+Message-ID: <20260202205833.941615-42-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
+References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,30 +60,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The page translation hash addresses are aligned:
-remove the misleading MO_UNALN flag.
+From: Xianglai Li <lixianglai@loongson.cn>
 
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
----
- target/ppc/tcg-excp_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+When we use the -kernel parameter to start an elf format kernel relying on
+fdt, we get the following error:
 
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 6f5d82af636..a8c67364669 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -161,7 +161,7 @@ static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
- {
-     uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
-     unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
--    MemOp op = MO_TE | MO_UQ | MO_UNALN;
-+    MemOp op = MO_TE | MO_UQ;
-     MemOpIdx oi = make_memop_idx(op, mmu_idx);
-     uintptr_t retaddr = GETPC();
+pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+pcieport 0000:00:01.0: AER: enabled with IRQ 19
+pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+pcieport 0000:00:01.1: AER: enabled with IRQ 20
+pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+pcieport 0000:00:01.2: AER: enabled with IRQ 21
+pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+pcieport 0000:00:01.3: AER: enabled with IRQ 22
+pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
+
+This is because  the description of interrupt-cell is missing in the pcie
+irq map.  And there is a lack of a description of the interrupt trigger
+type.  Now it is corrected and the correct interrupt-cell is added in the
+pcie irq map.
+
+Refer to the implementation in arm and add some comments.
+
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+(cherry picked from commit ff54394eed148c642f83b45753c7898acdbd5ddb)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index d00e974d4e..b61977808a 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -322,6 +322,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+     uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
+     uint32_t *irq_map = full_irq_map;
+     const MachineState *ms = MACHINE(lvms);
++    uint32_t pin_mask;
++    uint32_t devfn_mask;
  
+     /*
+      * This code creates a standard swizzle of interrupts such that
+@@ -334,37 +336,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+      */
+ 
+     for (dev = 0; dev < PCI_NUM_PINS; dev++) {
+-        int devfn = dev * 0x8;
++        int devfn = PCI_DEVFN(dev, 0);
+ 
+         for (pin = 0; pin < PCI_NUM_PINS; pin++) {
+-            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
++            int irq_nr = VIRT_DEVICE_IRQS + \
++                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+             int i = 0;
+ 
+-            /* Fill PCI address cells */
+-            irq_map[i] = cpu_to_be32(devfn << 8);
+-            i += 3;
+-
+-            /* Fill PCI Interrupt cells */
+-            irq_map[i] = cpu_to_be32(pin + 1);
+-            i += 1;
+-
+-            /* Fill interrupt controller phandle and cells */
+-            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
+-            irq_map[i++] = cpu_to_be32(irq_nr);
++            uint32_t map[] = {
++                devfn << 8, 0, 0,             /* devfn */
++                pin + 1,                      /* PCI pin */
++                *pch_pic_phandle,             /* interrupt controller handle */
++                irq_nr,                       /* irq number */
++                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
+ 
+             if (!irq_map_stride) {
+-                irq_map_stride = i;
++                irq_map_stride = sizeof(map) / sizeof(uint32_t);
+             }
++
++            /* Convert map to big endian */
++            for (i = 0; i < irq_map_stride; i++) {
++                irq_map[i] = cpu_to_be32(map[i]);
++            }
++
+             irq_map += irq_map_stride;
+         }
+     }
+ 
+-
+     qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
+                      PCI_NUM_PINS * PCI_NUM_PINS *
+                      irq_map_stride * sizeof(uint32_t));
++
++    /* Only need to match the pci slot bit */
++    devfn_mask = PCI_DEVFN((PCI_NUM_PINS - 1), 0) << 8;
++    /* The pci interrupt only needs to match the specified low bit */
++    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
++
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
+-                     0x1800, 0, 0, 0x7);
++                           devfn_mask, 0, 0,  /* address cells */
++                           pin_mask);
+ }
+ 
+ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+@@ -401,6 +411,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+                                  2, base_mmio, 2, size_mmio);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
+                            0, *pch_msi_phandle, 0, 0x10000);
++
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+     fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
+     g_free(nodename);
+ }
 -- 
-2.52.0
+2.47.3
 
 
