@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C714EE7FDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC57E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn25t-0004rV-3U; Mon, 02 Feb 2026 17:08:29 -0500
+	id 1vn26M-0004x9-1C; Mon, 02 Feb 2026 17:09:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25o-0004nw-5c; Mon, 02 Feb 2026 17:08:24 -0500
+ id 1vn25u-0004rx-JA; Mon, 02 Feb 2026 17:08:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn25m-0002ZY-Dl; Mon, 02 Feb 2026 17:08:23 -0500
+ id 1vn25t-0002bO-2m; Mon, 02 Feb 2026 17:08:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2071A1852B2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 744831852B6;
  Tue, 03 Feb 2026 01:07:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F25D335B3C5;
- Tue, 03 Feb 2026 01:08:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5326435B3C9;
+ Tue, 03 Feb 2026 01:08:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jie Song <songjie_yewu@cmss.chinamobile.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Zhijin Zeng <zengzhijin@linux.spacemit.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 05/56] monitor/qmp: cleanup SocketChardev listener
- sources early to avoid fd handling race
-Date: Tue,  3 Feb 2026 01:07:10 +0300
-Message-ID: <20260202220805.945271-5-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 09/56] tcg/riscv: Fix TCG_REG_TMP0 clobber in
+ tcg_gen_dup{m, i}
+Date: Tue,  3 Feb 2026 01:07:14 +0300
+Message-ID: <20260202220805.945271-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,114 +61,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jie Song <songjie_yewu@cmss.chinamobile.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-When starting a dummy QEMU process with virsh version, monitor_init_qmp()
-enables IOThread monitoring of the QMP fd by default. However, a race
-condition exists during the initialization phase: the IOThread only removes
-the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
-which may be delayed under high system load.
+TCG_REG_TMP0 may be used by set_vtype* to load the vtype
+parameter, so delay any other use of TCG_REG_TMP0 until
+the correct vtype has been installed.
 
-This creates a window between monitor_qmp_setup_handlers_bh() and
-qio_net_listener_set_client_func_full() where both the main thread and
-IOThread are simultaneously monitoring the same fd and processing events.
-This race can cause either the main thread or the IOThread to hang and
-become unresponsive.
-
-Fix this by proactively cleaning up the listener's IO sources in
-monitor_init_qmp() before the IOThread initializes QMP monitoring,
-ensuring exclusive fd ownership and eliminating the race condition.
-
-Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20251125140706.114197-1-mail@jiesong.me>
-(cherry picked from commit e714f1a3d4d1e66b9a3ff4be1ff999c32bbef29e)
+Cc: qemu-stable@nongnu.org
+Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
+Reported-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit af6db3b71310ea63a018d517ba7d79e4e014db62)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/chardev/char-io.c b/chardev/char-io.c
-index 3be17b51ca..beac5cd245 100644
---- a/chardev/char-io.c
-+++ b/chardev/char-io.c
-@@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len)
- {
-     return io_channel_send_full(ioc, buf, len, NULL, 0);
- }
-+
-+void remove_listener_fd_in_watch(Chardev *chr)
-+{
-+    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
-+    if (cc->chr_listener_cleanup) {
-+        cc->chr_listener_cleanup(chr);
-+    }
-+}
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 26d2f11202..3f45dd2ecd 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1570,6 +1570,15 @@ char_socket_get_connected(Object *obj, Error **errp)
-     return s->state == TCP_CHARDEV_STATE_CONNECTED;
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index 31b9f7d87a..0967a445a3 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -1074,7 +1074,7 @@ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
  }
  
-+static void tcp_chr_listener_cleanup(Chardev *chr)
-+{
-+    SocketChardev *s = SOCKET_CHARDEV(chr);
-+    if (s->listener) {
-+        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
-+                                              NULL, chr->gcontext);
-+    }
-+}
-+
- static void char_socket_class_init(ObjectClass *oc, const void *data)
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                   TCGReg dst, TCGReg src)
++                            TCGReg dst, TCGReg src)
  {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
-@@ -1587,6 +1596,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
-     cc->chr_add_client = tcp_chr_add_client;
-     cc->chr_add_watch = tcp_chr_add_watch;
-     cc->chr_update_read_handler = tcp_chr_update_read_handler;
-+    cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
+     set_vtype_len_sew(s, type, vece);
+     tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, src);
+@@ -1082,29 +1082,34 @@ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+ }
  
-     object_class_property_add(oc, "addr", "SocketAddress",
-                               char_socket_get_addr, NULL,
-diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
-index ac379ea70e..540131346d 100644
---- a/include/chardev/char-io.h
-+++ b/include/chardev/char-io.h
-@@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
- int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
-                          int *fds, size_t nfds);
+ static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                    TCGReg dst, TCGReg base, intptr_t offset)
++                             TCGReg dst, TCGReg base, intptr_t offset)
+ {
++    /* Note set_vtype* may clobber TMP0, so do that first. */
++    set_vtype_len_sew(s, type, vece);
+     tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
+-    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
++    tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
++    return true;
+ }
  
-+void remove_listener_fd_in_watch(Chardev *chr);
+ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+-                                    TCGReg dst, int64_t arg)
++                             TCGReg dst, int64_t arg)
+ {
+     /* Arg is replicated by VECE; extract the highest element. */
+     arg >>= (-8 << vece) & 63;
+ 
++    /* Note set_vtype* may clobber TMP0, so do that first. */
++    if (arg == 0 || arg == -1) {
++        set_vtype_len(s, type);
++    } else {
++        set_vtype_len_sew(s, type, vece);
++    }
 +
- #endif /* CHAR_IO_H */
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index b65e9981c1..192cad67d4 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -307,6 +307,8 @@ struct ChardevClass {
+     if (arg >= -16 && arg < 16) {
+-        if (arg == 0 || arg == -1) {
+-            set_vtype_len(s, type);
+-        } else {
+-            set_vtype_len_sew(s, type, vece);
+-        }
+         tcg_out_opc_vi(s, OPC_VMV_V_I, dst, 0, arg);
+-        return;
++    } else {
++        tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
++        tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
+     }
+-    tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
+-    tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
+ }
  
-     /* handle various events */
-     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
-+
-+    void (*chr_listener_cleanup)(Chardev *chr);
- };
- 
- Chardev *qemu_chardev_new(const char *id, const char *typename,
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index cb99a12d94..7ae070dc8d 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -537,6 +537,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-          * e.g. the chardev is in client mode, with wait=on.
-          */
-         remove_fd_in_watch(chr);
-+        /*
-+         * Clean up listener IO sources early to prevent racy fd
-+         * handling between the main thread and the I/O thread.
-+         */
-+        remove_listener_fd_in_watch(chr);
-         /*
-          * We can't call qemu_chr_fe_set_handlers() directly here
-          * since chardev might be running in the monitor I/O
+ static void tcg_out_br(TCGContext *s, TCGLabel *l)
 -- 
 2.47.3
 
