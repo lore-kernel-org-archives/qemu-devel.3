@@ -4,47 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE04E7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C696DE7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn143-0003v9-Dm; Mon, 02 Feb 2026 16:02:31 -0500
+	id 1vn144-00045F-Jk; Mon, 02 Feb 2026 16:02:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn131-0001RH-DE; Mon, 02 Feb 2026 16:01:32 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12y-0004Qf-OH; Mon, 02 Feb 2026 16:01:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 15AE21851AB;
- Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2BC635B322;
- Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn138-0001cy-0y
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:36 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn136-0004S7-F5
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:33 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48068ed1eccso45129205e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:01:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770066089; x=1770670889; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QjJS4F+ZR9UGuvJkYdHrYT9RQW3X7FVg+IiasIqKI/c=;
+ b=sZZ8IOwYVIYGl0sHb6hh2nJYx3Y1nJ8p1BqdvSLIpiWd3VqxFqMIdXhAEQEDQ3FLva
+ MrwzVmveKlKI6o6719NmnbFmf//+Y7KRNNZkMRExkMTyX4qIpaWeBzGNgjeCCwMMD9ta
+ HTILkPnsCBVLSNWByMSt8KVCTLnPGQd3j4tEPwFuWLIAPwFPx5mbv52bSR8S27PMdkBT
+ c8Er010vIjKSV+zr9/7cLaz5wc9/Bne/79RSGFzzSp46XBf9f112+LlcP1yo90IqHSIX
+ 4hAuHrjv3C1BIwylXePIEqFrZmelf81hnDmSP7lbxlghKQIRA8lq5Wr9JWJjklwMEPmG
+ MVHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770066089; x=1770670889;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QjJS4F+ZR9UGuvJkYdHrYT9RQW3X7FVg+IiasIqKI/c=;
+ b=JLNYzbLirjg12lj0q2KqLrEzS9gWwH3s1ny0xxh/VRiR5k6oNI/xfXBd7HGFeX3PpJ
+ sl50misDV5FDRt5i+SKv3x3+ZIjS0WajntgPNq6QxxE+OUD7dprhvRLZLY8+k5WeiegX
+ oJfg/uYy/oIHRw+l/Ze9hmW22kthSje32+gK0kaaP1T4b28+EbtUO+GpcfKeZR8dlnPU
+ rhcrAvW4MnMXJ88QaixsV695yF+PQnRdRSQ/NsLQChEyKL+R8nJwTUU5tUFjdrFlpF+z
+ 3iMhmq0FZPiXJxZyi1QmgPlbSFAF/MDpD2fH7y6TxPSuuT54Bjuy6KIOlWRW40NPzgCp
+ stzQ==
+X-Gm-Message-State: AOJu0Yz3fp+E7ftEij2xf4UH3bhXm94e5BFLSu2MX8BuaFldPqfnM4aT
+ XyiNTQdJLEsgteOeVva6LF4I4FoHBXwBKLPiCMDLPgNUwZlushs65M89mZb7BdHTmcykWWBiavJ
+ slVbA1IQ=
+X-Gm-Gg: AZuq6aJun3UXUR7XJE1m1pR541bmF51BOpJTJ3uus2NaaFMRaqhX/y2FYkg7cBid6+w
+ wH5NvzsGKIpNtbrpN5yWRSvfjSMVrkg2Bi5XVSot5EqMib8+TKXLziIWWu10FD5GJAIbVvZU+JG
+ HnBp2m5f4bYhbQo5YXujXw7NRoPmJxcAcCTJthBQXngIc0G/ne4U+oJPDEa9dIFcJfcfkk78Ths
+ QA99TKkNyTPph+UuhMz/k65oIvzWAHZ2l/EZBpujUMhTjrsjGTXuhkZ6IgQJglPQNR4B5L5KUCF
+ zAcCQc27Eif4YnUt/BKS5qelbnwJAAD3TRXLWmk8wCdnlrvkBxCDASZTpingKN6Dvi6aJepiriT
+ wocvlenlCCNZpaQT62OTtbxJIPFXV0N9Le0nvxmzfV+EW/GPyMrxx5zPLWzN0F2v1nCZym2oQyL
+ zLpsP3TJPsUsSe0QoSA8P0Rqz0ZFnwpRLxqmvbxAVAGzAJfO5ZZRVZI5ij+zODpqR5ipvpYlA=
+X-Received: by 2002:a05:600c:1c26:b0:47e:c562:a41f with SMTP id
+ 5b1f17b1804b1-482db481c92mr175084185e9.18.1770066089552; 
+ Mon, 02 Feb 2026 13:01:29 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-482e047d863sm107044645e9.1.2026.02.02.13.01.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 02 Feb 2026 13:01:28 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
+Cc: Anton Johansson <anjo@rev.ng>, Nicholas Piggin <npiggin@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 31/74] linux-user: fix mremap errors for invalid ranges
-Date: Mon,  2 Feb 2026 23:57:42 +0300
-Message-ID: <20260202205833.941615-31-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 03/11] target/ppc: Inline cpu_ld/st_data_ra() calls in
+ do_hash()
+Date: Mon,  2 Feb 2026 22:00:57 +0100
+Message-ID: <20260202210106.93257-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260202210106.93257-1-philmd@linaro.org>
+References: <20260202210106.93257-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,45 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Lugg <mlugg@mlugg.co.uk>
+In preparation of removing the cpu_ld*_data_ra() and
+cpu_st*_data_ra() calls, inline them. No logical change
+intended.
 
-If an address range given to `mremap` is invalid (exceeds addressing
-bounds on the guest), we were previously returning `ENOMEM`, which is
-not correct. The manpage and the Linux kernel implementation both agree
-that if `old_addr`/`old_size` refer to an invalid address, `EFAULT` is
-returned, and if `new_addr`/`new_size` refer to an invalid address,
-`EINVAL` is returned.
+We note the page translation hash address is expected to
+be aligned, so the MO_UNALN flag is misleading. Next commit
+will remove it.
 
-Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251117170954.31451-3-mlugg@mlugg.co.uk>
-(cherry picked from commit 2422884ec5a12037d2378f45ca1411d3f37c7081)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+---
+ target/ppc/tcg-excp_helper.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 7a5f7c3660..131c6374bc 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1109,12 +1109,15 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-     int prot;
-     void *host_addr;
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index edecfb85725..6f5d82af636 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -160,14 +160,18 @@ static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
+                     target_ulong rb, uint64_t key, bool store)
+ {
+     uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
++    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
++    MemOp op = MO_TE | MO_UQ | MO_UNALN;
++    MemOpIdx oi = make_memop_idx(op, mmu_idx);
++    uintptr_t retaddr = GETPC();
  
--    if (!guest_range_valid_untagged(old_addr, old_size) ||
--        ((flags & MREMAP_FIXED) &&
-+    if (((flags & MREMAP_FIXED) &&
-          !guest_range_valid_untagged(new_addr, new_size)) ||
-         ((flags & MREMAP_MAYMOVE) == 0 &&
-          !guest_range_valid_untagged(old_addr, new_size))) {
--        errno = ENOMEM;
-+        errno = EINVAL;
-+        return -1;
-+    }
-+    if (!guest_range_valid_untagged(old_addr, old_size)) {
-+        errno = EFAULT;
-         return -1;
+     if (store) {
+-        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
++        cpu_stq_mmu(env, ea, calculated_hash, oi, retaddr);
+     } else {
+-        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
++        loaded_hash = cpu_ldq_mmu(env, ea, oi, retaddr);
+         if (loaded_hash != calculated_hash) {
+             raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
+-                POWERPC_EXCP_TRAP, GETPC());
++                                   POWERPC_EXCP_TRAP, retaddr);
+         }
      }
- 
+ }
 -- 
-2.47.3
+2.52.0
 
 
