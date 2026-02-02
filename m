@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095B5E7FDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C64E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn29J-0006MW-In; Mon, 02 Feb 2026 17:12:03 -0500
+	id 1vn287-0002T1-Vx; Mon, 02 Feb 2026 17:10:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28Y-0005PB-H5; Mon, 02 Feb 2026 17:11:21 -0500
+ id 1vn282-000215-Ev; Mon, 02 Feb 2026 17:10:44 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28X-0003E3-2e; Mon, 02 Feb 2026 17:11:14 -0500
+ id 1vn280-00036n-T9; Mon, 02 Feb 2026 17:10:42 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 780ED1852CF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E9B51852CA;
  Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B00535B3E2;
- Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE32935B3DD;
+ Tue, 03 Feb 2026 01:08:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 34/56] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
-Date: Tue,  3 Feb 2026 01:07:39 +0300
-Message-ID: <20260202220805.945271-34-mjt@tls.msk.ru>
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 29/56] hw/arm: Re-enable the MAX78000FTHR machine in
+ qemu-system-arm/aarch64
+Date: Tue,  3 Feb 2026 01:07:34 +0300
+Message-ID: <20260202220805.945271-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -65,37 +65,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Fix typo to avoid the following build failure:
+Unfortunately while rebasing the series registering the
+ARM/Aarch64 machine interfaces and getting it merged as
+commit 38c5ab40031 ("hw/arm: Filter machine types for
+qemu-system-arm/aarch64 binaries") we missed the recent
+addition of the MAX78000FTHR machine in commit 51eb283dd0e.
+Correct that.
 
-  target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
-  target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
-    988 |     qcpu->vcpu_dirty = true;
-        |         ^~
+The effect is that the machine was accidentally disabled.
 
 Cc: qemu-stable@nongnu.org
 Reported-by: Thomas Huth <thuth@redhat.com>
-Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260113203924.81560-1-philmd@linaro.org>
-(cherry picked from commit 7be4256281f430f726366c92ffdea0b72651de8a)
+Tested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251218214306.63667-1-philmd@linaro.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
+Fixes: 38c5ab40031 ("hw/arm: Filter machine types for single binary")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit c5712ad83fa4bf2f2a4e8fc9431ad9548bac2b06)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-index b9bd9ed985..f808828d49 100644
---- a/target/i386/nvmm/nvmm-all.c
-+++ b/target/i386/nvmm/nvmm-all.c
-@@ -985,7 +985,7 @@ nvmm_init_vcpu(CPUState *cpu)
-         }
-     }
+diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
+index c4f6b5b1b0..ccef85e456 100644
+--- a/hw/arm/max78000fthr.c
++++ b/hw/arm/max78000fthr.c
+@@ -12,6 +12,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-clock.h"
+ #include "qemu/error-report.h"
++#include "hw/arm/machines-qom.h"
+ #include "hw/arm/max78000_soc.h"
+ #include "hw/arm/boot.h"
  
--    qcpu->vcpu_dirty = true;
-+    cpu->vcpu_dirty = true;
-     cpu->accel = qcpu;
+@@ -47,4 +48,4 @@ static void max78000_machine_init(MachineClass *mc)
+     mc->valid_cpu_types = valid_cpu_types;
+ }
  
-     return 0;
+-DEFINE_MACHINE("max78000fthr", max78000_machine_init)
++DEFINE_MACHINE_ARM("max78000fthr", max78000_machine_init)
 -- 
 2.47.3
 
