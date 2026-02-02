@@ -4,101 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C53E7DEFE
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 16:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A9AE7DEFF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 16:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmweG-0000WV-5p; Mon, 02 Feb 2026 11:19:36 -0500
+	id 1vmwmL-0002Fk-2W; Mon, 02 Feb 2026 11:27:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vmweD-0000Vo-Hx
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:19:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1vmwmJ-0002FD-0b; Mon, 02 Feb 2026 11:27:55 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vmweC-0004Zy-4M
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 11:19:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770049170;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Otgzz3JTanC4ARlk05P0NYg+t/glceE1AGvOnbtY3QQ=;
- b=Ke9UVKqCE65jsrW7lxXnlxLrfPe+u1LVpxiGIxX7W/spgkmUMWgZPFoU0VrfTK+TmrYxDR
- bv7lyddqAenjnyPpbuYvWOAufiJESASOG+6t+Zq7ELhIo9mPAwy3uNzuwSVyajHluIXWCq
- 14tWTGFN+rrsRNTE/Hw1urUsRysOS70=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-J6_6WFqTPUCOaqr-P4cuKw-1; Mon, 02 Feb 2026 11:19:25 -0500
-X-MC-Unique: J6_6WFqTPUCOaqr-P4cuKw-1
-X-Mimecast-MFC-AGG-ID: J6_6WFqTPUCOaqr-P4cuKw_1770049165
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8c52f89b415so1305266085a.0
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 08:19:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770049165; x=1770653965; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Otgzz3JTanC4ARlk05P0NYg+t/glceE1AGvOnbtY3QQ=;
- b=f2/UQ5efop8muLt+fTVa6gobkw47k4M4yFQ2mjv49pRCQie1o1LNzt4G/m4mPS3T/W
- /RRmrdKOYHNHmywt98SC4qne/R2dbgoViO+z1/vfW1NMphbM9EHkoULwQwaG/N4j/fE+
- 5JidLp9IvU7bhrqLpqtqik9hC0m0Lrvx1IE5UR2yNYzrL5+XezwJheEFPo12qhwwhV8Y
- vmZ9iRtMVbZD/i9ZiKQUrW6U+sAjWe81v+AgBOlVb1iQmlbomqTrH9JMizn1TfOiQ0AJ
- qDfVkl05icScmfc/UEXsVbJMb1yg1A0UPt9vURYM4ffXktXfiEpSRnUBhs9hVFB5gS+e
- x2sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770049165; x=1770653965;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Otgzz3JTanC4ARlk05P0NYg+t/glceE1AGvOnbtY3QQ=;
- b=N2kCIl+IxsXSqI5Ab10Ly4l3Sh8Wll3tP+h4FqHCi/6HoVF/0x4/j1dFOyllWKqKly
- yGbXlnsatV6HWrvBCOsEkoJ8WJ6C8JfIOk3tL5XrUN+CnNk4F23gjZZV4pR06gz89gpR
- sSRdRP82VBqnhj4+2Fj2E5m4j5yiLLMyED+s4YLeG3gpQfsoG4jw6BPEyRN7hIFb0pQP
- x/2SB1hp5BrNCI/Ee72/Fdt4ugZvq+pMo2/ay7TSMK7BpmGZXJwdRbai7qIG7IfWgFBm
- iXEo2BWSRb4rFrSA8zCMF7XoKKNemCD5HvDRWdXy4FQK2YjHPxxdREpsUeDiKxBzNB/u
- L/ew==
-X-Gm-Message-State: AOJu0YyAMHGIovlUspSGpd8qWZFL2d9LcPhGxlx7v0FFFH4uX14MdyJ7
- /zDpuEwTSqng5Cmmd9n37d+7DdMRcSZzp8wxopB7hc3u32VanFVBn/kYehV+JkZpu6Gr5oiNOCr
- /OuFLpstBFBAmspPrSUaowN+Y78hWZXUDrbQ056Q7sDcbo79ksW4WAKiN
-X-Gm-Gg: AZuq6aIyIHvSi8k2AO7/Pm3hYWGSHqkV8JEB77GvdkQRBc/rW/i0tLllvl8fnoF9wuT
- ntOv0DGGS2vEde43blCTdFaeoB9xK0bQQ1m4R6EAEDEfQA3jt4U4Chdfld1N5wBoIh/gkEps1An
- H5UwZKWm7maO5Ax6QK3plmfj3ytrfBNB5HdvBWalxBG30hUs794gU5WQ8HF1mdtYU+T1m/eWkN/
- AuEnXXCmb/dGfy3dyb54ft2+LbvupxSBnzowpHULvNUUwSWZuyAGmZOxgWla2I1wH8aa7xJNFp5
- Ornb1rR3iPZtlH2ydNzoOJtNtsnN9ZDE3iXUpkmtIg7Dq65E3g3d5BFbBknpptdtSXM1i+AibMz
- hvJg=
-X-Received: by 2002:a05:620a:400e:b0:8be:88f2:5b15 with SMTP id
- af79cd13be357-8c9eb279f82mr1592612285a.38.1770049165236; 
- Mon, 02 Feb 2026 08:19:25 -0800 (PST)
-X-Received: by 2002:a05:620a:400e:b0:8be:88f2:5b15 with SMTP id
- af79cd13be357-8c9eb279f82mr1592608985a.38.1770049164798; 
- Mon, 02 Feb 2026 08:19:24 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c711b7ba53sm1281178185a.1.2026.02.02.08.19.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Feb 2026 08:19:24 -0800 (PST)
-Date: Mon, 2 Feb 2026 11:19:23 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration: Update comments mentioning qmp_migrate_finish
-Message-ID: <aYDOizMPtP4uHa1K@x1.local>
-References: <20260202124112.30684-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1vmwmH-0007BR-H3; Mon, 02 Feb 2026 11:27:54 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6123jWGf023248;
+ Mon, 2 Feb 2026 16:27:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:sender:subject:to; s=pp1; bh=rXBseiwrz41JCTRc6vCb8PE
+ eMR5XOcksa5Auws/K+ck=; b=nBnxneMqHIh9VG3s54Z+vKJXMH+McSYipXjmbW0
+ KE/pgZtJswvUvxhdUkqO1To0bXvBHLgT/azyQmW0VU4DI5al/RK1bL3yak+tI2CV
+ dEXyTV8fclxpdJOl6MMZNaEQQJ74jneuni09TMDolRNvFYn2jnKuDFAOdSbQtujZ
+ +zRj6rTcgC7p3ZJeZfC7u5/53GSjEVoq5QW8MnDHRKxl/q3UnY3SIaqTWjXBZOy9
+ mbzlOWEHGzmCAWRUpcfI5NxFwxmpzzeQKDpLZUubH7y8sFGD+aWOCmsrIigiELWG
+ Gl58IqaGx+nfPxKLqpNUOa4+JFGUDgF8qXMsZpYJnscU6oQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19869bgt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Feb 2026 16:27:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 612DFhCW009544;
+ Mon, 2 Feb 2026 16:27:49 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1vexwv6q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Feb 2026 16:27:49 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 612GRiOw60752372
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Feb 2026 16:27:45 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD09220043;
+ Mon,  2 Feb 2026 16:27:44 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C248720040;
+ Mon,  2 Feb 2026 16:27:44 +0000 (GMT)
+Received: from vela (unknown [9.111.10.25])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  2 Feb 2026 16:27:44 +0000 (GMT)
+Received: from brueckner by vela with local (Exim 4.99.1)
+ (envelope-from <brueckner@linux.ibm.com>) id 1vmwm8-00000000Mxy-0jZN;
+ Mon, 02 Feb 2026 17:27:44 +0100
+Date: Mon, 2 Feb 2026 17:27:44 +0100
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
+To: Eric Farman <farman@linux.ibm.com>
+Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>, 
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] MAINTAINERS: Replace backup for s390 PCI
+Message-ID: <aYDQgE7pHgWK1rpc@linux.ibm.com>
+References: <20260202144702.1783102-1-farman@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260202124112.30684-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260202144702.1783102-1-farman@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDEyOSBTYWx0ZWRfX8GtrKlpEwIJW
+ obosfIlWMOd94Xl1vFAcpMrtsXgfTaGXc2+t+gMwARcqJyyHsMqg/IlSh25f3ILptXqDRoSy4VV
+ oy9na8Ada7Ksu2lC2X6tziZjbgFB/P+eBpoed6p6LY84ioJymMOBK1nuNrt5AlTPyHE0SKLeRAe
+ K5BJVZZDcSrpyxl9+UAheV6uCWl4pDP+SALC+83QifkUFwQptlh9pKS1V+JVdUb4exdsAB60EZX
+ UWsNmru7LsAAS0WpvikdhWn/3d3Ig7Ehk0y/EFY00pRtH5M9wndYmU50cT64SteRje1PFz1rB8f
+ hAmMR4QQqTzJN2ljxMd+XPvIfwJkDjDgVbi7jYodY/RHHfTwKjlIdqs0YmqXwPCERDddpdM3tQk
+ sDR6XU/zG/dvgHNOPMhO72E+LLqR0kRdO/3UGttRw70gZhIggfIHyQ0UjOfIpav0BmK8Ssv+Kzi
+ v0mMiBHlPYonUGz0m7Q==
+X-Proofpoint-GUID: sws2frFFIxEXBEZj6LYeSmBxtGmqA7SZ
+X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=6980d086 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=STK_0p3wlTkmVyiQI7oA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: sws2frFFIxEXBEZj6LYeSmBxtGmqA7SZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-02_04,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602020129
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,16 +124,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 02, 2026 at 09:41:12AM -0300, Fabiano Rosas wrote:
-> The qmp_migrate_finish function was recently removed in commit
-> 2379a04e60 ("migration: Remove qmp_migrate_finish"), update comments
-> that mention it.
+On Mon, Feb 02, 2026 at 03:47:02PM +0100, Eric Farman wrote:
+> Farhan has been doing a masterful job coming on in the
+> s390 PCI space, and my own attention has been lacking.
+> Let's make MAINTAINERS reflect reality.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Thank you Eric and Farhan!
 
--- 
-Peter Xu
-
+Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
