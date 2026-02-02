@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65165E7FDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 782D8E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2AZ-0000dR-Fs; Mon, 02 Feb 2026 17:13:19 -0500
+	id 1vn28I-0003qQ-4d; Mon, 02 Feb 2026 17:10:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn2A0-0007mw-BM; Mon, 02 Feb 2026 17:12:47 -0500
+ id 1vn287-0002XY-7Y; Mon, 02 Feb 2026 17:10:47 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn29x-0003UA-Af; Mon, 02 Feb 2026 17:12:42 -0500
+ id 1vn285-00038p-0I; Mon, 02 Feb 2026 17:10:46 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A6CE21852DF;
- Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B00E1852CB;
+ Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7942C35B3F2;
- Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F06A935B3DE;
+ Tue, 03 Feb 2026 01:08:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 50/56] pc-bios/optionrom: Use 32-bit linker emulation
- for the optionroms
-Date: Tue,  3 Feb 2026 01:07:55 +0300
-Message-ID: <20260202220805.945271-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 30/56] tests/functional: migrate aspeed_rainier image
+Date: Tue,  3 Feb 2026 01:07:35 +0300
+Message-ID: <20260202220805.945271-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -63,33 +63,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Without this linker flag, the linking fails on NetBSD v10.1 with:
+Cedric has a host for the file which allows us to keep the name.
 
- ld: i386 architecture of input file `multiboot.o' is incompatible with i386:x86-64 output
- ld: i386 architecture of input file `multiboot_dma.o' is incompatible with i386:x86-64 output
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260121074819.29396-1-thuth@redhat.com>
-(cherry picked from commit e4f1a9b1dacb4d02500629056551b1db2985429c)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20260113135941.3361163-1-alex.bennee@linaro.org
+Cc: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7cf096d609e67fd06abf6a59e592cb6de427825c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
-index 30d07026c7..e6674a76e7 100644
---- a/pc-bios/optionrom/Makefile
-+++ b/pc-bios/optionrom/Makefile
-@@ -36,7 +36,7 @@ config-cc.mak: Makefile
- 	    $(call cc-option,-Wno-array-bounds)) 3> config-cc.mak
- -include config-cc.mak
+diff --git a/tests/functional/arm/test_aspeed_rainier.py b/tests/functional/arm/test_aspeed_rainier.py
+index 602d6194ac..30827beca3 100755
+--- a/tests/functional/arm/test_aspeed_rainier.py
++++ b/tests/functional/arm/test_aspeed_rainier.py
+@@ -9,10 +9,8 @@
  
--override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds
-+override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds,-m,elf_i386
+ class RainierMachine(AspeedTest):
  
- pvh.img: pvh.o pvh_main.o
+-    ASSET_RAINIER_EMMC = Asset(
+-        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+-         'mmc-p10bmc-20240617.qcow2'),
+-        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++    ASSET_RAINIER_EMMC = Asset('https://kaod.org/qemu/aspeed/rainier/mmc-p10bmc-20240617.qcow2',
++                               'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
  
+     def test_arm_aspeed_emmc_boot(self):
+         self.set_machine('rainier-bmc')
 -- 
 2.47.3
 
