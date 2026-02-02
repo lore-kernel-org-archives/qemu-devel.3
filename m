@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B646BE7FDF5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F2EE7FDF7
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn27M-0006L3-Pj; Mon, 02 Feb 2026 17:10:00 -0500
+	id 1vn27O-0006Ng-Aj; Mon, 02 Feb 2026 17:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn26o-0005Ml-55; Mon, 02 Feb 2026 17:09:29 -0500
+ id 1vn26H-0004zB-G3; Mon, 02 Feb 2026 17:08:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn26m-0002i0-Ax; Mon, 02 Feb 2026 17:09:25 -0500
+ id 1vn26G-0002c2-39; Mon, 02 Feb 2026 17:08:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AD9F1852C0;
- Tue, 03 Feb 2026 01:07:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B6B0C1852B9;
+ Tue, 03 Feb 2026 01:07:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 199AA35B3D3;
- Tue, 03 Feb 2026 01:08:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A8D335B3CC;
+ Tue, 03 Feb 2026 01:08:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 19/56] target/i386/tcg: do not mark all SSE
- instructions as unaligned
-Date: Tue,  3 Feb 2026 01:07:24 +0300
-Message-ID: <20260202220805.945271-19-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 12/56] linux-user: fix mremap unmapping adjacent region
+Date: Tue,  3 Feb 2026 01:07:17 +0300
+Message-ID: <20260202220805.945271-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -61,65 +60,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Matthew Lugg <mlugg@mlugg.co.uk>
 
-If the vex_special field was not initialized, it was considered to be
-X86_VEX_SSEUnaligned (whose value was zero).  Add a new value to
-fix that.
+This typo meant that calls to `mremap` which shrink a mapping by some N
+bytes would, when the virtual address space was pre-reserved (e.g.
+32-bit guest on 64-bit host), unmap the N bytes following the *original*
+mapping.
 
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 73dd6e4a36dd8d85548292f382a4d479e2810371)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
+(cherry picked from commit aaed9ca1797d70a507371aea688c5cd60b074e2d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index dfaffec599..31aad730fc 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -944,15 +944,15 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
- static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     static const X86OpEntry opcodes_0F11_reg[4] = {
--        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPS */
--        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPD */
-+        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
-+        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
-         X86_OP_ENTRY3(VMOVSS,  W,x,  H,x,       V,x, vex5),
-         X86_OP_ENTRY3(VMOVLPx, W,x,  H,x,       V,q, vex5), /* MOVSD */
-     };
- 
-     static const X86OpEntry opcodes_0F11_mem[4] = {
--        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPS */
--        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPD */
-+        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
-+        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
-         X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
-         X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
-     };
-@@ -2382,6 +2382,9 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-     X86OpEntry *e = &decode->e;
- 
-     switch (e->vex_special) {
-+    case X86_VEX_None:
-+        break;
-+
-     case X86_VEX_REPScalar:
-         /*
-          * Instructions which differ between 00/66 and F2/F3 in the
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 7f23d373ea..9282296900 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -242,6 +242,8 @@ typedef enum X86InsnSpecial {
-  * section of the manual.
-  */
- typedef enum X86VEXSpecial {
-+    X86_VEX_None,
-+
-     /* Legacy SSE instructions that allow unaligned operands */
-     X86_VEX_SSEUnaligned,
- 
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 423c77856a..ef3833a2bb 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1171,7 +1171,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+                     errno = ENOMEM;
+                     host_addr = MAP_FAILED;
+                 } else if (reserved_va && old_size > new_size) {
+-                    mmap_reserve_or_unmap(old_addr + old_size,
++                    /* Re-reserve pages we just shrunk out of the mapping */
++                    mmap_reserve_or_unmap(old_addr + new_size,
+                                           old_size - new_size);
+                 }
+             }
 -- 
 2.47.3
 
