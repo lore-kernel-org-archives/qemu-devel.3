@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FDCE7FDC8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D58F1E7FDC7
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzyh-0004aI-Un; Mon, 02 Feb 2026 14:52:57 -0500
+	id 1vmzxq-0001Uj-03; Mon, 02 Feb 2026 14:52:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzyb-0004Of-Rr; Mon, 02 Feb 2026 14:52:49 -0500
+ id 1vmzxC-0000KZ-7A; Mon, 02 Feb 2026 14:51:25 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzya-0004Fn-Cw; Mon, 02 Feb 2026 14:52:49 -0500
+ id 1vmzx8-0003wi-AL; Mon, 02 Feb 2026 14:51:20 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BBBC1850D1;
- Mon, 02 Feb 2026 22:46:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EA1461850C3;
+ Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2142135B2B3;
- Mon, 02 Feb 2026 22:46:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9271335B2A5;
+ Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 63/69] pc-bios/optionrom: Use 32-bit linker emulation
- for the optionroms
-Date: Mon,  2 Feb 2026 22:46:26 +0300
-Message-ID: <20260202194638.939438-63-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 49/69] linux-user/aarch64/target_fcntl.h: add missing
+ TARGET_O_LARGEFILE definition
+Date: Mon,  2 Feb 2026 22:46:12 +0300
+Message-ID: <20260202194638.939438-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -63,33 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Without this linker flag, the linking fails on NetBSD v10.1 with:
+This caused a failure with program using openat2, where O_LARGEFILE was
+replaced by O_NOFOLLOW.
+This issue is only visible when QEMU is compiled with musl libc, where
+O_LARGEFILE is different from 0 (vs glibc).
 
- ld: i386 architecture of input file `multiboot.o' is incompatible with i386:x86-64 output
- ld: i386 architecture of input file `multiboot_dma.o' is incompatible with i386:x86-64 output
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3262
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260121074819.29396-1-thuth@redhat.com>
-(cherry picked from commit e4f1a9b1dacb4d02500629056551b1db2985429c)
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 83017c4aaa9e3ef80161443019764196dffdb654)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
-index 30d07026c7..e6674a76e7 100644
---- a/pc-bios/optionrom/Makefile
-+++ b/pc-bios/optionrom/Makefile
-@@ -36,7 +36,7 @@ config-cc.mak: Makefile
- 	    $(call cc-option,-Wno-array-bounds)) 3> config-cc.mak
- -include config-cc.mak
+diff --git a/linux-user/aarch64/target_fcntl.h b/linux-user/aarch64/target_fcntl.h
+index efdf6e5f05..55ab788a7c 100644
+--- a/linux-user/aarch64/target_fcntl.h
++++ b/linux-user/aarch64/target_fcntl.h
+@@ -11,6 +11,7 @@
+ #define TARGET_O_DIRECTORY      040000 /* must be a directory */
+ #define TARGET_O_NOFOLLOW      0100000 /* don't follow links */
+ #define TARGET_O_DIRECT        0200000 /* direct disk access hint */
++#define TARGET_O_LARGEFILE     0400000
  
--override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds
-+override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds,-m,elf_i386
- 
- pvh.img: pvh.o pvh_main.o
- 
+ #include "../generic/fcntl.h"
+ #endif
 -- 
 2.47.3
 
