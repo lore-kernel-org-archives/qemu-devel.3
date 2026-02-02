@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E411E7FDF9
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F1BE7FDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn28p-0005lP-G6; Mon, 02 Feb 2026 17:11:31 -0500
+	id 1vn29O-0006b6-C3; Mon, 02 Feb 2026 17:12:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28d-0005SZ-W2; Mon, 02 Feb 2026 17:11:22 -0500
+ id 1vn290-000673-Ti; Mon, 02 Feb 2026 17:11:43 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn28b-0003Hg-Rh; Mon, 02 Feb 2026 17:11:19 -0500
+ id 1vn28z-0003I6-HZ; Mon, 02 Feb 2026 17:11:42 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C90261852D2;
+ by isrv.corpit.ru (Postfix) with ESMTP id D9C441852D3;
  Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 97EFB35B3E5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B6C7635B3E6;
  Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 37/56] bsd-user: Fix __i386__ test for
- TARGET_HAS_STAT_TIME_T_EXT
-Date: Tue,  3 Feb 2026 01:07:42 +0300
-Message-ID: <20260202220805.945271-37-mjt@tls.msk.ru>
+ Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 38/56] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT
+ only for 32 bits
+Date: Tue,  3 Feb 2026 01:07:43 +0300
+Message-ID: <20260202220805.945271-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -64,28 +62,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The target test is TARGET_I386, not __i386__.
+Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
+"#if defined(TARGET_I386)".
+However, TARGET_I386 is defined for target x86_64 also.
 
-Cc: Kyle Evans <kevans@freebsd.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+This commit fixes it by identifying correctly 32 bits target.
+
+Found with:
+$ ./build/qemu-x86_64 \
+  -plugin ./build/contrib/plugins/libstoptrigger,icount=1000000 \
+  -plugin ./build/tests/tcg/plugins/libinsn \
+  -d plugin \
+  ./build/qemu-system-x86_64 --version
+ld-elf.so.1: /lib/libz.so.6: invalid file format
+cpu 0 insns: 59746
+total insns: 59746
+
+Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
+Fixes: dba028d1b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT" in 10.2.x)
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 369c1ba2b7c721341979889841772629b853092b)
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit f0de58ccf6566ad5cf04948788f9b0cfb8b960b4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 52f84d5dd1..c49be32bdc 100644
+index c49be32bdc..cc4b484f3a 100644
 --- a/bsd-user/syscall_defs.h
 +++ b/bsd-user/syscall_defs.h
 @@ -247,7 +247,7 @@ struct target_freebsd11_stat {
      unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
  } __packed;
  
--#if defined(__i386__)
-+#if defined(TARGET_I386)
+-#if defined(TARGET_I386)
++#if defined(TARGET_I386) && !defined(TARGET_X86_64)
  #define TARGET_HAS_STAT_TIME_T_EXT       1
  #endif
  
