@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D735E7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B893FE7FDF5
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2br-0007Zn-To; Mon, 02 Feb 2026 17:41:31 -0500
+	id 1vn2bl-0007Xp-1Q; Mon, 02 Feb 2026 17:41:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bp-0007ZD-V3
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:30 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bj-0007XB-16
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:23 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bo-0000ph-EL
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:29 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bh-0000nz-HL
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:22 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6FD4D5BCC7;
- Mon,  2 Feb 2026 22:41:21 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 78A713E6CA;
+ Mon,  2 Feb 2026 22:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770072081; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770072070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vLMEjTWFupYh/uII/IPnXh1gkX9mRWuYujdX2vbuxhg=;
- b=H/3MUdVGf/1ihuTbtVe5Wrz6E4bPQN/4aZUXXLywPW+o4K5IkzalJ9VCkMhrfyZZk1mWAX
- NI12tMjzVKskvP+oSMlPrhGwU9pU8TZ4eNDOlxQBcCEcmnqDNPC/igpppVEYbaC4p2e+nd
- 9Xw39wiJQ0E+q/WUrrRaVzDdLMsuJ8U=
+ bh=DY+2W53egeqkeThQ0vISQVGT1GdVd3dzarPpL4KIM2o=;
+ b=wEAzdK6CBwL7xMxGl7jD0R8NdTEPe+LiIZ8JzrzCrKO5iuH7+I3XDgDMHNKZbpteCFgmRw
+ DL8m8jvVN5zHZkIevPr8AkitHSqMRnc1bKsuAaWC6vpCc/Qv6b9QaficLaWQXAQWQrIJH/
+ KbpPUwwFbaNhE4Ix/DEV99nlJteSGv4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770072081;
+ s=susede2_ed25519; t=1770072070;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vLMEjTWFupYh/uII/IPnXh1gkX9mRWuYujdX2vbuxhg=;
- b=1TMTWsfDzNUtM80XlLejGtF7KtUYt1ZQBgnKNAuNtduZgTxSQdNPaWfkFgehd1yXQ0fUYU
- oXlZmsv1GoDqncBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="H/3MUdVG";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1TMTWsfD
+ bh=DY+2W53egeqkeThQ0vISQVGT1GdVd3dzarPpL4KIM2o=;
+ b=EYjh4qkhd2luIDE04PG2/TqFE8vKnCOgpNZC0/9+kQrSfvKwcqdIQtnt21P+PvjsJ0nfMd
+ 0FfMdOqBHZQaOBDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=wEAzdK6C;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EYjh4qkh
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770072081; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770072070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vLMEjTWFupYh/uII/IPnXh1gkX9mRWuYujdX2vbuxhg=;
- b=H/3MUdVGf/1ihuTbtVe5Wrz6E4bPQN/4aZUXXLywPW+o4K5IkzalJ9VCkMhrfyZZk1mWAX
- NI12tMjzVKskvP+oSMlPrhGwU9pU8TZ4eNDOlxQBcCEcmnqDNPC/igpppVEYbaC4p2e+nd
- 9Xw39wiJQ0E+q/WUrrRaVzDdLMsuJ8U=
+ bh=DY+2W53egeqkeThQ0vISQVGT1GdVd3dzarPpL4KIM2o=;
+ b=wEAzdK6CBwL7xMxGl7jD0R8NdTEPe+LiIZ8JzrzCrKO5iuH7+I3XDgDMHNKZbpteCFgmRw
+ DL8m8jvVN5zHZkIevPr8AkitHSqMRnc1bKsuAaWC6vpCc/Qv6b9QaficLaWQXAQWQrIJH/
+ KbpPUwwFbaNhE4Ix/DEV99nlJteSGv4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770072081;
+ s=susede2_ed25519; t=1770072070;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vLMEjTWFupYh/uII/IPnXh1gkX9mRWuYujdX2vbuxhg=;
- b=1TMTWsfDzNUtM80XlLejGtF7KtUYt1ZQBgnKNAuNtduZgTxSQdNPaWfkFgehd1yXQ0fUYU
- oXlZmsv1GoDqncBA==
+ bh=DY+2W53egeqkeThQ0vISQVGT1GdVd3dzarPpL4KIM2o=;
+ b=EYjh4qkhd2luIDE04PG2/TqFE8vKnCOgpNZC0/9+kQrSfvKwcqdIQtnt21P+PvjsJ0nfMd
+ 0FfMdOqBHZQaOBDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D8BCC3EA62;
- Mon,  2 Feb 2026 22:41:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFC013EA62;
+ Mon,  2 Feb 2026 22:41:08 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4IPzJQ8ogWl8XgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 22:41:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id oGGpJwQogWl8XgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 22:41:08 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	armbru@redhat.com,
 	ppandit@redhat.com
-Subject: [PATCH v2 7/9] migration/options: Open code migrate_params_apply
-Date: Mon,  2 Feb 2026 19:40:59 -0300
-Message-ID: <20260202224101.20568-8-farosas@suse.de>
+Subject: [PATCH v2 2/9] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+Date: Mon,  2 Feb 2026 19:40:54 -0300
+Message-ID: <20260202224101.20568-3-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202224101.20568-1-farosas@suse.de>
 References: <20260202224101.20568-1-farosas@suse.de>
@@ -100,10 +101,10 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 6FD4D5BCC7
+X-Rspamd-Queue-Id: 78A713E6CA
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,67 +126,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove migrate_params_apply so the logic of setting migration
-parameters is all in one spot.
+Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+method makes the handling of the TLS strings more intuitive because it
+clones them as well.
 
-Suggested-by: Prasad Pandit <ppandit@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 33 ++++++++++++++-------------------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ migration/options.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/migration/options.c b/migration/options.c
-index 180ebed51c..733aae51a8 100644
+index dcd5e07504..4161648268 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -1266,25 +1266,11 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-     return true;
+@@ -1264,9 +1264,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+ static void migrate_params_test_apply(MigrationParameters *params,
+                                       MigrationParameters *dest)
+ {
+-    *dest = migrate_get_current()->parameters;
++    MigrationState *s = migrate_get_current();
+ 
+-    /* TODO use QAPI_CLONE() instead of duplicating it inline */
++    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
+ 
+     if (params->has_throttle_trigger_threshold) {
+         dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
+@@ -1285,24 +1285,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
+ 
+     if (params->tls_creds) {
++        qapi_free_StrOrNull(dest->tls_creds);
+         dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_creds = NULL;
+     }
+ 
+     if (params->tls_hostname) {
++        qapi_free_StrOrNull(dest->tls_hostname);
+         dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_hostname = NULL;
+     }
+ 
+     if (params->tls_authz) {
++        qapi_free_StrOrNull(dest->tls_authz);
+         dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_authz = NULL;
+     }
+ 
+     if (params->has_max_bandwidth) {
+@@ -1359,8 +1353,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
+ 
+     if (params->has_block_bitmap_mapping) {
+-        dest->has_block_bitmap_mapping = true;
+-        dest->block_bitmap_mapping = params->block_bitmap_mapping;
++        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
++        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
++                                                params->block_bitmap_mapping);
+     }
+ 
+     if (params->has_x_vcpu_dirty_limit_period) {
+@@ -1384,7 +1379,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
+ 
+     if (params->has_cpr_exec_command) {
+-        dest->cpr_exec_command = params->cpr_exec_command;
++        qapi_free_strList(dest->cpr_exec_command);
++        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
+     }
  }
  
--static void migrate_params_apply(MigrationParameters *params)
--{
--    MigrationState *s = migrate_get_current();
--    MigrationParameters *cur = &s->parameters;
--
--    migrate_tls_opts_free(cur);
--    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
--    qapi_free_strList(cur->cpr_exec_command);
--
--    /* mark all present, so they're all copied */
--    migrate_mark_all_params_present(params);
--    QAPI_CLONE_MEMBERS(MigrationParameters, cur, params);
--}
--
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
- {
-     MigrationState *s = migrate_get_current();
--    g_autoptr(MigrationParameters) tmp = QAPI_CLONE(MigrationParameters,
--                                                    &s->parameters);
-+    MigrationParameters *cur = &s->parameters;
-+    g_autoptr(MigrationParameters) tmp = QAPI_CLONE(MigrationParameters, cur);
- 
-     /*
-      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-@@ -1300,8 +1286,17 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
- 
-     QAPI_MERGE(MigrationParameters, tmp, params);
- 
--    if (migrate_params_check(tmp, errp)) {
--        migrate_params_apply(tmp);
--        migrate_post_update_params(params, errp);
-+    if (!migrate_params_check(tmp, errp)) {
-+        return;
+@@ -1540,4 +1536,6 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
      }
-+
-+    migrate_tls_opts_free(cur);
-+    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
-+    qapi_free_strList(cur->cpr_exec_command);
-+
-+    /* mark all present, so they're all copied */
-+    migrate_mark_all_params_present(tmp);
-+    QAPI_CLONE_MEMBERS(MigrationParameters, cur, tmp);
-+
-+    migrate_post_update_params(params, errp);
+ 
+     migrate_tls_opts_free(&tmp);
++    qapi_free_BitmapMigrationNodeAliasList(tmp.block_bitmap_mapping);
++    qapi_free_strList(tmp.cpr_exec_command);
  }
 -- 
 2.51.0
