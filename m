@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C720CE7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C17DE7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn155-0008Bw-KB; Mon, 02 Feb 2026 16:03:35 -0500
+	id 1vn15L-00010E-WC; Mon, 02 Feb 2026 16:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn14p-0007Hw-57; Mon, 02 Feb 2026 16:03:22 -0500
+ id 1vn15K-0000sH-73; Mon, 02 Feb 2026 16:03:50 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn14m-0004hF-Vr; Mon, 02 Feb 2026 16:03:18 -0500
+ id 1vn15I-0004m7-ID; Mon, 02 Feb 2026 16:03:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 57B811851BB;
+ by isrv.corpit.ru (Postfix) with ESMTP id CCF441851C1;
  Mon, 02 Feb 2026 23:57:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 10A6535B332;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C6F735B338;
  Mon, 02 Feb 2026 23:58:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 47/74] tests/functional: migrate aspeed_rainier image
-Date: Mon,  2 Feb 2026 23:57:58 +0300
-Message-ID: <20260202205833.941615-47-mjt@tls.msk.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 53/74] tests/functional: Mark another MIPS replay test
+ as flaky
+Date: Mon,  2 Feb 2026 23:58:04 +0300
+Message-ID: <20260202205833.941615-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -63,36 +63,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Cedric has a host for the file which allows us to keep the name.
+When disabling MIPS tests on commit 1c11aa18071
+("tests/functional: Mark the MIPS replay tests as flaky")
+we missed the 5KEc test.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-id: 20260113135941.3361163-1-alex.bennee@linaro.org
-Cc: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 7cf096d609e67fd06abf6a59e592cb6de427825c)
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251104145955.84091-1-philmd@linaro.org>
+(cherry picked from commit 290e4e7de7a579be7457bfbc338b697b8eea638f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_arm_aspeed_rainier.py b/tests/functional/test_arm_aspeed_rainier.py
-index 602d6194ac..30827beca3 100755
---- a/tests/functional/test_arm_aspeed_rainier.py
-+++ b/tests/functional/test_arm_aspeed_rainier.py
-@@ -9,10 +9,8 @@
+diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
+index 05cc585f85..e9318448fa 100755
+--- a/tests/functional/test_mips64el_replay.py
++++ b/tests/functional/test_mips64el_replay.py
+@@ -40,6 +40,7 @@ def test_replay_mips64el_malta(self):
+         '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
  
- class RainierMachine(AspeedTest):
- 
--    ASSET_RAINIER_EMMC = Asset(
--        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
--         'mmc-p10bmc-20240617.qcow2'),
--        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
-+    ASSET_RAINIER_EMMC = Asset('https://kaod.org/qemu/aspeed/rainier/mmc-p10bmc-20240617.qcow2',
-+                               'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
- 
-     def test_arm_aspeed_emmc_boot(self):
-         self.set_machine('rainier-bmc')
+     @skipUntrustedTest()
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips64el_malta_5KEc_cpio(self):
+         self.set_machine('malta')
+         self.cpu = '5KEc'
 -- 
 2.47.3
 
