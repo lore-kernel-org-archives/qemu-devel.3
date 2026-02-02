@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1E3E7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C720CE7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn14G-0005iN-Hi; Mon, 02 Feb 2026 16:02:44 -0500
+	id 1vn155-0008Bw-KB; Mon, 02 Feb 2026 16:03:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn13v-000362-4g; Mon, 02 Feb 2026 16:02:24 -0500
+ id 1vn14p-0007Hw-57; Mon, 02 Feb 2026 16:03:22 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn13o-0004XJ-7L; Mon, 02 Feb 2026 16:02:20 -0500
+ id 1vn14m-0004hF-Vr; Mon, 02 Feb 2026 16:03:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8D0451851B2;
- Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 57B811851BB;
+ Mon, 02 Feb 2026 23:57:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5722835B329;
- Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10A6535B332;
+ Mon, 02 Feb 2026 23:58:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 38/74] target/i386/tcg: mask addresses for VSIB
-Date: Mon,  2 Feb 2026 23:57:49 +0300
-Message-ID: <20260202205833.941615-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 47/74] tests/functional: migrate aspeed_rainier image
+Date: Mon,  2 Feb 2026 23:57:58 +0300
+Message-ID: <20260202205833.941615-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,147 +63,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-VSIB can have either 32-bit or 64-bit addresses, pass a constant mask to
-the helper and apply it before the load.
+Cedric has a host for the file which allows us to keep the name.
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 5e3572ef2e94608568b1a73eab9d382b250936eb)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20260113135941.3361163-1-alex.bennee@linaro.org
+Cc: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7cf096d609e67fd06abf6a59e592cb6de427825c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/ops_sse.h b/target/i386/ops_sse.h
-index a2e4d48039..853196b2bb 100644
---- a/target/i386/ops_sse.h
-+++ b/target/i386/ops_sse.h
-@@ -2362,42 +2362,42 @@ void glue(helper_vpmaskmovq, SUFFIX)(CPUX86State *env, Reg *d, Reg *v, Reg *s)
- }
+diff --git a/tests/functional/test_arm_aspeed_rainier.py b/tests/functional/test_arm_aspeed_rainier.py
+index 602d6194ac..30827beca3 100755
+--- a/tests/functional/test_arm_aspeed_rainier.py
++++ b/tests/functional/test_arm_aspeed_rainier.py
+@@ -9,10 +9,8 @@
  
- void glue(helper_vpgatherdd, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (2 << SHIFT); i++) {
-         if (v->L(i) >> 31) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int32_t)s->L(i) << scale);
--            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
-+            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
-         }
-         v->L(i) = 0;
-     }
- }
+ class RainierMachine(AspeedTest):
  
- void glue(helper_vpgatherdq, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->Q(i) >> 63) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int32_t)s->L(i) << scale);
--            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
-+            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
-         }
-         v->Q(i) = 0;
-     }
- }
+-    ASSET_RAINIER_EMMC = Asset(
+-        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+-         'mmc-p10bmc-20240617.qcow2'),
+-        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++    ASSET_RAINIER_EMMC = Asset('https://kaod.org/qemu/aspeed/rainier/mmc-p10bmc-20240617.qcow2',
++                               'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
  
- void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->L(i) >> 31) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int64_t)s->Q(i) << scale);
--            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
-+            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
-         }
-         v->L(i) = 0;
-     }
-@@ -2408,14 +2408,14 @@ void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
- }
- 
- void glue(helper_vpgatherqq, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->Q(i) >> 63) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int64_t)s->Q(i) << scale);
--            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
-+            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
-         }
-         v->Q(i) = 0;
-     }
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 1a7fab9333..12e7f5f943 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -43,8 +43,8 @@ typedef void (*SSEFunc_0_pppi)(TCGv_ptr reg_a, TCGv_ptr reg_b, TCGv_ptr reg_c,
-                                TCGv_i32 val);
- typedef void (*SSEFunc_0_eppt)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-                                TCGv val);
--typedef void (*SSEFunc_0_epppti)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
--                                 TCGv_ptr reg_c, TCGv a0, TCGv_i32 scale);
-+typedef void (*SSEFunc_0_eppptit)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-+                                 TCGv_ptr reg_c, TCGv a0, TCGv_i32 scale, TCGv amask);
- typedef void (*SSEFunc_0_eppppi)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-                                   TCGv_ptr reg_c, TCGv_ptr reg_d, TCGv_i32 flags);
- typedef void (*SSEFunc_0_eppppii)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-@@ -1098,18 +1098,19 @@ VEXW_AVX(VPMASKMOV, vpmaskmov)
- 
- /* Same as above, but with extra arguments to the helper.  */
- static inline void gen_vsib_avx(DisasContext *s, X86DecodedInsn *decode,
--                                SSEFunc_0_epppti d_xmm, SSEFunc_0_epppti q_xmm,
--                                SSEFunc_0_epppti d_ymm, SSEFunc_0_epppti q_ymm)
-+                                SSEFunc_0_eppptit d_xmm, SSEFunc_0_eppptit q_xmm,
-+                                SSEFunc_0_eppptit d_ymm, SSEFunc_0_eppptit q_ymm)
- {
--    SSEFunc_0_epppti d = s->vex_l ? d_ymm : d_xmm;
--    SSEFunc_0_epppti q = s->vex_l ? q_ymm : q_xmm;
--    SSEFunc_0_epppti fn = s->vex_w ? q : d;
-+    SSEFunc_0_eppptit d = s->vex_l ? d_ymm : d_xmm;
-+    SSEFunc_0_eppptit q = s->vex_l ? q_ymm : q_xmm;
-+    SSEFunc_0_eppptit fn = s->vex_w ? q : d;
-     TCGv_i32 scale = tcg_constant_i32(decode->mem.scale);
-     TCGv_ptr index = tcg_temp_new_ptr();
-+    TCGv mask = tcg_constant_tl(MAKE_64BIT_MASK(0, 8 << s->aflag));
- 
-     /* Pass third input as (index, base, scale) */
-     tcg_gen_addi_ptr(index, tcg_env, ZMM_OFFSET(decode->mem.index));
--    fn(tcg_env, OP_PTR0, OP_PTR1, index, s->A0, scale);
-+    fn(tcg_env, OP_PTR0, OP_PTR1, index, s->A0, scale, mask);
- 
-     /*
-      * There are two output operands, so zero OP1's high 128 bits
-diff --git a/target/i386/tcg/ops_sse_header.h.inc b/target/i386/tcg/ops_sse_header.h.inc
-index d92c6faf6d..bbeb7301c3 100644
---- a/target/i386/tcg/ops_sse_header.h.inc
-+++ b/target/i386/tcg/ops_sse_header.h.inc
-@@ -388,10 +388,10 @@ DEF_HELPER_4(glue(vpmaskmovd_st, SUFFIX), void, env, Reg, Reg, tl)
- DEF_HELPER_4(glue(vpmaskmovq_st, SUFFIX), void, env, Reg, Reg, tl)
- DEF_HELPER_4(glue(vpmaskmovd, SUFFIX), void, env, Reg, Reg, Reg)
- DEF_HELPER_4(glue(vpmaskmovq, SUFFIX), void, env, Reg, Reg, Reg)
--DEF_HELPER_6(glue(vpgatherdd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherdq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherqd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherqq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
-+DEF_HELPER_7(glue(vpgatherdd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherdq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherqd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherqq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
- #if SHIFT == 2
- DEF_HELPER_3(vpermd_ymm, void, Reg, Reg, Reg)
- DEF_HELPER_4(vpermdq_ymm, void, Reg, Reg, Reg, i32)
+     def test_arm_aspeed_emmc_boot(self):
+         self.set_machine('rainier-bmc')
 -- 
 2.47.3
 
