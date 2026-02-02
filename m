@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD94E7DF16
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D848E7DF11
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmyAb-0007Re-3b; Mon, 02 Feb 2026 12:57:05 -0500
+	id 1vmyBX-0007rS-Op; Mon, 02 Feb 2026 12:58:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmyAZ-0007Qj-5a
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:03 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1vmyBS-0007qQ-7S
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:58 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmyAX-0008GR-Ou
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:02 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-c65822dead7so1854006a12.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:57:01 -0800 (PST)
+ id 1vmyBP-0008KK-NI
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:57 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a9004e4239so8403875ad.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:57:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770055020; x=1770659820; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770055074; x=1770659874; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=831PZeoEGhHjEJFXtrpbmInT+faGeD93DRE7pLYd0XE=;
- b=sXCAmSkz9Yjo+BV1it9x8AtvFQOPr40G8YECGwzfskkzIkHNGdO7MfbE3N4PRiHy7d
- YVO+aJYRK7BzAKCYvWDL9PCWbsf5tA5o8P+5Hb58TblNFdM7TvIngrSG5huiDZQ6hv9J
- yHGqY6aSc97P9NayFXCqexuArsKElg5lVlZ6riPiyTyi7NpNnr4keJGEOs29leGDC4Os
- OHAZqDvjdhZIuBxwnHKfWyRrWfugoYx+Oj9l+e9iDKKwCV1VMtYjuPSpwpYIIRlsg1/L
- sBrHp5rIb9omZrM8g64GkuPHezbVRPfTMCRVZKEF0a9/OJYf/m7Lh+e75t6/ZNk32f8h
- mGhw==
+ bh=JAuTrxn4gQGmEPvqo+iM+qmIJ0RYyWcQiCHd6otGo3U=;
+ b=Torc3i1ncbxpY/YY1O6VqE9MYZWcFE7SzNUhjHQxDKp76TgP9fb/yd/iHgbwgorkUp
+ lGqlm5kE2jBVJrboqVfEYHwEXs4dPxANxJl3y3mfhyIU7X6JVT1o9YFyrpcJjNttWmzT
+ 9sFb9OcETZxMOb+3yDLiu6zf7nDLHLZVHEjrsyc6rwQuuMe46e34efjr8AmfYKLe0v47
+ S1i76uSXYsHSd0A3MLH1YmH+cjM7rvU9L52gsVgF+qCJ/HoFvBzQOBCD4JAZN9NSaIHQ
+ 1Nwx7cYvse8bO9hk42RWd4f0BXLK5qkBcrH1qXxVAiVqV/yCfOkdo7TM9nKSJbMA1eSc
+ HGew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770055020; x=1770659820;
+ d=1e100.net; s=20230601; t=1770055074; x=1770659874;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=831PZeoEGhHjEJFXtrpbmInT+faGeD93DRE7pLYd0XE=;
- b=PBMCoGJyFzn+I8bCTxVTB9us2eIv5Q/cWmU9P9I6/nY0wyo3wpKH6180jyBVqAKOjF
- V8xwD9rJp+poeYWBwPo/ggEZHqWnY2FAk8igYWrt2vBcpMMLozbDID0Q58mn3LP3Mniz
- 3fFzOByVCIhSW1Jcj5gGvMug5orvz6eSOCMREzWRLo7y5inUIGEopVo8ux6hAST6ZoZC
- tOxf/y//cnQBpFLDB9l8USdzV/ZkTk/Vwp+ZdCFXT0SYcpgWUIfnnaWgBiuFu4P8K+jB
- PFvg/nu/FTKXAezMIpLcjqTiI5kHVsnpxJgKD/vNBoXD31NhQT2+OTX+WHOSeyAIX3o3
- 0JJQ==
-X-Gm-Message-State: AOJu0Yw789EIeno7HmLG9OyxA0NVOBWwUJ6nm3hlVLNjRewafYvXv65L
- ow4tbHjoj4N/4Y17Y8MBPl0c2nxaKQtST9U2+UXgcrjUSgEAg3O+84/kRCiuHyEtJSE=
-X-Gm-Gg: AZuq6aL88Lgn1MuB/xeuzNh15KExrAGriU3V4j2tUaAgxth1Ol3NQqsVKdu8/XkC4Lx
- MNGpBRFZM55ZBE7b6FvZq2soGcWf9swWia67COYM+UVH1XRALOgpVsXnXdkZurLPFlfKaev9PKN
- dvjcwhr/Ei2sMkBvtPtlyRy5xM3L8aAUgsFl17lQM984ojxfV/TJMn+PXGz6TTL1TU8vmaJYJ76
- rPNuGvBeFaVTLhBT8mharufQK5hPfLJM5JpTh1uBy2McjbRsQCV41+mNB4pZxnJMyzb1H0/Sl/V
- vKiyQpYznZZAPduVeYSqx5fpNH28UMgXEcUE0OU7rgw7fDxRxixxf3W7jiqsCJzmSzXDYFFWEl4
- h1y6m4B7PbH6tR/MOMN2+c1pOtcLo7SV+5LxIlE7OFI/Z2aLtz0Lz4MYJkkUOaBj1yUww8Y3LIQ
- z7wKcMtpdL2RYr+al8xkHJfQNB8cJ3yc+1+VSljvEtKHjeNEpntBag4eHQ
-X-Received: by 2002:a17:90a:d604:b0:349:3fe8:e7de with SMTP id
- 98e67ed59e1d1-3543b3ad375mr10891843a91.28.1770055019936; 
- Mon, 02 Feb 2026 09:56:59 -0800 (PST)
+ bh=JAuTrxn4gQGmEPvqo+iM+qmIJ0RYyWcQiCHd6otGo3U=;
+ b=lgsE3nmW1CUAu6MYEPlolFBZhlQgue3PRvG7QDq8g9sQ2tZprVlqQik4XVgAWFE5rS
+ Yc7FI+DyAegmnRFTpvCnuvyscdahRtpvSFK9xhRIN3qUw88yPf4StmK82XsCWgbv7ufi
+ kLftw1IAwHR4gdJJRwhUdcDbJAf9ek25tLWHUMxLVDPHdyHsM/3qniFAAH7ydhs89w92
+ h8uSb9oxMsUJwKDFkIJNuRvDzFuEz/jnRbvDxqZ4mn6u7K7m+lwog2iYwgxT58jWei5P
+ WTNwX7xIFup2bc0brQXIdYu/hO5psmm90Cs+zAJDvJFXKH6J9O4gYIdsOaprWQFlCUeQ
+ OEXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcoSsDzFohtydAtnyMPRXs6Ne0zI3v/giPjdiIp9Gj1Lr2gVPqneAGHgQmNKyotYfk6/w794XZezYz@nongnu.org
+X-Gm-Message-State: AOJu0Yx/mHH6LwzGIoMDfpc3PnYKjxrnFwJPhBG7f5OpbHbUTTCEqPv/
+ ltujydzsZpDk/1OKU+XeAGl9XszDmYm2W99UJ8WChBhYovDE9vcqKeE/1X01ftvFt/c=
+X-Gm-Gg: AZuq6aLbqa5tXVB2PdPjOfLNC76+L9SM2c8bEHB5d+OO9tdaHS/Waqyqd8eStqw5+e9
+ QrkHM0PXYon69Y7pLJ6QTTPk0uHE73LIEDGntOsubL2fu3uaJGX8W+8ZLb0q/Ib94CvW9c0CdOV
+ 79njHQvBrvMXbsq7at3WSTEXPlLceVWZbvl5OZzoXLaf8iN2GGnViv0CIbP+yfLFtCKDh6Vtj41
+ 5YRoMD2xEuCOrB3eD//IWMLJGqdd7wij/ODzhBJ/N183pv6Z8wqIev8XT6wsVxoIMxzYHdfUwse
+ Rdj+wyvO3imLkd4qsSqmfKlt+ESRtmCWltYZ46SvMnbmKOoZQVF9nLw1Qw2pdWpf2cbpYEd4fCh
+ +Y9gy1GvUMBzT+9JljakcMzS/9ogec1lUtHvy7fvJWt6O4RyLuWVNzUJ31wClNiHItYNuF9O/1n
+ mCQA6Afe9W7azeITHHPJYjeDXl4+F15V1w8mgmIJsEnnLAsf+2PFDWI7fP
+X-Received: by 2002:a17:903:46c6:b0:2a9:4c2:e53 with SMTP id
+ d9443c01a7336-2a904c242c9mr60520465ad.48.1770055074180; 
+ Mon, 02 Feb 2026 09:57:54 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3547778cb83sm112208a91.13.2026.02.02.09.56.59
+ d9443c01a7336-2a88b6e5fb0sm159459165ad.91.2026.02.02.09.57.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 09:56:59 -0800 (PST)
-Message-ID: <041edfda-541f-4274-94ba-b7e6b64399ac@linaro.org>
-Date: Mon, 2 Feb 2026 09:56:58 -0800
+ Mon, 02 Feb 2026 09:57:53 -0800 (PST)
+Message-ID: <681e7b2c-73c1-4861-88dc-23dcecec9c99@linaro.org>
+Date: Mon, 2 Feb 2026 09:57:53 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/11] target/ppc: Introduce ppc_code_endian() helper
+Subject: Re: [PATCH v2 1/2] target/arm: Remove dead code
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-References: <20260122221106.57184-1-philmd@linaro.org>
- <20260122221106.57184-7-philmd@linaro.org>
- <aYC1bfhw1CtIED8Y@hive.localdomain> <aYC28VNE0yNjlJw6@hive.localdomain>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ devel@lists.libvirt.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20260202153618.78675-1-philmd@linaro.org>
+ <20260202153618.78675-2-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <aYC28VNE0yNjlJw6@hive.localdomain>
+In-Reply-To: <20260202153618.78675-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,36 +141,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 6:39 AM, Anton Johansson wrote:
-> On 02/02/26, Anton Johansson wrote:
->> On 22/01/26, Philippe Mathieu-Daudé wrote:
->>> Introduce the ppc_code_endian() helper which returns the
->>> MemOp endianness for the CODE path.
->>>
->>> Use it in need_byteswap(), removing one TARGET_BIG_ENDIAN.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   target/ppc/translate.c | 11 ++++++-----
->>>   1 file changed, 6 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
->>> index 17e6d07c8c2..4a9199a4473 100644
->>> --- a/target/ppc/translate.c
->>> +++ b/target/ppc/translate.c
->>> @@ -214,14 +214,15 @@ static inline bool is_ppe(const DisasContext *ctx)
->>>       return !!(ctx->flags & POWERPC_FLAG_PPE42);
->>>   }
->>>   
->>> +static inline MemOp ppc_code_endian(const DisasContext *ctx)
->>> +{
->>> +    return MO_BE ^ (ctx->le_mode * MO_BSWAP);
->>> +}
->>
->> This was not super obvious to me, is this a common pattern?
+On 2/2/26 7:36 AM, Philippe Mathieu-Daudé wrote:
+> Since commit a0032cc5427 ("target/arm: Make 'any' CPU just
+> an alias for 'max'") the 'any' entry is never used (we use
+> 'max' instead): remove it.
 > 
-> Ignore this comment, I see we do it for translator_ld*()!:)
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/cpu32.c | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
 
-I agree that even though it's used there, it's far from being obvious 
-when reading it :)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
