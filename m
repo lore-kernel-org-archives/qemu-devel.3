@@ -4,109 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CB8E7DEF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F86DE7DEF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmvLh-0000Gi-KJ; Mon, 02 Feb 2026 09:56:21 -0500
+	id 1vmvNc-0000sU-RW; Mon, 02 Feb 2026 09:58:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1vmvLg-0000GT-4p; Mon, 02 Feb 2026 09:56:20 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vmvNb-0000sD-7X
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:58:19 -0500
+Received: from mail-southcentralusazon11012020.outbound.protection.outlook.com
+ ([40.93.195.20] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1vmvLe-0004di-Ib; Mon, 02 Feb 2026 09:56:19 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 612EHR2f017333;
- Mon, 2 Feb 2026 14:56:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NOMZ/P
- q4LxMTJi08jNS+9WtSVOm0ii5Q/+0EKheSGj8=; b=tifSffFzAO0dgRTzQcMZSl
- UsCFNsFkwR4lspSjTlhur8V/7pdRvZYXAZLr6SjpUxVgQ1Dv2/jWhaX/BdL4feZG
- Uu8HKaft+CLdB8s/3oZirKExrLlFvBZRMJ/Cyrm3QBmdZKjoGWKSiSfmEqL1xNMF
- DcN2AIo82jqx+AdU6S0+843vNQQoCygjBYi0p49MiLO9dIcPjZAo+Qxt7UPGW07K
- fh1v0Sib3tWR381WILfY10e5Ck6HGLutsWS+a8DskwSV/kHkrQLKq7VtW1QTEUGb
- U7PBZ/HLdmJfKiiwP+ptj+uYwqRgaXI0MVgYlrh1WDFCIFHjK7ukP1lhjseT7BrQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dt0vyu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Feb 2026 14:56:15 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 612DZHUJ029052;
- Mon, 2 Feb 2026 14:56:14 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1v2s5kd0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Feb 2026 14:56:14 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 612Etq9U16056962
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Feb 2026 14:55:53 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 245805805E;
- Mon,  2 Feb 2026 14:56:12 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 958975805A;
- Mon,  2 Feb 2026 14:56:11 +0000 (GMT)
-Received: from [9.61.91.248] (unknown [9.61.91.248])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Feb 2026 14:56:11 +0000 (GMT)
-Message-ID: <08158c5d-b133-43c2-b7bd-5437f48a70ac@linux.ibm.com>
-Date: Mon, 2 Feb 2026 09:56:11 -0500
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vmvNX-0004tp-4U
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 09:58:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=txVAXo8C6fa5le36PwX29Xo7GSKvkdB3yfPolrQbutaodI+nH2jAPTJzUfmr/4TeW4uJrCinkaqnfR2BQIioBGJHsxkY61lBkD4ykJ3fVpVyGPideRBX9wa2dB2yJ72KAAIjUSZ1SmAMBuQngjsn9RZ3lsIib90teZRZhQA65i7XFzE64XfJjgYRNCVZoULdNS16hG1woY2kQKFzn2idzs6cqM5YyP68zdxIKthJA/iGolZ7Mz+A/SvM+ZJubf3NCZaA/Wm/KjI3rAFmvs5tHP/p20cU8CAUORSBizJNW8b3pzXBYTFjTpnfL8TXGob3+KHgWogifFn3zWluXsTA+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5sOFsnb8ckEAh3V3ifsdW4jHZ3/Z+qK7iA+VpfGCqgI=;
+ b=wxaFDd+YnTHxxNCnEjAkwsFqn15EIXMYFSpC9v09LBGAK6zYPznT6HWIKV5uWgDsycpoRSaBmBGlr175CRax4u/OjvaaXUiuN3DPE/NtUu93W4u8KIIZp4oGiqdYJREn0zOHAHVqUfNpctINmf+CD6DASESbbbwGb633ctTCulwOpDGPdU81OwJG6MnnFbZww1OzgC+9fNgnd0487HNw1qkBin/ihjZght9phtjUbXXTKWjQS77A0Qb9vW7My7byICd1Y6MPJ7c5JO1hKCzU6wJxvA0uJqTaWksynQeBM0c74BZ0CcBef01mLXevWrMMzjcMQEUrwMlUb0VU9hTjSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5sOFsnb8ckEAh3V3ifsdW4jHZ3/Z+qK7iA+VpfGCqgI=;
+ b=ilovvu7vHK+1FXq9eJoaWXzVbF6OMAQscUtx1EHhAAlWX8p+Wy8f6NzjpOBwAQEAjMbt9/TYIIWof5PY0HX2cuzHFWVN/Llnjn9S5Nu5ZvDjnZSyjFcuo3da3/sdJB3ixEzha/T9v9nk/EXMxKmEFWnCN/e+2V/cAeaht+oTAra9shlLAdgE51oN7i+tmz/QON7f1nDiSOJq3hxV6BSK7doqgii2u3lgQUn4Dy3q7/i2gtf4TJ6jKmJYP+Ox9/bPLsPkT4J5ykY7NWV0hE/XPys/4UBEo0YAPhhRnWq6uA4ZaoLImL9ZnLnZN78GnVbYJC5QDshpTgNWrtp7vZkWYw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by DM4PR12MB7744.namprd12.prod.outlook.com (2603:10b6:8:100::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Mon, 2 Feb
+ 2026 14:53:07 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9564.007; Mon, 2 Feb 2026
+ 14:53:07 +0000
+Message-ID: <9f5eaacb-e99e-4d8b-888c-2191af1f09d9@nvidia.com>
+Date: Mon, 2 Feb 2026 16:53:02 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Replace backup for s390 PCI
-To: Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260202144702.1783102-1-farman@linux.ibm.com>
+Subject: Re: [PATCH v2] vfio/migration: Send VFIO_MIGRATION event before
+ PRE_COPY_P2P transition
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
+References: <20260201122348.28478-1-avihaih@nvidia.com>
+ <0c48a2d5-776a-4cd7-a1ee-3cfc32dde931@redhat.com>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260202144702.1783102-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDExNyBTYWx0ZWRfX+hbGdvWxCr4E
- 0upGnhbcL5i4pAbP1N0b2mNhjH9FwrxORxA6b7EhVXNNUPMGtuPS70FH5JnIXOCkgES83cU7UrY
- u7lQQojMKPC4Hh54VrK1MW8firokogrW9bAX75ohTEcxVaQ1BAUXfJMwrPbxswqEFDZMvOuN6Af
- O1zeQt6orMoWA+7v1HokA/ButcYVQVo6PmmsF30pRiRxdGkI2IO3jplDFahfEdpaxj69/jXu9ZV
- soOzgr91Sdcr0zOhCHirmrcLazMgMhQJ0C2kYQf1jB6B5trt5mmx2vWuxep9JGEor6goua8UVXi
- caUh/REGnV5g9zDH02lj4mCnIsGU4CQMDgxtiKZgdCYpMibo6lVo6/9g+3ItLpLJ4UszXwVPa+w
- zZbRQP/1J1wFdD62MLpu/JcOoXDmT+fvUm6cJDKr/yhZtmGprSpoj/KHSU8fwTYCxbwHKT2ki+I
- 9Y77IRk5Q7HpIyrrIaA==
-X-Proofpoint-GUID: w7kE-ZmFDVjrYu482rZnbwSac_FZGfM0
-X-Proofpoint-ORIG-GUID: w7kE-ZmFDVjrYu482rZnbwSac_FZGfM0
-X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=6980bb0f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=STK_0p3wlTkmVyiQI7oA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-02_04,2026-01-30_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602020117
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <0c48a2d5-776a-4cd7-a1ee-3cfc32dde931@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TL0P290CA0009.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:5::6)
+ To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DM4PR12MB7744:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf0df0ba-a192-43eb-c1a0-08de626ac694
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?c1NZeC92WFNWMmM3VkwyVVFiMXRPeWdGYlFXVDlFSVgvVHI0cENjKzNWaTRn?=
+ =?utf-8?B?RWNUcHNjSEE4cU1PN2VKaDVSKzRxTGhNSkFyMkZldkR0T3VveUxtY0p2V1lo?=
+ =?utf-8?B?MzdvakRnMHZpeWdRTjZmNXhJT3RJUUJzQ0NsQnMvOVhmSjhTMHVrc0VLR1VV?=
+ =?utf-8?B?dTVGaG1IS2IxbXNMVGh2UWNGT2VCK3BrbnZMYmZqNFJ1M1BaRUZlVmFBSmNI?=
+ =?utf-8?B?VnlaazRBL3lOMUNqeTVPOFlwUDFqUzRweTEyaFNkV0RIVThrR1RMbnQ1aXRm?=
+ =?utf-8?B?bFBZODdkeTVwNThWUUcwbXZ5b1NtOEE5Si9jWUZKcTBCSXkvdU1ONjU4WlBC?=
+ =?utf-8?B?VWlLTlJDUEZSaitUbWlCWmpGUDhtM2FMR0p2VEVBVlQvZzBGOHVZL2wxdW55?=
+ =?utf-8?B?TlVCeGI4QmNLa1BUNnJPeWNtWHFyVkZKVlFTdE9naVl4NHcxbG5Bb3lVUkFR?=
+ =?utf-8?B?NDhpWFNFQkMrNjI4UTFWOFBSTWp0anY5SkJPSndEQW1zbHdpeGpWUVpqd0Ev?=
+ =?utf-8?B?YVVYRzhoL2FYQnk2NnltTElUZGtsbUxHZ1ozUVV1TllTbUJxSWx3Ukw5OGJN?=
+ =?utf-8?B?cDhmeENNRFlKY2h5UHkvRGZzNDZteDU3eFl4ZVNGbXpLaGJsSVVFcWptTXJE?=
+ =?utf-8?B?WnYxUEtCSVdVcTVsT0ZaOUhpK2p2eDRzcytZajBnNmkwTjhaQnJNWmRMbVd4?=
+ =?utf-8?B?cnFJaXFSL2dPTFZxY3lmTG9teWF2T2JoVGMzcHMzMTdUaFAwSlZUcW1RL1d2?=
+ =?utf-8?B?a2ViWWR4MWJzZXRCUWx4YVpUS1JJWlNPYW40UTFDTWFHK3ZqUFJLVlc3YVp1?=
+ =?utf-8?B?ZFJ1bEU0ZXJUUXRqZFFPakkwN0tTN0ViKzRYQ293U2srZlBjeEhQUW1seHhm?=
+ =?utf-8?B?b3BmQStkc1RQU0JpZjRKZ1c5UTlaT0FzaXViVmZXV0xJbHRvN3lNU3UxSFRS?=
+ =?utf-8?B?MWRIVm55aXFSZWVsLy9CQklZazFqYnptZWI5blk5bWtvRkgwOTVuYlVFMTRh?=
+ =?utf-8?B?UWQ1R2p0d1B6c2RrL0VMVlRiY3NYQjMzaEV4TklZcVBQWmQ1N1prZHI5TTJF?=
+ =?utf-8?B?WEpic3pMWUlvS0hiampER2VMK0VDSk9oTTBlUG16bTNZaTMwV29PVkhaQitn?=
+ =?utf-8?B?ZU81cmpxYjFRU3Y5UEJOOUNiREoraUtwTWZIWG9hTVB1cWVodTdhNEw0SU05?=
+ =?utf-8?B?Y0JLRURkV084YW1ueFAyQWo1c3puTTBqcFZicUNKQnZIQk5pT3ptdWlZT2Rk?=
+ =?utf-8?B?SWdNRjNBTXhiN25OMURwWnV4cXg4RHduQXNCcDVGTGRmcjFSQW1ueUV6TE5y?=
+ =?utf-8?B?YnUxQjNOckpFNFAzNEFaMVhLTXN6a0dFK3J1YmZ3eUVIVHRvYUF4RWhRNGlZ?=
+ =?utf-8?B?elovTnQwYjBidVArT1dpVTR5NWdUMUdmRmJ3UjFWaGEvUWpzczlleTlybUhR?=
+ =?utf-8?B?QkFyWmpvc29LNitadDh0TlR2OTJjNStxdTN4aW9SRTRpM1lBbTROUHUvT25O?=
+ =?utf-8?B?TFZFRWNjQk51MHBKU2lpU1hkMXlCLzhSOThPdUxySWRhT2RMRkQrTXlzZlR3?=
+ =?utf-8?B?RVR0T3U0aHVaZFpFQ3lqT2tzdUhFWm05NTlBeFQ0MCtYYTlxMnpBT3J6cE1x?=
+ =?utf-8?B?Ti9uN3ZyTk5nSk5nYlhrQkcyVW1jWDlHL0VMcWF2SldrdDE2Lzh4YTVTYzNU?=
+ =?utf-8?B?Rkt1SDVXTFpRZ2JPUlp5QUszRnpWeDJkZDJXRHkxUlA1NzBtaXI0K21pcHE5?=
+ =?utf-8?B?MjQ0SHVjR3crdWZlOTFMV1dxK2thaEl6eXFIZFhnWGVWcW9ERWVNTi9BQ1FV?=
+ =?utf-8?B?RnkxOEsvMkxZcXRoVGZjeCt5dHJBeCtaQmlnNUpjRkxMTUxXSDFERnIxUnlC?=
+ =?utf-8?B?Uk5qeUloVWM2cCsybFZhcWJCMWNhWUwxWXp0OW1pVHhBZXQvRGxGSXJCbEFJ?=
+ =?utf-8?B?ck9ZSkRzbmg4aWg2UkpwM3ZIZ2FnQklDU2ZlV0hDalllaDM5RldRVTdtWnN3?=
+ =?utf-8?B?UnNqemZXUnhOVXJHUGlQUlJHL014ZXp1NlJNSkh3ZDArVGtLZnAxVHlqbzg4?=
+ =?utf-8?B?WUtTVGVreWZwS01ja1JSTEwvQ0VJOWZrY1c0RHVUbmJDaTJ0YTl1VnU4MVVo?=
+ =?utf-8?Q?CRM34hdLPYUQCI/7YwRx9Woiu?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RExHa0kwazFFREs0K2p0Yy9HcVV1ZXRIVUJaZXNLSkFXWGJ3cnpFMzFla2NI?=
+ =?utf-8?B?NkQzSEZtakhjWUZ2bWYzUVNUYWZFajNHYVV3bTBlSnBMMjZrb1RJanF0WG5S?=
+ =?utf-8?B?a0ZvL1E4NDZhazlMQkFBV1k3U0NxYlhSdC9RNVlZUWVBU0pSbnppU3NxSWFh?=
+ =?utf-8?B?ODJwQkJJaFA2cUhtcEFmZldKQkZrTThYQkRCUWluMVpSdnhkVC9PUGM2cklI?=
+ =?utf-8?B?QzNGSDBkM1hza21PU1lFUEtuanlpRjVQVHdwLytVUk5lU0l0WlhtZlliQU1r?=
+ =?utf-8?B?cUg5cGlnb2xaRDc3VWlPSUV2QTYxcVhXbUpZbHlhdUpkTDRzdElWMWpBT3VM?=
+ =?utf-8?B?dXVFdjlROU5kWHREY3RnK2VxcUViUjBEcGZuVWJwMFYwblk1dFdEUVp4cW8y?=
+ =?utf-8?B?QjdLWk9FR3JUU2V6cG0zUS9ObTNPT25PWnNZK1pCVHU1blJFWGM5UDJiUDVr?=
+ =?utf-8?B?eXJsR1NjMU82VDNTbXFjV2NoRS9FNVo5ZWFYcHlNOS9WZ2QwWjh0TGJ3NXhz?=
+ =?utf-8?B?NERnbyt0ait3NG8ydDNVYTNHcHFLdVBHTWEzYVpsaEx4b1BncVQxQ0dkbUFR?=
+ =?utf-8?B?VnRwdzFBN0ZtYUE3WnNTKzErR3RSMlVEOVp3ZmlXRGloODgvamJjaGxsVHVo?=
+ =?utf-8?B?KzJwd3ZXcFN5ZzZnTkhid21xQmxzMlRqbjBwOFVIc1J0amF0aUZFQWM1aEd6?=
+ =?utf-8?B?UEJBd0J1VHhXdjdWWlhqQ0FBUHNpT0tQazQ5V0lJNS9jbTZZeE04NE8vc0xZ?=
+ =?utf-8?B?QmhSREpPRDZ5cVk0SmlFdnRJeVdOSHN0SktZSXk4bkhOK05NVlpHMDNsV3ZC?=
+ =?utf-8?B?VDRaelRkZm1pdExPcE9Cb3gxajVBcVFjbTllS3dtckh5anowZm4yTklTeFU4?=
+ =?utf-8?B?ejlyZ3p1US9PUGd0azY1R3FocnJLT2I3VGloYkl2eWw0TUhjUFluWVpTWWVY?=
+ =?utf-8?B?bW8rMmdPcU5aYVNtMDdGM05US3dvWFcrRm4rR2JGWjh5dzQ1MUxTQk1nV2VD?=
+ =?utf-8?B?QzRHNURQbUQ2U1dvc3FwRG5FRWo3cnJzUXZ3dzJWb0ovbnk1TTVEeGQyRXJh?=
+ =?utf-8?B?VEJ1bFFJeldpRWY5bGJ4TmQvWSs5T1JGd01FQTB3Q0J0Sk04REZQUSs5TDZF?=
+ =?utf-8?B?VGV4Y0YvZFl1aUZvVVhJOWV0c1ZBWUYzNzlHMStrdjAzYXpKektVSm9CVVh3?=
+ =?utf-8?B?c2I5YklsOFE0eU5Hcm1mNk4yNXhNa0crVC80QkRkSTBWL2JjbnA2NTVRalVl?=
+ =?utf-8?B?emJwMkZYRjQ0WTVXb1R3UExMK0lzR1RJQ3MzWFFsdTdtNUFkVld0dkdTSGIx?=
+ =?utf-8?B?NWtweDZhWnpDVkk1ZjJyeEdzOG95THlNd3owdUUvRTExV3lUUklqMXU4U2dH?=
+ =?utf-8?B?dXBmV2s3UU1YSGUrNzNzbEhINVNZVDdaNktRTXc1TDViYmEwdzE4OE9udG1y?=
+ =?utf-8?B?MnlqT1BrOFBra1pVazdiTmtGM2hTMHh5a3k4MDV4OURNSm9IVEsweG45eFpV?=
+ =?utf-8?B?a0lybXgwd1JENzN6Vk9jZEg4WEluZ2hMZkNrd2p4T3NNQ1BXYzFJK3BhenB0?=
+ =?utf-8?B?U0RZNWVHWU15MUtCa0FtUXF3TmgxODB5T1pJK205bU5ZRTRLVmZtUnVEWDV2?=
+ =?utf-8?B?TmhMa21yQnBxS3B2OVZ6NkxacHJ0a0RaMlVJV051SmlSUVRqY0FxNDExN2t2?=
+ =?utf-8?B?cmFiT0ZzZHpDU0I4Zk1PdXJBenExa1RBTU9VYkhEWXkrczVhZUxRcmlYbWJv?=
+ =?utf-8?B?YWFQc3Z1djNhYnBoL3pWdnhQalRWSXIwQzRNb3dYWEFwckpXYXpueWIyNk9w?=
+ =?utf-8?B?MEpLVWw1cW8yWWxDMFQ0N2JJcHpPS0x0YXo5cWw0OHVRTHUzY0xnM2lScU5C?=
+ =?utf-8?B?SzVOdkkvSE96bW0velU5UUphYWdCQ3RtK3htQ2NhekdLenZxTUJ1eGhDSjNJ?=
+ =?utf-8?B?RDhjenlERGFNdjBOUm5qdWE0WGkvbFcreDFMRmRNY1ZvbjV3Vk9Uc001U2t5?=
+ =?utf-8?B?SlVlUjhUNzA2OVNKNmFLYnhJd3Vkc25SQXZJamFFalJlak8yU3g0WjArYlNN?=
+ =?utf-8?B?T1ZWRTVKYUtEVkk5TXhYUFIwdzdKZXk3dlFOb09OSXJPWVlOcWZ6OFNxc1pn?=
+ =?utf-8?B?cW9DelZSdHhBRG15bnBiYURTdjNzN3pjT3Qxd1FHbHhCTk41N0YvTnNrUEZZ?=
+ =?utf-8?B?cFpGRUFFaWxPN01iTkovRmkzMmF3R3hoRHNOR0Z3OS93QURVVGU4L0JZTWxT?=
+ =?utf-8?B?SGxJZkRPSTFjTWIwOC9UZFIrb3dRTkhucnp2cjFCQ3hhVnh4UHJOdE9Mb1Bw?=
+ =?utf-8?B?Z1ZYaUJsZ1JPMTlvM3NpWUJ2SzEwQnRlOWs0Rkc4K28zdVhhWU1JQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf0df0ba-a192-43eb-c1a0-08de626ac694
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 14:53:07.3278 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bwn/FIQTHuiBNmYgi1M/BPOoGyYU6F0AA8V5SYy4R4IORve8OWWif5rsJ5nl2K9928b60C27VtYTFAk2cdKH4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7744
+Received-SPF: permerror client-ip=40.93.195.20;
+ envelope-from=avihaih@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,36 +188,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 9:47 AM, Eric Farman wrote:
-> Farhan has been doing a masterful job coming on in the
-> s390 PCI space, and my own attention has been lacking.
-> Let's make MAINTAINERS reflect reality.
-> 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
 
-Eric, thanks alot for all of your help with this area in the past.
+On 2/2/2026 3:33 PM, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Hello Avihai,
+>
+> On 2/1/26 13:23, Avihai Horon wrote:
+>> The VFIO_MIGRATION event notifies users when a VFIO device transitions
+>> to a new state.
+>>
+>> One use case for this event is to prevent timeouts for RDMA connections
+>> to the migrated device. In this case, an external management application
+>> (not libvirt) consumes the events and disables the RDMA timeout
+>> mechanism when receiving the event for PRE_COPY_P2P state, which
+>> indicates that the device is non-responsive.
+>>
+>> This is essential because RDMA connections typically have very low
+>> timeouts (tens of milliseconds), which can be far below migration
+>> downtime.
+>>
+>> However, under heavy resource utilization, the device transition to
+>> PRE_COPY_P2P can take hundreds of milliseconds to complete. Since the
+>> VFIO_MIGRATION event is currently sent only after the transition
+>> completes, it arrives too late, after RDMA connections have already
+>> timed out.
+>>
+>> To address this, send an additional "prepare" event immediately before
+>> initiating the PRE_COPY_P2P transition. This guarantees timely event
+>> delivery regardless of how long the actual state transition takes.
+>>
+>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>> ---
+>> Changes from v1 
+>> (https://lore.kernel.org/qemu-devel/20260128105159.10282-1-avihaih@nvidia.com/):
+>> * Removed VFIO_MIGRATION_PREPARE event and instead added a new
+>>    PREPARE_PRE_COPY_P2P state which is sent before PRE_COPY_P2P
+>>    transition
+>> * Added details to commit message
+>> ---
+>>   qapi/vfio.json      | 13 +++++++++++--
+>>   hw/vfio/migration.c | 20 +++++++++++++-------
+>>   2 files changed, 24 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/qapi/vfio.json b/qapi/vfio.json
+>> index a1a9c5b673..2de87dc215 100644
+>> --- a/qapi/vfio.json
+>> +++ b/qapi/vfio.json
+>> @@ -11,7 +11,13 @@
+>>   ##
+>>   # @QapiVfioMigrationState:
+>>   #
+>> -# An enumeration of the VFIO device migration states.
+>> +# An enumeration of the VFIO device migration states.  In addition to
+>> +# the regular states, there are prepare states (with 'prepare' prefix)
+>> +# which indicate that the device is just about to transition to the
+>> +# corresponding state.  Note that seeing a prepare state for state X
+>> +# doesn't guarantee that the next state will be X, as the state
+>> +# transition can fail and the device may transition to a different
+>> +# state instead.
+>>   #
+>>   # @stop: The device is stopped.
+>>   #
+>> @@ -32,11 +38,14 @@
+>>   #     tracking its internal state and its internal state is available
+>>   #     for reading.
+>>   #
+>> +# @prepare-pre-copy-p2p: The device is just about to move to
+>
+> Could you please rename to "pre-copy-p2p-prepare" ?
 
-Farhan, thanks for stepping up to help here!
+Ack.
 
-Acked-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>
+> Peter, Fabiano,
+>
+> Any preferences in the naming ? I would like to avoid
+> "pre-pre-copy-p2p" but it is what this event looks like.
+>
+>
+>> +#     pre-copy-p2p state.  (since 11.0)
+>> +#
+>>   # Since: 9.1
+>>   ##
+>>   { 'enum': 'QapiVfioMigrationState',
+>>     'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
+>> -            'pre-copy', 'pre-copy-p2p' ] }
+>> +            'pre-copy', 'pre-copy-p2p', 'prepare-pre-copy-p2p' ] }
+>>
+>>   ##
+>>   # @VFIO_MIGRATION:
+>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>> index b4695030c7..3b215eb4ff 100644
+>> --- a/hw/vfio/migration.c
+>> +++ b/hw/vfio/migration.c
+>> @@ -68,7 +68,7 @@ static const char *mig_state_to_str(enum 
+>> vfio_device_mig_state state)
+>>   }
+>>
+>>   static QapiVfioMigrationState
+>> -mig_state_to_qapi_state(enum vfio_device_mig_state state)
+>> +mig_state_to_qapi_state(enum vfio_device_mig_state state, bool prep)
+>>   {
+>>       switch (state) {
+>>       case VFIO_DEVICE_STATE_STOP:
+>> @@ -84,15 +84,17 @@ mig_state_to_qapi_state(enum 
+>> vfio_device_mig_state state)
+>>       case VFIO_DEVICE_STATE_PRE_COPY:
+>>           return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
+>>       case VFIO_DEVICE_STATE_PRE_COPY_P2P:
+>> -        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
+>> +        return prep ? QAPI_VFIO_MIGRATION_STATE_PREPARE_PRE_COPY_P2P :
+>> +                      QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
+>>       default:
+>>           g_assert_not_reached();
+>>       }
+>>   }
+>>
+>> -static void vfio_migration_send_event(VFIODevice *vbasedev)
+>> +static void vfio_migration_send_event(VFIODevice *vbasedev,
+>> +                                      enum vfio_device_mig_state state,
+>> +                                      bool prep)
+>
+> prep -> prepare
 
-> ---
->  MAINTAINERS | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9b7ed4fccb..32d60dd673 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1862,7 +1862,8 @@ L: qemu-s390x@nongnu.org
->  
->  S390 PCI
->  M: Matthew Rosato <mjrosato@linux.ibm.com>
-> -M: Eric Farman <farman@linux.ibm.com>
-> +M: Farhan Ali <alifm@linux.ibm.com>
-> +R: Eric Farman <farman@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/s390-pci*
->  F: include/hw/s390x/s390-pci*
+Ack.
+
+>
+>>   {
+>> -    VFIOMigration *migration = vbasedev->migration;
+>>       DeviceState *dev = vbasedev->dev;
+>>       g_autofree char *qom_path = NULL;
+>>       Object *obj;
+>> @@ -106,8 +108,8 @@ static void vfio_migration_send_event(VFIODevice 
+>> *vbasedev)
+>>       g_assert(obj);
+>>       qom_path = object_get_canonical_path(obj);
+>>
+>> -    qapi_event_send_vfio_migration(
+>> -        dev->id, qom_path, 
+>> mig_state_to_qapi_state(migration->device_state));
+>> +    qapi_event_send_vfio_migration(dev->id, qom_path,
+>> + mig_state_to_qapi_state(state, prep));
+>>   }
+>>
+>>   static void vfio_migration_set_device_state(VFIODevice *vbasedev,
+>> @@ -119,7 +121,7 @@ static void 
+>> vfio_migration_set_device_state(VFIODevice *vbasedev,
+>> mig_state_to_str(state));
+>>
+>>       migration->device_state = state;
+>> -    vfio_migration_send_event(vbasedev);
+>> +    vfio_migration_send_event(vbasedev, state, false);
+>>   }
+>>
+>>   int vfio_migration_set_state(VFIODevice *vbasedev,
+>> @@ -146,6 +148,10 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
+>>           return 0;
+>>       }
+>>
+>
+> A short comment (extracted from the commit log) here would be good.
+
+Ack.
+
+>
+>
+>> +    if (new_state == VFIO_DEVICE_STATE_PRE_COPY_P2P) {
+>> +        vfio_migration_send_event(vbasedev, new_state, true);
+>
+> Please be explicit :
+>            vfio_migration_send_event(vbasedev, 
+> VFIO_DEVICE_STATE_PRE_COPY_P2P, true);
+
+Ack.
+
+Thanks.
 
 
