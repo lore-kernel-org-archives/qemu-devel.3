@@ -4,106 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84ADE73163
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 12:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FADE73164
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtW7-0003ju-0M; Mon, 02 Feb 2026 07:58:59 -0500
+	id 1vmtbz-0000Cx-9B; Mon, 02 Feb 2026 08:05:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vmtW5-0003jR-P5
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:58:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vmtW4-0002n9-1f
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:58:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770037134;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gwCsOvDlmTGVfzqpVT8tRcjAi3G+o/i1LC0DD+x7has=;
- b=bPTgJH83/gMHqodjrhpTJuFzRCY2maKB9aYCsJ9mKY9Dl0xALnYFCvQMq/Sa8vsyGB0NQ3
- UMSnny3iGQ11M5pPYdjy64PL8FdN9Yqhe8Jxs7gpFVbwm+Ew4jpKDWokb8v/WevntDDu4w
- FIOYo0u54HvsUqZYCnpsdt51nn+ADnY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-BIdNCXF7MomhOrIp0CmBIQ-1; Mon, 02 Feb 2026 07:58:53 -0500
-X-MC-Unique: BIdNCXF7MomhOrIp0CmBIQ-1
-X-Mimecast-MFC-AGG-ID: BIdNCXF7MomhOrIp0CmBIQ_1770037132
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-435991d4a3aso2393041f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 04:58:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770037132; x=1770641932;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vmtbx-0000A0-G7
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:05:01 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vmtbv-00041V-N0
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:05:01 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-653780e9eb3so5916605a12.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:04:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770037498; x=1770642298; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gwCsOvDlmTGVfzqpVT8tRcjAi3G+o/i1LC0DD+x7has=;
- b=PygG5mAqC8nrAe1OkrEOAMtdlo4xfaUFe/RppLCixXBbOAo1HITvw0xpxI0FuWJR61
- zckkN96XPTL8ubKo2bjG/ZwewlohEaFKg5qqnK3e/TsZfyNxDMqa5+L0PdzQgfWMJsi4
- iyJWa5SKZ+sd4dnLiiS3op07IT0J2UlTmEZrlhXGPhDwuO+OTJByvAA6jOKFXVNvfOXM
- OAF8FV8C4oa+CzQ+ZzhgZHj8nwVeL0SFNdk0BOnS3QA04cnqAnQwX62Kj2wbkv1jCVtx
- o741NABxfWQ4/mlrTvRk80oXLSVq2Vbd8r+RseqMFkb+2W6YbeE0xDWR5ehP/uqErX5i
- pXfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVI52ncB7Ndcbp33En/tNnu7+Pm1PVMuT9qfBpnuMvTfgMUMn/d7UVoAaFZh4Xe0BNgq0x8a4v00J+I@nongnu.org
-X-Gm-Message-State: AOJu0YyBl1Y/PXZr03wH+j/MhNbIOlvSyIbyTjfzHcmIrMGZLiry0isH
- ABLqCHRAy3nXnru8/oqJ5DWkw5Qy2Ko65ObzvbX/mX6iqA4LnI3i3uLJrOJDZ8FNLvuYNipiSJL
- yxQU94AodHPynt7mDvKMUn/Fy13FwLXQnQb7F706c6c19KDnsf/feHoVl
-X-Gm-Gg: AZuq6aJpAbw3eu9iPlZWWaQzcANnSu7Y69YlGXqdrc518fWT0ttCxCjWcrTHqa/WCyR
- XwsHm1YyaTF4rxkQVnPQSdA36rNFsbLMl/neMkHNP6JC0tko7LuclwKuOAsVcsfvyOlVO897ArK
- 5k+JVWJDXDrvaHY31YIY4c9J5DQdfzCiDMsse8DdFmKJd6TeHqqn3bfUIkwk9rQG0tB+u7Fb4nR
- RhMEmkHguLyqCScUrE6QLMTqKvZ5vt7KHgLOM43IFu63Op/+iMIwGoj7iH+PsndhShLgyfpnFTf
- YUpCwZQi3pnyGNTLlmmXwMw7f7otDIWMd8e/IJU0FJcQIYQMCYnDowwWyj1YSxzYlGi9njchDq5
- 5J5icMxKGENdENrZDfx42esJ5ck2V8IjPuLn45OlouK7rLu3jkejtLguO1w==
-X-Received: by 2002:a05:6000:2505:b0:435:a370:2d7a with SMTP id
- ffacd0b85a97d-435f3aafcd5mr15580022f8f.36.1770037132339; 
- Mon, 02 Feb 2026 04:58:52 -0800 (PST)
-X-Received: by 2002:a05:6000:2505:b0:435:a370:2d7a with SMTP id
- ffacd0b85a97d-435f3aafcd5mr15579984f8f.36.1770037131927; 
- Mon, 02 Feb 2026 04:58:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edfccsm42139863f8f.17.2026.02.02.04.58.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 04:58:51 -0800 (PST)
-Message-ID: <0bbdecdc-f997-4a3e-8023-f50ed629128f@redhat.com>
-Date: Mon, 2 Feb 2026 13:58:47 +0100
+ bh=muv298YAIKY8NJLq/ySiFM7aiROkT93W5+Hbce1MpZE=;
+ b=drCvrc5frVz/eRqZ0V7YOLDaznA0uYUvkHrlqj91RiQHwMxajuXewPAonIbkm3Asd9
+ J/SZ9XgZ3NpodZLiiF0N1q3umW97jepn5PTjI+Av+QjQ0oMdAYE1HtWriDSIdl1sGXvN
+ zAofdWrn476V7bf3iG0mbQ5u5VPR3ZpIdLi3R/R+iCGGA+kpBf5MyVnNYdEknUBVnXOa
+ jjAYDlDC37DEXQKPGApxmeAQUXBcDPtTuRXyUlT8AbeHacrEKCe4R8JsLNkgxOQ7m/yT
+ YHFKwKZ4nq4djASqU0jFYVRUfdY0VaaVdF4jxZeFJtE/UAgVO7igYzSA5+5WX11dHOEE
+ BEQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770037498; x=1770642298;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=muv298YAIKY8NJLq/ySiFM7aiROkT93W5+Hbce1MpZE=;
+ b=AlCxcNPrMvCxCq6XlJmHv0ciOmrn68rxFqVRy+/iwpad/o/AoGhdtaeL3O+79l6eXj
+ lKMvncNp0r2EU2EfaX2fUiyG+S7XUuiDs+692PEldCnScm0bOW2ccoltkqbvkIW31Ekg
+ 2R/hJRNJHq0zGGXRZ2xmPAFJi2V3CxmmiwD6dK6NDJqKZKNKkftO4t31t/1ufdlMm8NM
+ qUWN89MSM0imP2uVPQxHp2Tpy/p8z4EtrawJ3ntrtdD4BI9Rc/FeIQ6RmzBdVhwLaRZe
+ L+zGkbeG7rLB5Ap2KZ2G2L7AVVtZG+ygvViSy1WS5qFpPR3aGNVbp6axloY418ckEPHD
+ wXWQ==
+X-Gm-Message-State: AOJu0YzOHEEFSf6vfTWBNS76GS6qe+pzutky1FRWzTPY01x34/TkbA4Q
+ j7ZQcBgpaLQHGailtOZXLEz1RbtfjNprvvYNKWN4DMrVjYm6b7X6RvVhm7RjKR8KJ9Q=
+X-Gm-Gg: AZuq6aIcPgct/+nVzBWAHqtVkYW4mHMjvmTWAjBf3jpXJIMUktTkmDLHp1+B9NcF1zu
+ slhlCVZs/RmU5eWY+tVSY+akDu32jQ7E0qgIoz/2YtndY1trN0G4GcFVRXU1l4yQvv5uSewLywT
+ GruQthFDTj4XnzS5NJcyuKgVUQX+4+PUPxt9W+dtcoPSVxqmGPHaAV1NSdjGjD78Q5w856mWWLZ
+ VmarQ9fWAFTDxeUFv46QJdmGp8jRaGCt4jtazq3VbOBkHXGMAU3IIhoom1HkhyxaS28PamEiN4J
+ yiqX5J9QmWYX5qtYh7eWdSwcQ/Zd5vFYLiPjpva0gGHEqILHMbZyTioFyS8YemilwJ6po5Z4oAO
+ fD8CFttnmHz9/VfAAWzJUvIvTAcEi3uFDkB5Rzlye4EVFA83dmwjB44fm66E5J1L/veKHqDminx
+ gS5xDIVBw0mFQ=
+X-Received: by 2002:a17:907:da17:b0:b87:9d1d:ec6b with SMTP id
+ a640c23a62f3a-b8dff228764mr684230366b.0.1770037497687; 
+ Mon, 02 Feb 2026 05:04:57 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8dbefc69ebsm877860466b.20.2026.02.02.05.04.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Feb 2026 05:04:56 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CB7785F7D8;
+ Mon, 02 Feb 2026 13:04:55 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  jpcottin@google.com,  Markus Armbruster
+ <armbru@redhat.com>,  Roman Kiryanov <rkir@google.com>,  Will Hollins
+ <whollins@google.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  jansene@google.com,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v2 1/2] bulk: Stop forward-declaring enum typedefs
+In-Reply-To: <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 2 Feb 2026 13:05:33
+ +0100")
+References: <20260130211746.46667-1-philmd@linaro.org>
+ <20260130211746.46667-2-philmd@linaro.org>
+ <87ms1rpdnw.fsf@draig.linaro.org>
+ <7bfa5966-b7cd-4af4-b979-ea973a30195a@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Mon, 02 Feb 2026 13:04:55 +0000
+Message-ID: <87h5rzpa88.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] hw/arm/smmuv3-accel: Read and propagate host
- vIOMMU events
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20260127103328.255382-1-skolothumtho@nvidia.com>
- <20260127103328.255382-5-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260127103328.255382-5-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,135 +108,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-On 1/27/26 11:33 AM, Shameer Kolothum wrote:
-> Install an event handler on the vEVENTQ fd to read and propagate host
-> generated vIOMMU events to the guest.
+> On 2/2/26 12:50, Alex Benn=C3=A9e wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>=20
+>>> The C99 standard chapter =C2=A76.7.2.2 point 4 mentions:
+>>>
+>>>    Each enumerated type shall be compatible with char, a signed
+>>>    integer type, or an unsigned integer type. The choice of type
+>>>    is implementation-defined, but shall be capable of representing
+>>>    the values of all the members of the enumeration.
+>>>
+>>> Align with that recommendation by defining the typedef
+>>> along with the enum.
+>>>
+>>> For information, building with -Werror=3Dpedantic was reporting:
+>>>
+>>>    In file included from ../../ui/kbd-state.c:10:
+>>>    include/ui/kbd-state.h:12:14: error: ISO C forbids forward reference=
+s to 'enum' types [-Werror,-Wpedantic]
+>>>       12 | typedef enum QKbdModifier QKbdModifier;
+>>>          |              ^
+>>>    ...
+>>>
+>>> Reported-by: Roman Kiryanov <rkir@google.com>
+>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   hw/riscv/riscv-iommu-bits.h          |  4 ++--
+>>>   hw/riscv/riscv-iommu.h               |  2 --
+>>>   include/hw/misc/auxbus.h             | 11 ++++-------
+>>>   include/hw/pci/pci_device.h          |  5 ++---
+>>>   include/hw/ssi/ssi.h                 |  6 ++----
+>>>   include/hw/xen/interface/io/xenbus.h |  5 ++---
+>>>   include/io/channel.h                 | 11 ++++-------
+>>>   include/system/replay.h              | 10 ++++------
+>>>   include/ui/clipboard.h               | 15 ++++++---------
+>>>   include/ui/kbd-state.h               |  6 ++----
+>>>   pc-bios/s390-ccw/virtio.h            |  5 ++---
+>>>   tests/qtest/libqos/qgraph_internal.h | 10 ++++------
+>>>   hw/core/loader.c                     |  5 ++---
+>>>   hw/display/xlnx_dp.c                 | 11 ++++-------
+>>>   hw/dma/xlnx_dpdma.c                  | 10 ++++------
+>>>   qapi/opts-visitor.c                  |  7 ++-----
+>>>   qapi/string-output-visitor.c         |  6 ++----
+>>>   tests/unit/check-qom-proplist.c      |  6 ++----
+>>>   18 files changed, 50 insertions(+), 85 deletions(-)
+>>>
+>>> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+>>> index 47fe01bee58..281afa7bc3f 100644
+>>> --- a/hw/riscv/riscv-iommu-bits.h
+>>> +++ b/hw/riscv/riscv-iommu-bits.h
+>>> @@ -96,11 +96,11 @@ struct riscv_iommu_pq_record {
+>>>   #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
+>>>   #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
+>>>   -enum riscv_iommu_igs_modes {
+>>> +typedef enum riscv_iommu_igs_modes {
+>>>       RISCV_IOMMU_CAP_IGS_MSI =3D 0,
+>>>       RISCV_IOMMU_CAP_IGS_WSI,
+>>>       RISCV_IOMMU_CAP_IGS_BOTH
+>>> -};
+>>> +} riscv_iommu_igs_mode;
+>> mode vs modes.
 >
-> The handler runs in QEMU’s main loop, using a non-blocking fd registered
-> via qemu_set_fd_handler().
+> Pre-existing...
 >
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 60 +++++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h |  2 ++
->  2 files changed, 62 insertions(+)
+>> It seems very clumsy to have the type at the front and
+>> back of the declaration. The only real reason to have the tag ahead of
+>> the struct/enum was if there are references in the structure.
+>> IOW this does feel like a lot of churn.
 >
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index e8028d4be5..ab57eae575 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -390,6 +390,60 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
->                     sizeof(Cmd), &entry_num, cmd, errp);
->  }
->  
-> +static void smmuv3_accel_event_read(void *opaque)
-> +{
-> +    SMMUv3State *s = opaque;
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +    struct {
-> +        struct iommufd_vevent_header hdr;
-> +        struct iommu_vevent_arm_smmuv3 vevent;
-> +    } buf;
-> +    ssize_t readsz = sizeof(buf);
-> +    uint32_t last_seq = accel->last_event_seq;
-> +    ssize_t bytes;
-> +
-> +    bytes = read(accel->veventq->veventq_fd, &buf, readsz);
-in case we receive a header with LOST_EVENTS at the end of tail, no data
-is expected. So I am not sure you will be able to handle that case. 
-> +    if (bytes <= 0) {
-> +        if (errno == EAGAIN || errno == EINTR) {
-> +            return;
-> +        }
-> +        error_report("vEVENTQ: read failed (%m)");
-_once?
-> +        return;
-> +    }
-> +
-> +    if (bytes < readsz) {
-> +        error_report("vEVENTQ: incomplete read (%zd/%zd bytes)", bytes, readsz);
-> +        return;
-> +    }
-> +
-> +    if (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS) {
-> +        error_report("vEVENTQ has lost events");
-> +        accel->event_start = false;
-> +        accel->last_event_seq = 0;
-actually I read again the include/uapi/linux/iommufd.h and nothing tells
-sequence == 0 after a LOST_EVENTS. 
-> +        return;
-> +    }
-> +
-> +    /* Check sequence in hdr for lost events if any */
-> +    if (accel->event_start) {
-> +        uint32_t expected = (last_seq == INT_MAX) ? 0 : last_seq + 1;
-> +
-> +        if (buf.hdr.sequence != expected) {
-But can this happen? Normally you should have a LOST_EVENTS reported by
-the kernel, no?
-> +            uint32_t delta;
-> +
-> +            if (buf.hdr.sequence >= last_seq) {
-> +                delta = buf.hdr.sequence - last_seq;
-> +            } else {
-> +                /* Handle wraparound from INT_MAX */
-> +                delta = (INT_MAX - last_seq) + buf.hdr.sequence + 1;
-> +            }
-> +            error_report_once("vEVENTQ: detected lost %u event(s)", delta - 1);
-> +        }
-> +    }
-> +    accel->last_event_seq = buf.hdr.sequence;
-> +    accel->event_start = true;
-> +    smmuv3_propagate_event(s, (Evt *)&buf.vevent);
-> +}
-> +
->  static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
->  {
->      IOMMUFDVeventq *veventq = accel->veventq;
-> @@ -397,6 +451,8 @@ static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
->      if (!veventq) {
->          return;
->      }
-> +    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
-> +    close(veventq->veventq_fd);
->      iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
->      g_free(veventq);
->      accel->veventq = NULL;
-> @@ -439,6 +495,10 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
->      veventq->veventq_fd = veventq_fd;
->      veventq->viommu = accel->viommu;
->      accel->veventq = veventq;
-> +
-> +    /* Set up event handler for veventq fd */
-> +    fcntl(veventq_fd, F_SETFL, O_NONBLOCK);
-Looks this can fail.
+> Well I got it clear old-school maintainers are very reluctant
+> to open the project to more contributors, even if changes
+> required are only cosmetics, and less invasive than Rust ones.
 
-Thanks
+Is this opening up to more contributors? As far as I can tell this seems
+to be trying to make life easier for downstream for something we don't
+want contributed to the upstream (C++).=20
 
-Eric
-> +    qemu_set_fd_handler(veventq_fd, smmuv3_accel_event_read, NULL, s);
->      return true;
->  }
->  
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 92048bb674..ba0f40a565 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -23,6 +23,8 @@
->  typedef struct SMMUv3AccelState {
->      IOMMUFDViommu *viommu;
->      IOMMUFDVeventq *veventq;
-> +    uint32_t last_event_seq;
-> +    bool event_start;
->      uint32_t bypass_hwpt_id;
->      uint32_t abort_hwpt_id;
->      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+> I won't put more energy to this now. Maybe in 10 years from
+> now if the project still exists, and we get more inclusive.
 
+I'm all for improving inclusively and lowering barriers to entry for
+contributors upstream but I'm not sure how this does that.=20
+
+>
+> Regards,
+>
+> Phil.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
