@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02599E7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F268E7FDCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwx-0008Uw-8w; Mon, 02 Feb 2026 14:51:07 -0500
+	id 1vmzzH-0007LF-EG; Mon, 02 Feb 2026 14:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwn-0007mR-Op; Mon, 02 Feb 2026 14:50:57 -0500
+ id 1vmzz7-00075l-B8; Mon, 02 Feb 2026 14:53:21 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwl-0003wF-MF; Mon, 02 Feb 2026 14:50:57 -0500
+ id 1vmzz5-0004LV-Mb; Mon, 02 Feb 2026 14:53:21 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0A561850C2;
- Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E6A141850D7;
+ Mon, 02 Feb 2026 22:46:08 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7840335B2A4;
- Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 96ECA35B2B9;
+ Mon, 02 Feb 2026 22:46:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 48/69] tests/functional: Mark another MIPS replay test
- as flaky
-Date: Mon,  2 Feb 2026 22:46:11 +0300
-Message-ID: <20260202194638.939438-48-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 69/69] python: fix msys64 wheel directory specification
+Date: Mon,  2 Feb 2026 22:46:32 +0300
+Message-ID: <20260202194638.939438-69-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,32 +61,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: John Snow <jsnow@redhat.com>
 
-When disabling MIPS tests on commit 1c11aa18071
-("tests/functional: Mark the MIPS replay tests as flaky")
-we missed the 5KEc test.
+In python3.14, fixes were made to the file URI parsing [1] such that
+file URIs that used to work but were technically out of spec are now
+broken.
 
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+As a result, our msys2 GitLab CI tests began failing.
+
+Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
+fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
+
+[1] https://docs.python.org/3/whatsnew/3.14.html#urllib
+
+Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251104145955.84091-1-philmd@linaro.org>
-(cherry picked from commit 290e4e7de7a579be7457bfbc338b697b8eea638f)
+Message-ID: <20260130050518.517688-2-jsnow@redhat.com>
+(cherry picked from commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
-index 05cc585f85..e9318448fa 100755
---- a/tests/functional/test_mips64el_replay.py
-+++ b/tests/functional/test_mips64el_replay.py
-@@ -40,6 +40,7 @@ def test_replay_mips64el_malta(self):
-         '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
- 
-     @skipUntrustedTest()
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
-     def test_replay_mips64el_malta_5KEc_cpio(self):
-         self.set_machine('malta')
-         self.cpu = '5KEc'
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 9aed266df1..826c4ad58d 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -675,7 +675,7 @@ def pip_install(
+     if not online:
+         full_args += ["--no-index"]
+     if wheels_dir:
+-        full_args += ["--find-links", f"file://{str(wheels_dir)}"]
++        full_args += ["--find-links", str(wheels_dir)]
+     full_args += list(args)
+     subprocess.run(
+         full_args,
 -- 
 2.47.3
 
