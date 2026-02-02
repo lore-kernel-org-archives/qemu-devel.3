@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3777CE7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFB0E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzvg-00056o-Bl; Mon, 02 Feb 2026 14:49:52 -0500
+	id 1vmzup-0003Xp-Ph; Mon, 02 Feb 2026 14:48:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvG-0004of-QZ; Mon, 02 Feb 2026 14:49:23 -0500
+ id 1vmzuo-0003R9-9o; Mon, 02 Feb 2026 14:48:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzvF-0003UE-2B; Mon, 02 Feb 2026 14:49:22 -0500
+ id 1vmzum-0003Nw-KN; Mon, 02 Feb 2026 14:48:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E229F1850B1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 79AF81850AC;
  Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 873D235B293;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2BB5335B28E;
  Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 31/69] configs: use default prefix for Windows
- compilation
-Date: Mon,  2 Feb 2026 22:45:54 +0300
-Message-ID: <20260202194638.939438-31-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 26/69] linux-user: allow null `pathname` for
+ statx()/fstatat()
+Date: Mon,  2 Feb 2026 22:45:49 +0300
+Message-ID: <20260202194638.939438-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,40 +63,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 
-The update to Python 3.13 causes meson configuration to fail, see e.g.:
+Since Linux 6.11, the path argument may be NULL.
 
-   https://gitlab.com/qemu-project/qemu/-/jobs/12672816538#L397
-
-   meson.build:1:0: ERROR: prefix value '/qemu' must be an absolute path
-
-This is https://github.com/mesonbuild/meson/issues/14303.  Remove the
-prefix='/qemu' line in configs/meson/windows.txt, since commit d17f305a264
-("configure: use a platform-neutral prefix", 2020-09-30) says that the
-NSIS installer doesn't care.
+Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
+specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
+issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
+perform the appropiate syscall and let the host's kernel handle null `pathname`.
 
 Cc: qemu-stable@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260112160736.1028280-1-pbonzini@redhat.com>
-(cherry picked from commit 894c8bd56ff1d25127efa4ba9ee8cf4dd0670b1a)
+Message-ID: <20251229121416.2209295-1-jean.christian.cirstea@gmail.com>
+(cherry picked from commit 82ae60c8b5cb98d610056a1e2d0ba72e9ef7907c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/configs/meson/windows.txt b/configs/meson/windows.txt
-index 55b192e71b..9ef0fb3c8f 100644
---- a/configs/meson/windows.txt
-+++ b/configs/meson/windows.txt
-@@ -3,7 +3,6 @@
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index dcca90cfee..77bdbf20ae 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -11908,9 +11908,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+             int dirfd = arg1;
+             int flags = arg3;
  
- [built-in options]
- bindir = ''
--prefix = '/qemu'
- 
- [project options]
- qemu_suffix = ''
+-            p = lock_user_string(arg2);
+-            if (p == NULL) {
+-                return -TARGET_EFAULT;
++            p = NULL;
++            /* Since Linux 6.11, the path argument may be NULL */
++            if (arg2 != 0) {
++                p = lock_user_string(arg2);
++                if (p == NULL) {
++                    return -TARGET_EFAULT;
++                }
+             }
+ #if defined(__NR_statx)
+             {
 -- 
 2.47.3
 
