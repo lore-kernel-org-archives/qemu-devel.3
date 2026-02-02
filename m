@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CB8E7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8A6E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzsx-0000Bc-Ls; Mon, 02 Feb 2026 14:47:00 -0500
+	id 1vmzzH-0007MQ-Ee; Mon, 02 Feb 2026 14:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzsl-0000Ac-No; Mon, 02 Feb 2026 14:46:47 -0500
+ id 1vmzz6-00075k-Sz; Mon, 02 Feb 2026 14:53:21 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzsh-0003AC-Ti; Mon, 02 Feb 2026 14:46:47 -0500
+ id 1vmzz4-0004LB-GR; Mon, 02 Feb 2026 14:53:20 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2E841185092;
- Mon, 02 Feb 2026 22:45:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D44511850D6;
+ Mon, 02 Feb 2026 22:46:08 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B296735B274;
- Mon, 02 Feb 2026 22:46:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8520F35B2B8;
+ Mon, 02 Feb 2026 22:46:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 00/69] Patch Round-up for stable 10.0.8,
- freeze on 2026-02-10
-Date: Mon,  2 Feb 2026 22:45:23 +0300
-Message-ID: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilia Levi <ilia.levi@intel.com>,
+ Fabiano Rosas <farosas@suse.de>, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 68/69] tests/qtest/ufs-test: Add test for mcq
+ completion queue wraparound
+Date: Mon,  2 Feb 2026 22:46:31 +0300
+Message-ID: <20260202194638.939438-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
+References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,164 +61,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.8:
+From: Ilia Levi <ilia.levi@intel.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+Added a test that sends 32 NOP Out commands asynchronously. Since the CQ
+has 31 entries by default, this tests the scenario where CQ processing
+needs to wait for space to become available.
 
-Patch freeze is 2026-02-10, and the release is planned for 2026-02-12:
+Additionally, added two minor fixes to existing tests:
+* advance CQ head after reading from CQ
+* initialize command descriptor slots bitmap in ufs_init()
 
-  https://wiki.qemu.org/Planning/10.0
+Signed-off-by: Ilia Levi <ilia.levi@intel.com>
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+(cherry picked from commit 94e72135d4d657d672561b1ae02a5854421616a7)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 4867ccf08a..ff9835735c 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -166,6 +166,7 @@ __ufs_send_transfer_request_mcq(QUfs *ufs, uint8_t lun,
+     cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
+     cqentry_addr = ufs->cqlba[TEST_QID] + cqhp;
+     qtest_memread(ufs->dev.bus->qts, cqentry_addr, &cqentry, sizeof(cqentry));
++    cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
+     ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
+ 
+     return cqentry.status;
+@@ -208,6 +209,81 @@ static enum UtpOcsCodes ufs_send_nop_out(QUfs *ufs, UtpUpiuRsp *rsp_out)
+     return ret;
+ }
+ 
++static bool ufs_mcq_sq_has_space(QUfs *ufs)
++{
++    uint32_t sqhp = ufs_rreg(ufs, ufs->sqdao[TEST_QID]);
++    uint32_t sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
++    uint32_t next_sqtp =
++        (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
++    return next_sqtp != sqhp;
++}
++
++static void
++__ufs_send_transfer_request_mcq_async(QUfs *ufs, uint8_t lun,
++                                      const UtpTransferReqDesc *utrd)
++{
++    uint32_t sqtp;
++    uint64_t utrd_addr;
++
++    /* Wait for SQ space */
++    while (!ufs_mcq_sq_has_space(ufs)) {
++        qtest_clock_step(ufs->dev.bus->qts, 100);
++    }
++
++    sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
++    utrd_addr = ufs->sqlba[TEST_QID] + sqtp;
++    qtest_memwrite(ufs->dev.bus->qts, utrd_addr, utrd, sizeof(*utrd));
++    sqtp = (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
++    ufs_wreg(ufs, ufs->sqdao[TEST_QID] + 0x4, sqtp);
++}
++
++static int ufs_mcq_send_nop_out_async(QUfs *ufs)
++{
++    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
++    uint64_t req_upiu_addr =
++        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++
++    /* Build up request upiu */
++    UtpUpiuReq req_upiu = { 0 };
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
++    req_upiu.header.task_tag = cmd_desc_slot;
++    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
++                   sizeof(req_upiu));
++
++    /* Build up utp transfer request descriptor */
++    UtpTransferReqDesc utrd =
++        ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
++
++    /* Send Transfer Request */
++    __ufs_send_transfer_request_mcq_async(ufs, 0, &utrd);
++
++    return cmd_desc_slot;
++}
++
++static int ufs_mcq_poll_cq(QUfs *ufs, UfsCqEntry *cqe, uint16_t n_cqe)
++{
++    uint32_t cqhp, cqtp;
++    uint64_t cqe_addr;
++    int ix = 0;
++
++    cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
++    cqtp = ufs_rreg(ufs, ufs->cqdao[TEST_QID] + 0x4);
++
++    while (cqhp != cqtp && ix < n_cqe) {
++        /* read completion entry */
++        cqe_addr = ufs->cqlba[TEST_QID] + cqhp;
++        qtest_memread(ufs->dev.bus->qts, cqe_addr, &cqe[ix], sizeof(cqe[ix]));
++
++        /* advance completion queue head pointer */
++        cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
++        ix++;
++    }
++
++    ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
++
++    return ix;
++}
++
+ static enum UtpOcsCodes ufs_send_query(QUfs *ufs, uint8_t query_function,
+                                        uint8_t query_opcode, uint8_t idn,
+                                        uint8_t index, uint8_t selector,
+@@ -416,6 +492,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
+     ufs_wreg(ufs, A_UTRIACR, 0);
+ 
+     /* Enable transfer request */
++    bitmap_zero(ufs->cmd_desc_bitmap, UFS_MAX_CMD_DESC);
+     ufs->cmd_desc_addr =
+         guest_alloc(alloc, UFS_MAX_CMD_DESC * UTP_COMMAND_DESCRIPTOR_SIZE);
+     ufs->data_buffer_addr =
+@@ -679,6 +756,53 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
++static void ufstest_mcq_cq_wraparound(void *obj, void *data,
++                                      QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    UfsCqEntry cqe[QUEUE_SIZE];
++    const int num_requests = QUEUE_SIZE;
++    int i, completed = 0;
++
++    ufs_init(ufs, alloc);
++
++    /* Ensure MCQ is supported */
++    g_assert_true(ufs->support_mcq);
++
++    for (i = 0; i < num_requests; ++i) {
++        ufs_mcq_send_nop_out_async(ufs);
++    }
++
++    while (completed != num_requests) {
++        int n_cqe = ufs_mcq_poll_cq(ufs, cqe, ARRAY_SIZE(cqe));
++        if (!n_cqe) {
++            break;
++        }
++
++        for (i = 0; i < n_cqe; ++i) {
++            uint64_t ucdba;
++            uint64_t rsp_upiu_addr;
++            UtpUpiuRsp rsp_upiu;
++            uint8_t tag;
++
++            g_assert_cmpuint(cqe[i].status, ==, UFS_OCS_SUCCESS);
++
++            ucdba = le64_to_cpu(cqe[i].utp_addr) & MAKE_64BIT_MASK(7, 57);
++            rsp_upiu_addr = ucdba + UTP_RESPONSE_UPIU_OFFSET;
++            qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
++                          sizeof(rsp_upiu));
++
++            tag = rsp_upiu.header.task_tag;
++            release_cmd_desc_slot(ufs, tag);
++        }
++
++        completed += n_cqe;
++    }
++
++    g_assert_cmpint(completed, ==, num_requests);
++    ufs_exit(ufs, alloc);
++}
++
+ static void ufstest_query_flag_request(void *obj, void *data,
+                                        QGuestAllocator *alloc)
+ {
+@@ -1129,6 +1253,8 @@ static void ufs_register_nodes(void)
+     qos_add_test("init", "ufs", ufstest_init, NULL);
+     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
+     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
++    qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
++                 &mcq_test_opts);
+     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
+                  &io_test_opts);
+     qos_add_test("query-attribute", "ufs", ufstest_query_attr_request,
+-- 
+2.47.3
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 c8958b7eb494 Paolo Bonzini:
-   tests/vm: bump FreeBSD image to 14.3
-02 7e71b8e7f2f6 Michael Tokarev:
-   gitlab-ci.d/cirrus: Update the FreeBSD job to v14.3
-03 eafc5f69e621 Alex Bennée:
-   gitlab: move custom runners to Ubuntu 24.04
-04 408c8629105f Alex Bennée:
-   tests/docker: add --arch-only to qemu deps for all-test-cross
-05 6da616bb1700 Alex Bennée:
-   tests/docker: handle host-arch selection for all-test-cross
-06 61432e805e50 Alex Bennée:
-   tests/docker: fix debian-all-test-cross
-07 41706d3e72d6 Richard Henderson:
-   tcg: Zero extend 32-bit addresses for TCI
-08 dd77ef99aa02 Alex Bennée:
-   target/arm: handle unaligned PC during tlb probe
-09 46228925edd5 Hanna Czenczek:
-   vhost: Always initialize cached vring data
-10 e742b7bdc244 Stefan Weil:
-   scripts/nsis.py: Tell makensis that WoA is 64 bit
-11 307bc43095b8 Kevin Wolf:
-   block: Fix BDS use after free during shutdown
-12 ac3520f599fe Hanna Czenczek:
-   nvme: Note in which AioContext some functions run
-13 b002acacc1d7 Hanna Czenczek:
-   Revert "nvme: Fix coroutine waking"
-14 83f6dceb8f5c Thomas Huth:
-   qga: Fix ubsan warning
-15 326e620fc014 Cédric Le Goater:
-   Fix const qualifier build errors with recent glibc
-16 2f5c96d53409 Cédric Le Goater:
-   i386: Fix const qualifier build errors with recent glibc
-17 e37a0d514a17 Cédric Le Goater:
-   tests/vhost-user-bridge.c: Fix const qualifier build errors with recent 
-   glibc
-18 dfe87815ba45 Cédric Le Goater:
-   monitor: Fix const qualifier build errors with recent glibc
-19 d7e1df769910 Cédric Le Goater:
-   gdbstub: Fix const qualifier build errors with recent glibc
-20 00829ae3845f Zesen Liu:
-   qdev: fix error handling in set_uint64_checkmask
-21 60efba3c1bff Andrew Cooper:
-   target/i386: Fix #GP error code for INT instructions
-22 0db1b556e4bc Paolo Bonzini:
-   target/i386/tcg: ignore V3 in 32-bit mode
-23 3fbadbb3927a Alano Song:
-   hw/i2c/imx: Fix trace func name error
-24 e714f1a3d4d1 Jie Song:
-   monitor/qmp: cleanup SocketChardev listener sources early to avoid fd 
-   handling race
-25 af6db3b71310 Richard Henderson:
-   tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
-26 82ae60c8b5cb Jean-Christian CÎRSTEA:
-   linux-user: allow null `pathname` for statx()/fstatat()
-27 aaed9ca1797d Matthew Lugg:
-   linux-user: fix mremap unmapping adjacent region
-28 2422884ec5a1 Matthew Lugg:
-   linux-user: fix mremap errors for invalid ranges
-29 81ceab30492e Matthew Lugg:
-   linux-user: fix reserved_va page leak in do_munmap
-30 9290c10ae9d0 Matthew Lugg:
-   tests: add tcg coverage for fixed mremap bugs
-31 894c8bd56ff1 Paolo Bonzini:
-   configs: use default prefix for Windows compilation
-32 11dac41f2e83 Laurent Vivier:
-   m68k: fix CAS2 writeback when Dc1==Dc2
-33 73dd6e4a36dd Paolo Bonzini:
-   target/i386/tcg: do not mark all SSE instructions as unaligned
-34 5e3572ef2e94 Paolo Bonzini:
-   target/i386/tcg: mask addresses for VSIB
-35 ed88bdcfbdcf Paolo Bonzini:
-   target/i386/tcg: allow VEX in 16-bit protected mode
-36 c7504ba2a560 Vulnerability Report:
-   hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
-37 47de28a0b7fb Xianglai Li:
-   hw/loongarch/virt: Modify the interrupt trigger type in fdt table
-38 ff54394eed14 Xianglai Li:
-   hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
-39 70cf9b7bf7af Song Gao:
-   target/loongach: Fix some exceptions failure in updating CSR_BADV
-40 e4f0ef58d53e Song Gao:
-   target/loongarch: Fix exception BCE missing to update CSR_BADV
-41 a7be2e0a3f7d Song Gao:
-   target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
-42 49ee001a5b83 Yao Zi:
-   hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
-43 7cf096d609e6 Alex Bennée:
-   tests/functional: migrate aspeed_rainier image
-44 8da52b8401af Peter Maydell:
-   target/arm: Don't specify ID_PFR1 accessfn twice
-45 205ca535abac Peter Maydell:
-   target/arm: Correctly honour HCR.TID3 for v7A cores
-46 b67a35622f9a Peter Maydell:
-   target/arm: Correctly trap HCR.TID1 registers in v7A
-47 1c11aa180714 Philippe Mathieu-Daudé:
-   tests/functional: Mark the MIPS replay tests as flaky
-48 290e4e7de7a5 Philippe Mathieu-Daudé:
-   tests/functional: Mark another MIPS replay test as flaky
-49 83017c4aaa9e Pierrick Bouvier:
-   linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE 
-   definition
-50 214f79fdfb43 Bernhard Beschow:
-   hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
-51 369c1ba2b7c7 Richard Henderson:
-   bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
-52 f0de58ccf656 Pierrick Bouvier:
-   bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
-53 cf10273aff81 Alex Bennée:
-   hw/intc: avoid byte swap fiddling in gicv3 its path
-54 e9a8a10e84c1 Luca Bonissi:
-   linux-user: Add termios2 support
-55 8d8c6aeee859 Luca Bonissi:
-   linux-user: Add termios2 support to alpha target
-56 edc741710ace Luca Bonissi:
-   linux-user: Add termios2 support to hppa target
-57 edf9184f4feb Luca Bonissi:
-   linux-user: Add termios2 support to mips target
-58 afbe0ff81c29 Luca Bonissi:
-   linux-user: Add termios2 support to sh4 target
-59 947b971cad90 Luca Bonissi:
-   linux-user: Add termios2 support to sparc target
-60 4f22fcb5c67f Vivian Wang:
-   linux-user: Add missing termios baud rates
-61 d68f0e2e9069 Icenowy Zheng:
-   linux-user: fixup termios2 related things on PowerPC
-62 2eb8d9734355 Paolo Bonzini:
-   target/i386/tcg: fix a few instructions that do not support VEX.L=1
-63 e4f1a9b1dacb Thomas Huth:
-   pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
-64 d9ca273f8f31 Alex Bennée:
-   tests/functional: migrate sbsa_ref test images
-65 289e6a3edf50 Jeuk Kim:
-   hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
-66 ed621cc8e2a6 Jeuk Kim:
-   hw/ufs: fix CQE endianness and UPIU length
-67 f78762a3cc81 Ilia Levi:
-   hw/ufs: Fix mcq completion queue wraparound
-68 94e72135d4d6 Ilia Levi:
-   tests/qtest/ufs-test: Add test for mcq completion queue wraparound
-69 587f4a1805c8 John Snow:
-   python: fix msys64 wheel directory specification
 
