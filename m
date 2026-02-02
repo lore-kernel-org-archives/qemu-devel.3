@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA84E7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFB5E7FDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2Ai-0001kt-Ku; Mon, 02 Feb 2026 17:13:28 -0500
+	id 1vn2AQ-0008MP-BW; Mon, 02 Feb 2026 17:13:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn2AS-0000Be-2D; Mon, 02 Feb 2026 17:13:12 -0500
+ id 1vn29U-00075R-WA; Mon, 02 Feb 2026 17:12:13 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn2AQ-0003X5-7G; Mon, 02 Feb 2026 17:13:11 -0500
+ id 1vn29T-0003Mm-6n; Mon, 02 Feb 2026 17:12:12 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 094D81852E4;
- Tue, 03 Feb 2026 01:07:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 41B091852D9;
+ Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DAEAE35B3F7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F7D235B3EC;
  Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilia Levi <ilia.levi@intel.com>,
- Fabiano Rosas <farosas@suse.de>, Jeuk Kim <jeuk20.kim@samsung.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 55/56] tests/qtest/ufs-test: Add test for mcq
- completion queue wraparound
-Date: Tue,  3 Feb 2026 01:08:00 +0300
-Message-ID: <20260202220805.945271-55-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 44/56] linux-user: Add termios2 support to sh4 target
+Date: Tue,  3 Feb 2026 01:07:49 +0300
+Message-ID: <20260202220805.945271-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -61,188 +59,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Luca Bonissi <qemu@bonslack.org>
 
-Added a test that sends 32 NOP Out commands asynchronously. Since the CQ
-has 31 entries by default, this tests the scenario where CQ processing
-needs to wait for space to become available.
-
-Additionally, added two minor fixes to existing tests:
-* advance CQ head after reading from CQ
-* initialize command descriptor slots bitmap in ufs_init()
-
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 94e72135d4d657d672561b1ae02a5854421616a7)
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/642b32de-2985-45d2-bbdf-c0b2e3ea0551@bonslack.org
+Reviewed-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit afbe0ff81c29d674b9c18a588bcaab34ddcb8a7b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 4867ccf08a..ff9835735c 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -166,6 +166,7 @@ __ufs_send_transfer_request_mcq(QUfs *ufs, uint8_t lun,
-     cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-     cqentry_addr = ufs->cqlba[TEST_QID] + cqhp;
-     qtest_memread(ufs->dev.bus->qts, cqentry_addr, &cqentry, sizeof(cqentry));
-+    cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-     ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
+diff --git a/linux-user/sh4/termbits.h b/linux-user/sh4/termbits.h
+index 28e79f2c9a..cab6b1299e 100644
+--- a/linux-user/sh4/termbits.h
++++ b/linux-user/sh4/termbits.h
+@@ -18,6 +18,28 @@ struct target_termios {
+     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
+ };
  
-     return cqentry.status;
-@@ -208,6 +209,81 @@ static enum UtpOcsCodes ufs_send_nop_out(QUfs *ufs, UtpUpiuRsp *rsp_out)
-     return ret;
- }
++struct target_termios2 {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++struct target_ktermios {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
  
-+static bool ufs_mcq_sq_has_space(QUfs *ufs)
-+{
-+    uint32_t sqhp = ufs_rreg(ufs, ufs->sqdao[TEST_QID]);
-+    uint32_t sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    uint32_t next_sqtp =
-+        (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    return next_sqtp != sqhp;
-+}
-+
-+static void
-+__ufs_send_transfer_request_mcq_async(QUfs *ufs, uint8_t lun,
-+                                      const UtpTransferReqDesc *utrd)
-+{
-+    uint32_t sqtp;
-+    uint64_t utrd_addr;
-+
-+    /* Wait for SQ space */
-+    while (!ufs_mcq_sq_has_space(ufs)) {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+    }
-+
-+    sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    utrd_addr = ufs->sqlba[TEST_QID] + sqtp;
-+    qtest_memwrite(ufs->dev.bus->qts, utrd_addr, utrd, sizeof(*utrd));
-+    sqtp = (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    ufs_wreg(ufs, ufs->sqdao[TEST_QID] + 0x4, sqtp);
-+}
-+
-+static int ufs_mcq_send_nop_out_async(QUfs *ufs)
-+{
-+    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
-+    uint64_t req_upiu_addr =
-+        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+
-+    /* Build up request upiu */
-+    UtpUpiuReq req_upiu = { 0 };
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
-+    req_upiu.header.task_tag = cmd_desc_slot;
-+    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
-+                   sizeof(req_upiu));
-+
-+    /* Build up utp transfer request descriptor */
-+    UtpTransferReqDesc utrd =
-+        ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
-+
-+    /* Send Transfer Request */
-+    __ufs_send_transfer_request_mcq_async(ufs, 0, &utrd);
-+
-+    return cmd_desc_slot;
-+}
-+
-+static int ufs_mcq_poll_cq(QUfs *ufs, UfsCqEntry *cqe, uint16_t n_cqe)
-+{
-+    uint32_t cqhp, cqtp;
-+    uint64_t cqe_addr;
-+    int ix = 0;
-+
-+    cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-+    cqtp = ufs_rreg(ufs, ufs->cqdao[TEST_QID] + 0x4);
-+
-+    while (cqhp != cqtp && ix < n_cqe) {
-+        /* read completion entry */
-+        cqe_addr = ufs->cqlba[TEST_QID] + cqhp;
-+        qtest_memread(ufs->dev.bus->qts, cqe_addr, &cqe[ix], sizeof(cqe[ix]));
-+
-+        /* advance completion queue head pointer */
-+        cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-+        ix++;
-+    }
-+
-+    ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
-+
-+    return ix;
-+}
-+
- static enum UtpOcsCodes ufs_send_query(QUfs *ufs, uint8_t query_function,
-                                        uint8_t query_opcode, uint8_t idn,
-                                        uint8_t index, uint8_t selector,
-@@ -416,6 +492,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
-     ufs_wreg(ufs, A_UTRIACR, 0);
+ /* c_cc characters */
+ #define TARGET_VINTR 0
+@@ -251,14 +273,17 @@ struct target_termios {
+ #define TARGET_TIOCNOTTY       TARGET_IO('T', 34) /* 0x5422 */
+ #define TARGET_TIOCSETD        TARGET_IOW('T', 35, int) /* 0x5423 */
+ #define TARGET_TIOCGETD        TARGET_IOR('T', 36, int) /* 0x5424 */
+-#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* Needed for POSIX tcse
+-ndbreak() */
++#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* Needed for POSIX tcsendbreak() */
+ #define TARGET_TIOCSBRK        TARGET_IO('T', 39) /* 0x5427 */ /* BSD compatibility */
+ #define TARGET_TIOCCBRK        TARGET_IO('T', 40) /* 0x5428 */ /* BSD compatibility */
+-#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ /* Return the session
+-ID of FD */
+-#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-m
+-ux device) */
++#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ /* Return the session ID of FD */
++#define TARGET_TCGETS2         TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2         TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2        TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2        TARGET_IOW('T', 0x2D, struct target_termios2)
++#define TARGET_TIOCGRS485      TARGET_IOR('T', 0x2E, struct serial_rs485)
++#define TARGET_TIOCSRS485      TARGET_IOWR('T', 0x2F, struct serial_rs485)
++#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+ #define TARGET_TIOCSPTLCK      TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+ #define TARGET_TIOCGPTPEER     TARGET_IO('T', 0x41) /* Safely open the slave */
  
-     /* Enable transfer request */
-+    bitmap_zero(ufs->cmd_desc_bitmap, UFS_MAX_CMD_DESC);
-     ufs->cmd_desc_addr =
-         guest_alloc(alloc, UFS_MAX_CMD_DESC * UTP_COMMAND_DESCRIPTOR_SIZE);
-     ufs->data_buffer_addr =
-@@ -679,6 +756,53 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
+@@ -270,8 +295,7 @@ ux device) */
+ #define TARGET_TIOCSLCKTRMIOS  0x5457
+ #define TARGET_TIOCSERGSTRUCT  TARGET_IOR('T', 88, int) /* 0x5458 */ /* For d
+ ebugging only */
+-#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 0x5459 */ /* Get line sta
+-tus register */
++#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 0x5459 */ /* Get line status register */
+   /* ioctl (fd, TIOCSERGETLSR, &result) where result may be as below */
+ # define TARGET_TIOCSER_TEMT   0x01   /* Transmitter physically empty */
+ #define TARGET_TIOCSERGETMULTI TARGET_IOR('T', 90, int) /* 0x545A
+@@ -279,9 +303,7 @@ tus register */
+ #define TARGET_TIOCSERSETMULTI TARGET_IOW('T', 91, int) /* 0x545B
+ */ /* Set multiport config */
  
-+static void ufstest_mcq_cq_wraparound(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    UfsCqEntry cqe[QUEUE_SIZE];
-+    const int num_requests = QUEUE_SIZE;
-+    int i, completed = 0;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Ensure MCQ is supported */
-+    g_assert_true(ufs->support_mcq);
-+
-+    for (i = 0; i < num_requests; ++i) {
-+        ufs_mcq_send_nop_out_async(ufs);
-+    }
-+
-+    while (completed != num_requests) {
-+        int n_cqe = ufs_mcq_poll_cq(ufs, cqe, ARRAY_SIZE(cqe));
-+        if (!n_cqe) {
-+            break;
-+        }
-+
-+        for (i = 0; i < n_cqe; ++i) {
-+            uint64_t ucdba;
-+            uint64_t rsp_upiu_addr;
-+            UtpUpiuRsp rsp_upiu;
-+            uint8_t tag;
-+
-+            g_assert_cmpuint(cqe[i].status, ==, UFS_OCS_SUCCESS);
-+
-+            ucdba = le64_to_cpu(cqe[i].utp_addr) & MAKE_64BIT_MASK(7, 57);
-+            rsp_upiu_addr = ucdba + UTP_RESPONSE_UPIU_OFFSET;
-+            qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
-+                          sizeof(rsp_upiu));
-+
-+            tag = rsp_upiu.header.task_tag;
-+            release_cmd_desc_slot(ufs, tag);
-+        }
-+
-+        completed += n_cqe;
-+    }
-+
-+    g_assert_cmpint(completed, ==, num_requests);
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufstest_query_flag_request(void *obj, void *data,
-                                        QGuestAllocator *alloc)
- {
-@@ -1129,6 +1253,8 @@ static void ufs_register_nodes(void)
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
-+    qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
-+                 &mcq_test_opts);
-     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
-                  &io_test_opts);
-     qos_add_test("query-attribute", "ufs", ufstest_query_attr_request,
+-#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* wait for a change on
+-serial input line(s) */
+-#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* read
+-serial port inline interrupt counts */
++#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* wait for a change on serial input line(s) */
++#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* read serial port inline interrupt counts */
+ 
+ #endif
 -- 
 2.47.3
 
