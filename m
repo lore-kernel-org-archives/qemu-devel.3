@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6D1E7DEED
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62373E7DEEE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 14:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmuaM-0000vE-OW; Mon, 02 Feb 2026 09:07:26 -0500
+	id 1vmuai-0001Lw-8L; Mon, 02 Feb 2026 09:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1vmua8-0000ul-AN; Mon, 02 Feb 2026 09:07:12 -0500
+ id 1vmuaf-0001Jj-UP; Mon, 02 Feb 2026 09:07:45 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1vmua6-0001Is-J7; Mon, 02 Feb 2026 09:07:11 -0500
+ id 1vmuae-0001Lj-Lu; Mon, 02 Feb 2026 09:07:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Zqs7PL/wqPSjjLd4ha52euEHCpb352pTQcYeG3B8scc=; b=mrqv+Q7FlDzzePq
- 0TmlAZgXliMYvoS5pkaYVK34GxNv1+IUcBFZLk3JiojVODwDjomHCJaylI7XSN/wOEilz9LYU55OK
- wTPCy//izCq9upQyC3DssChthclaLMOD46sYiJrcA5miCv5sIpGT/xi7NH74avQq0Rd8jgEaABQh/
- Y4=;
-Date: Mon, 2 Feb 2026 15:10:42 +0100
+ List-Help; bh=ZDi9x/S8pwTg5G3BYsh9DdaDwoZynUSrU4TgFXDDLiY=; b=rXP0YYovcv8nmEL
+ /Ciz+sMkaJjechzHE+Cc4JRCEkhqHmIW6jUTXV5WVd4IDEmoi6k65CUYFDHpT2jvONTFKjWoM0TSv
+ 4kNO0UIAgJskbPcl70XsfKGWH/WYtIjk40jQitDKK330LrXVEFvhDKHZL/rTntsl/opFmG/jhjllw
+ Jg=;
+Date: Mon, 2 Feb 2026 15:11:17 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v5 03/11] target/ppc: Inline cpu_ld/st_data_ra() calls in
- do_hash()
-Message-ID: <aYCwU33ocHrEF9gn@hive.localdomain>
+Subject: Re: [PATCH v5 04/11] target/ppc: Expect page translation hash
+ addresses to be aligned
+Message-ID: <aYCwb1aPIDnbxD1L@hive.localdomain>
 References: <20260122221106.57184-1-philmd@linaro.org>
- <20260122221106.57184-4-philmd@linaro.org>
+ <20260122221106.57184-5-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260122221106.57184-4-philmd@linaro.org>
+In-Reply-To: <20260122221106.57184-5-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -70,18 +70,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/01/26, Philippe Mathieu-Daudé wrote:
-> In preparation of removing the cpu_ld*_data_ra() and
-> cpu_st*_data_ra() calls, inline them. No logical change
-> intended.
+> The page translation hash addresses are aligned:
+> remove the misleading MO_UNALN flag.
 > 
-> We note the page translation hash address is expected to
-> be aligned, so the MO_UNALN flag is misleading. Next commit
-> will remove it.
-> 
+> Reported-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/ppc/tcg-excp_helper.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
+>  target/ppc/tcg-excp_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
