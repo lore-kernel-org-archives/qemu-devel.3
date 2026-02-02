@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8364E7FDC8
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3777CE7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwn-0007jd-Q2; Mon, 02 Feb 2026 14:50:57 -0500
+	id 1vmzvg-00056o-Bl; Mon, 02 Feb 2026 14:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwJ-0005q1-1q; Mon, 02 Feb 2026 14:50:27 -0500
+ id 1vmzvG-0004of-QZ; Mon, 02 Feb 2026 14:49:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwH-0003rO-AE; Mon, 02 Feb 2026 14:50:26 -0500
+ id 1vmzvF-0003UE-2B; Mon, 02 Feb 2026 14:49:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4D9DA1850BC;
- Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E229F1850B1;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA83835B29E;
- Mon, 02 Feb 2026 22:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 873D235B293;
+ Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yao Zi <me@ziyao.cc>,
- Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 42/69] hw/loongarch/virt: Don't abort on access to
- unimplemented IOCSR
-Date: Mon,  2 Feb 2026 22:46:05 +0300
-Message-ID: <20260202194638.939438-42-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 31/69] configs: use default prefix for Windows
+ compilation
+Date: Mon,  2 Feb 2026 22:45:54 +0300
+Message-ID: <20260202194638.939438-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,71 +62,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Zi <me@ziyao.cc>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Since commit f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface
-for misc ops") which adds a call to g_assert_not_reached() in the path
-of handling unimplemented IOCSRs, QEMU would abort when the guest
-accesses unimplemented IOCSRs.
+The update to Python 3.13 causes meson configuration to fail, see e.g.:
 
-This is too serious since there's nothing fatal happening in QEMU
-itself, and the guest could probably continue running if we give zero as
-result for these reads, which also matches the behavior observed on
-3A5000M real machine.
+   https://gitlab.com/qemu-project/qemu/-/jobs/12672816538#L397
 
-Replace the assertion with qemu_log_mask(LOG_UNIMP, ...), it's still
-possible to examine unimplemented IOCSR access through "-d unimp"
-command line arguments.
+   meson.build:1:0: ERROR: prefix value '/qemu' must be an absolute path
 
-Fixes: f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface for misc ops")
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 49ee001a5b8378e9a9b3db8cbf61e7eda970ecd2)
-(Mjt: trivial context fix for 10.0)
+This is https://github.com/mesonbuild/meson/issues/14303.  Remove the
+prefix='/qemu' line in configs/meson/windows.txt, since commit d17f305a264
+("configure: use a platform-neutral prefix", 2020-09-30) says that the
+NSIS installer doesn't care.
+
+Cc: qemu-stable@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260112160736.1028280-1-pbonzini@redhat.com>
+(cherry picked from commit 894c8bd56ff1d25127efa4ba9ee8cf4dd0670b1a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 65c9027feb..63771782de 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -45,6 +45,7 @@
- #include "hw/block/flash.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
+diff --git a/configs/meson/windows.txt b/configs/meson/windows.txt
+index 55b192e71b..9ef0fb3c8f 100644
+--- a/configs/meson/windows.txt
++++ b/configs/meson/windows.txt
+@@ -3,7 +3,6 @@
  
- static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-                               void *opaque, Error **errp)
-@@ -532,8 +533,15 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
-                           EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-                           features, attrs, NULL);
-         break;
-+    case VERSION_REG:
-+    case FEATURE_REG:
-+    case VENDOR_REG:
-+    case CPUNAME_REG:
-+        break;
-     default:
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-     }
+ [built-in options]
+ bindir = ''
+-prefix = '/qemu'
  
-     return MEMTX_OK;
-@@ -580,7 +588,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         }
-         break;
-     default:
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-     }
- 
-     *data = ret;
+ [project options]
+ qemu_suffix = ''
 -- 
 2.47.3
 
