@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DC8E7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32729E7FDDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn15i-0002tt-PF; Mon, 02 Feb 2026 16:04:14 -0500
+	id 1vn168-0003nJ-PU; Mon, 02 Feb 2026 16:04:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn15h-0002pA-24; Mon, 02 Feb 2026 16:04:13 -0500
+ id 1vn167-0003jG-0s; Mon, 02 Feb 2026 16:04:39 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn15f-0004p0-Mz; Mon, 02 Feb 2026 16:04:12 -0500
+ id 1vn165-0004t0-Db; Mon, 02 Feb 2026 16:04:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AEEB1851C4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A08E1851C8;
  Mon, 02 Feb 2026 23:57:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8E7335B33B;
- Mon, 02 Feb 2026 23:58:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3372F35B33F;
+ Mon, 02 Feb 2026 23:58:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 56/74] bsd-user: Fix __i386__ test for
- TARGET_HAS_STAT_TIME_T_EXT
-Date: Mon,  2 Feb 2026 23:58:07 +0300
-Message-ID: <20260202205833.941615-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 60/74] linux-user: Add termios2 support to alpha target
+Date: Mon,  2 Feb 2026 23:58:11 +0300
+Message-ID: <20260202205833.941615-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,31 +59,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Luca Bonissi <qemu@bonslack.org>
 
-The target test is TARGET_I386, not __i386__.
-
-Cc: Kyle Evans <kevans@freebsd.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 369c1ba2b7c721341979889841772629b853092b)
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/02dba951-1bcf-4c74-8a6a-f4f4aa5ce909@bonslack.org
+Reviewed-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 8d8c6aeee8599a099e49ec4411f3d1e087ae40ad)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 52f84d5dd1..c49be32bdc 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -247,7 +247,7 @@ struct target_freebsd11_stat {
-     unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
- } __packed;
+diff --git a/linux-user/alpha/termbits.h b/linux-user/alpha/termbits.h
+index 4a4b1e96f2..b7be23ea13 100644
+--- a/linux-user/alpha/termbits.h
++++ b/linux-user/alpha/termbits.h
+@@ -17,6 +17,29 @@ struct target_termios {
+ 	target_speed_t c_ospeed;		/* output speed */
+ };
  
--#if defined(__i386__)
-+#if defined(TARGET_I386)
- #define TARGET_HAS_STAT_TIME_T_EXT       1
- #endif
- 
++struct target_termios2 {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++struct target_ktermios {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++
+ /* c_cc characters */
+ #define TARGET_VEOF 0
+ #define TARGET_VEOL 1
+@@ -247,6 +270,12 @@ struct target_termios {
+ #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+ #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+ #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
++#define TARGET_TCGETS2		TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2		TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2	TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2	TARGET_IOW('T', 0x2D, struct target_termios2)
++#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x2E, struct serial_rs485)
++#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x2F, struct serial_rs485)
+ #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+ #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+ #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open the slave */
 -- 
 2.47.3
 
