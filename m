@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE34EE7FDC8
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6A0E7FDC8
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwR-0006Wc-7D; Mon, 02 Feb 2026 14:50:35 -0500
+	id 1vmzub-0001i6-7F; Mon, 02 Feb 2026 14:48:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwE-0005hU-MB; Mon, 02 Feb 2026 14:50:23 -0500
+ id 1vmzuM-0001Iq-FL; Mon, 02 Feb 2026 14:48:28 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwA-0003bo-6U; Mon, 02 Feb 2026 14:50:22 -0500
+ id 1vmzuK-0003Kr-Pj; Mon, 02 Feb 2026 14:48:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C15C91850B9;
- Mon, 02 Feb 2026 22:46:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 12AA91850A7;
+ Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6914135B29B;
- Mon, 02 Feb 2026 22:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B731F35B289;
+ Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 39/69] target/loongach: Fix some exceptions failure in
- updating CSR_BADV
-Date: Mon,  2 Feb 2026 22:46:02 +0300
-Message-ID: <20260202194638.939438-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 21/69] target/i386: Fix #GP error code for INT
+ instructions
+Date: Mon,  2 Feb 2026 22:45:44 +0300
+Message-ID: <20260202194638.939438-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -60,31 +60,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-According to Volume 1 Manual 7.4.8 ,exception,SYS,BRK,INE,IPE,PPD
-FPE,SXD,ASXD are need't update CSR_BADV, this patch correct it.
+While the (intno << shift) expression is correct for indexing the IDT based on
+whether Long Mode is active, the error code itself was unchanged with AMD64,
+and is still the index with 3 bits of metadata in the bottom.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 70cf9b7bf7aff47f8d85ccce35b688dd91335cf0)
-(Mjt: the changes are in target/loongarch/cpu.h in 10.0)
+Found when running a Xen unit test, all under QEMU.  The unit test objected to
+being told there was an error with IDT index 256 when INT $0x80 (128) was the
+problem instruction:
+
+  ...
+  Error: Unexpected fault 0x800d0802, #GP[IDT[256]]
+  ...
+
+Fixes: d2fd1af76777 ("x86_64 linux user emulation")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/r/20250312000603.3666083-1-andrew.cooper3@citrix.com
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3160
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 60efba3c1bff0d78632d45c2dc927c5bc7a17ba8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index fc439d0090..9937fb5ace 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -209,8 +209,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     case EXCCODE_FPE:
-     case EXCCODE_SXD:
-     case EXCCODE_ASXD:
--        env->CSR_BADV = env->pc;
--        QEMU_FALLTHROUGH;
-     case EXCCODE_BCE:
-     case EXCCODE_ADEM:
-     case EXCCODE_PIL:
+diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
+index c45f2ac2ba..ff328b2a95 100644
+--- a/target/i386/tcg/user/seg_helper.c
++++ b/target/i386/tcg/user/seg_helper.c
+@@ -64,7 +64,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
+         cpl = env->hflags & HF_CPL_MASK;
+         /* check privilege if software int */
+         if (dpl < cpl) {
+-            raise_exception_err(env, EXCP0D_GPF, (intno << shift) + 2);
++            raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
+         }
+     }
+ 
 -- 
 2.47.3
 
