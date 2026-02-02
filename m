@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27244E7316D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C938BE7316F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmu44-0006mK-Ug; Mon, 02 Feb 2026 08:34:04 -0500
+	id 1vmu4M-0007If-7R; Mon, 02 Feb 2026 08:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vmu42-0006kw-FA
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:34:02 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vmu4G-00076t-SA
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:34:17 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vmu40-0002aL-TY
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:34:02 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4806fbc6bf3so47830195e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:34:00 -0800 (PST)
+ id 1vmu4D-0002i3-IT
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 08:34:16 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-482f2599980so15948935e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 05:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770039239; x=1770644039; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770039252; x=1770644052; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ozYHqfgk0X+sYeYUfUg6SMvjxSTGckHgPzq9y9VW0U0=;
- b=MJYBy1N2HYK9EyQczXG/n2u5s4CkxmSuB5J3ksNgvsI0MERc21CAJrsqM1HAEYh9X1
- w7sNgWyrv+CQWGAlQgnD4/Zuk3SyUAbVUcW1Rv3aURUvIzNYg3/Ta/eA0J6cBLvvs2Nq
- Sw4V5Rt8SxdcvbffOaAOqiL3YHnjsAgI3XkR/H1QNE4SPIlKKuM6UXKkjI6fMi0ZJBvA
- P1z1TXxXJzChJEsJz9Q2Ayez8p90UYKlEu1ExruO7X+qQ78sSWPR/m/JYqHBnYn+JRKH
- q55mP45hsYKZ4zOC8D4tZmsuVBJAyKL+esre0Re2WHhAgrk13+yfFr1bPUrrjS8OfLww
- 2LjA==
+ bh=yrzRKxM+gUNzaRlAaieIAxkZQfBhxlc5kLCyWkeZ6Cg=;
+ b=YmlB/lR6fk/ca056Bi9O/mpmY6lx91CUMbYjntz1VgBmHiwGhaBZeOF9gHiQrhRzjm
+ 2zRqxAPUBetMYGK7vY3Qat2Ncdmvh05Buft3DrAaINb1kS2UgWUuwCDeCmFfE9BRVVjQ
+ GeYOWK8LWhd+F9YtEntmm+wGRlcxTci2WRxMd439vCCDfHNPCHOoCblaKfGMkNcMr+ZF
+ RbfExgSMInmJJiSP7tevfALGymXsvPEDGXzbM6YoHChoCsF0J+FbHItSvqyQJSOolLQR
+ F8wBuhuHMfNUE4I8nubAJtxQ8+z/mjkpy7SRSeyx1U4+FJtD/l2Nx5OsBjnPF5p/+bjG
+ U2bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770039239; x=1770644039;
+ d=1e100.net; s=20230601; t=1770039252; x=1770644052;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ozYHqfgk0X+sYeYUfUg6SMvjxSTGckHgPzq9y9VW0U0=;
- b=w2RrBabW8JnUudQhXhZ0Iw4zR75eWYXWZjzQ7VFyW5DSNICwpT+zOb9FSeJv0jC5kl
- 91Fn35U5oNp8zm/IFSxsU25ivVluVSLRQuQI6xr24uf5HIlzDkmEjsmLxLEuounm3UzY
- LdJgXeht88J2tOCQIs6W1I31evqMN1WLAjBkx4maCs0UlGQZgWYTGtT2oMGb7zUJVKVp
- onYww5jbCY9aGHTZn0E1hOzG60iO2QOowhHP7E6w3pzWOnQ+/XQSIOqILBs7CwRn5+Xf
- E0y/vh+cy04H/f/NWKxU1TMTH1Nzk28+XtoeiwPOwAH6zpcgsoK7EBhHgz3sZsD+3vJu
- jkaw==
+ bh=yrzRKxM+gUNzaRlAaieIAxkZQfBhxlc5kLCyWkeZ6Cg=;
+ b=HOytPkCk0LjkD52EwMP79lN5shp9gf0rrUjGyom6pBRG12kUalVjIYjPHYyNg0Lcd+
+ rIl4WzQi+8Ao/g05psE8zF2Ynt6kactbb0n2XKqaNj73se06Qq7mSsstzgStQ6SDMiR+
+ 1n31WdZofq8MZrqfzDKqnktizDhp+Fb+7eozYRbmH72HehD6NmJ3WyxUkLAVrk1Bocl+
+ K9yReBrKhvONY2u9gI/NqxUAlhUXfSY/Q6VPRa7fgW/VnWKGDuDS3jSxBDrL+G/2RDEP
+ vwoL7l7S5SDEadzHhMy8mtVmrazCcKKJv0wRakDv6iBUKwnCxXIvSBlVI0MdfzRGHZwt
+ fBkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl8yf4/VYCJycfH6ThJiA0jdjj2BPun5SowXAwYergUMt16KXnGFMeUSo5alnKQU4ZruKCw++9L26z@nongnu.org
-X-Gm-Message-State: AOJu0YxSS3qkxWJE+7+C94x2Qu7pzvYznuWYw7VcCTb5++Obz7ysexKz
- mAVrtWS3seyZz9i06TFZfJ58qnkk/oax/NK0gkFmIimDIlvu9HX2v+AiPGjtskuGlcpe9EW/mM8
- 92Cz2
-X-Gm-Gg: AZuq6aJ+r5OqljlHuV58rKfbyO/SqByI8wjYYtH5L/VcVNoy5NVmML4rS63ZAUYB6Kt
- JmFr7WPevgxQ3MMc1/fAAyGXWWyJcCkF3c+5/U66jsjg104W6/CyqaAmO28enxkvJZC1o+cW7aq
- iDJKVWR2OQqvOAOsPRyyVan0ggvcLVaTI2MtonKxxc17JeIG4ZG7ODFJelSF1ZpS0bhVkv4EJFC
- m7gpNCJbaPxhN95YwoEEtaNPGZTRPGOY+z1Blk2q5DD9r/Gdhd2BZR0M8L7NMCdcIiIb8r2riHF
- F+RQbiatzf63BKjMw8lnTplUYjvVOp1IoO7pRcyNiPBHH2wYQxze7+gv7d7wcSSSK9YCSyuYnH/
- cFn7HHYLlhAfYp5JzgMBeOfSEuoCRhv5Ux6tferJ5u+OyBoQ8vemp4xRIlLFj3mZzmK2qrVKbDA
- KIdnv7tsxp0cveppwJvH/XGQCYjpUtXg==
-X-Received: by 2002:a05:600c:6214:b0:47e:e946:3a72 with SMTP id
- 5b1f17b1804b1-482db49d1b7mr151521965e9.27.1770039238819; 
- Mon, 02 Feb 2026 05:33:58 -0800 (PST)
+ AJvYcCXTtN4GhiGMnk5v3MEogiYqdrUe83736gkS5s0ripxHtOZ71noKdOIVJtn3SvqGTUC+LzUuimNFGzWV@nongnu.org
+X-Gm-Message-State: AOJu0YwdLL/7JDIXQyFLs2Py+h2t+yD2GY+irvwwwKamyWOovHrePvNZ
+ m/sK1qTIyI2Iq0FzMfyNt8MK6deVH+ZFyID+t8UYVPMjgo8ezKCF04La0C4NVUQS6zw=
+X-Gm-Gg: AZuq6aKHPq4zUHzc8L1uuz2t2lRUFbqRrnGpYEQT4q2x14Mi5drQSOeEtjncUEGi6Qz
+ NRJniLPBzn1kVPiNYzn1rCQZ49LaL17yS+vQ7wJCEt6g+4W0fJVhb128WtqUclK6QUTZ9geUOJ1
+ 44iRgaCD0b3rTxy8QVYr7SWr6VgtlYYPfbwMW7hWw5vhOgprRwWVgKWkiQoeYVBs14YWxSdV0Hq
+ ObiVrlgZUKG0uWEqRMw9ERto2+ZIfRfSzZhw9PTTlmHWR8DKzhPNnrYuv82escwaEUMY7WQFYgN
+ QAe/WCNE1yXLq7t0Y2gLym0HyzwTiPDadCVmudBlUe2zHnnkM38NpGqg4LIXWCh3Ei1NCYLL/Tj
+ HQqvABPChPOdXuySiEgDDxZ9UvYic1tLdzTBQroeKulBb4MkNrt+gesWDvRTdv64uxuhFv0EtPr
+ 15uG3TtqJAZ7FeaxwuCOtkX+1ToRyrGw==
+X-Received: by 2002:a05:600c:6214:b0:480:4a90:1b06 with SMTP id
+ 5b1f17b1804b1-482db49dbd5mr136827055e9.34.1770039252023; 
+ Mon, 02 Feb 2026 05:34:12 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066c42895sm478054495e9.14.2026.02.02.05.33.57
+ 5b1f17b1804b1-48066c42895sm478054495e9.14.2026.02.02.05.34.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Feb 2026 05:33:57 -0800 (PST)
+ Mon, 02 Feb 2026 05:34:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 03/15] target/arm: Fix feature check in DO_SVE2_RRX,
- DO_SVE2_RRX_TB
-Date: Mon,  2 Feb 2026 13:33:41 +0000
-Message-ID: <20260202133353.2231685-4-peter.maydell@linaro.org>
+Subject: [PATCH v3 14/15] target/arm: Squash FEAT_SME_FA64 if FEAT_SVE is not
+ present
+Date: Mon,  2 Feb 2026 13:33:52 +0000
+Message-ID: <20260202133353.2231685-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260202133353.2231685-1-peter.maydell@linaro.org>
 References: <20260202133353.2231685-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,43 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the macros DO_SVE2_RRX and DO_SVE2_RRX_TB we use the
-feature check aa64_sve, thus exposing this set of instructions
-in SVE as well as SVE2. Use aa64_sve2 instead, so they UNDEF
-on an SVE1-only CPU as they should.
+FEAT_SME_FA64 allows Streaming SVE code to access the whole
+SVE instruction set; it requires FEAT_SVE to be present. If
+we have a CPU with SME but not SVE, squash the FA64 bit in
+arm_cpu_sme_finalize().
 
-Strictly, the condition here should be "SVE2 or SME"; but we
-will correct that in a following commit with all the other
-missing "or SME" checks.
+This doesn't have any effect at the moment because we don't
+let the user create an SME-without-SVE CPU, but we are about
+to lift that restriction.
 
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-sve.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/cpu64.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 64adb5c1ce..81f487152c 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3769,7 +3769,7 @@ TRANS_FEAT(UDOT_zzxw_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzxz,
-            gen_helper_gvec_udot_idx_2h, a)
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index a9c1e60c95..c0447c8d54 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -385,6 +385,11 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+         /* SME2 or better */
+         FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, 2);
+     }
++
++    if (!cpu_isar_feature(aa64_sve, cpu)) {
++        /* FEAT_SME_FA64 requires SVE, not just SME */
++        FIELD_DP64_IDREG(&cpu->isar, ID_AA64SMFR0, FA64, 0);
++    }
+ }
  
- #define DO_SVE2_RRX(NAME, FUNC) \
--    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-+    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
-                a->rd, a->rn, a->rm, a->index)
- 
- DO_SVE2_RRX(MUL_zzx_h, gen_helper_gvec_mul_idx_h)
-@@ -3787,7 +3787,7 @@ DO_SVE2_RRX(SQRDMULH_zzx_d, gen_helper_sve2_sqrdmulh_idx_d)
- #undef DO_SVE2_RRX
- 
- #define DO_SVE2_RRX_TB(NAME, FUNC, TOP) \
--    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-+    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
-                a->rd, a->rn, a->rm, (a->index << 1) | TOP)
- 
- DO_SVE2_RRX_TB(SQDMULLB_zzx_s, gen_helper_sve2_sqdmull_idx_s, false)
+ static bool cpu_arm_get_sme(Object *obj, Error **errp)
 -- 
 2.43.0
 
