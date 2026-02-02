@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0B4E7DF13
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A23A4E7DF11
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmxtP-0007Ke-6B; Mon, 02 Feb 2026 12:39:19 -0500
+	id 1vmxtv-0007RX-Q0; Mon, 02 Feb 2026 12:39:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vmxtN-0007KB-QH
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:39:17 -0500
-Received: from mail-qk1-x744.google.com ([2607:f8b0:4864:20::744])
+ id 1vmxtu-0007QS-KZ
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:39:50 -0500
+Received: from mail-qt1-x842.google.com ([2607:f8b0:4864:20::842])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vmxtL-0004e2-Dt
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:39:17 -0500
-Received: by mail-qk1-x744.google.com with SMTP id
- af79cd13be357-8c59bce68a1so357011985a.0
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:39:14 -0800 (PST)
+ id 1vmxts-0004gX-QE
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:39:50 -0500
+Received: by mail-qt1-x842.google.com with SMTP id
+ d75a77b69052e-5014f383df6so35207381cf.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:39:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1770053954; x=1770658754; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1770053988; x=1770658788; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BrIOMSspAJuVYvXM4SNxT1bpAos9fFxbnpQTGHhn1dE=;
- b=QdI1AadLlSpsPFGc09s0oUtCzhcfJ7Ww2tMTE/vxUvH2urIHk74uw/9DtAZMyEc4x9
- q7iuLHM8FVMyAIEt7vbZo2Gph3ALkAgiaVqf3W3jgEJydUX/A8X3jNde4AqwNwbIDo5W
- 6I12enxn0in0HSBueXN+vVhNJYzMUZHjyw53wRNSNrxh/9Wf2ryQmW3Js8Kafq/oL17f
- q2yu0o6TCNMOL8wXyCiKlOX1IQY93XZaNgtKwOM9h/iNW/61EjUv6ej1ZPxx/OHF73B5
- b3vMFfglo8oIc+S9i93DRfltzEIpE2dnabmm3XUH0IcUuKzdk9ZzEO0MtiUuNosf2GhL
- s9Nw==
+ bh=L5BwdvI09BB46pmTluKOcSXhuaOM8CJ2zbaYIkrMgGk=;
+ b=oj2U6g95YG4/8m0yeTzWF5NadgTzhx7aMjzG+jHsa1k0WoYtKpNKS2i6l1+er4LsqC
+ qof4Trt+xjuFPQqfY4qTH0luAtV3/5bw32d6OzNeKhqeW3Rukwzl2cfbB1bbmJobC2hI
+ h4rxCskGM3UorkQim/QxWHuvgCgO+L0z/z4ndURGgLawjWYHnkPZT1dMHWJSvg6oO0yQ
+ 9TeKeHeZL4W/i6JI0u9LTtbc+IAq34HkSz8xBya1WUdxRD6qWFwuaF5XX5oRpU9MIQsB
+ IZf7/yi/DiqxAoRPk2QxkZ4MiabLfUh+kS041WO3yXRSU61pNZ1E3/tJp70iVsEDzLQw
+ aNRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770053954; x=1770658754;
+ d=1e100.net; s=20230601; t=1770053988; x=1770658788;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BrIOMSspAJuVYvXM4SNxT1bpAos9fFxbnpQTGHhn1dE=;
- b=Fc6iNPjZhHhexgf5LzNrNKITx13nH8vgIfHQywAn44Alyi0DX3ogkonpIILtKm+N27
- BBrVGIZiAKx9z9CfJgaYZeeNexMKuc2nTDu6llo2WVuXAReJKLMTvvl1zLA5viisu8HW
- o5RZ4+BqwdBeQi9PagCfg+dfvSTzL3haSzUVzpLWvhOzaV63OnLeGxpHbCrFHMQA+Myb
- XnotU4gPc/3dDSeiPedgvarjxzGhfy7uoL8uVhA7t0wZxUXUH4rao8dF+wi+Gx3LH1YI
- 6WGcObGvBKYcOzd46E3pPEkM7E4MnIrprY9e4I0tGV4PgktRYrl4elnhl6RnkdGeO0Qa
- E9sw==
-X-Gm-Message-State: AOJu0YzmKsgbmP2dw+CqqcrIGzB5pCl6bJ1kBkKCzrOd2O8e++wyKif0
- nNgWibhLFcvFLTSUitM3igup3pwUmn/Hpw2SOMKIYqueEo3X3+8Qn1DDVq3ixr6x4IU=
-X-Gm-Gg: AZuq6aI3mpliqEoYj7kIemFBqzX5fMdZpXAAj/uY7LAWzAJaWEzZCYirXloWAEx/xyM
- E5ysCGxBm9jURop3o+4tmH5NhRx0/UmQnF/5yka/uV77t7riPDTn0dtOyqe3Fbr4cvVQrymDDaK
- kdxev8y18OCKrefgBZRFtiZ83UZdVbEOB70vpy1zOAwAA0TGV01z+vhXdMPe2B5AlrAsjac7+Bt
- ZhRplAlCTQG58ATfM9FJbqS3uIzqdM/7zQv6PV+wmP7qYrokEPn9LTAOX8wilZxoV+DwAe8/ORv
- tMdwwg1trbJeFB9u6Smir+Y6pGH0I7RGkSZAHwktFmMvekyz+wxTwkAqFZMIdxPU5NfZ4xa5XEs
- +hQubqKdocfd5XfqNJ5elhv3ZMLhYxxUfWn+Q5QopwvJbE2bo7rAI0tNeBlfuI5LWSRtI4Ns3cE
- a0DasctUIQOvK/Kmi/6YnHrcmVOclKTzto2BABbpiNiTvvW/fFBEV0Qz/JsO/2fi3sTs/m942WR
- Q==
-X-Received: by 2002:a05:620a:444a:b0:8c6:aeff:4002 with SMTP id
- af79cd13be357-8c9eb349f59mr1580477285a.81.1770053953546; 
- Mon, 02 Feb 2026 09:39:13 -0800 (PST)
+ bh=L5BwdvI09BB46pmTluKOcSXhuaOM8CJ2zbaYIkrMgGk=;
+ b=CDYc6rRYzUjOyc/UE6oeoOIYsT0Bf80rl1HIgCQVIpJRosPqF+p+/mhlABO8SybWoF
+ mCD1tkun2DCVI+wkyMAgrR5mhkiUZkYsBj3ezmR+hdBq42nuOvx03nbgkEtj0TV9kane
+ gIqWeCI1CWqB4lUqQkkFxT1TkejWoOHVpKP8rqIDfgRbjdIkE5RvjFfWuuto1LDgPzK8
+ UZfUk1TEPrsS2MVpnSjcobJ63/Q1t/llevgda/Xwk5CAnuQaPmu8yJfb/YM2m9me9+5j
+ 5PcNx78lDqpTWV03YyDaocIis6wPwmxu0xQ6JT76G0BhnOabvGcCSP+TKTXDx3L4TEqY
+ 2EyQ==
+X-Gm-Message-State: AOJu0YzsYf+xHmetA3paBle9jgqx/LWAMELwOpMvdRj15/ULFCV7IyID
+ HtzpiWZXIn5jn9ortWAUUPJ6flCj4BDQrCatFmephQMr72poSL4vpazXD1n8ySOuYTk=
+X-Gm-Gg: AZuq6aKyVLCKzejPkH+E7HweXYCCRz3qEA78JiEKlpCTli/ogU9hEzkH3M/NZFhR+1e
+ 9E2Fx2p77mj2NyDxlOuoDyMHZD5nXVutQldERnCul0n0baXFN3o7Qxe3TKTOZw47PKMT3VBg3pU
+ 0I5PtJHwgmaoyxgJHDhIvdDzllfaEKlOT/2L1MAykMY4C16q43JezJeY7PkPy5fhU479f5c47xW
+ GkdmjVlm0T2zLJIhdsID1XiYfMtUYIGo00aTk+cPsgN9Y6MzXzW5ptg3tlKEnpOV3yL0gmmFjm9
+ 69llTfXPpHjJRBAe6QoshiM2xZ1ZvV5fXWNEZRAj7TZBDtwBmwSg1jpJ2ZahJyfaDe78WUnDdcR
+ DpmqFpcwhOP05Fzz4ulV9d0rg9JvgroBFDjgKX7fwgtsx2v9vzVCcaY8F/zxBR2FaLeFalLsDl1
+ 4k97qmqmwacjRe27pJdusNESrl8DtKROa7Bb6tPG864D9fJU95spK2uQM9d1ghLCwPVH0p3zA4c
+ g==
+X-Received: by 2002:a05:622a:20d:b0:503:4258:93aa with SMTP id
+ d75a77b69052e-505d1ffc375mr164622351cf.0.1770053987751; 
+ Mon, 02 Feb 2026 09:39:47 -0800 (PST)
 Received: from [192.168.68.103] (200-206-229-25.dsl.telesp.net.br.
  [200.206.229.25]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c711b7c789sm1274221785a.7.2026.02.02.09.39.11
+ d75a77b69052e-50337bbbf8csm111612221cf.28.2026.02.02.09.39.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 09:39:13 -0800 (PST)
-Message-ID: <3d39bbeb-d0ce-4b9b-9aa3-71f6e0dc8230@ventanamicro.com>
-Date: Mon, 2 Feb 2026 14:39:09 -0300
+ Mon, 02 Feb 2026 09:39:47 -0800 (PST)
+Message-ID: <19cabb53-386a-4282-b878-b514f0661ca5@ventanamicro.com>
+Date: Mon, 2 Feb 2026 14:39:44 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 2/7] target/riscv: add sdext debug CSRs state
+Subject: Re: [RFC PATCH v4 3/7] target/riscv: add sdext Debug Mode helpers
 To: Chao Liu <chao.liu.zevorn@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
@@ -79,14 +79,14 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  hust-os-kernel-patches@googlegroups.com, wangjingwei@iscas.ac.cn,
  devel@lists.libvirt.org
 References: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
- <6cbae2d3248275c050942c196f6b6e16d1ad4eee.1769751489.git.chao.liu.zevorn@gmail.com>
+ <e7bcdb91db6c5f51081a079ca4e8c593152a3f36.1769751489.git.chao.liu.zevorn@gmail.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <6cbae2d3248275c050942c196f6b6e16d1ad4eee.1769751489.git.chao.liu.zevorn@gmail.com>
+In-Reply-To: <e7bcdb91db6c5f51081a079ca4e8c593152a3f36.1769751489.git.chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::744;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x744.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::842;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qt1-x842.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,330 +115,177 @@ On 1/30/2026 3:00 AM, Chao Liu wrote:
 > RISC-V Debug Specification:
 > https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 > 
-> Add architectural state for Sdext Debug Mode: debug_mode, dcsr, dpc
-> and dscratch0/1. Wire up CSR access for dcsr/dpc/dscratch and gate
-> them to Debug Mode (or host debugger access).
-> 
-> The Sdext is not fully implemented, so it is disabled by default.
+> Add helpers to enter/leave Debug Mode and to update dpc/dcsr.
+> Model resume without a Debug Module by leaving Debug Mode at
+> cpu_exec_enter and continuing from dpc.
 > 
 > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
->   target/riscv/cpu.c                |  11 +++
->   target/riscv/cpu.h                |   4 +
->   target/riscv/cpu_bits.h           |  33 ++++++++
->   target/riscv/cpu_cfg_fields.h.inc |   1 +
->   target/riscv/csr.c                | 126 ++++++++++++++++++++++++++++++
->   target/riscv/machine.c            |  20 +++++
->   6 files changed, 195 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 9fa4e09f17..9b08ef9fb0 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -210,6 +210,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
->       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-> +    ISA_EXT_DATA_ENTRY(sdext, PRIV_VERSION_1_12_0, ext_sdext),
->       ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
->       ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
->       ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
-> @@ -782,6 +783,12 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->       env->vill = true;
->   
->   #ifndef CONFIG_USER_ONLY
-> +    env->debug_mode = false;
-> +    env->dcsr = DCSR_DEBUGVER(4);
-> +    env->dpc = 0;
-> +    env->dscratch[0] = 0;
-> +    env->dscratch[1] = 0;
-> +
->       if (cpu->cfg.ext_sdtrig) {
->           riscv_trigger_reset_hold(env);
->       }
-> @@ -1132,6 +1139,9 @@ static void riscv_cpu_init(Object *obj)
->        */
->       cpu->cfg.ext_sdtrig = true;
->   
-> +    /* sdext is not fully implemented, so it is disabled by default. */
-> +    cpu->cfg.ext_sdext = false;
-> +
-
-We don't need to specify ext_sdext as default false here. You've already 
-set it to false in MULTI_EXT_CFG_BOOL below, and that covers the rv64 
-defaults. For every other CPU, an ext is always assumed as 'false' 
-unless it's explicitly set to 'true' somewhere.
-
-
-Everything else LGTM, so with these 3 lines above removed:
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-
-
->       if (mcc->def->profile) {
->           mcc->def->profile->enabled = true;
->       }
-> @@ -1246,6 +1256,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
->       MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
->       MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
-> +    MULTI_EXT_CFG_BOOL("sdext", ext_sdext, false),
->       MULTI_EXT_CFG_BOOL("sdtrig", ext_sdtrig, true),
->       MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
->       MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
+>   target/riscv/cpu.h         |  3 ++
+>   target/riscv/cpu_helper.c  | 84 ++++++++++++++++++++++++++++++++++++++
+>   target/riscv/debug.c       |  5 +++
+>   target/riscv/tcg/tcg-cpu.c | 14 +++++++
+>   4 files changed, 106 insertions(+)
+> 
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 4c0676ed53..2a265faae5 100644
+> index 2a265faae5..62732957a4 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -476,6 +476,10 @@ struct CPUArchState {
+> @@ -624,6 +624,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>   char *riscv_isa_string(RISCVCPU *cpu);
+>   int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
+>   bool riscv_cpu_option_set(const char *optname);
+> +void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
+> +                                uint32_t cause);
+> +void riscv_cpu_leave_debug_mode(CPURISCVState *env);
 >   
->       /* True if in debugger mode.  */
->       bool debugger;
-> +    bool debug_mode;
-> +    target_ulong dcsr;
-> +    target_ulong dpc;
-> +    target_ulong dscratch[2];
->   
->       uint64_t mstateen[SMSTATEEN_MAX_COUNT];
->       uint64_t hstateen[SMSTATEEN_MAX_COUNT];
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index b62dd82fe7..bb59f7ff56 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -467,6 +467,39 @@
->   #define CSR_DCSR            0x7b0
->   #define CSR_DPC             0x7b1
->   #define CSR_DSCRATCH        0x7b2
-> +#define CSR_DSCRATCH1       0x7b3
-> +
-> +/* DCSR fields */
-> +#define DCSR_XDEBUGVER_SHIFT    28
-> +#define DCSR_XDEBUGVER_MASK     (0xfu << DCSR_XDEBUGVER_SHIFT)
-> +#define DCSR_DEBUGVER(val)      ((target_ulong)(val) << DCSR_XDEBUGVER_SHIFT)
-> +#define DCSR_EXTCAUSE_SHIFT     24
-> +#define DCSR_EXTCAUSE_MASK      (0x7u << DCSR_EXTCAUSE_SHIFT)
-> +#define DCSR_CETRIG             BIT(19)
-> +#define DCSR_PELP               BIT(18)
-> +#define DCSR_EBREAKVS           BIT(17)
-> +#define DCSR_EBREAKVU           BIT(16)
-> +#define DCSR_EBREAKM            BIT(15)
-> +#define DCSR_EBREAKS            BIT(13)
-> +#define DCSR_EBREAKU            BIT(12)
-> +#define DCSR_STEPIE             BIT(11)
-> +#define DCSR_STOPCOUNT          BIT(10)
-> +#define DCSR_STOPTIME           BIT(9)
-> +#define DCSR_CAUSE_SHIFT        6
-> +#define DCSR_CAUSE_MASK         (0x7u << DCSR_CAUSE_SHIFT)
-> +#define DCSR_V                  BIT(5)
-> +#define DCSR_MPRVEN             BIT(4)
-> +#define DCSR_NMIP               BIT(3)
-> +#define DCSR_STEP               BIT(2)
-> +#define DCSR_PRV_MASK           0x3u
-> +
-> +#define DCSR_CAUSE_EBREAK       1
-> +#define DCSR_CAUSE_TRIGGER      2
-> +#define DCSR_CAUSE_HALTREQ      3
-> +#define DCSR_CAUSE_STEP         4
-> +#define DCSR_CAUSE_RESET        5
-> +#define DCSR_CAUSE_GROUP        6
-> +#define DCSR_CAUSE_OTHER        7
->   
->   /* Performance Counters */
->   #define CSR_MHPMCOUNTER3    0xb03
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 1e9162281f..e0d70fe8c7 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -46,6 +46,7 @@ BOOL_FIELD(ext_zilsd)
->   BOOL_FIELD(ext_zimop)
->   BOOL_FIELD(ext_zcmop)
->   BOOL_FIELD(ext_ztso)
-> +BOOL_FIELD(ext_sdext)
->   BOOL_FIELD(ext_sdtrig)
->   BOOL_FIELD(ext_smstateen)
->   BOOL_FIELD(ext_sstc)
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 870fad87ac..3e38c943e0 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3136,6 +3136,126 @@ static RISCVException write_mtval(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
+>   #ifndef CONFIG_USER_ONLY
+>   void riscv_cpu_do_interrupt(CPUState *cpu);
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index dd6c861a90..0e266ff3a9 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -136,6 +136,90 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+>   #endif
 >   }
 >   
-> +#if !defined(CONFIG_USER_ONLY)
-> +static RISCVException sdext(CPURISCVState *env, int csrno)
+> +#ifndef CONFIG_USER_ONLY
+> +static bool riscv_sdext_enabled(CPURISCVState *env)
 > +{
-> +    if (!riscv_cpu_cfg(env)->ext_sdext) {
-> +        return RISCV_EXCP_ILLEGAL_INST;
-> +    }
-> +
-> +    if (!env->debug_mode && !env->debugger) {
-> +        return RISCV_EXCP_ILLEGAL_INST;
-> +    }
-> +
-> +    return RISCV_EXCP_NONE;
+> +    return riscv_cpu_cfg(env)->ext_sdext;
 > +}
-> +
-> +static target_ulong dcsr_visible_mask(CPURISCVState *env)
-> +{
-> +    target_ulong mask = (target_ulong)-1;
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +
-> +    if (!riscv_has_ext(env, RVH)) {
-> +        mask &= ~(DCSR_EBREAKVS | DCSR_EBREAKVU | DCSR_V);
-> +    }
-> +    if (!riscv_has_ext(env, RVS)) {
-> +        mask &= ~DCSR_EBREAKS;
-> +    }
-> +    if (!riscv_has_ext(env, RVU)) {
-> +        mask &= ~DCSR_EBREAKU;
-> +    }
-> +    if (!cpu->cfg.ext_zicfilp) {
-> +        mask &= ~DCSR_PELP;
-> +    }
-> +    if (!cpu->cfg.ext_smdbltrp) {
-> +        mask &= ~DCSR_CETRIG;
-> +    }
-> +
-> +    return mask;
-> +}
-> +
-> +static RISCVException read_dcsr(CPURISCVState *env, int csrno,
-> +                                target_ulong *val)
-> +{
-> +    *val = env->dcsr & dcsr_visible_mask(env);
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static target_ulong dcsr_writable_mask(CPURISCVState *env)
-> +{
-> +    target_ulong mask = DCSR_EBREAKM | DCSR_EBREAKS | DCSR_EBREAKU |
-> +                        DCSR_STEPIE | DCSR_STOPCOUNT | DCSR_STOPTIME |
-> +                        DCSR_STEP | DCSR_PRV_MASK;
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +
-> +    mask |= DCSR_MPRVEN;
-> +
-> +    if (riscv_has_ext(env, RVH)) {
-> +        mask |= DCSR_EBREAKVS | DCSR_EBREAKVU | DCSR_V;
-> +    }
-> +    if (riscv_has_ext(env, RVS)) {
-> +        mask |= DCSR_EBREAKS;
-> +    }
-> +    if (riscv_has_ext(env, RVU)) {
-> +        mask |= DCSR_EBREAKU;
-> +    }
-> +    if (cpu->cfg.ext_zicfilp) {
-> +        mask |= DCSR_PELP;
-> +    }
-> +    if (cpu->cfg.ext_smdbltrp) {
-> +        mask |= DCSR_CETRIG;
-> +    }
-> +
-> +    return mask;
-> +}
-> +
-> +static RISCVException write_dcsr(CPURISCVState *env, int csrno,
-> +                                 target_ulong val, uintptr_t ra)
-> +{
-> +    target_ulong mask = dcsr_writable_mask(env);
-> +    target_ulong new_val = env->dcsr;
-> +
-> +    new_val &= ~mask;
-> +    new_val |= val & mask;
-> +    new_val &= ~DCSR_XDEBUGVER_MASK;
-> +    new_val |= DCSR_DEBUGVER(4);
-> +    env->dcsr = new_val;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException read_dpc(CPURISCVState *env, int csrno,
-> +                               target_ulong *val)
-> +{
-> +    *val = env->dpc & get_xepc_mask(env);
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_dpc(CPURISCVState *env, int csrno,
-> +                                target_ulong val, uintptr_t ra)
-> +{
-> +    env->dpc = val & get_xepc_mask(env);
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException read_dscratch(CPURISCVState *env, int csrno,
-> +                                    target_ulong *val)
-> +{
-> +    int index = (csrno == CSR_DSCRATCH1) ? 1 : 0;
-> +
-> +    *val = env->dscratch[index];
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_dscratch(CPURISCVState *env, int csrno,
-> +                                     target_ulong val, uintptr_t ra)
-> +{
-> +    int index = (csrno == CSR_DSCRATCH1) ? 1 : 0;
-> +
-> +    env->dscratch[index] = val;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +#endif /* !CONFIG_USER_ONLY */
-> +
->   /* Execution environment configuration setup */
->   static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
->                                      target_ulong *val)
-> @@ -6297,6 +6417,12 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->       [CSR_TDATA3]    =  { "tdata3",   debug, read_tdata,    write_tdata    },
->       [CSR_TINFO]     =  { "tinfo",    debug, read_tinfo,    write_ignore   },
->       [CSR_MCONTEXT]  =  { "mcontext", debug, read_mcontext, write_mcontext },
-> +#if !defined(CONFIG_USER_ONLY)
-> +    [CSR_DCSR]      =  { "dcsr",      sdext, read_dcsr,     write_dcsr },
-> +    [CSR_DPC]       =  { "dpc",       sdext, read_dpc,      write_dpc },
-> +    [CSR_DSCRATCH]  =  { "dscratch0", sdext, read_dscratch, write_dscratch },
-> +    [CSR_DSCRATCH1] =  { "dscratch1", sdext, read_dscratch, write_dscratch },
 > +#endif
->   
->       [CSR_MCTRCTL]    = { "mctrctl",    ctr_mmode,  NULL, NULL, rmw_xctrctl    },
->       [CSR_SCTRCTL]    = { "sctrctl",    ctr_smode,  NULL, NULL, rmw_xctrctl    },
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 62c51c8033..52264cf047 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -248,6 +248,25 @@ static const VMStateDescription vmstate_sdtrig = {
->           VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
->           VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
->           VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-> +        VMSTATE_BOOL_V(env.debug_mode, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_V(env.dcsr, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_V(env.dpc, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_ARRAY_V(env.dscratch, RISCVCPU, 2, 3),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
 > +
-> +static const VMStateDescription vmstate_sdext = {
-> +    .name = "cpu/sdext",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = sdtrig_needed,
-> +    .post_load = sdtrig_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_BOOL_V(env.debug_mode, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_V(env.dcsr, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_V(env.dpc, RISCVCPU, 3),
-> +        VMSTATE_UINTTL_ARRAY_V(env.dscratch, RISCVCPU, 2, 3),
->           VMSTATE_END_OF_LIST()
+> +void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
+> +                                uint32_t cause)
+> +{
+> +#ifndef CONFIG_USER_ONLY
+> +    if (!riscv_sdext_enabled(env)) {
+> +        return;
+> +    }
+> +
+> +    env->debug_mode = true;
+> +    env->dpc = pc & get_xepc_mask(env);
+> +    env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
+> +    env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
+> +    env->dcsr |= env->priv & DCSR_PRV_MASK;
+> +    if (env->virt_enabled && riscv_has_ext(env, RVH)) {
+> +        env->dcsr |= DCSR_V;
+> +    }
+> +
+> +    if (env_archcpu(env)->cfg.ext_zicfilp) {
+> +        if (env->elp) {
+> +            env->dcsr |= DCSR_PELP;
+> +        } else {
+> +            env->dcsr &= ~DCSR_PELP;
+> +        }
+> +        env->elp = false;
+> +    }
+> +#endif
+> +}
+> +
+> +void riscv_cpu_leave_debug_mode(CPURISCVState *env)
+> +{
+> +#ifndef CONFIG_USER_ONLY
+> +    if (!riscv_sdext_enabled(env)) {
+> +        return;
+> +    }
+> +
+> +    target_ulong new_priv = env->dcsr & DCSR_PRV_MASK;
+> +    bool new_virt = riscv_has_ext(env, RVH) && (env->dcsr & DCSR_V);
+> +
+> +    if (new_priv > PRV_M) {
+> +        new_priv = PRV_M;
+> +    }
+> +    if (new_priv == PRV_M) {
+> +        new_virt = false;
+> +    }
+> +
+> +    if (new_priv == PRV_S && !riscv_has_ext(env, RVS)) {
+> +        new_priv = PRV_M;
+> +        new_virt = false;
+> +    } else if (new_priv == PRV_U && !riscv_has_ext(env, RVU)) {
+> +        new_priv = riscv_has_ext(env, RVS) ? PRV_S : PRV_M;
+> +        new_virt = false;
+> +    }
+> +
+> +    env->debug_mode = false;
+> +    riscv_cpu_set_mode(env, new_priv, new_virt);
+> +
+> +    if (env_archcpu(env)->cfg.ext_zicfilp) {
+> +        env->elp = cpu_get_fcfien(env) && (env->dcsr & DCSR_PELP);
+> +        env->dcsr &= ~DCSR_PELP;
+> +    }
+> +
+> +    if (new_priv != PRV_M) {
+> +        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, 0);
+> +    }
+> +
+> +    if (env_archcpu(env)->cfg.ext_smdbltrp && new_priv != PRV_M) {
+> +        env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
+> +    }
+> +    if (env_archcpu(env)->cfg.ext_ssdbltrp && (new_priv == PRV_U || new_virt)) {
+> +        env->mstatus = set_field(env->mstatus, MSTATUS_SDT, 0);
+> +        if (new_virt && new_priv == PRV_U) {
+> +            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
+> +        }
+> +    }
+> +#endif
+> +}
+> +
+>   RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+>   {
+>   #ifndef CONFIG_USER_ONLY
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 5664466749..5877a60c50 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -927,6 +927,11 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+>       RISCVCPU *cpu = RISCV_CPU(cs);
+>       CPURISCVState *env = &cpu->env;
+>   
+> +    /* Triggers must not match or fire while in Debug Mode. */
+> +    if (env->debug_mode) {
+> +        return;
+> +    }
+> +
+>       if (cs->watchpoint_hit) {
+>           if (cs->watchpoint_hit->flags & BP_CPU) {
+>               do_trigger_action(env, DBG_ACTION_BP);
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index d9fbb5bf58..f80e3413f8 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -266,6 +266,19 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
 >       }
->   };
-> @@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_ctr,
->           &vmstate_sstc,
->           &vmstate_sdtrig,
-> +        &vmstate_sdext,
->           NULL
->       }
->   };
+>       return extract64(result, 0, 64 - pm_len);
+>   }
+> +
+> +static void riscv_cpu_exec_enter(CPUState *cs)
+> +{
+> +    RISCVCPU *cpu = RISCV_CPU(cs);
+> +    CPURISCVState *env = &cpu->env;
+> +
+> +    if (!cpu->cfg.ext_sdext || !env->debug_mode) {
+> +        return;
+> +    }
+> +    target_ulong pc = env->dpc;
+> +    riscv_cpu_leave_debug_mode(env);
+> +    env->pc = pc;
+> +}
+>   #endif
+>   
+>   const TCGCPUOps riscv_tcg_ops = {
+> @@ -282,6 +295,7 @@ const TCGCPUOps riscv_tcg_ops = {
+>   #ifndef CONFIG_USER_ONLY
+>       .tlb_fill = riscv_cpu_tlb_fill,
+>       .pointer_wrap = riscv_pointer_wrap,
+> +    .cpu_exec_enter = riscv_cpu_exec_enter,
+>       .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
+>       .cpu_exec_halt = riscv_cpu_has_work,
+>       .cpu_exec_reset = cpu_reset,
 
 
