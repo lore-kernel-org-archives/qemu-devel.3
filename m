@@ -4,86 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33552E73158
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 12:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BB8E73158
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 12:41:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtBw-0001wY-7y; Mon, 02 Feb 2026 07:38:08 -0500
+	id 1vmtF5-0003jL-Rp; Mon, 02 Feb 2026 07:41:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vmtBv-0001vy-4a
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:38:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vmtBs-0007pa-LQ
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:38:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770035881;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iPT9paY39GfaTdLiYcFr02HeGBxC/vy280BB8hMwkCM=;
- b=VH03V8vLh1kzGL9DEDlGNQpJNkKaAHO7RRC9mku+vv7B44ytNtcvS70WmkSySHKjufvAVL
- bxkdCiZ1AR6XGJGifaHxx8N3rU5WfZ81GtsTqSukB0rFnYQSkEfTRGdYulvi/mnBDAeycl
- W4ixpkITkmi7jWLBlJ1JhyJFFWlb3LM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-PehBuJ-qNWy_vUWLaKitZA-1; Mon,
- 02 Feb 2026 07:37:58 -0500
-X-MC-Unique: PehBuJ-qNWy_vUWLaKitZA-1
-X-Mimecast-MFC-AGG-ID: PehBuJ-qNWy_vUWLaKitZA_1770035877
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmtF3-0003gl-VX
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:41:21 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmtF1-0008Eg-L8
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:41:21 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EF9D19560B2; Mon,  2 Feb 2026 12:37:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B282180009E; Mon,  2 Feb 2026 12:37:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A180121E692D; Mon, 02 Feb 2026 13:37:52 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Roman Kiryanov <rkir@google.com>,
- qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- mjt@tls.msk.ru,  whollins@google.com,  jansene@google.com,
- jpcottin@google.com,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-In-Reply-To: <6f175d60-6544-4dc9-99eb-71f60c305017@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 2 Feb 2026 12:20:30
- +0100")
-References: <20260129190444.225306-1-rkir@google.com>
- <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
- <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
- <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
- <0954062c-c032-42be-ad0d-df2559360963@linaro.org>
- <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
- <aYCD4g7x8DDH4tyW@redhat.com>
- <6f175d60-6544-4dc9-99eb-71f60c305017@linaro.org>
-Date: Mon, 02 Feb 2026 13:37:52 +0100
-Message-ID: <87wm0v9v8f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0A4725BD71;
+ Mon,  2 Feb 2026 12:41:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770036076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
+ b=yfXc+u2wYy7BRE1xSJeYek7d1GqdyLQkevu79g6DwSDjODVG4NFLx7z851ZIfQFA2Vidd2
+ n/Le1Wwl+fq6B1FwTtV/leL7VaLBZla59+vbu+gvGx/4+PdKX1EspFJ0+VavjxEqaZdc4Y
+ uENd1F1L3116fOpCuVc2h1hdH1W/pa8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770036076;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
+ b=sETIDtDu9pFy9iCCjNu6f5ItQrZLBAvddIjrylPbc1IT0CyhtsgtdEsGZBLMys8XzwM7HC
+ iatU1WN8r3q4hnBQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yfXc+u2w;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sETIDtDu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770036076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
+ b=yfXc+u2wYy7BRE1xSJeYek7d1GqdyLQkevu79g6DwSDjODVG4NFLx7z851ZIfQFA2Vidd2
+ n/Le1Wwl+fq6B1FwTtV/leL7VaLBZla59+vbu+gvGx/4+PdKX1EspFJ0+VavjxEqaZdc4Y
+ uENd1F1L3116fOpCuVc2h1hdH1W/pa8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770036076;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
+ b=sETIDtDu9pFy9iCCjNu6f5ItQrZLBAvddIjrylPbc1IT0CyhtsgtdEsGZBLMys8XzwM7HC
+ iatU1WN8r3q4hnBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EC9933EA62;
+ Mon,  2 Feb 2026 12:41:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yZ7cKmqbgGlFMgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 12:41:14 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PATCH] migration: Update comments mentioning qmp_migrate_finish
+Date: Mon,  2 Feb 2026 09:41:12 -0300
+Message-ID: <20260202124112.30684-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 0A4725BD71
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,112 +120,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+The qmp_migrate_finish function was recently removed in commit
+2379a04e60 ("migration: Remove qmp_migrate_finish"), update comments
+that mention it.
 
-> On 2/2/26 12:00, Daniel P. Berrang=C3=A9 wrote:
->> On Fri, Jan 30, 2026 at 09:19:32AM +0000, Peter Maydell wrote:
->>> On Thu, 29 Jan 2026 at 21:44, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
->>>>
->>>> Hi Peter,
->>>>
->>>> (+Paolo / Eric)
->>>>
->>>> On 29/1/26 21:31, Peter Maydell wrote:
->>>>>
->>>>> What are we trying to achieve here, and why does it benefit
->>>>> us as an upstream project ?
->>>>>
->>>>> cf previous email thread from 2024
->>>>> https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
->>>>> about "drip-feeding" of this kind of patch with no clear take
->>>>> on what the end state is or how much churn it's going to induce.
->>>>
->>>> I clearly know QEMU is not a C++ project. Now I don't see why we should
->>>> be reluctant to have headers being usable by a C++ compiler, as long as
->>>> it doesn't make our project worst to maintain.
->>>
->>> Every bit of code that is written by some downstream in C++ is
->>> some thing that will essentially then never be upstreamed without
->>> a big rewrite. So making it easier for downstreams to use C++
->>> reduces our chances of seeing them contribute what they do back to us.
->>>
->>> It's also extra work for us (for instance in this thread you
->>> proposed adding a CI job, which is more CI minutes cost to
->>> the project, more work for maintainers when something that
->>> builds fine locally falls over in the CI, and so on).
->>>
->>> Each individual fix might be trivial, but they add up.
->>> So it matters whether this one is "this is the only thing
->>> we tripped over since 2024" or "we just rebased to a new
->>> QEMU version and are going to be submitting dozens of these
->>> over the next few weeks".
->>>
->>>> See for example non-invasive commit 7246c4cc470 ("exec: don't use void*
->>>> in pointer arithmetic in headers"):
->>>
->>>> or commit 17c7df806b3 ("exec: avoid using C++ keywords in function
->>>> parameters"):
->>>
->>> For the record, I wasn't really enthusiastic about those changes
->>> either, for essentially the same reasons.
->>>
->>>> In this particular case, I always have been confused about what would =
-be
->>>> the size of forward-declared enums. The C99 standard chapter =C2=A76.7=
-.2.2
->>>> point 4 mentions:
->>>>
->>>>     Each enumerated type shall be compatible with char, a signed
->>>>     integer type, or an unsigned integer type. The choice of type
->>>>     is implementation-defined, but shall be capable of representing
->>>>     the values of all the members of the enumeration.
->>>>
->>>> When compiling this file with -Werror=3Dpedantic we get:
->>>>
->>>> In file included from ../../ui/kbd-state.c:10:
->>>> include/ui/kbd-state.h:12:14: error: ISO C forbids forward references =
-to
->>>> 'enum' types [-Werror,-Wpedantic]
->>>>      12 | typedef enum QKbdModifier QKbdModifier;
->>>>         |              ^
->>>>
->>>> So arguably this could be fixed for C.
->>>
->>> Yes, I actually like the specific change in the patch
->>> on style grounds.
->>
->> The *current* code style, however, matches the style we use for the
->> struct declaration & typedefs, and it is natural to be consistent
->> in this way.
->
-> Per the ISO C standard, maybe we should considerate following the same
-> structure style for enum typedefs was a mistake, and update our coding
-> style. This is what I suggested here:
->
-> https://lore.kernel.org/qemu-devel/20260130211746.46667-3-philmd@linaro.o=
-rg/
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Is ISO C conformance really a compelling argument?
-
-We are relying on multiple Gcc / Clang C extensions.  Forward-declared
-enums is just one of them.
-
->> Even within this one file we have this example:
->>
->>    typedef enum QKbdModifier QKbdModifier;
->>    typedef struct QKbdState QKbdState;
->>
->> And so personally I think the current code is preferrable to this patch.
-
-I think the current code is just fine.
-
->> IMHO, if downstream users/developers of a fork really strongly don't want
->> to be writing new devices in C, then the focus should be on Rust as the
->> next generation language, not the C++.
-
-Their funeral.
-
-Can't see why we'd be interested in enabling it, though.
+diff --git a/migration/migration.c b/migration/migration.c
+index b103a82fc0..1f5c289d68 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1469,8 +1469,8 @@ void migration_cancel(void)
+     }
+ 
+     /*
+-     * If qmp_migrate_finish has not been called, then there is no path that
+-     * will complete the cancellation.  Do it now.
++     * If migration_connect_outgoing has not been called, then there
++     * is no path that will complete the cancellation. Do it now.
+      */
+     if (setup && !s->to_dst_file) {
+         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+@@ -2051,11 +2051,12 @@ void qmp_migrate(const char *uri, bool has_channels,
+      * For cpr-transfer, the target may not be listening yet on the migration
+      * channel, because first it must finish cpr_load_state.  The target tells
+      * us it is listening by closing the cpr-state socket.  Wait for that HUP
+-     * event before connecting in qmp_migrate_finish.
++     * event before connecting in migration_connect_outgoing.
+      *
+      * The HUP could occur because the target fails while reading CPR state,
+      * in which case the target will not listen for the incoming migration
+-     * connection, so qmp_migrate_finish will fail to connect, and then recover.
++     * connection, so migration_connect_outgoing will fail to connect,
++     * and then recover.
+      */
+     if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
+         cpr_transfer_add_hup_watch(s, migration_connect_outgoing_cb,
+-- 
+2.51.0
 
 
