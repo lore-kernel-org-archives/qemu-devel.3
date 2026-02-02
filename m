@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2911AE7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02599E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzur-0003eo-Be; Mon, 02 Feb 2026 14:48:57 -0500
+	id 1vmzwx-0008Uw-8w; Mon, 02 Feb 2026 14:51:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzuq-0003a2-Cq; Mon, 02 Feb 2026 14:48:56 -0500
+ id 1vmzwn-0007mR-Op; Mon, 02 Feb 2026 14:50:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzuo-0003SB-6U; Mon, 02 Feb 2026 14:48:56 -0500
+ id 1vmzwl-0003wF-MF; Mon, 02 Feb 2026 14:50:57 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9468C1850AD;
- Mon, 02 Feb 2026 22:46:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0A561850C2;
+ Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C39335B28F;
- Mon, 02 Feb 2026 22:46:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7840335B2A4;
+ Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 27/69] linux-user: fix mremap unmapping adjacent region
-Date: Mon,  2 Feb 2026 22:45:50 +0300
-Message-ID: <20260202194638.939438-27-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 48/69] tests/functional: Mark another MIPS replay test
+ as flaky
+Date: Mon,  2 Feb 2026 22:46:11 +0300
+Message-ID: <20260202194638.939438-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,34 +63,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Lugg <mlugg@mlugg.co.uk>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This typo meant that calls to `mremap` which shrink a mapping by some N
-bytes would, when the virtual address space was pre-reserved (e.g.
-32-bit guest on 64-bit host), unmap the N bytes following the *original*
-mapping.
+When disabling MIPS tests on commit 1c11aa18071
+("tests/functional: Mark the MIPS replay tests as flaky")
+we missed the 5KEc test.
 
-Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
-(cherry picked from commit aaed9ca1797d70a507371aea688c5cd60b074e2d)
+Message-ID: <20251104145955.84091-1-philmd@linaro.org>
+(cherry picked from commit 290e4e7de7a579be7457bfbc338b697b8eea638f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index d1f36e6f16..703f8ca3cd 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1169,7 +1169,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-                     errno = ENOMEM;
-                     host_addr = MAP_FAILED;
-                 } else if (reserved_va && old_size > new_size) {
--                    mmap_reserve_or_unmap(old_addr + old_size,
-+                    /* Re-reserve pages we just shrunk out of the mapping */
-+                    mmap_reserve_or_unmap(old_addr + new_size,
-                                           old_size - new_size);
-                 }
-             }
+diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
+index 05cc585f85..e9318448fa 100755
+--- a/tests/functional/test_mips64el_replay.py
++++ b/tests/functional/test_mips64el_replay.py
+@@ -40,6 +40,7 @@ def test_replay_mips64el_malta(self):
+         '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
+ 
+     @skipUntrustedTest()
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips64el_malta_5KEc_cpio(self):
+         self.set_machine('malta')
+         self.cpu = '5KEc'
 -- 
 2.47.3
 
