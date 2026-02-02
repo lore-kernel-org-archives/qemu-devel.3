@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E31DE7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FB7E7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:01:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn123-0008Ec-Bk; Mon, 02 Feb 2026 16:00:27 -0500
+	id 1vn11S-00056Q-CQ; Mon, 02 Feb 2026 15:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11z-0007sZ-C5; Mon, 02 Feb 2026 16:00:23 -0500
+ id 1vn115-0004Cc-3W; Mon, 02 Feb 2026 15:59:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11w-0004Cc-Ua; Mon, 02 Feb 2026 16:00:22 -0500
+ id 1vn112-0003qQ-Ry; Mon, 02 Feb 2026 15:59:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2E2891851A0;
- Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 81FF2185197;
+ Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EC05035B317;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4A32535B30E;
  Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 20/74] target/i386: Fix #GP error code for INT
- instructions
-Date: Mon,  2 Feb 2026 23:57:31 +0300
-Message-ID: <20260202205833.941615-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ =?UTF-8?q?Luk=C3=A1=C5=A1=20Doktor?= <ldoktor@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 11/74] Revert "nvme: Fix coroutine waking"
+Date: Mon,  2 Feb 2026 23:57:22 +0300
+Message-ID: <20260202205833.941615-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,40 +61,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-While the (intno << shift) expression is correct for indexing the IDT based on
-whether Long Mode is active, the error code itself was unchanged with AMD64,
-and is still the index with 3 bits of metadata in the bottom.
+This reverts commit 0f142cbd919fcb6cea7aa176f7e4939925806dd9.
+(this is commit 619c2350fae574af67d371f68f701692d9b8487a in 10.1.3)
 
-Found when running a Xen unit test, all under QEMU.  The unit test objected to
-being told there was an error with IDT index 256 when INT $0x80 (128) was the
-problem instruction:
+Said commit changed the replay_bh_schedule_oneshot_event() in
+nvme_rw_cb() to aio_co_wake(), allowing the request coroutine to be
+entered directly (instead of only being scheduled for later execution).
+This can cause the device to become stalled like so:
 
-  ...
-  Error: Unexpected fault 0x800d0802, #GP[IDT[256]]
-  ...
+It is possible that after completion the request coroutine goes on to
+submit another request without yielding, e.g. a flush after a write to
+emulate FUA.  This will likely cause a nested nvme_process_completion()
+call because nvme_rw_cb() itself is called from there.
 
-Fixes: d2fd1af76777 ("x86_64 linux user emulation")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Link: https://lore.kernel.org/r/20250312000603.3666083-1-andrew.cooper3@citrix.com
+(After submitting a request, we invoke nvme_process_completion() through
+defer_call(); but the fact that nvme_process_completion() ran in the
+first place indicates that we are not in a call-deferring section, so
+defer_call() will call nvme_process_completion() immediately.)
+
+If this inner nvme_process_completion() loop then processes any
+completions, it will write the final completion queue (CQ) head index to
+the CQ head doorbell, and subsequently execution will return to the
+outer nvme_process_completion() loop.  Even if this loop now finds no
+further completions, it still processed at least one completion before,
+or it would not have called the nvme_rw_cb() which led to nesting.
+Therefore, it will now write the exact same CQ head index value to the
+doorbell, which effectively is an unrecoverable error[1].
+
+Therefore, nesting of nvme_process_completion() does not work at this
+point.  Reverting said commit removes the nesting (by scheduling the
+request coroutine instead of entering it immediately), and so fixes the
+stall.
+
+On the downside, reverting said commit breaks multiqueue for nvme, but
+better to have single-queue working than neither.  For 11.0, we will
+have a solution that makes both work.
+
+A side note: There is a comment in nvme_process_completion() above
+qemu_bh_schedule() that claims nesting works, as long as it is done
+through the completion_bh.  I am quite sure that is not true, for two
+reasons:
+- The problem described above, which is even worse when going through
+  nvme_process_completion_bh() because that function unconditionally
+  writes to the CQ head doorbell,
+- nvme_process_completion_bh() never takes q->lock, so
+  nvme_process_completion() unlocking it will likely abort.
+
+Given the lack of reports of such aborts, I believe that completion_bh
+simply is unused in practice.
+
+[1] See the NVMe Base Specification revision 2.3, page 180, figure 152:
+    “Invalid Doorbell Write Value: A host attempted to write an invalid
+    doorbell value. Some possible causes of this error are: [...] the
+    value written is the same as the previously written doorbell value.”
+
+    To even be notified of this error, we would need to send an
+    Asynchronous Event Request to the admin queue (p. 178ff), which we
+    don’t do, and then to handle it, we would need to delete and
+    recreate the queue (p. 88, section 3.3.1.2 Queue Usage).
+
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3160
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 60efba3c1bff0d78632d45c2dc927c5bc7a17ba8)
+Reported-by: Lukáš Doktor <ldoktor@redhat.com>
+Tested-by: Lukáš Doktor <ldoktor@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-id: 20251215141540.88915-1-hreitz@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit b002acacc1d72521351501fa0af81d146106c9ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
-index 263f59937f..28bbef1bba 100644
---- a/target/i386/tcg/user/seg_helper.c
-+++ b/target/i386/tcg/user/seg_helper.c
-@@ -63,7 +63,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
-         cpl = env->hflags & HF_CPL_MASK;
-         /* check privilege if software int */
-         if (dpl < cpl) {
--            raise_exception_err(env, EXCP0D_GPF, (intno << shift) + 2);
-+            raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
-         }
+diff --git a/block/nvme.c b/block/nvme.c
+index 919e14cef9..c3d3b99d1f 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -1200,36 +1200,26 @@ fail:
+ 
+ typedef struct {
+     Coroutine *co;
+-    bool skip_yield;
+     int ret;
++    AioContext *ctx;
+ } NVMeCoData;
+ 
++static void nvme_rw_cb_bh(void *opaque)
++{
++    NVMeCoData *data = opaque;
++    qemu_coroutine_enter(data->co);
++}
++
+ /* Put into NVMeRequest.cb, so runs in the BDS's main AioContext */
+ static void nvme_rw_cb(void *opaque, int ret)
+ {
+     NVMeCoData *data = opaque;
+-
+     data->ret = ret;
+-
+-    if (data->co == qemu_coroutine_self()) {
+-        /*
+-         * Fast path: We are inside of the request coroutine (through
+-         * nvme_submit_command, nvme_deferred_fn, nvme_process_completion).
+-         * We can set data->skip_yield here to keep the coroutine from
+-         * yielding, and then we don't need to schedule a BH to wake it.
+-         */
+-        data->skip_yield = true;
+-    } else {
+-        /*
+-         * Safe to call: The case where we run in the request coroutine is
+-         * handled above, so we must be independent of it; and without
+-         * skip_yield set, the coroutine will yield.
+-         * No need to release NVMeQueuePair.lock (we are called without it
+-         * held).  (Note: If we enter the coroutine here, @data will
+-         * probably be dangling once aio_co_wake() returns.)
+-         */
+-        aio_co_wake(data->co);
++    if (!data->co) {
++        /* The rw coroutine hasn't yielded, don't try to enter. */
++        return;
+     }
++    replay_bh_schedule_oneshot_event(data->ctx, nvme_rw_cb_bh, data);
+ }
+ 
+ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+@@ -1253,7 +1243,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         .cdw12 = cpu_to_le32(cdw12),
+     };
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1270,7 +1260,9 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         return r;
+     }
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1366,7 +1358,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+         .nsid = cpu_to_le32(s->nsid),
+     };
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1374,7 +1366,9 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+     req = nvme_get_free_req(ioq);
+     assert(req);
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    if (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1415,7 +1409,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1435,7 +1429,9 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     assert(req);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1463,7 +1459,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1508,7 +1504,9 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     trace_nvme_dsm(s, offset, bytes);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
      }
  
 -- 
