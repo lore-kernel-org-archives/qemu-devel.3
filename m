@@ -4,37 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC49E7FDC2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB578E7FDC6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzuT-0001JE-Gq; Mon, 02 Feb 2026 14:48:35 -0500
+	id 1vmztZ-0000Sn-PY; Mon, 02 Feb 2026 14:47:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztx-0000wm-MU; Mon, 02 Feb 2026 14:48:05 -0500
+ id 1vmztT-0000Oy-F3; Mon, 02 Feb 2026 14:47:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmztv-0003Jh-Hr; Mon, 02 Feb 2026 14:48:01 -0500
+ id 1vmztQ-0003FW-IV; Mon, 02 Feb 2026 14:47:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D500E1850A4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7B83A18509F;
  Mon, 02 Feb 2026 22:46:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8578C35B286;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2C81D35B281;
  Mon, 02 Feb 2026 22:46:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 18/69] monitor: Fix const qualifier build errors with
- recent glibc
-Date: Mon,  2 Feb 2026 22:45:41 +0300
-Message-ID: <20260202194638.939438-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ =?UTF-8?q?Luk=C3=A1=C5=A1=20Doktor?= <ldoktor@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 13/69] Revert "nvme: Fix coroutine waking"
+Date: Mon,  2 Feb 2026 22:45:36 +0300
+Message-ID: <20260202194638.939438-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -64,46 +61,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-A recent change in glibc 2.42.9000 [1] changes the return type of
-strchr() and other string functions to be 'const char *' when the
-input is a 'const char *'. This breaks the build in :
+This reverts commit 0f142cbd919fcb6cea7aa176f7e4939925806dd9.
+(this is commit 361bd4a6c8ca57f48dd5a9e590d2c69a87e7dda1 in 10.0.7)
 
-../monitor/hmp.c:589:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-  589 |     p = strchr(type, ':');
-      |       ^
+Said commit changed the replay_bh_schedule_oneshot_event() in
+nvme_rw_cb() to aio_co_wake(), allowing the request coroutine to be
+entered directly (instead of only being scheduled for later execution).
+This can cause the device to become stalled like so:
 
-Fix this by changing the type of the variables that store the result
-of these functions to 'const char *'.
+It is possible that after completion the request coroutine goes on to
+submit another request without yielding, e.g. a flush after a write to
+emulate FUA.  This will likely cause a nested nvme_process_completion()
+call because nvme_rw_cb() itself is called from there.
 
-[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+(After submitting a request, we invoke nvme_process_completion() through
+defer_call(); but the fact that nvme_process_completion() ran in the
+first place indicates that we are not in a call-deferring section, so
+defer_call() will call nvme_process_completion() immediately.)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251215101937.281722-4-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit dfe87815ba450228811f3abc633d7dc02757922e)
+If this inner nvme_process_completion() loop then processes any
+completions, it will write the final completion queue (CQ) head index to
+the CQ head doorbell, and subsequently execution will return to the
+outer nvme_process_completion() loop.  Even if this loop now finds no
+further completions, it still processed at least one completion before,
+or it would not have called the nvme_rw_cb() which led to nesting.
+Therefore, it will now write the exact same CQ head index value to the
+doorbell, which effectively is an unrecoverable error[1].
+
+Therefore, nesting of nvme_process_completion() does not work at this
+point.  Reverting said commit removes the nesting (by scheduling the
+request coroutine instead of entering it immediately), and so fixes the
+stall.
+
+On the downside, reverting said commit breaks multiqueue for nvme, but
+better to have single-queue working than neither.  For 11.0, we will
+have a solution that makes both work.
+
+A side note: There is a comment in nvme_process_completion() above
+qemu_bh_schedule() that claims nesting works, as long as it is done
+through the completion_bh.  I am quite sure that is not true, for two
+reasons:
+- The problem described above, which is even worse when going through
+  nvme_process_completion_bh() because that function unconditionally
+  writes to the CQ head doorbell,
+- nvme_process_completion_bh() never takes q->lock, so
+  nvme_process_completion() unlocking it will likely abort.
+
+Given the lack of reports of such aborts, I believe that completion_bh
+simply is unused in practice.
+
+[1] See the NVMe Base Specification revision 2.3, page 180, figure 152:
+    “Invalid Doorbell Write Value: A host attempted to write an invalid
+    doorbell value. Some possible causes of this error are: [...] the
+    value written is the same as the previously written doorbell value.”
+
+    To even be notified of this error, we would need to send an
+    Asynchronous Event Request to the admin queue (p. 178ff), which we
+    don’t do, and then to handle it, we would need to delete and
+    recreate the queue (p. 88, section 3.3.1.2 Queue Usage).
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Lukáš Doktor <ldoktor@redhat.com>
+Tested-by: Lukáš Doktor <ldoktor@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-id: 20251215141540.88915-1-hreitz@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit b002acacc1d72521351501fa0af81d146106c9ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 34e2b8f748..a3ee02e52c 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -577,10 +577,11 @@ static const char *get_command_name(const char *cmdline,
-  * Read key of 'type' into 'key' and return the current
-  * 'type' pointer.
-  */
--static char *key_get_info(const char *type, char **key)
-+static const char *key_get_info(const char *type, char **key)
- {
-     size_t len;
--    char *p, *str;
-+    const char *p;
-+    char *str;
+diff --git a/block/nvme.c b/block/nvme.c
+index bef515e903..5bf6480af7 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -1195,36 +1195,26 @@ fail:
  
-     if (*type == ',') {
-         type++;
+ typedef struct {
+     Coroutine *co;
+-    bool skip_yield;
+     int ret;
++    AioContext *ctx;
+ } NVMeCoData;
+ 
++static void nvme_rw_cb_bh(void *opaque)
++{
++    NVMeCoData *data = opaque;
++    qemu_coroutine_enter(data->co);
++}
++
+ /* Put into NVMeRequest.cb, so runs in the BDS's main AioContext */
+ static void nvme_rw_cb(void *opaque, int ret)
+ {
+     NVMeCoData *data = opaque;
+-
+     data->ret = ret;
+-
+-    if (data->co == qemu_coroutine_self()) {
+-        /*
+-         * Fast path: We are inside of the request coroutine (through
+-         * nvme_submit_command, nvme_deferred_fn, nvme_process_completion).
+-         * We can set data->skip_yield here to keep the coroutine from
+-         * yielding, and then we don't need to schedule a BH to wake it.
+-         */
+-        data->skip_yield = true;
+-    } else {
+-        /*
+-         * Safe to call: The case where we run in the request coroutine is
+-         * handled above, so we must be independent of it; and without
+-         * skip_yield set, the coroutine will yield.
+-         * No need to release NVMeQueuePair.lock (we are called without it
+-         * held).  (Note: If we enter the coroutine here, @data will
+-         * probably be dangling once aio_co_wake() returns.)
+-         */
+-        aio_co_wake(data->co);
++    if (!data->co) {
++        /* The rw coroutine hasn't yielded, don't try to enter. */
++        return;
+     }
++    replay_bh_schedule_oneshot_event(data->ctx, nvme_rw_cb_bh, data);
+ }
+ 
+ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+@@ -1248,7 +1238,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         .cdw12 = cpu_to_le32(cdw12),
+     };
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1265,7 +1255,9 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         return r;
+     }
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1361,7 +1353,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+         .nsid = cpu_to_le32(s->nsid),
+     };
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1369,7 +1361,9 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+     req = nvme_get_free_req(ioq);
+     assert(req);
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    if (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1410,7 +1404,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1430,7 +1424,9 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     assert(req);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1458,7 +1454,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .co = qemu_coroutine_self(),
++        .ctx = bdrv_get_aio_context(bs),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1503,7 +1499,9 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     trace_nvme_dsm(s, offset, bytes);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-    if (!data.skip_yield) {
++
++    data.co = qemu_coroutine_self();
++    while (data.ret == -EINPROGRESS) {
+         qemu_coroutine_yield();
+     }
+ 
 -- 
 2.47.3
 
