@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F19CE73164
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97BBE7316A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 13:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtpC-0006Jl-AV; Mon, 02 Feb 2026 08:18:42 -0500
+	id 1vmtsw-0002nA-BB; Mon, 02 Feb 2026 08:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmtpA-0006Fa-5b; Mon, 02 Feb 2026 08:18:40 -0500
+ id 1vmtst-0002m7-7Y; Mon, 02 Feb 2026 08:22:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmtp7-000797-MO; Mon, 02 Feb 2026 08:18:39 -0500
+ id 1vmtsr-0008NP-DM; Mon, 02 Feb 2026 08:22:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A038A184F73;
- Mon, 02 Feb 2026 16:17:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7110D184F79;
+ Mon, 02 Feb 2026 16:21:44 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BAB4935B064;
- Mon, 02 Feb 2026 16:18:25 +0300 (MSK)
-Message-ID: <7a92bfb8-447b-4c80-a623-3491303b1369@tls.msk.ru>
-Date: Mon, 2 Feb 2026 16:18:25 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 940B835B06A;
+ Mon, 02 Feb 2026 16:22:25 +0300 (MSK)
+Message-ID: <b27938b7-9436-4bf1-a294-09a24ccd2de9@tls.msk.ru>
+Date: Mon, 2 Feb 2026 16:22:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/functional: migrate sbsa_ref test images
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Radoslaw Biernacki <rad@semihalf.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260128105839.3487840-1-alex.bennee@linaro.org>
- <20260128105839.3487840-3-alex.bennee@linaro.org>
+Subject: Re: [PULL v2 0/4] ufs queue
+To: Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, jeuk20.kim@samsung.com,
+ qemu-block@nongnu.org, j-young.choi@samsung.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <cover.1770010668.git.jeuk20.kim@samsung.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -82,9 +79,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260128105839.3487840-3-alex.bennee@linaro.org>
+In-Reply-To: <cover.1770010668.git.jeuk20.kim@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -108,13 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 13:58, Alex Bennée wrote:
-> As the builds in codelinaro.org are going away migrate the binaries to
-> share.linaro.org. As the hotlinks don't encode the filename we need to
-> explicitly tell uncompress how to handle the files.
+On 2/2/26 08:41, Jeuk Kim wrote:
 
-I'm picking this up for qemu-stable too.
+> UFS MCQ fixes and tests series.
+> 
+> Changes in v2:
+> - Fix additional endianness-related bugs.
+> 
+> ----------------------------------------------------------------
+> Ilia Levi (2):
+>        hw/ufs: Fix mcq completion queue wraparound
+>        tests/qtest/ufs-test: Add test for mcq completion queue wraparound
+> 
+> Jeuk Kim (2):
+>        hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
+>        hw/ufs: fix CQE endianness and UPIU length
+
+Should these be picked up for the current qemu-stable releases too?
+
+I'm picking this patchset to 10.0, 10.1 and 10.2 series.
 Please let me know if I shouldn't.
+
+In the future, please don't forget about the qemu-stable series.
 
 Thanks,
 
