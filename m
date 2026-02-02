@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E6AE7FDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 23:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0691DE7FDF3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 23:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn3ci-0005cI-Eq; Mon, 02 Feb 2026 18:46:28 -0500
+	id 1vn3cu-0005d8-9i; Mon, 02 Feb 2026 18:46:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cd-0005bd-OU
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:24 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3ck-0005cd-Cb
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:31 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cc-0004vB-BM
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:23 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so55616465e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 15:46:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3ci-0004zb-Rs
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:30 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48068127f00so42798355e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 15:46:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770075980; x=1770680780; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770075987; x=1770680787; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K0nzZz8DG59Mf+z+m0h8r7zWQPfwbRc+kNGo82GwXbU=;
- b=kbb03zINU7fXdxVd1Wn9TQ0U+j83cXhTgYfn+nNGb0FyqFBBGOuHanJVVa5PZkbpl6
- 3X0E5I4OaZMs20/fnreyuKRmBBVZ7x+cl/8c7RP45VCKLzdOPujWrzLyIo8ZVhQ07TJi
- Nz+oRqCT39eAlqtm8wFNtr+qkDEXX2BXy/HAy7gcYKBPSf3TW/vEMEpzZPlRMzWi6DLj
- 2kSP1gG472da9tWRrmnEST6Ok4cSTnkArJd9Aj+h0XiIVaEx6Y0yM8dB/rDjAHG/M4ag
- Tnz0yY75ysB/IUPJyz0v+UEPgXrA8cbGJclspTD7a+crr4t2vB6DkrQkI50uCo4YWM2Z
- zQbg==
+ bh=EkaMhVjkThnUV33nCiP7UTlNSfm4cnSYMI9T3hosd9A=;
+ b=Zmr3zVeubMf7zMKVyDdT71IuQvuymKiOrBc7qLevDD5yN1/dmhMdhdfkvJQslb+xoP
+ YEEn87JgXReiHzfXHkBUYR1JWtSzc4kp1NZ1evVfHIgd9Q61waMX1BI5Sr6hn1eNS0Wl
+ SeT2+zcZ8vd/N3jgWyREK4EdaMKXXC1i/vq4jk14ff4X1UkjN6P0z6TLeWktpJpflzhG
+ 8lX8B80iexR8905Y1ECzLg4ryWhS4HCNM+YiywSbNrLWHPXK821t44OQOQ9DbAXGdYWK
+ Ro5kOH6xGfo8IXArMN28j7gOhf/pQMPWqyLhOE2Eyr4CSVv5hjnjVIe7TY11Y1VyebPn
+ 8cpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770075980; x=1770680780;
+ d=1e100.net; s=20230601; t=1770075987; x=1770680787;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=K0nzZz8DG59Mf+z+m0h8r7zWQPfwbRc+kNGo82GwXbU=;
- b=EblhikwIbmJ6bV9LAdTyCzedb1qOTnDvOlsZTZqhlBGvYh1Y2D3VsaCPUvK9o4vYP5
- /if8ydhKyQn0/iRa7Zoopq6vbCWlfd3NmHZlLvogCj8n5siU5UoT1ihaaU0UvIMn6Mv4
- RufB/2ZFyWm6HTm8nj9jmkZtOz41usSxp23iuPCUzHN+DkPzA6lNctY+xlhHcMGXOnNR
- m7ZW6aZjvWindqNWkSEZl0kB6D78VhNiTastSiMptUBTkkJovDqbeveyZCukLeyv0pSm
- zB/HXOy2bCmlEXFIilUlz1FX7hpxsbWyPSN/sPzLoShbeM8s0eCp0dTALPIVi0Q5B/hr
- 6EuA==
-X-Gm-Message-State: AOJu0Yy91ij4SomqNcq3SP0bvGu/XheCq6y4Vfp2HkFE33aHKwaVHPcc
- +YOZ6NlA54zUevaEqzKMK+iDQ94+zkm88sWnq4KcoQ6NK3gxpTcePzs/w4P7y619uS3IXfZRIKx
- eLxEUvYo=
-X-Gm-Gg: AZuq6aJ6qPbfsQElXcUB0rnJDeNXzfXyMrMzQ+nODfhiplMOKxwDEK2E3mf/grlOykd
- HjhzCnnN7oAYCaH7ktQClztPQTiGHg0UK7th7+FRCD/4K7d8h7lgHY+bhNXJ9wzJrVeSjC9+qbD
- 4Fxm4kVGwTI6/mwK72CdeNDwnduEOnuGn0XeNbYkwc3MzTeMrDvdCMiv+fxEQxrGJjTlQMnuRPX
- PyDqhtL10e+Cicbn+NeI1e7RCfx6pFtNf9n/14FeUxC+qKlNcHCXi1dVBhuqkVKOpHudN+aB9zR
- KoljFxL3iPJKeCwFNPgPPWkhYVhNvh0muYrvndgITqkIHntUkL28T1rE/ZXG9H22LTq9dNDhG2o
- uQSylUNV6ir2D2lfvYS6Rrabz+u3fIki9djIQE7evB05ZHDZxvA6mTIBXbtjPviIMk4ROVCWG4o
- aKZcct8alNDEH9FWZ00itJnXWTClpoU1IhBC5zdpzT2aDw6WqkGPv2EsWOOwnJ
-X-Received: by 2002:a05:600c:8b0a:b0:477:af8d:203a with SMTP id
- 5b1f17b1804b1-482db49993bmr178249945e9.27.1770075980361; 
- Mon, 02 Feb 2026 15:46:20 -0800 (PST)
+ bh=EkaMhVjkThnUV33nCiP7UTlNSfm4cnSYMI9T3hosd9A=;
+ b=V/aWM0dZKZwMFgkjWHVGzGR+y5oSlc1e0tsnduLgfiByGgeMgoW766jAh9VYel3IQ7
+ eZLuZ+GWQFFuV+gWLPQGiFZoptImCKUd36QYuo2NkKi3HmtU7KYHRYWDRjZNTv6QigNL
+ /oS8UOxoG8++xOklm7hCUZfm3LoJDXiFuNMRqgjoybq0gijKze7l84bd8I+0ogT4U+r1
+ WG2BJmbKA1xr60n0IcYSW7EBPhbCxUa9Li1Q5TJGTXuvah/ax7IsS28MHmIo6SOsNBco
+ GSwdcqEGFvlHL//3vNtEPHxYFSknDPKO5EU/pTxSAkJDAPq1zjTvrR+IdPSlWsifKgqt
+ IqCQ==
+X-Gm-Message-State: AOJu0Yz0xjt6EK7jQAbXQgIUjLvsYb80yTHeL4NDW/n0Wzj9+nD/x2y4
+ RVeLGbuPtvdnOVePTVCCKyYWFNmukG/CzNyitZdiI0fNeP9M1g4OvMPQIkVmMhLhqi199cCdFpQ
+ /HLX9MlE=
+X-Gm-Gg: AZuq6aKufnHnSR3oB3YoJb/N77in6OsHujfEBvzN9N37OO+PBbi1YN0HNZ7O3pAFtNz
+ YF+rDby53DopVoexColaDCbQ3W5ZrkgGoG3ZRbS1NcfZ1Oypk2Lt+JCRHXsdx1Ka735Mq8J+tVy
+ g2iQeE0LGfJ0xIifFEublIRNotAwt5UQH97SBhaVqc+E2G8yH8o8CrBMCxa3EIaOPDqDUtixsMP
+ 2vHJEH9ISkHvyImHUjbW737StutYoIQcKSAHfU7IJBJbPoavnRt11igABUqh8xo+5LJxOL5/GjW
+ nYXHuvmqjNeqEg86tyDxo5Cr1DeXsMxJWSp4fQu5QU5N3cD/273Ed9FHHg/O7+G0NGWOJkNosFo
+ d0nURHgj79ogM3VYgE8Fs682Zigk8GlFmwGLkxU2sw+xwJ/Q6UWzIEvacLpzbTYFXpok4ZCejec
+ G6NgXLhTQyDaSZQRj3pIJj1MLojt9KCjce/3o6YP3WcaQWsLVXexmLVMxst7AH
+X-Received: by 2002:a05:600c:6814:b0:480:699c:abe9 with SMTP id
+ 5b1f17b1804b1-482db4b21c6mr146819395e9.37.1770075987163; 
+ Mon, 02 Feb 2026 15:46:27 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce70sm48893214f8f.27.2026.02.02.15.46.18
+ 5b1f17b1804b1-483002955dbsm25456085e9.5.2026.02.02.15.46.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 15:46:19 -0800 (PST)
+ Mon, 02 Feb 2026 15:46:26 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/7] target/alpha: Do not use target_ulong for trap arguments
-Date: Tue,  3 Feb 2026 00:45:46 +0100
-Message-ID: <20260202234550.34156-5-philmd@linaro.org>
+Subject: [PATCH 5/7] target/alpha: Do not use target_ulong for page table
+ entries / indexes
+Date: Tue,  3 Feb 2026 00:45:47 +0100
+Message-ID: <20260202234550.34156-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260202234550.34156-1-philmd@linaro.org>
 References: <20260202234550.34156-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-%mmcsr and %cause are filled with @trap_arg1 / @trap_arg2,
-both declared as uint64_t in target/alpha/cpu.h:
+%L[123]pte are loaded calling ldq_le_phys() which returns
+a uint64_t. %pt is loaded with @ptbr, declared as uint64_t
+in target/alpha/cpu.h:
 
-    229     uint64_t trap_arg1;
-    230     uint64_t trap_arg2;
-    ...
+  236    uint64_t ptbr;
 
-Use uint64_t instead of target_ulong.
+%index is at most 1024 so can fit in uint16_t.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/alpha/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/alpha/helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 126a53c829b..2dc52cc4465 100644
+index 2dc52cc4465..d6200d101cc 100644
 --- a/target/alpha/helper.c
 +++ b/target/alpha/helper.c
-@@ -129,7 +129,7 @@ void alpha_cpu_record_sigsegv(CPUState *cs, vaddr address,
-                               bool maperr, uintptr_t retaddr)
- {
-     CPUAlphaState *env = cpu_env(cs);
--    target_ulong mmcsr, cause;
-+    uint64_t mmcsr, cause;
- 
-     /* Assuming !maperr, infer the missing protection. */
-     switch (access_type) {
+@@ -173,8 +173,9 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+     CPUState *cs = env_cpu(env);
+     target_long saddr = addr;
+     target_ulong phys = 0;
+-    target_ulong L1pte, L2pte, L3pte;
+-    target_ulong pt, index;
++    uint64_t L1pte, L2pte, L3pte;
++    uint64_t pt;
++    uint16_t index;
+     int prot = 0;
+     int ret = MM_K_ACV;
+     MemTxResult txres;
 -- 
 2.52.0
 
