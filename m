@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BB8E73158
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 12:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84ADE73163
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 12:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmtF5-0003jL-Rp; Mon, 02 Feb 2026 07:41:23 -0500
+	id 1vmtW7-0003ju-0M; Mon, 02 Feb 2026 07:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmtF3-0003gl-VX
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:41:21 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vmtF1-0008Eg-L8
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:41:21 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0A4725BD71;
- Mon,  2 Feb 2026 12:41:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770036076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
- b=yfXc+u2wYy7BRE1xSJeYek7d1GqdyLQkevu79g6DwSDjODVG4NFLx7z851ZIfQFA2Vidd2
- n/Le1Wwl+fq6B1FwTtV/leL7VaLBZla59+vbu+gvGx/4+PdKX1EspFJ0+VavjxEqaZdc4Y
- uENd1F1L3116fOpCuVc2h1hdH1W/pa8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770036076;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
- b=sETIDtDu9pFy9iCCjNu6f5ItQrZLBAvddIjrylPbc1IT0CyhtsgtdEsGZBLMys8XzwM7HC
- iatU1WN8r3q4hnBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yfXc+u2w;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sETIDtDu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770036076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
- b=yfXc+u2wYy7BRE1xSJeYek7d1GqdyLQkevu79g6DwSDjODVG4NFLx7z851ZIfQFA2Vidd2
- n/Le1Wwl+fq6B1FwTtV/leL7VaLBZla59+vbu+gvGx/4+PdKX1EspFJ0+VavjxEqaZdc4Y
- uENd1F1L3116fOpCuVc2h1hdH1W/pa8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770036076;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZUy9P9cz2iAraAOw/O9urk50Wc9IlGU8QXqpKAjvnXE=;
- b=sETIDtDu9pFy9iCCjNu6f5ItQrZLBAvddIjrylPbc1IT0CyhtsgtdEsGZBLMys8XzwM7HC
- iatU1WN8r3q4hnBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EC9933EA62;
- Mon,  2 Feb 2026 12:41:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yZ7cKmqbgGlFMgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 12:41:14 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH] migration: Update comments mentioning qmp_migrate_finish
-Date: Mon,  2 Feb 2026 09:41:12 -0300
-Message-ID: <20260202124112.30684-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vmtW5-0003jR-P5
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:58:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vmtW4-0002n9-1f
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 07:58:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770037134;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gwCsOvDlmTGVfzqpVT8tRcjAi3G+o/i1LC0DD+x7has=;
+ b=bPTgJH83/gMHqodjrhpTJuFzRCY2maKB9aYCsJ9mKY9Dl0xALnYFCvQMq/Sa8vsyGB0NQ3
+ UMSnny3iGQ11M5pPYdjy64PL8FdN9Yqhe8Jxs7gpFVbwm+Ew4jpKDWokb8v/WevntDDu4w
+ FIOYo0u54HvsUqZYCnpsdt51nn+ADnY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-BIdNCXF7MomhOrIp0CmBIQ-1; Mon, 02 Feb 2026 07:58:53 -0500
+X-MC-Unique: BIdNCXF7MomhOrIp0CmBIQ-1
+X-Mimecast-MFC-AGG-ID: BIdNCXF7MomhOrIp0CmBIQ_1770037132
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-435991d4a3aso2393041f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 04:58:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770037132; x=1770641932;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gwCsOvDlmTGVfzqpVT8tRcjAi3G+o/i1LC0DD+x7has=;
+ b=PygG5mAqC8nrAe1OkrEOAMtdlo4xfaUFe/RppLCixXBbOAo1HITvw0xpxI0FuWJR61
+ zckkN96XPTL8ubKo2bjG/ZwewlohEaFKg5qqnK3e/TsZfyNxDMqa5+L0PdzQgfWMJsi4
+ iyJWa5SKZ+sd4dnLiiS3op07IT0J2UlTmEZrlhXGPhDwuO+OTJByvAA6jOKFXVNvfOXM
+ OAF8FV8C4oa+CzQ+ZzhgZHj8nwVeL0SFNdk0BOnS3QA04cnqAnQwX62Kj2wbkv1jCVtx
+ o741NABxfWQ4/mlrTvRk80oXLSVq2Vbd8r+RseqMFkb+2W6YbeE0xDWR5ehP/uqErX5i
+ pXfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVI52ncB7Ndcbp33En/tNnu7+Pm1PVMuT9qfBpnuMvTfgMUMn/d7UVoAaFZh4Xe0BNgq0x8a4v00J+I@nongnu.org
+X-Gm-Message-State: AOJu0YyBl1Y/PXZr03wH+j/MhNbIOlvSyIbyTjfzHcmIrMGZLiry0isH
+ ABLqCHRAy3nXnru8/oqJ5DWkw5Qy2Ko65ObzvbX/mX6iqA4LnI3i3uLJrOJDZ8FNLvuYNipiSJL
+ yxQU94AodHPynt7mDvKMUn/Fy13FwLXQnQb7F706c6c19KDnsf/feHoVl
+X-Gm-Gg: AZuq6aJpAbw3eu9iPlZWWaQzcANnSu7Y69YlGXqdrc518fWT0ttCxCjWcrTHqa/WCyR
+ XwsHm1YyaTF4rxkQVnPQSdA36rNFsbLMl/neMkHNP6JC0tko7LuclwKuOAsVcsfvyOlVO897ArK
+ 5k+JVWJDXDrvaHY31YIY4c9J5DQdfzCiDMsse8DdFmKJd6TeHqqn3bfUIkwk9rQG0tB+u7Fb4nR
+ RhMEmkHguLyqCScUrE6QLMTqKvZ5vt7KHgLOM43IFu63Op/+iMIwGoj7iH+PsndhShLgyfpnFTf
+ YUpCwZQi3pnyGNTLlmmXwMw7f7otDIWMd8e/IJU0FJcQIYQMCYnDowwWyj1YSxzYlGi9njchDq5
+ 5J5icMxKGENdENrZDfx42esJ5ck2V8IjPuLn45OlouK7rLu3jkejtLguO1w==
+X-Received: by 2002:a05:6000:2505:b0:435:a370:2d7a with SMTP id
+ ffacd0b85a97d-435f3aafcd5mr15580022f8f.36.1770037132339; 
+ Mon, 02 Feb 2026 04:58:52 -0800 (PST)
+X-Received: by 2002:a05:6000:2505:b0:435:a370:2d7a with SMTP id
+ ffacd0b85a97d-435f3aafcd5mr15579984f8f.36.1770037131927; 
+ Mon, 02 Feb 2026 04:58:51 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10edfccsm42139863f8f.17.2026.02.02.04.58.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 04:58:51 -0800 (PST)
+Message-ID: <0bbdecdc-f997-4a3e-8023-f50ed629128f@redhat.com>
+Date: Mon, 2 Feb 2026 13:58:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260127103328.255382-1-skolothumtho@nvidia.com>
+ <20260127103328.255382-5-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260127103328.255382-5-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 0A4725BD71
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,49 +116,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qmp_migrate_finish function was recently removed in commit
-2379a04e60 ("migration: Remove qmp_migrate_finish"), update comments
-that mention it.
+Hi Shameer,
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+On 1/27/26 11:33 AM, Shameer Kolothum wrote:
+> Install an event handler on the vEVENTQ fd to read and propagate host
+> generated vIOMMU events to the guest.
+>
+> The handler runs in QEMU’s main loop, using a non-blocking fd registered
+> via qemu_set_fd_handler().
+>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c | 60 +++++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h |  2 ++
+>  2 files changed, 62 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index e8028d4be5..ab57eae575 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -390,6 +390,60 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
+>                     sizeof(Cmd), &entry_num, cmd, errp);
+>  }
+>  
+> +static void smmuv3_accel_event_read(void *opaque)
+> +{
+> +    SMMUv3State *s = opaque;
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +    struct {
+> +        struct iommufd_vevent_header hdr;
+> +        struct iommu_vevent_arm_smmuv3 vevent;
+> +    } buf;
+> +    ssize_t readsz = sizeof(buf);
+> +    uint32_t last_seq = accel->last_event_seq;
+> +    ssize_t bytes;
+> +
+> +    bytes = read(accel->veventq->veventq_fd, &buf, readsz);
+in case we receive a header with LOST_EVENTS at the end of tail, no data
+is expected. So I am not sure you will be able to handle that case. 
+> +    if (bytes <= 0) {
+> +        if (errno == EAGAIN || errno == EINTR) {
+> +            return;
+> +        }
+> +        error_report("vEVENTQ: read failed (%m)");
+_once?
+> +        return;
+> +    }
+> +
+> +    if (bytes < readsz) {
+> +        error_report("vEVENTQ: incomplete read (%zd/%zd bytes)", bytes, readsz);
+> +        return;
+> +    }
+> +
+> +    if (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS) {
+> +        error_report("vEVENTQ has lost events");
+> +        accel->event_start = false;
+> +        accel->last_event_seq = 0;
+actually I read again the include/uapi/linux/iommufd.h and nothing tells
+sequence == 0 after a LOST_EVENTS. 
+> +        return;
+> +    }
+> +
+> +    /* Check sequence in hdr for lost events if any */
+> +    if (accel->event_start) {
+> +        uint32_t expected = (last_seq == INT_MAX) ? 0 : last_seq + 1;
+> +
+> +        if (buf.hdr.sequence != expected) {
+But can this happen? Normally you should have a LOST_EVENTS reported by
+the kernel, no?
+> +            uint32_t delta;
+> +
+> +            if (buf.hdr.sequence >= last_seq) {
+> +                delta = buf.hdr.sequence - last_seq;
+> +            } else {
+> +                /* Handle wraparound from INT_MAX */
+> +                delta = (INT_MAX - last_seq) + buf.hdr.sequence + 1;
+> +            }
+> +            error_report_once("vEVENTQ: detected lost %u event(s)", delta - 1);
+> +        }
+> +    }
+> +    accel->last_event_seq = buf.hdr.sequence;
+> +    accel->event_start = true;
+> +    smmuv3_propagate_event(s, (Evt *)&buf.vevent);
+> +}
+> +
+>  static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+>  {
+>      IOMMUFDVeventq *veventq = accel->veventq;
+> @@ -397,6 +451,8 @@ static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+>      if (!veventq) {
+>          return;
+>      }
+> +    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
+> +    close(veventq->veventq_fd);
+>      iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
+>      g_free(veventq);
+>      accel->veventq = NULL;
+> @@ -439,6 +495,10 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+>      veventq->veventq_fd = veventq_fd;
+>      veventq->viommu = accel->viommu;
+>      accel->veventq = veventq;
+> +
+> +    /* Set up event handler for veventq fd */
+> +    fcntl(veventq_fd, F_SETFL, O_NONBLOCK);
+Looks this can fail.
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b103a82fc0..1f5c289d68 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1469,8 +1469,8 @@ void migration_cancel(void)
-     }
- 
-     /*
--     * If qmp_migrate_finish has not been called, then there is no path that
--     * will complete the cancellation.  Do it now.
-+     * If migration_connect_outgoing has not been called, then there
-+     * is no path that will complete the cancellation. Do it now.
-      */
-     if (setup && !s->to_dst_file) {
-         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
-@@ -2051,11 +2051,12 @@ void qmp_migrate(const char *uri, bool has_channels,
-      * For cpr-transfer, the target may not be listening yet on the migration
-      * channel, because first it must finish cpr_load_state.  The target tells
-      * us it is listening by closing the cpr-state socket.  Wait for that HUP
--     * event before connecting in qmp_migrate_finish.
-+     * event before connecting in migration_connect_outgoing.
-      *
-      * The HUP could occur because the target fails while reading CPR state,
-      * in which case the target will not listen for the incoming migration
--     * connection, so qmp_migrate_finish will fail to connect, and then recover.
-+     * connection, so migration_connect_outgoing will fail to connect,
-+     * and then recover.
-      */
-     if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
-         cpr_transfer_add_hup_watch(s, migration_connect_outgoing_cb,
--- 
-2.51.0
+Thanks
+
+Eric
+> +    qemu_set_fd_handler(veventq_fd, smmuv3_accel_event_read, NULL, s);
+>      return true;
+>  }
+>  
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index 92048bb674..ba0f40a565 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -23,6 +23,8 @@
+>  typedef struct SMMUv3AccelState {
+>      IOMMUFDViommu *viommu;
+>      IOMMUFDVeventq *veventq;
+> +    uint32_t last_event_seq;
+> +    bool event_start;
+>      uint32_t bypass_hwpt_id;
+>      uint32_t abort_hwpt_id;
+>      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
 
 
