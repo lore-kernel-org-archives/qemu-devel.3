@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461EDE7FDDC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D49E7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn13z-0003Gr-NV; Mon, 02 Feb 2026 16:02:27 -0500
+	id 1vn136-0001NC-Pt; Mon, 02 Feb 2026 16:01:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12x-00014A-1y; Mon, 02 Feb 2026 16:01:23 -0500
+ id 1vn12Q-0000cK-39; Mon, 02 Feb 2026 16:01:01 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12v-0004MF-9f; Mon, 02 Feb 2026 16:01:22 -0500
+ id 1vn12M-0004EW-I4; Mon, 02 Feb 2026 16:00:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E0F4F1851A9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F6711851A3;
  Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AA47935B320;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3652F35B31A;
  Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Ed Tanous <etanous@nvidia.com>, Patrick Williams <patrick@stwcx.xyz>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 29/74] linux-user: allow null `pathname` for
- statx()/fstatat()
-Date: Mon,  2 Feb 2026 23:57:40 +0300
-Message-ID: <20260202205833.941615-29-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 23/74] tests/functional: Fix URL of gb200nvl-bmc image
+Date: Mon,  2 Feb 2026 23:57:34 +0300
+Message-ID: <20260202205833.941615-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -63,44 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Since Linux 6.11, the path argument may be NULL.
+Commit [1] moved the FW image of the gb200nvl-bmc machine and broke
+the associated functional test. Fix that.
 
-Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
-specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
-issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
-perform the appropiate syscall and let the host's kernel handle null `pathname`.
+[1] https://github.com/legoater/qemu-aspeed-boot/commit/52451b2472eeb40aa97e131aeea327e9d4a8a78a
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251229121416.2209295-1-jean.christian.cirstea@gmail.com>
-(cherry picked from commit 82ae60c8b5cb98d610056a1e2d0ba72e9ef7907c)
+Cc: Ed Tanous <etanous@nvidia.com>
+Cc: Patrick Williams <patrick@stwcx.xyz>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20251222073351.166720-1-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 75bcfb98a13d14beb2ea95fb3c51da01c7102325)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index c236b28345..c11fecf5e0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11912,9 +11912,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             int dirfd = arg1;
-             int flags = arg3;
+diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+index 8e8e3f05c1..e5f2dce0f5 100644
+--- a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
++++ b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+@@ -11,7 +11,7 @@
+ class GB200Machine(AspeedTest):
  
--            p = lock_user_string(arg2);
--            if (p == NULL) {
--                return -TARGET_EFAULT;
-+            p = NULL;
-+            /* Since Linux 6.11, the path argument may be NULL */
-+            if (arg2 != 0) {
-+                p = lock_user_string(arg2);
-+                if (p == NULL) {
-+                    return -TARGET_EFAULT;
-+                }
-             }
- #if defined(__NR_statx)
-             {
+     ASSET_GB200_FLASH = Asset(
+-        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
++        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
+         'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
+ 
+     def test_arm_aspeed_gb200_openbmc(self):
 -- 
 2.47.3
 
