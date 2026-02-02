@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EC5E7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA85E7FDDC
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:08:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn17U-0008ES-SD; Mon, 02 Feb 2026 16:06:05 -0500
+	id 1vn14F-0005Ys-8A; Mon, 02 Feb 2026 16:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn17S-0007tE-Rj; Mon, 02 Feb 2026 16:06:02 -0500
+ id 1vn13x-0003EU-Mq; Mon, 02 Feb 2026 16:02:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn17R-0005Hr-2E; Mon, 02 Feb 2026 16:06:02 -0500
+ id 1vn13v-0004bC-8h; Mon, 02 Feb 2026 16:02:25 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A2741851D6;
- Mon, 02 Feb 2026 23:57:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A6A61851B3;
+ Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 223C335B34D;
- Mon, 02 Feb 2026 23:58:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6422635B32A;
+ Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 74/74] python: fix msys64 wheel directory specification
-Date: Mon,  2 Feb 2026 23:58:25 +0300
-Message-ID: <20260202205833.941615-74-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 39/74] target/i386/tcg: allow VEX in 16-bit protected
+ mode
+Date: Mon,  2 Feb 2026 23:57:50 +0300
+Message-ID: <20260202205833.941615-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -61,42 +61,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-In python3.14, fixes were made to the file URI parsing [1] such that
-file URIs that used to work but were technically out of spec are now
-broken.
+VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
+it for some unfathomable reason.
 
-As a result, our msys2 GitLab CI tests began failing.
-
-Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
-fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
-
-[1] https://docs.python.org/3/whatsnew/3.14.html#urllib
-
-Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260130050518.517688-2-jsnow@redhat.com>
-(cherry picked from commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d)
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit ed88bdcfbdcf9d411607cd690f93f915feff6a5b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 9aed266df1..826c4ad58d 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -675,7 +675,7 @@ def pip_install(
-     if not online:
-         full_args += ["--no-index"]
-     if wheels_dir:
--        full_args += ["--find-links", f"file://{str(wheels_dir)}"]
-+        full_args += ["--find-links", str(wheels_dir)]
-     full_args += list(args)
-     subprocess.run(
-         full_args,
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 31aad730fc..24dcf222f3 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2613,20 +2613,16 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+     case 0xc5: /* 2-byte VEX */
+     case 0xc4: /* 3-byte VEX */
+         /*
+-         * VEX prefixes cannot be used except in 32-bit mode.
+-         * Otherwise the instruction is LES or LDS.
++         * Bits 6-7 of the first byte must be set except in 64-bit mode.
++         * Otherwise the instruction is LES or LDS.  Not allowed in real mode.
+          */
+-        if (CODE32(s) && !VM86(s)) {
++        if (PE(s) && !VM86(s)) {
+             static const int pp_prefix[4] = {
+                 0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
+             };
+             int vex3, vex2 = x86_ldub_code(env, s);
+ 
+             if (!CODE64(s) && (vex2 & 0xc0) != 0xc0) {
+-                /*
+-                 * 4.1.4.6: In 32-bit mode, bits [7:6] must be 11b,
+-                 * otherwise the instruction is LES or LDS.
+-                 */
+                 s->pc--; /* rewind the advance_pc() x86_ldub_code() did */
+                 break;
+             }
 -- 
 2.47.3
 
