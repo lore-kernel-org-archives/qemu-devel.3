@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62025E7FDF2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE0ABE7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn29h-0007Ys-Ig; Mon, 02 Feb 2026 17:12:25 -0500
+	id 1vn2AQ-0008My-D2; Mon, 02 Feb 2026 17:13:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn297-0006D3-Om; Mon, 02 Feb 2026 17:11:51 -0500
+ id 1vn29t-0007ju-0e; Mon, 02 Feb 2026 17:12:40 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn296-0003MM-1X; Mon, 02 Feb 2026 17:11:49 -0500
+ id 1vn29r-0003Qt-Fw; Mon, 02 Feb 2026 17:12:36 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 229291852D7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6EE241852DC;
  Tue, 03 Feb 2026 01:07:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0199335B3EA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DD0435B3EF;
  Tue, 03 Feb 2026 01:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
+Cc: qemu-stable@nongnu.org, Icenowy Zheng <uwu@icenowy.me>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 42/56] linux-user: Add termios2 support to hppa target
-Date: Tue,  3 Feb 2026 01:07:47 +0300
-Message-ID: <20260202220805.945271-42-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 47/56] linux-user: fixup termios2 related things on
+ PowerPC
+Date: Tue,  3 Feb 2026 01:07:52 +0300
+Message-ID: <20260202220805.945271-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
@@ -59,61 +60,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-Link: https://lore.kernel.org/qemu-devel/ccf1be5c-9e2e-46f6-b303-d29888371fb0@bonslack.org
+The termios things on PowerPC equal to termios2 things otherwhere.
+
+Use some simple #define's to allow both termios and termios2 to map to
+termios on PowerPC.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Link: https://github.com/AOSC-Dev/aosc-os-abbs/blob/8d77eeaa76e9b159c3f35adaf73c875751aa7d17/app-virtualization/qemu/01-shared/patches/0005-AOSCOS-linux-user-fixup-termios2-related-things-on-P.patch
+Link: https://lore.kernel.org/qemu-devel/4403eb94ddbb2934f1f75d94ce921f0f1078ad9f.camel@icenowy.me
 Reviewed-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit edc741710acedd61011f937967b960d154794258)
+(cherry picked from commit d68f0e2e906939bef076d0cd52f902d433c8c3da)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/hppa/termbits.h b/linux-user/hppa/termbits.h
-index 11fd4eed62..645f17bf63 100644
---- a/linux-user/hppa/termbits.h
-+++ b/linux-user/hppa/termbits.h
-@@ -18,6 +18,29 @@ struct target_termios {
-     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
- };
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 28394961b6..fbacbaea3a 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -148,6 +148,21 @@
+ #include "fd-trans.h"
+ #include "user/cpu_loop.h"
  
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
++#if defined(__powerpc__)
++/*
++ * On PowerPC termios2 is lacking and termios along with ioctls w/o 2
++ * behaves like termios2 and things with 2 on other architectures.
++ *
++ * Just define termios2-related things to be the same with termios-related
++ * ones to support PowerPC.
++ */
++#define host_termios2 host_termios
++#define TCGETS2 TCGETS
++#define TCSETS2 TCSETS
++#define TCSETSW2 TCSETSW
++#define TCSETSF2 TCSETSF
++#endif
 +
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+
- /* c_iflag bits */
- #define TARGET_IGNBRK  0000001
- #define TARGET_BRKINT  0000002
-@@ -190,6 +213,12 @@ struct target_termios {
- #define TARGET_TIOCSBRK         0x5427 /* BSD compatibility */
- #define TARGET_TIOCCBRK         0x5428 /* BSD compatibility */
- #define TARGET_TIOCGSID         TARGET_IOR('T', 20, int)
-+#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct target_termios2)
-+#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct target_termios2)
-+#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct target_termios2)
-+#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct target_termios2)
-+#define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
- #define TARGET_TIOCGPTN         TARGET_IOR('T', 0x30, unsigned int)
-         /* Get Pty Number (of pty-mux device) */
- #define TARGET_TIOCSPTLCK       TARGET_IOW('T', 0x31, int)
+ #ifndef CLONE_IO
+ #define CLONE_IO                0x80000000      /* Clone io context */
+ #endif
 -- 
 2.47.3
 
