@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F60E7FDD7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD1DE7FDD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn0q9-0007NM-9p; Mon, 02 Feb 2026 15:48:09 -0500
+	id 1vn0qB-0007OP-EB; Mon, 02 Feb 2026 15:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0q2-0007HB-3t
+ id 1vn0q1-0007Gm-Th
  for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:02 -0500
 Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vn0pz-0001oH-4b
+ id 1vn0py-0001oA-KP
  for qemu-devel@nongnu.org; Mon, 02 Feb 2026 15:48:01 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 42A441D000A0;
- Mon,  2 Feb 2026 15:47:58 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Mon, 02 Feb 2026 15:47:58 -0500
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+ by mailfout.stl.internal (Postfix) with ESMTP id ED36F1D00099;
+ Mon,  2 Feb 2026 15:47:57 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-07.internal (MEProxy); Mon, 02 Feb 2026 15:47:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770065278; x=
- 1770151678; bh=t0OpkvKmgs3r3p5IFcwqLrOzfIoWRJB1S+bWvMool0c=; b=m
- hsKPIMmbmDJIk3GT/gQtcfVSMh/fsaN72kRmb4SPKI0e+dgkPRTZ+VIl/lzEJ+SS
- Bcj16BUBOx02Zf84Ytq0Evq4u15qBJyjalpfsPfn/i2kc9IjLodrN+t+vtp0/GW/
- uAHBRRQwuNyX88AG6X8O4B0qkUlmhcbOgpK2qdxDAHLotPlxiwVdDiy05tgkmsG3
- 8i4T66xUFpPXVhMm+hvUVDe6HLBvv6wqfiNn0sMuhU7d9/U6gJzgp7acMAPzVml4
- 1VmsmFg85uYachv7OTaSvsS9iSPzXBZtmJ0AQrBBTalWclQXIRwTny7otkEiQT+M
- 220lnJhQLgnqgYFRVAG9w==
+ :reply-to:subject:subject:to:to; s=fm2; t=1770065277; x=
+ 1770151677; bh=t09fhcpWk+aZIQ1AgyqKwCgGRfq7HEmlcpbHugFS7Os=; b=P
+ gu53xuMOkUcgNGFc+Doyy0MNHDM/TuvumJmuikDV5d/FZUXWYKacQqFAFcG4Iieb
+ JjMKDQlKvV/mRffUdMgavjXOXJkwxOkyyZc9NatWHxE68AaqPKUcic/EwNqZXZAb
+ 1PFUUoHTJbC/u9V8FheDkaXv7goVScN68EX5TpN9tVRzq5hTQhUsYx2Twx9oE70B
+ 5XOmxUvURMHK/OnjZA6LzlbZucRIrikAohCoYdpL9XgdhJ51H8tLgkjyE/rHaZZF
+ DDxIkRqZGHPd2IOk9X1glydc/jpHxAnozdoKTC10WkwGlsi7rD7A9Qex8oZhZFPl
+ GIcF30FFbhKW519EIM4Lw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770065278; x=1770151678; bh=t
- 0OpkvKmgs3r3p5IFcwqLrOzfIoWRJB1S+bWvMool0c=; b=YwtnF/oNoTYq7rLr1
- Gfwc5UPFRIN5KgtZfv/hEd0En0+gxb58VJc00+1Z7bUFldOfHghMmsBV5yN1qu4G
- vq8EhFKmyO6a4+F5m2qWqlkmGUNkIZcuGk8HL7XvX/gt1XUC+LDSGfAOymTOdIra
- IMp670UtvVymvMlW/fdFhjDRbkaDwlL7iBvf1IKyB/+db/EIMxvb0yze3HnaHi3u
- QaKHWLanensIYJXEB03fND+RvBce9HVNqbOymTI7KRoIbDc50skGTSy6Yc51nOs7
- Bbtwiaeltx6xLvsXsleAf9bWUhfsmqx6ATPFYXopUp46bwHfpJMFhHGgWw+Nxz8Q
- hcgpg==
-X-ME-Sender: <xms:fg2BaW0fATbQOFMCHPrVT8PpaSyzAP3q2bTQCuSMDrs1pf8y_I2EbA>
- <xme:fg2BaQhHBDFhNtHPdCbmyJqexBd35WHvdBaIaDCE2RzbuZF-pXDgrWDHExYDwzv9R
- euwNyvWBMoUm6FveUExIZYI43NBnPUvJKa2KB6U4AvZ3BDYeSqMc8M8>
-X-ME-Received: <xmr:fg2BacR2gVb1Ler0-VI_mfUKOCfM1-jWprEmxEaFtOk1AEjKDnF4t-jMR-9D>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieegucetufdoteggodetrf
+ :x-me-sender:x-sasl-enc; s=fm3; t=1770065277; x=1770151677; bh=t
+ 09fhcpWk+aZIQ1AgyqKwCgGRfq7HEmlcpbHugFS7Os=; b=ngCnX/A4mOGLlCenu
+ vT5VMHQhydCcSsacFjhyyDzTyLVn6fKhATExW3WBVKNzEkRqjpnNTVhIP1xeoieK
+ C6WuV0QFXIIQ6+LpJK91h1cYPD0MoTIcPSUASuJGWP0+I4QUu3YtJOG/DSouq0v6
+ L3DUip4dybk0Mvf7HBLq0ht+jITthCmtGhZQmOTWys8d3Mu/2rnaizZDOYIAbHQt
+ byB/Esr7mRoKu6MDOBsFqoaSz0fYTnmQVS3WUVZrpVPiPJZAlMm1nL3aNrq8XcgW
+ 637GP9QNg4rTXfLlw9hYeOFTaR7y67Z7+lwSabHp55R4moER7DqyrrFjbZpxnXj8
+ HmRIw==
+X-ME-Sender: <xms:fQ2BaZ_w7rOouT4L_-PlKWJgH3WfK-AwdGJsk3syewDW4AkItVhZBw>
+ <xme:fQ2BaVJFUa-Xj7-aimTD8T8HahEcscsqzTMok_z9zdxIyGDd32tfGdmuxwJ4vnHXC
+ 94_S74YCGYnHfZLmYr0jIzOvf6LplDx2WRYPa_mhlbXXbfcEnbAtg>
+X-ME-Received: <xmr:fQ2BaUY4-OEGBIYJbSV-XhEn6MNsJzn6ftu0dxpQepRcGpkevJfSOTBEeafT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeekieefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
  ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
- gsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgv
- lhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:fg2BaRgtToObga2OCm3JmzPYjy6uX3dAROgyWfsh13HSrwnjMIhPfA>
- <xmx:fg2Bac4-TvFl99_veYxPgYCvyt5wuPMQSk5jNM6Hdci_ggvHTBlFXQ>
- <xmx:fg2BaeBSN5_e9IQKqYJL6L0DRVo_qfxs4qj9vf0GQp_FTgbx-xPnGw>
- <xmx:fg2BaTaTVpPtdL48xj-4o2ceeCbb5VFujxT00imOapB47EBwhCAV9w>
- <xmx:fg2BaYOicqXyW5DFNbjlg4uWoDwyrkRIPxNivAupT_aZm3QDkwLooZko>
+ thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
+ htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
+ nhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:fQ2BaXJdkbapSEzALpfqky09ippWakQ2V_WjgP9lNyPRJCt68cAYcw>
+ <xmx:fQ2BaSCxUsGIHfEXiNc59ck7R8EyPZWuSWrWBxlyidYHkuBPo2fifw>
+ <xmx:fQ2Bacqraa_2WCv4uL2UQOoyJVtsNJ42kP1ePlV4tfyi1bc4usyjrQ>
+ <xmx:fQ2BadiqYJilf0Y7PVIEI4tgwRQw1Ew5dS0J9bXlXhzMI4SB9WT8zA>
+ <xmx:fQ2Bad7OwJCBkpvEc_e2ZC5KKkXWbptqBRfsFZjc_CpLOH6xWrB9MR4D>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  2 Feb 2026 15:47:57 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id ce851c5b;
+ by chomposaur (OpenSMTPD) with ESMTPA id 91aae1be;
  Mon, 2 Feb 2026 20:47:53 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v7 06/19] ati-vga: Add scissor clipping register support
-Date: Mon,  2 Feb 2026 15:47:24 -0500
-Message-ID: <20260202204738.3080092-7-chad@jablonski.xyz>
+Subject: [PATCH v7 05/19] ati-vga: Implement foreground and background color
+ register writes
+Date: Mon,  2 Feb 2026 15:47:23 -0500
+Message-ID: <20260202204738.3080092-6-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260202204738.3080092-1-chad@jablonski.xyz>
 References: <20260202204738.3080092-1-chad@jablonski.xyz>
@@ -113,169 +114,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
-and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
-when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
-to default clipping.
-
-Scissor clipping is used when rendering text in X.org. The r128 driver
-sends host data much wider than is necessary to draw a glyph and cuts it
-down to size using clipping before rendering. The actual clipping
-implementation follows in a future patch.
-
-This also includes a very minor refactor of the combined
-default_sc_bottom_right field in the registers struct to
-default_sc_bottom and default_sc_right. This was done to
-stay consistent with the other scissor registers and prevent repeated
-masking and extraction.
+These are straightforward 32-bit register write handlers. They're
+necessary for a future patch which will use them for color expansion
+from monochrome host data transfers.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-
 ---
-
-v5: Removed unused default_sc_bottom_right field
----
- hw/display/ati.c      | 70 +++++++++++++++++++++++++++++++++++++++++--
- hw/display/ati_int.h  |  9 +++++-
- hw/display/ati_regs.h |  2 ++
- 3 files changed, 78 insertions(+), 3 deletions(-)
+ hw/display/ati.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 26fc74b19b..6cf243bcf9 100644
+index ce23e5e48b..26fc74b19b 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -514,7 +514,32 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-         val |= s->regs.default_tile << 16;
+@@ -924,6 +924,12 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+     case DP_CNTL:
+         s->regs.dp_cntl = data;
          break;
-     case DEFAULT_SC_BOTTOM_RIGHT:
--        val = s->regs.default_sc_bottom_right;
-+        val = (s->regs.default_sc_bottom << 16) |
-+              s->regs.default_sc_right;
++    case DP_SRC_FRGD_CLR:
++        s->regs.dp_src_frgd_clr = data;
 +        break;
-+    case SC_TOP:
-+        val = s->regs.sc_top;
++    case DP_SRC_BKGD_CLR:
++        s->regs.dp_src_bkgd_clr = data;
 +        break;
-+    case SC_LEFT:
-+        val = s->regs.sc_left;
-+        break;
-+    case SC_BOTTOM:
-+        val = s->regs.sc_bottom;
-+        break;
-+    case SC_RIGHT:
-+        val = s->regs.sc_right;
-+        break;
-+    case SRC_SC_BOTTOM:
-+        val = s->regs.src_sc_bottom;
-+        break;
-+    case SRC_SC_RIGHT:
-+        val = s->regs.src_sc_right;
-+        break;
-+    case SC_TOP_LEFT:
-+    case SC_BOTTOM_RIGHT:
-+    case SRC_SC_BOTTOM_RIGHT:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Read from write-only register 0x%x\n", (unsigned)addr);
+     case DP_DATATYPE:
+         s->regs.dp_datatype = data & 0xe0070f0f;
          break;
-     default:
-         break;
-@@ -877,6 +902,16 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-             s->regs.dst_offset = s->regs.default_offset;
-             s->regs.dst_pitch = s->regs.default_pitch;
-         }
-+        if (!(data & GMC_SRC_CLIPPING)) {
-+            s->regs.src_sc_right = s->regs.default_sc_right;
-+            s->regs.src_sc_bottom = s->regs.default_sc_bottom;
-+        }
-+        if (!(data & GMC_DST_CLIPPING)) {
-+            s->regs.sc_top = 0;
-+            s->regs.sc_left = 0;
-+            s->regs.sc_right = s->regs.default_sc_right;
-+            s->regs.sc_bottom = s->regs.default_sc_bottom;
-+        }
-         break;
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
-@@ -956,7 +991,38 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case DEFAULT_SC_BOTTOM_RIGHT:
--        s->regs.default_sc_bottom_right = data & 0x3fff3fff;
-+        s->regs.default_sc_right = data & 0x3fff;
-+        s->regs.default_sc_bottom = (data >> 16) & 0x3fff;
-+        break;
-+    case SC_TOP_LEFT:
-+        s->regs.sc_left = data & 0x3fff;
-+        s->regs.sc_top = (data >> 16) & 0x3fff;
-+        break;
-+    case SC_LEFT:
-+        s->regs.sc_left = data & 0x3fff;
-+        break;
-+    case SC_TOP:
-+        s->regs.sc_top = data & 0x3fff;
-+        break;
-+    case SC_BOTTOM_RIGHT:
-+        s->regs.sc_right = data & 0x3fff;
-+        s->regs.sc_bottom = (data >> 16) & 0x3fff;
-+        break;
-+    case SC_RIGHT:
-+        s->regs.sc_right = data & 0x3fff;
-+        break;
-+    case SC_BOTTOM:
-+        s->regs.sc_bottom = data & 0x3fff;
-+        break;
-+    case SRC_SC_BOTTOM_RIGHT:
-+        s->regs.src_sc_right = data & 0x3fff;
-+        s->regs.src_sc_bottom = (data >> 16) & 0x3fff;
-+        break;
-+    case SRC_SC_RIGHT:
-+        s->regs.src_sc_right = data & 0x3fff;
-+        break;
-+    case SRC_SC_BOTTOM:
-+        s->regs.src_sc_bottom = data & 0x3fff;
-         break;
-     default:
-         break;
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 708cc1dd3a..98f57ca5fa 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -78,14 +78,21 @@ typedef struct ATIVGARegs {
-     uint32_t dp_brush_frgd_clr;
-     uint32_t dp_src_frgd_clr;
-     uint32_t dp_src_bkgd_clr;
-+    uint16_t sc_top;
-+    uint16_t sc_left;
-+    uint16_t sc_bottom;
-+    uint16_t sc_right;
-+    uint16_t src_sc_bottom;
-+    uint16_t src_sc_right;
-     uint32_t dp_cntl;
-     uint32_t dp_datatype;
-     uint32_t dp_mix;
-     uint32_t dp_write_mask;
-     uint32_t default_offset;
-     uint32_t default_pitch;
-+    uint16_t default_sc_bottom;
-+    uint16_t default_sc_right;
-     uint32_t default_tile;
--    uint32_t default_sc_bottom_right;
- } ATIVGARegs;
- 
- struct ATIVGAState {
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 0a0825db04..3999edb9b7 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -397,6 +397,8 @@
- #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
- #define GMC_SRC_CLIP_DEFAULT                    0x00000000
- #define GMC_DST_CLIP_DEFAULT                    0x00000000
-+#define GMC_SRC_CLIPPING                        0x00000004
-+#define GMC_DST_CLIPPING                        0x00000008
- #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
- #define GMC_SRC_DSTCOLOR                        0x00003000
- #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
 -- 
 2.52.0
 
