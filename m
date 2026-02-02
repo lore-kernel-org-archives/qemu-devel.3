@@ -4,79 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E45E73156
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6E8E73158
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 11:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmrxn-00068V-KR; Mon, 02 Feb 2026 06:19:27 -0500
+	id 1vmryv-0006hi-G9; Mon, 02 Feb 2026 06:20:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmrxm-000680-NQ
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:19:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vmrxk-0001Yz-S4
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:19:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770031162;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eccSpPKhQCQDrkAbpiEbzoq0z2Pj66GpHpX9SbrwNYk=;
- b=f5EHUv9dPEDRGlWYLLb9z7QwGmZvr/EFHaGbz2k0DeBZoi4iTvpVzuq7j8OHP8gpW4VUnU
- +UUU/XzNzIiXuxvR0PMtDcrGC99qZ8H/jSXPVbcdO/UM+Jw8qNVEaluasWYN8xlxZ9Tf8g
- /O92PsO1kZJmVq8+zQ0iGWyFxEcAi/Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-r-dwJduFOPuyleA2X4K2RQ-1; Mon,
- 02 Feb 2026 06:19:19 -0500
-X-MC-Unique: r-dwJduFOPuyleA2X4K2RQ-1
-X-Mimecast-MFC-AGG-ID: r-dwJduFOPuyleA2X4K2RQ_1770031157
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6AE2195607A; Mon,  2 Feb 2026 11:19:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.68])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92158180009E; Mon,  2 Feb 2026 11:19:13 +0000 (UTC)
-Date: Mon, 2 Feb 2026 11:19:09 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, jpcottin@google.com,
- Markus Armbruster <armbru@redhat.com>, Roman Kiryanov <rkir@google.com>,
- Will Hollins <whollins@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, jansene@google.com,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 1/2] bulk: Stop forward-declaring enum typedefs
-Message-ID: <aYCILbNMs18MvRSF@redhat.com>
-References: <20260130211746.46667-1-philmd@linaro.org>
- <20260130211746.46667-2-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmryt-0006hH-SL
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:20:35 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmryr-0001xY-JO
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 06:20:35 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-432d2c96215so4151379f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 03:20:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770031232; x=1770636032; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DBFirCWvd4NiNRnXJ2dvlbq1DQ8TBxs9IRukCSqUTA4=;
+ b=e0tLWvYV+b8pA3S+qxlIyQtGiD2zkJZWAMcd8ZKnlqybvpizF1Mjh9li/kYa6jVnUS
+ 78iBQvMUxTjoxpa7BNbasXZBYSOQ3hNCr8zqvlBMjMtQ6++iojQ2uKt61eOkEtfmUI22
+ UHe92WqDHq8v5C4AU+LYHHx4fAvm+LO83moOr5M5Sfckd7Py0aPCGO23nGfa5uFkihJK
+ +sTbShu2Furkg5hikehyH/LYT9UN3wM2+QR6DpXedegZ1+vlO1TuwO6+6/27a2tyOY9j
+ NgJ2GxjL5SFPiA86ZQw+/IB4ZxL9WUSWcEWjWG31vL9b7ncEvTfNVXPXx6VcUb4mwJHQ
+ Tu6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770031232; x=1770636032;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DBFirCWvd4NiNRnXJ2dvlbq1DQ8TBxs9IRukCSqUTA4=;
+ b=W63F4LZgD+0c/NOIWSQlgX5R443dohCaWqEF9cpIy+5wzMlK4Um7mGxU5LrbrOGsYm
+ u5tfKPUMorL0OtO0U5yhSt2Gc8wLI07ugEADlydEqxopUYfEhzaeKH/xqgrZHf+d9rIL
+ 6NBif2dWoE0cL4lNSylk/RQN55Lu6KCeJxRYex2UDHEQH52nJavW0wZrKrnSUxN4ECiF
+ J/SJgYR7q4I6pbPXhtBbrkI4sSv/vUr0MOt5JcFHOd59zkV9rmgoqD5g9N3u80/Eu/TE
+ oGAFxbuIslfeKPeTPETvGnF1yfkrHp4a0Eh6VHsM8cVJfnJlCzwDPc0ZWfWqj2rmJTsu
+ UF/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8na1HfDAo6TyFtlBg0rvTRaldVW0OlONMXPeDQ9UcRBhwLEW+Dm0Nf1oxg4wNEEXZdTBHz5ntTKFG@nongnu.org
+X-Gm-Message-State: AOJu0Ywc1lje56oYN/Gp3Sd3mM7iv7TXff2UI0HJZliL6Bj2G+hHfOl1
+ JrnqbIarC4ERqIMFPB3wWnxoNtDpYoFv3p1F+tLR6O/4Y3BlUT76Lj/ndy5aHcAw8ag=
+X-Gm-Gg: AZuq6aI3D6xDkGHOqoT5aP4YL60HuXMTcXuBUzp+xipTKzKoPFxARXRh814kT1jyMr7
+ ZXr+9aBuYo4vtggb1VRNuzj0BbhFEMF9xJmTmse+SG444NfYIgquqYH3AQcoXcHjw9Usm0nlKwz
+ TqwJVcy3vD1hELMC1aRp7Wq+nRtalsUqeXMhMcQ9UM4WZ1XbzVoECGYdSu6+3HUzsqdeAafTBHg
+ JL5VtmUtGc+Z0cpuTSbajtakAmFhct4gVE7jJzEAQMSY6c0pO4BtPwdyQ+tiVx94ARN/CSTRkW8
+ RcT/gwc/bqa6zfO+iTyA8+iaCDM9oIZl2uta9vd/q/Ci8y+wH+8E1CpblD+zfj+Rr/LntzJ89Qr
+ zV3CvC9QJgsE6ns3iwhg2CVcf+pyrWlTRdZilLJG0dho0Kt0H0QTVV2ObTOWcoxF9j7r/TaQSOv
+ 2P2V8PMsv1gMy1eyCfUYVF9cN4cwV4peUDfQLfaDzRFC6n2I6Jek0qtQ==
+X-Received: by 2002:a5d:634a:0:b0:436:684:b94a with SMTP id
+ ffacd0b85a97d-4360684b9a6mr4190890f8f.4.1770031231594; 
+ Mon, 02 Feb 2026 03:20:31 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10ee078sm43424642f8f.16.2026.02.02.03.20.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 03:20:31 -0800 (PST)
+Message-ID: <6f175d60-6544-4dc9-99eb-71f60c305017@linaro.org>
+Date: Mon, 2 Feb 2026 12:20:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, mjt@tls.msk.ru,
+ whollins@google.com, jansene@google.com, jpcottin@google.com,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260129190444.225306-1-rkir@google.com>
+ <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
+ <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
+ <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
+ <0954062c-c032-42be-ad0d-df2559360963@linaro.org>
+ <CAFEAcA-ShmtJ2tOO_bz+d_oKJaDTG15bc9s775mND=FLWQdRpw@mail.gmail.com>
+ <aYCD4g7x8DDH4tyW@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aYCD4g7x8DDH4tyW@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260130211746.46667-2-philmd@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,75 +109,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 30, 2026 at 10:17:45PM +0100, Philippe Mathieu-Daudé wrote:
-> The C99 standard chapter §6.7.2.2 point 4 mentions:
+On 2/2/26 12:00, Daniel P. Berrangé wrote:
+> On Fri, Jan 30, 2026 at 09:19:32AM +0000, Peter Maydell wrote:
+>> On Thu, 29 Jan 2026 at 21:44, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>>
+>>> Hi Peter,
+>>>
+>>> (+Paolo / Eric)
+>>>
+>>> On 29/1/26 21:31, Peter Maydell wrote:
+>>>>
+>>>> What are we trying to achieve here, and why does it benefit
+>>>> us as an upstream project ?
+>>>>
+>>>> cf previous email thread from 2024
+>>>> https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
+>>>> about "drip-feeding" of this kind of patch with no clear take
+>>>> on what the end state is or how much churn it's going to induce.
+>>>
+>>> I clearly know QEMU is not a C++ project. Now I don't see why we should
+>>> be reluctant to have headers being usable by a C++ compiler, as long as
+>>> it doesn't make our project worst to maintain.
+>>
+>> Every bit of code that is written by some downstream in C++ is
+>> some thing that will essentially then never be upstreamed without
+>> a big rewrite. So making it easier for downstreams to use C++
+>> reduces our chances of seeing them contribute what they do back to us.
+>>
+>> It's also extra work for us (for instance in this thread you
+>> proposed adding a CI job, which is more CI minutes cost to
+>> the project, more work for maintainers when something that
+>> builds fine locally falls over in the CI, and so on).
+>>
+>> Each individual fix might be trivial, but they add up.
+>> So it matters whether this one is "this is the only thing
+>> we tripped over since 2024" or "we just rebased to a new
+>> QEMU version and are going to be submitting dozens of these
+>> over the next few weeks".
+>>
+>>> See for example non-invasive commit 7246c4cc470 ("exec: don't use void*
+>>> in pointer arithmetic in headers"):
+>>
+>>> or commit 17c7df806b3 ("exec: avoid using C++ keywords in function
+>>> parameters"):
+>>
+>> For the record, I wasn't really enthusiastic about those changes
+>> either, for essentially the same reasons.
+>>
+>>> In this particular case, I always have been confused about what would be
+>>> the size of forward-declared enums. The C99 standard chapter §6.7.2.2
+>>> point 4 mentions:
+>>>
+>>>     Each enumerated type shall be compatible with char, a signed
+>>>     integer type, or an unsigned integer type. The choice of type
+>>>     is implementation-defined, but shall be capable of representing
+>>>     the values of all the members of the enumeration.
+>>>
+>>> When compiling this file with -Werror=pedantic we get:
+>>>
+>>> In file included from ../../ui/kbd-state.c:10:
+>>> include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to
+>>> 'enum' types [-Werror,-Wpedantic]
+>>>      12 | typedef enum QKbdModifier QKbdModifier;
+>>>         |              ^
+>>>
+>>> So arguably this could be fixed for C.
+>>
+>> Yes, I actually like the specific change in the patch
+>> on style grounds.
 > 
->   Each enumerated type shall be compatible with char, a signed
->   integer type, or an unsigned integer type. The choice of type
->   is implementation-defined, but shall be capable of representing
->   the values of all the members of the enumeration.
+> The *current* code style, however, matches the style we use for the
+> struct declaration & typedefs, and it is natural to be consistent
+> in this way.
+
+Per the ISO C standard, maybe we should considerate following the same
+structure style for enum typedefs was a mistake, and update our coding
+style. This is what I suggested here:
+
+https://lore.kernel.org/qemu-devel/20260130211746.46667-3-philmd@linaro.org/
+
 > 
-> Align with that recommendation by defining the typedef
-> along with the enum.
-
-What am I missing here - that text isn't talking about forward
-declarations / typedefs ? It is just saying that the size of
-an enum can vary betweeen compilers.
-
-
-> For information, building with -Werror=pedantic was reporting:
+> Even within this one file we have this example:
 > 
->   In file included from ../../ui/kbd-state.c:10:
->   include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to 'enum' types [-Werror,-Wpedantic]
->      12 | typedef enum QKbdModifier QKbdModifier;
->         |              ^
->   ...
-
-Compliance with -Wpedantic is a non-goal for QEMU. We long ago
-declared that our goal was only to support GCC/CLang, with the
-GNU dialect of C, explicitly *NOT* strict compliance with ISO C.
-
-
-
-> diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
-> index 1f37b932eb6..3522ebe51b9 100644
-> --- a/include/ui/kbd-state.h
-> +++ b/include/ui/kbd-state.h
-> @@ -9,9 +9,7 @@
->  
->  #include "qapi/qapi-types-ui.h"
->  
-> -typedef enum QKbdModifier QKbdModifier;
-
-Note this style...
-
-> -
-> -enum QKbdModifier {
-> +typedef enum QKbdModifier {
->      QKBD_MOD_NONE = 0,
->  
->      QKBD_MOD_SHIFT,
-> @@ -23,7 +21,7 @@ enum QKbdModifier {
->      QKBD_MOD_CAPSLOCK,
->  
->      QKBD_MOD__MAX
-> -};
-> +} QKbdModifier;
->  
->  typedef struct QKbdState QKbdState;
-
-...is a match for this style we use with structs, so this patch is forcing
-divergence in styles.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>    typedef enum QKbdModifier QKbdModifier;
+>    typedef struct QKbdState QKbdState;
+> 
+> And so personally I think the current code is preferrable to this patch.
+> 
+> IMHO, if downstream users/developers of a fork really strongly don't want
+> to be writing new devices in C, then the focus should be on Rust as the
+> next generation language, not the C++.
+> 
+> With regards,
+> Daniel
 
 
