@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96EFCE7FDDC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EC5E7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn174-00076O-HD; Mon, 02 Feb 2026 16:05:38 -0500
+	id 1vn17U-0008ES-SD; Mon, 02 Feb 2026 16:06:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn172-00073X-BO; Mon, 02 Feb 2026 16:05:36 -0500
+ id 1vn17S-0007tE-Rj; Mon, 02 Feb 2026 16:06:02 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn16z-0005A2-JF; Mon, 02 Feb 2026 16:05:36 -0500
+ id 1vn17R-0005Hr-2E; Mon, 02 Feb 2026 16:06:02 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 060F51851D1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5A2741851D6;
  Mon, 02 Feb 2026 23:57:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C184F35B348;
- Mon, 02 Feb 2026 23:58:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 223C335B34D;
+ Mon, 02 Feb 2026 23:58:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 69/74] tests/functional: migrate sbsa_ref test images
-Date: Mon,  2 Feb 2026 23:58:20 +0300
-Message-ID: <20260202205833.941615-69-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 74/74] python: fix msys64 wheel directory specification
+Date: Mon,  2 Feb 2026 23:58:25 +0300
+Message-ID: <20260202205833.941615-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,59 +61,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: John Snow <jsnow@redhat.com>
 
-As the builds in codelinaro.org are going away migrate the binaries to
-share.linaro.org. As the hotlinks don't encode the filename we need to
-explicitly tell uncompress how to handle the files.
+In python3.14, fixes were made to the file URI parsing [1] such that
+file URIs that used to work but were technically out of spec are now
+broken.
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+As a result, our msys2 GitLab CI tests began failing.
+
+Stop using "file://" URI links in favor of simple paths (Thanks pbo) to
+fix parsing errors under Python 3.14 and fix the msys2 GitLab CI tests.
+
+[1] https://docs.python.org/3/whatsnew/3.14.html#urllib
+
+Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260128105839.3487840-3-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit d9ca273f8f31acb22d3f5aca5f063b94fb962e19)
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260130050518.517688-2-jsnow@redhat.com>
+(cherry picked from commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index d3402f5080..3ff674039e 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -31,10 +31,10 @@ def fetch_firmware(test):
-     """
- 
-     # Secure BootRom (TF-A code)
--    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0)
-+    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0, format="xz")
- 
-     # Non-secure rom (UEFI and EFI variables)
--    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1)
-+    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1, format="xz")
- 
-     for path in [fs0_path, fs1_path]:
-         with open(path, "ab+") as fd:
-@@ -54,15 +54,13 @@ class Aarch64SbsarefMachine(QemuSystemTest):
- 
-     timeout = 180
- 
--    ASSET_FLASH0 = Asset(
--        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
--         '20241122-189881/edk2/SBSA_FLASH0.fd.xz'),
--        '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
-+    # SBSA_FLASH0.fd.xz
-+    ASSET_FLASH0 = Asset('https://share.linaro.org/downloadFile?id=kyoMLGC9zXa4oA7',
-+                         '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
- 
--    ASSET_FLASH1 = Asset(
--        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
--         '20241122-189881/edk2/SBSA_FLASH1.fd.xz'),
--        'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
-+    # SBSA_FLASH1.fd.xz
-+    ASSET_FLASH1 = Asset('https://share.linaro.org/downloadFile?id=Dj1HRXnDnKtU6Nj',
-+                         'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
- 
-     def test_sbsaref_edk2_firmware(self):
- 
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 9aed266df1..826c4ad58d 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -675,7 +675,7 @@ def pip_install(
+     if not online:
+         full_args += ["--no-index"]
+     if wheels_dir:
+-        full_args += ["--find-links", f"file://{str(wheels_dir)}"]
++        full_args += ["--find-links", str(wheels_dir)]
+     full_args += list(args)
+     subprocess.run(
+         full_args,
 -- 
 2.47.3
 
