@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE2BE7FDC7
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F694E7FDC7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzwp-0007yF-Nx; Mon, 02 Feb 2026 14:50:59 -0500
+	id 1vmzwk-0007J2-FL; Mon, 02 Feb 2026 14:50:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwm-0007fm-SK; Mon, 02 Feb 2026 14:50:56 -0500
+ id 1vmzwL-00065O-9Z; Mon, 02 Feb 2026 14:50:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzwk-0003w5-S6; Mon, 02 Feb 2026 14:50:56 -0500
+ id 1vmzwJ-0003rp-DH; Mon, 02 Feb 2026 14:50:28 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B5EDA1850C1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E3701850BD;
  Mon, 02 Feb 2026 22:46:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 65F9335B2A3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FCD335B29F;
  Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 47/69] tests/functional: Mark the MIPS replay tests as
- flaky
-Date: Mon,  2 Feb 2026 22:46:10 +0300
-Message-ID: <20260202194638.939438-47-mjt@tls.msk.ru>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 43/69] tests/functional: migrate aspeed_rainier image
+Date: Mon,  2 Feb 2026 22:46:06 +0300
+Message-ID: <20260202194638.939438-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -64,66 +63,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-MIPS test_replay.py often times out (likely hang) under GitLab CI:
+Cedric has a host for the file which allows us to keep the name.
 
-  2/21 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-replay   TIMEOUT   180.12s   killed by signal 15 SIGTERM
-
-The console.log file is empty, and recording.logs only shows:
-
-  qemu-system-mips64el: terminating on signal 15 from pid 344
-
-Since this is a long term issue affecting our CI, disable the tests.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251031094118.28440-2-philmd@linaro.org>
-(cherry picked from commit 1c11aa180714e8fb1df87923b6ddd0b17aa26204)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20260113135941.3361163-1-alex.bennee@linaro.org
+Cc: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7cf096d609e67fd06abf6a59e592cb6de427825c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
-index 26a6ccff3f..05cc585f85 100755
---- a/tests/functional/test_mips64el_replay.py
-+++ b/tests/functional/test_mips64el_replay.py
-@@ -5,6 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/tests/functional/test_arm_aspeed_rainier.py b/tests/functional/test_arm_aspeed_rainier.py
+index 602d6194ac..30827beca3 100755
+--- a/tests/functional/test_arm_aspeed_rainier.py
++++ b/tests/functional/test_arm_aspeed_rainier.py
+@@ -9,10 +9,8 @@
  
- from qemu_test import Asset, skipUntrustedTest
-+from qemu_test import skipFlakyTest
- from replay_kernel import ReplayKernelBase
+ class RainierMachine(AspeedTest):
  
+-    ASSET_RAINIER_EMMC = Asset(
+-        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+-         'mmc-p10bmc-20240617.qcow2'),
+-        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++    ASSET_RAINIER_EMMC = Asset('https://kaod.org/qemu/aspeed/rainier/mmc-p10bmc-20240617.qcow2',
++                               'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
  
-@@ -16,6 +17,7 @@ class Mips64elReplay(ReplayKernelBase):
-          'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
-         '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
- 
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
-     def test_replay_mips64el_malta(self):
-         self.set_machine('malta')
-         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
-diff --git a/tests/functional/test_mips_replay.py b/tests/functional/test_mips_replay.py
-index 4327481e35..747835bf00 100755
---- a/tests/functional/test_mips_replay.py
-+++ b/tests/functional/test_mips_replay.py
-@@ -5,6 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import Asset, skipSlowTest
-+from qemu_test import skipFlakyTest
- from replay_kernel import ReplayKernelBase
- 
- 
-@@ -16,6 +17,7 @@ class MipsReplay(ReplayKernelBase):
-          'linux-image-2.6.32-5-4kc-malta_2.6.32-48_mips.deb'),
-         '16ca524148afb0626f483163e5edf352bc1ab0e4fc7b9f9d473252762f2c7a43')
- 
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
-     def test_replay_mips_malta(self):
-         self.set_machine('malta')
-         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
+     def test_arm_aspeed_emmc_boot(self):
+         self.set_machine('rainier-bmc')
 -- 
 2.47.3
 
