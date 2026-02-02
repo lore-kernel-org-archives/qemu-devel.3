@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DDA7E7DEEE
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C60E7DEF2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmvyh-0008WT-6d; Mon, 02 Feb 2026 10:36:39 -0500
+	id 1vmw0V-0001e2-IK; Mon, 02 Feb 2026 10:38:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmvyg-0008VX-1U
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:36:38 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmw0T-0001ct-A6
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:38:29 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmvye-0005Fa-Ku
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:36:37 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4801ea9bafdso19515435e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 07:36:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmw0R-0005Mq-U8
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:38:29 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-432d28870ddso2834376f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 07:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770046595; x=1770651395; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/4n+u17ZiiyoK+LjjE2G+gKBx4QJYPePuRaxBrDh5JQ=;
- b=znYn+nPckeCO8sZszbU5skVxNlI/cFTpKpbzQi9LVZqpAItGC+wQnc8sfEIb0spSuy
- iWhDlIli0BIfpbZnarIwixJseDPoEIna4wGVcXmmrfYElm5DSe8FPzG90eWv/sakqVH1
- 9T3izHNdkCO6XUVJdyA1Suf+oytRIxnq5MSbHh6cn8zE1oquiXHlLA5WrDyPMt8OmvGu
- /s+JSaANLQ1dUKhVUW36Pvwjs1hBIjNzxkZw3cyREOVj/uZnI0RXJQISNBKVCqj8s15C
- lwQt9cW7qD61yoIMOcadyTRSY9UnYbxa3SxIi5O74zrj3VjYNffCzsoXuu9HMlsweLwC
- CmlQ==
+ d=linaro.org; s=google; t=1770046706; x=1770651506; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xtzc+zDHIihJICfdhzNz9OraYCFUdbVvRCSSebBmE8k=;
+ b=rq0uwiNgkkpmihIv7KLPrftUtLDEvvLa6jegcXQkeGr+iHRuNmfIot/UkuxsVW+tj+
+ a3RTbxO/B7XJEd2BH9tLAlckxpstUYzYJ2wpHDow6rcx5PlYolqTuitoGW4RPU73fe5S
+ AhMaJ3JfpYqxzWCkKhf11QiV/1eluLrehzzO4n/eXjb5Nnzh/TKT3ehL8F+uTzv/K4MK
+ 1ggfIx0COV+xY/PjHKcafeJuz5NNTLXwOmTRmEQyz5xO7uEAarqQUPteSmPcP87CutM0
+ qHq2G6JBVCyxOaEMQsfi9cSdfvvsznnBNN6So/YcRP3YsiQ/e0CqQZe1oOHeEapRpKkp
+ S2Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770046595; x=1770651395;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/4n+u17ZiiyoK+LjjE2G+gKBx4QJYPePuRaxBrDh5JQ=;
- b=Ozs+Me2UwvSoNURD7Xi0/Q8SsrEN1YSUmiNKB79QaEPVOVhzBp3hComb51rCygg9m8
- 7wcVTpXDP7NH4rKT5F8jpVb7doGQzhds1aapVpzmbkKG/aAWrBdRRQI0jOThWq5qyOFx
- ebf2mBgg0yeBhjRm3CHdsIxLSfnAPk1MjxRsBrvRKGeluXhyPBTW4r+ezSFodW5smN/Z
- GT9LnMdX0OrrCMi10eJAV4BShU71jGtzM3JFe0B6eusmKToF1AzWiC8x/E4GVUzpcWcQ
- +6ZtY8a7w813gVeEWG5gnBwZjWt8E5BZErdO93xISMHCUP0KCrkP0Ovrk9aTSlSeTFSF
- 02nw==
-X-Gm-Message-State: AOJu0YzLuSluvcozD2cF0Wb58yT+K4kh3uDbZP1DGwyYZSUaoO6ZnqNh
- p+t14HhF5w9LfCdersNtoivr5hGrFzU3J6hVKvVPB+fspcPmxH9cIznwDlDEA4igW0ueRsB3Ird
- /T7BO7AE=
-X-Gm-Gg: AZuq6aJc5mGwBRN6FC+jlcpvQs6OonEqRudB3zyOxxZ46dGy3+FS0D5UoYV7iKg9I83
- 2avp5oiCIjTkZjjo8NK1LDnyrbMuldUq6Gj1ojGwF9R94nTBWcdy8MJl8Opg4brsFNanCr+1bY+
- AM//xNf/sgMBLe+shv4hOxVvTmio2ky9oFgPZyvyVngNBUrAQDOA/pehReOrWfh9q73aBcw5xHD
- VQIBNQosRELPOXfL+CzezDqkO1FoZusAyJBNfb5OeY8RXDXG7c1sej28Ov6dpCL5OlrOI0urgSn
- PMs12kHcHYkwHsM0CT5by65MombrfMml9P10E7oZc7iXNcKFGQTf9OwqJeg/KyuM5Eo5j8q9uMN
- Ca5j4XEszOBfgkP5fCrz0lQzmmPayVZ0wYXwucOB1xJ7UqKF3pKWukVt+miDlULAgEZs5Fcq5hq
- O+bogM/VmzY2HWWQTSowWxc8vAVw5D0ZElA9hknK8p2dvQMYGTg8vBAEVtjFOw
-X-Received: by 2002:a05:600c:1d03:b0:477:7f4a:44b4 with SMTP id
- 5b1f17b1804b1-482db4567d6mr177172465e9.1.1770046594688; 
- Mon, 02 Feb 2026 07:36:34 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1770046706; x=1770651506;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xtzc+zDHIihJICfdhzNz9OraYCFUdbVvRCSSebBmE8k=;
+ b=HA06l6LWNMvQqCLltAlSeKEvEW1/iy+yymMqRtXCMRs4uCeG3os69Egp4N8WUbSVgX
+ mheVir3pJfc7qGXb200AuRkgtuUVK86zQY5dpu5MiOY+TfNzwpo0T+K2Ik1gtBCvBYQm
+ I1MQIABTZRGGi2ea74qmUQwibr268EbQ4XYO2GweU4oA+f3J05DrV3qw+amb6utAo/Kq
+ oZsJQGeVl+mjY61JjKkoLhFiB+MPKeSFo7KFurmp4cYbNq9tzTgOaJkHIF6V2qkk0daR
+ DGj7JMs3HvHtxDiR6demI/0CwtwKx1zwp0MY+pT71X7uAS10P72uIfbSHEQ/x2/erkQt
+ oyMg==
+X-Gm-Message-State: AOJu0YzetmjNZekvVT6wMzdGiK55b8/HFH0Q4LNY2/O2wHp7N9AcKdSB
+ B7LyyvCBsjq2/MCMN6jkSLXybd/9wusu5DGS4jxql5c2qtpcIN+r9nxZLkXkjnbgJDWwL+SGJ4j
+ lowip89c=
+X-Gm-Gg: AZuq6aKfWWahoGVqdCBra+14lEvPXVPmiwhsMvFBRnLD4v+D2pjzazMXJCgKCsqjgNn
+ 3zLeBTU7X/hsJpKwrNpOepfM2oK7yPuLjWLY9hCmR5gF9/qVQvQffL2bCS0HtfVvIXXb2ssv/V6
+ cYwooQw3XLKCBVtH0i+aBqBJ4L7vfyD7NNRV0tAPffa8JS/Nt33eYSxS5Xo7AahPCtiagVQ4sKq
+ RB64YCgGUldeYgj/KTXR+gtoolFeYClIAnsnsBONJtvZIKSAxiehmsFA/D1G4gTJsFsBl/lhvP/
+ GycZmHSFyX+K5HyasIG1fiZWy59Oq7LK6SSGJGD/xxPyGOWjhMyzig5Bek7dRr9sSKqwpG0D2hr
+ cOFrwbsRKWC9yqLtEMYc95H57EGcNVL35XfTmzSWL1IXlXOPrp0HNyLW6d0r3ArIDkNObXU/kpx
+ h5lfD7H42C1QO51yLUM8fEXSrtBDEpxxe6kyeCGiKf/EThqhYCEqRaSw==
+X-Received: by 2002:a05:6000:40df:b0:435:aecf:9674 with SMTP id
+ ffacd0b85a97d-435f3ad5ce2mr15506234f8f.55.1770046706260; 
+ Mon, 02 Feb 2026 07:38:26 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066bfb59asm444779065e9.7.2026.02.02.07.36.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 07:36:33 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 2/2] target/arm: Deprecate '-cpu any' (remplaced by '-cpu
- max')
-Date: Mon,  2 Feb 2026 16:36:18 +0100
-Message-ID: <20260202153618.78675-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260202153618.78675-1-philmd@linaro.org>
-References: <20260202153618.78675-1-philmd@linaro.org>
+ ffacd0b85a97d-435e135422csm46742514f8f.40.2026.02.02.07.38.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 07:38:25 -0800 (PST)
+Message-ID: <f8662a99-86c8-4747-9015-b1a82b50df13@linaro.org>
+Date: Mon, 2 Feb 2026 16:38:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/11] target/ppc: Introduce the mo_endian_env() helper
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+References: <20260122221106.57184-1-philmd@linaro.org>
+ <20260122221106.57184-6-philmd@linaro.org>
+ <aYDBNF0z2pe-8Cjt@hive.localdomain>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aYDBNF0z2pe-8Cjt@hive.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,64 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since more then 5 years the '-cpu any' is aliased to '-cpu max'
-(see commit a0032cc5427 "target/arm: Make 'any' CPU just an alias
-for 'max'"). Time to deprecate the alias so we can eventually
-remove the alias code. Emit a warnig meanwhile.
+On 2/2/26 16:36, Anton Johansson wrote:
+> On 22/01/26, Philippe Mathieu-Daudé wrote:
+>> Introduce mo_endian_env() which returns the endian MemOp
+>> from the vCPU env pointer. Keep it hardcoded as MO_TE.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/ppc/internal.h        |  6 ++++++
+>>   target/ppc/mem_helper.c      | 18 +++++++++---------
+>>   target/ppc/tcg-excp_helper.c |  2 +-
+>>   3 files changed, 16 insertions(+), 10 deletions(-)
+> 
+> Minor comment but the difference between mo_endian_env() and ppc_code_endian()
+> is a bit unclear from the names.  I think especially since
+> mo_endian_env() is used in ppc_ld_code() later on. Maybe
+> ppc_code_endian() -> ppc_disas_endian() || ppc_tb_endian()?
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- docs/about/deprecated.rst | 8 ++++++++
- target/arm/cpu.h          | 2 +-
- target/arm/cpu.c          | 1 +
- 3 files changed, 10 insertions(+), 1 deletion(-)
+Or mo_endian_env() -> ppc_data_endian()?
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 1d5c4f3707c..c544f23cab5 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -181,6 +181,14 @@ is going to be so much slower it wouldn't make sense for any serious
- instrumentation. Due to implementation differences there will also be
- anomalies in things like memory instrumentation.
- 
-+User emulation CPUs
-+-------------------
-+
-+Arm 'any' CPU (since 11.0)
-+''''''''''''''''''''''''''
-+
-+The Arm 'any' CPU is an alias for the 'max' CPU. Use the latter instead.
-+
- System emulator CPUs
- --------------------
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 21fee5e840b..3a888eb3fb6 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2390,7 +2390,7 @@ static inline bool arm_sctlr_b(CPUARMState *env)
-     return
-         /* We need not implement SCTLR.ITD in user-mode emulation, so
-          * let linux-user ignore the fact that it conflicts with SCTLR_B.
--         * This lets people run BE32 binaries with "-cpu any".
-+         * This lets people run BE32 binaries with "-cpu max".
-          */
- #ifndef CONFIG_USER_ONLY
-         !arm_feature(env, ARM_FEATURE_V7) &&
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 586202071d0..da664c4e30a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2218,6 +2218,7 @@ static ObjectClass *arm_cpu_class_by_name(const char *cpu_model)
-      * which has the same semantics as "-cpu max".
-      */
-     if (!strcmp(cpunamestr, "any")) {
-+        warn_report("CPU type 'any' is deprecated, use 'max' instead.");
-         cpunamestr = "max";
-     }
- #endif
--- 
-2.52.0
+> 
+> Regardless of namechange, just throwing out my 2c
+> 
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
 
+Thanks!
 
