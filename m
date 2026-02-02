@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282C5E7DF0F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD94E7DF16
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmy4x-0006Yt-D8; Mon, 02 Feb 2026 12:51:15 -0500
+	id 1vmyAb-0007Re-3b; Mon, 02 Feb 2026 12:57:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmy4v-0006Ye-3I
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:51:13 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1vmyAZ-0007Qj-5a
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:03 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vmy4t-0007kU-AQ
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:51:12 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-82307c6902eso2416419b3a.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:51:10 -0800 (PST)
+ id 1vmyAX-0008GR-Ou
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:57:02 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c65822dead7so1854006a12.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:57:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770054670; x=1770659470; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=KO/rnuJ24aB3f6jvq/AZtR0U+LPwI9pkjxsjSloE+G8=;
- b=eu8tuWMj02g025YlHYb9CumAZlKNjwD2fI16nXS87+Z1iQOFV88IG61qcYXn43Gi51
- Y5NsgC3WwFOPP8y12mqskso9+dWllo4QtjDSb2Hd8DKi9Wt0DGIa05XbJMeYE0N5+RNP
- LZFJbCe2Cv4x1gt9TcWVKcCZsUXvXc4VbtEW6bCn272b8ZBa3Rza2w+Eoqe0YhHhSeMD
- 7LEasm2v3Zxz6B30janbei5kdjS4/th5WV+2O3VezRVVBNT835OB0ORgp2Ird9zxHkR+
- AhhNN6bh5wcg+3LwmjY1KsjRNrUEyIKI/s63hrzjUUQMADretwv5Ae9EJZNJJszL7fr0
- 4hJg==
+ d=linaro.org; s=google; t=1770055020; x=1770659820; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=831PZeoEGhHjEJFXtrpbmInT+faGeD93DRE7pLYd0XE=;
+ b=sXCAmSkz9Yjo+BV1it9x8AtvFQOPr40G8YECGwzfskkzIkHNGdO7MfbE3N4PRiHy7d
+ YVO+aJYRK7BzAKCYvWDL9PCWbsf5tA5o8P+5Hb58TblNFdM7TvIngrSG5huiDZQ6hv9J
+ yHGqY6aSc97P9NayFXCqexuArsKElg5lVlZ6riPiyTyi7NpNnr4keJGEOs29leGDC4Os
+ OHAZqDvjdhZIuBxwnHKfWyRrWfugoYx+Oj9l+e9iDKKwCV1VMtYjuPSpwpYIIRlsg1/L
+ sBrHp5rIb9omZrM8g64GkuPHezbVRPfTMCRVZKEF0a9/OJYf/m7Lh+e75t6/ZNk32f8h
+ mGhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770054670; x=1770659470;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KO/rnuJ24aB3f6jvq/AZtR0U+LPwI9pkjxsjSloE+G8=;
- b=VLHcKviNDlCvZiGMTgvSNNBBN8giakoGpAzB3xusJ4HL4CsMLrAMMkKnMpy9R+Da2J
- ksWzjoqnhm9JIBBW5rrRvYYOIPJsJsNsBaLdovFTW4hJRX4QijsdXT2Pw8WyCVqw0yDm
- yikTuXFAR4LBJYnM6u0NoqCbzJ0MRhyYXki8xamIDkMQhtNNxHWAfOLbG+m49EoxT1xM
- Im6aS6dVAFcVAtjU0sKL72VUewRFzn5JUFMJ8rKeNq9mctkhTBapR9Fl97KnieZvirWI
- UJsZ8oFvUNKY+VYcA+D3kNSaywj4N5v/GAR5JDWzJA/WVzb22KgPZw23yukJ98rwrdLO
- dQiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6NhFt+imFlbtGpJ+zN2VHeLSvTT9e1n4NdHLZ37S3fS3uGUXClyHVdXqr617BQQVGMJpR//ZvP9NJ@nongnu.org
-X-Gm-Message-State: AOJu0Yykhawofye74HKTAN0ltgWWPgNpL38kUX3aJISWt35QdTKgMI8G
- xBKIPBF1edTi0Eh+EgPZDIBtlKDpQ5YzHMjrlhiEqjOHhnIbapqpsYDPPJSu/FLRbX0=
-X-Gm-Gg: AZuq6aJdgsGy9BWRPXYhuLh065qqJGOVSZTEK8RkNIqQgRcET/SRk6mLk5kao1lMXgC
- u6Zy86Lb6RVx9rvi/i3X6743g8B/1gds+b/9wpYCTatjqs3lUCLPMWhJzWtIxkauGdKuF7gRvj9
- 6fM15zOah0gbagHa3y3OHA3ZsGMQVAw/YHqlniyPPUudaflFMIB/oYrPJQVcqjVJT6+mCFq92zP
- 5hZpHAlPqK67EukEs/ZcpYS2oZB2v87AFeWrJaVWhLdDIObGH3veHKwDX+RROQUToVIZkJ6W2Yj
- NpcL046Jhfbh/6KuNNiXMSEcVzpHmDkd1Zd/yYuvS5yPn2DB1FNd4jyKVSKr8S508n5+grcB2R+
- UVLf7F4hx37wzxoS2I7fLU/bzR13kl0BHfP59WvmUqowUZeJB2VxBfY+Rg6vwHXhPJoCiJ1yh3o
- XMgZVysbY17QE3z+Vxgv3UgApiYzGqYQ7eUEcdkAQnyhInUdDrgHbotpGI
-X-Received: by 2002:a05:6a00:ad1:b0:81b:ab6f:2974 with SMTP id
- d2e1a72fcca58-823ab65ee90mr10397643b3a.9.1770054669490; 
- Mon, 02 Feb 2026 09:51:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770055020; x=1770659820;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=831PZeoEGhHjEJFXtrpbmInT+faGeD93DRE7pLYd0XE=;
+ b=PBMCoGJyFzn+I8bCTxVTB9us2eIv5Q/cWmU9P9I6/nY0wyo3wpKH6180jyBVqAKOjF
+ V8xwD9rJp+poeYWBwPo/ggEZHqWnY2FAk8igYWrt2vBcpMMLozbDID0Q58mn3LP3Mniz
+ 3fFzOByVCIhSW1Jcj5gGvMug5orvz6eSOCMREzWRLo7y5inUIGEopVo8ux6hAST6ZoZC
+ tOxf/y//cnQBpFLDB9l8USdzV/ZkTk/Vwp+ZdCFXT0SYcpgWUIfnnaWgBiuFu4P8K+jB
+ PFvg/nu/FTKXAezMIpLcjqTiI5kHVsnpxJgKD/vNBoXD31NhQT2+OTX+WHOSeyAIX3o3
+ 0JJQ==
+X-Gm-Message-State: AOJu0Yw789EIeno7HmLG9OyxA0NVOBWwUJ6nm3hlVLNjRewafYvXv65L
+ ow4tbHjoj4N/4Y17Y8MBPl0c2nxaKQtST9U2+UXgcrjUSgEAg3O+84/kRCiuHyEtJSE=
+X-Gm-Gg: AZuq6aL88Lgn1MuB/xeuzNh15KExrAGriU3V4j2tUaAgxth1Ol3NQqsVKdu8/XkC4Lx
+ MNGpBRFZM55ZBE7b6FvZq2soGcWf9swWia67COYM+UVH1XRALOgpVsXnXdkZurLPFlfKaev9PKN
+ dvjcwhr/Ei2sMkBvtPtlyRy5xM3L8aAUgsFl17lQM984ojxfV/TJMn+PXGz6TTL1TU8vmaJYJ76
+ rPNuGvBeFaVTLhBT8mharufQK5hPfLJM5JpTh1uBy2McjbRsQCV41+mNB4pZxnJMyzb1H0/Sl/V
+ vKiyQpYznZZAPduVeYSqx5fpNH28UMgXEcUE0OU7rgw7fDxRxixxf3W7jiqsCJzmSzXDYFFWEl4
+ h1y6m4B7PbH6tR/MOMN2+c1pOtcLo7SV+5LxIlE7OFI/Z2aLtz0Lz4MYJkkUOaBj1yUww8Y3LIQ
+ z7wKcMtpdL2RYr+al8xkHJfQNB8cJ3yc+1+VSljvEtKHjeNEpntBag4eHQ
+X-Received: by 2002:a17:90a:d604:b0:349:3fe8:e7de with SMTP id
+ 98e67ed59e1d1-3543b3ad375mr10891843a91.28.1770055019936; 
+ Mon, 02 Feb 2026 09:56:59 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c5293dsm15986056b3a.61.2026.02.02.09.51.08
+ 98e67ed59e1d1-3547778cb83sm112208a91.13.2026.02.02.09.56.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 09:51:08 -0800 (PST)
-Message-ID: <7c37f58b-243a-4915-ad6e-e4b6b12a64a0@linaro.org>
-Date: Mon, 2 Feb 2026 09:51:08 -0800
+ Mon, 02 Feb 2026 09:56:59 -0800 (PST)
+Message-ID: <041edfda-541f-4274-94ba-b7e6b64399ac@linaro.org>
+Date: Mon, 2 Feb 2026 09:56:58 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/21] Plugins patches for 2026-01-29
+Subject: Re: [PATCH v5 06/11] target/ppc: Introduce ppc_code_endian() helper
 Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+References: <20260122221106.57184-1-philmd@linaro.org>
+ <20260122221106.57184-7-philmd@linaro.org>
+ <aYC1bfhw1CtIED8Y@hive.localdomain> <aYC28VNE0yNjlJw6@hive.localdomain>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
- <2d69de6e-da9f-4f90-b805-9553bb72c78d@linaro.org>
- <7ac8fe1f-8098-4417-a97b-1a82c0fd23ca@linaro.org>
- <CAFEAcA_zghZeA0PzivCY9vCcFk6rVLwvP3in35rA=bF8yrdeyQ@mail.gmail.com>
- <878qdbtam7.fsf@redhat.com>
- <23be2c83-01ea-495d-b14e-496bd3e0a687@nutanix.com>
- <bd097ad0-d18e-42fc-9746-db4d448b71fa@linaro.org>
- <aYDgONbUOWdUi7SO@redhat.com>
- <416762ea-471d-4e7d-8e02-d350c01dc8fd@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -122,18 +114,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <416762ea-471d-4e7d-8e02-d350c01dc8fd@linaro.org>
+In-Reply-To: <aYC28VNE0yNjlJw6@hive.localdomain>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,92 +141,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 9:45 AM, Pierrick Bouvier wrote:
-> On 2/2/26 9:34 AM, Daniel P. Berrangé wrote:
->> On Mon, Feb 02, 2026 at 09:30:31AM -0800, Pierrick Bouvier wrote:
->>> On 2/2/26 8:55 AM, Mark Cave-Ayland wrote:
->>>> On 02/02/2026 15:42, Cornelia Huck wrote:
->>>>
->>>>> On Mon, Feb 02 2026, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>>
->>>>>> On Mon, 2 Feb 2026 at 04:04, Richard Henderson
->>>>>> <richard.henderson@linaro.org> wrote:
->>>>>>>
->>>>>>> On 1/30/26 04:41, Pierrick Bouvier wrote:
->>>>>>>> On 1/29/26 9:37 AM, Pierrick Bouvier wrote:
->>>>>>>>>            contrib/plugins: add empty cpp plugin
->>>>>>
->>>>>> Hi; this fails to build for me on Linux (Ubuntu 24.04) with clang:
->>>>>>
->>>>>> In file included from ../../contrib/plugins/cpp.cpp:33:
->>>>>> /usr/bin/../lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/coroutine:38:3:
->>>>>> error: "the <coroutine> header requires -fcoroutines"
->>>>>>        38 | # error "the <coroutine> header requires -fcoroutines"
->>>>>>           |   ^
->>>>>> 1 error generated.
->>>>>
->>>>> Fails for me as well on Fedora 42 (x86_64) with gcc:
->>>>>
->>>>> In file included from ../qemu/contrib/plugins/cpp.cpp:33:
->>>>> /usr/include/c++/15/coroutine:43:3: error: #error "the <coroutine> header requires -fcoroutines"
->>>>>        43 | # error "the <coroutine> header requires -fcoroutines"
->>>>>           |   ^~~~~
->>>>>
->>>>> (It works for me on an aarch64 RHEL 9 system.)
->>>>
->>>> Is this with a clean build? I had exactly the same error message
->>>> earlier, but I was able to fix it by destroying my build/ directory,
->>>> then re-running configure followed again by make.
->>>>
+On 2/2/26 6:39 AM, Anton Johansson wrote:
+> On 02/02/26, Anton Johansson wrote:
+>> On 22/01/26, Philippe Mathieu-Daudé wrote:
+>>> Introduce the ppc_code_endian() helper which returns the
+>>> MemOp endianness for the CODE path.
 >>>
->>> Thanks for the reports everyone.
+>>> Use it in need_byteswap(), removing one TARGET_BIG_ENDIAN.
 >>>
->>> I tried it on ubuntu LTS and didn't encounter this problem.
->>> What is happening is that meson unfortunately caches default_options set,
->>> including the C++ standard version in our case.
->>> Thus, you indeed need to clean and rebuild once.
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   target/ppc/translate.c | 11 ++++++-----
+>>>   1 file changed, 6 insertions(+), 5 deletions(-)
 >>>
->>> The solution for this would be to not use default_options and add the flag
->>> to qemu_cflags instead. It's the same limitation if we change the default
->>> warning level, or any other option set with default_options.
+>>> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+>>> index 17e6d07c8c2..4a9199a4473 100644
+>>> --- a/target/ppc/translate.c
+>>> +++ b/target/ppc/translate.c
+>>> @@ -214,14 +214,15 @@ static inline bool is_ppe(const DisasContext *ctx)
+>>>       return !!(ctx->flags & POWERPC_FLAG_PPE42);
+>>>   }
+>>>   
+>>> +static inline MemOp ppc_code_endian(const DisasContext *ctx)
+>>> +{
+>>> +    return MO_BE ^ (ctx->le_mode * MO_BSWAP);
+>>> +}
 >>
->> If that's correct as the root cause, then it feels like this is a meson bug
->> that ought to be reported upstream. Any meson.build default_options changes
->> that affect the compiler behaviour should invalidate cache in the same way
->> as when we modify qemu_cflags.
->>
+>> This was not super obvious to me, is this a common pattern?
 > 
-> I totally agree with you Daniel, and I've been bitten by that in my
-> previous company when updating cpp standard we used. As you can see, it
-> slipped out of my mind for current series...
-> 
-> I never understood why it had this counter intuitive behaviour, and
-> didn't bother to report to be honest, I simply switched to manual flags
-> instead at the time.
-> Meson devs usually have a strong opinion of how things should be, so I
-> don't expect this to be something that fell through the cracks but a
-> deliberate design choice.
-> 
-> EDIT: after typing the answer above, did a quick search, and indeed,
-> it's how it's supposed to be. So be it.
-> https://github.com/mesonbuild/meson/issues/13556
-> 
->> With regards,
->> Daniel
-> 
-> Regards,
-> Pierrick
+> Ignore this comment, I see we do it for translator_ld*()!:)
 
-Paolo, since it seems complicated to change this in meson, should we at 
-least remove C and C++ standard from default_options, and rely on manual 
-flags instead?
-
-Probably, same goes for rust standard when we'll have to update it to 2024.
-
-I'll let you (or anyone else on the thread more legitimate than me) 
-judge what's the best approach on this, and I can help to implement it 
-if needed.
-
-Regards,
-Pierrick
+I agree that even though it's used there, it's far from being obvious 
+when reading it :)
 
