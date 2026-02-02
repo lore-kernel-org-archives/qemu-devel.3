@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D649E7FDDE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17792E7FDD0
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn12x-000176-R4; Mon, 02 Feb 2026 16:01:24 -0500
+	id 1vn11H-0004Rm-6X; Mon, 02 Feb 2026 15:59:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12T-0000cl-VU; Mon, 02 Feb 2026 16:01:01 -0500
+ id 1vn10x-00046F-1b; Mon, 02 Feb 2026 15:59:22 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn12R-0004J3-Jw; Mon, 02 Feb 2026 16:00:53 -0500
+ id 1vn10t-0003oH-G7; Mon, 02 Feb 2026 15:59:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B05C1851A5;
- Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3B979185193;
+ Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 561B535B31C;
- Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 044FF35B30A;
+ Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 25/74] tcg/optimize: Save o_mask in fold_masks_zosa_int
-Date: Mon,  2 Feb 2026 23:57:36 +0300
-Message-ID: <20260202205833.941615-25-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 07/74] vhost: Always initialize cached vring data
+Date: Mon,  2 Feb 2026 23:57:18 +0300
+Message-ID: <20260202205833.941615-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -63,36 +61,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-When adding o_mask to this function, we used it in a
-couple of places but failed to save it for future use.
-Also, update a related comment.
+vhost_virtqueue_start() can exit early if the descriptor ring address is
+0, assuming the virtqueue isn’t ready to start.
+
+In this case, all cached vring information (size, physical address,
+pointer) is left as-is.  This is OK at first startup, when that info is
+still initialized to 0, but after a reset, it will retain old (outdated)
+information.
+
+vhost_virtqueue_start() must make sure these values are (re-)set
+properly before exiting.
+
+(When using an IOMMU, these outdated values can stall the device:
+vhost_dev_start() deliberately produces an IOMMU miss event for each
+used vring.  If used_phys contains an outdated value, the resulting
+lookup may fail, forcing the device to be stopped.)
 
 Cc: qemu-stable@nongnu.org
-Fixes: 56f15f67ea1 ("tcg/optimize: Add one's mask to TempOptInfo")
-Reported-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 7d2d577de0c72f3cf2eb43f1534e908070d3bc47)
+Message-ID: <20251208113008.153249-1-hreitz@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 46228925edd53bb0569519538b94e10b85f9c001)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index f69702b26e..1f95da487b 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1088,8 +1088,9 @@ static bool fold_masks_zosa_int(OptContext *ctx, TCGOp *op,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 6557c58d12..a7741b3527 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1244,7 +1244,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr s, l, a;
++    hwaddr l;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1255,8 +1255,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     };
+     struct VirtQueue *vvq = virtio_get_queue(vdev, idx);
  
-     ti = ts_info(ts);
-     ti->z_mask = z_mask;
-+    ti->o_mask = o_mask;
+-    a = virtio_queue_get_desc_addr(vdev, idx);
+-    if (a == 0) {
++    vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
++    vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
++    vq->desc = NULL;
++    vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
++    vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
++    vq->avail = NULL;
++    vq->used_size = virtio_queue_get_used_size(vdev, idx);
++    vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
++    vq->used = NULL;
++
++    if (vq->desc_phys == 0) {
+         /* Queue might not be ready for start */
+         return 0;
+     }
+@@ -1284,24 +1293,23 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         }
+     }
  
--    /* Canonicalize s_mask and incorporate data from z_mask. */
-+    /* Canonicalize s_mask and incorporate data from [zo]_mask. */
-     rep = clz64(~s_mask);
-     rep = MAX(rep, clz64(z_mask));
-     rep = MAX(rep, clz64(~o_mask));
+-    vq->desc_size = s = l = virtio_queue_get_desc_size(vdev, idx);
+-    vq->desc_phys = a;
+-    vq->desc = vhost_memory_map(dev, a, &l, false);
+-    if (!vq->desc || l != s) {
++    l = vq->desc_size;
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, &l, false);
++    if (!vq->desc || l != vq->desc_size) {
+         r = -ENOMEM;
+         goto fail_alloc_desc;
+     }
+-    vq->avail_size = s = l = virtio_queue_get_avail_size(vdev, idx);
+-    vq->avail_phys = a = virtio_queue_get_avail_addr(vdev, idx);
+-    vq->avail = vhost_memory_map(dev, a, &l, false);
+-    if (!vq->avail || l != s) {
++
++    l = vq->avail_size;
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, &l, false);
++    if (!vq->avail || l != vq->avail_size) {
+         r = -ENOMEM;
+         goto fail_alloc_avail;
+     }
+-    vq->used_size = s = l = virtio_queue_get_used_size(vdev, idx);
+-    vq->used_phys = a = virtio_queue_get_used_addr(vdev, idx);
+-    vq->used = vhost_memory_map(dev, a, &l, true);
+-    if (!vq->used || l != s) {
++
++    l = vq->used_size;
++    vq->used = vhost_memory_map(dev, vq->used_phys, &l, true);
++    if (!vq->used || l != vq->used_size) {
+         r = -ENOMEM;
+         goto fail_alloc_used;
+     }
 -- 
 2.47.3
 
