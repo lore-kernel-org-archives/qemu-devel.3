@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A982E7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0793DE7FDF5
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2bg-0007WN-JA; Mon, 02 Feb 2026 17:41:20 -0500
+	id 1vn2be-0007SY-DF; Mon, 02 Feb 2026 17:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bf-0007UQ-C6
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:19 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bd-0007Pn-I4
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:17 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bd-0000lw-KQ
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:19 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vn2bc-0000lr-0W
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:41:17 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 120B05BCC3;
- Mon,  2 Feb 2026 22:41:15 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6D2363E6C6;
+ Mon,  2 Feb 2026 22:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770072075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770072068; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=D2q+yo8cAqr+2JIcoh8bPW+FL0g5uqAWxr0z4CicI1WhyKCIRLW4QeCxmV+fuCegrum9yg
- uG3Z6EK+qYo+3SSvxyN9inz6qlkfLQYk0z41RJASMw2UNJR/sBpijMfFLUTeQMvtfzHV28
- L5w5BV4eZO6wKMvD3vfkMo59fIwEE5Q=
+ bh=EDJqt8uWzuu0pYBRshiU0zbXVLJA6f5OMr93LA+dcPA=;
+ b=A3OUWwxWj/08o6iGb7b87iUzkLU7XiGt2le85AujZ/Gkkw/qvmVfazysr5nKZt2BE3drKA
+ Ru7FD7KEqeZ//gfj40PC9uwOuEaiFzB04ThYNKPyLqMzbf5fuaYKpAAPz/5XONxU4Pa1hG
+ wY73EIp28YcM9Lu5MYbTP3DY0tWrH0M=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770072075;
+ s=susede2_ed25519; t=1770072068;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=WyNtTSQhbsRP5qObUmoHOmRIxlLTdbBsDtLtOQqme5tBIvAf9d4MVBqX+CmHwyWdMCCCFQ
- 7wzzVzqmc2hWBLDg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=D2q+yo8c;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WyNtTSQh
+ bh=EDJqt8uWzuu0pYBRshiU0zbXVLJA6f5OMr93LA+dcPA=;
+ b=DltHleTs1W8symduyu/+7pVBh5CFK4GkgfRpVh3rqlzbGgM7F7HhVzvTkPfyYodQ6svA9y
+ r6IUGTmDlMMb/jBw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=A3OUWwxW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DltHleTs
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770072075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1770072068; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=D2q+yo8cAqr+2JIcoh8bPW+FL0g5uqAWxr0z4CicI1WhyKCIRLW4QeCxmV+fuCegrum9yg
- uG3Z6EK+qYo+3SSvxyN9inz6qlkfLQYk0z41RJASMw2UNJR/sBpijMfFLUTeQMvtfzHV28
- L5w5BV4eZO6wKMvD3vfkMo59fIwEE5Q=
+ bh=EDJqt8uWzuu0pYBRshiU0zbXVLJA6f5OMr93LA+dcPA=;
+ b=A3OUWwxWj/08o6iGb7b87iUzkLU7XiGt2le85AujZ/Gkkw/qvmVfazysr5nKZt2BE3drKA
+ Ru7FD7KEqeZ//gfj40PC9uwOuEaiFzB04ThYNKPyLqMzbf5fuaYKpAAPz/5XONxU4Pa1hG
+ wY73EIp28YcM9Lu5MYbTP3DY0tWrH0M=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770072075;
+ s=susede2_ed25519; t=1770072068;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=WyNtTSQhbsRP5qObUmoHOmRIxlLTdbBsDtLtOQqme5tBIvAf9d4MVBqX+CmHwyWdMCCCFQ
- 7wzzVzqmc2hWBLDg==
+ bh=EDJqt8uWzuu0pYBRshiU0zbXVLJA6f5OMr93LA+dcPA=;
+ b=DltHleTs1W8symduyu/+7pVBh5CFK4GkgfRpVh3rqlzbGgM7F7HhVzvTkPfyYodQ6svA9y
+ r6IUGTmDlMMb/jBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E6DA3EA62;
- Mon,  2 Feb 2026 22:41:13 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D4FFE3EA62;
+ Mon,  2 Feb 2026 22:41:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cMBMAAkogWl8XgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 22:41:13 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aD0IJQIogWl8XgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Feb 2026 22:41:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, armbru@redhat.com, ppandit@redhat.com,
- Michael Roth <michael.roth@amd.com>
-Subject: [PATCH v2 4/9] qapi: Implement qapi_dealloc_present_visitor
-Date: Mon,  2 Feb 2026 19:40:56 -0300
-Message-ID: <20260202224101.20568-5-farosas@suse.de>
+Cc: peterx@redhat.com,
+	armbru@redhat.com,
+	ppandit@redhat.com
+Subject: [PATCH v2 1/9] migration/options.c: Don't export migrate_tls_opts_free
+Date: Mon,  2 Feb 2026 19:40:53 -0300
+Message-ID: <20260202224101.20568-2-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202224101.20568-1-farosas@suse.de>
 References: <20260202224101.20568-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_COUNT_TWO(0.00)[2]; ARC_NA(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+ MX_GOOD(-0.01)[]; TO_DN_NONE(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
  FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 6D2363E6C6
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 120B05BCC3
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -125,257 +127,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement a visitor that frees the pointer members of the visited QAPI
-object in the same way that qapi_dealloc_visitor does, but similarly
-to qobject_input_visitor, takes an input QObject that will dictate
-which members get freed and which don't. Members not present in the
-input QObject will be left unchanged in the visited QAPI object.
-
-This is useful to free memory just before perfoming a visit with
-qobject_input_visitor on a pre-existing, non-null QAPI object. If the
-same QObject is passed to both visitors, the pointers overwritten by
-the input visitor match the ones that are freed by the dealloc
-visitor.
+The migrate_tls_opts_free function was never used outside
+options.c. Make it static.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/qapi/dealloc-visitor.h |   6 ++
- qapi/qapi-dealloc-visitor.c    | 173 ++++++++++++++++++++++++++++++++-
- 2 files changed, 178 insertions(+), 1 deletion(-)
+ migration/options.c | 2 +-
+ migration/options.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/qapi/dealloc-visitor.h b/include/qapi/dealloc-visitor.h
-index c36715fdf3..96c7bf35c3 100644
---- a/include/qapi/dealloc-visitor.h
-+++ b/include/qapi/dealloc-visitor.h
-@@ -25,4 +25,10 @@ typedef struct QapiDeallocVisitor QapiDeallocVisitor;
-  */
- Visitor *qapi_dealloc_visitor_new(void);
+diff --git a/migration/options.c b/migration/options.c
+index 1ffe85a2d8..dcd5e07504 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1001,7 +1001,7 @@ AnnounceParameters *migrate_announce_params(void)
+     return &ap;
+ }
  
-+/*
-+ * Like qapi_dealloc_visitor_new but visits a QObject and only frees
-+ * present members.
-+ */
-+Visitor *qapi_dealloc_present_visitor_new(QObject *);
-+
+-void migrate_tls_opts_free(MigrationParameters *params)
++static void migrate_tls_opts_free(MigrationParameters *params)
+ {
+     qapi_free_StrOrNull(params->tls_creds);
+     qapi_free_StrOrNull(params->tls_hostname);
+diff --git a/migration/options.h b/migration/options.h
+index b502871097..0c3043f1ff 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -92,5 +92,4 @@ ZeroPageDetection migrate_zero_page_detection(void);
+ 
+ bool migrate_params_check(MigrationParameters *params, Error **errp);
+ void migrate_params_init(MigrationParameters *params);
+-void migrate_tls_opts_free(MigrationParameters *params);
  #endif
-diff --git a/qapi/qapi-dealloc-visitor.c b/qapi/qapi-dealloc-visitor.c
-index 57a2c904bb..90b017cc93 100644
---- a/qapi/qapi-dealloc-visitor.c
-+++ b/qapi/qapi-dealloc-visitor.c
-@@ -14,14 +14,146 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/dealloc-visitor.h"
-+#include "qemu/queue.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qlist.h"
- #include "qobject/qnull.h"
- #include "qapi/visitor-impl.h"
- 
-+typedef struct QStackEntry {
-+    QObject *obj;               /* QDict or QList being visited */
-+    void *qapi;
-+    const QListEntry *entry;    /* If @obj is QList: unvisited tail */
-+    QSLIST_ENTRY(QStackEntry) node;
-+} QStackEntry;
-+
- struct QapiDeallocVisitor
- {
-     Visitor visitor;
-+    QObject *root;
-+    QSLIST_HEAD(, QStackEntry) stack;
- };
- 
-+static void qapi_dealloc_pop(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(se && se->qapi == obj);
-+    QSLIST_REMOVE_HEAD(&qdv->stack, node);
-+    g_free(se);
-+}
-+
-+static void qapi_dealloc_push(Visitor *v, QObject *obj, void *qapi)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = g_new0(QStackEntry, 1);
-+
-+    assert(obj);
-+    se->obj = obj;
-+    se->qapi = qapi;
-+
-+    if (qobject_type(obj) == QTYPE_QLIST) {
-+        se->entry = qlist_first(qobject_to(QList, obj));
-+    }
-+
-+    QSLIST_INSERT_HEAD(&qdv->stack, se, node);
-+}
-+
-+static QObject *qapi_dealloc_try_get_object(QapiDeallocVisitor *qdv, const char *name)
-+{
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+    QObject *qobj;
-+    QObject *ret = NULL;
-+
-+    if (!se) {
-+        assert(qdv->root);
-+        return qdv->root;
-+    }
-+
-+    qobj = se->obj;
-+    assert(qobj);
-+
-+    if (qobject_type(qobj) == QTYPE_QDICT) {
-+        assert(name);
-+        ret = qdict_get(qobject_to(QDict, qobj), name);
-+    } else {
-+        assert(qobject_type(qobj) == QTYPE_QLIST);
-+        assert(!name);
-+        if (se->entry) {
-+            ret = qlist_entry_obj(se->entry);
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+static bool qapi_dealloc_present_start_struct(Visitor *v, const char *name,
-+                                              void **obj, size_t size,
-+                                              Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(qobject_type(qobj) == QTYPE_QDICT);
-+    qapi_dealloc_push(v, qobj, obj);
-+    return true;
-+}
-+
-+static void qapi_dealloc_present_end_struct(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(qobject_type(se->obj) == QTYPE_QDICT);
-+    qapi_dealloc_pop(v, obj);
-+
-+    if (obj) {
-+        g_free(*obj);
-+    }
-+}
-+
-+static bool qapi_dealloc_present_start_list(Visitor *v, const char *name,
-+                                            GenericList **list, size_t size,
-+                                            Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(qobject_type(qobj) == QTYPE_QLIST);
-+    qapi_dealloc_push(v, qobj, list);
-+    return true;
-+}
-+
-+static void qapi_dealloc_present_end_list(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(qobject_type(se->obj) == QTYPE_QLIST);
-+    qapi_dealloc_pop(v, obj);
-+}
-+
-+static void qapi_dealloc_present_free(Visitor *v)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+
-+    while (!QSLIST_EMPTY(&qdv->stack)) {
-+        QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+        QSLIST_REMOVE_HEAD(&qdv->stack, node);
-+        g_free(se);
-+    }
-+    qobject_unref(qdv->root);
-+    g_free(qdv);
-+}
-+
- static bool qapi_dealloc_start_struct(Visitor *v, const char *name, void **obj,
-                                       size_t unused, Error **errp)
- {
-@@ -35,6 +167,21 @@ static void qapi_dealloc_end_struct(Visitor *v, void **obj)
-     }
- }
- 
-+static bool qapi_dealloc_start_alternate(Visitor *v, const char *name,
-+                                         GenericAlternate **obj, size_t size,
-+                                         Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(*obj);
-+    (*obj)->type = qobject_type(qobj);
-+    return true;
-+}
-+
- static void qapi_dealloc_end_alternate(Visitor *v, void **obj)
- {
-     if (obj) {
-@@ -117,13 +264,14 @@ static void qapi_dealloc_free(Visitor *v)
-     g_free(container_of(v, QapiDeallocVisitor, visitor));
- }
- 
--Visitor *qapi_dealloc_visitor_new(void)
-+static QapiDeallocVisitor *qapi_dealloc_visitor_new_base(void)
- {
-     QapiDeallocVisitor *v;
- 
-     v = g_malloc0(sizeof(*v));
- 
-     v->visitor.type = VISITOR_DEALLOC;
-+
-     v->visitor.start_struct = qapi_dealloc_start_struct;
-     v->visitor.end_struct = qapi_dealloc_end_struct;
-     v->visitor.end_alternate = qapi_dealloc_end_alternate;
-@@ -139,5 +287,28 @@ Visitor *qapi_dealloc_visitor_new(void)
-     v->visitor.type_null = qapi_dealloc_type_null;
-     v->visitor.free = qapi_dealloc_free;
- 
-+    return v;
-+}
-+
-+Visitor *qapi_dealloc_visitor_new(void)
-+{
-+    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
-+
-+    return &v->visitor;
-+}
-+
-+Visitor *qapi_dealloc_present_visitor_new(QObject *obj)
-+{
-+    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
-+
-+    v->visitor.start_alternate = qapi_dealloc_start_alternate;
-+    v->visitor.start_list = qapi_dealloc_present_start_list;
-+    v->visitor.end_list = qapi_dealloc_present_end_list;
-+    v->visitor.start_struct = qapi_dealloc_present_start_struct;
-+    v->visitor.end_struct = qapi_dealloc_present_end_struct;
-+    v->visitor.free = qapi_dealloc_present_free;
-+
-+    v->root = qobject_ref(obj);
-+
-     return &v->visitor;
- }
 -- 
 2.51.0
 
