@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2983E7FDCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08386E7FDC8
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzxm-0001Ao-8y; Mon, 02 Feb 2026 14:51:58 -0500
+	id 1vmzxr-0001mr-N1; Mon, 02 Feb 2026 14:52:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxH-0000X8-Po; Mon, 02 Feb 2026 14:51:29 -0500
+ id 1vmzxP-0000zr-OR; Mon, 02 Feb 2026 14:51:39 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxD-00040o-P2; Mon, 02 Feb 2026 14:51:27 -0500
+ id 1vmzxL-00041m-54; Mon, 02 Feb 2026 14:51:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 357C31850C5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 593E51850C7;
  Mon, 02 Feb 2026 22:46:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CBA7835B2A7;
- Mon, 02 Feb 2026 22:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B47635B2A9;
+ Mon, 02 Feb 2026 22:46:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 51/69] bsd-user: Fix __i386__ test for
- TARGET_HAS_STAT_TIME_T_EXT
-Date: Mon,  2 Feb 2026 22:46:14 +0300
-Message-ID: <20260202194638.939438-51-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 53/69] hw/intc: avoid byte swap fiddling in gicv3 its
+ path
+Date: Mon,  2 Feb 2026 22:46:16 +0300
+Message-ID: <20260202194638.939438-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
@@ -64,31 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The target test is TARGET_I386, not __i386__.
+This allows us to keep the MSI data in plain host order all the way
+from the MemoryRegionOps write method to the final KVM_SIGNAL_MSI
+ioctl. This fixes a theoretical bug on big-endian hosts because we
+were using different size byte swaps which would have truncated the data.
 
-Cc: Kyle Evans <kevans@freebsd.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 369c1ba2b7c721341979889841772629b853092b)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260121105932.135676-5-alex.bennee@linaro.org
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit cf10273aff8198ab1c7e2a00e7e5fe51c80b04e7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 52f84d5dd1..c49be32bdc 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -247,7 +247,7 @@ struct target_freebsd11_stat {
-     unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
- } __packed;
+diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
+index 70dbee83a6..6a8fb0e4f8 100644
+--- a/hw/intc/arm_gicv3_its_common.c
++++ b/hw/intc/arm_gicv3_its_common.c
+@@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, hwaddr offset,
+     if (offset == 0x0040 && ((size == 2) || (size == 4))) {
+         GICv3ITSState *s = ARM_GICV3_ITS_COMMON(opaque);
+         GICv3ITSCommonClass *c = ARM_GICV3_ITS_COMMON_GET_CLASS(s);
+-        int ret = c->send_msi(s, le64_to_cpu(value), attrs.requester_id);
++        int ret = c->send_msi(s, value, attrs.requester_id);
  
--#if defined(__i386__)
-+#if defined(TARGET_I386)
- #define TARGET_HAS_STAT_TIME_T_EXT       1
- #endif
+         if (ret <= 0) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
+index e198974560..362b0a5cc0 100644
+--- a/hw/intc/arm_gicv3_its_kvm.c
++++ b/hw/intc/arm_gicv3_its_kvm.c
+@@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32_t value, uint16_t devid)
  
+     msi.address_lo = extract64(s->gits_translater_gpa, 0, 32);
+     msi.address_hi = extract64(s->gits_translater_gpa, 32, 32);
+-    msi.data = le32_to_cpu(value);
++    msi.data = value;
+     msi.flags = KVM_MSI_VALID_DEVID;
+     msi.devid = devid;
+     memset(msi.pad, 0, sizeof(msi.pad));
 -- 
 2.47.3
 
