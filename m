@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C362CE7FDF3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 23:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F15E7FDF8
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 23:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn3cX-0005aq-EZ; Mon, 02 Feb 2026 18:46:17 -0500
+	id 1vn3cR-0005YI-TK; Mon, 02 Feb 2026 18:46:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cW-0005aP-1U
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:16 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cQ-0005UM-4a
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:10 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cU-0004uS-Gm
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:15 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42fb2314eb0so4106622f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 15:46:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn3cO-0004ts-O6
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 18:46:09 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-482f2599980so22017615e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 15:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770075973; x=1770680773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770075966; x=1770680766; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xBbXyS5fYaMQMQgGnrQEP9mxFnEIUHqcktwDF9spmuU=;
- b=PilkQ25e3faKcSNkIhE3nLcAGZjmIJKiFau618MFAKak8DDQMazCMH48ZtNzEC4E6i
- VwTo+UxQX77rs/Iy/kAPMXBgLIqYGIGSjgDriDcl1jELkGbHHnDEZcaRzoKcMcIdFBwd
- qulvxwxW2gOQacgnehNKBu5t1ZnnWvBkr2tBjbFcUlR6MFuCcALlrABAA7cB8ax6Ol3l
- tpv7D3tCC7mImLPA4ULiMUPuGZc7L83W5huAIHVPpZSrLxqDI7ZOw6EbzBU8X6ogY0Sd
- JpvsPqM77gLoZjmjshB4hXZOdNsktfqox0s9ituXNCNaQlyNTA+Xb68QyEFH5mYhfKjH
- SJBw==
+ bh=a9SmiYXVM2fd88zXZvZgV+um15YTRCZVGWK+hRrqva4=;
+ b=Y5WGGev8rRtnOBDqzFvdYSSaKZ3MpGnsEsoE/ie501rjPCgdp78qDADJp0lbN6kuhs
+ NavluN0XhKGZplvrn0lBdeVwsBzwXgZRqcrfgZaBFQON08FNnXcW9Z1NDYWmLYiWywbj
+ c8Dw2ZVjj98WH5X7ytxi1YbDWrNh1l7ncmTtdDCvV5y83oySDxKMD3QyUrPhJpNvhhVW
+ iOcccxwwzW5zAJfBCd9lu8HGi+BN+Dhp5vh/UZPmsFRgiYruu+6ygG2mOvmnd5ATCtK4
+ sL6AOITilL46S2354B7eoIWJak2jNybeabBnN/uq3/Mm2trWQq3GnvBb3SwPcVff/oIr
+ 2OAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770075973; x=1770680773;
+ d=1e100.net; s=20230601; t=1770075966; x=1770680766;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xBbXyS5fYaMQMQgGnrQEP9mxFnEIUHqcktwDF9spmuU=;
- b=NRdBRKx6fJJiv2FPG3Bj8OyhUbZw0nfo3BiIcfzuDDYO3633ymtqwxZGmdCfeMVY7k
- QJLnJhpxZqQSJP6zy7NUL3q7e8a5fyVyULH0KxCSzEMWW9gbXM6gmdGW3Ay3CATjLRnY
- vdt4mlA1wQ03xDZOW1lkzU/3+//oh642HjwnE5/CGCCeDPNrHO3wSmujEyY0AJNzB7Dv
- 7X+xwSmGhleJvW8Gsj0NZ3SHll7zY+3JwDtXFYxKhjn9vEt93p6fJ02T0wjK3UfXzIJz
- pjztZPssknFoYyPinR5hcUg0cz/dk0hGxKEx9f7ZsirrphLQPJ+OfYIE7ltYJ+/njZWr
- 1Pnw==
-X-Gm-Message-State: AOJu0YxXKqYvf/sfj0EZSNLoh98KiyoGdyyI1GSQDsjuo4RNBUOb70rz
- HCINakMVdBzf2xArMm9H90dbRgxvlfBwzWc/Wz/nuUyjUn91kIyasZURbJS2veB1JQ1EQOfNJ5H
- dJKlDo+0=
-X-Gm-Gg: AZuq6aLvhUOc+a3urV3hpufHGws0JbVnL0/cxgXCgmOSficp+438jDW9vEoqbxLvteK
- mXwQN4FuNd8B9FuzFVtkFcVmDPXZOiORNhzwALUh6eTwgnuGSFq3aJLbVqJdZS2KvnGfaASF0ym
- hvPRWY8q/MnzGaPU79m9UllJKDbQ5/CJeJnPpcz/omE56jY7B2hnHFLNCVzZjLp0eDtMiSonrKy
- FfxyGdT8zWB6DHOnY1R+LMPv6HjY910gAncq9D2yvxUqJwTMC/H25OsVDWtgtLt6fDJdAGxcJLb
- 6jxI/dsZX3bx1wY7muhBIIJhMMp6tdfFGdMJnA667bRmE+imKJOQaXmFOD0Bl9XgE/vhaoLNJ4o
- JaMb5Z1ye3xPYsn1eEwAXuk7yO2kGVqypOEsEppfBAqvtpLBE0psEKCtkdH72YkV6v1x2opGuIo
- st6tCpAY1j5yRf9eR1c7kCranEUYv3dInTypUhdXF55vttHrqMeof7FG2ZP9hn
-X-Received: by 2002:a05:6000:2305:b0:432:da3b:5949 with SMTP id
- ffacd0b85a97d-435f3a72ae9mr19088811f8f.21.1770075972815; 
- Mon, 02 Feb 2026 15:46:12 -0800 (PST)
+ bh=a9SmiYXVM2fd88zXZvZgV+um15YTRCZVGWK+hRrqva4=;
+ b=VY1SIUxQLkF4d/Et8UjbCArmZIxjMB0nha0yct27e1ng3Y39tjMVwBSrscJznFxVhp
+ kzMJatzJkNEdHwjD01FjKdCLqll0rQ51/1OWtKxNerpbxatwad+tMWoKMZk/cJlnTC4P
+ 0NHXPFlFxXGPmfC0u+Eyk+a0X76HYmWd/E+uFPlZbe/dTVZp87VkOw2aPrGdCKIfi4s7
+ 9W8qUyG8TOhunxZGC29cQ4IIdsj3MkQVttaXyaFOpHJv+VRtIoBzbe1fnZ4BBA7F1UwW
+ DhJF63rK4a9a+DLNxPK7vB9V3MAKo658Iq70OwyY3g6SzhjGArBrhthuGpy8FSLW2GR5
+ PN+A==
+X-Gm-Message-State: AOJu0Yw8iTabyne5d8H+KKtcnfpWSRHA8g4YnBbrMHdJJRS/sxpa+MTW
+ DuRAD6/KoJ7RI/ie0CrD5IyrMdrKCJ6rGQ3N4KNezugb67Vb0bazBJiyObMT5ZREUIFwdR6IIwq
+ UfzMjnYk=
+X-Gm-Gg: AZuq6aIfeJK29kBcJxbpR/OpGu6dee32iLY+JTLhRpqPWi+AIqj8b9J74QjMY4gk1ov
+ t9SpZ8ltQh1ObOfcrFp0c8iIjVTYvNnwksxLi7ab4mEQ3acPKm8WWIJc4XT1HchVeXTDsmFSdik
+ NcA+Mm0A8z7GorixaFuVUKyEPw95VHuzMS0y6X5Nr/L3I1iQDLFC4Z74M92gRAMufYUZIwesujj
+ PwRYaIV/ghmmlIZlbwOTO1EXADdfx6fqaUg4R+qHzieB37W6RbP6ncf7n3yXPYMqeK1ud9R2QpL
+ 6cSuDxgE7wMWDrMoVAbWBeYwn84IdVuxts1U8p1MYw0SQjjks/Xcm7fl7q88MvMy705MniuHzZu
+ pI2Er3f/CB3huWU2pybPJzWQXgbv6G1evbX89mL5VcW+Wr9fO8syMJb5bpFXy0ZLWk+hDldNkqu
+ GaVhNT6Sai5IZty/CJzEPHKdM4jIRrZZhaHyJSBKXroQt2F7ypWBHc4CqbPTJc
+X-Received: by 2002:a05:600c:4f48:b0:47a:935f:61a0 with SMTP id
+ 5b1f17b1804b1-482db013b90mr207610795e9.0.1770075966128; 
+ Mon, 02 Feb 2026 15:46:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e132303fsm47827739f8f.36.2026.02.02.15.46.11
+ 5b1f17b1804b1-4830512e61dsm21403055e9.8.2026.02.02.15.46.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 15:46:12 -0800 (PST)
+ Mon, 02 Feb 2026 15:46:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/7] target/alpha: Replace target_ulong -> uint64_t in
- gdb_write_register()
-Date: Tue,  3 Feb 2026 00:45:45 +0100
-Message-ID: <20260202234550.34156-4-philmd@linaro.org>
+Subject: [PATCH 2/7] target/alpha: Build system units in common source set
+Date: Tue,  3 Feb 2026 00:45:44 +0100
+Message-ID: <20260202234550.34156-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260202234550.34156-1-philmd@linaro.org>
 References: <20260202234550.34156-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Alpha, the target_ulong type expands to uint64_t.
-Besides, ldq_be_p() returns a uint64_t type, and all
-field / values accessed are uint64_t, see target/alpha/cpu.h:
-
-  200 typedef struct CPUArchState {
-  201     uint64_t ir[31];
-  202     float64 fir[31];
-  203     uint64_t pc;
-  204     uint64_t unique;
-  ...
-  443 void cpu_alpha_store_fpcr (CPUAlphaState *env, uint64_t val);
-  445 void cpu_alpha_store_gr(CPUAlphaState *env, unsigned reg, uint64_t val);
-
-Use uint64_t instead of target_ulong.
+Since commits bb5de52524c ("target: Widen pc/cs_base in
+cpu_get_tb_cpu_state") and 32f0c394bbf ("target: Use vaddr
+in gen_intermediate_code") we remove all uses of the target_ulong
+type in target/alpha/. Use the meson target_common_system_arch[]
+source set to prevent further uses of target-specific types.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/alpha/gdbstub.c | 2 +-
+ target/alpha/meson.build | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
-index 1a7e2dd9202..a7110e8d1eb 100644
---- a/target/alpha/gdbstub.c
-+++ b/target/alpha/gdbstub.c
-@@ -59,7 +59,7 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
-     CPUAlphaState *env = cpu_env(cs);
--    target_ulong tmp = ldq_le_p(mem_buf);
-+    uint64_t tmp = ldq_le_p(mem_buf);
-     CPU_DoubleU d;
+diff --git a/target/alpha/meson.build b/target/alpha/meson.build
+index 7dbbd557171..9447f8020be 100644
+--- a/target/alpha/meson.build
++++ b/target/alpha/meson.build
+@@ -18,4 +18,4 @@ alpha_system_ss.add(files(
+ ))
  
-     switch (n) {
+ target_arch += {'alpha': alpha_ss}
+-target_system_arch += {'alpha': alpha_system_ss}
++target_common_system_arch += {'alpha': alpha_system_ss}
 -- 
 2.52.0
 
