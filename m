@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23595E7FDC8
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FDCE7FDC8
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 19:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmzxt-0001xL-3g; Mon, 02 Feb 2026 14:52:05 -0500
+	id 1vmzyh-0004aI-Un; Mon, 02 Feb 2026 14:52:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxm-0001FH-1R; Mon, 02 Feb 2026 14:51:58 -0500
+ id 1vmzyb-0004Of-Rr; Mon, 02 Feb 2026 14:52:49 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vmzxj-00044d-HC; Mon, 02 Feb 2026 14:51:57 -0500
+ id 1vmzya-0004Fn-Cw; Mon, 02 Feb 2026 14:52:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F28E11850CA;
- Mon, 02 Feb 2026 22:46:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BBBC1850D1;
+ Mon, 02 Feb 2026 22:46:08 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A4FDE35B2AC;
- Mon, 02 Feb 2026 22:46:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2142135B2B3;
+ Mon, 02 Feb 2026 22:46:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 56/69] linux-user: Add termios2 support to hppa target
-Date: Mon,  2 Feb 2026 22:46:19 +0300
-Message-ID: <20260202194638.939438-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 63/69] pc-bios/optionrom: Use 32-bit linker emulation
+ for the optionroms
+Date: Mon,  2 Feb 2026 22:46:26 +0300
+Message-ID: <20260202194638.939438-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260202173053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,61 +63,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
+From: Thomas Huth <thuth@redhat.com>
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-Link: https://lore.kernel.org/qemu-devel/ccf1be5c-9e2e-46f6-b303-d29888371fb0@bonslack.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit edc741710acedd61011f937967b960d154794258)
+Without this linker flag, the linking fails on NetBSD v10.1 with:
+
+ ld: i386 architecture of input file `multiboot.o' is incompatible with i386:x86-64 output
+ ld: i386 architecture of input file `multiboot_dma.o' is incompatible with i386:x86-64 output
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260121074819.29396-1-thuth@redhat.com>
+(cherry picked from commit e4f1a9b1dacb4d02500629056551b1db2985429c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/hppa/termbits.h b/linux-user/hppa/termbits.h
-index 11fd4eed62..645f17bf63 100644
---- a/linux-user/hppa/termbits.h
-+++ b/linux-user/hppa/termbits.h
-@@ -18,6 +18,29 @@ struct target_termios {
-     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
- };
+diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
+index 30d07026c7..e6674a76e7 100644
+--- a/pc-bios/optionrom/Makefile
++++ b/pc-bios/optionrom/Makefile
+@@ -36,7 +36,7 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-Wno-array-bounds)) 3> config-cc.mak
+ -include config-cc.mak
  
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+
- /* c_iflag bits */
- #define TARGET_IGNBRK  0000001
- #define TARGET_BRKINT  0000002
-@@ -190,6 +213,12 @@ struct target_termios {
- #define TARGET_TIOCSBRK         0x5427 /* BSD compatibility */
- #define TARGET_TIOCCBRK         0x5428 /* BSD compatibility */
- #define TARGET_TIOCGSID         TARGET_IOR('T', 20, int)
-+#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct target_termios2)
-+#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct target_termios2)
-+#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct target_termios2)
-+#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct target_termios2)
-+#define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
- #define TARGET_TIOCGPTN         TARGET_IOR('T', 0x30, unsigned int)
-         /* Get Pty Number (of pty-mux device) */
- #define TARGET_TIOCSPTLCK       TARGET_IOW('T', 0x31, int)
+-override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds
++override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds,-m,elf_i386
+ 
+ pvh.img: pvh.o pvh_main.o
+ 
 -- 
 2.47.3
 
