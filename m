@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D7DE7FDD0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A9DE7FDDE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11K-0004VV-5D; Mon, 02 Feb 2026 15:59:42 -0500
+	id 1vn16F-0004Bb-1N; Mon, 02 Feb 2026 16:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn111-00047J-CZ; Mon, 02 Feb 2026 15:59:24 -0500
+ id 1vn16D-000425-4U; Mon, 02 Feb 2026 16:04:45 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10y-0003pA-NS; Mon, 02 Feb 2026 15:59:23 -0500
+ id 1vn16B-0004vY-Fz; Mon, 02 Feb 2026 16:04:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61681185195;
- Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 97E721851CB;
+ Mon, 02 Feb 2026 23:57:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2A19735B30C;
- Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 61B7F35B342;
+ Mon, 02 Feb 2026 23:58:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 09/74] block: Fix BDS use after free during shutdown
-Date: Mon,  2 Feb 2026 23:57:20 +0300
-Message-ID: <20260202205833.941615-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Luca Bonissi <qemu@bonslack.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 63/74] linux-user: Add termios2 support to sh4 target
+Date: Mon,  2 Feb 2026 23:58:14 +0300
+Message-ID: <20260202205833.941615-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -60,53 +59,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Luca Bonissi <qemu@bonslack.org>
 
-During shutdown, blockdev_close_all_bdrv_states() drops any block node
-references that are still owned by the monitor (i.e. the user). However,
-in doing so, it forgot to also remove the node from monitor_bdrv_states
-(which qmp_blockdev_del() correctly does), which means that later calls
-of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
-the node.
-
-Usually there is no such call after this point, but in some cases it can
-happen. In the reported case, there was an ongoing migration, and the
-migration thread wasn't shut down yet: migration_shutdown() called by
-qemu_cleanup() doesn't actually wait for the migration to be shut down,
-but may just move it to MIGRATION_STATUS_CANCELLING. The next time
-migration_iteration_finish() runs, it sees the status and tries to
-re-activate all block devices that migration may have previously
-inactivated. This is where bdrv_first()/bdrv_next() get called and the
-access to the already freed node happens.
-
-It is debatable if migration_shutdown() should really return before
-migration has settled, but leaving a dangling pointer in the list of
-monitor-owned block nodes is clearly a bug either way and fixing it
-solves the immediate problem, so fix it.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251215150714.130214-1-kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 307bc43095b8ab1765fd66c26003d5da06681c05)
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/642b32de-2985-45d2-bbdf-c0b2e3ea0551@bonslack.org
+Reviewed-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit afbe0ff81c29d674b9c18a588bcaab34ddcb8a7b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/blockdev.c b/blockdev.c
-index b451fee6e1..76c8dd0573 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -685,6 +685,7 @@ void blockdev_close_all_bdrv_states(void)
+diff --git a/linux-user/sh4/termbits.h b/linux-user/sh4/termbits.h
+index 28e79f2c9a..cab6b1299e 100644
+--- a/linux-user/sh4/termbits.h
++++ b/linux-user/sh4/termbits.h
+@@ -18,6 +18,28 @@ struct target_termios {
+     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
+ };
  
-     GLOBAL_STATE_CODE();
-     QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
-+        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
-         bdrv_unref(bs);
-     }
- }
++struct target_termios2 {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++struct target_ktermios {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
+ 
+ /* c_cc characters */
+ #define TARGET_VINTR 0
+@@ -251,14 +273,17 @@ struct target_termios {
+ #define TARGET_TIOCNOTTY       TARGET_IO('T', 34) /* 0x5422 */
+ #define TARGET_TIOCSETD        TARGET_IOW('T', 35, int) /* 0x5423 */
+ #define TARGET_TIOCGETD        TARGET_IOR('T', 36, int) /* 0x5424 */
+-#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* Needed for POSIX tcse
+-ndbreak() */
++#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* Needed for POSIX tcsendbreak() */
+ #define TARGET_TIOCSBRK        TARGET_IO('T', 39) /* 0x5427 */ /* BSD compatibility */
+ #define TARGET_TIOCCBRK        TARGET_IO('T', 40) /* 0x5428 */ /* BSD compatibility */
+-#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ /* Return the session
+-ID of FD */
+-#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-m
+-ux device) */
++#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ /* Return the session ID of FD */
++#define TARGET_TCGETS2         TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2         TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2        TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2        TARGET_IOW('T', 0x2D, struct target_termios2)
++#define TARGET_TIOCGRS485      TARGET_IOR('T', 0x2E, struct serial_rs485)
++#define TARGET_TIOCSRS485      TARGET_IOWR('T', 0x2F, struct serial_rs485)
++#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+ #define TARGET_TIOCSPTLCK      TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+ #define TARGET_TIOCGPTPEER     TARGET_IO('T', 0x41) /* Safely open the slave */
+ 
+@@ -270,8 +295,7 @@ ux device) */
+ #define TARGET_TIOCSLCKTRMIOS  0x5457
+ #define TARGET_TIOCSERGSTRUCT  TARGET_IOR('T', 88, int) /* 0x5458 */ /* For d
+ ebugging only */
+-#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 0x5459 */ /* Get line sta
+-tus register */
++#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 0x5459 */ /* Get line status register */
+   /* ioctl (fd, TIOCSERGETLSR, &result) where result may be as below */
+ # define TARGET_TIOCSER_TEMT   0x01   /* Transmitter physically empty */
+ #define TARGET_TIOCSERGETMULTI TARGET_IOR('T', 90, int) /* 0x545A
+@@ -279,9 +303,7 @@ tus register */
+ #define TARGET_TIOCSERSETMULTI TARGET_IOW('T', 91, int) /* 0x545B
+ */ /* Set multiport config */
+ 
+-#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* wait for a change on
+-serial input line(s) */
+-#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* read
+-serial port inline interrupt counts */
++#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* wait for a change on serial input line(s) */
++#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* read serial port inline interrupt counts */
+ 
+ #endif
 -- 
 2.47.3
 
