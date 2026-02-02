@@ -4,93 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C9AE7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D71DE7FDF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn1qz-0000UP-1q; Mon, 02 Feb 2026 16:53:05 -0500
+	id 1vn1w0-0002Dq-V1; Mon, 02 Feb 2026 16:58:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn1qx-0000To-Nd; Mon, 02 Feb 2026 16:53:03 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn1qv-00072s-PN; Mon, 02 Feb 2026 16:53:03 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1B56A185297;
- Tue, 03 Feb 2026 00:52:16 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DC67E35B3B0;
- Tue, 03 Feb 2026 00:52:57 +0300 (MSK)
-Message-ID: <4968cec7-93a3-4835-a5e2-1486e9f502a8@tls.msk.ru>
-Date: Tue, 3 Feb 2026 00:52:57 +0300
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vn1vz-0002DP-7b
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:58:15 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vn1vw-0000Yf-PD
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:58:14 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3530715386cso3554645a91.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:58:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770069489; cv=none;
+ d=google.com; s=arc-20240605;
+ b=K+nrN2qzPWUTlpEBN+O/Q6BGDSXHtsExRseV9pIKAllHVq+X03Il5qiKxJFH6GwQVi
+ gvo2jZE4xtbNUh4GkZwudhxutpK5X5bdXWNhqhuoAgMnc8D5Lx51itcStv/xliKpF9Wj
+ ze5r3tyIHEz8S9tFUB/98MnnGukBN7ERVxJNxOMCR+AD3x2WOL8UmRTpt8EAtTqtc7DT
+ qw+ufbv+fATaWJbsFN0ViZd5EHPdScr76P5Q3APUhWuNh0ohF8008M59DKTDQwv0YIG9
+ Czy/P0Iw2VFQTxS76tuto7+Yk2MgjxMZjxuAjHF8Ji9rytpOXNu18WHNhdqvkOPODj/B
+ oU0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=jax2ikWOvLX5emBWcODUTM6/17NzqTdmhD3KY93G/jc=;
+ fh=V895JFIOPN+GQ3DMZfuojE9L3pOtA2qWwEemx+T4W5g=;
+ b=Da2uzRHDctN+S70b/UUcfw+pCcx0lgN4381/+tZC83jptS/oDM3zcY41RJQYyfG+cc
+ wFZUAClbrhkgQCVTguRdiNJJFl0bWbFn6rbSG9FP4TiYx4GghKpsE70iqIMYcisdvfLX
+ 311Gh7rCVTKDkTxhSdX9zmmhAsGZT4bcIMuOOdCUg/zIdhDvSEgW6KEVS0VXEnBlVEwh
+ +7VS2vRoNCpwfmg0/9qk3vtO5FsEKqZHTWLfKliO84QKIUewuLqr/P/O/gWdyJ94U6dM
+ Mb2/mmkc55DI4cmXZJKcxFmzJnj2SpN5S+c7cg66gxrOArTFSJWChG3+iDDy5lFGEWB/
+ 1Z0Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770069489; x=1770674289;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jax2ikWOvLX5emBWcODUTM6/17NzqTdmhD3KY93G/jc=;
+ b=K7XNnJH2CaYsHPDnxn0KdS0izmuQerSQMhIoPtzElgblYUVulqiswQHcwufpOogb8p
+ jbfiopLA7w26UX6KxKf4te3THOVvHAMB79mLD3oZ+e/RsNWjgvZIktKFaAXALbBRJRYo
+ ok+I3CYJYoYLW1m0i1lOyV+XMnojEcnhOLbLYJvQ3B38/qu7AWtJmX6Kend24cODCEf+
+ BOlGEKo9KKUcN9fqBjmPJT6pIUvu3415Q+5gF6omtIT3a4+oOd8tNSq0nCbb084SPh4e
+ a2msRaGsrVEHn9NmyTP391vOBZA2tR96Ji+3+uVQr0O2oWGWuTlaHBL/SHDVs9Gh9NqL
+ U/WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770069489; x=1770674289;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jax2ikWOvLX5emBWcODUTM6/17NzqTdmhD3KY93G/jc=;
+ b=k4bgVP3pJ5INLyYjqONhz8Eh/rFy69W6VTc81UEG/9TGljKR7HymauIU7rUlmHjW5C
+ jdDV6CN8dwdPvH/NqbuJ7QclYDq4H4TJzlnTZXV6PSxctM06zQcMCscGF2YqBWMQX15S
+ Scu6HvnF7H+0gVeUbPG1s4ez/nUMP324CIUgmrW4Zq0rfSPSfJW1Qz0WrAJ7ddOYeSTl
+ z7g6/yLm5jPVb6xSE/3yA+AFu2DoROxkeceFshAjfpJHYMRUuKjQXPMt4iQALpnWkQad
+ PdBxTerqkhfotJ8p8k7R7WlnY0jkHKKcRuKC2Wh1uR6IemKMod8udC+dct0/dr9Dw4ke
+ Le8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXn41/l+PNN1WiFywKRWPEcd6nQwtMTIiZLgPTT4TuvEAzw/12GELMWcNwlVf5fu5pGBqtYl1iw0FQl@nongnu.org
+X-Gm-Message-State: AOJu0YwNmbTA6a3KjiZEPlqKfh+T70sOUw+/Lswk8axY2Xup1X47jCB5
+ yov6WvmAYMQSZu9DBcJxZtuDKI8o9IwzZMKFVMR2qj9+WMRYMyUWdCI1pw0zxqthek0Zmm8paYU
+ 6biVnKxqB+qHPmZptzJEjRmF48b333464YeIFoWEAMA==
+X-Gm-Gg: AZuq6aIFz0VM9zazIqInAYLHaX9+tDyeUXfyP/AtDQlkOwIeQqnZaQVj6ZnJrCWlXjk
+ VEn/vtHlVDImyC+i37558AELquzCthQtfFzL6fl/6TslU4PkYbPQl+8RDyP83AK7nVqqQUSibQW
+ 8EYGeWw/rE48PzdgQ3xpbZz+XscenoCCklTTb4GduS8pm1PWkn2b7/P3V17WfN+qbIvHDTsaddd
+ w88WWvhS5WL8L+QbYggpDlK9iN8cjjCIKhcbkMYUQGZYNXs2G9ohemDcumuEylG9JMLinA=
+X-Received: by 2002:a17:90a:c106:b0:340:b908:9665 with SMTP id
+ 98e67ed59e1d1-3543b3cf58amr10571908a91.37.1770069489254; Mon, 02 Feb 2026
+ 13:58:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/elfload.c: use get_elf_hwcap2 to fix regression
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Qi.Chen@windriver.com, qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260202054537.2538899-1-Qi.Chen@windriver.com>
- <b283d771-98e9-45e6-9700-f45d98d01e81@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <b283d771-98e9-45e6-9700-f45d98d01e81@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
+ <20260123145750.1200879-9-alex.bennee@linaro.org>
+ <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
+ <aXOok4KRTvgwx7GJ@redhat.com>
+ <CANCZdfoXfeBh5For_Cag+191GkjDtsqBNZ4LU1g2DYepkYoaBw@mail.gmail.com>
+In-Reply-To: <CANCZdfoXfeBh5For_Cag+191GkjDtsqBNZ4LU1g2DYepkYoaBw@mail.gmail.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Mon, 2 Feb 2026 14:57:57 -0700
+X-Gm-Features: AZwV_Qit5lqfXjdg9NIBUme4ymCBsqWFRFMXtCLtC62zb9FG1Oxirv7fukLAE3w
+Message-ID: <CANCZdfqBKMt5qxfrEhudTbrkMzKRzVATuTWXnRnPttVj6UZ5HA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000002294d10649de6b89"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,58 +121,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 18:53, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 2/2/26 06:45, Qi.Chen@windriver.com wrote:
->> From: Chen Qi <Qi.Chen@windriver.com>
->>
->> In commit fcac98d0b (linux-user: Remove ELF_HWCAP2), the following
->> macro is removed:
->>
->> However, in place of the original ELF_HWCAP2, get_elf_hwcap instead
->> of the original get_elf_hwcap2 was used.
->>
->> This caused serious regression for at least ppc64 user mode. The
->> error message is like below:
->>
->>    Fatal glibc error: CPU lacks ISA 3.00 support (POWER9 or later 
->> required)
->>
->> This patch restores to use get_elf_hwcap2.
->>
->> Signed-off-by: Chen Qi <Qi.Chen@windriver.com>
->> ---
->>   linux-user/elfload.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
->> index 0002d5be2f..35471c0c9a 100644
->> --- a/linux-user/elfload.c
->> +++ b/linux-user/elfload.c
->> @@ -708,7 +708,7 @@ static abi_ulong create_elf_tables(abi_ulong p, 
->> int argc, int envc,
->>       NEW_AUX_ENT(AT_EXECFN, info->file_string);
->>       if (HAVE_ELF_HWCAP2) {
->> -        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap(thread_cpu));
->> +        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap2(thread_cpu));
->>       }
-> 
-> This is the correct fix. It was committed recently:
-> https://gitlab.com/qemu-project/qemu/-/commit/ 
-> c333f9c4ee212297f3b9a8a6ef62396a63c48e61
-> 
-> We forgot to Cc qemu-stable. Michael, could you include this
-> commit for v10.2.x stable series?
+--0000000000002294d10649de6b89
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, it's been applied to 10.2.x for quite some time,  - I picked
-it up on Jan-13.
+Just to follow up....
 
-Now I wonder - why did I pick it up? :)
+On Fri, Jan 23, 2026 at 3:14=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
 
-But it's there, at least.
+>
+>
+> On Fri, Jan 23, 2026 at 9:58=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange=
+@redhat.com>
+> wrote:
+>
+>> On Fri, Jan 23, 2026 at 08:12:33AM -0700, Warner Losh wrote:
+>> > On Fri, Jan 23, 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@=
+linaro.org>
+>> wrote:
+>> >
+>> > > We should reflect the current status so users don't have unrealistic
+>> > > expectations of how quickly things can get reviewed and merged.
+>> > >
+>> > > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> > >
+>> >
+>> > Reviewed-by: Warner Losh <imp@bsdimp.com>
+>>
+>> snip
+>>
+>> > A lot of the upstreaming work that's stalled would be ideal to tell
+>> claude
+>> > to do,
+>> > but I'm unsure the project's stance on using claude to move code, and
+>> git
+>> > log
+>> > 5 different trees to get the original author(s) of the code and make
+>> > trivial compile
+>> > tweaks.
+>>
+>> The critical thing we don't want is such tools making changes to the
+>> contents of source files.
+>>
+>> Automating the moving around of files is a non-issue.
+>>
+>> The use of AI for writing commit messages is arguably in scope of QEMU's
+>> AI policy given that is part of "the contribution", but it is less serio=
+us
+>> there, since commit messages don't have a copyright implication on what =
+we
+>> host & distribute.
+>>
+>> More important is that the commit messages are accurate and well written=
+.
+>> LLMs have a tendancy to be overly verbose about irrelevant stuff, and of
+>> course the well known danger of hallucinating nonsense. IME that makes i=
+t
+>> challenging to benefit from an LLM, due to review & re-writing overheads
+>> you then incurr to validate and fix their output.
+>>
+>
+> Yea, the commit messages llm would generate is 'do function X' and I'd th=
+en
+> fill it in from there, changing everything except X.
+>
+>
+>> I'd be wary of relying on an AI to extract and report on authorship of
+>> code. Accuracy is important there since it implies copyright ownership
+>> associations. Likewise a Signed-off-by tag should be added by humans
+>> only since it is a statement they are complying with the DCO policy.
+>>
+>
+> I'd be verifying everything done. Verification is relatively easy,
+> extraction is
+> the hard part. And the range of people it could be is tiny, so I'd know i=
+f
+> it
+> was making stuff up, or had gone off the rails...  And I'd have it add
+> something
+> like 'Supposed-author: ' that I'd change once I verified it. That's ugly
+> grunt work,
+> but ugly grunt work I can do in an hour or two rather than the dozens of
+> hours
+> it usually takes me to do the extraction...
+>
 
-Thanks,
+So, claude looks likeit's doing a passing fair job at this work. I plan on
+submitting
+a patch series for one of the minor files in the coming weeks (depending on
+how much time I can find to work on it). Any guidance you can give me up
+front?
 
-/mjt
+Before I submit, I plan on auditing every single change to make sure claude
+didn't introduce anything that's not in bsd-user's blitz branch. Make sure
+the authors
+are correct to the same level that I've been doing so far. And make sure
+I've rewritten
+all the commit messages.
+
+One question I have, should include these lines
+    =F0=9F=A4=96 Generated with [Claude Code](https://claude.com/claude-cod=
+e)
+    Co-Authored-By: Claude <noreply@anthropic.com>
+it is adding to the commit messages or not? Claude generated this as a
+series of
+commits from the blitz branch to the master branch, but didn't actually
+generate
+any new code or fix any bugs. I'm happy to include them if you want, but
+also
+am weary about setting of a knee-jerk reaction that would be unhelpful sinc=
+e
+it's responding to the 'slop' worries and not the merits of the current
+work.
+
+Comments?
+
+Warner
+
+--0000000000002294d10649de6b89
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Just to follow up....</div><br><div class=
+=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Fri, Jan 23, 2026 at 3:14=E2=80=AFPM Warner Losh &lt;<a href=3D"mailto=
+:imp@bsdimp.com">imp@bsdimp.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></di=
+v><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On F=
+ri, Jan 23, 2026 at 9:58=E2=80=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"=
+mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri, Ja=
+n 23, 2026 at 08:12:33AM -0700, Warner Losh wrote:<br>
+&gt; On Fri, Jan 23, 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=
+=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org=
+</a>&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; We should reflect the current status so users don&#39;t have unre=
+alistic<br>
+&gt; &gt; expectations of how quickly things can get reviewed and merged.<b=
+r>
+&gt; &gt;<br>
+&gt; &gt; Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee=
+@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=
+=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+<br>
+snip<br>
+<br>
+&gt; A lot of the upstreaming work that&#39;s stalled would be ideal to tel=
+l claude<br>
+&gt; to do,<br>
+&gt; but I&#39;m unsure the project&#39;s stance on using claude to move co=
+de, and git<br>
+&gt; log<br>
+&gt; 5 different trees to get the original author(s) of the code and make<b=
+r>
+&gt; trivial compile<br>
+&gt; tweaks.<br>
+<br>
+The critical thing we don&#39;t want is such tools making changes to the<br=
+>
+contents of source files.<br>
+<br>
+Automating the moving around of files is a non-issue.<br>
+<br>
+The use of AI for writing commit messages is arguably in scope of QEMU&#39;=
+s<br>
+AI policy given that is part of &quot;the contribution&quot;, but it is les=
+s serious<br>
+there, since commit messages don&#39;t have a copyright implication on what=
+ we<br>
+host &amp; distribute.<br>
+<br>
+More important is that the commit messages are accurate and well written.<b=
+r>
+LLMs have a tendancy to be overly verbose about irrelevant stuff, and of<br=
+>
+course the well known danger of hallucinating nonsense. IME that makes it<b=
+r>
+challenging to benefit from an LLM, due to review &amp; re-writing overhead=
+s<br>
+you then incurr to validate and fix their output.<br></blockquote><div><br>=
+</div><div>Yea, the commit messages llm would generate is &#39;do function =
+X&#39; and I&#39;d then</div><div>fill it in from there, changing everythin=
+g except X.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+I&#39;d be wary of relying on an AI to extract and report on authorship of<=
+br>
+code. Accuracy is important there since it implies copyright ownership<br>
+associations. Likewise a Signed-off-by tag should be added by humans<br>
+only since it is a statement they are complying with the DCO policy.<br></b=
+lockquote><div><br></div><div>I&#39;d be verifying everything done. Verific=
+ation is relatively easy, extraction is</div><div>the hard part. And the ra=
+nge of people it could be is tiny, so I&#39;d know if it</div><div>was maki=
+ng stuff up, or had gone off the rails...=C2=A0 And I&#39;d have it add som=
+ething</div><div>like &#39;Supposed-author: &#39; that I&#39;d change once =
+I verified it. That&#39;s ugly grunt work,</div><div>but ugly grunt work I =
+can do in an hour or two rather than the dozens of hours</div><div>it usual=
+ly takes me to do the extraction...</div></div></div></blockquote><div><br>=
+</div><div>So, claude looks likeit&#39;s doing a passing fair job at this w=
+ork. I plan on submitting</div><div>a patch series for one of the minor fil=
+es in the coming weeks (depending on</div><div>how much time I can find to =
+work on it). Any guidance you can give me up front?</div><div><br></div><di=
+v>Before I submit, I plan on auditing every single change to make sure clau=
+de</div><div>didn&#39;t introduce anything that&#39;s not in bsd-user&#39;s=
+ blitz branch. Make sure the authors</div><div>are correct to the same leve=
+l that I&#39;ve been doing so far. And make sure I&#39;ve rewritten</div><d=
+iv>all the commit messages.</div><div><br></div><div>One question I have, s=
+hould include these lines<br>=C2=A0 =C2=A0 =F0=9F=A4=96 Generated with [Cla=
+ude Code](<a href=3D"https://claude.com/claude-code">https://claude.com/cla=
+ude-code</a>)<br>=C2=A0 =C2=A0 Co-Authored-By: Claude &lt;<a href=3D"mailto=
+:noreply@anthropic.com">noreply@anthropic.com</a>&gt;<br></div><div>it is a=
+dding to the commit messages or not? Claude generated this as a series of</=
+div><div>commits from the blitz branch to the master branch, but didn&#39;t=
+ actually generate</div><div>any new code or fix any bugs. I&#39;m happy to=
+ include them if you want, but also</div><div>am weary about setting of a k=
+nee-jerk reaction that would be unhelpful since</div><div>it&#39;s respondi=
+ng to the &#39;slop&#39; worries and not the merits of the current work.</d=
+iv><div><br></div><div>Comments?</div><div><br></div><div>Warner</div></div=
+></div>
+
+--0000000000002294d10649de6b89--
 
