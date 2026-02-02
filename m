@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E098EE7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 135F2E7FDF7
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn28G-0003eu-E4; Mon, 02 Feb 2026 17:10:56 -0500
+	id 1vn27V-00079j-Cj; Mon, 02 Feb 2026 17:10:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn285-0002Hz-L4; Mon, 02 Feb 2026 17:10:45 -0500
+ id 1vn26L-0004zz-Ql; Mon, 02 Feb 2026 17:09:01 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn283-0003Bu-SH; Mon, 02 Feb 2026 17:10:45 -0500
+ id 1vn26J-0002f4-3e; Mon, 02 Feb 2026 17:08:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AF271852CC;
- Tue, 03 Feb 2026 01:07:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D4B5C1852BB;
+ Tue, 03 Feb 2026 01:07:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1862435B3DF;
- Tue, 03 Feb 2026 01:08:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B3A2C35B3CE;
+ Tue, 03 Feb 2026 01:08:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Matthew Lugg <mlugg@mlugg.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 31/56] target/arm: Don't specify ID_PFR1 accessfn twice
-Date: Tue,  3 Feb 2026 01:07:36 +0300
-Message-ID: <20260202220805.945271-31-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 14/56] linux-user: fix reserved_va page leak in
+ do_munmap
+Date: Tue,  3 Feb 2026 01:07:19 +0300
+Message-ID: <20260202220805.945271-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260202173336@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,40 +61,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matthew Lugg <mlugg@mlugg.co.uk>
 
-In the definition of ID_PFR1 we have an ifdef block; we specify the
-accessfn once in the common part of the ifdef and once in the
-not-user-only part, which is redundant but harmless.
+The old logic had an off-by-one bug. For instance, assuming 4k pages on
+host and guest, if 'len' is '4097' (indicating to unmap 2 pages), then
+'last = start + 4096', so 'real_last = start + 4095', so ultimately
+'real_len = 4096'. I do not believe this could cause any observable bugs
+in guests, because `target_munmap` page-aligns the length it passes in.
+However, calls to this function in `target_mremap` do not page-align the
+length, so those calls could "drop" pages, leading to a part of the
+reserved region becoming unmapped. At worst, a host allocation could get
+mapped into that hole, then clobbered by a new guest mapping.
 
-The accessfn will always return success in user-only mode (because
-we won't trap to EL2), so specify it only in the not-user-only
-half of the ifdef, as was probably the intention.
-
-This is only cc'd to stable to avoid a textual conflict with
-the following patch, which is a bug fix.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 0f150c8499e970bd ("target/arm: Constify ID_PFR1 on user emulation")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251231170858.254594-2-peter.maydell@linaro.org
-(cherry picked from commit 8da52b8401afa34ea8caa58e1bfb321ae142899b)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251117170954.31451-4-mlugg@mlugg.co.uk>
+(cherry picked from commit 81ceab30492ed251addae8539f7b69a069b0f984)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 27ebc6f29b..ec82ea6203 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6296,7 +6296,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             { .name = "ID_PFR1", .state = ARM_CP_STATE_BOTH,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 1, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_NO_RAW,
--              .accessfn = access_aa32_tid3,
- #ifdef CONFIG_USER_ONLY
-               .type = ARM_CP_CONST,
-               .resetvalue = GET_IDREG(isar, ID_PFR1),
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 6163f1a0d1..4bcfaf7894 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1029,9 +1029,9 @@ static int mmap_reserve_or_unmap(abi_ulong start, abi_ulong len)
+     void *host_start;
+     int prot;
+ 
+-    last = start + len - 1;
++    last = ROUND_UP(start + len, TARGET_PAGE_SIZE) - 1;
+     real_start = start & -host_page_size;
+-    real_last = ROUND_UP(last, host_page_size) - 1;
++    real_last = ROUND_UP(last + 1, host_page_size) - 1;
+ 
+     /*
+      * If guest pages remain on the first or last host pages,
 -- 
 2.47.3
 
