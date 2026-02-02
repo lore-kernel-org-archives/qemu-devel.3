@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31228E7FDDE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F39E7FDD0
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn15Q-0001QU-7L; Mon, 02 Feb 2026 16:03:56 -0500
+	id 1vn14F-0005XV-80; Mon, 02 Feb 2026 16:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn15N-00018c-1c; Mon, 02 Feb 2026 16:03:53 -0500
+ id 1vn13s-00035u-Dr; Mon, 02 Feb 2026 16:02:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn15L-0004or-F4; Mon, 02 Feb 2026 16:03:52 -0500
+ id 1vn13o-0004XH-6s; Mon, 02 Feb 2026 16:02:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C7BC1851C3;
- Mon, 02 Feb 2026 23:57:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7FAF61851B1;
+ Mon, 02 Feb 2026 23:57:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BEAC835B33A;
- Mon, 02 Feb 2026 23:58:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49A5935B328;
+ Mon, 02 Feb 2026 23:58:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 55/74] hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement
- sd-spec-version 3 by default
-Date: Mon,  2 Feb 2026 23:58:06 +0300
-Message-ID: <20260202205833.941615-55-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 37/74] target/i386/tcg: do not mark all SSE
+ instructions as unaligned
+Date: Mon,  2 Feb 2026 23:57:48 +0300
+Message-ID: <20260202205833.941615-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,41 +61,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Fixes TYPE_FSL_IMX6UL, TYPE_FSL_IMX7, and TYPE_FSL_IMX8MP to implement
-version 3 of the SD specification.
+If the vex_special field was not initialized, it was considered to be
+X86_VEX_SSEUnaligned (whose value was zero).  Add a new value to
+fix that.
 
-Note that TYPE_FSL_IMX6 already had "sd-spec-version" set accordingly and
-that TYPE_FSL_IMX25 correctly sets the same property to version 2 since the
-real hardware is an eSDHC which is the uSDHC's predecessor.
-
-Fixes: fd1e5c817964 ("sdhci: Add i.MX specific subtype of SDHCI")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260112145418.220506-2-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 214f79fdfb43e92f6c06efb76c3ad8e932b035f8)
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 73dd6e4a36dd8d85548292f382a4d479e2810371)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 3c897e54b7..9de8c9b7a6 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1888,9 +1888,11 @@ static const MemoryRegionOps usdhc_mmio_ops = {
- static void imx_usdhc_init(Object *obj)
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index dfaffec599..31aad730fc 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -944,15 +944,15 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
  {
-     SDHCIState *s = SYSBUS_SDHCI(obj);
-+    DeviceState *dev = DEVICE(obj);
+     static const X86OpEntry opcodes_0F11_reg[4] = {
+-        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPS */
+-        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4), /* MOVUPD */
++        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
++        X86_OP_ENTRY3(MOVDQ,   W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
+         X86_OP_ENTRY3(VMOVSS,  W,x,  H,x,       V,x, vex5),
+         X86_OP_ENTRY3(VMOVLPx, W,x,  H,x,       V,q, vex5), /* MOVSD */
+     };
  
-     s->io_ops = &usdhc_mmio_ops;
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    qdev_prop_set_uint8(dev, "sd-spec-version", 3);
- }
+     static const X86OpEntry opcodes_0F11_mem[4] = {
+-        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPS */
+-        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4), /* MOVUPD */
++        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
++        X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
+         X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
+         X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
+     };
+@@ -2382,6 +2382,9 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+     X86OpEntry *e = &decode->e;
  
- /* --- qdev Samsung s3c --- */
+     switch (e->vex_special) {
++    case X86_VEX_None:
++        break;
++
+     case X86_VEX_REPScalar:
+         /*
+          * Instructions which differ between 00/66 and F2/F3 in the
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 7f23d373ea..9282296900 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -242,6 +242,8 @@ typedef enum X86InsnSpecial {
+  * section of the manual.
+  */
+ typedef enum X86VEXSpecial {
++    X86_VEX_None,
++
+     /* Legacy SSE instructions that allow unaligned operands */
+     X86_VEX_SSEUnaligned,
+ 
 -- 
 2.47.3
 
