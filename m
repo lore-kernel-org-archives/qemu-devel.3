@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F495E7FDDC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A15E7FDD0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11H-0004SD-Db; Mon, 02 Feb 2026 15:59:39 -0500
+	id 1vn12x-00014F-G1; Mon, 02 Feb 2026 16:01:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10r-000453-8B; Mon, 02 Feb 2026 15:59:15 -0500
+ id 1vn12Q-0000cL-4C; Mon, 02 Feb 2026 16:01:01 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10n-0003mk-8C; Mon, 02 Feb 2026 15:59:11 -0500
+ id 1vn12O-0004FH-9R; Mon, 02 Feb 2026 16:00:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F1C79185190;
- Mon, 02 Feb 2026 23:57:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7DFA51851A4;
+ Mon, 02 Feb 2026 23:57:53 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B772035B307;
- Mon, 02 Feb 2026 23:58:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4775235B31B;
+ Mon, 02 Feb 2026 23:58:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 04/74] gitlab: move custom runners to Ubuntu 24.04
-Date: Mon,  2 Feb 2026 23:57:15 +0300
-Message-ID: <20260202205833.941615-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jie Song <songjie_yewu@cmss.chinamobile.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 24/74] monitor/qmp: cleanup SocketChardev listener
+ sources early to avoid fd handling race
+Date: Mon,  2 Feb 2026 23:57:35 +0300
+Message-ID: <20260202205833.941615-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
@@ -63,268 +62,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Jie Song <songjie_yewu@cmss.chinamobile.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20251001170947.2769296-7-alex.bennee@linaro.org>
-(cherry picked from commit eafc5f69e621725dcdcedcc1955d820af7abfc82)
+When starting a dummy QEMU process with virsh version, monitor_init_qmp()
+enables IOThread monitoring of the QMP fd by default. However, a race
+condition exists during the initialization phase: the IOThread only removes
+the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
+which may be delayed under high system load.
+
+This creates a window between monitor_qmp_setup_handlers_bh() and
+qio_net_listener_set_client_func_full() where both the main thread and
+IOThread are simultaneously monitoring the same fd and processing events.
+This race can cause either the main thread or the IOThread to hang and
+become unresponsive.
+
+Fix this by proactively cleaning up the listener's IO sources in
+monitor_init_qmp() before the IOThread initializes QMP monitoring,
+ensuring exclusive fd ownership and eliminating the race condition.
+
+Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20251125140706.114197-1-mail@jiesong.me>
+(cherry picked from commit e714f1a3d4d1e66b9a3ff4be1ff999c32bbef29e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
-index 1aa3c60efe..f6330c1614 100644
---- a/.gitlab-ci.d/custom-runners.yml
-+++ b/.gitlab-ci.d/custom-runners.yml
-@@ -29,6 +29,6 @@
-       junit: build/meson-logs/testlog.junit.xml
+diff --git a/chardev/char-io.c b/chardev/char-io.c
+index 3be17b51ca..beac5cd245 100644
+--- a/chardev/char-io.c
++++ b/chardev/char-io.c
+@@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len)
+ {
+     return io_channel_send_full(ioc, buf, len, NULL, 0);
+ }
++
++void remove_listener_fd_in_watch(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++    if (cc->chr_listener_cleanup) {
++        cc->chr_listener_cleanup(chr);
++    }
++}
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 1e8313915b..a52a47a25c 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1581,6 +1581,15 @@ char_socket_get_connected(Object *obj, Error **errp)
+     return s->state == TCP_CHARDEV_STATE_CONNECTED;
+ }
  
- include:
--  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
--  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
--  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
-+  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml'
-+  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml'
-+  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml'
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
-similarity index 78%
-rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
-rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
-index 8727687e2b..75029c9187 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
-@@ -1,13 +1,13 @@
--# All ubuntu-22.04 jobs should run successfully in an environment
-+# All ubuntu-24.04 jobs should run successfully in an environment
- # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
--# "Install basic packages to build QEMU on Ubuntu 22.04"
-+# "Install basic packages to build QEMU on Ubuntu 24.04"
++static void tcp_chr_listener_cleanup(Chardev *chr)
++{
++    SocketChardev *s = SOCKET_CHARDEV(chr);
++    if (s->listener) {
++        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
++                                              NULL, chr->gcontext);
++    }
++}
++
+ static void char_socket_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -1598,6 +1607,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+     cc->chr_add_client = tcp_chr_add_client;
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
++    cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
  
--ubuntu-22.04-aarch32-all:
-+ubuntu-24.04-aarch32-all:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch32
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-similarity index 89%
-rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-index ca2f140471..d26c7827f4 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-@@ -1,13 +1,13 @@
--# All ubuntu-22.04 jobs should run successfully in an environment
-+# All ubuntu-24.04 jobs should run successfully in an environment
- # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
--# "Install basic packages to build QEMU on Ubuntu 22.04"
-+# "Install basic packages to build QEMU on Ubuntu 24.04"
+     object_class_property_add(oc, "addr", "SocketAddress",
+                               char_socket_get_addr, NULL,
+diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
+index ac379ea70e..540131346d 100644
+--- a/include/chardev/char-io.h
++++ b/include/chardev/char-io.h
+@@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
+ int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
+                          int *fds, size_t nfds);
  
--ubuntu-22.04-aarch64-all-linux-static:
-+ubuntu-24.04-aarch64-all-linux-static:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -23,12 +23,12 @@ ubuntu-22.04-aarch64-all-linux-static:
-  - make check-tcg
-  - make --output-sync -j`nproc --ignore=40` check
++void remove_listener_fd_in_watch(Chardev *chr);
++
+ #endif /* CHAR_IO_H */
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 429852f8d9..c57f4b7329 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -307,6 +307,8 @@ struct ChardevClass {
  
--ubuntu-22.04-aarch64-all:
-+ubuntu-24.04-aarch64-all:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -45,12 +45,12 @@ ubuntu-22.04-aarch64-all:
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
+     /* handle various events */
+     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
++
++    void (*chr_listener_cleanup)(Chardev *chr);
+ };
  
--ubuntu-22.04-aarch64-without-defaults:
-+ubuntu-24.04-aarch64-without-defaults:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -67,12 +67,12 @@ ubuntu-22.04-aarch64-without-defaults:
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
- 
--ubuntu-22.04-aarch64-alldbg:
-+ubuntu-24.04-aarch64-alldbg:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -86,12 +86,12 @@ ubuntu-22.04-aarch64-alldbg:
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
- 
--ubuntu-22.04-aarch64-clang:
-+ubuntu-24.04-aarch64-clang:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -108,11 +108,11 @@ ubuntu-22.04-aarch64-clang:
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
- 
--ubuntu-22.04-aarch64-tci:
-+ubuntu-24.04-aarch64-tci:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -128,12 +128,12 @@ ubuntu-22.04-aarch64-tci:
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc --ignore=40`
- 
--ubuntu-22.04-aarch64-notcg:
-+ubuntu-24.04-aarch64-notcg:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - aarch64
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
-similarity index 88%
-rename from .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-rename to .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
-index e62ff1763f..45dbee1788 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
-@@ -1,13 +1,13 @@
--# All ubuntu-22.04 jobs should run successfully in an environment
-+# All ubuntu-24.04 jobs should run successfully in an environment
- # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
--# "Install basic packages to build QEMU on Ubuntu 22.04"
-+# "Install basic packages to build QEMU on Ubuntu 24.04"
- 
--ubuntu-22.04-s390x-all-linux:
-+ubuntu-24.04-s390x-all-linux:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -21,12 +21,12 @@ ubuntu-22.04-s390x-all-linux:
-  - make --output-sync check-tcg
-  - make --output-sync -j`nproc` check
- 
--ubuntu-22.04-s390x-all-system:
-+ubuntu-24.04-s390x-all-system:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  timeout: 75m
-  rules:
-@@ -42,12 +42,12 @@ ubuntu-22.04-s390x-all-system:
-  - make --output-sync -j`nproc`
-  - make --output-sync -j`nproc` check
- 
--ubuntu-22.04-s390x-alldbg:
-+ubuntu-24.04-s390x-alldbg:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -65,12 +65,12 @@ ubuntu-22.04-s390x-alldbg:
-  - make --output-sync -j`nproc`
-  - make --output-sync -j`nproc` check
- 
--ubuntu-22.04-s390x-clang:
-+ubuntu-24.04-s390x-clang:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -87,11 +87,11 @@ ubuntu-22.04-s390x-clang:
-  - make --output-sync -j`nproc`
-  - make --output-sync -j`nproc` check
- 
--ubuntu-22.04-s390x-tci:
-+ubuntu-24.04-s390x-tci:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -107,12 +107,12 @@ ubuntu-22.04-s390x-tci:
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc`
- 
--ubuntu-22.04-s390x-notcg:
-+ubuntu-24.04-s390x-notcg:
-  extends: .custom_runner_template
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_22.04
-+ - ubuntu_24.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index cb99a12d94..7ae070dc8d 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -537,6 +537,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          * e.g. the chardev is in client mode, with wait=on.
+          */
+         remove_fd_in_watch(chr);
++        /*
++         * Clean up listener IO sources early to prevent racy fd
++         * handling between the main thread and the I/O thread.
++         */
++        remove_listener_fd_in_watch(chr);
+         /*
+          * We can't call qemu_chr_fe_set_handlers() directly here
+          * since chardev might be running in the monitor I/O
 -- 
 2.47.3
 
