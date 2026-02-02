@@ -4,52 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375A3E7FDDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B8AE7FDDB
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 21:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn11W-0005V2-0K; Mon, 02 Feb 2026 15:59:54 -0500
+	id 1vn12y-0001BX-IV; Mon, 02 Feb 2026 16:01:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11T-0005J5-S7; Mon, 02 Feb 2026 15:59:51 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn11Q-0003rX-Uw; Mon, 02 Feb 2026 15:59:51 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C186B18519A;
- Mon, 02 Feb 2026 23:57:52 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8755735B311;
- Mon, 02 Feb 2026 23:58:34 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn12o-0000rC-5V
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:21 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn12l-0004Oa-7x
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 16:01:13 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-432d256c2e6so3957707f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 13:01:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770066069; x=1770670869; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YJim5VyeZ2IuzxEBcViYaYebgWdJCSbLeyjuVRqPweo=;
+ b=nOZntNZS4M9C1EM/L62taUFd8rKS03HBmzhincBRwQMMg0jIwGI0aJpvhFFEruHIv1
+ zf8nh7vVLKrvWPV1MGm6mR2rrgRIfjzj24RW7lyO8+w7rauhNiPF6zK0l4Wzd8AIYywz
+ EBILWAiPeGrg/2Cr504aYqX+c1y1+QkNfar0RTbhuueiZL3OkjcUASSJbAPQkXUMlN02
+ WISIlMpAxzu3WtdLaqL5sSaIwMa7SWkpIuiTx3vQy6dIDHMcp+RtTjl4pst2usX8quya
+ 2XMvvJRcXG3NcSibNgJO2nm55kadIIF+mqZt0jts7gFUvC+CHwkm/EB+wY+Vs2Qs3Czn
+ hA8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770066069; x=1770670869;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YJim5VyeZ2IuzxEBcViYaYebgWdJCSbLeyjuVRqPweo=;
+ b=P5m7+i02gNmJFSxkk/AZlDnPQMjbbmyF5kgfx5pzaC9PabzJePIbKVgnbLn7Fy3/Ds
+ 0oc5RvW9/R6hg/9N/7UX1WQujhAlAFEdBmjS4ZJS01fT1jasyZMh1Dz+GqlT4Ufvtvuz
+ 3MhBmOA+00ieajeZflV72vo9udmx1DTmJ86QHYE1pBu0cVEWH+ZW0bRvDmsVr+aBBwDM
+ KQbWLlRPnUAf/P1LzLkcx9vhF8ipPlgCUVYuTyayQQA0/b/gPIXqoXGzKZivDO4ia3Zw
+ oU4OG/AK07LCWfc9dmBX7EmCr64ZhOInV8TgJLu2QYqXKyF6rTKIDkE/60OzDWJe6FS8
+ cLTg==
+X-Gm-Message-State: AOJu0Yy/Hsio76UNwxDt6XXnSXQCI2X7vm40pJW/vhwSnCUcILHBPUo4
+ H0F/7gIPeXRAhQ14iZdOzoOyj0vZoaYYu5eTfni4HDDEiWnEpQV4MWrurosdA0iaqGW/FCaR9gp
+ hP51687M=
+X-Gm-Gg: AZuq6aKL3NxCHZ6uYJtIjX7CzlDPEBkd1+6T+0RNG8DuMhxs/H1xAb4TorB6OJ4c8Bd
+ E+9XudF1u5ncjgQxfHC6Z5BXuK0yTyejJw+eNi7wy6LCIIHkwrePQMjlUZBheaPp0HpLuEpoFzC
+ zoA1b2phSuaaWbh99coZdRNv4DbDyZmrTKp0kkrAS3benV54nVsG3TsflZ25Pm4dMZEPqZnlBA0
+ t0KwIOcy/JX0AbDpFbwO5Vk3k08manzDMX/OX0MFHXuFbIhFsISbOqIP6jg6Q+AuuPQQudA6EUL
+ xxLgfaqaClW24YA8uc2pLdr0yQ0BXALFVJe2Gc965Ch85tBobk8Yyx+Fi4JtDf7kVkz0uamamUy
+ IcyE4iOj0sm2N6y0f5J1v4+a8qjNUXpmb90LixnDmCnFK5wVSBcoh2grRwXVZ+375s5oGrX92pl
+ lzJ5y5KXLaoGK+srFNCqcu8DxiF5fPyc0qu22DaCL0IQV8Rak/r63MRDNWKkzX
+X-Received: by 2002:a05:6000:2489:b0:432:5b81:483 with SMTP id
+ ffacd0b85a97d-435f3a9244bmr21538398f8f.24.1770066068831; 
+ Mon, 02 Feb 2026 13:01:08 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e1048a54sm45305331f8f.0.2026.02.02.13.01.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 02 Feb 2026 13:01:08 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 14/74] Fix const qualifier build errors with recent
- glibc
-Date: Mon,  2 Feb 2026 23:57:25 +0300
-Message-ID: <20260202205833.941615-14-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
+Cc: Anton Johansson <anjo@rev.ng>, Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 00/11] target/ppc: Remove most MO_TE uses in
+ cpu_ld/st_code/data()
+Date: Mon,  2 Feb 2026 22:00:54 +0100
+Message-ID: <20260202210106.93257-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,143 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+All series reviewed.
 
-A recent change in glibc 2.42.9000 [1] changes the return type of
-strstr() and other string functions to be 'const char *' when the
-input is a 'const char *'.
+Since v5:
+- Renamed mo_endian_env() -> ppc_data_endian_env()
+- Renamed ppc_code_endian() -> ppc_code_endian_dc()
+- Clarified expression used in ppc_code_endian_dc()
 
-This breaks the build in various files with errors such as :
+Since v4:
+- Fixed incorrect rebase
 
-  error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-    208 |         char *pidstr = strstr(filename, "%");
-        |                        ^~~~~~
+Since v3 (DATA path):
+- Remove MO_UNALN in do_HASH (rth)
+- Complete CODE path
 
-Fix this by changing the type of the variables that store the result
-of these functions to 'const char *'.
+Philippe Mathieu-Daudé (11):
+  target/ppc: Inline cpu_ldl_data_ra() calls in ICBI helpers
+  target/ppc: Inline cpu_ld/st_mmuidx_ra() calls in memory helpers
+  target/ppc: Inline cpu_ld/st_data_ra() calls in do_hash()
+  target/ppc: Expect page translation hash addresses to be aligned
+  target/ppc: Introduce ppc_data_endian_env() helper
+  target/ppc: Introduce ppc_code_endian_dc() helper
+  target/ppc: Inline need_byteswap() and replace translator_ldl_swap()
+  target/ppc: Check endianness via env in ppc_disas_set_info()
+  target/ppc: Introduce ppc_env_is_little_endian() helper
+  target/ppc: Check endianness at runtime in ppc_data_endian_env()
+  target/ppc: Inline cpu_ldl_code() call in ppc_ldl_code()
 
-[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+ target/ppc/internal.h        | 17 ++++++++++
+ target/ppc/cpu_init.c        |  9 ++----
+ target/ppc/gdbstub.c         |  2 +-
+ target/ppc/mem_helper.c      | 60 ++++++++++++++++++++++++++----------
+ target/ppc/tcg-excp_helper.c | 27 +++++++---------
+ target/ppc/translate.c       | 21 +++++++------
+ 6 files changed, 87 insertions(+), 49 deletions(-)
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251209174328.698774-1-clg@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 326e620fc0145686124f754194cdc6d0d9b3400d)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
-index b7c7074c2a..a9f35ab7d6 100644
---- a/backends/tpm/tpm_passthrough.c
-+++ b/backends/tpm/tpm_passthrough.c
-@@ -211,7 +211,7 @@ static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
- static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
- {
-     int fd = -1;
--    char *dev;
-+    const char *dev;
-     char path[PATH_MAX];
- 
-     if (tpm_pt->options->cancel_path) {
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 7b98debc2b..64051d55aa 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1089,7 +1089,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
- static int vmdk_parse_description(const char *desc, const char *opt_name,
-         char *buf, int buf_size)
- {
--    char *opt_pos, *opt_end;
-+    const char *opt_pos, *opt_end;
-     const char *end = desc + strlen(desc);
- 
-     opt_pos = strstr(desc, opt_name);
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 814796d918..e334b9febb 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1826,7 +1826,7 @@ cluster_was_modified(BDRVVVFATState *s, uint32_t cluster_num)
- 
- static const char* get_basename(const char* path)
- {
--    char* basename = strrchr(path, '/');
-+    const char *basename = strrchr(path, '/');
-     if (basename == NULL)
-         return path;
-     else
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index dd5fb5667c..5b2fc06e58 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -362,7 +362,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
-      * qXfer:features:read:ANNEX:OFFSET,LENGTH'
-      *                     ^p    ^newp
-      */
--    char *term = strchr(p, ':');
-+    const char *term = strchr(p, ':');
-     *newp = term + 1;
-     len = term - p;
- 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 4a09ddc760..c639a60a94 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -403,7 +403,8 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
-     int i, offset, nhosts = 0, pcilen;
-     GuestPCIAddress *pciaddr = disk->pci_controller;
-     bool has_ata = false, has_host = false, has_tgt = false;
--    char *p, *driver = NULL;
-+    const char *p;
-+    char *driver = NULL;
-     bool ret = false;
- 
-     p = strstr(syspath, "/devices/pci");
-@@ -543,7 +544,7 @@ static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
-                                                  Error **errp)
- {
-     unsigned int tgt[3];
--    char *p;
-+    const char *p;
- 
-     if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
-         g_debug("Unsupported virtio device '%s'", syspath);
-@@ -575,7 +576,7 @@ static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
-                                            Error **errp)
- {
-     unsigned int cssid, ssid, subchno, devno;
--    char *p;
-+    const char *p;
- 
-     p = strstr(syspath, "/devices/css");
-     if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
-diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
-index 980a8bbc51..6c93d452c9 100644
---- a/ui/ui-hmp-cmds.c
-+++ b/ui/ui-hmp-cmds.c
-@@ -418,7 +418,7 @@ err_out:
- void sendkey_completion(ReadLineState *rs, int nb_args, const char *str)
- {
-     int i;
--    char *sep;
-+    const char *sep;
-     size_t len;
- 
-     if (nb_args != 2) {
-diff --git a/util/log.c b/util/log.c
-index abdcb6b311..33917625d5 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -203,7 +203,7 @@ static ValidFilenameTemplateResult
- valid_filename_template(const char *filename, bool per_thread, Error **errp)
- {
-     if (filename) {
--        char *pidstr = strstr(filename, "%");
-+        const char *pidstr = strstr(filename, "%");
- 
-         if (pidstr) {
-             /* We only accept one %d, no other format strings */
 -- 
-2.47.3
+2.52.0
 
 
