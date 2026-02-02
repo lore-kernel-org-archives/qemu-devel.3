@@ -4,111 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BC2E7DF0F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E207FE7DF0F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 17:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmy0a-0003Rn-KP; Mon, 02 Feb 2026 12:46:44 -0500
+	id 1vmy2G-0004hB-C4; Mon, 02 Feb 2026 12:48:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vmy0Y-0003R9-Kx; Mon, 02 Feb 2026 12:46:42 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vmy0W-0007B8-Ur; Mon, 02 Feb 2026 12:46:42 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 612Gvm5D018916;
- Mon, 2 Feb 2026 17:46:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=TAZJDb
- GB7DPcXMCPT1lOKdZlutg1LU0U8KyLZ2r8W+g=; b=fj8mjCKybPzppNPZT99Atm
- jRTWwm1GqvI5GFurXXcJhvjM8RWqUcDpcKx0uy+u50KAeTIpbzb/UXGsQQCYXfyG
- NLiXsCYENZMkz87LuWUo6RC6vmNU+2gLWgcscaRFSKoAbHpfuX1Up8lwfsfiItEj
- U4jazj6sdOrinwqOLDpwWUx5A7fCXSBWcOHW2KZFT9do6RfNgtZYzPBJEbYhYsIy
- LgKNQhldRiPuTzURWHbJw6bnOu+guFufR4hpoc4BP6Z92ACB3ftXAkzu3VFqjEsG
- +ps7uCBGNlfypDHL/kzP2YOHuDu706H5gDXXDz0oNXjSGhVIeQnIrw3MB/1XXTRA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19869n50-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Feb 2026 17:46:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 612EN5ep004411;
- Mon, 2 Feb 2026 17:46:36 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1wjjnxb8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Feb 2026 17:46:36 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 612HkY8D25362984
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Feb 2026 17:46:35 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A195E58055;
- Mon,  2 Feb 2026 17:46:34 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D27B65804B;
- Mon,  2 Feb 2026 17:46:33 +0000 (GMT)
-Received: from [9.61.254.56] (unknown [9.61.254.56])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Feb 2026 17:46:33 +0000 (GMT)
-Message-ID: <782cc686-01ff-438b-b470-d4fb74971879@linux.ibm.com>
-Date: Mon, 2 Feb 2026 09:46:33 -0800
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vmy26-0004fR-KD
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:48:18 -0500
+Received: from mail-qk1-x743.google.com ([2607:f8b0:4864:20::743])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vmy24-0007LH-Ds
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 12:48:18 -0500
+Received: by mail-qk1-x743.google.com with SMTP id
+ af79cd13be357-8c70b5594f4so519039285a.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 09:48:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1770054495; x=1770659295; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bNfHxqQnoZ0Mq/tEojZ4H15F+BZJ7hz/KqHixXZINMk=;
+ b=Lnp92VE1LuboIOu79ywzNMn52F48YLaUG40MMgdbDeLaeVLCeIW4McLASk2fK/oXfk
+ syYDdbg0HIj6aRd/yRxzrmdXo2nWlJB8BPxl1PTeCQVmFfZt8v1tbMz/yXUSwLdN3AJ2
+ efiDLQZIDdYiRjuuTVovvGTIIFvo8VzfCjAD2XosNxsHoWrTbjQyOrAXfoP2mHgNnU5d
+ UE0FuC4EGcV318ZI0b7ndtPUzJz/3sjexabVf1AeAjSq0jnq+StA+IL/MPU/ey+bsy1g
+ Wh+HXzbceb4/OKZSMlZ804agZI80ICspJ4MqBtYNCNE2Lv2sPqMIBcj5CxSTE+RmN5gG
+ cHCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770054495; x=1770659295;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bNfHxqQnoZ0Mq/tEojZ4H15F+BZJ7hz/KqHixXZINMk=;
+ b=UYg1Vu4AZzJ1z4XMXg+JATrtIfAF702NHrJIkzlA51fYrQMrkoD8GVQh8lhoNY7127
+ Ouqjal7UkXSfujl1HwDyul/OoWt2Os9Cu9H1afe5Wq9ZsVqCDgbcUDMAynX2AeJ+yKmQ
+ bfJpK8H1rWxVG+E3jTKXiF7WvDhJTQbsqDiWE1JrSLhAvwGiLYj7vhsKaD0TAMdUqg9R
+ CIBtX8jwsKwtp8/97jYa4Hd9SlvQtJWvELSPrT2cybv9mmjXzcFevbKUq/+jrAyvT2pK
+ 0cHkxdikbI98OUdJVKVzdynj/AoFj9KTMCb3jXulRapPD2G55+TCSkOJKrIotD9xLvqo
+ kD8w==
+X-Gm-Message-State: AOJu0Yyf4I26W32doigBwYBGrcWcC1gZUo6oQjnPQLXcMMiu+/fnBr3g
+ FnP6oWdS/IAGJPY+iI5mZTyJIcAUTykx1xCoYSH1tskIfycfpmBCUlRtIVGA0QbySt4=
+X-Gm-Gg: AZuq6aL77LzE/ID1whXkfaso7b1iQxVaR5ymZZp2LZQLlhk6Hi5lAO7Ww8et5DtaigC
+ bQUvDkbog5b73CoXgn7B0kehC2PzqjCrTLZsTjK/HK06uI05hOGd7z9T0TGl45rOo7lGx6GGidd
+ 6HogtrgkLc9zbA/TmSwHOJGDi2IDUMSs9KZ2IAoyvbGHqsuFua+yQTgU7Feg5xMNB0+f1wMjNmg
+ AgwTYLMfExruznlsw9E62ZNLaHevIexBNfmV727HHUWNXHwsZRP6uiym+2tNrtc4ob+dR4VqXEb
+ ksJg/C4vrqzJ8qHCJNWpK+AOCT18Pq1/jwzkU4mtX7l507Vhl9dup3qbL1tEBS5k7XxoFqT2L8J
+ ws0chacYXD/mwsimRXi67SaG76Xt8QdFsuHv/HYB4K1ltvMUuK/4bNw7qTNyx9UxchXncyohS18
+ Su9HMo2fW3mtUGEOkkcPnR157MG/TDUJm72fFFZ+exmhtJNj34hIV6XqA0KarYfcs9BmwbwrdLC
+ Ew/D0drh/Kf
+X-Received: by 2002:a05:620a:4151:b0:8c9:e989:9d8c with SMTP id
+ af79cd13be357-8ca2032ed92mr32839285a.3.1770054495370; 
+ Mon, 02 Feb 2026 09:48:15 -0800 (PST)
+Received: from [192.168.68.103] (200-206-229-25.dsl.telesp.net.br.
+ [200.206.229.25]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-894d36a5f82sm121062896d6.10.2026.02.02.09.48.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 09:48:14 -0800 (PST)
+Message-ID: <48b819aa-da6b-43f6-9427-78f721b9ad39@ventanamicro.com>
+Date: Mon, 2 Feb 2026 14:48:11 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Replace backup for s390 PCI
-To: Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260202144702.1783102-1-farman@linux.ibm.com>
+Subject: Re: [RFC PATCH v4 7/7] target/riscv: add sdtrig trigger action=debug
+ mode
+To: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com, wangjingwei@iscas.ac.cn,
+ devel@lists.libvirt.org
+References: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
+ <8fe531a24703eb426a66618822649bf5ee78697f.1769751489.git.chao.liu.zevorn@gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260202144702.1783102-1-farman@linux.ibm.com>
+In-Reply-To: <8fe531a24703eb426a66618822649bf5ee78697f.1769751489.git.chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDEzNyBTYWx0ZWRfX28nsqeaCvl8q
- KWa99S7pnXqWQqZyLNvDT8YuYhAeiURf+fk9eLnT9Wkf8kLlAgPcaExAfaYxveuxNecbjrsRaGS
- lhnu2q9aLURV2QXxnrjnH6IUhJXETW35E6ILytLMeOVXeXeCQU0bdi94PbMQGpMUE0C9ePmqWFF
- ZoARE77tk7loOQwjEjTXg/nMoqmJpRh6YEw2UdY5h/LgxjCiAfRiZOM6Plg88wcPRLQpH4Wh98M
- ooH/cUS6DRsjeovpsuMg6tZfRKK/bwSIf30AQEaM44vrPx3aI65MR6HhRZfb+A4f4+MiUQG7xHQ
- IL5aXZuOZmMUtZlP6mpDtAZnhJAY9r416t4cxxHaWHvgoIQjiS52IDLRmvH6S5Sa6c/mdWj7ZbS
- uF4Zz/02KDyuu4Zq0RoA/3G0BudOwe3mz47kBT2X+qnoRfLdBqb0pQoKnEvkms6N/Wv/gYX/gub
- z01WGCmqcaCnzvg9JFA==
-X-Proofpoint-GUID: CUNoKOKZe7o91JlqeQoJExIL3AVMUzqg
-X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=6980e2fd cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=STK_0p3wlTkmVyiQI7oA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: CUNoKOKZe7o91JlqeQoJExIL3AVMUzqg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-02_05,2026-02-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602020137
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::743;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x743.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,34 +111,169 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2/2/2026 6:47 AM, Eric Farman wrote:
-> Farhan has been doing a masterful job coming on in the
-> s390 PCI space, and my own attention has been lacking.
-> Let's make MAINTAINERS reflect reality.
->
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+
+On 1/30/2026 3:00 AM, Chao Liu wrote:
+> RISC-V Debug Specification:
+> https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+> 
+> Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
+> trigger hits, enter Debug Mode with cause=trigger and stop with
+> EXCP_DEBUG.
+> 
+> Also report inst-count triggers in tinfo and read their action field.
+> 
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
->   MAINTAINERS | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9b7ed4fccb..32d60dd673 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1862,7 +1862,8 @@ L: qemu-s390x@nongnu.org
+>   target/riscv/debug.c | 53 ++++++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 51 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 5877a60c50..4e30d42905 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -110,6 +110,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+>           action = (tdata1 & TYPE6_ACTION) >> 12;
+>           break;
+>       case TRIGGER_TYPE_INST_CNT:
+> +        action = tdata1 & ITRIGGER_ACTION;
+> +        break;
+>       case TRIGGER_TYPE_INT:
+>       case TRIGGER_TYPE_EXCP:
+>       case TRIGGER_TYPE_EXT_SRC:
+> @@ -280,6 +282,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
 >   
->   S390 PCI
->   M: Matthew Rosato <mjrosato@linux.ibm.com>
-> -M: Eric Farman <farman@linux.ibm.com>
-> +M: Farhan Ali <alifm@linux.ibm.com>
-> +R: Eric Farman <farman@linux.ibm.com>
->   S: Supported
->   F: hw/s390x/s390-pci*
->   F: include/hw/s390x/s390-pci*
+>   static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+>   {
+> +    CPUState *cs = env_cpu(env);
+>       trigger_action_t action = get_trigger_action(env, trigger_index);
+>   
+>       switch (action) {
+> @@ -289,6 +292,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+>           riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+>           break;
+>       case DBG_ACTION_DBG_MODE:
+> +        if (!env_archcpu(env)->cfg.ext_sdext) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "trigger action=debug mode requires Sdext\n");
 
-Thanks a lot Eric!
 
-Acked-by: Farhan Ali <alifm@linux.ibm.com>
+I believe we want LOG_GUEST_ERROR for invalid actions like this one. You 
+can check examples in trigger_priv_match and other places in debug.c
 
+LOG_UNIMP is reserved for cases where QEMU does not implement something 
+at all and we want to warn the user about it. For instance, again in 
+debug.c:trigger_priv_match():
+
+
+     case TRIGGER_TYPE_INT:
+     case TRIGGER_TYPE_EXCP:
+     case TRIGGER_TYPE_EXT_SRC:
+         qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n", 
+type);
+         break;
+
+
+This is the intended use for LOG_UNIMP.
+
+Everything else LGTM.
+
+Thanks,
+Daniel
+
+
+
+> +            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+> +        }
+> +        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
+> +        /*
+> +         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
+> +         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
+> +         */
+> +        if (cs->exception_index != EXCP_DEBUG) {
+> +            cs->exception_index = EXCP_DEBUG;
+> +            cpu_loop_exit_restore(cs, GETPC());
+> +        }
+> +        break;
+>       case DBG_ACTION_TRACE0:
+>       case DBG_ACTION_TRACE1:
+>       case DBG_ACTION_TRACE2:
+> @@ -441,6 +459,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+>   {
+>       target_ulong val;
+>       uint32_t size;
+> +    uint32_t action;
+>   
+>       /* validate the generic part first */
+>       val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
+> @@ -448,11 +467,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+>       /* validate unimplemented (always zero) bits */
+>       warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
+>       warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
+> -    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
+>       warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
+>       warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
+>       warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
+>   
+> +    action = (ctrl & TYPE2_ACTION) >> 12;
+> +    if (action == DBG_ACTION_BP) {
+> +        val |= ctrl & TYPE2_ACTION;
+> +    } else if (action == DBG_ACTION_DBG_MODE) {
+> +        if (env_archcpu(env)->cfg.ext_sdext) {
+> +            val |= ctrl & TYPE2_ACTION;
+> +        } else {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "trigger action=debug mode requires Sdext\n");
+> +        }
+> +    } else {
+> +        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
+> +                      action);
+> +    }
+> +
+>       /* validate size encoding */
+>       size = type2_breakpoint_size(env, ctrl);
+>       if (access_size[size] == -1) {
+> @@ -569,6 +602,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+>   {
+>       target_ulong val;
+>       uint32_t size;
+> +    uint32_t action;
+>   
+>       /* validate the generic part first */
+>       val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
+> @@ -576,11 +610,25 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+>       /* validate unimplemented (always zero) bits */
+>       warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+>       warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+> -    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+>       warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
+>       warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+>       warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
+>   
+> +    action = (ctrl & TYPE6_ACTION) >> 12;
+> +    if (action == DBG_ACTION_BP) {
+> +        val |= ctrl & TYPE6_ACTION;
+> +    } else if (action == DBG_ACTION_DBG_MODE) {
+> +        if (env_archcpu(env)->cfg.ext_sdext) {
+> +            val |= ctrl & TYPE6_ACTION;
+> +        } else {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "trigger action=debug mode requires Sdext\n");
+> +        }
+> +    } else {
+> +        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
+> +                      action);
+> +    }
+> +
+>       /* validate size encoding */
+>       size = extract32(ctrl, 16, 4);
+>       if (access_size[size] == -1) {
+> @@ -919,6 +967,7 @@ target_ulong tinfo_csr_read(CPURISCVState *env)
+>   {
+>       /* assume all triggers support the same types of triggers */
+>       return BIT(TRIGGER_TYPE_AD_MATCH) |
+> +           BIT(TRIGGER_TYPE_INST_CNT) |
+>              BIT(TRIGGER_TYPE_AD_MATCH6);
+>   }
+>   
 
 
