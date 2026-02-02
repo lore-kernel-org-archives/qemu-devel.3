@@ -4,81 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4899E7DF16
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 18:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B465EE7DF16
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 18:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmyEc-0001Ci-Q5; Mon, 02 Feb 2026 13:01:14 -0500
+	id 1vmyGM-0001hg-Dt; Mon, 02 Feb 2026 13:03:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vmyEY-00016Q-Tg
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 13:01:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vmyGK-0001hS-Ti
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 13:03:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vmyEW-0000IZ-Kz
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 13:01:09 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vmyGJ-0000Q4-By
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 13:03:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770055266;
+ s=mimecast20190719; t=1770055378;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9YNM7Xl0gOpzGCTgddCEXzGfzvYrH8oDg8ctwBbXq8E=;
- b=HvHhl5dLTqo98ggVBrf9kC19h4dCf0lAac7eJvBDM4bKtf2VrgWs9WLn+VNyuw7zwXIHFY
- xvk4l3OpzMQDqARw01dAMPov6zo4SX2Vc5RK3rXE8UxywV6eAZmVHMUFWXjhr7XjIPKfmp
- iz2d2FT1fm5R+oqed9eYfShCj0NLuNc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-gQaBReB9NYehrOfxON5upQ-1; Mon,
- 02 Feb 2026 13:01:00 -0500
-X-MC-Unique: gQaBReB9NYehrOfxON5upQ-1
-X-Mimecast-MFC-AGG-ID: gQaBReB9NYehrOfxON5upQ_1770055259
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF5331954231; Mon,  2 Feb 2026 18:00:58 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.105])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DDD31800577; Mon,  2 Feb 2026 18:00:57 +0000 (UTC)
-Date: Mon, 2 Feb 2026 13:00:56 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH 2/6] include/hw/virtio/virtio-access.h: remove target
- specifics define
-Message-ID: <20260202180056.GB405548@fedora>
-References: <20260131020100.1115203-1-pierrick.bouvier@linaro.org>
- <20260131020100.1115203-3-pierrick.bouvier@linaro.org>
- <20260131124842-mutt-send-email-mst@kernel.org>
- <095a1def-1548-4764-84d2-87ffb642bb8e@linaro.org>
- <20260202024813-mutt-send-email-mst@kernel.org>
+ bh=4B3KeeCQxLYPVjUccYfLTgm0JJojw4O2H3f+tzwFwiE=;
+ b=Hm516yV/xoTxoOAFhECqOg/bIMnJKGPkGoGIFqBvB6lEf8LkKabfG0tEe7wDAx1zht1xkH
+ q192EAhNfedYceK3EFg8DeR+4evHp+xdN8wjeSYaKwX9eseMvkNnnHBVMXGC/o2c00pN+4
+ IqKw+gx4DoQOdEby5ceVaHa293H4mLQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-1tnemoLzPQK0KsufC7aASg-1; Mon, 02 Feb 2026 13:02:57 -0500
+X-MC-Unique: 1tnemoLzPQK0KsufC7aASg-1
+X-Mimecast-MFC-AGG-ID: 1tnemoLzPQK0KsufC7aASg_1770055376
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430f5dcd4cdso3947101f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 10:02:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770055375; x=1770660175; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4B3KeeCQxLYPVjUccYfLTgm0JJojw4O2H3f+tzwFwiE=;
+ b=txONZZ3+wciycXmRpHRNOJ7cMnMFY2SXdZKT5XbpPB7lDRdXNdUVk0NNZGtlcCu1Xb
+ QhZ0ig0NcU77AJoAd+32YCHxk1LPnGC5Neox4revAM3NV9B/zZxFS/0EvLw/dJOfIu2/
+ VBYhMl72uI6pnBzEoSVt53KEe9pLmMhibglBVzk/6iKe3HTNPqjveeqGsaPo3MSaV2jM
+ a8VlvdYwKba/DxDnySG1gXGQGWu6z5cBBhzS5RNZa3HyM6k57CiAN4P6xCGjbEGkWW5d
+ s9dmzgcQBlEGKPAIce39hIA5swUMxWIIwBw1yOLleWq6aE/8ONqY5lYsa19Pv43wqnLD
+ Xzkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770055375; x=1770660175;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4B3KeeCQxLYPVjUccYfLTgm0JJojw4O2H3f+tzwFwiE=;
+ b=AMgdus4miQQVyn1ghAMO0KcS59IArlRGgLpbxqVd7Ro2oq3OM8wDT+UUx4u0YZjW7J
+ BJQFQ3mntTma1xl9zOYz9w9+giwv5FZIMTwI8GhVIo2yu3h5H1VzoJmSVimEed1qqdMt
+ BsBFIEGO/4uv8CjgeCUaNCU64mN7pUygcWvT5DqL3JeaZUfIwkA76e8eDcsbHHFMLwOC
+ jgtw9e4V6xWsrVOpwHogfkJNUpTgD9PP28koQwuerjya+pQgXGQ6vwtjIJpeeT+G+7/D
+ txOGuC7Nvj1nsoYdGsOu4wOS5hj/zksyLunhGWlrEpjb+XqTwbhp5Oj7E3OGBbsX31p9
+ jhMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlXKdON6KYfRwTbx7SyQyXSOgU8Guldg1YG3GfGYCC6tKsDn+F+4bCxlRPI+AycKGOWgEOYaA3Kc1b@nongnu.org
+X-Gm-Message-State: AOJu0Yzol4Db+K7/TQ+n5l0rRj/HvzjMb/rW7N/SRS1HsoZKoceGgbUN
+ IZ0h/ssJYYpu77zMmkYhPw/VJiQn7MgdYQXXcZ4UnE7hZxdo3Qjr3mHuXgO8zU+i+WlrYCt2XZV
+ q4FjlXqCWPpGqXWO7Slzdm1SuJeARZMVI5xOsiHPPL9O1r4ZcdKSZ6pb5KMOyrB7k
+X-Gm-Gg: AZuq6aKpOrDnMhBuB5AOCueaFnbZoKtxZzeFe7K8/ovPBCumOGw5QrzZscHmKKzCWwa
+ D9wz1+MRVmSYAViWjfCjcXcjL8PbTOqAcH/6Rv53TgM90Qkfz0eDIkVKVftLHn6cKxJOFzKjcH5
+ 1ddtybzM2OdyzA9WxOdpoISGsxc8SPYFniIK6t35g3ENmhUhl1PTuSFBKE5DojPn79BSMiEaJqc
+ OYsCfL4CGYRc+RjKvuwCVi80GPzxP4ZuIZN2e9H25UwvDw0/fXqgvT9Kwq+H2KIcZ7PMSTiSHJt
+ RU/L51ft0bDfqQNpz+7JPXfElv7SX1ZHkHbtDKgHdbf9MkFiWo2nC2OkEG/BDaGRkxXjrWeve8p
+ 3k5dI7KiJH7hXU3bcmHlaqKjsWiVk2FTt/aDBh0iTQrLJnfySL8rcJK5pqhTnheDey5eBYI+IW7
+ CGxtWv6A4HCOGbTg==
+X-Received: by 2002:a05:6000:1ac8:b0:432:c37c:d83a with SMTP id
+ ffacd0b85a97d-435f3a86321mr18913729f8f.15.1770055374733; 
+ Mon, 02 Feb 2026 10:02:54 -0800 (PST)
+X-Received: by 2002:a05:6000:1ac8:b0:432:c37c:d83a with SMTP id
+ ffacd0b85a97d-435f3a86321mr18913678f8f.15.1770055374374; 
+ Mon, 02 Feb 2026 10:02:54 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-435e10e46cesm45383869f8f.7.2026.02.02.10.02.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 10:02:53 -0800 (PST)
+Message-ID: <03a759aa-d24d-43aa-bb97-b65f8e80bf66@redhat.com>
+Date: Mon, 2 Feb 2026 19:02:52 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="pSgvDtVEIDmIA8q/"
-Content-Disposition: inline
-In-Reply-To: <20260202024813-mutt-send-email-mst@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] Makefile: add python script dependency for
+ meson-buildoptions.sh
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+References: <20260202174849.1949691-1-alex.bennee@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260202174849.1949691-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,85 +127,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/2/26 18:48, Alex Bennée wrote:
+> If we update the script we should also make sure we regenerate the
+> help text.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
---pSgvDtVEIDmIA8q/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, this is correct.
 
-On Mon, Feb 02, 2026 at 02:50:28AM -0500, Michael S. Tsirkin wrote:
-> On Sun, Feb 01, 2026 at 05:24:03PM -0800, Pierrick Bouvier wrote:
-> > On 1/31/26 9:48 AM, Michael S. Tsirkin wrote:
-> > > On Fri, Jan 30, 2026 at 06:00:56PM -0800, Pierrick Bouvier wrote:
-> > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > >=20
-> > > Performance impact?
-> > >=20
-> > > the reason we have these is for performance ...
-> > >=20
-> >=20
-> > I would be very happy to run any benchmark that you might judge critica=
-l.
-> >=20
-> > Should we run a disk read/write sequence with a virtio disk, or a downl=
-oad
-> > with a virtio interface? Any other idea?
->=20
-> block for sure, people who care about network perf go the vhost or
-> vhost user path.
->=20
-> So I CC'd Stefan Hajnoczi. Stefan do you feel this needs a test and what
-> kind of test do you suggest as the most representative of I/O overhead?
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-This command-line lets you benchmark virtio-blk without actual I/O
-slowing down the request processing:
-
-  qemu-system-x86_64 \
-      -M accel=3Dkvm \
-      -cpu host \
-      -m 4G \
-      --blockdev file,node-name=3Ddrive0,filename=3Dboot.img,cache.direct=
-=3Don,aio=3Dnative \
-      --blockdev null-co,node-name=3Ddrive1,size=3D$((10 * 1024 * 1024 * 10=
-24)) \
-      --object iothread,id=3Diothread0 \
-      --device virtio-blk-pci,drive=3Ddrive0,iothread=3Diothread0 \
-      --device virtio-blk-pci,drive=3Ddrive1,iothread=3Diothread0
-
-Here is a fio command-line for 4 KiB random reads:
-
-  fio \
-      --ioengine=3Dlibaio \
-      --direct=3D1 \
-      --runtime=3D30 \
-      --ramp_time=3D10 \
-      --rw=3Drandread \
-      --bs=3D4k \
-      --iodepth=3D128 \
-      --filename=3D/dev/vdb \
-      --name=3Drandread
-
-This is just a single vCPU, but it should be enough to see if there is
-any difference in I/O Operations Per Second (IOPS) or efficiency
-(IOPS/CPU utilization).
-
-Stefan
-
---pSgvDtVEIDmIA8q/
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmA5lgACgkQnKSrs4Gr
-c8jt5wf/UkeOZdWPQWpHp27wR+PCMdyDe8wo2Bd2HCnVRZcTcr7FtPhC8iFiuiPx
-M9Xdjf3rSVhjUIsyIDRC0CqA/+yXwcX7XiXa4JUvTN8m2LQP5PgjgDIIorDTacZD
-p9GnDyN49URDdtojxXb88HhK8WAcxHOyLDT3Z6uRpNW950YW0u3w+/lrV+yRC8fX
-LjP2BEcMgOShzudIUL1R3zipTO1e1KFEzgWE92It41XaDLADqjQB6PRP6OQrdJ/L
-SBJogNhg5N9gGwAK8ZYAd5xtmZ5rGhRCC3AmcZySHznXgct0MrIRSMyzohxfyUl+
-AWsTpP3apKBdwmrAFOQ9XJsy5ijESg==
-=/B3P
------END PGP SIGNATURE-----
-
---pSgvDtVEIDmIA8q/--
+> ---
+>   Makefile | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 9fb55dcf330..54547a37b1a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -130,7 +130,7 @@ Makefile.mtest: build.ninja scripts/mtest2make.py
+>   
+>   .PHONY: update-buildoptions
+>   all update-buildoptions: $(SRC_PATH)/scripts/meson-buildoptions.sh
+> -$(SRC_PATH)/scripts/meson-buildoptions.sh: $(SRC_PATH)/meson_options.txt
+> +$(SRC_PATH)/scripts/meson-buildoptions.sh: $(SRC_PATH)/meson_options.txt $(SRC_PATH)/scripts/meson-buildoptions.py
+>   	$(MESON) introspect --buildoptions $(SRC_PATH)/meson.build | $(PYTHON) \
+>   	  scripts/meson-buildoptions.py > $@.tmp && mv $@.tmp $@
+>   endif
 
 
