@@ -4,95 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27E7E7DEEE
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D88E7DEEE
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 15:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vmvsu-0006WE-Ve; Mon, 02 Feb 2026 10:30:40 -0500
+	id 1vmvvT-0007ZI-Hl; Mon, 02 Feb 2026 10:33:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmvst-0006Uv-35
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:30:39 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vmvsr-0004Da-6v
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 10:30:38 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4801c2fae63so34715475e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 07:30:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770046235; x=1770651035; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MZ51eWSEUzqtNu7Iazuf6KdAkqd+YZGG0v1m/OVg1Ns=;
- b=XmTMIlE16ub566mgX6VBWyyOgarx8lfve6x2oQ92RHeMjHCt8zkaQa0gcOcWCr+DdM
- H7nkiSEeQ4gHgZ70n9vbV9HdLGmgNERxQ0Hs6HI3IIDm66YwHUoZs1u7heFD8PsrqFxE
- bIuoHNyKRyO0uzT+MKIiI2ErAFpdteT0iL3Tt4EnKxhpwZ6CdCW4fyNAN1GfmYunDWp8
- wju+fpXX+5NtAzXBze63Kz4OMNKgQORx54xgkh35qik6GjD1GwFFl7XiIPaQl9dRM1VZ
- WCfktKMqtFyklXlOD/Jt2Un/nytDwADQD3+BGC2qu9iX6/t/wGSNIEnP4Iehx6DRHj/f
- SnMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770046235; x=1770651035;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MZ51eWSEUzqtNu7Iazuf6KdAkqd+YZGG0v1m/OVg1Ns=;
- b=E+sRE0+f8+2OAMrqHSi1vu/1qSt3OROa2zlDbNTct54CKF9JWJDU+qXGoiMjO8y7PN
- 3Mb6Drz5mNE0YcQN8mjcC4YUHZGqgefXUZJm5+mWeLfp0kJ42Tq0oAjI6PeJhQjxkMHq
- kHrnly95KfcuGQnACckW8/EJzOfOMl2Hrv6Tnxtx4p3qKmGaqxWvqxGGmjYeJHvJv/7g
- 4FGklO7hfIPQMf2a273gz5IR79WWpO9PQM/wv8pB9bP7SiP1W9r5FNbPJc2ioqduhxIm
- nsM47VvCnpi4m/0Z2uCsFIT1TDf2UEB7KayCarJrdmJA/rRnMAAjaG63kFo08iLXMmRl
- QSSQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYmDDIaTc1n8LHLf/G0OD4cV2BfgP14udOGmFF+gx2FBVLNE5eckxsXEXCuktH2e2OykMCbtFx+rDy@nongnu.org
-X-Gm-Message-State: AOJu0Yzt7VBUW/Zjse4KD6AsYdNoyN34gYIQEyxpSQEc/vxHrXJvszCe
- 6+HFQDGlwyxkKzm/yzURrwnwom35CCAxFoGLMMYgKQ+sChcdxaEQyOV4cPbrLlUZ91s=
-X-Gm-Gg: AZuq6aKzaiCyWc48pMfbDRjvcs2QjF2F60pT4KRXY/NNd0v5IegHGeR/RgyF+Azuy/o
- snRqktx3ilM186Tz2RGH42Pe2fMu9qBMKMkQIhq81AWBXGY6+idICGzk8XedmfSCdXFjH/S00Lq
- 7l5VpvZIi6bMWTO/tBDQzxJlzvXzB5UYbrVGImd8h96Bc2iUYDR1PHFjNoIOqEifVXwfpOoENVk
- TZj51YhoRwuqTIIlJfIcDVg7nvQQLnfN+qzcb6pL4GmlQL2C1DMNpvt73lsbgMY5P6zanjRPO2Z
- N+rWA882E/Xf33Q9dxrE5FnQILCOHS7kNxsRLVW9rf2e+pHHCkL74zp7fpmdLmHbJLqSjE7G6hu
- Oor9OidTbg0zVpj5I6Ndox3jQS4Vw04hnMiMfFbCUjFCQt2M48Ur3YasbxdzQLEx97N7obkvUPV
- KgmDBbQ+BxXt+XEPNgSYTzuI5H8s8mFZCtGE+soCM3q/Sfh4yKhQ27bg==
-X-Received: by 2002:a05:600c:8210:b0:480:3bba:1cac with SMTP id
- 5b1f17b1804b1-482db44795bmr173087155e9.6.1770046235262; 
- Mon, 02 Feb 2026 07:30:35 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806cdeafffsm378277075e9.7.2026.02.02.07.30.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 07:30:34 -0800 (PST)
-Message-ID: <fc2fa936-389f-4326-b001-21b22444388b@linaro.org>
-Date: Mon, 2 Feb 2026 16:30:33 +0100
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1vmvvR-0007YB-SY; Mon, 02 Feb 2026 10:33:18 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1vmvvQ-0004jJ-CN; Mon, 02 Feb 2026 10:33:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=kcJgEbkkcdPrw4x8wyXBf/JXILHs8kYvbY4F8xIe1GM=; b=BM2kS2JqtfNVswA
+ 3K09qzDBkcJkX3K7IMEbb1ksbc+64T8yEnZbsssxmGsSIX+419fhAVfObpy8rIL27sxtL2j3h1MAW
+ OSr4i6IK1QBkJ+aZPZwXXDu4AIPPZqlx2rX1VE/sKrUZgev6Be/csLVeV6eOD85GnyySFpcOef9Xc
+ L4=;
+Date: Mon, 2 Feb 2026 16:36:45 +0100
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v5 05/11] target/ppc: Introduce the mo_endian_env() helper
+Message-ID: <aYDBNF0z2pe-8Cjt@hive.localdomain>
+References: <20260122221106.57184-1-philmd@linaro.org>
+ <20260122221106.57184-6-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] memory: Add internal memory_region_set_ops helper
- function
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1770042013.git.balaton@eik.bme.hu>
- <25045c95c083e31c6773521ecfe41900738b7bb5.1770042013.git.balaton@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <25045c95c083e31c6773521ecfe41900738b7bb5.1770042013.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+In-Reply-To: <20260122221106.57184-6-philmd@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +63,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 15:28, BALATON Zoltan wrote:
-> This is a common operation used at multiple places, add a helper
-> function for it.
+On 22/01/26, Philippe Mathieu-Daudé wrote:
+> Introduce mo_endian_env() which returns the endian MemOp
+> from the vCPU env pointer. Keep it hardcoded as MO_TE.
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   system/memory.c | 21 ++++++++++++---------
->   1 file changed, 12 insertions(+), 9 deletions(-)
+>  target/ppc/internal.h        |  6 ++++++
+>  target/ppc/mem_helper.c      | 18 +++++++++---------
+>  target/ppc/tcg-excp_helper.c |  2 +-
+>  3 files changed, 16 insertions(+), 10 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Minor comment but the difference between mo_endian_env() and ppc_code_endian()
+is a bit unclear from the names.  I think especially since
+mo_endian_env() is used in ppc_ld_code() later on. Maybe
+ppc_code_endian() -> ppc_disas_endian() || ppc_tb_endian()?
+
+Regardless of namechange, just throwing out my 2c
+
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 
