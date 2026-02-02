@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73438E7FDDA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F407E7FDD8
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 20:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn10R-0003mO-0r; Mon, 02 Feb 2026 15:58:47 -0500
+	id 1vn10n-00041g-Rx; Mon, 02 Feb 2026 15:59:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10L-0003jX-MN; Mon, 02 Feb 2026 15:58:41 -0500
+ id 1vn10L-0003jY-MS; Mon, 02 Feb 2026 15:58:41 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vn10I-0003kP-Eq; Mon, 02 Feb 2026 15:58:40 -0500
+ id 1vn10I-0003kO-FK; Mon, 02 Feb 2026 15:58:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B733518518D;
+ by isrv.corpit.ru (Postfix) with ESMTP id B4F6B18518C;
  Mon, 02 Feb 2026 23:57:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F0EA35B304;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 70A6835B303;
  Mon, 02 Feb 2026 23:58:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 01/74] file-posix: Handle suspended dm-multipath
- better for SG_IO
-Date: Mon,  2 Feb 2026 23:57:12 +0300
-Message-ID: <20260202205833.941615-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 00/74] Patch Round-up for stable 10.1.4,
+ freeze on 2026-02-10
+Date: Mon,  2 Feb 2026 23:57:11 +0300
+Message-ID: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260202173333@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,113 +59,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+The following patches are queued for QEMU stable v10.1.4:
 
-When introducing DM_MPATH_PROBE_PATHS, we already anticipated that
-dm-multipath devices might be suspended for a short time when the DM
-tables are reloaded and that they return -EAGAIN in this case. We then
-wait for a millisecond and retry.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.1
 
-However, meanwhile it has also turned out that libmpathpersist (which is
-used by qemu-pr-helper) may need to perform more complex recovery
-operations to get reservations back to expected state if a path failure
-happened in the middle of a PR operation. In this case, the device is
-suspended for a longer time compared to the case we originally expected.
+Patch freeze is 2026-02-10, and the release is planned for 2026-02-12:
 
-This patch changes hdev_co_ioctl() to treat -EAGAIN separately so that
-it doesn't result in an immediate failure if the device is suspended for
-more than 1ms, and moves to incremental backoff to cover both quick and
-slow cases without excessive delays.
+  https://wiki.qemu.org/Planning/10.1
 
-Buglink: https://issues.redhat.com/browse/RHEL-121543
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251128221440.89125-1-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 2c3165a1a61c299b4a3ae30899e1cc738d20e004)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 827ffa77a5..d7f489a40b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -4300,25 +4300,8 @@ hdev_open_Mac_error:
- static bool coroutine_fn sgio_path_error(int ret, sg_io_hdr_t *io_hdr)
- {
-     if (ret < 0) {
--        switch (ret) {
--        case -ENODEV:
--            return true;
--        case -EAGAIN:
--            /*
--             * The device is probably suspended. This happens while the dm table
--             * is reloaded, e.g. because a path is added or removed. This is an
--             * operation that should complete within 1ms, so just wait a bit and
--             * retry.
--             *
--             * If the device was suspended for another reason, we'll wait and
--             * retry SG_IO_MAX_RETRIES times. This is a tolerable delay before
--             * we return an error and potentially stop the VM.
--             */
--            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
--            return true;
--        default:
--            return false;
--        }
-+        /* Path errors sometimes result in -ENODEV */
-+        return ret == -ENODEV;
-     }
- 
-     if (io_hdr->host_status != SCSI_HOST_OK) {
-@@ -4387,6 +4370,7 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
- {
-     BDRVRawState *s = bs->opaque;
-     RawPosixAIOData acb;
-+    uint64_t eagain_sleep_ns = 1 * SCALE_MS;
-     int retries = SG_IO_MAX_RETRIES;
-     int ret;
- 
-@@ -4415,9 +4399,37 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
-         },
-     };
- 
--    do {
--        ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
--    } while (req == SG_IO && retries-- && hdev_co_ioctl_sgio_retry(&acb, ret));
-+retry:
-+    ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
-+    if (req == SG_IO && s->use_mpath) {
-+        if (ret == -EAGAIN && eagain_sleep_ns < NANOSECONDS_PER_SECOND) {
-+            /*
-+             * If this is a multipath device, it is probably suspended.
-+             *
-+             * This can happen while the dm table is reloaded, e.g. because a
-+             * path is added or removed. This is an operation that should
-+             * complete within 1ms, so just wait a bit and retry.
-+             *
-+             * There are also some cases in which libmpathpersist must recover
-+             * from path failure during its operation, which can leave the
-+             * device suspended for a bit longer while the library brings back
-+             * reservations into the expected state.
-+             *
-+             * Use increasing delays to cover both cases without waiting
-+             * excessively, and stop after a bit more than a second (1023 ms).
-+             * This is a tolerable delay before we return an error and
-+             * potentially stop the VM.
-+             */
-+            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, eagain_sleep_ns);
-+            eagain_sleep_ns *= 2;
-+            goto retry;
-+        }
-+
-+        /* Even for ret == 0, the SG_IO header can contain an error */
-+        if (retries-- && hdev_co_ioctl_sgio_retry(&acb, ret)) {
-+            goto retry;
-+        }
-+    }
- 
-     return ret;
- }
--- 
-2.47.3
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 2c3165a1a61c Kevin Wolf:
+   file-posix: Handle suspended dm-multipath better for SG_IO
+02 41706d3e72d6 Richard Henderson:
+   tcg: Zero extend 32-bit addresses for TCI
+03 7e71b8e7f2f6 Michael Tokarev:
+   gitlab-ci.d/cirrus: Update the FreeBSD job to v14.3
+04 eafc5f69e621 Alex Bennée:
+   gitlab: move custom runners to Ubuntu 24.04
+05 dd77ef99aa02 Alex Bennée:
+   target/arm: handle unaligned PC during tlb probe
+06 8062bfd51764 Denis V. Lunev:
+   scripts: fix broken error path in modinfo-collect.py
+07 46228925edd5 Hanna Czenczek:
+   vhost: Always initialize cached vring data
+08 e742b7bdc244 Stefan Weil:
+   scripts/nsis.py: Tell makensis that WoA is 64 bit
+09 307bc43095b8 Kevin Wolf:
+   block: Fix BDS use after free during shutdown
+10 ac3520f599fe Hanna Czenczek:
+   nvme: Note in which AioContext some functions run
+11 b002acacc1d7 Hanna Czenczek:
+   Revert "nvme: Fix coroutine waking"
+12 ab0065e36adf Thomas Huth:
+   tests/qemu-iotests: Fix check for existing file in _require_disk_usage()
+13 83f6dceb8f5c Thomas Huth:
+   qga: Fix ubsan warning
+14 326e620fc014 Cédric Le Goater:
+   Fix const qualifier build errors with recent glibc
+15 2f5c96d53409 Cédric Le Goater:
+   i386: Fix const qualifier build errors with recent glibc
+16 e37a0d514a17 Cédric Le Goater:
+   tests/vhost-user-bridge.c: Fix const qualifier build errors with recent 
+   glibc
+17 dfe87815ba45 Cédric Le Goater:
+   monitor: Fix const qualifier build errors with recent glibc
+18 d7e1df769910 Cédric Le Goater:
+   gdbstub: Fix const qualifier build errors with recent glibc
+19 00829ae3845f Zesen Liu:
+   qdev: fix error handling in set_uint64_checkmask
+20 60efba3c1bff Andrew Cooper:
+   target/i386: Fix #GP error code for INT instructions
+21 0db1b556e4bc Paolo Bonzini:
+   target/i386/tcg: ignore V3 in 32-bit mode
+22 3fbadbb3927a Alano Song:
+   hw/i2c/imx: Fix trace func name error
+23 75bcfb98a13d Cédric Le Goater:
+   tests/functional: Fix URL of gb200nvl-bmc image
+24 e714f1a3d4d1 Jie Song:
+   monitor/qmp: cleanup SocketChardev listener sources early to avoid fd 
+   handling race
+25 7d2d577de0c7 Richard Henderson:
+   tcg/optimize: Save o_mask in fold_masks_zosa_int
+26 08b12bfb8f53 Richard Henderson:
+   tcg/optimize: Fix a_mask computation for orc
+27 23b53ec3a8a2 Paolo Bonzini:
+   tcg/optimize: Do use affected bits
+28 af6db3b71310 Richard Henderson:
+   tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
+29 82ae60c8b5cb Jean-Christian CÎRSTEA:
+   linux-user: allow null `pathname` for statx()/fstatat()
+30 aaed9ca1797d Matthew Lugg:
+   linux-user: fix mremap unmapping adjacent region
+31 2422884ec5a1 Matthew Lugg:
+   linux-user: fix mremap errors for invalid ranges
+32 81ceab30492e Matthew Lugg:
+   linux-user: fix reserved_va page leak in do_munmap
+33 9290c10ae9d0 Matthew Lugg:
+   tests: add tcg coverage for fixed mremap bugs
+34 628bda1ab759 Fabiano Rosas:
+   target/ppc: Fix env->quiesced migration
+35 894c8bd56ff1 Paolo Bonzini:
+   configs: use default prefix for Windows compilation
+36 11dac41f2e83 Laurent Vivier:
+   m68k: fix CAS2 writeback when Dc1==Dc2
+37 73dd6e4a36dd Paolo Bonzini:
+   target/i386/tcg: do not mark all SSE instructions as unaligned
+38 5e3572ef2e94 Paolo Bonzini:
+   target/i386/tcg: mask addresses for VSIB
+39 ed88bdcfbdcf Paolo Bonzini:
+   target/i386/tcg: allow VEX in 16-bit protected mode
+40 c7504ba2a560 Vulnerability Report:
+   hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
+41 47de28a0b7fb Xianglai Li:
+   hw/loongarch/virt: Modify the interrupt trigger type in fdt table
+42 ff54394eed14 Xianglai Li:
+   hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
+43 70cf9b7bf7af Song Gao:
+   target/loongach: Fix some exceptions failure in updating CSR_BADV
+44 e4f0ef58d53e Song Gao:
+   target/loongarch: Fix exception BCE missing to update CSR_BADV
+45 a7be2e0a3f7d Song Gao:
+   target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
+46 49ee001a5b83 Yao Zi:
+   hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
+47 7cf096d609e6 Alex Bennée:
+   tests/functional: migrate aspeed_rainier image
+48 8da52b8401af Peter Maydell:
+   target/arm: Don't specify ID_PFR1 accessfn twice
+49 205ca535abac Peter Maydell:
+   target/arm: Correctly honour HCR.TID3 for v7A cores
+50 b67a35622f9a Peter Maydell:
+   target/arm: Correctly trap HCR.TID1 registers in v7A
+51 7be4256281f4 Philippe Mathieu-Daudé:
+   accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+52 1c11aa180714 Philippe Mathieu-Daudé:
+   tests/functional: Mark the MIPS replay tests as flaky
+53 290e4e7de7a5 Philippe Mathieu-Daudé:
+   tests/functional: Mark another MIPS replay test as flaky
+54 83017c4aaa9e Pierrick Bouvier:
+   linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE 
+   definition
+55 214f79fdfb43 Bernhard Beschow:
+   hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
+56 369c1ba2b7c7 Richard Henderson:
+   bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
+57 f0de58ccf656 Pierrick Bouvier:
+   bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
+58 cf10273aff81 Alex Bennée:
+   hw/intc: avoid byte swap fiddling in gicv3 its path
+59 e9a8a10e84c1 Luca Bonissi:
+   linux-user: Add termios2 support
+60 8d8c6aeee859 Luca Bonissi:
+   linux-user: Add termios2 support to alpha target
+61 edc741710ace Luca Bonissi:
+   linux-user: Add termios2 support to hppa target
+62 edf9184f4feb Luca Bonissi:
+   linux-user: Add termios2 support to mips target
+63 afbe0ff81c29 Luca Bonissi:
+   linux-user: Add termios2 support to sh4 target
+64 947b971cad90 Luca Bonissi:
+   linux-user: Add termios2 support to sparc target
+65 4f22fcb5c67f Vivian Wang:
+   linux-user: Add missing termios baud rates
+66 d68f0e2e9069 Icenowy Zheng:
+   linux-user: fixup termios2 related things on PowerPC
+67 2eb8d9734355 Paolo Bonzini:
+   target/i386/tcg: fix a few instructions that do not support VEX.L=1
+68 e4f1a9b1dacb Thomas Huth:
+   pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
+69 d9ca273f8f31 Alex Bennée:
+   tests/functional: migrate sbsa_ref test images
+70 289e6a3edf50 Jeuk Kim:
+   hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
+71 ed621cc8e2a6 Jeuk Kim:
+   hw/ufs: fix CQE endianness and UPIU length
+72 f78762a3cc81 Ilia Levi:
+   hw/ufs: Fix mcq completion queue wraparound
+73 94e72135d4d6 Ilia Levi:
+   tests/qtest/ufs-test: Add test for mcq completion queue wraparound
+74 587f4a1805c8 John Snow:
+   python: fix msys64 wheel directory specification
 
