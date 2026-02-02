@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890B0E7FDE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F66E7FDE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Feb 2026 22:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn2Lf-00084r-LG; Mon, 02 Feb 2026 17:24:47 -0500
+	id 1vn2LI-0007vl-71; Mon, 02 Feb 2026 17:24:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn2Le-00084N-7k
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:24:46 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn2LF-0007vN-Sm
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:24:21 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn2Lb-0005gh-Rn
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:24:46 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4806e0f6b69so36455715e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 14:24:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vn2LC-0005d9-0k
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 17:24:20 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4806ce0f97bso42482065e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 14:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770071081; x=1770675881; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=81e/xdnyRjFZ8mxcbWyUm8xYnIAVgB5Q+4bR4erYypE=;
- b=QpDaWTZXBrPCcbBfvyBrrrmvZqUQCK/XFLay8MB9SBug+JAQDxsiQEmwSAL22f3Yz6
- jNNDK+xZCwB/QJuEl+NEmNtBOQJMV35xJuRtdJ6ag5dN0twxGKxBWHrRwwE5jUpS58nX
- TA3uWqMloAReIjEIt7A6dfbfGJHHb/Lpfp1dg34ulRD0I1lXKOanDBaKEq4zyc6yK7Hx
- QpcJdwlHTNd9XmYjLfc0lYGcDdbuvX0nbYulc12XRa1wgq05inbPQssVQ8f0XhqUO2NU
- qhvGf5HF809Rv0oHh1VEIJ10pgXOJGME4Xiq1hR/FDYllyaBNGQ8f+5mh87Gk/sfUZd8
- 0zaA==
+ d=linaro.org; s=google; t=1770071054; x=1770675854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dNkFLEId1hGGGjWWQdqVQsN/0wECLMxRnLUqfwiZ/dc=;
+ b=v0/ynZJtzNN99LPw9GzjQF4m8J2Tm7optNnIEy9XzqFllGYgeVr3LcqmlAWsLEg7Kn
+ 317MA8AxFBP6Shfuoaln+4i/GNbRwctHhdGfzTnHOmMwUbnJiKkRxyxqmg+iUEYSoqaT
+ myF4eoGC6obDvu6RAa/fSf0nVWzzWxpZnJwphHf7E+oEoyXSfn9XpBr+NJhfx7xdeqDr
+ pBXvEFmbXJR8nf89paxIwF+HsfoGLUD6jobqbJxO39N40/svgENfqAZ73u2Dpwusbdc3
+ W4njJvXbx5EFkemVfyg3u4bp2ZWFFwWvIX7eQOAIjY+jWtlgqEjmavETKu8Jf4uCE+l/
+ auLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770071081; x=1770675881;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=81e/xdnyRjFZ8mxcbWyUm8xYnIAVgB5Q+4bR4erYypE=;
- b=cndLBRaUhB3Zrlu+a56rYk3GCPOoMcpvPUNktWnBYt3lmexHVUWkBcPn9sgphVNG3t
- g2fMr6Er85jzsBqTeh82NiUbSEJQ3j3/Tcgxxt00WEadq8+AnjuVZjDviyjNVBWeHv+H
- IVGgWNmElgwBAGT5Rs2zfkrMxJTohxNBGtJSXOe6fSwLQEhAFb+0ipOAgiCQwq4b2UAy
- HgOrFmkakOXE07CBIZsGNZUe8I3XDlseU+V/+Mgt794GxiVKe31nvYt89Ujfl2QWjCFl
- 7R9ij4lUeqFeGsK8SN96hRCPm20EKrInZ83tqxAvJC6WxpuFORlF+nua+hX+TfqahtI/
- hIjA==
-X-Gm-Message-State: AOJu0YxwaxI3cKWcY0zPPsdudEmwUXAWM7ApCZ3zwGKXDkbY8aaXY8yN
- E9zb57wuo5MH7BGxc/viv+QUfZzdM2ISml07w3hb/FcxSrZlwzsjl+WBxnWTdGhQwB7COW2wE1i
- ryQuTJ34=
-X-Gm-Gg: AZuq6aJzwLuYFzOvRaFrl2rP3zEC9zYtT0g7iZbZbUQJL454y2vasNG1XbhlS2IPNFM
- dXOBe3r/YqioM8IUObTFP+F16BB2+6T5HkEDUN+vRVupUByK4QXUxBNdnrBU3LFj8ihd0os2Mor
- dj9BCJggIasdvv9A0n0vClENGfsuVTQLRQXfOu2LVyoTamrNzGE7u0gQOOK/TlkVXJ8hD0Rnx2t
- XwbHdOnTmDr4tCHfDIQR3unE1ml9gmSWYEHoV5kEkbopE6hM7FtIV08DGHW5JBGF82b6vsmvQQH
- E5LuaefrE/pjToYgRa74RogEz0KEcp2DNBC5IMJnXxcRHzgPm9DUTIdpWOESHJ/bIrVm5VK74zv
- ni7PpuLxlQWuFO8ZpXZ0SmJ7RezPNlOL5AETTDw0HUxHPWL1EtNkyVxm64dcv/6rrItnE0zJQsX
- 0yuPVV97n2ustO0jQJikHZI+l0L9oDF12REBKTEgocfCRSaEF/O99WWxWsrIbx8h1nYqV7p1E=
-X-Received: by 2002:a05:6000:2401:b0:429:c14f:5f7d with SMTP id
- ffacd0b85a97d-435f3aaa9f6mr20982292f8f.29.1770071081533; 
- Mon, 02 Feb 2026 14:24:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770071054; x=1770675854;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dNkFLEId1hGGGjWWQdqVQsN/0wECLMxRnLUqfwiZ/dc=;
+ b=BcdcLDClg8/1c2+qrDDo0gBn0Z/FAd+P11Y56aCWvAXePZTnBPYKidzDS6zthiS3b7
+ p8b48tgE33uf3Z5DS6aRXZKmH3nJnQv4xi6FDyS2PuYV87vhzgUQ+ZPFcj1FoC4ZmheV
+ DPsx5NWQgqpZO6LPV0d+JrFodqk761+MSWgzR99vZKrtzBnjfHVMve2Sgq38ubdtT1F1
+ fodEhKLIrKUZzwWJg3TxATTtT4jIB39fK9DJoj5Lee9jqUcY9ufTR949ck+7MjQ3D5WN
+ KXSH4oGx4PL/shIqFCh6eBBANbAW4HM/iBN8m7LcnWBDw9trRpIcbs6d9H5g8bzIZvjj
+ GZjQ==
+X-Gm-Message-State: AOJu0YzQuzsSj1FDtF70ArFjkCcz9BbUAHmCHgmMVaqkCPTO7O2dtoW3
+ HiIaTj9Q0P/Itn27nSM+KilvpJXNM44ZRP3lpd86jW7UHtF1lc0pg3msL3ngBAS0uXH5agTPYZC
+ gSymGQGWQ9Q==
+X-Gm-Gg: AZuq6aLy4Q1UuqxBoVePKZ/a/nX11sIm5izOF/og01pOgS5NZMRg5fPVRB/yLvATn+I
+ 7yfkaW0LLATLFkIIrzvAZM0D2GqH5LvHj5IzxGOW6j2Fp+zjT0gIjz2Gz+WqQUvL0t4jcrqAJ8e
+ mTFJekgW5QGRgtTBPbCSs/earrormoT0dPhdQ/sR/6m6UZS+WXorVH/Z9qfIUc+tdMwXlDQHJ1M
+ ZDq8mg7LvICqKDr2360aOQs5EYCTDXEBWoVd9iZ8Iuw+O+YEftQzBI/ZAsVj9BhDh2z0MOIMSbF
+ UqcQxPvqE+S4eqX1hVtqTEskgfXbi3Yybd0MmtLaIj5OCa7u8LZaRq9b6aV8M/P/2T+Lywim7rI
+ 8hKoohllcRhM9ZXVJfJzr1S6yFcEssuLAFMAkwY5Oc6Sd7faZ42crgayw1Rx/RI8bj9GrEKRqEd
+ kUsrCRIin/c2ZPZUOEpwhQ7Kw0OocVFeUL7W8nVlxsl4AgG+mWho3YjQo0+hmv
+X-Received: by 2002:a05:600c:350c:b0:47f:8c05:786b with SMTP id
+ 5b1f17b1804b1-482db48d476mr162100825e9.28.1770071054399; 
+ Mon, 02 Feb 2026 14:24:14 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce93sm45848864f8f.24.2026.02.02.14.24.40
+ ffacd0b85a97d-435e10e46cesm46734796f8f.7.2026.02.02.14.24.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Feb 2026 14:24:41 -0800 (PST)
+ Mon, 02 Feb 2026 14:24:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 4/7] target/arm: Have arm_sctlr_b() take a const @env argument
-Date: Mon,  2 Feb 2026 23:24:09 +0100
-Message-ID: <20260202222412.24923-5-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/7] disas: Have disas_set_info() take a const CPUState
+Date: Mon,  2 Feb 2026 23:24:05 +0100
+Message-ID: <20260202222412.24923-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260202222412.24923-1-philmd@linaro.org>
-References: <20260202222412.24923-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,26 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-arm_sctlr_b() only access @env read-only, make it const.
+Have the CPUClass::disas_set_info() handler take a const
+CPUState to be sure it is not modified. In order to do that,
+first constify few callees (ARM & RISCV).
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Philippe Mathieu-Daudé (7):
+  target/arm: Have arm_feature() take a const @env argument
+  target/arm: Have cpu_isar_feature() use a const ARMCPU object
+  target/arm: Have is_64() take a const @env argument
+  target/arm: Have arm_sctlr_b() take a const @env argument
+  disas/riscv: Make rv_decode::cfg const
+  disas: Make disassemble_info::target_info field const
+  disas: Have disas_set_info() take a const CPUState
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 40237168419..e146f7e6c41 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2385,7 +2385,7 @@ static inline bool arm_v7m_csselr_razwi(ARMCPU *cpu)
-     return (GET_IDREG(&cpu->isar, CLIDR) & R_V7M_CLIDR_CTYPE_ALL_MASK) != 0;
- }
- 
--static inline bool arm_sctlr_b(CPUARMState *env)
-+static inline bool arm_sctlr_b(const CPUARMState *env)
- {
-     return
-         /* We need not implement SCTLR.ITD in user-mode emulation, so
+ disas/riscv.h             | 2 +-
+ include/disas/dis-asm.h   | 2 +-
+ include/hw/core/cpu.h     | 2 +-
+ target/arm/cpu-features.h | 2 +-
+ target/arm/cpu.h          | 6 +++---
+ disas/riscv.c             | 5 +++--
+ target/alpha/cpu.c        | 3 ++-
+ target/arm/cpu.c          | 6 +++---
+ target/avr/cpu.c          | 2 +-
+ target/hexagon/cpu.c      | 3 ++-
+ target/hppa/cpu.c         | 2 +-
+ target/i386/cpu.c         | 6 +++---
+ target/loongarch/cpu.c    | 3 ++-
+ target/m68k/cpu.c         | 2 +-
+ target/microblaze/cpu.c   | 2 +-
+ target/mips/cpu.c         | 7 +++++--
+ target/openrisc/cpu.c     | 2 +-
+ target/ppc/cpu_init.c     | 5 +++--
+ target/riscv/cpu.c        | 7 ++++---
+ target/rx/cpu.c           | 2 +-
+ target/s390x/cpu.c        | 2 +-
+ target/sh4/cpu.c          | 3 ++-
+ target/sparc/cpu.c        | 3 ++-
+ target/xtensa/cpu.c       | 3 ++-
+ 24 files changed, 47 insertions(+), 35 deletions(-)
+
 -- 
 2.52.0
 
