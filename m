@@ -4,103 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC22DE87829
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD2BE8782C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnGMi-0007ar-IX; Tue, 03 Feb 2026 08:22:48 -0500
+	id 1vnGMd-0007ZL-Gy; Tue, 03 Feb 2026 08:22:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnGMh-0007aY-In
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMc-0007YT-5v
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:42 -0500
+Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnGMf-0003Qw-D6
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770124964;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ndQSdBX8cGPNgve9yPmKoU2rBt5Jaw3M7B4r7QAIeXM=;
- b=TQp0O+QTv+09RM+/8+wJeJyehkO9nyPVm+m6RRphMtv2YV0mw0hLgy8QojrFtjEfzrdvxt
- j6bq5GH1UaJiGz7KAW2zubLYni379iEdqG44VLU9zCviisthgwcmOF2wWOHuhcXSFpa3ER
- WnPNXkS/zV3dMbzSKA0a7q9OvAWff2s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-sP_ZIgq5Pw6Iqc3bbrRESA-1; Tue, 03 Feb 2026 08:22:42 -0500
-X-MC-Unique: sP_ZIgq5Pw6Iqc3bbrRESA-1
-X-Mimecast-MFC-AGG-ID: sP_ZIgq5Pw6Iqc3bbrRESA_1770124962
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430ffc4dc83so5760950f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 05:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770124961; x=1770729761; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ndQSdBX8cGPNgve9yPmKoU2rBt5Jaw3M7B4r7QAIeXM=;
- b=Qe3ru5j5hSaRjGtRlceH2Risogmi7cIx91sjv8DmEXXde7g6AVgOQzgf2wfQWw5ltY
- 003W+O/3F1nZ+W4WKxbxdEmyjV4e5WLbEFRSDBz6Pvt/G5h+RvvvJmY9qUuLQKhbIfoZ
- L/ONOAj0P4BeVFg1ZViKF95yCzNKbavsB8Xgkw3RYf+XDlZ3ZdAdBirr03+670LnZalb
- p2PS4G3CSCF7N4hnf+Ks/oc+ioEfxFjdrivRTjhygmV9UEDra37Old8+YMnu+8pmcDvC
- AjJ8CR7N6WexnbDW0uQk8ah+jYD/K432zfhU2i+hYVZGYnwNYaZUWwu6X3D8idICSbCN
- voFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770124961; x=1770729761;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ndQSdBX8cGPNgve9yPmKoU2rBt5Jaw3M7B4r7QAIeXM=;
- b=vbXVgKnwj0rSD5nYZpcP3NIqL2PZjw37SQHoOkGjA9Fy7G6A2FPnJkymFBSK4NM07X
- 2VmfRVrlk08Tg2CymAAFqD/r8QTB7Noxht//p4qg3HYt1YuTL6loMoVDKjBprbmsW6mL
- cIuoeYTKEfwA0lU2O26cfEhmKMhA0bBRuzOxA2/fOjbCJKOW+oka4U3t72xMU6rufPvF
- 2PzqaOiXGUlaJF0H3CQB75nBp2sd9/Gb7KhcSLnf0BjeCwuTIrmAhxIALPlrkmqU/InT
- +5iamzwmrQCDvvNF5cwlU58BAzNa64lrmpT0ahOEBdgo+X/s75r5HirrSMcV0jow6Ed6
- 6k9Q==
-X-Gm-Message-State: AOJu0YznfjDsC6JgLtwj0xn+VflQ5Qy60xIfopxL0HfmnTneNsivomLG
- Uz2hmx/L3kaoNq9mR9uw3wh8hut3KQTlpzU6k0AVn7PLVOdqVqEZZi4SV8basgCaSn6uqPLlUr/
- DPd+4nJGaXcbJU4S+SiFaLm1Q6xVHMfU8ZCuElSP/bkff1c6Z+VdEKPGZ
-X-Gm-Gg: AZuq6aJo/r3vwkU3fEr/rl+EGDIsu8++OO4x0Q2oBq1k9h4GOKlu4woxlivpkcTMRtZ
- fzbi+eYUzXDtSsOdr9Ube/IG0YTd7WhaePx6phmfGw3DO02fHjdAQWwrlcOQ0uGN+aCzUIuZI5v
- v8SvFQ+VNfLgkN5VcvlRTKB25DXdWZvVTDk8LoxSltjFa1sFhNfmMZySAiWBb3pdGqOuhh88tuD
- JOe5jnT8+1oP1RNcuBjqWshZbg1SkdnIRe1D+sXaPtTvau7+uIGOI6jZ/c3Gj7qXBdIbQ14U+RC
- 7eVB/Ss6/0CzuvZPDsi4IeUeOxCg+jYeX+pvwTGFAz4oSUBil6W18NPjQMx67d2ZtNpNS8EgH3P
- i1h9N003Y3CeWg+yLcf05WQaVrFC7USTC0Q==
-X-Received: by 2002:a05:6000:1849:b0:435:a21c:f946 with SMTP id
- ffacd0b85a97d-435f3ab0131mr22675177f8f.49.1770124961328; 
- Tue, 03 Feb 2026 05:22:41 -0800 (PST)
-X-Received: by 2002:a05:6000:1849:b0:435:a21c:f946 with SMTP id
- ffacd0b85a97d-435f3ab0131mr22675131f8f.49.1770124960876; 
- Tue, 03 Feb 2026 05:22:40 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436143d81desm3968259f8f.42.2026.02.03.05.22.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 05:22:40 -0800 (PST)
-Date: Tue, 3 Feb 2026 08:22:38 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, bill.mills@linaro.org,
- edgar.iglesias@amd.com
-Subject: Re: [PATCH v1 0/5] virtio: Add the virtio-msg transport
-Message-ID: <20260203082120-mutt-send-email-mst@kernel.org>
-References: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMY-0003Ej-Ve
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:41 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.150])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f540W3zPmz5vs4;
+ Tue,  3 Feb 2026 13:22:35 +0000 (UTC)
+Received: from kaod.org (37.59.142.97) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 3 Feb
+ 2026 14:22:34 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-97G002436ad424-1b80-4809-bfc0-112da53f5832,
+ 43D9FD9E6FAA5025B81087D7BA78A3446A80EEF4) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <38355fa4-93d8-4c71-a4cf-e4ce8bbaebf6@kaod.org>
+Date: Tue, 3 Feb 2026 14:22:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/8] hw/i2c/aspeed_i2c: Fix DMA moving data into
+ incorrect address
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ "leetroy@gmail.com" <leetroy@gmail.com>, "andrew@codeconstruct.com.au"
+ <andrew@codeconstruct.com.au>, "joel@jms.id.au" <joel@jms.id.au>,
+ "pierrick.bouvier@linaro.org" <pierrick.bouvier@linaro.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.97]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: 91f7e22c-9124-4ca4-98eb-4f69bf2fbce6
+X-Ovh-Tracer-Id: 17769796757235993589
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFZKOlJP+sYYb2SVdov2rWu142kuDtuhO7xgX20EJQmEY91bvaPuNErhd8Pirnd73fEaNuMW87KbnHprhcMjO9qVyrqvLHn9pqFHWvr4UG0Gu9a/KjfR66w6D1xJmOqD3Z9aVIbgFikL6qjqE8R9ndwlGcZ7CfNhZ+kT2n9rFq++gtZZ0YxpELWZWN5CLD+og++DJOgR4mboQXpPaYqGcrtHh4tYHKomuV9GoT20vQMYdvhoF31zcbEWmRMx5Msv2Sp9GGdiuxe8TKPDbGJUVY3O042N/s+mQVBoYsInTmJ6q2uCcTe1Al8dnrIVA3sUpNAXndSgFfblssfi5rhewRlhIiD3C7i2s5TKY2h1HwjstMVorEjMk5x237pHZDS9JPWMrLg9A9aj9T0PI1rjY2n7XdRdxZz4TdmM25yuuJ+V+52cvBq7hboOHG5tQpAxNy6Fo+LPbruqISurMtDily7gr40PEZlMOb2nELEhLdy3NpTkM3Wn2nOxEvTnsv/7avWDZlpwg7k+xwmFha2k6iTuUSiqmlSa2RtTa6SNSxyE4K9uZBPCP0cc1NrOe0+8qz0LRYzhvDUDfTOL8gtpBpJ5K7a6UMu7kK4wsIoIiFw+diPWaURil+Flat3XzU23SVk4gFHRRgAomtPk9jh0PNc66tIbYbu585wa9ByDMsiPg
+DKIM-Signature: a=rsa-sha256; bh=hGyczW1J0YmVijb21d5hAh7txnjAu46fo2BzHucgkuE=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770124955; v=1;
+ b=cNnSgrTRPSzbzfcbLovtdZMO1LEqWzc3Nt24ae63G59/++1T5mpmm9u9OL32R7azPvLelylz
+ bPoNa+J3/cG6YETNDmQhLQgo9CR7uPOoElUccY4R7lgd156JA0NI5gI76VVpEonBJKo6KxD3+1z
+ UhvIzI7ZxfgJkbtgBgzFJSsQhH94Fz58u/7cp/R81fBcNU9Uv0Un6PdkBkgaWgkoge2nCDkUR36
+ pGRWI/f5a1P6UV5Pynxj1+LCd+gOPTf512k4nIpubT+J7ZTo1FryYssd1GXpl17al/cw1lLT6e1
+ yXaBogfMqEdY1GYCPGGhxmR7RdOtusLe6Z32qVQmIc1Xg==
+Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
+ helo=2.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,93 +132,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 04:23:45PM +0100, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 2/3/26 02:55, Jamin Lin wrote:
+> In the previous design, the I2C model updated dma_dram_offset only when
+> firmware programmed the RX/TX DMA buffer address registers. The firmware
+> used to rewrite these registers before issuing each DMA command.
 > 
-> This adds virtio-msg, a new virtio transport. Virtio-msg works by
-> exchanging messages over a bus and doesn't rely on trapping and emulation
-> making it a good fit for a number of applications such as AMP, real-time
-> and safety applications.
+> The firmware driver behavior has changed to program the DMA address
+> registers only once during I2C initialization. As a result, the I2C model
+> no longer refreshes dma_dram_offset, causing DMA to move data into an
+> incorrect DRAM address.
 > 
-> Together with the new transport, this series adds a PCI device that
-> implements an AMP setup much like it could look if two SoC's would
-> use virtio-msg across a PCI link.
+> Fix this by introducing helper functions to update dma_dram_offset from
+> the DMA address registers, and invoke them right before handling TX/RX
+> DMA operations. This guarantees DMA always uses the correct buffer
+> address even if the registers are programmed only once.
 > 
-> Current gaps and limitations:
-> Shared memory FIFO layout likely to change in the future.
-> Temporarily uses PCI Vendor Xilinx / Device 0x9039.
-> Documentation.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Fixes: c400c38854017eeccda63115814eba4c3ef2b51f ("hw/i2c/aspeed: Introduce a new dma_dram_offset attribute in AspeedI2Cbus")
+> ---
+>   hw/i2c/aspeed_i2c.c | 87 +++++++++++++++++++++++++++++++--------------
+>   1 file changed, 61 insertions(+), 26 deletions(-)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 1ee73a8f5e..fb3d6a5600 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -116,8 +116,6 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+>               value = -1;
+>               break;
+>           }
+> -
+> -        value = extract64(bus->dma_dram_offset, 0, 32);
+>           break;
+>       case A_I2CD_DMA_LEN:
+>           if (!aic->has_dma) {
+> @@ -221,6 +219,64 @@ static uint8_t aspeed_i2c_get_state(AspeedI2CBus *bus)
+>       return SHARED_ARRAY_FIELD_EX32(bus->regs, R_I2CD_CMD, TX_STATE);
+>   }
+>   
+> +/*
+> + * The AST2700 support the maximum DRAM size is 8 GB.
+> + * The DRAM offset range is from 0x0_0000_0000 to
+> + * 0x1_FFFF_FFFF and it is enough to use bits [33:0]
+> + * saving the dram offset.
+> + * Therefore, save the high part physical address bit[1:0]
+> + * of Tx/Rx buffer address as dma_dram_offset bit[33:32].
+> + */
+> +static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2CBus *bus)
+> +{
+> +    AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+> +    uint32_t value;
+> +
+> +    assert(aic->has_dma);
+> +
+> +    if (aspeed_i2c_is_new_mode(bus->controller)) {
+> +        value = bus->regs[R_I2CM_DMA_TX_ADDR];
+> +        bus->dma_dram_offset =
+> +            deposit64(bus->dma_dram_offset, 0, 32,
+> +                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+> +        if (!aic->has_dma64) {
+> +            value = bus->regs[R_I2CM_DMA_TX_ADDR_HI];
+> +            bus->dma_dram_offset =
+> +                deposit64(bus->dma_dram_offset, 32, 32,
+> +                          extract32(value, 0, 2));
+> +        }
+> +    } else {
+> +        value = bus->regs[R_I2CD_DMA_ADDR];
+> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 0, 32,
+> +                                         value & 0x3ffffffc);
+> +    }
+> +}
+> +
+> +static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2CBus *bus)
+> +{
+> +    AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+> +    uint32_t value;
+> +
+> +    assert(aic->has_dma);
+> +
+> +    if (aspeed_i2c_is_new_mode(bus->controller)) {
+> +        value = bus->regs[R_I2CM_DMA_RX_ADDR];
+> +        bus->dma_dram_offset =
+> +            deposit64(bus->dma_dram_offset, 0, 32,
+> +                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+> +        if (!aic->has_dma64) {
+> +            value = bus->regs[R_I2CM_DMA_RX_ADDR_HI];
+> +            bus->dma_dram_offset =
+> +                deposit64(bus->dma_dram_offset, 32, 32,
+> +                          extract32(value, 0, 2));
+> +        }
+> +    } else {
+> +        value = bus->regs[R_I2CD_DMA_ADDR];
+> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 0, 32,
+> +                                         value & 0x3ffffffc);
+> +    }
+> +}
+> +
+>   static int aspeed_i2c_dma_read(AspeedI2CBus *bus, uint8_t *data)
+>   {
+>       MemTxResult result;
+> @@ -270,6 +326,7 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
+>           if (aspeed_i2c_is_new_mode(bus->controller)) {
+>               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, TX_LEN, 0);
+>           }
+> +        aspeed_i2c_set_tx_dma_dram_offset(bus);
+>           while (bus->regs[reg_dma_len]) {
+>               uint8_t data;
+>               ret = aspeed_i2c_dma_read(bus, &data);
+> @@ -335,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+>               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, 0);
+>           }
+>   
+> +        aspeed_i2c_set_rx_dma_dram_offset(bus);
+>           while (bus->regs[reg_dma_len]) {
+>               MemTxResult result;
+>   
+> @@ -401,6 +459,7 @@ static uint8_t aspeed_i2c_get_addr(AspeedI2CBus *bus)
+>       } else if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, TX_DMA_EN)) {
+>           uint8_t data;
+>   
+> +        aspeed_i2c_set_tx_dma_dram_offset(bus);
+>           aspeed_i2c_dma_read(bus, &data);
+>           return data;
+>       } else {
+> @@ -657,16 +716,10 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>       case A_I2CM_DMA_TX_ADDR:
+>           bus->regs[R_I2CM_DMA_TX_ADDR] = FIELD_EX32(value, I2CM_DMA_TX_ADDR,
+>                                                      ADDR);
+> -        bus->dma_dram_offset =
+> -            deposit64(bus->dma_dram_offset, 0, 32,
+> -                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+>           break;
+>       case A_I2CM_DMA_RX_ADDR:
+>           bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
+>                                                      ADDR);
+> -        bus->dma_dram_offset =
+> -            deposit64(bus->dma_dram_offset, 0, 32,
+> -                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+>           break;
+>       case A_I2CM_DMA_LEN:
+>           w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
+> @@ -748,15 +801,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           qemu_log_mask(LOG_UNIMP, "%s: Slave mode DMA TX is not implemented\n",
+>                         __func__);
+>           break;
+> -
+> -    /*
+> -     * The AST2700 support the maximum DRAM size is 8 GB.
+> -     * The DRAM offset range is from 0x0_0000_0000 to
+> -     * 0x1_FFFF_FFFF and it is enough to use bits [33:0]
+> -     * saving the dram offset.
+> -     * Therefore, save the high part physical address bit[1:0]
+> -     * of Tx/Rx buffer address as dma_dram_offset bit[33:32].
+> -     */
+>       case A_I2CM_DMA_TX_ADDR_HI:
+>           if (!aic->has_dma64) {
+>               qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
+> @@ -766,8 +810,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           bus->regs[R_I2CM_DMA_TX_ADDR_HI] = FIELD_EX32(value,
+>                                                         I2CM_DMA_TX_ADDR_HI,
+>                                                         ADDR_HI);
+> -        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
+> -                                         extract32(value, 0, 2));
+>           break;
+>       case A_I2CM_DMA_RX_ADDR_HI:
+>           if (!aic->has_dma64) {
+> @@ -778,8 +820,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           bus->regs[R_I2CM_DMA_RX_ADDR_HI] = FIELD_EX32(value,
+>                                                         I2CM_DMA_RX_ADDR_HI,
+>                                                         ADDR_HI);
+> -        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
+> -                                         extract32(value, 0, 2));
+>           break;
+>       case A_I2CS_DMA_TX_ADDR_HI:
+>           qemu_log_mask(LOG_UNIMP,
+> @@ -795,8 +835,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           bus->regs[R_I2CS_DMA_RX_ADDR_HI] = FIELD_EX32(value,
+>                                                         I2CS_DMA_RX_ADDR_HI,
+>                                                         ADDR_HI);
+> -        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
+> -                                         extract32(value, 0, 2));
+>           break;
+>       default:
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
+> @@ -887,9 +925,6 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
+>               qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+>               break;
+>           }
+> -
+> -        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 0, 32,
+> -                                         value & 0x3ffffffc);
+>           break;
+>   
+>       case A_I2CD_DMA_LEN:
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-I'm happy that the spec effort is making progress finally.
-Do you want to repost a version aligned to the latest spec posted?
+Thanks,
 
-
-> The virtio-msg draft spec:
-> https://github.com/Linaro/virtio-msg-spec/
-> 
-> QEMU with these patches:
-> https://github.com/edgarigl/qemu/tree/edgar/virtio-msg-rfc
-> 
-> Linux with virtio-msg support:
-> https://github.com/edgarigl/linux/tree/edgari/virtio-msg-6.17
-> 
-> To try it, first build Linux with the following enabled:
-> CONFIG_VIRTIO_MSG=y
-> CONFIG_VIRTIO_MSG_AMP=y
-> CONFIG_VIRTIO_MSG_AMP_PCI=y
-> 
-> Boot linux on QEMU with a virtio-msg-amp-pci device, in this example
-> with a virtio-net device attached to it:
-> 
->  -device virtio-msg-amp-pci
->  -device virtio-net-device,netdev=n0
->  -netdev user,id=n0
-> 
-> If you're running on a QEMU machine that has virtio-mmio enabled, e.g 
-> ARM virt, you'll need to specify the virtio-bus for the device, otherwise
-> QEMU will connect it to virtio-mmio. For ARM virt machines:
-> 
->  -device virtio-msg-amp-pci
->  -device virtio-net-device,netdev=n0,bus=/gpex-pcihost/pcie.0/virtio-msg-amp-pci/fifo0/virtio-msg/bus0/virtio-msg-dev
->  -netdev user,id=n0
-> 
-> Cheers,
-> Edgar
-> 
-> Edgar E. Iglesias (5):
->   virtio: Introduce notify_queue
->   virtio: Add virtio_queue_get_rings
->   virtio: Add the virtio-msg transport
->   hw/misc: Add generic virtio-msg AMP PCI device
->   docs: Describe virtio-msg-amp-pci
-> 
->  .../devices/virtio/virtio-msg-amp-pci.rst     |  70 ++
->  hw/misc/Kconfig                               |   7 +
->  hw/misc/meson.build                           |   1 +
->  hw/misc/virtio-msg-amp-pci.c                  | 328 +++++++
->  hw/virtio/Kconfig                             |   4 +
->  hw/virtio/meson.build                         |   5 +
->  hw/virtio/virtio-msg-bus.c                    |  89 ++
->  hw/virtio/virtio-msg.c                        | 695 ++++++++++++++
->  hw/virtio/virtio.c                            |  23 +
->  include/hw/virtio/spsc_queue.h                | 213 +++++
->  include/hw/virtio/virtio-bus.h                |   1 +
->  include/hw/virtio/virtio-msg-bus.h            |  95 ++
->  include/hw/virtio/virtio-msg-prot.h           | 846 ++++++++++++++++++
->  include/hw/virtio/virtio-msg.h                |  56 ++
->  include/hw/virtio/virtio.h                    |   2 +
->  15 files changed, 2435 insertions(+)
->  create mode 100644 docs/system/devices/virtio/virtio-msg-amp-pci.rst
->  create mode 100644 hw/misc/virtio-msg-amp-pci.c
->  create mode 100644 hw/virtio/virtio-msg-bus.c
->  create mode 100644 hw/virtio/virtio-msg.c
->  create mode 100644 include/hw/virtio/spsc_queue.h
->  create mode 100644 include/hw/virtio/virtio-msg-bus.h
->  create mode 100644 include/hw/virtio/virtio-msg-prot.h
->  create mode 100644 include/hw/virtio/virtio-msg.h
-> 
-> -- 
-> 2.43.0
-
+C.
 
