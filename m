@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F84E7FDCF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1462CE7FDCF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnF8l-00082q-2O; Tue, 03 Feb 2026 07:04:19 -0500
+	id 1vnF8w-0008RB-Lw; Tue, 03 Feb 2026 07:04:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8f-0007uI-A1
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8d-0007ti-Qf
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8d-0007gY-En
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:13 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8c-0007gT-9p
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770120250;
+ s=mimecast20190719; t=1770120249;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0aCRPDrxg4NCu6mP5DGl6oPrRVZb+Wkaw1NUKhZqgnI=;
- b=gWYpqh/wbIt1cBere5+I+H7ApW8mJyAbDd/HkYEM0XgE2TCymJeVkXS5f5oWGpm5kPmUzA
- zsdyM6iS3IZJviHM1FlE4LcueudityYVq7jhWHCIuPniPadjbgdBsOMk+kKhllJpmUtUwo
- UmCh4anLfKT6AzoI1xqkYB6vMaDTODA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JiiY6hdAG4pbuPdzjGdEJ5gQuntuGsJCEg5mBLcgkBI=;
+ b=b6E7Zitmk0Mlk8bXHLHXg236tf/yhtM5PsFn8bs/NM8hdzMQgN3ur4lWhZMOfMnAQbAs9e
+ sOnePn31pIdPXwjbsCzSDStolvup5VKdGIfsfTTg0w+zLZuKHBWtjp/wb5t4hyZMO5tG0/
+ HJbO/OI+Lg3+IGnT8sllBE4J38MfC40=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-175--qBoOQ6hNIGjAyotWTN-pA-1; Tue,
- 03 Feb 2026 07:04:07 -0500
-X-MC-Unique: -qBoOQ6hNIGjAyotWTN-pA-1
-X-Mimecast-MFC-AGG-ID: -qBoOQ6hNIGjAyotWTN-pA_1770120246
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-F-2lWMMIOTunCZmJ-JDT_g-1; Tue,
+ 03 Feb 2026 07:04:06 -0500
+X-MC-Unique: F-2lWMMIOTunCZmJ-JDT_g-1
+X-Mimecast-MFC-AGG-ID: F-2lWMMIOTunCZmJ-JDT_g_1770120245
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 061EC1956050; Tue,  3 Feb 2026 12:04:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6738F1956054; Tue,  3 Feb 2026 12:04:05 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.34.28])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4BE231800285; Tue,  3 Feb 2026 12:04:05 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD8C81800947; Tue,  3 Feb 2026 12:04:04 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 9BD79182626B; Tue, 03 Feb 2026 13:03:44 +0100 (CET)
+ id 7ED951826269; Tue, 03 Feb 2026 13:03:44 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -60,22 +60,22 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
  Gerd Hoffmann <kraxel@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
  Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 15/17] igvm: Pass machine state to IGVM file processing
-Date: Tue,  3 Feb 2026 13:03:40 +0100
-Message-ID: <20260203120343.656961-16-kraxel@redhat.com>
+Subject: [PULL 14/17] igvm: Refactor qigvm_parameter_insert
+Date: Tue,  3 Feb 2026 13:03:39 +0100
+Message-ID: <20260203120343.656961-15-kraxel@redhat.com>
 In-Reply-To: <20260203120343.656961-1-kraxel@redhat.com>
 References: <20260203120343.656961-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,230 +95,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Oliver Steffen <osteffen@redhat.com>
 
-Pass the full MachineState to the IGVM backend during file processing,
-instead of just the ConfidentialGuestSupport struct (which is a member
-of the MachineState).
-This replaces the cgs parameter of qigvm_process_file() with the machine
-state to make it available in the IGVM processing context.
-
-We will use it later to generate MADT data there to pass to the guest
-as IGVM parameter.
+Use qigvm_find_param_entry() also in qigvm_parameter_insert().
+This changes behavior: Processing now stops after the first parameter
+entry found. That is OK, because we expect only one matching entry
+anyway.
 
 Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Oliver Steffen <osteffen@redhat.com>
-Message-ID: <20260130054714.715928-8-osteffen@redhat.com>
+Message-ID: <20260130054714.715928-7-osteffen@redhat.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/system/igvm-cfg.h      |  3 ++-
- include/system/igvm-internal.h |  3 ++-
- include/system/igvm.h          |  5 +++--
- backends/igvm-cfg.c            |  2 +-
- backends/igvm.c                | 28 ++++++++++++++++------------
- target/i386/sev.c              |  3 +--
- 6 files changed, 25 insertions(+), 19 deletions(-)
+ backends/igvm.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
-index 6c07f3084082..e06d611f7446 100644
---- a/include/system/igvm-cfg.h
-+++ b/include/system/igvm-cfg.h
-@@ -12,6 +12,7 @@
- #ifndef QEMU_IGVM_CFG_H
- #define QEMU_IGVM_CFG_H
- 
-+#include "hw/core/boards.h"
- #include "qemu/typedefs.h"
- #include "qom/object.h"
- 
-@@ -27,7 +28,7 @@ typedef struct IgvmCfgClass {
-      *
-      * Returns 0 for ok and -1 on error.
-      */
--    int (*process)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-+    int (*process)(IgvmCfg *cfg, MachineState *machine_state,
-                    bool onlyVpContext, Error **errp);
- 
- } IgvmCfgClass;
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 019f95e86615..1d36519ab082 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -12,6 +12,7 @@
- #include "qemu/queue.h"
- #include "qemu/typedefs.h"
- #include "qom/object.h"
-+#include "hw/core/boards.h"
- #include "hw/core/resettable.h"
- 
- #include "system/confidential-guest-support.h"
-@@ -43,7 +44,7 @@ typedef struct QIgvmParameterData {
-  */
- typedef struct QIgvm {
-     IgvmHandle file;
--    ConfidentialGuestSupport *cgs;
-+    MachineState *machine_state;
-     ConfidentialGuestSupportClass *cgsc;
-     uint32_t compatibility_mask;
-     unsigned current_header_index;
-diff --git a/include/system/igvm.h b/include/system/igvm.h
-index 8355e54e95fc..5573a6111ae7 100644
---- a/include/system/igvm.h
-+++ b/include/system/igvm.h
-@@ -12,12 +12,13 @@
- #ifndef BACKENDS_IGVM_H
- #define BACKENDS_IGVM_H
- 
-+#include "hw/core/boards.h"
- #include "qemu/typedefs.h"
- #include "system/confidential-guest-support.h"
- #include "qapi/error.h"
- 
--int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
--                      bool onlyVpContext, Error **errp);
-+int qigvm_process_file(IgvmCfg *igvm, MachineState *machine_state,
-+                       bool onlyVpContext, Error **errp);
- 
- /* x86 native */
- int qigvm_x86_get_mem_map_entry(int index,
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index f236b523df3b..64589ca34f24 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -52,7 +52,7 @@ static void igvm_reset_hold(Object *obj, ResetType type)
- 
-     trace_igvm_reset_hold(type);
- 
--    qigvm_process_file(igvm, ms->cgs, false, &error_fatal);
-+    qigvm_process_file(igvm, ms, false, &error_fatal);
- }
- 
- static void igvm_reset_exit(Object *obj, ResetType type)
 diff --git a/backends/igvm.c b/backends/igvm.c
-index ffd1c325b661..3e7c0ea41d14 100644
+index ea3f9d6b008f..ffd1c325b661 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -202,7 +202,8 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-         g_autofree char *region_name =
-             g_strdup_printf("igvm.%X", region_identifier);
-         igvm_pages = g_new0(MemoryRegion, 1);
--        if (ctx->cgs && ctx->cgs->require_guest_memfd) {
-+        if (ctx->machine_state->cgs &&
-+            ctx->machine_state->cgs->require_guest_memfd) {
-             if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
-                                                     region_name, size, errp)) {
-                 return NULL;
-@@ -322,7 +323,7 @@ static int qigvm_process_mem_region(QIgvm *ctx, unsigned start_index,
-      * If a confidential guest support object is provided then use it to set the
-      * guest state.
-      */
--    if (ctx->cgs) {
-+    if (ctx->machine_state->cgs) {
-         cgs_page_type =
-             qigvm_type_to_cgs_type(page_type, flags->unmeasured, zero);
-         if (cgs_page_type < 0) {
-@@ -424,7 +425,7 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
- 
-     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
- 
--    if (ctx->cgs) {
-+    if (ctx->machine_state->cgs) {
-         result = ctx->cgsc->set_guest_state(
-             vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
-             CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
-@@ -494,7 +495,7 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
-      * If a confidential guest support object is provided then use it to
-      * set the guest state.
-      */
--    if (ctx->cgs) {
-+    if (ctx->machine_state->cgs) {
-         result = ctx->cgsc->set_guest_state(param->gpa, region,
-                                             param_entry->size,
-                                             CGS_PAGE_TYPE_UNMEASURED, 0,
-@@ -535,7 +536,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     ConfidentialGuestMemoryMapEntry cgmm_entry;
-     int retval = 0;
- 
--    if (ctx->cgs && ctx->cgsc->get_mem_map_entry) {
-+    if (ctx->machine_state->cgs && ctx->cgsc->get_mem_map_entry) {
-         get_mem_map_entry = ctx->cgsc->get_mem_map_entry;
- 
-     } else if (target_arch() == SYS_EMU_TARGET_X86_64) {
-@@ -661,7 +662,7 @@ static int qigvm_directive_required_memory(QIgvm *ctx,
-     if (!region) {
-         return -1;
+@@ -476,31 +476,31 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
+         return 0;
      }
--    if (ctx->cgs) {
-+    if (ctx->machine_state->cgs) {
-         result =
-             ctx->cgsc->set_guest_state(mem->gpa, region, mem->number_of_bytes,
-                                        CGS_PAGE_TYPE_REQUIRED_MEMORY, 0, errp);
-@@ -779,14 +780,14 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
-                                                 sizeof(
-                                                     IGVM_VHS_VARIABLE_HEADER));
-             if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
--                ctx->cgs) {
-+                ctx->machine_state->cgs) {
-                 if (ctx->cgsc->check_support(
-                         CGS_PLATFORM_SEV_ES, platform->platform_version,
-                         platform->highest_vtl, platform->shared_gpa_boundary)) {
-                     compatibility_mask_sev_es = platform->compatibility_mask;
-                 }
-             } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
--                       ctx->cgs) {
-+                       ctx->machine_state->cgs) {
-                 if (ctx->cgsc->check_support(
-                         CGS_PLATFORM_SEV, platform->platform_version,
-                         platform->highest_vtl, platform->shared_gpa_boundary)) {
-@@ -794,7 +795,7 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
-                 }
-             } else if ((platform->platform_type ==
-                         IGVM_PLATFORM_TYPE_SEV_SNP) &&
--                       ctx->cgs) {
-+                       ctx->machine_state->cgs) {
-                 if (ctx->cgsc->check_support(
-                         CGS_PLATFORM_SEV_SNP, platform->platform_version,
-                         platform->highest_vtl, platform->shared_gpa_boundary)) {
-@@ -867,7 +868,7 @@ IgvmHandle qigvm_file_init(char *filename, Error **errp)
-     return igvm;
- }
  
--int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-+int qigvm_process_file(IgvmCfg *cfg, MachineState *machine_state,
-                        bool onlyVpContext, Error **errp)
- {
-     int32_t header_count;
-@@ -883,13 +884,16 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-     ctx.file = cfg->file;
-     trace_igvm_process_file(cfg->file, onlyVpContext);
+-    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
+-    {
+-        if (param_entry->index == param->parameter_area_index) {
+-            region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
+-                                          ctx->current_header_index, errp);
+-            if (!region) {
+-                return -1;
+-            }
+-            memcpy(region, param_entry->data, param_entry->size);
+-            g_free(param_entry->data);
+-            param_entry->data = NULL;
++    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    if (param_entry == NULL) {
++        return 0;
++    }
  
-+    ctx.machine_state = machine_state;
+-            /*
+-             * If a confidential guest support object is provided then use it to
+-             * set the guest state.
+-             */
+-            if (ctx->cgs) {
+-                result = ctx->cgsc->set_guest_state(param->gpa, region,
+-                                                    param_entry->size,
+-                                                    CGS_PAGE_TYPE_UNMEASURED, 0,
+-                                                    errp);
+-                if (result < 0) {
+-                    return -1;
+-                }
+-            }
++    region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
++                                    ctx->current_header_index, errp);
++    if (!region) {
++        return -1;
++    }
++    memcpy(region, param_entry->data, param_entry->size);
++    g_free(param_entry->data);
++    param_entry->data = NULL;
 +
-     /*
-      * The ConfidentialGuestSupport object is optional and allows a confidential
-      * guest platform to perform extra processing, such as page measurement, on
-      * IGVM directives.
-      */
--    ctx.cgs = cgs;
--    ctx.cgsc = cgs ? CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs) : NULL;
-+    ctx.cgsc = machine_state->cgs ?
-+                   CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(machine_state->cgs) :
-+                   NULL;
- 
-     /*
-      * Check that the IGVM file provides configuration for the current
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fef9f441c61e..acdcb9c4e681 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1892,8 +1892,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-          */
-         if (x86machine->igvm) {
-             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
--                    ->process(x86machine->igvm, machine->cgs, true, errp) ==
--                -1) {
-+                    ->process(x86machine->igvm, machine, true, errp) == -1) {
-                 return -1;
-             }
-             /*
++    /*
++     * If a confidential guest support object is provided then use it to
++     * set the guest state.
++     */
++    if (ctx->cgs) {
++        result = ctx->cgsc->set_guest_state(param->gpa, region,
++                                            param_entry->size,
++                                            CGS_PAGE_TYPE_UNMEASURED, 0,
++                                            errp);
++        if (result < 0) {
++            return -1;
+         }
+     }
+     return 0;
 -- 
 2.52.0
 
