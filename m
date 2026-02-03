@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0646AE8304A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6392CE8304D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 04:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn7Sv-00041u-R1; Mon, 02 Feb 2026 22:52:39 -0500
+	id 1vn802-0000y7-GL; Mon, 02 Feb 2026 23:26:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vn7Ss-00041c-3O
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:52:34 -0500
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vn801-0000x3-FI
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:26:49 -0500
+Received: from mail-pg1-x542.google.com ([2607:f8b0:4864:20::542])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vn7Sp-0006Dm-PU
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:52:33 -0500
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2a76f90872cso27177125ad.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:52:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vn7zz-0006UH-SB
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:26:49 -0500
+Received: by mail-pg1-x542.google.com with SMTP id
+ 41be03b00d2f7-c2dd0c24e5cso2006083a12.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 20:26:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770090749; x=1770695549; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=43W/bqijZC7YzWZaWeBVeDKMvvvgnYk7wAD2A/CWaRk=;
- b=iaFoDksjYmDedEl9OOrYB035iV/IwhQ9f4Yi4QJMnUM7+jMO2ur7kA6/q0yK4dbFSx
- OB20t1gmfCBAriP8pY5pVAD8gax665EX2PV4KB20WBgnaegL7BlYIwpr26BHRSjnRrvY
- LNKjhub8nyAInVOjpawMjH/6O83x6pJKSRs+G8a1+hzfM3mloAdado0QibZH9pFI2rDu
- di5RuvCthVlk+KB2sD09rs/twI3SsR1BpmmJZ6ZYEr7C4njl8ge2ZD1+ax1vbw9p4/Fl
- HRtAuXEkPtFwemMGgQbJX8oObuYHeMSG536daiw5+wqyFVAz4eA5UYQvr9qcTq7BR0hJ
- qPKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770090749; x=1770695549;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1770092806; x=1770697606; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
  :subject:date:message-id:reply-to;
- bh=43W/bqijZC7YzWZaWeBVeDKMvvvgnYk7wAD2A/CWaRk=;
- b=w/2b38HYfv8kr6wR5Mqlv6SFqotzNJyu/8QV6bqd/CYsr8RHreVH005YYe5OZ89piQ
- vFOFFfhIAeoPDJF8vJSz67D8QAuXP1rnC0RZAiJeZ4gAM7c0WDKTvoW40GuS95EIbgR2
- DpG1UhxdL4QDrnK0h3yY3k03e2+fg65OY1hw/hCBBExujQ16+ud0ihkXYF9ljITxHnUV
- RESOuLJyo3Sq896JHB/e+yR3vNBx6XKGuKsUMf/kyeK/kFM4SIoWNK1WAQDK+hI1cay6
- hGsqtladIpZheF+UQQrm0grQxS44fs95s3Y50Nv14kPRpTfgQnkIz8v/CVvez2zeUHnz
- TUZQ==
+ bh=7zETuxYE6wQ3bIqFwJgc4Hg8ib5dFK/lb9mbhSwO0Co=;
+ b=H8adGn6ia4egV25g0ZbqiTv3wRl8uuPKXUF1luV04qlWZ9zY/f4uTaYj5+uO5AIbRT
+ JSfCxDUi0eeVcM/bTKtTGIObQqrq2riJVxmzoZSyt2lvtMr6LoFOZfVnX8HEV1/Uw3c7
+ mvjsAqaO0D395SatVKQ6JL6aE8MaGbsr98hXMk+TaILcP1WNYssfre+6liM68uREx2jM
+ gxhE4iEgazznjyjBd4946iIG01+uSnNDV1s9Mt3Jp5qgdcF0nsR1pUdOqdYeO2kmnhSH
+ PKhb73DJe+Tmi1t9f/+mtNE+Axlqa7E8ikhR1rz/iTieNmw2lAdCeZZx3G1jZ8Sn5Lye
+ S1vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770092806; x=1770697606;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7zETuxYE6wQ3bIqFwJgc4Hg8ib5dFK/lb9mbhSwO0Co=;
+ b=eTFwdKeopl0QM8f7ayFS973gmNDoHodChU8uHQANwyCDMskPySyWTS/yo2/JojU/Pp
+ XNXN0dpCYjCXMWtKYzEz2vXGfgI+5Deo+gTL2wH/u3VwfqX0b6cmLHDigryChVyEP+LQ
+ wj+ZkpeVSPWWcVao3htakobC0wtLhrkIXtU6olL2z8MLcXvr/6iNwa/C+0gIWH4/W5Bo
+ h5OkiShx5BxC3sUJcuYKp20Gl9WXl/fr2r/gNjEs+eYNGWhxFyHR0GzySU1h8enoTvr0
+ 65G+X57QFhixSkmqpQnDNyddBCXBC/jva8rK7Z23QrYuZ/4RrwLis54ebs5KF3Olr48W
+ 9QTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJHMVbgAo2mKj3HgFsM4TBgrxJLyiuDbVNJ4urfnTwaX6MwbhW1F86fvTPr5H1Kqj8UIkeOaaHP1Jm@nongnu.org
-X-Gm-Message-State: AOJu0Yw4/rTTwq1j1q/qQ2h7acfCBC0uGhmEzEOJrhgxLXOUp1QxTMg0
- i0Gu0KLZI3a8/ajGawgk37IBgpDJfROZqaQtJyIeFaBtUkcxS/4HEETL
-X-Gm-Gg: AZuq6aKTcQb6/3c1M9UDF345kz4s3Gm5lqvsOy4PhNiNn0ScFylSlOG6muuSHekGLMF
- aVSItwqc1ZSsgy9ObJ5FmXp9Mqb2/1LbPX4wa9fjgqO16Eq/nN5JvqzkbfI51xs+t1sWWVtBFq2
- Ra5BcCO4gnLRFcL1rvx/+zOQYgXgjDwkICMlvjYt8/Al59HiJRFy7/rN+wzsS0mv3xXwmIIbww0
- eevLFg2oVtmU0p3Y/zPsI9up7eU+qlOP0DX16XBCBL9lAWAtqWpL/US6o+cTu4T/b4B0SliSjJP
- P8xypoo04vHeS6v9sDF3fJcRHLIbE9jtcu6kdtS7vtUsf3NvPhyNqYGAGiz59d3vY/qIhfO7JUd
- qfeAoLerBBE6HJWQSERiSoOdf4nuR1c26hnMKx8BwXHaunrsthcU/cq3VTw2FyS0TBY++eLOT13
- 69fXb9D5Oh0ZcNfbGZRLXMSgkAYz2FFC6eIwUIdJp+q4UPGgKGXyL5HIu80A4/b6qqwE0YLA4t2
- g==
-X-Received: by 2002:a17:903:2305:b0:298:2879:fdf5 with SMTP id
- d9443c01a7336-2a8d9a5b220mr145853555ad.61.1770090748830; 
- Mon, 02 Feb 2026 19:52:28 -0800 (PST)
-Received: from b962e8cb79b7 ([43.139.160.244])
+ AJvYcCUs1elXzp1dMMEUH2Bbdxgm3zO4cciwonODnSeKHKnK4yTVYEHJ9NQRMm2gZcauRiRNhZo65aVKY6Uz@nongnu.org
+X-Gm-Message-State: AOJu0YyjOTdQHB576mSYES2ZjIGqz7cXdx4XfedHgV5TH0AWXZOTCiDl
+ o3O6Lk3hULIvX2CMg7QQBFQAf445kF9bZMJLmKN2k3AbV+v7qNud9pnD9WQXUSA3f8A=
+X-Gm-Gg: AZuq6aKv32GXZE5fxUetViR9/tUd6Zu94tq9cqvCiePwZ0+GjIMGRsoKhecXUaP4DP1
+ gH1NucqK/om5FBqN6YlpGAClqBWOWIDJmx6SRFuawoRnlIVINuuiYDhCXtFgRwpik479ynFrr0x
+ gPPDt/U6ApS5Z5kkFsT8zsWIOarRCOfCmDu/s/qgzUKmrStFQg4VrZ6ya5KYb9tFcSoi0U8tXEs
+ 70JnCn56ZJUbrAHBuumKyWkCrUGG+wpIvH6AoTeHOPXboBqqbpzTDuKBhsUTHUeRPGbctaSt0Ny
+ /DSktcq90JwbHveOFSV6SEKmQ9mr98l08Dt4imZBiNxQ7CkHuPGPHGqKFkqc467YhWRc3XvXl3y
+ NbUz/i3YTV5x5dgKzrfvA6fWZ1Xk5Cjk3DuoAkINUJtVcpkB03U5eoOwnngUTRdM1g52wkpZbmc
+ Gv9YyR36Rq26MreLju2vnoRhbjm4YVDPaSYI4uds44Jm2dMWp9oTgwxcpRqQmydZWLMBvwOfkEg
+ ZYfKBoNnoAeG5EljD3F8G3AHo5JuVtBJ75TyGdPhQ==
+X-Received: by 2002:a17:90b:50c7:b0:353:3b33:8263 with SMTP id
+ 98e67ed59e1d1-3543b3241efmr12750868a91.9.1770092805576; 
+ Mon, 02 Feb 2026 20:26:45 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
+ (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
+ [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c64276ef9fcsm15839683a12.1.2026.02.02.19.52.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Feb 2026 19:52:28 -0800 (PST)
-Date: Tue, 3 Feb 2026 11:52:22 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, hust-os-kernel-patches@googlegroups.com
-Subject: Re: [RFC PATCH v2 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
-Message-ID: <aYFw9sUi3rkuDIZq@b962e8cb79b7>
-References: <cover.1769678103.git.chao.liu.zevorn@gmail.com>
- <7cc1e085432336463dd19e11212cda516b97a33e.1769678103.git.chao.liu.zevorn@gmail.com>
- <87sebjq7x6.fsf@suse.de>
+ 98e67ed59e1d1-354774e0034sm977779a91.0.2026.02.02.20.26.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Feb 2026 20:26:45 -0800 (PST)
+Message-ID: <874d029e-fe67-4075-a02c-9c79c59a2d97@linaro.org>
+Date: Tue, 3 Feb 2026 14:26:39 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87sebjq7x6.fsf@suse.de>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x644.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/syscall.c: Prevent acquiring clone_lock while
+ fork()
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Aleksandr Sergeev <sergeev0xef@gmail.com>, qemu-devel@nongnu.org
+References: <20260126151612.2176451-1-sergeev0xef@gmail.com>
+ <e0ceab50-b976-4c38-bec8-705994295c0d@linaro.org>
+Content-Language: en-US
+In-Reply-To: <e0ceab50-b976-4c38-bec8-705994295c0d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::542;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x542.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,56 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fabiano,
+On 2/3/26 12:42, Richard Henderson wrote:
+> On 1/27/26 01:16, Aleksandr Sergeev wrote:
+>> By the spec, fork() copies only the thread which executes it.
+>> So it may happen, what while one thread is doing a fork,
+>> another thread is holding `clone_lock` mutex
+>> (e.g. doing a `fork()` or `exit()`).
+>> So the child process is born with the mutex being held,
+>> and there are nobody to release it.
+>>
+>> As the thread executing do_syscall() is not considered running,
+>> start_exclusive() does not protect us from the case.
+>>
+>> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/3226
+>> Signed-off-by: Aleksandr Sergeev<sergeev0xef@gmail.com>
+>> ---
+>>   linux-user/main.c           |  2 ++
+>>   linux-user/syscall.c        | 14 ++++++++++++++
+>>   linux-user/user-internals.h |  2 ++
+>>   3 files changed, 18 insertions(+)
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Mon, Feb 02, 2026 at 04:09:25PM -0300, Fabiano Rosas wrote:
-> Chao Liu <chao.liu.zevorn@gmail.com> writes:
-> 
-> > Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
-> > The test exercises bare, S-stage, G-stage, and nested translation paths
-> > using iommu-testdev and the qos-riscv-iommu helpers.
-> >
-> > The test validates:
-> > - Device context (DC) configuration
-> > - SV39 page table walks for S-stage translation
-> > - SV39x4 page table walks for G-stage translation
-> > - Nested translation combining both stages
-> > - FCTL register constraints
-> >
-> > This provides regression coverage for the RISC-V IOMMU implementation
-> > without requiring a full guest OS boot.
-> >
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> 
-> ...
-> 
-> > +static bool riscv_iommu_test_setup(RiscvIommuTestState *state)
-> > +{
-> > +    if (!qtest_has_machine("virt")) {
-> > +        g_test_skip("virt machine not available");
-> > +        return false;
-> > +    }
-> > +
-> > +    state->qts = qtest_init("-machine virt,acpi=off "
-> > +                            "-cpu max -smp 1 -m 512 -net none "
-> > +                            "-device riscv-iommu-pci "
-> > +                            "-device iommu-testdev");
-> > +
-> > +    qpci_init_generic(&state->gbus, state->qts, NULL, false);
-> > +    riscv_config_qpci_bus(&state->gbus);
-> > +
-> > +    state->iommu_dev = find_riscv_iommu_pci(&state->gbus, &state->iommu_base);
-> > +    g_assert(state->iommu_dev);
-> > +
-> > +    state->testdev = find_iommu_testdev(&state->gbus, &state->testdev_bar);
-> > +    g_assert(state->testdev);
-> > +
-> 
-> These two will leak. Otherwise, looks good.
-> 
-Thanks for the review. I'ill fix this in v3.
+Queued, thanks.
 
-Thanks,
-Chao
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+r~
 
