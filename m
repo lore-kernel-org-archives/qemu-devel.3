@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF23DE8B365
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 20:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBD4E8B361
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 20:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnN85-0003hq-6N; Tue, 03 Feb 2026 15:36:09 -0500
+	id 1vnN7r-0003d3-Tb; Tue, 03 Feb 2026 15:35:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vnN83-0003gf-O4
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:36:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vnN7o-0003Zh-Vo
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:35:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vnN82-0000vd-1S
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:36:07 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vnN7n-0000p1-5o
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:35:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770150965;
+ s=mimecast20190719; t=1770150950;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qM4jbO7HG0YEAOdAEbvAEnO6xXe/qKnbTHm6UO/Jgw8=;
- b=YLalXt5L0keu1yDcN8MY5BqdMYs6mi1Ply0/ms/od0Atmqu7DWw/DgjNrPYff6ujlWC+YI
- hCRGfONCHGJ/oggegGBxNxV4N/kY+PwGt4DxG8xfH+rtXn5yLmWWbdoFAwY0MYc6ceW85J
- XLnw97KABAsdU3ydEU5aMkyTgE1CxYs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dDrwYzF4ZTx/tdYB5fx6n6NIhVAMRz/uDXBvmnl+a+I=;
+ b=UHkdI2jtBu9fjdRx94rE9LP/ILzULWx/5yMTr4XLG22h5e/IWucRrYm75y2YhmoLDltXAb
+ ivIy0BQ2qeteNIE3n93NvsQ6FGFWmVTfzWMDZVxuvms2a+KvwZewB5cWB1yQetMZ544uUL
+ kHFWaE8x9htUMQECY1G2Z8rO0LdVZng=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-BpU19t1sNUaCSvS7oXeDcw-1; Tue,
- 03 Feb 2026 15:36:01 -0500
-X-MC-Unique: BpU19t1sNUaCSvS7oXeDcw-1
-X-Mimecast-MFC-AGG-ID: BpU19t1sNUaCSvS7oXeDcw_1770150959
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-d2qhB6FaMnevdsTX49FVng-1; Tue,
+ 03 Feb 2026 15:35:46 -0500
+X-MC-Unique: d2qhB6FaMnevdsTX49FVng-1
+X-Mimecast-MFC-AGG-ID: d2qhB6FaMnevdsTX49FVng_1770150944
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7FE1819560A5; Tue,  3 Feb 2026 20:35:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AA7118005B0; Tue,  3 Feb 2026 20:35:44 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.43])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 418EB18004D8; Tue,  3 Feb 2026 20:35:56 +0000 (UTC)
+ id 00DCE18004D8; Tue,  3 Feb 2026 20:35:40 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>,
@@ -63,16 +63,16 @@ Cc: qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v5 11/16] meson,
- mkvenv: add qemu.git/python/qemu package to pythondeps.toml
-Date: Tue,  3 Feb 2026 15:35:06 -0500
-Message-ID: <20260203203512.672552-12-jsnow@redhat.com>
+Subject: [PATCH v5 07/16] tests: use "run" script to execute device-crash-test
+Date: Tue,  3 Feb 2026 15:35:02 -0500
+Message-ID: <20260203203512.672552-8-jsnow@redhat.com>
 In-Reply-To: <20260203203512.672552-1-jsnow@redhat.com>
 References: <20260203203512.672552-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -97,27 +97,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the local python package group into pythondeps.toml for the
-tooling This makes qemu.qmp, qemu.machine and qemu.utils
-packages unconditionally available for tests and scripts.
+Instead of invoking python from the configure venv manually, instruct
+developers to use the "run" script instead. Change the test invocation
+to be a good example going forward.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- pythondeps.toml | 1 +
- 1 file changed, 1 insertion(+)
+ .gitlab-ci.d/buildtest.yml | 6 +++---
+ scripts/device-crash-test  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 743e2a8848c..89256132fee 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
- # system packages, or python packages we vendor.
- [tooling]
- "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-+"qemu" = { path = "python/" }
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 4c280dd29bc..b2db70ff904 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -102,7 +102,7 @@ crash-test-debian:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q --tcg-only ./qemu-system-i386
++    - ./run scripts/device-crash-test -q --tcg-only ./qemu-system-i386
  
- # This test group is for functional tests, and can include dependencies
- # fetched from PyPI.
+ build-system-fedora:
+   extends:
+@@ -159,8 +159,8 @@ crash-test-fedora:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-ppc
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-riscv32
++    - ./run scripts/device-crash-test -q ./qemu-system-ppc
++    - ./run scripts/device-crash-test -q ./qemu-system-riscv32
+ 
+ build-system-centos:
+   extends:
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index f97d9909c05..8a91dcaee31 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -42,7 +42,7 @@ except ModuleNotFoundError as exc:
+     print(f"Module '{exc.name}' not found.")
+     print("  Try 'make check-venv' from your build directory,")
+     print("  and then one way to run this script is like so:")
+-    print(f'  > $builddir/pyvenv/bin/python3 "{path}"')
++    print(f'  > $builddir/run "{path}"')
+     sys.exit(1)
+ 
+ logger = logging.getLogger('device-crash-test')
 -- 
 2.52.0
 
