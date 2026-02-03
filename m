@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6392CE8304D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75BCE8304A
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 04:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn802-0000y7-GL; Mon, 02 Feb 2026 23:26:50 -0500
+	id 1vn80N-000120-EV; Mon, 02 Feb 2026 23:27:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn801-0000x3-FI
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:26:49 -0500
-Received: from mail-pg1-x542.google.com ([2607:f8b0:4864:20::542])
+ id 1vn80L-00011d-Fe
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:27:10 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn7zz-0006UH-SB
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:26:49 -0500
-Received: by mail-pg1-x542.google.com with SMTP id
- 41be03b00d2f7-c2dd0c24e5cso2006083a12.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 20:26:47 -0800 (PST)
+ id 1vn80J-0006dF-VV
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:27:09 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a0d52768ccso35010865ad.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 20:27:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770092806; x=1770697606; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770092826; x=1770697626; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7zETuxYE6wQ3bIqFwJgc4Hg8ib5dFK/lb9mbhSwO0Co=;
- b=H8adGn6ia4egV25g0ZbqiTv3wRl8uuPKXUF1luV04qlWZ9zY/f4uTaYj5+uO5AIbRT
- JSfCxDUi0eeVcM/bTKtTGIObQqrq2riJVxmzoZSyt2lvtMr6LoFOZfVnX8HEV1/Uw3c7
- mvjsAqaO0D395SatVKQ6JL6aE8MaGbsr98hXMk+TaILcP1WNYssfre+6liM68uREx2jM
- gxhE4iEgazznjyjBd4946iIG01+uSnNDV1s9Mt3Jp5qgdcF0nsR1pUdOqdYeO2kmnhSH
- PKhb73DJe+Tmi1t9f/+mtNE+Axlqa7E8ikhR1rz/iTieNmw2lAdCeZZx3G1jZ8Sn5Lye
- S1vA==
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tUvty6tucvAvNgK45YmFODo3VxrvhkinANw58bVjh4Q=;
+ b=t0IdQ35yAFM9iFdQKMXD8NrMmDAIsREWVlPAPWu6Y77UCj8ZnBPMEbWZvJ/iY5DtP3
+ uPxh/zK8kqHWZoJzhFhxILDshdmS1km/NYqfBXU+uY9JO24qb0bEhN4NRUMv485CnP0M
+ cBBMFjIwOFI7zc52SXmjovPRbr8nXhn4rR/Zq81ErjO1GCGicrWYW8q6AtAYBdUScUTI
+ xdgKYjc0bNLDUrZquwQQfY8D89jOJM/Kqa8bbDmbc7vqhOAD7mR6f6QIe+rJSP2Dq+vH
+ D/PcNBjwT4aRQwOcwZW/tOUxRxHGih0FOuM90PfS+cOYFsuohzUDBznxGPmSLXSNw3sl
+ ajmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770092806; x=1770697606;
+ d=1e100.net; s=20230601; t=1770092826; x=1770697626;
  h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7zETuxYE6wQ3bIqFwJgc4Hg8ib5dFK/lb9mbhSwO0Co=;
- b=eTFwdKeopl0QM8f7ayFS973gmNDoHodChU8uHQANwyCDMskPySyWTS/yo2/JojU/Pp
- XNXN0dpCYjCXMWtKYzEz2vXGfgI+5Deo+gTL2wH/u3VwfqX0b6cmLHDigryChVyEP+LQ
- wj+ZkpeVSPWWcVao3htakobC0wtLhrkIXtU6olL2z8MLcXvr/6iNwa/C+0gIWH4/W5Bo
- h5OkiShx5BxC3sUJcuYKp20Gl9WXl/fr2r/gNjEs+eYNGWhxFyHR0GzySU1h8enoTvr0
- 65G+X57QFhixSkmqpQnDNyddBCXBC/jva8rK7Z23QrYuZ/4RrwLis54ebs5KF3Olr48W
- 9QTg==
+ bh=tUvty6tucvAvNgK45YmFODo3VxrvhkinANw58bVjh4Q=;
+ b=eIXrWGpDB7/PyQG61WhwMXrdyhBcUS/VUHG7Ta5LwyPUnrIb5XEyr1s9dmtY/jIsp2
+ sEu9xVWZXgb4WkjDZV5b8qE7oixb+P0BlQJ0SZNe0cip70cv7q1qc2X0lZIz3yO1KXgW
+ 9pZmuIERvxVpsNHKVhbbdaT7GdqbkbJC4kr9V08hmuKTKPMclkYbaIb6MIXbFZE49H5n
+ aDfXrzkyqc/Vvs1d0zFaPqd8JhHY6bQE299EqWwQ4+cRVgwlcnLTvbeoQsRHGXyXFwqb
+ BciSgDw1VzhBWGb9SKzy96QHyOxerkjnDT0qf2XZADD6fG8pb4jgLc/DYnq7xNxtJOeh
+ Izvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUs1elXzp1dMMEUH2Bbdxgm3zO4cciwonODnSeKHKnK4yTVYEHJ9NQRMm2gZcauRiRNhZo65aVKY6Uz@nongnu.org
-X-Gm-Message-State: AOJu0YyjOTdQHB576mSYES2ZjIGqz7cXdx4XfedHgV5TH0AWXZOTCiDl
- o3O6Lk3hULIvX2CMg7QQBFQAf445kF9bZMJLmKN2k3AbV+v7qNud9pnD9WQXUSA3f8A=
-X-Gm-Gg: AZuq6aKv32GXZE5fxUetViR9/tUd6Zu94tq9cqvCiePwZ0+GjIMGRsoKhecXUaP4DP1
- gH1NucqK/om5FBqN6YlpGAClqBWOWIDJmx6SRFuawoRnlIVINuuiYDhCXtFgRwpik479ynFrr0x
- gPPDt/U6ApS5Z5kkFsT8zsWIOarRCOfCmDu/s/qgzUKmrStFQg4VrZ6ya5KYb9tFcSoi0U8tXEs
- 70JnCn56ZJUbrAHBuumKyWkCrUGG+wpIvH6AoTeHOPXboBqqbpzTDuKBhsUTHUeRPGbctaSt0Ny
- /DSktcq90JwbHveOFSV6SEKmQ9mr98l08Dt4imZBiNxQ7CkHuPGPHGqKFkqc467YhWRc3XvXl3y
- NbUz/i3YTV5x5dgKzrfvA6fWZ1Xk5Cjk3DuoAkINUJtVcpkB03U5eoOwnngUTRdM1g52wkpZbmc
- Gv9YyR36Rq26MreLju2vnoRhbjm4YVDPaSYI4uds44Jm2dMWp9oTgwxcpRqQmydZWLMBvwOfkEg
- ZYfKBoNnoAeG5EljD3F8G3AHo5JuVtBJ75TyGdPhQ==
-X-Received: by 2002:a17:90b:50c7:b0:353:3b33:8263 with SMTP id
- 98e67ed59e1d1-3543b3241efmr12750868a91.9.1770092805576; 
- Mon, 02 Feb 2026 20:26:45 -0800 (PST)
+ AJvYcCXCSYsSX+ufVZ/9dqIQUb+Xcqf04Kqpt+B5yxVM4A+qTkesnTcP8OLMXCIT9cGOKVnMf/I5vcOkMQwU@nongnu.org
+X-Gm-Message-State: AOJu0YzFU9bUp3dUyT6OqSvbNcSM4KeVnXd7MZgQUEmcWBIX+NAuXOYh
+ b2CucwMKNCaDi0IBe7vf17Bp3zYmwAywmaH4WAeHamuN2ACgAvJbpBTl/KA62FMD988=
+X-Gm-Gg: AZuq6aLaDrLnF0vFNr3XBmG2k9ZDBp0WRu3HxGBTIp6Xh47Xw9sUpqWu8cErY69E5C8
+ UTnJpq3BP3oGItu1aBAJ8MoF64WXZB2lNvpmB53lNCrKnKHJ7V8DtGvdpPGCXctsxxzQtYQyXDT
+ 5x/qP4mTj0EvB05A73h6FdAVZeeKNmSj/LGQh+z4ARGxAe33++m71gv2YLv8Sig9rvnErfUQly7
+ YsMMedTDftr/tkuhy1XvRaqWhFmeCog6WAXStHwI7DzfyvM/67Uu1mvf2IUPYjRofgzpEhKYLsN
+ XIZRuzCn9Gbl1yrG703afew1T8y7DRuHNRclG6Qu9JQHd8X4cGc/t2ZmHKnhJgJveeOpvyjh5Bx
+ KuaUv5OxVrbMUKhShnL5rp0Oi00VG/+FCl3iTpOOb1djJZOAC6w6HSzzfPo9ApW4bfUCiPbPz1v
+ MWzkT9EESxnxSFkXre1Awi3Ub6lVqMP3UhyjSHaQ/8I0S8OxFBRcox27Yw/Pz9AMt53v+eucNkn
+ YtF3jKsWRGT3rhfMxkRt50OMvvQWmQLmc9WvLTGZBfyhzcp6lyP
+X-Received: by 2002:a17:903:2f8a:b0:2a7:5171:9221 with SMTP id
+ d9443c01a7336-2a8d99440eamr127930435ad.42.1770092825663; 
+ Mon, 02 Feb 2026 20:27:05 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
  (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
  [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354774e0034sm977779a91.0.2026.02.02.20.26.43
+ d9443c01a7336-2a88b415b01sm159233995ad.40.2026.02.02.20.27.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 20:26:45 -0800 (PST)
-Message-ID: <874d029e-fe67-4075-a02c-9c79c59a2d97@linaro.org>
-Date: Tue, 3 Feb 2026 14:26:39 +1000
+ Mon, 02 Feb 2026 20:27:05 -0800 (PST)
+Message-ID: <74937448-5e7b-4c95-95ec-fe0bcc999260@linaro.org>
+Date: Tue, 3 Feb 2026 14:27:00 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/syscall.c: Prevent acquiring clone_lock while
- fork()
+Subject: Re: [PATCH] Revert "tcg/user: do not set exit_request gratuitously"
 From: Richard Henderson <richard.henderson@linaro.org>
-To: Aleksandr Sergeev <sergeev0xef@gmail.com>, qemu-devel@nongnu.org
-References: <20260126151612.2176451-1-sergeev0xef@gmail.com>
- <e0ceab50-b976-4c38-bec8-705994295c0d@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Andreas Schwab <schwab@suse.de>
+References: <20260202091753.28459-1-pbonzini@redhat.com>
+ <7ed0c393-4d3c-44fb-a0e7-bd4375772c2b@linaro.org>
 Content-Language: en-US
-In-Reply-To: <e0ceab50-b976-4c38-bec8-705994295c0d@linaro.org>
+In-Reply-To: <7ed0c393-4d3c-44fb-a0e7-bd4375772c2b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::542;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x542.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,25 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 12:42, Richard Henderson wrote:
-> On 1/27/26 01:16, Aleksandr Sergeev wrote:
->> By the spec, fork() copies only the thread which executes it.
->> So it may happen, what while one thread is doing a fork,
->> another thread is holding `clone_lock` mutex
->> (e.g. doing a `fork()` or `exit()`).
->> So the child process is born with the mutex being held,
->> and there are nobody to release it.
+On 2/3/26 12:50, Richard Henderson wrote:
+> On 2/2/26 19:17, Paolo Bonzini wrote:
+>> This reverts commit b422a7bff64eaf55b8250225533ca1df42c3777e.
 >>
->> As the thread executing do_syscall() is not considered running,
->> start_exclusive() does not protect us from the case.
+>> The reporter says "The commit breaks go; if you run go build in a loop,
+>> it eventually hangs uninterruptible (except -9) with a couple of zombie
+>> children left over".
 >>
->> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/3226
->> Signed-off-by: Aleksandr Sergeev<sergeev0xef@gmail.com>
+>> Reported-by: Andreas Schwab <schwab@suse.de>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 >> ---
->>   linux-user/main.c           |  2 ++
->>   linux-user/syscall.c        | 14 ++++++++++++++
->>   linux-user/user-internals.h |  2 ++
->>   3 files changed, 18 insertions(+)
+>>   accel/tcg/cpu-exec.c | 2 --
+>>   1 file changed, 2 deletions(-)
+>>
+>> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+>> index 7c20d9db122..ad94f96b252 100644
+>> --- a/accel/tcg/cpu-exec.c
+>> +++ b/accel/tcg/cpu-exec.c
+>> @@ -751,7 +751,6 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+>>   void tcg_kick_vcpu_thread(CPUState *cpu)
+>>   {
+>> -#ifndef CONFIG_USER_ONLY
+>>       /*
+>>        * Ensure cpu_exec will see the reason why the exit request was set.
+>>        * FIXME: this is not always needed.  Other accelerators instead
+>> @@ -759,7 +758,6 @@ void tcg_kick_vcpu_thread(CPUState *cpu)
+>>        * CPU thread; see kvm_arch_pre_run() for example.
+>>        */
+>>       qatomic_store_release(&cpu->exit_request, true);
+>> -#endif
+>>       /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+>>       qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
