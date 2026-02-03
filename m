@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B73E83065
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0581DE83063
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnC9Y-0004bR-22; Tue, 03 Feb 2026 03:52:56 -0500
+	id 1vnCB4-0006DH-FF; Tue, 03 Feb 2026 03:54:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9W-0004ab-5O; Tue, 03 Feb 2026 03:52:54 -0500
+ id 1vnCAb-0005OJ-P4; Tue, 03 Feb 2026 03:54:05 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9U-0002qU-8w; Tue, 03 Feb 2026 03:52:53 -0500
+ id 1vnCAX-0003Po-Vb; Tue, 03 Feb 2026 03:54:01 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
- 2026 16:52:31 +0800
+ 2026 16:52:37 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 3 Feb 2026 16:52:31 +0800
+ Transport; Tue, 3 Feb 2026 16:52:37 +0800
 To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Steven Lee
@@ -36,10 +36,11 @@ To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
  <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, Patrick Venture <venture@google.com>
-Subject: [PATCH v2 04/20] hw/i3c/dw-i3c: Add more register fields
-Date: Tue, 3 Feb 2026 16:52:04 +0800
-Message-ID: <20260203085229.1543287-5-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>, Titus Rwantare <titusr@google.com>, "Patrick
+ Venture" <venture@google.com>
+Subject: [PATCH v2 17/20] hw/i3c: Add Mock target
+Date: Tue, 3 Feb 2026 16:52:17 +0800
+Message-ID: <20260203085229.1543287-18-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
 References: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
@@ -53,8 +54,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001,
- UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,274 +74,449 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joe Komlodi <komlodi@google.com>
 
-Adds the rest of the Designware register fields.
+Adds a simple i3c device to be used for testing in lieu of a real
+device.
+
+The mock target supports the following features:
+- A buffer that users can read and write to.
+- CCC support for commonly used CCCs when probing devices on an I3C bus.
+- IBI sending upon receiving a user-defined byte.
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Reviewed-by: Patrick Venture <venture@google.com>w
+Reviewed-by: Titus Rwantare <titusr@google.com>
+Reviewed-by: Patrick Venture <venture@google.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/i3c/dw-i3c.c | 199 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 199 insertions(+)
+ include/hw/i3c/mock-i3c-target.h |  52 ++++++
+ hw/i3c/mock-i3c-target.c         | 311 +++++++++++++++++++++++++++++++
+ hw/i3c/Kconfig                   |  10 +
+ hw/i3c/meson.build               |   1 +
+ hw/i3c/trace-events              |   9 +
+ 5 files changed, 383 insertions(+)
+ create mode 100644 include/hw/i3c/mock-i3c-target.h
+ create mode 100644 hw/i3c/mock-i3c-target.c
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index c949579ea1..2f04c69320 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -19,54 +19,253 @@
- #include "trace.h"
- 
- REG32(DEVICE_CTRL,                  0x00)
-+    FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)
-+    FIELD(DEVICE_CTRL, I2C_SLAVE_PRESENT,         7, 1)
-+    FIELD(DEVICE_CTRL, HOT_JOIN_ACK_NACK_CTRL,    8, 1)
-+    FIELD(DEVICE_CTRL, IDLE_CNT_MULTIPLIER,       24, 2)
-+    FIELD(DEVICE_CTRL, SLV_ADAPT_TO_I2C_I3C_MODE, 27, 1)
-+    FIELD(DEVICE_CTRL, DMA_HANDSHAKE_EN,          28, 1)
-+    FIELD(DEVICE_CTRL, I3C_ABORT,                 29, 1)
-+    FIELD(DEVICE_CTRL, I3C_RESUME,                30, 1)
-+    FIELD(DEVICE_CTRL, I3C_EN,                    31, 1)
- REG32(DEVICE_ADDR,                  0x04)
-+    FIELD(DEVICE_ADDR, STATIC_ADDR,         0, 7)
-+    FIELD(DEVICE_ADDR, STATIC_ADDR_VALID,   15, 1)
-+    FIELD(DEVICE_ADDR, DYNAMIC_ADDR,        16, 7)
-+    FIELD(DEVICE_ADDR, DYNAMIC_ADDR_VALID,  31, 1)
- REG32(HW_CAPABILITY,                0x08)
-+    FIELD(HW_CAPABILITY, DEVICE_ROLE_CONFIG,  0, 3)
-+    FIELD(HW_CAPABILITY, HDR_DDR, 3, 1)
-+    FIELD(HW_CAPABILITY, HDR_TS,  4, 1)
- REG32(COMMAND_QUEUE_PORT,           0x0c)
-+    FIELD(COMMAND_QUEUE_PORT, CMD_ATTR, 0, 3)
-+    /* Transfer command structure */
-+    FIELD(COMMAND_QUEUE_PORT, TID, 3, 4)
-+    FIELD(COMMAND_QUEUE_PORT, CMD, 7, 8)
-+    FIELD(COMMAND_QUEUE_PORT, CP, 15, 1)
-+    FIELD(COMMAND_QUEUE_PORT, DEV_INDEX, 16, 5)
-+    FIELD(COMMAND_QUEUE_PORT, SPEED, 21, 3)
-+    FIELD(COMMAND_QUEUE_PORT, ROC, 26, 1)
-+    FIELD(COMMAND_QUEUE_PORT, SDAP, 27, 1)
-+    FIELD(COMMAND_QUEUE_PORT, RNW, 28, 1)
-+    FIELD(COMMAND_QUEUE_PORT, TOC, 30, 1)
-+    FIELD(COMMAND_QUEUE_PORT, PEC, 31, 1)
-+    /* Transfer argument data structure */
-+    FIELD(COMMAND_QUEUE_PORT, DB, 8, 8)
-+    FIELD(COMMAND_QUEUE_PORT, DL, 16, 16)
-+    /* Short data argument data structure */
-+    FIELD(COMMAND_QUEUE_PORT, BYTE_STRB, 3, 3)
-+    FIELD(COMMAND_QUEUE_PORT, BYTE0, 8, 8)
-+    FIELD(COMMAND_QUEUE_PORT, BYTE1, 16, 8)
-+    FIELD(COMMAND_QUEUE_PORT, BYTE2, 24, 8)
-+    /* Address assignment command structure */
+diff --git a/include/hw/i3c/mock-i3c-target.h b/include/hw/i3c/mock-i3c-target.h
+new file mode 100644
+index 0000000000..7ac55a3179
+--- /dev/null
++++ b/include/hw/i3c/mock-i3c-target.h
+@@ -0,0 +1,52 @@
++#ifndef MOCK_I3C_TARGET_H_
++#define MOCK_I3C_TARGET_H_
++
++/*
++ * Mock I3C Device
++ *
++ * Copyright (c) 2025 Google LLC
++ *
++ * The mock I3C device can be thought of as a simple EEPROM. It has a buffer,
++ * and the pointer in the buffer is reset to 0 on an I3C STOP.
++ * To write to the buffer, issue a private write and send data.
++ * To read from the buffer, issue a private read.
++ *
++ * The mock target also supports sending target interrupt IBIs.
++ * To issue an IBI, set the 'ibi-magic-num' property to a non-zero number, and
++ * send that number in a private transaction. The mock target will issue an IBI
++ * after 1 second.
++ *
++ * It also supports a handful of CCCs that are typically used when probing I3C
++ * devices.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/timer.h"
++#include "hw/i3c/i3c.h"
++
++#define TYPE_MOCK_I3C_TARGET "mock-i3c-target"
++OBJECT_DECLARE_SIMPLE_TYPE(MockI3cTargetState, MOCK_I3C_TARGET)
++
++struct MockI3cTargetState {
++    I3CTarget i3c;
++
++    /* General device state */
++    bool can_ibi;
++    QEMUTimer qtimer;
++    size_t p_buf;
++    uint8_t *buf;
++
++    /* For Handing CCCs. */
++    bool in_ccc;
++    I3CCCC curr_ccc;
++    uint8_t ccc_byte_offset;
++
++    struct {
++        uint32_t buf_size;
++        uint8_t ibi_magic;
++    } cfg;
++};
++
++#endif
+diff --git a/hw/i3c/mock-i3c-target.c b/hw/i3c/mock-i3c-target.c
+new file mode 100644
+index 0000000000..e540a6c2f7
+--- /dev/null
++++ b/hw/i3c/mock-i3c-target.c
+@@ -0,0 +1,311 @@
++/*
++ * Mock I3C Device
++ *
++ * Copyright (c) 2025 Google LLC
++ *
++ * The mock I3C device can be thought of as a simple EEPROM. It has a buffer,
++ * and the pointer in the buffer is reset to 0 on an I3C STOP.
++ * To write to the buffer, issue a private write and send data.
++ * To read from the buffer, issue a private read.
++ *
++ * The mock target also supports sending target interrupt IBIs.
++ * To issue an IBI, set the 'ibi-magic-num' property to a non-zero number, and
++ * send that number in a private transaction. The mock target will issue an IBI
++ * after 1 second.
++ *
++ * It also supports a handful of CCCs that are typically used when probing I3C
++ * devices.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "trace.h"
++#include "hw/i3c/i3c.h"
++#include "hw/i3c/mock-i3c-target.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++
++#ifndef MOCK_I3C_TARGET_DEBUG
++#define MOCK_I3C_TARGET_DEBUG 0
++#endif
++
++#define DB_PRINTF(...) do { \
++        if (MOCK_I3C_TARGET_DEBUG) { \
++            qemu_log("%s: ", __func__); \
++            qemu_log(__VA_ARGS__); \
++        } \
++    } while (0)
++
++#define IBI_DELAY_NS (1 * 1000 * 1000)
++
++static uint32_t mock_i3c_target_rx(I3CTarget *i3c, uint8_t *data,
++                                   uint32_t num_to_read)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++    uint32_t i;
++
++    /* Bounds check. */
++    if (s->p_buf == s->cfg.buf_size) {
++        return 0;
++    }
++
++    for (i = 0; i < num_to_read; i++) {
++        data[i] = s->buf[s->p_buf];
++        trace_mock_i3c_target_rx(data[i]);
++        s->p_buf++;
++        if (s->p_buf == s->cfg.buf_size) {
++            break;
++        }
++    }
++
++    /* Return the number of bytes we're sending to the controller. */
++    return i;
++}
++
++static void mock_i3c_target_ibi_timer_start(MockI3cTargetState *s)
++{
++    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    timer_mod(&s->qtimer, now + IBI_DELAY_NS);
++}
++
++static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
++                              uint32_t num_to_send, uint32_t *num_sent)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++    int ret;
++    uint32_t to_write;
++
++    if (s->cfg.ibi_magic && num_to_send == 1 && s->cfg.ibi_magic == *data) {
++        mock_i3c_target_ibi_timer_start(s);
++        return 0;
++    }
++
++    /* Bounds check. */
++    if (num_to_send + s->p_buf > s->cfg.buf_size) {
++        to_write = s->cfg.buf_size - s->p_buf;
++        ret = -1;
++    } else {
++        to_write = num_to_send;
++        ret = 0;
++    }
++    for (uint32_t i = 0; i < to_write; i++) {
++        trace_mock_i3c_target_tx(data[i]);
++        s->buf[s->p_buf] = data[i];
++        s->p_buf++;
++    }
++    return ret;
++}
++
++static int mock_i3c_target_event(I3CTarget *i3c, enum I3CEvent event)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++
++    trace_mock_i3c_target_event(event);
++    if (event == I3C_STOP) {
++        s->in_ccc = false;
++        s->curr_ccc = 0;
++        s->ccc_byte_offset = 0;
++        s->p_buf = 0;
++    }
++
++    return 0;
++}
++
++static int mock_i3c_target_handle_ccc_read(I3CTarget *i3c, uint8_t *data,
++                                           uint32_t num_to_read,
++                                           uint32_t *num_read)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++
++    switch (s->curr_ccc) {
++    case I3C_CCCD_GETMXDS:
++        /* Default data rate for I3C. */
++        while (s->ccc_byte_offset < num_to_read) {
++            if (s->ccc_byte_offset >= 2) {
++                break;
++            }
++            data[s->ccc_byte_offset] = 0;
++            *num_read = s->ccc_byte_offset;
++            s->ccc_byte_offset++;
++        }
++        break;
++    case I3C_CCCD_GETCAPS:
++        /* Support I3C version 1.1.x, no other features. */
++        while (s->ccc_byte_offset < num_to_read) {
++            if (s->ccc_byte_offset >= 2) {
++                break;
++            }
++            if (s->ccc_byte_offset == 0) {
++                data[s->ccc_byte_offset] = 0;
++            } else {
++                data[s->ccc_byte_offset] = 0x01;
++            }
++            *num_read = s->ccc_byte_offset;
++            s->ccc_byte_offset++;
++        }
++        break;
++    case I3C_CCCD_GETMWL:
++    case I3C_CCCD_GETMRL:
++        /* MWL/MRL is MSB first. */
++        while (s->ccc_byte_offset < num_to_read) {
++            if (s->ccc_byte_offset >= 2) {
++                break;
++            }
++            data[s->ccc_byte_offset] = (s->cfg.buf_size &
++                                        (0xff00 >> (s->ccc_byte_offset * 8))) >>
++                                        (8 - (s->ccc_byte_offset * 8));
++            s->ccc_byte_offset++;
++            *num_read = num_to_read;
++        }
++        break;
++    case I3C_CCC_ENTDAA:
++    case I3C_CCCD_GETPID:
++    case I3C_CCCD_GETBCR:
++    case I3C_CCCD_GETDCR:
++        /* Nothing to do. */
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "Unhandled CCC 0x%.2x\n", s->curr_ccc);
++        return -1;
++    }
++
++    trace_mock_i3c_target_handle_ccc_read(*num_read, num_to_read);
++    return 0;
++}
++
++static int mock_i3c_target_handle_ccc_write(I3CTarget *i3c, const uint8_t *data,
++                                            uint32_t num_to_send,
++                                            uint32_t *num_sent)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++
++    if (!s->curr_ccc) {
++        s->in_ccc = true;
++        s->curr_ccc = *data;
++        trace_mock_i3c_target_new_ccc(s->curr_ccc);
++    }
++
++    *num_sent = 1;
++    switch (s->curr_ccc) {
++    case I3C_CCC_ENEC:
++    case I3C_CCCD_ENEC:
++        s->can_ibi = true;
++        break;
++    case I3C_CCC_DISEC:
++    case I3C_CCCD_DISEC:
++        s->can_ibi = false;
++        break;
++    case I3C_CCC_ENTDAA:
++    case I3C_CCC_SETAASA:
++    case I3C_CCC_RSTDAA:
++    case I3C_CCCD_SETDASA:
++    case I3C_CCCD_GETPID:
++    case I3C_CCCD_GETBCR:
++    case I3C_CCCD_GETDCR:
++    case I3C_CCCD_GETMWL:
++    case I3C_CCCD_GETMRL:
++    case I3C_CCCD_GETMXDS:
++    case I3C_CCCD_GETCAPS:
++        /* Nothing to do. */
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "Unhandled CCC 0x%.2x\n", s->curr_ccc);
++        return -1;
++    }
++
++    trace_mock_i3c_target_handle_ccc_write(*num_sent, num_to_send);
++    return 0;
++}
++
++static void mock_i3c_target_do_ibi(MockI3cTargetState *s)
++{
++    if (!s->can_ibi) {
++        DB_PRINTF("IBIs disabled by controller");
++        return;
++    }
++
++    trace_mock_i3c_target_do_ibi(s->i3c.address, true);
++    int nack = i3c_target_send_ibi(&s->i3c, s->i3c.address, /*is_recv=*/true);
++    /* Getting NACKed isn't necessarily an error, just print it out. */
++    if (nack) {
++        DB_PRINTF("NACKed from controller when sending target interrupt.\n");
++    }
++    nack = i3c_target_ibi_finish(&s->i3c, 0x00);
++    if (nack) {
++        DB_PRINTF("NACKed from controller when finishing target interrupt.\n");
++    }
++}
++
++static void mock_i3c_target_timer_elapsed(void *opaque)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(opaque);
++    timer_del(&s->qtimer);
++    mock_i3c_target_do_ibi(s);
++}
++
++static void mock_i3c_target_reset(I3CTarget *i3c)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
++    s->can_ibi = false;
++}
++
++static void mock_i3c_target_realize(DeviceState *dev, Error **errp)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(dev);
++    s->buf = g_new0(uint8_t, s->cfg.buf_size);
++    mock_i3c_target_reset(&s->i3c);
++}
++
++static void mock_i3c_target_init(Object *obj)
++{
++    MockI3cTargetState *s = MOCK_I3C_TARGET(obj);
++    s->can_ibi = false;
++
++    /* For IBIs. */
++    timer_init_ns(&s->qtimer, QEMU_CLOCK_VIRTUAL, mock_i3c_target_timer_elapsed,
++                  s);
++}
++
++static const Property remote_i3c_props[] = {
++    /* The size of the internal buffer. */
++    DEFINE_PROP_UINT32("buf-size", MockI3cTargetState, cfg.buf_size, 0x100),
 +    /*
-+     * bits 3..21 and 26..31 are the same as the transfer command structure, or
-+     * marked as reserved.
++     * If the mock target receives this number, it will issue an IBI after
++     * 1 second. Disabled if the IBI magic number is 0.
 +     */
-+    FIELD(COMMAND_QUEUE_PORT, DEV_COUNT, 21, 3)
- REG32(RESPONSE_QUEUE_PORT,          0x10)
-+    FIELD(RESPONSE_QUEUE_PORT, DL, 0, 16)
-+    FIELD(RESPONSE_QUEUE_PORT, CCCT, 16, 8)
-+    FIELD(RESPONSE_QUEUE_PORT, TID, 24, 3)
-+    FIELD(RESPONSE_QUEUE_PORT, ERR_STATUS, 28, 4)
- REG32(RX_TX_DATA_PORT,              0x14)
- REG32(IBI_QUEUE_STATUS,             0x18)
-+    FIELD(IBI_QUEUE_STATUS, IBI_DATA_LEN,   0, 8)
-+    FIELD(IBI_QUEUE_STATUS, IBI_ID,         8, 8)
-+    FIELD(IBI_QUEUE_STATUS, LAST_STATUS,    24, 1)
-+    FIELD(IBI_QUEUE_STATUS, ERROR,          30, 1)
-+    FIELD(IBI_QUEUE_STATUS, IBI_STATUS,     31, 1)
- REG32(IBI_QUEUE_DATA,               0x18)
- REG32(QUEUE_THLD_CTRL,              0x1c)
-+    FIELD(QUEUE_THLD_CTRL, CMD_BUF_EMPTY_THLD,  0, 8);
-+    FIELD(QUEUE_THLD_CTRL, RESP_BUF_THLD, 8, 8);
-+    FIELD(QUEUE_THLD_CTRL, IBI_DATA_THLD, 16, 5);
-+    FIELD(QUEUE_THLD_CTRL, IBI_STATUS_THLD,     24, 8);
- REG32(DATA_BUFFER_THLD_CTRL,        0x20)
-+    FIELD(DATA_BUFFER_THLD_CTRL, TX_BUF_THLD,   0, 3)
-+    FIELD(DATA_BUFFER_THLD_CTRL, RX_BUF_THLD,   8, 3)
-+    FIELD(DATA_BUFFER_THLD_CTRL, TX_START_THLD, 16, 3)
-+    FIELD(DATA_BUFFER_THLD_CTRL, RX_START_THLD, 24, 3)
- REG32(IBI_QUEUE_CTRL,               0x24)
-+    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_HOT_JOIN,   0, 1)
-+    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_MASTER_REQ, 1, 1)
-+    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_SLAVE_IRQ,  3, 1)
- REG32(IBI_MR_REQ_REJECT,            0x2c)
- REG32(IBI_SIR_REQ_REJECT,           0x30)
- REG32(RESET_CTRL,                   0x34)
-+    FIELD(RESET_CTRL, CORE_RESET,       0, 1)
-+    FIELD(RESET_CTRL, CMD_QUEUE_RESET,  1, 1)
-+    FIELD(RESET_CTRL, RESP_QUEUE_RESET, 2, 1)
-+    FIELD(RESET_CTRL, TX_BUF_RESET,     3, 1)
-+    FIELD(RESET_CTRL, RX_BUF_RESET,     4, 1)
-+    FIELD(RESET_CTRL, IBI_QUEUE_RESET,  5, 1)
- REG32(SLV_EVENT_CTRL,               0x38)
-+    FIELD(SLV_EVENT_CTRL, SLV_INTERRUPT,      0, 1)
-+    FIELD(SLV_EVENT_CTRL, MASTER_INTERRUPT,   1, 1)
-+    FIELD(SLV_EVENT_CTRL, HOT_JOIN_INTERRUPT, 3, 1)
-+    FIELD(SLV_EVENT_CTRL, ACTIVITY_STATE,     4, 2)
-+    FIELD(SLV_EVENT_CTRL, MRL_UPDATED,        6, 1)
-+    FIELD(SLV_EVENT_CTRL, MWL_UPDATED,        7, 1)
- REG32(INTR_STATUS,                  0x3c)
-+    FIELD(INTR_STATUS, TX_THLD,           0, 1)
-+    FIELD(INTR_STATUS, RX_THLD,           1, 1)
-+    FIELD(INTR_STATUS, IBI_THLD,          2, 1)
-+    FIELD(INTR_STATUS, CMD_QUEUE_RDY,     3, 1)
-+    FIELD(INTR_STATUS, RESP_RDY,          4, 1)
-+    FIELD(INTR_STATUS, TRANSFER_ABORT,    5, 1)
-+    FIELD(INTR_STATUS, CCC_UPDATED,       6, 1)
-+    FIELD(INTR_STATUS, DYN_ADDR_ASSGN,    8, 1)
-+    FIELD(INTR_STATUS, TRANSFER_ERR,      9, 1)
-+    FIELD(INTR_STATUS, DEFSLV,            10, 1)
-+    FIELD(INTR_STATUS, READ_REQ_RECV,     11, 1)
-+    FIELD(INTR_STATUS, IBI_UPDATED,       12, 1)
-+    FIELD(INTR_STATUS, BUSOWNER_UPDATED,  13, 1)
- REG32(INTR_STATUS_EN,               0x40)
-+    FIELD(INTR_STATUS_EN, TX_THLD,          0, 1)
-+    FIELD(INTR_STATUS_EN, RX_THLD,          1, 1)
-+    FIELD(INTR_STATUS_EN, IBI_THLD,         2, 1)
-+    FIELD(INTR_STATUS_EN, CMD_QUEUE_RDY,    3, 1)
-+    FIELD(INTR_STATUS_EN, RESP_RDY,         4, 1)
-+    FIELD(INTR_STATUS_EN, TRANSFER_ABORT,   5, 1)
-+    FIELD(INTR_STATUS_EN, CCC_UPDATED,      6, 1)
-+    FIELD(INTR_STATUS_EN, DYN_ADDR_ASSGN,   8, 1)
-+    FIELD(INTR_STATUS_EN, TRANSFER_ERR,     9, 1)
-+    FIELD(INTR_STATUS_EN, DEFSLV,           10, 1)
-+    FIELD(INTR_STATUS_EN, READ_REQ_RECV,    11, 1)
-+    FIELD(INTR_STATUS_EN, IBI_UPDATED,      12, 1)
-+    FIELD(INTR_STATUS_EN, BUSOWNER_UPDATED, 13, 1)
- REG32(INTR_SIGNAL_EN,               0x44)
-+    FIELD(INTR_SIGNAL_EN, TX_THLD,          0, 1)
-+    FIELD(INTR_SIGNAL_EN, RX_THLD,          1, 1)
-+    FIELD(INTR_SIGNAL_EN, IBI_THLD,         2, 1)
-+    FIELD(INTR_SIGNAL_EN, CMD_QUEUE_RDY,    3, 1)
-+    FIELD(INTR_SIGNAL_EN, RESP_RDY,         4, 1)
-+    FIELD(INTR_SIGNAL_EN, TRANSFER_ABORT,   5, 1)
-+    FIELD(INTR_SIGNAL_EN, CCC_UPDATED,      6, 1)
-+    FIELD(INTR_SIGNAL_EN, DYN_ADDR_ASSGN,   8, 1)
-+    FIELD(INTR_SIGNAL_EN, TRANSFER_ERR,     9, 1)
-+    FIELD(INTR_SIGNAL_EN, DEFSLV,           10, 1)
-+    FIELD(INTR_SIGNAL_EN, READ_REQ_RECV,    11, 1)
-+    FIELD(INTR_SIGNAL_EN, IBI_UPDATED,      12, 1)
-+    FIELD(INTR_SIGNAL_EN, BUSOWNER_UPDATED, 13, 1)
- REG32(INTR_FORCE,                   0x48)
-+    FIELD(INTR_FORCE, TX_THLD,          0, 1)
-+    FIELD(INTR_FORCE, RX_THLD,          1, 1)
-+    FIELD(INTR_FORCE, IBI_THLD,         2, 1)
-+    FIELD(INTR_FORCE, CMD_QUEUE_RDY,    3, 1)
-+    FIELD(INTR_FORCE, RESP_RDY,         4, 1)
-+    FIELD(INTR_FORCE, TRANSFER_ABORT,   5, 1)
-+    FIELD(INTR_FORCE, CCC_UPDATED,      6, 1)
-+    FIELD(INTR_FORCE, DYN_ADDR_ASSGN,   8, 1)
-+    FIELD(INTR_FORCE, TRANSFER_ERR,     9, 1)
-+    FIELD(INTR_FORCE, DEFSLV,           10, 1)
-+    FIELD(INTR_FORCE, READ_REQ_RECV,    11, 1)
-+    FIELD(INTR_FORCE, IBI_UPDATED,      12, 1)
-+    FIELD(INTR_FORCE, BUSOWNER_UPDATED, 13, 1)
- REG32(QUEUE_STATUS_LEVEL,           0x4c)
-+    FIELD(QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,  0, 8)
-+    FIELD(QUEUE_STATUS_LEVEL, RESP_BUF_BLR,         8, 8)
-+    FIELD(QUEUE_STATUS_LEVEL, IBI_BUF_BLR,          16, 8)
-+    FIELD(QUEUE_STATUS_LEVEL, IBI_STATUS_CNT,       24, 5)
- REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)
-+    FIELD(DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC, 0, 8)
-+    FIELD(DATA_BUFFER_STATUS_LEVEL, RX_BUF_BLR,       16, 8)
- REG32(PRESENT_STATE,                0x54)
-+    FIELD(PRESENT_STATE, SCL_LINE_SIGNAL_LEVEL, 0, 1)
-+    FIELD(PRESENT_STATE, SDA_LINE_SIGNAL_LEVEL, 1, 1)
-+    FIELD(PRESENT_STATE, CURRENT_MASTER,        2, 1)
-+    FIELD(PRESENT_STATE, CM_TFR_STATUS,         8, 6)
-+    FIELD(PRESENT_STATE, CM_TFR_ST_STATUS,      16, 6)
-+    FIELD(PRESENT_STATE, CMD_TID,               24, 4)
- REG32(CCC_DEVICE_STATUS,            0x58)
-+    FIELD(CCC_DEVICE_STATUS, PENDING_INTR,      0, 4)
-+    FIELD(CCC_DEVICE_STATUS, PROTOCOL_ERR,      5, 1)
-+    FIELD(CCC_DEVICE_STATUS, ACTIVITY_MODE,     6, 2)
-+    FIELD(CCC_DEVICE_STATUS, UNDER_ERR,         8, 1)
-+    FIELD(CCC_DEVICE_STATUS, SLV_BUSY,          9, 1)
-+    FIELD(CCC_DEVICE_STATUS, OVERFLOW_ERR,      10, 1)
-+    FIELD(CCC_DEVICE_STATUS, DATA_NOT_READY,    11, 1)
-+    FIELD(CCC_DEVICE_STATUS, BUFFER_NOT_AVAIL,  12, 1)
- REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)
-     FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)
-     FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)
- REG32(DEV_CHAR_TABLE_POINTER,       0x60)
-+    FIELD(DEV_CHAR_TABLE_POINTER, P_DEV_CHAR_TABLE_START_ADDR,  0, 12)
-+    FIELD(DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,         12, 7)
-+    FIELD(DEV_CHAR_TABLE_POINTER, PRESENT_DEV_CHAR_TABLE_INDEX, 19, 3)
- REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)
-+    FIELD(VENDOR_SPECIFIC_REG_POINTER, P_VENDOR_REG_START_ADDR, 0, 16)
- REG32(SLV_MIPI_PID_VALUE,           0x70)
- REG32(SLV_PID_VALUE,                0x74)
-+    FIELD(SLV_PID_VALUE, SLV_PID_DCR, 0, 12)
-+    FIELD(SLV_PID_VALUE, SLV_INST_ID, 12, 4)
-+    FIELD(SLV_PID_VALUE, SLV_PART_ID, 16, 16)
- REG32(SLV_CHAR_CTRL,                0x78)
-+    FIELD(SLV_CHAR_CTRL, BCR,     0, 8)
-+    FIELD(SLV_CHAR_CTRL, DCR,     8, 8)
-+    FIELD(SLV_CHAR_CTRL, HDR_CAP, 16, 8)
- REG32(SLV_MAX_LEN,                  0x7c)
-+    FIELD(SLV_MAX_LEN, MWL, 0, 16)
-+    FIELD(SLV_MAX_LEN, MRL, 16, 16)
- REG32(MAX_READ_TURNAROUND,          0x80)
- REG32(MAX_DATA_SPEED,               0x84)
- REG32(SLV_DEBUG_STATUS,             0x88)
- REG32(SLV_INTR_REQ,                 0x8c)
-+    FIELD(SLV_INTR_REQ, SIR,          0, 1)
-+    FIELD(SLV_INTR_REQ, SIR_CTRL,     1, 2)
-+    FIELD(SLV_INTR_REQ, MIR,          3, 1)
-+    FIELD(SLV_INTR_REQ, TS,           4, 1)
-+    FIELD(SLV_INTR_REQ, IBI_STS,      8, 2)
-+REG32(SLV_TSX_SYMBL_TIMING,         0x90)
-+    FIELD(SLV_TSX_SYMBL_TIMING, SLV_TSX_SYMBL_CNT, 0, 6)
- REG32(DEVICE_CTRL_EXTENDED,         0xb0)
-+    FIELD(DEVICE_CTRL_EXTENDED, MODE, 0, 2)
-+    FIELD(DEVICE_CTRL_EXTENDED, REQMST_ACK_CTRL, 3, 1)
- REG32(SCL_I3C_OD_TIMING,            0xb4)
-+    FIELD(SCL_I3C_OD_TIMING, I3C_OD_LCNT, 0, 8)
-+    FIELD(SCL_I3C_OD_TIMING, I3C_OD_HCNT, 16, 8)
- REG32(SCL_I3C_PP_TIMING,            0xb8)
-+    FIELD(SCL_I3C_PP_TIMING, I3C_PP_LCNT, 0, 8)
-+    FIELD(SCL_I3C_PP_TIMING, I3C_PP_HCNT, 16, 8)
- REG32(SCL_I2C_FM_TIMING,            0xbc)
- REG32(SCL_I2C_FMP_TIMING,           0xc0)
-+    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_LCNT, 0, 16)
-+    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_HCNT, 16, 8)
- REG32(SCL_EXT_LCNT_TIMING,          0xc8)
- REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)
- REG32(BUS_FREE_TIMING,              0xd4)
- REG32(BUS_IDLE_TIMING,              0xd8)
-+    FIELD(BUS_IDLE_TIMING, BUS_IDLE_TIME, 0, 20)
- REG32(I3C_VER_ID,                   0xe0)
- REG32(I3C_VER_TYPE,                 0xe4)
- REG32(EXTENDED_CAPABILITY,          0xe8)
- REG32(SLAVE_CONFIG,                 0xec)
-+/* Device characteristic table fields */
-+REG32(DEVICE_CHARACTERISTIC_TABLE_LOC1, 0x200)
-+REG32(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, 0x200)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DYNAMIC_ADDR, 0, 8)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DCR, 8, 8)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, BCR, 16, 8)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, STATIC_ADDR, 24, 8)
-+REG32(DEVICE_CHARACTERISTIC_TABLE_LOC2, 0x204)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC2, MSB_PID, 0, 16)
-+REG32(DEVICE_CHARACTERISTIC_TABLE_LOC3, 0x208)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, DCR, 0, 8)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, BCR, 8, 8)
-+REG32(DEVICE_CHARACTERISTIC_TABLE_LOC4, 0x20c)
-+    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC4, DEV_DYNAMIC_ADDR, 0, 8)
-+/* Dev addr table fields */
-+REG32(DEVICE_ADDR_TABLE_LOC1, 0x280)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_STATIC_ADDR, 0, 7)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_PEC_EN, 11, 1)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_WITH_DATA, 12, 1)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, SIR_REJECT, 13, 1)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, MR_REJECT, 14, 1)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_DYNAMIC_ADDR, 16, 8)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_ADDR_MASK, 24, 2)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_NACK_RETRY_CNT, 29, 2)
-+    FIELD(DEVICE_ADDR_TABLE_LOC1, LEGACY_I2C_DEVICE, 31, 1)
++    DEFINE_PROP_UINT8("ibi-magic-num", MockI3cTargetState, cfg.ibi_magic, 0x00),
++};
++
++static void mock_i3c_target_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    I3CTargetClass *k = I3C_TARGET_CLASS(klass);
++
++    dc->realize = mock_i3c_target_realize;
++    k->event = mock_i3c_target_event;
++    k->recv = mock_i3c_target_rx;
++    k->send = mock_i3c_target_tx;
++    k->handle_ccc_read = mock_i3c_target_handle_ccc_read;
++    k->handle_ccc_write = mock_i3c_target_handle_ccc_write;
++
++    device_class_set_props(dc, remote_i3c_props);
++}
++
++static const TypeInfo mock_i3c_target_info = {
++    .name          = TYPE_MOCK_I3C_TARGET,
++    .parent        = TYPE_I3C_TARGET,
++    .instance_size = sizeof(MockI3cTargetState),
++    .instance_init = mock_i3c_target_init,
++    .class_init    = mock_i3c_target_class_init,
++};
++
++static void mock_i3c_target_register_types(void)
++{
++    type_register_static(&mock_i3c_target_info);
++}
++
++type_init(mock_i3c_target_register_types)
+diff --git a/hw/i3c/Kconfig b/hw/i3c/Kconfig
+index ecec77d6fc..d5c6d4049b 100644
+--- a/hw/i3c/Kconfig
++++ b/hw/i3c/Kconfig
+@@ -3,3 +3,13 @@ config I3C
  
- static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
-     [R_HW_CAPABILITY]               = 0x000e00bf,
+ config DW_I3C
+     bool
++
++config I3C_DEVICES
++    # Device group for i3c devices which can reasonably be user-plugged to any
++    # board's i3c bus.
++    bool
++
++config MOCK_I3C_TARGET
++    bool
++    select I3C
++    default y if I3C_DEVICES
+diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build
+index 83d75e7d5c..e614b18712 100644
+--- a/hw/i3c/meson.build
++++ b/hw/i3c/meson.build
+@@ -2,4 +2,5 @@ i3c_ss = ss.source_set()
+ i3c_ss.add(when: 'CONFIG_I3C', if_true: files('core.c'))
+ i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))
+ i3c_ss.add(when: 'CONFIG_DW_I3C', if_true: files('dw-i3c.c'))
++i3c_ss.add(when: 'CONFIG_MOCK_I3C_TARGET', if_true: files('mock-i3c-target.c'))
+ system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)
+diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events
+index 39f33d9a50..3d6dd4f7dd 100644
+--- a/hw/i3c/trace-events
++++ b/hw/i3c/trace-events
+@@ -36,3 +36,12 @@ legacy_i2c_recv(uint8_t byte) "Legacy I2C recv 0x%" PRIx8
+ legacy_i2c_send(uint8_t byte) "Legacy I2C send 0x%" PRIx8
+ legacy_i2c_start_transfer(uint8_t address, bool is_recv) "Legacy I2C START with address 0x%" PRIx8 " is_recv=%d"
+ legacy_i2c_end_transfer(void) "Legacy I2C STOP"
++
++# mock-target.c
++mock_i3c_target_rx(uint8_t byte) "I3C mock target read 0x%" PRIx8
++mock_i3c_target_tx(uint8_t byte) "I3C mock target write 0x%" PRIx8
++mock_i3c_target_event(uint8_t event) "I3C mock target event 0x%" PRIx8
++mock_i3c_target_handle_ccc_read(uint32_t num_read, uint32_t num_to_read) "I3C mock target read %" PRId32 "/%" PRId32 " bytes"
++mock_i3c_target_new_ccc(uint8_t ccc) "I3C mock target handle CCC 0x%" PRIx8
++mock_i3c_target_handle_ccc_write(uint32_t num_sent, uint32_t num_to_send) "I3C mock target send %" PRId32 "/%" PRId32 " bytes"
++mock_i3c_target_do_ibi(uint8_t address, bool is_recv) "I3C mock target IBI with address 0x%" PRIx8 " RnW=%d"
 -- 
 2.43.0
 
