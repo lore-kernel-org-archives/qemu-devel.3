@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72880E8B366
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 20:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C5FE8B362
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 20:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnNSD-0006bY-CM; Tue, 03 Feb 2026 15:56:57 -0500
+	id 1vnNSM-0006gV-HA; Tue, 03 Feb 2026 15:57:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vnNSB-0006ae-5a
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:56:55 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1vnNSF-0006dU-I3
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:57:01 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vnNS9-0003Tg-6s
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:56:54 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a09d981507so1489135ad.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 12:56:52 -0800 (PST)
+ id 1vnNSC-0003VB-Sg
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 15:56:59 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c65822dead7so2440877a12.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 12:56:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770152212; x=1770757012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770152215; x=1770757015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JeipM9QRVydOFQNgbc5lZdQYc3E8fV/sokpGLUmNtbc=;
- b=K80a06mcX5feyY5wm/hvXRiJFPdI3/VuwHgFHOZUdfi6QLzTMLkfG6TaSnbpkrjGx6
- HY1Aln3tgRrHlSQC/gG9fFPodYtcyAlCMUS8LGU30bZhaH0R3oLP9pJ6SNbmpztdbIY0
- riluo8gxPFScJDn+CeskDVsMBXxSv5T4+D1ADQ1r2hJFD2MbOt+Cj4Sc2/7AT8DoZ2tj
- 1sQP3frxnL5Ei97cN/UdeDztuTrT2fjHA7kEYrF+El4awukVCbvhJF1XmEyKaSMfIa4B
- gvKXwom4vC0lXoc49hg+eAARKlE8V8s9N3/YpSreC1OpI4/baDZWoAPn6W/lLbQPJUwa
- XzkQ==
+ bh=FKrFbIzO+OqhM9EqMf1DvtMtDYxv5MFzwPEplnrkp6c=;
+ b=fmcBLdhmZq1IhD0XziawWDhcIZSXNUClujxKPLGcasp4Ij5H/LFs9Q7tBjkxt+6oTB
+ xEeNqp2/jKzZH7EiImAIyHtJaVcNHM6YBzreubl/GwXzO+wfgtDg7hgJEcoFrBlZcNUb
+ IGfhSe+S8mtON803lTLRa+pgYs574Lrd/d4YBxoetXFV0qMCZJPaxDimlUtQ/sJgsBXR
+ FsZS0tlJIHi+fwDRFsYwG0tcy4WqV7DDsxuxAZIf4gLDG55Zp+Hc3xqZMhkKKtSzRoJH
+ lIm2tJffkoJFlDS45JUFPqMskJctFZXPxYut4nr52Pe5nPidxFQF6KQX/IPVNquG2RFt
+ KI6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770152212; x=1770757012;
+ d=1e100.net; s=20230601; t=1770152215; x=1770757015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JeipM9QRVydOFQNgbc5lZdQYc3E8fV/sokpGLUmNtbc=;
- b=gZwakr9Lr5XwjAwwGWB3E3Wwg6Zav2kvjTqQToinqsMCM7LxeZgQlKGq/TJGCWO8WT
- /LZKWAx5F/qVDbqjQG5LW37shYu5z+35XlYztlwaaykrI0qyY4EokyOlrWrXY3OSZ0vG
- R6DeFYIUEwuRXvDqif+p0GrXwzGtqDC9FGOi0irdDGS2mE7AT8XbAl2UJ0Ox7YGdAFCP
- q+7GmNc/zzO03UQayfHVmRyAojfm/unDUSkIsKGuN4A8v1mBqGiGIfQrDRnnAFSxCkz/
- wzHM+BZKM/O3qIV8sfW3l68lYOMMIZoSrf+xY7JX/55RbdLOGepE0qVQHXUfVIDSzKe3
- efiA==
-X-Gm-Message-State: AOJu0Yw0wmJ+akqNVRAOtZLdl+9qdIOdafiftEvkOIur4rIqEjYKGvZU
- ybDuZM+LdzY94K4RMlBPiWilwKcXfM9/kop9QtJ9v2hKC1f166Mkf/f8ZBEgMATKpDsmYrWQEXb
- 1t/fw92c=
-X-Gm-Gg: AZuq6aJ7+Abq8TULe8ShEoxONjWDQ+bpla91lKdHrkYaiCzn5DZ0WK7xvNEKrNcXkFd
- oTrsBZ8moyIf15K1NlYtAyQsYFl+XsYKSfauvSbWuqm3H89607sFSyVg7a12rIG99ROuqDsBCOG
- NTDaSy9xs1cIzlt9624ejf1ko9KdHAjUK7O6tmJxDQumr19/0IL4Fl0zfVTrqqNQjUksoBE6SAk
- q4AGYEUfWQV37akgu/4BPUQQH7a5op/wqaKr5j1HNjpo5HOVmfL1tVs8LudsxNqN3blH05Yzbyi
- J7axQVazAwBaRF1bL/3MgEXdN/eWVCWttNOanXC255LqbSs/o913w66qs122/JY/M/BOiBNnnv5
- 4wiP7aXLlojewue0XudE3//k8BsEB7jEKjrTfTnyRzSTon9mFKszZ1F+nY8vH+L+V5aJBl2O5HT
- 0tbKZ2QNnUp1Pyxh4Gq5922dGRoVe1095KbqGgh73C71YHWsXABJnvC+8G+3gAH59Q
-X-Received: by 2002:a17:902:ef01:b0:2a7:c188:bd1b with SMTP id
- d9443c01a7336-2a9339a66demr6075265ad.25.1770152211814; 
- Tue, 03 Feb 2026 12:56:51 -0800 (PST)
+ bh=FKrFbIzO+OqhM9EqMf1DvtMtDYxv5MFzwPEplnrkp6c=;
+ b=YS0xEuYWZu0eLQcFbxdNiKs4Okv5VNZHxF5z+kZzRL2bTf3bzcdoiMv814jBdm1HdZ
+ /fFNeFaxHo9LtSoQOuLsDk/Vjh6t851bDhWVwRRW1oNhfrmoLPTFrK8Dg4x/p9B4YwwF
+ oLPRdu9OrCn12FvuuObH4Lpl0XyWDukyShSxFDuz8e9FC0J1f+t77tO3ojpXwKtavRpX
+ A3OyzcA5oIpgzZjG0WJh+BfXHRJpWQ2p6ZE2eaGiAOJVX1l1ir1WeJtY+rDyiP5knuKf
+ d/+NVgYYiuBVpfH0WCBJGgY2vzL5SkBa+e01m8BJ9Hk9oqd0dkpWuuN0JIVEUVEcqliD
+ C8Vg==
+X-Gm-Message-State: AOJu0YxESzCtdT6e7nbkvIZBAmqRrpVaF/aNXSCi3GfqmoCO11VaG4ZK
+ XXNyn5suTpMec9E2zoOI3e/n1zN+3MpYyBuLPgydmLvhs7Y20cCAPHnHagRJm62QE0wd+/BOgFa
+ 3zJrsqr8=
+X-Gm-Gg: AZuq6aKpcpbDsh0pLssl6lzn1LwcYAR8QOHiKpvlxqFBMRQn5HGZ1222OZl0tb3oKBy
+ Nu2SjvaDqytmyHYBEA1H00AywjedivxuYYuYRTZdr9t6biIDmHRXFlO/BiU8SmXqpZlJQieGpAJ
+ DU51o3uJGqJYWCvs4+MCet+lR/RSrxihcgS1a7ZnhKsOvz7YXBt+wjAPyUtxmlmATb0j6m1aKh4
+ oYkDohOFexN2KyxYxkDE/7/VQAyYoJOsYfv1wSaEmfN684Qoh1X+gGvLTWLUbek7QyP4riITxoq
+ Or4ZI1E9hWG7QAgaa/DDpIeW/FpS2HNH9sVgsnyA7uC09a2/2gwp1b4jqmr8P6zr+K33adoqvpA
+ z6F36/2fGYJ9ygYed6EHlEw9JIkkFmnhZMJapmX8vzjSzKZqaLIIWtRaaQPHs8eri9zUo/9LZPj
+ v57oC4R9WEM+vSk4wXSCFpJcSmE7vcxJu3LXy9mLSjFovnY5EZMiM3g6oDDde5XJGg
+X-Received: by 2002:a17:903:2391:b0:2a9:2ab2:e50d with SMTP id
+ d9443c01a7336-2a934112c06mr3679725ad.51.1770152215395; 
+ Tue, 03 Feb 2026 12:56:55 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a9338512f4sm3612875ad.9.2026.02.03.12.56.51
+ d9443c01a7336-2a9338512f4sm3612875ad.9.2026.02.03.12.56.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 12:56:51 -0800 (PST)
+ Tue, 03 Feb 2026 12:56:54 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -72,18 +72,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v4 2/9] hw/virtio: Introduce
- VirtIODevice::access_is_big_endian boolean field
-Date: Tue,  3 Feb 2026 12:56:30 -0800
-Message-ID: <20260203205637.3109749-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 6/9] include/hw/ppc/spapr: extract SPAPR_MAX_RAM_SLOTS in a
+ new header
+Date: Tue,  3 Feb 2026 12:56:34 -0800
+Message-ID: <20260203205637.3109749-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
 References: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,47 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Allow to include it from common code (vhost-user, in next commit), else
+it pulls ppc/cpu.h which has target specifics.
 
-VirtIODevice::access_is_big_endian boolean field, initialized on
-device reset, represents whether load/store accesses are ordered
-using big endianness.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/virtio/virtio.h | 5 +++++
- hw/virtio/virtio.c         | 1 +
- 2 files changed, 6 insertions(+)
+ include/hw/ppc/spapr.h        |  8 +-------
+ include/hw/ppc/spapr_common.h | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 7 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_common.h
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 65872f2c54c..6c05f1febcc 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -154,6 +154,11 @@ struct VirtIODevice
-     VMChangeStateEntry *vmstate;
-     char *bus_name;
-     uint8_t device_endian;
-+    /**
-+     * @access_is_big_endian: whether load/store memory accesses are ordered
-+     * using big endianness. Might change during device resets.
-+     */
-+    bool access_is_big_endian;
-     /**
-      * @user_guest_notifier_mask: gate usage of ->guest_notifier_mask() callback.
-      * This is used to suppress the masking of guest updates for
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 3dc9423eae9..df2887e7296 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3248,6 +3248,7 @@ void virtio_reset(void *opaque)
-         /* System reset */
-         vdev->device_endian = virtio_default_endian();
-     }
-+    vdev->access_is_big_endian = virtio_access_is_big_endian(vdev);
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 5476ac7ce7b..b022f8dd25d 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -4,6 +4,7 @@
+ #include "qemu/units.h"
+ #include "system/dma.h"
+ #include "hw/core/boards.h"
++#include "hw/ppc/spapr_common.h"
+ #include "hw/ppc/spapr_drc.h"
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/ppc/spapr_ovec.h"
+@@ -946,13 +947,6 @@ int spapr_rtc_import_offset(SpaprRtcState *rtc, int64_t legacy_offset);
  
-     if (k->get_vhost) {
-         struct vhost_dev *hdev = k->get_vhost(vdev);
+ #define SPAPR_MEMORY_BLOCK_SIZE ((hwaddr)1 << 28) /* 256MB */
+ 
+-/*
+- * This defines the maximum number of DIMM slots we can have for sPAPR
+- * guest. This is not defined by sPAPR but we are defining it to 32 slots
+- * based on default number of slots provided by PowerPC kernel.
+- */
+-#define SPAPR_MAX_RAM_SLOTS     32
+-
+ /* 1GB alignment for hotplug memory region */
+ #define SPAPR_DEVICE_MEM_ALIGN (1 * GiB)
+ 
+diff --git a/include/hw/ppc/spapr_common.h b/include/hw/ppc/spapr_common.h
+new file mode 100644
+index 00000000000..d799927ff5c
+--- /dev/null
++++ b/include/hw/ppc/spapr_common.h
+@@ -0,0 +1,16 @@
++/*
++ * Common definitions for PPC SPAPR
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_SPAPR_COMMON_H
++#define HW_SPAPR_COMMON_H
++
++/*
++ * This defines the maximum number of DIMM slots we can have for sPAPR
++ * guest. This is not defined by sPAPR but we are defining it to 32 slots
++ * based on default number of slots provided by PowerPC kernel.
++ */
++#define SPAPR_MAX_RAM_SLOTS     32
++
++#endif /* HW_SPAPR_COMMON_H */
 -- 
 2.47.3
 
