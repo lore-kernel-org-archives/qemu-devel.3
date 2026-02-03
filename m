@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10FDE8305D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B2FE8305C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnASB-0002Dt-9v; Tue, 03 Feb 2026 02:04:03 -0500
+	id 1vnASB-0002D7-32; Tue, 03 Feb 2026 02:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vnARx-00020x-Vp; Tue, 03 Feb 2026 02:03:51 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1vnARv-00020a-Vd; Tue, 03 Feb 2026 02:03:47 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vnARv-0003EA-IC; Tue, 03 Feb 2026 02:03:49 -0500
+ id 1vnARu-0003Dq-07; Tue, 03 Feb 2026 02:03:47 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 8F3A660141;
- Tue,  3 Feb 2026 07:03:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13F4C19425;
- Tue,  3 Feb 2026 07:03:37 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 77C736013C;
+ Tue,  3 Feb 2026 07:03:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD4EC2BC86;
+ Tue,  3 Feb 2026 07:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1770102218;
- bh=g4wSj2V6c1HLF8bCaTH2AO2uiIhDCllAUUFILdOy3vI=;
+ s=k20201202; t=1770102216;
+ bh=e2KtRGoKZ47Vc8zsUbi+oBeJfeeSHXFxI38YIVjPrls=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=F03r8Xxc36vZp2i+Z+RbQcjfKNvYddJdqiA7/XLQkmu7+sfWjOLnCM7JNegnK042O
- rzVvPAzCQddiodxPuVNBJysztaUIroXUwJg/YZV5gCz2OVab6EVQR0MS62OgpWf03Z
- AOAenfmTc59pg6bb8AcXJfY2O0qQagS951oOzxZyzalfGukCSJ7z309DhU+uu8rVR6
- o5qQpnP+lU7HW7WkRRr/V190SOZbBBSPCpaGTN/btL+PEQ1vwuTVkAKdw1vOH1ybnX
- qB6Ht2+0sVifYHH/vHjL6jRk3pYhUnrzc00h42JPWt5sMbN3ZGKZddmQ9JvZPeGgoQ
- m+4A0YdzBK5tg==
+ b=E8KArSHj6slGZfuj6yEjISiiVHht4bbO92EsSJNrBhA0ULUE3EI6verYKRY1Oshra
+ SOoQHnNN1ghfTZQKhAY+FsbZg39kMbUA7Kb7w1Q+/nBzG0jXFS8OZhiQPcg5CSlmtI
+ DYDruaNhWB9lOb+YNLh8rGvYWyfScd3zXV42qu6eP2zT6FJ8GpEizbyr4c4cTmmyG6
+ 0aOn8A/JIKgbAOAbS51dXIDVINWkOBRJ+c/LDinH711NPAh/v30d3u2goXBhAThbak
+ cpF90VFVuHhieFL1QVQ2v5HhMEj17UAZm/66MUbmhDd2LcIHuaBvv8j1reK70kn0kV
+ /X5PADs1eEsUA==
 From: Drew Fustini <fustini@kernel.org>
-Date: Mon, 02 Feb 2026 23:01:22 -0800
-Subject: [PATCH RFC 6/7] acpi: aml-build: Add Cache ID to PPTT table and
- set Cluster ID
+Date: Mon, 02 Feb 2026 23:01:17 -0800
+Subject: [PATCH RFC 1/7] hw/riscv: Add support for ACPI RQSC table
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260202-riscv-rqsc-v1-6-dcf448a3ed73@kernel.org>
+Message-Id: <20260202-riscv-rqsc-v1-1-dcf448a3ed73@kernel.org>
 References: <20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org>
 In-Reply-To: <20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org>
 To: qemu-devel@nongnu.org
@@ -64,22 +63,21 @@ Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org, 
  Drew Fustini <fustini@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6380; i=fustini@kernel.org;
- h=from:subject:message-id; bh=g4wSj2V6c1HLF8bCaTH2AO2uiIhDCllAUUFILdOy3vI=;
- b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWQ2zj3mfWbrtNVLZpYur3nftL87fN7LFXUb1tx9c459a
- rxFtmL83I5SFgYxLgZZMUWWTR/yLizxCv26YP6LbTBzWJlAhjBwcQrARJZ2MPwVNi99MWHhQY+u
- B6cuBslfuvJ/o2nCqvkNerWt36IctcodGRnuyivvnf3Z/PPcqwl1D68c5srj17sU8N658O16w/s
- HH27kAQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9127; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=eXZEfZrgLgLSbfNI9AvAgsinKRrStsfYatyPSMNmam0=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWQ2zj3GdOve2wDO/9miZW/enHyiJVXa8umE8a9rbGfdb
+ /DLMxrd7ChlYRDjYpAVU2TZ9CHvwhKv0K8L5r/YBjOHlQlkCAMXpwBMhMOT4X8655Rdj5f+nGD/
+ KiTikuiziJzX5pd1l3w18A0LzJgv2yLJyPDwMMu8H37J+ayMLElGcxVLMmUW+ot03Ztjb/F2O1v
+ sDGYA
 X-Developer-Key: i=fustini@kernel.org; a=openpgp;
  fpr=1B6F948213EA489734F3997035D5CD577C1E6010
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=fustini@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,140 +94,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bump PPTT table revision to 3 which corresponds to ACPI 6.4. A new
-field was added to the end of PPTT for the Cache ID. Ensure the Cache
-ID Valid bit is set in the flags.
+From: Vasudevan Srinivasan <vasu@rivosinc.com>
 
-HACK: cluster_id is not set by the riscv arch so force setting it.
-Divide the cores between the number of clusters. For the CBQRI example,
-cores 0-3 are cluster 0 and cores 4-8 are cluster 1. The proper solution
-is for the riscv code to set cluster_id the same way as the arm code.
+In build_rqsc(), set Res ID 1 for each cache controller in RQSC table.
+The AML code that generates that PPTT table uses the cache controller
+mmio_base address as the Cache ID.
 
-HACK: cluster 0 uses the first L2 cache controller and cluster 1 uses
-the second L2 cache controller. A more general solution is to make the
-L2 cache private to the cluster and not private to the core.
+TODO: Similar plumbing still needs to be done to correlate bandwitch
+controllers to the Proximity Domain for Memory Affinity Structures in
+the SRAT table.
 
-The series "[PATCH v8 0/6] Specifying cache topology on ARM" looks to be
-the correct approach. RISC-V support could be based on this.
-
-Link: https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/05_ACPI_Software_Programming_Model/ACPI_Software_Programming_Model.html#cache-type-structure-table
-Link: https://lore.kernel.org/all/20250310162337.844-1-alireza.sanaee@huawei.com/
+Signed-off-by: Vasudevan Srinivasan <vasu@rivosinc.com>
 Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- hw/acpi/aml-build.c | 57 +++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 10 deletions(-)
+ hw/core/sysbus-fdt.c       |   3 ++
+ hw/riscv/cbqri_bandwidth.c |  11 +++++
+ hw/riscv/cbqri_capacity.c  |  11 +++++
+ hw/riscv/virt-acpi-build.c | 121 +++++++++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/cbqri.h   |  12 +++++
+ 5 files changed, 158 insertions(+)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 742e7a6eb261..7c23b0413f5e 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2148,12 +2148,16 @@ static void build_cache_structure(GArray *tbl,
- {
-     /* Cache type structure */
-     build_append_byte(tbl, 1);
--    /* Length */
--    build_append_byte(tbl, 24);
-+    /*
-+     * Length - ACPI 6.4 table 5.140 shows size 28 which increased from
-+     * previous version to include space for the new cache id property
-+     * https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/05_ACPI_Software_Programming_Model/ACPI_Software_Programming_Model.html#cache-type-structure-table
-+     */
-+    build_append_byte(tbl, 28);
-     /* Reserved */
-     build_append_int_noprefix(tbl, 0, 2);
--    /* Flags */
--    build_append_int_noprefix(tbl, 0x7f, 4);
-+    /* Flags - enable bit 7 for Cache ID Valid */
-+    build_append_int_noprefix(tbl, 0xff, 4);
-     /* Next level cache */
-     build_append_int_noprefix(tbl, next_level, 4);
-     /* Size */
-@@ -2166,6 +2170,8 @@ static void build_cache_structure(GArray *tbl,
-     build_append_byte(tbl, cache_info->attributes);
-     /* Line size */
-     build_append_int_noprefix(tbl, cache_info->line_size, 2);
-+    /* Cache ID */
-+    build_append_int_noprefix(tbl, cache_info->id, 4);
- }
+diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+index 89d0c464454a..d7967cde51be 100644
+--- a/hw/core/sysbus-fdt.c
++++ b/hw/core/sysbus-fdt.c
+@@ -36,6 +36,7 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/arm/fdt.h"
++#include "hw/riscv/cbqri.h"
  
  /*
-@@ -2183,9 +2189,13 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-     uint32_t pptt_start = table_data->len;
-     uint32_t root_offset;
-     uint32_t l3_offset = 0, priv_num = 0;
--    uint32_t priv_rsrc[3] = {0};
-+    uint32_t priv_rsrc[4] = {0};
-     int n;
--    AcpiTable table = { .sig = "PPTT", .rev = 2,
-+    /*
-+     * rev should 3 not 2 based on
-+     * https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/05_ACPI_Software_Programming_Model/ACPI_Software_Programming_Model.html#processor-properties-topology-table-pptt
-+     */
-+    AcpiTable table = { .sig = "PPTT", .rev = 3,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
+  * internal struct that contains the information to create dynamic
+@@ -140,6 +141,8 @@ static const BindingEntry bindings[] = {
+     TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
+     TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
+     TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
++    TYPE_BINDING(TYPE_RISCV_CBQRI_BC, no_fdt_node),
++    TYPE_BINDING(TYPE_RISCV_CBQRI_CC, no_fdt_node),
+     TYPE_BINDING("", NULL), /* last element */
+ };
  
-     acpi_table_begin(&table, table_data);
-@@ -2209,6 +2219,16 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-      * created.
-      */
-     for (n = 0; n < cpus->len; n++) {
+diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
+index f86b3bf75027..01f03d790410 100644
+--- a/hw/riscv/cbqri_bandwidth.c
++++ b/hw/riscv/cbqri_bandwidth.c
+@@ -635,4 +635,15 @@ DeviceState *riscv_cbqri_bc_create(hwaddr addr,
+     return dev;
+ }
+ 
++void get_bc_details(DeviceState *ds, const char *type, RQSC *rqsc)
++{
++    if (strcmp(type, TYPE_RISCV_CBQRI_BC) == 0) {
++        RiscvCbqriBandwidthState *bcs = RISCV_CBQRI_BC(ds);
++        (rqsc)->controllerType = 1;
++        (rqsc)->mmio_base = bcs->mmio_base;
++        (rqsc)->rcidCount = bcs->nb_rcids;
++        (rqsc)->mcidCount = bcs->nb_mcids;
++    }
++}
++
+ type_init(riscv_cbqri_bc_register_types)
+diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+index 1c3570262a36..8d830c278e00 100644
+--- a/hw/riscv/cbqri_capacity.c
++++ b/hw/riscv/cbqri_capacity.c
+@@ -730,4 +730,15 @@ DeviceState *riscv_cbqri_cc_create(hwaddr addr,
+     return dev;
+ }
+ 
++void get_cc_details(DeviceState *ds, const char *type, RQSC *rqsc)
++{
++    if (strcmp(type, TYPE_RISCV_CBQRI_CC) == 0) {
++        RiscvCbqriCapacityState *ccs = RISCV_CBQRI_CC(ds);
++        rqsc->controllerType = 0;
++        rqsc->mmio_base = ccs->mmio_base;
++        rqsc->rcidCount = ccs->nb_rcids;
++        rqsc->mcidCount = ccs->nb_mcids;
++    }
++}
++
+ type_init(riscv_cbqri_cc_register_types)
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb68339..210b3f5fff98 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -34,6 +34,7 @@
+ #include "hw/pci-host/gpex.h"
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/numa.h"
++#include "hw/riscv/cbqri.h"
+ #include "hw/virtio/virtio-acpi.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+@@ -269,6 +270,123 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+ /* RHCT Node[N] starts at offset 56 */
+ #define RHCT_NODE_ARRAY_OFFSET 56
+ 
++static u_int8_t gatherCbqriDetails(RISCVVirtState *vs, RQSC rqsc[])
++{
++    BusChild *bc = NULL;
++    DeviceState *ds = NULL;
++    u_int8_t controllerCount = 0;
++
++    if (vs == NULL) {
++        printf("RISCVVirtState is NULL\n");
++        return 0;
++    }
++
++    QTAILQ_FOREACH(bc, &vs->platform_bus_dev->parent_bus->children, sibling) {
++        if (strcmp(object_get_typename(OBJECT(bc->child)),
++                   TYPE_RISCV_CBQRI_BC) == 0)
++        {
++            ds = bc->child;
++            get_bc_details(ds, object_get_typename(OBJECT(bc->child)),
++                           &(rqsc[controllerCount]));
++            controllerCount++;
++        }
++        if (strcmp(object_get_typename(OBJECT(bc->child)),
++                   TYPE_RISCV_CBQRI_CC) == 0)
++        {
++            ds = bc->child;
++            get_cc_details(ds, object_get_typename(OBJECT(bc->child)),
++                           &(rqsc[controllerCount]));
++            controllerCount++;
++        }
++    }
++
++    return controllerCount;
++}
++
++/*
++ *
++ * RQSC Table
++ *
++ */
++static void build_rqsc(GArray *table_data,
++                       BIOSLinker *linker,
++                       RISCVVirtState *s)
++{
++    int numCbqriControllers = 0;
++    /* Support for upto 10 CBQRI controllers */
++    RQSC rqsc[10];
++    int i = 0;
++
++    AcpiTable table = { .sig = "RQSC", .rev = 0, .oem_id = s->oem_id,
++                        .oem_table_id = s->oem_table_id };
++
++    acpi_table_begin(&table, table_data);
++
++    numCbqriControllers = gatherCbqriDetails(s, rqsc);
++
++    fprintf(stderr, "[QEMU] %s(): numCbqriControllers = %d\n",
++            __func__, numCbqriControllers);
++    /* Number of QoS Controllers */
++    build_append_int_noprefix(table_data, numCbqriControllers, 4);
++
++    for (i = 0; i < numCbqriControllers; i++) {
++        fprintf(stderr, "[QEMU] %s(): Controller %d: Controller Type = %d\n",
++                __func__, i, rqsc[i].controllerType);
++        /* Controller Type */
++        build_append_int_noprefix(table_data, rqsc[i].controllerType, 1);
++        /* Reserved */
++        build_append_int_noprefix(table_data, 0, 1);
++        /* Length */
++        build_append_int_noprefix(table_data, 32, 2);
++        /* Controller register interface address */
++        build_append_gas(table_data,
++                AML_AS_SYSTEM_MEMORY,
++                0,
++                0,
++                4,
++                rqsc[i].mmio_base);
++        /* RCID Count */
++        build_append_int_noprefix(table_data, rqsc[i].rcidCount, 4);
++        /* MCID Count */
++        build_append_int_noprefix(table_data, rqsc[i].mcidCount, 4);
++        /* Controller Flags*/
++        build_append_int_noprefix(table_data, 0, 2);
++        /* Number of Resources hard coded to 1 for QEMU */
++        build_append_int_noprefix(table_data, 1, 2);
++
++        /* Resource Structure per Controller */
++        /* Resource Type  - Setting to the same as Controller Type for now */
++        build_append_int_noprefix(table_data, rqsc[i].controllerType, 1);
++        /* Reserved */
++        build_append_int_noprefix(table_data, 0, 1);
++        /* Length of Resource Structure */
++        build_append_int_noprefix(table_data, 20, 2);
++        /* Resource Flags */
++        build_append_int_noprefix(table_data, 0, 2);
++        /* Reserved */
++        build_append_int_noprefix(table_data, 0, 1);
++        /* Resource ID Type  - Setting to the same as Controller Type for now */
++        build_append_int_noprefix(table_data, rqsc[i].controllerType, 1);
 +        /*
-+         * HACK: cluster_id is not set by the riscv arch so force setting it.
-+         * Divide the cores between the number of clusters. For the CBQRI
-+         * example, cores 0-3 are cluster 0 and cores 4-8 are cluster 1.
-+         * The correct solution is for the riscv code to set cluster_id the
-+         * same way the arm code is doing it.
++         * The AML code that generates that PPTT table uses the cache
++         * controller mmio_base address as the Cache ID.
++         *
++         * TODO: Similar plumbing still needs to be done to correlate
++         * the memory controller to Proximity Domain in the SRAT table
 +         */
-+        cpus->cpus[n].props.cluster_id = (n / (ms->smp.cores * ms->smp.threads))
-+                                          % ms->smp.clusters;
++        fprintf(stderr, "[QEMU] %s(): Controller %d: Resource ID 1 = 0x%lx\n",
++                __func__, i, rqsc[i].mmio_base);
++        /* Resource ID 1 DWORD 1 CacheID or Proximity Domain */
++        build_append_int_noprefix(table_data, rqsc[i].mmio_base, 4);
++        /* Resource ID 1 DWORD 2 Reserved */
++        build_append_int_noprefix(table_data, 0, 4);
++        /* Resrouce ID 2 */
++        build_append_int_noprefix(table_data, 0, 4);
++    }
 +
-         if (cpus->cpus[n].props.socket_id != socket_id) {
-             assert(cpus->cpus[n].props.socket_id > socket_id);
-             socket_id = cpus->cpus[n].props.socket_id;
-@@ -2250,7 +2270,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-         if (CPUCaches) {
-             /* L2 cache type structure */
-             priv_rsrc[0] = table_data->len - pptt_start;
--            build_cache_structure(table_data, 0, CPUCaches->l2_cache);
++    acpi_table_end(linker, &table);
++}
 +
-+            /*
-+             * HACK: cluster 0 uses the first L2 cache controller and
-+             * cluster 1 uses the second L2 cache controller. A more
-+             * general solution is to make the L2 cache private to
-+             * the cluster and not private to the core.
-+             *
-+             * This series seems to be the correct direction:
-+             * https://lore.kernel.org/all/20250310162337.844-1-alireza.sanaee@huawei.com/
-+             * but it is only adding support for ARM so it needs to
-+             * be broaden to support RISC-V too
-+             */
-+            if (cluster_id == 0) {
-+                build_cache_structure(table_data, l3_offset,
-+                                      CPUCaches->l2_cluster1_cache);
-+            } else {
-+                build_cache_structure(table_data, l3_offset,
-+                                      CPUCaches->l2_cluster2_cache);
-+            }
+ /*
+  * ACPI spec, Revision 6.6
+  * 5.2.37 RISC-V Hart Capabilities Table (RHCT)
+@@ -894,6 +1012,9 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+         spcr_setup(tables_blob, tables->linker, s);
+     }
  
-             /* L1d cache type structure */
-             priv_rsrc[1] = table_data->len - pptt_start;
-@@ -2261,14 +2299,13 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-             priv_rsrc[2] = table_data->len - pptt_start;
-             build_cache_structure(table_data, priv_rsrc[0],
-                                   CPUCaches->l1i_cache);
--
--            priv_num = 3;
-+            priv_num = 2;
-         }
-         if (ms->smp.threads == 1) {
-             build_processor_hierarchy_node(table_data,
-                 (1 << 1) | /* ACPI Processor ID valid */
-                 (1 << 3),  /* Node is a Leaf */
--                cluster_offset, n, priv_rsrc, priv_num);
-+                cluster_offset, n, &priv_rsrc[1], priv_num);
-         } else {
-             if (cpus->cpus[n].props.core_id != core_id) {
-                 assert(cpus->cpus[n].props.core_id > core_id);
++    acpi_add_table(table_offsets, tables_blob);
++    build_rqsc(tables_blob, tables->linker, s);
++
+     acpi_add_table(table_offsets, tables_blob);
+     {
+         AcpiMcfgInfo mcfg = {
+diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+index a07f1e3a2dde..227d4d2bd842 100644
+--- a/include/hw/riscv/cbqri.h
++++ b/include/hw/riscv/cbqri.h
+@@ -79,4 +79,16 @@ DeviceState *riscv_cbqri_cc_create(hwaddr addr,
+ DeviceState *riscv_cbqri_bc_create(hwaddr addr,
+                                    const RiscvCbqriBandwidthCaps *caps,
+                                    const char *target_name);
++void example_soc_cbqri_init(void);
++
++typedef struct _RQSC {
++    u_int8_t controllerType;
++    u_int64_t mmio_base;
++    u_int16_t rcidCount;
++    u_int16_t mcidCount;
++} RQSC;
++
++void get_bc_details(DeviceState *ds, const char *type, RQSC *rqsc);
++void get_cc_details(DeviceState *ds, const char *type, RQSC *rqsc);
++
+ #endif
 
 -- 
 2.43.0
