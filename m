@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B07E87846
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68B4E87848
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 16:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnJAT-0004BB-Fn; Tue, 03 Feb 2026 11:22:21 -0500
+	id 1vnJAS-00049y-EW; Tue, 03 Feb 2026 11:22:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vnJAR-00049K-Ff
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:19 -0500
+ id 1vnJAQ-00048f-69
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:18 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vnJAP-0008FS-2R
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:19 -0500
+ id 1vnJAO-0008Es-F7
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:17 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DB07B596E98;
- Tue, 03 Feb 2026 17:22:15 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AA70D5969FF;
+ Tue, 03 Feb 2026 17:22:12 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 7S60zt38gvMs; Tue,  3 Feb 2026 17:22:13 +0100 (CET)
+ id w2GI_7MRRs5T; Tue,  3 Feb 2026 17:22:10 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D0910596ABE; Tue, 03 Feb 2026 17:22:13 +0100 (CET)
-Message-ID: <e38f19ecf4a1a3b81c15b8028ed6ef70c5673581.1770131168.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1770131168.git.balaton@eik.bme.hu>
-References: <cover.1770131168.git.balaton@eik.bme.hu>
+ id A6E855969F3; Tue, 03 Feb 2026 17:22:10 +0100 (CET)
+Message-ID: <cover.1770131168.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 3/7] memory: Remove memory_region_init_ram_nomigrate()
+Subject: [PATCH v3 0/7] memory: Remove most _nomigrate variants
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -44,7 +42,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 03 Feb 2026 17:22:13 +0100 (CET)
+Date: Tue, 03 Feb 2026 17:22:10 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -68,265 +66,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is rarely needed and those cases can use
-memory_region_init_ram_flags_nomigrate() instead which is now the only
-_nomigrate variant left. (Some of these may better be converted to use
-memory_region_init_ram() but I don't know so left them as they are.)
+v3:
+- rebased on master after some patches were merged
+- drop some more line from memory-region-housekeeping.cocci
+- added comment to explain what factored out helper does
+- some more clean ups included
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- docs/devel/memory.rst                         |  8 +++----
- hw/display/tcx.c                              |  5 ++--
- hw/display/vga.c                              |  4 ++--
- hw/sparc/sun4m.c                              | 15 +++++++-----
- hw/sparc64/sun4u.c                            |  9 ++++----
- hw/xtensa/xtfpga.c                            |  4 ++--
- include/system/memory.h                       | 23 -------------------
- .../memory-region-housekeeping.cocci          | 19 ---------------
- system/memory.c                               | 13 ++---------
- 9 files changed, 26 insertions(+), 74 deletions(-)
+BALATON Zoltan (7):
+  hw/display/{cg3,tcx}: Do not use memory_region_init_rom_nomigrate()
+  memory: Remove memory_region_init_rom_nomigrate()
+  memory: Remove memory_region_init_ram_nomigrate()
+  memory: Factor out common ram region initialization
+  memory: Add internal memory_region_register_ram function
+  memory: Shorten memory_region_init_rom_device
+  memory: Factor out more common ram region initialization
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 0bb5acab21..9083b18f08 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -110,11 +110,9 @@ migrated:
- 
- For most devices and boards this is the correct thing. If you
- have a special case where you need to manage the migration of
--the backing memory yourself, you can call the functions:
--
--- memory_region_init_ram_nomigrate()
--
--which only initialize the MemoryRegion and leave handling
-+the backing memory yourself, you can call the function
-+memory_region_init_ram_flags_nomigrate()
-+which only initializes the MemoryRegion and leaves handling
- migration to the caller.
- 
- The functions:
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 87fe7216ba..d6be297828 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -817,8 +817,9 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
-     uint8_t *vram_base;
-     char *fcode_filename;
- 
--    memory_region_init_ram_nomigrate(&s->vram_mem, OBJECT(s), "tcx.vram",
--                           s->vram_size * (1 + 4 + 4), &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(&s->vram_mem, OBJECT(s), "tcx.vram",
-+                                           s->vram_size * (1 + 4 + 4), 0,
-+                                           &error_fatal);
-     vmstate_register_ram_global(&s->vram_mem);
-     memory_region_set_log(&s->vram_mem, true, DIRTY_MEMORY_VGA);
-     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 59a65cbbff..ee7d97b5c2 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -2235,8 +2235,8 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
-         return false;
-     }
- 
--    memory_region_init_ram_nomigrate(&s->vram, obj, "vga.vram", s->vram_size,
--                                     &local_err);
-+    memory_region_init_ram_flags_nomigrate(&s->vram, obj, "vga.vram",
-+                                           s->vram_size, 0, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return false;
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 0c0d658d30..66a21ae86c 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -587,8 +587,10 @@ static void idreg_realize(DeviceState *ds, Error **errp)
-     IDRegState *s = MACIO_ID_REGISTER(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.idreg",
--                                          sizeof(idreg_data), errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->mem, OBJECT(ds),
-+                                                "sun4m.idreg",
-+                                                sizeof(idreg_data),
-+                                                0, errp)) {
-         return;
-     }
- 
-@@ -638,8 +640,8 @@ static void afx_realize(DeviceState *ds, Error **errp)
-     AFXState *s = TCX_AFX(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.afx",
--                                          4, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->mem, OBJECT(ds),
-+                                                "sun4m.afx", 4, 0, errp)) {
-         return;
-     }
- 
-@@ -719,8 +721,9 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4m.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->prom, OBJECT(ds),
-+                                                "sun4m.prom", PROM_SIZE_MAX, 0,
-+                                                errp)) {
-         return;
-     }
- 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 5d7787fc1a..0da0eef74c 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -455,8 +455,9 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4u.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->prom, OBJECT(ds),
-+                                                "sun4u.prom", PROM_SIZE_MAX, 0,
-+                                                errp)) {
-         return;
-     }
- 
-@@ -498,8 +499,8 @@ static void ram_realize(DeviceState *dev, Error **errp)
-     RamDevice *d = SUN4U_RAM(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
--    memory_region_init_ram_nomigrate(&d->ram, OBJECT(d), "sun4u.ram", d->size,
--                           &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(&d->ram, OBJECT(d), "sun4u.ram",
-+                                           d->size, 0, &error_fatal);
-     vmstate_register_ram_global(&d->ram);
-     sysbus_init_mmio(sbd, &d->ram);
- }
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index d427d68e50..b025cc53a8 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -163,8 +163,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-             sysbus_mmio_get_region(s, 1));
- 
-     ram = g_malloc(sizeof(*ram));
--    memory_region_init_ram_nomigrate(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
--                           &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(ram, OBJECT(s), "open_eth.ram",
-+                                           16 * KiB, 0, &error_fatal);
-     vmstate_register_ram_global(ram);
-     memory_region_add_subregion(address_space, buffers, ram);
- }
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 7117699b10..d4793a08a7 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1374,29 +1374,6 @@ void memory_region_init_io(MemoryRegion *mr,
-                            const char *name,
-                            uint64_t size);
- 
--/**
-- * memory_region_init_ram_nomigrate:  Initialize RAM memory region.  Accesses
-- *                                    into the region will modify memory
-- *                                    directly.
-- *
-- * @mr: the #MemoryRegion to be initialized.
-- * @owner: the object that tracks the region's reference count
-- * @name: Region name, becomes part of RAMBlock name used in migration stream
-- *        must be unique within any device
-- * @size: size of the region.
-- * @errp: pointer to Error*, to store an error if it happens.
-- *
-- * Note that this function does not do anything to cause the data in the
-- * RAM memory region to be migrated; that is the responsibility of the caller.
-- *
-- * Return: true on success, else false setting @errp with error.
-- */
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp);
--
- /**
-  * memory_region_init_ram_flags_nomigrate:  Initialize RAM memory region.
-  *                                          Accesses into the region will
-diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
-index e45703141a..b23647a3d8 100644
---- a/scripts/coccinelle/memory-region-housekeeping.cocci
-+++ b/scripts/coccinelle/memory-region-housekeeping.cocci
-@@ -26,15 +26,9 @@ symbol true;
- expression E1, E2, E3, E4, E5;
- position p;
- @@
--(
-   memory_region_init_ram@p(E1, E2, E3, E4, E5);
-   ...
-   memory_region_set_readonly(E1, true);
--|
--  memory_region_init_ram_nomigrate@p(E1, E2, E3, E4, E5);
--  ...
--  memory_region_set_readonly(E1, true);
--)
- @script:python@
- p << possible_memory_region_init_rom.p;
- @@
-@@ -52,23 +46,10 @@ expression ALIAS, E5, E6, E7, E8;
- -  memory_region_set_readonly(ALIAS, true);
- 
- 
--// Replace by-hand memory_region_init_ram_nomigrate/vmstate_register_ram
--// code sequences with use of the new memory_region_init_ram function.
--// Similarly for the _rom and _rom_device functions.
- // We don't try to replace sequences with a non-NULL owner, because
- // there are none in the tree that can be automatically converted
- // (and only a handful that can be manually converted).
- @@
--expression MR;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
---memory_region_init_ram_nomigrate(MR, NULL, NAME, SIZE, ERRP);
--+memory_region_init_ram(MR, NULL, NAME, SIZE, ERRP);
-- ...
---vmstate_register_ram_global(MR);
--@@
- typedef DeviceState;
- identifier device_fn, dev, obj;
- expression E1, E2, E3, E4, E5;
-diff --git a/system/memory.c b/system/memory.c
-index 65042bd9fa..e15f931a8a 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1579,16 +1579,6 @@ void memory_region_init_io(MemoryRegion *mr,
-     memory_region_set_ops(mr, ops, opaque);
- }
- 
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp)
--{
--    return memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                  size, 0, errp);
--}
--
- bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-                                             Object *owner,
-                                             const char *name,
-@@ -3695,7 +3685,8 @@ bool memory_region_init_ram(MemoryRegion *mr,
- {
-     DeviceState *owner_dev;
- 
--    if (!memory_region_init_ram_nomigrate(mr, owner, name, size, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-+                                                size, 0, errp)) {
-         return false;
-     }
-     /* This will assert if owner is neither NULL nor a DeviceState.
+ docs/devel/memory.rst                         |   9 +-
+ hw/display/cg3.c                              |   6 +-
+ hw/display/tcx.c                              |  11 +-
+ hw/display/vga.c                              |   4 +-
+ hw/sparc/sun4m.c                              |  15 +-
+ hw/sparc64/sun4u.c                            |   9 +-
+ hw/xtensa/xtfpga.c                            |   4 +-
+ include/system/memory.h                       |  49 ----
+ .../memory-region-housekeeping.cocci          |  47 ----
+ system/memory.c                               | 265 ++++++------------
+ 10 files changed, 117 insertions(+), 302 deletions(-)
+
 -- 
 2.41.3
 
