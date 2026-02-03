@@ -4,75 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1C7E83072
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 09:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6318E83070
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 10:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnDA1-0001tR-Vw; Tue, 03 Feb 2026 04:57:30 -0500
+	id 1vnDEc-0002qq-EL; Tue, 03 Feb 2026 05:02:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vnD9z-0001t3-Os
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 04:57:27 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vnDEY-0002qI-8s; Tue, 03 Feb 2026 05:02:10 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vnD9x-0003Vt-9B
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 04:57:27 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id F171982854;
- Tue, 03 Feb 2026 12:57:17 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:435::1:2c] (unknown
- [2a02:6bf:8080:435::1:2c])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Gvk9pL0A5Cg0-huu4LyE8; Tue, 03 Feb 2026 12:57:17 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770112637;
- bh=b8W3U4qJ2bjvfQ3kXVpmgJ62HO7cvXHuWAhpp1jenyA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=vcnMgIWeswTQeiZnRN5eQms9J95pvKwAusaY4ozSTzxKolvLeT8C2SxzIC2CEAJXm
- K7b2tt08C2ltJNf3S8oqoPAGPYeXCDCHFnm1+zSYiMfGqPBnqIRc5sMEAymwshlsJh
- w/DPdYSss3HDuxkYcgTaY3suE7W7ws/WPjs8q/IE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <38db7222-bf35-43d4-9ab9-52810c9727e9@yandex-team.ru>
-Date: Tue, 3 Feb 2026 12:57:16 +0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vnDEW-0005Fg-Hg; Tue, 03 Feb 2026 05:02:10 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CDAD11855B8;
+ Tue, 03 Feb 2026 13:01:20 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89D5B35B7C0;
+ Tue, 03 Feb 2026 13:02:03 +0300 (MSK)
+Message-ID: <c45b67f5-e308-470b-a7d6-c5a2da61827c@tls.msk.ru>
+Date: Tue, 3 Feb 2026 13:02:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] Live update: tap and vhost
-To: "Chaney, Ben" <bchaney@akamai.com>, Peter Xu <peterx@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hamza Khan <hamza.khan@nutanix.com>,
- Mark Kanda <mark.kanda@oracle.com>, "Hunt, Joshua" <johunt@akamai.com>,
- "Tottenham, Max" <mtottenh@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-References: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
- <4b4e5317-9bbe-45c3-8c10-41cc448c5d22@yandex-team.ru>
- <aYCvexnciB7THTkr@x1.local> <8EFA386D-E593-4CC9-908D-75CFD74A53A5@akamai.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <8EFA386D-E593-4CC9-908D-75CFD74A53A5@akamai.com>
+Subject: Re: [PATCH trivial v2 7/7] rename CONFIG_EPOLL_CREATE1 to
+ CONFIG_EPOLL, and stop checking for epoll in meson.build
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20260119140557.2167351-1-mjt@tls.msk.ru>
+ <20260119140557.2167351-4-mjt@tls.msk.ru>
+ <d104e4b0-94c4-4de4-84e7-1011253ab5f8@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <d104e4b0-94c4-4de4-84e7-1011253ab5f8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,83 +106,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.02.26 18:42, Chaney, Ben wrote:
+On 2/3/26 05:36, Richard Henderson wrote:
+> On 1/20/26 00:05, Michael Tokarev wrote:
+>> Since CONFIG_EPOLL is now unused, it's okay to
+>> perform this rename, to make it less ugly.
+>>
+>> Since epoll is linux-specific and is always present on linux,
+>> define CONFIG_EPOLL to 1 on linux, without compile-time test.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   meson.build      | 3 +--
+>>   util/aio-posix.h | 4 ++--
+>>   util/meson.build | 2 +-
+>>   3 files changed, 4 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index f4eae50764..157189e306 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -2673,8 +2673,7 @@ config_host_data.set('CONFIG_INOTIFY1', 
+>> have_inotify_init1)
+>>   # has_header_symbol
+>>   config_host_data.set('CONFIG_BLKZONED',
+>>                        cc.has_header_symbol('linux/blkzoned.h', 
+>> 'BLKOPENZONE'))
+>> -config_host_data.set('CONFIG_EPOLL_CREATE1',
+>> -                     cc.has_header_symbol('sys/epoll.h', 
+>> 'epoll_create1'))
+>> +config_host_data.set('CONFIG_EPOLL', host_os == 'linux')
 > 
-> 
-> ﻿On 2/2/26, 9:07 AM, "Peter Xu" <peterx@redhat.com <mailto:peterx@redhat.com>> wrote:
-> 
->>> The latest version was
->>>
->>> [PATCH v9 0/8] virtio-net: live-TAP local migration
->>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/20251030203116.870742-1-vsementsov@yandex-team.ru <mailto:20251030203116.870742-1-vsementsov@yandex-team.ru>/__;!!GjvTz_vk!T9a83fcFgNhv7DgAAfFINb-FE6knVp53t5c7XkCrY76jAhmGxZz42YqHIlPt-eV_hh7V-OksMeBMsw$
->>>
->>> and I plan to post v10 soon.
-> 
-> 
->> Yes, thanks for re-raising this. If we have similar features being
->> proposed, we should always discuss whether we should stick with one of them
->> if that'll work for all.
-> 
-> 
->> IIUC Vladimir's solution looks indeed superior in that it has less
->> constraints, and also works for CPR mode.
-> 
-> 
-> This was previously discussed here: https://lore.kernel.org/all/ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru/
-> 
-> My impression from that discussion is that
-> 
-> 1. Vladimir's solution has some extra complexity
-> 2. We are trying to standardize cpr as the primary method for local migration,
+> I guess my question remains: Why keep CONFIG_EPOLL if it is identical to 
+> the existing CONFIG_LINUX?
 
-I believe, that we may do local migration of devices with FDs natively,
-through one migration channel, without CPR.
+It would be less obvious this way in the code.  When you've some
+#ifdef, when using CONFIG_EPOLL, it's much more obvious why it's here.
+When it's CONFIG_LINUX, you start to wonder which of the 100500
+different linux-only features this place is about.
 
-In my opinion, CPR breaks migration architecture, creating additional
-state, which owns mixed pieces of different devices (and sometimes,
-not only FDs, I heard).
+Current code very obviously uses configuration test for particular
+_feature_ (presence of epoll).  Yes, this interface is linux-specific,
+but in my view it is better to keep depending on particular feature,
+than to check of the os type or library version or something else like
+that.
 
-Instead we can keep device state all in device state description,
-including FDs if needed.
+Thanks,
 
-Also, second migration channel, and the fact that on target we can't
-access QMP until we say "migrate" on source seems to me an unnecessary
-load on the user and management software, we can avoid this.
-
-Next, as I understand, the only point, why we use CPR for devices, is
-avoiding rework of initialization code of some devices, which wants to
-have FDs at early stage. But that approach can't be applied
-everywhere. An example is vhost-user-blk: you have to rework
-initialization code anyway, as if you simple pass FDs to the target in
-CPR state, when source is still running, target will simple break the
-source, touching the FDs. And, if we can't touch FDs until source stop
-- it's actually a usual migration, and we can pass FDs through main
-migration channel, doing necessary things in pre-save and post-load,
-as usual.
-
-Hmm, looking at patch 01 here, I understand, that virtio-net/TAP does
-suffer from same problem? That we actually must not use passed FDs on
-target, when source is still running? But stopping source earlier
-means increase freeze-time. I think, if we can avoid it (and we can)
-we should avoid it.
-
-> so the benefit of supporting non-cpr local transfers is slightly double edged
-> 
-
-So, I think, if we plan that there would be more and more devices,
-supporting FDs local migration, and we have any change of fitting them
-into the "old" migration architecture (without CPR), we should try it.
-
---
-
-Hm, I don't have a full picture of CPR, it's not only device migration,
-but also some other things? Interesting, how much feasible is to move
-all these things into main migration channel. That's the question I
-can't answer now. But even if keep CPR for some non-device things, it
-seems still good to keep the whole state description for a device in
-one place - in device code, like it was historically.
-
--- 
-Best regards,
-Vladimir
+/mjt
 
