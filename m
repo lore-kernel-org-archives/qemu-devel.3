@@ -4,120 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F2FE87822
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429D9E87822
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnFzs-00088G-Uc; Tue, 03 Feb 2026 07:59:14 -0500
+	id 1vnG01-0008IX-NY; Tue, 03 Feb 2026 07:59:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vnFzT-0007sZ-AW
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:58:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vnFzR-0004dd-93
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:58:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770123522;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=z9XAVErHudAdtUVaCD/df3evUo4dj686bpaSW7Nz3UA=;
- b=XxmZeeGRzRIplbg/CQI4UQFb6XRY19CE5DF4qejNJEC3KncuAEc25HEbQnMLcnbrKhpVTA
- 3nWRsk6x/sAhwYBdpgIen57Ejoz6FuTSUMVpu2wqxjSw6fK4dYdOQYBa4A2I1PxDLzVUEX
- k3kifWnkZj2vMj3XodRAzmsqdHOASJw=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-mTzu2fFCO2ShkkdYHHTCBQ-1; Tue, 03 Feb 2026 07:58:41 -0500
-X-MC-Unique: mTzu2fFCO2ShkkdYHHTCBQ-1
-X-Mimecast-MFC-AGG-ID: mTzu2fFCO2ShkkdYHHTCBQ_1770123521
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8c6b315185aso1254544785a.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 04:58:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770123521; cv=none;
- d=google.com; s=arc-20240605;
- b=AgnYGhHxwk+rD3Lrc4ilXpk4nUtTWgk/t1FLq/1raTsTqUq1G93owbwSjrHc6yue7f
- zTUddZQtv5kbwnOuJPpVC24rhnGKXeBtupf4138CppS8xbgNE3DlBoJ5h+pY9db94RD1
- a59LbrjVM3VYXv0gIwhIViLjsFbrfcHAcOJvWgcuLgb171o/8jFXkH9+MxnaHM+A5uvz
- wWZmNFFWQy2gkqdt4uTXDygZl2bebW6pBiMmbP76Mq4faybyb7QaD9sFyaxhELMs7Fyf
- KgfLuOCy8uOe3b+iEE5LQyuUyI8OaMhz0pXT2oevN2eRxkJBfgm83qcL5iIelPBuMXdc
- HHbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=z9XAVErHudAdtUVaCD/df3evUo4dj686bpaSW7Nz3UA=;
- fh=tFbbyy6nTJWdhprEeRxjudxVDVBD2UID5FeaHQZqhG4=;
- b=kQZDhuDWZPgFuSBsa7vZ4frn3n53O1/W9uFJGWcnA1/esgzIrwu8cXWnE/4rjAsQgJ
- 56Cv5FFxr4iPomguEyH2XawHkoeNKWPD7vdXcWRvOAwnvWc60MiXtJnAcpy4c5xOmaCC
- jHYHAdGW43J+72gE/J5B3UexVlg2FsXy7n75NntBM2K1NNfyoImOM1pAzCfXX8TKd2jB
- AhXlUTmCKvDNC9N8t71qrsIQjf/xDU2H/7F3+dhs55uGdkcUFOA5Au2F5wPdtaMYVnl2
- hafApmD2UnEvX3O789alDv/DTZ8IYJK8tTsjxFsZReHdLllE5dFBvIy39Q4KHmPlD1sH
- W+dQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnFzq-00089U-Ku
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:59:11 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnFzo-0004fF-Ua
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:59:10 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47f5c2283b6so45578945e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 04:59:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770123521; x=1770728321; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=z9XAVErHudAdtUVaCD/df3evUo4dj686bpaSW7Nz3UA=;
- b=R/Q69dSfS7TC0Ilap+8HswHTltGXNt95GFhwDotv5lnMtw5TNjtc946eQe+2PHMD5A
- SdKLDa/WuBEejCOyhdTBbw3jkQirxlMxumsZqKL/LSqluqco5uRJo8NncWB6/v/zyqXW
- 2r0rcpmyAqp2Lq0mkE0cLbsLL70Wq1A/Dnfsc9AO2MxxhVqPPV/OwS5ap3srCQ4QPFpO
- jhb+qf9eiQG6+WjRkl+ILCGxmZKSHWCgnAcBQZdRy7OdDz8KXrh7bvXXMnAdA88uLLbn
- XIetQNUFGGc4l3h3+vwiLW2PHOpGEfenVElAws8HwsZoq8GcttRghlE3JwGwGKqwtYIa
- 5vpQ==
+ d=linaro.org; s=google; t=1770123547; x=1770728347; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UTf2zZnUfVI3aL4eHfZEebz0gWBjca7U3XVGGAlNN8Q=;
+ b=avXMZIlfvu43f2+IdKBLQGVAMIgvgqeVsQvCkqnRBn76GCdua6IwXKCkZhq6FKVz8x
+ QvAmYZuObuJCBInT0kVqHdNpGzd2vnHh5tXQwgLfby4EK0/Z1PYeb23Uf2nNygzPF22E
+ eWN7+CGrSZaxa0ht3igO/Wk+L96DEdOGc8WOYOAIBIldlq9BGYGZAUI0eLxYeEIoYMyu
+ 3beTq6iZ+6uVhiQZzYxrsPwE2Sr2ys01rxiLRkAp4BfR5/ZtGUzYwUbZPZjLDeqOPEQc
+ ocaIomSNSW68nAotvMXUr8QQhs63pcjD2n0TuWrDMXMDCv+7Pcu+mJWG4/Npnqe8dZy1
+ xOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770123521; x=1770728321;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z9XAVErHudAdtUVaCD/df3evUo4dj686bpaSW7Nz3UA=;
- b=eOQf5FJ7zQxleU1k8yD6LZN46q6WXLN/bLQpG+3poIQHKcx4f88OnYt6FFaYeezaiB
- nOdvhgTtamisXMcPMn5u6Kt7Uo2Po/Ri1pmpFBOKpR3XauwMc4UpDPj+hrmhJ6xi58Il
- QgwDrfHKDjioveevqZTq5JnLOkXNZQxPeSyXaF6ReDgoUsdZs2hqI+l5fHykd8o0V4E5
- JbkVL8FRdZ8iLKlmRqKh7fd7nHjWkLfOtYAaapH4mu8Z35QvkCo1lMyFvn+JE7mAKMDy
- rldZbQCEDkJ8K6IbqKpWkx1ODBY/QvoRrwagMJ0Ll/QJ0CvgI6RqtWYKxu+Fd6ydzxRK
- 49IA==
-X-Gm-Message-State: AOJu0YwuZIQrUIbWEC9KXf9/wh8aJIx2BM6b0EaAHFT8JoYp2CEAkZvY
- vIFnvZh1fY3W4ghhK5Y3FDQ3QzAJh1ZLcV4BWVL8RXUNucFjyR4cOXz+s0rOq+VPF3hTFBCzUwr
- K4FDs0M/l1CFqkWK1K16SQIm75UXR/rj0OwO3SByHPAlcgDqAdJl3pohVy1cc/IZlY8eRRqyME0
- Ml4ac6Wwzc8Et/BF0xeXufgsKq5LVMGIs=
-X-Gm-Gg: AZuq6aKPiZjcE/dhhiqG/lCq6upRl1VLarlBmZM/0Q3Ldb4vCehrTLSkm+3aOZwm+pE
- RZSsPNFBsqiSyT4E7zMk2eO4w0tiJZH6047whguaag/wpO/2BdDuOzWrvjDR6Fldz9IiN3L9srD
- ipTJc5GtIDffGLgNWBc7A7GqCR7iz5g020TogLlVFwzwvz1J8+8NfIKfPVe5HmZIr77Kcj
-X-Received: by 2002:a05:620a:29cc:b0:8c7:1ade:29a8 with SMTP id
- af79cd13be357-8c9eb266987mr1755477485a.23.1770123520807; 
- Tue, 03 Feb 2026 04:58:40 -0800 (PST)
-X-Received: by 2002:a05:620a:29cc:b0:8c7:1ade:29a8 with SMTP id
- af79cd13be357-8c9eb266987mr1755475985a.23.1770123520415; Tue, 03 Feb 2026
- 04:58:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770123547; x=1770728347;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UTf2zZnUfVI3aL4eHfZEebz0gWBjca7U3XVGGAlNN8Q=;
+ b=nkXkdPBhTjv4/V0Bb8BkaQlpMdwA092eepMDMd3zCgyCkE4KxiCw8uX4pJGqVG9Clu
+ rVzIlOSyAbid6spsKVPIJl99iYdIkMdGo6u0frNvGossV6fR0W/b5UC5q9s3mp04V/wU
+ 5DLI0GaF9AmboKiaXZgTAl9e6wqE3RIBc7tDlNwtv69LH8LJW0tV48QVIubjEVejO1pw
+ nmiu2Lwqj4dRrozT9V0RKT9EyEzLMpTbL4jig6ItA/0dzxIsnas5U/+MGz6NoKlhdp6x
+ 1kL+00tOSkNZ+93mStPC3MvKtQ0ikkV/cTxwm9UWiMTCPPW/pXpPg7ZwlB1LfSaUQ7uM
+ xZhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJFyDspZHTMjE0iTSo8SjJe1tTPuNh+rPQNr98irX3Nb2MyGxH3knGGDX1gZozuG0d56QHnTJv6RWM@nongnu.org
+X-Gm-Message-State: AOJu0Yx+kN4ZBP3hbFV2pZMtgQANhCMtCJrdeCU4+OkKXVUo3p1YN2mY
+ KwWpBw+tgllgM1vM1vhzPYA1AhctDVb27q78Rvo8vc/291tLymuDPr7vvSL9/Ne6N80=
+X-Gm-Gg: AZuq6aJ6QHKLPe+AG6w74rwuvkneoRhTcLJrpLi6jjwPbQCK9p1KscEDlzJZLspovpj
+ oyf9bFX+Eol3B6AboF1LC5u4u/t2mO8IlzA/xrqomC3kggTTfjVBkHEBfpd/3sfKePCyz+ZLghq
+ b+4ho/P+oDoxSRkPzZvNI+cdt2Ms2SVCo0kC2eZHKQbc5hOPqPAWFsPAzjldGzi7SoVv2VRJ+48
+ /rP+A7z69JDxGYN2w03S8osZg62t2IaQAIKNb98ZkFU+TRoIyluf1f4R6e/rTPiV3GDfkYK3IED
+ 1bgnC8cO2H0HbtcnJ+DjjsaQtPiaOlqqVDAN/QABRXvuDbpAMPm6XwyueMkYG0OEPnfzFRewuMZ
+ UGILgW0z14eMoCuXfhvg8ZxL7HCgMF2+v/hduNiHiDik53ujnOn033/WtxvX2FhmfGDjUT0Ywgn
+ Xv6O7b17280xBkktE8rP11xL0x3mOw8w8dmHPxN2TeoO1qkmz3bYYjlA==
+X-Received: by 2002:a05:600c:608e:b0:477:5c58:3d42 with SMTP id
+ 5b1f17b1804b1-482db45fcc0mr198438545e9.10.1770123547255; 
+ Tue, 03 Feb 2026 04:59:07 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483051287cfsm99465215e9.6.2026.02.03.04.59.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Feb 2026 04:59:06 -0800 (PST)
+Message-ID: <3f1ce23a-ce10-4725-b885-8cd6838f229d@linaro.org>
+Date: Tue, 3 Feb 2026 13:59:05 +0100
 MIME-Version: 1.0
-References: <CANc8XmBVnkbrsJ+DMKXA7HhepStAPHRpXOH8fB16e=bghPOsqQ@mail.gmail.com>
-In-Reply-To: <CANc8XmBVnkbrsJ+DMKXA7HhepStAPHRpXOH8fB16e=bghPOsqQ@mail.gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 3 Feb 2026 14:58:29 +0200
-X-Gm-Features: AZwV_QjqGUloTo03xmyr7ohCBrmD8SE-La_U52CSA7aZTOfpy0WSQGclEtjpil8
-Message-ID: <CAPMcbCq2oOYXo=O0D0fdBSG-vB7+q1=VtEqQpHqSzFU6+5Sq9g@mail.gmail.com>
-Subject: Re: QGA fsfreeze blocks QMP: need async fsfreeze or alternative?
-To: Noam Assouline <nassouli@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, 
- Qianqian Zhu <qizhu@redhat.com>, Stefan Hajnoczi <shajnocz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a4b2680649eaff6c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/15] target/arm: Handle SME-without-SVE on change of
+ EL
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260202133353.2231685-1-peter.maydell@linaro.org>
+ <20260202133353.2231685-8-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260202133353.2231685-8-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,136 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a4b2680649eaff6c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/2/26 14:33, Peter Maydell wrote:
+> aarch64_sve_change_el() currently assumes that SME implies
+> SVE, and will return without doing anything if SVE is not
+> implemented, skipping a possible requirement to change
+> the vector register state because the SME vector length
+> has changed. Update it to handle SME also.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Hi Noam
-
-QEMU agent was developed as a tool with a synchronous API, and adding any
-async commands requires a redesign of the API. QGA also does not support
-sending any event to the host.
-
-First of all, if you send 2 asing command "file-open-async" and get 2
-responses with FD, how can you know which FD is for which file? Yes, asked
-about FS freeze API, but the idea is the same. FS-freeze allow to provide a
-list of volumes to freeze, so you can have 2 requests to freeze 2 sets of
-volumes. And get the same question.
-
-Regarding multiple agents, this is theoretically possible because QGA is an
-independent application. If you run each QGA instance with a proper
-different state folder and a different communication channel, it should
-work. The main problem is that QGA instances will be independant and when
-QGA1 blocks all API execution because the guest has frozen FS, QGA2 will
-allow any command, including FS freeze.
-
-Unfortunately, I have no good answer for you. Windows VSS has a lot of
-limitations, and we are trying to somehow work with it. Windows VSS doesn't
-even have an API to report a FS state, so QGA builds and uses internal
-knowledge that will be out of sync after snapshot restoring.
-
-CC: @Yan Vugenfirer <yvugenfi@redhat.com> @Qianqian Zhu <qizhu@redhat.com> =
-Do
-you have any idea?
-
-Best Regards,
-Kostiantyn Kostiuk.
-
-
-On Tue, Feb 3, 2026 at 12:23=E2=80=AFPM Noam Assouline <nassouli@redhat.com=
-> wrote:
-
-> Hello qemu-devel!
->
-> I=E2=80=99m working on a KubeVirt fix for Windows VSS fsfreeze timeouts (=
-PR #16653
-> <https://github.com/kubevirt/kubevirt/pull/16653>). Up to now we=E2=80=99=
-ve
-> relied on libvirt=E2=80=99s default QEMU agent response timeout of 5 seco=
-nds, and
-> that often isn=E2=80=99t enough for VSS fsfreeze to complete. This PR pro=
-poses
-> increasing the timeout to 60 seconds so the freeze can finish successfull=
-y.
->
-> The challenge and the reason for this email is that qemu-ga processes
-> commands synchronously on a single connection. While guest-fsfreeze-freez=
-e
-> is running, the agent is effectively busy and other commands (e.g. ping,
-> status) will hang until it returns, which can impact pod readiness probes=
-.
-> I=E2=80=99m checking what we can do about this.
->
-> I=E2=80=99m mainly looking to understand whether this can be addressed in=
- qemu-ga,
-> and to get guidance on the right direction. Is there a supported way to u=
-se
-> multiple agent connections/channels, or is an async guest-fsfreeze-freeze
-> with a completion event the more appropriate solution? More generally, an=
-y
-> best=E2=80=91practice guidance around Windows fsfreeze timeouts and respo=
-nsiveness
-> would be very helpful!
->
-> Thanks in advance, and cc=E2=80=99ing qemu-ga maintainers.
->
-> Noam
-> KubeVirt Storage Ecosystem team
->
-
---000000000000a4b2680649eaff6c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi Noam=C2=A0<br><br>QEMU agent was developed as a to=
-ol with a synchronous API, and adding any async commands requires a redesig=
-n of the API. QGA also does not support sending any event to the host.<br><=
-br>First of all, if you send 2 asing command &quot;file-open-async&quot; an=
-d get 2 responses with FD, how can you know which FD is for which file? Yes=
-, asked about FS freeze API, but the idea is the same. FS-freeze allow to p=
-rovide a list of volumes to freeze, so you can have 2 requests to freeze 2 =
-sets of volumes. And get the same question.<br><br>Regarding multiple agent=
-s, this is theoretically possible because QGA is an independent application=
-. If you run each QGA instance with a proper different state folder and a d=
-ifferent communication channel, it should work. The main problem is that QG=
-A instances will be independant and when QGA1 blocks all API execution beca=
-use the guest has frozen FS, QGA2 will allow any command, including FS free=
-ze. <br><br>Unfortunately, I have no good answer for you. Windows VSS has a=
- lot of limitations, and we are trying to somehow work with it. Windows VSS=
- doesn&#39;t even have an API to report a FS state, so QGA builds and uses =
-internal knowledge that will be out of sync after snapshot restoring. <br><=
-br>CC:=C2=A0<a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" href=3D"mai=
-lto:yvugenfi@redhat.com" tabindex=3D"-1">@Yan Vugenfirer</a>=C2=A0<a class=
-=3D"gmail_plusreply" id=3D"plusReplyChip-1" href=3D"mailto:qizhu@redhat.com=
-" tabindex=3D"-1">@Qianqian Zhu</a>=C2=A0Do you have any idea?</div><div><b=
-r></div><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"g=
-mail_signature"><div dir=3D"ltr"><div>Best Regards,</div><div>Kostiantyn Ko=
-stiuk.</div></div></div></div><br></div><br><div class=3D"gmail_quote gmail=
-_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 3, 2026=
- at 12:23=E2=80=AFPM Noam Assouline &lt;<a href=3D"mailto:nassouli@redhat.c=
-om">nassouli@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex"><div dir=3D"ltr">Hello qemu-devel!<br><br>I=E2=80=99=
-m working on a KubeVirt fix for Windows VSS fsfreeze timeouts (<a href=3D"h=
-ttps://github.com/kubevirt/kubevirt/pull/16653" target=3D"_blank">PR #16653=
-</a>). Up to now we=E2=80=99ve relied on libvirt=E2=80=99s default QEMU age=
-nt response timeout of 5 seconds, and that often isn=E2=80=99t enough for V=
-SS fsfreeze to complete. This PR proposes increasing the timeout to 60 seco=
-nds so the freeze can finish successfully.<br><br>The challenge and the rea=
-son for this email is that qemu-ga processes commands synchronously on a si=
-ngle connection. While guest-fsfreeze-freeze is running, the agent is effec=
-tively busy and other commands (e.g. ping, status) will hang until it retur=
-ns, which can impact pod readiness probes. I=E2=80=99m checking what we can=
- do about this.<br><br>I=E2=80=99m mainly looking to understand whether thi=
-s can be addressed in qemu-ga, and to get guidance on the right direction. =
-Is there a supported way to use multiple agent connections/channels, or is =
-an async guest-fsfreeze-freeze with a completion event the more appropriate=
- solution? More generally, any best=E2=80=91practice guidance around Window=
-s fsfreeze timeouts and responsiveness would be very helpful!<br><br>Thanks=
- in advance, and cc=E2=80=99ing qemu-ga maintainers.<br><br>Noam<br>KubeVir=
-t Storage Ecosystem team</div>
-</blockquote></div>
-
---000000000000a4b2680649eaff6c--
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
