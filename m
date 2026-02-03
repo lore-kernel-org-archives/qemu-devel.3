@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B17E83063
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D67CE8305F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnCB5-0006KH-HA; Tue, 03 Feb 2026 03:54:31 -0500
+	id 1vnCB5-0006OX-Ua; Tue, 03 Feb 2026 03:54:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCAn-0005Up-KI; Tue, 03 Feb 2026 03:54:15 -0500
+ id 1vnCAi-0005Rf-3u; Tue, 03 Feb 2026 03:54:11 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCAj-0003Po-QD; Tue, 03 Feb 2026 03:54:12 -0500
+ id 1vnCAf-0003Po-F1; Tue, 03 Feb 2026 03:54:07 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
- 2026 16:52:39 +0800
+ 2026 16:52:38 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 3 Feb 2026 16:52:39 +0800
+ Transport; Tue, 3 Feb 2026 16:52:38 +0800
 To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Steven Lee
@@ -36,10 +36,10 @@ To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
  <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, Patrick Venture <venture@google.com>
-Subject: [PATCH v2 19/20] hw/i3c: Add hotplug support
-Date: Tue, 3 Feb 2026 16:52:19 +0800
-Message-ID: <20260203085229.1543287-20-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v2 18/20] hw/arm/aspeed: Build with I3C_DEVICES
+Date: Tue, 3 Feb 2026 16:52:18 +0800
+Message-ID: <20260203085229.1543287-19-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
 References: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
@@ -73,59 +73,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joe Komlodi <komlodi@google.com>
 
-This adds support for hotplugging in I3C.
-Conceptually this can be thought of as an I3C target being physically
-socketed onto a board.
-It is then the target's responsibility to go through the hot-join and
-DAA process so it can participate on the bus.
+Allows us to attach the mock I3C target
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
-
-Reviewed-by: Patrick Venture <venture@google.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/i3c/core.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/arm/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/i3c/core.c b/hw/i3c/core.c
-index fb4bfe5aec..1ab95c4866 100644
---- a/hw/i3c/core.c
-+++ b/hw/i3c/core.c
-@@ -11,6 +11,7 @@
- #include "qapi/error.h"
- #include "trace.h"
- #include "hw/i3c/i3c.h"
-+#include "hw/core/hotplug.h"
- #include "hw/core/qdev-properties.h"
- 
- /*
-@@ -26,11 +27,27 @@ static const Property i3c_props[] = {
-     DEFINE_PROP_UINT64("pid", struct I3CTarget, pid, 0),
- };
- 
-+static void i3c_realize(BusState *bus, Error **errp)
-+{
-+    qbus_set_bus_hotplug_handler(bus);
-+}
-+
-+static void i3c_class_init(ObjectClass *klass, const void *data)
-+{
-+    BusClass *k = BUS_CLASS(klass);
-+    k->realize = i3c_realize;
-+}
-+
- static const TypeInfo i3c_bus_info = {
-     .name = TYPE_I3C_BUS,
-     .parent = TYPE_BUS,
-     .instance_size = sizeof(I3CBus),
-     .class_size = sizeof(I3CBusClass),
-+    .class_init = i3c_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_HOTPLUG_HANDLER },
-+        { }
-+    }
- };
- 
- I3CBus *i3c_init_bus(DeviceState *parent, const char *name)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index ffdb293919..fefb2b9b33 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -547,6 +547,7 @@ config ASPEED_SOC
+     select I2C
+     select I3C
+     select DW_I3C
++    select I3C_DEVICES
+     select DPS310
+     select PCA9552
+     select PCA9554
 -- 
 2.43.0
 
