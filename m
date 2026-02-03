@@ -4,117 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2D8E87820
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B7FE87822
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnFBN-0006lZ-Ao; Tue, 03 Feb 2026 07:07:01 -0500
+	id 1vnFKZ-0001wu-Su; Tue, 03 Feb 2026 07:16:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnFBK-0006kG-TI
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:06:58 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnFBI-00009a-FT
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:06:58 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-649ae700ba0so3465048d50.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 04:06:55 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770120415; cv=none;
- d=google.com; s=arc-20240605;
- b=S5+zfy+TlTpxADE8kCWhQ4qtwDUDuxxIbgYM01wR4i12Sgr1g9Lq/xlP8BGaZCdPRl
- HuFVFo9tFwu6C0rAkx80hxbwEBBTLQakHqYguN4fdDvIvtqywndbbE4fs+m5dr0qICEa
- gNl2B09EZhVs2I4tJQHcdTwbJiReIDL1srtHHk7HbWFCyc/kCxDbmKJ81sKa69yFY5QM
- BAXJj83VLDAiJ4qRMY7ZMk7o6Yha9CyoxR6YfN9K6osa1At0JbXvr/FzsRvgMV2a7253
- HeuKtbirlaJTskyhAY3iwItwb78aSh3Ro3mCDpfgOHaZk9YneOIPhRd2gDA+JGd7MT2i
- vvFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1ykvjwTQbpRv8KzJHJarBZqCtPTrTnHI1dt7XSGI92o=;
- fh=tmJjK2J6iimjpqZ1PSzwBpfZsnohEb0p3+4izsbnbvA=;
- b=QCseaotHxoQcg5v65exucvbeBYC2AlisR2NQj5byh8+/XcE7pWLI4ho4omrDzUAxrk
- Coonhrbl7dlXTTzer11Q21KmOZXInXTdzEJ0FL1h6yuBM22PUhdVrLzbHaUBIazKbaFU
- 9yvkvixYhlv70F+nTZolPud6FSzDW/gFUxjjJVwpyfgfNA1BsbqbHrm7D/TI7DTq0wtP
- z5Nt9Gn9Fogb6zSBzQOT//vbttR/3BbgP5GUd97JSb47+FpzxCL+HmXD6AdQcfe4fNbX
- eWFQH+fP8igpa6hAJ65ZhlZkk3w2+W3XC46iGMwg/OwylMgpkc+Ci73elIgqlMC2bEt1
- Qw2g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770120415; x=1770725215; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1ykvjwTQbpRv8KzJHJarBZqCtPTrTnHI1dt7XSGI92o=;
- b=rK7eogWSgTmXPRsKYpTsWLlm2UULNr9qRn+zbUsp5DZJKRbl5pdOMFNNO5Eaq5MHQu
- 99VkQenYX/yu1r78Ao/uwDsMgeVl66/z6/RTEI36KUZQjukCsY1dVwFFLheJS+phjOiN
- OeiANKAv5V7NIT9SJ9NPzbGiKnuhGUINhsTAe8bIOXg0MJC+dZwNO8apzl6mGf/S6/Vn
- tmexaCOXlwyxVNkn1qdPn+xTvcZTVAPmoyTcwNdSBT0uQUQERgOLv+rP/vjC+owSqgUI
- /rqXpKphPnr8D/4rLrTiHZiQ5ziZCuylRFcrLWGSvXwRiqeCJq0mNGAPS0/g47H4lHw3
- RdQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770120415; x=1770725215;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1ykvjwTQbpRv8KzJHJarBZqCtPTrTnHI1dt7XSGI92o=;
- b=PSqybAsrtY6EMlcNpEE/b19lrcvksnYcsA+lUkl3DMAMNZlFc+TbcaH+mdrbXGd+kv
- T0n3SrjCIAigaOZv2ptACjBjbCO2vDcz2wDAt0RXW3v0J0wFohnNXk/ljCnzNyhMjaVI
- wqKVZjYqPZnfnY69zOdOMOrxPoGCGuHKNBTxoS1/0ji6X8QLyXA1KcWlNMi3zs84es6X
- dgVyeCdPphxaz+hQLX701rAkrmSgUNZQY1WEgy1Fvz38TOJuDYhOWrtUrrGvC6FFtFja
- QDpiwTMaAZsZIVRTiVejysfBWKYa36a6EgtErWRmN+94DM4Jl3pY9HEEx89nMKDg5jPK
- sqeQ==
-X-Gm-Message-State: AOJu0YyicsJYhuLls22tMRU1teZ1x143iUez/ZSqrR8TFLCgpZFBlJ2a
- CdNwnFRLDCpQUAlazPmjCSzP1g5hR/PysgwSwC+vparrkknthkObl7+5hcDCj5b+et1glC8iO+1
- VZHdU+YMM+ikKQmmGK1Jmq8vVLT8V0KfW51kZgWFURQ==
-X-Gm-Gg: AZuq6aK0jT0VKoMfnx4afA7dymWrEBGvA8Rr6O79H3oCXUesWSvI3J0uSAHuAmTjMxj
- uTTyrZJXXK7I2p8NsER/lCWwJ3Z1wg2wVdF9El260z1g3EQ8P+EFBCadG82KftAftnnpFzFGL5l
- 7UhX/qhFos+adlJUEf7ZHdN/M//GEDYGQV5MGI86gF6aMs/Ml0QGWdn2IjmUVVlpt7wRiX0P4BQ
- nnE8TNwiRbFrZf4hSzZq+2ZBDgvu1oC7eLpOgBHy1xM1OHwC0GQHYjq6ya1ZkZO6bfCJw==
-X-Received: by 2002:a05:690c:4b8b:b0:794:baaa:ccb2 with SMTP id
- 00721157ae682-794baaad2a0mr194716507b3.6.1770120414888; Tue, 03 Feb 2026
- 04:06:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vnFKN-0001se-4B
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:20 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vnFKJ-0003JN-SA
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:18 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 613CF1El088794
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 3 Feb 2026 21:16:07 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=ad3gBoKGRG5Bq20NGv+b002hLbxD/JUh7WCRLHEfdtA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1770120967; v=1;
+ b=Gw4uvF13VpBxIb+ISnhgsMIus80ZyA2mxwYxxs5+FezkQGFUSxiUSgLGnc1Vltho
+ Yxw+i+VxmzbPw4bRSRKObnioHRCuHrY/OuKSHa7fBhUWKMrfcNqSNdjtoy9Ni48W
+ uUzqAf0XqJJYu/0s3aM7ZLn/OUN0i42xmPa0WBQSS2EllmefvY8X8+8gdMbIOvSy
+ Nv5dRLSc1QMldSWzLesgEbp4ZWNgo4PEg3k3YLsOF4QgqAS0rXJYCdmCow9UPdJY
+ XehKDDCQ7uK0dqxo0PR2avkOEysHIqOOBE5Vwy0sAT1xmspIh0B1p86yCGGDYVmk
+ kzorn+4pSIYbQXnO4z4S+g==
+Message-ID: <3c9c5b16-f4cd-46b8-9596-d7f9260963d6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 3 Feb 2026 21:15:35 +0900
 MIME-Version: 1.0
-References: <20260203115201.2387721-1-alex.bennee@linaro.org>
- <20260203115201.2387721-11-alex.bennee@linaro.org>
-In-Reply-To: <20260203115201.2387721-11-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Feb 2026 12:06:43 +0000
-X-Gm-Features: AZwV_QgdRJ7OfJQizXGbRJ6Xq7Jz4t-wxxvtSpokK71Nv8PRhI7_QQ7M8Vz4DNU
-Message-ID: <CAFEAcA_V9vCSkZ-qPWw1s6qtqwhU_gbS33K0wHThpbxsfLrbmg@mail.gmail.com>
-Subject: Re: [PATCH 10/11] include/gdbstub: fix typo
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- David Gibson <david@gibson.dropbear.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-ppc@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-s390x@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/12] virtio-gpu-dmabuf: Remove rcu_read_lock/unlock
+ from virtio_gpu_create_udmabuf()
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
+ <20260203073200.848183-5-vivek.kasireddy@intel.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260203073200.848183-5-vivek.kasireddy@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,41 +79,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Feb 2026 at 11:52, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  include/gdbstub/commands.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-> index bff3674872e..989a95c33f9 100644
-> --- a/include/gdbstub/commands.h
-> +++ b/include/gdbstub/commands.h
-> @@ -50,7 +50,7 @@ typedef union GdbCmdVariant {
->   * '.' -> Skip 1 char unless reached "\0"
->   * Any other value is treated as the delimiter value itself
->   *
-> - * @allow_stop_reply: True iff the gdbstub can respond to this command w=
-ith a
-> + * @allow_stop_reply: True if the gdbstub can respond to this command wi=
-th a
->   * "stop reply" packet. The list of commands that accept such response i=
-s
->   * defined at the GDB Remote Serial Protocol documentation. See:
->   * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Sto=
-p-Reply-Packets.
+On 2026/02/03 16:30, Vivek Kasireddy wrote:
+> There is no need to wrap the call to qemu_ram_block_from_host() with
+> rcu_read_lock/unlock as we already hold a reference to the memory
+> region that owns the ram block. Note that, the reference was obtained
+> via dma_memory_map() while creating the mapping.
+> 
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Alex Williamson <alex@shazbot.org>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-"iff" is not generally a typo: it is an abbreviation for "if and only if".
-We tend to prefer not to use that abbreviation, though, because
-unless you happen to have a background in mathematics you probably
-won't recognise it.
-
-In this case I don't think spelling out "if and only if" brings
-us any more clarity than using a plain "if", so I'm OK with the
-change itself and we can just tweak the commit message.
-
-thanks
--- PMM
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
