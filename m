@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F59E8305B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D474E8305B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnAu2-0007Jq-OF; Tue, 03 Feb 2026 02:32:50 -0500
+	id 1vnAtw-00076q-Ow; Tue, 03 Feb 2026 02:32:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnAtw-00077Q-OB
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:44 -0500
+ id 1vnAts-00073Y-Tg
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:42 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnAtt-00067a-95
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:43 -0500
+ id 1vnAtq-0006Ca-Q4
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770103961; x=1801639961;
+ t=1770103958; x=1801639958;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ztabUCwYVEnXrUXpODUpIX/j6IsbTnuLW3gEfsQfQNk=;
- b=i8sk22S6pnXJtIBR2UN5La0hF9dgziWAZQ9vsjmkoxqPW/HOqDL2XIqu
- kSZ8fNpgrb8I1JMKjfQOJxrULzRbgXsrajWck9Oy6AZ+jRjO1wgYRncMN
- hSEgWNmQjmPcayErIuUq6y2rpv2YmFWyiXSP5dKTKHOa4BS37eSW1wJYG
- xHpzxEV7zB1IvQnJcGmRAd0Q2m73YOfBK+tS+bMAOPchFi/zLCeZ/6CMl
- VOpIntuHu+Iy+C6bb+9zVdO5MECIg5f1+p3d8g1am2YAiSr/nV6SiiE3r
- BsSUNcOrH1lYjtvcRyOoPYmgW9ICIZHfwmvl6C8k/ppHYdJm9QN79vhFN w==;
-X-CSE-ConnectionGUID: R3ewMf6hRKe8pOBwhRlR2A==
-X-CSE-MsgGUID: VUiBpzp5QiqV5SWl1jOdiw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82640885"
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="82640885"
+ bh=BU+2P8UJQiCNZ6B+Dn1fq51GInHfsJ6cD01Wea2i1DY=;
+ b=gXgXUqnv8Y9rkbTKKYratq9UYAkgFRUaexLgwLcwulMZJSmY84m43S4Y
+ 1GYzlZejJwQ9S637SY2syYR0GHRnAMd9B3tgJWmIZa3pilshZ3z8ZKmcA
+ RGVWvUbMUN1G/6OOJ1KDPfSsCH/OEbeO2tDeOJKjHVd4HablNqVHJCoYQ
+ b7LhYqFb2xYjGNWh1sBA14FNLjwrftXp8NrhYPT6MmMwGLDjHLff+EZ2g
+ uk3kXzloj16KqxCz7ntUeaBvrT7+Z8JaeBvHcf2L8xm5dAFubGONJ0ZQ5
+ B2PjDwF7XDKrSv88t8l/pqxqeRGCvTVWCJ8y5K17Tbk7aL4aSWznMlXEA g==;
+X-CSE-ConnectionGUID: 7mI9JMhIRDKv4O9XGB4rvQ==
+X-CSE-MsgGUID: ++d8TWCRS7amXLvPxomb3Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82640871"
+X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="82640871"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2026 23:32:34 -0800
-X-CSE-ConnectionGUID: m2MDBNH8TN+0R7IXY8t6ug==
-X-CSE-MsgGUID: Mpec0BsKSYa6MT/ufH4ETA==
+ 02 Feb 2026 23:32:33 -0800
+X-CSE-ConnectionGUID: lN3gkNMYT3+jgMx/Meuwgg==
+X-CSE-MsgGUID: qAcldugCStu7xVutd0xujg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="247373084"
+X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="247373067"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2026 23:32:34 -0800
+ 02 Feb 2026 23:32:33 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -55,10 +55,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 03/12] virtio-gpu: Rename udmabuf files and helpers to
- dmabuf
-Date: Mon,  2 Feb 2026 23:30:10 -0800
-Message-ID: <20260203073200.848183-4-vivek.kasireddy@intel.com>
+Subject: [PATCH v5 01/12] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Date: Mon,  2 Feb 2026 23:30:08 -0800
+Message-ID: <20260203073200.848183-2-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260203073200.848183-1-vivek.kasireddy@intel.com>
 References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
@@ -90,8 +90,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is prep-work for adding the ability to create dmabuf fds from
-VFIO devices in addition to udmabuf.
+There are cases when a blob resource's backing might get detached
+and re-attached again such as when the underlying object is getting
+migrated in the Guest. In these situations, we need to obtain a new
+dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -102,167 +104,24 @@ Cc: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/meson.build                               |  4 ++--
- ...gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |  4 ++--
- .../{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c}    | 12 ++++++------
- hw/display/virtio-gpu.c                              |  8 ++++----
- include/hw/virtio/virtio-gpu.h                       |  6 +++---
- 5 files changed, 17 insertions(+), 17 deletions(-)
- rename hw/display/{virtio-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} (79%)
- rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (94%)
+ hw/display/virtio-gpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 90e6c041bd..f5f92b1068 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -69,9 +69,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
-   virtio_gpu_ss.add(when: 'CONFIG_VIRTIO_GPU',
-                     if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
-   if host_os == 'linux'
--    virtio_gpu_ss.add(files('virtio-gpu-udmabuf.c'))
-+    virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
-   else
--    virtio_gpu_ss.add(files('virtio-gpu-udmabuf-stubs.c'))
-+    virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
-   endif
-   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
-   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
-diff --git a/hw/display/virtio-gpu-udmabuf-stubs.c b/hw/display/virtio-gpu-dmabuf-stubs.c
-similarity index 79%
-rename from hw/display/virtio-gpu-udmabuf-stubs.c
-rename to hw/display/virtio-gpu-dmabuf-stubs.c
-index f692e13510..01067e246d 100644
---- a/hw/display/virtio-gpu-udmabuf-stubs.c
-+++ b/hw/display/virtio-gpu-dmabuf-stubs.c
-@@ -7,12 +7,12 @@ bool virtio_gpu_have_udmabuf(void)
-     return false;
- }
- 
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     /* nothing (stub) */
- }
- 
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     /* nothing (stub) */
- }
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-similarity index 94%
-rename from hw/display/virtio-gpu-udmabuf.c
-rename to hw/display/virtio-gpu-dmabuf.c
-index d804f321aa..c34d4c85bc 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-dmabuf.c
-@@ -68,7 +68,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-     g_free(list);
- }
- 
--static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
-+static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     res->remapped = mmap(NULL, res->blob_size, PROT_READ,
-                          MAP_SHARED, res->dmabuf_fd, 0);
-@@ -79,7 +79,7 @@ static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
-     }
- }
- 
--static void virtio_gpu_destroy_udmabuf(struct virtio_gpu_simple_resource *res)
-+static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     if (res->remapped) {
-         munmap(res->remapped, res->blob_size);
-@@ -128,7 +128,7 @@ bool virtio_gpu_have_udmabuf(void)
-     return memfd_backend;
- }
- 
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     void *pdata = NULL;
- 
-@@ -141,7 +141,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-         if (res->dmabuf_fd < 0) {
-             return;
-         }
--        virtio_gpu_remap_udmabuf(res);
-+        virtio_gpu_remap_dmabuf(res);
-         if (!res->remapped) {
-             return;
-         }
-@@ -151,10 +151,10 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-     res->blob = pdata;
- }
- 
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     if (res->remapped) {
--        virtio_gpu_destroy_udmabuf(res);
-+        virtio_gpu_destroy_dmabuf(res);
-     }
- }
- 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 9930a21317..bc4d33c4dc 100644
+index f23eec6862..3d58cebf4b 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -360,7 +360,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+@@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
          return;
      }
- 
--    virtio_gpu_init_udmabuf(res);
-+    virtio_gpu_init_dmabuf(res);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
++
++    if (res->blob_size) {
++        virtio_gpu_init_udmabuf(res);
++    }
  }
  
-@@ -917,7 +917,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-     res->addrs = NULL;
- 
-     if (res->blob) {
--        virtio_gpu_fini_udmabuf(res);
-+        virtio_gpu_fini_dmabuf(res);
-     }
- }
- 
-@@ -954,7 +954,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-     }
- 
-     if (res->blob_size) {
--        virtio_gpu_init_udmabuf(res);
-+        virtio_gpu_init_dmabuf(res);
-     }
- }
- 
-@@ -1440,7 +1440,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
- 
--        virtio_gpu_init_udmabuf(res);
-+        virtio_gpu_init_dmabuf(res);
- 
-         resource_id = qemu_get_be32(f);
-     }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 58e0f91fda..e3d351a2d4 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -354,10 +354,10 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-                                    struct virtio_gpu_set_scanout_blob *ss,
-                                    uint64_t blob_size);
- 
--/* virtio-gpu-udmabuf.c */
-+/* virtio-gpu-dmabuf.c */
- bool virtio_gpu_have_udmabuf(void);
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res);
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res);
- int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-                              uint32_t scanout_id,
-                              struct virtio_gpu_simple_resource *res,
+ static void
 -- 
 2.50.1
 
