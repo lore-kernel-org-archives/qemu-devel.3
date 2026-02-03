@@ -4,109 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0509FE87852
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 18:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C4AE8785A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 19:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnLRw-0004do-He; Tue, 03 Feb 2026 13:48:32 -0500
+	id 1vnLjT-0001Aw-9M; Tue, 03 Feb 2026 14:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vnLRj-0004d3-2W; Tue, 03 Feb 2026 13:48:20 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnLjR-0001AS-Qw
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 14:06:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vnLRf-0000yX-MZ; Tue, 03 Feb 2026 13:48:17 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 613A8TDX017607;
- Tue, 3 Feb 2026 18:48:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2xipie
- ocgcAs9CUQMhLzOA/qgx9GBKaOqkR3jEP4kKY=; b=MSX9P3OditLbXQsblMCBbl
- hOY3Fvi4JrRqRvodUEDSR3eFsMo8f4iel+uwG+NiF9q+SWbztwrr5TNLhQo9wyah
- a48Kvii347+ZRm7Ny9OfX65MD1gMyZxZ36/991KVDnnOu837ev7mLrlc2DoD4ipp
- vdhhRWj0M7laD6ADpL8z62CUMYnLYpeTMwujZR9HSd0sht9reV4HY3e/zQwfaDu/
- VMXxACnOUJCAzqkrKLnr9/7XOWfFByGLpadWayY7Wx0VGfud/0Fm6FSDVXyztRcA
- utgq/2mqJ/lObiAUZwnQoTdMv1nX6qal1CcsnkGBlR7Bo46hqVWo3yZi2DyBt4jQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dt6rd2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Feb 2026 18:48:12 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 613Ghcce005921;
- Tue, 3 Feb 2026 18:48:11 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1x9ja1jt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Feb 2026 18:48:11 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 613Im90o38732326
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Feb 2026 18:48:09 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA7B55805D;
- Tue,  3 Feb 2026 18:48:09 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D403358059;
- Tue,  3 Feb 2026 18:48:08 +0000 (GMT)
-Received: from [9.61.249.4] (unknown [9.61.249.4])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  3 Feb 2026 18:48:08 +0000 (GMT)
-Message-ID: <3ddb6f91-4308-420d-b057-d26c1c727015@linux.ibm.com>
-Date: Tue, 3 Feb 2026 10:48:08 -0800
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnLjP-00038s-2S
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 14:06:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770145592;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dpi1fAKX9oUohLhbdHmU428yqMvlA1Nr+Fea/q0NGEo=;
+ b=TZGia3M0LvF77G4CxLqkENJpEcDEZeT6qnRPtmoKc9KorzwegduZw3U5MFwSnyscKoFTqC
+ BD54nml8tIRz47+Z1+UBBlcyqbH7ofVgUEJIGA4W20aOqkGQhHNJKURNU0mqlvArcqIapN
+ HJJ62M7HVsf0Y09kQtoQC7tZdueMINw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-492-ZFDd-2hVPei4AgpZHIQ1NQ-1; Tue, 03 Feb 2026 14:06:31 -0500
+X-MC-Unique: ZFDd-2hVPei4AgpZHIQ1NQ-1
+X-Mimecast-MFC-AGG-ID: ZFDd-2hVPei4AgpZHIQ1NQ_1770145590
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47ee432070aso48121995e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 11:06:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770145590; x=1770750390; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dpi1fAKX9oUohLhbdHmU428yqMvlA1Nr+Fea/q0NGEo=;
+ b=uLMEFtxAPn6gYYSrNAx+w70fInAbaS+056a4XdJluh/n0TB5EDmvp1xF4R0tme9qxV
+ PsfhrgYV5cj55dBmmvx3QinhyOnZnPZVxHDPHfTgSUvJHI4XjCsqK2nmWUxwlVF1l9pO
+ 5CgW/VukgGfaEaYyXhfXFkN/w7oZvvkgBC+rnkqYUQFIHZhHYLFyw0CNyOeGWxEcnKxE
+ PCq5JtsCMfBSssKygUBNTFeu/xtNghVRTqGzv7jVi5RUOMhrUfAb/kRll5iLE4Js4MnY
+ aBpUxIuLg3/ZLjUcd5VzhCkZMI1V+68tb5YWy/FtTXSnZq3GtUQsd12fH3ym9UzXk5rh
+ 3qdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770145590; x=1770750390;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Dpi1fAKX9oUohLhbdHmU428yqMvlA1Nr+Fea/q0NGEo=;
+ b=OSx9LXNjfl4YlICQ8VwvL7mEGXkE9WxI7sYP9bMRajvW3v8QWj3w38zAKAlLO5xN+o
+ czJQLnHmHFU5ZhCuTz1aVX3XVpKR9ATOo9Tcn/U0kbxJAuEpv13XPu/zdzQ3LHQd8F/S
+ rwBUP8rSILMuMxXG06hRi35lX9PcJORBCUKnHuLUWe/N/aZWr6MQ+1U+n/HP6hqc3YOj
+ SQR3vfuk4HI+41OWGop9d3SgYoSMlxPAqlwxg9MPHws6ckRUA8dIXJe6wtTNagI4tyGI
+ F2ez3NcHTHyJiPC5PdNEuNwE2yw0Y+s4DDS95zYb47xTYwYYVztwr1wjVnAHV2xdOMV6
+ aZMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXB6tOTtv28MN4bUA5JUxoHJ3h8e6tGnJwiiYw3NgXgZ4hD9gOvWdoXANcBeeW8CCe29XW/zOw2uUAx@nongnu.org
+X-Gm-Message-State: AOJu0YyTdUU/ihP0dvVTqJzICUbf3aoXIS65QJn/yigVCplpm+lwkZBk
+ LglTAM8/B/+MO8gOCjAUO6QXPAxcT323JsY+4/O2fb+jZVlu7B908fbGl2k1/fcBNFsDvUsp/Sn
+ ENF3oClO2FhMuL1N9q3R9dmRHmegFhWWEtaPqBCH7w2hADwu8D9GHyac2
+X-Gm-Gg: AZuq6aLiXU0Zz774zIJG9xKV9UmwomyXkjYcZWQSfIO7LCEwXENMyU84h/XPBwNnPCC
+ iWxHi0eCm+FQbTpLfxhPYneUQt6nKavjJGzWskR2mwO7Y9m+jLnXGPT/dVkOwugKoyiLZJSJuPf
+ iN8ne6ScKU2NIJ7h5yD1eThlenmoUtqb4iH9nWJN0YEUFpLWAaJWifM2chkYFijQCV+/kYNvpHL
+ S5Hm0MJs982jm26ksi2AgvwZPzY62LXZ6jloHd4G9ACFysJlDERVueeCH9lLjQgTaMDh+HLXoj3
+ q6swTDidKIbJ2CRFF2SmDal+hhBO8Awn0Sgc0Yzhq63zW5C21yi6aSA2mFGE3RLnWHM+COVWLv6
+ IVA/bbtLsndTKVwo8BTf2qtzOJ/sOhEOL+Q==
+X-Received: by 2002:a05:600c:3555:b0:477:9b35:3e49 with SMTP id
+ 5b1f17b1804b1-4830e93e9eamr10936585e9.3.1770145589871; 
+ Tue, 03 Feb 2026 11:06:29 -0800 (PST)
+X-Received: by 2002:a05:600c:3555:b0:477:9b35:3e49 with SMTP id
+ 5b1f17b1804b1-4830e93e9eamr10936225e9.3.1770145589441; 
+ Tue, 03 Feb 2026 11:06:29 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4830515381esm85519285e9.11.2026.02.03.11.06.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 11:06:28 -0800 (PST)
+Date: Tue, 3 Feb 2026 14:06:25 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v3 04/11] hw/virtio: Use
+ VirtIODevice::access_is_big_endian field
+Message-ID: <20260203140109-mutt-send-email-mst@kernel.org>
+References: <20260201232924.93399-1-philmd@linaro.org>
+ <20260201232924.93399-5-philmd@linaro.org>
+ <20260202024316-mutt-send-email-mst@kernel.org>
+ <87bji7pa2e.fsf@draig.linaro.org>
+ <20260202105847-mutt-send-email-mst@kernel.org>
+ <20260202185233.GC405548@fedora>
+ <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+ <1804511f-a048-4eb8-9cf3-1c75bdf4b277@linaro.org>
+ <20260203055247-mutt-send-email-mst@kernel.org>
+ <2426d548-2c6f-4bef-9c30-efb97dcc69dd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/14] pc-bios/s390-ccw: Introduce PCI device
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-10-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260127161547.459443-10-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDE0NyBTYWx0ZWRfX86pF59huPQCV
- 5oYvEaXF7u5BdHgAz1Lp6QX4c40wdPyjwCEv3bGRLgn3jcVJmxDkjHypxZgLmYJ4pLt2uCLkFv8
- hE0Y9ZLvOihTqCBMCw7hWnDxEh1iLQI/5qjZDjrhNe5Xg404gt+YD8WsGmnq/6EsLqGm0f8c/H6
- sXTVLFMt4LOKZQAt+6ZkDrdImpz0eBQD948SsMSv9X7bWL2ZC6OJRZk6Xnpn0yxrgmMlVBTXJZQ
- 8BoiUGCVdcZfql5SqUO9opARuLrCTS9LX2kMwIv2bj9QQHDjC9pMM4WHOmqRebqi4Jzo7FCCKKd
- 1iHyu13l+3ACMCQK9JfCCB7TpsDRvnMlVzF5TLVxKEDNOLGU5LVPIjnJfmW6nepCqUa+yGrlVm0
- oHzzEOt8hJao3twGPLbZsLcNm7c803DBN3Vn0jttGbdlulIVAA8OMJ6SGFcRV+oUA31VmmUHN/F
- OoH1wN6Jfai3ucC4rVQ==
-X-Proofpoint-GUID: 2OnJDnpHsvldT_Nn5qgOTOflajrQucRH
-X-Proofpoint-ORIG-GUID: 2OnJDnpHsvldT_Nn5qgOTOflajrQucRH
-X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=698242ec cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=VH4ka7d8O3_K94elNbEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-03_05,2026-02-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602030147
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2426d548-2c6f-4bef-9c30-efb97dcc69dd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,213 +132,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 1/27/2026 8:15 AM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On Tue, Feb 03, 2026 at 09:31:04AM -0800, Pierrick Bouvier wrote:
+> On 2/3/26 3:07 AM, Michael S. Tsirkin wrote:
+> > On Mon, Feb 02, 2026 at 07:22:16PM -0800, Pierrick Bouvier wrote:
+> > > On 2/2/26 11:25 AM, Pierrick Bouvier wrote:
+> > > > On 2/2/26 10:52 AM, Stefan Hajnoczi wrote:
+> > > > > 
+> > > > > This command-line lets you benchmark virtio-blk without actual I/O
+> > > > > slowing down the request processing:
+> > > > > 
+> > > > >      qemu-system-x86_64 \
+> > > > >          -M accel=kvm \
+> > > > >          -cpu host \
+> > > > >          -m 4G \
+> > > > >          --blockdev file,node-name=drive0,filename=boot.img,cache.direct=on,aio=native \
+> > > > >          --blockdev null-co,node-name=drive1,size=$((10 * 1024 * 1024 * 1024)) \
+> > > > >          --object iothread,id=iothread0 \
+> > > > >          --device virtio-blk-pci,drive=drive0,iothread=iothread0 \
+> > > > >          --device virtio-blk-pci,drive=drive1,iothread=iothread0
+> > > > > 
+> > > > > Here is a fio command-line for 4 KiB random reads:
+> > > > > 
+> > > > >      fio \
+> > > > >          --ioengine=libaio \
+> > > > >          --direct=1 \
+> > > > >          --runtime=30 \
+> > > > >          --ramp_time=10 \
+> > > > >          --rw=randread \
+> > > > >          --bs=4k \
+> > > > >          --iodepth=128 \
+> > > > >          --filename=/dev/vdb \
+> > > > >          --name=randread
+> > > > > 
+> > > > > This is just a single vCPU, but it should be enough to see if there is
+> > > > > any difference in I/O Operations Per Second (IOPS) or efficiency
+> > > > > (IOPS/CPU utilization).
+> > > > > 
+> > > > Thanks very much for the info Stefan. I didn't even know null-co
+> > > > blockdev, so it definitely would have taken some time to find all this.
+> > > > 
+> > > > For what it's worth, I automated the benchmark here (need podman for
+> > > > build), so it can be reused for future changes:
+> > > > https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
+> > > > 
+> > > > ./build.sh && ./run.sh path/to/qemu-system-x86_64
+> > > > 
+> > > > My initial testing showed a 50% slow down, which was more than
+> > > > surprising. After profiling, the extra time is spent here:
+> > > > https://github.com/qemu/qemu/blob/587f4a1805c83a4e1d59dd43cb14e0a834843d1d/target-info.c#L30
+> > > > 
+> > > > When we merged target-info, there have been several versions over a long
+> > > > time, and I was 100% sure we were updating the target_info structure,
+> > > > instead of reparsing the target_name every time. Unfortunately, that's
+> > > > not the case. I'll fix that.
+> > > > 
+> > > > With that fix, there is no difference in performance (<1%).
+> > > > 
+> > > > I'll respin a v4 with the target info fix, initial v1 changes and
+> > > > benchmark results.
+> > > > 
+> > > > Thanks for pointing the performance issue, there was one for sure.
+> > > > 
+> > > > Regards,
+> > > > Pierrick
+> > > 
+> > > After proper benchmarking, I get those results (in kIOPS) over 20 runs, all
+> > > including target_arch fix I mentioned.
+> > > 
+> > > reference: mean=239.2 var=12.16
+> > > v1: mean=232.2 var=37.06
+> > > v4-wip (optimized virtio_access_is_big_endian): mean=235.05 var=18.64
+> > > 
+> > > So basically, we have a 1.7% performance hit on a torture benchmark.
+> > > Is that acceptable for you, or should we dig more?
+> > > 
+> > > Regards,
+> > > Pierrick
+> > 
+> > Could we use some kind of linker trick?
+> > Split just the ring manipulation code from
+> > virtio.c and keep it target specific.
+> > 
+> 
+> While it would allow to extract the common part, unfortunately, as long as
+> we keep a target specific part, we still have a problem to solve.
 >
-> Define selected s390x PCI instructions.
 >
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/Makefile |   2 +-
->   pc-bios/s390-ccw/pci.c    | 194 ++++++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/pci.h    |  80 ++++++++++++++++
->   3 files changed, 275 insertions(+), 1 deletion(-)
->   create mode 100644 pc-bios/s390-ccw/pci.c
->   create mode 100644 pc-bios/s390-ccw/pci.h
->
-> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-> index 9c29548f84..a62fc9d766 100644
-> --- a/pc-bios/s390-ccw/Makefile
-> +++ b/pc-bios/s390-ccw/Makefile
-> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
->   
->   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
->   	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
-> -	  virtio-ccw.o clp.o
-> +	  virtio-ccw.o clp.o pci.o
->   
->   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
->   
-> diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
-> new file mode 100644
-> index 0000000000..9656be45ca
-> --- /dev/null
-> +++ b/pc-bios/s390-ccw/pci.c
-> @@ -0,0 +1,194 @@
-> +/*
-> + * s390x PCI funcionality
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "clp.h"
-> +#include "pci.h"
-> +#include "bswap.h"
-> +#include <stdio.h>
-> +#include <stdbool.h>
-> +
-> +/* PCI load */
-> +static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
-> +                        uint8_t *status)
-> +{
-> +    union register_pair req_off = {.even = req, .odd = offset};
-> +    int cc = -1;
+> Indeed, some symbols (may be ring manipulation code, or just functions
+> mentioned below) will still be duplicated, and in the end, when we'll link
+> two targets needing different versions, we'll have a conflict.
 
-Nit: Setting cc = -1 doesn't make any difference since the cc gets 
-overwritten and the pcilg will return cc > 0.
+Shrug. The generic slower one can be made stronger and be used then.
+This is not an new or unsolveable problem.
 
 
-> +    uint64_t __data;
-> +
-> +    asm volatile (
-> +        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "+d" (cc), [data] "=d" (__data),
-> +          [req_off] "+d" (req_off.pair) :: "cc");
-> +    *status = req_off.even >> 24 & 0xff;
-> +    *data = __data;
-> +    return cc;
-> +}
-> +
-> +/* PCI store */
-> +static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
-> +                         uint8_t *status)
-> +{
-> +    union register_pair req_off = {.even = req, .odd = offset};
-> +    int cc = -1;
-
-Nit: Same as pcilg.
+> Since our goal for a single-binary is to have at least arm and another base
+> architecture, we are in this situation now.
+> 
+> So the only solutions left are:
+> - accept the 1.7% regression, and we can provide more "real world"
+> benchmarks to show that it gets absorbed in all existing layers
+> - compute virtio_access_is_big_endian once and reuse this everywhere: that's
+> what Philippe implemented in his patches.
+> 
+> What would you prefer?
 
 
-> +
-> +    asm volatile (
-> +        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
-> +        : [data] "d" (data)
-> +        : "cc");
-> +    *status = req_off.even >> 24 & 0xff;
-> +    return cc;
-> +}
-> +
-> +/* store PCI function controls */
-> +static inline int stpcifc(uint64_t req, PciFib *fib, uint8_t *status)
-> +{
-> +    uint8_t cc;
-> +
-> +    asm volatile (
-> +        "     .insn   rxy,0xe300000000d4,%[req],%[fib]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
-> +        : : "cc");
-> +    *status = req >> 24 & 0xff;
-> +    return cc;
-> +}
-> +
-> +/* modify PCI function controls */
-> +static inline int mpcifc(uint64_t req, PciFib *fib, uint8_t *status)
-> +{
-> +    uint8_t cc;
-> +
-> +    asm volatile (
-> +        "     .insn   rxy,0xe300000000d0,%[req],%[fib]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
-> +        : : "cc");
-> +    *status = req >> 24 & 0xff;
-> +    return cc;
-> +}
-> +
-> +int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-> +              uint8_t len)
-> +{
-> +
-> +    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-> +    uint8_t status;
-> +    int rc;
-> +
-> +    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
-> +    switch (len) {
-> +    case 1:
-> +    case 2:
-> +    case 4:
-> +    case 8:
-> +        rc = pcistg(data, req, offset, &status);
-> +        break;
-> +    default:
-> +        rc = -1;
-> +    }
-> +
-> +    /* Error condition detected */
-> +    if (rc == 1) {
+Let's find a way where people who are not interested in a single binary
+do not have to pay the price, please.
 
-According to the architecture a return code of 0 would indicate normal 
-completion. But we do have error scenarios that can return error code > 
-1. For example an error code of 3 would indicate 'Unrecognized handle'. 
-May we should check for non-zero rc in this if condition...
-
-
-> +        printf("PCI store failed with status condition %d\n", status);
-
-... and print both the rc and status here.
-
-
-> +        return -1;
-> +    }
-> +
-> +    return rc ? -1 : 0;
-> +}
-> +
-> +int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-> +             uint8_t len)
-> +{
-> +    uint64_t req, data;
-> +    uint8_t status;
-> +    int rc;
-> +
-> +    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-> +    rc = pcilg(&data, req, offset, &status);
-> +
-> +    /* Error condition detected */
-> +    if (rc == 1) {
-
-Similar to pci_write we should check for non-zero return code here? And 
-should do the same in pci_get_fib (stpcifc) and pci_set_fib (mpcifc)?
-
-
-> +        printf("PCI load failed with status condition %d\n", status);
-> +        return -1;
-> +    }
-> +
-> +    switch (len) {
-> +    case 1:
-> +        *(uint8_t *)buf = data;
-> +        break;
-> +    case 2:
-> +        *(uint16_t *)buf = data;
-> +        break;
-> +    case 4:
-> +        *(uint32_t *)buf = data;
-> +        break;
-> +    case 8:
-> +        *(uint64_t *)buf = data;
-> +        break;
-> +    default:
-> +        return -1;
-> +    }
-> +
-> +    return rc ? -1 : 0;
-> +}
-> +
-
-<...snip...>
+> > 
+> > Or it could be that even just these two would be enough:
+> > 
+> > static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
+> >                                                 MemoryRegionCache *cache,
+> >                                                 hwaddr pa)
+> > {
+> >      if (virtio_access_is_big_endian(vdev)) {
+> >          return lduw_be_phys_cached(cache, pa);
+> >      }
+> >      return lduw_le_phys_cached(cache, pa);
+> > }
+> > 
+> > static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
+> >                                            MemoryRegionCache *cache,
+> >                                            hwaddr pa, uint16_t value)
+> > {
+> >      if (virtio_access_is_big_endian(vdev)) {
+> >          stw_be_phys_cached(cache, pa, value);
+> >      } else {
+> >          stw_le_phys_cached(cache, pa, value);
+> >      }
+> > }
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> 
+> Regards,
+> Pierrick
 
 
