@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69056E87846
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3957E87847
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 16:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnJAX-0004Ex-3O; Tue, 03 Feb 2026 11:22:25 -0500
+	id 1vnJAV-0004DD-HU; Tue, 03 Feb 2026 11:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vnJAU-0004CX-MU
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:22 -0500
+ id 1vnJAT-0004BE-Jr
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:21 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vnJAT-0008Gu-7D
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:22 -0500
+ id 1vnJAS-0008Ga-4p
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:22:21 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 122FC596E9E;
- Tue, 03 Feb 2026 17:22:20 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id EF294596E8D;
+ Tue, 03 Feb 2026 17:22:18 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Xoqeus9DeLU5; Tue,  3 Feb 2026 17:22:18 +0100 (CET)
+ id JMuHuQWxOsZS; Tue,  3 Feb 2026 17:22:16 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 077A2596EA4; Tue, 03 Feb 2026 17:22:18 +0100 (CET)
-Message-ID: <5bc65f3547802b67d3fbceb4f04228333d23ba1f.1770131168.git.balaton@eik.bme.hu>
+ id EE807596E8E; Tue, 03 Feb 2026 17:22:16 +0100 (CET)
+Message-ID: <8aa61d55502d0e9731bb200545be258d0b789247.1770131168.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1770131168.git.balaton@eik.bme.hu>
 References: <cover.1770131168.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 7/7] memory: Factor out more common ram region
- initialization
+Subject: [PATCH v3 6/7] memory: Shorten memory_region_init_rom_device
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,7 +44,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 03 Feb 2026 17:22:18 +0100 (CET)
+Date: Tue, 03 Feb 2026 17:22:16 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -69,56 +68,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce internal memory_region_do_init_ram_ptr() function to remove
-duplicated code from different memory_region_init_ram_*ptr functions.
+We can reuse memory_region_init_io in memory_region_init_rom_device.
+Also shorten some other function prototypes.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/memory.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ system/memory.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
 diff --git a/system/memory.c b/system/memory.c
-index 74179463ea..4504f6fa05 100644
+index c3465d7ffe..74179463ea 100644
 --- a/system/memory.c
 +++ b/system/memory.c
-@@ -1658,26 +1658,29 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
- }
- #endif
- 
--void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
--                                const char *name, uint64_t size, void *ptr)
-+static void memory_region_do_init_ram_ptr(MemoryRegion *mr, uint64_t size,
-+                                          void *ptr)
- {
--    memory_region_init(mr, owner, name, size);
-     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-     assert(ptr != NULL);
-     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-     memory_region_do_init_ram(mr, NULL, NULL);
+@@ -1568,12 +1568,9 @@ static void memory_region_set_ops(MemoryRegion *mr,
+     mr->terminates = true;
  }
  
-+void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-+                                const char *name, uint64_t size, void *ptr)
-+{
-+    memory_region_init(mr, owner, name, size);
-+    memory_region_do_init_ram_ptr(mr, size, ptr);
-+}
-+
- void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
+-void memory_region_init_io(MemoryRegion *mr,
+-                           Object *owner,
+-                           const MemoryRegionOps *ops,
+-                           void *opaque,
+-                           const char *name,
+-                           uint64_t size)
++void memory_region_init_io(MemoryRegion *mr, Object *owner,
++                           const MemoryRegionOps *ops, void *opaque,
++                           const char *name, uint64_t size)
  {
      memory_region_init(mr, owner, name, size);
-     memory_region_set_ops(mr, &ram_device_mem_ops, mr);
--    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
--    assert(ptr != NULL);
--    mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
--    memory_region_do_init_ram(mr, NULL, NULL);
-+    memory_region_do_init_ram_ptr(mr, size, ptr);
+     memory_region_set_ops(mr, ops, opaque);
+@@ -1684,12 +1681,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
      mr->ram_device = true;
  }
  
+-void memory_region_init_alias(MemoryRegion *mr,
+-                              Object *owner,
+-                              const char *name,
+-                              MemoryRegion *orig,
+-                              hwaddr offset,
+-                              uint64_t size)
++void memory_region_init_alias(MemoryRegion *mr, Object *owner,
++                              const char *name, MemoryRegion *orig,
++                              hwaddr offset, uint64_t size)
+ {
+     memory_region_init(mr, owner, name, size);
+     mr->alias = orig;
+@@ -3704,8 +3698,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
+     Error *err = NULL;
+ 
+     assert(ops);
+-    memory_region_init(mr, owner, name, size);
+-    memory_region_set_ops(mr, ops, opaque);
++    memory_region_init_io(mr, owner, ops, opaque, name, size);
+     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+     if (!memory_region_do_init_ram(mr, err, errp)) {
+         return false;
 -- 
 2.41.3
 
