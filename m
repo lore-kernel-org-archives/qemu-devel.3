@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4962AE87834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450F9E8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHzB-0004UL-32; Tue, 03 Feb 2026 10:06:37 -0500
+	id 1vnHz3-0003fW-8R; Tue, 03 Feb 2026 10:06:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHz7-0004Mc-Ht
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:06:33 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHz1-0003Ri-GS
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:06:27 -0500
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHz5-0002J5-UJ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:06:33 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHyy-0002IY-VI
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:06:26 -0500
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47ff94b46afso9522825e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:06:31 -0800 (PST)
+ 5b1f17b1804b1-4806d23e9f1so64316895e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:06:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770131190; x=1770735990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770131183; x=1770735983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2BwdxwgOylBEELY70JUf+5ITZYYVYk6FsH73loe8VHg=;
- b=y8WyhJ59RfE477CtrvRUST1ZbgPATxfRM4oB1AvJ3M4R843Ot0kkC8BjjWpAZp0ZuF
- fvkHJbmH1Ts4ulZ1JpyUfzX1AhPDjMuYCscYZv1K+yBtkFMcKWZt0pb6mSWP1dRzBK9L
- Pu+XlDel6OLYaiR+z0SG+7nqBROc+mDYGtGiQ6530l2oDmeyrEpwDImPQaNzATmxnr2y
- FiAfCMhoNEgb0NQEkpI1XsBr/h6oEJf3ffXTtJML2K1xytY8Wp99OCd2AqABIEwOEtkT
- msl2U+9TlUucQjgPS6dcB0BVkkp9gcG+EPyJQPasA376ql4fw6Xn1tGZa3XHY0aq2HmX
- HGnw==
+ :reply-to; bh=IBMz02HxPx5Ep8SztZCzfzvBJYPYJifqEnFHjrUKd+Q=;
+ b=UB55AK5h1gOGh6jXhhYwbf5ZONaKs5wWrcXq0gYKGMUiyA7wBqJzM+cPiEHZ+W3RSa
+ h1L5myGeNwpgJRByaNiO9SzXzlHN243L5hbXknmYst65Mf3BASFMexS72nt6EDuYMRJR
+ WWE3CfRzBeAALb8+L3IqqCriWAlqrl+Wp1JOv6QHdfU99WhR25K9mI6QthkFECVAcHiq
+ s3NM8HvkOuQHZOwxpyb3+JY9vaJTOQ0tAh0MHF6uAUzofH3EOuSZJ0HMTMExgYDTL9Kx
+ EZ6veWnhzxs0qbDwmPIezMUt1PE4qSNPVA1i9McnmqpoPO59OtVniv7baY9fB4qtZGXM
+ 5vSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770131190; x=1770735990;
+ d=1e100.net; s=20230601; t=1770131183; x=1770735983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2BwdxwgOylBEELY70JUf+5ITZYYVYk6FsH73loe8VHg=;
- b=tsXgdIzVlGRP6yg0tuqWZ+sXRrvVnVTDfuyaTYBqC79fN+TKKyHfb/VN8OzepINliu
- Ln/JVWLjfZcgA8zkojO0HcVV4G1kJw42wjjgBXndTzo32xeeQLBs4cugwZlpWgQ6SW7b
- krTc8O2oQyh7/1pE2sApJL8WJ2+ZXYXzgZoMJKUE7sfxCwQ5ZxUMRGwUxikvinYsqhir
- BQZK/UGSD1wm/tmfIWPyq0wuGpYgma28FlM2VfmX4LNCJwImel4nIFysY/02sl8vHz8B
- B/GKsuacD7rW6YcpLGszWIit8pQtIAxKM9PJYz2lL6UtdtpExnE97DcY2Q4T9cHFc+Rl
- fJzg==
-X-Gm-Message-State: AOJu0Yxsw5JDTetO1t7fGFcZplmLmQZkt0mObI+6p3DThfu54pgtI9/2
- WNjbYoBs6tyA5fcXyyFAMVJmuxMR7/NSWOwFOIrS8VJ4RUviEFb0N4BxGWDNfb28linmi/oNzic
- kt155AU8=
-X-Gm-Gg: AZuq6aLzkoCTk4VQHp5qApv2HY1zfTY5WU09qKYW+Z+M2fA2KhS1MiQF49UEafZplXt
- 4QbtxFgSkf+H8SpaN4K5H/NNSwAidUkzf0Ilo0nUbjWO4tylY8+z7ns7gc/L1M0yRFAlwl4edNz
- iajamZzMzQkRtU+4e4LLuCp7mXdUCthFAQKQoH8fX1LkdKhGcucMqYvGqdShPFNZL70VQDqjYy1
- g614jeO+tuOw4K1w3W2hlYOu0W3WYaP28spSb+kXffG4JTuQKzPbPHwW2EvGUnYWrLncQmDkOFZ
- QmnZXOklTZGPDFrJ/ECkyIEZXeWBB30H9ylhumvv4F3YRxjeZSRPvMpz1R/8J3bWHV1YqR3lQzN
- ORsKQWiyNiyXtevkQ9KQJsMpjRNRV9B6apAsLrMX4RF0BfExgWfGyDehM8CFKfA/Qh12uO/OuRP
- k73XaQDoicpRL0b3Za110u0f3LEcwCF7c+f6K2OA6V4DBJXzzBeA1VOulgrklj
-X-Received: by 2002:a05:600c:3e18:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-48305144e7cmr45290105e9.11.1770131189987; 
- Tue, 03 Feb 2026 07:06:29 -0800 (PST)
+ bh=IBMz02HxPx5Ep8SztZCzfzvBJYPYJifqEnFHjrUKd+Q=;
+ b=EY11trjY5HuZrfkJ7iZBibcl4mk4SEA5CBPw/PnuRlL9k7ZlCKXrPPi+kS2PfeSij9
+ XHdlABm0V39GcljsjHsmDjqroYVZ0Qmu+A0iGNuFAcLvHMfP0dSGB+tWZ5Y6k7mUJN2b
+ wt4T6yHyM4spltmyUxi0cS3aXAYQpc/53LhyD2OffiQ3iMf2LHJVzRQPa3mJfGrgrpmx
+ 0via3b/wLFW8440Xl1KH1cW++Jtc2M4nDSk8I4XWDhg/4ekUMWFGkpU4Tn8Qv3QjvS4l
+ WR+jX7/Q/oMZGJZ4AAu/71c0mS0VERz1JCvQ63dDF1CuNalMjRSY1APCGk3PR/PEr2Fp
+ q0Ag==
+X-Gm-Message-State: AOJu0Yx2JLS5QH/AettLkP7TWpraZZdkq7S+KoL2hPqGNrg76EYBWiKU
+ M7gnLgHA1UvNi7TbrHDTCElPCTGIpU7f5DYsH/85N4Z0ozMip7WVS6QA9ijM2WkiOIXL5R8GtGX
+ +ROeAv/E=
+X-Gm-Gg: AZuq6aLr9O09x0xbvzCtjECILNjBBu3tIWXYo6pd8REFjqcEl/zoWAiV8P1r+ER1Zxy
+ NXgEswME908VSwFV3pkryJ2FIFVKhCDvmP1om3XlHLwWiASimgP0jgCWOUmiSSU85vzMw/LUsCt
+ 2dVl14d/Y2usDcpoJaisWhXIcFK5kjI9WEIvxR/ccU56tD8NSUQkBj7Xxk0OY5JCvM70a240Rs9
+ tWgJZe8Y72UPa1HZz70hkyPTvmsDE0domwhVAbTiMvt53YLNn86MJK2SW/xB0VqIa6/hBU169Ix
+ +sQVC7FwJgjEOQfVF+4U7xx0W9ihNMo80qZ9YJrYWaQWKSq6i8j/1t5QMw70sSICNF06V4QEFn1
+ fZ2SIHHiBDwNL7VVIbGOTF4NhkL+F+Yiae9Sytz/lb6Dov7vB1smBwYSdidp4dGbGJyt+5JNhVE
+ YVSBVvb/DZzdvm0x1+hgWAKQftilSYbKzs1L73JE8VgKbShgkDqagpurRsSc7I
+X-Received: by 2002:a05:6000:26c1:b0:430:f3ab:56af with SMTP id
+ ffacd0b85a97d-435f3abc7b7mr22465818f8f.48.1770131182902; 
+ Tue, 03 Feb 2026 07:06:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cf16sm52972114f8f.22.2026.02.03.07.06.28
+ ffacd0b85a97d-435e10e4757sm54692144f8f.5.2026.02.03.07.06.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Feb 2026 07:06:29 -0800 (PST)
+ Tue, 03 Feb 2026 07:06:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/30] target/m68k: Inline translator_ld[uw,l,q]() calls
-Date: Tue,  3 Feb 2026 16:04:21 +0100
-Message-ID: <20260203150436.71907-17-philmd@linaro.org>
+Subject: [PULL 15/30] target/i386: Inline translator_ld[uw,l,q]() calls
+Date: Tue,  3 Feb 2026 16:04:20 +0100
+Message-ID: <20260203150436.71907-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260203150436.71907-1-philmd@linaro.org>
 References: <20260203150436.71907-1-philmd@linaro.org>
@@ -99,8 +99,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 In preparation of removing the translator_ld[uw,l,q]() methods,
-inline them for the m68k target, expanding MO_TE -> MO_BE since
-this architecture is only available in big endianness.
+inline them for the x86 targets, expanding MO_TE -> MO_LE since
+the architecture uses little endian order.
 
 Mechanical change using the following Coccinelle 'spatch' script:
 
@@ -109,51 +109,48 @@ Mechanical change using the following Coccinelle 'spatch' script:
     @@
     (
     - translator_lduw(env, db, pc)
-    + translator_lduw_end(env, db, pc, MO_BE)
+    + translator_lduw_end(env, db, pc, MO_LE)
     |
     - translator_ldl(env, db, pc)
-    + translator_ldl_end(env, db, pc, MO_BE)
+    + translator_ldl_end(env, db, pc, MO_LE)
     |
     - translator_ldq(env, db, pc)
-    + translator_ldq_end(env, db, pc, MO_BE)
+    + translator_ldq_end(env, db, pc, MO_LE)
     )
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Message-ID: <20260202214050.98935-1-philmd@linaro.org>
+Message-ID: <20260202213348.96754-1-philmd@linaro.org>
 ---
- target/m68k/translate.c | 6 +++---
+ target/i386/tcg/decode-new.c.inc | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 721668634d9..a0309939012 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -347,7 +347,7 @@ static TCGv gen_ldst(DisasContext *s, int opsize, TCGv addr, TCGv val,
- static inline uint16_t read_im16(CPUM68KState *env, DisasContext *s)
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 086a3bcec18..bc105aab9ea 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -315,18 +315,18 @@ static inline uint8_t x86_ldub_code(CPUX86State *env, DisasContext *s)
+ 
+ static inline uint16_t x86_lduw_code(CPUX86State *env, DisasContext *s)
  {
-     uint16_t im;
--    im = translator_lduw(env, &s->base, s->pc);
-+    im = translator_lduw_end(env, &s->base, s->pc, MO_BE);
-     s->pc += 2;
-     return im;
+-    return translator_lduw(env, &s->base, advance_pc(env, s, 2));
++    return translator_lduw_end(env, &s->base, advance_pc(env, s, 2), MO_LE);
  }
-@@ -1412,12 +1412,12 @@ static bool semihosting_test(DisasContext *s)
-     if (s->pc % 4 != 0) {
-         return false;
-     }
--    test = translator_lduw(s->env, &s->base, s->pc - 4);
-+    test = translator_lduw_end(s->env, &s->base, s->pc - 4, MO_BE);
-     if (test != 0x4e71) {
-         return false;
-     }
-     /* "... and followed by an invalid sentinel instruction movec %sp,0." */
--    test = translator_ldl(s->env, &s->base, s->pc);
-+    test = translator_ldl_end(s->env, &s->base, s->pc, MO_BE);
-     if (test != 0x4e7bf000) {
-         return false;
-     }
+ 
+ static inline uint32_t x86_ldl_code(CPUX86State *env, DisasContext *s)
+ {
+-    return translator_ldl(env, &s->base, advance_pc(env, s, 4));
++    return translator_ldl_end(env, &s->base, advance_pc(env, s, 4), MO_LE);
+ }
+ 
+ #ifdef TARGET_X86_64
+ static inline uint64_t x86_ldq_code(CPUX86State *env, DisasContext *s)
+ {
+-    return translator_ldq(env, &s->base, advance_pc(env, s, 8));
++    return translator_ldq_end(env, &s->base, advance_pc(env, s, 8), MO_LE);
+ }
+ #endif
+ 
 -- 
 2.52.0
 
