@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891AEE8783A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C3EE8783A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHNK-0001w5-2R; Tue, 03 Feb 2026 09:27:30 -0500
+	id 1vnHNn-0002Ar-TI; Tue, 03 Feb 2026 09:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnHNG-0001ve-Pg
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:28 -0500
-Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ id 1vnHNd-00023P-5B
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:50 -0500
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnHNF-0004Rd-9l
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:26 -0500
-Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-2b81ebac5d6so1833389eec.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 06:27:23 -0800 (PST)
+ id 1vnHNa-0004TO-8o
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:48 -0500
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2b74f839bdfso555527eec.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 06:27:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770128842; x=1770733642; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LhNgqORnWC5izm/emsuA+eqwGXyXBWpIwmLVxu3NZwg=;
- b=WmkN+0m4I3En30CJiY7NAuk2g2sVmwJQm880/aoryh7JeFJi7ER1diiRTWyWSdnG0W
- BntZ7K2F+L2e+t7HFFnjJ05zivP7RMumLQTTe1MK3XaoMxgws0MOEe6Pz6F51dRcbetX
- X2DfnEwOgK7bpbe+lPOnD9SzDNbmIc/PC/1rT8QfjH7ImN47x18ib2+RUSvma21a9O0d
- 61lZDUcM4jHHMDhjeKYda/ocKV9Pwp9Tgh0pUSUu4Z8SXvY3/w8Bslnu+mJ1i7iqkbFY
- rBQb0gPsTlHAkvGqII6g+nVJKRyIY9PgK0Psf6Me5jmE8OX/7qGsLgjA8yOr8cpjp5tS
- zj9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770128842; x=1770733642;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1770128864; x=1770733664; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LhNgqORnWC5izm/emsuA+eqwGXyXBWpIwmLVxu3NZwg=;
- b=Ss7KnmVA9ADzpxV4mXIVKJNhxbc9zsZ3nFM5DBQMzhyZuBX0f21Nlm8F3etxxXhE75
- fTGIcICewUPiEVe+QVChxijmlULV7JndZNK/7uYbsSIO7QPHAOBWMh3a+nCuGKcQL7pS
- hNJQirkYY51ACzSY+xxM2hfkhw0kgtX78xfY2Kk6CDuGRkbXCtCOXPBRVOGWNnagD5Er
- wrS2RG88/yAg9lTdeNGf4UtUq/S3nFaGs9YMv4gX6WLi291XkPQ0MrrxsbdzHxzPWgTh
- Tigm2JqYyg2wdGmMeS3B/KFmISI3mo2irzYUNDNwWaKozx0Q85j2OEfY5LD+V4NiHAA/
- Q0rA==
-X-Gm-Message-State: AOJu0YzhEY1zeOD/W4UBee0peUzpPfFg4M0thzdqPWca/Zc9POuXVsAb
- BRcJMiq0dRSQXZOYN3SQoxz3hreomwmqKt2v4ErpOKNOFidexO79a6Nm
-X-Gm-Gg: AZuq6aJiR36Wm4mms1CjdE0QJCRixf8hVpp6eluPlfAe435NyJWfkGFL2H+cYoj8ZN8
- FA/MdTxxtCsEMEtF13+hv1QU1MSoqO0cFUTtIvhythxx7fji/qvksWGHGcojDKKlu1eFWdpTmRB
- l0sbbu/+vuAD89hpqDbIkdt/hO+BvCVUiEqzwZweyxfW02CTQrH6EZwnsv67qFrH7SK5QMRapVd
- McBP2yg/gml2zNp8m0VUBZFm1OlEPViXVcn1DOos79e+iqfxDPvCLHOgW0yodmr3eOwunPJKiFl
- LafjclGbdoLlgN8QfdJgMErTA8l9vUhYw6GKvlc6pCdY8hGo4ks6FY2BHMNkfWAHi4NxtNiofT/
- IdaopHCIyRn/IH8OmzbSqXKJxb9mos+AHto1tqoER7gfjVXh3iBWG9jrXjWtXYK15rAr9Rluztn
- 9ExjppTHu8cNhKW47Y8wiloyW/aHdQIawEBgdUVam5t7gSzRyOs/GlLkjXg03ZdWqakoreGufnP
- ls8CydoCmYTVcYa6Zgz0nWsOQ==
-X-Received: by 2002:a05:7301:7c03:b0:2b4:700b:3d8b with SMTP id
- 5a478bee46e88-2b7c8940881mr7288505eec.37.1770128842163; 
- Tue, 03 Feb 2026 06:27:22 -0800 (PST)
+ bh=whvSwBVuYDo75Jw/Rz6Rbmf3DsAhFVAGZiscc3hmp5E=;
+ b=T46ZcvD6vv4sg5ds17aqKn5p3NXdgjm7n30P7A3RygpdQeOLAdzJuMfyZnPiOFvvEl
+ GA0RMP9NfueEfUHx6I1J/pGB/2lNmvYetkaynCgIPAn5W7q3dTEVd2Wc2E9hqZiIzRM4
+ Mer5smPtL5yL7NEqMt5em2YTdCBhIYAI0HmWv2GJpNXBfO+kYfAvcByUz1xtHl7k4b2/
+ f6mw7UyM1tSiVgW+rHYZ3HK+Z8PCvNOBwgOdYnlhKRe7gRtM3JrpD1U4LyGWxTkErBS0
+ gpacc2y25AFeakaCnyOWNv+dkMY2YZrJy1fvNYC9UwjD8AnsO21/lEXuLtgTuHlmk92A
+ jIyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770128864; x=1770733664;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=whvSwBVuYDo75Jw/Rz6Rbmf3DsAhFVAGZiscc3hmp5E=;
+ b=blgbIx0FgZiy5qN8sSbAbcK3fM9Yo7+fSVeWraPIM7pZZ2IVPR8EKRPxABaFmFHRdd
+ TPdqxJchsA9/LBx4mrKR9FcCH8sAcfDnu4mh+nT17oDhzQ5XJdtOux1wwjLBq393sh+e
+ 4Bpt9aOoHvfON+iSphUXOTrnvUR/KY6KMblplawxuiXVfMyGk2+vOUMEMoB0NVj5sBLl
+ UYM5vEvpMEVl79QwwT1HatndzFXZwef+Z/TNVoCBvFyTMc0pdlxTXK52MloDGu+ePIz0
+ u2M2HVDHHWDd2uf2kf8llBqC62gYjdCSgzJBJPlDaIbgiszi/ZGk2X5X9xgFamcLAziq
+ O9FA==
+X-Gm-Message-State: AOJu0Yx1kMrOpMnjmHMB4KbWTtMcUoyykAnKWpK2Mx39hfiqnSSA5cD5
+ idKeehGdt9mva3ayGXXYIzdalkGuc0obIlISJR13TE4Vm7n4wNrYaaji
+X-Gm-Gg: AZuq6aL755HQONDcLTQVJJfYpUpguhCvRvX0j63AQ4BSYZ6Liocy9Q3AH8QLVHqeqXl
+ 1LNAmmfmkYj6GBatdtH5HnogFRCk2kheHwqp3U0dRFjh5vP4uuWc+Av+Dyj9/TMUR0rNayYEm0G
+ 1sSqNS1hgvCy5vrba0dPpumJLiU1CEu72yOtxxzgIQwi11gBi65jvf3pxXRLpFTiQx/J6wl8ylP
+ MiXGuk8yFa1jNVR3C5uDmyXeRGbsor1OBRVsdZwcxTqTi6pte3DJNd3h9rM/qs2Iu+tzbzc6qFM
+ MUWIU/807tNvdx4KXi35O/Ne2I1hbhjwreiu+lrOVnDi6weYeLFe1aXe0Jk0nmmluJhqX5G4yxK
+ aS+kVD1vX93S0kNLEbS9nv+8M5UXVxC7sY7l0aKDgSrtecHpHmUNCS4PocbUVOzsd/pHO7xJqC8
+ 8M4fqKpYARt3x7sb5XUkEOszetuXbutnZItbxf6DS0aCp8iXPMX9ioiq4NbAv24SyH/YJBpsXd0
+ CnnQY5QhBvAF68qVc+Mk86j/g==
+X-Received: by 2002:a05:693c:4082:b0:2b8:27ec:b2b9 with SMTP id
+ 5a478bee46e88-2b827ecb86fmr843749eec.20.1770128859255; 
+ Tue, 03 Feb 2026 06:27:39 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b7a1af898asm24194529eec.33.2026.02.03.06.27.16
+ 5a478bee46e88-2b7a1af898asm24194529eec.33.2026.02.03.06.27.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 06:27:21 -0800 (PST)
+ Tue, 03 Feb 2026 06:27:38 -0800 (PST)
 From: chao.liu.zevorn@gmail.com
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -74,15 +75,16 @@ To: Alistair Francis <alistair.francis@wdc.com>,
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  hust-os-kernel-patches@googlegroups.com,
  Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PATCH v3 0/2] tests/qtest: Add RISC-V IOMMU bare-metal test using
- iommu-testdev
-Date: Tue,  3 Feb 2026 22:27:04 +0800
-Message-ID: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v3 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
+Date: Tue,  3 Feb 2026 22:27:06 +0800
+Message-ID: <35f046c8d21aa6d5f9a531258762e01be198d8cf.1770127918.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
+References: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,91 +109,343 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Hi,
+Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
+The test exercises bare, S-stage, G-stage, and nested translation paths
+using iommu-testdev and the qos-riscv-iommu helpers.
 
-This patch series adds a bare-metal qtest for the RISC-V IOMMU using the
-iommu-testdev framework. The test exercises address translation paths
-without requiring a full guest OS boot.
-
-Motivation
-----------
-
-The existing RISC-V IOMMU qtest (riscv-iommu-test.c) focuses on PCI device
-enumeration and register-level validation:
-- PCI configuration space verification (vendor/device ID)
-- Register reset value checks
-- Queue initialization procedures (CQ/FQ/PQ)
-
-However, it does not test the actual address translation functionality.
-This new test fills that gap by using iommu-testdev to trigger DMA
-transactions and validate the IOMMU's translation logic.
-
-Comparison with Existing Test
------------------------------
-
-| Feature               | riscv-iommu-test.c | iommu-riscv-test.c (new) |
-|-----------------------|--------------------|--------------------------|
-| PCI config            | Yes                | No                       |
-| Register reset        | Yes                | No                       |
-| Queue init            | Yes                | Yes (via helper)         |
-| Bare translation      | No                 | Yes                      |
-| S-stage (SV39)        | No                 | Yes                      |
-| G-stage (SV39x4)      | No                 | Yes                      |
-| Nested translation    | No                 | Yes                      |
-| DMA verification      | No                 | Yes                      |
-| Uses iommu-testdev    | No                 | Yes                      |
-
-The new test provides:
-- Device context (DC) configuration and validation
+The test validates:
+- Device context (DC) configuration
 - SV39 page table walks for S-stage translation
 - SV39x4 page table walks for G-stage translation
 - Nested translation combining both stages
-- FCTL register constraint validation
-- End-to-end DMA verification
+- FCTL register constraints
 
-Note: The current implementation only supports SV39/SV39x4. Support for
-SV48/SV48x4/SV57/SV57x4 can be added in future patches.
+This provides regression coverage for the RISC-V IOMMU implementation
+without requiring a full guest OS boot.
 
-Testing
--------
-
-QTEST_QEMU_BINARY=./build/qemu-system-riscv64 \
-  ./build/tests/qtest/iommu-riscv-test --tap -k
-
-Changes v2 -> v3
-----------------
-- Removed duplicate header includes in both patches (Tao)
-- Fixed memory leak of state->iommu_dev and state->testdev in
-  riscv_iommu_test_setup() in patch 2 (Fabiano)
-
-Changes v1 -> v2
-----------------
-- Removed unused 'mode' parameter from qriommu_get_pte_attrs() function
-- Simplified PTE mask definitions in header file by using direct hex
-  values instead of individual bit defines (removed QRIOMMU_PTE_V/R/W/X
-  /U/G/A/D macros), added comment referencing target/riscv/cpu_bits.h
-- Cleaned up variable declarations in qriommu_setup_translation_tables()
-  to follow C99 style (declare at point of use)
-- Minor code style improvements
-
-Thanks,
-Chao
-
-Chao Liu (2):
-  tests/qtest/libqos: Add RISC-V IOMMU helper library
-  tests/qtest: Add RISC-V IOMMU bare-metal test
-
- MAINTAINERS                          |   2 +
- tests/qtest/iommu-riscv-test.c       | 279 +++++++++++++++++++
- tests/qtest/libqos/meson.build       |   2 +-
- tests/qtest/libqos/qos-riscv-iommu.c | 403 +++++++++++++++++++++++++++
- tests/qtest/libqos/qos-riscv-iommu.h | 164 +++++++++++
- tests/qtest/meson.build              |   5 +-
- 6 files changed, 853 insertions(+), 2 deletions(-)
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+---
+ MAINTAINERS                    |   1 +
+ tests/qtest/iommu-riscv-test.c | 279 +++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |   5 +-
+ 3 files changed, 284 insertions(+), 1 deletion(-)
  create mode 100644 tests/qtest/iommu-riscv-test.c
- create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
- create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 830f56376b..73daaad841 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -349,6 +349,7 @@ F: common-user/host/riscv*
+ F: tests/functional/riscv32
+ F: tests/functional/riscv64
+ F: tests/tcg/riscv64/
++F: tests/qtest/iommu-riscv-test.c
+ 
+ RISC-V XThead* extensions
+ M: Christoph Muellner <christoph.muellner@vrull.eu>
+diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
+new file mode 100644
+index 0000000000..2638024891
+--- /dev/null
++++ b/tests/qtest/iommu-riscv-test.c
+@@ -0,0 +1,279 @@
++/*
++ * QTest testcase for RISC-V IOMMU with iommu-testdev
++ *
++ * This QTest file is used to test the RISC-V IOMMU with iommu-testdev so that
++ * we can test RISC-V IOMMU without any guest kernel or firmware.
++ *
++ * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqos/generic-pcihost.h"
++#include "hw/pci/pci_regs.h"
++#include "hw/misc/iommu-testdev.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++#include "libqos/qos-riscv-iommu.h"
++#include "libqos/riscv-iommu.h"
++
++#define DMA_LEN           4
++
++/* RISC-V virt machine PCI configuration */
++#define RISCV_GPEX_PIO_BASE        0x3000000
++#define RISCV_BUS_PIO_LIMIT        0x10000
++#define RISCV_BUS_MMIO_ALLOC_PTR   0x40000000
++#define RISCV_BUS_MMIO_LIMIT       0x80000000
++#define RISCV_ECAM_ALLOC_PTR       0x30000000
++
++typedef struct RiscvIommuTestState {
++    QTestState *qts;
++    QGenericPCIBus gbus;
++    QPCIDevice *iommu_dev;
++    QPCIDevice *testdev;
++    QPCIBar testdev_bar;
++    uint64_t iommu_base;
++} RiscvIommuTestState;
++
++static void riscv_config_qpci_bus(QGenericPCIBus *qpci)
++{
++    qpci->gpex_pio_base = RISCV_GPEX_PIO_BASE;
++    qpci->bus.pio_limit = RISCV_BUS_PIO_LIMIT;
++    qpci->bus.mmio_alloc_ptr = RISCV_BUS_MMIO_ALLOC_PTR;
++    qpci->bus.mmio_limit = RISCV_BUS_MMIO_LIMIT;
++    qpci->ecam_alloc_ptr = RISCV_ECAM_ALLOC_PTR;
++}
++
++static uint64_t riscv_iommu_expected_gpa(uint64_t iova)
++{
++    return QRIOMMU_SPACE_OFFS + QRIOMMU_L2_PTE_VAL + (iova & 0xfff);
++}
++
++static void save_fn(QPCIDevice *dev, int devfn, void *data)
++{
++    QPCIDevice **pdev = (QPCIDevice **) data;
++    uint16_t vendor = qpci_config_readw(dev, 0);
++    uint16_t device = qpci_config_readw(dev, 2);
++
++    g_test_message("Found PCI device: vendor=0x%04x device=0x%04x devfn=0x%02x",
++                   vendor, device, devfn);
++
++    if (!*pdev) {
++        *pdev = dev;
++    }
++}
++
++static QPCIDevice *find_riscv_iommu_pci(QGenericPCIBus *gbus,
++                                        uint64_t *iommu_base)
++{
++    QPCIDevice *iommu_dev = NULL;
++    QPCIBar iommu_bar;
++
++    g_test_message("Searching for riscv-iommu-pci "
++                   "(vendor=0x%04x, device=0x%04x)",
++                   RISCV_IOMMU_PCI_VENDOR_ID, RISCV_IOMMU_PCI_DEVICE_ID);
++
++    qpci_device_foreach(&gbus->bus, RISCV_IOMMU_PCI_VENDOR_ID,
++                        RISCV_IOMMU_PCI_DEVICE_ID, save_fn, &iommu_dev);
++
++    if (!iommu_dev) {
++        g_test_message("riscv-iommu-pci device not found!");
++        return NULL;
++    }
++
++    g_test_message("Found riscv-iommu-pci at devfn=0x%02x", iommu_dev->devfn);
++
++    qpci_device_enable(iommu_dev);
++    iommu_bar = qpci_iomap(iommu_dev, 0, NULL);
++    g_assert_false(iommu_bar.is_io);
++
++    *iommu_base = iommu_bar.addr;
++    g_test_message("RISC-V IOMMU MMIO base address: 0x%" PRIx64, *iommu_base);
++
++    return iommu_dev;
++}
++
++static QPCIDevice *find_iommu_testdev(QGenericPCIBus *gbus, QPCIBar *bar)
++{
++    QPCIDevice *dev = NULL;
++
++    g_test_message("Searching for iommu-testdev (vendor=0x%04x, device=0x%04x)",
++                   IOMMU_TESTDEV_VENDOR_ID, IOMMU_TESTDEV_DEVICE_ID);
++
++    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
++                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
++    g_assert(dev);
++
++    qpci_device_enable(dev);
++    *bar = qpci_iomap(dev, 0, NULL);
++    g_assert_false(bar->is_io);
++
++    return dev;
++}
++
++static bool riscv_iommu_test_setup(RiscvIommuTestState *state)
++{
++    if (!qtest_has_machine("virt")) {
++        g_test_skip("virt machine not available");
++        return false;
++    }
++
++    state->qts = qtest_init("-machine virt,acpi=off "
++                            "-cpu max -smp 1 -m 512 -net none "
++                            "-device riscv-iommu-pci "
++                            "-device iommu-testdev");
++
++    qpci_init_generic(&state->gbus, state->qts, NULL, false);
++    riscv_config_qpci_bus(&state->gbus);
++
++    state->iommu_dev = find_riscv_iommu_pci(&state->gbus, &state->iommu_base);
++    g_assert(state->iommu_dev);
++
++    state->testdev = find_iommu_testdev(&state->gbus, &state->testdev_bar);
++    g_assert(state->testdev);
++
++    return true;
++}
++
++static void riscv_iommu_test_teardown(RiscvIommuTestState *state)
++{
++    g_free(state->iommu_dev);
++    g_free(state->testdev);
++    qtest_quit(state->qts);
++}
++
++static uint64_t riscv_iommu_check(QTestState *qts, uint64_t iommu_base,
++                                  QRIOMMUTransMode mode)
++{
++    uint64_t cap;
++    uint64_t ddtp;
++    uint32_t cqcsr;
++    uint32_t fqcsr;
++    uint32_t pqcsr;
++    uint32_t fctl;
++    uint32_t fctl_mask;
++    uint32_t fctl_desired;
++    uint32_t igs;
++
++    cap = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_CAP);
++    g_assert_cmpuint((uint32_t)(cap & RISCV_IOMMU_CAP_VERSION), ==,
++                     RISCV_IOMMU_SPEC_DOT_VER);
++
++    fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
++    igs = (cap & RISCV_IOMMU_CAP_IGS) >> 28;
++    g_assert_cmpuint(igs, <=, RISCV_IOMMU_CAP_IGS_BOTH);
++
++    fctl_mask = RISCV_IOMMU_FCTL_BE | RISCV_IOMMU_FCTL_WSI |
++                RISCV_IOMMU_FCTL_GXL;
++    fctl_desired = fctl & ~fctl_mask;
++    if (igs == RISCV_IOMMU_CAP_IGS_WSI) {
++        fctl_desired |= RISCV_IOMMU_FCTL_WSI;
++    }
++
++    if ((fctl & fctl_mask) != (fctl_desired & fctl_mask)) {
++        ddtp = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_DDTP);
++        cqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_CQCSR);
++        fqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FQCSR);
++        pqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_PQCSR);
++
++        g_assert_cmpuint((uint32_t)(ddtp & RISCV_IOMMU_DDTP_MODE), ==,
++                         RISCV_IOMMU_DDTP_MODE_OFF);
++        g_assert_cmpuint(cqcsr & RISCV_IOMMU_CQCSR_CQON, ==, 0);
++        g_assert_cmpuint(fqcsr & RISCV_IOMMU_FQCSR_FQON, ==, 0);
++        g_assert_cmpuint(pqcsr & RISCV_IOMMU_PQCSR_PQON, ==, 0);
++
++        qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FCTL, fctl_desired);
++        fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
++    }
++
++    g_assert_cmpuint(fctl & fctl_mask, ==, fctl_desired & fctl_mask);
++
++    if (mode == QRIOMMU_TM_S_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
++        g_assert((cap & RISCV_IOMMU_CAP_SV39) != 0);
++    }
++    if (mode == QRIOMMU_TM_G_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
++        g_assert((cap & RISCV_IOMMU_CAP_SV39X4) != 0);
++        g_assert_cmpuint(fctl & RISCV_IOMMU_FCTL_GXL, ==, 0);
++    }
++
++    return cap;
++}
++
++static void run_riscv_iommu_translation(const QRIOMMUTestConfig *cfg)
++{
++    RiscvIommuTestState state = { 0 };
++
++    if (!riscv_iommu_test_setup(&state)) {
++        return;
++    }
++
++    riscv_iommu_check(state.qts, state.iommu_base, cfg->trans_mode);
++
++    g_test_message("### RISC-V IOMMU translation mode=%d ###",
++                   cfg->trans_mode);
++    qriommu_run_translation_case(state.qts, state.testdev, state.testdev_bar,
++                                 state.iommu_base, cfg);
++    riscv_iommu_test_teardown(&state);
++}
++
++static void test_riscv_iommu_bare(void)
++{
++    QRIOMMUTestConfig cfg = {
++        .trans_mode = QRIOMMU_TM_BARE,
++        .dma_gpa = QRIOMMU_IOVA,
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_riscv_iommu_translation(&cfg);
++}
++
++static void test_riscv_iommu_s_stage_only(void)
++{
++    QRIOMMUTestConfig cfg = {
++        .trans_mode = QRIOMMU_TM_S_STAGE_ONLY,
++        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_riscv_iommu_translation(&cfg);
++}
++
++static void test_riscv_iommu_g_stage_only(void)
++{
++    QRIOMMUTestConfig cfg = {
++        .trans_mode = QRIOMMU_TM_G_STAGE_ONLY,
++        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_riscv_iommu_translation(&cfg);
++}
++
++static void test_riscv_iommu_nested(void)
++{
++    QRIOMMUTestConfig cfg = {
++        .trans_mode = QRIOMMU_TM_NESTED,
++        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_riscv_iommu_translation(&cfg);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/iommu-testdev/translation/bare",
++                   test_riscv_iommu_bare);
++    qtest_add_func("/iommu-testdev/translation/s-stage-only",
++                   test_riscv_iommu_s_stage_only);
++    qtest_add_func("/iommu-testdev/translation/g-stage-only",
++                   test_riscv_iommu_g_stage_only);
++    qtest_add_func("/iommu-testdev/translation/ns-nested",
++                   test_riscv_iommu_nested);
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index dfb83650c6..25fdbc7980 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -287,7 +287,10 @@ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
+ qtests_riscv64 = ['riscv-csr-test'] + \
+-  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
++  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
++   config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
++   ['iommu-riscv-test'] : [])
+ 
+ qos_test_ss = ss.source_set()
+ qos_test_ss.add(
 -- 
 2.53.0
 
