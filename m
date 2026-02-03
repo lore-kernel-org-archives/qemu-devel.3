@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032A4E8782B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7D4E87824
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnGMq-0007dT-27; Tue, 03 Feb 2026 08:22:56 -0500
+	id 1vnGMw-0007fL-Ll; Tue, 03 Feb 2026 08:23:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMo-0007d5-8f
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:54 -0500
-Received: from 1.mo548.mail-out.ovh.net ([178.32.121.110])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMu-0007eO-RJ
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:23:00 -0500
+Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMm-0003S9-94
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:53 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.193])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f540p1qWTz5w1h;
- Tue,  3 Feb 2026 13:22:50 +0000 (UTC)
-Received: from kaod.org (37.59.142.97) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMt-0003T3-7n
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:23:00 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.35])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f540x4j0Rz5wt1;
+ Tue,  3 Feb 2026 13:22:57 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 3 Feb
- 2026 14:22:49 +0100
+ 2026 14:22:56 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G0026f7c59c4-be6b-4671-b53b-8580052682ca,
+ (GARM-96R001e6d6c3c3-8dfb-4112-aa07-25a54cd2c19e,
  43D9FD9E6FAA5025B81087D7BA78A3446A80EEF4) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <552d8254-9a01-4547-8c58-6b55a17b5f7f@kaod.org>
-Date: Tue, 3 Feb 2026 14:22:48 +0100
+Message-ID: <6d6f21ab-80d5-4b42-b212-145c84b45e68@kaod.org>
+Date: Tue, 3 Feb 2026 14:22:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] tests/functional/aarch64/test_aspeed_ast2700:
+Subject: Re: [PATCH v2 7/8] tests/functional/aarch64/test_aspeed_ast2700fc:
  Update test ASPEED SDK v11.00 for A1
 To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -43,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <TYPPR06MB82062FF44138D2F1EA26F4A8FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <TYPPR06MB8206C3E9FAF219E5FDE04386FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <TYPPR06MB82062FF44138D2F1EA26F4A8FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+In-Reply-To: <TYPPR06MB8206C3E9FAF219E5FDE04386FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.97]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: d6fa10a7-9960-4ebf-90e0-b0d53a43990d
-X-Ovh-Tracer-Id: 17774018879772527605
+X-Ovh-Tracer-GUID: 1b66ef74-b817-40ca-a14a-b2b01a688b0a
+X-Ovh-Tracer-Id: 17775989204530531317
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEOlf6sXOhr32sTGWOTnTYTRpTXgLjUXWJdPF8X8vlE1Q8DlwlMoN6KrvfGSQAbvt0ksE0RzRf1QleYtxNsnbaI7jbaT0PSg8WK/ZjgFVqzEkH26w5l8AlCm67sAp9iJqMx6l+2qHm7EomWOV+erRm0MkLOfD+jYH04IGb1BhJ42XWvoHbNhz6+6mPmOXULKgwDPGyDvqSRabOfyLPPY487XVEs/TFARfBy/RGzGzzIJ0INI2CZziolFyC7RZ78yOhhNvLXdk3ltQaoPP/QmDNlHG5fjWo30t0HlaGZyYPM+9j+QSo9lK+h6QcxI1UDMsX1pIsH36XLbihC64lMVMvzSSTTnJcQXR4cCzpeE1bWPx/gz31cfzUhBP/dR+1FOpeR0QuPfJsay+88qMn56GV9Rw5P8lsWvql17BAYZJNOXa24uAmXrsQHmBaW3GV6yuqKdqifGSk2LukP0s0efzPUbr0qyTaPoBl6WrVStX5P+x8cjMZrD3TgUlhJP8YxeH0OO+4b5JN+2Wmu2Cdi8OwV45sS3D3O4HSi/K+bwoct5w+ctFlDhYwHb673hqCBvK45vyWncpNMDOTKvKmM1vYx1ZafwRVAhHPam/uNKp+bKO5q5iTux9EREUYbjJVQjkQyPwvSimFvZF8oZk1MCWMGRG0oGIO7H9IdHnHbFJPkIQ
-DKIM-Signature: a=rsa-sha256; bh=B8QLOEl2PmefLnxXT6JybdkpTna9al9gHqSmQQLQZhE=; 
+X-VR-SPAMCAUSE: dmFkZTGXDa+OuYSZuv5lGli4pI+OdhDnzVmg6dcGIWeKGM1K8g7jZUl6uSugIYeWSJEIJpjeh/xJGazpvlEAA2lS/rPrwc1YPTk/kXc+kYLjZir4gc5C65a7zXckLB6fD6ZogEkeZKKo+xPJF/z8lzsTZOKu515I1ae7YvR5vGcOGBEAK19VV6QrbTWN7SUswpdaaAEgPkW+SH00A+/05otWrIm0cyfLfjvqGJMmR2nkhIiZAPNxf2ZQHFF5s72P8BhS1e0BfEbRW+XMVvWusQPBEZO9VrXdwYnrP29fa6qtp6iTSKG6SvpUqZ8CNFjrvNqzxnkWEoQUDtbAFj2nNA5Swhzbh/eBPOpvdy+5aHuNNbbvtok1FiTHug+YrptN1L3nEqg4O4a1/cy4y0oFcW/ObD7ADD4Z9lgg7Y+KNHNlYXk/WGrW7eCdK2+gdiIPiUm6NPz/AuRbefkS+1sX4VAyfMEkT7Pcq7xMzmsJ5V03NDcqJkpkdUGhu+FcUN/8Hq0eRfGIswe3ZDB8S7trUTPJt5FjAj8lTZ6tASMFjKHFhEEyVb4ZiPc74c8mJRcOcGtsidI1PZ3Lr76J4MloHT6H/sRjiR9OfNJu2ZZ2z7sJDEobXEZXzx4fX1GGk5jMMn/16ZFE9dxdhsCksAfyDqTL2A4bE/OmoglcfWY4NNAyO3YDrg
+DKIM-Signature: a=rsa-sha256; bh=648zy1ZhCy6Fx956++/RA5+azeeHtLivqlhX4CJbJAA=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770124970; v=1;
- b=Y+g3x5fC74GwIE3AytpmXBmnoG7xcsmoOlVS/dSIG1valvop1c17X3wQ064ayIRl0bx18XWz
- L7xVM78daMUwJzfgtE78RtvzULo01Iu7DuApoZaCXaZu2I5ZryKugeupeMv0TsOi5HLyVWqgMMK
- 3ck+nV3oqP97CmlBrQHVAjOV2ntctoEAbYpPRV/n5A+6QiQXuN1PGU7piknF28VZvM7HmF+hkTE
- ex/+qgMeImjYcRlTCv2bD6PVOZbQmXof2tj3QUyTeVAINr2qx/f86m0NIfcESjEjYPU5CRocmPl
- lSeBBPjpnpTP9v7TMbzJknd2F30bEIGGwMUy9hmV2/gqQ==
-Received-SPF: pass client-ip=178.32.121.110; envelope-from=clg@kaod.org;
- helo=1.mo548.mail-out.ovh.net
+ t=1770124977; v=1;
+ b=F4FvXAN4bhH+YBHLnogBhWqOSfBKooV/WSq6llGBA2HIi+2T8cW28+bVrb/BAwYEz1W9VA8c
+ vD9/u9wU0wDsGhZoq/19zpEEwE8Gb0sOn8ANHRa91GltPqmebU+g4d6ZYOTY8bFSrsKLjscNThm
+ DOtwPOn7SvGqGUIFhyjI+B/ENf8NDILrF1wUOX6f5V4nbfzB9+Xjzdpczqc4LWRIlO99qKuIaBU
+ lHOv9ARSELXEi/mbB/65Y1WoTT449U6mirb9r0CsblRBo2sPL77ULj0Wz8FcDdzNLhpYhWMSgiu
+ ioVGACkbQEIA/OgQKNneESr3lAYcJIDxFSXG1138YFjkA==
+Received-SPF: pass client-ip=46.105.45.231; envelope-from=clg@kaod.org;
+ helo=8.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,7 +116,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,63 +135,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/3/26 02:55, Jamin Lin wrote:
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   .../functional/aarch64/test_aspeed_ast2700.py | 60 +++++++++----------
->   1 file changed, 29 insertions(+), 31 deletions(-)
+>   .../aarch64/test_aspeed_ast2700fc.py          | 36 +++++++------------
+>   1 file changed, 13 insertions(+), 23 deletions(-)
 > 
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-> index 1f1b5749f4..828ea1ca53 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-> @@ -26,15 +26,23 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
->           self.vm.launch()
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> index a1d8046f58..47e56dcfc5 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> @@ -61,9 +61,9 @@ def load_ast2700fc_coprocessor(self, name):
+>               self.vm.add_args('-device',
+>                                f'loader,file={file},cpu-num={cpu_num}')
 >   
->       def verify_vbootrom_firmware_flow(self):
-> -        wait_for_console_pattern(self, 'Found valid FIT image')
-> -        wait_for_console_pattern(self, '[uboot] loading')
-> -        wait_for_console_pattern(self, 'done')
-> -        wait_for_console_pattern(self, '[fdt] loading')
-> -        wait_for_console_pattern(self, 'done')
-> -        wait_for_console_pattern(self, '[tee] loading')
-> -        wait_for_console_pattern(self, 'done')
-> -        wait_for_console_pattern(self, '[atf] loading')
-> -        wait_for_console_pattern(self, 'done')
-> +        wait_for_console_pattern(self, 'Found valid caliptra flash image')
-> +        wait_for_console_pattern(self, 'Check flash image checksum')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Read abb header')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Read soc manifest')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Load atf image')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Load optee image')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Load uboot image')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Load ssp image')
-> +        wait_for_console_pattern(self, 'pass')
-> +        wait_for_console_pattern(self, 'Load tsp image')
-> +        wait_for_console_pattern(self, 'pass')
->           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
->   
->       def enable_ast2700_pcie2(self):
-> @@ -63,9 +71,9 @@ def verify_openbmc_boot_and_login(self, name):
->           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
->           exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
->   
-> -    ASSET_SDK_V908_AST2700A1 = Asset(
+> -    ASSET_SDK_V908_AST2700 = Asset(
 > -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
 > -            'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
-> +    ASSET_SDK_V1100_AST2700A1 = Asset(
+> +    ASSET_SDK_V1100_AST2700 = Asset(
 > +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-obmc.tar.gz',
 > +            'd5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525')
 >   
 >       def do_ast2700_i2c_test(self):
 >           exec_command_and_wait_for_pattern(self,
-> @@ -93,19 +101,10 @@ def do_ast2700_pcie_test(self):
+> @@ -113,19 +113,10 @@ def do_ast2700fc_tsp_test(self):
 >   
->       def start_ast2700_test(self, name):
->           num_cpu = 4
+>       def start_ast2700fc_test(self, name):
+>           ca35_core = 4
 > -        uboot_size = os.path.getsize(self.scratch_file(name,
 > -                                                       'u-boot-nodtb.bin'))
 > -        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
@@ -209,7 +176,7 @@ On 2/3/26 02:55, Jamin Lin wrote:
 >               },
 >               {
 >                   'addr': '0x430000000',
-> @@ -113,8 +112,7 @@ def start_ast2700_test(self, name):
+> @@ -133,8 +124,7 @@ def start_ast2700fc_test(self, name):
 >               },
 >               {
 >                   'addr': '0x430080000',
@@ -219,39 +186,38 @@ On 2/3/26 02:55, Jamin Lin wrote:
 >               }
 >           ]
 >   
-> @@ -137,26 +135,26 @@ def start_ast2700_test_vbootrom(self, name):
+> @@ -158,24 +148,24 @@ def start_ast2700fc_test_vbootrom(self, name):
 >           self.do_test_aarch64_aspeed_sdk_start(
 >                   self.scratch_file(name, 'image-bmc'))
 >   
-> -    def test_aarch64_ast2700a1_evb_sdk_v09_08(self):
-> +    def test_aarch64_ast2700a1_evb_sdk_v11_00(self):
->           self.set_machine('ast2700a1-evb')
+> -    def test_aarch64_ast2700fc_sdk_v09_08(self):
+> +    def test_aarch64_ast2700fc_sdk_v11_00(self):
+>           self.set_machine('ast2700fc')
 >           self.require_netdev('user')
 >   
-> -        self.archive_extract(self.ASSET_SDK_V908_AST2700A1)
-> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700A1)
->           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
->           self.vm.add_args('-netdev', 'user,id=net1')
-> -        self.start_ast2700_test('ast2700-default')
+> -        self.archive_extract(self.ASSET_SDK_V908_AST2700)
+> -        self.start_ast2700fc_test('ast2700-default')
 > -        self.verify_openbmc_boot_and_login('ast2700-default')
-> +        self.start_ast2700_test('ast2700-a1')
+> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700)
+> +        self.start_ast2700fc_test('ast2700-a1')
 > +        self.verify_openbmc_boot_and_login('ast2700-a1')
 >           self.do_ast2700_i2c_test()
 >           self.do_ast2700_pcie_test()
+>           self.do_ast2700fc_ssp_test()
+>           self.do_ast2700fc_tsp_test()
 >   
-> -    def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_08(self):
-> +    def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_00(self):
->           self.set_machine('ast2700a1-evb')
->           self.require_netdev('user')
+> -    def test_aarch64_ast2700fc_sdk_vbootrom_v09_08(self):
+> +    def test_aarch64_ast2700fc_sdk_vbootrom_v11_00(self):
+>           self.set_machine('ast2700fc')
 >   
-> -        self.archive_extract(self.ASSET_SDK_V908_AST2700A1)
-> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700A1)
->           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
->           self.vm.add_args('-netdev', 'user,id=net1')
-> -        self.start_ast2700_test_vbootrom('ast2700-default')
-> +        self.start_ast2700_test_vbootrom('ast2700-a1')
->           self.verify_vbootrom_firmware_flow()
->           self.verify_openbmc_boot_start()
+> -        self.archive_extract(self.ASSET_SDK_V908_AST2700)
+> -        self.start_ast2700fc_test_vbootrom('ast2700-default')
+> -        self.verify_openbmc_boot_and_login('ast2700-default')
+> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700)
+> +        self.start_ast2700fc_test_vbootrom('ast2700-a1')
+> +        self.verify_openbmc_boot_and_login('ast2700-a1')
+>           self.do_ast2700fc_ssp_test()
+>           self.do_ast2700fc_tsp_test()
 >   
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
