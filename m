@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4692EE87823
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F0CE87820
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnFKj-000201-Tn; Tue, 03 Feb 2026 07:16:41 -0500
+	id 1vnFKX-0001sr-Mr; Tue, 03 Feb 2026 07:16:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vnFKM-0001sQ-8l
+ id 1vnFKM-0001sL-0L
  for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:18 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vnFKJ-0003JM-Jo
+ id 1vnFKK-0003JO-4X
  for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:17 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 613CF1Ek088794
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 613CF1Em088794
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Feb 2026 21:16:06 +0900 (JST)
+ Tue, 3 Feb 2026 21:16:07 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=d3dyI2BSUdJ4p7ETf9KIFMPQ6QF3mvWL6z0fqUOULhc=; 
+DKIM-Signature: a=rsa-sha256; bh=GuqXYd3IA5RwtSoWBA9bn+ihzDFvboN50kCStC/F13Y=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
  s=rs20250326; t=1770120967; v=1;
- b=vPPgHYwBMvzsa3FUjwEN4lyhTvv/qFJ+s2mOLGjZH9yMV992nQ7xqI1LQdxnXd61
- Txi/Cvp/B8ArPZi1jkASDbuJ6h4RtT6zvWqNs/CXPDKuju8B+5u5hMO4q1Th6hhh
- s7izbT3QzjbpOyAveiMZx/Cd5JR7RogUCZkBdejAZkguweIA0FrNhui6V8a1wCxK
- dmrXF+JI4bV3HgaBZ/Zcj4luS8Osb8vQ0iWE9FIeaP0+wos6RRReiRRa0eqt04cP
- VIX0Iyro6ysqWrfWwISeZKJhG3L0nRsDIN8pgV1K0Lt8fbjhU2VR3tls6HUQrEew
- BCHPGt2DcZxYZ8lrgMW3lA==
-Message-ID: <6f4dbff4-4623-488a-9810-ef081d08f09c@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 3 Feb 2026 21:15:00 +0900
+ b=gpUn4+YXnJbgNXcBYDmYKjTof2Xtfn1eOp8+2/LWCXfPgFYmq5OJ6kwAwLTpl37u
+ sWgm2ViCNBYIgm9ZRR84LXdzU9yV1s4h5ELw07p1Z/Yu+yVD72v29WY5tncg8J3h
+ 0pQ/9Cu7EY+eWv19JdJhEPuICa5UWNbOBJeg4iOxxqWVCd1kOQnGnLomiWBF1W4A
+ 6l70ZNP8v/MlNDwYmSA2jMEWacKrosddqnRBGiP7uirpfS6oyl4oR0ioTvfJ7oZt
+ +zZXHgSoGz224Jf3AEC8EvSBFz8Ca6sh9RJuL3NT/uHR1qMnX0mwuer8WI38GNF0
+ RPDmEtgxTYI/jie+TFEzPA==
+Message-ID: <3a50b455-9460-4566-b676-f6ca066af400@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 3 Feb 2026 21:16:00 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/12] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
+Subject: Re: [PATCH v5 05/12] virtio-gpu-dmabuf: Use g_autofree for the list
+ pointer
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +49,10 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>
 References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
- <20260203073200.848183-3-vivek.kasireddy@intel.com>
+ <20260203073200.848183-6-vivek.kasireddy@intel.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260203073200.848183-3-vivek.kasireddy@intel.com>
+In-Reply-To: <20260203073200.848183-6-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,28 +80,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/02/03 16:30, Vivek Kasireddy wrote:
-> If the Guest provides a DMA address that is associated with a ram
-> device (such as a VFIO PCI device region and not its system memory),
-> then we can obtain the hva (host virtual address) by invoking
-> address_space_translate() followed by memory_region_get_ram_ptr().
-> 
-> We cannot use dma_memory_map() because for memory regions that do
-> not support direct access, it would create bounce buffers instead
-> of returning the actual hva, which is not desirable here. And, since
-> VFIO device regions are not considered directly accessible (because
-> they are mostly MMIO based), virtio-gpu cannot invoke dma_memory_map()
-> to obtain the hva in this case.
-> 
-> Therefore, in order to handle addresses associated with VFIO devices,
-> we need to use the address_space_translate() API to first identify
-> the right memory region and the appropriate offset within that
-> region and then use memory_region_get_ram_ptr() to get the hva.
-> This approach also works for addresses associated with the system
-> memory region.
-> 
-> Note that, although we take an explicit reference on the memory
-> region, we would still rely on dma_memory_unmap() to drop that
-> reference when the dma mapping is eventually unmapped.
+> Avoid the manual g_free() calls for the list pointer by using
+> g_autofree in virtio_gpu_create_udmabuf().
 > 
 > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Cc: Alex Bennée <alex.bennee@linaro.org>
