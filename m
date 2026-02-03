@@ -4,117 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09EE1E87834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC6CE8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHtw-00070m-Qy; Tue, 03 Feb 2026 10:01:12 -0500
+	id 1vnHtu-00070l-AY; Tue, 03 Feb 2026 10:01:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nassouli@redhat.com>)
- id 1vnDaZ-0002qp-Fb
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:24:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nassouli@redhat.com>)
- id 1vnDaX-0000Jj-5i
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:24:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770114291;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=n7+8yOF06gbm/dDSdi8hhHB+wUZdffnhaGkeB3NHATY=;
- b=h1vse20dXWNU1Kqy2lPYGCqQOp1S4mKrge/OdGwQ8Lxz3NlgokKpUU4sEfHqb5iwzJungp
- 85dcxORQbwfz4oE3Z4gvKHVSo2BbOa3wd68l+p4tVVUwZujbMLJZjd3FvvmKvv+0h+9Uca
- d2NdxU4iW0TsZ/eGAsmPGO+QaAdNN3g=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-LuEAH9xsNBeHZKrrN13XzA-1; Tue, 03 Feb 2026 05:23:42 -0500
-X-MC-Unique: LuEAH9xsNBeHZKrrN13XzA-1
-X-Mimecast-MFC-AGG-ID: LuEAH9xsNBeHZKrrN13XzA_1770114221
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-59dd7edf3e1so420726e87.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 02:23:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770114220; cv=none;
- d=google.com; s=arc-20240605;
- b=KJOsoEXAIu7PR53S2LZTM4POLtkEgS+SfHvXoi/GFtrx4gRWLCKkKGnLizjAqCw7tL
- +rwV6Rpi/A34pdt3Cy2Oa7+lNWLq8faGUN/FR8Jf1jT2Fyd+Qje2i5fKfM3NaBTLfJLJ
- llXlgQ9bZ9Cd9yI4nzTFfDSPuttRVvHD8oYBbq9iJEXBL0/GJRC+7h2Ncdo2ufgf2ZBP
- F/y6rzaYVvLuk+5ZKKkzjhgv7ymfzLVZnLMDnDmGRhXd+64Gfobjhj2ibAEzfWJgsIGI
- oQuaVTh4fHlXOv63/0wATJePeuDU0sF0SA6mWkxsNgy3mqzPnG6aO5ntHsdQwcMY7WKN
- oK6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=n7+8yOF06gbm/dDSdi8hhHB+wUZdffnhaGkeB3NHATY=;
- fh=k5L7ghkSTNizXKm2wlOYLS9Iwep7IDhQo2qlyWo6lPc=;
- b=gNXd9YaecFvBdVNeDa3/6/LSAAaYQ4bJmNSYJf3ZDBmWMWKyGIkNDii9PeotjNQ+3/
- 6hSoa2GlV0VnszLfkT3ZIpH62zTjmcx9mqxL83wA1jNwvsnox02LR32Qp2JcwjJ3oCe2
- cqzfPOuF7OrffEntZZkMHHlWbH81YbRIc0Dq+QwTDLZAkAeE/IZQGq131ZwHiqttT7PQ
- oKgOnT2iwntqAdjvEoq+3yPH0R7B+cybxBKdmNrapzkbkDrflA3jjmyQQq2zOKhYCSay
- tU70sqxIA6yLpTK54uBn+QJVR4en8JF8s55Ma4Ind3duEr7W6+Mli8RmU56ktjGCPHti
- IC2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770114220; x=1770719020; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=n7+8yOF06gbm/dDSdi8hhHB+wUZdffnhaGkeB3NHATY=;
- b=f/621NQb9JO0yY5wtyrlD3c5kDLCOEcPL8vqx51jgw2XKYm6jFmVaGuEMD4YdT1LZX
- rM/2vv8EL/WW8cz1ghfbBVmV44y1Pj0PdAv39lQHLj1aaD/7FcT4RbFcPTQ4p1u8/rWV
- Y/9JPst+UAWnWT8sJ9/RXrxvp98qd2oK1AeZ1ByjdJ6l8Wte8sIqdM1WyIBaLzmwPEIh
- 3oD/WSmJKKaOGAZmXenMd2xc8k2fbvfIzkKV8P3hTtaLkoEUXUPmT0D7HKr//W6d97dg
- TcY2yNc2ZrMz35ou99MuWig+kWjpzNinxj02ZY7WFJiniUoPOt44cW01DUqo6YRqVGBz
- 8ixA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770114220; x=1770719020;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n7+8yOF06gbm/dDSdi8hhHB+wUZdffnhaGkeB3NHATY=;
- b=YWkuBrld7h59imjiJ5UUinaAu8lM+9AJwXT4ROCoC8U057X9olezt94tbhNXebz44z
- +OMyjTGbkaRluYHbvQdyry6h0p+sygubX/EKvD15ZWiw6RjqZJAv1+LIms6G+XLbUwbM
- iDlBLS6S9RUtSjO1DXvGcccgR5383f2XuzjqJ+znZKqLHLz4wMNSP7jBQYHsc403sBdP
- cR0Frw8FWiOOMLtdB2fMnulUgYpXLN6sYP1NUF61/p5Ux6ZswZQU/K/MWgoqhbyPcqcJ
- 9G90HgPeYfwVLyUn9mxQh2OTe2VnDT0lcrWxg02L3h0KiGnoic+dqJ2V0him8qiFhjl+
- Ntog==
-X-Gm-Message-State: AOJu0YzLz+ak1/RnTAaAXv6xSZJcSsMbdPrBpL4RWSUFSaPdROvJ4ZQm
- 5IcSkRpz/YIcUj8nA6xWpEHwz+8/7qhaJ0XFRLPm5vQy4CJdzzeROL4/wOZx3ql+27eSra837eY
- O4hdM6G/rOWa333zCYR+K1QF/U92h3wzhjDggucNNK4L8kbXEyKnn5mpjvzE4bLWh3QUVBGYRmY
- tX993z2RJqJmJfbKeWUpIj+zFljvYvY9ylIhbS8QYQdg==
-X-Gm-Gg: AZuq6aK973IHJNhTSraw8oKcGO5tSpp7NGHRmG51lh5V8hPvxZtoZLitr6b5OuBhN7Y
- jeCBTq9yXPEzC3AcRRD1rnTugWpaShnxL/0VXvZNHusPLIk9KWaEJsQUUXqbdwK8fAnsSfB6Cur
- 5tvaNeF/Q0B3FFxKvm7i7IHDdk6+LBkCS4/yJO7KQMzvk2W6HMz4ZPGntEx9x0ZiJ4ptHqoG4GN
- u09wX4d+NpzuRkRp2C0w1JO/dNG
-X-Received: by 2002:a05:651c:1991:b0:37a:5ae5:a1d2 with SMTP id
- 38308e7fff4ca-386466b5a20mr28769201fa.5.1770114220043; 
- Tue, 03 Feb 2026 02:23:40 -0800 (PST)
-X-Received: by 2002:a05:651c:1991:b0:37a:5ae5:a1d2 with SMTP id
- 38308e7fff4ca-386466b5a20mr28769071fa.5.1770114219565; Tue, 03 Feb 2026
- 02:23:39 -0800 (PST)
-MIME-Version: 1.0
-From: Noam Assouline <nassouli@redhat.com>
-Date: Tue, 3 Feb 2026 12:23:28 +0200
-X-Gm-Features: AZwV_Qj5_OMFlkfvP_ioeTcLi-3r8LspgdPFgqJu_RrNf_RABcvsPNcH5BPczrE
-Message-ID: <CANc8XmBVnkbrsJ+DMKXA7HhepStAPHRpXOH8fB16e=bghPOsqQ@mail.gmail.com>
-Subject: QGA fsfreeze blocks QMP: need async fsfreeze or alternative?
-To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com, Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
- Stefan Hajnoczi <shajnocz@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000044f6b70649e8d56c"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=nassouli@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <hongzhibo@bytedance.com>)
+ id 1vnBfw-00072M-Vn
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:22:21 -0500
+Received: from sg-1-107.ptr.blmpb.com ([118.26.132.107])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hongzhibo@bytedance.com>)
+ id 1vnBft-0004EW-Be
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:22:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1770106920; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=I7SOY3I0kT2JGHAjMl/y/SaarRknr6dY7aMb0GnOv/A=;
+ b=g2oDhN2Z3cCV2JoGm6uEUrN0q5EB//+FoX4gwCz9oWiS9pXQ+5WIOiPDnRV6hImZ0pyGby
+ kWQuq9LthyYag0vY+mq/zyeUkOwNAFANTTHEPMG8Y9y0/Shy6QPW4MshHg0FWFP8Mjujz7
+ oBSUOaU3s9kbe0L/jU1v+QwFTst7TkzGFo/OZDI4rxas/Ig1AQBt2mO+F8adw4pCPm1sVW
+ VNxn1dd/E0rtuW9jRRCmb/B6rKRe/AEV3donZ8CgpHREeebB4By6wQVtGYYTX3QFyE7HjV
+ vEeKYWyBDgR+9OkpbYk1KaY59Gc0TwXdaQCjw11kxmf1cu1yVhQv3SM9SkEg3w==
+Subject: [PATCH v1] riscv: Add support for Zibi extension
+Date: Tue,  3 Feb 2026 16:21:44 +0800
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Original-From: hongzhibo@bytedance.com
+X-Mailer: git-send-email 2.39.5
+X-Lms-Return-Path: <lba+26981b026+08d323+nongnu.org+hongzhibo@bytedance.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-riscv@nongnu.org>, "Zhibo Hong" <hongzhibo@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+From: =?utf-8?q?=E6=B4=AA=E5=BF=97=E5=8D=9A?= <hongzhibo@bytedance.com>
+Message-Id: <20260203082144.2183253-1-hongzhibo@bytedance.com>
+Received-SPF: pass client-ip=118.26.132.107;
+ envelope-from=hongzhibo@bytedance.com; helo=sg-1-107.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 03 Feb 2026 10:01:05 -0500
+X-Mailman-Approved-At: Tue, 03 Feb 2026 10:01:06 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,64 +67,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000044f6b70649e8d56c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Zhibo Hong <hongzhibo@bytedance.com>
 
-Hello qemu-devel!
+Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
+---
+ disas/riscv.c                              | 17 +++++++
+ disas/riscv.h                              |  2 +
+ target/riscv/cpu.c                         |  2 +
+ target/riscv/cpu_cfg_fields.h.inc          |  1 +
+ target/riscv/insn32.decode                 |  9 ++++
+ target/riscv/insn_trans/trans_rvzibi.c.inc | 54 ++++++++++++++++++++++
+ target/riscv/translate.c                   |  6 +++
+ 7 files changed, 91 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzibi.c.inc
 
-I=E2=80=99m working on a KubeVirt fix for Windows VSS fsfreeze timeouts (PR=
- #16653
-<https://github.com/kubevirt/kubevirt/pull/16653>). Up to now we=E2=80=99ve=
- relied
-on libvirt=E2=80=99s default QEMU agent response timeout of 5 seconds, and =
-that
-often isn=E2=80=99t enough for VSS fsfreeze to complete. This PR proposes
-increasing the timeout to 60 seconds so the freeze can finish successfully.
-
-The challenge and the reason for this email is that qemu-ga processes
-commands synchronously on a single connection. While guest-fsfreeze-freeze
-is running, the agent is effectively busy and other commands (e.g. ping,
-status) will hang until it returns, which can impact pod readiness probes.
-I=E2=80=99m checking what we can do about this.
-
-I=E2=80=99m mainly looking to understand whether this can be addressed in q=
-emu-ga,
-and to get guidance on the right direction. Is there a supported way to use
-multiple agent connections/channels, or is an async guest-fsfreeze-freeze
-with a completion event the more appropriate solution? More generally, any
-best=E2=80=91practice guidance around Windows fsfreeze timeouts and respons=
-iveness
-would be very helpful!
-
-Thanks in advance, and cc=E2=80=99ing qemu-ga maintainers.
-
-Noam
-KubeVirt Storage Ecosystem team
-
---00000000000044f6b70649e8d56c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello qemu-devel!<br><br>I=E2=80=99m working on a KubeVirt=
- fix for Windows VSS fsfreeze timeouts (<a href=3D"https://github.com/kubev=
-irt/kubevirt/pull/16653">PR #16653</a>). Up to now we=E2=80=99ve relied on =
-libvirt=E2=80=99s default QEMU agent response timeout of 5 seconds, and tha=
-t often isn=E2=80=99t enough for VSS fsfreeze to complete. This PR proposes=
- increasing the timeout to 60 seconds so the freeze can finish successfully=
-.<br><br>The challenge and the reason for this email is that qemu-ga proces=
-ses commands synchronously on a single connection. While guest-fsfreeze-fre=
-eze is running, the agent is effectively busy and other commands (e.g. ping=
-, status) will hang until it returns, which can impact pod readiness probes=
-. I=E2=80=99m checking what we can do about this.<br><br>I=E2=80=99m mainly=
- looking to understand whether this can be addressed in qemu-ga, and to get=
- guidance on the right direction. Is there a supported way to use multiple =
-agent connections/channels, or is an async guest-fsfreeze-freeze with a com=
-pletion event the more appropriate solution? More generally, any best=E2=80=
-=91practice guidance around Windows fsfreeze timeouts and responsiveness wo=
-uld be very helpful!<br><br>Thanks in advance, and cc=E2=80=99ing qemu-ga m=
-aintainers.<br><br>Noam<br>KubeVirt Storage Ecosystem team</div>
-
---00000000000044f6b70649e8d56c--
-
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 85cd2a9c2a..92862835f0 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -984,6 +984,8 @@ typedef enum {
+     rv_op_ssamoswap_d = 953,
+     rv_op_c_sspush = 954,
+     rv_op_c_sspopchk = 955,
++    rv_op_beqi      = 956,
++    rv_op_bnei      = 957,
+ } rv_op;
+ 
+ /* register names */
+@@ -2254,6 +2256,8 @@ const rv_opcode_data rvi_opcode_data[] = {
+       rv_op_sspush, 0 },
+     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+       rv_op_sspopchk, 0 },
++    { "beqi", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
++    { "bnei", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
+ };
+ 
+ /* CSR names */
+@@ -3997,6 +4001,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             switch ((inst >> 12) & 0b111) {
+             case 0: op = rv_op_beq; break;
+             case 1: op = rv_op_bne; break;
++            case 2: op = rv_op_beqi; break;
++            case 3: op = rv_op_bnei; break;
+             case 4: op = rv_op_blt; break;
+             case 5: op = rv_op_bge; break;
+             case 6: op = rv_op_bltu; break;
+@@ -4529,6 +4535,12 @@ static uint32_t operand_imml(rv_inst inst)
+     return (inst << 38) >> 58;
+ }
+ 
++static int32_t operand_bi(rv_inst inst)
++{
++    uint32_t cimm = (inst << 39) >> 59;
++    return cimm == 0 ? -1 : cimm;
++}
++
+ static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
+ {
+     int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
+@@ -4948,6 +4960,11 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+         dec->rs1 = dec->rs2 = operand_crs1(inst);
+         dec->imm = 0;
+         break;
++    case rv_codec_bi:
++        dec->rs1 = operand_rs1(inst);
++        dec->imm = operand_sbimm12(inst);
++        dec->imm1 = operand_bi(inst);
++        break;
+     };
+ }
+ 
+diff --git a/disas/riscv.h b/disas/riscv.h
+index d211700cb2..452c788278 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -168,6 +168,7 @@ typedef enum {
+     rv_codec_fli,
+     rv_codec_lp,
+     rv_codec_cmop_ss,
++    rv_codec_bi,
+ } rv_codec;
+ 
+ /* structures */
+@@ -305,5 +306,6 @@ enum {
+ #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
+ #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
+ #define rv_fmt_fli                    "O\t3,h"
++#define rv_fmt_rs1_imm1_offset        "O\t1,j,o"
+ 
+ #endif /* DISAS_RISCV_H */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e95eea0249..0a1cb41c96 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -120,6 +120,7 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
+  * instead.
+  */
+ const RISCVIsaExtData isa_edata_arr[] = {
++    ISA_EXT_DATA_ENTRY(zibi, PRIV_VERSION_1_13_0, ext_zibi),
+     ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
+     ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+     ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+@@ -1238,6 +1239,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+     MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
+     MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
++    MULTI_EXT_CFG_BOOL("zibi", ext_zibi, false),
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
+     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 70ec650abf..046c656bd9 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -30,6 +30,7 @@ BOOL_FIELD(ext_zks)
+ BOOL_FIELD(ext_zksed)
+ BOOL_FIELD(ext_zksh)
+ BOOL_FIELD(ext_zkt)
++BOOL_FIELD(ext_zibi)
+ BOOL_FIELD(ext_zifencei)
+ BOOL_FIELD(ext_zicntr)
+ BOOL_FIELD(ext_zicsr)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..0a92e79508 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -20,6 +20,7 @@
+ %rs3       27:5
+ %rs2       20:5
+ %rs1       15:5
++%rs1_3     17:3                  !function=ex_rvc_register
+ %rd        7:5
+ %sh5       20:5
+ %sh6       20:6
+@@ -40,6 +41,7 @@
+ %imm_z6   26:1 15:5
+ %imm_mop5 30:1 26:2 20:2
+ %imm_mop3 30:1 26:2
++%imm_bi   20:5                   !function=ex_bi
+ 
+ # Argument sets:
+ &empty
+@@ -60,6 +62,7 @@
+ &k_aes     shamt rs2 rs1 rd
+ &mop5 imm rd rs1
+ &mop3 imm rd rs1 rs2
++&bi   imm imm2 rs1
+ 
+ # Formats 32:
+ @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
+@@ -111,6 +114,8 @@
+ # Formats 128:
+ @sh6       ...... ...... ..... ... ..... ....... &shift shamt=%sh6 %rs1 %rd
+ 
++@bi      ....... ..... ... .. ... ..... ....... &bi imm=%imm_b imm2=%imm_bi rs1=%rs1
++
+ # *** Privileged Instructions ***
+ ecall       000000000000     00000 000 00000 1110011
+ ebreak      000000000001     00000 000 00000 1110011
+@@ -1084,3 +1089,7 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+ sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+ sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+ sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
++
++# *** Zibi Extension ***
++beqi       ....... ..... ..... 010 ..... 1100011 @bi
++bnei       ....... ..... ..... 011 ..... 1100011 @bi
+\ No newline at end of file
+diff --git a/target/riscv/insn_trans/trans_rvzibi.c.inc b/target/riscv/insn_trans/trans_rvzibi.c.inc
+new file mode 100644
+index 0000000000..24bc0806aa
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvzibi.c.inc
+@@ -0,0 +1,54 @@
++#define REQUIRE_ZIBI(ctx) do {                  \
++    if (!ctx->cfg_ptr->ext_zibi) {              \
++        return false;                           \
++    }                                           \
++} while (0)
++
++static bool gen_immediate_branch(DisasContext *ctx, arg_bi *a, TCGCond cond)
++{
++    TCGLabel *l = gen_new_label();
++    TCGv src1 = get_gpr(ctx, a->rs1, EXT_SIGN);
++    TCGv imm2 = tcg_constant_tl(a->imm2);
++    target_ulong orig_pc_save = ctx->pc_save;
++
++    if (get_xl(ctx) == MXL_RV128) {
++        TCGv src1h = get_gprh(ctx, a->rs1);
++        TCGv imm2h = tcg_constant_tl(a->imm2 >= 0 ? 0 : -1);
++        TCGv tmp = tcg_temp_new();
++
++        cond = gen_compare_i128(false, tmp, src1, src1h, imm2, imm2h, cond);
++        tcg_gen_brcondi_tl(cond, tmp, 0, l);
++    } else {
++        tcg_gen_brcond_tl(cond, src1, imm2, l);
++    }
++    gen_goto_tb(ctx, 1, ctx->cur_insn_len);
++    ctx->pc_save = orig_pc_save;
++
++    gen_set_label(l); /* branch taken */
++
++    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
++        (a->imm & 0x3)) {
++        /* misaligned */
++        TCGv target_pc = tcg_temp_new();
++        gen_pc_plus_diff(target_pc, ctx, a->imm);
++        gen_exception_inst_addr_mis(ctx, target_pc);
++    } else {
++        gen_goto_tb(ctx, 0, a->imm);
++    }
++    ctx->pc_save = -1;
++    ctx->base.is_jmp = DISAS_NORETURN;
++
++    return true;
++}
++
++static bool trans_beqi(DisasContext *ctx, arg_beqi *a)
++{
++    REQUIRE_ZIBI(ctx);
++    return gen_immediate_branch(ctx, a, TCG_COND_EQ);
++}
++
++static bool trans_bnei(DisasContext *ctx, arg_bnei *a)
++{
++    REQUIRE_ZIBI(ctx);
++    return gen_immediate_branch(ctx, a, TCG_COND_NE);
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index f687c75fe4..d0b83ebe01 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -858,6 +858,11 @@ static int ex_rvc_shiftri(DisasContext *ctx, int imm)
+     return imm;
+ }
+ 
++static int ex_bi(DisasContext *ctx, int imm)
++{
++    return imm == 0 ? -1 : imm;
++}
++
+ /* Include the auto-generated decoder for 32 bit insn */
+ #include "decode-insn32.c.inc"
+ 
+@@ -1215,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_xthead.c.inc"
+ #include "insn_trans/trans_xventanacondops.c.inc"
+ #include "insn_trans/trans_xmips.c.inc"
++#include "insn_trans/trans_rvzibi.c.inc"
+ 
+ /* Include the auto-generated decoder for 16 bit insn */
+ #include "decode-insn16.c.inc"
+-- 
+2.39.5
 
