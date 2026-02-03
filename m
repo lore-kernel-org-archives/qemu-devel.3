@@ -4,132 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D292E8B370
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 22:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F18BE8B377
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 22:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnP9e-000375-Sf; Tue, 03 Feb 2026 17:45:54 -0500
+	id 1vnPD6-0003pf-Mf; Tue, 03 Feb 2026 17:49:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vnP9Z-00036E-3c
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 17:45:51 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vnP9X-00024L-I2
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 17:45:48 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a0d67f1877so41020435ad.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 14:45:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnPD4-0003pG-Ru
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 17:49:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnPD3-0003Bh-2S
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 17:49:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770158964;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OSCnpuijEfbM0fiCq56tPrCFnB5RXxxeUhQrfFjEPA0=;
+ b=DRfdYZ+3aJZrToF0Zh+1+IiHLdT+szgmT9pLVp8bAXwNOIckOWRtWUjXXO+cCOmVfBo4So
+ vNmGSR+t/xh3nXCqg1ys7aF5E5HPraPW9P4qAu+8aiPY8q4z1xioFrUw8eqtBCFL8iyB+I
+ ZQ/EujLvO9XS6y1lJs0i76S7A6zwbLQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-648-gIWfm7hQMNSF0pPVAh-V-Q-1; Tue, 03 Feb 2026 17:49:22 -0500
+X-MC-Unique: gIWfm7hQMNSF0pPVAh-V-Q-1
+X-Mimecast-MFC-AGG-ID: gIWfm7hQMNSF0pPVAh-V-Q_1770158962
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-482d8e6e13aso741055e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 14:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770158745; x=1770763545; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YWiTEhIs0XqyaCiJ+EI5zqF5To5THfgZl5fyWRuqSIw=;
- b=L1NB/Tj488PROBhoOH3Rz6lJwcy1Nha136mzRQ63CifINFdKY3XW6Izwn3O6KoYUzb
- dVrePu9yb9/crw9P6V0aAQ32JoU96DzJvy50FsYaGePo2eV/vuKUGcIeV3O8Oi9OG27O
- XEH953aFM2Y88ZY1RucHzJyPm4q2n4QFMHrz0CEP9z95S8LeF3ZzF062/GBOXGqPZXiM
- hzBeYY6xMriV8T6PYBSSwr/cPich/+bnTLSJWeU9xm6M+AxNoGCG2qMudc5C16+bz7ff
- C/5XSk5ilQk7CCWJhYBM+AwbNZRNsDwRrLbjM3NB6Ms5rgiCXnXEftOmCJLLtGcXczCf
- nyVw==
+ d=redhat.com; s=google; t=1770158961; x=1770763761; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=OSCnpuijEfbM0fiCq56tPrCFnB5RXxxeUhQrfFjEPA0=;
+ b=epIIvnHHQGykQxidoqH19ju3jQ3XSFZsH4t0K2zEbhj+2PV1uFZGhCVXUUiB5E+E1O
+ V1Bf4RtsMLUGF9/WbzLpx5gkbs2pBNB4NFNvcPzxlf/fXndCqozQ+YBuospX6gAnq3Ka
+ bqORk4/qYpZRlTZef3CjPznPZktwonWxZX4LkL8Xr6fzG92HPhgMeea2kegsI+pV9Emp
+ RXwVSgxgaw5348qCad5U4K9lyQOTGOAKO//BIObW26tsRN509EjqLS2Afhbj1mmsGEj7
+ dm395u69qgwS9+2fgsnx33QHtsLHiFjHbSSvUuoKdWqW9rE14hiyve8JCXmFogzvZ6Z0
+ onsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770158745; x=1770763545;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YWiTEhIs0XqyaCiJ+EI5zqF5To5THfgZl5fyWRuqSIw=;
- b=dpOQq9wWObnqBbu8BXDvaZ/Gtm3REvYoBubnVFoFQqx3+C3yNmGUK6T1NdKC3bA6n1
- /SGfauUYDkANT278vN7CS4dJeDwTs6hUrkhqtiH8ar6WqABheOJmZlVJ3R8MP+l22ni6
- /Jdu+hS2CAcgUZ+mZd3o23P1tHxn8YUOi7wnmxznskGDNf+p1M9WdILdHUBKAdKnwtQx
- wl+ZseY3mdPDY58lUkE0mPauQzR5AAZxxJ1QNWg/G/dEOFekq4wms84N0QrYQKqTRCga
- rHjvGnhtMHHYcpZjUnJh20QLnT+Y0RmeQO47LIvNAcjR8pqaWEC2kb+FkU6i2KS8e5As
- rJSg==
-X-Gm-Message-State: AOJu0Yycr1gMTPluiqqIC+UiqktHeLqtUi8KtRQefrFCILsNEz7NZLXd
- 7V4YebCHb5QfUECGrvfh9UdffiCmHqiZSQxUrWdGdWwkQE+w4ymMIAYntqMwTO+XZKLtGmjb9EE
- obw+fMN8=
-X-Gm-Gg: AZuq6aJxUGX4/WM1ndz9HEwpx1EiJQN80JT64ZropUSm5RrZCSnBCanvO4TWAEW2FHa
- x9/QZ9WR8LTa9kHmpuzBRmqz1PMY0W/7lewAts9Wy/Cd5gdkhGf+wkba2ksu2tRpvmpvcUj6Hxk
- SFLg38KG7qr8fm/S/VyBEPoapVDuHK+fHf4SA2J3dLXFs/9sTAVLpm1oh1UHrkC6mkS0O0qg6L8
- RavA3mKU84CJdBH9xHtkr8qvUp2fXyrCRNlBeEogZe/Y2yZJi4zNDGRaTVOemFk/jgqAW0pJsIk
- n2Q3S8DGynxebkkWR8iG35qg0SwVzcIHdIMSdpCq266dTmWZkDt+ZWh9eEmSy0dLimmnA/PA7Qp
- l0TiOur2Nu/sB4ZDIJd8londl6wBt982GZ8M03z30mf1CVUzKWWMa3d+hih+I3hkYVG/jBU0CZB
- ras92WvxocOIp7Yk0saBpXIStWFV4frNzkU1MXFI5aIHvbMPWM3eWQAvBH
-X-Received: by 2002:a17:902:ea11:b0:2a7:994a:c02e with SMTP id
- d9443c01a7336-2a933bc9c52mr9256775ad.11.1770158745354; 
- Tue, 03 Feb 2026 14:45:45 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ d=1e100.net; s=20230601; t=1770158961; x=1770763761;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OSCnpuijEfbM0fiCq56tPrCFnB5RXxxeUhQrfFjEPA0=;
+ b=WkwCGNJ8QPeLDe/kEeQrSFEAhN+NvD8/TfuXWPiB4w2mL1glfITViNUmRscIbjgrB5
+ t1hPxk1wAMtIv+2M9PUNPiJPQOg7tpGl7siG0GC7jPTON4Bqj6JqLrmGN94hDl+HWAtc
+ D3lSvY/lozNkXljPAJu+zXRHJHrEUekRg2OXwbrlxXaIvcjp4oPylb1XvN2MtK8SP/0F
+ ktwFwZ+Fwky6ARuj0B0nVNcUW5jYcpA/YcL1LvwbDt1IkmiQbs+kJ5dCCocC8EMlVIlK
+ fFmDfsWvieKozyGoTtTp0WVkUzw6xdFg/gOO9zTS/erJdJW90d5Q6KonEhgcz1bpsIn0
+ 4OOQ==
+X-Gm-Message-State: AOJu0YwImilaABoyz7VvovVbz5R+rQlK2g9UJknIMEXczfYLHAYuU5cN
+ YlHe5+5C/gDSrPh9rjDTHwky4l11eWQZ708SzokI2cEZJw7O09qI7mbV5jouElDkOZ7lEAIHKv0
+ /LIzdwwOoRxDo6D3WXyKHZvlgo4rQt6cdBEF1W4ohFTubt2JPksjLD2iG6xZFLXVC
+X-Gm-Gg: AZuq6aLYENx9Z/JQJmnVla0GPOofmHvGrSW0bOEygIbsxxUTFeCmba2jQv0+96QVCaQ
+ 18l66HH64tr6S1Ael9+mSPmh48KCrpHjvfnDw6NbU/d6Y9NwcjnZHihGLMZoWaFdIcoZViBV+Ai
+ B7/1SB33DxI3k1xnQ/w9MXS1rtPXJyDCAaAyx6oEj3Llh6eIY7yEh02DzyAZ/WSUujJFmQt3ApC
+ DfB0YGSqujjBdXou0PmCGgElTPjakFL/QXVG8t8uSlD1lmnXPxzqbZuWnyaruQsLvhWRQ4C7vO6
+ 3wfYyR7aHfmuxig+noJkNhSiQdUV3H82Yb/88t1Oe/8YEbQepd4zy4OI1lrKkumgcQ/mveq/2Ay
+ /5ZKRq7bkGb2RE2tWVAAj8hz/OsdPZE8SjA==
+X-Received: by 2002:a05:600c:820a:b0:47e:e9c9:23bc with SMTP id
+ 5b1f17b1804b1-4830e980379mr15613275e9.30.1770158961228; 
+ Tue, 03 Feb 2026 14:49:21 -0800 (PST)
+X-Received: by 2002:a05:600c:820a:b0:47e:e9c9:23bc with SMTP id
+ 5b1f17b1804b1-4830e980379mr15613125e9.30.1770158960797; 
+ Tue, 03 Feb 2026 14:49:20 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a933888e8csm4694525ad.29.2026.02.03.14.45.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 14:45:44 -0800 (PST)
-Message-ID: <842f10f7-a8f3-46c2-a5de-387e01143fe3@linaro.org>
-Date: Tue, 3 Feb 2026 14:45:44 -0800
+ 5b1f17b1804b1-483108d79c9sm1336995e9.1.2026.02.03.14.49.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 14:49:20 -0800 (PST)
+Date: Tue, 3 Feb 2026 17:49:17 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, Andrey Ryabinin <arbn@yandex-team.com>,
+ qemu-stable@nongnu.org, michael.roth@amd.com
+Subject: Re: [PATCH v2] q35: Fix migration of SMRAM state
+Message-ID: <20260203174612-mutt-send-email-mst@kernel.org>
+References: <20251211165454.288476-1-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/9] hw/virtio: Use VirtIODevice::access_is_big_endian
- field
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
- <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
- <20260203205637.3109749-4-pierrick.bouvier@linaro.org>
- <3e6fcc5f-154d-4a71-aa7f-d42f04136616@linaro.org>
- <221a990d-cad7-e39c-2c2c-1aace5c3c3af@eik.bme.hu>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <221a990d-cad7-e39c-2c2c-1aace5c3c3af@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251211165454.288476-1-imammedo@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,44 +117,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 2:38 PM, BALATON Zoltan wrote:
-> On Tue, 3 Feb 2026, Philippe Mathieu-Daudé wrote:
->> On 3/2/26 21:56, Pierrick Bouvier wrote:
->>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>
->>> Endianness access is constant between device resets.
->>> Use the field instead of calling the same function.
->>
->> Maybe we should justify here, simply adding from your v3 comment:
->>
->>   When doing automated benchmark with fio (see instructions
->>   in [*]) this resulted in a +1.4% speedup vs existing code.
->>
->>   [*] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
+On Thu, Dec 11, 2025 at 05:54:54PM +0100, Igor Mammedov wrote:
+> When migrating, dst QEMU by default has SMRAM unlocked,
+> and since wmask is not migrated, the migrated value of
+> MCH_HOST_BRIDGE_F_SMBASE in config space fall to prey of
 > 
-> What does existing code refer to here? According to cover letter it's
-> within 0.003% of existing speed so not actually faster but only a tiny bit
-> slower. The speed up above maybe from previous version of the series
-> without this patch so maybe clarify that more if you include this in the
-> commit message.
->
-
-Existing is upstream/master.
-+1.4% is with this patch.
-End result is -0.3% with the full series applied.
-
-> Regards,
-> BALATON Zoltan
+>   mch_update_smbase_smram()
+>     ...
+>     if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
+>         *reg = 0x00;
 > 
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>    include/hw/virtio/virtio-access.h | 24 ++++++++++++------------
->>>    hw/virtio/virtio.c                |  4 ++--
->>>    2 files changed, 14 insertions(+), 14 deletions(-)
->>
->>
->>
+> and is getting cleared and leads to unlocked smram
+> on dst even if on source it's been locked.
+> 
+> As Andrey has pointed out [1], we should derive wmask
+> from config and not other way around.
+> 
+> Drop offending chunk and resync wmask based on MCH_HOST_BRIDGE_F_SMBASE
+> register value. That would preserve the register during
+> migration and set smram regions into corresponding state.
+> 
+> What that changes is:
+> that it would let guest write junk values in register
+> (with no apparent effect) until it's stumbles upon
+> reserved 0x1 [|] 0x2 values, at which point it
+> would be only possible to lock register and trigger
+> switch to SMRAM blackhole in CPU AS.
+> 
+> While at it, fix up test by removing junk discard before negotiation hunk.
+> 
+> PS2:
+> Instead of adding a dedicated post_load handler for it,
+> reuse mch_update->mch_update_smbase_smram call chain
+> that is called on write/reset/post_load to be consistent
+> with how we handle mch registers.
+> 
+> PS3:
+> for prosterity here is erro message Andrey got due to this bug:
+>     qemu: vfio_container_dma_map(0x..., 0x0, 0xa0000, 0x....) = -22 (Invalid argument)
+>     qemu: hardware error: vfio: DMA mapping failed, unable to continue
+> 
+> 1) https://patchew.org/QEMU/20251203180851.6390-1-arbn@yandex-team.com/
+> Fixes: f404220e279c ("q35: implement 128K SMRAM at default SMBASE address")
+> Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+> Cc: qemu-stable@nongnu.org
+> Cc: mst@redhat.com
+> Cc: arbn@yandex-team.com
+> Cc: michael.roth@amd.com
+> ---
+>  hw/pci-host/q35.c      | 25 +++++++++++--------------
+>  tests/qtest/q35-test.c |  6 ------
+>  2 files changed, 11 insertions(+), 20 deletions(-)
+> 
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index a708758d36..946342ba58 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -432,30 +432,27 @@ static void mch_update_smbase_smram(MCHPCIState *mch)
+>      }
+>  
+>      if (*reg == MCH_HOST_BRIDGE_F_SMBASE_QUERY) {
+> -        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] =
+> -            MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+>          *reg = MCH_HOST_BRIDGE_F_SMBASE_IN_RAM;
+>          return;
+>      }
+>  
+>      /*
+> -     * default/reset state, discard written value
+> -     * which will disable SMRAM balackhole at SMBASE
+> +     * reg value can come from register write/reset/migration source,
+> +     * update wmask to be in sync with it regardless of source
+>       */
+> -    if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
+> -        *reg = 0x00;
+> +    if (*reg == MCH_HOST_BRIDGE_F_SMBASE_IN_RAM) {
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> +        return;
+>      }
+> -
+> -    memory_region_transaction_begin();
+>      if (*reg & MCH_HOST_BRIDGE_F_SMBASE_LCK) {
+> -        /* disable all writes */
+> -        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] &=
+> -            ~MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> +        /* lock register at 0x2 and disable all writes */
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
+>          *reg = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> -        lck = true;
+> -    } else {
+> -        lck = false;
+>      }
+> +
+> +    lck = *reg & MCH_HOST_BRIDGE_F_SMBASE_LCK;
+
+why not move the if here and then simply:
+
+	if (lck) {
+		/* lock register at 0x2 and disable all writes */
+		pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
+		*reg = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+	}
+
+can be a patch on top.
+
+> +    memory_region_transaction_begin();
+>      memory_region_set_enabled(&mch->smbase_blackhole, lck);
+>      memory_region_set_enabled(&mch->smbase_window, lck);
+>      memory_region_transaction_commit();
+> diff --git a/tests/qtest/q35-test.c b/tests/qtest/q35-test.c
+> index 62fff49fc8..4e3a4457f6 100644
+> --- a/tests/qtest/q35-test.c
+> +++ b/tests/qtest/q35-test.c
+> @@ -206,12 +206,6 @@ static void test_smram_smbase_lock(void)
+>      qtest_writeb(qts, SMBASE, SMRAM_TEST_PATTERN);
+>      g_assert_cmpint(qtest_readb(qts, SMBASE), ==, SMRAM_TEST_PATTERN);
+>  
+> -    /* check that writing junk to 0x9c before before negotiating is ignored */
+> -    for (i = 0; i < 0xff; i++) {
+> -        qpci_config_writeb(pcidev, MCH_HOST_BRIDGE_F_SMBASE, i);
+> -        g_assert(qpci_config_readb(pcidev, MCH_HOST_BRIDGE_F_SMBASE) == 0);
+> -    }
+> -
+>      /* enable SMRAM at SMBASE */
+>      qpci_config_writeb(pcidev, MCH_HOST_BRIDGE_F_SMBASE, 0xff);
+>      g_assert(qpci_config_readb(pcidev, MCH_HOST_BRIDGE_F_SMBASE) == 0x01);
+> -- 
+> 2.47.3
+> 
+> 
 
 
