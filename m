@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9A6E83062
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029D0E83062
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnC9e-0004h7-9Q; Tue, 03 Feb 2026 03:53:02 -0500
+	id 1vnC9f-0004nb-TT; Tue, 03 Feb 2026 03:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9a-0004cY-Hu; Tue, 03 Feb 2026 03:52:58 -0500
+ id 1vnC9c-0004gh-U9; Tue, 03 Feb 2026 03:53:01 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9Z-0002qU-6H; Tue, 03 Feb 2026 03:52:58 -0500
+ id 1vnC9b-0002qU-IX; Tue, 03 Feb 2026 03:53:00 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
@@ -37,9 +37,9 @@ To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>, Patrick Venture <venture@google.com>
-Subject: [PATCH v2 06/20] hw/i3c/dw-i3c: Add more reset values
-Date: Tue, 3 Feb 2026 16:52:06 +0800
-Message-ID: <20260203085229.1543287-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 07/20] hw/i3c/aspeed_i3c: Add register RO field masks
+Date: Tue, 3 Feb 2026 16:52:07 +0800
+Message-ID: <20260203085229.1543287-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
 References: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
@@ -73,54 +73,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joe Komlodi <komlodi@google.com>
 
-Adds reset values for the new registers added.
+Adds read-only register masks for the Aspeed I3C controller registers.
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
 Reviewed-by: Patrick Venture <venture@google.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/i3c/dw-i3c.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ hw/i3c/aspeed_i3c.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index 2f04c69320..7bb33c7a9e 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -268,14 +268,32 @@ REG32(DEVICE_ADDR_TABLE_LOC1, 0x280)
-     FIELD(DEVICE_ADDR_TABLE_LOC1, LEGACY_I2C_DEVICE, 31, 1)
+diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
+index f0352aaca0..bb41493c55 100644
+--- a/hw/i3c/aspeed_i3c.c
++++ b/hw/i3c/aspeed_i3c.c
+@@ -74,6 +74,21 @@ REG32(I3C6_REG1, 0x64)
+     FIELD(I3C6_REG1, SA_EN,         15, 1)
+     FIELD(I3C6_REG1, INST_ID,       16, 4)
  
- static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
--    [R_HW_CAPABILITY]               = 0x000e00bf,
-+    /* Target mode is not supported, don't advertise it for now. */
-+    [R_HW_CAPABILITY]               = 0x000e00b9,
-     [R_QUEUE_THLD_CTRL]             = 0x01000101,
-+    [R_DATA_BUFFER_THLD_CTRL]       = 0x01010100,
-+    [R_SLV_EVENT_CTRL]              = 0x0000000b,
-+    [R_QUEUE_STATUS_LEVEL]          = 0x00000002,
-+    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000010,
-+    [R_PRESENT_STATE]               = 0x00000003,
-     [R_I3C_VER_ID]                  = 0x3130302a,
-     [R_I3C_VER_TYPE]                = 0x6c633033,
-     [R_DEVICE_ADDR_TABLE_POINTER]   = 0x00080280,
-     [R_DEV_CHAR_TABLE_POINTER]      = 0x00020200,
-+    [R_SLV_CHAR_CTRL]               = 0x00010000,
-     [A_VENDOR_SPECIFIC_REG_POINTER] = 0x000000b0,
-     [R_SLV_MAX_LEN]                 = 0x00ff00ff,
-+    [R_SLV_TSX_SYMBL_TIMING]        = 0x0000003f,
-+    [R_SCL_I3C_OD_TIMING]           = 0x000a0010,
-+    [R_SCL_I3C_PP_TIMING]           = 0x000a000a,
-+    [R_SCL_I2C_FM_TIMING]           = 0x00100010,
-+    [R_SCL_I2C_FMP_TIMING]          = 0x00100010,
-+    [R_SCL_EXT_LCNT_TIMING]         = 0x20202020,
-+    [R_SCL_EXT_TERMN_LCNT_TIMING]   = 0x00300000,
-+    [R_BUS_FREE_TIMING]             = 0x00200020,
-+    [R_BUS_IDLE_TIMING]             = 0x00000020,
-+    [R_EXTENDED_CAPABILITY]         = 0x00000239,
-+    [R_SLAVE_CONFIG]                = 0x00000023,
- };
++static const uint32_t ast2600_i3c_controller_ro[ASPEED_I3C_NR_REGS] = {
++    [R_I3C1_REG0]                   = 0xcc000000,
++    [R_I3C1_REG1]                   = 0xfff00000,
++    [R_I3C2_REG0]                   = 0xcc000000,
++    [R_I3C2_REG1]                   = 0xfff00000,
++    [R_I3C3_REG0]                   = 0xcc000000,
++    [R_I3C3_REG1]                   = 0xfff00000,
++    [R_I3C4_REG0]                   = 0xcc000000,
++    [R_I3C4_REG1]                   = 0xfff00000,
++    [R_I3C5_REG0]                   = 0xcc000000,
++    [R_I3C5_REG1]                   = 0xfff00000,
++    [R_I3C6_REG0]                   = 0xcc000000,
++    [R_I3C6_REG1]                   = 0xfff00000,
++};
++
+ static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+     AspeedI3CState *s = ASPEED_I3C(opaque);
+@@ -97,6 +112,7 @@ static void aspeed_i3c_write(void *opaque,
  
- static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)
+     addr >>= 2;
+ 
++    data &= ~ast2600_i3c_controller_ro[addr];
+     /* I3C controller register */
+     switch (addr) {
+     case R_I3C1_REG1:
 -- 
 2.43.0
 
