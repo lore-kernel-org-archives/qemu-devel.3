@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42539E83040
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 02:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41362E83041
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 02:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn6HF-0002gc-6i; Mon, 02 Feb 2026 21:36:29 -0500
+	id 1vn6Mt-0004iZ-C9; Mon, 02 Feb 2026 21:42:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn6HD-0002gN-Vy
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 21:36:28 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1vn6Mr-0004hx-S6
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 21:42:17 -0500
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn6HC-0004y4-CH
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 21:36:27 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3532aa9a77eso2387843a91.0
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 18:36:25 -0800 (PST)
+ id 1vn6Mq-0006HL-A7
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 21:42:17 -0500
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-c62239decbeso1993479a12.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 18:42:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770086185; x=1770690985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770086534; x=1770691334; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XgeOt9/6xAZdBDWOTYcZcrZL4DZk6Feit8gyjfJfU/8=;
- b=YP7p9MJabKq9sGPb9lmETF9zcELI2FQQiEGVqHWsC/pkD5gHKlKAn8muSp970M79ZG
- PsR3+u3nz1dnSsAzQOeOMxJne5+it3eenvz8c3fNh5vIENFzOB35OCv88bUdAWgav+N6
- Jsxf0erKIyWlJl0GUVc72DZs9dOrAqxbG6VopOykGXkQA11QV5I91ZqUXB/TULiUtOvz
- zw7eQ63gj36jvxLx8xek7MxaKkHq931PWISsWAwMsMjJGJCbL0dTzHh4BvLGF7/9kagx
- OtRVOcMrx/RVF0ctTCfMi51OD7rqeIhHhxtR0oO8BtXj7j9R8fyidVr5fHTfx/BMWxkm
- b1tg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AVdMqrT+YI+jQXDLH/TQUTSeswogU6gmyJFjnUuA6rM=;
+ b=DEReZRoWsFjRT4U9TjgKzynmCaFhKC2KinP/jT7QHgDjkHUd/15WO9hm31aEZGwI2E
+ nsMZli+Qx2iDcZVl49P4NhIlG0vca/AL7dyME3avg5HVjz6VxR37hDmZ3el/l1CmaTns
+ JclALFEGeaCtVN2sym7nC33lD/RK5C7RfcGK7iE7ayuM0xVsgkU7Wj/DC/iMCNbnzDZr
+ DGE9WcQnjvUad1u52rTDSHHuvecCJPWpI/jeME4CYOfG6T7EVhP0tinMt8uLF7TlTCxO
+ lFRxiFVodxAt273zn/oazkTnxx57Zsl8AjXlR8MyNZVDcNjW/Pd4JitnT1cxMr6KY4H7
+ JKeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770086185; x=1770690985;
+ d=1e100.net; s=20230601; t=1770086534; x=1770691334;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XgeOt9/6xAZdBDWOTYcZcrZL4DZk6Feit8gyjfJfU/8=;
- b=uGngjmPoX/VWrg9Y/3sitz/QuSTZGfqEb+y3f6oxs8yXmU0JlQG0cctCZYBBQZPzPB
- Y5Ho1LXPGj4ZA7Y5XPSonMOc9vPfxvXG8EvhU3xycUJGSEKjKAV5vNMCijPjy0csUWz4
- l/P2rYyl+aUhTViVMj/da+F0lDJmIjjMtpRY3FNSoP+kHuo4L3Ds9ybWWt7szrH21kKi
- TWs17ukS54gHFHsylkoT8ULcsjRn5CZK6cHFLta8KCqOg6IYn9iMPxJWyA5w0um4sB4y
- AsXjppbaV4h0KGfiYS04i9dXpFHoJz7rCj3kRNmos238Wsbn48Ns7cjpAZ7EZgAMgod1
- kSjw==
+ bh=AVdMqrT+YI+jQXDLH/TQUTSeswogU6gmyJFjnUuA6rM=;
+ b=ZgKm7VrQ9w7fTVXqbImzOtGRyI9I91NkQcAFuE0kwLvyM44pdOChcFPYHyuYQGTeb4
+ WE7kEuaTHXlXsjbc+jLMaXQlK1LrmvKLtLpGqw3R7d1LejBXiLP61nwC39Tm+KqxLb9H
+ /vqw9N4/N1pF+wFWWyGfDu3k52eBvuxnZTQ9tGTZ8eogfPnzW/avFL796PQR4Bo/UOmT
+ xoDXbx0/NetJ9k74s8QOTmCPkLtQ2kuQTQGBbSnZF/IU35kokiyb/zxK3oJArL7DlM+v
+ vgWGIXhniIGwlItjPo9a2rbyofqrEb3y63i+83niN2hnNstp1S1edwBZ6Gx+awdiE0xv
+ Ibzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWW9Np4HmzwsigCrGfg23CupEojScoiIh7YTzmvqbkUgBJ3ASm6j6uMfOoLFu/sqGgBlkxpDZ9sLFbX@nongnu.org
-X-Gm-Message-State: AOJu0YzkDevJKafkolC/7YKvNj3YC0d0pOPrEtUdNqYWhQUgXr9r+unP
- WKK7oM/XtQ5n+z6pJJ1BYRDYQWGJpDDPMvwFboCKDI/7qTDRUL5zJj+hQJGmdXKxWYY=
-X-Gm-Gg: AZuq6aInES8gYXjERU75jktEtvt4lvq6Pm753O0hS9dE0TFWUYExrdlR6clPhKL53FG
- FbUFOp23WtHY/kDnQwX+BrBqVAY5SJAgl6i4LiWScIOc5N5yKHlXjhNH8IiyPdje/tfgZbnXCBy
- g59c4HXWh7qUOElhr19+Bg3Swz7p+GQx6mEaU7giU0+opvuNW++wAGDGfcWG5YMafj+OiAbnwQA
- ut1KSsKeCli5wlolfkn6jcCp8njtdyhN7KAGhcOXuOZvh0rekzhPwAMZf3pYCO0jR66Jid87vIy
- BAausEchajHjt1bIzRUqlr7zKo6407OLQ2U1dQlkULK3Pkv/tgY/d4WLUWfs68eVtd7YKFee23F
- QFg0q2wL89n4+6r7SAi9ymqgBf60TdlIl7VQJkmn3Z1UUuooIrJydsdbkShNKixdoaJBMnhZScw
- 0pJtdyO0dxgH+hxWPeVtqrWlJ9iKMjC8c5pZEFCc/Ce2PLW5/DD2ZMe7VwT252rDmfKWpBGXiNT
- w58f4VwZPok+Z/1QcqREbZ7oCblOjEhk6jMxHBy2g==
-X-Received: by 2002:a17:90b:4b02:b0:340:d06d:ea73 with SMTP id
- 98e67ed59e1d1-3543b3b24aemr11220496a91.19.1770086184614; 
- Mon, 02 Feb 2026 18:36:24 -0800 (PST)
+ AJvYcCV5lDv0G0Sxvy9ciALy65V2ktHt9t4EmoBuH1QZFjjuy2BtT6zutdCLR0uytn6Yjsc5cE43uy3baWwO@nongnu.org
+X-Gm-Message-State: AOJu0YwfWOV0VDDJDPPtoTzB4HFV+LinRKMrz+UnkWkonBhPakkl/qLH
+ jpsIyGxjrbOsauezYwPBDBTABBuBFph1+3lEJK+c3M42jnq/M/jtcp97tFuXBGXcmOA=
+X-Gm-Gg: AZuq6aKbXWFKUWmJGoZIXMr9xjgPP9usie+l85DHV/E+hZr2ib0ajmSIHH87wSFPIda
+ Q/tVR0TrJpG2kjGn0nQKENAepQtdNRkcYYYTie7SL1KoujQ8ZuBeDtaf1ZbBgqTZLJGIDC0mF1f
+ xLGePpGR9OUDuhLVIjxVRQwFmr5owzNo6UYHI2kPL90te1RWVfw3HaAVbZqDOl/GytHXEWSgrdZ
+ xq9fA552c68IoRJzQIPth6ltrfLUHQVVVbzRe7oXrvvewafChMWMsfIK9yxLmnIhJbSGdaVewih
+ vb2YzdbXCBZ4jp/tYIFjAbZvPB3OR9A5NkDq++tGGAiq/cUG4qpYsYBEW6Rh2MDx5DFKw1KHN+F
+ 3TXnMVrNQqiTZu1QiEgcOMJDPL9UunHOHPU3gnsgxL+KLNzBTz8fowAajM4AoDmhIEjvbxJK1MK
+ 4i45ZRYcDYvWyYcS7yCrOjjI6vj15c74Stv4nEY7dG2b3aB8z304aq4MKBeO4k5jDY3AlRmVyuj
+ 8ewGEo0f67tcxmLn3UJCdnH3DLE/V55n+wY6mGzesnvBeIusYyD
+X-Received: by 2002:a05:6a21:2d44:b0:38e:9c27:72e8 with SMTP id
+ adf61e73a8af0-392dffe0d51mr13116481637.4.1770086534473; 
+ Mon, 02 Feb 2026 18:42:14 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
  (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
  [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3543babe32fsm5729724a91.0.2026.02.02.18.36.21
+ d9443c01a7336-2a88b3eecc5sm166466385ad.17.2026.02.02.18.42.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 18:36:23 -0800 (PST)
-Message-ID: <d104e4b0-94c4-4de4-84e7-1011253ab5f8@linaro.org>
-Date: Tue, 3 Feb 2026 12:36:18 +1000
+ Mon, 02 Feb 2026 18:42:13 -0800 (PST)
+Message-ID: <e0ceab50-b976-4c38-bec8-705994295c0d@linaro.org>
+Date: Tue, 3 Feb 2026 12:42:09 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial v2 7/7] rename CONFIG_EPOLL_CREATE1 to
- CONFIG_EPOLL, and stop checking for epoll in meson.build
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20260119140557.2167351-1-mjt@tls.msk.ru>
- <20260119140557.2167351-4-mjt@tls.msk.ru>
+Subject: Re: [PATCH] linux-user/syscall.c: Prevent acquiring clone_lock while
+ fork()
+To: Aleksandr Sergeev <sergeev0xef@gmail.com>, qemu-devel@nongnu.org
+References: <20260126151612.2176451-1-sergeev0xef@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260119140557.2167351-4-mjt@tls.msk.ru>
+In-Reply-To: <20260126151612.2176451-1-sergeev0xef@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,35 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/26 00:05, Michael Tokarev wrote:
-> Since CONFIG_EPOLL is now unused, it's okay to
-> perform this rename, to make it less ugly.
+On 1/27/26 01:16, Aleksandr Sergeev wrote:
+> By the spec, fork() copies only the thread which executes it.
+> So it may happen, what while one thread is doing a fork,
+> another thread is holding `clone_lock` mutex
+> (e.g. doing a `fork()` or `exit()`).
+> So the child process is born with the mutex being held,
+> and there are nobody to release it.
 > 
-> Since epoll is linux-specific and is always present on linux,
-> define CONFIG_EPOLL to 1 on linux, without compile-time test.
+> As the thread executing do_syscall() is not considered running,
+> start_exclusive() does not protect us from the case.
 > 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/3226
+> Signed-off-by: Aleksandr Sergeev<sergeev0xef@gmail.com>
 > ---
->   meson.build      | 3 +--
->   util/aio-posix.h | 4 ++--
->   util/meson.build | 2 +-
->   3 files changed, 4 insertions(+), 5 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index f4eae50764..157189e306 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2673,8 +2673,7 @@ config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
->   # has_header_symbol
->   config_host_data.set('CONFIG_BLKZONED',
->                        cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
-> -config_host_data.set('CONFIG_EPOLL_CREATE1',
-> -                     cc.has_header_symbol('sys/epoll.h', 'epoll_create1'))
-> +config_host_data.set('CONFIG_EPOLL', host_os == 'linux')
+>   linux-user/main.c           |  2 ++
+>   linux-user/syscall.c        | 14 ++++++++++++++
+>   linux-user/user-internals.h |  2 ++
+>   3 files changed, 18 insertions(+)
 
-I guess my question remains: Why keep CONFIG_EPOLL if it is identical to the existing 
-CONFIG_LINUX?
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
