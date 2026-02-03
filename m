@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439B5E83040
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84453E83040
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn706-0000rT-PQ; Mon, 02 Feb 2026 22:22:52 -0500
+	id 1vn721-0001ih-KX; Mon, 02 Feb 2026 22:24:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn701-0000qX-G4
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:22:46 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vn71z-0001iP-9I
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:24:47 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn6zz-0001yx-Ua
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:22:45 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-8230c2d3128so2740586b3a.0
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:22:43 -0800 (PST)
+ id 1vn71x-0002KM-4f
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:24:46 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a07f8dd9cdso34712625ad.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:24:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770088962; x=1770693762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770089084; x=1770693884; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7tEujU2jd2apFY7pqHGMuuQHSmW7OYpmY+BZ1+J4E8g=;
- b=Y1Gn3QRRIOcIWvip61esMOfsnT8Xp9IOuIzDjPkOE/bP1PHQ3INIpY33UNkZ8JWtGg
- PfeydUu3vXt0nxCmQCwgswqsusbal5APz9XRhrCWRDbjUaCRk++g8IJI3gm9uO5QClu5
- TyAiQ6TcpH8U4Lh/rmer8cadjaJysY4+T+VlP9uA244KdhplbIqMNhHXXF6nTxgjSVLQ
- gUZaq7RUi7G7h8LMjTZX72TijMxU7qPjIyOFCCaAPRaL+jTVGqPa9TIMJ55shZ8b6GHM
- sxJwfsK6aPRF2fboEHgfMxquh61unVKdmE1KKcnFom2qHjkixVrfcZiW8OUZnZBkz85B
- x8Gg==
+ bh=RINyX8ZCtnuiMQ9LOdWB/qhp7JvgZGe1eMv1s7y/yps=;
+ b=H82dsdet+bWLB7rdUnBQD0NpgVPVVp0/QpAV4hK/GL9NfnQDk7cdvp/odTzSK0Wtf0
+ iYgfFFsaBB7pb8ConQt6dkuLkwzxcXWrmF0Hml4kMGCVcKByoBZka1319fb5gEIzkWbr
+ GSpwamkg986s27jVkdo4dZ0H9txzwIiivdnZpuwq1jjMc0ubdslcS5tMe7eOg3LE7Kmy
+ kyf5pw5mIuusky+0iECeyfsjUJdN14VrwH1pcN+8RBhM1m8Q4Cp7YQldtNqiu3Q3qa+l
+ +GF3DDeC+bvqn9BLNdRxd67fcYqy9NbWDug4+ORAurifoO2RVfH0wXQvqi+FUzWawFgv
+ UGHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770088962; x=1770693762;
+ d=1e100.net; s=20230601; t=1770089084; x=1770693884;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7tEujU2jd2apFY7pqHGMuuQHSmW7OYpmY+BZ1+J4E8g=;
- b=i85gkFsEaTofFHLb02PUOVZZaF+im7n+eDn4nvvxFr6rN+XoksTECXC7ayD6uzgy5N
- oIEsMJbb7KHdX1OG2It272FZ02xJvZlDSn/N4PCT24E5kgQl4rdNEYNnCgkxnTZ9Uupw
- iywlWQH6hUNrURVDfGfElIJfDKPYuqUgZm2ye2yAMvCZDaVMFjOvWdYOKbfzXTh3//jS
- BuhftCwcrcBmIGq2j92T3Lrt2ib0qU+IJSLw+uEffGip9fPyANtNFN7P1NQ2795caUsN
- MA2mNVfNtuzYPjVQNERpy5bHeeeRuQ5L5phW0ggXasnYWY43tgAXMkCDJizfoiPfuzCb
- s4lQ==
+ bh=RINyX8ZCtnuiMQ9LOdWB/qhp7JvgZGe1eMv1s7y/yps=;
+ b=K5jBNe7yPcYZMXQ12ROXPbWm15rfLl+N6inKuYB97Fs2ih+OJ1YlhrM0WSwNf6eAVr
+ D2JhuWYh8qswaKNeNKCyS9ofWJq3U9rvGl5iNZame225ymLRULw6VkhPWOAy9qt9i2+b
+ V+67pAAyUklAO5E1hIoFz96yQc16GlC3ZjA/oIkp3evSWbymq8FinXgF1EO+JZm644Qt
+ 2x6/8aL2l6JjwYCqB4dcezJWErkzGe5NjeC1Oq848uCXHCTSIZBBeYWm1OE8wEht3kXQ
+ hceCzUyA6FfVSd8JgNR2uUq3yLq5+Papdwv6/qxxvporVfpN43QlUsBUObJ25sv8uaVb
+ URJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbK8AWM7m0eJM7yj41CCDwwH4yQwXbaZDEbillbFetyEfCGZVASWKk5XKeuKjYBe8mfz/6YF16dq8E@nongnu.org
-X-Gm-Message-State: AOJu0YzcgK/aX2/+0DHT6w2oeqQOPXERR1zF50uvF/m3B0SMr5lo8R97
- Xp8I8SqQ43haZsxLNMFYpU2pvLIeqOQhFoN+Kx/erDejs7k9zp9KBMjbAibVc+b9FYc=
-X-Gm-Gg: AZuq6aK9MJp5TsIUVvDYogQYHel7aYwecLAXUZBXcJXEvjGcpu/MkM9xh3GIJyuijLm
- QV6FRJ/uLjvIJBgImG8WHkzIEVnV0DXWsGKuY4ZMA+CMWSAv2vxRnukpk6mRhBpQLlTl/lcRw5R
- oeMjSWvS+ggfi2W36Ke750FZmifHmsy00gbA6sJuJ56H6z9NftAyLZksDoBLNs1bALbsT1nt+O8
- hlUpmoxyoWEREiTCyZzhY9zVeP9pXm3FeQBZLP6KXx6JLYzeK5+2RgCBJOp7SSzJvX23MKqdBwX
- uzIwjQsVlIGC/W589voS89WsHiBPxgnT3yQqCqdE5gAYCkw7DFJGRN4aDNZGtO4gBCMdo3hMvfT
- I54FczKQP+av+mwq5XCsQRbO6D9Sbn7/OMb5cvIyuhAhD+6DhNYBW/lREUV6tLJjVXO9/bB5oIu
- v2seBtVQDXjHA1dFBJyF2Gah3XD/X6bLchyO0AB46eiQ9Syi/ChMaaP63jCf/4+62cCjPp21iZ
-X-Received: by 2002:a05:6a00:3688:b0:81f:17b:c70f with SMTP id
- d2e1a72fcca58-823aa6ea514mr13425740b3a.29.1770088962311; 
- Mon, 02 Feb 2026 19:22:42 -0800 (PST)
+ AJvYcCXDVOcZewY+iBDkP/wg8k2ll+GFaZbY4OVFgxLZmOaxkh75C9wN3KmBVEDn8Q7KtuTisF8TqQnxC7u5@nongnu.org
+X-Gm-Message-State: AOJu0YwooVfdoBi2MOyvudhXnPWMo+nUz/3aDbn6l8mZZS5vS/gz32Yp
+ oJCk/I38/wBvGd+uNCDnLLr4jZvfBsB+4U2Q5G3y5G7EZilBXsjFsnA+tEl/gCwWfljYZJhHlXO
+ jh3iu8nfpNQ==
+X-Gm-Gg: AZuq6aJJayCmsT4Xf9afHR2PuS7HoVX1JyE3R+QGcFuTSyadF7mtx95qs4NVQhOkhGx
+ OJo4RNjcOIXLHTTbcynWgKiGAa/kL7l50pNjkvtVRW7CsA2P25QNDdb4PYFWoGDPGvekvC3rEaG
+ 4T8ODDJqG2PUKakvZ4g/9scpMTLY9cqQuGgFteXmwTP4NgmJMxJSV6QGad2+OZW2xeyWDZpMhqd
+ Hof4IlukLhJEm2g2ZVPxdjLk7Ck8hak+XLWH4+5+bbEXgXslW4udAl2ya6jJaZvbzDOIXFJCf7/
+ jIyMYXkyF2Kv1bnq0gWx6GHMmTe+E5HRThAp/2Sawr9orQBoaHLVM5viDxcTWhUBEDPNJ1Q8KjS
+ Ax/xV6sKXqXO82z+L6nYV9CgBeqOU3hlRESQcxZ0d19FSMI9KUinJthEF6BEVZYlAYS8cEjuR6n
+ 3wJbDd3+HAidPtnx6J5nxMvW594plyH00p6GTVch9QiM1NZ+OJEIF7pUS0uR2p//hzWvLIbQrts
+ U2KbRPZwpBFG0yj+3f1fjdMApOojxdvILuPbRCWl/slyZy8FBN7
+X-Received: by 2002:a17:903:a8f:b0:2a5:8c1c:744f with SMTP id
+ d9443c01a7336-2a8d99285cemr145142405ad.40.1770089083655; 
+ Mon, 02 Feb 2026 19:24:43 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
- ([2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
+ (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
+ [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c24083sm17106430b3a.55.2026.02.02.19.22.39
+ d9443c01a7336-2a88b5d88f0sm168363955ad.67.2026.02.02.19.24.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 19:22:41 -0800 (PST)
-Message-ID: <a84842b6-32aa-48e8-9ea9-9220b98de561@linaro.org>
-Date: Tue, 3 Feb 2026 13:22:36 +1000
+ Mon, 02 Feb 2026 19:24:43 -0800 (PST)
+Message-ID: <7ab6be04-44c8-4467-a206-534fd3cd968b@linaro.org>
+Date: Tue, 3 Feb 2026 13:24:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/15] target/arm: Don't squash all ID_AA64ZFR0_EL1
- fields for non-SVE
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH] target/i386: Inline translator_ld[uw,l,q]() calls
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260202133353.2231685-1-peter.maydell@linaro.org>
- <20260202133353.2231685-14-peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20260202213348.96754-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260202133353.2231685-14-peter.maydell@linaro.org>
+In-Reply-To: <20260202213348.96754-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,35 +109,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 23:33, Peter Maydell wrote:
-> The ID register ID_AA64ZFR0_EL1's fields are not all for SVE
-> exclusive features; some are also used to describe SME on an
-> SME-only CPU:
+On 2/3/26 07:33, Philippe Mathieu-Daudé wrote:
+> In preparation of removing the translator_ld[uw,l,q]() methods,
+> inline them for the x86 targets, expanding MO_TE -> MO_LE since
+> the architecture uses little endian order.
 > 
-> SVE-only fields:
->   * F64MM, F32MM, F16MM, SM4, B16B16, SVEVer
+> Mechanical change using the following Coccinelle 'spatch' script:
 > 
-> Fields used for SVE and SME (in some cases there is also a
-> field for SME in ID_AA64SMFR0_EL1, but it is just a "present
-> or absent" single bit flag and the ZFR0 field then tells you
-> what level of support is present):
->   * I8MM, SHA3, BF16, BitPerm, EltPerm, AES
+>      @@
+>      expression env, db, pc, do_swap;
+>      @@
+>      (
+>      - translator_lduw(env, db, pc)
+>      + translator_lduw_end(env, db, pc, MO_LE)
+>      |
+>      - translator_ldl(env, db, pc)
+>      + translator_ldl_end(env, db, pc, MO_LE)
+>      |
+>      - translator_ldq(env, db, pc)
+>      + translator_ldq_end(env, db, pc, MO_LE)
+>      )
 > 
-> Currently we zero the whole ID_AA64ZFR0_EL1 register in
-> arm_cpu_sve_finalize() if SVE is not present, which wipes also the
-> fields we need for SME.  Only clear the fields which are SVE-specific
-> here, and clear the rest in arm_cpu_sme_finalize() if we
-> have neither SME nor SVE.
-> 
-> This requires us to update our ID_AA64ZFR0 field definitions
-> to match the rev M.a.a Arm ARM, as the F16MM SVE-only field
-> is not one we had a definition for previously.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/arm/cpu-features.h |  2 ++
->   target/arm/cpu64.c        | 16 ++++++++++++++--
->   2 files changed, 16 insertions(+), 2 deletions(-)
+>   target/i386/tcg/decode-new.c.inc | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
