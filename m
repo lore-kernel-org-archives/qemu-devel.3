@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D731E7FDCF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 11:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B22E7FDD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnExM-0008Ax-SO; Tue, 03 Feb 2026 06:52:32 -0500
+	id 1vnF5u-00070l-Bx; Tue, 03 Feb 2026 07:01:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vnEx5-0007zF-JL
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:52:15 -0500
-Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vnEx2-0005Au-AK
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:52:15 -0500
-Received: by mail-ej1-x642.google.com with SMTP id
- a640c23a62f3a-b88593aa4dcso757579766b.3
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 03:52:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770119530; x=1770724330; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0V2C0hSasiZ0RXRAJCGAe8Bly/ben/AN3ObuqG7QFIY=;
- b=yMOIfzMCS41ghoCvKHzb10f7vGUlRTEtof/FNY9DtIUmXEqz4QSfZaYF5OlkhaS9st
- 0cCdxS9bDE3E6Qvg0W4NwQsZb9OA0he8jrTOgqPYGags5lK7jchnThcRkjO+7S911TRR
- ZJ0YghxN4hc8y7GKZoBFi8xeBG0ccopnjqHXRGUjziMpE/Mb3UqllOgLm8tgz4vTePrN
- zKos9Txs6/oe9HGOJslmMbtDLmKQKIbg7usOuueeCN1bj4HeKR5aHisApdGDSFd5shKn
- C4bryNf7vXDKDjgPSh4xa0ZZC9q1Qb7yS4ngblvKIh+k9yl91XsU4e1mPtrElzWbON7C
- s68A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770119530; x=1770724330;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0V2C0hSasiZ0RXRAJCGAe8Bly/ben/AN3ObuqG7QFIY=;
- b=nDkEwxByIoAWtJSQkOJwC0LTtL7hZjoug0/n31g4Qc8enCoKdhE5z+ZVJSg0Dc8iUz
- UEYrx9yUg13lI8IQ+UDDU3WD8hh1d2CTdUQWs+5QkaieFFrWOuDCEPumCRE4Ga4O2nbw
- /QdBs/c6hqdiwJC59D1mDCz/I6dq+uv/5gJ4F/5m47q0l9thjGZcV9t3/nLgFdNv0Mis
- l2EpbykWPAZNCi5jvWGHVEDJ10FULAYvQaFXjayYmKN+T+Fj+Qci40yqVi5nyTH4x22G
- Z8NJfNdsimYSBuFxrRdMgT1zT0jvaG6jGWQpGjoq4y77AeGrV0+qSdcyOeJywWoAVhs8
- Eqfg==
-X-Gm-Message-State: AOJu0YzoanWZEquFsGDPsmt43k8/OFtAHHBxy5qcXv4K6HFAHy4mIKHY
- b364mUrSFKfaiSY9gjpYyBs90TrEceiO8KYgkW5oZ+X61Kjdv3yULjRFBcUUFrm/jto=
-X-Gm-Gg: AZuq6aLC+s/LusNc21FYVb+ICJLeHBZZiYrzAy3SbnE24y74ogMWCvZFgfSk1QSTBJZ
- Vakk57ObYm7yCcz7IEGrelISjAlLmMG3/FH5v+p4UKSWo1kj7Twfi+vMan5oMF4wKUkOFe2W5WN
- n0mr0/V43dkvt/XUcbEdpjh5r7Zg9ElGIQ6ODn5b6eVVc/ewShybd1KMS0P8tI8to+HexBy1odB
- v3brkGDiPvMPmq7UAK55zEs9FqJW77ZslfA4cL13aQpTcczJ9+A9mT7wnBPCk/2i0q9RoBkpvVW
- Sd4RphrSSodeJZ+JFAoidSVy46NNKbOmBg/b8ntHPZZ4uY5wovZiIE7Z6nYgJverlztNahMAJxt
- txvj1xwhWsMZlHU/lQSqsaLCpGth1JLf7r5WKblhdJ6skaDH6QVKm8MTstegdLQpWAykzmfeyDJ
- WlewssLzLjIfY=
-X-Received: by 2002:a17:907:2d0e:b0:b86:e938:1b21 with SMTP id
- a640c23a62f3a-b8dff5d8e42mr918857266b.23.1770119530082; 
- Tue, 03 Feb 2026 03:52:10 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8dbef86991sm1042865266b.4.2026.02.03.03.52.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 03:52:07 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B4AC9602CD;
- Tue, 03 Feb 2026 11:52:02 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Nicholas Piggin <npiggin@gmail.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-s390x@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Yodel Eldar <yodel.eldar@yodel.dev>
-Subject: [PATCH 07/11] include/gdbstub/syscalls: Add EIO and ENOSYS GDB
- File-I/O errno values
-Date: Tue,  3 Feb 2026 11:51:57 +0000
-Message-ID: <20260203115201.2387721-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260203115201.2387721-1-alex.bennee@linaro.org>
-References: <20260203115201.2387721-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnF5j-0006uH-2D
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:01:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnF5h-0006sq-1q
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:01:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770120065;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6BTfd3DVHyuhlHuHqWsWbjhhvmxq50j8LFrR/ot1mzY=;
+ b=VXkKDa4K8ilz4Wu/nAzC3BinLvI6f0TK2j/Hc9gDL85puUhDp+eEEtBZFcwgYNt5r44Tvv
+ bqycldRA5dph1cokB6zV9QqLkEbF8DGqqfAtar857G63wy/hHyLqtntwFV8K8vlLfgFTGa
+ gThJr4ESQ/71kELBX0IoU7iUiK/QPUQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-R6xnPFESPsqewk4bkz6eMw-1; Tue,
+ 03 Feb 2026 07:01:04 -0500
+X-MC-Unique: R6xnPFESPsqewk4bkz6eMw-1
+X-Mimecast-MFC-AGG-ID: R6xnPFESPsqewk4bkz6eMw_1770120064
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF580180044D; Tue,  3 Feb 2026 12:01:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CAEE19560B2; Tue,  3 Feb 2026 12:01:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3685621E692D; Tue, 03 Feb 2026 13:01:01 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v3 1/2] block: Wire up 'flat' mode also for 'query-block'
+In-Reply-To: <a38d78156b74b134da0f1479a30fc0d6cdb7b97c.1770108436.git.pkrempa@redhat.com>
+ (Peter Krempa's message of "Tue, 3 Feb 2026 09:49:26 +0100")
+References: <cover.1770108436.git.pkrempa@redhat.com>
+ <a38d78156b74b134da0f1479a30fc0d6cdb7b97c.1770108436.git.pkrempa@redhat.com>
+Date: Tue, 03 Feb 2026 13:01:01 +0100
+Message-ID: <87pl6m2g02.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::642;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x642.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,43 +87,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+Peter Krempa <pkrempa@redhat.com> writes:
 
-This patch adds the EIO and ENOSYS errno values that were missing from
-the GDB Manual [1] when the other errno values were defined.
+> From: Peter Krempa <pkrempa@redhat.com>
+>
+> Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
+> omits 'backing-image' key in reply) to 'query-named-block-nodes' to
+> minimize the size of the returned JSON for deeper backing chains.
+>
+> While 'query-block' behaved slightly better it turns out that in libvirt
+> we do call 'query-block' to figure out some information about the
+> block device (e.g. throttling info) but we don't look at the backing
+> chain itself.
+>
+> Wire up 'flat' for 'query-block' so that libvirt can ask for an
+> abbreviated output. The implementation is much simpler as the internals
+> are shared with 'query-named-block-nodes'.
+>
+> Signed-off-by: Peter Krempa <pkrempa@redhat.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 
-[1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+[...]
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260116014612.226183-2-yodel.eldar@yodel.dev>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/gdbstub/syscalls.h | 2 ++
- 1 file changed, 2 insertions(+)
+> diff --git a/block/qapi.c b/block/qapi.c
+> index 27e0ac6a32..3688d0e713 100644
+> --- a/block/qapi.c
+> +++ b/block/qapi.c
 
-diff --git a/include/gdbstub/syscalls.h b/include/gdbstub/syscalls.h
-index d63228e96b4..6200416f77a 100644
---- a/include/gdbstub/syscalls.h
-+++ b/include/gdbstub/syscalls.h
-@@ -22,6 +22,7 @@
- #define GDB_EPERM           1
- #define GDB_ENOENT          2
- #define GDB_EINTR           4
-+#define GDB_EIO             5
- #define GDB_EBADF           9
- #define GDB_EACCES         13
- #define GDB_EFAULT         14
-@@ -37,6 +38,7 @@
- #define GDB_ENOSPC         28
- #define GDB_ESPIPE         29
- #define GDB_EROFS          30
-+#define GDB_ENOSYS         88
- #define GDB_ENAMETOOLONG   91
- #define GDB_EUNKNOWN       9999
- 
--- 
-2.47.3
+[...]
+
+> @@ -698,11 +698,12 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
+>      return s;
+>  }
+>
+> -BlockInfoList *qmp_query_block(Error **errp)
+> +BlockInfoList *qmp_query_block(bool has_flat, bool flat, Error **errp)
+>  {
+>      BlockInfoList *head = NULL, **p_next = &head;
+>      BlockBackend *blk;
+>      Error *local_err = NULL;
+> +    bool return_flat = has_flat && flat;
+
+This is fine.  Just flat would also be fine: flat implies has_flat.
+
+>
+>      GRAPH_RDLOCK_GUARD_MAINLOOP();
+>
+> @@ -714,7 +715,7 @@ BlockInfoList *qmp_query_block(Error **errp)
+>          }
+>
+>          info = g_malloc0(sizeof(*info));
+> -        bdrv_query_info(blk, &info->value, &local_err);
+> +        bdrv_query_info(blk, return_flat, &info->value, &local_err);
+>          if (local_err) {
+>              error_propagate(errp, local_err);
+>              g_free(info);
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index b82af74256..a701f6bbee 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -855,6 +855,10 @@
+>  #
+>  # Get a list of `BlockInfo` for all virtual block devices.
+>  #
+> +# @flat: Omit nested data about the backing image (ie. the contents at
+> +#        'inserted.image.backing-image' are trimmed).
+> +#        Default is false (Since 11.0)
+> +#
+
+s/ie./i.e./
+
+Remind me: true suppresses member inserted.image.backing-image, i.e. it
+is absent then.  Correct?
+
+>  # Returns: a list describing each virtual block device.  Filter nodes
+>  #     that were created implicitly are skipped over.
+>  #
+> @@ -945,6 +949,7 @@
+>  #        }
+>  ##
+>  { 'command': 'query-block', 'returns': ['BlockInfo'],
+> +  'data': { '*flat': 'bool' },
+>    'allow-preconfig': true }
+>
+>  ##
+
+[...]
 
 
