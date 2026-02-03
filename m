@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64AC7E8305F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C881E83062
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnCB2-0005yj-S3; Tue, 03 Feb 2026 03:54:28 -0500
+	id 1vnC9b-0004cq-6g; Tue, 03 Feb 2026 03:52:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCAV-0005LO-Pt; Tue, 03 Feb 2026 03:54:01 -0500
+ id 1vnC9Y-0004bh-D7; Tue, 03 Feb 2026 03:52:56 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCAU-0003Po-Cq; Tue, 03 Feb 2026 03:53:55 -0500
+ id 1vnC9X-0002qU-0O; Tue, 03 Feb 2026 03:52:56 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
- 2026 16:52:37 +0800
+ 2026 16:52:31 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 3 Feb 2026 16:52:37 +0800
+ Transport; Tue, 3 Feb 2026 16:52:31 +0800
 To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Steven Lee
@@ -36,10 +36,10 @@ To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
  <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 16/20] hw/i3c/aspeed: Add I3C bus get function
-Date: Tue, 3 Feb 2026 16:52:16 +0800
-Message-ID: <20260203085229.1543287-17-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>, Patrick Venture <venture@google.com>
+Subject: [PATCH v2 05/20] hw/i3c/aspeed_i3c: Add more register fields
+Date: Tue, 3 Feb 2026 16:52:05 +0800
+Message-ID: <20260203085229.1543287-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
 References: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
@@ -53,7 +53,8 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,46 +74,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joe Komlodi <komlodi@google.com>
 
-To retrieve the I3C bus object normally, the order is Aspeed I3C -> DW
-I3C[n] -> bus object, so make a nice wrapper for people to use.
+Adds the rest of the Aspeed I3C controller register fields.
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
+
+Reviewed-by: Patrick Venture <venture@google.com>
 Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/i3c/aspeed_i3c.h | 2 ++
- hw/i3c/aspeed_i3c.c         | 9 +++++++++
- 2 files changed, 11 insertions(+)
+ hw/i3c/aspeed_i3c.c | 54 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 42 insertions(+), 12 deletions(-)
 
-diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h
-index 436fb532b9..e4e8fda93b 100644
---- a/include/hw/i3c/aspeed_i3c.h
-+++ b/include/hw/i3c/aspeed_i3c.h
-@@ -34,3 +34,5 @@ typedef struct AspeedI3CState {
-     uint8_t id;
- } AspeedI3CState;
- #endif /* ASPEED_I3C_H */
-+
-+I3CBus *aspeed_i3c_get_bus(AspeedI3CState *s, uint8_t bus_num);
 diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
-index bb41493c55..867909ebe2 100644
+index b0844d4da2..f0352aaca0 100644
 --- a/hw/i3c/aspeed_i3c.c
 +++ b/hw/i3c/aspeed_i3c.c
-@@ -153,6 +153,15 @@ static const MemoryRegionOps aspeed_i3c_ops = {
-     }
- };
+@@ -21,28 +21,58 @@
+ /* I3C Controller Registers */
+ REG32(I3C1_REG0, 0x10)
+ REG32(I3C1_REG1, 0x14)
+-    FIELD(I3C1_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C1_REG1, SA_EN,     15, 1)
++    FIELD(I3C1_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C1_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C1_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C1_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C1_REG1, SA,            8,  7)
++    FIELD(I3C1_REG1, SA_EN,         15, 1)
++    FIELD(I3C1_REG1, INST_ID,       16, 4)
+ REG32(I3C2_REG0, 0x20)
+ REG32(I3C2_REG1, 0x24)
+-    FIELD(I3C2_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C2_REG1, SA_EN,     15, 1)
++    FIELD(I3C2_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C2_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C2_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C2_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C2_REG1, SA,            8,  7)
++    FIELD(I3C2_REG1, SA_EN,         15, 1)
++    FIELD(I3C2_REG1, INST_ID,       16, 4)
+ REG32(I3C3_REG0, 0x30)
+ REG32(I3C3_REG1, 0x34)
+-    FIELD(I3C3_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C3_REG1, SA_EN,     15, 1)
++    FIELD(I3C3_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C3_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C3_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C3_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C3_REG1, SA,            8,  7)
++    FIELD(I3C3_REG1, SA_EN,         15, 1)
++    FIELD(I3C3_REG1, INST_ID,       16, 4)
+ REG32(I3C4_REG0, 0x40)
+ REG32(I3C4_REG1, 0x44)
+-    FIELD(I3C4_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C4_REG1, SA_EN,     15, 1)
++    FIELD(I3C4_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C4_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C4_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C4_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C4_REG1, SA,            8,  7)
++    FIELD(I3C4_REG1, SA_EN,         15, 1)
++    FIELD(I3C4_REG1, INST_ID,       16, 4)
+ REG32(I3C5_REG0, 0x50)
+ REG32(I3C5_REG1, 0x54)
+-    FIELD(I3C5_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C5_REG1, SA_EN,     15, 1)
++    FIELD(I3C5_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C5_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C5_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C5_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C5_REG1, SA,            8,  7)
++    FIELD(I3C5_REG1, SA_EN,         15, 1)
++    FIELD(I3C5_REG1, INST_ID,       16, 4)
+ REG32(I3C6_REG0, 0x60)
+ REG32(I3C6_REG1, 0x64)
+-    FIELD(I3C6_REG1, I2C_MODE,  0,  1)
+-    FIELD(I3C6_REG1, SA_EN,     15, 1)
++    FIELD(I3C6_REG1, I2C_MODE,      0,  1)
++    FIELD(I3C6_REG1, SLV_TEST_MODE, 1,  1)
++    FIELD(I3C6_REG1, ACT_MODE,      2,  2)
++    FIELD(I3C6_REG1, PENDING_INT,   4,  4)
++    FIELD(I3C6_REG1, SA,            8,  7)
++    FIELD(I3C6_REG1, SA_EN,         15, 1)
++    FIELD(I3C6_REG1, INST_ID,       16, 4)
  
-+I3CBus *aspeed_i3c_get_bus(AspeedI3CState *s, uint8_t bus_num)
-+{
-+    if (bus_num < ARRAY_SIZE(s->devices)) {
-+        return s->devices[bus_num].bus;
-+    }
-+    /* Developer error, fail fast. */
-+    g_assert_not_reached();
-+}
-+
- static void aspeed_i3c_reset(DeviceState *dev)
+ static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
  {
-     AspeedI3CState *s = ASPEED_I3C(dev);
 -- 
 2.43.0
 
