@@ -4,97 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2BDE8305D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C84BE8305B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnAmn-0004vx-Ly; Tue, 03 Feb 2026 02:25:21 -0500
+	id 1vnAsX-0006Hx-8L; Tue, 03 Feb 2026 02:31:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnAmj-0004qq-Dd
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:25:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnAsS-0006Gd-LK
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:31:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnAmh-0001m1-Lx
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:25:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnAsP-0003Py-TS
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:31:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770103513;
+ s=mimecast20190719; t=1770103867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=u3D6QhZEOvienqiM/eISUkPT9ArlXrWtyjI69livpVs=;
- b=Q3Av0v1BpYntQl/EAi1nJnMpVicszUJ/INijhRV5SHwWMI27ScADCUPcJocBX9JKxSg1La
- FkRMrX1yLSo2rTg3ChCrtvIIDJ/c6aTiKPPwgFod100scl02jWWCCy66FZjLK5VkoZb2DM
- U16HdkPcd/QFdduLMQB5LayaRr9+esc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OlxsEFT0Dko9/Or/bR1K4IMxFA0xmHWvxzOGIBJCpAU=;
+ b=XKDu2/CjJZ1fXC2c4w7c6X1f0Vh6/xVDmIVl4dzJyVgpv0XNUygHxmRcI1LuDm7/MSj+pw
+ e52iyW/lBBR6Gr2kJsK0gcQise0CUyRfJ/8H141hCmS5hJh/yipkwuASpeKfzPw8fZnNkd
+ TpU01kwLSGWndP0y6YBp+qi7K0ugYuc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-v-tFl35ZPoKasSUkUYtnXg-1; Tue, 03 Feb 2026 02:25:12 -0500
-X-MC-Unique: v-tFl35ZPoKasSUkUYtnXg-1
-X-Mimecast-MFC-AGG-ID: v-tFl35ZPoKasSUkUYtnXg_1770103511
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47edf8ba319so55908245e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 23:25:11 -0800 (PST)
+ us-mta-674-1B1IyxYiNb--0ZJ3nEgAwQ-1; Tue, 03 Feb 2026 02:31:04 -0500
+X-MC-Unique: 1B1IyxYiNb--0ZJ3nEgAwQ-1
+X-Mimecast-MFC-AGG-ID: 1B1IyxYiNb--0ZJ3nEgAwQ_1770103864
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-482d8e6e13aso34801645e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 23:31:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770103511; x=1770708311; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770103864; x=1770708664; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=u3D6QhZEOvienqiM/eISUkPT9ArlXrWtyjI69livpVs=;
- b=mfR06xKJA/yxIsULeKSjR5V1JcvKyzZjM0C+pPPlqh5RSfxnyTJDDpX5v+woePPczj
- VrNlc0DYRGTxc+uW5/8NqJglFS2F5ge9GlKQo8HSZDyu3Kwb2Z/6bxUWbGhAzex1h4wC
- Y9NnfNVa56Ghik+DpsDtARq54FpYDylgcmEibeNjTl/nRb7UFvDDXxfWpw2ydM2AMbp9
- beCkmb89NKFzz8I/rxjfFyj9HoqfLITo8/OSIACa2cwGF1jS/MB4RFIkp/wKiw5zOkP2
- aUE3ZrGwixOL3UPCH+M1ua8YRmX5TfYsuE4c0oiEgQCuPlpvGIQduShDvkuopaoDgdud
- qzkw==
+ bh=OlxsEFT0Dko9/Or/bR1K4IMxFA0xmHWvxzOGIBJCpAU=;
+ b=Tlcrt9W+z/PHaxGVydb0PwNPdYc8uXz3TjGVQMikrAtE0bxG4Ij1QGjoA/tQXA5SUM
+ ll4FHY1yovXZSi6gJlD7abrvuLWFIahAwSWQK+weUZZ9gxoEmSmV9woynA+iSZKc66/Y
+ sN88QJd05ovF9pMa3Sarn2t3u/ufzjs2+W5tQk2bqmptns4XANucQOpFMvLh/FNnemfu
+ v1OKEtNIBvIVLMh8nAEv2m3qa/B+4LQBkZr2TDAZJ8NDuUR1zwsGyrO3R1LVjpDMP2Gm
+ m0fSjiGXABYvIg4C45hr3aJVItTPbLTLfXHAk4vGHzJlXP4Dbvflc1z+oedNksw+jZ35
+ 9wQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770103511; x=1770708311;
+ d=1e100.net; s=20230601; t=1770103864; x=1770708664;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u3D6QhZEOvienqiM/eISUkPT9ArlXrWtyjI69livpVs=;
- b=HFwqk5woUuTzvPRn/Vq4SObBN6MeWQQ/opFvBeby+cJF0qrQNgGQQVyg6HGZlMnuCP
- /WGaB+Wu6fSMrp/vSQXjFk0ow1ZUeOyYjW+cLA4NN6LIl9AzwX7+9hxs/1MUU9i3Mu+V
- XzP8qaXpOTooO+lQbtkfC5qF10r058cSZ8PuS8lExq5YTHDMsZTEphAFBLkF7tdupaCi
- v+Gi+wE33Wunz/9PGuvfhd2fF6yYQI9XpT32nbT1eajnyYSk0REYd00pC47zgg1qICqW
- Mdt84hLFSmYa//0BtRUiVesSc1+eEyEaCbYTh5e6syXp+1jOhdn9NLO4FkzrCyBh6GdD
- m4OA==
+ bh=OlxsEFT0Dko9/Or/bR1K4IMxFA0xmHWvxzOGIBJCpAU=;
+ b=D1bJqV3ptFNbcRv3a2+GlLsTEYsmBoa25y/jKkYzA8lAqz2U8S+E1A1sSZ0aogzagW
+ Zy9Zo1YX8za9D9veQcTFlAYb1r59MefZ9GD+D6610SRdNfCsli8QnLGLgclDNoZHIG69
+ 7RYLLsMFEKBvDaIgtakjSAGfkJKW4F8hJ9a4TbkYJZkqBdtpK/QZNAKlWWRDft/UdZpQ
+ QGfiCkNvLqW9z7HbLYDx+hoM+oPPqYL3Wa5oq+hqyGB5NBa0MORexh74trLeeHqV6SDB
+ DN76A/4Da+y4KhZA03BQQT7msMG173f0DB9cWs39zl6SW/KLHdgmngDbhXdw/bejjoJA
+ 87SQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/ZZ9wK93bKcXbr0TlanItF1NJ5qFLhIWOIykbBCUrtF6liOKlnch4Kz86tguEhqqzUjGoma4jl7YU@nongnu.org
-X-Gm-Message-State: AOJu0YwQXDGGbU2EOny9LtD2Ifi4BX6I6DzzHUEReZVTZfZP4JKm5CwU
- sEhoJAnuSHZAnnA6+k3lpo84YFss/i7crrDXh/fiVKpdahnVHqolOaEpFSRQOL/eQYLeDw9Gi4N
- hRjCjdBHU/O71iVrJhsnwuHUf36gPm4erXLr8ZZKhEE92Sjo3aOK2GczX
-X-Gm-Gg: AZuq6aLSUW7efss8+JM3F5jUr99GoHpOhsStDVkgHTplqWymmlUIFAPeN8mOKseXAEZ
- YySn1/QMl7Ff5Dl8B1lku5viQVZI6ccsXueC2k4RQJwcKt+3r1AZjsGdKcwiDCy6bJ6twqifJSg
- KxfWNO4a7IMyci7ZJ5DPXbaUwR0Up4saA8DSrJ8ZwFZs8pAHTcasRYuIg19GCr68T5QBuLRZtXY
- hqeuyOXGdNbd6QpfwKHRyLN5iav1wPuLhBOftVePdrRFtXX51XNMetrGsXFE3tiNA6lWsRv0Tm7
- vRK7N+vtP4uAHk2v4A8wiVhGLsM78as2N81+o0/VXYIgsjU8bZT8YLsNCveYP4VGCLnn7ePDBRt
- sBsJsnOU=
-X-Received: by 2002:a05:600c:6814:b0:480:699c:abe9 with SMTP id
- 5b1f17b1804b1-482db4b21c6mr157620685e9.37.1770103510923; 
- Mon, 02 Feb 2026 23:25:10 -0800 (PST)
-X-Received: by 2002:a05:600c:6814:b0:480:699c:abe9 with SMTP id
- 5b1f17b1804b1-482db4b21c6mr157620445e9.37.1770103510526; 
- Mon, 02 Feb 2026 23:25:10 -0800 (PST)
+ AJvYcCVL3/zCFxt98R8pUthxUNic5nbx0KHKn6+HIIHE7K7kKIgh6Dp9rRM6XI692+3vqADKGIMIp+26sC6j@nongnu.org
+X-Gm-Message-State: AOJu0Yy4GK7KDSaLERbYvW66GtCDM19IxUjvnVBybC2Pmq1xrIbbKJsi
+ aClwuqo3VVMdeOiOvKPIE76FrHUnlRiWnQb+sQl17HLPo2N0Mdz7mrM4Z5oGqTEFx3qBJB+1LNh
+ lkYyM06h0oPUGPqcAh15VtSx0sWDLcUCkDe03D4PzXu49amp7e2xoXE7m9YV4HdM9
+X-Gm-Gg: AZuq6aLw9PoROozjDAwDE9IIC+1H+jP2JAHRtfm4h5hWdjPTAmLOcJ+Z6eSMWC57bOs
+ caMwQZ8AC2Ld9nGmQNowNNjW1D2Qr7FVNorlCf+UCAErFaVnq0Ul6As06F9y6KJFTKP41bZxhNb
+ 4GPvNKK8VgM3UgZhRSG0VloU1r7yUlNwUrPkfjwOztNy3QnAA6gdnee5dLmwy+rU/REULb/2+Zt
+ tnYgqEkdKPI+gklrJ9fLll+IYbk/ZSqGeFrXRSb9KT7iatzdj65Ltwnrv8mBmVxPdIa4ZjztgUD
+ Pf14M4XPYmRAihfVHRBR2UGW691prAH0TRsV90SpuG9PDsMjhfDjsD2RnxJcTUi2DO+/LW3g5vn
+ UUDdHZb8=
+X-Received: by 2002:a05:600c:b99:b0:480:1e40:3d2 with SMTP id
+ 5b1f17b1804b1-482db49a4a6mr205493755e9.29.1770103863547; 
+ Mon, 02 Feb 2026 23:31:03 -0800 (PST)
+X-Received: by 2002:a05:600c:b99:b0:480:1e40:3d2 with SMTP id
+ 5b1f17b1804b1-482db49a4a6mr205493135e9.29.1770103863035; 
+ Mon, 02 Feb 2026 23:31:03 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.115.203])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830512d634sm66547215e9.8.2026.02.02.23.25.09
+ 5b1f17b1804b1-482e297119bsm109433985e9.17.2026.02.02.23.30.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 23:25:09 -0800 (PST)
-Message-ID: <6a8954ce-7af2-4828-ab8d-9eb80469f263@redhat.com>
-Date: Tue, 3 Feb 2026 08:25:08 +0100
+ Mon, 02 Feb 2026 23:31:02 -0800 (PST)
+Message-ID: <20ffe5d6-4e20-4545-a794-122c324b1d86@redhat.com>
+Date: Tue, 3 Feb 2026 08:30:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] meson-buildoptions: Remove duplicated entry of --gdb
- in the help text
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH 7/7] disas: Have disas_set_info() take a const CPUState
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260202174123.1943748-1-alex.bennee@linaro.org>
+Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Rolnik
+ <mrolnik@gmail.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Stafford Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+References: <20260202222412.24923-1-philmd@linaro.org>
+ <20260202222412.24923-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,7 +158,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260202174123.1943748-1-alex.bennee@linaro.org>
+In-Reply-To: <20260202222412.24923-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -167,29 +186,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/02/2026 18.41, Alex Bennée wrote:
-> Since --gdb has recently been added to meson_options.txt, the help
-> text shows up twice in the output of "./configure --help":
+On 02/02/2026 23.24, Philippe Mathieu-Daudé wrote:
+> The CPUClass::disas_set_info() handler is meant to initialize
+> the %disassemble_info structure; it shoudn't alter the CPU state.
+> Enforce the CPUState can not be modified by having the handler
+> take a const pointer.
 > 
->   $ ./configure --help | grep gdb
->     --gdb=GDB-path           gdb to use for gdbstub tests [/usr/bin/gdb]
->     --gdb=VALUE              Path to GDB
-> 
-> As the probed value is of interest we want to keep the configure text
-> so make meson-buildoptions able to handle deferring to configure.
-> 
-> Fixes: b46b3818cf8 ("tests/functional: Provide GDB to the functional tests")
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> AJB:
->    - This is an alternative take on Thomas's approach in 20260114155355.82096-1-thuth@redhat.com
-> ---
->   scripts/meson-buildoptions.py | 9 ++++++++-
->   scripts/meson-buildoptions.sh | 1 -
->   2 files changed, 8 insertions(+), 2 deletions(-)
+>   include/hw/core/cpu.h   | 2 +-
+>   target/alpha/cpu.c      | 3 ++-
+>   target/arm/cpu.c        | 6 +++---
+>   target/avr/cpu.c        | 2 +-
+>   target/hexagon/cpu.c    | 3 ++-
+>   target/hppa/cpu.c       | 2 +-
+>   target/i386/cpu.c       | 6 +++---
+>   target/loongarch/cpu.c  | 3 ++-
+>   target/m68k/cpu.c       | 2 +-
+>   target/microblaze/cpu.c | 2 +-
+>   target/mips/cpu.c       | 7 +++++--
+>   target/openrisc/cpu.c   | 2 +-
+>   target/ppc/cpu_init.c   | 5 +++--
+>   target/riscv/cpu.c      | 7 ++++---
+>   target/rx/cpu.c         | 2 +-
+>   target/s390x/cpu.c      | 2 +-
+>   target/sh4/cpu.c        | 3 ++-
+>   target/sparc/cpu.c      | 3 ++-
+>   target/xtensa/cpu.c     | 3 ++-
+>   19 files changed, 38 insertions(+), 27 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
 
 
