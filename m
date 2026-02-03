@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0666CE6E7EC
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 10:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BF9E6E7FA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 10:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnDth-0002JU-5M; Tue, 03 Feb 2026 05:44:41 -0500
+	id 1vnDwK-0003fK-Me; Tue, 03 Feb 2026 05:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDtf-0002J7-FU
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:44:39 -0500
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDwI-0003df-QW
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:47:22 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDtd-000189-Ru
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:44:39 -0500
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-42fbc305552so5061913f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 02:44:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDwH-0003YS-5F
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:47:22 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so56588735e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 02:47:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770115476; x=1770720276; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770115639; x=1770720439; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uqHxjMKQFiFwAp+J9hLm6aYQUNltmNCjBpxKauKcqTA=;
- b=GjbywmL0Vd0/J9xqsoLWNuA3WrJrD0Jyz0/mDyiUpzylTChQCrTji5X5YXVrcTcDTn
- kJOaC6g6XpfeXHdPS5zvzEdvPF9ngrGNSW+kwxecdi7F9uu5mLq+Mn5e78xxnNlMCoin
- /SIkxwgOb+ot6JeWA/SZWLdcE1KPNkXy4RZeXZGmoAemjZBMlUqAUNeQJeX/fE2Z5lws
- r+tP7EbVXoP/heFWYITbq2glfCEfd9uq5ZUdvoxDvwtOBr5e/saPRh/t4IMPRK0mjel6
- LnFiC0LtkZyAyXi2pcYqheC8wPdJfH7wHKWJQ7f4NtqoblWjzBlwpetchVt5xzQFjEdW
- u3Kg==
+ bh=w1rWNHiQhFa1U8/wYSnzkuJj/Wf5C4ryoJooSa3hsAk=;
+ b=q9v+W+q/0NM0uNzV3MIyp2zw7QrJkKyvUXdzJtlgTELOiBgZICRL9l1PYvkOrLom8/
+ 51fZxazcl66U0b1CBgTC2QY8Z6EZs9KCv2YqZLdKrqN4SWhvdukdK53Y3SfBNRu040mm
+ SYnLuPtZmPTP5YxtFpbWamtoeNMpsc7+HShU64KjcSxcYpUDEIPb0so2BBOZ2Us4TZgu
+ jWcU+/Hxp6qcVMOZ+RuWGPvOeYGzC76FltVacsx7uImw1+D4kwRa4QQcwBbDSIoiO25R
+ odrygte1euBLA3G3s7HLy2UVlI0pPPRspIN587314471LXtZWxkdexyAJh4DQD6flwjf
+ vpzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770115476; x=1770720276;
+ d=1e100.net; s=20230601; t=1770115639; x=1770720439;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uqHxjMKQFiFwAp+J9hLm6aYQUNltmNCjBpxKauKcqTA=;
- b=pX+PDAogPnBguAIx9pLZ0NGh2X3l17V7FhuP0VOE1naXgXECf8ddZjK+aU+v0zDOY5
- AJ+oRuwUNfhC3lO0+F64hxubkVgEuvLCOFCTVy5guwzBmVbiAa8RbiPvn0p89lBh5tVI
- qr3avEe/q68hKTUwuL+q66cFMxAGaaXOdr3nz2/qq5BatA+PON+OET7KClRsisXS+V93
- 5iLIbHRhC17Gg4HMd/WrRmm8EiLN7K9NxTKA09vo0IVKD8GouCMSIKJD2Qu/ywmL19p6
- qkuHusJoirUnuYxc++4E5dhLDX3S7+GRi9wGwBNVTsqzcTEm79z6TQnZh1HxO5TJR51b
- TIrA==
+ bh=w1rWNHiQhFa1U8/wYSnzkuJj/Wf5C4ryoJooSa3hsAk=;
+ b=UBZOuzOK+qC6RihWcJr0ihuSoDdo0rUuNjA4C9sDAb9Oe6kKyNm0nIxhUKIRY8ruQX
+ 4uBt7MWFpT2KMRp5DQamEChNcmkoMRR3hwyoAjL1oaUXApUh2ChUc9SAssERKjVo2bSW
+ KJA+c3cT+bpeo9Asn9pqa8rfe2fvKxHiMwAIiNPXGHjb9sagl0wnz81hUK+dZ4sV1xNu
+ AI4LWt2S+247+VEtANQkfNo1zlQx21E6+lI3CVkeLQ7YcLU/3J13y27YfFZeUah3CqIm
+ JTQ4w1q7CHMeuazn+WnWYTJozX0uSuigXSdkr/PbR1LRV5+n879/8FoCvhvB47bph5Db
+ 6a+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbZooPUmOBDuPhVtOYYgZkHm+NWfJQevOV1uZufeXOJHVvVWHv+4hImzo8zxYsjPd4T1MckjLf5rId@nongnu.org
-X-Gm-Message-State: AOJu0YwiKIG/1pD6tIDozTAk+i7piMQ0Xcfhaei8ZvMvb8+k1bukrXMO
- AkCwEnkMbRdbiQTg38wPxLlitKL9B3pHL2FyJ3UUFRjrTDcVxBJbdShmNTY2qn0q9wc=
-X-Gm-Gg: AZuq6aLMDq60i26MdFMfpEJHXranrwIpsyqFc6Vv6lsjUclMpVDjunBWILLoRkfLMva
- HXI+IWQFgCSAkcVduRPKb4DGV0a8rvF7brYz11bI9btpv15Vp2xb0YDy+3RulJu2W+gOsXFuRrs
- 3/maxl2DzzLxm4mWt81qhuYAQld695o2bWBCYaivWHVUXD04N2JG30XqeWqe7qwoBsS5Z9f1vD7
- fk7sHXWZSetFEOzh4RDrAf5eSwIGFdc0oDQ3G+Q92IZmujyO+SAFaEKL/DSmJUhvQeAsNzHahza
- dqpnKVFzSGDWTee4Fo6+ouh+yL5Is1WOKlgjbWXjojkFAujomkAEQqX0Kpl+QrM6FskZgs8CUu1
- 7KljCWliIXZwSOnSQCuPt3boNkToXbR0AAKoXBAB9+Ewr6JvvwKI5Vph4i0p/HLW7WCM1m3MKGl
- xvJ0yQUaHwlwi/geRSVeYhFFB9Yz47lyV5yllz33FPYp2OkvJid2FUWQ==
-X-Received: by 2002:a05:6000:18a8:b0:435:9a50:bbb4 with SMTP id
- ffacd0b85a97d-435f3abb517mr19878391f8f.59.1770115475885; 
- Tue, 03 Feb 2026 02:44:35 -0800 (PST)
+ AJvYcCVcWgv6IukeUdY1dgIrabwQu6W8oiEeHZC/dTxwD1jdvR4uH0CN3lH15IkK12jAA+tthbm1TktAMgvM@nongnu.org
+X-Gm-Message-State: AOJu0Yxi43CYmk/zY1woNmAAwfiCoGHT7D1qhPHZM+Ih/LPgadxMMA9M
+ yY+qX3XLFcF9gyih4t0RpJSa7+T2V2zbIKFuk3yqdxuTPdx+tnY6ZHsoFcCFzPTi+6A=
+X-Gm-Gg: AZuq6aIDn4ClzkfLJQrwQ+3CvxVdJAavGjkwa9aj4sljg/kOQlxJqNR/TL2A20dSD0g
+ zv3EPm22Tt1R0IWCHh1/IiV03enycfgUfjgYMEA3EHgjz12I6d9bdEll83PqGEPtzJovlATsYPu
+ nTl6ZAL9F1zXtsPXSa8vO3/BPfo5w1vrGY+BhcEaUzFxlN5CSIPd0DWde+Hdt3qUrE23AHVXZUJ
+ PeHXmAQKj4Ov9E0zTalulNhJcNv5vHMDoogRE1ACHmQnkNv3GqEcM7X7z+uX3vPwB0awxlTj18F
+ qehVRvw++sVhA37SmJyD65DyHPa22QbBj91R71m9aS8GaeSWl/2AqkyowrbBq5qDrHzO66Xq+n+
+ kEk5EBg/KgMAasWAyjW3JCZyYS/JnY+PkpSN4FYju4VSdFsPwZfaVnYnLdu2+iEr+MaWRfTC8yn
+ buKgQr7vZxU6GwDv3W4ZixAlKLMkPjVTEYaXYEKKa1BsGOOI2wsEHnqg==
+X-Received: by 2002:a05:600c:c0cd:b0:47d:6856:9bd9 with SMTP id
+ 5b1f17b1804b1-482db623c40mr129148815e9.23.1770115639512; 
+ Tue, 03 Feb 2026 02:47:19 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e132303fsm51413156f8f.36.2026.02.03.02.44.34
+ ffacd0b85a97d-435e10e48a6sm49396852f8f.8.2026.02.03.02.47.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 02:44:35 -0800 (PST)
-Message-ID: <92098ac5-9d77-4067-94fa-6395ef419925@linaro.org>
-Date: Tue, 3 Feb 2026 11:44:34 +0100
+ Tue, 03 Feb 2026 02:47:18 -0800 (PST)
+Message-ID: <28846f01-a97e-4034-8f56-7bef90417f69@linaro.org>
+Date: Tue, 3 Feb 2026 11:47:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/11] hw/virtio: Use
- VirtIODevice::access_is_big_endian field
+Subject: Re: [PATCH v2 1/3] accel/tcg: Send the CPUTLBEntryFull struct into
+ io_prepare()
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
- <npiggin@gmail.com>, qemu-ppc@nongnu.org
-References: <20260201232924.93399-1-philmd@linaro.org>
- <20260201232924.93399-5-philmd@linaro.org>
- <20260202024316-mutt-send-email-mst@kernel.org>
- <87bji7pa2e.fsf@draig.linaro.org>
- <20260202105847-mutt-send-email-mst@kernel.org>
- <20260202185233.GC405548@fedora>
- <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>
+References: <20260128152348.2095427-1-jim.shu@sifive.com>
+ <20260128152348.2095427-2-jim.shu@sifive.com>
+ <7b65cfff-3255-4fc7-b151-80ab284dbc1e@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+In-Reply-To: <7b65cfff-3255-4fc7-b151-80ab284dbc1e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,23 +110,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 20:25, Pierrick Bouvier wrote:
+On 3/2/26 02:15, Richard Henderson wrote:
+> On 1/29/26 01:23, Jim Shu wrote:
+>> To let io_prepare() function use the multiple members in
+>> CPUTLBEntryFull struct, send the full struct instead of 'xlat_section'
+>> member as the argument.
+>>
+>> It is the preliminary patch of next commit.
+>>
+>> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+>> ---
+>>   accel/tcg/cputlb.c | 14 +++++++-------
+>>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-> My initial testing showed a 50% slow down, which was more than 
-> surprising. After profiling, the extra time is spent here:
-> https://github.com/qemu/qemu/ 
-> blob/587f4a1805c83a4e1d59dd43cb14e0a834843d1d/target-info.c#L30
+
+>>   static MemoryRegionSection *
+>> -io_prepare(hwaddr *out_offset, CPUState *cpu, hwaddr xlat,
+>> +io_prepare(hwaddr *out_offset, CPUState *cpu, CPUTLBEntryFull *full,
+>>              MemTxAttrs attrs, vaddr addr, uintptr_t retaddr)
+>>   {
+>>       MemoryRegionSection *section;
+>>       hwaddr mr_offset;
+>> -    section = iotlb_to_section(cpu, xlat, attrs);
+>> -    mr_offset = (xlat & TARGET_PAGE_MASK) + addr;
+>> +    section = iotlb_to_section(cpu, full->xlat_section, attrs);
+>> +    mr_offset = (full->xlat_section & TARGET_PAGE_MASK) + addr;
 > 
-> When we merged target-info, there have been several versions over a long 
-> time, and I was 100% sure we were updating the target_info structure, 
-> instead of reparsing the target_name every time. Unfortunately, that's 
-> not the case. I'll fix that.
+> attrs is also present in CPUTLBEntryFull; you can also drop that parameter.
 
-We (Richard, you, myself) knew this patch was bad performance wise, but
-back then it was decided to be good enough for the first conversion of
-build-time target specific definitions to runtime methods.
+Jim, now that this patch got merged (commit 94c6e9cf044), do you mind
+sending a cleanup patch?
 
-As a second step, Richard asked for the target-info.c file to get
-absorbed with page-vary-common.c, compiling it with CFLAG=-fno-lto.
-This wasn't a priority until TargetInfo API got involved in hot path.
+Thanks,
+
+Phil.
 
