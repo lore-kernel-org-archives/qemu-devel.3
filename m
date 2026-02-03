@@ -4,142 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4BCE8784E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 17:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96445E87850
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 17:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnJzb-0006nb-Ku; Tue, 03 Feb 2026 12:15:11 -0500
+	id 1vnKF6-0002nX-11; Tue, 03 Feb 2026 12:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1vnJza-0006nI-1g
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:15:10 -0500
-Received: from mail-eastusazon11012063.outbound.protection.outlook.com
- ([52.101.53.63] helo=BL0PR03CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1vnJzR-0002oz-LM
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:15:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Yj+yWP1FO23gQOUs260f/q5Ml8NhUif7GBwUWaN5TdryElsIubayUnQM4/M6J5WhYFTOK4s44pL67xLY/7EwF0oopH3hm4PmP7rmR4fNa2fTQ4s4BNH4DzhjJBrYw/yBejqKZiaq1bK9avaZ1T5emlWm4fsjGM4Ob4YcU19XohE5mc93690AP2DuJ2i8wQmBwKAtzD2mbJVNU614B/fyfvIfpMRs36qDmOJujWWHOC2eg1KvTubCctCoGSt3QdtL8KbnpUMawQI6+wshgb05SUJsBT/k1rgAmj/lqxhcoxl5K92nHhKRbYCb+dXKH1LII4YrbjOD7Zsr551DbRvtag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VVOJYqQG0MekxtDw1n32VyGnw8lbMwtmNdVVe53AZlY=;
- b=RB/zjVino01x2ech0bZa3X9O1w5hNe11kOMdrL0Aw97eJWgbCK7SPv969JDzJPWvxYVtt0L90+TGgYCKym4HwGeT6gwPQNzIPIhdjgJ2oqbQQ+vNkealDIOPXpPFn+JyFCSnvsIf8otVuBYPPsLyuRtmos+w24GOKz2+MQ6Y7mwtbZBjjojyV+PO+wAypl889wex4wpj+zzn/c+0eP7t+Ct4BsE1oppl5PnCZtBIDXrPAAPRA3g2xG0gcgHsX9SJ+cxUv8FIMdjzCOtNy6jJdhrOMuPxcCsfvgRjRndM8Mk6FZ/+sKMdZPK1ZQJ4DPBD1vb5Yczr27Vtzj0ellh+uQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VVOJYqQG0MekxtDw1n32VyGnw8lbMwtmNdVVe53AZlY=;
- b=eVjGXrpxrnzDqoB4WpUqmRO032aKdQXJNX7H1ZRlNv6LAFIZXIyi3wC/L0E27VMNRfP3DJknC+bQfwz3IH0F5yomOXlBEEnfDrI6FBWNCYWHhMEhchU1f96M4y+7+c7anPbrzuHS7uX7iHeBCeIAQUjGqqblMNEruo0gjUtjHLM=
-Received: from DS7PR05CA0003.namprd05.prod.outlook.com (2603:10b6:5:3b9::8) by
- MW5PR12MB5650.namprd12.prod.outlook.com (2603:10b6:303:19e::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Tue, 3 Feb
- 2026 17:09:53 +0000
-Received: from DS3PEPF000099D4.namprd04.prod.outlook.com
- (2603:10b6:5:3b9:cafe::e3) by DS7PR05CA0003.outlook.office365.com
- (2603:10b6:5:3b9::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.12 via Frontend Transport; Tue,
- 3 Feb 2026 17:09:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DS3PEPF000099D4.mail.protection.outlook.com (10.167.17.5) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Tue, 3 Feb 2026 17:09:53 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 3 Feb
- 2026 11:09:53 -0600
-Date: Tue, 3 Feb 2026 18:09:46 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, <qemu-devel@nongnu.org>,
- <alex.bennee@linaro.org>, <bill.mills@linaro.org>
-Subject: Re: [PATCH v1 0/5] virtio: Add the virtio-msg transport
-Message-ID: <aYIr2rAPuXJJ-spR@zapote>
-References: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
- <20260203082120-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vnKF4-0002mm-BD
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:31:10 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vnKF2-00071D-7b
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:31:10 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-c626bd75628so2200880a12.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 09:31:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770139866; x=1770744666; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=akfZduGhNA7x7VhmlcMDP4rPypp308SEgS0Ti7+/2sU=;
+ b=dzKHHFf0pl0/TIjwxbpryC+sPDAvzoAXJEvhmwAVA5uMXlPRXasTnmOPGCmufOIBhT
+ VdnwJtEj/WjvtSI3V/4H/qULlU/UlzORRYTNiBkcRzYQk45+L5pC31/oAE440GL9yddR
+ 1UhaELDT+fSg60DqcHQMeu2LzeNBJ9JiLIRIHhYopaVDT4C9lnbw/tkfBLYyUFW0fE9V
+ 1cm19EjOQAngXzKmUu1+0GCRXRSX5UfYpLjmQlFcZRsLgQHBh7gYK1CgBCxej6pYDqDV
+ Z76QtZ3mda/hWQYmnlOZ1V9HgUmocj9cVTjkU016Yu2fJ+JKwPJnBH92DpjO+cV77lJI
+ /O8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770139866; x=1770744666;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=akfZduGhNA7x7VhmlcMDP4rPypp308SEgS0Ti7+/2sU=;
+ b=gBTJ6waEqsJ/HZSaBlLeulsPltr/Gj6GZIHrrldtdiQEtEafNkxiI9fw+D9seW2qMw
+ dDWcisSs0NpeVY4ZF9ZInxcvutmCAKr9P3W50CG1y1QNm+bTEQGvDNklacSfO1EvkDtB
+ 1acJ/F7AJbTNCilqwwPlBdbjc1xsGKJ0i1jXQFtpVoIKa0jZ0hob/BlAg3DLm8fsxuOS
+ xMnJsibunR4a1Z80E5/40OtbuYoaQeWwIuvMGBgACj5Wzz+dOQT6HgMoj0nDQITbNW/K
+ 1NnCnP+oMNkZg+TQtMI+y/2QAaN9P+ZDkpdafQ1g7QywvtzhCDUBX2H3+7I9YklDNbt/
+ MAHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/voe3nNJjfgLxbtus7Ti6bJOC8YtpnOVriAxnYmzNhEJLF2p1ZUv0ovkE2bLbmCptsfz01KV0gi1R@nongnu.org
+X-Gm-Message-State: AOJu0Yw9Co20Vo7aceWaHHhWV+jw2EuIXbtFrbyoc3Pkt7f2D2KV7Le8
+ 2XjbJMfrFv/dKo12gIKoIJbgooSVfQO2D4mXI62OYZ2VI4US3zOuSSx9CfVvS/1bZmg=
+X-Gm-Gg: AZuq6aLG2RqMK8jTQ/MQMaL1rgTeVpL3ovahBfNqhRqJy0qc48OFDi7HNO2NhqlnOc9
+ 4I1qRZRzvutbwUXbR7fI1Q5uqF/JBWyQuWvf38YVj3OsYA0Q2vdmSkpktGd8Hoezy37h+qzoVVy
+ mNpYcOMFbt2ptw+9tZ+OgrN45FGFYTfkU6KZ+O9jGyO17z/o0u3GK8FUdnNF4kG4r5DAqErCoNT
+ A5UCUu2yNHQg98IYoh+o90xjL1jnl94eZL+Uo8PhjcSvroMGTx94O9nTT4sXkrs3ZqBdA//uxdn
+ /PyYlLP1NN1szHFZDQZOCci9R7NMFsrbKLk9gJghlYD1qd36o3b1UtTs8J1xsulohD/StuVUSbC
+ WI0Y6kGtFJxsuobYVysy8dC2klUY8oyXcrwc2I6d3d4pWUPoPeS9eZzekAdFz0l7BKLvShrXX9K
+ n6pZRpZ8Mok0FCNjBPxjUElqX6BmSH9j7olmO6JbINtsWLd8AiptWVSfW0
+X-Received: by 2002:a05:6a20:160f:b0:38e:676a:f3e with SMTP id
+ adf61e73a8af0-3937210b935mr155677637.29.1770139866067; 
+ Tue, 03 Feb 2026 09:31:06 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6428371715sm17778677a12.13.2026.02.03.09.31.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Feb 2026 09:31:05 -0800 (PST)
+Message-ID: <2426d548-2c6f-4bef-9c30-efb97dcc69dd@linaro.org>
+Date: Tue, 3 Feb 2026 09:31:04 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260203082120-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2026-01-25)
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D4:EE_|MW5PR12MB5650:EE_
-X-MS-Office365-Filtering-Correlation-Id: 604677ed-95ce-4299-bfa2-08de63470c4b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?WVWkVWRa0UyMgdgW/ntgIiftuwGJev6ocF8+y0KgT3TDmvwZg3E1308JVacX?=
- =?us-ascii?Q?HRumc7WT//RlWe11xiWDLajQ8h/Vl5oxSsXotYThhp1VHT6WixfjisQ2H6iP?=
- =?us-ascii?Q?EhCpAtMJ5P3mkD/oRak86cGR1sIvPcctkgUn3azqRoyMcztozFrjCGX+VCYY?=
- =?us-ascii?Q?pnj6WsaQEilPMtg/ub5GDiMNBH4J3ck4+t5b3Y+3hmIWW0c6rxGSRvMc6PlC?=
- =?us-ascii?Q?Xj6CB6LwtayF0s+tZBIA5kDlRbFs9k+iWhN3kpJTvFxUbxtdYfSuYaaBSXTv?=
- =?us-ascii?Q?9HB//bkW40oTPeuTCyfJbfoqpePJnhE6d6gYu+88gLZZEJuerQ6p3HipW801?=
- =?us-ascii?Q?TNpqb9SN1DHeQpOzx2dmQgrBkfrrb9iT/HxVVmW7Yy+bBIcyR0UC4g6hd2pC?=
- =?us-ascii?Q?2toKUNiitvzUzWKQ/P8Y6wLrGFcbSfwZBmEj89IbLEaHD16i9ZkMiUTmGDEL?=
- =?us-ascii?Q?9FPoIn0cC+I/5yTJ4TAosgl0rGfLiPmdT2YO/zK8xJmhiqjht8h0z3XfW5bk?=
- =?us-ascii?Q?xuk6ZpUZPlcQJsnZNVsWhegs5kPqQFWPTt4y2r+RpuKbVmXXJ+mILckaMcTE?=
- =?us-ascii?Q?AW5ABCY9D8oBhuACEh2hTwASVpt6/2/9PLHuWNa7rpKHd0zqFMSibcQ6NYqD?=
- =?us-ascii?Q?/UhEuDGFs6vL5jYni43zt56Y2rnFVw3BrpMyuyE9o+6GBS9S6a2goMPYdwMQ?=
- =?us-ascii?Q?hpNgylfdz7eA6HRG1ZOolrg0MnNgBCkyG4k46lPEiVfwAaQMpSVjQUIep6VT?=
- =?us-ascii?Q?KE4FGBtaM5jegnHJFmLtNoMSGACbduriO2nXwE8dg7YyeZQy26IW4RLnpSVG?=
- =?us-ascii?Q?BWk+9wUlpAXuolyETWZH4Cb8Eo/ZTbxVNrOc2tVjG4g+oJdqoQ0uegK3986c?=
- =?us-ascii?Q?zAGPDWkXwL50w3/gPScUluOSNlYMHsEvElh/m9Owpv8ISGPbXzYS2FSZwqhZ?=
- =?us-ascii?Q?tW72oDr0acAeqCuZjIHBBT+hfoqVekXuFJi5aAxTCZmzVnJ1zqIu1sznPa9M?=
- =?us-ascii?Q?qm6az2OnybqN/QHLO1KkSCo3gmJ2wO4ukNdhFIORjHpQ9XViO8Dp9IXO5Yzm?=
- =?us-ascii?Q?3D071AwtFYoi6jc7wKhrQaZ3hqi0Jchh+PZmGLTaDw2Db1SdtsAvxira1oAD?=
- =?us-ascii?Q?bM6xl7OmgFbJ77iPn9dDYLpx/ScPoBa4MBuzRYbKgTfWV1H4vcEzaZPPmbj8?=
- =?us-ascii?Q?Wv7cmMhT/FjcKDHDJ1kcrAq7o1CJCBgLCp47xBCeNHVeiEQredkxJ6yw9DtB?=
- =?us-ascii?Q?VRybJpmN/W+L1V0phCeCS8QegVy9PBZylQMMDybBKFTIFEp7pfIUDY8z4ANj?=
- =?us-ascii?Q?2FWexYt8HikBBBRjFmdCrEzQCU05QdLWcoOu4JSrGf8Dh6rRZ7lx/fyhvdSS?=
- =?us-ascii?Q?BX7NWobR6/HkJrp+48yEH9xeTFBs3a1ZF3Grs+t7a3oTJL3VBIx1hMtdpjBN?=
- =?us-ascii?Q?mxVfPbr9JA4SJzlxDgDWunAWoNJWdO6Zn1qAWtjjCycdwh841Im8xMGVhlmR?=
- =?us-ascii?Q?WTSRRmoPwNI1ziKX5BrqFc/lhr2avaD549Z1ql5wN+iTwYTb6uhOWMRYjYui?=
- =?us-ascii?Q?a2rxV43vBuzuG9vs7ZYEJ5fMEnvbi6T43BKaIMt8/EQXloEyEtGQ/T6dQPLw?=
- =?us-ascii?Q?S2oGlYaJizviXd1dPjj+kuCF7M7Gt7+6QDXAuxqYLGbfv2O6vhNU4ks1NUXS?=
- =?us-ascii?Q?c2T1tQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 67F4ElM3E/U9Q6ESbYcRXH5EYfNdATcrS4h+7s1fj10QqfZ7mV1XiWRdqB1JuTUSlwtSinefAjyWWwWaxC/O6g+gLlEXQ4BPcdrEjI8jy7JDcoeLUnRvOXcqExJBDCWSMcfnxK7G9HMT4FjC1FSoQ9BCAx/1bPil8mZ8HHKKnnG7eR0FqSmzt4uWDa+N9DloVU/RUJmbJWohvq9d0UphcK0fl4LYqwmk2zAOipfCtqen5UHd6Bkajy8lUc51WIIX4hEDaQUJR0a3D4ZSUikMjoB6zhn2Yr8l/HkGfBFXG00Gd68tz7Dfxd51MjsTbRMLlLevXXO0F+NnRQg2ac6z1sizeB6Q75Vt4uFpMjUox08Tz9d6zERF0T2qwRgI6FRi30sdIJh0cDZwp69UDBWiWBJHfhx3BAT+jd2Uc3SCBHAS1buSSoRYF3tFFdYvuJSl
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Feb 2026 17:09:53.2829 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 604677ed-95ce-4299-bfa2-08de63470c4b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D4.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5650
-Received-SPF: permerror client-ip=52.101.53.63;
- envelope-from=Edgar.Iglesias@amd.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/11] hw/virtio: Use
+ VirtIODevice::access_is_big_endian field
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
+ <npiggin@gmail.com>, qemu-ppc@nongnu.org
+References: <20260201232924.93399-1-philmd@linaro.org>
+ <20260201232924.93399-5-philmd@linaro.org>
+ <20260202024316-mutt-send-email-mst@kernel.org>
+ <87bji7pa2e.fsf@draig.linaro.org>
+ <20260202105847-mutt-send-email-mst@kernel.org>
+ <20260202185233.GC405548@fedora>
+ <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+ <1804511f-a048-4eb8-9cf3-1c75bdf4b277@linaro.org>
+ <20260203055247-mutt-send-email-mst@kernel.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260203055247-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,33 +152,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 03, 2026 at 08:22:38AM -0500, Michael S. Tsirkin wrote:
-> On Tue, Oct 28, 2025 at 04:23:45PM +0100, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > 
-> > This adds virtio-msg, a new virtio transport. Virtio-msg works by
-> > exchanging messages over a bus and doesn't rely on trapping and emulation
-> > making it a good fit for a number of applications such as AMP, real-time
-> > and safety applications.
-> > 
-> > Together with the new transport, this series adds a PCI device that
-> > implements an AMP setup much like it could look if two SoC's would
-> > use virtio-msg across a PCI link.
-> > 
-> > Current gaps and limitations:
-> > Shared memory FIFO layout likely to change in the future.
-> > Temporarily uses PCI Vendor Xilinx / Device 0x9039.
-> > Documentation.
+On 2/3/26 3:07 AM, Michael S. Tsirkin wrote:
+> On Mon, Feb 02, 2026 at 07:22:16PM -0800, Pierrick Bouvier wrote:
+>> On 2/2/26 11:25 AM, Pierrick Bouvier wrote:
+>>> On 2/2/26 10:52 AM, Stefan Hajnoczi wrote:
+>>>>
+>>>> This command-line lets you benchmark virtio-blk without actual I/O
+>>>> slowing down the request processing:
+>>>>
+>>>>      qemu-system-x86_64 \
+>>>>          -M accel=kvm \
+>>>>          -cpu host \
+>>>>          -m 4G \
+>>>>          --blockdev file,node-name=drive0,filename=boot.img,cache.direct=on,aio=native \
+>>>>          --blockdev null-co,node-name=drive1,size=$((10 * 1024 * 1024 * 1024)) \
+>>>>          --object iothread,id=iothread0 \
+>>>>          --device virtio-blk-pci,drive=drive0,iothread=iothread0 \
+>>>>          --device virtio-blk-pci,drive=drive1,iothread=iothread0
+>>>>
+>>>> Here is a fio command-line for 4 KiB random reads:
+>>>>
+>>>>      fio \
+>>>>          --ioengine=libaio \
+>>>>          --direct=1 \
+>>>>          --runtime=30 \
+>>>>          --ramp_time=10 \
+>>>>          --rw=randread \
+>>>>          --bs=4k \
+>>>>          --iodepth=128 \
+>>>>          --filename=/dev/vdb \
+>>>>          --name=randread
+>>>>
+>>>> This is just a single vCPU, but it should be enough to see if there is
+>>>> any difference in I/O Operations Per Second (IOPS) or efficiency
+>>>> (IOPS/CPU utilization).
+>>>>
+>>> Thanks very much for the info Stefan. I didn't even know null-co
+>>> blockdev, so it definitely would have taken some time to find all this.
+>>>
+>>> For what it's worth, I automated the benchmark here (need podman for
+>>> build), so it can be reused for future changes:
+>>> https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
+>>>
+>>> ./build.sh && ./run.sh path/to/qemu-system-x86_64
+>>>
+>>> My initial testing showed a 50% slow down, which was more than
+>>> surprising. After profiling, the extra time is spent here:
+>>> https://github.com/qemu/qemu/blob/587f4a1805c83a4e1d59dd43cb14e0a834843d1d/target-info.c#L30
+>>>
+>>> When we merged target-info, there have been several versions over a long
+>>> time, and I was 100% sure we were updating the target_info structure,
+>>> instead of reparsing the target_name every time. Unfortunately, that's
+>>> not the case. I'll fix that.
+>>>
+>>> With that fix, there is no difference in performance (<1%).
+>>>
+>>> I'll respin a v4 with the target info fix, initial v1 changes and
+>>> benchmark results.
+>>>
+>>> Thanks for pointing the performance issue, there was one for sure.
+>>>
+>>> Regards,
+>>> Pierrick
+>>
+>> After proper benchmarking, I get those results (in kIOPS) over 20 runs, all
+>> including target_arch fix I mentioned.
+>>
+>> reference: mean=239.2 var=12.16
+>> v1: mean=232.2 var=37.06
+>> v4-wip (optimized virtio_access_is_big_endian): mean=235.05 var=18.64
+>>
+>> So basically, we have a 1.7% performance hit on a torture benchmark.
+>> Is that acceptable for you, or should we dig more?
+>>
+>> Regards,
+>> Pierrick
 > 
-> 
-> I'm happy that the spec effort is making progress finally.
-> Do you want to repost a version aligned to the latest spec posted?
-> 
+> Could we use some kind of linker trick?
+> Split just the ring manipulation code from
+> virtio.c and keep it target specific.
 >
 
-Thanks Michael, Yes, I'll repost a new version soon aligned with the
-latest spec and addressing comments from Alex.
+While it would allow to extract the common part, unfortunately, as long 
+as we keep a target specific part, we still have a problem to solve.
+Indeed, some symbols (may be ring manipulation code, or just functions 
+mentioned below) will still be duplicated, and in the end, when we'll 
+link two targets needing different versions, we'll have a conflict.
+Since our goal for a single-binary is to have at least arm and another 
+base architecture, we are in this situation now.
 
-Cheers,
-Edgar
+So the only solutions left are:
+- accept the 1.7% regression, and we can provide more "real world" 
+benchmarks to show that it gets absorbed in all existing layers
+- compute virtio_access_is_big_endian once and reuse this everywhere: 
+that's what Philippe implemented in his patches.
+
+What would you prefer?
+
+> 
+> Or it could be that even just these two would be enough:
+> 
+> static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
+>                                                 MemoryRegionCache *cache,
+>                                                 hwaddr pa)
+> {
+>      if (virtio_access_is_big_endian(vdev)) {
+>          return lduw_be_phys_cached(cache, pa);
+>      }
+>      return lduw_le_phys_cached(cache, pa);
+> }
+> 
+> static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
+>                                            MemoryRegionCache *cache,
+>                                            hwaddr pa, uint16_t value)
+> {
+>      if (virtio_access_is_big_endian(vdev)) {
+>          stw_be_phys_cached(cache, pa, value);
+>      } else {
+>          stw_le_phys_cached(cache, pa, value);
+>      }
+> }
+> 
+> 
+> 
+> 
+> 
+> 
+
+Regards,
+Pierrick
 
