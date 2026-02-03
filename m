@@ -4,96 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55938E87839
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C41CE8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnIHr-0003Ik-OJ; Tue, 03 Feb 2026 10:25:55 -0500
+	id 1vnIJL-0004B8-GJ; Tue, 03 Feb 2026 10:27:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnIHn-0003HU-RP
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:25:52 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnIHl-0003ba-Ax
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:25:51 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4806f80cac9so31441385e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:25:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770132346; x=1770737146; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zz9Xptb//vhNN0iiRD6i4hpiptz//NbAq6XkSaRkxT8=;
- b=pjss1YIIaPSbvKcINQfGWSVwwhTHUFQJtJcLM7xzdunvu8uv6AojuXZdzDfuxp7bBl
- JpoXeQS2HaAq/qR9Es+MS3wWF3jrdHOhw7YKg5VjF5iUUYgHUlKTcenaHTzhUX4pPBQM
- T/fr+ybjqFKiqmZElHSqLRLLGd9T0daWwrWM2Pwq4xHfQoEDBo/zmMbAxLpiG/57GOIK
- lkF7pNAfs9ipO3jdR7qvLx72+M3iwr8QgalVouyElQbdsRc3pFCtK4eCI1Z5PT1bUOH5
- SQPbWdlhnF1TG57Uy+2QsOA2GipTGuIsn1HE0AMI/UmebHTuUx74xsOaQDSHPp/HLOx+
- PjeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770132346; x=1770737146;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zz9Xptb//vhNN0iiRD6i4hpiptz//NbAq6XkSaRkxT8=;
- b=FW4rng+QoVWIhYzKYFcxlZoo+dBPvG6HBgRXcgiRQxPOWX4wjVV4NbXoDMBvstKSAb
- nSkRK0LHwn+SzvZ3eaN3gbV4eZ9xUESh0DbUVOj/IukggCGjHqAw9YvEd6DErGgyk3gJ
- fPr3AIr1vzLdcEPfP7Sun2vDMbu9HUAFNU6Cvn3FirV7Nlcl0n6VDk1gu4BMEcXqkKz7
- 9ELZj/oAPVvUNxZdMNkogqHgESv10e5zhX9ZL6HtIp+Rb5mgjkFxfxZLmCvkYNPgB4L/
- XDWoCubs5PmW24Dyg0P1vWx0lskmhtiANh/appWOUGGXjB0dN+klBxOEeJ5Izgmmqv8T
- xyfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtGv7Xd6Hl4FqSsCPcBE61nu1+GBZN1eSdIwUjUSNcDK2ZucmRKe2U3EyND9BN9z+RPhVrqyewZMq7@nongnu.org
-X-Gm-Message-State: AOJu0YzVVqWWJ0jRuoZSp9xnzi2wM8zgQCKJRM69EXVVow6ydW7velEV
- KWJAcnLEIr6Saum8tQYYcx2M9s2D/Yb8EPjRg2zz6GxI4+s5wWYkDQxPwxhtqRHnqtg=
-X-Gm-Gg: AZuq6aL1xvX+7wtZ590Ghm/PjfI9vtSnCrLUp8cDz2wQU9G2eO/8/Lo9oRukoIvbPms
- eqb3a1gH5xBoPLg0A8bnl7kPc40WFIXYnN6FCtWqSEAvVQo4ycYp1biACteEWF3psqKEjZoh658
- EM7m45l1BNFsiMuljc5dpM75pfT0aukSd658d8LX+PTihgzqC3bHoJ+nnAYulM1iGw4EpMuFS09
- 78ZhTW+1epX+YerVz4njAMUQ9LNZcG+ic9rYGvWusot7LH04dE28xtvNhfdrlNEVJqzIIufsMJE
- XyRQ6ZIKbBbSitB0VbZmSlKyhgoKjoGXgoLwR2vMLB+0lmyJiUh1qNNozLcL+cGcZexD4Myxteb
- 2DDQC+p0i71ubZlvOQ6DhU+/L/yx3O58/dDK7CUhxj5OEGpju71C1KjOhMcLs0eSD8UzuRsmMOf
- +zxDW4WXQQk/LZxaaHNMQsub3T1gpqtN/4mwnNxOaBQnFzbsp5EeyWAA==
-X-Received: by 2002:a05:600c:4e0f:b0:482:f12f:f35e with SMTP id
- 5b1f17b1804b1-4830e9310f6mr381205e9.12.1770132346156; 
- Tue, 03 Feb 2026 07:25:46 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-482da903a30sm151679675e9.1.2026.02.03.07.25.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 07:25:45 -0800 (PST)
-Message-ID: <30e03d21-44ee-487c-90bd-bdbee3ac69a0@linaro.org>
-Date: Tue, 3 Feb 2026 16:25:43 +0100
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vnIJH-00048u-3X
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:27:24 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vnIJC-0003xI-M6
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:27:21 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6139NGL4022220;
+ Tue, 3 Feb 2026 15:27:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6T8YQY
+ 84hqG/Gd69rJU3JzaxcGU1ueEfxHPjO0EdN8g=; b=Psk82ScJyCftnVs9qBDl9/
+ g4l7xK7ts6Dgks/AQtZ4jvoPD1sBmOuVHEsUeHQCuFq9a9zRqdLBNHIW9O848+Fx
+ JitC1Kag35jVdAvfIobobIP9dZhj7FxOPzBEcmDfBah1ohee4tVCvpANGLIN4tnF
+ uIT8gyknNmRyX+NMMePohXj5xGGveN2Qv92cbS2TuptCU53Rd2XJH6qu8Qr8dBLx
+ ujl5aD02aNU13C+fG8dzD6utzswZmUkLdN+DJzsIpFolk91soZsznMVY6GBsFMV6
+ LeQm6SveD3N3E1hvlJtx1FV/smAXVa8T1bFCZEcfiYmEpiLH25o+X3swTTaziZhg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dt60b8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 15:27:16 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 613EBwam029421;
+ Tue, 3 Feb 2026 15:27:15 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1v2s9rty-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 15:27:15 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 613FQtiG21496526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Feb 2026 15:26:55 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0DCE858058;
+ Tue,  3 Feb 2026 15:27:15 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 84B6F5805C;
+ Tue,  3 Feb 2026 15:27:14 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Feb 2026 15:27:14 +0000 (GMT)
+Message-ID: <d91deac0-c8dd-4832-a641-833d3064d02e@linux.ibm.com>
+Date: Tue, 3 Feb 2026 10:27:14 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/pci: Refactor atomic capability checking
+Subject: Re: [PATCH v2 0/3] follow-up for tpm_emulator errp story
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ stefanb@linux.vnet.ibm.com
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
+References: <20260201172746.404481-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
-To: "Pekovic, Manojlo" <Manojlo.Pekovic@amd.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "Prica, Nikola" <Nikola.Prica@amd.com>,
- "Andjelkovic, Dejan" <Dejan.Andjelkovic@amd.com>,
- Manojlo Pekovic <mpekovic@example.com>
-References: <20260203144939.49-1-manojlo.pekovic@amd.com>
- <20260203144939.49-2-manojlo.pekovic@amd.com>
- <2af33652-d467-42be-86c3-e1995f2c1b89@linaro.org>
- <CH0PR12MB52838F23E3431D5C21EF5240FA9BA@CH0PR12MB5283.namprd12.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CH0PR12MB52838F23E3431D5C21EF5240FA9BA@CH0PR12MB5283.namprd12.prod.outlook.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260201172746.404481-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDEyMyBTYWx0ZWRfX3Y3/8Dz/hsVu
+ rGEeYz8TXnCkiu5dFo3wP+7dEwDzHVOrLUD0d3T3ZDlgJTOru2/Fh+Qt/8L6GRj47DtS6Z8W/o8
+ NTK4XJAIN6w/31p1u3EcABN4v79N2ciiCuHqKY6rEsLXeCNyWYEQtLvO26AezJfwchWKIQVL7wZ
+ J8zw22Eaal1AyvbSSO7E9Qw1uf72yrAkdkf6OmGxj5nmn3afMAkrCzoGny/vLy0mfEqmNgcUhvd
+ lExOBbVdzTLg5ktAZp+C03I3UQ9u2zNw2vaM9v9S8KX0Xls3zziqoZyg0BIutDUpaKwZ9v1wNGe
+ sWUziHY5IljLfbb27PyDuXsh3AfQUJEhrUrdrE6FmrPMCgWnOkBoZY6Fs6O8U/WfmrOp3fsbuvr
+ /+onTcnSyg7SdgDf5NSB6rxoE/o88zzFGCDmHTlw2ut3yYAW7H5gVgU8+LvGxc/0Oc2a+3Pl6ZM
+ rM8Ab+mp0pn90gSuxMQ==
+X-Proofpoint-GUID: Bl2ORzP79GvRxqXUl1CtzneRTjQSfX6H
+X-Proofpoint-ORIG-GUID: Bl2ORzP79GvRxqXUl1CtzneRTjQSfX6H
+X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=698213d4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=hcWZWQIIgmldZBCGSpYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-03_04,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602030123
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,46 +122,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/26 15:55, Pekovic, Manojlo wrote:
-> [AMD Official Use Only - AMD Internal Distribution Only]
-> 
-> Hi Philippe,
-> 
-> Yeah, just caught it in the output of git send-email.. Sorry for that.
-> What is the appropriate fix, should I send the completely new patch, as this one went out?
 
-Yeah that would be better :)
 
+On 2/1/26 12:27 PM, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all!
 > 
-> Thanks and sorry for inconvenience,
-> Manojlo Pekovic
-> Software Development Engineer 2
-> Cloud Software Team
+> Here are fix and small enhancements, following comments on
+> already merged "tmp_emulator: improve and fix use of errp"
+> by Markus.
+
+Thanks for rebasing.
 > 
+> v2:
+> - add r-bs
+> - rebase on master
 > 
+> Vladimir Sementsov-Ogievskiy (3):
+>    tpm_emulator: print error on error-ignore path
+>    tpm_emulator: drop direct use of errno variable
+>    tpm_emulator: tpm_emulator_set_state_blobs(): move to boolean return
 > 
-> -----Original Message-----
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Sent: Tuesday, February 3, 2026 3:53 PM
-> To: Pekovic, Manojlo <Manojlo.Pekovic@amd.com>; qemu-devel@nongnu.org
-> Cc: alex.williamson@redhat.com; clg@redhat.com; Prica, Nikola <Nikola.Prica@amd.com>; Andjelkovic, Dejan <Dejan.Andjelkovic@amd.com>; Manojlo Pekovic <mpekovic@example.com>
-> Subject: Re: [PATCH 1/2] vfio/pci: Refactor atomic capability checking
-> 
-> Hi Manojlo,
-> 
-> On 3/2/26 15:49, Manojlo Pekovic wrote:
->> From: Manojlo Pekovic <mpekovic@example.com>
->>
->> Extract atomic capability checking logic into a separate function
->> vfio_get_atomic_cap() for better code organization and reusability.
->>
->> Signed-off-by: Manojlo Pekovic <mpekovic@example.com>
-> 
-> Don't you mean "Manojlo Pekovic <manojlo.pekovic@amd.com>"?
-> 
->> ---
->>    hw/vfio/pci.c | 53 ++++++++++++++++++++++++++++++---------------------
->>    1 file changed, 31 insertions(+), 22 deletions(-)
+>   backends/tpm/tpm_emulator.c | 58 +++++++++++++++----------------------
+>   1 file changed, 24 insertions(+), 34 deletions(-)
 > 
 
 
