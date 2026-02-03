@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31DEE8305F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 181A7E83062
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:50:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnC6R-0002qL-2s; Tue, 03 Feb 2026 03:49:43 -0500
+	id 1vnC6R-0002qd-If; Tue, 03 Feb 2026 03:49:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnC6O-0002oL-H5
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:49:40 -0500
+ id 1vnC6P-0002ou-Ng
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:49:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnC6M-0001oi-9m
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:49:40 -0500
+ id 1vnC6O-0001rb-FT
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:49:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770108577;
+ s=mimecast20190719; t=1770108579;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lbnxFT/DpoyAkkbqrOODjXa6B8Yc5r5IgxlYvo555mY=;
- b=OBSq37OsPHxH/+FfDMpN/EAv1m19ANacuCO/vYqnpAN16qy/JVjHgTMpWuCr5KAonQP+OR
- znv9WXFQfapSeWSbRNqt2iJcZTpF6iLE59Wp2M3dB65pMl/2rHpWRHITiP2xcPu35+zwjR
- 2iBFxcC8SkIA12uthJpkjnjq+7DpAgc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=h8k3XMtTeVC9HUtzi4IX4QOd53yiAU3NnJ9b2/fmKqA=;
+ b=WjftxVbpONa0jLgdWMPA8jcbTagGZS5UEHpuY4zhWeXK025oqLMk0UnmbVQMWhZVGIgRYn
+ tX7InfVizVmy/LaK/YfSmohynHh8gWwSXeHvsXnsnIFfeoOD8kn/WkoJbeoqIK/aSA0WDM
+ aI4cxSYBFJUDNuthkdCwpMUMniE1SgI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-Swcif7vDPJaal9BOm5-xrw-1; Tue,
- 03 Feb 2026 03:49:34 -0500
-X-MC-Unique: Swcif7vDPJaal9BOm5-xrw-1
-X-Mimecast-MFC-AGG-ID: Swcif7vDPJaal9BOm5-xrw_1770108573
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-i9zQVX4NPqySTudi0GR0lg-1; Tue,
+ 03 Feb 2026 03:49:36 -0500
+X-MC-Unique: i9zQVX4NPqySTudi0GR0lg-1
+X-Mimecast-MFC-AGG-ID: i9zQVX4NPqySTudi0GR0lg_1770108575
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 870301800359; Tue,  3 Feb 2026 08:49:33 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD85D19560B2; Tue,  3 Feb 2026 08:49:35 +0000 (UTC)
 Received: from speedmetal.lan (unknown [10.45.242.3])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79BC31956053; Tue,  3 Feb 2026 08:49:31 +0000 (UTC)
+ id EFA821956053; Tue,  3 Feb 2026 08:49:33 +0000 (UTC)
 From: Peter Krempa <pkrempa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 1/2] block: Wire up 'flat' mode also for 'query-block'
-Date: Tue,  3 Feb 2026 09:49:26 +0100
-Message-ID: <a38d78156b74b134da0f1479a30fc0d6cdb7b97c.1770108436.git.pkrempa@redhat.com>
+Subject: [PATCH v3 2/2] hmp_nbd_server_start: Don't ask for backing image data
+Date: Tue,  3 Feb 2026 09:49:27 +0100
+Message-ID: <c497843526c5befa4abdc3e525df8f0c211a3d30.1770108436.git.pkrempa@redhat.com>
 In-Reply-To: <cover.1770108436.git.pkrempa@redhat.com>
 References: <cover.1770108436.git.pkrempa@redhat.com>
 MIME-Version: 1.0
@@ -88,131 +88,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Krempa <pkrempa@redhat.com>
 
-Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
-omits 'backing-image' key in reply) to 'query-named-block-nodes' to
-minimize the size of the returned JSON for deeper backing chains.
-
-While 'query-block' behaved slightly better it turns out that in libvirt
-we do call 'query-block' to figure out some information about the
-block device (e.g. throttling info) but we don't look at the backing
-chain itself.
-
-Wire up 'flat' for 'query-block' so that libvirt can ask for an
-abbreviated output. The implementation is much simpler as the internals
-are shared with 'query-named-block-nodes'.
+'hmp_nbd_server_start' uses only the device name from the data returned
+from 'qmp_query_block', thus no backing file information. Use the new
+options to suppress asking for the unused parts to save on resources.
 
 Signed-off-by: Peter Krempa <pkrempa@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- block/monitor/block-hmp-cmds.c | 4 ++--
- block/qapi.c                   | 9 +++++----
- qapi/block-core.json           | 5 +++++
- ui/cocoa.m                     | 2 +-
- 4 files changed, 13 insertions(+), 7 deletions(-)
+ block/monitor/block-hmp-cmds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 3391cee4d2..bde25bb588 100644
+index bde25bb588..1fd28d59eb 100644
 --- a/block/monitor/block-hmp-cmds.c
 +++ b/block/monitor/block-hmp-cmds.c
 @@ -422,7 +422,7 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
      /* Then try adding all block devices.  If one fails, close all and
       * exit.
       */
--    block_list = qmp_query_block(NULL);
-+    block_list = qmp_query_block(false, false, NULL);
+-    block_list = qmp_query_block(false, false, NULL);
++    block_list = qmp_query_block(true, true, NULL);
 
      for (info = block_list; info; info = info->next) {
          if (!info->value->inserted) {
-@@ -741,7 +741,7 @@ void hmp_info_block(Monitor *mon, const QDict *qdict)
-
-     /* Print BlockBackend information */
-     if (!nodes) {
--        block_list = qmp_query_block(NULL);
-+        block_list = qmp_query_block(false, false, NULL);
-     } else {
-         block_list = NULL;
-     }
-diff --git a/block/qapi.c b/block/qapi.c
-index 27e0ac6a32..3688d0e713 100644
---- a/block/qapi.c
-+++ b/block/qapi.c
-@@ -456,7 +456,7 @@ fail:
-
- /* @p_info will be set only on success. */
- static void GRAPH_RDLOCK
--bdrv_query_info(BlockBackend *blk, BlockInfo **p_info, Error **errp)
-+bdrv_query_info(BlockBackend *blk, bool flat, BlockInfo **p_info, Error **errp)
- {
-     BlockInfo *info = g_malloc0(sizeof(*info));
-     BlockDriverState *bs = blk_bs(blk);
-@@ -488,7 +488,7 @@ bdrv_query_info(BlockBackend *blk, BlockInfo **p_info, Error **errp)
-     }
-
-     if (bs && bs->drv) {
--        info->inserted = bdrv_block_device_info(blk, bs, false, errp);
-+        info->inserted = bdrv_block_device_info(blk, bs, flat, errp);
-         if (info->inserted == NULL) {
-             goto err;
-         }
-@@ -698,11 +698,12 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
-     return s;
- }
-
--BlockInfoList *qmp_query_block(Error **errp)
-+BlockInfoList *qmp_query_block(bool has_flat, bool flat, Error **errp)
- {
-     BlockInfoList *head = NULL, **p_next = &head;
-     BlockBackend *blk;
-     Error *local_err = NULL;
-+    bool return_flat = has_flat && flat;
-
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
-
-@@ -714,7 +715,7 @@ BlockInfoList *qmp_query_block(Error **errp)
-         }
-
-         info = g_malloc0(sizeof(*info));
--        bdrv_query_info(blk, &info->value, &local_err);
-+        bdrv_query_info(blk, return_flat, &info->value, &local_err);
-         if (local_err) {
-             error_propagate(errp, local_err);
-             g_free(info);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b82af74256..a701f6bbee 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -855,6 +855,10 @@
- #
- # Get a list of `BlockInfo` for all virtual block devices.
- #
-+# @flat: Omit nested data about the backing image (ie. the contents at
-+#        'inserted.image.backing-image' are trimmed).
-+#        Default is false (Since 11.0)
-+#
- # Returns: a list describing each virtual block device.  Filter nodes
- #     that were created implicitly are skipped over.
- #
-@@ -945,6 +949,7 @@
- #        }
- ##
- { 'command': 'query-block', 'returns': ['BlockInfo'],
-+  'data': { '*flat': 'bool' },
-   'allow-preconfig': true }
-
- ##
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 23b7a736d7..5b21fe3aea 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -1849,7 +1849,7 @@ static void addRemovableDevicesMenuItems(void)
-     BlockInfoList *currentDevice, *pointerToFree;
-     NSString *deviceName;
-
--    currentDevice = qmp_query_block(NULL);
-+    currentDevice = qmp_query_block(false, false, NULL);
-     pointerToFree = currentDevice;
-
-     menu = [[[NSApp mainMenu] itemWithTitle:@"Machine"] submenu];
 -- 
 2.52.0
 
