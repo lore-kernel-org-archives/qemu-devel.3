@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3DCE8305C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AC58E8305C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnAu3-0007Kz-9L; Tue, 03 Feb 2026 02:32:51 -0500
+	id 1vnAu7-0007QD-VT; Tue, 03 Feb 2026 02:32:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnAu0-0007Em-O1
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:49 -0500
+ id 1vnAu3-0007LP-AD
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:51 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnAtx-0006DN-4k
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:47 -0500
+ id 1vnAu0-0006Ca-GL
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:32:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770103965; x=1801639965;
+ t=1770103968; x=1801639968;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6rfHFdfPdD8BjvFsHmnrTLtCCMNlWfo+Utny8DB0OFs=;
- b=D8q+t+K7SdrBVC0P6Hznysqfuv5yTa6ChOgjyHqu54HfO702OnCFjI7P
- VFwXJzXSS5XQWGMu00lNe/bxEPBUgOQOUUE1bUlJgIv2DPoQ8C9Oz9uHY
- NJx4NjMZb61JPlien9+2ZUJUYifn18y2/bWPUf45sdLKise59gC7c2vUR
- 0XdEXSxCWRTC7N0YBT4XoM+3BmMWnL54maoKNyB/Abi8YbyNjHPtsZhbD
- qaKACSIfCczj5vTjs8af9pjAkIPJmLwRCRL6I0cxgoMbJFfOVx7RdxS5l
- V6YPmiZdCKr/LcZNMXA5Yut9k0TIugU41XUZpItPAeRzHnL2gJPfU8Ggf w==;
-X-CSE-ConnectionGUID: fgE8vR3BQFS/nESFw5Z2Ug==
-X-CSE-MsgGUID: DPOmfZC4TWKL3UGJxqxTzQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82640916"
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="82640916"
+ bh=X8bbVuNMXC8vykTe65Rw/x/WDTflG92gptyM4eDsVm8=;
+ b=FKwHIB16aKEisXEuH6hHA3P6KQ9S+9JaWF77sJaIiF8xd3NttUiCezxd
+ upkyQ2OewHSPOipnhsBYFhaf5iK7+sHptl9WX0qDnVQeb1dqthyy3cbIk
+ OqUsE+JapdfEnXjFbKLkONqw1ptWFtvwEtXlzthNYgC0+5FPwfJExdt6s
+ VY9yvFhBkHlOF8sbx7IeZ9hwvdFhTecozEq2Za1YE8erh9w7ebMfOISgx
+ P7HtrtzTvRQDSXtVxabQGWF62N0DGQeqHttApi5dfHZbPZtGOEvIHdznT
+ UJNuFt7Mk3XzZvBEwYVc17qDgHVWqO2De3Br2vH9q7/0NqRD6BB/RrudD Q==;
+X-CSE-ConnectionGUID: wC+6mf9NSxSA0mjBapmqfA==
+X-CSE-MsgGUID: 8ABG7TwXSxKgaNWRbK7dgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82640922"
+X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="82640922"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Feb 2026 23:32:37 -0800
-X-CSE-ConnectionGUID: fx77WMWSRl2AH532SxsqEw==
-X-CSE-MsgGUID: SHG5BDBKSSCyZrPJNtKNiw==
+X-CSE-ConnectionGUID: j5BXF9GyTaG6fvxYV9hHNw==
+X-CSE-MsgGUID: qHlbABp0TRelZhCVvTN/Zg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="247373108"
+X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; d="scan'208";a="247373111"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2026 23:32:36 -0800
+ 02 Feb 2026 23:32:37 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 08/12] vfio/region: Add a helper to get region index from
+Subject: [PATCH v5 09/12] vfio/device: Add a helper to lookup VFIODevice from
  memory region
-Date: Mon,  2 Feb 2026 23:30:15 -0800
-Message-ID: <20260203073200.848183-9-vivek.kasireddy@intel.com>
+Date: Mon,  2 Feb 2026 23:30:16 -0800
+Message-ID: <20260203073200.848183-10-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260203073200.848183-1-vivek.kasireddy@intel.com>
 References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
@@ -86,62 +86,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having a way to figure out the region index (or bar) associated
-with a memory region is helpful in various scenarios. For example,
-this capability can be useful in retrieving the region info needed
-for mapping a part of a VFIO region or creating a dmabuf.
+Instead of iterating over all QOM devices to find the VFIODevice
+associated with a memory region, it is faster to just use the
+vfio_device_list to lookup the VFIODevice.
 
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/region.c              | 14 ++++++++++++++
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ hw/vfio/device.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index ab39d77574..9c3dc19ee1 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -461,3 +461,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
-                                         enabled);
- }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 973fc35b59..ecb3581fcc 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -644,3 +644,26 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
+     .region_read = vfio_device_io_region_read,
+     .region_write = vfio_device_io_region_write,
+ };
 +
-+int vfio_get_region_index_from_mr(MemoryRegion *mr)
++static bool vfio_device_lookup(struct iovec *iov, VFIODevice **vbasedevp,
++                               Error **errp)
 +{
-+    VFIORegion *region;
++    VFIODevice *vbasedev;
++    RAMBlock *first_rb;
++    ram_addr_t offset;
 +
-+    while (mr->container) {
-+        if (mr->ops == &vfio_region_ops) {
-+            region = mr->opaque;
-+            return region->nr;
-+        }
-+        mr = mr->container;
++    first_rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
++    if (!first_rb) {
++        error_setg(errp, "Could not find first ramblock\n");
++        return false;
 +    }
-+    return -1;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 828a31c006..596c7f5a10 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -308,6 +308,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
- 
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_irq_info *info);
 +
-+/**
-+ * Return the region index associated with a given MemoryRegion. The index
-+ * can be useful in retrieving region info.
-+ *
-+ * @mr: MemoryRegion to use
-+ *
-+ * Returns the region index or -1 on error.
-+ */
-+int vfio_get_region_index_from_mr(MemoryRegion *mr);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
++    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
++        if (vbasedev->dev == first_rb->mr->dev) {
++            *vbasedevp = vbasedev;
++            return true;
++        }
++    }
++    error_setg(errp, "No VFIO device found to create dmabuf from\n");
++    return false;
++}
 -- 
 2.50.1
 
