@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB1BE83040
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE40E83040
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn76e-000523-HY; Mon, 02 Feb 2026 22:29:37 -0500
+	id 1vn7L3-0001yD-0X; Mon, 02 Feb 2026 22:44:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn76V-0004v5-76
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:29:28 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vn7Ku-0001x0-8M
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:44:23 -0500
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn76T-0003Av-Bt
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:29:26 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a7bced39cfso54280065ad.1
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:29:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vn7Ks-00046C-AK
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:44:19 -0500
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-2a77c1d5c3bso22790205ad.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:44:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770089364; x=1770694164; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sltVt2KjaeJK1bdwL2H4RtrAgjXja8LctnyYoFfFy3I=;
- b=bwqEMZJBuu38WuG71zPDf5OnGCzr6t83s5FgGXkgXaxB97y5OJQ/LXPJRn/H8FnS8Y
- bMZ0uZOKUlpxrrZBbfYW63c8otKPENihoo6mYKdC92UchZw388zxh2E8Xso4GCBp6qo0
- F2jShvWRc8EjC0+1BZiYfORQm/hmYhBd2HZDI/h55gcJ6mSa8mMnTSjDsLMHqzDUYkfq
- w8eVBV3SUjHdmmRSXkQS+H/PS4+/ZRVKQEAgvTRwJRrSkZq92WlVeAkrOULqQMd1YNZp
- IkmCzuPLuu1t986g1xaBI2LQHRv027PhiQ3ji5xXbvPOVSCZP/I/t0gAA0/+Sn1Mf4B8
- 2LhQ==
+ d=gmail.com; s=20230601; t=1770090256; x=1770695056; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XZLfgFE6MKBPPnrM/khUe8dh84fjWHNXRMOZ3I9D3iQ=;
+ b=YdabzuybQbos0SibGkdw5//P2AwZyoH6UMUerGQtvm3Ws3J8X7vP8uRb9uZ8Md5ZFL
+ CpuZ9LU6KCaQrJm8uv9UCw5bOML1WGNxHeJcnXE6MnLglLSXApCby/0vgb7XYgdZ0/Zn
+ GsK0Es6I7owr1QchG7wJgQltC34j7wax1gy7aUwW+Hotetoq+HoX4DpNQ+9U0mZPgBu8
+ foaB0cVzFIz8vZKDppBXR7CfoxRRwSxw6BENrxP7fovKswJ1pmmY0JLYC2aPECp2dtvO
+ DCxU0z9EIDtDb0PhENf7OAdui2r2h+8XFpy5Ru5pWK1YyWuRnDNvqXnAaBFOUzgC1bTl
+ oe0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770089364; x=1770694164;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sltVt2KjaeJK1bdwL2H4RtrAgjXja8LctnyYoFfFy3I=;
- b=HixtF52c/unhnJj9SsqMblQ+qgVolaj4BZi/PF8HjZnjLQc7Xy4tRiM75QKp0eGlpw
- An4a8yqSjeHztLdqm7dxgumCi2nLgacT02wlDiM8R9Dby/3ikpbUYeL6/smUXNrvHCQ2
- h0zi4k5odEs5rJ3XhI3nNF65wGMtcBAHIkBVpYaAydMVNAhAgVI7rZhzpO1v+KZ+eGzH
- HUlwL3l3TeCUyyDQYXslDC0wHC3It2+CDosE/s5Lh7xpOcW5RLhcyfFUIpGDQH4J+DDu
- cJlD7Gu2cVbtGhRv2h688qQpBvB+Tin8SAUTN9QYJz0/BWTKv9nw2ZWBtwlCUWAyUTf5
- jnWg==
+ d=1e100.net; s=20230601; t=1770090256; x=1770695056;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XZLfgFE6MKBPPnrM/khUe8dh84fjWHNXRMOZ3I9D3iQ=;
+ b=aYVPgGyqkZX8uEksXevb7GBy7ALrvXl/JLSBgjhubQih0zmMZfj4TH8MWBJAzZPaNP
+ YM/2/o2qLY17ZXt0h+tfIv5JXJLGCi9RGCwTgxSot/sCqbYaTphqw2fkxiUf5O+guLKm
+ ZKVkKmTlg/pobFnhnV3LhqaK0NDNnzOk33wwNqwNWCI7Xs6d5r4dGYz+BqXS1wAay8QG
+ DOdBUecFglWdjvKM+ACMJOtDSR1OnDZIQNBaehZzulnbBU6/AfHAOtuGzi1DQ91wvzUS
+ Z4TgUq+St/70l+XQYgR+jF6WOg4bTL546TgHaMzLYlmliCNwLkPxlbPSRmKdYsDwG1Vu
+ flig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXThHjRdslkrV8IlGxFSOP0peU6cv5b3JSoJU0z2NOAn4SCa02InP+Ct6qV97W1sZlMxKAzxLkoLZqZ@nongnu.org
-X-Gm-Message-State: AOJu0YzwlFJ4fiNsKb5b/adMi2ioZ8IHzw1ZcNMLZmadQux4OBlakqFw
- 5QJBFYtcgDSpYuSJPwlQCMf92wgoQEEvsLcOuofZCu4JyObX5lplfVsJkvMBRBxBRZa6vGqq8cX
- +HFHUQO1Uag==
-X-Gm-Gg: AZuq6aImjPNfVbMPxTzDB+pD0H5hwjScALNc45XItoDdqFkXmuC4CiClqjsu7SNpWeT
- NUlOjcNFCbemfT67m5F8uQB67OsceI2Gt01ZFkjkqMlszGaLqmhFsP7vSwXsTfPShlc5RrUIKyL
- QBAVxAd8fZDMfQoFr7NZarx3Dv6d9f9rem4mPyIUgX80HuUVJrzrQw9npg8T030j/F5rpVb0LA+
- JWfyxKrp7HbdsCec17ceXtbcTF/Gcng18XOqH7m7obJS9r3LosLtuwiAErtlzM4lvQ5Whs3QDjh
- 5/w9q24n4jGsyACa3v8LI++g4+outI6pcthBXc2s8Yi5MkIL0hBcFK+vG5p3qEEWluVzSzgDc0A
- wdM0XiWjBD8DbnvzyY5P/1zE8EAruMa4Y5oXLeLvBQz9vPHWBtHCGr1gWkpYK7YYYOxIApn4+Di
- r31eOEleS3HR0/zh7ITNZp0BKIIb8MWBvQ5V9A/ww6tvJ5xsjouGkS5bCngro0EGIOzjfEjlP81
- 6EJaVOaDknvhysmzPEHG+bDlTI6fh4QZnH256/dJmla3jGcLpZ2
-X-Received: by 2002:a17:903:f8c:b0:2a3:ec72:f462 with SMTP id
- d9443c01a7336-2a8d96e3854mr128982395ad.25.1770089363864; 
- Mon, 02 Feb 2026 19:29:23 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
- (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
- [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
+ AJvYcCWiePMXdl2p8oZARt4E31YiH89RUJDFG+/eIRxkH5YaWE/7+kHh6dAh0AW+7UMsSZ//F+PsTOXvTWJI@nongnu.org
+X-Gm-Message-State: AOJu0YxSM0QePb7xEzyTXP1ccv1GlBTgfYHia8V6We2sSnQTMzTzAc9q
+ S/039Z+sKx3yI7u+StTxoRIabp/sGdf6gqUZhkYmVAh2XD8KBZtBIDE3
+X-Gm-Gg: AZuq6aInLDp46dTooN4mIve3V+Wwd0sB8qRe3+gjDBqtYdr6Tn0U7UkR6jf2BbV64Pr
+ tnv1W1Dufa8TEPL3wYTPVKrhXFIsnm6b8YjOqjM7dZBaQnzglLUyw5O8TCB7tBfmy+/W3Z7SSE/
+ BckDvSsLEKcm913sdUdb1QBXODBoYWNTGulGk430Xb+GuaQnaBO9iuC48javbDxUnanuwNmQjV0
+ LHFANkTc64KJ9OoK81kjwnXWiXWMcVKtrlGZstB1WEQ6Bm6c2PWqv4UqyrWvmiZJNaJA7FERZ29
+ jmWAo27+0f5064jmiO7XiZyEZOVlp+awGVc3w1QPTozGJ2r6v4sScvFpMOKCCUu56+gspIf3EjR
+ 9td75aq4eOER6FzoRv3ijFwnu4bL3YtNxU0JG7SNPp6BT5S3zyerEnLbccgGoT6xlZJ/79dMQY4
+ rcqEG1KSkbpVpWap/wAXu+XRG5OBmZNipo/uFtTc1VVYEeOb02SwHtGcRjZDUqkM/sP4517tyE8
+ Q==
+X-Received: by 2002:a17:902:ca8a:b0:2a0:be7b:1c50 with SMTP id
+ d9443c01a7336-2a8d9698e79mr102933905ad.14.1770090256066; 
+ Mon, 02 Feb 2026 19:44:16 -0800 (PST)
+Received: from b962e8cb79b7 ([43.139.160.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b417394sm155292885ad.42.2026.02.02.19.29.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 19:29:23 -0800 (PST)
-Message-ID: <aa8ecbc2-f688-4d8b-97a2-7265edac8ac6@linaro.org>
-Date: Tue, 3 Feb 2026 13:29:19 +1000
+ d9443c01a7336-2a88b4c3df6sm160070565ad.49.2026.02.02.19.44.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Feb 2026 19:44:15 -0800 (PST)
+Date: Tue, 3 Feb 2026 11:44:09 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, hust-os-kernel-patches@googlegroups.com
+Subject: Re: [RFC PATCH v2 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
+Message-ID: <aYFvCaE4MQyRcRIm@b962e8cb79b7>
+References: <cover.1769678103.git.chao.liu.zevorn@gmail.com>
+ <7cc1e085432336463dd19e11212cda516b97a33e.1769678103.git.chao.liu.zevorn@gmail.com>
+ <47268fe5-32cd-4d97-bdcd-2d349d3bfc2a@phytium.com.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] target/alpha: Remove unnecessary target_ulong uses
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-References: <20260202234550.34156-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260202234550.34156-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <47268fe5-32cd-4d97-bdcd-2d349d3bfc2a@phytium.com.cn>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,17 +109,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 09:45, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (7):
->    target/alpha: Avoid target-specific migration headers in machine.c
->    target/alpha: Build system units in common source set
->    target/alpha: Replace target_ulong -> uint64_t in gdb_write_register()
->    target/alpha: Do not use target_ulong for trap arguments
->    target/alpha: Do not use target_ulong for page table entries / indexes
->    target/alpha: Remove target_ulong uses in get_physical_address()
->    target/alpha: Expand TCGv type for 64-bit target
+Hi Tao,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Fri, Jan 30, 2026 at 11:49:11AM +0800, Tao Tang wrote:
+> Hi Chao,
+> 
+> On 2026/1/29 17:39, Chao Liu wrote:
+> > Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
+> > The test exercises bare, S-stage, G-stage, and nested translation paths
+> > using iommu-testdev and the qos-riscv-iommu helpers.
+> > 
+> > The test validates:
+> > - Device context (DC) configuration
+> > - SV39 page table walks for S-stage translation
+> > - SV39x4 page table walks for G-stage translation
+> > - Nested translation combining both stages
+> > - FCTL register constraints
+> > 
+> > This provides regression coverage for the RISC-V IOMMU implementation
+> > without requiring a full guest OS boot.
+> > 
+> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> > ---
+> >   MAINTAINERS                    |   1 +
+> >   tests/qtest/iommu-riscv-test.c | 279 +++++++++++++++++++++++++++++++++
+> >   tests/qtest/meson.build        |   5 +-
+> >   3 files changed, 284 insertions(+), 1 deletion(-)
+> >   create mode 100644 tests/qtest/iommu-riscv-test.c
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 830f56376b..73daaad841 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -349,6 +349,7 @@ F: common-user/host/riscv*
+> >   F: tests/functional/riscv32
+> >   F: tests/functional/riscv64
+> >   F: tests/tcg/riscv64/
+> > +F: tests/qtest/iommu-riscv-test.c
+> >   RISC-V XThead* extensions
+> >   M: Christoph Muellner <christoph.muellner@vrull.eu>
+> > diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
+> > new file mode 100644
+> > index 0000000000..5a86b18db9
+> > --- /dev/null
+> > +++ b/tests/qtest/iommu-riscv-test.c
+> > @@ -0,0 +1,279 @@
+> > +/*
+> > + * QTest testcase for RISC-V IOMMU with iommu-testdev
+> > + *
+> > + * This QTest file is used to test the RISC-V IOMMU with iommu-testdev so that
+> > + * we can test RISC-V IOMMU without any guest kernel or firmware.
+> > + *
+> > + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "libqtest.h"
+> > +#include "libqos/pci.h"
+> 
+> 
+> libqtest.h and libqos/pci.h are redundant because they are already pulled in
+> by libqos/generic-pcihost.h (libqos/pci.h itself includes libqtest.h)
+> 
+> 
+Thanks for the review. I'ill fix this in v3.
 
-r~
+Thanks,
+Chao
+
+> Besides
+> 
+> Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+> 
+> 
+> Thanks,
+> 
+> Tao
+> 
+> > +#include "libqos/generic-pcihost.h"
+> > +#include "hw/pci/pci_regs.h"
+> > +#include "hw/misc/iommu-testdev.h"
+> > +#include "hw/riscv/riscv-iommu-bits.h"
+> > +#include "libqos/qos-riscv-iommu.h"
+> > +#include "libqos/riscv-iommu.h"
+> > +
+> > +#define DMA_LEN           4
+> 
 
