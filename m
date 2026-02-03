@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A953FE8783F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE0DE8783F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHxR-0000OP-Tc; Tue, 03 Feb 2026 10:04:49 -0500
+	id 1vnHxk-0000Z4-A9; Tue, 03 Feb 2026 10:05:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxQ-0000Nq-DR
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:48 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxg-0000Vv-Rw
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:05:05 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxO-0001Lg-TO
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:48 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43590777e22so3592428f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:04:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxe-0001OH-Jx
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:05:04 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-43596062728so598412f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770131085; x=1770735885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770131099; x=1770735899; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tuRjC9GWhykhArGXENtPPp74AE8CygRAtcP+2Ych30U=;
- b=HwF6LNekjO/PddeXSIO5gMern5VCQ7e2iETSoos5NPuHHpit9sVeNfxcIej10qOEbV
- abwnerD11nnc4umsmLs5eAUGJeiPaJy6New13Tvh56wBsrKzQr6/PRe6g6IZ95q9IJ6c
- 4I8O3isusPYJybrRDIZTTnnzekEsOriUi2wS9GCVSpWjfZM+p85L4d1YrVprbNWposKD
- UqyMLt+bZ5gmDH+wqGIniIVNUcx1ivwiVylog/tery+FCPDHfdVFbdi1Us3Cpt8Wcia0
- g5Da7CE/Kk7Dgf6Rsd2Xaa2wfoZYjf4dWzOp5ussn687eS4PuyxCq+oh8YOkTS2WKACs
- Xx1w==
+ :reply-to; bh=xUztfZTO9Bj5kI5u2im5cSP6/lokB3CDs+dbm5suLgc=;
+ b=jiH/rR70Lk7RsbcC4zEEflP7BoD2fxl1Ts5Fq4/WfW7n6eYvgzRJRQbyxS2CH8iVad
+ gGUCeabmjCXsVKKJkZKavm60bYqECs55ilWirtCdJ+zPPVZ67wpZ0if36+/NmAwtjflR
+ gR//x5Z+0z3ZpvIsaiEg9zMkvDPWIh+bqF3K5mZFbRZf5YgsEQoK8emTg18guPuxkLI0
+ u7jLtOzag6QLCiFKWFgzVMT90+9UbPXZfhsjjIhmk5GnUb7+6LmYuC8VVUPa0k3NW4+8
+ c/8vaxBynK4nlRw1s3+WdU99Bf923tmPMiDj301wC/NvDZ3IWY/y0vwjdw1DhiE8cSCO
+ QTFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770131085; x=1770735885;
+ d=1e100.net; s=20230601; t=1770131099; x=1770735899;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=tuRjC9GWhykhArGXENtPPp74AE8CygRAtcP+2Ych30U=;
- b=lF/4HlcQ8WB0oiP0v4FeyfbLbE0CIbVljaxk/7m8oryrPXsoMjBLfhRusv0/Z9sbmO
- xb1Q8COyAhPHze4JQo/ai6u/dOszungEpHpasZuO1xwPQfc+uEYExfqEEurfmLAfAZjg
- Nq45wrL+5RdqE4UyoMxjwWtGlYM+ymUPmFJMO+ctTJwu7p+81DPUfTvsjWXy7zvQpX3g
- weMNgF+t/xtd9VQg7vypGkNMSKmD2QAGofreXmYcYYxrOrZm8qevPE+TIQzPROkllZx/
- gmJhSC5FUCt3K76lMQIgb1QndkgxBnVvCTW3wfigmmJR1vkOyx9H7CoAB/Ungi1tkbei
- vy8w==
-X-Gm-Message-State: AOJu0Ywl/26CPwjYNBDJEHO9pcf9VUOq/vaIPy1c7DGJ8DUsKMn4CdpV
- LqUd1j55wN0tMNzjS0bDLLU1hK3ODppEXgnJVyYUSkOxF2U5YTx9MNUKtwGIDg0Yss8j0Zv8xGV
- fC8mUIZw=
-X-Gm-Gg: AZuq6aLc62WH9EA5PkAqnN0Y6Gyy6LNBWpY8t3cMHCsPezGLJOu6fAvJoNkPsyY9gqi
- 0W5p3TM+NIcUhM99/+Rz8h/jLfphSTiqIiUauFMwkYeZRtyK+eM1Yf2yo3cNgWjQvAxRQqAy2Qf
- EBYxRQCcqW0uz5LY3v0dU2YKVU2ZpYRNVObCajLO+Njc6t1mJojREuDnYjW3O7cj8VsnvX6mCuV
- xhp/RbV6P+0FFEJBmtjtOfuShqBcNn6SYGGapKnxqR36/C8tQzrqrTqwv62MYem5wcjNi44k8XA
- b/fLMW5Uuzulmi9c3g6H9wY1rbcXOwAWdfRnGMym9c5rFTusvUn+JUiLOhn2cj6ZGbjqf3++CaZ
- 0PVhvqy4BXxhWwQlG7gdru0pwdA1MWrv7apbk1dKi6SYPhfCWKV0sWETxe4UsUSoloyUsiSwP8t
- SyvGqlN6pv99g/TAXP5mbsAB9/LU1Yt3HrtR77WZCEuotxvagEweS2Z3TN5EkV
-X-Received: by 2002:a05:6000:1a87:b0:435:9882:2342 with SMTP id
- ffacd0b85a97d-435f3aa91b8mr22989031f8f.33.1770131084759; 
- Tue, 03 Feb 2026 07:04:44 -0800 (PST)
+ bh=xUztfZTO9Bj5kI5u2im5cSP6/lokB3CDs+dbm5suLgc=;
+ b=GjRmoeGCqXAEDug8H0ZdPwNUBLQPQcOEudaYx0yf6K5wjgI4LmWxTT2iwom4emkrmn
+ XK5T+Wivh4igllkK739Cos06aScf/YoS3wGNOUi9ojD1OTl9WP1KR5+gQngd6fym08E3
+ AADrxRwsNJF+JNBfcWnKsN+6YQSiQbQQUxd34jufjPmK1ORxYmKOF/W3TQqGie/tUQaw
+ Q8rlCNf1h8xTDec/Nr151ppKyUn1dmAnQh2fO/5xqIN5nIsHjVEpNlN1oVIAElbcZSj+
+ 1IKt1zh4Bqx9BJQe2iTJxmliaK22FbtbJzRjs26EjQ0/TvGTjH2tDEMlV06W46tqYSFO
+ tRLQ==
+X-Gm-Message-State: AOJu0YyphRiLGx/aPbF2wcnRNZp5rLwmXoo6xf82EyOtwYiihsEflTGq
+ Y14RoK/MnMxye/RYpYOFnwFcMB6MjkiOtwkk1U/s8/p+UIXBJPv/LDdO/J32gRPt/kGjNXJAMMe
+ j3obxt0A=
+X-Gm-Gg: AZuq6aKqA2XOHXh277FVzvuoZi7XBAvaoZu7iCRCe4dXy3FCQvW47rGFFhXZSTHlicy
+ QrONqWgdARgYpzJgzjAFzMQ7+kozodjalTzK+YsPWoME+/197HN7iAjrBSOSPdQto+bmy9TJMyj
+ GsPCrqDq21bUDrezmh0GQLH++VcWif8/UNLAr8HvCS+wgRjW+xeaNhoSnC6zsLb4e95GhZpJgiQ
+ rN4vonQPKiQKa5mDX9BcTyjGW7j2+J4FEjKYrv28GSWeAxvTY+NtnKa47j5A4hEbpixWGmrMUkd
+ b0dL7jUghSqmVUSCT8gbliEJb7ShD4fjZv88n75QCXod1Vs2EQTBPEc93xEvqCux/OVgDry5g/6
+ PTuw25q8H0vQhObASh8fKm5h7OdqwJAu+tsmrTbgFVlYULam6xyIH7V7MS3Rao9shUzhg1VPZGf
+ 26BXllKy5raux9NfjyhMok1ihEwQ4VbbGYGkyx7fwSKMuTIUXgi/3leSPZBzej
+X-Received: by 2002:a05:6000:22c8:b0:42f:b555:5274 with SMTP id
+ ffacd0b85a97d-43611447d87mr4981834f8f.20.1770131098830; 
+ Tue, 03 Feb 2026 07:04:58 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edfe7sm51537171f8f.14.2026.02.03.07.04.43
+ ffacd0b85a97d-435e1322f40sm50752759f8f.34.2026.02.03.07.04.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Feb 2026 07:04:44 -0800 (PST)
+ Tue, 03 Feb 2026 07:04:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/30] target-info: add target_base_ppc,
- target_ppc and target_ppc64
-Date: Tue,  3 Feb 2026 16:04:06 +0100
-Message-ID: <20260203150436.71907-2-philmd@linaro.org>
+Subject: [PULL 03/30] target/ppc: Inline cpu_ld/st_mmuidx_ra() calls in memory
+ helpers
+Date: Tue,  3 Feb 2026 16:04:08 +0100
+Message-ID: <20260203150436.71907-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260203150436.71907-1-philmd@linaro.org>
 References: <20260203150436.71907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,77 +99,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In preparation of removing the cpu_ld*_mmuidx_ra() and
+cpu_st*_mmuidx_ra() calls, inline them.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260131020100.1115203-2-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20260202210106.93257-3-philmd@linaro.org>
 ---
- include/qemu/target-info.h | 21 +++++++++++++++++++++
- target-info.c              | 21 +++++++++++++++++++++
- 2 files changed, 42 insertions(+)
+ target/ppc/mem_helper.c | 41 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 62359622232..e3287334304 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -71,4 +71,25 @@ bool target_arm(void);
-  */
- bool target_aarch64(void);
- 
-+/**
-+ * target_base_ppc:
-+ *
-+ * Returns whether the target architecture is PowerPC 32-bit or 64-bit.
-+ */
-+bool target_base_ppc(void);
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 636ad769a93..90546967593 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -88,8 +88,11 @@ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
+         }
+     } else {
+         /* Slow path -- at least some of the operation requires i/o.  */
++        MemOp op = MO_TE | MO_UL | MO_UNALN;
++        MemOpIdx oi = make_memop_idx(op, mmu_idx);
 +
-+/**
-+ * target_ppc:
-+ *
-+ * Returns whether the target architecture is PowerPC 32-bit.
-+ */
-+bool target_ppc(void);
+         for (; reg < 32; reg++) {
+-            env->gpr[reg] = cpu_ldl_mmuidx_ra(env, addr, mmu_idx, raddr);
++            env->gpr[reg] = cpu_ldl_mmu(env, addr, oi, raddr);
+             addr = addr_add(env, addr, 4);
+         }
+     }
+@@ -111,7 +114,10 @@ void helper_stmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
+     } else {
+         /* Slow path -- at least some of the operation requires i/o.  */
+         for (; reg < 32; reg++) {
+-            cpu_stl_mmuidx_ra(env, addr, env->gpr[reg], mmu_idx, raddr);
++            MemOp op = MO_TE | MO_UL | MO_UNALN;
++            MemOpIdx oi = make_memop_idx(op, mmu_idx);
 +
-+/**
-+ * target_ppc64:
-+ *
-+ * Returns whether the target architecture is PowerPC 64-bit.
-+ */
-+bool target_ppc64(void);
++            cpu_stl_mmu(env, addr, env->gpr[reg], oi, raddr);
+             addr = addr_add(env, addr, 4);
+         }
+     }
+@@ -152,9 +158,12 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+             break;
+         }
+     } else {
++        MemOp op = MO_TE | MO_UL | MO_UNALN;
++        MemOpIdx oi = make_memop_idx(op, mmu_idx);
 +
- #endif
-diff --git a/target-info.c b/target-info.c
-index 24696ff4111..5a6d7282524 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -73,3 +73,24 @@ bool target_aarch64(void)
- {
-     return target_arch() == SYS_EMU_TARGET_AARCH64;
- }
+         /* Slow path -- at least some of the operation requires i/o.  */
+         for (; nb > 3; nb -= 4) {
+-            env->gpr[reg] = cpu_ldl_mmuidx_ra(env, addr, mmu_idx, raddr);
++            env->gpr[reg] = cpu_ldl_mmu(env, addr, oi, raddr);
+             reg = (reg + 1) % 32;
+             addr = addr_add(env, addr, 4);
+         }
+@@ -165,10 +174,14 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+             val = cpu_ldub_mmuidx_ra(env, addr, mmu_idx, raddr) << 24;
+             break;
+         case 2:
+-            val = cpu_lduw_mmuidx_ra(env, addr, mmu_idx, raddr) << 16;
++            op = MO_TE | MO_UW | MO_UNALN;
++            oi = make_memop_idx(op, mmu_idx);
++            val = cpu_ldw_mmu(env, addr, oi, raddr) << 16;
+             break;
+         case 3:
+-            val = cpu_lduw_mmuidx_ra(env, addr, mmu_idx, raddr) << 16;
++            op = MO_TE | MO_UW | MO_UNALN;
++            oi = make_memop_idx(op, mmu_idx);
++            val = cpu_ldw_mmu(env, addr, oi, raddr) << 16;
+             addr = addr_add(env, addr, 2);
+             val |= cpu_ldub_mmuidx_ra(env, addr, mmu_idx, raddr) << 8;
+             break;
+@@ -241,8 +254,11 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+             break;
+         }
+     } else {
++        MemOp op = MO_TE | MO_UL | MO_UNALN;
++        MemOpIdx oi = make_memop_idx(op, mmu_idx);
 +
-+bool target_base_ppc(void)
-+{
-+    switch (target_arch()) {
-+    case SYS_EMU_TARGET_PPC:
-+    case SYS_EMU_TARGET_PPC64:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
+         for (; nb > 3; nb -= 4) {
+-            cpu_stl_mmuidx_ra(env, addr, env->gpr[reg], mmu_idx, raddr);
++            cpu_stl_mmu(env, addr, env->gpr[reg], oi, raddr);
+             reg = (reg + 1) % 32;
+             addr = addr_add(env, addr, 4);
+         }
+@@ -252,10 +268,14 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+             cpu_stb_mmuidx_ra(env, addr, val >> 24, mmu_idx, raddr);
+             break;
+         case 2:
+-            cpu_stw_mmuidx_ra(env, addr, val >> 16, mmu_idx, raddr);
++            op = MO_TE | MO_UW | MO_UNALN;
++            oi = make_memop_idx(op, mmu_idx);
++            cpu_stw_mmu(env, addr, val >> 16, oi, raddr);
+             break;
+         case 3:
+-            cpu_stw_mmuidx_ra(env, addr, val >> 16, mmu_idx, raddr);
++            op = MO_TE | MO_UW | MO_UNALN;
++            oi = make_memop_idx(op, mmu_idx);
++            cpu_stw_mmu(env, addr, val >> 16, oi, raddr);
+             addr = addr_add(env, addr, 2);
+             cpu_stb_mmuidx_ra(env, addr, val >> 8, mmu_idx, raddr);
+             break;
+@@ -284,8 +304,11 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+     haddr = probe_write(env, addr, dcbz_size, mmu_idx, retaddr);
+     if (unlikely(!haddr)) {
+         /* Slow path */
++        MemOp op = MO_TE | MO_UQ | MO_UNALN;
++        MemOpIdx oi = make_memop_idx(op, mmu_idx);
 +
-+bool target_ppc(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_PPC;
-+}
-+
-+bool target_ppc64(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_PPC64;
-+}
+         for (int i = 0; i < dcbz_size; i += 8) {
+-            cpu_stq_mmuidx_ra(env, addr + i, 0, mmu_idx, retaddr);
++            cpu_stq_mmu(env, addr + i, 0, oi, retaddr);
+         }
+         return;
+     }
 -- 
 2.52.0
 
