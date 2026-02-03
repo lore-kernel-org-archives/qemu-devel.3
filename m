@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1462CE7FDCF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEDEE7FDCF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnF8w-0008RB-Lw; Tue, 03 Feb 2026 07:04:30 -0500
+	id 1vnF8v-0008QN-5a; Tue, 03 Feb 2026 07:04:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8d-0007ti-Qf
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:12 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8Y-0007le-57
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8c-0007gT-9p
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:11 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8W-0007fJ-G3
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770120249;
+ s=mimecast20190719; t=1770120243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JiiY6hdAG4pbuPdzjGdEJ5gQuntuGsJCEg5mBLcgkBI=;
- b=b6E7Zitmk0Mlk8bXHLHXg236tf/yhtM5PsFn8bs/NM8hdzMQgN3ur4lWhZMOfMnAQbAs9e
- sOnePn31pIdPXwjbsCzSDStolvup5VKdGIfsfTTg0w+zLZuKHBWtjp/wb5t4hyZMO5tG0/
- HJbO/OI+Lg3+IGnT8sllBE4J38MfC40=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RmXmcEqa3262D5qIjCHLmaAOTgx6BTKLMY37a3LazWY=;
+ b=hQlzr288p3ipuIJdhYZ8cHceVMpaqfil50jpMMJONbJAx7AhbryyO7WQH2YlnVG0BidgB/
+ 3vjByJ4rPNNwpevcGkOsOJEih5NHzn0i0jGQkshnzPT2z0rMMCWpp5tjTCxxpXOIRvXFIV
+ p0dussBkBO8ZYRXo7V/PnG2/zzLmbRw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-F-2lWMMIOTunCZmJ-JDT_g-1; Tue,
- 03 Feb 2026 07:04:06 -0500
-X-MC-Unique: F-2lWMMIOTunCZmJ-JDT_g-1
-X-Mimecast-MFC-AGG-ID: F-2lWMMIOTunCZmJ-JDT_g_1770120245
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-mTO2un3sPhi48GGBvGocSQ-1; Tue,
+ 03 Feb 2026 07:03:58 -0500
+X-MC-Unique: mTO2un3sPhi48GGBvGocSQ-1
+X-Mimecast-MFC-AGG-ID: mTO2un3sPhi48GGBvGocSQ_1770120237
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6738F1956054; Tue,  3 Feb 2026 12:04:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D18619560B5; Tue,  3 Feb 2026 12:03:57 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.34.28])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD8C81800947; Tue,  3 Feb 2026 12:04:04 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53EDE1955F16; Tue,  3 Feb 2026 12:03:57 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7ED951826269; Tue, 03 Feb 2026 13:03:44 +0100 (CET)
+ id 116741800990; Tue, 03 Feb 2026 13:03:44 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,16 +58,15 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
- Gerd Hoffmann <kraxel@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 14/17] igvm: Refactor qigvm_parameter_insert
-Date: Tue,  3 Feb 2026 13:03:39 +0100
-Message-ID: <20260203120343.656961-15-kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 08/17] igvm: move igvm file processing to reset callbacks
+Date: Tue,  3 Feb 2026 13:03:33 +0100
+Message-ID: <20260203120343.656961-9-kraxel@redhat.com>
 In-Reply-To: <20260203120343.656961-1-kraxel@redhat.com>
 References: <20260203120343.656961-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -93,81 +92,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Oliver Steffen <osteffen@redhat.com>
+Move igvm file processing from machine init to reset callbacks.  With
+that the igvm file is properly re-loaded on reset.  Also the loading
+happens later in the init process now.  This will simplify future
+support for some IGVM parameters which depend on initialization steps
+which happen after machine init.
 
-Use qigvm_find_param_entry() also in qigvm_parameter_insert().
-This changes behavior: Processing now stops after the first parameter
-entry found. That is OK, because we expect only one matching entry
-anyway.
-
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Oliver Steffen <osteffen@redhat.com>
-Message-ID: <20260130054714.715928-7-osteffen@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260126123755.357378-6-kraxel@redhat.com>
 ---
- backends/igvm.c | 48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ backends/igvm-cfg.c |  7 +++++++
+ hw/i386/pc_piix.c   | 10 ----------
+ hw/i386/pc_q35.c    | 10 ----------
+ 3 files changed, 7 insertions(+), 20 deletions(-)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index ea3f9d6b008f..ffd1c325b661 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -476,31 +476,31 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
-         return 0;
-     }
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+index 4014062e0f22..f236b523df3b 100644
+--- a/backends/igvm-cfg.c
++++ b/backends/igvm-cfg.c
+@@ -16,6 +16,8 @@
+ #include "system/igvm-internal.h"
+ #include "system/reset.h"
+ #include "qom/object_interfaces.h"
++#include "hw/core/qdev.h"
++#include "hw/core/boards.h"
  
--    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
--    {
--        if (param_entry->index == param->parameter_area_index) {
--            region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
--                                          ctx->current_header_index, errp);
--            if (!region) {
--                return -1;
--            }
--            memcpy(region, param_entry->data, param_entry->size);
--            g_free(param_entry->data);
--            param_entry->data = NULL;
-+    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    if (param_entry == NULL) {
-+        return 0;
-+    }
+ #include "trace.h"
  
--            /*
--             * If a confidential guest support object is provided then use it to
--             * set the guest state.
--             */
--            if (ctx->cgs) {
--                result = ctx->cgsc->set_guest_state(param->gpa, region,
--                                                    param_entry->size,
--                                                    CGS_PAGE_TYPE_UNMEASURED, 0,
--                                                    errp);
--                if (result < 0) {
--                    return -1;
--                }
--            }
-+    region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
-+                                    ctx->current_header_index, errp);
-+    if (!region) {
-+        return -1;
-+    }
-+    memcpy(region, param_entry->data, param_entry->size);
-+    g_free(param_entry->data);
-+    param_entry->data = NULL;
+@@ -45,7 +47,12 @@ static void igvm_reset_enter(Object *obj, ResetType type)
+ 
+ static void igvm_reset_hold(Object *obj, ResetType type)
+ {
++    MachineState *ms = MACHINE(qdev_get_machine());
++    IgvmCfg *igvm = IGVM_CFG(obj);
 +
-+    /*
-+     * If a confidential guest support object is provided then use it to
-+     * set the guest state.
-+     */
-+    if (ctx->cgs) {
-+        result = ctx->cgsc->set_guest_state(param->gpa, region,
-+                                            param_entry->size,
-+                                            CGS_PAGE_TYPE_UNMEASURED, 0,
-+                                            errp);
-+        if (result < 0) {
-+            return -1;
-         }
+     trace_igvm_reset_hold(type);
++
++    qigvm_process_file(igvm, ms->cgs, false, &error_fatal);
+ }
+ 
+ static void igvm_reset_exit(Object *obj, ResetType type)
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index fea158fc4bfe..878db5721b78 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -320,16 +320,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+                                x86_nvdimm_acpi_dsmio,
+                                x86ms->fw_cfg, OBJECT(pcms));
      }
-     return 0;
+-
+-#if defined(CONFIG_IGVM)
+-    /* Apply guest state from IGVM if supplied */
+-    if (x86ms->igvm) {
+-        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
+-                ->process(x86ms->igvm, machine->cgs, false, &error_fatal) < 0) {
+-            g_assert_not_reached();
+-        }
+-    }
+-#endif
+ }
+ 
+ typedef enum PCSouthBridgeOption {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 4d6046e47b0d..6e5a23d718f1 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -328,16 +328,6 @@ static void pc_q35_init(MachineState *machine)
+                                x86_nvdimm_acpi_dsmio,
+                                x86ms->fw_cfg, OBJECT(pcms));
+     }
+-
+-#if defined(CONFIG_IGVM)
+-    /* Apply guest state from IGVM if supplied */
+-    if (x86ms->igvm) {
+-        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
+-                ->process(x86ms->igvm, machine->cgs, false, &error_fatal) < 0) {
+-            g_assert_not_reached();
+-        }
+-    }
+-#endif
+ }
+ 
+ #define DEFINE_Q35_MACHINE(major, minor) \
 -- 
 2.52.0
 
