@@ -4,36 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E36E8305D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD61BE8305D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnBK9-0001S5-RB; Tue, 03 Feb 2026 02:59:50 -0500
+	id 1vnBPf-0003fp-Pt; Tue, 03 Feb 2026 03:05:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vnBK8-0001Rh-5E; Tue, 03 Feb 2026 02:59:48 -0500
+ id 1vnBPY-0003dI-QA; Tue, 03 Feb 2026 03:05:25 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vnBK6-0006gL-Ir; Tue, 03 Feb 2026 02:59:47 -0500
+ id 1vnBPW-0008JO-US; Tue, 03 Feb 2026 03:05:24 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6B22185502;
- Tue, 03 Feb 2026 10:58:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7434F185507;
+ Tue, 03 Feb 2026 11:04:38 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6631535B71E;
- Tue, 03 Feb 2026 10:59:42 +0300 (MSK)
-Message-ID: <12599ac0-9278-47aa-a723-ab24eafff3c6@tls.msk.ru>
-Date: Tue, 3 Feb 2026 10:59:42 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E767335B72C;
+ Tue, 03 Feb 2026 11:05:20 +0300 (MSK)
+Message-ID: <b813fff4-3ea9-4712-9878-4c81aff6b0a5@tls.msk.ru>
+Date: Tue, 3 Feb 2026 11:05:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/nvme: Fix bootindex suffix use-after-free
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Klaus Jensen <its@irrelevant.dk>, qemu-block@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 0/2] Fix iotlb_to_section() for different AddressSpace
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260128063907.2066100-1-jim.shu@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,17 +84,18 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260128063907.2066100-1-jim.shu@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,14 +111,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/26 09:42, Akihiko Odaki wrote:
-> The bootindex suffix can be used as long as the property is alive.
+On 1/28/26 09:39, Jim Shu wrote:
+> Current 'iotlb_to_section()' API only finds the sections from CPU's
+> AddressSpace but not other AddressSpaces. However, If address space
+> translation is over IOMMUMemoryRegion, like ARM MPC device, it could
+> return section from other AddressSpaces, which will break
+> 'iotlb_to_section()'.
+> 
+> To fix this bug, store complete MemoryRegionSection pointer in
+> CPUTLBEntryFull, and we can directly use section pointer in it w/o need
+> of 'iotlb_to_section()' API.
+> 
+> Besides ARM MPC device, the upcoming RISC-V wgChecker [1] and RISC-V IOPMP [2]
+> devices also require this bugfix.
 
-This looks like a qemu-stable material.
+ From the description it feels like this patch series should NOT be
+picked up for qemu-stable, since while the bug is here, but it only
+happens in a very specific narrow case, and the fix is rather involved.
 
-Please let me know if it isn't.
+Please let me know if I still should pick this one up for qemu-stable.
+
+P.S.  This is for the first time when I'm asking if a change
+       is *not* for stable :)
 
 Thanks,
 
 /mjt
+
+> [1] RISC-V WG:
+> https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
+> [2] RISC-V IOPMP:
+> https://patchew.org/QEMU/20250312093735.1517740-1-ethan84@andestech.com/
+> 
+> Jim Shu (2):
+>    accel/tcg: Fix iotlb_to_section() for different AddressSpace
+>    system/physmem: Remove the assertion of page-aligned section number
+> 
+>   accel/tcg/cputlb.c        | 32 +++++++++++++++-----------------
+>   include/accel/tcg/iommu.h | 15 ---------------
+>   include/exec/cputlb.h     |  2 +-
+>   include/hw/core/cpu.h     | 12 +++++++-----
+>   system/physmem.c          | 31 -------------------------------
+>   5 files changed, 23 insertions(+), 69 deletions(-)
+> 
+
 
