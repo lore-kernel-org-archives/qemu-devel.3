@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6408AE87834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A953FE8783F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHxL-0000IS-HA; Tue, 03 Feb 2026 10:04:43 -0500
+	id 1vnHxR-0000OP-Tc; Tue, 03 Feb 2026 10:04:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxK-0000H9-B2
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:42 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxQ-0000Nq-DR
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:48 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxI-0001Kf-CB
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:42 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47ee76e8656so76850595e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:04:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxO-0001Lg-TO
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:48 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43590777e22so3592428f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770131078; x=1770735878; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=DNMvwvqcNxPO7XREDEFoJV31BtUT3xnR6T/fIAPLrIE=;
- b=JOqaf87k8YBl65ziOo14XIAfDRwNbY1QxfH82Jhuk/24VR6V052C1IqH0d6Ft1HJsL
- 07nJYjr+CQaQL9U0to2g0igfRNT8ildDEb6sNhAfu8mI/nQ/r0Ez1stimnmwIkmet+1l
- ttRDcC/KsyH+Oxj5UQZMyGBkTtXmNVuEFqRUPIsZUKdBqus2//obaQELJRHUvmbYGoph
- b6gewbATOLnDJDVVBPKUw5GL2ANnbSwCAvXTA9ExvXUeqQS3CTFsOz0GETiPhBqrVRJ8
- GmZkBEdyk5DXqypUJ9cwhnlP/uRJUv7Bn/ZBWOiFfa2MTGI4KD59nPdFQ+3fN9AWcTFu
- w6Vw==
+ d=linaro.org; s=google; t=1770131085; x=1770735885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=tuRjC9GWhykhArGXENtPPp74AE8CygRAtcP+2Ych30U=;
+ b=HwF6LNekjO/PddeXSIO5gMern5VCQ7e2iETSoos5NPuHHpit9sVeNfxcIej10qOEbV
+ abwnerD11nnc4umsmLs5eAUGJeiPaJy6New13Tvh56wBsrKzQr6/PRe6g6IZ95q9IJ6c
+ 4I8O3isusPYJybrRDIZTTnnzekEsOriUi2wS9GCVSpWjfZM+p85L4d1YrVprbNWposKD
+ UqyMLt+bZ5gmDH+wqGIniIVNUcx1ivwiVylog/tery+FCPDHfdVFbdi1Us3Cpt8Wcia0
+ g5Da7CE/Kk7Dgf6Rsd2Xaa2wfoZYjf4dWzOp5ussn687eS4PuyxCq+oh8YOkTS2WKACs
+ Xx1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770131078; x=1770735878;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DNMvwvqcNxPO7XREDEFoJV31BtUT3xnR6T/fIAPLrIE=;
- b=X+vp8QTabBdt+2IWYSGVGm4aQmam5YC5Xre+oC74jTw4pGxbSRJGFnswDEcOOzb/8H
- jrNjhVk6tPNUz48Hl9KiRN3opKXjBw3bm3Tc044GjQBgM2VtLp8WpNmbteUpY7tMuLZE
- YQf2zHJQ04v79Wh/HLC+wlvgsJ3zJj/3xVyIP8j7FT23Becjp1lQ+4KGYVErEcRgPEb3
- T8dl/SdLICMj2n0LZkdjkWnHp4LS0NYEDY3wldD7Y/+MJXVUiCGU3lzVDPCtNyP8A+cc
- yFAGh/91J6HCwtoaE6NWUA0GTk4/7sucRDt2oIWVkuG2UcLjshvyrTEO4CIRmgccgSQ0
- 9brg==
-X-Gm-Message-State: AOJu0YyB/B317/qW243Bfnwfnm7VToPOvDWBLqf5UFhdIx/bjPrl4VHG
- PsbvsFOrC1Ew6l9nFP2EvqhEOAUiVlwMai2hzb9x4sKvfGt7NL0Z7hZq5rayb65nUbGjW8aSLSi
- FQtwMCJ0=
-X-Gm-Gg: AZuq6aKVeExbhfynhMs+T+a72dqhIny7rpDbXm4aa5GOzTxDPH0ANBwCDcI6TaKTEPv
- nanEhTd7qRGWktR90grkVuh6qNA/WgzdAzvx2tSONMvrHxwuFnZ2yo3t8GfMq7UUX29Xkz0pp9d
- Ou9BVWq52VcEZxOfbVbbcI3ixJFSTl8yr1Cb/u0VvRRUvfsfG2JzH3c3vsCWCftXDxr2z4rHORk
- FyiduKJqoH2bQ9LtoH7zBABgq/vy1xRz/Zz1Z6aYgN/jHpkT21PnQX/UvRZt04BlKyt4Uk/WOjr
- dEFPCNdCw6aI+84dw7XBb/uWtesPL9zXOYTFcxl7RjfKfJIcl10MI/nJ2XaAxsCGC1SzMzYuLJ2
- vHOcPVmJx31LPbqtnIxRZ7udu7Q4nZHP8DnJGPVIuRD1B9F5T3N4ZrMSHTLwMJCJNpjoWGB/Cvm
- LWw8zd5B4jmo2CP2YMOxMamvvtH9SHBSUhTDK6Hhpoj8giqg69qBiXFXd4/8qp
-X-Received: by 2002:a05:6000:402a:b0:436:1565:17d5 with SMTP id
- ffacd0b85a97d-43615651bdamr2817681f8f.12.1770131077961; 
- Tue, 03 Feb 2026 07:04:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770131085; x=1770735885;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tuRjC9GWhykhArGXENtPPp74AE8CygRAtcP+2Ych30U=;
+ b=lF/4HlcQ8WB0oiP0v4FeyfbLbE0CIbVljaxk/7m8oryrPXsoMjBLfhRusv0/Z9sbmO
+ xb1Q8COyAhPHze4JQo/ai6u/dOszungEpHpasZuO1xwPQfc+uEYExfqEEurfmLAfAZjg
+ Nq45wrL+5RdqE4UyoMxjwWtGlYM+ymUPmFJMO+ctTJwu7p+81DPUfTvsjWXy7zvQpX3g
+ weMNgF+t/xtd9VQg7vypGkNMSKmD2QAGofreXmYcYYxrOrZm8qevPE+TIQzPROkllZx/
+ gmJhSC5FUCt3K76lMQIgb1QndkgxBnVvCTW3wfigmmJR1vkOyx9H7CoAB/Ungi1tkbei
+ vy8w==
+X-Gm-Message-State: AOJu0Ywl/26CPwjYNBDJEHO9pcf9VUOq/vaIPy1c7DGJ8DUsKMn4CdpV
+ LqUd1j55wN0tMNzjS0bDLLU1hK3ODppEXgnJVyYUSkOxF2U5YTx9MNUKtwGIDg0Yss8j0Zv8xGV
+ fC8mUIZw=
+X-Gm-Gg: AZuq6aLc62WH9EA5PkAqnN0Y6Gyy6LNBWpY8t3cMHCsPezGLJOu6fAvJoNkPsyY9gqi
+ 0W5p3TM+NIcUhM99/+Rz8h/jLfphSTiqIiUauFMwkYeZRtyK+eM1Yf2yo3cNgWjQvAxRQqAy2Qf
+ EBYxRQCcqW0uz5LY3v0dU2YKVU2ZpYRNVObCajLO+Njc6t1mJojREuDnYjW3O7cj8VsnvX6mCuV
+ xhp/RbV6P+0FFEJBmtjtOfuShqBcNn6SYGGapKnxqR36/C8tQzrqrTqwv62MYem5wcjNi44k8XA
+ b/fLMW5Uuzulmi9c3g6H9wY1rbcXOwAWdfRnGMym9c5rFTusvUn+JUiLOhn2cj6ZGbjqf3++CaZ
+ 0PVhvqy4BXxhWwQlG7gdru0pwdA1MWrv7apbk1dKi6SYPhfCWKV0sWETxe4UsUSoloyUsiSwP8t
+ SyvGqlN6pv99g/TAXP5mbsAB9/LU1Yt3HrtR77WZCEuotxvagEweS2Z3TN5EkV
+X-Received: by 2002:a05:6000:1a87:b0:435:9882:2342 with SMTP id
+ ffacd0b85a97d-435f3aa91b8mr22989031f8f.33.1770131084759; 
+ Tue, 03 Feb 2026 07:04:44 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10e4757sm54679619f8f.5.2026.02.03.07.04.37
+ ffacd0b85a97d-435e10edfe7sm51537171f8f.14.2026.02.03.07.04.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Feb 2026 07:04:37 -0800 (PST)
+ Tue, 03 Feb 2026 07:04:44 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/30] Single binary patches for 2026-02-03
-Date: Tue,  3 Feb 2026 16:04:05 +0100
-Message-ID: <20260203150436.71907-1-philmd@linaro.org>
+Subject: [PULL 01/30] target-info: add target_base_ppc,
+ target_ppc and target_ppc64
+Date: Tue,  3 Feb 2026 16:04:06 +0100
+Message-ID: <20260203150436.71907-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260203150436.71907-1-philmd@linaro.org>
+References: <20260203150436.71907-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,102 +99,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b377abc220fc53e9cab2aac3c73fc20be6d85eea:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  Merge tag 'hw-misc-20260202' of https://github.com/philmd/qemu into staging (2026-02-03 07:52:04 +1000)
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20260131020100.1115203-2-pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/target-info.h | 21 +++++++++++++++++++++
+ target-info.c              | 21 +++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/single-binary-20260203
-
-for you to fetch changes up to a63b90ca6ce8d00dee5150b84bbc65428519ef2b:
-
-  disas: Have disas_set_info() take a const CPUState (2026-02-03 14:57:34 +0100)
-
-----------------------------------------------------------------
-Various patches related to single binary effort:
-
-- Endianness cleanups on various targets (PPC in particular)
-- Few cleanups around target_ulong type on Alpha
-- Have CPUClass::disas_set_info() take a const CPUState
-----------------------------------------------------------------
-
-Philippe Mathieu-Daudé (29):
-  target/ppc: Inline cpu_ldl_data_ra() calls in ICBI helpers
-  target/ppc: Inline cpu_ld/st_mmuidx_ra() calls in memory helpers
-  target/ppc: Inline cpu_ld/st_data_ra() calls in do_hash()
-  target/ppc: Expect page translation hash addresses to be aligned
-  target/ppc: Introduce ppc_data_endian_env() helper
-  target/ppc: Introduce ppc_code_endian_dc() helper
-  target/ppc: Inline need_byteswap() and replace translator_ldl_swap()
-  target/ppc: Check endianness via env in ppc_disas_set_info()
-  target/ppc: Introduce ppc_env_is_little_endian() helper
-  target/ppc: Check endianness at runtime in ppc_data_endian_env()
-  target/ppc: Inline cpu_ldl_code() call in ppc_ldl_code()
-  target/riscv: Inline cpu_ld[lq]_code() calls
-  target/riscv: Inline translator_ld[uw,l,q]() calls
-  target/i386: Inline translator_ld[uw,l,q]() calls
-  target/m68k: Inline translator_ld[uw,l,q]() calls
-  target/alpha: Avoid target-specific migration headers in machine.c
-  target/alpha: Build system units in common source set
-  target/alpha: Replace target_ulong -> uint64_t in gdb_write_register()
-  target/alpha: Do not use target_ulong for trap arguments
-  target/alpha: Do not use target_ulong for page table entries / indexes
-  target/alpha: Remove target_ulong uses in get_physical_address()
-  target/alpha: Expand TCGv type for 64-bit target
-  target/arm: Have arm_feature() take a const @env argument
-  target/arm: Have cpu_isar_feature() use a const ARMCPU object
-  target/arm: Have is_64() take a const @env argument
-  target/arm: Have arm_sctlr_b() take a const @env argument
-  disas/riscv: Make rv_decode::cfg const
-  disas: Make disassemble_info::target_info field const
-  disas: Have disas_set_info() take a const CPUState
-
-Pierrick Bouvier (1):
-  target-info: add target_base_ppc, target_ppc and target_ppc64
-
- disas/riscv.h                    |   2 +-
- include/disas/dis-asm.h          |   2 +-
- include/hw/core/cpu.h            |   2 +-
- include/qemu/target-info.h       |  21 +++
- target/arm/cpu-features.h        |   2 +-
- target/arm/cpu.h                 |   6 +-
- target/ppc/internal.h            |  17 +++
- disas/riscv.c                    |   5 +-
- target-info.c                    |  21 +++
- target/alpha/cpu.c               |   3 +-
- target/alpha/gdbstub.c           |   2 +-
- target/alpha/helper.c            |  17 +--
- target/alpha/machine.c           |   3 +-
- target/alpha/translate.c         | 228 ++++++++++++++++---------------
- target/arm/cpu.c                 |   6 +-
- target/avr/cpu.c                 |   2 +-
- target/hexagon/cpu.c             |   3 +-
- target/hppa/cpu.c                |   2 +-
- target/i386/cpu.c                |   6 +-
- target/loongarch/cpu.c           |   3 +-
- target/m68k/cpu.c                |   2 +-
- target/m68k/translate.c          |   6 +-
- target/microblaze/cpu.c          |   2 +-
- target/mips/cpu.c                |   7 +-
- target/openrisc/cpu.c            |   2 +-
- target/ppc/cpu_init.c            |  14 +-
- target/ppc/gdbstub.c             |   2 +-
- target/ppc/mem_helper.c          |  60 +++++---
- target/ppc/tcg-excp_helper.c     |  27 ++--
- target/ppc/translate.c           |  21 +--
- target/riscv/cpu.c               |   7 +-
- target/riscv/translate.c         |  18 ++-
- target/riscv/zce_helper.c        |   8 +-
- target/rx/cpu.c                  |   2 +-
- target/s390x/cpu.c               |   2 +-
- target/sh4/cpu.c                 |   3 +-
- target/sparc/cpu.c               |   3 +-
- target/xtensa/cpu.c              |   3 +-
- target/i386/tcg/decode-new.c.inc |   6 +-
- target/alpha/meson.build         |   2 +-
- 40 files changed, 329 insertions(+), 221 deletions(-)
-
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 62359622232..e3287334304 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -71,4 +71,25 @@ bool target_arm(void);
+  */
+ bool target_aarch64(void);
+ 
++/**
++ * target_base_ppc:
++ *
++ * Returns whether the target architecture is PowerPC 32-bit or 64-bit.
++ */
++bool target_base_ppc(void);
++
++/**
++ * target_ppc:
++ *
++ * Returns whether the target architecture is PowerPC 32-bit.
++ */
++bool target_ppc(void);
++
++/**
++ * target_ppc64:
++ *
++ * Returns whether the target architecture is PowerPC 64-bit.
++ */
++bool target_ppc64(void);
++
+ #endif
+diff --git a/target-info.c b/target-info.c
+index 24696ff4111..5a6d7282524 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -73,3 +73,24 @@ bool target_aarch64(void)
+ {
+     return target_arch() == SYS_EMU_TARGET_AARCH64;
+ }
++
++bool target_base_ppc(void)
++{
++    switch (target_arch()) {
++    case SYS_EMU_TARGET_PPC:
++    case SYS_EMU_TARGET_PPC64:
++        return true;
++    default:
++        return false;
++    }
++}
++
++bool target_ppc(void)
++{
++    return target_arch() == SYS_EMU_TARGET_PPC;
++}
++
++bool target_ppc64(void)
++{
++    return target_arch() == SYS_EMU_TARGET_PPC64;
++}
 -- 
 2.52.0
 
