@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283A2E83050
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 04:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F28B9E8304A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 04:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn8M0-0004x0-OH; Mon, 02 Feb 2026 23:49:32 -0500
+	id 1vn8Sa-0005tY-CA; Mon, 02 Feb 2026 23:56:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn8Ly-0004wX-HV
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:49:30 -0500
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ id 1vn8SY-0005tB-SB
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:56:19 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn8Lx-0005wF-0Q
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:49:30 -0500
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-81f39438187so3006685b3a.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 20:49:27 -0800 (PST)
+ id 1vn8SX-0000Iz-Di
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 23:56:18 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-81f5381d168so5312986b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 20:56:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770094166; x=1770698966; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9CZewBfPZDHsRuB0GvHA16vQhGlAwRyocwa+kFE71jg=;
- b=VWAYxSk3w8XuJdSeCF/xL1M+JPBVXdV2vo6BgN8+YjvCRwhl6DpY6d1LRDxrB+9UTF
- NHJAsLjIE832fEiEDOKdVOonwoqvU5CovY3pSOVNtLD6Sc/OTKmXlI9SqNW4H8xiXFjR
- bTJprax/HJEFF0jGGfqC7ZmKMUKbtBaHaqJwfKJtJQWRXxGBEBjiW3PC9s6aE75qMl3e
- djLJwomUBE/G4MkHeKdNmQNLGw+5CoUJEMfvB/A2oGZLRWirO3pcotBhrUfyjjcH3dhU
- 3gh13bcpzYMNKBFZ6DXEORPTCdT49aMX2wudbEBwM/cB+XABpu9JS904Hp0oD9HfZ/5Z
- W6fA==
+ d=linaro.org; s=google; t=1770094576; x=1770699376; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i9p6ReDDnihJGmA40asJRKmC6CYY9d1zbdrWkWcv18U=;
+ b=bjHFwO/ZnEME01UfNZSRD3l0RvavQwtdBiMNrkkYllHFwevSm5Y0iFflwK3U+m2zQM
+ 2wl5Sui2R/KcP1rBwvOPYk+pYOZd5G/0ninmM72fy71AOQZmEj4kn44VbHQ9F9DWh/Us
+ KcV6xG7b+GAJWglQxiIAKdoJzHp+ik9woR1WGEnKeKsOlbAt7wIS8vHyacnI83SRw+az
+ 2jjay5/253AjuHc49p0xbzruUb7oW/pQQdNMpQNtBKsRSxlX69pQne0IDlN2LhMGe3JF
+ zyDjhnYg4/HxCerzGiOZ8WzUz2lTSrquEBjn4GIdsv+jxytGuF15YrvyIIp/pTfhta5Z
+ ZBkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770094166; x=1770698966;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9CZewBfPZDHsRuB0GvHA16vQhGlAwRyocwa+kFE71jg=;
- b=Uaej91qQtIjL8re3qi1nzoQAx6B61G79Raf4YukfTtm+7YwkMVKw2Mi1oSJNvHfRz2
- fT9JY4ynV/AsFLNtls9HN8nxJdGMZlTRnOOg7NHa1xDRrHL9HTaKytQBhzuNMdrpX7VS
- QkXjIP2pvXqXQAzM21/g+w/f8KyizYNpkWkT3IztjYoUVNAc78zny1/OrqWb/Syr6A9F
- rbb687703F3paht4gwfvHdKKeVY9NOeUz57Q6hGFZos2pRT+yIMmVPR51oEJz+wOFCYD
- IwfO/5NMytqEELa63uMzCXWpoeGf+uypE9TYqJotCOyML8+1NXn9tJpKYcXgF+yQIMLL
- hpoA==
-X-Gm-Message-State: AOJu0YxVIeTJKgiGxcjn3DFmjJGClk7lgxuzrEVe1l5MVdgFrkA5qYAT
- VSPKCXGLTGpmdoM+e44b1o6gvNLGNQ0nVRO3yKWWZHVJv0MPwBOPyH+TOE0Y8w5ZsRDVTUfnsmB
- jalcROkbSag==
-X-Gm-Gg: AZuq6aIbhVOAxbp9lIfbvhEgdSSdiLIjI6VGaRNjD+cjaPK6v4VrjeFIt4w8U/zHp3u
- 0dz/rPigKdjNey2OE0A2ZuEnXnpsv30paGrIWTZdQWlxrQR3iDRa2NTRAjtBSn8Y7EH2EQpUEXG
- ETlUted4ppcd0nQLPawzMujPE7BGzGnm/r5M0xueo4Jp7bSy345LreJM5cmndudN+H15Zpob4lE
- D7ZG3zqul41xZmhb12IWX7PiZzGyevH3SlHwcoLDbG++2BU8NDpZNt+W2ZDwOSTS05Y3T0FvsX9
- sviybGHHpQIE4p/zSfsRBIMn0SNJmrW5LcpueXhkKlvsGyOLMUJWowVqYUm7hpY34aGbA73J55w
- 1BGx+1HnlXtKskVNrvKO4rDkzJlq0P/oD8NBZgdtpxIx0Isn9SLLdgB4CBMpgzeR3lC1JGScgNH
- E2z1j5Dbozc3aFE9PzIEAH62L8LtPSYG10LmRMRMZtgzaKy3YEVGts6TkeWregW1Cg0js6MLDNA
- 8HA1++sbsJjGKRCyi8Z5t/Y0OaRbzgx7wb8a6+UxQ==
-X-Received: by 2002:a05:6a00:1816:b0:81f:33a6:e9cd with SMTP id
- d2e1a72fcca58-823ab74d061mr13284309b3a.57.1770094166033; 
- Mon, 02 Feb 2026 20:49:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770094576; x=1770699376;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i9p6ReDDnihJGmA40asJRKmC6CYY9d1zbdrWkWcv18U=;
+ b=HdBVokJPOqueUL1CXmQWeWZh9ffwbrQsRQB8EnsEg3qzkX24gE+/U7FAV2Bdp397DN
+ 7mw81LpYdB1e2hyODtUxWNSnYuAOHw63YRAfQDnoc35UsMwNwghPIXKKNmgKjdAm04QW
+ ZO2gcauZ7Xi2R3p9fIz+ee2ltQfjOb/99ZQE9uuvW62iOZbOMVHHUizNPtwySaFwVEVL
+ 2j/O/43riARCwuQHOf6qNuQAOOinftYwf9dxBFstg5/+c5md+he4jIYGEuI8DxMqgKJk
+ rgmq0cYoAy9Ni/Fd6005XHFleBVuzkzKAa9tS/xOHkr3/aR45Fwnv958Z12YlcsjhrvK
+ g4Rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVisVpwSem8+LSWOrj8jV1qa6DnntIr9iLLIED89jkfAfF0GyB1YnNDn3o64iwsod+VTtN2MjME1NZM@nongnu.org
+X-Gm-Message-State: AOJu0Yw/N9LQBy481oT5E8xJg4UYL9o74sOUd6pkpxCR7NFpl6mn1D90
+ PIKUI9G1pT7NYRLrGIht8/MLGDGCdJjEhnEjNHaLCuxGzGlyjCY4pRJW1UcqSSqinaxjc0763W8
+ yljItVITbIw==
+X-Gm-Gg: AZuq6aKpO/QWVrJr0O5L9neu0ufMivOpVtvyhvGRMQdo6zvqgQcnS738mOVT07KppHM
+ X2/kN2WmuJFBq/2XGweP7jE34vv6ZPQX64VvgYY0Ynuur33+kpmJ2sZ7VDy0MPnH+CapNcUeUyZ
+ hPIJTtEc8mlhczs+QJ1EnDITaobKRSV+gJIhghUO+E6wIiWo5zEBRCZ/XZal7eJiU2DIUSl02T4
+ pcDXChr62GF0XFi+CuQotLChOXO2wsv0YqgzUwrNWjQ3k9+lJD/xXWf8X7YTl9LaOXrfBoaLYL7
+ sWdvUPjLce8d3dTmJKq1ommJoLYPnha2CnxWms4AXe+HtQw0+2jNi2jnKwY5Px6VK3XVfrl3C/r
+ HdBVbsQUm1GbqppFTSeoqUCKeskJvn+Kee9Fb4ZPDeS4NoqHN1AVIm53oyHEfl8gd1zPlrFsqdv
+ tyU2lj38gizbra2GzpZrDKtOeuGUeP0dHNqZG9gknro4ooklwi+Ixvejl5fo1O/0WN4VsX3RSiA
+ inCd4mtUl5VkjxrQZGJrwZSuoBqsjNgBEJV3bkHqA==
+X-Received: by 2002:a05:6a00:a114:b0:823:d2c:b156 with SMTP id
+ d2e1a72fcca58-823ab6535ccmr12518803b3a.5.1770094575830; 
+ Mon, 02 Feb 2026 20:56:15 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
  (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
  [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c54d4dsm20219251b3a.67.2026.02.02.20.49.24
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-82379c56e20sm19268186b3a.65.2026.02.02.20.56.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 20:49:25 -0800 (PST)
-Message-ID: <8a59ac40-1ef5-47ca-840d-d0b19c4907e9@linaro.org>
-Date: Tue, 3 Feb 2026 14:49:21 +1000
+ Mon, 02 Feb 2026 20:56:15 -0800 (PST)
+Message-ID: <40fb5998-8711-4f9c-8328-fdbf9904405c@linaro.org>
+Date: Tue, 3 Feb 2026 14:56:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] tcg: Lower deposit/extract2 during optimize
+Subject: Re: [PATCH] linux-user: Fix zero_bss for RX PT_LOAD segments
+To: Razvan Ghiorghe <razvanghiorghe16@gmail.com>, qemu-devel@nongnu.org,
+ laurent@vivier.eu
+References: <20260202002615.27441-1-razvanghiorghe16@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20260119000740.50516-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260119000740.50516-1-richard.henderson@linaro.org>
+In-Reply-To: <20260202002615.27441-1-razvanghiorghe16@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x442.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,34 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On 2/2/26 10:24, Razvan Ghiorghe wrote:
+> To validate the correctness of the modified zero_bss() implementation,
+> two targeted test cases were constructed, designed to exercise the edge cases where
+> the .bss segment overlaps a partially filled virtual memory page belonging to a
+> R_X region. The test binaries were intentionally built without a main() function
+> and instead defined a custom ELF entry-point via the _start symbol.
+> This approach bypasses CRT, dynamic loader, libc initialization etc. ensuring that
+> execution begins immediately after QEMU completes ELF loading and memory mapping.
 
-On 1/19/26 10:07, Richard Henderson wrote:
-> The idea is that we can do a better job of lowering once
-> we have a firm idea of which operands overlap, which are
-> constants, and the like.
-> 
-> The first version of this was almost 2 years ago:
-> 
-> https://lore.kernel.org/qemu-devel/20240312143839.136408-16-richard.henderson@linaro.org/
-> 
-> This version is fairly simplified by not having to handle
-> TCG_TARGET_REG_BITS == 32 anymore.  Some of Paolo's patches
-> to choose and vs shift could be incorporated here, but during
-> optimize instead of initial code generation.
-> 
-> 
-> r~
-> 
-> 
-> Richard Henderson (3):
->    tcg/optimize: Lower unsupported deposit during optimize
->    tcg/optimize: Lower unsupported extract2 during optimize
->    tcg: Expand missing rotri with extract2
-> 
->   tcg/optimize.c | 257 ++++++++++++++++++++++++++++++++++++++++++++-----
->   tcg/tcg-op.c   | 174 ++++++---------------------------
->   2 files changed, 262 insertions(+), 169 deletions(-)
-> 
+It would be nice to include those test cases.
 
+
+r~
 
