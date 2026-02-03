@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B4DE8305C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCA7E8305C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnB0n-0005RU-G4; Tue, 03 Feb 2026 02:39:49 -0500
+	id 1vnBIH-0000hS-Dc; Tue, 03 Feb 2026 02:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
- id 1vnB0m-0005RL-8c
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:39:48 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnBI5-0000gT-Vf
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:57:42 -0500
+Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
- id 1vnB0i-0001gM-5T
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:39:45 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-432d2c7a8b9so4527355f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 23:39:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnBI4-0006Wq-5n
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 02:57:41 -0500
+Received: by mail-pl1-x643.google.com with SMTP id
+ d9443c01a7336-29efd139227so35256025ad.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 23:57:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770104382; x=1770709182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sI4FkrE9WReztiTMDMz+fi7beSE+y3Xc9/AefNJ755w=;
- b=B3+Zd6icZ/6AUbHmQ7oI72UAYZyh6FBrwJT40GXmxuGDyxKko/2GziCiRRLELf3Tys
- 4ifWE6NJp9kmYnEcy20N48Gk0QQKLBwlzTaMd/4k7vvircBqPBrnIFxwybIGR+TA/WT1
- jd3nH/VuHcGwXTKQH88bZuv8FgvXLq+SmLB0aSQWhxTy4tAL2sJOfyp+1uGjUWtjf8Tu
- aV5yhqnvSHUafo/i5BedGCVGdeLGGw4DBqdXIDtBaMS6A026VZLowF46oSpMYIJIxW99
- nNEoZwNNw/Yu1VwDc8rcpJPDCD7p2NGS3tndPGE/tISY3RhmeuiN1OJSwVIV8An4jZ96
- 0Kew==
+ d=gmail.com; s=20230601; t=1770105458; x=1770710258; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=LMNKsMVbRoCuyOH7FBkHss38cAJ9Z2p705HQOidWoaU=;
+ b=H5pTDnfIbELjbVCLa2i0VHs3XJbufuHcYPaVC5Txe8RxLCNbmhAHcJ8kAF+jOVjTRf
+ qWELOKH2HgVo1e2zWp8EnuE4Yt6yc4Sm3jntb4y/kh6rRSG2YzRgZxVsafD3U8n4t/r9
+ iB7WWdF2y23DQGCJOOBlcAizvq6t5zpTi1dCaz2euSXnakQLfMPNmORd3wWYh+87SxaN
+ NGLfJoc8PLPuAV12rkmBKrl1yBs2JG3yledOAXXnUe4vcRhH9GY87hSpRsOoCwLJc9IL
+ t6TMjnEL3bK9dZdQPxaFi5RqI9329IUSHqywCqnKQ1cYcJxVvWWauO5w/cu3oLeezlm0
+ KcUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770104382; x=1770709182;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sI4FkrE9WReztiTMDMz+fi7beSE+y3Xc9/AefNJ755w=;
- b=KxljqXeH7P8Ba9dG91vu0U/O+0/Fw5yYBFVc719J4Pw93XLOyJBIi2XcagZzNGxhdN
- 7iItvEfcwXvVELhWsfvh0HRSjKinV1ttGXKey3gaHSq8zky3Qzf+qooy24wVMONcDGQm
- 9tv2lE0xVUk7HgFDdPpUqrvaLXM+2NNS0L9dwAUm2X+L1eEhbZlLSA1z0CefWBRnWDW5
- Vdko5gPdRAGCEgeYC/whXSJImTyB7BTxwHQude1dBWtiQ2JE/jENLvLM3re2IWic5R7G
- daa1Vs/dg8aWhHFRnY+GypAI+cFLmnbYZRQL16M0LqYRoTCkIj/KlGHKkMyjMBR5Dm6Z
- Au/g==
-X-Gm-Message-State: AOJu0Yxwj3gHeu2dL9IL6NaUU/prWpLi93C+InByjalcNzhhdhblbuiZ
- 7cK7w+y932Z5L6esxMda/a8oWFsuOC5wraMBCHoUMX/AstNwr2SDFsKZpXZ5Ig==
-X-Gm-Gg: AZuq6aKi9LhKU8OOL4p5o6ALuGSKbUG0zHbT1ZiRkS5ZZTQiZXMpKrqX74rIY3Q4vwd
- Wa2Rje9rMX+C4k1iOzFhDRP+PE9DcbUl+SgspJ60tZZ99df2dqulU2XxoeQ4AmrH2Qyn5OD8+A8
- gC1aDgUPgG3XjYQ5H0Ks6qaQdqQhbXK/at8n9KCKtxti7Hx7VXnVEMZluLd8MarXRmz+RT2fwRK
- pNfw8MId5GRU3EbWuVmRvjRbZuGZOjFMHJL47Rclix7upDxOlTzQ+kgdu8CnSsVLT7YMpA3MNUm
- ROIu6DWTxkPnW1CEuC86UskkvqvVS2O2ckWnCTOtzcWDFn2BCql0Q/QDzgspBVSeuggfAS9DgDi
- RuosQuypUzL0+Si1oU0OAbmy8aw22UW8pYimIPWTAUt5SCNpoY4qf4sjzxLn6YzW6LY5DKfhtmG
- HrgkOujROU7LDorDcXvLXBk68pnk8/
-X-Received: by 2002:a05:6000:186a:b0:435:e060:8071 with SMTP id
- ffacd0b85a97d-435f3a7a4dbmr20651698f8f.16.1770104381963; 
- Mon, 02 Feb 2026 23:39:41 -0800 (PST)
-Received: from localhost.localdomain ([92.180.8.65])
+ d=1e100.net; s=20230601; t=1770105458; x=1770710258;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LMNKsMVbRoCuyOH7FBkHss38cAJ9Z2p705HQOidWoaU=;
+ b=C/7BeaqhyT3iSvrVjYcv0reeNw+UpSANBOm154JH0TbLlQsAkcwmwY8qPrTwSaX12h
+ 22dpHXYIUb+DFmqq4wkUCRwuSSrcDHx5gKmvaaEB2u7x2RBDzw6vVJRNi2WIQ/XwYUFk
+ vtGHAK4bKVOlFEuroFW4ITuurRTZglHsvcTY+Pn1mudilelFP3mxQSXKLt7iS64L9mOD
+ IngAtBczdUl9VaIGgomjN84wVPMZxH8Qh16Fajm2lIBumN9DngO7J1ZsFEpv0Zp0e/0J
+ C4NFx7rEsTZuWXAhiY5MxwN1TiDY/WPI6BMuLDG/1i1PZWg/pMpjyrJXFIUrEr0SaxS4
+ AEiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXK8ggKL3DGGStoxvwvhs+BqOORQM5/sJgUkjEme/opQsaoMoxtpZmVm0FLOBgRJmQxUGSDl0s8ZBXL@nongnu.org
+X-Gm-Message-State: AOJu0YxsL84nEXTcSVvwgy6gSES6r5A9QjyaXGgdXIqpqTa2eM5o69Sk
+ 8qYJk5iO9FYXzKnZE83JwsmXyS5d7LYvpkBC0ofNa9UdJbO+ossd5tcx
+X-Gm-Gg: AZuq6aL1n1jrfjcieq59Ca6qVeXGSGXCbQL2BMDZqcsrwLgyxGu5ETj4/6Rwiy33YDI
+ XA5D31vb2gb3royHxH5yUc2sQpVjWvoh1FibxDlv/RAU3rwKGVSGFpwkoZmwj/fSLFIhJK4Ju79
+ yVaoG8S3q1BcAu/y8ZK449CbnsvOl5z5SHtHdsHNrF/eqJDjplGffxPCztPk3yGqEwz6Wum06t7
+ SfEj56dx/5O+z+pNHfbqJ8iwI0IukPjrm7nYoqQ8zRURC+U+dxrMeL2zTWMVe7wRclXcGgp0pvw
+ vRHgYRU6dMnId3r8GICtpvk1guP6NuUSHAQkeUUndZtSkP9Qpez6D6gnq9TxCKcGHXAGsthMP6Z
+ jySnJXzxw36gGuqauD15UyLKKjtzpK9+13mFvJqDypeAaIC/Iz/+QCIH6ze3XvkG5gqRrVLzooU
+ clrxO3QmzwkZdB/jDA/OyCxi1TeIJC6DLOnTJfIS4gEBfGzIYowOOedr6iZzkr
+X-Received: by 2002:a17:902:e78c:b0:2a1:3cd9:a73a with SMTP id
+ d9443c01a7336-2a8d8163c80mr162938015ad.40.1770105458178; 
+ Mon, 02 Feb 2026 23:57:38 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([183.195.22.5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436143d81desm1684077f8f.42.2026.02.02.23.39.41
+ d9443c01a7336-2a88b7f6c7csm172339055ad.98.2026.02.02.23.57.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Feb 2026 23:39:41 -0800 (PST)
-From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, richard.henderson@linaro.org,
- Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-Subject: [PATCH] tests/tcg/x86_64: Add tests for zero_bss() with RX PT_LOAD
- segments
-Date: Tue,  3 Feb 2026 09:36:56 +0200
-Message-ID: <20260203073740.19913-2-razvanghiorghe16@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260203073740.19913-1-razvanghiorghe16@gmail.com>
-References: <20260203073740.19913-1-razvanghiorghe16@gmail.com>
+ Mon, 02 Feb 2026 23:57:37 -0800 (PST)
+Date: Tue, 3 Feb 2026 15:57:31 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, hust-os-kernel-patches@googlegroups.com,
+ wangjingwei@iscas.ac.cn, devel@lists.libvirt.org
+Subject: Re: [RFC PATCH v4 7/7] target/riscv: add sdtrig trigger action=debug
+ mode
+Message-ID: <aYGqa5ddiHUIeNVi@ZEVORN-PC.localdomain>
+References: <cover.1769751489.git.chao.liu.zevorn@gmail.com>
+ <8fe531a24703eb426a66618822649bf5ee78697f.1769751489.git.chao.liu.zevorn@gmail.com>
+ <48b819aa-da6b-43f6-9427-78f721b9ad39@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=razvanghiorghe16@gmail.com; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <48b819aa-da6b-43f6-9427-78f721b9ad39@ventanamicro.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x643.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,176 +107,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add 2 test cases to validate the fix for issue #3179, where the linux-user
-ELF Loader incorrectly rejected binaries with .bss sections in R_X PT_LOAD
-segments.
+Hi Daniel,
 
-test-zerobss-1.c: defines a minimal _start routine that exists immediately
-without accessing the .bss region. Although a .bss region is present in ELF,
-it is never referenced at runtime. This test validates that the loader can
-correctly handle and zero the fractional .bss region in an R_X segment
-without triggering permission violations.
+On Mon, Feb 02, 2026 at 02:48:11PM -0300, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 1/30/2026 3:00 AM, Chao Liu wrote:
+> > RISC-V Debug Specification:
+> > https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+> > 
+> > Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
+> > trigger hits, enter Debug Mode with cause=trigger and stop with
+> > EXCP_DEBUG.
+> > 
+> > Also report inst-count triggers in tinfo and read their action field.
+> > 
+> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> > ---
+> >   target/riscv/debug.c | 53 ++++++++++++++++++++++++++++++++++++++++++--
+> >   1 file changed, 51 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> > index 5877a60c50..4e30d42905 100644
+> > --- a/target/riscv/debug.c
+> > +++ b/target/riscv/debug.c
+> > @@ -110,6 +110,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+> >           action = (tdata1 & TYPE6_ACTION) >> 12;
+> >           break;
+> >       case TRIGGER_TYPE_INST_CNT:
+> > +        action = tdata1 & ITRIGGER_ACTION;
+> > +        break;
+> >       case TRIGGER_TYPE_INT:
+> >       case TRIGGER_TYPE_EXCP:
+> >       case TRIGGER_TYPE_EXT_SRC:
+> > @@ -280,6 +282,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
+> >   static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+> >   {
+> > +    CPUState *cs = env_cpu(env);
+> >       trigger_action_t action = get_trigger_action(env, trigger_index);
+> >       switch (action) {
+> > @@ -289,6 +292,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+> >           riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+> >           break;
+> >       case DBG_ACTION_DBG_MODE:
+> > +        if (!env_archcpu(env)->cfg.ext_sdext) {
+> > +            qemu_log_mask(LOG_UNIMP,
+> > +                          "trigger action=debug mode requires Sdext\n");
+> 
+> 
+> I believe we want LOG_GUEST_ERROR for invalid actions like this one. You can
+> check examples in trigger_priv_match and other places in debug.c
+> 
+> LOG_UNIMP is reserved for cases where QEMU does not implement something at
+> all and we want to warn the user about it. For instance, again in
+> debug.c:trigger_priv_match():
+> 
+> 
+>     case TRIGGER_TYPE_INT:
+>     case TRIGGER_TYPE_EXCP:
+>     case TRIGGER_TYPE_EXT_SRC:
+>         qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
+> type);
+>         break;
+> 
+> 
+> This is the intended use for LOG_UNIMP.
+> 
+Thank you for the review and the clarification on the logging macros.
 
-test-zerobss-2.c: explicitly reads from multiple .bss variables to verify
-they are zeroed properly. If the .bss was correctly zeroed, the exit code will
-be 0.
+I will replace the sdext-related LOG_UNIMP macros with LOG_GUEST_ERROR for
+this case. Will send v5 with this fix.
 
-rx_anonymous_bss.ld: tests require a custom linker script to create the specific ELF
-layout that triggers the bug. The linker script:
-- creates a single PT_LOAD segment with FLAGS(5) = PF_R | PF_X (read-execute)
-- places .text and .bss in this same segment
-- sets .bss to ALIGN(1) to force it into the tail of the R_X segment
-- results in p_filesz < p_memsz, where the gap is anonymous .bss
+Thanks,
+Chao
 
-Expected behavior:
-- Without the fix: Both tests fail with "PT_LOAD with non-writable bss"
-- With the fix: Both tests pass (exit code 0)
-
-Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
----
- tests/tcg/x86_64/Makefile.target     | 15 ++++++++++++
- tests/tcg/x86_64/rx_anonymous_bss.ld | 27 +++++++++++++++++++++
- tests/tcg/x86_64/test-zerobss-1.c    | 20 ++++++++++++++++
- tests/tcg/x86_64/test-zerobss-2.c    | 36 ++++++++++++++++++++++++++++
- 4 files changed, 98 insertions(+)
- create mode 100644 tests/tcg/x86_64/rx_anonymous_bss.ld
- create mode 100644 tests/tcg/x86_64/test-zerobss-1.c
- create mode 100644 tests/tcg/x86_64/test-zerobss-2.c
-
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
-index be20fc64e8..ca375a4318 100644
---- a/tests/tcg/x86_64/Makefile.target
-+++ b/tests/tcg/x86_64/Makefile.target
-@@ -19,6 +19,9 @@ X86_64_TESTS += test-1648
- X86_64_TESTS += test-2175
- X86_64_TESTS += cross-modifying-code
- X86_64_TESTS += fma
-+
-+X86_64_TESTS +=  test-zerobss-1
-+X86_64_TESTS +=  test-zerobss-2
- TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
- else
- TESTS=$(MULTIARCH_TESTS)
-@@ -36,5 +39,17 @@ test-x86_64: LDFLAGS+=-lm -lc
- test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
- 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
- 
-+test-zerobss-1: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-1.c
-+	$(CC) -nostdlib -static -fno-stack-protector -fno-pie -no-pie \
-+	     -Wl,-T,$(SRC_PATH)/tests/tcg/x86_64/rx_anonymous_bss.ld \
-+	     -Wl,--build-id=none \
-+	     $< -o $@
-+
-+test-zerobss-2: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-2.c
-+	$(CC) -nostdlib -static -fno-stack-protector -fno-pie -no-pie \
-+	     -Wl,-T,$(SRC_PATH)/tests/tcg/x86_64/rx_anonymous_bss.ld \
-+	     -Wl,--build-id=none \
-+	     $< -o $@
-+
- %: $(SRC_PATH)/tests/tcg/x86_64/%.c
- 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-diff --git a/tests/tcg/x86_64/rx_anonymous_bss.ld b/tests/tcg/x86_64/rx_anonymous_bss.ld
-new file mode 100644
-index 0000000000..3ec72fde6c
---- /dev/null
-+++ b/tests/tcg/x86_64/rx_anonymous_bss.ld
-@@ -0,0 +1,27 @@
-+/* Linker script to create RX PT_LOAD with anonymous .bss tail
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+PHDRS
-+{
-+    text PT_LOAD FLAGS(5);
-+}
-+SECTIONS
-+{
-+    . = 0x400000;
-+    .text : {
-+        *(.text .text.*)
-+        _etext = .;
-+    } :text
-+    .bss ALIGN(1) : {
-+        _bss_start = .;
-+        *(.bss .bss.* COMMON)
-+        _bss_end = .;
-+    } :text
-+    /DISCARD/ : {
-+        *(.note.GNU-stack)
-+        *(.note.gnu.property)
-+        *(.comment)
-+        *(.eh_frame)
-+    }
-+}
-+ENTRY(_start)
-diff --git a/tests/tcg/x86_64/test-zerobss-1.c b/tests/tcg/x86_64/test-zerobss-1.c
-new file mode 100644
-index 0000000000..809ea3cb52
---- /dev/null
-+++ b/tests/tcg/x86_64/test-zerobss-1.c
-@@ -0,0 +1,20 @@
-+ /*
-+  * .bss region exists but unused
-+  * SPDX-License-Identifier: GPL-2.0-or-later
-+  */
-+int x;
-+void _start(void)
-+{
-+    /*
-+     * Exit immediately & never touched x
-+     */
-+    __asm__ volatile(
-+        "mov $60, %%rax\n"
-+        "xor %%rdi, %%rdi\n"
-+        "syscall\n"
-+        : /* no out */
-+        : /* no in */
-+        : "rax", "rdi"
-+    );
-+    __builtin_unreachable();
-+}
-diff --git a/tests/tcg/x86_64/test-zerobss-2.c b/tests/tcg/x86_64/test-zerobss-2.c
-new file mode 100644
-index 0000000000..1f4f0d9704
---- /dev/null
-+++ b/tests/tcg/x86_64/test-zerobss-2.c
-@@ -0,0 +1,36 @@
-+/*
-+ * Test case for zero_bss() with anonymous BSS in RX PT_LOAD
-+ *
-+ * This binary has .bss in the same PT_LOAD as .text (R_X permissions),
-+ * but the BSS is anonymous (beyond p_filesz), not file-backed.
-+ * Actual behavior:
-+ * old code: Fails with "PT_LOAD with non-writable bss"
-+ * new code: Succeeds, zeros BSS, exits with code 0
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+/* These will be included in .bss (uninitialized anonymous memory) */
-+int bss_value;
-+int bss_array[64];
-+
-+void _start(void)
-+{
-+    int sum = bss_value;
-+    int i;
-+
-+    for (i = 0; i < 64; i++) {
-+        sum += bss_array[i];
-+    }
-+    /* If BSS was properly zeroed, sum should be 0 */
-+    /* Exit with sum as exit code */
-+    __asm__ volatile (
-+        "movl %0, %%edi\n\t"
-+        "movl $60, %%eax\n\t"
-+        "syscall\n\t"
-+        : /* no out*/
-+        : "r" (sum)
-+        : "rdi", "rax"
-+    );
-+
-+    __builtin_unreachable();
-+}
--- 
-2.43.0
-
+> Everything else LGTM.
+> 
+> Thanks,
+> Daniel
+> 
+> 
+> 
+> > +            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+> > +        }
+> > +        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
+> > +        /*
+> > +         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
+> > +         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
+> > +         */
+> > +        if (cs->exception_index != EXCP_DEBUG) {
+> > +            cs->exception_index = EXCP_DEBUG;
+> > +            cpu_loop_exit_restore(cs, GETPC());
+> > +        }
+> > +        break;
+> >       case DBG_ACTION_TRACE0:
+> >       case DBG_ACTION_TRACE1:
+> >       case DBG_ACTION_TRACE2:
+> > @@ -441,6 +459,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+> >   {
+> >       target_ulong val;
+> >       uint32_t size;
+> > +    uint32_t action;
+> >       /* validate the generic part first */
+> >       val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
+> > @@ -448,11 +467,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+> >       /* validate unimplemented (always zero) bits */
+> >       warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
+> >       warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
+> > -    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
+> >       warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
+> >       warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
+> >       warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
+> > +    action = (ctrl & TYPE2_ACTION) >> 12;
+> > +    if (action == DBG_ACTION_BP) {
+> > +        val |= ctrl & TYPE2_ACTION;
+> > +    } else if (action == DBG_ACTION_DBG_MODE) {
+> > +        if (env_archcpu(env)->cfg.ext_sdext) {
+> > +            val |= ctrl & TYPE2_ACTION;
+> > +        } else {
+> > +            qemu_log_mask(LOG_UNIMP,
+> > +                          "trigger action=debug mode requires Sdext\n");
+> > +        }
+> > +    } else {
+> > +        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
+> > +                      action);
+> > +    }
+> > +
+> >       /* validate size encoding */
+> >       size = type2_breakpoint_size(env, ctrl);
+> >       if (access_size[size] == -1) {
+> > @@ -569,6 +602,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+> >   {
+> >       target_ulong val;
+> >       uint32_t size;
+> > +    uint32_t action;
+> >       /* validate the generic part first */
+> >       val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
+> > @@ -576,11 +610,25 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+> >       /* validate unimplemented (always zero) bits */
+> >       warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+> >       warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+> > -    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+> >       warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
+> >       warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+> >       warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
+> > +    action = (ctrl & TYPE6_ACTION) >> 12;
+> > +    if (action == DBG_ACTION_BP) {
+> > +        val |= ctrl & TYPE6_ACTION;
+> > +    } else if (action == DBG_ACTION_DBG_MODE) {
+> > +        if (env_archcpu(env)->cfg.ext_sdext) {
+> > +            val |= ctrl & TYPE6_ACTION;
+> > +        } else {
+> > +            qemu_log_mask(LOG_UNIMP,
+> > +                          "trigger action=debug mode requires Sdext\n");
+> > +        }
+> > +    } else {
+> > +        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
+> > +                      action);
+> > +    }
+> > +
+> >       /* validate size encoding */
+> >       size = extract32(ctrl, 16, 4);
+> >       if (access_size[size] == -1) {
+> > @@ -919,6 +967,7 @@ target_ulong tinfo_csr_read(CPURISCVState *env)
+> >   {
+> >       /* assume all triggers support the same types of triggers */
+> >       return BIT(TRIGGER_TYPE_AD_MATCH) |
+> > +           BIT(TRIGGER_TYPE_INST_CNT) |
+> >              BIT(TRIGGER_TYPE_AD_MATCH6);
+> >   }
+> 
 
