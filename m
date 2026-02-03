@@ -4,59 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17634E7C714
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41DE3E7FDCF
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 11:47:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnErT-0005fp-1N; Tue, 03 Feb 2026 06:46:27 -0500
+	id 1vnErL-0005en-4M; Tue, 03 Feb 2026 06:46:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnErL-0005f7-WE
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:21 -0500
+ id 1vnErI-0005eI-Vv
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnErJ-0002Xz-QS
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:19 -0500
+ id 1vnErH-0002XZ-NL
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770119176;
+ s=mimecast20190719; t=1770119174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=odbqucNEKD34NCFK37irTQs0y2GKmu6KPWjHIjGF09s=;
- b=hDGnFyin3p4+pXMBDgbHQEsHBz60BomVmfCWkzIpW95cX63MYvlV9Yc+6YuwLh2cJd7Vcn
- MvVIhBez6A408Smn8PRr3hVzIEah/3DCXFaG3e2O+1VleyIwf9uPuRSFGZMUHyQFFbUw32
- 5Wbkx3wCrnD9XCJeiR1TykN0aCAOVf4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nr4gzpwAbpiFu89VA91Xp1jojv0Jzg50xqp6p1J6m3U=;
+ b=BUHYrdBSCockviRT/2xENPHwF975fLZSIScOkHtFwKMboaWbnBhaMz+EOcdiH8b7VOLkjc
+ Zr/tnosL7OVVy3l6+ZvAQ/2kA/DGFFfk/St19AI+gxZJ1Oy/ASPv5nj9tLI4TKeXF1txdp
+ TwQoS293kuzj+bLO9IL4LvGPUE2Qum0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-C78MeEn-OiOVtnnRUnia7Q-1; Tue,
- 03 Feb 2026 06:46:15 -0500
-X-MC-Unique: C78MeEn-OiOVtnnRUnia7Q-1
-X-Mimecast-MFC-AGG-ID: C78MeEn-OiOVtnnRUnia7Q_1770119174
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-uujjewBSOS2rHlHd3_RUng-1; Tue,
+ 03 Feb 2026 06:46:11 -0500
+X-MC-Unique: uujjewBSOS2rHlHd3_RUng-1
+X-Mimecast-MFC-AGG-ID: uujjewBSOS2rHlHd3_RUng_1770119170
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CC69195608D; Tue,  3 Feb 2026 11:46:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46F6F18003FD; Tue,  3 Feb 2026 11:46:10 +0000 (UTC)
 Received: from speedmetal.lan (unknown [10.45.242.3])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDF7A1956053; Tue,  3 Feb 2026 11:46:12 +0000 (UTC)
+ id BD3C41956053; Tue,  3 Feb 2026 11:46:08 +0000 (UTC)
 From: Peter Krempa <pkrempa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
 	qemu-block@nongnu.org
-Subject: [PATCH v3 2/3] scripts: render_block_graph: Implement proper argument
- parser
-Date: Tue,  3 Feb 2026 12:46:06 +0100
-Message-ID: <72ba260b04c021740924e5638a7e165ed5121687.1770108741.git.pkrempa@redhat.com>
-In-Reply-To: <cover.1770108741.git.pkrempa@redhat.com>
-References: <cover.1770108741.git.pkrempa@redhat.com>
+Subject: [PATCH v3 0/3] scripts: render_block_graph: Fix with new python and
+ improve argument parsing
+Date: Tue,  3 Feb 2026 12:46:04 +0100
+Message-ID: <cover.1770108741.git.pkrempa@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -70,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,127 +83,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Krempa <pkrempa@redhat.com>
+New python doesn't like '\l' escapes from the 'dot' language.
 
-As no argument parsing is employed the script is hard to use and when
-running without arguments it blurbs:
+While at it improve usability of the script by employing proper argument
+parsing.
 
- $ ./scripts/render_block_graph.py
- Traceback (most recent call last):
-   File "/home/pipo/git/qemu.git/./scripts/render_block_graph.py", line 135, in <module>
-     obj = sys.argv[1]
-          ~~~~~~~~^^^
- IndexError: list index out of range
+v3:
+ - rebase + resend
 
-instead of an actionable error. The user then usually needs to read the
-script to understand arguments.
+v2:
+ - use mutually exclusive group instead of hardcoding it (Pavel)
 
-Implement proper argument parsing via 'argparse'. The following
-arguments will be supported:
+Peter Krempa (3):
+  scripts: render_block_graph: Fix invalid escape sequence warning with
+    python 3.12
+  scripts: render_block_graph: Implement proper argument parser
+  scripts: render_block_graph: Avoid backtrace on error from virsh
 
-  $ ./scripts/render_block_graph.py --help
-  usage: render_block_graph.py [-h] (--socket SOCKET | --vm VM) [--uri URI] [--output OUTPUT]
+ scripts/render_block_graph.py | 80 +++++++++++++++++++++++++----------
+ 1 file changed, 57 insertions(+), 23 deletions(-)
 
-  Tool that renders the qemu block graph into a image.
-
-  options:
-    -h, --help       show this help message and exit
-    --socket SOCKET  socket mode - path to qemu monitor socket
-    --vm VM          libvirt mode - name of libvirt VM
-    --uri URI        libvirt URI to connect to
-    --output OUTPUT  path to output image (.png suffix added); in libvirt mode default is the name of the VM
-
-Usage then requires one of '--vm' or '--socket'. In libvirt mode the
-output file is by default populated from the VM name and the '--uri'
-parameter allows overriding the libvirt connection uri.
-
-Signed-off-by: Peter Krempa <pkrempa@redhat.com>
----
- scripts/render_block_graph.py | 51 ++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 10 deletions(-)
-
-diff --git a/scripts/render_block_graph.py b/scripts/render_block_graph.py
-index 14b2d02ec2..6f668dec51 100755
---- a/scripts/render_block_graph.py
-+++ b/scripts/render_block_graph.py
-@@ -23,6 +23,7 @@
- import subprocess
- import json
- from graphviz import Digraph
-+import argparse
-
- sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'))
- from qemu.qmp import QMPError
-@@ -91,13 +92,19 @@ def render_block_graph(qmp, filename, format='png'):
-
-
- class LibvirtGuest():
--    def __init__(self, name):
-+    def __init__(self, name, uri=None):
-         self.name = name
-+        self.uri = uri
-
-     def cmd(self, cmd):
-         # only supports qmp commands without parameters
-         m = {'execute': cmd}
--        ar = ['virsh', 'qemu-monitor-command', self.name, json.dumps(m)]
-+        ar = ['virsh']
-+
-+        if self.uri:
-+            ar += ['-c', self.uri]
-+
-+        ar += ['qemu-monitor-command', self.name, json.dumps(m)]
-
-         reply = json.loads(subprocess.check_output(ar))
-
-@@ -108,15 +115,39 @@ def cmd(self, cmd):
-
-
- if __name__ == '__main__':
--    obj = sys.argv[1]
--    out = sys.argv[2]
-+    parser = argparse.ArgumentParser(
-+            description='Tool that renders the qemu block graph into a image.')
-+
-+    modegroup = parser.add_mutually_exclusive_group(required=True)
-+
-+    modegroup.add_argument('--socket',
-+                           help='socket mode - path to qemu monitor socket')
-+    modegroup.add_argument('--vm', help='libvirt mode - name of libvirt VM')
-+
-+    parser.add_argument('--uri', help='libvirt URI to connect to')
-+
-+    parser.add_argument('--output',
-+                        help='path to output image (.png suffix added); '
-+                             'in libvirt mode default is the name of the VM')
-
--    if os.path.exists(obj):
--        # assume unix socket
--        qmp = QEMUMonitorProtocol(obj)
-+    args = parser.parse_args()
-+
-+    if args.socket:
-+        if not args.output:
-+            print("--output required in socket mode", file=sys.stderr)
-+            parser.print_usage()
-+            sys.exit(1)
-+
-+        qmp = QEMUMonitorProtocol(args.socket)
-         qmp.connect()
--    else:
--        # assume libvirt guest name
--        qmp = LibvirtGuest(obj)
-+        out = args.output
-+
-+    if args.vm:
-+        qmp = LibvirtGuest(args.vm, args.uri)
-+
-+        if args.output:
-+            out = args.output
-+        else:
-+            out = args.vm
-
-     render_block_graph(qmp, out)
 -- 
 2.52.0
 
