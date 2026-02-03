@@ -4,92 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BF8E87822
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3542BE87822
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnFxJ-0004Xx-Cm; Tue, 03 Feb 2026 07:56:33 -0500
+	id 1vnFxa-0004kJ-K3; Tue, 03 Feb 2026 07:56:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnFxD-0004Wv-IP
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:56:27 -0500
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnFxB-0003wB-NH
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:56:27 -0500
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-8217f2ad01eso4494657b3a.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 04:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770123384; x=1770728184; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M90wMGk4h3GY5YVxBmIlu1BXQtHAUIoQs/agFdkxAIk=;
- b=b503CFttSQ7zTd79skZ7zRTak1AKrNgjelD6dwBBT4GwS3tX/fvhgkoxlWDU+AN5oJ
- +K4iO0YtmiMZc5EZfgdXGLPPqTs+2MsDXjjTAbX26mz/6rqICa4hy/yzxe7tGtQw2oXQ
- bcIqBme3WQjYJugFJ82A0G0TV0G5i3iGgm4RW37ap4vs8/voL+618l5391OXZn6oSOCK
- vLY7r4EsyUwI34E/MQqSk5SpvbAerkuh/NIvnW2KyoOCI6Yr++KUQvEC0ijeAj3FSTWK
- XU9fQmGdyCOmSrTbPbDXKI/wD0pqM4XFOoW88aRymkHgvcIsHEA9OrkR+XIzwsKG4NZz
- NQ8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770123384; x=1770728184;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=M90wMGk4h3GY5YVxBmIlu1BXQtHAUIoQs/agFdkxAIk=;
- b=kgAMf0X4Rnw7puGOaafuynolNkFVBdE7WBJc/MJy591AyIIXkKvqi/WijuW0BzmOXS
- uQ+McUeZTAfLu/y7/f7C2iy9g+WhBg9qp8EMiUOw/Fvq+brlGR6jf+/xw/w+DNQEl3UQ
- jEkMevNo6drXZIasFYzaJZGzneKXs9Fw1cQfHkfUDfkWIjlJCcKgtHzPG9z8aK9wkYvz
- rGYVv16cmwNlKGbq6ZVeVBBPgGy7W+UL5tfK/yLjpYYMMFEKYTHR15ZMGyl07vrcd0tK
- ef7rL8JiqBI/PSNa8IrvsWUYkNQ1Yrz1uinuu5FtG1L8epnYppOqXzJOuY8suKyho6X5
- 8Yhg==
-X-Gm-Message-State: AOJu0YwL/R22+1RZELys3Te8cM7dZO57Wi5csg+ICHPAFp06mnLh1Gp0
- 2KZ1lwIGuuHbdeE801ahcpWUE0VntcfpmRM40VOoDXq6zjWkh4N0TtZG
-X-Gm-Gg: AZuq6aLxO66gN/L7i6ZLCQzD5tDFWsT6WrelrrxYXEqOCTPy3tQvHKBHTJEsea6GIF6
- U/Dpjqc2XXLpETa9XnKqn4XF4xc/WwQLnasHo/zoTfomU2Z6d9sfHIxr8xdbR7z0E48CmbaaDSa
- Y+G3KNZB1mbnxtv/avNSrFpID0jKaXvAceqzoskihJ+PGDFj9ue8bu/tPjVMllDkqS89PGBgPjk
- RuzNy9YEKwQkcSZUTOTsudHMXWEAZw/AJAymQFiRv1CGuyrdtKYcbgz9GMSosBVqHna0GWwdznA
- E0vlitLTr+rBMmAFg0YI5/T8MI9MM8GPHSZ64bFjGOAv+nypNeB3K9kGGXMD4jAI6Hvy8gJpz9V
- eGGtpQdtJAW3OxEfD4gL/7l3EZFThn6cwEIszCPEq3P2TYLD3JbEDDEST/Bx3/GAmFDOEDTxmQJ
- fT1cK6YY37SrSslNuJB2c6F4W22nQsoHEY5GoWgZcmDBsg26xwfoW06a28
-X-Received: by 2002:a05:6a21:a98:b0:366:14ac:e1ec with SMTP id
- adf61e73a8af0-392e016e1f2mr14909595637.62.1770123384313; 
- Tue, 03 Feb 2026 04:56:24 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([183.195.22.5])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c642aaf1308sm18214796a12.30.2026.02.03.04.56.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 04:56:23 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- hust-os-kernel-patches@googlegroups.com, devel@lists.libvirt.org,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [RFC PATCH v5 3/7] target/riscv: add sdext Debug Mode helpers
-Date: Tue,  3 Feb 2026 20:56:02 +0800
-Message-ID: <7fd9deef21573daeeff53cea15d0e66417d4a8f3.1770104280.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1770104280.git.chao.liu.zevorn@gmail.com>
-References: <cover.1770104280.git.chao.liu.zevorn@gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vnFxZ-0004js-Dy; Tue, 03 Feb 2026 07:56:49 -0500
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vnFxX-00040d-MD; Tue, 03 Feb 2026 07:56:49 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.14])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f53Qg6Qy9z5w86;
+ Tue,  3 Feb 2026 12:56:43 +0000 (UTC)
+Received: from kaod.org (37.59.142.100) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 3 Feb
+ 2026 13:56:43 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-100R003d00bdf7a-0f9e-4493-bfa9-1173058b12fe,
+ 43D9FD9E6FAA5025B81087D7BA78A3446A80EEF4) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <41ca3be6-d33a-4eb9-96b1-d3e5a3fa1c5d@kaod.org>
+Date: Tue, 3 Feb 2026 13:56:42 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
+ remap
+To: Kane Chen <kane_chen@aspeedtech.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
+ Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
+ <20260120092939.2708302-5-jamin_lin@aspeedtech.com>
+ <588fa41c-a5ff-455d-b64d-b36b986ee781@kaod.org>
+ <TYPPR06MB8206FD6566DFDE3BA513FBFDFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <TYPPR06MB8206F928E28C7FE78BA9E3BEFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <TYPPR06MB8206F3CB33A135C5AC246E2CFC90A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <SI6PR06MB763182A3E4BC0C6ADC0555CEF79AA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <05782501-e775-4065-820e-1b599674f478@kaod.org>
+ <SI6PR06MB763184DBA59EA9E61B97C3A5F79AA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <57fcf2ba-fd8c-4978-af29-18c5dcc7a152@kaod.org>
+ <SI6PR06MB76316284692DF29B079A22FDF79BA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI6PR06MB76316284692DF29B079A22FDF79BA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x444.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [37.59.142.100]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: b20b6e0f-7c19-43bb-9e93-b1ac158e9ab4
+X-Ovh-Tracer-Id: 17332947594634103730
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGGl6ZOi/1PITA5mDhj1wJ2Sqp2lb68Oy0pm/Ti/ie+IFxFT0C/Odsqrj+EiLNFMLDKC8HIeArf7YNtxvx8wSYT5H8o4tbqsgTm+qGY55w+Am3hOrEh9vBkjw4tsaVmBA4Qno30zdMrsrZjZAE+rt9InMhSMq9AJpsfRSV9al4t8mpTj1GC1NK1emYSjXZJLIFMxu9q00RNoCaJTTaeT5/T6+kahLwe0c9qVSS9nMjWv+U1qgsssn9Oz+P5OgJ7feMN4+qoA4KtwvOpWN9TIkhgTwPzUyA/7AbfRzPyfl/0c4Gp91TaNL57G/6T/cMED2Gk5fqHgWDxQe6JNcHPzzXYnVMtNgw6px7Jhd7ckqu7nI3Tl9Q/PmXBID89HkIX2au0t4yoJUHwU3/j4ibTlKYYXpPrpUNlbUPfzucd1p7x7vW6pMQlOnOxQew9kw+adtJ5M687By2OOsLV8LPvjBZmid5Zpjz9u3TXq2HvXx5mzvkuLidwB5U2hFoTUrcgv9XRzcgY2ULbBx4qhjjC2QxRAXS3gr1Ib6Hf9C6e9f/+7XQmvNQw+PTg6WlXmdj7pxeJJGolZbpT6FHko/ghbuUMyUdhkXNVGZSZvie3niD6cUR38AabfcoWer3Te+62800Pu0iYsrLZa+hVDiKzQ8bwJFi48BB6FS/Ttp/SMpQ6DA
+DKIM-Signature: a=rsa-sha256; bh=73YO47UAslNxZp6BgvJhSsaeBgr/U0e6cMqeQfBF9cc=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770123405; v=1;
+ b=KH7/C3uzAu8QvPw0mqbNV+bASrIIvw622TSP+6WMyteS/VP9WTXTK88FGwVVXbgOoX0tCQ6q
+ gDfsviEAdHrprtOChbB9OtUgrrGIhwxe89TYCJK7ZxcP7x6sCuzL1G0urFZae/vylrckMj9u+iv
+ 0r4YilvBFiKnjbs04oY4UUlH/ZP9wS5wbyms5KtuQzhA7CdF1AtTkzUFkhRXoWiSq993U7KZ3gU
+ cRuKrfgm3qizAZbe791puSe8BP55M+68CFQwpl/+mV5Gdm94yMa3PaZJoUUwGj1onpMOHrJEUaK
+ zANOZnMjEC0S0bVMDAu8tes/QjsdswVw3j/LdDJP5CtUg==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,180 +142,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+On 2/3/26 11:23, Kane Chen wrote:
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Monday, February 2, 2026 6:49 PM
+>> To: Kane Chen <kane_chen@aspeedtech.com>; Jamin Lin
+>> <jamin_lin@aspeedtech.com>; Peter Maydell <peter.maydell@linaro.org>;
+>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>;
+>> Andrew Jeffery <andrew@codeconstruct.com.au>; Joel Stanley
+>> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>> list:All patches CC here <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP
+>> SDRAM remap
+>>
+>> On 2/2/26 10:46, Kane Chen wrote:
+>>>> -----Original Message-----
+>>>> From: Cédric Le Goater <clg@kaod.org>
+>>>> Sent: Monday, February 2, 2026 5:34 PM
+>>>> To: Kane Chen <kane_chen@aspeedtech.com>; Jamin Lin
+>>>> <jamin_lin@aspeedtech.com>; Peter Maydell <peter.maydell@linaro.org>;
+>>>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee
+>> <leetroy@gmail.com>;
+>>>> Andrew Jeffery <andrew@codeconstruct.com.au>; Joel Stanley
+>>>> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>>>> list:All patches CC here <qemu-devel@nongnu.org>
+>>>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>>>> Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP
+>>>> SDRAM remap
+>>>>
+>>>> Hi,
+>>>>
+>>>>> Working with our IT team, we've transitioned to a Microsoft mail
+>>>>> server to ensure DKIM is correctly included. Could you please
+>>>>> confirm if you've received the below patch series?
+>>>>>
+>>>>>
+>>>>
+>> https://patchew.org/QEMU/SE3PR06MB8199F4B0069F9326034585D6FC9AA
+>>>> @SE3PR0
+>>>>> 6MB8199.apcprd06.prod.outlook.com/
+>>>>
+>>>> I did. Although, the series is not threaded. Probably due to the way it was
+>> sent.
+>>>>
+>>>> Thanks,
+>>>>
+>>>> C.
+>>>
+>>> Hi Cédric,
+>>>
+>>> Thanks for the confirmation.
+>>>
+>>> It's possible that the threading issue was related to some extra
+>>> 'From' info in the mail body. I've updated the script to remove it, so
+>>> we'll see if that fixes the issue in the next version.
+>>
+>> OK. I can not fetch the series with b4. So you will have to resend.
+>>
+>>
+>> What about the v6 of "hw/arm/aspeed: AST1700 LTPI support and device
+>> hookups". Do you plan to resend soon ?
+>>
+>> Thanks,
+>>
+>> C.
+>>
+> Hi Cédric,
+> 
+> Do we need to make any code changes regarding the "i2c-bus-label"?
 
-Add helpers to enter/leave Debug Mode and to update dpc/dcsr.
-Model resume without a Debug Module by leaving Debug Mode at
-cpu_exec_enter and continuing from dpc.
+I don't remember any comments on v5 regarding the bus naming.
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- target/riscv/cpu.h         |  3 ++
- target/riscv/cpu_helper.c  | 84 ++++++++++++++++++++++++++++++++++++++
- target/riscv/debug.c       |  5 +++
- target/riscv/tcg/tcg-cpu.c | 14 +++++++
- 4 files changed, 106 insertions(+)
+Please rebase on top of :
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2a265faae5..62732957a4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -624,6 +624,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- char *riscv_isa_string(RISCVCPU *cpu);
- int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
- bool riscv_cpu_option_set(const char *optname);
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause);
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env);
- 
- #ifndef CONFIG_USER_ONLY
- void riscv_cpu_do_interrupt(CPUState *cpu);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index dd6c861a90..0e266ff3a9 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -136,6 +136,90 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
- #endif
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static bool riscv_sdext_enabled(CPURISCVState *env)
-+{
-+    return riscv_cpu_cfg(env)->ext_sdext;
-+}
-+#endif
-+
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
-+    }
-+
-+    env->debug_mode = true;
-+    env->dpc = pc & get_xepc_mask(env);
-+    env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
-+    env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
-+    env->dcsr |= env->priv & DCSR_PRV_MASK;
-+    if (env->virt_enabled && riscv_has_ext(env, RVH)) {
-+        env->dcsr |= DCSR_V;
-+    }
-+
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        if (env->elp) {
-+            env->dcsr |= DCSR_PELP;
-+        } else {
-+            env->dcsr &= ~DCSR_PELP;
-+        }
-+        env->elp = false;
-+    }
-+#endif
-+}
-+
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
-+    }
-+
-+    target_ulong new_priv = env->dcsr & DCSR_PRV_MASK;
-+    bool new_virt = riscv_has_ext(env, RVH) && (env->dcsr & DCSR_V);
-+
-+    if (new_priv > PRV_M) {
-+        new_priv = PRV_M;
-+    }
-+    if (new_priv == PRV_M) {
-+        new_virt = false;
-+    }
-+
-+    if (new_priv == PRV_S && !riscv_has_ext(env, RVS)) {
-+        new_priv = PRV_M;
-+        new_virt = false;
-+    } else if (new_priv == PRV_U && !riscv_has_ext(env, RVU)) {
-+        new_priv = riscv_has_ext(env, RVS) ? PRV_S : PRV_M;
-+        new_virt = false;
-+    }
-+
-+    env->debug_mode = false;
-+    riscv_cpu_set_mode(env, new_priv, new_virt);
-+
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        env->elp = cpu_get_fcfien(env) && (env->dcsr & DCSR_PELP);
-+        env->dcsr &= ~DCSR_PELP;
-+    }
-+
-+    if (new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, 0);
-+    }
-+
-+    if (env_archcpu(env)->cfg.ext_smdbltrp && new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
-+    }
-+    if (env_archcpu(env)->cfg.ext_ssdbltrp && (new_priv == PRV_U || new_virt)) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_SDT, 0);
-+        if (new_virt && new_priv == PRV_U) {
-+            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
-+        }
-+    }
-+#endif
-+}
-+
- RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
- {
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..5877a60c50 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -927,6 +927,11 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
- 
-+    /* Triggers must not match or fire while in Debug Mode. */
-+    if (env->debug_mode) {
-+        return;
-+    }
-+
-     if (cs->watchpoint_hit) {
-         if (cs->watchpoint_hit->flags & BP_CPU) {
-             do_trigger_action(env, DBG_ACTION_BP);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index d9fbb5bf58..f80e3413f8 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -266,6 +266,19 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
-     }
-     return extract64(result, 0, 64 - pm_len);
- }
-+
-+static void riscv_cpu_exec_enter(CPUState *cs)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (!cpu->cfg.ext_sdext || !env->debug_mode) {
-+        return;
-+    }
-+    target_ulong pc = env->dpc;
-+    riscv_cpu_leave_debug_mode(env);
-+    env->pc = pc;
-+}
- #endif
- 
- const TCGCPUOps riscv_tcg_ops = {
-@@ -282,6 +295,7 @@ const TCGCPUOps riscv_tcg_ops = {
- #ifndef CONFIG_USER_ONLY
-     .tlb_fill = riscv_cpu_tlb_fill,
-     .pointer_wrap = riscv_pointer_wrap,
-+    .cpu_exec_enter = riscv_cpu_exec_enter,
-     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
-     .cpu_exec_halt = riscv_cpu_has_work,
-     .cpu_exec_reset = cpu_reset,
--- 
-2.53.0
+   https://lore.kernel.org/qemu-devel/20260203020855.1642884-1-jamin_lin@aspeedtech.com/
+
+Thanks,
+
+C.
+
+> If not, I will send out the patch series tomorrow.
+> 
+> Best Regards,
+> Kane
 
 
