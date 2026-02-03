@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626F0E87834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E79E8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHa2-0006wK-29; Tue, 03 Feb 2026 09:40:38 -0500
+	id 1vnHfi-0008DI-Pw; Tue, 03 Feb 2026 09:46:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHZz-0006vw-Ri
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:40:35 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHZy-0001El-EX
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:40:35 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-658381b28e8so7944596a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 06:40:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnHff-0008Cy-TS
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:46:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnHfW-0005wI-7u
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:46:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770129976;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hmTCcF+HKBES3K6OXlSA4Cu5w5QfqqgL1UCfnHVpWDM=;
+ b=Tb+XMbKlziMP/RFV8PsNfqxrx8ewKUCk5xZRPJdD+qLnMTkQECgABBU0oGcXDcM8c4Je81
+ fRmy2pTUuQ2O8m0NR7tvkxl+RgSJ/goB2q4ZWHPDemedJr6ivsrOgX4mhwWAOReztValEa
+ SWgyVSGLooEkKko0MF3E1fPGWioKu+E=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-658-xsv8EFfWPzCKebzcdQlE2Q-1; Tue, 03 Feb 2026 09:46:14 -0500
+X-MC-Unique: xsv8EFfWPzCKebzcdQlE2Q-1
+X-Mimecast-MFC-AGG-ID: xsv8EFfWPzCKebzcdQlE2Q_1770129972
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4801bceb317so52881995e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 06:46:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770129633; x=1770734433; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CbAZMZ0PGJoI1St7AnSFtSEn8KWbGy2NJPOS2StUTXE=;
- b=CqBBQBHqQC1j8mDd13VIoIJDI8QRuZ9NBm95C9XgaTX/s8jKByiQURGa060n1LIGmz
- 96vjhO5kjTIk37ReXWrLryWm7esUNO8KFEHhvL36RArCbZT5r/sss/PHe8qyA5gZUSAO
- avC4YuTopTWPiq2rA7nvdG5YO2iLRhusmzEvNlcExrnP4GmjqV7Hzn2OXhtvLCx6jTLI
- E0rrMddoCn+OrDUkXdAywEIHBWUxfl3ofk8Yx1gqjnEvBkDCHvWwTqNPhyVNmTi/M6ed
- PyV3wWO/6YfdEgo5gSraXTnTjACFWZGi1jeWZffm21zJk3rEGX2mRHIbcl2VW6PUnHn3
- Bpeg==
+ d=redhat.com; s=google; t=1770129972; x=1770734772; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=hmTCcF+HKBES3K6OXlSA4Cu5w5QfqqgL1UCfnHVpWDM=;
+ b=jOuqMnvnY8oT/8QI3hvktmLAke+pWQMtEXQMTtXR7VsamieXC0f7z7pp2/OxQFobLT
+ wkP3g5mDpisaIndslWLGilCzo9hw6Lv3+4I0gUxVtxQo2DsfRTDXOlQEknspNTmZybjz
+ wJ3Cc77lWPYJ9yksh4Jx+pKJwwc1lKHFkQ3TOA/NiN65lHspMAq8G8aHL2vai4FkLB4+
+ CBTSyugaLC9pGU2BcbZaxaKkF1mWzioKdl2hjyFnitZG/MZowPzWZz1IKcHMfUjbau04
+ J3WRzOz+HO4OC83T85bzju3rrIrqpVWkPRdd7bjyJ/4auuWZgTnMp2gPgj4uzE7UhoYT
+ QV+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770129633; x=1770734433;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CbAZMZ0PGJoI1St7AnSFtSEn8KWbGy2NJPOS2StUTXE=;
- b=KqdkJLzgnMjP3TX1sZnFVLFVE2ZF8QtzpG4v6Z6rFGpa4s5Iv39kje1XtVR31hnWkK
- mN9pkYsebTe1HscywUlQr5R3WKmYken1e+9VJrhUOPUN9/VWgX4t8SV0xbio5qeevaF9
- Cq532vYyp2/K7rpjdJu2KYzomQ6SlSzYDGwyTFa6eU3AHygKK0R1QqqE92YhPig5Yrnv
- r+ZahpE2Rkj9DrSVI7VLqT10ZKdv4IVkkJ+Qf5xlGeOpnydN2RkDpYE5OO3zAtMd4Qhq
- wx152EKrNnWL7V6jGimoX6ae8cokr+YZd7v/LmE5c8oolEjCs5kWgiczNLX+aNIGYQBA
- DAfQ==
+ d=1e100.net; s=20230601; t=1770129972; x=1770734772;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hmTCcF+HKBES3K6OXlSA4Cu5w5QfqqgL1UCfnHVpWDM=;
+ b=dIFmyP5keaD7x2k8Vathf37xUrDtSql/3fDpTUCzx4zqZ8UiIRHeerOLuYc7/1PYvV
+ x48nqKX+O6Sre1WWXg4J04njJ68+oTS69ub585wQKdDRV/kicdKhPVWGozIKO++cc9q7
+ 8Dhl+XSFoexVQNHDXCkc11M+r1srVirHaX2P87O3XVad+FKRJruvJgaIfFlvTNprmrF/
+ tv21puRhc7ypUVmn2T1ORgCC1D917FiMrZb6AGKzI0cByvECF71cHOWvwipQLkYG2GLl
+ 4hYO3uGEQlRLtsgKJ1CR2coh4618g0JdjaXuft22t4spqIWbKTLz6ivp2F2BYP411iWB
+ 1FqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTKLwN225cWRlzoCrAxttNVAr2one8v9auGKqGEnaLSj9+1hixdOSRP7QR+DN6MTTug/HItuqWLG2k@nongnu.org
-X-Gm-Message-State: AOJu0YwdRgiFUWAG+FuSWY1BLfO9z5bpaYOoKkcmVAxoYHczhD2OFMmr
- pupQMAOXIhKk9ElUuoYSQvLNQLiVj+dvwu5nsiNd8BdMW892oe9sa+loPCFkYu5aMTg=
-X-Gm-Gg: AZuq6aJvAZ4X41M7scJw2Z9qXn1cDK1wjhHsFlDaf9HNuZqKxhp2b1O+od5mppDOLiJ
- me8zCm5z4eh6umMH4yYygBoMR9SSbynbzGfGXwPdq9ZZ//wqNsHv00fRsb47sWtF19ojKLHk5zF
- I5dMFBcNdnef8AEmzgTBirrI+vTLuD2C0eeGcUAho7M/07V8oj+9csP0L+7L9GUPpRxPxx/BosC
- sGWslOFZMaMYTc40d3lOqLWvcM4WBnSn0akqM3jYFXJKJdXyuNG+zotbKrjZlqNK8akLC6olkf3
- 7jKQrUvJlPgLxrkXvi79CVKDsWsICLBjvI+1yqnZtG6aC+62F1FgWjRBe7nT9kfKaYCd9unNJG3
- r/gWe+Ht1R6rL4XWXT0ZXUdmXHyMpHXjBzQwdkg8eTSGzpHZpKKW9o4AKwB7E2w6+QsAT5WnYI+
- rsC+PBgc/FEig+9eo8i4j166NCLOHUoMKzAQ1YoOUXCD+YNHNBuh9hcQ==
-X-Received: by 2002:a05:6402:f03:b0:64d:3b22:a5c2 with SMTP id
- 4fb4d7f45d1cf-658de5b64a4mr6992850a12.25.1770129632601; 
- Tue, 03 Feb 2026 06:40:32 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-658b4691db4sm9227695a12.22.2026.02.03.06.40.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 06:40:31 -0800 (PST)
-Message-ID: <860a055d-6a3e-4eca-8b3c-e997ee14b102@linaro.org>
-Date: Tue, 3 Feb 2026 15:40:30 +0100
+ AJvYcCVlL3I958Avk0bLqZJmu1QlHl7pM+6Jh9SOZAE4/1+bKtC42uHwQ3MApxRRXxKwFq2ra28CwCdINW32@nongnu.org
+X-Gm-Message-State: AOJu0YxfCJl6iCFSZs76mLIqpWZLlC5HB5qcpOWgCpxijM9uSUTbQ8IM
+ 1YlmRoDTvAXwyvFV7OO1dmX/QRdicJbHkFfmh8Avnj9onD1aQfyUaGlORzfeMH8q7n1B+qlmZHw
+ 8qJrQ5Gu/vfiSeqqFHTQth6j9KfZa/+ygOuLXNZZ4Qeh0MBgGmFBKXW02
+X-Gm-Gg: AZuq6aLNTz8MGpk0p1c+3/+DXCdlTuirz9R9PxmCHDe68wk/d7h7CDbdDCqe207VnWc
+ eE6WQPr1/xODYyfd0++HV06HIU/YueSD+O5P0JTwR1/OuM4eZhypm00COE9617uBJe7jJJHraAz
+ f68rFIhiaZhJxpo3oUtCNeeIy43St57wLKfq53Ogsr6BKFiY7RSM2ACfAPwNwIbnpoXnm6DYWA+
+ bRhGSGfNhpNb4keSnrASWg8BOeei6hPfLlco1hbwA8Ddx0BMvuw/Cq8WrQ7WmbomtkIqUtFhClG
+ N3DNJB6hzQM+hHhDERoHUbnN9l5BPF0+qJGngcemXqIl9/x+8qBIya+c3dsXfn1p/92JOjZbzhM
+ eklEcktBjjQ8PCv8+5yo5UwGsvoPdrVFUyA==
+X-Received: by 2002:a05:600c:4f8a:b0:477:76c2:49c9 with SMTP id
+ 5b1f17b1804b1-482db4568dbmr216139365e9.2.1770129971948; 
+ Tue, 03 Feb 2026 06:46:11 -0800 (PST)
+X-Received: by 2002:a05:600c:4f8a:b0:477:76c2:49c9 with SMTP id
+ 5b1f17b1804b1-482db4568dbmr216138985e9.2.1770129971409; 
+ Tue, 03 Feb 2026 06:46:11 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4830511bfc6sm122054025e9.2.2026.02.03.06.46.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 06:46:10 -0800 (PST)
+Date: Tue, 3 Feb 2026 09:46:08 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: liu.xuemei1@zte.com.cn
+Cc: imammedo@redhat.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, sunilvl@ventanamicro.com,
+ anisinha@redhat.com, pbonzini@redhat.com, palmer@dabbelt.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v4 RESEND 0/2] hw/riscv/virt: Add acpi ged and powerdown
+ support
+Message-ID: <20260203094546-mutt-send-email-mst@kernel.org>
+References: <2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Remove a redundant argument attrs in
- io_prepare()
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260203142737.2164763-1-jim.shu@sifive.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260203142737.2164763-1-jim.shu@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +122,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/26 15:27, Jim Shu wrote:
-> attrs is already in CPUTLBEntryFull, so this argument is redundant.
-> Just remove it.
+On Thu, Nov 13, 2025 at 09:27:09AM +0800, liu.xuemei1@zte.com.cn wrote:
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 > 
-> Clean up commit 94c6e9cf04409e38563080348d6136879f91ffee
-> 
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   accel/tcg/cputlb.c | 18 +++++-------------
->   1 file changed, 5 insertions(+), 13 deletions(-)
+> Add riscv acpi powerdown support
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+did you abandon this or do you plan to address Igor's comments?
+
+> Changes in v4:
+> - Added modifies of DSDT blob in another patch
+> - Link to v3: https://lore.kernel.org/qemu-riscv/20250723113739751COZ5PkRzx6aXEuKzsHhm_@zte.com.cn/
+> 
+> Changes in v3:
+> - Added missing param to virt_is_acpi_enabled
+> - Fixed failure of bios-tables-test
+> - Link to v2: https://lore.kernel.org/qemu-riscv/202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn/
+> 
+> Changes in v2:
+> - Unwrappered acpi_dsdt_add_ged function
+> - Modified base address of VIRT_ACPI_GED
+> - Added conditions for function calls
+> - Adjusted code formatting
+> - Link to v1: https://lore.kernel.org/qemu-riscv/202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn/
+> 
+> Xuemei Liu (2):
+>   hw/riscv/virt: Add acpi ged and powerdown support
+>   tests/acpi: Add acpi ged and power button in DSDT for RISC-V
+> 
+>  hw/riscv/Kconfig                  |   1 +
+>  hw/riscv/virt-acpi-build.c        |  10 +++++++++
+>  hw/riscv/virt.c                   |  35 ++++++++++++++++++++++++++++++
+>  include/hw/riscv/virt.h           |   4 ++++
+>  tests/data/acpi/riscv64/virt/DSDT | Bin 3538 -> 3681 bytes
+>  5 files changed, 50 insertions(+)
+> 
+> -- 
+> 2.27.0
+
 
