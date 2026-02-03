@@ -4,137 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D207E8B361
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 21:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1CDE8B365
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 21:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnNdT-0004sX-US; Tue, 03 Feb 2026 16:08:37 -0500
+	id 1vnNhK-0006Ln-Pi; Tue, 03 Feb 2026 16:12:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vnNdQ-0004rl-Cl
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 16:08:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnNhJ-0006LQ-EE
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 16:12:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vnNdO-0005Fl-MM
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 16:08:32 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnNhH-0006a3-Hc
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 16:12:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770152908;
+ s=mimecast20190719; t=1770153150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZuhNpISDIBG+XigPnGHMcwBsZVISdhYXdPEl/9EbhEw=;
- b=L4r2nb0quwy3NMrS5lvm8mVxAANKOdbk4f0nA7ZAp9Ss0MqVq/Sd/6+JPZkVHZ0S7skqh/
- p5QyJnJUlQ76Xr/vLe7nNtHDzduqCdLHT5EoT2jCEPVMr3SBmXICiyYzUPFii85ayBZKTU
- DWGcYh1mJv1rWn/kx5Kz1GBLVofcl9Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-R9Y0ru_sMLaK7t-PDiTphA-1; Tue, 03 Feb 2026 16:08:27 -0500
-X-MC-Unique: R9Y0ru_sMLaK7t-PDiTphA-1
-X-Mimecast-MFC-AGG-ID: R9Y0ru_sMLaK7t-PDiTphA_1770152906
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4806e7c4220so527585e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 13:08:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770152906; cv=none;
- d=google.com; s=arc-20240605;
- b=NxBMb57Qyo9ChVxa7rip6lKEQ6j1GDrpCE68epP6xUYnrsGZroIkxl8w2R0iBvsguV
- uA6iZ3UWAbnqiquC8aJWGKO2GiB7z9ZB1HxGXTStHU+58RoHhHR17PAT6CoHKiF74dwo
- T1LvzILiwqzFlq0p2ctg3UyTnaYjl4kZXgmjM3X0jdoV8U0TLXonMqBDrYrf2YellxIB
- 5lYd8yPEqpmgofN60G+BmNDysnExjW/xFZkIA536HcriggCMIvL/31HPotcq6GxYWpsf
- LP25lj0ra0jU0EkckAyL9Fl1JYM4jlXnR4kuSQ1ytLC9srwiYeYKB5U5BZMnb9u4zCB7
- r/ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZuhNpISDIBG+XigPnGHMcwBsZVISdhYXdPEl/9EbhEw=;
- fh=Aqbdj/jSz5Po3e1fl7F41zRPtpJ1ExtfkaWo4ELQX9M=;
- b=cMBUtAER3QJSK/iZtCqY3qJaUVFefd/Cc2qLoR5SqUBXe4AwFBWYL//WPSjWzAIRu4
- 2E29kSYJso+qBgWCl1zHQLdgMzZEUIcvU3OPFPtd2kUCpWzVgGTCTWPfpnI61SGJI2MK
- 5hnQvtPg5/+KTbEX/OJmtkwnbrOcGU2nk6IiMl0MrknrsBqVqfZBN8Wkogb1mf9/5Vkr
- sutMN1NxUrvASvuc8Ypx3hZ8M5uv+l+8QTy6+blqUQZ3BvvIHdrrMuIzcN6wwYCTpnbx
- 5mZSI/+hztJus9XpqBTOkBYvINdfkiJpZ5kZvkNVhb0bPMJa7TCvPchqTVoB7OvS1Vjh
- lOdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770152906; x=1770757706; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZuhNpISDIBG+XigPnGHMcwBsZVISdhYXdPEl/9EbhEw=;
- b=WP6H2m58q9SHBJSGBUKH635ovHiENNvr8t3Vj9LIKm2ysiBqOqYYzwlWFqFesqBC5B
- NnsqyLA5akP7C4UUUtvjMv+sOPnUyd1nTwaWoyEsActL4pX2E1WgTlZzChOY3rbMmG0i
- R+Mwk3/YLuzmfkDFM15bnoMWEil8VkWhGoUQu3jPWSynagpPbDDq9POZ+XSn4yhOavRC
- hUeiGi+ZxIRjNzgihldK+oMEht2GPs5UDZrBbkiEURZsWBfegMINsMQS392vkCiOKt2k
- uNObIzUKm6Gfr8iK3XeYozKU0fwEZWWm7QoBtw87cDl6c8U5evA++KNXekhtX2tW68kd
- oAKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770152906; x=1770757706;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZuhNpISDIBG+XigPnGHMcwBsZVISdhYXdPEl/9EbhEw=;
- b=axDDZpohwSLbijEnJtp8bpkbfncUI7C4flbtxspmJV5SCxIrIFGgBKteRAql2axNAy
- s+ThOJ8wwPFD77pU7JziV84rgZU1vJPANfcbDCCx0yEBL7oLkEPlmLBfn8ugO2JQ+Evn
- BuTk17toF7aqzDbV7/TP4RnMmapxLGHR7Y8v7J6Jwqz89D5To7bhKFE9BR+Z7yPeY7OM
- MXtzxlR7Ojjmcbf23gIHYyWAepNkkQLowjBZBKDK+is267MkDQPWZjanMyXQ4ZdBjNwn
- f2xnuWi53550/valFPbBxzciDa8fVObpLzgUZIkZxLwtF7e5/ftf0snO7YvRwgE5WvU8
- NxTQ==
-X-Gm-Message-State: AOJu0YyE6AFO1YBPSyiO3t9tbX3zZWEycK7G31RaoBojikB25kUB2097
- QcCGEeu61A3mBRch1J9B14768yFi/C4H1FrBSqFGXNMcVfY6VcIsDEW1hQhwFzFGfLIrMfZKRl4
- 1+NhpO1MppD4ITEvgCtHJ0HvSordAvu+pSktTrNixxN05j/IxaunIsoNERzI3B6Tdjuu+NF4yH8
- DdImZc3HokTaUl251rgMyD38RGbKpz3R4=
-X-Gm-Gg: AZuq6aJmNxVbxgV1gu/yKgBOk5Rcjm4SlA3L0/Qq9DsfTDH9lv+O/uNHoPBfXQq/Yqk
- JbniHg46uiZ1JiEMCKSKfcGkmSZc3cweXf6Y76IN+MxX3WUXeoeaKWd+RVqTNknqsHTO9udEcGd
- 1Scy0HcLhGdYoNvgVbew8mz5bfHl6tr7dPliZIeKqM1481U0BshDdoPwCAKOOkRXd+LcwpD9qkT
- Kx8+kFyHgrH0mfWVh0+JliugbmudNoTy1QUGpvLyd9xvhR1r/JxJKV0mNjY6U47EhSCug==
-X-Received: by 2002:a5d:5f88:0:b0:435:8fd6:5949 with SMTP id
- ffacd0b85a97d-43618059744mr1112134f8f.46.1770152905900; 
- Tue, 03 Feb 2026 13:08:25 -0800 (PST)
-X-Received: by 2002:a5d:5f88:0:b0:435:8fd6:5949 with SMTP id
- ffacd0b85a97d-43618059744mr1112106f8f.46.1770152905486; Tue, 03 Feb 2026
- 13:08:25 -0800 (PST)
+ bh=m4zV9ZTJ+0YBOBcHef5PpcCTsvR1XwRCI2/DtiZ1b7M=;
+ b=P62eIRyyym+B3AwFsYkK4mGksvdHe+z93oah2GXHWkGC4mnj8FMFtkje2TfOpUBpob6Lo+
+ 0ZkSqpdKSu8qYt4N/znahcCUHIQk5mZ7wLC+FSC6bh4+ckkUB8cbcOTmCKEusKH4XRwF8z
+ p5m93TTazmrH2B2JcVMyR4pEoyDh3g4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-eNSud6YfOr244hA4OfQLKg-1; Tue,
+ 03 Feb 2026 16:12:26 -0500
+X-MC-Unique: eNSud6YfOr244hA4OfQLKg-1
+X-Mimecast-MFC-AGG-ID: eNSud6YfOr244hA4OfQLKg_1770153145
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFA061956059; Tue,  3 Feb 2026 21:12:24 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.33])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5548D3001DB9; Tue,  3 Feb 2026 21:12:23 +0000 (UTC)
+Date: Tue, 3 Feb 2026 16:12:22 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: JAEHOON KIM <jhkim@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
+ fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+Subject: Re: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
+Message-ID: <20260203211222.GB449076@fedora>
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260119181630.GA834718@fedora>
+ <eb9693ae-6aae-4599-8c8c-22268357d2c0@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260203203512.672552-1-jsnow@redhat.com>
- <20260203203512.672552-12-jsnow@redhat.com>
-In-Reply-To: <20260203203512.672552-12-jsnow@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 3 Feb 2026 22:08:12 +0100
-X-Gm-Features: AZwV_Qh4yO5H3NEbHqnSU3ijloyAr0GGK4jTeRIkVML7M0TpZk0LqhuXl4bXoac
-Message-ID: <CABgObfYtKr88BvhPUL4KfX464u=T4d7BP70XRLMdn28sXSKU4g@mail.gmail.com>
-Subject: Re: [PATCH v5 11/16] meson, mkvenv: add qemu.git/python/qemu package
- to pythondeps.toml
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- "open list:Block layer core" <qemu-block@nongnu.org>,
- Thomas Huth <thuth@redhat.com>, 
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Ed Maste <emaste@freebsd.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: multipart/alternative; boundary="000000000000214b140649f1d75c"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="h8+rxwWFeNZKwfUY"
+Content-Disposition: inline
+In-Reply-To: <eb9693ae-6aae-4599-8c8c-22268357d2c0@linux.ibm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,90 +88,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000214b140649f1d75c
-Content-Type: text/plain; charset="UTF-8"
 
-Il mar 3 feb 2026, 21:36 John Snow <jsnow@redhat.com> ha scritto:
-
-> Add the local python package group into pythondeps.toml for the
-> tooling This makes qemu.qmp, qemu.machine and qemu.utils
-> packages unconditionally available for tests and scripts.
->
-
-Out of curiosity why not add setuptools and wheel to the group, at this
-point? Can be done on top of course.
-
-Paolo
-
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  pythondeps.toml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index 743e2a8848c..89256132fee 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed =
-> "1.2.2" }
->  # system packages, or python packages we vendor.
->  [tooling]
->  "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-> +"qemu" = { path = "python/" }
->
->  # This test group is for functional tests, and can include dependencies
->  # fetched from PyPI.
-> --
-> 2.52.0
->
->
-
---000000000000214b140649f1d75c
-Content-Type: text/html; charset="UTF-8"
+--h8+rxwWFeNZKwfUY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 3 feb 2026, 21:36 John Sn=
-ow &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt; ha scri=
-tto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add the loc=
-al python package group into pythondeps.toml for the<br>
-tooling This makes qemu.qmp, qemu.machine and qemu.utils<br>
-packages unconditionally available for tests and scripts.<br></blockquote><=
-/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Out of curiosity w=
-hy not add setuptools and wheel to the group, at this point? Can be done on=
- top of course.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote =
-gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"=
-_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
----<br>
-=C2=A0pythondeps.toml | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/pythondeps.toml b/pythondeps.toml<br>
-index 743e2a8848c..89256132fee 100644<br>
---- a/pythondeps.toml<br>
-+++ b/pythondeps.toml<br>
-@@ -37,6 +37,7 @@ sphinx_rtd_theme =3D { accepted =3D &quot;&gt;=3D0.5&quot=
-;, installed =3D &quot;1.2.2&quot; }<br>
-=C2=A0# system packages, or python packages we vendor.<br>
-=C2=A0[tooling]<br>
-=C2=A0&quot;qemu.qmp&quot; =3D { accepted =3D &quot;&gt;=3D0.0.5&quot;, ins=
-talled =3D &quot;0.0.5&quot; }<br>
-+&quot;qemu&quot; =3D { path =3D &quot;python/&quot; }<br>
-<br>
-=C2=A0# This test group is for functional tests, and can include dependenci=
-es<br>
-=C2=A0# fetched from PyPI.<br>
--- <br>
-2.52.0<br>
-<br>
-</blockquote></div></div></div>
+On Fri, Jan 23, 2026 at 01:15:04PM -0600, JAEHOON KIM wrote:
+> On 1/19/2026 12:16 PM, Stefan Hajnoczi wrote:
+> > On Tue, Jan 13, 2026 at 11:48:21AM -0600, Jaehoon Kim wrote:
+> > > We evaluated the patches on an s390x host with a single guest using 16
+> > > virtio block devices backed by FCP multipath devices in a separate-di=
+sk
+> > > setup, with the I/O scheduler set to 'none' in both host and guest.
+> > >=20
+> > > The fio workload included sequential and random read/write with varyi=
+ng
+> > > numbers of jobs (1,4,8,16) and io_depth of 8. The tests were conducted
+> > > with single and dual iothreads, using the newly introduced poll-weight
+> > > parameter to measure their impact on CPU cost and throughput.
+> > >=20
+> > > Compared to the baseline, across four FIO workload patterns (sequenti=
+al
+> > > R/W, random R/W), and averaged over FIO job counts of 1, 4, 8, and 16,
+> > > throughput decreased slightly (-3% to -8% for one iothread, -2% to -5%
+> > > for two iothreads), while CPU usage on the s390x host dropped
+> > > significantly (-10% to -25% and -7% to -12%, respectively).
+> > Hi Jaehoon,
+> > I would like to run the same fio benchmarks on a local NVMe drive (<10us
+> > request latency) to see how that type of hardware configuration is
+> > affected. Are the scripts and fio job files available somewhere?
+> >=20
+> > Thanks,
+> > Stefan
+>=20
+> Thank you for your reply.
+> The fio scripts are not available in a location you can access, but there=
+ is nothing particularly special in the settings.
+> I=E2=80=99m sharing below the methodology and test setup used by our perf=
+ormance team.
+>=20
+> Guest Setup
+> ----------------------
+> - 12 vCPUs, 4 GiB memory
+> - 16 virtio disks based on the FCP multipath devices in the host
+>=20
+> FIO test parameters
+> -----------------------
+> - FIO Version: fio-3.33
+> - Filesize: 2G
+> - Blocksize: 8K / 128K
+> - Direct I/O: 1
+> - FIO I/O Engine: libaio
+> - NUMJOB List: 1, 4, 8, 16
+> - IODEPTH: 8
+> - Runtime (s): 150
+>=20
+> Two FIO samples for random read
+> --------------------------------
+> fio --direct=3D1 --name=3Dtest --numjobs=3D16 --filename=3Dbase.0.0:base.=
+1.0:base.2.0:base.3.0:base.4.0:base.5.0:base.6.0:base.7.0:base.8.0:base.9.0=
+:base.10.0:base.11.0:base.12.0:base.13.0:base.14.0:base.15.0 --size=3D32G  =
+--time_based --runtime=3D4m --readwrite=3Drandread --ioengine=3Dlibaio --io=
+depth=3D8 --bs=3D8k
+> fio --direct=3D1 --name=3Dtest --numjobs=3D4  --filename=3Dsubw1/base.0.0=
+:subw4/base.3.0:subw8/base.7.0:subw12/base.11.0:subw16/base.15.0           =
+                                                             --size=3D8G   =
+--time_based --runtime=3D4m --readwrite=3Drandread --ioengine=3Dlibaio --io=
+depth=3D8 --bs=3D8k
+>=20
+>=20
+> additional notes
+> ----------------
+> - Each file is placed on a separate disk device mounted under subw<n> as =
+specified in --filename=3D....
+> - We execute one warmup run, then two measurement runs and calculate the =
+average
 
---000000000000214b140649f1d75c--
+Hi Jaehoon,
+I ran fio benchmarks on an Intel Optane SSD DC P4800X Series drive (<10
+microsecond latency). This is with just 1 drive.
+
+The 8 KiB block size results show something similar to what you
+reported: there are IOPS (or throughput) regressions and CPU utilization
+improvements.
+
+Although the CPU improvements are welcome, I think the default behavior
+should only be changed if the IOPS regressions can be brought below 5%.
+
+The regressions seem to happen regardless of whether 1 or 2 IOThreads
+are configured. CPU utilization is different (98% vs 78%) depending on
+the number of IOThreads, so the regressions happen across a range of CPU
+utilizations.
+
+The 128 KiB block size results are not interesting because the drive
+already saturates at numjobs=3D1. This is expected since the drive cannot
+go much above ~2 GiB/s throughput.
+
+You can find the Ansible playbook, libvirt domain XML, fio
+command-lines, and the fio/sar data here:
+
+https://gitlab.com/stefanha/virt-playbooks/-/tree/aio-polling-efficiency
+
+Please let me know if you'd like me to rerun the benchmark with new
+patches or a configuration change.
+
+Do you want to have a video call to discuss your work and how to get the
+patches merged?
+
+Host
+----
+CPU: Intel Xeon Silver 4214 CPU @ 2.20GHz
+RAM: 32 GiB
+
+Guest
+-----
+vCPUs: 8
+RAM: 4 GiB
+Disk: 1 virtio-blk aio=3Dnative cache=3Dnone
+
+IOPS
+----
+rw        bs   numjobs iothreads iops   diff
+randread  8k   1       1         163417 -7.8%
+randread  8k   1       2         165041 -2.4%
+randread  8k   4       1         221508 -0.64%
+randread  8k   4       2         251298 0.008%
+randread  8k   8       1         222128 -0.51%
+randread  8k   8       2         249489 -2.6%
+randread  8k   16      1         230535 -0.18%
+randread  8k   16      2         246732 -0.22%
+randread  128k 1       1          17616 -0.11%
+randread  128k 1       2          17678 0.027%
+randread  128k 4       1          17536 -0.27%
+randread  128k 4       2          17610 -0.031%
+randread  128k 8       1          17369 -0.42%
+randread  128k 8       2          17433 -0.071%
+randread  128k 16      1          17215 -0.61%
+randread  128k 16      2          17269 -0.22%
+randwrite 8k   1       1         156597 -3.1%
+randwrite 8k   1       2         157720 -3.8%
+randwrite 8k   4       1         218448 -0.5%
+randwrite 8k   4       2         247075 -5.1%
+randwrite 8k   8       1         220866 -0.75%
+randwrite 8k   8       2         260935 -0.011%
+randwrite 8k   16      1         230913 0.23%
+randwrite 8k   16      2         261125 -0.01%
+randwrite 128k 1       1          16009 0.094%
+randwrite 128k 1       2          16070 0.035%
+randwrite 128k 4       1          16073 -0.62%
+randwrite 128k 4       2          16131 0.059%
+randwrite 128k 8       1          16106 0.092%
+randwrite 128k 8       2          16153 0.048%
+randwrite 128k 16      1          16102 -0.0091%
+randwrite 128k 16      2          16160 0.048%
+
+IOThread CPU usage
+------------------
+iothreads before  after
+1         98.7    95.81
+2         78.43   66.13
+
+Stefan
+
+--h8+rxwWFeNZKwfUY
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmCZLYACgkQnKSrs4Gr
+c8jZGgf+KO4/clRIccUrPYfkx8a04QcYIobZ3WsYqSmpEOB9jnx5l4oc/Viy+XsI
+nj9KWm5GWCzA3db8hX+C8H5W0naBkQHs1a6gtZcoVNhcosmUxFYKxJn4ECAWObU1
+NlS1gazy2ZdIHJXLXbR0RrYPaCwtlnfZs8wKw6h0TsTN68F70fuOp86niR1Jyvct
+KrAu8EDop96LDIDD5hrN9AwPSlsBqVNHKFQbt7hd/X4zaLgMDas48iO9dsH7es+m
+T0XyQ5GavahjViEN3UWpLr6vbOTrmgNpoFduQaE3CuC3jhWwiixIdPeIKjJoTa60
+NRZ6QHRCdBwPPtPNPmw83GgJWewDDw==
+=YocA
+-----END PGP SIGNATURE-----
+
+--h8+rxwWFeNZKwfUY--
 
 
