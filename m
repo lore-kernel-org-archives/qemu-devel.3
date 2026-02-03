@@ -4,56 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0513CE87839
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A24BFE87839
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 14:27:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHLW-00019N-9v; Tue, 03 Feb 2026 09:25:38 -0500
+	id 1vnHNY-0001zP-D8; Tue, 03 Feb 2026 09:27:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1vnHLV-000194-4b
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:25:37 -0500
-Received: from apollo.dupie.be ([51.159.20.238])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1vnHLS-00040d-Sx
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:25:36 -0500
-Received: from [IPV6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2] (unknown
- [IPv6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2])
- by apollo.dupie.be (Postfix) with ESMTPSA id 685EF1520CCD;
- Tue, 03 Feb 2026 15:25:30 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1770128730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=vsU92RbtNXuYo1Z30VDe1YdfQ0oVBXsTTXhMQKwh2nU=;
- b=FhnGCZpQmTscX/TPezD+rkybEfoe+tddTTyk6fAMZHBDcqRjXD+6yzG+dGHswdYNy3dbK6
- dAfXCLtRjp6+mEA4CyWoo2h0s6cdzyUmWnB6rp2lV26Hk0WVaf+En3TVH552+NhKNWI2PE
- VZdDo7FK165wtVwy0l1bmKs1GPjs/434Aitd0ke2bIexmUNfYSD/3+pupfuk7ZM1EmMiMy
- 4kyoWJgxKV4MSGvjKF0Adu1jI6HrcrsJBbzVdFkuVxUuLSx8gf6StxCVDuEwSbTInC2yh4
- hpge1Xu+y8zym9rNU1tB07bnujk14KZ6lE3aitcx2XymeJqcc0sMUI+4NOJiOw==
-Content-Type: multipart/alternative;
- boundary="------------rNZ0YjKLqMmghUrjyvexC3nz"
-Message-ID: <4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be>
-Date: Tue, 3 Feb 2026 15:25:30 +0100
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnHNT-0001xB-Bq
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:40 -0500
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnHNQ-0004SV-Kd
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 09:27:39 -0500
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-126ea4e9694so3004446c88.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 06:27:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770128855; x=1770733655; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qU/hN2lGrJ1d+/4JiRA9o0cY+vOUvvBDZT9+G/+xD1w=;
+ b=DuQ0mgUER9w8XZYU0Hw/eFQDkHSF6fruh+tdbDyi0TKooBa0vMlCVcP0rg57VmcTaX
+ y/iecwQ5UjyEuKOHf6TqfUCtHC+HzkQd+j5p8SUnWAfSeJts9Ms9OZvK5XV5Y1RedhZI
+ GKPn8aKozgZBQv+OXwE3twPUcWRGNVxt4pNK1J8fbYIUwKfZtL7ARIyEQZZxhMDZ/9d4
+ XhHyZvUPzODw5WVRDXgixLtvm+NACxlJysxk4vs9z6ZCovs3d2kGZL9tmb4eTnM8q5uE
+ d58KN/34wIKl2nKZpRr/h2bsVBU9wfkV/4uf7jb+ff59iXjvSBqOjmiJhHvy9YH0dR6+
+ KrDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770128855; x=1770733655;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qU/hN2lGrJ1d+/4JiRA9o0cY+vOUvvBDZT9+G/+xD1w=;
+ b=ePl/MqZ16En5k22+syiG4Z5IRZtpSkr7CdllcLyaEwvLaTxK/VSUO6Ix9vOmaLEYFR
+ QflAeVebdd7cRI3poEpsyuucJtqLFngHuSpveuJw0pZ3nBPtSktk0unh1rVSJ2wWApms
+ k+YajUWU8xwsk9rzTeaTL85JetUdECZAritEO05do9zt1oasbn8xrxEo3JxOj/TOZxK2
+ +5Cg//kugwp05IqL0Qeu8ZJt2mP9WzF2Q7cX1s0oFQGDdtS+d36epieXEZTep2pABevJ
+ mWrJHBmjbVrAkTwNnrOlOnky/Gwwf5Y1vkbzXY3g4ibccAMvCjxLro0Z0NDaL9wFyko0
+ x8uA==
+X-Gm-Message-State: AOJu0Yz26bGtE3wBsaeKakW1hmZOVosRRh/snqtxfT51nzc5caa7OqNP
+ 5AQRTb19tCbJbAf1eA9ZypWWJBTjhTe79BN1I7ep4cnk3KYHQum6uZEC
+X-Gm-Gg: AZuq6aIe9WwyCXKgFthEmkzrdf0Qyk93pMRXWBjzKcS01zvQPsI6ZBHkz7xs56xEAJk
+ 4za0KFozuibAx7DF2qT/qV+X0MsbwbNbr5L39TRyG9BsyOZZ/wH1bdsZ0ZWAAiUHNcqs+csAjcP
+ Lh5hdtCFsYYbZTX5dIsYyzZ3XM/HSOloHS7CoiBIhN19cqLCgI42vUAqT9z8+XR/XhhkQLBRRCw
+ zpXPw7z6mG8IQpIlpT71Sw5QLco1RejRBJJsS9RoXahg68JtDYpoYY/OeHrEcqGIF/ONhW9BvHx
+ FEb526LUMlguY6kFiVw2oKm8BlXzFX/NBMxFHN2B0R/elx1G90oAKBI94qInkEbxZMZ2fLrEMiX
+ zi4rRkj65uSOMBzB6Ye14w9cche8Ve7/u3lLB5ClvHLw59MiIFoeNmd/u3mfWV5fTqhEGTpH5Fa
+ /K3VUhZIgyMnScDiyVS/uM91k8fP+pd9Fo/1gCiAJOnITgKXUS0ZqY5xpxtysEvd8i5MG4ttyEh
+ 2djvn2vztEs5vk=
+X-Received: by 2002:a05:7301:1014:b0:2b7:a4b8:69f7 with SMTP id
+ 5a478bee46e88-2b7c890b7damr6555348eec.36.1770128854598; 
+ Tue, 03 Feb 2026 06:27:34 -0800 (PST)
+Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b7a1af898asm24194529eec.33.2026.02.03.06.27.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 06:27:34 -0800 (PST)
+From: chao.liu.zevorn@gmail.com
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH v3 1/2] tests/qtest/libqos: Add RISC-V IOMMU helper library
+Date: Tue,  3 Feb 2026 22:27:05 +0800
+Message-ID: <a2edf8c44f0bce26dccb91a7d13edb58be50c1a3.1770127918.git.chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
+References: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: qemu-devel@nongnu.org, f.ebner@proxmox.com, kwolf@redhat.com
-Content-Language: en-US, en-GB, nl-BE
-Cc: dionbosschieter@gmail.com
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: (in guest) disk corruption during snapshots
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,124 +107,637 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------rNZ0YjKLqMmghUrjyvexC3nz
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Hi,
+Introduce a libqos helper module for RISC-V IOMMU testing with
+iommu-testdev. The helper provides routines to:
 
-Since some months we were observing disk corruption within the VM when 
-enabling backups (which triggers snapshots).
-After a lot of troubleshooting, we were able to track down the commit 
-that caused it:
-https://gitlab.com/qemu-project/qemu/-/commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694
+- Build device contexts (DC) and 3-level page tables for SV39/SV39x4
+- Program command queue (CQ), fault queue (FQ), and DDTP registers
+  following the RISC-V IOMMU specification
+- Execute DMA translations and verify results
 
-More info in the issue:
-https://gitlab.com/qemu-project/qemu/-/issues/3273
+The current implementation supports SV39 for S-stage and SV39x4 for
+G-stage translation. Support for SV48/SV48x4/SV57/SV57x4 can be added
+in future patches.
 
-Now this seems to be caused by a race between disabling the 
-dirty_bitmaps and the tracking implemented in the mirror top layer.
-Kevin shared me a possible solution:
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+---
+ MAINTAINERS                          |   1 +
+ tests/qtest/libqos/meson.build       |   2 +-
+ tests/qtest/libqos/qos-riscv-iommu.c | 403 +++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-riscv-iommu.h | 164 +++++++++++
+ 4 files changed, 569 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
 
-diff --git a/block/mirror.c b/block/mirror.c
-index b344182c747..f76e43f22c1 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-       * accessing it.
-       */
-      mirror_top_opaque->job = s;
-+    if (s->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
-+        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    }
-  
-      assert(!s->dbi);
-      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
-@@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
-       * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-       * mode.
-       */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    if (s->copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
-+        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    }
-  
-      bdrv_graph_wrlock_drained();
-      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-
-
-Running this for some hours already, and it seems to fix the issue.
-
-Let's open up the discussion if this is the proper way to fix it, or if 
-there are better alternatives :)
-
-Thanks
-Jean-Louis
-
---------------rNZ0YjKLqMmghUrjyvexC3nz
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi,<br>
-      <br>
-      Since some months we were observing disk corruption within the VM
-      when enabling backups (which triggers snapshots).<br>
-      After a lot of troubleshooting, we were able to track down the
-      commit that caused it:<br>
-<a class="moz-txt-link-freetext" href="https://gitlab.com/qemu-project/qemu/-/commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694">https://gitlab.com/qemu-project/qemu/-/commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694</a><br>
-      <br>
-      More info in the issue:<br>
-      <a class="moz-txt-link-freetext" href="https://gitlab.com/qemu-project/qemu/-/issues/3273">https://gitlab.com/qemu-project/qemu/-/issues/3273</a></p>
-    <p>Now this seems to be caused by a race between disabling the
-      dirty_bitmaps and the tracking implemented in the mirror top
-      layer.<br>
-      Kevin shared me a possible solution:<br>
-    </p>
-    <pre
-style="background-color: #f8f8f8; border: 1px solid #dddddd; border-radius: 4px; padding: 8px 12px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; white-space: pre-wrap; margin: 8px 0; background-color: #f8f8f8; border: 1px solid #dddddd; border-radius: 4px; padding: 8px 12px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; white-space: pre-wrap; margin: 8px 0">diff --git a/block/mirror.c b/block/mirror.c
-index b344182c747..f76e43f22c1 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-      * accessing it.
-      */
-     mirror_top_opaque-&gt;job = s;
-+    if (s-&gt;copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
-+        bdrv_disable_dirty_bitmap(s-&gt;dirty_bitmap);
-+    }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index dccdf47888..830f56376b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3584,6 +3584,7 @@ M: Tao Tang <tangtao1634@phytium.com.cn>
+ S: Maintained
+ F: tests/qtest/libqos/qos-iommu*
+ F: tests/qtest/libqos/qos-smmuv3*
++F: tests/qtest/libqos/qos-riscv-iommu*
  
-     assert(!s-&gt;dbi);
-     s-&gt;dbi = bdrv_dirty_iter_new(s-&gt;dirty_bitmap);
-@@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
-      * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-      * mode.
-      */
--    bdrv_disable_dirty_bitmap(s-&gt;dirty_bitmap);
-+    if (s-&gt;copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
-+        bdrv_disable_dirty_bitmap(s-&gt;dirty_bitmap);
-+    }
+ Device Fuzzing
+ M: Alexander Bulekov <alxndr@bu.edu>
+diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+index b4daec808f..4a69acad0d 100644
+--- a/tests/qtest/libqos/meson.build
++++ b/tests/qtest/libqos/meson.build
+@@ -71,7 +71,7 @@ if have_virtfs
+ endif
  
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&amp;s-&gt;common, "source", bs, 0,</pre>
-    <p><br>
-      Running this for some hours already, and it seems to fix the
-      issue.<br>
-      <br>
-      Let's open up the discussion if this is the proper way to fix it,
-      or if there are better alternatives :)<br>
-      <br>
-      Thanks<br>
-      Jean-Louis</p>
-  </body>
-</html>
+ if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
+-  libqos_srcs += files('riscv-iommu.c')
++  libqos_srcs += files('riscv-iommu.c', 'qos-riscv-iommu.c')
+ endif
+ if config_all_devices.has_key('CONFIG_TPCI200')
+   libqos_srcs += files('tpci200.c')
+diff --git a/tests/qtest/libqos/qos-riscv-iommu.c b/tests/qtest/libqos/qos-riscv-iommu.c
+new file mode 100644
+index 0000000000..295583f536
+--- /dev/null
++++ b/tests/qtest/libqos/qos-riscv-iommu.c
+@@ -0,0 +1,403 @@
++/*
++ * QOS RISC-V IOMMU Module
++ *
++ * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
++ * encapsulating RISC-V IOMMU setup, and assertions.
++ *
++ * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++#include "qos-iommu-testdev.h"
++#include "qos-riscv-iommu.h"
++
++/* Apply space offset to address */
++static inline uint64_t qriommu_apply_space_offs(uint64_t address)
++{
++    return address + QRIOMMU_SPACE_OFFS;
++}
++
++static uint64_t qriommu_encode_pte(uint64_t pa, uint64_t attrs)
++{
++    return ((pa >> 12) << 10) | attrs;
++}
++
++static void qriommu_wait_for_queue_active(QTestState *qts, uint64_t iommu_base,
++                                          uint32_t queue_csr, uint32_t on_bit)
++{
++    guint64 timeout_us = 2 * 1000 * 1000;
++    gint64 start_time = g_get_monotonic_time();
++    uint32_t reg;
++
++    for (;;) {
++        qtest_clock_step(qts, 100);
++
++        reg = qtest_readl(qts, iommu_base + queue_csr);
++        if (reg & on_bit) {
++            return;
++        }
++        g_assert(g_get_monotonic_time() - start_time <= timeout_us);
++    }
++}
++
++uint32_t qriommu_expected_dma_result(QRIOMMUTestContext *ctx)
++{
++    return ctx->config.expected_result;
++}
++
++uint32_t qriommu_build_dma_attrs(void)
++{
++    /* RISC-V IOMMU uses standard AXI attributes */
++    return 0;
++}
++
++uint32_t qriommu_setup_and_enable_translation(QRIOMMUTestContext *ctx)
++{
++    uint32_t build_result;
++
++    /* Build page tables and RISC-V IOMMU structures first */
++    build_result = qriommu_build_translation(
++                       ctx->qts, ctx->config.trans_mode,
++                       ctx->device_id);
++    if (build_result != 0) {
++        g_test_message("Build failed: mode=%u device_id=%u status=0x%x",
++                       ctx->config.trans_mode, ctx->device_id, build_result);
++        ctx->trans_status = build_result;
++        return ctx->trans_status;
++    }
++
++    /* Program RISC-V IOMMU registers */
++    qriommu_program_regs(ctx->qts, ctx->iommu_base);
++
++    ctx->trans_status = 0;
++    return ctx->trans_status;
++}
++
++static bool qriommu_validate_test_result(QRIOMMUTestContext *ctx)
++{
++    uint32_t expected = qriommu_expected_dma_result(ctx);
++    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
++                   expected, ctx->dma_result);
++    return (ctx->dma_result == expected);
++}
++
++static uint32_t qriommu_single_translation_setup(void *opaque)
++{
++    return qriommu_setup_and_enable_translation(opaque);
++}
++
++static uint32_t qriommu_single_translation_attrs(void *opaque)
++{
++    return qriommu_build_dma_attrs();
++}
++
++static bool qriommu_single_translation_validate(void *opaque)
++{
++    return qriommu_validate_test_result(opaque);
++}
++
++static void qriommu_single_translation_report(void *opaque,
++                                              uint32_t dma_result)
++{
++    QRIOMMUTestContext *ctx = opaque;
++
++    if (dma_result != 0) {
++        g_test_message("DMA failed: mode=%u result=0x%x",
++                       ctx->config.trans_mode, dma_result);
++    } else {
++        g_test_message("-> DMA succeeded: mode=%u",
++                       ctx->config.trans_mode);
++    }
++}
++
++void qriommu_run_translation_case(QTestState *qts, QPCIDevice *dev,
++                                  QPCIBar bar, uint64_t iommu_base,
++                                  const QRIOMMUTestConfig *cfg)
++{
++    QRIOMMUTestContext ctx = {
++        .qts = qts,
++        .dev = dev,
++        .bar = bar,
++        .iommu_base = iommu_base,
++        .config = *cfg,
++        .device_id = dev->devfn,
++    };
++
++    QOSIOMMUTestdevDmaCfg dma = {
++        .dev = dev,
++        .bar = bar,
++        .iova = QRIOMMU_IOVA,
++        .gpa = ctx.config.dma_gpa,
++        .len = ctx.config.dma_len,
++    };
++
++    qtest_memset(qts, cfg->dma_gpa, 0x00, cfg->dma_len);
++    qos_iommu_testdev_single_translation(&dma, &ctx,
++                                         qriommu_single_translation_setup,
++                                         qriommu_single_translation_attrs,
++                                         qriommu_single_translation_validate,
++                                         qriommu_single_translation_report,
++                                         &ctx.dma_result);
++
++    if (ctx.dma_result == 0 && ctx.config.expected_result == 0) {
++        g_autofree uint8_t *buf = g_malloc(ctx.config.dma_len);
++
++        qtest_memread(ctx.qts, ctx.config.dma_gpa, buf, ctx.config.dma_len);
++
++        for (int i = 0; i < ctx.config.dma_len; i++) {
++            uint8_t expected;
++
++            expected = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
++            g_assert_cmpuint(buf[i], ==, expected);
++        }
++    }
++}
++
++static uint32_t qriommu_get_table_index(uint64_t addr, int level)
++{
++    /* SV39: 39-bit virtual address, 3-level page table */
++    switch (level) {
++    case 0:
++        return (addr >> 30) & 0x1ff;   /* L0: bits [38:30] */
++    case 1:
++        return (addr >> 21) & 0x1ff;   /* L1: bits [29:21] */
++    case 2:
++        return (addr >> 12) & 0x1ff;   /* L2: bits [20:12] */
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t qriommu_get_table_addr(uint64_t base, int level, uint64_t iova)
++{
++    uint32_t index = qriommu_get_table_index(iova, level);
++    return (base & QRIOMMU_PTE_PPN_MASK) + (index * 8);
++}
++
++static void qriommu_map_leaf(QTestState *qts, uint64_t root_pa,
++                             uint64_t l0_pa, uint64_t l1_pa,
++                             uint64_t l0_pte_val, uint64_t l1_pte_val,
++                             uint64_t va, uint64_t pa, uint64_t leaf_attrs)
++{
++    uint64_t l0_addr = qriommu_get_table_addr(root_pa, 0, va);
++    uint64_t l1_addr = qriommu_get_table_addr(l0_pa, 1, va);
++    uint64_t l2_addr = qriommu_get_table_addr(l1_pa, 2, va);
++
++    qtest_writeq(qts, l0_addr, l0_pte_val);
++    qtest_writeq(qts, l1_addr, l1_pte_val);
++    qtest_writeq(qts, l2_addr, qriommu_encode_pte(pa, leaf_attrs));
++}
++
++static uint64_t qriommu_get_pte_attrs(bool is_leaf)
++{
++    if (!is_leaf) {
++        return QRIOMMU_NON_LEAF_PTE_MASK;
++    }
++
++    /* For leaf PTE, set RWX permissions */
++    return QRIOMMU_LEAF_PTE_RW_MASK;
++}
++
++void qriommu_setup_translation_tables(QTestState *qts,
++                                      uint64_t iova,
++                                      QRIOMMUTransMode mode)
++{
++    uint64_t s_root = 0, s_l0_pte_val = 0, s_l1_pte_val = 0;
++    uint64_t s_l0_addr = 0, s_l1_addr = 0, s_l2_addr = 0, s_l2_pte_val = 0;
++    uint64_t s_l0_pa = 0, s_l1_pa = 0;
++    uint64_t s_l2_pa = qriommu_apply_space_offs(QRIOMMU_L2_PTE_VAL);
++    uint64_t s_l0_pa_real = 0, s_l1_pa_real = 0;
++    uint64_t s_l2_pa_real = qriommu_apply_space_offs(QRIOMMU_L2_PTE_VAL);
++    uint64_t non_leaf_attrs = qriommu_get_pte_attrs(false);
++    uint64_t leaf_attrs = qriommu_get_pte_attrs(true);
++
++    if (mode != QRIOMMU_TM_G_STAGE_ONLY) {
++        /* Setup S-stage 3-level page tables (SV39) */
++        s_l0_pa = qriommu_apply_space_offs(QRIOMMU_L0_PTE_VAL);
++        s_l1_pa = qriommu_apply_space_offs(QRIOMMU_L1_PTE_VAL);
++        s_root = qriommu_apply_space_offs(
++            QRIOMMU_IOHGATP & QRIOMMU_PTE_PPN_MASK);
++        s_l2_pa = qriommu_apply_space_offs(QRIOMMU_L2_PTE_VAL);
++
++        s_l0_pa_real = s_l0_pa;
++        s_l1_pa_real = s_l1_pa;
++        s_l2_pa_real = s_l2_pa;
++
++        if (mode == QRIOMMU_TM_NESTED) {
++            s_l0_pa = QRIOMMU_L0_PTE_VAL;
++            s_l1_pa = QRIOMMU_L1_PTE_VAL;
++            s_l2_pa = QRIOMMU_L2_PTE_VAL;
++
++            s_l0_pa_real = qriommu_apply_space_offs(QRIOMMU_L0_PTE_VAL);
++            s_l1_pa_real = qriommu_apply_space_offs(QRIOMMU_L1_PTE_VAL);
++            s_l2_pa_real = qriommu_apply_space_offs(QRIOMMU_L2_PTE_VAL);
++        }
++
++        s_l0_pte_val = qriommu_encode_pte(s_l0_pa, non_leaf_attrs);
++        s_l1_pte_val = qriommu_encode_pte(s_l1_pa, non_leaf_attrs);
++
++        s_l0_addr = qriommu_get_table_addr(s_root, 0, iova);
++        qtest_writeq(qts, s_l0_addr, s_l0_pte_val);
++
++        s_l1_addr = qriommu_get_table_addr(s_l0_pa_real, 1, iova);
++        qtest_writeq(qts, s_l1_addr, s_l1_pte_val);
++
++        s_l2_addr = qriommu_get_table_addr(s_l1_pa_real, 2, iova);
++        s_l2_pte_val = qriommu_encode_pte(s_l2_pa, leaf_attrs);
++        qtest_writeq(qts, s_l2_addr, s_l2_pte_val);
++    }
++
++    if (mode == QRIOMMU_TM_G_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
++        uint64_t g_root;
++        uint64_t g_l0_pa;
++        uint64_t g_l1_pa;
++        uint64_t g_l0_pte_val;
++        uint64_t g_l1_pte_val;
++
++        g_root = qriommu_apply_space_offs(
++            QRIOMMU_G_IOHGATP & QRIOMMU_PTE_PPN_MASK);
++        g_l0_pa = qriommu_apply_space_offs(QRIOMMU_G_L0_PTE_VAL);
++        g_l1_pa = qriommu_apply_space_offs(QRIOMMU_G_L1_PTE_VAL);
++        g_l0_pte_val = qriommu_encode_pte(g_l0_pa, non_leaf_attrs);
++        g_l1_pte_val = qriommu_encode_pte(g_l1_pa, non_leaf_attrs);
++
++        if (mode == QRIOMMU_TM_G_STAGE_ONLY) {
++            qriommu_map_leaf(qts, g_root, g_l0_pa, g_l1_pa,
++                             g_l0_pte_val, g_l1_pte_val,
++                             iova, s_l2_pa_real, leaf_attrs);
++        } else {
++            qriommu_map_leaf(qts, g_root, g_l0_pa, g_l1_pa,
++                             g_l0_pte_val, g_l1_pte_val,
++                             QRIOMMU_IOHGATP, s_root, leaf_attrs);
++            qriommu_map_leaf(qts, g_root, g_l0_pa, g_l1_pa,
++                             g_l0_pte_val, g_l1_pte_val,
++                             QRIOMMU_L0_PTE_VAL, s_l0_pa_real, leaf_attrs);
++            qriommu_map_leaf(qts, g_root, g_l0_pa, g_l1_pa,
++                             g_l0_pte_val, g_l1_pte_val,
++                             QRIOMMU_L1_PTE_VAL, s_l1_pa_real, leaf_attrs);
++            qriommu_map_leaf(qts, g_root, g_l0_pa, g_l1_pa,
++                             g_l0_pte_val, g_l1_pte_val,
++                             QRIOMMU_L2_PTE_VAL, s_l2_pa_real, leaf_attrs);
++        }
++    }
++}
++
++uint32_t qriommu_build_translation(QTestState *qts, QRIOMMUTransMode mode,
++                                   uint32_t device_id)
++{
++    uint64_t dc_addr, dc_addr_real;
++    struct riscv_iommu_dc dc;
++    uint64_t iohgatp;
++
++    qtest_memset(qts, qriommu_apply_space_offs(QRIOMMU_DDT_BASE), 0, 0x1000);
++
++    dc_addr = device_id * sizeof(struct riscv_iommu_dc) + QRIOMMU_DC_BASE;
++    dc_addr_real = qriommu_apply_space_offs(dc_addr);
++
++    /* Build Device Context (DC) */
++    memset(&dc, 0, sizeof(dc));
++
++    switch (mode) {
++    case QRIOMMU_TM_BARE:
++        /* Pass-through mode: tc.V=1, no FSC/IOHGATP */
++        dc.tc = RISCV_IOMMU_DC_TC_V;
++        break;
++
++    case QRIOMMU_TM_S_STAGE_ONLY:
++        /* S-stage only: tc.V=1, set FSC */
++        dc.tc = RISCV_IOMMU_DC_TC_V;
++        iohgatp = qriommu_apply_space_offs(QRIOMMU_IOHGATP);
++        /* FSC mode: SV39 (mode=8) */
++        dc.fsc = (iohgatp >> 12) | (8ull << 60);
++        break;
++
++    case QRIOMMU_TM_G_STAGE_ONLY:
++        /* G-stage only: tc.V=1, set IOHGATP */
++        dc.tc = RISCV_IOMMU_DC_TC_V;
++        iohgatp = qriommu_apply_space_offs(QRIOMMU_G_IOHGATP);
++        /* IOHGATP mode: SV39x4 (mode=8) */
++        dc.iohgatp = (iohgatp >> 12) | (8ull << 60);
++        break;
++
++    case QRIOMMU_TM_NESTED:
++        /* Nested: tc.V=1, set both FSC and IOHGATP */
++        dc.tc = RISCV_IOMMU_DC_TC_V;
++        /* FSC mode: SV39 (mode=8) */
++        dc.fsc = (QRIOMMU_IOHGATP >> 12) | (8ull << 60);
++        /* IOHGATP mode: SV39x4 (mode=8) */
++        iohgatp = qriommu_apply_space_offs(QRIOMMU_G_IOHGATP);
++        dc.iohgatp = (iohgatp >> 12) | (8ull << 60);
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    /* Write DC to memory */
++    qtest_writeq(qts, dc_addr_real + 0,  dc.tc);
++    qtest_writeq(qts, dc_addr_real + 8,  dc.iohgatp);
++    qtest_writeq(qts, dc_addr_real + 16, dc.ta);
++    qtest_writeq(qts, dc_addr_real + 24, dc.fsc);
++    qtest_writeq(qts, dc_addr_real + 32, dc.msiptp);
++    qtest_writeq(qts, dc_addr_real + 40, dc.msi_addr_mask);
++    qtest_writeq(qts, dc_addr_real + 48, dc.msi_addr_pattern);
++    qtest_writeq(qts, dc_addr_real + 56, dc._reserved);
++
++    /* Setup translation tables if not in BARE mode */
++    if (mode != QRIOMMU_TM_BARE) {
++        qriommu_setup_translation_tables(qts, QRIOMMU_IOVA, mode);
++    }
++
++    return 0;
++}
++
++void qriommu_program_regs(QTestState *qts, uint64_t iommu_base)
++{
++    uint64_t ddtp, cqb, fqb;
++    uint64_t cq_base, fq_base;
++    uint64_t cq_align, fq_align;
++    uint32_t cq_entries = QRIOMMU_QUEUE_ENTRIES;
++    uint32_t fq_entries = QRIOMMU_QUEUE_ENTRIES;
++    uint32_t cq_log2sz = ctz32(cq_entries) - 1;
++    uint32_t fq_log2sz = ctz32(fq_entries) - 1;
++
++    cq_base = qriommu_apply_space_offs(QRIOMMU_CQ_BASE_ADDR);
++    fq_base = qriommu_apply_space_offs(QRIOMMU_FQ_BASE_ADDR);
++
++    cq_align = MAX(0x1000ull, (uint64_t)cq_entries * QRIOMMU_CQ_ENTRY_SIZE);
++    fq_align = MAX(0x1000ull, (uint64_t)fq_entries * QRIOMMU_FQ_ENTRY_SIZE);
++    g_assert((cq_base & (cq_align - 1)) == 0);
++    g_assert((fq_base & (fq_align - 1)) == 0);
++
++    /* Setup Command Queue */
++    cqb = (cq_base >> 12) << 10 | cq_log2sz;
++    qtest_writeq(qts, iommu_base + RISCV_IOMMU_REG_CQB, cqb);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_CQH, 0);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_CQT, 0);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_CQCSR,
++                 RISCV_IOMMU_CQCSR_CQEN);
++    qriommu_wait_for_queue_active(qts, iommu_base, RISCV_IOMMU_REG_CQCSR,
++                                  RISCV_IOMMU_CQCSR_CQON);
++
++    /* Setup Fault Queue */
++    fqb = (fq_base >> 12) << 10 | fq_log2sz;
++    qtest_writeq(qts, iommu_base + RISCV_IOMMU_REG_FQB, fqb);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FQH, 0);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FQT, 0);
++    qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FQCSR,
++                 RISCV_IOMMU_FQCSR_FQEN);
++    qriommu_wait_for_queue_active(qts, iommu_base, RISCV_IOMMU_REG_FQCSR,
++                                  RISCV_IOMMU_FQCSR_FQON);
++
++    /* Set Device Directory Table Pointer (DDTP) */
++    ddtp = qriommu_apply_space_offs(QRIOMMU_DDT_BASE);
++    g_assert((ddtp & 0xfff) == 0);
++    ddtp = ((ddtp >> 12) << 10) | RISCV_IOMMU_DDTP_MODE_1LVL;
++    qtest_writeq(qts, iommu_base + RISCV_IOMMU_REG_DDTP, ddtp);
++    g_assert((qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_DDTP) &
++              (RISCV_IOMMU_DDTP_PPN | RISCV_IOMMU_DDTP_MODE)) ==
++             (ddtp & (RISCV_IOMMU_DDTP_PPN | RISCV_IOMMU_DDTP_MODE)));
++}
+diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
+new file mode 100644
+index 0000000000..90e69a5d73
+--- /dev/null
++++ b/tests/qtest/libqos/qos-riscv-iommu.h
+@@ -0,0 +1,164 @@
++/*
++ * QOS RISC-V IOMMU Module
++ *
++ * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
++ * encapsulating RISC-V IOMMU setup, and assertions.
++ *
++ * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QTEST_LIBQOS_RISCV_IOMMU_H
++#define QTEST_LIBQOS_RISCV_IOMMU_H
++
++#include "hw/misc/iommu-testdev.h"
++
++/* RISC-V IOMMU MMIO register base for virt machine */
++#define VIRT_RISCV_IOMMU_BASE      0x0000000003010000ull
++
++/* RISC-V IOMMU queue and table base addresses */
++#define QRIOMMU_CQ_BASE_ADDR       0x000000000e160000ull
++#define QRIOMMU_FQ_BASE_ADDR       0x000000000e170000ull
++
++/* RISC-V IOMMU queue sizing */
++#define QRIOMMU_QUEUE_ENTRIES  1024
++#define QRIOMMU_CQ_ENTRY_SIZE  16
++#define QRIOMMU_FQ_ENTRY_SIZE  32
++
++/*
++ * Translation tables and descriptors for RISC-V IOMMU.
++ * Similar to ARM SMMUv3, but using RISC-V IOMMU terminology:
++ * - Device Context (DC) instead of STE
++ * - First-stage context (FSC) for S-stage translation
++ * - IOHGATP for G-stage translation
++ *
++ * Granule size: 4KB pages
++ * Page table levels: 3 levels for SV39 (L0, L1, L2)
++ * IOVA size: 39-bit virtual address space
++ */
++#define QRIOMMU_IOVA                0x0000000080604567ull
++#define QRIOMMU_IOHGATP             0x0000000000010000ull
++#define QRIOMMU_DDT_BASE            0x0000000000014000ull
++#define QRIOMMU_DC_BASE             (QRIOMMU_DDT_BASE)
++
++#define QRIOMMU_L0_PTE_VAL          0x0000000000011000ull
++#define QRIOMMU_L1_PTE_VAL          0x0000000000012000ull
++#define QRIOMMU_L2_PTE_VAL          0x0000000000013000ull
++
++#define QRIOMMU_G_IOHGATP           0x0000000000020000ull
++#define QRIOMMU_G_L0_PTE_VAL        0x0000000000021000ull
++#define QRIOMMU_G_L1_PTE_VAL        0x0000000000022000ull
++
++/*
++ * PTE masks for RISC-V IOMMU page tables.
++ * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
++ */
++#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
++#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
++#define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
++
++/* Address-space base offset for test tables */
++#define QRIOMMU_SPACE_OFFS          0x0000000080000000ull
++
++typedef enum QRIOMMUTransMode {
++    QRIOMMU_TM_BARE         = 0,    /* No translation (pass-through) */
++    QRIOMMU_TM_S_STAGE_ONLY = 1,    /* First-stage only (S-stage) */
++    QRIOMMU_TM_G_STAGE_ONLY = 2,    /* Second-stage only (G-stage) */
++    QRIOMMU_TM_NESTED       = 3,    /* Nested translation (S + G) */
++} QRIOMMUTransMode;
++
++typedef struct QRIOMMUTestConfig {
++    QRIOMMUTransMode trans_mode;    /* Translation mode */
++    uint64_t dma_gpa;               /* GPA for readback validation */
++    uint32_t dma_len;               /* DMA length for testing */
++    uint32_t expected_result;       /* Expected DMA result */
++} QRIOMMUTestConfig;
++
++typedef struct QRIOMMUTestContext {
++    QTestState *qts;                /* QTest state handle */
++    QPCIDevice *dev;                /* PCI device handle */
++    QPCIBar bar;                    /* PCI BAR for MMIO access */
++    QRIOMMUTestConfig config;       /* Test configuration */
++    uint64_t iommu_base;            /* RISC-V IOMMU base address */
++    uint32_t trans_status;          /* Translation configuration status */
++    uint32_t dma_result;            /* DMA operation result */
++    uint32_t device_id;             /* Device ID for the test */
++} QRIOMMUTestContext;
++
++/*
++ * qriommu_setup_and_enable_translation - Complete translation setup and enable
++ *
++ * @ctx: Test context containing configuration and device handles
++ *
++ * Returns: Translation status (0 = success, non-zero = error)
++ *
++ * This function performs the complete translation setup sequence:
++ * 1. Builds all required RISC-V IOMMU structures (DC, page tables)
++ * 2. Programs RISC-V IOMMU registers
++ * 3. Returns configuration status
++ */
++uint32_t qriommu_setup_and_enable_translation(QRIOMMUTestContext *ctx);
++
++/*
++ * qriommu_build_translation - Build RISC-V IOMMU translation structures
++ *
++ * @qts: QTest state handle
++ * @mode: Translation mode (BARE, S_STAGE_ONLY, G_STAGE_ONLY, NESTED)
++ * @device_id: Device ID
++ *
++ * Returns: Build status (0 = success, non-zero = error)
++ *
++ * Constructs all necessary RISC-V IOMMU translation structures in guest memory:
++ * - Device Context (DC) for the given device ID
++ * - First-stage context (FSC) if S-stage translation is involved
++ * - Complete page table hierarchy based on translation mode
++ */
++uint32_t qriommu_build_translation(QTestState *qts, QRIOMMUTransMode mode,
++                                   uint32_t device_id);
++
++/*
++ * qriommu_program_regs - Program all required RISC-V IOMMU registers
++ *
++ * @qts: QTest state handle
++ * @iommu_base: RISC-V IOMMU base address
++ *
++ * Programs RISC-V IOMMU registers:
++ * - Device Directory Table Pointer (DDTP)
++ * - Command queue (base, head, tail)
++ * - Fault queue (base, head, tail)
++ * - Control and status registers
++ */
++void qriommu_program_regs(QTestState *qts, uint64_t iommu_base);
++
++/*
++ * qriommu_setup_translation_tables - Setup RISC-V IOMMU page table hierarchy
++ *
++ * @qts: QTest state handle
++ * @iova: Input Virtual Address to translate
++ * @mode: Translation mode
++ *
++ * This function builds the complete page table structure for translating
++ * the given IOVA through the RISC-V IOMMU. The structure varies based on mode:
++ *
++ * - BARE: No translation (pass-through)
++ * - S_STAGE_ONLY: Single S-stage walk (IOVA -> PA)
++ * - G_STAGE_ONLY: Single G-stage walk (IPA -> PA)
++ * - NESTED: S-stage walk (IOVA -> IPA) + G-stage walk (IPA -> PA)
++ */
++void qriommu_setup_translation_tables(QTestState *qts,
++                                      uint64_t iova,
++                                      QRIOMMUTransMode mode);
++
++/* High-level test execution helpers */
++void qriommu_run_translation_case(QTestState *qts, QPCIDevice *dev,
++                                  QPCIBar bar, uint64_t iommu_base,
++                                  const QRIOMMUTestConfig *cfg);
++
++/* Calculate expected DMA result */
++uint32_t qriommu_expected_dma_result(QRIOMMUTestContext *ctx);
++
++/* Build DMA attributes for RISC-V IOMMU */
++uint32_t qriommu_build_dma_attrs(void);
++
++#endif /* QTEST_LIBQOS_RISCV_IOMMU_H */
+-- 
+2.53.0
 
---------------rNZ0YjKLqMmghUrjyvexC3nz--
 
