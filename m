@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F0CE87820
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBE2E87822
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnFKX-0001sr-Mr; Tue, 03 Feb 2026 07:16:32 -0500
+	id 1vnFQh-0003gJ-60; Tue, 03 Feb 2026 07:22:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vnFKM-0001sL-0L
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:18 -0500
+ id 1vnFQd-0003ey-VV
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:22:48 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vnFKK-0003JO-4X
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:16:17 -0500
+ id 1vnFQY-0006Gh-OK
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:22:46 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 613CF1Em088794
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 613CL53H090641
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Feb 2026 21:16:07 +0900 (JST)
+ Tue, 3 Feb 2026 21:22:38 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=GuqXYd3IA5RwtSoWBA9bn+ihzDFvboN50kCStC/F13Y=; 
+DKIM-Signature: a=rsa-sha256; bh=EfljTT7H+BKUC/puUtCiMYusXfjgRIczw7SNK8zSfsM=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1770120967; v=1;
- b=gpUn4+YXnJbgNXcBYDmYKjTof2Xtfn1eOp8+2/LWCXfPgFYmq5OJ6kwAwLTpl37u
- sWgm2ViCNBYIgm9ZRR84LXdzU9yV1s4h5ELw07p1Z/Yu+yVD72v29WY5tncg8J3h
- 0pQ/9Cu7EY+eWv19JdJhEPuICa5UWNbOBJeg4iOxxqWVCd1kOQnGnLomiWBF1W4A
- 6l70ZNP8v/MlNDwYmSA2jMEWacKrosddqnRBGiP7uirpfS6oyl4oR0ioTvfJ7oZt
- +zZXHgSoGz224Jf3AEC8EvSBFz8Ca6sh9RJuL3NT/uHR1qMnX0mwuer8WI38GNF0
- RPDmEtgxTYI/jie+TFEzPA==
-Message-ID: <3a50b455-9460-4566-b676-f6ca066af400@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 3 Feb 2026 21:16:00 +0900
+ s=rs20250326; t=1770121358; v=1;
+ b=rgybq/dm7J0UoXYbmNV7529C0TlbxvsQ2EafmxNyJw2v+j/KPRzN0nyXihwGp5If
+ 9f09XvPEuKYD+a0KMzClGSqf1tiEzaXK9bWGFub+/MI1zC0rLm3zd4Pb2eeu4cga
+ GJWBBlV4+/g0Hzf22KHHhG5J3CoTRBt7ySR9lBaMwHOzObQBo2G8Aasrzpf1Xzwo
+ yxaSafljGTuBZPPrXL78UbR7KXFiABq/Qlu0aJt2ALe80fNjMIKBhb+bUirgdNq+
+ V2WqWoPIx08QDPfaIYCLNshv5nmfLxfU8ci6NE2iSstRa8qTtsPz1igC+jsIHIjm
+ Ic/EhxoPJC8LW4jzSusIRg==
+Message-ID: <7ee2dc74-a5ec-40d8-be26-84a79a59a97f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 3 Feb 2026 21:21:04 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/12] virtio-gpu-dmabuf: Use g_autofree for the list
- pointer
+Subject: Re: [PATCH v5 06/12] virtio-gpu-dmabuf: Improve error handling by
+ introducing 'Error **'
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +49,10 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>
 References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
- <20260203073200.848183-6-vivek.kasireddy@intel.com>
+ <20260203073200.848183-7-vivek.kasireddy@intel.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260203073200.848183-6-vivek.kasireddy@intel.com>
+In-Reply-To: <20260203073200.848183-7-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,8 +80,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/02/03 16:30, Vivek Kasireddy wrote:
-> Avoid the manual g_free() calls for the list pointer by using
-> g_autofree in virtio_gpu_create_udmabuf().
+> Make the error handling more robust in virtio_gpu_init_udmabuf()
+> by passing in 'Error **' parameter to capture errors from
+> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+> And, since they now take in 'Error **' parameter, have them
+> return a bool to adhere to best practices.
 > 
 > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -90,6 +93,113 @@ On 2026/02/03 16:30, Vivek Kasireddy wrote:
 > Cc: Alex Williamson <alex@shazbot.org>
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> ---
+>   hw/display/virtio-gpu-dmabuf.c | 44 ++++++++++++++++++++++------------
+>   1 file changed, 29 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+> index 8d67ef7c2a..22e66fbb12 100644
+> --- a/hw/display/virtio-gpu-dmabuf.c
+> +++ b/hw/display/virtio-gpu-dmabuf.c
+> @@ -27,7 +27,8 @@
+>   #include "standard-headers/linux/udmabuf.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
+>   
+> -static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+> +static bool virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
+> +                                      Error **errp)
+>   {
+>       g_autofree struct udmabuf_create_list *list = NULL;
+>       RAMBlock *rb;
+> @@ -36,7 +37,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>       udmabuf = udmabuf_fd();
+>       if (udmabuf < 0) {
+> -        return;
+> +        error_setg(errp, "udmabuf device not available");
+> +        return false;
+>       }
+>   
+>       list = g_malloc0(sizeof(struct udmabuf_create_list) +
+> @@ -45,7 +47,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>       for (i = 0; i < res->iov_cnt; i++) {
+>           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+>           if (!rb || rb->fd < 0) {
+> -            return;
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: Could not find valid ramblock\n",
+> +                          __func__);
+> +            error_setg(errp, "Could not find ramblock for dmabuf segment");
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+This should stay LOG_GUEST_ERROR as this may be triggered by the guest.
+
+Regards,
+Akihiko Odaki
+
+> +            return false;
+>           }
+>   
+>           list->list[i].memfd  = rb->fd;
+> @@ -58,20 +64,26 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>       res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>       if (res->dmabuf_fd < 0) {
+> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+> -                    strerror(errno));
+> +        error_setg_errno(errp, -res->dmabuf_fd,
+> +                         "Could not create dmabuf fd via udmabuf driver");
+> +        return false;
+>       }
+> +    return true;
+>   }
+>   
+> -static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+> +static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
+> +                                    Error **err1)
+>   {
+> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+> -                         MAP_SHARED, res->dmabuf_fd, 0);
+> -    if (res->remapped == MAP_FAILED) {
+> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+> -                    strerror(errno));
+> +    void *map;
+> +
+> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
+> +    if (map == MAP_FAILED) {
+> +        error_setg_errno(err1, errno, "dmabuf mmap failed");
+>           res->remapped = NULL;
+> +        return false;
+>       }
+> +    res->remapped = map;
+> +    return true;
+>   }
+>   
+>   static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
+> @@ -125,6 +137,7 @@ bool virtio_gpu_have_udmabuf(void)
+>   
+>   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+> +    Error *err1 = NULL;
+>       void *pdata = NULL;
+>   
+>       res->dmabuf_fd = -1;
+> @@ -132,12 +145,13 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>           res->iov[0].iov_len < 4096) {
+>           pdata = res->iov[0].iov_base;
+>       } else {
+> -        virtio_gpu_create_udmabuf(res);
+> -        if (res->dmabuf_fd < 0) {
+> +        if (!virtio_gpu_create_udmabuf(res, &err1)) {
+> +            error_report_err(err1);
+>               return;
+>           }
+> -        virtio_gpu_remap_dmabuf(res);
+> -        if (!res->remapped) {
+> +
+> +        if (!virtio_gpu_remap_dmabuf(res, &err1)) {
+> +            error_report_err(err1);
+>               return;
+>           }
+>           pdata = res->remapped;
+
 
