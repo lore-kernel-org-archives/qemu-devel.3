@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA114E83060
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8882CE7FDD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 12:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnF8Y-0007jo-Nt; Tue, 03 Feb 2026 07:04:11 -0500
+	id 1vnF8o-0008Ai-MN; Tue, 03 Feb 2026 07:04:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8N-0007ih-6M
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:03:55 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8h-0007uz-Oj
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8K-0007dP-Fo
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:03:54 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vnF8e-0007gn-V4
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 07:04:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770120231;
+ s=mimecast20190719; t=1770120252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=50eLgHjC/pRtKcjo/0ngsF0jANwn8Iv9jNM2r9PWzZQ=;
- b=eNQ9YyGmZyehmDDG7pI56L/hjqocm4IKSS+LLajcKcxUcG0aCFtQ7SSeGuZajD53/znwAN
- juFCAm8tgVQ0QxGvbjbTimYH/aEqELD9QEersJZrTYkOIc47BI5r3fTcCKSLxjJGtuNpe4
- hYTMcvnDqDbwgBRWid92h+EM9qEZ2Ho=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=VLk1QYTAuX6H/ydX2gIg04GXxUxZ6ls8XqFNJjVMQmQ=;
+ b=WVu2UezxM4At98iS6pXCSJV+ygqJj2jWdXyPjJhEtrPCdHv5bL7Y3+6k1BNafMb9sWjbsl
+ ldQu0ZO7oNHVhK+Nwd/IO4/w1WL6pxvxL/D4D0/YUAtn6X/ZzhpkQALkeOOhuMZYY0WkaN
+ 2JoQyrTsI+03uF6izsY6lw/JAY4J1bM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-CzjAfwm1MqCbnoxzsYSuWw-1; Tue,
- 03 Feb 2026 07:03:48 -0500
-X-MC-Unique: CzjAfwm1MqCbnoxzsYSuWw-1
-X-Mimecast-MFC-AGG-ID: CzjAfwm1MqCbnoxzsYSuWw_1770120226
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-PiLt5Af7NJi8D9_8GjPnfg-1; Tue,
+ 03 Feb 2026 07:04:09 -0500
+X-MC-Unique: PiLt5Af7NJi8D9_8GjPnfg-1
+X-Mimecast-MFC-AGG-ID: PiLt5Af7NJi8D9_8GjPnfg_1770120247
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD98F1954B0B; Tue,  3 Feb 2026 12:03:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C42B318002C4; Tue,  3 Feb 2026 12:04:07 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.34.28])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D31E19560B2; Tue,  3 Feb 2026 12:03:45 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F5AA18002A6; Tue,  3 Feb 2026 12:04:07 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7828718003B5; Tue, 03 Feb 2026 13:03:43 +0100 (CET)
+ id AB4AF182626C; Tue, 03 Feb 2026 13:03:44 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,17 +58,15 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
- Gerd Hoffmann <kraxel@redhat.com>,
- Jim MacArthur <jim.macarthur@linaro.org>,
- Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 01/17] docs/system/igvm.rst: Update external links
-Date: Tue,  3 Feb 2026 13:03:26 +0100
-Message-ID: <20260203120343.656961-2-kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: [PULL 16/17] igvm: Only build stubs if igvm is enabled
+Date: Tue,  3 Feb 2026 13:03:41 +0100
+Message-ID: <20260203120343.656961-17-kraxel@redhat.com>
 In-Reply-To: <20260203120343.656961-1-kraxel@redhat.com>
 References: <20260203120343.656961-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -94,38 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+From: Oliver Steffen <osteffen@redhat.com>
 
-* Fixes link to AMD64 Architecture Programmer's
-Manual and bumps version to 3.43.
-* Updates link to buildigvm to new home on GitLab.
+Change meson script to only include the IGVM stubs file if the IGVM
+feature is enabled. It is used to handle architecture specific
+differences within the IGVM backend, not to provide stubs of the backend
+itself.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3247
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Message-ID: <20260119-igvm-documentation-fix-v2-1-b2f6174e3f4f@linaro.org>
+Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+Message-ID: <20260130054714.715928-9-osteffen@redhat.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- docs/system/igvm.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ stubs/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
-index 79508d958802..9db8ae43d21d 100644
---- a/docs/system/igvm.rst
-+++ b/docs/system/igvm.rst
-@@ -166,8 +166,8 @@ References
- ----------
- 
- [1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
--  Rev 3.41
--  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
-+  Rev 3.43
-+  https://docs.amd.com/v/u/en-US/24593_3.43
- 
- [2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
--  https://github.com/roy-hopkins/buildigvm
-\ No newline at end of file
-+  https://gitlab.com/qemu-project/buildigvm
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 2b5fd8a88af5..8a07059500db 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -71,7 +71,9 @@ if have_system
+   stub_ss.add(files('dump.c'))
+   stub_ss.add(files('cmos.c'))
+   stub_ss.add(files('fw_cfg.c'))
+-  stub_ss.add(files('igvm.c'))
++  if igvm.found()
++    stub_ss.add(files('igvm.c'))
++  endif
+   stub_ss.add(files('target-get-monitor-def.c'))
+   stub_ss.add(files('target-monitor-defs.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
 -- 
 2.52.0
 
