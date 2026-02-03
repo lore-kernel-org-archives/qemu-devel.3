@@ -4,75 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5903BE87839
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C767FE8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnIAy-0006iC-D3; Tue, 03 Feb 2026 10:18:51 -0500
+	id 1vnIDj-0000fI-J3; Tue, 03 Feb 2026 10:21:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnIAe-0006ZR-GW
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:18:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vnIDc-0000Vo-Lz; Tue, 03 Feb 2026 10:21:33 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnIAc-0007A1-92
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:18:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770131905;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HA/h7ZMhcapQU3W1kqr0RuT09ndTqWPCITJJvwMUyhA=;
- b=W624+CFgIpJlT2YkhuJ129mJ5Q3GLqC/fS5ejlddtFRf/mnZ8NIZixNcE9au2e6OUAvMQ/
- Hp3wiujNNczahSaWdFMOkwVTlT8qw3JqcayyS/MVqMmXHDioEutRIIBygaPeyiN3bco90e
- X/85J9p4IXh7z7YWlBvjVL/EmD2NPZc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-vIDi4N1fNXmYPG2R8piODQ-1; Tue,
- 03 Feb 2026 10:18:22 -0500
-X-MC-Unique: vIDi4N1fNXmYPG2R8piODQ-1
-X-Mimecast-MFC-AGG-ID: vIDi4N1fNXmYPG2R8piODQ_1770131901
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC28A1800BC2; Tue,  3 Feb 2026 15:17:27 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.45.242.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF25A180094B; Tue,  3 Feb 2026 15:17:25 +0000 (UTC)
-Date: Tue, 3 Feb 2026 16:17:22 +0100
-From: Peter Krempa <pkrempa@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 1/2] block: Wire up 'flat' mode also for 'query-block'
-Message-ID: <aYIRgmXsqf09ZfX4@angien.pipo.sk>
-References: <cover.1770108436.git.pkrempa@redhat.com>
- <a38d78156b74b134da0f1479a30fc0d6cdb7b97c.1770108436.git.pkrempa@redhat.com>
- <87pl6m2g02.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vnIDa-0000Hm-C7; Tue, 03 Feb 2026 10:21:31 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6137xW5h005339;
+ Tue, 3 Feb 2026 15:21:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uBs1bp
+ ZC5DNa87wY74RKTIxAJoNza/+9iiL9xfQjRp8=; b=lOrxgDSiB1hABzZP0kE+59
+ Py4dvar4yWwrT9r+58OSUGU6oUl96eAnX9vYpNWuZP1l8bV1yOPyBM9oEmqn1h6f
+ lqF3uwfO9Pnmq+PvFJZRPxoDohvsVjGwrAIKSFHcQfCIfiYMT/PyMysZL3nxb3sq
+ wnpEtidxlphefK0XiYf++rAv2BqnE1DzPnRHDYpeKF4SgeaXY5G5447FMiYh/840
+ N5YxjEnR0sMpOWFzhhzW0Jzwec0Ej5322Znf5vrKAfuafEgHtxjgFGNkC1au3aTT
+ JHNAFZh1NuhT1vylxAyfA7+OQAbeMpRj8CFaNOuuiOGBNSSktMPJuGFjEfI2d51Q
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c1986e1au-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 15:21:24 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 613FLNXH027789;
+ Tue, 3 Feb 2026 15:21:24 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c1986e1ak-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 15:21:23 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 613BL7KL004422;
+ Tue, 3 Feb 2026 15:21:22 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1wjjsj8u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 15:21:22 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 613FLMJe6882056
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Feb 2026 15:21:22 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47B4B5805C;
+ Tue,  3 Feb 2026 15:21:22 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4D7EC5805E;
+ Tue,  3 Feb 2026 15:21:21 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Feb 2026 15:21:21 +0000 (GMT)
+Message-ID: <26b39a30-8ef0-4f68-af65-58a6718226a6@linux.ibm.com>
+Date: Tue, 3 Feb 2026 10:21:20 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87pl6m2g02.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4 qemu] Exclude TPM ioctls definitions for the
+ GNU/Hurd
+To: Paolo Bonzini <pbonzini@redhat.com>, Damien Zammit <damien@zamaudio.com>, 
+ bug-hurd@gnu.org
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
+ peter.maydell@linaro.org, kwolf@redhat.com, berrange@redhat.com,
+ eblake@redhat.com, bugaevc@gmail.com
+References: <20260130031954.1661880-1-damien@zamaudio.com>
+ <20260130031954.1661880-4-damien@zamaudio.com>
+ <ac182e8e-cd4f-467b-b6a8-31f03b70b3b9@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <ac182e8e-cd4f-467b-b6a8-31f03b70b3b9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDExNSBTYWx0ZWRfXzu/uo1puBFqA
+ nGje+8lHBynemZp6ZUqqzVqrE1zD9qbx7J2kWGuFV2S5vAiaoNH6oWD3pVRf8kTeOgBL7RWaexa
+ /8e4uEpxHJ3kxNhC0FRiQEPz0VmxXyc45YEd3CMQgknTbQed18s/OCmUFtiYMEutghuQhR14AEL
+ RSrovL4HOduo6Yd56ebg6q3ONyAyj7ekmAlkILSL1dFeUvf4l74tEbedxKLYv97mPWhAWR58xPb
+ brRTi7VRNckNpyowd0BwPhQs4Vr4R9Ovj211+opbDQStoWbDpCgvtDYbJFPD8KVJv9D8getoOO4
+ n6F8WjPg0ADh8/ypiqftJ0Mbz3cIZZMbnzOVVr83Ce/Ik/kEg3Xu2BP97j1kwfdy/l5QrfMEy/r
+ aJblAE6VIiIq3cT3GgIXCfXgQQFWTViItHh9L4ZSJiWa6bCJkJuqbw0UVV1GS8N15JqrM3JCzs9
+ OK7Kijw71jUaTepJKhw==
+X-Proofpoint-GUID: aR0UZa91qQLQbJ59xCBqyVHGkjw-iO6m
+X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=69821274 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=oPMGwu8xAAAA:20 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=_KKo3MieFKyQ8d2-XqgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: 8M6zu97pdPmnNjci-ZzUZFBzGNk4zmn2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-03_04,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1011 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602030115
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,93 +134,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 03, 2026 at 13:01:01 +0100, Markus Armbruster wrote:
-> Peter Krempa <pkrempa@redhat.com> writes:
-> 
-> > From: Peter Krempa <pkrempa@redhat.com>
-> >
-> > Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
-> > omits 'backing-image' key in reply) to 'query-named-block-nodes' to
-> > minimize the size of the returned JSON for deeper backing chains.
-> >
-> > While 'query-block' behaved slightly better it turns out that in libvirt
-> > we do call 'query-block' to figure out some information about the
-> > block device (e.g. throttling info) but we don't look at the backing
-> > chain itself.
-> >
-> > Wire up 'flat' for 'query-block' so that libvirt can ask for an
-> > abbreviated output. The implementation is much simpler as the internals
-> > are shared with 'query-named-block-nodes'.
-> >
-> > Signed-off-by: Peter Krempa <pkrempa@redhat.com>
-> > Acked-by: Markus Armbruster <armbru@redhat.com>
-> 
-> [...]
-> 
-> > diff --git a/block/qapi.c b/block/qapi.c
-> > index 27e0ac6a32..3688d0e713 100644
-> > --- a/block/qapi.c
-> > +++ b/block/qapi.c
-> 
-> [...]
-> 
-> > @@ -698,11 +698,12 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
-> >      return s;
-> >  }
-> >
-> > -BlockInfoList *qmp_query_block(Error **errp)
-> > +BlockInfoList *qmp_query_block(bool has_flat, bool flat, Error **errp)
-> >  {
-> >      BlockInfoList *head = NULL, **p_next = &head;
-> >      BlockBackend *blk;
-> >      Error *local_err = NULL;
-> > +    bool return_flat = has_flat && flat;
-> 
-> This is fine.  Just flat would also be fine: flat implies has_flat.
 
-I've borrowed this from my old patch that added it to
-query-named-block-nodes.
 
-Otherwise I'd have to mark 'has_flat' as unused. Nice side effect would
-be that 'flat' can then be used directly in the call to bdrv_query_info.
+On 1/30/26 3:27 AM, Paolo Bonzini wrote:
+> On 1/30/26 04:20, Damien Zammit wrote:
+>> From: Manolo de Medici <manolodemedici@gmail.com>
+>>
+>> The Hurd currently doesn't have any TPM driver, compilation fails
+>> for missing symbols unless these are left undefined.
+> 
+> This is due to the missing _IO* symbols, not the TPM driver.
+> 
+> Fortunately, these are unused and the whole enum can be removed.  Please 
+> check if it's also possible to remove
+> 
+> #ifndef _WIN32
+> #include <sys/uio.h>
+> #include <sys/ioctl.h>
+> #endif
+> 
+> #ifdef HAVE_SYS_IOCCOM_H
+> #include <sys/ioccom.h>
+> #endif
 
-Alternatively I can move the 'has_flat && flat' expression into the
-arguments of the call to bdrv_query_info to avoid the extra local
-variable.
+So this file comes originally from swtpm here: 
+https://github.com/stefanberger/swtpm/blob/master/include/swtpm/tpm_ioctl.h
 
-Whichever you prefer.
+To keep them in sync as much as possible -- would this here work?
+
+#ifndef _WIN32
+#include <sys/uio.h>
+#include <sys/ioctl.h>
+#endif
+
+#ifdef HAVE_SYS_IOCCOM_H
+#include <sys/ioccom.h>
+#endif
+
+#ifdef __gnu_hurd__
+#include <mach/x86_64/ioccom.h>
+#endif
+
+and then keep this as-is?
+
+#if !defined(_WIN32)
+enum {
+     PTM_GET_CAPABILITY     = _IOR('P', 0, ptm_cap),
+     PTM_INIT               = _IOWR('P', 1, ptm_init),
+     PTM_SHUTDOWN           = _IOR('P', 2, ptm_res),
+
+
 
 > 
-> >
-> >      GRAPH_RDLOCK_GUARD_MAINLOOP();
-> >
-> > @@ -714,7 +715,7 @@ BlockInfoList *qmp_query_block(Error **errp)
-> >          }
-> >
-> >          info = g_malloc0(sizeof(*info));
-> > -        bdrv_query_info(blk, &info->value, &local_err);
-> > +        bdrv_query_info(blk, return_flat, &info->value, &local_err);
-> >          if (local_err) {
-> >              error_propagate(errp, local_err);
-> >              g_free(info);
-> > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > index b82af74256..a701f6bbee 100644
-> > --- a/qapi/block-core.json
-> > +++ b/qapi/block-core.json
-> > @@ -855,6 +855,10 @@
-> >  #
-> >  # Get a list of `BlockInfo` for all virtual block devices.
-> >  #
-> > +# @flat: Omit nested data about the backing image (ie. the contents at
-> > +#        'inserted.image.backing-image' are trimmed).
-> > +#        Default is false (Since 11.0)
-> > +#
+> at the top of the file.
 > 
-> s/ie./i.e./
+> Paolo
 > 
-> Remind me: true suppresses member inserted.image.backing-image, i.e. it
-> is absent then.  Correct?
-
-Yes the 'backing-image' key is completely missing when @flat is true.
+>> Signed-off-by: Manolo de Medici <manolo.demedici@gmail.com>
+>> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+>> ---
+>>   backends/tpm/tpm_ioctl.h | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
+>> index ee2dd15d35..e466311455 100644
+>> --- a/backends/tpm/tpm_ioctl.h
+>> +++ b/backends/tpm/tpm_ioctl.h
+>> @@ -285,7 +285,7 @@ typedef struct ptm_lockstorage ptm_lockstorage;
+>>   #define PTM_CAP_SEND_COMMAND_HEADER (1 << 15)
+>>   #define PTM_CAP_LOCK_STORAGE       (1 << 16)
+>> -#ifndef _WIN32
+>> +#if !defined(_WIN32) && !defined(__GNU__)
+>>   enum {
+>>       PTM_GET_CAPABILITY     = _IOR('P', 0, ptm_cap),
+>>       PTM_INIT               = _IOWR('P', 1, ptm_init),
+> 
+> 
 
 
