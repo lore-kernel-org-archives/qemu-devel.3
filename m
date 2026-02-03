@@ -4,109 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8D8E87841
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B218AE87843
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnIhO-0000fc-9i; Tue, 03 Feb 2026 10:52:18 -0500
+	id 1vnIjH-0001EB-Qp; Tue, 03 Feb 2026 10:54:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnIhM-0000ey-Bh
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:52:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vnIjF-0001DN-7l
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:54:13 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnIhK-0002vF-Sl
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:52:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770133933;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WMh2DVjaLF1XUes7Ouut6z9VFTty5/vtSDQ8YlcVaic=;
- b=NccePUm4euDnCz1vv2uwJl3t8REVxZapDDJWovOgQHk5HF5BKG4Iut/L2KeKWXuZOEPgRT
- 5ObSx4swPD8aWuFA44RCvJFjtT/VMlVFtyWwVIjzbUUnLEiJpDsQO48OReeVEXF9qEi1FX
- T+f9x5y3ACv26sioVCe0HG5FxkWZy7w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-Q1rv7bjpPOqFoKckPsnLAw-1; Tue, 03 Feb 2026 10:52:11 -0500
-X-MC-Unique: Q1rv7bjpPOqFoKckPsnLAw-1
-X-Mimecast-MFC-AGG-ID: Q1rv7bjpPOqFoKckPsnLAw_1770133930
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4801d21c280so46722705e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:52:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770133930; x=1770738730; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WMh2DVjaLF1XUes7Ouut6z9VFTty5/vtSDQ8YlcVaic=;
- b=na40peDHU/86O4zbmpGVx2cf3+/iikFyGOFGuHIscg0rnSt7c90i3jWsv7I3FP37tl
- HzZERfkrup7vEm1l0gsfoQnf4kWWzoFSuISbnRZGySMxYDWJdWWWsPLHBiYQ5pUbb9TI
- m0k2KTNW9mkLyTmulFBEV9XV0iYj2nedhMJSlt1nDty/OIOrhFz038lsY5QRUNB5KHfS
- LEdtY+I0zv4/0UrhKpfiZZRUJTC48LukoAIRSgHfVo8DbI2IUAZ/M32MvjIpJ07JdZLd
- zQaSIjyCcCH50EqsdcfWEZuKfQSwdRNhdNxw7SgQZTyymH04egMxWJGd1VevRspo08tf
- mXRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770133930; x=1770738730;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WMh2DVjaLF1XUes7Ouut6z9VFTty5/vtSDQ8YlcVaic=;
- b=k09V0QTQt5JAhtbhp7RLgdLWrDEd6qnE9eGtdV2FqoBYg8p62wQFj8Ynricn5EWDmv
- 2ak6dJz6fFUZlsV/MBV4KvE2xeg0BHVSUoH0qyOBLgtxh3ZmphEzY2r9xg9WE2qZpBJB
- q8R27nO1BScqnR4t9t1QpZ8glFwTOx1u9KcuLtJ67wuN0DoJgqoXJi0QrobE0hoeiQkp
- KWc2QUu7UkFwIqqvS9TB/lthQVsBGJZQ4A+Bi08magN7cfHDg7+QwG7xn16+GaCTX/ts
- XRDrOiaHYaBZIit+2M+3DITceP+0ExUF3P0/49i7E7kJqpGuuTOxUmblsOFSYYQOl2sQ
- APtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXk8uqn29znmTLV//COUPiZhJJ+1FuZEsI9OP7htxKPSnLVnMPAfSwf8RnR2Gez0cT8e4MPmT1CiK1c@nongnu.org
-X-Gm-Message-State: AOJu0Yz9qtj/0VhppMmv2RfOp0LkAey51gH0bASq0SB3AN6mxq3JMdHi
- 8ca/JlvcjiwFPMFB6v0oGKMxNA7YGMneyIdxPdCP+t6E3phoCOcjMywzTNA0KaZfVx7qqlqxsLZ
- Y2m+c1wBWOVwA3VvOeCETilPLfrtWgaa6gJ42k8Hy9OJgzFYwPcQylMac
-X-Gm-Gg: AZuq6aIJy9Z6kzhr9bKaYd6KJOSiE7N59K5PFYLS7A66C3GxFtmolq0qnR7elRHp2h+
- 58GE/E5xgAIUmmdcJz+qvIYVttVHN4JriflfGRj3mTv5pAUgcl/WMPw258MGAlu+iSy0KqAbwzq
- AblYYrWaY1lULNyuT8BpXEtYo7KU/Vc+do/gR/Osk0uUeACV0BJTcAyml91go6cGm+92IFTVS4O
- 9MXpJWI15pknEk/DI6s7tIceO0qneZ0S2EqY/TzAJaphychWB1REC3YK2o063I5geuGpwD/5Emp
- Z7OmAlgjuNDAaA+0Fv8FsXnJoliS9g+zzlf1SviOE/ElmFyjp1FQN3sUeIefT6XA6PhMtYMzPHq
- XYR8OwzNRD1jqAYwUlQrhfm9cUnHJgKrJaA==
-X-Received: by 2002:a05:600c:a088:b0:47e:e7e5:ff32 with SMTP id
- 5b1f17b1804b1-4830e98388dmr851715e9.34.1770133929984; 
- Tue, 03 Feb 2026 07:52:09 -0800 (PST)
-X-Received: by 2002:a05:600c:a088:b0:47e:e7e5:ff32 with SMTP id
- 5b1f17b1804b1-4830e98388dmr851505e9.34.1770133929486; 
- Tue, 03 Feb 2026 07:52:09 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43614cc4868sm4809896f8f.11.2026.02.03.07.52.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 07:52:08 -0800 (PST)
-Date: Tue, 3 Feb 2026 10:52:06 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Yanfeng Liu <yfliu2008@qq.com>, kraxel@redhat.com,
- qemu-devel@nongnu.org, Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
-Subject: Re: [PATCH v1] audio/virtio-snd: fix latency calc
-Message-ID: <20260203105150-mutt-send-email-mst@kernel.org>
-References: <tencent_66E8C146EA79CD00E966DEDAEF8CACD97D05@qq.com>
- <CAAjaMXYV5M-Zkg=1ycopGJBRpcuR5HHx6Cp0FVkws4+QR0VEug@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vnIjD-0003ga-5V
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:54:12 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0B47580C51;
+ Tue, 03 Feb 2026 18:54:07 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:52d::1:1f] (unknown
+ [2a02:6bf:8080:52d::1:1f])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 5sqUWQ0AECg0-KL8tLvZL; Tue, 03 Feb 2026 18:54:06 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1770134046;
+ bh=m9fbE+YFjyn4uyPZzzKwvFsXpTV6a1UGqyUH7nTfXRQ=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=wZPoanrQ6I+RY1ZIZ8VRtmA9j8qr/rCUt+rrfIDee5sbQ5DV5d6lUjtD38YK6JKKc
+ nEC15oV2fvD7WUszAaohAKmeh8yWDyIKc9tQ7r9cymrAK3eRs+i9H9hqJcw1dDCIqK
+ JIKYAiS2f+pm7ZGRKCZuewMgHK6M8GW+rkSqw9FI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3633d0dd-14c1-4445-bcbf-e22db557ec52@yandex-team.ru>
+Date: Tue, 3 Feb 2026 18:54:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] tpm_emulator: drop direct use of errno variable
+To: Stefan Berger <stefanb@linux.ibm.com>, stefanb@linux.vnet.ibm.com
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
+References: <20260201172746.404481-1-vsementsov@yandex-team.ru>
+ <20260201172746.404481-3-vsementsov@yandex-team.ru>
+ <6d0b4330-1aba-4f2e-968d-1d64397241de@linux.ibm.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <6d0b4330-1aba-4f2e-968d-1d64397241de@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAjaMXYV5M-Zkg=1ycopGJBRpcuR5HHx6Cp0FVkws4+QR0VEug@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,92 +78,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 15, 2025 at 12:08:07PM +0200, Manos Pitsidianakis wrote:
-> On Fri, Nov 14, 2025 at 11:35 AM Yanfeng Liu <yfliu2008@qq.com> wrote:
-> >
-> > Media players needs meaningful latency_bytes update but it is
-> > zero now most of the time. This adds stream-wise latency_bytes
-> > calculation so that to improve the situation.
-> >
-> > Signed-off-by: Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
-> > ---
-
-Manos what do you want to do with this patch?
-
+On 03.02.26 18:32, Stefan Berger wrote:
 > 
-> Thanks for this patch. The virtio spec doesn't adequately explain what
-> latency_bytes means, could you explain what it does and why it's
-> needed? And also what behavior in media players this patch fixes?
 > 
-> Thanks again!
+> On 2/1/26 12:27 PM, Vladimir Sementsov-Ogievskiy wrote:
+>> The code tends to include errno into error messages after
+>> tpm_util_test_tpmdev() and tpm_emulator_ctrlcmd() calls.
+>>
+>> Both has error paths, where errno is not set, examples:
+>>
+>> tpm_emulator_ctrlcmd()
+>>    qemu_chr_fe_write_all()
+>>      qemu_chr_write()
+>>        replay_char_write_event_load()
+>>          ...
+>>          *res = replay_get_dword();
+>>          ...
+>>
+>> tpm_util_test_tpmdev()
+>>    tpm_util_test()
+>>      tpm_util_request()
+>>        ...
+>>        if (n != requestlen) {
+>>            return -EFAULT;
+>>        }
+>>        ...
+>>
+>> Both doesn't document that they set errno.
+>>
+>> Let's drop these explicit usage of errno. If we need this information,
+>> it should be added to errp deeper in the stack.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+>> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>> ---
 > 
-> >  hw/audio/virtio-snd.c         | 12 +++++++++++-
-> >  include/hw/audio/virtio-snd.h |  1 +
-> >  2 files changed, 12 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> > index 9101560f38..ed0422b45a 100644
-> > --- a/hw/audio/virtio-snd.c
-> > +++ b/hw/audio/virtio-snd.c
-> > @@ -431,6 +431,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-> >          stream->id = stream_id;
-> >          stream->pcm = s->pcm;
-> >          stream->s = s;
-> > +        stream->latency_bytes = 0;
-> >          qemu_mutex_init(&stream->queue_mutex);
-> >          QSIMPLEQ_INIT(&stream->queue);
-> >
-> > @@ -899,6 +900,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-> >              buffer->vq = vq;
-> >              buffer->size = size;
-> >              buffer->offset = 0;
-> > +            stream->latency_bytes += size;
-> >
-> >              QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
-> >          }
-> > @@ -1112,12 +1114,19 @@ error_cleanup:
-> >      virtio_snd_unrealize(dev);
-> >  }
-> >
-> > +static inline void update_latency(VirtIOSoundPCMStream *s, size_t used)
-> > +{
-> > +    s->latency_bytes = s->latency_bytes > used ?
-> > +                       s->latency_bytes - used : 0;
-> > +}
-> > +
-> >  static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
-> >                                      VirtIOSoundPCMBuffer *buffer)
-> >  {
-> >      virtio_snd_pcm_status resp = { 0 };
-> >      resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
-> > -    resp.latency_bytes = cpu_to_le32((uint32_t)buffer->size);
-> > +    update_latency(stream, buffer->size);
-> > +    resp.latency_bytes = cpu_to_le32(stream->latency_bytes);
-> >      iov_from_buf(buffer->elem->in_sg,
-> >                   buffer->elem->in_num,
-> >                   0,
-> > @@ -1178,6 +1187,7 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
-> >                  buffer->size -= size;
-> >                  buffer->offset += size;
-> >                  available -= size;
-> > +                update_latency(stream, size);
-> >                  if (buffer->size < 1) {
-> >                      return_tx_buffer(stream, buffer);
-> >                      break;
-> > diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-> > index c176066584..9560bac8b1 100644
-> > --- a/include/hw/audio/virtio-snd.h
-> > +++ b/include/hw/audio/virtio-snd.h
-> > @@ -150,6 +150,7 @@ struct VirtIOSoundPCMStream {
-> >      } voice;
-> >      QemuMutex queue_mutex;
-> >      bool active;
-> > +    uint32_t latency_bytes;
-> >      QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
-> >  };
-> >
-> > --
-> > 2.34.1
-> >
+>> @@ -539,8 +535,7 @@ static void tpm_emulator_cancel_cmd(TPMBackend *tb)
+>>       /* FIXME: make the function non-blocking, or it may block a VCPU */
+>>       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_CANCEL_TPM_CMD, &res, 0,
+>>                                sizeof(ptm_res), sizeof(res)) < 0) {
+>> -        error_report("tpm-emulator: Could not cancel command: %s",
+>> -                     strerror(errno));
+>> +        error_report("tpm-emulator: Could not cancel command: %s");
+> 
+> Remove the '%s'.
+> 
+> I get these build errors now:
+> 
+> ../backends/tpm/tpm_emulator.c: In function ‘tpm_emulator_cancel_cmd’:
+> ../backends/tpm/tpm_emulator.c:538:22: error: format ‘%s’ expects a matching ‘char *’ argument [-Werror=format=]
+>    538 |         error_report("tpm-emulator: Could not cancel command: %s");
+>        |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ../backends/tpm/tpm_emulator.c: In function ‘tpm_emulator_post_load’:
+> ../backends/tpm/tpm_emulator.c:958:9: error: unused variable ‘ret’ [-Werror=unused-variable]
+>    958 |     int ret;
+>        |         ^~~
+> cc1: all warnings being treated as errors
+> 
 
+ashamed :/ I've checked compilation without tpm in config. Sorry, will resend.
+
+
+-- 
+Best regards,
+Vladimir
 
