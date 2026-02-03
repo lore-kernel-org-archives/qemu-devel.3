@@ -4,146 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8827AE8782A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6646E87827
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnGUY-0003s3-Bs; Tue, 03 Feb 2026 08:30:54 -0500
+	id 1vnGeE-0006cf-Ba; Tue, 03 Feb 2026 08:40:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnGUX-0003o9-A0
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:30:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnGeC-0006cJ-I3
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:40:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnGUV-0006uE-QQ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:30:53 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnGeA-0003eS-3h
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:40:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770125451;
+ s=mimecast20190719; t=1770126047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xb2PJj/ck2B3XoHxEMTZFU2KlVnDtPaOCdSpg8ChGVI=;
- b=hlHZ0ZSksyIExDj+uJ+OPqv6eJPGQsanvV5YEn0sM0wzpj7DN5sqnHIuqe2ncmO8jHEwkM
- f4XRcAtKynnIwoSroR50RHKVLGMG+ItAy47W2FFb6xo6nrQlVKPM6sFqXO/y3o9e+P01ou
- TKuUAhws747+k9sRUrlvN39Q4XvMg8w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=hgnSI0cbDDbkSCP7huGpDrVnx8OOkSAH7uS6u96Q0Ww=;
+ b=ZIaniMxeJE1RepHqYt/lPxwsvSWVgJsCca8zLlbuaLHqG1j4Vlxffpa9MICevV/2raRu70
+ ljrYnZZ/YRjPT04BToSI6h4OLlb9sgaEowGsYNY6AWMo71yYT2oWVn0VvziiYOAVRAPnH6
+ aDyOhrIP0iXWEQShXCbYh8FH7i7zQ5E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-h-4onaFqN1WtY0L9k3Qqfg-1; Tue, 03 Feb 2026 08:30:49 -0500
-X-MC-Unique: h-4onaFqN1WtY0L9k3Qqfg-1
-X-Mimecast-MFC-AGG-ID: h-4onaFqN1WtY0L9k3Qqfg_1770125449
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47edf8ba319so60320205e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 05:30:49 -0800 (PST)
+ us-mta-148-CSMzgqAVNPyU8o0ABkJs7w-1; Tue, 03 Feb 2026 08:40:46 -0500
+X-MC-Unique: CSMzgqAVNPyU8o0ABkJs7w-1
+X-Mimecast-MFC-AGG-ID: CSMzgqAVNPyU8o0ABkJs7w_1770126045
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4806e7c4220so56233415e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 05:40:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770125448; x=1770730248; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=xb2PJj/ck2B3XoHxEMTZFU2KlVnDtPaOCdSpg8ChGVI=;
- b=awqaLij2OGt55Urc37tc/qfx0JFjJkPOndKMOEOUQDlPjn6RsfyT2YJHAfruRTyRZN
- NDdP92CYn6Ja4u3W8ibrsEEp+C4mIluZ2LiSJVlR0SuIlnzEWozwVPqpVBpTreusI2T9
- h1EghqFCyF/I0CW5nFCw4PXlP8XL3T1auWt2LrBGrQhnrrsjCqya/c+UVwspqFPBSgT3
- hD7vn1Jh8oELYaFg4RgIX8Hh47WFbl5/H9uufc2XBwDiuJL1rNQ4gT5fYULsmryZ/uUE
- 9lplU12heqm3NSagMfhUjiP73qUy2Fw9p19Mw9t+UsR4oHEXmVdM+2Q0LYgZqleIHJek
- 60EA==
+ d=redhat.com; s=google; t=1770126045; x=1770730845; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=hgnSI0cbDDbkSCP7huGpDrVnx8OOkSAH7uS6u96Q0Ww=;
+ b=Hy7fiDUpwFE48Jude9X2KTAo1xNk5PnprXVMiyxuAc2WhiJODrATeIfqeSZ/xULSf0
+ p/GfEppaAsFdd+68+6e9aqwqlfb8CQSTWditfnv3w0nlwHI9q9J0YVeR+LiVbzLSdQK3
+ J6EFOtT1Hx+9ugAgFUtV5sTdIx4AVBTNRQ/fnP5vc4ZkMHKE6pOM1kKE+gzWAiqgae8b
+ k6p9K3mcWgDl0YcC6XrGf6zn6kfkzdZrE3C4a59URPpSF7UMT/eK2n1Kui2VFxUXfGSA
+ iSRe7OtjyuCn2hL1wdpSlXjD14ukAOw1VBFZhFF7aguKJOfoLZQKhtaU4QHgwv17bXgB
+ dRAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770125448; x=1770730248;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xb2PJj/ck2B3XoHxEMTZFU2KlVnDtPaOCdSpg8ChGVI=;
- b=bOkqhlGHditZYd0F+kcMaVh7zd3qptF3yiyxDCf+G25PcPOzse2kh1Nri5b2R3ZYEw
- D+nhvh/XkC0wH3LqMuuqh1VY9KhvP9ATarJxzNQopFGtkRMcpMTztV+frrbXuYZ9zEvg
- r5vMvfgL09OIlx+4vY6nvLqXFp4IpN4SKsEXNcLZRjXapFXzoXcSYKyxY2GjyA2PVeZ5
- LtslVgMKNrGVe5KR47wQGIUq6m4BQFsiq+9xOwSO3OcRQpti71EyRVBa5auMuKB7HduD
- FuPDSuUKckGGkafdS+3KKVRYbPVidaVsJGw5IY5jlkBhskUjjSC41FZUXGFtKdYbKWYw
- OiVQ==
+ d=1e100.net; s=20230601; t=1770126045; x=1770730845;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hgnSI0cbDDbkSCP7huGpDrVnx8OOkSAH7uS6u96Q0Ww=;
+ b=NE/+IZoefxSK9Ti0pWsAEbXRBZwEwzjHRRqAH+MySftrx1Fl6tlSCj09/V1AT2v/Bw
+ JC++1ua9+XK2TU1b0PoETh+6HLJTnojQsDyUujMR+nmtMJG2xqDo/GNMiDTqT5kXkdNa
+ Z13G6f426ne00/aBRggeoDFYXhRxyuK0Bo78ZmNCY46JVlOaHo5BHh/wM49dc0MVwzzK
+ yTPJynlV13x1aFlSejXa8xfmLHF9Ks4r3+sCyWYX72cF2U0JMUKgQ4KEUkP8cPoShMwH
+ iHy1CVT6EbBBvd0N2ALToKsWiYTcgFmmGOB1A7VREVe4Mi3C4aF0etYTSzmOP817gxEc
+ NjIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0bonsdUg7XYN/kQbAqUBY9h/wxsaKhIRrXWMb5fK3Qp6sQcjSskffpqzwueDnODrN/s47jCVSHAAt@nongnu.org
-X-Gm-Message-State: AOJu0YwaPiXLJeYH3M3Ix0MFyNteKQqQGt7rK2iZ/r/Bt6/xKSuBA5Qx
- MCsJ4tlCYiEkpK/RoxZQWDxLbVSj+886VLmxfsIxYpD12IU4LxHJUI8PF7MIDB7BZcUcLL0z63A
- cQ7cPmrTHS7UMqQSRkFEbm/d8Qx0rZmcK0obitgPCqgHgFJ+PQtWDUi6SrA/W140G
-X-Gm-Gg: AZuq6aICWGnjY4f3L2I54+R64ISmVGy/RyeP24fvc3CXymvfz6vgMYdAEUjjWuKIdE0
- AI/nKcg5jPnFVHFNp6YUSdnVbFFhdjTsIwNt/3lPh+0ZdEoE2yUjpi5j8lCMZRUMLSnTFbwTfZx
- 0qzOmNLhpCf9PIzgCGhgiXFag5Ci3kRRu6nhcCVaYBMR4TMzcqaYWbiWZh49kOx6v147x7SDy+g
- JJcDLhiO5oNJV3d9i64gxsnbfA4RdaCk9MQq+Y2OKrPdmOObzZTEZ48mb2bSqTJzEZymmo8wU45
- KCQrHAwOkfuiSTr7oY8Yk+qSJJnjVi+okDl1gwbTes5B7xJV40p8Zgtl98Mo7YJK+sEcErHSgNN
- OMO2acXPTOT6C8PdAZVHJtuDHw+pji7amMsSfuMTMwWW1zi3k
-X-Received: by 2002:a05:600c:350a:b0:480:6910:abd1 with SMTP id
- 5b1f17b1804b1-482db491f3emr174594725e9.18.1770125448225; 
- Tue, 03 Feb 2026 05:30:48 -0800 (PST)
-X-Received: by 2002:a05:600c:350a:b0:480:6910:abd1 with SMTP id
- 5b1f17b1804b1-482db491f3emr174594455e9.18.1770125447800; 
- Tue, 03 Feb 2026 05:30:47 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCXVRzHDVh9+QFiBGA+Et1tixRLRMYiKy3II4clM+UEzq6hLzWynUMqkYqEADiNiOm5uMxFQF4TdfrDd@nongnu.org
+X-Gm-Message-State: AOJu0YxHnQAiB6wKKOmAkgrNNh7EoV6Ma8GVUU6suRCt7vqD4TTdDgPp
+ UlTwIG9VVl+P0ZKr+gLB03lk/CEjY9/PeABSIc4PCw+X8K1Vq3lNPvJGSlvkW+IddhXZxERF4dR
+ IK68NISTop5UUB+TEzY77XYcW/et2ZUY9sJpzDVYa/qKHVhg2wrTlq6Ag
+X-Gm-Gg: AZuq6aKFDCPFAhzFbkEtksO5cfci4J6atR/V6ElDbCuoPXe2REUKL+cLl3YPGDqKkJy
+ HSfLXZtaXqgxReKcfgwj4LJdqoYN4mELtn0bDfA9ZiviN6F73243GFbV0+m6wPv5WVIRIypowQW
+ crVHUkZotzZLFcsJFAudzjcwB8H/UJx/reqwcilQPqEZKUA34jPG6yE3hiJM2haj1UyRkJD+KCp
+ BDo6KI5qEcyjsxD4K6dk1/L/eW+q2/F6EAqchJYVXp8Dth2K41Jjue3VSEosrtEYBX3hkrqVlNf
+ SeUbgro0uoN+TpvQqZUmlv2iRQ3aBwTAXk5VRz61OcJfmnvRQRxuy/jegbbXNRcpGkSFEDixDvk
+ XG70DbLQJe3XDEgkVLMk3kw5fDfMsXp2yQA==
+X-Received: by 2002:a05:600c:b99:b0:47a:8154:33e3 with SMTP id
+ 5b1f17b1804b1-482db49a483mr199341565e9.28.1770126044460; 
+ Tue, 03 Feb 2026 05:40:44 -0800 (PST)
+X-Received: by 2002:a05:600c:b99:b0:47a:8154:33e3 with SMTP id
+ 5b1f17b1804b1-482db49a483mr199341185e9.28.1770126043979; 
+ Tue, 03 Feb 2026 05:40:43 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483051372cdsm102546635e9.13.2026.02.03.05.30.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 05:30:46 -0800 (PST)
-Message-ID: <4f7f77df-afa9-43c4-a429-2ca387fe9df7@redhat.com>
-Date: Tue, 3 Feb 2026 14:30:45 +0100
+ 5b1f17b1804b1-483051292bcsm95571285e9.5.2026.02.03.05.40.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 05:40:43 -0800 (PST)
+Date: Tue, 3 Feb 2026 08:40:41 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Wafer Xie <wafer@jaguarmicro.com>, qemu-devel@nongnu.org,
+ jasowang@redhat.com, angus.chen@jaguarmicro.com
+Subject: Re: [PATCH] vdpa: fix cannot get vring base when stopping a
+ vhost-vdpa device with multiple queues
+Message-ID: <20260203084017-mutt-send-email-mst@kernel.org>
+References: <20251029125001.15086-1-wafer@jaguarmicro.com>
+ <CAJaqyWf+YxQAxM3e0H2Er=dYSbGHhadJQ5n=Lj_b4Ufa4z=HYg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/12] vfio/device: Add a helper to lookup VFIODevice
- from memory region
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>
-References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
- <20260203073200.848183-10-vivek.kasireddy@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260203073200.848183-10-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+In-Reply-To: <CAJaqyWf+YxQAxM3e0H2Er=dYSbGHhadJQ5n=Lj_b4Ufa4z=HYg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -168,55 +123,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 08:30, Vivek Kasireddy wrote:
-> Instead of iterating over all QOM devices to find the VFIODevice
-> associated with a memory region, it is faster to just use the
-> vfio_device_list to lookup the VFIODevice.
+On Thu, Nov 06, 2025 at 09:04:46AM +0100, Eugenio Perez Martin wrote:
+> On Wed, Oct 29, 2025 at 1:50 PM Wafer Xie <wafer@jaguarmicro.com> wrote:
+> >
+> > When stopping a vhost-vdpa device, only the first queue pair is marked as suspended,
+> > while the remaining queues are not updated to the suspended state.
+> > As a result, when stopping a multi-queue vhost-vdpa device,
+> > the following error message will be printed.
+> >
+> > qemu-system-x86_64:vhost VQ 2 ring restore failed: -1: Operation not permitted (1)
+> >
+> > qemu-system-x86_64:vhost VQ 3 ring restore failed: -1: Operation not permitted (1)
+> >
+> > Fixes: b6662cb7 ("vdpa: add vhost_vdpa->suspended parameter")
+> >
+> > Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+> > ---
+> >  hw/virtio/vhost-vdpa.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> > index 7061b6e1a3..2d5e6aca74 100644
+> > --- a/hw/virtio/vhost-vdpa.c
+> > +++ b/hw/virtio/vhost-vdpa.c
+> > @@ -1481,7 +1481,7 @@ static int vhost_vdpa_get_vring_base(struct vhost_dev *dev,
+> >          return 0;
+> >      }
+> >
+> > -    if (!v->suspended) {
+> > +    if (!v->suspended && vhost_vdpa_first_dev(dev)) {
 > 
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/vfio/device.c | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
+> I'm sorry I missed this fix!
 > 
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 973fc35b59..ecb3581fcc 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -644,3 +644,26 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
->       .region_read = vfio_device_io_region_read,
->       .region_write = vfio_device_io_region_write,
->   };
-> +
-> +static bool vfio_device_lookup(struct iovec *iov, VFIODevice **vbasedevp,
-> +                               Error **errp)
-> +{
-> +    VFIODevice *vbasedev;
-> +    RAMBlock *first_rb;
-> +    ram_addr_t offset;
-> +
-> +    first_rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        error_setg(errp, "Could not find first ramblock\n");
-> +        return false;
-> +    }
-> +
-> +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
-> +        if (vbasedev->dev == first_rb->mr->dev) {
-> +            *vbasedevp = vbasedev;
-> +            return true;
-> +        }
-> +    }
-> +    error_setg(errp, "No VFIO device found to create dmabuf from\n");
-> +    return false;
-> +}
+> Good catch, thank you very much! But the right fix is to move
+> v->suspended to v->shared, and then all the vhost_vdpa devices cannot
+> have different suspended states.
+> 
+> Apart from that, please include the tag
+> 
+> Fixes: 0bb302a9960a ("vdpa: add vhost_vdpa_suspend")
+> 
+> In the patch description.
+> 
+> Thanks!
 
 
-This won't compile and break bisect. Please merge with the following patch.
+Eugenio do you want to post the fix?
 
-Thanks,
-
-C.
+> >          /*
+> >           * Cannot trust in value returned by device, let vhost recover used
+> >           * idx from guest.
+> > --
+> > 2.34.1
+> >
 
 
