@@ -4,102 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB7DE8784D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 17:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5E7E8784E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 17:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnJnb-0001Hw-Cg; Tue, 03 Feb 2026 12:02:47 -0500
+	id 1vnJmo-00012z-TA; Tue, 03 Feb 2026 12:01:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vnJn8-00018F-PA
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:02:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnJml-00010s-8V
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:01:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vnJn1-0008S3-Dc
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:02:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnJmi-0008Pc-CJ
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 12:01:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770138129;
+ s=mimecast20190719; t=1770138110;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Et9EguKbw4NAk34vNwfy6uXsGwsluwnBxYsXz8Wt3Oc=;
- b=Jop55C9j07rcrRMC+K6raTOgvFkhAp/6Mcy9LdiJXT5Xp3+CfIlKdZvmzQfvrgQ2iAovD4
- ym9TX/J5++s2kHj7jDwQMXGbxDa5ilmaiVf/Ge//n3eCSzOx5pJgR5/dlpzVnT8YoaozQ4
- lHHSNe/zcHJcizylefYL/Lb4ra/0U54=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VTYIdMQvP3PzeqbZebN6Gxe2xSw6GE8j1PqDnAGQ4Jw=;
+ b=epnLXvMcYxjgZfC6xNAlz9LFmAtB46UP5hy/W9xVkvCNfCQe4up/Dkd4ek/SRnJQd+r1rW
+ 9SniSZY7IBPMM5K+GN4KMcnB9cvfGCK984hhzk+9Z2Eah13broWO1gB6v9OOxPiv4H7bAU
+ LYcWjC67WBIy37Ow4kGZflkVKM7a+vg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-508-0f9tQbBANEyaZLtrklmLDQ-1; Tue, 03 Feb 2026 12:02:07 -0500
-X-MC-Unique: 0f9tQbBANEyaZLtrklmLDQ-1
-X-Mimecast-MFC-AGG-ID: 0f9tQbBANEyaZLtrklmLDQ_1770138127
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8c5296c7e57so1337030685a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 09:02:07 -0800 (PST)
+ us-mta-191-p_Se8ikBMxuqxfNhCdZr6A-1; Tue, 03 Feb 2026 12:01:48 -0500
+X-MC-Unique: p_Se8ikBMxuqxfNhCdZr6A-1
+X-Mimecast-MFC-AGG-ID: p_Se8ikBMxuqxfNhCdZr6A_1770138107
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4802bb29400so73015375e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 09:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770138127; x=1770742927; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Et9EguKbw4NAk34vNwfy6uXsGwsluwnBxYsXz8Wt3Oc=;
- b=TXpwGCfkagzHnn6BrzkxDfExRRTiq3q1rAKqs4dixZlEC75JZMxmr/MAted0hozWea
- ZnKUWL9zYqEjjK112SGPkJHaZqk8ThV74yt8u1nimPfhpsSWYsw01rkf/CZRw+yQLNW8
- 2QpdZ2BV5l7l11t+7ER3lerx++Q9QBb9R8mwj++RXpPV2kX3KP4363LIKT/U4lc7SLnU
- rzXdcWJ8T5H9AdMZZnPCLM4EoDQPUD3vEmeuCNMsBslwFJ8tuppQGpJnQ0GLCPjNACxH
- qlJtmhRdURpHpAfJ63N82dN0ClyZNYKQLxXJGT//nvJ0GFc0o2whci4iL4JtrRIAV7Fw
- U6fA==
+ d=redhat.com; s=google; t=1770138107; x=1770742907; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VTYIdMQvP3PzeqbZebN6Gxe2xSw6GE8j1PqDnAGQ4Jw=;
+ b=Jsi3ir683TF3CZ18MpNCdcHDnfy/WJwETwI2dZ24xQ5DMiq0KONFxSHbpFHp5gWoFb
+ +Z3FwqLEIcqP6CVNTgGJf6GUAM4HNyIQTOxihWPl6HjpcgcJKI/ytB1UyGyoKInJzyT7
+ tqRJQC0cmOc/vXUHF8dn2EypROLRlthkiAVbcXxJM3POxOZTv3ggIvDpWABRYZa+wxIA
+ pHsvtms9nPiCCHEaViDV3DpA4sDzviNSZNVB7xlGlAeGqEFkFxR2IUqvzGwGYj/98QWI
+ L7/SIdik8bBJRXQ+T/AvnAIak7yWOJ8aMoeASQ7n4Fy7vBI9ABGIYOCXTXdf+lsrJaNl
+ GeKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770138127; x=1770742927;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Et9EguKbw4NAk34vNwfy6uXsGwsluwnBxYsXz8Wt3Oc=;
- b=aQCCLEdfkrCfX4RsMolsC5F6vLTbjJ09pbv6KryOT4m5SrCgwGxFF7+oixRY5z4L8A
- yRKcvO3ywJiJVqHvioTReS7kSL+QacKTAx13t+aabUoWV92ZiTWf4SLR8e3JZZsAMe63
- FjlKzpnKe3j/9m8aZsNgKGvEoC4nWvdxld5z9wPhYE2so9GvASNzaZj1qqV9DvrMp65W
- b5iwmK8VlALS0b+Xn80Bse4I1N1s2c48r9V0qtIJ8vgGnLi1N50DUPJEEhD+de2v0ANq
- uPt3WA54HdzaRQuzLqc6QHeZXc9M2w2iNTvUJuom1CLMw7Yk3fV9p6crA/2ymPcd7klv
- RjiA==
+ d=1e100.net; s=20230601; t=1770138107; x=1770742907;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VTYIdMQvP3PzeqbZebN6Gxe2xSw6GE8j1PqDnAGQ4Jw=;
+ b=AMx/godwwdm26Hkpgaxsdr+stZWjo4UlXlRWzLAbFMjFtjReaJyrgalHeZIOUySpL5
+ 4OPQzNzTMtmIKubMSHqXoXc7kG0Dax8KYI7+mATVp2wUYD0U7BYoqjkv4LD1WpZjGNTw
+ zRVnKi/hJzGnUuJJmtmq+YcUZXfcg1T3JG80YRTSsZqNp3zZh3XsTdtdDR3e0tOloOWx
+ J36+fB0y8x0ODp7UCl7IEb8VPit0rHIrQ8fIFrD7PvBwdR81rExWZrIaQAfxEStxmMAs
+ YX5RD2q/rrsjIxBOtkA6TEsEJyRGaQ8Dbo0NV0wjRGld0KjQ+BNkNHIUkP7YVG7D1EyG
+ xLug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGYrF3zQY98it6SnVuKjsUpbKTA5W62KsZcFMswBMk7MMXjH+4v4SOoplcgoAL6dMBgedGjhs5Mytt@nongnu.org
-X-Gm-Message-State: AOJu0Yx32VGdVG6uGItClQXKIcvVecvTENBwpPb2pQ7yGpRRTY5hLtEy
- c1oc0d+8InMSTGROAh4gXjndcqR0HGPj0SwOB8OYtucm3hNsbpRGKkyvP+dhy2rwnpU3fbbs+pj
- RZtJeDxCWPFtAoVRmBj5F9Skb7MOdWHb86G8RLiUT+9wvFZEEVOLHb1Eo
-X-Gm-Gg: AZuq6aIedG2y8SPU5QhU4P+0h59PMSrx8xH1EFa1mI/8vVupPAvqVUNenc639FzBs4F
- hr3I6ZvedLF2k557dbGUsDx3pIBoiUB6iZKtcPVV4eoeTfo4udhuG8++qmZiH39dScwdoQa2aX1
- ldwUWfAwHi5Kda/xY8PkXwitAGQfAWPI7NVoEVZXEcdNoiao4nwzTKN9oAIjlXfhTndmuOZLc+W
- X7ycElzI6KpU00ulH18oE1223fnSdJboHzcqQ/bHb2On1AtH6n6Cx9FDbxWJEJaS1obnw67yARH
- iEfG9csCNc+DGLf7rAwUDX2Q8bCC6XNK4nwpFq286jacGi6fL0o5ZlvM9e96T5+dJuygEkBR70Q
- pCRk=
-X-Received: by 2002:a05:620a:6cc3:b0:8b2:e70c:427a with SMTP id
- af79cd13be357-8ca2f9b1220mr27547985a.44.1770138127040; 
- Tue, 03 Feb 2026 09:02:07 -0800 (PST)
-X-Received: by 2002:a05:620a:6cc3:b0:8b2:e70c:427a with SMTP id
- af79cd13be357-8ca2f9b1220mr27542585a.44.1770138126481; 
- Tue, 03 Feb 2026 09:02:06 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8ca2fd2cbe5sm7792685a.28.2026.02.03.09.02.05
+ AJvYcCX7tVjUzoPb7dqryxPExZfxDY+H593LUo9FAC/FhoFpu5Jl1hVd90/83aom4P25KHPDlv9CK75ey+Ho@nongnu.org
+X-Gm-Message-State: AOJu0YxCjp30Bd3fmXOi0mjREY5XSvaNoa1oW16LWs3Mx0sAcgoU5xiS
+ g+Ms2CClgQHJzuSsHJDw7fku+Cfez32ySjWsR0xeC1FJWVy8CFEiB59nPw2Sd2q4Czl4oB4b5fI
+ B36FKjoWcvMkdxbh8ixoO7dK4MTQ0i4A9S2NLDbW42vLJtai/07c1p7Ot
+X-Gm-Gg: AZuq6aJGRf5OK1P0iAe89/86ZCjami8L1JOYCV0+rarQr+a09gRzxN3eSoJQ6wNC0Df
+ fBQN1fzqLbg6a9fTTgFw4vcBnk7BzG+9GBJL3akxi+0vaYMr6YYcPiuozERsqqzhIALRBUX0A36
+ 5/uFyMh3Qk0J81dL4RzGYgwPDJwQcFAxK1hJKv2UKd1TD/j1yMsTAGZT2D1xKYPV/uhrJEtaLOH
+ pNa/jvvso6JdYw2s5Sip2SkhqUOofIhAKNTjg2Mw8oX4qAm/WC8xLKOjuc1+VkRO8bVt9GGtVEy
+ RzvqkhdjQA2kdRfR8xErmivccTkQt0q6/DuCoVnEGVueY6bLcQslpAYjzJ2TTqQ6ARtwuW9/GRp
+ iGsMEZ+2XCrsOWtiJjxmzjcNbcs46tGztgw==
+X-Received: by 2002:a05:600c:19cd:b0:480:32da:f338 with SMTP id
+ 5b1f17b1804b1-4830e940b2cmr4315805e9.14.1770138107427; 
+ Tue, 03 Feb 2026 09:01:47 -0800 (PST)
+X-Received: by 2002:a05:600c:19cd:b0:480:32da:f338 with SMTP id
+ 5b1f17b1804b1-4830e940b2cmr4315155e9.14.1770138106813; 
+ Tue, 03 Feb 2026 09:01:46 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4830516a0a0sm73893265e9.15.2026.02.03.09.01.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 09:02:06 -0800 (PST)
-Date: Tue, 3 Feb 2026 12:02:04 -0500
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex@shazbot.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
- PRE_COPY_P2P transition
-Message-ID: <aYIqDAdld4a41VDy@x1.local>
-References: <20260202173406.13979-1-avihaih@nvidia.com>
- <24ea8ccb-d904-49e4-bd27-5378aac4a56a@redhat.com>
+ Tue, 03 Feb 2026 09:01:45 -0800 (PST)
+Date: Tue, 3 Feb 2026 12:01:41 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Wafer Xie <wafer@jaguarmicro.com>
+Cc: eperezma@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org,
+ leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com
+Subject: Re: [PATCH v4 0/4] Add Split indirect descriptors for SVQ
+Message-ID: <20260203120023-mutt-send-email-mst@kernel.org>
+References: <20251231103615.9987-1-wafer@jaguarmicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <24ea8ccb-d904-49e4-bd27-5378aac4a56a@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20251231103615.9987-1-wafer@jaguarmicro.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -124,23 +118,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 03, 2026 at 05:48:11PM +0100, Cédric Le Goater wrote:
-> Peter, Fabiano,
+On Wed, Dec 31, 2025 at 06:36:15PM +0800, Wafer Xie wrote:
 > 
-> Do you think it would be interesting to send VFIO migration events
-> by default ?
+> This patch series adds support for VIRTIO split indirect descriptors.
+> The feature is VIRTIO_RING_F_INDIRECT_DESC.
+> 
+> Eugenio hs submitted a patch: vhost: accept indirect descriptors in shadow virtqueue
+> https://lists.nongnu.org/archive/html/qemu-devel/2025-12/msg00056.html
+> Therefore, this patch must be applied first.
 
-No objection here.
-
-IIUC it's a matter of why it got introduced with default off in the middle
-of 2024?  If it's about compatibility of any old mgmt which may be
-surprised by these events, then we want to know if they're ready, and then
-if we need a compat field for it in older machine types (or enable it even
-with old machines).
-
-Thanks,
-
--- 
-Peter Xu
+Thanks for the patches but i could not apply them.
+This posting is corrupted. Pls post as a thread and without corrupting
+patches.
 
 
