@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB51E87834
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E0BE8783D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHzf-0005x8-OP; Tue, 03 Feb 2026 10:07:07 -0500
+	id 1vnHzu-000777-CQ; Tue, 03 Feb 2026 10:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHzb-0005Wi-Ic
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:07:03 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHzo-00071V-N3
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:07:16 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHzY-0002Mp-Jq
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:07:03 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-480706554beso62323085e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:06:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHzl-0002Oz-JJ
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:07:15 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-432d2c7dd52so5968891f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:07:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770131218; x=1770736018; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770131232; x=1770736032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aOyWNIQY2zrEQlsluNmHHH92qW0jD7NTLVHRoHPN2vs=;
- b=GiZ37uEW+fwS5vLWPiwQcsNsPGPovbXdCVzKWrA/8Cy3pU4Poq2chcmEKk6dSZ6DkG
- OVtTnlZnaFEvDMcZw868c1xhGciIgVelKDMe/WuLp4fGS8XV7FV7qqIqOG0zCxGv2+9l
- 6ndYi/YWUilFSyWXGz+voDiM+MZ/oYzRQS+yRn08T2aywC7StAD9RujU+ubIuzXLTgk6
- wBr0k2b/dCYy/cgyzxHTZoT59ds25GffpdDbo3InYymoqKcW9lvcPPOhXZkmJzldt4bH
- kK9I6Z846XJzpdmltvD1JEFeawuGWMQgQUyr2o6eHlIjkLjG6ZCVVBEwWRvyMhnlZF8t
- GzUA==
+ :reply-to; bh=bjhzaEBGyHaRFQtACgFvrwQWK/lqJCAf9i6R698ij38=;
+ b=awJ/fX9PIPwIeDIJiKtCcayQSn2HMv66NP72PTJ9jyBQijH5mHTHN3J8ZQXjHIgGFp
+ c6OUde9ZczHSQ2oJSpBWt47/aSFB7WhHkgbeIPu1DEGNo42LEbS4qFLf3m5m5xAXElnx
+ EBqRUk7vlztsJOKuJP3EykF8ATc89Ds7RpeBZwPL0OkSM/06QWJoVT15SzSoEWz/jqBn
+ DoTeiAjtLZgstvcxuom8HOvEpHg7Ro2j5WNdGyG1J6Qm08oKVVHK2vPMvJ1eAl04/BPU
+ oX2RLffpkly5YleUx8qXyNXtcZteUrHBJuOQoN7Kl+nEX9MOMEA2kZ2oVPvNEUv9BZjp
+ oqgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770131218; x=1770736018;
+ d=1e100.net; s=20230601; t=1770131232; x=1770736032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=aOyWNIQY2zrEQlsluNmHHH92qW0jD7NTLVHRoHPN2vs=;
- b=UnMuzrTydnpUFW+l5eQO+ubCNnsQ2WJr2QsYcmJUY1ea64O95jDYxCRrb/w6QxpJ4t
- St12KnRENVLEgTm3cfs9VL+4Uuv+GmjBUf/1JvW8sQTWOc0Ro292sJiAK30laTZb6VNk
- wNuA5ZSfWM5KbYam4wRt1IRALvjEC+s8qQzssVd7YJHdST2ggeoRypgcrg3aubIz0wm7
- KWkotfahzF2bprEvL5ktBuO8QI1yId6DyKPgCRf26UE0CrhVjeVj2rdrTwReTsJ7nPZg
- dpZci/yYaUxfl+qqey4Wz2DOENpo9KghO9rwHmOO6l9wUMzvNoiDQCGk3NI8xn8ekLC5
- iBew==
-X-Gm-Message-State: AOJu0YxZapr93+q0PJGiozsjg5vrodbuIXAvyiHwHQtSMDATGbLvpcsR
- G6e1g8o9mMDQ821ZWf5g+9+S+531KtcnvHDM/3UFZau9S5WYaSRfmc/K5Q2CB83rM3bWwN+S0UM
- JJTUesME=
-X-Gm-Gg: AZuq6aL2ZtjVGxZsXJ5rjUzQ1/PadLRilHW/A6Nh/v6xQSvviiGnbJ1wnbF3Gl15ToX
- WDbBrWQwa9GCWd1YMTRBvTfLwt9zC8Uxn/WYzh8Ny+ftzuyZNDsT0bfqP0KQuGZOrxCovvFRUoM
- yynbAbM72jeqov3pkHaSg+jsCNSXamgUNTHJRMpNDF8TlVbDtrL5hsCScq6gE5HuDQSEn5jenKg
- GyF8JzP6KqAV+8FHYti9Mvi2ASKT0mkYfmplC5Er8OVIslCWeCzwkKXSsKTO8Nf/UzpMDeL+rdz
- ZT6r+XAnDMuE3K4kijFsBaTlcupCUj1l7xUWEzqErkAC5B0f1ItMyEvHLduGkl9wtNSZcZENAfN
- DMTrF1a+d9zHaN3CrxKSCO2vJVh4l9M87LPc4VD9/zpkuIMhG03cZMc0KiQloRJXJRPbFuk9Nn0
- 3eL+BUXhfhXvh0PEayVNO0kcVlWT1K9OspEg+GWhTTzDFS1KxZ0IlVNZ9FhtmW5seOciKOH2g=
-X-Received: by 2002:a05:600c:530f:b0:47e:e20e:bbb2 with SMTP id
- 5b1f17b1804b1-482db45dc5emr222739535e9.7.1770131218252; 
- Tue, 03 Feb 2026 07:06:58 -0800 (PST)
+ bh=bjhzaEBGyHaRFQtACgFvrwQWK/lqJCAf9i6R698ij38=;
+ b=VdxjrVL0jEaXeqh8rKdkayx7iOScFf5B54zrz/z0u8/89KL/rW2pbUEvmJJByPitU9
+ lIqj2Qx0XSl1GSBkH3xAxogW8M6RpavBvHBcpgQNBuq47VtwXyohhgR0mbQOig6hfLHG
+ 7Hrd4Y3MlaTABO6csXZ/0hQPImEdQRbbLhRTE4vVhCU56BatHg6zpZ3bWMnDnPA153Zg
+ Dq2MdDOkfIx+YQ07VqBJRMzJ9SwqZREzylc/pMK2eUW1c4SVSEXLdzkORPFFOhko5LRq
+ dXyEbKiS/5X2RfRSO21qZR7MhDgTqBC9MkgQc9uYJ0EuAudRhQsYhylC0agcJhJQ13Jp
+ OPPg==
+X-Gm-Message-State: AOJu0YyjIwG16wcX9fU3t9YP6QmkOnAPMNcGDfsEcELGjZ8Nu2sWPf2R
+ GJbMYQ5d8n5ysNVzVfJGxmR5VU/APnlSrbqxIBnMNb2RmuUpvvdiEW6qwobeFMcw5PrSweE7eBD
+ KBzfdX/M=
+X-Gm-Gg: AZuq6aLNEdboAOr2WfsvAjZ8aUMDYuShaLZ4gVaYJQ7ki0yy3XTDUsZtiZwBjVK5QwE
+ Qp9F4EXxPy3f6ynENsfbqHXj8E7CAt3dTx0DSY4MxHU966P0lAyqqltn8c0BnBVUU8kWfYigIOQ
+ iF1lBhE5PMJpIZqXje/UpO7i5SrHCfvmtbAjx8L9jYZau7kBxMpkLejW2YVOBg/fkO9x2FHRHAV
+ DdKm5VzGYwEV2XSqq3ZHv9AhGzicVp+LDz1nDa+IhnM7Gs3/E/d3hK/T3BYWstAO+GB708YGzZt
+ 92wGd26MrWqVanNacFYC+L5tmrPmcTLUJ8LYPlVjitRgUB8tAzoUvuOsCBwArxDEzkP+jL+QyAQ
+ nVJm29bm8QwPaBqm+h2xfLiEfci2HNy1AAGEPoe5i9eCGQgw0HloMxluwJo9UkX0c5/h/hoWCD1
+ 9ZdXvW2upU+XHfRX3SnN5Dtg4EP8NFIkdTFTltScxabdOQaK7IMpqRqguvo2jO
+X-Received: by 2002:a5d:584d:0:b0:435:a2f8:1533 with SMTP id
+ ffacd0b85a97d-435f3abc7ccmr24715415f8f.52.1770131231598; 
+ Tue, 03 Feb 2026 07:07:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-482db623407sm154182265e9.0.2026.02.03.07.06.57
+ ffacd0b85a97d-435e131cf16sm52975072f8f.22.2026.02.03.07.07.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Feb 2026 07:06:57 -0800 (PST)
+ Tue, 03 Feb 2026 07:07:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/30] target/alpha: Do not use target_ulong for trap arguments
-Date: Tue,  3 Feb 2026 16:04:25 +0100
-Message-ID: <20260203150436.71907-21-philmd@linaro.org>
+Subject: [PULL 22/30] target/alpha: Remove target_ulong uses in
+ get_physical_address()
+Date: Tue,  3 Feb 2026 16:04:27 +0100
+Message-ID: <20260203150436.71907-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260203150436.71907-1-philmd@linaro.org>
 References: <20260203150436.71907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-%mmcsr and %cause are filled with @trap_arg1 / @trap_arg2,
-both declared as uint64_t in target/alpha/cpu.h:
-
-    229     uint64_t trap_arg1;
-    230     uint64_t trap_arg2;
-    ...
-
-Use uint64_t instead of target_ulong.
+%addr is a virtual address, so use the 'vaddr' type.
+%pphys is a pointer to a physical address, so use the 'hwaddr' type.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260202234550.34156-5-philmd@linaro.org>
+Message-ID: <20260202234550.34156-7-philmd@linaro.org>
 ---
- target/alpha/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/alpha/helper.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 126a53c829b..2dc52cc4465 100644
+index d6200d101cc..179dc2dc7ae 100644
 --- a/target/alpha/helper.c
 +++ b/target/alpha/helper.c
-@@ -129,7 +129,7 @@ void alpha_cpu_record_sigsegv(CPUState *cs, vaddr address,
-                               bool maperr, uintptr_t retaddr)
+@@ -165,14 +165,14 @@ void alpha_cpu_record_sigsegv(CPUState *cs, vaddr address,
+ }
+ #else
+ /* Returns the OSF/1 entMM failure indication, or -1 on success.  */
+-static int get_physical_address(CPUAlphaState *env, target_ulong addr,
++static int get_physical_address(CPUAlphaState *env, vaddr addr,
+                                 int prot_need, int mmu_idx,
+-                                target_ulong *pphys, int *pprot)
++                                hwaddr *pphys, int *pprot)
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     CPUState *cs = env_cpu(env);
+     target_long saddr = addr;
+-    target_ulong phys = 0;
++    hwaddr phys = 0;
+     uint64_t L1pte, L2pte, L3pte;
+     uint64_t pt;
+     uint16_t index;
+@@ -297,7 +297,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+ 
+ hwaddr alpha_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ {
+-    target_ulong phys;
++    hwaddr phys;
+     int prot, fail;
+ 
+     fail = get_physical_address(cpu_env(cs), addr, 0, 0, &phys, &prot);
+@@ -309,7 +309,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+                         bool probe, uintptr_t retaddr)
  {
      CPUAlphaState *env = cpu_env(cs);
--    target_ulong mmcsr, cause;
-+    uint64_t mmcsr, cause;
+-    target_ulong phys;
++    hwaddr phys;
+     int prot, fail;
  
-     /* Assuming !maperr, infer the missing protection. */
-     switch (access_type) {
+     fail = get_physical_address(env, addr, 1 << access_type,
 -- 
 2.52.0
 
