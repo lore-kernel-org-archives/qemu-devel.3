@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEBBE7C712
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 11:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DECE7C714
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 11:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnErP-0005fW-9B; Tue, 03 Feb 2026 06:46:23 -0500
+	id 1vnErV-0005my-El; Tue, 03 Feb 2026 06:46:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnErJ-0005ee-GH
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vnErU-0005m3-36
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vnErH-0002Xa-Ni
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:17 -0500
+ id 1vnErQ-0002Yb-1X
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 06:46:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770119174;
+ s=mimecast20190719; t=1770119179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Dqfr+maX9BJk8cLtLzKyZPPkmmwpgIdpki5XdC9JHgk=;
- b=hukEGUlTx13ERmMZ+JhRCXgxjjmwPqjxoezwLBHrO+qFQMSYLDEldUTpZkkeadfX19Xf5B
- m7HcVruiCIZkveVF8GOVJKprn5npsl4x2BXWn9zO9OL3feete/q0PelUe2lgHJk/BDz2KZ
- 8TL9ayUYaBQy326EqBifwaeLE4m/nWc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RKFh1tELC5JFN4Ye45utstgAs6HTnOl5iObcbtaVoy0=;
+ b=PReUzl7Czb1zKMSzLs5EVFrLPNbKHB2MQ9eyT7/Z0/Aswzp/2cvq18dJU2CiJXSVMd/AI+
+ Rc/RNiP2U2nnWs+OuZy7NW8DkKeliXxuiYO7YVIBVC/7ucz4e0E/7tlu1gEHyWZ/Osl+Li
+ Y+WNfNrcWCFadVxdIEplOgeVdLeVx7Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-TPNsUWJCPyeiJ_Xos3Enpg-1; Tue,
- 03 Feb 2026 06:46:12 -0500
-X-MC-Unique: TPNsUWJCPyeiJ_Xos3Enpg-1
-X-Mimecast-MFC-AGG-ID: TPNsUWJCPyeiJ_Xos3Enpg_1770119172
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-pAdb6O35MiGbaOYhite3VQ-1; Tue,
+ 03 Feb 2026 06:46:17 -0500
+X-MC-Unique: pAdb6O35MiGbaOYhite3VQ-1
+X-Mimecast-MFC-AGG-ID: pAdb6O35MiGbaOYhite3VQ_1770119176
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23D0518005B0; Tue,  3 Feb 2026 11:46:12 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD6D21800447; Tue,  3 Feb 2026 11:46:15 +0000 (UTC)
 Received: from speedmetal.lan (unknown [10.45.242.3])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E54061955F16; Tue,  3 Feb 2026 11:46:10 +0000 (UTC)
+ id 943201956053; Tue,  3 Feb 2026 11:46:14 +0000 (UTC)
 From: Peter Krempa <pkrempa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
 	qemu-block@nongnu.org
-Subject: [PATCH v3 1/3] scripts: render_block_graph: Fix invalid escape
- sequence warning with python 3.12
-Date: Tue,  3 Feb 2026 12:46:05 +0100
-Message-ID: <d73121f37c8d2127338b87aa294de686eb65bd10.1770108741.git.pkrempa@redhat.com>
+Subject: [PATCH v3 3/3] scripts: render_block_graph: Avoid backtrace on error
+ from virsh
+Date: Tue,  3 Feb 2026 12:46:07 +0100
+Message-ID: <c62ec3caf1e2521256c6b602212468026961297d.1770108741.git.pkrempa@redhat.com>
 In-Reply-To: <cover.1770108741.git.pkrempa@redhat.com>
 References: <cover.1770108741.git.pkrempa@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,71 +88,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Krempa <pkrempa@redhat.com>
 
-Trying to run 'render_block_graph' produces following warnings on
-machine with python 3.12:
+An error from virsh spews also backtrace:
 
- $ ./scripts/render_block_graph.py cd-throttle ble.png
- ./scripts/render_block_graph.py:57: SyntaxWarning: invalid escape sequence '\l'
-   '  w - Write\l'
- ./scripts/render_block_graph.py:58: SyntaxWarning: invalid escape sequence '\l'
-   '  r - consistent-Read\l'
- ./scripts/render_block_graph.py:59: SyntaxWarning: invalid escape sequence '\l'
-   '  u - write - Unchanged\l'
- ./scripts/render_block_graph.py:60: SyntaxWarning: invalid escape sequence '\l'
+  $ ./scripts/render_block_graph.py --vm doesnotexist
+  error: failed to get domain 'doesnotexist'
+  Traceback (most recent call last):
+    File "/home/pipo/git/qemu.git/./scripts/render_block_graph.py", line 152, in <module>
+      render_block_graph(qmp, out)
+      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+    File "/home/pipo/git/qemu.git/./scripts/render_block_graph.py", line 47, in render_block_graph
 
- [...]
+ [snipped]
 
-The graphviz '\l' escape sequence is used to left-justify the line and
-new python started enforcing of strings to contain only known escape
-sequences. Convert the strings containing the dot language to raw.
+instead of just the important bits:
+
+  $ ./scripts/render_block_graph.py --vm doesnotexist
+  error: failed to get domain 'doesnotexist'
+
+Catch the exception and exit. 'virsh' already printed the error.
 
 Signed-off-by: Peter Krempa <pkrempa@redhat.com>
 ---
- scripts/render_block_graph.py | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ scripts/render_block_graph.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/render_block_graph.py b/scripts/render_block_graph.py
-index 3e1a2e3fa7..14b2d02ec2 100755
+index 6f668dec51..3bfc751caa 100755
 --- a/scripts/render_block_graph.py
 +++ b/scripts/render_block_graph.py
-@@ -53,16 +53,16 @@ def render_block_graph(qmp, filename, format='png'):
+@@ -106,7 +106,10 @@ def cmd(self, cmd):
 
-     graph = Digraph(comment='Block Nodes Graph')
-     graph.format = format
--    graph.node('permission symbols:\l'
--               '  w - Write\l'
--               '  r - consistent-Read\l'
--               '  u - write - Unchanged\l'
--               '  g - Graph-mod\l'
--               '  s - reSize\l'
--               'edge label scheme:\l'
--               '  <child type>\l'
--               '  <perm>\l'
--               '  <shared_perm>\l', shape='none')
-+    graph.node(r'permission symbols:\l'
-+               r'  w - Write\l'
-+               r'  r - consistent-Read\l'
-+               r'  u - write - Unchanged\l'
-+               r'  g - Graph-mod\l'
-+               r'  s - reSize\l'
-+               r'edge label scheme:\l'
-+               r'  <child type>\l'
-+               r'  <perm>\l'
-+               r'  <shared_perm>\l', shape='none')
+         ar += ['qemu-monitor-command', self.name, json.dumps(m)]
 
-     for n in block_graph['nodes']:
-         if n['type'] == 'block-driver':
-@@ -83,8 +83,8 @@ def render_block_graph(qmp, filename, format='png'):
-         graph.node(str(n['id']), label, shape=shape)
+-        reply = json.loads(subprocess.check_output(ar))
++        try:
++            reply = json.loads(subprocess.check_output(ar))
++        except subprocess.CalledProcessError:
++            sys.exit(1)
 
-     for e in block_graph['edges']:
--        label = '%s\l%s\l%s\l' % (e['name'], perm(e['perm']),
--                                  perm(e['shared-perm']))
-+        label = r'%s\l%s\l%s\l' % (e['name'], perm(e['perm']),
-+                                   perm(e['shared-perm']))
-         graph.edge(str(e['parent']), str(e['child']), label=label)
-
-     graph.render(filename)
+         if 'error' in reply:
+             raise QMPError(reply)
 -- 
 2.52.0
 
