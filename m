@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C568E8782A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78687E87824
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 13:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnGN3-0007gz-Eg; Tue, 03 Feb 2026 08:23:09 -0500
+	id 1vnGMj-0007bt-E0; Tue, 03 Feb 2026 08:22:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGN2-0007gX-29
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:23:08 -0500
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMi-0007aq-DQ
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:48 -0500
+Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGN0-0003Te-Dl
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:23:07 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.199])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f54144N4kz5w1M;
- Tue,  3 Feb 2026 13:23:04 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnGMg-0003Qr-E5
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 08:22:48 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.222])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f540g3L0Lz5vxp;
+ Tue,  3 Feb 2026 13:22:43 +0000 (UTC)
+Received: from kaod.org (37.59.142.112) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 3 Feb
- 2026 14:23:03 +0100
+ 2026 14:22:42 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G00671ef3d11-8b2f-463b-9468-91bce274a2fa,
+ (GARM-112S006479616af-041b-42dc-8a63-443843a60ab9,
  43D9FD9E6FAA5025B81087D7BA78A3446A80EEF4) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <fc66e841-217c-40b8-bc03-23e903e3dc4a@kaod.org>
-Date: Tue, 3 Feb 2026 14:23:03 +0100
+Message-ID: <4a21eb77-afa2-4ce1-83e4-134d460b0436@kaod.org>
+Date: Tue, 3 Feb 2026 14:22:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] docs/system/arm/aspeed: Load raw U-Boot image in
- AST2700 boot example
+Subject: Re: [PATCH v2 5/8] tests/functional/aarch64/test_aspeed_ast2700:
+ Enable PCIe2 DTS status for AST2700 tests
 To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
  "leetroy@gmail.com" <leetroy@gmail.com>, "andrew@codeconstruct.com.au"
@@ -43,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, "peter.maydell@linaro.org"
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <TYPPR06MB82066553EFFA88182689036BFC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <TYPPR06MB8206E427D92025CB3A2D47A2FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <TYPPR06MB82066553EFFA88182689036BFC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+In-Reply-To: <TYPPR06MB8206E427D92025CB3A2D47A2FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.112]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: a5067250-87fe-4102-a74c-b3f1d9a21223
-X-Ovh-Tracer-Id: 17777959532243028981
+X-Ovh-Tracer-GUID: fc584a0d-d0cf-4e79-9683-3a00ff50240c
+X-Ovh-Tracer-Id: 17772048557629148149
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGs1FVmJmR0rocJc9dH+u5GuLP1FIV890KW9vhFwiSiAnIkZB+PQENIZNzU8FH52mrMx/WkZro4TbhSm8i4m7F0pRUIuDc0AOHyj4eA/jj4ffnlAZGflHV78iqMzA3YNGP0p7IHi3kT0fOCzr+nDuJ178NmtE+ruLNfCyxxyu/k2N5suIWRe8aj38iyrdvm3FFZbc5zb6NnKkqpDFrXv/kQdn5QAif0IQXRnSVtu/Ep6rA1C3ySiz02gpUOwdtCkccFk2EcL0oGJz48EkZkNsuUeQsyPzGoAwOoaA7/z6+JPgQsNvRJgb0Eoy/aVVwO1LYyXthXMYzM7ZTePbo4gy2yDTjed7kI6PSa6NKNjCXvgMTWWU6jo64/3bpylVRgwJ/av1ofFJijqRPDmjXtXBSA0pne35spBnrtYKN5Wvj6ed55riEWvuWrjQGaCuxyqZ5TRqRAQe5lpWbZmBN4RMLplU7HSlOTZ/GXpaPNM7DX+kchIlxYp38T6BNC4sTs/fhih0Mb944PvmiB8idv6ESP8bzmqyBsgaqIm48RgzygyfAZHaYIpazQXQABR590bbIFsHuRpoF0Vy5IP/jt4EbSc1ywNe1tTRLmGu5Kef4ROq8FSnp+tNIeCp02R7Kz9yotCyZtimYbqwADH/UfgG9Z9eNUihYjSpwnQ7nT0e6eIA
-DKIM-Signature: a=rsa-sha256; bh=8z6Ihm1LfHehRrgeQiraybdMf6hVi7ScgSSic41VZvc=; 
+X-VR-SPAMCAUSE: dmFkZTGe5KBRj3a536g5e6Vd5hd+i5APplG7GXC1AycTgdL8jLMEu4R/UOnC3WlwntOgeUGicJpBwYbKdEXBmkH1uywPpSRebgWKfp/NdFLxuCqZa+tLVnQJPBInm9+zB9Q1J4FZD1KA24TRRnXHyBjM26BxWF/mrpbH7PBOKwMqldOY3TfnRTZLmb8VzeT25pRnBrnoXPR0X4GtUAqXaiu/Q3LDy4sgljeVELz8EwQzPOvn+MQ74WJ3d9sPS5zUqWaJ+xxBBtmXm8oqZZxt1P2+qc/9XVzMAQssyqCGbxLwnpDihZaP1vtcUVm3T/x2dMDtXUPCKX4Zz1ISDwTY0OiZFmBLeEBPdx56lEITt4UbzXgS5Um5UcnsWKsD0C2IE2BBgGAYwwlL3RzALYkpxWxs2W9BJ0C3J1QPgigy6G9aPCCKqUrVcJ5M2RMfGVJaTVMYO8up9whi4Y+XjOWp3X4Z+I01kf2Hr4jbW/2b1DmR1EwGSqRWeror/4iBQj8XqFFsAlgRpV3WL2EtClVm0CGnfVZAyAtyhz7PYAUVQlivWIK9nH7Fo1i1q3YOJi+kmniyyarQbsyFUS09JenReLDK32Ynys/yhLEpYw3GphHLXVurx16pxk2/f4w2de8GnyPP3n0AIGQWnkmiJrPoNZCKT+dvlDXkv64OJUqLeVBkAjgQ/Q
+DKIM-Signature: a=rsa-sha256; bh=WX2bOPBIe6MdjSsWdjCyQZ/O0ZqeJDxxHwy5r3JIdTY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770124984; v=1;
- b=YybXaUkpNIqg+IS0KrgXvLt4tnqxnW3QN1R60x74t4E65L61HJGx65GexYs++C09ujdachdY
- Qc7aswnq04MnQTCsqlIndpY5+OH1HceU7cT2ojxqq7R3BvDW4I0gPPIjyPc2hrL44PhDXBFSJpL
- zSgrrzj0lmuYxD+dwvh+kW3I7XuKHzgjf5XZRfFnLh18tUIpp7M7aQDJvo75duw3HljdK0NOFX9
- Ef+u7MZzjsPeJmdoj4l0oWK/c8M/0GpON4+EE+5WZ44C8HQujFVwIxVubBLBU/V+3AaFxF5AXN4
- gGYPikgtP154h+ezTAhfBmla/18ERyVq8o64FLagEcxKg==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+ t=1770124963; v=1;
+ b=Xm9qtQNv8jsrOY5wEGdawpC6YniMT/ScDf7rE0V8RuQ1IHJZ06dKLjdLyKuF1w5hecC1OGCc
+ sGoHfMirdLdCF1kdY4LTi9WYrR2nrVy/DMROGrPIEUKFUkqYKO3ZOMsrEDSlsprEfaYaLOhdS+S
+ wmxJR4kCGoQIAgvs6t+zPxat1k6QkmZH7zP5Qfu9ieVOBJGgpBB2tEWdea7V6XhGuXup3B5u28u
+ vKO2+60NpMh8iXRuIdJqIzs/mIyt6VRxuy9knMQumDErb35y1QMKbZP1466nnQCYjaUkpq6mz6Z
+ 3t7D0pU/J074SPV+B1pEFoNDhh9BYr2AYnbXcNQA04FNg==
+Received-SPF: pass client-ip=46.105.33.25; envelope-from=clg@kaod.org;
+ helo=7.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,45 +133,95 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/3/26 02:55, Jamin Lin wrote:
-> Recent SDK versions no longer provide a U-Boot FIT image, and U-Boot is
-> now built as a single raw binary. Update the documentation to load the
-> raw u-boot.bin image directly.
+> PCIe2 is disabled by default starting from SDK v10.00.
+> 
+> Add a helper function to stop U-Boot autoboot and update the device
+> tree at runtime, setting the PCIe2 node status to "okay" before
+> booting Linux. This allows the AST2700 functional test to verify
+> the PCIe2 root complex behavior correctly.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   docs/system/arm/aspeed.rst | 8 ++------
->   1 file changed, 2 insertions(+), 6 deletions(-)
+>   .../functional/aarch64/test_aspeed_ast2700.py  | 18 ++++++++++++++++--
+>   .../aarch64/test_aspeed_ast2700fc.py           | 18 ++++++++++++++++--
+>   2 files changed, 32 insertions(+), 4 deletions(-)
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 97e14b7d33..d0054a7dbb 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -350,11 +350,9 @@ corresponds to the BL31 image load address.
->   .. code-block:: bash
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
+> index 0ced1a2502..1f1b5749f4 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
+> @@ -9,7 +9,7 @@
+>   import os
 >   
->     IMGDIR=ast2700-default
-> -  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+>   from qemu_test import QemuSystemTest, Asset
+> -from qemu_test import wait_for_console_pattern
+> +from qemu_test import wait_for_console_pattern, exec_command
+>   from qemu_test import exec_command_and_wait_for_pattern
 >   
->     $ qemu-system-aarch64 -M ast2700-evb \
-> -       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-> -       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-> +       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
->          -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
->          -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
->          -device loader,cpu-num=0,addr=0x430000000 \
-> @@ -409,11 +407,9 @@ Steps to boot the AST2700fc machine:
->   .. code-block:: bash
 >   
->     IMGDIR=ast2700-default
-> -  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+> @@ -37,9 +37,23 @@ def verify_vbootrom_firmware_flow(self):
+>           wait_for_console_pattern(self, 'done')
+>           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
 >   
->     $ qemu-system-aarch64 -M ast2700fc \
-> -       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-> -       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-> +       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
->          -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
->          -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
->          -device loader,cpu-num=0,addr=0x430000000 \
+> +    def enable_ast2700_pcie2(self):
+> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'cp 100420000 403000000 900000', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'bootm start 403000000', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm loados', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm ramdisk', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm prep', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'fdt set /soc@14000000/pcie@140d0000 status "okay"', '=>')
+> +        exec_command(self, 'bootm go')
+> +
+>       def verify_openbmc_boot_start(self):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> -        wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+> +        self.enable_ast2700_pcie2()
+>           wait_for_console_pattern(self, 'Linux version ')
+>   
+>       def verify_openbmc_boot_and_login(self, name):
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> index 8dbc8f234f..a1d8046f58 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> @@ -9,7 +9,7 @@
+>   import os
+>   
+>   from qemu_test import QemuSystemTest, Asset
+> -from qemu_test import wait_for_console_pattern
+> +from qemu_test import wait_for_console_pattern, exec_command
+>   from qemu_test import exec_command_and_wait_for_pattern
+>   
+>   
+> @@ -27,9 +27,23 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+>   
+>           self.vm.launch()
+>   
+> +    def enable_ast2700_pcie2(self):
+> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'cp 100420000 403000000 900000', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'bootm start 403000000', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm loados', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm ramdisk', '=>')
+> +        exec_command_and_wait_for_pattern(self, 'bootm prep', '=>')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'fdt set /soc@14000000/pcie@140d0000 status "okay"', '=>')
+> +        exec_command(self, 'bootm go')
+> +
+>       def verify_openbmc_boot_and_login(self, name):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> -        wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+> +        self.enable_ast2700_pcie2()
+>           wait_for_console_pattern(self, 'Starting kernel ...')
+>   
+>           wait_for_console_pattern(self, f'{name} login:')
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
