@@ -4,55 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC6CE8783D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6408AE87834
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnHtu-00070l-AY; Tue, 03 Feb 2026 10:01:12 -0500
+	id 1vnHxL-0000IS-HA; Tue, 03 Feb 2026 10:04:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hongzhibo@bytedance.com>)
- id 1vnBfw-00072M-Vn
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:22:21 -0500
-Received: from sg-1-107.ptr.blmpb.com ([118.26.132.107])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxK-0000H9-B2
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:42 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hongzhibo@bytedance.com>)
- id 1vnBft-0004EW-Be
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 03:22:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1770106920; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=I7SOY3I0kT2JGHAjMl/y/SaarRknr6dY7aMb0GnOv/A=;
- b=g2oDhN2Z3cCV2JoGm6uEUrN0q5EB//+FoX4gwCz9oWiS9pXQ+5WIOiPDnRV6hImZ0pyGby
- kWQuq9LthyYag0vY+mq/zyeUkOwNAFANTTHEPMG8Y9y0/Shy6QPW4MshHg0FWFP8Mjujz7
- oBSUOaU3s9kbe0L/jU1v+QwFTst7TkzGFo/OZDI4rxas/Ig1AQBt2mO+F8adw4pCPm1sVW
- VNxn1dd/E0rtuW9jRRCmb/B6rKRe/AEV3donZ8CgpHREeebB4By6wQVtGYYTX3QFyE7HjV
- vEeKYWyBDgR+9OkpbYk1KaY59Gc0TwXdaQCjw11kxmf1cu1yVhQv3SM9SkEg3w==
-Subject: [PATCH v1] riscv: Add support for Zibi extension
-Date: Tue,  3 Feb 2026 16:21:44 +0800
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Original-From: hongzhibo@bytedance.com
-X-Mailer: git-send-email 2.39.5
-X-Lms-Return-Path: <lba+26981b026+08d323+nongnu.org+hongzhibo@bytedance.com>
-To: <qemu-devel@nongnu.org>
-Cc: <qemu-riscv@nongnu.org>, "Zhibo Hong" <hongzhibo@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-From: =?utf-8?q?=E6=B4=AA=E5=BF=97=E5=8D=9A?= <hongzhibo@bytedance.com>
-Message-Id: <20260203082144.2183253-1-hongzhibo@bytedance.com>
-Received-SPF: pass client-ip=118.26.132.107;
- envelope-from=hongzhibo@bytedance.com; helo=sg-1-107.ptr.blmpb.com
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnHxI-0001Kf-CB
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:04:42 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-47ee76e8656so76850595e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:04:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770131078; x=1770735878; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DNMvwvqcNxPO7XREDEFoJV31BtUT3xnR6T/fIAPLrIE=;
+ b=JOqaf87k8YBl65ziOo14XIAfDRwNbY1QxfH82Jhuk/24VR6V052C1IqH0d6Ft1HJsL
+ 07nJYjr+CQaQL9U0to2g0igfRNT8ildDEb6sNhAfu8mI/nQ/r0Ez1stimnmwIkmet+1l
+ ttRDcC/KsyH+Oxj5UQZMyGBkTtXmNVuEFqRUPIsZUKdBqus2//obaQELJRHUvmbYGoph
+ b6gewbATOLnDJDVVBPKUw5GL2ANnbSwCAvXTA9ExvXUeqQS3CTFsOz0GETiPhBqrVRJ8
+ GmZkBEdyk5DXqypUJ9cwhnlP/uRJUv7Bn/ZBWOiFfa2MTGI4KD59nPdFQ+3fN9AWcTFu
+ w6Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770131078; x=1770735878;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DNMvwvqcNxPO7XREDEFoJV31BtUT3xnR6T/fIAPLrIE=;
+ b=X+vp8QTabBdt+2IWYSGVGm4aQmam5YC5Xre+oC74jTw4pGxbSRJGFnswDEcOOzb/8H
+ jrNjhVk6tPNUz48Hl9KiRN3opKXjBw3bm3Tc044GjQBgM2VtLp8WpNmbteUpY7tMuLZE
+ YQf2zHJQ04v79Wh/HLC+wlvgsJ3zJj/3xVyIP8j7FT23Becjp1lQ+4KGYVErEcRgPEb3
+ T8dl/SdLICMj2n0LZkdjkWnHp4LS0NYEDY3wldD7Y/+MJXVUiCGU3lzVDPCtNyP8A+cc
+ yFAGh/91J6HCwtoaE6NWUA0GTk4/7sucRDt2oIWVkuG2UcLjshvyrTEO4CIRmgccgSQ0
+ 9brg==
+X-Gm-Message-State: AOJu0YyB/B317/qW243Bfnwfnm7VToPOvDWBLqf5UFhdIx/bjPrl4VHG
+ PsbvsFOrC1Ew6l9nFP2EvqhEOAUiVlwMai2hzb9x4sKvfGt7NL0Z7hZq5rayb65nUbGjW8aSLSi
+ FQtwMCJ0=
+X-Gm-Gg: AZuq6aKVeExbhfynhMs+T+a72dqhIny7rpDbXm4aa5GOzTxDPH0ANBwCDcI6TaKTEPv
+ nanEhTd7qRGWktR90grkVuh6qNA/WgzdAzvx2tSONMvrHxwuFnZ2yo3t8GfMq7UUX29Xkz0pp9d
+ Ou9BVWq52VcEZxOfbVbbcI3ixJFSTl8yr1Cb/u0VvRRUvfsfG2JzH3c3vsCWCftXDxr2z4rHORk
+ FyiduKJqoH2bQ9LtoH7zBABgq/vy1xRz/Zz1Z6aYgN/jHpkT21PnQX/UvRZt04BlKyt4Uk/WOjr
+ dEFPCNdCw6aI+84dw7XBb/uWtesPL9zXOYTFcxl7RjfKfJIcl10MI/nJ2XaAxsCGC1SzMzYuLJ2
+ vHOcPVmJx31LPbqtnIxRZ7udu7Q4nZHP8DnJGPVIuRD1B9F5T3N4ZrMSHTLwMJCJNpjoWGB/Cvm
+ LWw8zd5B4jmo2CP2YMOxMamvvtH9SHBSUhTDK6Hhpoj8giqg69qBiXFXd4/8qp
+X-Received: by 2002:a05:6000:402a:b0:436:1565:17d5 with SMTP id
+ ffacd0b85a97d-43615651bdamr2817681f8f.12.1770131077961; 
+ Tue, 03 Feb 2026 07:04:37 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10e4757sm54679619f8f.5.2026.02.03.07.04.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 03 Feb 2026 07:04:37 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/30] Single binary patches for 2026-02-03
+Date: Tue,  3 Feb 2026 16:04:05 +0100
+Message-ID: <20260203150436.71907-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 03 Feb 2026 10:01:06 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,257 +96,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhibo Hong <hongzhibo@bytedance.com>
+The following changes since commit b377abc220fc53e9cab2aac3c73fc20be6d85eea:
 
-Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
----
- disas/riscv.c                              | 17 +++++++
- disas/riscv.h                              |  2 +
- target/riscv/cpu.c                         |  2 +
- target/riscv/cpu_cfg_fields.h.inc          |  1 +
- target/riscv/insn32.decode                 |  9 ++++
- target/riscv/insn_trans/trans_rvzibi.c.inc | 54 ++++++++++++++++++++++
- target/riscv/translate.c                   |  6 +++
- 7 files changed, 91 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_rvzibi.c.inc
+  Merge tag 'hw-misc-20260202' of https://github.com/philmd/qemu into staging (2026-02-03 07:52:04 +1000)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 85cd2a9c2a..92862835f0 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -984,6 +984,8 @@ typedef enum {
-     rv_op_ssamoswap_d = 953,
-     rv_op_c_sspush = 954,
-     rv_op_c_sspopchk = 955,
-+    rv_op_beqi      = 956,
-+    rv_op_bnei      = 957,
- } rv_op;
- 
- /* register names */
-@@ -2254,6 +2256,8 @@ const rv_opcode_data rvi_opcode_data[] = {
-       rv_op_sspush, 0 },
-     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
-       rv_op_sspopchk, 0 },
-+    { "beqi", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
-+    { "bnei", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -3997,6 +4001,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             switch ((inst >> 12) & 0b111) {
-             case 0: op = rv_op_beq; break;
-             case 1: op = rv_op_bne; break;
-+            case 2: op = rv_op_beqi; break;
-+            case 3: op = rv_op_bnei; break;
-             case 4: op = rv_op_blt; break;
-             case 5: op = rv_op_bge; break;
-             case 6: op = rv_op_bltu; break;
-@@ -4529,6 +4535,12 @@ static uint32_t operand_imml(rv_inst inst)
-     return (inst << 38) >> 58;
- }
- 
-+static int32_t operand_bi(rv_inst inst)
-+{
-+    uint32_t cimm = (inst << 39) >> 59;
-+    return cimm == 0 ? -1 : cimm;
-+}
-+
- static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
- {
-     int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
-@@ -4948,6 +4960,11 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
-         dec->rs1 = dec->rs2 = operand_crs1(inst);
-         dec->imm = 0;
-         break;
-+    case rv_codec_bi:
-+        dec->rs1 = operand_rs1(inst);
-+        dec->imm = operand_sbimm12(inst);
-+        dec->imm1 = operand_bi(inst);
-+        break;
-     };
- }
- 
-diff --git a/disas/riscv.h b/disas/riscv.h
-index d211700cb2..452c788278 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -168,6 +168,7 @@ typedef enum {
-     rv_codec_fli,
-     rv_codec_lp,
-     rv_codec_cmop_ss,
-+    rv_codec_bi,
- } rv_codec;
- 
- /* structures */
-@@ -305,5 +306,6 @@ enum {
- #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
- #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
- #define rv_fmt_fli                    "O\t3,h"
-+#define rv_fmt_rs1_imm1_offset        "O\t1,j,o"
- 
- #endif /* DISAS_RISCV_H */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e95eea0249..0a1cb41c96 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -120,6 +120,7 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
-  * instead.
-  */
- const RISCVIsaExtData isa_edata_arr[] = {
-+    ISA_EXT_DATA_ENTRY(zibi, PRIV_VERSION_1_13_0, ext_zibi),
-     ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
-     ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
-     ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
-@@ -1238,6 +1239,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
-     MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
-     MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
-+    MULTI_EXT_CFG_BOOL("zibi", ext_zibi, false),
-     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 70ec650abf..046c656bd9 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -30,6 +30,7 @@ BOOL_FIELD(ext_zks)
- BOOL_FIELD(ext_zksed)
- BOOL_FIELD(ext_zksh)
- BOOL_FIELD(ext_zkt)
-+BOOL_FIELD(ext_zibi)
- BOOL_FIELD(ext_zifencei)
- BOOL_FIELD(ext_zicntr)
- BOOL_FIELD(ext_zicsr)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 6e35c4b1e6..0a92e79508 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -20,6 +20,7 @@
- %rs3       27:5
- %rs2       20:5
- %rs1       15:5
-+%rs1_3     17:3                  !function=ex_rvc_register
- %rd        7:5
- %sh5       20:5
- %sh6       20:6
-@@ -40,6 +41,7 @@
- %imm_z6   26:1 15:5
- %imm_mop5 30:1 26:2 20:2
- %imm_mop3 30:1 26:2
-+%imm_bi   20:5                   !function=ex_bi
- 
- # Argument sets:
- &empty
-@@ -60,6 +62,7 @@
- &k_aes     shamt rs2 rs1 rd
- &mop5 imm rd rs1
- &mop3 imm rd rs1 rs2
-+&bi   imm imm2 rs1
- 
- # Formats 32:
- @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
-@@ -111,6 +114,8 @@
- # Formats 128:
- @sh6       ...... ...... ..... ... ..... ....... &shift shamt=%sh6 %rs1 %rd
- 
-+@bi      ....... ..... ... .. ... ..... ....... &bi imm=%imm_b imm2=%imm_bi rs1=%rs1
-+
- # *** Privileged Instructions ***
- ecall       000000000000     00000 000 00000 1110011
- ebreak      000000000001     00000 000 00000 1110011
-@@ -1084,3 +1089,7 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
- sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
- sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
- sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-+
-+# *** Zibi Extension ***
-+beqi       ....... ..... ..... 010 ..... 1100011 @bi
-+bnei       ....... ..... ..... 011 ..... 1100011 @bi
-\ No newline at end of file
-diff --git a/target/riscv/insn_trans/trans_rvzibi.c.inc b/target/riscv/insn_trans/trans_rvzibi.c.inc
-new file mode 100644
-index 0000000000..24bc0806aa
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzibi.c.inc
-@@ -0,0 +1,54 @@
-+#define REQUIRE_ZIBI(ctx) do {                  \
-+    if (!ctx->cfg_ptr->ext_zibi) {              \
-+        return false;                           \
-+    }                                           \
-+} while (0)
-+
-+static bool gen_immediate_branch(DisasContext *ctx, arg_bi *a, TCGCond cond)
-+{
-+    TCGLabel *l = gen_new_label();
-+    TCGv src1 = get_gpr(ctx, a->rs1, EXT_SIGN);
-+    TCGv imm2 = tcg_constant_tl(a->imm2);
-+    target_ulong orig_pc_save = ctx->pc_save;
-+
-+    if (get_xl(ctx) == MXL_RV128) {
-+        TCGv src1h = get_gprh(ctx, a->rs1);
-+        TCGv imm2h = tcg_constant_tl(a->imm2 >= 0 ? 0 : -1);
-+        TCGv tmp = tcg_temp_new();
-+
-+        cond = gen_compare_i128(false, tmp, src1, src1h, imm2, imm2h, cond);
-+        tcg_gen_brcondi_tl(cond, tmp, 0, l);
-+    } else {
-+        tcg_gen_brcond_tl(cond, src1, imm2, l);
-+    }
-+    gen_goto_tb(ctx, 1, ctx->cur_insn_len);
-+    ctx->pc_save = orig_pc_save;
-+
-+    gen_set_label(l); /* branch taken */
-+
-+    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
-+        (a->imm & 0x3)) {
-+        /* misaligned */
-+        TCGv target_pc = tcg_temp_new();
-+        gen_pc_plus_diff(target_pc, ctx, a->imm);
-+        gen_exception_inst_addr_mis(ctx, target_pc);
-+    } else {
-+        gen_goto_tb(ctx, 0, a->imm);
-+    }
-+    ctx->pc_save = -1;
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+
-+    return true;
-+}
-+
-+static bool trans_beqi(DisasContext *ctx, arg_beqi *a)
-+{
-+    REQUIRE_ZIBI(ctx);
-+    return gen_immediate_branch(ctx, a, TCG_COND_EQ);
-+}
-+
-+static bool trans_bnei(DisasContext *ctx, arg_bnei *a)
-+{
-+    REQUIRE_ZIBI(ctx);
-+    return gen_immediate_branch(ctx, a, TCG_COND_NE);
-+}
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index f687c75fe4..d0b83ebe01 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -858,6 +858,11 @@ static int ex_rvc_shiftri(DisasContext *ctx, int imm)
-     return imm;
- }
- 
-+static int ex_bi(DisasContext *ctx, int imm)
-+{
-+    return imm == 0 ? -1 : imm;
-+}
-+
- /* Include the auto-generated decoder for 32 bit insn */
- #include "decode-insn32.c.inc"
- 
-@@ -1215,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_xthead.c.inc"
- #include "insn_trans/trans_xventanacondops.c.inc"
- #include "insn_trans/trans_xmips.c.inc"
-+#include "insn_trans/trans_rvzibi.c.inc"
- 
- /* Include the auto-generated decoder for 16 bit insn */
- #include "decode-insn16.c.inc"
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/single-binary-20260203
+
+for you to fetch changes up to a63b90ca6ce8d00dee5150b84bbc65428519ef2b:
+
+  disas: Have disas_set_info() take a const CPUState (2026-02-03 14:57:34 +0100)
+
+----------------------------------------------------------------
+Various patches related to single binary effort:
+
+- Endianness cleanups on various targets (PPC in particular)
+- Few cleanups around target_ulong type on Alpha
+- Have CPUClass::disas_set_info() take a const CPUState
+----------------------------------------------------------------
+
+Philippe Mathieu-Daudé (29):
+  target/ppc: Inline cpu_ldl_data_ra() calls in ICBI helpers
+  target/ppc: Inline cpu_ld/st_mmuidx_ra() calls in memory helpers
+  target/ppc: Inline cpu_ld/st_data_ra() calls in do_hash()
+  target/ppc: Expect page translation hash addresses to be aligned
+  target/ppc: Introduce ppc_data_endian_env() helper
+  target/ppc: Introduce ppc_code_endian_dc() helper
+  target/ppc: Inline need_byteswap() and replace translator_ldl_swap()
+  target/ppc: Check endianness via env in ppc_disas_set_info()
+  target/ppc: Introduce ppc_env_is_little_endian() helper
+  target/ppc: Check endianness at runtime in ppc_data_endian_env()
+  target/ppc: Inline cpu_ldl_code() call in ppc_ldl_code()
+  target/riscv: Inline cpu_ld[lq]_code() calls
+  target/riscv: Inline translator_ld[uw,l,q]() calls
+  target/i386: Inline translator_ld[uw,l,q]() calls
+  target/m68k: Inline translator_ld[uw,l,q]() calls
+  target/alpha: Avoid target-specific migration headers in machine.c
+  target/alpha: Build system units in common source set
+  target/alpha: Replace target_ulong -> uint64_t in gdb_write_register()
+  target/alpha: Do not use target_ulong for trap arguments
+  target/alpha: Do not use target_ulong for page table entries / indexes
+  target/alpha: Remove target_ulong uses in get_physical_address()
+  target/alpha: Expand TCGv type for 64-bit target
+  target/arm: Have arm_feature() take a const @env argument
+  target/arm: Have cpu_isar_feature() use a const ARMCPU object
+  target/arm: Have is_64() take a const @env argument
+  target/arm: Have arm_sctlr_b() take a const @env argument
+  disas/riscv: Make rv_decode::cfg const
+  disas: Make disassemble_info::target_info field const
+  disas: Have disas_set_info() take a const CPUState
+
+Pierrick Bouvier (1):
+  target-info: add target_base_ppc, target_ppc and target_ppc64
+
+ disas/riscv.h                    |   2 +-
+ include/disas/dis-asm.h          |   2 +-
+ include/hw/core/cpu.h            |   2 +-
+ include/qemu/target-info.h       |  21 +++
+ target/arm/cpu-features.h        |   2 +-
+ target/arm/cpu.h                 |   6 +-
+ target/ppc/internal.h            |  17 +++
+ disas/riscv.c                    |   5 +-
+ target-info.c                    |  21 +++
+ target/alpha/cpu.c               |   3 +-
+ target/alpha/gdbstub.c           |   2 +-
+ target/alpha/helper.c            |  17 +--
+ target/alpha/machine.c           |   3 +-
+ target/alpha/translate.c         | 228 ++++++++++++++++---------------
+ target/arm/cpu.c                 |   6 +-
+ target/avr/cpu.c                 |   2 +-
+ target/hexagon/cpu.c             |   3 +-
+ target/hppa/cpu.c                |   2 +-
+ target/i386/cpu.c                |   6 +-
+ target/loongarch/cpu.c           |   3 +-
+ target/m68k/cpu.c                |   2 +-
+ target/m68k/translate.c          |   6 +-
+ target/microblaze/cpu.c          |   2 +-
+ target/mips/cpu.c                |   7 +-
+ target/openrisc/cpu.c            |   2 +-
+ target/ppc/cpu_init.c            |  14 +-
+ target/ppc/gdbstub.c             |   2 +-
+ target/ppc/mem_helper.c          |  60 +++++---
+ target/ppc/tcg-excp_helper.c     |  27 ++--
+ target/ppc/translate.c           |  21 +--
+ target/riscv/cpu.c               |   7 +-
+ target/riscv/translate.c         |  18 ++-
+ target/riscv/zce_helper.c        |   8 +-
+ target/rx/cpu.c                  |   2 +-
+ target/s390x/cpu.c               |   2 +-
+ target/sh4/cpu.c                 |   3 +-
+ target/sparc/cpu.c               |   3 +-
+ target/xtensa/cpu.c              |   3 +-
+ target/i386/tcg/decode-new.c.inc |   6 +-
+ target/alpha/meson.build         |   2 +-
+ 40 files changed, 329 insertions(+), 221 deletions(-)
+
 -- 
-2.39.5
+2.52.0
+
 
