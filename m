@@ -4,111 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08206E8783D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26F1E87841
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnIOp-0008Tf-QL; Tue, 03 Feb 2026 10:33:08 -0500
+	id 1vnIVa-00027j-Uq; Tue, 03 Feb 2026 10:40:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vnIOn-0008NP-R8
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:33:05 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
+ id 1vnIVY-00027C-Td
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:40:05 -0500
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vnIOl-0004my-VN
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:33:05 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6139WDtT016796;
- Tue, 3 Feb 2026 15:33:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=TQKi2a
- m5oZcgIHaq8eQaj00/wo7enqjS2FdBn8oU1nQ=; b=QcRho1A2jCVrvOmiA92w/K
- oTVT4SDlW/zGHRY3qCeJMU6lhq0JK0V2IKKbsgKSwAUYRhFp+SGRoWp2kwIVv5p8
- FWnX3iRYK/iu9tpLhQlHqmdU5bWULICeBel+74DIbhKVCJ84e/CdKudMWrbb/s+s
- 61WaqmsAVJsJGPl1ouAUxjc3dBN3yPp5IXhOPW1rBUShOTVHoYpVon04cAEB0CJC
- m74sFSCU5N2PyeJJP+feANhnxxU2oBWqJYyshJsQzvbPMvyUV/JJg2WFRsY2/z20
- nAuaKI90RNDQZ7IRtv8cKCv5Rri388xsDTtFq7Yes0jUL9a3UjC8jZarY9dqlzYg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dt613x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Feb 2026 15:33:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 613C7GFD005996;
- Tue, 3 Feb 2026 15:33:01 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1x9j9dmt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Feb 2026 15:33:01 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 613FX0CV14746268
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Feb 2026 15:33:01 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 95F895805E;
- Tue,  3 Feb 2026 15:33:00 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF39558058;
- Tue,  3 Feb 2026 15:32:59 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  3 Feb 2026 15:32:59 +0000 (GMT)
-Message-ID: <6d0b4330-1aba-4f2e-968d-1d64397241de@linux.ibm.com>
-Date: Tue, 3 Feb 2026 10:32:59 -0500
+ (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
+ id 1vnIVX-0006J7-57
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:40:04 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=C8K63o6t8mttjMArUFXp67Cnk297hTDqkCP1gSw32kUUGV9xtvrrTdTX7yX2EFjeMWsXqaqWUcqj4jFyNu2yctlG2cpK8tWS6IPTiCT/0m7HGW/LZ+eSVdFhS9/Fq1YE3P+EJrO5IOKJuhfBTWYLcdrTwVVJZJ7AAUGAuJqjPHR60omX1DfB80J7b4/u0C+H0TzMVwXRINxbgHEgRQY7pUKliLB1bLB2GI3fMmIW+SlJtKFJmoKNciIJ/dWWHrWNwINaqocSaHf0RRQ8r17zEZt4+L0+LsizDrBKpF0qQNgZBjkXww3yEOmsvusN9QurFF+5/2TuLZpeocAIxmA3yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=n/lACOTwlJsJUqtjYzqnYFYF9IgBtoRL556eElujoIM=;
+ b=C7c09MjC8gez1BXiziIxHuhGRjCw+QdPgDcl/C2U3j3NSTxRkri4sH+iMoGaezhEMKP91dVBVGTpMYblCaw51hpkrxwdnIW2dbhhjY07rfxxpUHlOWwY4JEC85XLEB6ig2O02dBbGYinId+GroJ+IawZ1JEIAcHiaBA0uImBDvF0nIxn+Rm4Ivw+EA/zROQPpmWyjAdv282L+Rh780msEsSmIR6FtRG+FM74Y7QYJLZAaJMgoQn6OzNERNbI2UJwHPkqgaZgWLL+dZh7tueKd3bl4jfb7Ot3DayNAbK722ZFjPmPvCMxc4RRJZ6zzaoPA4dtlkvD+WBlCjPZC+6uVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=n/lACOTwlJsJUqtjYzqnYFYF9IgBtoRL556eElujoIM=;
+ b=dQNytArNjBFs/j2Siybnw+5VIiPV1hOWTUZYzABmh3/1GzgmnsRTjqbX/1SKBEVrbkH6ZuiyN7PHQB2Hvq87FirQ5g2Gxhgo3Chpa4sD4e9YfMPfMO8o6eKAFMLwDlG0SJY/KznnW0Mlojqi3ivrsYmJzY5SRyvh8+Uw+KfuUV8=
+Received: from BN0PR04CA0183.namprd04.prod.outlook.com (2603:10b6:408:e9::8)
+ by LV8PR12MB9407.namprd12.prod.outlook.com (2603:10b6:408:1f9::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.11; Tue, 3 Feb
+ 2026 15:39:56 +0000
+Received: from BN1PEPF00004686.namprd03.prod.outlook.com
+ (2603:10b6:408:e9:cafe::74) by BN0PR04CA0183.outlook.office365.com
+ (2603:10b6:408:e9::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.15 via Frontend Transport; Tue,
+ 3 Feb 2026 15:39:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BN1PEPF00004686.mail.protection.outlook.com (10.167.243.91) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.10 via Frontend Transport; Tue, 3 Feb 2026 15:39:55 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 3 Feb
+ 2026 09:39:55 -0600
+Received: from RSBMPEKOVIC01.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Tue, 3 Feb 2026 07:39:54 -0800
+From: Manojlo Pekovic <manojlo.pekovic@amd.com>
+To: <mpekovic@amd.com>, <qemu-devel@nongnu.org>
+Subject: [PATCH 0/2] vfio/pci: Add multifunction atomic ops support
+Date: Tue, 3 Feb 2026 16:39:50 +0100
+Message-ID: <20260203153952.1337-1-manojlo.pekovic@amd.com>
+X-Mailer: git-send-email 2.51.0.windows.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] tpm_emulator: drop direct use of errno variable
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- stefanb@linux.vnet.ibm.com
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
-References: <20260201172746.404481-1-vsementsov@yandex-team.ru>
- <20260201172746.404481-3-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260201172746.404481-3-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDEyMyBTYWx0ZWRfX7kEecgRIIgU5
- lUW7AJaaEGEs53udSMYv3/R9DEiGFjSduPjOb6hpEXTWBtOVMeM1ZMGSB0aB5C3b1LM/Y1FgPjK
- bJ4gUkRbCVi909oyRhk89533na0JUFOsW0A8ULqDSflkAIuWp2Sm5jpPpEaTz6jk2Ans/1eRUx9
- LsuEzCUKRUJ+Fkc+ZU0IDkvFSI8NNUCXGktXB2nrOT9xD31P/HsAtUqQWUH4DkKdyHqqRP3P8u0
- /nOipT35GZtw2lU4LFrx7luyHBY2SGMBpTlMQLu/J3UzaEiIxN4qPTr79PiQb631FecRoGAi+mZ
- jf2JDe94b654aBIp0LL2jac7jH9nO/rnFMimhcnGJH3y/MI0TJI8CSafVYfldQxKH5K+vsy7Nv2
- VprCS9dIWR0TOPku+ZtFiBbB/+vrGI48zUZiOUPlXJIQNX0zma+lkb4jTXA7YxWnFMykO2Ck2ss
- X0Kx413L9h9HG8+lpgg==
-X-Proofpoint-GUID: 5APv9dC5jrTjF8ftoXgNthnw1OwQDKiP
-X-Proofpoint-ORIG-GUID: 5APv9dC5jrTjF8ftoXgNthnw1OwQDKiP
-X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=6982152e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=6R7veym_AAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=myy8jjzOfpeVxhzBBLUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-03_04,2026-02-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602030123
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004686:EE_|LV8PR12MB9407:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b1ef1c7-f4ef-4c81-1a9b-08de633a7b2a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|376014|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?nQJaxR5OEQxXlTX+l2e8+qCsYQkySYO4dHTYVExelC9FFLHSInsTe3PfHOnR?=
+ =?us-ascii?Q?aE0H/9Dy1ob4qDSvNN990DIDYWo4aRvW+YxAUT1eIwLeG3XGFBEJe3SGvfA9?=
+ =?us-ascii?Q?I+c2IxPUm2IirPUMaGiHmmmlxrvOKWjvKbc2lOvybGZfNUAQK8TLiNCi86Z9?=
+ =?us-ascii?Q?oqvxbXzOmdUuuOdcIYYx0LJY8RDrlhAtrmSyGmB1UgNrgl+T/Vdvf509aZcZ?=
+ =?us-ascii?Q?RAR9/dApCD1F7xePlb5H9kiQwoWPNQd2TAABymx1EnCU4YqwnOxRdlPFPYGO?=
+ =?us-ascii?Q?BJjugcLXYG698hJ+Xkeb2NVJ9h7lZMBe4GUSOykUwdNj+jLR8uhZtX1cjBJK?=
+ =?us-ascii?Q?f3d86YIxrXJne0ug4D73rlrbYlHbTATdvc8Jc8HG8l8uVNkykkTC+q+Nd2HA?=
+ =?us-ascii?Q?H10VoWhn86EfSMHxUGEEKB1/PtKX7dq1DQUWQ56OdsWlRvMH33Qq5GswvRxU?=
+ =?us-ascii?Q?OjvrWHtnIqI/QSRgINjyUJ3p5ITf8Y5w3S/5QuVLVavDzf7PteZGpaizqiZH?=
+ =?us-ascii?Q?M8/pCVTU835irx6kQAxskO4MJvI6bvxYJQ50vOX9aRX9gtjH4HRZMb0b/4UN?=
+ =?us-ascii?Q?+At4ewXQzi+/98mIjpEM3zQjV3dYtXAChffMtq83X8g4B28UexvBdh3niKiM?=
+ =?us-ascii?Q?zJ5HCjcJTK3wmB3vinLp7knj81Vp4NZmh6K4FS0nIRjtxS08INyNeAWrQ3ZO?=
+ =?us-ascii?Q?gfKeqOm4pm/YdT2q+Hbig5amgI+avPpcqjquMxhzMgpKtqOISswT9UeSEJYa?=
+ =?us-ascii?Q?Pg4Orh1p5+Hmx7rkqPfWh+LucD1dnN8IPebg6CFc52aFxM71+pHyNbAKtwbU?=
+ =?us-ascii?Q?Utwlbt6njV0WKoyllqY0Bd3cGz/npxAMA9cBOFteqnxja2bFiqCiX3WVtO2y?=
+ =?us-ascii?Q?z6zn4AI/gp43zxC8zCQPgkK2A+Wyr4HAcx/05LElez7SrUr7kzuiPmCoXgMP?=
+ =?us-ascii?Q?8FgsZ7j3LVQlGk4qMKgUOeFGFy4ye29hB0AaKcq1y5aw/AWhERhYtfjOfUus?=
+ =?us-ascii?Q?HvMn/p2EN3tb3mhnZY3ut3GFTr7vq+nAz27y+I49joqfWuaoFs6h+BpVihLI?=
+ =?us-ascii?Q?moUEm7gomjbv2t/CAWQvr2DPtflmAXgj0W+lNbDFTIo4et8xyoca3UMWUfUR?=
+ =?us-ascii?Q?NyLm7472FHAFvVrmSGrYkBwidH06JQj1u41EMo3bw14Q0GDqjxlZOdUpCVGZ?=
+ =?us-ascii?Q?ZvjfaTrenyENR0r/zEfXbwLa6wwqwG8pOuKwQ3+BXP4JYiHocRSCQDHrzGmz?=
+ =?us-ascii?Q?6jo6uz/OZEmpeTtwndzOpV7yP0DF+2VGNH32OPmqz1nKK/GY2kLj9+YKxgN6?=
+ =?us-ascii?Q?CrRRQiozIyPBFR6/ztQizLTXJwfn881RnFlFYDCVW/DMzVdlMxzi0KFym9cR?=
+ =?us-ascii?Q?/B3tgG3a78e1epepJ8OVU3zFeqdXtkf1tkh5+QZJjNZNCtNFqg5fTnmDJp/5?=
+ =?us-ascii?Q?6uxqgNW0VEFzjnUsbZWEli7uWS7paK6/VMDUkSN00zoSJCOF2kQC1orEuBvv?=
+ =?us-ascii?Q?F8QCiycGsrqYVBOHIrf89KSgZtiP+S90x0oZnpbR55g74w7K7WR+GolLnLpE?=
+ =?us-ascii?Q?UFTcg42uClptQae34M9qB8iaHCUIAZLk3HIY0VfrP06X6Uz/Kfc5lVOxMe1y?=
+ =?us-ascii?Q?8xh41QgLzGW4T6uLkmkA6o6uR1CnY4WOBFT8Y3wjjPPLGp6fNyNya6udD1aS?=
+ =?us-ascii?Q?htpeAA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: K923RaivGi8ZcjavlMX8NYBOj82TxWq1wguA1tI9FeR/x/4jZ4C7g7RDuRFNqznj4kdUFSUkib3RurIKxOsy5SgcYi05Swe2awgkT4OrNJeNra+6vA1NNFvk7Z08f01eM/dWtyCB7ULQaVkeB07uHAuEjDNaWDE6oKIeffUlPo4nDrp01VGairF2LBXY+WYMBWAPmb3YajAeLnDo1blrF8ag3tSrZYQYJH5S7Px2oIivg9cFNy/0jRMI/c+MfzTupztH3O9s2wnzDlI2JRqFe+rjdQHWXZ9m3rmdxLzEIlsjpOlZNTJAO8rLYXjeuf/FUTRlGA0Y1LAgVx1i6FegspkXuHFdkonc09G8oWcc6L5hO/uPmTPvN7PNIB+6kG0HnlUVgeOPPvC5z2XeATKqDwwnIJ1qKp1IFmBpiQ4e14g8kUWfJuegbNzswScx9nFY
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Feb 2026 15:39:55.8369 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b1ef1c7-f4ef-4c81-1a9b-08de633a7b2a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004686.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9407
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=Manojlo.Pekovic@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,65 +149,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Manojlo Pekovic <mpekovic@amd.com>
 
+This series extends PCIe Atomic Ops completer support to multifunction
+vfio-pci devices. 
+It is an update on previously discussed issues
 
-On 2/1/26 12:27 PM, Vladimir Sementsov-Ogievskiy wrote:
-> The code tends to include errno into error messages after
-> tpm_util_test_tpmdev() and tpm_emulator_ctrlcmd() calls.
-> 
-> Both has error paths, where errno is not set, examples:
-> 
-> tpm_emulator_ctrlcmd()
->    qemu_chr_fe_write_all()
->      qemu_chr_write()
->        replay_char_write_event_load()
->          ...
->          *res = replay_get_dword();
->          ...
-> 
-> tpm_util_test_tpmdev()
->    tpm_util_test()
->      tpm_util_request()
->        ...
->        if (n != requestlen) {
->            return -EFAULT;
->        }
->        ...
-> 
-> Both doesn't document that they set errno.
-> 
-> Let's drop these explicit usage of errno. If we need this information,
-> it should be added to errp deeper in the stack.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
+Patch 1 refactors the existing atomic capability checking logic into
+a reusable helper function.
 
-> @@ -539,8 +535,7 @@ static void tpm_emulator_cancel_cmd(TPMBackend *tb)
->       /* FIXME: make the function non-blocking, or it may block a VCPU */
->       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_CANCEL_TPM_CMD, &res, 0,
->                                sizeof(ptm_res), sizeof(res)) < 0) {
-> -        error_report("tpm-emulator: Could not cancel command: %s",
-> -                     strerror(errno));
-> +        error_report("tpm-emulator: Could not cancel command: %s");
+Patch 2 extends the support to multifunction devices by calculating
+the intersection of atomic capabilities across all functions, deferring
+configuration to machine_done time when all functions are realized.
 
-Remove the '%s'.
+Manojlo Pekovic (2):
+  vfio/pci: Refactor atomic capability checking
+  vfio/pci: Support multifunction atomic ops capability
 
-I get these build errors now:
+ hw/vfio/pci.c | 177 +++++++++++++++++++++++++++++++++++++++++++++-----
+ hw/vfio/pci.h |   1 +
+ 2 files changed, 161 insertions(+), 17 deletions(-)
 
-../backends/tpm/tpm_emulator.c: In function ‘tpm_emulator_cancel_cmd’:
-../backends/tpm/tpm_emulator.c:538:22: error: format ‘%s’ expects a 
-matching ‘char *’ argument [-Werror=format=]
-   538 |         error_report("tpm-emulator: Could not cancel command: %s");
-       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../backends/tpm/tpm_emulator.c: In function ‘tpm_emulator_post_load’:
-../backends/tpm/tpm_emulator.c:958:9: error: unused variable ‘ret’ 
-[-Werror=unused-variable]
-   958 |     int ret;
-       |         ^~~
-cc1: all warnings being treated as errors
-
-
+-- 
+2.43.0
 
 
