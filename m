@@ -4,182 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37028E83062
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 09:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F6DE8306E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 09:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnCHP-0006ZK-Rj; Tue, 03 Feb 2026 04:01:07 -0500
+	id 1vnCYW-0001w9-2W; Tue, 03 Feb 2026 04:18:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCH9-0006YK-LS; Tue, 03 Feb 2026 04:00:47 -0500
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vnCYU-0001vy-5B
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 04:18:42 -0500
+Received: from mout.web.de ([212.227.15.4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnCH7-0006T7-5t; Tue, 03 Feb 2026 04:00:47 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bAg2ELA4nXDVoU5KV1BIGudCQM6CxH192mGg+Nha9nIm42fIPo+G+Ik40cB6ebboofCH4WCiGWUJgW3+HdTOOLYeZoFh/h8JVXq5k5BcyhuDfyl3h5bG80tHVqvkb/XkFPC0n2Tedgf+RDJEVt3rFRP2fGqH6SRC8cEZI95onFG7lRGBM7TEUzzwejF8B/eDQDSRNUwlaXRQZ7A8lRyJDg/0fLRz2XTudCu+J7HlgfP7pwF91a5BdrG5v9W3yrhjJPYG3labB8Rt624KGTC3ADUu0+3Jjib8yknMHZTubSudl/qNwkL7XIr3FKirOA8KGHB0hNBtqGOHBZxdx2DN8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GA30YdTR0gN4aFefYJxbT1ex/rLr2nsdMlhfwKXFXTs=;
- b=MsXatUDTFAL4vLMa9o6gztEblyvpsP/766BALXrju/KQYx735bxHDx15sZXk+VgzNLET/q3+4jZmWeXGx0SD0G1TLHADIol4LOLH0rJ28RyLbc9BrJVL+3wsPkoiSx8C8u18AtHwWKezxrcPAJV2lQS/M0gyUv+40/bp9cOmDbd6JUF/i7n+2zBplq67qZ1kVtwHzJi2Dwo4v56OFBQSks+3bmKxiCKoVm67BntLw4tjQ61saE9z9gqO5jiDzikIUZlS4ffU6I5MNTsJ8WkGj+vFTpG0c0KUr5ZlPG/u11Wn/x9izQeM0XDjdaDtvz38K3wNWx2FtrtdtN3PToJSsw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GA30YdTR0gN4aFefYJxbT1ex/rLr2nsdMlhfwKXFXTs=;
- b=UOxnTBQ5nljLZSwRV6pTorjafH2iofGzQYTZDveuatm9Ao2v5uwHB/1GEH/ulFXbZSPZNrQ4kXgQDLtdICiuzzStdtbNNGs0zTSL+0Olb7MB7RGaKnY/2Qr2QTrfucf0b8dw01WnZC0vE6QKtGFMX9hQX5nwIJWLZyHPqtXcoFkaTSfuax1stCrx6+YTLZ12LUWu4p7Iif5TwJkJDuKIiAY07OEW6vWtbZeP4nriQkEiqwlIAO/Wizfq4nTknL2vwOcwGt9RmmwMvbWPZqbkd//bI27MTv7sSOQwa1w1EKYZCDlS5g3O2sBcST0EgcTAqzZAQiA3gvaFwJSJCy0CZQ==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by OSNPR06MB8226.apcprd06.prod.outlook.com (2603:1096:604:45b::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Tue, 3 Feb
- 2026 09:00:38 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9564.016; Tue, 3 Feb 2026
- 09:00:38 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Kane Chen
- <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
- Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>, "komlodi@google.com" <komlodi@google.com>
-Subject: RE: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and device
- hookups
-Thread-Topic: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and device
- hookups
-Thread-Index: AQHcicxLj69gtQDV7UaGII1il83Fe7VbOqAAgACSMECAA3ulgIAABE0AgAsZXoCABlvK4A==
-Date: Tue, 3 Feb 2026 09:00:38 +0000
-Message-ID: <TYPPR06MB8206F29363725A1F5929C6BDFC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
- <1433fb86-bb1b-41f7-b7ec-45560e52146a@kaod.org>
- <SE3PR06MB81997150B11579509E3B31C1FC96A@SE3PR06MB8199.apcprd06.prod.outlook.com>
- <ccf7e1e6-f7fb-483e-b69c-32ab15a9ce0a@kaod.org>
- <TYPPR06MB8206E096C66EF9C504F79146FC94A@TYPPR06MB8206.apcprd06.prod.outlook.com>
- <TYPPR06MB82063D551A78C621B00F399DFC9FA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-In-Reply-To: <TYPPR06MB82063D551A78C621B00F399DFC9FA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|OSNPR06MB8226:EE_
-x-ms-office365-filtering-correlation-id: b138fbc9-3a0d-4ed5-fa08-08de6302b36d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?cFZPS2VxUXZaSmhHQW9SU01PMlNXcmhMZFRxKzRyUTBvTWZSa01EQURFUlJa?=
- =?utf-8?B?blVnMXZjNVE5N1VlU1dXQ2NYZEV5dzZFRWNlM1VxUmZyeEhkVERtb3VtV3lW?=
- =?utf-8?B?SjVtSzhvajVGY2hyazR4bzZPTDQrRGpkWjZnUDdCOFFtcmZ1SDZ0eWttUjJ2?=
- =?utf-8?B?T1JzZStrMXFZOE84NGR3OW9TemRTWC8vZEZsZm1TTCswYXhRbkJXMi81L2I4?=
- =?utf-8?B?ZkNHQjUrT21QL2pVY2d5NXZaRml1cUg5V0dXdnlabERVcVF4Qi9wV01PaHdB?=
- =?utf-8?B?REhLc0JlY2VxZzJKSHB4eGFxVTdVcUZ5a2Jndi9VQzE5MlBhQStNSUt3RFA1?=
- =?utf-8?B?UkswYTBTN2Z0aDBTenFvV1B4TXdOd2pMYkRwYTFGSVhoYUZMU1dTQXNyS0pm?=
- =?utf-8?B?RTlHd25sZFNta2RONFphQUNWUkd0V0hvY1hwa3Jpb2dzNFRGV0tjN0NMWmhH?=
- =?utf-8?B?UU1ETGt3UVJhTHhZelFLY210TUM2VVRycktBVDIyNzVYbldKRUZ5aHVDNHk0?=
- =?utf-8?B?NXgvODU5cGkxNmthdnZjbXVqVURNUStkUmc5WjY0ckdta3JBdFdqRmNrOWFZ?=
- =?utf-8?B?NXhTZ1Y4eTZPRzlnamJZOVg1b0FXWXZRYU1LWEI3a1Voa3pWZGQ3VTBQRzRT?=
- =?utf-8?B?NEdWR3AyYno2NU5UWm1VMjhORGFFKzJqa2V6Q1piZWlzK3FjUy9rN0s5TW4y?=
- =?utf-8?B?TkoyZDFGVWQwelNNNTl1STF6QUo3RXhwc1RlamhTdXlFRW9reWJXSHowZFZI?=
- =?utf-8?B?eFhMOTg0NVpIL05CcktmWHJndjR1Sy9VMzlVTi95YlBTNVlvTm9DZU9UUW40?=
- =?utf-8?B?Rm9kNjU1NnliV3djR29HUWFjQXhvSWgrTVNVcmlPaUoySVRueHNkdUVsWVA3?=
- =?utf-8?B?NXN2cEg4dVI2R0pjRkhGWjdYQm4zeFBsbE93LzltVEc4Zk9seUtpemlpdUJT?=
- =?utf-8?B?ckExYlVhaU51eU45a1h4a0llNnNoaTFjWGZPak1CSSt0WFd1SWhXZGZrRWtI?=
- =?utf-8?B?dnFOSFRYNm0wbjFrM1VOWkcwVXpxanloWllQQVEvVWhZOVhVeXdVTUtNVEI4?=
- =?utf-8?B?aVkzV3lJbjA0bGI2TWZieFhxUUtnYlNneWNRdzJzWFFXTGFFdWdicCtWQWhn?=
- =?utf-8?B?MEtCa0hZSUNiR3IxY0dsVkhITXREdG1id0R4RHoyOXNEblpHczJXVUN2V0x1?=
- =?utf-8?B?OHVUd2U1RHFwU0VTV0owVUkwbFczNE8rSWZuZCswMFJ3dXdLZTdXYUpobE8w?=
- =?utf-8?B?MlNBME5vQ01lSTY0VitRM0RTbUlDZktxRnp6UkNTMDVnN2VPekRDVXdYRGY1?=
- =?utf-8?B?b0VFbWh4TGNkTWYzUVJHbXJmVmtidk5JNHh3d0xESVhnYjFrakptK1FhZkhx?=
- =?utf-8?B?RU84OEtKTnNmWjJ2Z2s4R0U1Z2I5MkRWdG5sbk1FdGJlZmFyM2NDd2hMNS9o?=
- =?utf-8?B?NUZ4Z2xHeC9YWXQ4L3FEd2ZYVmxvK0x2YWI4NTFKNXV0aEJHbWxwak5JcnBr?=
- =?utf-8?B?K0dma1V0VXprTEk0VzZYcG0rc3VISW55YVVnQzlDWEdsSGpXYk1Uemc3b0JB?=
- =?utf-8?B?b0tXV3Z2S3VmdGJvWG5vZHltQ3dscnVkMmhOTzF2UGtOc3duUElNTHJiQU9W?=
- =?utf-8?B?SlRhd1dCTTkzdHArVmNQald6Zzg2azRnSU85aTQ1Si9ESWpHQXM1Q2tQdi85?=
- =?utf-8?B?aHAzMHIvamtkTzY1UVJSVUVSNEt6dFJmN2FxRm1WSG5qaGtvOXRTU3Rmc3p5?=
- =?utf-8?B?S1RNeFJ6NjQrMjRHN1ljOTkzb1I4dnJ1dHFVcHI4UW5PVkNzZjAzUjJkWEJL?=
- =?utf-8?B?L3ZvNkc3YXBNd0xRTStDbWp2OVpmMlo1MUNnbDFyWkl4dWFlMUhpK1lXTjB4?=
- =?utf-8?B?dmZmME9tZWdlZWFjd2xOUU52NW5CZUdUUG9pVm9ZL1o5QVVoZWoxdjVKT05H?=
- =?utf-8?B?ZU9GMG1obGZQakJWbHJVb3dLdm9sbmY0OFhGMUZOWWR2VisyaXJGZWtzaHZQ?=
- =?utf-8?B?aTg4QkVUdHQ0YTJiUEJOaGtUeU1BRnZITUwvS3EvMk4vUGlKRWNYNjBFckZm?=
- =?utf-8?B?TXpodCt6eUNTUm92U3ZYdnJsYXlUUjV5UGN2bis3bFpYS0o1QW1LVnZveHh5?=
- =?utf-8?Q?3iBc=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Qm1tYUdreC9udHVrNndJMk5xTjdvUHlLSUdLY1RvckJDR01NQVQvd3dmbHFE?=
- =?utf-8?B?ZzJVNGlWUjdSd2FpdWpNeUZ4MFdhRXNMRk1KdnV6V2p1YVZGTGNoQXlPVUY0?=
- =?utf-8?B?bE53aklTT1QzMURoTzE4MTR4ek1VcGJxUytkZFVuZTZYQjhodXVsMkhhaXBC?=
- =?utf-8?B?ZmFLWHBUZ05WWDFFM0ZxMDR3aVNGZjlid3M3bTFyelNZNFlyYkh1R3BQN1NX?=
- =?utf-8?B?UVUreXVSc2tUQ2JzMFAydUVUeURYNFl1K2llNmc4c0FKdG03UzFRQWFJbUQ2?=
- =?utf-8?B?WmJCRFRhOUNvNXUrQ3VyOFRyYTNJUjdDd1BTQytISmhsWFdQTVc0Yk1xeUNm?=
- =?utf-8?B?YlFyeVpwRW96MlRDbnpkL2tyTFZJWFNXWjVwRHowRWFJYVdRdFQwNW8zTjZv?=
- =?utf-8?B?Wlo5LzJxUHNXNVB0OUhnZy8xR3d1ZWFOWHhlVTBsaUxJbEtnT0dQMVNHM3c1?=
- =?utf-8?B?YWsyMVA2ZlFjeXhtVFlxbGs2bTN5RDNFSEE1RTBOR3lTdlViRHVuY1ZZV2xQ?=
- =?utf-8?B?K1dFZkxhM0hSaUNpd3dvTUU0RDlCVTVwQ3JVKzAzQmRIYStJT3NEdVNUeFFh?=
- =?utf-8?B?TWJERHgvSnRMZG1UbE93TDRiVk01R2VTL0hGc2d0aHBVd2RLNkZoaElIVUwr?=
- =?utf-8?B?K3RGU0QzaUY2WDdqM1BKWk9lWXd6QnpYRENmVU51bmJHc01ZcWFrY3lXTVpS?=
- =?utf-8?B?YzFTVTQzQUVSTW5yQklmZ2dETmlJZ2hTNi9MTnE3aTYyUnFWVXFlUHdoTFNv?=
- =?utf-8?B?VkxocGV0eXBoOHBwdmlIWmIxbitNMDhNK0tpbXJwTkZDMWsrZHVoTmowOW5x?=
- =?utf-8?B?SGlhSDdDVFByQkZGWW5qYUZNc213dGFiVnpvUnA3OXdtM0VhM29OdldWbXFY?=
- =?utf-8?B?anlEaXU2c2M1ZjJ4cFRpUGQrN0NKQm5hUHdjU2h6anQrRmNaejZFdSs5UlN0?=
- =?utf-8?B?bXRUVTNzV1FES2tHZEdZUGkzK2IrQlAvU0I2N1J3MGRhbzdtQjN4UW41NXZm?=
- =?utf-8?B?LzBxckxKYmUxOERNT0pkeFBHOUM3dlhjVEdxeksxV2ZIZisrd2M1TlNMOE9S?=
- =?utf-8?B?Z21yd3pZZVd6U2hmU3VWRzhnMW9ocGJFTmw5aDdJSlY3ZTJKV25Ud1BjMTVV?=
- =?utf-8?B?Rm4yem5nTGp4Tmh6c3k3ckUxUFlzNnZwMGIreDg1WGhEZDBmelRnZmFNdEZC?=
- =?utf-8?B?VUdmZTBTTnF4WHRFK0FUZGJTY3gwckpWVWNLVytoNlFPRXJXOEZxWjBEaHRw?=
- =?utf-8?B?QU8rQWdtQkE1b295Z3d5YTlRVFVhbGJSNUkvVVBERUVSUldnWjhLS3cwZUNu?=
- =?utf-8?B?cFU0NGttNWRkUTdMUCsrNExrNmhTZjQ3SEdhM282TXo5dlp0YmcwTG0vdEJz?=
- =?utf-8?B?cWFNT1dTUTZFSm5WaDNHd3hlNUlXa3I4UGlGMDIycHNkTFIycUpWS0Y4Vitl?=
- =?utf-8?B?YlFiTEswcDVPWjAwT2V3ZGdzbnBFQVFsK2thZFdUbk0yRmFBakZLZnhDb2ts?=
- =?utf-8?B?UXp5QVJGMzVJS3J2NnBSOXIvNTcxMjlPcmoxZVV2cHhDczV4czVNcC9lbllm?=
- =?utf-8?B?R2hzVmVXSnhHRU1ZdGU5YTh5ZUhKcjArU21GYlg3a3lJM3VBanFzcmFMTFgy?=
- =?utf-8?B?MGpHUkZFZEltOVpCWDlGY3p2Wmg3Z3BPdEtEbUgzQWkyT0dScGFmUjdIN1lz?=
- =?utf-8?B?bWJCbEtuQ2FPRXo4c1kzY1RKcUR4amtxL1JCMDlOdTU4ckN3c3hiWURtd2hR?=
- =?utf-8?B?ODQ4VlhPdGxsQ3psbmp2Uk1nTHQ5UmlLaC9zL00vRUNIUnJrcHhNb2t3OUJo?=
- =?utf-8?B?OVBNU0p5QXVpczZCZTRGbU55WHVqT1l4VmtsQzVVSlo2NEFod3VzTXV4eDJ2?=
- =?utf-8?B?dWVyT3ZkaFFXMVBzeWFpd2wxelZmSnNaWXVFZWpMSDgzcXNjaEpTU20zQkwr?=
- =?utf-8?B?RFo4bW9pemhXUDhKbW1sb21BeDIzTm9RSjU4SUpncGFrWSs2M0toOUVWRnNZ?=
- =?utf-8?B?d1BnTTJiaklJU1IwZE9FbUJGejU0V1dHc0k3U1VtdDJuVllycVVJaVpNeTRJ?=
- =?utf-8?B?aGpZTmxKaXBpSW84U1AwaGljYmFxOXkwYm5IaEpmQlZnaWNPclFPTXQyL0xQ?=
- =?utf-8?B?Y1RvUkNQU0tOK0hxbU1JQkt4Tmlza2ZDbi9tV3FLekRUSytDWndBNzJCc1A5?=
- =?utf-8?B?UHM3NUh1VHM2QWx0N3Z5Q3hiYVRoS1ppbVJ4VCs0SVd0MGVKUGwrQWJXdHZh?=
- =?utf-8?B?UEpHQTAzc3RkdFJ0L2ptVUNhQ2ljTTNDNVU3SHNUbmpVMWRpYURpU0cwclB5?=
- =?utf-8?B?MWhZUHFwZk0xQytBNFhaMTVmdVB4SzJMaDVnTGtVVUhONmdPSjhlQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vnCYP-0005I6-SY
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 04:18:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1770110314; x=1770715114; i=lukasstraub2@web.de;
+ bh=IUCQJ+PdNBG41cXc7D1iPwF+KZlQTICXOVEEobx1p3I=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=SLdNew+EmQSFEccGxRP6/ZRYfuXdXyyjUL7GsDF+4duFttXnbHvniMaKuQMEjc7J
+ yVMpoCdz9hbGGHOjoSTTDgBfkE3Q5fh2qXYW31vdkE7B0Z3E5ufocOQSuofedt083
+ VpEYuEn1xO3nkYZ6OGS8qu6AwzGuN2WXvJ+TB7KYJSwuKt/oEixED13Mk7zmfFXhD
+ 55XuNk55A09CcASxBjLeq0rYDI++G/lbNSBhbTTMbv+NstCM2/7WEO/YHg/n0Df7W
+ SFoatMTwYlkuYOHSNpFxXXgdtCfmWDnRFPFRNN10lqaoXt/hoTt7bK4bJpodRQX3H
+ 3zOBMLMvqi2U7aIlzg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from penguin ([217.247.97.172]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MiuSe-1vJLSA2jOW-00iDVI; Tue, 03
+ Feb 2026 10:18:34 +0100
+Date: Tue, 3 Feb 2026 10:18:22 +0100
+From: Lukas Straub <lukasstraub2@web.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Zhang Chen
+ <zhangckid@gmail.com>, Hailiang Zhang <zhanghailiang@xfusion.com>, Markus
+ Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>, "Dr.
+ David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 06/10] migration-test: Add COLO migration unit test
+Message-ID: <20260203101822.00eeeb0f@penguin>
+In-Reply-To: <aYCz_se6Ji2g5d_L@x1.local>
+References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
+ <20260125-colo_unit_test_multifd-v3-6-ae926ccd8eae@web.de>
+ <aXkk22x1M0k4qZoo@x1.local> <20260130112402.2c008707@penguin>
+ <aYCz_se6Ji2g5d_L@x1.local>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b138fbc9-3a0d-4ed5-fa08-08de6302b36d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Feb 2026 09:00:38.3957 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Tr4ALcmS7QWzVB9G/9Gwy6rNRTCH6TH5vtzIrpvXJJiUoxTIAy2aE8kJ3APWBngcGWNoe+I9D6Slg/ZpGCvzWyWHJPGgEkFI9fdtbh7Bs0U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSNPR06MB8226
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, URIBL_SBL=1.623 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; boundary="Sig_/vKhbzVNrZIXPJ+AO9g+Q+6q";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:blanWx4CwGdM5VS8GrctZz10XDlXSxWID03AIAmrd+DW8FYvv8z
+ g9IQfG5UK2sOvEzEqFVjgU4oYWdbbjXJ7jf7BjfQbYIqpsvilW16ftJhIi5UNNLrdQ/4KbP
+ VQ+6QXOLsvltfTtTvzc+uzqqnXeigM60RIp4+asTEq5PVvGUHG6HWY0anVvWvRIqDzJKoOU
+ F+tEFOD+7mJDDAsRSQ29w==
+UI-OutboundReport: notjunk:1;M01:P0:p3rMT1gNUxw=;7MlUUtnUPTBugXcEnrBRtPP7GMN
+ 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
+Received-SPF: pass client-ip=212.227.15.4; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,19 +160,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywgSm9lLCBOYWJpaA0KDQo+ID4gPiBXaGF0IGFib3V0IHRoZSBJM0Mgc2VyaWVz
-ID8gQ291bGQgeW91IHRha2Ugb3duZXJzaGlwID8NCj4gPiA+DQo+ID4NCj4gPiBJIHdpbGwgZGlz
-Y3VzcyB0aGlzIHdpdGggSm9lIGFuZCBOYWJpaCBmaXJzdC4NCj4gPiBJZiB0aGV5IGFncmVlLCBJ
-IGFtIHdpbGxpbmcgdG8gdGFrZSBvd25lcnNoaXAgb2YgdGhlIEkzQyB1cHN0cmVhbSB3b3JrDQo+
-ID4gc3RhcnRpbmcgZnJvbSB2Mi4NCj4gDQo+IEpvZSBhbmQgTmFiaWggKEdPT0dMRSkgaGF2ZSBh
-Z3JlZWQgdGhhdCBJIHdpbGwgdGFrZSBvd25lcnNoaXAgb2YgdGhlIEkzQw0KPiB1cHN0cmVhbSB3
-b3JrLg0KPiANCj4gSSBhbSBjdXJyZW50bHkgdXBkYXRpbmcgdGhlIGZ1bmN0aW9uIHRlc3RzIGZv
-ciBBU1QyNzAwIEExIHRvIHZlcnNpb24gMTEuMDAsIGFuZA0KPiB3aWxsIHRoZW4gcHJvY2VlZCB3
-aXRoIHVwc3RyZWFtIHN1cHBvcnQgZm9yIEFTVDI3MDAgQTIuDQo+IEFmdGVyIGNvbXBsZXRpbmcg
-dGhlc2UgdGFza3MsIEkgcGxhbiB0byByZXNlbmQgdGhlIEkzQyB2MiBzZXJpZXMsIHdpdGggYW4N
-Cj4gZXN0aW1hdGVkIHRpbWVsaW5lIGFyb3VuZCBtaWQtRmVicnVhcnkuDQo+IA0KPiBUaGFua3Mt
-SmFtaW4NCj4gDQoNCkkgaGF2ZSBzZW50IHRoZSBJM0MgdjIgcGF0Y2ggc2VyaWVzIGhlcmU6DQpo
-dHRwczovL3BhdGNoZXcub3JnL1FFTVUvMjAyNjAyMDMwODUyMjkuMTU0MzI4Ny0xLWphbWluLl81
-RmxpbkBhc3BlZWR0ZWNoLmNvbS8NCg0KVGhhbmtzDQpKYW1pbg0KDQo+ID4NCj4gPiBUaGFua3Ms
-DQo+ID4gSmFtaW4NCj4gPg0KPiA+ID4gVGhhbmtzLA0KPiA+ID4NCj4gPiA+IEMuDQo=
+--Sig_/vKhbzVNrZIXPJ+AO9g+Q+6q
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, 2 Feb 2026 09:26:06 -0500
+Peter Xu <peterx@redhat.com> wrote:
+
+> On Fri, Jan 30, 2026 at 11:24:02AM +0100, Lukas Straub wrote:
+> > On Tue, 27 Jan 2026 15:49:31 -0500
+> > Peter Xu <peterx@redhat.com> wrote:
+> >  =20
+> > > On Sun, Jan 25, 2026 at 09:40:11PM +0100, Lukas Straub wrote: =20
+> > > > +void migration_test_add_colo(MigrationTestEnv *env)
+> > > > +{
+> > > > +    if (!env->has_kvm) {
+> > > > +        g_test_skip("COLO requires KVM accelerator");
+> > > > +        return;
+> > > > +    }   =20
+> > >=20
+> > > I'm OK if you want to explicitly bypass others, but could you explana=
+tion
+> > > why?
+> > >=20
+> > > Thanks,
+> > >  =20
+> >=20
+> > It used to hang with TCG. Now it crashes, since
+> > migration_bitmap_sync_precopy assumes bql is held. Something for later.=
+ =20
+>=20
+> If we want to keep COLO around and be serious, let's try to make COLO the
+> same standard we target for migration in general whenever possible.  We
+> shouldn't randomly workaround bugs.  We should fix it.
+>=20
+> It looks to me there's some locking issue instead.
+>=20
+> Iterator's complete() requires BQL.  Would a patch like below makes sense
+> to you?
+>=20
+> diff --git a/migration/colo.c b/migration/colo.c
+> index db783f6fa7..b3ea137120 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -458,8 +458,8 @@ static int colo_do_checkpoint_transaction(MigrationSt=
+ate *s,
+>      /* Note: device state is saved into buffer */
+>      ret =3D qemu_save_device_state(fb);
+> =20
+> -    bql_unlock();
+>      if (ret < 0) {
+> +        bql_unlock();
+>          goto out;
+>      }
+> =20
+> @@ -473,6 +473,9 @@ static int colo_do_checkpoint_transaction(MigrationSt=
+ate *s,
+>       */
+>      qemu_savevm_live_state(s->to_dst_file);
+> =20
+> +    /* Save live state requires BQL */
+> +    bql_unlock();
+> +
+>      qemu_fflush(fb);
+> =20
+>      /*
+
+I already tested that and it works. However, we have to be very careful
+around the locking here and I don't think it is safe to take the bql on
+the primary here:
+
+The secondary has the bql held at this point:
+
+    colo_receive_check_message(mis->from_src_file,
+                       COLO_MESSAGE_VMSTATE_SEND, &local_err);
+    ...
+    bql_lock();
+    cpu_synchronize_all_states();
+    ret =3D qemu_loadvm_state_main(mis->from_src_file, mis, errp);
+    bql_unlock();
+
+On the primary there is a filter-mirror mirroring incoming packets to
+the secondary filter-redirector. However since the secondary migration
+holds bql the receiving filter is blocked and will not receive anything
+from the socket. Thus filter-mirror on the primary also may get blocked
+during send and block the mainloop (It uses blocking IO).
+
+Now if the primary migration thread wants to take the bql it will
+deadlock.
+
+So I think this is something to fix in a separate series since it is
+more involved.
+
+Regards,
+Lukas Straub
+
+>=20
+> >=20
+> > #6  0x00007ffff7471517 in __assert_fail
+> >     (assertion=3Dassertion@entry=3D0x555555f17aee "bql_locked() !=3D lo=
+cked", file=3Dfile@entry=3D0x555555f17ab0 "../system/cpus.c", line=3Dline@e=
+ntry=3D535, function=3Dfunction@entry=3D0x55555609bfd0 <__PRETTY_FUNCTION__=
+.9> "bql_update_status") at ./assert/assert.c:105
+> > #7  0x0000555555b09f1e in bql_update_status (locked=3Dlocked@entry=3Dfa=
+lse) at ../system/cpus.c:535
+> > #8  0x0000555555ec60e7 in qemu_mutex_pre_unlock (mutex=3D0x555557166700=
+ <bql>, file=3D0x555555efe1dc "../cpu-common.c", line=3D164) at ../util/qem=
+u-thread-common.h:57
+> > #9  qemu_mutex_pre_unlock (line=3D164, file=3D0x555555efe1dc "../cpu-co=
+mmon.c", mutex=3D0x555557166700 <bql>) at ../util/qemu-thread-common.h:48
+> > #10 qemu_cond_wait_impl (cond=3D0x5555571442c0 <qemu_work_cond>, mutex=
+=3D0x555557166700 <bql>, file=3D0x555555efe1dc "../cpu-common.c", line=3D16=
+4) at ../util/qemu-thread-posix.c:224
+> > #11 0x000055555589e6c8 in do_run_on_cpu (cpu=3D<optimized out>, func=3D=
+<optimized out>, data=3D..., mutex=3D0x555557166700 <bql>) at ../cpu-common=
+.c:164
+> > #12 0x0000555555b17a06 in memory_global_after_dirty_log_sync () at ../s=
+ystem/memory.c:2938
+> > #13 0x0000555555b55b47 in migration_bitmap_sync (rs=3D0x7fffe8001340, l=
+ast_stage=3Dlast_stage@entry=3Dtrue) at ../migration/ram.c:1157
+> > #14 0x0000555555b56721 in migration_bitmap_sync_precopy (last_stage=3Dl=
+ast_stage@entry=3Dtrue) at ../migration/ram.c:1195
+> > #15 0x0000555555b59f8a in ram_save_complete (f=3D0x5555575db620, opaque=
+=3D<optimized out>) at ../migration/ram.c:3381
+> > #16 0x0000555555b5e4f5 in qemu_savevm_complete (se=3Dse@entry=3D0x55555=
+74c0d80, f=3Df@entry=3D0x5555575db620) at ../migration/savevm.c:1521
+> > #17 0x0000555555b60437 in qemu_savevm_state_complete_precopy_iterable (=
+f=3Df@entry=3D0x5555575db620, in_postcopy=3Din_postcopy@entry=3Dfalse) at .=
+./migration/savevm.c:1627
+> > #18 0x0000555555b60a4f in qemu_savevm_state_complete_precopy (iterable_=
+only=3Dtrue, f=3D0x5555575db620) at ../migration/savevm.c:1719
+> > #19 qemu_savevm_live_state (f=3D0x5555575db620) at ../migration/savevm.=
+c:1855
+> > #20 0x0000555555b65ed9 in colo_do_checkpoint_transaction (fb=3D<optimiz=
+ed out>, bioc=3D<optimized out>, s=3D0x5555574c0070) at ../migration/colo.c=
+:474
+> > #21 colo_process_checkpoint (s=3D0x5555574c0070) at ../migration/colo.c=
+:592
+> > #22 migrate_start_colo_process (s=3D0x5555574c0070) at ../migration/col=
+o.c:655
+> > #23 0x0000555555b4971e in migration_iteration_finish (s=3D0x5555574c007=
+0) at ../migration/migration.c:3297
+> > #24 migration_thread (opaque=3Dopaque@entry=3D0x5555574c0070) at ../mig=
+ration/migration.c:3584
+> > #25 0x0000555555ec58c0 in qemu_thread_start (args=3D0x5555576583e0) at =
+../util/qemu-thread-posix.c:393
+> > #26 0x00007ffff74d2aa4 in start_thread (arg=3D<optimized out>) at ./npt=
+l/pthread_create.c:447
+> > #27 0x00007ffff755fc6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_6=
+4/clone3.S:78 =20
+>=20
+>=20
+>=20
+
+
+--Sig_/vKhbzVNrZIXPJ+AO9g+Q+6q
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmmBvV4ACgkQNasLKJxd
+slh3Og//fj7Rybncw0+cQmuh5UqYnehRlz0/QhhpgLseXSgcTgpQDCdp3tbDFL8w
+R7jK8qj81X2ojEHyd+veDy6rnT/fSrgYmhp84KSueUTQokcZAEy7V4tk0dBRqh9T
+dCTdVyrOG4LMiaN2y6KHkTDndMJsKwqId9auejcZrzCaJzeA/46giI/aBDa1tfUX
+WwA8euLoW5eGlbtdLoqJYYTyhHKa+5aeqCDM9kBgWLU7fgSfywJiliwmH5GUlCVs
+9NKIpEJRRirZXc4xfqywkHYCbMDHAHZ9vGahPiIVF0kVvm6RXHVXWqhNLInwZpnX
+yk83r7BYsF2DXwMTnVgrJs0ajj2m420I7D3ve1mxMaR6lcFZ0zn3AHD//ZXsbtQC
+2UdzF8102x9N855yxuffmtOdcuDeblIcf25YCLdKTDqA3iIxO/oXxDaTzTf+jwAk
+uhCTFdU/cnC009bTq3C5VksUQHh1comKIU7IkXUMB9QWZpCQlfvrR2nEiciXIE7W
+PQKR/K7D9j56sEsZzs6mqf71gndi72+iIpckoiwEg9T8tg4vMlKyOMiuhnqcZdBf
+i/lZN4vq1bSBUgSOsmSnXmnGPvTgqLFKCm3UK/JBlOvoEFXpjGDwbxbV/r4PSK3Q
+ekFwGBpkb/59gNTyZvc5gnIx9D2sfVo/kLbo1iDWuLMH/eZ97x4=
+=Gh4D
+-----END PGP SIGNATURE-----
+
+--Sig_/vKhbzVNrZIXPJ+AO9g+Q+6q--
 
