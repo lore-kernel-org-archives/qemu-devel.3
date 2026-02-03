@@ -4,153 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1AF7E8784C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 18:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0509FE87852
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 18:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnL5a-0001MZ-6h; Tue, 03 Feb 2026 13:25:26 -0500
+	id 1vnLRw-0004do-He; Tue, 03 Feb 2026 13:48:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnL5Y-0001ME-DK
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 13:25:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vnLRj-0004d3-2W; Tue, 03 Feb 2026 13:48:20 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vnL5W-00045R-SD
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 13:25:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770143120;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4VJ5qGLmwlGAWb947iv+WzdmCl1wDHJk64TuQe2Qung=;
- b=ezp6YLV1TGpwiTeZ2MhMeUGUzXRCva3FGukOPyPw2RhlEiq79XqJwy00FiraWLe6UcsKuc
- 1fn6GyVDY3TMtu/Mi7M7Dzy87+egaprc8WD9bKae34tfgWeRXJz4VrpgO8uAflVrMEhY69
- uZ6+/EDsTgO1+0EPhKtW5016IVJkN4o=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456--YRN7ekyMT2Akevhan1ZJQ-1; Tue, 03 Feb 2026 13:25:18 -0500
-X-MC-Unique: -YRN7ekyMT2Akevhan1ZJQ-1
-X-Mimecast-MFC-AGG-ID: -YRN7ekyMT2Akevhan1ZJQ_1770143117
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-432db1a9589so4356703f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 10:25:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770143117; x=1770747917; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=4VJ5qGLmwlGAWb947iv+WzdmCl1wDHJk64TuQe2Qung=;
- b=acVxe/lrTQqgfcio1EFd5lLRvzFx5KedhcxRq3Fa0CudlWEV89tRcTPTI19vF87dKf
- GXoWh/B6LW6OnVAKzZSrLS3BFlO2oz1hkpohzr20+6OQiYZppohP73XRJo+psQhiMqYC
- bt/Ddqtr+2yHXxdfUXiGzR2DXv9JhcLZWx7zPJCvvT8+exjKoLJt3jwb9Tmo78rqFMsX
- ssEG/Yvu6D9POsDzuEEseCJHFL39XnfACxhYFMh+RzS4x96Tcy9VdAWGC36AqhHsAG+t
- bLAdKH4Nzw+uNcco33lo4BGeWCR+cOmg9tjiQhgfu8P2gN6yfzYqdeQZTvTAHwz13c4h
- yyjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770143117; x=1770747917;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4VJ5qGLmwlGAWb947iv+WzdmCl1wDHJk64TuQe2Qung=;
- b=rLRtjwC27ERdonTv5GN5kcOvSML9w9stCfqnA8Lr66fyt05mL9nkIq57j9ed7X+jZG
- ongOtKJkntfwI7KYaBwea5akgM+mlZao0vF36zB5gD4jXVHx+wrZtReg57S6VS2LV/Cp
- 99f3lxRGIy3EiFe4GHUg+fPpnlRPilzyKLvNxfZNmk1mnFebuZoANSMomfUhsfwqqm15
- we3YC5UdGM714F0sY7xYMDU5R4odNaKOo6YcJ9pDKCnBNMHSJLN/QuYfdUtWiG1Hlagx
- lNzwG7+jGkHqqWeLmYeZvRnzl9BVRo2CnJvxYeS7dv220b0L8YWlfDQwGLLixq03/kIe
- czCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWq4MmKG+i41D16Wsx0n3idB2vCxodKdIAtwDpmeY1fmY5sc89QttDk+M5uAbl1hlA6BPvqBbyKFitF@nongnu.org
-X-Gm-Message-State: AOJu0Yx3va96BwUsaZtxYcb5olDGplueRLnKB0QxmkbGuK2tt2zATFrU
- +HhNf6IyEdgo5QUonx3WD9Gg5AVoa8RZwuPIUiZswg4cyOWzbweKD8S5TXFJaIQiAw5GJW9pDJn
- 2FVEBjgBORk7wWA752W6zGVVq4QR8QtyVxRAhMgWRHKH6CmqxIuWjqEmT
-X-Gm-Gg: AZuq6aL5CCp9uVdnf7JkOYt8mEsPgZJgKHyOJsm4EGGGFqjMCw9FN9azqsVVXG5CRE6
- J0gMErQwVCQl62JuMidYG0MAHv8DQC4EKkBO8+PyOk0qhtv/p9yjm47o1VwqIRpKry+D4X05CBs
- e6+2gQ1HYLWTStUZbUw6H1IhKgVZrt7EXzDhW18eAgGvFUJIIVryJnRxOm07L7JdTJMX7xt1TG3
- DU1vUDhc5s1JM8o+WmFFjFOJjEOJGfuKmGNTsCNP9LS4gmkDrR/nMHxUeB6ZYdddAhcWhUYSN0m
- mBLUrviNAbvJpWAutJZwliyR3HWMpFnFmR9TVLOLzsZCPZJ/hCkyNW1fVdV2uZC7FJVOAjleFjP
- 7pza7aKg=
-X-Received: by 2002:a5d:5d05:0:b0:436:cf5:67c2 with SMTP id
- ffacd0b85a97d-43617e3a314mr459597f8f.11.1770143117480; 
- Tue, 03 Feb 2026 10:25:17 -0800 (PST)
-X-Received: by 2002:a5d:5d05:0:b0:436:cf5:67c2 with SMTP id
- ffacd0b85a97d-43617e3a314mr459557f8f.11.1770143117084; 
- Tue, 03 Feb 2026 10:25:17 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.115.203])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805f25dsm463621f8f.29.2026.02.03.10.25.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 10:25:16 -0800 (PST)
-Message-ID: <e3d242f7-a649-4c08-b30f-c2180f3b7055@redhat.com>
-Date: Tue, 3 Feb 2026 19:25:14 +0100
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vnLRf-0000yX-MZ; Tue, 03 Feb 2026 13:48:17 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 613A8TDX017607;
+ Tue, 3 Feb 2026 18:48:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2xipie
+ ocgcAs9CUQMhLzOA/qgx9GBKaOqkR3jEP4kKY=; b=MSX9P3OditLbXQsblMCBbl
+ hOY3Fvi4JrRqRvodUEDSR3eFsMo8f4iel+uwG+NiF9q+SWbztwrr5TNLhQo9wyah
+ a48Kvii347+ZRm7Ny9OfX65MD1gMyZxZ36/991KVDnnOu837ev7mLrlc2DoD4ipp
+ vdhhRWj0M7laD6ADpL8z62CUMYnLYpeTMwujZR9HSd0sht9reV4HY3e/zQwfaDu/
+ VMXxACnOUJCAzqkrKLnr9/7XOWfFByGLpadWayY7Wx0VGfud/0Fm6FSDVXyztRcA
+ utgq/2mqJ/lObiAUZwnQoTdMv1nX6qal1CcsnkGBlR7Bo46hqVWo3yZi2DyBt4jQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dt6rd2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 18:48:12 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 613Ghcce005921;
+ Tue, 3 Feb 2026 18:48:11 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1x9ja1jt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Feb 2026 18:48:11 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 613Im90o38732326
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Feb 2026 18:48:09 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA7B55805D;
+ Tue,  3 Feb 2026 18:48:09 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D403358059;
+ Tue,  3 Feb 2026 18:48:08 +0000 (GMT)
+Received: from [9.61.249.4] (unknown [9.61.249.4])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Feb 2026 18:48:08 +0000 (GMT)
+Message-ID: <3ddb6f91-4308-420d-b057-d26c1c727015@linux.ibm.com>
+Date: Tue, 3 Feb 2026 10:48:08 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/.../reverse_debugging: Remove unsatisfiable
- condition
-To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-trivial@nongnu.org
-References: <20260203182153.75276-1-yodel.eldar@yodel.dev>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 09/14] pc-bios/s390-ccw: Introduce PCI device
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-10-jrossi@linux.ibm.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260203182153.75276-1-yodel.eldar@yodel.dev>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260127161547.459443-10-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDE0NyBTYWx0ZWRfX86pF59huPQCV
+ 5oYvEaXF7u5BdHgAz1Lp6QX4c40wdPyjwCEv3bGRLgn3jcVJmxDkjHypxZgLmYJ4pLt2uCLkFv8
+ hE0Y9ZLvOihTqCBMCw7hWnDxEh1iLQI/5qjZDjrhNe5Xg404gt+YD8WsGmnq/6EsLqGm0f8c/H6
+ sXTVLFMt4LOKZQAt+6ZkDrdImpz0eBQD948SsMSv9X7bWL2ZC6OJRZk6Xnpn0yxrgmMlVBTXJZQ
+ 8BoiUGCVdcZfql5SqUO9opARuLrCTS9LX2kMwIv2bj9QQHDjC9pMM4WHOmqRebqi4Jzo7FCCKKd
+ 1iHyu13l+3ACMCQK9JfCCB7TpsDRvnMlVzF5TLVxKEDNOLGU5LVPIjnJfmW6nepCqUa+yGrlVm0
+ oHzzEOt8hJao3twGPLbZsLcNm7c803DBN3Vn0jttGbdlulIVAA8OMJ6SGFcRV+oUA31VmmUHN/F
+ OoH1wN6Jfai3ucC4rVQ==
+X-Proofpoint-GUID: 2OnJDnpHsvldT_Nn5qgOTOflajrQucRH
+X-Proofpoint-ORIG-GUID: 2OnJDnpHsvldT_Nn5qgOTOflajrQucRH
+X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=698242ec cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=VH4ka7d8O3_K94elNbEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-03_05,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602030147
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,31 +122,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/02/2026 19.21, Yodel Eldar wrote:
-> get_qemu_img() already skips the test if qemu-img is not found and does
-> not return None. Eliminate the check for None on its result, and the
-> unreachable skipTest() gated by it.
-> 
-> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-> ---
->   tests/functional/reverse_debugging.py | 3 ---
->   1 file changed, 3 deletions(-)
-> 
-> diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
-> index 8e6f0b0e92..eaf178da49 100644
-> --- a/tests/functional/reverse_debugging.py
-> +++ b/tests/functional/reverse_debugging.py
-> @@ -73,9 +73,6 @@ def reverse_debugging(self, gdb_arch, shift=7, args=None, big_endian=False):
->           self.log.info('creating qcow2 image for VM snapshots')
->           image_path = os.path.join(self.workdir, 'disk.qcow2')
->           qemu_img = get_qemu_img(self)
-> -        if qemu_img is None:
-> -            self.skipTest('Could not find "qemu-img", which is required to '
-> -                          'create the temporary qcow2 image')
->           out = check_output([qemu_img, 'create', '-f', 'qcow2', image_path, '128M'],
->                              encoding='utf8')
->           self.log.info("qemu-img: %s" % out)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On 1/27/2026 8:15 AM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>
+> Define selected s390x PCI instructions.
+>
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/Makefile |   2 +-
+>   pc-bios/s390-ccw/pci.c    | 194 ++++++++++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/pci.h    |  80 ++++++++++++++++
+>   3 files changed, 275 insertions(+), 1 deletion(-)
+>   create mode 100644 pc-bios/s390-ccw/pci.c
+>   create mode 100644 pc-bios/s390-ccw/pci.h
+>
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index 9c29548f84..a62fc9d766 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>   
+>   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+>   	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> -	  virtio-ccw.o clp.o
+> +	  virtio-ccw.o clp.o pci.o
+>   
+>   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>   
+> diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
+> new file mode 100644
+> index 0000000000..9656be45ca
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/pci.c
+> @@ -0,0 +1,194 @@
+> +/*
+> + * s390x PCI funcionality
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include "pci.h"
+> +#include "bswap.h"
+> +#include <stdio.h>
+> +#include <stdbool.h>
+> +
+> +/* PCI load */
+> +static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
+> +                        uint8_t *status)
+> +{
+> +    union register_pair req_off = {.even = req, .odd = offset};
+> +    int cc = -1;
+
+Nit: Setting cc = -1 doesn't make any difference since the cc gets 
+overwritten and the pcilg will return cc > 0.
+
+
+> +    uint64_t __data;
+> +
+> +    asm volatile (
+> +        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "+d" (cc), [data] "=d" (__data),
+> +          [req_off] "+d" (req_off.pair) :: "cc");
+> +    *status = req_off.even >> 24 & 0xff;
+> +    *data = __data;
+> +    return cc;
+> +}
+> +
+> +/* PCI store */
+> +static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
+> +                         uint8_t *status)
+> +{
+> +    union register_pair req_off = {.even = req, .odd = offset};
+> +    int cc = -1;
+
+Nit: Same as pcilg.
+
+
+> +
+> +    asm volatile (
+> +        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
+> +        : [data] "d" (data)
+> +        : "cc");
+> +    *status = req_off.even >> 24 & 0xff;
+> +    return cc;
+> +}
+> +
+> +/* store PCI function controls */
+> +static inline int stpcifc(uint64_t req, PciFib *fib, uint8_t *status)
+> +{
+> +    uint8_t cc;
+> +
+> +    asm volatile (
+> +        "     .insn   rxy,0xe300000000d4,%[req],%[fib]\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
+> +        : : "cc");
+> +    *status = req >> 24 & 0xff;
+> +    return cc;
+> +}
+> +
+> +/* modify PCI function controls */
+> +static inline int mpcifc(uint64_t req, PciFib *fib, uint8_t *status)
+> +{
+> +    uint8_t cc;
+> +
+> +    asm volatile (
+> +        "     .insn   rxy,0xe300000000d0,%[req],%[fib]\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
+> +        : : "cc");
+> +    *status = req >> 24 & 0xff;
+> +    return cc;
+> +}
+> +
+> +int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
+> +              uint8_t len)
+> +{
+> +
+> +    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
+> +    uint8_t status;
+> +    int rc;
+> +
+> +    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
+> +    switch (len) {
+> +    case 1:
+> +    case 2:
+> +    case 4:
+> +    case 8:
+> +        rc = pcistg(data, req, offset, &status);
+> +        break;
+> +    default:
+> +        rc = -1;
+> +    }
+> +
+> +    /* Error condition detected */
+> +    if (rc == 1) {
+
+According to the architecture a return code of 0 would indicate normal 
+completion. But we do have error scenarios that can return error code > 
+1. For example an error code of 3 would indicate 'Unrecognized handle'. 
+May we should check for non-zero rc in this if condition...
+
+
+> +        printf("PCI store failed with status condition %d\n", status);
+
+... and print both the rc and status here.
+
+
+> +        return -1;
+> +    }
+> +
+> +    return rc ? -1 : 0;
+> +}
+> +
+> +int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
+> +             uint8_t len)
+> +{
+> +    uint64_t req, data;
+> +    uint8_t status;
+> +    int rc;
+> +
+> +    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
+> +    rc = pcilg(&data, req, offset, &status);
+> +
+> +    /* Error condition detected */
+> +    if (rc == 1) {
+
+Similar to pci_write we should check for non-zero return code here? And 
+should do the same in pci_get_fib (stpcifc) and pci_set_fib (mpcifc)?
+
+
+> +        printf("PCI load failed with status condition %d\n", status);
+> +        return -1;
+> +    }
+> +
+> +    switch (len) {
+> +    case 1:
+> +        *(uint8_t *)buf = data;
+> +        break;
+> +    case 2:
+> +        *(uint16_t *)buf = data;
+> +        break;
+> +    case 4:
+> +        *(uint32_t *)buf = data;
+> +        break;
+> +    case 8:
+> +        *(uint64_t *)buf = data;
+> +        break;
+> +    default:
+> +        return -1;
+> +    }
+> +
+> +    return rc ? -1 : 0;
+> +}
+> +
+
+<...snip...>
 
 
