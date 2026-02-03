@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92E8E7C714
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 02:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED15BE73165
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 02:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn5qq-0002UE-FC; Mon, 02 Feb 2026 21:09:12 -0500
+	id 1vn5r6-0002aZ-Cu; Mon, 02 Feb 2026 21:09:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vn5qo-0002TP-Sn; Mon, 02 Feb 2026 21:09:10 -0500
+ id 1vn5r4-0002a3-Nj; Mon, 02 Feb 2026 21:09:26 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vn5qn-0006uM-F7; Mon, 02 Feb 2026 21:09:10 -0500
+ id 1vn5r3-0006uM-En; Mon, 02 Feb 2026 21:09:26 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
- 2026 10:08:56 +0800
+ 2026 10:08:58 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 3 Feb 2026 10:08:56 +0800
+ Transport; Tue, 3 Feb 2026 10:08:58 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,17 +32,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
  here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v2 1/8] hw/arm/aspeed_ast27x0: Fix EHCI3/4 IRQ routing to GIC
-Date: Tue, 3 Feb 2026 10:08:46 +0800
-Message-ID: <20260203020855.1642884-2-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v2 8/8] docs/system/arm/aspeed: Load raw U-Boot image in
+ AST2700 boot example
+Date: Tue, 3 Feb 2026 10:08:53 +0800
+Message-ID: <20260203020855.1642884-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203020855.1642884-1-jamin_lin@aspeedtech.com>
 References: <20260203020855.1642884-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,36 +68,45 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-EHCI3 and EHCI4 were missing entries in aspeed_soc_ast2700a1_irqmap,
-so their source IRQs were never routed through the INTC OR-gates.
-
-As a result, EHCI3/4 interrupts were not propagated to the GIC,
-causing incorrect interrupt behavior for these controllers.
-
-Add EHCI3 and EHCI4 to the IRQ map and route them to the same INTC
-group as other shared peripherals, ensuring their interrupts are
-properly connected to the GIC.
+Recent SDK versions no longer provide a U-Boot FIT image, and U-Boot is
+now built as a single raw binary. Update the documentation to load the
+raw u-boot.bin image directly.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Fixes: ba27ba302a264117c8b8427f944ced1bed17c438 ("hw/arm: ast27x0: Wire up EHCI controllers")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ docs/system/arm/aspeed.rst | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index d17f446661..e16183c3b3 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -149,6 +149,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
-     [ASPEED_DEV_ETH1]      = 196,
-     [ASPEED_DEV_ETH2]      = 196,
-     [ASPEED_DEV_ETH3]      = 196,
-+    [ASPEED_DEV_EHCI3]     = 196,
-+    [ASPEED_DEV_EHCI4]     = 196,
-     [ASPEED_DEV_PECI]      = 197,
-     [ASPEED_DEV_SDHCI]     = 197,
- };
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 97e14b7d33..d0054a7dbb 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -350,11 +350,9 @@ corresponds to the BL31 image load address.
+ .. code-block:: bash
+ 
+   IMGDIR=ast2700-default
+-  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+ 
+   $ qemu-system-aarch64 -M ast2700-evb \
+-       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+-       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
+        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
+        -device loader,cpu-num=0,addr=0x430000000 \
+@@ -409,11 +407,9 @@ Steps to boot the AST2700fc machine:
+ .. code-block:: bash
+ 
+   IMGDIR=ast2700-default
+-  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+ 
+   $ qemu-system-aarch64 -M ast2700fc \
+-       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+-       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
+        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
+        -device loader,cpu-num=0,addr=0x430000000 \
 -- 
 2.43.0
 
