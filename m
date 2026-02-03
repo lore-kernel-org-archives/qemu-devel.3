@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029D0E83062
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B17E83063
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 08:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnC9f-0004nb-TT; Tue, 03 Feb 2026 03:53:03 -0500
+	id 1vnCB5-0006KH-HA; Tue, 03 Feb 2026 03:54:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9c-0004gh-U9; Tue, 03 Feb 2026 03:53:01 -0500
+ id 1vnCAn-0005Up-KI; Tue, 03 Feb 2026 03:54:15 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vnC9b-0002qU-IX; Tue, 03 Feb 2026 03:53:00 -0500
+ id 1vnCAj-0003Po-QD; Tue, 03 Feb 2026 03:54:12 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 3 Feb
- 2026 16:52:32 +0800
+ 2026 16:52:39 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 3 Feb 2026 16:52:32 +0800
+ Transport; Tue, 3 Feb 2026 16:52:39 +0800
 To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Steven Lee
@@ -37,9 +37,9 @@ To: <komlodi@google.com>, <nabihestefan@google.com>, Paolo Bonzini
  <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>, Patrick Venture <venture@google.com>
-Subject: [PATCH v2 07/20] hw/i3c/aspeed_i3c: Add register RO field masks
-Date: Tue, 3 Feb 2026 16:52:07 +0800
-Message-ID: <20260203085229.1543287-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 19/20] hw/i3c: Add hotplug support
+Date: Tue, 3 Feb 2026 16:52:19 +0800
+Message-ID: <20260203085229.1543287-20-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
 References: <20260203085229.1543287-1-jamin_lin@aspeedtech.com>
@@ -73,50 +73,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joe Komlodi <komlodi@google.com>
 
-Adds read-only register masks for the Aspeed I3C controller registers.
+This adds support for hotplugging in I3C.
+Conceptually this can be thought of as an I3C target being physically
+socketed onto a board.
+It is then the target's responsibility to go through the hot-join and
+DAA process so it can participate on the bus.
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
 Reviewed-by: Patrick Venture <venture@google.com>
 ---
- hw/i3c/aspeed_i3c.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ hw/i3c/core.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
-index f0352aaca0..bb41493c55 100644
---- a/hw/i3c/aspeed_i3c.c
-+++ b/hw/i3c/aspeed_i3c.c
-@@ -74,6 +74,21 @@ REG32(I3C6_REG1, 0x64)
-     FIELD(I3C6_REG1, SA_EN,         15, 1)
-     FIELD(I3C6_REG1, INST_ID,       16, 4)
+diff --git a/hw/i3c/core.c b/hw/i3c/core.c
+index fb4bfe5aec..1ab95c4866 100644
+--- a/hw/i3c/core.c
++++ b/hw/i3c/core.c
+@@ -11,6 +11,7 @@
+ #include "qapi/error.h"
+ #include "trace.h"
+ #include "hw/i3c/i3c.h"
++#include "hw/core/hotplug.h"
+ #include "hw/core/qdev-properties.h"
  
-+static const uint32_t ast2600_i3c_controller_ro[ASPEED_I3C_NR_REGS] = {
-+    [R_I3C1_REG0]                   = 0xcc000000,
-+    [R_I3C1_REG1]                   = 0xfff00000,
-+    [R_I3C2_REG0]                   = 0xcc000000,
-+    [R_I3C2_REG1]                   = 0xfff00000,
-+    [R_I3C3_REG0]                   = 0xcc000000,
-+    [R_I3C3_REG1]                   = 0xfff00000,
-+    [R_I3C4_REG0]                   = 0xcc000000,
-+    [R_I3C4_REG1]                   = 0xfff00000,
-+    [R_I3C5_REG0]                   = 0xcc000000,
-+    [R_I3C5_REG1]                   = 0xfff00000,
-+    [R_I3C6_REG0]                   = 0xcc000000,
-+    [R_I3C6_REG1]                   = 0xfff00000,
-+};
+ /*
+@@ -26,11 +27,27 @@ static const Property i3c_props[] = {
+     DEFINE_PROP_UINT64("pid", struct I3CTarget, pid, 0),
+ };
+ 
++static void i3c_realize(BusState *bus, Error **errp)
++{
++    qbus_set_bus_hotplug_handler(bus);
++}
 +
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     AspeedI3CState *s = ASPEED_I3C(opaque);
-@@ -97,6 +112,7 @@ static void aspeed_i3c_write(void *opaque,
++static void i3c_class_init(ObjectClass *klass, const void *data)
++{
++    BusClass *k = BUS_CLASS(klass);
++    k->realize = i3c_realize;
++}
++
+ static const TypeInfo i3c_bus_info = {
+     .name = TYPE_I3C_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(I3CBus),
+     .class_size = sizeof(I3CBusClass),
++    .class_init = i3c_class_init,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_HOTPLUG_HANDLER },
++        { }
++    }
+ };
  
-     addr >>= 2;
- 
-+    data &= ~ast2600_i3c_controller_ro[addr];
-     /* I3C controller register */
-     switch (addr) {
-     case R_I3C1_REG1:
+ I3CBus *i3c_init_bus(DeviceState *parent, const char *name)
 -- 
 2.43.0
 
