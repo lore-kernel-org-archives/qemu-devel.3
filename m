@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59578E87839
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597FEE8783F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 15:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnIJb-0004P7-Tk; Tue, 03 Feb 2026 10:27:43 -0500
+	id 1vnIN1-0005jS-7p; Tue, 03 Feb 2026 10:31:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vnIJZ-0004KD-HJ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:27:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vnIJX-0003zN-SU
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:27:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770132458;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fQAhcLqTzoGbogwYigo7nENGQbFQ3baEvHFMCzejPcY=;
- b=JNDJaLd0hYzFRTDw52DnW547Z1eOYqea5UfTYMi0c4Cpk9skzNb5d+D+5SAbzV5nCSmM/e
- GykYMZ2wx9PmP49sNZ0Ur7KDv+UFvZ4ZdsdKUK9EPlvsRE+kkk3sZ10OrqPgNY0do5EnS+
- dNefknzIjhpj49sbd0fvublknWos+vU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-DEAYmLUYOGy48hahMnvyNQ-1; Tue,
- 03 Feb 2026 10:27:36 -0500
-X-MC-Unique: DEAYmLUYOGy48hahMnvyNQ-1
-X-Mimecast-MFC-AGG-ID: DEAYmLUYOGy48hahMnvyNQ_1770132455
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9976F18005AF; Tue,  3 Feb 2026 15:27:35 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.143])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EEFDE1800665; Tue,  3 Feb 2026 15:27:34 +0000 (UTC)
-Date: Tue, 3 Feb 2026 10:27:33 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: Noam Assouline <nassouli@redhat.com>,
- Yan Vugenfirer <yvugenfi@redhat.com>, qemu-devel@nongnu.org,
- michael.roth@amd.com, Qianqian Zhu <qizhu@redhat.com>,
- Stefan Hajnoczi <shajnocz@redhat.com>
-Subject: Re: QGA fsfreeze blocks QMP: need async fsfreeze or alternative?
-Message-ID: <20260203152733.GA449076@fedora>
-References: <CANc8XmBVnkbrsJ+DMKXA7HhepStAPHRpXOH8fB16e=bghPOsqQ@mail.gmail.com>
- <CAPMcbCq2oOYXo=O0D0fdBSG-vB7+q1=VtEqQpHqSzFU6+5Sq9g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnIMs-0005a9-AH
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:31:07 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnIMd-0004VA-39
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 10:31:04 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-42fb2314eb0so4695444f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 07:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770132645; x=1770737445; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TBdV1wUbm8IUKNQagaDhb1Obn7Ei8Y8jeWJHjuzY1/c=;
+ b=ACcCmdAA47ZW/8ZanHL/h0+9W6WMG2rjNve8sijnvfaVI7j05D9+GLb31yb8u3PZ7H
+ Y1mTBotmnl7bKf0HwxeOAC6y5CytQVn5SkW71IoirQLEUQ83rV2z+PsSZTMXtbe2RkIX
+ bcsBi77RZHUrlmuSklA4T+ByXMm/O8EzDz8Ej8tvQcTD7WxfZsHVtuPzy1s09Ik0iLKh
+ VFdgquc3qRP9vNBrQOtd9l7zjLA6vRGj9N/nEtJRjGUVCXpluu0110pIC26FChaxBPTE
+ v8OzIuMavkd33U4VA+crOFnAMLJ8rf9rZRv9yr+1U1KlD9d7mau4l006mCI9bMSZmaVm
+ /FWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770132645; x=1770737445;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TBdV1wUbm8IUKNQagaDhb1Obn7Ei8Y8jeWJHjuzY1/c=;
+ b=a5QaLAH2GG9Y+uDjRFkGZdhTI2gZXvKkRnqd58EZq+I6o9BPbDkCpNy/uIJxWR2kI3
+ o9n2A0H1DYdSNXzPf1ISclE89N+fLTq3oNz55VXDi0pKKdKMAF+336LfvM5a7OYcI9O7
+ rrvmVGC5nggrwdDTTQ49zMsgHuZ+BZOaOSJuSaG+uD74m6QYLIU06+ANVEK8tgajWN8F
+ ocf7W9RE3aMhjchVxnJgcFmOxkW/9fcDGtjnZgRt0cHtCIAq2DnqkumswqJTJ+CODdbO
+ ri6/wSM7Vc7gI/Y4hNy7TCQMkHHGdGZUM2aL2xNHB1N8EpqASeT2adQpvI5f4gXrlel8
+ YtuA==
+X-Gm-Message-State: AOJu0YyOwtoQdITzTIMLPvXa9QDwGQ1pD97xaiNLMgJkm6ppelsRRT0D
+ LSxMmexjMxIyaZYS8NG8Xwe0C/W4hddZpMKXvwSFBiMg+U3EBIVHreywiDQvWIiMMzlZN5+Abvr
+ Hn4/+5M0=
+X-Gm-Gg: AZuq6aKTIdc34xdDCxelu1sGOi+9xt2JcQdP0JlWxBrHaa9ykX0BBvxTzAnRuIygByI
+ jBVFgDnU6/11mMjdr7auOorPWI0T9pVKVBRxvA9uQvjG9kilK5WOAT79+XkrvsCUEcZv46WSTlJ
+ aeJvBa2My7nw34RDknKNTlUQCNvfLwqNtg8hol2OYVtjEYoZnnLIsCcNY6kBL0VpWEWTR7x9eY6
+ VFfBE+FsVi7NiVoOe3FPaUvmdZEEco4z86f6U8zAZu9lqvyBz7Bng13yNkMbiFjdrEvlyIwENpl
+ Xr5aV701D9yW0+t2/VacJGEDH+eTuEWPYn7dLKbVR8PA0lp9rAadP20Hv3Mg3q2J/iJhd8ARmse
+ W5PZBE+gnivuvlGyj7bcbi86OmEUCkdhEQxyMATormfUxF05vFxUhNxyUIFiW3+7dHevvPQWYiQ
+ kcfpoW9Y1j4n/0zpo4w9vS4nuiYZCXb/VQ5uVqGUl6ajApmHLdVuixg2ZPP9BiCQVX
+X-Received: by 2002:a05:6000:24c1:b0:42b:38b1:e32e with SMTP id
+ ffacd0b85a97d-435f3aac886mr26901186f8f.46.1770132645132; 
+ Tue, 03 Feb 2026 07:30:45 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10ed952sm54670150f8f.10.2026.02.03.07.30.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Feb 2026 07:30:44 -0800 (PST)
+Message-ID: <a3602928-18f4-425e-b5d9-049563d5531d@linaro.org>
+Date: Tue, 3 Feb 2026 16:30:44 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="YmIqKLi6X8F6IYQZ"
-Content-Disposition: inline
-In-Reply-To: <CAPMcbCq2oOYXo=O0D0fdBSG-vB7+q1=VtEqQpHqSzFU6+5Sq9g@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/m68k: Inline translator_ld[uw,l,q]() calls
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20260202214050.98935-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260202214050.98935-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,122 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/2/26 22:40, Philippe Mathieu-Daudé wrote:
+> In preparation of removing the translator_ld[uw,l,q]() methods,
+> inline them for the m68k target, expanding MO_TE -> MO_BE since
+> this architecture is only available in big endianness.
+> 
+> Mechanical change using the following Coccinelle 'spatch' script:
+> 
+>      @@
+>      expression env, db, pc, do_swap;
+>      @@
+>      (
+>      - translator_lduw(env, db, pc)
+>      + translator_lduw_end(env, db, pc, MO_BE)
+>      |
+>      - translator_ldl(env, db, pc)
+>      + translator_ldl_end(env, db, pc, MO_BE)
+>      |
+>      - translator_ldq(env, db, pc)
+>      + translator_ldq_end(env, db, pc, MO_BE)
+>      )
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/m68k/translate.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
---YmIqKLi6X8F6IYQZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 03, 2026 at 02:58:29PM +0200, Kostiantyn Kostiuk wrote:
-> Hi Noam
->=20
-> QEMU agent was developed as a tool with a synchronous API, and adding any
-> async commands requires a redesign of the API. QGA also does not support
-> sending any event to the host.
-
-Regarding the lack of QMP events, this is a bummer because it introduces
-latency but polling for completion is a possibility. Enabling QMP events
-might also be an option?
-
-> First of all, if you send 2 asing command "file-open-async" and get 2
-> responses with FD, how can you know which FD is for which file? Yes, asked
-> about FS freeze API, but the idea is the same. FS-freeze allow to provide=
- a
-> list of volumes to freeze, so you can have 2 requests to freeze 2 sets of
-> volumes. And get the same question.
-
-An async freeze command could take a unique identifier argument that is
-passed back to the client when completion is reported. This way the
-client can correlate the completion to a specific command.
-
-There are existing async QAPI APIs that can be used as a reference. For
-example, qapi/jobs.json. It's a 3-part API where jobs are launched, can
-be queried, and can be managed (pause/cancel/dismiss). Querying is
-read-only, so the dismiss command can be used to actually reap the job
-and make it go away. Something similar could be done for fsfreeze. The
-job API was supposed to be generic, but it's only used by the block
-layer as far as I'm aware - maybe it could be reused here too?
-
->=20
-> Regarding multiple agents, this is theoretically possible because QGA is =
-an
-> independent application. If you run each QGA instance with a proper
-> different state folder and a different communication channel, it should
-> work. The main problem is that QGA instances will be independant and when
-> QGA1 blocks all API execution because the guest has frozen FS, QGA2 will
-> allow any command, including FS freeze.
->=20
-> Unfortunately, I have no good answer for you. Windows VSS has a lot of
-> limitations, and we are trying to somehow work with it. Windows VSS doesn=
-'t
-> even have an API to report a FS state, so QGA builds and uses internal
-> knowledge that will be out of sync after snapshot restoring.
->=20
-> CC: @Yan Vugenfirer <yvugenfi@redhat.com> @Qianqian Zhu <qizhu@redhat.com=
-> Do
-> you have any idea?
->=20
-> Best Regards,
-> Kostiantyn Kostiuk.
->=20
->=20
-> On Tue, Feb 3, 2026 at 12:23=E2=80=AFPM Noam Assouline <nassouli@redhat.c=
-om> wrote:
->=20
-> > Hello qemu-devel!
-> >
-> > I=E2=80=99m working on a KubeVirt fix for Windows VSS fsfreeze timeouts=
- (PR #16653
-> > <https://github.com/kubevirt/kubevirt/pull/16653>). Up to now we=E2=80=
-=99ve
-> > relied on libvirt=E2=80=99s default QEMU agent response timeout of 5 se=
-conds, and
-> > that often isn=E2=80=99t enough for VSS fsfreeze to complete. This PR p=
-roposes
-> > increasing the timeout to 60 seconds so the freeze can finish successfu=
-lly.
-> >
-> > The challenge and the reason for this email is that qemu-ga processes
-> > commands synchronously on a single connection. While guest-fsfreeze-fre=
-eze
-> > is running, the agent is effectively busy and other commands (e.g. ping,
-> > status) will hang until it returns, which can impact pod readiness prob=
-es.
-> > I=E2=80=99m checking what we can do about this.
-> >
-> > I=E2=80=99m mainly looking to understand whether this can be addressed =
-in qemu-ga,
-> > and to get guidance on the right direction. Is there a supported way to=
- use
-> > multiple agent connections/channels, or is an async guest-fsfreeze-free=
-ze
-> > with a completion event the more appropriate solution? More generally, =
-any
-> > best=E2=80=91practice guidance around Windows fsfreeze timeouts and res=
-ponsiveness
-> > would be very helpful!
-> >
-> > Thanks in advance, and cc=E2=80=99ing qemu-ga maintainers.
-> >
-> > Noam
-> > KubeVirt Storage Ecosystem team
-> >
-
---YmIqKLi6X8F6IYQZ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmCE+UACgkQnKSrs4Gr
-c8jXlAf/d9eE6+8Scq5Yi0jl2d7vkFFxWfMjAuf0LniLgRGbkmb+ICmvt/2ty+gK
-yC3YjyWZacTm0Eb0y46V71GalMC0yhAeHq52PWJg+le3mSlPHBLBtblXoytKEuFL
-um24DsXNH6qaQ26LLtfKO7O07vzhkuF4MLgZ6ySaSXH9VHAP4aLaEA1WrGHFiB4m
-rDGWorNvS8T182CRwGo4jMfp59f6QxrNwa1VacoY6v4pBPzRbSvM34ZgPOHSaEx+
-dwCFqbacRAL8Tc5yfBoBUzO6wi35VQpY1qVbK3I7lGMgLC42NUUy8hrJg71xkxjb
-iLdxRCot4Zl7htqeP7Nc9qdM7TOTOQ==
-=UFCP
------END PGP SIGNATURE-----
-
---YmIqKLi6X8F6IYQZ--
-
+Patch queued, thanks.
 
