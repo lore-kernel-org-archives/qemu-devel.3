@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37034E8B37E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 23:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444BFE8B381
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 23:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnPOe-00061Z-9I; Tue, 03 Feb 2026 18:01:24 -0500
+	id 1vnPOZ-0005yO-Hc; Tue, 03 Feb 2026 18:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnPOa-0005yi-WC
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 18:01:21 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnPOV-0005y9-3M
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 18:01:15 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnPOZ-0006B7-Fe
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 18:01:20 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4358fb60802so146953f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 15:01:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnPOS-0006Av-Fu
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 18:01:13 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-483100e97d8so526325e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 15:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770159677; x=1770764477; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770159670; x=1770764470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cMPkVyK650njXsWAImuRdeZzNFIoTsC8s5V4QtgoJgg=;
- b=O6t9F3m27MxJNc5iNKfyYAaq2bW/gBlTEkvMlIsr9LeztT4RmqVtIGUmQoDNym50MJ
- i99JKsTMdnIqIC8K+0cv627sUHSuNy0i3Nsl1jdyt9TRL3P2FuLDNEYFIJvjQTIqnK+W
- gBNtYXXPvOG+/MjsfUMbuMzTBuLMp6pCYzQ7I06FDozUXn9DbHTDAd/Q0RueN5D+q8nx
- YrZMInBV8ncMG2iDxtwsC02aGjlU69TlGuv5yCmQhE8O4ooYpZwpu7FXKq6HRyOJoD76
- NabTkMLvXGdYMORX6LQF4aChUnOt/JqFCK06Zop1Cl/OWslbonAqOOkPZr4+x5TFYqyM
- qbyg==
+ bh=Fki7Z7lvkxs4LTNUjYTuJYA3h2xrMJ2tqxVaedVRuZM=;
+ b=C/nLyhfB1B9yjff440lEqhFQnsfW/zj/x+PkPCEBvGzgc6nM0oGXGyk+FsaNrsOtuc
+ Jj1unOTfJOFJE86TYR42LAPKQRD0OdDv4JtQcpm85baGyQvVTqyc/qT0a1OBomnuoVex
+ pclwr6Z6v8pTQZY2pF/y8lvv/dD0vcQZ5vPOkgXcfUzvW22RpORaHoMy73jnCCaHEjU0
+ wgdnpZbT3a2xiY8+IIPoxU/aqvRo9XYMg/Th6GCi5VJuJbW7p6DzifEiNHpcF2gqMD5z
+ 7FHAOQ7Wl++G1XyqpZtNnkGs3kLY5Wcw2oqfgIUh1iykWmA15Sgg5w59CZD4HZKCIxk9
+ BPEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770159677; x=1770764477;
+ d=1e100.net; s=20230601; t=1770159670; x=1770764470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cMPkVyK650njXsWAImuRdeZzNFIoTsC8s5V4QtgoJgg=;
- b=stsfzOkaadbEJ8quZV2UaycGjVd+uWqeWKPaocZjgu6ecubvKFD90+QAia4g6bUGRT
- 4RiUAf8s56mx3SnQCrkhhIkQwi3rYLDi29cDa7B1e/nEV8mPEDmf120ejMv1aNwq2Qfq
- Tu158v6ztidHStA7mitrUNNUW9svSCoMGwygncVtt7YeDn8wEHukinlltsb9/mSEj16z
- q8Rc1Ts32/P8WWepWNqlu61nqDVr8+dZu320SbUVHHJhA1m8FmDo5DeWTwfO4lSH55MG
- kMC0OO+93ra36gx/x69aM2CB3X94/W33Y/adwlKwBG2QfEG3/WB32s/EGvlFx7B+95h6
- 1+sA==
-X-Gm-Message-State: AOJu0YxYyXYqdfo5KeADWAt72/wYsXHaUs9/GbP7/286fJS5EqJ0dBim
- Sa9MLYxtNiz5hYxsNFALdEJnhkF0Q5IEPLCfKW59eDx/yDhdSPB+8V2DN3qYHMobBPpX9jyEng5
- 79dFiEho=
-X-Gm-Gg: AZuq6aJJCOIwgUKjBI5WTStM5pXCd4GccR/zVZbpampBplSkrhcGoiXGeTPkG/pe654
- cbq9/l4Fq3TComSbMg6q1APUD7QYP+DX7mFychs3a8GvXgWcPWWEKirvAT052fQhj4vLCaoIHM2
- V3/t1ZcIekVKyfX8XbdeTg+KE0AnX7jklc2RKH6cdkGGPyBt0Tmb0irkwPI15T8Rw7WUph6/5Uw
- Zsu7jJUQP8Z1/u/Nx0rqwcFzg1I1sWR7Sf1RNaKhg/YKVv48d3fACG9f1F9PoThD0V9BxCiBBYf
- Wq3kwzF3Bu7RyuaaXDZhXib4gYaH1KB5tWr8wG8Qk6gVWMZ8ZEgzMpO6rmI07gMg29VVXXm4taf
- ImzC9U7T4y4li1B1ERzAw0HxhASiitqycDGy/ERNoylxWfJqRzvoU/Xq+uYWHbfSJ7p8t/lrLjN
- MqbvIx3oasJCzL9Q6sxXpGX5s60swTTLC1n6VNwNvexR91stO0vCA/AwIF4NxD
-X-Received: by 2002:a05:6000:40cf:b0:435:9538:939b with SMTP id
- ffacd0b85a97d-43617c3933emr1432912f8f.8.1770159677419; 
- Tue, 03 Feb 2026 15:01:17 -0800 (PST)
+ bh=Fki7Z7lvkxs4LTNUjYTuJYA3h2xrMJ2tqxVaedVRuZM=;
+ b=K8nYtMSpcmEzl8PCIZ8jTXzNyGB9ci4zvREUalPuD/ZkUbMP7bgpCRYGnoBHF2zSjh
+ a2TydlCjFWaCFCy0uf8jUMwnp5DYI9rBT5Ac7WasSxSeq/RPLXO36GWhqcll1HRtFLCw
+ hPcnXVZq+ugRh/WdSzlHFjmFBa2YgSsi6YCyjxM6OYIiWdhO8VN/mqmrpOdGMkp6FU/K
+ JdOCVkU4Eu83iaOacoN6BRIJhDa5DEBt+FfywGs6ND9AvpCTD7LaxNkkNDl+oc/DNjaZ
+ 1SJfs7U7YDLrPN73NPbk20RCFM9jJvP/c3zx17nn40EEuYI8zaQrRAnZ4SU9SZ/ILBq5
+ If+Q==
+X-Gm-Message-State: AOJu0YzmRddhJL2VgbB4P59TQrDRuPKufkj5iWO2R4326/5wySj7sRNe
+ UmyASwhr0xnZvL1NPW+VjMpYqsoEhc6AYR/39LXmuaTtSsikvaJjQpmvem1n9+MHuMHL4QFW3Ff
+ 8FVdDOME=
+X-Gm-Gg: AZuq6aJfvjM2H1PJp6pKw0VITTRsz5pQs7xst2gimLTm91/pHh5QbBu9E7dk6PuMpwv
+ HocyK6OulYnRfBoVCwLQmQ/GpgHAgJQjqgM4gbzNWqjshOUBjzLywBb8LXcS6YmCcHb1LM0ijrl
+ rpB72WEjW+07p5iA+88LAbAE7bA4tnpuo+9wYzPJJCrWYqS/5vJtTpuzgTZt1tIXeH/yhaggTCZ
+ mN/dZX6BYHfGaUk31CWW8GdsrlBW7VVvz4CG90uItSblONVO7heavLoBX+BTvcqH6LFpOTi+b3O
+ rgliHoSUQ3OLIZkuWjuK0drbFN3X4mKLQkqh4n0lB42uW/g5MFX26CWMjQWFp0kI/5+p8Pncval
+ nrUfp44IRbGHjoQm0L/5EjQYz8fAg3+RgVRVi/wVanx/rORvJd7EMWvQ0E7ralxhl4HxYaqA+YV
+ oGN1twkutxZnR4fLQ8CHjmtw1IXshDYV8PqxubW49Eh03+zkMLNuKOfdVZrbZI
+X-Received: by 2002:a05:600c:c4ab:b0:475:dd9a:f791 with SMTP id
+ 5b1f17b1804b1-4830e9795d3mr14357965e9.28.1770159670552; 
+ Tue, 03 Feb 2026 15:01:10 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805faf7sm1903528f8f.30.2026.02.03.15.01.16
+ 5b1f17b1804b1-48310928f1fsm1291235e9.14.2026.02.03.15.01.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Feb 2026 15:01:16 -0800 (PST)
+ Tue, 03 Feb 2026 15:01:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,18 +71,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 3/5] target/sparc: Remove dubious swapping in LD_code()
- helper
-Date: Wed,  4 Feb 2026 00:00:52 +0100
-Message-ID: <20260203230054.23667-4-philmd@linaro.org>
+Subject: [RFC PATCH v4 2/5] accel/tcg: Have cpu_ld*_mmu() methods consider the
+ MO_SIGN flag
+Date: Wed,  4 Feb 2026 00:00:51 +0100
+Message-ID: <20260203230054.23667-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260203230054.23667-1-philmd@linaro.org>
 References: <20260203230054.23667-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,43 +105,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the endianness is contained in %oi, cpu_ld*_code_mmu() has
-already honored it. Swapping again makes no sense. Remove the
-bswap() calls.
+Sign-extend the result when the MO_SIGN flag is requested
+in TCG common CPU TLB handling.
 
-Fixes: 2786a3f8d3a ("Use GET_ASI_CODE for ASI_KERNELTXT / ASI_USERTXT")
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Remote the SPARC specific handling.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/ldst_helper.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ accel/tcg/cputlb.c         | 37 +++++++++++++++++++++++++++++++------
+ target/sparc/ldst_helper.c |  9 ---------
+ 2 files changed, 31 insertions(+), 15 deletions(-)
 
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 76546c66515..97782997881 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -2296,12 +2296,18 @@ static uint8_t do_ld1_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+ {
+     MMULookupLocals l;
+     bool crosspage;
++    uint8_t ret;
+ 
+     cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
+     crosspage = mmu_lookup(cpu, addr, oi, ra, access_type, &l);
+     tcg_debug_assert(!crosspage);
+ 
+-    return do_ld_1(cpu, &l.page[0], l.mmu_idx, access_type, ra);
++    ret = do_ld_1(cpu, &l.page[0], l.mmu_idx, access_type, ra);
++
++    if (l.memop & MO_SIGN) {
++        ret = (int8_t)ret;
++    }
++    return ret;
+ }
+ 
+ static uint16_t do_ld2_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+@@ -2315,7 +2321,8 @@ static uint16_t do_ld2_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
+     crosspage = mmu_lookup(cpu, addr, oi, ra, access_type, &l);
+     if (likely(!crosspage)) {
+-        return do_ld_2(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        ret = do_ld_2(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        goto return_signextended;
+     }
+ 
+     a = do_ld_1(cpu, &l.page[0], l.mmu_idx, access_type, ra);
+@@ -2326,6 +2333,10 @@ static uint16_t do_ld2_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     } else {
+         ret = b | (a << 8);
+     }
++return_signextended:
++    if (l.memop & MO_SIGN) {
++        ret = (int16_t)ret;
++    }
+     return ret;
+ }
+ 
+@@ -2339,7 +2350,8 @@ static uint32_t do_ld4_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
+     crosspage = mmu_lookup(cpu, addr, oi, ra, access_type, &l);
+     if (likely(!crosspage)) {
+-        return do_ld_4(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        ret = do_ld_4(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        goto return_signextended;
+     }
+ 
+     ret = do_ld_beN(cpu, &l.page[0], 0, l.mmu_idx, access_type, l.memop, ra);
+@@ -2347,6 +2359,10 @@ static uint32_t do_ld4_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     if ((l.memop & MO_BSWAP) == MO_LE) {
+         ret = bswap32(ret);
+     }
++return_signextended:
++    if (l.memop & MO_SIGN) {
++        ret = (int32_t)ret;
++    }
+     return ret;
+ }
+ 
+@@ -2360,7 +2376,8 @@ static uint64_t do_ld8_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
+     crosspage = mmu_lookup(cpu, addr, oi, ra, access_type, &l);
+     if (likely(!crosspage)) {
+-        return do_ld_8(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        ret = do_ld_8(cpu, &l.page[0], l.mmu_idx, access_type, l.memop, ra);
++        goto return_signextended;
+     }
+ 
+     ret = do_ld_beN(cpu, &l.page[0], 0, l.mmu_idx, access_type, l.memop, ra);
+@@ -2368,6 +2385,10 @@ static uint64_t do_ld8_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     if ((l.memop & MO_BSWAP) == MO_LE) {
+         ret = bswap64(ret);
+     }
++return_signextended:
++    if (l.memop & MO_SIGN) {
++        ret = (int64_t)ret;
++    }
+     return ret;
+ }
+ 
+@@ -2396,7 +2417,7 @@ static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
+                 ret = bswap128(ret);
+             }
+         }
+-        return ret;
++        goto return_signextended;
+     }
+ 
+     first = l.page[0].size;
+@@ -2410,7 +2431,7 @@ static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
+         } else {
+             ret = int128_make128(b, a);
+         }
+-        return ret;
++        goto return_signextended;
+     }
+ 
+     if (first < 8) {
+@@ -2429,6 +2450,10 @@ static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
+     if ((l.memop & MO_BSWAP) == MO_LE) {
+         ret = bswap128(ret);
+     }
++return_signextended:
++    if (l.memop & MO_SIGN) {
++        ret = int128_signextend(ret);
++    }
+     return ret;
+ }
+ 
 diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index e1178e53d51..10746b3c0f1 100644
+index 3bc6a6827a4..e1178e53d51 100644
 --- a/target/sparc/ldst_helper.c
 +++ b/target/sparc/ldst_helper.c
-@@ -1166,21 +1166,12 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
+@@ -1163,27 +1163,18 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
+     switch (mop & MO_SIZE) {
+     case MO_8:
+         ret = cpu_ldb_code_mmu(env, addr, oi, ra);
+-        if (mop & MO_SIGN) {
+-            ret = (int8_t)ret;
+-        }
          break;
      case MO_16:
          ret = cpu_ldw_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap16(ret);
+         if ((mop & MO_BSWAP) != MO_TE) {
+             ret = bswap16(ret);
+         }
+-        if (mop & MO_SIGN) {
+-            ret = (int16_t)ret;
 -        }
          break;
      case MO_32:
          ret = cpu_ldl_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap32(ret);
+         if ((mop & MO_BSWAP) != MO_TE) {
+             ret = bswap32(ret);
+         }
+-        if (mop & MO_SIGN) {
+-            ret = (int32_t)ret;
 -        }
          break;
      case MO_64:
          ret = cpu_ldq_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap64(ret);
--        }
-         break;
-     default:
-         g_assert_not_reached();
 -- 
 2.52.0
 
