@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D081E83043
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2495AE83049
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 03:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn6ga-0000Ar-MV; Mon, 02 Feb 2026 22:02:40 -0500
+	id 1vn6qI-00038s-4d; Mon, 02 Feb 2026 22:12:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn6gY-0000AX-UI
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:02:38 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1vn6qC-00037f-FI
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:12:36 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn6gX-00032p-BE
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:02:38 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8217f2ad01eso4110461b3a.2
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:02:36 -0800 (PST)
+ id 1vn6q8-0006qg-QG
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 22:12:35 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-82318b640beso2883174b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 19:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770087755; x=1770692555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770088351; x=1770693151; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GhhvTJcLSZjg5NWAm4+sf6CdvE3XvDrZ4hzeHUQAfj0=;
- b=Cus4ucBXHvXnzNf1DZxfrkhcIEoryJxt6vmiY3iZeNUtNwjxAUPmCmog7MB7+rmJUa
- vmjz17qdT7CI3sDZztYG9ByrMcgKppDfm6U9/BS01kPPsUIXDeBTQxrF/9IPh4p/LbCT
- //S5HYEJjtYxL8wNhqVNU671AGtI270zzvDr6n9l4/cAFKsRpzu7wkvqEzJlIUUrDqf0
- 6JPOAUbWNz6juLlcNLIZR1siEfKXHiZpvdMqlHAlAf967RKwwv4Y+yhwIoIUIJJRrXWv
- 8+HwvMdY91eWQx/IV4NDzEPHa1zr4qyzBEl2EIUQ+iyN4o0WlF2RrzImSxn9YnbS8hh4
- oGRA==
+ bh=07V7MfFl/bioGoEebLtntbQdeaz9O9lILUnoX5oUsCg=;
+ b=xnB5slQwB2mAM0zGXh1BUCpUc6wqyiYHQhxHbPZQIsWn+QkuNwVGYLhQlUv97Hn6SL
+ AvbQ/YTLbCtdKJK/FGhh98O3cta2fy0sXghYtlXjcuS8Xn3zHBKunMPj1eDXEKrKHZTH
+ /pB2gAEDcBq8CwWWC91c3mLYG4i6wti40HyClH0oIQgQYbTUE/zP1I7iJRFvJmkZ0f+D
+ OXC0PLiOz4ocAJzh6Tkmj6Kkx8rK0aN+x94WmDuU080hXqG91J5eakEbu8Sh6dywRXQO
+ hMJRaFf9/lAUXg7h863KRtCOSAZ18EyZ+e57VLRU5FP40Np83FWcpWA7H7jgLGu0xR7U
+ 6grA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770087755; x=1770692555;
+ d=1e100.net; s=20230601; t=1770088351; x=1770693151;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GhhvTJcLSZjg5NWAm4+sf6CdvE3XvDrZ4hzeHUQAfj0=;
- b=A4Vuy9BuXu0emprgwwlmntOxY1Nt7L2GY5hndVRO+wgMgwECXn5Gq9rEh7/30WABg0
- 74s3ftlj6wq56wrg9Xb1RRvatyOhOz2DAnlJ+sGbXyUAHPecGvrF1uD+kKQepr2ot23p
- yX1/6YgJ5xfYnK+LGjJrjaXPOlu45YD6gOi7yliEAi6TgLUuxKmD9FlYFzjiBGvOufCG
- bMAVWJ+kQp+2wXZs3VoHOFqBzNiVaKBYpc40swXLF57kpHVGyhbZCk8kSTGUimAU5WSF
- iGAxxECkeyAXcPwGX8XG6dFC2/bPJ+Pr/vcHbS1W9Rpu2ACcVR/nbYFL+9IuHL9X5ws5
- QQcA==
+ bh=07V7MfFl/bioGoEebLtntbQdeaz9O9lILUnoX5oUsCg=;
+ b=mwSgZ9oNkn5fcztWUDlrrSOl3M8ccv26qLQQsdXA4Xng0U7l6teFtYecu0fpRsO+oe
+ vTd3/3UY8C1y0DPBl7iwwqdtVwyOxYXa3kJcY89oIoGd42Zp+toBEq8IJx1BZPuLWtPK
+ Ykeg648LaLN7T7+O50+j+UgU6cSUV69dzluqeRcLLWaZE4ZhKwBIz0LnxWVfnXE3dTZe
+ 6N4OIPyhhDyGxYHELFov51JHWrCar+CV82YIYS+ih9eGxXl07vDqOVehpFrRuu+aBvBN
+ uIsBMAkecz54yKjp3dyEFVUMCvAPSmXLJk/HaPjRgSkerMXQjCh4S4Bzqs8iwl0a01Ec
+ chWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMjurRlstVaVfdTF+jiQFmR7/olmSyp70oKyQUUTVvp2EyMQJ1rlwCVdqGGyPcovA/wrzeVGeZ46Ax@nongnu.org
-X-Gm-Message-State: AOJu0Yx6EJ5TMiXmxrPJxl10pjpo5pnP99ESFRKsXU1tYNqWEN9S5K8p
- 7ioYXtIiyIM03Dw10HM1TuPKf1OJMO/MCh6ZblAOBWgjmkiyL1Z0B0A9fktDJddoXv4=
-X-Gm-Gg: AZuq6aL+WwoKbeIMRSNTXdhzypKf6NNtCPzYrZx+tw/lCeHBqGjpIUn4MCBkn1/JsoW
- hIuvnAG8+ils7uxaa3E5pFbs2KWMbPykAUX5PJrTCzDgiIe56GipfEQqGRxjYEo68Krp7R9dilN
- rR573TDKG7Qqpa4RXql0xKJzPH1aVdtoiSU6PWHwlJS2fMxeL6ul9zJkBoxH9obnOhiuKHHo1VN
- EWYrD5HbS705VHLW+XtjJ8SE+cxtV9o3q7OF4jqIjxBKNZmNHlhlOGSPoUIZO3vGEMIPkVzle3t
- zDrigANx6wWnz2by/OzOKaZme9UNbGRsDnzIcNDhRtDvam63vKCSYPgZlFrTVIZpCQfW22IWyOy
- ztMzu1lQWeD1PcWwSkqP2u0jUgoPqgjzlZcrX+X1vSb6E7bhJtQHl053wR6231rd+Igjf6bduLc
- Jiwbn5gSRCpChg07TxCCy1bbVcYuLTKm38vKXFKRKU2EY5vsmSGOIm3TKXGbYHGGmzXB3KDlDNv
- KELZUn6BXiPubYfQ1ODzPWQrhc1TH4CagjFwGb5Dw==
-X-Received: by 2002:a05:6a21:6f12:b0:38b:e430:157a with SMTP id
- adf61e73a8af0-392e0115568mr13394366637.41.1770087755482; 
- Mon, 02 Feb 2026 19:02:35 -0800 (PST)
+ AJvYcCVFPasTjCB6oT7LRP73ah7/4mw7BtdrJ+iqmG3FzkMdJnqtLeci59BPtUX9hMDlTIchEhC57aZ5ZNb0@nongnu.org
+X-Gm-Message-State: AOJu0YzUXiFD1k5nlv1Frq9Fl5gGbpe7ve2vxkimCUfP/NzSZTsnay59
+ 25zwqtOWv8C5uYrAdQhA7LkaPveNbCuuBZx0WaVSbGe1x+AAnR/cOawJrsi4Eslvb8B18kDcnsB
+ TrZI8uyipIA==
+X-Gm-Gg: AZuq6aJpQDTcpf4XWyRxXwKqWDZbbbcneuAuwjhc2r6wbLrziaCaOW/A2w4Vz8RIvtN
+ PMlB7d5DDFtl5yk8lXd0OscP9CKKCk5rmO7ArNlW4lrtog5Dz6jnEIG5D+P+pQgB6eYFZ4vibI3
+ iqeTpJ3W2QdA8waHBkYqUxIjvyR10WkNWmSbfqW6yyvBv+1vtx4lKVNFzaKMcyb/tN9IfFP/X6H
+ VMx9sV6rnAdZ36D4A33aD/ux2wwIFqc+dUlogGvHk6xJ07xyevsvmLWghvX9gyTYSqUOInlklcc
+ YTEGDE4/tOjNBcnT8tKL5KrecvH2C4g1hUrrionTxa/rBIQVF82uHaPwXRPLfrY2Ip0z0ZXMLwf
+ xrh4GGa8R5QPDgnJA7wwGp03DJaK4eMdmFkU2BtgPiGfqZLwE6J9dNalq9VZOqDxMXxQcmDr3U4
+ faxD/xpkE187gJJWQCKjzwI09Cd71o9hyFaqPp8h43rTPKAcL0W4CZ5GRPIEgLUi61ezQCwSWxM
+ m21tldefJQ=
+X-Received: by 2002:a05:6a00:2d01:b0:81c:92ec:ccf3 with SMTP id
+ d2e1a72fcca58-823aa43a5afmr15378833b3a.19.1770088350945; 
+ Mon, 02 Feb 2026 19:12:30 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
- (bg30dhzn7h1zhjqnvj08.ip6.superloop.au.
- [2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
+ ([2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c64276efd8asm15999627a12.7.2026.02.02.19.02.32
+ d2e1a72fcca58-82379bfb924sm17821845b3a.34.2026.02.02.19.12.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 19:02:34 -0800 (PST)
-Message-ID: <299e4fa8-d973-49cc-85d2-87d5477ca4fe@linaro.org>
-Date: Tue, 3 Feb 2026 13:02:28 +1000
+ Mon, 02 Feb 2026 19:12:30 -0800 (PST)
+Message-ID: <4bcf78f9-e2c3-4673-b7de-88ba7776e1a8@linaro.org>
+Date: Tue, 3 Feb 2026 13:12:25 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/15] target/arm: Fix feature check in DO_SVE2_RRX,
- DO_SVE2_RRX_TB
+Subject: Re: [PATCH v3 04/15] target/arm/tcg: Allow SVE RAX1 in SME2p1
+ streaming mode
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20260202133353.2231685-1-peter.maydell@linaro.org>
- <20260202133353.2231685-4-peter.maydell@linaro.org>
+ <20260202133353.2231685-5-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260202133353.2231685-4-peter.maydell@linaro.org>
+In-Reply-To: <20260202133353.2231685-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,44 +112,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/2/26 23:33, Peter Maydell wrote:
-> In the macros DO_SVE2_RRX and DO_SVE2_RRX_TB we use the
-> feature check aa64_sve, thus exposing this set of instructions
-> in SVE as well as SVE2. Use aa64_sve2 instead, so they UNDEF
-> on an SVE1-only CPU as they should.
-> 
-> Strictly, the condition here should be "SVE2 or SME"; but we
-> will correct that in a following commit with all the other
-> missing "or SME" checks.
+> The SVE RAX1 instruction is permitted in SME streaming mode starting
+> from SME2p1.  We forgot to allow this relaxation when we implemented
+> SME2p1.
 > 
 > Cc: qemu-stable@nongnu.org
+> Fixes: 7b1613a1020d2 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/translate-sve.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/arm/tcg/translate-sve.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 > 
 > diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-> index 64adb5c1ce..81f487152c 100644
+> index 81f487152c..e853b4dd0a 100644
 > --- a/target/arm/tcg/translate-sve.c
 > +++ b/target/arm/tcg/translate-sve.c
-> @@ -3769,7 +3769,7 @@ TRANS_FEAT(UDOT_zzxw_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzxz,
->              gen_helper_gvec_udot_idx_2h, a)
+> @@ -7803,8 +7803,17 @@ TRANS_FEAT_NONSTREAMING(SM4E, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
+>   TRANS_FEAT_NONSTREAMING(SM4EKEY, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
+>                           gen_helper_crypto_sm4ekey, a, 0)
 >   
->   #define DO_SVE2_RRX(NAME, FUNC) \
-> -    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-> +    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
->                  a->rd, a->rn, a->rm, a->index)
+> -TRANS_FEAT_NONSTREAMING(RAX1, aa64_sve2_sha3, gen_gvec_fn_arg_zzz,
+> -                        gen_gvec_rax1, a)
+> +static bool trans_RAX1(DisasContext *s, arg_RAX1 *a)
+> +{
+> +    if (!dc_isar_feature(aa64_sve2_sha3, s)) {
+> +        return false;
+> +    }
+> +    if (!dc_isar_feature(aa64_sme2p1, s)) {
+> +        /* SME2p1 adds this as valid in streaming SVE mode */
+> +        s->is_nonstreaming = true;
+> +    }
+> +    return gen_gvec_fn_arg_zzz(s, gen_gvec_rax1, a);
+> +}
 >   
->   DO_SVE2_RRX(MUL_zzx_h, gen_helper_gvec_mul_idx_h)
-> @@ -3787,7 +3787,7 @@ DO_SVE2_RRX(SQRDMULH_zzx_d, gen_helper_sve2_sqrdmulh_idx_d)
->   #undef DO_SVE2_RRX
->   
->   #define DO_SVE2_RRX_TB(NAME, FUNC, TOP) \
-> -    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-> +    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
->                  a->rd, a->rn, a->rm, (a->index << 1) | TOP)
->   
->   DO_SVE2_RRX_TB(SQDMULLB_zzx_s, gen_helper_sve2_sqdmull_idx_s, false)
+>   TRANS_FEAT(FCVTNT_sh, aa64_sve2, gen_gvec_fpst_arg_zpz,
+>              gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
 
+I wonder if we should update sme-fa64.decode instead of handling this per-insn?
+
+Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
