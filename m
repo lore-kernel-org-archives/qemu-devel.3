@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ACA5E8305C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEEBE8305A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 07:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnAS1-00023e-Ll; Tue, 03 Feb 2026 02:03:53 -0500
+	id 1vnAS5-000279-KX; Tue, 03 Feb 2026 02:03:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vnARv-00020S-6C; Tue, 03 Feb 2026 02:03:47 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1vnARw-00020e-I6; Tue, 03 Feb 2026 02:03:49 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vnARt-0003Dl-6a; Tue, 03 Feb 2026 02:03:46 -0500
+ id 1vnARu-0003Dx-0h; Tue, 03 Feb 2026 02:03:48 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id C846660138;
- Tue,  3 Feb 2026 07:03:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECED3C116D0;
- Tue,  3 Feb 2026 07:03:34 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 2DA7A444C7;
+ Tue,  3 Feb 2026 07:03:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1138C2BC86;
+ Tue,  3 Feb 2026 07:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1770102215;
- bh=vmBN+yUQkLB6QkQP0CNuVrYUKpcSilmO4j8ztdPGuQk=;
- h=From:Subject:Date:To:Cc:From;
- b=UdQO2CgPfbbhkYBqECYFCjBjoR9QDGY+qJq6SDMvCN2qqy54nDd0+VVpQMSk7Zdim
- zQO2Sa7FsIkUaAuCIyYbtS9YQg3IVHv53lHp4UOXb0keKuULzuZeq66c7NRT/Wn3Pn
- c9AZlqECuKhKQjz6jw/zU80IYsWVcXJ+/yxF+XXNpPSA6k4t6FlcRKtPpXaz3nIx+o
- 4POJfFpAJcZ7XS5GAqkfcd05qevQAiXVf3pSKshKVJfPBbGmgxDhJidBI2+tf1LrcZ
- 2hzLd5vrvOCjg1CkY3n9Ugu1cx4vRkhjvqFpf4fxsHeNiGKhTsnWvTp3izoNKzZ95A
- 4S1IuGZsDkFig==
+ s=k20201202; t=1770102217;
+ bh=Nkr5nf9b7Y4A9IBCYQHm95/Po/azKwjoY+f4gLgHvqk=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=Mm/hMfPJLfZVNBLSnNrD2YZr4EPrVCKv2Oa1w1RYa4eR/F9c+i6Dv1vdiUVk0XmQy
+ Ykymu20za64Iygmrq11g5F1P0y6TkcDQz9o9oQpT29DM7ASDC9VRf6JG0alhRWf0HJ
+ wD0pUv3YFC+x/BAGjJlVMWHh6MDNnGqgrSrbibkOcHktFoE8gpXeEhUsH/QecGgO3O
+ nGwHtGc4JLz90aavL7n/G/1KiAJ2AruVnAeQE9WFwrkTCabntvibUjRNQNDdfKyADp
+ D3slJnnTJa122Sqps2JPdnmz9eE+eH5FCGBHDWTlPSO9awqGIKdYZ2Dcpsv5b/vQN7
+ GNVFxFzPP7FVA==
 From: Drew Fustini <fustini@kernel.org>
-Subject: [PATCH RFC 0/7] RISC-V: Add support for ACPI RQSC table
-Date: Mon, 02 Feb 2026 23:01:16 -0800
-Message-Id: <20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org>
+Date: Mon, 02 Feb 2026 23:01:19 -0800
+Subject: [PATCH RFC 3/7] hw/riscv: virt-acpi-build: Generate PPTT table
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADydgWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDIwND3aLM4uQy3aLC4mTdxFQLA7PUVINE88REJaCGgqLUtMwKsGHRSkF
- uzkqxtbUALx+6E2EAAAA=
-X-Change-ID: 20260201-riscv-rqsc-ae806ee0a7aa
+Message-Id: <20260202-riscv-rqsc-v1-3-dcf448a3ed73@kernel.org>
+References: <20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org>
+In-Reply-To: <20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <Alistair.Francis@wdc.com>, 
@@ -65,16 +63,16 @@ Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org, 
  Drew Fustini <fustini@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5339; i=fustini@kernel.org;
- h=from:subject:message-id; bh=vmBN+yUQkLB6QkQP0CNuVrYUKpcSilmO4j8ztdPGuQk=;
- b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWQ2zt0tdcHcdsXsMJ3AA0FiwRknmySmHnrlc+Hv2zjfe
- /fapqsu6ChlYRDjYpAVU2TZ9CHvwhKv0K8L5r/YBjOHlQlkCAMXpwBMhDeA4X9IsWL3lmx/T791
- C1ZuOX3I8v+BKKH5c3ZaHwuZbnXijfVPRobtmiUqR/+WrOmbF+JhveL3sq5SK+YLP0PM3b59LfG
- 1+cQNAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3575; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=f01KlbLacT8ikueuCj8ojGDFWa6aTj7XhptcDLqYro0=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWQ2zj12Y3/j532z1onsyTvaKljStOuEpcvcf2tWp9+fW
+ 7vN669dekcpC4MYF4OsmCLLpg95F5Z4hX5dMP/FNpg5rEwgQxi4OAVgIm9YGBmePDsg0/s+2aiV
+ M8x5G4NfzM3Z1dYcijOCruU8cS/fdn46I8PxXQ11it5JGrNY/oj7bbLQLfg0NfOC9MqGFmnhXZX
+ 7V/AAAA==
 X-Developer-Key: i=fustini@kernel.org; a=openpgp;
  fpr=1B6F948213EA489734F3997035D5CD577C1E6010
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=fustini@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,113 +95,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the ACPI RISC-V Quality of Service Controller (RQSC)
-table [1] which describes the CBQRI controllers present in a system.
-This series is based on the v5 series that implements Ssqosid extension
-and CBQRI controllers [2]. The patches are also available as the
-b4/riscv-rqsc branch [3].
+From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 
-This series is marked as an RFC due to open issues:
+Generate the Processor Properties Topology Table (PPTT) with a
+cache type 1 structure for RISC-V virtual machine. A 3-layer
+cache topology is used.
 
- - The "Add cache structure table creation for PPTT table" series [4] by
-   Sia Jee Heng is used to generate to the PPTT table with a cache type
-   1 structure for a 3-layer cache topology. This series doesn't seem to
-   have made progress on landing upstream.
-
- - cluster_id is not set by the riscv arch, so cores 0-3 are hard-coded
-   to be cluster 0 and cores 4-8 are cluster 1. The proper solution is
-   for the riscv code to set cluster_id the same way as the arm code.
-
- - cluster 0 uses the first L2 cache controller and cluster 1 uses the
-   second L2 cache controller. A more general solution is to make the L2
-   cache private to the cluster and not private to the core.
-
- - struct CPUCaches is modified to add CPUCacheInfo *l2_cluster1_cache
-   and CPUCacheInfo *l2_cluster2_cache. This is a hack to support the
-   example configuration used for CBQRI. A solution could make use of
-   the flexible approach in the "Specifying cache topology on ARM" patch
-   series by Alireza Sanaee [5].
-
- - Need a solution to correlate bandwidth controllers to the Proximity
-   Domain for Memory Affinity Structures in the SRAT table.
-
-There is a Linux kernel patch series [6] and branch [7] that implement
-Ssqosid and CBQRI support in resctrl as well as parsing the RQSC to
-discover the CBQRI controllers in the system.
-
-This Qemu series was developed and tested with the following
-configuration:
-
-  Base addr  Size
-  0x4820000  4KB  Cluster 0 L2 cache controller
-  0x4821000  4KB  Cluster 1 L2 cache controller
-  0x4828000  4KB  Memory controller 0
-  0x4829000  4KB  Memory controller 1
-  0X482a000  4KB  Memory controller 2
-  0X482b000  4KB  Shared LLC cache controller
-
-The example platform is created with the following:
-
-  qemu-system-riscv64 \
-	-M virt,pflash0=pflash0,pflash1=pflash1,aia=aplic-imsic  \
-	-smp cpus=8,sockets=1,clusters=2,cores=4,threads=1 \
-	-m 1G \
-	-nographic \
-	-kernel ${LINUX}/arch/riscv/boot/Image \
-	-append "root=/dev/vda rootwait" \
-	-blockdev node-name=pflash0,driver=file,read-only=on,filename=${EDK}/RISCV_VIRT_CODE.fd \
-	-blockdev node-name=pflash1,driver=file,filename=${EDK}/RISCV_VIRT_VARS.fd \
-	-drive if=none,file=${ROOTFS}/rootfs.ext2,format=raw,id=hd0 \
-	-device virtio-blk-device,drive=hd0 \
-	-device qemu-xhci \
-	-device usb-kbd \
-	-device virtio-net-pci,netdev=net0 \
-	-netdev user,id=net0 \
-	-device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04820000 \
-	-device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04821000 \
-	-device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=16,mmio_base=0x0482B000 \
-	-device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04828000 \
-	-device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04829000 \
-	-device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x0482a000
-
-[1] https://github.com/riscv-non-isa/riscv-rqsc/blob/main/src/
-[2] https://lore.kernel.org/all/20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org/
-[3] https://github.com/tt-fustini/qemu/tree/b4/riscv-rqsc
-[4] https://lore.kernel.org/all/20240129104039.117671-1-jeeheng.sia@starfivetech.com/
-[5] https://lore.kernel.org/all/20250310162337.844-1-alireza.sanaee@huawei.com/
-[6] https://lore.kernel.org/all/20260128-ssqosid-cbqri-v2-0-dca586b091b9@kernel.org/
-[7] https://git.kernel.org/pub/scm/linux/kernel/git/fustini/linux.git/log/?h=b4/ssqosid-cbqri
-
+Link: https://lore.kernel.org/all/20240129104039.117671-1-jeeheng.sia@starfivetech.com/
+Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
-Drew Fustini (4):
-      hw/riscv: virt-acpi-build: Adjust RQSC cache properties
-      include: acpi: aml-build: Add Cache ID and L2 cache for each cluster
-      acpi: aml-build: Add Cache ID to PPTT table and set Cluster ID
-      hw/riscv: virt-acpi-build: Build PPTT table before RQSC table
+ hw/riscv/virt-acpi-build.c | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+ hw/riscv/virt.c            |  1 +
+ 2 files changed, 48 insertions(+)
 
-Sia Jee Heng (2):
-      acpi: aml-build: Add cache structure table creation for PPTT table
-      hw/riscv: virt-acpi-build: Generate PPTT table
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 210b3f5fff98..5703b0827682 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -40,6 +40,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "system/reset.h"
++#include "qemu/units.h"
+ 
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+ #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+@@ -973,6 +974,48 @@ build_srat(GArray *table_data, BIOSLinker *linker, RISCVVirtState *vms)
+     acpi_table_end(linker, &table);
+ }
+ 
++static void pptt_setup(GArray *table_data, BIOSLinker *linker, MachineState *ms,
++                       const char *oem_id, const char *oem_table_id)
++{
++    CPUCaches default_cache_info = {
++        .l1d_cache = &(CPUCacheInfo) {
++            .type = DATA_CACHE,
++            .size = 64 * KiB,
++            .line_size = 64,
++            .associativity = 4,
++            .sets = 256,
++            .attributes = 0x02,
++        },
++        .l1i_cache = &(CPUCacheInfo) {
++            .type = INSTRUCTION_CACHE,
++            .size = 64 * KiB,
++            .line_size = 64,
++            .associativity = 4,
++            .sets = 256,
++            .attributes = 0x04,
++        },
++        .l2_cache = &(CPUCacheInfo) {
++            .type = UNIFIED_CACHE,
++            .size = 2048 * KiB,
++            .line_size = 64,
++            .associativity = 8,
++            .sets = 4096,
++            .attributes = 0x0a,
++        },
++        .l3_cache = &(CPUCacheInfo) {
++            .type = UNIFIED_CACHE,
++            .size = 4096 * KiB,
++            .line_size = 64,
++            .associativity = 8,
++            .sets = 8192,
++            .attributes = 0x0a,
++        },
++    };
++
++    build_pptt(table_data, linker, ms, oem_id, oem_table_id,
++               &default_cache_info);
++}
++
+ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+ {
+     GArray *table_offsets;
+@@ -1015,6 +1058,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+     acpi_add_table(table_offsets, tables_blob);
+     build_rqsc(tables_blob, tables->linker, s);
+ 
++    acpi_add_table(table_offsets, tables_blob);
++    pptt_setup(tables_blob, tables->linker, ms,
++               s->oem_id, s->oem_table_id);
++
+     acpi_add_table(table_offsets, tables_blob);
+     {
+         AcpiMcfgInfo mcfg = {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 99871119be44..491328f7e192 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1929,6 +1929,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
+     mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
+     mc->numa_mem_supported = true;
++    mc->smp_props.clusters_supported = true;
+     /* platform instead of architectural choice */
+     mc->cpu_cluster_has_numa_boundary = true;
+     mc->default_ram_id = "riscv_virt_board.ram";
 
-Vasudevan Srinivasan (1):
-      hw/riscv: Add support for ACPI RQSC table
-
- hw/acpi/aml-build.c         | 108 ++++++++++++++++++++++++--
- hw/core/sysbus-fdt.c        |   3 +
- hw/riscv/cbqri_bandwidth.c  |  11 +++
- hw/riscv/cbqri_capacity.c   |  11 +++
- hw/riscv/virt-acpi-build.c  | 181 ++++++++++++++++++++++++++++++++++++++++++++
- hw/riscv/virt.c             |   1 +
- include/hw/acpi/aml-build.h |  23 +++++-
- include/hw/riscv/cbqri.h    |  12 +++
- 8 files changed, 343 insertions(+), 7 deletions(-)
----
-base-commit: 117b7aeabad83d437dfa69f2ee2bac75c0e02abe
-change-id: 20260201-riscv-rqsc-ae806ee0a7aa
-
-Best regards,
 -- 
-Drew Fustini <fustini@kernel.org>
+2.43.0
 
 
