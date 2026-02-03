@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9421BE6E7E2
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 10:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0666CE6E7EC
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 10:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnDaN-0002Za-F8; Tue, 03 Feb 2026 05:24:43 -0500
+	id 1vnDth-0002JU-5M; Tue, 03 Feb 2026 05:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDaM-0002XS-4s
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:24:42 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDtf-0002J7-FU
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:44:39 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDaK-0000GT-5h
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:24:41 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-482f2599980so26306375e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 02:24:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnDtd-000189-Ru
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 05:44:39 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42fbc305552so5061913f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 02:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770114279; x=1770719079; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770115476; x=1770720276; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cY+rIj4rJ/0OVDhoBXhH5F0+ZmQpVWsBXHp5HVio4bY=;
- b=tdbHPIzGHMCgm/C/L4wiaGFwIej0JPtk1tPMO1DCQPhT4ylHFZ+6pRMc1SzNzuaNab
- duLJZS337hUjubdp+i/ScMD5Ru56693rSjyrW0fkehWGZ9E2SClhia+yxpfR9XtkyXgG
- tHHGK4XHu5/Ar0/nrR0+IX1A/4P4KvEW38xGLWqQ3SUFx51hqEgXsVVtLHnn5JwE1hwV
- XiesamV2mb90SsKD5wNiigxqn6CZGikAHZrsd0nnaqMeSo+kAC24GUD2q1Tew8crK5GD
- RRoccn4OuvE7XBqLXJNwePfGXuRbz9mAaabPjNB9hs/HIl3fx+1rf4wnAHsD4YhCB4NI
- 2zEw==
+ bh=uqHxjMKQFiFwAp+J9hLm6aYQUNltmNCjBpxKauKcqTA=;
+ b=GjbywmL0Vd0/J9xqsoLWNuA3WrJrD0Jyz0/mDyiUpzylTChQCrTji5X5YXVrcTcDTn
+ kJOaC6g6XpfeXHdPS5zvzEdvPF9ngrGNSW+kwxecdi7F9uu5mLq+Mn5e78xxnNlMCoin
+ /SIkxwgOb+ot6JeWA/SZWLdcE1KPNkXy4RZeXZGmoAemjZBMlUqAUNeQJeX/fE2Z5lws
+ r+tP7EbVXoP/heFWYITbq2glfCEfd9uq5ZUdvoxDvwtOBr5e/saPRh/t4IMPRK0mjel6
+ LnFiC0LtkZyAyXi2pcYqheC8wPdJfH7wHKWJQ7f4NtqoblWjzBlwpetchVt5xzQFjEdW
+ u3Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770114279; x=1770719079;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770115476; x=1770720276;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cY+rIj4rJ/0OVDhoBXhH5F0+ZmQpVWsBXHp5HVio4bY=;
- b=hHDYnjyCMtx/pfafQoVCKySqjzbzsmsAM2YYACPIEO86BYBLcxM1OAYe2wh7I26+Z2
- a2Dv9bQE+aVBP579TKSMPDIDmk3C1iskOyRGB1wmO+Uz+2J5cRrAjZKXoggqzeSgIUq3
- actzOg/H5+LUK6ro4DjnnTMWtcf4BJU23Ayr0ww+NUFwsr1hyElzcEmqBZBspF3S7xmq
- cbjy1lRuNprAJQWy3gGEsI9Zrn0a+afZyYVMsn1aHJ/SRlqdKTtExc8jSDDM6TEwucqy
- zA85A1Ppbbh0vUK1yOO1gIatf1Uc9Tp/pyZicJMF5FOCWSTsd2lCGqpGJAKrlljo4RmV
- AAHw==
+ bh=uqHxjMKQFiFwAp+J9hLm6aYQUNltmNCjBpxKauKcqTA=;
+ b=pX+PDAogPnBguAIx9pLZ0NGh2X3l17V7FhuP0VOE1naXgXECf8ddZjK+aU+v0zDOY5
+ AJ+oRuwUNfhC3lO0+F64hxubkVgEuvLCOFCTVy5guwzBmVbiAa8RbiPvn0p89lBh5tVI
+ qr3avEe/q68hKTUwuL+q66cFMxAGaaXOdr3nz2/qq5BatA+PON+OET7KClRsisXS+V93
+ 5iLIbHRhC17Gg4HMd/WrRmm8EiLN7K9NxTKA09vo0IVKD8GouCMSIKJD2Qu/ywmL19p6
+ qkuHusJoirUnuYxc++4E5dhLDX3S7+GRi9wGwBNVTsqzcTEm79z6TQnZh1HxO5TJR51b
+ TIrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBVAVnHiwHKx/Nu7dV2bV9B1nkQxnk+Dd8gSbIuk6Cm9Kwke6rrRtJi9hpZWLgj3x8p2fesUUcz8J2@nongnu.org
-X-Gm-Message-State: AOJu0YxsE4SOfNj84FMjdTrsk5SccJBeUKbqJwwUs8mscbS3ONEUs4jS
- A+RtOlwjUJLQKKsMXVYVMGWZVnWHIs5ZL8Xsw6NyANFzfumKDQkoPAmKBbExCP/0jTw=
-X-Gm-Gg: AZuq6aI2v84TWnFtjbDmxEY45KR89aOv2/mffGdAgiva3mbmunFUIBjFwJr+bEmiykS
- HsvN2b/utFOyjNwLYCCMIMDSph3ax+6ASkMjs8tPWaHVJmi/vrIzrsxQ/QV6HMBOVFmgkYwzX6N
- KPwAAXvybHExPLYr06gnnUBnDSD9r9pbOG1BsF/7nULZxchVrZ5wScQOCl90Qt5+4PmlIwXK0Gr
- 04844idxFHdaDzZFtHEgRev7f7hYkZgR/sHoO9hM3ke6CENE0A7s/rtRkuNRFpGuhjNfG76iz4S
- qsbwiRcPjgA/7whGcT0ERYlh+UsPmFGA2ne9uhYSZ5ry2440wSkUA1H7nPxUeYCGWI6eDN6HdGL
- aTe2whz5XiNhU/7FyLv2+TGPlVhux4RdWh8ZxzLq/wCEc31FzagQW97p3PQbBOyWh5FH/7QD+dR
- kYcl+VqRyeYtfRo0Fi2PMbkgHIbolA73xKj3CIygoxEpI/6rBYXJiwDA==
-X-Received: by 2002:a05:600c:c04b:10b0:482:eec4:74c with SMTP id
- 5b1f17b1804b1-482eec4094fmr110497305e9.22.1770114278608; 
- Tue, 03 Feb 2026 02:24:38 -0800 (PST)
+ AJvYcCUbZooPUmOBDuPhVtOYYgZkHm+NWfJQevOV1uZufeXOJHVvVWHv+4hImzo8zxYsjPd4T1MckjLf5rId@nongnu.org
+X-Gm-Message-State: AOJu0YwiKIG/1pD6tIDozTAk+i7piMQ0Xcfhaei8ZvMvb8+k1bukrXMO
+ AkCwEnkMbRdbiQTg38wPxLlitKL9B3pHL2FyJ3UUFRjrTDcVxBJbdShmNTY2qn0q9wc=
+X-Gm-Gg: AZuq6aLMDq60i26MdFMfpEJHXranrwIpsyqFc6Vv6lsjUclMpVDjunBWILLoRkfLMva
+ HXI+IWQFgCSAkcVduRPKb4DGV0a8rvF7brYz11bI9btpv15Vp2xb0YDy+3RulJu2W+gOsXFuRrs
+ 3/maxl2DzzLxm4mWt81qhuYAQld695o2bWBCYaivWHVUXD04N2JG30XqeWqe7qwoBsS5Z9f1vD7
+ fk7sHXWZSetFEOzh4RDrAf5eSwIGFdc0oDQ3G+Q92IZmujyO+SAFaEKL/DSmJUhvQeAsNzHahza
+ dqpnKVFzSGDWTee4Fo6+ouh+yL5Is1WOKlgjbWXjojkFAujomkAEQqX0Kpl+QrM6FskZgs8CUu1
+ 7KljCWliIXZwSOnSQCuPt3boNkToXbR0AAKoXBAB9+Ewr6JvvwKI5Vph4i0p/HLW7WCM1m3MKGl
+ xvJ0yQUaHwlwi/geRSVeYhFFB9Yz47lyV5yllz33FPYp2OkvJid2FUWQ==
+X-Received: by 2002:a05:6000:18a8:b0:435:9a50:bbb4 with SMTP id
+ ffacd0b85a97d-435f3abb517mr19878391f8f.59.1770115475885; 
+ Tue, 03 Feb 2026 02:44:35 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48305153842sm56335955e9.10.2026.02.03.02.24.37
+ ffacd0b85a97d-435e132303fsm51413156f8f.36.2026.02.03.02.44.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 02:24:38 -0800 (PST)
-Message-ID: <8c813812-40c7-43b4-b796-b4ec7003484b@linaro.org>
-Date: Tue, 3 Feb 2026 11:24:36 +0100
+ Tue, 03 Feb 2026 02:44:35 -0800 (PST)
+Message-ID: <92098ac5-9d77-4067-94fa-6395ef419925@linaro.org>
+Date: Tue, 3 Feb 2026 11:44:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Fix iotlb_to_section() for different AddressSpace
-To: Michael Tokarev <mjt@tls.msk.ru>, Jim Shu <jim.shu@sifive.com>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260128063907.2066100-1-jim.shu@sifive.com>
- <b813fff4-3ea9-4712-9878-4c81aff6b0a5@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 04/11] hw/virtio: Use
+ VirtIODevice::access_is_big_endian field
 Content-Language: en-US
-In-Reply-To: <b813fff4-3ea9-4712-9878-4c81aff6b0a5@tls.msk.ru>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
+ <npiggin@gmail.com>, qemu-ppc@nongnu.org
+References: <20260201232924.93399-1-philmd@linaro.org>
+ <20260201232924.93399-5-philmd@linaro.org>
+ <20260202024316-mutt-send-email-mst@kernel.org>
+ <87bji7pa2e.fsf@draig.linaro.org>
+ <20260202105847-mutt-send-email-mst@kernel.org>
+ <20260202185233.GC405548@fedora>
+ <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1c0fc67a-1ded-4200-b9d0-e20a06cb5b4b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,33 +114,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/26 09:05, Michael Tokarev wrote:
-> On 1/28/26 09:39, Jim Shu wrote:
->> Current 'iotlb_to_section()' API only finds the sections from CPU's
->> AddressSpace but not other AddressSpaces. However, If address space
->> translation is over IOMMUMemoryRegion, like ARM MPC device, it could
->> return section from other AddressSpaces, which will break
->> 'iotlb_to_section()'.
->>
->> To fix this bug, store complete MemoryRegionSection pointer in
->> CPUTLBEntryFull, and we can directly use section pointer in it w/o need
->> of 'iotlb_to_section()' API.
->>
->> Besides ARM MPC device, the upcoming RISC-V wgChecker [1] and RISC-V 
->> IOPMP [2]
->> devices also require this bugfix.
+On 2/2/26 20:25, Pierrick Bouvier wrote:
+
+> My initial testing showed a 50% slow down, which was more than 
+> surprising. After profiling, the extra time is spent here:
+> https://github.com/qemu/qemu/ 
+> blob/587f4a1805c83a4e1d59dd43cb14e0a834843d1d/target-info.c#L30
 > 
->  From the description it feels like this patch series should NOT be
-> picked up for qemu-stable, since while the bug is here, but it only
-> happens in a very specific narrow case, and the fix is rather involved.
-> 
-> Please let me know if I still should pick this one up for qemu-stable.
+> When we merged target-info, there have been several versions over a long 
+> time, and I was 100% sure we were updating the target_info structure, 
+> instead of reparsing the target_name every time. Unfortunately, that's 
+> not the case. I'll fix that.
 
-No, you are right, the issue this patch fixes isn't yet reachable by
-our current code, so not useful for the stable releases.
+We (Richard, you, myself) knew this patch was bad performance wise, but
+back then it was decided to be good enough for the first conversion of
+build-time target specific definitions to runtime methods.
 
-> P.S.  This is for the first time when I'm asking if a change
->        is *not* for stable :)
-
-:)
+As a second step, Richard asked for the target-info.c file to get
+absorbed with page-vary-common.c, compiling it with CFLAG=-fno-lto.
+This wasn't a priority until TargetInfo API got involved in hot path.
 
