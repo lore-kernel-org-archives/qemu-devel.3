@@ -4,147 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE80E87845
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 16:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC26FE87845
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 16:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnJFx-0001MO-FK; Tue, 03 Feb 2026 11:28:01 -0500
+	id 1vnJKd-0003Wc-EZ; Tue, 03 Feb 2026 11:32:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnJFv-0001LX-UL
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:28:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnJKW-0003V8-R6
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:32:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnJFt-0003Fy-Ur
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:27:59 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnJKV-0005oE-Ex
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 11:32:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770136077;
+ s=mimecast20190719; t=1770136361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U2bOva1H3SkdmmRfsXLDoXqAJuO+xOxjm1PpnHaChhU=;
- b=d1yaLyxZefnjGpLhul+Mm7+k7BmBpQU900nphsChfI8fy9PJ0dNP4x8L3t+LCFsAD1iiyZ
- GUuehr/05I2/KKkiIK9rqVNLM06zmR5+RBXtxCUmtw+a8hqP5Z0wuNnDljLjdJy7M54ZfQ
- 618Ers90PPzJnwxNIOoIk4o1UnJx+cU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=owGj0OJ2wCHGfsqeNdhXTREIrZPWZ7iLe7nJQieUIZI=;
+ b=RIlx7ISOFKuipIj9d0aSnSgCFqkYW7b35dnes9u0ivR1boMLx2mONyMooP+PsEhoU/RD3z
+ DUtBbfLPlpLRPUR4T95G62/9YvbrBybUFqSPle6yYun1zgdyhEqY7Iajv3C5N156keN8ya
+ xuCmMVqnnHVloTpDqrM3bgz5IZ765Io=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-wqYjc3cgPNK7GWELSUZnoA-1; Tue, 03 Feb 2026 11:27:55 -0500
-X-MC-Unique: wqYjc3cgPNK7GWELSUZnoA-1
-X-Mimecast-MFC-AGG-ID: wqYjc3cgPNK7GWELSUZnoA_1770136074
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-431026b6252so5839646f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 08:27:55 -0800 (PST)
+ us-mta-458--xIdUjsmNQea0TLexarIiA-1; Tue, 03 Feb 2026 11:32:39 -0500
+X-MC-Unique: -xIdUjsmNQea0TLexarIiA-1
+X-Mimecast-MFC-AGG-ID: -xIdUjsmNQea0TLexarIiA_1770136358
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48069a43217so64581805e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 08:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770136074; x=1770740874; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=U2bOva1H3SkdmmRfsXLDoXqAJuO+xOxjm1PpnHaChhU=;
- b=FYMqhGGKWcXmkV9hsOuCec/8ACtbXH5sTF2du4ylmq2Z6IRMMkAVdbxxSMXcB8JDhM
- zZnEp16qcMClC6xv5fb2IiReU/vWKQpRmC0smWEFbqRtRr2xxQ2x0BRMiQ4vS4pLBL/t
- HnDe8qeD2hC61fJltMoDfn4DnO59AuqnYdGSqQYVe66XQz8hZwpiIbB8oHsJ1acTPU6o
- O4ZrUDh4UfNgZsvUGjGGnYX/V3HzmsH1Nes+JgtBy87Tu8cRR/ks954yxkYGHT23NtSH
- 2A90+i0I1BPjQiMR6CQUKnkuNUl380IVnbEPzO5ogDSIqxdVKZEy7johieHysXMPsaiO
- UUUg==
+ d=redhat.com; s=google; t=1770136358; x=1770741158; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=owGj0OJ2wCHGfsqeNdhXTREIrZPWZ7iLe7nJQieUIZI=;
+ b=eq89xzHvNXoSZCxbpRFwdBfhCOBJjXJt3rsl6DJDEHSDErPfisGBcgZ/MWK08AsNLf
+ kokxjjA0TZlQiA25BlAgmSR1wt1B8uGnSZhmdDuIfFhYyWaMqVtaCnGYbuvBdE3XphnZ
+ dOyhmVJGS7hwNV+0+tAQXudw/NDtcL48nrT6IMsQeE+i73Wc1c2x0zkvou+Q9efP/NVp
+ QG9EBDxH8WYQCj0QaHqOg73MUMPjwkSpCs0C7sMtAIGbpapTExfuRymsxJ8rGJ6dMYVo
+ yzgyCOc5jbAXs2GVhJ6qKye/i5yYoiscGDRs4XNC5uKAFVWLbl7W3GcGtuTHz0GH6acO
+ YHkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770136074; x=1770740874;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U2bOva1H3SkdmmRfsXLDoXqAJuO+xOxjm1PpnHaChhU=;
- b=KpDeqOE17qcYX1EzuKDLmAshOSEgyWt3HnuKaYqeBrZpleus5dXE4I23bjchI457y3
- XkGK0yeXZbF8XVSPqrFGkpJuGhsW0/VOxlCQqCvtjPTTaxKon2DxrZSf9zdzrg2Hbmha
- KmJkEYDV/gTyyv/Hc4ZAh5EWlP/B7PnLACZscr0cVpB3m9ptfUMsGrWQHSU6E7KAQ0//
- jkvURUqKK3jBKz0uMhLAPJnDrztYTp/c6G4cinAnEqAf+bqDxQff+gTjO0hwXxmclay2
- 0DQNN6GETS7J+WDKNwgzOK5+sOXdu+W12qfLF9Uj86dswe4teIpnGcu97R36qlCL42CJ
- d+7Q==
+ d=1e100.net; s=20230601; t=1770136358; x=1770741158;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=owGj0OJ2wCHGfsqeNdhXTREIrZPWZ7iLe7nJQieUIZI=;
+ b=pPIhzwyXP0lnG3BJgdBCYL4MFfdJWrZxEb+uXbsHPO/ZX+wYA+oD6Tqa1EFhoixII4
+ T6amEeoXd/L5MZLyNfMuTTplYYKcvoNQfmI9FORvLrzqgjW68kBF601cr0AZ/KhKf3av
+ 8F8Ee4orLbxTq+Mnu1LRxHbFq7qv7EAErpt78RxAl+l3sWPEZIaXZjkrhFET7U7a61b7
+ zUFO8rM6WKGuuVJiuv8F4mlZuB5V5LMGIHgMEljmoSBIyQppTVtqIuZQexb1B4TOW7Gl
+ p1XHDY/FiR9/yhVs40jlaWgBdpoenvIWHqPEhZ/jJEPHeLQtjez1EU3xJOQ/1BaKSGGB
+ MPew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUU9rxSiUHi6ydS1qvOXHwYFbPiXol8uk5g8DglXqWsVN8iqBBKh8sEt+yHNJc0U0w4IT1bthal/782@nongnu.org
-X-Gm-Message-State: AOJu0YzxSxPZwh9+9un3vJcjaXqyZWk6VJrLesDom8u1Rw3+osenpcmq
- 87QzLhXGtU83NcH7aksR3nCd9ulIziapYKcO3a42eFYb2XsqBYsoacNF2PlIJGdtIlyhlA+EZI5
- EHWY0m8R5iPIVJrKWuVvUsYjca4Qrb8HhIuB5va6feFmIfEVFtXIEB/yK
-X-Gm-Gg: AZuq6aKgxqcI+cv8B1z7fGhCktrUUMXzwtZCzEbFJeHnmkb6VXV2SchiK0Tl6bysl05
- s40OXgnRpoPtxoAHnLZZ7HwaYjYBrLwKVzuxovWbG5zjhrBmlBq9MnxEpFrppLnATDlFjbkXw0/
- OB9yEW+a9Ro6am8FUNrWmzEShZcNd1R3/YygZJ8WE7vCzTsf7e38Z0gy5nV9QisrP6h0qc0ACde
- ks4EAwbUCNVRoyUjW4J7xca/5YZJEfBii+Iv6T83kJUYcbQf6PoJh9asRZmeyHT0JYTwrY8oHGN
- 4TjsKb9d2VIGVgvtYur0NLBVw2VMp62+1i9WRDnYjdvHh2lUFiV63SvrcgAQOk538pi5Icg2lK4
- XmaGzI9U3GIOxj4zUkgaEUUPkDqhBKN6LJGbxVxspOHCU3ATM
-X-Received: by 2002:adf:ffce:0:b0:435:e440:f518 with SMTP id
- ffacd0b85a97d-435f3abb472mr20197964f8f.54.1770136074074; 
- Tue, 03 Feb 2026 08:27:54 -0800 (PST)
-X-Received: by 2002:adf:ffce:0:b0:435:e440:f518 with SMTP id
- ffacd0b85a97d-435f3abb472mr20197927f8f.54.1770136073524; 
- Tue, 03 Feb 2026 08:27:53 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCWMHRi0OGWZZirrd8nE8FE4YR63MIl0/cjkyEzfYe6u+TpFznuyLcfec9APM82CryCDiM8orrVWN5Wo@nongnu.org
+X-Gm-Message-State: AOJu0YyUfnnLOCKmolc9SDNxEzYkfT+avHXFNOtCPzyN4W/HoDOd69P7
+ I9Aa3NlmVYPW3UE/9lIGC25Jq4ZHQ75xueEZEGO5Ba9T/g2xaJEra0jmtklVw5B4JVNSgMdLKVg
+ R20KQ5m3HIlhVnxNpLih3gunCC/p2uGzvNab2GjDiCcNEUi4pBPXFK47q
+X-Gm-Gg: AZuq6aJ+kti1G/55qSqM0SjwStNLwjOUDhCVgvugs0W+zimdIgf2WfBOf/mEWNwzJ2p
+ +rDjdkLFlw6pPNhtIbjWv6su4CZUspC07Nfy7p5QKVLZcRZMLzPvU12IYnCZ6B/0mnGyzdA/qqU
+ Y3uI+mn3jO3fNum+MpQvx7HjhKUkk/VGyVCjPDOtFud1cwmFcn2I2xECkLNqQJyYvmL2ajNlLEO
+ w/hu7zONL0PnFioT1JNBfAcMX8CW9B/xSFlYjWOakBYh4m8uCOZ+/PPHAiiJRF+E+pItzyFyx9v
+ /29DxA1P43BLWx4VIdM5Ss1nGlQuEdwFtYOrQDjwLBIFOvAXMnmkyBeVhdDAmnECCXjSvYVZdPP
+ fdkfWC8Paw5Txjop16i0wJdnJBdz8qIUmuw==
+X-Received: by 2002:a05:600c:1f08:b0:480:68ed:1e73 with SMTP id
+ 5b1f17b1804b1-4830e98fa7fmr2683675e9.36.1770136358279; 
+ Tue, 03 Feb 2026 08:32:38 -0800 (PST)
+X-Received: by 2002:a05:600c:1f08:b0:480:68ed:1e73 with SMTP id
+ 5b1f17b1804b1-4830e98fa7fmr2683215e9.36.1770136357850; 
+ Tue, 03 Feb 2026 08:32:37 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cfd4sm50663463f8f.25.2026.02.03.08.27.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 08:27:52 -0800 (PST)
-Message-ID: <baab949a-b413-4197-9659-d1e6b8232966@redhat.com>
-Date: Tue, 3 Feb 2026 17:27:52 +0100
+ 5b1f17b1804b1-4830ead1973sm515725e9.5.2026.02.03.08.32.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 08:32:37 -0800 (PST)
+Date: Tue, 3 Feb 2026 11:32:34 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Marc Morcos <marcmorcos@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH 0/4] Clean up TSAN warnings
+Message-ID: <20260203113137-mutt-send-email-mst@kernel.org>
+References: <20251213001443.2041258-1-marcmorcos@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
- PRE_COPY_P2P transition
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
-References: <20260202173406.13979-1-avihaih@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260202173406.13979-1-avihaih@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251213001443.2041258-1-marcmorcos@google.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -169,162 +124,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/2/26 18:34, Avihai Horon wrote:
-> The VFIO_MIGRATION event notifies users when a VFIO device transitions
-> to a new state.
-> 
-> One use case for this event is to prevent timeouts for RDMA connections
-> to the migrated device. In this case, an external management application
-> (not libvirt) consumes the events and disables the RDMA timeout
-> mechanism when receiving the event for PRE_COPY_P2P state, which
-> indicates that the device is non-responsive.
-> 
-> This is essential because RDMA connections typically have very low
-> timeouts (tens of milliseconds), which can be far below migration
-> downtime.
-> 
-> However, under heavy resource utilization, the device transition to
-> PRE_COPY_P2P can take hundreds of milliseconds to complete. Since the
-> VFIO_MIGRATION event is currently sent only after the transition
-> completes, it arrives too late, after RDMA connections have already
-> timed out.
-> 
-> To address this, send an additional "prepare" event immediately before
-> initiating the PRE_COPY_P2P transition. This guarantees timely event
-> delivery regardless of how long the actual state transition takes.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
-> Changes from v2 (https://lore.kernel.org/qemu-devel/20260201122348.28478-1-avihaih@nvidia.com/):
-> * Renamed prepare-pre-copy-p2p to pre-copy-p2p-prepare
-> * Renamed prep parameter to prepare in mig_state_to_qapi_state() and
->    vfio_migration_send_event()
-> * Added short explanatory comment before sending the prepare event in
->    vfio_migration_set_state()
-> * Explicitly used VFIO_DEVICE_STATE_PRE_COPY_P2P as parameter for
->    vfio_migration_send_event()
-> 
-> Changes from v1 (https://lore.kernel.org/qemu-devel/20260128105159.10282-1-avihaih@nvidia.com/):
-> * Removed VFIO_MIGRATION_PREPARE event and instead added a new
->    PREPARE_PRE_COPY_P2P state which is sent before PRE_COPY_P2P
->    transition
-> * Added details to commit message
-> ---
->   qapi/vfio.json      | 13 +++++++++++--
->   hw/vfio/migration.c | 26 +++++++++++++++++++-------
->   2 files changed, 30 insertions(+), 9 deletions(-)
+On Sat, Dec 13, 2025 at 12:14:39AM +0000, Marc Morcos wrote:
+> When running several tests with tsan, thread races were detected when reading certain variables. This should allieviate the problem.
+> Additionally, the apicbase member of APICCommonState has been updated to 64 bit to reflect its 36 bit contents.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks,
+Doing a sweep over old threads, Paolo iiuc you will be
+fixing it all up differently, yourself?
 
-C.
-
-> diff --git a/qapi/vfio.json b/qapi/vfio.json
-> index a1a9c5b673..17b6046871 100644
-> --- a/qapi/vfio.json
-> +++ b/qapi/vfio.json
-> @@ -11,7 +11,13 @@
->   ##
->   # @QapiVfioMigrationState:
->   #
-> -# An enumeration of the VFIO device migration states.
-> +# An enumeration of the VFIO device migration states.  In addition to
-> +# the regular states, there are prepare states (with 'prepare' suffix)
-> +# which indicate that the device is just about to transition to the
-> +# corresponding state.  Note that seeing a prepare state for state X
-> +# doesn't guarantee that the next state will be X, as the state
-> +# transition can fail and the device may transition to a different
-> +# state instead.
->   #
->   # @stop: The device is stopped.
->   #
-> @@ -32,11 +38,14 @@
->   #     tracking its internal state and its internal state is available
->   #     for reading.
->   #
-> +# @pre-copy-p2p-prepare: The device is just about to move to
-> +#     pre-copy-p2p state.  (since 11.0)
-> +#
->   # Since: 9.1
->   ##
->   { 'enum': 'QapiVfioMigrationState',
->     'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
-> -            'pre-copy', 'pre-copy-p2p' ] }
-> +            'pre-copy', 'pre-copy-p2p', 'pre-copy-p2p-prepare' ] }
->   
->   ##
->   # @VFIO_MIGRATION:
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index b4695030c7..4bd8e24699 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -68,7 +68,7 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
->   }
->   
->   static QapiVfioMigrationState
-> -mig_state_to_qapi_state(enum vfio_device_mig_state state)
-> +mig_state_to_qapi_state(enum vfio_device_mig_state state, bool prepare)
->   {
->       switch (state) {
->       case VFIO_DEVICE_STATE_STOP:
-> @@ -84,15 +84,17 @@ mig_state_to_qapi_state(enum vfio_device_mig_state state)
->       case VFIO_DEVICE_STATE_PRE_COPY:
->           return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
->       case VFIO_DEVICE_STATE_PRE_COPY_P2P:
-> -        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
-> +        return prepare ? QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P_PREPARE :
-> +                         QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
->       default:
->           g_assert_not_reached();
->       }
->   }
->   
-> -static void vfio_migration_send_event(VFIODevice *vbasedev)
-> +static void vfio_migration_send_event(VFIODevice *vbasedev,
-> +                                      enum vfio_device_mig_state state,
-> +                                      bool prepare)
->   {
-> -    VFIOMigration *migration = vbasedev->migration;
->       DeviceState *dev = vbasedev->dev;
->       g_autofree char *qom_path = NULL;
->       Object *obj;
-> @@ -106,8 +108,8 @@ static void vfio_migration_send_event(VFIODevice *vbasedev)
->       g_assert(obj);
->       qom_path = object_get_canonical_path(obj);
->   
-> -    qapi_event_send_vfio_migration(
-> -        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
-> +    qapi_event_send_vfio_migration(dev->id, qom_path,
-> +                                   mig_state_to_qapi_state(state, prepare));
->   }
->   
->   static void vfio_migration_set_device_state(VFIODevice *vbasedev,
-> @@ -119,7 +121,7 @@ static void vfio_migration_set_device_state(VFIODevice *vbasedev,
->                                             mig_state_to_str(state));
->   
->       migration->device_state = state;
-> -    vfio_migration_send_event(vbasedev);
-> +    vfio_migration_send_event(vbasedev, state, false);
->   }
->   
->   int vfio_migration_set_state(VFIODevice *vbasedev,
-> @@ -146,6 +148,16 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
->           return 0;
->       }
->   
-> +    /*
-> +     * Send a prepare event before initiating the PRE_COPY_P2P transition to
-> +     * ensure timely event delivery regardless of how long the state transition
-> +     * takes.
-> +     */
-> +    if (new_state == VFIO_DEVICE_STATE_PRE_COPY_P2P) {
-> +        vfio_migration_send_event(vbasedev, VFIO_DEVICE_STATE_PRE_COPY_P2P,
-> +                                  true);
-> +    }
-> +
->       feature->argsz = sizeof(buf);
->       feature->flags =
->           VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
+> Marc Morcos (4):
+>   apic: Resize APICBASE
+>   thread-pool: Fix thread race
+>   qmp: Fix thread race
+>   apic: Make apicbase accesses atomic to fix data race
+> 
+>  hw/i386/kvm/apic.c              | 12 ++++++++----
+>  hw/intc/apic_common.c           | 24 ++++++++++++++----------
+>  include/hw/i386/apic_internal.h |  2 +-
+>  monitor/monitor.c               | 11 ++++++++++-
+>  monitor/qmp.c                   |  6 ++++--
+>  util/thread-pool.c              | 30 ++++++++++++++++--------------
+>  6 files changed, 53 insertions(+), 32 deletions(-)
+> 
+> -- 
+> 2.52.0.239.gd5f0c6e74e-goog
 
 
