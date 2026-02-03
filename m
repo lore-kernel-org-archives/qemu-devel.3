@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B821E7FDF3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 01:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94035E7FDF3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Feb 2026 01:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vn4x8-0000CR-37; Mon, 02 Feb 2026 20:11:38 -0500
+	id 1vn50p-0002Bf-VV; Mon, 02 Feb 2026 20:15:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn4x5-0000Bs-Tp
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 20:11:36 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vn50j-0002Ao-1j
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 20:15:26 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vn4x4-0007YM-9s
- for qemu-devel@nongnu.org; Mon, 02 Feb 2026 20:11:35 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a09a3bd9c5so35455625ad.3
- for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 17:11:33 -0800 (PST)
+ id 1vn50e-0000K1-2H
+ for qemu-devel@nongnu.org; Mon, 02 Feb 2026 20:15:17 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3530f597ea3so2125397a91.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Feb 2026 17:15:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770081092; x=1770685892; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770081313; x=1770686113; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2wTD9C7g1r4Qt9O4glRCThVykt+z6nyaT3Yx8fjx5iY=;
- b=eIimSYXlxrHaTTKmplTijnOQ4j0qQxRs8eUkVX4MF0nZtaAAAS25y5BVUUuB5GS+nS
- kPKKCgCmvhdYngqEZXK9PG04zLiJpeMuNIijdCT08x5IcKm9pkDWrcaiqvHHETnII6pH
- w5ISNS7TG2dTHGpEkSEnyFcReNf3xmG321aNEJn2JJHusTZBWhrKWQ7maFkE7Rz6rjyR
- VmOdUPvINA35W5H4vrHpeBagKB1AfPAzuD//Bx5vPMnl2z1vsNzfYSK2+ZT/pVN0ubuI
- 8z+aV0mLOSWcLK5kU/BvXhL4c/pPki8vL7lg/ROArD561+jw/ZR7j+NPIjhw1Oe1YnF5
- xDVQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hUL/tekxYZTVlaXybo6qNTHFQdXyKb3ZbeZaLq9CcUQ=;
+ b=USDHym31JaHBuAxqJnLC7SY1DJKyrK201YVGoWU8P7huG+XRNTAp0HOyiRzzaxQQbR
+ mw5HbkZouBAD8uNLTT0S85AQRIIFPMI/oehZHucT/QlbZD7vKXgFJoWLOpr5M/gOHDdo
+ SGlnzImkOeiReXWsPuRcrHMyVQS4/sp2KbQ95w2LSbR2DfiegmaLAOvdG5NE362PpTFu
+ R+7pIofoJhDefRl5eMPurRImhjViqS3wUW/7J7VhutQi2u4/P0roBWE42UwcCLnpH4WC
+ OBr3nEGWaYwjQWnxy6HTfo3NFb+0b/RXWnbT5SuHQ9UXGNOD4GiJt/6WgiU8HrPFl20Z
+ 8ccA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770081092; x=1770685892;
+ d=1e100.net; s=20230601; t=1770081313; x=1770686113;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2wTD9C7g1r4Qt9O4glRCThVykt+z6nyaT3Yx8fjx5iY=;
- b=a/y1pzSgMByBaiapxhOheR1Ww8zu+Fvs7VtZnaLX2+7ZzzARRR7ZNZNrgGq+uw69V/
- Q/RzqoGVjxFZeEBzmSIOv56iykrCIFFs2ETQecDvasZFrzy0laFiIC9sqYFSCl2Z2yLy
- jrahn/lIXkSswZLRitB6Pcnx5hL2T4A+17WPpGDWxaR5LDxrKeQZgPDqzuzod9wTG1AV
- QqjhiOJd8P90Yf005jWfP0jlENr8aQUq38xePey/xYe7eMWLMokXvTEP8wxoA4i2lLtY
- K9nMRzx0z/rLsljpd1rlFaNBBW+3P9OxrvbAfjDJolxEA5Jmaf/5bhGq9vTw9WQP2t9D
- NwzQ==
+ bh=hUL/tekxYZTVlaXybo6qNTHFQdXyKb3ZbeZaLq9CcUQ=;
+ b=tDuA9tnEyfLbTpVpYVZYFgIcf4fYzxndFAMzjQCFCD2PqC6cUgfRpgmo/0/XTSrWnu
+ 9pNNCteGSFUKF8WobtTozllw1pxwwm7HJ3WopWaGdnTje3edzHR4X7kHs38x3XrFlFn2
+ VrX34HKr3KFJQHE+iJojlx1Mruhjc2OcS+r8SsOzrfevnUY7F5rw8mC3x1hSh4hXp1jk
+ qgztrqd2PJ2DCX4zR1DWvo12sRBXogDcXEXJznxIio6RHFe2LczR1Pq+qIfmgg5B7GIN
+ tpq//tZMvumL0RexngqBy07xAeC9A8XR8v0i90+xWOmClvAeBbIQkbQPdg6hjH5zqr9t
+ 26ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBXEPiUYA/eTevdolRz2beCKRfAYVFAAiuNVwp1Yj1L1MYx3PrTGbQOt5R/wgyxcEmC5Y2jnS5K/vD@nongnu.org
-X-Gm-Message-State: AOJu0YxPniY9C94k9QgE9Q3J3QTb5/JX2wpWC9nOwUmOu/iBkgQ7R7RT
- yMLnfnJI9QWEU5zU5Lusgmu+ZehOMCf2jv5Uln/hDihceW8086OfFm02z3s7WQC/5hs=
-X-Gm-Gg: AZuq6aJyIhezTy1/dztWNYGkN2W/f8ZJk3OdM+zYKMEQbf074IdcxMy+/dcGjHtRLwv
- gYYe31sc4Syk9ore9ApHip0tWD6ZwhRHWpOwN2inNjM42qW3LUHpRuTdrJX754AC/y2mEhL/vuX
- NztrbO55JxMlGPXPsfez/bLIRTC85axNglcuGyo35QVDsb25xInQhbP44j1Ag8F0ArYF/TUxR4J
- 4mSrPNgBGBJR4+oFjo32P/TI4lMNYs9aZukr/0PsDliAc6vQc/DWGijz/lULb4R8DYugPD871qy
- rDAgZ46WtgOmL3OpOCuYdG65fEj9kCLJcEjhNzMEOVS3jE0LockgwQgL/oxMSPS0IRw93oCrZcH
- HT0Mwg//aFLbLdvlXuockWBfSx/dP+Qfs/uxV4y/fk72UL/zfhueKXi9L7x7VbmGHbHE5HMRWjC
- izpbUNZDFLfWkosrU6vmZS87qKq7kUc05AGhUEfBZ3tLEaIr9CEU0Z4C4Qp+eeh+3wKSpoVwiD
-X-Received: by 2002:a17:903:a8f:b0:2a7:d729:6a76 with SMTP id
- d9443c01a7336-2a8d9a72230mr140198415ad.60.1770081092430; 
- Mon, 02 Feb 2026 17:11:32 -0800 (PST)
+ AJvYcCWzI6pkxj8vAxkYx2w669CBogImB9fA3ZtJtF9dbiKikgzAiAzM/OsqajGL5FOB7EzIsbOlRPR3HbLr@nongnu.org
+X-Gm-Message-State: AOJu0YwdtNNJJ42DfFSa+KXk3aJsHyxCoH5j4Huph4fNH2SGI0zYHWEy
+ QuXxlVGc2J7KseXlpFXovjwqkNpnEpCEOD8ElSnCI9LOzhIZlgU8yfKQQlqPKQEuFDc=
+X-Gm-Gg: AZuq6aIcUIJOWbXy755Id72PcwCtGUEwQoRq/yytcl7tjW3W5L5QpkyWssGs+1EtTNt
+ qQwC2Xfhi24LFthjNSlgIK+aodhitCopWHBX3UwSE9CEWlhGsRgWnQl2cGIJSKYh+rrpDzyukwI
+ 2+5tHfS6jjcweoKU0H3tQYRSrc8BVe3waE4rP9XWULjDDRWXd1FMZ17LFc2FPGjKJ/gI57UStgw
+ AaJjkqCaVGJ7HqS6tt0qQ3UTQHYb0/BvyzMMi6GQryCDeY4SGS6coDkvGV/NBtxeB7JujRUpX9X
+ fZ15DQoypsJMe96HLOzpp4QQlFnkAEnj6e7SGyVDfDgtk/7/vOv98uHJjQCoqG+sFFfDpz6iK6h
+ ZyN7yhv7BjIZqaTsjbKwaQhTCZZ26VZm07/zlIcl6RIhhrpz+rm0dB3Qmxm40aKnMkkXh7Qd7uy
+ MgpIFuVwBbAmzRv9vJEwPpt5JFC5+iBVPdDZve0Hn/n9+Luce+mOFRNGESBoI+OVWh3NXuTNtBr
+ ctYacB9TTE=
+X-Received: by 2002:a17:90b:2d4c:b0:353:2e1:95f4 with SMTP id
+ 98e67ed59e1d1-3543b308529mr11155524a91.13.1770081312638; 
+ Mon, 02 Feb 2026 17:15:12 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1047:c02f:591b:6a5c?
  ([2401:d002:dc0f:2100:1047:c02f:591b:6a5c])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b4148d0sm159339075ad.27.2026.02.02.17.11.30
+ 98e67ed59e1d1-35477615e26sm622939a91.2.2026.02.02.17.15.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Feb 2026 17:11:32 -0800 (PST)
-Message-ID: <b7f94202-3924-4fa8-88b3-8532c7e886cb@linaro.org>
-Date: Tue, 3 Feb 2026 11:11:27 +1000
+ Mon, 02 Feb 2026 17:15:12 -0800 (PST)
+Message-ID: <7b65cfff-3255-4fc7-b151-80ab284dbc1e@linaro.org>
+Date: Tue, 3 Feb 2026 11:15:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] Misc HW & Memory API patches for 2026-02-02
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260202212019.94205-1-philmd@linaro.org>
+Subject: Re: [PATCH v2 1/3] accel/tcg: Send the CPUTLBEntryFull struct into
+ io_prepare()
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>
+References: <20260128152348.2095427-1-jim.shu@sifive.com>
+ <20260128152348.2095427-2-jim.shu@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260202212019.94205-1-philmd@linaro.org>
+In-Reply-To: <20260128152348.2095427-2-jim.shu@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +114,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 07:20, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 587f4a1805c83a4e1d59dd43cb14e0a834843d1d:
+On 1/29/26 01:23, Jim Shu wrote:
+> To let io_prepare() function use the multiple members in
+> CPUTLBEntryFull struct, send the full struct instead of 'xlat_section'
+> member as the argument.
 > 
->    python: fix msys64 wheel directory specification (2026-02-02 16:46:40 +1000)
+> It is the preliminary patch of next commit.
 > 
-> are available in the Git repository at:
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> ---
+>   accel/tcg/cputlb.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 > 
->    https://github.com/philmd/qemu.git tags/hw-misc-20260202
-> 
-> for you to fetch changes up to d8316b64dfbb4fdb706f20c3b42fd9bcf70b0cdc:
-> 
->    monitor: Reduce target-specific methods (2026-02-02 22:14:51 +0100)
-> 
-> Ignoring this checkpatch.pl error:
-> 
->    ERROR: unnecessary whitespace before a quoted newline
->    #85: FILE: tests/unit/test-cutils.c:3685:
->    +            "s is \n";
-> 
-> ----------------------------------------------------------------
-> Misc HW & memory API patches
-> 
-> - Add unit test for qemu_hexdump()
-> - Remove legacy native endianness API uses on the Alpha target
-> - Remove unused memory_region_init_rom_device_nomigrate()
-> - Fix use-after-free in NvmeNamespace "bootindex" suffix
-> - Correct documentation of SCSI Rotation Rate field
-> - Make iotlb_to_section() work with non-CPU AddressSpaces
-> - Reduce few monitor target-specific methods
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 6900a126827..82c9b6389dc 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1270,14 +1270,14 @@ static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
+>   }
+>   
+>   static MemoryRegionSection *
+> -io_prepare(hwaddr *out_offset, CPUState *cpu, hwaddr xlat,
+> +io_prepare(hwaddr *out_offset, CPUState *cpu, CPUTLBEntryFull *full,
+>              MemTxAttrs attrs, vaddr addr, uintptr_t retaddr)
+>   {
+>       MemoryRegionSection *section;
+>       hwaddr mr_offset;
+>   
+> -    section = iotlb_to_section(cpu, xlat, attrs);
+> -    mr_offset = (xlat & TARGET_PAGE_MASK) + addr;
+> +    section = iotlb_to_section(cpu, full->xlat_section, attrs);
+> +    mr_offset = (full->xlat_section & TARGET_PAGE_MASK) + addr;
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
+attrs is also present in CPUTLBEntryFull; you can also drop that parameter.
+
 
 r~
 
