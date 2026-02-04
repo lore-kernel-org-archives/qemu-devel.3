@@ -4,59 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F49DE9D41F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC07E9D41E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnglP-0008Fj-GW; Wed, 04 Feb 2026 12:34:03 -0500
+	id 1vnh4d-0002zz-8x; Wed, 04 Feb 2026 12:53:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vnglO-0008FK-45
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:34:02 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vnh4b-0002zn-QV
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:53:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vnglL-0005sx-Qt
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:34:01 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f5nW90nMTzJ46Zw;
- Thu,  5 Feb 2026 01:33:09 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 70FEC4056A;
- Thu,  5 Feb 2026 01:33:58 +0800 (CST)
-Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 4 Feb 2026 17:33:57 +0000
-To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Arpit Kumar
- <arpit1.kumar@samsung.com>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
- <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: [PATCH qemu v5 3/3] hw/cxl: Add Physical Port Control FMAPI Command
- (Opcode 5102h)
-Date: Wed, 4 Feb 2026 17:32:23 +0000
-Message-ID: <20260204173223.44122-4-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
-References: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vnh4a-0001rD-1B
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:53:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770227630;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3QNvYk0XPIL7Ls1MY/pVeHgd6/wtVq/1DJM0sMJkxpU=;
+ b=JrogF2R4AuzL77L3bbfH7zjf6TplYLOFy3Mn/ZLNpZBLdeuuCQN7Ry3EijIy7ryURJTwJa
+ I6eekj0/L81PQMoWhcPeBmVF7cKrbPJFK994p2LRlrDuLuFaFSABi1th7JpenCXKcckqkD
+ +wdi4LSAXY0IWJKxm8wPdgYK0lqVkJ8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-416-Uz2vOcIwOsuVFyLbHnEhrg-1; Wed, 04 Feb 2026 12:53:49 -0500
+X-MC-Unique: Uz2vOcIwOsuVFyLbHnEhrg-1
+X-Mimecast-MFC-AGG-ID: Uz2vOcIwOsuVFyLbHnEhrg_1770227628
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-432db1a9589so105192f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 09:53:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770227628; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CASXTUd7OdmYgHSWxzjQz3uqflh6Eqgwf5SZpSqk1oTgMe4ARabu4iR14mdEiHzcLs
+ bocrYD2AYr7jKKvs3V9sXGHnYm++RmB0D/YgJ6poh+OjklXZjaOlHxydXQRNk7CD2+/A
+ XQHqwSs3KJZbSTslPgjYqhafZeEnDW66NogZ3maM04DLKajJlh66/RO5L+oL4Z4inzWl
+ 3DT1UH3A6E7cxaD2MMTWsqtYzDGXDKJ0ShNgzl1P6ZjDheCuE2y20W5kY78DODpmkqyo
+ KNHRJlb6BQ9rQGhC5OlZ2YwnGqbH3KXqEe2VfbhS5SH5E/iuk+WGs2ru7aqYFgMXqYPa
+ b7yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3QNvYk0XPIL7Ls1MY/pVeHgd6/wtVq/1DJM0sMJkxpU=;
+ fh=Aqbdj/jSz5Po3e1fl7F41zRPtpJ1ExtfkaWo4ELQX9M=;
+ b=BHRlhXzN8xsL9q/37YoALrA31+gGqxFFiEU6q4hCWTg9Os+xyOxaOLsN0dUVAJSDcm
+ bHKyXkQxScroLn45cbTsB7yHsne0VM3mAEqSCn/+SDbtQkgDn3CtoRx1z89ePDvhL4Ek
+ zIsZSqzdg9qm+qI6wkPSIslwrM0PDoxv13N+G1bhYQgZj4hReiwdG75NwAS8Dgp7LIpT
+ 5jCBHRNHDxLA2CtvRlC06Y8zMS4Liy703PWwxO8yZlbDD5au9uuy7VYTN7pbKKfok7eS
+ eM4ZHjkht7Q1v1K9qEAKQtpkYiSBYnS/H4t50tMM6dBXVD4XxkI7okUkr0SixxclaWGw
+ /fKg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770227628; x=1770832428; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3QNvYk0XPIL7Ls1MY/pVeHgd6/wtVq/1DJM0sMJkxpU=;
+ b=fnrN1hIbQ5pZ1mNCZ1uCF3uDdEQQTFZKAdM8A4p463IaK659PCe4SPHaQ9FHWiRy/t
+ DLLiG0yejRBqvnxtosd6QHRy+zoad01LheEKhKvAJY/hEi8Gs7rmU5mp4qlBQYm0DOea
+ 1KLYWPSkk9dMMv6ZVvSpK4iVWw1ihgzf25wbprLT86Ec8OwZWgMXUXk3uRQiFwFO8KTj
+ RRNXWLYoJUWcDVrs1BbmOS4pO3QxFb8/ms5vsDhkXRxDcxEgaJyXp3rkx6WhVLz4NlQS
+ DCcbGT6nJgUba/+dILr1qXsP6ukXGPROABeQYyUpofQq6CcmBKwDL6sHwS6VO/iy706h
+ +f3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770227628; x=1770832428;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3QNvYk0XPIL7Ls1MY/pVeHgd6/wtVq/1DJM0sMJkxpU=;
+ b=LUQuD7w4ctebY+yZqVWPRmOAgi3nFfHTKQjpU63dENy0q0ycwLvCsLfv/dAGWxzlcL
+ PUA90uVpML7WHMLu4aXXhDsc9eQpQ/xI1JNMSHlNom13F+RN92pI7sidYcgPoXCPCtV1
+ KDYMAlH9Oy8mEV5fwRUD+EtClckt1pVIk0o8r5ywq8Lw4C+uxxpUvZa4rgb3UjpuF10g
+ 8ocayonRTKuK35sxvzQxx4OO9jMixmRBAYKRuLaHr2feaHxeOVve31EaTGPIYlqAx/2q
+ yGXBmfAqxUXU0uoMEisEty+oy0vbUmEEbStd+gSh5BfvY+IOZJ1HUJTJVVteBLNHlrCe
+ oBPw==
+X-Gm-Message-State: AOJu0Yw2rde51moRizv3UXxaX4bU592HCcEV1j7U0pfNZCWo5rfC/auT
+ Z3uYubnRE1WdPNgXlGdNT9RxzqxbQtRK+ZFORDE9vlr/n0Och9Okqxi0SewxkcvuCicbb9vLWGw
+ 11HtKDeT+sXTv/7BYthg186U2OVs+2HIIdFpdEys/49lPzG+OX1clp2+UoHmSJPO2BQhFfBvm+f
+ otqSuo/zkOIc+g53WVWeeTPvenZsNALRA=
+X-Gm-Gg: AZuq6aIHyS6YxFtx1hgJUbhTD4eoq6+pTufuY/gttY6JIZgcdKeqBxYFNfkv+w9Fpc6
+ kZnt06c+mrvrFbTeLwtTeslw+teLVPYs1a9W6Ek1QMG4Jhx7dmsmvIHfQHneq6xSWzRiHY5YC1M
+ U3cmHdydpXI1GhY+fzi7xLHfnHnOjY7B8pq7UIUqPU7+YxDP4N0zjWjkqutS1nXNbwl1eTTjpnt
+ w1ornBVI3I+kVfGBNVGTQK1H5hoL+n+Va8tc35qRrWPb0d8JCMvwrrDdfYFWLxz7zZp0A==
+X-Received: by 2002:a05:6000:4008:b0:435:94dc:8c78 with SMTP id
+ ffacd0b85a97d-43618057605mr5702616f8f.40.1770227627898; 
+ Wed, 04 Feb 2026 09:53:47 -0800 (PST)
+X-Received: by 2002:a05:6000:4008:b0:435:94dc:8c78 with SMTP id
+ ffacd0b85a97d-43618057605mr5702579f8f.40.1770227627495; Wed, 04 Feb 2026
+ 09:53:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+References: <20260203203512.672552-1-jsnow@redhat.com>
+ <20260203203512.672552-12-jsnow@redhat.com>
+ <CABgObfYtKr88BvhPUL4KfX464u=T4d7BP70XRLMdn28sXSKU4g@mail.gmail.com>
+ <CAFn=p-bq8siBh0f2bs=x6ZeHQn6y2_2RuwKVnVrH+CvOTe-4ig@mail.gmail.com>
+ <CABgObfYA12a08yXPsn84hX8dv59x7DDDLW0X3u5Cre3od6iMFw@mail.gmail.com>
+ <CAFn=p-aforipvpRhUyLbStYPSRC4Pc0Oadcq8HzT7GzEGL+BnQ@mail.gmail.com>
+In-Reply-To: <CAFn=p-aforipvpRhUyLbStYPSRC4Pc0Oadcq8HzT7GzEGL+BnQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 4 Feb 2026 18:53:36 +0100
+X-Gm-Features: AZwV_Qihu1G79mmYsN2B95lOAZsXx_gWyGfijyZS6Ib0ozeJ7tghzMbmc2XyPYg
+Message-ID: <CABgObfYOYykc+af+HawH9-vVj7vpUikrVPYDmY-ykD8cEVv-TQ@mail.gmail.com>
+Subject: Re: [PATCH v5 11/16] meson, mkvenv: add qemu.git/python/qemu package
+ to pythondeps.toml
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,363 +154,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arpit Kumar <arpit1.kumar@samsung.com>
+On Wed, Feb 4, 2026 at 6:03=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+>> Use whatever is in bookworm or 22.04?
+>>
+>
+> OpenSUSE Leap 15.6 and 22.04 until April
 
-Added assert-deassert PERST implementation for physical ports (both USP
-and DSP's).
+Technically for OpenSUSE we would use py3XX-setuptools;
+py310-setuptools in particular is 67.6. But yeah, 22.04 is the oldest
+at this point and we might as well pick that one for our accepted
+version.
 
-Assert PERST involves bg operation for holding 100ms.
-Reset PPB implementation for physical ports.
+> https://gitlab.com/jsnow/repology-dashboard
+>
+> 44.x
 
-Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
-Co-developed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+And 0.42.0 for wheel.
 
----
-Changes mostly due to dropping refactor that preceeded this in original
-series.
----
- include/hw/cxl/cxl_port.h                   |  20 +++
- include/hw/pci-bridge/cxl_downstream_port.h |  12 ++
- include/hw/pci-bridge/cxl_upstream_port.h   |   2 +
- hw/cxl/cxl-mailbox-utils.c                  | 130 ++++++++++++++++++++
- hw/pci-bridge/cxl_downstream.c              |   9 ++
- hw/pci-bridge/cxl_upstream.c                |   1 +
- 6 files changed, 174 insertions(+)
-
-diff --git a/include/hw/cxl/cxl_port.h b/include/hw/cxl/cxl_port.h
-index 04db60f7bc23..fb2e22a9f2ae 100644
---- a/include/hw/cxl/cxl_port.h
-+++ b/include/hw/cxl/cxl_port.h
-@@ -3,6 +3,8 @@
- #ifndef CXL_PORT_H
- #define CXL_PORT_H
- 
-+#include "qemu/thread.h"
-+
- /* CXL r3.2 Table 7-19: Get Physical Port State Port Information Block Format */
- #define CXL_PORT_CONFIG_STATE_DISABLED           0x0
- #define CXL_PORT_CONFIG_STATE_BIND_IN_PROGRESS   0x1
-@@ -50,4 +52,22 @@
- #define CXL_PORT_LINK_STATE_FLAG_PRSNT            BIT(2)
- #define CXL_PORT_LINK_STATE_FLAG_POWER_OFF        BIT(3)
- 
-+#define CXL_MAX_PHY_PORTS 256
-+#define ASSERT_WAIT_TIME_MS 100 /* Assert - Deassert PERST */
-+
-+/* Assert - Deassert PERST */
-+typedef struct CXLPhyPortPerst {
-+    bool issued_assert_perst;
-+    QemuMutex lock; /* protecting assert-deassert reset request */
-+    uint64_t asrt_time;
-+    QemuThread asrt_thread; /* thread for 100ms delay */
-+} CXLPhyPortPerst;
-+
-+void cxl_init_physical_port_control(CXLPhyPortPerst *perst);
-+
-+static inline bool cxl_perst_asserted(CXLPhyPortPerst *perst)
-+{
-+    return perst->issued_assert_perst || perst->asrt_time < ASSERT_WAIT_TIME_MS;
-+}
-+
- #endif /* CXL_PORT_H */
-diff --git a/include/hw/pci-bridge/cxl_downstream_port.h b/include/hw/pci-bridge/cxl_downstream_port.h
-new file mode 100644
-index 000000000000..1611504c8764
---- /dev/null
-+++ b/include/hw/pci-bridge/cxl_downstream_port.h
-@@ -0,0 +1,12 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef CXL_DOWNSTREAM_PORT_H
-+#define CXL_DOWNSTREAM_PORT_H
-+#include "include/hw/cxl/cxl_port.h"
-+
-+typedef struct CXLDownstreamPort CXLDownstreamPort;
-+CXLPhyPortPerst *cxl_dsp_get_perst(CXLDownstreamPort *dsp);
-+
-+#endif
-diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
-index e3d6a27acc86..dfe01771c7d7 100644
---- a/include/hw/pci-bridge/cxl_upstream_port.h
-+++ b/include/hw/pci-bridge/cxl_upstream_port.h
-@@ -4,6 +4,7 @@
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
- #include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_port.h"
- 
- typedef struct CXLUpstreamPort {
-     /*< private >*/
-@@ -12,6 +13,7 @@ typedef struct CXLUpstreamPort {
-     /*< public >*/
-     CXLComponentState cxl_cstate;
-     CXLCCI swcci;
-+    CXLPhyPortPerst perst;
- 
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index b6ac987ee021..c83b5f90d4d3 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -17,6 +17,7 @@
- #include "hw/cxl/cxl_mailbox.h"
- #include "hw/cxl/cxl_port.h"
- #include "hw/pci/pci.h"
-+#include "hw/pci-bridge/cxl_downstream_port.h"
- #include "hw/pci-bridge/cxl_upstream_port.h"
- #include "qemu/cutils.h"
- #include "qemu/host-utils.h"
-@@ -119,6 +120,7 @@ enum {
-     PHYSICAL_SWITCH = 0x51,
-         #define IDENTIFY_SWITCH_DEVICE      0x0
-         #define GET_PHYSICAL_PORT_STATE     0x1
-+        #define PHYSICAL_PORT_CONTROL       0x2
-     TUNNEL = 0x53,
-         #define MANAGEMENT_COMMAND     0x0
-     FMAPI_DCD_MGMT = 0x56,
-@@ -616,6 +618,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-         struct cxl_fmapi_port_state_info_block *port;
-         /* First try to match on downstream port */
-         PCIDevice *port_dev;
-+        CXLPhyPortPerst *perst;
-         uint16_t lnkcap, lnkcap2, lnksta;
- 
-         port = &out->ports[i];
-@@ -663,6 +666,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-             port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH |
-                 CXL_PORT_SUPPORTS_256B;
-             port->supported_ld_count = 3;
-+            perst = cxl_dsp_get_perst(CXL_DSP(port_dev));
-         } else if (usp->port == in->ports[i]) { /* USP */
-             port_dev = PCI_DEVICE(usp);
-             port->config_state = CXL_PORT_CONFIG_STATE_USP;
-@@ -670,6 +674,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-             port->connected_device_mode = 0; /* Reserved for USP */
-             port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH |
-                 (CXL_USP(usp)->flitmode ? CXL_PORT_SUPPORTS_256B : 0);
-+            perst = &CXL_USP(usp)->perst;
-         } else {
-             return CXL_MBOX_INVALID_INPUT;
-         }
-@@ -698,6 +703,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-         /* TODO: Track down if we can get the rest of the info */
-         port->ltssm_state = 0x7;
-         port->first_lane_num = 0;
-+        port->link_state = perst ? CXL_PORT_LINK_STATE_FLAG_PERST_ASSERTED : 0;
-     }
- 
-     pl_size = sizeof(*out) + sizeof(*out->ports) * in->num_ports;
-@@ -706,6 +712,115 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+static void *bg_assertcb(void *opaque)
-+{
-+    CXLPhyPortPerst *perst = opaque;
-+
-+    /* holding reset phase for 100ms */
-+    while (perst->asrt_time--) {
-+        usleep(1000);
-+    }
-+    perst->issued_assert_perst = true;
-+    return NULL;
-+}
-+
-+static CXLRetCode cxl_deassert_perst(Object *obj, CXLPhyPortPerst *perst)
-+{
-+    if (!perst->issued_assert_perst) {
-+        return CXL_MBOX_INTERNAL_ERROR;
-+    }
-+
-+    QEMU_LOCK_GUARD(&perst->lock);
-+    resettable_release_reset(obj, RESET_TYPE_COLD);
-+    perst->issued_assert_perst = false;
-+    perst->asrt_time = ASSERT_WAIT_TIME_MS;
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+static CXLRetCode cxl_assert_perst(Object *obj, CXLPhyPortPerst *perst)
-+{
-+    if (cxl_perst_asserted(perst)) {
-+        return CXL_MBOX_INTERNAL_ERROR;
-+    }
-+
-+    QEMU_LOCK_GUARD(&perst->lock);
-+    resettable_assert_reset(obj, RESET_TYPE_COLD);
-+    qemu_thread_create(&perst->asrt_thread, "assert_thread", bg_assertcb,
-+                       perst, QEMU_THREAD_DETACHED);
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+static CXLDownstreamPort *cxl_find_dsp_on_bus(PCIBus *bus, uint8_t pn)
-+{
-+
-+    PCIDevice *port_dev = pcie_find_port_by_pn(bus, pn);
-+
-+    if (object_dynamic_cast(OBJECT(port_dev), TYPE_CXL_DSP)) {
-+        return CXL_DSP(port_dev);
-+    }
-+
-+    return NULL;
-+}
-+
-+/* CXL r3.2 Section 7.6.7.1.3: Get Physical Port Control (Opcode 5102h) */
-+static CXLRetCode cmd_physical_port_control(const struct cxl_cmd *cmd,
-+                                            uint8_t *payload_in,
-+                                            size_t len_in,
-+                                            uint8_t *payload_out,
-+                                            size_t *len_out,
-+                                            CXLCCI *cci)
-+{
-+   CXLUpstreamPort *pp = CXL_USP(cci->d);
-+   CXLPhyPortPerst *perst;
-+   PCIDevice *dev;
-+
-+   struct cxl_fmapi_get_physical_port_control_req_pl {
-+        uint8_t ppb_id;
-+        uint8_t ports_op;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+
-+    if (len_in < sizeof(*in)) {
-+        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+    }
-+
-+    if (PCIE_PORT(pp)->port == in->ppb_id) {
-+        dev = PCI_DEVICE(pp);
-+        perst = &pp->perst;
-+    } else {
-+        CXLDownstreamPort *dsp =
-+            cxl_find_dsp_on_bus(&PCI_BRIDGE(pp)->sec_bus, in->ppb_id);
-+
-+        if (!dsp) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        dev = PCI_DEVICE(dsp);
-+        perst = cxl_dsp_get_perst(dsp);
-+    }
-+
-+    switch (in->ports_op) {
-+    case 0:
-+        return cxl_assert_perst(OBJECT(&dev->qdev), perst);
-+    case 1:
-+        return cxl_deassert_perst(OBJECT(&dev->qdev), perst);
-+    case 2: {
-+        if (!perst) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+
-+        if (perst->issued_assert_perst ||
-+            perst->asrt_time < ASSERT_WAIT_TIME_MS) {
-+            return CXL_MBOX_INTERNAL_ERROR;
-+        }
-+        device_cold_reset(&dev->qdev);
-+        return CXL_MBOX_SUCCESS;
-+    }
-+    default:
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+}
-+
- /* CXL r3.1 Section 8.2.9.1.2: Background Operation Status (Opcode 0002h) */
- static CXLRetCode cmd_infostat_bg_op_sts(const struct cxl_cmd *cmd,
-                                          uint8_t *payload_in,
-@@ -4412,6 +4527,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-         cmd_identify_switch_device, 0, 0 },
-     [PHYSICAL_SWITCH][GET_PHYSICAL_PORT_STATE] = { "SWITCH_PHYSICAL_PORT_STATS",
-         cmd_get_physical_port_state, ~0, 0 },
-+    [PHYSICAL_SWITCH][PHYSICAL_PORT_CONTROL] = { "SWITCH_PHYSICAL_PORT_CONTROL",
-+        cmd_physical_port_control, 2, 0 },
-     [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
-                                      cmd_tunnel_management_cmd, ~0, 0 },
- };
-@@ -4618,6 +4735,19 @@ static void cxl_rebuild_cel(CXLCCI *cci)
-     }
- }
- 
-+void cxl_init_physical_port_control(CXLPhyPortPerst *perst)
-+{
-+    qemu_mutex_init(&perst->lock);
-+    perst->issued_assert_perst = false;
-+    /*
-+     * Assert PERST involves physical port to be in
-+     * hold reset phase for minimum 100ms. No other
-+     * physical port control requests are entertained
-+     * until Deassert PERST command.
-+     */
-+    perst->asrt_time = ASSERT_WAIT_TIME_MS;
-+}
-+
- void cxl_init_cci(CXLCCI *cci, size_t payload_max)
- {
-     cci->payload_max = payload_max;
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index 320818a8f1ce..ec450d1aa09e 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -13,9 +13,11 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
-+#include "hw/pci-bridge/cxl_downstream_port.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_port.h"
- #include "qapi/error.h"
- 
- typedef struct CXLDownstreamPort {
-@@ -24,6 +26,7 @@ typedef struct CXLDownstreamPort {
- 
-     /*< public >*/
-     CXLComponentState cxl_cstate;
-+    CXLPhyPortPerst perst;
- } CXLDownstreamPort;
- 
- #define CXL_DOWNSTREAM_PORT_MSI_OFFSET 0x70
-@@ -81,6 +84,11 @@ static void cxl_dsp_config_write(PCIDevice *d, uint32_t address,
-     cxl_dsp_dvsec_write_config(d, address, val, len);
- }
- 
-+CXLPhyPortPerst *cxl_dsp_get_perst(CXLDownstreamPort *dsp)
-+{
-+    return &dsp->perst;
-+}
-+
- static void cxl_dsp_reset(DeviceState *qdev)
- {
-     PCIDevice *d = PCI_DEVICE(qdev);
-@@ -92,6 +100,7 @@ static void cxl_dsp_reset(DeviceState *qdev)
-     pci_bridge_reset(qdev);
- 
-     latch_registers(dsp);
-+    cxl_init_physical_port_control(&dsp->perst);
- }
- 
- static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index fb8d19539c9f..b6281cbd4cb0 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -103,6 +103,7 @@ static void cxl_usp_reset(DeviceState *qdev)
-     pcie_cap_deverr_reset(d);
-     pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed, usp->flitmode);
-     latch_registers(usp);
-+    cxl_init_physical_port_control(&usp->perst);
- }
- 
- static void build_dvsecs(CXLUpstreamPort *usp)
--- 
-2.51.0
+Paolo
 
 
