@@ -4,157 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1974EA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154A3EA7941
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vni8N-0004X4-9I; Wed, 04 Feb 2026 14:01:51 -0500
+	id 1vni9c-0005zx-Hp; Wed, 04 Feb 2026 14:03:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vni8E-0004TT-C8; Wed, 04 Feb 2026 14:01:43 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9Z-0005wQ-Uj
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vni88-0007Tc-Vj; Wed, 04 Feb 2026 14:01:40 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VcSAoXOdauQ8/qJNCr70LOg/rXoApiRVY+0Kqee3HVaF92nD/O8jd80DaV0xTcL7zjNbEuuwkLZGwvL7x65nhdEKrGflHgIB7W1zaRattwVBWjyqJ85aGLrW93EJK+RMf9pz8x6A5Z/9oarOjr21b5ompacw1RFoFThnA50fVy03g+imKL91Xqse96cq3RYDBuKK1bTTfhWERplRrlU+4pofDgzA40gpVnLTyftvkJrEUgbwQ1mD+e19KfrQbQtfKmRF3dgOvX8hV37gmMC8UJxQsscgS7gRAZaB02iRluHdDj7fIz2wuUwaGZxi9i/GcJIIfOeN+cjWOJZNbAJ6TA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lCZutUdnXpAlo5H9tNNR5eRPMKnj38qI5g7YwxpMMmY=;
- b=yPsnXQUXqm3osq4yqmSl/F1JU+K85dGxvKjfHsRYeOJvHiWouZAVyIPhvP84/h4/E2gufhDDmJa3aE8Cy0ApYKlp70rDc/ALtAezmNInj1vQqdxz68sYiFlsPzs0Re1gOruzXHZLfCmBiuNvbKpNX+0RIN8D1138ZdchIebqFES1vZcgv2u/IcfNvr3bEd17aJsexaTNNgaJMo+PAqXYybZkSFcpZ6gTznJAz8+9xWNDjAhyvGjuuXaidNv/Lf6rEH6pws/ufsHG74sPw5ELRYnn5aCRKV+yp0kqdTrmItXm1sx+rEEzCf+JgiPprFKQWZY8NKnttrXhpaFhD94S/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lCZutUdnXpAlo5H9tNNR5eRPMKnj38qI5g7YwxpMMmY=;
- b=eVWK80Olk6xMU7fYKLnnbmkOX2Yj16+tkeqzkV14JeqXHOLCl5YLObw3j1MMQSEzifW6GL2cxzsmctuDGFQ3P7AssBQHNvMR96/gLapdw6LtYGuNAtgOlrYvsuFPXnZdjHeMbTNfc2v3q+S4UcjmtlWGFtoDdmsQHADjUmaHnFAS80hTTar8UsbHqPL1yjTlKPBbNsBYSchsILL/8qIgi7ph2ccmTAPIgv35pqb0SQyRGsshfa9HiSRU/cAncciP6ck7o0K0/khaj+vhDoUyTedKraNTKh2p74Hri0Yfa760ElbUMQfMz77b3kfglrtaVuOIN+BPmHtmmkq6UGbEBA==
-Received: from BN1PR14CA0029.namprd14.prod.outlook.com (2603:10b6:408:e3::34)
- by SJ5PPF6375781D1.namprd12.prod.outlook.com
- (2603:10b6:a0f:fc02::995) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Wed, 4 Feb
- 2026 19:01:28 +0000
-Received: from BN2PEPF00004FBB.namprd04.prod.outlook.com
- (2603:10b6:408:e3:cafe::f3) by BN1PR14CA0029.outlook.office365.com
- (2603:10b6:408:e3::34) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.14 via Frontend Transport; Wed,
- 4 Feb 2026 19:01:18 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN2PEPF00004FBB.mail.protection.outlook.com (10.167.243.181) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 19:01:27 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 4 Feb
- 2026 11:01:02 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 4 Feb
- 2026 11:00:59 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <skolothumtho@nvidia.com>
-Subject: [PATCH v4 5/5] hw/arm/smmuv3-accel: Read and propagate host vIOMMU
- events
-Date: Wed, 4 Feb 2026 19:00:08 +0000
-Message-ID: <20260204190008.20070-6-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260204190008.20070-1-skolothumtho@nvidia.com>
-References: <20260204190008.20070-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9W-0007hv-P1
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770231781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=f6b04XluuWYq9dbsDugfsn4NE3d4xNud4Tf/2I+SCUE=;
+ b=PMWezmqwHUDXyjrL1BgSrQCnPdt+ci/g/MtSTjZzWM/sWBGJypLZcTi/LmWxAdGzFAuVLo
+ 9U+y27KzOc0fY+IwwyC+QZrSTo5O0PJjRfDzHvJnPspNMiVKXSqZ50cG9jhStMU+rNtNI6
+ C1/MVibBqfHSkvdqZ8fINcEyZjTFbJE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-685-V2uBnkDoPo2Su1cezdISzA-1; Wed, 04 Feb 2026 14:03:00 -0500
+X-MC-Unique: V2uBnkDoPo2Su1cezdISzA-1
+X-Mimecast-MFC-AGG-ID: V2uBnkDoPo2Su1cezdISzA_1770231779
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-480686b3b4cso1737105e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770231779; x=1770836579; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=f6b04XluuWYq9dbsDugfsn4NE3d4xNud4Tf/2I+SCUE=;
+ b=ddjURH0kfNhgKB/N15N03SMsRi28FAjsNE49SmWFBEPN+siVxKSkcOrE+SruPbd8vs
+ NqT7bU6cTaG/xJUWzIq8EpPn73I2Lk7tzWTaMWmwejbs42qT3UtUIlTnGzdJYSEGg06S
+ u3WJ5b6ws9ZcLttMoxkKm/RJO6gh0vOqGUqzSmBzgoItej6SKGSrblAK4RKkUeQHShFl
+ TOfwZJSagZ8m1FeTDdgcxPQuIWwXmOF74iV4sDFc56fyxCuL+BYeBeAYz3S4uUs1ICNq
+ Knrj9gv85+wFj6TE5bUMSPgmVVgr20J5ll/tWNl1YOu+jgXuxWSlh7bFfcJ3N3vJuodE
+ KOwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770231779; x=1770836579;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f6b04XluuWYq9dbsDugfsn4NE3d4xNud4Tf/2I+SCUE=;
+ b=dVmn5RD5bxYmVTuhWob7QUfKCSuORshenaonsbNf3kaGf7kCDOE0LnIzwZ5d95OfrW
+ t6ddJS+oiJnUnizOXVQ6S6aIuUul7zC+CgHy053eFqbQaPSFaX6xZA7RK6qivEsc/bna
+ huWIXF/PvJZYyheYJcM6fIjj24R75z9r1DnLWPojJaYqzQ0KUn9fqcvJWpr/LdXSEslV
+ vxARWLqQ/EtlDlaBQC8MDvB57BmJraA45nck/6ulw009foySIy2m1YBhmw8gZXXlkf5K
+ PJdilSS3LFLrVrz8ZqP0XrAxiX/YdnoYlt36YPNLlRgojnOTuVIKnpBny9frKBc9fKdq
+ CAAw==
+X-Gm-Message-State: AOJu0Yzp6hRiVySjWuHLHSw+Df22qLW+cMoOOL2WX1CiNrue1fcmf4Xw
+ Odrc+Grbqw8rLB4ZjFTFQWti2Mib76kQYOlhZ6HNWSGMRHBnKFNwZk5t8pIyMS6w9z3sET8jZcj
+ 3B2PN6P5dB2Ydx9nxmIFiDXDQBZ5KRgaoa2jG5xk+sD1JGg3HrE1x1e73O1lMTl0xH6r93sHE8e
+ M3zRf76aRsgNQ5S7ji5/rg7msVyvxmA6yPVA==
+X-Gm-Gg: AZuq6aIHfJCOXa19vf0oN/f4m8ZzYk0voUrS5ujTo4ZW4eos1NdVSvjOqVfSsUMcsWV
+ S7aJQTHhule55SUYIJv34SkmeWUpuVNMvxG15hA6bF5lIaY1+VzJ4f0keXaBXZYbT1MbXWhKaeO
+ UjatPUA6mKscszPnPd7hJMaPKxfd2AqRCVMwTi1/ZmqNZiiRejNqazVBI8JcwVpOzdktoPoeeZV
+ R6fVeKoexhcdNh8tkNp6NRZrg1BzD3rpEPNYA1WulI20JsPeEzyNnt0rYYxRRpCGlRIrwMRvM2m
+ z5/lsKVfiVY8isPhilnw6WS4UIjr5aaPreQ580fOlrdqXW/fzuj3+NaiTXs6Wln6YQd4Ort9LHb
+ 9nEz9Zqll6OkasE9LvnVQD1ZI08kRIXOdCQ==
+X-Received: by 2002:a05:600c:a00b:b0:477:7975:30ea with SMTP id
+ 5b1f17b1804b1-4830e971be8mr44111905e9.29.1770231778443; 
+ Wed, 04 Feb 2026 11:02:58 -0800 (PST)
+X-Received: by 2002:a05:600c:a00b:b0:477:7975:30ea with SMTP id
+ 5b1f17b1804b1-4830e971be8mr44111385e9.29.1770231777794; 
+ Wed, 04 Feb 2026 11:02:57 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48317d299bfsm3535325e9.2.2026.02.04.11.02.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Feb 2026 11:02:57 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:02:55 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Davidlohr Bueso <dave@stgolabs.net>, Shiju Jose <shiju.jose@huawei.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 03/51] hw/cxl: Add support for Maintenance command and Post
+ Package Repair (PPR)
+Message-ID: <5aed4664fcc771eee7b0eb72a2776526788041af.1770231744.git.mst@redhat.com>
+References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBB:EE_|SJ5PPF6375781D1:EE_
-X-MS-Office365-Filtering-Correlation-Id: a59365d9-4560-476f-ef22-08de641fcd1a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?M0dQbHhsVzArQTdzZ0dDNVVZaEdFV1M4RDNpYllSTTMvc2lWSmlYTlVvTUE0?=
- =?utf-8?B?TlovTEt6Y0NwMmRkWkJUeW5qVjBIM2xqLzdyemJIRStLVERabEl5TUtoSWFQ?=
- =?utf-8?B?Yjh2ZUdsVDBvS3piWWNQRWhNSmZ4eC9wNVViZWZtcjNBN1Z1YUZLRVBxYkRn?=
- =?utf-8?B?NUl0NmIzTkxEUFlRSjU1RDVPVUdPdjFleHRzdnBVc1NwZWJpWHhsS2Q4N2NL?=
- =?utf-8?B?U2FpY3R4Q1NmV2c2UjdHa1N3bFJyZ0FKbDREWUJ6YmNPeWlqRnJKaWJZeHJ6?=
- =?utf-8?B?Y2ppeitlMUlYSGtGcC9aMGUraUE0NHI2MmJNaVJJamNmdS92Y0xQUXZWT1Vl?=
- =?utf-8?B?VmVIU3RxUVZRYjZmTDBINEszdUlmNkUwNXJjSU5VbCtMbWR0Q2dmTFpIVGJa?=
- =?utf-8?B?YW03K0ltK3RndlNYNnFuT2JxL09KUDNWb1RsZk93Z3dvczZsdUhTVEkxK3ZD?=
- =?utf-8?B?K2hINVFJYUJ6bWRuRFM0TEMyWmZBQmdaZWZaeUNjell4TCtqWC9zNTRwclZr?=
- =?utf-8?B?cDAzalhIbXpwZG93NytOWjF2MVhDL1FoVC9CZ3gvYXQrWm5BQ09ORGpOeFFB?=
- =?utf-8?B?WVErWmRVcitMa1dRUklmbjcwK0NwdUZjOG5rZFNhK0JhUDFWbDROMDd2UmRm?=
- =?utf-8?B?WlVBdDljWXVEUmdaK3hvUlF0ZVpJQ2hHSXNrS0JTdnFHT2FEcGZOTkpSb294?=
- =?utf-8?B?OVoycU5nUlZTeGZCNDZRdG1ONFFOZE5naURMbTFOZzM0d3p4cFpPVXBPYUk3?=
- =?utf-8?B?cUZ4MzQ5a3IrR2RnUkJRTk10dERkaHpyT3hRMHJnamZ1d3ZCRjdDLzFCM2Q5?=
- =?utf-8?B?Yko2NkhSeHJLTVRBeWFCSEsvZWt2MVdFUGxLbDR0a1ZZVUtXcG41UlZ2eEQy?=
- =?utf-8?B?cU56bkVZZDJJUG43ZGVyQWVyV0VWaGVoRXhwdUZHbWFYSmczTGZkaG9UWmdT?=
- =?utf-8?B?SUhiUGZPeVdxK0lMTzhoRWpkaTFKVnp1OXVlalR2TnlCVWNDRjJMdC9DQ2pt?=
- =?utf-8?B?SDA4UXpVUXZSbzl0ZnZKUWNSLzN1VjZlWVZXWGRRcVRLbktGT2l0WWc3Um9M?=
- =?utf-8?B?d1ZpbjBJN293ZHc0a0dJZFVjSUtkcmdEZ1Bha3JEN21pTmJXejhIMG9QdXBp?=
- =?utf-8?B?UmdBa2NVOWNsWG5tZFRaMzgwaUZYMDdYVVpjQjdCUHM1N2JObWYrZ1pYS21j?=
- =?utf-8?B?NU9zMEs5VmVLWUErS3d2bEd2ZFRlZHBXSHJrakVhWm1Deml6VHNyRm9PVEU2?=
- =?utf-8?B?QmtQV3lOUjdXVjMyS0xEVjRNWmhZM2dLMWtzRStsdmV4R3Y3Sm14bnNmRWFZ?=
- =?utf-8?B?SU1vTXlDL3dFT2RDY2dlVDY3VzlxZ1hxU3JjTDd4LzdHMVBHaElvbUpEdTlw?=
- =?utf-8?B?MDJjQURsOWNaYWdJUzdYNFJqSFZJWXN4M09ici9ibW4yRnJ0a1dEUWdEYWZo?=
- =?utf-8?B?d29Yc1ZaMEZaLys3WjNESC9WYUtqbUJkRkZSZW5ac3RuL3JLUHg1c29aaWpi?=
- =?utf-8?B?VXMzdmZ1VzJaaUJIWGsrQlgraTlEb0hYUDh1bFRJeGtLNm81S1lpQzRVQlVr?=
- =?utf-8?B?ZHdFWXByWjBWRWRZcHFjb24wczBmRjVqbFU4MmVSMnEyMkRsRVdHQllBbDRL?=
- =?utf-8?B?Y05YeFFkN1ZDMVI0R1htLzB0dGVVUVYrYXBDRUE5MDdNWGt3bFR5N040WWtY?=
- =?utf-8?B?RklFZ0x4bG8ySUVhdGFnT2VnclZ2R0NOaDcwSXJqTXFickh6ZVlhSlI4b2Rx?=
- =?utf-8?B?SGdRajNZVE1hMWFCZzI2Y3NpMno3RzJrUUJGYnBXR3phTklWNzdUalNVTitw?=
- =?utf-8?B?ejRXY25LMVZMdmJ4TzU3TG9NYVZ1ajJ0ZTdMOXhCR1oxR1AvYTBjcDFuSmV3?=
- =?utf-8?B?T1VkeDhvbUtFZkpQdVo0bHNuOWdSejZFK3FTM0pTVnpOVFBHNWdEODY4eUlC?=
- =?utf-8?B?anVSN2t4RndZenFRYnI5REZVRWVaMVQvc0N0Q28zanVBS24xcUpSdFlEMEU5?=
- =?utf-8?B?bkZJWFJMWk9MeEJrU2MxbThINStSSFk5NW9xVGVnR0dOMWJiVk5odHhWSWJr?=
- =?utf-8?B?S0wyekNCLzY5NFZQV0JYbW1mS2hidzUrUmVJUjh4cmJDakZkRGlFeGxsMDI4?=
- =?utf-8?B?L3RNVDhaUjRHWUM2N0NQSE9rTVlCK1JXclVIcXlZYkdvUC9tSDJFbmdaZytu?=
- =?utf-8?B?R0FiVFZCZzRTaDUwaW5QK2JPY0dWVTRxNVVCeFgzVFZ2OUFQdkx0clptZis3?=
- =?utf-8?B?aXdDd1lJSldqcThQd0s1RlFIQzdRPT0=?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: iN4m0AmhKVLI1ZJWZXmvy5AWZcgjHJYz9W3Z5NSHWJXLGB0C98YXgsLKFSoKFNxvl2AtgYyfN12FKc7xPUI4lRes8lo/OE0KC0skFV6G9jLaPEoSydB6o0FbYYkED+Vg5oNvh+Owk7ilVxJJMiTPeKE0TKJqFGViVGsR2N4MYqaa3e9nVRYaWQo5JoDy7amuULQQBd7e7dTpvPlifif+54W9vv6RdXFSL7p/DyPymCMrcKI0TVEPczZQglgqVXtcXIP9hc1Ch6LqbihYOHzQDe9uIoDTjPobA8TaH/RsQkR/85Kf7lNF7pphk4uZ9j3gI0R1c7LrnQg+hSK6yFGzJhanwVJe61hmAAApwwl215M2tdGTqzoUskBFFEs2T6LB3m5I0Qvina16SnwjQbz14bvz64wx3h+a66IdzkH3qhwKdCWP8euA6DA200n1lLfT
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 19:01:27.9210 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a59365d9-4560-476f-ef22-08de641fcd1a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBB.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF6375781D1
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1770231744.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,133 +121,739 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Install an event handler on the vEVENTQ fd to read and propagate host
-generated vIOMMU events to the guest.
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-The handler runs in QEMU’s main loop, using a non-blocking fd registered
-via qemu_set_fd_handler().
+This adds initial support for the Maintenance command, specifically
+the soft and hard PPR operations on a dpa. The implementation allows
+to be executed at runtime, therefore semantically, data is retained
+and CXL.mem requests are correctly processed.
 
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Keep track of the requests upon a general media or DRAM event.
+
+Post Package Repair (PPR) maintenance operations may be supported by CXL
+devices that implement CXL.mem protocol. A PPR maintenance operation
+requests the CXL device to perform a repair operation on its media.
+For example, a CXL device with DRAM components that support PPR features
+may implement PPR Maintenance operations. DRAM components may support two
+types of PPR, hard PPR (hPPR), for a permanent row repair, and Soft PPR
+(sPPR), for a temporary row repair. Soft PPR is much faster than hPPR,
+but the repair is lost with a power cycle.
+
+CXL spec 3.2 section 8.2.10.7.1.2 describes the device's sPPR (soft PPR)
+maintenance operation and section 8.2.10.7.1.3 describes the device's
+hPPR (hard PPR) maintenance operation feature.
+
+CXL spec 3.2 section 8.2.10.7.2.1 describes the sPPR feature discovery and
+configuration.
+
+CXL spec 3.2 section 8.2.10.7.2.2 describes the hPPR feature discovery and
+configuration.
+
+CXL spec 3.2 section 8.2.10.2.1.4 Table 8-60 describes the Memory Sparing
+Event Record.
+
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Co-developed-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20250917143330.294698-3-Jonathan.Cameron@huawei.com>
 ---
- hw/arm/smmuv3-accel.c | 62 +++++++++++++++++++++++++++++++++++++++++++
- hw/arm/smmuv3-accel.h |  2 ++
- 2 files changed, 64 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c  | 240 +++++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3.c          | 125 +++++++++++++++++++
+ include/hw/cxl/cxl_device.h | 112 +++++++++++++++++
+ include/hw/cxl/cxl_events.h |  42 +++++++
+ 4 files changed, 517 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 2ca0d1deac..beffb8aa94 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -390,6 +390,48 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
-                    sizeof(Cmd), &entry_num, cmd, errp);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 65b599f7aa..8c38b88ad4 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -86,6 +86,8 @@ enum {
+         #define GET_SUPPORTED 0x0
+         #define GET_FEATURE   0x1
+         #define SET_FEATURE   0x2
++    MAINTENANCE = 0x06,
++        #define PERFORM 0x0
+     IDENTIFY    = 0x40,
+         #define MEMORY_DEVICE 0x0
+     CCLS        = 0x41,
+@@ -1111,8 +1113,8 @@ typedef struct CXLSupportedFeatureEntry {
+ #define CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE BIT(0)
+ #define CXL_FEAT_ENTRY_ATTR_FLAG_DEEPEST_RESET_PERSISTENCE_MASK GENMASK(3, 1)
+ #define CXL_FEAT_ENTRY_ATTR_FLAG_PERSIST_ACROSS_FIRMWARE_UPDATE BIT(4)
+-#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_DEFAULT_SELECTION BIT(5)
+-#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_SAVED_SELECTION BIT(6)
++#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_DEFAULT_SEL BIT(5)
++#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_SAVED_SEL BIT(6)
+ 
+ /* Supported Feature Entry : set feature effects */
+ #define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_COLD_RESET BIT(0)
+@@ -1131,6 +1133,8 @@ typedef struct CXLSupportedFeatureEntry {
+ enum CXL_SUPPORTED_FEATURES_LIST {
+     CXL_FEATURE_PATROL_SCRUB = 0,
+     CXL_FEATURE_ECS,
++    CXL_FEATURE_SPPR,
++    CXL_FEATURE_HPPR,
+     CXL_FEATURE_MAX
+ };
+ 
+@@ -1172,6 +1176,28 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
+ };
+ #define CXL_SET_FEAT_DATA_SAVED_ACROSS_RESET BIT(3)
+ 
++/* CXL r3.2 section 8.2.10.7.2.1: sPPR Feature Discovery and Configuration */
++static const QemuUUID soft_ppr_uuid = {
++    .data = UUID(0x892ba475, 0xfad8, 0x474e, 0x9d, 0x3e,
++                 0x69, 0x2c, 0x91, 0x75, 0x68, 0xbb)
++};
++
++typedef struct CXLMemSoftPPRSetFeature {
++        CXLSetFeatureInHeader hdr;
++        CXLMemSoftPPRWriteAttrs feat_data;
++} QEMU_PACKED QEMU_ALIGNED(16) CXLMemSoftPPRSetFeature;
++
++/* CXL r3.2 section 8.2.10.7.2.2: hPPR Feature Discovery and Configuration */
++static const QemuUUID hard_ppr_uuid = {
++    .data = UUID(0x80ea4521, 0x786f, 0x4127, 0xaf, 0xb1,
++                 0xec, 0x74, 0x59, 0xfb, 0x0e, 0x24)
++};
++
++typedef struct CXLMemHardPPRSetFeature {
++        CXLSetFeatureInHeader hdr;
++        CXLMemHardPPRWriteAttrs feat_data;
++} QEMU_PACKED QEMU_ALIGNED(16) CXLMemHardPPRSetFeature;
++
+ /* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
+ static const QemuUUID patrol_scrub_uuid = {
+     .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
+@@ -1235,6 +1261,38 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+     for (entry = 0, index = get_feats_in->start_index;
+          entry < req_entries; index++) {
+         switch (index) {
++        case CXL_FEATURE_SPPR:
++            /* Fill supported feature entry for soft-PPR */
++            get_feats_out->feat_entries[entry++] =
++                           (struct CXLSupportedFeatureEntry) {
++                .uuid = soft_ppr_uuid,
++                .feat_index = index,
++                .get_feat_size = sizeof(CXLMemSoftPPRReadAttrs),
++                .set_feat_size = sizeof(CXLMemSoftPPRWriteAttrs),
++                .attr_flags = CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE |
++                              CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_DEFAULT_SEL,
++                .get_feat_version = CXL_MEMDEV_SPPR_GET_FEATURE_VERSION,
++                .set_feat_version = CXL_MEMDEV_SPPR_SET_FEATURE_VERSION,
++                .set_feat_effects = CXL_FEAT_ENTRY_SFE_IMMEDIATE_CONFIG_CHANGE |
++                                    CXL_FEAT_ENTRY_SFE_CEL_VALID,
++            };
++            break;
++        case CXL_FEATURE_HPPR:
++            /* Fill supported feature entry for hard-PPR */
++            get_feats_out->feat_entries[entry++] =
++                           (struct CXLSupportedFeatureEntry) {
++                .uuid = hard_ppr_uuid,
++                .feat_index = index,
++                .get_feat_size = sizeof(CXLMemHardPPRReadAttrs),
++                .set_feat_size = sizeof(CXLMemHardPPRWriteAttrs),
++                .attr_flags = CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE |
++                              CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_DEFAULT_SEL,
++                .get_feat_version = CXL_MEMDEV_HPPR_GET_FEATURE_VERSION,
++                .set_feat_version = CXL_MEMDEV_HPPR_SET_FEATURE_VERSION,
++                .set_feat_effects = CXL_FEAT_ENTRY_SFE_IMMEDIATE_CONFIG_CHANGE |
++                                    CXL_FEAT_ENTRY_SFE_CEL_VALID,
++            };
++            break;
+         case  CXL_FEATURE_PATROL_SCRUB:
+             /* Fill supported feature entry for device patrol scrub control */
+             get_feats_out->feat_entries[entry++] =
+@@ -1333,6 +1391,26 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
+         memcpy(payload_out,
+                (uint8_t *)&ct3d->ecs_attrs + get_feature->offset,
+                bytes_to_copy);
++    } else if (qemu_uuid_is_equal(&get_feature->uuid, &soft_ppr_uuid)) {
++        if (get_feature->offset >= sizeof(CXLMemSoftPPRReadAttrs)) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        bytes_to_copy = sizeof(CXLMemSoftPPRReadAttrs) -
++                        get_feature->offset;
++        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
++        memcpy(payload_out,
++               (uint8_t *)&ct3d->soft_ppr_attrs + get_feature->offset,
++               bytes_to_copy);
++    } else if (qemu_uuid_is_equal(&get_feature->uuid, &hard_ppr_uuid)) {
++        if (get_feature->offset >= sizeof(CXLMemHardPPRReadAttrs)) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        bytes_to_copy = sizeof(CXLMemHardPPRReadAttrs) -
++                        get_feature->offset;
++        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
++        memcpy(payload_out,
++               (uint8_t *)&ct3d->hard_ppr_attrs + get_feature->offset,
++               bytes_to_copy);
+     } else {
+         return CXL_MBOX_UNSUPPORTED;
+     }
+@@ -1444,6 +1522,44 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+                         ct3d->ecs_wr_attrs.fru_attrs[count].ecs_config & 0x1F;
+             }
+         }
++    } else if (qemu_uuid_is_equal(&hdr->uuid, &soft_ppr_uuid)) {
++        CXLMemSoftPPRSetFeature *sppr_set_feature = (void *)payload_in;
++        CXLMemSoftPPRWriteAttrs *sppr_write_attrs =
++                            &sppr_set_feature->feat_data;
++
++        if (hdr->version != CXL_MEMDEV_SPPR_SET_FEATURE_VERSION) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
++               sppr_write_attrs, bytes_to_copy);
++        set_feat_info->data_size += bytes_to_copy;
++
++        if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
++            data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
++            ct3d->soft_ppr_attrs.op_mode = ct3d->soft_ppr_wr_attrs.op_mode;
++            ct3d->soft_ppr_attrs.sppr_op_mode =
++                    ct3d->soft_ppr_wr_attrs.sppr_op_mode;
++        }
++    } else if (qemu_uuid_is_equal(&hdr->uuid, &hard_ppr_uuid)) {
++        CXLMemHardPPRSetFeature *hppr_set_feature = (void *)payload_in;
++        CXLMemHardPPRWriteAttrs *hppr_write_attrs =
++                            &hppr_set_feature->feat_data;
++
++        if (hdr->version != CXL_MEMDEV_HPPR_SET_FEATURE_VERSION) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
++               hppr_write_attrs, bytes_to_copy);
++        set_feat_info->data_size += bytes_to_copy;
++
++        if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
++            data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
++            ct3d->hard_ppr_attrs.op_mode = ct3d->hard_ppr_wr_attrs.op_mode;
++            ct3d->hard_ppr_attrs.hppr_op_mode =
++                    ct3d->hard_ppr_wr_attrs.hppr_op_mode;
++        }
+     } else {
+         return CXL_MBOX_UNSUPPORTED;
+     }
+@@ -1456,6 +1572,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             memset(&ct3d->patrol_scrub_wr_attrs, 0, set_feat_info->data_size);
+         } else if (qemu_uuid_is_equal(&hdr->uuid, &ecs_uuid)) {
+             memset(&ct3d->ecs_wr_attrs, 0, set_feat_info->data_size);
++        } else if (qemu_uuid_is_equal(&hdr->uuid, &soft_ppr_uuid)) {
++            memset(&ct3d->soft_ppr_wr_attrs, 0, set_feat_info->data_size);
++        } else if (qemu_uuid_is_equal(&hdr->uuid, &hard_ppr_uuid)) {
++            memset(&ct3d->hard_ppr_wr_attrs, 0, set_feat_info->data_size);
+         }
+         set_feat_info->data_transfer_flag = 0;
+         set_feat_info->data_saved_across_reset = false;
+@@ -1466,6 +1586,116 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
  }
  
-+static void smmuv3_accel_event_read(void *opaque)
++static void cxl_mbox_create_mem_sparing_event_records(CXLType3Dev *ct3d,
++                            uint8_t maint_op_class, uint8_t maint_op_sub_class,
++                            CXLMaintenance *ent)
 +{
-+    SMMUv3State *s = opaque;
-+    SMMUv3AccelState *accel = s->s_accel;
-+    struct {
-+        struct iommufd_vevent_header hdr;
-+        struct iommu_vevent_arm_smmuv3 vevent;
-+    } buf;
-+    uint32_t last_seq = accel->last_event_seq;
-+    ssize_t bytes;
++    CXLEventSparing event_rec = {};
 +
-+    bytes = read(accel->veventq->veventq_fd, &buf, sizeof(buf));
-+    if (bytes <= 0) {
-+        if (errno == EAGAIN || errno == EINTR) {
-+            return;
++    cxl_assign_event_header(&event_rec.hdr,
++                            &sparing_uuid,
++                            (1 << CXL_EVENT_TYPE_INFO),
++                            sizeof(event_rec),
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            1, maint_op_class, 1, maint_op_sub_class,
++                            0, 0, 0, 0);
++    if (ent) {
++        event_rec.flags = 0;
++        event_rec.result = 0;
++        stw_le_p(&event_rec.res_avail, 2);
++        stw_le_p(&event_rec.validity_flags, ent->validity_flags);
++        event_rec.channel = ent->channel;
++        event_rec.rank = ent->rank;
++        st24_le_p(event_rec.nibble_mask, ent->nibble_mask);
++        event_rec.bank_group = ent->bank_group;
++        event_rec.bank = ent->bank;
++        st24_le_p(event_rec.row, ent->row);
++        stw_le_p(&event_rec.column, ent->column);
++        event_rec.sub_channel = ent->sub_channel;
++        if (ent->validity_flags & CXL_MSER_VALID_COMP_ID) {
++            strncpy((char *)event_rec.component_id, (char *)ent->component_id,
++                    sizeof(event_rec.component_id));
 +        }
-+        error_report_once("vEVENTQ: read failed (%m)");
++    } else {
 +        return;
 +    }
 +
-+    if (bytes == sizeof(buf.hdr) &&
-+        (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
-+        error_report_once("vEVENTQ has lost events");
-+        accel->event_start = false;
-+        return;
++    if (cxl_event_insert(&ct3d->cxl_dstate,
++                         CXL_EVENT_TYPE_INFO,
++                         (CXLEventRecordRaw *)&event_rec)) {
++        cxl_event_irq_assert(ct3d);
 +    }
-+    if (bytes < sizeof(buf)) {
-+        error_report_once("vEVENTQ: incomplete read (%zd/%zd bytes)",
-+                          bytes, sizeof(buf));
-+        return;
-+    }
-+
-+    /* Check sequence in hdr for lost events if any */
-+    if (accel->event_start && (buf.hdr.sequence - last_seq != 1)) {
-+        error_report_once("vEVENTQ: detected lost %u event(s)",
-+                          buf.hdr.sequence - last_seq - 1);
-+    }
-+    accel->last_event_seq = buf.hdr.sequence;
-+    accel->event_start = true;
-+    smmuv3_propagate_event(s, (Evt *)&buf.vevent);
 +}
 +
- static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
- {
-     IOMMUFDVeventq *veventq = accel->veventq;
-@@ -397,6 +439,7 @@ static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
-     if (!veventq) {
++
++static void cxl_perform_ppr(CXLType3Dev *ct3d, uint64_t dpa)
++{
++    CXLMaintenance *ent, *next;
++
++    QLIST_FOREACH_SAFE(ent, &ct3d->maint_list, node, next) {
++        if (dpa == ent->dpa) {
++            /* Produce a Memory Sparing Event Record */
++            if (ct3d->soft_ppr_attrs.sppr_op_mode &
++                CXL_MEMDEV_SPPR_OP_MODE_MEM_SPARING_EV_REC_EN) {
++                cxl_mbox_create_mem_sparing_event_records(ct3d,
++                                CXL_MEMDEV_MAINT_CLASS_SPARING,
++                                CXL_MEMDEV_MAINT_SUBCLASS_CACHELINE_SPARING,
++                                ent);
++            }
++            break;
++        }
++    }
++}
++
++/* CXL r3.2 section 8.2.10.7.1 - Perform Maintenance (Opcode 0600h) */
++#define MAINTENANCE_PPR_QUERY_RESOURCES BIT(0)
++
++static CXLRetCode cmd_media_perform_maintenance(const struct cxl_cmd *cmd,
++                                   uint8_t *payload_in, size_t len_in,
++                                   uint8_t *payload_out, size_t *len_out,
++                                   CXLCCI *cci)
++{
++    struct {
++        uint8_t class;
++        uint8_t subclass;
++        union {
++            struct {
++                uint8_t flags;
++                uint64_t dpa;
++                uint8_t nibble_mask[3];
++            } QEMU_PACKED ppr;
++        };
++    } QEMU_PACKED *maint_in = (void *)payload_in;
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++
++    if (maintenance_running(cci)) {
++        return CXL_MBOX_BUSY;
++    }
++
++    switch (maint_in->class) {
++    case CXL_MEMDEV_MAINT_CLASS_NO_OP:
++        return CXL_MBOX_SUCCESS; /* nop */
++    case CXL_MEMDEV_MAINT_CLASS_PPR:
++        if (maint_in->ppr.flags & MAINTENANCE_PPR_QUERY_RESOURCES) {
++            return CXL_MBOX_SUCCESS;
++        }
++
++        switch (maint_in->subclass) {
++        case CXL_MEMDEV_MAINT_SUBCLASS_SPPR:
++        case CXL_MEMDEV_MAINT_SUBCLASS_HPPR:
++            cxl_perform_ppr(ct3d, ldq_le_p(&maint_in->ppr.dpa));
++            return CXL_MBOX_SUCCESS;
++        default:
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        break;
++    default:
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    return CXL_MBOX_SUCCESS;
++}
++
+ /* CXL r3.1 Section 8.2.9.9.1.1: Identify Memory Device (Opcode 4000h) */
+ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
+                                              uint8_t *payload_in,
+@@ -3761,6 +3991,12 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+                                  CXL_MBOX_IMMEDIATE_POLICY_CHANGE |
+                                  CXL_MBOX_IMMEDIATE_LOG_CHANGE |
+                                  CXL_MBOX_SECURITY_STATE_CHANGE)},
++    [MAINTENANCE][PERFORM] = { "MAINTENANCE_PERFORM",
++                               cmd_media_perform_maintenance, ~0,
++                               CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
++                               CXL_MBOX_IMMEDIATE_DATA_CHANGE |
++                               CXL_MBOX_IMMEDIATE_LOG_CHANGE |
++                               CXL_MBOX_BACKGROUND_OPERATION },
+     [IDENTIFY][MEMORY_DEVICE] = { "IDENTIFY_MEMORY_DEVICE",
+         cmd_identify_memory_device, 0, 0 },
+     [CCLS][GET_PARTITION_INFO] = { "CCLS_GET_PARTITION_INFO",
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 6eb20137a0..b02dc31f11 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -964,6 +964,32 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+         ct3d->ecs_attrs.fru_attrs[count].ecs_flags = 0;
+     }
+ 
++    /* Set default values for soft-PPR attributes */
++    ct3d->soft_ppr_attrs = (CXLMemSoftPPRReadAttrs) {
++        .max_maint_latency = 0x5, /* 100 ms */
++        .op_caps = 0, /* require host involvement */
++        .op_mode = 0,
++        .maint_op_class = CXL_MEMDEV_MAINT_CLASS_PPR,
++        .maint_op_subclass = CXL_MEMDEV_MAINT_SUBCLASS_SPPR,
++        .sppr_flags = CXL_MEMDEV_SPPR_DPA_SUPPORT_FLAG |
++                      CXL_MEMDEV_SPPR_MEM_SPARING_EV_REC_CAP_FLAG,
++        .restriction_flags = 0,
++        .sppr_op_mode = CXL_MEMDEV_SPPR_OP_MODE_MEM_SPARING_EV_REC_EN
++    };
++
++    /* Set default value for hard-PPR attributes */
++    ct3d->hard_ppr_attrs = (CXLMemHardPPRReadAttrs) {
++        .max_maint_latency = 0x5, /* 100 ms */
++        .op_caps = 0, /* require host involvement */
++        .op_mode = 0,
++        .maint_op_class = CXL_MEMDEV_MAINT_CLASS_PPR,
++        .maint_op_subclass = CXL_MEMDEV_MAINT_SUBCLASS_HPPR,
++        .hppr_flags = CXL_MEMDEV_HPPR_DPA_SUPPORT_FLAG |
++                      CXL_MEMDEV_HPPR_MEM_SPARING_EV_REC_CAP_FLAG,
++        .restriction_flags = 0,
++        .hppr_op_mode = CXL_MEMDEV_HPPR_OP_MODE_MEM_SPARING_EV_REC_EN
++    };
++
+     return;
+ 
+ err_release_cdat:
+@@ -1635,6 +1661,75 @@ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+         return -EINVAL;
+     }
+ }
++
++static void cxl_maintenance_insert(CXLType3Dev *ct3d, uint64_t dpa,
++                                   bool has_channel, uint8_t channel,
++                                   bool has_rank, uint8_t rank,
++                                   bool has_nibble_mask, uint32_t nibble_mask,
++                                   bool has_bank_group, uint8_t bank_group,
++                                   bool has_bank, uint8_t bank,
++                                   bool has_row, uint32_t row,
++                                   bool has_column, uint16_t column,
++                                   const char *component_id,
++                                   bool has_comp_id_pldm, bool is_comp_id_pldm,
++                                   bool has_sub_channel, uint8_t sub_channel)
++{
++    CXLMaintenance *ent, *m;
++
++    QLIST_FOREACH(ent, &ct3d->maint_list, node) {
++        if (dpa == ent->dpa) {
++            return;
++        }
++    }
++    m = g_new0(CXLMaintenance, 1);
++    memset(m, 0, sizeof(*m));
++    m->dpa = dpa;
++    m->validity_flags = 0;
++
++    if (has_channel) {
++        m->channel = channel;
++        m->validity_flags |= CXL_MSER_VALID_CHANNEL;
++    }
++    if (has_rank) {
++        m->rank = rank;
++        m->validity_flags |= CXL_MSER_VALID_RANK;
++    }
++    if (has_nibble_mask) {
++        m->nibble_mask = nibble_mask;
++        m->validity_flags |= CXL_MSER_VALID_NIB_MASK;
++    }
++    if (has_bank_group) {
++        m->bank_group = bank_group;
++        m->validity_flags |= CXL_MSER_VALID_BANK_GROUP;
++    }
++    if (has_bank) {
++        m->bank = bank;
++        m->validity_flags |= CXL_MSER_VALID_BANK;
++    }
++    if (has_row) {
++        m->row = row;
++        m->validity_flags |= CXL_MSER_VALID_ROW;
++    }
++    if (has_column) {
++        m->column = column;
++        m->validity_flags |= CXL_MSER_VALID_COLUMN;
++    }
++    if (has_sub_channel) {
++        m->sub_channel = sub_channel;
++        m->validity_flags |= CXL_MSER_VALID_SUB_CHANNEL;
++    }
++    if (component_id) {
++        strncpy((char *)m->component_id, component_id,
++                sizeof(m->component_id) - 1);
++        m->validity_flags |= CXL_MSER_VALID_COMP_ID;
++        if (has_comp_id_pldm && is_comp_id_pldm) {
++            m->validity_flags |= CXL_MSER_VALID_COMP_ID_FORMAT;
++        }
++    }
++
++    QLIST_INSERT_HEAD(&ct3d->maint_list, m, node);
++}
++
+ /* Component ID is device specific.  Define this as a string. */
+ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+                                         uint8_t flags, uint64_t dpa,
+@@ -1671,6 +1766,11 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+         error_setg(errp, "Unhandled error log type");
          return;
      }
-+    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
-     close(veventq->veventq_fd);
-     iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
-     g_free(veventq);
-@@ -424,6 +467,7 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-     IOMMUFDVeventq *veventq;
-     uint32_t veventq_id;
-     uint32_t veventq_fd;
-+    int flags;
++    if (rc == CXL_EVENT_TYPE_INFO &&
++        (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED)) {
++        error_setg(errp, "Informational event cannot require maintenance");
++        return;
++    }
+     enc_log = rc;
  
-     if (!accel->viommu) {
-         return true;
-@@ -445,12 +489,30 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-         return false;
+     memset(&gem, 0, sizeof(gem));
+@@ -1708,6 +1808,15 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
+         cxl_event_irq_assert(ct3d);
      }
- 
-+    flags = fcntl(veventq_fd, F_GETFL);
-+    if (flags < 0) {
-+        error_setg(errp, "Failed to get flags for vEVENTQ fd");
-+        goto free_veventq;
++
++    if (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED) {
++        cxl_maintenance_insert(ct3d, dpa, has_channel, channel,
++                               has_rank, rank,
++                               0, 0, 0, 0, 0, 0, 0, 0,
++                               0, 0, component_id,
++                               has_comp_id_pldm, is_comp_id_pldm,
++                               0, 0);
 +    }
-+    if (fcntl(veventq_fd, F_SETFL, O_NONBLOCK | flags) < 0) {
-+        error_setg(errp, "Failed to set O_NONBLOCK on vEVENTQ fd");
-+        goto free_veventq;
-+    }
-+
-     veventq = g_new(IOMMUFDVeventq, 1);
-     veventq->veventq_id = veventq_id;
-     veventq->veventq_fd = veventq_fd;
-     veventq->viommu = accel->viommu;
-     accel->veventq = veventq;
-+
-+    /* Set up event handler for veventq fd */
-+    qemu_set_fd_handler(veventq_fd, smmuv3_accel_event_read, NULL, s);
-     return true;
-+
-+free_veventq:
-+    close(veventq_fd);
-+    iommufd_backend_free_id(accel->viommu->iommufd, veventq_id);
-+    return false;
  }
  
- static bool
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index dba6c71de5..c9c10e55c3 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -23,6 +23,8 @@
- typedef struct SMMUv3AccelState {
-     IOMMUFDViommu *viommu;
-     IOMMUFDVeventq *veventq;
-+    uint32_t last_event_seq;
-+    bool event_start;
-     uint32_t bypass_hwpt_id;
-     uint32_t abort_hwpt_id;
-     QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+ #define CXL_DRAM_VALID_CHANNEL                          BIT(0)
+@@ -1758,6 +1867,11 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+         error_setg(errp, "Unhandled error log type");
+         return;
+     }
++    if (rc == CXL_EVENT_TYPE_INFO &&
++        (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED)) {
++        error_setg(errp, "Informational event cannot require maintenance");
++        return;
++    }
+     enc_log = rc;
+ 
+     memset(&dram, 0, sizeof(dram));
+@@ -1819,6 +1933,17 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&dram)) {
+         cxl_event_irq_assert(ct3d);
+     }
++
++    if (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED) {
++        cxl_maintenance_insert(ct3d, dpa, has_channel, channel,
++                               has_rank, rank,
++                               has_nibble_mask, nibble_mask,
++                               has_bank_group, bank_group,
++                               has_bank, bank, has_row, row,
++                               has_column, column, component_id,
++                               has_comp_id_pldm, is_comp_id_pldm,
++                               has_sub_channel, sub_channel);
++    }
+ }
+ 
+ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 165355baf9..72e8c68187 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -430,6 +430,12 @@ static inline bool cxl_dev_media_disabled(CXLDeviceState *cxl_dstate)
+     uint64_t dev_status_reg = cxl_dstate->mbox_reg_state64[R_CXL_MEM_DEV_STS];
+     return FIELD_EX64(dev_status_reg, CXL_MEM_DEV_STS, MEDIA_STATUS) == 0x3;
+ }
++
++static inline bool maintenance_running(CXLCCI *cci)
++{
++    return cci->bg.runtime && cci->bg.opcode == 0x0600;
++}
++
+ static inline bool scan_media_running(CXLCCI *cci)
+ {
+     return !!cci->bg.runtime && cci->bg.opcode == 0x4304;
+@@ -443,6 +449,23 @@ typedef struct CXLError {
+ 
+ typedef QTAILQ_HEAD(, CXLError) CXLErrorList;
+ 
++typedef struct CXLMaintenance {
++    uint64_t dpa;
++    uint16_t validity_flags;
++    uint8_t channel;
++    uint8_t rank;
++    uint32_t nibble_mask;
++    uint8_t bank_group;
++    uint8_t bank;
++    uint32_t row;
++    uint16_t column;
++    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
++    uint8_t sub_channel;
++    QLIST_ENTRY(CXLMaintenance) node;
++} CXLMaintenance;
++
++typedef QLIST_HEAD(, CXLMaintenance) CXLMaintenanceList;
++
+ typedef struct CXLPoison {
+     uint64_t start, length;
+     uint8_t type;
+@@ -455,6 +478,87 @@ typedef struct CXLPoison {
+ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
+ #define CXL_POISON_LIST_LIMIT 256
+ 
++/* CXL memory maintenance operation */
++/*
++ * CXL r3.2 section 8.2.10.7.2, Table 8-125: Mainteance Operation:
++ * Classes, Subclasses, and Feature UUIDs
++ */
++#define CXL_MEMDEV_MAINT_CLASS_NO_OP 0x0
++#define CXL_MEMDEV_MAINT_CLASS_PPR 0x1
++#define CXL_MEMDEV_MAINT_CLASS_SPARING 0x2
++#define CXL_MEMDEV_MAINT_CLASS_DEV_BUILT_IN_TEST 0x3
++
++#define CXL_MEMDEV_MAINT_SUBCLASS_SPPR 0x0
++#define CXL_MEMDEV_MAINT_SUBCLASS_HPPR 0x1
++
++#define CXL_MEMDEV_MAINT_SUBCLASS_CACHELINE_SPARING 0x0
++#define CXL_MEMDEV_MAINT_SUBCLASS_ROW_SPARING 0x1
++#define CXL_MEMDEV_MAINT_SUBCLASS_BANK_SPARING 0x2
++#define CXL_MEMDEV_MAINT_SUBCLASS_RANK_SPARING 0x3
++
++/* CXL memory Post Package Repair control attributes */
++/*
++ * CXL r3.2 section 8.2.10.7.2.1, Table 8-128 and 8-129:
++ * sPPR Feature Readable/Writable Attributes
++ */
++typedef struct CXLMemSoftPPRReadAttrs {
++    uint8_t max_maint_latency;
++    uint16_t op_caps;
++    uint16_t op_mode;
++    uint8_t maint_op_class;
++    uint8_t maint_op_subclass;
++    uint8_t rsvd[9];
++    uint8_t sppr_flags;
++    uint16_t restriction_flags;
++    uint8_t sppr_op_mode;
++} QEMU_PACKED CXLMemSoftPPRReadAttrs;
++
++typedef struct CXLMemSoftPPRWriteAttrs {
++    uint16_t op_mode;
++    uint8_t sppr_op_mode;
++} QEMU_PACKED CXLMemSoftPPRWriteAttrs;
++
++#define CXL_MEMDEV_SPPR_GET_FEATURE_VERSION    0x03
++#define CXL_MEMDEV_SPPR_SET_FEATURE_VERSION    0x03
++#define CXL_MEMDEV_SPPR_DPA_SUPPORT_FLAG               BIT(0)
++#define CXL_MEMDEV_SPPR_NIBBLE_SUPPORT_FLAG            BIT(1)
++#define CXL_MEMDEV_SPPR_MEM_SPARING_EV_REC_CAP_FLAG BIT(2)
++#define CXL_MEMDEV_SPPR_DEV_INITIATED_AT_BOOT_CAP_FLAG BIT(3)
++
++#define CXL_MEMDEV_SPPR_OP_MODE_MEM_SPARING_EV_REC_EN BIT(0)
++#define CXL_MEMDEV_SPPR_OP_MODE_DEV_INITIATED_AT_BOOT BIT(1)
++
++/*
++ * CXL r3.2 section 8.2.10.7.2.2, Table 8-131 and 8-132:
++ * hPPR Feature Readable/Writable Attributes
++ */
++typedef struct CXLMemHardPPRReadAttrs {
++    uint8_t max_maint_latency;
++    uint16_t op_caps;
++    uint16_t op_mode;
++    uint8_t maint_op_class;
++    uint8_t maint_op_subclass;
++    uint8_t rsvd[9];
++    uint8_t hppr_flags;
++    uint16_t restriction_flags;
++    uint8_t hppr_op_mode;
++} QEMU_PACKED CXLMemHardPPRReadAttrs;
++
++typedef struct CXLMemHardPPRWriteAttrs {
++    uint16_t op_mode;
++    uint8_t hppr_op_mode;
++} QEMU_PACKED CXLMemHardPPRWriteAttrs;
++
++#define CXL_MEMDEV_HPPR_GET_FEATURE_VERSION    0x03
++#define CXL_MEMDEV_HPPR_SET_FEATURE_VERSION    0x03
++#define CXL_MEMDEV_HPPR_DPA_SUPPORT_FLAG               BIT(0)
++#define CXL_MEMDEV_HPPR_NIBBLE_SUPPORT_FLAG            BIT(1)
++#define CXL_MEMDEV_HPPR_MEM_SPARING_EV_REC_CAP_FLAG    BIT(2)
++#define CXL_MEMDEV_HPPR_DEV_INITIATED_AT_BOOT_CAP_FLAG BIT(3)
++
++#define CXL_MEMDEV_HPPR_OP_MODE_MEM_SPARING_EV_REC_EN BIT(0)
++#define CXL_MEMDEV_HPPR_OP_MODE_DEV_INITIATED_AT_BOOT BIT(1)
++
+ /* CXL memory device patrol scrub control attributes */
+ typedef struct CXLMemPatrolScrubReadAttrs {
+         uint8_t scrub_cycle_cap;
+@@ -605,6 +709,9 @@ struct CXLType3Dev {
+     /* Error injection */
+     CXLErrorList error_list;
+ 
++    /* Keep track of maintenance requests */
++    CXLMaintenanceList maint_list;
++
+     /* Poison Injection - cache */
+     CXLPoisonList poison_list;
+     unsigned int poison_list_cnt;
+@@ -617,6 +724,11 @@ struct CXLType3Dev {
+ 
+     CXLSetFeatureInfo set_feat_info;
+ 
++    /* PPR control attributes */
++    CXLMemSoftPPRReadAttrs soft_ppr_attrs;
++    CXLMemSoftPPRWriteAttrs soft_ppr_wr_attrs;
++    CXLMemHardPPRReadAttrs hard_ppr_attrs;
++    CXLMemHardPPRWriteAttrs hard_ppr_wr_attrs;
+     /* Patrol scrub control attributes */
+     CXLMemPatrolScrubReadAttrs patrol_scrub_attrs;
+     CXLMemPatrolScrubWriteAttrs patrol_scrub_wr_attrs;
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 758b075a64..7cba494b72 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -199,4 +199,46 @@ typedef enum CXLDCEventType {
+     DC_EVENT_CAPACITY_RELEASED = 0x5,
+ } CXLDCEventType;
+ 
++/*
++ * CXL r3.2 section Table 8-60: Memory Sparing Event Record
++ * All fields little endian.
++ */
++#define CXL_MSER_VALID_CHANNEL BIT(0)
++#define CXL_MSER_VALID_RANK BIT(1)
++#define CXL_MSER_VALID_NIB_MASK BIT(2)
++#define CXL_MSER_VALID_BANK_GROUP BIT(3)
++#define CXL_MSER_VALID_BANK BIT(4)
++#define CXL_MSER_VALID_ROW BIT(5)
++#define CXL_MSER_VALID_COLUMN BIT(6)
++#define CXL_MSER_VALID_COMP_ID BIT(7)
++#define CXL_MSER_VALID_COMP_ID_FORMAT BIT(8)
++#define CXL_MSER_VALID_SUB_CHANNEL BIT(9)
++
++typedef struct CXLEventSparing {
++    CXLEventRecordHdr hdr;
++    uint8_t maint_op_class;
++    uint8_t maint_op_subclass;
++    uint8_t flags;
++    uint8_t result;
++    uint16_t validity_flags;
++    uint8_t reserved1[6];
++    uint16_t res_avail;
++    uint8_t channel;
++    uint8_t rank;
++    uint8_t nibble_mask[3];
++    uint8_t bank_group;
++    uint8_t bank;
++    uint8_t row[3];
++    uint16_t column;
++    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
++    uint8_t sub_channel;
++    uint8_t reserved2[0x25];
++} QEMU_PACKED CXLEventSparing;
++
++/* CXL r3.2 Table 8-60: Memory Sparing Event Record */
++static const QemuUUID sparing_uuid = {
++    .data = UUID(0xe71f3a40, 0x2d29, 0x4092, 0x8a, 0x39,
++                 0x4d, 0x1c, 0x96, 0x6c, 0x7c, 0x65),
++};
++
+ #endif /* CXL_EVENTS_H */
 -- 
-2.43.0
+MST
 
 
