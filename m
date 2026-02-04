@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC7E8B387
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C52BE8B383
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 02:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnS3R-0005U3-8m; Tue, 03 Feb 2026 20:51:41 -0500
+	id 1vnSLj-0000eW-Qy; Tue, 03 Feb 2026 21:10:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnS3P-0005S4-0c
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:51:39 -0500
+ id 1vnSLi-0000e0-J7
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 21:10:34 -0500
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnS3L-00056z-Ca
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:51:36 -0500
+ id 1vnSLh-0002jP-2Z
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 21:10:34 -0500
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-81f4ba336b4so5239644b3a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:51:34 -0800 (PST)
+ d2e1a72fcca58-8230d228372so156537b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 18:10:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770169893; x=1770774693; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770171031; x=1770775831; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t3hPdbETkY0/DzU5luywE4IdAQ6LHqzcVpQ4LCpwRg4=;
- b=m81cX9P9pgzbah/w1G75T0k+qRKyynxBkFWNP7zEUnNnDeOsAqaqVh0BY0Gl0hQ39C
- o7sDQekB1gDb3XZ16ZbFuG3b8cYEeAfyp5sXGqNdwaGD3R6JohH7U/24I+NnZ/QFelyW
- QR0NjP3EF0DzXf3AUNacbVa91UtG7U6DBzKPZ6ezpfdF+5596J6/z62GNkLb+ws2pCW3
- wkO6+ZwjiKKXDrUcf2Hch7FFTJX7lZ0p6zM21vRw+kpYu9qF0Urnpkw0lDpiMq0iwUpt
- xMD7+Se8eJeq5TwvvcYFez+KFpKYh77d0voLszHF26Zs/EERa8l8JadX3pX3Z+qUsbqf
- 9SLw==
+ bh=oX2gRXmsjH09OOSy6AzITXbftKhFHiKoWuLm1W5Fe14=;
+ b=dGsQ5NjLTsX4bCGT2asxAISFGhMhnJPGVo2OOmSgE847xMbTOi7mrrPW/yaHGK1xhO
+ UqNmiuomhFnFcpy4iXLJspXKVtKO+8ijsBmwHJRoqx7Nch1k+41noovRxHOf5rUI/fjB
+ 99TzcAaV+LJ4W4iFYI4+2OO91YXL15Dca6kPxZ+OPCATWeSo7Pv1natcBInQKryXox57
+ WKoW7lW8CJxxsnv4HtCrfSks6OdKpVwUzm7STg9SQgJ+PcP9sKuKsYkUGdbXbuwJn42T
+ TK8vReBU9yEluzSP5Tbh7cn9pQgPv1SxVZxfpF27qZkz3914me0zKH5fmZsP73ZVdbEs
+ BVdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770169893; x=1770774693;
+ d=1e100.net; s=20230601; t=1770171031; x=1770775831;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=t3hPdbETkY0/DzU5luywE4IdAQ6LHqzcVpQ4LCpwRg4=;
- b=bm6bnRuWrtiIawzAobVkwgtnrXEZhsQ6XsrLNJsE/uY18vqXhPE0ghwhLkNUluhear
- ALr0I6BdBDSoUAaAG1z84sqblZiA286j0/d6RVOGjZog7tl+bxs40Yw9ac60WU9eaSlN
- IKs3ZemjFSi5CMsWiKp5FGUoPOxsLNzUFW/Vz0kFyujybbodsjNY189GxnzPstL7Tp9A
- nLXcP5n/gGedfJLgXOnjDGQ1gt3girNPGCasFMBGHEhcuGuXwQwMtFsJkdRl45FEbcAG
- K92TDno4Pdo130qjJRs8NYglZTQ+1gD2dvWARo9OUhgV6zbKSFY9uv2Yw5B9Lw/Jxb2y
- HtYg==
+ bh=oX2gRXmsjH09OOSy6AzITXbftKhFHiKoWuLm1W5Fe14=;
+ b=sPusjlGLaRxmPn0KuALRkpU2MWVK/Eb8089giqc7B7lVweEwFEgMciuooK3GVcEHBd
+ EpPz2QRMJnqVF/Jv3rEf6RMzGg0kVg2n3e8be9Qr4ArnnrlCW+YSTwmeEK/lBFCTunzM
+ QvDpLqNPf9GB31n+qewfKiKJhujNbllPuxtQSzZAcdukZyWGQZ8YjKhOSyIBcuQegPKH
+ T6Kt4FUpJ237VuLE7aRxesHuTN8XWcV8Lu9EGOqSHir98EM9TQkHkvWbqC/Ck6MIulz1
+ yJHbGiNHdrgFnOoC49n7YPt0O/z0kkiT3st8S/Jk6G0ZE2zjtW0ZP4wC3Ob4Ln12VIzR
+ ozWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3Tf3T2j6rsZrfZqdDEXX8VBIh6sB7CGMp278PJknAOkVBVV1b/1RYFxIlAMwXsCKNMJAVh2u3rGms@nongnu.org
-X-Gm-Message-State: AOJu0YzKgBJVkTx93zzGY4HBDnS/1JImna8CfvXw9mYEpxT9m28kbS++
- zzqNLMoC39F755/DbPWVSCDVvevMroqIrMdxCt0k7eSL21I0Jt6PF32JMnTwGmyZFjg=
-X-Gm-Gg: AZuq6aLx4ZgZTc99C5J8zPxA626hGcW42CnuIwyfRPT2bRoMQ8+AORAg0XxpuzOQC2m
- l+vuMobcZlPeZhtdhHZTqeDBy+twLFDlHivP5TOVhCh9tzcjaWcvlDzqPl15vQbgmtuP/yN1b77
- 3aWnqa6C6GT72Dhb3QvnhDz/R5/mpeQ6ZQSStUg0R0M/9K5fAaqFptUHsnxfPsSlNOU5bmFqW88
- Aa+F9DKrp9kI096VJnjylgYOE+GrQQQAKC6/za+o4/Elk6QBPEiegGo6qjO897CPUqgK/Y0fGIR
- VaDrGrAukc4UnOstKhVez1AxVVTKOeaGqIzmgvshsMHnJqOQFEKg4IKMlsPpikh5aWKa8AGCn/U
- 4tPZ7viVzNbFN4jzX1efBWQpzM0mJ2nhFpv5BLFUH623Wq8boKCdwvjdLf0WpKe9C/fR4HT9jAI
- Hzwgy1lOO5izoqr10RN1I3vNurC+fxcqLk+GfQ5bHYbLZ8iDLBEAJWeuQj4kFglzMz0QzvEnkHF
- 2dNxpgb6d454W3xnTVj1PnS3x+5ewprz8tq
-X-Received: by 2002:a05:6a00:ab86:b0:821:78bf:b048 with SMTP id
- d2e1a72fcca58-8241c6a65c8mr1378200b3a.62.1770169893458; 
- Tue, 03 Feb 2026 17:51:33 -0800 (PST)
+ AJvYcCWKhyeY7z/UeFM/P1hYXYKi40bq7NConErLVKlnUCfFScE2a1oHLlGPLiYOBW0k+4ZdPAUqq/ZL99jj@nongnu.org
+X-Gm-Message-State: AOJu0YyZc9rAAFAN2UjYQCeNEEwGmrIcsEbf9kb17Vuxah8JZq6P5FHh
+ A+2z00giGXvgkP04Sx2SqcwkHXHwehn7MnnZE39msrFUel6jkE/IsOVUSew6TP9RFJU=
+X-Gm-Gg: AZuq6aLJLePYUv98cy/BeLk89v7pQYQYP7xM6i6v+9JE6MPHuv1GGG17Rs2s4cO1DhP
+ gmE4d/HlwCeE5tRhUIP6y3JKH91buLBs+j6CmCfSXT3L4VffdUYjddccnjGNdvqZz8JVT2KcbHX
+ FmBCJpQDRH7lwdKvEDhqHok39UNLuDsr3u13JsF5oacMqx0WonJRAxbirfZFcL9lUGI3+QIsnag
+ ZqKJLt6Ipqz9ro6+tP7RuFsSK5qaUst7tnCWunAzu1i9Jxuc3x0xNVwQbJ72RSMVymqS3673Uzq
+ 0IScPQRR1Erz9MuzyBOe9glVBuHU7wtpfMJ4lBMKwyjZ1YyER9CVJsi7ZTQ+ImCt7ZtsxfxaHUm
+ M/aM54Xln3Fu2FBCGd5zui6m8keBBEjuI5jkQcuz/+CbmBSre1PyRbNtm/JABXfrgd/sbQklvYh
+ 1MnWzaC686HIWtZ12tpAE1T9TfxvaLAFTeBl1EWR/6ozk1dQbuLbHrs5elHnZFg6qXXt+19hlAm
+ P4Rw7jfnD2c5n982OLvj0nE6dyyZkpxV77fjXb7nycGOjM=
+X-Received: by 2002:a05:6a20:56a3:b0:366:14ac:e201 with SMTP id
+ adf61e73a8af0-393724968d8mr1460280637.63.1770171031274; 
+ Tue, 03 Feb 2026 18:10:31 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
  (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
  [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d1bd466sm606154b3a.20.2026.02.03.17.51.29
+ 41be03b00d2f7-c6c82e342e0sm613460a12.6.2026.02.03.18.10.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 17:51:32 -0800 (PST)
-Message-ID: <5a698261-9d37-4502-ac45-2db098a513e3@linaro.org>
-Date: Wed, 4 Feb 2026 11:51:27 +1000
+ Tue, 03 Feb 2026 18:10:30 -0800 (PST)
+Message-ID: <5b4fca48-2fab-4874-8e0e-4dc8b63087b6@linaro.org>
+Date: Wed, 4 Feb 2026 12:10:23 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] configs/targets: Forbid SPARC to use legacy native
- endianness APIs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260203230054.23667-1-philmd@linaro.org>
- <20260203230054.23667-6-philmd@linaro.org>
+Subject: Re: [PATCH v4 5/9] include/hw/virtio/virtio-access.h: remove target
+ specifics define
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-ppc@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
+ <20260203205637.3109749-6-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260203230054.23667-6-philmd@linaro.org>
+In-Reply-To: <20260203205637.3109749-6-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
  envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
@@ -114,23 +112,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 09:00, Philippe Mathieu-Daudé wrote:
-> All SPARC-related binaries are buildable without a single
-> use of the legacy "native endian" API. Set the transitional
-> TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API definition to forbid
-> further uses of the legacy API.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Manos Pitsidianakis<manos.pitsidianakis@linaro.org>
+On 2/4/26 06:56, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   configs/targets/sparc-linux-user.mak       | 1 +
->   configs/targets/sparc-softmmu.mak          | 1 +
->   configs/targets/sparc32plus-linux-user.mak | 1 +
->   configs/targets/sparc64-linux-user.mak     | 1 +
->   configs/targets/sparc64-softmmu.mak        | 1 +
->   5 files changed, 5 insertions(+)
+>   include/hw/virtio/virtio-access.h | 26 +++++++++++++-------------
+>   1 file changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+> index f3b4d0075b5..1bea3445979 100644
+> --- a/include/hw/virtio/virtio-access.h
+> +++ b/include/hw/virtio/virtio-access.h
+> @@ -17,27 +17,27 @@
+>   #define QEMU_VIRTIO_ACCESS_H
+>   
+>   #include "exec/hwaddr.h"
+> +#include "qemu/target-info.h"
+>   #include "system/memory_cached.h"
+>   #include "hw/virtio/virtio.h"
+>   #include "hw/virtio/virtio-bus.h"
+>   
+> -#if defined(TARGET_PPC64) || defined(TARGET_ARM)
+> -#define LEGACY_VIRTIO_IS_BIENDIAN 1
+> -#endif
+> -
+>   static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+>   {
+> -#if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+> -    return virtio_is_big_endian(vdev);
+> -#elif TARGET_BIG_ENDIAN
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> -        /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+> -        return false;
+> +    if (target_ppc64() || target_base_arm()) {
+> +        return virtio_is_big_endian(vdev);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Why use two predicates like this, effectively calling target_arch() twice?
+Surely it's better to do
+
+     switch (target_arch()) {
+     case SYS_EMU_TARGET_ARM:
+     case SYS_EMU_TARGET_AARCH64:
+     case SYS_EMU_TARGET_PPC64:
+         return virtio_is_big_endian(vdev);
+     default:
+         break;
+     }
+
+Definitely with a comment saying this is about legacy behaviour.
+And does VIRTIO_F_VERSION_1 really not take priority?
+
 
 r~
 
