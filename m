@@ -4,120 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66467E83EF7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DEDE83EF9
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnYiy-0003gr-Gt; Wed, 04 Feb 2026 03:59:00 -0500
+	id 1vnYmM-0005hx-C0; Wed, 04 Feb 2026 04:02:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiw-0003fx-K0
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:58 -0500
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vnYmK-0005hp-N0
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:02:28 -0500
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiu-0005wv-S7
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:58 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.119])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f5Z5p49cTz5w2L;
- Wed,  4 Feb 2026 08:58:54 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG14EX2.mxp5.local (172.16.2.142)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 4 Feb
- 2026 09:58:53 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S004caa71605-d924-4b8f-a7be-2b5b7aedc842,
- E481ED796CD1A7AD002472F698DA8951F44CEEA4) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e7c8d3fe-f3d3-4fda-9c62-d74c6b75934f@kaod.org>
-Date: Wed, 4 Feb 2026 09:58:52 +0100
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vnYmI-0006cs-5u
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:02:28 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rhH0I4iGcaMhDlS6g1hmBVjqmcMZu4I4kxlnda2/V2VNckG0olHESIavYKxLSFvh6hojimZ/OXbG4Km+CP50JbxH/q5kFR+kHR91g5q0FSgvGvc4t4n1tnbiIuVFg489BXvr5AHNoHHcb/dk3X4qseLXWfDM/Oieb3kDtOKkB+PSfW9MfqF76ciJNYaDKfp3yY8UatNXJdrM3Hx098Aq+l2GGS4yvAFmayCRgIG00fOU+NWXeHxkePFAX8PK4iTRHm6i991EvHby+8YmdimnSU9jABj2ZM3jg9n9mQup2rX3hYW607UHYWc9zWjvHnm9s1ki9q+9sY05LR7obX3NWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qaR93bzfy7QQq1feK8HNJYsYg6xGoXybBx6/g/CLpYI=;
+ b=ok69f2zbLnaKJy9JGM6HSKe9u18KNfYRr1MJSgl/hw57NQNAbwWillxuYo8hDwI65vN07Oe6CMVKMc0m9WzE1S4xicPgab86tydcMrZT1UTfMaCqelJ9I4oDACS/lrOiH6gp4egcuriD97bAGnzHWHQ7zztrGMBm68TEWyifV4eR7bkliyGmyQ0Ql07wTK4RlvMH/KzIu2cPXtwFU6Qay3bpIh2jtfuScLNBqUP7p2NhG2qnWsO++AH3pSep4fRAINt4JxYJu2dhMyPuwCzrKNOPySSO6IkGlVUaPZ8Q2XhSUV/wO6u9T7HQjXAtrEvynX2AcVe+WupmFFh0XgV/cQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qaR93bzfy7QQq1feK8HNJYsYg6xGoXybBx6/g/CLpYI=;
+ b=0Dm9uAym3wk4L8wvSMDpIv0QwOWdwqdCm1jWm6bTKr2xpUevmIlzBYh6Cudwzbr7LUbTGIcfGwU1UyHvC9EIKKVj7SBYL+7rTnNSuDi0pIryoDcBNgQqLaamTa6a8W40vT3YqTO1L6gIOyEgLMbuTlyNOJE/DLNHpHXfbwr8qOA=
+Received: from CH2PR17CA0003.namprd17.prod.outlook.com (2603:10b6:610:53::13)
+ by CY5PR12MB6528.namprd12.prod.outlook.com (2603:10b6:930:43::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Wed, 4 Feb
+ 2026 09:02:19 +0000
+Received: from CH1PEPF0000AD75.namprd04.prod.outlook.com
+ (2603:10b6:610:53:cafe::1e) by CH2PR17CA0003.outlook.office365.com
+ (2603:10b6:610:53::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.13 via Frontend
+ Transport; Wed, 4 Feb 2026 09:02:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ CH1PEPF0000AD75.mail.protection.outlook.com (10.167.244.54) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 09:02:18 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Wed, 4 Feb
+ 2026 03:02:18 -0600
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 4 Feb
+ 2026 03:02:18 -0600
+Received: from [172.31.180.39] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Wed, 4 Feb 2026 03:02:15 -0600
+Message-ID: <fe2934f7-0e96-4b76-9993-40b4492e698b@amd.com>
+Date: Wed, 4 Feb 2026 14:32:14 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 22/22] tests/functional/aarch64: Add I2C test for
- AST1700 IO expanders
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "kaneluno1@gmail.com"
- <kaneluno1@gmail.com>
-References: <20260204082113.3955407-1-kane_chen@aspeedtech.com>
- <20260204082113.3955407-23-kane_chen@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260204082113.3955407-23-kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG14EX2.mxp5.local
- (172.16.2.142)
-X-Ovh-Tracer-GUID: 16143d6f-118f-4899-b20a-38a8c22d9c13
-X-Ovh-Tracer-Id: 742530989719718901
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFr5Gbb+DWXK0mbGKznepz2iZ5JjvnON+uQK4PfaIrgtahIicVtcKBLLilo7mXON1qpsORenuVFw9kSNNECvlMWJCnttj6xciaQ8N/JvndlaXvVMDLyPDGxqzCyjPOjBM288nSQAdcMLdP4jiNwTTNJs4sEMJvyZ+6RKMwFT/1EtotEgA3oHLTlBM6zAgGNEqfw8tLh/atVbP3izNQBDsP55501iDaidKjOUr74caLybt8V6WQXFUMxliif1hmhpJW/+s+N1AdVDVsvoClBUDtPBEdJN6t/+oWlUUitECxK8NWL+5JQAR+s3v10fXqPBUmmMVRnjytage3Qt3JEAp7CXuZooMvGR07QbksbMWDg/+0X4cEVBX9z8qsIcrTw6ky5vdaK0YEAqzD4M+7cgVJMCUXR9ssTO+jVuYA5b1U8rknwL4oHlLXBZ1YVRrKzoDWVNx8j3gG89dH1H0tAwSeC9AI760+pOPp4isTz8d+N3iCHOVgQZF8CagRBDusLtCikjpKEncoiq1ZFRS50UIODLDsgGaRHyPenQ5wJC75P+pIDD/gwX3PnbKtm20YtgN94z20KVQ8jUOARwOjGPtg8lI5cbqLyxEbHxYCgpXlHk4EegNC60p3fKr12fkFiGakRwRMUHEq0RXG4PHFdyiF/DG6cy5RVWWA11tE1+A9ukA
-DKIM-Signature: a=rsa-sha256; bh=eCuxLO9e5XqSSImuHQN2Vpzq8HZ91j4Zs+8d4vvfqus=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770195534; v=1;
- b=j4Y0KJa3N9kr1toI2dAtIeBIRHJANwOiE7M9rUisNw98MY2W/3+Sbup3atFC5LvGorNJtlA+
- v3ksTwoWoSVrxFJGeZlUj/O2yY1vQTrrty1fEIsi/wcwHBwCzkN4NrY9pU5EPtW9KE704IbkqDH
- fFz5atm98AdHZXeWYys4MBJpIdeOErh6R7gA75e5Wv/wj2GIWRvM92F3d4QXBfGoaEZsHYKq/8A
- HqpveMLKbjkp0uVdBO/0qgEFPRi/aCZeoOMCONR9Om/YL6zgAe729Rn9wkjDWDJF8qO0nHuw12Y
- zAAjUTxtlNB1dr6YIlonplTnsbvI52fsF9Suc42eKopVQ==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+Subject: Re: [PATCH 4/5] i386: Add Bus Lock Detect support
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>,
+ <kvm@vger.kernel.org>
+CC: <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
+ <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
+ Shivansh Dhiman <shivansh.dhiman@amd.com>
+References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
+ <20251121083452.429261-5-shivansh.dhiman@amd.com>
+Content-Language: en-US
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <20251121083452.429261-5-shivansh.dhiman@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB04.amd.com: shivansh.dhiman@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD75:EE_|CY5PR12MB6528:EE_
+X-MS-Office365-Filtering-Correlation-Id: 66095669-e65b-41fe-b6e8-08de63cc19c7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|1800799024|36860700013|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MkVIckY5V2tWOEdHaFBGTlNhL1g3ekwyTGVNNDR5OEJrUUNIUVVXTVRHbDBz?=
+ =?utf-8?B?Q1lBb09nV2l2cXVDUnhGbDh2eUc2SGtINVZtYi9KYnA2bVI4ZVNFSzRDdzZx?=
+ =?utf-8?B?anFHV3BzVXUxTnJscm9pbXJ1Q3FlcjVyZGwzMTRXQlFWWHBGVnZyYTJEVWdB?=
+ =?utf-8?B?dDNtUDk0bGJNRTdBOVJWZVBZdFphZWREZmoyamZ0N3MreG5CS0llN0M5QzBK?=
+ =?utf-8?B?RzNKdU9QekJVMks1elkxUkloSTYvSFBuZ1ZlTTdTNEU3dUdGWHNaYUswcVpU?=
+ =?utf-8?B?UDhLVE0yTkxPSDlEa1lOTE1pMWhYcVlXS2l6elcvb0JseHVVa3hodW9MMXE0?=
+ =?utf-8?B?MmhvblVROEwvVXlsbzgwWWhocS9QZ2RJNkUzNThOaVdVdzN1UU5aNkRTbjdK?=
+ =?utf-8?B?eG9JbFRpUWtPcjVDZThsUUtOQjVwMVlSQklrQkN4aU5CbWxBOUNKWisxVWFR?=
+ =?utf-8?B?RGNaTDZUZ1B5Z0ZFdEdZTWR2LzB6WWtZTGR5K2E1K2hRRXAyNmc1b3lWempz?=
+ =?utf-8?B?VjlWRmZJYzBtUGJ4ZTJaZndoYVJIdndVQjNoNmJLWGJOdVh6cGxpUEhyYS9V?=
+ =?utf-8?B?MXV3S3RlKzVDR3Q0QUt1M3FHU29KOXY1TmwwR1RsRU1IRlRIZk8xeklBYXZF?=
+ =?utf-8?B?QVpWRWlRR1JicG9ISWdFcDI2SlpPMnloaHZTTUlSdW4wT1dDUWo4VXpUa1Rz?=
+ =?utf-8?B?TGVTdjFOWkpLNjZvdVNzb2thMHYvdnVLeGR6TW4vVVZkaXVFNVd3SmtlaW1F?=
+ =?utf-8?B?ckx0QmUrOUdVaEFVQ1ZrTERCWkFRZ0F2V2swTW45VFRSaC9MOFRQVHdzcmwz?=
+ =?utf-8?B?dGJjTVNGZk15OFdqRlZXelcyUmptSVgyS2tMbEQweWl0VzZjRktTUWRCQmhX?=
+ =?utf-8?B?R2RIRHgxekxMcmdRdnN3ZGpHYVVXaFNoT0JRU2ZpSGVUWHk3VEpzNDMxbU1z?=
+ =?utf-8?B?eW9vSjI1WGI3R3hsODY0eGthZjFvUURQZmhVcmpvMlFtSWY2YmZmR2RCQ0FH?=
+ =?utf-8?B?UUcyT0JsSkNCZ3BDSUxGVzhJUkFqVU1KVGZHaW5PYTdYNmhtUmVNNFd3Zmsw?=
+ =?utf-8?B?dXRrOXZsalhTTHJZUlUrZEtZWllJQTZFd2hXeG95eGNQdVhJbzlsNzJQTUEx?=
+ =?utf-8?B?aXNqMWVHNzJxVlBzU1A2ZzZxZUMzVXd0VzBNdjBHYTVIRnEwVU9RS2tLYlY5?=
+ =?utf-8?B?WFJ2cGFCbGg0ZnhMd1BHQ3g1VDBna202RVo4aTBLUmk3a0JJaDZOT2Y5WXpz?=
+ =?utf-8?B?SjFtVWV6SXBLRUVhWFpBeUhiODZEeStRb25VYXpmalFwL2VRU051TWRmbzVo?=
+ =?utf-8?B?VURFMHhXM2RYbHhzUUl2NXd6Sm8zaUhuS05YMUphUU01OWowMmxtcmRlR1J4?=
+ =?utf-8?B?ZnJTb25ic1Q3TU9HaHBPRVZveXR2RUVFTXZqVlRiaDZxeWVXSG12Ky9hRkcz?=
+ =?utf-8?B?UUlueHNpRTRqekJ6RTVMTjM4Ulk4bkdBUy9NSkk0QTNUVDZQZnA3YXdZbHBM?=
+ =?utf-8?B?WStCNzFYYXorMGM4M2t1aVZTNXp5aHZqcVI3ZzlNNWxWNkdHSVNLWWZMb0tH?=
+ =?utf-8?B?VjVjREU3QTcxdVJrUnY3Wk5uQnlSenN6cmxoZWM1MWVVTzR1WUFObklRVFJq?=
+ =?utf-8?B?MEhJeHZQdU9NdmhVcWNOOUJkeDREcXZjWmRpdW1XMGlRcXRtL1A3dStBVUZS?=
+ =?utf-8?B?RTJ2eDFudkFxSWdoYWdBS2haUFBwUDJEVERhR05uQkJ4MXkrNE5MQ0dZcXdJ?=
+ =?utf-8?B?QnNlMmRPNTc4WDNna042am5xYTVuYkZjMm56ejJTMVBkNUdVbEVkMkJuelUy?=
+ =?utf-8?B?NXlOVkpzYnZtV3BEVUlXM1d2dkthTEhSRG1rL2Nmbm1NRXFHQy9zQVpqNm9M?=
+ =?utf-8?B?em45UDVteXJrQUROcDlWUzQzSlRhNFNnR3BQd3lFT2xUdE9UNXNKKzZlZHBy?=
+ =?utf-8?B?Wm5MSFhDVm1oRHg2cGdVR00zRGM3cHBZZ1BIb1F6dWE5NUVQRHFhNzNlellZ?=
+ =?utf-8?B?eTdOYUVNY3BsZlZBTEQycDNYOTM5STIwR2haMEJUMHZiYVI1NzlYbXNBWWV1?=
+ =?utf-8?B?NVdrZTI5amFjcVFYVzBHa09xVEFIWlFwdWVleERzWlhHR25URzNDcHh2aU9j?=
+ =?utf-8?B?c2tTNnYvcjZIK1JLbHVjRWlTRkhRaUxRSFo4NFM5d2hwSjIrMEljVkVkdEVF?=
+ =?utf-8?B?NzFWaFI5SjZaTTJFaVZmdjJydVovN0N2VzJXNkVyVjlMMENEU21yVGJTS0NE?=
+ =?utf-8?B?WjNKK1ZVVC9XeXV4KzFVdTkvM1pnPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: xbOb+dYOCFAEHvB2eq7poqcet2A7jHfLrKvKe97VAcDzA4l4bTi2YcqesY9TZi1vPdqdIeuLJUp9HGf8KQAv3iULCUPYErasiR2RG+Mzv37YbaXQewiM1AZKB065YRHRP3LrPQpIEvs0pSDBCok9EicrFlmYzndM5FNXx82oRHelPwoSNv5YxynL9o33FhW2Fi4nllcGnye7B8Hg+Gj+Annc2uuCwTfxeRPMQgMshvtT9erS5nQcgcoVzfBrmIM7kPIaFmXaZmdZOWZ9HfJMEA4qUvyp8fhQU7/LLwnik0+5exKsSrMhGWIHqtGz+OKE4LA9R5z/0RCkI2/S4UxUZf5oUylRptiijIW/IlOSat0tPuY8Z+JPCvjR6pPmA4BUbwg82UqNXcXcolVWyukyEp5iNJLvX1Mh7D0m5VhdD5MHzD7t0AeU4ElyyAu8MDRt
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 09:02:18.9904 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66095669-e65b-41fe-b6e8-08de63cc19c7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD75.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6528
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,61 +172,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 09:21, Kane Chen wrote:
-> Extend the AST2700 test suite to verify I2C connectivity on AST1700
-> IO expanders using the DCSCM image. This validates the new bus-label
-> naming scheme by testing communication on both primary and
-> expander-attached I2C buses.
-> 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Hi,
 
+Gentle ping for reviewing patches for Bus Lock Detect in this series. Would
+appreciate any feedback or guidance on next steps. The related KVM patch is at [1].
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+[1] https://lore.kernel.org/kvm/20251121081228.426974-1-shivansh.dhiman@amd.com/
 
 Thanks,
+Shivansh
 
-C.
-
-
-
-> ---
->   tests/functional/aarch64/test_aspeed_ast2700.py | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
+On 21-11-2025 14:04, Shivansh Dhiman wrote:
+> From: Ravi Bangoria <ravi.bangoria@amd.com>
 > 
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-> index cb1aafeb99..61373ffe5b 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-> @@ -82,6 +82,10 @@ def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
->               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-obmc.tar.gz',
->               'd5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525')
->   
-> +    ASSET_SDK_V1100_AST2700A1_DCSCM = Asset(
-> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-dcscm-obmc.tar.gz',
-> +            '4f8778be176ece1b57d33c4aee13bb989be114c3e4703150eaeb6f996bd5587f')
-> +
->       def do_ast2700_i2c_test(self, bus_id):
->           bus_str = str(bus_id)
->           exec_command_and_wait_for_pattern(self,
-> @@ -166,5 +170,18 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_00(self):
->           self.verify_vbootrom_firmware_flow()
->           self.verify_openbmc_boot_start()
->   
-> +    def test_aarch64_ast2700a1_evb_ioexp_v11_00(self):
-> +        self.set_machine('ast2700a1-evb')
-> +        self.require_netdev('user')
-> +
-> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700A1_DCSCM)
-> +        self.vm.set_machine('ast2700a1-evb,fmc-model=w25q512jv')
-> +        self.vm.add_args('-device',
-> +                         'tmp105,bus=ioexp0.0,address=0x4d,id=tmp-test-16')
-> +        self.start_ast2700_test('ast2700-a1-dcscm', 8)
-> +        self.verify_openbmc_boot_and_login('ast2700-a1-dcscm', False)
-> +        self.do_ast2700_i2c_test(8)
-> +        self.do_ast2700_i2c_test(16)
-> +
->   if __name__ == '__main__':
->       QemuSystemTest.main()
+> Bus Lock Detect is enumerated with cpuid Fn0000_0007_ECX_x0 
+> bit [24 / BUSLOCKTRAP]. It can be enabled through MSR_IA32_DEBUGCTLMSR.
+> When enabled, hardware clears DR6[11] and raises a #DB exception on
+> occurrence of Bus Lock if CPL > 0. More detail about the feature can be
+> found in AMD APM[1].
+> 
+> Qemu supports remote debugging through host gdb (the "gdbstub" facility)
+> where some of the remote debugging features like instruction and data
+> breakpoints relies on the same hardware infrastructure (#DB, DR6 etc.)
+> that Bus Lock Detect also uses. Instead of handling internally, KVM
+> forwards #DB to Qemu when remote debugging is ON and #DB is being
+> intercepted. It's Qemu's responsibility to re-inject the exception to
+> guest when some of the exception source bits (in DR6) are not being
+> handled by Qemu remote debug handler. Bus Lock Detect is one such case.
+> 
+> [1]: AMD64 Architecture Programmer's Manual Pub. 40332, Rev. 4.07 - June
+>      2023, Vol 2, 13.1.3.6 Bus Lock Trap
+>      https://bugzilla.kernel.org/attachment.cgi?id=304653
+> 
+> Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+> Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
+> ---
+>  target/i386/cpu.h     | 1 +
+>  target/i386/kvm/kvm.c | 4 ++--
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 0fecca26dc4a..852b3a33b54d 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -276,6 +276,7 @@ typedef enum X86Seg {
+>                  | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
+>                  | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
+>  
+> +#define DR6_BLD         (1 << 11)
+>  #define DR6_BD          (1 << 13)
+>  #define DR6_BS          (1 << 14)
+>  #define DR6_BT          (1 << 15)
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index ed3d40bf073e..00c44c2de650 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -5864,14 +5864,14 @@ static int kvm_handle_debug(X86CPU *cpu,
+>      } else if (kvm_find_sw_breakpoint(cs, arch_info->pc)) {
+>          ret = EXCP_DEBUG;
+>      }
+> -    if (ret == 0) {
+> +    if (ret == 0 || !(arch_info->dr6 & DR6_BLD)) {
+>          cpu_synchronize_state(cs);
+>          assert(env->exception_nr == -1);
+>  
+>          /* pass to guest */
+>          kvm_queue_exception(env, arch_info->exception,
+>                              arch_info->exception == EXCP01_DB,
+> -                            arch_info->dr6);
+> +                            ret == 0 ? arch_info->dr6 ^ DR6_BLD : DR6_BLD);
+>          env->has_error_code = 0;
+>      }
+>  
 
 
