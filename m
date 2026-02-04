@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774C1E8B399
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E558E8B397
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnUWh-0005VM-7U; Tue, 03 Feb 2026 23:30:03 -0500
+	id 1vnUcY-0006Yd-IG; Tue, 03 Feb 2026 23:36:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnUWf-0005VA-UN
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:30:01 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1vnUcX-0006YP-T4
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:36:05 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnUWe-0004ne-FY
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:30:01 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c075ec1a58aso2631608a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 20:29:59 -0800 (PST)
+ id 1vnUcW-0006hI-Ge
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:36:05 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7f89d0b37f0so216383b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 20:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770179398; x=1770784198; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770179762; x=1770784562; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FgZQBzeB17i8aneSRU2yV5HB7PWMsSsPjMBm7sJEyfI=;
- b=r5BD8i3YioD3G243xNcPYm3ic+dBvoXimfdyr6OOlDJbrocpYgULX+qtFs8MsVJQd/
- 84RnzvwPGEoLMrCrKhz4xuZPbY5BC+zlP1C2+BqeJxlrDggVMIURdbzHNJBUyjL+Hy0+
- R16c1q8Cq6SH8poCbmhpD0V7v8KDoVg7+DlT3OorBuXslIo69LJbnPLLUKBQn+GIM2D6
- 1rJMRVVP4kqrU+HgvppMT1q7dVVauFZ/AVu4eK/EYOaGdec8xmDWpBy7Rf+KbbqxiGw1
- f0Vjj8uVO9T9Ke4r9rPv0Zrj/qA3oKfBU/WI7pNyLsVMtwhasl2K1Ps9NXqiFbxp4dGT
- NUoA==
+ bh=isgzfM3dfOHrDHP535tyrqT4hFMl9xutstTJO7213Ks=;
+ b=C8u68SD1+UlCsxvBc2gjKtJ0kAeGxvlZvDSWs3A7//1tU0yG7lqqqJ1JCdz/caxzpF
+ e3Q0ATr0g0tG+0whmOcaCqxImZypEKmgwlsgT3+PtM8RFk9vJJdPUjEUtqJnGUPad8Qg
+ Eo2ZMx6N37ODXjuoTmjKcolQI2RU9FtqQmjZ2dVQjUU+ugZWAKVJ+LqQ2qFx3RGdbxg+
+ 7f9mZs3SgPl6JjiFrWM3Cc+SJxprJ5H1Yi1nowa1CHrUFORpn4UzrbJ493xIZCHFlqDa
+ jZsIPhx92POfrVKRtpvk7u+GY6wLGzNy8+fR0UvOHaPlp5M9HeEkhCI7WPV2MkoCxqxk
+ LUOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770179398; x=1770784198;
+ d=1e100.net; s=20230601; t=1770179762; x=1770784562;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FgZQBzeB17i8aneSRU2yV5HB7PWMsSsPjMBm7sJEyfI=;
- b=bkod6Lw7B8cqnNt9v3KgGB5HnmYxEOi1U1KV3QGELgxRbM7eKZN1l86UG7u4ie0UTs
- +cSRzH3oM5+cVVNfxxD9k/DilvADAT1s60ChTZTn1nS3idVwtGwsJoqQSei+NxEKYMp/
- QWm5nWFPhK1YOmUpibfuYBaErCxr1/6a0k/XauRjh0A/eNdf0jb4AtNJORROVKtrMosc
- ijDfj1W8Ys3KfeJTf512r+EtPHImOGPrTqoZViYsmF38ZOCQ75A5zoKz+fHrsFGflC8A
- pBcg4e3n4SO+t0qR3mscxnBT6CEe6nKjuNCpzLM8PzHijCoSvLswphwao2JE7lZHgXSE
- XBuw==
+ bh=isgzfM3dfOHrDHP535tyrqT4hFMl9xutstTJO7213Ks=;
+ b=C9SkMDn9P0vryXd4UrzsoJJivhAqZh6kIwyBxelyb5tLE2yCMzLZ10zno324MgZD2m
+ ZU51ElsI6wpvNZJKSX3nMWnQsUV8LRXfHVSfcaD7OJ9WxBiWOF7bfk+u8uFZRKAv6yKp
+ 9nIpbSA/1MhBHe6RWe+6M58wS8bQ7ajfdcM38Ktb2BSmbqtHjZ6rApKrw70HVWzpGo67
+ fBhgybvOlU0MHAD6Xyb1HZs8xrQu49+/oDtYXhMr/APYTisog59Jec93/5C6SxKUvBm9
+ qFGt/lIAxuKhjK+FnG75f2At1UbNSBCrkU8Q7i4NH3sHjB0jGmYxqCp5+EZjqSl/n5Rz
+ ZSew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvYwww+iLoQkzc0WjF8Rq09BohGcr//k6Ay9y1mb1UWEWACS8Shm5WaBd0ldZox2s/g8y1ypqwjFSI@nongnu.org
-X-Gm-Message-State: AOJu0Yx0ZFw/bQLogVa47KZMmlHIZ/DZxBSMSwhpdrTbGkgi4uL1hyYH
- tC5/ROHNrr8K3lPpaYnbV5GUdk6j0HLSYTr3txXxqxnzJo/W+YByu5J2MBPXQZEBsdVwY7Heofd
- m2raUpjM=
-X-Gm-Gg: AZuq6aI5lwwMXYAzg/2ZDxYwCXofGR7b5dRoVOpqvE8jduGf5dqOJgisS41LP80MoUH
- 00kEcB0dzASDzWftBg5e8U/fwkWLQtkzzlwkhCd4onqUHWRMUxQvs2DyI/94aIDf9E3pQLOUD8E
- zUpdLPiPeobP3Bv9q7JMdBpaYegDFahqfXJQmCCgMa15B+3w7ih5h8fiK8PVDt1Nxmn0KjBHGui
- yLIObpZCI9pBFGi2R2oe/Nfapuug+9XjSYFr0bea2AL9zZ++T4wxXA6p2TncizHs5Udmweu5oVd
- 0TkzAh3WCnnq7/wZbP2DDe+ofe/nEEzQ4+vYEp50Ow2V0Bg6azGHN7pRCviGayW6Znuk4rHCHoL
- dHdT3TgHmhbZgon9xhjioOmeAbAYO41hOF1TnE9+bJREbP2TlIGCDojRTWHa+a9mbesYgk/+yQ/
- SkFwsCEwtRo5zQiMlSS3DPlpOj9+CQF+fMhvKntbUxaEkdq8g+p07mhCCcl8o+2nNNnUzMotKPL
- 7XagiwtvT7CZJ1tnvk2EPN8JLIAD4GcMCytj+MFM+99CA8=
-X-Received: by 2002:a17:90b:568e:b0:354:83c1:9efc with SMTP id
- 98e67ed59e1d1-354871948b3mr1397096a91.19.1770179398013; 
- Tue, 03 Feb 2026 20:29:58 -0800 (PST)
+ AJvYcCWNtgOdKPudLD+2VGZABW6ViIkG3Z7BFmSzJSNfOt+V0L1Y+SCeb8TSe8UcWSkvkNaiFkNm5/VQWsyN@nongnu.org
+X-Gm-Message-State: AOJu0YxKxVoEPpJN7rmKrYGdkxkcyXrwFuxdykTZ/jAqW3o7ih9tpE+W
+ FQ87O1k3cNBfPjtbUNDn6a3vyKSN7jKhJFZZk1jECI6/+tbPNyA7RKGvGe75UceVKl5/62jvFXR
+ Fvl50G9k=
+X-Gm-Gg: AZuq6aKcVzR+cOJXh5kPuK7TLg2h2PIhlZlQEVAhK66YAbpO2JlVVTbcw2haOCPXfSp
+ iQ/ENgfiPccw+8plDNl58LBeId/fkYx4dx0kXbgBR5odrpyhbW34OMXnQzGpH3a0eBup6kXlqhc
+ wp041K5n4JV8utj0YSndTzZuatj0oy8HA80JvIzmgcztcHuQT7CTDvK+dujIf0b5yhWORqIH5s3
+ IsEa9N03p4e4ujP5F70MydPjR6RYsh9f41FX5/U/CDTyIbLOLAbzjEcfaV91b29qJRzfUc61R21
+ vP65Z2tJP2oX4Ihlelj5SfXVd1KwoE9CvfBmpQhZyDyr/6Xv9eUMByZ2lLifx0TIrx82lS0ZnPs
+ LDpvc9dSbhjnhf4AnvwIIJpBvvxi2gHxaaPItV/puHjs9bjU9DElXV24AUV1nBVMiSTFkSdSDhQ
+ jkD5JwmHS8HsnU/ANOkepq9lvrcRuo53CobM7UPm5Bkn9TIyNkgDD+Adleb2SDPFvMKA5jzeTZ9
+ 1tXwawxhi8xlZ5YjMkpVnr/xT9VoltmQ2hd
+X-Received: by 2002:a05:6a00:12d9:b0:81d:e9b1:b6d6 with SMTP id
+ d2e1a72fcca58-8241c75f197mr1782079b3a.28.1770179762396; 
+ Tue, 03 Feb 2026 20:36:02 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
  (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
  [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35485eb8d90sm1155554a91.12.2026.02.03.20.29.56
+ d2e1a72fcca58-8241d438897sm869112b3a.37.2026.02.03.20.36.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 20:29:57 -0800 (PST)
-Message-ID: <21e95344-cd34-49be-a3b4-77eaa86e3406@linaro.org>
-Date: Wed, 4 Feb 2026 14:29:52 +1000
+ Tue, 03 Feb 2026 20:36:01 -0800 (PST)
+Message-ID: <e0b9ce25-db50-4f72-bfc5-751770c0695e@linaro.org>
+Date: Wed, 4 Feb 2026 14:35:57 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] gdbstub: extract stop reply message construction
+Subject: Re: [PATCH 05/11] gdbstub/user: localise variables for reading gdb
+ socket
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20260203115201.2387721-1-alex.bennee@linaro.org>
- <20260203115201.2387721-5-alex.bennee@linaro.org>
+ <20260203115201.2387721-6-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260203115201.2387721-5-alex.bennee@linaro.org>
+In-Reply-To: <20260203115201.2387721-6-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,25 +111,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/3/26 21:51, Alex Bennée wrote:
-> The stop reply message we send can include a lot of extra information
-> and a bunch is mode dependant. Extract the construction into a helper
-> and add specialised versions for system and user mode.
+> Keep things tidy by moving the declarations to the block where they
+> are used.
 > 
-> The correct response for system mode should be of the form:
-> 
->    T05core:N;
-> 
-> Where N is the core ID.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   gdbstub/internals.h |  7 +++++++
->   gdbstub/gdbstub.c   | 15 ++++++---------
->   gdbstub/system.c    | 11 +++++++++++
->   gdbstub/user.c      | 12 ++++++++++++
->   4 files changed, 36 insertions(+), 9 deletions(-)
+>   gdbstub/user.c | 10 +++-------
+>   1 file changed, 3 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index cc71cda3e33..c7a3ef947ed 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -198,9 +198,6 @@ void gdb_qemu_exit(int code)
+>   int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
+>                     int siginfo_len)
+>   {
+> -    char buf[256];
+> -    int n;
+> -
+>       if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
+>           return sig;
+>       }
+> @@ -246,11 +243,10 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
+>       gdbserver_state.state = RS_IDLE;
+>       gdbserver_user_state.running_state = 0;
+>       while (gdbserver_user_state.running_state == 0) {
+> -        n = read(gdbserver_user_state.fd, buf, 256);
+> +        char buf[256];
+> +        int n = read(gdbserver_user_state.fd, buf, 256);
+>           if (n > 0) {
+> -            int i;
+> -
+> -            for (i = 0; i < n; i++) {
+> +            for (int i = 0; i < n; i++) {
+>                   gdb_read_byte(buf[i]);
+>               }
+>           } else {
+
 
