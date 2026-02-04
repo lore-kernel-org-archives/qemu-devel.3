@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43C6E95360
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC54E95360
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnZL8-0007ZV-Lh; Wed, 04 Feb 2026 04:38:27 -0500
+	id 1vnZQy-0002JN-Q0; Wed, 04 Feb 2026 04:44:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vnZL4-0007ZG-Ge
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:22 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnZQw-0002JD-Ra
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:44:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vnZL2-0005tG-Uu
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:22 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnZQu-00016x-Vy
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:44:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770197899;
+ s=mimecast20190719; t=1770198263;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WYzMp1hOuZWmrDY0DcNQnChGOTVn+Js87JG+Ft4C4ok=;
- b=ekCjYpLphI2NFV5BSBDW71ZxKGP55C48EGasWNJtgmzwrBvd1ljhzZOdh2shYlPIhohyzR
- Jf3Z+wQpEyYaJ6OCy32z+LqjnnRP/VHM8DbOxqoGzO2oSSlNNmhIzfHtOJUhCOSdxgcIGd
- /s9dzFG5VjvylPpfAWNHYlsORmIhRXs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rvk6f0QHfNg2ko/MR8M57vqIwTfpRqvJe/Y3E+jRsQY=;
+ b=V8eS95RiX1DOiRIz6RUPeqPMuSXPLDYt1ZyPto/xqGnd4howeN43f/RDTbnrUSzogs63UE
+ BPIsZlrGWDUP+l9Xz9Z1wvHv4uryqpFDwIh+wlAjDrFPp8fj1gHVey2O8IWLWT9z4iuYA6
+ Gvd/UNFMOKqZ2GuwVtcmXVdvEX2EU3g=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-21rY9O0NMkChMpWe1e-sUQ-1; Wed,
- 04 Feb 2026 04:38:14 -0500
-X-MC-Unique: 21rY9O0NMkChMpWe1e-sUQ-1
-X-Mimecast-MFC-AGG-ID: 21rY9O0NMkChMpWe1e-sUQ_1770197893
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-mu0aNqHCOsK6Mv6-ioL1Qw-1; Wed,
+ 04 Feb 2026 04:44:20 -0500
+X-MC-Unique: mu0aNqHCOsK6Mv6-ioL1Qw-1
+X-Mimecast-MFC-AGG-ID: mu0aNqHCOsK6Mv6-ioL1Qw_1770198258
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63D6C180034D; Wed,  4 Feb 2026 09:38:13 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.45.224.78])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 328841955D85; Wed,  4 Feb 2026 09:38:07 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, slp@redhat.com, hi@alyssa.is,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, manos.pitsidianakis@linaro.org,
- stevensd@chromium.org, dbassey@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, stefanha@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, mst@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v12 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-Date: Wed,  4 Feb 2026 10:37:54 +0100
-Message-ID: <20260204093758.1250167-2-aesteve@redhat.com>
-In-Reply-To: <20260204093758.1250167-1-aesteve@redhat.com>
-References: <20260204093758.1250167-1-aesteve@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C5CE18003F5; Wed,  4 Feb 2026 09:44:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 91CD718003F5; Wed,  4 Feb 2026 09:44:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 299E321E692D; Wed, 04 Feb 2026 10:44:15 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  Fabiano Rosas
+ <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  kvm <kvm@vger.kernel.org>,  Helge Deller
+ <deller@gmx.de>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Matias Ezequiel Vara Larsen
+ <mvaralar@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  German Maglione
+ <gmaglione@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Alex Bennee <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: Modern HMP
+In-Reply-To: <aYMMRuWGYe96rpZZ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 4 Feb 2026 09:07:18 +0000")
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
+ <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
+ <87ikctk5ss.fsf@suse.de> <aXJJkd8g0AGZ3EVv@redhat.com>
+ <aX-boauFX2Ju7x8Z@gallifrey> <875x8d0w32.fsf@pond.sub.org>
+ <aYMMRuWGYe96rpZZ@redhat.com>
+Date: Wed, 04 Feb 2026 10:44:15 +0100
+Message-ID: <87ldh8zvv4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,108 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add SHMEM_MAP/_UNMAP request to the vhost-user
-spec documentation.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- docs/interop/vhost-user.rst | 59 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+> On Wed, Feb 04, 2026 at 09:08:49AM +0100, Markus Armbruster wrote:
+>> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+>>=20
+>> > * Daniel P. Berrang=C3=A9 (berrange@redhat.com) wrote:
+>> >> On Thu, Jan 22, 2026 at 12:47:47PM -0300, Fabiano Rosas wrote:
+>> >> > One question I have is what exactly gets (eventually) removed from =
+QEMU
+>> >> > and what benefits we expect from it. Is it the entire "manual"
+>> >> > interaction that's undesirable? Or just that to maintain HMP there =
+is a
+>> >> > certain amount of duplication? Or even the less-than-perfect
+>> >> > readline/completion aspects?
+>> >>=20
+>> >> Over time we've been gradually separating our human targetted code fr=
+om
+>> >> our machine targetted code, whether that's command line argument pars=
+ing,
+>> >> or monitor parsing. Maintaining two ways todo the same thing is always
+>> >> going to be a maint burden, and in QEMU it has been especially burden=
+some
+>> >> as they were parallel impls in many cases, rather than one being excl=
+usively
+>> >> built on top of the other.
+>> >>=20
+>> >> Even today we still get contributors sending patches which only impl
+>> >> HMP code and not QMP code. Separating HMP fully from QMP so that it
+>> >> was mandatory to create QMP first gets contributors going down the
+>> >> right path, and should reduce the burden on maint.
+>> >
+>> > Having a separate HMP isn't a bad idea - but it does need some idea of
+>> > how to make it easy for contributors to add stuff that's just for debug
+>> > or for the dev.   For HMP the bar is very low; if it's useful to the
+>> > dev, why not (unless it's copying something that's already in the QMP =
+interface
+>> > in a different way);  but although the x- stuff in theory lets
+>> > you add something via QMP, in practice it's quite hard to get it throu=
+gh
+>> > review without a lot of QMP design bikeshedding.
+>>=20
+>> I think this description has become less accurate than it used to be :)
+>>=20
+>> A long time ago, we started with "QMP is a stable, structured interface
+>> for machines, HMP is a plain text interface for humans, and layered on
+>> top of QMP."  Layered on top means HMP commands wrap around QMP
+>> commands.  Ensures that QMP is obviously complete.  Without such a
+>> layering, we'd have to verify completeness by inspection.  Impractical
+>> given the size and complexity of the interfaces involved.
+>>=20
+>> Trouble is there are things in HMP that make no sense in QMP.  For
+>> instance, HMP command 'cpu' sets the monitor's default CPU, which
+>> certain HMP commands use.  To wrap 'cpu' around a QMP command, we'd have
+>> to drag the concept "default CPU" into QMP where it's not wanted.
+>
+> Surely the isolated HMP monitor code can just keep track of its view
+> of a "default" CPU, and then pass an explicit CPU to the QMP commands
+> it runs ?
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 17a68a62eb..6c1d66d7d3 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -350,6 +350,27 @@ Device state transfer parameters
-   In the future, additional phases might be added e.g. to allow
-   iterative migration while the device is running.
- 
-+MMAP request
-+^^^^^^^^^^^^
-+
-++-------+---------+-----------+------------+-----+-------+
-+| shmid | padding | fd_offset | shm_offset | len | flags |
-++-------+---------+-----------+------------+-----+-------+
-+
-+:shmid: a 8-bit shared memory region identifier
-+
-+:fd_offset: a 64-bit offset of this area from the start
-+            of the supplied file descriptor
-+
-+:shm_offset: a 64-bit offset from the start of the
-+             pointed shared memory region
-+
-+:len: a 64-bit size of the memory to map
-+
-+:flags: a 64-bit value:
-+  - 0: Pages are mapped read-only
-+  - 1: Pages are mapped read-write
-+
- C structure
- -----------
- 
-@@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserInflight inflight;
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-+          VhostUserMMap mmap;
-       };
-   } QEMU_PACKED VhostUserMsg;
- 
-@@ -1064,6 +1086,7 @@ Protocol features
-   #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
-   #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
-   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
-+  #define VHOST_USER_PROTOCOL_F_SHMEM                20
- 
- Front-end message types
- -----------------------
-@@ -1872,6 +1895,42 @@ is sent by the front-end.
-   when the operation is successful, or non-zero otherwise. Note that if the
-   operation fails, no fd is sent to the backend.
- 
-+``VHOST_USER_BACKEND_SHMEM_MAP``
-+  :id: 9
-+  :equivalent ioctl: N/A
-+  :request payload: fd and ``struct VhostUserMMap``
-+  :reply payload: N/A
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends to
-+  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
-+  Upon receiving the message, the front-end will mmap the given fd into the
-+  VIRTIO Shared Memory Region with the requested ``shmid``.
-+  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-+  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-+  must respond with zero when operation is successfully completed,
-+  or non-zero otherwise.
-+
-+  Mapping over an already existing map is not allowed and requests shall fail.
-+  Therefore, the memory range in the request must correspond with a valid,
-+  free region of the VIRTIO Shared Memory Region. Also, note that mappings
-+  consume resources and that the request can fail when there are no resources
-+  available. Lastly, mappings are automatically unmapped by the front-end
-+  across device reset operation.
-+
-+``VHOST_USER_BACKEND_SHMEM_UNMAP``
-+  :id: 10
-+  :equivalent ioctl: N/A
-+  :request payload: ``struct VhostUserMMap``
-+  :reply payload: N/A
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends so
-+  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
-+  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-+  given range shall correspond to the entirety of a valid mapped region.
-+  A reply is generated indicating whether unmapping succeeded.
-+
- .. _reply_ack:
- 
- VHOST_USER_PROTOCOL_F_REPLY_ACK
--- 
-2.52.0
+Yes.  It's how HMP works today.
 
 
