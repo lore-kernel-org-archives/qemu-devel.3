@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46840E9537C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C81E9537D
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 11:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnadu-00020J-Kf; Wed, 04 Feb 2026 06:01:54 -0500
+	id 1vnadb-0001Pk-T3; Wed, 04 Feb 2026 06:01:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadt-0001rd-8F
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadZ-0001Pa-I6
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadn-0002xn-FQ
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:52 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadY-0002qA-8s
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770202903;
+ s=mimecast20190719; t=1770202890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ytqoyVsoCtzdTkkmGSJsy6xixwptxcvSJRO6L1WAx8A=;
- b=KbQKXhENhPsFlYimTfnkVRP6iVy6LyohmrwhJd6P0q8y92DhF/XtzebnfcexrnHpldlt+X
- rDjbKMv9a04uNLtBILZSmFK4HBdLK/PNlw5GPxOYCoRnGAMhh875pkWuTt9LrVBvTt1iMH
- gJ8Z5HYLCuMISG0XUaGspRxHnOxvAIw=
+ bh=iX9CLo1079q9GFBbcum8ANwzEzOFk8ylauhc6MGrexs=;
+ b=Ezr1xAi/GZGChS5YWPiZfmt+WaylCxdw9+RMED/ZI3/YCvz3TKi3l+xDJyJEoaRezILQE1
+ KCAGxQr+ebnb2qG2FCnGSgQLvPylLf+euEVfvJZTLhouxrBDi+hL8E64mL78usrJXcyKXm
+ lUEr4pLlmMVislxYtqn+aZVg2UJ7zzI=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-4l_YkGmrNX2F4luFCEhDxg-1; Wed, 04 Feb 2026 06:01:42 -0500
-X-MC-Unique: 4l_YkGmrNX2F4luFCEhDxg-1
-X-Mimecast-MFC-AGG-ID: 4l_YkGmrNX2F4luFCEhDxg_1770202901
+ us-mta-662-JMWNhNN-OkSlIi_3hP64VQ-1; Wed, 04 Feb 2026 06:01:29 -0500
+X-MC-Unique: JMWNhNN-OkSlIi_3hP64VQ-1
+X-Mimecast-MFC-AGG-ID: JMWNhNN-OkSlIi_3hP64VQ_1770202888
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48071615686so55477815e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:01:42 -0800 (PST)
+ 5b1f17b1804b1-4806b12ad3fso55458035e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770202901; x=1770807701; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770202888; x=1770807688; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ytqoyVsoCtzdTkkmGSJsy6xixwptxcvSJRO6L1WAx8A=;
- b=ahZs/Lp0JlVweZfrXyomUAmOwMjdn4+rmuN563vwXAV/GEuTBZAReH6EpaVvCEK7RJ
- AB9u765OB2vp/bmvwPCTvWg/wI8e7b7GCG8eimZgWhZDJtBtyuGi8jrQ6hP2p9W/kBeZ
- rQg7t8ygSAIVuhI6cDT79+QnAgUshkMboT0eBtKOmuQHlIUjZHAOvwdx3hEvBlN9KPp/
- lHe2F0uSeEiKF2dZTgKo6VnDalF9NTPjnpK++WtvFmVmW9wHJ2B0WcMw0M+oBPrIzmmD
- ODcaiF23DJyKk9bUSdq9rKX123chyeKxzGc3wRzQKYHEYWbFP8Jxcb+Z9+3F43OwB0zB
- pB0A==
+ bh=iX9CLo1079q9GFBbcum8ANwzEzOFk8ylauhc6MGrexs=;
+ b=HyG+L+KjCLiovCYY/yXpkqaP1y3i4/amSNRuU9p6MxhW1sNoSSzAWyvAC3l3ieNFxD
+ 34a2PrG6NhHBfmYu9Q5cvXSe4hFa7o845XEBntfl9Q+LpTZHURcn8vev0V/SJ0fD0326
+ 66jU4SQu04hF2NETuGqEZl0quiwgz2Q5j25143J393XWz7gYtQCCc7EXPXuPL+TTXz8l
+ Kar/pYSL2W/mlvyEJkzxSp8AEGTANDgszQhr20w5UoHQ5ZPspJwprrmmzs0WyT5P+1EW
+ 0ZrSmBCi13igAz7wpEvAu1X7fXxjQbBVF+rz5c8AUUaYZzFD2cABbxX3xOJvnfhtEbHl
+ vpGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770202901; x=1770807701;
+ d=1e100.net; s=20230601; t=1770202888; x=1770807688;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ytqoyVsoCtzdTkkmGSJsy6xixwptxcvSJRO6L1WAx8A=;
- b=QZ+T0yXHHzRxooRHgAvi3v2UUknkPmK2VLuS3RFXgE9lbd9X4EbfGNLrO7iSUgV2X5
- a5CATx4hx74l/LMPLUTuE0dzTbCvMt80Bccsbm2wNhz6K84WFih6xaDm+F0pya4L1jC8
- HjXnL1cSa6zs9Tn+LKJ6bFdaegTAv0r9OOUewbNeeXx5TfymGnsBjnYOJM3T1ohGB9NR
- /WFzJg5sT2zUroXLbMYk8Ecys3TC06v+/+zeuUzRMDdUhCjzEKyXbqGymLdRcx1awZNf
- FZ6r8IbxU9bwCXrE6wF3HpCLwpFeEJV3uTU1o4omuv2sHu49qhn6J2+ruVFGMsy7PLMq
- 8KGw==
+ bh=iX9CLo1079q9GFBbcum8ANwzEzOFk8ylauhc6MGrexs=;
+ b=pUdGymS9E6X+jgpyDpm7X82eDE+Jd2XXFyt9cvcQpaaafOsRGUBfi0c7UL/+O3mH3k
+ 76e9eJtV8WnU6DUnLOnla5wq+WenYvY4mR78pkHv7Zf2WcGR8VYGaJx9muQ3ynrc5AQl
+ jcP2n25y5xiS3AL5wxNFet1R6q+p27DgIYRbVRSnuuCZH3ncX7yPFQeXjM4xfwxN1nTQ
+ KZ9846G6gQmuVxyAb+cWk6LtKvWXTVHUew+jACN7oHG1fh5uZ6JTzqfABzYF+sIc0G9x
+ WNg3dzLB5zv/X2aAIIiep457sS9c7GgQvrXQb+iVRN3lSYEiBI5gOt/FFlPvRYVy4XMt
+ in1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSGTZrO2nuNGa8gRUuzbL9rBCAvF5SVsmnZirIN8PFPzpdsx411CD5lkApGEwx5hu2Ka/lKJsHI60W@nongnu.org
-X-Gm-Message-State: AOJu0YxVDBmQoUhzuiqDo3o2BCgJq8ssEPCPOU/z8TPAVUum1xuYhPAT
- /h+4cGSprVzfZ2N9eHkNLXnemXFGUduHJyNqgLoxKr3fw6k2pSqcS8uiV01UwK2RQAImwZ3Y7gJ
- KqGa0ACA4hAizDcbeJ7dCmkDC3p8EkM3HcnRxWSbQx380UPwvbNywLq7A
-X-Gm-Gg: AZuq6aJj1LwuO3QJ6lUWcKjNHL1z+6Q/Zj4XZ9fbfU0iI0iYj8Lj3S8kd6KVTvlzVdW
- ss2oOyU3wTewfO2TkYJOJC4UvNg2a5CU5E4Wq2U77FAE0tGhlzdRBMszznIM/YjiIYrQ2qU9m+i
- 7qv9Ju5c4kBgv1sdDKbLkBkpizakTraIGsrJY7dBnoU3KRy+wBbxM/v5OPi39i/sX9qr7qoJS/1
- sWEZPGq2E4m46N8k7g4ZU1JuuZI0ARnbqpVw8wF1L6iUI4nkGvK15yrrjvd3jiTybtnms//fajz
- IkaZV2ufSrlFzcuvIHP3v91b6Dkb1REWTB4Rqb3AiSyCGSYZznz+ftlvhYsVBRTHudbobxaE/hL
- DK6dlfFYmBkn2cbSoN1CcBt909ggUyMqFd4CGTJrzlUwCNPB9
-X-Received: by 2002:a05:600c:5491:b0:480:46c6:bf4b with SMTP id
- 5b1f17b1804b1-4830e92a73bmr31082555e9.5.1770202901002; 
- Wed, 04 Feb 2026 03:01:41 -0800 (PST)
-X-Received: by 2002:a05:600c:5491:b0:480:46c6:bf4b with SMTP id
- 5b1f17b1804b1-4830e92a73bmr31082085e9.5.1770202900541; 
- Wed, 04 Feb 2026 03:01:40 -0800 (PST)
+ AJvYcCWnjXxtvCHRM8074Z2I3/P6AueBjBgp7CI1ejuG9hK6YuUuuCuJL6wHjh+pP5NBCl4lT6Ybzn8Ey8Fp@nongnu.org
+X-Gm-Message-State: AOJu0YztMWSBJXcu/u9Pwm7x8F1zkEq+1UoJZK1r+/pYleENhV1RS5bC
+ 0/h+NCeNpIFZ+OOcyQ0RXkD7Wg9zLe0VEqT9otDcYSFLFBCNlriep4eNTxZvTxzpaaBmiEu8fPY
+ hZTxV/RTRXCUSduVvuaQPbYMYWQbbVNTz0N5N4U/6Nr/asr5SCJktiX6v
+X-Gm-Gg: AZuq6aJ6wDJzVvYk/BCSZvAKd5CaN/qQsKls+XW4nacuFExrknzKnX8ECWYFbDdl3o7
+ D7vSL52yfNXkCSoN2EDOT7WA8YyH0dcijFctWXDTnZ/rymWTnqEqVIpjr6IL6iRcKZsfDDVUlIC
+ VKbYw5GkKx/F2NXPgh96OQ67xJH9jAxh68p3ThsyZjRin4OxzfiKrYt4IJDH8QhiTPcZ9cMyfMn
+ k/Ekh3fBsiQFnBegJvPM9Vfxs07ywU0dr3wRdjYGx7R4julEiCHjSI9DZ6BVlgGI9LgVCIf1Sue
+ lipNHUe4WhkNEVwkNcloNLlEdJ91EtHFoZLjaeskMUrQr8mtIeddhFe1LN6Bquc7kNwNMFIIRLx
+ l83tmfq+ZYStWIi+nouNYNrUPZZXechRknLhRskmuBjg5dUM7
+X-Received: by 2002:a05:600c:5309:b0:480:4b59:9327 with SMTP id
+ 5b1f17b1804b1-4830e93eb11mr32228295e9.1.1770202887786; 
+ Wed, 04 Feb 2026 03:01:27 -0800 (PST)
+X-Received: by 2002:a05:600c:5309:b0:480:4b59:9327 with SMTP id
+ 5b1f17b1804b1-4830e93eb11mr32227875e9.1.1770202887315; 
+ Wed, 04 Feb 2026 03:01:27 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e250b2sm5936053f8f.8.2026.02.04.03.01.39
+ 5b1f17b1804b1-4830ec42833sm28680595e9.1.2026.02.04.03.01.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 03:01:39 -0800 (PST)
-Message-ID: <bd8d630b-f3e9-49a7-b94a-24707a66d755@redhat.com>
-Date: Wed, 4 Feb 2026 12:01:38 +0100
+ Wed, 04 Feb 2026 03:01:26 -0800 (PST)
+Message-ID: <f357d187-70df-4482-b224-47006f0cefec@redhat.com>
+Date: Wed, 4 Feb 2026 12:01:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] system/memory: minor doc fix
+Subject: Re: [PATCH 03/10] virtio-mem: use warn_report_err_once()
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Ben Chaney <bchaney@akamai.com>,
@@ -98,7 +98,7 @@ Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Kanda <mark.kanda@oracle.com>
 References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
- <20260204100708.724800-5-marcandre.lureau@redhat.com>
+ <20260204100708.724800-4-marcandre.lureau@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,10 +144,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260204100708.724800-5-marcandre.lureau@redhat.com>
+In-Reply-To: <20260204100708.724800-4-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -172,27 +172,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 11:07, marcandre.lureau@redhat.com wrote:
+On 2/4/26 11:06, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/system/memory.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/virtio/virtio-mem.c | 13 +------------
+>   1 file changed, 1 insertion(+), 12 deletions(-)
 > 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index be36fd93dc0..a64b2826489 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -574,7 +574,7 @@ struct RamDiscardListener {
->        * new population (e.g., unmap).
->        *
->        * @rdl: the #RamDiscardListener getting notified
-> -     * @section: the #MemoryRegionSection to get populated. The section
-> +     * @section: the #MemoryRegionSection to get discarded. The section
->        *           is aligned within the memory region to the minimum granularity
->        *           unless it would exceed the registered section.
->        */
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index 251d1d50aaa..a4b71974a1c 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -594,18 +594,7 @@ static int virtio_mem_set_block_state(VirtIOMEM *vmem, uint64_t start_gpa,
+>           Error *local_err = NULL;
+>   
+>           if (!qemu_prealloc_mem(fd, area, size, 1, NULL, false, &local_err)) {
+> -            static bool warned;
+> -
+> -            /*
+> -             * Warn only once, we don't want to fill the log with these
+> -             * warnings.
+> -             */
+> -            if (!warned) {
+> -                warn_report_err(local_err);
+> -                warned = true;
+> -            } else {
+> -                error_free(local_err);
+> -            }
+> +            warn_report_err_once(local_err);
+>               ret = -EBUSY;
+>           }
+>       }
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com
