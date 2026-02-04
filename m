@@ -4,193 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C55B7E8B39B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2562E8B39B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnV9n-0004gs-DK; Wed, 04 Feb 2026 00:10:27 -0500
+	id 1vnVBT-0005Gv-Em; Wed, 04 Feb 2026 00:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnV9m-0004gi-8R
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:10:26 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnVBR-0005Gf-Sc
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:12:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vnV9k-0005OC-OE
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:10:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770181825; x=1801717825;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=QIs+c+3eIyUBx0iLUMMlt8I9TmrkCOGzGLr6AiNpOPo=;
- b=XLzZlch0LvKDhdttYQt35PFuSu+AmciPssdD7Q2qFz1tGi1KzQ/KpLr+
- 3ldOnSho32+X4UlNX/81DiFbKmXjSt1Zc1CykwyBEaEnppXuJ4/B9/jKu
- 7byd9tb07G32DQPmrY/GR3inAoYFvqEq0PCR0cKZnlIMcXXjdj6kulW4p
- ButdWcBzjNe2vwri9etgipBTErkcGLCqilWLFd9yy/XG254YejFxAeFTu
- Tu2c4F6lyVuhc1Nh2AHXSqfSdfsgNh89bTVIT+xRySTydcp8ec4oUm12Q
- aAzolxGyIavqWO0i1DQQd43YE64FPppGOYEy4t2AEZyIPFlYMoxJE2bph Q==;
-X-CSE-ConnectionGUID: v3mtjqICTXKIDaM+X5/RiQ==
-X-CSE-MsgGUID: AnB8lF+FTcaaf0sAeBzqmw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="94015316"
-X-IronPort-AV: E=Sophos;i="6.21,272,1763452800"; d="scan'208";a="94015316"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2026 21:10:23 -0800
-X-CSE-ConnectionGUID: /tKJnVhkTfu5B82HpAr2zQ==
-X-CSE-MsgGUID: 5IqByoyyT/WdkrPkAVXfyg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,272,1763452800"; d="scan'208";a="209693328"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2026 21:10:22 -0800
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Tue, 3 Feb 2026 21:10:22 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Tue, 3 Feb 2026 21:10:22 -0800
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.70) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Tue, 3 Feb 2026 21:10:21 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BkR+miN9mDW0EOkf0X/M2W/Kq32vRW0HLMqDoCQuC7HHojQb/Vp1Qa3OTodaCTsmst4ONKt3gNnYRctoWALPPyMt4UOBMLd7r3gbuV5wptzuIMzAy8Fmctc9sRvERbjGYVqnmQ5/JEF/EoltsNV6YyWVkU70MoptUyG7IXuymZ2U8T7kbqssGSYg50wHP8qcF4LURxnAJW/Hdqo3AxH8MzmODsWcFd0v/9B9tpUni72C7Taa0R2SLeqCAddgA73gyerAVzDj7yu1+7Y/RkA+XVqGbcYvnseFJDsHzn3sH/IbV8nMfw5AxUo9y9o2Sy/tBY4PFESpAwM6Ipt+SdtPbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eFfZiLNCUTZhoK20eFQIaTLpVRDvXBqrQnb5fq2IYYY=;
- b=YObqFZ4vgim/Q8vysjmEGPK2Ao9IC6SQHpkpgxRlwZF73Sz00GmPNUtCKTdTL9MKT/NntkuXgfMWfO5j2W0Id383q1/R2z9wPLOJOdKGSPUrfNs8fI4S3lIwhYpLi7wYCsUv6teDS7SX5EcnVUCIYx/eGIQfDsh9K8IJlcDh2AEbxhFu0WR3e615zqYBy4xHI/Xyk7sOalKmXXeGMbd6BaLc7RAUgpk8R54P88YfTD/xzA+CsO2juy2CgBPLPpYB/cv3bu+A02VQpHS91Grx0c/ytKs4X2yN1jlA+S82AvmaSX9Ed1jcCPA7Oj3BtOYDFWIPXL98VENQPV+i8af5gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by BN9PR11MB5323.namprd11.prod.outlook.com (2603:10b6:408:118::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Wed, 4 Feb
- 2026 05:10:19 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9564.016; Wed, 4 Feb 2026
- 05:10:19 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex@shazbot.org>
-Subject: RE: [PATCH v5 09/12] vfio/device: Add a helper to lookup VFIODevice
- from memory region
-Thread-Topic: [PATCH v5 09/12] vfio/device: Add a helper to lookup VFIODevice
- from memory region
-Thread-Index: AQHclN9MSxHLXxk870q3BItQvlgG3bVw+NuAgACMnNA=
-Date: Wed, 4 Feb 2026 05:10:19 +0000
-Message-ID: <IA0PR11MB7185A57303040A2F934A79B8F898A@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
- <20260203073200.848183-10-vivek.kasireddy@intel.com>
- <4f7f77df-afa9-43c4-a429-2ca387fe9df7@redhat.com>
-In-Reply-To: <4f7f77df-afa9-43c4-a429-2ca387fe9df7@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|BN9PR11MB5323:EE_
-x-ms-office365-filtering-correlation-id: 984043de-b7cc-4f79-b332-08de63abb137
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?ipnupZv8kh1usaq9b1kHMqyRn+FZe5CBYAQcrj33zOTV0KWdOH3zikkeJd?=
- =?iso-8859-1?Q?DAqQ5cU5mGkO1dvHQMPrVstUoLXJR8isdBEO5SPxPaibm/iKYv0uD9yzBw?=
- =?iso-8859-1?Q?S6gGFsRv+jb+60bg6m9oFs6w04p6BVAq5nZkZISascTbxvOLbCXSjjv32b?=
- =?iso-8859-1?Q?SWuIKAcg2MVmbeWRhb8Y4uFvpqDdWjTefPTFjH7wJpgRF+9gs1Fw0D8uFM?=
- =?iso-8859-1?Q?k5PQ1iR9gaiuoGJBacalC7IoTxezx4wmWYh0cTrYOSb2CacdjwoU2tmp4n?=
- =?iso-8859-1?Q?7hSyptaV0+HpOMaJCvmHSmPj3/YZwjdIfW8OwzEHa0OvqpP1JKH0qkTeTH?=
- =?iso-8859-1?Q?kOgeRhg9peUjmcudq2Ac0H7Ve4Gh9HJwnX2kPUgBk1GZrZUrW8frzuY8IV?=
- =?iso-8859-1?Q?YXJ3Osw73Iq37hAU1r6yOnj/nHzgBaciINKp2Od1hepdzYYNuaIASyeU+1?=
- =?iso-8859-1?Q?HB7bDNk/O9SKkY4gsGWLuerVlV6cwLql7L35yyIjjwIds/6vqdlbOT2Ylz?=
- =?iso-8859-1?Q?F+vqUZPAior4nTKy2CBt+0/qkn5TwkH1KilLgt8haYt97IfLtDne7eGTAo?=
- =?iso-8859-1?Q?7Hz9qUyKPT/bnQo84Rs3pMbYgdzwdUdFXHRGSnwQ3T2xEvLAYsROUg/gi8?=
- =?iso-8859-1?Q?lsCoe5Yv2bZJ2rf+o9268UAchWzJNyLn060Sl+sKan0EQWCNjFPUVn3sJR?=
- =?iso-8859-1?Q?3rbn0U+nB9Q5F4aJNT+m+R9gsuVoWdINA26SeSJEkuqOmibhYrhSvcG4xN?=
- =?iso-8859-1?Q?IxR/Tr9RF3ugG9NfLmhVsVEW7JBICd2DALvPHPH3lZaM9MAuW0D6o/7D7v?=
- =?iso-8859-1?Q?78j1/IhRQN41mwra5ErhNkL1wA1aVFwFFFJoFau+I+PcxbkpQ0DBlAtu0f?=
- =?iso-8859-1?Q?32EIjdV9DSJFrBjvJzEjntAAe/XzTsx+01jMeMTOFjsVzUl4qwd3Drnx++?=
- =?iso-8859-1?Q?PJpWNwLoFmnYnsqLLgBW5SdE0nQ4NG6sf3O0DtBIO4ANr+QZ9a5EymaEAS?=
- =?iso-8859-1?Q?nynL8/156z7X8hoImn1TXDMynZ9sY86LxkkJN3Kz2a+44LSBOzlR3z0eMl?=
- =?iso-8859-1?Q?F3pH4EV03EgvVIvm+2qgtNXW5eO/xz7smuOU9Zi/VICjLK86vLWqXoYDQo?=
- =?iso-8859-1?Q?423eddK9a2vtA/LKTQsz3w49re18D8orcHfOhr90cbeRrDkAoeLAvnKR15?=
- =?iso-8859-1?Q?19vhv5JUs8UAELY4lK4z95rco5i+dM+jy0a2dj8NnW7IpSGZdUpz+GaeF5?=
- =?iso-8859-1?Q?p4T2NCrZSANdD5t883yVIKSDuiutXel0troi0onLq1pLv7/tBdrXDL1XH+?=
- =?iso-8859-1?Q?ZckLZtJ/5Bn2XE/OCTVepN4BojnvnuBUjTh2TPlUiUbo3J6avJ8rvnaXdV?=
- =?iso-8859-1?Q?qWZAzwoOY98Z/MyKNzOrF+90nRzfHJyagn1TB8eOlfFW00Lo1QfBTeeZ9h?=
- =?iso-8859-1?Q?ZCT9eoD57WZnUNOQ/MA4/q2C9Fll6Iz9FNFQf7AtLcSZREPr3ZBMH5gYit?=
- =?iso-8859-1?Q?b5bmwVmWopJ8nH8xCFuVkB7hPLEEBt78FLI+iz0Ryjdppc+2OftwBGsi30?=
- =?iso-8859-1?Q?F7E1agK+KFq41DaBbF0D0Gg5fZPcQtYvzRJAnMg1lW+H5XYFIexSIcsfkr?=
- =?iso-8859-1?Q?jHWpdu58HmW2xYYFhQ1Pfb1yWrZqNgjWdbmXfpyrKsjpwiN4TzR87uczUf?=
- =?iso-8859-1?Q?kEpoRzFw/+6vvsEIg8o=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?6Jt5fI8blunpBBeSj0lWIw8N6lERbDxDzvtDbh+35ELqi2FvqSZ3rJy9MX?=
- =?iso-8859-1?Q?b4fCGahuFADyPXF5a2xyAFAbPK52zFJGG71y45cL1m2WGhmloazolv+red?=
- =?iso-8859-1?Q?5anff+bgHcdATx8qE4Q/2SiZuAZD5uW0551i5WhssiRhapHWSaEHUkP+CF?=
- =?iso-8859-1?Q?jRMceUSAT1270pBX4yJXAX7mw5TnAC6uMoWWisAl/lTtc1Ce56VRLA08wM?=
- =?iso-8859-1?Q?19ebWFR+8D6TJN6uNGzsBBjTyU/zDIYOY60ft1Y/EpeiZqaSVM19b9D53B?=
- =?iso-8859-1?Q?4nvwBny9yUAW3JpPB0XJDv3SjCy5ONmp4PuSd5b8kw4j7fcErKjsFZFRsE?=
- =?iso-8859-1?Q?16xNsUNnDmYdx6W0SPBdEfYFcBTqOSjM5dLxaVghHvYldpebfp0tmDDRyB?=
- =?iso-8859-1?Q?Fw72T6i/X0so7XtCG4q1SIT8Rnd/hfZQJGREF7JUB+t/xbBmVDLbW4RQ3P?=
- =?iso-8859-1?Q?hWgvV5f0nTajfcP5hnchLZwrT+c4KSc3x8f9x88VnKSTjAieNMMnLjqeo6?=
- =?iso-8859-1?Q?IdtGWZW3zht/tUEz+RaAGXH3pXmvGzW/Cs7YjrDP1fiBs08fBMKmyZNCxW?=
- =?iso-8859-1?Q?3xrmlqgYQif3B7Yy1l7fJFmo4eI2ZkriWqUgkQvrCHAa1T9RHN06KAFO6V?=
- =?iso-8859-1?Q?/uD+V1kRjxCvio1Fb6hKF0Op1DrHXOeWqBrhDXp2JeBDFeA1/mujTl/Hng?=
- =?iso-8859-1?Q?FdtbaYUvUwOtfHLWvaAg7ryNCQsVLzCD4x4Eh0WZIwYq38Q5W0I1U/Qmbm?=
- =?iso-8859-1?Q?I3h12+SmEyj4vFvhVoLRfQQHBeNeEfuJ0mry4nL3WsHSGodrKxumGUu+fC?=
- =?iso-8859-1?Q?+ESonr8r8S+WqTQahk76RLukzoS1/tyCD08865ez2mSQAjPyhaXUVz1wDq?=
- =?iso-8859-1?Q?h6sWfnCwLqkj97cHRf4hPM8zD15/GuJie1jFkTXy+wGE25kFqXlq2sYkTX?=
- =?iso-8859-1?Q?e8dpDmYJWzTcJJSM2hheL0E+6R4yD3D1taTpgeRcJaVyKQhwRGYjLjQtnI?=
- =?iso-8859-1?Q?jkdrUtZufTwKAc3xIqVu2gIIS3jjNwXJXeWL53MLzMF+umqSpQiJVcVtxb?=
- =?iso-8859-1?Q?zdzqaRAih0kaPtOEtffNPMSZJroNVrnJasS1/CveZwHULBP4fuiBNd3aNN?=
- =?iso-8859-1?Q?BguBjLI+zlIIy1Tv8toYAw59idGtMw8OZkzIZpB3NRQM3wLHEfuEPUylxt?=
- =?iso-8859-1?Q?J40bCeYTGjLZbJEjeDzwSuxNCtSWRNYS2PwUt55TmebcBd8Id5OpfGWXLR?=
- =?iso-8859-1?Q?u/uh2O1CesK97Fa0gdfiZed55+cpjaHOggwVZWQASoWA+TFF4JK/7FmWEZ?=
- =?iso-8859-1?Q?GxxTXEF0IewqTDSNknnQ4NAdjPx49VAub7h5AJOWAePzAXtvu/qbfjrpj9?=
- =?iso-8859-1?Q?wmYv09qmXvR9gAMAAev6bJFm+/AZefT2SFwkvIoopBw0yA8EwwMgapN/Zx?=
- =?iso-8859-1?Q?1epRHUM4mnzvvZBMteE1ufAOSRLlB58m7xA5sLtTRwL+WYsj3BqR4eX9QD?=
- =?iso-8859-1?Q?EmVTEetCgk+cxynQlqoxtEjgRBzqx8TQwqMheDEdeBoVB6rPHpoCS6YzzO?=
- =?iso-8859-1?Q?qLonaah0bOvp0sCJSjcSHKIA976B4TfGQRm9vOqUqvJQDWfETax4mV6XZv?=
- =?iso-8859-1?Q?PzJ+5Sod62WRomPao2qvBcJoyrYqfCkbaPg5eVi6FD/7uTg+XMpU5UZQ9f?=
- =?iso-8859-1?Q?oYYDddbgk08KpYfgA0YIefBzp1gMl6ouD+NVthXaxqWGeBAeQWCzYVL8hE?=
- =?iso-8859-1?Q?dpQykO7vNzhG9Bq9TnzQJwVeZHZSkCXn57JdrDgnVHjccJBQCec/vT7nWA?=
- =?iso-8859-1?Q?C0WFzxi5qw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnVBP-0005hk-Dq
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:12:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770181925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
+ b=F3OsFB/FBLjIj7H3qcsm9UQ5105L6q8zNLYwu+8nSsjzCGOJEddRd7WFJ0gTnoJMCQW/2F
+ 3X2uiK/k12LMJes6NTvRUEMMofp++AGDEeM95fPCco2mwi/+Bx7/1g3+BkQsTZJOqUjKkw
+ qH7n6ALRqaFQmYtPjcFq0E+HX5s0MEI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-171-DBYkXU_tMpy20q-ouZHWNw-1; Wed, 04 Feb 2026 00:12:03 -0500
+X-MC-Unique: DBYkXU_tMpy20q-ouZHWNw-1
+X-Mimecast-MFC-AGG-ID: DBYkXU_tMpy20q-ouZHWNw_1770181922
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4361765dc85so840427f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:12:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770181922; x=1770786722; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
+ b=O4uoovzE4O0DVVzA/dgH40sgNDSfvag9QP8BqNPyQg8x671SqDOn2NBGINdGoVqDIP
+ wSJqZtK8Ru0GxNBiw1pgfC66iVWY9TtmHLGFK8K+NO4ZPR6wrIYj5gKyoqacRSoNCq12
+ B37OUqMYcCgXLhbjCh4Lzz4MdN9iUjWZEQEsANlWSFx8lrzgxftGKzYg3j2pRT9d5x3X
+ B9Jz7sx8JWBuqf4fqxk4BsIXFqenbe03eAf7/IVM760i8Y4U37wIemoySDg6af4gysZf
+ 7O6/HifjPGc1CQRuFSXvQhUObIc1UgmNfpS+xXGRP2tvQHvhV8B3JCNlYWu8I+vIGe/d
+ NrCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770181922; x=1770786722;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
+ b=m1gu/9phTYe1+pT2fFewhRIbYWCjn6usJo0pOot5hJSvHqVbQX7OblsoXUgU6+Z1TJ
+ GKn+NxiXGVQt31ghs080s608BGa6GGw/W8EFDbMXs7GnoM9IvSdJPw2Bz+6/WiFcnOwD
+ 1grlfEX5tY++Fm9AitS0NYWPpzMUbYxNKPUnOud4+0OlF3eP5rZcZZBe7tsOxkU4zma3
+ DyAIi+UI0sjT7JFtyPJ1bfv01JGe3iG5bwxqGXGRLzaM0SjTyiU6eVtqXnJ0St9zLmE1
+ 7nY5Znhl+WhH42t9AFs2NGS0UwsPkdlJ53PwMe42v/9Q62fHqTRV1xjNwH/hVBCjTHE8
+ Qigg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjXtbrTXl4thquxCblq9v4lIAMKX+Ak2eel08GNG9ftki5GVmvKwqgwCKNi14da+oV5nfgJSTdGi65@nongnu.org
+X-Gm-Message-State: AOJu0YwmeoOzLmkNUdZnWbnEvts6+yfskX6M2G+lzgI3LkMvp1uvJBMa
+ UEFf9Sb+m2ggpJNsSkFNZLQEfRylC+mhRAiD1SsdJ6Oju9YeHCMFMAcKwN8gb/uJJGfcytPwSQf
+ L1PgbE1wiY/Q0SwddiNP4zCq1Ti4uBtdTV+Jhbv2/2JZQUgkq0Vul17kJ
+X-Gm-Gg: AZuq6aJZNsDqYpLf+a9Ssd2QlBJRdJ30iL6Q6HqkDfWXVRmL7aqNNIQEuYxzZ65EiV6
+ Js1O/ARtepdKYMgkSgAQ8o5n7UBX19BTIbeE351DQNLE4Sxcxkkjfo69uAyS3vFz/TUaRIDrF67
+ DGGBfwIYuBPkKejSW3OyDx915kqK+CAV11rbJmyz0djP/W6hp0naoujW+oUeGVdsFPNwjxhjoHe
+ 4VdY2O3VybsviBmtXi5JRdhfWuw1AAhcyuqd6LCNXk143tlJpB3WzafoJNJH3o8x5hEJGntHf4y
+ Tihq6uWQUOpO4J0LM0s0aDodvsKRO7Rm8uH+tJE7MmB6krOWDsQld8+n73KD4k0EX8h28jQ2z7T
+ TaRPjQMvHF+zkUW7HfGFOTpGWjqtBxOqv7w==
+X-Received: by 2002:a05:6000:250c:b0:432:da3b:5941 with SMTP id
+ ffacd0b85a97d-43617e405famr2012763f8f.21.1770181922016; 
+ Tue, 03 Feb 2026 21:12:02 -0800 (PST)
+X-Received: by 2002:a05:6000:250c:b0:432:da3b:5941 with SMTP id
+ ffacd0b85a97d-43617e405famr2012738f8f.21.1770181921480; 
+ Tue, 03 Feb 2026 21:12:01 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-436180659b8sm3194283f8f.43.2026.02.03.21.11.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 21:12:00 -0800 (PST)
+Date: Wed, 4 Feb 2026 00:11:56 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
+Subject: Re: [PATCH v2 4/9] pnv/phb4: Implement read-only and write-only bits
+ of registers
+Message-ID: <20260204001123-mutt-send-email-mst@kernel.org>
+References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
+ <20251230102156.886288-5-saif.abrar@linux.vnet.ibm.com>
+ <20260204000148-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 984043de-b7cc-4f79-b332-08de63abb137
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2026 05:10:19.6322 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mQ8h2SP+5tLSXfs4GVYLFLWScsSOHKIUEehICPrJ447nZXherCfToq9OQV0fzkEDYsGnqAH2RpvID6PxWOO+wftRMluoxFFareDjNdK+AoA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5323
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.9;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260204000148-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,70 +126,368 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
+On Wed, Feb 04, 2026 at 12:04:20AM -0500, Michael S. Tsirkin wrote:
+> On Tue, Dec 30, 2025 at 04:21:22AM -0600, Saif Abrar wrote:
+> > SW cannot write the read-only(RO) bits of a register
+> > and write-only(WO) bits of a register return 0 when read.
+> > 
+> > Added ro_mask[] for each register that defines which
+> > bits in that register are RO.
+> > When writing to a register, the RO-bits are not updated.
+> > 
+> > When reading a register, clear the WO bits and return the updated value.
+> > 
+> > Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
+> > PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
+> > by writing all 1's and reading back the value.
+> > The WO bits in these registers should read back as 0.
+> > 
+> > Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> > Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> 
+> causes a crash in boot-serial-test:
+> https://gitlab.com/mstredhat/qemu/-/jobs/12975819193
 
-> Subject: Re: [PATCH v5 09/12] vfio/device: Add a helper to lookup
-> VFIODevice from memory region
->=20
-> On 2/3/26 08:30, Vivek Kasireddy wrote:
-> > Instead of iterating over all QOM devices to find the VFIODevice
-> > associated with a memory region, it is faster to just use the
-> > vfio_device_list to lookup the VFIODevice.
-> >
-> > Cc: Alex Williamson <alex@shazbot.org>
-> > Cc: C=E9dric Le Goater <clg@redhat.com>
-> > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+I forgot to say - with tci:
+
+  ../configure --enable-tcg-interpreter --target-list=ppc64-softmmu                                                                      
+
+
+> bisect script:
+> 
+> #!/bin/bash                                                                                                                            
+> cd /scm/qemu-bisect/build                                                                                                              
+> make -j$(nproc) || exit 125                                                                                                            
+> ninja tests/qtest/boot-serial-test || exit 125                                                                                         
+> QTEST_QEMU_BINARY=./qemu-system-ppc64 timeout 60 ./tests/qtest/boot-serial-test -p /ppc64/boot-serial/powernv9 && exit 0 || exit 1     
+> 
+> 
 > > ---
-> >   hw/vfio/device.c | 23 +++++++++++++++++++++++
-> >   1 file changed, 23 insertions(+)
-> >
-> > diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> > index 973fc35b59..ecb3581fcc 100644
-> > --- a/hw/vfio/device.c
-> > +++ b/hw/vfio/device.c
-> > @@ -644,3 +644,26 @@ static VFIODeviceIOOps
-> vfio_device_io_ops_ioctl =3D {
-> >       .region_read =3D vfio_device_io_region_read,
-> >       .region_write =3D vfio_device_io_region_write,
-> >   };
+> > v1 -> v2: New PnvPHB4Class to hold each register's RO mask.
+> > 
+> >  hw/pci-host/pnv_phb4.c              | 78 ++++++++++++++++++++++++++---
+> >  include/hw/pci-host/pnv_phb4.h      | 13 ++++-
+> >  include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
+> >  tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
+> >  4 files changed, 157 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> > index 70f5af21fa..48caba9e79 100644
+> > --- a/hw/pci-host/pnv_phb4.c
+> > +++ b/hw/pci-host/pnv_phb4.c
+> > @@ -707,6 +707,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+> >          return;
+> >      }
+> >  
+> > +    /* Update 'val' according to the register's RO-mask */
+> > +    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
+> > +    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
+> > +                                            (val & ~(k->ro_mask[off >> 3]));
 > > +
-> > +static bool vfio_device_lookup(struct iovec *iov, VFIODevice
-> **vbasedevp,
-> > +                               Error **errp)
+> >      /* Record whether it changed */
+> >      changed = phb->regs[off >> 3] != val;
+> >  
+> > @@ -781,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+> >      case PHB_TCE_TAG_ENABLE:
+> >      case PHB_INT_NOTIFY_ADDR:
+> >      case PHB_INT_NOTIFY_INDEX:
+> > -    case PHB_DMARD_SYNC:
+> > +    case PHB_DMA_SYNC:
+> >         break;
+> >  
+> >      /* Noise on anything else */
+> > @@ -819,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+> >      case PHB_VERSION:
+> >          return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
+> >  
+> > -        /* Read-only */
+> > +    /* Read-only */
+> >      case PHB_PHB4_GEN_CAP:
+> >          return 0xe4b8000000000000ull;
+> >      case PHB_PHB4_TCE_CAP:
+> > @@ -829,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+> >      case PHB_PHB4_EEH_CAP:
+> >          return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
+> >  
+> > +    /* Write-only, read will return zeros */
+> > +    case PHB_LEM_ERROR_AND_MASK:
+> > +    case PHB_LEM_ERROR_OR_MASK:
+> > +        return 0;
+> > +    case PHB_PCIE_DLP_TRWCTL:
+> > +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
+> > +        return val;
+> >      /* IODA table accesses */
+> >      case PHB_IODA_DATA0:
+> >          return pnv_phb4_ioda_read(phb);
+> >  
+> > +    /*
+> > +     * DMA sync: make it look like it's complete,
+> > +     *           clear write-only read/write start sync bits.
+> > +     */
+> > +    case PHB_DMA_SYNC:
+> > +        val = PHB_DMA_SYNC_RD_COMPLETE |
+> > +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
+> > +        return val;
+> > +
+> > +    /*
+> > +     * PCI-E Stack registers
+> > +     */
+> > +    case PHB_PCIE_SCR:
+> > +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+> > +        break;
+> > +
+> >      /* Link training always appears trained */
+> >      case PHB_PCIE_DLP_TRAIN_CTL:
+> >          /* TODO: Do something sensible with speed ? */
+> > -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+> > +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+> > +        return val;
+> > +
+> > +    case PHB_PCIE_HOTPLUG_STATUS:
+> > +        /* Clear write-only bit */
+> > +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+> > +        return val;
+> >  
+> > -    /* DMA read sync: make it look like it's complete */
+> > -    case PHB_DMARD_SYNC:
+> > -        return PHB_DMARD_SYNC_COMPLETE;
+> > +    /* Link Management Register */
+> > +    case PHB_PCIE_LMR:
+> > +        /* These write-only bits always read as 0 */
+> > +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
+> > +        return val;
+> >  
+> >      /* Silent simple reads */
+> >      case PHB_LSI_SOURCE_ID:
+> > @@ -1685,6 +1721,32 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+> >      .get_address_space = pnv_phb4_dma_iommu,
+> >  };
+> >  
+> > +static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
 > > +{
-> > +    VFIODevice *vbasedev;
-> > +    RAMBlock *first_rb;
-> > +    ram_addr_t offset;
+> > +    PnvPHB4Class *phb4c = PNV_PHB4_GET_CLASS(phb);
 > > +
-> > +    first_rb =3D qemu_ram_block_from_host(iov[0].iov_base, false,
-> &offset);
-> > +    if (!first_rb) {
-> > +        error_setg(errp, "Could not find first ramblock\n");
-> > +        return false;
-> > +    }
+> > +    /*
+> > +     * Set register specific RO-masks
+> > +     */
 > > +
-> > +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
-> > +        if (vbasedev->dev =3D=3D first_rb->mr->dev) {
-> > +            *vbasedevp =3D vbasedev;
-> > +            return true;
-> > +        }
-> > +    }
-> > +    error_setg(errp, "No VFIO device found to create dmabuf from\n");
-> > +    return false;
+> > +    /* PBL - Error Injection Register (0x1910) */
+> > +    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
+> > +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
+> > +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
+> > +
+> > +    /* Reserved bits[60:63] */
+> > +    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
+> > +    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
+> > +    /* Reserved bits[36:63] */
+> > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
+> > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
+> > +    /* Reserved bits[40:63] */
+> > +    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
+> > +    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
+> > +
+> > +    /* TODO: Add more RO-masks as regs are implemented in the model */
 > > +}
->=20
->=20
-> This won't compile and break bisect. Please merge with the following
-> patch.
-Ok, I'll merge it with the next patch that adds vfio_device_create_dmabuf()=
-.
-
-Thanks,
-Vivek
-
->=20
-> Thanks,
->=20
-> C.
+> > +
+> >  static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+> >  {
+> >      STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+> > @@ -1743,6 +1805,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+> >      pnv_phb4_err_reg_reset(phb);
+> >      pnv_phb4_pcie_stack_reg_reset(phb);
+> >      pnv_phb4_regb_err_reg_reset(phb);
+> > +    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+> >  }
+> >  
+> >  static void pnv_phb4_instance_init(Object *obj)
+> > @@ -1753,6 +1816,9 @@ static void pnv_phb4_instance_init(Object *obj)
+> >  
+> >      /* XIVE interrupt source object */
+> >      object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
+> > +
+> > +    /* Initialize RO-mask of registers */
+> > +    pnv_phb4_ro_mask_init(phb);
+> >  }
+> >  
+> >  void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
+> > diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+> > index 47a5c3edf5..bea0684724 100644
+> > --- a/include/hw/pci-host/pnv_phb4.h
+> > +++ b/include/hw/pci-host/pnv_phb4.h
+> > @@ -19,7 +19,7 @@
+> >  
+> >  
+> >  #define TYPE_PNV_PHB4 "pnv-phb4"
+> > -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
+> > +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
+> >  
+> >  typedef struct PnvPhb4PecStack PnvPhb4PecStack;
+> >  
+> > @@ -156,6 +156,17 @@ struct PnvPHB4 {
+> >      QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
+> >  };
+> >  
+> > +typedef struct PnvPHB4Class {
+> > +    DeviceClass parent_class;
+> > +
+> > +    /*
+> > +     * Read-only bitmask for registers
+> > +     * Bit value: 1 => RO bit
+> > +     *            0 => RW bit
+> > +     */
+> > +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
+> > +} PnvPHB4Class;
+> > +
+> >  void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
+> >  int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
+> >  PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
+> > diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+> > index df5e86d29a..dfd0e01d1e 100644
+> > --- a/include/hw/pci-host/pnv_phb4_regs.h
+> > +++ b/include/hw/pci-host/pnv_phb4_regs.h
+> > @@ -180,9 +180,11 @@
+> >  #define PHB_M64_AOMASK                  0x1d0
+> >  #define PHB_M64_UPPER_BITS              0x1f0
+> >  #define PHB_NXLATE_PREFIX               0x1f8
+> > -#define PHB_DMARD_SYNC                  0x200
+> > -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
+> > -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
+> > +#define PHB_DMA_SYNC                    0x200
+> > +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
+> > +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
+> > +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
+> > +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+> >  #define PHB_RTC_INVALIDATE              0x208
+> >  #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
+> >  #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
+> > @@ -370,6 +372,7 @@
+> >  #define P32_CAP                                 0x228
+> >  #define P32_CTL                                 0x22C
+> >  #define P32_STAT                                0x230
+> > +
+> >  /* PHB4 REGB registers */
+> >  
+> >  /* PBL core */
+> > @@ -395,8 +398,8 @@
+> >  #define PHB_PCIE_SCR                    0x1A00
+> >  #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
+> >  #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
+> > +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
+> >  #define PHB_PCIE_BNR                    0x1A08
+> > -
+> >  #define PHB_PCIE_CRESET                 0x1A10
+> >  #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
+> >  #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
+> > @@ -405,7 +408,14 @@
+> >  #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+> >  #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+> >  #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+> > +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
+> > +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+> >  #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
+> > +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
+> > +#define PHB_PCIE_LMR                    0x1A30
+> > +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
+> > +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
+> > +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
+> >  
+> >  #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+> >  #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+> > @@ -433,7 +443,7 @@
+> >  
+> >  #define PHB_PCIE_DLP_TRWCTL             0x1A80
+> >  #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+> > -
+> > +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+> >  #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+> >  #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+> >  #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+> > diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+> > index f186efaf0d..841306ae3f 100644
+> > --- a/tests/qtest/pnv-phb4-test.c
+> > +++ b/tests/qtest/pnv-phb4-test.c
+> > @@ -73,7 +73,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
+> >       * Sticky reset test of PHB_PBL_ERR_STATUS.
+> >       *
+> >       * Write all 1's to reg PHB_PBL_ERR_INJECT.
+> > -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
+> > +     * RO-only bits will not be written and
+> > +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
+> >       *
+> >       * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+> >       * Verify the sticky bits are still set.
+> > @@ -81,7 +82,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
+> >      phb4_xscom_write(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
+> >      phb4_xscom_write(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
+> >      val = phb4_xscom_read(PHB_PBL_ERR_STATUS);
+> > -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
+> > +    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
+> > +}
+> > +
+> > +/* Check that write-only bits/regs return 0 when read */
+> > +static void phb4_writeonly_read_test(QTestState *qts)
+> > +{
+> > +    uint64_t val;
+> > +
+> > +    /*
+> > +     * Set all bits of PHB_DMA_SYNC,
+> > +     * bits 0 and 2 are write-only and should be read as 0.
+> > +     */
+> > +    phb4_xscom_write(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_DMA_SYNC);
+> > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+> > +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
+> > +
+> > +    /*
+> > +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
+> > +     * bit 9 is write-only and should be read as 0.
+> > +     */
+> > +    phb4_xscom_write(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_PCIE_HOTPLUG_STATUS);
+> > +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
+> > +
+> > +    /*
+> > +     * Set all bits of PHB_PCIE_LMR,
+> > +     * bits 0 and 1 are write-only and should be read as 0.
+> > +     */
+> > +    phb4_xscom_write(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_PCIE_LMR);
+> > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+> > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+> > +
+> > +    /*
+> > +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
+> > +     * write-only bit-1 should be read as 0.
+> > +     */
+> > +    phb4_xscom_write(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_PCIE_DLP_TRWCTL);
+> > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+> > +
+> > +    /*
+> > +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
+> > +     * both regs are write-only and should be read as 0.
+> > +     */
+> > +    phb4_xscom_write(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_LEM_ERROR_AND_MASK);
+> > +    g_assert_cmpuint(val, ==, 0x0);
+> > +
+> > +    phb4_xscom_write(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
+> > +    val = phb4_xscom_read(PHB_LEM_ERROR_OR_MASK);
+> > +    g_assert_cmpuint(val, ==, 0x0);
+> >  }
+> >  
+> >  static void phb4_tests(void)
+> > @@ -96,6 +149,9 @@ static void phb4_tests(void)
+> >      /* Check sticky reset of a register */
+> >      phb4_sticky_rst_test(qts);
+> >  
+> > +    /* Check write-only logic */
+> > +    phb4_writeonly_read_test(qts);
+> > +
+> >      qtest_quit(qts);
+> >  }
+> >  
+> > -- 
+> > 2.47.3
 
 
