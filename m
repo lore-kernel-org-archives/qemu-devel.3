@@ -4,159 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DEDE83EF9
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AB0E83EF9
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnYmM-0005hx-C0; Wed, 04 Feb 2026 04:02:30 -0500
+	id 1vnYqE-0006qI-21; Wed, 04 Feb 2026 04:06:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1vnYmK-0005hp-N0
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:02:28 -0500
-Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1vnYmI-0006cs-5u
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:02:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rhH0I4iGcaMhDlS6g1hmBVjqmcMZu4I4kxlnda2/V2VNckG0olHESIavYKxLSFvh6hojimZ/OXbG4Km+CP50JbxH/q5kFR+kHR91g5q0FSgvGvc4t4n1tnbiIuVFg489BXvr5AHNoHHcb/dk3X4qseLXWfDM/Oieb3kDtOKkB+PSfW9MfqF76ciJNYaDKfp3yY8UatNXJdrM3Hx098Aq+l2GGS4yvAFmayCRgIG00fOU+NWXeHxkePFAX8PK4iTRHm6i991EvHby+8YmdimnSU9jABj2ZM3jg9n9mQup2rX3hYW607UHYWc9zWjvHnm9s1ki9q+9sY05LR7obX3NWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qaR93bzfy7QQq1feK8HNJYsYg6xGoXybBx6/g/CLpYI=;
- b=ok69f2zbLnaKJy9JGM6HSKe9u18KNfYRr1MJSgl/hw57NQNAbwWillxuYo8hDwI65vN07Oe6CMVKMc0m9WzE1S4xicPgab86tydcMrZT1UTfMaCqelJ9I4oDACS/lrOiH6gp4egcuriD97bAGnzHWHQ7zztrGMBm68TEWyifV4eR7bkliyGmyQ0Ql07wTK4RlvMH/KzIu2cPXtwFU6Qay3bpIh2jtfuScLNBqUP7p2NhG2qnWsO++AH3pSep4fRAINt4JxYJu2dhMyPuwCzrKNOPySSO6IkGlVUaPZ8Q2XhSUV/wO6u9T7HQjXAtrEvynX2AcVe+WupmFFh0XgV/cQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qaR93bzfy7QQq1feK8HNJYsYg6xGoXybBx6/g/CLpYI=;
- b=0Dm9uAym3wk4L8wvSMDpIv0QwOWdwqdCm1jWm6bTKr2xpUevmIlzBYh6Cudwzbr7LUbTGIcfGwU1UyHvC9EIKKVj7SBYL+7rTnNSuDi0pIryoDcBNgQqLaamTa6a8W40vT3YqTO1L6gIOyEgLMbuTlyNOJE/DLNHpHXfbwr8qOA=
-Received: from CH2PR17CA0003.namprd17.prod.outlook.com (2603:10b6:610:53::13)
- by CY5PR12MB6528.namprd12.prod.outlook.com (2603:10b6:930:43::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Wed, 4 Feb
- 2026 09:02:19 +0000
-Received: from CH1PEPF0000AD75.namprd04.prod.outlook.com
- (2603:10b6:610:53:cafe::1e) by CH2PR17CA0003.outlook.office365.com
- (2603:10b6:610:53::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.13 via Frontend
- Transport; Wed, 4 Feb 2026 09:02:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- CH1PEPF0000AD75.mail.protection.outlook.com (10.167.244.54) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 09:02:18 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Wed, 4 Feb
- 2026 03:02:18 -0600
-Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 4 Feb
- 2026 03:02:18 -0600
-Received: from [172.31.180.39] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Wed, 4 Feb 2026 03:02:15 -0600
-Message-ID: <fe2934f7-0e96-4b76-9993-40b4492e698b@amd.com>
-Date: Wed, 4 Feb 2026 14:32:14 +0530
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnYq3-0006oG-De
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:06:25 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnYq1-0007M7-VB
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:06:19 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-81f47610542so308763b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 01:06:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770195976; x=1770800776; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t1BQDt+ZwGveBewjMthST4kyVOdPiCHqqQdGl2PhLdU=;
+ b=ftvrz9zW7lp+FROljnqRWmZh184dUkN5+QALYkS9SxxcKoDtkLLEatsNgGSsSG8vkU
+ pbES3WludFpCrjeTwd34g1tDNwyBbgTjrCqm0B8I9BdGPa4wmtxvBdHGUPrmMH40tXbq
+ BgzHz4klahH9yF7WiirSnct5e5QphOuKmNon7yXOUggw+0kRDFDm2DwDGeOceOK1u7O9
+ DjF+KTIquyn0K8Xl8bALmoOGfMMAPcvIsmw3zFSA/cNTX0aRdURAhLtCqBR1ZhXV2rzS
+ Y8BVjfb4ZsN12Rz94WLmzAuMYRlbPn7BkKLxFFzZSiUBi7/+EHd93E63QWTBL+mirOAP
+ hEtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770195976; x=1770800776;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t1BQDt+ZwGveBewjMthST4kyVOdPiCHqqQdGl2PhLdU=;
+ b=hgiTDM5LX3Y5esQBHjBumoFTMo6FUVC07uFCZq1IVNtbkY4MMyfmHcnVUXeU9/mcX1
+ BpJJeuY7auQ7wSqa+8qhK7ILEq5I51dBEfVJ7M/L2FsFpHTnZdOUFVqwZZ739CJJQdD0
+ lrwHsn+fJ4oHBtIO2W2DKNx6+ZAeRXm+LCFJO99T56rsnWsJRDS18ccI3fp2xwg0cToQ
+ F+qEH/CtusicDN10vHZlaGTAOhmFpgTqdcuttSHyRhsRViho86ZBQbNvA6xOj/wX5Tjn
+ MRESVow6UNeFzj4l+DIccQNyhjFt1PCSZwVhGa3S0VKy2qcvok3gli0oZER/88OjSKhc
+ pidA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJnhCUB7VyB/2P1jkOCN6WvTP3Oiv+ukblB2lnk+KSYkghySnpC6/0ab1NvOrgajuzjRrvjZ6xbL+L@nongnu.org
+X-Gm-Message-State: AOJu0YwXdXjbmWubOLeYmfXIchyZbCPY38/rVrDkq4dD0JagVrAsLVmD
+ 799YmhX1j1dts1GgaBF8hYe7RM4vRG/dp9RaFiG/bgTbE04cpYO/OG/eo18TusbYsN4=
+X-Gm-Gg: AZuq6aKS0a6n4bIwONIFK1gX6nlSiCceY781rNuDAtInoUAA+uUa26axYiNoIZTLhbH
+ N3y/xG9ktDlyqi/HB5yukhs2xpq+OYGJlM7lM1WVMPglafCUA1eudx+K0lorvUPJgtyOebvoJqZ
+ e6rn6zrJzu2JzrBn93GT85UnLeVdm3yNXyVEdD/uM/U3N3VjnBWE2fnymvo3XzL8rxqWwpYxT1E
+ YlY45edXUmn/JHA7ZaDfzk6BiJ1jG1IqVmspuMM/KtYrFNdJPKehTNbuP6CgCrfPzGqikFbyR/c
+ hvBy7+9ziBeY2hhVo8Un25HT6v23G+Fo7q2SjtZERJbEyXuEeeJAKhH6DrJZdeLhJocNrsEKpl6
+ LEyhzk3uQCsSBJKSL2Y4FWK8Qc3SWjG3SZjcewzybGmxoMGQ6GXlgBALkVpyVNJjBmV79U/OQNE
+ IR1Z5UDV1jhnn1HdIndEyi54B0oNWahdYgUHssw7nVVf6mcaaPsXXen3HAHDbSG6ry58px9w==
+X-Received: by 2002:a05:6a00:a14:b0:81f:8084:7ea0 with SMTP id
+ d2e1a72fcca58-8241c163128mr2450978b3a.7.1770195975856; 
+ Wed, 04 Feb 2026 01:06:15 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:bb8:49ae:4cdf:8d97?
+ ([2401:d002:dc0f:2100:bb8:49ae:4cdf:8d97])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8241d1a5214sm1853892b3a.16.2026.02.04.01.06.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Feb 2026 01:06:15 -0800 (PST)
+Message-ID: <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
+Date: Wed, 4 Feb 2026 19:06:09 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] i386: Add Bus Lock Detect support
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>,
- <kvm@vger.kernel.org>
-CC: <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
- <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
- Shivansh Dhiman <shivansh.dhiman@amd.com>
-References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
- <20251121083452.429261-5-shivansh.dhiman@amd.com>
+Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
+ with shifts
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260204052456.970605-1-richard.henderson@linaro.org>
+ <20260204052456.970605-7-richard.henderson@linaro.org>
+ <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-In-Reply-To: <20251121083452.429261-5-shivansh.dhiman@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Received-SPF: None (SATLEXMB04.amd.com: shivansh.dhiman@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD75:EE_|CY5PR12MB6528:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66095669-e65b-41fe-b6e8-08de63cc19c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MkVIckY5V2tWOEdHaFBGTlNhL1g3ekwyTGVNNDR5OEJrUUNIUVVXTVRHbDBz?=
- =?utf-8?B?Q1lBb09nV2l2cXVDUnhGbDh2eUc2SGtINVZtYi9KYnA2bVI4ZVNFSzRDdzZx?=
- =?utf-8?B?anFHV3BzVXUxTnJscm9pbXJ1Q3FlcjVyZGwzMTRXQlFWWHBGVnZyYTJEVWdB?=
- =?utf-8?B?dDNtUDk0bGJNRTdBOVJWZVBZdFphZWREZmoyamZ0N3MreG5CS0llN0M5QzBK?=
- =?utf-8?B?RzNKdU9QekJVMks1elkxUkloSTYvSFBuZ1ZlTTdTNEU3dUdGWHNaYUswcVpU?=
- =?utf-8?B?UDhLVE0yTkxPSDlEa1lOTE1pMWhYcVlXS2l6elcvb0JseHVVa3hodW9MMXE0?=
- =?utf-8?B?MmhvblVROEwvVXlsbzgwWWhocS9QZ2RJNkUzNThOaVdVdzN1UU5aNkRTbjdK?=
- =?utf-8?B?eG9JbFRpUWtPcjVDZThsUUtOQjVwMVlSQklrQkN4aU5CbWxBOUNKWisxVWFR?=
- =?utf-8?B?RGNaTDZUZ1B5Z0ZFdEdZTWR2LzB6WWtZTGR5K2E1K2hRRXAyNmc1b3lWempz?=
- =?utf-8?B?VjlWRmZJYzBtUGJ4ZTJaZndoYVJIdndVQjNoNmJLWGJOdVh6cGxpUEhyYS9V?=
- =?utf-8?B?MXV3S3RlKzVDR3Q0QUt1M3FHU29KOXY1TmwwR1RsRU1IRlRIZk8xeklBYXZF?=
- =?utf-8?B?QVpWRWlRR1JicG9ISWdFcDI2SlpPMnloaHZTTUlSdW4wT1dDUWo4VXpUa1Rz?=
- =?utf-8?B?TGVTdjFOWkpLNjZvdVNzb2thMHYvdnVLeGR6TW4vVVZkaXVFNVd3SmtlaW1F?=
- =?utf-8?B?ckx0QmUrOUdVaEFVQ1ZrTERCWkFRZ0F2V2swTW45VFRSaC9MOFRQVHdzcmwz?=
- =?utf-8?B?dGJjTVNGZk15OFdqRlZXelcyUmptSVgyS2tMbEQweWl0VzZjRktTUWRCQmhX?=
- =?utf-8?B?R2RIRHgxekxMcmdRdnN3ZGpHYVVXaFNoT0JRU2ZpSGVUWHk3VEpzNDMxbU1z?=
- =?utf-8?B?eW9vSjI1WGI3R3hsODY0eGthZjFvUURQZmhVcmpvMlFtSWY2YmZmR2RCQ0FH?=
- =?utf-8?B?UUcyT0JsSkNCZ3BDSUxGVzhJUkFqVU1KVGZHaW5PYTdYNmhtUmVNNFd3Zmsw?=
- =?utf-8?B?dXRrOXZsalhTTHJZUlUrZEtZWllJQTZFd2hXeG95eGNQdVhJbzlsNzJQTUEx?=
- =?utf-8?B?aXNqMWVHNzJxVlBzU1A2ZzZxZUMzVXd0VzBNdjBHYTVIRnEwVU9RS2tLYlY5?=
- =?utf-8?B?WFJ2cGFCbGg0ZnhMd1BHQ3g1VDBna202RVo4aTBLUmk3a0JJaDZOT2Y5WXpz?=
- =?utf-8?B?SjFtVWV6SXBLRUVhWFpBeUhiODZEeStRb25VYXpmalFwL2VRU051TWRmbzVo?=
- =?utf-8?B?VURFMHhXM2RYbHhzUUl2NXd6Sm8zaUhuS05YMUphUU01OWowMmxtcmRlR1J4?=
- =?utf-8?B?ZnJTb25ic1Q3TU9HaHBPRVZveXR2RUVFTXZqVlRiaDZxeWVXSG12Ky9hRkcz?=
- =?utf-8?B?UUlueHNpRTRqekJ6RTVMTjM4Ulk4bkdBUy9NSkk0QTNUVDZQZnA3YXdZbHBM?=
- =?utf-8?B?WStCNzFYYXorMGM4M2t1aVZTNXp5aHZqcVI3ZzlNNWxWNkdHSVNLWWZMb0tH?=
- =?utf-8?B?VjVjREU3QTcxdVJrUnY3Wk5uQnlSenN6cmxoZWM1MWVVTzR1WUFObklRVFJq?=
- =?utf-8?B?MEhJeHZQdU9NdmhVcWNOOUJkeDREcXZjWmRpdW1XMGlRcXRtL1A3dStBVUZS?=
- =?utf-8?B?RTJ2eDFudkFxSWdoYWdBS2haUFBwUDJEVERhR05uQkJ4MXkrNE5MQ0dZcXdJ?=
- =?utf-8?B?QnNlMmRPNTc4WDNna042am5xYTVuYkZjMm56ejJTMVBkNUdVbEVkMkJuelUy?=
- =?utf-8?B?NXlOVkpzYnZtV3BEVUlXM1d2dkthTEhSRG1rL2Nmbm1NRXFHQy9zQVpqNm9M?=
- =?utf-8?B?em45UDVteXJrQUROcDlWUzQzSlRhNFNnR3BQd3lFT2xUdE9UNXNKKzZlZHBy?=
- =?utf-8?B?Wm5MSFhDVm1oRHg2cGdVR00zRGM3cHBZZ1BIb1F6dWE5NUVQRHFhNzNlellZ?=
- =?utf-8?B?eTdOYUVNY3BsZlZBTEQycDNYOTM5STIwR2haMEJUMHZiYVI1NzlYbXNBWWV1?=
- =?utf-8?B?NVdrZTI5amFjcVFYVzBHa09xVEFIWlFwdWVleERzWlhHR25URzNDcHh2aU9j?=
- =?utf-8?B?c2tTNnYvcjZIK1JLbHVjRWlTRkhRaUxRSFo4NFM5d2hwSjIrMEljVkVkdEVF?=
- =?utf-8?B?NzFWaFI5SjZaTTJFaVZmdjJydVovN0N2VzJXNkVyVjlMMENEU21yVGJTS0NE?=
- =?utf-8?B?WjNKK1ZVVC9XeXV4KzFVdTkvM1pnPT0=?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: xbOb+dYOCFAEHvB2eq7poqcet2A7jHfLrKvKe97VAcDzA4l4bTi2YcqesY9TZi1vPdqdIeuLJUp9HGf8KQAv3iULCUPYErasiR2RG+Mzv37YbaXQewiM1AZKB065YRHRP3LrPQpIEvs0pSDBCok9EicrFlmYzndM5FNXx82oRHelPwoSNv5YxynL9o33FhW2Fi4nllcGnye7B8Hg+Gj+Annc2uuCwTfxeRPMQgMshvtT9erS5nQcgcoVzfBrmIM7kPIaFmXaZmdZOWZ9HfJMEA4qUvyp8fhQU7/LLwnik0+5exKsSrMhGWIHqtGz+OKE4LA9R5z/0RCkI2/S4UxUZf5oUylRptiijIW/IlOSat0tPuY8Z+JPCvjR6pPmA4BUbwg82UqNXcXcolVWyukyEp5iNJLvX1Mh7D0m5VhdD5MHzD7t0AeU4ElyyAu8MDRt
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 09:02:18.9904 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66095669-e65b-41fe-b6e8-08de63cc19c7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD75.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6528
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
- envelope-from=Shivansh.Dhiman@amd.com;
- helo=SN4PR2101CU001.outbound.protection.outlook.com
+In-Reply-To: <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,77 +107,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Gentle ping for reviewing patches for Bus Lock Detect in this series. Would
-appreciate any feedback or guidance on next steps. The related KVM patch is at [1].
-
-[1] https://lore.kernel.org/kvm/20251121081228.426974-1-shivansh.dhiman@amd.com/
-
-Thanks,
-Shivansh
-
-On 21-11-2025 14:04, Shivansh Dhiman wrote:
-> From: Ravi Bangoria <ravi.bangoria@amd.com>
+On 2/4/26 18:05, Paolo Bonzini wrote:
+> On 2/4/26 06:24, Richard Henderson wrote:
+>> Use tcg_op_imm_match to choose between expanding with AND+SHL vs SHL+SHR.
+>>
+>> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/optimize.c | 40 +++++++++++++++++++++++++++++++---------
+>>   1 file changed, 31 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/tcg/optimize.c b/tcg/optimize.c
+>> index e6a16921c9..2944c5a748 100644
+>> --- a/tcg/optimize.c
+>> +++ b/tcg/optimize.c
+>> @@ -1743,10 +1743,17 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+>>               goto done;
+>>           }
+>> -        /* Lower invalid deposit into zero as AND + SHL or SHL + AND. */
+>> +        /* Lower invalid deposit into zero. */
+>>           if (!valid) {
+>> -            if (TCG_TARGET_extract_valid(ctx->type, 0, ofs + len) &&
+>> -                !TCG_TARGET_extract_valid(ctx->type, 0, len)) {
+>> +            if (TCG_TARGET_extract_valid(ctx->type, 0, len)) {
+>> +                /* EXTRACT (at 0) + SHL */
+>> +                op2 = opt_insert_before(ctx, op, INDEX_op_extract, 4);
+>> +                op2->args[0] = ret;
+>> +                op2->args[1] = arg2;
+>> +                op2->args[2] = 0;
+>> +                op2->args[3] = len;
+>> +            } else if (TCG_TARGET_extract_valid(ctx->type, 0, ofs + len)) {
+>> +                /* SHL + EXTRACT (at 0) */
+>>                   op2 = opt_insert_before(ctx, op, INDEX_op_shl, 3);
+>>                   op2->args[0] = ret;
+>>                   op2->args[1] = arg2;
+>> @@ -1757,14 +1764,29 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+>>                   op->args[2] = 0;
+>>                   op->args[3] = ofs + len;
+>>                   goto done;
+>> +            } else if (tcg_op_imm_match(INDEX_op_and, ctx->type, len_mask)) {
+>> +                /* AND + SHL */
 > 
-> Bus Lock Detect is enumerated with cpuid Fn0000_0007_ECX_x0 
-> bit [24 / BUSLOCKTRAP]. It can be enabled through MSR_IA32_DEBUGCTLMSR.
-> When enabled, hardware clears DR6[11] and raises a #DB exception on
-> occurrence of Bus Lock if CPL > 0. More detail about the feature can be
-> found in AMD APM[1].
-> 
-> Qemu supports remote debugging through host gdb (the "gdbstub" facility)
-> where some of the remote debugging features like instruction and data
-> breakpoints relies on the same hardware infrastructure (#DB, DR6 etc.)
-> that Bus Lock Detect also uses. Instead of handling internally, KVM
-> forwards #DB to Qemu when remote debugging is ON and #DB is being
-> intercepted. It's Qemu's responsibility to re-inject the exception to
-> guest when some of the exception source bits (in DR6) are not being
-> handled by Qemu remote debug handler. Bus Lock Detect is one such case.
-> 
-> [1]: AMD64 Architecture Programmer's Manual Pub. 40332, Rev. 4.07 - June
->      2023, Vol 2, 13.1.3.6 Bus Lock Trap
->      https://bugzilla.kernel.org/attachment.cgi?id=304653
-> 
-> Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-> Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
-> ---
->  target/i386/cpu.h     | 1 +
->  target/i386/kvm/kvm.c | 4 ++--
->  2 files changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 0fecca26dc4a..852b3a33b54d 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -276,6 +276,7 @@ typedef enum X86Seg {
->                  | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
->                  | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
->  
-> +#define DR6_BLD         (1 << 11)
->  #define DR6_BD          (1 << 13)
->  #define DR6_BS          (1 << 14)
->  #define DR6_BT          (1 << 15)
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index ed3d40bf073e..00c44c2de650 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5864,14 +5864,14 @@ static int kvm_handle_debug(X86CPU *cpu,
->      } else if (kvm_find_sw_breakpoint(cs, arch_info->pc)) {
->          ret = EXCP_DEBUG;
->      }
-> -    if (ret == 0) {
-> +    if (ret == 0 || !(arch_info->dr6 & DR6_BLD)) {
->          cpu_synchronize_state(cs);
->          assert(env->exception_nr == -1);
->  
->          /* pass to guest */
->          kvm_queue_exception(env, arch_info->exception,
->                              arch_info->exception == EXCP01_DB,
-> -                            arch_info->dr6);
-> +                            ret == 0 ? arch_info->dr6 ^ DR6_BLD : DR6_BLD);
->          env->has_error_code = 0;
->      }
->  
+> Even if these extracts are valid, can they really be cheaper then an AND with immediate 
+> argument, or back to back shifts?
 
+This is primarily for x86.
+
+(1) movz is 2 operand, so that may avoid clobbering an input,
+(2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.
+
+Because of these, there's a comment somewhere that says we'll prefer extract over and 
+(perhaps in tcg_gen_andi_* or fold_and).  IIRC this also happens to simplify ppc and s390x 
+insn selection (and vs rotate and mask).  AFAIK, no other hosts are penalized.
+
+
+
+r~
 
