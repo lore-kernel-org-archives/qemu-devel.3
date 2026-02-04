@@ -4,149 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABB8EA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38BFEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnit7-00080P-7V; Wed, 04 Feb 2026 14:50:09 -0500
+	id 1vniuX-0001lY-IW; Wed, 04 Feb 2026 14:51:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vnit5-0007xb-42; Wed, 04 Feb 2026 14:50:07 -0500
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vniuG-00014w-4T
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:51:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vnit3-0001Gz-8s; Wed, 04 Feb 2026 14:50:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=deXW1ti7EMhj2eR1qiS+FFAD96NkcD7uFJ25qR5RaoVLhdyNUs9v0qb686B/00yD0a1AIHDDbVHEsfDcgXFi00ifCH1v/oX7btIozpl+hyaWj/zcPTYJQqupgNCJN2i7HawBwiieDREIQxnGttchhonv/Q9g2giAMTUJqa98H/ktFnYXd/YRGwhgYAgU7uEHp603sxm/QPbldDuMw7psCr45hxJR01LaDlwSj2LOl4N4N8biYp/T8WuVUYkkhRA8zZl0M9mZvDjkfzN/m5zbVXDbywLOc6iZ+Plgo0+WTfNjtRc16EQFO1jBgITgZGUlDqBDE3IF0PSJX5MHeL21uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/ll3VqRU1tbwZVC1YV9ojC4wUvpQZZrJ9L2mTNoLVNI=;
- b=mgHyUuUNYnfRarSdltCGIZliySNT12FvWQ+x/rxZ/wh2v+N+Pe4m6PitDVfHo8sC5rDYtO4L3JjeIg6IC18jUlgI1sb6iz8Jb4g+5BfuKgZH20Naq/5qHKN3pmmTy6u/AfbRvLpbWU5TQJ/+3rNHl83jtwMt7g3LesXfHTAE1au4kZLLc95ddv6b5phc5vKLVsCmnH+j6mktZQ/7NNO4C8sdoYYyImqBgzbikRbzc7rUXbJF/fgKzhCwiaCsYhdGyTj4cBZIMHkJgQ/gYGUkVFhmj0UD9x872qCak8dcDE7mI7926u8iRz7f4fydqXgrrIR5OCmmEwlemeWhc4Ybwg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/ll3VqRU1tbwZVC1YV9ojC4wUvpQZZrJ9L2mTNoLVNI=;
- b=LOl3QLSb3pbA+3hJqYnnJJVgnYoLGp+884YL8C5Jx58B0oOcR8XiZid7Q5is7AbhFd4ZsOQkv+nYoUsR7ZyR+YotrEi/i99jnDOYRIamvAWTH/ZNEv3EqGApyWkYuoFjsyNURjE58vyucVny7v/WlDJ3shwcaPYpUTOhUq9K0wCHBpx15AVGLaXz1/Tl/v6WpWuCDPwKB5SGFztTRnWst6gVdmb9jx+1zhqcuU5ZBozXT3TK29c2F9EndDRg7lqUZ9r4TnRQlmYT0yjVRzR+J3Hh0A37QAY/8d4qxDim+Xy5AtubVfqZvzwVJV7AO/zg01QG65r6AzdE3u9rSf5J4g==
-Received: from MN2PR18CA0020.namprd18.prod.outlook.com (2603:10b6:208:23c::25)
- by DM4PR12MB6184.namprd12.prod.outlook.com (2603:10b6:8:a6::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.12; Wed, 4 Feb 2026 19:49:57 +0000
-Received: from BL02EPF0001A105.namprd05.prod.outlook.com
- (2603:10b6:208:23c:cafe::d8) by MN2PR18CA0020.outlook.office365.com
- (2603:10b6:208:23c::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.14 via Frontend Transport; Wed,
- 4 Feb 2026 19:49:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BL02EPF0001A105.mail.protection.outlook.com (10.167.241.137) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 19:49:56 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 4 Feb
- 2026 11:49:41 -0800
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Wed, 4 Feb 2026 11:49:41 -0800
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 4 Feb 2026 11:49:40 -0800
-Date: Wed, 4 Feb 2026 11:49:39 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [PATCH v4 2/5] hw/arm/smmuv3-accel: Add viommu free helper
-Message-ID: <aYOi07H88pXyqn5j@Asurada-Nvidia>
-References: <20260204190008.20070-1-skolothumtho@nvidia.com>
- <20260204190008.20070-3-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vniuA-0001gj-TO
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:51:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770234664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qVu0kXtMHWzluizRVmwIEy1t9qzTm/kWC2WlOqKuxQ=;
+ b=F4C9kRn2RkVL/bmW1zloDAMlHvZaszCXykPPeNfdd+mfYoPzxvy+OTZXaZb/uQf04sllQf
+ sfp8OOhJoPeRT8VnVlbnEPb0JK6AdbN7SbhPTPpKixTI+xTSFmACy/pu7PuSswUMmrtKU2
+ u9EeGUQ1DM9eNw84WODlyM+40HX1EFs=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-38-EC-s9SHdP-6ZZm03KTnV7Q-1; Wed, 04 Feb 2026 14:51:03 -0500
+X-MC-Unique: EC-s9SHdP-6ZZm03KTnV7Q-1
+X-Mimecast-MFC-AGG-ID: EC-s9SHdP-6ZZm03KTnV7Q_1770234662
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-50336ebabe0so46012801cf.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:51:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770234662; x=1770839462; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=0qVu0kXtMHWzluizRVmwIEy1t9qzTm/kWC2WlOqKuxQ=;
+ b=q2jt5BKtV9ZZ5g46Glg1EAz6QJ2H5W+Dhccz31rUyURuQnvN5nsED5l3RAqJ6V4aSq
+ OINzp7pFT/VfrG37M9rSmKVxdiIGyfp8IAaYIlTQm7eepAaKHqEa7l0PMQnUSv7VbI8K
+ XuiwnsmN1YkAVdhCY1KLgojh+ngrq1mAC8qiz1JV3GXegfr3KOFAdKRXJJnxIJO0uiWm
+ 4Allm0kdqGvrsqVXt0Lbqyt0IzFzzdmvtqnrk4j9ud7tQC+/7kY2SRiMWnAjeGM0+778
+ Gc6l3ISPAZDzcr52lD0zL7xcNzBgNSsWeJXUjroC9TS6fWF4pyQ4FLEw66MBooJcaHm/
+ mXsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770234662; x=1770839462;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0qVu0kXtMHWzluizRVmwIEy1t9qzTm/kWC2WlOqKuxQ=;
+ b=QBqsFhcycWB7ZYF5r6iKZxiTQuX/Jkhxvy6LPLkYarLbK4KS5DaqLgx/NFofLK8/Nf
+ 1D2S7QSPIJHzZ09F5QAvz6BiKz4m5i1nklBLYy6xUV0/EFKkE1zc3v+fQnlGP7huQi/A
+ ZXQxvIytNzWyeVngLRRMr98YiQ6c22bA8unuZhNmerKD20iqsOAGfx3h4oDxCnYRx06Y
+ 3QhakZN8Y/OZUc/hecIDKG6FCQ7QLyi+9mnquun+0l/YFVtsKlbTJmXqSO3IWG6hMA//
+ Pdw5sE4DmPBzw3/o7lUdhH8Ja686rPUkZNcfBq+dJRUD82P75VxjTd2tECXQrmtk/hZg
+ 7Pzg==
+X-Gm-Message-State: AOJu0YyrJVX/zCryZnYBbF9Eb2fK9PbsGGJEeqrw/QkF5YpkFA3tfZWV
+ 2jxxp/R5kTTvlLikMD/CXGUmTgkJWs4Zfcg51yyFfKaxxnMnelS+qnuBguuic/7hPw2CAJckOao
+ yHgLTxBi0a/n8yugWxnwg4hkbQmBp74Tb32F8K5x/Br9RNTmoDHLY5tia
+X-Gm-Gg: AZuq6aL6P0pGtwtW2fXaYmStos02Sia1eU0U48J5t+FhF2I7opuoke5Pnn0iR3dGSVs
+ SLt2IZ5jB5VCoT2KrUtGfDAD9sFph66sSsAq2ZIYfhqdgTHSIHjcIh0a+CwZddGojstCAY4/BB1
+ toXQ77PRFDt4FnGHrRugkgxmZ1EVifF4FPD9T/uFhoh5j7WcjBP3E9HrQlnXdLH+GLg0U5G8rWN
+ pB+IaUReSx7xHAIS6itA4yr5AQ/aT0O2UerCofKSZiYZm4SOZKVIWQyamfoUtygD2kayKrv5Xqd
+ t1cn7YTsqHPY2SNHF3rr7izg1eRVdXWQrGPwqzCNDmMGCh82iGjtdUBcIL+ZcSVyOdT9gsmG/ck
+ AIpA=
+X-Received: by 2002:a05:622a:349:b0:501:3aed:fa5f with SMTP id
+ d75a77b69052e-5062aa49736mr8102581cf.12.1770234662272; 
+ Wed, 04 Feb 2026 11:51:02 -0800 (PST)
+X-Received: by 2002:a05:622a:349:b0:501:3aed:fa5f with SMTP id
+ d75a77b69052e-5062aa49736mr8102271cf.12.1770234661781; 
+ Wed, 04 Feb 2026 11:51:01 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8ca2fd2b5e3sm251469385a.25.2026.02.04.11.51.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Feb 2026 11:51:01 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:51:00 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com, berrange@redhat.com,
+ Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v2 4/4] tests/functional/ppc64: Remove custom migration
+ routine
+Message-ID: <aYOjJEG5paKOObnJ@x1.local>
+References: <20260204172332.21367-1-farosas@suse.de>
+ <20260204172332.21367-5-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260204190008.20070-3-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A105:EE_|DM4PR12MB6184:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6acbcb46-1de3-4a32-855c-08de6426928b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?tRhF/WphQW2WbAyEr6Z+s404fvSstECKo+S36TBQlH5R0S7PrMhFSyC7n+kP?=
- =?us-ascii?Q?B50XKhGmN0b+9s8cM+0aRhZUFqMXLD4HQYa2tHGeROERZPTUtlZglyuk87g0?=
- =?us-ascii?Q?aK2aat3WQ8/fq2Sox+Qt47yqUJX6M9sOwBtx5+qYdc0E5Fmz2vSuD17t77jG?=
- =?us-ascii?Q?VNT5tQ9ikChQ7eLTQTKAdkDEeFWLEJUfKtQJTvPdDZYeoNDIdeoY4BSKXUYq?=
- =?us-ascii?Q?l9YLG1ZjwTPopIF6o9RNWqcRoF6igS/iNUGyEf2W3fDG5R5NW+j7sLTbwrRi?=
- =?us-ascii?Q?BGhP5gJ9O6H3DwLdnOapyYDAJMCFu57T5itVzoHinytbGreZkKCC1D8lmokR?=
- =?us-ascii?Q?SKkvjLkIiZJs4cZ+qPQSui3iUodlg6DPL+Q99YbRYxh13xwyw86QJDG4Um32?=
- =?us-ascii?Q?DmQRu9EXC4hnENFtTMHsPTCzJhuIz3t9mn/NeIW6Qr+A4sb8+Gy3cepDzsvc?=
- =?us-ascii?Q?KCDOdsr8s/7YVlVUnmapPuifd8iAPtCP0ty9I9KhV63YvSwIPaRImMkjiEja?=
- =?us-ascii?Q?1MCH8Nld1+XrUyXMujfSVyGnfPCU1ZlJrfn36zVqWxQXUmtTmZz+sBZwVFDi?=
- =?us-ascii?Q?5Egg2/QBqKzASt8uCrCKffUhKwGbUPk9DxxMhos5aSzjKvcSMIZ1Rx5j34eN?=
- =?us-ascii?Q?vBl73xe00jzFvgx1OkHlU7xvq6BGkPuUCtJsczNphAsK9C16p1eKQZzsy5mW?=
- =?us-ascii?Q?7ZTUdE4i8MY07IQRSvyCTKQIAavj2LLIiJTEmgF/8yNYIcxn0pcyb/oAw7Bx?=
- =?us-ascii?Q?OxFcSTtXkVuxRNmiqpXUVZKa28qIAdb+l/iTvjYTJkQS0b/cxSVgu0lu22JT?=
- =?us-ascii?Q?siRspHkZy5v6eukSHRuXwcKvOTdy4UVjmRGBxybjX+kiBqPutK8/5Oisna5Z?=
- =?us-ascii?Q?Oy9UCwl2insu2cx1M9NdB+icNMtLG4o1hfPCPJLPr1O8++VKW4MOtqXANgps?=
- =?us-ascii?Q?NlYD67ExslhusjQ+Uscccj4HWuGVD7omoGdBOfSxmSWn9jQ5mUCLEymoGhe3?=
- =?us-ascii?Q?FQcFOdX6OguwsWXuA784MNyGb/lOUvN2sKeX1A0NAxcLQ9XxKJVPVLsFps8K?=
- =?us-ascii?Q?ALufGEJvZv1swAKHd5Vs+gc8W15iyoPTWUkmXrwLQLuCFrpN0r09+NnUJL9R?=
- =?us-ascii?Q?/u2vmkQwmdGtG8vdkG7LwJMu+3qYlk7+yRjc/G1ZpyAbsYZ+o7Md+9+vXQ65?=
- =?us-ascii?Q?Q00eSSP2CMkLkET9oJF7lzTwBV2WFNqfWTEgezGpUR7TKCKbDfl0PAE8DSIT?=
- =?us-ascii?Q?ZCI5VjCQpSYEFsCuzAd9UlumCVjKOGthPEEkxyQSGRsTZotlB1c7JS0SxpsE?=
- =?us-ascii?Q?J2Z5kuYReTKsuD0fx6zymguzC8MOv/7IdYEui1k5+wcEBX447hRAPsgRvbJz?=
- =?us-ascii?Q?srhZXebncVV+A6tgvsHWL9kIdE/yG6I+nhTbwgQC5VQJEQOWYIt5ko5PDySw?=
- =?us-ascii?Q?yDZjHDitfm7LQBLJ/8her81AVUKv87qXWWJ+yg/IoeoRFTxg3B42dYT1wj/O?=
- =?us-ascii?Q?8BUnsA5vcOji38emVZIAN5M+APM1MF+Z8UqC+8EQFEoaQiujlAS1tTy0IaOh?=
- =?us-ascii?Q?7xduV1IyfSMCzzCrl6IuHXebdVEbpS8yS0EDXJEZbUoh46nhHsOOFei5gwyt?=
- =?us-ascii?Q?bzPtxWh0zaACWYxoJarY2SpIOq2KjFEJNjxNm7fw9svB5Vw+Yph4hCwkIZob?=
- =?us-ascii?Q?NmE4Jw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 460QsSeY8PdM/lNhF0oPa1G/bBHHAr2FY/9GWirHRcXSjYon6RJDDi1lrcd2lgScF5qOa4VeyL8at0cR7qAlKqPPPnq+559KQNFxx26L54SkMRCJ1n6vXClcoLWztaYkdHG5tp5uZ1X13hxjJO6JORABjDC7FKEvaf/133sOsa3YWv9PtLr1T0PAKWmAsxYm4v0VPKAKwDbS+z9sJb/lLOTZzMU+3zehYPTSI7Esst+RfY8aU/WNPHblUJPQNRNwjjbPB54NKExuEO5LG8WWm+FJe6lxq1KqLN/WJmwM9cZ6uUhMNdCaij0kiOsPx45rn44DXGRFsUjalgClcdRoGgC5lDE8Vgrb6wxdwgpydhyvB4Zv1MU5DU0odm/b/+y/K7MuDczR1E0cad+t/8eT0Z0UouO/2D+IIWVXji0G1j3mAaSiep92jRxsPLtb6840
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 19:49:56.1623 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6acbcb46-1de3-4a32-855c-08de6426928b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A105.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6184
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=nicolinc@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20260204172332.21367-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,15 +118,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 07:00:05PM +0000, Shameer Kolothum wrote:
-> Move viommu teardown into a helper function and use it from the
-> last device removal path. No functional change.
+On Wed, Feb 04, 2026 at 02:23:32PM -0300, Fabiano Rosas wrote:
+> Don't implement a custom migration routine at PpcMigrationTest and
+> instead reuse the generic one from MigrationTest.
 > 
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
- 
-Seems there is still only one caller by the end of the series..
+> This removes the dependency of PpcMigrationTest from
+> PseriesMachine. Having one test import another causes unittest code to
+> instantiate the imported test, resulting in the setup and teardown
+> methods being invoked for the imported test class, even if no test
+> from that class will be executed.
+> 
+> If run in parallel, the extra setup/teardown methods that result from
+> importing can race with the ones from the actual test being executed
+> and cause the following error:
+> 
+> File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
+> shutil.rmtree(self.workdir)
+> ...
+> FileNotFoundError: [Errno 2] No such file or directory:
+> '<SRC_DIR>/build/tests/functional/ppc64/.../test_migration_with_exec/scratch'
+> 
+> Fixes: f4e34d0fd5 ("tests/functional: Add a OS level migration test for pseries")
+> Reported-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/functional/migration.py            |  5 +++++
+>  tests/functional/ppc64/test_migration.py | 11 -----------
+>  tests/functional/ppc64/test_pseries.py   |  6 ++++--
+>  3 files changed, 9 insertions(+), 13 deletions(-)
+> 
+> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+> index 49347a30bb..e995328e83 100644
+> --- a/tests/functional/migration.py
+> +++ b/tests/functional/migration.py
+> @@ -65,6 +65,11 @@ def _get_free_port(self, ports):
+>              self.skipTest('Failed to find a free port')
+>          return port
+>  
+> +    def migration_with_tcp_localhost_vms(self, dst_vm, src_vm):
+> +        with Ports() as ports:
+> +            uri = 'tcp:localhost:%u' % self._get_free_port(ports)
+> +            self.migrate_vms(uri, uri, dst_vm, src_vm)
+> +
+>      def migration_with_tcp_localhost(self):
+>          with Ports() as ports:
+>              dst_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
+> diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
+> index a3b819680b..7d49ee175b 100755
+> --- a/tests/functional/ppc64/test_migration.py
+> +++ b/tests/functional/ppc64/test_migration.py
+> @@ -22,17 +22,6 @@ def test_migration_with_exec(self):
+>          self.set_machine('mac99')
+>          self.migration_with_exec()
+>  
+> -    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
+> -        with Ports() as ports:
+> -            port = ports.find_free_port()
+> -            if port is None:
+> -                self.skipTest('Failed to find a free port')
+> -            uri = 'tcp:localhost:%u' % port
+> -
+> -            dest_vm.qmp('migrate-incoming', uri=uri)
+> -            source_vm.qmp('migrate', uri=uri)
+> -            self.assert_migration(source_vm, dest_vm)
+> -
+>  
+>  if __name__ == '__main__':
+>      MigrationTest.main()
+> diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
+> index b45763c305..3996a4a878 100755
+> --- a/tests/functional/ppc64/test_pseries.py
+> +++ b/tests/functional/ppc64/test_pseries.py
+> @@ -9,7 +9,7 @@
+>  
+>  from qemu_test import QemuSystemTest, Asset
+>  from qemu_test import wait_for_console_pattern
+> -from test_migration import PpcMigrationTest
+> +from migration import MigrationTest
+>  
+>  class PseriesMachine(QemuSystemTest):
 
-Anyway,
+I wonder if PseriesMachine would be better to inherit directly from
+MigrationTest, to avoid the timeout setup and temp QemuSystemTest to be
+created on the fly (I'm not familiar with the test framework on side
+effects).  But I don't see a major issue with it either so far.
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+
+>  
+> @@ -116,7 +116,9 @@ def test_ppc64_linux_migration(self):
+>          wait_for_console_pattern(self, console_pattern, self.panic_message,
+>                                   vm=source_vm)
+>  
+> -        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
+> +        mt = MigrationTest()
+> +        mt.timeout = self.timeout
+> +        mt.migration_with_tcp_localhost_vms(dest_vm, source_vm);
+>  
+>          # ensure the boot proceeds after migration
+>          wait_for_console_pattern(self, self.good_message, self.panic_message,
+> -- 
+> 2.51.0
+> 
+
+-- 
+Peter Xu
+
 
