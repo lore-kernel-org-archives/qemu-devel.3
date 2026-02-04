@@ -4,58 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06566E9D41A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C7BE9D419
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vngRM-0001rS-R5; Wed, 04 Feb 2026 12:13:21 -0500
+	id 1vngZ1-0003Db-Pr; Wed, 04 Feb 2026 12:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vngRJ-0001rF-H3
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:13:17 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vngZ0-0003DL-73
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:21:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vngRI-0001T9-33
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:13:17 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f5n3F3sMfzJ46bf;
- Thu,  5 Feb 2026 01:12:25 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id D75AA40539;
- Thu,  5 Feb 2026 01:13:14 +0800 (CST)
-Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 4 Feb 2026 17:13:14 +0000
-To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Davidlohr Bueso
- <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
- <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH qemu v7 7/7] hw/cxl: Remove register special_ops->read()
-Date: Wed, 4 Feb 2026 17:09:35 +0000
-Message-ID: <20260204170936.43959-8-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260204170936.43959-1-Jonathan.Cameron@huawei.com>
-References: <20260204170936.43959-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vngYy-0002pY-FJ
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:21:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770225670;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=h81uoTrIFwGOm67byZDCjGj/nEMdjzlyasvu12FCdXM=;
+ b=CPT2ByEiw8mdrxGzM1zfzalKnTvA5yxyQgT7NGdVIw6ITeq3FqwKPRkxrcxwq+KIAT2+OF
+ skTEmMOabgIPKp5+UGTfw4GQx1Zs5NzqPrHBx8yrIRmM3CxrkSIvOBcljGs2j+gN/uCeBq
+ hQ4LSQ5SDvOTw6J/IDQ8vhY+N8r6I9U=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-Mio7Da7DOhC76u9rSUyjJA-1; Wed, 04 Feb 2026 12:21:09 -0500
+X-MC-Unique: Mio7Da7DOhC76u9rSUyjJA-1
+X-Mimecast-MFC-AGG-ID: Mio7Da7DOhC76u9rSUyjJA_1770225668
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5033c6265d2so2018781cf.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 09:21:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770225668; x=1770830468; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=h81uoTrIFwGOm67byZDCjGj/nEMdjzlyasvu12FCdXM=;
+ b=U6zKkea0rivoKPtgoCioBjBRx+nfKzd+WVK40dh9k33KjxgJmYeHYTU9IVenKu2Szm
+ WtfL5xDqm+m7zhdFHb3v+U4hi0DzSTz5cflAmFH5WZKUtO2Gs5XVv9H9YzvK9//G0AeR
+ oo45bvlPbGFZwvRPWjU2X8rMH2s0WLvRZv6ahQSFjedsBZepGkuQ0axCxO26NtyaTSIT
+ gRBgWZ3p9Rv6m5dA7H3pQwaG5Pl4BlQnuPjZNGTUy0skVCaHTvkTXrS1Q6kfEk0gSSQT
+ vlBC8CjUgoX3aQguKbb5ahIyWRan7/WEVIh4ICxpjOVyFZcLOEarAomJLjsBbrHKvqEA
+ 7v1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770225668; x=1770830468;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h81uoTrIFwGOm67byZDCjGj/nEMdjzlyasvu12FCdXM=;
+ b=Jl9di0nZO3GktOBKdyyjeiBxyAngbC+qB+sDfAJlB+ojcZZhhmlAKplRFya4cH6bCn
+ a+Q1CR0fuZbllchzo2w5PhT6EVFU1SxJUn1Y+07GWXCSete7ilENU7hUTOgCUlt2weNF
+ D/f8k1VO7lN+UQ/Qg320d2GPxrH/SLKkkCTSKZFPrROmIUpz+kQ6hdCxdOXL6e9y+k0C
+ MwEm8Nb+3GNUn5lj3L9hxwwaubxg8aoD1o/9Ov8nmIYFh1TambzbiNsLr7NEz5jc+02+
+ jmVWQ6toJz7xMEtkRGH7xl+bCUFVs0UqETgL1xHtDOC6XlMdOkM1zY3wW5TbaO0480oO
+ zAYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmpujqzEh81AKgncTZ9FQDr4GDjSeGH7YvlUSSUahP8TLUxRcxFYpUFAfgCEXT9UazOafuHG1AqOc0@nongnu.org
+X-Gm-Message-State: AOJu0YxwgZ3Q9z3bFunFVaRWhqh2XvpPCJpen26io7spCjRPUMRE6oQh
+ cVTOAa7aqRDosg6OQylSqjNqHyjHhf21EDGYO3Qk0bI7b4TQTFU02/cg0j3yc6E4WnhoWtBfZIy
+ 6v3w8vMJqIi1sODUxSLO7AlW/oGObqpEbOaFLVNZigKYzH+tG1rrmf1qL
+X-Gm-Gg: AZuq6aL/ARYSaVhzjA5Ged0xN5rShq+CwGmyFltbNYckFdV6sDVss4BOCXhjAC1/WX+
+ /YvneYMN0MNDLR5LpoYHKMpzEP4nNUKNSt7ABUF7eQcfMvtdfuGkRq3Bj5uVhfXnA49R+yRA9Ym
+ fTwfPMca6lj/7kc8Hmdg8EizFl5YSYX95ZDGLd2VVfQNl4iBm+G5jy/9ZzohzhFdPGBLADcfIKT
+ GDYoWA9s5KauN/bPV29EyI+lz7ic/FfNbW+3yhpYYEGaUtoIkJj3I7qWbSlHh8CoXh67NNNLED3
+ H2EkURrj7tyTRN8SETVAw++7n8KO+9AH4s7wUxu1SMp6197HlEL2aoN+4Vq76fgch4ITLAnI6am
+ Fl3Q=
+X-Received: by 2002:a05:622a:546:b0:4ee:26bd:13f2 with SMTP id
+ d75a77b69052e-5061c1dedc6mr48373651cf.72.1770225667780; 
+ Wed, 04 Feb 2026 09:21:07 -0800 (PST)
+X-Received: by 2002:a05:622a:546:b0:4ee:26bd:13f2 with SMTP id
+ d75a77b69052e-5061c1dedc6mr48373201cf.72.1770225667235; 
+ Wed, 04 Feb 2026 09:21:07 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5061c1f9470sm20819991cf.24.2026.02.04.09.21.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Feb 2026 09:21:06 -0800 (PST)
+Date: Wed, 4 Feb 2026 12:21:05 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, mst@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com, thuth@redhat.com, armbru@redhat.com,
+ eblake@redhat.com, farosas@suse.de, zhao1.liu@intel.com,
+ wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com
+Subject: Re: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
+Message-ID: <aYOAAfzZQ3PeKf4q@x1.local>
+References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
+ <20260201162001.296328-4-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260201162001.296328-4-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,54 +121,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+On Sun, Feb 01, 2026 at 07:19:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>  # @migrate-set-parameters:
+> @@ -1004,6 +1005,13 @@
+>  #     is @cpr-exec.  The first list element is the program's filename,
+>  #     the remainder its arguments.  (Since 10.2)
+>  #
+> +# @backend-transfer: Enable backend-transfer feature for devices that
+> +#     supports it.  In general that means that backend state and its
+> +#     file descriptors are passed to the destination in the migraton
+> +#     channel (which must be a UNIX socket).  Individual devices
+> +#     declare the support for backend-transfer by per-device
+> +#     backend-transfer option.  (Since 11.0)
 
-... this is unused, unlike its write counterpart.
+I still think it'll be nice to either have "local" in the name of parameter
+or at least document it with crystal clear terms.
 
-Scope needs to be added to avoid _Static_assert() immediately
-after a label. c23 makes this valid but before then it is compiler
-dependent.
+I used to suggest fd-passing, but maybe you wanted to emphasize there's
+more than fds to be migrated at least for tap? Then it can still be
+"local-backend-transfer", because nobody stops a device to transfer backend
+states in a remote migration either.. so "backend-transfer" seems to also
+work for remote migrations, but it is not.
 
-Suggested-by: Jonathan.Cameron@huawei.com
-Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
-v7: Add scope to avoid pre C23 issue.
-hw/cxl/cxl-component-utils.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Or at least mentioned explicitly in the comment, saying this is a local
+migration / upgrade.
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index a7d36e1128c2..07aabe331c44 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -68,11 +68,7 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
-     ComponentRegisters *cregs = &cxl_cstate->crb;
- 
-     switch (size) {
--    case 4:
--        if (cregs->special_ops && cregs->special_ops->read) {
--            return cregs->special_ops->read(cxl_cstate, offset, 4);
--        }
--
-+    case 4: {
-         QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
- 
-         if (offset == A_CXL_BI_RT_STATUS ||
-@@ -105,6 +101,7 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
-         }
- 
-         return cregs->cache_mem_registers[offset / 4];
-+    }
-     case 8:
-         qemu_log_mask(LOG_UNIMP,
-                       "CXL 8 byte cache mem registers not implemented\n");
+If you could at least update the doc on the locality attribute for the
+migration (one way or another..), feel free to take:
+
+Acked-by: Peter Xu <peterx@redhat.com>
+
+If you decide to rename, that's even better.
+
+Thanks,
+
 -- 
-2.51.0
+Peter Xu
 
 
