@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E047EEA794A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 23:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872B4EA794A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 23:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnm65-000802-Ut; Wed, 04 Feb 2026 18:15:45 -0500
+	id 1vnm63-0007zb-8a; Wed, 04 Feb 2026 18:15:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ravis.opensrc@gmail.com>)
- id 1vnkWx-0001R3-Tm
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:35:23 -0500
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ id 1vnkgk-0002W2-JI
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:45:30 -0500
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ravis.opensrc@gmail.com>)
- id 1vnkWv-0002fs-2W
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:35:23 -0500
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-12460a7caa2so416384c88.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 13:35:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770240919; cv=none;
+ id 1vnkgb-0003Ev-TH
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:45:30 -0500
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-1233c155a42so443951c88.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 13:42:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770241332; cv=none;
  d=google.com; s=arc-20240605;
- b=VAG77DG6nA49bXMcXGO96r41Cr24scRuFrrtDYFwFqXzp5EI3bzk0f3LEWUdBlWUP+
- TQmgENV5DOsHP0WT9V7nLVp/pjFOm7dd4B0o+ltFpFaTf3mUEb4gKa1vHFlf5WKFRoES
- IQy9GFm+jrKmLhtoGPMDDtTL9mamCjO1/upOTRa6T3PSyvxEZw3vN86QvL8/R/OW/MxZ
- 7LA1Ae7QyTN1ZE59iDZMTjqw2xPsLLfFJOULPqTbdMwpDdj5nsznKvrLiDmJpUn7Uelv
- 1hVYmuKQiI3stoqJLA9LyNRPY1DsnUEvYVv873v9tZ9gRjJxMluphTKcTPthgPUAwoSO
- SzwQ==
+ b=lmCo6Xd49PCt11pizg51trnCynNZewftz17nDxK75zodgKSu3Fl6VnkdsVVS5pNNdu
+ 86odk0YcMQ7RgP2xzQuBM8Z727l/6+LW7aiJCGt/ENt8Q/7hipXZoZhSCpDtwYPAnIY3
+ YbdqBT5kIWLz7I90WHoYWK5o6VYt6IjNhjWb/0tMvAxC9nCYhZYwRCP2J9Hi9+XkiHvx
+ 6dntgVpanqmYuvSKFM83DcCVlkekfC5v8AsbP1fdiMNW8gTTzkc+mtlICnDgzDAZihLB
+ Gj7AgHvPiCbR7s0ciiMyK+HPp/lP4+O/Cztx/ztLTiNEnRUR/j1w9lZ37WrPc/JUH5KP
+ wgjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=M3RQ59nUZ9Towd8GDsZPSDQjnVq07JYcR2GuclUxKQ0=;
- fh=MhSzTH+R64L3AukYtzap7dGayDkH+XAevKXN7juvoIQ=;
- b=DHUZVvmE55Q0xUZQbhBJYnwae9NrWSsNgfyW9RXrHpU7aZMSffRo8I0m8UlgoC0kim
- +hz1NzC6V4lXhOnjHY4BqA7PUD4QyShPKsiMbayH8nep3GrNzBRgYHzTlxtqtdJ/zmOf
- H9i9K3AJLm2uZRsNtdFN7GexX/ExLzrBNIJjF8klIiqojN3K97heWW4NYM+921mf5WfR
- Tgp464gKHZd+l4fxjJQ7LAGHR68W8COmgR3XENICANt1DpRyWiNibtY+GUXI0U4vKMto
- XyTFgzpqBvfbHW32Lm9yspvo5EJo/mM+SQG90v7YO87KQs/+78V0wMOZU9c9lQ78e6cc
- wcIg==; darn=nongnu.org
+ bh=5c/YEHv5IM764CbDu3MkA791h8iG/cd351LF381Debg=;
+ fh=VGr6Cyjft57WzMCefZgm6aIJIm0x1AEevVwiL/glZqc=;
+ b=LBTNNPU3VZqNiR7m0jRrezhl/cx5NHt8BITYA6iSIJ+uVNx0EJmCObW4WC8tS2NKOT
+ gpDs+lEDUiBXxVgUFDgx8ZOo1pbpbTeRm+vOLENnvHpkdFIVb++JFP9vhh+6WJOOTAgx
+ WzTabNYXNPb/BNmQqje88x2j+EC4tjat+rWUSEAf2UQ7CWZNQQJ/Ht+SBfENFWc8uaT1
+ wruCGfdJotXW64IphhtaAXZ92rlLT/QbCOEcIccaRbIZ6ppykYe/+/TRKq7ERbjAAjsy
+ I2vsRJzrfyzAbGUYTLZ+TMeYP6M4QbYdbJggaUiuKwhKkvQz4cEl1v5kCi1FrYxRied7
+ Suqg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770240919; x=1770845719; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770241332; x=1770846132; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M3RQ59nUZ9Towd8GDsZPSDQjnVq07JYcR2GuclUxKQ0=;
- b=f0Y2jZUKnAagx7j7aYBU2Y6nywF6T7/tj+ABDVHWAcYadRVoztOytSZ5e6y/1yYV7o
- eE9iuPq10md7a9AUGOZXIBdkGlma1crirLeANiyrxlzO80UOM+Mex0llHsSqs3Xq+WrO
- McCsSjo2rAriNHxI0haBlJWpEPU8PB/6p9NZn85yANyyT9nPZ/uGKj/6x4+D1Uj1yTnE
- H6CJVe/1TfjTi3GkprzxMlVPOY39UcRxhmS1XroHsgH3D9qWFNHVVKfkPPCxypW4qgQr
- nREvu+kIbo//geDorSY8CIBopGP+gdgevbi4K2tyilpkOdZk66+PRwW9m0quiqBZBDbM
- m4og==
+ bh=5c/YEHv5IM764CbDu3MkA791h8iG/cd351LF381Debg=;
+ b=F5q6qUBzjHh1kAcCFwxK8HtaaOsPx9k0UwHrgXMtnhqAK+hEqrw5xiRw2HSxTLtfow
+ 0N4pKj4HSlqYrVBZcUdRFcZlJmQJtE2IbmKiQwJIqEtoRcbQ1oRrQqEmWr2+3uWR0DNW
+ N+gILplD95t0rG20Kf6vSHqPnvOMVVY/bCh+yl1pmNnw/tObGspP+7KLHXCY7akL2RXE
+ V2vkq/oskXDIcmy4Dr6EFXKgrs6aqEOiNI5Ej9gJtvxIjhoxhiMoakC1YhT6H62Rj1Ni
+ at5iXwoGWt6lbQezO3AM103BKt14NOwrM5WLjxZqjJYWHIiwhf8A70Z/leMz6hQpBLUZ
+ Dj3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770240919; x=1770845719;
+ d=1e100.net; s=20230601; t=1770241332; x=1770846132;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=M3RQ59nUZ9Towd8GDsZPSDQjnVq07JYcR2GuclUxKQ0=;
- b=QoQXRbbooezKaNX7iRsPNBf98RRjdkSledc2+5W6H4Lq6LcHAFpftxpIEChIOgaZrJ
- lqSRaALkhrXA4bQpLQMIwgBSSe1qClIsn6GgUjVxS3ESjB79VEeptAtiwcJRZSFlOJzS
- Y8i0BZcAoBsISc+1txUyXPBNyN3Kv7Z0mDkbyZMF9cadH3gvFbDcPFXGhDlVzfkYgVkJ
- 8EmdOJNgFd2PEn1aNp7KI/ts65nE68NbSiebDORp5AZFBbL0SOCujRnPGCtW6FwyAHop
- JQRUZJP/GZyuaZgpCnsscvmPeltwwmq7RwrXzqB/Ac6AG7KnvhjcaFkv9ACXkeke0BID
- nSYQ==
+ bh=5c/YEHv5IM764CbDu3MkA791h8iG/cd351LF381Debg=;
+ b=LHAkpg3nHMshZVd/52dQBy8Vo1+h8s+RFpMEZLw7tpiy27DsysQswapf785wCorx+T
+ pDZE8WSDAq4hdS5l1jFeTcybo//E2kbM5J9o0SmXuUYu4Q8ky+eO7bfQDx1J9vGMnlHp
+ x9CC1SXN6g+V4EUGZyPe5l63pRBLHfWFN6rpzLWrI6egFWpXqTxN4lqWwyNZzeSVm7zr
+ O1Cr2E27EsfXQNmCXuU782piTaCtr1xIMLJe+v+YYvnRCHoklUvi+PDVLDoRAZPAhhVh
+ gmnmZWzPAGbpqKbuIuByIquNXapRIc7vJoebnqRtQ7dc/KfnyoJE6rIF7SBCRdsOtpD8
+ VcGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjlNeClInhcCxxTf3fJAqstVYMCzWgDUHnTgWxIBkhhAULqnuoorrpvsYyVBCIaEx2WQ+R7vUavIug@nongnu.org
-X-Gm-Message-State: AOJu0YwxEppGcp8MXYGN+KGnHmNjE3DHecllDT61exjXRSoqYAAETFDA
- zfw3lGU5xnqnmGVKTH3dPKmIVhf78rmLAJ4veN410fuSOrIupsOGzsuwGoriJr2uWEcz1HxkWEw
- zK6omsKtLJdY3NhG8CJmsDDCmzSiwgw==
-X-Gm-Gg: AZuq6aLA8dyVb8JIq4lel7BhU1K/G/GXXbtA/cIggGr7CHFRvZNGU7ygQ760bLn/o3h
- KxL2CVXt0aoP3Tl+POqM9ZNaOsfk3W9YPO3dZ6rYTzymEVpXcjXIpmeQVElaoJC0zb7nFni21oZ
- qcgXeB43AaGEz4cHkPcNA1BuBNnJ4FV78IlpDuQgW9LFBpsXvillZ/SXUVCZJlNCnN2cs7iv/A6
- c1+QL6/KxcU6JVytO36fPPdeXcYRCPhILF7K5NbVNJq+OvKkJcLv2HJ+av15HkH+SfNYKk=
-X-Received: by 2002:a05:7022:6b9b:b0:124:9e46:82fb with SMTP id
- a92af1059eb24-126f47d9bf5mr1768151c88.38.1770240919229; Wed, 04 Feb 2026
- 13:35:19 -0800 (PST)
+ AJvYcCWIrHVvpXUIZq6kL9NkBqm4a0BG/xTUOLSkd9D+W1TDJHVbWScoDMgjCHvghLkWRbH0UnREMSVSZUxZ@nongnu.org
+X-Gm-Message-State: AOJu0YzBziM3NafS86/FZdwgi9ql/DifFlEvwJXoSnWIibWuGy3UaJRt
+ Avmc4MIHcWhrMjMDLtCo1/v6Wh5dSG5pVucQ70FpZqvE8WFR5zqq7JNiRr8R3kmf6QYif7o+3P7
+ xHBBbTcqSoowtHTEfHmwwU/LiuE4oMA==
+X-Gm-Gg: AZuq6aIJpeNU0C44C72hgLpbQnWDDNhPBoEAiHERDCNLqQ7jfDmcTsi8CsJs594YbuR
+ 6DwC2QI1aI28JmRyYSsEBSqqcc1SIPvUepJDhrX78/mxIdzgLmL9Yicz92CUypdS47V68Un594D
+ kPMc73dbCH/8PSXmjWk7sW4/RwjiJCCU4QCYCs7bRox3OIZN3IyOTJIja/kNhW4sFiWfR/+60F6
+ 9768u5Mr9sMeWV5hky1EJFfZhi/Mb29pD5N4HtzrqWVEpkFB28sH/npHZfVspCTJUrKrYk=
+X-Received: by 2002:a05:7022:2506:b0:119:e56b:98a4 with SMTP id
+ a92af1059eb24-126f478f949mr2206138c88.11.1770241331526; Wed, 04 Feb 2026
+ 13:42:11 -0800 (PST)
 MIME-Version: 1.0
 References: <20260119111542.788389-1-Jonathan.Cameron@huawei.com>
- <20260119111542.788389-3-Jonathan.Cameron@huawei.com>
-In-Reply-To: <20260119111542.788389-3-Jonathan.Cameron@huawei.com>
+ <20260119111542.788389-4-Jonathan.Cameron@huawei.com>
+In-Reply-To: <20260119111542.788389-4-Jonathan.Cameron@huawei.com>
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Date: Wed, 4 Feb 2026 13:35:07 -0800
-X-Gm-Features: AZwV_QgkXMJg8jDxHD0sl5cCn0DBoKKDr62lcBMCAWXiD11iLe_MubokxRMQjtU
-Message-ID: <CALa+Y16OT6Ew_fhC-Y_=E3N3E_eGHWt3yQuFJJS6Za1Wt8jMBg@mail.gmail.com>
-Subject: Re: [PATCH qemu v4 2/5] hw/cxl/events: Update for rev3.2 common event
- record format
+Date: Wed, 4 Feb 2026 13:42:00 -0800
+X-Gm-Features: AZwV_Qim6-6gtJPN1ilsYZ97WF7on0oMm6F1Kq0bMDH0-DIhzDImPu1Ygl6JVDY
+Message-ID: <CALa+Y15jKXUH=9k5aBveN4WN0AK1QW6VHGLHTVVgTF+-2hXvhA@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 3/5] hw/cxl/events: Updates for rev3.2 general
+ media event record
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
  shiju.jose@huawei.com, 
@@ -97,8 +97,8 @@ Cc: Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
  Ravi Shankar <venkataravis@micron.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=ravis.opensrc@gmail.com; helo=mail-dl1-x1243.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=ravis.opensrc@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,378 +122,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 19, 2026 at 3:16=E2=80=AFAM Jonathan Cameron
+On Mon, Jan 19, 2026 at 3:21=E2=80=AFAM Jonathan Cameron
 <Jonathan.Cameron@huawei.com> wrote:
 >
 > From: Shiju Jose <shiju.jose@huawei.com>
 >
-> CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
-> format has updated with optional Maintenance Operation Subclass,
-> LD ID and ID of the device head information.
+> CXL spec rev3.2 section 8.2.10.2.1.1 Table 8-57, general media event
+> table has updated with following new fields.
+> 1. Advanced Programmable Corrected Memory Error Threshold Event Flags
+> 2. Corrected Memory Error Count at Event
+> 3. Memory Event Sub-Type
+> 4. Support for component ID in the PLDM format.
 >
-> Add updates for the above optional parameters in the related
-> CXL events reporting and in the QMP commands to inject CXL events.
+> Add updates for the above spec changes in the CXL general media event
+> reporting and QMP command to inject general media event.
 >
-> Update all related specification references to CXL r3.2 to ensure
-> one consistent source.
+> In order to have one consistent source of references, update all to
+> references for this command to CXL r3.2.
 >
 > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
-> v3: Expand the LD acronym (Markus)
+> v4: Update the spec reference in the related command to 3.2 as well.
+> (Markus)
+> v3: Update all references to 3.2 for consistency.
 > ---
->  qapi/cxl.json               | 21 ++++++++---
->  include/hw/cxl/cxl_device.h |  7 +++-
->  include/hw/cxl/cxl_events.h | 15 ++++++--
->  hw/cxl/cxl-events.c         |  3 +-
->  hw/cxl/cxl-mailbox-utils.c  |  3 +-
->  hw/mem/cxl_type3.c          | 70 ++++++++++++++++++++++++++++++++-----
->  hw/mem/cxl_type3_stubs.c    | 24 +++++++++++--
->  7 files changed, 122 insertions(+), 21 deletions(-)
+>  qapi/cxl.json               | 29 +++++++++++++++++++++--------
+>  include/hw/cxl/cxl_events.h |  7 +++++--
+>  hw/mem/cxl_type3.c          | 29 +++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3_stubs.c    |  6 ++++++
+>  4 files changed, 61 insertions(+), 10 deletions(-)
 >
 > diff --git a/qapi/cxl.json b/qapi/cxl.json
-> index 55a088586e53..82001c0591d8 100644
+> index 82001c0591d8..4ff66fc6c16c 100644
 > --- a/qapi/cxl.json
 > +++ b/qapi/cxl.json
-> @@ -33,20 +33,33 @@
+> @@ -64,22 +64,22 @@
 >  ##
->  # @CXLCommonEventBase:
+>  # @CXLGeneralMediaEvent:
 >  #
-> -# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
-> -# Table 8-42 Common Event Record Format).
-> +# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
-> +# Table 8-55 Common Event Record Format).
+> -# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
+> +# Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
 >  #
->  # @path: CXL type 3 device canonical QOM path
+>  # @dpa: Device Physical Address (relative to @path device).  Note
+> -#     lower bits include some flags.  See CXL r3.0 Table 8-43 General
+> +#     lower bits include some flags.  See CXL r3.2 Table 8-57 General
+>  #     Media Event Record, Physical Address.
 >  #
->  # @log: event log to add the event to
+>  # @descriptor: Memory Event Descriptor with additional memory event
+> -#     information.  See CXL r3.0 Table 8-43 General Media Event
+> +#     information.  See CXL r3.2 Table 8-57 General Media Event
+>  #     Record, Memory Event Descriptor for bit definitions.
 >  #
-> -# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
-> +# @flags: Event Record Flags.  See CXL r3.2 Table 8-55 Common Event
->  #     Record Format, Event Record Flags for subfield definitions.
+> -# @type: Type of memory event that occurred.  See CXL r3.0 Table 8-43
+> +# @type: Type of memory event that occurred.  See CXL r3.2 Table 8-57
+>  #     General Media Event Record, Memory Event Type for possible
+>  #     values.
 >  #
-> +# @maint-op-class: Maintenance operation class the device requests to
-> +#     initiate.
+>  # @transaction-type: Type of first transaction that caused the event
+> -#     to occur.  See CXL r3.0 Table 8-43 General Media Event Record,
+> +#     to occur.  See CXL r3-2 Table 8-57 General Media Event Record,
+>  #     Transaction Type for possible values.
+>  #
+>  # @channel: The channel of the memory event location.  A channel is an
+> @@ -94,6 +94,16 @@
+>  # @component-id: Device specific component identifier for the event.
+>  #     May describe a field replaceable sub-component of the device.
+>  #
+> +# @is-comp-id-pldm: This flag specifies whether the device-specific
+> +#     component identifier format follows PLDM.
 > +#
-> +# @maint-op-subclass: Maintenance operation subclass the device
-> +#     requests to initiate.
+> +# @cme-ev-flags: Advanced programmable corrected memory error
+> +#     threshold event flags.
 > +#
-> +# @ld-id: Logical Device (LD) ID of LD from where the event
-> +#     originated.
+> +# @cme-count: Corrected memory error count at event.
 > +#
-> +# @head-id: ID of the device head from where the event originated.
+> +# @sub-type: Memory event sub-type.
 > +#
 >  # Since: 8.1
 >  ##
->  { 'struct': 'CXLCommonEventBase',
-> -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
-> +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
-> +            '*maint-op-class':'uint8', '*maint-op-subclass':'uint8',
-> +            '*ld-id':'uint16', '*head-id':'uint8' } }
+>  { 'struct': 'CXLGeneralMediaEvent',
+> @@ -101,13 +111,16 @@
+>    'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+>              'type': 'uint8', 'transaction-type': 'uint8',
+>              '*channel': 'uint8', '*rank': 'uint8',
+> -            '*device': 'uint32', '*component-id': 'str' } }
+> +            '*device': 'uint32', '*component-id': 'str',
+> +            '*is-comp-id-pldm':'bool',
+> +            '*cme-ev-flags':'uint8', '*cme-count':'uint32',
+> +            'sub-type':'uint8' } }
 >
 >  ##
->  # @CXLGeneralMediaEvent:
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 165355baf9da..e461a824b692 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -723,7 +723,12 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d,=
- uint64_t dpa,
->                                    uint64_t len);
->  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
->                               const QemuUUID *uuid, uint32_t flags,
-> -                             uint8_t length, uint64_t timestamp);
-> +                             uint8_t length, uint64_t timestamp,
-> +                             bool has_maint_op_class, uint8_t maint_op_c=
-lass,
-> +                             bool has_maint_op_subclass,
-> +                             uint8_t maint_op_subclass,
-> +                             bool has_ld_id, uint16_t ld_id,
-> +                             bool has_head_id, uint8_t head_id);
->  void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
->                                               CXLDCEventType type,
->                                               CXLDCExtentRaw extents[],
+>  # @cxl-inject-general-media-event:
+>  #
+> -# Inject an event record for a General Media Event (CXL r3.0
+> -# 8.2.9.2.1.1).  This event type is reported via one of the event
+> +# Inject an event record for a General Media Event (CXL r3.2
+> +# 8.2.10.2.1.1).  This event type is reported via one of the event
+>  # logs specified via the log parameter.
+>  #
+>  # Since: 8.1
 > diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-> index 758b075a64b9..4d9cfdb621ea 100644
+> index 4d9cfdb621ea..352f9891bd36 100644
 > --- a/include/hw/cxl/cxl_events.h
 > +++ b/include/hw/cxl/cxl_events.h
-> @@ -29,9 +29,15 @@ typedef enum CXLEventLogType {
+> @@ -115,10 +115,10 @@ typedef struct CXLEventInterruptPolicy {
 >
 >  /*
->   * Common Event Record Format
-> - * CXL r3.1 section 8.2.9.2.1: Event Records; Table 8-43
-> + * CXL r3.2 section 8.2.10.2.1: Event Records; Table 8-55
+>   * General Media Event Record
+> - * CXL r3.1 Section 8.2.9.2.1.1; Table 8-45
+> + * CXL r3.2 Section 8.2.10.2.1.1; Table 8-57
 >   */
-> -#define CXL_EVENT_REC_HDR_RES_LEN 0xf
-> +#define CXL_EVENT_REC_FLAGS_PERMANENT_COND BIT(2)
-> +#define CXL_EVENT_REC_FLAGS_MAINT_NEEDED   BIT(3)
-> +#define CXL_EVENT_REC_FLAGS_PERF_DEGRADED  BIT(4)
-> +#define CXL_EVENT_REC_FLAGS_HW_REPLACEMENT_NEEDED BIT(5)
-> +#define CXL_EVENT_REC_FLAGS_MAINT_OP_SUBCLASS_VALID BIT(6)
-> +#define CXL_EVENT_REC_FLAGS_LD_ID_VALID BIT(7)
-> +#define CXL_EVENT_REC_FLAGS_HEAD_ID_VALID BIT(8)
->  typedef struct CXLEventRecordHdr {
->      QemuUUID id;
->      uint8_t length;
-> @@ -40,7 +46,10 @@ typedef struct CXLEventRecordHdr {
->      uint16_t related_handle;
->      uint64_t timestamp;
->      uint8_t maint_op_class;
-> -    uint8_t reserved[CXL_EVENT_REC_HDR_RES_LEN];
-> +    uint8_t maint_op_subclass;
-> +    uint16_t ld_id;
-> +    uint8_t head_id;
-> +    uint8_t reserved[0xb];
->  } QEMU_PACKED CXLEventRecordHdr;
+>  #define CXL_EVENT_GEN_MED_COMP_ID_SIZE  0x10
+> -#define CXL_EVENT_GEN_MED_RES_SIZE      0x2e
+> +#define CXL_EVENT_GEN_MED_RES_SIZE      0x29
+>  typedef struct CXLEventGenMedia {
+>      CXLEventRecordHdr hdr;
+>      uint64_t phys_addr;
+> @@ -130,6 +130,9 @@ typedef struct CXLEventGenMedia {
+>      uint8_t rank;
+>      uint8_t device[3];
+>      uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
+> +    uint8_t cme_ev_flags;
+> +    uint8_t cme_count[3];
+> +    uint8_t sub_type;
+>      uint8_t reserved[CXL_EVENT_GEN_MED_RES_SIZE];
+>  } QEMU_PACKED CXLEventGenMedia;
 >
->  #define CXL_EVENT_RECORD_DATA_LENGTH 0x50
-> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-> index 7583dd9162f6..5356dfb5b300 100644
-> --- a/hw/cxl/cxl-events.c
-> +++ b/hw/cxl/cxl-events.c
-> @@ -271,7 +271,8 @@ void cxl_create_dc_event_records_for_extents(CXLType3=
-Dev *ct3d,
->                              &dynamic_capacity_uuid,
->                              (1 << CXL_EVENT_TYPE_INFO),
->                              sizeof(event_rec),
-> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate))=
-;
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
-> +                            0, 0, 0, 0, 0, 0, 0, 0);
->      event_rec.type =3D type;
->      event_rec.validity_flags =3D 1;
->      event_rec.host_id =3D 0;
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 6cfdd98168f9..e9528da70cc4 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -3458,7 +3458,8 @@ static CXLRetCode cmd_fm_set_dc_region_config(const=
- struct cxl_cmd *cmd,
->                              &dynamic_capacity_uuid,
->                              (1 << CXL_EVENT_TYPE_INFO),
->                              sizeof(dcEvent),
-> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate))=
-;
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
-> +                            0, 0, 0, 0, 0, 0, 0, 0);
->      dcEvent.type =3D DC_EVENT_REGION_CONFIG_UPDATED;
->      dcEvent.validity_flags =3D 1;
->      dcEvent.host_id =3D 0;
 > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 6eb20137a04f..371bd4dc6ab2 100644
+> index 371bd4dc6ab2..d03a9f0edc29 100644
 > --- a/hw/mem/cxl_type3.c
 > +++ b/hw/mem/cxl_type3.c
-> @@ -1592,12 +1592,39 @@ void qmp_cxl_inject_correctable_error(const char =
-*path, CxlCorErrorType type,
+> @@ -1646,6 +1646,11 @@ static const QemuUUID memory_module_uuid =3D {
+>  #define CXL_GMER_VALID_RANK                             BIT(1)
+>  #define CXL_GMER_VALID_DEVICE                           BIT(2)
+>  #define CXL_GMER_VALID_COMPONENT                        BIT(3)
+> +#define CXL_GMER_VALID_COMPONENT_ID_FORMAT              BIT(4)
+> +
+> +#define CXL_GMER_EV_DESC_UCE                            BIT(0)
+> +#define CXL_GMER_EV_DESC_THRESHOLD_EVENT                BIT(1)
+> +#define CXL_GMER_EV_DESC_POISON_LIST_OVERFLOW_EVENT     BIT(2)
 >
->  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
->                               const QemuUUID *uuid, uint32_t flags,
-> -                             uint8_t length, uint64_t timestamp)
-> +                             uint8_t length, uint64_t timestamp,
-> +                             bool has_maint_op_class, uint8_t maint_op_c=
-lass,
-> +                             bool has_maint_op_subclass,
-> +                             uint8_t maint_op_subclass,
-> +                             bool has_ld_id, uint16_t ld_id,
-> +                             bool has_head_id, uint8_t head_id)
+>  static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
 >  {
-> -    st24_le_p(&hdr->flags, flags);
->      hdr->length =3D length;
->      memcpy(&hdr->id, uuid, sizeof(hdr->id));
->      stq_le_p(&hdr->timestamp, timestamp);
-> +
-> +    if (has_maint_op_class) {
-> +        hdr->maint_op_class =3D maint_op_class;
-> +    } else {
-> +        hdr->maint_op_class =3D 0;
-> +    }
-> +
-> +    if (has_maint_op_subclass) {
-> +        flags |=3D CXL_EVENT_REC_FLAGS_MAINT_OP_SUBCLASS_VALID;
-> +        hdr->maint_op_subclass =3D maint_op_subclass;
-> +    }
-> +
-> +    if (has_ld_id) {
-> +        flags |=3D CXL_EVENT_REC_FLAGS_LD_ID_VALID;
-> +        stw_le_p(&hdr->ld_id, ld_id);
-> +    }
-> +
-> +    if (has_head_id) {
-> +        flags |=3D CXL_EVENT_REC_FLAGS_HEAD_ID_VALID;
-> +        hdr->head_id =3D head_id;
-> +    }
-> +
-> +    st24_le_p(&hdr->flags, flags);
->  }
->
->  static const QemuUUID gen_media_uuid =3D {
-> @@ -1637,7 +1664,13 @@ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog =
-log)
->  }
->  /* Component ID is device specific.  Define this as a string. */
->  void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog lo=
-g,
-> -                                        uint8_t flags, uint64_t dpa,
-> +                                        uint32_t flags, bool has_maint_o=
-p_class,
-> +                                        uint8_t maint_op_class,
-> +                                        bool has_maint_op_subclass,
-> +                                        uint8_t maint_op_subclass,
-> +                                        bool has_ld_id, uint16_t ld_id,
-> +                                        bool has_head_id, uint8_t head_i=
-d,
-> +                                        uint64_t dpa,
->                                          uint8_t descriptor, uint8_t type=
+> @@ -1677,6 +1682,12 @@ void qmp_cxl_inject_general_media_event(const char=
+ *path, CxlEventLog log,
+>                                          bool has_rank, uint8_t rank,
+>                                          bool has_device, uint32_t device=
 ,
->                                          uint8_t transaction_type,
->                                          bool has_channel, uint8_t channe=
-l,
-> @@ -1675,7 +1708,10 @@ void qmp_cxl_inject_general_media_event(const char=
- *path, CxlEventLog log,
+>                                          const char *component_id,
+> +                                        bool has_comp_id_pldm,
+> +                                        bool is_comp_id_pldm,
+> +                                        bool has_cme_ev_flags,
+> +                                        uint8_t cme_ev_flags,
+> +                                        bool has_cme_count, uint32_t cme=
+_count,
+> +                                        uint8_t sub_type,
+>                                          Error **errp)
+>  {
+>      Object *obj =3D object_resolve_path(path, NULL);
+> @@ -1737,10 +1748,28 @@ void qmp_cxl_inject_general_media_event(const cha=
+r *path, CxlEventLog log,
+>          strncpy((char *)gem.component_id, component_id,
+>                  sizeof(gem.component_id) - 1);
+>          valid_flags |=3D CXL_GMER_VALID_COMPONENT;
+> +        if (has_comp_id_pldm && is_comp_id_pldm) {
+> +            valid_flags |=3D CXL_GMER_VALID_COMPONENT_ID_FORMAT;
+> +        }
+>      }
 >
->      memset(&gem, 0, sizeof(gem));
->      cxl_assign_event_header(hdr, &gen_media_uuid, flags, sizeof(gem),
-> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate))=
-;
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
-> +                            has_maint_op_class, maint_op_class,
-> +                            has_maint_op_subclass, maint_op_subclass,
-> +                            has_ld_id, ld_id, has_head_id, head_id);
+>      stw_le_p(&gem.validity_flags, valid_flags);
 >
->      stq_le_p(&gem.phys_addr, dpa);
->      gem.descriptor =3D descriptor;
-> @@ -1719,7 +1755,13 @@ void qmp_cxl_inject_general_media_event(const char=
- *path, CxlEventLog log,
->  #define CXL_DRAM_VALID_COLUMN                           BIT(6)
->  #define CXL_DRAM_VALID_CORRECTION_MASK                  BIT(7)
->
-> -void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_=
-t flags,
-> +void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
-> +                               uint32_t flags,
-> +                               bool has_maint_op_class, uint8_t maint_op=
-_class,
-> +                               bool has_maint_op_subclass,
-> +                               uint8_t maint_op_subclass,
-> +                               bool has_ld_id, uint16_t ld_id,
-> +                               bool has_head_id, uint8_t head_id,
->                                 uint64_t dpa, uint8_t descriptor,
->                                 uint8_t type, uint8_t transaction_type,
->                                 bool has_channel, uint8_t channel,
-> @@ -1762,7 +1804,10 @@ void qmp_cxl_inject_dram_event(const char *path, C=
-xlEventLog log, uint8_t flags,
->
->      memset(&dram, 0, sizeof(dram));
->      cxl_assign_event_header(hdr, &dram_uuid, flags, sizeof(dram),
-> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate))=
-;
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
-> +                            has_maint_op_class, maint_op_class,
-> +                            has_maint_op_subclass, maint_op_subclass,
-> +                            has_ld_id, ld_id, has_head_id, head_id);
->      stq_le_p(&dram.phys_addr, dpa);
->      dram.descriptor =3D descriptor;
->      dram.type =3D type;
-> @@ -1822,7 +1867,13 @@ void qmp_cxl_inject_dram_event(const char *path, C=
-xlEventLog log, uint8_t flags,
->  }
->
->  void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog lo=
-g,
-> -                                        uint8_t flags, uint8_t type,
-> +                                        uint32_t flags, bool has_maint_o=
-p_class,
-> +                                        uint8_t maint_op_class,
-> +                                        bool has_maint_op_subclass,
-> +                                        uint8_t maint_op_subclass,
-> +                                        bool has_ld_id, uint16_t ld_id,
-> +                                        bool has_head_id, uint8_t head_i=
-d,
-> +                                        uint8_t type,
->                                          uint8_t health_status,
->                                          uint8_t media_status,
->                                          uint8_t additional_status,
-> @@ -1861,7 +1912,10 @@ void qmp_cxl_inject_memory_module_event(const char=
- *path, CxlEventLog log,
->
->      memset(&module, 0, sizeof(module));
->      cxl_assign_event_header(hdr, &memory_module_uuid, flags, sizeof(modu=
-le),
-> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate))=
-;
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
-> +                            has_maint_op_class, maint_op_class,
-> +                            has_maint_op_subclass, maint_op_subclass,
-> +                            has_ld_id, ld_id, has_head_id, head_id);
->
->      module.type =3D type;
->      module.health_status =3D health_status;
+> +    if (has_cme_ev_flags) {
+> +        gem.cme_ev_flags =3D cme_ev_flags;
+> +    } else {
+> +        gem.cme_ev_flags =3D 0;
+> +    }
+> +
+> +    if (has_cme_count) {
+> +        descriptor |=3D CXL_GMER_EV_DESC_THRESHOLD_EVENT;
+
+The modification to 'descriptor' here is not written back to gem.descriptor
+which was assigned earlier in this function.
+
+Suggest moving gem.descriptor assignment after this block, similar to
+how valid_flags is handled in this same function.
+
+> +        st24_le_p(gem.cme_count, cme_count);
+> +    } else {
+> +        st24_le_p(gem.cme_count, 0);
+> +    }
+> +
+> +    gem.sub_type =3D sub_type;
+> +
+>      if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
+>          cxl_event_irq_assert(ct3d);
+>      }
 > diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
-> index c1a5e4a7c193..91b1478114d9 100644
+> index 91b1478114d9..2047e9784694 100644
 > --- a/hw/mem/cxl_type3_stubs.c
 > +++ b/hw/mem/cxl_type3_stubs.c
-> @@ -14,7 +14,13 @@
->  #include "qapi/qapi-commands-cxl.h"
->
->  void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog lo=
-g,
-> -                                        uint8_t flags, uint64_t dpa,
-> +                                        uint32_t flags, bool has_maint_o=
-p_class,
-> +                                        uint8_t maint_op_class,
-> +                                        bool has_maint_op_subclass,
-> +                                        uint8_t maint_op_subclass,
-> +                                        bool has_ld_id, uint16_t ld_id,
-> +                                        bool has_head_id, uint8_t head_i=
-d,
-> +                                        uint64_t dpa,
->                                          uint8_t descriptor, uint8_t type=
-,
->                                          uint8_t transaction_type,
->                                          bool has_channel, uint8_t channe=
-l,
-> @@ -23,7 +29,13 @@ void qmp_cxl_inject_general_media_event(const char *pa=
+> @@ -27,6 +27,12 @@ void qmp_cxl_inject_general_media_event(const char *pa=
 th, CxlEventLog log,
+>                                          bool has_rank, uint8_t rank,
+>                                          bool has_device, uint32_t device=
+,
 >                                          const char *component_id,
+> +                                        bool has_comp_id_pldm,
+> +                                        bool is_comp_id_pldm,
+> +                                        bool has_cme_ev_flags,
+> +                                        uint8_t cme_ev_flags,
+> +                                        bool has_cme_count, uint32_t cme=
+_count,
+> +                                        uint8_t sub_type,
 >                                          Error **errp) {}
 >
-> -void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_=
-t flags,
-> +void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
-> +                               uint32_t flags,
-> +                               bool has_maint_op_class, uint8_t maint_op=
-_class,
-> +                               bool has_maint_op_subclass,
-> +                               uint8_t maint_op_subclass,
-> +                               bool has_ld_id, uint16_t ld_id,
-> +                               bool has_head_id, uint8_t head_id,
->                                 uint64_t dpa, uint8_t descriptor,
->                                 uint8_t type, uint8_t transaction_type,
->                                 bool has_channel, uint8_t channel,
-> @@ -38,7 +50,13 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEv=
-entLog log, uint8_t flags,
->                                 Error **errp) {}
->
->  void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog lo=
-g,
-> -                                        uint8_t flags, uint8_t type,
-> +                                        uint32_t flags, bool has_maint_o=
-p_class,
-> +                                        uint8_t maint_op_class,
-> +                                        bool has_maint_op_subclass,
-> +                                        uint8_t maint_op_subclass,
-> +                                        bool has_ld_id, uint16_t ld_id,
-> +                                        bool has_head_id, uint8_t head_i=
-d,
-> +                                        uint8_t type,
->                                          uint8_t health_status,
->                                          uint8_t media_status,
->                                          uint8_t additional_status,
+>  void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
 > --
 > 2.48.1
 >
 >
-No comments.
-
-Reviewed-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 
