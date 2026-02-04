@@ -4,117 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8DD2E9D41E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E137FE83EF6
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vngbm-0003uw-Hf; Wed, 04 Feb 2026 12:24:06 -0500
+	id 1vngk1-0006vT-KF; Wed, 04 Feb 2026 12:32:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vngbg-0003qZ-LM
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:24:04 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vngbf-0003Hj-1T
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:24:00 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DB4C85BCE2;
- Wed,  4 Feb 2026 17:23:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770225822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XAMl8TjKrno+NXucicsGsu9H+ENi6nLYqJAg2vADj2c=;
- b=0mKjR60I166TsiBYVDyBi1XgKpdpB8zyMOryfI3g95FfhmZW71iRG/v87rY1MGQysTKUHv
- 9Ya0xkxpvqjJbg7eZ3crcceLwg5D0wrPZNn8HKYEonFIN9wxbI7+fKEmdgF8Dtz527zlmK
- XshQqUwvf8LWYN1iMGq4AJGRjmZ/NpY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770225822;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XAMl8TjKrno+NXucicsGsu9H+ENi6nLYqJAg2vADj2c=;
- b=/CEiLWylV/yfejDe04tnZwb6lPllQEM1yDOcJIJdROC0TYoHOEUSePWw8U0NZaGzmDIkG4
- eH9rO/dV+OgzaIAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0mKjR60I;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/CEiLWyl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770225822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XAMl8TjKrno+NXucicsGsu9H+ENi6nLYqJAg2vADj2c=;
- b=0mKjR60I166TsiBYVDyBi1XgKpdpB8zyMOryfI3g95FfhmZW71iRG/v87rY1MGQysTKUHv
- 9Ya0xkxpvqjJbg7eZ3crcceLwg5D0wrPZNn8HKYEonFIN9wxbI7+fKEmdgF8Dtz527zlmK
- XshQqUwvf8LWYN1iMGq4AJGRjmZ/NpY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770225822;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XAMl8TjKrno+NXucicsGsu9H+ENi6nLYqJAg2vADj2c=;
- b=/CEiLWylV/yfejDe04tnZwb6lPllQEM1yDOcJIJdROC0TYoHOEUSePWw8U0NZaGzmDIkG4
- eH9rO/dV+OgzaIAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 554A93EA63;
- Wed,  4 Feb 2026 17:23:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4GAnBp2Ag2nQNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 04 Feb 2026 17:23:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com,
-	berrange@redhat.com,
-	peterx@redhat.com
-Subject: [PATCH v2 3/4] tests/functional/migration: Use the migrate_vms helper
-Date: Wed,  4 Feb 2026 14:23:31 -0300
-Message-ID: <20260204172332.21367-4-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vngjy-0006us-RB
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:32:34 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vngjv-0005E4-Qj
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 12:32:34 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f5nTM53lfzJ46ZY;
+ Thu,  5 Feb 2026 01:31:35 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 123CA40571;
+ Thu,  5 Feb 2026 01:32:25 +0800 (CST)
+Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 4 Feb 2026 17:32:24 +0000
+To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Arpit Kumar
+ <arpit1.kumar@samsung.com>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
+ <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Michael Roth <michael.roth@amd.com>
+Subject: [PATCH qemu v5 0/3] hw/cxl: FM-API Physical Switch Command Set
+ Support.
+Date: Wed, 4 Feb 2026 17:32:20 +0000
+Message-ID: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260204172332.21367-1-farosas@suse.de>
-References: <20260204172332.21367-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[4];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: DB4C85BCE2
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,79 +67,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change do_migrate() to call the migrate_vms() helper and provide it
-with the two VMs already created. Rename do_migrate -> migrate and
-adjust the callers.
+Changes since v4:
+https://lore.kernel.org/qemu-devel/20250916080736.1266083-1-arpit1.kumar@samsung.com/
+- Dropped initial refactor. Reason being that it is not static enough
+  for caching at boot to be appropriate.  Kept the spec update part
+  of this.
+- Added a patch to make sure the new flip mode stuff is reported in
+  the Get Physical Port State command.
+- Rebased Arpit's Physical Control Control FMAPI Command given drop
+  of the major refactor from v4 patch 1.
 
-While here, standardize on the "src" and "dst" names.
+I had taken this into my cxl staging tree thinking it only needed a few
+minor tweaks.  Then whilst testing I realized it didn't work with hotplug
+and that made me consider if Arpit's original approach made sense.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/migration.py | 34 ++++++++++++++++++----------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+So this is my proposal on how to take this forwards. Note that this is
+not ready for merge (probably) just yet as I'd like Arpit to take a
+look at the changes.  I went through a version that had major refactors
+to push the logic of building the records to the ports themselves, but
+in the end don't think that brings enough benefits for the complexity.
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 3362e5c743..49347a30bb 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -45,17 +45,19 @@ def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-         src_vm.qmp('migrate', uri=src_uri)
-         self.assert_migration(src_vm, dst_vm)
- 
--    def do_migrate(self, dest_uri, src_uri=None):
--        dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
--        dest_vm.add_args('-nodefaults')
--        dest_vm.launch()
-+    def migrate(self, dst_uri, src_uri=None):
-+        dst_vm = self.get_vm('-incoming', 'defer', name="dst-qemu")
-+        dst_vm.add_args('-nodefaults')
-+        dst_vm.launch()
-+
-+        src_vm = self.get_vm(name="src-qemu")
-+        src_vm.add_args('-nodefaults')
-+        src_vm.launch()
-+
-         if src_uri is None:
--            src_uri = dest_uri
--        source_vm = self.get_vm(name="source-qemu")
--        source_vm.add_args('-nodefaults')
--        source_vm.launch()
--        source_vm.qmp('migrate', uri=src_uri)
--        self.assert_migration(source_vm, dest_vm)
-+            src_uri = dst_uri
-+
-+        self.migrate_vms(dst_uri, src_uri, dst_vm, src_vm)
- 
-     def _get_free_port(self, ports):
-         port = ports.find_free_port()
-@@ -65,18 +67,18 @@ def _get_free_port(self, ports):
- 
-     def migration_with_tcp_localhost(self):
-         with Ports() as ports:
--            dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
--            self.do_migrate(dest_uri)
-+            dst_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-+            self.migrate(dst_uri)
- 
-     def migration_with_unix(self):
--        dest_uri = 'unix:%s/migration.sock' % self.socket_dir().name
--        self.do_migrate(dest_uri)
-+        dst_uri = 'unix:%s/migration.sock' % self.socket_dir().name
-+        self.migrate(dst_uri)
- 
-     def migration_with_exec(self):
-         if not which('ncat'):
-             self.skipTest('ncat is not available')
-         with Ports() as ports:
-             free_port = self._get_free_port(ports)
--            dest_uri = 'exec:ncat -l localhost %u' % free_port
-+            dst_uri = 'exec:ncat -l localhost %u' % free_port
-             src_uri = 'exec:ncat localhost %u' % free_port
--            self.do_migrate(dest_uri, src_uri)
-+            self.migrate(dst_uri, src_uri)
+Based on:
+https://lore.kernel.org/qemu-devel/20260204170936.43959-1-Jonathan.Cameron@huawei.com/T/#t
+(with all it's precursors, though hopefully they will all be in Michael's
+next pull request)
+
+I'll note this is an enormous foot gun as it lets you effectively trigger
+surprise device resets.  However, it's only accessible if you are using
+a configuration with the fabric management parts of the CXL emulation.
+For now that is a switch-cci (MCTP over USB support is near the top
+of my list of things to get ready for upstram.  I tested this with a
+custom driver and if nothing else it exposed some gaps in Linux's
+ability to rescan PCI buses after a perst event (even with drivers
+unbound etc to make it safe).
+
+Original cover letter:
+
+This patch series refactor existing support for Identify Switch Device
+and Get Physical Port State by utilizing physical ports (USP & DSP)
+information stored during enumeration.
+
+Additionally, it introduces new support for Physical Port Control
+of Physical Switch Command Set as per CXL spec r3.2 Section 7.6.7.1.3.
+It primarily constitutes two logic:
+    -Assert-Deassert PERST: Assert PERST involves physical port to be in
+     hold reset phase for minimum 100ms. No other physical port control
+     request are entertained until Deassert PERST command for the given
+     port is issued.
+    -Reset PPB: cold reset of physical port (completing enter->hold->exit
+     phases).
+
+Tested using libcxl-mi interface[1]:
+All active ports and all opcodes per active port is tested. Also, tested
+against possible edge cases manually since the interface currently dosen't
+support run time input.
+
+Typical Qemu topology
+(1 USP + 3 DSP's in a switch with 2 CXLType3 devices connected to the 2 DSP's):
+FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
+    -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
+    -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
+    -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
+    -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+    -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+    -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
+    -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
+    -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+    -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+    -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
+    -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
+    -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
+    -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
+    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
+    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
+    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
+    -device virtio-rng-pci,bus=swport1"
+
+Tested multiple Qemu topologies:
+        -without any devices connected to downstream ports.
+        -with virtio-rng-pci devices connected to downstream ports.
+        -with CXLType3 devices connected to downstream ports.
+        -with different unique values of ports (both upstream and downstream).
+
+Changes from v3 (https://lore.kernel.org/qemu-devel/20250909160316.00000190@huawei.com/T/):
+        -Namespaced the defines with cleaner prefix for Get Physical Port State 
+         Port Information Block members.
+        -switch CCI implementation instead of switch FM interface as per
+         Jonathan's review comments, hence moved perst members initializations
+         from: cxl_initialize_usp_mctpcci() -> cxl_initialize_mailbox_swcci().
+
+[1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
+
+
+Arpit Kumar (2):
+  hw/cxl: Physical Port Info FMAPI - update to current spec and add
+    defines.
+  hw/cxl: Add Physical Port Control FMAPI Command (Opcode 5102h)
+
+Jonathan Cameron (1):
+  hw/cxl: Get Physical Port State - update for PCIe flit mode
+
+ include/hw/cxl/cxl_port.h                   |  73 ++++++++
+ include/hw/pci-bridge/cxl_downstream_port.h |  12 ++
+ include/hw/pci-bridge/cxl_upstream_port.h   |   2 +
+ hw/cxl/cxl-mailbox-utils.c                  | 183 ++++++++++++++++++--
+ hw/pci-bridge/cxl_downstream.c              |   9 +
+ hw/pci-bridge/cxl_upstream.c                |   1 +
+ 6 files changed, 268 insertions(+), 12 deletions(-)
+ create mode 100644 include/hw/cxl/cxl_port.h
+ create mode 100644 include/hw/pci-bridge/cxl_downstream_port.h
+
 -- 
 2.51.0
 
