@@ -4,96 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A6CE9D40F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88813E9D411
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnfzE-0005Mx-Sl; Wed, 04 Feb 2026 11:44:16 -0500
+	id 1vng1J-00073a-BZ; Wed, 04 Feb 2026 11:46:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnfz9-0005JB-75
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:44:12 -0500
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnfz7-0003E0-EC
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:44:10 -0500
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-1233bb90317so868949c88.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 08:44:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770223448; x=1770828248; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=eysfJqTLZud+iBPAEDNeiaLRHLCXHhBIbn0GZlGU8P0=;
- b=NQKl2mBBqec/+P4baKN3m86ytEIv9cq5vRDBC143w1pbNV3fApjl2TGkRIY8Pl/60+
- cFVxQRaLSXeMjHdGYos4VwJUE/y+kerdt4wmKScx4kKfsozcmVJ99GSntl+OIGpSKpVX
- j6He1ul2Tn3gJULTDaxZxhrJmC/zK6BYdZAXlzfcY1v0bOnH4Ydw5Qt2Kq8Ndmu+Z65e
- CK6ZPuQLac0Girq1KA2oaaCTZdCfj3fm3ODLmBp33SyP5Kbm4vNTgO4lPKVS/tHeuT06
- B42zMijTvgSiNj/N8D2KXiqbVqaUaVzekr5uGGh/GHE1JYYcbCNU6oeNxo0JNlFO2z/A
- UT2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770223448; x=1770828248;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eysfJqTLZud+iBPAEDNeiaLRHLCXHhBIbn0GZlGU8P0=;
- b=lRjlATGjubVHKbpvmNYFMv0D6fwp6x0vphhtBlcko5BldafyHUjrU5HWBnmd9USZO8
- 0GhcnzONydbIXaxfSD+AqBuMwWQYYEJqZdIZFkjVNVjmLG7SpzirlyvVDZCo/OS6P2xl
- o9KwS6EXfubCnieQVOq/GLD2J3Xvc39QtdyJTBVT3iI5fpIa2o4jqHxIuyWDwd5qlAvO
- I9igemtiBGAic7nkpytgxKa9Fib1c4jADBrAVss5yHKSJGH2WRPoqBID0AM3hUAP3D1K
- 7PU7+dHlsO9dvtmB0ueqz8cxmUY5oD4vJ6fSFtzUSXySxgVyle9BBjiAYpwcG6O8C8GD
- j1lg==
-X-Gm-Message-State: AOJu0YyTFUcx6SdRfdR4kKYDklXGFS422Rc++gvmxWsK+GeEWyGVgsou
- C6M6bbwPlpFBF0uutc8x+4NTSTEpdIXwC6S3lxPVa3VTWrHCFmOmpux7
-X-Gm-Gg: AZuq6aLrjrfnnc6wstWhvpfbDQUukYzQU1PCQOA/pwUXoEEo05Oe//wGdozuoDHyrsE
- EVr5eQkXsP55xeXxr4w071M/5t6qnbqJDsZ9zujtIlN9e6P4sTfQzU5q80Br75MVeI9Yqmu0tq0
- 1mfWWDaS65ETrJ2yPxHAywVs9fTuLHus7EaQRX230zPClsdFcnSBqCmWnn3cZ+1qkTUiIRlyvsH
- FQD16uZUVfVD0A48BgPNwMsFoaVlGCqbkI9Ke3+nYxjXx5H1Adgjym0dXbMCpJYUJa79HpghHQ1
- g7tNWkQxxl6zwSy9QGAIrBW/b+thK/xOYbk6+0kC44Wl8tK9kI2OIUF1jGO4+/0WlZARzjvboWs
- /hiVY7o9unMrlWxH6jsT5/meV0FIXHrqh0E2ZiiKyFdcEe3gykqpKwij1YnatP7CkCIkC2hZTro
- 355NMm/LjrgseK0n2V/uD52ctDuzmwUx7AOL3EUQJrWbC1eNY4B9OG3VOT3W4mK1JG0vLAO6MDM
- mFlvWQM7Op7dcyyLnBzpevNJ3dRVQ==
-X-Received: by 2002:a05:7022:920:b0:123:3301:a718 with SMTP id
- a92af1059eb24-126fc07b912mr22756c88.1.1770223447801; 
- Wed, 04 Feb 2026 08:44:07 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b832fc5045sm1698261eec.28.2026.02.04.08.44.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 08:44:07 -0800 (PST)
-Date: Thu, 5 Feb 2026 00:43:53 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v3 19/19] disas/riscv: Add support of Zvfofp4min extension
-Message-ID: <aYN1Z3YY45q76GcD@ZEVORN-PC.localdomain>
-References: <20260204051756.667397-1-max.chou@sifive.com>
- <20260204051756.667397-20-max.chou@sifive.com>
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vng1A-000711-NH
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:17 -0500
+Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vng17-0004Wu-A0
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:16 -0500
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.stl.internal (Postfix) with ESMTP id 8D6001D00161;
+ Wed,  4 Feb 2026 11:46:12 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Wed, 04 Feb 2026 11:46:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1770223572; x=
+ 1770309972; bh=jEmCW2CJeKwiBoliiD/nWnWhBy0/mPCAScNKxecv+dg=; b=S
+ dXZ9DM4uYqWzFhEzAxr3iFIKL1/ZXy1Nzbi0Zp+Iz/qEeg9u+QDdkvPNuG+FqFBA
+ j8WKvXa9YHoB/yQLc5/PImVNhJu0+V5jl3uP89qArh2lDjV89Ul15AZGz9HxIX15
+ 0PKJ8CVQNJwYJurMXaPjoUGZd9yzu60u2BCo8rmTiGUIzGiUFVK+oxxY/0p96dm3
+ dTYZGPTOKSeixQwPC5XLsxYhv4c1wSnvDviLAwURw8SEq+8sUwmm/hyJiu8+qigv
+ j1tg6OABXEfHodRQFyDXtObsozoO6IRWxshXG768Z9MKV2GwE8gZmHhcGdMfPCNP
+ +SxBdhsc6j+B1FVDuHQiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1770223572; x=1770309972; bh=j
+ EmCW2CJeKwiBoliiD/nWnWhBy0/mPCAScNKxecv+dg=; b=PlwKeqdTa90T/V23v
+ x/S4WC1++Tq3lJ3PLt17zGy2JrOTUdYnLWITvYkCXx1LMOSUp6iOAlaFbW0loweP
+ zm6vwWy3PXYOFNEwgVWfgv4U603ovUvQX/17SnCiGkVK4jjMHGNMl/Oi2vvLuRfN
+ IDJWb7IrT6CDOW3DnV/4foVnlfNYR4bL1lHMkm1/aID2mnakgaqIDmtOxAQL2nrN
+ X/xWNQJLNDb4gxFsokTQKxZ62V50phqSgyYxU/+fvWDAgj/rJuWZl1beD9jDzi8S
+ ToBE4L7HMRTpoYLa+hjXkrSShLgfVRCmCShFlL8oxGqJG/FKddJayZizMAG1Z1GV
+ PcSbw==
+X-ME-Sender: <xms:1HeDae7a-NDkHr5CtFONlMa1OkmhaAVd-0edgZTfbmwpI1w7PyKuyQ>
+ <xme:1HeDafUC4XeRhOGJDYS-fRfum0KMCjrDbh9mfjuzMKaVnCx1V5b_a5jwI-n7-_4EO
+ RGC2xSBQ5FS_va-2zEfY2MOh4oQLoT2Q9qypLg4pgxRFjSNRq6KbIc>
+X-ME-Received: <xmr:1HeDaa1o0JeUnw2RHx5W-v5_Jz0c40L774kxBVnmRkxytz2ecvN3hUSVqZj6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleehucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
+ ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
+ ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
+ eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
+ uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+ thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
+ hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehj
+ rggslhhonhhskhhirdighiii
+X-ME-Proxy: <xmx:1HeDaU2DDlA3Mj65DPilBVw5q04cOaoHgMSN6HcFwxHIGajoOQ2xWA>
+ <xmx:1HeDaV-Rglt-fI7qCsOicFg5AzpRIwk_Rbcn14mpCC8wm6uBDlcf7A>
+ <xmx:1HeDaZ3AWLX0mQMkCVSJS6CbUVF7MBw7P4d4-NnGqz5fuemNuEnX4g>
+ <xmx:1HeDaa8aZhi8nE__aS7Lyc6VZWB-WmUxeqcc5v_T0B38pCdA2CMPcg>
+ <xmx:1HeDaYit__aXMrVEec7g18fXmIncIM6V3DbGqQe9lpeVMEhM78zkM2TG>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Feb 2026 11:46:12 -0500 (EST)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 293bb1cd;
+ Wed, 4 Feb 2026 16:46:08 +0000 (UTC)
+From: Chad Jablonski <chad@jablonski.xyz>
+To: qemu-devel@nongnu.org
+Cc: balaton@eik.bme.hu,
+	Chad Jablonski <chad@jablonski.xyz>
+Subject: [PATCH v8 07/18] ati-vga: Remove dst_x/y updates after blit
+Date: Wed,  4 Feb 2026 11:45:55 -0500
+Message-ID: <20260204164606.3425246-8-chad@jablonski.xyz>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260204164606.3425246-1-chad@jablonski.xyz>
+References: <20260204164606.3425246-1-chad@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260204051756.667397-20-max.chou@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.12.124.150; envelope-from=chad@jablonski.xyz;
+ helo=fout-b7-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,59 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 01:17:55PM +0800, Max Chou wrote:
-> This patch adds support to disassemble Zvfofp4min instructions.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->  disas/riscv.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index daffe9917f..9abf86f2d7 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -987,6 +987,7 @@ typedef enum {
->      rv_op_vfncvtbf16_sat_f_f_w = 956,
->      rv_op_vfncvt_f_f_q = 957,
->      rv_op_vfncvt_sat_f_f_q = 958,
-> +    rv_op_vfext_vf2 = 959,
->  } rv_op;
->  
->  /* register names */
-> @@ -2260,6 +2261,7 @@ const rv_opcode_data rvi_opcode_data[] = {
->      { "vfncvtbf16.sat.f.f.w", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
->      { "vfncvt.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
->      { "vfncvt.sat.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-> +    { "vfext.vf2", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
->  };
->  
->  /* CSR names */
-> @@ -3715,6 +3717,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                      case 12: op = rv_op_vclz_v; break;
->                      case 13: op = rv_op_vctz_v; break;
->                      case 14: op = rv_op_vcpop_v; break;
-> +                    case 22: op = rv_op_vfext_vf2; break;
-checkpatch reports:
-ERROR: trailing statements should be on next line
+The Mobility M6 register reference (DST_HEIGHT_WIDTH) states that dst_y is
+updated after a blit but this appears to not be the case.
 
-But this should be on next line" can be ignored (Patch 9 too). The existing disas/riscv.c file
-consistently uses the single-line format:
-       case X: op = rv_op_xxx; break;
+Hardware testing revealed that both the R128 and R100 do not update
+dst_x or dst_y after a blit, regardless of the source. This removes
+the update.
 
-Maintaining consistency with the existing file style takes precedence here.
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/display/ati_2d.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Other, LGTM.
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index a8c4c534b9..cfc7bf9789 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -174,10 +174,6 @@ void ati_2d_blt(ATIVGAState *s)
+                                     dst_y * surface_stride(ds),
+                                     s->regs.dst_height * surface_stride(ds));
+         }
+-        s->regs.dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+-                         dst_x + s->regs.dst_width : dst_x);
+-        s->regs.dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+-                         dst_y + s->regs.dst_height : dst_y);
+         break;
+     }
+     case ROP3_PATCOPY:
+@@ -228,8 +224,6 @@ void ati_2d_blt(ATIVGAState *s)
+                                     dst_y * surface_stride(ds),
+                                     s->regs.dst_height * surface_stride(ds));
+         }
+-        s->regs.dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+-                         dst_y + s->regs.dst_height : dst_y);
+         break;
+     }
+     default:
+-- 
+2.52.0
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-
-Thanks,
-Chao
->                      }
->                      break;
->                  case 20:
-> -- 
-> 2.52.0
-> 
-> 
 
