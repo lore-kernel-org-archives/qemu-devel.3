@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA2BE95377
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646EBE95374
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnaBW-0000kb-7Q; Wed, 04 Feb 2026 05:32:34 -0500
+	id 1vnaBv-0002Ao-ND; Wed, 04 Feb 2026 05:32:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaB5-0000Tn-WC
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaBt-00020X-1g
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaB3-0003zF-HC
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:06 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaBr-0004AE-7j
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770201124;
+ s=mimecast20190719; t=1770201174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kVYqvwYnieU/MufqUKWfecoFgGqXHMqugvWnaZa1UfU=;
- b=IyncjeB4oNAGgNQu8QIW4SlG/LZ58OFRG95qmwURzhvZjpGEp5EtJAG8cYONCAPKUj+SPL
- 6FfW6i/2LMONINt5GAKMv/zDSLSsR1UtG1uCi6XZjFHl+Ue3AU66++7Pq/8D8b67kewtTP
- I1j0tzcwAB42O2WOyMmaAtYBpoQEVyg=
+ bh=wMZ8qmEUe8A2TekbLyV0QRh/wIEbtQpzG/Y38x9W5g8=;
+ b=esXCqfeTkxZK/Mp0+/XDJPGlEh7TO9J1XEUNmmjOmFKJqag92iOIzuOlDV5yIxkzBP663u
+ X77hQxAS9+aNAzJ9JKF0xIJAaHDUODTDGU6rwTqMFjnKaMK8qJKLNnjCMEV7shcDw/uDkR
+ hbAjSbPT63bLVkHhpHUFGHxfsYmg/tg=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-NGjX-NzyPsqvs5vvgALWhg-1; Wed,
- 04 Feb 2026 05:32:01 -0500
-X-MC-Unique: NGjX-NzyPsqvs5vvgALWhg-1
-X-Mimecast-MFC-AGG-ID: NGjX-NzyPsqvs5vvgALWhg_1770201120
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-DaNuJ0WrOASMppgqcpxFCA-1; Wed,
+ 04 Feb 2026 05:32:49 -0500
+X-MC-Unique: DaNuJ0WrOASMppgqcpxFCA-1
+X-Mimecast-MFC-AGG-ID: DaNuJ0WrOASMppgqcpxFCA_1770201168
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 64C6018001E6; Wed,  4 Feb 2026 10:32:00 +0000 (UTC)
+ id 3634018004BB; Wed,  4 Feb 2026 10:32:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BB942180035A; Wed,  4 Feb 2026 10:31:58 +0000 (UTC)
+ id 6858D18003F6; Wed,  4 Feb 2026 10:32:46 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/45] tests/functional/arm/test_aspeed_ast2500: Update test
- ASPEED SDK v10.00
-Date: Wed,  4 Feb 2026 11:31:00 +0100
-Message-ID: <20260204103136.1795455-10-clg@redhat.com>
+Cc: Kane Chen <kane_chen@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Nabih Estefan <nabihestefan@google.com>
+Subject: [PULL 32/45] hw/arm/aspeed: Attach SRAM device to AST1700 model
+Date: Wed,  4 Feb 2026 11:31:23 +0100
+Message-ID: <20260204103136.1795455-33-clg@redhat.com>
 In-Reply-To: <20260204103136.1795455-1-clg@redhat.com>
 References: <20260204103136.1795455-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,8 +69,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_SPACE_RATIO=0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,39 +85,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Kane Chen <kane_chen@aspeedtech.com>
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Map the SRAM device to AST1700 model
+
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260127032348.2238527-2-jamin_lin@aspeedtech.com
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+Tested-by: Nabih Estefan <nabihestefan@google.com>
+Link: https://lore.kernel.org/qemu-devel/20260204082113.3955407-10-kane_chen@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/arm/test_aspeed_ast2500.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/hw/arm/aspeed_ast1700.h |  2 ++
+ hw/arm/aspeed_ast1700.c         | 17 +++++++++++++++++
+ hw/arm/aspeed_ast27x0.c         |  1 +
+ 3 files changed, 20 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2500.py b/tests/functional/arm/test_aspeed_ast2500.py
-index ac33c62a9f85..5d75e20184d6 100755
---- a/tests/functional/arm/test_aspeed_ast2500.py
-+++ b/tests/functional/arm/test_aspeed_ast2500.py
-@@ -37,14 +37,14 @@ def test_arm_ast2500_evb_buildroot(self):
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
+index b15b13aedd3f..a981bff3b268 100644
+--- a/include/hw/arm/aspeed_ast1700.h
++++ b/include/hw/arm/aspeed_ast1700.h
+@@ -20,9 +20,11 @@ struct AspeedAST1700SoCState {
+     SysBusDevice parent_obj;
  
-         self.do_test_arm_aspeed_buildroot_poweroff()
+     MemoryRegion iomem;
++    uint8_t board_idx;
  
--    ASSET_SDK_V908_AST2500 = Asset(
--        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2500-default-obmc.tar.gz',
--        'c0a2ba169efd19be5eb77c50ec2a6afd9d826e196a0be3432f969fc72d4b7c0e')
-+    ASSET_SDK_V1000_AST2500 = Asset(
-+        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v10.00/ast2500-default-obmc.tar.gz',
-+        '7d71a3f71d5f4d9f3451f59a73bf9baf8fd9f6a24107eb504a3216151a8b2b5b')
+     AspeedLTPIState ltpi;
+     SerialMM uart;
++    MemoryRegion sram;
+ };
  
-     def test_arm_ast2500_evb_sdk(self):
-         self.set_machine('ast2500-evb')
+ #endif /* ASPEED_AST1700_H */
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+index f610f259326c..fd5db3268e75 100644
+--- a/hw/arm/aspeed_ast1700.c
++++ b/hw/arm/aspeed_ast1700.c
+@@ -13,13 +13,16 @@
+ #include "hw/arm/aspeed_ast1700.h"
  
--        self.archive_extract(self.ASSET_SDK_V908_AST2500)
-+        self.archive_extract(self.ASSET_SDK_V1000_AST2500)
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
++#define AST1700_SOC_SRAM_SIZE        0x00040000
  
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2500-default", "image-bmc"))
+ enum {
++    ASPEED_AST1700_DEV_SRAM,
+     ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
+ };
+ 
+ static const hwaddr aspeed_ast1700_io_memmap[] = {
++    [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
+     [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+ };
+@@ -28,12 +31,21 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    char dev_name[32];
+ 
+     /* Occupy memory space for all controllers in AST1700 */
+     memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
+                        AST2700_SOC_LTPI_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
+ 
++    /* SRAM */
++    snprintf(dev_name, sizeof(dev_name), "aspeed.ioexp-sram.%d", s->board_idx);
++    memory_region_init_ram(&s->sram, OBJECT(s), dev_name,
++                           AST1700_SOC_SRAM_SIZE, errp);
++    memory_region_add_subregion(&s->iomem,
++                            aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SRAM],
++                            &s->sram);
++
+     /* UART */
+     qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
+     qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
+@@ -69,11 +81,16 @@ static void aspeed_ast1700_instance_init(Object *obj)
+     return;
+ }
+ 
++static const Property aspeed_ast1700_props[] = {
++    DEFINE_PROP_UINT8("board-idx", AspeedAST1700SoCState, board_idx, 0),
++};
++
+ static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->realize = aspeed_ast1700_realize;
++    device_class_set_props(dc, aspeed_ast1700_props);
+ }
+ 
+ static const TypeInfo aspeed_ast1700_info = {
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index d9866c2c3b23..6a144742ead6 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -1023,6 +1023,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+ 
+     /* IO Expander */
+     for (i = 0; i < sc->ioexp_num; i++) {
++        qdev_prop_set_uint8(DEVICE(&s->ioexp[i]), "board-idx", i);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
+             return;
+         }
 -- 
 2.52.0
 
