@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 239D1E95392
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8FCE95392
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncO2-0001r9-OH; Wed, 04 Feb 2026 07:53:38 -0500
+	id 1vncSO-0003pF-T0; Wed, 04 Feb 2026 07:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vncO1-0001pc-Bz; Wed, 04 Feb 2026 07:53:37 -0500
-Received: from mout.kundenserver.de ([212.227.17.10])
+ id 1vncSN-0003p3-2X; Wed, 04 Feb 2026 07:58:07 -0500
+Received: from mout.kundenserver.de ([217.72.192.75])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vncNy-000484-H5; Wed, 04 Feb 2026 07:53:37 -0500
+ id 1vncSL-0004i8-AP; Wed, 04 Feb 2026 07:58:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
- s=s1-ionos; t=1770209609; x=1770814409; i=laurent@vivier.eu;
- bh=cMg403Z2JXNf6wREhHzqf1Ncf/DgptqCXwutfm2lpoY=;
+ s=s1-ionos; t=1770209883; x=1770814683; i=laurent@vivier.eu;
+ bh=QkfDRCP3B8v/mQwWWGU/i1HYd3F/DeGJ3//sJXM1cGg=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=zS9kfVQ4loiOT/2kxEfQFNXnqmVF+r3C3g2wgNnHxB4azvA7iHX2t3H5ILALxDNb
- yI9LXEt/MO5jZvS/JdNpTxcSASA0mogZysmI66WiscsnbKL/sQE+c3LNj1iuwUiDF
- banUYqqDLo1ilo0UYXU1WLXTKHbw5ksQF6Y4c+S8JZO7t3B72qYJKbQwtflKI830b
- /4+vo9Hh8J3i6ivO96NdR9GO+sgLwkdd0+88ImWAgEnFtzwYMhq0v+5RBHOTveg8h
- kh3+NBJB9PLqP43uIn1oBdyYBAf2bdN2Twc3y3TOpHF/xvEe9ugUjIIsvgZsyh0n3
- h+6FhrI+60QmDJCt9g==
+ b=TCIhw7+vXyQ+n/DCi9oru1x9tH1FH8xur9+gq1MNWS6PRcFEx2A4Fd6j68zhvgHE
+ XtkbrTjV7X7Bl8GSV68tOhKKWlKd8AJf6+jTXlei2jb12/86T6m8us93l/+rEVivP
+ S3FJOIjVRjBCr8XGYypqqzBO+fia7XNrM6UatZ0eAaN1E9JA5bvkLx8Xikb+RI4os
+ VqDxvog30fZwtMPPNKODdZk12X3QiAx0Wz4rVYJKdWJB6/7ACY9FEFoTwVzN0+1an
+ 1Dhtr/Q9/6BQNOHCPiIdOPlnpB9ox0gh0HTqhmxlrGJkNN5KieXFiFykJioCjJP90
+ f6aAis7wbwef00NXWw==
 X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
  (mreue108 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MN5aF-1w5yaC0C4T-00OiN2; Wed, 04 Feb 2026 13:53:29 +0100
-Message-ID: <722eb7df-0eb2-49c1-af07-90004ad46a8e@vivier.eu>
-Date: Wed, 4 Feb 2026 13:53:28 +0100
+ 1Mirb8-1vK53m3bL2-00bSiV; Wed, 04 Feb 2026 13:58:02 +0100
+Message-ID: <842d76d5-0485-48a8-8b34-fea986797b72@vivier.eu>
+Date: Wed, 4 Feb 2026 13:58:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] system/physmem.c: reorder usage and assertion of block
+Subject: Re: [PATCH 1/4] migration/savevm.c: reorder usage and assertion of
+ mis->from_src_file
 To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
 References: <20260204075754.21078-1-heifetz@yandex-team.com>
- <20260204075754.21078-4-heifetz@yandex-team.com>
+ <20260204075754.21078-2-heifetz@yandex-team.com>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -89,49 +90,49 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20260204075754.21078-4-heifetz@yandex-team.com>
+In-Reply-To: <20260204075754.21078-2-heifetz@yandex-team.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:a2XVJnzjoaL4ZSS/IyyKbpCpm3lf6MIP1GQZUU7qrBamRVm9zCb
- Rp5u9Ln7UPxYEY0b2OFGkIC5Khr4b25ivfHRYIbjArn8NrL1xus72YfUobA5o0klGm2hUAH
- h5hUV3pyOzFiNz4XffEvnaN95L1TfHyh6vUCdKVFXiparJQPAFAaFl8laa57e1NY60ajKl/
- ujpxOHk+FCSmKISgTP+kg==
-UI-OutboundReport: notjunk:1;M01:P0:5KjD5Pe7cZQ=;k/nt7wma5P8iYp0MyaRDltyGJa/
- m2UHKN386RNJjl7zrGwDfzjGqoNkYQqPUeNcPwsLVkgCdI+SHXtBOcoDdJEhvThtuOzocdlyD
- M2E0ZM6ITuoGG5K+J6FGxfi6xIuaq30WhHqLv10COVHxINFbQoIaRy3MrHihdylwb071OqBwv
- Y+JfoNsy7KsFtMfDSO9rGJsqmyzjdtIGne/6xC+GMVmMi0SvqyPT5hnt6sSkAoYVyWAOsbZ2b
- MvetVX1nb91x52NC9+H//uakD4yci4cSwP0TbJvplbzyGu8dnSRj4W4Lh4TpiwvxQawhFEcFa
- Chy5B/GQht29reYfJy/bcWfTgt5NQQAXgJrALR6Z12gBNTnUNGurbl06zKLYyEEQz1tV8GU+f
- FvsGVE6GUcTC7e5zJBAVutM6yj5wuvWvw7yKtgT5/medpVABKbscRRt4d9e27OpFnYhCpa8QY
- tuz7rvwVv9Ykj/o4SxD1dmB5T6tGPzxPZLex///Pyu1DRUI2k1T8VU9DGNOc1ldy1QOSFzx0m
- nu7TCSW7RHp7NXdXG60T8KvNET0gsQQFeshxmSt4c3XQkSNZtga1iEy2XaFwQ1hBUFfwV8LBI
- W11L3hhJeQgprHQt0soN1A1uUP76KsQ4xDAbeElcdXLwtMDdjgM6CSrdPPpCW05gVXDJ52zr5
- b0kaxIS7QDUFezDbfjENt8kHOjKKOzFV9cfUyzgND/fJE+/Uo3RTRjK4ElKueukNLCsjCIP0F
- V56Ymg6ywhL2cXR2p72BKhNVIR8+jzHnAdEn3SSB8r6UsnslBZ+If1nuexIRrNu3hDh9Gd0Gd
- HwbLoGK2Aovgx9clu0mMk9/IIdHkvja4zm61rHdVg6wQ4O/9ZEIECzb/AtIRdcxDkMEU6wnsT
- R5QfOupEyia5CE5vtc2Ge0qHrtCFXe9OqCj6/JHivrB6taqz0D13RYt+0P/67QfV69OUWCUWW
- TieFsGReAeQA/dYROnv+Y9v+Vn82elp9F7/OBQQxTr4xxWtag+GH4I/aSotZ9IqKjVp5PNz6R
- 8rQIpiJinh4jdNJluIu1w1Xs43SIr61AobVjhEpoG2K1OD/IAN5IfednZb28ZQ94pLyrlTGlK
- i/pcDzRMYDBOCU+C05T4AY386y5SlV4+ZF2fTSsm76m7fF8xsUUSBiDuF3OYyTEgHQmE/cWlV
- 4qkldgppL7/D4FNV+2SV5kFvtjaRmygWIYAlhYflVyFhpGLnKXtyTN0DNjCEIpLaZ+JuPD3/q
- Co3o0OikHmcObKKdY8DtNw+U8HT+0OCRxAVu3Auu9QSHOiUAXBXtL5k1xgxmtWxIB+RtqsPf6
- s5tYuV1F9CS5Ff6m0MZOy2YfJTFryPTeuBFUfGiuif0k3ZDFZYp+u0BvQUGvvHgVAkxd83n2W
- idmu+p0HjdgxD9/MkI+/2WimRAfJBU7K+TKz+5pb0aIWXLg2TYTz8qsYhq5q6yGnRLz2wt0hZ
- 9+bjg/7ok6JCBYlIIzoZiPPuwCOzZpvGxc4v20FYCkBHFKJeb2mDMavpmGq+4qDT5DKOAlFg2
- PzYHLTY+bXsbdP75NOCY6rRYcm/94Qu0jStFNPWZWMwLlBcRZp97Ky1z9EBAoQgBGXoxTfz0D
- 8QEaGIhp6YwgnG6A/oF619wWw8nXP5wVh+dUmaJc6nl1S3z12DB/oiOjrMD415qZ8VMa1Xjl0
- ozrvtbHiLESotNknYDAej0hFio+VhB7DFdg+TJkRX5V1mYMqdpIN9qUGcjFD9ZMEt8mtY6bSQ
- x3ZU9A15WCOqa3ig0CE+AE1pxeSzU4O5n/jTLr6TmmB2vCV83bhtrWEs=
-Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:Eu+jdKWqi3PgWfM7QFnnCtpCq1u/ODgazH47z9fmnxC0Knp15+N
+ Aqm5VWlRT01BZXhUsFA+sO1TPUIRcBY22km4BTwnr7rcYMJfJmbDyBIWkYAOckA7gxMLTYz
+ 6bZfTl3TiBGIaEqEuZOgWUhWesMg+HX56FxuSvTB/iyW85xly3oqiXCpWSGPp8oV1gtYWA5
+ R3rwOODphvPnovhkZHApw==
+UI-OutboundReport: notjunk:1;M01:P0:tJmma872pyQ=;209OV1rGTzA/QPVw3pHGSO0ZoR9
+ YdehlITwCTN3VhhK0jwDx+YZporAFcHbtjbdUYFPc0/iu0Mt3DS7+dJ44Lk1ytDfXg2UBS2S/
+ v2Nd9+9PetcxO4ZN9K+A7U6cRzq6oz/CNSboqt6qI+Sx7UYrdCz1436uZF4lRnUzOlFknqKgA
+ rg03H+7O7234aMLVlO1TBv77xakV7KW+aOG/MOZIn9FlTxiuYdPQlyYgZV7/ffFFhv2l1LoMT
+ 5k7wQ9ByhPvZicdhdC/eDY3zuE5MoPWqaJn8JpCYMeybM9FCfxq6ULIDEXSCLZV2VeYRpGbo/
+ xdfsEc8RpRNnwJqGwvjr6kgu1/Y1eHCa8Zo5z5oz0/rTFt9ZBaN4/cqaD53gSoKSUR80xJQDt
+ pxkxWs6PqwNlN8Bz5s9N50bEFiwiwZmfebrKEnFV5pO2d+IPcUQ9ANe60zGLWDO/3wbS1hHVg
+ oRGdJHEdcEnbVxSZfgeszJIvFtYJGspwPXBMaSoV62bG73/qvhzni7OVZhScH7eDRqu0QF/xn
+ HhikX4z1Y9Oh5vgalepSoWJjuaZDqWbLK8gypvB7LbKN7m81KeUYwGJA0uB/FfelBv75oWupj
+ GS+y4LU7XSKtNQpIDMA8VUsC3op+k6b8b8bPmQgdPG/jDq0ZhTvQlGOCacT5j4u57HPR9W1aH
+ 3VD6pl6vAqpfp0788wIoBiepYXLukLx/9vUEtmJcFXH3xk3oZw83oxtmu8zrjSsdQePCeB8IC
+ L3oZgxNZktWBnQDfPjSGo08pOn6n+mF2vd0RZG/uE0lkG0nVQwAUoyWxaVoGugWzdWG8M6Irs
+ pdXxRbihdn9LYxTGugvf672yK+Sh+f1oidxb4fLvCVs+dOpsX0pEceTH/AJItYwdHmTGK2Dtw
+ rtfN8vYAlS6A943Tzd0p/Uo9DgI6nxBxnJsJCHcOTb3cb0c1ZvcXVbR52tBLnFfsyUdjUONuZ
+ pECmWrS5TlrAYYAngzwPaBDLsWXHinFautF0D/sxgbTd1p48wsOtTEtlWZi8gxMGIb/q6UKEo
+ D9aNgLKkR60jwotJ0/ZGA0TrTFJyKVdljhAawEPXmW9n7xGEqWzMIQpUOYzrfaHPQfJuk8Tyb
+ E6Riay+vYxBsum7hUT2V+zrOrUjoZpiTluLpJOdomtLBzuNyp+hJUen/aaKM3J/B62J74BkAK
+ EDwAue+r+Ew0gdC9wNChd3DYGZWv+01n8F+AH6InWrA+kCA/Izggk2lq41P/8BkJIXzYeu6PL
+ cOz2VXsee4S/jUSvnBLc6phmOMBiUQ2lTF1rWZTXHqpCsLTBl7I5SKWqnAPoKfS6kQTt2Ixew
+ TufZvMSSMrfmBMV1Ti22R04DBZXaKDw5CkG3A6TQnqbP/vLsYTGiPA7a+DPq1cXXwdGPanGjE
+ Mmz9sgs3Uo41gtpku73ejH+2vX8mnfeHWbp17JBdyW+98o0WjOx2eH1UGL80gm9DR7i/j+9Bi
+ C+gK37UbOdBAcL44oED0Om1GiMHH9I7mXj7OcePdFA923pgf29vtQO5LUc4GcsyDhIgR0HEHJ
+ MgYCD0GF3R2H8FO5u8WlbKoVtkE13NoC4dW1YhJXmVqqbDwPD3berZJq5KxUMYZ31Zr0K7CR8
+ HdY7uRsHpJQmi1sdhTXohDXETfHqh/Jnv189595jcFEjTQdUKiRijs5ejyeC0fxPHdUbboIjE
+ wx/BQAdiPecbk62WPa7KRLQaADiCXu0CMhuR+lU8CN8Docd1FZm/erxTMi4Vn99Lu+d62kKP+
+ bZRFTOhZCfIBFuQpRkYPw5jlAbDVNVJUDDe+AXlVxE+oejZ7CvMGkbm0=
+Received-SPF: pass client-ip=217.72.192.75; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,40 +149,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Le 04/02/2026 =C3=A0 08:57, Sergei Heifetz a =C3=A9crit=C2=A0:
-> Reorder the code so the assertion of block occurs before it is
-> used in the subsequent lines.
+> Reorder the code so the assertion of mis->from_src_file occurs before
+> the call to migration_ioc_unregister_yank_from_file, which dereferences
+> it in qemu_file_get_ioc.
 >=20
+> Fixes: 39675ffffb3394 ("migration: Move the yank unregister of channel_c=
+lose out")
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 > ---
->   system/physmem.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   migration/savevm.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 >=20
-> diff --git a/system/physmem.c b/system/physmem.c
-> index b0311f4531..4308e02940 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2054,11 +2054,11 @@ static int memory_try_enable_merging(void *addr,=
- size_t len)
->    */
->   int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
->   {
-> +    assert(block);
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 3dc812a7bb..930a3391e3 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2885,13 +2885,14 @@ static bool postcopy_pause_incoming(MigrationInc=
+omingState *mis)
+>  =20
+>       assert(migrate_postcopy_ram());
+>  =20
+> +    assert(mis->from_src_file);
 > +
->       const ram_addr_t oldsize =3D block->used_length;
->       const ram_addr_t unaligned_size =3D newsize;
+>       /*
+>        * Unregister yank with either from/to src would work, since ioc b=
+ehind it
+>        * is the same
+>        */
+>       migration_ioc_unregister_yank_from_file(mis->from_src_file);
 >  =20
-> -    assert(block);
-> -
+> -    assert(mis->from_src_file);
+>       qemu_file_shutdown(mis->from_src_file);
+>       qemu_fclose(mis->from_src_file);
+>       mis->from_src_file =3D NULL;
 
-According to coding style (docs/devel/style.rst):
-
-Mixed declarations (interleaving statements and declarations within
-blocks) are generally not allowed.
-
->       newsize =3D TARGET_PAGE_ALIGN(newsize);
->       newsize =3D REAL_HOST_PAGE_ALIGN(newsize);
->  =20
-
-Thanks,
-Laurent
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
