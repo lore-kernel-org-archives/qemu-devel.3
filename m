@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2B5EA7943
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 465A3EA7942
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAV-0008AR-B1; Wed, 04 Feb 2026 14:04:03 -0500
+	id 1vniBx-0003ch-Ka; Wed, 04 Feb 2026 14:05:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAL-0007av-CH
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniBI-00030v-80
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:05:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAJ-0007vH-QH
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:53 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB8-0008En-Ur
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231831;
+ s=mimecast20190719; t=1770231882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YXkScNv7xNrQiajhZNxV5Y+IbqsvARHUNAQ/l/4frxQ=;
- b=Sprhm/1PW5pknAg/m9QSrA/F5rDsJxt18yq7uItgp5Ds0H7Qw0voEGE80AFFXaKHXaBJ0i
- HvbNv9ItPCDtQ5fa7bIcT3PWp0uXJQM6x7n5/eFIPZxojnlKNbxDCQyZBMymwwuR5KO62z
- CXp5iQnL3uDzGKUZafO/mFflzXqxUhY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0m3fu01MzQJcwZ0QMeUZQcEMiRgauyETG8pOx1+H3bk=;
+ b=H4B9qTxDuVp+Cbt1cI56bpxpCWVdkURAajqGJH/TxwY4d32kZOf1v+OMQQgWcldYBaVWSj
+ nhggPO1RlDAr7v7I6nMyvTKcIHf+c4oH4yw7BEeuPSLmlQCq1uPy30rustRKVKCjtv/8ho
+ wWr2HLE6cvHZtf+TsVQyTDbOd0DFU/s=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-S1kZFgiONg25G7Y9VaoA8Q-1; Wed, 04 Feb 2026 14:03:50 -0500
-X-MC-Unique: S1kZFgiONg25G7Y9VaoA8Q-1
-X-Mimecast-MFC-AGG-ID: S1kZFgiONg25G7Y9VaoA8Q_1770231829
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-435a6c0c794so179882f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:49 -0800 (PST)
+ us-mta-652-mzLH6MvWNSehEmRLRfj0Ww-1; Wed, 04 Feb 2026 14:04:41 -0500
+X-MC-Unique: mzLH6MvWNSehEmRLRfj0Ww-1
+X-Mimecast-MFC-AGG-ID: mzLH6MvWNSehEmRLRfj0Ww_1770231879
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43591aacca2so156751f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231828; x=1770836628; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=YXkScNv7xNrQiajhZNxV5Y+IbqsvARHUNAQ/l/4frxQ=;
- b=LPAKXDgjm1erUf7SnogR0JqEiNTf5J1IN/aFYdKNxktLhBzqiDxGLMo4oAybgwXPdq
- ZwgqxWss77OzRHWktxDmTldUdZ3dmtpfIG2s5SfG+0LedmFvL+IOHRJK5SwbLGkhsSor
- dNRhTk1JPhLSj0ZwPCx72i2ad015ieW3X8+q5YUpMxU+gGE912AfC9uSnhEvwEmbbYj7
- 9UFC8Z/+67JLfKOS5Gr9aFra509USdgEHB8H0BlmeKfMMM8YILi5CkiV3uJFyPDIwIU2
- iIoe7TZ6wrymEJM66PyGNxp9kmr0oiu10wkIwA0iCI01ALHbkmaDPwJ8eWzVs3nHXUDQ
- QVEw==
+ d=redhat.com; s=google; t=1770231879; x=1770836679; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=0m3fu01MzQJcwZ0QMeUZQcEMiRgauyETG8pOx1+H3bk=;
+ b=DBd5RF5g75rUhhkreqU3YD4klLsAeRLqsrbJmD9K3axTVaVrZ5PbEr4Bm31GCtL03i
+ NORkXxILl5ZYk2I7vNgjMvyZNhmp3b+tSfZmGbglzy+COGM0jb5eY+dA3svmso1rj2fx
+ OhOpn9I5u/qiUmEMHThYtWlRfy39/LHIWwLKE6eZxvkzJKrZdXlUEOv/LZw36/GPxCLa
+ c8VdHoGx1ZdbadvgQOcb8bWYmX+X+9Q5nJKza0gb03cs1RHCvkQ7ONFyjQQRHGr23tmI
+ kKL8kl1pn6WS81yKhs59nX21OEe1lQgo01DuVEWluU/nRk2GtnjXwNNoNouMRwMP9cG2
+ q5Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231828; x=1770836628;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YXkScNv7xNrQiajhZNxV5Y+IbqsvARHUNAQ/l/4frxQ=;
- b=KI6QsPGcxenKComBdG9mTrPYWFx8T6nl3m1rqmHhWIeq26ThFsLm70g4ZWhv+MJAMt
- sCXlEtd1RK+ww+hJ+qkp4bTQ56gw7EH5B2/xOzqVU4RFpsOeoYq5DXn6x3P2WBBCsb2t
- pqFI2WIvFIiKUPff1wSOxx8ERa7RM52IowhGfQ0ysFK8g/C30qlpNBcSoXvUFfUhEk21
- 3cBGCaFamwqU/1PXY6g7aQlbSiYkBdO6DGjuZ+/iBbHZBNgyRrBoyy3VP2fR0QIiFIxD
- qo6Q0qkt/WKTUcl4sti4qL0EK6wW+9by4+3F7AUYXAw8QvAp9tlgtiF8S8/7m42Rxkrq
- HKZw==
-X-Gm-Message-State: AOJu0YwrS+JFEMnbY3LHDXjbfLVxSENcSZTceFOmUVSOSnVD3AlVu225
- B4nWumMt7EQ5orITBRgPU5as+UdhrKKJJnKbkDSIqlYNM7AAkTnefc5BLT/V3v7Dm98iuzGd6BS
- u9pt2frRvVQIcs6HGrDSXNcA5XL87rknAkYcBpJmM12z9EzeC5ztxYk8X5Bw/Bf+xs4b0szHhCb
- qteTQpc5FsgBeVkzH4acyCmXXA3IfdYBJr3A==
-X-Gm-Gg: AZuq6aJXZQwItlXs3jg2++X6btMKAabAyAJJRtsMGnu2puuKjdXYhrACgAcHTrlPjTf
- sSPOBnraVKt4EeBqYTqr2t6IrdfVndAS6Mnl/03pn64ZzQFghlv821rOKUCqQRufksGr3PZgttf
- xHUgRXtf/K31tdtKukq3fkMnN+7V0KkI1OVRszZiNt0xEcHnWidtPCJxto2mxss2C2AZJsn7UXl
- YauC1FxFn+mbQWAcXGV5rr3kMy9l6iT4FY0hpcmhRV/vbT/+7h3dM4yiNOo5LSMvoJRcUrqRQFT
- KEIZgXiXh/5ZbrQjftu2lVobA5N14YD4JuEXNnu/PvyBuppGknnTp4ZkDJHK0Jovn4ZND8QwBij
- oeTeQRrLq4Hw286bS0ZuHOxtQHKahfcoAIA==
-X-Received: by 2002:a05:6000:400b:b0:432:8504:befd with SMTP id
- ffacd0b85a97d-4361805509dmr5469577f8f.32.1770231828491; 
- Wed, 04 Feb 2026 11:03:48 -0800 (PST)
-X-Received: by 2002:a05:6000:400b:b0:432:8504:befd with SMTP id
- ffacd0b85a97d-4361805509dmr5469516f8f.32.1770231827967; 
- Wed, 04 Feb 2026 11:03:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231879; x=1770836679;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0m3fu01MzQJcwZ0QMeUZQcEMiRgauyETG8pOx1+H3bk=;
+ b=lh/q1eocpJvkK8LztbahWGrrdKRc8oIdPBvNIvT5tBtkn6QCYvkjDGNwpguW7fTjh8
+ Z1EgdHLk9uOYkQXY6z3WB2trMJLIv7GGTpWyPBONUMpp+T00VYEJBbJKsea/Q6ezk5y6
+ HhhUArPw8OFWnHhmwPBmKcZq5YeWY2M7Q3CFZ4hWHxPRmesCtljr5wtj7SGDO8C4MdGK
+ iB5r8/gxlZaz2xdCuhxeECRin4+K5SMZVkXzwDWo/jheGQLAUXHdIcUb0wjSon8+n0g3
+ Tfyo45WD7pwGn39ejOkWYerPgOTKRKr7B8g5c1sPcllZbYPnu6GYU3RyZVzmBZ1Fd8Vw
+ lvhA==
+X-Gm-Message-State: AOJu0Yydcl0bi46RQeK9BO+d9O+b3b61dMVQya2aUXU2+AGMbiVncZ6J
+ xm5p30gtF7BSTt55hs0REU7lMj+rTcHM2dkFdWegIFDvPkg9n53Xj97C7VmuSULr4zUtoM5t9E7
+ T/HTpUtxENW0QlY3jioRrJO6G2ixxAa5nms2hmAvsU8G5x76Om3ZETxbyLlb4lTCENCfwbgDBoU
+ cOzkJgGaZqfRolN/KBWMrSdbpD4kAgZLXq8Q==
+X-Gm-Gg: AZuq6aIVd7FlAEZnuLFrUDEPuR+e3k4CKJouP57emSlnWdw5aBvHeU9Anoc8qTUEMd7
+ j4iMOzy5mHkHn1Wupgfz7YpbmTA6AvD7VeBuZokuhMaCOYgTxdbqFvKgjjeCPwK/I9xBfitnkU8
+ I1kmk4ZhkCbhHo02NaAaNgbJaoaV9f7spSLYtDXgtDim/uycecChU6Xq+ZeVLgMKvEeA3Tv2WUq
+ BXMtzKxeqq+TGgd5fQjn8vdQeqmODWW4HI67k/h0/ZHZ747HUS2iKXzkG9D+WnpCz0J4crFtOdt
+ BBaeJ9HwfwqTzSdj7Y7IXY1XPEhre7a3Yv05HIIXNjgkakWCaoGO79zz56gYCQxDXyWMP+00xaA
+ CmFXujtkmZla6Z5C7Y5D5Fmutz8sbX+q76Q==
+X-Received: by 2002:a05:6000:18a3:b0:432:7d2a:2be4 with SMTP id
+ ffacd0b85a97d-43618061f74mr6087433f8f.60.1770231878890; 
+ Wed, 04 Feb 2026 11:04:38 -0800 (PST)
+X-Received: by 2002:a05:6000:18a3:b0:432:7d2a:2be4 with SMTP id
+ ffacd0b85a97d-43618061f74mr6087371f8f.60.1770231878317; 
+ Wed, 04 Feb 2026 11:04:38 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e263b9sm7935042f8f.4.2026.02.04.11.03.46
+ ffacd0b85a97d-43618057f93sm8046826f8f.24.2026.02.04.11.04.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:47 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:45 -0500
+ Wed, 04 Feb 2026 11:04:37 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:36 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Wafer Xie <wafer@jaguarmicro.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 25/51] vdpa: fix vhost-vdpa suspended state not be shared
-Message-ID: <707e307a3d30cd04b8fe627fa34254732a9d7caa.1770231744.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 47/51] vmstate: introduce VMSTATE_VBUFFER_UINT64
+Message-ID: <12e2242ea717e1f4ecadba290988d13e7acd1fd2.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -124,91 +121,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wafer Xie <wafer@jaguarmicro.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-When stopping a vhost-vdpa device, only the first queue pair is marked as suspended,
-while the remaining queues are not updated to the suspended state.
-As a result, when stopping a multi-queue vhost-vdpa device,
-the following error message will be printed.
+This is an analog of VMSTATE_VBUFFER_UINT32 macro, but for uint64 type.
 
-qemu-system-x86_64:vhost VQ 2 ring restore failed: -1: Operation not permitted (1)
-
-qemu-system-x86_64:vhost VQ 3 ring restore failed: -1: Operation not permitted (1)
-
-So move v->suspended to v->shared, and then all the vhost_vdpa devices cannot
-have different suspended states.
-
-Fixes: 0bb302a9960a ("vdpa: add vhost_vdpa_suspend")
-Suggested-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20251119132452.3117-1-wafer@jaguarmicro.com>
+Message-Id: <20260115081103.655749-4-dtalexundeer@yandex-team.ru>
 ---
- hw/virtio/vhost-vdpa.c         | 6 +++---
- include/hw/virtio/vhost-vdpa.h | 8 ++++++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ include/migration/vmstate.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 7061b6e1a3..2f8f11df86 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -905,7 +905,7 @@ static int vhost_vdpa_reset_device(struct vhost_dev *dev)
- 
-     memory_listener_unregister(&v->shared->listener);
-     v->shared->listener_registered = false;
--    v->suspended = false;
-+    v->shared->suspended = false;
-     return 0;
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index ed9095a466..89f9f49d20 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -706,6 +706,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset       = offsetof(_state, _field),                        \
  }
  
-@@ -1354,7 +1354,7 @@ static void vhost_vdpa_suspend(struct vhost_dev *dev)
-         if (unlikely(r)) {
-             error_report("Cannot suspend: %s(%d)", g_strerror(errno), errno);
-         } else {
--            v->suspended = true;
-+            v->shared->suspended = true;
-             return;
-         }
-     }
-@@ -1481,7 +1481,7 @@ static int vhost_vdpa_get_vring_base(struct vhost_dev *dev,
-         return 0;
-     }
- 
--    if (!v->suspended) {
-+    if (!v->shared->suspended) {
-         /*
-          * Cannot trust in value returned by device, let vhost recover used
-          * idx from guest.
-diff --git a/include/hw/virtio/vhost-vdpa.h b/include/hw/virtio/vhost-vdpa.h
-index 449bf5c840..80ff670e23 100644
---- a/include/hw/virtio/vhost-vdpa.h
-+++ b/include/hw/virtio/vhost-vdpa.h
-@@ -76,6 +76,12 @@ typedef struct vhost_vdpa_shared {
- 
-     /* SVQ switching is in progress, or already completed? */
-     SVQTransitionState svq_switching;
++#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _field_size) { \
++    .name         = (stringify(_field)),                             \
++    .version_id   = (_version),                                      \
++    .field_exists = (_test),                                         \
++    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
++    .info         = &vmstate_info_buffer,                            \
++    .flags        = VMS_VBUFFER | VMS_POINTER,                       \
++    .offset       = offsetof(_state, _field),                        \
++}
 +
-+    /*
-+     * Device suspended successfully.
-+     * The vhost_vdpa devices cannot have different suspended states.
-+     */
-+    bool suspended;
- } VhostVDPAShared;
- 
- typedef struct vhost_vdpa {
-@@ -83,8 +89,6 @@ typedef struct vhost_vdpa {
-     uint32_t address_space_id;
-     uint64_t acked_features;
-     bool shadow_vqs_enabled;
--    /* Device suspended successfully */
--    bool suspended;
-     VhostVDPAShared *shared;
-     GPtrArray *shadow_vqs;
-     const VhostShadowVirtqueueOps *shadow_vq_ops;
+ #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
+                                      _test, _field_size) {           \
+     .name         = (stringify(_field)),                             \
 -- 
 MST
 
