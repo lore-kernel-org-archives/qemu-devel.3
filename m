@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1289EE8B387
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E76E8B383
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnS1j-0004FX-Ja; Tue, 03 Feb 2026 20:49:55 -0500
+	id 1vnS2k-0004s8-4H; Tue, 03 Feb 2026 20:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnS1h-0004Ez-TP
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:49:53 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vnS2X-0004rA-Ku
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:50:46 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnS1f-0004lK-CJ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:49:53 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-82318702afbso5189025b3a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:49:50 -0800 (PST)
+ id 1vnS2S-00052W-ST
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:50:44 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a93210fcc2so4527125ad.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:50:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770169790; x=1770774590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770169839; x=1770774639; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=liqHnRpz+wsxvdhNrhnELCQ/WUt9SLA/8TrJMuVN6bY=;
- b=VFQ8iIyQv8yGEO1WStWfsVjNcMCsd7eD2DenmiwB/FE6+OR02rl4tleV9IrIkyxBNo
- 8hMis6cQjxu90a9caY/Z5PZ36bQdWJXEQ/1uyS6Xe4xDFXZRu0qrGGM0IzsRyVjIjJ8z
- Jr2OVCzDY71sjSU3mFwOaiQdZv6YFrrPhdItiA6621gvvonqyLaEw4Pvy+Cu9hxu7wsi
- oG9oJGmzZFH/OSMvQWf8nYNCW4WAW7HbHHbSGLSGX4fjeeVJRmYOYg0kEEIUkcM1Nl3i
- Ez2Wg6WV4yBeG7UDJPhb741uPiDctBGpprpU/4ssxbcLIqOnTAh7RR9TY5s/UdB7YF+z
- 0D5A==
+ bh=578GFfVT38ERUL3RFeaL7/zeROh7w5nIRlvU9jxiTgs=;
+ b=I8o/8NIWuIW2EA71YbAbndkKn1v8BA70ywcR48BKhVrb/SQbX+6lUbUtwdougNIvYt
+ T6Sb+1GI9pw6EnvEyVSEkVf5gym/MeKowKxf0el3ji5Q22cHho0FqOVLO0VzP/FBCDq9
+ QqvgZPJezXncpCtskD9matuu4WfIMIdY4MnOZB2WzcjejJ0kYKtsJV5GHrRQzkZuKBIU
+ WcrEpSFSlptVH5N5tOC9+ZGORqsKhgQlQHPBcnwWENpQVmP0OHTUUPDyzH55j1KgS6AK
+ 37V5A0vA/hP7ZlyefKpuwGkQpjQ7/DKaCIFxafHqq5R5IX5SmsqO0CpJNQBbcUZFjMJT
+ PIwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770169790; x=1770774590;
+ d=1e100.net; s=20230601; t=1770169839; x=1770774639;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=liqHnRpz+wsxvdhNrhnELCQ/WUt9SLA/8TrJMuVN6bY=;
- b=GwmqKd0VpFu4BtKmLHLsEs55p0pS+tsQhlYzP27kKNON2uD13LXAvPMYY38ox8YNEF
- BB17DhmWhgZSz5d4xMof91Rbq3qdxkadA9Ub+ZsDgy3FuOvo4N9lYqGIBpNMgmpEYSFx
- zwKIznVsgY55EXGz2Ct7b93xnqr4BRIuCCi5P6jxzb1XMp8MntE9BR7iCKs7n1OZxvjn
- ABFexGeuQJTFEKNk2UoX+dKzEpZ3FrWZl3iiUrGZ/tAewuUK0xUnhsmFDjQ569ze4vPC
- YLYhdiaN/SNj8HoqO9nocP3L+OdmP/C26P6W395WmvVIZuyPzcQe3ozdOh0aMtd/+wg7
- S3bw==
+ bh=578GFfVT38ERUL3RFeaL7/zeROh7w5nIRlvU9jxiTgs=;
+ b=dnjhOOn1QgxDiTh8yDhhG3/64Ja51ZLKPhno7wM2b7O/QgcQmUuOwGAK+r30vFhU2t
+ HDQwtI6NRrT7X4O/6zKHThrw50oU99tPP3Jlg91rzK9mcifO6IS+4YfZbFau+FdFmxMC
+ mjfVLoXRN4jc+TMv86NA7l4AmMiMU0Qye5+0QcBIJLs2F9FAHYMsuvxYPCOpqGUXL2ry
+ FLBc+pdbJaAYG7NWE+/ldaLXL9jHBf0QVxvmhEvfUmJKqXu+Nfibj43/VbeNlKzdyvXO
+ 3zELZgIvm+HuSYVGDCWvDD/m6h8ATfhlXx6HQ7gcsGIy025ekZG5E8nY3fOO0iAATeGk
+ XP5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFIND6yl1jH21zKpf4Nx1w0zBx1TYgz4jio6UXvL7ZaYeY+ZiTXWpCehV5VBIG3in5+1vHVVBNIViX@nongnu.org
-X-Gm-Message-State: AOJu0YzggZ+AlPMuVswrdmNbQsgbk5RGPAttquHzJ+npYcW9oo0hSRvR
- QPO3pYGcc9oGvhRYEjju3Sv5ALYAAuhqnukEWqhgc0pUTa6lYrxdzE2p7VQ0EGiDWOw=
-X-Gm-Gg: AZuq6aLIHwUgR+WN17mnnxShj5VXfAtYkIQL4ECe44UOqvGqvcXmf72HX3ADAPFxSvj
- TMgyRpGRM/NBOdXEI3wxlU0NNUtoZKFw+zcCqUhN7NovjpgOplu9WpUjmRtzKsuzLY1zTYSlyJ1
- r1l4PFn/MbAolwsfSQUgEHAUvfHPz98qXfpb0wFydK9R4yFeF+BuC3Zb/gk5GOSfVKe13uMb8TI
- yH3FBL5YQr8ipRjmZD6EYf0xfpdyw0++4cgeoEB8iTczr8Xx/mgOVvvz42yTg7H50K1MEDlQTd0
- jfczECbXKd6DsnrltN2SsNxBeDEGpMZLxfF8v+FBjNX7k7I/VzpAbvJzh9ARJaU6zNC9bSQVhIq
- /lapHkw6JCyP09fIE39bbqa5HoKam28isdOwrbxtIDCirOGbTZHyhFH/tex/+NeBvHy6u1yf+n0
- yDh2nM3ndflaC7XQK3lv/Xh3lk+Re7H75smNEX98lEZe60N9NsZhM1muRcBxc37Dr6nsDX0fCQX
- 7MCkWNrrpEd77snyT3v42hPI5I2gMzaVkDd
-X-Received: by 2002:a05:6a00:b47:b0:823:602:9565 with SMTP id
- d2e1a72fcca58-8241c1eba85mr1407288b3a.18.1770169789632; 
- Tue, 03 Feb 2026 17:49:49 -0800 (PST)
+ AJvYcCWri9ji9jrzG0jLD2vcOuHsK1MW312E36ggj6DTX0nAZ+AEIXHmzGb56cg5VZuMNHLVAgzZQZnnxy5R@nongnu.org
+X-Gm-Message-State: AOJu0Yxg8avCwGdPsrvmpMED+uVNyY3m+E85jhN9/JeXQi5Wv5vESgwz
+ jrd8FFNKNzAgnNGHYkPVEQt2z656ce/gNH+jFlZJMcEVUm7HX9R4/5pbMDbJqx2U5TQ=
+X-Gm-Gg: AZuq6aJGa2dY94s/f1KbiElzQhz8xDhz6I2tNvajMUT2c/LP+h31sLY8Prrm9hvaE64
+ O/jlrmrodadbeaQohDjMBJrWvqUMMqfGEFXRDKrKKkjPjpsR1WMynPtEqigpYB2bgZyQvPEaTKs
+ 3xCdToZIB/hd6NuK0mzW38CMEMcBWktbhBIgo82BYuFIeV1+6UyPEGpsEePqMWZeFWBMzm0tKJx
+ hTFEmlOKKqOrcUD0807iCw+xqB/Hkb7Jl2OOpl7F6f0lWKUK6RkgCAIf1SuZt2Hgz0e/F3tD2Er
+ htlQtQH8TWCqPH5WGZRmyjv6E/2YW066U3dKr3vu1jp9y/cV4+wYbV5z/xZI60cMi2QiamGpx/Z
+ uIiZqmUVzXmmPJ0rN1Pg33VBrxGFkq51+kFtAGJT9Pxd5TvIPxh0mPFVgeFhj96a/2woQIjAUZk
+ 7apdSwEj6ir4ce2rnJLkoaixx+MaFSKg5HzLtEkEe+pIOapgKjXXXPZ9uQyoBhq6Jw1uQ=
+X-Received: by 2002:a17:903:3e23:b0:24b:24dc:91a7 with SMTP id
+ d9443c01a7336-2a933fdd6e5mr9981255ad.45.1770169838614; 
+ Tue, 03 Feb 2026 17:50:38 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
- (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
- [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
+ ([2401:d002:dc0f:2100:1bc:fe1e:491:928e])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d48789dsm592538b3a.58.2026.02.03.17.49.46
+ d9443c01a7336-2a93396747esm6463745ad.80.2026.02.03.17.50.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 17:49:49 -0800 (PST)
-Message-ID: <8f91d8f3-0d7a-4438-b261-ca8ba509be96@linaro.org>
-Date: Wed, 4 Feb 2026 11:49:43 +1000
+ Tue, 03 Feb 2026 17:50:38 -0800 (PST)
+Message-ID: <59f4d0f4-4d6e-4dc3-bde0-40f41f1550a0@linaro.org>
+Date: Wed, 4 Feb 2026 11:50:32 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 2/5] accel/tcg: Have cpu_ld*_mmu() methods consider
- the MO_SIGN flag
+Subject: Re: [PATCH v4 3/5] target/sparc: Remove dubious swapping in LD_code()
+ helper
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -83,14 +81,14 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20260203230054.23667-1-philmd@linaro.org>
- <20260203230054.23667-3-philmd@linaro.org>
+ <20260203230054.23667-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260203230054.23667-3-philmd@linaro.org>
+In-Reply-To: <20260203230054.23667-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,42 +112,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/4/26 09:00, Philippe Mathieu-Daudé wrote:
-> Sign-extend the result when the MO_SIGN flag is requested
-> in TCG common CPU TLB handling.
+> Since the endianness is contained in %oi, cpu_ld*_code_mmu() has
+> already honored it. Swapping again makes no sense. Remove the
+> bswap() calls.
 > 
-> Remote the SPARC specific handling.
-> 
+> Fixes: 2786a3f8d3a ("Use GET_ASI_CODE for ASI_KERNELTXT / ASI_USERTXT")
+> Reported-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/tcg/cputlb.c         | 37 +++++++++++++++++++++++++++++++------
->   target/sparc/ldst_helper.c |  9 ---------
->   2 files changed, 31 insertions(+), 15 deletions(-)
-> 
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 76546c66515..97782997881 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -2296,12 +2296,18 @@ static uint8_t do_ld1_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
->   {
->       MMULookupLocals l;
->       bool crosspage;
-> +    uint8_t ret;
->   
->       cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
->       crosspage = mmu_lookup(cpu, addr, oi, ra, access_type, &l);
->       tcg_debug_assert(!crosspage);
->   
-> -    return do_ld_1(cpu, &l.page[0], l.mmu_idx, access_type, ra);
-> +    ret = do_ld_1(cpu, &l.page[0], l.mmu_idx, access_type, ra);
-> +
-> +    if (l.memop & MO_SIGN) {
-> +        ret = (int8_t)ret;
-> +    }
-> +    return ret;
->   }
+>   target/sparc/ldst_helper.c | 9 ---------
+>   1 file changed, 9 deletions(-)
 
-Nope.  The return type is uint8_t, so this doesn't change anything at all.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+> index e1178e53d51..10746b3c0f1 100644
+> --- a/target/sparc/ldst_helper.c
+> +++ b/target/sparc/ldst_helper.c
+> @@ -1166,21 +1166,12 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
+>           break;
+>       case MO_16:
+>           ret = cpu_ldw_code_mmu(env, addr, oi, ra);
+> -        if ((mop & MO_BSWAP) != MO_TE) {
+> -            ret = bswap16(ret);
+> -        }
+>           break;
+>       case MO_32:
+>           ret = cpu_ldl_code_mmu(env, addr, oi, ra);
+> -        if ((mop & MO_BSWAP) != MO_TE) {
+> -            ret = bswap32(ret);
+> -        }
+>           break;
+>       case MO_64:
+>           ret = cpu_ldq_code_mmu(env, addr, oi, ra);
+> -        if ((mop & MO_BSWAP) != MO_TE) {
+> -            ret = bswap64(ret);
+> -        }
+>           break;
+>       default:
+>           g_assert_not_reached();
+
 
