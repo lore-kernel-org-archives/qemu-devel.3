@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D6DE8B383
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A516BE8B383
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnRJD-0003oL-Pk; Tue, 03 Feb 2026 20:03:56 -0500
+	id 1vnRUr-0005fo-0I; Tue, 03 Feb 2026 20:15:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vnRJC-0003o8-IB; Tue, 03 Feb 2026 20:03:54 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vnRJ9-0000Xq-RD; Tue, 03 Feb 2026 20:03:54 -0500
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4f5MYS3v2Wz5BNRf;
- Wed, 04 Feb 2026 09:03:40 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl2.zte.com.cn with SMTP id 61413TBX082219;
- Wed, 4 Feb 2026 09:03:29 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp02[null]) by mapi (Zmail) with MAPI id mid32;
- Wed, 4 Feb 2026 09:03:30 +0800 (CST)
-X-Zmail-TransId: 2afa69829ae23a9-f67ea
-X-Mailer: Zmail v1.0
-Message-ID: <20260204090330375y0v2aPy7n9usQq7mAyk4T@zte.com.cn>
-In-Reply-To: <20260203094546-mutt-send-email-mst@kernel.org>
-References: 2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn,
- 20260203094546-mutt-send-email-mst@kernel.org
-Date: Wed, 4 Feb 2026 09:03:30 +0800 (CST)
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <mst@redhat.com>
-Cc: <imammedo@redhat.com>, <alistair.francis@wdc.com>,
- <dbarboza@ventanamicro.com>, <sunilvl@ventanamicro.com>,
- <anisinha@redhat.com>, <pbonzini@redhat.com>, <palmer@dabbelt.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
- <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCB2NCBSRVNFTkQgMC8yXSBody9yaXNjdi92aXJ0OiBBZGQgYWNwaSBnZWQgYW5kIHBvd2VyZG93biBzdXBwb3J0?=
-Content-Type: multipart/mixed;
-	boundary="=====_001_next====="
-X-MAIL: mse-fl2.zte.com.cn 61413TBX082219
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.133 unknown Wed, 04 Feb 2026 09:03:40 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69829AEC.000/4f5MYS3v2Wz5BNRf
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnRUp-0005f4-0A
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:15:55 -0500
+Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnRUm-0005Bo-E3
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:15:54 -0500
+Received: by mail-dl1-x1243.google.com with SMTP id
+ a92af1059eb24-124a1b4dd40so1207436c88.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:15:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770167751; x=1770772551; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tOR0oL1KbuZ0hG48p8XhI1KDqpXL4kQOLSrKk9E80Hc=;
+ b=eVv9mHD+aIqjI8XXxHBonqrrkHNnsjneAXZ9dl6eiO3OTJ+1vJ2ZC0j2cdfmF3FvUL
+ PNigSFABogYaEDZrPcXIFy7jmoOaV20zkNynDi6RiQfHKD8jH3lzALqS1YiE5bSmhSxe
+ c+EKwKfeIS5lYbbOHHRE5jT2B+EMbdFzBsRobjffCXTaaRzSU3pFtHOIKTf2cUyEAwgf
+ MGKQvUl3zc0LHW9ad5gjSlP+qgMhZkDeELs0Me+dtf66eYfk/0GNiKWaWBuTqlJLx3Nt
+ i+55yDw9jZSwJ0RRKdycgy+ZXXoixrFJMPMmzENcj1QCLaBmcjNLNSUFRIIWNejnFSQq
+ vhMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770167751; x=1770772551;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tOR0oL1KbuZ0hG48p8XhI1KDqpXL4kQOLSrKk9E80Hc=;
+ b=pX2037g6jFMX6Eo2QGHdaN6YNh+0N8bs1Ho82uBbnK5bNgzOCUKFMCMEwyG8mT2Cyu
+ mJz/2WD+b25qmkuK0lXgKqG8qUqv3cXbqtuq4nh7Ua/fIh+YNOkGWjA27FELU/y0qKhX
+ MTDMT584Kiio5MUYCLO8NfauSq1F925DmsCt73JxAcZCUWpScsjQkAGYyRnOR6ZvDJa/
+ WTjFQClmfrvJkqufqamC+iqlfMmYXPWKqmkaiZMFSI2hJ2Qs86JV7BtKQElanjcCeOP5
+ Uo5XGvhuWLO3ZzcK67uU32A6RG9DgOqnx/YDPjbipMN5mT2dP/LCTty7PAhlcZzx1G2x
+ XDBQ==
+X-Gm-Message-State: AOJu0YwlP/WFYkKlYhXb7nBY/EvR4SjvefsFeq7FZ8q2m9XG1ZBmrO4p
+ iWTwqYOnqZ+8mKc5XdGNXOBTSW+mYGYqH5Rv/MYZdBKt91ECW6WgaN9S
+X-Gm-Gg: AZuq6aKvx/sbneB2ZZVMB5qUAH9emX2SVV3UupkCIHQuj6VFwAEVa8RDu8uYAH0j+37
+ XAkZXmttaTYguS646Kp89TltuLkw+IN4nTwnZF2ElsQWp+13lmFQUC6O76OG7jC4DAOGxQ/JXsG
+ ckLLyfI5meWQzPxBbId36PCwiZaHdEYNSzieFfx0csy3I88x4goFUiiIfvmqgyIA+tO0Laf4tmE
+ Yy1tdZ2GkY22VdHfspb5Hayhi1fCVDsW/H/2aY7K6RzuQl1oARtsg6JI1z+NHNpMJFhlkFkmdx2
+ ub0bbg18mWwuzN6DAWRm0gnDd+EK47iVUiPUcTnpBphTKQMXKSCurEQ5S4xs/X8cOpaff6Ak5LJ
+ adsVYoy/HxGZkYIII2J0K+bSZ/BPiYMD2HNWBz7fxNFwCsxZ+V+htKBev+grugB6CEU/4ONmlm4
+ FNCs6LxJLXh3wzikq+Gb9f1IkFcupD0NFqDJf/QGEGMmikkHy0VGg/uWImaraej+o4pyQUpZV8a
+ wI=
+X-Received: by 2002:a05:7022:2526:b0:11a:335d:80d3 with SMTP id
+ a92af1059eb24-126f478e634mr712502c88.22.1770167750313; 
+ Tue, 03 Feb 2026 17:15:50 -0800 (PST)
+Received: from ZEVORN-PC ([38.95.120.198]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-126f4e04297sm901470c88.3.2026.02.03.17.15.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Feb 2026 17:15:49 -0800 (PST)
+Date: Wed, 4 Feb 2026 09:15:41 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: =?utf-8?B?5rSq5b+X5Y2a?= <hongzhibo@bytedance.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v1] riscv: Add support for Zibi extension
+Message-ID: <aYKdvRafG2issFds@ZEVORN-PC>
+References: <20260203082144.2183253-1-hongzhibo@bytedance.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260203082144.2183253-1-hongzhibo@bytedance.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,109 +100,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhibo,
 
+Thanks for the patch. I have some comments below.
 
---=====_001_next=====
-Content-Type: multipart/related;
-	boundary="=====_002_next====="
+On Tue, Feb 03, 2026 at 04:21:44PM +0800, 洪志博 wrote:
+> From: Zhibo Hong <hongzhibo@bytedance.com>
+>
+The patch is missing a commit message. Please add a title and description
+explaining what the Zibi extension is and what instructions are being
+implemented. A link to the specification would also be helpful.
 
+> Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
+> ---
+>  disas/riscv.c                              | 17 +++++++
+>  disas/riscv.h                              |  2 +
+>  target/riscv/cpu.c                         |  2 +
+>  target/riscv/cpu_cfg_fields.h.inc          |  1 +
+>  target/riscv/insn32.decode                 |  9 ++++
+>  target/riscv/insn_trans/trans_rvzibi.c.inc | 54 ++++++++++++++++++++++
+>  target/riscv/translate.c                   |  6 +++
+>  7 files changed, 91 insertions(+)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzibi.c.inc
+> 
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 85cd2a9c2a..92862835f0 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -984,6 +984,8 @@ typedef enum {
+>      rv_op_ssamoswap_d = 953,
+>      rv_op_c_sspush = 954,
+>      rv_op_c_sspopchk = 955,
+> +    rv_op_beqi      = 956,
+> +    rv_op_bnei      = 957,
+>  } rv_op;
+>  
+>  /* register names */
+> @@ -2254,6 +2256,8 @@ const rv_opcode_data rvi_opcode_data[] = {
+>        rv_op_sspush, 0 },
+>      { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+>        rv_op_sspopchk, 0 },
+> +    { "beqi", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
+> +    { "bnei", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
+>  };
+>  
+>  /* CSR names */
+> @@ -3997,6 +4001,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+>              switch ((inst >> 12) & 0b111) {
+>              case 0: op = rv_op_beq; break;
+>              case 1: op = rv_op_bne; break;
+> +            case 2: op = rv_op_beqi; break;
+> +            case 3: op = rv_op_bnei; break;
+>              case 4: op = rv_op_blt; break;
+>              case 5: op = rv_op_bge; break;
+>              case 6: op = rv_op_bltu; break;
+> @@ -4529,6 +4535,12 @@ static uint32_t operand_imml(rv_inst inst)
+>      return (inst << 38) >> 58;
+>  }
+>  
+> +static int32_t operand_bi(rv_inst inst)
+> +{
+> +    uint32_t cimm = (inst << 39) >> 59;
+> +    return cimm == 0 ? -1 : cimm;
+> +}
+> +
+>  static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
+>  {
+>      int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
+> @@ -4948,6 +4960,11 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+>          dec->rs1 = dec->rs2 = operand_crs1(inst);
+>          dec->imm = 0;
+>          break;
+> +    case rv_codec_bi:
+> +        dec->rs1 = operand_rs1(inst);
+> +        dec->imm = operand_sbimm12(inst);
+> +        dec->imm1 = operand_bi(inst);
+> +        break;
+>      };
+>  }
+>  
+> diff --git a/disas/riscv.h b/disas/riscv.h
+> index d211700cb2..452c788278 100644
+> --- a/disas/riscv.h
+> +++ b/disas/riscv.h
+> @@ -168,6 +168,7 @@ typedef enum {
+>      rv_codec_fli,
+>      rv_codec_lp,
+>      rv_codec_cmop_ss,
+> +    rv_codec_bi,
+>  } rv_codec;
+>  
+>  /* structures */
+> @@ -305,5 +306,6 @@ enum {
+>  #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
+>  #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
+>  #define rv_fmt_fli                    "O\t3,h"
+> +#define rv_fmt_rs1_imm1_offset        "O\t1,j,o"
+>  
+>  #endif /* DISAS_RISCV_H */
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e95eea0249..0a1cb41c96 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -120,6 +120,7 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
+>   * instead.
+>   */
+>  const RISCVIsaExtData isa_edata_arr[] = {
+> +    ISA_EXT_DATA_ENTRY(zibi, PRIV_VERSION_1_13_0, ext_zibi),
+>      ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
+>      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+>      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+> @@ -1238,6 +1239,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>      MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+>      MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
+>      MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
+> +    MULTI_EXT_CFG_BOOL("zibi", ext_zibi, false),
+>      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+>      MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
+>      MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 70ec650abf..046c656bd9 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -30,6 +30,7 @@ BOOL_FIELD(ext_zks)
+>  BOOL_FIELD(ext_zksed)
+>  BOOL_FIELD(ext_zksh)
+>  BOOL_FIELD(ext_zkt)
+> +BOOL_FIELD(ext_zibi)
+>  BOOL_FIELD(ext_zifencei)
+>  BOOL_FIELD(ext_zicntr)
+>  BOOL_FIELD(ext_zicsr)
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index 6e35c4b1e6..0a92e79508 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -20,6 +20,7 @@
+>  %rs3       27:5
+>  %rs2       20:5
+>  %rs1       15:5
+> +%rs1_3     17:3                  !function=ex_rvc_register
 
---=====_002_next=====
-Content-Type: multipart/alternative;
-	boundary="=====_003_next====="
+This definition is added but not used anywhere. Is it needed? If not, please
+remove it.
 
+>  %rd        7:5
+>  %sh5       20:5
+>  %sh6       20:6
+> @@ -40,6 +41,7 @@
+>  %imm_z6   26:1 15:5
+>  %imm_mop5 30:1 26:2 20:2
+>  %imm_mop3 30:1 26:2
+> +%imm_bi   20:5                   !function=ex_bi
+>  
+>  # Argument sets:
+>  &empty
+> @@ -60,6 +62,7 @@
+>  &k_aes     shamt rs2 rs1 rd
+>  &mop5 imm rd rs1
+>  &mop3 imm rd rs1 rs2
+> +&bi   imm imm2 rs1
+>  
+>  # Formats 32:
+>  @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
+> @@ -111,6 +114,8 @@
+>  # Formats 128:
+>  @sh6       ...... ...... ..... ... ..... ....... &shift shamt=%sh6 %rs1 %rd
+>  
+> +@bi      ....... ..... ... .. ... ..... ....... &bi imm=%imm_b imm2=%imm_bi rs1=%rs1
+> +
+>  # *** Privileged Instructions ***
+>  ecall       000000000000     00000 000 00000 1110011
+>  ebreak      000000000001     00000 000 00000 1110011
+> @@ -1084,3 +1089,7 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+>  sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+>  sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+>  sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+> +
+> +# *** Zibi Extension ***
+> +beqi       ....... ..... ..... 010 ..... 1100011 @bi
+> +bnei       ....... ..... ..... 011 ..... 1100011 @bi
+> \ No newline at end of file
 
---=====_003_next=====
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+Missing newline at end of file. Please run script/checkpatch.pl check
+it.
 
-T24gVHVlLCBGZWIgMywgMjAyNiBhdCAxMDo0NjowOVBNLCAgTWljaGFlbFMuVHNpcmtpbiA8bXN0
-QHJlZGhhdC5jb20+IHdyb3RlOg0KPj4gRnJvbTogWHVlbWVpIExpdSA8bGl1Lnh1ZW1laTFAenRl
-LmNvbS5jbj4NCj4+IA0KPj4gQWRkIHJpc2N2IGFjcGkgcG93ZXJkb3duIHN1cHBvcnQNCj4NCj4N
-Cj5kaWQgeW91IGFiYW5kb24gdGhpcyBvciBkbyB5b3UgcGxhbiB0byBhZGRyZXNzIElnb3IncyBj
-b21tZW50cz8NCg0KVGhhbmsgeW91IGZvciB0aGUgcmVtaW5kZXIuIFNvcnJ5IGZvciB0aGUgZGVs
-YXkg4oCUIEknbGwgc2VuZCB2NSBzaG9ydGx5Lg0KDQpUaGFua3MsDQpKZXNzaWNhDQoNCj4NCj4+
-IENoYW5nZXMgaW4gdjQ6DQo+PiAtIEFkZGVkIG1vZGlmaWVzIG9mIERTRFQgYmxvYiBpbiBhbm90
-aGVyIHBhdGNoDQo+PiAtIExpbmsgdG8gdjM6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUt
-cmlzY3YvMjAyNTA3MjMxMTM3Mzk3NTFDT1o1UGtSeng2YVhFdUt6c0hobV9AenRlLmNvbS5jbi8N
-Cj4+IA0KPj4gQ2hhbmdlcyBpbiB2MzoNCj4+IC0gQWRkZWQgbWlzc2luZyBwYXJhbSB0byB2aXJ0
-X2lzX2FjcGlfZW5hYmxlZA0KPj4gLSBGaXhlZCBmYWlsdXJlIG9mIGJpb3MtdGFibGVzLXRlc3QN
-Cj4+IC0gTGluayB0byB2MjogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1yaXNjdi8yMDI1
-MDYyMDExMzAwOTk4NjFsVGtEODM5SGg2b2tvOEpvMlcySEB6dGUuY29tLmNuLw0KPj4gDQo+PiBD
-aGFuZ2VzIGluIHYyOg0KPj4gLSBVbndyYXBwZXJlZCBhY3BpX2RzZHRfYWRkX2dlZCBmdW5jdGlv
-bg0KPj4gLSBNb2RpZmllZCBiYXNlIGFkZHJlc3Mgb2YgVklSVF9BQ1BJX0dFRA0KPj4gLSBBZGRl
-ZCBjb25kaXRpb25zIGZvciBmdW5jdGlvbiBjYWxscw0KPj4gLSBBZGp1c3RlZCBjb2RlIGZvcm1h
-dHRpbmcNCj4+IC0gTGluayB0byB2MTogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1yaXNj
-di8yMDI1MDYxOTE1NTYyNjA3MzVReFdDOHN4UndGVVJZRXZsRDI0eUB6dGUuY29tLmNuLw0KPj4g
-DQo+PiBYdWVtZWkgTGl1ICgyKToNCj4+ICAgaHcvcmlzY3YvdmlydDogQWRkIGFjcGkgZ2VkIGFu
-ZCBwb3dlcmRvd24gc3VwcG9ydA0KPj4gICB0ZXN0cy9hY3BpOiBBZGQgYWNwaSBnZWQgYW5kIHBv
-d2VyIGJ1dHRvbiBpbiBEU0RUIGZvciBSSVNDLVYNCj4+IA0KPj4gIGh3L3Jpc2N2L0tjb25maWcg
-ICAgICAgICAgICAgICAgICB8ICAgMSArDQo+PiAgaHcvcmlzY3YvdmlydC1hY3BpLWJ1aWxkLmMg
-ICAgICAgIHwgIDEwICsrKysrKysrKw0KPj4gIGh3L3Jpc2N2L3ZpcnQuYyAgICAgICAgICAgICAg
-ICAgICB8ICAzNSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4+ICBpbmNsdWRlL2h3
-L3Jpc2N2L3ZpcnQuaCAgICAgICAgICAgfCAgIDQgKysrKw0KPj4gIHRlc3RzL2RhdGEvYWNwaS9y
-aXNjdjY0L3ZpcnQvRFNEVCB8IEJpbiAzNTM4IC0+IDM2ODEgYnl0ZXMNCj4+ICA1IGZpbGVzIGNo
-YW5nZWQsIDUwIGluc2VydGlvbnMoKykNCj4+IA0KPj4gLS0gDQo+PiAyLjI3LjA=
+> diff --git a/target/riscv/insn_trans/trans_rvzibi.c.inc b/target/riscv/insn_trans/trans_rvzibi.c.inc
+> new file mode 100644
+> index 0000000000..24bc0806aa
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzibi.c.inc
+Missing copyright header and SPDX license identifier. Please add something
+like:
 
+/*
+ * RISC-V translation routines for the Zibi Extension.
+ *
+ * Copyright (c) 2025 Zhibo Hong <hongzhibo@bytedance.com>
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 
---=====_003_next=====
-Content-Type: text/html ;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+> @@ -0,0 +1,54 @@
+> +#define REQUIRE_ZIBI(ctx) do {                  \
+> +    if (!ctx->cfg_ptr->ext_zibi) {              \
+> +        return false;                           \
+> +    }                                           \
+> +} while (0)
+> +
+> +static bool gen_immediate_branch(DisasContext *ctx, arg_bi *a, TCGCond cond)
+> +{
+> +    TCGLabel *l = gen_new_label();
+> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_SIGN);
+> +    TCGv imm2 = tcg_constant_tl(a->imm2);
+> +    target_ulong orig_pc_save = ctx->pc_save;
+> +
+> +    if (get_xl(ctx) == MXL_RV128) {
+> +        TCGv src1h = get_gprh(ctx, a->rs1);
+> +        TCGv imm2h = tcg_constant_tl(a->imm2 >= 0 ? 0 : -1);
+> +        TCGv tmp = tcg_temp_new();
+> +
+> +        cond = gen_compare_i128(false, tmp, src1, src1h, imm2, imm2h, cond);
+> +        tcg_gen_brcondi_tl(cond, tmp, 0, l);
+> +    } else {
+> +        tcg_gen_brcond_tl(cond, src1, imm2, l);
+> +    }
+> +    gen_goto_tb(ctx, 1, ctx->cur_insn_len);
+> +    ctx->pc_save = orig_pc_save;
+> +
+> +    gen_set_label(l); /* branch taken */
+> +
+This function is missing CTR (Control Transfer Records) support. Please add
+the smctr/ssctr handling similar to gen_branch() in trans_rvi.c.inc:
 
-PGRpdiBjbGFzcz0iemNvbnRlbnRSb3ciPjxwPk9uIFR1ZSwgRmViIDMsIDIwMjYgYXQgMTA6NDY6
-MDlQTSwgJm5ic3A7TWljaGFlbFMuVHNpcmtpbiAmbHQ7bXN0QHJlZGhhdC5jb20mZ3Q7Jm5ic3A7
-d3JvdGU6PC9wPjxwPiZndDsmZ3Q7IEZyb206IFh1ZW1laSBMaXUgJmx0O2xpdS54dWVtZWkxQHp0
-ZS5jb20uY24mZ3Q7PC9wPjxwPiZndDsmZ3Q7Jm5ic3A7PC9wPjxwPiZndDsmZ3Q7IEFkZCByaXNj
-diBhY3BpIHBvd2VyZG93biBzdXBwb3J0PC9wPjxwPiZndDs8L3A+PHA+Jmd0OzwvcD48cD4mZ3Q7
-ZGlkIHlvdSBhYmFuZG9uIHRoaXMgb3IgZG8geW91IHBsYW4gdG8gYWRkcmVzcyBJZ29yJ3MgY29t
-bWVudHM/PC9wPjxwPjxicj48L3A+PHA+VGhhbmsgeW91IGZvciB0aGUgcmVtaW5kZXIuIFNvcnJ5
-IGZvciB0aGUgZGVsYXkg4oCUIEknbGwgc2VuZCB2NSBzaG9ydGx5LjwvcD48cD48YnI+PC9wPjxw
-PlRoYW5rcyw8L3A+PHA+SmVzc2ljYTwvcD48cD48YnI+PC9wPjxwPiZndDs8L3A+PHA+Jmd0OyZn
-dDsgQ2hhbmdlcyBpbiB2NDo8L3A+PHA+Jmd0OyZndDsgLSBBZGRlZCBtb2RpZmllcyBvZiBEU0RU
-IGJsb2IgaW4gYW5vdGhlciBwYXRjaDwvcD48cD4mZ3Q7Jmd0OyAtIExpbmsgdG8gdjM6IGh0dHBz
-Oi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtcmlzY3YvMjAyNTA3MjMxMTM3Mzk3NTFDT1o1UGtSeng2
-YVhFdUt6c0hobV9AenRlLmNvbS5jbi88L3A+PHA+Jmd0OyZndDsmbmJzcDs8L3A+PHA+Jmd0OyZn
-dDsgQ2hhbmdlcyBpbiB2Mzo8L3A+PHA+Jmd0OyZndDsgLSBBZGRlZCBtaXNzaW5nIHBhcmFtIHRv
-IHZpcnRfaXNfYWNwaV9lbmFibGVkPC9wPjxwPiZndDsmZ3Q7IC0gRml4ZWQgZmFpbHVyZSBvZiBi
-aW9zLXRhYmxlcy10ZXN0PC9wPjxwPiZndDsmZ3Q7IC0gTGluayB0byB2MjogaHR0cHM6Ly9sb3Jl
-Lmtlcm5lbC5vcmcvcWVtdS1yaXNjdi8yMDI1MDYyMDExMzAwOTk4NjFsVGtEODM5SGg2b2tvOEpv
-MlcySEB6dGUuY29tLmNuLzwvcD48cD4mZ3Q7Jmd0OyZuYnNwOzwvcD48cD4mZ3Q7Jmd0OyBDaGFu
-Z2VzIGluIHYyOjwvcD48cD4mZ3Q7Jmd0OyAtIFVud3JhcHBlcmVkIGFjcGlfZHNkdF9hZGRfZ2Vk
-IGZ1bmN0aW9uPC9wPjxwPiZndDsmZ3Q7IC0gTW9kaWZpZWQgYmFzZSBhZGRyZXNzIG9mIFZJUlRf
-QUNQSV9HRUQ8L3A+PHA+Jmd0OyZndDsgLSBBZGRlZCBjb25kaXRpb25zIGZvciBmdW5jdGlvbiBj
-YWxsczwvcD48cD4mZ3Q7Jmd0OyAtIEFkanVzdGVkIGNvZGUgZm9ybWF0dGluZzwvcD48cD4mZ3Q7
-Jmd0OyAtIExpbmsgdG8gdjE6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtcmlzY3YvMjAy
-NTA2MTkxNTU2MjYwNzM1UXhXQzhzeFJ3RlVSWUV2bEQyNHlAenRlLmNvbS5jbi88L3A+PHA+Jmd0
-OyZndDsmbmJzcDs8L3A+PHA+Jmd0OyZndDsgWHVlbWVpIExpdSAoMik6PC9wPjxwPiZndDsmZ3Q7
-Jm5ic3A7ICZuYnNwO2h3L3Jpc2N2L3ZpcnQ6IEFkZCBhY3BpIGdlZCBhbmQgcG93ZXJkb3duIHN1
-cHBvcnQ8L3A+PHA+Jmd0OyZndDsmbmJzcDsgJm5ic3A7dGVzdHMvYWNwaTogQWRkIGFjcGkgZ2Vk
-IGFuZCBwb3dlciBidXR0b24gaW4gRFNEVCBmb3IgUklTQy1WPC9wPjxwPiZndDsmZ3Q7Jm5ic3A7
-PC9wPjxwPiZndDsmZ3Q7Jm5ic3A7IGh3L3Jpc2N2L0tjb25maWcmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyB8Jm5ic3A7ICZuYnNw
-OzEgKzwvcD48cD4mZ3Q7Jmd0OyZuYnNwOyBody9yaXNjdi92aXJ0LWFjcGktYnVpbGQuYyZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyB8Jm5ic3A7IDEwICsrKysrKysrKzwvcD48cD4mZ3Q7Jmd0
-OyZuYnNwOyBody9yaXNjdi92aXJ0LmMmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt8Jm5ic3A7IDM1ICsrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKzwvcD48cD4mZ3Q7Jmd0OyZuYnNwOyBpbmNsdWRlL2h3L3Jpc2N2
-L3ZpcnQuaCZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7fCZuYnNwOyAm
-bmJzcDs0ICsrKys8L3A+PHA+Jmd0OyZndDsmbmJzcDsgdGVzdHMvZGF0YS9hY3BpL3Jpc2N2NjQv
-dmlydC9EU0RUIHwgQmluIDM1MzggLSZndDsgMzY4MSBieXRlczwvcD48cD4mZ3Q7Jmd0OyZuYnNw
-OyA1IGZpbGVzIGNoYW5nZWQsIDUwIGluc2VydGlvbnMoKyk8L3A+PHA+Jmd0OyZndDsmbmJzcDs8
-L3A+PHA+Jmd0OyZndDsgLS0mbmJzcDs8L3A+PHA+Jmd0OyZndDsgMi4yNy4wPC9wPjxwIHN0eWxl
-PSJmb250LXNpemU6MTRweDtmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsTWljcm9zb2Z0IFlhSGVp
-OyI+PGJyPjwvcD48cCBzdHlsZT0iZm9udC1zaXplOjE0cHg7Zm9udC1mYW1pbHk65b6u6L2v6ZuF
-6buRLE1pY3Jvc29mdCBZYUhlaTsiPjxicj48L3A+PHAgc3R5bGU9ImZvbnQtc2l6ZToxNHB4O2Zv
-bnQtZmFtaWx5OuW+rui9r+mbhem7kSxNaWNyb3NvZnQgWWFIZWk7Ij48YnI+PC9wPjxwIHN0eWxl
-PSJmb250LXNpemU6MTRweDtmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsTWljcm9zb2Z0IFlhSGVp
-OyI+PGJyPjwvcD48cD48YnI+PC9wPjwvZGl2Pg==
+#ifndef CONFIG_USER_ONLY
+    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
+        TCGv type = tcg_constant_tl(CTRDATA_TYPE_NONTAKEN_BRANCH);
+        ...
+    }
+#endif
 
+And similarly for the taken branch path with CTRDATA_TYPE_TAKEN_BRANCH.
 
---=====_003_next=====--
+> +    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
+Please use riscv_cpu_allow_16bit_insn() instead of directly checking RVC/zca,
+to be consistent with the existing code in trans_rvi.c.inc:
 
---=====_002_next=====--
+    if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
+                                    ctx->priv_ver,
+                                    ctx->misa_ext) &&
+        (a->imm & 0x3)) {
 
---=====_001_next=====--
-
+Thanks,
+Chao
+> +        (a->imm & 0x3)) {
+> +        /* misaligned */
+> +        TCGv target_pc = tcg_temp_new();
+> +        gen_pc_plus_diff(target_pc, ctx, a->imm);
+> +        gen_exception_inst_addr_mis(ctx, target_pc);
+> +    } else {
+> +        gen_goto_tb(ctx, 0, a->imm);
+> +    }
+> +    ctx->pc_save = -1;
+> +    ctx->base.is_jmp = DISAS_NORETURN;
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_beqi(DisasContext *ctx, arg_beqi *a)
+> +{
+> +    REQUIRE_ZIBI(ctx);
+> +    return gen_immediate_branch(ctx, a, TCG_COND_EQ);
+> +}
+> +
+> +static bool trans_bnei(DisasContext *ctx, arg_bnei *a)
+> +{
+> +    REQUIRE_ZIBI(ctx);
+> +    return gen_immediate_branch(ctx, a, TCG_COND_NE);
+> +}
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index f687c75fe4..d0b83ebe01 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -858,6 +858,11 @@ static int ex_rvc_shiftri(DisasContext *ctx, int imm)
+>      return imm;
+>  }
+>  
+> +static int ex_bi(DisasContext *ctx, int imm)
+> +{
+> +    return imm == 0 ? -1 : imm;
+> +}
+> +
+>  /* Include the auto-generated decoder for 32 bit insn */
+>  #include "decode-insn32.c.inc"
+>  
+> @@ -1215,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>  #include "insn_trans/trans_xthead.c.inc"
+>  #include "insn_trans/trans_xventanacondops.c.inc"
+>  #include "insn_trans/trans_xmips.c.inc"
+> +#include "insn_trans/trans_rvzibi.c.inc"
+>  
+>  /* Include the auto-generated decoder for 16 bit insn */
+>  #include "decode-insn16.c.inc"
+> -- 
+> 2.39.5
+> 
 
