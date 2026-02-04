@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC79E95373
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C05E95371
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:08:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnZnJ-0006Gv-I2; Wed, 04 Feb 2026 05:07:33 -0500
+	id 1vnZnV-0006K5-ST; Wed, 04 Feb 2026 05:07:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vnZnI-0006Fz-2o
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:32 -0500
+ id 1vnZnU-0006Jk-Jt
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vnZnF-0004zg-LV
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:31 -0500
+ id 1vnZnT-000512-8g
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770199648;
+ s=mimecast20190719; t=1770199662;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GMe2H9Qo0iM7nYK0XlxnPgnO70S5mOa8wtlOBW9QH5Y=;
- b=UuVx4CDX+XlMh26m/AES/JhrHv9TxtHO+CdEMK2W+VgUNSqMs3PGDQCZAlYwL9RqvLmXUH
- s2sbxNFqFZAaGwpYDp2Cr6yLIWOBfFRn3PGyAwfw81g+LhhnN7DR/2oZJZ3TR7KDpmwYna
- y6X4QtB8wRJ/PeQqctBOu86/Ya7cJP8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Mizg/dgdD1DY/jcPXclyntH039bzzdaewQLJZPncsmk=;
+ b=YIjTMurNvB/4Z7+IxpnfXqF3B6QbvCZUfoAasSjIX06osWfPjNNyf/qOTfbWeyT91v2A+L
+ v+vb4fY62jOmC4yaPY91MPl9XYs2KVMGY+Cc1YEX8mHkAjrG9JkbYoIyqgOuGv4KrHjzcG
+ Tpzxwgb60CYgwiEUwGzwjbkcZzpo1Eg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-AJc9Vf9kM0GyO_wSVahhFA-1; Wed,
- 04 Feb 2026 05:07:27 -0500
-X-MC-Unique: AJc9Vf9kM0GyO_wSVahhFA-1
-X-Mimecast-MFC-AGG-ID: AJc9Vf9kM0GyO_wSVahhFA_1770199646
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-j9g_IonDO1uAip7CeuoIYg-1; Wed,
+ 04 Feb 2026 05:07:40 -0500
+X-MC-Unique: j9g_IonDO1uAip7CeuoIYg-1
+X-Mimecast-MFC-AGG-ID: j9g_IonDO1uAip7CeuoIYg_1770199659
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2948D1800367; Wed,  4 Feb 2026 10:07:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEAF719560B3; Wed,  4 Feb 2026 10:07:38 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 22A901955D85; Wed,  4 Feb 2026 10:07:23 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C148E18003F6; Wed,  4 Feb 2026 10:07:36 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -58,16 +58,15 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Kanda <mark.kanda@oracle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 02/10] memory: drop
- RamDiscardListener::double_discard_supported
-Date: Wed,  4 Feb 2026 14:06:58 +0400
-Message-ID: <20260204100708.724800-3-marcandre.lureau@redhat.com>
+Subject: [PATCH 04/10] system/memory: minor doc fix
+Date: Wed,  4 Feb 2026 14:07:00 +0400
+Message-ID: <20260204100708.724800-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260204100708.724800-1-marcandre.lureau@redhat.com>
 References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -96,153 +95,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This was never turned off, effectively some dead code.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/system/memory.h       | 12 +-----------
- hw/vfio/listener.c            |  2 +-
- hw/virtio/virtio-mem.c        | 22 ++--------------------
- system/ram-block-attributes.c | 23 +----------------------
- 4 files changed, 5 insertions(+), 54 deletions(-)
+ include/system/memory.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/system/memory.h b/include/system/memory.h
-index 0562af31361..be36fd93dc0 100644
+index be36fd93dc0..a64b2826489 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -580,26 +580,16 @@ struct RamDiscardListener {
+@@ -574,7 +574,7 @@ struct RamDiscardListener {
+      * new population (e.g., unmap).
+      *
+      * @rdl: the #RamDiscardListener getting notified
+-     * @section: the #MemoryRegionSection to get populated. The section
++     * @section: the #MemoryRegionSection to get discarded. The section
+      *           is aligned within the memory region to the minimum granularity
+      *           unless it would exceed the registered section.
       */
-     NotifyRamDiscard notify_discard;
- 
--    /*
--     * @double_discard_supported:
--     *
--     * The listener suppors getting @notify_discard notifications that span
--     * already discarded parts.
--     */
--    bool double_discard_supported;
--
-     MemoryRegionSection *section;
-     QLIST_ENTRY(RamDiscardListener) next;
- };
- 
- static inline void ram_discard_listener_init(RamDiscardListener *rdl,
-                                              NotifyRamPopulate populate_fn,
--                                             NotifyRamDiscard discard_fn,
--                                             bool double_discard_supported)
-+                                             NotifyRamDiscard discard_fn)
- {
-     rdl->notify_populate = populate_fn;
-     rdl->notify_discard = discard_fn;
--    rdl->double_discard_supported = double_discard_supported;
- }
- 
- /**
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 1087fdc142e..960da9e0a93 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -283,7 +283,7 @@ static bool vfio_ram_discard_register_listener(VFIOContainer *bcontainer,
- 
-     ram_discard_listener_init(&vrdl->listener,
-                               vfio_ram_discard_notify_populate,
--                              vfio_ram_discard_notify_discard, true);
-+                              vfio_ram_discard_notify_discard);
-     ram_discard_manager_register_listener(rdm, &vrdl->listener, section);
-     QLIST_INSERT_HEAD(&bcontainer->vrdl_list, vrdl, next);
- 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index c1e2defb68e..251d1d50aaa 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -331,14 +331,6 @@ static int virtio_mem_notify_populate_cb(MemoryRegionSection *s, void *arg)
-     return rdl->notify_populate(rdl, s);
- }
- 
--static int virtio_mem_notify_discard_cb(MemoryRegionSection *s, void *arg)
--{
--    RamDiscardListener *rdl = arg;
--
--    rdl->notify_discard(rdl, s);
--    return 0;
--}
--
- static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
-                                      uint64_t size)
- {
-@@ -398,12 +390,7 @@ static void virtio_mem_notify_unplug_all(VirtIOMEM *vmem)
-     }
- 
-     QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
--        if (rdl->double_discard_supported) {
--            rdl->notify_discard(rdl, rdl->section);
--        } else {
--            virtio_mem_for_each_plugged_section(vmem, rdl->section, rdl,
--                                                virtio_mem_notify_discard_cb);
--        }
-+        rdl->notify_discard(rdl, rdl->section);
-     }
- }
- 
-@@ -1824,12 +1811,7 @@ static void virtio_mem_rdm_unregister_listener(RamDiscardManager *rdm,
- 
-     g_assert(rdl->section->mr == &vmem->memdev->mr);
-     if (vmem->size) {
--        if (rdl->double_discard_supported) {
--            rdl->notify_discard(rdl, rdl->section);
--        } else {
--            virtio_mem_for_each_plugged_section(vmem, rdl->section, rdl,
--                                                virtio_mem_notify_discard_cb);
--        }
-+        rdl->notify_discard(rdl, rdl->section);
-     }
- 
-     memory_region_section_free_copy(rdl->section);
-diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-index 9f72a6b3545..630b0fda126 100644
---- a/system/ram-block-attributes.c
-+++ b/system/ram-block-attributes.c
-@@ -61,16 +61,6 @@ ram_block_attributes_notify_populate_cb(MemoryRegionSection *section,
-     return rdl->notify_populate(rdl, section);
- }
- 
--static int
--ram_block_attributes_notify_discard_cb(MemoryRegionSection *section,
--                                       void *arg)
--{
--    RamDiscardListener *rdl = arg;
--
--    rdl->notify_discard(rdl, section);
--    return 0;
--}
--
- static int
- ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
-                                                 MemoryRegionSection *section,
-@@ -191,22 +181,11 @@ ram_block_attributes_rdm_unregister_listener(RamDiscardManager *rdm,
-                                              RamDiscardListener *rdl)
- {
-     RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
--    int ret;
- 
-     g_assert(rdl->section);
-     g_assert(rdl->section->mr == attr->ram_block->mr);
- 
--    if (rdl->double_discard_supported) {
--        rdl->notify_discard(rdl, rdl->section);
--    } else {
--        ret = ram_block_attributes_for_each_populated_section(attr,
--                rdl->section, rdl, ram_block_attributes_notify_discard_cb);
--        if (ret) {
--            error_report("%s: Failed to unregister RAM discard listener: %s",
--                         __func__, strerror(-ret));
--            exit(1);
--        }
--    }
-+    rdl->notify_discard(rdl, rdl->section);
- 
-     memory_region_section_free_copy(rdl->section);
-     rdl->section = NULL;
 -- 
 2.52.0
 
