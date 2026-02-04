@@ -4,59 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBB9E95396
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 638A5E9539B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncjE-0007TV-69; Wed, 04 Feb 2026 08:15:33 -0500
+	id 1vncjb-0007eg-W5; Wed, 04 Feb 2026 08:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vncj0-0007Sa-Nc
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:15:24 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>) id 1vncit-0000hH-Nn
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:15:18 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDX3ppLRoNphSTCBg--.1391S2;
- Wed, 04 Feb 2026 21:14:51 +0800 (CST)
-Received: from [192.168.31.151] (unknown [222.244.181.122])
- by mail (Coremail) with SMTP id AQAAfwDXL+1JRoNpsQkZAA--.29212S2;
- Wed, 04 Feb 2026 21:14:49 +0800 (CST)
-Message-ID: <e43203cf-58aa-4642-8a2f-94b7a4a212ec@phytium.com.cn>
-Date: Wed, 4 Feb 2026 21:14:48 +0800
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vncja-0007cI-GX
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:15:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vncjY-00015b-7J
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:15:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770210950;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GGk0mTdNsiXzXdTsnv2+zVTx31ANWxYPzgHEuu4AppU=;
+ b=bXldSUnfnnhvo3WDWD83CVprBJM3+h4pa6R+UriqOlavYacxSmdcyg0yk+EIFzmf+rnJCf
+ RjPMuZqqjuLnlBAnVwPiMiQnYgyoE5ZmP9ucNoqOU4Jtmd06ceUrEIiRYaKyDUQr13PKHf
+ zvLabxWwMKQY8M3fCRim6CGph2u1yyw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-PfEC_D5kNniQj1QGibEkDw-1; Wed,
+ 04 Feb 2026 08:15:49 -0500
+X-MC-Unique: PfEC_D5kNniQj1QGibEkDw-1
+X-Mimecast-MFC-AGG-ID: PfEC_D5kNniQj1QGibEkDw_1770210948
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27A1E1956094; Wed,  4 Feb 2026 13:15:48 +0000 (UTC)
+Received: from speedmetal.lan (unknown [10.45.242.3])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0D8E430001B9; Wed,  4 Feb 2026 13:15:45 +0000 (UTC)
+From: Peter Krempa <pkrempa@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v4 0/2] block: Wire up 'flat' mode also for 'query-block'
+Date: Wed,  4 Feb 2026 14:15:42 +0100
+Message-ID: <cover.1770210044.git.pkrempa@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v1 0/2] tests/qtest: Add Intel IOMMU bare-metal test
- using iommu-testdev
-To: Fengyuan Yu <15fengyuan@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org
-References: <cover.1770172615.git.15fengyuan@gmail.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <cover.1770172615.git.15fengyuan@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXL+1JRoNpsQkZAA--.29212S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAQBWmCVm4FwgAAsA
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZFyfAr17CFykGw15XFy7Wrg_yoWrZw1kpF
- y8CFyakay3Jr1xGr1xJr18tryUtrs7J3W7ZryUG3Z5Jry5AryIvr4IgrW0g34qqrW0qF1a
- qw4UtFnruw15ArUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,114 +83,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fengyuan,
+v4:
+ - No need to check 'has_flat', as qemu doesn't have warnings about
+   unused variables active (Markus)
+ - Doc wording tweak (Markus)
 
-On 2026/2/4 11:06, Fengyuan Yu wrote:
-> Hi,
->
-> This patch series adds a bare-metal qtest for the Intel IOMMU (VT-d) using
-> the iommu-testdev framework. The test exercises address translation paths
-> without requiring a full guest OS boot.
->
-> Motivation
-> ----------
->
-> The Intel IOMMU implementation in QEMU supports various translation modes
-> including pass-through and translated (4-level paging) modes. Currently,
-> comprehensive testing of these translation paths requires booting a full
-> guest OS with appropriate drivers, which is time-consuming and makes
-> regression testing difficult.
->
-> This new test fills that gap by using iommu-testdev to trigger DMA
-> transactions and validate the IOMMU's translation logic directly.
->
-> Test Coverage
-> -------------
->
-> The new test provides:
-> - Legacy pass-through mode (identity mapping)
-> - Legacy translated mode with 4-level page table walks
-> - Root Entry Table and Context Entry Table configuration
-> - Complete 48-bit address space translation
-> - End-to-end DMA verification with memory validation
->
-> Testing
-> -------
->
-> QTEST_QEMU_BINARY=./build/qemu-system-x86_64 \
->    ./build/tests/qtest/iommu-intel-test --tap -k
->
-> Thanks,
-> Fengyuan
+v3:
+ - Doc wording tweak (Eric)
 
+v2:
+ - More descriptive docs text for the new QAPI option (Markus; new
+   wording not approved)
+ - use new options in hmp_nbd_server_start to avoid fetching unused
+   backing image info, impossible in 'info block' worker (Markus)
 
-Thanks for working on VT-d qtests. As a first-time patch contributor, 
-you’ve already done a great job with good cover letter and commit 
-messages to accurately summarize your work.
+Peter Krempa (2):
+  block: Wire up 'flat' mode also for 'query-block'
+  hmp_nbd_server_start: Don't ask for backing image data
 
+ block/monitor/block-hmp-cmds.c | 4 ++--
+ block/qapi.c                   | 8 ++++----
+ qapi/block-core.json           | 5 +++++
+ ui/cocoa.m                     | 2 +-
+ 4 files changed, 12 insertions(+), 7 deletions(-)
 
-It seems that your code cannot be applied to the latest master branch. 
-And I also noticed multiple lines >80 columns (some > 90). QEMU style 
-says try to keep lines to 80 columns, only going a bit over when 
-wrapping would harm readability but never > 90 columns.
-
-../tests/qtest/libqos/qos-intel-iommu.c: In function 
-‘qvtd_build_root_entry’:
-../tests/qtest/libqos/qos-intel-iommu.c:168:31: error: 
-‘VTD_CONTEXT_ENTRY_SLPTPTR’ undeclared (first use in this function); did 
-you mean ‘VTD_CONTEXT_ENTRY_SSPTPTR’?
-   168 |     lo = (context_table_ptr & VTD_CONTEXT_ENTRY_SLPTPTR) | 
-VTD_CONTEXT_ENTRY_P;
-       |                               ^~~~~~~~~~~~~~~~~~~~~~~~~
-       |                               VTD_CONTEXT_ENTRY_SSPTPTR
-../tests/qtest/libqos/qos-intel-iommu.c:168:31: note: each undeclared 
-identifier is reported only once for each function it appears in
-../tests/qtest/libqos/qos-intel-iommu.c: In function 
-‘qvtd_build_context_entry’:
-../tests/qtest/libqos/qos-intel-iommu.c:190:25: error: 
-‘VTD_CONTEXT_ENTRY_SLPTPTR’ undeclared (first use in this function); did 
-you mean ‘VTD_CONTEXT_ENTRY_SSPTPTR’?
-   190 |              (slptptr & VTD_CONTEXT_ENTRY_SLPTPTR);
-       |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
-       |                         VTD_CONTEXT_ENTRY_SSPTPTR
-../tests/qtest/libqos/qos-intel-iommu.c: In function 
-‘qvtd_setup_translation_tables’:
-../tests/qtest/libqos/qos-intel-iommu.c:239:36: error: ‘VTD_SL_R’ 
-undeclared (first use in this function); did you mean ‘VTD_SS_R’?
-   239 |     pml4_entry = QVTD_PT_L3_BASE | VTD_SL_R | VTD_SL_W;
-       |                                    ^~~~~~~~
-       |                                    VTD_SS_R
-../tests/qtest/libqos/qos-intel-iommu.c:239:47: error: ‘VTD_SL_W’ 
-undeclared (first use in this function); did you mean ‘VTD_SS_W’?
-   239 |     pml4_entry = QVTD_PT_L3_BASE | VTD_SL_R | VTD_SL_W;
-       |                                               ^~~~~~~~
-       |                                               VTD_SS_W
-[92/2328] Compiling C object libblock.a.p/block.c.o
-
-
-
-Besides when submitting patches it’s a good idea to read 
-`docs/devel/submitting-a-patch.rst`. It may be a bit long, but making 
-sure the code builds cleanly and running scripts/checkpatch.pl for style 
-checks beforehand can help avoid many basic issues.
-
-
-Finally I think CC the experts on x86 and VT-d emulation might be a more 
-efficient way to review this sereis patch.
-
-M: Paolo Bonzini <pbonzini@redhat.com>
-R: Zhao Liu <zhao1.liu@intel.com>
-
-M: Michael S. Tsirkin <mst@redhat.com>
-R: Jason Wang <jasowang@redhat.com>
-R: Yi Liu <yi.l.liu@intel.com>
-R: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-
-
-Anyway I'm looking forward to your v2 patches.
-
-Best regards,
-
-Tao
+-- 
+2.52.0
 
 
