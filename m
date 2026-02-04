@@ -4,162 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4070AE8B399
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA4EE8B399
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnUIN-0002N4-HS; Tue, 03 Feb 2026 23:15:15 -0500
+	id 1vnUQV-0003uG-Re; Tue, 03 Feb 2026 23:23:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1vnUIL-0002M3-VJ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:15:14 -0500
-Received: from mail-westus3azon11011058.outbound.protection.outlook.com
- ([40.107.208.58] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vnUQU-0003u7-S4
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:23:38 -0500
+Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1vnUIJ-0000JX-QQ
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:15:13 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k56cH1tIZdPkZ+z/6VksTH65/E90LbMV6iz7/4HwVtPO+vdkCcIrX340nm8Uj4fGjjURFrg6ZM7eQS0pJnWPLEJeKkbqXv4EkkzyGLdiypkCRBYmE+NM6cpuGSyOyeyFROrFL0u4w3xZTWVs3Gta3VxUiK7fj6CFv8j38gMH+yTJj0bzBC1APjK+tc1hE+elzsucBRuJQxFCHoUwO8UnvKlmctl7ldq48ACVte/cauoy58+66a/grtx/6GWBqaevb0nxhxfEor5sFmd+xozHraH9riJILz2rW9NVQvdTQtWqRfFygkBCXlaGKnKZijKFhR7HpBfU9ufA6kNog6stcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iux/Sp0C6GxBAIQdiiieQWeqnJKgb+Lr+q17TaV/az4=;
- b=ZY8pZixYwjthTlFmNkRKRNQ5YMYqGbZN9KSTDVLjcNhf8REpEs5vG7iscTf1A+LV+PBAaSFX8swTFBmp3CPlWXTGEiiY+A9lGLAJlBTYpqETIu386kHFwmM345A2UZoyeIT3IwAA2LzR/oMMQiH48tJ81/eQvHRQbIpUy3UKVREPJ+WqYuOxynoF7QB8H3vE6KwPVbKXkdCKiuSa88RXK0AjoQcPVDaYrHqehv+qCoSuEjHWgULJghRfhsF3BDYbRXKesCCBI5984qBDJ3piNOpWwD5ycmEZixh5mw+l10PuBkPbhISAcJlfNBWnqxVoIsO6/1dVufIqugCkLBpYiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iux/Sp0C6GxBAIQdiiieQWeqnJKgb+Lr+q17TaV/az4=;
- b=e86XihikdfQNBvjN6qZQ3K0tWaClNHAUbRY3wcJp14N+wGrkynXSY2R5a8Mo+5I5ZvYa+Wd95e5pY32zfv485DZlUepoUt3HuD+847FgV6l9AwnFjhkOq1iYM6lw9x7+fwN/xf1hRiTy7dlrQZvPiT97wyD/MbrQAd3pQCpoguI=
-Received: from BN9PR03CA0286.namprd03.prod.outlook.com (2603:10b6:408:f5::21)
- by MW4PR12MB6732.namprd12.prod.outlook.com (2603:10b6:303:1ea::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Wed, 4 Feb
- 2026 04:10:03 +0000
-Received: from BN1PEPF00005FFE.namprd05.prod.outlook.com
- (2603:10b6:408:f5:cafe::1d) by BN9PR03CA0286.outlook.office365.com
- (2603:10b6:408:f5::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.12 via Frontend Transport; Wed,
- 4 Feb 2026 04:09:58 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN1PEPF00005FFE.mail.protection.outlook.com (10.167.243.230) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 04:10:03 +0000
-Received: from [172.31.190.188] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 3 Feb
- 2026 22:10:00 -0600
-Message-ID: <acbdabb6-bbe8-41aa-9c39-de7d5c9a1c55@amd.com>
-Date: Wed, 4 Feb 2026 09:39:58 +0530
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vnUQS-0004HT-D6
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:23:38 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id 569E81D0011C;
+ Tue,  3 Feb 2026 23:23:33 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Tue, 03 Feb 2026 23:23:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1770179013;
+ x=1770265413; bh=/WgdSsNCntby7XMSIdz0zkncGUXCX3d0acE8JmCn+nI=; b=
+ dQezSIIYlReEPpmgn/9Z1ZV1G3h3fT2ZeZ0shijOuqJk8iJOzZVkw+HSElsA8IcW
+ 4CBWQ3w2QWMDeJpOxEg0lFguGt2yMiOF2AcfcbB9Tddf5zzAEZcsOhAGkOT4eVDA
+ Upfbk9KjiKiEMX6bImqYUKebZxexI+R2cevqg4nNf7CvqzmC7mDRNHM8cZaPJX+a
+ T8qE40/0bUF5Wr+a7iPdLnyXWs8pXfeQ1ZsxB4YnKnYrvYBpl3gKbu9y4OTNnPYz
+ L1qEW1PuTWKRRUrDu1+XmhEPLKZBsxcyYHxEg2D6YowfpOQTxgxtssfJL95nQVpV
+ zTXR6L/t94LSE70Q3VNqig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770179013; x=
+ 1770265413; bh=/WgdSsNCntby7XMSIdz0zkncGUXCX3d0acE8JmCn+nI=; b=H
+ NlLV25pSCDZ6zQEaxCuESors0ZW8bgODc/L1vtxBHu9WSR5kNc881g/i7LZm4PpP
+ j3WUlSjRVHzByFofThCKNG/9ViFyW3G8vy/mgHEi82DuIv9c/XKiC63rEWwpBl3h
+ 87wdv3/PsnjDN9qnYAPxNjH76yJ1C39wFm7uqGCChFd4QRXUF8ZfhgE/JKLS8IBl
+ 5n5ZQNZvBpbWXr0FD+HoSEV6QwVArVeuq9XH2lPhi4UGR4tzlVD7UHER9Y+frphi
+ ZE4Z6zlwYzXrLdc+Z/X4X4FCPt3/QHG3gRr5FMsdfb4oCIcxZSqo1TmIQoCV/naa
+ J61pVsKCylH2DrymoUysQ==
+X-ME-Sender: <xms:xMmCaTkqfTh6bVrtbjK5Q_ktbA6nG77gwJtOKDddQy-UJohEZwACXg>
+ <xme:xMmCafyJwt9EytbA4WozUc8UDcz480ziACsKJVl-kAv2tM1ZwF_UEIbxE4gdCRxaw
+ 8juJGjNJu0-IysJSSzuJxeNyDbcwmIWMTZzDWdMp5s5ZsumN1zd>
+X-ME-Received: <xmr:xMmCaVNwViCxKCVRdpSd9hFLOxmS7N1pYR8xFSC_rscIM-67bVODwDgLxKE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedukeduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkjghfofggtgfgsehtqhertdertdejnecuhfhrohhmpeetlhgvgicu
+ hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
+ htthgvrhhnpeegudevhfejueefveduieeuueeifeettdekveekhffgvdetfeelueehgfdt
+ heffhfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+ mhhtphhouhhtpdhrtghpthhtohepmhgrnhhojhhlohdrphgvkhhovhhitgesrghmugdrtg
+ homhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghp
+ thhtoheptghlghesrhgvughhrghtrdgtohhmpdhrtghpthhtohepnhhikhholhgrrdhprh
+ hitggrsegrmhgurdgtohhmpdhrtghpthhtohepuggvjhgrnhdrrghnughjvghlkhhovhhi
+ tgesrghmugdrtghomhdprhgtphhtthhopehmphgvkhhovhhitgesrghmugdrtghomh
+X-ME-Proxy: <xmx:xMmCabqmresnc7pJA9hNubWWBVfxH1map7ux2cTdLjrdDdNu6Qeu5A>
+ <xmx:xMmCaeFz9qTeY8Wx8dxO-Ejee9EHqbIobt45-VZzzokd6nkVxhU4mw>
+ <xmx:xMmCaYrsZH7OleaRrdRyc2pXvszT7HLZI5wNZRBi502GxZHnG3v7gA>
+ <xmx:xMmCafaBKp9IUeCwx05N1KyC38ILJ4vwovPv57aWn53H5wXUmW0rZQ>
+ <xmx:xcmCaU-umy95HoJzBAeTyMPCvJuE7izkcceXLuPUwdGlYDRvbcw9toNP>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Feb 2026 23:23:32 -0500 (EST)
+Date: Tue, 3 Feb 2026 21:23:30 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: Manojlo Pekovic <manojlo.pekovic@amd.com>
+Cc: <qemu-devel@nongnu.org>, <clg@redhat.com>, <Nikola.Prica@amd.com>,
+ <Dejan.Andjelkovic@amd.com>, Manojlo Pekovic <mpekovic@amd.com>
+Subject: Re: [PATCH 2/2] vfio/pci: Support multifunction atomic ops capability
+Message-ID: <20260203212330.56e07330@shazbot.org>
+In-Reply-To: <20260203154112.1668-3-manojlo.pekovic@amd.com>
+References: <20260203154112.1668-1-manojlo.pekovic@amd.com>
+ <20260203154112.1668-3-manojlo.pekovic@amd.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "eduardo@habkost.net" <eduardo@habkost.net>, "mst@redhat.com"
- <mst@redhat.com>, "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "vasant.hegde@amd.com" <vasant.hegde@amd.com>
-Subject: Re: [PATCH v2 1/3] amd_iommu: Use switch case to determine mmio
- register name
-Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-References: <20260129102814.4488-1-sarunkod@amd.com>
- <20260129102814.4488-2-sarunkod@amd.com>
- <85c7506f677e3a9145eb8be2212ee62c0b92169e.camel@eviden.com>
- <df3b9d64-b47c-48e7-a368-715a74989cfa@amd.com>
- <0edcc43c-ac6a-4407-867a-4240982f49ec@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <0edcc43c-ac6a-4407-867a-4240982f49ec@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFE:EE_|MW4PR12MB6732:EE_
-X-MS-Office365-Filtering-Correlation-Id: d57e0c47-9e90-4f47-3e59-08de63a345b1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RUxFYndLSHFNQklvNk10WlVLeWJyYXNtTUVrR2l1VTVwYnhta2ZJeWhNWGpI?=
- =?utf-8?B?TWdzS3NOTExWTkJPQmFaN1pIbmJGaUltajYySHNDbWVZL2JuL2FmR3NFSW40?=
- =?utf-8?B?czIwYVNwWmU4empONHl6eEIyaEtwSXVzTG5EODE4R3ZuNmZaZlFnRUl1a3Fn?=
- =?utf-8?B?Um9VSnNxOExoTm9DOTVkZTRQVTVUcGF4WDA3bzN4YkZiKzFOUTNJbDN3MGFG?=
- =?utf-8?B?elhaWitGdFhONWlkbHRZZ0E0MC92WHJJcW5Tb1NUV0hNcmxYRjlLcllaOWx5?=
- =?utf-8?B?VmFSdGVXeVVlWHE2K1VmcmVwS241OG55RzBFM0toME1HUC8xS2toU0dHRnlr?=
- =?utf-8?B?TGlsOHhMdjZJZXYydXNYVnllVzRKcStTQlJMdngyZS81azFkQTZRVlB6dkdu?=
- =?utf-8?B?dFRrU3E5aU92NHVwN1NyWk1zWjAvOWJDUU5OSzVic21JSXpqRjZoQUR2NmQ5?=
- =?utf-8?B?UmxXdmNuejJjeWlicDNua3ZRTFAzVE4vdlEyUURxRGh3OFd6VEFUWHB2Uzhr?=
- =?utf-8?B?NERWUUIwcXY5N0NrS0R2TmxjaDg1K0Q2T29sV3p6MG8rVFo3dDNSNmtqMEZ1?=
- =?utf-8?B?aUdzNk5wS0JsQmtVbHRPNzFETE80QlJmanhEeDdvU2h4R1lpQ1QvUmdML1Fi?=
- =?utf-8?B?eVFNd2VCOVNTRXVZdEFxRmJUOThENjdXNTl2R0JSYUY3Y1QzWUJIeTVmVTcy?=
- =?utf-8?B?Y1BuVW8vM1M3V1U5Q3drYXh3VzdaRzllOHJwRjdhWkI5U21xZDB3QXhwYWtP?=
- =?utf-8?B?TVIzV2NHUXBDOHBvb1NYbm9XMGNocTRmYzRkTTZIVk1nZ1J5UmxZSzhkeDk2?=
- =?utf-8?B?cnlvY0MydFNrY2V6ODh5bnZLdmhuMnhiR0RsM1AvY3VWSEM0UHYvNVE3UVdp?=
- =?utf-8?B?SVBia3F4UUdGU1RzTGptZEVFWG5iM1lmcFJqV09ka2pvRmFWKzBZaVBjS0FE?=
- =?utf-8?B?eXkyTEdXY2lwekdPSThobFlKR2w2ZXpIdmlPYmx2TGJaZHBiaktqOWcxV1Vt?=
- =?utf-8?B?VWp3aTV3NElodWZYTWN6TWVlMWFWTlIrYU8xTWpRY0tRSFptNG41L2ZMQkwy?=
- =?utf-8?B?U3JLVFFySmRxVm5EY0YvSEI3TG9BcGpiUTBRUFYwbXQzbC9jYnNmenVTZ01U?=
- =?utf-8?B?YTFSNUVsT1VySHZyUlNmYVZQTjJwZG8yQ2pYcnJGWWFRTElhdUFndGU0WXNR?=
- =?utf-8?B?K3c2aFVLTW5DcVBGaDgxUnVYbVlWUnhWQjlFZ2dWU0VlZUpmRTc5MFJidGhB?=
- =?utf-8?B?ajZYM09YV3J6NUpzWENWY2FDbmgzTjNtN21abm1EL1NUcVBCdHR2eExESDFP?=
- =?utf-8?B?WS9CNVVSM3plY1VxbjRzR3VXdDNVQ0Rza2JLcVVOc3R5VithOTRGT0hrY2Nm?=
- =?utf-8?B?akFBSitTN0VmcjY2N1VLUm5hUFRqcHJmMWphZGpKcDNrbnRPUzJ3K2pzL0c3?=
- =?utf-8?B?SXppQ3Bjb3VZSkI1N3htZXlsRDBWWk9tSVFiWUtIdzE2U2x5YnVhOEZWNTE3?=
- =?utf-8?B?Ty9rT3lOYmMxcU4rd1RhR21tdi9NR0lkVjVYRDhET21McFdlUjVDU0NwUW8v?=
- =?utf-8?B?YVF2VHpYT1BaZTlDZlFwS3cyS0IxM2txVzVHNnVJMjRQcVROMXlsR2FEVnNk?=
- =?utf-8?B?UzFoTldpdjk3eEJyMUltaDVBVW44Ykd1WmlDNWZTVmRVenF3c054RWJ1RVlU?=
- =?utf-8?B?L2x0WmRRM05KU0x1T1RkRzVQMGd2dUN0NlNwZE93TjRYQWQ3L1pheWtDYWJL?=
- =?utf-8?B?d0ZDdG5FSWxEb2hSVzNMUWRpd0VHRVFRbmsybVhmSCtLM1FPdXFjaFdXQ29p?=
- =?utf-8?B?azNKRTlDbjR2RWF2OVdTNXNPQmExWXc3VDU5NWdDVEhyZG5xWHZJQnowdUZD?=
- =?utf-8?B?RG1ualRQeFV3R0s0RHhGUzlKbXNacDhpNG5vcWdIcVREbkJMZTNVZ1pPdE9U?=
- =?utf-8?B?WFdxRE5Cckxvd2dISWFQYXo1QllpTGc2MGh4QXRkMThIZVpxeDdiblNPOUxv?=
- =?utf-8?B?a0VTNDUxVEl5cmlyR2d4MkdpTXR1NXVhRm1UbTBkSnZMMDBLdTV3Qk82ZGd3?=
- =?utf-8?B?ZUkvaTFKbTdLYUpDeUxOcFAzNVJ4SU85aElxYzVOdHhla3hHQ1Vub2treWlS?=
- =?utf-8?B?cWpRcFRVakM5bWEzNFcranpnc0ZXUFppSzR2b0pxQzRkTUtqMU9aanI2aGQz?=
- =?utf-8?B?Q1lMZ3BsUlRlR1NJVWtVSEVma2gyRWoyTWVyRzZ3YjFJSGFYbktESjRDbHdn?=
- =?utf-8?B?TkdiWVpLcFpLYmRWTmMyVkN5akZnPT0=?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: tAI258p2x0EIt3KDzUPu/FLW62xSpfNAwVt/J33UzlbHWb60x7HN8I4Dz90MTGQCgtXc67JPBv4euj5RsuQOAGhfUL85e2xSnmjhMqiq0uPIyG4gpOIi6SMtbG3g1bSQ9+51coF+ov1H7pOM97v0q3xgmM0befN/H7lrRGVm7Je6bwckWcKLJ3nsr7y5vgqPf+xm1bhZq0QLKSoNwH2sf6kPkR5FVwlE6hK2gKCufNwOIpvSU/aEvbN1CqnAyikgSFnGm2ZggnXYBiGJaWprqPZN40pk8H5qe/P/YHDo7KayHIBu0FFHPdHQx2zev012eaEsUeIgwCjbvd9nhmN4cmbpQX+K3BVQZN//u7w3m2pRwH7jV8gUL5/QYT+GK47p4DJg85Jzho/pveBaktQdKcViSTvWmgHAgPyuxLbTTmyxMpz1tnl3ijUThhGhAlTT
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 04:10:03.2817 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d57e0c47-9e90-4f47-3e59-08de63a345b1
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFE.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6732
-Received-SPF: permerror client-ip=40.107.208.58;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=202.12.124.150; envelope-from=alex@shazbot.org;
+ helo=fout-b7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,163 +111,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 3 Feb 2026 16:41:12 +0100
+Manojlo Pekovic <manojlo.pekovic@amd.com> wrote:
 
+> From: Manojlo Pekovic <mpekovic@amd.com>
+>=20
+> Extend PCIe Atomic Ops completer support to multifunction vfio-pci
+> devices by calculating the common subset of atomic capabilities across
+> all functions.
+>=20
+> For multifunction devices, we now:
+> 1. Calculate the intersection of atomic capabilities across all functions
+> 2. Only enable capabilities that ALL functions with atomic support share
+> 3. Functions without atomic support are skipped (not penalized)
+>=20
+> During vfio_realize(), other functions in a multifunction device may not
+> be realized yet, making it impossible to enumerate all functions. We
+> defer atomic ops configuration to machine_done time for multifunction
+> devices, ensuring all functions are realized before calculating common
+> capabilities.
 
-On 2/2/2026 8:47 PM, Alejandro Jimenez wrote:
->
-> On 1/30/26 3:04 AM, Sairaj Kodilkar wrote:
->>
->> On 1/30/2026 1:09 PM, CLEMENT MATHIEU--DRIF wrote:
->>> On Thu, 2026-01-29 at 15:58 +0530, Sairaj Kodilkar wrote:
->>>> This makes it easier to add new MMIO registers for tracing and removes
->>>> the unnecessary complexity introduced by amdvi_mmio_(low/high) array.
->>>>
->>>> Signed-off-by: Sairaj Kodilkar <[sarunkod@amd.com]
->>>> (mailto:sarunkod@amd.com)>
->>>> Reviewed-by: Vasant Hegde <[vasant.hegde@amd.com]
->>>> (mailto:vasant.hegde@amd.com)>
->>>> ---
->>>>    hw/i386/amd_iommu.c | 65 +++++++++++++++++++--------------------------
->>>>    1 file changed, 27 insertions(+), 38 deletions(-)
->>>>
->>>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
->>>> index 789e09d6f2bc..62175cc366ac 100644
->>>> --- a/hw/i386/amd_iommu.c
->>>> +++ b/hw/i386/amd_iommu.c
->>>> @@ -35,28 +35,7 @@
->>>>    #include "kvm/kvm_i386.h"
->>>>    #include "qemu/iova-tree.h"
->>>>      -/* used AMD-Vi MMIO registers */
->>>> -const char *amdvi_mmio_low[] = {
->>>> -    "AMDVI_MMIO_DEVTAB_BASE",
->>>> -    "AMDVI_MMIO_CMDBUF_BASE",
->>>> -    "AMDVI_MMIO_EVTLOG_BASE",
->>>> -    "AMDVI_MMIO_CONTROL",
->>>> -    "AMDVI_MMIO_EXCL_BASE",
->>>> -    "AMDVI_MMIO_EXCL_LIMIT",
->>>> -    "AMDVI_MMIO_EXT_FEATURES",
->>>> -    "AMDVI_MMIO_PPR_BASE",
->>>> -    "UNHANDLED"
->>>> -};
->>>> -const char *amdvi_mmio_high[] = {
->>>> -    "AMDVI_MMIO_COMMAND_HEAD",
->>>> -    "AMDVI_MMIO_COMMAND_TAIL",
->>>> -    "AMDVI_MMIO_EVTLOG_HEAD",
->>>> -    "AMDVI_MMIO_EVTLOG_TAIL",
->>>> -    "AMDVI_MMIO_STATUS",
->>>> -    "AMDVI_MMIO_PPR_HEAD",
->>>> -    "AMDVI_MMIO_PPR_TAIL",
->>>> -    "UNHANDLED"
->>>> -};
->>>> +#define MMIO_REG_TO_STRING(mmio_reg) case mmio_reg: return #mmio_reg
->>> Hi Sairaj,
->>>
->>> Shouldn't we define this inside the mmio_get_name function and undef it
->>> after the return statement?
->>> I think it would be cleanup to make the scope of this a bit smaller as it
->>> is specifically written for this function.
-> I agree with the above. I think it is a good idea given the ad-hoc nature
-> of this macro to keep the definition and its usage together and undef it
-> right after to avoid any confusion.
->
-> I was a bit reluctant when I proposed the macro because it affects control
-> flow (the kernel coding style frowns on that even if QEMU doesn't
-> explicitly forbids it), but I think this is clean and easy to parse:
->
-> static inline
-> const char *amdvi_mmio_get_name(hwaddr addr)
-> {
->      /* Return MMIO names as string literals */
->      switch (addr) {
-> #define MMIO_REG_TO_STRING(mmio_reg) case mmio_reg: return #mmio_reg
->      MMIO_REG_TO_STRING(AMDVI_MMIO_DEVICE_TABLE);
->
-> [...]
->      MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_TAIL);
-> #undef MMIO_REG_TO_STRING
->      default:
->          return "UNHANDLED";
+Exactly what are we trying to enable with this support?  Why do we need
+multifunction AtomicOps support versus multiple single function
+assignments under separate root ports?
+=20
+> Signed-off-by: Manojlo Pekovic <mpekovic@amd.com>
+> ---
+>  hw/vfio/pci.c | 138 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  hw/vfio/pci.h |   1 +
+>  2 files changed, 137 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 6a6c8f1807..89f171f431 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1931,6 +1931,67 @@ static uint32_t vfio_get_atomic_cap(VFIOPCIDevice =
+*vdev)
+>      return mask;
+>  }
+> =20
+> +static void vfio_pci_machine_done(Notifier *notifier, void *data);
+
+Why aren't these ordered to avoid the forward declaration?
+
+> +
+> +/*
+> + * This function iterates through all possible functions (0-7)
+> + * at the same slot and returns the intersection of their capabilities.
+> + *
+> + * Returns: Bitmask of atomic capabilities supported by functions on slot
+> + *          (PCI_EXP_DEVCAP2_ATOMIC_COMP32/64/128), or 0 if:
+> + *          - Mixed device types found (vfio-pci + emulated)
+> + *          - No common capabilities exist
+> + */
+> +static uint32_t vfio_get_multifunction_atomic_cap(VFIOPCIDevice *vdev,
+> +                                                    PCIBus *bus)
+> +{
+> +    PCIDevice *func_dev;
+> +    VFIOPCIDevice *func_vdev;
+> +    int slot =3D PCI_SLOT(vdev->pdev.devfn);
+> +    int target_devfn;
+> +    uint32_t func_cap;
+> +    uint32_t common_mask =3D PCI_EXP_DEVCAP2_ATOMIC_COMP32 |
+> +                           PCI_EXP_DEVCAP2_ATOMIC_COMP64 |
+> +                           PCI_EXP_DEVCAP2_ATOMIC_COMP128;
+> +
+> +    /* Iterate through all possible functions at this slot */
+> +    for (int fn =3D 0; fn < PCI_FUNC_MAX; fn++) {
+> +        target_devfn =3D PCI_DEVFN(slot, fn);
+> +        func_dev =3D pci_find_device(bus, pci_bus_num(bus), target_devfn=
+);
+> +
+> +        if (!func_dev) {
+> +            continue;
+> +        }
+> +
+> +        /*
+> +         * We can only calculate atomic caps for vfio-pci devices. If we
+> +         * encounter a mixed multifunction device (e.g., vfio-pci functi=
+on 0
+> +         * + emulated e1000 function 1), we cannot safely determine the =
+atomic
+> +         * capabilities. Taking the conservative approach: disable all a=
+tomic
+> +         * ops for mixed configurations.
+> +         */
+> +
+> +        func_vdev =3D (VFIOPCIDevice *)object_dynamic_cast(OBJECT(func_d=
+ev),
+> +                                                        TYPE_VFIO_PCI);
+> +        if (!func_vdev) {
+> +            return 0;
+> +        }
+> +
+> +        /*
+> +         * A function with no atomic completer support simply cannot
+> +         * receive and execute atomic operations.
+> +         * This does NOT mean other functions in the same multifunction
+> +         * device should be prevented from supporting atomics.
+> +         */
+> +        func_cap =3D vfio_get_atomic_cap(func_vdev);
+> +        if (func_cap !=3D 0) {
+> +            common_mask &=3D func_cap;
+> +        }
+
+It's not clear to me that this is a valid interpretation:
+
+PCIe 7.0, 6.15.2:
+
+	If any Function in a Multi-Function Device supports AtomicOp
+	Completer or AtomicOp routing capability, all Functions with
+	Memory Space BARs in that device must decode properly formed
+	AtomicOp Requests and handle any they don=E2=80=99t support as an
+	Unsupported Request (UR). Note that in such devices, Functions
+	lacking AtomicOp Completer capability are forbidden to handle
+	properly formed AtomicOp Requests as Malformed TLPs.
+
+If we're adding an arbitrary device that may not support AtomicOps into
+a virtual multifunction package, how can we know that a device that
+doesn't have an AtomicOps cap wouldn't respond with a Malformed TLP
+error?
+
+> +    }
+> +
+> +    return common_mask;
+> +}
+> +
+>  static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
+>  {
+>      PCIBus *bus =3D pci_get_bus(&vdev->pdev);
+> @@ -1948,8 +2009,7 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevic=
+e *vdev)
+>      if (pci_bus_is_root(bus) || !parent || !parent->exp.exp_cap ||
+>          pcie_cap_get_type(parent) !=3D PCI_EXP_TYPE_ROOT_PORT ||
+>          pcie_cap_get_version(parent) !=3D PCI_EXP_FLAGS_VER2 ||
+> -        vdev->pdev.devfn ||
+> -        vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> +        vdev->pdev.devfn) {
+>          return;
 >      }
-> }
->
-> Sairaj: if you don't want to sign off on this specific pattern, I can send
-> a patch for it and we can review it separately.
->
-> Alejandro
+> =20
+> @@ -1962,6 +2022,25 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevi=
+ce *vdev)
+>          return;
+>      }
+> =20
+> +    /*
+> +     * Single-function: All device info is available now, configure imme=
+diately
+> +     * Multifunction: Other functions may not be realized yet, defer to
+> +     *                machine_done time when all devices guaranteed to e=
+xist
+> +     */
 
-Sure, I'll send the V3 by tommorrow with all the changes
+This also means that multifunction devices can only support cold-plug
+whereas single function devices support AtomicOps with cold-plug and
+hot-plug.  The cold-plug device can be unplugged and re-added and it
+will have different behavior.
 
-Thanks
-Sairaj
+Additionally, it seems we only enable AtomicOps if function 0 supports
+AtomicOps, what's the basis for that decision?  Based on the previous
+comment, the more conservative approach might be that all functions
+need to support AtomicOps, but...
 
->
->> Hi
->> I think this is probably okay as its unlikely to cause any issues in future.
->>
->> Thanks
->> -Sairaj
->>
->>>>        struct AMDVIAddressSpace {
->>>>        PCIBus *bus;                /* PCIBus (for bus
->>>> number)              */
->>>> @@ -1484,31 +1463,41 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
->>>>        }
->>>>    }
->>>>      -static inline uint8_t amdvi_mmio_get_index(hwaddr addr)
->>>> -{
->>>> -    uint8_t index = (addr & ~0x2000) / 8;
->>>> -
->>>> -    if ((addr & 0x2000)) {
->>>> -        /* high table */
->>>> -        index = index >= AMDVI_MMIO_REGS_HIGH ? AMDVI_MMIO_REGS_HIGH :
->>>> index;
->>>> -    } else {
->>>> -        index = index >= AMDVI_MMIO_REGS_LOW ? AMDVI_MMIO_REGS_LOW :
->>>> index;
->>>> +static inline
->>>> +const char *amdvi_mmio_get_name(hwaddr addr)
->>>> +{
->>>> +    /* Return MMIO names as string literals */
->>>> +    switch (addr) {
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_DEVICE_TABLE);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_BASE);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_BASE);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_CONTROL);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EXCL_BASE);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EXCL_LIMIT);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EXT_FEATURES);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_HEAD);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_TAIL);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_HEAD);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_TAIL);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_STATUS);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_BASE);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_HEAD);
->>>> +    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_TAIL);
->>>> +    default:
->>>> +        return "UNHANDLED";
->>>>        }
->>>> -
->>>> -    return index;
->>>>    }
->>>>        static void amdvi_mmio_trace_read(hwaddr addr, unsigned size)
->>>>    {
->>>> -    uint8_t index = amdvi_mmio_get_index(addr);
->>>> -    trace_amdvi_mmio_read(amdvi_mmio_low[index], addr, size, addr &
->>>> ~0x07);
->>>> +    const char *mmio_name = amdvi_mmio_get_name(addr);
->>>> +    trace_amdvi_mmio_read(mmio_name, addr, size, addr & ~0x07);
->>>>    }
->>>>        static void amdvi_mmio_trace_write(hwaddr addr, unsigned size,
->>>> uint64_t val)
->>>>    {
->>>> -    uint8_t index = amdvi_mmio_get_index(addr);
->>>> -    trace_amdvi_mmio_write(amdvi_mmio_low[index], addr, size, val,
->>>> -                           addr & ~0x07);
->>>> +    const char *mmio_name = amdvi_mmio_get_name(addr);
->>>> +    trace_amdvi_mmio_write(mmio_name, addr, size, val, addr & ~0x07);
->>>>    }
->>>>        static uint64_t amdvi_mmio_read(void *opaque, hwaddr addr,
->>>> unsigned size)
+Maybe what we really want is for each function to attempt to initialize
+the AtomicOps bits on the root port.  The last realized function should
+get it correct regardless of the order the functions are realized,
+though we'll need to track our 'Abort if already configured' strategy
+differently.
+
+I tossed out this machine_done notifier as a possibility, but I'd
+rather avoid it.
+
+
+> +    if (vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> +        /*
+> +         * Register machine_done notifier if not already registered.
+> +         * The notifier will be called after all devices are realized, a=
+t which
+> +         * point we can safely enumerate all functions and calculate the=
+ common
+> +         * atomic capabilities.
+> +         */
+> +        if (!vdev->machine_done.notify) {
+> +            vdev->machine_done.notify =3D vfio_pci_machine_done;
+> +            qemu_add_machine_init_done_notifier(&vdev->machine_done);
+> +        }
+> +        return;  /* Actual work deferred to vfio_pci_machine_done() */
+> +    }
+> +
+>      mask =3D vfio_get_atomic_cap(vdev);
+> =20
+>      if (!mask) {
+> @@ -1972,6 +2051,51 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevi=
+ce *vdev)
+>      vdev->clear_parent_atomics_on_exit =3D true;
+>  }
+> =20
+> +/*
+> + * Called at machine_done time, after ALL devices are realized
+> + * but before the VM starts running.
+> + *
+> + * For multifunction devices, we need to calculate atomic capabilities
+> + * across all functions. During realize of function 0, the other functio=
+ns
+> + * (1-7) may not exist yet. By deferring to machine_done time, we ensure
+> + * all functions are realized and can be safely enumerated.
+> + */
+> +static void vfio_pci_machine_done(Notifier *notifier, void *data)
+> +{
+> +    VFIOPCIDevice *vdev =3D container_of(notifier, VFIOPCIDevice, machin=
+e_done);
+> +    PCIBus *bus =3D pci_get_bus(&vdev->pdev);
+> +    PCIDevice *parent =3D pci_bridge_get_device(bus);
+> +    uint32_t mask;
+> +    uint8_t *pos;
+> +
+> +    /*
+> +     * Sanity checks: Should always pass since vfio_pci_enable_rp_atomic=
+s()
+> +     * already validated these conditions before registering this notifi=
+er.
+> +     */
+> +    if (!parent || !parent->exp.exp_cap) {
+> +        return;
+> +    }
+> +
+> +    pos =3D parent->config + parent->exp.exp_cap + PCI_EXP_DEVCAP2;
+> +
+> +    /* Abort if there'a already an Atomic Ops configuration on the root =
+port */
+> +
+> +    if (pci_get_long(pos) & (PCI_EXP_DEVCAP2_ATOMIC_COMP32 |
+> +                             PCI_EXP_DEVCAP2_ATOMIC_COMP64 |
+> +                             PCI_EXP_DEVCAP2_ATOMIC_COMP128)) {
+> +        return;
+> +    }
+> +
+> +    mask =3D vfio_get_multifunction_atomic_cap(vdev, bus);
+> +
+> +    if (!mask) {
+> +        return;
+> +    }
+> +
+> +    pci_long_test_and_set_mask(pos, mask);
+> +    vdev->clear_parent_atomics_on_exit =3D true;
+> +}
+
+Duplication relative to vfio_pci_enable_rp_atomics() should be
+refactored if we keep it.  Thanks,
+
+Alex
+
+> +
+>  static void vfio_pci_disable_rp_atomics(VFIOPCIDevice *vdev)
+>  {
+>      if (vdev->clear_parent_atomics_on_exit) {
+> @@ -3281,6 +3405,16 @@ static void vfio_exitfn(PCIDevice *pdev)
+>      VFIOPCIDevice *vdev =3D VFIO_PCI(pdev);
+>      VFIODevice *vbasedev =3D &vdev->vbasedev;
+> =20
+> +    /*
+> +     * Remove machine_done notifier if it was registered.
+> +     * This happens for multifunction devices where function 0 registered
+> +     * a notifier to defer atomic ops configuration to machine_done time.
+> +     */
+> +    if (vdev->machine_done.notify) {
+> +        qemu_remove_machine_init_done_notifier(&vdev->machine_done);
+> +        vdev->machine_done.notify =3D NULL;
+> +    }
+> +
+>      vfio_unregister_req_notifier(vdev);
+>      vfio_unregister_err_notifier(vdev);
+>      pci_device_set_intx_routing_notifier(&vdev->pdev, NULL);
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index 5ad090a229..9182ab0053 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -180,6 +180,7 @@ struct VFIOPCIDevice {
+>      bool skip_vsc_check;
+>      VFIODisplay *dpy;
+>      Notifier irqchip_change_notifier;
+> +    Notifier machine_done;
+>  };
+> =20
+>  /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot matc=
+h hw */
 
 
