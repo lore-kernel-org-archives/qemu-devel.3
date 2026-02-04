@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559BDEA7942
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F738EA7944
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAg-0001N4-WD; Wed, 04 Feb 2026 14:04:15 -0500
+	id 1vniAa-0000PH-5r; Wed, 04 Feb 2026 14:04:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAe-0000wT-PI
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA9-0007BY-3L
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAd-00083T-25
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA7-0007pW-Dt
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231850;
+ s=mimecast20190719; t=1770231817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j3U+rCZB23JOTCshf+slsXWzZHrPIED/RSpRMRmSPAA=;
- b=H7P4r2obgpL2MFvpedRhDoA7oZhSMKT62u4yrteWBPb88XtMlLyQ79gdKi+js3pfLBYRu0
- AcPj8pitpf2ZAKwjKNzO7ObXhiPGSGETXKy2MwtpLKncoVf9Z6GrpRwSAjp8q0Tqj948mx
- fOG8lf0hr1XySOui3Rf0SYqDHpYg+oE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ft9lkVidKGvDWSkbSEDf12J/y4bCfw+ORVztPvg4jUA=;
+ b=aTm9pgl/dExNZ94M0moSkHUMG6LLhojHERDM1RaqYkGBIE27az2ymzQgMOqPssd5lABCTZ
+ 14dxUHAjNUagv/KDSv7E7/v1ZoRceKcSbCnjYCCWzWWuT62boXR1/niNhRAJF4NazQDxdV
+ 8yzjvF5mIEYUEuVdF8gqgDpFf4aWSXY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-RkFFxHJEMMuGUpIaWUEnPA-1; Wed, 04 Feb 2026 14:04:07 -0500
-X-MC-Unique: RkFFxHJEMMuGUpIaWUEnPA-1
-X-Mimecast-MFC-AGG-ID: RkFFxHJEMMuGUpIaWUEnPA_1770231846
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48079ae1001so986265e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:06 -0800 (PST)
+ us-mta-678-rUuqJNpXNYOGNONVnW7IrQ-1; Wed, 04 Feb 2026 14:03:35 -0500
+X-MC-Unique: rUuqJNpXNYOGNONVnW7IrQ-1
+X-Mimecast-MFC-AGG-ID: rUuqJNpXNYOGNONVnW7IrQ_1770231814
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4806fce5ab1so751745e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231845; x=1770836645; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=j3U+rCZB23JOTCshf+slsXWzZHrPIED/RSpRMRmSPAA=;
- b=Pxepu8P6BQgwP15dWA41BcKu4r77ZWDwLWbz7ocfrZfVwUDSsrS7ik8CgTREPM5aOE
- 3IX9uqL8s2FF7LDKOhl1lZYgxUa/l0/92lwzkoSycWo1IiqgaO5CRGUVrEFag/gj2YXr
- pu3/WYsp2KEk6bf8c+Y2uV8hmgtIZ/P8uE1lF9Cq5NJoyTEId/h8tTROigJ1Mo0uGvrf
- RGYmrcX5P3bbTV6Xvz2NaSzoZnkDw9f4IETwca6RZItdg27B+lPXk//X2RdmOgkYMLNd
- EkdVr3Lnaq7s+L7SQLm8NjqTQMpAowGm75LMbIHH22X9BsIzpPRhf+2p7xqWBK9roaK8
- wHjg==
+ d=redhat.com; s=google; t=1770231814; x=1770836614; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ft9lkVidKGvDWSkbSEDf12J/y4bCfw+ORVztPvg4jUA=;
+ b=UdYmPeVv6XpbSvqb2g5ywA7lDDsl3zin/Pzwxz+Bwbt5YTHxyHIpxOD3VzyIGeGn7b
+ EtaQIX8H36g1kZsEzeOwU2OM2pC6UGHwNCczUOJdN/GFb2opW7dMH7KwlBybR/MWp+rQ
+ G+JOcjDLGHn8fqkNCARs88qe4xz8tG5Q+oIHOaeTeU/g/9cb7YtBSVMKEO5DYWHwOZ0k
+ 3fLE5Xn6PatdSJDOBJItktgwm4mtcTN/3NkWxOpfUuQWJDECnPREyHS2yre2XkXf0y1y
+ xrNqckZ6hABXDOMYkVL0G/77Y4UVyX6nV2UKmeLKeaMckpJ4eNx1TS3c65Gb0vgSwDh2
+ GQLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231845; x=1770836645;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j3U+rCZB23JOTCshf+slsXWzZHrPIED/RSpRMRmSPAA=;
- b=VN/DaOp25eNDBAVzRIMf87aEHc85sMfK5z5YpycbAxg+y86ZzbY8r+pZV/l0ZK53N5
- 28Pszry4+Av/1JVkyzQgpBWgSApkTHPC7YBAJSQT71eBcdVrUHeRY6NX9ldre6oSNs5p
- 1roF1OvNf3WgJaE/Zp4Sz2CCOsaZiixtEgJCYNvWZUUqEgYcIYHw9Dcmh7zctHLPl+e5
- rVmCWcxjX1pk9BMpF8cNZnT8yzcecDfy1Ec8ngBJY1gqxpqwrNTD3t8YKWDLfcrPrVyw
- xeJa9sJIpx2GBlPvGjIoTbOvBMmgP8zy6gsCe8uEsz//pNGnZnvriLAGX8NMTUDLZniO
- Kj7g==
-X-Gm-Message-State: AOJu0Yw/xpyb3sU9ZpHDG2claXSrvatrc2VBGlH9YpKFllbRm3Gt1hKu
- JoNB1iSIRor1rdukHiRvBA4lc5SHKgZ+CCUnkEILnRC9QPavG2tPcQTg4d8TFjWQ+NV8VhNLTNo
- CFGVozg4vnfhNBr5CVNGr9mVTf0UxSQv32Z6Tku7gbNF39TkkLyXG+gXzLt0RqZBGT3G2k0I/LF
- ogtoWt7QybNbyQbhwgzshV1nz2exHs/xAxjg==
-X-Gm-Gg: AZuq6aK/kwVhUporRvUktq27ozt/hYXtQchHHuxlJQT3WJ0E/p6kdJ4+107if2SzVTm
- wu0gFC2wuFx8AYmz0LwqRU170QqEpMmTlIV1i7LjCWG+lYK9y31oJk1b58DCzPa1JX5HJclfEuo
- DFME8fL/Wyp5RaWaatTLCOpj91+Hmf5x0Af3b9plcaJG+EW9Yg463n5nIary5i/N0icjoaT/b+2
- 1wY1BZ5sFL1RRbBXPJmWAViQiH+dgxd0NuovZwgFUF2sbLmwHC+S3dlrsYlMDLf4h6yaj9i9+wP
- Vyuv+N1GIcuDS8WH0kf8Ie1HBH3yQonUhiR8dgNap5IzPodoPeKeUQjA00Mg1mkKocjgARgUvUJ
- HUJZU/9DAVHFAbCQOWuPK7QWYoRurPT3xrQ==
-X-Received: by 2002:a05:600c:a03:b0:47d:885d:d2ff with SMTP id
- 5b1f17b1804b1-4830e991bf6mr50528645e9.29.1770231845573; 
- Wed, 04 Feb 2026 11:04:05 -0800 (PST)
-X-Received: by 2002:a05:600c:a03:b0:47d:885d:d2ff with SMTP id
- 5b1f17b1804b1-4830e991bf6mr50527955e9.29.1770231844891; 
- Wed, 04 Feb 2026 11:04:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231814; x=1770836614;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ft9lkVidKGvDWSkbSEDf12J/y4bCfw+ORVztPvg4jUA=;
+ b=pY4a5LWCg03+YFfQGJlNWPNZy8R1rNLrV3uLxZPEBv/Weu90uFfTl5HhX9yeN4e7ve
+ Qocr81PL6t/7ChQv6cKJ0G4yMhykhRBTyfj9ldfs/f04i3ixY16pGD0tZ5DuRbFgNQAs
+ /T1ag2+1zfTqR7QZaEI0nrs+p55ZPNjK8dWDprERHuA6j07hF1rydvYhMSqGdz2YHUiG
+ qNEbCjT4sp2aIvZBx825yrspJMRJ1f5SBn1zy7yufMUSwbfJzXfr9CUakTMtPeM1KbJg
+ iWHeyc22aL6jeQaVZnIl/7fYEZPRlgUIkjZkWewcUVrO3fZ+n/Zccx6CzuohKK+g/aEZ
+ Xmgw==
+X-Gm-Message-State: AOJu0Yy/QwcLxZ8XHwPEO3ahmxjD/WZ6CZMkv1E/JNFE00yXYHw48b6A
+ qxpSYGWxG9Xj1s1hq72MceOcKojEEejT0MbsdySY5ctUAiXwEA+sxH0E9Ix0jE8aathoe1P7wga
+ ta4DiU6K/s5S6etdFvUq1+3mGWHltIBGEt8PQQmllmmf08o1ffE9mh9T/dVX6hg3G1FqlHqasZH
+ DodTEqT3PyQ3G+sn1/dp/X/jKVa2nfAtosSw==
+X-Gm-Gg: AZuq6aK5C8mWbucEexKISQQ3o4VVBdyRV7ckmbteTj7IYvJFpVSrXc0i5kzfwR8VGIc
+ DrFb4+4dZ6b7hq4shvjcyIm2Jgyow+BiXxPbOX6yKNQFa8WTZwMqw854WarcVoM/o8Jc21BKHD9
+ scSuoTcWAZW1EJ8MIur/QzVYdQ3kFzSJKgmy9Z+8P9c4zaUEWgxxu1zAniwpxFms0EDSXKq7OVB
+ fFdOKpD7CY3Vl3GZ7hRFNmTTYAhtPymgGgX1Euja98olj41nMEATluar528tFYHWt6DtO5mCHZp
+ jnIKGx25G1Br27HkOVrGnaQyREKum6QCmVBmxe+4vhZTwm+6k8crhjKPqJ3NZpyUPC5Bkl1C/ZF
+ D2g4ASRCV6PA/ibrehea2+3cvJ25/CQpqQA==
+X-Received: by 2002:a05:600c:3143:b0:477:a978:3a7b with SMTP id
+ 5b1f17b1804b1-4830e987c76mr61833085e9.22.1770231813582; 
+ Wed, 04 Feb 2026 11:03:33 -0800 (PST)
+X-Received: by 2002:a05:600c:3143:b0:477:a978:3a7b with SMTP id
+ 5b1f17b1804b1-4830e987c76mr61832445e9.22.1770231813133; 
+ Wed, 04 Feb 2026 11:03:33 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d8341csm3511625e9.13.2026.02.04.11.04.03
+ ffacd0b85a97d-43617e38ec5sm9088230f8f.14.2026.02.04.11.03.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:04 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:02 -0500
+ Wed, 04 Feb 2026 11:03:32 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:30 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Dorinda Bassey <dbassey@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Albert Esteve <aesteve@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PULL 32/51] virtio-dmabuf: Ensure UUID persistence for hash table
- insertion
-Message-ID: <730274b225e4a4b9346e2cd5a8d38858d65e2bb5.1770231744.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 18/51] intel_iommu: Add a CLI option to enable SVM
+Message-ID: <e7757cdd660878b5f08bf89cbefb509b8cc2586d.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -127,50 +124,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dorinda Bassey <dbassey@redhat.com>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-In `virtio_add_resource` function, the UUID used as a key for
-`g_hash_table_insert` was temporary, which could lead to
-invalid lookups when accessed later. This patch ensures that
-the UUID remains valid by duplicating it into a newly allocated
-memory space. The value is then inserted into the hash table
-with this persistent UUID key to ensure that the key stored in
-the hash table remains valid as long as the hash table entry
-exists.
-
-Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
-Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Albert Esteve <aesteve@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251204162129.262745-1-dbassey@redhat.com>
+Message-Id: <20251029105137.1097933-8-clement.mathieu--drif@eviden.com>
 ---
- hw/display/virtio-dmabuf.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu.c          | 45 ++++++++++++++++++++++++----------
+ hw/i386/intel_iommu_internal.h |  6 ++++-
+ include/hw/i386/intel_iommu.h  |  1 +
+ 3 files changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
-index 3dba4577ca..5e0395be77 100644
---- a/hw/display/virtio-dmabuf.c
-+++ b/hw/display/virtio-dmabuf.c
-@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, VirtioSharedObject *value)
-     if (resource_uuids == NULL) {
-         resource_uuids = g_hash_table_new_full(qemu_uuid_hash,
-                                                uuid_equal_func,
--                                               NULL,
-+                                               g_free,
-                                                g_free);
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 77adeed0cc..dd00079a40 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -2862,8 +2862,10 @@ static bool vtd_inv_desc_reserved_check(IntelIOMMUState *s,
+ 
+ static bool vtd_process_wait_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
+ {
+-    uint64_t mask[4] = {VTD_INV_DESC_WAIT_RSVD_LO, VTD_INV_DESC_WAIT_RSVD_HI,
+-                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
++    uint64_t mask[4] = {
++        VTD_INV_DESC_WAIT_RSVD_LO(s->ecap), VTD_INV_DESC_WAIT_RSVD_HI,
++        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE
++    };
+     bool ret = true;
+ 
+     if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, false,
+@@ -4186,6 +4188,7 @@ static const Property vtd_properties[] = {
+     DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
++    DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
+     DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
+@@ -5096,6 +5099,10 @@ static void vtd_init(IntelIOMMUState *s)
+         vtd_spte_rsvd_large[3] &= ~VTD_SPTE_SNP;
      }
-     if (g_hash_table_lookup(resource_uuids, uuid) == NULL) {
--        g_hash_table_insert(resource_uuids, uuid, value);
-+        g_hash_table_insert(resource_uuids,
-+                            g_memdup2(uuid, sizeof(*uuid)),
-+                            value);
-     } else {
-         result = false;
+ 
++    if (s->svm) {
++        s->ecap |= VTD_ECAP_PRS | VTD_ECAP_PDS | VTD_ECAP_NWFS;
++    }
++
+     vtd_reset_caches(s);
+ 
+     /* Define registers with default values and bit semantics */
+@@ -5573,6 +5580,29 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         return false;
      }
+ 
++    if (s->svm) {
++        if (!x86_iommu->dt_supported) {
++            error_setg(errp, "Need to set device IOTLB for svm");
++            return false;
++        }
++
++        if (!s->fsts) {
++            error_setg(errp, "Need to set flts for svm");
++            return false;
++        }
++
++        if (!x86_iommu->dma_translation) {
++            error_setg(errp, "Need to set dma-translation for svm");
++            return false;
++        }
++
++        if (!s->pasid) {
++            error_setg(errp, "Need to set PASID support for svm");
++            return false;
++        }
++    }
++
++
+     return true;
+ }
+ 
+@@ -5583,17 +5613,6 @@ static void vtd_realize(DeviceState *dev, Error **errp)
+     X86MachineState *x86ms = X86_MACHINE(ms);
+     PCIBus *bus = pcms->pcibus;
+     IntelIOMMUState *s = INTEL_IOMMU_DEVICE(dev);
+-    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+-
+-    if (s->pasid && x86_iommu->dt_supported) {
+-        /*
+-         * PASID-based-Device-TLB Invalidate Descriptor is not
+-         * implemented and it requires support from vhost layer which
+-         * needs to be implemented in the future.
+-         */
+-        error_setg(errp, "PASID based device IOTLB is not supported");
+-        return;
+-    }
+ 
+     if (!vtd_decide_config(s, errp)) {
+         return;
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 18d50191d2..11a53aa369 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -194,8 +194,10 @@
+ #define VTD_ECAP_PRS                (1ULL << 29)
+ #define VTD_ECAP_MHMV               (15ULL << 20)
+ #define VTD_ECAP_SRS                (1ULL << 31)
++#define VTD_ECAP_NWFS               (1ULL << 33)
+ #define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
+ #define VTD_ECAP_PASID              (1ULL << 40)
++#define VTD_ECAP_PDS                (1ULL << 42)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+ #define VTD_ECAP_SSTS               (1ULL << 46)
+ #define VTD_ECAP_FSTS               (1ULL << 47)
+@@ -417,7 +419,9 @@ typedef union VTDPRDesc VTDPRDesc;
+ #define VTD_INV_DESC_WAIT_IF            (1ULL << 4)
+ #define VTD_INV_DESC_WAIT_FN            (1ULL << 6)
+ #define VTD_INV_DESC_WAIT_DATA_SHIFT    32
+-#define VTD_INV_DESC_WAIT_RSVD_LO       0Xfffff180ULL
++#define VTD_INV_DESC_WAIT_RSVD_LO(ecap) (0Xfffff100ULL | \
++                                        (((ecap) & VTD_ECAP_PDS) \
++                                            ? 0 : (1 << 7)))
+ #define VTD_INV_DESC_WAIT_RSVD_HI       3ULL
+ 
+ /* Masks for Context-cache Invalidation Descriptor */
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 6c61fd39c7..d600e5495f 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -275,6 +275,7 @@ struct IntelIOMMUState {
+     bool scalable_mode;             /* RO - is Scalable Mode supported? */
+     bool fsts;                      /* RO - is first stage translation supported? */
+     bool snoop_control;             /* RO - is SNP filed supported? */
++    bool svm;                       /* RO - is SVA/SVM supported? */
+ 
+     dma_addr_t root;                /* Current root table pointer */
+     bool root_scalable;             /* Type of root table (scalable or not) */
 -- 
 MST
 
