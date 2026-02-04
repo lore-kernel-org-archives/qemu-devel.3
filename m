@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C520EEA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B686EA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniA4-00070l-7p; Wed, 04 Feb 2026 14:03:36 -0500
+	id 1vniAD-0007CB-7p; Wed, 04 Feb 2026 14:03:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA1-0006qm-VR
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:33 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA4-00071E-71
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA0-0007mk-C4
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:33 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA2-0007oi-HH
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231811;
+ s=mimecast20190719; t=1770231813;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+939riydvwDd27jqC2atSYgpM2eosXh2uo/JqY9/3xU=;
- b=HyecGc8Hs1fN/wpGI7XhtzgU2pnzZUq4YfNyfzv3e2LnjeCotTnC7Uuyrfr2RPEBCyfQ3O
- pKqzHJ9gqvqnh3peDlC8vmDHKsV/ytojx1bKX2QxswlPhUHrz7Zg+ahSmpVouWjibmDyfZ
- CdaQePwSfGarPEtrZXYeg0OSmaZ6KbI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
+ b=eYhFp2A9fvRG4kQWxmm1kQHEA7K8+F0yd3P4QgrMoxfnuay6WJgAaaj4YJDTrGUeJ4TgCq
+ VCK+PWj2ZcpT01TfQLmUfsz0WlkUf0jV9MWvyKje8FZxw/RJILoVmDmzyWw7hglRK86oJS
+ 7QVLBVhcTLiIAOkS/6+MI8WQpJz9D3I=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-376-yhLOvfY0Pc2jld7g4joNVw-1; Wed, 04 Feb 2026 14:03:30 -0500
-X-MC-Unique: yhLOvfY0Pc2jld7g4joNVw-1
-X-Mimecast-MFC-AGG-ID: yhLOvfY0Pc2jld7g4joNVw_1770231809
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4358f90fe8dso118238f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:30 -0800 (PST)
+ us-mta-94-HEu0iro1PvipcO24S1VhTw-1; Wed, 04 Feb 2026 14:03:32 -0500
+X-MC-Unique: HEu0iro1PvipcO24S1VhTw-1
+X-Mimecast-MFC-AGG-ID: HEu0iro1PvipcO24S1VhTw_1770231812
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43284f60a8aso172877f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231809; x=1770836609; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231811; x=1770836611; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+939riydvwDd27jqC2atSYgpM2eosXh2uo/JqY9/3xU=;
- b=OJB8UaUyFl2O2t/5fqdE/OPMVOS6YoIoW9FV/e2TN6vPZhg8i6Vehg/FFs12sqAPfc
- V/j737omikb3+SnB2OGBhgTXYPnfUXgnBloxO210tPQPX94kH1G2AtIISaYuEGy7F4vK
- gdR/00oqzbIa4oF+bsbB2zMb69gp34HRpANnXMk51yBnjBqi71CVDbsAsJk+aeZATLHC
- sSA7Q19c7BjsjC67XXn0DSJIY0D4556inTcVw2q8fUlCWTI3pgae23tJZR+sNulRtFcT
- N0vS7BPmQ5dSlCeCiwBMcYjbmXVCHsM+zIozW523KoiNmGJzSyUtWNAcHxzh0NS9Drrp
- 00/A==
+ bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
+ b=HMtrQkQXmnd1TJ23oxvbyxUYJCo5NIombJTr40bBXBZ2mPGZUo9KytO8IOzj3mG9kA
+ D7O6e3z/5vej64lQeR43B2f/Hf7zquxij9dZgjofTIl4MQ5+rzumh8d5MEOFhOHBcbnW
+ QKqKNvZ+JYVoRtqZPdYa6GjFrxEFk8TaDmUpEYtpDfK2nic5I7zZO8qAO/w+A+CzJM+q
+ oCK4wJmYuV/8mPaeTx6EvtkN885tI8NNz268+hbGx8DfGiQx9KkeexskJ5FR1hgZy/Va
+ reFvdH9WrRG1tN5DS/w+m7E1gbVSAEjco+Dffbly5BnVgc9GYzwSh0PJ+QAxLUQY6BqR
+ ZOIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231809; x=1770836609;
+ d=1e100.net; s=20230601; t=1770231811; x=1770836611;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+939riydvwDd27jqC2atSYgpM2eosXh2uo/JqY9/3xU=;
- b=IUoQNSQzMU5MQk7FPXPxZ13x7x2my75ESbKWoHRveLcfpzMLFLbMwRbaWBeEjX0N6r
- jXlj1eaZFByroD1VdLq64y5R04yFLcrcXVcfnyNHpH4qmHpOCOKZx0n3CNqmdbHrSdjc
- hwH7g7wDBPr38E0nGx8kwYVebOjl8Jvmpa7mkPG+sFLo2HvJRLlb1cLdV2TKQXXDXhVm
- kNa6u2aLa/8oeVN8j4mlx/JlVi9/CqzCNIenTczUedKP7zDz4hRpPq2lTmucAS+IraGw
- boSMC0r44t8+PVx1kU2u2S7G8oJd51euvdAMMQXw2i2EUoUhd4fDuwuBU1P4BKSYWceG
- d+ow==
-X-Gm-Message-State: AOJu0Yzf5WQG2PAao72jZH41SupKSEb+4Fu/ZCXUojSFOP09zwNtxChJ
- VSYVVEN8PNTvBQrkMwM2G7cJQJm9vSj0Dnrkg52BUUY7XwGVu4/DlBMDTQd3VArDH1DhAyguOvA
- 4VpbnNHQjUM27lzf4vkGiwWHXMkm5/m/btOhJsKYQOc4XE8QWIud/G/Fr/87I25X1sH1mokfeWz
- qEd9LiDwcXT+rqUOPZazEK88lXH+1wSbMAIg==
-X-Gm-Gg: AZuq6aLWZzTgSYh4Pj0AeEQr6VNCxGWlcR2+0X1Uie58w9RTPSgyAlO2mCi41NnxOR1
- 1DDm6F3vJwyxcPoLwQ69TtZaJgeWGlQdwhe0DNwIylrBuSlvWM6VUM7mOXbjg4qWdMwxGWjrWZX
- 1QHZzYF1L47E+PWx4mzE/74qSagA5s88KsjxQFYWwqzPYYlM/eqq2bgWwNj+p/lk2coVI/BRtO+
- uw729bkPX9+XZopZW/Q0O2HdvBFfhDLz4I/FWnnFr87EcFWUmeEeC40ra7ySUnMxKkdEEUQuRnu
- 5BANsjr3OvJxWsc6GGFQAs2p+O8tjkmcBA0EanZf7C8pfNduAJTsKXpz5K7Pk8T6bPQvTFEglfa
- 3GHb7GzFJCYFJUqXyXJO+IlLU+byfqApyuw==
-X-Received: by 2002:a05:6000:250a:b0:432:88c4:e180 with SMTP id
- ffacd0b85a97d-436209bfc2cmr593190f8f.15.1770231809004; 
- Wed, 04 Feb 2026 11:03:29 -0800 (PST)
-X-Received: by 2002:a05:6000:250a:b0:432:88c4:e180 with SMTP id
- ffacd0b85a97d-436209bfc2cmr593133f8f.15.1770231808502; 
- Wed, 04 Feb 2026 11:03:28 -0800 (PST)
+ bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
+ b=v7E0+zcd5F3N1TkWhbw3qMNFURqg9YdZA59pg8SDp6y6++qbq0PR48GDfg7AOX34mV
+ EyPjm1mBGhLjp5SI3Vwe36refzCwXJZfFQ1EMZJxoRSA4Qcl7A4gLuc1wkmlL/XrpI3Z
+ EUUoD3L8/LHLBGWJqEwyQisyy5Ey5NvuQegG0Ky+PWS4hsSSXRR/hUDfrlyWRM5T1uUH
+ MbyO+Y/uF653f8V0qdNFZrJRNGvbIoqLvsQ22T+Mvtg6PpN5Zm52QoKQBfrAbWulRoYN
+ RYgRLEqb/Gc1B18woAX9T5VpDTPyqX93hYY6p28c+3uS5QWRKGqL7xHLAF1HtlMQth/x
+ F3sQ==
+X-Gm-Message-State: AOJu0YyWT+Winvq60M/2wJjGFkFQY655w0B7dfIV4TX3p7Uft7Ahv7ks
+ QyclLI6DEXcdBoM0BLqNfceQio0XjJcL7WZbITLAuEldwtpmzHAW7MBCg75WOeHuFZFaqh4bZdJ
+ GVrEeeZy1VbL/dZ6kJaUiJscnomQwho64db9Lr+m8DrJ+zDp3ZYj6sldTmLsXh/CcenxP5BYE87
+ l0bnsqzNAXVC1iwQCfC1EPjh+4OQSfh1wE4A==
+X-Gm-Gg: AZuq6aJvTjJQDt4Q8RYABoZML7ra/13cimT5zDpaCxZM6FxdawjsrIqKwE0Fjz2pAea
+ wG2Vi/W9FBjW2k1pxvl5kc7z4CMgT6wbrmQMsj9Zgkk1neVLxXFU+CC1/1nd2ktakKnUKuvhPwb
+ 4YdbT/iLbIqlDzrx7AywiPfu33S+PM2bFLRnOQZD/5lFWqomwAOdBcHx1LOwfNKhwupUo/lXSbT
+ LYacxsonW8pvLjNEWDVEA1fzhWe7Ludzk5JcOhVqBdfTJDRJVqjg47bRak9RTllg/YAqLs+aupt
+ v61nd56GD9/jUsIpgsPrvH+NnUL/l+3iBq7wFrjFGcOXfl0IElux8yXJzAV9VoeNHghvELipB9q
+ GF4mAt1X6qkrV5MswOBNnGMLRBVDVmfPBfQ==
+X-Received: by 2002:a05:6000:26c9:b0:436:7e8:a10 with SMTP id
+ ffacd0b85a97d-43617e317e2mr5379469f8f.13.1770231811338; 
+ Wed, 04 Feb 2026 11:03:31 -0800 (PST)
+X-Received: by 2002:a05:6000:26c9:b0:436:7e8:a10 with SMTP id
+ ffacd0b85a97d-43617e317e2mr5379378f8f.13.1770231810755; 
+ Wed, 04 Feb 2026 11:03:30 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e25d47sm7489588f8f.5.2026.02.04.11.03.27
+ ffacd0b85a97d-4361805fec6sm7963220f8f.32.2026.02.04.11.03.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:28 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:26 -0500
+ Wed, 04 Feb 2026 11:03:30 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:28 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 16/51] intel_iommu: Handle insufficient permissions during
- translation requests
-Message-ID: <86c5072181002ea6160c716e0524105900c40dc2.1770231744.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 17/51] intel_iommu: Minimal handling of privileged ATS request
+Message-ID: <bbb8d5b6a3c0105054bd41849f72c04065296bca.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -127,91 +126,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-ATS translations should not fail when the write permission is not set.
+The purpose of this commit is not to support privileged requests but
+to prevent devices from doing things they wouldn't be able to do
+with real hardware.
+
+We simply block privileged requests when the SRS ecap is not set
+and abort when the ecap is present.
+
+For now, its not worth implementing support for privileged requests
+because the kernel does not support it.
+(https://lore.kernel.org/linux-iommu/20230411064815.31456-11-baolu.lu@linux.intel.com/)
+However, we may consider working on it depending on how the development
+goes in the kernel.
 
 Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251029105137.1097933-6-clement.mathieu--drif@eviden.com>
+Message-Id: <20251029105137.1097933-7-clement.mathieu--drif@eviden.com>
 ---
- hw/i386/intel_iommu.c          | 14 ++++++++------
- hw/i386/intel_iommu_internal.h |  3 ++-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ hw/i386/intel_iommu.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 7e7c31cb55..6ba1c1676b 100644
+index 6ba1c1676b..77adeed0cc 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -1998,7 +1998,7 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
-                              uint64_t iova, bool is_write,
-                              uint64_t *fsptep, uint32_t *fspte_level,
-                              bool *reads, bool *writes, uint8_t aw_bits,
--                             uint32_t pasid)
-+                             uint32_t pasid, int iommu_idx)
+@@ -5190,13 +5190,27 @@ static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
+                                                 hwaddr addr,
+                                                 IOMMUAccessFlags flags)
  {
-     dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
-     uint32_t offset;
-@@ -2039,7 +2039,8 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
+-    IOMMUTLBEntry entry;
++    IOMMUTLBEntry entry = { .target_as = &address_space_memory };
+     VTDAddressSpace *vtd_as = container_of(iommu, VTDAddressSpace, iommu);
++    IntelIOMMUState *s = vtd_as->iommu_state;
++
++    /* Guard that makes sure we avoid weird behaviors */
++    if ((flags & IOMMU_PRIV) && (s->ecap & VTD_ECAP_SRS)) {
++        error_report_once("Privileged ATS not supported");
++        abort();
++    }
  
-         *reads = true;
-         *writes = (*writes) && (fspte & VTD_FS_RW);
--        if (is_write && !(fspte & VTD_FS_RW)) {
-+        /* ATS should not fail when the write permission is not set */
-+        if (is_write && !(fspte & VTD_FS_RW) && iommu_idx != VTD_IDX_ATS) {
-             return -VTD_FR_SM_WRITE;
-         }
-         if (vtd_fspte_nonzero_rsvd(fspte, *fspte_level)) {
-@@ -2098,7 +2099,7 @@ static void vtd_report_fault(IntelIOMMUState *s,
-  */
- static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-                                    uint8_t devfn, hwaddr addr, bool is_write,
--                                   IOMMUTLBEntry *entry)
-+                                   IOMMUTLBEntry *entry, int iommu_idx)
- {
-     IntelIOMMUState *s = vtd_as->iommu_state;
-     VTDContextEntry ce;
-@@ -2204,7 +2205,8 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
- 
-     if (s->fsts && s->root_scalable) {
-         ret_fr = vtd_iova_to_fspte(s, &ce, addr, is_write, &pte, &level,
--                                   &reads, &writes, s->aw_bits, pasid);
-+                                   &reads, &writes, s->aw_bits, pasid,
-+                                   iommu_idx);
-         pgtt = VTD_SM_PASID_ENTRY_FST;
-     } else {
-         ret_fr = vtd_iova_to_sspte(s, &ce, addr, is_write, &pte, &level,
-@@ -4033,7 +4035,7 @@ static IOMMUTLBEntry vtd_iommu_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
-             }
-         } else {
-             success = vtd_do_iommu_translate(vtd_as, vtd_as->bus, vtd_as->devfn,
--                                            addr, is_write, &iotlb);
-+                                            addr, is_write, &iotlb, iommu_idx);
-         }
-     } else {
-         /* DMAR disabled, passthrough, use 4k-page*/
-@@ -5196,7 +5198,7 @@ static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
+     if (vtd_is_interrupt_addr(addr)) {
+-        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
          vtd_prepare_error_entry(&entry);
-         entry.target_as = &address_space_memory;
+-        entry.target_as = &address_space_memory;
++        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
++    } else if ((flags & IOMMU_PRIV) && !(s->ecap & VTD_ECAP_SRS)) {
++        /*
++         * For translation-request-with-PASID with PR=1, remapping hardware
++         * not supporting supervisor requests (SRS=0 in the Extended
++         * Capability Register) forces R=W=E=0 in addition to setting PRIV=1.
++         */
++        vtd_prepare_error_entry(&entry);
++        entry.perm = IOMMU_PRIV;
      } else {
--        entry = vtd_iommu_translate(iommu, addr, flags, VTD_IDX_UNTRANSLATED);
-+        entry = vtd_iommu_translate(iommu, addr, flags, VTD_IDX_ATS);
+         entry = vtd_iommu_translate(iommu, addr, flags, VTD_IDX_ATS);
      }
- 
-     return entry;
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index be757c290d..18d50191d2 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -692,7 +692,8 @@ typedef struct VTDPIOTLBInvInfo {
- typedef enum VTDIOMMUIndex {
-     VTD_IDX_UNTRANSLATED = 0, /* Default */
-     VTD_IDX_TRANSLATED = 1,
--    VTD_IDX_COUNT = 2, /* Number of supported indexes */
-+    VTD_IDX_ATS = 2,
-+    VTD_IDX_COUNT = 3, /* Number of supported indexes */
- } VTDIOMMUIndex;
- 
- typedef struct VTDHostIOMMUDevice {
 -- 
 MST
 
