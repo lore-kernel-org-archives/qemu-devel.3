@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39863E9D417
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03350E9D40F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 17:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vng9r-0000jx-5p; Wed, 04 Feb 2026 11:55:15 -0500
+	id 1vngER-0002Qp-8E; Wed, 04 Feb 2026 11:59:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vng9p-0000i3-LG
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:55:13 -0500
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ id 1vngEP-0002QS-Ds
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:59:57 -0500
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vng9m-0006Sw-SW
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:55:13 -0500
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2b82c605dbdso3066803eec.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 08:55:10 -0800 (PST)
+ id 1vngEN-0006xa-Ds
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:59:57 -0500
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2b6b0500e06so10024922eec.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 08:59:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770224109; x=1770828909; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770224394; x=1770829194; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tDAnhpjOr0+geE4BIMXpxPz/fJo9jvZz/BTRuxJzeog=;
- b=f6cSK6AL+Zf/+jbAifkdCQKMNiDyaKazgiuAj016BvNKrakHiuMdgNjS7Z7aE6XZ2e
- gi+7oriGnOmyagjt+c0brZfpqAOy2KO71u50ikoemmpzu0phspiQCUa+Usd+hsPp6PpO
- Qe1hB+P1tSd06fv99SBa10C83JPxFf53lBtOhpkpyQ0qGQJkeNZf7WwX1LVXAHEHXvdy
- pATR9y340F/6z4+yAohoBarQM6BBy+77R6CWYaQV9REt8yxIYC+kbhZnaVDf8nDLrMIo
- LYpUmiJJgpOXxxiAhpUSj0rdTq8ijAw+NIn2MAwhzzT0hy/Pc5bhz/IcJIeFtTLnrDTa
- VpcQ==
+ bh=0EvO5S2fGDXgutvQ5wLQrVcDRVCihdG/kVqHHErhiZo=;
+ b=e1c1pQE9KiZ3RDz3J1NMwV4ASnc3IWLkP2nAmtVzbU/oG6Gh+Pihgchmrkme/Pldzw
+ rm2Fv9i3qaUUnxcv9+0jHZV4SHnMOHUjZtYVxUoy0mVwnrfbcIW4DXvCp7uEPfUg6Zg5
+ o/zDI6iVK5yvDq9wV/lH5+ZkfZ6lbplJiCOFBq8Dz3jqopD2fhomHxuaUHrsTScGuoI8
+ Y2aXolMZ5ST2Kgx4ThFKfGbnzwdqAhbvaK1z4QLfbOmk4AKcxCyouv6UUvQyCAhxk8Az
+ o3/9OjuH7F2ZCZTP2I3HCNa1S7qJjoSFMnxGvGEj8p28kd+j5Vs7wFKZJNC09dbtvspt
+ GatA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770224109; x=1770828909;
+ d=1e100.net; s=20230601; t=1770224394; x=1770829194;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tDAnhpjOr0+geE4BIMXpxPz/fJo9jvZz/BTRuxJzeog=;
- b=S3oPQOp2I5LUj1VDEx1ccFWCIbHabV3FHq82VeCaFhHWX+nZ83+2HgDLAzBo8V5Ezi
- vWx6l28v2icbMZN4CcaUU0UF42GtDaxCfoPGCNQrnxzSYbl+M0iJkWX3OkGWoueyeieQ
- PqXIzLe3+W4Y4ZqwhXVojMgIYTncU0K41OoBJzJ7aw37p7rBD3KesvAkA4BWG5QIaQXE
- 4UbZQ5qbK6K4a/Z9+Y33mUYh9JgJNVeCD+DpLbaC3PxjoQEgZFGwF+LHXN+WpgSYucfU
- x5yRTJV/+RKsxgaBDIlA2KE3JVYGkXOoKhYXaF0cWtF8MD7EXWN8mWJ4aD/prOVC4Rvv
- RAZg==
-X-Gm-Message-State: AOJu0YzugdbiHkinFltzz6HdM8ezITzAYP3FuglVrfUxcJdW5/m2ykCV
- iHFA9iyn8ffnMnUY2r43GjW+PNKCOeBrUmgRzTTat4Qjpb/zMsLpEWmK
-X-Gm-Gg: AZuq6aK5R/zBhd6y2fk/HMj5IX4sTZgC7UnBUnMGBcHOQYszhoNn6LRzNn5mQDld8Q+
- pM5JSqvdpMDWIAyYDIoJKwd28xUNPas1sJjyqhXsYBaq0Sesqqv1eXc+t1ugubOW6PZqL5m1OvM
- xEgclQLZWJ4gnMV2D1iW03zzwAUCNVnVYak7BuWeaWWK97isSjxpDwFsM57gLWv3Lw5LRUtf6pF
- 5hvb0EiWvj2awjgb4wQ5PiYHi8yJq7rTUTAtRxzCYlaAw/R9rbvkObXbgkVTMYlcfxTjrTHupyo
- 4gg+z0Hl+51jla8Z7qKZUgubfxQfywjAO073vnBSG0ea1j0zjx6j4Vsivqcz4YQ81qxplxXHQP9
- mDZBVhG57a8qO4pBYGCRnPukC19qlH/aFYDZPxPTRQ7a7rXprIEm7MXxjyDVf5TUjtJ+WOd9Aq2
- ufTfeZw9LRsk8pOMI9q2x/AZwK+mFshLSQkK4VqEYNFS6w63dmHdCn6+RfSZYgioNWIVryVu3qb
- m6bv75G07iblLdKnEJyllyzDZtLLg==
-X-Received: by 2002:a05:7301:1688:b0:2a4:3592:cf75 with SMTP id
- 5a478bee46e88-2b8329a07f4mr2422304eec.25.1770224109060; 
- Wed, 04 Feb 2026 08:55:09 -0800 (PST)
+ bh=0EvO5S2fGDXgutvQ5wLQrVcDRVCihdG/kVqHHErhiZo=;
+ b=CgdBEdDMM5mFbWmdfqo71OkpwZHjr+xMYlF9IJk2/Y2NbCJ2Pz/HfbvkmPy+5k1Ek0
+ d4Z7dl5veztKtMypxwpvbh33jy6lupwY66qa9W/PbasFNpaxITpdlDsDl5y0e56CiPzH
+ jA+7jON2fWXu58pWgIVeDejzy5joJZel0woNgzKfLtwNI3E/HYcneBhrtLy1GXurrjK+
+ jMZ68xKZCjWuIoVwyHqMmGH7Ppo7V9dDxruRaIYhzYyBSrCimHVNOA2TMcuOy4MfmRPl
+ kBLf0BtErv9/GFbDriFlOLprB5e99d0a85KbyB/zZi+bRoMnl7XmT7A34YJ9L55a1zF5
+ 2PIQ==
+X-Gm-Message-State: AOJu0Yw7hwCZ27RBEhQkFsMqzwkERpBc1RBKHkNrqK3Wn4DOs/gHPZLI
+ DtriPx4p0W/PPpm4Us6XBp5jTlz19aene1FdHyJDUi++NWWwpGWg3XyY
+X-Gm-Gg: AZuq6aIZMiWk9JNipkqZEKTXdG4tqwtBy0otx670kQNCcEifxLvbO8ta8nLcx5dGjii
+ 0OZef0+QfzlXl5q1M29GabSuuTYXDC4YXbprtESfysXJGzHrABLPdMalACVCt/L5sqblKhT5jo9
+ hMDglzKbDnv3GQrASGDkpfWLP2gcQOTM064HMdraL4EPTf71sA6kVD63W5Jgiofd9NVTVcQ1BQi
+ EvvStthpBbTldTJHecU0suTE1JCiM7fS2631SKlqPo6pjxaDTkd19F8if0i1P5idgEvPoA5G737
+ a3KSX0dyhDWCQO44f15XS2SV/KnRbBO4G/lTxyyoD6sPOspgwVtr6vsCqXgMdLyz+urqaILDWbl
+ zk2qdJMy2vcFMerTL8uDIsrHXLPI6jS84swKO1T+9b4qljJSTlp8IIqY5ZIbtw1B1nw7QbzOKVM
+ ilSd6EawZrH7aICV6C1yfZwbyj/+wsU7ZGeMpKyZz7aVukSOwglPcR3aOAk07Ta+f86E4o4+jrS
+ tElCyP2xPvXw4QDNIE=
+X-Received: by 2002:a05:7300:3212:b0:2a4:630b:c789 with SMTP id
+ 5a478bee46e88-2b832a40be5mr1437035eec.37.1770224393498; 
+ Wed, 04 Feb 2026 08:59:53 -0800 (PST)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b832f8e78esm1673917eec.16.2026.02.04.08.55.05
+ a92af1059eb24-126f503d0fbsm2239958c88.13.2026.02.04.08.59.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 08:55:08 -0800 (PST)
-Date: Thu, 5 Feb 2026 00:54:55 +0800
+ Wed, 04 Feb 2026 08:59:53 -0800 (PST)
+Date: Thu, 5 Feb 2026 00:59:40 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
@@ -77,17 +77,16 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>, Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v3 09/19] target/riscv: rvv: Make vfwcvtbf16.f.f.v
- support OFP8 to BF16 conversion for Zvfofp8min extension
-Message-ID: <aYN5C0Gal8ZKQS3A@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH v3 00/19] Add OCP FP8/FP4 and RISC-V
+ Zvfofp8min/Zvfofp4min extension support
+Message-ID: <aYN6l-wqLutdOOSh@ZEVORN-PC.localdomain>
 References: <20260204051756.667397-1-max.chou@sifive.com>
- <20260204051756.667397-10-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260204051756.667397-10-max.chou@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+In-Reply-To: <20260204051756.667397-1-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,196 +109,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 01:17:45PM +0800, Max Chou wrote:
-> According to the Zvfofp8min extension, the vfwcvtbf16.f.f.v instruction
-> supports OFP8 to BF16 conversion when SEW is 8.
-> And the VTYPE.altfmt field is used to select the OFP8 format.
-> * altfmt = 0: OFP8.e4m3 to BF16
-> * altfmt = 1: OFP8.e5m2 to BF16
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->  target/riscv/helper.h                      | 12 +++
->  target/riscv/insn_trans/trans_rvbf16.c.inc | 16 +++-
->  target/riscv/vector_helper.c               | 97 ++++++++++++++++++++++
->  3 files changed, 121 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index eb0a488ba8..356c24d9fb 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -1247,6 +1247,18 @@ DEF_HELPER_5(vfwcvtbf16_f_f_v, void, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vfwmaccbf16_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vfwmaccbf16_vf, void, ptr, ptr, i64, ptr, env, i32)
->  
-> +/* OFP8 functions */
-> +DEF_HELPER_5(vfwcvtbf16_f_f_v_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfwcvtbf16_f_f_v_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvtbf16_f_f_w_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvtbf16_f_f_w_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvtbf16_sat_f_f_w_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvtbf16_sat_f_f_w_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvt_f_f_q_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvt_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
-> +
->  /* Vector crypto functions */
->  DEF_HELPER_6(vclmul_vv, void, ptr, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_6(vclmul_vx, void, ptr, ptr, tl, ptr, env, i32)
-> diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/insn_trans/trans_rvbf16.c.inc
-> index 6cfda03d2e..9aafd4d2ef 100644
-> --- a/target/riscv/insn_trans/trans_rvbf16.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvbf16.c.inc
-> @@ -92,11 +92,20 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
->  static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
->  {
->      REQUIRE_FPU;
-> -    REQUIRE_ZVFBFMIN(ctx);
->  
-> -    if (opfv_widen_check(ctx, a) && (ctx->sew == MO_16)) {
-> +    if (opfv_widen_check(ctx, a) &&
-> +        ((ctx->sew == MO_16 && ctx->cfg_ptr->ext_zvfbfmin) ||
-> +         (ctx->sew == MO_8 && ctx->cfg_ptr->ext_zvfofp8min))) {
-> +        gen_helper_gvec_3_ptr *fn;
->          uint32_t data = 0;
->  
-> +        if (ctx->sew == MO_16) {
-> +            fn = gen_helper_vfwcvtbf16_f_f_v;
-> +        } else {
-> +            fn = ctx->altfmt ? gen_helper_vfwcvtbf16_f_f_v_ofp8e5m2 :
-> +                               gen_helper_vfwcvtbf16_f_f_v_ofp8e4m3;
-> +        }
-> +
->          gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
->  
->          data = FIELD_DP32(data, VDATA, VM, a->vm);
-> @@ -106,8 +115,7 @@ static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
->          tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
->                             vreg_ofs(ctx, a->rs2), tcg_env,
->                             ctx->cfg_ptr->vlenb,
-> -                           ctx->cfg_ptr->vlenb, data,
-> -                           gen_helper_vfwcvtbf16_f_f_v);
-> +                           ctx->cfg_ptr->vlenb, data, fn);
->          finalize_rvv_inst(ctx);
->          return true;
->      }
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index ee5a1e595b..418212973d 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -5024,6 +5024,103 @@ GEN_VEXT_V_ENV(vfncvt_f_f_w_w, 4)
->  RVVCALL(OPFVV1, vfncvtbf16_f_f_w, NOP_UU_H, H2, H4, float32_to_bfloat16)
->  GEN_VEXT_V_ENV(vfncvtbf16_f_f_w, 2)
->  
-> +/*
-> + * OCP FP8 Narrowing Conversions (BF16/F32 -> FP8)
-> + * 1. Initialize a local float_status with RISC-V specific NaN handling
-> + * 2. Call the softfloat conversion function with saturation parameter
-> + * 3. Merge exception flags back to the original status
-> + */
-> +#define GEN_OCP_FP8_NARROW(NAME, CONVERT_FN, SATURATE, IN_TYPE)  \
-> +static uint8_t NAME(IN_TYPE a, float_status *s)                  \
-> +{                                                                \
-> +    float_status local = *s;                                     \
-> +    local.default_nan_pattern = 0x70;                            \
-I suggest adding a comment in GEN_OCP_FP8_NARROW() to explain the
-choice of default_nan_pattern:
+Hi Max,
 
-    * 0x70 produces canonical NaN 0x7f for both E4M3 and E5M2 per
-    * Zvfofp8min spec
+On Wed, Feb 04, 2026 at 01:17:36PM +0800, Max Chou wrote:
+> This patchset adds support for the OCP (Open Compute Project) 8-bit and
+> 4-bit floating-point formats, along with the RISC-V Zvfofp8min and
+> Zvfofp4min vector extensions that provide conversion operations for
+> these formats.
+> 
+> OCP Floating-Point Formats
+> * The OCP FP8 specification defines two 8-bit floating-point formats:
+>   - E4M3: 4-bit exponent, 3-bit mantissa
+>     * No infinity representation; only 0x7f and 0xff are NaN
+>   - E5M2: 5-bit exponent, 2-bit mantissa
+>     * IEEE-like format with infinity representation
+>     * Multiple NaN encodings supported
+> * The OCP FP4 specification defines the E2M1 format:
+>   - E2M1: 2-bit exponent, 1-bit mantissa
+>     * No NaN representation
+> 
+> RISC-V ISA Extensions
+> * Zvfofp8min (Version 0.2.1):
+>   The Zvfofp8min extension provides minimal vector conversion support
+>   for OFP8 formats. It requires the Zve32f extension and leverages the
+>   altfmt field in the VTYPE CSR (introduced by Zvfbfa) to select between
+>   E4M3 (altfmt=0) and E5M2 (altfmt=1) formats.
+>   - Canonical NaN for both E4M3 and E5M2 is 0x7f
+>   - All NaNs are treated as quiet NaNs
+>   Instructions added/extended:
+>   - vfwcvtbf16.f.f.v: OFP8 to BF16 widening conversion
+>   - vfncvtbf16.f.f.w: BF16 to OFP8 narrowing conversion
+>   - vfncvtbf16.sat.f.f.w: BF16 to OFP8 with saturation (new)
+>   - vfncvt.f.f.q: FP32 to OFP8 quad-narrowing conversion (new)
+>   - vfncvt.sat.f.f.q: FP32 to OFP8 with saturation (new)
+> 
+> * Zvfofp4min (Version 0.1):
+>   The Zvfofp4min extension provides minimal vector conversion support
+>   for the OFP4 E2M1 format. It requires the Zve32f extension.
+>   Instructions added:
+>   - vfext.vf2: OFP4 E2M1 to OFP8 E4M3 widening conversion
+> 
+> Modifications
+> * Softfloat library:
+>   - Refactored IEEE format NaN classification to share code (new in v2)
+>   - New float8_e4m3 and float8_e5m2 types with NaN checking functions
+>   - New float4_e2m1 type for OFP4 support
+>   - Conversion functions: bfloat16/float32 <-> float8_e4m3/float8_e5m2
+>   - Conversion function: float4_e2m1 -> float8_e4m3
+>   - Implementation uses capability-based FloatFmt flags for format behavior
+> * RISC-V target:
+>   - CPU configuration properties for Zvfofp8min and Zvfofp4min
+>   - Extension implied rules (Zvfofp8min requires Zve32f and Zvfbfa)
+>   - Vector helper functions for OFP8/OFP4 conversion instructions
+>   - Disassembler support for new instructions
+> 
+> Changes in v3:
+> - Add floatN_nan_is_snan to simply the quiet/signaling NaN checking flow
+>   in patch 2 & 3
+> - Add patch 4 to fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
+> 
+Thanks for the v3 series.
+
+I have also noted a few minor issues and replied to the relevant patch
+emails individually.
+
+Everything else looks good to me.
+
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Thanks,
 Chao
-> +    local.default_nan_mode = true;                               \
-> +    uint8_t result = CONVERT_FN(a, SATURATE, &local);            \
-> +    s->float_exception_flags |= local.float_exception_flags;     \
-> +    return result;                                               \
-> +}
-> +
-> +/* BF16 -> E4M3/E5M2 conversions */
-> +GEN_OCP_FP8_NARROW(vfncvt_bf16_to_e4m3, bfloat16_to_float8_e4m3, false,
-> +                   uint16_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_bf16_to_e5m2, bfloat16_to_float8_e5m2, false,
-> +                   uint16_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_bf16_to_e4m3_sat, bfloat16_to_float8_e4m3, true,
-> +                   uint16_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_bf16_to_e5m2_sat, bfloat16_to_float8_e5m2, true,
-> +                   uint16_t)
-> +
-> +/* F32 -> E4M3/E5M2 conversions */
-> +GEN_OCP_FP8_NARROW(vfncvt_f32_to_e4m3, float32_to_float8_e4m3, false, uint32_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_f32_to_e5m2, float32_to_float8_e5m2, false, uint32_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_f32_to_e4m3_sat, float32_to_float8_e4m3, true,
-> +                   uint32_t)
-> +GEN_OCP_FP8_NARROW(vfncvt_f32_to_e5m2_sat, float32_to_float8_e5m2, true,
-> +                   uint32_t)
-> +
-> +/*
-> + * OCP FP8 Widening Conversions (FP8 -> BF16)
-> + * According to Zvfofp8min isa specification: "No rounding occurs, and no
-> + * floating-point exception flags are set."
-> + * 1. Initialize a local float_status with no_signaling_nans=true
-> + * 2. Call the softfloat conversion function
-> + * 3. Intentionally DISCARD exception flags (not merged back)
-> + */
-> +#define GEN_OCP_FP8_WIDEN(NAME, CONVERT_FN)      \
-> +static uint16_t NAME(uint8_t a, float_status *s) \
-> +{                                                \
-> +    float_status local = *s;                     \
-> +    local.no_signaling_nans = true;              \
-> +    return CONVERT_FN(a, &local);                \
-> +}
-> +
-> +GEN_OCP_FP8_WIDEN(vfwcvt_e4m3_to_bf16, float8_e4m3_to_bfloat16)
-> +GEN_OCP_FP8_WIDEN(vfwcvt_e5m2_to_bf16, float8_e5m2_to_bfloat16)
-> +
-> +/* vfwcvtbf16.f.f.w vd, vs2, vm # Convert OFP8 to BF16. */
-> +RVVCALL(OPFVV1, vfwcvtbf16_f_f_v_ofp8e4m3, WOP_UU_B, H2, H1,
-> +        vfwcvt_e4m3_to_bf16)
-> +RVVCALL(OPFVV1, vfwcvtbf16_f_f_v_ofp8e5m2, WOP_UU_B, H2, H1,
-> +        vfwcvt_e5m2_to_bf16)
-> +GEN_VEXT_V_ENV(vfwcvtbf16_f_f_v_ofp8e4m3, 2)
-> +GEN_VEXT_V_ENV(vfwcvtbf16_f_f_v_ofp8e5m2, 2)
-> +
-> +/* vfncvtbf16.f.f.w vd, vs2, vm # Convert BF16 to OFP8 without saturation. */
-> +RVVCALL(OPFVV1, vfncvtbf16_f_f_w_ofp8e4m3, NOP_UU_B, H1, H2,
-> +        vfncvt_bf16_to_e4m3)
-> +RVVCALL(OPFVV1, vfncvtbf16_f_f_w_ofp8e5m2, NOP_UU_B, H1, H2,
-> +        vfncvt_bf16_to_e5m2)
-> +GEN_VEXT_V_ENV(vfncvtbf16_f_f_w_ofp8e4m3, 1)
-> +GEN_VEXT_V_ENV(vfncvtbf16_f_f_w_ofp8e5m2, 1)
-> +
-> +/* vfncvtbf16.sat.f.f.w vd, vs2, vm # Convert BF16 to OFP8 with saturation. */
-> +RVVCALL(OPFVV1, vfncvtbf16_sat_f_f_w_ofp8e4m3, NOP_UU_B, H1, H2,
-> +        vfncvt_bf16_to_e4m3_sat)
-> +RVVCALL(OPFVV1, vfncvtbf16_sat_f_f_w_ofp8e5m2, NOP_UU_B, H1, H2,
-> +        vfncvt_bf16_to_e5m2_sat)
-> +GEN_VEXT_V_ENV(vfncvtbf16_sat_f_f_w_ofp8e4m3, 1)
-> +GEN_VEXT_V_ENV(vfncvtbf16_sat_f_f_w_ofp8e5m2, 1)
-> +
-> +/* Quad-width narrowing type for FP32 to OFP8 */
-> +#define QOP_UU_B uint8_t, uint32_t, uint32_t
-> +
-> +/* vfncvt.f.f.q vd, vs2, vm # Convert FP32 to OFP8. */
-> +RVVCALL(OPFVV1, vfncvt_f_f_q_ofp8e4m3, QOP_UU_B, H1, H4,
-> +        vfncvt_f32_to_e4m3)
-> +RVVCALL(OPFVV1, vfncvt_f_f_q_ofp8e5m2, QOP_UU_B, H1, H4,
-> +        vfncvt_f32_to_e5m2)
-> +GEN_VEXT_V_ENV(vfncvt_f_f_q_ofp8e4m3, 1)
-> +GEN_VEXT_V_ENV(vfncvt_f_f_q_ofp8e5m2, 1)
-> +
-> +/* vfncvt.sat.f.f.q vd, vs2, vm # Convert FP32 to OFP8 with saturation. */
-> +RVVCALL(OPFVV1, vfncvt_sat_f_f_q_ofp8e4m3, QOP_UU_B, H1, H4,
-> +        vfncvt_f32_to_e4m3_sat)
-> +RVVCALL(OPFVV1, vfncvt_sat_f_f_q_ofp8e5m2, QOP_UU_B, H1, H4,
-> +        vfncvt_f32_to_e5m2_sat)
-> +GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e4m3, 1)
-> +GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e5m2, 1)
-> +
->  /*
->   * Vector Reduction Operations
->   */
+
+> Changes in v2:
+> - Merged v1 patch 2 & 3 to v2 patch 3, v1 patch 4 & 5 to v2 patch 4
+> - Added new v2 patch 2 to refactor the IEEE format NaN classification
+>   functions (float16, bfloat16, float32, float64) to use internal helper
+>   functions, reducing code duplication and improving maintainability.
+>   The OCP FP8 NaN classification functions follow the same pattern.
+> - Refactored softfloat implementation to use capability-based FloatFmt
+>   flags (no_infinity, limited_nan, overflow_raises_invalid, normal_frac_max)
+>   instead of monolithic flags
+> - Removed ocp_fp8e5m2_no_signal_nan and ocp_fp8_same_canonical_nan flags
+>   from float_status; now using local float_status with no_signaling_nans
+>   and default_nan_pattern for RISC-V Zvfofp8min instructions
+> - Rebased on latest riscv-to-apply.next with zvfbfa v3 patchset
+> 
+> References
+> * OCP FP8 specification:
+>   https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1
+> * Zvfofp8min specification (v0.2.1 commit e1e20a7):
+>   https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp8min.adoc
+> * Zvfofp4min specification (v0.1 commit e1e20a7):
+>   https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp4min.adoc
+> 
+> PS: This series depends on the Zvfbfa extension patchset which introduces:
+>   - The altfmt field in VTYPE CSR
+>   - BF16 vector operations infrastructure
+>   - vfwcvtbf16.f.f.v and vfncvtbf16.f.f.w base instructions
+> 
+> v2: <20260127063723.442734-1-max.chou@sifive.com>
+> v1: <20260108151650.16329-1-max.chou@sifive.com>
+> 
+> Based-on: <20260127014227.406653-1-max.chou@sifive.com>
+> 
+> Max Chou (19):
+>   target/riscv: rvv: Fix NOP_UU_B vs2 width
+>   fpu/softfloat: Refactor IEEE format NaN classification to share code
+>   fpu/softfloat: Refactor floatx80 format NaN classification to share
+>     code
+>   target/i386: Fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
+>   fpu/softfloat: Support OCP(Open Compute Project) OFP8 data type
+>   fpu/softfloat: Support OCP(Open Compute Project) OFP4 data type
+>   target/riscv: Add cfg properity for Zvfofp8min extension
+>   target/riscv: Add implied rules for Zvfofp8min extension
+>   target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
+>     conversion for Zvfofp8min extension
+>   target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16 to OFP8
+>     conversion for Zvfofp8min extension
+>   target/riscv: rvv: Add vfncvtbf16.sat.f.f.w instruction for Zvfofp8min
+>     extension
+>   target/riscv: rvv: Add vfncvt.f.f.q and vfncvt.sat.f.f.q instructions
+>     for Zvfofp8min extension
+>   target/riscv: Expose Zvfofp8min properity
+>   disas/riscv: Add support of Zvfofp8min extension
+>   target/riscv: Add cfg properity for Zvfofp4min extension
+>   target/riscv: Add implied rules for Zvfofp4min extension
+>   target/riscv: rvv: Add vfext.vf2 instruction for Zvfofp4min extension
+>   target/riscv: Expose Zvfofp4min properity
+>   disas/riscv: Add support of Zvfofp4min extension
+> 
+>  disas/riscv.c                              |  12 +
+>  fpu/softfloat-parts.c.inc                  | 159 +++++++++---
+>  fpu/softfloat-specialize.c.inc             | 287 +++++++++++----------
+>  fpu/softfloat.c                            | 220 +++++++++++++++-
+>  include/fpu/softfloat-types.h              |  17 ++
+>  include/fpu/softfloat.h                    | 128 ++++++++-
+>  target/i386/tcg/fpu_helper.c               |  30 +--
+>  target/riscv/cpu.c                         |  32 ++-
+>  target/riscv/cpu_cfg_fields.h.inc          |   2 +
+>  target/riscv/helper.h                      |  15 ++
+>  target/riscv/insn32.decode                 |   8 +
+>  target/riscv/insn_trans/trans_rvbf16.c.inc |  32 ++-
+>  target/riscv/insn_trans/trans_rvofp4.c.inc |  43 +++
+>  target/riscv/insn_trans/trans_rvofp8.c.inc | 105 ++++++++
+>  target/riscv/insn_trans/trans_rvv.c.inc    |  39 +++
+>  target/riscv/tcg/tcg-cpu.c                 |  10 +
+>  target/riscv/translate.c                   |   2 +
+>  target/riscv/vector_helper.c               | 135 +++++++++-
+>  18 files changed, 1072 insertions(+), 204 deletions(-)
+>  create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
+>  create mode 100644 target/riscv/insn_trans/trans_rvofp8.c.inc
+> 
 > -- 
 > 2.52.0
 > 
