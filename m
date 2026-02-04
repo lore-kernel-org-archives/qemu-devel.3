@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550C9EA7943
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 20:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEC1EA7944
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 21:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnjlK-0001B9-Bl; Wed, 04 Feb 2026 15:46:10 -0500
+	id 1vnjyR-0004ik-PS; Wed, 04 Feb 2026 15:59:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnjlJ-0001AR-3s
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:46:09 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnjlH-0003fv-Fr
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:46:08 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8231061d234so224242b3a.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 12:46:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vnjyQ-0004iS-26
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:59:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vnjyO-0005dC-5x
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:59:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770238778;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=i0cw9t1aWTKQ1/nKKYDKQelKwsT2XNqw2beHE8+3rFQ=;
+ b=KmWswqqBRNhi7CDUheqz0yYjbUHgNK3JCOXrIB+7IQsRtUBxVv6L5urbGc/J/y+GjQqkyI
+ hd1XP1ESr/cYUPQUSulcZd4mkb2xsnGZj4rf8e0tmNUAUhMc6Mv63NQTNwe9qTARd5LIkI
+ abI09ikvocJH+s3s8G6xSsTcJk7OD2Y=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-358-GNy0hmi2Pr-6lICWLZTECQ-1; Wed, 04 Feb 2026 15:59:36 -0500
+X-MC-Unique: GNy0hmi2Pr-6lICWLZTECQ-1
+X-Mimecast-MFC-AGG-ID: GNy0hmi2Pr-6lICWLZTECQ_1770238776
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-89473f5a755so8394136d6.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 12:59:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770237965; x=1770842765; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lun9Lb+QX4WVFdWMEaSyNUaYuqr3Hka1aVgD0N5WlBQ=;
- b=TNss9zpILBBNpkJiLxlv8sdr2wDGy30rd6Lt/V2OLIVhrXR3dgMQieUJVMTUl2qLIi
- uYh/3oVb1GhswPKaykmymZlJA+ZlBTSFxzdcR2b84MtHEsDwZrReQJlGG/IcXFoyZhSt
- /2EtWv6KkZk/hGHwdLZGTXbrIYfgN7OVU/Wp9n+bwLfcPkdB7A44kf06eODqyrki6hSb
- VO/EEo/EzYZKqTo3H1I0RX6t/xbog/U4f9U4c2IHMg+6Znxw/0loowN6fyDfYwg1ti1t
- rkahFIvaATELq9ZiwgmGVR3y2W4by/eqIV2ay4XTsPUbk/tXXV2F029wPneINOrMNobT
- h82Q==
+ d=redhat.com; s=google; t=1770238776; x=1770843576; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=i0cw9t1aWTKQ1/nKKYDKQelKwsT2XNqw2beHE8+3rFQ=;
+ b=dGtVuQ+J5Dl6R4vAc/6QvKBn+6L42hSfonCPcR+N6IwgHs7stkz1Z/gL4f7M7GJRlz
+ d09U0sH/m3vHrV+rxrkhHMRksPMOzz6RWvyzR9yAzTzDwIpulAtMn4Nonm+bnccnY4JI
+ h5GxVy5xrolH5GyNyT/ogUQ0cOYcnkb2/YpPsfJb0SVv90T72RuBhFf4ksD4wHq+MHUs
+ kxvl5JPzV3PGhlcBdjOpeaskceIqX4fLIRqSsstOL0KeKnF6KujS9RWgnZ2rRNhmc3/B
+ 3j5cPivX+RvkexWOSEF4KIrMEXAojKco2qELPXhcIBkiV8GwXEqJ4mcRqQG0ObkoXlks
+ uEvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770237965; x=1770842765;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lun9Lb+QX4WVFdWMEaSyNUaYuqr3Hka1aVgD0N5WlBQ=;
- b=gxGYdmNZX5NnZVGh+Eu9nhXU05OmARy6NxlOhKs6KwN/FQVXRjFP/2d4Tjv8Y6L4zN
- gUmXFx5pjrE/ZYGRgh2MNEkjK4TTDguyGcq4bMAdi1k24jwymD7I4ei1MEULHVVRfYsD
- W4jSinUp/SdOrTetV/mZjLCtd0NsGuIJvmjm1j3iLvAsJ0kWUDQaSSMYGDy97ZCe0inT
- tgeOEWbTeQ5lwm8cV066++UlVUtYQGE/PYOKN4Dnwym2udQz8wjwzVLMVpLNUKrNhliG
- TRbHCYC2elVv4i43CH1EUSGTa0d4QcOndBWu4Ch06KuARNQWgfK8lj3zUOwZJPs9Ng2Q
- AHQA==
-X-Gm-Message-State: AOJu0YyZB5HLL5mJRGH60ZZZ9EH4exPtVhO1E9tdTlqg4ahHbr2kxStd
- UkGOg1QrAy5iWthbYeFn96tg91rud32qEBAwkXT+9nXzZqqN/XCHMLV2GF7/82iZiK4=
-X-Gm-Gg: AZuq6aIzBSccG5u7VvQqetxLZ37UxwhyyKj7U2nGFke3Bu2xFvmAFqa74pbKgCX8mSN
- OFQzlG7i6EWIHti9/BBgprueyZgJeEXUPkDTDehiZUnEEQ8L7Banf959lS3fQaCxOeriiqu1RZV
- Xnvs3b4Iaa5VKXZK6q4JcGvqTAQpURWb525GAJAbIk7jdPvAmJu4dA+9RWp4rIjhJNRwTFK+IHX
- ZUU4pwk8P0Ep10MUO2piJFYJZ95g1eAVOb1vHCC1uWYZ9LAC56MZROcpJGPNBrNm/bBv7tGtPoL
- d623UkYTI1ouMm1tQRscdb50PBR3y6rGSaYkJ/zgswMFvCW76X9gqE7JdhIiC7rerlDwR4uMTNt
- 3sEFT/yOSrKMuSy+ADOpg0f8cU3FOflE5NIzB/wayXpl9AktOBBuHjVsb8LTBDwDmyp1G2SDuAO
- tJ6ZK0lSCXpYbftE9gArcEUFJQmuw3RT8vpOuaNTIccPSYtPLk3U2b8bxAdS2vf1WuPTpeCV+Oe
- tWXJZmp3AqzvePioClWnRQmvrRADyAod7n3AtYijg==
-X-Received: by 2002:a05:6a20:d523:b0:34e:7bef:e820 with SMTP id
- adf61e73a8af0-39372413fa5mr4606240637.41.1770237965482; 
- Wed, 04 Feb 2026 12:46:05 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:110e:c2b5:eb10:f92d?
- (bg30dhzn9pdmmwqf9rf0.ip6.superloop.au.
- [2401:d002:dc0f:2100:110e:c2b5:eb10:f92d])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6c8322127bsm2852541a12.12.2026.02.04.12.46.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 12:46:05 -0800 (PST)
-Message-ID: <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
-Date: Thu, 5 Feb 2026 06:45:59 +1000
+ d=1e100.net; s=20230601; t=1770238776; x=1770843576;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i0cw9t1aWTKQ1/nKKYDKQelKwsT2XNqw2beHE8+3rFQ=;
+ b=gbIT4OJAp3sZBrN3HBgrs/xaw8r4UlD+bN31NB3dKobNYRdjs+ldztPC7Bq82JQQcZ
+ kDIdtbEDOxWAr4xEDOjMMQNGrQIMkGdkZX/Ip+lLazXOfeqEwJKzt9ObVS0/7WixOPN0
+ LsXESL8GniRneC/Zh0XyIPzRURXh60BBnEuRQ8AX3CBQsuf7dv4sqwFuBdbfw8J6Mtyv
+ KDt712gQjT51Iv1spRuDqc1a5+WV2vDIkRv/Yw0biED6tiVyDXsJW83/C9mrUz77feit
+ rAxj5voOCypBNxNA+DS1H+TNedXKs0sFCm4eIHcXHm3lhA2ShK7aSpDuseHeLkLZtDt7
+ 97Pg==
+X-Gm-Message-State: AOJu0YwDp5sUxhJyHrnaQDp0bqnEb3OFmOrF0IcFzpZ+n/5Rde4h8/7r
+ OAC16qYBTCRUINDDHop6wMbXZ9eTz3uvzYVnLR7b2CVGFhcDcw64X5APbAoCLlVgkMG3HJHomQI
+ TQCto/LvztNkEedIm4A/7Nrp30jYUWplngJc4yUBgVSD/K2LOZtEQVzRn
+X-Gm-Gg: AZuq6aJE35wXmcPzzRiW5xlMbbXvzuzwIFRMO2t9mruPTN4K0AVhfXTe+NNH1lICjnW
+ x6mAQ+W4vRdtC98nYbBB/ZqRcnIA+6DrFjrOEoa0gSzfbhsDkqiJZQpc0K9eIH6vjeC/COHqNIo
+ t/y0VvY1DGJXZ9nWOER27lnu+/ZskF7O9x7+E55vmvnQDxuwOL2QTiL52PsX1MttsCy5RGEQaCh
+ pgF98pRH4zcnndrk/u8XBIfA8APfvk75VJv+Jtr5dcx/KwFW3++doTOxjKBcQk5UWHPdngzbNz1
+ xgCIPR1Bfivrxv9cZOesUQgFSGuC69ZR+UTTKWyhjBqyNZzTYtPFCdHYzcB34u9kx+qaIhfSDH1
+ MLiU=
+X-Received: by 2002:a05:6214:c2d:b0:880:854:908f with SMTP id
+ 6a1803df08f44-895221a77ecmr67515336d6.38.1770238775997; 
+ Wed, 04 Feb 2026 12:59:35 -0800 (PST)
+X-Received: by 2002:a05:6214:c2d:b0:880:854:908f with SMTP id
+ 6a1803df08f44-895221a77ecmr67515006d6.38.1770238775571; 
+ Wed, 04 Feb 2026 12:59:35 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89521bfe7f6sm27324936d6.5.2026.02.04.12.59.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Feb 2026 12:59:34 -0800 (PST)
+Date: Wed, 4 Feb 2026 15:59:33 -0500
+From: Peter Xu <peterx@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 6/7] memory: Factor out common ram region initialization
+Message-ID: <aYOzNeoBw0Hu3zk2@x1.local>
+References: <cover.1770042013.git.balaton@eik.bme.hu>
+ <e938355d877a0f8645ca51f863517f8a73febe2c.1770042013.git.balaton@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
- with shifts
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <20260204052456.970605-1-richard.henderson@linaro.org>
- <20260204052456.970605-7-richard.henderson@linaro.org>
- <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
- <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
- <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e938355d877a0f8645ca51f863517f8a73febe2c.1770042013.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,27 +120,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 20:41, Paolo Bonzini wrote:
->     This is primarily for x86.
-> 
->     (1) movz is 2 operand, so that may avoid clobbering an input,
->     (2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.
-> 
->     Because of these, there's a comment somewhere that says we'll prefer extract over and
->     (perhaps in tcg_gen_andi_* or fold_and).  IIRC this also happens to simplify ppc and
->     s390x
->     insn selection (and vs rotate and mask).  AFAIK, no other hosts are penalized.
-> 
-> 
-> I think it would be better to pick a canonical form for AND with 2^n-1 and handle 
-> conversion to extract (like PPC rotates or movz) in the backend.
-> 
-> Picking AND as the canonical form also avoids makes the macros for extract validity 
-> simpler too; adding an extra constraint for immediate 2^n-1 is easier and it generalizes 
-> to other PPC rotate and mask cases.
+On Mon, Feb 02, 2026 at 03:28:17PM +0100, BALATON Zoltan wrote:
+> -bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
+> -                                            Object *owner,
+> -                                            const char *name,
+> -                                            uint64_t size,
+> -                                            uint32_t ram_flags,
+> -                                            Error **errp)
+> +static bool memory_region_do_init_ram(MemoryRegion *mr,
+> +                                      Error *err, Error **errp)
 
-Picking AND means we have to use "r,0,ri" for x86, losing register allocation flexibility.
+I keep thinking taking two Errors here is almost not readable for an init
+function.  It only makes sense to me if it's something like
+error_propagate().  E.g. we also have migrate_error_propagate().  I can't
+think of anything that should pass in two Errors..
 
+I'm not sure how bad it is we keep the old code as-is.. but if we really
+want to provide some helpers, IMHO we should still avoid this, maybe:
 
-r~
+memory_region_ram_setup(mr)
+{
+  mr->ram = true;
+  mr->terminates = true;
+  mr->destructor = memory_region_destructor_ram;
+}
+
+memory_region_error_propagate(mr, err, errp)
+{
+  mr->size = int128_zero();
+  object_unparent(OBJECT(mr));
+  error_propagate(errp, err);
+}
+
+Then taking one example:
+
+memory_region_init_ram_flags_nomigrate()
+{
+  Error *err = NULL;
+  memory_region_init(mr, owner, name, size);
+  memory_region_ram_setup(mr);
+  mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
+  if (err) {
+    memory_region_error_propagate(mr, err, errp);
+    return false;
+  }
+  return true;
+}
+
+Thanks,
+
+-- 
+Peter Xu
+
 
