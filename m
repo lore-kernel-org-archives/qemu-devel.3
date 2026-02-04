@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6491AEA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E586EA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniA4-00072e-Mp; Wed, 04 Feb 2026 14:03:37 -0500
+	id 1vni9z-0006kI-6h; Wed, 04 Feb 2026 14:03:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA2-0006vy-TK
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9x-0006ie-3F
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA0-0007mh-CT
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:34 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9v-0007lR-An
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231811;
+ s=mimecast20190719; t=1770231806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
- b=aIrJjGo6mtWGgCjVHhe8x4uh+e2EeFC0UeZO5uzwk4QpKF0bEKJjNwIW0wE2MzlJwIgv/l
- szJJck8U5xjgTPZVVTsnsF660moDouIPKnF/DNbDOO1ykE0bw0X+RBQu9JjLmYhF2jO6wb
- v20rLpfpCf/YkfUF7gZDbA1ZmSvvcu8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fvEsUtD4PbmE+Ms6GIDHh3NZPUYzXZdD4oNou5cZ8kI=;
+ b=e4ztpHpokD0Lq58O91pd4tDwmGlWrxa8u8LHwmuJtL3BFkdPKLkLMaKmhmKyv3yk2ZzSzV
+ L4848oUTBONhObD3x61UK8l+bV5zcVUrGzfBEll1fy9MANE1RZyafYzolz7zxJ/gZ6cCjK
+ YHe4ABhdcdK7ATiCFftl7tGASGcI+0w=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-Qgs30U1AOAS9TIS-Q1dV6A-1; Wed, 04 Feb 2026 14:03:26 -0500
-X-MC-Unique: Qgs30U1AOAS9TIS-Q1dV6A-1
-X-Mimecast-MFC-AGG-ID: Qgs30U1AOAS9TIS-Q1dV6A_1770231805
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42fdbba545fso1119891f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:25 -0800 (PST)
+ us-mta-138-KfdjpgtBPeCpVuONFhQwDA-1; Wed, 04 Feb 2026 14:03:25 -0500
+X-MC-Unique: KfdjpgtBPeCpVuONFhQwDA-1
+X-Mimecast-MFC-AGG-ID: KfdjpgtBPeCpVuONFhQwDA_1770231803
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43591aacca2so156043f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231804; x=1770836604; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231802; x=1770836602; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
- b=hXbGoMmUjTrwQhS4rpQ4DKGM5hsTZ9JOkr3JgQ7KcQdWVRX0xLU7XKxBMUKLD5I/9s
- fgJTNEYtBjuTct1X537OkiVMrbsGmhHUw/qhbAkp5alsr/UfQrhagP8qzIxpCQkgFA+z
- bdc3ynSH/QKltShmqX0KEMG7EhDB3SfsPtDQRIKjORANZzMHMD2thaFJHWSYYwyhbFM7
- J8yuiwQvmH4yMDSrqQfO6XfbW4+2vNud52fCQqdaJmHEKbynsvIw1OYh2JE44UoRz7PW
- m6xXfw7IMIH6im7AjErg1t+qC/flKmKMaX4bnquAFvN4hAw2iaTNM3tpN/UFzXLzKeon
- RTEw==
+ bh=fvEsUtD4PbmE+Ms6GIDHh3NZPUYzXZdD4oNou5cZ8kI=;
+ b=eJMLG4nynrTgNNBE0aDfuGLhsWdUNR5Vt+nxbiJhf11jfX7Ku9VAr05j7dNrhc4W9l
+ Gff0Y5UPLWTrwuWNGRScqgr/2G+kv3nbJ9ITZ+AuQ2K0bvS3pdFdJQwC8NSsEQNx5HTY
+ YrvhxRjfEvw5hThN2dh/UoBl1sIc+ZeuaceU6ArdpZSyULwP7tt/gKDj3fLgRtkZFdIm
+ vbxJliTfSnN5ZegZNGq8abVmE57XrDi3dT9M37QVQe5RnSvX9pPZDdOzcWwvAq3KkNT6
+ n8ATAlWcqOFwfzA7XobJ0Hj+hc3UgV97sDNfHkjxDpZ7im2G3ryhK1JvT9/cjWfGUbUO
+ kJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231804; x=1770836604;
+ d=1e100.net; s=20230601; t=1770231802; x=1770836602;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
- b=lmzKFQSUa3B1QOhOvlrsh8Kg29hSnXaoo9cIjmqzdLjOlVJZ6eCH54GrT6UcMhwVta
- tij93oP3xI8q9U7IHCd+fMX8P3vqAplTyhh2N3AEkZnL+Ag/zHyP6kka75ohsEQas5gF
- yMR/geIWerrHs1dpXpuozSQ7DCAG1sbDIctHC0F6IZTNfRCuq2lEDTEY89u4FKWk4EtL
- 8CGL3i3U5sZmV9nZPr5m8vy0xGEVdE0uNsv8dwcZ/L/FYpoWienELboiJDkl0dmqaEZ8
- B7K2GK78MLWKeh6uWuf89E8J8llJeTpl9keKJhaKKC8F4nnUBsQ6ZC7YAeu9omU0jqP0
- WXDw==
-X-Gm-Message-State: AOJu0YwElSMhTKvZPqfz16RTvrhCV9hli8L/v09+sTt8qEc9ZX10/bbe
- Db3L0jehvADbNB6D8fzCw5TD7Z2gGxnjGxdPBRYx10wKQtSgObqrloDlCNRQqu7GOdYZuWYqlmQ
- 76hKV9bcSy0DGvBQq37ho9eb4BQG0g2nypRPPsKats19WobjfkLG1b7mGEKvtf/1oWNhgxtUeCn
- hQxSqK3XcLMQela51/PmdNcK2jg0Ero+tWHw==
-X-Gm-Gg: AZuq6aJKp0BAQs5rL9OUkrjPw3e4RvlfiEz9I1GKY0Ti/xiKqXVTE3Ao+VhTpXrYbfo
- B2DbemjRdmpNP4u/kr0cNVfVPLUiQMtMfKmh5KbVmkEvSALuDb56wlfMnXsidld82+IDk9yzuBm
- DSnelAKNzLAYWw2nkWKhhU+/9wxX6rx1uSC4+MgDSqDnB66+as9MZRYvX2XSbiMtfevqh47EcGE
- vtMxQueA+lgHrE53XBUOqdH3oleI3C7rxstJtcunbSSWG0JtItd1iSHwXnkqRSlgBbEuFpDRXF6
- pSttQLbAk9euxjHtVayUv0qLoOnGhoUPGPKplDpgxJY6E+vcOBl787QGOkCv0L44OMkLiuc9Mf9
- XVVgWhV51IXBZQjBmC00NGZ0lMaUFlegCUQ==
-X-Received: by 2002:a05:600c:1c22:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-483179da808mr3365795e9.16.1770231804530; 
- Wed, 04 Feb 2026 11:03:24 -0800 (PST)
-X-Received: by 2002:a05:600c:1c22:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-483179da808mr3365375e9.16.1770231803992; 
- Wed, 04 Feb 2026 11:03:23 -0800 (PST)
+ bh=fvEsUtD4PbmE+Ms6GIDHh3NZPUYzXZdD4oNou5cZ8kI=;
+ b=R9HOpISzZsgRXizgU3ggf0jRMVS58K0hRSdJ4DnV8yZ2LilP4xy77IlgnIKsun8SEu
+ EqlKzj4jhdtb/e5wRdz7shkQFSuElpFN6nF4Hdyw6t/TlJisxpAPdlEbrmuF/H7gsuh4
+ RfLgchJvNfJl+zbB2qk6yTgSj765h2GBWBVNXmA51yIR2mKBpu+fI/AEvMRfoAt/Fmzz
+ D3bm73C761qLiM6bD+bpBiquOOcjVJkq+tDK9ERk5x/vz26veZz+4RgG5jzTB+XbwMb7
+ INmDwN8bx572k+OMDbelnSDRTd2kLYOvwq9F7eKgSNll1r7KyPpI0oOsQT1Eh1i0smzw
+ IVew==
+X-Gm-Message-State: AOJu0Yz2qEuPHuttG95zEbgHac5Ah9pWX5rWq69kFo1rSJRtwVw1jZIa
+ hEKiH6s9KyF8PXDl1WjCl6pg5R87xhcdQzXqP5nvOkisEedHovogfYxe52XSDeLGuLejYAvssJg
+ UB3mIHdDn9VweBzd8mHRgf8NLnUbZFo9sh0wsftcWys4Yc5PzCdPMADGpxZUcG6WlxnxSBlsMWY
+ 5gt+ZtXWsZcSFTcS2oCyw2ujcGLTDCgQwdDw==
+X-Gm-Gg: AZuq6aLcRCw++4PReUQ/GqfzJvYPrmlphSkTiiqLfMFWd8rt3eFFdlkR5VBTD1DabuF
+ qLgkX2Qh3V+Ee8sbPUmo9iyCF/QGpdWkZjkb68FcNaFWHpxhXua24/hwG0K1wDT0sKUrvoggolb
+ q3/2EpNbevOhPHI8ZsFcvVp9TXvDorkKosi3KG3aq42cuODgNQEaSkg2R6+5/Er7GCq9It7rfrf
+ /IhJ05NYUzyz7qVXWjmwSZeNUbc6ndZ/DoVgBWOJNeOj+AuWELh2F+TjQTn7mRY6i10yPuIvBsd
+ oMYo8FLBw9NAnEUK/DVLtT1XB5oR+mB647CnEzKxgqMUy8+GUEIqXe41icZby6ZEhrf18auLodu
+ 68to1zbfL2kjGvf2R2geII0/0YNnJ4aUG0w==
+X-Received: by 2002:a05:6000:2882:b0:436:141:82f8 with SMTP id
+ ffacd0b85a97d-43617e41f07mr6095256f8f.25.1770231802325; 
+ Wed, 04 Feb 2026 11:03:22 -0800 (PST)
+X-Received: by 2002:a05:6000:2882:b0:436:141:82f8 with SMTP id
+ ffacd0b85a97d-43617e41f07mr6095194f8f.25.1770231801767; 
+ Wed, 04 Feb 2026 11:03:21 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d4a6b1sm3760595e9.11.2026.02.04.11.03.22
+ ffacd0b85a97d-4361805faddsm8349158f8f.33.2026.02.04.11.03.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:23 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:21 -0500
+ Wed, 04 Feb 2026 11:03:21 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:19 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 14/51] pcie: Add a function to check if pasid privileged mode
- is enabled
-Message-ID: <7b775ce1e595487808620877e77d4158ada2b0ce.1770231744.git.mst@redhat.com>
+Subject: [PULL 13/51] intel_iommu: Support memory operations with
+ pre-translated addresses
+Message-ID: <40376c5eb89f2961fef811db0ca4c15dfa673a6b.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,7 +100,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,62 +130,193 @@ From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251029105137.1097933-4-clement.mathieu--drif@eviden.com>
+Message-Id: <20251029105137.1097933-3-clement.mathieu--drif@eviden.com>
 ---
- hw/pci/pcie.c         | 21 ++++++++++++++++-----
- include/hw/pci/pcie.h |  1 +
- 2 files changed, 17 insertions(+), 5 deletions(-)
+ hw/i386/intel_iommu.c | 118 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 81 insertions(+), 37 deletions(-)
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index c481c16c0f..50fc4aa8eb 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1340,6 +1340,16 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
-     dev->exp.pri_cap = offset;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 80b21a6468..7e7c31cb55 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3985,6 +3985,25 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+     }
  }
  
-+static inline bool pcie_pasid_check_ctrl_bit_enabled(const PCIDevice *dev,
-+                                                     uint16_t mask)
++static void vtd_prepare_identity_entry(hwaddr addr, IOMMUAccessFlags perm,
++                                         uint32_t pasid, IOMMUTLBEntry *iotlb)
 +{
-+    if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
-+        return false;
++    iotlb->iova = addr & VTD_PAGE_MASK_4K;
++    iotlb->translated_addr = addr & VTD_PAGE_MASK_4K;
++    iotlb->addr_mask = ~VTD_PAGE_MASK_4K;
++    iotlb->perm = perm;
++    iotlb->pasid = pasid;
++}
++
++static inline void vtd_prepare_error_entry(IOMMUTLBEntry *entry)
++{
++    entry->iova = 0;
++    entry->translated_addr = 0;
++    entry->addr_mask = ~VTD_PAGE_MASK_4K;
++    entry->perm = IOMMU_NONE;
++    entry->pasid = PCI_NO_PASID;
++}
++
+ static IOMMUTLBEntry vtd_iommu_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
+                                          IOMMUAccessFlags flag, int iommu_idx)
+ {
+@@ -3996,16 +4015,29 @@ static IOMMUTLBEntry vtd_iommu_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
+         .pasid = vtd_as->pasid,
+     };
+     bool success;
++    bool is_write = flag & IOMMU_WO;
+ 
+     if (likely(s->dmar_enabled)) {
+-        success = vtd_do_iommu_translate(vtd_as, vtd_as->bus, vtd_as->devfn,
+-                                         addr, flag & IOMMU_WO, &iotlb);
++        /* Only support translated requests in scalable mode */
++        if (iommu_idx == VTD_IDX_TRANSLATED && s->root_scalable) {
++            if (vtd_as->pasid == PCI_NO_PASID) {
++                vtd_prepare_identity_entry(addr, IOMMU_RW, PCI_NO_PASID,
++                                           &iotlb);
++                success = true;
++            } else {
++                vtd_prepare_error_entry(&iotlb);
++                error_report_once("%s: translated request with PASID not "
++                                  "allowed (pasid=0x%" PRIx32 ")", __func__,
++                                  vtd_as->pasid);
++                success = false;
++            }
++        } else {
++            success = vtd_do_iommu_translate(vtd_as, vtd_as->bus, vtd_as->devfn,
++                                            addr, is_write, &iotlb);
++        }
+     } else {
+         /* DMAR disabled, passthrough, use 4k-page*/
+-        iotlb.iova = addr & VTD_PAGE_MASK_4K;
+-        iotlb.translated_addr = addr & VTD_PAGE_MASK_4K;
+-        iotlb.addr_mask = ~VTD_PAGE_MASK_4K;
+-        iotlb.perm = IOMMU_RW;
++        vtd_prepare_identity_entry(addr, IOMMU_RW, vtd_as->pasid, &iotlb);
+         success = true;
+     }
+ 
+@@ -4414,6 +4446,37 @@ static int vtd_int_remap(X86IOMMUState *iommu, MSIMessage *src,
+                                    src, dst, sid, false);
+ }
+ 
++static void vtd_report_sid_ir_illegal_access(IntelIOMMUState *s, uint16_t sid,
++                                             uint32_t pasid, hwaddr addr,
++                                             bool is_write)
++{
++    uint8_t bus_n = VTD_SID_TO_BUS(sid);
++    uint8_t devfn = VTD_SID_TO_DEVFN(sid);
++    bool is_fpd_set = false;
++    VTDContextEntry ce;
++
++    /* Try out best to fetch FPD, we can't do anything more */
++    if (vtd_dev_to_context_entry(s, bus_n, devfn, &ce) == 0) {
++        is_fpd_set = ce.lo & VTD_CONTEXT_ENTRY_FPD;
++        if (!is_fpd_set && s->root_scalable) {
++            vtd_ce_get_pasid_fpd(s, &ce, &is_fpd_set, pasid);
++        }
 +    }
-+    return (pci_get_word(dev->config + dev->exp.pasid_cap + PCI_PASID_CTRL) &
-+                mask) != 0;
++
++    vtd_report_fault(s, VTD_FR_SM_INTERRUPT_ADDR, is_fpd_set, sid, addr,
++                     is_write, pasid != PCI_NO_PASID, pasid);
 +}
 +
- uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev)
- {
-     if (!pcie_pri_enabled(dev)) {
-@@ -1359,11 +1369,12 @@ bool pcie_pri_enabled(const PCIDevice *dev)
- 
- bool pcie_pasid_enabled(const PCIDevice *dev)
- {
--    if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
--        return false;
--    }
--    return (pci_get_word(dev->config + dev->exp.pasid_cap + PCI_PASID_CTRL) &
--                PCI_PASID_CTRL_ENABLE) != 0;
-+    return pcie_pasid_check_ctrl_bit_enabled(dev, PCI_PASID_CTRL_ENABLE);
-+}
-+
-+bool pcie_pasid_priv_enabled(PCIDevice *dev)
++static void vtd_report_ir_illegal_access(VTDAddressSpace *vtd_as,
++                                         hwaddr addr, bool is_write)
 +{
-+    return pcie_pasid_check_ctrl_bit_enabled(dev, PCI_PASID_CTRL_PRIV);
- }
++    uint8_t bus_n = pci_bus_num(vtd_as->bus);
++    uint16_t sid = PCI_BUILD_BDF(bus_n, vtd_as->devfn);
++
++    vtd_report_sid_ir_illegal_access(vtd_as->iommu_state, sid, vtd_as->pasid,
++                                     addr, is_write);
++}
++
+ static MemTxResult vtd_mem_ir_read(void *opaque, hwaddr addr,
+                                    uint64_t *data, unsigned size,
+                                    MemTxAttrs attrs)
+@@ -4425,9 +4488,11 @@ static MemTxResult vtd_mem_ir_write(void *opaque, hwaddr addr,
+                                     uint64_t value, unsigned size,
+                                     MemTxAttrs attrs)
+ {
++    IntelIOMMUState *s = opaque;
+     int ret = 0;
+     MSIMessage from = {}, to = {};
+     uint16_t sid = X86_IOMMU_SID_INVALID;
++    uint32_t pasid;
  
- bool pcie_ats_enabled(const PCIDevice *dev)
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index fc02aeb169..d4e065db82 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -165,5 +165,6 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
- uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev);
- bool pcie_pri_enabled(const PCIDevice *dev);
- bool pcie_pasid_enabled(const PCIDevice *dev);
-+bool pcie_pasid_priv_enabled(PCIDevice *dev);
- bool pcie_ats_enabled(const PCIDevice *dev);
- #endif /* QEMU_PCIE_H */
+     from.address = (uint64_t) addr + VTD_INTERRUPT_ADDR_FIRST;
+     from.data = (uint32_t) value;
+@@ -4435,9 +4500,16 @@ static MemTxResult vtd_mem_ir_write(void *opaque, hwaddr addr,
+     if (!attrs.unspecified) {
+         /* We have explicit Source ID */
+         sid = attrs.requester_id;
++        pasid = attrs.pid != 0 ? attrs.pid : PCI_NO_PASID;
++
++        if (attrs.address_type == PCI_AT_TRANSLATED &&
++            sid != X86_IOMMU_SID_INVALID) {
++            vtd_report_sid_ir_illegal_access(s, sid, pasid, from.address, true);
++            return MEMTX_ERROR;
++        }
+     }
+ 
+-    ret = vtd_interrupt_remap_msi(opaque, &from, &to, sid, true);
++    ret = vtd_interrupt_remap_msi(s, &from, &to, sid, true);
+     if (ret) {
+         /* Drop this interrupt */
+         return MEMTX_ERROR;
+@@ -4462,30 +4534,6 @@ static const MemoryRegionOps vtd_mem_ir_ops = {
+     },
+ };
+ 
+-static void vtd_report_ir_illegal_access(VTDAddressSpace *vtd_as,
+-                                         hwaddr addr, bool is_write)
+-{
+-    IntelIOMMUState *s = vtd_as->iommu_state;
+-    uint8_t bus_n = pci_bus_num(vtd_as->bus);
+-    uint16_t sid = PCI_BUILD_BDF(bus_n, vtd_as->devfn);
+-    bool is_fpd_set = false;
+-    VTDContextEntry ce;
+-
+-    assert(vtd_as->pasid != PCI_NO_PASID);
+-
+-    /* Try out best to fetch FPD, we can't do anything more */
+-    if (vtd_dev_to_context_entry(s, bus_n, vtd_as->devfn, &ce) == 0) {
+-        is_fpd_set = ce.lo & VTD_CONTEXT_ENTRY_FPD;
+-        if (!is_fpd_set && s->root_scalable) {
+-            vtd_ce_get_pasid_fpd(s, &ce, &is_fpd_set, vtd_as->pasid);
+-        }
+-    }
+-
+-    vtd_report_fault(s, VTD_FR_SM_INTERRUPT_ADDR,
+-                     is_fpd_set, sid, addr, is_write,
+-                     true, vtd_as->pasid);
+-}
+-
+ static MemTxResult vtd_mem_ir_fault_read(void *opaque, hwaddr addr,
+                                          uint64_t *data, unsigned size,
+                                          MemTxAttrs attrs)
+@@ -5145,14 +5193,10 @@ static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
+ 
+     if (vtd_is_interrupt_addr(addr)) {
+         vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
++        vtd_prepare_error_entry(&entry);
+         entry.target_as = &address_space_memory;
+-        entry.iova = 0;
+-        entry.translated_addr = 0;
+-        entry.addr_mask = ~VTD_PAGE_MASK_4K;
+-        entry.perm = IOMMU_NONE;
+-        entry.pasid = PCI_NO_PASID;
+     } else {
+-        entry = vtd_iommu_translate(iommu, addr, flags, 0);
++        entry = vtd_iommu_translate(iommu, addr, flags, VTD_IDX_UNTRANSLATED);
+     }
+ 
+     return entry;
 -- 
 MST
 
