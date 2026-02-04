@@ -4,36 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF854E9539C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3827FE95396
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncqL-0003KS-NA; Wed, 04 Feb 2026 08:22:53 -0500
+	id 1vncqN-0003LL-DG; Wed, 04 Feb 2026 08:22:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vncqH-0003IM-8j; Wed, 04 Feb 2026 08:22:50 -0500
+ id 1vncqJ-0003JX-Rw; Wed, 04 Feb 2026 08:22:51 -0500
 Received: from mail.avm.de ([2001:bf0:244:244::120])
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vncqE-00030z-AP; Wed, 04 Feb 2026 08:22:48 -0500
+ id 1vncqH-00031u-I9; Wed, 04 Feb 2026 08:22:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1770211360; bh=q4twjt2E4pRsujRgtku8JrJOS12+2byH1d3KqcJv0Gs=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=hx98ePk1z1z2qXnJ7JjFA5kEZbqkTslaJqE0hz42YgNsBxUl5a2HGHdSVEjxgNkDe
+ JZ3z3ZZR+WeXHOq/JqZinWVLDWxiHyNwOGilHBrskEVcUoMgbosrFmi3ZeVaKlxodb
+ 11k/Ax9+bRGV9mdzyJDf7BwEgXMY5byTO8MdbNiA=
 Received: from [172.16.0.1] (helo=mail.avm.de)
  by mail.avm.de with ESMTP (eXpurgate 4.55.0)
  (envelope-from <c.speich@avm.de>)
- id 6983481e-cb91-7f0000032729-7f000001d8e8-1
- for <multiple-recipients>; Wed, 04 Feb 2026 14:22:38 +0100
+ id 69834820-cb91-7f0000032729-7f000001d936-1
+ for <multiple-recipients>; Wed, 04 Feb 2026 14:22:40 +0100
 Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
  by mail.avm.de (Postfix) with ESMTP;
- Wed,  4 Feb 2026 14:22:38 +0100 (CET)
+ Wed,  4 Feb 2026 14:22:40 +0100 (CET)
 Received: from [127.0.1.1] ([172.17.89.139])
  by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2026020414223964-15148 ;
+ with ESMTP id 2026020414223966-15151 ;
  Wed, 4 Feb 2026 14:22:39 +0100 
-Date: Wed, 04 Feb 2026 14:22:25 +0100
-Subject: [PATCH v3 1/6] hw/sd: Switch read/write primitive to buf+len
+From: Christian Speich <c.speich@avm.de>
+Date: Wed, 04 Feb 2026 14:22:28 +0100
+Subject: [PATCH v3 4/6] hw/sd/sdhci: Don't use bounce buffer for ADMA
 MIME-Version: 1.0
-Message-Id: <20260204-sdcard-performance-b4-v3-1-dc1cf172ee57@avm.de>
+Message-Id: <20260204-sdcard-performance-b4-v3-4-dc1cf172ee57@avm.de>
 References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
 In-Reply-To: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
 To: qemu-devel@nongnu.org
@@ -44,24 +51,25 @@ X-Mailer: b4 0.14.2
 X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
  2025) at 04.02.2026 14:22:39,
  Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 04.02.2026 14:22:39, Serialize complete at 04.02.2026 14:22:39
+ 04.02.2026 14:22:41, Serialize complete at 04.02.2026 14:22:41
 X-TNEFEvaluated: 1
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
-X-purgate-ID: 149429::1770211358-B8E7371A-5E025E8A/0/0
+X-purgate-ID: 149429::1770211360-4BE4165A-D55E3678/0/0
 X-purgate-type: clean
-X-purgate-size: 10788
+X-purgate-size: 6515
 X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
 X-purgate: This mail is considered clean (visit https://www.eleven.de for
  further information)
 X-purgate: clean
 Received-SPF: pass client-ip=2001:bf0:244:244::120;
  envelope-from=c.speich@avm.de; helo=mail.avm.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,318 +82,158 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Christian Speich <c.speich@avm.de>
-From:  Christian Speich via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, read/writes are broken down into individual bytes which result
-in many function calls. This is quite bad for performance and since both
-the layer below and above work with larger buffers, it should be
-corrected.
+Currently, ADMA will temporarily store data into a local bounce buffer
+when transferring it. This will produce unneeded copies of the data and
+limit us to the bounce buffer size for each step.
 
-This patch is the first that switches the corresponding interface over to
-use a buf+len instead of a single byte. However, for most cases the
-implementation still only reads one byte and is then called again with
-the remaining buffer.
-
-Optimizations taking advantage of this new interface are to follow in the
-next commits.
+This patch now maps the requested DMA address and passes this buffer
+directly to sdbus_{read,write}_data. This allows to pass much larger
+buffers down to increase the performance. sdbus_{read,write}_data is
+already able to handle arbitrary length and alignments, so we do not
+need to ensure this.
 
 Signed-off-by: Christian Speich <c.speich@avm.de>
 ---
- hw/sd/core.c       | 26 ++++++++++++++---------
- hw/sd/sd.c         | 62 +++++++++++++++++++++++++++++++++++-------------------
- include/hw/sd/sd.h | 22 +++++++++++++------
- 3 files changed, 71 insertions(+), 39 deletions(-)
+ hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 55 insertions(+), 47 deletions(-)
 
-diff --git a/hw/sd/core.c b/hw/sd/core.c
-index 3568a81e809fe107cfd0b5cc33b8b5761b11ce04..594c5e011ba30940a33799f9032c92494ee0ca19 100644
---- a/hw/sd/core.c
-+++ b/hw/sd/core.c
-@@ -113,21 +113,24 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c86dfa281f4b0218bf6dda7a38d46abfc9638450..6e07711478cb6ca046a7d371a82e2c682ebbda00 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -775,7 +775,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
  
--        sc->write_byte(card, value);
-+        sc->write_data(card, &value, 1);
-     }
- }
- 
- void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
+ static void sdhci_do_adma(SDHCIState *s)
  {
-     SDState *card = get_card(sdbus);
--    const uint8_t *data = buf;
- 
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
--        for (size_t i = 0; i < length; i++) {
--            trace_sdbus_write(sdbus_name(sdbus), data[i]);
--            sc->write_byte(card, data[i]);
-+        while (length > 0) {
-+            size_t written = sc->write_data(card, buf, length);
+-    unsigned int begin, length;
++    unsigned int length;
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+     const MemTxAttrs attrs = { .memory = true };
+     ADMADescr dscr = {};
+@@ -817,66 +817,74 @@ static void sdhci_do_adma(SDHCIState *s)
+             if (s->trnmod & SDHC_TRNS_READ) {
+                 s->prnsts |= SDHC_DOING_READ;
+                 while (length) {
+-                    if (s->data_count == 0) {
+-                        sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
+-                    }
+-                    begin = s->data_count;
+-                    if ((length + begin) < block_size) {
+-                        s->data_count = length + begin;
+-                        length = 0;
+-                     } else {
+-                        s->data_count = block_size;
+-                        length -= block_size - begin;
+-                    }
+-                    res = dma_memory_write(s->dma_as, dscr.addr,
+-                                           &s->fifo_buffer[begin],
+-                                           s->data_count - begin,
+-                                           attrs);
+-                    if (res != MEMTX_OK) {
++                    dma_addr_t dma_len = length;
 +
-+            g_assert(written >= 1);
++                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
++                                               DMA_DIRECTION_FROM_DEVICE,
++                                               attrs);
 +
-+            buf += written;
-+            length -= written;
-         }
-     }
- }
-@@ -140,7 +143,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
--        value = sc->read_byte(card);
-+        sc->read_data(card, &value, 1);
-     }
-     trace_sdbus_read(sdbus_name(sdbus), value);
- 
-@@ -150,14 +153,17 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
- void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
- {
-     SDState *card = get_card(sdbus);
--    uint8_t *data = buf;
- 
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
--        for (size_t i = 0; i < length; i++) {
--            data[i] = sc->read_byte(card);
--            trace_sdbus_read(sdbus_name(sdbus), data[i]);
-+        while (length > 0) {
-+            size_t read = sc->read_data(card, buf, length);
++                    if (buf == NULL) {
++                        res = MEMTX_ERROR;
+                         break;
++                    } else {
++                        res = MEMTX_OK;
+                     }
+-                    dscr.addr += s->data_count - begin;
+-                    if (s->data_count == block_size) {
+-                        s->data_count = 0;
+-                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+-                            s->blkcnt--;
+-                            if (s->blkcnt == 0) {
+-                                break;
+-                            }
 +
-+            g_assert(read >= 1);
++                    sdbus_read_data(&s->sdbus, buf, dma_len);
++                    length -= dma_len;
++                    dscr.addr += dma_len;
 +
-+            buf += read;
-+            length -= read;
-         }
-     }
- }
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 37f6e0702b0bce85915ef727ba1ec05f02f9c32c..135113add29b5ee3cb11d9d535355eba8f6cb3f7 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2638,30 +2638,37 @@ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
-     return false;
- }
- 
--static void sd_write_byte(SDState *sd, uint8_t value)
-+static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
- {
-     unsigned int partition_access;
-     int i;
-+    const uint8_t *value = buf;
- 
-     if (!sd->blk || !blk_is_inserted(sd->blk)) {
--        return;
-+        return length;
-     }
- 
-     if (sd->state != sd_receivingdata_state) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: not in Receiving-Data state\n", __func__);
--        return;
-+        return length;
-     }
- 
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
--        return;
-+        return length;
++                    dma_memory_unmap(s->dma_as, buf, dma_len,
++                                     DMA_DIRECTION_FROM_DEVICE, dma_len);
 +
-+    /*
-+     * Only read one byte at a time. We will be called again with the
-+     * remaining.
-+     */
-+    length = 1;
- 
-     trace_sdcard_write_data(sd->proto->name,
-                             sd->last_cmd_name,
--                            sd->current_cmd, sd->data_offset, value);
-+                            sd->current_cmd, sd->data_offset, value[0]);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
--        if (sd_generic_write_byte(sd, value)) {
-+        if (sd_generic_write_byte(sd, value[0])) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_blk_write(sd, sd->data_start, sd->data_offset);
-@@ -2686,7 +2693,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
++                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
++                        size_t transfered = s->data_count + dma_len;
++
++                        s->blkcnt -= transfered / block_size;
++                        s->data_count = transfered % block_size;
++
++                        if (s->blkcnt == 0) {
++                            s->data_count = 0;
++                            break;
+                         }
+                     }
+                 }
+             } else {
+                 s->prnsts |= SDHC_DOING_WRITE;
+                 while (length) {
+-                    begin = s->data_count;
+-                    if ((length + begin) < block_size) {
+-                        s->data_count = length + begin;
+-                        length = 0;
+-                     } else {
+-                        s->data_count = block_size;
+-                        length -= block_size - begin;
+-                    }
+-                    res = dma_memory_read(s->dma_as, dscr.addr,
+-                                          &s->fifo_buffer[begin],
+-                                          s->data_count - begin,
+-                                          attrs);
+-                    if (res != MEMTX_OK) {
++                    dma_addr_t dma_len = length;
++
++                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
++                                               DMA_DIRECTION_TO_DEVICE, attrs);
++
++                    if (buf == NULL) {
++                        res = MEMTX_ERROR;
+                         break;
++                    } else {
++                        res = MEMTX_OK;
+                     }
+-                    dscr.addr += s->data_count - begin;
+-                    if (s->data_count == block_size) {
+-                        sdbus_write_data(&s->sdbus, s->fifo_buffer, block_size);
+-                        s->data_count = 0;
+-                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+-                            s->blkcnt--;
+-                            if (s->blkcnt == 0) {
+-                                break;
+-                            }
++
++                    sdbus_write_data(&s->sdbus, buf, dma_len);
++                    length -= dma_len;
++                    dscr.addr += dma_len;
++
++                    dma_memory_unmap(s->dma_as, buf, dma_len,
++                                     DMA_DIRECTION_TO_DEVICE, dma_len);
++
++                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
++                        size_t transfered = s->data_count + dma_len;
++
++                        s->blkcnt -= transfered / block_size;
++                        s->data_count = transfered % block_size;
++
++                        if (s->blkcnt == 0) {
++                            s->data_count = 0;
++                            break;
+                         }
+                     }
                  }
              }
-         }
--        sd->data[sd->data_offset++] = value;
-+        sd->data[sd->data_offset++] = value[0];
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-@@ -2716,7 +2723,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 26:  /* CMD26:  PROGRAM_CID */
--        if (sd_generic_write_byte(sd, value)) {
-+        if (sd_generic_write_byte(sd, value[0])) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->cid); i ++)
-@@ -2734,7 +2741,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 27:  /* CMD27:  PROGRAM_CSD */
--        if (sd_generic_write_byte(sd, value)) {
-+        if (sd_generic_write_byte(sd, value[0])) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->csd); i ++)
-@@ -2757,7 +2764,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 42:  /* CMD42:  LOCK_UNLOCK */
--        if (sd_generic_write_byte(sd, value)) {
-+        if (sd_generic_write_byte(sd, value[0])) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_lock_command(sd);
-@@ -2767,36 +2774,47 @@ static void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 56:  /* CMD56:  GEN_CMD */
--        sd_generic_write_byte(sd, value);
-+        sd_generic_write_byte(sd, value[0]);
-         break;
- 
-     default:
-         g_assert_not_reached();
-     }
 +
-+    return length;
- }
- 
--static uint8_t sd_read_byte(SDState *sd)
-+static size_t sd_read_data(SDState *sd, void *buf, size_t length)
- {
-     /* TODO: Append CRCs */
-     const uint8_t dummy_byte = 0x00;
-     unsigned int partition_access;
--    uint8_t ret;
-     uint32_t io_len;
-+    uint8_t *value = buf;
- 
-     if (!sd->blk || !blk_is_inserted(sd->blk)) {
--        return dummy_byte;
-+        memset(buf, dummy_byte, length);
-+        return length;
-     }
- 
-     if (sd->state != sd_sendingdata_state) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: not in Sending-Data state\n", __func__);
--        return dummy_byte;
-+        memset(buf, dummy_byte, length);
-+        return length;
-     }
- 
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION)) {
--        return dummy_byte;
-+        memset(buf, dummy_byte, length);
-+        return length;
-     }
- 
-+    /*
-+     * We will only read one byte at a time. We will be called again with the
-+     * remaining buffer.
-+     */
-+    length = 1;
-+
-     io_len = sd_blk_len(sd);
- 
-     trace_sdcard_read_data(sd->proto->name,
-@@ -2814,7 +2832,7 @@ static uint8_t sd_read_byte(SDState *sd)
-     case 30: /* CMD30:  SEND_WRITE_PROT */
-     case 51: /* ACMD51: SEND_SCR */
-     case 56: /* CMD56:  GEN_CMD */
--        sd_generic_read_byte(sd, &ret);
-+        sd_generic_read_byte(sd, value);
-         break;
- 
-     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
-@@ -2831,7 +2849,7 @@ static uint8_t sd_read_byte(SDState *sd)
-                 sd_blk_read(sd, sd->data_start, io_len);
-             }
-         }
--        ret = sd->data[sd->data_offset ++];
-+        *value = sd->data[sd->data_offset++];
- 
-         if (sd->data_offset >= io_len) {
-             sd->data_start += io_len;
-@@ -2850,10 +2868,10 @@ static uint8_t sd_read_byte(SDState *sd)
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DAT read illegal for command %s\n",
-                                        __func__, sd->last_cmd_name);
--        return dummy_byte;
-+        *value = dummy_byte;
-     }
- 
--    return ret;
-+    return length;
- }
- 
- static bool sd_receive_ready(SDState *sd)
-@@ -3173,8 +3191,8 @@ static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
-     sc->get_dat_lines = sd_get_dat_lines;
-     sc->get_cmd_line = sd_get_cmd_line;
-     sc->do_command = sd_do_command;
--    sc->write_byte = sd_write_byte;
--    sc->read_byte = sd_read_byte;
-+    sc->write_data = sd_write_data;
-+    sc->read_data = sd_read_data;
-     sc->receive_ready = sd_receive_ready;
-     sc->data_ready = sd_data_ready;
-     sc->get_inserted = sd_get_inserted;
-diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
-index d12f24955a5ba3c1ba9ab851d75992e830c00608..2162fb584020110bcdaa7a92c2a05b6cfc041d2f 100644
---- a/include/hw/sd/sd.h
-+++ b/include/hw/sd/sd.h
-@@ -107,22 +107,30 @@ struct SDCardClass {
-     size_t (*do_command)(SDState *sd, SDRequest *req,
-                          uint8_t *resp, size_t respsz);
-     /**
--     * Write a byte to a SD card.
-+     * Write data to a SD card.
-      * @sd: card
--     * @value: byte to write
-+     * @value: data to write
-+     * @len: length of data
-      *
--     * Write a byte on the data lines of a SD card.
-+     * Write data on the data lines of a SD card. May write not all data, in
-+     * which case it should be called again. At least one byte must be consumed.
-+     *
-+     * Return: number of bytes actually written. >= 1
-      */
--    void (*write_byte)(SDState *sd, uint8_t value);
-+    size_t (*write_data)(SDState *sd, const void *buf, size_t len);
-     /**
-      * Read a byte from a SD card.
-      * @sd: card
-+     * @buf: buffer to receive the data
-+     * @len: size of data to read
-      *
--     * Read a byte from the data lines of a SD card.
-+     * Read data from the data lines of a SD card. This may not read all
-+     * requested data, in this case it should be called again with the remaining
-+     * buffer. At least one byte must be read.
-      *
--     * Return: byte value read
-+     * Return: number of bytes actually read. >= 1
-      */
--    uint8_t (*read_byte)(SDState *sd);
-+    size_t (*read_data)(SDState *sd, void* buf, size_t len);
-     bool (*receive_ready)(SDState *sd);
-     bool (*data_ready)(SDState *sd);
-     void (*set_voltage)(SDState *sd, uint16_t millivolts);
+             if (res != MEMTX_OK) {
+                 s->data_count = 0;
+                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
 
 -- 
 2.43.0
