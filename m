@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBF1EA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0BEEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnhbw-0003o7-8Z; Wed, 04 Feb 2026 13:28:20 -0500
+	id 1vnhbP-0002c1-RO; Wed, 04 Feb 2026 13:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbu-0003hY-JQ
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:18 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbN-0002bM-Oj
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:27:45 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbs-00018l-HI
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:18 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-432d2c7dd52so157366f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:28:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbK-00014P-4o
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:27:43 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4806dffc64cso872245e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:27:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770229695; x=1770834495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770229660; x=1770834460; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gQAJVYtXe6Sn/UI/A5OH3OSD/hxJES4kcCI9tUH5Imc=;
- b=OQUU4GYt04KiHLwURBxabmqZ9v0sFSpzKk5MjKLix6gCjEV8yOTs8qCKcvA6qIztq+
- AEHj8RJ9RFYQvnahDIaRt55ramJsZwxxIz/WkhVrwyyx8oefW96yF6MVWIMOfwIHfPSx
- AsXv1/4wsIbNfA+eQ4CtQdG2APJyNpLUTLQJp2cCvezog40Zc/Hcn4sCzRG0AW/COlWr
- +ENba9Se6aDE0bfYwAEt6BdoY+vTbVCRGvgY3zOsPvcAJs9+iWY+jfnU+Z3mxD1O+tTk
- MhvAz/Xk9cjk1o568e28ASvQMPN9ybtfeuSEvnjzIt6mNsvuUT0ktRbhw0ybesrWSQ5R
- vlFQ==
+ bh=7Kt3MaIKigPezWwUjh9ifQEhTMOdqMF6Sn8DTtDUVGU=;
+ b=r6vuV0Y8XB+euD9bExb+Wo9nwcyLPGVR6OltY7ScCnCmM7CQr7oHjaf6W99sIROOUP
+ ihp3aHd/sWx1JU7WPiMNbWrsxLkMAMOP9jbNVJotFk96y1NtxMc++VDKp0wQqBdANbMV
+ qBXwLI/fHM+vl5IIHfrybrjC1R1LyLVpXtlYQpng3gwFaxfMrZ91h2EyH0LEKE6hhavg
+ yBOY8tOjR/3E5OZVIsKc/O9jaxsnfPzF8pSv6RKjw9Ytx5Z9UNzvEh9LDgZZBj2gq6Iy
+ n2cI53zOeTYhXHv+WY16ktZZOrWiCIPOhYfowrQACLj5cL9vA6oO5BKhZ4IV0/7D9Q3w
+ x28A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770229695; x=1770834495;
+ d=1e100.net; s=20230601; t=1770229660; x=1770834460;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gQAJVYtXe6Sn/UI/A5OH3OSD/hxJES4kcCI9tUH5Imc=;
- b=dXQD2gfMgThF0ZuHzqPxgMkuDp7daj0Sm+qLdV1FDzHxY7hqiVZ6vBpEEOGjCBndEb
- pDkeKscvI2rGDDcjVr1OXDs8t7cGcJTibR+u/FGB9Kr8wODR6ijLB4wocBP4vTrgNCzn
- ZI15xAo8Nco8KgWYFNWq8rLxqNVSFwsdcLCuxCjx6GlclxbVNZyZVQj9xVTP8gMqB2XH
- g1qm4bvK95aLo2V3HVUVt94z+zFp8n4lasosIbbIEG3Ad/Fyk88s/Bw1CK38On57ajUh
- +Bpg8sDJRiJgnPO1w5gbNsfHmHQhe8KknYasCIg6SATiYLyH6Ir2q0huOYTzIDE8g3PO
- sjmg==
-X-Gm-Message-State: AOJu0YyZDdoqfkHVsNT/0VJecKva04H4GJdv6+KR2542WIRJHRAgRCU+
- u9BPgQyjQ7Q950ht6B1nvlipovG6qEVGRk/iQvTH2EmNlxqudMWoIIWjEa7TJjLRWp9Wne3Bck0
- jd8wr9Eg=
-X-Gm-Gg: AZuq6aJedHwBevICwmtBvNVQ3qV+pJnhpDDSI7ccYsda7iNB6sqoTNvyH6ckJSlT5Cq
- kOBjMaObTUfgW74npUJUQeChYQc2LLlVxdwxu2NGvSzDEqcJAwX3qtpDxgW8ZDYUEcS9UvDl1RI
- +bDCjUqmhdaHB7tqXRIJQGHcYajyxZEYi4qFh559kKogfPx1wDXInamJ/81Cpmikejn5H8KJ93G
- YIUI9IYmWK5HPkrQesFbj/HW2l551VXOEe9kjCvZMVSQV6VeTRdXSFUifzEbe/46ry/o/zFYKHN
- DP3ytH2BDuj9h5haTXUX4xWeargFdwpKCBslAwVlKUOggucl5tnPs8R6PuCcPXlVMmq+JWSyP3X
- BMGJ/0gJy/BgiwLzjFRDHy5Y7tVfoWRT2EtPewhwUlMA2OEMXBxIajkiDQuR5xihRiChscL6iTp
- G4L1NuHSuQrMVCi2G5dZGT/NbBkCP22/lVkF1AHQWoGhNUKnudOgTkwDxVAAtU
-X-Received: by 2002:a05:6000:2c04:b0:432:dfea:1fa8 with SMTP id
- ffacd0b85a97d-436180581cfmr5643755f8f.45.1770229694481; 
- Wed, 04 Feb 2026 10:28:14 -0800 (PST)
+ bh=7Kt3MaIKigPezWwUjh9ifQEhTMOdqMF6Sn8DTtDUVGU=;
+ b=QKFq7BI0BIY7g8XYV3xZ4NqR3o7WKDvGE7XPMbivqubomH9XigPkoS6LCaiIAZ80PK
+ M/KyHziRCHBqb/IXahuFu2I+rt+SpypgundmuA0FThxWcV3iP5nvKTDiW8d92A6k4gFP
+ 76AJCRgTmgvFwXwm855ee7xdpkWCd6Q1dCBWRsHChRoFST+hu+1pN41GSrxEALtMxSvl
+ ZTTxBs+OnqcUoOEvOe8a6Vdumk+g0lFQ/76qkNlxGewld5Txt0x+7wyIr1sNJW9dqCuw
+ utoJ/6xjT/IxfKk+9SYTuXHJhUxJ7tkDo/jan9zEQiauzO+hc1UKVH7MDrumw82KsPNV
+ O87g==
+X-Gm-Message-State: AOJu0YxK10AiHYPnonFHwywX7pz0GVvUR+fGPNmWjpK22m081u2MQIMN
+ CckF2f3mJ16/yiabVf3mXF9zIeRJf9plim/WyRwhmHgiSFbOW6wwJZuVFOudOLo6/4PrkziBL9y
+ vk4uNzV4=
+X-Gm-Gg: AZuq6aIkyzMWiZDV6jPeZ6IevA4mJa9beCzB1gjQHKLsD4Xc7zy0xiG+ce8nk3hF9kO
+ 1CXIRd3DIFfHoUlrDFPIs5Ts9NfXyG3YHVkX8rilxpUmJJTRVazcKa6ROKE3NIjzyks/rFMAo9k
+ h5CEM74D+qxFvsWd1tEGACyTR/v7shSbUFTM59/foPVDufG2SZ8d2zSH+MvSLkqlRRojBwehAVI
+ /wEOpwkhdLEhxENksLzoHMWE5pAQg7JLKG7w5bXRNVLxB7X28oXPPEQJ56s1XVf0OnIFdj6Nwv+
+ vAhhQ9u074dpPS2UvN1atAN9YXJ8Mg3h6TFLD5KTWQTsPzdTiPg0zK+XXqUQF3E4Ie4ENKfcCdH
+ SACm71Dag48CM1uch/6KV/12Zad6LBdn8IcrLG9Jiqb9O19s1KQeB2OTC8OYvwDapsZeq3HhnbE
+ gWJ+1UoO1xyonLjUF2xph5hnO+lYHoVT82F5ruTJ+YgV96391nHJZSurWSmn+U
+X-Received: by 2002:a05:600c:608e:b0:480:3ad0:93bf with SMTP id
+ 5b1f17b1804b1-4830e96d1e3mr59900965e9.24.1770229659715; 
+ Wed, 04 Feb 2026 10:27:39 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805edcfsm7818170f8f.35.2026.02.04.10.28.13
+ ffacd0b85a97d-43618057f9esm6884478f8f.28.2026.02.04.10.27.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Feb 2026 10:28:14 -0800 (PST)
+ Wed, 04 Feb 2026 10:27:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -74,17 +74,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 7/9] target/s390x: Build system units in common source set
-Date: Wed,  4 Feb 2026 19:27:20 +0100
-Message-ID: <20260204182722.44062-8-philmd@linaro.org>
+Subject: [PATCH v2 2/9] target/s390x: Rename get_phys_page_debug() @vaddr
+ argument as @v_addr
+Date: Wed,  4 Feb 2026 19:27:15 +0100
+Message-ID: <20260204182722.44062-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260204182722.44062-1-philmd@linaro.org>
 References: <20260204182722.44062-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,60 +108,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Except the ioinst.c file which uses the TARGET_PAGE_SIZE
-definition in the ioinst_handle_chsc() method, all other
-files in meson's s390x_system_ss[] source set don't use
-any target-specific code. Moving them in the other
-s390x_common_system_ss[] set to build as common objects
-ensures these files won't use any target-specific API
-such target_ulong / TARGET_PAGE_SIZE, thus forcing to use
-the appropriate types instead (such vaddr, hwaddr, uint64_t,
-...).
+In order to use the %vaddr type in s390_cpu_get_phys_page_debug()
+in the next commit, rename the argument @vaddr -> @v_addr.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/meson.build     | 7 ++++++-
- target/s390x/tcg/meson.build | 2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ target/s390x/helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-index 3b34ae034cb..0fb45103afe 100644
---- a/target/s390x/meson.build
-+++ b/target/s390x/meson.build
-@@ -20,10 +20,14 @@ s390x_ss.add(gen_features_h)
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index a6c89ed0af3..d0c36d4a537 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -68,14 +68,14 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
+     return raddr;
+ }
  
- s390x_system_ss = ss.source_set()
- s390x_system_ss.add(files(
-+  'ioinst.c',
-+))
-+
-+s390x_common_system_ss = ss.source_set()
-+s390x_common_system_ss.add(files(
-   'helper.c',
-   'arch_dump.c',
-   'diag.c',
--  'ioinst.c',
-   'machine.c',
-   'mmu_helper.c',
-   'sigp.c',
-@@ -41,4 +45,5 @@ subdir('kvm')
+-hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr vaddr)
++hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr v_addr)
+ {
+     hwaddr phys_addr;
+     target_ulong page;
  
- target_arch += {'s390x': s390x_ss}
- target_system_arch += {'s390x': s390x_system_ss}
-+target_common_system_arch += {'s390x': s390x_common_system_ss}
- target_user_arch += {'s390x': s390x_user_ss}
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index 515cb8b473d..17c9374d09e 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -12,6 +12,6 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'vec_int_helper.c',
-   'vec_string_helper.c',
- ))
--s390x_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-+s390x_common_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'debug.c',
- ))
+-    page = vaddr & TARGET_PAGE_MASK;
++    page = v_addr & TARGET_PAGE_MASK;
+     phys_addr = cpu_get_phys_page_debug(cs, page);
+-    phys_addr += (vaddr & ~TARGET_PAGE_MASK);
++    phys_addr += (v_addr & ~TARGET_PAGE_MASK);
+ 
+     return phys_addr;
+ }
 -- 
 2.52.0
 
