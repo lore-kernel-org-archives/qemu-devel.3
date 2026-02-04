@@ -4,82 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF94E9D407
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 15:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07455E9D408
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnfEp-0007qq-Qr; Wed, 04 Feb 2026 10:56:19 -0500
+	id 1vnfUR-0002ud-AL; Wed, 04 Feb 2026 11:12:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnfEo-0007qQ-Lg
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 10:56:18 -0500
-Received: from p-west1-cluster5-host5-snip4-2.eps.apple.com ([57.103.66.133]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnfEm-0001os-AK
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 10:56:18 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPS id
- 49A0C18002E9; Wed,  4 Feb 2026 15:56:08 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770220572; x=1772812572;
- bh=P+H0HaAzK35j+sFAQWcjappE0gHuM2R5Eo987/PjfdI=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=CtF5YsM8SdiDx47gOMvs5wsXqF8XT36bP2xk86qmJTzf8tQxekrZrBXMVNWBorOHWZ0WRd8sSEGW+C7Lt4dz0DvC2DDAfTEmfIAXfk6PXvXPF+rm0B55KuE2cVYzM2UqUuwfzDgrFH8g+MY58Fkk6idtiJ1Bl1MpNpRidhX+uUePvKj2Cho8sbCqWoUgjus1fpFgY95e3DdOFxlvtkzI8b1KfF24RF1p3BfDAAK2j0C9w5zisp2/GP8cEzOUx4en1qRPTtMprCkL3SzsdHdkARTls9fpNQyBYlzKTc5NZ5HqRgQPV6JVTqbge1ZtSjQ9t5VZUno2qmhMxPodGCLQtw==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPSA id
- 059E71800A8F; Wed,  4 Feb 2026 15:56:06 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v2] target/arm: implement FEAT_E2H0
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260204131353.2977855-1-alex.bennee@linaro.org>
-Date: Wed, 4 Feb 2026 16:55:54 +0100
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vnfUP-0002uH-CG
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:12:25 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vnfUN-00046G-RE
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:12:25 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-65808d08423so10350676a12.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 08:12:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770221541; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RAhPIwxi/KqRbfem2CpnZ7caaM7wie33oDq+xwCLoFTRcfLFQ4NoVDPGce/acmHoC0
+ A8SvK+JqPjtKvCGwOQ+pEmJiKrgzekCR39kIyl4Xt5/ciWgzXBvNVKuR4nDpETxjtHNL
+ j6Nqzbog+tcaNPgDiQP4qHKRdeewU4f88tjTG17luOCDAuvfD+7n0Itj4d0CLrplcgXu
+ A8iCnvcjYawAeLlBiE0Jm5QdBWZAqq6kEa6Gla8FxFIc/iHDXMX5qIdZ/vF6AtnRkHE2
+ MjFyQG4i1eOuwNZ2+ddAzNw9TPhxXKU9SrpmcwDi/j/x9bXL0uR4XWiZ8WVd3Y97JSbl
+ 9pig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kA3kkGkRy1EoHSUrG2Cy3FfnE3rgBk/8wS8Bi5b9XyE=;
+ fh=x5HMi2bFcpW5plFmeTH1wxKaF74BkwSYZQXa5+amB5c=;
+ b=CGzllC4/twDD0HXAoU9mLPKIpOFTprfQFsGVU0s2kh0QnMXfw4Iqbxm+sluo6J1K5X
+ rDe0XoguaUBRdL9FWSK5hDmz2CyGPBmY9ttjvacFI/B6L6mCeFSVoZvOlhJ+B2RTpafY
+ HJ89vUNKjX3nJJxRCNUqy7lXqRVrqTGgN2hJHDX/nfAoqhSvEIXV8MbwnELv4+sBaI4m
+ RHqK5dshKYYBsuL/jH4zBh6l703rWYPfMXJpk9X2p1/58S3J5xVBDP45SaDVo38usRYv
+ XiOVz40hk+3frN7ATOzoZZPiaA6qa8tvxMrHL1BoslrqQhxQnIDhcWUscJXhmy8IwLNh
+ brfQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770221541; x=1770826341; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kA3kkGkRy1EoHSUrG2Cy3FfnE3rgBk/8wS8Bi5b9XyE=;
+ b=PrlgpnhGeusEjJ7CSY9NtO3QkfpfiL+iudnpUDR2VjQusO5c/UNlsQa18Jy1Jg6jGU
+ G41zxzcuuJExKhoWshwbT6CknjfkOr88t4+xZ6VXkSCRLztQVPldkGxc8HvjTF/VsKfd
+ 68yyozKfwYNE1r4NJGdAwnXUcCAVQ/OubxtTwwuH8bDRiR23ak8G6jMWZ77sJy/rWv8U
+ h+pKqMe46cNAoEEDfy8SJybMJiy8445BJk9wLowTakrPfxswBbtsFI0IiAlMtnmONCGp
+ 7bKlK3zZ1l05cev2KmcmtHw5WLhJr2Vticmsj+pGLTViAbafE6IxEnz2z3G/LpouQ7c+
+ V9vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770221541; x=1770826341;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kA3kkGkRy1EoHSUrG2Cy3FfnE3rgBk/8wS8Bi5b9XyE=;
+ b=MhXE36pFF8D3lLYwg3xEe4CFFwUFrE3tV/opNWL3dVuYYPjO4jTmEIJkwLLPIs8JlI
+ H+12MaFCP9tvNtbdWVRYdd0Nh2jF3XK4uNbBUBikm1iJ6PR6Xx4lSa+nay03IJ1ipS9H
+ GJA3un7NwYdD+7jerHYiPqv64o+AQNffrNXT/y/dZMzjxcE6/5MaImN16eEt1i0IyiTC
+ Pol5vzy7r1EibEcWPSRC1okEuv2KuvxsgvygwuOp+bKv0rIrDdhLC7R2hve99Gd8dq1V
+ FZ3VwLBiscjdaVZwd0TCuf8LR0fkO1UYJ7aspuq6PYn7r5VP6FbpmZ2vSEne7Qx0LyQC
+ /L6g==
+X-Gm-Message-State: AOJu0YzorTMPM4tamCvyMQYyOM/XdLlGN5WFfW0puUAPepidkDxuQ/9p
+ LHR9nNhm5a270YVFRJUqJOyKJHo4ITMHdraLk0ZwdMsKcpyncQgrS0iE+MIrU/p1d6bAGWw2j5g
+ ssNHl0RUBPIBnUtjxvtQEpT4+rV3QnLM=
+X-Gm-Gg: AZuq6aKKwgI58zu9BkVu8FZAA1TPbg/MUphFwehpZfbkJM8dmIWkeuy/ePbNzfWTC0D
+ TAckYoYwqx13NslAwRSJotaG8lgCeAwm49JVumKYfQmdvOV0db8PCIlyeUVKCAT9NSEzixhffv/
+ swqQ+Y30weQ1oX6iLQ2UjDJcHyP2jTYvfDITZywhw/8E+M7ZCGsaRPceilcm8/3b5oT4iELFvG1
+ CohRQmwnRR+F6B03CmVjKhn0geWvdW25Rx459tkhe2+aOFOy9z9i4EbuygQwGpng9s9qQ==
+X-Received: by 2002:a05:6402:1ed5:b0:659:408e:b7e6 with SMTP id
+ 4fb4d7f45d1cf-65949ecd24emr2079778a12.29.1770221541257; Wed, 04 Feb 2026
+ 08:12:21 -0800 (PST)
+MIME-Version: 1.0
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <h4uue2ekbnlh26rylj4ilsqzyxdrfzrq7czleysrkbowlgp4q2@wtbm7zi4kev5>
+ <CAJSP0QXu+fmKuOKLw=OXL0GqTQS58pM_-REtnnOCiSaZJp9=LQ@mail.gmail.com>
+ <2dzs6ukw6gwndluqlzarsmrueug5t7vtic6toxs74k2zewrzwe@337u533iprja>
+In-Reply-To: <2dzs6ukw6gwndluqlzarsmrueug5t7vtic6toxs74k2zewrzwe@337u533iprja>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 4 Feb 2026 11:12:09 -0500
+X-Gm-Features: AZwV_Qi34AfCTqThZTWIsGY-3u8Y3efuATqJR74FppYiIUTjW6dmESozfgaiWhg
+Message-ID: <CAJSP0QXV5GK=wecHQcdJoa-ORGg6yM0zgeunezW0pPJiXRrqBA@mail.gmail.com>
+Subject: Re: COCONUT-SVSM project ideas for GSoC 2026
+To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <7585A291-F924-4A75-BA2A-D55A3B62319F@unpredictable.fr>
-References: <20260204131353.2977855-1-alex.bennee@linaro.org>
-To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-GUID: jcUJb6LdnJJ8MsRPFj8g-01VbwAKZgT7
-X-Proofpoint-ORIG-GUID: jcUJb6LdnJJ8MsRPFj8g-01VbwAKZgT7
-X-Authority-Info-Out: v=2.4 cv=adlsXBot c=1 sm=1 tr=0 ts=69836c1a
- cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=Y1okbNz4jf-ho67gAakA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA0MDExOSBTYWx0ZWRfXxwmmiPrh26Hk
- s1yMX5o3QvkgFz6JszvyKCVMV9VFddR0vqbL4SbpRAwCWiWqZSMyjn6ejhjVzSdi3R+pQ5sm5dK
- WlgXOQ7lRnZ6HMZvZKMJZ0tziWM/+dkjc+c9F1Mzfk09JX5nTFl4PiEupRUPo7g7g0N51DPQpXK
- A/Q5A8iRdamEXbSSAslhGWhFsJ8cL3pY/ys/YCNgJ88EB/QJ0gmIOeRRTycijlgiJ1ZvNA5mr7i
- qwttKpkcQ4lRYwEcEp5++d5jfnryPVs1cliUMEiosg8qQBGSd1NI8ajRQPfTdxzT8Xs0zJ4ASj8
- r2NSWPSyAFTVr7XcKMEVJ7GxEt9skcW7s2yhICEFslZ2VuyrBfHFr0u16iKpeQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-04_05,2026-02-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- phishscore=0 malwarescore=0 adultscore=0 mlxscore=0
- spamscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1030 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602040119
-X-JNJ: AAAAAAABFVTrJn+uIh1K5NrOunOID4AqnrHaYhDNiUfgXBrXCqzNq9iL8YC8L8lPaG6QzJYIc1YXWiKNiPkSzjdo3Nf9AiyUIuEtMRvq6+sJr4mIwaoeSlORLVi6RQGkY6iEl91x/NuyN+ItBogPhMRGmxer8ixPjDjMdDX+viDvuBOyrzfrRrB+vIcHgNCWJwE673JilcRk86Lg+6ywXea2Nd6Vdh0eJYbYyyk8WV3an6PaOfQhN1KKWeJUoSpLuCdqa0EEGPywa1HH5KVrnk+xh73q0EGIN79sLiL4ZZ4+Uh4610KpXMAb93AhQHy/rrYZArm8fiikR7cd7VXiU0y4X0s8J5Z2TKeATASgT0AbQmdMbmNIi7Z15UDVeQ1s8JwuolgiIY0ynfrrQWLTqqXBg3qkte85nEjkEhTfmw3b/PhZnszPqYbHBf8WhU5fiMP5n8mdZY0k62IZWFiTynRucZnRajiKFDhQgSLaAS7+eLEoyxqm+FTXoxorKvA2UUeV/8EG0nSJmmZ9QnQohMKYBVmhD5yYnGfuFl0G//2v05NijyLbhSC9FVwqLbsrps1gMwZU+oTaO1J57vycAXxjbwVG1jBo+ESZuKbivLD9fSYfZ7fkyK/xwvjlhg==
-Received-SPF: pass client-ip=57.103.66.133;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,147 +129,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Feb 4, 2026 at 8:24=E2=80=AFAM J=C3=B6rg R=C3=B6del <joro@8bytes.or=
+g> wrote:
+>
+> Hi Stefan,
+>
+> On Thu, Jan 29, 2026 at 09:18:15AM -0500, Stefan Hajnoczi wrote:
+> > I think the mentors should provide the extension to the SVSM protocol
+> > specification. That way the intern can start the coding period by
+> > diving straight into the implementation and there is no risk that the
+> > project is held up because the community does not like the design.
+>
+> Thanks a lot for your feedback. You are right the the project as describe=
+d is
+> too big for GSoC.
+>
+> So we settled on defining the protocol on our own before GSoC starts and
+> provide it to the student. Updated proposal below:
 
+Excellent! I posted your project description here:
+https://wiki.qemu.org/Google_Summer_of_Code_2026#Observability_Support_for_=
+COCONUT-SVSM
 
-> On 4. Feb 2026, at 14:13, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->=20
-> FEAT_E2H0 is a formalisation of the existing behaviour of HCR_EL2.E2H
-> being programmable to switch between EL2 host mode and the
-> "traditional" nVHE EL2 mode. This implies at some point we might want
-> to model CPUs without FEAT_E2H0 which will always have EL2 host mode
-> enabled.
->=20
-> There are two values to represent no E2H0 systems of which 0b1110 will
-> make HCR_EL2.NV1 RES0 for FEAT_NV systems.
-Hello,
+Please add a link to the protocol by February 19th when accepted
+organizations will be announced and interns can begin researching
+project ideas.
 
-That part looks good.
-
-> For FEAT_NV2 the NV1 bit is
-> always valid.
-
-At section A2.2.5 of the Arm ARM:
-
-> If FEAT_NV2 is implemented, then FEAT_NV is implemented.
-
-My reading of the spec is that 0b1110 is allowed on a system that =
-implements FEAT_NV2 as those always implement FEAT_NV - even if the trap =
-mode is gone because of using NV_frac to represent nested virtualisation =
-support.
-
-As the code looks fine,
-
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->=20
-> Message-ID: <20260130181648.628364-1-alex.bennee@linaro.org>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->=20
-> ---
-> v2
->  - new helper and properly handling NV1
-> ---
-> docs/system/arm/emulation.rst |  1 +
-> target/arm/cpu-features.h     | 12 ++++++++++++
-> target/arm/helper.c           | 16 +++++++++++++---
-> 3 files changed, 26 insertions(+), 3 deletions(-)
->=20
-> diff --git a/docs/system/arm/emulation.rst =
-b/docs/system/arm/emulation.rst
-> index e0d5f9886e1..7787691853e 100644
-> --- a/docs/system/arm/emulation.rst
-> +++ b/docs/system/arm/emulation.rst
-> @@ -54,6 +54,7 @@ the following architecture extensions:
-> - FEAT_DotProd (Advanced SIMD dot product instructions)
-> - FEAT_DoubleFault (Double Fault Extension)
-> - FEAT_E0PD (Preventing EL0 access to halves of address maps)
-> +- FEAT_E2H0 (Programming of HCR_EL2.E2H)
-> - FEAT_EBF16 (AArch64 Extended BFloat16 instructions)
-> - FEAT_ECV (Enhanced Counter Virtualization)
-> - FEAT_EL0 (Support for execution at EL0)
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index e0b7a45b7bd..78ff761ae06 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -347,6 +347,7 @@ FIELD(ID_AA64MMFR3, ADERR, 56, 4)
-> FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
->=20
-> FIELD(ID_AA64MMFR4, ASID2, 8, 4)
-> +FIELD(ID_AA64MMFR4, E2H0, 24, 4)
->=20
-> FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
-> FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
-> @@ -1378,6 +1379,17 @@ static inline bool =
-isar_feature_aa64_asid2(const ARMISARegisters *id)
->     return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) !=3D 0;
-> }
->=20
-> +static inline bool isar_feature_aa64_e2h0(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64MMFR4, E2H0) =3D=3D 0;
-> +}
-> +
-> +static inline bool isar_feature_aa64_noe2h0_and_nv1_res0(const =
-ARMISARegisters *id)
-> +{
-> +    /* 0b1110 is not permitted unless we have FEAT_NV */
-> +    return isar_feature_aa64_nv(id) && FIELD_EX64_IDREG(id, =
-ID_AA64MMFR4, E2H0) =3D=3D 0b1110;
-> +}
-> +
-> static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
-> {
->     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) !=3D 0;
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 390ea32c218..c3f4054a0b0 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -3776,7 +3776,8 @@ static void do_hcr_write(CPUARMState *env, =
-uint64_t value, uint64_t valid_mask)
->     }
->=20
->     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
-> -        if (cpu_isar_feature(aa64_vh, cpu)) {
-> +        if (cpu_isar_feature(aa64_vh, cpu) &&
-> +            cpu_isar_feature(aa64_e2h0, cpu)) {
->             valid_mask |=3D HCR_E2H;
->         }
->         if (cpu_isar_feature(aa64_ras, cpu)) {
-> @@ -3801,10 +3802,13 @@ static void do_hcr_write(CPUARMState *env, =
-uint64_t value, uint64_t valid_mask)
->             valid_mask |=3D HCR_GPF;
->         }
->         if (cpu_isar_feature(aa64_nv, cpu)) {
-> -            valid_mask |=3D HCR_NV | HCR_NV1 | HCR_AT;
-> +            valid_mask |=3D HCR_NV | HCR_AT;
-> +            if (!cpu_isar_feature(aa64_noe2h0_and_nv1_res0, cpu)) {
-> +                valid_mask |=3D HCR_NV1;
-> +            }
->         }
->         if (cpu_isar_feature(aa64_nv2, cpu)) {
-> -            valid_mask |=3D HCR_NV2;
-> +            valid_mask |=3D HCR_NV1 | HCR_NV2;
->         }
->     }
->=20
-> @@ -3823,6 +3827,12 @@ static void do_hcr_write(CPUARMState *env, =
-uint64_t value, uint64_t valid_mask)
->         value |=3D HCR_RW;
->     }
->=20
-> +    /* Strictly E2H is RES1 unless FEAT_E2H0 relaxes the requirement =
-*/
-> +    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
-> +        !cpu_isar_feature(aa64_e2h0, cpu)) {
-> +        value |=3D HCR_E2H;
-> +    }
-> +
->     /*
->      * These bits change the MMU setup:
->      * HCR_VM enables stage 2 translation
-> --=20
-> 2.47.3
->=20
->=20
-
+Thanks,
+Stefan
 
