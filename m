@@ -4,115 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195F9EA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6491AEA7941
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vni9w-0006fJ-3l; Wed, 04 Feb 2026 14:03:28 -0500
+	id 1vniA4-00072e-Mp; Wed, 04 Feb 2026 14:03:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9s-0006LE-8X
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA2-0006vy-TK
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9q-0007kZ-9k
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA0-0007mh-CT
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231801;
+ s=mimecast20190719; t=1770231811;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o7oJwB+/MR7DB60Rv9oamUAujf6sHA9qp5RSISJ/HXw=;
- b=N4MhTRDzGMxytRl0+BmjvvmBPoSCNKUZsG4EGnfi89XvUa+UqsFGC2RdgPmdiFz6gbiSjj
- ud0DMcVzKxwtVYSP32VMSkG2FDgIxDLNzBdSwZT2GqspYk6F0Pv7LQda7Sml8mqLikHPBD
- rmEZERpqHxynRs6NepkyNfz1Ipp6OwQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
+ b=aIrJjGo6mtWGgCjVHhe8x4uh+e2EeFC0UeZO5uzwk4QpKF0bEKJjNwIW0wE2MzlJwIgv/l
+ szJJck8U5xjgTPZVVTsnsF660moDouIPKnF/DNbDOO1ykE0bw0X+RBQu9JjLmYhF2jO6wb
+ v20rLpfpCf/YkfUF7gZDbA1ZmSvvcu8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-jPoPeFwGPVqUplD-7tdZOQ-1; Wed, 04 Feb 2026 14:03:19 -0500
-X-MC-Unique: jPoPeFwGPVqUplD-7tdZOQ-1
-X-Mimecast-MFC-AGG-ID: jPoPeFwGPVqUplD-7tdZOQ_1770231798
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-435ab9ed85dso133031f8f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:19 -0800 (PST)
+ us-mta-637-Qgs30U1AOAS9TIS-Q1dV6A-1; Wed, 04 Feb 2026 14:03:26 -0500
+X-MC-Unique: Qgs30U1AOAS9TIS-Q1dV6A-1
+X-Mimecast-MFC-AGG-ID: Qgs30U1AOAS9TIS-Q1dV6A_1770231805
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42fdbba545fso1119891f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231798; x=1770836598; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=o7oJwB+/MR7DB60Rv9oamUAujf6sHA9qp5RSISJ/HXw=;
- b=VJRQVE/YPZcpjosM6qc8gYfG3Q/qMPnG2Eh2fL8p8kHL/+qk9mZ1wyIKAtCxW364bx
- L2wwE2msQywB9sb5FYFWANAOVmn+Pex8+LhHsvB4THYqv1l0+0S8G4l20NLvnikzh01N
- +Ooc8ymUVEnLOF4kVT7fXDyyoQdAWZuFu0ngVHiicE1Wc5Si/vcIkztd1Av5QW7yaT2i
- zZQHi9UxKP8zlXGolkzwzSYQA59OiqyBsoQXvYISD3n3x+HpbcIU7BwYA0jcMjeUjOXP
- 86GoY0IAne+JO4WBNBUneYueEdKFSwyPK9FKh2J95m/QFqmt+c/RbYQxdLm8y7X4mco0
- JqMg==
+ d=redhat.com; s=google; t=1770231804; x=1770836604; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
+ b=hXbGoMmUjTrwQhS4rpQ4DKGM5hsTZ9JOkr3JgQ7KcQdWVRX0xLU7XKxBMUKLD5I/9s
+ fgJTNEYtBjuTct1X537OkiVMrbsGmhHUw/qhbAkp5alsr/UfQrhagP8qzIxpCQkgFA+z
+ bdc3ynSH/QKltShmqX0KEMG7EhDB3SfsPtDQRIKjORANZzMHMD2thaFJHWSYYwyhbFM7
+ J8yuiwQvmH4yMDSrqQfO6XfbW4+2vNud52fCQqdaJmHEKbynsvIw1OYh2JE44UoRz7PW
+ m6xXfw7IMIH6im7AjErg1t+qC/flKmKMaX4bnquAFvN4hAw2iaTNM3tpN/UFzXLzKeon
+ RTEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231798; x=1770836598;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o7oJwB+/MR7DB60Rv9oamUAujf6sHA9qp5RSISJ/HXw=;
- b=M86wRkpM4pQ+9bhnKHe4HCjE1bxuKArjLaCBxi/L/ilzTNnoOJu7fsWXpM5AZLLIBH
- cmEysXygpgLeujAyYT4fkyEsuB/7zJJ0lCkJDuETjGz2VCfC7lvzTwWy27JtWu5/i8rf
- 2d4S6dipxBZg9IFuI9aTpAQgT0Q/ODIAfFm13CbOvSS8DP63mf11hKr4KX/6JkzUgFBi
- iwa3DZvC0AxeZsHQz3Cejxg6n59g69o406fOwH8cQbcfB8z7FiqYzWk50DHwWLlk7bsx
- 2/VmisUNF7T7np8tIXScS95tZY69EyRUXY8dpsnZKljFwRoTuAvFxPu6t/4q3f1qA1jZ
- rIZA==
-X-Gm-Message-State: AOJu0YwoFpRb4wkhvXbn9JYED8VSsv+qbagB3LbKXJnzt6JImkE/YzuC
- ERNrGVJ3SzgFb8F97gaNW2nkZLfghnFJi5IC6vEQLXhUbTeo4qpUDMR83bQ1RZQYgRQpqISNh4d
- Xs1MmN6TdMhHNoytwCZ6VZoNPktG24X5DNBxNl1yStteEdbfwA+T07qgGrW1MTwhBajoc/kuFOS
- knJaOnLKAWx9p7ApamKnpZgsAAol4XOtHEuA==
-X-Gm-Gg: AZuq6aJvRMDV13TWmIeLzpQpkkcLrAYoVjImILN9CxoT5PExxKd9mGVzhCCgE2CsWNS
- riaQYjNdeQmjavdvK5VEFJ5wKbG/51OGg39PDLhWaY0+xQ+fqkx0ezkBsqfMyfeoiVCaMwsVuSg
- exjbY7yS991D/u+1cqFOQFB4NZH+W5hBKNMfaSStikJLAJPO4/jGpIQhDerkLPXenOpdktAFDp2
- /vspS9eBJiS6/erMKTQQDkUmE7vpxyFo/8sGkB9nluSy37L4hGyIMY64OuHut/uriCr2QW/xvan
- crcliGLYNz+ePDaQLcLQvAX4f46+QEVLjjbp5hZcor3ztrayEKxKkk4vzKWPbZTivUW9v34Qmv5
- gV61GwxyxnVaigwaHH8+l60JnuW/uUJTLSg==
-X-Received: by 2002:a05:6000:2c08:b0:432:dfa8:e1b6 with SMTP id
- ffacd0b85a97d-43618053ae7mr5702188f8f.39.1770231797695; 
- Wed, 04 Feb 2026 11:03:17 -0800 (PST)
-X-Received: by 2002:a05:6000:2c08:b0:432:dfa8:e1b6 with SMTP id
- ffacd0b85a97d-43618053ae7mr5702086f8f.39.1770231796962; 
- Wed, 04 Feb 2026 11:03:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231804; x=1770836604;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FASluuV0Jcb054KpKqsmGba0D+bzV9eQK8JmA6WXuug=;
+ b=lmzKFQSUa3B1QOhOvlrsh8Kg29hSnXaoo9cIjmqzdLjOlVJZ6eCH54GrT6UcMhwVta
+ tij93oP3xI8q9U7IHCd+fMX8P3vqAplTyhh2N3AEkZnL+Ag/zHyP6kka75ohsEQas5gF
+ yMR/geIWerrHs1dpXpuozSQ7DCAG1sbDIctHC0F6IZTNfRCuq2lEDTEY89u4FKWk4EtL
+ 8CGL3i3U5sZmV9nZPr5m8vy0xGEVdE0uNsv8dwcZ/L/FYpoWienELboiJDkl0dmqaEZ8
+ B7K2GK78MLWKeh6uWuf89E8J8llJeTpl9keKJhaKKC8F4nnUBsQ6ZC7YAeu9omU0jqP0
+ WXDw==
+X-Gm-Message-State: AOJu0YwElSMhTKvZPqfz16RTvrhCV9hli8L/v09+sTt8qEc9ZX10/bbe
+ Db3L0jehvADbNB6D8fzCw5TD7Z2gGxnjGxdPBRYx10wKQtSgObqrloDlCNRQqu7GOdYZuWYqlmQ
+ 76hKV9bcSy0DGvBQq37ho9eb4BQG0g2nypRPPsKats19WobjfkLG1b7mGEKvtf/1oWNhgxtUeCn
+ hQxSqK3XcLMQela51/PmdNcK2jg0Ero+tWHw==
+X-Gm-Gg: AZuq6aJKp0BAQs5rL9OUkrjPw3e4RvlfiEz9I1GKY0Ti/xiKqXVTE3Ao+VhTpXrYbfo
+ B2DbemjRdmpNP4u/kr0cNVfVPLUiQMtMfKmh5KbVmkEvSALuDb56wlfMnXsidld82+IDk9yzuBm
+ DSnelAKNzLAYWw2nkWKhhU+/9wxX6rx1uSC4+MgDSqDnB66+as9MZRYvX2XSbiMtfevqh47EcGE
+ vtMxQueA+lgHrE53XBUOqdH3oleI3C7rxstJtcunbSSWG0JtItd1iSHwXnkqRSlgBbEuFpDRXF6
+ pSttQLbAk9euxjHtVayUv0qLoOnGhoUPGPKplDpgxJY6E+vcOBl787QGOkCv0L44OMkLiuc9Mf9
+ XVVgWhV51IXBZQjBmC00NGZ0lMaUFlegCUQ==
+X-Received: by 2002:a05:600c:1c22:b0:46f:a2ba:581f with SMTP id
+ 5b1f17b1804b1-483179da808mr3365795e9.16.1770231804530; 
+ Wed, 04 Feb 2026 11:03:24 -0800 (PST)
+X-Received: by 2002:a05:600c:1c22:b0:46f:a2ba:581f with SMTP id
+ 5b1f17b1804b1-483179da808mr3365375e9.16.1770231803992; 
+ Wed, 04 Feb 2026 11:03:23 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e25e8csm7558641f8f.1.2026.02.04.11.03.14
+ 5b1f17b1804b1-48317d4a6b1sm3760595e9.11.2026.02.04.11.03.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:16 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:13 -0500
+ Wed, 04 Feb 2026 11:03:23 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:21 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Andrey Smirnov <andrew.smirnov@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Aurelien Jarno <aurelien@aurel32.net>, Nicholas Piggin <npiggin@gmail.com>,
- Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Paul Burton <paulburton@kernel.org>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org
-Subject: [PULL 11/51] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
- class_init()
-Message-ID: <f6258e47396663e06468f971433044521311c233.1770231744.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 14/51] pcie: Add a function to check if pasid privileged mode
+ is enabled
+Message-ID: <7b775ce1e595487808620877e77d4158ada2b0ce.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -125,7 +105,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,278 +121,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-No need to set DEVICE_CATEGORY_BRIDGE for each device
-implementing TYPE_PCI_HOST_BRIDGE: set it once in the
-parent.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20251027112306.57634-1-philmd@linaro.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251027112306.57634-1-philmd@linaro.org>
+Message-Id: <20251029105137.1097933-4-clement.mathieu--drif@eviden.com>
 ---
- hw/pci-host/articia.c     | 1 -
- hw/pci-host/aspeed_pcie.c | 1 -
- hw/pci-host/designware.c  | 3 ---
- hw/pci-host/gpex.c        | 2 --
- hw/pci-host/grackle.c     | 1 -
- hw/pci-host/gt64120.c     | 1 -
- hw/pci-host/mv64361.c     | 1 -
- hw/pci-host/pnv_phb.c     | 1 -
- hw/pci-host/ppce500.c     | 1 -
- hw/pci-host/q35.c         | 1 -
- hw/pci-host/raven.c       | 1 -
- hw/pci-host/remote.c      | 1 -
- hw/pci-host/sabre.c       | 1 -
- hw/pci-host/uninorth.c    | 4 ----
- hw/pci-host/xilinx-pcie.c | 2 --
- hw/pci/pci_host.c         | 1 +
- 16 files changed, 1 insertion(+), 22 deletions(-)
+ hw/pci/pcie.c         | 21 ++++++++++++++++-----
+ include/hw/pci/pcie.h |  1 +
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-index 1881e03d58..04623dfd84 100644
---- a/hw/pci-host/articia.c
-+++ b/hw/pci-host/articia.c
-@@ -200,7 +200,6 @@ static void articia_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = articia_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index c481c16c0f..50fc4aa8eb 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1340,6 +1340,16 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
+     dev->exp.pri_cap = offset;
  }
  
- /* TYPE_ARTICIA_PCI_HOST */
-diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-index 83a1c7075c..8eeba1f9f3 100644
---- a/hw/pci-host/aspeed_pcie.c
-+++ b/hw/pci-host/aspeed_pcie.c
-@@ -350,7 +350,6 @@ static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "ASPEED PCIe RC";
-     dc->realize = aspeed_pcie_rc_realize;
-     dc->fw_name = "pci";
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- 
-     hc->root_bus_path = aspeed_pcie_rc_root_bus_path;
-     device_class_set_props(dc, aspeed_pcie_rc_props);
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index 019e025382..00c9449c4d 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -593,8 +593,6 @@ static void designware_pcie_root_class_init(ObjectClass *klass,
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
--
-     k->vendor_id = PCI_VENDOR_ID_SYNOPSYS;
-     k->device_id = 0xABCD;
-     k->revision = 0;
-@@ -736,7 +734,6 @@ static void designware_pcie_host_class_init(ObjectClass *klass,
- 
-     hc->root_bus_path = designware_pcie_host_root_bus_path;
-     dc->realize = designware_pcie_host_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     dc->vmsd = &vmstate_designware_pcie_host;
- }
-diff --git a/hw/pci-host/gpex.c b/hw/pci-host/gpex.c
-index b5074c05c0..e66784ce51 100644
---- a/hw/pci-host/gpex.c
-+++ b/hw/pci-host/gpex.c
-@@ -200,7 +200,6 @@ static void gpex_host_class_init(ObjectClass *klass, const void *data)
-     hc->root_bus_path = gpex_host_root_bus_path;
-     dc->realize = gpex_host_realize;
-     dc->unrealize = gpex_host_unrealize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     device_class_set_props(dc, gpex_host_properties);
- }
-@@ -242,7 +241,6 @@ static void gpex_root_class_init(ObjectClass *klass, const void *data)
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->desc = "QEMU generic PCIe host bridge";
-     dc->vmsd = &vmstate_gpex_root;
-     k->vendor_id = PCI_VENDOR_ID_REDHAT;
-diff --git a/hw/pci-host/grackle.c b/hw/pci-host/grackle.c
-index 9a58f0e9b5..b0db7870b0 100644
---- a/hw/pci-host/grackle.c
-+++ b/hw/pci-host/grackle.c
-@@ -140,7 +140,6 @@ static void grackle_class_init(ObjectClass *klass, const void *data)
- 
-     dc->realize = grackle_realize;
-     device_class_set_props(dc, grackle_properties);
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     sbc->explicit_ofw_unit_address = grackle_ofw_unit_address;
- }
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index d361c457ed..566f928304 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1298,7 +1298,6 @@ static void gt64120_class_init(ObjectClass *klass, const void *data)
++static inline bool pcie_pasid_check_ctrl_bit_enabled(const PCIDevice *dev,
++                                                     uint16_t mask)
++{
++    if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
++        return false;
++    }
++    return (pci_get_word(dev->config + dev->exp.pasid_cap + PCI_PASID_CTRL) &
++                mask) != 0;
++}
++
+ uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+     if (!pcie_pri_enabled(dev)) {
+@@ -1359,11 +1369,12 @@ bool pcie_pri_enabled(const PCIDevice *dev)
  
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     device_class_set_props(dc, gt64120_properties);
-     dc->realize = gt64120_realize;
-     device_class_set_legacy_reset(dc, gt64120_reset);
-diff --git a/hw/pci-host/mv64361.c b/hw/pci-host/mv64361.c
-index ef1c77563e..495a82befd 100644
---- a/hw/pci-host/mv64361.c
-+++ b/hw/pci-host/mv64361.c
-@@ -108,7 +108,6 @@ static void mv64361_pcihost_class_init(ObjectClass *klass, const void *data)
- 
-     dc->realize = mv64361_pcihost_realize;
-     device_class_set_props(dc, mv64361_pcihost_props);
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- }
- 
- static const TypeInfo mv64361_pcihost_info = {
-diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
-index 85fcc3b686..0b556d1bf5 100644
---- a/hw/pci-host/pnv_phb.c
-+++ b/hw/pci-host/pnv_phb.c
-@@ -202,7 +202,6 @@ static void pnv_phb_class_init(ObjectClass *klass, const void *data)
-     hc->root_bus_path = pnv_phb_root_bus_path;
-     dc->realize = pnv_phb_realize;
-     device_class_set_props(dc, pnv_phb_properties);
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->user_creatable = true;
- }
- 
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index 76623f78c4..67180ba5f0 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -516,7 +516,6 @@ static void e500_pcihost_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = e500_pcihost_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     device_class_set_props(dc, pcihost_properties);
-     dc->vmsd = &vmstate_ppce500_pci;
- }
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index bf56229051..b353d3e1e6 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -194,7 +194,6 @@ static void q35_host_class_init(ObjectClass *klass, const void *data)
-     device_class_set_props(dc, q35_host_props);
-     /* Reason: needs to be wired up by pc_q35_init */
-     dc->user_creatable = false;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
- }
- 
-diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index c50061996c..b3c2678667 100644
---- a/hw/pci-host/raven.c
-+++ b/hw/pci-host/raven.c
-@@ -296,7 +296,6 @@ static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+ bool pcie_pasid_enabled(const PCIDevice *dev)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->realize = raven_pcihost_realizefn;
-     dc->fw_name = "pci";
- }
-diff --git a/hw/pci-host/remote.c b/hw/pci-host/remote.c
-index feaaa9adaa..9ea95fac6e 100644
---- a/hw/pci-host/remote.c
-+++ b/hw/pci-host/remote.c
-@@ -55,7 +55,6 @@ static void remote_pcihost_class_init(ObjectClass *klass, const void *data)
-     dc->realize = remote_pcihost_realize;
- 
-     dc->user_creatable = false;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
+-    if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
+-        return false;
+-    }
+-    return (pci_get_word(dev->config + dev->exp.pasid_cap + PCI_PASID_CTRL) &
+-                PCI_PASID_CTRL_ENABLE) != 0;
++    return pcie_pasid_check_ctrl_bit_enabled(dev, PCI_PASID_CTRL_ENABLE);
++}
++
++bool pcie_pasid_priv_enabled(PCIDevice *dev)
++{
++    return pcie_pasid_check_ctrl_bit_enabled(dev, PCI_PASID_CTRL_PRIV);
  }
  
-diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-index b3f57dca7d..cd2328ad53 100644
---- a/hw/pci-host/sabre.c
-+++ b/hw/pci-host/sabre.c
-@@ -505,7 +505,6 @@ static void sabre_class_init(ObjectClass *klass, const void *data)
-     dc->realize = sabre_realize;
-     device_class_set_legacy_reset(dc, sabre_reset);
-     device_class_set_props(dc, sabre_properties);
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     sbc->explicit_ofw_unit_address = sabre_ofw_unit_address;
- }
-diff --git a/hw/pci-host/uninorth.c b/hw/pci-host/uninorth.c
-index d39546b6f4..10972de694 100644
---- a/hw/pci-host/uninorth.c
-+++ b/hw/pci-host/uninorth.c
-@@ -435,7 +435,6 @@ static void pci_unin_main_class_init(ObjectClass *klass, const void *data)
- 
-     dc->realize = pci_unin_main_realize;
-     device_class_set_props(dc, pci_unin_main_pci_host_props);
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     sbc->explicit_ofw_unit_address = pci_unin_main_ofw_unit_address;
- }
-@@ -453,7 +452,6 @@ static void pci_u3_agp_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = pci_u3_agp_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- }
- 
- static const TypeInfo pci_u3_agp_info = {
-@@ -469,7 +467,6 @@ static void pci_unin_agp_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = pci_unin_agp_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- }
- 
- static const TypeInfo pci_unin_agp_info = {
-@@ -485,7 +482,6 @@ static void pci_unin_internal_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = pci_unin_internal_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- }
- 
- static const TypeInfo pci_unin_internal_info = {
-diff --git a/hw/pci-host/xilinx-pcie.c b/hw/pci-host/xilinx-pcie.c
-index 86c20377d1..40f625b61d 100644
---- a/hw/pci-host/xilinx-pcie.c
-+++ b/hw/pci-host/xilinx-pcie.c
-@@ -172,7 +172,6 @@ static void xilinx_pcie_host_class_init(ObjectClass *klass, const void *data)
- 
-     hc->root_bus_path = xilinx_pcie_host_root_bus_path;
-     dc->realize = xilinx_pcie_host_realize;
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "pci";
-     device_class_set_props(dc, xilinx_pcie_host_props);
- }
-@@ -291,7 +290,6 @@ static void xilinx_pcie_root_class_init(ObjectClass *klass, const void *data)
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->desc = "Xilinx AXI-PCIe Host Bridge";
-     k->vendor_id = PCI_VENDOR_ID_XILINX;
-     k->device_id = 0x7021;
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index 05f1475dc7..91e3885c7f 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -245,6 +245,7 @@ static void pci_host_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     device_class_set_props(dc, pci_host_properties_common);
-     dc->vmsd = &vmstate_pcihost;
-+    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
- }
- 
- static const TypeInfo pci_host_type_info = {
+ bool pcie_ats_enabled(const PCIDevice *dev)
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index fc02aeb169..d4e065db82 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -165,5 +165,6 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
+ uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev);
+ bool pcie_pri_enabled(const PCIDevice *dev);
+ bool pcie_pasid_enabled(const PCIDevice *dev);
++bool pcie_pasid_priv_enabled(PCIDevice *dev);
+ bool pcie_ats_enabled(const PCIDevice *dev);
+ #endif /* QEMU_PCIE_H */
 -- 
 MST
 
