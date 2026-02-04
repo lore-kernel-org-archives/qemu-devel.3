@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7EEE8B39B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76FBE8B39B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnVI9-0008FU-HA; Wed, 04 Feb 2026 00:19:05 -0500
+	id 1vnVHH-0007Gz-4t; Wed, 04 Feb 2026 00:18:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vnVI8-00087z-GS
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:19:04 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1vnVHF-0007FX-HT
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:09 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vnVI7-00087v-2w
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:19:04 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-34c3259da34so222862a91.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:19:02 -0800 (PST)
+ id 1vnVHE-0007lM-38
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:09 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35305538592so5379843a91.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:18:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1770182342; x=1770787142; darn=nongnu.org;
+ d=sifive.com; s=google; t=1770182287; x=1770787087; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d5CYrkhJrpjvqBVPkzOjtXXVzTM5dZscmB48AsapUgU=;
- b=WdYJNeDnnNPJLvdljqpJweZf0ovrp/i18QidVxFVserUDrcHHnaaMn9IuGM1NAamON
- O43iouR+5XeLqJv0PM/2xk9FGcN+bigR6x0k+dInD0fnAJeBZVyvWuRe2FvjgdiAvd2e
- HNK3ZMnU3LXCvy7xlaAmozFhr8BPUb2RHm589Zojpa1lZow+LPhEvIhtGkjJ822T50K8
- 3VeGPSxFvPz9zhhvwQNEAirh7ME/vg8i2bngxbm4+hPemo9vAoj/KqdYgQfM4w01Neme
- dmQ7CyMM9WR+4CAfCCxGZgFDoRD6aYs2ZxmwcAjQizCFyFIzZqbqHteMFAH+7cYReW0M
- idYA==
+ bh=LRPOC/3+XMfcKObCsTL8Q0o11X+pdIr3Wyk3iUXtQg0=;
+ b=LOoXMTryBLHp0xslmvFiz72AW0smDzcSIjXAiGk5xpHLl47jeh+6OkKuIK3iy4zS4S
+ O12LJibvzjDJ7v2Lk0uI5W2mcErzMR6Cs60x5jZiwuABp7J/a0TUHfG1nAHZvJeud8M6
+ QD01F0s+ZkkKaG9/A+L4RaryMrCerDwqEZ/jfSg9MfUfTKWjnZT7EaJvnO2+nLVo5r2d
+ p6vk0qPPfsd0tsZSJxzyF4hlfIzAHJ8ARizc9csMUdecdW9u44YEWwBVoWaPqwzvLWKr
+ GC4CJhnEnM9/8HGh7KwhB/vAkXjpDGElPhStXCCssL7VVeTNk8j964Mb1YZAbvDaiQh8
+ vXjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770182342; x=1770787142;
+ d=1e100.net; s=20230601; t=1770182287; x=1770787087;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=d5CYrkhJrpjvqBVPkzOjtXXVzTM5dZscmB48AsapUgU=;
- b=AAHtY8zkVzDfaIAX/0c/OjeWGqJsVZOdBIpwZqm7LVTdFLLpqbYYZkCt8vOCij7dbF
- f7LthCI7125fio90rbCuOlLZ2GNmI61dFlTavUQaMWsZmdEVfhr/OBZrgT3NDk/4mlA/
- khIQXjn4RQVfJk4/kVUvgIkCI4qx8ffJIkheSS/3tKEwOt/szkLWf/+o4fj+gaWxKMHV
- 4jKMOK6y5O22OmY3c+O5WkAK3o9UDTWFO3lYUvm8yoIfGAH+G/iPyJ2ALSm+ycb8A2r2
- RlZ/vS4/pVyEx73baSS1FPIvcYUJ0mEHzhvd/1rhwc8Bz3ru0cft8xL9Wm5UoONXCg9i
- rkjw==
-X-Gm-Message-State: AOJu0YxkquIdISiCS0YQWMKInACEt/4rtqC2JNEHp074rXN+MNMOP6kq
- pfjgQI6ZP2NKdevdNF4U1igJnOMwjnfpkAl07F7723XZGl8iol/tVEkwO51Uc75I6XA+zmFnjlo
- 6gs0pJE6f2SW7Z/vTkSUVxntMcSIw0iiS/fZPtyoN1jFsI7BakmQGnFFTw/D0ODf+nevjJevbU8
- +GSA4iZvMSRxPZNidaiKaYDZv3I3ksUSDys/i8R62MJkCV
-X-Gm-Gg: AZuq6aI0D2KDd5iGxmoUYtgLFzHEcabmEbm7zHNcoos7Khor1ofVOurEHVe/nzep5Fs
- U2hWKTIfm49AklsjYQzaRlA4N+9poiGu+tGORhg2VJeUfAtVfEqT4D+8xjnUH3c9fJwaQR1b/TG
- A2DJEH5yzAwIbM+3bMI3zYW0vkJQG1jg/R9LUFTEsGpiJEnpbO8Ep8Tt7lVlJe290YmrcotlApT
- 9Jpsm3Nvm9j9UTGWCJ1XY+S9m16CzBvSQdvWEFUqcPvKWvce7g8s1CfJV1ereYy65eHsfJskox+
- rHM2/a1L5I4s1dK6M4lZb13yu+pbdTt8g+B2zw6YiJwXckDd7qmZBtQm1HgKvyXiDlX9cdizrRL
- ocikghmBTAzYAHHo+81K6eB7XUXKol9lrv5eyPNNOApDKHntuvOJsR8VST1so4jRfh4Udp+ZfFC
- cdzpfz6FVO1wIwMj1zPrNTKXuryb/FSg2OszRtT3F5WCuhKzInSR5Sqb/2FLZMAm7eDXQ56T7Wz
- bSkhbAzlb7FJGj3tLNiTA+UkQ==
-X-Received: by 2002:a17:90b:5201:b0:353:100:2f20 with SMTP id
- 98e67ed59e1d1-354870eb37bmr1537890a91.10.1770182341673; 
- Tue, 03 Feb 2026 21:19:01 -0800 (PST)
+ bh=LRPOC/3+XMfcKObCsTL8Q0o11X+pdIr3Wyk3iUXtQg0=;
+ b=K5FCUIRAbFolZthY2d+OU4LbLYR6DECzp1mNYkGMSC7v8/aV8hjsXwgPH02BtNGvWY
+ x8fjNpT5xsDyEwfXBhF8EbTLuEKIP/QD6e41tK8VgQKQc7X8Z5aCXuuoRIAlby03BsQr
+ tTc7Tax8wdbvseOqjmTR5drPJGUZB/aYsR3eoHm9mpHbBr+3lQyDch83DA0n7YaelxRb
+ 9NkavnQyYMQvvxDzHwhf8JjXAUfL54X3m0CbHN4Jzd2E+OQsF4xkVfZczdsl9IcXBOZ2
+ hEvOfxOgW+VNxBeiDNY/SQXwM+6wxGSAFPIwgDySiGlU4+bv5UuwBypxnCWh/z9iLBHc
+ Agaw==
+X-Gm-Message-State: AOJu0Yx+sNrgYmEMn3rycU2X0ZGtazTkP+oOkbjNTQF8xwM9PCnVGRH+
+ fTRm55WFfP47BGWXSYNTbx5ND7KpiPzT/ICaKFrmaU2t6TuJS13FAdKgWDcM8r3MH7BhjfDuzIC
+ KVCEM77clzJA0CquOYBVgP5t9BXx04YfWORzcrUQeKgN0+1uiJKvoPwOAhSpwHRge3XsB7oYmnR
+ 4sikoqRGUP3U1U3txu2f1pbRHOvSNuC6bt9Pp4EBuZhsRv
+X-Gm-Gg: AZuq6aJtIfE6uZBWHkFph5xUf6HoOA9l9DMczRBHLCnumvC79W3fdI8Rx9urwGDWJ3x
+ zbOAfI36KO2YaYFLS3Ixd/7dGBT31euC7NqR8boIxQXC2tx/jPAp6/rm5g/W8IgEv/OeckpxHUp
+ Ocx+nAo839RNIZF8BzCwFagjbGs32mrH3xWM7t/OduN/+ma0usUFfi+Me+RUE2ZhbONAnDZKreh
+ L4XcylY8IEZsdZiSheeSFmUeZqrmhmr+r9VwGYvn6SMHH5gmAMGSkfwZci6Gx0XHkWWAgUHVkO4
+ OG7cyBnWhMAbpoOBXKdtUPXAzo8ZkuNDiK/dEXg9f8/BgvBQY4NQqSNCMZbsY4tMLM6HcAe+0c4
+ Cbc1ptOEhl35UoEkJ4oMyH5F658r8Czy1nzVD1kcTq2NXJQAu3GP9DUnNFtIFy8ywUjCNnvwGG9
+ YLNC8+qfjOPnDQ7N+aEElTpLuzAYhnXeQBVZ3SW1Dd1RlVLFYmLEmR4XkLmtlw6VFCFly36G1Gu
+ arXTg3sNU7zR/Q=
+X-Received: by 2002:a17:90b:2fd0:b0:34c:a29d:992f with SMTP id
+ 98e67ed59e1d1-354871fea80mr1694194a91.31.1770182286594; 
+ Tue, 03 Feb 2026 21:18:06 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35485eb8d90sm1266314a91.12.2026.02.03.21.18.59
+ 98e67ed59e1d1-35485eb8d90sm1266314a91.12.2026.02.03.21.18.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 21:19:01 -0800 (PST)
+ Tue, 03 Feb 2026 21:18:06 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,17 +79,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v3 19/19] disas/riscv: Add support of Zvfofp4min extension
-Date: Wed,  4 Feb 2026 13:17:55 +0800
-Message-ID: <20260204051756.667397-20-max.chou@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v3 01/19] target/riscv: rvv: Fix NOP_UU_B vs2 width
+Date: Wed,  4 Feb 2026 13:17:37 +0800
+Message-ID: <20260204051756.667397-2-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260204051756.667397-1-max.chou@sifive.com>
 References: <20260204051756.667397-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,41 +113,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support to disassemble Zvfofp4min instructions.
-
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- disas/riscv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/riscv/vector_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index daffe9917f..9abf86f2d7 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -987,6 +987,7 @@ typedef enum {
-     rv_op_vfncvtbf16_sat_f_f_w = 956,
-     rv_op_vfncvt_f_f_q = 957,
-     rv_op_vfncvt_sat_f_f_q = 958,
-+    rv_op_vfext_vf2 = 959,
- } rv_op;
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5aea553814..ec0ea4c143 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4972,7 +4972,7 @@ GEN_VEXT_V_ENV(vfwcvtbf16_f_f_v, 4)
  
- /* register names */
-@@ -2260,6 +2261,7 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vfncvtbf16.sat.f.f.w", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfncvt.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfncvt.sat.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-+    { "vfext.vf2", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -3715,6 +3717,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                     case 12: op = rv_op_vclz_v; break;
-                     case 13: op = rv_op_vctz_v; break;
-                     case 14: op = rv_op_vcpop_v; break;
-+                    case 22: op = rv_op_vfext_vf2; break;
-                     }
-                     break;
-                 case 20:
+ /* Narrowing Floating-Point/Integer Type-Convert Instructions */
+ /* (TD, T2, TX2) */
+-#define NOP_UU_B uint8_t,  uint16_t, uint32_t
++#define NOP_UU_B uint8_t,  uint16_t, uint16_t
+ #define NOP_UU_H uint16_t, uint32_t, uint32_t
+ #define NOP_UU_W uint32_t, uint64_t, uint64_t
+ /* vfncvt.xu.f.v vd, vs2, vm # Convert float to unsigned integer. */
 -- 
 2.52.0
 
