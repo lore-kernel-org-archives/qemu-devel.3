@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793B6E95372
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E03C4E95372
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vna0N-0004n6-18; Wed, 04 Feb 2026 05:21:03 -0500
+	id 1vna27-0005QH-Rg; Wed, 04 Feb 2026 05:22:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vna0K-0004ke-8R; Wed, 04 Feb 2026 05:21:00 -0500
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ id 1vna25-0005PO-Ih; Wed, 04 Feb 2026 05:22:49 -0500
+Received: from mxhk.zte.com.cn ([160.30.148.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vna0G-0000tI-Sh; Wed, 04 Feb 2026 05:20:59 -0500
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ id 1vna22-0001BO-3w; Wed, 04 Feb 2026 05:22:49 -0500
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4f5bwD59MZz51STg;
- Wed, 04 Feb 2026 18:20:44 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl2.zte.com.cn with SMTP id 614AKcDg034635;
- Wed, 4 Feb 2026 18:20:38 +0800 (+08)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4f5byP2r48z8Xs6y;
+ Wed, 04 Feb 2026 18:22:37 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+ by mse-fl1.zte.com.cn with SMTP id 614AMPgM060083;
+ Wed, 4 Feb 2026 18:22:25 +0800 (+08)
  (envelope-from liu.xuemei1@zte.com.cn)
 Received: from mapi (xaxapp02[null]) by mapi (Zmail) with MAPI id mid32;
- Wed, 4 Feb 2026 18:20:41 +0800 (CST)
-X-Zmail-TransId: 2afa69831d79487-8b537
+ Wed, 4 Feb 2026 18:22:28 +0800 (CST)
+X-Zmail-TransId: 2afa69831de4815-8d8c3
 X-Mailer: Zmail v1.0
-Message-ID: <20260204182041057hohVHgmaAJborE1DrghXH@zte.com.cn>
-Date: Wed, 4 Feb 2026 18:20:41 +0800 (CST)
+Message-ID: <202602041822284131BM90xnixL5L-cl6Z0HHj@zte.com.cn>
+In-Reply-To: <20260204182041057hohVHgmaAJborE1DrghXH@zte.com.cn>
+References: 20260204182041057hohVHgmaAJborE1DrghXH@zte.com.cn
+Date: Wed, 4 Feb 2026 18:22:28 +0800 (CST)
 Mime-Version: 1.0
 From: <liu.xuemei1@zte.com.cn>
 To: <imammedo@redhat.com>, <alistair.francis@wdc.com>,
@@ -42,23 +44,23 @@ To: <imammedo@redhat.com>, <alistair.francis@wdc.com>,
 Cc: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
  <zhiwei_liu@linux.alibaba.com>, <mst@redhat.com>,
  <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIHY1IDAvNF0gaHcvcmlzY3YvdmlydDogQWRkIGFjcGkgZ2VkIGFuZCBwb3dlcmRvd24gc3VwcG9ydA==?=
+Subject: =?UTF-8?B?W1BBVENIIHY1IDEvNF0gdGVzdHMvYWNwaTogdmlydDogYWxsb3cgRFNEVCBhY3BpIHRhYmxlIGNoYW5nZXM=?=
 Content-Type: text/plain;
 	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 614AKcDg034635
+X-MAIL: mse-fl1.zte.com.cn 614AMPgM060083
 X-TLS: YES
 X-SPF-DOMAIN: zte.com.cn
 X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
 X-SPF: None
-X-SOURCE-IP: 10.5.228.133 unknown Wed, 04 Feb 2026 18:20:44 +0800
+X-SOURCE-IP: 10.5.228.132 unknown Wed, 04 Feb 2026 18:22:37 +0800
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69831D7C.001/4f5bwD59MZz51STg
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Fangmail-MID-QID: 69831DED.000/4f5byP2r48z8Xs6y
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
@@ -79,43 +81,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-Add acpi ged and powerdown support for riscv
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v5:
-- Added a new patch to allow DSDT acpi table changes
-- Split a new patch to support ACPI GED
-- Introduced a condition for calling acpi_send_event
-- Link to v4: https://lore.kernel.org/qemu-devel/2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn/
-
-Changes in v4:
-- Added modifies of DSDT blob in another patch
-- Link to v3: https://lore.kernel.org/qemu-riscv/20250723113739751COZ5PkRzx6aXEuKzsHhm_@zte.com.cn/
-
-Changes in v3:
-- Added missing param to virt_is_acpi_enabled
-- Fixed failure of bios-tables-test
-- Link to v2: https://lore.kernel.org/qemu-riscv/202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn/
-
-Changes in v2:
-- Unwrappered acpi_dsdt_add_ged function
-- Modified base address of VIRT_ACPI_GED
-- Added conditions for function calls
-- Adjusted code formatting
-- Link to v1: https://lore.kernel.org/qemu-riscv/202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn/
-
-Xuemei Liu (4):
-  tests/acpi: virt: allow DSDT acpi table changes
-  hw/riscv/virt: Add acpi ged support
-  hw/riscv/virt: add system_powerdown hmp command support
-  tests/acpi: Add acpi ged and power button in DSDT for RISC-V
-
- hw/riscv/Kconfig                  |   1 +
- hw/riscv/virt-acpi-build.c        |  10 ++++++++
- hw/riscv/virt.c                   |  37 ++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h           |   4 ++++
- tests/data/acpi/riscv64/virt/DSDT | Bin 3538 -> 3681 bytes
- 5 files changed, 52 insertions(+)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..8e85fcdee9 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/DSDT",
 -- 
 2.27.0
 
