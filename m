@@ -4,113 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2562E8B39B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAD4E8B39A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnVBT-0005Gv-Em; Wed, 04 Feb 2026 00:12:11 -0500
+	id 1vnVCS-0005xu-5D; Wed, 04 Feb 2026 00:13:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnVBR-0005Gf-Sc
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:12:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vnVCO-0005xT-Sk
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:13:08 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnVBP-0005hk-Dq
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:12:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770181925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
- b=F3OsFB/FBLjIj7H3qcsm9UQ5105L6q8zNLYwu+8nSsjzCGOJEddRd7WFJ0gTnoJMCQW/2F
- 3X2uiK/k12LMJes6NTvRUEMMofp++AGDEeM95fPCco2mwi/+Bx7/1g3+BkQsTZJOqUjKkw
- qH7n6ALRqaFQmYtPjcFq0E+HX5s0MEI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-171-DBYkXU_tMpy20q-ouZHWNw-1; Wed, 04 Feb 2026 00:12:03 -0500
-X-MC-Unique: DBYkXU_tMpy20q-ouZHWNw-1
-X-Mimecast-MFC-AGG-ID: DBYkXU_tMpy20q-ouZHWNw_1770181922
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4361765dc85so840427f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:12:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770181922; x=1770786722; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
- b=O4uoovzE4O0DVVzA/dgH40sgNDSfvag9QP8BqNPyQg8x671SqDOn2NBGINdGoVqDIP
- wSJqZtK8Ru0GxNBiw1pgfC66iVWY9TtmHLGFK8K+NO4ZPR6wrIYj5gKyoqacRSoNCq12
- B37OUqMYcCgXLhbjCh4Lzz4MdN9iUjWZEQEsANlWSFx8lrzgxftGKzYg3j2pRT9d5x3X
- B9Jz7sx8JWBuqf4fqxk4BsIXFqenbe03eAf7/IVM760i8Y4U37wIemoySDg6af4gysZf
- 7O6/HifjPGc1CQRuFSXvQhUObIc1UgmNfpS+xXGRP2tvQHvhV8B3JCNlYWu8I+vIGe/d
- NrCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770181922; x=1770786722;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fkrFFYacfy0rWA5EU4SmFwDCPYQfT6vXJNgHjpz4ZRU=;
- b=m1gu/9phTYe1+pT2fFewhRIbYWCjn6usJo0pOot5hJSvHqVbQX7OblsoXUgU6+Z1TJ
- GKn+NxiXGVQt31ghs080s608BGa6GGw/W8EFDbMXs7GnoM9IvSdJPw2Bz+6/WiFcnOwD
- 1grlfEX5tY++Fm9AitS0NYWPpzMUbYxNKPUnOud4+0OlF3eP5rZcZZBe7tsOxkU4zma3
- DyAIi+UI0sjT7JFtyPJ1bfv01JGe3iG5bwxqGXGRLzaM0SjTyiU6eVtqXnJ0St9zLmE1
- 7nY5Znhl+WhH42t9AFs2NGS0UwsPkdlJ53PwMe42v/9Q62fHqTRV1xjNwH/hVBCjTHE8
- Qigg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjXtbrTXl4thquxCblq9v4lIAMKX+Ak2eel08GNG9ftki5GVmvKwqgwCKNi14da+oV5nfgJSTdGi65@nongnu.org
-X-Gm-Message-State: AOJu0YwmeoOzLmkNUdZnWbnEvts6+yfskX6M2G+lzgI3LkMvp1uvJBMa
- UEFf9Sb+m2ggpJNsSkFNZLQEfRylC+mhRAiD1SsdJ6Oju9YeHCMFMAcKwN8gb/uJJGfcytPwSQf
- L1PgbE1wiY/Q0SwddiNP4zCq1Ti4uBtdTV+Jhbv2/2JZQUgkq0Vul17kJ
-X-Gm-Gg: AZuq6aJZNsDqYpLf+a9Ssd2QlBJRdJ30iL6Q6HqkDfWXVRmL7aqNNIQEuYxzZ65EiV6
- Js1O/ARtepdKYMgkSgAQ8o5n7UBX19BTIbeE351DQNLE4Sxcxkkjfo69uAyS3vFz/TUaRIDrF67
- DGGBfwIYuBPkKejSW3OyDx915kqK+CAV11rbJmyz0djP/W6hp0naoujW+oUeGVdsFPNwjxhjoHe
- 4VdY2O3VybsviBmtXi5JRdhfWuw1AAhcyuqd6LCNXk143tlJpB3WzafoJNJH3o8x5hEJGntHf4y
- Tihq6uWQUOpO4J0LM0s0aDodvsKRO7Rm8uH+tJE7MmB6krOWDsQld8+n73KD4k0EX8h28jQ2z7T
- TaRPjQMvHF+zkUW7HfGFOTpGWjqtBxOqv7w==
-X-Received: by 2002:a05:6000:250c:b0:432:da3b:5941 with SMTP id
- ffacd0b85a97d-43617e405famr2012763f8f.21.1770181922016; 
- Tue, 03 Feb 2026 21:12:02 -0800 (PST)
-X-Received: by 2002:a05:6000:250c:b0:432:da3b:5941 with SMTP id
- ffacd0b85a97d-43617e405famr2012738f8f.21.1770181921480; 
- Tue, 03 Feb 2026 21:12:01 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436180659b8sm3194283f8f.43.2026.02.03.21.11.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 21:12:00 -0800 (PST)
-Date: Wed, 4 Feb 2026 00:11:56 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
-Subject: Re: [PATCH v2 4/9] pnv/phb4: Implement read-only and write-only bits
- of registers
-Message-ID: <20260204001123-mutt-send-email-mst@kernel.org>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
- <20251230102156.886288-5-saif.abrar@linux.vnet.ibm.com>
- <20260204000148-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vnVCL-0005xm-8L
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:13:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770181985; x=1801717985;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=ONXcrm7AFJY7LPqR9LKcB0x1BwiIvuwUuRbFu+hGALk=;
+ b=Objr+hITqQH/aYoDMQAzlRTxB7zJY9q6WKoaCi55qqV5oCpLNCnENNMD
+ BEmCvR4VEagLdOAykatmNcvfjCPe5mo1A82iWodh1+LE3ZA2PP4zz97KQ
+ y/rlmCmPtwa24smJEx80y4bW72PAAKdfmyKf2XV1f8C2V7m8zxwDAY19P
+ i50xBtBkTeUjDE9sQrxmaV/X7ehqCVWQOJbCGDdbVKWpY3iN+3pAHQF95
+ HsF9gR9og/wUjtDkgCf9yY5fBWaVk8WCfsND6VYN8CjMTkHoNJxuVVA4j
+ 63a957kDcQYotMTlBjJrVknenS78zlwO+oI4gUvzkFu82Ujw7JcPCRATv g==;
+X-CSE-ConnectionGUID: s1FTtn/lTlq8AiC6CV95hA==
+X-CSE-MsgGUID: v108tdxXRgufSzwCxqg1Zg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="71422030"
+X-IronPort-AV: E=Sophos;i="6.21,272,1763452800"; d="scan'208";a="71422030"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Feb 2026 21:13:02 -0800
+X-CSE-ConnectionGUID: 6RKKV7AyTZyIW4yaUgcc3A==
+X-CSE-MsgGUID: 2sX5hHlTSNy4cqZdQJGTqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,272,1763452800"; d="scan'208";a="210098438"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Feb 2026 21:13:02 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Tue, 3 Feb 2026 21:13:00 -0800
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35 via Frontend Transport; Tue, 3 Feb 2026 21:13:00 -0800
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.58) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Tue, 3 Feb 2026 21:13:00 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xYyiSvV4BUbXZmZBnhDHPM6EHiXb08U3ShYKqWYMBa92gnV0KA8d+y0jixlsrDJKLwe+XVx4UqAN67lLhpCHEciQ1DGve+V4WYginASWFtCNSBGLrWFb/Vn2wDyM1KW57NP3+fCgJvkmA/r1FJZFCd9owEx6ybfrC6+/Gsbkf4d27x68IFBqRloDIO6N+XB1J0FhgnVtPIlG/5Llh4NajLgqPY92EVf1PKgwTsr1sT4t9um5ygFaZhb9LW6ZVUxxUXx0T+bn0vmxQ4/uyk/jY2LMFAwMNMARF8eixpoj/Q5LVWs/0Za6EdyR+aynLLPRLJvTupcBpJJfCEmHpQw6tg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SK3gpDmka30C+rrahjAlO5KirXtludsKEZ+Xos3sbYE=;
+ b=UWOZrKVNXhzQN7c+WxmX/fysC64yuzIrLQQxzoan5j7bAm1A5Qr1ghBIZPAeKNWGbQE68t4zMD1AskH6c1Knl0Rmgrv0CRRLZ85/V/czWeGDS6Qb8kAWpIqmf8SmgKgWJb1tAQMKbhVkC33wTKmrA/HiefmfYT4gvUgIIzqTAGd/schPuu8Aal/Ts1SzMApHZj4ddphLxMcrbhnFH7R0yXMe6xnJZ2fUQPuOTHD9DRs3vEfpNd1/iK6rueTRWKK+ERNoD9ry8xT63a7kLau1UG9xQ3TjniWq7YM+8rzHi4pLkECrY6ZMh0URNOnL/NjTToNs8j5vjlck7jrYy8zPxw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
+ by PH0PR11MB4824.namprd11.prod.outlook.com (2603:10b6:510:38::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.11; Wed, 4 Feb
+ 2026 05:12:59 +0000
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9564.016; Wed, 4 Feb 2026
+ 05:12:59 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>
+Subject: RE: [PATCH v5 12/12] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Topic: [PATCH v5 12/12] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Index: AQHclN9KKehwGwfZP0uL1Ero8hOPIrVxAWWAgACHQgA=
+Date: Wed, 4 Feb 2026 05:12:59 +0000
+Message-ID: <IA0PR11MB7185AD122729307CD0294E05F898A@IA0PR11MB7185.namprd11.prod.outlook.com>
+References: <20260203073200.848183-1-vivek.kasireddy@intel.com>
+ <20260203073200.848183-13-vivek.kasireddy@intel.com>
+ <60caad88-611b-4ccb-b591-e34c9c751a72@redhat.com>
+In-Reply-To: <60caad88-611b-4ccb-b591-e34c9c751a72@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|PH0PR11MB4824:EE_
+x-ms-office365-filtering-correlation-id: b088b15e-aa92-4fe1-3435-08de63ac1058
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?SoqfceElTnsE9EyAgcu1orE4paSpeXaFzVJtViOstyCYww0DaQBNkKm2sg?=
+ =?iso-8859-1?Q?7I2bwOcm25OcBP/PxM6qhOj2sVoEoUUdwGOG5Hq6+guLTrXb3Cb7fgkdYB?=
+ =?iso-8859-1?Q?QT2xx6EeQka2LLH4ghlfPe/DRimpc05MsKdK5ik2eCc0dZO+mWrzi5rVM/?=
+ =?iso-8859-1?Q?l1rr/m7sr9CT8+fKaynVZXqi4zgALGMykbDeeDsCdl61itY0IXPSicj4or?=
+ =?iso-8859-1?Q?kJe9mJW/FNTScw8XtZ7tJC7svPcK62f9bOrwHNKWe+6PwYP97c9lQBaThh?=
+ =?iso-8859-1?Q?a0O74TGxYfOviqAvkZxS/hjSygPJSddNiF2f1rYAc0iXYDM7LZH5snB4Zx?=
+ =?iso-8859-1?Q?neDnXfdUYSpz0nupdpXB9FnYH1QzOEwj84lrv8ged2lyTccU5Lu5YVmE5B?=
+ =?iso-8859-1?Q?UuR7A8Tz4xE4aLjALMfHjxqdMN/VXbCUglpdU3fi5AcynktOFEUFPzgu0v?=
+ =?iso-8859-1?Q?6dkwGvw+K6aBryNZXYC7a7JZoSbV+yjXL9Nh8Mii5tDpbVIxSk2KD2yTQL?=
+ =?iso-8859-1?Q?0cansNi6wL7T2R8fIKgI5RK2vb85D1kAwcEuWFtXWAih4RpOivg2rwXdcH?=
+ =?iso-8859-1?Q?C38OOV2SVNK+5a3bbXmxWkhGiZvrrFomEmIRd5aFws2mFLu6jNy2e3iDwv?=
+ =?iso-8859-1?Q?Si5T2yPZXqY8u/+OCAZQrnrOpIAdRG3xu58gzLKhhM22tCUR4gGTyeEnW5?=
+ =?iso-8859-1?Q?MfcpkDtBJCfWgx+AQu8GzQZ7oeJf2F6gR46YuJt2WHgmBZEGOeqjMujiQP?=
+ =?iso-8859-1?Q?S33xkNS2YpwDx2zepb8xaq5zjRFNyWFjcSBrg6rWq6Kb7CVwg17BgbCvJk?=
+ =?iso-8859-1?Q?YKHrT1nruontkzpdgRamsDqsQPyRIyVIY3xA6db0I9ZHbFI7pbzs3vI/td?=
+ =?iso-8859-1?Q?68GVnIPAvi2kOuCsyxSu7aq68y5YQQM5In22cd0u+WO+Mo3y9qdZvAg+hW?=
+ =?iso-8859-1?Q?gx0xvAEKvTt2wOXBfmeSB0Qr38GX/rYxlBdBPCWjd0St14ASevfotWxUmN?=
+ =?iso-8859-1?Q?z5c4ZMnnOKtehGCR2uwyDT6uPR8t4daRRQkyFBPFDA2inawgQOQU1EASE4?=
+ =?iso-8859-1?Q?Bx3AkZa8XAwIV9asy/xYuB865bDpWGfiBJJIYdXzHeQltTTL6fNdZyahCq?=
+ =?iso-8859-1?Q?pEPrRiWBtiMirMY1o+BaSCo4c/oUZ+1wiqVgkYdtvXWxyJhqKZHXZx8lpM?=
+ =?iso-8859-1?Q?lmSfo1GWT8hPOSC/DfkpJ8LTYq8SRk4/EhL4KcX2ZVZ0T2xVAkTwPDRbMf?=
+ =?iso-8859-1?Q?n2/oyg0jl/q6ZgFIKTWxARbCzY6baNlwvnf8XMt8xDqvbp8eSJpNASPAK9?=
+ =?iso-8859-1?Q?qI6HpLi1VJ47yAzYn4xdduqz9vK2dvlYaCjj4HFcKXc/1cec7/b8bpclp9?=
+ =?iso-8859-1?Q?abEj5JSx0xB7YbglzV28vTuJ4/Syde3T3Pg0mSyjDEa2koNDasQzpkKsJB?=
+ =?iso-8859-1?Q?oD2J8e/oDOG5DgeDPFQiZriOTvhfhHh/ya61MNoD7NdC3fwj8W2Ff2zFB1?=
+ =?iso-8859-1?Q?TkAGBaJZ2kDC8+2WbzXZO8VwLQjdNLCRg94tUj480klduCUdFS6kzPcnEw?=
+ =?iso-8859-1?Q?xVtkzeF/Uu5OpeSIpdnzQWc9BUwPSuvwpqy6kF2pB4ltnCKdnB5htROinS?=
+ =?iso-8859-1?Q?q0/U8KXn5rin+dURSt+HYY9MXd9o77QKrCH2IHCo8uPWDKOU6fp8GeTK/V?=
+ =?iso-8859-1?Q?nC1s908vZUT5WGlcYnM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?bm4nq4wucdIzWaexMtf0H8UWOWueVqiByN/F89UxzbicwPUt1uvTv6cKAv?=
+ =?iso-8859-1?Q?2f3oZiRCFTBqHwBKSV7N1c6HX6WDf4Ddzaad0zswf4EFcNf4/RzxzjLbNH?=
+ =?iso-8859-1?Q?Um4OPRpLPO187jaZ6bq0fklCuDBr4c63GpremPn2wE07/FDzO9cdVrcMbR?=
+ =?iso-8859-1?Q?PITAkxpN/Fg2i0N/zixn+NNlqwudRbeDaESzr/+NhcfUy/ufiuA2JVllc7?=
+ =?iso-8859-1?Q?awJku6m813St1MjsGBHW3l2D7XPyHijlaRFDBz+Ui2cMBdctBIQRg98SSk?=
+ =?iso-8859-1?Q?HZv24yoCXSzCEWqHbV6ZloDEnqwSDBRmPnFt/O045NLmRLMgcPXsZi/Lpg?=
+ =?iso-8859-1?Q?sbS79s+QSDw+Riy98vfUwZZEijV+gz8VNEC6lg1HL3ckraAUDiD51+KjFa?=
+ =?iso-8859-1?Q?iionc0QbX9p7uSDC5DQbkFI0KK+XZvu8CEXRk2pH3hRonu+8VYaOdxCbYx?=
+ =?iso-8859-1?Q?LnKGSgPA3GBbN5O+ykZCwU16AQ1PX9rkVPc8Tif2PZsXlgX1vMyjE+ee/H?=
+ =?iso-8859-1?Q?6NCRLzCHVkrimAcFe5OQLb8LoQqm8nmF4YkGztRz5zf0vd4urcqY3cQnwa?=
+ =?iso-8859-1?Q?7EqxakBIItpfDtrxFm1YHyonsOfcfXfsW0uIo22yUCtwT1vp6Z8zOv5B5i?=
+ =?iso-8859-1?Q?kBclWxLuSq/tfaccjUsSqzAdBtJ7MSBp/WJqGRit9VKjzeBb1z0dI/rkHP?=
+ =?iso-8859-1?Q?7Q/p3WBRgh1BY7tFEbC8XZZnJbNyAxNgax636yv56FPnSEYW5xcBx3sSkw?=
+ =?iso-8859-1?Q?U5ja8E1/GCRcha36zunqkJbb1StVLyAmmOvzNxV8/KrGQn7XZ/VJU8Cm8t?=
+ =?iso-8859-1?Q?DRTpCDq+xy1GHAR1H0JJ+Cnz8llFIQRXDUvyLtZpLl5jlOAPy0IUzir9nK?=
+ =?iso-8859-1?Q?kigyPiq66bOQ0DjOG2/YdXYPYx4ThDSBWXKrJpbHho3cyCNtiQtPFIzRre?=
+ =?iso-8859-1?Q?upYgTnMfClEl71gvWjeX/KO/Lvsez0y4WLwO/9EdmD58i8lXBoEIHt+tJ6?=
+ =?iso-8859-1?Q?igzghcal4gyeGmkehw4E/0kcnIsZYBQdmjDP+zj/zz0Kqu4G0krseW+x03?=
+ =?iso-8859-1?Q?Xe1SpnyTpRq/OfackjwGmA2bQqTGSn3rg/GO1Pt/o+fnPKJynUP64DDgDb?=
+ =?iso-8859-1?Q?THE0401fVG5zqPvN7YQGXeRw8qhOWcNXbOi0V4FfseLzrxZZcWCWos2GPe?=
+ =?iso-8859-1?Q?ONxyl2//zrvcdmVykGXIIAwLl5u5xorED5GjbrwFzztPrz+GgbrhY5GsYO?=
+ =?iso-8859-1?Q?LPDWZPpjf7c19F5C1YT0048PS/XMHaQaW4SvbZ7kTMhA6J57vxjoUBjFZx?=
+ =?iso-8859-1?Q?o+gHwRh+wFuqAkb/Bb5AN1UP1giU4ra/N3DL+pklCDVeoeIKs1/zZfVcAb?=
+ =?iso-8859-1?Q?aNO0mGKwZN+plqgF4LvHrPrJAfiSCj685GK6eVCVm3kir6GFWTAdC1cp8/?=
+ =?iso-8859-1?Q?cccnAhR0ryD14PZXkedy1xVLp4+k5CehAXmycus8FnrUfat1tIpUPjSjN7?=
+ =?iso-8859-1?Q?Yunh7GDCmeSFhqSUJSsJC68v4jGSi2qx2MbWZCntOCN3FWrNB96BTojisp?=
+ =?iso-8859-1?Q?znvfO8kJHokSuyGEztGZCJYUBLOsNT7okHRdSUman1StcYt67g74WQrP7q?=
+ =?iso-8859-1?Q?rc+nOMV1LFATypugH+H+sP6WpMEVlxGeEYKOdWrhLpv53TIh9BrJycRe75?=
+ =?iso-8859-1?Q?WY5dMhpnUYEXTzpoMpx5BxpOCfi+1ZmwoVoxOV/VZYzHNo/H9uOTZeiyhF?=
+ =?iso-8859-1?Q?H0TOnClknzFvFlpRLkVrBPpUSbL+8pjcZbAcENCzMVYTo5teFTX87JSc6T?=
+ =?iso-8859-1?Q?BXARNR9+mg=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260204000148-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b088b15e-aa92-4fe1-3435-08de63ac1058
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2026 05:12:59.1841 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CUx6wda+SYpCL1p6TEabIzqc+uqBLPWAdibC2tu/Q4onzpZbugro84qIZ8fBSFbjz/bECbLu0vF2aKb8N6oeEQ+TI2v8c64TcB2Sj0MrM2g=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4824
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,368 +209,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 12:04:20AM -0500, Michael S. Tsirkin wrote:
-> On Tue, Dec 30, 2025 at 04:21:22AM -0600, Saif Abrar wrote:
-> > SW cannot write the read-only(RO) bits of a register
-> > and write-only(WO) bits of a register return 0 when read.
-> > 
-> > Added ro_mask[] for each register that defines which
-> > bits in that register are RO.
-> > When writing to a register, the RO-bits are not updated.
-> > 
-> > When reading a register, clear the WO bits and return the updated value.
-> > 
-> > Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
-> > PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
-> > by writing all 1's and reading back the value.
-> > The WO bits in these registers should read back as 0.
-> > 
-> > Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> > Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> 
-> causes a crash in boot-serial-test:
-> https://gitlab.com/mstredhat/qemu/-/jobs/12975819193
+Hi Cedric,
 
-I forgot to say - with tci:
-
-  ../configure --enable-tcg-interpreter --target-list=ppc64-softmmu                                                                      
-
-
-> bisect script:
-> 
-> #!/bin/bash                                                                                                                            
-> cd /scm/qemu-bisect/build                                                                                                              
-> make -j$(nproc) || exit 125                                                                                                            
-> ninja tests/qtest/boot-serial-test || exit 125                                                                                         
-> QTEST_QEMU_BINARY=./qemu-system-ppc64 timeout 60 ./tests/qtest/boot-serial-test -p /ppc64/boot-serial/powernv9 && exit 0 || exit 1     
-> 
-> 
+> Subject: Re: [PATCH v5 12/12] virtio-gpu-dmabuf: Create dmabuf for
+> blobs associated with VFIO devices
+>=20
+> On 2/3/26 08:30, Vivek Kasireddy wrote:
+> > In addition to memfd, a blob resource can also have its backing
+> > storage in a VFIO device region. Since, there is no effective way
+> > to determine where the backing storage is located, we first try to
+> > create a dmabuf assuming it is in memfd. If that fails, we try to
+> > create a dmabuf assuming it is in VFIO device region.
+> >
+> > So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+> > backing storage is located in a memfd or not. If it is not, we invoke
+> > the vfio_device_create_dmabuf() API which identifies the right VFIO
+> > device and eventually creates a dmabuf fd.
+> >
+> > Note that in virtio_gpu_remap_dmabuf(), we first try to test if
+> > the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+> > fall back to the vfio_device_mmap_dmabuf() API to get a mapping
+> > created for the dmabuf.
+> >
+> > Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> > Cc: Alex Benn=E9e <alex.bennee@linaro.org>
+> > Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> > Cc: Alex Williamson <alex@shazbot.org>
+> > Cc: C=E9dric Le Goater <clg@redhat.com>
+> > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > > ---
-> > v1 -> v2: New PnvPHB4Class to hold each register's RO mask.
-> > 
-> >  hw/pci-host/pnv_phb4.c              | 78 ++++++++++++++++++++++++++---
-> >  include/hw/pci-host/pnv_phb4.h      | 13 ++++-
-> >  include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
-> >  tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
-> >  4 files changed, 157 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> > index 70f5af21fa..48caba9e79 100644
-> > --- a/hw/pci-host/pnv_phb4.c
-> > +++ b/hw/pci-host/pnv_phb4.c
-> > @@ -707,6 +707,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-> >          return;
-> >      }
-> >  
-> > +    /* Update 'val' according to the register's RO-mask */
-> > +    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
-> > +    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
-> > +                                            (val & ~(k->ro_mask[off >> 3]));
+> >   hw/display/Kconfig             |  5 ++++
+> >   hw/display/virtio-gpu-dmabuf.c | 49 ++++++++++++++++++++++++++--
+> ------
+> >   2 files changed, 43 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> > index 1e95ab28ef..0d090f25f5 100644
+> > --- a/hw/display/Kconfig
+> > +++ b/hw/display/Kconfig
+> > @@ -106,6 +106,11 @@ config VIRTIO_VGA
+> >       depends on VIRTIO_PCI
+> >       select VGA
+> >
+> > +config VIRTIO_GPU_VFIO_BLOB
+> > +    bool
+> > +    default y
+> > +    depends on VFIO
 > > +
-> >      /* Record whether it changed */
-> >      changed = phb->regs[off >> 3] != val;
-> >  
-> > @@ -781,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-> >      case PHB_TCE_TAG_ENABLE:
-> >      case PHB_INT_NOTIFY_ADDR:
-> >      case PHB_INT_NOTIFY_INDEX:
-> > -    case PHB_DMARD_SYNC:
-> > +    case PHB_DMA_SYNC:
-> >         break;
-> >  
-> >      /* Noise on anything else */
-> > @@ -819,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-> >      case PHB_VERSION:
-> >          return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
-> >  
-> > -        /* Read-only */
-> > +    /* Read-only */
-> >      case PHB_PHB4_GEN_CAP:
-> >          return 0xe4b8000000000000ull;
-> >      case PHB_PHB4_TCE_CAP:
-> > @@ -829,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-> >      case PHB_PHB4_EEH_CAP:
-> >          return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
-> >  
-> > +    /* Write-only, read will return zeros */
-> > +    case PHB_LEM_ERROR_AND_MASK:
-> > +    case PHB_LEM_ERROR_OR_MASK:
-> > +        return 0;
-> > +    case PHB_PCIE_DLP_TRWCTL:
-> > +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
-> > +        return val;
-> >      /* IODA table accesses */
-> >      case PHB_IODA_DATA0:
-> >          return pnv_phb4_ioda_read(phb);
-> >  
-> > +    /*
-> > +     * DMA sync: make it look like it's complete,
-> > +     *           clear write-only read/write start sync bits.
-> > +     */
-> > +    case PHB_DMA_SYNC:
-> > +        val = PHB_DMA_SYNC_RD_COMPLETE |
-> > +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
-> > +        return val;
-> > +
-> > +    /*
-> > +     * PCI-E Stack registers
-> > +     */
-> > +    case PHB_PCIE_SCR:
-> > +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
-> > +        break;
-> > +
-> >      /* Link training always appears trained */
-> >      case PHB_PCIE_DLP_TRAIN_CTL:
-> >          /* TODO: Do something sensible with speed ? */
-> > -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> > +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> > +        return val;
-> > +
-> > +    case PHB_PCIE_HOTPLUG_STATUS:
-> > +        /* Clear write-only bit */
-> > +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
-> > +        return val;
-> >  
-> > -    /* DMA read sync: make it look like it's complete */
-> > -    case PHB_DMARD_SYNC:
-> > -        return PHB_DMARD_SYNC_COMPLETE;
-> > +    /* Link Management Register */
-> > +    case PHB_PCIE_LMR:
-> > +        /* These write-only bits always read as 0 */
-> > +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
-> > +        return val;
-> >  
-> >      /* Silent simple reads */
-> >      case PHB_LSI_SOURCE_ID:
-> > @@ -1685,6 +1721,32 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
-> >      .get_address_space = pnv_phb4_dma_iommu,
-> >  };
-> >  
-> > +static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+> >   config VHOST_USER_GPU
+> >       bool
+> >       default y
+> > diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+> dmabuf.c
+> > index 22e66fbb12..2e65f21dda 100644
+> > --- a/hw/display/virtio-gpu-dmabuf.c
+> > +++ b/hw/display/virtio-gpu-dmabuf.c
+> > @@ -18,6 +18,7 @@
+> >   #include "ui/console.h"
+> >   #include "hw/virtio/virtio-gpu.h"
+> >   #include "hw/virtio/virtio-gpu-pixman.h"
+> > +#include "hw/vfio/vfio-device.h"
+> >   #include "trace.h"
+> >   #include "system/ramblock.h"
+> >   #include "system/hostmem.h"
+> > @@ -27,6 +28,23 @@
+> >   #include "standard-headers/linux/udmabuf.h"
+> >   #include "standard-headers/drm/drm_fourcc.h"
+> >
+> > +static bool virtio_gpu_create_vfio_dmabuf(struct
+> virtio_gpu_simple_resource *r,
+> > +                                          Error **errp)
 > > +{
-> > +    PnvPHB4Class *phb4c = PNV_PHB4_GET_CLASS(phb);
+> > +    bool ret =3D false;
+> > +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> > +    int fd;
 > > +
-> > +    /*
-> > +     * Set register specific RO-masks
-> > +     */
+> > +    if (!vfio_device_create_dmabuf(r->iov, r->iov_cnt, &fd, errp)) {
+> > +        return false;
+> > +    }
 > > +
-> > +    /* PBL - Error Injection Register (0x1910) */
-> > +    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
-> > +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
-> > +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
-> > +
-> > +    /* Reserved bits[60:63] */
-> > +    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
-> > +    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
-> > +    /* Reserved bits[36:63] */
-> > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
-> > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
-> > +    /* Reserved bits[40:63] */
-> > +    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
-> > +    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
-> > +
-> > +    /* TODO: Add more RO-masks as regs are implemented in the model */
+> > +    ret =3D true;
+> > +    r->dmabuf_fd =3D fd;
+> > +#endif
+> > +    return ret;
 > > +}
 > > +
-> >  static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
-> >  {
-> >      STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-> > @@ -1743,6 +1805,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
-> >      pnv_phb4_err_reg_reset(phb);
-> >      pnv_phb4_pcie_stack_reg_reset(phb);
-> >      pnv_phb4_regb_err_reg_reset(phb);
-> > +    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
-> >  }
-> >  
-> >  static void pnv_phb4_instance_init(Object *obj)
-> > @@ -1753,6 +1816,9 @@ static void pnv_phb4_instance_init(Object *obj)
-> >  
-> >      /* XIVE interrupt source object */
-> >      object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
-> > +
-> > +    /* Initialize RO-mask of registers */
-> > +    pnv_phb4_ro_mask_init(phb);
-> >  }
-> >  
-> >  void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
-> > diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-> > index 47a5c3edf5..bea0684724 100644
-> > --- a/include/hw/pci-host/pnv_phb4.h
-> > +++ b/include/hw/pci-host/pnv_phb4.h
-> > @@ -19,7 +19,7 @@
-> >  
-> >  
-> >  #define TYPE_PNV_PHB4 "pnv-phb4"
-> > -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
-> > +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
-> >  
-> >  typedef struct PnvPhb4PecStack PnvPhb4PecStack;
-> >  
-> > @@ -156,6 +156,17 @@ struct PnvPHB4 {
-> >      QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
-> >  };
-> >  
-> > +typedef struct PnvPHB4Class {
-> > +    DeviceClass parent_class;
-> > +
-> > +    /*
-> > +     * Read-only bitmask for registers
-> > +     * Bit value: 1 => RO bit
-> > +     *            0 => RW bit
-> > +     */
-> > +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
-> > +} PnvPHB4Class;
-> > +
-> >  void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
-> >  int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
-> >  PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
-> > diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-> > index df5e86d29a..dfd0e01d1e 100644
-> > --- a/include/hw/pci-host/pnv_phb4_regs.h
-> > +++ b/include/hw/pci-host/pnv_phb4_regs.h
-> > @@ -180,9 +180,11 @@
-> >  #define PHB_M64_AOMASK                  0x1d0
-> >  #define PHB_M64_UPPER_BITS              0x1f0
-> >  #define PHB_NXLATE_PREFIX               0x1f8
-> > -#define PHB_DMARD_SYNC                  0x200
-> > -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
-> > -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
-> > +#define PHB_DMA_SYNC                    0x200
-> > +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
-> > +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
-> > +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
-> > +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
-> >  #define PHB_RTC_INVALIDATE              0x208
-> >  #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
-> >  #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
-> > @@ -370,6 +372,7 @@
-> >  #define P32_CAP                                 0x228
-> >  #define P32_CTL                                 0x22C
-> >  #define P32_STAT                                0x230
-> > +
-> >  /* PHB4 REGB registers */
-> >  
-> >  /* PBL core */
-> > @@ -395,8 +398,8 @@
-> >  #define PHB_PCIE_SCR                    0x1A00
-> >  #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
-> >  #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
-> > +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
-> >  #define PHB_PCIE_BNR                    0x1A08
-> > -
-> >  #define PHB_PCIE_CRESET                 0x1A10
-> >  #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
-> >  #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
-> > @@ -405,7 +408,14 @@
-> >  #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
-> >  #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
-> >  #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
-> > +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
-> > +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
-> >  #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
-> > +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
-> > +#define PHB_PCIE_LMR                    0x1A30
-> > +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
-> > +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
-> > +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
-> >  
-> >  #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
-> >  #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
-> > @@ -433,7 +443,7 @@
-> >  
-> >  #define PHB_PCIE_DLP_TRWCTL             0x1A80
-> >  #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
-> > -
-> > +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
-> >  #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
-> >  #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
-> >  #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
-> > diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
-> > index f186efaf0d..841306ae3f 100644
-> > --- a/tests/qtest/pnv-phb4-test.c
-> > +++ b/tests/qtest/pnv-phb4-test.c
-> > @@ -73,7 +73,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
-> >       * Sticky reset test of PHB_PBL_ERR_STATUS.
-> >       *
-> >       * Write all 1's to reg PHB_PBL_ERR_INJECT.
-> > -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
-> > +     * RO-only bits will not be written and
-> > +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
-> >       *
-> >       * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
-> >       * Verify the sticky bits are still set.
-> > @@ -81,7 +82,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
-> >      phb4_xscom_write(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
-> >      phb4_xscom_write(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
-> >      val = phb4_xscom_read(PHB_PBL_ERR_STATUS);
-> > -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
-> > +    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
-> > +}
-> > +
-> > +/* Check that write-only bits/regs return 0 when read */
-> > +static void phb4_writeonly_read_test(QTestState *qts)
-> > +{
-> > +    uint64_t val;
-> > +
-> > +    /*
-> > +     * Set all bits of PHB_DMA_SYNC,
-> > +     * bits 0 and 2 are write-only and should be read as 0.
-> > +     */
-> > +    phb4_xscom_write(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_DMA_SYNC);
-> > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> > +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
-> > +
-> > +    /*
-> > +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
-> > +     * bit 9 is write-only and should be read as 0.
-> > +     */
-> > +    phb4_xscom_write(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_PCIE_HOTPLUG_STATUS);
-> > +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
-> > +
-> > +    /*
-> > +     * Set all bits of PHB_PCIE_LMR,
-> > +     * bits 0 and 1 are write-only and should be read as 0.
-> > +     */
-> > +    phb4_xscom_write(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_PCIE_LMR);
-> > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> > +
-> > +    /*
-> > +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
-> > +     * write-only bit-1 should be read as 0.
-> > +     */
-> > +    phb4_xscom_write(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_PCIE_DLP_TRWCTL);
-> > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> > +
-> > +    /*
-> > +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
-> > +     * both regs are write-only and should be read as 0.
-> > +     */
-> > +    phb4_xscom_write(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_LEM_ERROR_AND_MASK);
-> > +    g_assert_cmpuint(val, ==, 0x0);
-> > +
-> > +    phb4_xscom_write(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
-> > +    val = phb4_xscom_read(PHB_LEM_ERROR_OR_MASK);
-> > +    g_assert_cmpuint(val, ==, 0x0);
-> >  }
-> >  
-> >  static void phb4_tests(void)
-> > @@ -96,6 +149,9 @@ static void phb4_tests(void)
-> >      /* Check sticky reset of a register */
-> >      phb4_sticky_rst_test(qts);
-> >  
-> > +    /* Check write-only logic */
-> > +    phb4_writeonly_read_test(qts);
-> > +
-> >      qtest_quit(qts);
-> >  }
-> >  
-> > -- 
-> > 2.47.3
+> >   static bool virtio_gpu_create_udmabuf(struct
+> virtio_gpu_simple_resource *res,
+> >                                         Error **errp)
+> >   {
+> > @@ -72,18 +90,25 @@ static bool virtio_gpu_create_udmabuf(struct
+> virtio_gpu_simple_resource *res,
+> >   }
+> >
+> >   static bool virtio_gpu_remap_dmabuf(struct
+> virtio_gpu_simple_resource *res,
+> > -                                    Error **err1)
+> > +                                    Error **err1, Error **err2)
+>=20
+> This looks wrong. Why do we need 2 errors ?
+As seen below in virtio_gpu_init_dmabuf(), we have a situation where
+there is a need to collect errors from two different paths and report
+them only if both the paths fail. In other words, we do not want to
+return an error when the first path fails. The intended goal is to inform
+the user that one or both paths were tried when a failure is seen.
+
+For example, in virtio_gpu_remap_dmabuf(), we first try to do mmap()
+and if that fails, we capture the error in err1. Next, we call
+vfio_device_mmap_dmabuf() and if that succeeds, then we do not need
+to report err1. However, if it fails, we then collect the error in err2 and
+report both err1 and err2.
+
+Is there a better way to handle the above situation?
+
+Thanks,
+Vivek
+
+>=20
+> C.
+>=20
+> >   {
+> > +    bool ret =3D true;
+> >       void *map;
+> >
+> >       map =3D mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+> res->dmabuf_fd, 0);
+> >       if (map =3D=3D MAP_FAILED) {
+> >           error_setg_errno(err1, errno, "dmabuf mmap failed");
+> > -        res->remapped =3D NULL;
+> > -        return false;
+> > +        map =3D NULL;
+> > +        ret =3D false;
+> > +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> > +        if (vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
+> > +                                    res->blob_size, err2)) {
+> > +            ret =3D true;
+> > +        }
+> > +#endif
+> >       }
+> >       res->remapped =3D map;
+> > -    return true;
+> > +    return ret;
+> >   }
+> >
+> >   static void virtio_gpu_destroy_dmabuf(struct
+> virtio_gpu_simple_resource *res)
+> > @@ -137,7 +162,7 @@ bool virtio_gpu_have_udmabuf(void)
+> >
+> >   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+> >   {
+> > -    Error *err1 =3D NULL;
+> > +    Error *err1 =3D NULL, *err2 =3D NULL;
+> >       void *pdata =3D NULL;
+> >
+> >       res->dmabuf_fd =3D -1;
+> > @@ -146,12 +171,16 @@ void virtio_gpu_init_dmabuf(struct
+> virtio_gpu_simple_resource *res)
+> >           pdata =3D res->iov[0].iov_base;
+> >       } else {
+> >           if (!virtio_gpu_create_udmabuf(res, &err1)) {
+> > -            error_report_err(err1);
+> > -            return;
+> > +            if (!virtio_gpu_create_vfio_dmabuf(res, &err2)) {
+> > +                error_report_err(err1);
+> > +                error_report_err(err2);
+> > +                return;
+> > +            }
+> >           }
+> >
+> > -        if (!virtio_gpu_remap_dmabuf(res, &err1)) {
+> > +        if (!virtio_gpu_remap_dmabuf(res, &err1, &err2)) {
+> >               error_report_err(err1);
+> > +            error_report_err(err2);
+> >               return;
+> >           }
+> >           pdata =3D res->remapped;
+> > @@ -162,9 +191,7 @@ void virtio_gpu_init_dmabuf(struct
+> virtio_gpu_simple_resource *res)
+> >
+> >   void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+> >   {
+> > -    if (res->remapped) {
+> > -        virtio_gpu_destroy_dmabuf(res);
+> > -    }
+> > +    virtio_gpu_destroy_dmabuf(res);
+> >   }
+> >
+> >   static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf
+> *dmabuf)
 
 
