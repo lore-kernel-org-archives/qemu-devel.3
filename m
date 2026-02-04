@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB06AEA7944
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B5FEA7941
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniC0-0003hX-5g; Wed, 04 Feb 2026 14:05:36 -0500
+	id 1vniAz-0002hd-4H; Wed, 04 Feb 2026 14:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB3-0002xB-Ms
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:41 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAu-0002Jd-La
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB2-0008B0-6q
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:37 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAt-00089K-2g
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231875;
+ s=mimecast20190719; t=1770231866;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MYOHd7OZhpLHGlsgoLBWOeyBZyIml693wIxtgYusuig=;
- b=UB7ALBn7yU4N9BljTodWk/JnFKSCf8JnhhFWOjvfEGOnmid3DoKQvZ4jTrdNe+QaBk82Sb
- sAyrtacuFGafgpNU1/1xZsdHLVLDWlQF/HfwXQNqWRPzsiq+iiUzAcfN5/nNVmDXmI9Jq2
- aArtQnP8IMobFLDpgzAYTHT88s50ZB0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
+ b=Zwwy/lQOQvbe0Rnve848+LowkH49Outg0/vpsQD/51XQ9IOdavKACMlf+H2JuR4tPWQMTU
+ oI4+pCj/iSuoIXLXAlhZeNEwna4/5jIdih7/ZXIB53MTxnKW48rpP/ParUSNnHzE2nvb8w
+ tcyFz3lAQbre8tCV3+Xv+0xJPKHeUMs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-Tf0mnLSUOC-qIBAJFt7AaQ-1; Wed, 04 Feb 2026 14:04:34 -0500
-X-MC-Unique: Tf0mnLSUOC-qIBAJFt7AaQ-1
-X-Mimecast-MFC-AGG-ID: Tf0mnLSUOC-qIBAJFt7AaQ_1770231873
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4801c1056c7so763405e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:34 -0800 (PST)
+ us-mta-622-wMU2un5hNEmHSOvxLxHNig-1; Wed, 04 Feb 2026 14:04:25 -0500
+X-MC-Unique: wMU2un5hNEmHSOvxLxHNig-1
+X-Mimecast-MFC-AGG-ID: wMU2un5hNEmHSOvxLxHNig_1770231864
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4325aa61c6bso145234f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231872; x=1770836672; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=MYOHd7OZhpLHGlsgoLBWOeyBZyIml693wIxtgYusuig=;
- b=gvKyK3YkHJoed+hemBVh4ZPObTaBjH3dfkOxWlpRkLP88aQnH5+bSmguo0/7Dk89L8
- +s8ClpqQbnvSBNw6yUkQP1eBrcmfyM6GE95AWDSereoEdggD93dq+peyATP1Aq/hrn3R
- PeUywj9YU8kjjZwwsQ3beQopKO2qRZbj50R+4XSrxQjR0Mbq+xDvEd968jAhr8aXWJF5
- mEQXMuXFZC9wuUD1MxTPe9vRd7gwvkz9QnsrmwH/u5UCRIoGfhGeMMZJyxUdQ77VRzIS
- PApu0XxBLVhAenyzMXOmbuLu4WiGFAQ/oqR5l8az34eb+uzQzrRtow3ZDqdUD7o3SJCA
- XVVQ==
+ d=redhat.com; s=google; t=1770231863; x=1770836663; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
+ b=BWiyFx7GL3d3fI2lM3Vo4ratpt3sIbuZq9W6fgmuqEYAZwAAKkeftXJD1+KOOBSXx3
+ Hc2HAJWbw5b4u9LoCg2a/uLS/uM7L4e+D9fyrTMrd2VaQbbDq5m5FxrnA0j1HNMO2Z0q
+ SNgzDC34Zho7ccQx89AA9Qaldb7nWM+0macP7eppw/yBJRr7ic9wZDJkEjRPDIDp5/oX
+ VvlmTv1nfBDbEH0SnnlltKCrA52x+bhN6ZWlcma4rxvWbBauAxXeusLH5D8IEsePGxVK
+ 6zbjH8cELVSj8cjE29utCRumjwdQVqnUTapJbSBkAsp9wZJXIkK+Hq/aX9iVPm1YduaX
+ dWZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231872; x=1770836672;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MYOHd7OZhpLHGlsgoLBWOeyBZyIml693wIxtgYusuig=;
- b=Ndpx7/+tIuhsrkJ95hxwnbqlJupa9PUsVCkwJrNwpZUury8g7DvSeOmF7fsW82pKEl
- VJkKbqCKRFdtl2tMKwhR4vm/kKLF0zVEmC9v3bCbKKDtQsYQlmnr4aoQsa83Xbeuz+5n
- aKeRHqLfSHLR3YuhqAx5JagmywpEzk1tNxvtfDNlKJFVODz6RJ5KYweMRuzV9O75P94b
- uf8mD/pQFbAvH7Bo821yNqCzyUWSgW11rmFh875H1ipr03OSt9xxb+QgLTDaqEO4SiRH
- 4M43GEb4/3hpJLqiqMWa2NXbFe9BKLkyFhACtjiuMj6/i8PuCOWhR+/QWx5AQNaGoFjK
- d/AA==
-X-Gm-Message-State: AOJu0Yy7sp9KN5WdNu23kO3hEA+qhvjTHPUHZ49kgUToMHt7wjPurXRm
- yx5ROUY5xYVQSqUe43EbUuNMg3BTkb0OCuX8JgCDOytqiwkG9Tb0L98BSZHQDRPCnxVfRk4Ktjg
- HY4gGH3qkzNzc8sGFxwNepe1pDyWkATrA/utDFkNw9aHHHTybpkfx3tJbRWhzqYUPLPM67pHYck
- 98VaBiyHPOgZve16yB+XkNW0+SrAiLrb9wOA==
-X-Gm-Gg: AZuq6aK5fG+Q8nLqQY+GOg5ZI902p8ez6sXcoIr6JMNgKJneVov1wiX2+usT14MBYxx
- bwtNPKNqdhEOaB/jkmhVYP/aXfP//z65yvkd7yiL5PV+bfEptDl7jrVL3gCfQ07PedbscJBOQKO
- 86yCPz3+NDSnh618rSe+nMZjnnPxtkG0Fspp1EDcUr9djYuP8TxSzzQb27s+eohxtjXfU8G/tMx
- /d4jnW86+VL7aiQb/halPYspDtWS8XYLNpH2zmpAeDGnoiKlqiHtCG8kV1FnBquP/bb9oKs+3sq
- 0D3P7zwMqD69j16ZDi2TS09iZRGpa7XCi7rdXQvFQOJp5shXkP+l+RGBUWOGyiz55VcTeJ9T1+W
- WRikD3zcS6v9SG5Js1xNwwnw18tTwIjLsUA==
-X-Received: by 2002:a05:600c:444d:b0:480:1b1a:551d with SMTP id
- 5b1f17b1804b1-4830e96d468mr54584575e9.18.1770231872503; 
- Wed, 04 Feb 2026 11:04:32 -0800 (PST)
-X-Received: by 2002:a05:600c:444d:b0:480:1b1a:551d with SMTP id
- 5b1f17b1804b1-4830e96d468mr54584085e9.18.1770231871920; 
- Wed, 04 Feb 2026 11:04:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231863; x=1770836663;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
+ b=IdzHrU52866xXRPPnXinjT5R8z7mq1ePAzYOzaxVi+CZbIVmCCYt3k7mDrgmgXxndJ
+ 2D1RIrnDPlRxD2cSt9vrLTdlc2hMGGtwQqEf/HD1ctF4kaZhz8G9ZqyIUKbGYj59cxId
+ S6TNe0PvtxyhC4ktXuMRZjIebxq3gsluQA3MI5FUs1AyQQkLkW489wdIueqo2uS32+R8
+ Q3PvQssWdCTnzKFx+AAi9wvSq4/8mvuMu0mmEuyq30vSN16OHTgi4tVNBnJjTi4M2H4a
+ VaaLAg2xeom5F3tcezCz28E6AK5Ph0Wkj+g0Ntc8Gdw1dik5EEGdWuuPCKCZHcUY2cVT
+ Z1Yg==
+X-Gm-Message-State: AOJu0YzEy4ZTBRNKr7Rd90DppSzuKGrsdCc7K8JqEQ5g1DOL4lQCUgti
+ DevBmu5RL6nlfvXhBfQATO5IWYbIMIQgmFRZc3vK0uRz5OCNBmPJHVs/y5DWjJdeVDq+jTstq1H
+ zx0xSskgxwYTR/TN0Jqvupb9cwixMSy2moAnOJsbn66BpwT9aFmzo/ODHH0IcvbjA1wduY6Vb/0
+ 3O+Ujpw2QcFE23KE0appnoE8gUbC33UMmwVQ==
+X-Gm-Gg: AZuq6aL1QF9S1fqXxjldJkR7C7HgvvPAlqsoyTccV/sd1yWg2J0TQcQ7SaJusoY86oe
+ QJT6GZ1PgWazqfBA03u9NEwCpm3yibOOOmEy0iWc6v5N9qpPsMN68GzZIzsFuE5MI/N6lMQbBfy
+ +fVpQx6mQWTTCq/am6a5ESvOqs1kPjpmi0B5TvdiBtkdaYbwAMaPxNADVuuCZLvHE/Bk98djpMf
+ Z2QyhIbYPxeBmS8rO77eznqzbAOqlpnPuWc8Y54SzVl7K/goTAgsc4j3ZcZQ6iZRjAPcGI/F/E6
+ Tk/mnO93+AIZkTN89vPmCt9DsHuBk2p++4coS14gXn7d49k6O9j91RAHrUXtyfsw2dSq/Ve97X1
+ cxzDGLBsp9NCZqaHdCvihcom4p0yyMKAA/Q==
+X-Received: by 2002:a05:6000:200e:b0:435:6c8d:d017 with SMTP id
+ ffacd0b85a97d-4361805558bmr5462829f8f.32.1770231863501; 
+ Wed, 04 Feb 2026 11:04:23 -0800 (PST)
+X-Received: by 2002:a05:6000:200e:b0:435:6c8d:d017 with SMTP id
+ ffacd0b85a97d-4361805558bmr5462767f8f.32.1770231862964; 
+ Wed, 04 Feb 2026 11:04:22 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830ec6fc89sm25782095e9.6.2026.02.04.11.04.30
+ ffacd0b85a97d-4361805813asm7970389f8f.27.2026.02.04.11.04.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:31 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:29 -0500
+ Wed, 04 Feb 2026 11:04:22 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:20 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Honglei Huang <honghuan@amd.com>,
- Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 44/51] virtio-gpu: use consistent error checking for
- virtio_gpu_create_mapping_iov
-Message-ID: <24688ce275c19731c359af89a67f4f899be9fca5.1770231744.git.mst@redhat.com>
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL 40/51] MAINTAINERS: Update VIOT maintainer
+Message-ID: <ddf1de5c2e1fa83d273f00461cc7d3a0fc798899.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -127,88 +125,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Honglei Huang <honghuan@amd.com>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Unify error checking style for virtio_gpu_create_mapping_iov() across the
-codebase to improve consistency and readability.
+Unfortunately I can't contribute to QEMU for the time being, but Eric
+has offered to take on maintainership of the ACPI VIOT. Thank you!
 
-virtio_gpu_create_mapping_iov() returns 0 on success and negative values
-on error. The original code used inconsistent patterns for checking errors:
-- Some used 'if (ret != 0)' in virtio-gpu-virgl.c and virtio-gpu.c
-- Some used 'CHECK(!ret, cmd)' in virtio-gpu-rutabaga.c
-
-For if-statement checks, change to 'if (ret < 0)' which is the preferred
-QEMU coding convention for functions that return 0 on success and negative
-on error. This makes the return value convention immediately clear to code
-readers.
-
-For CHECK macro usage in virtio-gpu-rutabaga.c, keep the original
-'CHECK(!ret, cmd)' pattern as it is more concise and consistent with other
-error checks in the same file.
-
-Updated locations:
-- hw/display/virtio-gpu-virgl.c: virgl_resource_attach_backing()
-- hw/display/virtio-gpu-virgl.c: virgl_cmd_resource_create_blob()
-- hw/display/virtio-gpu.c: virtio_gpu_resource_create_blob()
-- hw/display/virtio-gpu.c: virtio_gpu_resource_attach_backing()
-
-Signed-off-by: Honglei Huang <honghuan@amd.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260113015203.3643608-3-honghuan@amd.com>
+Message-Id: <20251230154844.325364-2-jean-philippe@linaro.org>
 ---
- hw/display/virtio-gpu-virgl.c | 4 ++--
- hw/display/virtio-gpu.c       | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 741728cabb..ecf8494f36 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -561,7 +561,7 @@ static void virgl_resource_attach_backing(VirtIOGPU *g,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d049270777..ebd27cd7f3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2197,7 +2197,7 @@ S: Maintained
+ F: hw/riscv/virt-acpi-build.c
  
-     ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
-                                         cmd, NULL, &res_iovs, &res_niov);
--    if (ret != 0) {
-+    if (ret < 0) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
-@@ -705,7 +705,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-                                             cmd, &res->base.addrs,
-                                             &res->base.iov, &res->base.iov_cnt);
--        if (ret != 0) {
-+        if (ret < 0) {
-             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-             return;
-         }
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index f23eec6862..643e91ca2a 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -354,7 +354,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-     ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-                                         cmd, &res->addrs, &res->iov,
-                                         &res->iov_cnt);
--    if (ret != 0) {
-+    if (ret < 0) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         g_free(res);
-         return;
-@@ -933,7 +933,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
- 
-     ret = virtio_gpu_create_mapping_iov(g, ab.nr_entries, sizeof(ab), cmd,
-                                         &res->addrs, &res->iov, &res->iov_cnt);
--    if (ret != 0) {
-+    if (ret < 0) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
+ ACPI/VIOT
+-M: Jean-Philippe Brucker <jean-philippe@linaro.org>
++M: Eric Auger <eric.auger@redhat.com>
+ S: Supported
+ F: hw/acpi/viot.c
+ F: hw/acpi/viot.h
 -- 
 MST
 
