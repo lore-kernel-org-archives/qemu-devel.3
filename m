@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A2CE83EE7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66467E83EF7
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnYiu-0003fB-RU; Wed, 04 Feb 2026 03:58:56 -0500
+	id 1vnYiy-0003gr-Gt; Wed, 04 Feb 2026 03:59:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYis-0003de-NE
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:54 -0500
-Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiw-0003fx-K0
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:58 -0500
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiq-0005v0-5W
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:54 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.226])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f5Z5h21Qlz5vsq;
- Wed,  4 Feb 2026 08:58:47 +0000 (UTC)
-Received: from kaod.org (37.59.142.104) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiu-0005wv-S7
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:58 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.119])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f5Z5p49cTz5w2L;
+ Wed,  4 Feb 2026 08:58:54 +0000 (UTC)
+Received: from kaod.org (37.59.142.110) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 4 Feb
- 2026 09:58:45 +0100
+ 2026 09:58:53 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-104R00594f80d1e-0d50-4169-a44c-1040feb79539,
+ (GARM-110S004caa71605-d924-4b8f-a7be-2b5b7aedc842,
  E481ED796CD1A7AD002472F698DA8951F44CEEA4) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d27d32b2-b076-4049-a845-39fbad4dfa8f@kaod.org>
-Date: Wed, 4 Feb 2026 09:58:44 +0100
+Message-ID: <e7c8d3fe-f3d3-4fda-9c62-d74c6b75934f@kaod.org>
+Date: Wed, 4 Feb 2026 09:58:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/22] tests/functional/aarch64: Parameterize PCIe2
- initialization in AST2700
+Subject: Re: [PATCH v7 22/22] tests/functional/aarch64: Add I2C test for
+ AST1700 IO expanders
 To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -44,7 +44,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, "kaneluno1@gmail.com"
  <kaneluno1@gmail.com>
 References: <20260204082113.3955407-1-kane_chen@aspeedtech.com>
- <20260204082113.3955407-22-kane_chen@aspeedtech.com>
+ <20260204082113.3955407-23-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260204082113.3955407-22-kane_chen@aspeedtech.com>
+In-Reply-To: <20260204082113.3955407-23-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.104]
+X-Originating-IP: [37.59.142.110]
 X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 7eb67720-13a5-4194-9fcc-833763d34e68
-X-Ovh-Tracer-Id: 740560665367383029
+X-Ovh-Tracer-GUID: 16143d6f-118f-4899-b20a-38a8c22d9c13
+X-Ovh-Tracer-Id: 742530989719718901
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFcqtlfOM4QNFiq34GRKD9NBjTZMMswusWzdFgjxpspDL19zZtYj4YP4B1jZYGN1kkgGJlYa+OC12Yont10MYkg2E/6OKO4SRVK8E+5OOcqbbV44+Z/bEImaL9hnhrh3+1uQUnWMme37oaSTetw59hhAzy+Q6dAqf5sqVBFDtJRsbJev1cuOHsbktAxI+n5Nepgi/Ukenq0WeiOYR2FkI8hubeU63ufOltOWI/LBPtye+GjvZZnSMsiYH3ePx2KP+4t2YO7VNZM6ts36S6v5Zo0jH0jIOXiBq/7QOjyXl0QCZ2FkJ3b9g7ei6Q6yzMCaculoWvrXUA95i08R1e9rNQVA23y3RsrDJ1ZTCQMifL6snYFhJBnKpedDO8mSim+LNvl0InEAVQpbNi+0Wp5a8rX+L6JFC0fEWB65RUpAkmDGBh/7ycG5kGilYF3Pgs+CKBWbcXubMXPx/JzITkm8r26L57RNqEtFvjegkkWyvGKMDUxQoayp2J1emD+kdhsnm4Dy0Erjtnca4m2327PgAn4nONlAtGLA/pM8S6J/10d6buL1YawqvFSmoTk5Pq83+4c2S6mbd5Wxh2S6qT76nLOvCYfNjsE9r1aJyzqREUGkH8STuhTAinpFimMJZzjFyXm+AGrExk8iiVBL7PQCUs/pHPxKFh7oqLSqM2S6EUjTg
-DKIM-Signature: a=rsa-sha256; bh=42ZovUMF0ykQ3ngiuSS7JzNRtlBbdU7DmDhL6pWhhCk=; 
+X-VR-SPAMCAUSE: dmFkZTFr5Gbb+DWXK0mbGKznepz2iZ5JjvnON+uQK4PfaIrgtahIicVtcKBLLilo7mXON1qpsORenuVFw9kSNNECvlMWJCnttj6xciaQ8N/JvndlaXvVMDLyPDGxqzCyjPOjBM288nSQAdcMLdP4jiNwTTNJs4sEMJvyZ+6RKMwFT/1EtotEgA3oHLTlBM6zAgGNEqfw8tLh/atVbP3izNQBDsP55501iDaidKjOUr74caLybt8V6WQXFUMxliif1hmhpJW/+s+N1AdVDVsvoClBUDtPBEdJN6t/+oWlUUitECxK8NWL+5JQAR+s3v10fXqPBUmmMVRnjytage3Qt3JEAp7CXuZooMvGR07QbksbMWDg/+0X4cEVBX9z8qsIcrTw6ky5vdaK0YEAqzD4M+7cgVJMCUXR9ssTO+jVuYA5b1U8rknwL4oHlLXBZ1YVRrKzoDWVNx8j3gG89dH1H0tAwSeC9AI760+pOPp4isTz8d+N3iCHOVgQZF8CagRBDusLtCikjpKEncoiq1ZFRS50UIODLDsgGaRHyPenQ5wJC75P+pIDD/gwX3PnbKtm20YtgN94z20KVQ8jUOARwOjGPtg8lI5cbqLyxEbHxYCgpXlHk4EegNC60p3fKr12fkFiGakRwRMUHEq0RXG4PHFdyiF/DG6cy5RVWWA11tE1+A9ukA
+DKIM-Signature: a=rsa-sha256; bh=eCuxLO9e5XqSSImuHQN2Vpzq8HZ91j4Zs+8d4vvfqus=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770195529; v=1;
- b=LYjc+K1/8EEtFd6vm+FmvdUE1DMnMZJkVQhilTs3kFU+UaRXlbnWvLJsR+cp0AqXOdvruqbI
- 9qs+iaSYE9Y7qgml30R25lAoWdJfYFQ0Xk/I3vj+iG4VsdRQMzKpvW84U3YsptpAtKyXuj8Mtum
- d+HRlBoecdH84J1MdbVfxhNTya4IYxXaqFWLUu3ClK8S9nnstllckEC90Ko8+AyAhcDgam+LOeK
- 7OPNwcmlcGLoZoudI5tnz0z+LzdjSQaBhE92dgcszS/q4YGm1odaGPJ8aYw4XcsAozywXD+aXwC
- h/yFFf5i9NPrlZdEPG57e42pzWPQxZz+NWy2rldptOGMQ==
-Received-SPF: pass client-ip=46.105.77.235; envelope-from=clg@kaod.org;
- helo=10.mo548.mail-out.ovh.net
+ t=1770195534; v=1;
+ b=j4Y0KJa3N9kr1toI2dAtIeBIRHJANwOiE7M9rUisNw98MY2W/3+Sbup3atFC5LvGorNJtlA+
+ v3ksTwoWoSVrxFJGeZlUj/O2yY1vQTrrty1fEIsi/wcwHBwCzkN4NrY9pU5EPtW9KE704IbkqDH
+ fFz5atm98AdHZXeWYys4MBJpIdeOErh6R7gA75e5Wv/wj2GIWRvM92F3d4QXBfGoaEZsHYKq/8A
+ HqpveMLKbjkp0uVdBO/0qgEFPRi/aCZeoOMCONR9Om/YL6zgAe729Rn9wkjDWDJF8qO0nHuw12Y
+ zAAjUTxtlNB1dr6YIlonplTnsbvI52fsF9Suc42eKopVQ==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,17 +134,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/4/26 09:21, Kane Chen wrote:
-> The current AST2700 functional test forces PCIe2 enablement by manually
-> manipulating U-Boot env and FDT via the console. This sequence
-> interferes with test cases that rely on the default boot flow of the
-> image.
-> 
-> Introduce a 'enable_pcie' parameter (defaulting to True) to both
-> 'verify_openbmc_boot_start' and 'verify_openbmc_boot_and_login' methods.
-> This allow test cases to toggle the PCIe2 initialization sequence based
-> on their specific requirements without breaking standard boot tests.
+> Extend the AST2700 test suite to verify I2C connectivity on AST1700
+> IO expanders using the DCSCM image. This validates the new bus-label
+> naming scheme by testing communication on both primary and
+> expander-attached I2C buses.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -155,33 +151,43 @@ C.
 
 
 
-
 > ---
->   tests/functional/aarch64/test_aspeed_ast2700.py | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+>   tests/functional/aarch64/test_aspeed_ast2700.py | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
 > 
 > diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-> index d7eeab9c23..cb1aafeb99 100755
+> index cb1aafeb99..61373ffe5b 100755
 > --- a/tests/functional/aarch64/test_aspeed_ast2700.py
 > +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-> @@ -65,13 +65,14 @@ def enable_ast2700_pcie2(self):
->               'fdt set /soc@14000000/pcie@140d0000 status "okay"', '=>')
->           exec_command(self, 'bootm go')
+> @@ -82,6 +82,10 @@ def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
+>               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-obmc.tar.gz',
+>               'd5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525')
 >   
-> -    def verify_openbmc_boot_start(self):
-> +    def verify_openbmc_boot_start(self, enable_pcie=True):
->           wait_for_console_pattern(self, 'U-Boot 2023.10')
-> -        self.enable_ast2700_pcie2()
-> +        if enable_pcie:
-> +            self.enable_ast2700_pcie2()
->           wait_for_console_pattern(self, 'Linux version ')
+> +    ASSET_SDK_V1100_AST2700A1_DCSCM = Asset(
+> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-dcscm-obmc.tar.gz',
+> +            '4f8778be176ece1b57d33c4aee13bb989be114c3e4703150eaeb6f996bd5587f')
+> +
+>       def do_ast2700_i2c_test(self, bus_id):
+>           bus_str = str(bus_id)
+>           exec_command_and_wait_for_pattern(self,
+> @@ -166,5 +170,18 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_00(self):
+>           self.verify_vbootrom_firmware_flow()
+>           self.verify_openbmc_boot_start()
 >   
-> -    def verify_openbmc_boot_and_login(self, name):
-> -        self.verify_openbmc_boot_start()
-> +    def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
-> +        self.verify_openbmc_boot_start(enable_pcie)
->   
->           wait_for_console_pattern(self, f'{name} login:')
->           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+> +    def test_aarch64_ast2700a1_evb_ioexp_v11_00(self):
+> +        self.set_machine('ast2700a1-evb')
+> +        self.require_netdev('user')
+> +
+> +        self.archive_extract(self.ASSET_SDK_V1100_AST2700A1_DCSCM)
+> +        self.vm.set_machine('ast2700a1-evb,fmc-model=w25q512jv')
+> +        self.vm.add_args('-device',
+> +                         'tmp105,bus=ioexp0.0,address=0x4d,id=tmp-test-16')
+> +        self.start_ast2700_test('ast2700-a1-dcscm', 8)
+> +        self.verify_openbmc_boot_and_login('ast2700-a1-dcscm', False)
+> +        self.do_ast2700_i2c_test(8)
+> +        self.do_ast2700_i2c_test(16)
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
 
 
