@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A516BE8B383
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAC9E8B383
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 01:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnRUr-0005fo-0I; Tue, 03 Feb 2026 20:15:57 -0500
+	id 1vnRpH-0000yL-VR; Tue, 03 Feb 2026 20:37:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnRUp-0005f4-0A
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:15:55 -0500
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnRpF-0000xy-QZ
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:37:01 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vnRUm-0005Bo-E3
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:15:54 -0500
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-124a1b4dd40so1207436c88.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:15:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnRpE-0000ON-1r
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 20:37:01 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c62239decbeso2454786a12.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 17:36:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770167751; x=1770772551; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=tOR0oL1KbuZ0hG48p8XhI1KDqpXL4kQOLSrKk9E80Hc=;
- b=eVv9mHD+aIqjI8XXxHBonqrrkHNnsjneAXZ9dl6eiO3OTJ+1vJ2ZC0j2cdfmF3FvUL
- PNigSFABogYaEDZrPcXIFy7jmoOaV20zkNynDi6RiQfHKD8jH3lzALqS1YiE5bSmhSxe
- c+EKwKfeIS5lYbbOHHRE5jT2B+EMbdFzBsRobjffCXTaaRzSU3pFtHOIKTf2cUyEAwgf
- MGKQvUl3zc0LHW9ad5gjSlP+qgMhZkDeELs0Me+dtf66eYfk/0GNiKWaWBuTqlJLx3Nt
- i+55yDw9jZSwJ0RRKdycgy+ZXXoixrFJMPMmzENcj1QCLaBmcjNLNSUFRIIWNejnFSQq
- vhMg==
+ d=linaro.org; s=google; t=1770169018; x=1770773818; darn=nongnu.org;
+ h=in-reply-to:content-language:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q3Rh6bvtADQt5Pf3JpTCI766uFGT8qIobiba6T/8t4M=;
+ b=RfJksIeFv23SXorv3bawouIbbhAGDnF/yn29g8ZSpx9fqz34X8LxWD3EgRr4gikU8y
+ 0APs40AfV6TnDLCYGcPn+VTFOlsPOAP7qNNDY51L8ses+8HyrREuCoNvUBpoRFHdj9aC
+ MkVogmrfhetoibj12Qn9L7C1+0A9ee0FHEdel3wvH9BnGgrH+YNXr2jj2E91RFP9FbLk
+ pwscco8rLnLmBsgajS+pQTjP8pn/xiMufrIOPpQfDoQjJjEgCSOAY3mk2sxEk8bki3M5
+ aj2xMrG0wM7vIQF6IlY9hofCJfm/1rMtqsSpTwi+3KS1xIvFjifPPxYGxDJgyWMWg7mw
+ zJaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770167751; x=1770772551;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tOR0oL1KbuZ0hG48p8XhI1KDqpXL4kQOLSrKk9E80Hc=;
- b=pX2037g6jFMX6Eo2QGHdaN6YNh+0N8bs1Ho82uBbnK5bNgzOCUKFMCMEwyG8mT2Cyu
- mJz/2WD+b25qmkuK0lXgKqG8qUqv3cXbqtuq4nh7Ua/fIh+YNOkGWjA27FELU/y0qKhX
- MTDMT584Kiio5MUYCLO8NfauSq1F925DmsCt73JxAcZCUWpScsjQkAGYyRnOR6ZvDJa/
- WTjFQClmfrvJkqufqamC+iqlfMmYXPWKqmkaiZMFSI2hJ2Qs86JV7BtKQElanjcCeOP5
- Uo5XGvhuWLO3ZzcK67uU32A6RG9DgOqnx/YDPjbipMN5mT2dP/LCTty7PAhlcZzx1G2x
- XDBQ==
-X-Gm-Message-State: AOJu0YwlP/WFYkKlYhXb7nBY/EvR4SjvefsFeq7FZ8q2m9XG1ZBmrO4p
- iWTwqYOnqZ+8mKc5XdGNXOBTSW+mYGYqH5Rv/MYZdBKt91ECW6WgaN9S
-X-Gm-Gg: AZuq6aKvx/sbneB2ZZVMB5qUAH9emX2SVV3UupkCIHQuj6VFwAEVa8RDu8uYAH0j+37
- XAkZXmttaTYguS646Kp89TltuLkw+IN4nTwnZF2ElsQWp+13lmFQUC6O76OG7jC4DAOGxQ/JXsG
- ckLLyfI5meWQzPxBbId36PCwiZaHdEYNSzieFfx0csy3I88x4goFUiiIfvmqgyIA+tO0Laf4tmE
- Yy1tdZ2GkY22VdHfspb5Hayhi1fCVDsW/H/2aY7K6RzuQl1oARtsg6JI1z+NHNpMJFhlkFkmdx2
- ub0bbg18mWwuzN6DAWRm0gnDd+EK47iVUiPUcTnpBphTKQMXKSCurEQ5S4xs/X8cOpaff6Ak5LJ
- adsVYoy/HxGZkYIII2J0K+bSZ/BPiYMD2HNWBz7fxNFwCsxZ+V+htKBev+grugB6CEU/4ONmlm4
- FNCs6LxJLXh3wzikq+Gb9f1IkFcupD0NFqDJf/QGEGMmikkHy0VGg/uWImaraej+o4pyQUpZV8a
- wI=
-X-Received: by 2002:a05:7022:2526:b0:11a:335d:80d3 with SMTP id
- a92af1059eb24-126f478e634mr712502c88.22.1770167750313; 
- Tue, 03 Feb 2026 17:15:50 -0800 (PST)
-Received: from ZEVORN-PC ([38.95.120.198]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-126f4e04297sm901470c88.3.2026.02.03.17.15.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 17:15:49 -0800 (PST)
-Date: Wed, 4 Feb 2026 09:15:41 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: =?utf-8?B?5rSq5b+X5Y2a?= <hongzhibo@bytedance.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v1] riscv: Add support for Zibi extension
-Message-ID: <aYKdvRafG2issFds@ZEVORN-PC>
-References: <20260203082144.2183253-1-hongzhibo@bytedance.com>
+ d=1e100.net; s=20230601; t=1770169018; x=1770773818;
+ h=in-reply-to:content-language:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q3Rh6bvtADQt5Pf3JpTCI766uFGT8qIobiba6T/8t4M=;
+ b=oTTczMfQb5Md9CkIz8rwgyQsqr1Ozn2hWo5Ccjum7REZov+BgIeerNgvmc9kZtziH5
+ OsSUR58mxqqG6U83whVr94V3YlwRXD6N4MHC0hUIXyzy76D4YGih8QLxLyw+QSbQ7xJa
+ 39ZhJP0gQ8lppFp/Lup5H274f8tfGUAPLzK3KrQSJaEVqyXmW7uAtXoaAS2QQ4qM4AYM
+ vyHmNxgemCZ0Ch5ev+89Qb3ImG6/FMeBJYxnYlIiU3IVFatwLDO+4HSLkvOarSEKGfNL
+ NzlckXfMOrUjw6k0JJbBDB385l8iHJf06oKKy9RvsEryAm8zQTljvPU4kNIglUcjzBE3
+ 3vvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXI8juzwe8IPPpQj/1v9VFUN5X+cTH79qHjN7Cy9HIk64tLqmaDgqMRu3BbjMInoBS7r0jaKjUf2Kes@nongnu.org
+X-Gm-Message-State: AOJu0YymszwCeOkaidxTE1CK2pnNsCgorDJhsb2tO3UhbJ/h3kPFR9Kq
+ KABQM5RaCEOHedZfrIQIAwYgdUK7Htvnv5ZlfUf4FcMU+Il/Tm9PUd812digV62DkZI=
+X-Gm-Gg: AZuq6aLeLz1eWNMVv75H6yJXTR18CxZalSA1w04Irx4qD4Ucbiaz+DgyW0y27CMXIfr
+ /7A0Y5c4ZGqT3Z0MU0E/2+h7ZHWdHgw+hHb+ggRze4w6eCNpR0/QlgTtzbQMQO6V+dQ2PdiQWXM
+ xYwP6FebWnBlyxWFG4vKRnn2V9hiDQHFzmfKBwzfE8RFjJ3woewdaefmCCQaqIccjxhprs8Slv/
+ QhTJ3T7bwBslKR2nCLfOI3S1Cnj4xUS+EykQhHtHESQNzk9Ii2Oxbp1vjjmLya4/w2KOwkUc76+
+ 12Wzx+USX6rB8al22JG8g7N9JdOH1TKI7jeEeZGYWxIMzKv3EDLiPtS1oHM8vH3PsUKfSiiCp6/
+ hgfkNSM48pryIDP2GoHrJmicgCE8wkZp6bDV/4avD0mKqN14kQgiibkG1X7ITttZiCKjl8jkkEa
+ IgW6rzAOvzQUCkucR6UZrnNfRL4hUafa9Mx2fhL6fYLxj61054/ck64gmDkyXs8XqKW/A=
+X-Received: by 2002:a17:903:2449:b0:2a9:322e:2473 with SMTP id
+ d9443c01a7336-2a93400297fmr12107835ad.48.1770169018120; 
+ Tue, 03 Feb 2026 17:36:58 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
+ ([2401:d002:dc0f:2100:1bc:fe1e:491:928e])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a93397c2fdsm6159655ad.87.2026.02.03.17.36.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Feb 2026 17:36:57 -0800 (PST)
+Content-Type: multipart/mixed; boundary="------------3AbknLye5FvJClELFIvVcM00"
+Message-ID: <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
+Date: Wed, 4 Feb 2026 11:36:47 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260203082144.2183253-1-hongzhibo@bytedance.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target-info: set target_arch statically
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,308 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhibo,
+This is a multi-part message in MIME format.
+--------------3AbknLye5FvJClELFIvVcM00
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thanks for the patch. I have some comments below.
-
-On Tue, Feb 03, 2026 at 04:21:44PM +0800, 洪志博 wrote:
-> From: Zhibo Hong <hongzhibo@bytedance.com>
->
-The patch is missing a commit message. Please add a title and description
-explaining what the Zibi extension is and what instructions are being
-implemented. A link to the specification would also be helpful.
-
-> Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
-> ---
->  disas/riscv.c                              | 17 +++++++
->  disas/riscv.h                              |  2 +
->  target/riscv/cpu.c                         |  2 +
->  target/riscv/cpu_cfg_fields.h.inc          |  1 +
->  target/riscv/insn32.decode                 |  9 ++++
->  target/riscv/insn_trans/trans_rvzibi.c.inc | 54 ++++++++++++++++++++++
->  target/riscv/translate.c                   |  6 +++
->  7 files changed, 91 insertions(+)
->  create mode 100644 target/riscv/insn_trans/trans_rvzibi.c.inc
+On 2/4/26 05:41, Pierrick Bouvier wrote:
+> target_arch() function will reparse target_name() every time if it was
+> not set to a proper SYS_EMU_TARGET_* value (when using
+> target-info-stub.c), which is not efficient.
 > 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 85cd2a9c2a..92862835f0 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -984,6 +984,8 @@ typedef enum {
->      rv_op_ssamoswap_d = 953,
->      rv_op_c_sspush = 954,
->      rv_op_c_sspopchk = 955,
-> +    rv_op_beqi      = 956,
-> +    rv_op_bnei      = 957,
->  } rv_op;
->  
->  /* register names */
-> @@ -2254,6 +2256,8 @@ const rv_opcode_data rvi_opcode_data[] = {
->        rv_op_sspush, 0 },
->      { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
->        rv_op_sspopchk, 0 },
-> +    { "beqi", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
-> +    { "bnei", rv_codec_bi, rv_fmt_rs1_imm1_offset, NULL, 0, 0, 0 },
->  };
->  
->  /* CSR names */
-> @@ -3997,6 +4001,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
->              switch ((inst >> 12) & 0b111) {
->              case 0: op = rv_op_beq; break;
->              case 1: op = rv_op_bne; break;
-> +            case 2: op = rv_op_beqi; break;
-> +            case 3: op = rv_op_bnei; break;
->              case 4: op = rv_op_blt; break;
->              case 5: op = rv_op_bge; break;
->              case 6: op = rv_op_bltu; break;
-> @@ -4529,6 +4535,12 @@ static uint32_t operand_imml(rv_inst inst)
->      return (inst << 38) >> 58;
->  }
->  
-> +static int32_t operand_bi(rv_inst inst)
-> +{
-> +    uint32_t cimm = (inst << 39) >> 59;
-> +    return cimm == 0 ? -1 : cimm;
-> +}
-> +
->  static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
->  {
->      int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
-> @@ -4948,6 +4960,11 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
->          dec->rs1 = dec->rs2 = operand_crs1(inst);
->          dec->imm = 0;
->          break;
-> +    case rv_codec_bi:
-> +        dec->rs1 = operand_rs1(inst);
-> +        dec->imm = operand_sbimm12(inst);
-> +        dec->imm1 = operand_bi(inst);
-> +        break;
->      };
->  }
->  
-> diff --git a/disas/riscv.h b/disas/riscv.h
-> index d211700cb2..452c788278 100644
-> --- a/disas/riscv.h
-> +++ b/disas/riscv.h
-> @@ -168,6 +168,7 @@ typedef enum {
->      rv_codec_fli,
->      rv_codec_lp,
->      rv_codec_cmop_ss,
-> +    rv_codec_bi,
->  } rv_codec;
->  
->  /* structures */
-> @@ -305,5 +306,6 @@ enum {
->  #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
->  #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
->  #define rv_fmt_fli                    "O\t3,h"
-> +#define rv_fmt_rs1_imm1_offset        "O\t1,j,o"
->  
->  #endif /* DISAS_RISCV_H */
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e95eea0249..0a1cb41c96 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -120,6 +120,7 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
->   * instead.
->   */
->  const RISCVIsaExtData isa_edata_arr[] = {
-> +    ISA_EXT_DATA_ENTRY(zibi, PRIV_VERSION_1_13_0, ext_zibi),
->      ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
->      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
->      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
-> @@ -1238,6 +1239,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->      MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
->      MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
->      MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
-> +    MULTI_EXT_CFG_BOOL("zibi", ext_zibi, false),
->      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
->      MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
->      MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 70ec650abf..046c656bd9 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -30,6 +30,7 @@ BOOL_FIELD(ext_zks)
->  BOOL_FIELD(ext_zksed)
->  BOOL_FIELD(ext_zksh)
->  BOOL_FIELD(ext_zkt)
-> +BOOL_FIELD(ext_zibi)
->  BOOL_FIELD(ext_zifencei)
->  BOOL_FIELD(ext_zicntr)
->  BOOL_FIELD(ext_zicsr)
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 6e35c4b1e6..0a92e79508 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -20,6 +20,7 @@
->  %rs3       27:5
->  %rs2       20:5
->  %rs1       15:5
-> +%rs1_3     17:3                  !function=ex_rvc_register
+> Since we want to preserve the constness of TargetInfo but C doesn't give
+> us flexible compile time expressions, we simply set target_arch using a
+> static constructor once instead.
 
-This definition is added but not used anywhere. Is it needed? If not, please
-remove it.
+A static constructor isn't static initialization.
+That said, we can do better with some extra help from meson; see attached.
 
->  %rd        7:5
->  %sh5       20:5
->  %sh6       20:6
-> @@ -40,6 +41,7 @@
->  %imm_z6   26:1 15:5
->  %imm_mop5 30:1 26:2 20:2
->  %imm_mop3 30:1 26:2
-> +%imm_bi   20:5                   !function=ex_bi
->  
->  # Argument sets:
->  &empty
-> @@ -60,6 +62,7 @@
->  &k_aes     shamt rs2 rs1 rd
->  &mop5 imm rd rs1
->  &mop3 imm rd rs1 rs2
-> +&bi   imm imm2 rs1
->  
->  # Formats 32:
->  @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
-> @@ -111,6 +114,8 @@
->  # Formats 128:
->  @sh6       ...... ...... ..... ... ..... ....... &shift shamt=%sh6 %rs1 %rd
->  
-> +@bi      ....... ..... ... .. ... ..... ....... &bi imm=%imm_b imm2=%imm_bi rs1=%rs1
-> +
->  # *** Privileged Instructions ***
->  ecall       000000000000     00000 000 00000 1110011
->  ebreak      000000000001     00000 000 00000 1110011
-> @@ -1084,3 +1089,7 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
->  sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
->  sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
->  sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-> +
-> +# *** Zibi Extension ***
-> +beqi       ....... ..... ..... 010 ..... 1100011 @bi
-> +bnei       ....... ..... ..... 011 ..... 1100011 @bi
-> \ No newline at end of file
+I'm mildly annoyed with openrisc vs or1k.  We really ought to fix that, but I haven't 
+looked into what API breakage we get from selecting one or the other.
 
-Missing newline at end of file. Please run script/checkpatch.pl check
-it.
 
-> diff --git a/target/riscv/insn_trans/trans_rvzibi.c.inc b/target/riscv/insn_trans/trans_rvzibi.c.inc
-> new file mode 100644
-> index 0000000000..24bc0806aa
-> --- /dev/null
-> +++ b/target/riscv/insn_trans/trans_rvzibi.c.inc
-Missing copyright header and SPDX license identifier. Please add something
-like:
+r~
+--------------3AbknLye5FvJClELFIvVcM00
+Content-Type: text/x-patch; charset=UTF-8; name="target-arch.patch"
+Content-Disposition: attachment; filename="target-arch.patch"
+Content-Transfer-Encoding: base64
 
-/*
- * RISC-V translation routines for the Zibi Extension.
- *
- * Copyright (c) 2025 Zhibo Hong <hongzhibo@bytedance.com>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+ZGlmZiAtLWdpdCBhL3RhcmdldC1pbmZvLXN0dWIuYyBiL3RhcmdldC1pbmZvLXN0dWIuYwpp
+bmRleCA4MzkyZDgxZThmLi42NTIyMGNjNzgyIDEwMDY0NAotLS0gYS90YXJnZXQtaW5mby1z
+dHViLmMKKysrIGIvdGFyZ2V0LWluZm8tc3R1Yi5jCkBAIC0xOCw3ICsxOCw3IEBAIFFFTVVf
+QlVJTERfQlVHX09OKG9mZnNldG9mKEFyY2hDUFUsIGVudikgIT0gc2l6ZW9mKENQVVN0YXRl
+KSk7CiAKIHN0YXRpYyBjb25zdCBUYXJnZXRJbmZvIHRhcmdldF9pbmZvX3N0dWIgPSB7CiAg
+ICAgLnRhcmdldF9uYW1lID0gVEFSR0VUX05BTUUsCi0gICAgLnRhcmdldF9hcmNoID0gU1lT
+X0VNVV9UQVJHRVRfX01BWCwKKyAgICAudGFyZ2V0X2FyY2ggPSBnbHVlKFNZU19FTVVfVEFS
+R0VUXywgVEFSR0VUX0FSQ0gpLAogICAgIC5sb25nX2JpdHMgPSBUQVJHRVRfTE9OR19CSVRT
+LAogICAgIC5jcHVfdHlwZSA9IENQVV9SRVNPTFZJTkdfVFlQRSwKICAgICAubWFjaGluZV90
+eXBlbmFtZSA9IFRZUEVfTUFDSElORSwKZGlmZiAtLWdpdCBhL3RhcmdldC1pbmZvLmMgYi90
+YXJnZXQtaW5mby5jCmluZGV4IDVhNmQ3MjgyNTIuLmEyNjUzMmY2NjAgMTAwNjQ0Ci0tLSBh
+L3RhcmdldC1pbmZvLmMKKysrIGIvdGFyZ2V0LWluZm8uYwpAQCAtMjQsMTMgKzI0LDcgQEAg
+dW5zaWduZWQgdGFyZ2V0X2xvbmdfYml0cyh2b2lkKQogCiBTeXNFbXVUYXJnZXQgdGFyZ2V0
+X2FyY2godm9pZCkKIHsKLSAgICBTeXNFbXVUYXJnZXQgYXJjaCA9IHRhcmdldF9pbmZvKCkt
+PnRhcmdldF9hcmNoOwotCi0gICAgaWYgKGFyY2ggPT0gU1lTX0VNVV9UQVJHRVRfX01BWCkg
+ewotICAgICAgICBhcmNoID0gcWFwaV9lbnVtX3BhcnNlKCZTeXNFbXVUYXJnZXRfbG9va3Vw
+LCB0YXJnZXRfbmFtZSgpLCAtMSwKLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAm
+ZXJyb3JfYWJvcnQpOwotICAgIH0KLSAgICByZXR1cm4gYXJjaDsKKyAgICByZXR1cm4gdGFy
+Z2V0X2luZm8oKS0+dGFyZ2V0X2FyY2g7CiB9CiAKIGNvbnN0IGNoYXIgKnRhcmdldF9jcHVf
+dHlwZSh2b2lkKQpkaWZmIC0tZ2l0IGEvbWVzb24uYnVpbGQgYi9tZXNvbi5idWlsZAppbmRl
+eCA4YzZjMGE5YTMyLi4zNTc3MmUxNTc4IDEwMDY0NAotLS0gYS9tZXNvbi5idWlsZAorKysg
+Yi9tZXNvbi5idWlsZApAQCAtMzI2Myw3ICszMjYzLDcgQEAgaG9zdF9rY29uZmlnID0gXAog
+ICAoaHZfYmFsbG9vbiA/IFsnQ09ORklHX0hWX0JBTExPT05fUE9TU0lCTEU9eSddIDogW10p
+ICsgXAogICAoaGF2ZV9ydXN0ID8gWydDT05GSUdfSEFWRV9SVVNUPXknXSA6IFtdKQogCi1p
+Z25vcmVkID0gWyAnVEFSR0VUX1hNTF9GSUxFUycsICdUQVJHRVRfQUJJX0RJUicsICdUQVJH
+RVRfQVJDSCcgXQoraWdub3JlZCA9IFsgJ1RBUkdFVF9YTUxfRklMRVMnLCAnVEFSR0VUX0FC
+SV9ESVInIF0KIAogZGVmYXVsdF90YXJnZXRzID0gJ0NPTkZJR19ERUZBVUxUX1RBUkdFVFMn
+IGluIGNvbmZpZ19ob3N0CiBhY3R1YWxfdGFyZ2V0X2RpcnMgPSBbXQpAQCAtMzM1Myw2ICsz
+MzUzLDEzIEBAIGZvcmVhY2ggdGFyZ2V0IDogdGFyZ2V0X2RpcnMKICAgICAgICMgZG8gbm90
+aGluZwogICAgIGVsaWYgaWdub3JlZC5jb250YWlucyhrKQogICAgICAgIyBkbyBub3RoaW5n
+CisgICAgZWxpZiBrID09ICdUQVJHRVRfQVJDSCcKKyAgICAgICMgRklYTUU6IHN0YW5kYXJk
+aXplIG9uIGVpdGhlciBvcjFrIG9yIG9wZW5yaXNjIGV2ZXJ5d2hlcmUKKyAgICAgICMgVGhp
+cyB1c2FnZSBpcyBjb25jZXJuZWQgd2l0aCBwYXN0aW5nIGludG8gU1lTX0VNVV9UQVJHRVRf
+Ki4KKyAgICAgIGlmIHYgPT0gJ29wZW5yaXNjJworICAgICAgICB2ID0gJ29yMWsnCisgICAg
+ICBlbmRpZgorICAgICAgY29uZmlnX3RhcmdldF9kYXRhLnNldChrLCB2LnRvX3VwcGVyKCkp
+CiAgICAgZWxpZiBrID09ICdUQVJHRVRfQkFTRV9BUkNIJwogICAgICAgIyBOb3RlIHRoYXQg
+VEFSR0VUX0JBU0VfQVJDSCBlbmRzIHVwIGluIGNvbmZpZy10YXJnZXQuaCBidXQgaXQgaXMK
+ICAgICAgICMgbm90IHVzZWQgdG8gc2VsZWN0IGZpbGVzIGZyb20gc291cmNlc2V0cy4KZGlm
+ZiAtLWdpdCBhL3FhcGkvbWFjaGluZS5qc29uIGIvcWFwaS9tYWNoaW5lLmpzb24KaW5kZXgg
+OTA3Y2IyNWY3NS4uZWY4NTc1YjZlYiAxMDA2NDQKLS0tIGEvcWFwaS9tYWNoaW5lLmpzb24K
+KysrIGIvcWFwaS9tYWNoaW5lLmpzb24KQEAgLTI4LDYgKzI4LDggQEAKICMKICMgQGxvb25n
+YXJjaDY0OiBzaW5jZSA3LjEKICMKKyMgQGhleGFnb246IHNpbmNlIDExLjAKKyMKICMgLi4g
+bm90ZTo6IFRoZSByZXN1bHRpbmcgUU1QIHN0cmluZ3MgY2FuIGJlIGFwcGVuZGVkIHRvIHRo
+ZQogIyAgICAicWVtdS1zeXN0ZW0tIiBwcmVmaXggdG8gcHJvZHVjZSB0aGUgY29ycmVzcG9u
+ZGluZyBRRU1VCiAjICAgIGV4ZWN1dGFibGUgbmFtZS4gIFRoaXMgaXMgdHJ1ZSBldmVuIGZv
+ciAicWVtdS1zeXN0ZW0teDg2XzY0Ii4KQEAgLTM1LDcgKzM3LDcgQEAKICMgU2luY2U6IDMu
+MAogIyMKIHsgJ2VudW0nIDogJ1N5c0VtdVRhcmdldCcsCi0gICdkYXRhJyA6IFsgJ2FhcmNo
+NjQnLCAnYWxwaGEnLCAnYXJtJywgJ2F2cicsICdocHBhJywgJ2kzODYnLAorICAnZGF0YScg
+OiBbICdhYXJjaDY0JywgJ2FscGhhJywgJ2FybScsICdhdnInLCAnaGV4YWdvbicsICdocHBh
+JywgJ2kzODYnLAogICAgICAgICAgICAgICdsb29uZ2FyY2g2NCcsICdtNjhrJywgJ21pY3Jv
+YmxhemUnLCAnbWljcm9ibGF6ZWVsJywgJ21pcHMnLCAnbWlwczY0JywKICAgICAgICAgICAg
+ICAnbWlwczY0ZWwnLCAnbWlwc2VsJywgJ29yMWsnLCAncHBjJywKICAgICAgICAgICAgICAn
+cHBjNjQnLCAncmlzY3YzMicsICdyaXNjdjY0JywgJ3J4JywgJ3MzOTB4JywgJ3NoNCcsCg==
 
-> @@ -0,0 +1,54 @@
-> +#define REQUIRE_ZIBI(ctx) do {                  \
-> +    if (!ctx->cfg_ptr->ext_zibi) {              \
-> +        return false;                           \
-> +    }                                           \
-> +} while (0)
-> +
-> +static bool gen_immediate_branch(DisasContext *ctx, arg_bi *a, TCGCond cond)
-> +{
-> +    TCGLabel *l = gen_new_label();
-> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_SIGN);
-> +    TCGv imm2 = tcg_constant_tl(a->imm2);
-> +    target_ulong orig_pc_save = ctx->pc_save;
-> +
-> +    if (get_xl(ctx) == MXL_RV128) {
-> +        TCGv src1h = get_gprh(ctx, a->rs1);
-> +        TCGv imm2h = tcg_constant_tl(a->imm2 >= 0 ? 0 : -1);
-> +        TCGv tmp = tcg_temp_new();
-> +
-> +        cond = gen_compare_i128(false, tmp, src1, src1h, imm2, imm2h, cond);
-> +        tcg_gen_brcondi_tl(cond, tmp, 0, l);
-> +    } else {
-> +        tcg_gen_brcond_tl(cond, src1, imm2, l);
-> +    }
-> +    gen_goto_tb(ctx, 1, ctx->cur_insn_len);
-> +    ctx->pc_save = orig_pc_save;
-> +
-> +    gen_set_label(l); /* branch taken */
-> +
-This function is missing CTR (Control Transfer Records) support. Please add
-the smctr/ssctr handling similar to gen_branch() in trans_rvi.c.inc:
 
-#ifndef CONFIG_USER_ONLY
-    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
-        TCGv type = tcg_constant_tl(CTRDATA_TYPE_NONTAKEN_BRANCH);
-        ...
-    }
-#endif
-
-And similarly for the taken branch path with CTRDATA_TYPE_TAKEN_BRANCH.
-
-> +    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
-Please use riscv_cpu_allow_16bit_insn() instead of directly checking RVC/zca,
-to be consistent with the existing code in trans_rvi.c.inc:
-
-    if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
-                                    ctx->priv_ver,
-                                    ctx->misa_ext) &&
-        (a->imm & 0x3)) {
-
-Thanks,
-Chao
-> +        (a->imm & 0x3)) {
-> +        /* misaligned */
-> +        TCGv target_pc = tcg_temp_new();
-> +        gen_pc_plus_diff(target_pc, ctx, a->imm);
-> +        gen_exception_inst_addr_mis(ctx, target_pc);
-> +    } else {
-> +        gen_goto_tb(ctx, 0, a->imm);
-> +    }
-> +    ctx->pc_save = -1;
-> +    ctx->base.is_jmp = DISAS_NORETURN;
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_beqi(DisasContext *ctx, arg_beqi *a)
-> +{
-> +    REQUIRE_ZIBI(ctx);
-> +    return gen_immediate_branch(ctx, a, TCG_COND_EQ);
-> +}
-> +
-> +static bool trans_bnei(DisasContext *ctx, arg_bnei *a)
-> +{
-> +    REQUIRE_ZIBI(ctx);
-> +    return gen_immediate_branch(ctx, a, TCG_COND_NE);
-> +}
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index f687c75fe4..d0b83ebe01 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -858,6 +858,11 @@ static int ex_rvc_shiftri(DisasContext *ctx, int imm)
->      return imm;
->  }
->  
-> +static int ex_bi(DisasContext *ctx, int imm)
-> +{
-> +    return imm == 0 ? -1 : imm;
-> +}
-> +
->  /* Include the auto-generated decoder for 32 bit insn */
->  #include "decode-insn32.c.inc"
->  
-> @@ -1215,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
->  #include "insn_trans/trans_xthead.c.inc"
->  #include "insn_trans/trans_xventanacondops.c.inc"
->  #include "insn_trans/trans_xmips.c.inc"
-> +#include "insn_trans/trans_rvzibi.c.inc"
->  
->  /* Include the auto-generated decoder for 16 bit insn */
->  #include "decode-insn16.c.inc"
-> -- 
-> 2.39.5
-> 
+--------------3AbknLye5FvJClELFIvVcM00--
 
