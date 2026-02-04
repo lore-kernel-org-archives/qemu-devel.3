@@ -4,101 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16007E9D410
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C99E9D416
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vng1L-000741-BL; Wed, 04 Feb 2026 11:46:27 -0500
+	id 1vngA9-0000n4-Pa; Wed, 04 Feb 2026 11:55:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng1B-000714-5J
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:18 -0500
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vngA6-0000mh-U6
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:55:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng17-0004X3-VU
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:16 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 3D1DA7A0124;
- Wed,  4 Feb 2026 11:46:13 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Wed, 04 Feb 2026 11:46:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770223573; x=
- 1770309973; bh=pFvDrCs4rTE8Xavb9xtgI9c9ynRu6wIk7meG5xVIP8U=; b=q
- yNSmYePmi0trCWiEEe5+p4BmtviGTZQ+iu1FIgvdP2BQmFPsIp1p+Twwxm3HS8IW
- EniHVGtePa0JpbKokWCipSC+e3APHBPy/7YTIGfbKIs6iaGmCBznsXq4uo/a0+Gi
- OFVub9F77Q+ag3Di/GXEAGkPfK9fpcUNYM4l6uqV0rJIcrmZZ3Rw3jDQkdtPNVkq
- oxDE+mZ7YLL3pI9v2QYXGn/mlHan55fAOL5JHl3moDm4qepFESzJTRD1HGvTFUMA
- GvZLmKcWDawKAhpaHTfnVFnzZypEcDsJiJMLpvaH8CB4G8GKvKVlqLCnV/fhUT5h
- QGfLS8et/G5lWTi2o3ilg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770223573; x=1770309973; bh=p
- FvDrCs4rTE8Xavb9xtgI9c9ynRu6wIk7meG5xVIP8U=; b=SjgUXo4SDYcbJ/8Hm
- 56p/oCOJjkvNkny53DpWi6KKl4OqAvvBm2Wfn8oBXjQDDnDGPQknWUSKh2iT7LkU
- KL0EufP28KtsMySn9i9q6E/HLI1G1F8eIyU2muC3jd/lnfWDDU001wt+Ry0qBsTe
- zFn9rP9avPcqzkkPO6zWwMS8LDtCPk+hV1Yy3lzW2/TVdy1AzfpuJI/F8lGDzFjS
- IY1DzTgG3ZhbNg5Uws81HCgIZtcplZDLnWmLKFgrjMOGKtnw3+reni15dHYQY+ZO
- +ZhvyU6aMPXG+adCn74n8ea5DwVzbrO/qCI4OW3qJPnDdBnTeaWFpMMFlD1q3y+I
- gmXcg==
-X-ME-Sender: <xms:1XeDaVrbOtAqrsnjzxgb1INpRv-2mRRU1qaDsjeVIUViYYgtQNIzhw>
- <xme:1XeDafE47H4i5Fo9K2T9WaWi1UITK_gj9lFLr09XfA27MlbNQyou9-k8NAppgpEbu
- B8VJPKzZm-kMpqR8qyDyoY8rXXoUUYmUol33wDVfkS__3Sy2P-2Wks>
-X-ME-Received: <xmr:1XeDafnMZvYW1y6P-fHtG_EN6f4D_w1Ua8u9to8r9ogjIahzQx5Uul5zUIgC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleehucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
- nhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:1XeDaal_QxIAtOrFyREmKa4h2HDThzldqypwkqFTaIcL0vqgrCBkaw>
- <xmx:1XeDaYusnBNThWKh4N9CLXiOjS42o9I_mC52AzbPQRYSjyKjX9E13w>
- <xmx:1XeDaVnab8Hr-7qbpyaWm7tprYBUtmKdq84lthTcCTxlV729dZ1uag>
- <xmx:1XeDabv3qsBQ0hf42B6VetdNYe_i8ErrcFO5g3IkTVLSvKwnQYxwqQ>
- <xmx:1XeDaaTRU-FMo58ViPVoG_1ftG5qJoS4cZgo3oNYcRvFPtRiXKA9WtOP>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 11:46:12 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id b309b06d;
- Wed, 4 Feb 2026 16:46:08 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
-To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu,
-	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v8 09/18] ati-vga: Remove src and dst stride mutation in
- ati_2d_blt
-Date: Wed,  4 Feb 2026 11:45:57 -0500
-Message-ID: <20260204164606.3425246-10-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260204164606.3425246-1-chad@jablonski.xyz>
-References: <20260204164606.3425246-1-chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vngA4-0006V2-CT
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:55:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770224126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lw+5RwHfWwWY5wYINuc/4rkAx8WGDfNU4a2kNgjbhpw=;
+ b=dKeLY5MQ/OtDIOWUFWdOXoUOAEnVG560703Oh26Yy7t4+HunJRm6XMEchdrT7RuqQoYft8
+ 3vNElNPbB+Mb96IR20mPq+lJLY0qCDuhNLjyFzxMgxz8OLAP96MzljaE1PMRMfWWYwcfNq
+ Z6OPYjnp03zcp52T6A/VoI+wx0tTlYA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-546-L4DteRWWPBWeKPkux8S68A-1; Wed, 04 Feb 2026 11:55:24 -0500
+X-MC-Unique: L4DteRWWPBWeKPkux8S68A-1
+X-Mimecast-MFC-AGG-ID: L4DteRWWPBWeKPkux8S68A_1770224124
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4804157a3c9so99365e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 08:55:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770224124; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kTm2Pt+njoi4M0fN0jcLPfiWEUEktVx0VO4OqxwBbMgI26S61hRhyQg8ckuEIYBocw
+ PIR1idNyi6oBOGTQV7v8AFWjufP2aCihyZ6rKks+WPfdB3ck/3bvNerwUd3FPqFtwb4W
+ YBHqvrpXsx8qsVHqAelo86y3Ys5uXJobbFuJE1WUvt7Wf9R90CIlibatiTLDJTZVfNIS
+ ZSY0tU3DCn7EZYUczudxTOVTmOuHPHA9Re5lR6KJlTMYjYAKf5RheoOL3PIe2wqm7cRe
+ oetoednMaqREiBRQSMQ7SP29FA/CUM3BDOExRxwgIgcqy/0f0lwOMUXyD4O22/4NyBve
+ s2ag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lw+5RwHfWwWY5wYINuc/4rkAx8WGDfNU4a2kNgjbhpw=;
+ fh=Aqbdj/jSz5Po3e1fl7F41zRPtpJ1ExtfkaWo4ELQX9M=;
+ b=RsfC6OzTkrhNwRCFYMLAbDOKOTBLZZF4N/KW8brtEYYyAJVdYlpI6UGUXNWRDLQisc
+ 6a2j0dapJNIy/VKbkWwnFOsZVGPfTjTWirfyLv/eC1AEoamwXbbOrB8r3CbEuY39fYjR
+ 11IfvaSFndLowIUpFJYv33jtwiG4kS4YyHfAg3fqbVn72OCH14gFP0R3KrXCKL6Ebi93
+ f+9aLxbEzNJr2Lxvvz80ntU6gpX1w34bCus02OszJ3Sobv7uCHzUzygFEvkKXEpxCixi
+ 1eLNY8g6MWacpxz9JKui/n84tvG3enUytHycIsTj3JJ9u3Xku+2jYWGm7jmGLLYdoXu3
+ 9ngw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770224124; x=1770828924; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lw+5RwHfWwWY5wYINuc/4rkAx8WGDfNU4a2kNgjbhpw=;
+ b=LjQUyTmSPhf8Hq/qdhad7vuQVOUP32aMCopNGbnmDff99ry9KI41uDeVEOJyFNWy+4
+ w/+ON0gP1H1Kx7ve4aSEHn77EOA7rlk/SZoryP7GYr82XvouNGlBiVW8KOeCQs6O5BTZ
+ kR5TriGuyfeOwMdkSo4yf5XEKnA3Tti+El8br/ZsUXcDqkFySX+QGitc/WM5c8l3LPWW
+ fMVXmY77ARkrJnB3zspGC1IfX2m7LdOc0FGP85kxcuS9l543fZX96bHIHBJPljjF1sJx
+ hJDTpsFP6TLSAKuokkEp/vRcNCnxpKMlJhZO7WAfgjziidz/+iewkTQOAYTteWLprA62
+ z8hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770224124; x=1770828924;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lw+5RwHfWwWY5wYINuc/4rkAx8WGDfNU4a2kNgjbhpw=;
+ b=VIBj2dLVfdIQ2PLYSNRsWgBaGfYckljM9eRTlzLlFMfhx9dxkoLgUP+4gXE0IvoSBU
+ XDRWfeSPiLYOZZq2iuNFkL8FFAC+OXB9rKgvJ3pbuvDmBiUD5j7C4Ug4qnlsLI5OQ7Qv
+ WhC/y8zJqWbNyQowJwn2034SNP3Qk7BRTSAcOHUDFHmOSOyKNU4WyYsm0kMa8cdfWJF4
+ TRvOYet1W3JGnvvwBOYPK/AvW/aSZQHXizRM3hFo/8EziMTmP0wIzzjeoMsGBwC1tXHQ
+ Q7MkhMjY/oO4SBSnW5P/Y+9AIZNWBRxsO/t2tX3abPMkANrUWif7kQDTVZ96Tn3fPnsS
+ lDGQ==
+X-Gm-Message-State: AOJu0Yzh6wjMuhIpMkyTRNIIpZoP/bp5HdjR3H5US8YM5HSSUan7S+hU
+ cDyOLQHUbdVZ5N1Rpl6vcX2ZTUHLmVv3huNpiRj9AU8CUeD/t/bVVZwXr9w9DzVwy3Sfok4mpAR
+ 7IDhwQZGmR9Cz8UfSw0MPHoXj/qFHAcEwfe5+jw0d4uGeNyF94jHWm5Kl/a75vuPypFX9oHty+E
+ xA4NBzRm4ea6WA4tUADzMfez9iyo4iaPs=
+X-Gm-Gg: AZuq6aLvTeNp01ngV44d1i9Z0VTzQKsnU/NiTIAqvDA1C2beuCzKTXTZfXiFs8CLH0T
+ ubLSBsjZV4/vdLM8gONqb5cPmOd3Lwk1p5DgVYJ24Ff/b2RVg/8Tx7l4GmNujEdbQCF+EIG5d3H
+ YW5Q9Zb4rfRBSLBP9gVrPhKFsmHyaINplF56G57U8SXE4sfG1yxZBPiNU79vezi34fZbaEA8yBK
+ cicM9RHu4bxNa9lypC521dboZD5rxOOp1KX7Umwa7jMCIO99HeWKVAQgGA0B4c03tXU1g==
+X-Received: by 2002:a05:600c:8718:b0:47d:403e:4eaf with SMTP id
+ 5b1f17b1804b1-4830e9335c4mr47169375e9.10.1770224123557; 
+ Wed, 04 Feb 2026 08:55:23 -0800 (PST)
+X-Received: by 2002:a05:600c:8718:b0:47d:403e:4eaf with SMTP id
+ 5b1f17b1804b1-4830e9335c4mr47168975e9.10.1770224123178; Wed, 04 Feb 2026
+ 08:55:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b5-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+References: <20260203203512.672552-1-jsnow@redhat.com>
+ <20260203203512.672552-12-jsnow@redhat.com>
+ <CABgObfYtKr88BvhPUL4KfX464u=T4d7BP70XRLMdn28sXSKU4g@mail.gmail.com>
+ <CAFn=p-bq8siBh0f2bs=x6ZeHQn6y2_2RuwKVnVrH+CvOTe-4ig@mail.gmail.com>
+In-Reply-To: <CAFn=p-bq8siBh0f2bs=x6ZeHQn6y2_2RuwKVnVrH+CvOTe-4ig@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 4 Feb 2026 17:55:10 +0100
+X-Gm-Features: AZwV_QjfPTOFBNkuWhBrqhUkAY1Njh6ZJuNBYD5v1KB-mUGUy0aUHy_cjrHlk04
+Message-ID: <CABgObfYA12a08yXPsn84hX8dv59x7DDDLW0X3u5Cre3od6iMFw@mail.gmail.com>
+Subject: Re: [PATCH v5 11/16] meson, mkvenv: add qemu.git/python/qemu package
+ to pythondeps.toml
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,125 +155,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pixman requires stride in words. So over the course of the ati_2d_blt
-function both src and dst stride were mutated before being passed to
-pixman and then back afterwards.
+On Tue, Feb 3, 2026 at 10:28=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+>
+> On Tue, Feb 3, 2026 at 4:08=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+> >
+> >
+> >
+> > Il mar 3 feb 2026, 21:36 John Snow <jsnow@redhat.com> ha scritto:
+> >>
+> >> Add the local python package group into pythondeps.toml for the
+> >> tooling This makes qemu.qmp, qemu.machine and qemu.utils
+> >> packages unconditionally available for tests and scripts.
+> >
+> >
+> > Out of curiosity why not add setuptools and wheel to the group, at this=
+ point? Can be done on top of course.
+>
+> Hm. If we're operating offline, it would only really serve as a
 
-This creates local variables holding src and dst stride in words
-avoiding the potentially confusing mutation.
+s/only/also/ :)
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
----
- hw/display/ati_2d.c | 35 +++++++++++++++--------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+> configure check. Online it might actually be a help. I'll do it as a
+> follow up, I just need to figure out which versions meet our needs and
+> do testing to choose the accepted values.
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 980cdd6ac0..e8b9bf5f70 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -85,6 +85,7 @@ void ati_2d_blt(ATIVGAState *s)
-         dst_bits += s->regs.crtc_offset & 0x07ffffff;
-         dst_stride *= bpp;
-     }
-+    int dst_stride_words = dst_stride / sizeof(uint32_t);
-     uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
-     if (dst_x > 0x3fff || dst_y > 0x3fff || dst_bits >= end
-         || dst_bits + dst_x
-@@ -118,6 +119,7 @@ void ati_2d_blt(ATIVGAState *s)
-             src_bits += s->regs.crtc_offset & 0x07ffffff;
-             src_stride *= bpp;
-         }
-+        int src_stride_words = src_stride / sizeof(uint32_t);
-         if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
-             || src_bits + src_x
-              + (src_y + s->regs.dst_height) * src_stride >= end) {
-@@ -125,18 +127,16 @@ void ati_2d_blt(ATIVGAState *s)
-             return;
-         }
- 
--        src_stride /= sizeof(uint32_t);
--        dst_stride /= sizeof(uint32_t);
-         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
--                src_bits, dst_bits, src_stride, dst_stride, bpp, bpp,
--                src_x, src_y, dst_x, dst_y,
-+                src_bits, dst_bits, src_stride_words, dst_stride_words,
-+                bpp, bpp, src_x, src_y, dst_x, dst_y,
-                 s->regs.dst_width, s->regs.dst_height);
- #ifdef CONFIG_PIXMAN
-         if ((s->use_pixman & BIT(1)) &&
-             s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT &&
-             s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-             fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst_bits,
--                                   src_stride, dst_stride, bpp, bpp,
-+                                   src_stride_words, dst_stride_words, bpp, bpp,
-                                    src_x, src_y, dst_x, dst_y,
-                                    s->regs.dst_width, s->regs.dst_height);
-         } else if (s->use_pixman & BIT(1)) {
-@@ -146,12 +146,12 @@ void ati_2d_blt(ATIVGAState *s)
-             uint32_t *tmp = g_malloc(tmp_stride * sizeof(uint32_t) *
-                                      s->regs.dst_height);
-             fallback = !pixman_blt((uint32_t *)src_bits, tmp,
--                                   src_stride, tmp_stride, bpp, bpp,
-+                                   src_stride_words, tmp_stride, bpp, bpp,
-                                    src_x, src_y, 0, 0,
-                                    s->regs.dst_width, s->regs.dst_height);
-             if (!fallback) {
-                 fallback = !pixman_blt(tmp, (uint32_t *)dst_bits,
--                                       tmp_stride, dst_stride, bpp, bpp,
-+                                       tmp_stride, dst_stride_words, bpp, bpp,
-                                        0, 0, dst_x, dst_y,
-                                        s->regs.dst_width, s->regs.dst_height);
-             }
-@@ -163,18 +163,15 @@ void ati_2d_blt(ATIVGAState *s)
-         }
-         if (fallback) {
-             unsigned int y, i, j, bypp = bpp / 8;
--            unsigned int src_pitch = src_stride * sizeof(uint32_t);
--            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
--
-             for (y = 0; y < s->regs.dst_height; y++) {
-                 i = dst_x * bypp;
-                 j = src_x * bypp;
-                 if (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
--                    i += (dst_y + y) * dst_pitch;
--                    j += (src_y + y) * src_pitch;
-+                    i += (dst_y + y) * dst_stride;
-+                    j += (src_y + y) * src_stride;
-                 } else {
--                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_pitch;
--                    j += (src_y + s->regs.dst_height - 1 - y) * src_pitch;
-+                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_stride;
-+                    j += (src_y + s->regs.dst_height - 1 - y) * src_stride;
-                 }
-                 memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
-             }
-@@ -201,21 +198,19 @@ void ati_2d_blt(ATIVGAState *s)
-             break;
-         }
- 
--        dst_stride /= sizeof(uint32_t);
-         DPRINTF("pixman_fill(%p, %d, %d, %d, %d, %d, %d, %x)\n",
--                dst_bits, dst_stride, bpp, dst_x, dst_y,
-+                dst_bits, dst_stride_words, bpp, dst_x, dst_y,
-                 s->regs.dst_width, s->regs.dst_height, filler);
- #ifdef CONFIG_PIXMAN
-         if (!(s->use_pixman & BIT(0)) ||
--            !pixman_fill((uint32_t *)dst_bits, dst_stride, bpp, dst_x, dst_y,
--                    s->regs.dst_width, s->regs.dst_height, filler))
-+            !pixman_fill((uint32_t *)dst_bits, dst_stride_words, bpp, dst_x,
-+                         dst_y, s->regs.dst_width, s->regs.dst_height, filler))
- #endif
-         {
-             /* fallback when pixman failed or we don't want to call it */
-             unsigned int x, y, i, bypp = bpp / 8;
--            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
-             for (y = 0; y < s->regs.dst_height; y++) {
--                i = dst_x * bypp + (dst_y + y) * dst_pitch;
-+                i = dst_x * bypp + (dst_y + y) * dst_stride;
-                 for (x = 0; x < s->regs.dst_width; x++, i += bypp) {
-                     stn_he_p(&dst_bits[i], bypp, filler);
-                 }
--- 
-2.52.0
+Use whatever is in bookworm or 22.04?
+
+Paolo
 
 
