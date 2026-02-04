@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B711E9537C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 11:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D84DE9537D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 11:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnadX-0001P3-EZ; Wed, 04 Feb 2026 06:01:31 -0500
+	id 1vnadK-0001Ga-1f; Wed, 04 Feb 2026 06:01:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadT-0001Jg-KV
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadG-0001G6-T0
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadS-0002mh-8Q
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnadF-0002WS-BP
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:01:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770202885;
+ s=mimecast20190719; t=1770202870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9LzQq34rqf4wVt2xmbpyvK/KfxuQ6p8j981mEiYdQIQ=;
- b=e0PzF0jDj6A/m/HxPyN5l60X1/7ZM2KHrwNVJb01Yq6XaIeNyV6s8zMf5sDMN1Gu8MBIMu
- H0J1En95tnhtA1dYmaSe3zAfbNtYlINTPLXFPzXbcb0Tv+1idrtpVIpMD5Ba5BdYRy2nzQ
- 8hsY3RE3EsLV7tmuNNzj4F7CW7tWS+8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u+O6sAxi0+uikxe9nJN/COhn6Ec+5y5VrLnRQxND988=;
+ b=fUVlsF3p27LdJb0yx8mnVoViCBsIdFbiivSxu4O1mDTfI3CM9az4a/rCeUupn3Xpvng8CE
+ J6NC0riDaR9r9RbGudf046iTL6CdSJs9ZgJ4OtESRbn1JOg9Fe5PRUmsMBFDGyRApalJMT
+ Xd50aDNB1U62rUYub8dpFh+YXXM4k7k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-5NucRw8LN4WB8CDo_l3yJw-1; Wed, 04 Feb 2026 06:01:24 -0500
-X-MC-Unique: 5NucRw8LN4WB8CDo_l3yJw-1
-X-Mimecast-MFC-AGG-ID: 5NucRw8LN4WB8CDo_l3yJw_1770202883
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4806cb47edaso4762395e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:01:24 -0800 (PST)
+ us-mta-130-qAE9Yj_vPsq8fqXIofG06Q-1; Wed, 04 Feb 2026 06:01:08 -0500
+X-MC-Unique: qAE9Yj_vPsq8fqXIofG06Q-1
+X-Mimecast-MFC-AGG-ID: qAE9Yj_vPsq8fqXIofG06Q_1770202867
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43065ad16a8so4802807f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:01:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770202883; x=1770807683; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770202867; x=1770807667; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9LzQq34rqf4wVt2xmbpyvK/KfxuQ6p8j981mEiYdQIQ=;
- b=o/R3/T6FW5rib3SEE95r2eMSYN8D19T+nlQ1Nj05nkNEP+ve05oQ9wrkWeIj2W/p+J
- 7VsMai8ZP7upLEi7czpeo2j+7WzL7S5UCegKHM/kGY7oQV6v/bYvm9eKMnzNoX/7yNA3
- zeM9HJFSlVzDJSd0uk56NGZ+Z+t1a/K2MkjK3FjntHo18e5tk8vFLe/d2+9Tmn/c82Ju
- c187P/2lIoucRjPNG4y23QGljBptuqNN3hQZ/HE6BEPSKGO+UqwO5flXKgI36x5miGqX
- bgEwQE5+5HMJgRk1vNUIOYuewv6zTadMWWA5CiEHLnm973Uf67LPhEvTNJfBH5YRBrbf
- v+0w==
+ bh=u+O6sAxi0+uikxe9nJN/COhn6Ec+5y5VrLnRQxND988=;
+ b=lzyrQ0TGc7TuoX84jVv5DhCr9OW3v0y3cXo16yQGTW6KML+wXOtyX19dqmzEGhs0WG
+ z2s1m9hixRYVAfG8BA3/IunPPBKtuiFpmkoP4sXKRfnoJ/MpErn3rrKV8BLTyXenvMYx
+ 8Z4BCNgr54r1/iHoSzAti1LDwjxmBQOHyJnv1XRAS5PnQH3CKuZDllcp0HFf4zflXh4W
+ G4eKuvVS/HhofgPIU5dbsj9Vh3xDJc93MShTPA1Kxg62al/SgzM/okWOEwA+vbWKtk7L
+ +T0Pmq0ZZeDVx1J06XN5IO9ZAkStx/2VlyuGGyySaLb3/UQMHPd6BPb6ZqSe396Lr8Si
+ VHwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770202883; x=1770807683;
+ d=1e100.net; s=20230601; t=1770202867; x=1770807667;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9LzQq34rqf4wVt2xmbpyvK/KfxuQ6p8j981mEiYdQIQ=;
- b=ZWKLc9+CkaYibK9gs3Tv7/iM0NwOoXRovyD0H6x3ynl3F1q1WAAaFK69xWV+XyTvS6
- ay5+njR4S2Ofd2Z6VQis7HKVBzqV899iz01LoN4lrkzsrmna/wsCZsbRKqL1p4JV6FOa
- 73gmLfhPVNkETv+UkjkhXyBKNo6ykK3C8bKgMeTBytmb8/HLGURvi6NFObO5VCuyGZe4
- JQcOVMx+Xizh/sVdwpkC3is+JrZE34A+h6Ws44+tbW84rRYpxx2oErZRX3YyBNWPo8FN
- aaZ/kzkVxIEj2abAMHJQ6N9DRLauEKJ5pub157aRxYT484HsIjtybq79yN/38QVpoTa0
- 1pzA==
+ bh=u+O6sAxi0+uikxe9nJN/COhn6Ec+5y5VrLnRQxND988=;
+ b=At6m2GwCLK68griVzgyzFl1/v4rcaTr7gcs6xy8PgF+zNjTWa7JGAez3bUKkaWktnD
+ xpakOAj8RFpOrle1t9QrB8dH47G7lMxzO0ePD8ZOFWO15mtLTh3Pf67DirnCUdMC6yVS
+ x+oy0XpHBB2H87QppnDTKhbOzK2pgy0m4kbwoveIBYG+e1iRKKrEtiiOqTIApSbLHD+l
+ J/oBDmVwrhcB021tdE9DBcWIRaYCM4wie8OK2xPvSqDAew2h38QZyLRnctmuz+ab3Sej
+ TSj4fLHkJCMR67SEQRoSbSfjPl+6AjJWAoT/2DUriIoJ/FzIfsKGfgf5An31twpJb9S1
+ BTJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAE7WGUWk4rvfX1tpe/oGuoKhQ1XVkCDqKahmYvvcgTXC/lG3DUH0J1N9NTBENf+qVBBWX+9NMU2fz@nongnu.org
-X-Gm-Message-State: AOJu0YyhydsBGD6iAY1Kf/T5kInOShR06xTuYawObRfsOkF9HgR6Y5aC
- X8SkARvqX4YDBwYAs18nFcdID2cqmLdc5zSFKoHQ13baJ9ZfVnl7HJyJWNZBDQXek76qhp1Jvub
- icMjOMwWD3J2lcbw5Knl/3MLU5raxLMTQuUCwTUR+kmTk26Cxhjs1amsK0U/RN+Ef
-X-Gm-Gg: AZuq6aJUw6RNYzqcvLWmzePLWDSXooOJaC/jF1dkoG34Kc47zsAdUK9JN9QlSAFRxmm
- 8KGfy2vcXnUCEIQ3M6hqCe1bbVT5sDDkHy1mfQzwieSbMRM+TQIKyK1JS+NMDxZB9kHRQrCsz4m
- tdY6yIedrsK1H8/gnsQxvGXkPiwgNkthd7eAc1sQqwmiR8YTG1S1q1316u4ayDl8/eevcU97O9r
- VWkDFQdbAwHL4LzdpsJ1i5Y9p7KuvPVY3gLCK3N7wGorqRncN31i+6IGrSUdIcGkN9tLO8LuChg
- xPvTLD+75DUHlw5Fujq6x28ilJawtuOxcZXvWHK1UOX3KDHWu6/we///zOOhUVkvufHakMjLgFW
- JDmvc7SeUH2jcSnckMyG6eLjetXFnfzmNkPQiasIdNfeO1hAs
-X-Received: by 2002:a05:600c:5643:b0:47e:e452:ec12 with SMTP id
- 5b1f17b1804b1-48305171930mr53020735e9.15.1770202882701; 
- Wed, 04 Feb 2026 03:01:22 -0800 (PST)
-X-Received: by 2002:a05:600c:5643:b0:47e:e452:ec12 with SMTP id
- 5b1f17b1804b1-48305171930mr53020215e9.15.1770202882213; 
- Wed, 04 Feb 2026 03:01:22 -0800 (PST)
+ AJvYcCVKxzn+8HybOyC1hTM0dA0CXSFikVig2HmvHM8uvO8R+G7J/0NIHLoi77yN33pR+VEbfze8MWQ46x+t@nongnu.org
+X-Gm-Message-State: AOJu0Yy/KsYFuynZndy5g1Kn6s7g7MAjCmdr1TvQ5X6P8btUb3B7Y4lE
+ eXNLWssCYKT3l+IxKssuxlEi/8AqfpzaJqPbokRbIKhjx/XmemP+V6ONNqa8zklq4chGp4W2S/0
+ /iviyEjqucoqkmXsmBK+5QVPVzuZYRVtiOoEOMxn9fI54+/UD96xd9fdE
+X-Gm-Gg: AZuq6aJW3jYJ7J1Ht0DwIoG1xDXNj1/5AnuBx1EoU9cpHGKLoMWW1fXvOT+0lcydrir
+ rXVBmt+tfrHkmD013iF0tCZOF4ajhboBY+at7OCaesSRkZP99+eu7nSyE4XzqEcfF5SxOwr64et
+ nJMBMSdKlRztUgcFEiFaldA+HSoQpfqAsncTi9B9QYp84zPgCrbZcPN7HBgwx1I6hM4Mjy0oe0Y
+ cp0c5Kms68QSf3Wepr2GQ+IpwU4AIdNVFUKsIXvUiioOLV/P4fHeJIp8yuNKZzLpOKSUMJY5+nP
+ 4MFgskfjw8LOXhxABdOlTzNZD2zdzAte0IC94DsW0VMzdC8Th2xjK4dskcNGEfD/bUPoWqSYc+Y
+ sEBxc2K+y9m9x+Q/H255tfF94xMT4T0QXJ4SFoxKwrhFnk/B8
+X-Received: by 2002:a05:6000:18a3:b0:435:b068:d3d2 with SMTP id
+ ffacd0b85a97d-436180611a9mr3521613f8f.57.1770202866760; 
+ Wed, 04 Feb 2026 03:01:06 -0800 (PST)
+X-Received: by 2002:a05:6000:18a3:b0:435:b068:d3d2 with SMTP id
+ ffacd0b85a97d-436180611a9mr3521231f8f.57.1770202863356; 
+ Wed, 04 Feb 2026 03:01:03 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830ec42833sm28680595e9.1.2026.02.04.03.01.20
+ ffacd0b85a97d-4361805f8c1sm4763764f8f.37.2026.02.04.03.01.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 03:01:21 -0800 (PST)
-Message-ID: <6de8c68b-f10f-4c95-8652-d1774a4a2f34@redhat.com>
-Date: Wed, 4 Feb 2026 12:01:20 +0100
+ Wed, 04 Feb 2026 03:01:02 -0800 (PST)
+Message-ID: <da5b11cb-c55a-499c-9351-729370f77948@redhat.com>
+Date: Wed, 4 Feb 2026 12:01:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] memory: drop
- RamDiscardListener::double_discard_supported
+Subject: Re: [PATCH 01/10] system/rba: use DIV_ROUND_UP
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Ben Chaney <bchaney@akamai.com>,
@@ -99,7 +98,7 @@ Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Kanda <mark.kanda@oracle.com>
 References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
- <20260204100708.724800-3-marcandre.lureau@redhat.com>
+ <20260204100708.724800-2-marcandre.lureau@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,7 +144,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260204100708.724800-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20260204100708.724800-2-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -176,16 +175,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/4/26 11:06, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This was never turned off, effectively some dead code.
+> Mostly for readability.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/system/memory.h       | 12 +-----------
->   hw/vfio/listener.c            |  2 +-
->   hw/virtio/virtio-mem.c        | 22 ++--------------------
->   system/ram-block-attributes.c | 23 +----------------------
->   4 files changed, 5 insertions(+), 54 deletions(-)
-
+>   system/ram-block-attributes.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+> index fb7c5c27467..9f72a6b3545 100644
+> --- a/system/ram-block-attributes.c
+> +++ b/system/ram-block-attributes.c
+> @@ -401,8 +401,7 @@ RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+>           object_unref(OBJECT(attr));
+>           return NULL;
+>       }
+> -    attr->bitmap_size =
+> -        ROUND_UP(int128_get64(mr->size), block_size) / block_size;
+> +    attr->bitmap_size = DIV_ROUND_UP(int128_get64(mr->size), block_size);
+>       attr->bitmap = bitmap_new(attr->bitmap_size);
+>   
+>       return attr;
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com
 
