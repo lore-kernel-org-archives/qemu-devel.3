@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B686EA7942
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CABEA7943
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAD-0007CB-7p; Wed, 04 Feb 2026 14:03:45 -0500
+	id 1vniCL-0004ll-8v; Wed, 04 Feb 2026 14:05:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA4-00071E-71
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:36 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniBP-000396-EO
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:05:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniA2-0007oi-HH
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:35 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniBE-0008FV-1L
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231813;
+ s=mimecast20190719; t=1770231883;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
- b=eYhFp2A9fvRG4kQWxmm1kQHEA7K8+F0yd3P4QgrMoxfnuay6WJgAaaj4YJDTrGUeJ4TgCq
- VCK+PWj2ZcpT01TfQLmUfsz0WlkUf0jV9MWvyKje8FZxw/RJILoVmDmzyWw7hglRK86oJS
- 7QVLBVhcTLiIAOkS/6+MI8WQpJz9D3I=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f25Nke9lbXBse1DcsUR1BuSwyhsX+SCykZqse82vnPI=;
+ b=Hrl7bqpRaGDSiW7vaRyxzNWXt3bLd8qcN3UM8i9h+8uziqVw76//nV9B0hxVAAPqJAba5Z
+ hWrW5t5GUKtNYXD0XPDOIAZbmVtKIm/cBro6o6q6oXp8qwJJNn/JNHt8WHTh+SklKbdjrI
+ kfrgVIuyESuGDD4XcERdr5tLCebtrNU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-HEu0iro1PvipcO24S1VhTw-1; Wed, 04 Feb 2026 14:03:32 -0500
-X-MC-Unique: HEu0iro1PvipcO24S1VhTw-1
-X-Mimecast-MFC-AGG-ID: HEu0iro1PvipcO24S1VhTw_1770231812
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43284f60a8aso172877f8f.3
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:32 -0800 (PST)
+ us-mta-678-HD4hRnrdP5CZeRE5WhYz5Q-1; Wed, 04 Feb 2026 14:04:42 -0500
+X-MC-Unique: HD4hRnrdP5CZeRE5WhYz5Q-1
+X-Mimecast-MFC-AGG-ID: HD4hRnrdP5CZeRE5WhYz5Q_1770231881
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-436164e7f42so188993f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231811; x=1770836611; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231881; x=1770836681; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
- b=HMtrQkQXmnd1TJ23oxvbyxUYJCo5NIombJTr40bBXBZ2mPGZUo9KytO8IOzj3mG9kA
- D7O6e3z/5vej64lQeR43B2f/Hf7zquxij9dZgjofTIl4MQ5+rzumh8d5MEOFhOHBcbnW
- QKqKNvZ+JYVoRtqZPdYa6GjFrxEFk8TaDmUpEYtpDfK2nic5I7zZO8qAO/w+A+CzJM+q
- oCK4wJmYuV/8mPaeTx6EvtkN885tI8NNz268+hbGx8DfGiQx9KkeexskJ5FR1hgZy/Va
- reFvdH9WrRG1tN5DS/w+m7E1gbVSAEjco+Dffbly5BnVgc9GYzwSh0PJ+QAxLUQY6BqR
- ZOIg==
+ bh=f25Nke9lbXBse1DcsUR1BuSwyhsX+SCykZqse82vnPI=;
+ b=HHYK/J3fULyJKeVSpXUT2nKlLHTzLylLdItxggzoLPGnj3LDGU7fHFGBA0AaLkz5tm
+ KE+rxuYyjKtNSV/aVzqxfCeksWZ4A4kghMMplStvWawIDBCW20HLztTJtCgfj2HbiHl+
+ 5U2VM/Ko/LKLxkYiyFCIswC5aYhtrtU35nLzqbSlydBSBvGE9EpHVynWxWcBtGDkpegJ
+ x+bCDfkNchAWlSJo2oAFSF0EbonnnYfnXJEmeRCqgYm0w77aKAhFacNM//3QB3DttR7O
+ KrdJ8og/9JpBuc0PyJF0pSK/dc+fK78vABNAqG89mqixf6Xhiu+hva5r7z+CeYeC+8Fq
+ CR5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231811; x=1770836611;
+ d=1e100.net; s=20230601; t=1770231881; x=1770836681;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=npw1QjPEPkrUSmQMTkhMuqAaf36Fs29cc+AU0ZeYdxU=;
- b=v7E0+zcd5F3N1TkWhbw3qMNFURqg9YdZA59pg8SDp6y6++qbq0PR48GDfg7AOX34mV
- EyPjm1mBGhLjp5SI3Vwe36refzCwXJZfFQ1EMZJxoRSA4Qcl7A4gLuc1wkmlL/XrpI3Z
- EUUoD3L8/LHLBGWJqEwyQisyy5Ey5NvuQegG0Ky+PWS4hsSSXRR/hUDfrlyWRM5T1uUH
- MbyO+Y/uF653f8V0qdNFZrJRNGvbIoqLvsQ22T+Mvtg6PpN5Zm52QoKQBfrAbWulRoYN
- RYgRLEqb/Gc1B18woAX9T5VpDTPyqX93hYY6p28c+3uS5QWRKGqL7xHLAF1HtlMQth/x
- F3sQ==
-X-Gm-Message-State: AOJu0YyWT+Winvq60M/2wJjGFkFQY655w0B7dfIV4TX3p7Uft7Ahv7ks
- QyclLI6DEXcdBoM0BLqNfceQio0XjJcL7WZbITLAuEldwtpmzHAW7MBCg75WOeHuFZFaqh4bZdJ
- GVrEeeZy1VbL/dZ6kJaUiJscnomQwho64db9Lr+m8DrJ+zDp3ZYj6sldTmLsXh/CcenxP5BYE87
- l0bnsqzNAXVC1iwQCfC1EPjh+4OQSfh1wE4A==
-X-Gm-Gg: AZuq6aJvTjJQDt4Q8RYABoZML7ra/13cimT5zDpaCxZM6FxdawjsrIqKwE0Fjz2pAea
- wG2Vi/W9FBjW2k1pxvl5kc7z4CMgT6wbrmQMsj9Zgkk1neVLxXFU+CC1/1nd2ktakKnUKuvhPwb
- 4YdbT/iLbIqlDzrx7AywiPfu33S+PM2bFLRnOQZD/5lFWqomwAOdBcHx1LOwfNKhwupUo/lXSbT
- LYacxsonW8pvLjNEWDVEA1fzhWe7Ludzk5JcOhVqBdfTJDRJVqjg47bRak9RTllg/YAqLs+aupt
- v61nd56GD9/jUsIpgsPrvH+NnUL/l+3iBq7wFrjFGcOXfl0IElux8yXJzAV9VoeNHghvELipB9q
- GF4mAt1X6qkrV5MswOBNnGMLRBVDVmfPBfQ==
-X-Received: by 2002:a05:6000:26c9:b0:436:7e8:a10 with SMTP id
- ffacd0b85a97d-43617e317e2mr5379469f8f.13.1770231811338; 
- Wed, 04 Feb 2026 11:03:31 -0800 (PST)
-X-Received: by 2002:a05:6000:26c9:b0:436:7e8:a10 with SMTP id
- ffacd0b85a97d-43617e317e2mr5379378f8f.13.1770231810755; 
- Wed, 04 Feb 2026 11:03:30 -0800 (PST)
+ bh=f25Nke9lbXBse1DcsUR1BuSwyhsX+SCykZqse82vnPI=;
+ b=iEHR5EM/BLAmQYad6WGoeNfbZPuHV58L4ZNkXgk3gxLzNnCINIJF45zvFwiAi4XjH/
+ XalSbn/mTyUyKT6HLW0xAg2E6Ly1grk4N4Z6utQUFVgsr1PLu6xZOIN186DGjV//Cr2U
+ CWmbdMY466imv8QqbLflAnM9b4EMBlljKAzVXvsMRedJhu3TozuN/CLl8ro1N8G1jLdd
+ ycCMOJKo4sgiJY0FxcB3Lq0HVmmF6dt0/itA35l62aY6iHhdU4/dO4uXk0PyPOXJOpDs
+ B665CVmk1R4BhwBkMqCw8c2yDPNmArsVZa841KZZFd7LCw2zZwi1KV8lwlV8+V7f2uVS
+ JWog==
+X-Gm-Message-State: AOJu0YxcVKa6RwFhAsKUbTMXwgXA31qPH1uyuOpthRVy/BHOAjtvUpkW
+ ifcj99HWHUVuXI75TOyGldT4d2/4vpGqN0yzPvRTLOXMKuzBSn0CfYSOGz2qamkvsquDSn93rRl
+ 6c5Dtgs0UbIPDvwaOOZ8bps3UIYu49ZMYFYf7Y79jPzpNURklkNJ80hMVJ6ZgnAO5TQy5p+Iv3a
+ Q1n2ORa9Ol4SUQYcSiLnqhBGXf6hLnLG6lgw==
+X-Gm-Gg: AZuq6aJrJK30M7/Rm4xFbuWbeyvH+CHGsZ/Xs5PzjuSgnT21zroPSerArkuNmUJM2li
+ fbk6qDbACFA9chQXKOPoPPjOfsuFOFwk9cGSfpsb2Z+UZWWC6P0VrWL6UWRMXNoyUG1wgAEPnV4
+ bf2Tk7GR2subZHTUIaDUlG3j53UjMYrnt2gb6hpSp/YxVHMdix6vjPN5vAmdrk5RJKOPAYok0dE
+ sfBJI7n1EL9WJ4uCll5r3vA6imS5gZqnO0ur3ip/a4Zg8QjjzDi17g6p4G0k50baHDtEs930bpy
+ 6qaMD/jjV8ztsOjsqY7rSK431N1dN4vD8DoPtfLdVuAOknYK4eSK8N/3fe1zx2TaNL6fyvEnxcM
+ 2lSAW8qCHQ6AMpzHLuqCZlHB5uw5HD0feRw==
+X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
+ ffacd0b85a97d-436180551e9mr6176041f8f.33.1770231881021; 
+ Wed, 04 Feb 2026 11:04:41 -0800 (PST)
+X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
+ ffacd0b85a97d-436180551e9mr6175981f8f.33.1770231880462; 
+ Wed, 04 Feb 2026 11:04:40 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805fec6sm7963220f8f.32.2026.02.04.11.03.29
+ ffacd0b85a97d-436180640e5sm7542944f8f.40.2026.02.04.11.04.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:30 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:28 -0500
+ Wed, 04 Feb 2026 11:04:40 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:38 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 17/51] intel_iommu: Minimal handling of privileged ATS request
-Message-ID: <bbb8d5b6a3c0105054bd41849f72c04065296bca.1770231744.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 48/51] vhost: add vmstate for inflight region with inner buffer
+Message-ID: <41ccfe54e16060219a0ef5ee106bbf63ed8abb24.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -124,64 +121,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-The purpose of this commit is not to support privileged requests but
-to prevent devices from doing things they wouldn't be able to do
-with real hardware.
+Prepare for future inflight region migration for vhost-user-blk.
+We need to migrate size, queue_size, and inner buffer.
 
-We simply block privileged requests when the SRS ecap is not set
-and abort when the ecap is present.
+So firstly it migrate size and queue_size fields, then allocate memory
+for buffer with
+migrated size, then migrate inner buffer itself.
 
-For now, its not worth implementing support for privileged requests
-because the kernel does not support it.
-(https://lore.kernel.org/linux-iommu/20230411064815.31456-11-baolu.lu@linux.intel.com/)
-However, we may consider working on it depending on how the development
-goes in the kernel.
-
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251029105137.1097933-7-clement.mathieu--drif@eviden.com>
+Message-Id: <20260115081103.655749-5-dtalexundeer@yandex-team.ru>
 ---
- hw/i386/intel_iommu.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ hw/virtio/vhost.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 6ba1c1676b..77adeed0cc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -5190,13 +5190,27 @@ static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
-                                                 hwaddr addr,
-                                                 IOMMUAccessFlags flags)
- {
--    IOMMUTLBEntry entry;
-+    IOMMUTLBEntry entry = { .target_as = &address_space_memory };
-     VTDAddressSpace *vtd_as = container_of(iommu, VTDAddressSpace, iommu);
-+    IntelIOMMUState *s = vtd_as->iommu_state;
-+
-+    /* Guard that makes sure we avoid weird behaviors */
-+    if ((flags & IOMMU_PRIV) && (s->ecap & VTD_ECAP_SRS)) {
-+        error_report_once("Privileged ATS not supported");
-+        abort();
-+    }
- 
-     if (vtd_is_interrupt_addr(addr)) {
--        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
-         vtd_prepare_error_entry(&entry);
--        entry.target_as = &address_space_memory;
-+        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
-+    } else if ((flags & IOMMU_PRIV) && !(s->ecap & VTD_ECAP_SRS)) {
-+        /*
-+         * For translation-request-with-PASID with PR=1, remapping hardware
-+         * not supporting supervisor requests (SRS=0 in the Extended
-+         * Capability Register) forces R=W=E=0 in addition to setting PRIV=1.
-+         */
-+        vtd_prepare_error_entry(&entry);
-+        entry.perm = IOMMU_PRIV;
-     } else {
-         entry = vtd_iommu_translate(iommu, addr, flags, VTD_IDX_ATS);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c6a5928cb1..52801c1796 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1918,6 +1918,62 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
      }
+ }
+ 
++static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
++{
++    struct vhost_inflight *inflight = opaque;
++
++    int fd = -1;
++    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
++                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
++                                  &fd, errp);
++    if (*errp) {
++        return -ENOMEM;
++    }
++
++    inflight->offset = 0;
++    inflight->addr = addr;
++    inflight->fd = fd;
++
++    return true;
++}
++
++const VMStateDescription vmstate_vhost_inflight_region_buffer = {
++    .name = "vhost-inflight-region/buffer",
++    .pre_load_errp = vhost_inflight_buffer_pre_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static bool vhost_inflight_region_post_load(void *opaque,
++                                           int version_id,
++                                           Error **errp)
++{
++    struct vhost_inflight *inflight = opaque;
++
++    if (inflight->addr == NULL) {
++        error_setg(errp, "inflight buffer subsection has not been loaded");
++        return false;
++    }
++
++    return true;
++}
++
++const VMStateDescription vmstate_vhost_inflight_region = {
++    .name = "vhost-inflight-region",
++    .post_load_errp = vhost_inflight_region_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(size, struct vhost_inflight),
++        VMSTATE_UINT16(queue_size, struct vhost_inflight),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_vhost_inflight_region_buffer,
++        NULL
++    }
++};
++
+ void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bits,
+                            const uint64_t *features)
+ {
 -- 
 MST
 
