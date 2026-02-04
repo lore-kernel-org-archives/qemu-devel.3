@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B5FEA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0594FEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAz-0002hd-4H; Wed, 04 Feb 2026 14:04:33 -0500
+	id 1vniB1-0002sA-2x; Wed, 04 Feb 2026 14:04:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAu-0002Jd-La
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:28 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAy-0002dO-KS
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAt-00089K-2g
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:28 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAw-00089j-Ks
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231866;
+ s=mimecast20190719; t=1770231868;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
- b=Zwwy/lQOQvbe0Rnve848+LowkH49Outg0/vpsQD/51XQ9IOdavKACMlf+H2JuR4tPWQMTU
- oI4+pCj/iSuoIXLXAlhZeNEwna4/5jIdih7/ZXIB53MTxnKW48rpP/ParUSNnHzE2nvb8w
- tcyFz3lAQbre8tCV3+Xv+0xJPKHeUMs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fi6E2clXTxrQ+L0LRK6W+AcUGXgcfu3jZgG8jffOEZY=;
+ b=YJVkczwyMMEAukjcshesnJKG349LyuHNjS1CuPo/nsfayqNlXMtUlrAkvFDWcPMaYk+mDh
+ HeSgRyCpJUP/17cD+W9rp8nOD0z1WfJ9D6jLPPuhMrIU4knhkiAs6cDAuJXLY9aIs7Lm1C
+ HTski5imqusr2iyOtQaw2O4IugXwxtY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-wMU2un5hNEmHSOvxLxHNig-1; Wed, 04 Feb 2026 14:04:25 -0500
-X-MC-Unique: wMU2un5hNEmHSOvxLxHNig-1
-X-Mimecast-MFC-AGG-ID: wMU2un5hNEmHSOvxLxHNig_1770231864
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4325aa61c6bso145234f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:24 -0800 (PST)
+ us-mta-688-BDPJjpFcNHG8pinlBXastw-1; Wed, 04 Feb 2026 14:04:27 -0500
+X-MC-Unique: BDPJjpFcNHG8pinlBXastw-1
+X-Mimecast-MFC-AGG-ID: BDPJjpFcNHG8pinlBXastw_1770231866
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-480717a8ef9so1645165e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231863; x=1770836663; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231865; x=1770836665; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
- b=BWiyFx7GL3d3fI2lM3Vo4ratpt3sIbuZq9W6fgmuqEYAZwAAKkeftXJD1+KOOBSXx3
- Hc2HAJWbw5b4u9LoCg2a/uLS/uM7L4e+D9fyrTMrd2VaQbbDq5m5FxrnA0j1HNMO2Z0q
- SNgzDC34Zho7ccQx89AA9Qaldb7nWM+0macP7eppw/yBJRr7ic9wZDJkEjRPDIDp5/oX
- VvlmTv1nfBDbEH0SnnlltKCrA52x+bhN6ZWlcma4rxvWbBauAxXeusLH5D8IEsePGxVK
- 6zbjH8cELVSj8cjE29utCRumjwdQVqnUTapJbSBkAsp9wZJXIkK+Hq/aX9iVPm1YduaX
- dWZg==
+ bh=Fi6E2clXTxrQ+L0LRK6W+AcUGXgcfu3jZgG8jffOEZY=;
+ b=bPR8TTOojnZkHRu7nzGm7dBRys5WD6jH6JtaHMtlfsm7uPfYIHTu26Yahc6PDoOTTi
+ 165sqIDTiBkxRfmoFZ58XidPtpwZF+QJP+zRG09rOlaiszNPYEzFOiON4IpW9ygZEg1U
+ svSyjZoBKd2XyHtm18CF6PhicWDCnBHnQgLK3zBKjRrY700iyURGhEMv05aWY5sGsXjQ
+ Al1QO209fwRB2iG6s1oIHxB75ieglDXsjZnOwOVCYyjETfauAo2pAmaQn07jSIxxUvHE
+ sbIt3U0sW3y9By2yhYpmkcZSgHLkcneixTlhPx0dsKuu268vVhPXiCUJXq/jG77I4DhQ
+ +mvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231863; x=1770836663;
+ d=1e100.net; s=20230601; t=1770231865; x=1770836665;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=03AkzHRloJMk9ZlcKj4KKHLNBGVRlt5Fh/16c/Y11xM=;
- b=IdzHrU52866xXRPPnXinjT5R8z7mq1ePAzYOzaxVi+CZbIVmCCYt3k7mDrgmgXxndJ
- 2D1RIrnDPlRxD2cSt9vrLTdlc2hMGGtwQqEf/HD1ctF4kaZhz8G9ZqyIUKbGYj59cxId
- S6TNe0PvtxyhC4ktXuMRZjIebxq3gsluQA3MI5FUs1AyQQkLkW489wdIueqo2uS32+R8
- Q3PvQssWdCTnzKFx+AAi9wvSq4/8mvuMu0mmEuyq30vSN16OHTgi4tVNBnJjTi4M2H4a
- VaaLAg2xeom5F3tcezCz28E6AK5Ph0Wkj+g0Ntc8Gdw1dik5EEGdWuuPCKCZHcUY2cVT
- Z1Yg==
-X-Gm-Message-State: AOJu0YzEy4ZTBRNKr7Rd90DppSzuKGrsdCc7K8JqEQ5g1DOL4lQCUgti
- DevBmu5RL6nlfvXhBfQATO5IWYbIMIQgmFRZc3vK0uRz5OCNBmPJHVs/y5DWjJdeVDq+jTstq1H
- zx0xSskgxwYTR/TN0Jqvupb9cwixMSy2moAnOJsbn66BpwT9aFmzo/ODHH0IcvbjA1wduY6Vb/0
- 3O+Ujpw2QcFE23KE0appnoE8gUbC33UMmwVQ==
-X-Gm-Gg: AZuq6aL1QF9S1fqXxjldJkR7C7HgvvPAlqsoyTccV/sd1yWg2J0TQcQ7SaJusoY86oe
- QJT6GZ1PgWazqfBA03u9NEwCpm3yibOOOmEy0iWc6v5N9qpPsMN68GzZIzsFuE5MI/N6lMQbBfy
- +fVpQx6mQWTTCq/am6a5ESvOqs1kPjpmi0B5TvdiBtkdaYbwAMaPxNADVuuCZLvHE/Bk98djpMf
- Z2QyhIbYPxeBmS8rO77eznqzbAOqlpnPuWc8Y54SzVl7K/goTAgsc4j3ZcZQ6iZRjAPcGI/F/E6
- Tk/mnO93+AIZkTN89vPmCt9DsHuBk2p++4coS14gXn7d49k6O9j91RAHrUXtyfsw2dSq/Ve97X1
- cxzDGLBsp9NCZqaHdCvihcom4p0yyMKAA/Q==
-X-Received: by 2002:a05:6000:200e:b0:435:6c8d:d017 with SMTP id
- ffacd0b85a97d-4361805558bmr5462829f8f.32.1770231863501; 
- Wed, 04 Feb 2026 11:04:23 -0800 (PST)
-X-Received: by 2002:a05:6000:200e:b0:435:6c8d:d017 with SMTP id
- ffacd0b85a97d-4361805558bmr5462767f8f.32.1770231862964; 
- Wed, 04 Feb 2026 11:04:22 -0800 (PST)
+ bh=Fi6E2clXTxrQ+L0LRK6W+AcUGXgcfu3jZgG8jffOEZY=;
+ b=o0TC0Fr1RFBABeiYuOGMYcb8p+uPbI0XASWEcbtk41LbtQuEvoqbm9wM3Pr/HZUYyr
+ uXH7zaf2BfVhxKrXY/FFe/lONX2xKuNKGiXlWlMo4S38xtFLDktxsAuikWV77rZylfqF
+ /6Xm4XxIFBoxwetlcwpEdc0Ei1K7iFYZA4VvjZEYH5Ex8WZLdHEYA45gqxOnRR1f7lAL
+ 2BwMyLMFnSUAXrDlpTjzBF6q/XUR6+yj1G96UWHl7I0iMu02xGu/phTyKJhahbYyT7To
+ T/3qzSv77j5imyTJpUR8U2v4Ccahi9eA0X0CY7p/4YQXhltwvIdsc6+B3hP/j9CQaJnb
+ hpNA==
+X-Gm-Message-State: AOJu0YxQ280OHXDjWEfhkDqJhp73R3zmaDSHUhzZuxjPq6XnAgtfhTxn
+ vcShTzIbkDmY0yZ/Dck6/te5cACH8I8TRNXBUK2lQZHt5sMQ3kcH31xCaXUvi3i0oobvBgcnVmV
+ uvGdaXW7ml+BIQIoj28FFCYryaQkroB9CcMiD/Ans2JidoLW4XtjKbKbAUWpMnXFblYdPKfESp9
+ 0VDjrr1KU/dyRqCLdz8cnrMCB0NlrjdfRToA==
+X-Gm-Gg: AZuq6aIyBauRAESfnlxaBo5rplyikW0gDeZuYd41R4uyNX2obR0F/UeN/MQ4FcRJvTj
+ dS3fjErOgzI3ISoMMfqlbJuxelCEOWZ9mW/DQquYIPLCYjEUpSeFgJnqsNVs+ZXt9Vt32Qejc/1
+ rTXpcHMBpaSpT1lIg+zoT6yrHeuMmvnZFMrSMTt0DgC91sIbMFidoDnIRpQgvIshWX7DVqrRgig
+ 577EvZYd4GZ8zQLa2nnGeOJGL7XCIDhxZLhoAOglaMEkdDspM0Rp/jPDd9c/b4O6vdn0cWNj+LJ
+ ZuSAaxNNzsuAlJVEhoVwzA6DIATafpQIVmhJp0gUzSu0d9fu5jLzlCh8/GzDyUq27uHvEL4lGIH
+ MajTw+jinbrDc8B8J9+6a/xQ+jv0xVv1ElA==
+X-Received: by 2002:a05:600c:4e94:b0:47e:e2b8:66e6 with SMTP id
+ 5b1f17b1804b1-483179c893bmr4272465e9.14.1770231865551; 
+ Wed, 04 Feb 2026 11:04:25 -0800 (PST)
+X-Received: by 2002:a05:600c:4e94:b0:47e:e2b8:66e6 with SMTP id
+ 5b1f17b1804b1-483179c893bmr4271935e9.14.1770231865132; 
+ Wed, 04 Feb 2026 11:04:25 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805813asm7970389f8f.27.2026.02.04.11.04.21
+ 5b1f17b1804b1-48317d2c88dsm5759365e9.5.2026.02.04.11.04.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:22 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:20 -0500
+ Wed, 04 Feb 2026 11:04:24 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:23 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL 40/51] MAINTAINERS: Update VIOT maintainer
-Message-ID: <ddf1de5c2e1fa83d273f00461cc7d3a0fc798899.1770231744.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Joelle van Dyne <j@getutm.app>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory region
+Message-ID: <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -125,33 +121,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+From: Joelle van Dyne <j@getutm.app>
 
-Unfortunately I can't contribute to QEMU for the time being, but Eric
-has offered to take on maintainership of the ACPI VIOT. Thank you!
+When `owner` == `mr`, `object_unparent` will crash:
 
-Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+object_unparent(mr) ->
+object_property_del_child(mr, mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+object_finalize(mr) ->
+object_property_del_all(mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+fail on g_assert(obj->ref > 0)
+
+However, passing a different `owner` to `memory_region_init` does not
+work. `memory_region_ref` has an optimization where it takes a ref
+only on the owner. That means when flatviews are created, it does not
+take a ref on the region and you can get a UAF from `flatview_destroy`
+called from RCU.
+
+The correct fix therefore is to use `NULL` as the name which will set
+the `owner` but not the `parent` (which is still NULL). This allows us
+to use `memory_region_ref` on itself while not having to rely on unparent
+for cleanup.
+
+Signed-off-by: Joelle van Dyne <j@getutm.app>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251230154844.325364-2-jean-philippe@linaro.org>
+Message-Id: <20260103214400.71694-1-j@getutm.app>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/display/virtio-gpu-virgl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d049270777..ebd27cd7f3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2197,7 +2197,7 @@ S: Maintained
- F: hw/riscv/virt-acpi-build.c
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 07f6355ad6..6a83fb63c8 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -120,7 +120,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     vmr->g = g;
  
- ACPI/VIOT
--M: Jean-Philippe Brucker <jean-philippe@linaro.org>
-+M: Eric Auger <eric.auger@redhat.com>
- S: Supported
- F: hw/acpi/viot.c
- F: hw/acpi/viot.h
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+@@ -186,7 +186,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+-        object_unparent(OBJECT(mr));
++        object_unref(OBJECT(mr));
+     }
+ 
+     return 0;
 -- 
 MST
 
