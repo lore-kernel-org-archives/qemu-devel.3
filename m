@@ -4,100 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DECEA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED0AEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAT-0007uv-QI; Wed, 04 Feb 2026 14:04:01 -0500
+	id 1vni9t-0006P9-7I; Wed, 04 Feb 2026 14:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAF-0007Od-D8
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:49 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9j-00062N-AZ
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAD-0007sD-4y
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:47 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9h-0007ja-Hk
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231824;
+ s=mimecast20190719; t=1770231792;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=44CCfFqxFh058FYaqfQ166E828OwbzPeM6ZE6ERmryw=;
- b=efDVeIeBjp1v4KIepxWCV8WJy0+E2D+hiGFnnLRVh7BA7okdb3YceNeolGtEtysDixdbGw
- RCiVFFCO2tBsrvdPz+zNh+GJ59t3+fWMzdVtwIMBlZEklfmHQ6XiMq6M6EJYZyX0InnchU
- Yzd6ezv0XFomX+C8sFvQU5KC4ZWNLU8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P2QPRaRY25mgH7GQ9hBvdL6BBixB+wpf/B6tPD3ZxpU=;
+ b=MRWdM97fVTeLBRXoNSwB/c9Fy9iPYTLMUnnL7vn0VQaGOS5BgijgSgD2W3sb1QNTV5Nvpp
+ 2KqFn0f2vt6O3GNdLBGImHAbEOnlQUeAD9Whsdxs6nsfZjQM0LNJDCqLZ9nn3eUGddBorU
+ Ay69I+DTXjbL8uTBnA3OYPKyoFlOEi0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-ryCqI1UaOjOdNcyPEcifGA-1; Wed, 04 Feb 2026 14:03:41 -0500
-X-MC-Unique: ryCqI1UaOjOdNcyPEcifGA-1
-X-Mimecast-MFC-AGG-ID: ryCqI1UaOjOdNcyPEcifGA_1770231820
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4830e7c6131so1250935e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:41 -0800 (PST)
+ us-mta-613-NlLDHFrwNky6Frw_E5jaHA-1; Wed, 04 Feb 2026 14:03:11 -0500
+X-MC-Unique: NlLDHFrwNky6Frw_E5jaHA-1
+X-Mimecast-MFC-AGG-ID: NlLDHFrwNky6Frw_E5jaHA_1770231790
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-435db8ebc98so201817f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231820; x=1770836620; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=44CCfFqxFh058FYaqfQ166E828OwbzPeM6ZE6ERmryw=;
- b=rksF+dYAceO0KGc96wMOLzZ7ZZiNm+I/oaYto79K0xDTDsUBlvjHRHmhoswGsTk6fy
- 27GBRkIaDx/IlJ2Hl5MXbkk4yTZ+6pVYMGVKGObxXZpkk/gGD/a5xeEULMMV6r+kMlso
- OS/6BHRhJ6GUj/uVMawCLbUg1YgI7w3sv0XWHm2nrdD4ZMaxKzmTBH2QU+hcOtczAlor
- RaztWE7tiO3SpuPZaKplGKsqvyJE0ay0Y7HHnoTa8rYkNt1W84BL7NQKnNGJBEFdzeLT
- dZJz33QtrqewAQaptjUhHlQ4TPGOoZnJ+sKxwsM7Fvxw63WnViCQO+aZJCf2aty+ptBA
- qVLQ==
+ d=redhat.com; s=google; t=1770231790; x=1770836590; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=P2QPRaRY25mgH7GQ9hBvdL6BBixB+wpf/B6tPD3ZxpU=;
+ b=h4IKNGgMaGLGPGRGBbXtP5qsN+gdTluAN1ia+GRqJ6RPGqyXQXrSiGnkKeeU4L0eWD
+ mtWGYKYMxus80Dqnd9Isb62spmwSNIP+EOGcfrrveakasgo3VSxznsddpoG+xIzikhFN
+ sSJhEfyy/XNesBGuU23cQLxiWWRAXKifW6bdIpCGJR1YpSyjaYchfvzXtg+xVJv2khDz
+ o0P4zYOI2IFSp9FgMd178Eh4iXfmpM0lwZZ2k0HY2Mn0tv+zeh7W3TH5++sSEFpVD1zJ
+ b6c/rkL0E2gSWdOr6us+NN1WVMZ0qx+/NY9QKA+OTZKTpcc+mPjgVA5sAcUHkIiq0JJN
+ GV3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231820; x=1770836620;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=44CCfFqxFh058FYaqfQ166E828OwbzPeM6ZE6ERmryw=;
- b=h+CHirTjKsb7Sm0FaKlMw5BuMB4cr3x4cHXiudxz9y2GwCfv4mRfm3uM0lhKbAFmaZ
- HcpANJzd/SaOJbYVwbDxNaBZWYJF5SURdgSN+xjVfoI9IvwyhoGkNe/q7+O8+uwyJwCj
- 40IfTcnpdNxuG8bLCBv/XU6zv85YYLv8kKRc3w6QEJvIz9gC4Tjf+urzeZkpxLIo7nbB
- j8dsd8XN0oIKgE1LeHbHo+9JE+LlqsyBMovjcdEAelNjlw8krluaVoebGgvqRzUUFkZ3
- cEcfY79Q17ukgIrkQTzsMsPQvKPq093KVw2zI9ecjKyaJTIT7A4WZ7Ag2QsB3B9fQ0WT
- rThA==
-X-Gm-Message-State: AOJu0Yys0oL9NylsCs6MrHc2CU9X95wYOW0DuXAKZF237N9bDNuYk4eg
- kruWIkOZTpUu9JCbsz7W5VD4ErFfWvVkfjWWIz9ZZVBw/pUpAKoQxHwHg2tTSeRn957t8c5oAeK
- quzcoQ77iLpPQctlIdCmru93Pe+X5TqEQMOewrZt3IRZ3Aua8PII2HoTXVxMASZZlyV2aYkFMpO
- nMo2sitLvoRVTJtYZhF5t8ovgt/FTmKxTIRg==
-X-Gm-Gg: AZuq6aJMUB3Jja4gEXZ9wDa/gHSyZ/EZFa4+kBqtFV3zcmnv6mDB8f0YT8JqmeMOs4W
- hG4G1JDpXr0ElTI05ZB5hRd1OiA1Jkx+LPmnraHy4xzrYl+Js6l2HX8tKfZSPE//IVmzkT16wg/
- lYeYcY7cbzu6qOGxSXTH1oQXH/H/2W1WXDuoEE8P4J1m6PA3ajxgl59zX4f3+NkeIytDGTVhO+6
- boBM132w1LWnGLcBUqXOVZO41nqBWzX0Vt2dM1eMP5Fu8YEMLVCpHvWpFWt7sxaSWeSuTguUMiN
- ZLqLzyNSqBNP1iYRg0RjaXei2+kUwZi2DircGzLQt0VDUDe+WIYeDSHzwBK2nj27jOipZ7Z+5Mk
- CW2qpJPLUUaW2pjlnLvZpeh8KG6ePc0Ymxw==
-X-Received: by 2002:a05:600c:4fd0:b0:480:1e9e:f9d with SMTP id
- 5b1f17b1804b1-4830e92cbc0mr56364795e9.8.1770231819957; 
- Wed, 04 Feb 2026 11:03:39 -0800 (PST)
-X-Received: by 2002:a05:600c:4fd0:b0:480:1e9e:f9d with SMTP id
- 5b1f17b1804b1-4830e92cbc0mr56364245e9.8.1770231819433; 
- Wed, 04 Feb 2026 11:03:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231790; x=1770836590;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P2QPRaRY25mgH7GQ9hBvdL6BBixB+wpf/B6tPD3ZxpU=;
+ b=o01m1h3TFZ5RsDDOK3JzJj4rm/fgiirbjKiEdpuT1bMAExMjP9jd393jIJzB4MlN9K
+ 1OTky98ZvIu8dmBFdJPdnU6pV079bEMMmUbnI1ySU8f06rWu+gxLxKj4uqOzpQdWJhAn
+ VHhJjqymtroeSCIIf82jAERgCxjr/m+VbYfyfyfghfeNjT5xLbfxvGHHc0beqouyZP22
+ DlEX0eWKCIAkyjSah3adNQC6E/wA/N9WTKmMv+j7U7E1Ni+ep25TcIV3FqGK1Ce/dy+S
+ piENLKg+jwEz1+TYqdXAXhJ8bHsRTZwAE7yN4Or6WBOtH0NTOZXfBPS9kpt8XCqeW0yx
+ PpsA==
+X-Gm-Message-State: AOJu0YydhmsGm1q4xaiXmsQVrwVZGYVMXqmK7Q24nQU7UpFLlMUJNPV8
+ I4Z+DuTZuvxJ48pwIupBCZhklxEuybuCAtOrW7cVtDwZJqLrB1TAJe3fVNZe708MUJyz+8YR1GR
+ Pym2oGlrBap+wQRvVoBkYTIzUVxVZV22jtnl/YlI+II5qIB9XHy9z0YI1CqkZprH9GArEx0wdLF
+ C3n6qSIs8OEbyPvMboRzxr9Ap/+Zg4q1kipw==
+X-Gm-Gg: AZuq6aLMaNra8uRucD40W1KeHR/GaM2IufOJnjOBHtZwI7XgZrQW2oqPVa0uA0z+N33
+ IFt8tJPl0t2ObZEdXUc5hpQWXGFl5xxVCGgA8tU54az/kjntAWHIxxzIBzfsODsAouNhN6W8tca
+ VlUC4cXB6BHHxXtPKBXoZtx/+4Xwe4miVsUYUaTlrBQgbpxxQigsYQKo+nKH4d9K7qsuV6a6fNT
+ CoUbaXSqbk7Qf2EIbWRXd1Lh8eMkcXplmKhMvAwmxhksOBt+zg4Oi+nQgydVLFzcdSR4wrgGGpi
+ gWtNl3pHNGR+o9HwOkKpJj6fUK+71rGUXuA6Ofm1pBM8xlOjqa63QTHnTeqC2gkHLgI6dqoAhBR
+ qvC5C4L82bbuWuXm6/fzBwzh8pn7TysfxWg==
+X-Received: by 2002:a05:6000:438a:b0:435:96b7:e0db with SMTP id
+ ffacd0b85a97d-43617e410b4mr5529502f8f.17.1770231789898; 
+ Wed, 04 Feb 2026 11:03:09 -0800 (PST)
+X-Received: by 2002:a05:6000:438a:b0:435:96b7:e0db with SMTP id
+ ffacd0b85a97d-43617e410b4mr5529412f8f.17.1770231789139; 
+ Wed, 04 Feb 2026 11:03:09 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d4b2a6sm3151735e9.12.2026.02.04.11.03.38
+ ffacd0b85a97d-43618057f93sm8039995f8f.24.2026.02.04.11.03.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:39 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:37 -0500
+ Wed, 04 Feb 2026 11:03:08 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:07 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 21/51] x86: q35: generate WDAT ACPI table
-Message-ID: <3c7a9fcf2e3afcb50a6b740643165e3b6275915c.1770231744.git.mst@redhat.com>
+ Shiju Jose <shiju.jose@huawei.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 08/51] hw/cxl/events: Updates for rev3.2 DRAM event record
+Message-ID: <bef3c4b9d71a029358abe0f4cd80207f4ad08b26.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -126,241 +122,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-It will generate WDAT table [1] customized for TCO watchdog.
-This allows Windows guests (Windows Server 2008/Vista) to
-use TCO watchdog using built-in generic driver, which
-aleviates need to install vendor specific drivers.
+CXL spec rev3.2 section 8.2.10.2.1.2 Table 8-58, DRAM event record
+has updated with following new fields.
+1. Component Identifier
+2. Sub-channel of the memory event location
+3. Advanced Programmable Corrected Memory Error Threshold Event Flags
+4. Corrected Volatile Memory Error Count at Event
+5. Memory Event Sub-Type
 
-Given that enabling it might change guest behaviour
-(both Windows/Linux) the feature is disabled by default.
+Add updates for the above spec changes in the CXL DRAM event
+reporting and QMP command to inject DRAM event.
 
-Users that need it can enable the feature with
-following CLI option.
-    -global 'ICH9-LPC.wdat=on'
+In order to ensure consistency update all specification references
+for this command to CXL r3.2.
 
-1)
-   "Hardware Watchdog Timers Design Specification"
-    https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251030123750.136175-4-imammedo@redhat.com>
+Message-Id: <20260114142713.617806-5-Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/meson.build    |  3 +-
- hw/acpi/wdat-ich9.c    | 85 ++++++++++++++++++++++++++++++++++++++++++
- hw/acpi/wdat-stub.c    | 16 ++++++++
- hw/i386/acpi-build.c   | 13 +++++++
- include/hw/acpi/wdat.h |  3 ++
- 5 files changed, 119 insertions(+), 1 deletion(-)
- create mode 100644 hw/acpi/wdat-ich9.c
- create mode 100644 hw/acpi/wdat-stub.c
+ hw/mem/cxl_type3.c          | 42 +++++++++++++++++++++++++++++++++++++
+ hw/mem/cxl_type3_stubs.c    |  7 +++++++
+ include/hw/cxl/cxl_events.h |  9 ++++++--
+ qapi/cxl.json               | 31 +++++++++++++++++++++------
+ 4 files changed, 81 insertions(+), 8 deletions(-)
 
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 56b5d1ec96..fb4304f21c 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
--acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c', 'wdat-ich9.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
- acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
- acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
-@@ -33,6 +33,7 @@ if have_tpm
- endif
- system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
- system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
-+system_ss.add(when: 'CONFIG_ACPI_ICH9', if_false: files('wdat-stub.c'))
- system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
- system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
- system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.c'))
-diff --git a/hw/acpi/wdat-ich9.c b/hw/acpi/wdat-ich9.c
-new file mode 100644
-index 0000000000..c32ecf922c
---- /dev/null
-+++ b/hw/acpi/wdat-ich9.c
-@@ -0,0 +1,85 @@
-+/*
-+ * TCO Watchdog Action Table (WDAT)
-+ *
-+ * Copyright Red Hat, Inc. 2025
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 73fd85daa7..d6bb219597 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1936,6 +1936,13 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+ #define CXL_DRAM_VALID_ROW                              BIT(5)
+ #define CXL_DRAM_VALID_COLUMN                           BIT(6)
+ #define CXL_DRAM_VALID_CORRECTION_MASK                  BIT(7)
++#define CXL_DRAM_VALID_COMPONENT                        BIT(8)
++#define CXL_DRAM_VALID_COMPONENT_ID_FORMAT              BIT(9)
++#define CXL_DRAM_VALID_SUB_CHANNEL                      BIT(10)
 +
-+#include "qemu/osdep.h"
-+#include "hw/acpi/aml-build.h"
-+#include "hw/acpi/wdat.h"
-+#include "hw/southbridge/ich9.h"
-+
-+#define TCO_REG(base, reg_offset, reg_width) { .space_id = AML_AS_SYSTEM_IO, \
-+            .address = base + reg_offset, .bit_width = reg_width, \
-+            .access_width = AML_WORD_ACC, };
-+
-+/*
-+ *   "Hardware Watchdog Timers Design Specification"
-+ *       https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
-+ */
-+void build_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                const char *oem_table_id, uint64_t tco_base)
-+{
-+    AcpiTable table = { .sig = "WDAT", .rev = 1, .oem_id = oem_id,
-+                        .oem_table_id = oem_table_id };
-+    struct AcpiGenericAddress tco_rld =  TCO_REG(tco_base, 0x0, 16);
-+    struct AcpiGenericAddress tco2_sts = TCO_REG(tco_base, 0x6, 16);
-+    struct AcpiGenericAddress tco1_cnt = TCO_REG(tco_base, 0x8, 16);
-+    struct AcpiGenericAddress tco_tmr =  TCO_REG(tco_base, 0x12, 16);
-+
-+    acpi_table_begin(&table, table_data);
-+    build_append_int_noprefix(table_data, 0x20, 4); /* Watchdog Header Length */
-+    build_append_int_noprefix(table_data, 0xff, 2); /* PCI Segment */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Bus Number */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Device Number */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Function Number */
-+    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
-+    build_append_int_noprefix(table_data, 0x258, 4);/* Timer Period, ms */
-+    build_append_int_noprefix(table_data, 0x3ff, 4);/* Maximum Count */
-+    build_append_int_noprefix(table_data, 0x4, 4);  /* Minimum Count */
-+    /*
-+     * WATCHDOG_ENABLED & WATCHDOG_STOPPED_IN_SLEEP_STATE
-+     */
-+    build_append_int_noprefix(table_data, 0x81, 1); /* Watchdog Flags */
-+    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
-+    /*
-+     * watchdog instruction entries
-+     */
-+    build_append_int_noprefix(table_data, 10, 4);
-+    /* Action table */
-+    build_append_wdat_ins(table_data, WDAT_ACTION_RESET,
-+        WDAT_INS_WRITE_VALUE,
-+        tco_rld, 0x1, 0x1ff);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_RUNNING_STATE,
-+        WDAT_INS_READ_VALUE,
-+        tco1_cnt, 0x0, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_RUNNING_STATE,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco1_cnt, 0, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_STOPPED_STATE,
-+        WDAT_INS_READ_VALUE,
-+        tco1_cnt, 0x800, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_STOPPED_STATE,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco1_cnt, 0x800, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_COUNTDOWN_PERIOD,
-+        WDAT_INS_WRITE_COUNTDOWN,
-+        tco_tmr, 0x0, 0x3FF);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_COUNTDOWN_PERIOD,
-+        WDAT_INS_READ_COUNTDOWN,
-+        tco_tmr, 0x0, 0x3FF);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_WATCHDOG_STATUS,
-+        WDAT_INS_READ_VALUE,
-+        tco2_sts, 0x2, 0x2);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco2_sts, 0x2, 0x2);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco2_sts, 0x4, 0x4);
-+
-+    acpi_table_end(linker, &table);
-+}
-diff --git a/hw/acpi/wdat-stub.c b/hw/acpi/wdat-stub.c
-new file mode 100644
-index 0000000000..a9b57a047b
---- /dev/null
-+++ b/hw/acpi/wdat-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * Copyright Red Hat, Inc. 2025
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/acpi/aml-build.h"
-+#include "hw/acpi/wdat.h"
-+
-+void build_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                const char *oem_table_id, uint64_t tco_base)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 9446a9f862..ac420eab81 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -77,6 +77,7 @@
++#define CXL_DRAM_EV_DESC_UCE                            BIT(0)
++#define CXL_DRAM_EV_DESC_THRESHOLD_EVENT                BIT(1)
++#define CXL_DRAM_EV_DESC_POISON_LIST_OVERFLOW_EVENT     BIT(2)
  
- #include "hw/acpi/hmat.h"
- #include "hw/acpi/viot.h"
-+#include "hw/acpi/wdat.h"
- 
- #include CONFIG_DEVICES
- 
-@@ -104,11 +105,13 @@ typedef struct AcpiPmInfo {
-     bool smi_on_cpuhp;
-     bool smi_on_cpu_unplug;
-     bool pcihp_root_en;
-+    bool wdat_enabled;
-     uint8_t s4_val;
-     AcpiFadtData fadt;
-     uint16_t cpu_hp_io_base;
-     uint16_t pcihp_io_base;
-     uint16_t pcihp_io_len;
-+    uint64_t tco_io_base;
- } AcpiPmInfo;
- 
- typedef struct AcpiMiscInfo {
-@@ -203,6 +206,7 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
-     pm->pcihp_io_len = 0;
-     pm->smi_on_cpuhp = false;
-     pm->smi_on_cpu_unplug = false;
-+    pm->wdat_enabled = false;
- 
-     assert(obj);
-     init_common_fadt_data(machine, obj, &pm->fadt);
-@@ -224,6 +228,9 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
-             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT));
-         pm->smi_on_cpu_unplug =
-             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
-+        pm->wdat_enabled = object_property_get_bool(obj, "wdat", NULL);
-+        pm->tco_io_base = object_property_get_uint(obj, ACPI_PM_PROP_PM_IO_BASE,
-+            NULL) + ICH9_PMIO_TCO_RLD;
+ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+                                uint32_t flags,
+@@ -1955,6 +1962,12 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+                                bool has_column, uint16_t column,
+                                bool has_correction_mask,
+                                uint64List *correction_mask,
++                               const char *component_id,
++                               bool has_comp_id_pldm, bool is_comp_id_pldm,
++                               bool has_sub_channel, uint8_t sub_channel,
++                               bool has_cme_ev_flags, uint8_t cme_ev_flags,
++                               bool has_cvme_count, uint32_t cvme_count,
++                               uint8_t sub_type,
+                                Error **errp)
+ {
+     Object *obj = object_resolve_path(path, NULL);
+@@ -2046,6 +2059,35 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+         valid_flags |= CXL_DRAM_VALID_CORRECTION_MASK;
      }
-     pm->pcihp_io_base =
-         object_property_get_uint(obj, ACPI_PCIHP_IO_BASE_PROP, NULL);
-@@ -2079,6 +2086,12 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-     acpi_add_table(table_offsets, tables_blob);
-     build_waet(tables_blob, tables->linker, x86ms->oem_id, x86ms->oem_table_id);
  
-+    if (pm.wdat_enabled == true) {
-+        acpi_add_table(table_offsets, tables_blob);
-+        build_wdat(tables_blob, tables->linker, x86ms->oem_id,
-+                   x86ms->oem_table_id, pm.tco_io_base);
++    if (component_id) {
++        strncpy((char *)dram.component_id, component_id,
++                sizeof(dram.component_id) - 1);
++        valid_flags |= CXL_DRAM_VALID_COMPONENT;
++        if (has_comp_id_pldm && is_comp_id_pldm) {
++            valid_flags |= CXL_DRAM_VALID_COMPONENT_ID_FORMAT;
++        }
 +    }
 +
-     /* Add tables supplied by user (if any) */
-     for (u = acpi_table_first(); u; u = acpi_table_next(u)) {
-         unsigned len = acpi_table_len(u);
-diff --git a/include/hw/acpi/wdat.h b/include/hw/acpi/wdat.h
-index c539e97e9b..67b9136d8c 100644
---- a/include/hw/acpi/wdat.h
-+++ b/include/hw/acpi/wdat.h
-@@ -115,4 +115,7 @@ void build_append_wdat_ins(GArray *table_data,
-                            struct AcpiGenericAddress as,
-                            uint32_t val, uint32_t mask);
- 
-+void build_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                const char *oem_table_id, uint64_t tco_base);
++    if (has_sub_channel) {
++        dram.sub_channel = sub_channel;
++        valid_flags |= CXL_DRAM_VALID_SUB_CHANNEL;
++    }
 +
- #endif /* QEMU_HW_ACPI_WDAT_H */
++    if (has_cme_ev_flags) {
++        dram.cme_ev_flags = cme_ev_flags;
++    } else {
++        dram.cme_ev_flags = 0;
++    }
++
++    if (has_cvme_count) {
++        descriptor |= CXL_DRAM_EV_DESC_THRESHOLD_EVENT;
++        st24_le_p(dram.cvme_count, cvme_count);
++    } else {
++        st24_le_p(dram.cvme_count, 0);
++    }
++
++    dram.sub_type = sub_type;
++
+     stw_le_p(&dram.validity_flags, valid_flags);
+ 
+     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&dram)) {
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index 2047e97846..231dda263f 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -53,6 +53,13 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+                                bool has_column, uint16_t column,
+                                bool has_correction_mask,
+                                uint64List *correction_mask,
++                               const char *component_id,
++                               bool has_comp_id_pldm,
++                               bool is_comp_id_pldm,
++                               bool has_sub_channel, uint8_t sub_channel,
++                               bool has_cme_ev_flags, uint8_t cme_ev_flags,
++                               bool has_cvme_count, uint32_t cvme_count,
++                               uint8_t sub_type,
+                                Error **errp) {}
+ 
+ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index a3f69b99a4..0cc7372101 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -138,7 +138,7 @@ typedef struct CXLEventGenMedia {
+ 
+ /*
+  * DRAM Event Record
+- * CXL r3.1 Section 8.2.9.2.1.2: Table 8-46
++ * CXL r3.2 Section 8.2.10.2.1.2: Table 8-58
+  * All fields little endian.
+  */
+ typedef struct CXLEventDram {
+@@ -156,7 +156,12 @@ typedef struct CXLEventDram {
+     uint8_t row[3];
+     uint16_t column;
+     uint64_t correction_mask[4];
+-    uint8_t reserved[0x17];
++    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
++    uint8_t sub_channel;
++    uint8_t cme_ev_flags;
++    uint8_t cvme_count[3];
++    uint8_t sub_type;
++    uint8_t reserved;
+ } QEMU_PACKED CXLEventDram;
+ 
+ /*
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index c159687f84..630c37d64e 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -131,21 +131,21 @@
+ ##
+ # @CXLDRAMEvent:
+ #
+-# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
++# Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
+ #
+ # @dpa: Device Physical Address (relative to @path device).  Note
+-#     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
++#     lower bits include some flags.  See CXL r3.2 Table 8-58 DRAM
+ #     Event Record, Physical Address.
+ #
+ # @descriptor: Memory Event Descriptor with additional memory event
+-#     information.  See CXL r3.0 Table 8-44 DRAM Event Record, Memory
++#     information.  See CXL r3.2 Table 8-58 DRAM Event Record, Memory
+ #     Event Descriptor for bit definitions.
+ #
+-# @type: Type of memory event that occurred.  See CXL r3.0 Table 8-44
++# @type: Type of memory event that occurred.  See CXL r3.2 Table 8-58
+ #     DRAM Event Record, Memory Event Type for possible values.
+ #
+ # @transaction-type: Type of first transaction that caused the event
+-#     to occur.  See CXL r3.0 Table 8-44 DRAM Event Record,
++#     to occur.  See CXL r3.2 Table 8-58 DRAM Event Record,
+ #     Transaction Type for possible values.
+ #
+ # @channel: The channel of the memory event location.  A channel is an
+@@ -169,6 +169,21 @@
+ # @correction-mask: Bits within each nibble.  Used in order of bits
+ #     set in the nibble-mask.  Up to 4 nibbles may be covered.
+ #
++# @component-id: Device specific component identifier for the event.
++#     May describe a field replaceable sub-component of the device.
++#
++# @is-comp-id-pldm: This flag specifies whether the device-specific
++#     component identifier format follows PLDM.
++#
++# @sub-channel: The sub-channel of the memory event location.
++#
++# @cme-ev-flags: Advanced programmable corrected memory error
++#     threshold event flags.
++#
++# @cvme-count: Corrected volatile memory error count at event.
++#
++# @sub-type: Memory event sub-type.
++#
+ # Since: 8.1
+ ##
+ { 'struct': 'CXLDRAMEvent',
+@@ -177,7 +192,11 @@
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
+             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
+-            '*column': 'uint16', '*correction-mask': [ 'uint64' ]
++            '*column': 'uint16', '*correction-mask': [ 'uint64' ],
++            '*component-id': 'str', '*is-comp-id-pldm':'bool',
++            '*sub-channel':'uint8',
++            '*cme-ev-flags':'uint8', '*cvme-count':'uint32',
++            'sub-type':'uint8'
+            }}
+ 
+ ##
 -- 
 MST
 
