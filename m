@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C609DEA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD9AEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniC2-0003jO-3h; Wed, 04 Feb 2026 14:05:39 -0500
+	id 1vniCK-0004iH-DT; Wed, 04 Feb 2026 14:05:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB6-0002xO-0U
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniBT-0003Bn-K3
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:05:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB4-0008BC-FO
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:39 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniBI-0008Fn-1j
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231877;
+ s=mimecast20190719; t=1770231888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aMlqbmSKooP03sc2CostLcGLDMkW4cYnire/pDDEN4k=;
- b=Cy9WruY1y7K0WTJNo3hjZvLKpVgEjF4GxR6JllK1ytkylzU+bfPXEw+Ey29xYQ7T7uXFYI
- ZU2MW0e1Nzn1l32626nJvqotXLNog+HMC+iiztGffqK6G7Wlklv47Qn+ZoXBWjrP2s+pfe
- Tj+UTqkCujQtvn3ilAOkydLOCJ6v/Wc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BHV9CRtIc65hjBzMkzz5+7e4XSr1yitt8eUrbCO0Ung=;
+ b=Rsv71bbaF3qQtndm7YDQbC9bt7+XsZFY7MOJY/NlMz6xOaK6rQ+dddVcm8RrlBDlahvkWc
+ ix5CrxoPyboRiGVNf9dhRkPRttWembckbIynkh/WDZpQwQvTYNfM9FwexEGUdq9tTegSU4
+ a7go52L9LPry0VxaWNwyXWEebWrFYEw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-7ayJdR8fPDS9HAl1poTmXw-1; Wed, 04 Feb 2026 14:04:36 -0500
-X-MC-Unique: 7ayJdR8fPDS9HAl1poTmXw-1
-X-Mimecast-MFC-AGG-ID: 7ayJdR8fPDS9HAl1poTmXw_1770231870
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-483129eb5ccso1267515e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:31 -0800 (PST)
+ us-mta-155-NSLfXvkCOWGMaolB0lsskA-1; Wed, 04 Feb 2026 14:04:46 -0500
+X-MC-Unique: NSLfXvkCOWGMaolB0lsskA-1
+X-Mimecast-MFC-AGG-ID: NSLfXvkCOWGMaolB0lsskA_1770231884
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4801c1056c7so763955e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231870; x=1770836670; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=aMlqbmSKooP03sc2CostLcGLDMkW4cYnire/pDDEN4k=;
- b=iqO4VUXZPcSPVxSRgtiwJ+5n7rr2S6DtXLsRILQtMK6vyG+XCRJtxztiK+sM0TRKRi
- Wr0X/XLi+SExsAK255DX1R4sJFv0x4duEMKkZ7WsdoV/ip3fQjc3XkfC2coSWOAtdzbG
- in32Xs0Oqd0VRVonv0Dr/I8zP4Jb6voYIOkrkHPNEUOE0cPPP97TG8y6RGD+AY0/MG0b
- VVdLFMIAdw8VpFQ1q9KJfo7oKMX/wpMijxvjAeP/WtXH2qQzpM5qA2zlO2NbnZoUebx1
- EPt0QKVsIblA4woWqY/9F87r22TMUUF86aZccj3ypBu2tNMPMEHZ6IvgTCHDOdvnGqkO
- Zohg==
+ d=redhat.com; s=google; t=1770231883; x=1770836683; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=BHV9CRtIc65hjBzMkzz5+7e4XSr1yitt8eUrbCO0Ung=;
+ b=X2ega7iZWDbbIfGVIfakEEHmEOQw0WBD1Stij3+20tOFCQ6g2cKugb7HUQmLl5YIqM
+ by8wBSESUOcuFgfaDFMpoDZZQ9zm9uS0Kq8pYj6ND9uCOc1ZQGs2x4LAukl2E3q9kWjc
+ cTdgWbLNg4wpP5bHJwbmkpXXkjqMt8ghQpGVjoXCRW/jmmQ6SZBpDjkDQki5c5Q0CHnR
+ gWf/LeTMxMEb0Vr4+mp8ZOM7xhD/qXWQM4JlF8oynavKOI5fosORc3zTK7EyLqqc9JRF
+ QaZKXi23+LVFn1qShSSDOZeMhrOGSCwyvCUzlw5wM9f4QrJ+n8g4TVnnmHI3KW9wTiVg
+ ye1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231870; x=1770836670;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aMlqbmSKooP03sc2CostLcGLDMkW4cYnire/pDDEN4k=;
- b=nTogCuIEECoBcheWHgROhUHDomkertHdFC3PQXh1r0t1nAfC4wakepdvEiuKnviPzk
- 3P5AlEJOQPiyTERCB8l8/H3tfvmiy/mVCuhmBh7mO1qUWuAe6qCJQTkakw0BEuN/fbZF
- GBnmuOZRgCX1+jmgfnpd6hPG1W8245O/6wR2Wku9G148xa0Q/QA8PhG9or4rlY7Egdhm
- fJNc3rN/i3zdQ04Zv7IUAizJMxfYJjybx079jbu3qNLQuRbIoPNFdvWXeRfiRl6y8pA7
- Ay7MCzFUQIWfUJWM6yxsk6C5GN4ilzKXuTh0E+waNHhshElsG6Evp52CYBMFchXMIG14
- 6w6g==
-X-Gm-Message-State: AOJu0YxqwXKzpkH4HKE70h6MEuhBPAxQqiVmq+1YWCubcHXt67+4HZhj
- fb/YHWsHS6co12nFvUC8IjU8WtSVcyQOKhXBbCkexZCj2dqX+0cxSWuT+19lmEORv2iZf42UIfo
- zttpdTCTYpKaLCUnV1b7vykczRtf6jcSKWsBnAzsKBReETR0SVvF7A20pTanH9/RHZzD6ChfzKX
- SBB05Lqkq6rZ2hieYRCw63gNf+xWG7NkPRCA==
-X-Gm-Gg: AZuq6aJUKe99XYALUcHS97tfUT9ViYQS0akudGaCDylxf27Dh2iYdAv0iR7JDTo81C1
- aIKXc972NHWF7WUZ/j1S40OyRgF1mdgbaAghO9qBnpcLoRQ7Tc48M1zZ/IGViJZyb3qZ2xVkz/C
- FZScv0X+BaqgFHXiZZZiMGR/9zJZ8Q2LGe3lmrBZqOV3jI19d/Oq1gIKmJN+vt+RdW6DU+A7Bfz
- pkG0lMAHZ/uFGAqQn2E6o9Z/idoXhi0HyWsIDZYoVjOn2D4FtEldxBVnzGnoOpX+IJMu5JWrGuf
- k2tXDmzv8qCdf03cHUNs0+6I/+CF3qh9Qiup5Dr2+xw39zSSNfVrR7iVZ6LYD8zZciIn0l4jKAL
- DOLtNIxLIH7zKI4KEB4/UwJLNlhk03RpUvg==
-X-Received: by 2002:a05:600c:190a:b0:480:4a90:1b06 with SMTP id
- 5b1f17b1804b1-4830e9b7a3cmr51073185e9.34.1770231870026; 
- Wed, 04 Feb 2026 11:04:30 -0800 (PST)
-X-Received: by 2002:a05:600c:190a:b0:480:4a90:1b06 with SMTP id
- 5b1f17b1804b1-4830e9b7a3cmr51072675e9.34.1770231869491; 
- Wed, 04 Feb 2026 11:04:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770231883; x=1770836683;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BHV9CRtIc65hjBzMkzz5+7e4XSr1yitt8eUrbCO0Ung=;
+ b=f0hO2j/1say0GvxOPugH3yMuAic5eXneySIUH8kNVz7rUlj+hLccSXKj2i6SQ54O2p
+ dDrr/L3+KcwiHrIIGrrg6aFFUqlTaDyqFIFA9mt+RcnM4/oQAGuks0ANy1aXPFYDNO5k
+ aQsKfBQaZeNzFoERi2Po8t2pSEVPZAugWMr7ATqOO3RCfLj1RObwYWwUt+M9BPhMmggi
+ pSNaq/ax22tKitXYiXM8WTjapSBk+2gusSgXKP3PS6mJDGdeg4Ts51aELjBz63Ks6+rY
+ 0d/IcpJm61m56xPUMqSRINI3GFRkUQMCysU+m+cUjFq9NoxDkrDug+Og0tnC6oe1DCVY
+ J/uQ==
+X-Gm-Message-State: AOJu0YzO9gkJ7NJQ6Tu9nqh+nIbLNqZU41iriAQx64e+zH5eduyRGMt7
+ 7UvMR0aU5BgogpbjBnoFco2TOrVyFyJpM4+8PnE8aUW06AUMOPxSvJhn9pEcyFwuR3ycLZg2FHu
+ wK0FzP8ALu7Q4G1E4oWeoDK+x/m5AxVhH8BJ4uVFNL20WCJ+8IzqbA6Cw/RJfJGHMiJ7eC+98Gn
+ beGizVC4OYWOSvqU4wVckhfc6AhHSPPRqA7Q==
+X-Gm-Gg: AZuq6aKGIrch90SHQsCETvjTkf7vOHXivjSvDI5ozQY2DEpm3tSCzjyW80mjMjG/i8i
+ ByWQ7zd9uSlARZSMUbLVzmakUnjkBa2AZU+8/o6PRt50tGdUkW4S70kA5jh670u8YDxA/7DRRIs
+ DGBndUQCToqb/5A+XZZK9WYTzwzYF9DkmaFGb4rr4jtui0V325QwOqbLMMwzjlKhjvYTIwyH2Zn
+ piGiJLTmxeK6ztyKyd4S5Q8l8oR88jTZHybz7zZi1QuelwpYRhUdJdRC4Hm2bqyxfhKJBg/DDLN
+ sQt/k2twL89nXsBCFNk4MfHF/c4bPKUil2JXyUlzlB6lNlN9JzMT3n9Qkc5rm7CpRcVJwFk4Lw8
+ yjKpIOyoLHPeC/7aye5pwbqAtM00nXNLOQQ==
+X-Received: by 2002:a05:600c:1988:b0:47b:deb9:15fb with SMTP id
+ 5b1f17b1804b1-4830e9913afmr53018555e9.33.1770231883407; 
+ Wed, 04 Feb 2026 11:04:43 -0800 (PST)
+X-Received: by 2002:a05:600c:1988:b0:47b:deb9:15fb with SMTP id
+ 5b1f17b1804b1-4830e9913afmr53018065e9.33.1770231882929; 
+ Wed, 04 Feb 2026 11:04:42 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830ec4a76esm43230005e9.1.2026.02.04.11.04.28
+ 5b1f17b1804b1-48317d3f007sm7648095e9.9.2026.02.04.11.04.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:29 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:27 -0500
+ Wed, 04 Feb 2026 11:04:42 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:40 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Honglei Huang <honghuan@amd.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 43/51] virtio-gpu: fix error handling in
- virgl_cmd_resource_create_blob
-Message-ID: <3aa1e2730e60a54e497a13f6af98bee3390a1074.1770231744.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Raphael Norwitz <raphael.s.norwitz@gmail.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 49/51] vhost-user-blk: support inter-host inflight migration
+Message-ID: <2e6dd85eed340e12b523a548970a47550be9ac44.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1770231744.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,42 +125,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Honglei Huang <honghuan@amd.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-Fix inverted error check in virgl_cmd_resource_create_blob() that causes
-the function to return error when virtio_gpu_create_mapping_iov() succeeds.
+During inter-host migration, waiting for disk requests to be drained
+in the vhost-user backend can incur significant downtime.
 
-virtio_gpu_create_mapping_iov() returns 0 on success and negative values
-on error. The check 'if (!ret)' incorrectly treats success (ret=0) as an
-error condition, causing the function to fail when it should succeed.
+This can be avoided if QEMU migrates the inflight region in
+vhost-user-blk.
+Thus, during the qemu migration, with feature flag the vhost-user
+back-end can immediately stop vrings, so all in-flight requests will be
+migrated to another host.
 
-Change the condition to 'if (ret != 0)' to properly detect errors.
-
-Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
-Signed-off-by: Honglei Huang <honghuan@amd.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260113015203.3643608-2-honghuan@amd.com>
+Message-Id: <20260115081103.655749-6-dtalexundeer@yandex-team.ru>
 ---
- hw/display/virtio-gpu-virgl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/block/vhost-user-blk.c          | 27 +++++++++++++++++++++++++++
+ include/hw/virtio/vhost-user-blk.h |  1 +
+ include/hw/virtio/vhost.h          |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 6a83fb63c8..741728cabb 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -705,7 +705,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-                                             cmd, &res->base.addrs,
-                                             &res->base.iov, &res->base.iov_cnt);
--        if (!ret) {
-+        if (ret != 0) {
-             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-             return;
-         }
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 4d81d2dc34..c151e83677 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -353,6 +353,7 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+ 
+     s->vhost_user.supports_config = true;
++    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+                          errp);
+     if (ret < 0) {
+@@ -568,6 +569,26 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+     return &s->dev;
+ }
+ 
++static bool vhost_user_blk_inflight_needed(void *opaque)
++{
++    struct VHostUserBlk *s = opaque;
++
++    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
++                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
++
++    return inflight_migration;
++}
++
++static const VMStateDescription vmstate_vhost_user_blk_inflight = {
++    .name = "vhost-user-blk/inflight",
++    .version_id = 1,
++    .needed = vhost_user_blk_inflight_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const VMStateDescription vmstate_vhost_user_blk = {
+     .name = "vhost-user-blk",
+     .minimum_version_id = 1,
+@@ -576,6 +597,10 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+         VMSTATE_VIRTIO_DEVICE,
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_vhost_user_blk_inflight,
++        NULL
++    }
+ };
+ 
+ static const Property vhost_user_blk_properties[] = {
+@@ -591,6 +616,8 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
++    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
++                     inflight_migration, false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+index 8158d4673d..1e41a2bcdf 100644
+--- a/include/hw/virtio/vhost-user-blk.h
++++ b/include/hw/virtio/vhost-user-blk.h
+@@ -52,6 +52,7 @@ struct VHostUserBlk {
+     bool started_vu;
+ 
+     bool skip_get_vring_base_on_force_shutdown;
++    bool inflight_migration;
+ };
+ 
+ #endif
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 08bbb4dfe9..89817bd848 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -554,4 +554,10 @@ static inline int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f,
+ }
+ #endif
+ 
++extern const VMStateDescription vmstate_vhost_inflight_region;
++#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
++    VMSTATE_STRUCT_POINTER(_field, _state, \
++                           vmstate_vhost_inflight_region, \
++                           struct vhost_inflight)
++
+ #endif
 -- 
 MST
 
