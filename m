@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394EEEA7944
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 20:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB718EA7944
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 20:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnjdO-0005j4-UV; Wed, 04 Feb 2026 15:37:58 -0500
+	id 1vnjgc-0006R3-3G; Wed, 04 Feb 2026 15:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnjdK-0005iq-QB
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:37:55 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnjga-0006Qg-2v
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:41:16 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnjdJ-0002eq-36
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:37:54 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-81e93c5961cso235083b3a.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 12:37:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnjgY-000378-9z
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 15:41:15 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-4359a316d89so228852f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 12:41:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770237471; x=1770842271; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ppbWwbdYbFxnHKPDva+koH/01mgTjSewOYL3RJ5AUM4=;
- b=Ity2qSvkgsBeK7ykDBZQkZb5DkdX4cFMUhlBFJeRjVZ+r/diJV74USB22iwWeWBkoK
- gMWGgkTArRLRNWvcyPdainF5aVCCtat0ZuC4NQrg4LvP3gaTbbcj568sIi3gJDTHfzDQ
- bIZy4IgYiF/Y8wgThLDpmt5ENMsQHUAT/hljkp9zF5JnzK7uEFiROgusvS9bvDtafWQ4
- eV6u21KzMPyYjI6GCPucmuvzv+LsLB3aqY0PCwdDqSfIz1oxyzMpqSAMyaJNDzdHR4lk
- 2pHnDdgRLEtBVVVvQvsoYot67HMUpXPvdqlcnkpSUqPX808Cq3a+WQul3Ik3ICXKs4Mz
- jZfw==
+ d=linaro.org; s=google; t=1770237672; x=1770842472; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OBZUhK4NBIfVwwKndj7XLGMI5lFYBXqizdp8CnNTnt0=;
+ b=BFt4gSwJ/324hOx7XNcOnuyst7bWkZScLiY49x5iBD/NP0R8cTt+C/cOkzISFd8ydg
+ /KGKWjNlAzI7jhW61AXz6aWwOvd7IxIggaFzXSK8RsYGKo6Cl1W7J4E+xRwpYqJgE9Dk
+ VVNOtJV48U0asO6Xim7XFwzDo9FtaUBS4KpdOKtLBjkvM5rekSrDCU/IVxKud2b+wWnV
+ EV/F8DnegFWWdFqbwsUR4Kw/V5s2ynTKgQGib5w8AMyKKwZ/wIUp8v7P8JsomC72uM5K
+ +ro2EbwZJNFhnmZErN3rToW6ACEBk02aSUsupZFZPAMCTD6FFpwj/UVzDpl+ml6YfgJC
+ omZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770237471; x=1770842271;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ppbWwbdYbFxnHKPDva+koH/01mgTjSewOYL3RJ5AUM4=;
- b=EASPaY7bn+fALlblH21xu15MlnSF+SIitg1xrV918LUFSdGYK7H2mjv7FZeD//7UwD
- yZSbGiftzXny0x66Eevg9kRxUbqmiDLYGGHFRk/f/pFckDVPVw/43HqmFYpK5zsLZpqc
- V2kcvuvG8MZEjgyxbYIAqPaBSh2z85HioFfkm2b4w8Rb1GHc9ouUP5SbQy+fYDeXJlb1
- On4b0/inrSWShE6F0QP5xbMLut9wGDSrIxzT9DjTTci0cjr5GundHUZD9rJFDHRuf9IC
- YIVM3bGyCQ4LnjoCQqIPrSfu2VgQxADliBs8bYnGc63t7oCwlStJLphMw7Pqv8I9R1ZO
- 6dxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxs/4MJ9tvY2QEqMlMs4ri0yp6wppGK/KSe127UqXS2A8EHo8sl9Ts6E2unqr+5xinUt9Ixr4waViO@nongnu.org
-X-Gm-Message-State: AOJu0YxYBQCTJzdPhtmQ2DXUBsAOd+URp19Z7obtkFIxuKoduLSFVU/l
- e3kX+SYOBom5N+NxcfkEDEfdHiQZ6gHHQdBaKEAfWaikrakr+ALbBICVReqVi6p6xGo=
-X-Gm-Gg: AZuq6aJDLJRHpPSF4kpAVeefxqxzeeHJll+CD3F91HzPgH0LGEk7wT3FKQbXK5F3Obp
- 0CpBGf0TGH/8kH2x79cbhduOrrCKF+/SdxBUqe3Asrtye9Yi8wyzK9oixWPfjZRzghrhgENv/mi
- /B7S2qFUma5t3NF8w03kpFNvT5lczr3NvQYzxuQcFCTaIWZIbOy1IMhF21zGi/KCwhd4+pRz+lS
- dg/NR5YE4kGRNq7+UrtMAOxa0dkElwsaO3JHLIpexSX1oDE4CwMWN1uVo7UPO+Tdp5x+3jMYz7Z
- gnd9LccpLS0X15I1F9Dseqt19m4+alxjcKJp/GEQpLbp1zPmxIhmlSpbt182Lu/3JJKvnJrJC3Q
- IoJMxgfGOET5VTaUv8hY0JeicZknWH5PfbnQapBYfyTu85GXlIUpv1sozZmBD3Q+wwW4Zfd/gxi
- PeJ1tl45InNo+MFduyuwlLYc5CL1UWy/OinQKiqsu0FiPzwm+JukJ5ikdmmms28gmgIxJswWv4
-X-Received: by 2002:a05:6a00:1248:b0:81f:bb67:8f8 with SMTP id
- d2e1a72fcca58-8241c4c4961mr3676704b3a.39.1770237470941; 
- Wed, 04 Feb 2026 12:37:50 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:110e:c2b5:eb10:f92d?
- ([2401:d002:dc0f:2100:110e:c2b5:eb10:f92d])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d163865sm3795131b3a.9.2026.02.04.12.37.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 12:37:50 -0800 (PST)
-Message-ID: <fa6b22a0-b605-4090-a9d7-ed3b61f26143@linaro.org>
-Date: Thu, 5 Feb 2026 06:37:44 +1000
+ d=1e100.net; s=20230601; t=1770237672; x=1770842472;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OBZUhK4NBIfVwwKndj7XLGMI5lFYBXqizdp8CnNTnt0=;
+ b=r/SZJnQIvePqlkBc+Qg0Ca4z+VAg46+6C3JRbcmTW5lclPqly2TUToHy7oxYlnFVXG
+ CBV8OJyJs1kK+uS4Dae3Bpl4Je/cMsZBFV9NDo7D6rrAUsFG5ssj8sUyeCU1TGbUIokH
+ t0waxijyPtAEB2M26WedO7JazPBuLOdT3iZG8PZWECH/QWwVIIsYp3QUZVDLIQT+Gc/s
+ 8OTQF5YXP3fIfekpKBnCP0pjKAzdsSdROW7KR5szguwu6mOWVDVSJxIRNdqfTRrWMLro
+ /rV0TXJU774BIMhcEFwAXipdAp2yvwFJ4FmoKIh6xjBQJ2YuIV0nUg7BgeOrv1cLTmSO
+ 0QwA==
+X-Gm-Message-State: AOJu0YxkSRNVetckgtExSPJkyuGBmB5WaM8KKlShGeY+MhavLyO1bjaT
+ qO9EUzpClAy/IR+sDoOI/Rjt+X5xunji1oNvEQxRM0T+lAFgoH/wU7XMz9s5QdQ3plw7pDRCMYX
+ 0pVlIO2c=
+X-Gm-Gg: AZuq6aIXTwqAh5cWr7mPRrqsxc3EYylvn++EnDb2NgDA2TUjrbZix4oJMGHE8z5Tyj4
+ f1VpPCqDQrE7F28zBP+LTJSEduBvIfaOsvfHQEhYQyvwO4DTzPS6dH0J2uYMBIoBEm8aTgnzpab
+ dCupxIYgr+nfJhQaD7qOCvZMS18R3PtVDI9UOhIyN8nvn3S5fGe99rk7CdhKARPf+FZLT3Gtqtf
+ WmDEWlksx18RqNCApWLJSRSpdsvxph3Ix89puES3Gz0ohmZgID4zGYN6Ps2Xc8K7ppDpEjyNezt
+ ca1/cDBTSyCCgNhqoaLbfjnjNLkB9rHbXWLx3dtAMXzaNKTlNlc4B7fXw06TN4ttOHpI8TkBhbH
+ oB+2vBFYBZoX4p6p8wEXODYD+GpnZsr2+v5UAjZi7JVKPrwnMAWM8uMAMb2jfqpQzZY051Zafga
+ DbQLenalDUPkCsDDEso+EWixpp6+b+OyigiBNb7XiPngYwVQBlsGvOK/lvJKMf
+X-Received: by 2002:a05:6000:2207:b0:431:3a5:d9c1 with SMTP id
+ ffacd0b85a97d-4361805500amr5849739f8f.30.1770237672332; 
+ Wed, 04 Feb 2026 12:41:12 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4361805f8c1sm7300776f8f.37.2026.02.04.12.41.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 04 Feb 2026 12:41:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/4] target/i386: Use explicit little-endian LD/ST API
+Date: Wed,  4 Feb 2026 21:41:00 +0100
+Message-ID: <20260204204103.46343-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260204204103.46343-1-philmd@linaro.org>
+References: <20260204204103.46343-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 1/5] qemu/int128: Add int128_signextend()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260203230054.23667-1-philmd@linaro.org>
- <20260203230054.23667-2-philmd@linaro.org>
- <45d7fb96-f2de-4d67-8069-b545e210947b@linaro.org>
- <db38246e-091b-4bb8-84a0-fc50b02e21d3@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <db38246e-091b-4bb8-84a0-fc50b02e21d3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,24 +102,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 04:35, Philippe Mathieu-Daudé wrote:
-> On 4/2/26 02:47, Richard Henderson wrote:
->> On 2/4/26 09:00, Philippe Mathieu-Daudé wrote:
->>> Add a method to sign-extend a Int128, along with unit tests.
->>
->> What in the world does this mean?
->>
->> I can't imagine a real use for this:
->>
->>> +static inline Int128 int128_signextend(Int128 a)
->>> +{
->>> +    return a.hi ? a : int128_exts64(a.lo);
->>> +}
-> 
-> Should we ignore MO_SIGN in do_ld16_mmu() in the
-> next patch then?
+The x86 architecture uses little endianness. Directly use
+the little-endian LD/ST API.
 
-Well, since the next patch is broken... yes.
+Mechanical change running:
 
-r~
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' target/i386/);
+    done
+
+Coding style adapted manually.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/i386/helper.c                 | 12 ++++++------
+ target/i386/tcg/system/misc_helper.c | 16 ++++++++--------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index f9f9488eb4d..c397a6fde5a 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -669,7 +669,7 @@ uint32_t x86_lduw_phys(CPUState *cs, hwaddr addr)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    return address_space_lduw(as, addr, attrs, NULL);
++    return address_space_lduw_le(as, addr, attrs, NULL);
+ }
+ 
+ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
+@@ -679,7 +679,7 @@ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    return address_space_ldl(as, addr, attrs, NULL);
++    return address_space_ldl_le(as, addr, attrs, NULL);
+ }
+ 
+ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
+@@ -689,7 +689,7 @@ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    return address_space_ldq(as, addr, attrs, NULL);
++    return address_space_ldq_le(as, addr, attrs, NULL);
+ }
+ 
+ void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val)
+@@ -709,7 +709,7 @@ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    address_space_stw(as, addr, val, attrs, NULL);
++    address_space_stw_le(as, addr, val, attrs, NULL);
+ }
+ 
+ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
+@@ -719,7 +719,7 @@ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    address_space_stl(as, addr, val, attrs, NULL);
++    address_space_stl_le(as, addr, val, attrs, NULL);
+ }
+ 
+ void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val)
+@@ -729,6 +729,6 @@ void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val)
+     MemTxAttrs attrs = cpu_get_mem_attrs(env);
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+-    address_space_stq(as, addr, val, attrs, NULL);
++    address_space_stq_le(as, addr, val, attrs, NULL);
+ }
+ #endif
+diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
+index 0c32424d36a..bb79d4e470e 100644
+--- a/target/i386/tcg/system/misc_helper.c
++++ b/target/i386/tcg/system/misc_helper.c
+@@ -42,26 +42,26 @@ target_ulong helper_inb(CPUX86State *env, uint32_t port)
+ 
+ void helper_outw(CPUX86State *env, uint32_t port, uint32_t data)
+ {
+-    address_space_stw(&address_space_io, port, data,
+-                      cpu_get_mem_attrs(env), NULL);
++    address_space_stw_le(&address_space_io, port, data,
++                         cpu_get_mem_attrs(env), NULL);
+ }
+ 
+ target_ulong helper_inw(CPUX86State *env, uint32_t port)
+ {
+-    return address_space_lduw(&address_space_io, port,
+-                              cpu_get_mem_attrs(env), NULL);
++    return address_space_lduw_le(&address_space_io, port,
++                                 cpu_get_mem_attrs(env), NULL);
+ }
+ 
+ void helper_outl(CPUX86State *env, uint32_t port, uint32_t data)
+ {
+-    address_space_stl(&address_space_io, port, data,
+-                      cpu_get_mem_attrs(env), NULL);
++    address_space_stl_le(&address_space_io, port, data,
++                         cpu_get_mem_attrs(env), NULL);
+ }
+ 
+ target_ulong helper_inl(CPUX86State *env, uint32_t port)
+ {
+-    return address_space_ldl(&address_space_io, port,
+-                             cpu_get_mem_attrs(env), NULL);
++    return address_space_ldl_le(&address_space_io, port,
++                                cpu_get_mem_attrs(env), NULL);
+ }
+ 
+ target_ulong helper_read_cr8(CPUX86State *env)
+-- 
+2.52.0
+
 
