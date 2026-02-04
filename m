@@ -4,66 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB05EA7940
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20446EA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnhc7-0004Nw-El; Wed, 04 Feb 2026 13:28:31 -0500
+	id 1vnheL-0006to-Kh; Wed, 04 Feb 2026 13:30:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhc1-000476-4y
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:25 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnheE-0006sW-CU
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:30:43 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbz-00019y-FR
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:24 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso10601995e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:28:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnheB-00036Q-TR
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:30:42 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47ee07570deso924215e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:30:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770229701; x=1770834501; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1qdXoLhrWNktizoOz+xJF/JbA7BLhwaH5pSsoPSydNY=;
- b=WFpX8Xzqyp8kw6q1zLnmNwBVVmEZowyp/9Tt9fUYeIhwAqoPsGk+Bn58S4qhWBPLXZ
- 2pid27w5kFpZl90dlWEKgM3FuuqVQTSXGR41KpNqfvEr0XB7CwVVlmsRdID/kErOLTPo
- NXrKLUR5Fb4PZfRj8S4JciOXfxqEAq8CE3S2pbVdol/NMrC1Br87YJ0q0gHI5lWUZ7QY
- Qq0P8wMH+3MlLtJF/cJgJYxgTUNAc2thJUgCDUDzUYV+ePDOivzZKTolBAaanVDs6peM
- 0BDwFDwukSWrRfulvDhWpizhxHwiKY9j1l0ELZ9vWXy7f1gsUZZ9frQsM9bZrJ+31Ao+
- 9XdQ==
+ d=linaro.org; s=google; t=1770229838; x=1770834638; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jb1F9Vr2vzh6XgXud4z+xI0erfynMFsLEm+U9URSLUQ=;
+ b=ASdizDdn47AapKlhqyqKBjjWzl4q95jOPyR+EgSvf3tHLVA0yOF2V1ByghjAYUu0/m
+ pYR9cn3RzzKdBHZeIQtFlcxMNbltaYaDMaJhpBv+r9zCfcWBp7599Q878x6nyuDtPC9+
+ KorueiECupo48medC7kxbA0wCs9+6O1Z/7cHlMKzD1rOu7GSw07NbqWDUZxI9uhWi11y
+ SZV2C48UduEaJGe4DgPuaDPP02k4ppZUMO4zWQLkEg5TkOxQgAPEhTOJ1oqNKRmdsxPE
+ Rd1V8R+FfFN9yHuhwsT7m58ntfzX42cPhf2dChTi2I8b8mj0STVDTna4tOtmPGekYZYI
+ SZQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770229701; x=1770834501;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1qdXoLhrWNktizoOz+xJF/JbA7BLhwaH5pSsoPSydNY=;
- b=E6aS658lu2evXsqwzTD0SL8FZnGvLcQms1f04ib0kGs0LR3go3LatsMWZGSUr5sICo
- sDU6QrB/uKxXCUe7AGxer9Txztnnn33JcxDXianWi0/E1IpYg371tANLQg89LYu7sfs6
- ULhk3QBl9IiN/dDFIMEoddeH/aH7B1zT24+TYcIrR6F3oQmvZAEv4LahIVaO6fDS74qj
- ObUoM6hAlD/EYE0U7C7+xDO8lJtYfqK3LIGovBSSvUiovqjladHYuEZ05e8oXDs1/Sr9
- 0Cn8ui2MLYdns9ZOCJdj16OjFC5kmzplJGe0w/v82U6tdrvj7NBY/j+s7twc53LjR/0J
- uL9A==
-X-Gm-Message-State: AOJu0YzlalrnSutSWbiHvJ6KpmVXt8OfD6h0417OToCw7MK9Oj2IvPA1
- yKt8lNBeE5Bax0uq8yP/RseIC6PVkRNIwddi3mxuQB7MAdCve/1lcequHOqPzsl9uP0sm6tzXEv
- j8JcE1L8=
-X-Gm-Gg: AZuq6aLDPYJAcz9Rj/3/vOqyI0pkoI3MFRqeXJsYddR6q6f8KYUJAxOGZWblbrZPnCq
- pts+7KPTCoMwDvWQVnYCQBkStCfUBhv/IsbWtfmx2jF9oN9C/CNGFe6ailIY3qNV0wdqMFkbN5y
- qksL0V9HFvjbhDjPpL+0cHkonYwv8bxXW/5ORMBcWPXfL4VUC2MxpwwtIFf/P5FKCO9ex6Z++Va
- ZCp886etCa2KqnCzEf8N/DBUfJS52zHsWPB6E43nYGIWuEaFyg1UJie8lZXWzk5mJVowa4nvJFI
- BZU0EuLnLHaJoss9ryf5xt+BGaYIqBNHaPIxATPdAArVd/m4/BLca4RMoYFKyjYTroyWdGkwqRR
- to9xEkmWjY+rXfyZAOBqFktj2BdSIGY/Kx56zoN7ftBHuOfo34tK+h95mIoa8FBEEzb2ZaN6+AH
- 7Oa0NOzer1db2Gf3GQ+XymrJMrqVyuoau8VlvLhmJB+Ya2r1jIExbpfVoAJ8ic
-X-Received: by 2002:a05:600c:5619:b0:477:a71c:d200 with SMTP id
- 5b1f17b1804b1-4831791784bmr2497235e9.11.1770229701593; 
- Wed, 04 Feb 2026 10:28:21 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1770229838; x=1770834638;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jb1F9Vr2vzh6XgXud4z+xI0erfynMFsLEm+U9URSLUQ=;
+ b=H2Um4/k6CoOaOl9YphVgm0DVpoFhSXNqO+lEJj/Vi8LGXZCwSHmBZrayoRsoFLH8HJ
+ 8NSu2RfFu21BEKSQUVlUoqewpYAbS10U8l+BexVM7TLHiTESrjt00P0c5WmzF9QtFr83
+ ZVHt8DMSeaGVeoje6LdGG+63Le25micX5TO8PLrtmhQqpuYRGR8id55TpVhSBJRsqSH2
+ 1ba4tGiE95tMFmicg8wEuRyK8eS6xbEqYqXMBxvLS0703uDOeFTuMPN9AA5VvuonaosW
+ mbpOVJjTiCw96ZM1Ub9yEpXTCd25SZ4NE+zA+DXxJpS57qWjSkeuAaXLlk6Sd6iZ7IR4
+ mflA==
+X-Gm-Message-State: AOJu0YzZ5sadmguCKPEt9E6CRL8QslcfzFTUqPRaPV17pHDphi90Boe2
+ EbsaJNs7ETArzJnvYChew0WjqS2k6nQmZcBfjG8JCOVbcY+tpIV7CvCLansRVfm2+FZfDf6i83Y
+ eAXJU82s=
+X-Gm-Gg: AZuq6aIlat4Hbi5eK1UktVYbWKvZK5GDLfXU+FzIfmHTYL6UnkzbACfYD4zltsUcERq
+ r5ZchUn+DmWfUoWt0pYqE+XoiYaKu1ahISmkx2w4v9siGAWO0c+ild0jM3vC2d4/9Y/5rO3gPWd
+ V5rk8KZR8d0KacqTcg7cVPzmks7r3/HYb70eWb4c6OAjRyK5PVw/Z0xer/0GRthViLi+QeUj46j
+ iLyfsoHPyVxlBqm1GV9qVfhYxkGIYWYsqHjQR3WK6BKyOl8dC+xFEJxJFuT53DxBaYuuzua0ht+
+ P4cwDWFTjfTlrsuIeQJZFvpIC31UlDDZ0V9nBNvgkwDIIM0GexuCWcDPPkLcD9Ty80LIvJffpw6
+ rwQcQoZglj5I+6v6+5Xjn3BE9MWTjsJzoufgOoKOzhOkWFZ2hpAR7oF60M7SMPQ9zYrl3kGPLDH
+ r1iC7AHiNc9QC872q/Z4fcYsDxk2PkxY7mnUi8T06tz/MQ2FoKetEEaA==
+X-Received: by 2002:a05:600c:3143:b0:477:a978:3a7b with SMTP id
+ 5b1f17b1804b1-4830e987c76mr60392235e9.22.1770229837677; 
+ Wed, 04 Feb 2026 10:30:37 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d4d030sm3049545e9.13.2026.02.04.10.28.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Feb 2026 10:28:21 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ 5b1f17b1804b1-48317d20319sm4249475e9.2.2026.02.04.10.30.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Feb 2026 10:30:37 -0800 (PST)
+Message-ID: <8535c348-4eaf-4085-aa7e-c7219f8693cc@linaro.org>
+Date: Wed, 4 Feb 2026 19:30:36 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 9/9] target/s390x: Expand TCGv type as 64-bit target
+Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
@@ -72,19 +78,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 8/9] target/s390x: Expand TCGv type as 64-bit target
-Date: Wed,  4 Feb 2026 19:27:21 +0100
-Message-ID: <20260204182722.44062-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260204182722.44062-1-philmd@linaro.org>
+ Ilya Leoshkevich <iii@linux.ibm.com>
 References: <20260204182722.44062-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20260204182722.44062-10-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260204182722.44062-10-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,41 +109,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The s390x target is a 64-bit one, so TCGv expands to TCGv_i64.
-Use the latter which is already used about a hundred times in
-this file, and is also more explicit.
+On 4/2/26 19:27, Philippe Mathieu-Daudé wrote:
+> The s390x target is a 64-bit one, so we have these expansions
+> in the "tcg/tcg-op.h" header:
+> 
+>   . tcg_gen_qemu_ld_tl() -> tcg_gen_qemu_ld_i64()
+>   . tcg_gen_qemu_st_tl() -> tcg_gen_qemu_st_i64()
+> 
+> Use the expanded form which is more explicit when a target
+> isn't built for different words size.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/tcg/translate.c | 54 ++++++++++++++++++------------------
+>   1 file changed, 27 insertions(+), 27 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/s390x/tcg/translate.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Argh, $Subject ought to be:
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 540c5a569c0..437f5a4aeb7 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -3142,7 +3142,7 @@ static DisasJumpType op_mov2(DisasContext *s, DisasOps *o)
- static DisasJumpType op_mov2e(DisasContext *s, DisasOps *o)
- {
-     int b2 = get_field(s, b2);
--    TCGv ar1 = tcg_temp_new_i64();
-+    TCGv_i64 ar1 = tcg_temp_new_i64();
-     int r1 = get_field(s, r1);
- 
-     o->out = o->in2;
-@@ -5743,9 +5743,9 @@ static void in2_a2(DisasContext *s, DisasOps *o)
- }
- #define SPEC_in2_a2 0
- 
--static TCGv gen_ri2(DisasContext *s)
-+static TCGv_i64 gen_ri2(DisasContext *s)
- {
--    TCGv ri2 = NULL;
-+    TCGv_i64 ri2 = NULL;
-     bool is_imm;
-     int imm;
- 
--- 
-2.52.0
+   "target/s390x: Expand tcg_gen_qemu_ld/st_tl() as 64-bit target"
 
 
