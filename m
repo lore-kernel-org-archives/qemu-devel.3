@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C5E1EA7940
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB05EA7940
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnhbq-0003Q4-Ar; Wed, 04 Feb 2026 13:28:14 -0500
+	id 1vnhc7-0004Nw-El; Wed, 04 Feb 2026 13:28:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbp-0003LH-5r
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:13 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhc1-000476-4y
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:25 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbn-00017w-KL
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:12 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-432d2c7a8b9so137316f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:28:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnhbz-00019y-FR
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:28:24 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso10601995e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:28:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770229690; x=1770834490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770229701; x=1770834501; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xOcVEoIy22xT6BELs0cJqqzemyJ5KqwhxzuTFdiT2QI=;
- b=R2rU2gYP8TGxLTCgY880ki8sE4gN5UgKT6oHIwU6E8AjY+ln/vC5vhdU0vTYKGesB0
- 9u2sJZLOPQNnTPPeGVto6HAP2AW2ULlEDsrYlGs0tWWcm8jFLNGryx8i4+DZ+zwPlO/u
- lwr11bA7ntH/upJn6c8u09zIQMe2jpCQbb75mFLyn4sWgfej6vu9dcedo/NizvkXCVFL
- yLW2CPE7n0WLv64Ru/u5fn1xtZGcMijg2RCIGxlac0hAV5mLDWcuvUjZG7aW2vGOASDX
- jus6h4KQiZ5+Dm2pMq8SJc/m0LIArM16q/rOB1MxghBZ849kBXrCbAKFxtyXKWqvvBrY
- soDg==
+ bh=1qdXoLhrWNktizoOz+xJF/JbA7BLhwaH5pSsoPSydNY=;
+ b=WFpX8Xzqyp8kw6q1zLnmNwBVVmEZowyp/9Tt9fUYeIhwAqoPsGk+Bn58S4qhWBPLXZ
+ 2pid27w5kFpZl90dlWEKgM3FuuqVQTSXGR41KpNqfvEr0XB7CwVVlmsRdID/kErOLTPo
+ NXrKLUR5Fb4PZfRj8S4JciOXfxqEAq8CE3S2pbVdol/NMrC1Br87YJ0q0gHI5lWUZ7QY
+ Qq0P8wMH+3MlLtJF/cJgJYxgTUNAc2thJUgCDUDzUYV+ePDOivzZKTolBAaanVDs6peM
+ 0BDwFDwukSWrRfulvDhWpizhxHwiKY9j1l0ELZ9vWXy7f1gsUZZ9frQsM9bZrJ+31Ao+
+ 9XdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770229690; x=1770834490;
+ d=1e100.net; s=20230601; t=1770229701; x=1770834501;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xOcVEoIy22xT6BELs0cJqqzemyJ5KqwhxzuTFdiT2QI=;
- b=PUiCeTwP/4F+Sa4qalo0PtnMn2ytgkPHOPcfjdGO0kcXJ5bZKSMbGXt41J1ztFS6Zl
- XtRsnPAuSjP9Hwdved69QAbrFPyMDy1IZB8CM+fH873/Jc3+9hF84p8ezA99oCPCgkZ3
- isZiQ6uH6RThm0RL8OH7if37fVDogsb+PGTi0+yShUYhEbIxPDN4Kdm/n6Vx8rBic3A6
- XjIDz87kLyyXZSvtH2xsQ19VqkfievZKLF1Ze2tavlvkf05ZnAuFPLdL4qaOjAsbfGUU
- EXIyXq7Iw2CVww2OImyggBVqos16284s8AizdUbAmfgM2HrrmL3otF6jgis4hzG4eKSA
- hr+w==
-X-Gm-Message-State: AOJu0Yz9I32xPqhmExL12hdpJZQvjJrG1a4KoHtMCH5eDXghFLq0ACgO
- 7VppttvgMUuODuuTWUl1H5sPCTtjGAHRTmCpzZEkD4wKRJc1SYC4tbiOXAa6fT2h8yNmz14gABU
- 5aREQzqU=
-X-Gm-Gg: AZuq6aKQPBuDpG8Q9eNMxutZ7GQjeb91FtyUMXhLQ/0JcVADqiC6fabpPIUB/GYg/hS
- X+PggXWTfAKGnP8kofaDA2zlbnSDo5g817N1X77mRoJX+HbXvriLn3CpUCXZXIzrSt18WXGLAMY
- 3piqOIPcYE+dX3SqXaRZz77u8JXdXSm7IMzipHy4yWdSB4q5TyjIpfPqXyL5rOLLIjDRDs0OnrC
- D0Rw7ca0+XjW4ssuPYbJMVkhwGPbI4ThOXJhjvfVvEji/S4LsTj7bPxM7+k+PzFPujq6y+NutOw
- FxD/qNtweTEwkDMRsv1NmhQ4Cps7RZPmHAyuKuhDYF1PM3sGksfbd/ujKcMZz9j6FmDewixWegm
- qPmp+2R9K31qp3bXsRQXjfANWqoTrDtPKlY/tOiMWCqSH5zf33/+g+jlu+waoewWpvPFv3UERET
- J5FeJp7Fie0mtsCHwuEwlb0UrbIs2px0pnRY6TEdAznW/jg1rEUIKOJ/OAdFEP
-X-Received: by 2002:a05:6000:184d:b0:435:a3c5:a528 with SMTP id
- ffacd0b85a97d-43618056b5amr6034532f8f.39.1770229687513; 
- Wed, 04 Feb 2026 10:28:07 -0800 (PST)
+ bh=1qdXoLhrWNktizoOz+xJF/JbA7BLhwaH5pSsoPSydNY=;
+ b=E6aS658lu2evXsqwzTD0SL8FZnGvLcQms1f04ib0kGs0LR3go3LatsMWZGSUr5sICo
+ sDU6QrB/uKxXCUe7AGxer9Txztnnn33JcxDXianWi0/E1IpYg371tANLQg89LYu7sfs6
+ ULhk3QBl9IiN/dDFIMEoddeH/aH7B1zT24+TYcIrR6F3oQmvZAEv4LahIVaO6fDS74qj
+ ObUoM6hAlD/EYE0U7C7+xDO8lJtYfqK3LIGovBSSvUiovqjladHYuEZ05e8oXDs1/Sr9
+ 0Cn8ui2MLYdns9ZOCJdj16OjFC5kmzplJGe0w/v82U6tdrvj7NBY/j+s7twc53LjR/0J
+ uL9A==
+X-Gm-Message-State: AOJu0YzlalrnSutSWbiHvJ6KpmVXt8OfD6h0417OToCw7MK9Oj2IvPA1
+ yKt8lNBeE5Bax0uq8yP/RseIC6PVkRNIwddi3mxuQB7MAdCve/1lcequHOqPzsl9uP0sm6tzXEv
+ j8JcE1L8=
+X-Gm-Gg: AZuq6aLDPYJAcz9Rj/3/vOqyI0pkoI3MFRqeXJsYddR6q6f8KYUJAxOGZWblbrZPnCq
+ pts+7KPTCoMwDvWQVnYCQBkStCfUBhv/IsbWtfmx2jF9oN9C/CNGFe6ailIY3qNV0wdqMFkbN5y
+ qksL0V9HFvjbhDjPpL+0cHkonYwv8bxXW/5ORMBcWPXfL4VUC2MxpwwtIFf/P5FKCO9ex6Z++Va
+ ZCp886etCa2KqnCzEf8N/DBUfJS52zHsWPB6E43nYGIWuEaFyg1UJie8lZXWzk5mJVowa4nvJFI
+ BZU0EuLnLHaJoss9ryf5xt+BGaYIqBNHaPIxATPdAArVd/m4/BLca4RMoYFKyjYTroyWdGkwqRR
+ to9xEkmWjY+rXfyZAOBqFktj2BdSIGY/Kx56zoN7ftBHuOfo34tK+h95mIoa8FBEEzb2ZaN6+AH
+ 7Oa0NOzer1db2Gf3GQ+XymrJMrqVyuoau8VlvLhmJB+Ya2r1jIExbpfVoAJ8ic
+X-Received: by 2002:a05:600c:5619:b0:477:a71c:d200 with SMTP id
+ 5b1f17b1804b1-4831791784bmr2497235e9.11.1770229701593; 
+ Wed, 04 Feb 2026 10:28:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e38fbbsm8667302f8f.13.2026.02.04.10.28.06
+ 5b1f17b1804b1-48317d4d030sm3049545e9.13.2026.02.04.10.28.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Feb 2026 10:28:06 -0800 (PST)
+ Wed, 04 Feb 2026 10:28:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -74,17 +74,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 6/9] target/s390x: Add more unreachable KVM stubs
-Date: Wed,  4 Feb 2026 19:27:19 +0100
-Message-ID: <20260204182722.44062-7-philmd@linaro.org>
+Subject: [PATCH v2 8/9] target/s390x: Expand TCGv type as 64-bit target
+Date: Wed,  4 Feb 2026 19:27:21 +0100
+Message-ID: <20260204182722.44062-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260204182722.44062-1-philmd@linaro.org>
 References: <20260204182722.44062-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,109 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next patch will move s390x system objects from the target
-specific source set to the common one. Unfortunately the
-kvm_enabled() macro won't be evaluable at built-time
-anymore. Add stubs for KVM symbols unreachable at runtime.
+The s390x target is a 64-bit one, so TCGv expands to TCGv_i64.
+Use the latter which is already used about a hundred times in
+this file, and is also more explicit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/kvm/stubs.c | 76 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 75 insertions(+), 1 deletion(-)
+ target/s390x/tcg/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/s390x/kvm/stubs.c b/target/s390x/kvm/stubs.c
-index 046e1f922b7..196127baa51 100644
---- a/target/s390x/kvm/stubs.c
-+++ b/target/s390x/kvm/stubs.c
-@@ -4,8 +4,9 @@
- 
- #include "qemu/osdep.h"
- 
--#include "kvm_s390x.h"
-+#include "target/s390x/kvm/kvm_s390x.h"
- #include "target/s390x/kvm/pv.h"
-+#include "target/s390x/cpu_models.h"
- 
- int kvm_s390_get_protected_dump(void)
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 540c5a569c0..437f5a4aeb7 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -3142,7 +3142,7 @@ static DisasJumpType op_mov2(DisasContext *s, DisasOps *o)
+ static DisasJumpType op_mov2e(DisasContext *s, DisasOps *o)
  {
-@@ -104,3 +105,76 @@ int kvm_s390_dump_completion_data(void *buff)
- {
-     return 0;
+     int b2 = get_field(s, b2);
+-    TCGv ar1 = tcg_temp_new_i64();
++    TCGv_i64 ar1 = tcg_temp_new_i64();
+     int r1 = get_field(s, r1);
+ 
+     o->out = o->in2;
+@@ -5743,9 +5743,9 @@ static void in2_a2(DisasContext *s, DisasOps *o)
  }
-+
-+bool kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_access_exception(S390CPU *cpu, uint16_t code, uint64_t te_code)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_mem_op(S390CPU *cpu, vaddr addr, uint8_t ar, void *hostbuf,
-+                    int len, bool is_write)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_mem_op_pv(S390CPU *cpu, vaddr addr, void *hostbuf, int len,
-+                       bool is_write)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_set_cpu_state(S390CPU *cpu, uint8_t cpu_state)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_vcpu_interrupt_pre_save(S390CPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_vcpu_interrupt_post_load(S390CPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_get_hpage_1m(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_enable_css_support(S390CPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_assign_subch_ioeventfd(EventNotifier *notifier, uint32_t sch,
-+                                    int vq, bool assign)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_cmma_reset(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_crypto_reset(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_s390_set_diag318(CPUState *cs, uint64_t diag318_info)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_s390_topology_set_mtcr(uint64_t attr)
-+{
-+    g_assert_not_reached();
-+}
+ #define SPEC_in2_a2 0
+ 
+-static TCGv gen_ri2(DisasContext *s)
++static TCGv_i64 gen_ri2(DisasContext *s)
+ {
+-    TCGv ri2 = NULL;
++    TCGv_i64 ri2 = NULL;
+     bool is_imm;
+     int imm;
+ 
 -- 
 2.52.0
 
