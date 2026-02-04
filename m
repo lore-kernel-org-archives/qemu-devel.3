@@ -4,76 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DBAE9539D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF854E9539C
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncqZ-0003Sr-9A; Wed, 04 Feb 2026 08:23:07 -0500
+	id 1vncqL-0003KS-NA; Wed, 04 Feb 2026 08:22:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vncqP-0003Lu-R1
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:22:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vncqN-000338-V4
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:22:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770211374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A/g6KjAiQZk+xb8sc5e1aTQWLKu0s6V9lTsUfrosO08=;
- b=VC50RNZz0ltBZNc992c1jB9sY6mVLlnwfwJOGYHis4rI/N4KVYYPAoz+99daZqG8sNruJt
- cMg8bCXVPFX6/0cjg8ODsc/j+uJlDnG1ssjmIB63Edj2tPk0RAu14KA7oaVI2WrE/fW15q
- O99qVQyGSFP4qVys8qmzopnKWwlYyak=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-25zX8RY5NqSWyND7qZWcRg-1; Wed,
- 04 Feb 2026 08:22:52 -0500
-X-MC-Unique: 25zX8RY5NqSWyND7qZWcRg-1
-X-Mimecast-MFC-AGG-ID: 25zX8RY5NqSWyND7qZWcRg_1770211371
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCAF219560B2; Wed,  4 Feb 2026 13:22:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7849118003F6; Wed,  4 Feb 2026 13:22:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 02C5321E692D; Wed, 04 Feb 2026 14:22:49 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: <qemu-devel@nongnu.org>,  Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>,  Eric Blake <eblake@redhat.com>,  Markus
- Armbruster <armbru@redhat.com>,  Peter Xu <peterx@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
- PRE_COPY_P2P transition
-In-Reply-To: <20260202173406.13979-1-avihaih@nvidia.com> (Avihai Horon's
- message of "Mon, 2 Feb 2026 19:34:06 +0200")
-References: <20260202173406.13979-1-avihaih@nvidia.com>
-Date: Wed, 04 Feb 2026 14:22:48 +0100
-Message-ID: <87jywswslz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1vncqH-0003IM-8j; Wed, 04 Feb 2026 08:22:50 -0500
+Received: from mail.avm.de ([2001:bf0:244:244::120])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1vncqE-00030z-AP; Wed, 04 Feb 2026 08:22:48 -0500
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.55.0)
+ (envelope-from <c.speich@avm.de>)
+ id 6983481e-cb91-7f0000032729-7f000001d8e8-1
+ for <multiple-recipients>; Wed, 04 Feb 2026 14:22:38 +0100
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Wed,  4 Feb 2026 14:22:38 +0100 (CET)
+Received: from [127.0.1.1] ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2026020414223964-15148 ;
+ Wed, 4 Feb 2026 14:22:39 +0100 
+Date: Wed, 04 Feb 2026 14:22:25 +0100
+Subject: [PATCH v3 1/6] hw/sd: Switch read/write primitive to buf+len
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260204-sdcard-performance-b4-v3-1-dc1cf172ee57@avm.de>
+References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
+In-Reply-To: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
+ <bmeng.cn@gmail.com>, qemu-block@nongnu.org, Christian Speich
+ <c.speich@avm.de>
+X-Mailer: b4 0.14.2
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 04.02.2026 14:22:39,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 04.02.2026 14:22:39, Serialize complete at 04.02.2026 14:22:39
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-purgate-ID: 149429::1770211358-B8E7371A-5E025E8A/0/0
+X-purgate-type: clean
+X-purgate-size: 10788
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=2001:bf0:244:244::120;
+ envelope-from=c.speich@avm.de; helo=mail.avm.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,76 +74,320 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Christian Speich <c.speich@avm.de>
+From:  Christian Speich via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avihai Horon <avihaih@nvidia.com> writes:
+Currently, read/writes are broken down into individual bytes which result
+in many function calls. This is quite bad for performance and since both
+the layer below and above work with larger buffers, it should be
+corrected.
 
-> The VFIO_MIGRATION event notifies users when a VFIO device transitions
-> to a new state.
->
-> One use case for this event is to prevent timeouts for RDMA connections
-> to the migrated device. In this case, an external management application
-> (not libvirt) consumes the events and disables the RDMA timeout
-> mechanism when receiving the event for PRE_COPY_P2P state, which
-> indicates that the device is non-responsive.
->
-> This is essential because RDMA connections typically have very low
-> timeouts (tens of milliseconds), which can be far below migration
-> downtime.
->
-> However, under heavy resource utilization, the device transition to
-> PRE_COPY_P2P can take hundreds of milliseconds to complete. Since the
-> VFIO_MIGRATION event is currently sent only after the transition
-> completes, it arrives too late, after RDMA connections have already
-> timed out.
->
-> To address this, send an additional "prepare" event immediately before
-> initiating the PRE_COPY_P2P transition. This guarantees timely event
-> delivery regardless of how long the actual state transition takes.
->
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+This patch is the first that switches the corresponding interface over to
+use a buf+len instead of a single byte. However, for most cases the
+implementation still only reads one byte and is then called again with
+the remaining buffer.
 
-[...]
+Optimizations taking advantage of this new interface are to follow in the
+next commits.
 
-> diff --git a/qapi/vfio.json b/qapi/vfio.json
-> index a1a9c5b673..17b6046871 100644
-> --- a/qapi/vfio.json
-> +++ b/qapi/vfio.json
-> @@ -11,7 +11,13 @@
->  ##
->  # @QapiVfioMigrationState:
->  #
-> -# An enumeration of the VFIO device migration states.
-> +# An enumeration of the VFIO device migration states.  In addition to
-> +# the regular states, there are prepare states (with 'prepare' suffix)
-> +# which indicate that the device is just about to transition to the
-> +# corresponding state.  Note that seeing a prepare state for state X
-> +# doesn't guarantee that the next state will be X, as the state
-> +# transition can fail and the device may transition to a different
-> +# state instead.
->  #
->  # @stop: The device is stopped.
->  #
-> @@ -32,11 +38,14 @@
->  #     tracking its internal state and its internal state is available
->  #     for reading.
->  #
-> +# @pre-copy-p2p-prepare: The device is just about to move to
-> +#     pre-copy-p2p state.  (since 11.0)
-> +#
->  # Since: 9.1
->  ##
->  { 'enum': 'QapiVfioMigrationState',
->    'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
-> -            'pre-copy', 'pre-copy-p2p' ] }
-> +            'pre-copy', 'pre-copy-p2p', 'pre-copy-p2p-prepare' ] }
->  
->  ##
->  # @VFIO_MIGRATION:
+Signed-off-by: Christian Speich <c.speich@avm.de>
+---
+ hw/sd/core.c       | 26 ++++++++++++++---------
+ hw/sd/sd.c         | 62 +++++++++++++++++++++++++++++++++++-------------------
+ include/hw/sd/sd.h | 22 +++++++++++++------
+ 3 files changed, 71 insertions(+), 39 deletions(-)
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/hw/sd/core.c b/hw/sd/core.c
+index 3568a81e809fe107cfd0b5cc33b8b5761b11ce04..594c5e011ba30940a33799f9032c92494ee0ca19 100644
+--- a/hw/sd/core.c
++++ b/hw/sd/core.c
+@@ -113,21 +113,24 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+-        sc->write_byte(card, value);
++        sc->write_data(card, &value, 1);
+     }
+ }
+ 
+ void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
+ {
+     SDState *card = get_card(sdbus);
+-    const uint8_t *data = buf;
+ 
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+-        for (size_t i = 0; i < length; i++) {
+-            trace_sdbus_write(sdbus_name(sdbus), data[i]);
+-            sc->write_byte(card, data[i]);
++        while (length > 0) {
++            size_t written = sc->write_data(card, buf, length);
++
++            g_assert(written >= 1);
++
++            buf += written;
++            length -= written;
+         }
+     }
+ }
+@@ -140,7 +143,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+-        value = sc->read_byte(card);
++        sc->read_data(card, &value, 1);
+     }
+     trace_sdbus_read(sdbus_name(sdbus), value);
+ 
+@@ -150,14 +153,17 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
+ void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
+ {
+     SDState *card = get_card(sdbus);
+-    uint8_t *data = buf;
+ 
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+-        for (size_t i = 0; i < length; i++) {
+-            data[i] = sc->read_byte(card);
+-            trace_sdbus_read(sdbus_name(sdbus), data[i]);
++        while (length > 0) {
++            size_t read = sc->read_data(card, buf, length);
++
++            g_assert(read >= 1);
++
++            buf += read;
++            length -= read;
+         }
+     }
+ }
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 37f6e0702b0bce85915ef727ba1ec05f02f9c32c..135113add29b5ee3cb11d9d535355eba8f6cb3f7 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2638,30 +2638,37 @@ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
+     return false;
+ }
+ 
+-static void sd_write_byte(SDState *sd, uint8_t value)
++static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ {
+     unsigned int partition_access;
+     int i;
++    const uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+-        return;
++        return length;
+     }
+ 
+     if (sd->state != sd_receivingdata_state) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: not in Receiving-Data state\n", __func__);
+-        return;
++        return length;
+     }
+ 
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+-        return;
++        return length;
++
++    /*
++     * Only read one byte at a time. We will be called again with the
++     * remaining.
++     */
++    length = 1;
+ 
+     trace_sdcard_write_data(sd->proto->name,
+                             sd->last_cmd_name,
+-                            sd->current_cmd, sd->data_offset, value);
++                            sd->current_cmd, sd->data_offset, value[0]);
+     switch (sd->current_cmd) {
+     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
+-        if (sd_generic_write_byte(sd, value)) {
++        if (sd_generic_write_byte(sd, value[0])) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             sd_blk_write(sd, sd->data_start, sd->data_offset);
+@@ -2686,7 +2693,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+                 }
+             }
+         }
+-        sd->data[sd->data_offset++] = value;
++        sd->data[sd->data_offset++] = value[0];
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+@@ -2716,7 +2723,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 26:  /* CMD26:  PROGRAM_CID */
+-        if (sd_generic_write_byte(sd, value)) {
++        if (sd_generic_write_byte(sd, value[0])) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             for (i = 0; i < sizeof(sd->cid); i ++)
+@@ -2734,7 +2741,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 27:  /* CMD27:  PROGRAM_CSD */
+-        if (sd_generic_write_byte(sd, value)) {
++        if (sd_generic_write_byte(sd, value[0])) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             for (i = 0; i < sizeof(sd->csd); i ++)
+@@ -2757,7 +2764,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 42:  /* CMD42:  LOCK_UNLOCK */
+-        if (sd_generic_write_byte(sd, value)) {
++        if (sd_generic_write_byte(sd, value[0])) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             sd_lock_command(sd);
+@@ -2767,36 +2774,47 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 56:  /* CMD56:  GEN_CMD */
+-        sd_generic_write_byte(sd, value);
++        sd_generic_write_byte(sd, value[0]);
+         break;
+ 
+     default:
+         g_assert_not_reached();
+     }
++
++    return length;
+ }
+ 
+-static uint8_t sd_read_byte(SDState *sd)
++static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+ {
+     /* TODO: Append CRCs */
+     const uint8_t dummy_byte = 0x00;
+     unsigned int partition_access;
+-    uint8_t ret;
+     uint32_t io_len;
++    uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+-        return dummy_byte;
++        memset(buf, dummy_byte, length);
++        return length;
+     }
+ 
+     if (sd->state != sd_sendingdata_state) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: not in Sending-Data state\n", __func__);
+-        return dummy_byte;
++        memset(buf, dummy_byte, length);
++        return length;
+     }
+ 
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION)) {
+-        return dummy_byte;
++        memset(buf, dummy_byte, length);
++        return length;
+     }
+ 
++    /*
++     * We will only read one byte at a time. We will be called again with the
++     * remaining buffer.
++     */
++    length = 1;
++
+     io_len = sd_blk_len(sd);
+ 
+     trace_sdcard_read_data(sd->proto->name,
+@@ -2814,7 +2832,7 @@ static uint8_t sd_read_byte(SDState *sd)
+     case 30: /* CMD30:  SEND_WRITE_PROT */
+     case 51: /* ACMD51: SEND_SCR */
+     case 56: /* CMD56:  GEN_CMD */
+-        sd_generic_read_byte(sd, &ret);
++        sd_generic_read_byte(sd, value);
+         break;
+ 
+     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
+@@ -2831,7 +2849,7 @@ static uint8_t sd_read_byte(SDState *sd)
+                 sd_blk_read(sd, sd->data_start, io_len);
+             }
+         }
+-        ret = sd->data[sd->data_offset ++];
++        *value = sd->data[sd->data_offset++];
+ 
+         if (sd->data_offset >= io_len) {
+             sd->data_start += io_len;
+@@ -2850,10 +2868,10 @@ static uint8_t sd_read_byte(SDState *sd)
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: DAT read illegal for command %s\n",
+                                        __func__, sd->last_cmd_name);
+-        return dummy_byte;
++        *value = dummy_byte;
+     }
+ 
+-    return ret;
++    return length;
+ }
+ 
+ static bool sd_receive_ready(SDState *sd)
+@@ -3173,8 +3191,8 @@ static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
+     sc->get_dat_lines = sd_get_dat_lines;
+     sc->get_cmd_line = sd_get_cmd_line;
+     sc->do_command = sd_do_command;
+-    sc->write_byte = sd_write_byte;
+-    sc->read_byte = sd_read_byte;
++    sc->write_data = sd_write_data;
++    sc->read_data = sd_read_data;
+     sc->receive_ready = sd_receive_ready;
+     sc->data_ready = sd_data_ready;
+     sc->get_inserted = sd_get_inserted;
+diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+index d12f24955a5ba3c1ba9ab851d75992e830c00608..2162fb584020110bcdaa7a92c2a05b6cfc041d2f 100644
+--- a/include/hw/sd/sd.h
++++ b/include/hw/sd/sd.h
+@@ -107,22 +107,30 @@ struct SDCardClass {
+     size_t (*do_command)(SDState *sd, SDRequest *req,
+                          uint8_t *resp, size_t respsz);
+     /**
+-     * Write a byte to a SD card.
++     * Write data to a SD card.
+      * @sd: card
+-     * @value: byte to write
++     * @value: data to write
++     * @len: length of data
+      *
+-     * Write a byte on the data lines of a SD card.
++     * Write data on the data lines of a SD card. May write not all data, in
++     * which case it should be called again. At least one byte must be consumed.
++     *
++     * Return: number of bytes actually written. >= 1
+      */
+-    void (*write_byte)(SDState *sd, uint8_t value);
++    size_t (*write_data)(SDState *sd, const void *buf, size_t len);
+     /**
+      * Read a byte from a SD card.
+      * @sd: card
++     * @buf: buffer to receive the data
++     * @len: size of data to read
+      *
+-     * Read a byte from the data lines of a SD card.
++     * Read data from the data lines of a SD card. This may not read all
++     * requested data, in this case it should be called again with the remaining
++     * buffer. At least one byte must be read.
+      *
+-     * Return: byte value read
++     * Return: number of bytes actually read. >= 1
+      */
+-    uint8_t (*read_byte)(SDState *sd);
++    size_t (*read_data)(SDState *sd, void* buf, size_t len);
+     bool (*receive_ready)(SDState *sd);
+     bool (*data_ready)(SDState *sd);
+     void (*set_voltage)(SDState *sd, uint16_t millivolts);
 
-[...]
+-- 
+2.43.0
 
 
