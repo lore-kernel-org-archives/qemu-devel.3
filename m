@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D07E9D40D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D429E9D410
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vng1i-0007Nc-Mz; Wed, 04 Feb 2026 11:46:52 -0500
+	id 1vng1R-00078e-T9; Wed, 04 Feb 2026 11:46:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng1E-00071r-26
+ id 1vng1D-00071n-VA
  for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:22 -0500
 Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng18-0004XL-Mh
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:18 -0500
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
- by mailfout.stl.internal (Postfix) with ESMTP id B6AD91D0016A;
- Wed,  4 Feb 2026 11:46:13 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-07.internal (MEProxy); Wed, 04 Feb 2026 11:46:13 -0500
+ id 1vng19-0004Xd-D4
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:19 -0500
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id 51B141D0013D;
+ Wed,  4 Feb 2026 11:46:14 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Wed, 04 Feb 2026 11:46:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770223573; x=
- 1770309973; bh=VdUP9zFdBAQ8o9L25psVF4bIDfcLY4zJ+o4E5zyHfsI=; b=k
- NeOaXRj3L4xVAeLR+Ckudqch1IqeemKL1XnBe84XjI5/zPRYTtapW6lSPzd+pX1j
- AxWmPjMekqBlL+Kiohsk4r1EblxaKsKoMFiwLtvDRabbQFVYuPhlgjD3G0GW9haz
- n6qnC4p1IoSMjXSPuM24pIsNjgTwPS5hMRF11enfDfzplZ22Tvcs3Y9uvE1MF5UI
- fcXmV8gWe88w6seDLrTbtPtV9E4ZIEpGbgViTLa+ZMK9MlIf+0VjUKD3Yh+bHAwn
- xWoY8L7tJZs8WXzk3I+DY9u969GgaIHz9xzb5mx6fsvkdRiZtVp/3iLTjUPNaQmT
- GZgGzb+0dfxVN4OuzJpZQ==
+ :reply-to:subject:subject:to:to; s=fm2; t=1770223574; x=
+ 1770309974; bh=8E8EO5MFzU7EGJqwB1/3+1ke6zNnVRVKaQSUNKQX0jQ=; b=K
+ GH7ugJQcwY9J8nIENFJ5iwybn44HY7e3IvFEA9w2Q+RAb42iN3cTPMjRGupbVSDK
+ OmgWxGKir41vouPjpgdEbxvt0crvdqz94HBuVMAEg5aUrXLdzE47RQHltKd6BaKA
+ dOE2lCQ4T9DfY2plaQP/08u+KEAYfaz8TMJEVy0MYDYxvQe5de+6gqHQC96BQxdt
+ 1t+qJxqZGk8QM/e8OMcUVlhYw0E26VrTOdQIc8ZLt2hvj4qz9H1+rp2W/vLuNoeu
+ hw7nFYEgXJ8KGkpfLyhuL14n5XsdciCXWPYHI83W3NCbbVj0cwtC8OQ2lri3Kj6d
+ dOHtqxBi0/AsxapYsqQ3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770223573; x=1770309973; bh=V
- dUP9zFdBAQ8o9L25psVF4bIDfcLY4zJ+o4E5zyHfsI=; b=W0DFBAFl53ZN/UPz2
- jupO8oCfT09isQVn+Qh6BA5/9cbeDVy7fniRZ3oMo+2l9WicWCAf1qflBxyV9yAr
- 3Dz0HwlnifbiCuBgXxyb43f2yPabDvnX2FYtcnd7UoBT5sMIMsxf5AFN9Xe860ju
- +GtFhVrUlF+CzF5AoFm9RBGztRX8OyPp5UZmliovdPMABMzNeroI2eH3GbKaN4KK
- gI+fs/rLKS2mo9XhbDt28xr6RuGfrl76hwQ8g/xSUvUT0Z6yKxPBS+u/ZxV2dLlS
- 679l1rPNil9bRgVJRta0AiZuofM+icdHHrCX4Y/jvb/yRRHnokqwqChNMSfPjbiI
- Jt8aQ==
-X-ME-Sender: <xms:1XeDacHVL5Jf5lEfAej0e3jcqbrTNcLw5RMkVia6f2Dhs5DCIzjr7Q>
- <xme:1XeDacxgJ1Zkp2j-f3pEPQs5n-BAKGqhFedLdfVRGAqx2YYZ_Mi7kJryTtrJsR3bK
- mzoR5kFy6hj_CVZ7pIJjW1Fkmcbh9JHu2w2GipZOq0Lv8wITmsAl3I>
-X-ME-Received: <xmr:1XeDaTiHSWgCGTlF7L6IFmk71klWWJ4_AzupRaIa7erkYeP73dEi55_87RY3>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1770223574; x=1770309974; bh=8
+ E8EO5MFzU7EGJqwB1/3+1ke6zNnVRVKaQSUNKQX0jQ=; b=seNyV5rUPdO0CXAsf
+ SZEEamWohTxbGEvXL8zBglDkLGA38klAYIMhbd9vRvobriNx4S3+qb8LDrZez58X
+ 98BjZ8y6ft96Qx9ZDUM3D0UMTMr8niW/zbBUB7nFFKXEP99hnFiW4KrfXNMstnBb
+ 8cY7/i9Xm4d0LMcnyln70nHUxtlcV75lDI/CmK4dmbOIC5coYnch8PldjiMWfKGR
+ +Tk4646NCVz/0f16WN8SOpR2sQg8hI1M/wrwUaMvJH30LxD2vHdlAM1vqb7GS95S
+ fI7nXW6B+Y+Z24hHIfwrWhLiYO2fzSjIoBEPud4C11vKo/0eAtLntueQtx84G1sj
+ SRCYg==
+X-ME-Sender: <xms:1neDaXch5d13bFTR2k-y7UY_YJUJjsSqlkVsBwMItR6iqmQkj2YRwg>
+ <xme:1neDaUohJhQzzLe7DQRxStTJhgKlpuf1Bs9GamjG2aOvcI2TsqESTeBBQ8s7-nCQ7
+ P3WRtIdINttSThx5_lZLYDE8IJ1wMYn6SyEW0rTzXrSL7bVHSlPIQ>
+X-ME-Received: <xmr:1neDad6w2uZfKCidqi7fRIfCAbVPQYqEfjVPQ1MrJXyIzVsVMqE2sxreAQzX>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleeiucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
@@ -61,28 +61,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleeiucetufdote
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
  uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
- gthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehqvghmuhdquggvvhgv
- lhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:1XeDaXxmNZfldr73JGB4DKDTWBobWlkxxu5d4T0Vyo-6q25JgTAB-Q>
- <xmx:1XeDaWKGgcg8RguKXJlow1dG-igyOeVBqg3gF8L2QAfdP1ki4OiNfQ>
- <xmx:1XeDaeTEy6bAxVgU4TyFLWnLm15arOZ18nFSwjv9hes9PNsTfBw6KQ>
- <xmx:1XeDaeq2qr8s8FVpzfO_kATeuJxgvLXM4ncSnuLpjBlURRyF6sF8zg>
- <xmx:1XeDaScw_GMxiZEfuIGD_Op2Sxs3Bj6G627uhXCQz_q316SwAAC3I8hm>
+ thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
+ htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehj
+ rggslhhonhhskhhirdighiii
+X-ME-Proxy: <xmx:1neDaSpGdz_00yO3zvwjcHxrZygyjD18wS36VUje06yoCAPki28dqw>
+ <xmx:1neDaXgX7LMpsPMAHTBiXKTmufabMGMTUsZEPSNmH9ftarvaZezXGA>
+ <xmx:1neDaUJPzXX0Frd4RonGdhyQotrhij1Jzb7t8AtMIoCUvDdjzTQtXw>
+ <xmx:1neDafAUS1grzJRG5j-0BJAGqoxecer_dE6hLDZSMF7zv_r0pyLzPA>
+ <xmx:1neDabX77MKqu3rjkKe3igGKz0tuuDV2o10c74uLrjbmHvoJuFDYjuld>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
  4 Feb 2026 11:46:13 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 718914d3;
+ by chomposaur (OpenSMTPD) with ESMTPA id 31db66e4;
  Wed, 4 Feb 2026 16:46:08 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v8 10/18] ati-vga: Use local variables for register values in
- ati_2d_blt
-Date: Wed,  4 Feb 2026 11:45:58 -0500
-Message-ID: <20260204164606.3425246-11-chad@jablonski.xyz>
+Subject: [PATCH v8 12/18] ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
+Date: Wed,  4 Feb 2026 11:46:00 -0500
+Message-ID: <20260204164606.3425246-13-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260204164606.3425246-1-chad@jablonski.xyz>
 References: <20260204164606.3425246-1-chad@jablonski.xyz>
@@ -114,218 +113,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ati_2d_blt uses a mixture of locals and direct register access of needed
-state. This assigns all values derived from register state to local
-variables. It prepares the function for a larger refactor that removes
-the dependency on the full device and direct register access entirely.
+setup_2d_blt_ctx is responsible for knowing how to retrieve the state
+needed by ati_2d_blt from the registers and assigning it to the ATI2DCtx.
+This will be useful in a future patch when HOST_DATA needs to make small
+modifications to the ctx.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati_2d.c | 97 ++++++++++++++++++++++++---------------------
- 1 file changed, 52 insertions(+), 45 deletions(-)
+ hw/display/ati_2d.c | 75 ++++++++++++++++++++++++---------------------
+ 1 file changed, 40 insertions(+), 35 deletions(-)
 
 diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index e8b9bf5f70..618aedc3da 100644
+index 4154202677..cf80296a25 100644
 --- a/hw/display/ati_2d.c
 +++ b/hw/display/ati_2d.c
-@@ -65,10 +65,20 @@ void ati_2d_blt(ATIVGAState *s)
+@@ -25,7 +25,7 @@
+  * possible.
+  */
+ 
+-static int ati_bpp_from_datatype(ATIVGAState *s)
++static int ati_bpp_from_datatype(const ATIVGAState *s)
  {
-     /* FIXME it is probably more complex than this and may need to be */
-     /* rewritten but for now as a start just to get some output: */
--    unsigned dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
--                      s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
--    unsigned dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
--                      s->regs.dst_y : s->regs.dst_y + 1 - s->regs.dst_height);
+     switch (s->regs.dp_datatype & 0xf) {
+     case 2:
+@@ -80,76 +80,81 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+     }
+ }
+ 
+-void ati_2d_blt(ATIVGAState *s)
++static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+ {
+-    /* FIXME it is probably more complex than this and may need to be */
+-    /* rewritten but for now as a start just to get some output: */
+-    bool use_pixman_fill = s->use_pixman & BIT(0);
+-    bool use_pixman_blt = s->use_pixman & BIT(1);
+-    ATI2DCtx ctx_;
+-    ATI2DCtx *ctx = &ctx_;
++    ctx->bpp = ati_bpp_from_datatype(s);
+     ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
+     ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
+     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
+     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
+     ctx->palette = s->vga.palette;
+     ctx->dst_offset = s->regs.dst_offset;
++    ctx->vram_end = s->vga.vram_ptr + s->vga.vram_size;
++
+     ctx->dst.width = s->regs.dst_width;
+     ctx->dst.height = s->regs.dst_height;
+     ctx->dst.x = (ctx->left_to_right ?
+                  s->regs.dst_x : s->regs.dst_x + 1 - ctx->dst.width);
+     ctx->dst.y = (ctx->top_to_bottom ?
+                  s->regs.dst_y : s->regs.dst_y + 1 - ctx->dst.height);
+-    ctx->bpp = ati_bpp_from_datatype(s);
++    ctx->dst_stride = s->regs.dst_pitch;
++    ctx->dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        ctx->dst_bits += s->regs.crtc_offset & 0x07ffffff;
++        ctx->dst_stride *= ctx->bpp;
++    }
++
++    ctx->src.x = (ctx->left_to_right ?
++                 s->regs.src_x : s->regs.src_x + 1 - ctx->dst.width);
++    ctx->src.y = (ctx->top_to_bottom ?
++                 s->regs.src_y : s->regs.src_y + 1 - ctx->dst.height);
++    ctx->src_stride = s->regs.src_pitch;
++    ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        ctx->src_bits += s->regs.crtc_offset & 0x07ffffff;
++        ctx->src_stride *= ctx->bpp;
++    }
++    DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
++            s->regs.src_offset, s->regs.dst_offset, s->regs.default_offset,
++            ctx->src_stride, ctx->dst_stride, s->regs.default_pitch,
++            ctx->src.x, ctx->src.y, ctx->dst.x, ctx->dst.y,
++            ctx->dst.width, ctx->dst.height,
++            (ctx->left_to_right ? '>' : '<'),
++            (ctx->top_to_bottom ? 'v' : '^'));
++}
++
++void ati_2d_blt(ATIVGAState *s)
++{
++    /* FIXME it is probably more complex than this and may need to be */
++    /* rewritten but for now as a start just to get some output: */
 +    bool use_pixman_fill = s->use_pixman & BIT(0);
 +    bool use_pixman_blt = s->use_pixman & BIT(1);
-+    int rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
-+    bool left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
-+    bool top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-+    uint32_t frgd_clr = s->regs.dp_brush_frgd_clr;
-+    uint8_t *palette = s->vga.palette;
-+    unsigned dst_offset = s->regs.dst_offset;
-+    unsigned dst_width = s->regs.dst_width;
-+    unsigned dst_height = s->regs.dst_height;
-+    unsigned dst_x = (left_to_right ?
-+                     s->regs.dst_x : s->regs.dst_x + 1 - dst_width);
-+    unsigned dst_y = (top_to_bottom ?
-+                     s->regs.dst_y : s->regs.dst_y + 1 - dst_height);
-     int bpp = ati_bpp_from_datatype(s);
-     if (!bpp) {
++    ATI2DCtx ctx_;
++    ATI2DCtx *ctx = &ctx_;
++    setup_2d_blt_ctx(s, ctx);
+     if (!ctx->bpp) {
          qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-@@ -79,7 +89,7 @@ void ati_2d_blt(ATIVGAState *s)
+         return;
+     }
+-    ctx->dst_stride = s->regs.dst_pitch;
+     if (!ctx->dst_stride) {
          qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
          return;
      }
--    uint8_t *dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
-+    uint8_t *dst_bits = s->vga.vram_ptr + dst_offset;
- 
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-         dst_bits += s->regs.crtc_offset & 0x07ffffff;
-@@ -88,26 +98,25 @@ void ati_2d_blt(ATIVGAState *s)
-     int dst_stride_words = dst_stride / sizeof(uint32_t);
-     uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
-     if (dst_x > 0x3fff || dst_y > 0x3fff || dst_bits >= end
--        || dst_bits + dst_x
--         + (dst_y + s->regs.dst_height) * dst_stride >= end) {
-+        || dst_bits + dst_x + (dst_y + dst_height) * dst_stride >= end) {
+-    ctx->dst_bits = s->vga.vram_ptr + ctx->dst_offset;
+-
+-    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-        ctx->dst_bits += s->regs.crtc_offset & 0x07ffffff;
+-        ctx->dst_stride *= ctx->bpp;
+-    }
+     int dst_stride_words = ctx->dst_stride / sizeof(uint32_t);
+-    ctx->vram_end = s->vga.vram_ptr + s->vga.vram_size;
+     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff
+         || ctx->dst_bits >= ctx->vram_end || ctx->dst_bits + ctx->dst.x
+          + (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= ctx->vram_end) {
          qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
          return;
      }
-     DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
--            s->regs.src_offset, s->regs.dst_offset, s->regs.default_offset,
--            s->regs.src_pitch, s->regs.dst_pitch, s->regs.default_pitch,
-+            s->regs.src_offset, dst_offset, s->regs.default_offset,
-+            s->regs.src_pitch, dst_stride, s->regs.default_pitch,
-             s->regs.src_x, s->regs.src_y, dst_x, dst_y,
--            s->regs.dst_width, s->regs.dst_height,
--            (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ? '>' : '<'),
--            (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ? 'v' : '^'));
--    switch (s->regs.dp_mix & GMC_ROP3_MASK) {
-+            dst_width, dst_height,
-+            (left_to_right ? '>' : '<'),
-+            (top_to_bottom ? 'v' : '^'));
-+    switch (rop3) {
+-    DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
+-            s->regs.src_offset, ctx->dst_offset, s->regs.default_offset,
+-            ctx->src_stride, ctx->dst_stride, s->regs.default_pitch,
+-            ctx->src.x, ctx->src.y, ctx->dst.x, ctx->dst.y,
+-            ctx->dst.width, ctx->dst.height,
+-            (ctx->left_to_right ? '>' : '<'),
+-            (ctx->top_to_bottom ? 'v' : '^'));
+     switch (ctx->rop3) {
      case ROP3_SRCCOPY:
      {
          bool fallback = false;
--        unsigned src_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
--                       s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
--        unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
--                       s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
-+        unsigned src_x = (left_to_right ?
-+                         s->regs.src_x : s->regs.src_x + 1 - dst_width);
-+        unsigned src_y = (top_to_bottom ?
-+                         s->regs.src_y : s->regs.src_y + 1 - dst_height);
-         int src_stride = s->regs.src_pitch;
-         if (!src_stride) {
+-        ctx->src.x = (ctx->left_to_right ?
+-                     s->regs.src_x : s->regs.src_x + 1 - ctx->dst.width);
+-        ctx->src.y = (ctx->top_to_bottom ?
+-                     s->regs.src_y : s->regs.src_y + 1 - ctx->dst.height);
+-        ctx->src_stride = s->regs.src_pitch;
+         if (!ctx->src_stride) {
              qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-@@ -122,7 +131,7 @@ void ati_2d_blt(ATIVGAState *s)
-         int src_stride_words = src_stride / sizeof(uint32_t);
-         if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
-             || src_bits + src_x
--             + (src_y + s->regs.dst_height) * src_stride >= end) {
-+             + (src_y + dst_height) * src_stride >= end) {
-             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
              return;
          }
-@@ -130,30 +139,28 @@ void ati_2d_blt(ATIVGAState *s)
-         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
-                 src_bits, dst_bits, src_stride_words, dst_stride_words,
-                 bpp, bpp, src_x, src_y, dst_x, dst_y,
--                s->regs.dst_width, s->regs.dst_height);
-+                dst_width, dst_height);
- #ifdef CONFIG_PIXMAN
--        if ((s->use_pixman & BIT(1)) &&
--            s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT &&
--            s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-+        if (use_pixman_blt && left_to_right && top_to_bottom) {
-             fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst_bits,
-                                    src_stride_words, dst_stride_words, bpp, bpp,
-                                    src_x, src_y, dst_x, dst_y,
--                                   s->regs.dst_width, s->regs.dst_height);
--        } else if (s->use_pixman & BIT(1)) {
-+                                   dst_width, dst_height);
-+        } else if (use_pixman_blt) {
-             /* FIXME: We only really need a temporary if src and dst overlap */
--            int llb = s->regs.dst_width * (bpp / 8);
-+            int llb = dst_width * (bpp / 8);
-             int tmp_stride = DIV_ROUND_UP(llb, sizeof(uint32_t));
-             uint32_t *tmp = g_malloc(tmp_stride * sizeof(uint32_t) *
--                                     s->regs.dst_height);
-+                                     dst_height);
-             fallback = !pixman_blt((uint32_t *)src_bits, tmp,
-                                    src_stride_words, tmp_stride, bpp, bpp,
-                                    src_x, src_y, 0, 0,
--                                   s->regs.dst_width, s->regs.dst_height);
-+                                   dst_width, dst_height);
-             if (!fallback) {
-                 fallback = !pixman_blt(tmp, (uint32_t *)dst_bits,
-                                        tmp_stride, dst_stride_words, bpp, bpp,
-                                        0, 0, dst_x, dst_y,
--                                       s->regs.dst_width, s->regs.dst_height);
-+                                       dst_width, dst_height);
-             }
-             g_free(tmp);
-         } else
-@@ -163,17 +170,17 @@ void ati_2d_blt(ATIVGAState *s)
-         }
-         if (fallback) {
-             unsigned int y, i, j, bypp = bpp / 8;
--            for (y = 0; y < s->regs.dst_height; y++) {
-+            for (y = 0; y < dst_height; y++) {
-                 i = dst_x * bypp;
-                 j = src_x * bypp;
--                if (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-+                if (top_to_bottom) {
-                     i += (dst_y + y) * dst_stride;
-                     j += (src_y + y) * src_stride;
-                 } else {
--                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_stride;
--                    j += (src_y + s->regs.dst_height - 1 - y) * src_stride;
-+                    i += (dst_y + dst_height - 1 - y) * dst_stride;
-+                    j += (src_y + dst_height - 1 - y) * src_stride;
-                 }
--                memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
-+                memmove(&dst_bits[i], &src_bits[j], dst_width * bypp);
-             }
-         }
-         break;
-@@ -184,34 +191,34 @@ void ati_2d_blt(ATIVGAState *s)
-     {
-         uint32_t filler = 0;
- 
--        switch (s->regs.dp_mix & GMC_ROP3_MASK) {
-+        switch (rop3) {
-         case ROP3_PATCOPY:
--            filler = s->regs.dp_brush_frgd_clr;
-+            filler = frgd_clr;
-             break;
-         case ROP3_BLACKNESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(s->vga.palette[0],
--                     s->vga.palette[1], s->vga.palette[2]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[0], palette[1],
-+                                                   palette[2]);
-             break;
-         case ROP3_WHITENESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(s->vga.palette[3],
--                     s->vga.palette[4], s->vga.palette[5]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[3], palette[4],
-+                                                   palette[5]);
-             break;
-         }
- 
-         DPRINTF("pixman_fill(%p, %d, %d, %d, %d, %d, %d, %x)\n",
-                 dst_bits, dst_stride_words, bpp, dst_x, dst_y,
--                s->regs.dst_width, s->regs.dst_height, filler);
-+                dst_width, dst_height, filler);
- #ifdef CONFIG_PIXMAN
--        if (!(s->use_pixman & BIT(0)) ||
-+        if (!use_pixman_fill ||
-             !pixman_fill((uint32_t *)dst_bits, dst_stride_words, bpp, dst_x,
--                         dst_y, s->regs.dst_width, s->regs.dst_height, filler))
-+                         dst_y, dst_width, dst_height, filler))
- #endif
-         {
-             /* fallback when pixman failed or we don't want to call it */
-             unsigned int x, y, i, bypp = bpp / 8;
--            for (y = 0; y < s->regs.dst_height; y++) {
-+            for (y = 0; y < dst_height; y++) {
-                 i = dst_x * bypp + (dst_y + y) * dst_stride;
--                for (x = 0; x < s->regs.dst_width; x++, i += bypp) {
-+                for (x = 0; x < dst_width; x++, i += bypp) {
-                     stn_he_p(&dst_bits[i], bypp, filler);
-                 }
-             }
-@@ -220,7 +227,7 @@ void ati_2d_blt(ATIVGAState *s)
-     }
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unimplemented ati_2d blt op %x\n",
--                      (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-+                      rop3 >> 16);
-         return;
-     }
- 
+-        ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
+-
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            ctx->src_bits += s->regs.crtc_offset & 0x07ffffff;
+-            ctx->src_stride *= ctx->bpp;
+-        }
+         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
+         if (ctx->src.x > 0x3fff || ctx->src.y > 0x3fff
+             || ctx->src_bits >= ctx->vram_end
 -- 
 2.52.0
 
