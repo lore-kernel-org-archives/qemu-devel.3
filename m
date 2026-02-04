@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A246FEA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE9CEA7941
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAU-000849-VZ; Wed, 04 Feb 2026 14:04:03 -0500
+	id 1vniDO-000766-MS; Wed, 04 Feb 2026 14:07:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAJ-0007WN-QL
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:52 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vniDN-00075m-5T
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:07:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAH-0007uc-Sm
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vniDL-0000LQ-PF
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:07:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231829;
+ s=mimecast20190719; t=1770232018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
- b=YCf/BWIoElUWtMwnmdg9i3xcs3h5dS0riL/SYG/6AQi5i9P1T7tEoliNMYIVhmltiEzLa6
- jCyxHiAzy9sxvj47/7nDUFduz0qFcxf/+trb/TpCM8KUJifpw3P2rTin0ifkS3XYQHZduK
- nVuxmcfxCbqVcm6Yo9P8ks8pwoQ/wso=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NAz5ifMyVqO/4MketkO+Niw88qfNwYYGxKO0zM7InWE=;
+ b=A4Oc1KOX+pxMMs4O0iKEmsnsPohFFjOqUnb1UL9MlR8NHuxEUlR8KH8eLqI6DB6mPZ4rF+
+ fNKO0QpvtnwsyfjDqSekiFEKUKoN5bOe0NUx9AOU5SV9gqYamRC8JD355TgcVRvlG2dz8T
+ XELK35vwlbNwe3qDeb5Dq6FiCq3vrtU=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28--qxdtjUqOCKEuWHiyj18fQ-1; Wed, 04 Feb 2026 14:03:47 -0500
-X-MC-Unique: -qxdtjUqOCKEuWHiyj18fQ-1
-X-Mimecast-MFC-AGG-ID: -qxdtjUqOCKEuWHiyj18fQ_1770231827
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-436164e7f42so188258f8f.3
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:47 -0800 (PST)
+ us-mta-320-WINxiCw1OiWTWdG-vUoOgQ-1; Wed, 04 Feb 2026 14:06:57 -0500
+X-MC-Unique: WINxiCw1OiWTWdG-vUoOgQ-1
+X-Mimecast-MFC-AGG-ID: WINxiCw1OiWTWdG-vUoOgQ_1770232017
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-89467edcd21so11425746d6.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:06:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231826; x=1770836626; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770232017; x=1770836817; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
- b=sUio0CruBpA1z13Su8LVckuFGDdyWxtWq+45MnOwD3ykZjua6MLba9g5A9w+IsyWqt
- JklCMV6XYLHrS0sDIoG6ZL0JzxD5a7vi3zA6XpZ5ziIKAwUzKJKeYYtk3A0fG7QXdUSe
- +cExfHEHN/mQ2lm5WdgqSeVtvvOG+BChuMFR94BIDreIz2HPfcMFZVzsZXrqkY3R1Huw
- EfItmcn/nn6toGu3OyMBtoRPGj+XJ27rGhgIRcFp/Tpb+yHCcXYu9o5nM32PShNhndaK
- lZBjj4P+FMLDzQ4SGb6zP1jW4bUwDIW3+sMn95LmxZ5v0Rlwm8FPy9kUsGw9/YWhRYhp
- Zk4Q==
+ bh=NAz5ifMyVqO/4MketkO+Niw88qfNwYYGxKO0zM7InWE=;
+ b=kL8Qgv64Oq6/dlCv8FHVkHN5/qXsmEIGF4sdSRvESNQ09+kia1bu5qAuz8wiWMP+Fc
+ 0yszW77uy0xRXCKvTfrIyEyiXdBbJfd8Dx+mENYZS9o35C3GIrtWDMnoR1Cx/k/YUDPB
+ hgfGKVNTD96mRWQ3h72C4kPVTUhbmIDa/xiXvwvp7sBQHi/JPVWM4EAbw+Zz5zpyr49H
+ CX8kPewfi/VEKaNGp+fXMTR2gvm4rOT5SS6nejCkb6GkCoIuKC+ymdjqMmU+5zokHK8h
+ MRACjQuO16imqkaRzXMfGnGn6coNsVSxCy/zFhIFQABxW7ngUjcVMPl9joz5oaD/RN8N
+ 4MiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231826; x=1770836626;
+ d=1e100.net; s=20230601; t=1770232017; x=1770836817;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
- b=pYY0Uy/1YK40C7xBJQ7YNGIjQ64Je93Y0O1LNtQTSb2z/HmW0hY8rW8Pd1vjd1wcT+
- rMWz0P+RS0iXnSHRcW1VMsVhyxbWWOKOZcHXeNc+agLS79WRtf9282GmLUr0KsNrENX2
- QPZEQXgbxVgXIq8zVbImOqbHKxgQubgAhrlaiPIG4PJVP+D0QreCIXufp+28GK5qUjpy
- H+HFUDp6ktth2fThR0taBTIBwrp2RqsqsC6R5ro+eHdsAp7+brjBzu4zUbSKv6DOItcu
- NBLZcrHkbvEpwYoJqwqEMgnlcS8+Vzi3Fl/zkNDme2OABAjb7uCJ+FYQ0MvR4BM39bmT
- /g0A==
-X-Gm-Message-State: AOJu0YzuHED+4yIhWwit5CWZ/H/f50C1o0P8oAFA6xRs0PRNtzY0NsSe
- iFxC8utUDIkHkv1sfqgn3GlNv6NH2NMtBoEAkRYRttvsi5K7mOU6OeLJ+AFJLxc0jdOrdwHzQcx
- dn2Q7HMKS7T3fm4i62NTipsbUanR3uAgr6sx1JmZ1Bi0fNJX8Spmr+ZU8Bf0UOZYd5jaq3hK8pK
- vltQVNroB0kyv/jzB/11Zhu8Y/tHMwRbZzFA==
-X-Gm-Gg: AZuq6aLjXzNBKrj9h/CbyIQWNK3d59/TfOTdRhdWQ6n+tzDey3ZQQSSDnMGap1f7fab
- 2/ukWtwwPnh02k5PlbBKraOEkskn6LRAQ88GPFMHPi1ohOGj03xy58Hv3WKFW1YLSi1temSvC0Z
- +xKhvVJIQvfY3IXlI8bNxxaA6SxLJFXB3uNFyN++O2ogs8D3DSZfcKfQB6oiBOObhfu7x3BbPmH
- Foro1pOtKHeBnTRrHhbGfoF9hTDJpxrfxYYqHvgO/Y/Xs+16CK+0yEqvVj2SuWFinsBnzutC+nW
- +eaqb0cxeo2ebF2eb8H8kx0Z4EQ8OvumRlUH+UYVdXaoJB144UgZm8RZzv1HiLPhDL9BUvw2WqM
- 5NM/pZUQp+5FsADnxUGutJvrpMeTdwL5S2A==
-X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
- ffacd0b85a97d-436180551e9mr6170079f8f.33.1770231826191; 
- Wed, 04 Feb 2026 11:03:46 -0800 (PST)
-X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
- ffacd0b85a97d-436180551e9mr6170025f8f.33.1770231825628; 
- Wed, 04 Feb 2026 11:03:45 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436180659b8sm7888347f8f.43.2026.02.04.11.03.44
+ bh=NAz5ifMyVqO/4MketkO+Niw88qfNwYYGxKO0zM7InWE=;
+ b=JeNzvVmirJGxg2hyFwQZ5f7sumNa/t1kXAa5SUXQzp2Nd48xM3eOPP5WPuJCLW2BzV
+ O5Hkrd/rkk+HAd6JoRrdP/phKV+pLIpKDryCQuPQotgs6ODB6aJr5cWw/2+LSaaNZHlu
+ CV7/FcwEHeLc10CqZ4uX8PyWItKeEmqZGauufueUyYec/QgSQMawiOVK4a8bKMsdMVvy
+ eE0akWijp0UO+wxARuiM3IhQaka8pBaR2GtON17xYUQqG5LFCxW58MBBYZgjUUDUzUQY
+ +PcRI4H41+PTUHGvRXIClcHArQ/uUqzBHsCqJ29RByV+8XCzF3xm8MPuRGxS/+wk7MfX
+ y3QQ==
+X-Gm-Message-State: AOJu0YxQtlyM2XCa7NRa4RFh8ViH8i60lbDFu68kQ0ZlPn6jdx8P7OvX
+ oZYplOr8DSXw4xESvBOJLc0V1JEiMM0g5MbWBg9Zg0H+DxZTo8L4Rb22gdbpHitVb7VTpxGXcmK
+ nm84T9xBB08qYCxt1d0ih5ogzLLL3tGCVygeoNHOFEYDb4xGXB3luW6kn
+X-Gm-Gg: AZuq6aK6S9OLoNyQCZLH3RR3Lew0ToN2jR5kC/OdMPshvzChutGTDQfnvMvMOLP5Gom
+ wIWDmajO9jTsgm80xFfB2880/GFlv/R//yrlaVqYVLJt/JTZAZEwETXjuCJ6V8yYDQp4NIxYgfA
+ 83hzTkcFNtGRS34OjplTxjAzj8Cvvv7jLoTK8HYMQGduITpwAT6QCgUD+lhgSzcxA/QD+oBmv0G
+ 5VNSywvYnkgG2LscCMgV0gDcAX0s0BYlo84ilSWQIKYL9tT2VTTQPe5dGKBGVtYvesbsw4OoqNC
+ +Dbd2q4RK9L1ZVg+pS0WjyY8xlmlajZzSBqfJfJM1DWT8e+xukTAN0dn2NYTi3nHKJUK/ucZ+E4
+ 17E0=
+X-Received: by 2002:a05:6214:5011:b0:893:348e:4126 with SMTP id
+ 6a1803df08f44-895221c8e2bmr54482286d6.61.1770232016892; 
+ Wed, 04 Feb 2026 11:06:56 -0800 (PST)
+X-Received: by 2002:a05:6214:5011:b0:893:348e:4126 with SMTP id
+ 6a1803df08f44-895221c8e2bmr54481836d6.61.1770232016492; 
+ Wed, 04 Feb 2026 11:06:56 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89521cf89fasm25232416d6.31.2026.02.04.11.06.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:45 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:43 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 24/51] virtio/vhost: don't consider non-MAP_SHARED regions
- public
-Message-ID: <158f8d3bb06f65cac00bccb681fbd145189a1211.1770231744.git.mst@redhat.com>
-References: <cover.1770231744.git.mst@redhat.com>
+ Wed, 04 Feb 2026 11:06:56 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:06:55 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com, berrange@redhat.com
+Subject: Re: [PATCH v2 2/4] tests/functional/migration: Add migrate_vms
+Message-ID: <aYOYz_lprXaICZps@x1.local>
+References: <20260204172332.21367-1-farosas@suse.de>
+ <20260204172332.21367-3-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1770231744.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20260204172332.21367-3-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -121,47 +115,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+On Wed, Feb 04, 2026 at 02:23:30PM -0300, Fabiano Rosas wrote:
+> Add a migration helper to MigrationTest that uses the migrate-incoming
+> QMP commmand and takes the already instantiated VMs. The -incoming
+> 'defer' command line option is preferred way instead of the -incoming
+> URI syntax that's currently used.
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Just having a file descriptor is not enough to consider a memory region
-public. If QEMU didn't map it as MAP_SHARED (in case of share=off), guest
-writes to this region won't be visible to the vhost-user backend, thus
-causing it to read all zeroes or garbage. Make sure we don't pass such
-regions and include that to our definition of what a private region is.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Fixes: 552b25229c ("vhost: Rework memslot filtering and fix "used_memslot" tracking")
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
----
- hw/virtio/vhost.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 31e9704cdc..c6a5928cb1 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -592,11 +592,13 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
-         /*
-          * Some backends (like vhost-user) can only handle memory regions
-          * that have an fd (can be mapped into a different process). Filter
--         * the ones without an fd out, if requested.
--         *
--         * TODO: we might have to limit to MAP_SHARED as well.
-+         * the ones without an fd out, if requested. Also make sure that
-+         * this region is mapped as shared so that the vhost backend can
-+         * observe modifications to this region, otherwise we consider it
-+         * private.
-          */
--        if (memory_region_get_fd(section->mr) < 0 &&
-+        if ((memory_region_get_fd(section->mr) < 0 ||
-+            !qemu_ram_is_shared(section->mr->ram_block)) &&
-             dev->vhost_ops->vhost_backend_no_private_memslots &&
-             dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-             trace_vhost_reject_section(mr->name, 2);
 -- 
-MST
+Peter Xu
 
 
