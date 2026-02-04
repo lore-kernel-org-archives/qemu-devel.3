@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8FEE9537D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 11:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99AB2E9537D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 11:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnaeE-0002YD-Ox; Wed, 04 Feb 2026 06:02:14 -0500
+	id 1vnaev-0003aH-Ta; Wed, 04 Feb 2026 06:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaeC-0002ON-Kt
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:02:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaeu-0003Zk-5m
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:02:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaeB-0003Cy-Ai
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:02:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaes-0003Gg-Rf
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 06:02:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770202930;
+ s=mimecast20190719; t=1770202974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=stYoBmDqpFy0bzLkTHuEeUMZMLbMG6I0YuF8zRTmjmU=;
- b=cMXjbz4HHeV/a+uAQoKOGZMyPUBPsmO6TSinBy7wf5vzXIevD6sZTOL/5qvL4N0xga5r8S
- lWMvlf3Go63s38JQxhLXDz/dTmNbehu781J/ZNu1zdi7kBcujea+8LOI8fZ9vX5dSvLT31
- m4PL4iP8pus2wjue1haLTSSQsUFVxOA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qvcKAZkncLIc+v7K5p5BcoqgrEGB2Yh9ODnVajfUSl0=;
+ b=PJQWt2Wglj4oCusHlDmqHtctYLoagaQPHOZ0i3PZhaGf4wVrfh75aDXzDRmJNGjRUR3W+a
+ KtgTdAPOmzgPrt+HevrL6x9WmPWxs2ovwYP2+RWTdO/1Ru1lZolOYJPqly3OiDTgWtFQSP
+ b7OkJOzw/hzhYXaFQVy9Jjolwm/TtJY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-MT3pW8BxMz-5S862VE-ONA-1; Wed, 04 Feb 2026 06:02:07 -0500
-X-MC-Unique: MT3pW8BxMz-5S862VE-ONA-1
-X-Mimecast-MFC-AGG-ID: MT3pW8BxMz-5S862VE-ONA_1770202926
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48071615686so55481755e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:02:06 -0800 (PST)
+ us-mta-61-o7UmYNgDPh-qEzyE9_p6gw-1; Wed, 04 Feb 2026 06:02:52 -0500
+X-MC-Unique: o7UmYNgDPh-qEzyE9_p6gw-1
+X-Mimecast-MFC-AGG-ID: o7UmYNgDPh-qEzyE9_p6gw_1770202971
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-482d8e6e13aso4069895e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 03:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770202926; x=1770807726; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770202971; x=1770807771; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=stYoBmDqpFy0bzLkTHuEeUMZMLbMG6I0YuF8zRTmjmU=;
- b=tOLqmu+TDi98m/prPBGzRi2G7jtPioc2W9a3Uqdq8D7+ssPrrOp9Pc1OMBVwcr+FtE
- ger0cDuzwpCflyKDnWZK2pZVGa/VRlBx+0sbd7apn3SxleG4BJ7qa1FXJ3mW7+4TpPEc
- bUjwMBe901adJ+NlNeVSAwHDZDh8hRTNAv9uqI15N1cEDv5NuxcEekf4BeaM5+FtsYR5
- c5A/ne6uQKG3qP5kM0L/RqiPfuEZZyQPeaJfXvc72+4hVyvg3AzQ6pxc1BsrhuAHKzjT
- d+eVtw5xHSNmbpldeyUtiWdWLpxiTl6a5ZJHSjbbr23Q5KSORD2C+dd5mAb9GQAg3fmM
- 2W3g==
+ bh=qvcKAZkncLIc+v7K5p5BcoqgrEGB2Yh9ODnVajfUSl0=;
+ b=tzJBdrWFaztXj2/4w7pn89EnCLYIx/GW0JoXKIoQ72jb39wXx6UXNuBH55DThEsxB5
+ e0KpuTi06n6P9mL3WTZ1+VHd/zYfvqs8Mx7F2UwNCG9rHZhmRDlMxCYdYENyrjVZo5oQ
+ DuVdgZfVZ7VqZUL/HcAxd+vs56lj8xTquGXiTIL1jnBVInpud21wCn2Q7+Yq/xeo3dDc
+ eVQRVLAuWqf/Fp+aCs80vT9bQ8THYgXY7zCNUnKzfS9NF/hVVOI3kcBMTd+m7eeR1Fsl
+ rz0/Ye5xOM78WkxqF/52qNsEzbpg0Qiif9UAWP5A067b/KX5vGtONoMu391Z+v7kV97F
+ CR+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770202926; x=1770807726;
+ d=1e100.net; s=20230601; t=1770202971; x=1770807771;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=stYoBmDqpFy0bzLkTHuEeUMZMLbMG6I0YuF8zRTmjmU=;
- b=LscixGsmqcKrnY4srPrYK5OxK28FF8J4c/y0WGLLMNwUKKF+yZEg01sa/8Lyb96Pfv
- i3J+FKLGlSTG0vsG1k4uNM0wNNwYTev2oTBK/3lA6T9yZA6mPQIdNNevQvtAtMfT7Eas
- ZwYKLABkxa8Oyci++aCLUnYdI5wS3D4gUF2bYsQj3JMv6jvFNNEStreX419vCMEKXdxM
- V3jvPuryflhAy+YFNsmE1e9TnCGYzzqzAYWeP/63SEHgELLlVEiNS/v2O/ynEyThGC13
- 07Yw0oHRjuR0XToxR4OuWN6kYjemR9hZiReHHCJVbfT1p26/7WtcM/JH+N4UomAt1t2K
- 86ag==
+ bh=qvcKAZkncLIc+v7K5p5BcoqgrEGB2Yh9ODnVajfUSl0=;
+ b=pB69n8N3SoEse+e1Z9tXQ14Ol+YlL0bOyhlcSrqGUupgy+TRWqkJhg6cV2W1h55Mmk
+ Bby2PEZ22Za45kjyj4ukckZXgjxGuOOgzHqQ8eFAnZ7MfsfTHQNAKCnmSZE7O3S2SeLl
+ XW5SJQG2GpEfwgDD2KiSbCiEllm+lk5r7XIyTx6BYlrfA9aSNRD0H8j2Ym017MA3fPSX
+ yrWOOU6c1HOMrW96+obTECM15ZBoIExOcbGh8BbRdJitAG4NSi4zADkYEPHURVnx7u6p
+ lDINz/bP1hiJHW6sDt8tNC4hRhkAQw/Mu26JABjN65LjvH1yQyDXjUKLNku2RmlmQNYX
+ GkAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+IzpSHaEtwIPQMmvywX7gjOhnTi5mAaOxCyReR/RHrZqv7X6nCt51Zl4w5cxPyMy9SVhkAXXC4Sdt@nongnu.org
-X-Gm-Message-State: AOJu0YxaQ7IbFUPz9qsPwzTE1TnNw0VQdBaoISKJlaWBZ8ubuBXTGcET
- v2fzGNbsCBJpSam22fI5mhxNnkWzy0AYbdxtx7hfslLcvax7urvnGgQ5IIHEqtmW0DHoMlW+YBj
- isVmAor7oA7SPHT2BhUpoUrrvZz/zEFTmFYYFYKqsRDzbkXJLLuIJmM33
-X-Gm-Gg: AZuq6aI3eP4qD3OJhtG1OdWkYoDVtBBRL/kNfshxNXkDMYYKRvp2MD0Yvz6jS8rKg+Y
- CGfrgFJQsusg2dBGN4HSLvcHTKBWioPQBwDSPJXLjlptkTTFBDLHwnON00RLdDgCfNZPTyg2e4J
- 7wOiKKyL1QEIRbI6X6p8mVvcUhNdt9ayfzNAZen0ojvebPzYfSoCbQRw1HoZGcs4m4Vam85kV58
- UjbffG2118WEdT6F2gMw/gkVwAyiVlJB7jS2n7++OxU8ZNxaHBQHl6zLoFFIMCfDeGGjuu/i7eh
- ew68q4c8HBRNlSzZIXAiyST++DP9pURiIdV9cXZZ8QA/EyOq8dsMVrPv1vxnG06x0+Ff7hs9mmH
- RZU1QhtaVNMEfzLilBW9l9YJATkeb4w+Htqzg/SNr9n8yvQSb
-X-Received: by 2002:a05:600c:1c28:b0:477:7925:f7fb with SMTP id
- 5b1f17b1804b1-4830e93203cmr38810225e9.10.1770202925866; 
- Wed, 04 Feb 2026 03:02:05 -0800 (PST)
-X-Received: by 2002:a05:600c:1c28:b0:477:7925:f7fb with SMTP id
- 5b1f17b1804b1-4830e93203cmr38808305e9.10.1770202924171; 
- Wed, 04 Feb 2026 03:02:04 -0800 (PST)
+ AJvYcCUxD8oRwV2WTPbfOhe3m+xgxXFN4VyxpHFPbYVCikJbOKMqe1/a+aiZ1ig9MPzKiuDLIP28RHkAfltK@nongnu.org
+X-Gm-Message-State: AOJu0YwNe3Tfu6ROdfiCBWRuVvcsa40Rgl4NGUBH0ulvNFJCkA+x3YHu
+ lxEZDHtA3uy+QNQmkdAErh/2wEhilP718BI9z77gSiLTeP9UEz2rC//7GdYkWy41jENaQdLzcHm
+ hnVJrhhCYjaQmtE670LJpwKpo/DTPXxynvFcSfhCBcLVe6AZPTzdlijhQ
+X-Gm-Gg: AZuq6aIiKu0wdOa8pPhGM8+C5JNE9TC40Ii8md0RWlMbjhDSvVSgNU93RYIzqIpG+7T
+ IXpkfKdo18ym+Ki5BOqcoT5dzK+lrMia5tjbmk+9qKQIDQeyCqUv5YsYF/Ck6PRmybY2q+yQGMM
+ vwbQXSFAq3Ei+VjOTkHPccapTLYXPyZ+IPybXLrQPp2vZbU1r0ZXZgo44HWSQ3J6EJ0iYKIESkV
+ NlmOtysxRKpNIEfPt2Y8T4dOFCwKGsrpToUDsKfoTZ7hxq55YpleSt/kIBlfVVrIoNYfxtkFwxZ
+ jNZ44KRWTGKnA0nHSIMVwrnNaqo/ymUV52o4S8uxG3M3zMNg0/lK+VjpeAzYcP0hMkRPMLK44d9
+ be9mP5GPW4MVBrYlnUHmntn64nNLoFJAAl729EERKBnQSGl2U
+X-Received: by 2002:a05:600c:3496:b0:480:49ce:42cc with SMTP id
+ 5b1f17b1804b1-4830e93124emr36587325e9.9.1770202971384; 
+ Wed, 04 Feb 2026 03:02:51 -0800 (PST)
+X-Received: by 2002:a05:600c:3496:b0:480:49ce:42cc with SMTP id
+ 5b1f17b1804b1-4830e93124emr36586895e9.9.1770202970909; 
+ Wed, 04 Feb 2026 03:02:50 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4831093650esm53589965e9.15.2026.02.04.03.02.02
+ 5b1f17b1804b1-483109278adsm35298505e9.13.2026.02.04.03.02.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 03:02:03 -0800 (PST)
-Message-ID: <1a656700-8185-4b0f-b90b-795da131e110@redhat.com>
-Date: Wed, 4 Feb 2026 12:02:02 +0100
+ Wed, 04 Feb 2026 03:02:50 -0800 (PST)
+Message-ID: <56522478-b1a5-4f2a-a5f4-a45f6f2e153e@redhat.com>
+Date: Wed, 4 Feb 2026 12:02:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] kvm: replace RamDicardManager by the
- RamBlockAttribute
+Subject: Re: [PATCH 08/10] system/memory: constify section arguments
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Ben Chaney <bchaney@akamai.com>,
@@ -99,7 +98,7 @@ Cc: kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Kanda <mark.kanda@oracle.com>
 References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
- <20260204100708.724800-6-marcandre.lureau@redhat.com>
+ <20260204100708.724800-9-marcandre.lureau@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,10 +144,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260204100708.724800-6-marcandre.lureau@redhat.com>
+In-Reply-To: <20260204100708.724800-9-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -176,29 +175,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/4/26 11:07, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> No need to cast through the RamDiscardManager interface, use the
-> RamBlock already retrieved. Makes it more direct and readable, and allow
-> further refactoring to make RamDiscardManager an aggregator object in
-> the following patches.
+> The sections shouldn't be modified.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   accel/kvm/kvm-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 8301a512e7f..b6a593d0863 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3124,7 +3124,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->       addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
->       rb = qemu_ram_block_from_host(addr, false, &offset);
->   
-> -    ret = ram_block_attributes_state_change(RAM_BLOCK_ATTRIBUTES(mr->rdm),
-> +    ret = ram_block_attributes_state_change(rb->attributes,
->                                               offset, size, to_private);
->       if (ret) {
->           error_report("Failed to notify the listener the state change of "
+>   include/hw/vfio/vfio-container.h     |  2 +-
+>   include/hw/vfio/vfio-cpr.h           |  2 +-
+>   include/system/ram-discard-manager.h | 14 +++++++-------
+>   hw/vfio/cpr-legacy.c                 |  4 ++--
+>   hw/vfio/listener.c                   | 10 +++++-----
+>   hw/virtio/virtio-mem.c               | 10 +++++-----
+>   migration/ram.c                      |  6 +++---
+>   system/memory_mapping.c              |  4 ++--
+>   system/ram-block-attributes.c        |  8 ++++----
+>   system/ram-discard-manager.c         | 10 +++++-----
+>   10 files changed, 35 insertions(+), 35 deletions(-)
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com
