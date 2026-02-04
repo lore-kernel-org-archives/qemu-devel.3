@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0611E95396
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9859CE9539A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncTH-0004JS-HD; Wed, 04 Feb 2026 07:59:03 -0500
+	id 1vncT1-0004DO-Sd; Wed, 04 Feb 2026 07:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vncTF-0004IK-2W; Wed, 04 Feb 2026 07:59:01 -0500
-Received: from mout.kundenserver.de ([217.72.192.73])
+ id 1vncT0-0004Bi-GE; Wed, 04 Feb 2026 07:58:46 -0500
+Received: from mout.kundenserver.de ([212.227.17.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vncTD-0004mN-Gs; Wed, 04 Feb 2026 07:59:00 -0500
+ id 1vncSy-0004l6-Se; Wed, 04 Feb 2026 07:58:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
- s=s1-ionos; t=1770209936; x=1770814736; i=laurent@vivier.eu;
- bh=hhrJ5M/5x5wjTnQpCDgzYnQB6gAro4YmDfJIHh1t6Dg=;
+ s=s1-ionos; t=1770209923; x=1770814723; i=laurent@vivier.eu;
+ bh=F7HrnsKPZPvojr8kLM6lK182TN4yxBA5Tu6qvgS2mlc=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=OAgyxg6HR6CAZGc+TMhfzGt9W0QDondqBvY04veU3+Qs1c5ExLZtrMD4IzKO4ONr
- tYYCSNKupXoZDs4a5zCeZp9VZCdvVh67I4sQSojgAtEZMcoY42qYXY27wEftAF2jl
- jTv3MpPuUU+snikrXNsqQnNuPF0psqV3nf2y7s+8/y15Y5HrxCcySLUzxkL8wd84Z
- UkgKh5gi5gvHQzYzgvmGpLRAIZhc2WCRQ278TO4JJUZrOD3ExJnGw017cewfG50IC
- mZWxH+5E03W0KB6u1vkM9dC4wL8+LcInDbZPdZeV39MBW4hggk9pOCHNpeAte0iOW
- llz3B/okY9vgcqtGhw==
+ b=SB2W+1es37nbZCYq49MtC+8UcDStb10QHBevyAIzS4TAQw7lqG3kifuX4tMuUsir
+ X5eqT4rJFRTDN6NcYVbj+/KaBTdtM4TUV2MimIEXb4I3euVR8m1meuuixUK/AbG+E
+ GzKZThjuazhtxodJhQKg1ffzATG3eWrDClOKPwbyqXMK2NTFmN9IwNH+eKjtKJb2G
+ Y7BcQbysOJmSJCO35assPAmWFuipG8t7tjfyZlEi5aj1om05L9Aljgw1o0qxPB8bh
+ Nd4cYYK4EEkHDjzSaXzhd94g3zLLYOGaZJmdXSCmuz0HX7hlpjwyQUxb+RED3ZNwq
+ IR94KZdbZHNgu9flHw==
 X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue106 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MWBC8-1wK3b80Nfm-00SFqX; Wed, 04 Feb 2026 13:58:56 +0100
-Message-ID: <1ce3095c-977e-4157-bd69-6f8da387946c@vivier.eu>
-Date: Wed, 4 Feb 2026 13:58:55 +0100
+ (mreue107 [213.165.67.119]) with ESMTPSA (Nemesis) id
+ 1MJn4B-1w75II0YNl-00Sl5X; Wed, 04 Feb 2026 13:58:43 +0100
+Message-ID: <d205fec6-6f5e-4c4f-82ad-ffb64d4c8f71@vivier.eu>
+Date: Wed, 4 Feb 2026 13:58:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/usb/core.c: reorder usage and assertion of p->ep
+Subject: Re: [PATCH 2/4] dump/dump.c: reorder usage and assertion of block
 To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
 References: <20260204075754.21078-1-heifetz@yandex-team.com>
- <20260204075754.21078-5-heifetz@yandex-team.com>
+ <20260204075754.21078-3-heifetz@yandex-team.com>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -89,50 +89,49 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20260204075754.21078-5-heifetz@yandex-team.com>
+In-Reply-To: <20260204075754.21078-3-heifetz@yandex-team.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8QcoAJ/rzJDOZY48fWfdUhQqZp8RnSF8zB/xjrm2d5b7zpyDi/g
- tAJx1Gd3NXLOOn2iIviHLMtaOIU1zlPDnTW+Y4YNt9tD57vf6+6ynDxs+AKRngLBDWg5+hm
- XwAdfqVRlz6Ienwgje20XW07mnkP6WWinlE/h0pp4Ubm6aiISQL5Bz16Jsji5Kf8c3iJg8H
- vuED3ciekVWy1MOFwAqQQ==
-UI-OutboundReport: notjunk:1;M01:P0:ezxFrIX18r4=;2Pf+O2eon+mIhLEOrLzEj1yVmGH
- lH3DT5/AtV8MtV29oN31kBfzCUJgm4CI8cAAn1H7Yp8tf0hYh2ez92HOvlJyAdH/B6pttNJ3F
- BA/5+ERtq0hGN521CNQfBRMngqGh8KDWPrQoGL383cSAEvrS2htvX3o/1hGfiIVO2cTnvXjQK
- BXUcWD7vF80xid0y+J6jLBoA+rVZQPQ1/tfsQig3VE5+oycA/rmecFoYLk2pHb+30v4nTwZaA
- RGu3gVGF0rmn2KeQcaIctnjuOSKM9vXv6JaWC/iCadUjkdEiWgj4gkYc17SVWyfWQpR2r3eHY
- F/t0KG43PSG5jj7lJJ7SskJ+Q4zAN6CGUsNtGfa44um74fSeEw4r3i/lJOVcwHnX8VI+ZszKn
- 4FCGWfCvbuyIcByJpIlEci4eRbASXKuC6AYp/rwtxW+esQn7mbO8e2v1UI4QlJBDw6+BGJ967
- VG8Cf3H5OfJy8u5BYBhwjNP9tOkNdhd12mgNVxdyXZxZFDCp7c/tQ35gjZW/saFrubk61sybQ
- e1MupQL8mq4mHyLmSopwIorcfklm3mGnBEReYNviC6xVlC4AXRwWGP7ycnu+Ln9RogLYwHcv1
- eRWuD55/bJCpO+wq8qFFkFUT86npdOqbi26S/in6C3tE8s0uv7nNSzPdThOVFdH8oW4A2VjkI
- uLFknFAFZ/6HreIuwNA229kzbEQZY3r3EGw+9bGM0G6Ycwchv+JnmTfgD+T0Ttu4B0jTjSSxZ
- SXbD/+clATSNstmntk/W0kAbjvh+OtSzYPs9Oxe/ReVpqlAYrIMdp84umvZIdnt0ybWN0J18W
- IehwyzYnZix72VA/HCrH9iMvh1nxf/Hz9g7V4Ll81TbWi3SOqVv5gNncGNMUPKLKyOsH9LPyX
- bwVk9pWvIUDVLxOYaqRGnR6g/MXd+RhvoP1VPBbrhGiePL5tTt79w0lVnoW5xH3Vvfpl9KAS2
- fXi8WNZ5d82193xP0l1oxpYBp2jvb7smqNGUVfWN1tu5GqRDTD0/fHoTxiwITZXBX/bI3iB1G
- vTpSuE+ULd3OgJR6aB0EDgxeXse4r4DnmBBHwJutQaHGbMpEx8VQQLvFK22qVoT9nOQdzjlyo
- nc4MOcReRHlKMhk5/p9GtnpSWTDope+VHWRGxEbRxjIH4E+2kard+NA8ZPnh0FDbj8RLCDfZP
- dat1bTn1k8hMFZYP9mMe1fWVB5zgqr0kc9I24XMy+sGZhIsGh4dwXzPVUNYk+xm7sk1/7Qn8Q
- ftVVnkZ5fC2OZ38tBjg+88VYxPz4cxmxrjO3Upvb3f2QMPOF9Wq9ctw1cs0zT7CfTTpPDCd75
- 7+jZ86Aq1K5/xAcQJXYEKlntAjC1ukRHNi4D9oSQVnpbovzF1G4qO8ygd6+JdhSmpof2gWn89
- RYWhfwvMSdM9FnuR5B8ES3oSPujn3/qpEzEfLenSmHbbBezThGJ38zy56kw47HemBC5xGX9lF
- 2R9reoSIp+r1VjSOFjVh6oZfJ+y3u6qkItzqyT+cljywZ2gSogF0j+GY9aWQmmPbdofDcu5co
- xso42pkDTm+TcvbmHrZmSqt+PIsuOu5YkSrBpHy0jf+nVFaedh+RNiyMzqu16YBKlc0aC/il2
- NWeODVr7gdFv+LfEaq8QZ9ktIfpv6VNV2OlNh+S+BgLPFQLhLSb5IZf3iBVq6qnDPV5aVj5RO
- c31lDYSnF1B9Hvd1zSqRwUKxr5eP0kZSKQ9qA4gmPpZDNrinMOCP85FCm4tOJjcbpb65Jlzwz
- gfMvhUpG5M5igCcV6/HjRkq6RbDinKAb5iYQ2TsT1P8FDZYv9L3p/d+IE4lZyiUVh6NcZM+r0
- vuwv
-Received-SPF: pass client-ip=217.72.192.73; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:tHItisgMDb/RwsYZJwKxTFWDmqOLIddVYtXQCCYDiq/qOFINpgL
+ j+EAA5fgQAOX+6JS4u2HceRv2J7cmy0Udqye/wlNociXODUC1CFphV+WDdsDxLguC+yuoS1
+ KJh6numyvlVRBJ0BYOI12uB7yB/YtVJhBDvWkPWz/1SEfVOK1yWE/pM9WB9JpuGRYRF54BD
+ tlpfozqW8h+M7qQM7uxZg==
+UI-OutboundReport: notjunk:1;M01:P0:TGSeX4FgSTY=;Ccul4/KbfP4VZQNnlLoZjb/sOsE
+ jxb0MjuR3VwGnoFWuJAgcLz1Xk8arykb61aWN/niIjgLU8zPBgNRc9XHy+uu4VWrupLuuyu42
+ qceZJCButx15phlvqk3aeJCzMYYpIVBhP6C97QyR86lmifubUZtW4dYVgFpTH2P9FiJ7SJ3pZ
+ VRiKEz/bb8Ip9NBmN6fwjDgvAR9CxOcZucBOk7kEhiOUyajrwbxUfzeyEub/Jhi6EYHB/gXVA
+ yreFLTR+cpgkIu+oKdA9drPQ/Ugq8CbD3rYrNSvjO8l7DCif73sIwk4KKM0A/gejQc5c7SjjT
+ bKIA4ikETZcNwpWnXp97ELH9VLiI28d8s2pNgm8Mp5naLoFqfUmHDwToDiFFSkkdJOKR8BvYP
+ PoVcoJCwRKq35LS9BnsQYi0ve1C3lo71dMQfJl9SuyRRxXiFeOYEGSbU6HWrgeMEDhS3ukzPj
+ +Vb596I9nQ6DFuvjbBwWN3xJbphKHQRlFtxTeGcMJroVT80lW5feKdlGf8l28eqboyIXpeg4Q
+ GzvaR9oDptryEDt8BDwFzIl4Fbz6JiBQM8eOfiDMLRXnz5shxbs03TjZ9mw6qEJ6iFR+dpafV
+ 5MJOfyhaicJo4a0sK39VfdbUqL+g2G3B6ZE/ro6mVMG3zh3VkTPm6gscoCDpI07JqxhjK8/9u
+ oDwGsVUxoDPQpniGnEeZefmPQ/marpFsQxsAUKX178ux2xed6azzpc5v/dOBSNZOWYh2i8QKa
+ 7YKbK8NDNX5fBdKPL/3rR1VU29Vl3ynpnxKkBIThTVadQa0wuezFQUNh5PxovALtKTayyo0ZB
+ 2+8qOY8puDBC0D5Jo8035fdCeJMLwHI0F4cgKZ9laUOmR/jcpm1+l6rZvw7nSNlinlQXTmYM5
+ kwnAQ1O+TLCczeN3Cw1o4MFRyEpzaAaNY8xlqiTg+QzVUrqLb94s0V7PaL27mkyQoawXJ/ymg
+ RDnNzTLfIEwpDqjkD4hDJejmpK9LFDwlgvAjSND7Tf1g0baGx0VZhVBEAAMgFMQRgVoDy8Gsp
+ heoW6WIMv5CTo4AXD1xAy3fsea9Djo6Zcw6z17auoKAq5Ymbm0cw9A18BRMiX6pk9tUdSESl2
+ 6IR8WAIG4ePJ2btaphXZFTjK7eawEvT6NZ1OC2wda6A1G8IPuMy8+RBj0gb/w0bT5TMldDH+W
+ AdZn4MaYGrTfix6BVtShwCCW32VLUqMMYm7gDrYD+FIDpsdb0KD/Nr88LFu7+vLtdGIfB/Gfi
+ 2etktrWFpXt2uX1MXLcgtCY3Pw+TRSkxmJuTI7YK+/SisyREkDkvvJZnVfq36xSNk4BYGyOMW
+ z6pwj+22W7nVwdmX0i6MgxmTzj5UZSnWaa8HlAJz6AJLy6xeX1+C4R5KkYohVv5TDEe0HLLsF
+ 03gnH5EI7+ST6c6Gcz1yfTpHXGHo46r1ShTasvhCEKcTw3uhSCtWxmlYTeWuUV92FyNHa9mGn
+ iNIvmz5QOsE+MSizfqCQKe7hkRSkyc5FiglUx1mi4A61h0bfadN8fgQWxmKkyv7unFn+MrYyV
+ uBWBunA4CcfBSa6a1O/OaHLDCBKM/s4M+x5HP6MzPvehv/cTvuVMtD5rKyft+priVDHZ4MsWO
+ BJ9P19MW+krVatdetBvMSmKJHG1eaOnCwK/Fs5a+aFxsZJS0A9OWgliVzDlwfSblchkbEM0N+
+ dsCURDllnzPBshDwFr0UCHfy9O/sU4jw0FI9E3KTEKRDYw8sWtZCAZqiLSKjisjX8HaHNYLem
+ sXHlBNr7aKQ9HjbbtVFbvefAT8TG0oWFD3NUnhW1zGHvm/HPo9GkC44Y=
+Received-SPF: pass client-ip=212.227.17.13; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,31 +148,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Le 04/02/2026 =C3=A0 08:57, Sergei Heifetz a =C3=A9crit=C2=A0:
-> Reorder the code so the assertion of p->ep occurs before it is
+> Reorder the code so the assertion of block occurs before it is
 > used in the subsequent lines.
 >=20
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 > ---
->   hw/usb/core.c | 2 +-
+>   dump/dump.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 >=20
-> diff --git a/hw/usb/core.c b/hw/usb/core.c
-> index b3f811c513..9572a870cc 100644
-> --- a/hw/usb/core.c
-> +++ b/hw/usb/core.c
-> @@ -423,10 +423,10 @@ void usb_handle_packet(USBDevice *dev, USBPacket *=
-p)
->           p->status =3D USB_RET_NODEV;
->           return;
+> diff --git a/dump/dump.c b/dump/dump.c
+> index f7a99a7af2..80ed6c8d21 100644
+> --- a/dump/dump.c
+> +++ b/dump/dump.c
+> @@ -1288,6 +1288,7 @@ static bool get_next_page(GuestPhysBlock **blockpt=
+r, uint64_t *pfnptr,
+>       /* block =3D=3D NULL means the start of the iteration */
+>       if (!block) {
+>           block =3D QTAILQ_FIRST(&s->guest_phys_blocks.head);
+> +        assert(block);
+>           *blockptr =3D block;
+>           addr =3D block->target_start;
+>           *pfnptr =3D dump_paddr_to_pfn(s, addr);
+> @@ -1295,7 +1296,6 @@ static bool get_next_page(GuestPhysBlock **blockpt=
+r, uint64_t *pfnptr,
+>           *pfnptr +=3D 1;
+>           addr =3D dump_pfn_to_paddr(s, *pfnptr);
 >       }
-> +    assert(p->ep);
->       assert(dev =3D=3D p->ep->dev);
->       assert(dev->state =3D=3D USB_STATE_DEFAULT);
->       usb_packet_check_state(p, USB_PACKET_SETUP);
-> -    assert(p->ep !=3D NULL);
+> -    assert(block !=3D NULL);
 >  =20
->       /* Submitting a new packet clears halt */
->       if (p->ep->halted) {
+>       while (1) {
+>           if (addr >=3D block->target_start && addr < block->target_end)=
+ {
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
