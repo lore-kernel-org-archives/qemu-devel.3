@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C05E95371
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FE0E95374
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnZnV-0006K5-ST; Wed, 04 Feb 2026 05:07:45 -0500
+	id 1vnZnH-0006Fy-Sr; Wed, 04 Feb 2026 05:07:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vnZnU-0006Jk-Jt
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vnZnG-0006FV-NZ
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vnZnT-000512-8g
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:44 -0500
+ id 1vnZnF-0004za-De
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:07:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770199662;
+ s=mimecast20190719; t=1770199648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Mizg/dgdD1DY/jcPXclyntH039bzzdaewQLJZPncsmk=;
- b=YIjTMurNvB/4Z7+IxpnfXqF3B6QbvCZUfoAasSjIX06osWfPjNNyf/qOTfbWeyT91v2A+L
- v+vb4fY62jOmC4yaPY91MPl9XYs2KVMGY+Cc1YEX8mHkAjrG9JkbYoIyqgOuGv4KrHjzcG
- Tpzxwgb60CYgwiEUwGzwjbkcZzpo1Eg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tkLNAKQI54XNalRuCNfScWmToO2pgvJK9kp1aOTV5Zo=;
+ b=hL5XMCTJDASBdg8vcx2RF3UoQPLJ97uFnKRTvL2iVUxrUpWHOn/rvBpR92pvWviUBt1e2i
+ WmEIYMnwCRI/weEK8xZJEv2UYouaWsEtPoZAsukSaVvDRlUfZ8E/ZfFICCpUSZZ+LrPSOe
+ m2wasw0aJ/MbnMDQo4eUyH4UE0kv0O0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-j9g_IonDO1uAip7CeuoIYg-1; Wed,
- 04 Feb 2026 05:07:40 -0500
-X-MC-Unique: j9g_IonDO1uAip7CeuoIYg-1
-X-Mimecast-MFC-AGG-ID: j9g_IonDO1uAip7CeuoIYg_1770199659
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-2D5PbSVdPwmTpoxyCTs2hw-1; Wed,
+ 04 Feb 2026 05:07:21 -0500
+X-MC-Unique: 2D5PbSVdPwmTpoxyCTs2hw-1
+X-Mimecast-MFC-AGG-ID: 2D5PbSVdPwmTpoxyCTs2hw_1770199640
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEAF719560B3; Wed,  4 Feb 2026 10:07:38 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05CAF1956058; Wed,  4 Feb 2026 10:07:20 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C148E18003F6; Wed,  4 Feb 2026 10:07:36 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 369E819560A3; Wed,  4 Feb 2026 10:07:17 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -58,16 +58,16 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Kanda <mark.kanda@oracle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 04/10] system/memory: minor doc fix
-Date: Wed,  4 Feb 2026 14:07:00 +0400
-Message-ID: <20260204100708.724800-5-marcandre.lureau@redhat.com>
+Subject: [PATCH 01/10] system/rba: use DIV_ROUND_UP
+Date: Wed,  4 Feb 2026 14:06:57 +0400
+Message-ID: <20260204100708.724800-2-marcandre.lureau@redhat.com>
 In-Reply-To: <20260204100708.724800-1-marcandre.lureau@redhat.com>
 References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -95,24 +95,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Mostly for readability.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/system/memory.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ system/ram-block-attributes.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index be36fd93dc0..a64b2826489 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -574,7 +574,7 @@ struct RamDiscardListener {
-      * new population (e.g., unmap).
-      *
-      * @rdl: the #RamDiscardListener getting notified
--     * @section: the #MemoryRegionSection to get populated. The section
-+     * @section: the #MemoryRegionSection to get discarded. The section
-      *           is aligned within the memory region to the minimum granularity
-      *           unless it would exceed the registered section.
-      */
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index fb7c5c27467..9f72a6b3545 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -401,8 +401,7 @@ RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+         object_unref(OBJECT(attr));
+         return NULL;
+     }
+-    attr->bitmap_size =
+-        ROUND_UP(int128_get64(mr->size), block_size) / block_size;
++    attr->bitmap_size = DIV_ROUND_UP(int128_get64(mr->size), block_size);
+     attr->bitmap = bitmap_new(attr->bitmap_size);
+ 
+     return attr;
 -- 
 2.52.0
 
