@@ -4,109 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB00EA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1974EA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vni9q-0006Cp-5g; Wed, 04 Feb 2026 14:03:23 -0500
+	id 1vni8N-0004X4-9I; Wed, 04 Feb 2026 14:01:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9e-00060d-S8
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vni8E-0004TT-C8; Wed, 04 Feb 2026 14:01:43 -0500
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vni9d-0007iz-74
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231788;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s8o9e/d8lMOSdZF43VdPPly6c5Scmgonl/LFvLQlohY=;
- b=EtBqCaRH7yY+6FB4rzHTSOFXr42tpI3Tc+s9T+8KXW0r4E3XvGm40qk0qf0pfRq/84uZM4
- ClSOxwreNG/D6M449i0BYppgsc0+vLW0oCI05ENtmobCDTXKu8Gn2Y816DSizylwPvhtZc
- 0zjx/7LwRcm5dsHWqsHofpCLo0WUmD0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-wLjfd27pMXmOZH8bSFbaFA-1; Wed, 04 Feb 2026 14:03:04 -0500
-X-MC-Unique: wLjfd27pMXmOZH8bSFbaFA-1
-X-Mimecast-MFC-AGG-ID: wLjfd27pMXmOZH8bSFbaFA_1770231783
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430f5dcd4cdso136354f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231783; x=1770836583; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=s8o9e/d8lMOSdZF43VdPPly6c5Scmgonl/LFvLQlohY=;
- b=g50qVF8F1zzsCyewCNkVCsh42Qg+mFo7w1v1Wc3zHGk8Po2psN/0thu0C5YDhi7Io+
- KhNefZ1P5HNFRrWynrf5SlckgQMLRNiGoT7rgcDF5Qjbzu5tVbUJJg3AeXuGDsG3qziF
- JMAW95AEQ82+OhPyeMNopmg1CdtzzshtRiDOfEYsa9OzUoBqRF4wkOD29bAKgVOVtmJ4
- 5MSMQSnllnRu1s4ZDa5kc7Gs/TRyvwJNhLy6KPk0Iv3+bO56Q8kDvCFZ7C+lHiuF1L61
- 1EHb7Z0xK0fH11JNav2yGb5BN6yuqkVu70mjZepZQngpHMylXgl1leQotPRtIwWxRmjG
- yiBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231783; x=1770836583;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s8o9e/d8lMOSdZF43VdPPly6c5Scmgonl/LFvLQlohY=;
- b=fn4A/r2z8nOK106z1cPIrNowquavaN2J9WUaQPQBFYofpm3suW9hGGRPTslkAsH3bJ
- O8a995o4qoDT3iKjmkiA2xpbNkKQrKXg2FfnClyUMNYeoo8BXVU2p8QdMGbnj/ODLMtT
- ryerZ/PLlwuHBkUinFKmckAG18kn47bDIOwPavoReh8GhBqYjVem4fQG5Cn0PXBp3fLw
- NXv/XTFUwpF1HfUiBi+7jmxSRGfUoBPujY1AkmC8HZcbBqOxUMBCYHSowr1H/wUD1zgD
- PfsMtaKKGmGWqfv8r81HCmCtu5wcM9J9fssIlXh32s1Y9OuTQlvpdwTogQkxCaMtRaiJ
- XTdQ==
-X-Gm-Message-State: AOJu0YwdBBNuQKbu2RMbidmWAW+uXtFpxOvN8H0Foy5SS5vPyVf5AtcK
- R0YTaheens6lbFc1zpmXZtz5emXJHVNHH3cMF1+cKlLJ9J9m8EiZlk8wIUMEk7PtNwoFuAk2H+J
- olpPFl9z4diyX2LZr9cKQ6Fkd8duQ62oCRJMFNTn+GQNIzqZ9G+dpQ0BphlQUSk/AKi6pVGvPtk
- 7MVukL5U0kzYh/dql7l+izPz67S4NZVEuY3Q==
-X-Gm-Gg: AZuq6aKLs7DpJPz0OkKAvRkwP/jiohFqoXhYtVCAi3NAflgfB/oSijVO2MxpDo/zP9e
- t+Mc+RlxA18ogW6ujZJjREL3NWh3Cg4lwlPx44B3nYlc/7hvyOTT76stJvu2Ss7dWIaMewQd2id
- m52OdEbXt/wcG0hcstxFraupBdK4PEbbYJfuopl/8ft0bUiscDZtse1UKp/z4GyfjMcOUEp3taC
- J/Fswhl6TbAuxgXvWY9Hl1CQzqONnPrkGvbDg86N6WP0f5POFUz5SmMqnzQh+knrG7DgYok9T+I
- OF+fR26XOF5XaILTwVXMXYBHov/YVKWj2FnokEwv9gGVlq+asyRNwyLKYeDMyUnxAMCZw/afEfW
- PDfmy165igObCag4IlhPGbf+cX4YX8CoLtA==
-X-Received: by 2002:a05:6000:24c6:b0:435:ab90:6f34 with SMTP id
- ffacd0b85a97d-43617e3fcf9mr5438935f8f.16.1770231782811; 
- Wed, 04 Feb 2026 11:03:02 -0800 (PST)
-X-Received: by 2002:a05:6000:24c6:b0:435:ab90:6f34 with SMTP id
- ffacd0b85a97d-43617e3fcf9mr5438886f8f.16.1770231782333; 
- Wed, 04 Feb 2026 11:03:02 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43618057f93sm8039320f8f.24.2026.02.04.11.03.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:03:01 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:03:00 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shiju Jose <shiju.jose@huawei.com>, Markus Armbruster <armbru@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 05/51] qapi: cxl: Refactor CXL event injection for common
- commands arguments
-Message-ID: <785b458d94343c629d353628f9cf6e5774dbc2f6.1770231744.git.mst@redhat.com>
-References: <cover.1770231744.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vni88-0007Tc-Vj; Wed, 04 Feb 2026 14:01:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VcSAoXOdauQ8/qJNCr70LOg/rXoApiRVY+0Kqee3HVaF92nD/O8jd80DaV0xTcL7zjNbEuuwkLZGwvL7x65nhdEKrGflHgIB7W1zaRattwVBWjyqJ85aGLrW93EJK+RMf9pz8x6A5Z/9oarOjr21b5ompacw1RFoFThnA50fVy03g+imKL91Xqse96cq3RYDBuKK1bTTfhWERplRrlU+4pofDgzA40gpVnLTyftvkJrEUgbwQ1mD+e19KfrQbQtfKmRF3dgOvX8hV37gmMC8UJxQsscgS7gRAZaB02iRluHdDj7fIz2wuUwaGZxi9i/GcJIIfOeN+cjWOJZNbAJ6TA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lCZutUdnXpAlo5H9tNNR5eRPMKnj38qI5g7YwxpMMmY=;
+ b=yPsnXQUXqm3osq4yqmSl/F1JU+K85dGxvKjfHsRYeOJvHiWouZAVyIPhvP84/h4/E2gufhDDmJa3aE8Cy0ApYKlp70rDc/ALtAezmNInj1vQqdxz68sYiFlsPzs0Re1gOruzXHZLfCmBiuNvbKpNX+0RIN8D1138ZdchIebqFES1vZcgv2u/IcfNvr3bEd17aJsexaTNNgaJMo+PAqXYybZkSFcpZ6gTznJAz8+9xWNDjAhyvGjuuXaidNv/Lf6rEH6pws/ufsHG74sPw5ELRYnn5aCRKV+yp0kqdTrmItXm1sx+rEEzCf+JgiPprFKQWZY8NKnttrXhpaFhD94S/w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lCZutUdnXpAlo5H9tNNR5eRPMKnj38qI5g7YwxpMMmY=;
+ b=eVWK80Olk6xMU7fYKLnnbmkOX2Yj16+tkeqzkV14JeqXHOLCl5YLObw3j1MMQSEzifW6GL2cxzsmctuDGFQ3P7AssBQHNvMR96/gLapdw6LtYGuNAtgOlrYvsuFPXnZdjHeMbTNfc2v3q+S4UcjmtlWGFtoDdmsQHADjUmaHnFAS80hTTar8UsbHqPL1yjTlKPBbNsBYSchsILL/8qIgi7ph2ccmTAPIgv35pqb0SQyRGsshfa9HiSRU/cAncciP6ck7o0K0/khaj+vhDoUyTedKraNTKh2p74Hri0Yfa760ElbUMQfMz77b3kfglrtaVuOIN+BPmHtmmkq6UGbEBA==
+Received: from BN1PR14CA0029.namprd14.prod.outlook.com (2603:10b6:408:e3::34)
+ by SJ5PPF6375781D1.namprd12.prod.outlook.com
+ (2603:10b6:a0f:fc02::995) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Wed, 4 Feb
+ 2026 19:01:28 +0000
+Received: from BN2PEPF00004FBB.namprd04.prod.outlook.com
+ (2603:10b6:408:e3:cafe::f3) by BN1PR14CA0029.outlook.office365.com
+ (2603:10b6:408:e3::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.14 via Frontend Transport; Wed,
+ 4 Feb 2026 19:01:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN2PEPF00004FBB.mail.protection.outlook.com (10.167.243.181) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 19:01:27 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 4 Feb
+ 2026 11:01:02 -0800
+Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 4 Feb
+ 2026 11:00:59 -0800
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <skolothumtho@nvidia.com>
+Subject: [PATCH v4 5/5] hw/arm/smmuv3-accel: Read and propagate host vIOMMU
+ events
+Date: Wed, 4 Feb 2026 19:00:08 +0000
+Message-ID: <20260204190008.20070-6-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260204190008.20070-1-skolothumtho@nvidia.com>
+References: <20260204190008.20070-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1770231744.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.126.231.35]
+X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBB:EE_|SJ5PPF6375781D1:EE_
+X-MS-Office365-Filtering-Correlation-Id: a59365d9-4560-476f-ef22-08de641fcd1a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|376014|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?M0dQbHhsVzArQTdzZ0dDNVVZaEdFV1M4RDNpYllSTTMvc2lWSmlYTlVvTUE0?=
+ =?utf-8?B?TlovTEt6Y0NwMmRkWkJUeW5qVjBIM2xqLzdyemJIRStLVERabEl5TUtoSWFQ?=
+ =?utf-8?B?Yjh2ZUdsVDBvS3piWWNQRWhNSmZ4eC9wNVViZWZtcjNBN1Z1YUZLRVBxYkRn?=
+ =?utf-8?B?NUl0NmIzTkxEUFlRSjU1RDVPVUdPdjFleHRzdnBVc1NwZWJpWHhsS2Q4N2NL?=
+ =?utf-8?B?U2FpY3R4Q1NmV2c2UjdHa1N3bFJyZ0FKbDREWUJ6YmNPeWlqRnJKaWJZeHJ6?=
+ =?utf-8?B?Y2ppeitlMUlYSGtGcC9aMGUraUE0NHI2MmJNaVJJamNmdS92Y0xQUXZWT1Vl?=
+ =?utf-8?B?VmVIU3RxUVZRYjZmTDBINEszdUlmNkUwNXJjSU5VbCtMbWR0Q2dmTFpIVGJa?=
+ =?utf-8?B?YW03K0ltK3RndlNYNnFuT2JxL09KUDNWb1RsZk93Z3dvczZsdUhTVEkxK3ZD?=
+ =?utf-8?B?K2hINVFJYUJ6bWRuRFM0TEMyWmZBQmdaZWZaeUNjell4TCtqWC9zNTRwclZr?=
+ =?utf-8?B?cDAzalhIbXpwZG93NytOWjF2MVhDL1FoVC9CZ3gvYXQrWm5BQ09ORGpOeFFB?=
+ =?utf-8?B?WVErWmRVcitMa1dRUklmbjcwK0NwdUZjOG5rZFNhK0JhUDFWbDROMDd2UmRm?=
+ =?utf-8?B?WlVBdDljWXVEUmdaK3hvUlF0ZVpJQ2hHSXNrS0JTdnFHT2FEcGZOTkpSb294?=
+ =?utf-8?B?OVoycU5nUlZTeGZCNDZRdG1ONFFOZE5naURMbTFOZzM0d3p4cFpPVXBPYUk3?=
+ =?utf-8?B?cUZ4MzQ5a3IrR2RnUkJRTk10dERkaHpyT3hRMHJnamZ1d3ZCRjdDLzFCM2Q5?=
+ =?utf-8?B?Yko2NkhSeHJLTVRBeWFCSEsvZWt2MVdFUGxLbDR0a1ZZVUtXcG41UlZ2eEQy?=
+ =?utf-8?B?cU56bkVZZDJJUG43ZGVyQWVyV0VWaGVoRXhwdUZHbWFYSmczTGZkaG9UWmdT?=
+ =?utf-8?B?SUhiUGZPeVdxK0lMTzhoRWpkaTFKVnp1OXVlalR2TnlCVWNDRjJMdC9DQ2pt?=
+ =?utf-8?B?SDA4UXpVUXZSbzl0ZnZKUWNSLzN1VjZlWVZXWGRRcVRLbktGT2l0WWc3Um9M?=
+ =?utf-8?B?d1ZpbjBJN293ZHc0a0dJZFVjSUtkcmdEZ1Bha3JEN21pTmJXejhIMG9QdXBp?=
+ =?utf-8?B?UmdBa2NVOWNsWG5tZFRaMzgwaUZYMDdYVVpjQjdCUHM1N2JObWYrZ1pYS21j?=
+ =?utf-8?B?NU9zMEs5VmVLWUErS3d2bEd2ZFRlZHBXSHJrakVhWm1Deml6VHNyRm9PVEU2?=
+ =?utf-8?B?QmtQV3lOUjdXVjMyS0xEVjRNWmhZM2dLMWtzRStsdmV4R3Y3Sm14bnNmRWFZ?=
+ =?utf-8?B?SU1vTXlDL3dFT2RDY2dlVDY3VzlxZ1hxU3JjTDd4LzdHMVBHaElvbUpEdTlw?=
+ =?utf-8?B?MDJjQURsOWNaYWdJUzdYNFJqSFZJWXN4M09ici9ibW4yRnJ0a1dEUWdEYWZo?=
+ =?utf-8?B?d29Yc1ZaMEZaLys3WjNESC9WYUtqbUJkRkZSZW5ac3RuL3JLUHg1c29aaWpi?=
+ =?utf-8?B?VXMzdmZ1VzJaaUJIWGsrQlgraTlEb0hYUDh1bFRJeGtLNm81S1lpQzRVQlVr?=
+ =?utf-8?B?ZHdFWXByWjBWRWRZcHFjb24wczBmRjVqbFU4MmVSMnEyMkRsRVdHQllBbDRL?=
+ =?utf-8?B?Y05YeFFkN1ZDMVI0R1htLzB0dGVVUVYrYXBDRUE5MDdNWGt3bFR5N040WWtY?=
+ =?utf-8?B?RklFZ0x4bG8ySUVhdGFnT2VnclZ2R0NOaDcwSXJqTXFickh6ZVlhSlI4b2Rx?=
+ =?utf-8?B?SGdRajNZVE1hMWFCZzI2Y3NpMno3RzJrUUJGYnBXR3phTklWNzdUalNVTitw?=
+ =?utf-8?B?ejRXY25LMVZMdmJ4TzU3TG9NYVZ1ajJ0ZTdMOXhCR1oxR1AvYTBjcDFuSmV3?=
+ =?utf-8?B?T1VkeDhvbUtFZkpQdVo0bHNuOWdSejZFK3FTM0pTVnpOVFBHNWdEODY4eUlC?=
+ =?utf-8?B?anVSN2t4RndZenFRYnI5REZVRWVaMVQvc0N0Q28zanVBS24xcUpSdFlEMEU5?=
+ =?utf-8?B?bkZJWFJMWk9MeEJrU2MxbThINStSSFk5NW9xVGVnR0dOMWJiVk5odHhWSWJr?=
+ =?utf-8?B?S0wyekNCLzY5NFZQV0JYbW1mS2hidzUrUmVJUjh4cmJDakZkRGlFeGxsMDI4?=
+ =?utf-8?B?L3RNVDhaUjRHWUM2N0NQSE9rTVlCK1JXclVIcXlZYkdvUC9tSDJFbmdaZytu?=
+ =?utf-8?B?R0FiVFZCZzRTaDUwaW5QK2JPY0dWVTRxNVVCeFgzVFZ2OUFQdkx0clptZis3?=
+ =?utf-8?B?aXdDd1lJSldqcThQd0s1RlFIQzdRPT0=?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: iN4m0AmhKVLI1ZJWZXmvy5AWZcgjHJYz9W3Z5NSHWJXLGB0C98YXgsLKFSoKFNxvl2AtgYyfN12FKc7xPUI4lRes8lo/OE0KC0skFV6G9jLaPEoSydB6o0FbYYkED+Vg5oNvh+Owk7ilVxJJMiTPeKE0TKJqFGViVGsR2N4MYqaa3e9nVRYaWQo5JoDy7amuULQQBd7e7dTpvPlifif+54W9vv6RdXFSL7p/DyPymCMrcKI0TVEPczZQglgqVXtcXIP9hc1Ch6LqbihYOHzQDe9uIoDTjPobA8TaH/RsQkR/85Kf7lNF7pphk4uZ9j3gI0R1c7LrnQg+hSK6yFGzJhanwVJe61hmAAApwwl215M2tdGTqzoUskBFFEs2T6LB3m5I0Qvina16SnwjQbz14bvz64wx3h+a66IdzkH3qhwKdCWP8euA6DA200n1lLfT
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 19:01:27.9210 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a59365d9-4560-476f-ef22-08de641fcd1a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBB.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF6375781D1
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,177 +170,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+Install an event handler on the vEVENTQ fd to read and propagate host
+generated vIOMMU events to the guest.
 
-Refactor CXL event injection to use struct for common command
-arguments.
+The handler runs in QEMU’s main loop, using a non-blocking fd registered
+via qemu_set_fd_handler().
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260114142713.617806-2-Jonathan.Cameron@huawei.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 ---
- qapi/cxl.json | 89 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 58 insertions(+), 31 deletions(-)
+ hw/arm/smmuv3-accel.c | 62 +++++++++++++++++++++++++++++++++++++++++++
+ hw/arm/smmuv3-accel.h |  2 ++
+ 2 files changed, 64 insertions(+)
 
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index eeddb58d1d..55a088586e 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -31,11 +31,10 @@
-  }
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 2ca0d1deac..beffb8aa94 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -390,6 +390,48 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
+                    sizeof(Cmd), &entry_num, cmd, errp);
+ }
  
- ##
--# @cxl-inject-general-media-event:
-+# @CXLCommonEventBase:
- #
--# Inject an event record for a General Media Event (CXL r3.0
--# 8.2.9.2.1.1).  This event type is reported via one of the event logs
--# specified via the log parameter.
-+# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
-+# Table 8-42 Common Event Record Format).
- #
- # @path: CXL type 3 device canonical QOM path
- #
-@@ -44,6 +43,16 @@
- # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
- #     Record Format, Event Record Flags for subfield definitions.
- #
-+# Since: 8.1
-+##
-+{ 'struct': 'CXLCommonEventBase',
-+  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
++static void smmuv3_accel_event_read(void *opaque)
++{
++    SMMUv3State *s = opaque;
++    SMMUv3AccelState *accel = s->s_accel;
++    struct {
++        struct iommufd_vevent_header hdr;
++        struct iommu_vevent_arm_smmuv3 vevent;
++    } buf;
++    uint32_t last_seq = accel->last_event_seq;
++    ssize_t bytes;
 +
-+##
-+# @CXLGeneralMediaEvent:
-+#
-+# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
-+#
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
- #     Media Event Record, Physical Address.
-@@ -74,26 +83,29 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-general-media-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLGeneralMediaEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8',
-             '*device': 'uint32', '*component-id': 'str' } }
++    bytes = read(accel->veventq->veventq_fd, &buf, sizeof(buf));
++    if (bytes <= 0) {
++        if (errno == EAGAIN || errno == EINTR) {
++            return;
++        }
++        error_report_once("vEVENTQ: read failed (%m)");
++        return;
++    }
++
++    if (bytes == sizeof(buf.hdr) &&
++        (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
++        error_report_once("vEVENTQ has lost events");
++        accel->event_start = false;
++        return;
++    }
++    if (bytes < sizeof(buf)) {
++        error_report_once("vEVENTQ: incomplete read (%zd/%zd bytes)",
++                          bytes, sizeof(buf));
++        return;
++    }
++
++    /* Check sequence in hdr for lost events if any */
++    if (accel->event_start && (buf.hdr.sequence - last_seq != 1)) {
++        error_report_once("vEVENTQ: detected lost %u event(s)",
++                          buf.hdr.sequence - last_seq - 1);
++    }
++    accel->last_event_seq = buf.hdr.sequence;
++    accel->event_start = true;
++    smmuv3_propagate_event(s, (Evt *)&buf.vevent);
++}
++
+ static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+ {
+     IOMMUFDVeventq *veventq = accel->veventq;
+@@ -397,6 +439,7 @@ static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+     if (!veventq) {
+         return;
+     }
++    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
+     close(veventq->veventq_fd);
+     iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
+     g_free(veventq);
+@@ -424,6 +467,7 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+     IOMMUFDVeventq *veventq;
+     uint32_t veventq_id;
+     uint32_t veventq_fd;
++    int flags;
  
- ##
--# @cxl-inject-dram-event:
-+# @cxl-inject-general-media-event:
- #
--# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
--# This event type is reported via one of the event logs specified via
--# the log parameter.
-+# Inject an event record for a General Media Event (CXL r3.0
-+# 8.2.9.2.1.1).  This event type is reported via one of the event
-+# logs specified via the log parameter.
- #
--# @path: CXL type 3 device canonical QOM path
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-general-media-event',
-+  'data': 'CXLGeneralMediaEvent' }
-+
-+##
-+# @CXLDRAMEvent:
- #
--# @log: Event log to add the event to
--#
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
- #
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
-@@ -133,9 +145,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-dram-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLDRAMEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
-             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
-@@ -143,18 +155,21 @@
-            }}
+     if (!accel->viommu) {
+         return true;
+@@ -445,12 +489,30 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+         return false;
+     }
  
- ##
--# @cxl-inject-memory-module-event:
-+# @cxl-inject-dram-event:
- #
--# Inject an event record for a Memory Module Event (CXL r3.0
--# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
--# at the time of the event.
-+# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
-+# This event type is reported via one of the event logs
-+# specified via the log parameter.
- #
--# @path: CXL type 3 device canonical QOM path
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-dram-event',
-+  'data': 'CXLDRAMEvent' }
++    flags = fcntl(veventq_fd, F_GETFL);
++    if (flags < 0) {
++        error_setg(errp, "Failed to get flags for vEVENTQ fd");
++        goto free_veventq;
++    }
++    if (fcntl(veventq_fd, F_SETFL, O_NONBLOCK | flags) < 0) {
++        error_setg(errp, "Failed to set O_NONBLOCK on vEVENTQ fd");
++        goto free_veventq;
++    }
 +
-+##
-+# @CXLMemModuleEvent:
- #
--# @log: Event Log to add the event to
--#
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a Memory Module Event (CXL r3.0 8.2.9.2.1.3).
- #
- # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
- #     Event Record for bit definitions for bit definiions.
-@@ -185,9 +200,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-memory-module-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
--            'type': 'uint8', 'health-status': 'uint8',
-+{ 'struct': 'CXLMemModuleEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'type': 'uint8', 'health-status': 'uint8',
-             'media-status': 'uint8', 'additional-status': 'uint8',
-             'life-used': 'uint8', 'temperature' : 'int16',
-             'dirty-shutdown-count': 'uint32',
-@@ -195,6 +210,18 @@
-             'corrected-persistent-error-count': 'uint32'
-             }}
+     veventq = g_new(IOMMUFDVeventq, 1);
+     veventq->veventq_id = veventq_id;
+     veventq->veventq_fd = veventq_fd;
+     veventq->viommu = accel->viommu;
+     accel->veventq = veventq;
++
++    /* Set up event handler for veventq fd */
++    qemu_set_fd_handler(veventq_fd, smmuv3_accel_event_read, NULL, s);
+     return true;
++
++free_veventq:
++    close(veventq_fd);
++    iommufd_backend_free_id(accel->viommu->iommufd, veventq_id);
++    return false;
+ }
  
-+##
-+# @cxl-inject-memory-module-event:
-+#
-+# Inject an event record for a Memory Module Event (CXL r3.0
-+# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
-+# at the time of the event.
-+#
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-memory-module-event',
-+  'data': 'CXLMemModuleEvent' }
-+
- ##
- # @cxl-inject-poison:
- #
+ static bool
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index dba6c71de5..c9c10e55c3 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -23,6 +23,8 @@
+ typedef struct SMMUv3AccelState {
+     IOMMUFDViommu *viommu;
+     IOMMUFDVeventq *veventq;
++    uint32_t last_event_seq;
++    bool event_start;
+     uint32_t bypass_hwpt_id;
+     uint32_t abort_hwpt_id;
+     QLIST_HEAD(, SMMUv3AccelDevice) device_list;
 -- 
-MST
+2.43.0
 
 
