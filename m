@@ -4,75 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3741E6E815
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 06:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F79E6E815
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 06:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnW7K-0003hY-Az; Wed, 04 Feb 2026 01:12:00 -0500
+	id 1vnWMe-0007kV-NL; Wed, 04 Feb 2026 01:27:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnW7H-0003h4-RP
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:11:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnW7F-00053D-CM
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:11:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770185511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LdBC23U37EdSZCt5wdSJ5+ZnPxLMJ66ATpqb7N4z2dg=;
- b=AnmW2oAgIm5vBXqBv4cnvKErpfbQlc3sXu3cbT11PKuQfBQRSji+jW7bZ6YIpLqbTt/TkQ
- kEhOSpYHXz5RvF3D+GSNs1z85Dd5sZ+Rx5nPFbRsOgpgw57W2ewVUDe8yop5HpfDgID7Hk
- PhRDNyns6zIZUMgPheW/WA75bYBUg24=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-E65V6q9mOJ-lLF8VnbwJPg-1; Wed,
- 04 Feb 2026 01:11:49 -0500
-X-MC-Unique: E65V6q9mOJ-lLF8VnbwJPg-1
-X-Mimecast-MFC-AGG-ID: E65V6q9mOJ-lLF8VnbwJPg_1770185508
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE52019560B7; Wed,  4 Feb 2026 06:11:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3293818003F5; Wed,  4 Feb 2026 06:11:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9F41321E692D; Wed, 04 Feb 2026 07:11:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
- <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v3 1/2] block: Wire up 'flat' mode also for 'query-block'
-In-Reply-To: <aYIRgmXsqf09ZfX4@angien.pipo.sk> (Peter Krempa's message of
- "Tue, 3 Feb 2026 16:17:22 +0100")
-References: <cover.1770108436.git.pkrempa@redhat.com>
- <a38d78156b74b134da0f1479a30fc0d6cdb7b97c.1770108436.git.pkrempa@redhat.com>
- <87pl6m2g02.fsf@pond.sub.org> <aYIRgmXsqf09ZfX4@angien.pipo.sk>
-Date: Wed, 04 Feb 2026 07:11:44 +0100
-Message-ID: <87sebh11i7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vnWMd-0007kF-LX
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:27:47 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vnWMb-0007Hp-S2
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:27:47 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b8d7f22d405so1011084866b.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 22:27:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770186464; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fp/LBHlhB+dq7KCOTkYU0X5HOwXtXeYAwrDOLU/LrO0rwQEVaL9rL9O/VqeNhavAg/
+ wECwILXxHbsvhdT5z+xDA9NaaJvB+Z1OgJbM+oYFwzFMDzHLanpT/8QRFBnVPdG6XrK2
+ IsTu/YQeJkUDltJltsSQaS1baUGovjUSZvlBscs0Bl9AKRH3ru94ERz8wWf29AfkrZDo
+ nBLQePXRtzIbKmMlgkq2Nd8WofqFNxpBleoyHwXSeen8K2RXc2JRV3RP3XQ/ugPS2Cfx
+ 93lq3YnbMj8EQ9Gh3sdU6ZZGj+MgOJjsTdLeVxet9MYcsl+vElKZhDr6jh1OWMVgBA2q
+ cvlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=y2wLZ5L3u7zcCg7GHGTYRx6GpyUpuKoPTjraUpLc3HE=;
+ fh=aTR85SRgTPgSMFTDK2Kxpm8Yl1newjy/gHNrVLVyJvk=;
+ b=ZNkPx/2i+cUw62pS5b256DgiPnG26Z5sIxBJcNnqIorj320/otE/Svv4mHzQ0P4pFq
+ NqELF6j/SQBKxtADw7UzlCeBq9nCICFwjK1HSaujfroN9T6qTE1US/s1ivTeVwSk/1QS
+ y3zl+amgYzcH6Ene8CuUzsB+panFcaafVVku+dbitrJKzJcGVIr6D9zwLu6GLs5cgmCK
+ bGomz2Ru8ewvCoY7aLkMcjF6dd4+jWG3RfbHC+eK9ILV0KCg5Xabb9Xu6YkLuHU1RS7+
+ LV9yT6xEiS5n7fmhuFOqhfAa0wsQ5HDQkd4CR3ga/ifzjL9fkVw9A8MD229IJlnohqdc
+ q9pQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1770186464; x=1770791264; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y2wLZ5L3u7zcCg7GHGTYRx6GpyUpuKoPTjraUpLc3HE=;
+ b=Re9NqckclwtGAJ8hiwcjlLCRsAeV6ni3JXc6NmOcJ1wOj8sLvI0dc5nDYHOeeUr6Qj
+ 10flE6fQcHK4mO63tKoGAKxjsrpCWdbCivn1g563J8IujHOBUNkIQMFPbxuXRZfy60HV
+ 6RA/orF5JDR2NPVh4xlGn0siSLe0tEozjyckzcCdLji8gAqUOpjlJTGqslPRHzx7V4ib
+ NdOTqRCv3vDoBZ+ZyTf33lgMtL2m0VseDa/9iK8kRJUt26UPHCZJE3EhZFpKeIeYZq/r
+ ljQ1/vnxAQrdMSBlUhw1EtNTBkIWBJoyuP7mmUG6UJAvj6qWCjrGSLoR0FrY3V+Oah06
+ fk2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770186464; x=1770791264;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=y2wLZ5L3u7zcCg7GHGTYRx6GpyUpuKoPTjraUpLc3HE=;
+ b=NWa0TOMisH/kOQ/ztu36sfEq3wza6oEeu43DqdthiOl/JqVl1UDc6TSZlrSzHIfBwE
+ 3j451VAr6jxUA1Xo0/tXd3uaSzt5KjIVPFwdNIc6whOiHOO/ClXZdrMjz7RU1mhPVPSd
+ 4oEGn1ScdkLtraNhw5wEkZes2PUSdgh2Xnhm/gXHDYOT0kGWe027zetxRzeLjJZTEzQ7
+ 3NBRKR3Hb7SbL3H95kWNcKYHeigipElROlb7XyKPjZWMr8aslJcziNIjOWBGbR6w+S/O
+ n+zoEJBQxeq5ZcecLKsFWZplGbQoVeWyOmB6EaiGnS6GcjuQiRE+0KIU8/OKXK3ien1b
+ ozsQ==
+X-Gm-Message-State: AOJu0YzbE6YYoFS6k+u73Ra/KuViLCmPSTjWTg1wigtDBD05fBKtHefw
+ QprP0C1N7sJJpG1gmncJO6mqyhF1H5iLCoZULWg430iLUwsm+LMGtLchTfXD4mSXt72z78S/Puu
+ TEyjeQeCXMNhuuJ/MGirwZKJAv4kfuLt7qFId7ja+ng==
+X-Gm-Gg: AZuq6aKFir2zlK41RTUyD1hUf0N5LZxUOTSIwTp9rSk6NRzEVHfWC9x/cJeB79Yq20A
+ VQ/UD1CCUo58i62t+TNJFC6RcIVJUdNMkvA87Kz3ZCKoCc+uR0H4FZE16awcnMbFoV/dPXB5FQu
+ XGZUfn74W1avEfSIEbelMBGJFdiLWcwgxTNsfC7ACyMekYp6ungiajyUWMz5lGepCnMGEt0svmJ
+ 7OwTYUzNggRx6vMc7NVBoFRLdvvlfeOT7IlmIESVv7e0QYTxJbNo1EjrnBH3RVYS2nSFbRanw==
+X-Received: by 2002:a17:907:842:b0:b88:7568:26d5 with SMTP id
+ a640c23a62f3a-b8e9f2c55ffmr121065166b.27.1770186463996; Tue, 03 Feb 2026
+ 22:27:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260202075358.2137740-1-jim.shu@sifive.com>
+ <20260202075358.2137740-2-jim.shu@sifive.com>
+ <fb85a3b7-5281-45e8-a0df-9c804236324e@linaro.org>
+In-Reply-To: <fb85a3b7-5281-45e8-a0df-9c804236324e@linaro.org>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Wed, 4 Feb 2026 14:27:32 +0800
+X-Gm-Features: AZwV_QieW9mrXM4MdDvL1H7RgIA3SuEzWzuH8LqKtRYn1828kNueF-QejlGhKHU
+Message-ID: <CALw707rNVBpdAoiShMdtJZCmg4BEq-YKy+ejT0jc=h_hPx7EPg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] accel/tcg: Pass access_type as an argument of
+ tlb_set_page*()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Helge Deller <deller@gmx.de>, 
+ Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, 
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=jim.shu@sifive.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,117 +142,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Krempa <pkrempa@redhat.com> writes:
-
-> On Tue, Feb 03, 2026 at 13:01:01 +0100, Markus Armbruster wrote:
->> Peter Krempa <pkrempa@redhat.com> writes:
->> 
->> > From: Peter Krempa <pkrempa@redhat.com>
->> >
->> > Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
->> > omits 'backing-image' key in reply) to 'query-named-block-nodes' to
->> > minimize the size of the returned JSON for deeper backing chains.
->> >
->> > While 'query-block' behaved slightly better it turns out that in libvirt
->> > we do call 'query-block' to figure out some information about the
->> > block device (e.g. throttling info) but we don't look at the backing
->> > chain itself.
->> >
->> > Wire up 'flat' for 'query-block' so that libvirt can ask for an
->> > abbreviated output. The implementation is much simpler as the internals
->> > are shared with 'query-named-block-nodes'.
->> >
->> > Signed-off-by: Peter Krempa <pkrempa@redhat.com>
->> > Acked-by: Markus Armbruster <armbru@redhat.com>
->> 
->> [...]
->> 
->> > diff --git a/block/qapi.c b/block/qapi.c
->> > index 27e0ac6a32..3688d0e713 100644
->> > --- a/block/qapi.c
->> > +++ b/block/qapi.c
->> 
->> [...]
->> 
->> > @@ -698,11 +698,12 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
->> >      return s;
->> >  }
->> >
->> > -BlockInfoList *qmp_query_block(Error **errp)
->> > +BlockInfoList *qmp_query_block(bool has_flat, bool flat, Error **errp)
->> >  {
->> >      BlockInfoList *head = NULL, **p_next = &head;
->> >      BlockBackend *blk;
->> >      Error *local_err = NULL;
->> > +    bool return_flat = has_flat && flat;
->> 
->> This is fine.  Just flat would also be fine: flat implies has_flat.
-
-Verbose version: This is a QMP command handler.  The generated
-unmarshaler passes has_flat=false, flat=false when @flat is absent, and
-has_flat=true, flat=F when @flat is present with value F.  Therefore,
-flat can only be true when has_flat is also true.  Therefore, flat
-implies has_flat.
-
-Other code calling QMP command handlers (e.g. HMP commands) must satisfy
-this precondition, too.
-
-In fact, any code passing around QAPI-style has_FOO, FOO pairs should
-stick to the "when has_FOO is false, FOO is zero bits" convention to
-keep things consistent and predictable.
-
-> I've borrowed this from my old patch that added it to
-> query-named-block-nodes.
+On Tue, Feb 3, 2026 at 10:24=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Otherwise I'd have to mark 'has_flat' as unused. Nice side effect would
-> be that 'flat' can then be used directly in the call to bdrv_query_info.
-
-We don't -Wunused-variable, so no need to mark anything.
-
-> Alternatively I can move the 'has_flat && flat' expression into the
-> arguments of the call to bdrv_query_info to avoid the extra local
-> variable.
+> On 2/2/26 17:53, Jim Shu wrote:
+> > Pass the access_type so that we could know CPU will do the read or
+> > write access. Then, CPU can fill the CPUTLBEntry[Full] of the specific
+> > permission (@prot).
 >
-> Whichever you prefer.
-
-Matter of taste, up to you.  I just wanted to make sure you know.
-
->> >
->> >      GRAPH_RDLOCK_GUARD_MAINLOOP();
->> >
->> > @@ -714,7 +715,7 @@ BlockInfoList *qmp_query_block(Error **errp)
->> >          }
->> >
->> >          info = g_malloc0(sizeof(*info));
->> > -        bdrv_query_info(blk, &info->value, &local_err);
->> > +        bdrv_query_info(blk, return_flat, &info->value, &local_err);
->> >          if (local_err) {
->> >              error_propagate(errp, local_err);
->> >              g_free(info);
->> > diff --git a/qapi/block-core.json b/qapi/block-core.json
->> > index b82af74256..a701f6bbee 100644
->> > --- a/qapi/block-core.json
->> > +++ b/qapi/block-core.json
->> > @@ -855,6 +855,10 @@
->> >  #
->> >  # Get a list of `BlockInfo` for all virtual block devices.
->> >  #
->> > +# @flat: Omit nested data about the backing image (ie. the contents at
->> > +#        'inserted.image.backing-image' are trimmed).
->> > +#        Default is false (Since 11.0)
->> > +#
->> 
->> s/ie./i.e./
->> 
->> Remind me: true suppresses member inserted.image.backing-image, i.e. it
->> is absent then.  Correct?
+> This is wrong.  tlb_set_page* is recording data for *any* future translat=
+ion.  There is no
+> one access_type which is appropriate.
 >
-> Yes the 'backing-image' key is completely missing when @flat is true.
 
-Okay.  What about this:
+Thank you very much for reviewing this patchset!
 
-# @flat: Omit nested data about the backing image, i.e. `BlockInfo`
-#     member 'inserted.image.backing-image' will be absent.  Default is
-#     false.  (Since 11.0)
+Considering the target MMU support in QEMU, I think tlb_set_page* can
+support RO/RW permission 'CPUTLBEntry[Full]' if the target MMU has
+RO/RW mappings.
 
+I have leveraged this idea to support cpu-side iommu translation.
+By using the access_type, we can do the following approach if the
+cpu-side IOMMU translation returns a different section in RO/WO
+iommu_flags:
+1. When the CPU does read access, tlb_set_page* will create a RO
+CPUTLBEntry[Full] with read section & xlat_offset.
+2. When the CPU does write access, tlb_set_page* will create a WO
+CPUTLBEntry[Full] with write section & xlat_offset.
+
+When the CPU does interleaved read and write accesses on
+IOMMUMemoryRegion, it probably has poor performance
+because It will get much TLB miss and go to the slow path create a
+CPUTLBEntry[Full] with another permission via tlb_set_page*.
+However, I think the functionality is correct.
+
+Do you think this approach has any possible issues?
+
+> I know you're trying to handle cpu-side iommu translation, and that you h=
+ave a case which
+> requires reads and writes to go to different address spaces (?), but this=
+ doesn't help.
+>
+
+Yes, for our wgChecker case, reads and writes will go to different
+target_as, section and xlat_offset.
+When it has RO or WO permission, the success one will go to
+'downstream_as' and failure one will go to 'blocked_io_as'
+
+> I think the underlying issue is that, for your case, we're handling iommu=
+ too early -- we
+> want to be able to defer the translation until the actual access.
+>
+
+Currently, we handle the iommu translation early in the cpu-side.
+Thus, when IOMMUMemoryRegion changes the translation, we will rely on
+the IOMMUNotifier to trigger the tlb_flush() via TCGIOMMUNotifier to
+invalidate CPUTLBEntry.
+Then, next memory access will call the IOMMU translation function
+again in tlb_set_page* to find new translations.
+
+> r~
+
+Thanks
+
+Jim
 
