@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8594FEA7941
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B41EA7941
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniAe-0000rq-GG; Wed, 04 Feb 2026 14:04:12 -0500
+	id 1vniAw-0002M7-Og; Wed, 04 Feb 2026 14:04:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAa-0000RW-KW
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:08 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAs-00028y-7z
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAZ-00082F-4Z
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:08 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAq-00088d-LV
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231846;
+ s=mimecast20190719; t=1770231864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IRIH6dHk97LErqYrRBUU7eUC8F1/GVFoIBs89PuE0lY=;
- b=Hma4e5T6W/k/skIY0s+SAjWz8Ou7Sw/GeuWDaMJ2lgITgZh6/hTTnAZQ47jM8mYXEUI54E
- x4N58hwN5/i+scYUlbomqaoiQnP+8vcafWQ5Ar8Fp9BInuUJWUUXOj1GM3UUtKxmAwOOpB
- hjBmk9gVMvdmFAMFKIvHucurnW0rk7I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ej1dx9mzEv6uFTt+nidTdAWYhIzVe6HhR8BEsb/fzCQ=;
+ b=KWiTDJYSE2woVhiWD/fTQc4JmWJxQClODgE1OpEhHu8AU+UueFeVjaa6KfcLeQe1EUMbB7
+ W8qfdTP0IuLBw1QAx4YU/t5rji3bytgHn/bNydJresMgAHqEpO1DHOILRK1f7UBHlC0XGp
+ UmytxxRzmSYqESFcLUkntozIMeZpCbQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-ITXHcoT5MPSqnYSRsxhY7g-1; Wed, 04 Feb 2026 14:04:04 -0500
-X-MC-Unique: ITXHcoT5MPSqnYSRsxhY7g-1
-X-Mimecast-MFC-AGG-ID: ITXHcoT5MPSqnYSRsxhY7g_1770231843
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4806cfffca6so1011565e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:04 -0800 (PST)
+ us-mta-479-NbZizNR4OYGALe_uz2zFbg-1; Wed, 04 Feb 2026 14:04:22 -0500
+X-MC-Unique: NbZizNR4OYGALe_uz2zFbg-1
+X-Mimecast-MFC-AGG-ID: NbZizNR4OYGALe_uz2zFbg_1770231862
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-435db9425ebso158623f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231843; x=1770836643; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231861; x=1770836661; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IRIH6dHk97LErqYrRBUU7eUC8F1/GVFoIBs89PuE0lY=;
- b=g1WBTFgKZIPO91V6eAH910NmwZ9KBOEN/LYnUtNbjEJoOhgqiORpIocpWQz2UKqmZj
- 1PpxEEVpJqLjrCVWG5S09z/W7hOcMi5m2DNJd+1op57k09S4ZroV7/NvXn2Qmcj1WOJ/
- 5yMoHwlHA1RivklSjgey2qeaThHQQBnrmv2ZVAXeh9r/ZXjyJFFy1VfnJ+hVjuxTS/F7
- N0mj9KkNg3uEMxLGxX1EDO5qe16hN5c0PVi/cJJEz/VjCdFjd5l6PZfskCgsEiJLsyQa
- RYsHWhqDA3jDnW6Td4/jM1pn9Eh4SDJasms1dOa8dYj5SE5y7oJSSs160jdjZBLJ4PjC
- dYUw==
+ bh=ej1dx9mzEv6uFTt+nidTdAWYhIzVe6HhR8BEsb/fzCQ=;
+ b=Yby09ilfQH31v/m5n+DbB7yxSMk9ShmzCYL0PObrL/OlVQ2RU+ZDMe/66T/Uy09IA2
+ HvguspiLeHIjLxPRuZH22WiVwN3fGDw/fNBldptvyoV0Z6xPzR89IgWgwB1SNdEiOD6S
+ CdEKe0LF4WgxR9nySM4mfFyBrE6Dti9dUrtBtaeMsHNzus2Soebj5Ls4Zm6akoP/PbDf
+ JUsnQ8W8dWcdRxLDl8bHGMuAMmC4bbb9qqCSLnqKAMhlInbx4xsLHQE81fkkYgeupMpr
+ c2BoI5uj0MWW6JAH5Nwa1zozpE9FZ4bZkacDOvaLthORIV9noR6f88R8xeD4B7ljUojv
+ JStg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231843; x=1770836643;
+ d=1e100.net; s=20230601; t=1770231861; x=1770836661;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IRIH6dHk97LErqYrRBUU7eUC8F1/GVFoIBs89PuE0lY=;
- b=szvOxQKvEMmk9PEHVdlENT7AxNeJaPqKZl3cCOfvTOXAQdaF80CNsL6Vvq7Wqq6X/I
- b6M4c+5jjO/Faykr6KYpLE02C1iELyw+tuJ+vlw+ex/nP9qKN0s2VmtQFDLFV3q7T6po
- T13AUxgQNU9FZo5ehwcH7YQqhcsR8Nto7L0X2h7WRlx+KeuDVVIxlwQUszc4qSLyTjPP
- Tp1GqrVY62jGY0DCGkO/Qnv8fghnLU+W4wx7TUsfeU3T3XmwORyClR8x/BTsnkuaW0EG
- hbHo8haYIJ27+uT22Sv4hsTAw8tK1GDN5fwuhIlvZXoGdXwoeetFO68UKmZS5cBkICW3
- k8XQ==
-X-Gm-Message-State: AOJu0YwokM39iASdCfZKPzGWbdaPKJUS2G65Lp7IOuWi5dseyIPqVJrL
- 2QUWPGWwOvo+mtdJk9KKm6eKkfwf7jRkI8TRrIdZUDRVfJ/arIHtXfZfM7f4HDyZxh4WwvzITym
- VQ603WIvsdtfJokSSoXe8RDsepxdKTGkMYZARdZ2TskrOH8x8tAt1//TAc/pgZFWC/wfO+EGVTK
- o7II9ow8cgLQ3yNL6Tvr8B4p6+yHn0EBGKBA==
-X-Gm-Gg: AZuq6aK04sldOEKG+DxaSzgM+pTr2JWpZNLcXDxrvMyEASugA7wPPr8e2+LEEHxU65F
- uTx0G1jxIIo7Pw38mTF1eTRYEvOF6q7+xJft/mCngLVgfs6KULkyTdaRGJshLrNKBdFhlJj5WYz
- 3u4cxXsNq2mAgxs0rvTbLnH3ykm2Ef0FOQptyh1zKj10sCzd5f/b3I8XDHH9mZ7nm+eC1cYx61Q
- DbB1hwVZUyqjCqKN9soJwT1GRMdi5rWWCswmT4GgJXwXDhBVZG7jveV0Rd3nHa9O5Tx5tIxyeLb
- VvK0pgatOvBeQBluwfQBc+/RPOqzcAVi+ZaGFaqbDyhT9Ktn21+29nbIjHenAViL6v1f0aWTd/v
- jjrUDbTPYEEa8OxRB/sxzhrq7dDL/zbwJ5A==
-X-Received: by 2002:a05:600c:19cd:b0:477:93f7:bbc5 with SMTP id
- 5b1f17b1804b1-4830e9402f8mr57122485e9.10.1770231843192; 
- Wed, 04 Feb 2026 11:04:03 -0800 (PST)
-X-Received: by 2002:a05:600c:19cd:b0:477:93f7:bbc5 with SMTP id
- 5b1f17b1804b1-4830e9402f8mr57121855e9.10.1770231842623; 
- Wed, 04 Feb 2026 11:04:02 -0800 (PST)
+ bh=ej1dx9mzEv6uFTt+nidTdAWYhIzVe6HhR8BEsb/fzCQ=;
+ b=XSJ6Jg+aF5CSHqibsuiu/ZN+X35N1sM5fuePqV0a8ZG53wk4rsj7lxEsHYXf/5i+bT
+ oDCZ/w/NTaN0/d2vUYrgKsTlr1Eb9AicTF9kcG6YefJI6hg5vvEbir/6bvAhZ358Oold
+ 0/8SOeRaT6oPpecczKJ5u/nN+xSeNbEWwlFYZB0FFwMiVxeLlpcu1arc3xZEThfktot3
+ fh3X/lXVmMTdOZ0JMq+b66fDBa4j7QG+WeBZaOq6xBSi+LUIRFS6Qmrci/HqSgt6AmfR
+ zdU3mTSCWvWY5cRgGndYdVbn5xhfmqasfv8p1+9uozMH5SQTOyFayuyz4YqYhlzMr451
+ 3YrQ==
+X-Gm-Message-State: AOJu0YxbOnsaoAnyo6+Bv+2qZwejXyCOLoxkTdkFtVROMXV1dye6hBZT
+ FTM8ePwII/6nOinPO22h389i6e0c7qYMWeB67yYZfhO1LT0j75UCYJZj/0DtU5jiRuZ10rcDmla
+ niqd2Jl7MEmVTo0fVkt/28YUmo7aYcA8hs+AEV4nVM6JZ+L4fSNQDQo5YAGUqBfF+nDYa8IAdvQ
+ iqBQPBrvASHxOM2WE6tYjpMu4yhF2/4o+uDQ==
+X-Gm-Gg: AZuq6aLd5XcZ0PjAPLFejfg5Ud+ZJgtbl+xHi6FdBqUJcNkCrRn1ighBrz+dwyJltiR
+ xgWDNQ7x1EUa+ZIXEKjnziYVJTtkCWSPAmMPCwkheqjW+fpMvPFZOSC+9vT5CK8C/aEeAyEeTbl
+ IJP5x8aviBIIAhaQGRxbWbuxxr6qk8xgIUQM9cXHRCPnGXfJcniUFCplYokrOWcykcqasYFffrZ
+ l1g9HtrQ0Wkx0tvyz978Pxg7tW7zqP0EzcmRPPM+hF8cQMqcMd+fGIhhKMOcBXdisbmIKb7yJRV
+ 4fVWMfXQsDyDt5QeIN9dsbYA5KSvcsXgkGPjJWLYvuwCVvnQCx7MdpYQiz+T3TSyLwBCvmYCdQc
+ Uz9mC9NpgW+sHGsCYxQXbO6V5s9bB5kadxw==
+X-Received: by 2002:a05:6000:2281:b0:430:fd0f:28fe with SMTP id
+ ffacd0b85a97d-43618050e5emr6402932f8f.31.1770231861213; 
+ Wed, 04 Feb 2026 11:04:21 -0800 (PST)
+X-Received: by 2002:a05:6000:2281:b0:430:fd0f:28fe with SMTP id
+ ffacd0b85a97d-43618050e5emr6402867f8f.31.1770231860643; 
+ Wed, 04 Feb 2026 11:04:20 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e263b9sm7936301f8f.4.2026.02.04.11.04.01
+ ffacd0b85a97d-43617e387b9sm8913503f8f.12.2026.02.04.11.04.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:02 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:00 -0500
+ Wed, 04 Feb 2026 11:04:20 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:04:18 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 31/51] vhost: accept indirect descriptors in shadow virtqueue
-Message-ID: <b569677fe06510a0661da6bf08aee70b1a3e5655.1770231744.git.mst@redhat.com>
+ zhenwei pi <pizhenwei@tensorfer.com>,
+ =?utf-8?B?7J207J6s7JiB?= <nakamurajames123@gmail.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: [PULL 39/51] cryptodev-builtin: Limit the maximum size
+Message-ID: <48978afc01e7c419e03c4dd608d0c4ece3832d02.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -123,43 +125,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eugenio Pérez <eperezma@redhat.com>
+From: zhenwei pi <pizhenwei@tensorfer.com>
 
-The device is not able to generate indirect descriptors by itself, only
-the driver can do it.  And SVQ is already able to handle them by reusing
-VirtQueue struct.
+This backend driver is used for demonstration purposes only, unlimited
+size leads QEMU OOM.
 
-Shadow VirtQueue just transform the indirect descriptors to chained
-buffers.  This way we don't need to map a new buffer for the indirect
-table and handle its exhaustion etc.  As they are only used in control
-plane and HW devices don't like indirect, we should not see significant
-downsides with these.
-
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
---
-
-Tested functionally by forwarding the CVQ descriptors.
-
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: CVE-2025-14876
+Fixes: 1653a5f3fc7 ("cryptodev: introduce a new cryptodev backend")
+Reported-by: 이재영 <nakamurajames123@gmail.com>
+Signed-off-by: zhenwei pi <zhenwei.pi@linux.dev>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251201125149.2151026-1-eperezma@redhat.com>
+Message-Id: <20251221024321.143196-3-zhenwei.pi@linux.dev>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 1 +
- 1 file changed, 1 insertion(+)
+ backends/cryptodev-builtin.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 2481d49345..6242aeb69c 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -34,6 +34,7 @@ bool vhost_svq_valid_features(uint64_t features, Error **errp)
-         switch (b) {
-         case VIRTIO_F_ANY_LAYOUT:
-         case VIRTIO_RING_F_EVENT_IDX:
-+        case VIRTIO_RING_F_INDIRECT_DESC:
-             continue;
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index 0414c01e06..55a3fbd27b 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -53,6 +53,8 @@ typedef struct CryptoDevBackendBuiltinSession {
  
-         case VIRTIO_F_ACCESS_PLATFORM:
+ #define CRYPTODEV_BUITLIN_MAX_AUTH_KEY_LEN    512
+ #define CRYPTODEV_BUITLIN_MAX_CIPHER_KEY_LEN  64
++/* demonstration purposes only, use a limited size to avoid QEMU OOM */
++#define CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE  (1024 * 1024)
+ 
+ struct CryptoDevBackendBuiltin {
+     CryptoDevBackend parent_obj;
+@@ -98,12 +100,7 @@ static void cryptodev_builtin_init(
+                          1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_MAC;
+     backend->conf.cipher_algo_l = 1u << VIRTIO_CRYPTO_CIPHER_AES_CBC;
+     backend->conf.hash_algo = 1u << VIRTIO_CRYPTO_HASH_SHA1;
+-    /*
+-     * Set the Maximum length of crypto request.
+-     * Why this value? Just avoid to overflow when
+-     * memory allocation for each crypto request.
+-     */
+-    backend->conf.max_size = LONG_MAX - sizeof(CryptoDevBackendOpInfo);
++    backend->conf.max_size = CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE;
+     backend->conf.max_cipher_key_len = CRYPTODEV_BUITLIN_MAX_CIPHER_KEY_LEN;
+     backend->conf.max_auth_key_len = CRYPTODEV_BUITLIN_MAX_AUTH_KEY_LEN;
+     cryptodev_builtin_init_akcipher(backend);
 -- 
 MST
 
