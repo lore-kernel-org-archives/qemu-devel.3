@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4573E8B38A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 02:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28DEE8B397
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 03:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnSfc-0004AF-Dd; Tue, 03 Feb 2026 21:31:08 -0500
+	id 1vnTfM-0003nG-8m; Tue, 03 Feb 2026 22:34:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1vnSfa-00049I-P6
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 21:31:06 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnTfJ-0003n7-Jo
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:34:54 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1vnSfY-0000Oy-39
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 21:31:06 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2a743050256so40230915ad.3
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 18:31:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnTfH-0000aO-Ru
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:34:53 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-2a0d67f1877so42229125ad.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 19:34:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1770172262; x=1770777062; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sBNSP7pWMOIu/H9JEVCg9qlWgOq5ASSmzfH3BGFRZJI=;
- b=a4HEr10Yk2fhXnEDL8UGAggCWnDlhthMMdOBqpr8SgTGeSRdumiu1DI5d5AJGz5f34
- lQrO0GqQ+kU4n9Q0oIQbNl8W/xPLpwe1c2yxvKBys9hvx6QUIGvi0Q3YljKPqjzd79ar
- JLrcr+/vOX54MxF5pfUxqwtpDpdZsBsZph35nwu6+6kk/jqB1YsvTdFbgRqQGSgUiYh2
- vsX3E6SbXroE/X7lYSJBBh4b+afWUi9YB1p3M/i7rvt27NzJ3aFwQegBm43OOgUfUjwS
- VzXnkHTkc6ev6RfqqVT1eGfqJdGMiIahfkp2RZt+fATGFYFB4usByrgbMCtthp0MJsRt
- YEng==
+ d=linaro.org; s=google; t=1770176090; x=1770780890; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Av8r5uw4CR5AB8M4Nksy6GgCjSnmLjeRlg/59X3iEOA=;
+ b=srIP1g5tLK0NnRv31xdTo+D87EXPxIQhDJgh2jXCnnU7CbC55/yEDtLa+bFeSCNcRR
+ SWwB5h0Vvptzam5coRcqhtmfdwLNz7JPbDL2K3EaA5ZjGstQd2Zeplm//cns7DkkKIVh
+ NdhAl59LQ/PpZVnO/oJJWWiozmI/eqjQ58DwESRlLMMz/0u7orBWY91joOuscnxp96vp
+ PeahPi2A8DLkUWDo6fpUBlW35DO9dKsyYEWp7+YsIlJ1AOcvfFYyUuK2NiLWnXKui/8c
+ 6jAZiyib7yGxYoTUCTEATWB2jI6cR3u7cqiE2eUnOqR/7+hBQfl8qLNm68+Uyo50PTmC
+ CBiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770172262; x=1770777062;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sBNSP7pWMOIu/H9JEVCg9qlWgOq5ASSmzfH3BGFRZJI=;
- b=G1dmiaccjodTlpGNERwxgORuaC6mDtbsJ2jP9k65xxbLt15Zi+tjsClrCNcEiRCZdO
- 6drBc3thSxP346UmVhsAD8Wz+m2Kb3vg+JZcVOWqebRMtGxwe3jMQwO9pjDGFr9FqB5z
- fk4CWhlQ9jCmH17g4ya6eefJaIymQxHnKPm6gzPUczSinCuTYL3M3t02WWmTQtqCIi+9
- KdQoXEYB+42EC+wrNA+suI06zkfznk1R2GFL2V+jCVmocDYPqt3AwxigtX91lj0JQg6J
- zyju1+zu2eyPV+7212adTlvE1UWNEVECm9HBBfAzTv+n3Y/J0RV2tiGUhYtPzVRyv4D7
- rUXw==
-X-Gm-Message-State: AOJu0YySnsFpAb58ptT5DisP8tMR0dXDrok00CPSaL/n9HZEVty3UqmS
- Vm3N4mS+lXzZHPf6iU16SR0M2Tzg3TeFETuOY5ZfG4ggSGMETxeTOt7RaJ0UF8AAxlIzPwXhDjt
- sfHiOLWK51oinyeQT1ywDoTYdau1+EGPf+Ca3rju/sQuz5NNeMEG1jOL09BsrlxpPJt05VY8/7v
- MmW70FApQgZxjexBFXZYitH8IOVbc5++CY7VSX7ArzCZ0=
-X-Gm-Gg: AZuq6aLyRLcPXuGJcsXjNjv+fa/hv+P+AD3KVAscYdG6FB3SgBCGMzfYJ5jsaZLFUym
- v1t5c5UzpAkFOtN6U/0flcWEBlsa4FYurWLjwLFrgPUDZ8V2V0ZpfnLoXe8xWW1n5DbUOOssPXj
- AgTJ+XrdZboG44q2SwFA//UUbmEj6J3+t0bXmPAfqL7hINl+V29AP81Nxo/tq8xF6QUok5vsWDl
- a2GQF63wl21ELBJjKK21x4qTrb95HWtFDwbHQi1hpMt0dkae6aJ8SQ0IGbgr2KJ5SR3/Eyt3409
- DHlOKjOkvWr/E2RHxFKYVQsohoKiJqW0bWoMTRSQzkz5fVknEonzD7yA9rGQ877FfuMiP2I00UE
- bPNnsGk748hcieI1Gn/Bps4tALSHcTRQv54sVDBArNOh/0JbjlsHIGvnfUyCs++/tdFfT0pQ1rP
- fldLElLXylsqUoSoIIOfjyAVQAVR+BdzE7jRTgRG8o0mWOCJAl
-X-Received: by 2002:a17:903:4b0d:b0:2a7:cf36:80f with SMTP id
- d9443c01a7336-2a933fffb49mr13008675ad.55.1770172261945; 
- Tue, 03 Feb 2026 18:31:01 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ d=1e100.net; s=20230601; t=1770176090; x=1770780890;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Av8r5uw4CR5AB8M4Nksy6GgCjSnmLjeRlg/59X3iEOA=;
+ b=VZt4U4QrmhSqminfCDJG1a6cquY38C3/UdqRb6joiL54/m6T7PakjjhsXo9vXXauPW
+ GiX5Txt57qnVw9MFdO0+NyCk0VpCSWUt0Fg6wnpPkO0GDwP94MafXvTtEwJxli68n3rO
+ 4x3u1WiH+YvLwvvXdY1MjcJJ/WkiVDtkMLah92blbxpiQgDf+YcoCIapWpYuFwx6RZqA
+ zE9ExjHADT1xUwb/a73fMmo98dGWSzHSPjoZxrineIa4ou758vwkr5FjVM0Mv6k5+OBQ
+ jub+Prw/7CRjux1fsOqjo53JoU/6LXWF8upWg8vJBXtZFAG63bp2xkkOaoV8oxq6n9On
+ X7Bg==
+X-Gm-Message-State: AOJu0YwzXc7Lw+8b/+Iv65CxPRv8HjqBGued3TgzfjwAf6g8vNFN095u
+ EVwYqdO/Qt/qMnDcHECIxGWIZCf5a3k821Ee5Spo4W74zILjTPwmyLUviQVknsI4RleGjsxtp+5
+ Gn1iHLJk=
+X-Gm-Gg: AZuq6aKj1A+ZqrOqnVfQkdoxQdn9EbpVWCnW0J6upO2ABRnWIVvOpDEXdy45IQZ4S6w
+ ZER40cnWR9bhw/QI8Z1rk7m894xzN63I4DcbDXQCrrcwzQUlrBZGZKhU9Ubmn7GnAOgnSWjbMrD
+ CByYwXMWOO1ywtQDgbIAfg2oJA40vKdaFhzy8V5go6Ijbr2Vx8/WdAiVtdzSit4O0x4j02e8afN
+ 3IX2Rv8hxJl5g3oaNVnWkAzmBsybtkL/KqiPB7jpR5npYcbTjHt61M65uWB3QjesSZdFfHG3f/z
+ OhFjsQKDlCsGbGGDwRpTNnN138SrPHJwl5egSlwUIpJvbnZeJiSquL0+9rN8Thd8MIVwFxdUlln
+ 50nyiIbHcuj2I8Fs+4KOs+BYET29UJg/GyatFd3tH0XKcrjW0tYYg8ncV9rcyl/RMks/Y2kgpUq
+ LI76ekYPbWPeQmzryZRUuJrzzlAdI3OCbrHGzG8dDt/Ky24y5TmYaCQbSOOyNhzTVqpMGge5NcV
+ Cp2HWdYbyINgmIT8IBEbwwQ4gGHB7cExCQH
+X-Received: by 2002:a17:902:ced2:b0:295:888e:9fff with SMTP id
+ d9443c01a7336-2a933d2fe37mr14937725ad.20.1770176090061; 
+ Tue, 03 Feb 2026 19:34:50 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
+ (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
+ [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a933965e6csm6991695ad.73.2026.02.03.18.30.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 18:31:01 -0800 (PST)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH] target/riscv: Mask xepc[0] only when Zc* extension is enabled
-Date: Wed,  4 Feb 2026 10:30:55 +0800
-Message-ID: <20260204023055.589588-1-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ d2e1a72fcca58-8241d4b8c8dsm773891b3a.69.2026.02.03.19.34.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Feb 2026 19:34:49 -0800 (PST)
+Message-ID: <28bcab83-0098-4e7c-b4c8-26c3bdf8a7f2@linaro.org>
+Date: Wed, 4 Feb 2026 13:34:45 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=frank.chang@sifive.com; helo=mail-pl1-x62e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Fix mremap() with old_size == 0
+To: qemu-devel@nongnu.org
+References: <20260201010436.5735-1-razvanghiorghe16@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260201010436.5735-1-razvanghiorghe16@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x641.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+On 2/1/26 11:03, Razvan Ghiorghe wrote:
+> When old_size is zero and old_address refers to a shareable mapping,
+> mremap() should create a new mapping of the same pages according to the
+> mremap(2) man page. The MREMAP_MAYMOVE flag must be specified in this case.
+> Previously, QEMU's target_mremap() rejected this valid case with EFAULT during
+> the initial validation, before checking for the special old_size == 0 behaviour.
+> 
+> This patch adds proper handling for old_size == 0:
+> - Validates that MREMAP_MAYMOVE flag is set (required by man spec)
+> - Passes the call through to the host mremap()
+> - Creates a new mapping without invalidating the original, with both
+> beeing valid and sharing the same physical memory frames.
+> 
+> Tested with the reproducer from the issue on qemu-riscv64.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3105
+> Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+> ---
+>   linux-user/mmap.c | 32 ++++++++++++++++++++++++++++++++
+>   1 file changed, 32 insertions(+)
+> 
+> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+> index 4bcfaf7894..b1a84eb60a 100644
+> --- a/linux-user/mmap.c
+> +++ b/linux-user/mmap.c
+> @@ -1117,6 +1117,38 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+>           errno = EINVAL;
+>           return -1;
+>       }
+> +
+> +    if (!old_size) {
+> +        if (!(flags & MREMAP_MAYMOVE)) {
+> +            errno = EINVAL;
+> +            return -1;
+> +        }
+> +        mmap_lock();
+> +        if (flags & MREMAP_FIXED) {
+> +            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
+> +                             flags, g2h_untagged(new_addr));
+> +        } else {
+> +            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
+> +                             flags);
+> +        }
 
-IALIGN is 16 when the CPU supports the Zc* extension. We should only
-mask xepc[0] when the Zc* extension is enabled.
+This probably doesn't work with host page size != target page size.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
----
- target/riscv/internals.h | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+The non-FIXED path doesn't work with reserved_va, as qemu needs to handle the address 
+space itself for that case.  See the top of target_mmap__locked.
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 35b923c4bf5..d2a77c41047 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -160,9 +160,15 @@ static inline float16 check_nanbox_bf16(CPURISCVState *env, uint64_t f)
- 
- static inline target_ulong get_xepc_mask(CPURISCVState *env)
- {
--    /* When IALIGN=32, both low bits must be zero.
--     * When IALIGN=16 (has C extension), only bit 0 must be zero. */
--    if (riscv_has_ext(env, RVC)) {
-+    RISCVCPU *cpu = env_archcpu(env);
-+
-+    /*
-+     * When IALIGN=32, both low bits must be zero.
-+     * When IALIGN=16 (has C or Zc* extensions), only bit 0 must be zero.
-+     */
-+    if (riscv_has_ext(env, RVC) || cpu->cfg.ext_zca ||
-+        cpu->cfg.ext_zcb || cpu->cfg.ext_zcd || cpu->cfg.ext_zce ||
-+        cpu->cfg.ext_zcf || cpu->cfg.ext_zcmp || cpu->cfg.ext_zcmt) {
-         return ~(target_ulong)1;
-     } else {
-         return ~(target_ulong)3;
--- 
-2.43.0
+> +
+> +        if (host_addr == MAP_FAILED) {
+> +            mmap_unlock();
+> +            return -1;
+> +        }
+> +        new_addr = h2g(host_addr);
+> +        prot = page_get_flags(old_addr);
+> +        /*
+> +         * For old_size zero, there is nothing to clear at old_addr.
+> +         * Only set the flags for the new mapping. They both are valid.
+> +         */
+> +        page_set_flags(new_addr, new_addr + new_size - 1,
+> +                       prot | PAGE_VALID, PAGE_VALID);
+> +        shm_region_rm_complete(new_addr, new_addr + new_size - 1);
 
+Don't you need to copy the shm data?
+Tracing all this through linux/mm/mremap.c is non-trivial...
+
+
+r~
 
