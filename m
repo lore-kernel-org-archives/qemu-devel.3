@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107ACE95363
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22D6E95363
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 09:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnZLE-0007aB-00; Wed, 04 Feb 2026 04:38:32 -0500
+	id 1vnZL3-0007Z1-0B; Wed, 04 Feb 2026 04:38:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vnZL8-0007Zk-Tr
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vnZKy-0007Yk-Dc
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vnZL7-0005wP-F2
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:26 -0500
+ id 1vnZKw-0005os-LE
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 04:38:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770197904;
+ s=mimecast20190719; t=1770197892;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gWQU8N3M/VEPlBfsThD0/ZfMnUZYv5eJfQvM3AaTjpw=;
- b=bv9mE5exr8FawS1U34eW1IdYJhIPR9Bk4/Ypf1OriOjFWt93KxbFRKM9MEh4u4BMZkiBgY
- Al2quhhNF3Kw/1tVymebdXhhEWc6mC8wFRgvTdYotTxIfbwV6paZGMhK9ywyO3Q/jxoSlf
- Zp/liIgvJu0YLxTnhPCAqGJf03HYrxY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CTIghZDDjcjcr+UxnuOTps3iekwhp2MJxs9bA1eXso8=;
+ b=QRw9cwcCwxR034GUxrUo1k/WMb2yWJc9M+ZG7J3NSzBj+VOPoH10sAabG8cMqBXxyisB0Z
+ 4sqQ+GuhyBHQW7Flfo+l7sn5EHknZiO8J1wzv44Gdif7C2zoUd7sDuy5wehJwXSnlHi6AW
+ zUe3bT4Fs2QvCxEPi62C84pJgRm9Xkc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-UplER3mdMSat_-NYFjzy6w-1; Wed,
- 04 Feb 2026 04:38:21 -0500
-X-MC-Unique: UplER3mdMSat_-NYFjzy6w-1
-X-Mimecast-MFC-AGG-ID: UplER3mdMSat_-NYFjzy6w_1770197900
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-vazB5vL5P_iZMnOwgFM9rg-1; Wed,
+ 04 Feb 2026 04:38:09 -0500
+X-MC-Unique: vazB5vL5P_iZMnOwgFM9rg-1
+X-Mimecast-MFC-AGG-ID: vazB5vL5P_iZMnOwgFM9rg_1770197887
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95A34195608F; Wed,  4 Feb 2026 09:38:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DC9E1956095; Wed,  4 Feb 2026 09:38:07 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.224.78])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD6881955D85; Wed,  4 Feb 2026 09:38:13 +0000 (UTC)
+ id 9AF891955D86; Wed,  4 Feb 2026 09:38:00 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jasowang@redhat.com, slp@redhat.com, hi@alyssa.is,
@@ -58,15 +57,13 @@ Cc: jasowang@redhat.com, slp@redhat.com, hi@alyssa.is,
  Peter Xu <peterx@redhat.com>, stefanha@redhat.com,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, mst@redhat.com,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v12 4/7] vhost_user: Add frontend get_shmem_config command
-Date: Wed,  4 Feb 2026 10:37:55 +0100
-Message-ID: <20260204093758.1250167-3-aesteve@redhat.com>
-In-Reply-To: <20260204093758.1250167-1-aesteve@redhat.com>
-References: <20260204093758.1250167-1-aesteve@redhat.com>
+Subject: [PATCH v12 2/7] vhost_user.rst: Align VhostUserMsg excerpt members
+Date: Wed,  4 Feb 2026 10:37:53 +0100
+Message-ID: <20260204093758.1250167-1-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,75 +88,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The frontend can use this command to retrieve
-VirtIO Shared Memory Regions configuration from
-the backend. The response contains the number of
-shared memory regions, their size, and shmid.
+Add missing members to the VhostUserMsg excerpt in
+the vhost-user spec documentation.
 
-This is useful when the frontend is unaware of
-specific backend type and configuration,
-for example, in the `vhost-user-device` case.
-
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- include/hw/virtio/vhost-backend.h | 10 ++++++++++
- include/hw/virtio/vhost-user.h    |  1 +
- include/hw/virtio/virtio.h        |  2 ++
- 3 files changed, 13 insertions(+)
+ docs/interop/vhost-user.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index ff94fa1734..ce58b4d2d6 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -163,6 +163,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
-                                             int *reply_fd,
-                                             Error **errp);
- typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
-+/*
-+ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
-+ * number of memory_sizes that will be accepted.
-+ */
-+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
-+                                         int *nregions,
-+                                         uint64_t *memory_sizes,
-+                                         Error **errp);
-+
- 
- typedef struct VhostOps {
-     VhostBackendType backend_type;
-@@ -220,6 +229,7 @@ typedef struct VhostOps {
-     vhost_supports_device_state_op vhost_supports_device_state;
-     vhost_set_device_state_fd_op vhost_set_device_state_fd;
-     vhost_check_device_state_op vhost_check_device_state;
-+    vhost_get_shmem_config_op vhost_get_shmem_config;
- } VhostOps;
- 
- int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 55d5725ef8..8ac2120cfd 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
-     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-+    VHOST_USER_PROTOCOL_F_SHMEM = 20,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 40d881ca09..9aef913af0 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -82,6 +82,8 @@ typedef struct VirtQueueElement
- 
- #define VIRTIO_NO_VECTOR 0xffff
- 
-+#define VIRTIO_MAX_SHMEM_REGIONS 256
-+
- /* special index value used internally for config irqs */
- #define VIRTIO_CONFIG_IRQ_IDX -1
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 93a9c8df2b..17a68a62eb 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -366,11 +366,15 @@ In QEMU the vhost-user message is implemented with the following struct:
+           struct vhost_vring_state state;
+           struct vhost_vring_addr addr;
+           VhostUserMemory memory;
++          VhostUserMemRegMsg mem_reg;
+           VhostUserLog log;
+           struct vhost_iotlb_msg iotlb;
+           VhostUserConfig config;
++          VhostUserCryptoSession session;
+           VhostUserVringArea area;
+           VhostUserInflight inflight;
++          VhostUserShared object;
++          VhostUserTransferDeviceState transfer_state;
+       };
+   } QEMU_PACKED VhostUserMsg;
  
 -- 
 2.52.0
