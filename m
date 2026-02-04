@@ -4,106 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956C5E83041
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 06:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B5BE8B39F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 06:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnWbO-0006CH-Di; Wed, 04 Feb 2026 01:43:02 -0500
+	id 1vnWgH-0007rk-K2; Wed, 04 Feb 2026 01:48:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnWbI-00069Q-DB
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:42:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vnWgF-0007rO-BF
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:48:03 -0500
+Received: from mail-westus3azon11011066.outbound.protection.outlook.com
+ ([40.107.208.66] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnWbD-0004ku-1d
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:42:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770187369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cIKuDVWrmwsDYfsEMIyqgWJoMDF4gy/wdB7kJv+fqRk=;
- b=cdiuGWBAMUpcnzSdItDUkowFvVkW/PejmpltT59tWuen5mD+QAScwd5410QyJrHdjV4ty+
- OKwqFITgyIGTvKH2h1Dy4GHPxN2kssFEIq33mrMBu2y4mpdt+WU+0e9SLmZMB6ilqUZRhW
- feUdkyff2ZgQyK5ETl8EFZYLyj2Lo44=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-58-kuwDIT3cOdCEGgZgNyu-UA-1; Wed, 04 Feb 2026 01:42:48 -0500
-X-MC-Unique: kuwDIT3cOdCEGgZgNyu-UA-1
-X-Mimecast-MFC-AGG-ID: kuwDIT3cOdCEGgZgNyu-UA_1770187367
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4358f1c082eso310313f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 22:42:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770187367; x=1770792167; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=cIKuDVWrmwsDYfsEMIyqgWJoMDF4gy/wdB7kJv+fqRk=;
- b=HTJKxZg4w36ud3zfCFSO2/BgiNVfUj8DN6YjXhg4ChfBNPKZEQd3WPNW1t/XndD/nP
- hIZ79d6wPq/GqbQfzBFvZtkROQWZMjCRK5CNTE8WNjn6Kxug0jd0fI394OCKxYrPkIEV
- pDTz1pkqCWOA4Mf9juO+KfpwpO9b/uG0wRnMv3UakGb4b9KvYZO86A22Nd4b1e2W/q+I
- MrhKE8OzPW1Q7ycT9HjNIzWgx+AraoebCkdUGoGbu5+y+1z6aeDXoRr1PrMEWHDZY3ns
- 4Wmhus6rRyP5mHncw93o3itQIxpAcmq4rnpUM36C+QMI/lXRlDs41CWmRpnmJAwkq86+
- bN6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770187367; x=1770792167;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cIKuDVWrmwsDYfsEMIyqgWJoMDF4gy/wdB7kJv+fqRk=;
- b=RLeKg55WZp75E5NHwUw0fC9z6vgmUWnSPB1Iwc9KJr92KfxCdjd6UaklJzMl7+O51o
- 5lsDO89a3dXKu6Xf+8W/voeEQG1pFiTAzVihn6/RZgTXPaQb+rwd5RqBgZbiCi2KxmDb
- d1j7/h89HLTcAFC7eiwousJHixc9cz3UbYmS3A+KyW4aKqwRjDHGMJbdka03rOGnFAjM
- 7GHqrmVbROXiwV0GZ6uo4r5kjOjyNvmdXnuYi+GjZymAOIO/KepQVSYe1de5012mtu+v
- jwAwsS5reBrO/ZgS0PQRMhv1FkYX54awZYa8u2P5h7LUqIzM3DygUiyPjLpcseHYe+ON
- 8c+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQn0OayH2MDMcm9g61Q4MQRC+/dFbV4OqULijVAUJjwyAC5bSYD91X2o35XOBwlFPR1VilOIzFfUHU@nongnu.org
-X-Gm-Message-State: AOJu0YwbNAUDblbop9/rA4Y89LOTDDh6A66Et/uRtzqY3DMLw0S2gzkP
- pFEvRJPsYQMIEJwtwYT/8ZoB3OpVuYiPF4ZOwXi5cMcGRRhoh+zOL2/9ca4tyC0//d+XWqzSxPh
- 7Hult26H2X/Yb9eDsVYU+mibcHT4jD3u4IeZyz6grBl7106uHy3Vmrhi2
-X-Gm-Gg: AZuq6aLaNM5ZAAAF+4uJq4yv028FMsXJSCO0QSn5o0qg8/ug9Z5dJlNYWAFUzjwyED7
- gNSHao/LhBEzGTLA5u77hqER4SPEwMA+snEVO0FGj2/cFnvXz6XxQTi7GwpYp+KiXr6QYDifOmT
- Gx1KRNlhWKlg4eBZik7gBfs+i3ykVwLZILEOKyWoVU/yPsm5gJaZ/3AjzVgXSX7c0gMocjtkNNJ
- Cc0BOBuFjtIVYs75+SsKSNPTzda9nr6W9aS5StH/5BoyezHzqchOcQ3cbQjpjg64RVNzmv9iUUY
- nXmv7uxutxo/dTy50KQrnzSxvIlcr+cTFSi/93k18YTLABEZOY54x4GlDUAUZZhcTKt+6zrICBw
- O3M4c+FtSWyF5u1Bkf+kVcSsY77Rv8ZTu2Q==
-X-Received: by 2002:a05:6000:2504:b0:436:4c1:ce9f with SMTP id
- ffacd0b85a97d-436113099a4mr8262688f8f.5.1770187366670; 
- Tue, 03 Feb 2026 22:42:46 -0800 (PST)
-X-Received: by 2002:a05:6000:2504:b0:436:4c1:ce9f with SMTP id
- ffacd0b85a97d-436113099a4mr8262645f8f.5.1770187366009; 
- Tue, 03 Feb 2026 22:42:46 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e40b49sm4022102f8f.19.2026.02.03.22.42.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 22:42:45 -0800 (PST)
-Date: Wed, 4 Feb 2026 01:42:42 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
-Subject: Re: [PATCH v2 4/9] pnv/phb4: Implement read-only and write-only bits
- of registers
-Message-ID: <20260204001948-mutt-send-email-mst@kernel.org>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
- <20251230102156.886288-5-saif.abrar@linux.vnet.ibm.com>
- <20260204000148-mutt-send-email-mst@kernel.org>
- <20260204001123-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vnWgC-0005rB-Rv
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 01:48:02 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lx4e6w5sXepcqbmtCK4DszS3PofUVSPR3bGznVtjZvOUZi0dWfXmUWLvroO7MOWfXKogcPudPsi+YJnGbF2g8EDDieYDviIxNYDlGP/Zl8yvGxAjJF3dVuRLW69Tzl5uHUVRzzhfZ21/IcJBWJJaxeMhdlDYuYLHia/oBKeOpR4+EUZoed2WqX74F7xq4I3NPnVrkHF7iJXZBherYWBmvUi9y03gdyoK1PjxPp7Ocb4iiEWrY5yV0haU6UqaAqkOGzhTjZ7NCGTDRFAcHGyPzbUR/BlkNJ2WXTv8k/hHWcDJ9i6P/3NcUT5+CiRz60U+yTIgDB2WAKeLMm4LBeuWeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9clVYLlSpy9CksWF+Ayq2TcvUtjtoDxpyDafa7tPnHs=;
+ b=FeH7McXe2kPOLvtCHUJ6VE8q4rUZxHTun5E/IW3d51xO3wGRyn/kaYu4C0zW9VwAzsOoEKuWkiTipQ/wNBOUqCHJXdBolumttkinPS1uRdaX0UFRi8/Ot5Sv/Ha9ZtZTfmyc4eR6Ak9oocEyNt7YsLckr3NkwYEWli/SYVGvEeXESZ8yoGNb3GFk61A+I5ozH9tm0tPhXJb6jfc1sPiO6+Kqkl4brhslsFxEZ6mjUEBDQaQcvKPLPBlfaQzE92vUn7n/r+NxxYwCT3BZC0RpG8QmkFBToMb3OQLkuPcmB/lTZZpBNTk8HtSuFGTeS75/vChFPauUktXD1MQF9B+qBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=intel.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9clVYLlSpy9CksWF+Ayq2TcvUtjtoDxpyDafa7tPnHs=;
+ b=P4q4DRaHa+21vHtt/0SqDfzuvFEzXlPF+k1PZZ1nK/ckA0Eyi3+AjWOt3pbd31/MnWhrWsBQgE7b8dPmlx5D814JSiOEVQ/CPDdaWoCnsXVvidej+i5nfU3gByidolGUJCO7KNhp3rXGI7NGMTZnXpBbhU6UUx+0+umuGfjibTM=
+Received: from BL0PR02CA0142.namprd02.prod.outlook.com (2603:10b6:208:35::47)
+ by MW3PR12MB4489.namprd12.prod.outlook.com (2603:10b6:303:5e::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.15; Wed, 4 Feb
+ 2026 06:42:54 +0000
+Received: from BL02EPF0002992A.namprd02.prod.outlook.com
+ (2603:10b6:208:35:cafe::68) by BL0PR02CA0142.outlook.office365.com
+ (2603:10b6:208:35::47) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.13 via Frontend Transport; Wed,
+ 4 Feb 2026 06:42:54 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0002992A.mail.protection.outlook.com (10.167.249.55) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.10 via Frontend Transport; Wed, 4 Feb 2026 06:42:54 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 4 Feb
+ 2026 00:42:53 -0600
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 3 Feb
+ 2026 22:42:52 -0800
+Received: from [172.31.180.39] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Tue, 3 Feb 2026 22:42:49 -0800
+Message-ID: <fbd7da6a-5b06-4fb4-9edf-f2a53a137ea0@amd.com>
+Date: Wed, 4 Feb 2026 12:12:43 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260204001123-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+Subject: Re: [PATCH 2/5] i386: Add CPU property x-force-cpuid-0x80000026
+To: Zhao Liu <zhao1.liu@intel.com>
+CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <kvm@vger.kernel.org>,
+ <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
+ <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>
+References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
+ <20251121083452.429261-3-shivansh.dhiman@amd.com>
+ <aV4PgVwYVXHgmCi3@intel.com> <8ef42171-5473-449f-bd72-e9874fa6f7f1@amd.com>
+ <aWSpZxg7kKrdBifu@intel.com>
+Content-Language: en-US
+In-Reply-To: <aWSpZxg7kKrdBifu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0002992A:EE_|MW3PR12MB4489:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3bdca86e-afbf-4b4e-f274-08de63b89fde
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|82310400026|1800799024|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?b1FQQkplQ2JMVFlaeHI2K20rVE1kMjgvUSs4YjBFZWdLVGN2ZzYyeVJLNXdN?=
+ =?utf-8?B?eThpZjdSaGcwcmVBZjVrdldQTUIzS0RtVWlRRTdaZkloSStnV1dLSmx4UWNJ?=
+ =?utf-8?B?Q1RCNWMvSlRVdjArN2F5MEFMRDVPQXgwc2x1WVEyUWRBRWY1NWtHaDZpY01x?=
+ =?utf-8?B?Z3d1YmtHSDczNHVJZFFmQzhxaDZVZWk1QWxSdVpvcGtVVWdrelhZYTBWQ2I1?=
+ =?utf-8?B?MnpEL2xPN0pyTG9hditFY0d1OUhEb3BBWGRycW5HU0l1d2drR2FRR0NRelhk?=
+ =?utf-8?B?NEdkNUcxU0tNSmFjS21nYklFQ210VkhBTWppa0tRNHVzWDZLOTBKR2tBVk1h?=
+ =?utf-8?B?QXllZmhIUUZKUk90SkV4a2Z2VmZSZVFUWFJDZVlCMUUwVVRuSGJ2QlJEUlBT?=
+ =?utf-8?B?KzFlK3l4MkR2UXpQTGhwaVlnYzZlS1g0cmRVNGJTc1NBdnFWY3JteCt1eGhW?=
+ =?utf-8?B?UmpIeStxVlZ3OU1KS1FsSXZzb2pHKy8yWXNJRXdEdzhFT0FFa3FLb2s1US9R?=
+ =?utf-8?B?ellqZHVUMmJyTjJhMTFyd2RKR0IzN0VDQnlEY0tZM0RZdDR5aUxsZjZFb28z?=
+ =?utf-8?B?UnJLVHR5RE8xeGo1ZGNER0xaWXYweXpJTFZsSXlTZWhLSms4OFdSVXhpdmRW?=
+ =?utf-8?B?QStYTE0vek50VkJFTFhuUFRwS3g5bThmWlV1MmZIMCtsNy9PQ2lNVjMybHFY?=
+ =?utf-8?B?U1JYSDhQTXJIZmdlbGJRMWVremtRMHN1RUhWZC8vSXBDRmxmVTJxZzNUVW9p?=
+ =?utf-8?B?TWFUbU9ISmptSW4xVjZNTlQ1MUZ0eWVuVENNc2ptaHZmSG9KblFOdjg3Tm9U?=
+ =?utf-8?B?bVFDQmZUYXNIaTBKLzNPWDBsU25ubTdibFBuSzZEMGxMV2t0aUZaRXpXTURj?=
+ =?utf-8?B?TU80dDFjalNOazVyY1R2UUhqVXE0WStSMGpPMlFJWXl6MkpYdldXbE9qdnlS?=
+ =?utf-8?B?QU9OdTdKRTdrWDJOSDVObCtmS0xiNGFXRXFTVE5KY1NraVIxdUFPNTg1OEhK?=
+ =?utf-8?B?YWRZcHJvNmNLVHNBSzR4STZwYXdNRkNKV2V1SW51VWdPR1R2cFlwRTlJeDZB?=
+ =?utf-8?B?VzlJTzBUZjFRYzJSNGc5TmFhM1VYSVlhQ0JoanVJNG93TlkxWjBjc3dTUVd0?=
+ =?utf-8?B?ZDdGRDhMRDlpME8zS2tGQ3NvQVNVVFl3L25rUDdITHZFTmw1dEJKbk9SWlVa?=
+ =?utf-8?B?cGs0SmQ2SGtxVi81M3pqcm9ETGFIMDljTWZXSHRYdGkvcGJ6cnpPM0J0RURw?=
+ =?utf-8?B?bzFMT2Nlc3BzWGRWdnJuemtrVElWc1V3TEJaeDZuQ1Rpd3g3RitHbUFuTFM1?=
+ =?utf-8?B?Ym9xYTZlVmRGa05JeC9BazBBMmJhUUpPNmxNRWpmdUo1UGRlUUhxakplY3dz?=
+ =?utf-8?B?Zm9OOHVobFdFR0d4M05mNGZBeG9xUUtZNVExWFRYL0VNL1dNZmFTSVZsUTQx?=
+ =?utf-8?B?R1B6WmJxS0tHUkNnc0tFNGJtSHJWWCt1alhsSWpHaWFaQWZ1bUlOMU5NSVJx?=
+ =?utf-8?B?VXNwcFRucnNOTUZycVprSVZzVVdLdHBOVXVsbldSa2xhOE1lQnlUZFY1Z1hz?=
+ =?utf-8?B?SEhVdlFrZmtyUmZzTWttRFNUZHRiWVRVSmNQQ3hDcVVRNEZ2cVpKaTZYSElG?=
+ =?utf-8?B?ZGJzdkpCeG13czVQL2sxaGFBdFZpRVoxOUhyS01TRk5yMEYySFk5eDJ0dHJn?=
+ =?utf-8?B?TnhVYlE3eHZUZ1NJL2phZHZmVTJJQVZ2amhaQlpaV3dvaURtYm01dnRFTnZV?=
+ =?utf-8?B?dU9wbEVqbnFiRm9PNlh0ME94S25iZXU5bml3Q0E3U0twN08vZjJIS2tsd3VQ?=
+ =?utf-8?B?SCtiMTREblZEcmpGZ1BOYk1JVlJ5OThQQjNpUUhWMzQ3bm92TEZkUWIrcERN?=
+ =?utf-8?B?TWVmUmt3ckxuZW0wOHJBUTBvenc3Ym9vWXkwZ0E2V2RoZUt2OGhyQjV4TFZ4?=
+ =?utf-8?B?bGVZbGlqZXh0NnAybjdmWGJFY1M0anVoak9kekVNTFYydnZneTlqTFlpbzBB?=
+ =?utf-8?B?OWhHcFRyQkR0U2MrcDZHQU5WYlpuZi93NitXM3FuQ3pCZC9UQ1F4eExOQUNj?=
+ =?utf-8?B?aURnaHl2RVB4WUFUK1dDVzd3cXFLN1h1QlJDNGxKSVNxa0kvdWMxRkNrcjZy?=
+ =?utf-8?B?WW9LVjBVcGpXRndPYXBZOXZUTlZvNlZ3ZUU5ekJ4cERNR3o2VkErazZsb0hD?=
+ =?utf-8?B?emJGeUpncWE0emZxM3h4S01vNlV0a0Q1bFFqam9jSEJ1a3FtdnJSTGlNV2xx?=
+ =?utf-8?B?djlSM01HWE1wYmV1bjU1ZHUrSHBRPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: MN/2MwL15+Y/ZUHlZv3td8YBdhesx6OLIj3KOg5nnuctpHjQ9Cvs8VJ5wxZ4zpk+sabJI0nTOB+Bdv65epwAj1nYsodWtLGhuGk1n6zd7v0QGkzLSloAUAXVr5vDaigMiYE101UopCypCVcp9fflfgoobsuI6WQU/MYmfvyhGSXYed/EYJzkQs45ST/fd3eNXEnfqQPT0P4IuXVqLQZJ4Tqvev1Tn9de/P0sTUJ4MVo7qMWquRSlvwXdO/FhE5V2nDj9kg1jauj8wykLibqqEQqdKg5hJ7Hs0Vcyf5F3OnFDE8e/uDEPzAv0swbcLjhSnyYvyzxBjiIsBzdtjwtnFzFJWhluvxu0fl2viqYVgGPLMfTzDFMC/6+npVNBkyroQEXDf5hMcYROryWFSw4Y1J+ZH/dwByFixdFh5NgrJIWgCpIxr7F8TxgLxdCT+iRa
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 06:42:54.0053 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3bdca86e-afbf-4b4e-f274-08de63b89fde
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0002992A.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4489
+Received-SPF: permerror client-ip=40.107.208.66;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,7 +157,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,486 +173,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 12:12:01AM -0500, Michael S. Tsirkin wrote:
-> On Wed, Feb 04, 2026 at 12:04:20AM -0500, Michael S. Tsirkin wrote:
-> > On Tue, Dec 30, 2025 at 04:21:22AM -0600, Saif Abrar wrote:
-> > > SW cannot write the read-only(RO) bits of a register
-> > > and write-only(WO) bits of a register return 0 when read.
-> > > 
-> > > Added ro_mask[] for each register that defines which
-> > > bits in that register are RO.
-> > > When writing to a register, the RO-bits are not updated.
-> > > 
-> > > When reading a register, clear the WO bits and return the updated value.
-> > > 
-> > > Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
-> > > PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
-> > > by writing all 1's and reading back the value.
-> > > The WO bits in these registers should read back as 0.
-> > > 
-> > > Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> > > Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> > 
-> > causes a crash in boot-serial-test:
-> > https://gitlab.com/mstredhat/qemu/-/jobs/12975819193
+Hi,
+
+On 12-01-2026 13:27, Zhao Liu wrote:
+>> On 07-01-2026 13:17, Zhao Liu wrote:
+>>> On Fri, Nov 21, 2025 at 08:34:49AM +0000, Shivansh Dhiman wrote:
+>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>>> index b7827e448aa5..01c4da7cf134 100644
+>>>> --- a/target/i386/cpu.c
+>>>> +++ b/target/i386/cpu.c
+>>>> @@ -9158,6 +9158,12 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>>>          if (env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) {
+>>>>              x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x12);
+>>>>          }
+>>>> +
+>>>> +        /* Enable CPUID[0x80000026] for AMD Genoa models and above */
+>>>> +        if (cpu->force_cpuid_0x80000026 ||
+>>>> +            (!xcc->model && x86_is_amd_zen4_or_above(cpu))) {
+>>>
+>>> I understand you want to address max/host CPU case here, but it's still
+>>> may not guarentee the compatibility with old QEMU PC mahinces, e.g.,
+>>> boot a old PC machine on v11.0 QEMU, it can still have this leaf.
+>>
+>> Wouldn't initializing x-force-cpuid-0x80000026 default to false prevent this?
+>> Oh, but, this CPUID can still be enabled on an older machine-type with latest
+>> QEMU with the existing checks. And probably this could also affect live migration.
 > 
-> I forgot to say - with tci:
+> Yes, on a zen4 host, booting an older machine with latest QEMU will have
+> this CPUID leaf.
+>  
+>>> So it would be better to add a compat option to disable 0x80000026 for
+>>> old PC machines by default.
+>>
+>> Does this look fine?
+>>
+>> GlobalProperty pc_compat_10_2[] = {
+>>     { TYPE_X86_CPU, "x-force-cpuid-0x80000026", "false" },
+>> };
+>> const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
 > 
->   ../configure --enable-tcg-interpreter --target-list=ppc64-softmmu                                                                      
+> It looks fine if we only check "if (cpu->force_cpuid_0x80000026)".
+> 
+>>> If needed, to avoid unnecessarily enabling extended CPU topology, I think
+>>> it's possible to implement a check similar to x86_has_cpuid_0x1f().
+>>
+>> Do you mean something like this? I avoided it initially because it is
+>> functionally same as current one, and a bit lengthy.
+> 
+> Sorry for confusion. Could we get rid of model check
+> (x86_is_amd_zen4_or_above)? and could we do something like 0x1f leaf,
 
-triggered with tcg now, too.
-
-  Core was generated by `/scm/qemu-bisect/build/qemu-system-ppc64 -qtest unix:/tmp/qtest-194326.sock -qtest-log /dev/null -chardev     
-     socket,path=/tmp/qtest-194326.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with                      
-    exit-with-parent=on -M powernv9 -no-shutdown -chardev file,id=serial0,path=/tmp/qtest-boot-serial-sVOZKK3 -serial                    
-    chardev:serial0 -accel tcg -accel kvm -accel qtest'.                                                                                 
-    Program terminated with signal SIGSEGV, Segmentation fault.                                                                          
-    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
-    1871            if (lprop->flags & OBJ_PROP_LINK_DIRECT) {                                                                           
-    [Current thread is 1 (Thread 0x7f2716e774c0 (LWP 194336))]                                                                           
-    warning: File "/scm/qemu/.gdbinit" auto-loading has been declined by your `auto-load safe-path' set to                               
-    "$debugdir:$datadir/auto-load:/usr/lib/golang/src/runtime/runtime-gdb.py".                                                           
-    To enable execution of this file add                                                                                                 
-        add-auto-load-safe-path /scm/qemu/.gdbinit                                                                                       
-    line to your configuration file "/home/mst/.config/gdb/gdbinit".                                                                     
-    To completely disable this security protection add                                                                                   
-        set auto-load safe-path /                                                                                                        
-    line to your configuration file "/home/mst/.config/gdb/gdbinit".                                                                     
-    For more information about this security protection see the                                                                          
-    "Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:                                                       
-        info "(gdb)Auto-loading safe path"                                                                                               
-    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
-    #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,     
-     errp=0x7ffe749d2a00) at ../qom/object.c:1945                                                                                        
-    #2  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", v=0x55fe8ebc81a0,                      
-    errp=0x7ffe749d2a00) at ../qom/object.c:1450                                                                                         
-    #3  0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebc8520,          
-    errp=0x7ffe749d2a00) at ../qom/qom-qobject.c:28                                                                                      
-    #4  0x000055fe6e84ab7b in object_property_set_str (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebbc8e0               
-    "/machine/chip[0]/pec[0]", errp=0x7ffe749d2a00) at ../qom/object.c:1458                                                              
-    #5  0x000055fe6e84ad30 in object_property_set_link (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8e654330,             
-    errp=0x7ffe749d2a00) at ../qom/object.c:1495                                                                                         
-    #6  0x000055fe6e7fb1ff in pnv_phb_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2a00) at ../hw/pci-host/pnv_phb.c:156                  
-    #7  0x000055fe6e8435be in device_set_realized (obj=0x55fe8ebbb960, value=true, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:523         
-    #8  0x000055fe6e84d060 in property_set_bool (obj=0x55fe8ebbb960, v=0x55fe8e70db20, name=0x55fe6efb2979 "realized",                   
-    opaque=0x55fe8e2595f0, errp=0x7ffe749d2d60) at ../qom/object.c:2376                                                                  
-    #9  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", v=0x55fe8e70db20,                 
-    errp=0x7ffe749d2d60) at ../qom/object.c:1450                                                                                         
-    #10 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=0x55fe8ebbc860,     
-     errp=0x7ffe749d2d60) at ../qom/qom-qobject.c:28                                                                                     
-    #11 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=true,                  
-    errp=0x7ffe749d2d60) at ../qom/object.c:1520                                                                                         
-    #12 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8ebbb960, bus=0x55fe8e6164d0, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:276        
-    #13 0x000055fe6e1ee440 in sysbus_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2d60) at ../hw/core/sysbus.c:249                        
-    #14 0x000055fe6e7f9901 in pnv_pec_default_phb_realize (pec=0x55fe8e654330, stack_no=0, errp=0x7ffe749d2d60) at                       
-    ../hw/pci-host/pnv_phb4_pec.c:194                                                                                                    
-    #15 0x000055fe6e7f9bc0 in pnv_pec_realize (dev=0x55fe8e654330, errp=0x7ffe749d2d60) at ../hw/pci-host/pnv_phb4_pec.c:258             
-    #16 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e654330, value=true, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:523         
-    #17 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e654330, v=0x55fe8e63ea90, name=0x55fe6efb2979 "realized",                   
-    opaque=0x55fe8e2595f0, errp=0x7ffe749d2fe8) at ../qom/object.c:2376                                                                  
-    #18 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", v=0x55fe8e63ea90,                 
-    errp=0x7ffe749d2fe8) at ../qom/object.c:1450                                                                                         
-    #19 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=0x55fe8ebbb0f0,     
-     errp=0x7ffe749d2fe8) at ../qom/qom-qobject.c:28                                                                                     
-    #20 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=true,                  
-    errp=0x7ffe749d2fe8) at ../qom/object.c:1520                                                                                         
-    #21 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e654330, bus=0x0, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:276                   
-    #22 0x000055fe6e676fef in pnv_chip_power9_pec_realize (chip=0x55fe8e64e4f0, errp=0x7ffe749d2fe8) at ../hw/ppc/pnv.c:1892             
-    #23 0x000055fe6e677b1b in pnv_chip_power9_realize (dev=0x55fe8e64e4f0, errp=0x7ffe749d3080) at ../hw/ppc/pnv.c:2108                  
-    #24 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e64e4f0, value=true, errp=0x7ffe749d3190) at ../hw/core/qdev.c:523         
-    #25 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e64e4f0, v=0x55fe8e623cf0, name=0x55fe6efb2979 "realized",                   
-    opaque=0x55fe8e2595f0, errp=0x7ffe749d3190) at ../qom/object.c:2376                                                                  
-    #26 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", v=0x55fe8e623cf0,                 
-    errp=0x7ffe749d3190) at ../qom/object.c:1450                                                                                         
-    #27 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=0x55fe8e63eb90,     
-     errp=0x55fe6f599380 <error_fatal>) at ../qom/qom-qobject.c:28                                                                       
-    #28 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=true,                  
-    errp=0x55fe6f599380 <error_fatal>) at ../qom/object.c:1520                                                                           
-    #29 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 <error_fatal>) at                
-    ../hw/core/qdev.c:276                                                                                                                
-    #30 0x000055fe6e842ca4 in qdev_realize_and_unref (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 <error_fatal>) at      
-    ../hw/core/qdev.c:283                                                                                                                
-    #31 0x000055fe6e1ee488 in sysbus_realize_and_unref (dev=0x55fe8e64e4f0, errp=0x55fe6f599380 <error_fatal>) at                        
-    ../hw/core/sysbus.c:254                                                                                                              
-    #32 0x000055fe6e675245 in pnv_init (machine=0x55fe8e615c80) at ../hw/ppc/pnv.c:1221                                                  
-    #33 0x000055fe6e1e62de in machine_run_board_init (machine=0x55fe8e615c80, mem_path=0x0, errp=0x7ffe749d3420) at                      
-    ../hw/core/machine.c:1747                                                                                                            
-    #34 0x000055fe6e44f235 in qemu_init_board () at ../system/vl.c:2715                                                                  
-    #35 0x000055fe6e44f5c8 in qmp_x_exit_preconfig (errp=0x55fe6f599380 <error_fatal>) at ../system/vl.c:2809                            
-    #36 0x000055fe6e452a22 in qemu_init (argc=28, argv=0x7ffe749d37d8) at ../system/vl.c:3849                                            
-    #37 0x000055fe6e99bb52 in main (argc=28, argv=0x7ffe749d37d8) at ../system/main.c:71                                                 
-     
-
-
-Looking at it:
-
-    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
-    #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,     
-     errp=0x7ffe749d2a00) at ../qom/object.c:1945                                                                                        
-              
-
-  The opaque=0xf (15) is being passed as lprop but it should be a pointer to an ObjectLinkProperty.
-
-Could be this:
-  -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)                                                                                         
-  +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)                                                                                  
-
-The following seems to fix it:
-
-$ git diff
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 48caba9e79..0eb1e7c2bf 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -1998,6 +1998,7 @@ static const TypeInfo pnv_phb4_type_info = {
-     .parent        = TYPE_DEVICE,
-     .instance_init = pnv_phb4_instance_init,
-     .instance_size = sizeof(PnvPHB4),
-+    .class_size    = sizeof(PnvPHB4Class),
-     .class_init    = pnv_phb4_class_init,
-     .interfaces = (const InterfaceInfo[]) {
-             { TYPE_XIVE_NOTIFIER },
-
-
-without .class_size, QOM will allocate sizeof(DeviceClass) and heap is
-corrupted.
+The CPUs prior to Zen4 do not have this CPUID. So, we need to match the hardware
+and avoid enabling 80000026h on guests booting with EPYC-Milan or older. For
+such a condition, we can't get rid of the model/family check.
 
 > 
-> > bisect script:
-> > 
-> > #!/bin/bash                                                                                                                            
-> > cd /scm/qemu-bisect/build                                                                                                              
-> > make -j$(nproc) || exit 125                                                                                                            
-> > ninja tests/qtest/boot-serial-test || exit 125                                                                                         
-> > QTEST_QEMU_BINARY=./qemu-system-ppc64 timeout 60 ./tests/qtest/boot-serial-test -p /ppc64/boot-serial/powernv9 && exit 0 || exit 1     
-> > 
-> > 
-> > > ---
-> > > v1 -> v2: New PnvPHB4Class to hold each register's RO mask.
-> > > 
-> > >  hw/pci-host/pnv_phb4.c              | 78 ++++++++++++++++++++++++++---
-> > >  include/hw/pci-host/pnv_phb4.h      | 13 ++++-
-> > >  include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
-> > >  tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
-> > >  4 files changed, 157 insertions(+), 14 deletions(-)
-> > > 
-> > > diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> > > index 70f5af21fa..48caba9e79 100644
-> > > --- a/hw/pci-host/pnv_phb4.c
-> > > +++ b/hw/pci-host/pnv_phb4.c
-> > > @@ -707,6 +707,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-> > >          return;
-> > >      }
-> > >  
-> > > +    /* Update 'val' according to the register's RO-mask */
-> > > +    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
-> > > +    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
-> > > +                                            (val & ~(k->ro_mask[off >> 3]));
-> > > +
-> > >      /* Record whether it changed */
-> > >      changed = phb->regs[off >> 3] != val;
-> > >  
-> > > @@ -781,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-> > >      case PHB_TCE_TAG_ENABLE:
-> > >      case PHB_INT_NOTIFY_ADDR:
-> > >      case PHB_INT_NOTIFY_INDEX:
-> > > -    case PHB_DMARD_SYNC:
-> > > +    case PHB_DMA_SYNC:
-> > >         break;
-> > >  
-> > >      /* Noise on anything else */
-> > > @@ -819,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-> > >      case PHB_VERSION:
-> > >          return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
-> > >  
-> > > -        /* Read-only */
-> > > +    /* Read-only */
-> > >      case PHB_PHB4_GEN_CAP:
-> > >          return 0xe4b8000000000000ull;
-> > >      case PHB_PHB4_TCE_CAP:
-> > > @@ -829,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-> > >      case PHB_PHB4_EEH_CAP:
-> > >          return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
-> > >  
-> > > +    /* Write-only, read will return zeros */
-> > > +    case PHB_LEM_ERROR_AND_MASK:
-> > > +    case PHB_LEM_ERROR_OR_MASK:
-> > > +        return 0;
-> > > +    case PHB_PCIE_DLP_TRWCTL:
-> > > +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
-> > > +        return val;
-> > >      /* IODA table accesses */
-> > >      case PHB_IODA_DATA0:
-> > >          return pnv_phb4_ioda_read(phb);
-> > >  
-> > > +    /*
-> > > +     * DMA sync: make it look like it's complete,
-> > > +     *           clear write-only read/write start sync bits.
-> > > +     */
-> > > +    case PHB_DMA_SYNC:
-> > > +        val = PHB_DMA_SYNC_RD_COMPLETE |
-> > > +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
-> > > +        return val;
-> > > +
-> > > +    /*
-> > > +     * PCI-E Stack registers
-> > > +     */
-> > > +    case PHB_PCIE_SCR:
-> > > +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
-> > > +        break;
-> > > +
-> > >      /* Link training always appears trained */
-> > >      case PHB_PCIE_DLP_TRAIN_CTL:
-> > >          /* TODO: Do something sensible with speed ? */
-> > > -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> > > +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> > > +        return val;
-> > > +
-> > > +    case PHB_PCIE_HOTPLUG_STATUS:
-> > > +        /* Clear write-only bit */
-> > > +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
-> > > +        return val;
-> > >  
-> > > -    /* DMA read sync: make it look like it's complete */
-> > > -    case PHB_DMARD_SYNC:
-> > > -        return PHB_DMARD_SYNC_COMPLETE;
-> > > +    /* Link Management Register */
-> > > +    case PHB_PCIE_LMR:
-> > > +        /* These write-only bits always read as 0 */
-> > > +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
-> > > +        return val;
-> > >  
-> > >      /* Silent simple reads */
-> > >      case PHB_LSI_SOURCE_ID:
-> > > @@ -1685,6 +1721,32 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
-> > >      .get_address_space = pnv_phb4_dma_iommu,
-> > >  };
-> > >  
-> > > +static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
-> > > +{
-> > > +    PnvPHB4Class *phb4c = PNV_PHB4_GET_CLASS(phb);
-> > > +
-> > > +    /*
-> > > +     * Set register specific RO-masks
-> > > +     */
-> > > +
-> > > +    /* PBL - Error Injection Register (0x1910) */
-> > > +    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
-> > > +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
-> > > +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
-> > > +
-> > > +    /* Reserved bits[60:63] */
-> > > +    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
-> > > +    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
-> > > +    /* Reserved bits[36:63] */
-> > > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
-> > > +    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
-> > > +    /* Reserved bits[40:63] */
-> > > +    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
-> > > +    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
-> > > +
-> > > +    /* TODO: Add more RO-masks as regs are implemented in the model */
-> > > +}
-> > > +
-> > >  static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
-> > >  {
-> > >      STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-> > > @@ -1743,6 +1805,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
-> > >      pnv_phb4_err_reg_reset(phb);
-> > >      pnv_phb4_pcie_stack_reg_reset(phb);
-> > >      pnv_phb4_regb_err_reg_reset(phb);
-> > > +    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
-> > >  }
-> > >  
-> > >  static void pnv_phb4_instance_init(Object *obj)
-> > > @@ -1753,6 +1816,9 @@ static void pnv_phb4_instance_init(Object *obj)
-> > >  
-> > >      /* XIVE interrupt source object */
-> > >      object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
-> > > +
-> > > +    /* Initialize RO-mask of registers */
-> > > +    pnv_phb4_ro_mask_init(phb);
-> > >  }
-> > >  
-> > >  void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
-> > > diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-> > > index 47a5c3edf5..bea0684724 100644
-> > > --- a/include/hw/pci-host/pnv_phb4.h
-> > > +++ b/include/hw/pci-host/pnv_phb4.h
-> > > @@ -19,7 +19,7 @@
-> > >  
-> > >  
-> > >  #define TYPE_PNV_PHB4 "pnv-phb4"
-> > > -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
-> > > +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
-> > >  
-> > >  typedef struct PnvPhb4PecStack PnvPhb4PecStack;
-> > >  
-> > > @@ -156,6 +156,17 @@ struct PnvPHB4 {
-> > >      QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
-> > >  };
-> > >  
-> > > +typedef struct PnvPHB4Class {
-> > > +    DeviceClass parent_class;
-> > > +
-> > > +    /*
-> > > +     * Read-only bitmask for registers
-> > > +     * Bit value: 1 => RO bit
-> > > +     *            0 => RW bit
-> > > +     */
-> > > +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
-> > > +} PnvPHB4Class;
-> > > +
-> > >  void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
-> > >  int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
-> > >  PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
-> > > diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-> > > index df5e86d29a..dfd0e01d1e 100644
-> > > --- a/include/hw/pci-host/pnv_phb4_regs.h
-> > > +++ b/include/hw/pci-host/pnv_phb4_regs.h
-> > > @@ -180,9 +180,11 @@
-> > >  #define PHB_M64_AOMASK                  0x1d0
-> > >  #define PHB_M64_UPPER_BITS              0x1f0
-> > >  #define PHB_NXLATE_PREFIX               0x1f8
-> > > -#define PHB_DMARD_SYNC                  0x200
-> > > -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
-> > > -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
-> > > +#define PHB_DMA_SYNC                    0x200
-> > > +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
-> > > +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
-> > > +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
-> > > +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
-> > >  #define PHB_RTC_INVALIDATE              0x208
-> > >  #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
-> > >  #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
-> > > @@ -370,6 +372,7 @@
-> > >  #define P32_CAP                                 0x228
-> > >  #define P32_CTL                                 0x22C
-> > >  #define P32_STAT                                0x230
-> > > +
-> > >  /* PHB4 REGB registers */
-> > >  
-> > >  /* PBL core */
-> > > @@ -395,8 +398,8 @@
-> > >  #define PHB_PCIE_SCR                    0x1A00
-> > >  #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
-> > >  #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
-> > > +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
-> > >  #define PHB_PCIE_BNR                    0x1A08
-> > > -
-> > >  #define PHB_PCIE_CRESET                 0x1A10
-> > >  #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
-> > >  #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
-> > > @@ -405,7 +408,14 @@
-> > >  #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
-> > >  #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
-> > >  #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
-> > > +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
-> > > +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
-> > >  #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
-> > > +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
-> > > +#define PHB_PCIE_LMR                    0x1A30
-> > > +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
-> > > +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
-> > > +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
-> > >  
-> > >  #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
-> > >  #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
-> > > @@ -433,7 +443,7 @@
-> > >  
-> > >  #define PHB_PCIE_DLP_TRWCTL             0x1A80
-> > >  #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
-> > > -
-> > > +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
-> > >  #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
-> > >  #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
-> > >  #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
-> > > diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
-> > > index f186efaf0d..841306ae3f 100644
-> > > --- a/tests/qtest/pnv-phb4-test.c
-> > > +++ b/tests/qtest/pnv-phb4-test.c
-> > > @@ -73,7 +73,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
-> > >       * Sticky reset test of PHB_PBL_ERR_STATUS.
-> > >       *
-> > >       * Write all 1's to reg PHB_PBL_ERR_INJECT.
-> > > -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
-> > > +     * RO-only bits will not be written and
-> > > +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
-> > >       *
-> > >       * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
-> > >       * Verify the sticky bits are still set.
-> > > @@ -81,7 +82,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
-> > >      phb4_xscom_write(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
-> > >      phb4_xscom_write(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
-> > >      val = phb4_xscom_read(PHB_PBL_ERR_STATUS);
-> > > -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
-> > > +    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
-> > > +}
-> > > +
-> > > +/* Check that write-only bits/regs return 0 when read */
-> > > +static void phb4_writeonly_read_test(QTestState *qts)
-> > > +{
-> > > +    uint64_t val;
-> > > +
-> > > +    /*
-> > > +     * Set all bits of PHB_DMA_SYNC,
-> > > +     * bits 0 and 2 are write-only and should be read as 0.
-> > > +     */
-> > > +    phb4_xscom_write(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_DMA_SYNC);
-> > > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> > > +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
-> > > +
-> > > +    /*
-> > > +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
-> > > +     * bit 9 is write-only and should be read as 0.
-> > > +     */
-> > > +    phb4_xscom_write(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_PCIE_HOTPLUG_STATUS);
-> > > +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
-> > > +
-> > > +    /*
-> > > +     * Set all bits of PHB_PCIE_LMR,
-> > > +     * bits 0 and 1 are write-only and should be read as 0.
-> > > +     */
-> > > +    phb4_xscom_write(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_PCIE_LMR);
-> > > +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> > > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> > > +
-> > > +    /*
-> > > +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
-> > > +     * write-only bit-1 should be read as 0.
-> > > +     */
-> > > +    phb4_xscom_write(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_PCIE_DLP_TRWCTL);
-> > > +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> > > +
-> > > +    /*
-> > > +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
-> > > +     * both regs are write-only and should be read as 0.
-> > > +     */
-> > > +    phb4_xscom_write(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_LEM_ERROR_AND_MASK);
-> > > +    g_assert_cmpuint(val, ==, 0x0);
-> > > +
-> > > +    phb4_xscom_write(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
-> > > +    val = phb4_xscom_read(PHB_LEM_ERROR_OR_MASK);
-> > > +    g_assert_cmpuint(val, ==, 0x0);
-> > >  }
-> > >  
-> > >  static void phb4_tests(void)
-> > > @@ -96,6 +149,9 @@ static void phb4_tests(void)
-> > >      /* Check sticky reset of a register */
-> > >      phb4_sticky_rst_test(qts);
-> > >  
-> > > +    /* Check write-only logic */
-> > > +    phb4_writeonly_read_test(qts);
-> > > +
-> > >      qtest_quit(qts);
-> > >  }
-> > >  
-> > > -- 
-> > > 2.47.3
+> static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
+> {
+>     return cpu->force_cpuid_0x1f ||
+>            x86_has_extended_topo(cpu->env.avail_cpu_topo);
+> 	   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> }
+> 
+> similarly, apply x86_has_extended_topo() for AMD CPU as well?
 
+Something like this looks fine?
+
+static inline bool x86_has_cpuid_0x80000026(X86CPU *cpu) {
+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
+
+    return cpu->force_cpuid_0x80000026 ||
+            (x86_has_extended_topo(cpu->env.avail_cpu_topo) &&
+             x86_is_amd_zen4_or_above(cpu) && !xcc->model);
+}
+
+> 
+> x86_has_extended_topo() also checks "module" level, but I think we could
+> return error in encode_topo_cpuid80000026() for unsupported "moduel"
+> level?
+
+That can be done, but it should be harmless to let QEMU encode 80000026h when
+only module is present, right? Another option can be to add vendor specific
+checks in x86_has_extended_topo(). Thoughts?
+
+> 
+> Thus, when users explicitly set these levels, the 0x80000026 leaf will be
+> enabled.>
+> Furthermore, I think it's better that different x86 vendors could adopt
+> similar behavior for these extended topology levels, especially since
+> they are all all configured through a unified "-smp" interface.
+
+Ack.
+
+> 
+> Thanks,
+> Zhao
+> 
+
+Regards,
+Shivansh
 
