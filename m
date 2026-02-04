@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47F1E83EED
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCE1E83EE8
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnXwc-00062M-Hi; Wed, 04 Feb 2026 03:09:02 -0500
+	id 1vnXyI-0006ad-Rn; Wed, 04 Feb 2026 03:10:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnXwb-00061G-Lm
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:09:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vnXyG-0006aQ-Jx
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:10:44 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnXwZ-00025z-Uh
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:09:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770192539;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GQYc7vzJ+vLiqRcVbL9Fy4WFqd+/9YmBpyNDssdXXt0=;
- b=ZPdmeITQVzBiukMMyRHOhh96Jvb8RP6hPoo4Tr8JDfhSEyPlfM/1ERjyptRuVUAB3C2ACN
- VXyr5VypU+KDN3J0/WowxBA7f62RmMmZ6O17Ez9b3YgB/QcYI2XqHpGyDzmMCbjuOu0ssY
- EchtiNFYLId16d4yQf0UA2rjrsuQsmY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-PC0MjxkQOJK99x-KRUBCzg-1; Wed,
- 04 Feb 2026 03:08:55 -0500
-X-MC-Unique: PC0MjxkQOJK99x-KRUBCzg-1
-X-Mimecast-MFC-AGG-ID: PC0MjxkQOJK99x-KRUBCzg_1770192534
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E88F1800349; Wed,  4 Feb 2026 08:08:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BD2730001A5; Wed,  4 Feb 2026 08:08:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DE3BE21E692D; Wed, 04 Feb 2026 09:08:49 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  kvm <kvm@vger.kernel.org>,  Helge Deller
- <deller@gmx.de>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
- Garzarella <sgarzare@redhat.com>,  Matias Ezequiel Vara Larsen
- <mvaralar@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  German Maglione
- <gmaglione@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>,  Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>,  Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: Modern HMP
-In-Reply-To: <aX-boauFX2Ju7x8Z@gallifrey> (David Alan Gilbert's message of
- "Sun, 1 Feb 2026 18:29:53 +0000")
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
- <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
- <87ikctk5ss.fsf@suse.de> <aXJJkd8g0AGZ3EVv@redhat.com>
- <aX-boauFX2Ju7x8Z@gallifrey>
-Date: Wed, 04 Feb 2026 09:08:49 +0100
-Message-ID: <875x8d0w32.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vnXyE-0002PT-MO
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:10:44 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4E14B80464;
+ Wed, 04 Feb 2026 11:10:39 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:52d::1:1f] (unknown
+ [2a02:6bf:8080:52d::1:1f])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id bAkUaf0A58c0-ehvcMztJ; Wed, 04 Feb 2026 11:10:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1770192638;
+ bh=UOyEgU2fkSCNwwe5eR/WpF3MJRlgWR+j2W2KcgqeC+M=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=rIczyRI5rxCz8PZZkiQmol00FfXrQaNTEIkhD5tEVpdzkARUltGsYkUdEv+ECio6b
+ 5CaTcW5yoVbvQSkBCCPX4YirsYoCg1CnXhDUjvMV4IYHzetFMoplcKNtVu90IwzvMU
+ WeqMApAh77/LTKj9Kf+i9GL6I7r4iLbSOfJDaSQY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <cefd433e-ce22-49fc-855d-b6c15ad8bf19@yandex-team.ru>
+Date: Wed, 4 Feb 2026 11:10:37 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/12] net/af-xdp: fix type overflow
+To: "Chaney, Ben" <bchaney@akamai.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "d-tatianin@yandex-team.ru" <d-tatianin@yandex-team.ru>,
+ "davydov-max@yandex-team.ru" <davydov-max@yandex-team.ru>,
+ Ilya Maximets <i.maximets@ovn.org>
+References: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
+ <20260129213215.1405459-2-vsementsov@yandex-team.ru>
+ <E43BA2A0-02D1-416A-BE1A-0942D337ACC3@akamai.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <E43BA2A0-02D1-416A-BE1A-0942D337ACC3@akamai.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,97 +83,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
+On 03.02.26 22:10, Chaney, Ben wrote:
+> 
+>> In for-loop in net_init_af_xdp, we do nc->queue_index = i,
+>> where is is int64_t for 0 to queues-1, and nc->queue_index is
+>> unsigned int.
+> 
+> 
+>> Also in parse_socket_fds, g_strv_length() returns guint which
+>> is equivalent to unsigned int.
+> 
+> 
+>> Let's simply use unsigned int type for queues, and update
+>> the check appropriately.
+> 
+> 
+> I have some concerns about this patch queues is generally signed,
+> so negative values can be used for error handling.
 
-> * Daniel P. Berrang=C3=A9 (berrange@redhat.com) wrote:
->> On Thu, Jan 22, 2026 at 12:47:47PM -0300, Fabiano Rosas wrote:
->> > One question I have is what exactly gets (eventually) removed from QEMU
->> > and what benefits we expect from it. Is it the entire "manual"
->> > interaction that's undesirable? Or just that to maintain HMP there is a
->> > certain amount of duplication? Or even the less-than-perfect
->> > readline/completion aspects?
->>=20
->> Over time we've been gradually separating our human targetted code from
->> our machine targetted code, whether that's command line argument parsing,
->> or monitor parsing. Maintaining two ways todo the same thing is always
->> going to be a maint burden, and in QEMU it has been especially burdensome
->> as they were parallel impls in many cases, rather than one being exclusi=
-vely
->> built on top of the other.
->>=20
->> Even today we still get contributors sending patches which only impl
->> HMP code and not QMP code. Separating HMP fully from QMP so that it
->> was mandatory to create QMP first gets contributors going down the
->> right path, and should reduce the burden on maint.
->
-> Having a separate HMP isn't a bad idea - but it does need some idea of
-> how to make it easy for contributors to add stuff that's just for debug
-> or for the dev.   For HMP the bar is very low; if it's useful to the
-> dev, why not (unless it's copying something that's already in the QMP int=
-erface
-> in a different way);  but although the x- stuff in theory lets
-> you add something via QMP, in practice it's quite hard to get it through
-> review without a lot of QMP design bikeshedding.
+Right, and because of it, in "net: introduce net_parse_fds()" I
+change this UINT_MAX limit to INT_MAX.
 
-I think this description has become less accurate than it used to be :)
+> We should
+> probably be consistent with this.
 
-A long time ago, we started with "QMP is a stable, structured interface
-for machines, HMP is a plain text interface for humans, and layered on
-top of QMP."  Layered on top means HMP commands wrap around QMP
-commands.  Ensures that QMP is obviously complete.  Without such a
-layering, we'd have to verify completeness by inspection.  Impractical
-given the size and complexity of the interfaces involved.
+I wanted make it int, but decided, that I don't want to argue against
 
-Trouble is there are things in HMP that make no sense in QMP.  For
-instance, HMP command 'cpu' sets the monitor's default CPU, which
-certain HMP commands use.  To wrap 'cpu' around a QMP command, we'd have
-to drag the concept "default CPU" into QMP where it's not wanted.
+    If you're using "int" or "long", odds are good that there's a better type.
+    If a variable is counting something, it should be declared with an
+    unsigned type.
 
-So we retreated from "all", and permitted exceptions for commands that
-make no sense in QMP.
+of docs/devel/style.rst :)
 
-We then found out the hard & expensive way that designing a QMP command
-with its stable, structured interface is often a lot harder than
-cobbling together an HMP command.  It's not just avoidable social
-problems ("bikeshedding"); designing stable interfaces is just hard.
-Sometimes the extra effort is worthwhile.  Sometimes it's not, e.g. when
-all we really want is print something to aid a human with debugging.
+Still, in tap.c, queues variable is int in net_init_tap(), exactly to handle
+errors. Still, where possible I use unsigned for it. Don't know what is better.
+No problem to change all "queues" to be int, up to Jason.
 
-So we retreated from "all" some more, and permitted exceptions for
-commands meant exclusively for human use, typically debugging and
-development aids.
+> 
+> 
+>> - queues = opts->has_queues ? opts->queues : 1;
+>> - if (queues < 1) {
+>> + if (opts->has_queues && (opts->queues < 0 || opts->queues > UINT_MAX)) {
+>> error_setg(errp, "invalid number of queues (%" PRIi64 ") for '%s'",
+>> - queues, opts->ifname);
+>> + opts->queues, opts->ifname);
+>> return -1;
+>> }
+> 
+> Perhaps the condition here should be opts->queues > MAX_TAP_QUEUES
+> instead of UINT_MAX
+> 
+> Thanks,
+>          Ben
+> 
 
-This effectifely redefined the meaning of "complete": instead of "QMP
-can do everything HMP can do and more", it's now "... except for certain
-development and debugging aids and maybe other stuff".
 
-To keep "maybe other stuff" under control, we required (and still
-require) an *argument* for adding functionality just to HMP.
-
-This turned out to be differently bothersome.  Having to review HMP
-changes for QMP bypasses is bothersome, and bound to miss things at
-least occasionally.  Having to ask for an argument is bothersome.
-Constructing one is bothersome.
-
-To reduce the bother, we retreated from another QMP ideal: the
-structured interface.  Permit QMP commands to return just text when the
-command is meant just for humans.  Such commands must be unstable.
-Possible because we had retreated from "all of QMP is stable" meanwhile.
-
-How does this work?  Instead of adding an HMP-only command, add a QMP
-command that returns QAPI type HumanReadableText, and a trivial HMP
-command that wraps around it.  Slightly more work, but no interface
-design.
-
-The QMP command addition is much more visible to the QAPI/QMP
-maintainers than an HMP-only command would be.  This helps avoid missing
-things.
-
-We still want an argument why a structured interface isn't needed.  But
-we can be much more lenient there: if it turns out to be needed, we can
-just add it, and drop the unstructured interface.  Remember, it's
-unstable.
-
-Hope this helps.
-
+-- 
+Best regards,
+Vladimir
 
