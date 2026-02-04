@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A08E95394
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45568E95392
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnby4-0005IJ-OX; Wed, 04 Feb 2026 07:26:48 -0500
+	id 1vnbz2-0005Yf-0l; Wed, 04 Feb 2026 07:27:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnby2-0005HI-Te
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:26:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnby1-0002h8-Dp
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:26:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770208004;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IdcU9+K4cP2d/Y8ojG423LkL5jalxUnLTEZnxO7FTIs=;
- b=dO+PO8F4yDnU4hyOZ5jA1wi4cEEXOlyCFmtmi7BcGdYeuzrz/s4uRyLQeHuagkEDpJMgQ1
- TycldJ310yVhSZTsr29VoYMhYgok90v8FVbFZhLnDdMOtTsRu8xXilpml2pbvWcCzp6fVX
- tNtr8m88Gc9EfXK8Zvg3uQfxK1XHdmI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-U7S1czuTMiGF9yYeLIoQNA-1; Wed,
- 04 Feb 2026 07:26:41 -0500
-X-MC-Unique: U7S1czuTMiGF9yYeLIoQNA-1
-X-Mimecast-MFC-AGG-ID: U7S1czuTMiGF9yYeLIoQNA_1770208000
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 914AB19560A3; Wed,  4 Feb 2026 12:26:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BBD718003F5; Wed,  4 Feb 2026 12:26:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 040D921E692D; Wed, 04 Feb 2026 13:26:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eduardo@habkost.net,
- berrange@redhat.com,  pbonzini@redhat.com,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com
-Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
-In-Reply-To: <20260119144941.87936-5-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Mon, 19 Jan 2026 17:49:37 +0300")
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260119144941.87936-5-vsementsov@yandex-team.ru>
-Date: Wed, 04 Feb 2026 13:26:35 +0100
-Message-ID: <87wm0sy9s4.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vnbyz-0005YH-Nf
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:27:45 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vnbyx-0002sn-NT
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:27:45 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-501469b598fso49757461cf.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 04:27:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770208062; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KWLq83hOG1bSwc68cQb+kCSkDbsvw/EqhrGLu3BYLJ26SPx1rMv4EI2FouKvkQ5nUq
+ egBSb2r9PA785IJnp9XcTG65aus2GGcWg26vHRex5xZ3s7wFOyPFhv32s3auPP/LT4kZ
+ yOTppv1JWfVPomUasEehUj+d5l1J1pY0QymyFT6xsQ5+16UhOn69bUvGs4i8XodgTHDf
+ +QW1nC0QbrjAXe+/EueY7C2+bKesgpdTpE4Ms9jXcuQpPKZtH1QhTNNHyKtSwY3mmC8y
+ lAcu3NrSwyGGB5V4hNC4yVuZoR5rqFkA0RYkp5J8hQTdUo/0yFywZNCE0esTJKlgI+ys
+ AC8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EGH1UWAtzLtI3MU7H7I/5fB/5T65yquJgaZ8EgaTaVo=;
+ fh=7YH/6k/j25NNwwt5Z0aNR+l5vsUJilkY+EqN5Ef/xhY=;
+ b=bgmyHYOtZLUQf0ItzBaVifFpqV8nguzhEniPGz01Ipx9d9RgKJ3xomWL5aE6STXDhB
+ duIwtXXcLeiNQo7H6aQmirecAwK4aFe3FXD8Hfrc7orF31+CVG8hzUxkLenHZsveJBpt
+ t27BYtMw6Jh3KfmHidgvDjojM066gKAxHx7qYb7K292bxfz1wET5IOd6DW8aWmCm8iQC
+ AHep8hEAo0h8tRn6M/mbXC08MXJXjFiLvHW2ATltqYdx6fPPt/XpcUQdbg4f8ar5X3Pn
+ goGKYSslJABE8hC7u5Xig5se9sA/A8Nn71DhR4Libumtj40MLIR7KuvxMlVwDNWdJdCE
+ aMoA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770208062; x=1770812862; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EGH1UWAtzLtI3MU7H7I/5fB/5T65yquJgaZ8EgaTaVo=;
+ b=ImDhwfKqwBMm0+iN9VrDsCqgcDzrEtnQlsZx85gPmyvffLcE2vyVcn5MEWZoKOr6fk
+ cOsixymrCNiniZHMxr52lpXPfvrR35LWwGFnefdbO0s5vyzyvwlODtxyea1Ef9Bxohb2
+ WmOUu5JNy2SMAaVq1a5TCa7qau8A2oitDdx4l2Y7GD+AzpvuwB7VVhdbw623rzXtSss2
+ whYoDiPIxsofugJpf3hjgDGbztOiH7p9k2ZEMyd2eX3VFXM1b+ezeBS/Q9JNecE2VDkc
+ ufGOWznUA76WLA2i2jNGPOfD2tDPHURdYIvGH2OaF3uaoCWptr2o1rp5fblR6m0nTKmO
+ IksQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770208062; x=1770812862;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EGH1UWAtzLtI3MU7H7I/5fB/5T65yquJgaZ8EgaTaVo=;
+ b=ni5QTdvD5GuVexybKTkrfOYx146S5NSZY5yiVFOvPV3eusxXzy7aa7ggW+oqC/fUT1
+ d/BMp5yyR4NMEk6Sjn3oWfGT9dW7NU5aZ0JPtBLJFlwbCym0GDarMc6oyoLMc1d0If6N
+ RK+E7GbigVWOSiwddA7xF4gRhcXCdVOCsjm20MZgxDUKmXVPIAMNlcdLUlxc3LxjfQRe
+ oXd5sqCRIh+CGwNlOh68lvSR1L1nHUYxgxcL3yMxcq5bW0/AZc980BzvD4e76LB46Cn6
+ lLlWpQKO28eMUy+ibDwEI6XvfhXjy8p64KsRVkCEFMQcCUtSLYNaQ8GIFM8OPsguyJ5S
+ RSOQ==
+X-Gm-Message-State: AOJu0Yy+pjRkTAEaC4cy9Yc/x23kmTYiI+WRimioSeDg7QPYPD+c/14R
+ 8wrUd7xBPo8cxBaIgZqVOIIiJCMz3DISjF7fZTK33Wjg9aZP55Tw/E3WW8GGoeORLe4akJ9/iKU
+ GD7KuV+baYcx+kFzIddHRJ3Nn4DB4MlU=
+X-Gm-Gg: AZuq6aKCAnyc/da3BhNn7SJV8Erj5Pn37i2U2rfh324sSRpU7EW6XawXKtBDnqU6IaP
+ v5RL9A96tJR1/9fSfY36K0OQyHQ8f34c73vgGD0zzGQ1yaHEvUddcrCd8+KMzUM4r81FfzKxVKo
+ 0zuZBuXtZYU+cC3cn+91leu0OqsVjo93Me2VhKddUocnTVmjy9O5tWUQ5/0xaRqk9Paa/7FB1Nf
+ 32kampE5rW3Su1k0i0isLHUimzkO+XbOEb8dFsOhog9RLZ309tf1jvMc/DNo6jEPlQFXE5mxVYP
+ 2WAsa9zLxAenYXc6G9xR6d0wuo4=
+X-Received: by 2002:ac8:5a42:0:b0:4f1:83e4:6f55 with SMTP id
+ d75a77b69052e-5061c0c58a3mr31095001cf.16.1770208062063; Wed, 04 Feb 2026
+ 04:27:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
+ <20260123074945.2563196-6-marcandre.lureau@redhat.com>
+ <b28fd63e-063c-41d3-a9dc-54929e7adfaa@nutanix.com>
+In-Reply-To: <b28fd63e-063c-41d3-a9dc-54929e7adfaa@nutanix.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 4 Feb 2026 16:27:30 +0400
+X-Gm-Features: AZwV_Qg1f8xp6jZaaN3SJLnkmas6CcIdE2eMh9kIcMmpAY0yqMsbvh49-0CRLLI
+Message-ID: <CAJ+F1CKauYDpB0+_ggGP9mMkvYTDTbcsp2LX+twm8dvMggpSuQ@mail.gmail.com>
+Subject: Re: [PATCH 05/37] qemu-options.hx: clarify default audio backend
+ selection
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,110 +120,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Hi Mark
 
-> Add a command that can replace bs in following BdrvChild structures:
+On Tue, Feb 3, 2026 at 7:49=E2=80=AFPM Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
 >
->  - qdev blk root child
->  - block-export blk root child
->  - any child of BlockDriverState selected by child-name
+> On 23/01/2026 07:49, marcandre.lureau@redhat.com wrote:
 >
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   qemu-options.hx | 22 +++++++++++++++-------
+> >   1 file changed, 15 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 455b8be8903..732934a6fa8 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -896,11 +896,16 @@ DEF("audiodev", HAS_ARG, QEMU_OPTION_audiodev,
+> >       QEMU_ARCH_ALL)
+> >   SRST
+> >   ``-audiodev [driver=3D]driver,id=3Did[,prop[=3Dvalue][,...]]``
+> > -    Adds a new audio backend driver identified by id. There are global
+> > -    and driver specific properties. Some values can be set differently
+> > -    for input and output, they're marked with ``in|out.``. You can set
+> > -    the input's property with ``in.prop`` and the output's property wi=
+th
+> > -    ``out.prop``. For example:
+> > +    Adds a new audio backend driver identified by id.
+> > +
+> > +    If no audio backend is specified, QEMU will attempt to select a
+> > +    default one. The ``-display`` option may influence which backend i=
+s
+> > +    selected.
+> > +
+> > +    There are global and driver specific properties. Some values can b=
+e
+> > +    set differently for input and output, they're marked with ``in|out=
+.``.
+> > +    You can set the input's property with ``in.prop`` and the output's
+> > +    property with ``out.prop``. For example:
+> >
+> >       ::
+> >
+> > @@ -2172,8 +2177,11 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
+> >       , QEMU_ARCH_ALL)
+> >   SRST
+> >   ``-display type``
+> > -    Select type of display to use. Use ``-display help`` to list the a=
+vailable
+> > -    display types. Valid values for type are
+> > +    Select type of display to use. This may also influence the default
+> > +    audio backend selection.
+> > +
+> > +    Use ``-display help`` to list the available display types. Valid v=
+alues
+> > +    for type are
+> >
+> >       ``spice-app[,gl=3Don|off]``
+> >           Start QEMU as a Spice server and launch the default Spice cli=
+ent
+>
+> The documentation changes look fine in terms of describing how one
+> option may influence the other, however there is no explicit mention in
+> the documentation that selecting a dbus display with no audio backend
+> will also use dbus for audio.
+>
+> Is it possible to mention this somewhere? Otherwise someone would have
+> to go digging through the code to figure this out.
 
-[...]
+would something like that help?
 
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index b82af74256..9cc7c3d140 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -6334,3 +6334,27 @@
->  ##
->  { 'struct': 'DummyBlockCoreForceArrays',
->    'data': { 'unused-block-graph-info': ['BlockGraphInfo'] } }
-> +
-> +##
-> +# @blockdev-replace:
-> +#
-> +# Replace a block-node associated with device (@parent should be
-> +# QOM path, and @child should be "root") or with block-export (@parent
-> +# should be export name, and @child should be "root") or any child
-> +# of block-node (@parent should be node-name, and @child should be any
-> +# if its children names) with @new-child block-node.
+@@ -2191,6 +2192,9 @@ SRST
+     ``dbus``
+         Export the display over D-Bus interfaces. (Since 7.0)
 
-of its
++        When no audio backend is specified, the dbus audio backend is used
++        by default.
++
 
-> +#
-> +# @parent: QOM path or block-export or node-name, which @child should
-> +#     be repalced.  If several matching parents exist, the command
 
-replaced
-
-> +#     will fail
-
-End the sentence with a period, please.
-
-> +#
-> +# @child: child to replace.  Must be "root" when parent is QOM path or
-> +#     block-export
-
-Likewise.
-
-> +#
-> +# @new-child: node-name of the block-node, which should become a
-> +#    replacement for @child's current block-node
-
-Likewise.
-
-Indent one more, please.
-
-> +#
-> +# Since 11.0
-> +##
-
-Let's see whether I understand...
-
-@parent determines which of the three cases mentioned in the commit
-message it ids:
-
-* If @parent is a QOM path, case 1.
-
-* If @parent is a block export name (@id in BlockExportOptions and
-  BlockExportInfo), case 2.
-
-* If @parent is a block node name (@node-name in BlockdevOptions and
-  BlockDeviceInfo), case 3.
-
-Correct?
-
-Problem: this is ambiguous.  A @parent "foo" could in fact be any of the
-three cases.
-
-3. If a block node named "foo" exists, it's case 3.
-
-2. If a block export named "foo" exists, it's also case 2.
-
-1. If exactly one QOM object named "foo" exists, it's also case 1.  Why?
-   "foo" is a syntactically valid partial QOM path.  Partial QOM paths
-   are a convenience feature that is virtually unknown (and possibly
-   ill-advised): you can omit leading path components as long as there's
-   no ambiguity.
-
-Peeking ahead in the series...  PATCH 8 appears to deprecate the
-ambiguity between case 2. and 3.
-
-I think we need to do better.
-
-More questions...
-
-In case 1 and 2, @child "should be root".  What happens when it's
-something else?
-
-In case 3, @child "should be any if its children names".  I figure the
-command fails when it isn't.
-
-> +{ 'command': 'blockdev-replace',
-> +  'data': { 'parent': 'str', 'child': 'str', 'new-child': 'str' } }
-
-[...]
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
