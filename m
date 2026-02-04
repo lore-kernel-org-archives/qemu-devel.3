@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8459E9D40D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FD2E9D411
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 16:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vng1s-0007XB-Jf; Wed, 04 Feb 2026 11:47:00 -0500
+	id 1vng1q-0007U3-JD; Wed, 04 Feb 2026 11:46:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng1N-00074F-50
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:29 -0500
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ id 1vng19-00070Q-WA
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:16 -0500
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vng1K-0004Yd-HP
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:28 -0500
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.stl.internal (Postfix) with ESMTP id AAF0C1D00163;
- Wed,  4 Feb 2026 11:46:15 -0500 (EST)
+ id 1vng17-0004Wm-30
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 11:46:15 -0500
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 577C87A003E;
+ Wed,  4 Feb 2026 11:46:12 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Wed, 04 Feb 2026 11:46:15 -0500
+ by phl-compute-08.internal (MEProxy); Wed, 04 Feb 2026 11:46:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1770223575; x=
- 1770309975; bh=PdWCyyZVoq9rSO4tnOaL9465qRC90aZ6qTNBQk4TT6E=; b=W
- 8MP7LbZ5/lwkx+NoLiImBNrGg7lXyhCHYybrmJkm9lKifNwYuE6+TCOq4QMmav82
- H4f7MqAIdx1yYTXMa/MV4KpRRYUj21OFW+9WybrFJxrRc0k7LdT9RVn0BBfkprvY
- BsPcgcVex+X4bkpSplFllS5A4DBZx4XbUTP/YLjES193CUBD6eQoSLwF4GJAuwwM
- 1IXNUiKAKuFLsAXXiQJcFpw/AgbzowgvZlvcWkhs0aBIQC9cMNqgdwn1IqQKtnMH
- q4dXAj+hpFhmD8w78PufOXX07ze5cey7AGPfPzcC5cMoHhox6IAZzsHuNg2p8MP8
- rBxrZwIysAaCzRXebYyoA==
+ :reply-to:subject:subject:to:to; s=fm2; t=1770223572; x=
+ 1770309972; bh=t0OpkvKmgs3r3p5IFcwqLrOzfIoWRJB1S+bWvMool0c=; b=P
+ UHywBTEyxqJqu5jNu3URu9rf2xKCi0ZewZVXUGz2Q2zSPrUTT3fCUN1oSvs9wuoS
+ CScWaXld9h1dgTqrW86eeYsEOCNQr1y3PGsX7hUtaQg6F1AUCyiyd4PlDArMlmCi
+ 1nmIbzdylP0u3IaXcScE2TEMAecoJlTdZwpvJqmyF8cQlDkZxEgCZpv9svTsVL4w
+ PzbuMM9ai7c+svt8LBQuVEeAcnE3PSazNxH6fWIy/iwDfcoPr7Qcwe909X/1scr8
+ f9dSEvUIENX/y9GFZjFs4TXGhW7G6biOoMJR8+M17U1N6FqacKDtO6Se5hXlRVnu
+ lD16FIUq/i0nVz7RvpgKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1770223575; x=1770309975; bh=P
- dWCyyZVoq9rSO4tnOaL9465qRC90aZ6qTNBQk4TT6E=; b=XKU5ckp8S32jrjxtv
- ipnlMSPwezhXfkVuC8847VgkHVzDMLQH7PGK7uzRkWg2hZjSqKbO6NA/AOO6kwRx
- JcFYDHNaGGLbInzdstOZDOh3c3oHddDa+rYVUPDdCR/w/8HOvIoEYJLY7vxJh01a
- oZPU4j70bq8THY7RjnAJRWt7ZK9/tAZj648m3xfoM+wcHMcx476kxFeqEWguXHLZ
- XJ5VOG+hJSexdNkmu4s4Z9XkB+/nheVJceWY3xGNkMd2unQEdaOB1ovLIL/vEcn2
- hmVB5wp4GRnRVZsXw5h1dXXjSdlhTOQmmht6opSinXjq581K1dsu1WWOn8L2Xqrk
- wcs5w==
-X-ME-Sender: <xms:13eDaQljp_1MB977wwluLtFRpP9JnCxDGL7sA1-JM5GZkhySOCPROg>
- <xme:13eDaXQ4XS9hdj-DOf87K_4m4qcwcNflnfMUJYF35kebsSUoSvw7z0SWrzASkbM8L
- 4Jtb8RNiZgnHFGLw7TN6nNiJqhGB5xU6oDloX71-cInxbZ-fuTFEg>
-X-ME-Received: <xmr:13eDacBJ18I3xUmjVeEqWi1MNtlOJGAFqepMOrtEli7ILl9YOC6USTk1ykDe>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleehucetufdoteggodetrf
+ :x-me-sender:x-sasl-enc; s=fm3; t=1770223572; x=1770309972; bh=t
+ 0OpkvKmgs3r3p5IFcwqLrOzfIoWRJB1S+bWvMool0c=; b=NlHB7ptTjEQXQWUya
+ AbBQQLOEgc8rwWCQx57txPuBF6eXWKVm6VG9lRCvivO4T/In78WBjF4s/ERG8JEd
+ uo5Ndlkq1S9w9Q/9vgqtO5VhlwHW0taCZOmKcCdFYqTM6habIJyN6Ad85qtVGXjB
+ CiEvd5XFbSo0JWNiCI6OMX48k5qBp8YdXkz9EVnWx8hrtOT17ayBPOgETl8sBVfz
+ PJLbw5b1mJ0atGjLDm65AtFxcfDq8MnZJVpGhLC1CHzhVUD0sWL5WohoUpavGbzh
+ EaKegy+NlpXt0xPkmDIHidYSEFvmI5tH3fRiUJmYBIE2dEm4dLRpsJt8E4tb7tyS
+ byPQQ==
+X-ME-Sender: <xms:1HeDaYuevdcrsbqTNN6t7Bu6_af1elQ-F9i0zR2jRPcuxQTKrXo2PQ>
+ <xme:1HeDac5aI5xBIPqwLUIkKyjXAEPuKqL2eAcI1gT0cYn4x7xw9Rw3d6-NquCiVkOzD
+ t-8TnoFTOgo_3wHunGlFqis7Pc7IcPbU7sUsWy0brWMVfiaRW2DcMXQ>
+X-ME-Received: <xmr:1HeDaRLGCM2NstfmaVdsPTOXX8slrYxiVZlE0aNPEcm3i43G9schmFbYopD->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukedvleeiucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
  ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:13eDaWRqt8cvR17xVowNaOYjQbwvF8nwIft3Ufa1YOv4MMCYUuEO5Q>
- <xmx:13eDaSqgPwlEktYn0roOY3j23ozg9u0YhPlrtrWDQ0QgVDfRyW9fGQ>
- <xmx:13eDaQxvRjeqOmK1fPe_6v9Zk0GaJTEhE6wV_VvpXKVuzOFoPMH2vA>
- <xmx:13eDafIZpQUilaDbWNGjj-o1K0I73zRk2pMa8lse5ZfpaFu5-P1EaA>
- <xmx:13eDaY_e9kfSFK8nzp9LEbsSfEJ95ida-jliaes86EHhcR3OX4CwBsAx>
+ thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
+ gsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgv
+ lhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:1HeDaU4FE0w5s-eyT31CksgKK4vUR4wBUpd3E_cR861b5s8BlQWV4g>
+ <xmx:1HeDaczRJm1aUCZT0HL8MPTe9vn3PLr1sNJ8cGYIht6amnrTx8pvrA>
+ <xmx:1HeDaQYdprTkEI4qFqGpRFTrPsJT4o7Un19KPkXysB2xAb-xyVCeNw>
+ <xmx:1HeDaWTJKIxYms2Gly7pG_7TpX-imuueu7nt4CrJ2C8JmjhZndkvWw>
+ <xmx:1HeDaRmLCb01JApm_CgVRgOlvdPC5OJDpg6x4J5uIGrF9j9lLQSy2EXB>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Feb 2026 11:46:15 -0500 (EST)
+ 4 Feb 2026 11:46:11 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id be41346d;
+ by chomposaur (OpenSMTPD) with ESMTPA id 5a39ba9f;
  Wed, 4 Feb 2026 16:46:08 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v8 18/18] ati-vga: Implement HOST_DATA flush to VRAM
-Date: Wed,  4 Feb 2026 11:46:06 -0500
-Message-ID: <20260204164606.3425246-19-chad@jablonski.xyz>
+Subject: [PATCH v8 06/18] ati-vga: Add scissor clipping register support
+Date: Wed,  4 Feb 2026 11:45:54 -0500
+Message-ID: <20260204164606.3425246-7-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260204164606.3425246-1-chad@jablonski.xyz>
 References: <20260204164606.3425246-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.150; envelope-from=chad@jablonski.xyz;
- helo=fout-b7-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.156; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b5-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -113,178 +113,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement flushing the 128-bit HOST_DATA accumulator to VRAM to enable
-text rendering in X. Currently supports only the monochrome
-foreground/background datatype.
+Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
+and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
+when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
+to default clipping.
 
-The flush is broken up into two steps. First, expansion of the
-monochrome bits to the destination color depth. Then the expanded pixels
-are sent to the ati_2d_do_blt one scanline at a time. ati_2d_do_blt then
-clips and performs the blit.
+Scissor clipping is used when rendering text in X.org. The r128 driver
+sends host data much wider than is necessary to draw a glyph and cuts it
+down to size using clipping before rendering. The actual clipping
+implementation follows in a future patch.
+
+This also includes a very minor refactor of the combined
+default_sc_bottom_right field in the registers struct to
+default_sc_bottom and default_sc_right. This was done to
+stay consistent with the other scissor registers and prevent repeated
+masking and extraction.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+
 ---
- hw/display/ati.c      |  4 +--
- hw/display/ati_2d.c   | 84 +++++++++++++++++++++++++++++++++++++++++++
- hw/display/ati_int.h  |  3 ++
- hw/display/ati_regs.h |  4 +++
- 4 files changed, 93 insertions(+), 2 deletions(-)
+
+v5: Removed unused default_sc_bottom_right field
+---
+ hw/display/ati.c      | 70 +++++++++++++++++++++++++++++++++++++++++--
+ hw/display/ati_int.h  |  9 +++++-
+ hw/display/ati_regs.h |  2 ++
+ 3 files changed, 78 insertions(+), 3 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index fd717044b0..514935e510 100644
+index 26fc74b19b..6cf243bcf9 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -1045,13 +1045,13 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case HOST_DATA7:
-         s->host_data.acc[s->host_data.next++] = data;
-         if (s->host_data.next >= 4) {
--            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+            ati_flush_host_data(s);
-             s->host_data.next = 0;
-         }
+@@ -514,7 +514,32 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+         val |= s->regs.default_tile << 16;
          break;
-     case HOST_DATA_LAST:
-         s->host_data.acc[s->host_data.next] = data;
--        qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+        ati_flush_host_data(s);
-         ati_host_data_reset(&s->host_data);
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        val = s->regs.default_sc_bottom_right;
++        val = (s->regs.default_sc_bottom << 16) |
++              s->regs.default_sc_right;
++        break;
++    case SC_TOP:
++        val = s->regs.sc_top;
++        break;
++    case SC_LEFT:
++        val = s->regs.sc_left;
++        break;
++    case SC_BOTTOM:
++        val = s->regs.sc_bottom;
++        break;
++    case SC_RIGHT:
++        val = s->regs.sc_right;
++        break;
++    case SRC_SC_BOTTOM:
++        val = s->regs.src_sc_bottom;
++        break;
++    case SRC_SC_RIGHT:
++        val = s->regs.src_sc_right;
++        break;
++    case SC_TOP_LEFT:
++    case SC_BOTTOM_RIGHT:
++    case SRC_SC_BOTTOM_RIGHT:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Read from write-only register 0x%x\n", (unsigned)addr);
          break;
      default:
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 53f00e07ec..fc18ed4384 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -282,6 +282,11 @@ static void ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
- void ati_2d_blt(ATIVGAState *s)
- {
-     ATI2DCtx ctx;
-+    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
-+    if (src_source == DP_SRC_HOST || src_source == DP_SRC_HOST_BYTEALIGN) {
-+        /* HOST_DATA sources are handled by ati_flush_host_data() */
-+        return;
-+    }
-     setup_2d_blt_ctx(s, &ctx);
-     if (ctx.src.x > 0x3fff || ctx.src.y > 0x3fff
-         || ctx.src_bits >= ctx.vram_end || ctx.src_bits + ctx.src.x
-@@ -292,3 +297,82 @@ void ati_2d_blt(ATIVGAState *s)
-     ati_2d_do_blt(&ctx, s->use_pixman);
-     ati_set_dirty(&s->vga, &ctx);
- }
-+
-+void ati_flush_host_data(ATIVGAState *s)
-+{
-+    ATI2DCtx ctx, chunk;
-+    uint32_t fg = s->regs.dp_src_frgd_clr;
-+    uint32_t bg = s->regs.dp_src_bkgd_clr;
-+    unsigned bypp, row, col, idx;
-+    uint8_t pix_buf[ATI_HOST_DATA_ACC_BITS * sizeof(uint32_t)];
-+    uint32_t byte_pix_order = s->regs.dp_datatype & DP_BYTE_PIX_ORDER;
-+    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
-+    uint32_t src_datatype = s->regs.dp_datatype & DP_SRC_DATATYPE;
-+
-+    if (src_source != DP_SRC_HOST) {
-+        qemu_log_mask(LOG_UNIMP, "host_data_blt: only DP_SRC_HOST supported\n");
-+        return;
-+    }
-+    if (src_datatype != SRC_MONO_FRGD_BKGD) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "host_data_blt: only SRC_MONO_FRGD_BKGD supported\n");
-+        return;
-+    }
-+
-+    setup_2d_blt_ctx(s, &ctx);
-+
-+    if (!ctx.left_to_right || !ctx.top_to_bottom) {
-+        qemu_log_mask(LOG_UNIMP, "host_data_blt: only L->R, T->B supported\n");
-+        return;
-+    }
-+
-+    bypp = ctx.bpp / 8;
-+
-+    /* Expand monochrome bits to color pixels */
-+    idx = 0;
-+    for (int word = 0; word < 4; word++) {
-+        for (int byte = 0; byte < 4; byte++) {
-+            uint8_t byte_val = s->host_data.acc[word] >> (byte * 8);
-+            for (int i = 0; i < 8; i++) {
-+                int bit = byte_pix_order ? i : (7 - i);
-+                bool is_fg = extract8(byte_val, bit, 1);
-+                uint32_t color = is_fg ? fg : bg;
-+                stn_he_p(&pix_buf[idx * bypp], bypp, color);
-+                idx += 1;
-+            }
+         break;
+@@ -877,6 +902,16 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+             s->regs.dst_offset = s->regs.default_offset;
+             s->regs.dst_pitch = s->regs.default_pitch;
+         }
++        if (!(data & GMC_SRC_CLIPPING)) {
++            s->regs.src_sc_right = s->regs.default_sc_right;
++            s->regs.src_sc_bottom = s->regs.default_sc_bottom;
 +        }
-+    }
-+
-+    /* Copy and then modify blit ctx for use in a chunked blit */
-+    chunk = ctx;
-+    chunk.src_bits = pix_buf;
-+    chunk.src.y = 0;
-+    chunk.src_stride = ATI_HOST_DATA_ACC_BITS * bypp;
-+
-+    /* Blit one scanline chunk at a time */
-+    row = s->host_data.row;
-+    col = s->host_data.col;
-+    idx = 0;
-+    while (idx < ATI_HOST_DATA_ACC_BITS && row < ctx.dst.height) {
-+        unsigned pix_in_scanline = MIN(ATI_HOST_DATA_ACC_BITS - idx,
-+                                       ctx.dst.width - col);
-+        chunk.src.x = idx;
-+        /* Build a rect for this scanline chunk */
-+        chunk.dst.x = ctx.dst.x + col;
-+        chunk.dst.y = ctx.dst.y + row;
-+        chunk.dst.width = pix_in_scanline;
-+        chunk.dst.height = 1;
-+        ati_2d_do_blt(&chunk, s->use_pixman);
-+        ati_set_dirty(&s->vga, &chunk);
-+        idx += pix_in_scanline;
-+        col += pix_in_scanline;
-+        if (col >= ctx.dst.width) {
-+            col = 0;
-+            row += 1;
++        if (!(data & GMC_DST_CLIPPING)) {
++            s->regs.sc_top = 0;
++            s->regs.sc_left = 0;
++            s->regs.sc_right = s->regs.default_sc_right;
++            s->regs.sc_bottom = s->regs.default_sc_bottom;
 +        }
-+    }
-+
-+    /* Track state of the overall blit for use by the next flush */
-+    s->host_data.row = row;
-+    s->host_data.col = col;
-+}
+         break;
+     case DST_WIDTH_X:
+         s->regs.dst_x = data & 0x3fff;
+@@ -956,7 +991,38 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         }
+         break;
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        s->regs.default_sc_bottom_right = data & 0x3fff3fff;
++        s->regs.default_sc_right = data & 0x3fff;
++        s->regs.default_sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SC_TOP_LEFT:
++        s->regs.sc_left = data & 0x3fff;
++        s->regs.sc_top = (data >> 16) & 0x3fff;
++        break;
++    case SC_LEFT:
++        s->regs.sc_left = data & 0x3fff;
++        break;
++    case SC_TOP:
++        s->regs.sc_top = data & 0x3fff;
++        break;
++    case SC_BOTTOM_RIGHT:
++        s->regs.sc_right = data & 0x3fff;
++        s->regs.sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SC_RIGHT:
++        s->regs.sc_right = data & 0x3fff;
++        break;
++    case SC_BOTTOM:
++        s->regs.sc_bottom = data & 0x3fff;
++        break;
++    case SRC_SC_BOTTOM_RIGHT:
++        s->regs.src_sc_right = data & 0x3fff;
++        s->regs.src_sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SRC_SC_RIGHT:
++        s->regs.src_sc_right = data & 0x3fff;
++        break;
++    case SRC_SC_BOTTOM:
++        s->regs.src_sc_bottom = data & 0x3fff;
+         break;
+     default:
+         break;
 diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index ef474e366e..32d1e628d3 100644
+index 708cc1dd3a..98f57ca5fa 100644
 --- a/hw/display/ati_int.h
 +++ b/hw/display/ati_int.h
-@@ -33,6 +33,8 @@
- #define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
- #define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
+@@ -78,14 +78,21 @@ typedef struct ATIVGARegs {
+     uint32_t dp_brush_frgd_clr;
+     uint32_t dp_src_frgd_clr;
+     uint32_t dp_src_bkgd_clr;
++    uint16_t sc_top;
++    uint16_t sc_left;
++    uint16_t sc_bottom;
++    uint16_t sc_right;
++    uint16_t src_sc_bottom;
++    uint16_t src_sc_right;
+     uint32_t dp_cntl;
+     uint32_t dp_datatype;
+     uint32_t dp_mix;
+     uint32_t dp_write_mask;
+     uint32_t default_offset;
+     uint32_t default_pitch;
++    uint16_t default_sc_bottom;
++    uint16_t default_sc_right;
+     uint32_t default_tile;
+-    uint32_t default_sc_bottom_right;
+ } ATIVGARegs;
  
-+#define ATI_HOST_DATA_ACC_BITS 128
-+
- #define TYPE_ATI_VGA "ati-vga"
- OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
- 
-@@ -125,5 +127,6 @@ struct ATIVGAState {
- const char *ati_reg_name(int num);
- 
- void ati_2d_blt(ATIVGAState *s);
-+void ati_flush_host_data(ATIVGAState *s);
- 
- #endif /* ATI_INT_H */
+ struct ATIVGAState {
 diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 48f15e9b1d..9d08d3e956 100644
+index 0a0825db04..3999edb9b7 100644
 --- a/hw/display/ati_regs.h
 +++ b/hw/display/ati_regs.h
-@@ -397,7 +397,11 @@
- #define DST_32BPP                               0x00000006
- #define DP_DST_DATATYPE                         0x0000000f
- #define DP_BRUSH_DATATYPE                       0x00000f00
-+#define SRC_MONO_FRGD_BKGD                      0x00000000
-+#define SRC_MONO_FRGD                           0x00010000
-+#define SRC_COLOR                               0x00020000
- #define DP_SRC_DATATYPE                         0x00030000
-+#define DP_BYTE_PIX_ORDER                       0x40000000
- 
- #define BRUSH_SOLIDCOLOR                        0x00000d00
- 
+@@ -397,6 +397,8 @@
+ #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
+ #define GMC_SRC_CLIP_DEFAULT                    0x00000000
+ #define GMC_DST_CLIP_DEFAULT                    0x00000000
++#define GMC_SRC_CLIPPING                        0x00000004
++#define GMC_DST_CLIPPING                        0x00000008
+ #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
+ #define GMC_SRC_DSTCOLOR                        0x00003000
+ #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
 -- 
 2.52.0
 
