@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E772AE8B39C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 655CEE8B39B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 05:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnVI1-0007yf-EZ; Wed, 04 Feb 2026 00:18:57 -0500
+	id 1vnVHq-0007aN-Bl; Wed, 04 Feb 2026 00:18:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vnVHz-0007v0-Oh
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:55 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1vnVHl-0007Yf-VF
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:42 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vnVHy-00086R-7V
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:55 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-352e2156450so3079012a91.3
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:18:53 -0800 (PST)
+ id 1vnVHk-000828-1P
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 00:18:41 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-34be2be4b7cso3396416a91.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 21:18:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1770182333; x=1770787133; darn=nongnu.org;
+ d=sifive.com; s=google; t=1770182318; x=1770787118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7RJutSKn1k65hDY8Ig9jUscMyGWjNCtLo7Y1bHL9Eo=;
- b=ZWVaCAumoW3t+DQg4q4R9oN+OeJDOEnVIM1huRVQP3K8L0QyiWluJgjquNM8FbwFve
- owmadV5me5q/UbtBsuWTF2JRFhvVZnlbYnX58YMBDMwZnNg+1cmWR982xzfc0o0SBJlH
- 6jJn2+4HdWuBdpc9qEE/r+d1mLUS8CEL8oyWQZ837srNMTBD2LNVgfcfyd36fGiujzou
- hYBeTsy+xwGJYQo1Crk7XeVEtzwIED8Nr4T6gj492CiPaCIqpp5tqGLoPDI3sGmv4ngZ
- L0/C0iIivqaNQFK95LKhc8C/XWyK0qQShBtulU4gbQBWHQos27aEFfdXfGYCFkwaVss+
- +z3Q==
+ bh=4xhjFhewDZ8HVtK25LyUvnhiok1WWrm6V2kKzv9k0BU=;
+ b=IsB20SgxaLVeKw0u47znyZuDqjajXYMo7cCVQ4Ks+4BgX/TewXRQSiacKkVhKU5/gB
+ +xOVbGarM95f38Q7aaSHHK+3YE5YeeDBBT+Kf3xxj4YlmTP8L2d5r1KAbhHVv/YxMmzk
+ 0Cm+7fQISUQQ2pRJHla+fv0kA1zx1YQkoOoL9wHWepvpbFfGwwZB3QRk2ASFBJSPAvxA
+ h2V/5wnnYDL2PLutvIEJ+xHQB0GymB2bQee1s5F2VSSK9MWSJN3oEYfWY5jNb4gellPG
+ D0JNAMo29ZEh2v71ZEC/1JILU97ISu8REzM5VFaVtv6JJXn/RMVKgYxucTknIe3HOlhP
+ 1VjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770182333; x=1770787133;
+ d=1e100.net; s=20230601; t=1770182318; x=1770787118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/7RJutSKn1k65hDY8Ig9jUscMyGWjNCtLo7Y1bHL9Eo=;
- b=P18u+QUd+IrZL/HedYkJUOrvE8lBTeZkzNFA+nc/2Mp0scBj/k5R9tFDOSlbpNu0so
- tPnmf3+I6ebSVJRkzp2XYJ1TWz9UcX1qq5ARN4Spk/JVJKILF6lC8Vza22g5Lw3VdqXr
- pvuWmr091l9Uf8JopVsOSmUSu8s1uGnQ6oAaGzjk+krt231/wnvUUDj8uFV4eIBQFXbR
- enasUZfbIW9Vm7A0e1rDDl5aGWJogX9e9b7Pt1El4YHNqC5Ecr9c/reUSwAO+ro9f7dE
- PWLeqFzKfAP1aBVpREkqNdBYSvLEK3XuL1FMqtDXQhtjIm0QnzVXWTET0ntklhUQGMRy
- UKrA==
-X-Gm-Message-State: AOJu0Yy0sykBx0WmQtPMTzJFHKzA60xRsUFs/s0JOSgV1P15GlC9bTkE
- z6eX7YvZZZbI1JA4UUzxylLWp5Ju+bRxy/jfzvPJ14mOCuyA3J59aU3I1TjhVoIw+i+FQMTDtSf
- y5d66eTWnbsuQ5PJj0i023H9nNArhx5MZCA+mWgSdoAj7owxklGzTEF0tQwwlO1//R547jSyQ7u
- T45C+a1VrCo8Orgmos52L2+3DU3A5bjDmOfldCDpiWHS/U
-X-Gm-Gg: AZuq6aIm63cWxhNab8HBjrVegXv+ewakKpBUxCpBC4HL/G5ppx1ZvjWs2277djCo/ko
- 8qWJAyvYvfj2LKWuYLEPfaOKIDXJXATz+E/lnIuWNLM8/jpuz0N+Bx3TCDIMx/Nf2aq5T8BrlGZ
- SSGF7DcYBftyohFmWTjfhjjII8NY6dMtO0aRnOCp0f0PAvl84sMAaZNDYVpa9zdD/O8J0NNZpBS
- 120uq1aZhxD4DgPeGu091zW72IH4qgXl7OoxyEWNAJe887idilZSegH+Sv+4i1QetlR/u8WHW+c
- Iezoayk/zlVXPkXfosko7SfO+RyRMs/ibmr2QoFSlgc61+U34SCwungLXhmNTTrlf4eNsqcoe9e
- qeKIA78HgcFWkPBzGxzjj+PPrbq6gpOmcVn05/qihny7e8LZhBUgcyBbCi863arBr0PswavpnKI
- dd+aH3DCuM7e/RAj0H+8q8rroltKQUJl9Yzdq4dB2RMDXbdT+uWgawdVuOk3/Dg1J2XGw6Jr8wr
- akaz5zOAl3TtqU=
-X-Received: by 2002:a17:90a:da88:b0:341:88d5:a74e with SMTP id
- 98e67ed59e1d1-354871f7af7mr1255211a91.29.1770182332674; 
- Tue, 03 Feb 2026 21:18:52 -0800 (PST)
+ bh=4xhjFhewDZ8HVtK25LyUvnhiok1WWrm6V2kKzv9k0BU=;
+ b=toBtYdOEyb6+5DIdcansYHWmAF+mPM+43YHmoXsO/pIOqKXCXUtP13AD7rNMiM5afl
+ iYjI4SPYFVV4JLiP5RUlMW7r8Izxi3pnWvhBhuhoJuWUg+p4j31fFNXVBUqM4kouZnPX
+ zyiDNQhfiYLWxfeiQwIBJl54W2IBAkbnW5S7jFbrSADUo9j80IuUPtiKSfITH+mCsZkN
+ bKTSqgHJzd5pPw22u+0t4euuYirQlxwfo28XeBPBSKIaNQxeCf5yyBBrHH0vC/29FbLA
+ 8sObcN3Az0mK2873qTfVUUL/h2u908hj5/OfC7mreRnQ7XkDff4v5pI7IcJXKNJyaTfb
+ 3tdA==
+X-Gm-Message-State: AOJu0YwZRG9xRELOHsNMIG5Y/P//cBUZ2nUP0AQHHk7l176Z7+MntLtH
+ 3rkiSmDPF0ASKP36ZgtB+rHzV2YcC4X6Snqh1EMmFJfuoRn9S9YB9aItA+pKiLGHlRNSTYbDGQ6
+ sJaZ8wjgn/rHj9z8ohV+2/ekVNhh4hi1yqz6j90rQUnXBLkf8FKpAYdbKSOsFDwvn60sWIdTtXJ
+ S09PbRrtwFqBnOXItJguQpOhSDyHB70ByPw16UM2yim8BS
+X-Gm-Gg: AZuq6aJIcp+N9IMZlme1mFtlPhb8p8f/aB7o9w+PdUeN9NX4SAry51TSUBQzpGEAwy8
+ 5DkjEwQLzseRopTsvoewelA1isV23JZnRlCewcanMvW7XXjxjGOK0b5dDSruJv3xt9zqiF6QPDm
+ upkN2BbZc8khOoEMWioXy+jDFqn+xQXtSQYPlsb3UliOdVIwlMnIISVvYIxewTwIKy6AZTfJeY3
+ IZc3E8W/akK3DFQqKsKXL2UnpfredWZzCEm0msEaqffRqXDKtFE6jGLfDGb3g8ZH7+nRncAAb5a
+ Koogt5hV3gH+fXIpcfSWBaStj8NPQ9dHKfGX03ZTvyNzbklTJHgh8t6onD48uuAhnWncJhlbgBV
+ e5xHqQpCnq6l9COTeUwmuyITjlgQ+/s4/DwsyTlSWyB57Ts4ADvtvXrI+X8di+zNy3F7DGVri8Z
+ ltnhBbrPUGhoVErv8kAOvzONsnfwFwckONOg0FtH5lL4KBgkTiS1bQx/P6yAq6CVfFlIDBE/PMY
+ vXa+DbNEP0vzLg=
+X-Received: by 2002:a17:90b:5348:b0:340:ec8f:82d8 with SMTP id
+ 98e67ed59e1d1-354870e9703mr1628842a91.12.1770182318088; 
+ Tue, 03 Feb 2026 21:18:38 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35485eb8d90sm1266314a91.12.2026.02.03.21.18.49
+ 98e67ed59e1d1-35485eb8d90sm1266314a91.12.2026.02.03.21.18.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 21:18:52 -0800 (PST)
+ Tue, 03 Feb 2026 21:18:37 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -81,24 +81,24 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v3 16/19] target/riscv: Add implied rules for Zvfofp4min
- extension
-Date: Wed,  4 Feb 2026 13:17:52 +0800
-Message-ID: <20260204051756.667397-17-max.chou@sifive.com>
+Subject: [PATCH v3 11/19] target/riscv: rvv: Add vfncvtbf16.sat.f.f.w
+ instruction for Zvfofp8min extension
+Date: Wed,  4 Feb 2026 13:17:47 +0800
+Message-ID: <20260204051756.667397-12-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260204051756.667397-1-max.chou@sifive.com>
 References: <20260204051756.667397-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,48 +114,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add implied rules to enable the implied extensions of Zvfofp4min
-extension recursively.
+The vfncvtbf16.sat.f.f.w instruction converts a vector of 16-bit
+floating-point numbers to a vector of 8-bit floating-point numbers with
+saturation.
+The VTYPE.altfmt field is used to select the format of the 8-bit floating-point
+numbers.
+* altfmt = 0: BF16 to OFP8.e4m3
+* altfmt = 1: BF16 to OFP8.e5m2
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ target/riscv/insn32.decode                 |  3 ++
+ target/riscv/insn_trans/trans_rvofp8.c.inc | 42 ++++++++++++++++++++++
+ target/riscv/translate.c                   |  1 +
+ 3 files changed, 46 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvofp8.c.inc
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 7823508615..87827441d3 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2520,6 +2520,15 @@ static RISCVCPUImpliedExtsRule ZVFOFP8MIN_IMPLIED = {
-     },
- };
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..49201c0c20 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -973,6 +973,9 @@ vfwcvtbf16_f_f_v  010010 . ..... 01101 001 ..... 1010111 @r2_vm
+ vfwmaccbf16_vv    111011 . ..... ..... 001 ..... 1010111 @r_vm
+ vfwmaccbf16_vf    111011 . ..... ..... 101 ..... 1010111 @r_vm
  
-+static RISCVCPUImpliedExtsRule ZVFOFP4MIN_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvfofp4min),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zve32f),
++# *** Zvfofp8min Extension ***
++vfncvtbf16_sat_f_f_w  010010 . ..... 11111 001 ..... 1010111 @r2_vm
 +
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
+ # *** Zvbc vector crypto extension ***
+ vclmul_vv   001100 . ..... ..... 010 ..... 1010111 @r_vm
+ vclmul_vx   001100 . ..... ..... 110 ..... 1010111 @r_vm
+diff --git a/target/riscv/insn_trans/trans_rvofp8.c.inc b/target/riscv/insn_trans/trans_rvofp8.c.inc
+new file mode 100644
+index 0000000000..d28f92e050
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvofp8.c.inc
+@@ -0,0 +1,42 @@
++/*
++ * RISC-V translation routines for the OFP8 Standard Extensions.
++ *
++ * Copyright (C) 2025 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
-     .ext = CPU_CFG_OFFSET(ext_zvkn),
-     .implied_multi_exts = {
-@@ -2648,9 +2657,10 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
-     &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
-     &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
--    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP8MIN_IMPLIED,
--    &ZVKN_IMPLIED, &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
--    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-+    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP4MIN_IMPLIED,
-+    &ZVFOFP8MIN_IMPLIED, &ZVKN_IMPLIED, &ZVKNC_IMPLIED,
-+    &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED, &ZVKS_IMPLIED,
-+    &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-     &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
-     NULL
- };
++#define REQUIRE_ZVFOFP8MIN(ctx) do {        \
++    if (!ctx->cfg_ptr->ext_zvfofp8min) {    \
++        return false;                       \
++    }                                       \
++} while (0)
++
++
++static bool trans_vfncvtbf16_sat_f_f_w(DisasContext *ctx, arg_rmr *a)
++{
++    REQUIRE_FPU;
++    REQUIRE_ZVFOFP8MIN(ctx);
++
++    if (opfv_narrow_check(ctx, a) && ctx->sew == MO_8) {
++        gen_helper_gvec_3_ptr *fn;
++        uint32_t data = 0;
++
++        fn = ctx->altfmt ? gen_helper_vfncvtbf16_sat_f_f_w_ofp8e5m2 :
++                           gen_helper_vfncvtbf16_sat_f_f_w_ofp8e4m3;
++
++        gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
++
++        data = FIELD_DP32(data, VDATA, VM, a->vm);
++        data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
++        data = FIELD_DP32(data, VDATA, VTA, ctx->vta);
++        data = FIELD_DP32(data, VDATA, VMA, ctx->vma);
++        tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
++                           vreg_ofs(ctx, a->rs2), tcg_env,
++                           ctx->cfg_ptr->vlenb,
++                           ctx->cfg_ptr->vlenb, data, fn);
++        finalize_rvv_inst(ctx);
++        return true;
++    }
++    return false;
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index a1c4b325e5..137022d7fb 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1219,6 +1219,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_privileged.c.inc"
+ #include "insn_trans/trans_svinval.c.inc"
+ #include "insn_trans/trans_rvbf16.c.inc"
++#include "insn_trans/trans_rvofp8.c.inc"
+ #include "decode-xthead.c.inc"
+ #include "decode-xmips.c.inc"
+ #include "insn_trans/trans_xthead.c.inc"
 -- 
 2.52.0
 
