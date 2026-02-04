@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40D5E95377
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB62FE95378
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 10:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnaBa-00014U-7S; Wed, 04 Feb 2026 05:32:38 -0500
+	id 1vnaBL-0000WE-Mu; Wed, 04 Feb 2026 05:32:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaBX-0000nj-85
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaB2-0000ST-Uo
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaBV-000452-De
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vnaB1-0003yW-Gc
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 05:32:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770201152;
+ s=mimecast20190719; t=1770201122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=69RKBa6O0jc+vw18PPmUNrPxdE3iOm75pBiuL3uwTeo=;
- b=L8cS7wj/lgWb9x4mADg+zIZFG+XZGRBQfWPWvnDRTcmvsGWUewf47cci8vNk4ADfwZ0Vtp
- DcqzqxIor3l9O4++S3LyqoWTzmTnmizKw3O/S/2th2tXVisVg5CvRCYoP1yEZtZXCTZ/E8
- NwlwVBRCkR8jKyqurSTFHUewqomdXoI=
+ bh=8GoPy3jKgTWdpyHPRiMnRFnTMsp4NxwY5YOERW/tJV8=;
+ b=I1b84uNnxI8uNBO7io053YJ5Ry6mN2CF0qF9hHoE4ca49YMKIGE5CSPI7CqAtqbVm8mYGW
+ 8fOGM2w7YS5KcJJdKhDHrV1CrtgPIYPKJTy213IDLHj7eF713HK1baoNBftTSd1dBCgSWn
+ Quq3IOJ9xyC+7rz2PujbNBXiRy703ak=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-Z3Rt2kgKNmiH47atod62rA-1; Wed,
- 04 Feb 2026 05:32:29 -0500
-X-MC-Unique: Z3Rt2kgKNmiH47atod62rA-1
-X-Mimecast-MFC-AGG-ID: Z3Rt2kgKNmiH47atod62rA_1770201148
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-J8mHMFX-NcaPcnAt3svAgA-1; Wed,
+ 04 Feb 2026 05:31:59 -0500
+X-MC-Unique: J8mHMFX-NcaPcnAt3svAgA-1
+X-Mimecast-MFC-AGG-ID: J8mHMFX-NcaPcnAt3svAgA_1770201118
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C06E1800464; Wed,  4 Feb 2026 10:32:28 +0000 (UTC)
+ id 48A2E1800613; Wed,  4 Feb 2026 10:31:58 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0BBDD18003F6; Wed,  4 Feb 2026 10:32:26 +0000 (UTC)
+ id 321301800669; Wed,  4 Feb 2026 10:31:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 23/45] docs/system/arm/aspeed: Load raw U-Boot image in AST2700
- boot example
-Date: Wed,  4 Feb 2026 11:31:14 +0100
-Message-ID: <20260204103136.1795455-24-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Elhrj Saad <saadelhrj@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/45] hw/adc: Fix out-of-bounds write in Aspeed ADC model
+Date: Wed,  4 Feb 2026 11:30:59 +0100
+Message-ID: <20260204103136.1795455-9-clg@redhat.com>
 In-Reply-To: <20260204103136.1795455-1-clg@redhat.com>
 References: <20260204103136.1795455-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,50 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
+memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
+function has an out-of-bounds write vulnerability when accessing
+unimplemented registers.
 
-Recent SDK versions no longer provide a U-Boot FIT image, and U-Boot is
-now built as a single raw binary. Update the documentation to load the
-raw u-boot.bin image directly.
+Fix this by using 'return' instead of 'break' in the default case,
+which prevents execution from reaching the s->regs[reg] assignment for
+unimplemented registers.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260203020855.1642884-9-jamin_lin@aspeedtech.com
+Reported-by: Elhrj Saad <saadelhrj@gmail.com>
+Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260126141820.719492-1-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/system/arm/aspeed.rst | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ hw/adc/aspeed_adc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 97e14b7d338f..d0054a7dbb88 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -350,11 +350,9 @@ corresponds to the BL31 image load address.
- .. code-block:: bash
+diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
+index fd3af308296e..3cc75bbcd6e2 100644
+--- a/hw/adc/aspeed_adc.c
++++ b/hw/adc/aspeed_adc.c
+@@ -228,7 +228,8 @@ static void aspeed_adc_engine_write(void *opaque, hwaddr addr, uint64_t value,
+         qemu_log_mask(LOG_UNIMP, "%s: engine[%u]: "
+                       "0x%" HWADDR_PRIx " 0x%" PRIx64 "\n",
+                       __func__, s->engine_id, addr, value);
+-        break;
++        /* Do not update the regs[] array */
++        return;
+     }
  
-   IMGDIR=ast2700-default
--  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
- 
-   $ qemu-system-aarch64 -M ast2700-evb \
--       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
--       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-+       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
-        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
-        -device loader,cpu-num=0,addr=0x430000000 \
-@@ -409,11 +407,9 @@ Steps to boot the AST2700fc machine:
- .. code-block:: bash
- 
-   IMGDIR=ast2700-default
--  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
- 
-   $ qemu-system-aarch64 -M ast2700fc \
--       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
--       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-+       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot.bin \
-        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
-        -device loader,cpu-num=0,addr=0x430000000 \
+     s->regs[reg] = value;
 -- 
 2.52.0
 
