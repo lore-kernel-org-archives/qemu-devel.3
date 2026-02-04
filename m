@@ -4,96 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20446EA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714A4EA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 18:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnheL-0006to-Kh; Wed, 04 Feb 2026 13:30:49 -0500
+	id 1vnhfh-0007UB-MA; Wed, 04 Feb 2026 13:32:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnheE-0006sW-CU
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:30:43 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vnheB-00036Q-TR
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:30:42 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee07570deso924215e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 10:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770229838; x=1770834638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jb1F9Vr2vzh6XgXud4z+xI0erfynMFsLEm+U9URSLUQ=;
- b=ASdizDdn47AapKlhqyqKBjjWzl4q95jOPyR+EgSvf3tHLVA0yOF2V1ByghjAYUu0/m
- pYR9cn3RzzKdBHZeIQtFlcxMNbltaYaDMaJhpBv+r9zCfcWBp7599Q878x6nyuDtPC9+
- KorueiECupo48medC7kxbA0wCs9+6O1Z/7cHlMKzD1rOu7GSw07NbqWDUZxI9uhWi11y
- SZV2C48UduEaJGe4DgPuaDPP02k4ppZUMO4zWQLkEg5TkOxQgAPEhTOJ1oqNKRmdsxPE
- Rd1V8R+FfFN9yHuhwsT7m58ntfzX42cPhf2dChTi2I8b8mj0STVDTna4tOtmPGekYZYI
- SZQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770229838; x=1770834638;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jb1F9Vr2vzh6XgXud4z+xI0erfynMFsLEm+U9URSLUQ=;
- b=H2Um4/k6CoOaOl9YphVgm0DVpoFhSXNqO+lEJj/Vi8LGXZCwSHmBZrayoRsoFLH8HJ
- 8NSu2RfFu21BEKSQUVlUoqewpYAbS10U8l+BexVM7TLHiTESrjt00P0c5WmzF9QtFr83
- ZVHt8DMSeaGVeoje6LdGG+63Le25micX5TO8PLrtmhQqpuYRGR8id55TpVhSBJRsqSH2
- 1ba4tGiE95tMFmicg8wEuRyK8eS6xbEqYqXMBxvLS0703uDOeFTuMPN9AA5VvuonaosW
- mbpOVJjTiCw96ZM1Ub9yEpXTCd25SZ4NE+zA+DXxJpS57qWjSkeuAaXLlk6Sd6iZ7IR4
- mflA==
-X-Gm-Message-State: AOJu0YzZ5sadmguCKPEt9E6CRL8QslcfzFTUqPRaPV17pHDphi90Boe2
- EbsaJNs7ETArzJnvYChew0WjqS2k6nQmZcBfjG8JCOVbcY+tpIV7CvCLansRVfm2+FZfDf6i83Y
- eAXJU82s=
-X-Gm-Gg: AZuq6aIlat4Hbi5eK1UktVYbWKvZK5GDLfXU+FzIfmHTYL6UnkzbACfYD4zltsUcERq
- r5ZchUn+DmWfUoWt0pYqE+XoiYaKu1ahISmkx2w4v9siGAWO0c+ild0jM3vC2d4/9Y/5rO3gPWd
- V5rk8KZR8d0KacqTcg7cVPzmks7r3/HYb70eWb4c6OAjRyK5PVw/Z0xer/0GRthViLi+QeUj46j
- iLyfsoHPyVxlBqm1GV9qVfhYxkGIYWYsqHjQR3WK6BKyOl8dC+xFEJxJFuT53DxBaYuuzua0ht+
- P4cwDWFTjfTlrsuIeQJZFvpIC31UlDDZ0V9nBNvgkwDIIM0GexuCWcDPPkLcD9Ty80LIvJffpw6
- rwQcQoZglj5I+6v6+5Xjn3BE9MWTjsJzoufgOoKOzhOkWFZ2hpAR7oF60M7SMPQ9zYrl3kGPLDH
- r1iC7AHiNc9QC872q/Z4fcYsDxk2PkxY7mnUi8T06tz/MQ2FoKetEEaA==
-X-Received: by 2002:a05:600c:3143:b0:477:a978:3a7b with SMTP id
- 5b1f17b1804b1-4830e987c76mr60392235e9.22.1770229837677; 
- Wed, 04 Feb 2026 10:30:37 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d20319sm4249475e9.2.2026.02.04.10.30.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 10:30:37 -0800 (PST)
-Message-ID: <8535c348-4eaf-4085-aa7e-c7219f8693cc@linaro.org>
-Date: Wed, 4 Feb 2026 19:30:36 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnhff-0007TE-WE
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:32:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnhfd-0003Cx-GI
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 13:32:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770229928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eHgjEq++QKxnVUH4c7Njw+76PaDzNVSUitYr9lRnKnI=;
+ b=GsEo66E22TZzLCA22vjY49H5ChxuI5kis1e9j7h6ZXjRVQD4DKZDCf+DPob/wepp8dBAXL
+ S0DOtCjUidlPtiIWGBsNYPINrqVCG8Na7hWFSjTWl+xSajobc+tFS08YP/6fzw71Z93lOC
+ OAPk/90M8abDBEm3wJpvTZgzVspx2nM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-DzxXGJ4bOmaViYyhU9mDrQ-1; Wed,
+ 04 Feb 2026 13:32:04 -0500
+X-MC-Unique: DzxXGJ4bOmaViYyhU9mDrQ-1
+X-Mimecast-MFC-AGG-ID: DzxXGJ4bOmaViYyhU9mDrQ_1770229923
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 220C11956053; Wed,  4 Feb 2026 18:32:03 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.153])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2127830001BB; Wed,  4 Feb 2026 18:32:01 +0000 (UTC)
+Date: Wed, 4 Feb 2026 13:32:01 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Martin Wilck <mwilck@suse.com>
+Cc: Benjamin Marzinski <bmarzins@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hannes Reinecke <hare@suse.de>,
+ afaria@redhat.com, qemu-devel@nongnu.org,
+ Mikulas Patocka <mpatocka@redhat.com>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+Message-ID: <20260204183201.GB610283@fedora>
+References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
+ <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
+ <20260203180437.GA527989@fedora>
+ <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 9/9] target/s390x: Expand TCGv type as 64-bit target
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-10-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260204182722.44062-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="jtSO5w/CS6eK19eI"
+Content-Disposition: inline
+In-Reply-To: <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,23 +91,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/26 19:27, Philippe Mathieu-Daudé wrote:
-> The s390x target is a 64-bit one, so we have these expansions
-> in the "tcg/tcg-op.h" header:
-> 
->   . tcg_gen_qemu_ld_tl() -> tcg_gen_qemu_ld_i64()
->   . tcg_gen_qemu_st_tl() -> tcg_gen_qemu_st_i64()
-> 
-> Use the expanded form which is more explicit when a target
-> isn't built for different words size.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/s390x/tcg/translate.c | 54 ++++++++++++++++++------------------
->   1 file changed, 27 insertions(+), 27 deletions(-)
 
-Argh, $Subject ought to be:
+--jtSO5w/CS6eK19eI
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   "target/s390x: Expand tcg_gen_qemu_ld/st_tl() as 64-bit target"
+On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
+> Hi Stefan,
+>=20
+> On Tue, 2026-02-03 at 13:04 -0500, Stefan Hajnoczi wrote:
+> > On Tue, Feb 03, 2026 at 12:53:12PM -0500, Benjamin Marzinski wrote:
+> > > On Tue, Feb 03, 2026 at 10:09:39AM -0500, Stefan Hajnoczi wrote:
+> > > > On Tue, Jan 27, 2026 at 04:06:03PM -0500, Benjamin Marzinski
+> > > > wrote:
+> > > > > On Tue, Jan 27, 2026 at 01:47:43PM -0500, Stefan Hajnoczi
+> > > > > wrote:
+> > > > > > Hi Benjamin and Paolo,
+> > > > > > I would like to discuss changes to DM-Multipath and qemu-pr-
+> > > > > > helper to
+> > > > > > handle SCSI Persistent Reservations in QEMU without
+> > > > > > privileged code.
+> > > > > >=20
+> > > > > > SCSI Persistent Reservations support in QEMU is built on the
+> > > > > > qemu-pr-helper daemon that performs PERSISTENT RESERVATION IN
+> > > > > > and
+> > > > > > PERSISTENT RESERVATION OUT commands on behalf of the guest.
+> > > > > > The
+> > > > > > qemu-pr-helper process provides privilege separation for
+> > > > > > ioctl(SG_IO)'s
+> > > > > > CAP_SYS_RAWIO and libmpathpersist's root privileges since the
+> > > > > > main QEMU
+> > > > > > process should not have those privileges.
+> > > > > >=20
+> > > > > > There are issues with the current approach:
+> > > > > > - Privileged code is a security attack surface.
+> > > > > > - A bunch of code is required for privilege separation and
+> > > > > > for management
+> > > > > > =A0 tools to set up qemu-pr-helper with access to multipathd.
+> > > > > > - The interface is SCSI-specific and does not support NVMe.
+> > > > > >=20
+> > > > > > Several of us have pondered a different approach that I will
+> > > > > > summarize
+> > > > > > here. The <linux/pr.h> ioctl interface provides an
+> > > > > > alternative to
+> > > > > > ioctl(SG_IO) without the CAP_SYS_RAWIO requirement. It
+> > > > > > supports both
+> > > > > > SCSI and NVMe. Since privileges are not required, there would
+> > > > > > be no need
+> > > > > > for the qemu-pr-helper daemon anymore.
+> > > > > >=20
+> > > > > > The blocker is that <linux/pr.h> is not usable in multipath
+> > > > > > environments. The Linux DM-Multipath driver has an incomplete
+> > > > > > ioctl
+> > > > > > implementation that falls short of what libmpathpersist and
+> > > > > > multipathd
+> > > > > > do in userspace. Kernel changes are necessary to fix this.
+> > > > > >=20
+> > > > > > My suggestion is to implement <linux/pr.h> via upcalls from
+> > > > > > DM-Multipath
+> > > > > > to multipathd. That way applications like QEMU can
+> > > > > > consistently use
+> > > > > > <linux/pr.h> across block device types and no longer have to
+> > > > > > go through
+> > > > > > the privileged libmpathpersist interface.
+> > > > >=20
+> > > > > This would take intercepting the pr commands to multipath
+> > > > > devices right
+> > > > > at the start of dm_call_pr(). In order to make some persistent
+> > > > > reservation commands seem atomic, libmpathpersist needs to
+> > > > > suspend the
+> > > > > multipath device in certain situations. So device-mapper cannot
+> > > > > call
+> > > > > dm_get_live_table(), since this will block suspends. This
+> > > > > should be o.k.
+> > > > > Libmpathpersist is designed to handle the possiblity that the
+> > > > > multipath
+> > > > > device gets reloaded with different paths while it is running.
+> > > > > And since
+> > > > > the multipath target is an immutable singleton target, there is
+> > > > > no
+> > > > > possibility of it turning into another target type because of a
+> > > > > table
+> > > > > reload during suspend.
+> > > > >=20
+> > > > > Also, just to clarify, the kernel code can't interface directly
+> > > > > with
+> > > > > multipathd. Most of the code for handling persistent
+> > > > > reservations is in
+> > > > > libmpathpersist, which just needs multipathd to do things like
+> > > > > make sure
+> > > > > that paths that are added in the furture get registered
+> > > > > properly. There
+> > > > > would likely need to be some new program (that is just a thin
+> > > > > wrapper
+> > > > > around libmpathpersist) which can be called with
+> > > > > call_usermodehelper().
+> > >=20
+> > > Adding Martin Wilck, since he will also be looking at these
+> > > changes.
+> > > =A0
+> > > > Hi everyone,
+> > > > I'm starting to work on the DM-Multipath changes. Some more
+> > > > details on
+> > > > how I am approaching this:
+> > > >=20
+> > > > - multipath-tools will create multipath device-mapper targets
+> > > > with a new
+> > > > =A0 ctr argument (pr_netlink) when this feature is enabled. When
+> > > > the
+> > > > =A0 feature is disabled, everything remains backwards compatible.
+> > > > With the
+> > > > =A0 pr_netlink ctr argument, the multipath target sends a netlink
+> > > > =A0 multicast group notification instead of handling PR operations
+> > > > (e.g.
+> > > > =A0 IOC_PR_* ioctls) in the kernel.
+> > > >=20
+> > > > - There will be a new program in multipath-tools called
+> > > > mpathpersistd
+> > > > =A0 that listens on the netlink multicast group for notifications.
+> > > > The
+> > > > =A0 notification tells it which multipath device has a pending PR
+> > > > =A0 operation. It fetches the PR operation parameters by sending a
+> > > > netlink
+> > > > =A0 message, performs the persistent reservation operation via
+> > > > =A0 libmpathpersist, and then sends a response to the kernel via
+> > > > another
+> > > > =A0 netlink message.
+> > > >=20
+> > > > - The multipath device-mapper target completes the PR operation
+> > > > upon
+> > > > =A0 receiving the netlink response.
+> > > >=20
+> > > > I ended up choosing netlink because call_usermodehelper() seems
+> > > > less
+> > > > appropriate for an operation triggered by untrusted userspace
+> > > > processes.
+> > > >=20
+> > > > Your input is welcome. Let me know if a different approach would
+> > > > be
+> > > > better.
+> > >=20
+> > > Is the netlink interface going to be a generic persistent
+> > > reservation
+> > > upcall interface, or it this just for dm multipath? I'm not sure if
+> > > there would ever be another user, and I don't have enough
+> > > experience
+> > > with the netlink code to know how ugly it might be to route
+> > > communications from different kernel drivers to different userspace
+> > > daemons through the same generic netlink family. But if there's not
+> > > much extra complexity in building a generic interface, it seems
+> > > like
+> > > it would be preferable to a multipath specific one.
+> >=20
+> > It can be generic. The messages will contain the block device
+> > major:minor as well as information to describe <linux/pr.h> requests.
+>=20
+> So the ioctls will pass through qemu into the kernel, to be intercepted
+> by the dm-mpath driver, which will use an upcall to have them handled
+> by mpathpersistd (for the actual command) and multipathd (for the path
+> registrations).
+>=20
+> I don't fully understand the advantage, security and complexity-wise,
+> of this concept, compared to intercepting them qemu and using a socket
+> to talk to mpathpersistd directly. If we did this, we could even
+> support both generic and SCSI PR commands.
+
+Hi Martin,
+The simplification and security benefits are on the application side,
+not on the DM-Multipath side, so I can see what you're getting at. From
+the DM-Multipath perspective things get a little more complex.
+
+=46rom an application perspective, a single API that works across block
+device types (SCSI, NVMe, DM-Multipath) and requires no privileges or
+sockets (they are a pain in container environments) is the most
+convenient. The <linux/pr.h> ioctl API offers exactly this.
+
+Unfortunately, DM-Multipath currently does not fully support
+<linux/pr.h>. It sends PR operations down each path, but that is only a
+subset of libmpathpersist's logic and multipathd is not kept in sync.
+
+My impression is that libmpathpersist and multipathd logic cannot be
+easily moved into the kernel. This is where the upcall idea comes from.
+Let's notify multipath-tools from DM-Multipath so it can do its work in
+userspace.
+
+Getting back to the application vs DM-Multipath advantages: I think it's
+worth simplifying things for applications because there are many
+applications and only one DM-Multipath.
+
+Thanks,
+Stefan
+
+--jtSO5w/CS6eK19eI
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmDkKEACgkQnKSrs4Gr
+c8i9lQgAud8oLItw8VnaaMVUuStKKBpzE+qOq9DtSBoCi1wo+w9n8pipHmPH9JsH
+k1mYsYBM77GCapymsY0+Yu2V1YI+G0oMasFP2YJkmNhHgPILrDFWNyJRKNLDcgKz
+pTWAatjhl93bGsUcMVjOC85N+WYmHzD5XB1V/mXW06GyqVCLAfvU1cVaduS0Hn4D
+x8MANXtqr2nBWvd56mvSsackmHjhUoFJBYP7B56qTV8GQp9M8P2EUmXcNENpSFln
+cq9n3UW2CUL/o9NQ25kwIC7NuSsjFJOHWfrTZdprXtMsyBTio/py1cMZofqvrAyo
+M4UXLPIofyDgNeZSLRoVV9RQqNNW6g==
+=Y+a0
+-----END PGP SIGNATURE-----
+
+--jtSO5w/CS6eK19eI--
 
 
