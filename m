@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BACE83EF9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A2CE83EE7
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnYig-0003YF-BN; Wed, 04 Feb 2026 03:58:42 -0500
+	id 1vnYiu-0003fB-RU; Wed, 04 Feb 2026 03:58:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYif-0003Xd-8w
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:41 -0500
-Received: from 7.mo552.mail-out.ovh.net ([188.165.59.253])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYis-0003de-NE
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:54 -0500
+Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYic-0005t7-P1
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:41 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.72])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f5Z5R3sv5z5vS5;
- Wed,  4 Feb 2026 08:58:35 +0000 (UTC)
-Received: from kaod.org (37.59.142.103) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vnYiq-0005v0-5W
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 03:58:54 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.226])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f5Z5h21Qlz5vsq;
+ Wed,  4 Feb 2026 08:58:47 +0000 (UTC)
+Received: from kaod.org (37.59.142.104) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 4 Feb
- 2026 09:58:34 +0100
+ 2026 09:58:45 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0050b4dcc8d-a1d3-4526-854a-6f7f765e852c,
+ (GARM-104R00594f80d1e-0d50-4169-a44c-1040feb79539,
  E481ED796CD1A7AD002472F698DA8951F44CEEA4) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <76c6098c-a924-4c19-848e-3910fe65e7a4@kaod.org>
-Date: Wed, 4 Feb 2026 09:58:34 +0100
+Message-ID: <d27d32b2-b076-4049-a845-39fbad4dfa8f@kaod.org>
+Date: Wed, 4 Feb 2026 09:58:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 20/22] tests/functional/aarch64: Parameterize I2C bus
- ID in AST2700 test
+Subject: Re: [PATCH v7 21/22] tests/functional/aarch64: Parameterize PCIe2
+ initialization in AST2700
 To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -44,7 +44,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, "kaneluno1@gmail.com"
  <kaneluno1@gmail.com>
 References: <20260204082113.3955407-1-kane_chen@aspeedtech.com>
- <20260204082113.3955407-21-kane_chen@aspeedtech.com>
+ <20260204082113.3955407-22-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260204082113.3955407-21-kane_chen@aspeedtech.com>
+In-Reply-To: <20260204082113.3955407-22-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.104]
+X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 94c7712e-291a-42cf-86cb-158cf1dcf0f3
-X-Ovh-Tracer-Id: 737182967922396149
+X-Ovh-Tracer-GUID: 7eb67720-13a5-4194-9fcc-833763d34e68
+X-Ovh-Tracer-Id: 740560665367383029
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFwE5jkYFznWbfEnUZg34IsSxerq7GWH35BoKpbwEvK8jxnFr0v6jm2dKrwXAzWfLpW4F92owa0Yhq0VuoXvZs99OJ07lUczs3ezJQHTiPjhAQMpqlH76FhqrYn89eQL6byLzDvdaV4RbZXfCtSOr9j10eu2BF+7kTK+y1t3FFdsz7Tc5tqU0CEZgcci809HL0I5knvURocXdhM97UMfWae74lVrXzN7v+26JHXKEcCq2hwdxHQLGI75Stc+hkA/emYBc6OBLsAg49seodzjdc5zM38cjVl3+CtLAM0X6nU9e9J+lnzy5aug7h45GXLr8sPtre30+x6y90lqyz5nQvsM/PQYxRKAdrnYPf436ESInN80QWrVw3EGiP4NlVsJFFLSFBiXbr4yeTh4xYqu+qAauOP6GU09ETJVn68pbBR1nREn/9DW8/kvYDWnMcUzI+zLYVwA81Dse3iWEwlBiEJI5s5CxUVlPCDu0K6uVtQztx+2CxOKQb58+JKIrsZ1rNAIXp57ZFeB75nHG+NULwTHKBim2f0ntZ6w7hmnm5gsJOKVd4LlLLhnTISFuJJQrN8/pCxN0ExoOTbIB3pV7cnxhCPr/cKgo9gmGp29+mu4jWPeejSZW8AQEq/yf0JL90rvWgeYr5N1ac1R5R4oXA2AtDJsXeJKTCnoF9cTAtpZw
-DKIM-Signature: a=rsa-sha256; bh=mxXacsUwv/dAoellGLT35D3wtWIQuzYHO0KcQFy2/cY=; 
+X-VR-SPAMCAUSE: dmFkZTFcqtlfOM4QNFiq34GRKD9NBjTZMMswusWzdFgjxpspDL19zZtYj4YP4B1jZYGN1kkgGJlYa+OC12Yont10MYkg2E/6OKO4SRVK8E+5OOcqbbV44+Z/bEImaL9hnhrh3+1uQUnWMme37oaSTetw59hhAzy+Q6dAqf5sqVBFDtJRsbJev1cuOHsbktAxI+n5Nepgi/Ukenq0WeiOYR2FkI8hubeU63ufOltOWI/LBPtye+GjvZZnSMsiYH3ePx2KP+4t2YO7VNZM6ts36S6v5Zo0jH0jIOXiBq/7QOjyXl0QCZ2FkJ3b9g7ei6Q6yzMCaculoWvrXUA95i08R1e9rNQVA23y3RsrDJ1ZTCQMifL6snYFhJBnKpedDO8mSim+LNvl0InEAVQpbNi+0Wp5a8rX+L6JFC0fEWB65RUpAkmDGBh/7ycG5kGilYF3Pgs+CKBWbcXubMXPx/JzITkm8r26L57RNqEtFvjegkkWyvGKMDUxQoayp2J1emD+kdhsnm4Dy0Erjtnca4m2327PgAn4nONlAtGLA/pM8S6J/10d6buL1YawqvFSmoTk5Pq83+4c2S6mbd5Wxh2S6qT76nLOvCYfNjsE9r1aJyzqREUGkH8STuhTAinpFimMJZzjFyXm+AGrExk8iiVBL7PQCUs/pHPxKFh7oqLSqM2S6EUjTg
+DKIM-Signature: a=rsa-sha256; bh=42ZovUMF0ykQ3ngiuSS7JzNRtlBbdU7DmDhL6pWhhCk=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770195515; v=1;
- b=K1qlNjdxXrG3SusuHMnOsO2slOd222EjfE+U7ve9UOARQzZSWLHDviO/IRA1luit+r0f9ZMm
- Fs19pyXSxeL/Zt7Tx838GGihLEBr8+UyBLJmNr9NnblTKJEZuGmBCXU+kKno9GqXAIRv7WmtSW2
- Dj38BhkHmkn4iPcFn0voOyt8AH+DXGYRK4HgdUkAgCwkaPbay/p25xasm9me8cXKZbHN/JVDzUw
- ijDB92CEXk6iwpyW1UtAyfFIohAMSTaqkDBlxr9cm9025jbrOrC5BnfkcO8UUwTnkHmjkgDK3YL
- ns5T0eNOkdwkjFHwmEvo/kqv6bOOg5Wkd5WfM/0i72uHg==
-Received-SPF: pass client-ip=188.165.59.253; envelope-from=clg@kaod.org;
- helo=7.mo552.mail-out.ovh.net
+ t=1770195529; v=1;
+ b=LYjc+K1/8EEtFd6vm+FmvdUE1DMnMZJkVQhilTs3kFU+UaRXlbnWvLJsR+cp0AqXOdvruqbI
+ 9qs+iaSYE9Y7qgml30R25lAoWdJfYFQ0Xk/I3vj+iG4VsdRQMzKpvW84U3YsptpAtKyXuj8Mtum
+ d+HRlBoecdH84J1MdbVfxhNTya4IYxXaqFWLUu3ClK8S9nnstllckEC90Ko8+AyAhcDgam+LOeK
+ 7OPNwcmlcGLoZoudI5tnz0z+LzdjSQaBhE92dgcszS/q4YGm1odaGPJ8aYw4XcsAozywXD+aXwC
+ h/yFFf5i9NPrlZdEPG57e42pzWPQxZz+NWy2rldptOGMQ==
+Received-SPF: pass client-ip=46.105.77.235; envelope-from=clg@kaod.org;
+ helo=10.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,15 +134,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/4/26 09:21, Kane Chen wrote:
-> The current Aspeed AST2700 functional test case strictly uses I2C bus
-> 1 for its sensor tests. This hard-coded approach prevents the test
-> logic from being reused for other machine types or configurations
-> where I2C bus 1 might be disabled or where a different bus needs to
-> be verified (e.g., I2C expanders).
+> The current AST2700 functional test forces PCIe2 enablement by manually
+> manipulating U-Boot env and FDT via the console. This sequence
+> interferes with test cases that rely on the default boot flow of the
+> image.
 > 
-> This refactoring allows the same I2C verification logic to be shared
-> across different test scenarios by simply passing the target bus
-> number.
+> Introduce a 'enable_pcie' parameter (defaulting to True) to both
+> 'verify_openbmc_boot_start' and 'verify_openbmc_boot_and_login' methods.
+> This allow test cases to toggle the PCIe2 initialization sequence based
+> on their specific requirements without breaking standard boot tests.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
@@ -154,104 +154,34 @@ Thanks,
 C.
 
 
+
+
 > ---
->   .../functional/aarch64/test_aspeed_ast2700.py | 39 +++++++++++--------
->   1 file changed, 23 insertions(+), 16 deletions(-)
+>   tests/functional/aarch64/test_aspeed_ast2700.py | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 > 
 > diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-> index 828ea1ca53..d7eeab9c23 100755
+> index d7eeab9c23..cb1aafeb99 100755
 > --- a/tests/functional/aarch64/test_aspeed_ast2700.py
 > +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-> @@ -15,11 +15,17 @@
+> @@ -65,13 +65,14 @@ def enable_ast2700_pcie2(self):
+>               'fdt set /soc@14000000/pcie@140d0000 status "okay"', '=>')
+>           exec_command(self, 'bootm go')
 >   
->   class AST2x00MachineSDK(QemuSystemTest):
+> -    def verify_openbmc_boot_start(self):
+> +    def verify_openbmc_boot_start(self, enable_pcie=True):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> -        self.enable_ast2700_pcie2()
+> +        if enable_pcie:
+> +            self.enable_ast2700_pcie2()
+>           wait_for_console_pattern(self, 'Linux version ')
 >   
-> -    def do_test_aarch64_aspeed_sdk_start(self, image):
-> +    def do_test_aarch64_aspeed_sdk_start(self, image, bus_id):
-> +        bus_str = str(bus_id)
->           self.require_netdev('user')
->           self.vm.set_console()
-> -        self.vm.add_args('-device',
-> -                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-> +        self.vm.add_args(
-> +            '-device',
-> +            f'tmp105,'
-> +            f'bus=aspeed.i2c.bus.{bus_str},'
-> +            f'address=0x4d,'
-> +            f'id=tmp-test-{bus_str}'
-> +        )
->           self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
->                            '-net', 'nic', '-net', 'user', '-snapshot')
+> -    def verify_openbmc_boot_and_login(self, name):
+> -        self.verify_openbmc_boot_start()
+> +    def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
+> +        self.verify_openbmc_boot_start(enable_pcie)
 >   
-> @@ -75,16 +81,17 @@ def verify_openbmc_boot_and_login(self, name):
->               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-obmc.tar.gz',
->               'd5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525')
->   
-> -    def do_ast2700_i2c_test(self):
-> +    def do_ast2700_i2c_test(self, bus_id):
-> +        bus_str = str(bus_id)
->           exec_command_and_wait_for_pattern(self,
-> -            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-> -            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
-> +            f'echo lm75 0x4d > /sys/class/i2c-dev/i2c-{bus_str}/device/new_device ',
-> +            f'i2c i2c-{bus_str}: new_device: Instantiated device lm75 at 0x4d')
->           exec_command_and_wait_for_pattern(self,
-> -            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-> -        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> +            f'cat /sys/bus/i2c/devices/{bus_str}-004d/hwmon/hwmon*/temp1_input', '0')
-> +        self.vm.cmd('qom-set', path=f'/machine/peripheral/tmp-test-{bus_str}',
->                       property='temperature', value=18000)
->           exec_command_and_wait_for_pattern(self,
-> -            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
-> +            f'cat /sys/bus/i2c/devices/{bus_str}-004d/hwmon/hwmon*/temp1_input', '18000')
->   
->       def do_ast2700_pcie_test(self):
->           exec_command_and_wait_for_pattern(self,
-> @@ -99,7 +106,7 @@ def do_ast2700_pcie_test(self):
->               'ip addr show dev eth2',
->               'inet 10.0.2.15/24')
->   
-> -    def start_ast2700_test(self, name):
-> +    def start_ast2700_test(self, name, bus_id):
->           num_cpu = 4
->           load_images_list = [
->               {
-> @@ -128,12 +135,12 @@ def start_ast2700_test(self, name):
->   
->           self.vm.add_args('-smp', str(num_cpu))
->           self.do_test_aarch64_aspeed_sdk_start(
-> -            self.scratch_file(name, 'image-bmc'))
-> +            self.scratch_file(name, 'image-bmc'), bus_id)
->   
-> -    def start_ast2700_test_vbootrom(self, name):
-> +    def start_ast2700_test_vbootrom(self, name, bus_id):
->           self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
->           self.do_test_aarch64_aspeed_sdk_start(
-> -                self.scratch_file(name, 'image-bmc'))
-> +                self.scratch_file(name, 'image-bmc'), bus_id)
->   
->       def test_aarch64_ast2700a1_evb_sdk_v11_00(self):
->           self.set_machine('ast2700a1-evb')
-> @@ -142,9 +149,9 @@ def test_aarch64_ast2700a1_evb_sdk_v11_00(self):
->           self.archive_extract(self.ASSET_SDK_V1100_AST2700A1)
->           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
->           self.vm.add_args('-netdev', 'user,id=net1')
-> -        self.start_ast2700_test('ast2700-a1')
-> +        self.start_ast2700_test('ast2700-a1', 1)
->           self.verify_openbmc_boot_and_login('ast2700-a1')
-> -        self.do_ast2700_i2c_test()
-> +        self.do_ast2700_i2c_test(1)
->           self.do_ast2700_pcie_test()
->   
->       def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_00(self):
-> @@ -154,7 +161,7 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_00(self):
->           self.archive_extract(self.ASSET_SDK_V1100_AST2700A1)
->           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
->           self.vm.add_args('-netdev', 'user,id=net1')
-> -        self.start_ast2700_test_vbootrom('ast2700-a1')
-> +        self.start_ast2700_test_vbootrom('ast2700-a1', 1)
->           self.verify_vbootrom_firmware_flow()
->           self.verify_openbmc_boot_start()
->   
+>           wait_for_console_pattern(self, f'{name} login:')
+>           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
 
 
