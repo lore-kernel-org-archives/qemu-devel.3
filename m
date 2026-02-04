@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B2AE9D3E2
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 14:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E339CE9D3E2
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 14:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vndbD-0000IN-Vz; Wed, 04 Feb 2026 09:11:20 -0500
+	id 1vndfg-0002LI-Mk; Wed, 04 Feb 2026 09:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vndb8-0000GC-0m
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 09:11:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vndfe-0002KP-Is
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 09:15:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vndb3-0000hm-D7
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 09:11:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vndfd-0001g9-3z
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 09:15:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770214266;
+ s=mimecast20190719; t=1770214552;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QFzbu7+uOkaP/4gZvuVsm8v5xfxngFjJNMtqpswEYaU=;
- b=Nd1z+GtFhG9AkXxu+mnKiSZ+opyg5t5CFncgB7KG0QljXOkoOPAo0ZdwwPJUoGXVKmXJej
- fRInwPcDV95/19Dvq8Ylpqg+F4jSsWTTH5sr/25OIl/8oz7Fs574HV2Yns676RUi2hqb0t
- j6esSH9cd94ytFD1odJMPpkwzGlxp9s=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5MWKkIucLF6x9E02TxtvEEFofm8o9t6lD9Azor25BLI=;
+ b=Um6ik5gVSvQLak4zX6fNhS3YeGr/0Neb1JeVHqFZq+lIUe61h+2/BNNuZokxFnSmt69MON
+ S2PGnDNECdXPz3HFYlxA5dthQgHlE8ERs2nNBwtwysmqzJZcL8PvEoHRy/pJSirOtomYkw
+ jrmlOgYWpZ/rOppqaba1SEmKipq+l9c=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-CdzvMVxfNeSTr-wThkUc_w-1; Wed, 04 Feb 2026 09:11:05 -0500
-X-MC-Unique: CdzvMVxfNeSTr-wThkUc_w-1
-X-Mimecast-MFC-AGG-ID: CdzvMVxfNeSTr-wThkUc_w_1770214264
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47edf8ba319so74518505e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 06:11:05 -0800 (PST)
+ us-mta-533-dl7VhSYOPVmrOI7Bd3NbgQ-1; Wed, 04 Feb 2026 09:15:49 -0500
+X-MC-Unique: dl7VhSYOPVmrOI7Bd3NbgQ-1
+X-Mimecast-MFC-AGG-ID: dl7VhSYOPVmrOI7Bd3NbgQ_1770214548
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4359849d324so5015788f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 06:15:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770214264; x=1770819064; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770214548; x=1770819348; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=QFzbu7+uOkaP/4gZvuVsm8v5xfxngFjJNMtqpswEYaU=;
- b=LqqzWJVYc68/g37LDGXM5gyqFWSsHq48ToJ7dUh30Hz5AyZQNDGrEHmnFGwy3mElAf
- 8axE9luYnIZ+rH91jXkNaKOjntD5l76tobpPqyf4yP9p9o3nf2lwZAi43tgN14TUdZ7a
- n4Q+lBeh1xpvWxZcnwM3zE+N5WeRTT0W5q7mjAtVMxBG2efGQ+wB6brhXmBbb3LHwMZn
- O502RI23FLlpr4CXNtwL5U/6Z+FSfJ5fofP8cmNJgCAaoQhuOe3ZCOGchLI2ngXhY1m+
- 0SceG4VSCBglhlsdP9i7xMuz+bAVNHmXmOhG2cE6T1t+RpPGJJHrcWS0ZiRMbzogZdUD
- 7FIA==
+ bh=5MWKkIucLF6x9E02TxtvEEFofm8o9t6lD9Azor25BLI=;
+ b=P3FLGtFqYAwTNUXxxgzVi8DtLm0uoLMkh+tLX/ADtc6ry/enwwIj7nvoRwTFHgL/lH
+ 7iK6kF056J/r38bshxFPk/sA37yMTBPLpRPuVs3r0FxxMqLfPDy7lcreyd+K8aC0i7IL
+ o+bKfJXarcAVdRN67Ah5LCZIg83i8WNNEG2MP9hBZlUfBUgAHt9aUSMB+E/CPRCcuewJ
+ zznwjpFpAEQIdWGogOnaDpC2wdh8o5DteV0jOBUVqLuWO8HI5qJfR6j3RSErF1dkRHLT
+ mQeuLbVZxIkdxBgF64Mwb2D59px27JfPp4h8O3/ZbifU0h9fOoJYwJVN0038dwAOuIKP
+ un+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770214264; x=1770819064;
+ d=1e100.net; s=20230601; t=1770214548; x=1770819348;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QFzbu7+uOkaP/4gZvuVsm8v5xfxngFjJNMtqpswEYaU=;
- b=Ff52y4F+VH0nwdTpVH5gvpAhCTTOCgjjrXfq/cpFZxUMv1/2pg1sCnxEReJsahXCoi
- UkzhfDaPgCufbdsC/LIY+taXduBvbzDdqY6SPWamp6CaNGtfGG+PjViHAfWTvPiHIvWZ
- ohC7OATiqjLiETnEKKIKD0blDrDqFvvlEz8Xi6Z6fX4POm2HY05cDtX4+HY+6CWe33sa
- yWDSx3+Lpg6HfRsqZ8sElDcJki9uAoVFrQWR/oWLbnyE48UWX260+S1ZTq3QPhk4FkGD
- mUDL2BWSMK9KLpbAMHLqVTZ+rbJjtQzsUkX89HqaTGZn/t3nL5paDY3sXwUulnR1/gM/
- FxTg==
+ bh=5MWKkIucLF6x9E02TxtvEEFofm8o9t6lD9Azor25BLI=;
+ b=EX3iF1mFwlC02Fb/Hk/nelr98glvR3sdz4vNGSJv/5asv9z1SEDPLM5tPabpcDTD0w
+ dhyeeh9KYUdZ8rD2jfz9vEeB90nh2DWq24xWVZyVSPOWvY71ogKnF32gVIVkDWKfzIFe
+ xgug1YFxmxoZuUfUmVXO92JVIzVRXw9oUORB+WVx4YZOBgtPnF2L9QfP1kL3DPrYUfvN
+ htR/KvYbJTfOkzJfe8PLkI964JaQ5atO65EOzi2viQqN6qKrHGCY/FQZRaPOuuP/Bd25
+ z8Kmy3sooOE+neXDWImutz+WZ5dl8mXOEnm7UAzUvpopOEOSCVn9mY8+mcPcBGHWNEkM
+ YOeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0tznkGmkFUmY8VvBDS5SfMpEGV9rDs2DS0NO4yX06SY/DpKBPSycKA0TCERmKJrjzcRo93I+QgYAA@nongnu.org
-X-Gm-Message-State: AOJu0YwRLcXDRgDCA30CXFS+eyuk5JoOc6eTNnfvw7MSp0PRhf5gu0GI
- m/lX5E13wxux3+yeKwLdzgb/dNGM2JXxDZAgZq9DiMVYXagN3GUWUt0nKvc9xubzeOgjEHrzbpF
- ZD9Hzyus5enHzWSLgfpLVefAHyFz5pxK6ObKLW6nZ9hT+BM/fS1SXXEm/
-X-Gm-Gg: AZuq6aItqFczUYWeTQcDRPhN6ei5IN7IJNCv/CoezyXDewC6rbBF8YIN4xapr/REI5Z
- CtJrV0VciEIt81i/bU6L1YHB4lyhmNM7jY14eWM56/LPr3KaFIzGo0T7AyOzoaprNkSbxPUWWYy
- ryD8JYksHG3bpnUXsTUqnjSJb0+0x6eRn3hw7Q/kVIHZ3h3o65l6ShJdzFHZrxCcXuPMa/QK9GW
- 3tIubxK9Xw7XdUbB0PG2Z6TNgy/gDWYWCUBg+ffgIgsLLJPt3qlBkttEbq/9zublua0vQOtBZVh
- JAfZb8Bm7EbCUkoONWOu6A9SaS+zclBVMTNfBWYAxNM2fEsFnyp+BxEirFzbW7aXDxcuQXlve/W
- f5+w2XAHtUeAcSTSTbF++I8OeFTkXVaCpL7E=
-X-Received: by 2002:a05:600c:8715:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-4830e930416mr43119025e9.10.1770214264142; 
- Wed, 04 Feb 2026 06:11:04 -0800 (PST)
-X-Received: by 2002:a05:600c:8715:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-4830e930416mr43118675e9.10.1770214263735; 
- Wed, 04 Feb 2026 06:11:03 -0800 (PST)
+ AJvYcCUauulg4BulzDHtEOrXxBs8XAwog5FJ5FP57yJ+wG84FmX/pVo9R855ZYM4kXLcsn8vY8DHrwueGAv3@nongnu.org
+X-Gm-Message-State: AOJu0YwUHv1c6f8U5xWSrb1qASubPQrJG0e6tiTdQASpkQdflVsh0u44
+ gk4wFzBPvYOeV4cCbXW2sJk+b6RZEsVvQ9h8JUbX/tKP5lW5DbjSgZTHoT7S02e480zC0Iuwdju
+ hPYvUqNABPjcKVaEDM7JN2uj6Ds2ZGMEdYmargUNAIDTJ31umhe2kuJKa
+X-Gm-Gg: AZuq6aKI/2E0RMA41qAZic0IjPP9ZUUS26zhjWXh2Witb27ntdU111fMMiSEgLstmYG
+ YBCeQNVRBLOiaLZAqp7TDHeWCxWoq8RoKJSpsBNEde4PBURvHp2h6dJwP2Qsg+K7CVPtVzu8XjU
+ OenWuENw/Z7jLalqm/oNBGLYmoEYBTbueh6bqedSrp4DbWtnQWUWdb9jt0TRKssBEMNC//9tIZe
+ kbgDVFEtVFHyeEgmp6yx2LyRCpdnoK9KIYLsw9e7+D2vqDPNi9t3g/EXlPDzYr6+XpiH4nLVb+B
+ vxapmG8Be6Mk92ge/VwH66UkAWPLWCLT4920Mp2LQElk0UZJA4g/UDyKOtIhdVde3YRadzPgoPt
+ kpKqIFyakbJKYV9seo+yoSSZC4oy3+mZCSdw=
+X-Received: by 2002:a05:6000:400b:b0:432:a9db:f9a2 with SMTP id
+ ffacd0b85a97d-43618053ca8mr4404995f8f.41.1770214548073; 
+ Wed, 04 Feb 2026 06:15:48 -0800 (PST)
+X-Received: by 2002:a05:6000:400b:b0:432:a9db:f9a2 with SMTP id
+ ffacd0b85a97d-43618053ca8mr4404955f8f.41.1770214547541; 
+ Wed, 04 Feb 2026 06:15:47 -0800 (PST)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830ec57bcdsm36644175e9.2.2026.02.04.06.11.02
+ ffacd0b85a97d-43618057f66sm6423465f8f.25.2026.02.04.06.15.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 06:11:03 -0800 (PST)
-Message-ID: <a173e463-4796-4520-b91f-f5db5ae80e5d@redhat.com>
-Date: Wed, 4 Feb 2026 15:11:02 +0100
+ Wed, 04 Feb 2026 06:15:47 -0800 (PST)
+Message-ID: <67f49a61-1273-4004-8858-b2b4f78c254e@redhat.com>
+Date: Wed, 4 Feb 2026 15:15:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/16] meson, mkvenv: add qemu.git/python/qemu package
- to pythondeps.toml
+Subject: Re: [PATCH v5 13/16] tests: remove "make check-venv" target
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Maksim Davydov <davydov-max@yandex-team.ru>,
  Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -106,7 +105,7 @@ Cc: qemu-block@nongnu.org, Maksim Davydov <davydov-max@yandex-team.ru>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fabiano Rosas <farosas@suse.de>
 References: <20260203203512.672552-1-jsnow@redhat.com>
- <20260203203512.672552-12-jsnow@redhat.com>
+ <20260203203512.672552-14-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -151,10 +150,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260203203512.672552-12-jsnow@redhat.com>
+In-Reply-To: <20260203203512.672552-14-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -180,24 +179,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/02/2026 21.35, John Snow wrote:
-> Add the local python package group into pythondeps.toml for the
-> tooling This makes qemu.qmp, qemu.machine and qemu.utils
-> packages unconditionally available for tests and scripts.
+> With the qemu.qmp and qemu.machine dependencies now installed by default
+> at configure time and additional dependencies required by functional
+> testing installed on demand, there is no longer any reason to have an
+> explicit target.
 > 
+> FIXME: This forces image regeneration for vm tests whenever Make
+> determines that the image needs to be rebuilt; which is a regression
+> over the previous behavior.
+
+Maybe elaborate on that (and then replace the "FIXME:" with a "Note:") - in 
+which cases does Make think that the image needs to be regenerated? 
+Hopefully not on every invocation?
+
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   pythondeps.toml | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index 743e2a8848c..89256132fee 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
->   # system packages, or python packages we vendor.
->   [tooling]
->   "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-> +"qemu" = { path = "python/" }
+>   tests/Makefile.include    | 22 ++--------------------
+>   tests/vm/Makefile.include | 24 +++++++-----------------
+>   2 files changed, 9 insertions(+), 37 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
