@@ -4,106 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D0EE9538F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3ED7E9538F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnbig-00036O-6N; Wed, 04 Feb 2026 07:10:55 -0500
+	id 1vnbkB-0005T1-TM; Wed, 04 Feb 2026 07:12:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vnbiV-00031n-Or; Wed, 04 Feb 2026 07:10:43 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vnbk9-0005SL-Ro
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:12:25 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vnbiS-0006SD-Mx; Wed, 04 Feb 2026 07:10:43 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6143YvYu012920;
- Wed, 4 Feb 2026 12:10:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=uDFpOr
- TKD4tfvio491w45htkLbYV8H4eGvyMdZDlOOU=; b=CiRTZc6VO6/gbF4PruyRtz
- rlpJSbUgeoEtJl/juSQ/frOw0cKiRSunm7QznMB2surAGzQ1AtQ9VdCCOfCKKf8b
- 0wpbvEpHYflyPqTeSBPydIZmKHeDs9ihZ1IlG4Zz5UAbDZVrNnUIxhOW2GF0GCxM
- sEGnKvxGj/FaFZ9J8VRsdRnpxQQhnn+eL33n6VdkYQ69H/iODgpZmt0XD+tiWFx9
- 9oig9jcJ8jkaZ821OU7JFI1OP4HExU7+xVMqzpFSICXGmQOPoQuAKCgH0o+GT1XZ
- OcuzTKJAsUVDdxnk+wUT0SVGHxRG+FCyM4Wrx5fhy9lvdubzBvNQzVMrIk4iBELg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c175mybvj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Feb 2026 12:10:33 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 614AuEYk029421;
- Wed, 4 Feb 2026 12:10:32 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1v2sd7wa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Feb 2026 12:10:32 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 614CAUvl52101436
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Feb 2026 12:10:30 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A9EAE20040;
- Wed,  4 Feb 2026 12:10:30 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AF6C2004B;
- Wed,  4 Feb 2026 12:10:30 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.87.140.180])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  4 Feb 2026 12:10:30 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 5/5] tests/tcg/s390x: Test DIVIDE TO INTEGER
-Date: Wed,  4 Feb 2026 13:07:48 +0100
-Message-ID: <20260204121026.645382-6-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260204121026.645382-1-iii@linux.ibm.com>
-References: <20260204121026.645382-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vnbk6-00076G-Lk
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:12:25 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f5fMp4nfSzHnHM9;
+ Wed,  4 Feb 2026 20:11:18 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id EBCE040584;
+ Wed,  4 Feb 2026 20:12:19 +0800 (CST)
+Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 4 Feb 2026 12:12:17 +0000
+To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Davidlohr Bueso
+ <dave@stgolabs.net>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
+ <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH qemu v6 0/7] hw/cxl: Support Back-Invalidate (+ PCIe Flit mode)
+Date: Wed, 4 Feb 2026 12:12:08 +0000
+Message-ID: <20260204121215.68897-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: kEfCT1UQ2-SYbgejyoJrvtCqzd_qzkiX
-X-Authority-Analysis: v=2.4 cv=VcX6/Vp9 c=1 sm=1 tr=0 ts=69833739 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=xC6-lGDZH8Trbaw0IpYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: kEfCT1UQ2-SYbgejyoJrvtCqzd_qzkiX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA0MDA5MCBTYWx0ZWRfX5IetQI1BHcvV
- rA603Qtv0X4BMq6Px2g4k+kDEVYIykd2ABn2pwJOCcJJ8NIJOqkElbBhQvAownqJxkFqiMPFLc1
- uKuSXhplJTEoeNJrj7egb3VUWipp/YlozszTl/xHdnRc8isnwBC7YjREdK8xcTvzylM2pqnK6Of
- zoGLZFoc5sT1tpOs7zjypQrk3UCWGXPtMgJJaQ1hCjvthqcPzYCB/0BRWZr9v4WhjJTfTeej+1h
- tvzCFN5MuFeRyMgsRVG30zHdN6mAXwZkQRwVWoYprYjaztURVlRMY7gtaSf9XjMHtAyrRoJJ4zo
- 0DiDdcPX3XW/W6HBtu5sFNIDbX1FKg/pPft6W+781hsD4UhAoc2Er/I9m/Sb8pKe+o2eqkjIVGs
- BAMiu1C/DP26QDblPeRgpG+GJUghYop8+d90weaYdc9B2H9GQSkJ8r5kzSo8OeZVyNhxuvby21P
- FlsUjtH/DKxo+icvP9g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-04_02,2026-02-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0 adultscore=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602040090
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -119,317 +66,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test to prevent regressions. Data is generated using a
-libFuzzer-based fuzzer and hopefully covers all the important corner
-cases.
+v6:
+- Initialize a variable that causing a false warning with some versions of gcc.
+- Rebase.
+- Tag from Davidlohr for the ACPI change.
 
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/s390x/Makefile.target     |   5 +
- tests/tcg/s390x/divide-to-integer.c | 265 ++++++++++++++++++++++++++++
- 2 files changed, 270 insertions(+)
- create mode 100644 tests/tcg/s390x/divide-to-integer.c
+Based on - due to fuzz + context changes.
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index da5fe71a407..0ca030ded01 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -49,14 +49,19 @@ TESTS+=cvd
- TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
-+TESTS+=divide-to-integer
- 
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
- 
-+# The following tests contain inline assembly that requires inlining,
-+# and thus cannot be built with -O0.
- rxsbg: CFLAGS+=-O2
-+divide-to-integer: CFLAGS+=-O2
- 
- cgebra: LDFLAGS+=-lm
- clgebr: LDFLAGS+=-lm
-+divide-to-integer: LDFLAGS+=-lm
- 
- include $(S390X_SRC)/pgm-specification.mak
- $(PGM_SPECIFICATION_TESTS): pgm-specification-user.o
-diff --git a/tests/tcg/s390x/divide-to-integer.c b/tests/tcg/s390x/divide-to-integer.c
-new file mode 100644
-index 00000000000..62b4787ec0e
---- /dev/null
-+++ b/tests/tcg/s390x/divide-to-integer.c
-@@ -0,0 +1,265 @@
-+/*
-+ * Test DIEBR and DIDBR instructions.
-+ *
-+ * Most inputs were discovered by fuzzing and exercise various corner cases in
-+ * the helpers.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <asm/ucontext.h>
-+
-+static void sigfpe_handler(int sig, siginfo_t *info, void *puc)
-+{
-+    struct ucontext *uc = puc;
-+    unsigned short *xr_insn;
-+    int r;
-+
-+    xr_insn = (unsigned short *)(uc->uc_mcontext.regs.psw.addr - 6);
-+    r = *xr_insn & 0xf;
-+    uc->uc_mcontext.regs.gprs[r] = sig;
-+}
-+
-+#define DIVIDE_TO_INTEGER(name, floatN)                                        \
-+static inline __attribute__((__always_inline__)) int                           \
-+name(floatN *r1, floatN r2, floatN *r3, int m4, int *sig)                      \
-+{                                                                              \
-+    int cc;                                                                    \
-+                                                                               \
-+    asm(/* Make the initial CC predictable for suppression tests */            \
-+        "xr %[sig],%[sig]\n"                                                   \
-+        #name " %[r1],%[r3],%[r2],%[m4]\n"                                     \
-+        "ipm %[cc]\n"                                                          \
-+        "srl %[cc],28"                                                         \
-+        /*                                                                     \
-+         * Use earlyclobbers to prevent the compiler from reusing floating     \
-+         * point registers. This instruction doesn't like it.                  \
-+         */                                                                    \
-+        : [r1] "+&f" (*r1), [r3] "+&f" (*r3), [sig] "=r" (*sig), [cc] "=d" (cc)\
-+        : [r2] "f" (r2), [m4] "i" (m4)                                         \
-+        : "cc");                                                               \
-+                                                                               \
-+    return cc;                                                                 \
-+}
-+
-+DIVIDE_TO_INTEGER(diebr, float)
-+DIVIDE_TO_INTEGER(didbr, double)
-+
-+#define TEST_DIVIDE_TO_INTEGER(name, intN, int_fmt, floatN, float_fmt)         \
-+static inline __attribute__((__always_inline__)) int                           \
-+test_ ## name(unsigned intN r1i, unsigned intN r2i, int m4, int fpc,           \
-+              unsigned intN r1o, unsigned intN r3o, int cco, unsigned int fpco,\
-+              int sigo)                                                        \
-+{                                                                              \
-+    union {                                                                    \
-+        floatN f;                                                              \
-+        unsigned intN i;                                                       \
-+    } r1, r2, r3;                                                              \
-+    int cc, err = 0, sig;                                                      \
-+                                                                               \
-+    r1.i = r1i;                                                                \
-+    r2.i = r2i;                                                                \
-+    r3.i = 0x12345678;                                                         \
-+    printf("[ RUN      ] %" float_fmt "(0x%" int_fmt                           \
-+           ") / %" float_fmt "(0x%" int_fmt ")\n", r1.f, r1.i, r2.f, r2.i);    \
-+    asm volatile("sfpc %[fpc]" : : [fpc] "r" (fpc));                           \
-+    cc = name(&r1.f, r2.f, &r3.f, m4, &sig);                                   \
-+    asm volatile("stfpc %[fpc]" : [fpc] "=Q" (fpc));                           \
-+    if (r1.i != r1o) {                                                         \
-+        printf("[  FAILED  ] remainder 0x%" int_fmt                            \
-+               " != expected 0x%" int_fmt "\n", r1.i, r1o);                    \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (r3.i != r3o) {                                                         \
-+        printf("[  FAILED  ] quotient 0x%" int_fmt                             \
-+               " != expected 0x%" int_fmt "\n", r3.i, r3o);                    \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (cc != cco) {                                                           \
-+        printf("[  FAILED  ] cc %d != expected %d\n", cc, cco);                \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (fpc != fpco) {                                                         \
-+        printf("[  FAILED  ] fpc 0x%x != expected 0x%x\n", fpc, fpco);         \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (sig != sigo) {                                                         \
-+        printf("[  FAILED  ] signal 0x%x != expected 0x%x\n", sig, sigo);      \
-+        err += 1;                                                              \
-+    }                                                                          \
-+                                                                               \
-+    return err;                                                                \
-+}
-+
-+TEST_DIVIDE_TO_INTEGER(diebr, int, "x", float, "f")
-+TEST_DIVIDE_TO_INTEGER(didbr, long, "lx", double, "lf")
-+
-+int main(void)
-+{
-+    struct sigaction act = {
-+        .sa_sigaction = sigfpe_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err = 0;
-+
-+    /* Set up SIG handler */
-+    if (sigaction(SIGFPE, &act, NULL)) {
-+        printf("[  FAILED  ] sigaction(SIGFPE) failed\n");
-+        return EXIT_FAILURE;
-+    }
-+
-+    /* 451 / 460 */
-+    err += test_diebr(0x43e1f1f1, 0x43e61616, 7, 0,
-+                      0x43e1f1f1, 0, 0, 0, 0);
-+
-+    /* 480 / 0 */
-+    err += test_diebr(0x43f00000, 0, 0, 0,
-+                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
-+
-+    /* QNaN / QNaN */
-+    err += test_diebr(0xffffffff, 0xffffffff, 0, 0,
-+                      0xffffffff, 0xffffffff, 1, 0, 0);
-+
-+    /* -2.08E-8 / -2.08E-8 */
-+    err += test_diebr(0xb2b2b2b2, 0xb2b2b2b2, 0, 0,
-+                      0x80000000, 0x3f800000, 0, 0, 0);
-+
-+    /*
-+     * Test partial remainder without quotient scaling (cc2).
-+     *
-+     * a = 12401981 / 268435456
-+     * b = -5723991 / 72057594037927936
-+     * q = a / b = -3329131425038336 / 5723991 =~ -581610178.1
-+     * n = round(q, float32, nearest_even) = -581610176
-+     * r_precise = a - b * n = 189155 / 1125899906842624
-+     * r = round(r_precise, float32, nearest_even) = r_precise
-+     */
-+    err += test_diebr(0x3d3d3d3d, 0xaeaeaeae, 0, 0,
-+                      0x2f38b8c0, 0xce0aaaab, 2, 0, 0);
-+
-+    /* 1.07E-31 / 2.19 */
-+    err += test_diebr(0x0c0c0c0c, 0x400c0c0c, 6, 0,
-+                      0xc00c0c0c, 0x3f800000, 0, 0x80000, 0);
-+
-+    /*
-+     * Test partial remainder with quotient scaling (cc3).
-+     *
-+     * a = 298343530578310714772108083200
-+     * b = -592137/10384593717069655257060992658440192
-+     * q = a / b
-+     *   = -1032725451057301340137043014721780674141077289604872315653324800 /
-+     *     197379
-+     *   =~ -5232195173029052432817285601415452880707052369324357280426.6
-+     * n = round(q, float32, nearest_even)
-+     *   = -5232194943010009439437691768433469154159343131709361094656
-+     * n / 2^192 = -6992213 / 8388608
-+     * r_precise = a - b * n = 13115851209189604982784
-+     * r = round(r_precise, float32, nearest_even) = r_precise
-+     */
-+    err += test_diebr(0x7070ffff, 0x90909090, 0, 0,
-+                      0x6431c0c0, 0xbf5562aa, 3, 0, 0);
-+
-+    /*
-+     * Test large, but representable quotient.
-+     *
-+     * a = -12040119 / 549755813888
-+     * b = 1 / 38685626227668133590597632
-+     * q = a / b = -847248053779631702016
-+     * n = round(q, float32, to_odd) = q
-+     * r_precise = a - b * n = -0
-+     * r = round(r_precise, float32, nearest_even) = -0
-+     */
-+    err += test_diebr(0xb7b7b7b7, 0x15000000, 7, 0,
-+                      0x80000000, 0xe237b7b7, 0, 0, 0);
-+
-+    /* 0 / 0 */
-+    err += test_diebr(0, 0, 1, 0,
-+                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
-+
-+    /* 4.3E-33 / -2.08E-8 with SIGFPE */
-+    err += test_diebr(0x09b2b2b2, 0xb2b2b2b2, 0, 0xfc000007,
-+                      0xb2b2b2b1, 0xbf800000, 0, 0xfc000807, SIGFPE);
-+
-+    /*
-+     * Test tiny remainder scaling when FPC Underflow Mask is set.
-+     *
-+     * 1.19E-39 / -1.28E-9 = { r = 1.19E-39 * 2^192, n = -0 }
-+     */
-+    err += test_diebr(0x000d0100, 0xb0b0b0b0, 6, 0xfc000000,
-+                      0x5ed01000, 0x80000000, 0, 0xfc001000, SIGFPE);
-+
-+    /*
-+     * Test "inexact and incremented" DXC.
-+     *
-+     * a = 53555504
-+     * b = -520849213389117849600
-+     * q = a / b = -3347219 / 32553075836819865600
-+     * n = round(q, float32, to_odd) = -1
-+     * r_precise = a - b * n = -520849213389064294096
-+     * r = round(r_precise, float32, to_odd) = -520849213389117849600
-+     * abs(r) - abs(r_precise) = 53555504
-+     */
-+    err += test_diebr(0x4c4c4c4c, 0xe1e1e1e1, 0, 0xfc000007,
-+                      0xe1e1e1e1, 0xbf800000, 0, 0xfc000c07, SIGFPE);
-+
-+    /* 0 / 0 with SIGFPE */
-+    err += test_diebr(0, 0, 0, 0xfc000007,
-+                      0, 0x12345678, 0, 0xfc008007, SIGFPE);
-+
-+    /* 5.76E-16 / 5.39E+34 */
-+    err += test_diebr(0x26262626, 0x79262626, 6, 0,
-+                      0xf9262626, 0x3f800000, 0, 0x80000, 0);
-+
-+    /* -4.97E+17 / 2.03E-38 */
-+    err += test_diebr(0xdcdcdcdc, 0x00dcdcdc, 7, 0xfc000000,
-+                      0x80000000, 0xbb800000, 1, 0xfc000000, 0);
-+
-+    /* -1.23E+17 / SNaN */
-+    err += test_diebr(0xdbdb240b, 0xffac73ff, 4, 0,
-+                      0xffec73ff, 0xffec73ff, 1, 0x800000, 0);
-+
-+    /* 2.34E-38 / 3.27E-33 with SIGFPE */
-+    err += test_diebr(0x00ff0987, 0x0987c6f6, 6, 0x08000000,
-+                      0x8987c6b6, 0x3f800000, 0, 0x8000800, SIGFPE);
-+
-+    /* -5.93E+11 / -2.7E+4 */
-+    err += test_diebr(0xd30a0040, 0xc6d30a00, 0, 0xc4000000,
-+                      0xc74a4400, 0x4ba766c6, 2, 0xc4000000, 0);
-+
-+    /* 9.86E-32 / -inf */
-+    err += test_diebr(0x0c000029, 0xff800000, 0, 0,
-+                      0xc000029, 0x80000000, 0, 0, 0);
-+
-+    /* QNaN / SNaN */
-+    err += test_diebr(0xffff94ff, 0xff94ff24, 4, 7,
-+                      0xffd4ff24, 0xffd4ff24, 1, 0x800007, 0);
-+
-+    /* 2.8E-43 / -inf */
-+    err += test_diebr(0x000000c8, 0xff800000, 0, 0x7c000007,
-+                      0x000000c8, 0x80000000, 0, 0x7c000007, 0);
-+
-+    /* -1.7E+38 / -inf */
-+    err += test_diebr(0xff00003d, 0xff800000, 0, 0,
-+                      0xff00003d, 0, 0, 0, 0);
-+
-+    /* 1.94E-304 / 1.94E-304 */
-+    err += test_didbr(0x00e100e100e100e1, 0x00e100e100e100e1, 0, 1,
-+                      0, 0x3ff0000000000000, 0, 1, 0);
-+
-+    /* 4.82E-299 / 5.29E-308 */
-+    err += test_didbr(0x0200230200230200, 0x0023020023020023, 0, 0,
-+                      0x8001a017d247b3f4, 0x41cb2aa05f000000, 0, 0, 0);
-+
-+    /* -1.38E-75 / -3.77E+208 */
-+    err += test_didbr(0xb063eb3d63b063eb, 0xeb3d63b063eb3d63, 3, 0xe8000000,
-+                      0x6b3d63b063eb3d63, 0x3ff0000000000000, 0, 0xe8000c00,
-+                      SIGFPE);
-+
-+    /* 4.78E-299 / 6.88E-315 */
-+    err += test_didbr(0x0200000000000000, 0x0000000053020000, 0, 0,
-+                      0x8000000020820000, 0x4338ac20dd47c6c1, 0, 0, 0);
-+
-+    return err ? EXIT_FAILURE : EXIT_SUCCESS;
-+}
+1. [PATCH qemu v4 0/5] cxl: r3.2 specification event updates.
+https://lore.kernel.org/qemu-devel/20260119111542.788389-1-Jonathan.Cameron@huawei.com/
+
+2. [PATCH qemu for 10.2 0/3] cxl: Additional RAS features support.
+https://lore.kernel.org/qemu-devel/20250917143330.294698-1-Jonathan.Cameron@huawei.com/
+
+3. [PATCH qemu 0/2] hw/cxl: Two media operations related fixes.
+https://lore.kernel.org/qemu-devel/20260102154731.474859-1-Jonathan.Cameron@huawei.com/
+(most likely will apply fine with out this one)
+
+v5 changes:
+- Rebase much earlier in the CXL queue as Davidlohr had it beind some stuff
+  I was carrying that is not ready for upstream just yet.
+- Update the CFMWS flags directly as the patch doing restriction control needs
+  some more thought.
+- Bios tables test data updates.
+- Don't provide flit mode control for gen_pcie_root_port as we don't need it
+  for the rest of the series which is all about CXL.
+
+The following allows support for component basic back invalidation discovery
+and config, by exposing the BI routing table and decoder registers. Instead
+of going the type2[0] route, this series proposes adding support for type3
+hdm-db, which allows a more direct way of supporting BI in qemu.
+
+As BI is a dependent on the larger flits introduced in PCIe (and CXL 3.0)
+add support for enabling that for CXL components. Negotiation is handled
+via an equivalent of what we do for link speed.
+
+Davidlohr Bueso (3):
+  hw/pcie: Support enabling flit mode
+  hw/cxl: Support type3 HDM-DB
+  hw/cxl: Remove register special_ops->read()
+
+Ira Weiny (1):
+  hw/cxl: Refactor component register initialization
+
+Jonathan Cameron (3):
+  tests/bios-tables-test: Excluded CEDT.cxl for BI restriction
+    relaxation.
+  hw/cxl: Update CXL Fixed Memory Window ACPI description to include
+    Back Invalidate support.
+  tests/acpi/cxl: Update CEDT.cxl to allow BI in CFWMS
+
+ docs/system/devices/cxl.rst               |  23 +++
+ include/hw/cxl/cxl_component.h            |  87 +++++++--
+ include/hw/cxl/cxl_device.h               |   4 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+ include/hw/pci/pcie.h                     |   2 +-
+ include/hw/pci/pcie_port.h                |   1 +
+ hw/acpi/cxl.c                             |   2 +-
+ hw/cxl/cxl-component-utils.c              | 211 ++++++++++++++++------
+ hw/mem/cxl_type3.c                        |  15 +-
+ hw/pci-bridge/cxl_downstream.c            |  10 +-
+ hw/pci-bridge/cxl_root_port.c             |  11 +-
+ hw/pci-bridge/cxl_upstream.c              |  18 +-
+ hw/pci-bridge/pci_expander_bridge.c       |   2 +-
+ hw/pci/pcie.c                             |  23 ++-
+ tests/data/acpi/x86/q35/CEDT.cxl          | Bin 184 -> 184 bytes
+ 15 files changed, 313 insertions(+), 97 deletions(-)
+
 -- 
-2.52.0
+2.51.0
 
 
