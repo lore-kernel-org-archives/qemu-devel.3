@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28DEE8B397
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 03:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8FBE8B397
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 03:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnTfM-0003nG-8m; Tue, 03 Feb 2026 22:34:56 -0500
+	id 1vnTjb-0004Yw-5W; Tue, 03 Feb 2026 22:39:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnTfJ-0003n7-Jo
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:34:54 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnTfH-0000aO-Ru
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:34:53 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-2a0d67f1877so42229125ad.2
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 19:34:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770176090; x=1770780890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Av8r5uw4CR5AB8M4Nksy6GgCjSnmLjeRlg/59X3iEOA=;
- b=srIP1g5tLK0NnRv31xdTo+D87EXPxIQhDJgh2jXCnnU7CbC55/yEDtLa+bFeSCNcRR
- SWwB5h0Vvptzam5coRcqhtmfdwLNz7JPbDL2K3EaA5ZjGstQd2Zeplm//cns7DkkKIVh
- NdhAl59LQ/PpZVnO/oJJWWiozmI/eqjQ58DwESRlLMMz/0u7orBWY91joOuscnxp96vp
- PeahPi2A8DLkUWDo6fpUBlW35DO9dKsyYEWp7+YsIlJ1AOcvfFYyUuK2NiLWnXKui/8c
- 6jAZiyib7yGxYoTUCTEATWB2jI6cR3u7cqiE2eUnOqR/7+hBQfl8qLNm68+Uyo50PTmC
- CBiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770176090; x=1770780890;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Av8r5uw4CR5AB8M4Nksy6GgCjSnmLjeRlg/59X3iEOA=;
- b=VZt4U4QrmhSqminfCDJG1a6cquY38C3/UdqRb6joiL54/m6T7PakjjhsXo9vXXauPW
- GiX5Txt57qnVw9MFdO0+NyCk0VpCSWUt0Fg6wnpPkO0GDwP94MafXvTtEwJxli68n3rO
- 4x3u1WiH+YvLwvvXdY1MjcJJ/WkiVDtkMLah92blbxpiQgDf+YcoCIapWpYuFwx6RZqA
- zE9ExjHADT1xUwb/a73fMmo98dGWSzHSPjoZxrineIa4ou758vwkr5FjVM0Mv6k5+OBQ
- jub+Prw/7CRjux1fsOqjo53JoU/6LXWF8upWg8vJBXtZFAG63bp2xkkOaoV8oxq6n9On
- X7Bg==
-X-Gm-Message-State: AOJu0YwzXc7Lw+8b/+Iv65CxPRv8HjqBGued3TgzfjwAf6g8vNFN095u
- EVwYqdO/Qt/qMnDcHECIxGWIZCf5a3k821Ee5Spo4W74zILjTPwmyLUviQVknsI4RleGjsxtp+5
- Gn1iHLJk=
-X-Gm-Gg: AZuq6aKj1A+ZqrOqnVfQkdoxQdn9EbpVWCnW0J6upO2ABRnWIVvOpDEXdy45IQZ4S6w
- ZER40cnWR9bhw/QI8Z1rk7m894xzN63I4DcbDXQCrrcwzQUlrBZGZKhU9Ubmn7GnAOgnSWjbMrD
- CByYwXMWOO1ywtQDgbIAfg2oJA40vKdaFhzy8V5go6Ijbr2Vx8/WdAiVtdzSit4O0x4j02e8afN
- 3IX2Rv8hxJl5g3oaNVnWkAzmBsybtkL/KqiPB7jpR5npYcbTjHt61M65uWB3QjesSZdFfHG3f/z
- OhFjsQKDlCsGbGGDwRpTNnN138SrPHJwl5egSlwUIpJvbnZeJiSquL0+9rN8Thd8MIVwFxdUlln
- 50nyiIbHcuj2I8Fs+4KOs+BYET29UJg/GyatFd3tH0XKcrjW0tYYg8ncV9rcyl/RMks/Y2kgpUq
- LI76ekYPbWPeQmzryZRUuJrzzlAdI3OCbrHGzG8dDt/Ky24y5TmYaCQbSOOyNhzTVqpMGge5NcV
- Cp2HWdYbyINgmIT8IBEbwwQ4gGHB7cExCQH
-X-Received: by 2002:a17:902:ced2:b0:295:888e:9fff with SMTP id
- d9443c01a7336-2a933d2fe37mr14937725ad.20.1770176090061; 
- Tue, 03 Feb 2026 19:34:50 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
- (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
- [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d4b8c8dsm773891b3a.69.2026.02.03.19.34.48
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 19:34:49 -0800 (PST)
-Message-ID: <28bcab83-0098-4e7c-b4c8-26c3bdf8a7f2@linaro.org>
-Date: Wed, 4 Feb 2026 13:34:45 +1000
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vnTja-0004Yb-58; Tue, 03 Feb 2026 22:39:18 -0500
+Received: from sender4-op-o12.zoho.com ([136.143.188.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vnTjX-0000xa-P9; Tue, 03 Feb 2026 22:39:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1770176310; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=WFDYGdLb1bsWei0csczarQOCmw5GvGRs6DuIvQLzApQdBEeFaJlALUz2YAQETsINrFg+PoDPv1OitDEd4i46ippl9WijvuF4B36adOmLpapqZfsWUf8iW2C9R0B+DJ2iTTuk1KEwcHhSXNlNNV6vmXmhS7BdYunc8BS/XH7JjkU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1770176310;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=xwTcCMTsvlbfK5xVogufrTQHrp0gNEojmWU75QGw69I=; 
+ b=Gx0mNEh9LEfIixysIbC3XwHKKKweZWbqOMLwHxLE9FZ95Dw1NG0IwA9FFha7VLaFzv+EgtSDk0bmJjxKTTaroxLQcp2wix9Dk9V/9jYu3B3/NAKtHQE2NR1jUkWZJzPuBpW6NbDY8yg1pZQLjzUHFsDoRBrC7E7UwQlo0386wDg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770176310; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=xwTcCMTsvlbfK5xVogufrTQHrp0gNEojmWU75QGw69I=;
+ b=D3rRVWhj5C5DlyRI7AymYyoTr22Ikzd7pX91wf8LYSKycxFZnTlnvsWiqOVN3tgO
+ Nwaw6xvUdMxdK279NghWK8B9MUwZ1Ck4/HlkUbocDsCLcegtIbwEwIQtks9CH4uanhb
+ 4nQpR82LLH1pzcU0CVcMGG7z6pnbRglMMJglJTrI=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1770176307254144.01059433825696;
+ Tue, 3 Feb 2026 19:38:27 -0800 (PST)
+Date: Wed, 04 Feb 2026 11:38:27 +0800
+From: Li Chen <me@linux.beauty>
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ "Igor Mammedov" <imammedo@redhat.com>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ "Ani Sinha" <anisinha@redhat.com>, "Eduardo Habkost" <eduardo@habkost.net>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ "Yanan Wang" <wangyanan55@huawei.com>,
+ "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Sunil V L" <sunilvl@ventanamicro.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,
+ "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
+Message-ID: <19c26bae026.4e0422e0822242.1901726439479280077@linux.beauty>
+In-Reply-To: <20260203112450-mutt-send-email-mst@kernel.org>
+References: <20251211102025.873506-1-me@linux.beauty>
+ <20251211080811-mutt-send-email-mst@kernel.org>
+ <19b104a617e.133b3feb891309.6986511857690603518@linux.beauty>
+ <20251218161253.7f13038f@imammedo>
+ <20260203112450-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v6] acpi/virt: suppress UART device & SPCR when guest
+ has no serial hardware
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user: Fix mremap() with old_size == 0
-To: qemu-devel@nongnu.org
-References: <20260201010436.5735-1-razvanghiorghe16@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260201010436.5735-1-razvanghiorghe16@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x641.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
+ helo=sender4-op-o12.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,72 +97,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/26 11:03, Razvan Ghiorghe wrote:
-> When old_size is zero and old_address refers to a shareable mapping,
-> mremap() should create a new mapping of the same pages according to the
-> mremap(2) man page. The MREMAP_MAYMOVE flag must be specified in this case.
-> Previously, QEMU's target_mremap() rejected this valid case with EFAULT during
-> the initial validation, before checking for the special old_size == 0 behaviour.
-> 
-> This patch adds proper handling for old_size == 0:
-> - Validates that MREMAP_MAYMOVE flag is set (required by man spec)
-> - Passes the call through to the host mremap()
-> - Creates a new mapping without invalidating the original, with both
-> beeing valid and sharing the same physical memory frames.
-> 
-> Tested with the reproducer from the issue on qemu-riscv64.
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3105
-> Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-> ---
->   linux-user/mmap.c | 32 ++++++++++++++++++++++++++++++++
->   1 file changed, 32 insertions(+)
-> 
-> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> index 4bcfaf7894..b1a84eb60a 100644
-> --- a/linux-user/mmap.c
-> +++ b/linux-user/mmap.c
-> @@ -1117,6 +1117,38 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
->           errno = EINVAL;
->           return -1;
->       }
-> +
-> +    if (!old_size) {
-> +        if (!(flags & MREMAP_MAYMOVE)) {
-> +            errno = EINVAL;
-> +            return -1;
-> +        }
-> +        mmap_lock();
-> +        if (flags & MREMAP_FIXED) {
-> +            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
-> +                             flags, g2h_untagged(new_addr));
-> +        } else {
-> +            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
-> +                             flags);
-> +        }
+Hi Michael and Igor,
 
-This probably doesn't work with host page size != target page size.
+ ---- On Wed, 04 Feb 2026 00:27:06 +0800  Michael S. Tsirkin <mst@redhat.co=
+m> wrote ---=20
+ > On Thu, Dec 18, 2025 at 04:12:53PM +0100, Igor Mammedov wrote:
+ > > On Fri, 12 Dec 2025 10:01:08 +0800
+ > > Li Chen <me@linux.beauty> wrote:
+ > >=20
+ > > > Hi Michael,
+ > > >=20
+ > > >  ---- On Thu, 11 Dec 2025 21:10:18 +0800  Michael S. Tsirkin <mst@re=
+dhat.com> wrote ---=20
+ > > >  > On Thu, Dec 11, 2025 at 06:20:25PM +0800, Li Chen wrote: =20
+ > > >  > > From: Li Chen <chenl311@chinatelecom.cn>
+ > > >  > >=20
+ > > >  > > virt machines always instantiate a PL011/16550 UART at slot 0 a=
+nd describe
+ > > >  > > it in ACPI (DSDT and optional SPCR table). When the command lin=
+e disables
+ > > >  > > the serial backend (e.g. "-serial none"), the guest still sees =
+the UART as
+ > > >  > > a preferred console even though it is not usable.
+ > > >  > >=20
+ > > >  > > Teach the virt ACPI code to omit the UART device and SPCR when =
+there is no
+ > > >  > > serial backend attached. This matches the hardware that the gue=
+st can
+ > > >  > > actually use and avoids confusing firmware or OS code that reli=
+es on SPCR.
+ > > >  > >=20
+ > > >  > > The bios-tables-test qtests rely on an ACPI UART node and SPCR =
+entry for
+ > > >  > > UEFI-based virt machines. To keep those tests working we create=
+ a UART
+ > > >  > > with a "null" chardev backend instead. This preserves the ACPI =
+tables
+ > > >  > > while discarding the firmware's serial output so it does not co=
+rrupt the
+ > > >  > > TAP stdout stream.
+ > > >  > >=20
+ > > >  > > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+ > > >  > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+ > > >  > > Reviewed-by: Sunil V L <sunilvl@ventanamicro.com> =20
+ > > >  >=20
+ > > >  > This bothers me:
+ > > >  > won't this mean number of serial devices changes silently?  So fo=
+r
+ > > >  > example, if you install a guest, see that 1st serial device is br=
+oken,
+ > > >  > configure it with 2nd one as a work around, now with your change =
+there
+ > > >  > is no second one so guest will be broken?
+ > > >  >=20
+ > > >  >=20
+ > > >  > I seems safer to have compat machinery around and avoid
+ > > >  > changing this for old machine types. =20
+ > > > =20
+ > > > Thanks for pointing this out, you=E2=80=99re right that changing the=
+ number of serial=20
+ > > > devices that the guest sees is risky for existing machine types.
+ > > >=20
+ > > > For v7 I=E2=80=99m planning to take a more conservative approach and=
+ only gate SPCR
+ > > > on the presence of a backend for the primary UART, while  keeping th=
+e ACPI
+ > > > UART devices in DSDT unchanged.=20
+ > > > Concretely:
+ > > > - virt ACPI DSDT will continue to unconditionally describe the UART(=
+s) as before,
+ > > >    so the guest-visible UART topology doesn=E2=80=99t change for exi=
+sting virt-* machines.
+ > > > - We only call spcr_setup() when there is a backend attached to UART=
+0 (e.g. serial_hd(0) !=3D NULL),
+ > > >   so SPCR doesn=E2=80=99t point at a completely unusable console whe=
+n the user passes -serial none.
+ > > >=20
+ > > > In particular, for a command line like -serial none -serial pty, thi=
+s means SPCR would not be present
+ > > > (rather than silently switching it to UART1/pty). My reasoning is th=
+at, for existing virt machines,
+ > > > SPCR is meant to describe =E2=80=9Cthe board=E2=80=99s primary conso=
+le (UART0)=E2=80=9D, not =E2=80=9Cthe first UART that happens
+ > > > to have a host backend=E2=80=9D, and changing that interpretation fe=
+els like it would need compat machinery
+ > > > and a new machine type.
+ > > >=20
+ > > > The qtests already force -serial null for the UEFI-based virt tests,=
+ so they will still exercise the SPCR path.
+ > > >=20
+ > > > Would this behaviour be acceptable for you, or would you prefer that=
+ I go further and also add a compat
+ > > > flag/new machine type where SPCR can follow =E2=80=9Cthe first UART =
+with a backend=E2=80=9D while old virt-* machines
+ > > > keep the current UART/SPCR semantics?
+ > >=20
+ > >=20
+ > > all described above looks complicated.
+ > > In ACPI tables we usually try to avoid compat settings, and do them on=
+ly if we have to.
+ > >=20
+ > > So question is how guest enumerates serial ports when
+ > >    '-nodefaults' is used _and_ there is a second serial port configure=
+d (is it even possible?)
+ > > check it with and without you patch please, to see what difference the=
+ patch makes.
+ > >=20
+ > > >=20
+ > > > Regards,
+ > > > Li=E2=80=8B
+ > > >=20
+ >=20
+ > Looks like this got stuck.  I think what Igor and me are saying is, do
+ > not rush to do compat, just test what happens and document. If guests
+ > survive fine, then it's fine.
+ >=20
+ >=20
 
-The non-FIXED path doesn't work with reserved_va, as qemu needs to handle the address 
-space itself for that case.  See the top of target_mmap__locked.
+Sorry this got stuck.
 
-> +
-> +        if (host_addr == MAP_FAILED) {
-> +            mmap_unlock();
-> +            return -1;
-> +        }
-> +        new_addr = h2g(host_addr);
-> +        prot = page_get_flags(old_addr);
-> +        /*
-> +         * For old_size zero, there is nothing to clear at old_addr.
-> +         * Only set the flags for the new mapping. They both are valid.
-> +         */
-> +        page_set_flags(new_addr, new_addr + new_size - 1,
-> +                       prot | PAGE_VALID, PAGE_VALID);
-> +        shm_region_rm_complete(new_addr, new_addr + new_size - 1);
+I just tested the scenario Igor asked about (guest serial enumeration with
+-nodefaults and a second -serial backend) on aarch64 virt + UEFI, both
+with and without my v6 patch. Without the patch, -nodefaults -serial none
+still produces a DSDT with COM0 and an SPCR table, and `-nodefaults
+backend is indeed possible). With the v6 patch, both command lines end up
+with no COMx nodes in DSDT and no SPCR because the DSDT UART nodes were
+gated on serial_hd(0). This means v6 silently changes the guest-visible
+UART topology and matches Michael=E2=80=99s concern about guests configured=
+ to use
+the 2nd serial device as a workaround.
 
-Don't you need to copy the shm data?
-Tracing all this through linux/mm/mremap.c is non-trivial...
+So, for v7 I will keep the UART devices in DSDT unchanged, and only gate SP=
+CR
+on serial_hd(0) !=3D NULL, so SPCR never points at a completely unusable
+console.
 
+Please let me know if I missed anything.
 
-r~
+Regards,
+Li=E2=80=8B
+
 
