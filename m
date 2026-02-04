@@ -4,73 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9DBCE95398
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB05DE95399
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 12:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vncJ4-0006pu-Ub; Wed, 04 Feb 2026 07:48:34 -0500
+	id 1vncKG-0000O0-N4; Wed, 04 Feb 2026 07:49:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vncId-0006eW-TW
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:48:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vncKE-0000NI-N9; Wed, 04 Feb 2026 07:49:42 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vncIb-0002MI-V3
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 07:48:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770209281;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wmjhED3ORDKEOXe9pGXWs7Q209zto8qnQla/9MUlqrM=;
- b=Z4TFXb/TCOy0K4HymYfLYhSPhOxBUJ0vx+P/qHtDdZyVNXnXz2MI0jmjrJwVGjVw1HHBal
- WNOMF5z2+Md5vg7nx+uq5ZoqZ2dswV/rb9W7zuIJRppVwPWsDyrx3C6OFYzg77BN38xYM4
- NDS8SzU2Q30RJM2XOfhRlbRlIkOg42U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-7bpqJvnLMNCYJgCbZnwsNQ-1; Wed,
- 04 Feb 2026 07:47:56 -0500
-X-MC-Unique: 7bpqJvnLMNCYJgCbZnwsNQ-1
-X-Mimecast-MFC-AGG-ID: 7bpqJvnLMNCYJgCbZnwsNQ_1770209275
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5D131956094; Wed,  4 Feb 2026 12:47:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FD9619560A3; Wed,  4 Feb 2026 12:47:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1478521E692D; Wed, 04 Feb 2026 13:47:53 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Andrew Keesler <ankeesler@google.com>
-Cc: alex.bennee@linaro.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/1] Support per-head resolutions with virtio-gpu
-In-Reply-To: <CAGZECHP9i9zeZP4wLtDtx44OsPesOC3hG=bmpjsGrYUVAG-mXg@mail.gmail.com>
- (Andrew Keesler's message of "Fri, 9 Jan 2026 15:31:09 -0500")
-References: <20260109202740.362506-1-ankeesler@google.com>
- <20260109202740.362506-2-ankeesler@google.com>
- <CAGZECHP9i9zeZP4wLtDtx44OsPesOC3hG=bmpjsGrYUVAG-mXg@mail.gmail.com>
-Date: Wed, 04 Feb 2026 13:47:53 +0100
-Message-ID: <87ikccy8sm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vncKD-0003Jj-8d; Wed, 04 Feb 2026 07:49:42 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6140s5nH011155;
+ Wed, 4 Feb 2026 12:10:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WMMLBE
+ nlB9senlYLt6cuRQlVO3rduv28qhpgXcZd+tQ=; b=ZJk+FdsUEB2Sk9oaXe4Fnr
+ lCW9ohdAZXuGtk/jXoH/glYcm00YSPKKNdQHltBRt2AT7tE4xFQD9IFKup8NZAhW
+ zRhrWiTrRvquOUdSHw3Lw27DX0CSTJMRoo907cI+umYNSVIA0kF5hb1PQbfhWJjL
+ aKg/H6USMn2fSMdM5idlNLTKtGyaLu9BvyXv4sIa/WGV98DPrnF0rlQzq6gBRZNs
+ mz47tAd/1P3yqkbnGaok+9GsXyrv5tGkIpA7AiqOD83pFo79Cchool8jX4/T9Y9T
+ Dh+aokkgzt6jOy5sBj9mlfn8BEz83nu5gLSIRzLggfwT8ZrpKzINDv5xrd4oaZWA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c185gy8dx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Feb 2026 12:10:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 614CA5SX025710;
+ Wed, 4 Feb 2026 12:10:31 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1w2mw3tw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Feb 2026 12:10:30 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 614CASl048234806
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Feb 2026 12:10:29 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E3F7F20043;
+ Wed,  4 Feb 2026 12:10:28 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7C8D220040;
+ Wed,  4 Feb 2026 12:10:28 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.87.140.180])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Feb 2026 12:10:28 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v4 1/5] target/s390x: Dump Floating-Point-Control Register
+Date: Wed,  4 Feb 2026 13:07:44 +0100
+Message-ID: <20260204121026.645382-2-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260204121026.645382-1-iii@linux.ibm.com>
+References: <20260204121026.645382-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=UdxciaSN c=1 sm=1 tr=0 ts=69833737 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=WEarJFB7UarLcg5xSFgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: I4pygt64l14HMM9GBcnndTQJZZWP4pcj
+X-Proofpoint-ORIG-GUID: I4pygt64l14HMM9GBcnndTQJZZWP4pcj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA0MDA5MCBTYWx0ZWRfXyKSpP5UA/QGp
+ SO3WMyDxF3NMeG88oGTI3oY78/H1OrGSobNj9oE4xU789xCM6LO6ebDMcbWt350zMGosrC5Inuz
+ zaGv9bH5IqPkAt2jRHQrz4VCFwY2LrrFdWgxJsLdbeIKsG9dCiBr5liTIzT5VbOovp6EywWI4Ey
+ mwYfCL3qcoECMrIyEuniwiS/81Ygyw78DN0l0513+uf9cTuPzxdNruOYGlm6wWsH93dyI2P2do+
+ LEQTrXl1KaMksRNKcwAMyDZON+Gfhd/bswwQ850IrBbdSJQKz0qQq7Q5NtZSZ9g6jGjSUqHZhCj
+ u/EnSHE7y50mrj8Y0Ge+BtnsWDjfSGugEh2ZqddmP3Hqcikg5Bk9VtLWoWR6edtryDf/h9eBqBb
+ 1FqnmDxYP5uAP88iBXrz7g6DWDEInwfAj6EWAWgiaqOddOK2/ncs3mGhgGdIRGnSKWZgnNklNlC
+ IXYLKUqmXOZxaBbzDAA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-04_02,2026-02-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 bulkscore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602040090
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,11 +123,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Andrew Keesler <ankeesler@google.com> writes:
+Knowing the value of this register is very useful for debugging
+floating-point code.
 
-> Note - we use "xres" and "yres" (instead of, say, "width" and "height")
-> to match analogous virtio_gpu_base_conf.xres/yres.
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ target/s390x/cpu-dump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Mentioning this in the commit message wouldn't hurt.
+diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
+index 869d3a4ad54..5b852928031 100644
+--- a/target/s390x/cpu-dump.c
++++ b/target/s390x/cpu-dump.c
+@@ -63,6 +63,7 @@ void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+                              (i % 4) == 3 ? '\n' : ' ');
+             }
+         }
++        qemu_fprintf(f, "FPC=%08" PRIx32 "\n", env->fpc);
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+-- 
+2.52.0
 
 
