@@ -4,75 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C62E9539E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DDDE9539E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 13:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnd06-0001tf-M5; Wed, 04 Feb 2026 08:32:58 -0500
+	id 1vnd6a-0004wg-4T; Wed, 04 Feb 2026 08:39:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vnd05-0001sl-D3
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:32:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vnd6Y-0004wR-6B
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:39:38 -0500
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vnd02-0005fR-4w
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:32:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770211972;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vR2fBcORYdmt1YPsf7yFFS0kUNSb0702Te0uJ25zGIo=;
- b=Jno1SCmo2e8MtkQZegN/PsE8AxhyxHWLKfAcUgZItS5qTz4WJ7YXsNTqggN0EQu+s/MaNj
- LIeyrMAfyrLPoj6MwpN8F7htpq+EroTSvbzRIGEqPqHhS5OzIle94UnshJ6ez0tQE8GYKf
- 3Wmjk2SyzQ2dMdmOAYga4MiryIovP9w=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-d7zoEFN8NiGZbBCnsVrEWQ-1; Wed,
- 04 Feb 2026 08:32:51 -0500
-X-MC-Unique: d7zoEFN8NiGZbBCnsVrEWQ-1
-X-Mimecast-MFC-AGG-ID: d7zoEFN8NiGZbBCnsVrEWQ_1770211970
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39178195608A; Wed,  4 Feb 2026 13:32:50 +0000 (UTC)
-Received: from gondolin.str.redhat.com (dhcp-192-192.str.redhat.com
- [10.33.192.192])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 31CA41955D87; Wed,  4 Feb 2026 13:32:48 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v2 1/3] arm: handle demuxed ID registers
-Date: Wed,  4 Feb 2026 14:32:27 +0100
-Message-ID: <20260204133229.297061-2-cohuck@redhat.com>
-In-Reply-To: <20260204133229.297061-1-cohuck@redhat.com>
-References: <20260204133229.297061-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vnd6W-0007IW-F3
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 08:39:37 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=anNGePXd7Ci6U2IQBlx0BV7gLH3KxkwocNJjP0k1N5AbyGiOOPpDb8URUc7cnhsSKG+o5Hm58TxvSwMuDEGmuZNJHMW+qKH9fNF3hgfHDaknGFY2+OkBYTVAzqwyCghujrsTq+azp3aX08GKiogjzyR4FkNxmTUQhGEGhOfJkxYNOkQTBpkhU1qlttFUuw7YPzubKWd78W3RDEnqc4Etiw/E0oS1VsMY4p0xlFGAHsWGWbEUXRfHR9ADi9U9rRITb/2NJt3Ie6qwSGIXlwNE4bzPmhbiiSchOMZ8rG+qWPQWbEI4AtfEj2KPOUbQBGBhtf/c+ATD3JEl6OZrIvnkTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tIycZKgaWX7BoRaFy5trw9lbqOQRgvpSVrkRO+dTNgU=;
+ b=VbzBZ7grJtGLBT6zYGpNUp+QNSHfSQTZ+6FWvaIagDBpa9md7DX3WI331BUzfHnp6Aau3QsJ5Z5gjvQv54XofCecBWdM9gAhlCtj0ndPgEDmK0UPxKeuDlJr3CmRl7oyOZWCoY70v1RBCNEyI73ZKn5OF6cllAAyG31AEAUTn7fhbah7Qs0ygCbips2ZxSzXDYpOvCoy3+Wc42Gmh6t69paVCtxYtzPLpzMYab+h8Q7jGm6mDLT1+vBODR49P6VUcSRp43SxNUUT7tqFtZLsKsD0Bh+exAa9woNtyYiBKUtujgS6JO5MYLfCzPmG7OE0p890Ip+lFcOMha0Hb0TF3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tIycZKgaWX7BoRaFy5trw9lbqOQRgvpSVrkRO+dTNgU=;
+ b=EYLPPNO0j9ZAgt0VPidoEwDl5Ip+BZejaN8rsgxmOD4rYBqlYBXZZtI/zniqEPIPyROy4YXZ/BJb2Qf26IhY7oRe9dQCc84UlKoA+ocwWkMxHQHq+SFZ62VgZerwoV1G/CEmiqlA8Xh4/zZor8zAAjE9LdH2WIH6SreWXRMrvFG0FmhjKUIu09aokNW/ABKyHm1lRu4FRsThw0ncy6fZeGswQ9WU5JmEaxby19qhQEAOsaF0ItqkystrxVS7ZiC/5x4o8eCouG1nxxlOZkfbcxxT14v2PNasL7o2mORcFQrLikel0ybz7jKjUCXR4EGWRqGUDJsklmo4nIYO1XP1ww==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by CY5PR12MB6624.namprd12.prod.outlook.com (2603:10b6:930:40::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Wed, 4 Feb
+ 2026 13:39:27 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9564.007; Wed, 4 Feb 2026
+ 13:39:26 +0000
+Message-ID: <af10c110-d2ec-4b92-b33e-7f259c3d7646@nvidia.com>
+Date: Wed, 4 Feb 2026 15:39:21 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
+ PRE_COPY_P2P transition
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
+References: <20260202173406.13979-1-avihaih@nvidia.com>
+ <87jywswslz.fsf@pond.sub.org> <87ecn0wsif.fsf@pond.sub.org>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <87ecn0wsif.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TL2P290CA0016.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::18) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|CY5PR12MB6624:EE_
+X-MS-Office365-Filtering-Correlation-Id: d5b867ee-3b1d-4025-78dd-08de63f2d055
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TTJheHlERmNtZDlxVXpyMGFBUzFHeVErWmdSN0M5anZYSTFoL1U4LzQydjRK?=
+ =?utf-8?B?eGE0MHV3OXYvbWZsMWR5cy9zbjNMZmF4SVptWnFwdDE1MmdGWTRNUnlNRVUr?=
+ =?utf-8?B?WU13TkkyRkF5Zlo0clJJTmFRU0JnQ00rL0RybDh1d0lGN0NFZWpxUjNBeklI?=
+ =?utf-8?B?bGFxUTBmRVZhWkloZ2pWcWJpUXYrZGVNWUtYM3FnZURDYTBEc2RXaTZ4S2cz?=
+ =?utf-8?B?ZnRxc21hWmtBenNyanlBOFMwQlFDUGZmdkRvY1d5QUprNEZ1YnUxd2hiNWow?=
+ =?utf-8?B?eVNkMHcra0oyRUd0QkFrRllkajFRMkRIc3I4N3I4ZEZOb2JhR3RSdHc0MStL?=
+ =?utf-8?B?OXZYM1QrM3pTeEMzcS9KQS9JMWcrQ3BQdXVNeTQ3UWREOCtKY0RmMnRLbkRU?=
+ =?utf-8?B?b3RlTU5XYTlBeThsa2NXTDcrZGR2a2EyN2xiUEppYXU2dHU0Wk5QL0RBNmRL?=
+ =?utf-8?B?UTF5am1TckhYb0tNei8zZkZuaTBxTGNwa21DdE92ay9lZDBXRjlSYklVSy94?=
+ =?utf-8?B?bjlHQUZ5M09uSlEwZmR5WTFSdDA4ZmQ5cEZ1Q0g5c1AvMU9VdDRTcDNyamJh?=
+ =?utf-8?B?SFNwazZ3ZGdYQm93NWthR3I5RnlYcm8zNGJpOTZqcWNRdXRUdHh1V2owQlRZ?=
+ =?utf-8?B?MnJYR25WTGZvaE9YejRsSFBIa2twTmQ0Uk1PaFlneFc3dCtXOVVBak5ETy9C?=
+ =?utf-8?B?ZzlZVUpXYXpjZG9TTnRYL1AzVllMckZIYnVOeU43VDNsQWtFdWZJZkF1Zkcz?=
+ =?utf-8?B?YlcxVkRVMzdCNHBPRDR5NFJDTXliMEhYNHM5UlcxWHJiTmgya1U3ZnVmOUx1?=
+ =?utf-8?B?V3ZYUGJtZVljdnJFMmFqcXI0UXAxcmpFY1BVU3B1Ump0Vmw3ZFBBNVg5a3ZG?=
+ =?utf-8?B?ZHBUNFd3ckpTWnd6alc0RHZ3Nnl1S0laQ2R1Yjd4QXNWeVovNXpUNWRsWHdu?=
+ =?utf-8?B?WTJTR2Z4dFBGbVUyVHNkbjRJbHBjSVJ5L3QrZnFjcC9CcFBWQXFLNGZJQXZN?=
+ =?utf-8?B?VXpScjhicnFQaFZWY3hicVdDTDkrWmlPcTR0dXRHQ2FBQ0xDSU1QbldUREhp?=
+ =?utf-8?B?c1cwblF4QjNxYkxvcUNTaktKVGtnTTdXOWlOektjSGNUTlhWd1RiZk1LczQw?=
+ =?utf-8?B?Z0pxTFBqL3IrVld1aWFMdElNbjlYT3NNR0pDRGM0bDcydElMMXprZ3JZQ1F1?=
+ =?utf-8?B?ZVBMdFpTZnZRQ0MrZHVjNkZGZVhHaEFwS2Z4b2R3SFVsbFVjMGlISWV6d3di?=
+ =?utf-8?B?T0htQmNGclZ2T2JLbnVySkRacW5YTThJVWJNbG80RGt1R0lWOTRzaXhlY0xn?=
+ =?utf-8?B?QWJ2Yk15YWVXcEpZN2kzZmxJeDYrR0hCMW1IN1hyb04wOHIzNG9BNHdsQndz?=
+ =?utf-8?B?b0ZKaWRucVlCbW5oSGg0VVNCTGVYV2ZlbmJKRzd0YmFlOEk0UVJjdE94WDV3?=
+ =?utf-8?B?U3dKYXJZdDJCR2tJdVp5SjVtK1FEckw4aHJTS05pdG5xRVJCcno0NG5WL3Yr?=
+ =?utf-8?B?SnIxVTdvalRzTnM4ODdTaDY4N3hXQUhBK0cvMmpUSFQ3dkdjak5RVHlBdmh2?=
+ =?utf-8?B?OHNucG84azZGcDlMUVJDeVk0NTBxbUdvaDBxRjcvRWpiRFp4SmE0MEJVN0tX?=
+ =?utf-8?B?Q3NVZnhvbW5qbXFwQUxpSEJuUmwwL2x1TkZOeXk4TXlvKy9KeTNFcGt3SS8w?=
+ =?utf-8?B?RUVaczJRV2RxWC9WdGUvS05uZXNQa1AwOVIrSExZU2cvVDZCbnZJanVvaHpC?=
+ =?utf-8?B?cGN1dEozVkhRdUptemsrL0t3V1hoRmpxS2x1MnRWMW9HeFdqb1VUbU56Qjcv?=
+ =?utf-8?B?bEtnWUYzVEdDcmU2d3puSzIrU2VtUisvemZRdHVOTDJvcTZTUlpKVG1lQ2R1?=
+ =?utf-8?B?bVY3UWFCNGQ4YkVYdWMzWFpRZTEwa1FEQzIrdUljd05uRHRhY1RZYXhLZGJG?=
+ =?utf-8?B?eHJkWHZZdlY5MnNWZFU1aUczdEVkN2ZlUkRTdU04bVJZeGFZczBtM05YK1FL?=
+ =?utf-8?B?bEQ1TVdoOEZOTEk5ZVpUYitVKzF2ZWRyRkhSSjhCY1BUSHd3N3N6ZnQ1YUg0?=
+ =?utf-8?B?SlU4ZzduRjREQUlyaEhkek1VR0VpYldmR1NHVDFnMlN5QUprQ1QxWlc0Tjc3?=
+ =?utf-8?Q?tv6U=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U1YzVDdXTUpPTWovb0NFWUVseVlXQ2FibGV1TWFDVHZTVGdGK1hqa1BYZWw1?=
+ =?utf-8?B?T0RuZnY5QkpuWndYRDZ2WlVYWlJ5TmVLVFBPZE1lMC9QcHByaUhhajVTeG9v?=
+ =?utf-8?B?VWwyamNOS1h6b201cDR4anBLbzVVMWkvbU16bUR1eUdMYTh4RmpDZm1EQjNS?=
+ =?utf-8?B?M1BjYklhdm5OSVE3S200V2hnbDY4QXpuTzUzcUdWMERhK09Va1V6aUR0dW5r?=
+ =?utf-8?B?RHIrWlZVeUpWMjBqK04xbVR1ZkI5TDZiYi9iRnhlSGQ5ZzJxUmIydEtkQ0NG?=
+ =?utf-8?B?YjR5UnpPR0hxcFVqT2tJMEZaWUJKUTFPNWcrSmdxdVh2TWxXcFZ0WStRYzhX?=
+ =?utf-8?B?SWRBQVJDVTNUVnVFR2kzaUZYMHU4Vks0R2JKV0RuUXpoa3lJby9sNXZJRnJz?=
+ =?utf-8?B?dUlnQ0tqcFpkTjk5ZHpnU0lhcUNVMGFnQ3Z5MFk4d3B2bUNJM3MrSWRyd3g0?=
+ =?utf-8?B?dG5xdUZrRDdYRXVEdUNOS1ZrZFJ1TCt5ODdDV1pDLzNnVjl6em0zTXFTZk96?=
+ =?utf-8?B?ZmxUT2RrMW5Pc28yb1pQU3RYRHhCeHhaazNuemlxZjA3RnVXZGZKMWxiNGdU?=
+ =?utf-8?B?ZFVaaFJ2NFhNRTlzbGVDR2NvK0tqbFptemtTL1QzL3I1U3hlTlQvRWJjVnp3?=
+ =?utf-8?B?U3Z3Q2FSSHJZbkJXYUdIMWQyYnZmRWJOSDVldE9BYmNhZzA2cnNlNXJKWDZw?=
+ =?utf-8?B?R1RvNjBIRi9acVJoWW1QYjEwNkxpT2plRzdaVmI2NTNiMVhibnlieGdVYWll?=
+ =?utf-8?B?ZjYyWlgyUS82ZnB4bHZlVzkwTTlsNFVwRWdvVmhuTDlvYU5Zd1RYTTF5WVZr?=
+ =?utf-8?B?d2xxcWZrdWZFdVlBeTBvT3JjRjd0UUFtRjRMMVNsS2o3OHdSL0VKREM3dHhB?=
+ =?utf-8?B?RlpmQU9SZm16Z3ZsdGNpZGVOQlhseDhUUENTcEhkcjJJNkRKNEZ3Y1MySDZx?=
+ =?utf-8?B?WW13TitEckY0ZjdPM241Z1dRQlpmRnZVK0QzVitrclk4dDlLeXJVMXRZTVlN?=
+ =?utf-8?B?TytLRTlmYXBrODh3Z3RMT2t4NWVqaURwZ0UyZHNPK1FXd0p1RWpHdEpYaHY0?=
+ =?utf-8?B?Q3pmemNiQXJPK2RtMVhsNmVJMlUyMFN4SnYyQVllczJzNTNtMkZ0Z3E1UUFi?=
+ =?utf-8?B?OWZrbzN0eXhBVHJ3djh3K1VaeFkzM2F0aHhMRi9xajMzTUtRcnRkWmlEckxX?=
+ =?utf-8?B?WFJTY0ZtMlF4WVBGWHJyY1lJSW9BMU9TMk9MRm9RWUdPdTZjSzhmUExGdjFv?=
+ =?utf-8?B?NHA5ODVrNU1xTnBrR2F2VEs3aDBFcXZOZm5MSGNMQThnbDl4YTB0ekJ5Y2Yr?=
+ =?utf-8?B?b0o1bUxxb3Q1elcrb2xpSC8yRktMKzkvUkdFaXliRmRXWitrS0RqdzJLenRn?=
+ =?utf-8?B?TVBXY29iaUREYUNPOGgxRWwwaXgzRzZPREZBOFBzbXVjMmorV2JXK0dxcFNz?=
+ =?utf-8?B?UEJ4WnpOZ2FtcGdLTnNHQVRiK1MxS2tEODArbEp3Zk1oRGpHZmZWQ3NreXQx?=
+ =?utf-8?B?VjhpQUVwZnkzQnhlVTN3dWQraUV2dzdSalkveXQ1YndXeDUyT2Y1eXBVeUFN?=
+ =?utf-8?B?NHBvNGt0RGlDU21acFZWekY3TE9QR3JQUTZBMDYvRnVwME5rZ2I3c29jQVNJ?=
+ =?utf-8?B?R3dEU0NuTUJ5V3ZtTUFjUDkvL3Q2MU02Wk5vZ3VmT1VVTGdWcnl2TksxMVdO?=
+ =?utf-8?B?OTlydWhoQTBmZDYzWGp3d0traTYvVXh3OUtUaWZiWithMWxpcVZpT0c0UXJX?=
+ =?utf-8?B?cFpBNHlGL25XSEVRSDVIbFdsc0M3VTNPMWMrbVM4dkRyS0RmbkFEWjBoMVo2?=
+ =?utf-8?B?eGVndTlNWkZ4azhxazNsS1VERXpJMGFFKy9rT0M0azJBMFNjSmRJSndVcFk1?=
+ =?utf-8?B?czgrWDI1Um43S3E0eXk4cGdzWU5KZEpObnJnUWQzaTNzTFVCZWNyRHlwSHlU?=
+ =?utf-8?B?dUplSCttRjhCaWxLUWEycFNJT29BTTdpTkQ3Wm92ZDlnS2JxV2JER2JWemhM?=
+ =?utf-8?B?TXQwVXZUNXdIVklkVG0zSGdpMDZvbStXOGprNnhGMDN2aVJKRFJHTWZJUWRH?=
+ =?utf-8?B?ckdWUG94Tk15aHdBbXFVRUNqQ2QvRXdTSHE0TXpqODc2eSs2OEtDZk5nOUNN?=
+ =?utf-8?B?czVUK3JzNkhyVk5hdzJIQlJNVFZOK09vOEExVGp1aWRrNE1TZ2FHbHJCVDNI?=
+ =?utf-8?B?ZG12Ui9yOU1SK3F4dmxwV0ZYNW1vUGRYSjNhVXBCK2l3b1ZmNTYzb3Z6Tzg4?=
+ =?utf-8?B?SlNRTVJJMVlJRWFackxmU2NKa05HbDRmTHhPYzF2VEFFTnBtZmFRYTJ3dG9Z?=
+ =?utf-8?B?ZGRTVy83MTFlVHpjemlieThaaDB3cGpPd1Nkc2pkcXpxL08xd2NMdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5b867ee-3b1d-4025-78dd-08de63f2d055
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 13:39:26.8589 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZepVs1JQgBZqncQ94Pa+A4yVwrSHMkjHVNGkbfXq5goDvk9uJg85/CwsWCi0XSv9zlYQo5KiXu9XNBoiG1Dv6w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6624
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
+ envelope-from=avihaih@nvidia.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,85 +188,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some registers, we do not have a single ID register, but actually
-an array of values (e.g. CCSIDR_EL1, where the actual value is
-determined by whatever CSSELR_EL1 points to.) If we want to avoid
-using a different way to handle registers like that for every
-instance, we should provide some kind of infrastructure. Therefore,
-add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-we already use for regular ID registers.
 
-Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-sysregs.h | 13 +++++++++++++
- target/arm/cpu.h         | 20 ++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+On 2/4/2026 3:24 PM, Markus Armbruster wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Avihai Horon <avihaih@nvidia.com> writes:
+>>
+>>> The VFIO_MIGRATION event notifies users when a VFIO device transitions
+>>> to a new state.
+>>>
+>>> One use case for this event is to prevent timeouts for RDMA connections
+>>> to the migrated device. In this case, an external management application
+>>> (not libvirt) consumes the events and disables the RDMA timeout
+>>> mechanism when receiving the event for PRE_COPY_P2P state, which
+>>> indicates that the device is non-responsive.
+>>>
+>>> This is essential because RDMA connections typically have very low
+>>> timeouts (tens of milliseconds), which can be far below migration
+>>> downtime.
+>>>
+>>> However, under heavy resource utilization, the device transition to
+>>> PRE_COPY_P2P can take hundreds of milliseconds to complete. Since the
+>>> VFIO_MIGRATION event is currently sent only after the transition
+>>> completes, it arrives too late, after RDMA connections have already
+>>> timed out.
+>>>
+>>> To address this, send an additional "prepare" event immediately before
+>>> initiating the PRE_COPY_P2P transition. This guarantees timely event
+>>> delivery regardless of how long the actual state transition takes.
+>>>
+>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>> [...]
+>>
+>>> diff --git a/qapi/vfio.json b/qapi/vfio.json
+>>> index a1a9c5b673..17b6046871 100644
+>>> --- a/qapi/vfio.json
+>>> +++ b/qapi/vfio.json
+>>> @@ -11,7 +11,13 @@
+>>>   ##
+>>>   # @QapiVfioMigrationState:
+>>>   #
+>>> -# An enumeration of the VFIO device migration states.
+>>> +# An enumeration of the VFIO device migration states.  In addition to
+>>> +# the regular states, there are prepare states (with 'prepare' suffix)
+>>> +# which indicate that the device is just about to transition to the
+>>> +# corresponding state.  Note that seeing a prepare state for state X
+>>> +# doesn't guarantee that the next state will be X, as the state
+>>> +# transition can fail and the device may transition to a different
+>>> +# state instead.
+>>>   #
+>>>   # @stop: The device is stopped.
+>>>   #
+>>> @@ -32,11 +38,14 @@
+>>>   #     tracking its internal state and its internal state is available
+>>>   #     for reading.
+>>>   #
+>>> +# @pre-copy-p2p-prepare: The device is just about to move to
+>>> +#     pre-copy-p2p state.  (since 11.0)
+>>> +#
+>>>   # Since: 9.1
+>>>   ##
+>>>   { 'enum': 'QapiVfioMigrationState',
+>>>     'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
+>>> -            'pre-copy', 'pre-copy-p2p' ] }
+>>> +            'pre-copy', 'pre-copy-p2p', 'pre-copy-p2p-prepare' ] }
+>>>
+>>>   ##
+>>>   # @VFIO_MIGRATION:
+>> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Except for the subject line: "vfio/migration: Send VFIO_MIGRATION event
+> before PRE_COPY_P2P transition" become misleading in v2.
 
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-index 7877a3b06a8e..911f54bc8a4f 100644
---- a/target/arm/cpu-sysregs.h
-+++ b/target/arm/cpu-sysregs.h
-@@ -35,6 +35,19 @@ typedef enum ARMSysRegs {
- 
- #undef DEF
- 
-+/* ID registers that vary based upon another register */
-+typedef enum ARMIDRegisterDemuxIdx {
-+    NUM_ID_DEMUX_IDX,
-+} ARMIDRegisterDemuxIdx;
-+
-+/*
-+ * Number of register variants per demuxed register, trying to accommodate
-+ * possible use cases.
-+ * CCSIDR_EL1 currently needs 7*2, could be 7 more with FEAT_MTE2, in which
-+ * case we would need to bump this number.
-+ */
-+#define ID_DEMUX_ARRAYLEN 16
-+
- extern const uint32_t id_register_sysreg[NUM_ID_IDX];
- 
- int get_sysreg_idx(ARMSysRegs sysreg);
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 21fee5e840b7..f9d51c0fc187 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -906,6 +906,25 @@ typedef struct {
-         i_->idregs[REG ## _EL1_IDX];                                    \
-     })
- 
-+#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX] = VALUE;         \
-+    })
-+
-+#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX];                 \
-+    })
-+
-+#define COPY_IDREG_DEMUX(ISAR, REG, FROM_INDEX, TO_INDEX)               \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][TO_INDEX] =             \
-+            i_->idregs_demux[REG ## _EL1_DEMUX_IDX][FROM_INDEX];        \
-+    })
-+
- /**
-  * ARMCPU:
-  * @env: #CPUARMState
-@@ -1084,6 +1103,7 @@ struct ArchCPU {
-         uint32_t dbgdevid1;
-         uint64_t reset_pmcr_el0;
-         uint64_t idregs[NUM_ID_IDX];
-+        uint64_t idregs_demux[NUM_ID_DEMUX_IDX][ID_DEMUX_ARRAYLEN];
-     } isar;
-     uint64_t midr;
-     uint32_t revidr;
--- 
-2.52.0
+Can you explain why misleading?
+
+Prior to this patch VFIO_MIGRATION event was sent only after 
+PRE_COPY_P2P transition.
+Now with this patch VFIO_MIGRATION event is sent also before 
+PRE_COPY_P2P transition.
+
+Thanks.
 
 
