@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E558E8B397
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D1BE8B397
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 04:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnUcY-0006Yd-IG; Tue, 03 Feb 2026 23:36:06 -0500
+	id 1vnUdw-00075l-Bb; Tue, 03 Feb 2026 23:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnUcX-0006YP-T4
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:36:05 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1vnUdv-00075L-59
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:37:31 -0500
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnUcW-0006hI-Ge
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:36:05 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7f89d0b37f0so216383b3a.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 20:36:04 -0800 (PST)
+ id 1vnUdt-0007XU-Jo
+ for qemu-devel@nongnu.org; Tue, 03 Feb 2026 23:37:30 -0500
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-8230d228372so202850b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 20:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770179762; x=1770784562; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770179847; x=1770784647; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=isgzfM3dfOHrDHP535tyrqT4hFMl9xutstTJO7213Ks=;
- b=C8u68SD1+UlCsxvBc2gjKtJ0kAeGxvlZvDSWs3A7//1tU0yG7lqqqJ1JCdz/caxzpF
- e3Q0ATr0g0tG+0whmOcaCqxImZypEKmgwlsgT3+PtM8RFk9vJJdPUjEUtqJnGUPad8Qg
- Eo2ZMx6N37ODXjuoTmjKcolQI2RU9FtqQmjZ2dVQjUU+ugZWAKVJ+LqQ2qFx3RGdbxg+
- 7f9mZs3SgPl6JjiFrWM3Cc+SJxprJ5H1Yi1nowa1CHrUFORpn4UzrbJ493xIZCHFlqDa
- jZsIPhx92POfrVKRtpvk7u+GY6wLGzNy8+fR0UvOHaPlp5M9HeEkhCI7WPV2MkoCxqxk
- LUOg==
+ bh=2WretFc+MWXwy612rL1TXzUrvnw1/LpQEDQv8YM/MSM=;
+ b=QuH1kJf5BlZ0YFy0drEkYT9n2/lg4h4aTJXRCBr6qIVK4+mQJbhaU2rogL1zjPHoBv
+ l33Y72K6ld0sGgCMqIkfx9+oWPFqvCiJfkV30ooqRN1rmephBf9zDzexlJTiUSIgIgZl
+ zFk28RbgRBePlpCXXuy1gOlRFa3wxs80VJEKwPLXPyjxrGvT1w+bKPQVpteaMksBk1Xz
+ MZn3YZTvFyoVS51pCkPSrR2XhngZ3C5wFVnu1/snkRPpEpxi+PHwn/1xXuoWRGH9ce21
+ lyPmhnnNGjp9hG/ROw7fyRf3naJugC4uVuKwKrGiI9nmkOux2WQBgEP6Qw6zF7icq3gi
+ g84w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770179762; x=1770784562;
+ d=1e100.net; s=20230601; t=1770179847; x=1770784647;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=isgzfM3dfOHrDHP535tyrqT4hFMl9xutstTJO7213Ks=;
- b=C9SkMDn9P0vryXd4UrzsoJJivhAqZh6kIwyBxelyb5tLE2yCMzLZ10zno324MgZD2m
- ZU51ElsI6wpvNZJKSX3nMWnQsUV8LRXfHVSfcaD7OJ9WxBiWOF7bfk+u8uFZRKAv6yKp
- 9nIpbSA/1MhBHe6RWe+6M58wS8bQ7ajfdcM38Ktb2BSmbqtHjZ6rApKrw70HVWzpGo67
- fBhgybvOlU0MHAD6Xyb1HZs8xrQu49+/oDtYXhMr/APYTisog59Jec93/5C6SxKUvBm9
- qFGt/lIAxuKhjK+FnG75f2At1UbNSBCrkU8Q7i4NH3sHjB0jGmYxqCp5+EZjqSl/n5Rz
- ZSew==
+ bh=2WretFc+MWXwy612rL1TXzUrvnw1/LpQEDQv8YM/MSM=;
+ b=gqPvrP1FkXRl9x+5XjyDkV3dClk+trmVJH9uhoRFYnZrBFsA9lOGyHjXH8nYnUi4X9
+ Uhwxm1Poh8e7ROAbWuvf3lGHkniV+9QS/5ueJGA0wEYABaj0+OfqqidlkSYZPVJtgLJj
+ DBAlRH8NYounF43xySr00du7URSyi3eLdAEb4km+PuSqgoBhpJX2uerqO6ezl+zqMprt
+ m1uJOJZ6x3+CFs1N7TwkXjkZpwPaMAuKu5bb7O2GryBtynjjNFUVKybhdv47b4KckuXU
+ c45AP3o5Wv6hkbpciAL587LGpDZUG/CIohf65h4/ERRUfXTHuE49sVjX8gJYLtDTDf67
+ CgJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNtgOdKPudLD+2VGZABW6ViIkG3Z7BFmSzJSNfOt+V0L1Y+SCeb8TSe8UcWSkvkNaiFkNm5/VQWsyN@nongnu.org
-X-Gm-Message-State: AOJu0YxKxVoEPpJN7rmKrYGdkxkcyXrwFuxdykTZ/jAqW3o7ih9tpE+W
- FQ87O1k3cNBfPjtbUNDn6a3vyKSN7jKhJFZZk1jECI6/+tbPNyA7RKGvGe75UceVKl5/62jvFXR
- Fvl50G9k=
-X-Gm-Gg: AZuq6aKcVzR+cOJXh5kPuK7TLg2h2PIhlZlQEVAhK66YAbpO2JlVVTbcw2haOCPXfSp
- iQ/ENgfiPccw+8plDNl58LBeId/fkYx4dx0kXbgBR5odrpyhbW34OMXnQzGpH3a0eBup6kXlqhc
- wp041K5n4JV8utj0YSndTzZuatj0oy8HA80JvIzmgcztcHuQT7CTDvK+dujIf0b5yhWORqIH5s3
- IsEa9N03p4e4ujP5F70MydPjR6RYsh9f41FX5/U/CDTyIbLOLAbzjEcfaV91b29qJRzfUc61R21
- vP65Z2tJP2oX4Ihlelj5SfXVd1KwoE9CvfBmpQhZyDyr/6Xv9eUMByZ2lLifx0TIrx82lS0ZnPs
- LDpvc9dSbhjnhf4AnvwIIJpBvvxi2gHxaaPItV/puHjs9bjU9DElXV24AUV1nBVMiSTFkSdSDhQ
- jkD5JwmHS8HsnU/ANOkepq9lvrcRuo53CobM7UPm5Bkn9TIyNkgDD+Adleb2SDPFvMKA5jzeTZ9
- 1tXwawxhi8xlZ5YjMkpVnr/xT9VoltmQ2hd
-X-Received: by 2002:a05:6a00:12d9:b0:81d:e9b1:b6d6 with SMTP id
- d2e1a72fcca58-8241c75f197mr1782079b3a.28.1770179762396; 
- Tue, 03 Feb 2026 20:36:02 -0800 (PST)
+ AJvYcCVeUmjpOGNe7TN1r/pz3ga3tjcilaPQ9UE635rj68jYv98J9wZ1Uli6qYOJ2e+6nqXvEyVat6C+SR4e@nongnu.org
+X-Gm-Message-State: AOJu0YwofYkIxnciKdMDFdSO2t/DjbRxgHwOb8oN+T38c8X3j1pOEH6b
+ umMPv48efG/FD9081ds/igk4/BLRVK8Qq4oGy2KbdjJ18ULZB5CbHvSwH5dc+to8b+s=
+X-Gm-Gg: AZuq6aIGwZb+7jBE1FsSBzoJzHqOVfwiDC3H6LO++Iazfx05z29Z74ood71w7Yo+SE0
+ og+ZMfks0oqpHWPMBwntPBuqjk/u63xXaD7Bcee0wNpK/WCbnuZGG00yKhUWXVcPeFu+5wGbOp3
+ ILVi/HS9Lg+XQaGat46S/JP8muH8fvgbCGfCUm03PskuJv4NtFJ4g3PrSXoK9LX7nos+hmduwDC
+ i2zHXuAfoAPBRysGYJWjFKudqMBC6DRj7KunI2NKYTauLb+xdxFxMtTQnTFEHmL3EqmAizuyvUN
+ w3NEIZNUuF/Mdqlzt5CwXDjTDfJiNkZd6e22dIdwUGGKr6q5rtrdFHb/b4LAOdwvAArd3fSds8c
+ WhdKaf7fiJRUsGRtBvHnm497clYJyN6jdTmc2x4SxfkAcEngyQAXzCBq1VLULPqpZO1yvY367pQ
+ WPFWZ+JSJ379NW59oO3HUT61S/JcBtgkF6z3RN7H76/dRLvj2Uah7EXXmagYru/G0I7CTRjNdFn
+ ezkwNQkCWJ72UKfMcVTnfUsEoc6pIIdR0Dq
+X-Received: by 2002:a05:6a00:2d18:b0:81f:cea1:f93f with SMTP id
+ d2e1a72fcca58-8241c6347bamr1905857b3a.53.1770179847288; 
+ Tue, 03 Feb 2026 20:37:27 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1bc:fe1e:491:928e?
  (bg30dhzlx7lnyrq74wrz.ip6.superloop.au.
  [2401:d002:dc0f:2100:1bc:fe1e:491:928e])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d438897sm869112b3a.37.2026.02.03.20.36.00
+ d2e1a72fcca58-8241d468d73sm883726b3a.49.2026.02.03.20.37.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Feb 2026 20:36:01 -0800 (PST)
-Message-ID: <e0b9ce25-db50-4f72-bfc5-751770c0695e@linaro.org>
-Date: Wed, 4 Feb 2026 14:35:57 +1000
+ Tue, 03 Feb 2026 20:37:26 -0800 (PST)
+Message-ID: <00a4742c-cb5e-4a7d-be00-daebcba4cb9d@linaro.org>
+Date: Wed, 4 Feb 2026 14:37:22 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/11] gdbstub/user: localise variables for reading gdb
- socket
+Subject: Re: [PATCH 06/11] gdbstub: pass GString to gdb_build_stop_packet
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20260203115201.2387721-1-alex.bennee@linaro.org>
- <20260203115201.2387721-6-alex.bennee@linaro.org>
+ <20260203115201.2387721-7-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260203115201.2387721-6-alex.bennee@linaro.org>
+In-Reply-To: <20260203115201.2387721-7-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,47 +109,99 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/3/26 21:51, Alex Bennée wrote:
-> Keep things tidy by moving the declarations to the block where they
-> are used.
+> The other functions we are going to clean-up work variously with there
+> own dynamically allocated GStrings or with the common shared buffer.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   gdbstub/user.c | 10 +++-------
->   1 file changed, 3 insertions(+), 7 deletions(-)
+>   gdbstub/internals.h | 5 ++++-
+>   gdbstub/gdbstub.c   | 4 ++--
+>   gdbstub/system.c    | 4 ++--
+>   gdbstub/user.c      | 8 ++++----
+>   4 files changed, 12 insertions(+), 9 deletions(-)
 
+This function is brand new in patch 4.
+Why not just merge these two patches?
+
+Either way,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
 > 
+> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+> index 3134a6e8eb2..9b25bf58b8e 100644
+> --- a/gdbstub/internals.h
+> +++ b/gdbstub/internals.h
+> @@ -239,9 +239,12 @@ int gdb_target_memory_rw_debug(CPUState *cs, hwaddr addr,
+>   
+>   /**
+>    * gdb_build_stop_packet() - craft the stop packet
+> + * @buf: GString buffer for building the packet
+>    * @cs: CPUState
+> + *
+> + * Craft the Stop/Reply packet when we halt.
+>    */
+>   
+> -void gdb_build_stop_packet(CPUState *cs);
+> +void gdb_build_stop_packet(GString *buf, CPUState *cs);
+>   
+>   #endif /* GDBSTUB_INTERNALS_H */
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index c82fb5ad324..b45eb7c7b2b 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -1432,7 +1432,7 @@ static void handle_v_attach(GArray *params, void *user_ctx)
+>           gdbserver_state.c_cpu = cpu;
+>   
+>           if (gdbserver_state.allow_stop_reply) {
+> -            gdb_build_stop_packet(cpu);
+> +            gdb_build_stop_packet(gdbserver_state.str_buf, cpu);
+>               gdbserver_state.allow_stop_reply = false;
+>           }
+>       }
+> @@ -2036,7 +2036,7 @@ static void handle_gen_set(GArray *params, void *user_ctx)
+>   static void handle_target_halt(GArray *params, void *user_ctx)
+>   {
+>       if (gdbserver_state.allow_stop_reply) {
+> -        gdb_build_stop_packet(gdbserver_state.c_cpu);
+> +        gdb_build_stop_packet(gdbserver_state.str_buf, gdbserver_state.c_cpu);
+>           gdbserver_state.allow_stop_reply = false;
+>           gdb_put_strbuf();
+>       }
+> diff --git a/gdbstub/system.c b/gdbstub/system.c
+> index 6963c930b01..8ec8b7ea336 100644
+> --- a/gdbstub/system.c
+> +++ b/gdbstub/system.c
+> @@ -668,8 +668,8 @@ void gdb_breakpoint_remove_all(CPUState *cs)
+>    *   T05core:{id};
+>    */
+>   
+> -void gdb_build_stop_packet(CPUState *cs)
+> +void gdb_build_stop_packet(GString *buf, CPUState *cs)
+>   {
+> -    g_string_printf(gdbserver_state.str_buf,
+> +    g_string_printf(buf,
+>                       "T%02xcore:%02x;", GDB_SIGNAL_TRAP, gdb_get_cpu_index(cs));
+>   }
 > diff --git a/gdbstub/user.c b/gdbstub/user.c
-> index cc71cda3e33..c7a3ef947ed 100644
+> index c7a3ef947ed..a16f37616b1 100644
 > --- a/gdbstub/user.c
 > +++ b/gdbstub/user.c
-> @@ -198,9 +198,6 @@ void gdb_qemu_exit(int code)
->   int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
->                     int siginfo_len)
+> @@ -976,9 +976,9 @@ void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
+>    *   T05thread:{id};
+>    */
+>   
+> -void gdb_build_stop_packet(CPUState *cs)
+> +void gdb_build_stop_packet(GString *buf, CPUState *cs)
 >   {
-> -    char buf[256];
-> -    int n;
-> -
->       if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
->           return sig;
->       }
-> @@ -246,11 +243,10 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
->       gdbserver_state.state = RS_IDLE;
->       gdbserver_user_state.running_state = 0;
->       while (gdbserver_user_state.running_state == 0) {
-> -        n = read(gdbserver_user_state.fd, buf, 256);
-> +        char buf[256];
-> +        int n = read(gdbserver_user_state.fd, buf, 256);
->           if (n > 0) {
-> -            int i;
-> -
-> -            for (i = 0; i < n; i++) {
-> +            for (int i = 0; i < n; i++) {
->                   gdb_read_byte(buf[i]);
->               }
->           } else {
+> -    g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
+> -    gdb_append_thread_id(cs, gdbserver_state.str_buf);
+> -    g_string_append_c(gdbserver_state.str_buf, ';');
+> +    g_string_printf(buf, "T%02xthread:", GDB_SIGNAL_TRAP);
+> +    gdb_append_thread_id(cs, buf);
+> +    g_string_append_c(buf, ';');
+>   }
 
 
