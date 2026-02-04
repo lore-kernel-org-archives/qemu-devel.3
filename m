@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CBEEA7942
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:07:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A246FEA7942
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 19:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vniCG-0004Ee-Mi; Wed, 04 Feb 2026 14:05:52 -0500
+	id 1vniAU-000849-VZ; Wed, 04 Feb 2026 14:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB8-0002xs-Jc
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:48 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAJ-0007WN-QL
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniB6-0008Ca-MU
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:04:42 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vniAH-0007uc-Sm
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 14:03:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770231880;
+ s=mimecast20190719; t=1770231829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wGXvf5fY+VkV3ljpaQjbHmq0FJ5IzXTjQ9EoEMpxP6A=;
- b=D3KmPdBNg1x8+Vfmcu/DW1uoOQO3P8vc+S2j8lZh47Tcgws/0QA8HmE99jj7Yh7Z+n0EKT
- jSEoXQf44p5vWQRaE/ERgXJ4YQql5kt1Wqru22irrQxmuduTJkhdWGL9cy7JJ+Q8YWz+uR
- MrPxgb/H5P0R2BLnl/yv8s53ILEu7wU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
+ b=YCf/BWIoElUWtMwnmdg9i3xcs3h5dS0riL/SYG/6AQi5i9P1T7tEoliNMYIVhmltiEzLa6
+ jCyxHiAzy9sxvj47/7nDUFduz0qFcxf/+trb/TpCM8KUJifpw3P2rTin0ifkS3XYQHZduK
+ nVuxmcfxCbqVcm6Yo9P8ks8pwoQ/wso=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592--6PE_Z1sP4K2yFkN8ymoFQ-1; Wed, 04 Feb 2026 14:04:38 -0500
-X-MC-Unique: -6PE_Z1sP4K2yFkN8ymoFQ-1
-X-Mimecast-MFC-AGG-ID: -6PE_Z1sP4K2yFkN8ymoFQ_1770231877
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4361765dc85so26585f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:04:38 -0800 (PST)
+ us-mta-28--qxdtjUqOCKEuWHiyj18fQ-1; Wed, 04 Feb 2026 14:03:47 -0500
+X-MC-Unique: -qxdtjUqOCKEuWHiyj18fQ-1
+X-Mimecast-MFC-AGG-ID: -qxdtjUqOCKEuWHiyj18fQ_1770231827
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-436164e7f42so188258f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 11:03:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770231877; x=1770836677; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770231826; x=1770836626; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wGXvf5fY+VkV3ljpaQjbHmq0FJ5IzXTjQ9EoEMpxP6A=;
- b=ZxNbjnrf5TyV+lDrwegVU+IrWR97nCChStYYZHKXsvd9G8yeG7t0Vls0w1C4yYkNRH
- K3q8UU6CwsS1P+luhiT7YydS5tahpDGhZn2WUnwCIZqQFhPk334uAIpLcMXZ5GfsH2sY
- R04hJo2cjQ+5mZa5FacgzTH9DHlGMUGdd2NASwiaMifNAGTX4da+1HpIdvIRZAHBIE1/
- FMBIzvjEudomqBN76nKLbRk4hYuwctTrS7ajHzAUogFv0JCT7FzbP9QB+jts8LNucEc4
- S7CGjcTABXoHuep/b0ndQR6FSwNvf+BO4y+Zx6+PIvaMvgUKyOX90BCUeMMB31//aLvx
- deJQ==
+ bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
+ b=sUio0CruBpA1z13Su8LVckuFGDdyWxtWq+45MnOwD3ykZjua6MLba9g5A9w+IsyWqt
+ JklCMV6XYLHrS0sDIoG6ZL0JzxD5a7vi3zA6XpZ5ziIKAwUzKJKeYYtk3A0fG7QXdUSe
+ +cExfHEHN/mQ2lm5WdgqSeVtvvOG+BChuMFR94BIDreIz2HPfcMFZVzsZXrqkY3R1Huw
+ EfItmcn/nn6toGu3OyMBtoRPGj+XJ27rGhgIRcFp/Tpb+yHCcXYu9o5nM32PShNhndaK
+ lZBjj4P+FMLDzQ4SGb6zP1jW4bUwDIW3+sMn95LmxZ5v0Rlwm8FPy9kUsGw9/YWhRYhp
+ Zk4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770231877; x=1770836677;
+ d=1e100.net; s=20230601; t=1770231826; x=1770836626;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wGXvf5fY+VkV3ljpaQjbHmq0FJ5IzXTjQ9EoEMpxP6A=;
- b=ol+E+yLXRpgRctPxB8pF6oqgspPPzjWNXNyLBnvxk1vXFgW9UFkAx+1aAQFfhHdUJQ
- Q/FVohGvCMHkhxNaRvrzwdymQAaEg9EGmmTZq5ZCRaegbpv0KjotCn/ui8Bu2pJJfiyR
- 3UqvRNC86K6a0Yly4a6NFhoWrbUQPP8jXK1rMoDXkuXPv9Wa7Wd28UXdu0a9lBRda5jn
- wgANiJTidpiWxpK+pgu5fngt1AeaqWHRMH43rdQifJY8es1OsqFPd8t93NegwFUn89m4
- 9ziN2GQSHUxAynn06/ZoOEve9FD/aR4/wzdMe+aC/waR49ycUQVmjKoutB90Iuus63V7
- KR/g==
-X-Gm-Message-State: AOJu0Yy7Pl5R3r83xuAtTlEMpK/wHqpnR+Wqec7YTB99HUkygyOk2eSh
- wSz3ROsWsWzLi8MrFWQX2Q/Eawqf0uLIApnZBPOo7X04qRMGcQx8gPP0FyrCnlgRJcuLNyoexsL
- /nL+2rXrSsbP1S1pVuqqrUxt1DjEfNClqpH8WVOdqBaHgaPQMc6PAaAbQ1rtt0paZ+5on0qHQIz
- e8UPR8dIOAUCicFmztDFfPUYm7IUpJKRsVOA==
-X-Gm-Gg: AZuq6aJzk926KvPuw/oLTidfZPqexp29BOX24m4NFrfJbcqwdmEWiwSADCXZmjtnSv7
- 9y9Zetqjk+CoqA0HIZQkSweb7rtVOp8YVOXGzKUzr7sFZjnCnUop09Hz2VUko+Q00gyiYy3UWgf
- M9dyMC3/ngrYCdbHvDyUYdBPL1BZ6rmg406YKGFYbvZNGHVbTE1LQkoAHyoQpGJhDXHddm/CO6r
- uwjYU3iD1fbH/KJb8uWs0hGLvOzUc4grq+mFukxf/rwPLi8bCUxgeUVhjZzWdrdIvIUBIOpixPM
- Z+nbkXOz1FIJ/6mJYvtteWdz9IkyBDOxjla9txxod5akcyenIiCdXXaWZXNgx7Db2Ibb6AA4lOK
- BXNw9Zy5MLo24tlRL8uIAm2XH7FPng1Ztaw==
-X-Received: by 2002:a05:6000:230a:b0:436:684:b94a with SMTP id
- ffacd0b85a97d-43617e346demr5598179f8f.4.1770231876761; 
- Wed, 04 Feb 2026 11:04:36 -0800 (PST)
-X-Received: by 2002:a05:6000:230a:b0:436:684:b94a with SMTP id
- ffacd0b85a97d-43617e346demr5598128f8f.4.1770231876282; 
- Wed, 04 Feb 2026 11:04:36 -0800 (PST)
+ bh=1eEfcRbtK2xlCfiX35UT2DVbhf1pwTVIcDLjUARGxQM=;
+ b=pYY0Uy/1YK40C7xBJQ7YNGIjQ64Je93Y0O1LNtQTSb2z/HmW0hY8rW8Pd1vjd1wcT+
+ rMWz0P+RS0iXnSHRcW1VMsVhyxbWWOKOZcHXeNc+agLS79WRtf9282GmLUr0KsNrENX2
+ QPZEQXgbxVgXIq8zVbImOqbHKxgQubgAhrlaiPIG4PJVP+D0QreCIXufp+28GK5qUjpy
+ H+HFUDp6ktth2fThR0taBTIBwrp2RqsqsC6R5ro+eHdsAp7+brjBzu4zUbSKv6DOItcu
+ NBLZcrHkbvEpwYoJqwqEMgnlcS8+Vzi3Fl/zkNDme2OABAjb7uCJ+FYQ0MvR4BM39bmT
+ /g0A==
+X-Gm-Message-State: AOJu0YzuHED+4yIhWwit5CWZ/H/f50C1o0P8oAFA6xRs0PRNtzY0NsSe
+ iFxC8utUDIkHkv1sfqgn3GlNv6NH2NMtBoEAkRYRttvsi5K7mOU6OeLJ+AFJLxc0jdOrdwHzQcx
+ dn2Q7HMKS7T3fm4i62NTipsbUanR3uAgr6sx1JmZ1Bi0fNJX8Spmr+ZU8Bf0UOZYd5jaq3hK8pK
+ vltQVNroB0kyv/jzB/11Zhu8Y/tHMwRbZzFA==
+X-Gm-Gg: AZuq6aLjXzNBKrj9h/CbyIQWNK3d59/TfOTdRhdWQ6n+tzDey3ZQQSSDnMGap1f7fab
+ 2/ukWtwwPnh02k5PlbBKraOEkskn6LRAQ88GPFMHPi1ohOGj03xy58Hv3WKFW1YLSi1temSvC0Z
+ +xKhvVJIQvfY3IXlI8bNxxaA6SxLJFXB3uNFyN++O2ogs8D3DSZfcKfQB6oiBOObhfu7x3BbPmH
+ Foro1pOtKHeBnTRrHhbGfoF9hTDJpxrfxYYqHvgO/Y/Xs+16CK+0yEqvVj2SuWFinsBnzutC+nW
+ +eaqb0cxeo2ebF2eb8H8kx0Z4EQ8OvumRlUH+UYVdXaoJB144UgZm8RZzv1HiLPhDL9BUvw2WqM
+ 5NM/pZUQp+5FsADnxUGutJvrpMeTdwL5S2A==
+X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
+ ffacd0b85a97d-436180551e9mr6170079f8f.33.1770231826191; 
+ Wed, 04 Feb 2026 11:03:46 -0800 (PST)
+X-Received: by 2002:a5d:64e6:0:b0:42f:b707:56dd with SMTP id
+ ffacd0b85a97d-436180551e9mr6170025f8f.33.1770231825628; 
+ Wed, 04 Feb 2026 11:03:45 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43617e38e38sm8599989f8f.11.2026.02.04.11.04.35
+ ffacd0b85a97d-436180659b8sm7888347f8f.43.2026.02.04.11.03.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Feb 2026 11:04:35 -0800 (PST)
-Date: Wed, 4 Feb 2026 14:04:34 -0500
+ Wed, 04 Feb 2026 11:03:45 -0800 (PST)
+Date: Wed, 4 Feb 2026 14:03:43 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 46/51] vhost-user: introduce protocol feature for skip drain
- on GET_VRING_BASE
-Message-ID: <891e89735f87ebcf80f0e939a0d4005e7f1bf935.1770231744.git.mst@redhat.com>
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 24/51] virtio/vhost: don't consider non-MAP_SHARED regions
+ public
+Message-ID: <158f8d3bb06f65cac00bccb681fbd145189a1211.1770231744.git.mst@redhat.com>
 References: <cover.1770231744.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -123,158 +121,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-Add vhost-user protocol feature
-VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT
+Just having a file descriptor is not enough to consider a memory region
+public. If QEMU didn't map it as MAP_SHARED (in case of share=off), guest
+writes to this region won't be visible to the vhost-user backend, thus
+causing it to read all zeroes or garbage. Make sure we don't pass such
+regions and include that to our definition of what a private region is.
 
-Now on GET_VRING_BASE this feature can control whether to wait for
-in-flight requests to complete or not.
-Also we have to validate that this feature will be enabled only when
-qemu and back-end supports in-flight buffer and in-flight migration
-
-It will be helpfull in future for in-flight requests migration in
-vhost-user devices.
-
-Update docs, add ref to label for inflight-io-tracking
-
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Fixes: 552b25229c ("vhost: Rework memslot filtering and fix "used_memslot" tracking")
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260115081103.655749-3-dtalexundeer@yandex-team.ru>
+Message-Id: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
 ---
- docs/interop/vhost-user.rst    | 59 +++++++++++++++++++++-------------
- hw/virtio/vhost-user.c         |  7 ++++
- include/hw/virtio/vhost-user.h |  2 ++
- 3 files changed, 46 insertions(+), 22 deletions(-)
+ hw/virtio/vhost.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 505f8d3a33..137c9f3669 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -743,6 +743,8 @@ negotiated, back-end can send file descriptors (at most 8 descriptors in
- each message) to front-end via ancillary data using this fd communication
- channel.
- 
-+.. _inflight_io_tracking:
-+
- Inflight I/O tracking
- ---------------------
- 
-@@ -1040,26 +1042,27 @@ Protocol features
- 
- .. code:: c
- 
--  #define VHOST_USER_PROTOCOL_F_MQ                    0
--  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD             1
--  #define VHOST_USER_PROTOCOL_F_RARP                  2
--  #define VHOST_USER_PROTOCOL_F_REPLY_ACK             3
--  #define VHOST_USER_PROTOCOL_F_MTU                   4
--  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ           5
--  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN          6
--  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION        7
--  #define VHOST_USER_PROTOCOL_F_PAGEFAULT             8
--  #define VHOST_USER_PROTOCOL_F_CONFIG                9
--  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD      10
--  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER        11
--  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD       12
--  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE         13
--  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS 14
--  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS  15
--  #define VHOST_USER_PROTOCOL_F_STATUS               16
--  #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
--  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
--  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
-+  #define VHOST_USER_PROTOCOL_F_MQ                       0
-+  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD                1
-+  #define VHOST_USER_PROTOCOL_F_RARP                     2
-+  #define VHOST_USER_PROTOCOL_F_REPLY_ACK                3
-+  #define VHOST_USER_PROTOCOL_F_MTU                      4
-+  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ              5
-+  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN             6
-+  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION           7
-+  #define VHOST_USER_PROTOCOL_F_PAGEFAULT                8
-+  #define VHOST_USER_PROTOCOL_F_CONFIG                   9
-+  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD         10
-+  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER           11
-+  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD          12
-+  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE            13
-+  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS    14
-+  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS     15
-+  #define VHOST_USER_PROTOCOL_F_STATUS                  16
-+  #define VHOST_USER_PROTOCOL_F_XEN_MMAP                17
-+  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT           18
-+  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
-+  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
- 
- Front-end message types
- -----------------------
-@@ -1250,12 +1253,24 @@ Front-end message types
- 
-   When and as long as all of a device's vrings are stopped, it is
-   *suspended*, see :ref:`Suspended device state
--  <suspended_device_state>`. The back-end must complete all inflight I/O
--  requests for the specified vring before stopping it.
-+  <suspended_device_state>`.
- 
-   The request payload's *num* field is currently reserved and must be
-   set to 0.
- 
-+  By default, the back-end must complete all inflight I/O requests for the
-+  specified vring before stopping it.
-+
-+  If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
-+  feature has been negotiated, the back-end may suspend in-flight I/O
-+  requests and record them as described in :ref:`Inflight I/O tracking
-+  <inflight_io_tracking>` instead of completing them before stopping the vring.
-+  How to suspend an in-flight request depends on the implementation of the back-end
-+  but it typically can be done by aborting or cancelling the underlying I/O
-+  request. The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
-+  protocol feature must only be neogotiated if
-+  ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` is also negotiated.
-+
- ``VHOST_USER_SET_VRING_KICK``
-   :id: 12
-   :equivalent ioctl: ``VHOST_SET_VRING_KICK``
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 63fa9a1b4b..bb8f8eab77 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -2225,6 +2225,13 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-             }
-         }
- 
-+        if (!u->user->supports_inflight_migration ||
-+            !virtio_has_feature(protocol_features,
-+                                VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
-+            protocol_features &= ~(1ULL <<
-+                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
-+        }
-+
-         /* final set of protocol features */
-         dev->protocol_features = protocol_features;
-         err = vhost_user_set_protocol_features(dev, dev->protocol_features);
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 55d5725ef8..53fe996686 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
-     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-+    VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
-@@ -68,6 +69,7 @@ typedef struct VhostUserState {
-     GPtrArray *notifiers;
-     int memory_slots;
-     bool supports_config;
-+    bool supports_inflight_migration;
- } VhostUserState;
- 
- /**
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 31e9704cdc..c6a5928cb1 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -592,11 +592,13 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
+         /*
+          * Some backends (like vhost-user) can only handle memory regions
+          * that have an fd (can be mapped into a different process). Filter
+-         * the ones without an fd out, if requested.
+-         *
+-         * TODO: we might have to limit to MAP_SHARED as well.
++         * the ones without an fd out, if requested. Also make sure that
++         * this region is mapped as shared so that the vhost backend can
++         * observe modifications to this region, otherwise we consider it
++         * private.
+          */
+-        if (memory_region_get_fd(section->mr) < 0 &&
++        if ((memory_region_get_fd(section->mr) < 0 ||
++            !qemu_ram_is_shared(section->mr->ram_block)) &&
+             dev->vhost_ops->vhost_backend_no_private_memslots &&
+             dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+             trace_vhost_reject_section(mr->name, 2);
 -- 
 MST
 
