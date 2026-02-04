@@ -4,92 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0E3E83EE0
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 07:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6853E83EE3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 07:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnX8q-0005x0-Ue; Wed, 04 Feb 2026 02:17:36 -0500
+	id 1vnX9X-0006W7-BY; Wed, 04 Feb 2026 02:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
- id 1vnTEA-0000Kr-T8
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:06:50 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
- id 1vnTE7-0000vE-CD
- for qemu-devel@nongnu.org; Tue, 03 Feb 2026 22:06:50 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a933b9b591so4074815ad.0
- for <qemu-devel@nongnu.org>; Tue, 03 Feb 2026 19:06:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770174406; x=1770779206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7a/epblF0jTP277tKrocU1eLpBvU6LjHXCOatNwrerA=;
- b=TLHLImay+wVpnaUOXJAHnHncKpp0tFu5dM0noe5HHLS+LHCOUu1q17ifuLRCeIKdvh
- GVyICmOelvmLNaKYBQkY1Y7J8ANkdxguYNNISy8joVYeSSiNKhT29E6uFvrn3vsOa5HJ
- Z7Z7+i/DzmFf+qyD8R/Ie897B/Mc+hg+aKArAtHSwOLrNZ7M5LxowOrxGhFXaU+JqgsP
- v87oYSuSTI89uQkw4wOs52BtHFhYz/NWkq6B8r2Pid06IV20eUb/U1mEx3jDsfI4ekO/
- cUanqgrE0le3S6fmzM3H4DGsqrsI4Ksi0QjHRlkLscDM2oJHRTMZYuL51o8q5WSzrgl+
- F3/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770174406; x=1770779206;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7a/epblF0jTP277tKrocU1eLpBvU6LjHXCOatNwrerA=;
- b=a7UNllNH5vHjWJ/97+lsVSTQrgSokSMW2YCphLRPafpDDZ5RW8x0chMYKwVZuYyDMT
- wSyJ6oaL2FQcC4KhcEmKJ7tElhMCaDZhKJ+wNoZl8/xzRsnr4aRczxNMV8mloZstG2IW
- Y7Nac33x6w1g0YVcR5Po+9UdbgX45Vg2SQJLIYpFpIhdbVzwEHKZS6YJrPe0yHNUnNA7
- GAPcdo+Nxt9X8Kll2+FBUT1U3rmemZN8npt3TDuh7WMfsGXwTXWn4ceXgxIlMyK/oaay
- TXmsb7aHF6lb63fe8zqvHzClZZyQOG+bYUCky/aNrjsY86M2GeS/8Bq5Tf7qd/jWMEb1
- OYXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQwq4MpZBkWWHtGposSkglfba9JBkUbzopZKgiq0jHJ3oWMFPqTlPFsVJ/u9/RQ1KBms+WcoFvf0ph@nongnu.org
-X-Gm-Message-State: AOJu0YxKgPqG2kHEIcmE+se+u/iUi8+EHIanTrwA/6VBUNOu4NGT6lGB
- GR868vVHxEAGzkEnQX7SBv9rFep4vPYmwRe7oPpz/Y8Pbygmno9WKVDR
-X-Gm-Gg: AZuq6aKSeBPNHmi4SsIsc4J+4BN6TwN3Ik5kdyIzineAdEnA/eVxVXQxWNVSgJhvg51
- yVgiVNFcVBY1zNpQnLe1KJv8Sc/pRMuFDo8gCnfQbt42xJ3FI35pQhr5OXeoj5RKw3qQ4WAUI85
- 2xgzZ2/YseyWBtc3e0aO9hmespnWBsPPXwECyY0Q95UUtDOYFboAb44/nfAUY7aMDp7sezl50fc
- rVC0ot8dlQ3qrXtIRbvkL2+SN6y8rcsDcQoefj4xpXNf8wbxdDZ2y/PRGmQ6sD6WVm8H2DRlgKV
- tiXmyiT2kO9cUX7pVCALy6ceF7ECF1JelTINaZ/D5bhHkNl4aDA1KlJq6fxaRBhpGdjD8+LAkH/
- vmqyEkBzrndFyAGB/xidP34l+1YfmskFFcfbwyylPXs/IlpUW5QVVYUA5rWfhnbSLOiyYIowRA+
- 9dBchHUELiAo3X/g2y5Ug7jQ==
-X-Received: by 2002:a17:903:1a86:b0:29e:e925:1abb with SMTP id
- d9443c01a7336-2a933e44bd1mr14803035ad.27.1770174405658; 
- Tue, 03 Feb 2026 19:06:45 -0800 (PST)
-Received: from orion-o6.tail020997.ts.net ([113.247.230.250])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a93388c7c8sm9156735ad.30.2026.02.03.19.06.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Feb 2026 19:06:45 -0800 (PST)
-From: Fengyuan Yu <15fengyuan@gmail.com>
-To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
- Fengyuan Yu <15fengyuan@gmail.com>
-Subject: [PATCH RFC v1 1/2] tests/qtest/libqos: Add Intel IOMMU helper library
-Date: Wed,  4 Feb 2026 11:06:19 +0800
-Message-Id: <43566a31edae425986188b71fce8520c58e9476d.1770172615.git.15fengyuan@gmail.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <cover.1770172615.git.15fengyuan@gmail.com>
-References: <cover.1770172615.git.15fengyuan@gmail.com>
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vnWZL-0004f5-TV; Wed, 04 Feb 2026 01:40:55 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vnWZJ-0004HE-Vr; Wed, 04 Feb 2026 01:40:55 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Uvmol2kIjWkyDPIiFkIermjVnajLdps/RRoID3XUg0qRfPpb6lQteCMYnULuNRJrwzbboRphH7STgdqvr6I/LOYMVi/Lz5Dgwa4O2OJ5PX7CCV2e1GpO8A+G8CPkAhC/QX69UpRxUQyGwVlvfBYuV16Xj0SzVz+6MEd3JfibPWhkL9MXRiHKrgDiR9NrqGXeAUO6wfajjqp+sxWyVsoD84EN/8JrHFQ94AjeK92vK/2Et1ECV6Rra51gjQBzJDMpwKpz17KZT22fCK4RzYR1U/Khg4rGWufKpyNUQKzcXn3Jh303oEJJAgVfx8xMudo3Ut1dshnpfUtpDQGM+agNng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6HxCxHDktcIzXCIZckd9BrN4dC+PRK9QzfFArg4Wo4E=;
+ b=cCDrljkPjw3+mp1kRHErZ+aUWizTISXGTOWIPxF1efFLF9i4+/GpE3Kz2XcEiI9u4XCrwYgNjxHhiokM0LZ8tU6CtaPmsBowaUrRiRDpVk11hFkeGT2UM1FfmG0tvKloxrKW9DD3Yoy6MqQmKADpF11jUOozxEEGEyg9AmddNmO+sANr+SqIC+Kx31IFBd7jdB3ndODcwg9jEBHlwPjwSimzB8JqzFnBoyDRGnKxgnGdjAyaWPfl/4AgwFrWs554E09OcJf/7xWP7+Ussleituu6O/G79J7PQ1Vg9O4ZncdVIN8/KF8c5AgEx/kNEMDGuQxlqBF2hnpSf1HuKy54+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6HxCxHDktcIzXCIZckd9BrN4dC+PRK9QzfFArg4Wo4E=;
+ b=Guzegf+4fipv20P3HzpHrkKWkvrS2pNsRl7YTfyBvMAHPkpyJwX4aV1unxKQ3EhFgL0sCfV88N1z27V/q7KSJLS3dKFMUhGmkLfE2Ph6F5z5Wx8mI3T+bBr5cx0acWWnrDtkFb7Jk/F+qDKN2nhRq7kLB674KKlnDLkGj+UcYjIdU6XPUhUg2g+AfQt13klMlWvMfM4rj/P4QXER4MNad2BJvfOfM/HlBY+3+K6JCU6NNR3Feprfvqvw3U2k45sUFEtVj6LFCvzlZEEkxHaaDD33NHrUssJZzGcFcB+s2WyJoRDEC0LQwBuwzDrfCso7eey3tRJZ98yxR/gBrO+f6Q==
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
+ by TY2PPFD3DE53D05.apcprd06.prod.outlook.com (2603:1096:408::7ad) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.15; Wed, 4 Feb
+ 2026 06:40:24 +0000
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c%4]) with mapi id 15.20.9587.010; Wed, 4 Feb 2026
+ 06:40:24 +0000
+From: Kane Chen <kane_chen@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Nabih Estefan
+ <nabihestefan@google.com>
+Subject: [PATCH v6 05/22] hw/arm/aspeed: Integrate AST1700 device into AST27X0
+Thread-Topic: [PATCH v6 05/22] hw/arm/aspeed: Integrate AST1700 device into
+ AST27X0
+Thread-Index: AQHclaEkcPgw0qI+sUyKEDruGxfi+Q==
+Date: Wed, 4 Feb 2026 06:40:24 +0000
+Message-ID: <20260204064016.3515639-6-kane_chen@aspeedtech.com>
+References: <20260204064016.3515639-1-kane_chen@aspeedtech.com>
+In-Reply-To: <20260204064016.3515639-1-kane_chen@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|TY2PPFD3DE53D05:EE_
+x-ms-office365-filtering-correlation-id: 9ca6ee6e-3453-4657-bc2a-08de63b846c9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?eGlld1o0amVjeFdQajlEb3Axek1yRTlVN05KRU5uODVVcmRVQks2SFk2RE13?=
+ =?utf-8?B?OTRoK2lNRk5XVjhNdHZGWWlkc1Z0dVdUSDJVbUExN0pxWVhpTlV0L0EzVGVS?=
+ =?utf-8?B?NFo4T05KTi9Ya1QvR2VJc1ZtYkdJQmQ3TXdDbE9QNysyaWFwUnlTR010ZWJC?=
+ =?utf-8?B?dEZGdkdkamJiNXFwYzdmTWhaS3Y4KzlLWGhMM3hIcDN0dUlzMm9QTGtnMlIw?=
+ =?utf-8?B?T3NNbTNkUExoYUV1TUxaam02YmlCUFVaNUZhVW1FUXh1WEJCdWVHeVdPVkx4?=
+ =?utf-8?B?Q1dpa2E0eHhuQlBnVm1hVDZEMDZkV1NPOEsvNGNXVXdVQW91TWhsOEtTMkJi?=
+ =?utf-8?B?UCt2RmdrUTYyVVJUejlndHVnUVNQYVRrbXA2OUZaR1ArZmhmQVZWUFIzNzBn?=
+ =?utf-8?B?RjRiV3hyVFhMdzRrMHhCYzlMOEtkMHBoNmxjd2tvTnhVUmxzNGtvTHRQa0Nw?=
+ =?utf-8?B?TFpmc3d1dXU2N0d0QXMxVzVQMXpYelBrZktUUXRmQlFFaU5aU25aZnVjQkFi?=
+ =?utf-8?B?aFIzV1k3dmlTSUdkaENDMFBWV0tyWjVGRGFyTnJaRndoNlVEOWxYY3lOY2FG?=
+ =?utf-8?B?YlU4Wk8wdmRqcTlpR2t0V2llQ3AySkRXNFlhQTlQWkU4M09vc2dsL0VYSVN5?=
+ =?utf-8?B?cG1OeDZZcFloUmpkVlYxdVZVUHIrbXk3dFl5RE93UUlrMlA2aEk2N3QvZnQz?=
+ =?utf-8?B?d0I3dU02eFFsMWN0Sm93YU5YVERMMXlCWHVTR0svRHBnU3dYNHRQa0xMSTly?=
+ =?utf-8?B?RjBGR0lHRVRtdlJGWUJ3MndvOHZBbmVmUkRFNnJhMDB1Y3J0Qk9uQ2dESFpM?=
+ =?utf-8?B?SS9raTdOMURucmE4dUpubU1PVVRqMXV5UnhFbEFJYnhFVndjd0JQTEd5NnJL?=
+ =?utf-8?B?TWpYdWZiZmo5Lzdpb0lSUG14T3drSkorZWZIcjN5MmROZDMwa1BvSitmYUtr?=
+ =?utf-8?B?ODBSY29HVUFLN3JDZEJVS2haOXVwM3JLTmxZMitQQjduaVEwdGNsRjZuVUVY?=
+ =?utf-8?B?RkR2Ti9yNDZSUkNOVDhmOGRFVnIvd2RST204Z0ZaRXZlb2xIdXRlOXUxMzhB?=
+ =?utf-8?B?bklxZ1pnYlF3OFVISlhnQkd1c3hUVHl5em9vQ0hLQ3k1U1BzVlJ5N1lJZnpm?=
+ =?utf-8?B?b0JoZzZZa1VFMVJHV0ZQNmV1QkREMW1kWFJhN0paSjZEaFlDTm9RbTArSzhH?=
+ =?utf-8?B?bGtOU3FlTlNVdHJ5S2tQTDNNbTBHK0hRd1l5VExEUmE2S2VzRFRBR1lmQzlk?=
+ =?utf-8?B?UWtmVXFuaVVOcERmNFFFSStYQkc5K2l6U0RsLzAzZWtPQi9QcjlBelI4Q1Rr?=
+ =?utf-8?B?MlZGNUxwYUtmV2M4aFE1OW1VSFdOa0U1bEdiRWp2MDFPU3pGOFBVRnlwYkxa?=
+ =?utf-8?B?aGUrMTJxSlIrUE5xRnphbGUrNFZ5UHdrQWRzU3FCOC9ndVA5VkVRYzFqUjFZ?=
+ =?utf-8?B?T0NNTmdSWXBtZTd5cHZYbVRKc0swZTlWOXN6Q0x3V3JpYTIzME1zdkh5bzJM?=
+ =?utf-8?B?WkdnNWJNdWkzMkl5cmQ4bzhXMkliOWFlLzZESGo5YnEzY1hLbHZVYmNHZ0xR?=
+ =?utf-8?B?dHQ2RHdUOGo3N0drSUptZk1Nb1Z1WXNBNnVCdy9mT0swNzlMYml1WUpUNTNE?=
+ =?utf-8?B?S3A0V3lnemRSK0RvUm9CYXBGV3k2eEVJc0JjaHBneHRlNXZER01wUnRjdkFS?=
+ =?utf-8?B?Vm1kNFE2dDRaMnlVL0svb3BnWHNjMlJGMWpSYWFXc1RCWEZTZnRWQ3RTTDBM?=
+ =?utf-8?B?K2dISHJOZld1N0NJNGtoM3lJVFo2b0xGWG45alU0TUh4dDAybXE3SzJJQzhT?=
+ =?utf-8?B?RC9uQnV4dHZwS2RldEJXUDNDNFNRZm9NWEZtdjNadkdFUi9XT2d6WjB4dVgx?=
+ =?utf-8?B?NXFLZk9XY2VKcmtxTmFEZXltdzBsVkEwT0pIczVnYlJsWUxodjMrZ0hNK3FH?=
+ =?utf-8?B?TmF1N0hWTjNRZzM1QkxWdUV1ZStjaThYb25GNm5ZbHQrSllqdzV4bWNUMDZk?=
+ =?utf-8?B?cFpsMzZMR2pETW9wbGh4emQ1N3pXWHdhT1FHNHlpTkk5ejBHdTNMSGd4anFB?=
+ =?utf-8?B?RGRQQ2xiRExJa0FwMWQvNFZ3RDRmL1RsRGxNU1R3WTJmWHBiMndrM0ZSNlhY?=
+ =?utf-8?B?eXBud0NmUkFzTm9wYVZUNXIyVG42NnBCTXRRaVFQVEZoc3Axc29kbzJZaCtI?=
+ =?utf-8?Q?koCYtLuemI2d8D4xRgiLtBg=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?alJTQ0RxaVNOZUVGMldZWmhrSTY5clFlS0ZCTWVzQ21KRzVsZzM3cVdtU0N3?=
+ =?utf-8?B?NHJ4cW4vWE5GNjFXUlN0WWFoamZEWGFXWVZxcWlwRmVOOW9qTE4yQ0lUVDdU?=
+ =?utf-8?B?YmYyTy9YVlY2Y2tZRXR4QzRMT0NpMi83Y0JjTXNqS2ZsNExMWXkwRHUyMHk2?=
+ =?utf-8?B?dS9GQ1JTVEt4Z3dUZ1J4QVJCNmlBZGgxODFrYnlTR0NvZXRvNmQvaVRDU3dk?=
+ =?utf-8?B?UW5KUHMzakdENTFnczJ2eVdhemhUVGhORXF1UlZEbXh3WU9xZGtVRERqMlZR?=
+ =?utf-8?B?KzNFVzMrSTIza0dBa3d4dHM4M0g4S2tsSlZ5OE43ZU1WTW1NWmh1QmNVZXJR?=
+ =?utf-8?B?SXdTRlVZVVk0UG9ZaHFqcENpN2pvTlVyYXc5ZG9pMGFkZzhnQ0l3eGRxaWJL?=
+ =?utf-8?B?bzRtWVpyV1lPM1d4ZEF5T0dzeGhxVE9CYlFIbzdFbXhIMlBrVW9pY2xaQlV5?=
+ =?utf-8?B?WnFnQVprckcwOEdFaHJ0RHBVSWZtOUd2Lzg1Z2JjUTNDelNBTjB5Unc2N2h6?=
+ =?utf-8?B?RytGMHBuZDd1ZUxXR0pKRkZSZnVrQ0t6Y0V4Z3QvZi9ueS8za21QRTk3Y1la?=
+ =?utf-8?B?Z3ArTEZCNXlqMWNEa3NmMi83OGEraXdoYWxDMlNhb2xraTl0OEljT2tRaEhp?=
+ =?utf-8?B?b0YrM2VPUEtRNzQwcGlhY202VzRoM0xQYzBqeU8zM2ozbkVNUnVuN0ZvbEtM?=
+ =?utf-8?B?R0lzdU0vMGtBM0VTOXJJZ3IyaGlRaVo4YU9rQWhXRHk2OGVHMW1RZ1RqMk5R?=
+ =?utf-8?B?bStnb2d5VVlNbENnK0F3UFRPSittRWpjcTlKUWNQMXlPNFo2c0VxTEVuR2VH?=
+ =?utf-8?B?QmZGNjhmdTZFR2l3OXhkTW1aMDVCRnBaSldZd3l0UW5HOHZWSWhQdkY0ZTN4?=
+ =?utf-8?B?K2ExOHRLNU5EdTN6NWRaUmNKNmlPNXByTVZkREFJZ1ZURjU2ekl0cVZESWlN?=
+ =?utf-8?B?c3VJb2lLWkdHRFFEbUZsWklVSXQ4VlFjb1ZUMFUrQzExVjJjWVBndWRSYUlH?=
+ =?utf-8?B?ZGNqc09EdnJHOTd5UzgwYlJqdWpmVFZmSjZBWE5oRFpVWEN0ZS95Qkw1Szh1?=
+ =?utf-8?B?WWJGUVNSQmhMNVNCWWh5RjA3OWhQd0JZdGs0VnRpemVydis2QkVscUI2U25x?=
+ =?utf-8?B?REV1QjFZRlRGNGZrbHcwYUV1elZXdldDZzVtMFlwNFdNOS9qN3BCU0RQZlI0?=
+ =?utf-8?B?UlFnNGswVnNDZTN0Q3FLSDRGNWJZczROSUVTLzVWQ2o1YTQvdXVHR085M3Ji?=
+ =?utf-8?B?TDYxbEF4djNJL21WbUVLdGF6cDBZOVBIbjJvcG9yVUhOcnF6eDVac0Ywdkda?=
+ =?utf-8?B?YzlQZVFCV1BINHFCNTc0a3NYSXlyL3pSNjBPTnVsUlR4NlM2TFZGaittTWto?=
+ =?utf-8?B?b2NNYmFCbWYrMkdRSDlvSGpadEJ2NzZHOGhiZGdabHNVRDdlZXhsTVY3QWl3?=
+ =?utf-8?B?VGdrVzZ2TnZXOWM3U0U1UEpaMVFrQWw5U1VvRERTdmZkVFgvZWpJdXRjTkV6?=
+ =?utf-8?B?TGQ3bEE5a0tlVkEya1ZRaHVRN1RncDEyVmRVQjBBbktJdkp2OGcya2NZejdF?=
+ =?utf-8?B?ZENyeWhMYmlKU2V6THJiZWJJNjFxWFkwS09nNWlRZDROdGo4Ukd1RHU3eUFv?=
+ =?utf-8?B?K3JjODlUcVVMV0YyVXhRTUNLdFJmR0QyZXBFREVqVG5pc0hOYWh0UmY0Rm81?=
+ =?utf-8?B?eklYbkk2R2gzZUErMXFCdVEzVlcyRXZYdFp4eVhXVXJxUVZkdjBIeTZSZUtz?=
+ =?utf-8?B?NzhJNGE5NkU3UTdrcGorbml3cktlTWdQcE9SUFBWb2xtU1JpbWlxYWpBMzRl?=
+ =?utf-8?B?UDV1SWlzM016bUdnMzNyZVJCZFdHeCtmZm5yUEQ0UGlYUzJsdlFyRG5WdkRP?=
+ =?utf-8?B?aWN6Z1UyU2dqNUt1Snd4T3c1V1ZwQzc3djFMejh5bExZTUc4MXlFZFBPVUhR?=
+ =?utf-8?B?bHR5ZmtvdGFvcW1xOEx2SS82NWZMZ0lpblI5OWQ0WFk5WGZJUnJicUJQbkpl?=
+ =?utf-8?B?YlJSMUw4OU1IZWVEd2w2UjRWRC92cUZ4MnExUzJPRzNteGoyTnJ5KzlMQTdJ?=
+ =?utf-8?B?cFVMS1l5RFJSNjVIRlFzQVpnbjBJVG5NTFltbE5VR3BTQkxJNDczbzRFU3VO?=
+ =?utf-8?B?bkg4Wmpvb204dUY5YUMyQnkvdUtmeG9uM2M1TjB4WkIvZC91M3RFcGEvYzZu?=
+ =?utf-8?B?dWcyZEVGUHVKd1V3YTJUVmkzallJLzhYTFZwM2tHbHByRVJNQWNIdi9rZURU?=
+ =?utf-8?B?Yi8rQ3VNQVpmYUQ1UlJnRGNEZkNxc2NnSXc0QnE3NTF1S01hc1lOUXY2bDBi?=
+ =?utf-8?B?MDBibFVKcytvMUNodlFHUTdSVWZIam9MWCtHNmxzQ2tGdGVwVmhHUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=15fengyuan@gmail.com; helo=mail-pl1-x62a.google.com
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ca6ee6e-3453-4657-bc2a-08de63b846c9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2026 06:40:24.4870 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: g9qfI8v9DluitKRrrR/xBuxc2QJzknFTS3yv/+x91JtS5kheNez/4Fu8zuOJ2MQp6QTGzH+AA3N4EIUEkan49Y1kivYmFbTu1j06mn5nK6o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPFD3DE53D05
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=kane_chen@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 04 Feb 2026 02:17:23 -0500
+X-Mailman-Approved-At: Wed, 04 Feb 2026 02:17:22 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,934 +191,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a libqos helper module for Intel IOMMU (VT-d) testing with
-iommu-testdev. The helper provides routines to:
-
-- Build Root Entry Tables, Context Entry Tables, and 4-level page tables
-  for 48-bit address translation
-- Program VT-d registers (Root Table Pointer, Global Command Register)
-  following the Intel VT-d specification
-- Execute DMA translations and verify results
-
-The current implementation supports Legacy mode with both pass-through and
-translated (4-level paging) modes. Support for Scalable mode (PASID-based)
-can be added in future patches.
-
-Signed-off-by: Fengyuan Yu <15fengyuan@gmail.com>
-
----
- MAINTAINERS                          |   1 +
- tests/qtest/libqos/meson.build       |   3 +
- tests/qtest/libqos/qos-intel-iommu.c | 566 +++++++++++++++++++++++++++
- tests/qtest/libqos/qos-intel-iommu.h | 299 ++++++++++++++
- 4 files changed, 869 insertions(+)
- create mode 100644 tests/qtest/libqos/qos-intel-iommu.c
- create mode 100644 tests/qtest/libqos/qos-intel-iommu.h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9b7ed4fccb..1cd2a4f474 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3585,6 +3585,7 @@ M: Tao Tang <tangtao1634@phytium.com.cn>
- S: Maintained
- F: tests/qtest/libqos/qos-iommu*
- F: tests/qtest/libqos/qos-smmuv3*
-+F: tests/qtest/libqos/qos-intel-iommu*
- 
- Device Fuzzing
- M: Alexander Bulekov <alxndr@bu.edu>
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 8d6758ec2b..7f7c4f9c6f 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -72,6 +72,9 @@ endif
- if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
-   libqos_srcs += files('riscv-iommu.c')
- endif
-+if config_all_devices.has_key('CONFIG_VTD')
-+  libqos_srcs += files('qos-intel-iommu.c')
-+endif
- if config_all_devices.has_key('CONFIG_TPCI200')
-   libqos_srcs += files('tpci200.c')
- endif
-diff --git a/tests/qtest/libqos/qos-intel-iommu.c b/tests/qtest/libqos/qos-intel-iommu.c
-new file mode 100644
-index 0000000000..d6a733de7e
---- /dev/null
-+++ b/tests/qtest/libqos/qos-intel-iommu.c
-@@ -0,0 +1,566 @@
-+/*
-+ * QOS Intel IOMMU (VT-d) Module Implementation
-+ *
-+ * This module provides Intel IOMMU-specific helper functions for libqos tests.
-+ *
-+ * Copyright (c) 2026 Fengyuan Yu <15fengyuan@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "pci.h"
-+#include "qos-intel-iommu.h"
-+
-+#define QVTD_POLL_DELAY_US        1000
-+#define QVTD_POLL_MAX_RETRIES     1000
-+#define QVTD_AW_48BIT_ENCODING    2
-+
-+/*
-+ * iommu-testdev DMA attribute layout for Intel VT-d traffic.
-+ *
-+ * Bits [2:0] keep using the generic iommu-testdev encoding
-+ * (secure + ArmSecuritySpace). Bits [23:8] carry the PCI Requester ID in the
-+ * format defined in the Intel VT-d spec (Figure 3-2 in
-+ * spec/Intel-iommu-spec.txt), and bits [31:24] contain the PASID that tags
-+ * scalable-mode transactions. Bit 4 distinguishes between pure legacy RID
-+ * requests and scalable-mode PASID-tagged requests. The PASID field is
-+ * limited to 8 bits because MemTxAttrs::pid only carries 8 bits today (see
-+ * include/exec/memattrs.h and the VTD_ECAP_PSS limit in
-+ * hw/i386/intel_iommu_internal.h).
-+ */
-+#define QVTD_DMA_ATTR_MODE_SHIFT      4
-+#define QVTD_DMA_ATTR_MODE_MASK       0x1
-+#define QVTD_DMA_ATTR_MODE_LEGACY     0
-+#define QVTD_DMA_ATTR_MODE_SCALABLE   1
-+#define QVTD_DMA_ATTR_RID_SHIFT       8
-+#define QVTD_DMA_ATTR_RID_MASK        0xffffu
-+#define QVTD_DMA_ATTR_PASID_BITS      8
-+#define QVTD_DMA_ATTR_PASID_SHIFT     24
-+#define QVTD_DMA_ATTR_PASID_MASK      ((1u << QVTD_DMA_ATTR_PASID_BITS) - 1)
-+
-+#define QVTD_PCI_FUNCS_PER_DEVICE     8
-+#define QVTD_PCI_DEVS_PER_BUS         32
-+
-+static void qvtd_wait_for_bitsl(QTestState *qts, uint64_t addr,
-+                                uint32_t mask, bool expect_set)
-+{
-+    uint32_t val = 0;
-+
-+    for (int attempt = 0; attempt < QVTD_POLL_MAX_RETRIES; attempt++) {
-+        val = qtest_readl(qts, addr);
-+        if (!!(val & mask) == expect_set) {
-+            return;
-+        }
-+        g_usleep(QVTD_POLL_DELAY_US);
-+    }
-+
-+    g_error("Timeout waiting for bits 0x%x (%s) at 0x%llx, last=0x%x",
-+            mask, expect_set ? "set" : "clear",
-+            (unsigned long long)addr, val);
-+}
-+
-+static void qvtd_wait_for_bitsq(QTestState *qts, uint64_t addr,
-+                                uint64_t mask, bool expect_set)
-+{
-+    uint64_t val = 0;
-+
-+    for (int attempt = 0; attempt < QVTD_POLL_MAX_RETRIES; attempt++) {
-+        val = qtest_readq(qts, addr);
-+        if (!!(val & mask) == expect_set) {
-+            return;
-+        }
-+        g_usleep(QVTD_POLL_DELAY_US);
-+    }
-+
-+    g_error("Timeout waiting for bits 0x%llx (%s) at 0x%llx, last=0x%llx",
-+            (unsigned long long)mask, expect_set ? "set" : "clear",
-+            (unsigned long long)addr, (unsigned long long)val);
-+}
-+
-+static uint16_t qvtd_calc_sid(const QPCIDevice *dev)
-+{
-+    uint16_t devfn = dev->devfn & 0xff;
-+    uint16_t bus = (dev->devfn >> 8) & 0xff;
-+    uint8_t device = (devfn >> 3) & 0x1f;
-+    uint8_t function = devfn & 0x7;
-+
-+    /* Validate BDF components. */
-+    if (device >= QVTD_PCI_DEVS_PER_BUS || function >= QVTD_PCI_FUNCS_PER_DEVICE) {
-+        g_error("Invalid BDF: bus=%u device=%u function=%u", bus, device, function);
-+    }
-+
-+    return (bus << 8) | devfn;
-+}
-+
-+static bool qvtd_validate_dma_memory(QVTDTestContext *ctx)
-+{
-+    uint32_t len = ctx->config.dma_len;
-+    g_autofree uint8_t *buf = NULL;
-+
-+    if (!len) {
-+        return true;
-+    }
-+
-+    buf = g_malloc(len);
-+    qtest_memread(ctx->qts, ctx->config.dma_pa, buf, len);
-+
-+    for (uint32_t i = 0; i < len; i++) {
-+        uint8_t expected = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
-+        if (buf[i] != expected) {
-+            g_test_message("Memory mismatch at PA=0x%llx offset=%u "
-+                           "expected=0x%02x actual=0x%02x",
-+                           (unsigned long long)ctx->config.dma_pa, i,
-+                           expected, buf[i]);
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+uint32_t qvtd_expected_dma_result(QVTDTestContext *ctx)
-+{
-+    return ctx->config.expected_result;
-+}
-+
-+uint32_t qvtd_build_dma_attrs(uint16_t bdf, uint32_t pasid)
-+{
-+    uint32_t attrs = 0;
-+    uint8_t bus = (bdf >> 8) & 0xff;
-+    uint8_t devfn = bdf & 0xff;
-+    uint8_t device = devfn >> 3;
-+    uint8_t function = devfn & 0x7;
-+    bool scalable_mode = pasid != 0;
-+
-+    if (device >= QVTD_PCI_DEVS_PER_BUS || function >= QVTD_PCI_FUNCS_PER_DEVICE) {
-+        g_error("Invalid requester-id 0x%04x (bus=%u device=%u function=%u)",
-+                bdf, bus, device, function);
-+    }
-+
-+    attrs = ITD_ATTRS_SET_SECURE(attrs, 0);
-+    attrs = ITD_ATTRS_SET_SPACE(attrs, 0);
-+    attrs |= ((uint32_t)bdf & QVTD_DMA_ATTR_RID_MASK) << QVTD_DMA_ATTR_RID_SHIFT;
-+
-+    if (scalable_mode) {
-+        if (pasid > QVTD_DMA_ATTR_PASID_MASK) {
-+            g_error("PASID 0x%x exceeds %u-bit limit imposed by MemTxAttrs",
-+                    pasid, QVTD_DMA_ATTR_PASID_BITS);
-+        }
-+
-+        attrs |= (QVTD_DMA_ATTR_MODE_SCALABLE << QVTD_DMA_ATTR_MODE_SHIFT);
-+        attrs |= ((pasid & QVTD_DMA_ATTR_PASID_MASK) << QVTD_DMA_ATTR_PASID_SHIFT);
-+    } else {
-+        attrs |= (QVTD_DMA_ATTR_MODE_LEGACY << QVTD_DMA_ATTR_MODE_SHIFT);
-+    }
-+
-+    return attrs;
-+}
-+
-+static void qvtd_build_root_entry(QTestState *qts, uint8_t bus,
-+                                  uint64_t context_table_ptr)
-+{
-+    uint64_t root_entry_addr = QVTD_ROOT_TABLE_BASE + (bus * 16);
-+    uint64_t lo, hi;
-+
-+    /* Root Entry Low: Context Table Pointer + Present bit (VT-d spec Section 9.1). */
-+    lo = (context_table_ptr & VTD_CONTEXT_ENTRY_SLPTPTR) | VTD_CONTEXT_ENTRY_P;
-+    hi = 0;  /* Reserved. */
-+
-+    qtest_writeq(qts, root_entry_addr, lo);
-+    qtest_writeq(qts, root_entry_addr + 8, hi);
-+}
-+
-+static void qvtd_build_context_entry(QTestState *qts, uint16_t sid,
-+                                     QVTDTransMode mode, uint16_t domain_id,
-+                                     uint64_t slptptr)
-+{
-+    uint8_t devfn = sid & 0xff;
-+    uint64_t context_entry_addr = QVTD_CONTEXT_TABLE_BASE + (devfn * 16);
-+    uint64_t lo, hi;
-+
-+    if (mode == QVTD_TM_LEGACY_PT) {
-+        /* Pass-through mode (VT-d spec Section 3.9, Section 9.3). */
-+        lo = VTD_CONTEXT_ENTRY_P | VTD_CONTEXT_TT_PASS_THROUGH;
-+        hi = ((uint64_t)domain_id << 8) | QVTD_AW_48BIT_ENCODING;
-+    } else {
-+        /* Translated mode: 4-level paging (AW=2 for 48-bit, VT-d spec Section 9.3). */
-+        lo = VTD_CONTEXT_ENTRY_P | VTD_CONTEXT_TT_MULTI_LEVEL |
-+             (slptptr & VTD_CONTEXT_ENTRY_SLPTPTR);
-+        hi = ((uint64_t)domain_id << 8) | QVTD_AW_48BIT_ENCODING;
-+    }
-+
-+    qtest_writeq(qts, context_entry_addr, lo);
-+    qtest_writeq(qts, context_entry_addr + 8, hi);
-+}
-+
-+void qvtd_setup_translation_tables(QTestState *qts, uint64_t iova,
-+                                   uint64_t pa, QVTDTransMode mode)
-+{
-+    uint64_t pml4_entry, pdpt_entry, pd_entry, pt_entry;
-+    uint64_t pml4_addr, pdpt_addr, pd_addr, pt_addr;
-+    uint32_t pml4_idx, pdpt_idx, pd_idx, pt_idx;
-+    const char *mode_str = (mode == QVTD_TM_LEGACY_PT) ?
-+                           "Pass-Through" : "Translated";
-+
-+    g_test_message("Begin of page table construction: IOVA=0x%llx PA=0x%llx mode=%s",
-+                   (unsigned long long)iova, (unsigned long long)pa, mode_str);
-+
-+    /* Pass-through mode doesn't need page tables */
-+    if (mode == QVTD_TM_LEGACY_PT) {
-+        g_test_message("Pass-through mode: skipping page table setup");
-+        return;
-+    }
-+
-+    /* Extract indices from IOVA
-+     * 4-level paging for 48-bit virtual address space:
-+     * - PML4 index: bits [47:39] (9 bits = 512 entries)
-+     * - PDPT index:  bits [38:30] (9 bits = 512 entries)
-+     * - PD index:    bits [29:21] (9 bits = 512 entries)
-+     * - PT index:    bits [20:12] (9 bits = 512 entries)
-+     * - Page offset: bits [11:0]  (12 bits = 4KB pages)
-+     */
-+    pml4_idx = (iova >> 39) & 0x1ff;  /* Bits [47:39] */
-+    pdpt_idx = (iova >> 30) & 0x1ff;  /* Bits [38:30] */
-+    pd_idx = (iova >> 21) & 0x1ff;    /* Bits [29:21] */
-+    pt_idx = (iova >> 12) & 0x1ff;    /* Bits [20:12] */
-+
-+    /*
-+     * Build 4-level page table hierarchy (VT-d spec Section 9.3, Table 9-3).
-+     * Non-leaf entries: both R+W set for full access (spec allows R or W individually).
-+     * Per VT-d spec Section 9.8: "If either the R or W field of a non-leaf
-+     * paging-structure entry is 1", indicating that setting one or both is valid.
-+     * We set both R+W for non-leaf entries as standard practice.
-+     */
-+
-+    /* PML4 Entry: points to PDPT. */
-+    pml4_addr = QVTD_PT_L4_BASE + (pml4_idx * 8);
-+    pml4_entry = QVTD_PT_L3_BASE | VTD_SL_R | VTD_SL_W;
-+    qtest_writeq(qts, pml4_addr, pml4_entry);
-+
-+    /* PDPT Entry: points to PD. */
-+    pdpt_addr = QVTD_PT_L3_BASE + (pdpt_idx * 8);
-+    pdpt_entry = QVTD_PT_L2_BASE | VTD_SL_R | VTD_SL_W;
-+    qtest_writeq(qts, pdpt_addr, pdpt_entry);
-+
-+    /* PD Entry: points to PT. */
-+    pd_addr = QVTD_PT_L2_BASE + (pd_idx * 8);
-+    pd_entry = QVTD_PT_L1_BASE | VTD_SL_R | VTD_SL_W;
-+    qtest_writeq(qts, pd_addr, pd_entry);
-+
-+    /* PT Entry: points to physical page (leaf). */
-+    pt_addr = QVTD_PT_L1_BASE + (pt_idx * 8);
-+    pt_entry = (pa & VTD_PAGE_MASK_4K) | VTD_SL_R | VTD_SL_W;
-+    qtest_writeq(qts, pt_addr, pt_entry);
-+
-+    g_test_message("End of page table construction: mapped IOVA=0x%llx -> PA=0x%llx",
-+                   (unsigned long long)iova, (unsigned long long)pa);
-+}
-+
-+static void qvtd_invalidate_context_cache(QTestState *qts,
-+                                          uint64_t iommu_base)
-+{
-+    uint64_t ccmd_val;
-+
-+    /* Context Command Register: Global invalidation (VT-d spec Section 6.5.1.1). */
-+    ccmd_val = VTD_CCMD_ICC | VTD_CCMD_GLOBAL_INVL;
-+    qtest_writeq(qts, iommu_base + DMAR_CCMD_REG, ccmd_val);
-+
-+    /* Wait for ICC bit to clear. */
-+    qvtd_wait_for_bitsq(qts, iommu_base + DMAR_CCMD_REG,
-+                        VTD_CCMD_ICC, false);
-+}
-+
-+static void qvtd_invalidate_iotlb(QTestState *qts, uint64_t iommu_base)
-+{
-+    uint64_t iotlb_val;
-+
-+    /* IOTLB Invalidate Register: Global flush (VT-d spec Section 6.5.1.2). */
-+    iotlb_val = VTD_TLB_IVT | VTD_TLB_GLOBAL_FLUSH;
-+    qtest_writeq(qts, iommu_base + DMAR_IOTLB_REG, iotlb_val);
-+
-+    /* Wait for IVT bit to clear. */
-+    qvtd_wait_for_bitsq(qts, iommu_base + DMAR_IOTLB_REG,
-+                        VTD_TLB_IVT, false);
-+}
-+
-+static void qvtd_clear_memory_regions(QTestState *qts)
-+{
-+    /* Clear root table. */
-+    qtest_memset(qts, QVTD_ROOT_TABLE_BASE, 0, 4096);
-+
-+    /* Clear context table. */
-+    qtest_memset(qts, QVTD_CONTEXT_TABLE_BASE, 0, 4096);
-+
-+    /* Clear all page table levels (4 levels * 4KB each = 16KB). */
-+    qtest_memset(qts, QVTD_PT_L4_BASE, 0, 16384);
-+}
-+
-+void qvtd_program_regs(QTestState *qts, uint64_t iommu_base)
-+{
-+    uint32_t gcmd;
-+
-+    /* 1. Disable translation (VT-d spec Section 11.4.4). */
-+    gcmd = qtest_readl(qts, iommu_base + DMAR_GCMD_REG);
-+    gcmd &= ~VTD_GCMD_TE;
-+    qtest_writel(qts, iommu_base + DMAR_GCMD_REG, gcmd);
-+
-+    /* Wait for TES to clear. */
-+    qvtd_wait_for_bitsl(qts, iommu_base + DMAR_GSTS_REG,
-+                        VTD_GSTS_TES, false);
-+
-+    /* 2. Program root table address (VT-d spec Section 11.4.5). */
-+    qtest_writeq(qts, iommu_base + DMAR_RTADDR_REG, QVTD_ROOT_TABLE_BASE);
-+
-+    /* 3. Set root table pointer (VT-d spec Section 6.6). */
-+    gcmd = qtest_readl(qts, iommu_base + DMAR_GCMD_REG);
-+    gcmd |= VTD_GCMD_SRTP;
-+    qtest_writel(qts, iommu_base + DMAR_GCMD_REG, gcmd);
-+
-+    /* Wait for RTPS. */
-+    qvtd_wait_for_bitsl(qts, iommu_base + DMAR_GSTS_REG,
-+                        VTD_GSTS_RTPS, true);
-+
-+    /* Invalidate context cache after setting root table pointer. */
-+    qvtd_invalidate_context_cache(qts, iommu_base);
-+
-+    /* 4. Unmask fault event interrupt to avoid warning messages. */
-+    qtest_writel(qts, iommu_base + DMAR_FECTL_REG, 0);
-+
-+    /* NOTE: Translation is NOT enabled here - caller must enable after building structures. */
-+}
-+
-+uint32_t qvtd_build_translation(QTestState *qts, QVTDTransMode mode,
-+                                uint16_t sid, uint16_t domain_id,
-+                                uint64_t iova, uint64_t pa)
-+{
-+    uint8_t bus = (sid >> 8) & 0xff;
-+    const char *mode_str = (mode == QVTD_TM_LEGACY_PT) ?
-+                           "Pass-Through" : "Translated";
-+
-+    g_test_message("Begin of construction: IOVA=0x%llx PA=0x%llx "
-+                   "mode=%s domain_id=%u ===",
-+                   (unsigned long long)iova, (unsigned long long)pa,
-+                   mode_str, domain_id);
-+
-+    /* Build root entry */
-+    qvtd_build_root_entry(qts, bus, QVTD_CONTEXT_TABLE_BASE);
-+
-+    /* Build context entry */
-+    if (mode == QVTD_TM_LEGACY_PT) {
-+        /* Pass-through mode: no page tables needed */
-+        qvtd_build_context_entry(qts, sid, mode, domain_id, 0);
-+        g_test_message("End of construction: identity mapping to PA=0x%llx ===",
-+                       (unsigned long long)pa);
-+    } else {
-+        /* Translated mode: build 4-level page tables */
-+        qvtd_setup_translation_tables(qts, iova, pa, QVTD_TM_LEGACY_TRANS);
-+        qvtd_build_context_entry(qts, sid, mode, domain_id, QVTD_PT_L4_BASE);
-+        g_test_message("End of construction: mapped IOVA=0x%llx -> PA=0x%llx ===",
-+                       (unsigned long long)iova, (unsigned long long)pa);
-+    }
-+
-+    return 0;
-+}
-+
-+uint32_t qvtd_setup_and_enable_translation(QVTDTestContext *ctx)
-+{
-+    uint32_t gcmd;
-+
-+    /* Clear memory regions once during setup */
-+    qvtd_clear_memory_regions(ctx->qts);
-+
-+    /* Program IOMMU registers (sets up root table pointer) */
-+    qvtd_program_regs(ctx->qts, ctx->iommu_base);
-+
-+    /* Build translation structures AFTER clearing memory */
-+    ctx->trans_status = qvtd_build_translation(ctx->qts, ctx->config.trans_mode,
-+                                               ctx->sid, ctx->config.domain_id,
-+                                               ctx->config.dma_iova,
-+                                               ctx->config.dma_pa);
-+    if (ctx->trans_status != 0) {
-+        return ctx->trans_status;
-+    }
-+
-+    /* Invalidate caches using register-based invalidation */
-+    qvtd_invalidate_context_cache(ctx->qts, ctx->iommu_base);
-+    qvtd_invalidate_iotlb(ctx->qts, ctx->iommu_base);
-+
-+    /* Enable translation AFTER building structures and invalidating caches */
-+    gcmd = qtest_readl(ctx->qts, ctx->iommu_base + DMAR_GCMD_REG);
-+    gcmd |= VTD_GCMD_TE;
-+    qtest_writel(ctx->qts, ctx->iommu_base + DMAR_GCMD_REG, gcmd);
-+
-+    /* Wait for TES */
-+    qvtd_wait_for_bitsl(ctx->qts, ctx->iommu_base + DMAR_GSTS_REG,
-+                        VTD_GSTS_TES, true);
-+
-+    return 0;
-+}
-+
-+uint32_t qvtd_trigger_dma(QVTDTestContext *ctx)
-+{
-+    uint64_t iova = ctx->config.dma_iova;
-+    uint32_t len = ctx->config.dma_len;
-+    uint32_t result, attrs_val;
-+    const char *mode_str = (ctx->config.trans_mode == QVTD_TM_LEGACY_PT) ?
-+                           "Pass-Through" : "Translated";
-+
-+    /* Write IOVA low 32 bits */
-+    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_LO, (uint32_t)iova);
-+
-+    /* Write IOVA high 32 bits */
-+    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_HI, (uint32_t)(iova >> 32));
-+
-+    /* Write DMA length */
-+    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_LEN, len);
-+
-+    /* Build and write DMA attributes with BDF (PASID=0 for Legacy mode) */
-+    attrs_val = qvtd_build_dma_attrs(ctx->sid, 0);
-+    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_ATTRS, attrs_val);
-+
-+    /* Arm DMA by writing 1 to doorbell */
-+    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_DBELL, ITD_DMA_DBELL_ARM);
-+
-+    /* Trigger DMA by reading from triggering register */
-+    qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_TRIGGERING);
-+
-+    /* Poll for completion */
-+    ctx->dma_result = ITD_DMA_RESULT_BUSY;
-+    for (int attempt = 0; attempt < QVTD_POLL_MAX_RETRIES; attempt++) {
-+        result = qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_RESULT);
-+        if (result != ITD_DMA_RESULT_BUSY) {
-+            ctx->dma_result = result;
-+            break;
-+        }
-+        g_usleep(QVTD_POLL_DELAY_US);
-+    }
-+
-+    if (ctx->dma_result == ITD_DMA_RESULT_BUSY) {
-+        ctx->dma_result = ITD_DMA_ERR_TX_FAIL;
-+        g_test_message("-> DMA timeout detected, forcing failure");
-+    }
-+
-+    if (ctx->dma_result == 0) {
-+        g_test_message("-> DMA succeeded: mode=%s", mode_str);
-+    } else {
-+        g_test_message("-> DMA failed: mode=%s result=0x%x",
-+                       mode_str, ctx->dma_result);
-+    }
-+
-+    return ctx->dma_result;
-+}
-+
-+void qvtd_cleanup_translation(QVTDTestContext *ctx)
-+{
-+    uint8_t bus = (ctx->sid >> 8) & 0xff;
-+    uint8_t devfn = ctx->sid & 0xff;
-+    uint64_t root_entry_addr = QVTD_ROOT_TABLE_BASE + (bus * 16);
-+    uint64_t context_entry_addr = QVTD_CONTEXT_TABLE_BASE + (devfn * 16);
-+    uint32_t gcmd;
-+
-+    /* Disable translation before tearing down the structures */
-+    gcmd = qtest_readl(ctx->qts, ctx->iommu_base + DMAR_GCMD_REG);
-+    if (gcmd & VTD_GCMD_TE) {
-+        gcmd &= ~VTD_GCMD_TE;
-+        qtest_writel(ctx->qts, ctx->iommu_base + DMAR_GCMD_REG, gcmd);
-+        qvtd_wait_for_bitsl(ctx->qts, ctx->iommu_base + DMAR_GSTS_REG,
-+                            VTD_GSTS_TES, false);
-+    }
-+
-+    /* Clear context entry */
-+    qtest_writeq(ctx->qts, context_entry_addr, 0);
-+    qtest_writeq(ctx->qts, context_entry_addr + 8, 0);
-+
-+    /* Clear root entry */
-+    qtest_writeq(ctx->qts, root_entry_addr, 0);
-+    qtest_writeq(ctx->qts, root_entry_addr + 8, 0);
-+
-+    /* Invalidate caches using register-based invalidation */
-+    qvtd_invalidate_context_cache(ctx->qts, ctx->iommu_base);
-+    qvtd_invalidate_iotlb(ctx->qts, ctx->iommu_base);
-+}
-+
-+bool qvtd_validate_test_result(QVTDTestContext *ctx)
-+{
-+    uint32_t expected = qvtd_expected_dma_result(ctx);
-+    bool passed = (ctx->dma_result == expected);
-+    bool mem_ok = true;
-+
-+    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
-+                   expected, ctx->dma_result);
-+
-+    if (passed && expected == 0) {
-+        mem_ok = qvtd_validate_dma_memory(ctx);
-+        g_test_message("-> Memory validation %s at PA=0x%llx",
-+                       mem_ok ? "passed" : "failed",
-+                       (unsigned long long)ctx->config.dma_pa);
-+        passed = mem_ok;
-+    }
-+
-+    return passed;
-+}
-+
-+void qvtd_single_translation(QVTDTestContext *ctx)
-+{
-+    uint32_t config_result;
-+    bool test_passed;
-+
-+    /* Configure Intel IOMMU translation */
-+    config_result = qvtd_setup_and_enable_translation(ctx);
-+    if (config_result != 0) {
-+        g_test_message("Configuration failed: mode=%u status=0x%x",
-+                       ctx->config.trans_mode, config_result);
-+    }
-+    g_assert_cmpint(config_result, ==, 0);
-+
-+    /* Trigger DMA operation */
-+    qvtd_trigger_dma(ctx);
-+
-+    /* Validate test result */
-+    test_passed = qvtd_validate_test_result(ctx);
-+    g_assert_true(test_passed);
-+
-+    /* Clean up translation state to prepare for the next test */
-+    qvtd_cleanup_translation(ctx);
-+}
-+
-+void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-+                               QPCIBar bar, uint64_t iommu_base,
-+                               const QVTDTestConfig *cfg)
-+{
-+    /* Initialize test memory */
-+    qtest_memset(qts, cfg->dma_pa, 0x00, cfg->dma_len);
-+
-+    /* Create test context on stack */
-+    QVTDTestContext ctx = {
-+        .qts = qts,
-+        .dev = dev,
-+        .bar = bar,
-+        .iommu_base = iommu_base,
-+        .config = *cfg,
-+        .trans_status = 0,
-+        .dma_result = 0,
-+        .sid = qvtd_calc_sid(dev),
-+    };
-+
-+    /* Execute the test using existing single_translation logic */
-+    qvtd_single_translation(&ctx);
-+
-+    /* Report results */
-+    g_test_message("--> Test completed: mode=%u domain_id=%u "
-+                   "status=0x%x result=0x%x",
-+                   cfg->trans_mode, cfg->domain_id,
-+                   ctx.trans_status, ctx.dma_result);
-+}
-+
-+void qvtd_translation_batch(const QVTDTestConfig *configs, size_t count,
-+                            QTestState *qts, QPCIDevice *dev,
-+                            QPCIBar bar, uint64_t iommu_base)
-+{
-+    for (size_t i = 0; i < count; i++) {
-+        g_test_message("=== Running test %zu/%zu ===", i + 1, count);
-+        qvtd_run_translation_case(qts, dev, bar, iommu_base, &configs[i]);
-+    }
-+}
-diff --git a/tests/qtest/libqos/qos-intel-iommu.h b/tests/qtest/libqos/qos-intel-iommu.h
-new file mode 100644
-index 0000000000..dab5d4df63
---- /dev/null
-+++ b/tests/qtest/libqos/qos-intel-iommu.h
-@@ -0,0 +1,299 @@
-+/*
-+ * QOS Intel IOMMU (VT-d) Module
-+ *
-+ * This module provides Intel IOMMU-specific helper functions for libqos tests,
-+ * encapsulating VT-d setup, assertion, and cleanup operations.
-+ *
-+ * Copyright (c) 2026 Fengyuan Yu <15fengyuan@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QTEST_LIBQOS_INTEL_IOMMU_H
-+#define QTEST_LIBQOS_INTEL_IOMMU_H
-+
-+#include "hw/misc/iommu-testdev.h"
-+#include "hw/i386/intel_iommu_internal.h"
-+
-+/*
-+ * Intel IOMMU MMIO register base. This is the standard Q35 IOMMU address.
-+ */
-+#define Q35_IOMMU_BASE            0xfed90000ULL
-+
-+/*
-+ * Guest memory layout for IOMMU structures.
-+ * All structures are placed in guest physical memory inside the 512MB RAM.
-+ * Using 256MB mark (0x10000000) as base to ensure all structures fit in RAM.
-+ */
-+#define QVTD_MEM_BASE             0x10000000ULL
-+
-+/* Root Entry Table: 256 entries * 16 bytes = 4KB */
-+#define QVTD_ROOT_TABLE_BASE      (QVTD_MEM_BASE + 0x00000000)
-+
-+/* Context Entry Table: 256 entries * 16 bytes = 4KB per bus */
-+#define QVTD_CONTEXT_TABLE_BASE   (QVTD_MEM_BASE + 0x00001000)
-+
-+/* Page Tables: 4-level hierarchy for 48-bit address translation */
-+#define QVTD_PT_L4_BASE           (QVTD_MEM_BASE + 0x00010000)  /* PML4 */
-+#define QVTD_PT_L3_BASE           (QVTD_MEM_BASE + 0x00011000)  /* PDPT */
-+#define QVTD_PT_L2_BASE           (QVTD_MEM_BASE + 0x00012000)  /* PD */
-+#define QVTD_PT_L1_BASE           (QVTD_MEM_BASE + 0x00013000)  /* PT */
-+
-+/* Invalidation Queue: 256 entries * 16 bytes = 4KB */
-+#define QVTD_INV_QUEUE_BASE       (QVTD_MEM_BASE + 0x00020000)
-+
-+/* Test IOVA and target physical address */
-+#define QVTD_TEST_IOVA            0x0000008080604000ULL
-+#define QVTD_TEST_PA              (QVTD_MEM_BASE + 0x00100000)
-+
-+/*
-+ * Translation modes supported by Intel IOMMU
-+ */
-+typedef enum QVTDTransMode {
-+    QVTD_TM_LEGACY_PT,      /* Legacy pass-through mode */
-+    QVTD_TM_LEGACY_TRANS,   /* Legacy translated mode (4-level paging) */
-+} QVTDTransMode;
-+
-+/*
-+ * Test configuration structure
-+ */
-+typedef struct QVTDTestConfig {
-+    QVTDTransMode trans_mode;     /* Translation mode */
-+    uint64_t dma_iova;            /* DMA IOVA address for testing */
-+    uint64_t dma_pa;              /* Target physical address */
-+    uint32_t dma_len;             /* DMA length for testing */
-+    uint32_t expected_result;     /* Expected DMA result */
-+    uint16_t domain_id;           /* Domain ID for this test */
-+} QVTDTestConfig;
-+
-+/*
-+ * Test context structure
-+ */
-+typedef struct QVTDTestContext {
-+    QTestState *qts;              /* QTest state handle */
-+    QPCIDevice *dev;              /* PCI device handle */
-+    QPCIBar bar;                  /* PCI BAR for MMIO access */
-+    QVTDTestConfig config;        /* Test configuration */
-+    uint64_t iommu_base;          /* Intel IOMMU base address */
-+    uint32_t trans_status;        /* Translation configuration status */
-+    uint32_t dma_result;          /* DMA operation result */
-+    uint16_t sid;                 /* Source ID (bus:devfn) */
-+} QVTDTestContext;
-+
-+/*
-+ * qvtd_setup_and_enable_translation - Complete translation setup and enable
-+ *
-+ * @ctx: Test context containing configuration and device handles
-+ *
-+ * Returns: Translation status (0 = success, non-zero = error)
-+ *
-+ * This function performs the complete translation setup sequence:
-+ * 1. Builds all required VT-d structures (root entry, context entry, page tables)
-+ * 2. Programs IOMMU registers
-+ * 3. Invalidates caches
-+ * 4. Enables translation
-+ */
-+uint32_t qvtd_setup_and_enable_translation(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_build_translation - Build Intel IOMMU translation structures
-+ *
-+ * @qts: QTest state handle
-+ * @mode: Translation mode (pass-through or translated)
-+ * @sid: Source ID (bus:devfn)
-+ * @domain_id: Domain ID
-+ * @iova: IOVA address for logging purposes
-+ * @pa: Physical address backed by the mapping
-+ *
-+ * Returns: Build status (0 = success, non-zero = error)
-+ *
-+ * Constructs all necessary VT-d translation structures in guest memory:
-+ * - Root Entry for the device's bus
-+ * - Context Entry for the device
-+ * - Complete 4-level page table hierarchy (if translated mode)
-+ */
-+uint32_t qvtd_build_translation(QTestState *qts, QVTDTransMode mode,
-+                                uint16_t sid, uint16_t domain_id,
-+                                uint64_t iova, uint64_t pa);
-+
-+/*
-+ * qvtd_program_regs - Program Intel IOMMU registers
-+ *
-+ * @qts: QTest state handle
-+ * @iommu_base: IOMMU base address
-+ *
-+ * Programs IOMMU registers with the following sequence:
-+ * 1. Disable translation
-+ * 2. Program root table address
-+ * 3. Set root table pointer
-+ * 4. Unmask fault event interrupt
-+ *
-+ * Note: This function does NOT clear memory regions or enable translation.
-+ * Memory clearing should be done once during test setup via qvtd_clear_memory_regions().
-+ * Translation is enabled separately after building all structures.
-+ */
-+void qvtd_program_regs(QTestState *qts, uint64_t iommu_base);
-+
-+/*
-+ * qvtd_trigger_dma - Trigger DMA operation via iommu-testdev
-+ *
-+ * @ctx: Test context
-+ *
-+ * Returns: DMA result code
-+ *
-+ * Programs iommu-testdev BAR0 registers to trigger a DMA operation:
-+ * 1. Write IOVA address (GVA_LO/HI)
-+ * 2. Write DMA length
-+ * 3. Arm DMA (write to DBELL)
-+ * 4. Trigger DMA (read from TRIGGERING)
-+ * 5. Poll for completion (read DMA_RESULT)
-+ */
-+uint32_t qvtd_trigger_dma(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_cleanup_translation - Clean up translation configuration
-+ *
-+ * @ctx: Test context containing configuration and device handles
-+ *
-+ * Clears all translation structures and invalidates IOMMU caches.
-+ */
-+void qvtd_cleanup_translation(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_validate_test_result - Validate actual vs expected test result
-+ *
-+ * @ctx: Test context containing actual and expected results
-+ *
-+ * Returns: true if test passed (actual == expected), false otherwise
-+ *
-+ * Compares the actual DMA result with the expected result and logs
-+ * the comparison for debugging purposes.
-+ */
-+bool qvtd_validate_test_result(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_setup_translation_tables - Setup complete VT-d page table hierarchy
-+ *
-+ * @qts: QTest state handle
-+ * @iova: Input Virtual Address to translate
-+ * @pa: Physical address to map to
-+ * @mode: Translation mode
-+ *
-+ * This function builds the complete 4-level page table structure for translating
-+ * the given IOVA to PA through Intel VT-d. The structure is:
-+ * - PML4 (Level 4): IOVA bits [47:39]
-+ * - PDPT (Level 3): IOVA bits [38:30]
-+ * - PD (Level 2): IOVA bits [29:21]
-+ * - PT (Level 1): IOVA bits [20:12]
-+ * - Page offset: IOVA bits [11:0]
-+ *
-+ * The function writes all necessary Page Table Entries (PTEs) to guest
-+ * memory using qtest_writeq(), setting up the complete translation path
-+ * that the VT-d hardware will traverse during DMA operations.
-+ */
-+void qvtd_setup_translation_tables(QTestState *qts, uint64_t iova,
-+                                   uint64_t pa, QVTDTransMode mode);
-+
-+/*
-+ * qvtd_expected_dma_result - Calculate expected DMA result
-+ *
-+ * @ctx: Test context containing configuration
-+ *
-+ * Returns: Expected DMA result code
-+ *
-+ * This function acts as a test oracle, calculating the expected DMA result
-+ * based on the test configuration. It centralizes validation logic for
-+ * different scenarios (pass-through vs. translated, fault conditions).
-+ */
-+uint32_t qvtd_expected_dma_result(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_build_dma_attrs - Build DMA attributes for an Intel VT-d DMA request
-+ *
-+ * @bdf: PCI requester ID encoded as Bus[15:8]/Device[7:3]/Function[2:0]
-+ * @pasid: PASID tag (0 for legacy requests, non-zero for scalable mode)
-+ *
-+ * Returns: Value to program into iommu-testdev's DMA_ATTRS register
-+ *
-+ * The iommu-testdev attribute register mirrors Intel VT-d request metadata:
-+ *   - bits[2:0] keep the generic iommu-testdev fields (secure + space)
-+ *   - bit[4] selects legacy (0) vs. scalable (1) transactions
-+ *   - bits[23:8] carry the requester ID as defined in the VT-d spec
-+ *   - bits[31:24] carry the PASID (limited to 8 bits in QEMU, matching
-+ *     the MemTxAttrs::pid width and ECAP.PSS advertisement)
-+ *
-+ * The helper validates the BDF layout (bus <= 255, device <= 31, function <= 7)
-+ * and makes sure PASID fits in the supported width before returning the value.
-+ */
-+uint32_t qvtd_build_dma_attrs(uint16_t bdf, uint32_t pasid);
-+
-+/*
-+ * High-level test execution functions
-+ */
-+
-+/*
-+ * qvtd_single_translation - Execute single translation test
-+ *
-+ * @ctx: Test context
-+ *
-+ * Performs a complete test cycle:
-+ * 1. Setup translation structures
-+ * 2. Trigger DMA operation
-+ * 3. Validate results
-+ * 4. Cleanup
-+ */
-+void qvtd_single_translation(QVTDTestContext *ctx);
-+
-+/*
-+ * qvtd_run_translation_case - Execute a single Intel VT-d translation test
-+ *
-+ * @qts: QTestState for the test
-+ * @dev: PCI device (iommu-testdev)
-+ * @bar: BAR0 of iommu-testdev
-+ * @iommu_base: Base address of Intel IOMMU MMIO registers
-+ * @cfg: Test configuration
-+ *
-+ * High-level wrapper that creates test context internally and executes
-+ * a single translation test case. This provides a simpler API compared
-+ * to qvtd_single_translation() which requires manual context initialization.
-+ *
-+ * This function is analogous to qriommu_run_translation_case() in the
-+ * RISC-V IOMMU test framework, providing a consistent API across different
-+ * IOMMU architectures.
-+ *
-+ * Example usage:
-+ *   QVTDTestConfig cfg = {
-+ *       .trans_mode = QVTD_TM_LEGACY_PT,
-+ *       .domain_id = 1,
-+ *       .dma_iova = 0x40100000,
-+ *       .dma_pa = 0x40100000,
-+ *       .dma_len = 4,
-+ *   };
-+ *   qvtd_run_translation_case(qts, dev, bar, iommu_base, &cfg);
-+ */
-+void qvtd_run_translation_case(QTestState *qts, QPCIDevice *dev,
-+                               QPCIBar bar, uint64_t iommu_base,
-+                               const QVTDTestConfig *cfg);
-+
-+/*
-+ * qvtd_translation_batch - Execute batch of translation tests
-+ *
-+ * @configs: Array of test configurations
-+ * @count: Number of configurations
-+ * @qts: QTest state handle
-+ * @dev: PCI device handle
-+ * @bar: PCI BAR for MMIO access
-+ * @iommu_base: IOMMU base address
-+ *
-+ * Executes multiple translation tests in sequence, each with its own
-+ * configuration. Useful for testing different translation modes and
-+ * scenarios in a single test run.
-+ *
-+ * This function now uses qvtd_run_translation_case() internally to
-+ * reduce code duplication.
-+ */
-+void qvtd_translation_batch(const QVTDTestConfig *configs, size_t count,
-+                            QTestState *qts, QPCIDevice *dev,
-+                            QPCIBar bar, uint64_t iommu_base);
-+
-+#endif /* QTEST_LIBQOS_INTEL_IOMMU_H */
--- 
-2.39.5
-
+Q29ubmVjdCB0aGUgQVNUMTcwMCBkZXZpY2UgYXMgYSBjaGlsZCBvZiB0aGUgQVNUMjdYMCBtb2Rl
+bCB0byByZWZsZWN0Cml0cyByb2xlIGluIERDLVNDTSAyLjAgTFRQSS1iYXNlZCBhcmNoaXRlY3R1
+cmVzLiBUaGlzIHBhdGNoIHdpcmVzCnRoZSBBU1QxNzAwIGRldmljZSBpbnRvIHRoZSBwbGF0Zm9y
+bSB3aXRob3V0IGludHJvZHVjaW5nIGZ1bmN0aW9uYWwKcGVyaXBoZXJhbHMuCgpUaGlzIGZvcm1z
+IHRoZSBiYXNlIGZvciBMVFBJIGV4cGFuZGVyIGVtdWxhdGlvbiBpbiBRRU1VIHVzaW5nCkFTVDI3
+WDAgYXMgdGhlIGhvc3QgY29udHJvbGxlci4KCk5vdGU6IGlvZXhwX251bSBpcyBzZXQgdG8gMCBh
+dCB0aGlzIHN0YWdlLiBPbmNlIGFsbCByZWxhdGVkIGRldmljZXMKYW5kIGludGVycnVwdHMgYXJl
+IGZ1bGx5IGltcGxlbWVudGVkLCBpb2V4cF9udW0gd2lsbCBiZSB1cGRhdGVkIHRvCml0cyBleHBl
+Y3RlZCB2YWx1ZS4gVGhpcyBlbnN1cmVzIHRoZSBtYWNoaW5lIHJlbWFpbnMgZnVuY3Rpb25hbCBh
+dApldmVyeSBjb21taXQgYW5kIGF2b2lkcyBwb3RlbnRpYWwgY29tcGlsZXIgb3IgYnVpbGQgaXNz
+dWVzLgoKU2lnbmVkLW9mZi1ieTogS2FuZS1DaGVuLUFTIDxrYW5lX2NoZW5AYXNwZWVkdGVjaC5j
+b20+ClJldmlld2VkLWJ5OiBD77+9ZHJpYyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPgpSZXZp
+ZXdlZC1ieTogTmFiaWggRXN0ZWZhbiA8bmFiaWhlc3RlZmFuQGdvb2dsZS5jb20+ClRlc3RlZC1i
+eTogTmFiaWggRXN0ZWZhbiA8bmFiaWhlc3RlZmFuQGdvb2dsZS5jb20+Ci0tLQogaW5jbHVkZS9o
+dy9hcm0vYXNwZWVkX3NvYy5oIHwgIDcgKysrKystLQogaHcvYXJtL2FzcGVlZF9hc3QyN3gwLmMg
+ICAgIHwgMjYgKysrKysrKysrKysrKysrKysrLS0tLS0tLS0KIDIgZmlsZXMgY2hhbmdlZCwgMjMg
+aW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9h
+cm0vYXNwZWVkX3NvYy5oIGIvaW5jbHVkZS9ody9hcm0vYXNwZWVkX3NvYy5oCmluZGV4IDdiMDhj
+Y2E5MDguLmYxOWJhYjM0NTcgMTAwNjQ0Ci0tLSBhL2luY2x1ZGUvaHcvYXJtL2FzcGVlZF9zb2Mu
+aAorKysgYi9pbmNsdWRlL2h3L2FybS9hc3BlZWRfc29jLmgKQEAgLTQ1LDYgKzQ1LDcgQEAKICNp
+bmNsdWRlICJody9jaGFyL3NlcmlhbC1tbS5oIgogI2luY2x1ZGUgImh3L2ludGMvYXJtX2dpY3Yz
+LmgiCiAjaW5jbHVkZSAiaHcvbWlzYy9hc3BlZWRfbHRwaS5oIgorI2luY2x1ZGUgImh3L2FybS9h
+c3BlZWRfYXN0MTcwMC5oIgogCiAjZGVmaW5lIFZCT09UUk9NX0ZJTEVfTkFNRSAgImFzdDI3eDBf
+Ym9vdHJvbS5iaW4iCiAKQEAgLTExMiwxMCArMTEzLDEwIEBAIHN0cnVjdCBBc3BlZWRTb0NTdGF0
+ZSB7CiAgICAgVW5pbXBsZW1lbnRlZERldmljZVN0YXRlIGRwbWN1OwogICAgIFVuaW1wbGVtZW50
+ZWREZXZpY2VTdGF0ZSBlc3BpOwogICAgIFVuaW1wbGVtZW50ZWREZXZpY2VTdGF0ZSB1ZGM7Ci0g
+ICAgVW5pbXBsZW1lbnRlZERldmljZVN0YXRlIGx0cGk7CiAgICAgVW5pbXBsZW1lbnRlZERldmlj
+ZVN0YXRlIGp0YWdbQVNQRUVEX0pUQUdfTlVNXTsKICAgICBBc3BlZWRBUEIyT1BCU3RhdGUgZnNp
+WzJdOwogICAgIEFzcGVlZExUUElTdGF0ZSBsdHBpX2N0cmxbQVNQRUVEX0lPRVhQX05VTV07Cisg
+ICAgQXNwZWVkQVNUMTcwMFNvQ1N0YXRlIGlvZXhwW0FTUEVFRF9JT0VYUF9OVU1dOwogfTsKIAog
+I2RlZmluZSBUWVBFX0FTUEVFRF9TT0MgImFzcGVlZC1zb2MiCkBAIC0xNzgsNiArMTc5LDcgQEAg
+c3RydWN0IEFzcGVlZFNvQ0NsYXNzIHsKICAgICBpbnQgbWFjc19udW07CiAgICAgaW50IHVhcnRz
+X251bTsKICAgICBpbnQgdWFydHNfYmFzZTsKKyAgICBpbnQgaW9leHBfbnVtOwogICAgIGNvbnN0
+IGludCAqaXJxbWFwOwogICAgIGNvbnN0IGh3YWRkciAqbWVtbWFwOwogICAgIHVpbnQzMl90IG51
+bV9jcHVzOwpAQCAtMTkwLDcgKzE5Miw2IEBAIGVudW0gewogICAgIEFTUEVFRF9ERVZfSU9NRU0s
+CiAgICAgQVNQRUVEX0RFVl9JT01FTTAsCiAgICAgQVNQRUVEX0RFVl9JT01FTTEsCi0gICAgQVNQ
+RUVEX0RFVl9MVFBJLAogICAgIEFTUEVFRF9ERVZfVUFSVDAsCiAgICAgQVNQRUVEX0RFVl9VQVJU
+MSwKICAgICBBU1BFRURfREVWX1VBUlQyLApAQCAtMjg1LDYgKzI4Niw4IEBAIGVudW0gewogICAg
+IEFTUEVFRF9ERVZfSVBDMSwKICAgICBBU1BFRURfREVWX0xUUElfQ1RSTDEsCiAgICAgQVNQRUVE
+X0RFVl9MVFBJX0NUUkwyLAorICAgIEFTUEVFRF9ERVZfTFRQSV9JTzAsCisgICAgQVNQRUVEX0RF
+Vl9MVFBJX0lPMSwKIH07CiAKIGNvbnN0IGNoYXIgKmFzcGVlZF9zb2NfY3B1X3R5cGUoY29uc3Qg
+Y2hhciAqIGNvbnN0ICp2YWxpZF9jcHVfdHlwZXMpOwpkaWZmIC0tZ2l0IGEvaHcvYXJtL2FzcGVl
+ZF9hc3QyN3gwLmMgYi9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYwppbmRleCBiYmNiNmUwMTI3Li5h
+MDUxMTJlMmIwIDEwMDY0NAotLS0gYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYworKysgYi9ody9h
+cm0vYXNwZWVkX2FzdDI3eDAuYwpAQCAtMjYsNyArMjYsNiBAQAogI2RlZmluZSBBU1QyNzAwX1NP
+Q19JT19TSVpFICAgICAgICAgIDB4MDBGRTAwMDAKICNkZWZpbmUgQVNUMjcwMF9TT0NfSU9NRU1f
+U0laRSAgICAgICAweDAxMDAwMDAwCiAjZGVmaW5lIEFTVDI3MDBfU09DX0RQTUNVX1NJWkUgICAg
+ICAgMHgwMDA0MDAwMAotI2RlZmluZSBBU1QyNzAwX1NPQ19MVFBJX1NJWkUgICAgICAgIDB4MDEw
+MDAwMDAKIAogc3RhdGljIGNvbnN0IGh3YWRkciBhc3BlZWRfc29jX2FzdDI3MDBfbWVtbWFwW10g
+PSB7CiAgICAgW0FTUEVFRF9ERVZfVkJPT1RST01dICA9ICAweDAwMDAwMDAwLApAQCAtOTEsNyAr
+OTAsOCBAQCBzdGF0aWMgY29uc3QgaHdhZGRyIGFzcGVlZF9zb2NfYXN0MjcwMF9tZW1tYXBbXSA9
+IHsKICAgICBbQVNQRUVEX0RFVl9MVFBJX0NUUkwxXSA9ICAweDE0QzM0MDAwLAogICAgIFtBU1BF
+RURfREVWX0xUUElfQ1RSTDJdID0gIDB4MTRDMzUwMDAsCiAgICAgW0FTUEVFRF9ERVZfV0RUXSAg
+ICAgICA9ICAweDE0QzM3MDAwLAotICAgIFtBU1BFRURfREVWX0xUUEldICAgICAgPSAgMHgzMDAw
+MDAwMCwKKyAgICBbQVNQRUVEX0RFVl9MVFBJX0lPMF0gID0gIDB4MzAwMDAwMDAsCisgICAgW0FT
+UEVFRF9ERVZfTFRQSV9JTzFdICA9ICAweDUwMDAwMDAwLAogICAgIFtBU1BFRURfREVWX1BDSUVf
+TU1JTzBdID0gMHg2MDAwMDAwMCwKICAgICBbQVNQRUVEX0RFVl9QQ0lFX01NSU8xXSA9IDB4ODAw
+MDAwMDAsCiAgICAgW0FTUEVFRF9ERVZfUENJRV9NTUlPMl0gPSAweEEwMDAwMDAwLApAQCAtNDk4
+LDEwICs0OTgsMTQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3NvY19hc3QyNzAwX2luaXQoT2JqZWN0
+ICpvYmopCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZzLT5sdHBpX2N0cmxbaV0s
+IFRZUEVfQVNQRUVEX0xUUEkpOwogICAgIH0KIAorICAgIGZvciAoaSA9IDA7IGkgPCBzYy0+aW9l
+eHBfbnVtOyBpKyspIHsKKyAgICAgICAgLyogQVNUMTcwMCBJT0VYUCAqLworICAgICAgICBvYmpl
+Y3RfaW5pdGlhbGl6ZV9jaGlsZChvYmosICJpb2V4cFsqXSIsICZzLT5pb2V4cFtpXSwKKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgVFlQRV9BU1BFRURfQVNUMTcwMCk7CisgICAgfQor
+CiAgICAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQob2JqLCAiZHBtY3UiLCAmcy0+ZHBtY3UsCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgVFlQRV9VTklNUExFTUVOVEVEX0RFVklDRSk7Ci0g
+ICAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQob2JqLCAibHRwaSIsICZzLT5sdHBpLAotICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIFRZUEVfVU5JTVBMRU1FTlRFRF9ERVZJQ0UpOwogICAgIG9i
+amVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgImlvbWVtIiwgJnMtPmlvbWVtLAogICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIFRZUEVfVU5JTVBMRU1FTlRFRF9ERVZJQ0UpOwogICAgIG9iamVj
+dF9pbml0aWFsaXplX2NoaWxkKG9iaiwgImlvbWVtMCIsICZzLT5pb21lbTAsCkBAIC05OTUsMTQg
+Kzk5OSwxOSBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfc29jX2FzdDI3MDBfcmVhbGl6ZShEZXZpY2VT
+dGF0ZSAqZGV2LCBFcnJvciAqKmVycnApCiAgICAgICAgIGFzcGVlZF9tbWlvX21hcChzLT5tZW1v
+cnksIFNZU19CVVNfREVWSUNFKGx0cGlfY3RybCksIDAsIGx0cGlfYmFzZSk7CiAgICAgfQogCisg
+ICAgLyogSU8gRXhwYW5kZXIgKi8KKyAgICBmb3IgKGkgPSAwOyBpIDwgc2MtPmlvZXhwX251bTsg
+aSsrKSB7CisgICAgICAgIGlmICghc3lzYnVzX3JlYWxpemUoU1lTX0JVU19ERVZJQ0UoJnMtPmlv
+ZXhwW2ldKSwgZXJycCkpIHsKKyAgICAgICAgICAgIHJldHVybjsKKyAgICAgICAgfQorICAgICAg
+ICBzeXNidXNfbW1pb19tYXAoU1lTX0JVU19ERVZJQ0UoJnMtPmlvZXhwW2ldKSwgMCwKKyAgICAg
+ICAgICAgICAgICAgICAgICAgIHNjLT5tZW1tYXBbQVNQRUVEX0RFVl9MVFBJX0lPMCArIGldKTsK
+KyAgICB9CisKICAgICBhc3BlZWRfbW1pb19tYXBfdW5pbXBsZW1lbnRlZChzLT5tZW1vcnksIFNZ
+U19CVVNfREVWSUNFKCZzLT5kcG1jdSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgImFzcGVlZC5kcG1jdSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2Mt
+Pm1lbW1hcFtBU1BFRURfREVWX0RQTUNVXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBBU1QyNzAwX1NPQ19EUE1DVV9TSVpFKTsKLSAgICBhc3BlZWRfbW1pb19tYXBfdW5pbXBs
+ZW1lbnRlZChzLT5tZW1vcnksIFNZU19CVVNfREVWSUNFKCZzLT5sdHBpKSwKLSAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAiYXNwZWVkLmx0cGkiLAotICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIHNjLT5tZW1tYXBbQVNQRUVEX0RFVl9MVFBJXSwKLSAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBBU1QyNzAwX1NPQ19MVFBJX1NJWkUpOwogICAgIGFzcGVl
+ZF9tbWlvX21hcF91bmltcGxlbWVudGVkKHMtPm1lbW9yeSwgU1lTX0JVU19ERVZJQ0UoJnMtPmlv
+bWVtKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYXNwZWVkLmlvIiwKICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzYy0+bWVtbWFwW0FTUEVFRF9ERVZfSU9N
+RU1dLApAQCAtMTA0MSw2ICsxMDUwLDcgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3NvY19hc3QyNzAw
+YTFfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqb2MsIGNvbnN0IHZvaWQgKmRhdGEpCiAgICAgc2Mt
+Pm1hY3NfbnVtICAgICA9IDM7CiAgICAgc2MtPnVhcnRzX251bSAgICA9IDEzOwogICAgIHNjLT5u
+dW1fY3B1cyAgICAgPSA0OworICAgIHNjLT5pb2V4cF9udW0gICAgPSAwOwogICAgIHNjLT51YXJ0
+c19iYXNlICAgPSBBU1BFRURfREVWX1VBUlQwOwogICAgIHNjLT5pcnFtYXAgICAgICAgPSBhc3Bl
+ZWRfc29jX2FzdDI3MDBhMV9pcnFtYXA7CiAgICAgc2MtPm1lbW1hcCAgICAgICA9IGFzcGVlZF9z
+b2NfYXN0MjcwMF9tZW1tYXA7Ci0tIAoyLjQzLjAK
 
