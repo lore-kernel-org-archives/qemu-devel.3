@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7CCE83EED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B613E83EF5
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 08:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnY8m-0002OQ-Ec; Wed, 04 Feb 2026 03:21:36 -0500
+	id 1vnY8n-0002OZ-HI; Wed, 04 Feb 2026 03:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vnY8l-0002Nm-3V; Wed, 04 Feb 2026 03:21:35 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1vnY8l-0002O4-CN; Wed, 04 Feb 2026 03:21:35 -0500
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vnY8j-0003VZ-Kz; Wed, 04 Feb 2026 03:21:34 -0500
+ id 1vnY8j-0003UH-Jw; Wed, 04 Feb 2026 03:21:35 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bujGd7hPQ0gYNUIp0Pq44tXNbt1P/8KFB//4k63k6vXHv1BXZt/lKmjb+JuMDexlQtuuT9/Jv5afC4w8OOvJ8mwSPrXEDkhg57dzQq+zLSRXcogXPTBzxNZqd7iicKBSVHQjnmzO/Hy7B9093iB7yy4Qcpo4jBu8aMFewLHD5ZH+clLXI3T3LpDR8sp3uJRUT5WEVnMCyivFzw+kxGUbhC2cbNc2BJtIaYpiQBe455fFKT3NRzLVMVoz/1q0+4OeEtUzhPI0fIhnlLkSfmZynCQyarTh3BvW+Skb+TjqfaxKzUJBLde2X92p80+lwCE46Vg9HdKWeY6WAFSPRGXKoQ==
+ b=xiUG0b8sVT3fwP6VlA0RkmEtwEk4yHKyRNg+/ZTvH2vpOIEOLRlxbOAvn10+4F3qx0spYBwftf+TbV+eBeNuDLJ1v5qEyggtwISBfQjB82gNwaVLj+zjjlJPcch300h6DAnTwQafOPCzR1e0wBqBt5rNqmFKydgipeGk7n7Ckcn1jLsdaZQhWZHbRg69qpQ6jQfYBI9DW4CTM91zME5VmYE2UAZckDFzsd7BZMlr1q4OACO9lneEwj6c0m5kVfFwyyvAjP6waR0gDd0OREfDsHynZR5XNEsDl9Kn3BWi53iFvxa6hmmKjQhtVJVR6f1IvhtiAGwu7+oKHT581RgQuQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5/MCjKq2WfUFhkLNlluC4LeTUxt227UqkGo1OYBeyJE=;
- b=gkS90L2HLFmln11W46gNWGzzs/pmw9TSaof+NVx1D7QsiefR4zdUy+44SeHw2fDvFI6gl0EOBI8HNHP0tdKD6JBY28x4rhqEvgkSkwf1Mro1p+tkZGJZEYaXQ/ZTh89b4TK/BhtJP6TBvUO0S3Z6Cm6uy1MTfRIucp+Vs/neE7ZEPLS59JFwVGByKHMZggW6Rek/RE1uwFXxgtEoj4Gs2VHXxVsMX9jtSXnJuk/qeci//AC6mJWsHczMBbsWCOlIhd+GqP12nASLDh7gOH2b6Usp5d4O9e/ydO4WJwzajSum92rorTVUDLoYoJgaMXGoKx1wzy6Itwl0mtY+6mOiiA==
+ bh=xanY8lWWj1o9pHV4DaF+bwhx77T/jfPF1cnYyg/dbTU=;
+ b=U2fNuGQXYVcmUpY2vTYhOkLqjqsmLDAW4QmaVIGyD5FTUq8G0BjWJ7N5s6JIMGYC+4FzsmPtllV/L2ssdQ1bvAuURTlWT8+i3moU6JD0V0CrVAPhFCvLOuO+aKYxmSsHK8g1CTVWL7E6l/QVwo/5gl3UDd2yypzvM1ioKBueb9lJWyqynWV0envDMUNg8pkGqVt1wBS0AurXfokZZ0+3ER6z3bFLCFkJYORuX6pJX4lvuaJqb46I5ppfbPqipBWbOL2GmHjOuyXzE/bQrtNWUwMPGyb09uuhQK4Vz7FgcrWbyKnnI65waXbXgUaXuHY0xeOZKwDLTrDwUw05p0hTtw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5/MCjKq2WfUFhkLNlluC4LeTUxt227UqkGo1OYBeyJE=;
- b=qbUj95pqM733aCvGegie5zH0D/Lvxo97J/kh3Mpi3D0i//mPUKcS/l9eX2HTv38agiJDV800xFCHKtwQlBZHTsh+smMJK3FuM/jq2efGyLUshgkbIqWntqndVxOZiavRCAfNUk2r+LWI4/cV7p2w4SbJboOunIKIQ6TuxotEm/3XH0y/HSwKUysj+ElVZw644kr0z0LZW/Fh8OiQ2SxvsJWbPA/ILusB/ZxcXglvimBON1Flo78B1M7h/ti7m75ST3ZhBr14ZbOLqpr9kyj1PDDhdQQkCi89RKaOw8gugEs6ZxPDQ5qCXb0nZvGV0XGZEYYtVrmDDm0NONTayngGmg==
+ bh=xanY8lWWj1o9pHV4DaF+bwhx77T/jfPF1cnYyg/dbTU=;
+ b=aTmgkVx2bK2DMnzeOzuPyJClUnFnipbsnTTZ06LeS4L2sGou3UGCM8Mu86GluOnPNqBpyt8RDh56Hvpx/JnCOyQwmy9yP8/kwvfs1dSjdMBtAprgK1KSGVnmNmrwfNai/8Wzaks8EmKpg/O1Z64vk0Aa6j5TkMHmqEsba9JY1YTZVqlxUkoNLapzNy6P7tIWhcNlhl7dHs0IkyyH19VRNsv4B5+yC/tbceGWvZJ676LoQkm5GD5/RjRYThtFOMBFdaElk6k8ho8AHTWmSV+dEmLZudC0NzEpCvaRPjrANKZ6lx3EYT0w0UtCjrFhpNy7WQYAVfyKlivV2vaMXVFhkQ==
 Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
  by PUZPR06MB5586.apcprd06.prod.outlook.com (2603:1096:301:e8::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Wed, 4 Feb
- 2026 08:21:24 +0000
+ 2026 08:21:22 +0000
 Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
  ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
  ([fe80::afe5:a3f1:b435:e43c%4]) with mapi id 15.20.9587.010; Wed, 4 Feb 2026
- 08:21:24 +0000
+ 08:21:22 +0000
 From: Kane Chen <kane_chen@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,16 +51,14 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, "kaneluno1@gmail.com"
- <kaneluno1@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, Nabih Estefan
- <nabihestefan@google.com>
-Subject: [PATCH v7 07/22] hw/arm/aspeed: Attach LTPI controller to AST1700
- model
-Thread-Topic: [PATCH v7 07/22] hw/arm/aspeed: Attach LTPI controller to
- AST1700 model
-Thread-Index: AQHcla9ARhJ97lSoxEuMsOC4NjNZxg==
-Date: Wed, 4 Feb 2026 08:21:24 +0000
-Message-ID: <20260204082113.3955407-8-kane_chen@aspeedtech.com>
+ <kaneluno1@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>
+Subject: [PATCH v7 06/22] hw/arm/aspeed: Integrate interrupt controller for
+ AST1700
+Thread-Topic: [PATCH v7 06/22] hw/arm/aspeed: Integrate interrupt controller
+ for AST1700
+Thread-Index: AQHcla8/itGmu5FPUUeTNpv6WhfoGg==
+Date: Wed, 4 Feb 2026 08:21:22 +0000
+Message-ID: <20260204082113.3955407-7-kane_chen@aspeedtech.com>
 References: <20260204082113.3955407-1-kane_chen@aspeedtech.com>
 In-Reply-To: <20260204082113.3955407-1-kane_chen@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,92 +69,90 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|PUZPR06MB5586:EE_
-x-ms-office365-filtering-correlation-id: e9c49d0c-c9c7-4f35-b39d-08de63c6628f
+x-ms-office365-filtering-correlation-id: fa7478cd-fa22-4c4c-0f19-08de63c661ad
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|376014|38070700021; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?xr6J5hghMbEN29RH3bfG1/k0NpQGz7VKm5ApkzqbxQDVSRII4R3ceiXR3b?=
- =?iso-8859-1?Q?r/f143Umi+BftTuWKb45rMF1wm7iR+BkCFjU2xXGqn0yxjiU9pq7JbJ/57?=
- =?iso-8859-1?Q?BtGgw8GfftXZX4OWXBMc/PPSo3DFYqz6mRv5oJs3rf5hRuTuXZV9289P1y?=
- =?iso-8859-1?Q?oARlmzk3Ju1MtUc1j1tZg5G6wrgBk57oLlZ/wQJ3uN+rd6D/KRjJJXj23m?=
- =?iso-8859-1?Q?McloWeHltOJZPiB/7QTObKMLtezvJK2zPyFW9pqFhpfRGjlmwYaL34znsx?=
- =?iso-8859-1?Q?pHkHjrHl4W0YRyPfPMdt/eDPYzqJX2f8cDX2Pp9WavKc7k1TlS0IwmrkwL?=
- =?iso-8859-1?Q?jsi0kkLlFYVQpZo8cBdxSuvlYPzGOtAmtnCwa1CNTRBIbQMm/DlapfXaYG?=
- =?iso-8859-1?Q?PNTeANNab0Qv9copCVXGSO/MhoYuIxKi3LExsI1PWWNtdsAsnkoROBQdl6?=
- =?iso-8859-1?Q?xzJMevef/ueXjlthVhS0WjrClX6lYSZKvGrH73zc4VqkgShBVZLcWBa6ID?=
- =?iso-8859-1?Q?BkowtyfMtU2qSnCvHhejfQSJSyWesUY/FFu4aUFNa2zN9mlDWDm5E4kKnG?=
- =?iso-8859-1?Q?bGcrnR8hKJTz+GxOWAby70mzFIt7DXp2IUC3QHwykHdJw8VvzsvWhYXLwi?=
- =?iso-8859-1?Q?/5j8nLhaAUS39hiozErdHVA/ZP89L9Nb+GZCnyt8uuT44m5k6r+y3GohS3?=
- =?iso-8859-1?Q?3bHu2Zz+Z3zQ+6P/+/8oHdeV3e++k7AiESgpvt8jEi4TKkXgd5olV4tOjI?=
- =?iso-8859-1?Q?LJkj0Qn8KZb1qhZlTiziCf9fse1wsirUhAEem1UGLVOf7MyMLK7pFS0IXM?=
- =?iso-8859-1?Q?t8jL1O/bH7q0p+Qg9Mg3PJtViLLAMQtFY/MimZvlbgIbbCPYG69F2VQMpr?=
- =?iso-8859-1?Q?CQ8DFsp/kkCJmKJ1vJitPmDUlkaGUphLIhBjSeRJgx8HB4cYBtncjTPale?=
- =?iso-8859-1?Q?cIir9B8CKNo1h2xWJWWH41Cv3AHys3XLaUp2P8k3/rWU4JULqdDJi5gLSw?=
- =?iso-8859-1?Q?wBVpFGEDlVyxNJJzy4YiB8g/WXHoV0Ct9aZIJdeMXmcjJIAyggWk41CoS9?=
- =?iso-8859-1?Q?tG+RcBlfR0L86Cbz5c8yl4ubN/5EiBf+MtF28P3D5nxGeUErS6cgn15FWK?=
- =?iso-8859-1?Q?fQXxtMLZAUH8Su5NWvPKmdW9gjVkrJPeU3tVrdBDf3M657Ycz/4H2kqg8Q?=
- =?iso-8859-1?Q?6F6rIA8MlDqwL6SluZ1f8XZqfafUdH9w7PjpWBkQs8ndhszdFCF0XM7FbH?=
- =?iso-8859-1?Q?JaB6eyOgZEhDgd02Am3G0ikllsGtfMzR+iCYf0ems96PcMYWVdAse8PQFF?=
- =?iso-8859-1?Q?FkrG0Fstr3k8zhBnUVi341SMpoTrfRwoxdjlzVwgMJEoK0Yqsem3LSGYyJ?=
- =?iso-8859-1?Q?le0ZJ5NW4sb+FYmhm1M6vbxz91+zLiPlqgXkdLYsYaX9nBLRsVWAumSCm5?=
- =?iso-8859-1?Q?zZJ70s037Zm+7ggQvAC+1FXAlq6hYovkEp/AE6c1tPR9c0xaT7IUc6DTgZ?=
- =?iso-8859-1?Q?tuHREPnD+eVxVB4EMLJW9h+aD8nXziIhmO2GjnlqC+r7sVzCtJs1wInaGj?=
- =?iso-8859-1?Q?cv39dtIcnb+f6rpMFhcdRRVQCVWdV2KskmapO+sI4F7KRzLVYZDIAcS7yv?=
- =?iso-8859-1?Q?+cPzeYoNGDnJPQ4yPqFZMiOWc5n5BytuOsmGyLW5wUMXqxEQRUdeaNfy8B?=
- =?iso-8859-1?Q?Jc8N59i3ysoY8/nVB+s=3D?=
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?OT7Op5Wx7MODfuUyP6WAU54P4LqdNWIRH+gPLxa61qgqEoStfKkhkWeKzf?=
+ =?iso-8859-1?Q?zCR545sPchmKHDdqCFbM+VFKrq7BFJNw4SBkbwWqyn8js8jrJTXhYqeJZz?=
+ =?iso-8859-1?Q?iArHOaF3+DjNMCLyf42ULXz4cgOXQJPBY+h9UVQ/hVjA67YCE4oNb2fBKV?=
+ =?iso-8859-1?Q?zxHEvFRPnpYgT7hxAWWDRLUGT5TW2VKlESNBax3n+eE2XQyLk2xplAkwKl?=
+ =?iso-8859-1?Q?O7ld2iwutCqOqW3ywozHNMibbIDBH1bdb4Ne4xiOG25LJY9TWzwZ1JQAd/?=
+ =?iso-8859-1?Q?pFcDTipcx8MLhxAMXXj+3p24cmbKTdiWxK9uj33x97hSBJt4zs/3x/wpQ0?=
+ =?iso-8859-1?Q?H1SP+CImHpZye9/LQFcGCf0wrAgb/9WwzIF3C+3H4O8cD3oRQf3AxTXQU7?=
+ =?iso-8859-1?Q?GMrCbzXypuDBIi5PpMyNbfKQ3JWI9WR+mugi4l2folpKlinb6zARhYf/Eo?=
+ =?iso-8859-1?Q?o/US8GC6/BOI4JoTHKHhQ1sIGOgicbb2KpH3joMJK2smv4M/Mj16YJY5F2?=
+ =?iso-8859-1?Q?vf1KCozW/eqaSHewbR4NhK1dgIgJP2Eof5Yv8rKQkTYD1IBI2/TpOkOFBN?=
+ =?iso-8859-1?Q?n5ZzO6hMHyE+q/RUN3N1ar4TeFgN/oorIdz4N9WZPgvlotL0yc9eRZer5n?=
+ =?iso-8859-1?Q?8fGAQhW6gRDAs2Fma3p6j7E/Db9nqyW37OE0oDWOfhx1IOSTD8iPJOzwcQ?=
+ =?iso-8859-1?Q?ZIBtnrieTHJvuG3/aOxLljQA4skSRNe+k+3oEE4TRZLLYKr49JkEBILDNm?=
+ =?iso-8859-1?Q?WOxeR0302cK+qJx1jPwHSnQvx5TOxVzpHpy9gZuFqzI2Ivw9IImG2QIdGF?=
+ =?iso-8859-1?Q?VwroG6w+FsFpsH/w+ZGwETe9GofID+wNPpZowxkuqZHwT/fWkGVv8TLPil?=
+ =?iso-8859-1?Q?CoB1qWTYA8VKNtKnzVXBXmNB86txCXwLgOCndPiBASaiuHO4E29EEPvNfm?=
+ =?iso-8859-1?Q?vtbzlTi/D+4qF4yW8cnyW/0nmZMgemHVCGB5oL1cZfjyfpK/cySwj/1iWa?=
+ =?iso-8859-1?Q?RviCuvxfCvcP1kecbDPUX93xqv8ZC4ss07wfSIPXnZCgEBAF2rX0dNBIdc?=
+ =?iso-8859-1?Q?Ge51oN+7jVLdXjGdfGZsos3YNp4jDGOF98ZuV3b/2WTOakT3IuCn/dO8Yg?=
+ =?iso-8859-1?Q?KIlFw0dGZva2o472i0l0/m67+KWhkgvrmoBdehiSwXT5k89ZyYCjv7o726?=
+ =?iso-8859-1?Q?J1KOkKBRkDDzlYR1ktjp8FQihS1Ers9razddnG/ONRAcofPrk44THvjUt7?=
+ =?iso-8859-1?Q?2J6TcwLtr3G1IaQN+gnIToVrBp5KbtGYyYiMWEtzxiHM5K0XXuhq2OPbol?=
+ =?iso-8859-1?Q?8y20PFL2HTciuG8hy+syeiA3ebrCgPcC/QYBRKJi9sjgp0uFAV4H7hOxvz?=
+ =?iso-8859-1?Q?WlCGGBwp6tIm2IoZOAIYXZDvx4Tq/3Y4F5CyKjEaH4XOWp5mBPrEgUHPqm?=
+ =?iso-8859-1?Q?O5aNjiVPLsohKtBwdr2b1dG+r6rh9M4iQTbV4ZehHblVJtJUiJvB2AwiVy?=
+ =?iso-8859-1?Q?DbB83tXA9hfkNbUkSZDTyv2XUXjqiSDJ6821wVlWtSjOBwV9cNeIoaZgAP?=
+ =?iso-8859-1?Q?Jd/imnt2o75SwI/XpTf6OiGca3pEwJs39whl0Gx+7gqHmAZ6ThLuE69G0D?=
+ =?iso-8859-1?Q?NTwjEQS6SPodjEXxT//gIYfQic7F/kigiNOdExuh7q368BtSu5F0gsTXj4?=
+ =?iso-8859-1?Q?gidDguWBv9lnCl0rD2k=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021); DIR:OUT;
- SFP:1102; 
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DhEeSvL37N/ASi2kM/PYzdazP4fSOSCK3TNNdKeevSQe2QMVMPOtpylNKK?=
- =?iso-8859-1?Q?XTrAohKQhyXqGLnLvBOMYWBJdOhPaatVnBtSlOCnR6ocrcwi0IskpTIcrd?=
- =?iso-8859-1?Q?Ie+3ChDb/wJr0t+5S2q9q3KTdyGfwlMp4j9Jj+FDhUc7ZTy6TBdhlzqoSO?=
- =?iso-8859-1?Q?dB4obocxz8YTkS8I18ynXT1erJvCa36p6jCEwjKOcE2cWs0gSyYun1On3L?=
- =?iso-8859-1?Q?wjWRYaxqq88GXvn7UCcessTZEHY3ikI95MmOwZEkfuU5jL33vOPoQjJl9k?=
- =?iso-8859-1?Q?W0WM0OuwHflF0n6VlFJpqXkVZ6VZWx9i6dET9LHv1d+GwSkFTNEIZM1PAs?=
- =?iso-8859-1?Q?1uHTIfgdaFqeieLazDViXJnBOckWBQJe8dKjOpvXbUgoJXT+R0uYDO9ftd?=
- =?iso-8859-1?Q?3a1cD9x6nm3CRO/ZRX+6Y3UZbsvZONDtIlk4oqAeUnmk1wT0JGL80FbAj+?=
- =?iso-8859-1?Q?Mua5eh1nR66fMy/0ogkzsAcUMEtR/wl8bodQvV0b5nfYXI6AlMQKm8zcQ2?=
- =?iso-8859-1?Q?cVNzfrtQdJEx0hNGuI38VedqGl4FoEtuJyOL7LDHVO0A96UoIA9L+w4BD+?=
- =?iso-8859-1?Q?4pLq9nlRl3+u6nxNUClF2t3AGQ2UqI8mceNh2pC5k9uFSKnB/2HHiQ+md7?=
- =?iso-8859-1?Q?DYy6FewutF9MP4JlGRbGIGagL0jKOEXh7BCGcCnoLuToP2Ck6Vz+E7frV1?=
- =?iso-8859-1?Q?ZY+QQerK3H+tb7CHe5OY+sJ9Vr6mJAX9QGk23wLaQyc3Ed5ZMrOwEI7Cy8?=
- =?iso-8859-1?Q?EVSM5t9/BwJVXF8z8Pr1lN8jk50sRy9pZsbbj9oJfWoX/BIAH+XEjpNqgi?=
- =?iso-8859-1?Q?kFxOqLbNLTp6TCg1iOtQeG4FPuRhBg8wLkJ+y6BLooNl98vfPATPNABA4F?=
- =?iso-8859-1?Q?e2OdeJI1eQiOaEae1wY9kjJ8/dHhBXd2/pRIfbp5Z8N9IT5ACkCQyZOkC1?=
- =?iso-8859-1?Q?Nz0IbM/w4DplDwjntj/nFYd7u1FsVohZ9B/CCgJ3g4r0b6kQ3bvD2gS0gd?=
- =?iso-8859-1?Q?At8tBPVrCJiWOxIbQPm80ozy0VrU/PE0xGaG0RXUyvxGfz42o0CcIBAWI7?=
- =?iso-8859-1?Q?FSHPYRMeZzie/nXR70XOKJ6D8cXhfzFjdhix9CwAfnrWLKE++ZWTxaCKsp?=
- =?iso-8859-1?Q?Pp4YuD1ZLWmfXwOw8kYhl83ta4sj0A/S3FtbxTqZ9TWK7/MzYOyxoyktu4?=
- =?iso-8859-1?Q?rsjtLxblehRn1YiPk6AiLpgG9KyIiGxCRZPDS9bJTfZALPlAE9F6gIFwq9?=
- =?iso-8859-1?Q?tHrkPY030aE3sxiSRFwRMUtzSt+s4zSg6W8CSyvSNAmQ7gti1l9+ihO9XQ?=
- =?iso-8859-1?Q?PPMkZKSCJG95XFQ8gpPaBNXUBKtUsdET8sDkYQGta0yKQBH82ntJu497Pe?=
- =?iso-8859-1?Q?mJUpxu3QHN6mxJ7uzxNdUksY/WyK1GeHv/O8XsB5Tq49jgim5AZS5QZiRM?=
- =?iso-8859-1?Q?oLz4DA5ehoLntqjiS1jg/LYdB+99wfkvyP1zaFMuHfs4UICHpQ78P2WGUM?=
- =?iso-8859-1?Q?figjqz90nS0GwlKXoEl6p/dAlx/zH4qsAwHWhKdXZ1+gBusYjSPDxjYdyP?=
- =?iso-8859-1?Q?WSfIdKcrnNNogqg4i8xtvHXPlhZnPjawXBGitWRiQIvWxXltjdwuC3BJhU?=
- =?iso-8859-1?Q?PE6Y8X3KtJ4gL8bF3bYN6lBTUBaN6X2RLQc6MYW8if9KNxSWXhxex+o9lX?=
- =?iso-8859-1?Q?9IA2nedIQwqcMdH34ndX/Cl08ITT4iSk8xfMLNk3/o4ZtVhdw7zElMy/6z?=
- =?iso-8859-1?Q?VxnQYGhXnhjCR+3ECcaaE+qBGms2QWkkJmh3OlZt/oAsPLyICFCuiidYn1?=
- =?iso-8859-1?Q?4cmXdpXPJQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?sIo+T6m1qO7P6PhkEQmAc4FKVJC50oetoZdddriGW0s5NtU5WGA0Z2Dza4?=
+ =?iso-8859-1?Q?WUG4nUDAOmA5Aq72KuKNEZkKpvQ1yFeOcMdG/B8DohpkMZaQkabZgA9D8T?=
+ =?iso-8859-1?Q?8d49+Rufl2MkW2/v3JySl6+CPTRXRiDSBwsGOJdHoNYou6e5K4hHXNcWaW?=
+ =?iso-8859-1?Q?aiWp8bTDWBxc9w1sQIIVyzdMZ1uaUY4OTqbk2K27F4NLYTH738d/6jUkm3?=
+ =?iso-8859-1?Q?4hfVXmEOmGC/uY6uexGPabWYCjY0/jMJKu43drhVdKCT2ZNx9v3pc5+jtb?=
+ =?iso-8859-1?Q?weeX1ByqqMn8DnIaxNiXMuji0qYG8ZDH0G6S95/jeaOj2y+iGfIoRGsDBX?=
+ =?iso-8859-1?Q?x1kZ4LVBYrRmckch2AK3bjC8giq/58Y5xWctnR5tIXsk3Bzz9u1Ew6VFB7?=
+ =?iso-8859-1?Q?2/7fofsOh8WhveLkynqDrYzfEu4MopIbA18pEqAYKKil0b0VIyN/xfuXLp?=
+ =?iso-8859-1?Q?AOVL6e6XtJ2ltT1/H+5xVAZQ53JI5mH4CE0nvuBqHhuSsMtuCt8+bzKtpe?=
+ =?iso-8859-1?Q?HmUrTeJeU3SSWH1Bt+jsIaE8nlTd1vwqqsa8GatSsyO6fmdpiOyF1yLL2u?=
+ =?iso-8859-1?Q?dpAikh+fz/X4je1zCnKs/6GIYVnn1hDo2YhGDBo2fbMwuSfmh/czbmxkkV?=
+ =?iso-8859-1?Q?Wl/L7y+k/V1QwwGlaT1P47xgLby/cYjJtODvreIcxbFGVFOllhLGjCgFtO?=
+ =?iso-8859-1?Q?NHf9pOZu91h3IEdZvObrlf+mZ9zUEHDgdyXxv0/JTsrzoEYbGncoqxkiL9?=
+ =?iso-8859-1?Q?QwZxCROjJ/W3WM4+KcBCOYgWpOfD1+UlFTESur+8RvK0FPE+f2jxXXRjld?=
+ =?iso-8859-1?Q?1rsKcLyMSezu3NWOqK0KW3CmWLvb0e3mvDFMDyaut14OI9mx8M87tXQscM?=
+ =?iso-8859-1?Q?KsCpxwOoKxPdH6N6mg8X/lmjR9eVw9aOWCox3GDE6vYSFnlgaOazVrZMpY?=
+ =?iso-8859-1?Q?wrLU/OVuTLzCyxoHFmN9xRUwP4SxGUtbgW0uDoZjsE4z8vhcc04tlSmXGQ?=
+ =?iso-8859-1?Q?LY88sCVsZ9xEBXLO7ylIme/KM+WAA6NYzJAXrBXMbKsJlC2kFzYjJBunvu?=
+ =?iso-8859-1?Q?6TACrBPd2i88q3c7yF3Tu5sgkv5kEHjTUNBGMZnTRD9WnhD9fSepUUOYoF?=
+ =?iso-8859-1?Q?ltFnU/Tsl9x8QsX1SNNYuspCNIKxocN6gzQ5eTvTTfi3fH7hq47G2QGaLv?=
+ =?iso-8859-1?Q?oQRXtu+tKgFhVzp4DAJvvcHmOspYXBBhTiQxeHylucK74Tlc2l5BaquAEQ?=
+ =?iso-8859-1?Q?dCenGjW/UViJVnXReM9VF6Mmm3s04UpElAEE4nTTAbw8OICR6XmkjqJlzk?=
+ =?iso-8859-1?Q?XCM4vuZoxdLee05Od9zZe+osKDjfniKbwvXiB8Txqzt5G5up4Yeq3kb/LD?=
+ =?iso-8859-1?Q?HNMvgg12tm1OIt2mD5v82hiaRDNPXM0YPpJzgLIiZdcJsDw9vdTDA6ypIe?=
+ =?iso-8859-1?Q?PupR8XNXEnk2e5QSw6ovMNz7c33FvrMnA7sjLuWg9YkyxnIL19xaGDMAUv?=
+ =?iso-8859-1?Q?V2tdmN96WTHdk4jt+sTOJVkZioZOrt0QnkHoKdsEHGm1kg6H+vlxtnmzvg?=
+ =?iso-8859-1?Q?s70FmP/zAocDJeNZmuvGek4wYECDMCQMsf5dx42KY2vhLjAnyuIn1NiSSL?=
+ =?iso-8859-1?Q?yu8afbwJF5gPJv5be+Rk+WqQVs/YI5wlxKboM9kuN6ZNGaBxcCykmt0NvF?=
+ =?iso-8859-1?Q?50hJj+WxS3G9v6EeE9gqrmYer72g9vlTrjbifYuXrOsguq4UDqAdRJB6nb?=
+ =?iso-8859-1?Q?s5yzkRkjcHjvR0tRXEP13874aNMciAxrhrFLyHzDqj+QC2Cpkjdegx04N8?=
+ =?iso-8859-1?Q?1fc86+95Xw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9c49d0c-c9c7-4f35-b39d-08de63c6628f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2026 08:21:24.1095 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa7478cd-fa22-4c4c-0f19-08de63c661ad
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2026 08:21:22.5969 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OAFUWgnDCDU3J0LulAcdOy3K9XEKlZXK1So33bzZzmhAFxHkgvRsNT099goYECxvlz8L/aiBB47L2VOHCyMqFTTfCIu9MXGNS2ubeJwhDLk=
+X-MS-Exchange-CrossTenant-userprincipalname: 2c4MinHUymTmftUIX2l0pae4cID9VdQGjCJ39IgtL8LpYuWc2KzkrFIwZ7xV8hLfDaQDNDFj7upRB6vX7aT+jrgyeOgzG2X8mCTeOP3GA90=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5586
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -178,97 +174,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Connect the LTPI controller to the AST1700 model by mapping its MMIO=0A=
-region.=0A=
+Connect the AST1700 interrupt lines to the GIC in AST27X0, enabling=0A=
+the propagation of AST1700-originated interrupts to the host SoC.=0A=
+=0A=
+This patch does not implement interrupt sources in AST1700 itself,=0A=
+only the wiring into AST27X0.=0A=
 =0A=
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>=0A=
-Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>=0A=
-Tested-by: Nabih Estefan <nabihestefan@google.com>=0A=
 ---=0A=
- include/hw/arm/aspeed_ast1700.h |  3 +++=0A=
- hw/arm/aspeed_ast1700.c         | 28 ++++++++++++++++++++++++++++=0A=
- 2 files changed, 31 insertions(+)=0A=
+ include/hw/arm/aspeed_soc.h   |  6 +++-=0A=
+ include/hw/intc/aspeed_intc.h |  2 ++=0A=
+ hw/arm/aspeed_ast27x0.c       | 37 +++++++++++++++++++++=0A=
+ hw/intc/aspeed_intc.c         | 60 +++++++++++++++++++++++++++++++++++=0A=
+ 4 files changed, 104 insertions(+), 1 deletion(-)=0A=
 =0A=
-diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast170=
-0.h=0A=
-index 378dcb437a..addea3ab1f 100644=0A=
---- a/include/hw/arm/aspeed_ast1700.h=0A=
-+++ b/include/hw/arm/aspeed_ast1700.h=0A=
-@@ -9,6 +9,7 @@=0A=
- #define ASPEED_AST1700_H=0A=
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
+index f19bab3457..b051d0eb3a 100644=0A=
+--- a/include/hw/arm/aspeed_soc.h=0A=
++++ b/include/hw/arm/aspeed_soc.h=0A=
+@@ -58,6 +58,7 @@=0A=
+ #define ASPEED_UARTS_NUM 13=0A=
+ #define ASPEED_JTAG_NUM  2=0A=
+ #define ASPEED_PCIE_NUM  3=0A=
++#define ASPEED_INTC_NUM  2=0A=
+ #define ASPEED_IOEXP_NUM 2=0A=
  =0A=
- #include "hw/core/sysbus.h"=0A=
-+#include "hw/misc/aspeed_ltpi.h"=0A=
+ struct AspeedSoCState {=0A=
+@@ -146,7 +147,8 @@ struct Aspeed27x0SoCState {=0A=
+     AspeedSoCState parent;=0A=
  =0A=
- #define TYPE_ASPEED_AST1700 "aspeed.ast1700"=0A=
- =0A=
-@@ -18,6 +19,8 @@ struct AspeedAST1700SoCState {=0A=
-     SysBusDevice parent_obj;=0A=
- =0A=
-     MemoryRegion iomem;=0A=
-+=0A=
-+    AspeedLTPIState ltpi;=0A=
+     ARMCPU cpu[ASPEED_CPUS_NUM];=0A=
+-    AspeedINTCState intc[2];=0A=
++    AspeedINTCState intc[ASPEED_INTC_NUM];=0A=
++    AspeedINTCState intcioexp[ASPEED_IOEXP_NUM];=0A=
+     GICv3State gic;=0A=
+     MemoryRegion dram_empty;=0A=
+ };=0A=
+@@ -288,6 +290,8 @@ enum {=0A=
+     ASPEED_DEV_LTPI_CTRL2,=0A=
+     ASPEED_DEV_LTPI_IO0,=0A=
+     ASPEED_DEV_LTPI_IO1,=0A=
++    ASPEED_DEV_IOEXP0_INTCIO,=0A=
++    ASPEED_DEV_IOEXP1_INTCIO,=0A=
  };=0A=
  =0A=
- #endif /* ASPEED_AST1700_H */=0A=
-diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c=0A=
-index dd38b819b8..e4c8565d3f 100644=0A=
---- a/hw/arm/aspeed_ast1700.c=0A=
-+++ b/hw/arm/aspeed_ast1700.c=0A=
-@@ -13,6 +13,14 @@=0A=
+ const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);=0A=
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h=
+=0A=
+index 5d10268fff..b25ef4a464 100644=0A=
+--- a/include/hw/intc/aspeed_intc.h=0A=
++++ b/include/hw/intc/aspeed_intc.h=0A=
+@@ -15,6 +15,8 @@=0A=
+ #define TYPE_ASPEED_INTC "aspeed.intc"=0A=
+ #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"=0A=
+ #define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io-ast2700"=0A=
++#define TYPE_ASPEED_2700_INTCIOEXP1 TYPE_ASPEED_INTC "-ast2700-ioexp1"=0A=
++#define TYPE_ASPEED_2700_INTCIOEXP2 TYPE_ASPEED_INTC "-ast2700-ioexp2"=0A=
+ #define TYPE_ASPEED_2700SSP_INTC TYPE_ASPEED_INTC "-ast2700ssp"=0A=
+ #define TYPE_ASPEED_2700SSP_INTCIO TYPE_ASPEED_INTC "io-ast2700ssp"=0A=
+ #define TYPE_ASPEED_2700TSP_INTC TYPE_ASPEED_INTC "-ast2700tsp"=0A=
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c=0A=
+index a05112e2b0..d9866c2c3b 100644=0A=
+--- a/hw/arm/aspeed_ast27x0.c=0A=
++++ b/hw/arm/aspeed_ast27x0.c=0A=
+@@ -91,7 +91,9 @@ static const hwaddr aspeed_soc_ast2700_memmap[] =3D {=0A=
+     [ASPEED_DEV_LTPI_CTRL2] =3D  0x14C35000,=0A=
+     [ASPEED_DEV_WDT]       =3D  0x14C37000,=0A=
+     [ASPEED_DEV_LTPI_IO0]  =3D  0x30000000,=0A=
++    [ASPEED_DEV_IOEXP0_INTCIO] =3D 0x30C18000,=0A=
+     [ASPEED_DEV_LTPI_IO1]  =3D  0x50000000,=0A=
++    [ASPEED_DEV_IOEXP1_INTCIO] =3D 0x50C18000,=0A=
+     [ASPEED_DEV_PCIE_MMIO0] =3D 0x60000000,=0A=
+     [ASPEED_DEV_PCIE_MMIO1] =3D 0x80000000,=0A=
+     [ASPEED_DEV_PCIE_MMIO2] =3D 0xA0000000,=0A=
+@@ -446,6 +448,10 @@ static void aspeed_soc_ast2700_init(Object *obj)=0A=
+     object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INT=
+C);=0A=
+     object_initialize_child(obj, "intcio", &a->intc[1],=0A=
+                             TYPE_ASPEED_2700_INTCIO);=0A=
++    object_initialize_child(obj, "intc-ioexp0", &a->intcioexp[0],=0A=
++                            TYPE_ASPEED_2700_INTCIOEXP1);=0A=
++    object_initialize_child(obj, "intc-ioexp1", &a->intcioexp[1],=0A=
++                            TYPE_ASPEED_2700_INTCIOEXP2);=0A=
  =0A=
- #define AST2700_SOC_LTPI_SIZE        0x01000000=0A=
+     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);=0A=
+     object_initialize_child(obj, "adc", &s->adc, typename);=0A=
+@@ -690,6 +696,22 @@ static void aspeed_soc_ast2700_realize(DeviceState *de=
+v, Error **errp)=0A=
+     aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[1]), 0,=0A=
+                     sc->memmap[ASPEED_DEV_INTCIO]);=0A=
  =0A=
-+enum {=0A=
-+    ASPEED_AST1700_DEV_LTPI_CTRL,=0A=
-+};=0A=
-+=0A=
-+static const hwaddr aspeed_ast1700_io_memmap[] =3D {=0A=
-+    [ASPEED_AST1700_DEV_LTPI_CTRL] =3D  0x00C34000,=0A=
-+};=0A=
-+=0A=
- static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)=0A=
- {=0A=
-     AspeedAST1700SoCState *s =3D ASPEED_AST1700(dev);=0A=
-@@ -22,6 +30,25 @@ static void aspeed_ast1700_realize(DeviceState *dev, Err=
-or **errp)=0A=
-     memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,=0A=
-                        AST2700_SOC_LTPI_SIZE);=0A=
-     sysbus_init_mmio(sbd, &s->iomem);=0A=
-+=0A=
-+    /* LTPI controller */=0A=
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {=0A=
++    /* INTCIOEXP0 */=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intcioexp[0]), errp)) {=0A=
 +        return;=0A=
 +    }=0A=
-+    memory_region_add_subregion(&s->iomem,=0A=
-+                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI_C=
-TRL],=0A=
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi), 0=
-));=0A=
-+}=0A=
 +=0A=
-+static void aspeed_ast1700_instance_init(Object *obj)=0A=
-+{=0A=
-+    AspeedAST1700SoCState *s =3D ASPEED_AST1700(obj);=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intcioexp[0]), 0,=0A=
++                    sc->memmap[ASPEED_DEV_IOEXP0_INTCIO]);=0A=
 +=0A=
-+    /* LTPI controller */=0A=
-+    object_initialize_child(obj, "ltpi-ctrl",=0A=
-+                            &s->ltpi, TYPE_ASPEED_LTPI);=0A=
++    /* INTCIOEXP1 */=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intcioexp[1]), errp)) {=0A=
++        return;=0A=
++    }=0A=
 +=0A=
-+    return;=0A=
- }=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intcioexp[1]), 0,=0A=
++                    sc->memmap[ASPEED_DEV_IOEXP1_INTCIO]);=0A=
++=0A=
+     /* irq sources -> orgates -> INTC */=0A=
+     for (i =3D 0; i < ic->num_inpins; i++) {=0A=
+         qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,=0A=
+@@ -1006,6 +1028,21 @@ static void aspeed_soc_ast2700_realize(DeviceState *=
+dev, Error **errp)=0A=
+         }=0A=
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioexp[i]), 0,=0A=
+                         sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);=0A=
++=0A=
++        icio =3D ASPEED_INTC_GET_CLASS(&a->intcioexp[i]);=0A=
++        /* INTC_IOEXP internal: orgate[i] -> input[i] */=0A=
++        for (int j =3D 0; j < icio->num_inpins; j++) {=0A=
++            irq =3D qdev_get_gpio_in(DEVICE(&a->intcioexp[i]), j);=0A=
++            qdev_connect_gpio_out(DEVICE(&a->intcioexp[i].orgates[j]), 0,=
+=0A=
++                                  irq);=0A=
++        }=0A=
++=0A=
++        /* INTC_IOEXP output[i] -> INTC0.orgate[0].input[i] */=0A=
++        for (int j =3D 0; j < icio->num_outpins; j++) {=0A=
++            irq =3D qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), j);=
+=0A=
++            sysbus_connect_irq(SYS_BUS_DEVICE(&a->intcioexp[i]), j,=0A=
++                               irq);=0A=
++        }=0A=
+     }=0A=
  =0A=
- static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data=
-)=0A=
-@@ -36,6 +63,7 @@ static const TypeInfo aspeed_ast1700_info =3D {=0A=
-     .parent        =3D TYPE_SYS_BUS_DEVICE,=0A=
-     .instance_size =3D sizeof(AspeedAST1700SoCState),=0A=
-     .class_init    =3D aspeed_ast1700_class_init,=0A=
-+    .instance_init =3D aspeed_ast1700_instance_init,=0A=
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),=0A=
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c=0A=
+index 77fae39205..52f2f946d5 100644=0A=
+--- a/hw/intc/aspeed_intc.c=0A=
++++ b/hw/intc/aspeed_intc.c=0A=
+@@ -793,6 +793,64 @@ static const TypeInfo aspeed_2700_intc_info =3D {=0A=
+     .class_init =3D aspeed_2700_intc_class_init,=0A=
  };=0A=
  =0A=
- static void aspeed_ast1700_register_types(void)=0A=
++static AspeedINTCIRQ aspeed_2700_intcioexp2_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
++    {0, 8, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
++    {1, 9, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
++};=0A=
++=0A=
++static void aspeed_2700_intcioexp2_class_init(ObjectClass *klass,=0A=
++                                              const void *data)=0A=
++{=0A=
++    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
++    AspeedINTCClass *aic =3D ASPEED_INTC_CLASS(klass);=0A=
++=0A=
++    dc->desc =3D "ASPEED 2700 IOEXP2 INTC Controller";=0A=
++    aic->num_lines =3D 32;=0A=
++    aic->num_inpins =3D 2;=0A=
++    aic->num_outpins =3D 10;=0A=
++    aic->mem_size =3D 0x400;=0A=
++    aic->nr_regs =3D 0x58 >> 2;=0A=
++    aic->reg_offset =3D 0x100;=0A=
++    aic->reg_ops =3D &aspeed_intcio_ops;=0A=
++    aic->irq_table =3D aspeed_2700_intcioexp2_irqs;=0A=
++    aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intcioexp2_irqs);=0A=
++}=0A=
++=0A=
++static const TypeInfo aspeed_2700_intcioexp2_info =3D {=0A=
++    .name =3D TYPE_ASPEED_2700_INTCIOEXP2,=0A=
++    .parent =3D TYPE_ASPEED_INTC,=0A=
++    .class_init =3D aspeed_2700_intcioexp2_class_init,=0A=
++};=0A=
++=0A=
++static AspeedINTCIRQ aspeed_2700_intcioexp1_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
++    {0, 6, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
++    {1, 7, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
++};=0A=
++=0A=
++static void aspeed_2700_intcioexp1_class_init(ObjectClass *klass,=0A=
++                                              const void *data)=0A=
++{=0A=
++    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
++    AspeedINTCClass *aic =3D ASPEED_INTC_CLASS(klass);=0A=
++=0A=
++    dc->desc =3D "ASPEED 2700 IOEXP1 INTC Controller";=0A=
++    aic->num_lines =3D 32;=0A=
++    aic->num_inpins =3D 2;=0A=
++    aic->num_outpins =3D 10;=0A=
++    aic->mem_size =3D 0x400;=0A=
++    aic->nr_regs =3D 0x58 >> 2;=0A=
++    aic->reg_offset =3D 0x100;=0A=
++    aic->reg_ops =3D &aspeed_intcio_ops;=0A=
++    aic->irq_table =3D aspeed_2700_intcioexp1_irqs;=0A=
++    aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intcioexp1_irqs);=0A=
++}=0A=
++=0A=
++static const TypeInfo aspeed_2700_intcioexp1_info =3D {=0A=
++    .name =3D TYPE_ASPEED_2700_INTCIOEXP1,=0A=
++    .parent =3D TYPE_ASPEED_INTC,=0A=
++    .class_init =3D aspeed_2700_intcioexp1_class_init,=0A=
++};=0A=
++=0A=
+ static AspeedINTCIRQ aspeed_2700_intcio_irqs[ASPEED_INTC_MAX_INPINS] =3D {=
+=0A=
+     {0, 0, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
+     {1, 1, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
+@@ -950,6 +1008,8 @@ static void aspeed_intc_register_types(void)=0A=
+     type_register_static(&aspeed_intc_info);=0A=
+     type_register_static(&aspeed_2700_intc_info);=0A=
+     type_register_static(&aspeed_2700_intcio_info);=0A=
++    type_register_static(&aspeed_2700_intcioexp1_info);=0A=
++    type_register_static(&aspeed_2700_intcioexp2_info);=0A=
+     type_register_static(&aspeed_2700ssp_intc_info);=0A=
+     type_register_static(&aspeed_2700ssp_intcio_info);=0A=
+     type_register_static(&aspeed_2700tsp_intc_info);=0A=
 -- =0A=
 2.43.0=0A=
 
