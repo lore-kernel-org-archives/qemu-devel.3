@@ -4,83 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBD3EA7943
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 22:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E586EEA794D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 23:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnlKW-0001Jc-83; Wed, 04 Feb 2026 17:26:36 -0500
+	id 1vnm63-0007zv-Ox; Wed, 04 Feb 2026 18:15:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vnlKU-0001JM-P0
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 17:26:34 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
+ (Exim 4.90_1) (envelope-from <ravis.opensrc@gmail.com>)
+ id 1vnkgm-0002XS-CJ
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:45:32 -0500
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vnlKR-00068n-He
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 17:26:34 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 1933c59a14224e5cf95fb1cdada9a2ff1f1f95ad0c1f7101bb2ff79632b2e744 with SMTP id
- 6983c78c28aee0c2faf57c18; Wed, 04 Feb 2026 22:26:20 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1770243979;
- bh=42M3jYuOBwCEeszKUkHWdzzriDyip+bJJYEw379DRlI=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=eml4JvMyItlgkaIsmYcAYtOsO2o0awKNEXtXudJOs+FbOGrb1kGkjOLe00+LLMTh3
- XSQKAQeNBhuZj8QUXui9BZDGsyMIpexWlY0kxlkocZ3OxguHpehjByzHQCUEiFXkpk
- tWTHsVX08p9TLufIQRrFtn3/g6aoRbejvEs1FBocxyUX6eqdnd5UASxFkYi2LnrfSr
- 0N96B0kObbdKRpDM4DYcH2Bj1GtmL5d+JXXtwvevH0UNlpGVFQFwN5rno4nssdf6Ja
- wCYzvhE1nECjrBjbBMxVzdAgLVpHbV+jOLB/btnb4f0THa6iKIjp1+WF/J+90NOEYL
- dBKLDdS4MSUYQ==
-Message-ID: <82b54068-8abe-401f-ae03-121daf09e003@yodel.dev>
-Date: Wed, 4 Feb 2026 16:26:18 -0600
+ (Exim 4.90_1) (envelope-from <ravis.opensrc@gmail.com>)
+ id 1vnkgc-0003JQ-8J
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 16:45:32 -0500
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-1233c155a42so446055c88.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 13:44:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770241467; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Aq1VAkIPsSoMHZ3ic5PO3tj4ncw9VB2SCVgsFGOkcjMTyue6seM5fVggWxOvrZbqV7
+ o72QpODJDLrxBxCsssKrBIeLPIa9j83BosBuGtSRsBVU4Hgn6Epbm/HNZmkTVmkz7p4a
+ Do9/k7a6x4lWlqcgH1sp3U03bdTRSPbd/2LJZb9/cf7kYzDrFJEHpKYidjrAD0grifR/
+ S4QrLNK7j3TFUAR2vg+HdhoWpiHiA0dO6vV1SeCJhTpVMeFRb21Ib4Qt7L9ZIFN8iv09
+ 38HQNHcmPK3Z/+yJnbFQRoIaWI8Z8pM2diPS49c/k6SZoZP6eQTKO2RPfD4/LhAYIa/G
+ rS2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PvTtBBJSlojlrae51xh5mjCo03hqZlOza85tsomIVDQ=;
+ fh=n4VmXzZeAcby728BbqFOg6UV9Vk8m+071RLfAy19yhI=;
+ b=Smh0lSzfnxOyUvqzBrCt8zThz5CIiPfIekf9qgbMI20e6+6au+fVj+0hBOPSe2bwrJ
+ uICetGfIYe1r5oliInnMIIkoFn8wSrEa1+V2mejtwMccS04/Fi8j54Ke+O+WVoFZGIxM
+ +26xhDe35T/Mdcapl8sIBLJdOPMyJeqP7qLc2l+2m0Hvj0z2qt/mT7lmvLuj6BbAbnSY
+ PPjc/Jtp1eXS581O3MM4FMtSmBrJdhD9Tol6KyrtFpOiG/1y+IDpVCXZ8nbLA3IWTZpq
+ IpIoCDUnJvK+9m/ggGh5hSK1niIzGH8RGrPaaEcMvYoFDYYOdPVW251Cv6uXPGuJVEBS
+ r0EA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770241467; x=1770846267; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PvTtBBJSlojlrae51xh5mjCo03hqZlOza85tsomIVDQ=;
+ b=awr1yr71H1vlrjHdzQZjQavwYvswU1pz1K8tFcMrQFnEKbxlCno1a8OxCetaQOaDi/
+ vIC9AVCKwxBp7c9CpL6mNAMCdgxx21luBx92V1KLxUad/ohsii5IcwE6ZgmUOAPu6Yvz
+ zuSbu3AabkrjH0BJsprn0ibRUKz2pALMJBPiqx+nsKyNcz3m3x5wSsncjNfFhY1BI/mi
+ 2At2NfbJnxfo6JUnk5Fd0IvFscXjoDZyfaTfI0Q4pvCDdQxanSrtrMK3cVu5iLywLEaj
+ 5Ndu/i0ryWzcQ2dmOMOfID55mL7UpQfHluUdOAuch/SmACbhifQasvnGsMeOXKJ4WwKc
+ inKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770241467; x=1770846267;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PvTtBBJSlojlrae51xh5mjCo03hqZlOza85tsomIVDQ=;
+ b=w1xZ+I328VBnXIDO2Lv0l2GVQ7tC7/QBMQahPxU0xhdrvDqGxb2640jxgit4BVXLp6
+ pqwGevtPfFv+HgyOO4qEeYqN4sPWhr0r8EcVWFEAMwh3TJgvwkJv6cYCJclfT12uTesK
+ 229mN4sAuSkagQ/MlYTWd8DNF0Pk2hAA5Juyprz8bkepUUJIqxfBo7dJt9Ney+kbHdDb
+ mH502GJjPU0OZ+gWO9jOpfpKLu0Tvx5bsHsSxZq30c88ED1U8Y6Mv41JuAu4KvAutqh5
+ 87AEikL8eqqljo4hkmv4wlweM4YOJN/9q5uhfVI3uDfnYRCSnvA3OEV7o+l4zGZqK/3v
+ glNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX2uf9eztxfvQ/+TZ8+xcknqCFkWyXNJ9cydfrga8OolcTtabqG1+vtVTZ/WeagRHvCBLYrJwTOlfUD@nongnu.org
+X-Gm-Message-State: AOJu0Ywv0wp63d3IZaf8J2e/Uc4tOMLgUKWpdInWKGZcqYy01py58wTB
+ 3Zeet8IO1xIqYjtyR4894WTvPnJvAAoRyIzZ173oHMSqHiptqxhnoR9eBUwESvVAs2UbRTqU/VU
+ 37HxUwtZVjP/JmCEpvTdISmftAJuzNg==
+X-Gm-Gg: AZuq6aLdu6F3nsJcINV8YN/o4mhRW3uX6hSCaL9sWAoIn1N70Vkr9rEqlIndalfsT91
+ It+gGgIo5Ni8XKAWzQupaxA+YPIc8tQ5iFZzoyPN66BY7nqnlsfAAIDyYpEhn6PANnudmS3VEy5
+ JREqgbyLLt9jfrsUT74oV4BRFIRT3x4iF02pjLhecXCcCLstx3E4akYc0+XZQjBjnhF76BgbasG
+ wj3jMJfRO5L84U+3pfW8oPdZ5aLiKeS/tPKBozUNJBUWgOMxGx3UWEKGoKaLbkzsKprClQ=
+X-Received: by 2002:a05:7022:403:b0:11e:3e9:3e9f with SMTP id
+ a92af1059eb24-126f48ee2cemr1851333c88.50.1770241467170; Wed, 04 Feb 2026
+ 13:44:27 -0800 (PST)
 MIME-Version: 1.0
-Subject: Re: [PATCH] hw/pci: Use correct bus aperture for device container size
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20251124114754.79831-1-philmd@linaro.org>
- <20260204071045-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <20260204071045-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+References: <20260119111542.788389-1-Jonathan.Cameron@huawei.com>
+ <20260119111542.788389-5-Jonathan.Cameron@huawei.com>
+In-Reply-To: <20260119111542.788389-5-Jonathan.Cameron@huawei.com>
+From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Date: Wed, 4 Feb 2026 13:44:14 -0800
+X-Gm-Features: AZwV_Qgepb2j0CPBa1ynab4EN2iLg4ekEsMtjEklsND7qpJKBHYIWjjvjqEGAeI
+Message-ID: <CALa+Y15pZYQU3xB+5xudhPiJVKwd29k0g+itFSgydPoGLoqi_Q@mail.gmail.com>
+Subject: Re: [PATCH qemu v4 4/5] hw/cxl/events: Updates for rev3.2 DRAM event
+ record
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
+ shiju.jose@huawei.com, 
+ armbru@redhat.com, linuxarm@huawei.com, linux-cxl@vger.kernel.org, 
+ Ravi Shankar <venkataravis@micron.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=ravis.opensrc@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 04 Feb 2026 18:15:41 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,81 +122,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 04/02/2026 06:29, Michael S. Tsirkin wrote:
-> On Mon, Nov 24, 2025 at 12:47:54PM +0100, Philippe Mathieu-Daudé wrote:
->> Before commit 3716d5902d7 ("pci: introduce a bus master container")
->> device view of the bus address space was correctly sized to the
->> bus aperture, but then it always used a 64-bit aperture. Restore
->> the previous behavior, so devices on 32-bit PCI only see 32-bit
->> address space.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> 
-> Wait I am confused. Is there a problem this is trying to fix?
-> 
-> 
->> ---
->>   hw/pci/pci.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->> index b1eba348e06..64f33b9de04 100644
->> --- a/hw/pci/pci.c
->> +++ b/hw/pci/pci.c
->> @@ -1375,7 +1375,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
->>       pstrcpy(pci_dev->name, sizeof(pci_dev->name), name);
->>   
->>       memory_region_init(&pci_dev->bus_master_container_region, OBJECT(pci_dev),
->> -                       "bus master container", UINT64_MAX);
->> +                       "bus master container",
->> +                       memory_region_size(bus->address_space_mem));
-> 
-> as far as I can tell this does more than it says it does.
-> 
-> 
-> Look at raven.c:
->                                                                                                                                           
->    h->bus = pci_register_root_bus(d, NULL, raven_set_irq, raven_map_irq,
->                                   s, &s->pci_memory, &s->pci_io, 0, 4,
->                                   TYPE_PCI_BUS);
->                                                                                                                                           
->    The bus is created with &s->pci_memory (1G) as the address space.
->                                                                                                                                           
->    But the actual bus master space (&s->bm at line 285) is 4 G.
->                                                                                                                                           
->    Your patch limits DMA to 1G. No?
-> 
-> failures here (definitely the ppc one)
-> 
-> https://gitlab.com/mstredhat/qemu/-/jobs/12984084992
-> 
-> reverting fixed it:
-> 
-> https://gitlab.com/mstredhat/qemu/-/jobs/12984187692
-> 
-> 
-> 
+On Mon, Jan 19, 2026 at 3:21=E2=80=AFAM Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
 >
+> From: Shiju Jose <shiju.jose@huawei.com>
+>
+> CXL spec rev3.2 section 8.2.10.2.1.2 Table 8-58, DRAM event record
+> has updated with following new fields.
+> 1. Component Identifier
+> 2. Sub-channel of the memory event location
+> 3. Advanced Programmable Corrected Memory Error Threshold Event Flags
+> 4. Corrected Volatile Memory Error Count at Event
+> 5. Memory Event Sub-Type
+>
+> Add updates for the above spec changes in the CXL DRAM event
+> reporting and QMP command to inject DRAM event.
+>
+> In order to ensure consistency update all specification references
+> for this command to CXL r3.2.
+>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+> v4: Update spec reference in related command as well (Markus)
+> v3: Update all spec references for this command to 3.2 for consistency
+>    (Markus)
+> ---
+>  qapi/cxl.json               | 33 ++++++++++++++++++++++-------
+>  include/hw/cxl/cxl_events.h |  9 ++++++--
+>  hw/mem/cxl_type3.c          | 42 +++++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3_stubs.c    |  7 +++++++
+>  4 files changed, 82 insertions(+), 9 deletions(-)
+>
+> diff --git a/qapi/cxl.json b/qapi/cxl.json
+> index 4ff66fc6c16c..1dc8b08ca301 100644
+> --- a/qapi/cxl.json
+> +++ b/qapi/cxl.json
+> @@ -131,21 +131,21 @@
+>  ##
+>  # @CXLDRAMEvent:
+>  #
+> -# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+> +# Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
+>  #
+>  # @dpa: Device Physical Address (relative to @path device).  Note
+> -#     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
+> +#     lower bits include some flags.  See CXL r3.2 Table 8-58 DRAM
+>  #     Event Record, Physical Address.
+>  #
+>  # @descriptor: Memory Event Descriptor with additional memory event
+> -#     information.  See CXL r3.0 Table 8-44 DRAM Event Record, Memory
+> +#     information.  See CXL r3.2 Table 8-58 DRAM Event Record, Memory
+>  #     Event Descriptor for bit definitions.
+>  #
+> -# @type: Type of memory event that occurred.  See CXL r3.0 Table 8-44
+> +# @type: Type of memory event that occurred.  See CXL r3.2 Table 8-58
+>  #     DRAM Event Record, Memory Event Type for possible values.
+>  #
+>  # @transaction-type: Type of first transaction that caused the event
+> -#     to occur.  See CXL r3.0 Table 8-44 DRAM Event Record,
+> +#     to occur.  See CXL r3.2 Table 8-58 DRAM Event Record,
+>  #     Transaction Type for possible values.
+>  #
+>  # @channel: The channel of the memory event location.  A channel is an
+> @@ -169,6 +169,21 @@
+>  # @correction-mask: Bits within each nibble.  Used in order of bits
+>  #     set in the nibble-mask.  Up to 4 nibbles may be covered.
+>  #
+> +# @component-id: Device specific component identifier for the event.
+> +#     May describe a field replaceable sub-component of the device.
+> +#
+> +# @is-comp-id-pldm: This flag specifies whether the device-specific
+> +#     component identifier format follows PLDM.
+> +#
+> +# @sub-channel: The sub-channel of the memory event location.
+> +#
+> +# @cme-ev-flags: Advanced programmable corrected memory error
+> +#     threshold event flags.
+> +#
+> +# @cvme-count: Corrected volatile memory error count at event.
+> +#
+> +# @sub-type: Memory event sub-type.
+> +#
+>  # Since: 8.1
+>  ##
+>  { 'struct': 'CXLDRAMEvent',
+> @@ -177,13 +192,17 @@
+>              'type': 'uint8', 'transaction-type': 'uint8',
+>              '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint=
+32',
+>              '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
+> -            '*column': 'uint16', '*correction-mask': [ 'uint64' ]
+> +            '*column': 'uint16', '*correction-mask': [ 'uint64' ],
+> +            '*component-id': 'str', '*is-comp-id-pldm':'bool',
+> +            '*sub-channel':'uint8',
+> +            '*cme-ev-flags':'uint8', '*cvme-count':'uint32',
+> +            'sub-type':'uint8'
+>             }}
+>
+>  ##
+>  # @cxl-inject-dram-event:
+>  #
+> -# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+> +# Inject an event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
+>  # This event type is reported via one of the event logs
+>  # specified via the log parameter.
+>  #
+> diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+> index 352f9891bd36..a3c5f2ec20e6 100644
+> --- a/include/hw/cxl/cxl_events.h
+> +++ b/include/hw/cxl/cxl_events.h
+> @@ -138,7 +138,7 @@ typedef struct CXLEventGenMedia {
+>
+>  /*
+>   * DRAM Event Record
+> - * CXL r3.1 Section 8.2.9.2.1.2: Table 8-46
+> + * CXL r3.2 Section 8.2.10.2.1.2: Table 8-58
+>   * All fields little endian.
+>   */
+>  typedef struct CXLEventDram {
+> @@ -156,7 +156,12 @@ typedef struct CXLEventDram {
+>      uint8_t row[3];
+>      uint16_t column;
+>      uint64_t correction_mask[4];
+> -    uint8_t reserved[0x17];
+> +    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
+> +    uint8_t sub_channel;
+> +    uint8_t cme_ev_flags;
+> +    uint8_t cvme_count[3];
+> +    uint8_t sub_type;
+> +    uint8_t reserved;
+>  } QEMU_PACKED CXLEventDram;
+>
+>  /*
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index d03a9f0edc29..3da538bafb64 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1783,6 +1783,13 @@ void qmp_cxl_inject_general_media_event(const char=
+ *path, CxlEventLog log,
+>  #define CXL_DRAM_VALID_ROW                              BIT(5)
+>  #define CXL_DRAM_VALID_COLUMN                           BIT(6)
+>  #define CXL_DRAM_VALID_CORRECTION_MASK                  BIT(7)
+> +#define CXL_DRAM_VALID_COMPONENT                        BIT(8)
+> +#define CXL_DRAM_VALID_COMPONENT_ID_FORMAT              BIT(9)
+> +#define CXL_DRAM_VALID_SUB_CHANNEL                      BIT(10)
+> +
+> +#define CXL_DRAM_EV_DESC_UCE                            BIT(0)
+> +#define CXL_DRAM_EV_DESC_THRESHOLD_EVENT                BIT(1)
+> +#define CXL_DRAM_EV_DESC_POISON_LIST_OVERFLOW_EVENT     BIT(2)
+>
+>  void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+>                                 uint32_t flags,
+> @@ -1802,6 +1809,12 @@ void qmp_cxl_inject_dram_event(const char *path, C=
+xlEventLog log,
+>                                 bool has_column, uint16_t column,
+>                                 bool has_correction_mask,
+>                                 uint64List *correction_mask,
+> +                               const char *component_id,
+> +                               bool has_comp_id_pldm, bool is_comp_id_pl=
+dm,
+> +                               bool has_sub_channel, uint8_t sub_channel=
+,
+> +                               bool has_cme_ev_flags, uint8_t cme_ev_fla=
+gs,
+> +                               bool has_cvme_count, uint32_t cvme_count,
+> +                               uint8_t sub_type,
+>                                 Error **errp)
+>  {
+>      Object *obj =3D object_resolve_path(path, NULL);
+> @@ -1888,6 +1901,35 @@ void qmp_cxl_inject_dram_event(const char *path, C=
+xlEventLog log,
+>          valid_flags |=3D CXL_DRAM_VALID_CORRECTION_MASK;
+>      }
+>
+> +    if (component_id) {
+> +        strncpy((char *)dram.component_id, component_id,
+> +                sizeof(dram.component_id) - 1);
+> +        valid_flags |=3D CXL_DRAM_VALID_COMPONENT;
+> +        if (has_comp_id_pldm && is_comp_id_pldm) {
+> +            valid_flags |=3D CXL_DRAM_VALID_COMPONENT_ID_FORMAT;
+> +        }
+> +    }
+> +
+> +    if (has_sub_channel) {
+> +        dram.sub_channel =3D sub_channel;
+> +        valid_flags |=3D CXL_DRAM_VALID_SUB_CHANNEL;
+> +    }
+> +
+> +    if (has_cme_ev_flags) {
+> +        dram.cme_ev_flags =3D cme_ev_flags;
+> +    } else {
+> +        dram.cme_ev_flags =3D 0;
+> +    }
+> +
+> +    if (has_cvme_count) {
+> +        descriptor |=3D CXL_DRAM_EV_DESC_THRESHOLD_EVENT;
 
-Thanks for the catch, Michael.
+Same issue as the general media event patch - the modification to
+ 'descriptor' is not written back to dram.descriptor which was assigned
+earlier.
 
-Sorry, I wasn't aware of this quirk in raven when I acked. Looking into
-it now, it seems that prior to 97db0466788 its pci_memory had size
-0xff000000 as a workaround, and that would indeed "fix" the regression
-here, too, but is probably not preferable to leaving the bus master
-container maxed out. What do you think, Philippe?
-
-  
-
->>       address_space_init(&pci_dev->bus_master_as,
->>                          &pci_dev->bus_master_container_region, pci_dev->name);
->>       pci_dev->bus_master_as.max_bounce_buffer_size =
->> -- 
->> 2.51.0
-> 
-> 
-
+> +        st24_le_p(dram.cvme_count, cvme_count);
+> +    } else {
+> +        st24_le_p(dram.cvme_count, 0);
+> +    }
+> +
+> +    dram.sub_type =3D sub_type;
+> +
+>      stw_le_p(&dram.validity_flags, valid_flags);
+>
+>      if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&dram)) {
+> diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+> index 2047e9784694..231dda263fa4 100644
+> --- a/hw/mem/cxl_type3_stubs.c
+> +++ b/hw/mem/cxl_type3_stubs.c
+> @@ -53,6 +53,13 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEv=
+entLog log,
+>                                 bool has_column, uint16_t column,
+>                                 bool has_correction_mask,
+>                                 uint64List *correction_mask,
+> +                               const char *component_id,
+> +                               bool has_comp_id_pldm,
+> +                               bool is_comp_id_pldm,
+> +                               bool has_sub_channel, uint8_t sub_channel=
+,
+> +                               bool has_cme_ev_flags, uint8_t cme_ev_fla=
+gs,
+> +                               bool has_cvme_count, uint32_t cvme_count,
+> +                               uint8_t sub_type,
+>                                 Error **errp) {}
+>
+>  void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog lo=
+g,
+> --
+> 2.48.1
+>
+>
 
