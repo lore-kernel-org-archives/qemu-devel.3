@@ -4,110 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7842ECD996
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 18:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BD9ECD995
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 18:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo4Ro-0007Ch-Bm; Thu, 05 Feb 2026 13:51:24 -0500
+	id 1vo4VO-0008Kq-0P; Thu, 05 Feb 2026 13:55:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo4Rm-0007CG-E9
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:51:22 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vo4VM-0008Hk-Es
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:55:04 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo4Rk-0008Q8-13
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:51:21 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-795232991adso8076147b3.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 10:51:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770317477; cv=none;
- d=google.com; s=arc-20240605;
- b=QDKWpSaDeRu0xJwq33QP7yzxfCJublCQV6dc3MCF8B9dYlapvvD9UwY+u5tMuYHaQ4
- 7mCmhML6MG9ezRTMSXxoyP2JtOutaLOAfssO23NbPnoqF+YAgzbGivxd1dYNS0vR4xet
- 0Tl66X+AeRPU1s7JXNfjvYqbk0G7Tcc9VXw0koD0ubgqAZms+eRQgu6BUG+Pyjc6melq
- lW1MKm9mUOiAcpVyH4ky/eukuVsJ+riffAIP6cJ1psmecw9cZ/GTNyo6x+HOdODYQzUJ
- BTrcsxmnwJrfrw8XL3fz8Z3GSqIItCkICtHgWvDXYbtJUjl10TNPtNp/WiJ751kwaFWa
- dvIg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iaplVcg+C3ZIVbHnVYp/FtHc/2vtoaqZXFq0RfFunq0=;
- fh=Glmb9uYbbqGw8ozJBdGqQA9/mEPeo76cQodAziec5gI=;
- b=i/SzeSzL2+R5jg7yuZR8VyYfVzuEF5/Kae+dBPfbnJxjJUTkX3xaawf2gOKx3neqFF
- jSYhROdh+d32Fttemx8XXRFgZ9u+eWtRyB2EYPLzADJqaKx3W8C+MlfIsU4xpsmek6vA
- MaIA0RvFYorMDKGLQgJtl/do6DUe2wYW7o9iN/qstoRKoC0k/O9Vk4VjVh3Cv+1y41nZ
- 5FPtFP674hpjf1+ulC8Cko11MqaqznqqVP4oTme0yxDiTagLZplT75VVzlFc7glMIyWM
- FevMgwY1R0xi1IXs/1JTq7RMuZ5vd1I5erUWdU/oipjheQ74RTgsBNkhIjbVscUUAPsC
- CvmQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vo4VJ-0000Vi-NY
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:55:04 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a94450ae14so7805575ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 10:55:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770317477; x=1770922277; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iaplVcg+C3ZIVbHnVYp/FtHc/2vtoaqZXFq0RfFunq0=;
- b=Zfeve+mkT8yR8xDKlAR7gU5L6kSqmj9Q/lH8GJWZH8wDftX5zGuzf36+VeVxwk1MaK
- 2ph2qYC4HA/oUy9bZYmHn1m8RlqBecWIblQj12lMH0bqt0CsQkGG6ZN5dFrhGKsA+fQ1
- 2X+hcjJfyK0topT+dJg89XBqURdPAkJi3NPvN/sYsGYF8j0sftr2UFPKHJ8ui/7iWXn7
- vOR63aGGwgqHF84xIxdCUacXOtX4Ys4S54w61yR2XtAszq5A3xMpi6p2M8PDpazBU5/d
- Z/7i0/KTKgPS0AOvwMHoi/UNEWFLIe8yyONAH7eRnRHfKnnj0YU+VsthFzpq8HKb9e3k
- 8Eyw==
+ d=linaro.org; s=google; t=1770317700; x=1770922500; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=nXTh9ADwPs6EJLkEFUVFofM3ZH9zqi3ifWjFED/6z5c=;
+ b=p2bUnQSMjvF31WOQo0o/zXxrE1COouXxRfhcn091DMfJS7yCMfM9JhavB8gdEqzOdw
+ jXYglDL/db1+hdUzz+Cdiv+05o+qJ2XWSOKoEwL8h5yDBRr47SzEHinFd6MRMhvdGGKt
+ +YXWes6jWwBD4DLnNNNczvzOBGgrKM3CIGhvY5sQpU+6ecRu4W1wCjq73G/D7m3rRyoc
+ 0pduTukkzlXKo5l3rrhHu9bhY1JA+vgB20sPOaVX61s4bFXVHLgnxlRghPHiHIxg/gzQ
+ B/BZOZ6IZWGlYAkDzSFa2WT38+70jq8nilHQcXsuvqrD3vbjl/DlddHIoxJrNQMXpGaM
+ W+EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770317477; x=1770922277;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1770317700; x=1770922500;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iaplVcg+C3ZIVbHnVYp/FtHc/2vtoaqZXFq0RfFunq0=;
- b=plQZkVmevXxMh24fsyffE6J1ULnwcO17PyoNyifnXeCyDTR2NOk7oRnPuv6HbCtL1J
- Vyg/cW2dDhY7FxKjogPvGoUCizJpmL27XAZDLySwI7pYrZCHCQ+OGaU2pD43rFEwTBIm
- R4z64U+RoQgHQQAepPmN72Z/IEF+xklSY6RLJErPBQGK7vTt/qvSpkZyaNfrmm8o4ksx
- rT7mr8UgToZuaZtdad0WJdDqsnEf4xijtamADVkSosjfDzsMpCZyTzcmd+PxBeLxGhZq
- o3FwZStppsbJ1KQ7ob+3C/O0ZnmXl2bZnIZvF2k1Fvghqffsus12GPR6p8D6Gtu1bJcU
- Sqcg==
+ bh=nXTh9ADwPs6EJLkEFUVFofM3ZH9zqi3ifWjFED/6z5c=;
+ b=VvFTfcbntiz1pLk/3Fw+JTCCPQMiXca3Bxny4Rx1Hb1229AtSYr4dUHdEsA8cSHrEF
+ lHJN0tnucinDvDsU+CyiPlVaTvIzGOre+kOspeuevwzMW9Q66UMgY1oMuXSoYd/BA00a
+ VnFKSUkyMofl2wI5Q/+rHc1GFdX1E76feqlh60fLZhwVvcHcbVeMPoKeFCmpA9jauw2U
+ kekk5wIj2WbwY1Cw9zKSuQXnboSeQg3DRz9saqWqPz0Hd3DE97gYyUi/9Yr8iL1ZMOYN
+ DlKlito8S004XgjKOVmzbG1uPYLxOM0SMxWaMra2GAZyRFkYwcpE4nbDUYDCuStyPL8N
+ 4HBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvYtL1sfq2S4mHO3TrD4to169HCdzEjPGCusDgYTWDCjTq60e6c1SRFP7Vnm53siH/yvPgc46KmFJK@nongnu.org
-X-Gm-Message-State: AOJu0Yyu7lSsDMTZk1WgUrBbT0QIviqLe3BlULTiXoUFr3SOfB/daXjz
- lCgIsXsY1BNcqIaxFxS6OGxUGZWka4Cvbu1/9ELvbs4yrzrsYq/q4gzr0C6vb8X0sifgkDNXkB/
- f17xZp3siMuIMboOIWCjU2tLuN/S+PiFVb4yBETGd1A==
-X-Gm-Gg: AZuq6aLgF/zeFL0bkcIaw98og7DlhBytySbWoVV+5KXIq49k3w8rWJBR+MV1icoYkEV
- /VuKVZMmIp8qnM1tvIiLxWPOoo034cjSPahduLOSwuPJnFEGm3pvTIGRJFL2ItExu5LTSGSoiO1
- ijfuw0LmejawUVTowP8lpyI0LSGwvfkhzZknMfqPNsxeEeY65eAczIyg5vO+T2P+g+rJ2KRqjKT
- a1aTKDHfST8nqR2EUruwr9KHwaX1msHHG8TJMFgLHPWjEt0GkbL7XygpaU8v3LxZfl2yz+6oGYx
- nfIy9bA/N0AN06RDAa20d8N7rgkXWoBVcz+Nlh9fBH2XEmQ4K7tcIL4=
-X-Received: by 2002:a05:690c:a96:b0:795:616:4367 with SMTP id
- 00721157ae682-7952aa74934mr1782537b3.4.1770317477416; Thu, 05 Feb 2026
- 10:51:17 -0800 (PST)
+ AJvYcCUq/sigB/d1sXMDNZKC0YjpvGbewUPkLtYhkOQcmySgVIDTYZvbm5vl7gC1HaurPSwggf9rNxOeOalG@nongnu.org
+X-Gm-Message-State: AOJu0Yz1dP51WhMCoFvTP+7jePg21C1/3Xr5QEQ4/X3HIBusHVegPe9k
+ H2ImVDcHOF3GgFMccMPcy9QtQupIQ75CuBQGURUr98RMBwGMXVfjSp+xmRfgaoZQlC3ZGBHa3m0
+ XSBsj
+X-Gm-Gg: AZuq6aLkxlqN1cB6ATe0NwjEsBBv1x47v1STE0p0xNQXJnCCXiO7p+JZtAacj4wqCtC
+ KkkYZ1/exlN/qFslRfSX+rGqfztqVHXUDchkCQD+vSuplPf1P53USfs8L4MUrrKisECN9QO0fAd
+ v7tHb+/vRILt7HJXMk5X+BwsNijKlWejpCIS8tmwARxoFzwtKN4VcOAoxRdTbyvbp0y53PYO/Kk
+ yguGDeRWANvAVAEwVEVXStquxf2T8NJACu6rX8fKWT83cf4ePyETS+ggcj+8EXrH5icfRfDaxpB
+ rQ9ZJCybu+p0iL/3LqfdjQhBDxlhU/v+RW0prE1GyS+G5mfvL+vL4xrgPbKsfWtY5I5jsIWO9+r
+ 6P5KRmNt/XATZOsZlcY8fNJo8Lc/hpObAynOIJkkjuP+mXBE2522UwQmDtnxKKuj/RDsZxrisb/
+ a6CspwhAQRTZSvzwe5vX/pvin4fUZcqdoP/JlJps9HC1GijaYdT4IPdwC2
+X-Received: by 2002:a17:903:2310:b0:2a7:c340:4c48 with SMTP id
+ d9443c01a7336-2a95180cda7mr1981325ad.32.1770317699985; 
+ Thu, 05 Feb 2026 10:54:59 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a9522364c1sm699965ad.97.2026.02.05.10.54.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 10:54:59 -0800 (PST)
+Message-ID: <3570030f-23fc-4c7f-9508-7b4573445ffb@linaro.org>
+Date: Thu, 5 Feb 2026 10:54:58 -0800
 MIME-Version: 1.0
-References: <20251211102025.873506-1-me@linux.beauty>
- <CAFEAcA8FcW22-TnyBKHmFUUsR=xk2u-74uPz6KisJTeG=YWxmQ@mail.gmail.com>
- <20260205051236-mutt-send-email-mst@kernel.org>
- <CAFEAcA-2QKtniTsLFA2ayjQ28dmQ=35r_zhkL6UBpiEOr=xGVg@mail.gmail.com>
- <20260205124004-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260205124004-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 18:51:05 +0000
-X-Gm-Features: AZwV_QhQKL5fV6kOZjgQ6PwWGHq3Hjx3t9EpHp2HxMUy3n5ENyeEI0CYDvHg3-8
-Message-ID: <CAFEAcA_P4-Uqy_agp0VZt4+5ukL2tWYK2G394W=zkwJxKF+6Yw@mail.gmail.com>
-Subject: Re: [PATCH v6] acpi/virt: suppress UART device & SPCR when guest has
- no serial hardware
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Li Chen <me@linux.beauty>, Shannon Zhao <shannon.zhaosl@gmail.com>, 
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- qemu-arm <qemu-arm@nongnu.org>, qemu-devel <qemu-devel@nongnu.org>, 
- qemu-riscv <qemu-riscv@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/9] include/hw/virtio/virtio-access.h: remove target
+ specifics define
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-ppc@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
+ <20260203205637.3109749-6-pierrick.bouvier@linaro.org>
+ <5b4fca48-2fab-4874-8e0e-4dc8b63087b6@linaro.org>
+ <65f1a050-5822-4025-8292-9ca22062df0c@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <65f1a050-5822-4025-8292-9ca22062df0c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -130,50 +146,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Feb 2026 at 17:41, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> On Thu, Feb 05, 2026 at 05:15:17PM +0000, Peter Maydell wrote:
-> > On Thu, 5 Feb 2026 at 10:13, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > presumably, things would be different with -nodefaults?
-> >
-> > -nodefaults doesn't generally do much on Arm boards, because
-> > we don't have a lot of "pluggable thing that's plugged in by
-> > default" that we would turn off -- that's more of an x86 thing.
-> >
-> > On the virt board the UART situation is a bit complicated,
-> > for command-line backwards compatibility reasons:
-> >
-> >  * the first UART always exists
-> >  * if you're emulating the security extensions, the second
-> >    UART always exists (and is the secure-world UART)
-> >  * otherwise, the second UART exists only if the user
-> >    configured a second serial backend (i.e. provided
-> >    "-serial foo -serial bar" or similar)
-> >
-> > If I were designing it again from scratch without the
-> > back-compat baggage, it would probably have three always-exists
-> > UARTs, one for secure-world and two for normal-world.
+On 2/4/26 8:37 AM, Pierrick Bouvier wrote:
+> On 2/3/26 6:10 PM, Richard Henderson wrote:
+>> On 2/4/26 06:56, Pierrick Bouvier wrote:
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>     include/hw/virtio/virtio-access.h | 26 +++++++++++++-------------
+>>>     1 file changed, 13 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+>>> index f3b4d0075b5..1bea3445979 100644
+>>> --- a/include/hw/virtio/virtio-access.h
+>>> +++ b/include/hw/virtio/virtio-access.h
+>>> @@ -17,27 +17,27 @@
+>>>     #define QEMU_VIRTIO_ACCESS_H
+>>>     
+>>>     #include "exec/hwaddr.h"
+>>> +#include "qemu/target-info.h"
+>>>     #include "system/memory_cached.h"
+>>>     #include "hw/virtio/virtio.h"
+>>>     #include "hw/virtio/virtio-bus.h"
+>>>     
+>>> -#if defined(TARGET_PPC64) || defined(TARGET_ARM)
+>>> -#define LEGACY_VIRTIO_IS_BIENDIAN 1
+>>> -#endif
+>>> -
+>>>     static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+>>>     {
+>>> -#if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+>>> -    return virtio_is_big_endian(vdev);
+>>> -#elif TARGET_BIG_ENDIAN
+>>> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+>>> -        /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+>>> -        return false;
+>>> +    if (target_ppc64() || target_base_arm()) {
+>>> +        return virtio_is_big_endian(vdev);
+>>
+>> Why use two predicates like this, effectively calling target_arch() twice?
+>> Surely it's better to do
+>>
+> 
+> Yes it can, I simply wrote the simplest change possible. Since this
+> function is called only once now at reset time, it definitely looks like
+> premature optimization IMHO.
+> 
+>>        switch (target_arch()) {
+>>        case SYS_EMU_TARGET_ARM:
+>>        case SYS_EMU_TARGET_AARCH64:
+>>        case SYS_EMU_TARGET_PPC64:
+>>            return virtio_is_big_endian(vdev);
+>>        default:
+>>            break;
+>>        }
+>>
+>> Definitely with a comment saying this is about legacy behaviour.
+>> And does VIRTIO_F_VERSION_1 really not take priority?
+>>
+> 
+> Not sure about this one, but current implementation has same behaviour
+> than previous ifdef based one.
+> In case that's wrong, I would be happy to change it.
+> 
+>>
+>> r~
+> 
+> Regards,
+> Pierrick
 
-> that is why we have machine versioning?
+For what it's worth, that's the patch I wrote when I was optimizing this 
+function and found -1.7% for performance:
 
-The problem is real world guest code that just breaks if
-it gets a second serial port unexpectedly. Specifically, UEFI
-would behave unhelpfully. Since fixed, but there are/were still
-plenty of old UEFI binaries out there. Otherwise I'd have
-just added the new UART and made it a versioned machine thing.
+commit d497f71b5b1bcc46de97436e1ce31641ff792eb9
+Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date:   Mon Feb 2 13:53:06 2026 -0800
 
-> I would say -nodefaults really should not have a serial port
-> unless defined, no?
+     include/hw/virtio/virtio-access.h: optimize virtio_access_is_big_endian
 
-QEMU's arm boards have never behaved that way, and nor have
-most of the other architectures' machine types. For PC
--nodefaults makes sense as it disables a lot of the optional
-pluggable devices that the machines create by default. For the
-Arm boards these devices are not like e.g. a floppy disk
-or a PCI VGA card that you could unplug, and that you can
-on the QEMU command line manually re-create, they're like a
-UART that's baked into the SoC and there usually isn't
-a way to create them on the command line.
+     By following benchmark recommended by Stefan [1], it was found that
+     previous commit introduced an overhead of 3% for this scenario.
+     By reading TargetInfo only once and using a jump table, we get to 1.7%.
 
--- PMM
+     [1] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
+
+     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+diff --git a/include/hw/virtio/virtio-access.h 
+b/include/hw/virtio/virtio-access.h
+index 1bea3445979..b7695f56fed 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -24,11 +24,17 @@
+
+  static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+  {
+-    if (target_ppc64() || target_base_arm()) {
++    const TargetInfo *info = target_info();
++    static const int may_be_big_endian[SYS_EMU_TARGET__MAX] = {
++        [SYS_EMU_TARGET_ARM] = 1,
++        [SYS_EMU_TARGET_AARCH64] = 1,
++        [SYS_EMU_TARGET_PPC64] = 1,
++    };
++    if (may_be_big_endian[info->target_arch]) {
+          return virtio_is_big_endian(vdev);
+      }
+
+-    if (target_big_endian()) {
++    if (info->endianness == ENDIAN_MODE_BIG) {
+          if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+              /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+              return false;
+
 
