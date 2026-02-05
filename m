@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DFAECD980
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D0AECD980
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1SN-0007rv-0G; Thu, 05 Feb 2026 10:39:47 -0500
+	id 1vo1W9-0000Ru-Ab; Thu, 05 Feb 2026 10:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1SL-0007rd-El
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:39:45 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1W6-0000RL-Uy
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:43:38 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1SJ-0005ga-MH
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:39:45 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4806dffc64cso9447205e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:39:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1W3-0006E0-UE
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:43:38 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso11295525e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:43:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770305981; x=1770910781; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770306214; x=1770911014; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0QMMAt7u/W3kURzsiue9Mogq0i0g8HCQ3UJiZn7/BdI=;
- b=rppfmYb5O3W6LoJFfYcRCI0g7QlbxUVxuMeDGTIZbZ4bG8GlFx0O1Uuy9n/uI6jz4E
- 6K59JGqizbqa/K+60aWFIlbNSadKqdaLnS9Im1Fxbe4Qqpfs2sFYyJwW0QRZCkUX+ynq
- cqu1Ug47x28ygD5QpIKlIvl0EQ/HEdeuK9NKdN33xvq2bzCLU4clCnm6RfI2IOR4dDkv
- j1FY8iVTS3gkrmuckS94YOIrPcQvU10dT9YJhBv7Eg9KesnvPTZQjZGkDcozxQ3373A3
- /gIU1av3WXYc1n20ZTkvmMeMRzQRTUDofkhQK1yzkpu2ZNApVhuid06a+GjwptH66upG
- bn3Q==
+ bh=+WoeOm28m91v7yiwzsKJUC94/qSK6s8Cw29K4bwsQu4=;
+ b=c6mcjtagE3slOvzGMn9V+asb2yvRt6sp/Qh8Cs8gcHlw5NiT9WW9BOLTbk/mwLc/Sl
+ 4KUZ5I96HLBWpLRsNsPkc+W5wS3UsoNTbJ7AI4C4svSCqltD+OBHCLiHPrAvULhFby1a
+ O4WbyrKwfC0T9/roCcwYGMSdMwfV4TLbYGpBf4hS8rkPk4rruYxBlGkypkoFUM4l4SHI
+ 7cHJLev42Xsz5miW06uDZPLQQSgm6nn706IpjZv/NwTOnk2HKdLo8dmJ20oBAzcBusDt
+ nX4dXZHlGOKAcnLxiQzEzLSI0VZ3TjegQ1fsqaQWULVQkXiNhcjv07c+loEAB/dpJk3d
+ qMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770305981; x=1770910781;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770306214; x=1770911014;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0QMMAt7u/W3kURzsiue9Mogq0i0g8HCQ3UJiZn7/BdI=;
- b=SuseNmjJYt/BCxhg5ZqMpmNjQBT95hOzUX3xEeUKn8QSYyZuSExRvz7Ya1elKNyfqj
- Gw6NRYNFVkf0hm4y3upiLllC3B0wJkbKCHu2kIwrhKFP2pg1g2vC9cmt3xHz+iaFH8xb
- f4HHZYmlqhYRTOFAztJ63gw8R4UJBCslOXe4lMs+kVKSo/Yk/nU6AGi7GbNdntQUHBDp
- Jm8KnOlUoBtpNj7s0MywVQJLd/X4qAciDejGdk2l0JJkj1Vpfpg7XoEGSHyJRsHMex7C
- clBHE8YlEhjHAS/Wl1yh/C9qX7vLrWNCtQGCPT9MHKKnK/D3WF8gCfHutknwqazNVyoH
- Hv3Q==
+ bh=+WoeOm28m91v7yiwzsKJUC94/qSK6s8Cw29K4bwsQu4=;
+ b=GxVmz71Fh3AsyWIitnrcOOpN9e32ve6165KC+caQuJFuBDklzXIwcPg0xSVbUW+5zW
+ i/3evWm7+sxwGgZVSjsOpeY+E5Z0RhJZiGm2Nzb61kLI4pXNeCblDU+salOsWaIovjHg
+ 4LXILucrrBBVs3vDcGD8+hFcn632Rr9ZjTYT2VgYbnd9DO1Wx7I/msAcqaWKOuEuMC+J
+ neX0aHl+kfUjv4VMGu0gnA0+52N6Cg1BbKy+ZlfYssShuJTJuivNTqoAcr0sDfe1iiZj
+ 90jNE/K8yRT4CsGEo0mMVbA2g9eXqvwmMcSRPoEGrl52Tn7BrMqyRotzVtoays07HyJt
+ P33A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrolT/l7x4G0V9vTmKyEDaMOOICkRbl//f4/0M/D+ngoipYF4w+iyEP05oJFx99GM03GpDypoZ/ukF@nongnu.org
-X-Gm-Message-State: AOJu0YxEQ3hjF9fww6CTDhZ9GhzCLzEy/1v78mJGvyWHrOD4PtpgGz82
- b8St0yA+I95OlnoiWo/fUiPjs2s20cmqiVfsmSIxYDsS+KUqnT+6WGy8aHNLtqkVhnY=
-X-Gm-Gg: AZuq6aILq6HY91Fe6NJmnYESM1o68hgSeHnGws0UXxxGn8bqlw1WhDW27XiCr/QXFmz
- ULpHZqF3d8OGr2x5+bMD1bRJIMtcWKh3O3WdaOQsuTzTYpY7SuhQbCrG3+ihNw+IKaHYQgU4olR
- sGo+GdD0sGhAgq9AmpGyuYJ1OiyzbYQi0U97MqBO+DvtqCW/az7+sHlSuF/UFfrnaq99V9KKjAK
- GliUbkASgmiT8iY7R+j2MzrVKP3Rx7Djh/7bNEfnCYvkr0A6OEF0Mh5R2w6C8e3w9FTJzma0XNE
- Jdnro7qWfRrNhrSgifP1lObBq2RbW/xVEICmzZbIH4xcz3XLERpkPCfNybHnLYdGg1/PGwnsLsK
- XkJSbqujgDOe92bY0oW46ozlTN4NUIgPOtbPCpBID5oAbjFt3mbZTdP1ex9oa6I/G4AIKoSQbvU
- q3CnJ+G2j/E5RgNLWI/00GyohEK8mdoMlQiwKAKPCRYM/yNLYHS0MyOw==
-X-Received: by 2002:a05:600c:628b:b0:479:2f95:5179 with SMTP id
- 5b1f17b1804b1-4830e931e2amr97658925e9.15.1770305981222; 
- Thu, 05 Feb 2026 07:39:41 -0800 (PST)
+ AJvYcCW924Aj0eNBlzo9tkhYqRcYXZHWT67vbDYiq4bZbidQOrhXbo+ymHuo5EQETGHJ70sOVGs5DlGLRMQH@nongnu.org
+X-Gm-Message-State: AOJu0YzjQ+VOLUCcz97nzV+lHPGOhDB4syaoYm4faPOzg8N/iZOVTGfH
+ Etv78R/6Fs8syd4Z72Yyq3/z0P53TnoLkxhfhgEeMpa0def5LZ6JyCc4wUs65jWCN7U6ovecr/n
+ fpdt/IX0=
+X-Gm-Gg: AZuq6aI7VleAL063qckHUalV20rI5LXg34kRBvorhrQbqJfYxNmvZ5r4woXXpfhzHJd
+ st8OMn7SokIxjTf7VfBw2Pjoa/MY6CRhw1/nejEP1Yj951jLPiM4+JezAbYtp5JyM4a3o0qDDmB
+ GVVFZofoeujiXuF/c28CD65MzKuQarm0iS7ClW/HtKHqRdcUjWUcCxm6QaevrM9e52nPJ+CvUZF
+ odhHwcKe2yWie0h9wO6cWdcBQha8A/kH40LS7eiUFxHU9wMQ77FtmCcv+/NWOG0bxxyhXineIqK
+ 4NKR/mqqE/LrHqzqMNiBb4tNW+hqVVypzNS9ugvgexZPo/v200XCGKYYaZwpZ+pQYRVWlDE5PQ6
+ SLj4mC9+64YORRWM9rOJlEQ6vxrdwwcy9rPqO/pUHSOrCE62pMEFavxVTODdBt6EZ4c/YfTHbET
+ MWqbcC4iT1BqSu1PdKi5LUoBsuV5mRGlQ7jnBjn2j6adVE50nPg79Kc2j/0TT4ne5h
+X-Received: by 2002:a05:600c:5250:b0:47e:e20e:bbb2 with SMTP id
+ 5b1f17b1804b1-4830e92ca43mr100025615e9.7.1770306214359; 
+ Thu, 05 Feb 2026 07:43:34 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d8341csm61415405e9.13.2026.02.05.07.39.40
+ 5b1f17b1804b1-48317d7a924sm97829815e9.10.2026.02.05.07.43.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 07:39:40 -0800 (PST)
-Message-ID: <ec2b9446-df98-46e3-b7aa-f486eb189dd0@linaro.org>
-Date: Thu, 5 Feb 2026 16:39:39 +0100
+ Thu, 05 Feb 2026 07:43:33 -0800 (PST)
+Message-ID: <e8629c21-500c-4561-b1f5-f58fc7329dea@linaro.org>
+Date: Thu, 5 Feb 2026 16:43:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] or1k: Rename the architecture from openrisc
+Subject: Re: [PATCH 3/6] hw/or1k: Rename from openrisc
+Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, shorne@gmail.com
 References: <20260205030244.266447-1-richard.henderson@linaro.org>
+ <20260205030244.266447-4-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260205030244.266447-1-richard.henderson@linaro.org>
+In-Reply-To: <20260205030244.266447-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +105,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/2/26 04:02, Richard Henderson wrote:
-> We have an odd mix of 'openrisc' and 'or1k' in use.
-> Standardize TARGET_ARCH and all of the filenames to use 'or1k'.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   hw/{openrisc => or1k}/boot.c         | 0
+>   hw/{openrisc => or1k}/cputimer.c     | 0
+>   hw/{openrisc => or1k}/openrisc_sim.c | 0
+>   hw/{openrisc => or1k}/virt.c         | 0
+>   MAINTAINERS                          | 4 ++--
+>   hw/Kconfig                           | 2 +-
+>   hw/meson.build                       | 2 +-
+>   hw/{openrisc => or1k}/Kconfig        | 0
+>   hw/{openrisc => or1k}/meson.build    | 0
+>   9 files changed, 4 insertions(+), 4 deletions(-)
+>   rename hw/{openrisc => or1k}/boot.c (100%)
+>   rename hw/{openrisc => or1k}/cputimer.c (100%)
+>   rename hw/{openrisc => or1k}/openrisc_sim.c (100%)
+>   rename hw/{openrisc => or1k}/virt.c (100%)
+>   rename hw/{openrisc => or1k}/Kconfig (100%)
+>   rename hw/{openrisc => or1k}/meson.build (100%)
 
-I was confused thinking OpenRISC is the architecture, and 1k
-(or 1000) is the first (processor model) implementation; since
-there is also the 1200 one:
-https://github.com/openrisc/or1200/blob/master/doc/openrisc1200_spec.txt
 
-But then I read digging [*] I read "OR1200 is the original
-implementation of the OpenRISC 1000 architecture."
+> diff --git a/hw/openrisc/meson.build b/hw/or1k/meson.build
+> similarity index 100%
+> rename from hw/openrisc/meson.build
+> rename to hw/or1k/meson.build
 
-[*] https://openrisc.io/implementations.html#OR1200
+Can we s/openrisc_ss/or1k_ss/ in this file?
 
