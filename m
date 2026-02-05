@@ -4,101 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C54AEA794F
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 00:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13278EA794F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 01:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnnTe-0005MQ-Of; Wed, 04 Feb 2026 19:44:10 -0500
+	id 1vnnmq-0008Ie-Pq; Wed, 04 Feb 2026 20:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnnTc-0005Lu-O5
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 19:44:08 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnnTb-00061o-2G
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 19:44:08 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-81f4f4d4822so218733b3a.3
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 16:44:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770252245; x=1770857045; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZIdWBqERGDkCuHAmynKNfKDnv+WTnjtlLCkOUkA+s9U=;
- b=yYwBZuqpQuAFFmEM9/W/gPDJZFrAt5owy4UZdQg4eYe9OP2oeHA2YX8sGFRnnYkaAy
- 4Hxk+aJ/m8yB9XiZE2W4WOtIA3KuWJb7FGy/JUOsBRRoJDKvdl+IeKceQdNSe473wBx+
- Mho/7Kblqaoj2rjburVDhBwpLC9ZOgFMAOX7+epyN/5yhlQe+a9EDvLos2npAhIxYoN6
- fHycJt1VsWwIztSFXUH1w+bkSxNCp8y1w87suMI/o71/G3rn8avFhEPBE2JC185z07+C
- dbAIsdl3Fg9xd0TCw4Dcp3U48ZhIK65bzr8U+iKTqIpx70ZH3gcor2HrJNi9ojD3w1Tz
- wrkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770252245; x=1770857045;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZIdWBqERGDkCuHAmynKNfKDnv+WTnjtlLCkOUkA+s9U=;
- b=LE/pc6LTMJuXmWLcueAeth8s3TlG+CEkb5RjR0Kx8DEczJPoUeB6EGRSaFOHr1n5EF
- +3Gpqwe1Ig8zzNG9D0MDgpiisKSoY+UkZeK+iJwdCjJ4AoVWkzmArSO3g+nGjs8JzsgF
- RAZGRZzm1YYLlRErS2mKL9tRzZ+9Vp5Yl9ZVQgC4Ys4rMp1D6htBeuHVLNhf93uW0w0L
- wLWSVE+MTibrGIHJpih5KKTc7aVp2rpaOxoSlXt57pCFA8JY6vZ48Nv3xbkwPWDm9/XK
- pb9w/nrmnEarvtFpKhd7sqEcdBlfcgNzDQLwBfnlVAVzLHWvRaLMl+lUvvl8p00PFv/V
- rhPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhT8wvV/UoSwL3354WLfn3G/Dj/2q8NY5+uXvss4PpOeI2G/KfKzyanoxkP9H01jzlOUaubbqO2tUz@nongnu.org
-X-Gm-Message-State: AOJu0YyoSdwRB270V5HEoi6phRAVcFT82YwlFOiyI+F+kxOiTHCyQ2AF
- IV44nwEsIlVPdnICmX1UF6V+U1HpOx7ShQ8Ncn/csK6Uqa4YLsR5djrq1uJlBc58Wo8=
-X-Gm-Gg: AZuq6aIV/rFbdUtg38jxM8p9A6D2IL44wNNRGVr/vyxDWx4CEBTLKmq6m4jE3Yi4etc
- BXg97hWuaQUY1iCH0urBM9fHyNx4NE38qiT9MbSReKAogHSl/x0bap57VuqwBsCpRdkujq6wBoj
- tr8o7cKG1T8D937AOwkOVrxNDLmIxTDgLt9ZmDEn4lL55wzWr6QWzOkeWICAi6stXyZ37oLcNCn
- VGGQ0bI5kRlW6JdoU41FotpmOCRNbcDxN0QPERREKLuEtZAIUUmm+9WxckHhjdX1dUQzi1hsASl
- /u0VJvKrPB16iDCWoT5jrEIxbxR3L90+KIoBq2wCS20xqAJfPaNItcAHfQM+jk9O1oJ7BFtLFTq
- lGm25yyYAok75kl6uDRQ+1d5PUS2VniZjpB6EodN6+IIjJ0dNXRV8GuulEL/5QOePoXmVLVQLcd
- CrDbEenrl0372wUVRJ7QiTa1OZogp7draAUDD/2sGA8eXv01b6rmB888iKUmBmkwsMBja3uJdQ3
- gRE9UIajauJYxYEbbCJwQGYONfO4V/nINon0PvEGg==
-X-Received: by 2002:a05:6a00:94c3:b0:81f:be3c:9c9e with SMTP id
- d2e1a72fcca58-8241c5f5ef1mr4693031b3a.33.1770252245260; 
- Wed, 04 Feb 2026 16:44:05 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
- (bg30dhzygc4twf4fscxk.ip6.superloop.au.
- [2401:d002:dc0f:2100:7515:513c:b646:18b8])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d437c74sm3619325b3a.35.2026.02.04.16.44.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 16:44:04 -0800 (PST)
-Message-ID: <1c6c21c5-da0a-4356-80a9-208d0e147356@linaro.org>
-Date: Thu, 5 Feb 2026 10:43:53 +1000
+ (Exim 4.90_1) (envelope-from <bmarzins@redhat.com>)
+ id 1vnnmp-0008Hj-Aq
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 20:03:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bmarzins@redhat.com>)
+ id 1vnnmn-0000JC-Ch
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 20:03:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770253434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aqqPkT19X8H1Yhs0EVxQLrcQO1bjE7Rm5Ne4UVl7YbQ=;
+ b=e4I644SBIL5DmWLI3cj+3yHbL0tyZXLukNbg3XLB8vdUz672mMSqpXSnkybvuLLEW9xwvc
+ UdglFIMSgoK6TW3R4R33qDYWJeikVa2IUzt8pRfrrVRKsTh4nViigyQtbFd9g0C7vq6sJc
+ AWn+KIHo6rkYtTWSQtsnBzOzQ9wPuRA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-l3eoC3BtPciYnbzjmdz2bg-1; Wed,
+ 04 Feb 2026 20:03:53 -0500
+X-MC-Unique: l3eoC3BtPciYnbzjmdz2bg-1
+X-Mimecast-MFC-AGG-ID: l3eoC3BtPciYnbzjmdz2bg_1770253432
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97BA11956059; Thu,  5 Feb 2026 01:03:51 +0000 (UTC)
+Received: from bmarzins-01.fast.eng.rdu2.dc.redhat.com (unknown [10.6.23.247])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix)
+ with ESMTPS id AE4F01800465; Thu,  5 Feb 2026 01:03:50 +0000 (UTC)
+Received: from bmarzins-01.fast.eng.rdu2.dc.redhat.com (localhost [127.0.0.1])
+ by bmarzins-01.fast.eng.rdu2.dc.redhat.com (8.18.1/8.17.1) with
+ ESMTPS id 61513nYH785051
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 4 Feb 2026 20:03:49 -0500
+Received: (from bmarzins@localhost)
+ by bmarzins-01.fast.eng.rdu2.dc.redhat.com (8.18.1/8.18.1/Submit) id
+ 61513ndd785050; Wed, 4 Feb 2026 20:03:49 -0500
+Date: Wed, 4 Feb 2026 20:03:49 -0500
+From: Benjamin Marzinski <bmarzins@redhat.com>
+To: Hannes Reinecke <hare@suse.de>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Martin Wilck <mwilck@suse.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, afaria@redhat.com,
+ qemu-devel@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+Message-ID: <aYPsdWW6ntBq2RFm@redhat.com>
+References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
+ <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
+ <20260203180437.GA527989@fedora>
+ <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
+ <20260204183201.GB610283@fedora>
+ <ff71f35e-06b5-4a82-98ec-8e0419f5ec62@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/sparc: Replace legacy st_phys() ->
- address_space_st()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260204215304.52757-1-philmd@linaro.org>
- <20260204215304.52757-2-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260204215304.52757-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+In-Reply-To: <ff71f35e-06b5-4a82-98ec-8e0419f5ec62@suse.de>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=bmarzins@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,38 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 07:53, Philippe Mathieu-DaudÃ© wrote:
-> Prefer the address_space_ld/st API over the legacy ld_phys()
-> because it allow checking for bus access fault.
-> 
-> get_physical_address() already accessed the PTE stored at
-> %pde_ptr and is going to update it. Assume the address space
-> is also writeable there. The SPARC v8 manual only mentions
-> faults (with error condition bits updated) in the READ path
-> but not on the WRITE (update) one.
-> 
-> Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
-> ---
->   target/sparc/mmu_helper.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> index 5a58239d65e..a6f76a1ab76 100644
-> --- a/target/sparc/mmu_helper.c
-> +++ b/target/sparc/mmu_helper.c
-> @@ -190,7 +190,9 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
->           if (is_dirty) {
->               pde |= PG_MODIFIED_MASK;
->           }
-> -        stl_be_phys(cs->as, pde_ptr, pde);
-> +        address_space_stl_be(cs->as, pde_ptr, pde,
-> +                             MEMTXATTRS_UNSPECIFIED, &result);
-> +        assert(result == MEMTX_OK);
->       }
->   
->       /* the page can be put in the TLB */
+On Thu, Feb 05, 2026 at 12:57:38AM +0100, Hannes Reinecke wrote:
+> On 2/4/26 19:32, Stefan Hajnoczi wrote:
+> > On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
+> > > Hi Stefan,
+> > > 
+> > > On Tue, 2026-02-03 at 13:04 -0500, Stefan Hajnoczi wrote:
+> [ .. ]>>>
+> > > > It can be generic. The messages will contain the block device
+> > > > major:minor as well as information to describe <linux/pr.h> requests.
+> > > 
+> > > So the ioctls will pass through qemu into the kernel, to be intercepted
+> > > by the dm-mpath driver, which will use an upcall to have them handled
+> > > by mpathpersistd (for the actual command) and multipathd (for the path
+> > > registrations).
+> > > 
+> > > I don't fully understand the advantage, security and complexity-wise,
+> > > of this concept, compared to intercepting them qemu and using a socket
+> > > to talk to mpathpersistd directly. If we did this, we could even
+> > > support both generic and SCSI PR commands.
+> > 
+> > Hi Martin,
+> > The simplification and security benefits are on the application side,
+> > not on the DM-Multipath side, so I can see what you're getting at. From
+> > the DM-Multipath perspective things get a little more complex.
+> > 
+> >  From an application perspective, a single API that works across block
+> > device types (SCSI, NVMe, DM-Multipath) and requires no privileges or
+> > sockets (they are a pain in container environments) is the most
+> > convenient. The <linux/pr.h> ioctl API offers exactly this.
+> > 
+> > Unfortunately, DM-Multipath currently does not fully support
+> > <linux/pr.h>. It sends PR operations down each path, but that is only a
+> > subset of libmpathpersist's logic and multipathd is not kept in sync.
+> > 
+> > My impression is that libmpathpersist and multipathd logic cannot be
+> > easily moved into the kernel. This is where the upcall idea comes from.
+> > Let's notify multipath-tools from DM-Multipath so it can do its work in
+> > userspace.
+> > 
+> It _might_ be possible by extending the current path-switching
+> code in the kernel to keep track of PRs. The we could move the
+> registration upon path switching, and (ideally) could do away
+> with upcalls.
+> Not sure, though, how targets react when having to deal with a
+> flood of PR commands ...
+> But maybe worth a try.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Making a multipath device pretend to be single Persistently Reservable
+device involves a lot of ugly workarounds that I'm not really excited to
+see in the kernel.
 
-r~
+For instance, every time a new path appears or a path that was down when
+the device was registered comes up, multipath needs to register that
+path. But a preempt could come it while it is doing this (or indeed any
+time after multipath registered the other paths). So it has to check
+the that the registrations are still there on the other paths before
+registering the new path, and then check again afterwards to make sure
+that there wasn't a preempt during the registration. 
+
+Worse, you can't release a reservation from a path that is down. If
+multipath needs to release its reservation, and the path that is holding
+it is down, the only solution I could come up with is to suspend the
+device so no IO happens. Preempt the reservation to move it to an active
+path, which wipes the registrations off all the other paths. Then
+reregister the all the active paths again, and unsuspend the device.
+The failed paths will get reregistred as they come back up.
+
+And there's more cases like these. They are, of course, just as doable
+in the kernel as in userspace, but it's a lot of persistent reservation
+code to put into the multipath target.
+
+-Ben
+ 
+> Cheers,
+> 
+> Hannes
+> -- 
+> Dr. Hannes Reinecke                  Kernel Storage Architect
+> hare@suse.de                                +49 911 74053 688
+> SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+> HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+
 
