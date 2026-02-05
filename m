@@ -4,93 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360DFE9128F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399F0E91297
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 14:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo0K0-0001XM-Dt; Thu, 05 Feb 2026 09:27:04 -0500
+	id 1vo0Lm-0005vy-HL; Thu, 05 Feb 2026 09:28:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo0Js-0001Kh-OH
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:58 -0500
-Received: from qs-2004a-snip4-4.eps.apple.com ([57.103.84.7]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vo0Lk-0005mk-S1
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:28:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo0Jr-00087D-9j
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:56 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPS id
- 8DBD31800D98; Thu,  5 Feb 2026 14:26:49 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770301614; x=1772893614;
- bh=yJUrkA3wK08ViV31cAOA/Pb+MGLmCaTb/RGoYUR01yw=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=XqlPdLrZj3WgGpG/VHhGiZdNHtroRQlF7B1h/K09sh/dai4rKtLwEU87WcNO0YiAU86NlmrO6KNvTsmB8rAuRuXmLG0MdWF5zyVwoV96DLY/ZaCvP59iA6iu/X8xd1bwr18x27RVNV+bvaDDYLDzbzvwhNUHpPZ4VBpCuO5GKqMa3U05pSTsprsasm/QHBcQybKDP9WZSzCsW/lEYkqG4GmbLEBH8ifOp6dMFX3Uw51Cfno7jNJE2E+v7EqZusKH+ZOM3GSkzgjUXVysaB3Mg2+5swFjQsk8RirSduIyOR2uEGpkpSDLdp0MEuZoyySOXX+bjTQWOeCx/Co6W6AKaw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPSA id
- 3CF041800D91; Thu,  5 Feb 2026 14:26:46 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v21 21/22] whpx: enable arm64 builds
-Date: Thu,  5 Feb 2026 15:25:39 +0100
-Message-ID: <20260205142543.64818-22-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260205142543.64818-1-mohamed@unpredictable.fr>
-References: <20260205142543.64818-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vo0Li-0008Nl-G3
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:28:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770301729;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vFteZ2+Uw8FcJX3AH82Qy03uqI7C9vH6wAHLKqQei38=;
+ b=NiR92I+oHLchFPVTHEEgem3DtQdaQAwPfUwiJDnx1aBU1MDeEwMenDYaXRVC5QLWYND7Gl
+ x26y0l+QLhbwGgoInwwvEM5kF23q2t5ALv8W0twOyj1WjDmOQXm3xUikB0bdEjwkrfBIoX
+ fj1htSAv3owAnu+fm0C4+KL2kigErv4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-rfWDFL8HOnW5lpyOs5f74w-1; Thu,
+ 05 Feb 2026 09:28:47 -0500
+X-MC-Unique: rfWDFL8HOnW5lpyOs5f74w-1
+X-Mimecast-MFC-AGG-ID: rfWDFL8HOnW5lpyOs5f74w_1770301726
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5482B1955E7E; Thu,  5 Feb 2026 14:28:46 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.72])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 817DA18003F6; Thu,  5 Feb 2026 14:28:45 +0000 (UTC)
+Date: Thu, 5 Feb 2026 09:28:44 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Martin Wilck <mwilck@suse.com>
+Cc: Benjamin Marzinski <bmarzins@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hannes Reinecke <hare@suse.de>,
+ afaria@redhat.com, qemu-devel@nongnu.org,
+ Mikulas Patocka <mpatocka@redhat.com>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+Message-ID: <20260205142844.GB36872@fedora>
+References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
+ <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
+ <20260203180437.GA527989@fedora>
+ <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
+ <20260204183201.GB610283@fedora>
+ <d6cfd9a22c397e3811eaa73409f4ab1499e3e63f.camel@suse.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwOSBTYWx0ZWRfX/zgSXs2RRl/c
- IgH/b9Whq/jH7FkJmgS9jKoXPH4ASC6S9FbnNRjUQ2gelcGslTG2qb85MzlsH0/9Rkscn6oSz/3
- A0fGUzlgwIv2Z33ejCDNw3ZTYzuWzhjmBHvVx/pDwHqiLIS5xZ4dgMVV3I99Z+tG83kLLS9z4TS
- 1GhVqi6KPyNjXsRdrPaf0ZxSjDjWuoMD9bMfIHY+9tDoaifbhiTCvEi4bHN/eqSy8K8V7anNDXR
- jJoOns9oy1PyyugEEWHU+gCp2e5lZ2lrv2e3LyTdlt2Bghu5ygc8djZMTJxyCe9FtaxWoueTn8f
- DJ+x84GwXUXpHGKi+2IvXQYp/yMfkMebGFmFJz9//3HRbRZvn5QT8Fx6D7ZDM0=
-X-Proofpoint-GUID: bNuXwyx1dcIRbJXmzFKl-2XtJk5gCoLG
-X-Proofpoint-ORIG-GUID: bNuXwyx1dcIRbJXmzFKl-2XtJk5gCoLG
-X-Authority-Info-Out: v=2.4 cv=Zvzg6t7G c=1 sm=1 tr=0 ts=6984a8ae
- cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- clxscore=1030 spamscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=955 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602050109
-X-JNJ: AAAAAAABZ4Nn6hWQH2tTfoYE8KbpprcjDXWXtPzhKiiWxbUDmDSPiPg47kLih3OCUJ1MVvhwVzurwNi2H/zhqkrJsuDLmNMHEsEdR/veuy9gJndYz+1O3atrKiQklDEmqm2uOE145cadZbfpgjk64GYSXJJTmzIRG1yodOSiCwYcJTHQTFt7/Pgs+E8oipeQK+OxdctO/UAqQWepY0DQM5tYu9Uk/q7BAZ7D6HJafDaW4lOKn5kkxAK4/suthEFt52FMBhti5ER1SxVM4y/2V/XKBFYiq5ZSUzXBOZPJFvTsJlTjeZk+HKfQsT51qEKUC//w99t8/vlLKs2L3oqMmJdGFUd5fUajIACxx0UHRaez+jbiU21tMYg0ye7gx6kH75fZF0Ds5xvcGKWpGiGVPMuD3JYI2/jUVaNz2Qr3jTk+7ooYCT0LldsGJKbMHQBhch96GfyI7Z+9qdisWcpy5ygYAywMWjLZM2fjMOHXxiWUjvga43AlScoqcQpb5FE9TAbqd0H22F+iB7TgdxA2cQQ4n7skr9421bHAnqVy5YBGp7xW03sfkskMR1f294QXXVbXwJTFkvTMTX03OHSWs4V7oBbVDdx3bSLsgvXPNK11ZGAbNE54GXw1c1zUF/aCzWp6FWqe2vhyiPwUZFaXdyLknun6BNjq8IAaNnoUa88Aoy/uUQC778lt9KUji1JWtpt7YsZa/7j5uS9fhApnJIZi/p9o8YM0zUL0CoYeMgEGvfTHiZh1HeFkL5eo+lb8Y0FCTcFw6eabeRS4gAiNi41l/DONDClbco4ddjXffMeLLOuxeN61Qo/GqiKHJqm5e1AEI4XXwG62HYuIAeSnfijE8ztwij7GLrCCN7+GvpuMo/dkBmGg27LG41ZU/MI4YDgo+H15UKveTM6HVrv8XFQZyrLmFsPGMRwL1zga148iyA==
-Received-SPF: pass client-ip=57.103.84.7;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="RYSsR4JzeCjlV4k7"
+Content-Disposition: inline
+In-Reply-To: <d6cfd9a22c397e3811eaa73409f4ab1499e3e63f.camel@suse.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,54 +93,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- meson.build | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+--RYSsR4JzeCjlV4k7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/meson.build b/meson.build
-index 8c6c0a9a32..eeafd1d42b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -301,7 +301,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
- 
- if cpu == 'aarch64'
-   accelerator_targets += {
--    'CONFIG_HVF': ['aarch64-softmmu']
-+    'CONFIG_HVF': ['aarch64-softmmu'],
-+    'CONFIG_WHPX': ['aarch64-softmmu']
-   }
- elif cpu == 'x86_64'
-   accelerator_targets += {
-@@ -858,13 +859,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
- endif
- 
- if get_option('whpx').allowed() and host_os == 'windows'
--  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
--    error('WHPX requires 64-bit host')
--  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
--       cc.has_header('winhvemulation.h', required: get_option('whpx'))
--    accelerators += 'CONFIG_WHPX'
-+  if cpu == 'i386'
-+    if get_option('whpx').enabled()
-+     error('WHPX requires 64-bit host')
-+    endif
-+   # Leave CONFIG_WHPX disabled
-+  else
-+    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
-+      cc.has_header('winhvemulation.h', required: get_option('whpx'))
-+      accelerators += 'CONFIG_WHPX'
-+    endif
-   endif
--endif
-+ endif
- 
- hvf = not_found
- if get_option('hvf').allowed()
--- 
-2.50.1 (Apple Git-155)
+On Thu, Feb 05, 2026 at 12:52:33PM +0100, Martin Wilck wrote:
+> On Wed, 2026-02-04 at 13:32 -0500, Stefan Hajnoczi wrote:
+> > On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
+> > Getting back to the application vs DM-Multipath advantages: I think
+> > it's
+> > worth simplifying things for applications because there are many
+> > applications and only one DM-Multipath.
+>=20
+> TBH, I don't see so many applications. Actually I am having trouble
+> finding any application at all that uses the generic linux PR
+> functionality. I haven't even found a basic command line tool that
+> encapsulates the ioctls, are you aware of one? That would be the first
+> thing we need, be it only for testing the kernel.
+
+blkpr(8) is part of util-linux:
+https://github.com/util-linux/util-linux/blob/master/sys-utils/blkpr.c
+
+> As for applications using SCSI/NVMe PRs, I also don't see many, at
+> least not in the Linux / open source realm. Actually, qemu is the only
+> one that immediately comes to my mind. I can imagine that storage
+> management tools for e.g. OpenStack or Kubernetes would want to use
+> PRs, but I don't know any details.
+
+HA/clustering frameworks as well.
+
+> Wrt sockets, not sure what's so painful about them. multipathd recently
+> enabled a pathname sockets for qemu-pr-helper in KubeVirt [1].
+
+This is a good example. KubeVirt has code to:
+- Create a pr-helper container image with qemu-pr-helper,
+  libmpathpersist, and a multipath.conf file.
+- Run the pr-helper container with the host's multipathd socket and
+  /etc/multipath directory passed through.
+- Run a multipath-monitor daemon that remounts the multipathd UNIX
+  domain socket bind mount when it changes (multipathd restart?).
+
+And that's just at the KubeVirt level. Libvirt and QEMU also have code
+to make this possible.
+
+That is a lot of setup! All of this goes away if QEMU can use
+<linux/pr.h> ioctls instead of libmpathpersist. It's just not needed.
+
+Stefan
+
+>=20
+> Thanks,
+> Martin
+>=20
+> [1] https://github.com/opensvc/multipath-tools/issues/111
+>=20
+
+--RYSsR4JzeCjlV4k7
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmEqRwACgkQnKSrs4Gr
+c8j1KggArppbQqNV0mqFtcjG7RKw3iWvERbsp6RP1kxShcdpkmS/kjutOi/816SW
+xams/qmF5AaIqPTdxZkMo2+CQIbDOt6X5B75Jnejt+zBUfgdwbCWQl4YQnsvbx6T
+nZjzoWjo0KsxPuke5/bEeR+AHNAekb6c47TgKOJKGJfAv537lPkWoqD9heVmVPGY
+LNGNOWpxMKhDGko/OsOQK5RbthUkuuEbWpC1w7jaIeGS6cfHkAes3rn7ud1m3sgy
+YJt6MtN+HwqL3BFCO6JeYByiGIONiI3xLHP296nnm2gRqJ+FePhjxQirmfSLx2eR
+bB8RTxhsXFxKTDWCAsSUtRvW9g+kHw==
+=n2cU
+-----END PGP SIGNATURE-----
+
+--RYSsR4JzeCjlV4k7--
 
 
