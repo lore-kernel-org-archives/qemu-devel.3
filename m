@@ -4,69 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3038EC1E9A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCF5EC1E92
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnx4G-000144-TH; Thu, 05 Feb 2026 05:58:36 -0500
+	id 1vnx3x-0000zB-Jv; Thu, 05 Feb 2026 05:58:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1vnx4E-00012Y-7P
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:34 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1vnx4B-00006s-8U
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:33 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6Dh23fDCzJ46ly;
- Thu,  5 Feb 2026 18:57:22 +0800 (CST)
-Received: from dubpeml100006.china.huawei.com (unknown [7.214.145.132])
- by mail.maildlp.com (Postfix) with ESMTPS id 0FF2040570;
- Thu,  5 Feb 2026 18:58:13 +0800 (CST)
-Received: from dubpeml500008.china.huawei.com (7.214.146.94) by
- dubpeml100006.china.huawei.com (7.214.145.132) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Thu, 5 Feb 2026 10:58:12 +0000
-Received: from dubpeml500008.china.huawei.com ([7.214.146.94]) by
- dubpeml500008.china.huawei.com ([7.214.146.94]) with mapi id 15.02.1544.011;
- Thu, 5 Feb 2026 10:58:12 +0000
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>, Jonathan Cameron
- <jonathan.cameron@huawei.com>
-CC: Michael Tsirkin <mst@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "armbru@redhat.com" <armbru@redhat.com>, Linuxarm
- <linuxarm@huawei.com>, "linux-cxl@vger.kernel.org"
- <linux-cxl@vger.kernel.org>, Ravi Shankar <venkataravis@micron.com>
-Subject: RE: [PATCH qemu v4 3/5] hw/cxl/events: Updates for rev3.2 general
- media event record
-Thread-Topic: [PATCH qemu v4 3/5] hw/cxl/events: Updates for rev3.2 general
- media event record
-Thread-Index: AQHciTUr4LxvIobS5kmrIl1k4W36E7VzK8UAgADdjxA=
-Date: Thu, 5 Feb 2026 10:58:12 +0000
-Message-ID: <36df3469e1ac47d2a0474329a0f3c47c@huawei.com>
-References: <20260119111542.788389-1-Jonathan.Cameron@huawei.com>
- <20260119111542.788389-4-Jonathan.Cameron@huawei.com>
- <CALa+Y15jKXUH=9k5aBveN4WN0AK1QW6VHGLHTVVgTF+-2hXvhA@mail.gmail.com>
-In-Reply-To: <CALa+Y15jKXUH=9k5aBveN4WN0AK1QW6VHGLHTVVgTF+-2hXvhA@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.158.31]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnx3u-0000yf-DQ
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:14 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnx3s-00006P-J4
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:14 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-790b7b3e594so8014247b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:58:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770289091; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QBYb4crK90DFbZGCbfpKDQKMe8uMfxSAwN8vWc38zJYkEOQ5hc2B8qKiGxLizN7pwH
+ +Z0QvxpvCnfGsQDBsL0H9Sk4lXi5yscQrsPKG846LX7ont8JksjJ2MmmwCwPeImOkY4Y
+ iPScQO7bcZcUErnmOCN3haqLzmmxfnXl/ztcVqzrytECklj9TgznkoCxs7aaEXsO6FLU
+ WcjT8qEUg81XyNH5sfR8KtOgufLENk0VCmFA+/1cX2aKNb2Vqeb9eo2P07aXOB69YJME
+ VzCkRkPv+5fE3isgWtYv5PG2zr7d4qXhLyFnwcLz4Sys61T5vfRkoTYykBHoBwznT4Eu
+ 8UHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
+ fh=/H3IPXbHkfJ7U92CFkuy7ATs0nyti9jVtYEI7Xvu9DI=;
+ b=ad/1INVOB+OvJI1fqch2g07XuZ/pfMITBxIFMTMYmpFPHPEb0eEEnUSFsVH7+mhjBG
+ IOpL0njCZb5qzlWuEG9WJFzJ60slDU7wLoKojeARQu4z8GShT/9kgr+EfLXaN9Qewt96
+ y9iSzDptzrx6Tw1qrLpMHhfLdi+3noBBR+B3p9Ahj8Su00XeDGSrnaK4Q0MTgiM9ysSU
+ bon219Q1rRQVPRYJ2CtfHy48n3kFblhFCva0fT2n7qarQkRvNzDypvjUFs8+Zt3xhyPg
+ jSN7Xd4ZgCIWdwNMo8H4E1zghcNxi/RKpoEx7CT7m/FOdgXBiDMWj8aCZE93H1BdOWYF
+ CJsQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770289091; x=1770893891; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
+ b=mUwArEEr1fvp1njk9EMru50pWNlAtzg5fWPc7n/sMeYceYYycocio1oXYWKEwTYSKn
+ zIc2TV3XYMZweuso9UGiyBRRbrIXwMIgaO040CV2UPCGoRhgRWVlVfeql6Jl6VRq2jPo
+ kqRVcect9DqsPajswvlsfn0ry+q1aDl4pk0P7vrnbVGVlKtSjNS8fnKvYTBAPY2+J1ps
+ 7J3MMRmcZ0UCZxGuZIU5mQhnj6CJxOVQukWHUT3+ivr3cLYsdDj+Y1cAkBthuSf29HH6
+ MyjDv+u0Wbet/4pStjxgxWucE0xtk1qjTz81thpnCvypUz2NrbbVWgIzbMspU67n0y5E
+ qG+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770289091; x=1770893891;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
+ b=XUE8tUuLYxMsmMJtH70YuhI6jRgPc0U+wnWm8HJ567OEuqru8fH2tdxQ/5Zyso9xN4
+ pY76+i1Suew84FShoGA1PkaRubsk4nvx/S1A/DDYIEz0B8Ykdm9NGrH7xC7WG3WpY3s/
+ 57OcXdDQBryCJnoBRgdBYF/LoVBn4nevkgI/Loy/aRsRnLnZTWOgkxysi5MMNaht00is
+ fYttzIQEXl70uEWDlurkBorIRLdjvJnn5oB9gtPGOE28drpy1lYQDNX+q7iY7CPOsqlE
+ fYqNjryUtGlRkY0ep5cilOCThS+prsJJXaOlRV+o6lw0bs7NiqB67q+MZ7Fe5TfOsLmy
+ 7D2A==
+X-Gm-Message-State: AOJu0YyDrtF8clPBU9v3nTXh++//bdzq6hYo9glHSqrZ/CVvqmCNKnr7
+ FlhaNR0No+mpRmrL6EGAtpt26rktvvlIB3k+aHRE7TKepW5jgex2XtrH/+QYcLWPqx23ruvlQS9
+ ZpCLgYsaDP6ksVTMDox84DieIcAuO2LQ9PzMR42gJIg==
+X-Gm-Gg: AZuq6aLdbCvTfpO3Jq7xGvv41v+o29WUWDmyFXJ3uBLkIrNbodwSPQqLCN7s5yzZw24
+ 6yoKP5tziVf3NHzGVMS+7fBwlxXx4j0LShbrY1BgCR5pAcKlBfW+h0k/Ch8LN0kXxRlnJnfV1M+
+ 8055NTME68Nz9ACj7PNjnYvJgWwKCSJpgtcqplPiA9UI9WOMbfTSpz5Mx5j2hU1Sp4zP/F2ZSLe
+ gQ4Sb4EKvO7OqZSLaRwBp4/LJhFMziyzo9lEydNRFWuWdECTZ9r2RyrX3SM2V/t7r/KtHpHjM52
+ Oqjs
+X-Received: by 2002:a05:690c:c190:b0:794:8853:53f7 with SMTP id
+ 00721157ae682-794fe84fc60mr56277547b3.69.1770289091115; Thu, 05 Feb 2026
+ 02:58:11 -0800 (PST)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CGME20260203130603epcas5p4dfde087764b1131e855c39ac9ceb0326@epcas5p4.samsung.com>
+ <20260203130257.3263336-1-ashish.a6@samsung.com>
+In-Reply-To: <20260203130257.3263336-1-ashish.a6@samsung.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Feb 2026 10:57:58 +0000
+X-Gm-Features: AZwV_Qh8xYUWFFL590jYYEvEnv-pkCUAabxE_KpJP4kNfDiKiIDUC2N_0xUoxqc
+Message-ID: <CAFEAcA-kV4JmjwmbByYAf5ws7No0HP372cjRWsnH6mbZwvouRw@mail.gmail.com>
+Subject: Re: [PATCH v3] target/arm: Implement WFE,
+ SEV and SEVONPEND for Cortex-M
+To: Ashish Anand <ashish.a6@samsung.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, saurabh@samsung.com, 
+ vishwa.mg@samsung.com, y.kaushal@samsung.com, ashish.anand202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,56 +115,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiju Jose <shiju.jose@huawei.com>
-From:  Shiju Jose via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFJhdmkgSm9ubmFsYWdhZGRh
-IDxyYXZpcy5vcGVuc3JjQGdtYWlsLmNvbT4NCj5TZW50OiAwNCBGZWJydWFyeSAyMDI2IDIxOjQy
-DQo+VG86IEpvbmF0aGFuIENhbWVyb24gPGpvbmF0aGFuLmNhbWVyb25AaHVhd2VpLmNvbT4NCj5D
-YzogTWljaGFlbCBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9y
-ZzsgU2hpanUgSm9zZQ0KPjxzaGlqdS5qb3NlQGh1YXdlaS5jb20+OyBhcm1icnVAcmVkaGF0LmNv
-bTsgTGludXhhcm0NCj48bGludXhhcm1AaHVhd2VpLmNvbT47IGxpbnV4LWN4bEB2Z2VyLmtlcm5l
-bC5vcmc7IFJhdmkgU2hhbmthcg0KPjx2ZW5rYXRhcmF2aXNAbWljcm9uLmNvbT4NCj5TdWJqZWN0
-OiBSZTogW1BBVENIIHFlbXUgdjQgMy81XSBody9jeGwvZXZlbnRzOiBVcGRhdGVzIGZvciByZXYz
-LjIgZ2VuZXJhbA0KPm1lZGlhIGV2ZW50IHJlY29yZA0KPg0KPk9uIE1vbiwgSmFuIDE5LCAyMDI2
-IGF0IDM6MjHigK9BTSBKb25hdGhhbiBDYW1lcm9uDQo+PEpvbmF0aGFuLkNhbWVyb25AaHVhd2Vp
-LmNvbT4gd3JvdGU6DQo+Pg0KPj4gRnJvbTogU2hpanUgSm9zZSA8c2hpanUuam9zZUBodWF3ZWku
-Y29tPg0KPj4NCj4+IENYTCBzcGVjIHJldjMuMiBzZWN0aW9uIDguMi4xMC4yLjEuMSBUYWJsZSA4
-LTU3LCBnZW5lcmFsIG1lZGlhIGV2ZW50DQo+PiB0YWJsZSBoYXMgdXBkYXRlZCB3aXRoIGZvbGxv
-d2luZyBuZXcgZmllbGRzLg0KPj4gMS4gQWR2YW5jZWQgUHJvZ3JhbW1hYmxlIENvcnJlY3RlZCBN
-ZW1vcnkgRXJyb3IgVGhyZXNob2xkIEV2ZW50IEZsYWdzDQo+PiAyLiBDb3JyZWN0ZWQgTWVtb3J5
-IEVycm9yIENvdW50IGF0IEV2ZW50IDMuIE1lbW9yeSBFdmVudCBTdWItVHlwZSA0Lg0KPj4gU3Vw
-cG9ydCBmb3IgY29tcG9uZW50IElEIGluIHRoZSBQTERNIGZvcm1hdC4NCj4+DQo+PiBBZGQgdXBk
-YXRlcyBmb3IgdGhlIGFib3ZlIHNwZWMgY2hhbmdlcyBpbiB0aGUgQ1hMIGdlbmVyYWwgbWVkaWEg
-ZXZlbnQNCj4+IHJlcG9ydGluZyBhbmQgUU1QIGNvbW1hbmQgdG8gaW5qZWN0IGdlbmVyYWwgbWVk
-aWEgZXZlbnQuDQo+Pg0KPj4gSW4gb3JkZXIgdG8gaGF2ZSBvbmUgY29uc2lzdGVudCBzb3VyY2Ug
-b2YgcmVmZXJlbmNlcywgdXBkYXRlIGFsbCB0bw0KPj4gcmVmZXJlbmNlcyBmb3IgdGhpcyBjb21t
-YW5kIHRvIENYTCByMy4yLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6IFNoaWp1IEpvc2UgPHNoaWp1
-Lmpvc2VAaHVhd2VpLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IEpvbmF0aGFuIENhbWVyb24gPEpv
-bmF0aGFuLkNhbWVyb25AaHVhd2VpLmNvbT4NCj4+IC0tLQ0KPj4gdjQ6IFVwZGF0ZSB0aGUgc3Bl
-YyByZWZlcmVuY2UgaW4gdGhlIHJlbGF0ZWQgY29tbWFuZCB0byAzLjIgYXMgd2VsbC4NCj4+IChN
-YXJrdXMpDQo+PiB2MzogVXBkYXRlIGFsbCByZWZlcmVuY2VzIHRvIDMuMiBmb3IgY29uc2lzdGVu
-Y3kuDQo+PiAtLS0NCj4+ICBxYXBpL2N4bC5qc29uICAgICAgICAgICAgICAgfCAyOSArKysrKysr
-KysrKysrKysrKysrKystLS0tLS0tLQ0KPj4gIGluY2x1ZGUvaHcvY3hsL2N4bF9ldmVudHMuaCB8
-ICA3ICsrKysrLS0NCj4+ICBody9tZW0vY3hsX3R5cGUzLmMgICAgICAgICAgfCAyOSArKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKw0KPj4gIGh3L21lbS9jeGxfdHlwZTNfc3R1YnMuYyAgICB8
-ICA2ICsrKysrKw0KPj4gIDQgZmlsZXMgY2hhbmdlZCwgNjEgaW5zZXJ0aW9ucygrKSwgMTAgZGVs
-ZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL3FhcGkvY3hsLmpzb24gYi9xYXBpL2N4bC5q
-c29uIGluZGV4DQo+PiA4MjAwMWMwNTkxZDguLjRmZjY2ZmM2YzE2YyAxMDA2NDQNCj4+IC0tLSBh
-L3FhcGkvY3hsLmpzb24NCj4+ICsrKyBiL3FhcGkvY3hsLmpzb24NCj4+DQo+PiAgICAgIHN0d19s
-ZV9wKCZnZW0udmFsaWRpdHlfZmxhZ3MsIHZhbGlkX2ZsYWdzKTsNCj4+DQo+PiArICAgIGlmICho
-YXNfY21lX2V2X2ZsYWdzKSB7DQo+PiArICAgICAgICBnZW0uY21lX2V2X2ZsYWdzID0gY21lX2V2
-X2ZsYWdzOw0KPj4gKyAgICB9IGVsc2Ugew0KPj4gKyAgICAgICAgZ2VtLmNtZV9ldl9mbGFncyA9
-IDA7DQo+PiArICAgIH0NCj4+ICsNCj4+ICsgICAgaWYgKGhhc19jbWVfY291bnQpIHsNCj4+ICsg
-ICAgICAgIGRlc2NyaXB0b3IgfD0gQ1hMX0dNRVJfRVZfREVTQ19USFJFU0hPTERfRVZFTlQ7DQo+
-DQo+VGhlIG1vZGlmaWNhdGlvbiB0byAnZGVzY3JpcHRvcicgaGVyZSBpcyBub3Qgd3JpdHRlbiBi
-YWNrIHRvIGdlbS5kZXNjcmlwdG9yIHdoaWNoDQo+d2FzIGFzc2lnbmVkIGVhcmxpZXIgaW4gdGhp
-cyBmdW5jdGlvbi4NCj4NCj5TdWdnZXN0IG1vdmluZyBnZW0uZGVzY3JpcHRvciBhc3NpZ25tZW50
-IGFmdGVyIHRoaXMgYmxvY2ssIHNpbWlsYXIgdG8gaG93DQo+dmFsaWRfZmxhZ3MgaXMgaGFuZGxl
-ZCBpbiB0aGlzIHNhbWUgZnVuY3Rpb24uDQo+DQpUaGFua3MgUmF2aS4NCldpbGwgIGZpeC4NCg0K
-Pj4gIHZvaWQgcW1wX2N4bF9pbmplY3RfZHJhbV9ldmVudChjb25zdCBjaGFyICpwYXRoLCBDeGxF
-dmVudExvZyBsb2csDQo+PiAtLQ0KPj4gMi40OC4xDQo+Pg0KPj4NCg0KVGhhbmtzLA0KU2hpanUN
-Cg==
+On Tue, 3 Feb 2026 at 13:06, Ashish Anand <ashish.a6@samsung.com> wrote:
+>
+> Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
+> simple yield. This causes high host CPU usage because guest
+> RTOS idle loops effectively become busy-wait loops.
+>
+> To improve efficiency, this patch transitions WFE to use the architectura=
+l
+> 'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
+> to sleep when the guest is idle.
+>
+> To support this transition, we implement the full architectural behavior
+> required for WFE, specifically the 'Event Register', 'SEVONPEND' logic,
+> and 'R_BPBR' exception handling requirements defined in the ARM
+> Architecture Reference Manual.
+>
+> This patch enables resource-efficient idle emulation for Cortex-M.
+>
+> Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
+> ---
+>
+> Changes in v3:
+> 1. Changed event_register from uint32_t to bool, as it's architecturally
+>    a single-bit register. (Alex Benn=C3=A9e)
+> 2. Refactored nvic_update_pending_state() to accept VecInfo* and scr_bank
+>    as parameters instead of recalculating them from irq/secure. (Peter Ma=
+ydell)
+>
+> Link to v2 - https://lore.kernel.org/qemu-devel/20260121132421.2220928-1-=
+ashish.a6@samsung.com
+>
+>
+>  hw/intc/armv7m_nvic.c      | 114 ++++++++++++++++++++++++++++++-------
+>  target/arm/cpu.c           |   6 ++
+>  target/arm/cpu.h           |   7 +++
+>  target/arm/machine.c       |  19 +++++++
+>  target/arm/tcg/helper.h    |   1 +
+>  target/arm/tcg/m_helper.c  |   5 ++
+>  target/arm/tcg/op_helper.c |  56 +++++++++++++++---
+>  target/arm/tcg/t16.decode  |   5 +-
+>  target/arm/tcg/t32.decode  |   5 +-
+>  target/arm/tcg/translate.c |  29 ++++++++--
+>  10 files changed, 212 insertions(+), 35 deletions(-)
+>
+> diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+> index 28b34e9944..0be8facb8e 100644
+> --- a/hw/intc/armv7m_nvic.c
+> +++ b/hw/intc/armv7m_nvic.c
+> @@ -221,6 +221,29 @@ static int exc_group_prio(NVICState *s, int rawprio,=
+ bool targets_secure)
+>      return rawprio;
+>  }
+>
+> +/*
+> + * Update the pending state of an exception vector.
+> + * This is the central function for all updates to vec->pending.
+> + * Handles SEVONPEND: if this is a 0->1 transition on an external interr=
+upt
+> + * and SEVONPEND is set in the appropriate SCR, sets the event register.
+> + */
+> +static void nvic_update_pending_state(NVICState *s, VecInfo *vec,
+> +                                      int irq, int scr_bank,
+> +                                      uint8_t next_pending_val)
+> +{
+> +    uint8_t prev_pending_val =3D vec->pending;
+> +    vec->pending =3D next_pending_val;
+> +
+> +    /* Check for 0->1 transition on interrupts (>=3D NVIC_FIRST_IRQ) onl=
+y */
+> +    if (!prev_pending_val && next_pending_val && irq >=3D NVIC_FIRST_IRQ=
+) {
+> +        /* SEVONPEND: interrupt going to pending is a WFE wakeup event *=
+/
+> +        if (s->cpu->env.v7m.scr[scr_bank] & R_V7M_SCR_SEVONPEND_MASK) {
+> +            s->cpu->env.event_register =3D true;
+> +            qemu_cpu_kick(CPU(s->cpu));
+> +        }
+> +    }
+
+I looked a bit more closely at the SEVONPEND language in the Arm ARM,
+and it says
+
+# When SCR.SEVONPEND bit associated with a security state is one, interrupt=
+s
+# transitioning from the inactive to the pending state that target that
+# security state are wakeup events.
+
+So the thing that determines whether we are looking at the S or the NS
+SCR.SEVONPEND is "does this interrupt target S or NS security state?".
+We have a function for that:
+ exc_targets_secure(s, irq)
+
+So we can determine which SCR to look at in this nvic_update_pending_state(=
+)
+function and we don't need the callers to pass in scr_bank to us.
+
+exc_targets_secure() requires it to be called only for a non-banked
+exception, but we can call it only inside the irq >=3D NVIC_FIRST_IRQ
+condition, as all interrupts are non-banked.
+
+This should simplify the changes you're making at the callsites.
+
+thanks
+-- PMM
 
