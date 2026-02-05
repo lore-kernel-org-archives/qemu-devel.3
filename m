@@ -4,181 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37D6EC1E86
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B97CEC1E85
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnvwj-0003mn-87; Thu, 05 Feb 2026 04:46:45 -0500
+	id 1vnvwe-0003ln-5d; Thu, 05 Feb 2026 04:46:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vnvwh-0003mO-QQ; Thu, 05 Feb 2026 04:46:43 -0500
-Received: from mail-norwayeastazon11023138.outbound.protection.outlook.com
- ([40.107.159.138] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vnvwc-0003kk-HH
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:46:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vnvwB-00028E-Nt; Thu, 05 Feb 2026 04:46:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ig9cK+f5XIM3KnQ4WDbhE3NGtpWvuImomgAYK5F34iAJVFVeSDtEaYd+js/VyVOIRamVGTe0g/mbMmAoAxi/4o1R3SAXBW3ZPtW2t9/ic6Mhwf1yT9/nGfzINAi7OVJzqnYj3Y1G5UoyvZGQYk/UDZVnwt8ohMnCubiH8gMJKz1wj2lUsilnyD3nFDz925UhFxJDRK7d1FF91GcA8ZdqBzBXtbspMVhYTpWl2EO3Hmhgd3e6rfHKpLJrTnvw0UQ0HvWtUm6TFG7TNQokMKjZCnCwi9r/1tjOc0kWkTU5ksZtRnQOWwksQ+HFmzUkkFEv2IggqmOvBJ6cIN3bOKF5bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SFUvVpA51+RiCrD07c9pPgHw2A+x9t4qWEvY2tlsshE=;
- b=qHSNeuJ4gosRnsnLC5TNMpf/0xxlRqJTL/7HIrx7esv+5VHSB1LKjwGEEEuMQ4LTVsCVpdPl7RelBCzZy3CXsrS4TLAMSlEBKGlbT1tG/1XMx4T3zZVWJXr4ihMFtrH2u+c83IPOp9lqzC3c/0cdN6uhUr4XlTY/6fJ0Lh+7N31XMIS6o8mxSctuiKmACiRDu69y1RYiTTst64aD11z9/kDJAmSCEA8swT6Lqes9e7vKjPHEaPBTtPImAwDaABxLrrGdltEfZXax4VN6qY8qRSalAzCwLZTiH9rtWGijZMES99sMXKvhCvTeOZHTQ0KXU89b9PcTXvvcXHsyz1lzYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SFUvVpA51+RiCrD07c9pPgHw2A+x9t4qWEvY2tlsshE=;
- b=G8pcLMLjTVB2RzS7blE0iu5+PIKC5cEgXGWZFoSlEVbklSgZMDg4s5D8c5ChFJwyto3Qn3rv37nn9lpXKUC/rthDAZOKxwIpnFu68XIPx5+oYajT7EQV3dSKGE1EMwWjw5EHN7b2TlPFw9Z0iafLhoIJmKX8Dnm6WaSP/PmEoONXQrIAyZoPUkjF/pI1gluYXDAzJrNB+7UCmCFPiQDs7uxFodtNxLynjD3Otac/FFc3dNwOy7EK+pyRGMDdIejXRD5RpqCUH8+Ajl/4+4AdlK1jRGuJspfkD1/L5xxJw7l6XINp0xLZlycRSq2420FPSB55I33zlYJsCtFXfHFCow==
-Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
- by AS8PR09MB6188.eurprd09.prod.outlook.com (2603:10a6:20b:5b6::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Thu, 5 Feb
- 2026 09:40:31 +0000
-Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
- ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
- ([fe80::939c:95df:4890:ce63%6]) with mapi id 15.20.9587.013; Thu, 5 Feb 2026
- 09:40:31 +0000
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "alistair.francis@wdc.com" <alistair.francis@wdc.com>, "liwei1518@gmail.com"
- <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
- <zhiwei_liu@linux.alibaba.com>, "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-Subject: Re: [PATCH] riscv64/test_boston.py: fix intermitent test timeout
-Thread-Topic: [PATCH] riscv64/test_boston.py: fix intermitent test timeout
-Thread-Index: AQHcjuubdhWgVupRzUKjz1WcHacsLLVz6RcA
-Date: Thu, 5 Feb 2026 09:40:31 +0000
-Message-ID: <f9cd765a-1cb6-44be-92d9-236db10ac3f4@htecgroup.com>
-References: <20260126174534.9860-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260126174534.9860-1-daniel.barboza@oss.qualcomm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|AS8PR09MB6188:EE_
-x-ms-office365-filtering-correlation-id: 4464f738-2b1d-4d2b-a86e-08de649a9a5f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|7053199007|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?b1B1MDBqK3kzaXpkRUxxb2xydFhiR3ZFTnpJaUl0dUc5Tk80NWJnTTZnOUNl?=
- =?utf-8?B?UmFJMkdUOWxsSHZGNWFnOVZQZTNnMnNKeTR5cENCcWJtR2xvWWlTMWNYQ2o5?=
- =?utf-8?B?a3Q3UXJsR25uZWxEdW1qY0FkMFpUSkhGdVhaSlVLOXhVNTVRTjhuTXVhaFY1?=
- =?utf-8?B?b0VkbGwwZHRIZk1MV2RxVDBvT1IyNC9IcVVjNmxYbkxoYzk5Z1E4ZFNWcVBQ?=
- =?utf-8?B?QVQyZk9JQUFlNVNaNGxPUmxVNGhFcXVkUjdjSk93VGMzK0hvK1VqUXM2aWVr?=
- =?utf-8?B?czB4V3BYNWtMcGtVa3pFSFNmNnFZdm5Rc1J4Z2pMVlNKcjYxRlFkaXNuYW1s?=
- =?utf-8?B?YVBLSXZQQlNvNEltTWpZZnF6RE1ONTM0MStpdW5TdkZpWmcwMFhHeklxaml1?=
- =?utf-8?B?R0U3K3NGTDJCL0hVVmpBWi90cU9qNUpsWkVlbFpSWk9sR2syMVZDSWI3QmlO?=
- =?utf-8?B?VjVLZ2hyT0IxcFdQSGJiUDhPNjBUejE0am91WktHN3lFRlVIMUhmOTVzeDYw?=
- =?utf-8?B?UmhQaGFIUGt2aWtwY2NGWHZXNUZKNmRrZlZTcE1IMURnWCtmZXJscmhXZER2?=
- =?utf-8?B?dWY4UVhBWkFrRTBtTzl5ZWlodkxNNUM5REhwNFRrOVBTNWxqazNWZDlMY2wy?=
- =?utf-8?B?d3hvUUJYWEQ5VmpOUktpK0I2MU1la2tsYk5pQW1QOUxnczU4Y1RuSlIyZEpQ?=
- =?utf-8?B?VDIzRVVLazFhU1UvelRtTCsyVVJYVkZ6MlUvR1pTRnRQNmRoVitweUdtMVFC?=
- =?utf-8?B?eXBWdmI4YXJsK2dCSzBFNnhaQURxRWk2amNPTWZzZFZ3MS9uemU0MzN6Z2s2?=
- =?utf-8?B?bFFxOWhnVjAyK0xpVUF3bjgyZGNsSnJMRkhlejI5eFl5c1RtVElZSlgzcHNT?=
- =?utf-8?B?S0R2UEhrNEdpRVdqWjdldHNCbHAxZVZkZFU2V2tzV0RpMElPUVY2NkhXTWNY?=
- =?utf-8?B?MCthUnl1OEdsVUpnOVN1YlBpM01BelNUdFhJZE9qRS9qSlR3L2x5SEdoUzh0?=
- =?utf-8?B?V0xmc1FDZG5ZQWZlczVnQzNKUlNCaVdRSmpsUllvdTdYUlg0ekJYeVBlb2xn?=
- =?utf-8?B?aVdZQ1p3U0FzTmF2UDFnbnArd1QydElIZGJrT0hSWWd1cERJUXJ4VFZvdmJM?=
- =?utf-8?B?NkNqelY1YkRaRlhyVEF6QkgvR3FPNklFWTVYTytmUTN4a2NPQlgrWUE5Sm1R?=
- =?utf-8?B?bmd0OE9ZSjFzVUxRNFFGbUJWYzI0OUNjYUxMd1IvM3VFa2tqQmEzNkJTUjJL?=
- =?utf-8?B?VDlOUldaK2dJV242STF6UlZnYlI3ZkJHMUV5NllUa2ZpdVZGTjlCQW02K0ZB?=
- =?utf-8?B?M0JMVTlUaml5MVdHamdINCtyTnlmQWJVU1lucnJjbXJKdlZqTXpzN1FJby9a?=
- =?utf-8?B?U2dYMHdSWDhvUUNEejRYcFJsd1RaUHh1WFBlRlJ0YTVGeXJ2Zkh4ZEdYT2Jj?=
- =?utf-8?B?SHJ0ZXVqUldUMTVtVU5mbVRuN3d3Q1VkQUFYaTBmZ3RVUTVSRlZCNnA0cVVt?=
- =?utf-8?B?enUzaVYwS0NwaDFxZTVDQUZrbmJCL0pjZFRwK1VjcnBURlBWWjFzMy96Unhu?=
- =?utf-8?B?NitjL3ZtZ2lJampFcDNFSUNpOVhlcXNmOHByRExwejRnbGZxeFA0em1MOFN0?=
- =?utf-8?B?UitrZW5maGFVZ0xmeVJvL1FxYWlkTzNzTEE3aElVcSs0UFpobnA0ZWY3Um40?=
- =?utf-8?B?UncvMGh2SktGbnNjZGhBN1UyY3dIZ0ZZcStEYUhPSTRVVUZvckQrUmNWTm4z?=
- =?utf-8?B?SVl1VHdDT05OQmRDMXlub1RRMnZOOGZuOU1YSW93TVE0ODc5THpwOU5mVFhv?=
- =?utf-8?B?UThSY1U1NVlJaEo5TEIwdE9vZHkwWEtpdWk0MHlrNzZ1UUxGakdJM0w1L2Fp?=
- =?utf-8?B?OW9Cbmp3Z09TYnRld1RjNGNUcjRReE52QlJoNllWZjRkVHhjOG9RS2NKZmpB?=
- =?utf-8?B?QkZmMWRFemhZbkg3UDE0Z1FQYTF3dUZDQ1pOSTl6RkFoVlZRMTNDUEd5c2NU?=
- =?utf-8?B?THVmbUw3REMwbWUrUmJ3Y3RES2xXYUJwblI1QTQ0Mm1IS3IvdUM1NC9HMjRQ?=
- =?utf-8?B?TlVVbGQweUlYcUxUM2FCWjluRHFUTnlUejZBeDk1VVJHQ0RnZllUdnNEQ0RO?=
- =?utf-8?B?TnNhZyttdnhzeCt2b1A2S2lDTkMzTG5veG12d3liYUZ6NjAwd1B4YW90aUJJ?=
- =?utf-8?Q?f9iMNWDYekS5QRTRTnefSg0=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(7053199007)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ak9nWVJXYWtQSXZrSTRIVm1reWR5cWZSdFlqeElhNTFsTU9tSEw5R3MxMXpk?=
- =?utf-8?B?WlhESUhWRmpsTC9JLzQxQVljaVNtRnBRbHRqV0tMdCtsV1MxWkdZdmhnUGU4?=
- =?utf-8?B?dXRoUXRUdGQrckoxRjVYQWxYdmdIcVVMZSsrNCtYaDR2bStZYzZVbmJYQmdr?=
- =?utf-8?B?N2xKZXU5OXYxNWhRekMyUmRBSUl2eTkrZHpzb3NDZUdxdEVyMkdzdEdNajRG?=
- =?utf-8?B?RzIwNGIxQ0xoR083VE1LdlVzOWpSMWloZkxsQkZadURhY1VML2hjVFlLaXM3?=
- =?utf-8?B?U0xTQ0hwSVR5RzE4aWE0Tlg2bFYwOUpuOEtLM1dJVkJ3T2kwempBZk1KV3NN?=
- =?utf-8?B?MHR3dlpwd3RPK09rbG1OK1MwbW83LzRDdmJPWkVYTUlGWGJtb0kvUGM0NnQ3?=
- =?utf-8?B?YVVBMTVvS2M3YzVRUkdvdWZWeWhLUTVxR3h3VXl6OWFkcy9aTy9idXdNd3FI?=
- =?utf-8?B?OW5QNHVYZmY1VnpaVXZYay8wMjFEOEk1cDdralBsdUFZWCtXNUtxUGxab3lC?=
- =?utf-8?B?TCtGemQ5NEdRbG8zV0FxMUlzVlBYNTZqYWEyV2JmcFYzVXllcVF6MG4yYi84?=
- =?utf-8?B?TzZJZnR2ZFhwejVjcGZzclhTUm9Ha1kwRzMzTEJoRmN3d2FzYktMZ1VyQUtG?=
- =?utf-8?B?RzJ5U2c3U1Y5VVlvZHlxZHZSS1VteThBa3lDbDQ4OU1FYWRodjU1cDVPbkxo?=
- =?utf-8?B?cFFub2RwUnN0TWtDSFVXaURabGhIY0dpSFByVWIyVS83ZGRqSHNveHJjVmRt?=
- =?utf-8?B?ZlhjcC9ocURHUUNOMEgxckZKSjYyVUVaRVMxdk8yMVJCVTRrVlN1N1hISjhp?=
- =?utf-8?B?VU1ZN01PSVNTdExOOTlmbDdUNFhiWWVvdGNLQndxMDExWHVnT2Y0M1N0Ujcv?=
- =?utf-8?B?bXQvSTliV2ZpTFptME1xZTNIRkFidXBXQ0JUOXJiUXJ0ayszN1RUaTJBbnlh?=
- =?utf-8?B?ejI3cGkzVWxobHk4NlErNm9IaHJpampweUxzWUFCV0tmQjh6bTVsNXZ4N3NL?=
- =?utf-8?B?NEFnaUdyOFlsL3dWeHVQQlhLc0o3M0tqTFJvUnJvM3lvVWtTVVgwZVhKQUZp?=
- =?utf-8?B?UmE5OHNSejF6bzN1TklKSzB1M2Q3TFo4ZmJTelhEelA0RmE1RGdlbXdyV1Fo?=
- =?utf-8?B?UFZZSldOalB3WTQzMGJlV29HTWVPb0Q0Rm1PUHlLQlF4dDJNdUVIRnZjR2lk?=
- =?utf-8?B?dVlFbnFybGVjcFNyaDdMQXRaY05ZWGV4bzVybStNbVFwNjNuekNlT2ZBRmdY?=
- =?utf-8?B?RW4zOXdTaFR4dGRIUndhNmdkY1RWd08xL1ZUR01IUWlXdEpZL0NCV09HNG9z?=
- =?utf-8?B?QmRRZVhUVW5lZFQyeGZMTHFIMzA4dDEwV0pDRFI2clJXYUlIUHVQcmNTa1R4?=
- =?utf-8?B?cWNDdW8zZGpOU1hUbnhNZkNST0hrNFYyTS9NVXY3UjBVUHRVZG1neS8vejhV?=
- =?utf-8?B?TEZqZHh1VVZHaEowNzlyK28zMjdjODc3MlFoaVN0UUZEREp1WU9zTURCSHBI?=
- =?utf-8?B?WVZTOVZyUzJZbmZ5dmJ5VzRTUnRKWUdjTGh0NXJLRENqVmxvTXlMdW90S1B6?=
- =?utf-8?B?RXNmN2ZoR2g2SStSZlFtK0k5K3VxVW1vOVVBMUlZZkRuNFcvTFh6S3ZpZUlz?=
- =?utf-8?B?UVJEZ0d6OHlKQ1d1UlBZNElSR3ZCUlJLdElRR1ZZOTZXbWtoQjAzWStlZEl3?=
- =?utf-8?B?Q0ZKSmUxanJxSGc5Rkw5UDFHV1ZlL1kvSzEyUnhXSTlpQUJycjBHZUNmWWdN?=
- =?utf-8?B?OThYZXhYUmh5dEgrZ0hlL3pWVFhPWnNaT0dKbVJaTTJTbTFGbWZvNXA5TnZ6?=
- =?utf-8?B?V3M4MnNaN1FBVW5LRVJiNzFnN1NXbGNtalAzQ1Njam9zREFVLzY1MStmakN6?=
- =?utf-8?B?Nkt0Wk41c2dJNy80MVNSdkJpM3RlM1hNZWNpOE4vUUdWVjJZR3VIQm1nWEZ1?=
- =?utf-8?B?ajhoWWx0enlzZ1dSZ2JTV2t1UFJETVg0c0lrejFYNTBUQWk5bHlmbUJRdzAx?=
- =?utf-8?B?UmdUYktsM1F0K0JjM1ZpazEvTDVPUE1qNWovVXBJVmpwSXI4T1hUeXZ6UzdZ?=
- =?utf-8?B?TTFna1RPNlB5cDdveG9UalVMbWQ1bXMxQVdkTjdIRUxCZ1FFb09JS29sMHA4?=
- =?utf-8?B?amlNQmFlcm52d0VDbm5oMjlwZnNWUEtMamF0WkZseHppMHBXamNPMXpwZ3Ar?=
- =?utf-8?B?MFAwY3k2VXdDT1ZXaSs5K25HNlgxdzVGTkNIcG5HN0xxUnd4Uzh0QUR4WWd2?=
- =?utf-8?B?NDZheVoyYzVId0xOanZRWFQ2T0MxZldEaCtSaUxYdy8xUkJBSHF5RmJmOXhU?=
- =?utf-8?B?aGx4YVBnMytLUlRlcU1GTEZXOHdlR0FNekwwczNjbEEzREN1OXpmRVV1SnlR?=
- =?utf-8?Q?Xv0qHe8o4ZqTwpZ3nfc9PbEeqUT2bubzbLrE4?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C8087EEFBA0E5848B92EDA51D0B15F5B@eurprd09.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vnvwA-00026R-OA
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:46:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770284702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VocTWuxHKncefVi3u1d8zNTzJTdIZ9+PxiV7QPezD80=;
+ b=THwK4LYZkqwxce8IhEz1RUlej7z4M5EWukQU1teATtT13magyzeFF1L2eUv5kyEkfJS5wC
+ 0EnygiZNPdoif79O0QYK8bwNCbhV9BLNv3qnHckjYf7g29+x4gPmF2EtQGgM//gim+HgfC
+ oX+TpaT2TYU5p8IIqTqbT2yu84iXdw4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-nV0bt4MEMIG8eOvu1vbBjg-1; Thu, 05 Feb 2026 04:39:17 -0500
+X-MC-Unique: nV0bt4MEMIG8eOvu1vbBjg-1
+X-Mimecast-MFC-AGG-ID: nV0bt4MEMIG8eOvu1vbBjg_1770284356
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4362456500eso301330f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 01:39:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770284356; x=1770889156; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VocTWuxHKncefVi3u1d8zNTzJTdIZ9+PxiV7QPezD80=;
+ b=FUtMYjiOLYpBVQkIf8gLipA5FNe+56llY3WGQ+AESasV2XtMvgv8dgtd60oF34MIPw
+ 446F8o5woC6PtoGafuUlm8GqGuqw25S0Chdb2fLxCN7CMwFJ9LOZNH3Lr7dLEQ2lqoyO
+ L4AzHDOMEBZRzgoFuqEYP7LrHoPXwhjm0qGDylr3luqfsVDXfsSxY8MQVZRAkk6uZ+lG
+ AlXVgEAEP7KCmLQ/w92weaD3jtHPpNcuB/qFS/0uPsjFLiOrg0uOOxzZSe3RpXdDiuSf
+ GvAv/aseo60WxEyLqJE0LQVtjVGVD2PbCJV4/KqdOGbr0n1g2L4qCg4/jWkeLDpfht9C
+ TLTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770284356; x=1770889156;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VocTWuxHKncefVi3u1d8zNTzJTdIZ9+PxiV7QPezD80=;
+ b=Ry2gW+T1BmF9rEuMZ5hcixIgFuW2/uHq6WMll6HUm7HG+4C0FKJl7VLOmUsLjz/KOw
+ XGqIlkdQCfjdEATnYziWU0HAIgq3jRexI/Gw5Y9FrbVUW9DWF5fmhWr12B/bJ9VCP0fm
+ MPSsdqPhyV0Fo4u3iHrSmEoMsN0YX9O46ivyd5O5asmamZ5P1gqezK763qhnwR8BcENB
+ cg2yTrvZymRmb6tC30PPXkYPhv56+nYbywrrrq90G7pGC7teoh/V1m+j9LWUeWSQrIEa
+ A5IKsseCK3EOoHJSODZMddg3lXNfuasvwHnc/ojJvGnSFErX4IfoTM2WUC84SQdhru0O
+ aBog==
+X-Gm-Message-State: AOJu0Yzxu4g8z1gGi7vB6Av1V5FZ4nxnmajbs8kaRRMNwTtxRU5Ek7NH
+ WmTu5t+HxTpZg8pk42uXiKQlcMMLEF0SWfsVuW51Wvtpga1MWIrGKi833vV2zB1Tu+vmZaGoRwS
+ IoLpfvqQn3h1HLa9/EdPzwc+lsJxDWmGjTciQeip1vCYY4ekJFPTsfgb4
+X-Gm-Gg: AZuq6aJCn4RNzkMB9R838qqW7IUidJhLaQteK2gJsl95e+GbuiaRmuJTpMvBeesx04k
+ PwBFnPv5vVlRODLciCsiPhvBt3x3jHxwaEopNu/IU5FcvsiK1eGzoWRA7IerWjuwt7M1fu4YF7O
+ 5L6+MPY9WyMDCOIBCXgIdP36HEogaWLzMuSmCz7brVNNYT2qd9QSYI3jaro2FyuoNbQFsXITf/2
+ JOmjyXRIzt/cyxnhTxWg5BeuqusvTA7N380MFxvgBvbPswrh99nErOtTDU32OgYiqQ8fsSc/uqX
+ mrLhGU3DyRi+mM/fwIaQKcnx9LtQXEjgQ6/Ex2cN4L+diKB6X1Ys3cxUjbtZVH4bLxeF5Q==
+X-Received: by 2002:a05:6000:1ac7:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-43618054ff1mr8084256f8f.34.1770284355504; 
+ Thu, 05 Feb 2026 01:39:15 -0800 (PST)
+X-Received: by 2002:a05:6000:1ac7:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-43618054ff1mr8084214f8f.34.1770284354967; 
+ Thu, 05 Feb 2026 01:39:14 -0800 (PST)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4361805813asm12407128f8f.27.2026.02.05.01.39.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Feb 2026 01:39:14 -0800 (PST)
+Date: Thu, 5 Feb 2026 10:39:11 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL 00/51] virtio,pci,pc: features, fixes
+Message-ID: <20260205103911.002c90b5@imammedo>
+In-Reply-To: <20260205015956-mutt-send-email-mst@kernel.org>
+References: <cover.1770231744.git.mst@redhat.com>
+ <20260205015022-mutt-send-email-mst@kernel.org>
+ <20260205015956-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4464f738-2b1d-4d2b-a86e-08de649a9a5f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Feb 2026 09:40:31.0854 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ujwkUHs6SSHGMQPxYd3ncziV2HeoG0cldeOABxwO8c0LLOIm0sfzp8ji8Tk0MXdxtlxFnv/cwnMo05PafsEzmlF9Sz/5d+b+GTzBiAGk4WI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR09MB6188
-Received-SPF: pass client-ip=40.107.159.138;
- envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,66 +120,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpPbiAxLzI2LzI2IDE4OjQ1LCBEYW5pZWwgSGVucmlxdWUgQmFyYm96YSB3cm90ZToNCj4gW1lv
-dSBkb24ndCBvZnRlbiBnZXQgZW1haWwgZnJvbSBkYW5pZWwuYmFyYm96YUBvc3MucXVhbGNvbW0u
-Y29tLiBMZWFybiB3aHkgdGhpcyBpcyBpbXBvcnRhbnQgYXQgaHR0cHM6Ly9ha2EubXMvTGVhcm5B
-Ym91dFNlbmRlcklkZW50aWZpY2F0aW9uIF0NCj4NCj4gQ0FVVElPTjogVGhpcyBlbWFpbCBvcmln
-aW5hdGVkIGZyb20gb3V0c2lkZSBvZiB0aGUgb3JnYW5pemF0aW9uLiBEbyBub3QgY2xpY2sgbGlu
-a3Mgb3Igb3BlbiBhdHRhY2htZW50cyB1bmxlc3MgeW91IHJlY29nbml6ZSB0aGUgc2VuZGVyIGFu
-ZCBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+DQo+DQo+IFRoZSByZWNlbnRseSBhZGRlZCBC
-b3N0b24gTUlQUyBib2FyZCBzZWxmdGVzdCB0aW1lcyBvdXQgY29uc2lzdGVudGx5IGluIGENCj4g
-bWFjaGluZSBydW5uaW5nICdtYWtlIGNoZWNrLWZ1bmN0aW9uYWwnIHdpdGggLWogMTY6DQo+DQo+
-IDE4LzE4IGZ1bmMtdGhvcm91Z2grZnVuYy1yaXNjdjY0LXRob3JvdWdoK3Rob3JvdWdoIC0gcWVt
-dTpmdW5jLXJpc2N2NjQtYm9zdG9uDQo+ICAgICAgICBUSU1FT1VUICAgICAgICAxMjAuMDlzICAg
-a2lsbGVkIGJ5IHNpZ25hbCAxNSBTSUdURVJNDQo+DQo+IFRoZSByZWFzb24gaXMgcXVpdGUgYm9y
-aW5nOiBpdCBpcyB0ZXN0aW5nIHRvbyBtdWNoIHN0dWZmLg0KPg0KPiBOb3RlIHRoYXQgZnVuY3Rp
-b25hbCB0ZXN0cyBhcmVuJ3Qgc3VwcG9zZWQgdG8gYmUgdXNlZCBhcyBzdHJlc3MgdGVzdHMsDQo+
-IGUuZy4gaXQgZG9lc24ndCBoYXZlIHRvIHRlc3QgZXZlcnkgc2luZ2xlIGNvcm5lciBjYXNlIHRo
-YXQgbWlnaHQgaGl0IHRoZQ0KPiBib2FyZC4gSXQgaXMgc3VwcG9zZWQgdG8gY2F0Y2ggbW9zdCBj
-b21tb24gdXNlciBvb29wc2llcy4gQSB0aW1lb3V0LCBpbg0KPiB0aGlzIGNvbnRleHQsIGlzIG1v
-c3QgbGlrZWx5IHRvIGJlIGNvbnNpZGVyZWQgc29tZXRoaW5nIGFibm9ybWFsIHNsb3dpbmcNCj4g
-ZG93biB0aGUgZW11bGF0aW9uLCBub3QgYSBsYWNrIG9mIENQVSBob3JzZXBvd2VyIHRvIHJ1biBh
-bGwgdGhlIHRlc3RzDQo+IGJlZm9yZSB0aW1lb3V0Lg0KPg0KPiBTb21lIG9mIHRoZSB0ZXN0cyBj
-bGFpbSB0byB0ZXN0IG9kZCBDUFUgU01QIG51bWJlcnMgdG8gZWl0aGVyICJlbnN1cmVzDQo+IHBy
-b3BlciBjb3JlIGRpc3RyaWJ1dGlvbiBhY3Jvc3MgY2x1c3RlcnMiIG9yICJ2YWxpZGF0aW5nIHBy
-b3BlciBoYW5kbGluZw0KPiBvZiBsYXJnZXIgYXN5bW1ldHJpYyBTTVAgY29uZmlndXJhdGlvbnMi
-LiBCdXQgdGhlcmUncyBubyBTTVAvTlVNQSBjaGVjaw0KPiBtYWRlIGFueXdoZXJlIGFmdGVyIGJv
-b3QsIHNvIGluIHRoZSBlbmQgd2UncmUganVzdCB0ZXN0aW5nIHdoZXRoZXIgdGhlDQo+IGJvYXJk
-IGlzIGFibGUgdG8gYm9vdCB3aXRoIDcvMzUgQ1BVcy4gQXMgZmFyIGFzIHRoZXNlIHRlc3RzIGFy
-ZSBjb25jZXJuZWQNCj4gd2UgY291bGQgaGF2ZSBhIGNvbXBsZXRlbHkgYnJva2VuLCBidXQgYm9v
-dGFibGUsIFNNUCB0b3BvbG9neSB3aXRoIDcvMzUNCj4gQ1BVUywgYW5kIHdlJ3JlIG9ibGl2aW91
-cyBhYm91dCBpdC4NCj4NCj4gUmVtb3ZlIHRoZSA3IGFuZCAzNSBTTVAgdGVzdHMsIGtlZXBpbmcg
-dGhlIG1pbmltYWwgQ1BVcyAoMikgYW5kIG1heGltdW0NCj4gKDY0KSB0ZXN0cy4gV2l0aCB0aGVz
-ZSBjaGFuZ2VzIHdlJ3JlIG5vdyBhYmxlIHRvIHJ1biB0aGUgdGVzdCB3aXRoIGENCj4gZ29vZCBU
-SU1FT1VUIG1hcmdpbjoNCj4NCj4gMTcvMTggZnVuYy10aG9yb3VnaCtmdW5jLXJpc2N2NjQtdGhv
-cm91Z2grdGhvcm91Z2ggLSBxZW11OmZ1bmMtcmlzY3Y2NC1ib3N0b24NCj4gICAgICAgIE9LICAg
-ICAgICAgICAgICA2MS4yOHMgICAzIHN1YnRlc3RzIHBhc3NlZA0KPg0KPiBGaXhlczogZTcxMTEx
-ZTI2YiAoInRlc3QvZnVuY3Rpb25hbDogQWRkIHRlc3QgZm9yIGJvc3Rvbi1haWEgYm9hcmQiKQ0K
-PiBTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgSGVucmlxdWUgQmFyYm96YSA8ZGFuaWVsLmJhcmJvemFA
-b3NzLnF1YWxjb21tLmNvbT4NCj4gLS0tDQo+ICAgdGVzdHMvZnVuY3Rpb25hbC9yaXNjdjY0L3Rl
-c3RfYm9zdG9uLnB5IHwgMTkgLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAgIDEgZmlsZSBjaGFuZ2Vk
-LCAxOSBkZWxldGlvbnMoLSkNCj4NCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL2Z1bmN0aW9uYWwvcmlz
-Y3Y2NC90ZXN0X2Jvc3Rvbi5weSBiL3Rlc3RzL2Z1bmN0aW9uYWwvcmlzY3Y2NC90ZXN0X2Jvc3Rv
-bi5weQ0KPiBpbmRleCAzODVkZTZhNjFkLi4xM2M0NGNhM2UzIDEwMDc1NQ0KPiAtLS0gYS90ZXN0
-cy9mdW5jdGlvbmFsL3Jpc2N2NjQvdGVzdF9ib3N0b24ucHkNCj4gKysrIGIvdGVzdHMvZnVuY3Rp
-b25hbC9yaXNjdjY0L3Rlc3RfYm9zdG9uLnB5DQo+IEBAIC02MywyNSArNjMsNiBAQCBkZWYgdGVz
-dF9ib3N0b25fYm9vdF9saW51eF9taW5fY3B1cyhzZWxmKToNCj4gICAgICAgICAgICIiIg0KPiAg
-ICAgICAgICAgc2VsZi5fYm9vdF9saW51eF90ZXN0KHNtcF9jb3VudD0yKQ0KPg0KPiAtICAgIGRl
-ZiB0ZXN0X2Jvc3Rvbl9ib290X2xpbnV4XzdfY3B1cyhzZWxmKToNCj4gLSAgICAgICAgIiIiDQo+
-IC0gICAgICAgIFRlc3QgTGludXgga2VybmVsIGJvb3Qgd2l0aCA3IENQVXMNCj4gLQ0KPiAtICAg
-ICAgICA3IENQVXMgaXMgYSBzcGVjaWFsIGNvbmZpZ3VyYXRpb24gdGhhdCB0ZXN0cyBvZGQgQ1BV
-IGNvdW50DQo+IC0gICAgICAgIGhhbmRsaW5nIGFuZCBlbnN1cmVzIHByb3BlciBjb3JlIGRpc3Ry
-aWJ1dGlvbiBhY3Jvc3MgY2x1c3RlcnMuDQo+IC0gICAgICAgICIiIg0KPiAtICAgICAgICBzZWxm
-Ll9ib290X2xpbnV4X3Rlc3Qoc21wX2NvdW50PTcpDQo+IC0NCj4gLSAgICBkZWYgdGVzdF9ib3N0
-b25fYm9vdF9saW51eF8zNV9jcHVzKHNlbGYpOg0KPiAtICAgICAgICAiIiINCj4gLSAgICAgICAg
-VGVzdCBMaW51eCBrZXJuZWwgYm9vdCB3aXRoIDM1IENQVXMNCj4gLQ0KPiAtICAgICAgICAzNSBD
-UFVzIGlzIGEgc3BlY2lhbCBjb25maWd1cmF0aW9uIHRoYXQgdGVzdHMgYSBub24tcG93ZXItb2Yt
-Mg0KPiAtICAgICAgICBDUFUgY291bnQgYWJvdmUgMzIsIHZhbGlkYXRpbmcgcHJvcGVyIGhhbmRs
-aW5nIG9mIGxhcmdlcg0KPiAtICAgICAgICBhc3ltbWV0cmljIFNNUCBjb25maWd1cmF0aW9ucy4N
-Cj4gLSAgICAgICAgIiIiDQo+IC0gICAgICAgIHNlbGYuX2Jvb3RfbGludXhfdGVzdChzbXBfY291
-bnQ9MzUpDQo+IC0NCj4gICAgICAgZGVmIHRlc3RfYm9zdG9uX2Jvb3RfbGludXhfbWF4X2NwdXMo
-c2VsZik6DQo+ICAgICAgICAgICAiIiINCj4gICAgICAgICAgIFRlc3QgTGludXgga2VybmVsIGJv
-b3Qgd2l0aCBtYXhpbXVtIHN1cHBvcnRlZCBDUFUgY291bnQgKDY0KQ0KPiAtLQ0KPiAyLjQzLjAN
-Cg0KTEdUTSwgdGhhbmsgeW91IQ0KDQpSZXZpZXdlZC1ieTogRGpvcmRqZSBUb2Rvcm92aWMgPERq
-b3JkamUuVG9kb3JvdmljQGh0ZWNncm91cC5jb20+DQo=
+On Thu, 5 Feb 2026 02:00:22 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
+
+> On Thu, Feb 05, 2026 at 01:51:39AM -0500, Michael S. Tsirkin wrote:
+> > On Wed, Feb 04, 2026 at 02:16:23PM -0500, Michael S. Tsirkin wrote: =20
+> > > The following changes since commit b377abc220fc53e9cab2aac3c73fc20be6=
+d85eea:
+> > >=20
+> > >   Merge tag 'hw-misc-20260202' of https://github.com/philmd/qemu into=
+ staging (2026-02-03 07:52:04 +1000)
+> > >=20
+> > > are available in the Git repository at:
+> > >=20
+> > >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstr=
+eam
+> > >=20
+> > > for you to fetch changes up to 1ef708ee4b765b9eac097192d54b69a603589f=
+9b:
+> > >=20
+> > >   hw/cxl: Take into account how many media operations are requested f=
+or param check (2026-02-04 07:42:50 -0500) =20
+> >=20
+> > updated to 591fb214b96be2fab1dcf41282e567d6b64e613d now.
+> >=20
+> > It is the same patchset with 5 patches dropped (and tag message
+> > updated accordingly). So I am guessing it is better not
+> > to resend the whole pull, but pls let me know. =20
+>=20
+> sent too early, there is a dependency i missed.
+> will post v2 later.
+
+Michael,
+
+please drop WDAT patches,
+I'm preparing to post v2 soon with arm/virt support included
+and x86 part changed  as well to make configuration generic.=20
+=20
+> >  =20
+> > > ----------------------------------------------------------------
+> > > virtio,pci,pc: features, fixes
+> > >=20
+> > > cxl:
+> > >     Additional RAS features support.
+> > >     Back-Invalidate support
+> > >     PCIe Flit mode support
+> > >     Misc fixes
+> > > intel_iommu:
+> > >     SVM support
+> > > vhost:
+> > >     support for indirect descriptors in shadow virtqueue
+> > > vhost-user:
+> > >     vhost-user-spi support
+> > >     vhost-user-blk inflight migration support
+> > >     vhost-user-blk inflight migration support
+> > > acpi:
+> > >     update VIOT maintainer
+> > >     WDAT watchdog support
+> > >=20
+> > > misc fixes in pci, vhost, virtio, acpi
+> > > cleanups in acpi/ghes
+> > >=20
+> > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > >=20
+> > > ----------------------------------------------------------------
+> > > Akihiko Odaki (1):
+> > >       pci/shpc: Do not unparent in instance_finalize()
+> > >=20
+> > > Alexandr Moshkov (5):
+> > >       vhost-user.rst: specify vhost-user back-end action on GET_VRING=
+_BASE
+> > >       vhost-user: introduce protocol feature for skip drain on GET_VR=
+ING_BASE
+> > >       vmstate: introduce VMSTATE_VBUFFER_UINT64
+> > >       vhost: add vmstate for inflight region with inner buffer
+> > >       vhost-user-blk: support inter-host inflight migration
+> > >=20
+> > > Cl=C3=A9ment Mathieu--Drif (7):
+> > >       intel_iommu: Add an IOMMU index for pre-translated addresses
+> > >       intel_iommu: Support memory operations with pre-translated addr=
+esses
+> > >       pcie: Add a function to check if pasid privileged mode is enabl=
+ed
+> > >       pci: Block ATS requests when privileged mode is disabled
+> > >       intel_iommu: Handle insufficient permissions during translation=
+ requests
+> > >       intel_iommu: Minimal handling of privileged ATS request
+> > >       intel_iommu: Add a CLI option to enable SVM
+> > >=20
+> > > Daniil Tatianin (1):
+> > >       virtio/vhost: don't consider non-MAP_SHARED regions public
+> > >=20
+> > > Davidlohr Bueso (1):
+> > >       hw/cxl: Add support for Maintenance command and Post Package Re=
+pair (PPR)
+> > >=20
+> > > Dorinda Bassey (1):
+> > >       virtio-dmabuf: Ensure UUID persistence for hash table insertion
+> > >=20
+> > > Eugenio P=C3=A9rez (1):
+> > >       vhost: accept indirect descriptors in shadow virtqueue
+> > >=20
+> > > Gavin Shan (5):
+> > >       acpi/ghes: Automate data block cleanup in acpi_ghes_memory_erro=
+rs()
+> > >       acpi/ghes: Abort in acpi_ghes_memory_errors() if necessary
+> > >       target/arm/kvm: Exit on error from acpi_ghes_memory_errors()
+> > >       acpi/ghes: Bail early on error from get_ghes_source_offsets()
+> > >       acpi/ghes: Use error_fatal in acpi_ghes_memory_errors()
+> > >=20
+> > > Haixu Cui (2):
+> > >       standard-headers: Update virtio_spi.h from Linux v6.18-rc3
+> > >       virtio-spi: Add vhost-user-spi device support
+> > >=20
+> > > Honglei Huang (2):
+> > >       virtio-gpu: fix error handling in virgl_cmd_resource_create_blob
+> > >       virtio-gpu: use consistent error checking for virtio_gpu_create=
+_mapping_iov
+> > >=20
+> > > Igor Mammedov (6):
+> > >       x86: q35: ich9: add 'wdat' property
+> > >       acpi: add API to build WDAT instructions
+> > >       x86: q35: generate WDAT ACPI table
+> > >       tests: x86: q35: acpi: add WDAT table test case
+> > >       tests: acpi: update expected WDAT blob
+> > >       q35: Fix migration of SMRAM state
+> > >=20
+> > > Jean-Philippe Brucker (1):
+> > >       MAINTAINERS: Update VIOT maintainer
+> > >=20
+> > > Joelle van Dyne (1):
+> > >       virtio-gpu-virgl: correct parent for blob memory region
+> > >=20
+> > > Jonathan Cameron (2):
+> > >       hw/cxl: Check for overflow on santize media as both base and of=
+fset 64bit.
+> > >       hw/cxl: Take into account how many media operations are request=
+ed for param check
+> > >=20
+> > > Kevin Wolf (2):
+> > >       virtio: Fix crash when sriov-pf is set for non-PCI-Express devi=
+ce
+> > >       pcie_sriov: Fix PCI_SRIOV_* accesses in pcie_sriov_pf_exit()
+> > >=20
+> > > Li Chen (1):
+> > >       virtio-pmem: ignore empty queue notifications
+> > >=20
+> > > Michael S. Tsirkin (1):
+> > >       vhost-user: ancilliary -> ancillary
+> > >=20
+> > > Philippe Mathieu-Daud=C3=A9 (1):
+> > >       hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent class_in=
+it()
+> > >=20
+> > > Shiju Jose (7):
+> > >       hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS fea=
+ture attributes in cmd_features_set_feature()
+> > >       hw/cxl: Add emulation for memory sparing control feature
+> > >       qapi: cxl: Refactor CXL event injection for common commands arg=
+uments
+> > >       hw/cxl/events: Update for rev3.2 common event record format
+> > >       hw/cxl/events: Updates for rev3.2 general media event record
+> > >       hw/cxl/events: Updates for rev3.2 DRAM event record
+> > >       hw/cxl/events: Updates for rev3.2 memory module event record
+> > >=20
+> > > Wafer Xie (1):
+> > >       vdpa: fix vhost-vdpa suspended state not be shared
+> > >=20
+> > > zhenwei pi (2):
+> > >       hw/virtio/virtio-crypto: verify asym request size
+> > >       cryptodev-builtin: Limit the maximum size
+> > >=20
+> > >  MAINTAINERS                                 |   8 +-
+> > >  backends/cryptodev-builtin.c                |   9 +-
+> > >  docs/interop/vhost-user.rst                 |  60 +--
+> > >  docs/system/devices/virtio/vhost-user.rst   |   3 +
+> > >  hw/acpi/aml-build.c                         |  14 +
+> > >  hw/acpi/ghes-stub.c                         |   6 +-
+> > >  hw/acpi/ghes.c                              |  45 +--
+> > >  hw/acpi/ich9.c                              |   5 +
+> > >  hw/acpi/meson.build                         |   3 +-
+> > >  hw/acpi/wdat-ich9.c                         |  85 ++++
+> > >  hw/acpi/wdat-stub.c                         |  16 +
+> > >  hw/block/vhost-user-blk.c                   |  27 ++
+> > >  hw/cxl/cxl-events.c                         |   3 +-
+> > >  hw/cxl/cxl-mailbox-utils.c                  | 580 ++++++++++++++++++=
++++++++++-
+> > >  hw/display/virtio-dmabuf.c                  |   6 +-
+> > >  hw/display/virtio-gpu-virgl.c               |   8 +-
+> > >  hw/display/virtio-gpu.c                     |   4 +-
+> > >  hw/i386/acpi-build.c                        |  13 +
+> > >  hw/i386/intel_iommu.c                       | 204 +++++++---
+> > >  hw/i386/intel_iommu_internal.h              |  14 +-
+> > >  hw/isa/lpc_ich9.c                           |   1 +
+> > >  hw/mem/cxl_type3.c                          | 330 +++++++++++++++-
+> > >  hw/mem/cxl_type3_stubs.c                    |  41 +-
+> > >  hw/pci-host/articia.c                       |   1 -
+> > >  hw/pci-host/aspeed_pcie.c                   |   1 -
+> > >  hw/pci-host/designware.c                    |   3 -
+> > >  hw/pci-host/gpex.c                          |   2 -
+> > >  hw/pci-host/grackle.c                       |   1 -
+> > >  hw/pci-host/gt64120.c                       |   1 -
+> > >  hw/pci-host/mv64361.c                       |   1 -
+> > >  hw/pci-host/pnv_phb.c                       |   1 -
+> > >  hw/pci-host/ppce500.c                       |   1 -
+> > >  hw/pci-host/q35.c                           |  28 +-
+> > >  hw/pci-host/raven.c                         |   1 -
+> > >  hw/pci-host/remote.c                        |   1 -
+> > >  hw/pci-host/sabre.c                         |   1 -
+> > >  hw/pci-host/uninorth.c                      |   4 -
+> > >  hw/pci-host/xilinx-pcie.c                   |   2 -
+> > >  hw/pci/pci.c                                |   4 +
+> > >  hw/pci/pci_host.c                           |   1 +
+> > >  hw/pci/pcie.c                               |  21 +-
+> > >  hw/pci/pcie_sriov.c                         |   9 +-
+> > >  hw/pci/shpc.c                               |   1 -
+> > >  hw/virtio/Kconfig                           |   5 +
+> > >  hw/virtio/meson.build                       |   3 +
+> > >  hw/virtio/vhost-shadow-virtqueue.c          |   1 +
+> > >  hw/virtio/vhost-user-spi-pci.c              |  69 ++++
+> > >  hw/virtio/vhost-user-spi.c                  |  65 ++++
+> > >  hw/virtio/vhost-user.c                      |   7 +
+> > >  hw/virtio/vhost-vdpa.c                      |   6 +-
+> > >  hw/virtio/vhost.c                           |  66 +++-
+> > >  hw/virtio/virtio-crypto.c                   |   7 +
+> > >  hw/virtio/virtio-pci.c                      |  20 +-
+> > >  hw/virtio/virtio-pmem.c                     |   1 -
+> > >  hw/virtio/virtio.c                          |   4 +-
+> > >  include/hw/acpi/ghes.h                      |   6 +-
+> > >  include/hw/acpi/ich9.h                      |   1 +
+> > >  include/hw/acpi/wdat.h                      | 121 ++++++
+> > >  include/hw/cxl/cxl_device.h                 | 152 +++++++-
+> > >  include/hw/cxl/cxl_events.h                 |  85 +++-
+> > >  include/hw/i386/intel_iommu.h               |   1 +
+> > >  include/hw/pci/pcie.h                       |   1 +
+> > >  include/hw/virtio/vhost-user-blk.h          |   1 +
+> > >  include/hw/virtio/vhost-user-spi.h          |  25 ++
+> > >  include/hw/virtio/vhost-user.h              |   2 +
+> > >  include/hw/virtio/vhost-vdpa.h              |   8 +-
+> > >  include/hw/virtio/vhost.h                   |   6 +
+> > >  include/migration/vmstate.h                 |  10 +
+> > >  include/standard-headers/linux/virtio_spi.h | 181 +++++++++
+> > >  qapi/cxl.json                               | 186 ++++++---
+> > >  target/arm/kvm.c                            |  10 +-
+> > >  tests/data/acpi/x86/q35/WDAT.wdat           | Bin 0 -> 308 bytes
+> > >  tests/qtest/bios-tables-test.c              |  13 +
+> > >  tests/qtest/q35-test.c                      |   6 -
+> > >  74 files changed, 2342 insertions(+), 297 deletions(-)
+> > >  create mode 100644 hw/acpi/wdat-ich9.c
+> > >  create mode 100644 hw/acpi/wdat-stub.c
+> > >  create mode 100644 hw/virtio/vhost-user-spi-pci.c
+> > >  create mode 100644 hw/virtio/vhost-user-spi.c
+> > >  create mode 100644 include/hw/acpi/wdat.h
+> > >  create mode 100644 include/hw/virtio/vhost-user-spi.h
+> > >  create mode 100644 include/standard-headers/linux/virtio_spi.h
+> > >  create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat =20
+>=20
+>=20
+
 
