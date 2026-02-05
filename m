@@ -4,111 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F93EC1E8B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA9AEC1E92
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnwQj-00026s-PO; Thu, 05 Feb 2026 05:17:45 -0500
+	id 1vnwT6-000318-5J; Thu, 05 Feb 2026 05:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnwQi-000230-Ad
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:17:44 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1vnwT5-00030t-7Z
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:20:11 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnwQg-00071H-W6
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:17:44 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-790884840baso6917737b3.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:17:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770286662; cv=none;
- d=google.com; s=arc-20240605;
- b=AE56pFtg9KQRasZb6Kwip/0qVz/AUs63FmPksRxbtdAu2jGkr2r4zp+WMUaa9Sx+w5
- JAdf3gCpyYRD41ScztfWAklOP/oHeMZb+V+qeLyCorOdOc4366ZEqvieVrwIajg426Um
- j5XA5fegr1uupCcoIc7qOzuVOZZOpDODpvuPfPAruEb2BWGmnrgbwZruaoKW4jzh2JA0
- faKPQPwpSrIhCaLb8JlUT2R9xS/tUI63p/aO56BxbUCAk/JUODvQULvz9risSMVWYDPb
- gbtVNMxSn/6wYtYy4Vnk2Ca7us3teiqgVLlYzJBakOxNg7uEOuUSx/6Lm0ypyAGdA/8r
- qmHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NwqyLTejgGUQwqWC9rLC0neXY1L1LQEfYlBSKMGnQbY=;
- fh=09I2axr4uxBaQZWOq7eGnNEbjKYzXXuOZ/WYgxqbxRU=;
- b=hX/ljR/K2CD1f+ynPXqC8oRIoiwm/3UaQN20kPFJ1c72nMkkwpD8K90IJ7fCSKwNtj
- IFfPAqstrag4iPX0UygDhXxa0T7ZK7mZ/Ozy6OSJs8Bz2mP4G/Fsd3sP9JwzBj4klHNR
- QkFPSI1Unu/XrEKsvBPUG0CUbrHaNM/QvYY0pc3ptYPTqXbv8I22r41PlUUgCT+ZSfam
- p7u3r1AqbeTOf8raND5asWV12Zz0o+1lXAzhE0dZM1Af2fF8Gqow6bq6wc0Tmyy9FhTL
- dwPQyqZfRMvizknjfLENL2dmwFIlzuoAS2EF3XIGXAZKSS0ssribJU4EUUOwVbPepEgR
- Ta2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770286662; x=1770891462; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NwqyLTejgGUQwqWC9rLC0neXY1L1LQEfYlBSKMGnQbY=;
- b=kjfeTtSzddP1Oszrz4NPqhU3eLI0JKW5zsemeE+z27PEAZb3dS7a9j1FIf1EFnKvJX
- egrf73guH6d2tTfQP5FtXRbbcSPpoixJpP/GA+xNcwslEBEIHr48Lpr+xcVnnC5mxCO3
- Hhz1kXTFWoddrp/5P7cV//BY8x1cFcCiDrBygifAB9lb0JUDwCBhEQafICP4piWEryOM
- 3lUS4yVWVuRElE+vi6aP9rSXTSsbrpFhPT5a6NX1eY7K4ZffcQpI+Gvz7fhencs0Xbv/
- GayZT/pmvmBRDmRHoO2s0IX41cq67YR5+wkvkbtIA7J2VqBWS3W9eJrdUzDuUOq+ceGc
- edtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770286662; x=1770891462;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NwqyLTejgGUQwqWC9rLC0neXY1L1LQEfYlBSKMGnQbY=;
- b=B0i9uJ3GiWRhoC61tbLmq8I4uya/G4BELSivbSTdzIrHLhCLkv1AjrqDn/Rw8kZR5s
- aprWPgWNiHhntYut+7A2ipBXOfwTqYbASR9lWxLYP7lNOEsgyMzQYCDNr62EJgsuOXye
- r0d6xcSuJYcjvhLKWUUOUVl8zumBzp9HEDSAPNaCb/sfYp5tMjvHdb4Srakhx0ShDEy5
- yg8jURjMW9EwrkTJewkQZFSLHnoqbefFxkhqD+C3TfzvRviCvMgJ7oAuNtqxq1y/EE9z
- 6xcb7krHXzJwpLCw5ztP9vk229GORtmhgleNtEcXlGlds96Ut/D+HkEdHiKEw1L7+KpT
- QuVw==
-X-Gm-Message-State: AOJu0YwC/b+Y8weTz0RsLrqAWfleEWQN5L09cBpXNZm5EMWL359LXEnR
- LmrYMiscoZDUfOuJIOlePaHPkVGU5Xndh6nBwr3Hi0sVY+puOxK0F8FkLn+EAvoJP80IHRte+Cq
- OLMIrioWtJa5EOarrFzUZxUXA3krdtFqGOhd/etaIrg==
-X-Gm-Gg: AZuq6aKst/dj5DU7O80OnnxMTNZZgmkjXVVn7ffeumcl+MKdajEu24ne+Cg9LbbYOQ0
- xs1N+Q/buy6PVC3hocwNLMPvdzkdkluIPojjLYsIeY9r/yG4CNkeIPWMn00591+sdS5TS8uMCsM
- xxt9WFg/sNrbVUf4X1FDEAxJQPHm6CZi5/lVN3h+6Bc+Zpo/oYUkw7dSwmecZr1vAM71rLfUgcl
- IdAG7S62iiumj4zuhOBBSL2QSugUeHfgnaydgohGu1NaKKdxvlwAMUfY+2uMSjXvZuX5g==
-X-Received: by 2002:a05:690c:289:b0:795:e10:3c9c with SMTP id
- 00721157ae682-7950e104ca6mr33143217b3.29.1770286661823; Thu, 05 Feb 2026
- 02:17:41 -0800 (PST)
-MIME-Version: 1.0
-References: <20260129192009.14707-1-mohamed@unpredictable.fr>
- <20260129192009.14707-8-mohamed@unpredictable.fr>
-In-Reply-To: <20260129192009.14707-8-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 10:17:30 +0000
-X-Gm-Features: AZwV_QigkqPVo0n6PvcWC7mgVXFYBB9hP5GqRFZnSJ54x9ktmIJHHLWpVDx4VcU
-Message-ID: <CAFEAcA8vQNvLUP72HE6Prak+AaZJPq_jf+Nd0Y6rXrGRSDYB7w@mail.gmail.com>
-Subject: Re: [PATCH v19 07/22] docs: arm: update virt machine model description
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1vnwT3-0007e4-8R
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:20:10 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 817605BD78;
+ Thu,  5 Feb 2026 10:20:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1770286807; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mzU5sJFijs89eY03gzb5l8Gfl0mRycAhHvicbkX+qFo=;
+ b=J6wCQMc0RDhwx/tPdhbbHP42isyZunN5fJRwj4XG5FGFmPX7M5H4LS36/uP5Dk9cJxe+jE
+ NpejveIIIPImLzZ+8DiGlZHamWRoXgv0jd/4C9OlgmebZYvoLHZ9Yb/F4RBeOFts2KUZ8Z
+ vVmut+GNL+bTt/ZTIQE26KL/4LHc/zo=
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1770286806; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mzU5sJFijs89eY03gzb5l8Gfl0mRycAhHvicbkX+qFo=;
+ b=AZdbKl+iP/xf+fGPvj0UM4Gc3Id0WfyotPxDgIfntuihsdmmL5vK6vHeiZSt/AuQ1fcL70
+ 4JituvcnrnUcJZHi+XLYjiv3p3K3zCYQhmhkgFDkXB9dSqUcz9z7pcO3z8CQ8fdpxxFKci
+ RkpoGopzXkHMmbotuw7njje9EqTM26Y=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 414593EA63;
+ Thu,  5 Feb 2026 10:20:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yI7gDtZuhGmlPQAAD6G6ig
+ (envelope-from <mwilck@suse.com>); Thu, 05 Feb 2026 10:20:06 +0000
+Message-ID: <6c7229e3d085f961209338e165e8487cbc5b8ed0.camel@suse.com>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+From: Martin Wilck <mwilck@suse.com>
+To: Benjamin Marzinski <bmarzins@redhat.com>, Hannes Reinecke <hare@suse.de>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, 	qemu-block@nongnu.org, Kevin Wolf
+ <kwolf@redhat.com>, afaria@redhat.com, 	qemu-devel@nongnu.org, Mikulas
+ Patocka <mpatocka@redhat.com>
+Date: Thu, 05 Feb 2026 11:20:05 +0100
+In-Reply-To: <aYPsdWW6ntBq2RFm@redhat.com>
+References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
+ <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
+ <20260203180437.GA527989@fedora>
+ <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
+ <20260204183201.GB610283@fedora>
+ <ff71f35e-06b5-4a82-98ec-8e0419f5ec62@suse.de>
+ <aYPsdWW6ntBq2RFm@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 
+MIME-Version: 1.0
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[9];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=mwilck@suse.com;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,18 +110,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Jan 2026 at 19:20, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Update the documentation to match current QEMU.
->
-> Remove the mention of pre-2.7 machine models as those aren't provided
-> anymore.
->
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
+On Wed, 2026-02-04 at 20:03 -0500, Benjamin Marzinski wrote:
+> On Thu, Feb 05, 2026 at 12:57:38AM +0100, Hannes Reinecke wrote:
+> > On 2/4/26 19:32, Stefan Hajnoczi wrote:
+> > > On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
+> > > > Hi Stefan,
+> > > >=20
+> > > > On Tue, 2026-02-03 at 13:04 -0500, Stefan Hajnoczi wrote:
+> > [ .. ]>>>
+> > > > > It can be generic. The messages will contain the block device
+> > > > > major:minor as well as information to describe <linux/pr.h>
+> > > > > requests.
+> > > >=20
+> > > > So the ioctls will pass through qemu into the kernel, to be
+> > > > intercepted
+> > > > by the dm-mpath driver, which will use an upcall to have them
+> > > > handled
+> > > > by mpathpersistd (for the actual command) and multipathd (for
+> > > > the path
+> > > > registrations).
+> > > >=20
+> > > > I don't fully understand the advantage, security and
+> > > > complexity-wise,
+> > > > of this concept, compared to intercepting them qemu and using a
+> > > > socket
+> > > > to talk to mpathpersistd directly. If we did this, we could
+> > > > even
+> > > > support both generic and SCSI PR commands.
+> > >=20
+> > > Hi Martin,
+> > > The simplification and security benefits are on the application
+> > > side,
+> > > not on the DM-Multipath side, so I can see what you're getting
+> > > at. From
+> > > the DM-Multipath perspective things get a little more complex.
+> > >=20
+> > > =C2=A0From an application perspective, a single API that works across
+> > > block
+> > > device types (SCSI, NVMe, DM-Multipath) and requires no
+> > > privileges or
+> > > sockets (they are a pain in container environments) is the most
+> > > convenient. The <linux/pr.h> ioctl API offers exactly this.
+> > >=20
+> > > Unfortunately, DM-Multipath currently does not fully support
+> > > <linux/pr.h>. It sends PR operations down each path, but that is
+> > > only a
+> > > subset of libmpathpersist's logic and multipathd is not kept in
+> > > sync.
+> > >=20
+> > > My impression is that libmpathpersist and multipathd logic cannot
+> > > be
+> > > easily moved into the kernel. This is where the upcall idea comes
+> > > from.
+> > > Let's notify multipath-tools from DM-Multipath so it can do its
+> > > work in
+> > > userspace.
+> > >=20
+> > It _might_ be possible by extending the current path-switching
+> > code in the kernel to keep track of PRs. The we could move the
+> > registration upon path switching, and (ideally) could do away
+> > with upcalls.
+> > Not sure, though, how targets react when having to deal with a
+> > flood of PR commands ...
+> > But maybe worth a try.
+>=20
+> Making a multipath device pretend to be single Persistently
+> Reservable
+> device involves a lot of ugly workarounds that I'm not really excited
+> to
+> see in the kernel.
+>=20
+> For instance, every time a new path appears or a path that was down
+> when
+> the device was registered comes up, multipath needs to register that
+> path. But a preempt could come it while it is doing this (or indeed
+> any
+> time after multipath registered the other paths). So it has to check
+> the that the registrations are still there on the other paths before
+> registering the new path, and then check again afterwards to make
+> sure
+> that there wasn't a preempt during the registration.=20
+>=20
+> Worse, you can't release a reservation from a path that is down. If
+> multipath needs to release its reservation, and the path that is
+> holding
+> it is down, the only solution I could come up with is to suspend the
+> device so no IO happens. Preempt the reservation to move it to an
+> active
+> path, which wipes the registrations off all the other paths. Then
+> reregister the all the active paths again, and unsuspend the device.
+> The failed paths will get reregistred as they come back up.
+>=20
+> And there's more cases like these. They are, of course, just as
+> doable
+> in the kernel as in userspace, but it's a lot of persistent
+> reservation
+> code to put into the multipath target.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Having reviewed (or tried to do so) Ben's code for handling the various
+corner cases, I agree that we don't want to start all over with this.
 
-thanks
--- PMM
+Martin
 
