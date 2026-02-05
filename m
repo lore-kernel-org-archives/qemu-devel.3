@@ -4,115 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28240ECD9A8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3A0ECD9A8
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6ta-0004E9-FU; Thu, 05 Feb 2026 16:28:14 -0500
+	id 1vo6uf-0004dh-OV; Thu, 05 Feb 2026 16:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo6tY-0004Dt-VT; Thu, 05 Feb 2026 16:28:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo6tX-0002DG-7A; Thu, 05 Feb 2026 16:28:12 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 615ETrFm028582;
- Thu, 5 Feb 2026 21:28:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=k/jtVP
- ivlQcnRwkwqVpnt01k7ikYWiZuk2rXGv2O+wM=; b=BvRSnFptDvAX6M/5eagZuj
- 7I7aDOdR5jcIocZmYIpxLDrtY4I4Ha9FjsNet6YpyhSXcA4lNEAiSi08I0AdlIVl
- t87k+/vtaDDUBxNUobB4L+wiwpfTFLlBcsw1zYqURU2Qs9Xj9N6j6RsHB1qKBALz
- sz9crtsFnqxFoXQu8KrXIlC9z1oCB3zkCv6Y/kkg6+M2NR7yT8LJnxTmrA0/C9p2
- 75/I+fKLfhUrGNw86yXWhcy3B1xYPSwtBLoz6JWWDy7vCH6wfMF4aF5vA2MkZ4R1
- yD1S2IqNzKEaZWlC7cTr8i0R4xlLwDMxIlBh1FiaEbAbTo1RILkWcDxTEqnyfkig
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c1986rv2h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:28:07 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 615K9Gql025706;
- Thu, 5 Feb 2026 21:28:06 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1w2n3gm1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:28:06 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 615LS4Ze22741646
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Feb 2026 21:28:04 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37B4D5805D;
- Thu,  5 Feb 2026 21:28:04 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6409D58059;
- Thu,  5 Feb 2026 21:28:01 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.132.67]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Feb 2026 21:28:01 +0000 (GMT)
-Message-ID: <6fb69264ceeff3dee08cd0f295a9ff3322212fba.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 5/9] target/s390x: Un-inline KVM Protected
- Virtualization stubs
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, Matthew Rosato	
- <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, David
- Hildenbrand	 <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Anton Johansson	 <anjo@rev.ng>, Richard Henderson
- <richard.henderson@linaro.org>, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Date: Thu, 05 Feb 2026 16:28:00 -0500
-In-Reply-To: <20260204182722.44062-6-philmd@linaro.org>
-References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-6-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6ue-0004dQ-La
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:29:20 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6ud-0002GY-1P
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:29:20 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4801bc32725so474475e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 13:29:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770326957; x=1770931757; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZnKiFlav7UgaZxndqkDzb7Iemff3Mov2XWTDysgHbc4=;
+ b=YKoVnyWyq/Cby7ncCtyVB96GEupQCRZdhV+89pe3NOqrDxnbG/buIGGNBY6IhMJby7
+ HnGM/VpGamh1V17zX06++WJvscZh6Y0QBH7rTjahoGHzflqUzebmG6DwpkFnnvUu+xQN
+ zeD8GBvLli96Og8ZG8n9AHrqYqcrv+bIVCgLJQdoo+qZWvtqyrIwcFEK1lPeaIYKo5oj
+ jotYWzekh9yo+N1zSqYN3TSZCIsRRZ/m7rwPzerYqAdXBmunokiweTEQW8rq9nXnDoZU
+ S2a3aYe6KBSKDnMA7dO8+38dvHJxUCxiYwXPLOmvaAgQcHs4B6JntpgCsrMu2xD/KwiN
+ Z2Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770326957; x=1770931757;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZnKiFlav7UgaZxndqkDzb7Iemff3Mov2XWTDysgHbc4=;
+ b=GxGNeFhbSyrXxefQhuyUVvLVzCaaGqp20in3L2nmthLXT7D56PSsIGsxcM43zJoEdH
+ TcvkhtwicDamdWeTHgzGcy40p9YCips9zraEB5ZFgVR+NERG+v8yyel4gAv/p1OXaOIP
+ 3Johs7lDQNPjt6l1h4vkijsUrJHyswyO0hKycvJ6jeNJbw5hFlj/E8drvsMOQp9JUkz8
+ vR8rQ807R3rPf+3thd5PFRYtf01EMlhruD4twsoZFNMrXGdVSKIQUX/InXIvIFDYAG1R
+ GFWHWnTWsxZ4eUQyVUWScImF6EicRdvESYgKO+QWftPjAw7wHVC325C8vJe3jR1tWDCv
+ 7n0g==
+X-Gm-Message-State: AOJu0YwvLk0SU/9j14i3l9INGs8b9YUEaikQVMfjuAaq7l7f8I0ad0TC
+ htg4K6LgWWPKzhLOT6ddNWYt/79qBwVszBGW4lR+wkdEsnJv45Jz814KE7tOlbdpZMI1LMbSHfZ
+ HIrBYa6s=
+X-Gm-Gg: AZuq6aJ4reumzS8gpVuvd1sHtVmSBzvmBNsOGrkvMPcagZVvftZI5Agdbw4Ll2B1cxY
+ 6jJsx9QpVgbkiBOGb1dKloavc+IdnExDcxFDCbs1n5kadJtFscbirU51v9X/+PhWlHXg16Vrv53
+ IF2HgVuMXoCJQFL/QvYxgq4afTC6tyZw+4T5D3O5b2dG0V6cSldeHck8b2vVDLbeRWgxliUkCBF
+ fCbOzAd8woKvp3kgs4h7t0YtgdbAHnyqt/2xu4OumtYLFLMlokmpqEAjFONEUQdz6VXC3SqnTTR
+ 0PntDX2ZZc5YuN1HYwrTPq51CYOYFUMgY1Wi119F7+DiXa/2H2ytRyNC0Mkaxw1OxAQPqLQPAj1
+ ikZrZKa4i2fn1elJu6ndu4wkNhBRRADiBTzglLJOKMDW9X31Fz6F5lWS6dDNCIgDk62XPGsxUdA
+ 2RLftmJpHA3hb63Kfk45zbQs/6RKQm8ctPqmRaNJytO2JTFUgqJmqplNgcqqpu
+X-Received: by 2002:a05:600c:34d1:b0:482:ef72:5787 with SMTP id
+ 5b1f17b1804b1-483201da065mr10652375e9.1.1770326956682; 
+ Thu, 05 Feb 2026 13:29:16 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483209c1a64sm1754185e9.12.2026.02.05.13.29.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 05 Feb 2026 13:29:16 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/hppa: Expand tcg_global_mem_new() ->
+ tcg_global_mem_new_i64()
+Date: Thu,  5 Feb 2026 22:29:14 +0100
+Message-ID: <20260205212914.10382-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDE2MyBTYWx0ZWRfX0nInJabfu0YT
- InXOJG1WiyQEM6kO2HSzHvXKknaWWBsMtI9NbysNB8xt3w9bAQSCaeA3bdhxMQm30wr7b0EiMy5
- 3fa1IB5HuHirfZ1B0gCYTDZH+XIS5qYzb94ao9ac83/ieiX4diundsqU29bELSSJDpMu6uLVePb
- 2KUgGyxwBCNdQeZa+p3o8I0sgVlJ+aOK3D70H5dPdouKsvz9WbxPFomM0T33Ak8CNwG61GnHtOY
- Hes3r/kYXakDyVoZZKb2MTUJjcvEZzIWVlH6rZa/JCVjm3y1/khL5JDhZ3rdWKNceozQO/sn8mx
- aKAPZW4R0o+EIrzMlyxMKuQ29BHSV1t/zJKVl/PLVkGorctI/RyRFBPQ5ljHP6S767naiVXIqEb
- mdJbRtEffVr/BzzOsUjiYFYL5SCSgp3EQgeUKxmYOZCIShsm/44kEmnY2YkS5RIBFqccJEnlYul
- IzmlZFz6rEKNZiW+d3w==
-X-Proofpoint-GUID: Yl8MkwVwk_X43V8m9y7fDdJoimj36W0q
-X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=69850b67 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=JGbXeRc44ytq_BG_GvEA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Yl8MkwVwk_X43V8m9y7fDdJoimj36W0q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_05,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602050163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,15 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> By removing the target-specific 'CONFIG_KVM' definition this
-> header can be used by files in meson common_ss[].
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  target/s390x/kvm/pv.h    | 27 ------------
->  target/s390x/kvm/stubs.c | 94 ++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 94 insertions(+), 27 deletions(-)
+The HPPA target is a 64-bit one, so tcg_global_mem_new()
+expands to tcg_global_mem_new_i64(). Use the latter which
+is more explicit.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/translate.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 0f8a66f7732..70c20c00377 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -307,9 +307,9 @@ void hppa_translate_init(void)
+ 
+     cpu_gr[0] = NULL;
+     for (i = 1; i < 32; i++) {
+-        cpu_gr[i] = tcg_global_mem_new(tcg_env,
+-                                       offsetof(CPUHPPAState, gr[i]),
+-                                       gr_names[i]);
++        cpu_gr[i] = tcg_global_mem_new_i64(tcg_env,
++                                           offsetof(CPUHPPAState, gr[i]),
++                                           gr_names[i]);
+     }
+     for (i = 0; i < 4; i++) {
+         cpu_sr[i] = tcg_global_mem_new_i64(tcg_env,
+@@ -322,7 +322,7 @@ void hppa_translate_init(void)
+ 
+     for (i = 0; i < ARRAY_SIZE(vars); ++i) {
+         const GlobalVar *v = &vars[i];
+-        *v->var = tcg_global_mem_new(tcg_env, v->ofs, v->name);
++        *v->var = tcg_global_mem_new_i64(tcg_env, v->ofs, v->name);
+     }
+ 
+     cpu_psw_xb = tcg_global_mem_new_i32(tcg_env,
+-- 
+2.52.0
+
 
