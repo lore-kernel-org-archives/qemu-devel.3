@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117E8EA7959
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30FC8EA7959
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnpny-00062J-AW; Wed, 04 Feb 2026 22:13:18 -0500
+	id 1vnpn7-00053b-Td; Wed, 04 Feb 2026 22:12:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnu-0005wY-2i
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:15 -0500
+ id 1vnpn5-00053B-Pt
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:12:23 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnr-0001yQ-83
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:13 -0500
+ id 1vnpn3-0001uY-7j
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:12:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770261191; x=1801797191;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ur7GDkrzvnTeBh6YDKJdGCMGFr1zOjYfQZCRxpq7Olo=;
- b=jA0LpRl2nr6NIuPummMhPi121eoU62zwiQGie5Y15outv36IFjZKz75l
- gq5KE5o/hyPJTZb76f8rA9vt8EuyPjQmuQ4X9QN7IHji8mlahkIl3jRw7
- TYV07IDw+GxMpMC2LzHkWMF5A6taLfMAnryuOMrEwu+cYWpQKRoaZrmwq
- IDCMUjQa9yi0bwP/ehUasFdC85C3TqlDyeM3X2ulT/D4yy4YkTDAYoLi/
- QWKMo3MnCFYHhhlRbKdr7Qtq63zzHMEYSzmdwg/xQv6yskJ6m07EbTF18
- +Odhy2QXBOjeD09e/UVAzRdk41wDk3/DuKrWdcMdn4TU+ELDGCY/qp2f6 w==;
-X-CSE-ConnectionGUID: 4HKSSauxS4m0z/zbi74Pxg==
-X-CSE-MsgGUID: Jhgn7wqKRvSpwiWcUUxumA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910537"
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910537"
+ t=1770261141; x=1801797141;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=L22ynXXHrKLQrtZwgUrusx+C9ZhZibxT/UOhM1RK+Qs=;
+ b=THBvAIhDA8/fKd0IPa8pA+3pK9J8Igw0rv8iVzbWYcONCnP907oYYOC9
+ Jx/RRIDZDzHzRYE2CoPEJOJs2yzIWLwB2FhHZSdi8bAsTaxfwNg3kholR
+ g6f4DtwlG5mYBsKMHpZTNTjAugBzxT+h9Xd3PRt6eUHZHbkv1pJMEKWqZ
+ eQ94e2LxdLjy/wvZnhv4v8mwnoIZzgzF8hU5OdwUXGgUm1w5QrjvfCFzD
+ qkxaA8aQsG0Af1S+D9qJKp4i3GEHK3tApAwhEcTFBdGFm6GMwYIhLnmK7
+ eRaCOeu2vj0mgHU4bTSziMYX0zGyHPPURwT/5Hi9RZA6qRkMJYaZDHl/6 Q==;
+X-CSE-ConnectionGUID: HZzrG8wES16UI10nIAiVSw==
+X-CSE-MsgGUID: rntwUNUnRFGvTM5bo3i5yw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910411"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910411"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:13:10 -0800
-X-CSE-ConnectionGUID: AnFYNdwVQf+fV0iOjLj5Bg==
-X-CSE-MsgGUID: 9mg2eEq7SkiOJyLN7VtG0Q==
+ 04 Feb 2026 19:12:16 -0800
+X-CSE-ConnectionGUID: heTnz8qyQCGT8D/9hnm2PQ==
+X-CSE-MsgGUID: PObsjgkqTmeUiV5JwkPPqA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209652138"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209651964"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:13:06 -0800
+ 04 Feb 2026 19:12:13 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,13 +53,11 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [RFC PATCH 14/14] intel_iommu: Expose flag
- VIOMMU_FLAG_PASID_SUPPORTED when configured
-Date: Wed,  4 Feb 2026 22:11:32 -0500
-Message-ID: <20260205031133.74357-15-zhenzhong.duan@intel.com>
+Subject: [RFC PATCH 00/14] intel_iommu: Enable PASID support for passthrough
+ device
+Date: Wed,  4 Feb 2026 22:11:18 -0500
+Message-ID: <20260205031133.74357-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260205031133.74357-1-zhenzhong.duan@intel.com>
-References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7;
@@ -87,29 +85,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO device will check flag VIOMMU_FLAG_PASID_SUPPORTED and expose PASID
-capability, or else guest could not enable PASID of this device even if
-vIOMMU's pasid is configured.
+Hi,
 
-This is the final knob to enable PASID.
+Now we already support first stage translation with passthrough device
+backed by nested translation in host, but only for PASID_0.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+Structure VTDAddressSpace includes some elements suitable for emulated
+device and passthrough device without PASID, e.g., address space,
+different memory regions, etc, it is also protected by vtd iommu lock,
+all these are useless and become a burden for passthrough device with
+PASID.
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 4ab50a9fd9..86998dad94 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4727,6 +4727,7 @@ static uint64_t vtd_get_viommu_flags(void *opaque)
-     uint64_t flags;
- 
-     flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
-+    flags |= s->pasid ? VIOMMU_FLAG_PASID_SUPPORTED : 0;
- 
-     return flags;
- }
+When there are lots of PASIDs used in one device, the AS and MRs are
+all registered to memory core and impact the whole system performance.
+
+So instead of using VTDAddressSpace to cache pasid entry for each pasid
+of a passthrough device, we define a light weight structure
+VTDACCELPASIDCacheEntry with only necessary elements for each pasid. We
+will use this struct as a parameter to conduct binding/unbinding to
+nested hwpt, to record the current binded nested hwpt and even future
+PRQ support. It's also designed to support PASID_0.
+
+The potential full definition of VTDACCELPASIDCacheEntry may like:
+
+  typedef struct VTDACCELPASIDCacheEntry {
+      VTDHostIOMMUDevice *vtd_hiod;
+      VTDPASIDEntry pe;
+      uint32_t pasid;
+      uint32_t fs_hwpt_id;
+      uint32_t fault_id;
+      int fault_fd;
+      QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
+      IOMMUPRINotifier pri_notifier_entry;
+      IOMMUPRINotifier *pri_notifier;
+      QLIST_ENTRY(VTDACCELPASIDCacheEntry) next;
+  } VTDACCELPASIDCacheEntry;
+
+GIT branch: https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_pasid
+
+PATCH01-06: Some preparing work
+PATCH07-09: Handle PASID entry addition and removal
+PATCH10-11: Support pasid binding and unbinding
+PATCH12-13: Add PASID related check and drop useless check
+PATCH14:    Enable PASID for passthrough device
+
+This patchset depends on a kernel feature enhancement[1] to work.
+
+Tests:
+Tested with DSA device which driver uses 2 PASIDs by default.
+
+Thanks
+Zhenzhong
+
+[1] https://lore.kernel.org/all/20260205023405.41583-1-zhenzhong.duan@intel.com/
+
+
+Zhenzhong Duan (14):
+  backends/iommufd: Add pasid attach/detach callbacks
+  vfio/iommufd: Implement pasid attach/detach callbacks in
+    TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO
+  vfio/iommufd: Create nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID
+    flag
+  intel_iommu: Create the nested hwpt with IOMMU_HWPT_ALLOC_PASID flag
+  intel_iommu: Change pasid property from bool to uint8
+  intel_iommu: Export some functions
+  intel_iommu: Handle PASID entry addition for pc_inv_dsc request
+  intel_iommu: Handle PASID entry removal for pc_inv_dsc request
+  intel_iommu: Handle PASID entry removal for system reset
+  intel_iommu_accel: Support pasid binding/unbinding and PIOTLB flushing
+  intel_iommu_accel: drop _lock suffix in
+    vtd_flush_host_piotlb_all_locked()
+  intel_iommu_accel: Add pasid bits size check
+  intel_iommu: Drop pasid related check
+  intel_iommu: Expose flag VIOMMU_FLAG_PASID_SUPPORTED when configured
+
+ hw/i386/intel_iommu_accel.h    |  34 ++-
+ hw/i386/intel_iommu_internal.h |  41 +++-
+ include/hw/i386/intel_iommu.h  |   4 +-
+ include/hw/vfio/vfio-device.h  |   1 +
+ include/system/iommufd.h       |  40 ++++
+ backends/iommufd.c             |  23 ++
+ hw/i386/intel_iommu.c          |  87 ++-----
+ hw/i386/intel_iommu_accel.c    | 405 +++++++++++++++++++++++++++------
+ hw/vfio/device.c               |  11 +
+ hw/vfio/iommufd.c              |  55 ++++-
+ hw/vfio/trace-events           |   2 +
+ 11 files changed, 558 insertions(+), 145 deletions(-)
+
 -- 
 2.47.3
 
