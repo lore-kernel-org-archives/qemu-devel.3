@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A34ECD9A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C1FECD99C
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5VE-0006cC-HQ; Thu, 05 Feb 2026 14:59:00 -0500
+	id 1vo5VZ-0006sa-Hx; Thu, 05 Feb 2026 14:59:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VC-0006bA-Gb
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:58 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1vo5VT-0006pC-7p
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:18 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VA-00034q-Mb
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:58 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-482f2599980so15691165e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:58:56 -0800 (PST)
+ id 1vo5VQ-000386-M9
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:14 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-4359a316d89so1095515f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321534; x=1770926334; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321551; x=1770926351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KJHws2bGwjwBm9rF5KtccgfLM9W22L+zuBOlFcWoRxA=;
- b=GnLcaF/lEwM/Z/assz+xWQzBGfEq3ZyBAxgrr9lOrdmLP62niD6f/e9PZeI+cBdtwm
- wLYNBQ5KtREOAPVZghg14ERpDmK+Lv8Y0KFzzXc+E6u4C7aksnZNoIwFlLtWOukeN5XC
- DaeCSJ9DWo3yW/UIVlweGSh7veiiHAIHCjTwDgyr/JQ7PyIXgNBgBgUg0RC8vHN+vxFo
- 2ne4dRQ2iPJCq7cxAB7DhmM5Y6GcKrhMcseft5QlD9pa5A+2p4v1qirQfv28Ygs72g1y
- ell4ut/wS4/YkRLtomQN+/SQ5RREfFjxfAFMPUN0F7Ax3IefIcin5oYmVQ6v+SxEX+1k
- VhOA==
+ bh=YNa6k84+p4NLUcl3AM/SAA8NkXll7Iajqtfasejwd8w=;
+ b=cDiVPx7b7HuXo0k+KLaLGPOo36XxNfSNyBsWBXoyFz+ISc0suoZreLPeA766Rh7FtY
+ kIru1nhayRHrpCfLu2aQLVTwVIvfdzSgGTs/SV55IVUwd6kRBagtRGB4bkB+pjQ42tZZ
+ 44zQX/TlecYaAdrYHPBQbJUp8NA/kEQ9rT4myvRWh1Z4a4AuYZ0aN2ulkEMvjnwJ29yr
+ 4htefsBDtI9YufL6qvfaw6C4kVBgZJanYIfvoC5F8TzZTeK7JGWa4KEVthSmJPYbTDHS
+ uCG4y7CKQZw5F7sj7Skmu+5xKYSMh9y1UDYJ14b9039jJW86PrL/xjjSJfole3GB+Q1u
+ 9A2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321535; x=1770926335;
+ d=1e100.net; s=20230601; t=1770321551; x=1770926351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KJHws2bGwjwBm9rF5KtccgfLM9W22L+zuBOlFcWoRxA=;
- b=JgzJjXpNDijnkfA3eUplCJ6Q80abVk532l+yJrLHpGPB6XlgVKixSuMbA+zd9yBkFu
- WlqSVATJo7WSgYYD/ejWzGEu5FHUON0Qsi/zygZOj5QJ36L+QJsrlySX3aSY9KUe0YD6
- v+c4vP8cBBmIqigSAMMI7NAx4Nwb3B1Eczfr2bHVuHWRafbHmN20flWEbSE15BuEM3Jq
- cdknFfFDnOdJchDl9Osi0ZtXYlHQt7wktn+fsZ+UbPAqhXIKAvHwWwhk0tqSKauR5MOM
- O0E51XtW1qFpBGoj+Ic7Puhjywx2g2HyneMEZdb/+w5UV7pD9dpQxsr5gP5gKaj0TRON
- l4QA==
-X-Gm-Message-State: AOJu0Yzw7HXDRMxIUwJC3Hit0J6lnBJ+gaO6BphjtBtXAHsQya1DlXg5
- GfquTDBImSHCXc3QsI7duwtKeFzRmDyldiMAA6rPcvkTq/KJFUs8K46tBjEmrJlZrIw=
-X-Gm-Gg: AZuq6aIm6d6TdMOINQ+d9bM9zPLDFqFJnHBoMy1dRSckwA0H0kwvpgLrz+rHr6IP5Lt
- raMHlJh76E8wPbPfLsepbTpIpwFrVmcwLOkosLAfkAm6JtrBpYKA1sOdtNwUaqo1r4/ghqKf7eL
- NMlOIvkEPArcwV8PaG3rraDiFLIo1n3mSyMpD4AzNDa1hdnQM9l0MmIKV4934ybDiWzNRAtYEVq
- ES7V/fY/DRjb7bRa96K982kpJIdFvpFRoyYKN3I4NvTvDe/+mSlWYRap++cmRUfCqu8RLxqs5lI
- kEMv+jSGI7tJzuL0TrZlI9Hi1V6rd9KYsQvr57/1hH+BkHAsVzseWPboW/iu922ug8RnX5P+8iG
- /iczQMwIPDxM1u2uvJ81Dy/b7goCAc6c32w3yBOe77srWg+od6t1TROyrixBvE2gBoirKlL/RZU
- IQ9RqW58LnDWJ1YS58NAo=
-X-Received: by 2002:a05:600c:45cb:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-483201dd216mr8628225e9.1.1770321534470; 
- Thu, 05 Feb 2026 11:58:54 -0800 (PST)
+ bh=YNa6k84+p4NLUcl3AM/SAA8NkXll7Iajqtfasejwd8w=;
+ b=kXJ2COrm4lQ7uI5A1L4IA9kXG9efiaImv5JLFXebw5v/0pgpdA5faPWnig4OH/zg+9
+ SZoVJKxlk3Er42xNKAa9WIUqyPMmcWrpFSmtamp7V+PsPHVbevBOE744vEs0mmWlCuZ6
+ Dttjf7VuYME6c95GZ8FpTl7Qr3nWIrF4PUZ7pxBDmn9mTD8tLlbqULDdyIYZN1jmWnq1
+ X+V7xnKjQrCn+FV3ZdM8iD+GqmYwDjBwrdAQIzuvHeJdRPNAa96b9e98lzrN41owx5m1
+ cNSEirbcw2sDBKlzReL95/Yc8dAe8pNrVWG1yhmbsh28H1vvvf6GFWyeX/P2AaWt8O3H
+ GUpw==
+X-Gm-Message-State: AOJu0Ywe+06FenVF8n3ht/kjYPhXHboNbaEeYZl5AQy5aU3Z9I0ErAAI
+ FTs8zlpsaLbOvr1GkuAmgVNCv+R4+74cGN7Pwu7eCRuVxul6TI9pulFKzjDYRJPBVoY=
+X-Gm-Gg: AZuq6aIadpLzulQa3gFwliBruEx9kqWkYatID9F65i4+AfyoDGsYYtgTY+CgL8YMc3j
+ rVDfjLdDmH0mF7ERlspcNrVxPY0NStuMsnJNUn5nF08o5dGBqx9PBXPtkVoeZQ+jjI8SXYGP9uI
+ 71+W9CAN4liKWu4W3FzIwNAoo9xukmh7h8cm2jlRUZlTYjInXR2yttTR/33s+SyYzVbSwMVGvSQ
+ +MNphBFpnhoGIRKJfjY2iq+FdGDpkuagDqO2yh6yeBL/UPEPLEd05EbDFQJZoJH90qwJhktCor3
+ mJ22QwWg2JW8bdSUHnuwnD2rx6lbjVLM25h19EQpcZqIQq0MXb4oB2nXXiP9x2L+hF3nwUKjnH0
+ HMH7wYw5eULjqXl/5nsRqY9Xe/wP3hcQ0HKr58H7Tou3dKTNGZF4dWa4uZF1w6phcn1Ix/EyzxO
+ Vdj/gUHnJ605XCmDasEJs=
+X-Received: by 2002:a05:6000:2386:b0:433:2f55:7cab with SMTP id
+ ffacd0b85a97d-4362934bff8mr746555f8f.37.1770321550643; 
+ Thu, 05 Feb 2026 11:59:10 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.58.52
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:58:53 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:10 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
@@ -71,16 +71,17 @@ Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 08/29] hw/core: Setup Remote Port I/O channels
-Date: Thu,  5 Feb 2026 20:58:03 +0100
-Message-ID: <20260205195824.2610192-9-ruslichenko.r@gmail.com>
+Subject: [PATCH 18/29] hw/core: Implement Remote Port ATS logic and cache
+ management
+Date: Thu,  5 Feb 2026 20:58:13 +0100
+Message-ID: <20260205195824.2610192-19-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,277 +106,249 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Add initialization of communication channels with
-remote peer.
+Complete the Remote Port ATS implementation by adding the translation
+and cache management logic.
 
-This includes character device backend, which can be
-configured based on QOM properties or automatic socket
-creation based on the machine path. The patch also
-initializes the signaling event pipes.
+This patch implements:
+- The logic for ats_translate_address to resolve addresses via the
+  QEMU IOMMU translation mechanism.
+- A local cache management system to store IOMMU entries for remote
+  masters.
+- Integration with IOMMU notifiers to handle invalidation requests
+  and maintain coherency with the peer.
 
+Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port.c         | 187 ++++++++++++++++++++++++++++++++++
- include/hw/core/remote-port.h |  16 +++
- 2 files changed, 203 insertions(+)
+ hw/core/remote-port-ats.c | 207 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 205 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
-index c909a825f3..5154c1bc2a 100644
---- a/hw/core/remote-port.c
-+++ b/hw/core/remote-port.c
-@@ -52,6 +52,58 @@
- #define REMOTE_PORT_CLASS(klass)    \
-      OBJECT_CLASS_CHECK(RemotePortClass, (klass), TYPE_REMOTE_PORT)
- 
-+static char *rp_sanitize_prefix(RemotePort *s)
-+{
-+    char *sanitized_name;
-+    char *c;
-+
-+    sanitized_name = g_strdup(s->prefix);
-+    for (c = sanitized_name; *c != '\0'; c++) {
-+        if (*c == '/') {
-+            *c = '_';
-+        }
-+    }
-+    return sanitized_name;
-+}
-+
-+static char *rp_autocreate_chardesc(RemotePort *s, bool server)
-+{
-+    char *prefix;
-+    char *chardesc;
-+    int r;
-+
-+    prefix = rp_sanitize_prefix(s);
-+    r = asprintf(&chardesc, "unix:%s/qemu-rport-%s%s",
-+                 machine_path, prefix, server ? ",wait,server" : "");
-+    assert(r > 0);
-+    free(prefix);
-+    return chardesc;
-+}
-+
-+static Chardev *rp_autocreate_chardev(RemotePort *s, char *name)
-+{
-+    Chardev *chr = NULL;
-+    char *chardesc;
-+    char *s_path;
-+    int r;
-+
-+    r = asprintf(&s_path, "%s/qemu-rport-%s", machine_path,
-+                 rp_sanitize_prefix(s));
-+    assert(r > 0);
-+    if (g_file_test(s_path, G_FILE_TEST_EXISTS)) {
-+        chardesc = rp_autocreate_chardesc(s, false);
-+        chr = qemu_chr_new_noreplay(name, chardesc, false, NULL);
-+        free(chardesc);
-+    }
-+    free(s_path);
-+
-+    if (!chr) {
-+        chardesc = rp_autocreate_chardesc(s, true);
-+        chr = qemu_chr_new_noreplay(name, chardesc, false, NULL);
-+        free(chardesc);
-+    }
-+    return chr;
-+}
- 
- static void rp_reset(DeviceState *dev)
+diff --git a/hw/core/remote-port-ats.c b/hw/core/remote-port-ats.c
+index c0e8150452..1f6c8d7410 100644
+--- a/hw/core/remote-port-ats.c
++++ b/hw/core/remote-port-ats.c
+@@ -57,14 +57,217 @@ static IOMMUTLBEntry *rp_ats_lookup_translation(RemotePortATSCache *cache,
+                                                 hwaddr translated_addr,
+                                                 hwaddr len)
  {
-@@ -66,6 +118,127 @@ static void rp_reset(DeviceState *dev)
- 
- static void rp_realize(DeviceState *dev, Error **errp)
- {
-+    RemotePort *s = REMOTE_PORT(dev);
-+    int r;
-+    Error *err = NULL;
+-    /* TBD */
++    RemotePortATS *s = REMOTE_PORT_ATS(cache);
 +
-+    s->prefix = object_get_canonical_path(OBJECT(dev));
++    for (int i = 0; i < s->cache->len; i++) {
++        IOMMUTLBEntry *iotlb = g_array_index(s->cache, IOMMUTLBEntry *, i);
++        hwaddr masked_start = (translated_addr & ~iotlb->addr_mask);
++        hwaddr masked_end = ((translated_addr + len - 1) & ~iotlb->addr_mask);
 +
-+    if (!qemu_chr_fe_get_driver(&s->chr)) {
-+        char *name;
-+        Chardev *chr = NULL;
-+        static int nr;
-+
-+        r = asprintf(&name, "rport%d", nr);
-+        nr++;
-+        assert(r > 0);
-+
-+        if (s->chrdev_id) {
-+            chr = qemu_chr_find(s->chrdev_id);
++        if (masked_start == iotlb->translated_addr &&
++            masked_end == iotlb->translated_addr) {
++            return iotlb;
 +        }
-+
-+        if (chr) {
-+            /* Found the chardev via commandline */
-+        } else if (s->chardesc) {
-+            chr = qemu_chr_new(name, s->chardesc, NULL);
-+        } else {
-+            if (!machine_path) {
-+                error_report("%s: Missing chardesc prop."
-+                             " Forgot -machine-path?",
-+                             s->prefix);
-+                exit(EXIT_FAILURE);
-+            }
-+            chr = rp_autocreate_chardev(s, name);
-+        }
-+
-+        free(name);
-+        if (!chr) {
-+            error_report("%s: Unable to create remort-port channel %s",
-+                         s->prefix, s->chardesc);
-+            exit(EXIT_FAILURE);
-+        }
-+
-+        qdev_prop_set_chr(dev, "chardev", chr);
-+        s->chrdev = chr;
 +    }
 +
-+#ifdef _WIN32
+     return NULL;
+ }
+ 
++static void rp_ats_cache_remove(RemotePortATS *s, IOMMUTLBEntry *iotlb)
++{
++    for (int i = 0; i < s->cache->len; i++) {
++        IOMMUTLBEntry *tmp = g_array_index(s->cache, IOMMUTLBEntry *, i);
++        hwaddr masked_start = (tmp->iova & ~iotlb->addr_mask);
++        hwaddr masked_end = ((tmp->iova | tmp->addr_mask) & ~iotlb->addr_mask);
++
++        if (masked_start == iotlb->iova || masked_end == iotlb->iova) {
++            g_array_remove_index_fast(s->cache, i);
++        }
++    }
++}
++
++static void rp_ats_invalidate(RemotePortATS *s, IOMMUTLBEntry *iotlb)
++{
++    size_t pktlen = sizeof(struct rp_pkt_ats);
++    struct rp_pkt_ats pkt;
++    RemotePortRespSlot *rsp_slot;
++    RemotePortDynPkt *rsp;
++    size_t enclen;
++    int64_t clk;
++    uint32_t id;
++    hwaddr len = iotlb->addr_mask + 1;
++
++    id = rp_new_id(s->rp);
++    clk = rp_normalized_vmclk(s->rp);
++
++    enclen = rp_encode_ats_inv(id, s->rp_dev,
++                             &pkt,
++                             clk,
++                             0,
++                             iotlb->iova,
++                             len,
++                             0,
++                             0);
++    assert(enclen == pktlen);
++
++    rp_rsp_mutex_lock(s->rp);
++    rp_write(s->rp, (void *) &pkt, enclen);
++
++    rsp_slot = rp_dev_wait_resp(s->rp, s->rp_dev, id);
++    rsp = &rsp_slot->rsp;
++
++    /* We dont support out of order answers yet.  */
++    assert(rsp->pkt->hdr.id == id);
++
++    rp_resp_slot_done(s->rp, rsp_slot);
++    rp_rsp_mutex_unlock(s->rp);
++}
++
++static void rp_ats_cache_insert(RemotePortATS *s,
++                                hwaddr iova,
++                                hwaddr translated_addr,
++                                hwaddr mask,
++                                AddressSpace *target_as)
++{
++    IOMMUTLBEntry *iotlb;
++
 +    /*
-+     * Create a socket connection between two sockets. We auto-bind
-+     * and read out the port selected by the kernel.
++     * Invalidate all current translations that collide with the new one and
++     * does not have the same target_as. This means that translated_addresses
++     * towards the same addresses but in different target address spaces are
++     * not allowed.
 +     */
-+    {
-+        char *name;
-+        SocketAddress *sock;
-+        int port;
-+        int listen_sk;
++    for (int i = 0; i < s->cache->len; i++) {
++        iotlb = g_array_index(s->cache, IOMMUTLBEntry *, i);
++        hwaddr masked_start = (translated_addr & ~iotlb->addr_mask);
++        hwaddr masked_end = ((translated_addr | mask) & ~iotlb->addr_mask);
++        bool spans_region = masked_start < iotlb->translated_addr &&
++                             masked_end > iotlb->translated_addr;
 +
-+        sock = socket_parse("127.0.0.1:0", &error_abort);
-+        listen_sk = socket_listen(sock, 1, &error_abort);
++        if (masked_start == iotlb->translated_addr ||
++            masked_end == iotlb->translated_addr || spans_region) {
++            hwaddr masked_iova_start;
++            hwaddr masked_iova_end;
 +
-+        if (s->event.pipe.read < 0) {
-+            perror("socket read");
-+            exit(EXIT_FAILURE);
-+        }
-+
-+        {
-+            struct sockaddr_in saddr;
-+            socklen_t slen = sizeof saddr;
-+            int r;
-+
-+            r = getsockname(listen_sk, (struct sockaddr *) &saddr, &slen);
-+            if (r < 0) {
-+                perror("getsockname");
-+                exit(EXIT_FAILURE);
++            /*
++             * Invalidated & remove the mapping if the address range hit in the
++             * cache but the target_as is different.
++             */
++            if (iotlb->target_as != target_as) {
++                rp_ats_invalidate(s, iotlb);
++                g_array_remove_index_fast(s->cache, i);
++                continue;
 +            }
-+            port = htons(saddr.sin_port);
++
++            /*
++             * Remove duplicates with a smaller range length since the new
++             * mapping will span over it.
++             */
++            masked_iova_start = (iova & ~iotlb->addr_mask);
++            masked_iova_end = ((iova | mask) & ~iotlb->addr_mask);
++            spans_region = masked_iova_start < iotlb->iova &&
++                            masked_iova_end > iotlb->iova;
++
++            if (masked_iova_start == iotlb->iova ||
++                masked_iova_end == iotlb->iova || spans_region) {
++
++                if ((iotlb->addr_mask + 1) < (mask + 1)) {
++                    g_array_remove_index_fast(s->cache, i);
++                } else {
++                    /*
++                     * The new mapping is smaller or equal in size and is thus
++                     * already cached.
++                     */
++                    return;
++                }
++            }
 +        }
++    }
 +
-+        name = g_strdup_printf("127.0.0.1:%d", port);
-+        s->event.pipe.write = inet_connect(name, &error_abort);
-+        g_free(name);
-+        if (s->event.pipe.write < 0) {
-+            perror("socket write");
-+            exit(EXIT_FAILURE);
-+        }
++    iotlb = g_new0(IOMMUTLBEntry, 1);
++    iotlb->iova = iova;
++    iotlb->translated_addr = translated_addr;
++    iotlb->addr_mask = mask;
++    iotlb->target_as = target_as;
++    g_array_append_val(s->cache, iotlb);
++}
 +
-+        for (;;) {
-+            struct sockaddr_in saddr;
-+            socklen_t slen = sizeof saddr;
-+            int fd;
++static void rp_ats_iommu_unmap_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
++{
++    ATSIOMMUNotifier *notifier = container_of(n, ATSIOMMUNotifier, n);
++    RemotePortATS *s = notifier->rp_ats;
 +
-+            slen = sizeof(saddr);
-+            fd = qemu_accept(listen_sk, (struct sockaddr *)&saddr, &slen);
-+            if (fd < 0 && errno != EINTR) {
-+                close(listen_sk);
-+                return;
-+            } else if (fd >= 0) {
-+                close(listen_sk);
-+                s->event.pipe.read = fd;
++    rp_ats_invalidate(s, iotlb);
++    rp_ats_cache_remove(s, iotlb);
++}
++
+ static bool ats_translate_address(RemotePortATS *s, struct rp_pkt *pkt,
+                                   hwaddr *phys_addr, hwaddr *phys_len)
+ {
+-    /* TBD */
++    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    IOMMUMemoryRegion *iommu_mr;
++    AddressSpace *target_as;
++    MemoryRegion *mr;
++    int prot = 0;
++
++    RCU_READ_LOCK_GUARD();
++
++    mr = ats_do_translate(&s->as, pkt->ats.addr, phys_addr, phys_len,
++                          &target_as, &prot, attrs);
++    if (!mr) {
++        return false;
++    }
++
++    iommu_mr = memory_region_get_iommu(mr);
++    if (iommu_mr) {
++        int iommu_idx = memory_region_iommu_attrs_to_index(iommu_mr, attrs);
++        ATSIOMMUNotifier *notifier;
++        int i;
++
++        for (i = 0; i < s->iommu_notifiers->len; i++) {
++            notifier = g_array_index(s->iommu_notifiers, ATSIOMMUNotifier *, i);
++            if (notifier->mr == mr && notifier->iommu_idx == iommu_idx) {
 +                break;
 +            }
 +        }
 +
-+        if (!qemu_set_blocking(s->event.pipe.read, false, &err)) {
-+            error_report("%s: Unable to set non-block for internal pipes",
-+                        s->prefix);
-+            exit(EXIT_FAILURE);
++        /* Register a notifier if not found.  */
++        if (i == s->iommu_notifiers->len) {
++            Error *err = NULL;
++            bool ret;
++
++            s->iommu_notifiers = g_array_set_size(s->iommu_notifiers, i + 1);
++            notifier = g_new0(ATSIOMMUNotifier, 1);
++            g_array_index(s->iommu_notifiers, ATSIOMMUNotifier *, i) = notifier;
++
++            notifier->mr = mr;
++            notifier->iommu_idx = iommu_idx;
++            notifier->rp_ats = s;
++
++            iommu_notifier_init(&notifier->n,
++                                rp_ats_iommu_unmap_notify,
++                                IOMMU_NOTIFIER_UNMAP,
++                                0,
++                                HWADDR_MAX,
++                                iommu_idx);
++
++            ret = memory_region_register_iommu_notifier(mr, &notifier->n, &err);
++            if (ret) {
++                error_report_err(err);
++                exit(1);
++            }
 +        }
 +    }
-+#else
-+    if (!g_unix_open_pipe(s->event.pipes, FD_CLOEXEC, NULL)) {
-+        error_report("%s: Unable to create remort-port internal pipes",
-+                    s->prefix);
-+        exit(EXIT_FAILURE);
++
++    if (!(prot & IOMMU_RO)) {
++        pkt->ats.attributes &= ~(RP_ATS_ATTR_exec | RP_ATS_ATTR_read);
++    }
++    if (!(prot & IOMMU_WO)) {
++        pkt->ats.attributes &= ~(RP_ATS_ATTR_write);
 +    }
 +
-+    if (!qemu_set_blocking(s->event.pipe.read, false, &err)) {
-+        error_report("%s: Unable to set non-block for internal pipes",
-+                    s->prefix);
-+        exit(EXIT_FAILURE);
-+    }
++    rp_ats_cache_insert(s, pkt->ats.addr, *phys_addr, *phys_len - 1, target_as);
 +
-+#endif
+     return true;
  }
  
- static void rp_unrealize(DeviceState *dev)
-@@ -73,6 +246,13 @@ static void rp_unrealize(DeviceState *dev)
-     RemotePort *s = REMOTE_PORT(dev);
- 
-     s->finalizing = true;
-+
-+    info_report("%s: Wait for remote-port to disconnect", s->prefix);
-+    qemu_chr_fe_disconnect(&s->chr);
-+
-+    close(s->event.pipe.read);
-+    close(s->event.pipe.write);
-+    object_unparent(OBJECT(s->chrdev));
- }
- 
- static const VMStateDescription vmstate_rp = {
-@@ -84,6 +264,12 @@ static const VMStateDescription vmstate_rp = {
-     }
- };
- 
-+static Property rp_properties[] = {
-+    DEFINE_PROP_CHR("chardev", RemotePort, chr),
-+    DEFINE_PROP_STRING("chardesc", RemotePort, chardesc),
-+    DEFINE_PROP_STRING("chrdev-id", RemotePort, chrdev_id),
-+};
-+
- static void rp_prop_allow_set_link(const Object *obj, const char *name,
-                                    Object *val, Error **errp)
- {
-@@ -112,6 +298,7 @@ static void rp_class_init(ObjectClass *klass, const void *data)
-     dc->realize = rp_realize;
-     dc->unrealize = rp_unrealize;
-     dc->vmsd = &vmstate_rp;
-+    device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
- }
- 
- static const TypeInfo rp_info = {
-diff --git a/include/hw/core/remote-port.h b/include/hw/core/remote-port.h
-index db71071c8e..0f40018cdb 100644
---- a/include/hw/core/remote-port.h
-+++ b/include/hw/core/remote-port.h
-@@ -56,8 +56,24 @@ typedef struct RemotePortDeviceClass {
- struct RemotePort {
-     DeviceState parent;
- 
-+    union {
-+       int pipes[2];
-+       struct {
-+           int read;
-+           int write;
-+       } pipe;
-+    } event;
-+    Chardev *chrdev;
-+    CharFrontend chr;
-     bool finalizing;
- 
-+    char *chardesc;
-+    char *chrdev_id;
-+
-+    const char *prefix;
-+    const char *remote_prefix;
-+
-+    uint32_t current_id;
-     bool reset_done;
- 
- #define REMOTE_PORT_MAX_DEVS 1024
 -- 
 2.43.0
 
