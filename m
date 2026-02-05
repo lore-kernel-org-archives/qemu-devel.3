@@ -4,98 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C63EA7966
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 04:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E82E8B394
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 05:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnr6e-0006nY-89; Wed, 04 Feb 2026 23:36:40 -0500
+	id 1vnrtF-0003nj-AA; Thu, 05 Feb 2026 00:26:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnr6c-0006n3-O4
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 23:36:38 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vnrtE-0003n9-5B
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 00:26:52 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnr6b-0000QN-5c
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 23:36:38 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-81f5381d168so604981b3a.2
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 20:36:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vnrt3-00071I-9i
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 00:26:51 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-81f4ba336b4so446018b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 21:23:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770266195; x=1770870995; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770269029; x=1770873829; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PwoKjZlALAMKycsCbRjNHfPD6VbPqrSwbc0AdAoTn/k=;
- b=EUVzevKgZvsvKjpBapoZC12Fo94fFegMqdfH4pCcp2mQtXChp9dFysYAftSehrURcV
- HEua8tWehQuEdg/I9LBPik0bscAB+1rDIyrY3lz4goobeMy+fLiUKk8TmW39NwhwTnNE
- 8LHwJcejkROpCxWKGDJqGDWVRvSBjU2sUzvgTzWHkQRoXbLUizh49/apdXIWGLCloNtR
- 66doQeHZbr3RITpfnyCsCFLEtdFVPJdJjadDYyQbkXLVUVn/WcYdv9uxnBaGJe/sOFtt
- tauFJbETyTgI+cUVLXsXHYHbxgGm+MGa4kGEfd0r2B8Zm56PqR6DGFuAtbdIVW7uFukV
- Lnew==
+ bh=F097Q0+npWaHE6vxXwxTy3fwQCPXDeAdrbjRdO0FE2Q=;
+ b=Xo1HhngFaCwx7DE58heZhG36oYMFbVreGIUEaLUnGxH84vH8LtpUKHGw8Brr1nU7Wu
+ 7bFtWOo+uFq5Oopn3vDCx5Vlom6I+BSpo764XqXvtcjYaMkWEF2Qhn87MQL5SN/OE1qp
+ L7B4YPtRbmie5+79BOHC1hbSEMgj6m7bxIxqidk2S7BuFrHwxq5XNf5sd0SphhSm7rOH
+ CowuBCJTPXVGBwDI6FVhghZ1ZTgGs0E9LinkAuPCtIMR0R1ASlHyq/4TK2V/BU28jeAs
+ rY0hmyoWNXNufGqGXHIHMdy2qyKZdsIv1uCD7rfB9DEW1PLfkaTejfGTaqvtnJKy2ReW
+ TDfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770266195; x=1770870995;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770269029; x=1770873829;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PwoKjZlALAMKycsCbRjNHfPD6VbPqrSwbc0AdAoTn/k=;
- b=t+TrLcxGiCput0bgF4F+fx6AcqsT4mZGPMvrg8phiTpONuuNC6/U91YZR/dRjHyC6o
- yCedteEylLg13dDMqJZYCdqjE2enOE9+eTYTvc9zSdRw7nZk+1DKBpGr9oFxetzDXtCx
- 1YLtt/3naPS7H187VC1RJpTEHo9X4xCFh5ChU3pJOyvG7zKq+s8DIXOdHmiOqy5G+DrR
- 47eiiV/fhWVKYWydBbrGUctYyNZiXLuZzUb0Z2x7mJOGWHmfeBlX9Lq5t4sIg0r2WfLk
- ZsbLYeLSp2jmqZpRejyvSltVnfwbOxTyGCfW9uxc9/2KGKuaD2H/54OZRFIB+6DBVn9c
- 0Exg==
+ bh=F097Q0+npWaHE6vxXwxTy3fwQCPXDeAdrbjRdO0FE2Q=;
+ b=MXjBf20M2YiqtYbPr4QAp1QpA6uqptTKtk05RlJSef2xbvzyD2zK/YYyHXHIh03Vit
+ TDQqZU8771SnszkKu+1hel3dFJ/XtcqD4RvqU/VXveSU3MBx/rR46CI3E/5zCJWaLSJH
+ uuonQrm2mVNptaU40qnhpyIQaCr7K0zGmUjnWg36ZyayYCQQC3gUFcSCirITqRWlqPzl
+ RNZhMR6y1ksOkpiY4mPeH5SB+VwILbZPO4f+MUusa+eCOxfWMnBvscqEN7dTIb5fh0ED
+ IqDDAAe3E+2wR7VlgbrsKZg3jVqkpE6nYF38HZeQJa5+/xFUiPfGMzPr7su3WQyKsdhN
+ DHig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXb9y2+DiX8+EGo9z3U9It32jU/viQUDBNAugSuXYFLShncSbEvvQQiHdoTY5HB9/Ud1ZMk0x6rvBTi@nongnu.org
-X-Gm-Message-State: AOJu0YzlR/gYZxOdZaTd2L5DYicoylt39mciuHjBKdNbNiBZFVX6B8DW
- 9sWAiP1sTtxWqtiwZ0tnKYAv0ze7c1HyUUvYI2HHmAmnfWgdzxyjIm1xCtOBfGnKNO4=
-X-Gm-Gg: AZuq6aJwXwwrAMhSRRkLbudmfy6sl+/TuK71u3ARxeEV2M3XDB9sEX4L2Ddn2Fr3rSm
- 3H9/21tMS2tygZTqm1SP1afCnnoO7UYamlbYRGx6hy/FxunwX1wCcGmDZn86cC7wmc7HpePwCER
- 3PmP8SP+c0nb9YjinuMtzXIG3VE9bDKSAcATl5abZKVwIqauyOfe3SVfCyVWSdR445xI/lKkoel
- MPSR2acripiRCpALAxgM9EQyUaa2vKL4KBD5JbPBwJi/N1YLnGbBQ3kJlLm4JLl/xUw1MwVPKat
- 1pwQ5nt+mwGyoTlr02qRQoJ1zJkcdA2ltFry+u1TizdhaSfVQZqNaTHCErSNMwtFtNXw3LfXeii
- Cxuk0cU17CjKcRKh+G/Hdif5J7WNYr+MKzJsRgqUZtbMvXIBjcCBHl+9ZkfRl5gJmNZbjHomAoE
- jyLCq/ZBB109xSXfYLu9K0Fn7C9P9nAue4UjfvzyZn/q85yww/Je2arjSVwMffbHJzdsvy18dt5
- 6au+cnOFrB8n7aO7f7zRLgaZbgVv2xagsprfm2Cyg==
-X-Received: by 2002:aa7:8881:0:b0:81f:3c34:fa78 with SMTP id
- d2e1a72fcca58-8241c1deae5mr5906549b3a.25.1770266194798; 
- Wed, 04 Feb 2026 20:36:34 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
- (bg30dhzygc4twf4fscxk.ip6.superloop.au.
- [2401:d002:dc0f:2100:7515:513c:b646:18b8])
+ AJvYcCUeGsC6OwYN0ancS3e6nO670nZ2o/Q+i1/R0yRNUUrpgVUMFqf2ZjcboQajEJjmxBie6lW1AbYelZYu@nongnu.org
+X-Gm-Message-State: AOJu0YyJOI5bRIh664YZ4G2699XUz0KARLjkQLloiyqF/WwCkKBOcczq
+ GRtqhOm//LtLKK7lm2W1BK76hA/FJmrRm5l5wsJcFynUWRXoDLkocM9HNZwNesSQg7U=
+X-Gm-Gg: AZuq6aK9i/kKdeAzem/wvC54enhpMMqfN0l7uJZjhaIoYL58eFfKH/lnPXECrpWg+ho
+ KwZQtoDSOgx2fIyRyfADMa461Wqsv0ZcU+UeG1ZIGkko0DrwTS0tZ/WjYaiGSD+EG2uxzrmViXX
+ yguRJuJ9bTnA+XIyBK/Tsy/pXFJyd6FwMobYzenBxXXH49e3ihbUbtuNOUkmcP/GYYJuYXanQ/N
+ yBlSebYk6CDY7tamzwnrmlAbCE7hCPgn/ySlam6+2vVadpZDKWmoun+nMhc7AsDOWQpRFZu5atr
+ pU3q4P5edD+6AgtMrEIymjKEVHtjHGtKLMiyPteSDDnpYMrCgXi1ygN8WhT04M0AffOhKGfsWzY
+ n4EXeOBC6AcekLhCV3h2H81NM4lwwFA3JAW6vNUwzNTS8S6JGFjlQ/KyiYi6LbTaKmMqSB+mhCe
+ 7eFJ/es5YTJn5fr3Qm8tN7038WjkOa1PXL4winkeLhDsj0Rn+24J0LuYGVz4cmukQSvOI=
+X-Received: by 2002:a05:6a00:3e01:b0:823:5270:ef48 with SMTP id
+ d2e1a72fcca58-8241c5f4a99mr5181140b3a.33.1770269029071; 
+ Wed, 04 Feb 2026 21:23:49 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8241d43851csm3999861b3a.31.2026.02.04.20.36.29
+ d2e1a72fcca58-8241d16401esm4444293b3a.4.2026.02.04.21.23.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 20:36:34 -0800 (PST)
-Message-ID: <797df006-5270-462d-a0a4-4e5951cbdb1d@linaro.org>
-Date: Thu, 5 Feb 2026 14:36:26 +1000
+ Wed, 04 Feb 2026 21:23:48 -0800 (PST)
+Message-ID: <7802106f-7221-44af-aec3-b9283bb42ef5@linaro.org>
+Date: Wed, 4 Feb 2026 21:23:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/19] fpu/softfloat: Support OCP(Open Compute Project)
- OFP8 data type
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20260204051756.667397-1-max.chou@sifive.com>
- <20260204051756.667397-6-max.chou@sifive.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 2/3] meson: Add TARGET_ARCH to config_target_data
 Content-Language: en-US
-In-Reply-To: <20260204051756.667397-6-max.chou@sifive.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260205030617.266625-1-richard.henderson@linaro.org>
+ <20260205030617.266625-3-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260205030617.266625-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,70 +138,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 15:17, Max Chou wrote:
-> This commit provides the implementation defined behavior flags and the basic
-> operation support for the OCP float8 data types(E4M3 & E5M2).
+On 2/4/26 7:06 PM, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   meson.build | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
 
-I'd really like to see this split into parts.  Beginning with
-
-> @@ -542,11 +549,39 @@ typedef struct {
->       int exp_max;
->       int frac_size;
->       int frac_shift;
-> -    bool arm_althp;
->       bool has_explicit_bit;
->       uint64_t round_mask;
-> +    /*
-> +     * Format capability flags:
-> +     * no_infinity: Format has no infinity encoding. When true, exp=exp_max
-> +     *   with frac=0 is NOT infinity - it's either NaN or max normal.
-> +     *
-> +     * limited_nan: Format has limited or no NaN patterns. When combined
-> +     *   with normal_frac_max, determines NaN encoding capability:
-> +     *   - limited_nan=false: Standard IEEE NaN (exp=exp_max, frac!=0)
-> +     *   - limited_nan=true && normal_frac_max!=0: Limited NaN (E4M3)
-> +     *   - limited_nan=true && normal_frac_max==0: No NaN encoding (AHP, E2M1)
-> +     *
-> +     * overflow_raises_invalid: Raise Invalid (not Overflow) exception.
-> +     *   ARM Alt HP uses this to signal overflow as an invalid operation.
-> +     *
-> +     * normal_frac_max: For formats with limited_nan, the maximum fraction
-> +     *   value (after normalization shift, including implicit bit) that is
-> +     *   still considered normal at exp=exp_max.
-> +     *   Use NORMAL_FRAC_MAX_ALL (0) to indicate all frac values at exp_max
-> +     *   are normal (E2M1, ARM Alt HP), which also implies no NaN encoding.
-> +     */
-> +    bool no_infinity;
-> +    bool limited_nan;
-> +    bool overflow_raises_invalid;
-> +    uint64_t normal_frac_max;
->   } FloatFmt;
-
-... this.  I wanted to say something about this vs previous revisions, but I hadn't had 
-anything coherent to say besides "meh".
-
-In particular, I think separating "no_infinity" and "limited_nan" leads to confusing 
-checks, such as the one in parts_canonicalize where you test "limited_nan" in a context 
-that is really testing for overflow to infinity.
-
-Further, normal_frac_max is defined oddly, such that you have to test it twice, once vs 
-frac_hi and once vs NORMAL_FRAC_MAX_ALL.  Since this is used for exactly one format, this 
-is perhaps trying to be overly general.
-
-I think better might be:
-
-     typedef enum {
-         /* exp==max, frac==0 ? infinity : nan; this is ieee standard. */
-         float_maxexp_ieee,
-         /* exp==max is a normal number; no infinity or nan representation. */
-         float_maxexp_normal,
-         /* exp==max, frac==max ? nan : normal; no infinity. */
-         float_maxexp_e4m3,
-     } FloatFmtMaxExp;
-
-We can stage in this behaviour without also including either FP8 format.
-Just changing Arm althp in a separate patch is large enough.
-
-
-r~
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
