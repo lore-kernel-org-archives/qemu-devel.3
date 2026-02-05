@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80329ECD999
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869D5ECD999
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5zL-0001h7-RW; Thu, 05 Feb 2026 15:30:07 -0500
+	id 1vo61J-0002YM-W7; Thu, 05 Feb 2026 15:32:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vo5zJ-0001gi-Ol
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:30:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vo5zH-0000U3-Iv
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:30:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770323402;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=9qV/z/WkZPtS6OM0BpUsbfFll5aU2iTLuPicgbUDO58=;
- b=aVXW+n6DqXxSH7keinNMkyhRkw/o/FJLXCNx1Zr6enK89JKSfK+shPc/VxXAL+x66cglZC
- CKJDDVV3V2NO68C+3d9A+qRVwL7+C+XnSkxVZAXjk8ntw5OngiNxJMFnvzlRFrQGPLabx2
- Eub1HGiDiwF6lKUvs5apmBT3pJmDDqw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-a84lM7U-OP6nzAyvXSSuow-1; Thu,
- 05 Feb 2026 15:29:57 -0500
-X-MC-Unique: a84lM7U-OP6nzAyvXSSuow-1
-X-Mimecast-MFC-AGG-ID: a84lM7U-OP6nzAyvXSSuow_1770323395
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A7F0180025C; Thu,  5 Feb 2026 20:29:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98649300DDA1; Thu,  5 Feb 2026 20:29:51 +0000 (UTC)
-Date: Thu, 5 Feb 2026 20:29:47 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: Re: [PATCH 09/29] hw/core: Add Remote Port protocol thread and
- handshake
-Message-ID: <aYT9u7yO61zCOdR0@redhat.com>
-References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
- <20260205195824.2610192-10-ruslichenko.r@gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo61H-0002Y7-Sa
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:32:07 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo61G-0001Nd-Ab
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:32:07 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so13103975e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 12:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770323524; x=1770928324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NRlOgARc68YgEQy92s/UJv4/TgC6vu+iZ7Sy0UquqE4=;
+ b=kENZIOO1TH9O1SFjChQqz1pW61PNlGOn97EjCvyq9UUOTiQBvFAEPfUIEB+qEQ0jOz
+ 3zzkJC3ngOzVmTqdaGhT6QRQBBLQUZojv5M2/Gj73JJLdL1GOTGK/yrAHoNnibFx1yEP
+ OF/+k4OAB/MJj0KSKEbFPtO/Vd1m7d6YRRhXApPa3BNiHeTmMKfJ+RxxaLeQMieBCdCo
+ KNZJXX0tVNN5gxE9GMl05C6ekTAEAvcDNDkiNk+Sz7JRgVME1cvrjjqJfujFUMjy3QXq
+ 3f/aeSWWZ0eix1Ig9jEKmw/DsKmshxV0dm/UzJGOQHzqY9R3zQ1PyfO8mhSorVeWwjUe
+ ddUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770323524; x=1770928324;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NRlOgARc68YgEQy92s/UJv4/TgC6vu+iZ7Sy0UquqE4=;
+ b=fJuxtt/xQfTmqhcxHISl3/KLbc1jF1kiRvsZTMmiDzXVbOtlSOTesjUPlMhlSOeiQ2
+ vnVKJLGFlNYRqF0Ib1tQsEJH2JQGTe2BAAWHNSuZmPha4jUjFcIHPylf6RfNxOa2WLWo
+ TqzN8sHnwoMprlPXB1Mx3PZjmJAemVbEbYOoWJ/Gs0JhNxUM/GCrRVah0rTmc1rHM94D
+ J6xf5yvy4L10JZbQ3KzlgJIMyjdRQF5XVoXzi53QYcRzsxZNuQ8HlCg1MmJkXBmnTPqD
+ YJBHh6gqueCEZY0mqgQJMvbdEe18FZfUwsxzzjpMoxK71cZHO7Z6qG/XboAJKJBbKnCF
+ 3wag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUVIn9hpA+P/rhbyCArQrDbxY6C1HgTRH5cLjdkHjjCWKtATFuzUHwMMEx7drixVRhn1UItrHV2+9i@nongnu.org
+X-Gm-Message-State: AOJu0YybF0OcPpQ3WRYYIad5yJnhQP4+ISFBmKA+80EuroMCJcamJnr4
+ P9I6tMNyCzlJgCiwR14t/qpVScOnWKLYaW9zN4fZuxIHq618raTLS2xyCdM0Q715Uqw=
+X-Gm-Gg: AZuq6aICUhttLnNQa7sBxh7rMHgEJV86i0uATMhSlGlEt/rcN5u4b11i+J34EMYEWKb
+ XELOt+t5cuEGsqifg/r4szsi9wT1e4TbRMlDrfQnzlR4OaQeGNtPUedfBS5ONPz46RWdAi+60vj
+ 0TuT2nj7n0jNgU03hA+24zjzl/+Sn4ckdGMw579Fho8brAn3xfjqCKlgyg5EQkLv/u1PxBHchez
+ SttAf5qUM5BUcRsxA2QPKl9RWVhoPS5HHmpmV5ZVzin4iyfaKoRtgo2N7rw+QGAXrwUsH7JfU+R
+ /zFSkIbJ7XTZVddcLO30k8xru9+Im7dNpmSq0lkIyKUqbMAaFGF9zUb8XWlMf0s425ZBBvgSf2V
+ bFKUpuCmnymMdKsxeC+/g51y+Ug1diIYVNOviUmqDwEXWSd4zBzGOrdWwzH0hkcvNSTE8YbgytX
+ yLq+Ge9qlxdusC0LXN+lVndyFMnw4yNnvOTcefRthR4FDvSPRzB4OVaw==
+X-Received: by 2002:a05:600c:4f8a:b0:480:3230:6c9b with SMTP id
+ 5b1f17b1804b1-483201dd004mr9123145e9.7.1770323524349; 
+ Thu, 05 Feb 2026 12:32:04 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48320736953sm3706755e9.15.2026.02.05.12.32.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 12:32:03 -0800 (PST)
+Message-ID: <14d9bde9-938c-4eda-aeab-5e3c863b17a1@linaro.org>
+Date: Thu, 5 Feb 2026 21:32:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260205195824.2610192-10-ruslichenko.r@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/24] bsd-user: FreeBSD needs this too, so drop linux
+ ifdef
+Content-Language: en-US
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>
+References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-2-8d8ff0035372@bsdimp.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260205-bsd-user-claude-v1-2-8d8ff0035372@bsdimp.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,164 +104,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 05, 2026 at 08:58:04PM +0100, Ruslan Ruslichenko wrote:
-> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+On 5/2/26 18:26, Warner Losh wrote:
+> This is more of a toolchain than an OS issue, and all the toolchains are
+> headed to requiring this. There's nothing Linux specific about it.
 > 
-> Introduce main execution loop for the Remote Port protocol.
-> Creates a dedicated thread to manage the communication lifecycle.
-> This includes logic to read packets and manage RX queue.
-> 
-> Patch also implements handshake logic to verify protocol
-> versions and negotiate capabilities with remote peer.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
-> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
 > ---
->  hw/core/remote-port.c         | 190 ++++++++++++++++++++++++++++++++++
->  include/hw/core/remote-port.h |  22 ++++
->  2 files changed, 212 insertions(+)
-> 
-> diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
-> index 5154c1bc2a..91b0682884 100644
-> --- a/hw/core/remote-port.c
-> +++ b/hw/core/remote-port.c
-> @@ -52,6 +52,88 @@
->  #define REMOTE_PORT_CLASS(klass)    \
->       OBJECT_CLASS_CHECK(RemotePortClass, (klass), TYPE_REMOTE_PORT)
->  
-> +static void rp_pkt_dump(const char *prefix, const char *buf, size_t len)
-> +{
-> +    qemu_hexdump(stdout, prefix, buf, len);
-> +}
-> +
-> +static void rp_fatal_error(RemotePort *s, const char *reason)
-> +{
-> +    error_report("%s: %s", s->prefix, reason);
-> +    exit(EXIT_FAILURE);
-> +}
-> +
-> +static ssize_t rp_recv(RemotePort *s, void *buf, size_t count)
-> +{
-> +    ssize_t r;
-> +
-> +    r = qemu_chr_fe_read_all(&s->chr, buf, count);
-> +    if (r <= 0) {
-> +        return r;
-> +    }
-> +    if (r != count) {
-> +        error_report("%s: Bad read, expected %zd but got %zd",
-> +                     s->prefix, count, r);
-> +        rp_fatal_error(s, "Bad read");
-> +    }
-> +
-> +    return r;
-> +}
-> +
-> +ssize_t rp_write(RemotePort *s, const void *buf, size_t count)
-> +{
-> +    ssize_t r;
-> +
-> +    qemu_mutex_lock(&s->write_mutex);
-> +    r = qemu_chr_fe_write_all(&s->chr, buf, count);
-> +    qemu_mutex_unlock(&s->write_mutex);
-> +    assert(r == count);
-> +    if (r <= 0) {
-> +        error_report("%s: Disconnected r=%zd buf=%p count=%zd",
-> +                     s->prefix, r, buf, count);
-> +        rp_fatal_error(s, "Bad write");
-> +    }
-> +    return r;
-> +}
-> +
-> +static void rp_cmd_hello(RemotePort *s, struct rp_pkt *pkt)
-> +{
-> +    s->peer.version = pkt->hello.version;
-> +    if (pkt->hello.version.major != RP_VERSION_MAJOR) {
-> +        error_report("remote-port version missmatch remote=%d.%d local=%d.%d",
-> +                      pkt->hello.version.major, pkt->hello.version.minor,
-> +                      RP_VERSION_MAJOR, RP_VERSION_MINOR);
-> +        rp_fatal_error(s, "Bad version");
-> +    }
-> +
-> +    if (pkt->hello.caps.len) {
-> +        void *caps = (char *) pkt + pkt->hello.caps.offset;
-> +
-> +        rp_process_caps(&s->peer, caps, pkt->hello.caps.len);
-> +    }
-> +}
-> +
-> +static void rp_say_hello(RemotePort *s)
-> +{
-> +    struct rp_pkt_hello pkt;
-> +    uint32_t caps[] = {
-> +        CAP_BUSACCESS_EXT_BASE,
-> +        CAP_BUSACCESS_EXT_BYTE_EN,
-> +        CAP_WIRE_POSTED_UPDATES,
-> +        CAP_ATS,
-> +    };
-> +    size_t len;
-> +
-> +    len = rp_encode_hello_caps(s->current_id++, 0, &pkt, RP_VERSION_MAJOR,
-> +                               RP_VERSION_MINOR,
-> +                               caps, caps, sizeof caps / sizeof caps[0]);
-> +    rp_write(s, (void *) &pkt, len);
-> +
-> +    if (sizeof caps) {
-> +        rp_write(s, caps, sizeof caps);
-> +    }
-> +}
-> +
->  static char *rp_sanitize_prefix(RemotePort *s)
->  {
->      char *sanitized_name;
-> @@ -105,6 +187,108 @@ static Chardev *rp_autocreate_chardev(RemotePort *s, char *name)
->      return chr;
->  }
->  
-> +static bool rp_pt_process_pkt(RemotePort *s, RemotePortDynPkt *dpkt)
-> +{
-> +    struct rp_pkt *pkt = dpkt->pkt;
-> +
-> +    D(qemu_log("%s: cmd=%x id=%d dev=%d\n", __func__, pkt->hdr.cmd,
-> +             pkt->hdr.id, pkt->hdr.dev));
+>   common-user/safe-syscall.S | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-This kind of thing feels better suited to being implement with
-QEMU tracepoints.
-
-> +
-> +    if (pkt->hdr.dev >= ARRAY_SIZE(s->devs)) {
-> +        /* FIXME: Respond with an error.  */
-> +        return true;
-> +    }
-> +
-> +    switch (pkt->hdr.cmd) {
-> +    case RP_CMD_hello:
-> +        rp_cmd_hello(s, pkt);
-> +        break;
-> +    case RP_CMD_read:
-> +    case RP_CMD_write:
-> +    case RP_CMD_interrupt:
-> +    case RP_CMD_ats_req:
-> +    case RP_CMD_ats_inv:
-> +        /* TBD */;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +        break;
-> +    }
-> +    return false;
-> +}
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
