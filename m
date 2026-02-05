@@ -4,119 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6112CEC1E86
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2219DEC1E8B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnwMR-0000sw-J9; Thu, 05 Feb 2026 05:13:19 -0500
+	id 1vnwQE-0001zF-MS; Thu, 05 Feb 2026 05:17:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnwMJ-0000rc-PD
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:13:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnwMH-0006cJ-TN
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:13:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770286388;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WMX3XJ8cyHbJ7lmfnDUiplGZd/RUEGZQjFEvJ21+2h4=;
- b=B33AgefAsDq/vHW7pfsxiwiplHMZgPRkrhpd2UPYE65TxGcFYHuZU08hKfJ7SJF5Gj+AMj
- SbCgF2Lh2zv9PjLjPHNFJBkIVC5z2BxRU7RyBpOv0H7AkP05iG/CKJ3TfDB2F7C/ehrwxn
- u8NOAl9tMd4qDs2Z5Z54kIfZtF+FnkQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-YmDiVkE0MZKxUzt37UH4xw-1; Thu, 05 Feb 2026 05:13:07 -0500
-X-MC-Unique: YmDiVkE0MZKxUzt37UH4xw-1
-X-Mimecast-MFC-AGG-ID: YmDiVkE0MZKxUzt37UH4xw_1770286386
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47edf8ba319so10117885e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:13:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnwQC-0001yb-7n
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:17:12 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnwQA-0006wE-T2
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:17:12 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-794e95357cfso7021847b3.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:17:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770286629; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OAt45nYDaW6f+FB//LQWjvkUqtMfAeBJjbdsc05VwkMysvWhmFEmHRRFD3/1IrzvAY
+ vKq/DepIb4slchVXiDM1ueIGCGvyaRwk7SX8xvWp6kEnvJ/b2klvO/IszuAuvIzRxDaw
+ TdWE9RHg5pniWUP6iVGaVl85SzwkX/BHyqKvP/g9YMKmShO/n1+mxdbPLyGznuAdkaQi
+ Bnc1GexFppg2oaY38eTIdUBUahIgPzrR9gAyz6XcTOvCjcn6irDqOloRPjF2+C8pWarh
+ JP7PVnmkFqFwr6eZ4tXnUHr5PXkLkBu4YACzEyiaarS8QDocZOVCy/zgLj5hPe3oAipr
+ BZ5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Yh/gwoMoCd3XaIwuvwmcawbcsXQYz4dh6o/53HMIhHQ=;
+ fh=09I2axr4uxBaQZWOq7eGnNEbjKYzXXuOZ/WYgxqbxRU=;
+ b=Fiztx7ECNTh+BOJPlp0/S7aVECadh5nh8dezUxJk75/+s9NsYypgrFutzCMJf+E5AR
+ 2BVccBNBHphgbWZ1yKYLCA6AMAf8RQcSBynYQ3syz19Nf25AcPb++s9TuVaHDzWK3idM
+ 9nNN0L8ddEYdYx09yuq+filkFvQDGWeBfft7fSUalhW0s5zbzXCP5Qp+b6ZvWudjHn/i
+ 4Ee4/4ydEJmSOdIT3yMv3VjfCDMOXWBFhTevuZweOKL+97RfR74VLi0+4znWZI72diU6
+ 7mlwWuf08bnFedmkUqPFhLlF9MqXCGVFZNcYsUgO1LXIFcKFxvLWCCGn056aDDH3cSw8
+ HhLA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770286386; x=1770891186; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WMX3XJ8cyHbJ7lmfnDUiplGZd/RUEGZQjFEvJ21+2h4=;
- b=T8m3PB9W1dfUbvMULGgfFlsr7lgdrLNEmBK2uYdlTf9QkoDDOdmPz3dWBlOvFnjSk5
- rIOcJPWa+jJRHztSAEHbZ77SsQ474PtOZ92PzYXMZ5ehP22Ss0OHNzNJwCNSKEbG6TU3
- QNWk+R9MNOa9n8CfL36+gyWGhHB/KCV8vVwC8StR7fx0lI5fsv7ueIztW/Hhw4YdkmoT
- kkzGG0QJoGxkA2tAGhklMdf2fbDgIIOmg+lqadiKnwgGegI3dPwxoWt7+1cjQx/X9XGE
- pRZ+e4/MGOvx0m9m5nEQj0i1S3vfEcUZHswYuNIiELtG0hdbs+ba5PeVIrUnpBj2B8/f
- xUiw==
+ d=linaro.org; s=google; t=1770286629; x=1770891429; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yh/gwoMoCd3XaIwuvwmcawbcsXQYz4dh6o/53HMIhHQ=;
+ b=FChT1P7MgUyE8wGGZ7WC2afwQbFb3WMr8YMAdbaCsg8Nax4kiqSUzypU+oNELKC9lE
+ M42XqdgIQIZlbdUc+Lsk3e6RHqSi4t1Ip02+BaDAhjMn+mVlpjxkjrGUovYfKtwyenDm
+ Y2ZzUI842x10w7hovZNGdm0uTU7N9Vb1ixIP/3ZUNCXTTyJRwXw5yf3N4q65ZmAvWnC9
+ QGNlNbcmQIqVXPcqj+Z88Vx6UwsuyN11P+lTD70SKT8cB56wx+/z2ey1+pkuDhSsbkQw
+ 1t3pC1udAq2XmkFr7WY9jSDDYjte6QB1cBgPFc6BIYj0GI1HLbhUezEbgBoxu+HBQfrS
+ keGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770286386; x=1770891186;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WMX3XJ8cyHbJ7lmfnDUiplGZd/RUEGZQjFEvJ21+2h4=;
- b=sL7V8p46uIsFvnrWRtCdBErpyELW0+Jwcgr3E2VQAdGFcWB0fTXpoesyk8ylU4Dny3
- gnqyNcbbntbW5IrqbIYAi+jPnIQY7MPptzQROGXO63lZ+n6xdOVXUP89lAOblQPnUeH/
- z/wzQELalfJKQ2hSrXNOx9wOGX1cAQ30ajV3rrzIgJ3VEHZFAHaSNdsdSUV9UQPa+E3b
- D/AXjsbr6XnB4zENhl/8cfomKenteS4oLvw1GrBGaIiVRzvUv3Yu0TDZ0w7ApBD9tWai
- eqmWXOy/DVHiNIi5pNAJihmDDLo0K/KBt2RDX6K0SUnPkg87N7eDD6N3fTG95Bp2hV0e
- 8nfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJt2Es25VWckt4zWk+mKIHvb+H98pZzk1mohKcmlYzFRJ+DWvfH9xUwya09Dc07OQQH12FekYxLrpN@nongnu.org
-X-Gm-Message-State: AOJu0YyD66kfjw1FlsZkMq7MiFDVcYolij3jotfmA5Fl8ioCmgF4wDIl
- 70CuzeYyaKGIZeIG5hT4UB3Lgx5/bDch7mh60iRKalywEszCQ1VvXo5i45fa60ugLpQJHPPIGJf
- 82ECLmlCTaHW5TQfAOUWV9dWRhuOzll5g5AlH3tJVlMaGIN9YJV33OtUX
-X-Gm-Gg: AZuq6aJd6ehVzZzfR3NKud51iMrIEPDv+Hs8sNqxEPQLZ3zECLC5EN4MuAIjM5Hv7cK
- AuMCenPXC2PdaUXtbfG7XQY9ZfYPH8L5hg9U5eiazWYfnRJxsZ3ZKI1gbwV95PJkdesGiKXhRin
- zchAFrRVvFKIleM3YjInIXmj6vaUysQCJlu5qfnr72u9TkbMiQ+bIz985l6ZzDTxSzKVZSf4CPp
- Zlq6YOiT4rxtPD2wSy4zbUmlRLUYKhgLbbft9l608hw6eJuD30vddK9fvY3IDvpP/yUrPJKkhmC
- 3AisjRh5qZfHJWrP/u6BoyI1O6NuEyzVYwM05XA+3qhnv+iQvWMh5F+VbDSP544k5ueb3Sq8uyz
- QbRLblgs9d0DFLFIvekUknOFv8a9J02STug==
-X-Received: by 2002:a05:600c:3145:b0:480:19ed:7efa with SMTP id
- 5b1f17b1804b1-4830e97af61mr71822265e9.36.1770286385607; 
- Thu, 05 Feb 2026 02:13:05 -0800 (PST)
-X-Received: by 2002:a05:600c:3145:b0:480:19ed:7efa with SMTP id
- 5b1f17b1804b1-4830e97af61mr71821845e9.36.1770286385088; 
- Thu, 05 Feb 2026 02:13:05 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830fe53c23sm62352395e9.3.2026.02.05.02.13.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 02:13:03 -0800 (PST)
-Date: Thu, 5 Feb 2026 05:13:00 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Li Chen <me@linux.beauty>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v6] acpi/virt: suppress UART device & SPCR when guest has
- no serial hardware
-Message-ID: <20260205051236-mutt-send-email-mst@kernel.org>
-References: <20251211102025.873506-1-me@linux.beauty>
- <CAFEAcA8FcW22-TnyBKHmFUUsR=xk2u-74uPz6KisJTeG=YWxmQ@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1770286629; x=1770891429;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yh/gwoMoCd3XaIwuvwmcawbcsXQYz4dh6o/53HMIhHQ=;
+ b=Rw23lWjjiMNcR23v0HjKW9vedM/oR1wE3RKKKSDB3NuUxI90LCY0fwsO7vcdWLWgSV
+ n0km6QMwTB/kvKTL/Yd52WmocnVrRRJovX9/zFRl0gi4OCO5pNpcSg/Ijw5Fl+epMrQp
+ M0sk02CN0viYk8MNdXHKj8FxasfAUsEWlojC7d3EPG9Bb8ROPDh2tuLt7WVQQI3lvTUW
+ 4m/8r6TOV6GiuyDETh38dCOc1n8alfyTOgRi7y1Py1ShgvfElBySMhPuBMkVP5YNBQMG
+ wJuF7Es1rPoGkz/NZXRtNFyDDqI4M1fgFfmswy6BNQDVYoce6isBw/Wbjkmv8Z/3KANn
+ sj/w==
+X-Gm-Message-State: AOJu0Yxe6S9QxHTtzGlzr5eqNBpNOysjbWN2dxRcTodtD/NOOjCoEzAr
+ t4yCr/0iG0ADlFJ88VbBpeI/dFavimjsI0SXNrOAcuve9LpTGW2Y1xBFz9OniJ0G/LxthwACr2T
+ ejp9gMVMR3DVBKt7GreCcK+4o0s6AFCDl14Gqq7IioJSAA36EWo2m
+X-Gm-Gg: AZuq6aI+U91nreQhzDkXmA62uEu2QfB75BVstoGGWCI3lctPyVGZeY6P9QrT6G8DuhM
+ LMoeG1C70PZkrkULVD9dQouXChcZOQi2xzGNaTvYAtowZSaL/ktjkiTLMLVdIwMgHc61LAdFEIt
+ 2ZltyMAV+ZdMtYLenz6GMOUhhy7aRhKUxsqJDPwpGQLFIajI1w0shHnXU0+0Dp3ooFtY+krNobF
+ rRq1x1cncl3RM8vi7qiZyqOIlzcJkVjQzq/zTxz423ok76PW/pbHGOelacnYvhsCDK2qQ==
+X-Received: by 2002:a05:690c:f87:b0:794:3068:255a with SMTP id
+ 00721157ae682-794fe75d83dmr59373397b3.40.1770286629193; Thu, 05 Feb 2026
+ 02:17:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA8FcW22-TnyBKHmFUUsR=xk2u-74uPz6KisJTeG=YWxmQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260129192009.14707-1-mohamed@unpredictable.fr>
+ <20260129192009.14707-5-mohamed@unpredictable.fr>
+In-Reply-To: <20260129192009.14707-5-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Feb 2026 10:16:57 +0000
+X-Gm-Features: AZwV_QifK9yOEmRQj0syBe6nYY0HaAlpeSiFq02Hp70EZ9QTg1OYsSnybQpK8ig
+Message-ID: <CAFEAcA97TVmWM9WJuPLxXqS=1cqLNQk4r5x3YAm0Xwx+E+HESg@mail.gmail.com>
+Subject: Re: [PATCH v19 04/22] hw: arm: virt: rework MSI-X configuration
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,45 +124,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 05, 2026 at 10:08:32AM +0000, Peter Maydell wrote:
-> On Thu, 11 Dec 2025 at 10:21, Li Chen <me@linux.beauty> wrote:
-> >
-> > From: Li Chen <chenl311@chinatelecom.cn>
-> >
-> > virt machines always instantiate a PL011/16550 UART at slot 0 and describe
-> > it in ACPI (DSDT and optional SPCR table). When the command line disables
-> > the serial backend (e.g. "-serial none"), the guest still sees the UART as
-> > a preferred console even though it is not usable.
-> >
-> > Teach the virt ACPI code to omit the UART device and SPCR when there is no
-> > serial backend attached. This matches the hardware that the guest can
-> > actually use and avoids confusing firmware or OS code that relies on SPCR.
-> >
-> > The bios-tables-test qtests rely on an ACPI UART node and SPCR entry for
-> > UEFI-based virt machines. To keep those tests working we create a UART
-> > with a "null" chardev backend instead. This preserves the ACPI tables
-> > while discarding the firmware's serial output so it does not corrupt the
-> > TAP stdout stream.
-> >
-> > Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-> > Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-> 
-> Sorry, I must have missed this patch previously. I'm not sure that
-> this is a good idea, because it means:
->  * the dtb version of virt and the ACPI handling diverge
->  * we tangle up "what chardev do you want to connect serial output to"
->    and "what UARTs does the guest see"
-> 
-> If the user explicitly sends the first serial port output
-> to nowhere with "-serial none -serial stdio" they presumably
-> had a reason for that and won't be happy to find that we've
-> adjusted the ACPI tables to redirect that output to the
-> second serial port they were planning to use for something else.
-> 
-> thanks
-> -- PMM
+On Thu, 29 Jan 2026 at 19:20, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> Introduce a -M msi= argument to be able to control MSI-X support independently
+> from ITS, as part of supporting GICv3 + GICv2m platforms.
+>
+> Remove vms->its as it's no longer needed after that change.
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
 
-presumably, things would be different with -nodefaults?
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
