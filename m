@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BC5EC1E81
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116F9EC1E84
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnvgY-0000w6-SK; Thu, 05 Feb 2026 04:30:02 -0500
+	id 1vnvm7-0002hF-5H; Thu, 05 Feb 2026 04:35:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnvgW-0000vQ-UA
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:30:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnvgV-0000lQ-5s
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:30:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770283798;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nnXqLVMeIhQg6mPnu3MWMmlSO+K0fZA7JDPvKKR/7+0=;
- b=Tft0+ftuysNFquzwJ4/BHIELxN0qVTgS1hmwWw27GJQLIclO5n93D0Pr7j8lKHEU6dx2ui
- Xj9/akKQKrRPsqU39s7l+DWWG1c01x67n1Z3/myEN96FSoD16tJj44pnKSarM2ahJqF8Bu
- V4JYwlduf19HYoswzUCu+GEItljkLB4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-HEEAnrO2N2Wjv08Xy80prA-1; Thu,
- 05 Feb 2026 04:29:54 -0500
-X-MC-Unique: HEEAnrO2N2Wjv08Xy80prA-1
-X-Mimecast-MFC-AGG-ID: HEEAnrO2N2Wjv08Xy80prA_1770283793
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A25D21800352; Thu,  5 Feb 2026 09:29:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FE21192C7C3; Thu,  5 Feb 2026 09:29:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D6E3D21E692D; Thu, 05 Feb 2026 10:29:50 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, richard.henderson@linaro.org
-Subject: Re: [PATCH] target-info: set target_arch statically
-In-Reply-To: <20260203194113.3026757-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Tue, 3 Feb 2026 11:41:13 -0800")
-References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
-Date: Thu, 05 Feb 2026 10:29:50 +0100
-Message-ID: <878qd735dd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
+ id 1vnvm5-0002gm-59
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:35:45 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
+ id 1vnvm3-0001lj-Cm
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:35:44 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3545cf80e1dso327993a91.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 01:35:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770284142; x=1770888942; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=++l4A5mtnrtSPUE9IEtJhlCwr1t0zQWGNUCTgsc+nOI=;
+ b=iSeWx8evbxBiJuxuOzCJ2F2CD+7opm8FrZQvqzXHcp0CbsEXJ6jh1jXDASL6lcx2Cf
+ IbLI6RbA5793ACCd03Pcij0oMHUO/zrJZ6cQDwLr35ZnzBzU7y2bwcGKdVoPJGaR2PZw
+ NeUzvMUu4NUNKwY8aFgXv5ZUYRynnHKsBrpNuq9i//9yAm6Zwqxxt4XCW6XMbjLNrHnn
+ 6fnxmcKkApxG1hyZCnKQRRgAN75S20KOh9UhURWR3ABMgPIutjgTYGfGPCeoY7lFO0zO
+ /ELa6uxcFhD0kRY6y8SoKPjkLW71/ktEoOJBHRqoP2Bc445Wx8t8ZFvflIhUFqMLtXW+
+ 8gdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770284142; x=1770888942;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=++l4A5mtnrtSPUE9IEtJhlCwr1t0zQWGNUCTgsc+nOI=;
+ b=hWKkvxFNfhAvl7K0wNdNcSAIT99qSzuprWJZBiD3v14ent+TW4jnFaNqwaWiw5kzbZ
+ IHtDqGf45JbCEZKnC5cZvD/GdFOMqDNAI/ww/4kVsCIF/JqJik6nD3bG9utZ1joC/ZiG
+ gJto0/JINGSavGJ6h1qx2M60zxQuTO3enxOPUKgm2A9EqXDrjnCqufiquiVzsWvuh01h
+ D9nmV7PZ6V+GXTPUdi4Bil0bXr7QaEEO7PLNDl5x94AfvqbYCkDfz0IRwDbuiMgurNs7
+ FDXBIEGzXrYftaoJvbPU2A8QG+3tJcc47CJPHEAu+4OxPMzMC7X6dYz1sEpxDbqB1YQ5
+ 6CUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNaq5HMD0R4ERFvvVyC+KvESvAoC+1DJrjouyp9yEK6daNq6jaT0LYGA1iwbP1Y6IDwuRQRMsKCiJN@nongnu.org
+X-Gm-Message-State: AOJu0YxNfR625SWOCCeK4PLIb8N1/R3yNB9tRUVtJnmcIIoV9LmlD2mh
+ vtrvs3rigl3caL8v6FNTENsv98TZBBJ1IwYuJp5ZS2jhQosKeSBOMcQ6
+X-Gm-Gg: AZuq6aLFVUQgldRLkjltmX5ATJM8TWjqNB214cM48aIVXyJo7d9gbX8hY0MgNHWcMNW
+ hK4k5otDP+pCPqjqWbWUtbNZCMDvktjNTXOni6wzDbm8Im3SiCY81uWpRxfmt/m/ET3WqT/G5Mv
+ AqyCSlazQB02cT1S6oXkpCVGNuT9wcFNKjLysE0SGyyNlGlvsJlPjFgO6HQiuIbM2ZXMrTObQpm
+ zwdAmGTg0pAf/ITq+20mEKJo4v8kRMc3ZAjOvSV5pVSkMkhiJDpgMsQdbytEtdkivqtvX4z88CO
+ 45ZUHJ70AibhSMaRM1UJ4Wsqs5XP75PVNwj7NJfudkbS2uVuNM6135X19Ra4S7kyDboNw6N6WAi
+ ii6X51eVMHUJbUAx1wtNZf6i8jtUd7JiVCHLAt5GCai0OZ3TnppY56vRoWKjTp78B3BiuXDiBqm
+ w0j6yfL+DlXp91GINyFnrLEQ7jWMtz/YDmV4hI5+tJ12B6+Px+v8xmkNIfLFhikk0c8bU=
+X-Received: by 2002:a17:90a:e70d:b0:354:7c90:8c6 with SMTP id
+ 98e67ed59e1d1-354871f3f42mr5397162a91.25.1770284141743; 
+ Thu, 05 Feb 2026 01:35:41 -0800 (PST)
+Received: from ?IPV6:240e:468:788:182d:c9a0:5302:cea5:79d2?
+ ([240e:468:788:182d:c9a0:5302:cea5:79d2])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-354873a85d8sm1979929a91.3.2026.02.05.01.35.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 01:35:41 -0800 (PST)
+Message-ID: <ac09572b-778e-4a6d-a080-aaa25decf977@gmail.com>
+Date: Thu, 5 Feb 2026 17:35:34 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v1 0/2] tests/qtest: Add Intel IOMMU bare-metal test
+ using iommu-testdev
+To: Tao Tang <tangtao1634@phytium.com.cn>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org
+References: <cover.1770172615.git.15fengyuan@gmail.com>
+ <e43203cf-58aa-4642-8a2f-94b7a4a212ec@phytium.com.cn>
+From: Fengyuan <15fengyuan@gmail.com>
+In-Reply-To: <e43203cf-58aa-4642-8a2f-94b7a4a212ec@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=15fengyuan@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,100 +106,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Hi Tao,
 
-> target_arch() function will reparse target_name() every time if it was
-> not set to a proper SYS_EMU_TARGET_* value (when using
-> target-info-stub.c), which is not efficient.
->
-> Since we want to preserve the constness of TargetInfo but C doesn't give
-> us flexible compile time expressions, we simply set target_arch using a
-> static constructor once instead.
->
-> This was found when doing changes to virtio_access_is_big_endian()
-> function, having an overhead of 50% after switching to runtime checks.
-> With this, overhead left is around 3%, due to indirect function
-> calls.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  target-info-stub.c | 11 ++++++++++-
->  target-info.c      |  9 +--------
->  2 files changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/target-info-stub.c b/target-info-stub.c
-> index 8392d81e8f8..ff86a02247a 100644
-> --- a/target-info-stub.c
-> +++ b/target-info-stub.c
-> @@ -10,13 +10,14 @@
->  #include "qemu/target-info.h"
->  #include "qemu/target-info-impl.h"
->  #include "hw/core/boards.h"
-> +#include "qapi/error.h"
->  #include "cpu.h"
->  
->  /* Validate correct placement of CPUArchState. */
->  QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
->  QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
->  
-> -static const TargetInfo target_info_stub = {
-> +static TargetInfo target_info_stub = {
->      .target_name = TARGET_NAME,
->      .target_arch = SYS_EMU_TARGET__MAX,
->      .long_bits = TARGET_LONG_BITS,
-> @@ -29,3 +30,11 @@ const TargetInfo *target_info(void)
->  {
->      return &target_info_stub;
->  }
-> +
-> +__attribute__((constructor))
-> +static void init_target_arch(void)
-> +{
-> +    target_info_stub.target_arch = qapi_enum_parse(&SysEmuTarget_lookup,
-> +                                                   target_name(), -1,
-> +                                                   &error_abort);
-> +}
+Thanks for the attention!
 
-This is slightly unclean.  Constructors run before main().  If
-qapi_enum_parse(..., &error_abort) fails here, error_handle() will
-report the unexpected error with error_report() before main() calls
-error_init().
+On 2/4/2026 9:14 PM, Tao Tang wrote:
+> Hi Fengyuan,
+> 
+> On 2026/2/4 11:06, Fengyuan Yu wrote:
+>> Hi,
+>>
+>> This patch series adds a bare-metal qtest for the Intel IOMMU (VT-d) using
+>> the iommu-testdev framework. The test exercises address translation paths
+>> without requiring a full guest OS boot.
+>>
+>> Motivation
+>> ----------
+>>
+>> The Intel IOMMU implementation in QEMU supports various translation modes
+>> including pass-through and translated (4-level paging) modes. Currently,
+>> comprehensive testing of these translation paths requires booting a full
+>> guest OS with appropriate drivers, which is time-consuming and makes
+>> regression testing difficult.
+>>
+>> This new test fills that gap by using iommu-testdev to trigger DMA
+>> transactions and validate the IOMMU's translation logic directly.
+>>
+>> Test Coverage
+>> -------------
+>>
+>> The new test provides:
+>> - Legacy pass-through mode (identity mapping)
+>> - Legacy translated mode with 4-level page table walks
+>> - Root Entry Table and Context Entry Table configuration
+>> - Complete 48-bit address space translation
+>> - End-to-end DMA verification with memory validation
+>>
+>> Testing
+>> -------
+>>
+>> QTEST_QEMU_BINARY=./build/qemu-system-x86_64 \
+>>    ./build/tests/qtest/iommu-intel-test --tap -k
+>>
+>> Thanks,
+>> Fengyuan
+> 
+> 
+> Thanks for working on VT-d qtests. As a first-time patch contributor, you’ve 
+> already done a great job with good cover letter and commit messages to 
+> accurately summarize your work.
+> 
+> 
+> It seems that your code cannot be applied to the latest master branch. And I 
+> also noticed multiple lines >80 columns (some > 90). QEMU style says try to keep 
+> lines to 80 columns, only going a bit over when wrapping would harm readability 
+> but never > 90 columns.
+> 
+> ../tests/qtest/libqos/qos-intel-iommu.c: In function ‘qvtd_build_root_entry’:
+> ../tests/qtest/libqos/qos-intel-iommu.c:168:31: error: 
+> ‘VTD_CONTEXT_ENTRY_SLPTPTR’ undeclared (first use in this function); did you 
+> mean ‘VTD_CONTEXT_ENTRY_SSPTPTR’?
+>    168 |     lo = (context_table_ptr & VTD_CONTEXT_ENTRY_SLPTPTR) | 
+> VTD_CONTEXT_ENTRY_P;
+>        |                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+>        |                               VTD_CONTEXT_ENTRY_SSPTPTR
+> ../tests/qtest/libqos/qos-intel-iommu.c:168:31: note: each undeclared identifier 
+> is reported only once for each function it appears in
+> ../tests/qtest/libqos/qos-intel-iommu.c: In function ‘qvtd_build_context_entry’:
+> ../tests/qtest/libqos/qos-intel-iommu.c:190:25: error: 
+> ‘VTD_CONTEXT_ENTRY_SLPTPTR’ undeclared (first use in this function); did you 
+> mean ‘VTD_CONTEXT_ENTRY_SSPTPTR’?
+>    190 |              (slptptr & VTD_CONTEXT_ENTRY_SLPTPTR);
+>        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+>        |                         VTD_CONTEXT_ENTRY_SSPTPTR
+> ../tests/qtest/libqos/qos-intel-iommu.c: In function 
+> ‘qvtd_setup_translation_tables’:
+> ../tests/qtest/libqos/qos-intel-iommu.c:239:36: error: ‘VTD_SL_R’ undeclared 
+> (first use in this function); did you mean ‘VTD_SS_R’?
+>    239 |     pml4_entry = QVTD_PT_L3_BASE | VTD_SL_R | VTD_SL_W;
+>        |                                    ^~~~~~~~
+>        |                                    VTD_SS_R
+> ../tests/qtest/libqos/qos-intel-iommu.c:239:47: error: ‘VTD_SL_W’ undeclared 
+> (first use in this function); did you mean ‘VTD_SS_W’?
+>    239 |     pml4_entry = QVTD_PT_L3_BASE | VTD_SL_R | VTD_SL_W;
+>        |                                               ^~~~~~~~
+>        |                                               VTD_SS_W
+> [92/2328] Compiling C object libblock.a.p/block.c.o
+> 
+> 
+> 
+> Besides when submitting patches it’s a good idea to read `docs/devel/submitting- 
+> a-patch.rst`. It may be a bit long, but making sure the code builds cleanly and 
+> running scripts/checkpatch.pl for style checks beforehand can help avoid many 
+> basic issues.
+> 
+> 
+Thank you for your reply, and I sincerely apologize for my oversight.
+I have identified the issue: since I started development on iommu-testdev 
+earlier, some Intel IOMMU macro definitions changed during my development, 
+causing them to be undefined.
+I will include comprehensive CI/CD checks and patch verification in v2.
 
-See also
+> Finally I think CC the experts on x86 and VT-d emulation might be a more 
+> efficient way to review this sereis patch.
+> 
+> M: Paolo Bonzini <pbonzini@redhat.com>
+> R: Zhao Liu <zhao1.liu@intel.com>
+> 
+> M: Michael S. Tsirkin <mst@redhat.com>
+> R: Jason Wang <jasowang@redhat.com>
+> R: Yi Liu <yi.l.liu@intel.com>
+> R: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> 
+> 
+Okay, I will cc these reviewers in v2 submission.
 
-    From: Markus Armbruster <armbru@redhat.com>
-    Subject: Re: [PATCH v3 02/20] monitor: initialize global data from a constructor 
-    Date: Thu, 18 Sep 2025 08:30:23 +0200
-    Message-ID: <87frck1dds.fsf@pond.sub.org>
+Thanks,
 
-Observation, not objection.
+Fengyuan
 
-> diff --git a/target-info.c b/target-info.c
-> index 24696ff4111..c3c0856d01a 100644
-> --- a/target-info.c
-> +++ b/target-info.c
-> @@ -10,7 +10,6 @@
->  #include "qemu/target-info.h"
->  #include "qemu/target-info-qapi.h"
->  #include "qemu/target-info-impl.h"
-> -#include "qapi/error.h"
->  
->  const char *target_name(void)
->  {
-> @@ -24,13 +23,7 @@ unsigned target_long_bits(void)
->  
->  SysEmuTarget target_arch(void)
->  {
-> -    SysEmuTarget arch = target_info()->target_arch;
-> -
-> -    if (arch == SYS_EMU_TARGET__MAX) {
-> -        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-> -                               &error_abort);
-> -    }
-> -    return arch;
-> +    return target_info()->target_arch;
->  }
->  
->  const char *target_cpu_type(void)
+> Anyway I'm looking forward to your v2 patches.
+> 
+> Best regards,
+> 
+> Tao
+> 
 
 
