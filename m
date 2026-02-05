@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA9DEC1EA1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A05EC1EA1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnxTP-0001A6-3s; Thu, 05 Feb 2026 06:24:37 -0500
+	id 1vnxTE-00018S-Co; Thu, 05 Feb 2026 06:24:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vnxTG-000193-0X
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:30 -0500
+ id 1vnxT1-000183-4c
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:13 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vnxTE-00054J-7p
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:25 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6FGD2sz2zJ46l4;
- Thu,  5 Feb 2026 19:23:32 +0800 (CST)
+ id 1vnxSy-0004xn-94
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:10 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6FFd3Z6tzJ46lY;
+ Thu,  5 Feb 2026 19:23:01 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id F1B1940570;
- Thu,  5 Feb 2026 19:24:22 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 14F1C40539;
+ Thu,  5 Feb 2026 19:23:52 +0800 (CST)
 Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
  dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 5 Feb 2026 11:24:22 +0000
+ 15.2.1544.11; Thu, 5 Feb 2026 11:23:51 +0000
 To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>,
  <shiju.jose@huawei.com>, Ravi Shankar <venkataravis@micron.com>,
  <armbru@redhat.com>, Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>
-Subject: [PATCH qemu v5 1/5] qapi: cxl: Refactor CXL event injection for
- common commands arguments
-Date: Thu, 5 Feb 2026 11:23:46 +0000
-Message-ID: <20260205112350.60681-2-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu v5 0/5] cxl: r3.2 specification event updates.
+Date: Thu, 5 Feb 2026 11:23:45 +0000
+Message-ID: <20260205112350.60681-1-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260205112350.60681-1-Jonathan.Cameron@huawei.com>
-References: <20260205112350.60681-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -73,174 +70,60 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+Changes since v4:
+- Fix the setting of descriptor field in general media and DRAM event records.
+  (Ravi)
+- Fix wrong table number in the commit description for patch 5.
 
-Refactor CXL event injection to use struct for common command
-arguments.
+Chances since v3:
+https://lore.kernel.org/qemu-devel/20260114142713.617806-1-Jonathan.Cameron@huawei.com/
+Update references in the documentation for related commands as well as the
+structures. (Markus)
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- qapi/cxl.json | 89 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 58 insertions(+), 31 deletions(-)
+Changes since v2:
+https://lore.kernel.org/all/20260102151512.460766-1-Jonathan.Cameron@huawei.com/
+Thanks to Markus Armbruster.
+- Expand LD acronym.  Given the spec definition is acronyms soup, just
+  expand to Logical Device and let people go enjoy the specification if
+  they want to know what that actually means!
+- Update spec references elsewhere in the qapi commands and data types
+  so they all refer to r3.2 rather than just the new bits.
 
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index eeddb58d1d3f..55a088586e53 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -31,11 +31,10 @@
-  }
- 
- ##
--# @cxl-inject-general-media-event:
-+# @CXLCommonEventBase:
- #
--# Inject an event record for a General Media Event (CXL r3.0
--# 8.2.9.2.1.1).  This event type is reported via one of the event logs
--# specified via the log parameter.
-+# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
-+# Table 8-42 Common Event Record Format).
- #
- # @path: CXL type 3 device canonical QOM path
- #
-@@ -44,6 +43,16 @@
- # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
- #     Record Format, Event Record Flags for subfield definitions.
- #
-+# Since: 8.1
-+##
-+{ 'struct': 'CXLCommonEventBase',
-+  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
-+
-+##
-+# @CXLGeneralMediaEvent:
-+#
-+# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
-+#
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
- #     Media Event Record, Physical Address.
-@@ -74,26 +83,29 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-general-media-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLGeneralMediaEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8',
-             '*device': 'uint32', '*component-id': 'str' } }
- 
- ##
--# @cxl-inject-dram-event:
--#
--# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
--# This event type is reported via one of the event logs specified via
--# the log parameter.
-+# @cxl-inject-general-media-event:
- #
--# @path: CXL type 3 device canonical QOM path
-+# Inject an event record for a General Media Event (CXL r3.0
-+# 8.2.9.2.1.1).  This event type is reported via one of the event
-+# logs specified via the log parameter.
- #
--# @log: Event log to add the event to
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-general-media-event',
-+  'data': 'CXLGeneralMediaEvent' }
-+
-+##
-+# @CXLDRAMEvent:
- #
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
- #
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
-@@ -133,9 +145,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-dram-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLDRAMEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
-             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
-@@ -143,18 +155,21 @@
-            }}
- 
- ##
--# @cxl-inject-memory-module-event:
--#
--# Inject an event record for a Memory Module Event (CXL r3.0
--# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
--# at the time of the event.
-+# @cxl-inject-dram-event:
- #
--# @path: CXL type 3 device canonical QOM path
-+# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
-+# This event type is reported via one of the event logs
-+# specified via the log parameter.
- #
--# @log: Event Log to add the event to
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-dram-event',
-+  'data': 'CXLDRAMEvent' }
-+
-+##
-+# @CXLMemModuleEvent:
- #
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a Memory Module Event (CXL r3.0 8.2.9.2.1.3).
- #
- # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
- #     Event Record for bit definitions for bit definiions.
-@@ -185,9 +200,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-memory-module-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
--            'type': 'uint8', 'health-status': 'uint8',
-+{ 'struct': 'CXLMemModuleEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'type': 'uint8', 'health-status': 'uint8',
-             'media-status': 'uint8', 'additional-status': 'uint8',
-             'life-used': 'uint8', 'temperature' : 'int16',
-             'dirty-shutdown-count': 'uint32',
-@@ -195,6 +210,18 @@
-             'corrected-persistent-error-count': 'uint32'
-             }}
- 
-+##
-+# @cxl-inject-memory-module-event:
-+#
-+# Inject an event record for a Memory Module Event (CXL r3.0
-+# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
-+# at the time of the event.
-+#
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-memory-module-event',
-+  'data': 'CXLMemModuleEvent' }
-+
- ##
- # @cxl-inject-poison:
- #
+v2: Cover letter,
+
+Hi Michael,
+
+This is a rebase/resend of:
+https://lore.kernel.org/qemu-devel/20250917141355.293217-1-Jonathan.Cameron@huawei.com/
+which I think slipped through the cracks for 10.2.
+
+Original cover letter:
+
+This is the 1st CXL set that I think is ready for upstream.
+They are lightly tweaked and rebased from the first part of:
+https://lore.kernel.org/qemu-devel/20250811085530.2263-1-shiju.jose@huawei.com/
+[PATCH v6 0/8] hw/cxl: Update CXL events to rev3.2 and add maintenance support for memory repair features
+
+I've split that series up as the two parts were only slightly connected.
+
+The initial rework was a request from Markus from an earlier version.
+
+Shiju Jose (5):
+  qapi: cxl: Refactor CXL event injection for common commands arguments
+  hw/cxl/events: Update for rev3.2 common event record format
+  hw/cxl/events: Updates for rev3.2 general media event record
+  hw/cxl/events: Updates for rev3.2 DRAM event record
+  hw/cxl/events: Updates for rev3.2 memory module event record
+
+ qapi/cxl.json               | 180 ++++++++++++++++++++++++++----------
+ include/hw/cxl/cxl_device.h |   7 +-
+ include/hw/cxl/cxl_events.h |  38 ++++++--
+ hw/cxl/cxl-events.c         |   3 +-
+ hw/cxl/cxl-mailbox-utils.c  |   3 +-
+ hw/mem/cxl_type3.c          | 167 ++++++++++++++++++++++++++++++---
+ hw/mem/cxl_type3_stubs.c    |  41 +++++++-
+ 7 files changed, 364 insertions(+), 75 deletions(-)
+
 -- 
 2.51.0
 
