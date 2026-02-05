@@ -4,113 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E44ECD983
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 16:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E30DECD986
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 16:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo2B0-0004md-H9; Thu, 05 Feb 2026 11:25:54 -0500
+	id 1vo2Ce-0005hB-Uu; Thu, 05 Feb 2026 11:27:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vo2Ay-0004m7-Ph
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:25:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vo2Cb-0005fl-6t
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:27:33 -0500
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vo2Av-0005eF-4r
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:25:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770308747;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6uh6Elq1Zgru6/gD5EAK11Ph2oRsMY0wOd9bLg2LPCA=;
- b=QFBS1HhJJRTAB2Uqn7HsrakzEWnnXps/wQG6dgQgOMsj1TsoFb84wwq321/M449Hpro3Ie
- CTSlaYJ/Ot912i3PWwPNmQ/jymHUZm/NGmiqGG7+q8FXUf2i3WKKnfo5hNOKfqjC8owlOi
- WFTSzEMtMFoYciph6mRakKNmhMRcEVU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-5YdJN0e-Pcqeij7Jhd45aw-1; Thu, 05 Feb 2026 11:25:44 -0500
-X-MC-Unique: 5YdJN0e-Pcqeij7Jhd45aw-1
-X-Mimecast-MFC-AGG-ID: 5YdJN0e-Pcqeij7Jhd45aw_1770308744
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50142190becso41472341cf.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 08:25:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770308744; x=1770913544; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6uh6Elq1Zgru6/gD5EAK11Ph2oRsMY0wOd9bLg2LPCA=;
- b=fs/zneJzdWCA3tG6dt6/zfqdr1j1lSCqWADT83XfwNoZTfrHy0iXh8YCDuto0uhgS2
- YLAA0X+84YBBkcBnIGjvWdLFG7tvr+R+6g7HnLkYs1tP67oIlDGgnlyIpoM5Efidi2sh
- XW5atIaYElwLW7N0smVs88B0IKB4XjVmc0af4nHw/H0TtdpqoBxbNvJlTScz53ywvuKP
- 3jPaWwyWEaaTViaCB4Dpfh0whsehN/I4kcXT0BQxExsyJtewVgjE1oey4LK1UNaV/S74
- Rlz6z6KQsNFgGL0vvgikv8oscKnlc7eKZ4E1r7F6uaGZBKMCyoaPwokVxnsZ31hZUcnC
- 2toQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770308744; x=1770913544;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6uh6Elq1Zgru6/gD5EAK11Ph2oRsMY0wOd9bLg2LPCA=;
- b=ds4NRHIoOjsSJKlWzen76a5gFrggfyk4HZh+aJZn7EeZt24I3UOpFPnPVz9ZvCkCvo
- w/NHplnP2dETcQj91W/3N8rdQwUdODVVU7MeJQ5+aXXCJq5Wri92Lh6Zprh3v/mfkysl
- J4XvM7+rWR2ImcFERXfu4Yj3OdU8GQdWsKQ+yMaYA3sweU8zNKHDyqTb6uDcWFlYBgsv
- YJA6PR26DvqFlBnmoRBJTlS+fMoiUtAB3/LGfxXb7EPJDUKX90xe7mQdazrpLJeLnhB8
- gaI1yL6zrkUAOx0rNgZnNzlkj1/SZG8SH5/kZOmDSl5hpUMPKDKTRdTofkkgtnxmVZ9z
- XQ2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWbcgzUtD3yAYl3azN/U4jCOz+DKpYNOn+oBcR62f0lkwPbhobWaLqrNbXThIDb6GTK7DDgfvqvQor@nongnu.org
-X-Gm-Message-State: AOJu0YyP/Th80ji5+zxbs6sKj0sIV72jpy/MB+56XeOgP/P4pPgjPi/+
- iv/X+pijhTm3Ooe+fSImekl4KOeHcqrIQhSeNBfQfX6kI/z8XdgpsJBWj7yt+xcldOMkP7PA7F5
- y5fwaWUggh4EmruiK3Qo9c5TKEQtvHmiikUk7VJERWwsZJxm2wuGYuPAa
-X-Gm-Gg: AZuq6aIHyBP/z0ntOeVV969v+2C3tphftfKkJxFJKoLGyew3VWj01+sm88iSY4niOkU
- lQClqCqEapf5Gzq+5Rm/IC2eAbZXOY7T6ULNRAcRM+1N+BMQ/7FYM636eO0XLbyhszCWpbNEcji
- PDC4n/JPg2JxSU2zSyhGpQBV+DjzWVuxgVAPS1GGbjV9HoeAYlVWqYgO2RqB0WGG3NgbQv1tb4a
- 1a8KNWkHlvaB+k2ZDWNp/sUoMf0MFwIuRLbBVJ+JKcWWFjZduQRuclEwNTOCNejZufBl7WMx/ay
- I0LvSIXnmZ0rk5tMOdGM9CnNXhVBHZDSBef6909aGQLtAWeugkzPGhnPiQHuBRB6BbUmITmqMOu
- SCtg=
-X-Received: by 2002:ac8:5f0b:0:b0:4ff:8da6:2289 with SMTP id
- d75a77b69052e-5061c0d70f5mr88277591cf.27.1770308744141; 
- Thu, 05 Feb 2026 08:25:44 -0800 (PST)
-X-Received: by 2002:ac8:5f0b:0:b0:4ff:8da6:2289 with SMTP id
- d75a77b69052e-5061c0d70f5mr88276771cf.27.1770308743393; 
- Thu, 05 Feb 2026 08:25:43 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89521c19923sm43080326d6.23.2026.02.05.08.25.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 08:25:43 -0800 (PST)
-Date: Thu, 5 Feb 2026 11:25:41 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
- mst@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
- thuth@redhat.com, eblake@redhat.com, farosas@suse.de,
- zhao1.liu@intel.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, leiyang@redhat.com,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: Re: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
-Message-ID: <aYTEhSjA6Dnvw1yf@x1.local>
-References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
- <20260201162001.296328-4-vsementsov@yandex-team.ru>
- <aYOAAfzZQ3PeKf4q@x1.local> <87ecmzu0qx.fsf@pond.sub.org>
- <f83e7888-8159-4522-a40d-352ed0a81be3@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vo2CY-0005jz-C4
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:27:32 -0500
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 615BudXA035949; Thu, 5 Feb 2026 08:27:28 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=OkwYtEUu3N8hKncutl1VouY14yUlePUiC5y5SirPL
+ Gk=; b=dP/+bVjspG+XVwek0LNxerRGM246iiLLmAa6RVtdIWjfGOSCdnJToFYfd
+ mZMbNxamSeXADrKNG9SCidqOl2YyaiNHU37hLPpnvdnNxHuJkBSIoDRR5+DuAkfR
+ gqpx1oaN3LSsHs/txyWdcZk4MP5GmH6CrMx3McPfV/GYHxSl7PjJe6LSkCYl2dBY
+ EYHzyBLhVgtrzo3Ca5eH9ItjwkZHiqeCSOKgcdkEUULqLu4IFb2NUuHDRgr9TyOH
+ CzCatky63HaspYWbxqpQB4T5whnV5acPdcKPPcePkJgwa57v/rKppYDWWCFzuDJs
+ oGmAL9aJNyxSNpRyAe9NlA1u75wgg==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11021140.outbound.protection.outlook.com [52.101.52.140])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4c4emb26q6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 05 Feb 2026 08:27:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dhf63LwhTooVFLHkhPF5hWScCJlDHcY9KtiPy8RHf+lX4jWlntEs4VHHoXUVYVraKV2RCzaG+WqFHnZv4r9KsyrGitZF9y12GhOg4V56Iu+YZ06OJz8cprRKjrQhGnn2z6hYt9mzDDmECOZYNRPEV8AlCZYyPFd9sOLBUv89ru9bvdgezTnX4tR6fsoNj7VcSGUst+ohrrrGXabg+fY5w6lPrJLcvQIIj7K1ADpMQctiTn9aGYVCXOk3P/KPu/v2c/tSi3JtKGNiHkEGswLeHPSHMfAF7PpIUdH8a7buyt3TAsqkZ6jMft/ZPyztgvmheLIgSNJckdUqXQiO8+BbNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OkwYtEUu3N8hKncutl1VouY14yUlePUiC5y5SirPLGk=;
+ b=AcTvP5LJc2mddkh5kWqgud6wW26735pUbKgqb09jH1EHzXON26apG7qxQM9glQY8iaCoEtZt1sKm5UAdLtKS2qKEDzAT9KpB03FbGBNwxtEipUVvetGX1oQwN03Ig8gsWMoxbO0fPFYYLY8yp/Am+7eDNk0hsQAi4X4ylZPRGxI/lFEnP/L3yJID9Y+S70Y7+J7h5ej0X2vximnjYHMlCtLw1+3PjDtUrihUSpqT+Z1wOsQsppXj2SISgz0nJYpHVNZF6b54KDoSGobCKy2fVBdhLUwaG9eFSqoOuHpLXHqtYh0ShUfqpbACGB50Y1YPPDMSBYeBtWqr/vybZHr7MQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OkwYtEUu3N8hKncutl1VouY14yUlePUiC5y5SirPLGk=;
+ b=gEcsq5Nws1DInut9xXNR/a/s/qDZ6Z4PRZRLhiLu0Amn9JGtzbpwzj7z8VzBgQTnR4nR4qZyRMmF+GnSXZkpwJzUceox0fVV0TFHVC8a4bMhd2N8jkd/cwP++ZjKm6uUT8tM4/K+c4t422sNY0rE7plg3l1qC51gMP5WtJ5HyZbxJeYW3jsxYDBor6qiSCqB6tztGA9xea/FsA5SuLCPgDvH87OoaL2OS+j/KYfrsYScTFvJIDN2CZ4tFyFA9o8IlRSTIS4AKX3UFJr66TEIAUAaHhukGkC2gqcb3hLiAqwS0qTq6yDfyGSKZCz7LWT9Bu0s446SMZuLkVsH3FE7Nw==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by CH3PR02MB9114.namprd02.prod.outlook.com (2603:10b6:610:149::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.13; Thu, 5 Feb
+ 2026 16:27:26 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.20.9587.013; Thu, 5 Feb 2026
+ 16:27:26 +0000
+Message-ID: <4825b39b-6a44-47f1-b75c-a9965fb3bdca@nutanix.com>
+Date: Thu, 5 Feb 2026 16:27:22 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 23/37] audio: lookup "audio-" object types, and realize
+ them
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
+ <20260123074945.2563196-24-marcandre.lureau@redhat.com>
+ <c77444a3-8bfb-44d0-8b6b-b72d59ed4e63@nutanix.com>
+ <CAMxuvazrTrL1mW6XDDgQTw+RpQn0NnMGLGirLzgxnXqpqTO_Ag@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <CAMxuvazrTrL1mW6XDDgQTw+RpQn0NnMGLGirLzgxnXqpqTO_Ag@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P265CA0222.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:33a::10) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f83e7888-8159-4522-a40d-352ed0a81be3@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CH3PR02MB9114:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d26b2db-9ed8-4a31-599e-08de64d372e5
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MURnUFJ5aWw1Vm00ZFRXVks5UWJPdFlaK3ZsSnZIcWRocnlZdnlrK2xDUWs2?=
+ =?utf-8?B?TlNyeFlzWjZ1MysrbDBUZjE4Sm1JUkxURS9EUGRyWStvblFLS3ZnRXZCK2Zq?=
+ =?utf-8?B?MzNISDlyaVp4NGlFTS9saC9WS0RucTAyUmNyQnVUWCt2WGVwTVZuOGI4NCta?=
+ =?utf-8?B?em9wWnRJV1U5NEg5VDBGUStEa2d3Y3FpZ1B3a24xMUZUaTJhbkVaNHM4cU9F?=
+ =?utf-8?B?T0thNGY0UE1xbkwvU3RMN01XQjRWM0tFY3gxa2hOSjU0RTZnRGFvSzVDRHlp?=
+ =?utf-8?B?UVlyclljOTdvOGttTFVpMU04bjVEd3Y2Q00zV3dER2xXK2JWMXBWT2hLTzF3?=
+ =?utf-8?B?ZUYrN0FCcnl4dTczazBGRDVoTExjWi9rc3N2d1R1YWtUTnY1NTUxTnMxMTJL?=
+ =?utf-8?B?UEVUdFlqRkhUNUQzK0NvcGxNV2MwR1NoRmxISEp4S0R6aDA5cmtGNlZRK3py?=
+ =?utf-8?B?U1RaN1p6OTVjZFRFdjFSVjlmTUFjWnk5MkFHOW9vMEJ3RVptM3JsYWZ4WlFn?=
+ =?utf-8?B?b1dxTXVIUlVXOWFwYUM2elpheWdnalZDbjdEbm1oU1BteFlYeVE2T0k4QUZU?=
+ =?utf-8?B?dnJINStBZEtPZ1RuS083VGk3c3Z1MlVVczdFSzBXNEdiaFVBbHVSbXBNSzJS?=
+ =?utf-8?B?N2ZSVkNTOFBLcEoxakZXWkhrcncyeDM4aHFiV2twazN4VVpmdmVydXcxM0ts?=
+ =?utf-8?B?L1RxU0hUMDUxTXFTWEE2QnJOM2tnSmtsVTFHWGlRbGVIQThlTFVIcVF2STFJ?=
+ =?utf-8?B?S2F4OU01N2pTdTBIZXA0RUpVMXJnWW12Q1RXMVltb0FYajM3MlVOVTNDZi9T?=
+ =?utf-8?B?cS96eGJZMXAwdUp0Y2FGbm54aE1tWkF6TG1XUnl0b0ZrbE1Sdzg0eElvMGtH?=
+ =?utf-8?B?ZWJoZTNwRG9BMFZXdEEwSS90aGo1cEpDSHJ6UGo5cnVzNFV1d2lIQ0FyNjR5?=
+ =?utf-8?B?U2lwT0Y3QXhqekVOSEI0aGIrTGx1OC9ZY1JmTHNhQXN5VEpyT2R3NkRkUHJl?=
+ =?utf-8?B?SWdzalN1dDdqdVdjYVg1YkZRUS93YXRCNzJEODRuUmRmWVNXTjZoRkJCSjhZ?=
+ =?utf-8?B?bW13S1hsRFcvZUNEME1hSjZBamp3QzdnQlA2d0FoWGxad2k2eU1aellRNElU?=
+ =?utf-8?B?bmhnTFQ4VHcrL0RHMDRTajFHREhndHRPNE1QNzh4a0U2WU16Nm15SWozdFZC?=
+ =?utf-8?B?VGRnUGlkWWZreE4zVWxQOWI5V2dBUEFhZno3ZmRUNENBQVduaSttQXY4a3o2?=
+ =?utf-8?B?b0VhN0Y0SXRwY29wQWcyMGt5S0ZBN3NGekRUOWlLb3VVR051bWNjSXltSkdv?=
+ =?utf-8?B?SjBoWFhLdWtXVDZ1Y0RjYXNXVjhjcjVydGp5aDZTdTdENk50VitzVlpBeFUy?=
+ =?utf-8?B?ZTZTdFBJb2RsOGk1SlQrMmNtajkrR0xxOVF1U0tyeEtPK2d1YkRVVWRVOTBW?=
+ =?utf-8?B?dFpSbmV6M1dZK0ZZNUlGWkgwV0hJWjA1VTFHMWU3VHQ3dFFma2NPWEVkbFBF?=
+ =?utf-8?B?Nmc3QjZ4WmdLcWlDcE42RzB5NUtZVjh0NzBVblMyUE9PcWR1dE9SNngySzBx?=
+ =?utf-8?B?ZnU4TTBGbE9hYlpUTm5ZNHQxMjVjSDBzbitUMThkSVV1dlA3a0JXa0ZIVnhi?=
+ =?utf-8?B?RWowc2VtVldWdkVxRUl0MnZaWk8yOEJucUpHcC9uVlY0QzFIdytiVVIyM3Zl?=
+ =?utf-8?B?OUpYRTR5QUg2L3RqVlZpSUNRZTFIdENkWjdxVFVhTlJGakJFempWd21QRVNw?=
+ =?utf-8?B?cGg1dWZVYkhRYlFDUHZJYkVtU0ZtbWZPUnYycFV1Zmd1OVVHdkxLZnlrMU1s?=
+ =?utf-8?B?aG43bm1aSHZ3SUtVMnZaRHJ1ZkpzOWE4RTNLWll2bUxJemh5eHZpR3dTTDhX?=
+ =?utf-8?B?YVgraW5wZGFTRTJBMUo5NXBSUHB4S1o2bjZ0SFJQaU15em1adVhzNTU1TlUv?=
+ =?utf-8?B?cEhrZFIwTk9QS2I3OVU2bklaeTlRZWV5bmU3ZVhNOE5mVm9IUmkydGpHclhF?=
+ =?utf-8?B?SmpWSEEvamdpczY4cnFMclZCSTRGNlEvZW1kQXUyaVpHT1lKdWV0NnRJU2FI?=
+ =?utf-8?B?VzNpeXBNRWUwZ2JsdEx3MWtQM1VGTXlQd3FZcXdxMHdCcW5iZzdlTFlVclIx?=
+ =?utf-8?Q?JyBE=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RGVNVUpPS0k1OEhYWk14QTdDa1hpME93bDN2M01qQXphbXBZOUx5d29NVWRq?=
+ =?utf-8?B?OUQ5MWFOTVVWdVBBYjNqSHR0NTRFL1A2c0FYcmlMbUh4ek80amdNZDZ5T20x?=
+ =?utf-8?B?bFdGVUZ5ajBZQ3laVDFJcEpyYkFMYXdOZTNJUWlBWEdUcFg5dEZ5UlEwUDF3?=
+ =?utf-8?B?Rm5YMGNtV0lnWG1oU1o5eHlEZXZIcUdVMTIydDR1M3BFWlJCaXIrWkJJZ0Qz?=
+ =?utf-8?B?Tk5tTHdXeitwZUtCR2p5clpncFBUZmllNldLVnpuMkt0TFRrVlEyeFRZWTlG?=
+ =?utf-8?B?R1Qvc1N5VThjVVl5NHBJMHYrWkRFakt5akJaWVYvUGJmZ045QWhiUHpYREF3?=
+ =?utf-8?B?Q0d1K25GMEE3ZHVqTG9TNHhMNFpvbk9nK3JEYS96TUdEaGhRaEtSMktpNG14?=
+ =?utf-8?B?KzBQdDZyeEZQWkZuRWE5QXFNY2RFREc3bW1zOVU2S25Nb004SnpUczVzNkYw?=
+ =?utf-8?B?QjNsNVNGUWNiNi83TlAvaWhRd2lNL2RCaU9kK3RaTkJ1S1RhR29KeVRUSVNk?=
+ =?utf-8?B?R3VaNkFLQm1XTFhsckJGQWlEWGJBSVNWZDRrMUFPTFJXbjVZUHZXMHlaTnB1?=
+ =?utf-8?B?WGU4QmJ1dEt0MUQrUEtaVW5WZjBvT0NZcFdOQXNZbW43elU0N1BmWmZCQml6?=
+ =?utf-8?B?R3ZvTWFRODZGQ0hiVkRMVFoxOXo0bUFyeXlXQXp5L0hNTEZ6ckdIdkhEdHdq?=
+ =?utf-8?B?ajBHcm5XUmdiMlRWZVJUVzNOTTRUTlRZUisyL1QxMTJ0MlFtU29ZV2thM1M2?=
+ =?utf-8?B?NXBmVVYyZ2drSFRMMU5sMFhYNjY3dTBkeGYvRDc1K05YaWo2SGNQSTBManVU?=
+ =?utf-8?B?Mk9IRFVuZVRKd1RTWFpWQUgwZkZRNkZFcmtDWjhqbGpMeGNKWll1b0VQZWRr?=
+ =?utf-8?B?ZThUaldCMGFqT2NYdTZtRDFkLzBFVDVJTTVHK1pJWFhMRXAyN2QycmpZSGZX?=
+ =?utf-8?B?OWxKTU45YjJ1MUJlL2dsVWhUeHZXYmlTcXFaN085NHRJaHlHMUdKN0hDNWpk?=
+ =?utf-8?B?K2xreW5LRFBBSmxzVGJRbkMzNEZ4U2xRQXRwQldoREg3OXdSQmdNYjAwM0xH?=
+ =?utf-8?B?OUM5cGNwY0JSUGhtUWhXaG1HZC84MC9YY0tmTUhZK1V1ZnAwckZKQjlLaWIz?=
+ =?utf-8?B?UFRJd0EzSENwb2FqZVJJdklIaVllYzNZZVA4SmpQeVRkMllpd2JQS0xwVGFV?=
+ =?utf-8?B?R1h1VjZHbWxqNmxseDQ3UzliWUFYYnZaRXBPL1J6eVlGcWRDWUVydm9qMW1J?=
+ =?utf-8?B?UHA5UWNyeWR3WTlNVVFWYnpsblhobThvT1FVMzVEOXNIaEp6K1FTRXNCcUlP?=
+ =?utf-8?B?V2FBUFhyeVROUERpcHYvaVRaOEZyc1NIbG9TWTRmTzJmTnloVDZRNVcrbm5z?=
+ =?utf-8?B?WVQ1d3pnOERaWDl1RkFJdkQ2RlFxOWxZcThvZXhoMjFjVlVDNkx6WGtEY1NZ?=
+ =?utf-8?B?b1JRcHFlWExpdHpYL2FXeXR0YnMrZmsrc0dqSEUreWt0MVhaWGlpeGN0UU9p?=
+ =?utf-8?B?eGVMYXF4NzhCR3dkN0tmbTFEKzl2amhZSGJ1WVBjdjlDN1dNZU9TZW41QVNZ?=
+ =?utf-8?B?cVBVSlRYSUREbHRwSmFsQmFhS0xWak5zaGF5MnNubXV4a0QyckwyVlBPeGh0?=
+ =?utf-8?B?My9mcXVBTXN5NC9VWGdmOWlITmhBTVNGa0tWQ01yL0IwYVIrVDdjYjdyTHp2?=
+ =?utf-8?B?aGJZbFp2SGtWOEdvZGFTWFlwSXdQRk9EVkFhMFRLVm5HRDJSckx3UlI2QmZo?=
+ =?utf-8?B?TWRVS00zRlJ3MGZpV2FFRlVubkwzUWlBVlB1ckxDYTNIRkx3Q2NRNkxoVFdT?=
+ =?utf-8?B?Z3QwWVRMd01WZ1lUVFRpYTNZWDRKNG55NUJzK3RFVXhuYmxON2ZsOEtRbkZp?=
+ =?utf-8?B?K0R6RHRLUmI2NldMc1c4cmU2d0p4SVJxeTBMS0RZWU40NWdHTFFoRXZpSTl3?=
+ =?utf-8?B?ZExjTjJReEJEWm9PcHZSdTI4YVBreHpVV2pqL3BCK1RxNm1mMFFSK3Qrd3Nw?=
+ =?utf-8?B?SngwVHZ6VjhRelFCLzY2WFluSmNSd0F6dGwyeU5jUWJXV1lubDVmc1AyeUsz?=
+ =?utf-8?B?Nmg0NzA4VnNRbEtmaW9BaFlEbXh3TThIakxyTHRiYlhXaFBCNTVOZUE2OEwx?=
+ =?utf-8?B?MVJZdW9UTFB5LzhTbW01cTVHZzhCTGZHT0w5Qi9VWTJ5SFNGM1p0Q0V3cEh0?=
+ =?utf-8?B?K2tnc2dTWWNxNEZwNmMwakE4M3pVNktIRENHYVo1OVpEL3lZWHV4aTJsRzZ5?=
+ =?utf-8?B?cFhCM2VnYXB5UEVsVXdlbVVMWHFhMTR1Ukhod2ltZmFXMERSUDhnUWVEbVM3?=
+ =?utf-8?B?QXI0UVFYYi9kUm9ENzlmcXl2RG9UVGNoSlcvTUFJRXlyR1hoMmd6MzNrWjla?=
+ =?utf-8?Q?971ltm75tbLHf2Ko=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d26b2db-9ed8-4a31-599e-08de64d372e5
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Feb 2026 16:27:26.4263 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 16uXW/fuE9fgTKCcm2QsGyu9mdpBv6H2jVwmZGIOPj8eEEBdF4GSMkWVEOb8TFtFgXQTfPnK5QO0KEZ66Vb6MlL5FQf+6ise+SqmC56DWto=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9114
+X-Proofpoint-GUID: HZW0DXz-kikSeu8bMS40KSKp3LAgruHm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEyNCBTYWx0ZWRfX5TgwWpUO2TBc
+ CPPZOdWHShy+3S9xkZnLyUVu4KW6k8dOGR+4klKCykwGJRKDkQ32lGHiN2OCeMf+ouIoXcQZDVK
+ W6508h9kLGuO+DiygaXNoa+g1jzaFDshdrFvAprKujivWEecGeMS7DIxSxxb+c28HmneUxTCSfu
+ n21lAuH3/FshdmJbHyJFA+AOjt2OVhyVCdYYGF5vgIT11K9+M6+dB9hsASPhchYh5sPBAaKeDgK
+ YRWLKu0mwlJmtGzUolygMY4QZJSFVRlhQsZrLllhw+KVBn4Ls7ugznh1t3yTBoYBBkIuKW1p8d6
+ C0wOYYI3ZX6oMMjTAweOY+j1AmrLSBeKYHTOJI+rHSns8S1LLC7/aPRlhIeisGW/vt07Ig8aRVu
+ Lhiv6OcMtVgmM1C7mw2HeOABc9sax9KNhFqXjaAIkzzq/Bpdeltimq/LJVI2DUNIYye7VHOdLIG
+ 8jKq/c9nkDhwUItoetw==
+X-Proofpoint-ORIG-GUID: HZW0DXz-kikSeu8bMS40KSKp3LAgruHm
+X-Authority-Analysis: v=2.4 cv=Z7Ph3XRA c=1 sm=1 tr=0 ts=6984c4f0 cx=c_pps
+ a=gYwftH0Zntp9Uye4m1fzyA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8
+ a=SMHBd62EOTy9xGSA90EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,138 +225,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 05, 2026 at 11:06:03AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 05.02.26 10:07, Markus Armbruster wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> > 
-> > > On Sun, Feb 01, 2026 at 07:19:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > >   # @migrate-set-parameters:
-> > > > @@ -1004,6 +1005,13 @@
-> > > >   #     is @cpr-exec.  The first list element is the program's filename,
-> > > >   #     the remainder its arguments.  (Since 10.2)
-> > > >   #
-> > > > +# @backend-transfer: Enable backend-transfer feature for devices that
-> > > > +#     supports it.  In general that means that backend state and its
-> > > > +#     file descriptors are passed to the destination in the migraton
-> > > > +#     channel (which must be a UNIX socket).  Individual devices
-> > > > +#     declare the support for backend-transfer by per-device
-> > > > +#     backend-transfer option.  (Since 11.0)
-> > > 
-> > > I still think it'll be nice to either have "local" in the name of parameter
-> > > or at least document it with crystal clear terms.
-> > > 
-> > > I used to suggest fd-passing, but maybe you wanted to emphasize there's
-> > > more than fds to be migrated at least for tap?
+On 04/02/2026 14:39, Marc-André Lureau wrote:
+
+> Hi
 > 
-> For vhost-user-blk it's the same: not only FDs.
+> On Wed, Feb 4, 2026 at 3:33 PM Mark Cave-Ayland
+> <mark.caveayland@nutanix.com> wrote:
+>>
+>> On 23/01/2026 07:49, marcandre.lureau@redhat.com wrote:
+>>
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> Now "audio_driver" is a detail implementation of AudioMixengBackend and
+>>> not required to implement an AudioBackend.
+>>>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> ---
+>>>    include/qemu/audio.h |  1 +
+>>>    audio/audio.c        | 40 ++++++++++++++++++++++++++--------------
+>>>    2 files changed, 27 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+>>> index 474d761f0be..1eeead2a722 100644
+>>> --- a/include/qemu/audio.h
+>>> +++ b/include/qemu/audio.h
+>>> @@ -51,6 +51,7 @@ typedef struct AudioBackend {
+>>>    typedef struct AudioBackendClass {
+>>>        ObjectClass parent_class;
+>>>
+>>> +    bool (*realize)(AudioBackend *be, Audiodev *dev, Error **errp);
+>>>        const char *(*get_id)(AudioBackend *be);
+>>>    #ifdef CONFIG_GIO
+>>>        bool (*set_dbus_server)(AudioBackend *be,
+>>> diff --git a/audio/audio.c b/audio/audio.c
+>>> index 7e23a63d401..f6896229cfb 100644
+>>> --- a/audio/audio.c
+>>> +++ b/audio/audio.c
+>>> @@ -1561,24 +1561,16 @@ size_t audio_generic_read(HWVoiceIn *hw, void *buf, size_t size)
+>>>        return total;
+>>>    }
+>>>
+>>> -static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
+>>> +static bool audio_mixeng_backend_realize(AudioBackend *abe,
+>>> +                                         Audiodev *dev, Error **errp)
+>>>    {
+>>> -    const char *drvname = AudiodevDriver_str(dev->driver);
+>>> -    struct audio_driver *drv = audio_driver_lookup(drvname);
+>>> +    AudioMixengBackend *be = AUDIO_MIXENG_BACKEND(abe);
+>>> +    audio_driver *drv = AUDIO_MIXENG_BACKEND_GET_CLASS(be)->driver;
+>>>
+>>> -    if (!drv) {
+>>> -        error_setg(errp, "Unknown audio driver `%s'", drvname);
+>>> -        qapi_free_Audiodev(dev);
+>>> -        return NULL;
+>>> -    }
+>>> -
+>>> -    AudioMixengBackend *be = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
+>>>        be->dev = dev;
+>>> -
+>>>        be->drv_opaque = drv->init(be->dev, errp);
+>>>        if (!be->drv_opaque) {
+>>> -        object_unref(OBJECT(be));
+>>> -        return NULL;
+>>> +        return false;
+>>>        }
+>>>
+>>>        if (!drv->pcm_ops->get_buffer_in) {
+>>> @@ -1600,7 +1592,26 @@ static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
+>>>            be->period_ticks = be->dev->timer_period * (int64_t)SCALE_US;
+>>>        }
+>>>
+>>> -    return AUDIO_BACKEND(be);
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
+>>> +{
+>>> +    const char *drvname = AudiodevDriver_str(dev->driver);
+>>> +    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
+>>> +    AudioBackend *be = AUDIO_BACKEND(object_new(type));
+>>> +
+>>> +    if (!be) {
+>>> +        error_setg(errp, "Unknown audio driver `%s'", drvname);
+>>> +        return NULL;
+>>> +    }
+>>> +
+>>> +    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
+>>> +        object_unref(OBJECT(be));
+>>> +        return NULL;
+>>> +    }
+>>> +
+>>> +    return be;
+>>>    }
+>>>
+>>>    static void audio_vm_change_state_handler (void *opaque, bool running,
+>>> @@ -1643,6 +1654,7 @@ static void audio_mixeng_backend_class_init(ObjectClass *klass, const void *data
+>>>    {
+>>>        AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
+>>>
+>>> +    be->realize = audio_mixeng_backend_realize;
+>>>        be->get_id = audio_mixeng_backend_get_id;
+>>>    }
+>>
+>> I'm wondering if an AudioBackendClass realize() method is the right way
+>> to handle this, and if instead an object_property_set() function could
+>> be used to set a "driver" property?
+>>
 > 
-> > > Then it can still be
-> > > "local-backend-transfer", because nobody stops a device to transfer backend
-> > > states in a remote migration either.. so "backend-transfer" seems to also
-> > > work for remote migrations, but it is not.
-> 
-> Hmm. I imagine a mechanism, where OS supports passing FDs to another host.
-> This needs support for actually migrating the corresponding kernel object
-> by OS automatically. But theoretically I think it can be done transparently
-> for userspace QEMU process, which will simply pass FDs to the some special
-> socket, similar to UNIX domain socket.
-> 
-> So, the key aspect is that we should be able to pass FDs to the migration
-> channel, which currently meant that it must be UNIX domain socket, and it
-> must be local migration. But in future it may change.
+> By the end of the refactoring, "driver" is gone. Effectively, each
+> (current) backend will inherit from AudioMixengBe.
 
-That's a nice vision, but IMHO we shouldn't take it into account when
-defining any QEMU interface, when it's only about pure imaginations..
-unless there is solid work in progress, or ideas proposed / known feasible
-at least.
+(goes and looks)
 
-> 
-> And yes, "backend-transfer" work for remote migration of backend.
-> If we ever implement remote backend migration, why not to
-> reuse "backend-transfer" for it? Even if there will not be transparent
-> support from OS, and we'll implement another mechanics, we may add
-> new parameter
-> 
-> 
->    backend-transfer-mechanism = "scm-rights" | "something-other"
+I see, so this happens in part 2 of the series. If the property were 
+exposed directly to callers then I'd prefer to use an object setter to 
+bind the Audiodev to the backend. However in this case it's all nicely 
+tucked away in audio_be_new() so it doesn't really matter. Hence:
 
-Yes, this will look much better.  We likely shouldn't make it "scm-rights",
-it should be generic terms that applies to all platforms like "local", even
-if the implication / implementation might be different on various
-platforms.
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-That's also the major confusion I got when I was reading the other
-vhost-user-blk series, thought it was a local migration but not.
 
-I feel like the interface is simply wrong to make it one covering both, or
-at least it shouldn't be a boolean as you said because it represents more
-than one use case.
+ATB,
 
-If it's a boolean, it also shouldn't rely on UNIX sockets if it was trying
-to describe a remote migration, right?  The vhost-usr-blk way of
-backend-migration doesn't require UNIX socket, or does it?
-
-Especially, if we still want to have your new proposal try to work for CPR
-too or even replace it some day (or a continuous set of proposals in the
-future, from different developers based on this feature), we need to have a
-solid and clear way represents what CPR does, which is to do local fd
-sharing.  "backend-transfer: local" or something similar can be that.
-
-> 
-> (or we can put this into "backend-transfer", supporting passing string to
-> it and deprecating boolean)
-
-It can be a enum, something like NONE, LOCAL, REMOTE.  But before that..
-
-> 
-> More over, this future "remote-backend-transfer" could be used for local
-> migration, so again, it should be called simply "backend-transfer"..
-
-Yes, REMOTE might be slightly misleading.  And considering you seem to want
-to allow any of below to work:
-
-  (1) enable fd migrations only,
-  (2) enable remote migrations on backends only,
-  (3) enable both of (1)+(2)
-
-Maybe we should have two different feature bits?  The per-device one can be
-kept as backend-transfer, however we need to change the global migration
-knob to something describing a local migration.
-
-In summary, still 1 new parameter for migration, 1 new parameter for
-device, but adjust to:
-
-  - Migration parameter: "local", boolean, when set, the migration must be
-    a local migration within host (which requires UNIX sockets on Linux)
-
-  - Per-device parameter "backend-transfer", boolean, when set, device will
-    migrate backends when migration happens.  Otherwise, backends are not
-    migrated; dest QEMU needs to re-initialize it.  The backends may or may
-    not contain FDs.
-
-    When the backend device states contain FDs and FD migrations are
-    required, it requires "local" set first above, or it should fail the
-    migration when user requested backend-transfer=on.
-
-    When it doesn't contain FD at all (or FD migration is not a must?), it
-    should either migrate the backend or not depending on the user's
-    selection.
-
-For tap (your series here), you need to set both ON and required.
-
-For vhost-usr-blk, that only needs to set per-device knob to ON, the other
-one shouldn't matter.
-
-Then when we want to replace cpr, we request people switch (cpr-transfer
-only, keeping cpr-exec / cpr-reboot aside for now) from setting
-mode=cpr-transfer to local=on, which hopefully will start work as before.
-The per-device parameter doesn't matter in this case.
-
-Would this be more reasonable?
-
-Thanks,
-
--- 
-Peter Xu
+Mark.
 
 
