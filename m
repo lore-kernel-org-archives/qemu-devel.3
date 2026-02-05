@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B1FE83F1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB3BE9129A
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 14:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo0eN-0007kw-6G; Thu, 05 Feb 2026 09:48:07 -0500
+	id 1vo0eJ-0007jr-RF; Thu, 05 Feb 2026 09:48:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vo0eK-0007kB-0I
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:48:04 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vo0eF-0007j2-7O
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:47:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vo0eI-0004CI-JF
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:48:03 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vo0eD-0004Ac-8L
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:47:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770302881;
+ s=mimecast20190719; t=1770302874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OBLrgUT4SfRJL0oHz2LpcYh6U/+GwUwU1+4XoRPSUmo=;
- b=akRCU+mD5J4krEMn7yOIPrDqKDcSlmQKEcZZyyOme23XQ93jfsRdQjgzR9RTIyWNTNlqsC
- aHcmkgXvXmw2d1rJZ2Tloxyzv1lDUNFCa6xE8W2ka2LI+9aIaBMMmFW5cg44cxpTf8SsgG
- t9syPzT5ebkf24AzKueERRcfye5JWrQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Fu5f1o6wjPypJD+lh+/BJ100QRzUucDZZqzgUI+QAjE=;
+ b=XoCbCHaEmmo3QAYdXhMcOD2wpyyV2RbycPAUO5s81hNxLlINw4nyk4c94ComAMkC+M0Jco
+ FIckj/ewEfyaDcbDzb0DPVSyYVLZ/Fpgi2YofDcYNMQv6YXFm7EQmcR6HVSdsoyaE7psKL
+ u6ukptFIzgJ/tC958qiI73hQzajMDHM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-ajfyp4JiMQKkYNXgWi2YcQ-1; Thu, 05 Feb 2026 09:48:00 -0500
-X-MC-Unique: ajfyp4JiMQKkYNXgWi2YcQ-1
-X-Mimecast-MFC-AGG-ID: ajfyp4JiMQKkYNXgWi2YcQ_1770302879
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-435991d4a3aso734138f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 06:48:00 -0800 (PST)
+ us-mta-507-6lCt50iGP_eXsHXJ_Jh62g-1; Thu, 05 Feb 2026 09:47:52 -0500
+X-MC-Unique: 6lCt50iGP_eXsHXJ_Jh62g-1
+X-Mimecast-MFC-AGG-ID: 6lCt50iGP_eXsHXJ_Jh62g_1770302872
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-480686b3b4cso15419025e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 06:47:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770302879; x=1770907679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OBLrgUT4SfRJL0oHz2LpcYh6U/+GwUwU1+4XoRPSUmo=;
- b=bN7MNtrtJkCP9utYXzHmwCVgq1gg4v+oLB4l0OkJU6VM9reqPF/wwZ05cieS4omvNI
- X3ekuNpTO40GJY/ctXecTMnMo1n8fyzKRWptJ6nFQKSxAopBDanxX7fiM5VejRUaBhxw
- 9fLLKdkaQ1iLaNByh3cnjtMoYUyrXMuxxkYWmWSA8KBjdk1pPMm4CKeQAmWlvBD8x9pp
- K8hMPeIXBXP26NlqDUgOIfAkwUH0FVzaKV+jNJbhgZ9CQU7r5qcFtMp0/T5IO5tP/bQZ
- T5Lk3ER53dK3AvylqG5jxuBx4hEgDuzjNM0YsGrvn3R6V5AVZlttNc6rafdAh9DNpW9F
- hV9Q==
+ d=redhat.com; s=google; t=1770302872; x=1770907672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fu5f1o6wjPypJD+lh+/BJ100QRzUucDZZqzgUI+QAjE=;
+ b=TKFQ5LyNyDtp7otAsrL8mZXIxToQonkqZQpfa3RPXFufFhT14VNbZxC7Zoqv+0OUEV
+ cBd6WyBOvyPYtGf/98idYyJAt/wbGIEOQ9vMA6FzPINq3O8zxN5S25+nrA3UnAI/zt63
+ vCUQwHiuL4KW6p+A+I/WKPeaqUyrWQLexBFoqIcklUj6RH4KD0f7t8YF7ziYF5ZsmaLg
+ HEEVEBjcJNnFGesOO4BZiGKT3WwKtPiwE9DAfMO6jBzzoCt2ELoWhj39zQt+yDq8vsNV
+ rkYpsMrfLz4E1Vn/1RJB04c8wXmQnfHxm3Ki52dDk40RG8ATQPswtKCpz+Cw+sqtK4UH
+ Vaew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770302879; x=1770907679;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OBLrgUT4SfRJL0oHz2LpcYh6U/+GwUwU1+4XoRPSUmo=;
- b=iUxweQuC+6sjaW/MagUGsyHbeMcEpw0ZMLBfSC6r4onaVBqD8b5p0eA/5RNo7an+2N
- mZZKIem+UqHu+xbYMXXG0XtNAlJcdQPjU27770TMURTgBW45RmLWbzsstxwoAEYYQqoq
- tr/PgM2J68zj8Hi/mjYOpsCQao3s9iHn2sIK/F2kSgFysyBsRyeCesrac1RXW1+FLxp2
- 4ebHkV3PShjOmxpJgwH8RTCXvXJpkQ2pBfREJaXGe+oXmG0SDDzZwSyD1scTh8ehomgF
- rxEYaax2DBeOvmnAIyQR71BvkpX494RrfDRKDlwH+BGIs9igoQHS8zPVHorx4/pe5tPP
- m2bw==
-X-Gm-Message-State: AOJu0Yz88GwCkaqZRxGpe9i/oZ2GJTv1WUn0DEQXFoJQZp+1aqGMEm+U
- 4LYhTG4e2s3cZ/n0OeRcg3lDyeQpQX3IXV/tC6iEKLz1WXnToY1DdBsq8lRqtj6jyLcvWSoUVar
- g8YN3orquBnk6e5UJRkeR6ONwSG+Go5ixJq/kw3zTvRuftgnW0SY7qbPo
-X-Gm-Gg: AZuq6aKpETIh9cSBs28uilM4Rk7q6I4tnkh8iWSSQg9cy4kiv3wUCD6QuW+Of1PS20U
- Sl/qGofGRMGC+2Ud8Vij9F/BuumR2sm3H7eV+1vSr0I2hfPSp/4IFXCGNMc7MdfYXk1LXoDGq8P
- K8roGX70K4bNid3cPQ7D/GEJ06LmZBxvVxA323Tx4Xlrbx/shUkKyebhuAzD4gYqeqmNMLINaWY
- BzCLY2qrau8wqotqV3EmdCOEeNpJqtxq3+G6rmF5SjjqUIYEcAK5Nx9PR+PaT6lrq+IealpgCqL
- s62qYeN4D/obEqUpXzEf2JKbBrb4lEqMdOJQGzJYoiDg4UO7xwVnVW2vlJktiw1YJs87vPxFgNk
- gyl09mwrJAURBYgC5Hml6m+yV1PUEwDgkB/fcQrse6givPI4WOReoSgcyFFjAwf84ZHMU
-X-Received: by 2002:a05:6000:26c9:b0:435:a83e:88f with SMTP id
- ffacd0b85a97d-43617ccd136mr9324854f8f.0.1770302878956; 
- Thu, 05 Feb 2026 06:47:58 -0800 (PST)
-X-Received: by 2002:a05:6000:26c9:b0:435:a83e:88f with SMTP id
- ffacd0b85a97d-43617ccd136mr9324802f8f.0.1770302878404; 
- Thu, 05 Feb 2026 06:47:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770302872; x=1770907672;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fu5f1o6wjPypJD+lh+/BJ100QRzUucDZZqzgUI+QAjE=;
+ b=QG6TbFsQf2vV1Pg43t+1p0O832qTV9Biz3SshMIi4DBg/kXWQaiqJXqaGYI1WXYOBr
+ wLHecEgyF/fgJEXTtBJuwxNZQ7EpuvLFVjXhmK6Pifadtbeupy5qdSSu1KGPODnKxnkO
+ X36t5pDd7Mr6mdqYRo0NLCmblDlOvOs8WtzugnL/pXtrvx9WDufg2MvaNkBDVUDRimk3
+ iSXWR7kZuhDd8CMnL6X90ZgpD2fKhin8ud8G1yFtmBqxJEEIXsSK/ET0xp6UPaTK1SH5
+ h+1SRj2U35nOJUo+mXhmnJzwZkeMX9pM4o4249JBNNAAKiLcQcxD/pG71kDEgoHcSk2E
+ s/Sw==
+X-Gm-Message-State: AOJu0YxHj/M2LCyFjy5XnSUeKNKL45/3YrbYhTfs0tznD/o66slKQ2NG
+ p/he0npd6m4ZRhr9VJgOHEVoRltLZmNUW6uI5lOvnWv0S2gexPKOO9ELm3jtl/TTC0X1S/FR1Da
+ fW6scaR/q/La4NFfWG+0DyHpBNPcmvpwN0YIJLrEXKoBh6ZI+Oqg4OvdE
+X-Gm-Gg: AZuq6aITWSailJBhEY6jCEOr4nKCx+xgaqogCSoB9HDkeF9DfJ48Bof80cH9kxsDZQa
+ Xslfpl0XHG2fyDbNrVBex+FZmxMopeGUk+PvVSEAYMGayaWSyt11SDJy38MlwiF6m9HF6XNCmVJ
+ tZaXSIjgn1r/xqTiO6JfK7wNIBECEY6UO8UrQahK+PPYieHrYs7I+JaDlZO8ek33GytQ/Ra0edT
+ QgdmEhvYlDzLvxe/XyZPaahz88ARhBgvi6p3oviFZMbAOKwSi1+eN+jDrBldWRh7hsqGMKllzbo
+ 9WAwRTaabLHOHhdZxpXk2w5Lc6bhYE/4zRWnktdszofwa94DENGPTHx9WtWFvwyQ38faaHs/MGa
+ T7Y8ibXnRBtXxt7jGwUSMT1eUjj0Qf3wDJn+qEs1bsHb4gBXk+gKgJ21aAekABZRc/SoR
+X-Received: by 2002:a05:600c:3145:b0:480:19ed:7efa with SMTP id
+ 5b1f17b1804b1-4830e97af61mr83873445e9.36.1770302871637; 
+ Thu, 05 Feb 2026 06:47:51 -0800 (PST)
+X-Received: by 2002:a05:600c:3145:b0:480:19ed:7efa with SMTP id
+ 5b1f17b1804b1-4830e97af61mr83873145e9.36.1770302871066; 
+ Thu, 05 Feb 2026 06:47:51 -0800 (PST)
 Received: from localhost
  (p200300cfd737d06375fda007e5d3c5c8.dip0.t-ipconnect.de.
  [2003:cf:d737:d063:75fd:a007:e5d3:c5c8])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805815esm13324642f8f.20.2026.02.05.06.47.56
+ 5b1f17b1804b1-48317d4d030sm90763505e9.13.2026.02.05.06.47.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 06:47:57 -0800 (PST)
+ Thu, 05 Feb 2026 06:47:50 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 2/5] block: Introduce BDRV_O_NO_DATA_{WRITE,RESIZE}
-Date: Thu,  5 Feb 2026 15:47:32 +0100
-Message-ID: <20260205144737.31131-3-hreitz@redhat.com>
+Subject: [PATCH 0/5] qcow2: Suppress data-file WRITE during creation
+Date: Thu,  5 Feb 2026 15:47:30 +0100
+Message-ID: <20260205144737.31131-1-hreitz@redhat.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260205144737.31131-1-hreitz@redhat.com>
-References: <20260205144737.31131-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,7 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,67 +117,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add BDS flags that prevent taking WRITE and/or RESIZE permissions on
-pure data (no metadata) children.  These are going to be used by qcow2
-during formatting, when we need write access to format the metadata
-file, but no write access to an external data file.  This will allow
-creating a qcow2 image for a raw image while the latter is currently in
-use by the VM.
+Hi,
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Some people want to create a qcow2 image for an existing raw image while
+that raw image is in use by a VM.  That is, the raw image is attached to
+a guest device, and the new qcow2 image is supposed to use it as its raw
+external data file.
+
+(See https://issues.redhat.com/browse/RHEL-128573 -- specifically, the
+idea is to allow incremental backups on a previously raw image.)
+
+One reason why that currently does not work is that formatting the qcow2
+image requires write access, which will automatically result in taking
+the WRITE permission on the data-file child, i.e. the raw image.  If
+that image is currently in use and thus the WRITE permission is not
+shared, the qcow2 image cannot be created.  However, without data
+preallocation, we don't really need to write to the data file, so this
+series allows qcow2 to relax that requirement to make formatting work
+while the data-file child is in use.
+
+NOTE: One exception for needing the WRITE permission without data
+preallocation is when creating a qcow2 image with a guest disk size that
+is not aligned to the cluster size.  Then, we will implicitly COW the
+cluster tail past the end of the guest disk.  I think that is
+unnecessary, so commit 3 removes it.  This will cause images whose guest
+disk size is not aligned to full clusters have a partial data cluster at
+the end, after creation.  I think that’s fine, but maybe not...?
+
 ---
- include/block/block-common.h | 11 +++++++++++
- block.c                      | 15 +++++++++++++++
- 2 files changed, 26 insertions(+)
 
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index c8c626daea..504f6aa113 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -245,6 +245,17 @@ typedef enum {
- 
- #define BDRV_O_CBW_DISCARD_SOURCE 0x80000 /* for copy-before-write filter */
- 
-+/*
-+ * Promise not to write any data to pure (non-metadata-bearing) data storage
-+ * children, so we don't need the WRITE permission for them.
-+ * For image creation, formatting requires write access to the image, but not
-+ * necessarily to its pure storage children.  This allows creating an image on
-+ * top of an existing raw storage image that is already attached to the VM.
-+ */
-+#define BDRV_O_NO_DATA_WRITE  0x100000
-+/* Same as O_NO_DATA_WRITE, but for resizing */
-+#define BDRV_O_NO_DATA_RESIZE 0x200000
-+
- #define BDRV_O_CACHE_MASK  (BDRV_O_NOCACHE | BDRV_O_NO_FLUSH)
- 
- 
-diff --git a/block.c b/block.c
-index 48a17f393c..cdfed7a4d8 100644
---- a/block.c
-+++ b/block.c
-@@ -2887,6 +2887,21 @@ static void bdrv_default_perms_for_storage(BlockDriverState *bs, BdrvChild *c,
-         if (perm & BLK_PERM_WRITE) {
-             perm |= BLK_PERM_RESIZE;
-         }
-+
-+        if (!(role & BDRV_CHILD_METADATA)) {
-+            /*
-+             * For a pure data storage child (no metadata), these flags
-+             * respectively promise that
-+             * - nothing will be written, and/or
-+             * - it will not be resized.
-+             */
-+            if (flags & BDRV_O_NO_DATA_WRITE) {
-+                perm &= ~BLK_PERM_WRITE;
-+            }
-+            if (flags & BDRV_O_NO_DATA_RESIZE) {
-+                perm &= ~BLK_PERM_RESIZE;
-+            }
-+        }
-     }
- 
-     if (bs->open_flags & BDRV_O_INACTIVE) {
+Side note: Another reason why it's difficult to replace a raw image with
+a qcow2 image using that raw image as a raw data file is because we
+don't have a comprehensive QMP command to fully replace one node by
+another (there is no QMP command for bdrv_replace_node()).  You can kind
+of get around that via qom-set for guest devices and blockdev-reopen for
+in-graph changes, but (1) there is no command for changing a block
+export's node yet, (2) this is not fully transactionable, and (3) it's
+cumbersome.  blockdev-replace is supposed to solve (1) and can probably
+also be made transactionable later to solve (2), but maybe we still want
+a simple command that just calls bdrv_replace_node() for the case where
+a user just wants to fully replace one node by another.
+
+But this series does not concern itself with that problem.
+
+
+Hanna Czenczek (5):
+  qcow2: Skip data-file resize if possible
+  block: Introduce BDRV_O_NO_DATA_{WRITE,RESIZE}
+  qcow2: Preallocation: Do not COW after disk end
+  qcow2: Suppress data-file WRITE/RESIZE if possible
+  iotests: Add qcow2-live-data-file test
+
+ include/block/block-common.h                  |   11 +
+ block.c                                       |   15 +
+ block/qcow2.c                                 |   96 +-
+ tests/qemu-iotests/125                        |   17 +-
+ tests/qemu-iotests/tests/qcow2-live-data-file |  274 ++
+ .../tests/qcow2-live-data-file.out            | 2904 +++++++++++++++++
+ 6 files changed, 3302 insertions(+), 15 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/qcow2-live-data-file
+ create mode 100644 tests/qemu-iotests/tests/qcow2-live-data-file.out
+
 -- 
 2.52.0
 
