@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504E7ECD997
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B359ECD9A6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6qh-0002ya-Df; Thu, 05 Feb 2026 16:25:15 -0500
+	id 1vo6sm-0003f8-V2; Thu, 05 Feb 2026 16:27:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo6qY-0002wf-P7
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:25:06 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo6qW-0001pc-Nz
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:25:06 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16B2418651D;
- Fri, 06 Feb 2026 00:24:15 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 377B035D952;
- Fri, 06 Feb 2026 00:25:02 +0300 (MSK)
-Message-ID: <d0135462-3b9f-47c7-bbbe-b5bbbc2cc08e@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:25:02 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6sj-0003eZ-DE
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:27:21 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6sh-00028a-5O
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:27:20 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso1126479f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 13:27:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770326837; x=1770931637; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XxNnZTCKp5g2WkUf5d7qDwOIEz00PYgDoHsNEpolEt0=;
+ b=ZqjPCV+s6CVu7O4gf0f+kp1OARE6jT2rSfCGgd/d0kmApedspD2yJysbiUFAVcOeoF
+ BCN7WIbFOwc2kHdsHspavZax9pit9fyEE6XRks1w69MQZ4Sy5EVi6hBcLSUEDIsufuzG
+ c5aPP3bPLyUXUlEI1vXxzAlMCxz5xQUJtp2+MOGNzrJVNfyD3uQ5AS8QQY9Kjs2g9cUf
+ V7DH/mvK8qO9TaMDaXxe7dXLuWf5o2qtzAxakuQQKaLpEgBzsaQ4DG/oAQubCQOWm1w2
+ WewjvjKT5JPdZVjdES9+UIIIfVG1EqjM9BkYQKk7BbLO3/AiPr1FQkqnJEvQmoZG3RBS
+ fZ9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770326837; x=1770931637;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XxNnZTCKp5g2WkUf5d7qDwOIEz00PYgDoHsNEpolEt0=;
+ b=Su3l0tQzoea/uHcfwvnfNecIIjdcK7bTa/qrhh1QNMVTCrPqeZSVfEDB2GwA66sk9U
+ pmVPx5XxWiYdM74BZfFfY84TXPaQZz/LNDhl4+iVedIp0vRsvmlzElfOlCs42gQK9rad
+ wCRs+u2+WfZDeIvlgQTVelSUmVVZkXi97tjoGQqRXYP6Kr5DWf9Xg8FsOqGxXAnujBr4
+ SLBw0f7LKTjFu57PeyW1NplKhRfHF+/GOGZgthJBPCeK5fvehXeTnhooX3zK/2Cd6S6r
+ 3UGBP2a174XrbJBZHpIyRFs18R1tElQHpxCSM11vUIe6DZQAwjQtpNumwfEFFLfVoMYh
+ pJUA==
+X-Gm-Message-State: AOJu0YzmnRcK2vQexcNRX6TsoNbSzwqqRF5hUabbFRbLLe2hlnXw/x4l
+ oLPy+AQWbUuHOukVgcC9RR642AzfvA8tXHpvk17ODJWAtmgXCUZ0W3qWmtOCCubQi3lEoqJgfQa
+ 4w/aYMbE=
+X-Gm-Gg: AZuq6aJ6MF7ByCE5k1QCIHPGHQ+z6kqgeMjOWtzWvZ1H+73LnSQstUvjT1opfanDSo7
+ 9W/ZtyV65T9v6C8a8f9PJS/ApGg8J8NxF9rHFThOCDoBj1xTDLBA/xNiLmgKkcGXHH8d0G91D3t
+ ucMdXq14BJqN0VEwCWX5j+8YsKclYR6raHSlT+KSWLofEnQ6eIss96D4tL33ebY7wKgrATYVp/5
+ jvEt7G51fkK1xXdd0jndbkdwQu04860sfOJYl8V6rNqMW5Fe61PafWagT3pPzdh3c7VX9AeAmMX
+ WcCTc8LeF1BFj4HcQXamR0xPOwEMsm7+JsEqtcZkxzqELGlITtz+3tIF+YzFtW9/W6vrPzFZhHO
+ bDcKip5IqAWpGVAr3/sD3h4kwrNXnoWB40wnB3Bl+emtYfw7slZnzyR38rrX37uDsV7gic3PloQ
+ 7TXHmkD/sL1SfnU5kam5r24eYKoVazchwLAQhXhFd5Xc97f8N5cO9OiIWAASvG
+X-Received: by 2002:a5d:5f82:0:b0:435:94dc:8c78 with SMTP id
+ ffacd0b85a97d-43629378331mr992196f8f.40.1770326836684; 
+ Thu, 05 Feb 2026 13:27:16 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4362972fa41sm913092f8f.23.2026.02.05.13.27.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 05 Feb 2026 13:27:15 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/tcg: Expand tcg_global_mem_new() ->
+ tcg_global_mem_new_i64()
+Date: Thu,  5 Feb 2026 22:27:14 +0100
+Message-ID: <20260205212714.10035-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci/shpc: Do not unparent in instance_finalize()
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,54 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/27/25 04:24, Akihiko Odaki wrote:
-> Children are automatically unparented so manually unparenting is
-> unnecessary.
-> 
-> Worse, automatic unparenting happens before the instance_finalize()
-> callback of the parent gets called, so object_unparent() calls in
-> the callback will refer to objects that are already unparented, which
-> is semantically incorrect.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The s390x target is a 64-bit one, so tcg_global_mem_new()
+expands to tcg_global_mem_new_i64(). Use the latter which
+is more explicit.
 
-Is this a qemu-stable material?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/tcg/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Please let me know if it is -- I'm *not* queuing it up for now.
-
-Thanks,
-
-/mjt
-
-> ---
-> See also:
-> https://lore.kernel.org/qemu-devel/20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp
-> ---
->   hw/pci/shpc.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
-> index aac6f2d03459..938602866d77 100644
-> --- a/hw/pci/shpc.c
-> +++ b/hw/pci/shpc.c
-> @@ -735,7 +735,6 @@ void shpc_free(PCIDevice *d)
->       if (!shpc) {
->           return;
->       }
-> -    object_unparent(OBJECT(&shpc->mmio));
->       g_free(shpc->config);
->       g_free(shpc->cmask);
->       g_free(shpc->wmask);
-> 
-> ---
-> base-commit: c85ba2d7a4056595166689890285105579db446a
-> change-id: 20251027-shpc-d71bb72d67af
-> 
-> Best regards,
-> --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> 
-> 
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 4dabd49840f..203afe265bc 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -217,9 +217,9 @@ void s390x_translate_init(void)
+ 
+     for (i = 0; i < 16; i++) {
+         snprintf(cpu_reg_names[i], sizeof(cpu_reg_names[0]), "r%d", i);
+-        regs[i] = tcg_global_mem_new(tcg_env,
+-                                     offsetof(CPUS390XState, regs[i]),
+-                                     cpu_reg_names[i]);
++        regs[i] = tcg_global_mem_new_i64(tcg_env,
++                                         offsetof(CPUS390XState, regs[i]),
++                                         cpu_reg_names[i]);
+     }
+ }
+ 
+-- 
+2.52.0
 
 
