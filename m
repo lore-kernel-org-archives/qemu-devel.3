@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F2BECD9A5
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A134DECD9A3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:42:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo68C-0004m8-Fn; Thu, 05 Feb 2026 15:39:16 -0500
+	id 1vo6AT-0005uT-UA; Thu, 05 Feb 2026 15:41:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vo68B-0004lX-Gp
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:39:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vo689-0001v1-GW
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:39:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770323952;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1O6a5pMeyc4uv9FYsRWDY7HXuUaNJxUyTl+H8YOdFhc=;
- b=eiVF2fv2doeJ6lz0oMtIjJFE68wru6U9dTkfwJmiI5zYudbIwpE4jzs26PWknoDODZfGy+
- Qd44yxW6NzIAfsVAetA518xpIUf/aj6SG+pwJbE1MkeXEEXdAkvGoSC/Kfi3IS+YCfLRkX
- 4WZv+YLR6/O26bXdTnYd/OgirU/dmPk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-QjExaxjGNIuuzrW_BLku6A-1; Thu,
- 05 Feb 2026 15:39:07 -0500
-X-MC-Unique: QjExaxjGNIuuzrW_BLku6A-1
-X-Mimecast-MFC-AGG-ID: QjExaxjGNIuuzrW_BLku6A_1770323945
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CFC81955DC1; Thu,  5 Feb 2026 20:39:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE6DA300DDA1; Thu,  5 Feb 2026 20:39:00 +0000 (UTC)
-Date: Thu, 5 Feb 2026 20:38:56 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: Re: [PATCH 01/29] hw/core: Add Remote Port protocol packet definition
-Message-ID: <aYT_4NYQDbCyfS1c@redhat.com>
-References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
- <20260205195824.2610192-2-ruslichenko.r@gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6AS-0005uJ-Mc
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:41:36 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6AR-0002Jr-Bz
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:41:36 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43621bf67ceso781592f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 12:41:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770324093; x=1770928893; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UbAITpIltBlq2geT1pXCh6rITRqeTeJAV4K3copBTAE=;
+ b=i2nU/VnbAsnJp+2Ma6J2XheiyrquyVrqoRcrYA7QZBzrtgTlTCY/GEaY3zpJKoyaSz
+ 3hn15RKjz/+xzDzdJq1UOlD3MEd8t9xccXHlhGoNTAovRo2u5Bkk7Tv74HfcLrLu8nMJ
+ RYR+5eq79wCNXzjOHXQk94iUGHoYDM2BOrN33gmk2aSqnENCSkEbQRCpAbap1w0OObUj
+ 3dEjle7rozlhZmtlMrWCL1tCb9RHIvcmwNa5YQ5POAgHggQQkVA77ww67rX/fdU2Gq2k
+ GWa6ewoTV6fogJuKvfDQVlq5qEb8yIlXeE7GZqsSbunekAff7GV/AFJUy3Qrvcz4z2rG
+ LLmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770324093; x=1770928893;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UbAITpIltBlq2geT1pXCh6rITRqeTeJAV4K3copBTAE=;
+ b=vHezKXhbDcQGRbHDMIP1rPfdPe47UC4Nf+AJA5Ilc6CGTfa7pEkBxJ3Pqy/FDCpqAi
+ WxiQhrgtvmGqSyhReS0AuBkDwAoBgHD92LN0o3A44mzrjgyw5L2w4D89wwlK28xpPl3A
+ pugaexb5GoC03VSXLowHnPDBadPaI0zKqQ4L4YdxFv9LnCKgddka9J8pivgi+LCIH+ge
+ IuMnmhCukOSGOEBoHhu0COcTeBMuSQromru9HKp8Ag3yIZuuTnCQCxFftQVAJ1PzwT1b
+ qE0Bo2ZoYWtpvmXzOjp6uUismi99s7trb4NN9/gG4v9BGKSaccXKWTLtizMe+Itq1d2z
+ 4fCA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUU4MzgpHyR0fcGoax5/VKxGibnnVaifRuxtZrTDfJ/sYYDAN80WrsutyunxZY97Nc35m7/XoYl+xmK@nongnu.org
+X-Gm-Message-State: AOJu0Yya5h8cNB9v0IaZ+yAZLcKGWlTRUc2lDoCGmtvrq91TRIAMZwlw
+ q3Jd33Q3obAjYZFlLOdCGSZLIjk5gS2TZULZmvNvzXXoK1eLTAUuyyBUVxRuwJsynJvgB4SlOJw
+ srcwCIEo=
+X-Gm-Gg: AZuq6aJ5FOrToAWj8MMcrG+S93pIFl9ghSOmbLyy5xtgkLXweu/tLLQnogifKrtfM1f
+ ZE5H6NBt5wr0mnHyvCaamJTnaw0uOQUXYaBrtERz6Y1eCx7s9zYvR1PNjYPJEvj73NnzDp5ZGCD
+ F2rYIOCQZkUBz3Ic1MiSfgtIBZn8a3GLAp4Yjo4nutB/pfoDbTUJzCzKo6tLrfXcKJSqvQa/I8k
+ QeBJIQYX1uVCGlol2CNJOfdLx2FRUCyJDF/VDi5CjQ7S4QOH1hhFLlxlK4HHQDvooVOWYWlv5Oq
+ J0buh/qxayGqmwx6ouCNZIr8c2lrmFpKmPAicIh42pUb9GCd2gz6i6e4/o6J4F8xrjE8iBaNy9X
+ WtHujWYYHgq2+8gF/5uKN8NJDhr/1HWeHO+JSgwCnseIsA32rc8ZhHn2gFH67SY9UUJOY1JEwfv
+ BO1m0yuNX+7ugKgnX+czcXMDgnBTnEVQLkVnHEU11IzJVXozSXIinIAw==
+X-Received: by 2002:a05:6000:1a8c:b0:435:e436:2f81 with SMTP id
+ ffacd0b85a97d-4362934a034mr784602f8f.2.1770324093352; 
+ Thu, 05 Feb 2026 12:41:33 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43629730992sm664412f8f.21.2026.02.05.12.41.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 12:41:32 -0800 (PST)
+Message-ID: <d13eeccf-1b82-4b97-998e-6efdb390c56f@linaro.org>
+Date: Thu, 5 Feb 2026 21:41:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260205195824.2610192-2-ruslichenko.r@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] meson: Add TARGET_ARCH to config_target_data
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260205030617.266625-1-richard.henderson@linaro.org>
+ <20260205030617.266625-3-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260205030617.266625-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,129 +100,14 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 05, 2026 at 08:57:56PM +0100, Ruslan Ruslichenko wrote:
-> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
-> 
-> Introduce packet definition for Remote Port protocol.
-> 
-> Remote Port is a socket based inter-simulation protocol
-> designed to connect QEMU to external simulator (such as
-> SystemC models, RTL simulators, etc) for hardware co-
-> simulation.
-> 
-> The protocol supports bidirectional communication for:
-> - Connection setup, version negotiation (Hello/Cfg packets)
-> - Memory and MMIO transactions (Read/Write packets)
-> - Interrupts and GPIO signaling (Interrupt packets)
-> - Time synchronization (Sync packets)
-> 
-> The patch introduces header file with packet definition
-> used by protocol.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
-> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+On 5/2/26 04:06, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  include/hw/core/remote-port-proto.h | 305 ++++++++++++++++++++++++++++
->  1 file changed, 305 insertions(+)
->  create mode 100644 include/hw/core/remote-port-proto.h
-> 
-> diff --git a/include/hw/core/remote-port-proto.h b/include/hw/core/remote-port-proto.h
-> new file mode 100644
-> index 0000000000..cbe1498df0
-> --- /dev/null
-> +++ b/include/hw/core/remote-port-proto.h
-> @@ -0,0 +1,305 @@
-> +// SPDX-License-Identifier: MIT
+>   meson.build | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 
-Preferrably stick this inside the comment block below instead of
-mixing C and C++ style comments.
-
-> +/*
-> + * QEMU remote port protocol parts.
-> + *
-> + * Copyright (c) 2013 Xilinx Inc
-> + * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
-> + *
-> + * Permission is hereby granted, free of charge, to any person obtaining a copy
-> + * of this software and associated documentation files (the "Software"), to deal
-> + * in the Software without restriction, including without limitation the rights
-> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-> + * copies of the Software, and to permit persons to whom the Software is
-> + * furnished to do so, subject to the following conditions:
-> + *
-> + * The above copyright notice and this permission notice shall be included in
-> + * all copies or substantial portions of the Software.
-> + *
-> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-> + * THE SOFTWARE.
-
-Including this is OK, since IIUC in this case you're carrying on
-with someone else's code, and so aren't permitted to remove their
-license comment.
-
-If there are any files later in the series that you wrote yourself
-from scratch though, they can omit any license comments, only the
-SPDX is need.
-
-
-> + */
-> +#ifndef REMOTE_PORT_PROTO_H__
-> +#define REMOTE_PORT_PROTO_H__
-> +
-> +/*
-> + * Remote-Port (RP) is an inter-simulator protocol. It assumes a reliable
-> + * point to point communcation with the remote simulation environment.
-> + *
-> + * Setup
-> + * In the SETUP phase a mandatory HELLO packet is exchanged with optional
-> + * CFG packets following. HELLO packets are useful to ensure that both
-> + * sides are speaking the same protocol and using compatible versions.
-> + *
-> + * CFG packets are used to negotiate configuration options. At the moment
-> + * these remain unimplemented.
-> + *
-> + * Once the session is up, communication can start through various other
-> + * commands. The list can be found further down this document.
-> + * Commands are carried over RP packets. Every RP packet contains a header
-> + * with length, flags and an ID to track potential responses.
-> + * The header is followed by a packet specific payload. You'll find the
-> + * details of the various commands packet layouts here. Some commands can
-> + * carry data/blobs in their payload.
-> + */
-> +
-> +
-> +#define RP_VERSION_MAJOR 4
-> +#define RP_VERSION_MINOR 3
-> +
-> +#if defined(_WIN32) && defined(__MINGW32__)
-> +/* mingw GCC has a bug with packed attributes.  */
-> +#define PACKED __attribute__ ((gcc_struct, packed))
-> +#else
-> +#define PACKED __attribute__ ((packed))
-> +#endif
-
-Is this comment & conditional #define still relevant today ?
-
-For the rest of QEMU we just use  QEMU_PACKED whose definition matches
-the #else clause. Ideally change the patch to use QEMU_PACKED, if not,
-mention in the commit message why it can't be used.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
