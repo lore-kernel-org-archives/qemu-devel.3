@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6CEECD999
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC693ECD999
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5Vn-00079z-OY; Thu, 05 Feb 2026 14:59:35 -0500
+	id 1vo5Vd-0006vX-MJ; Thu, 05 Feb 2026 14:59:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5Vk-00075F-Ce
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:32 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1vo5VX-0006q2-72
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:19 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5Vi-0003DM-4Q
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:32 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4362ab556f5so16840f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:29 -0800 (PST)
+ id 1vo5VT-000399-RK
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:17 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43596062728so1770176f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321568; x=1770926368; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321554; x=1770926354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X7UzQPgmBiRY/upCcfubCk3rZyvcBcdMj1LuFEKqEEs=;
- b=aACq35yd7CVghLv0MoCHCn9c41VCypCzExQQso5a2Yr1nSTVD2uyEUfTLitJ1XnK0Y
- U8KYKMzHjiyMADw03E/CUYnIPoTYqDnKLSm1w4iTQiNw3z/cfkYu1QkHGVzGddnwa5XR
- EDHlT51bLI8cHpEGz6XVbcIA5OXAq4aNg+a8e7LImX4ZGg7bmnxnLGZVen/OxmH8zDt8
- 8770MeySgFWJols8SgLwgv0TD+Ybcx1S0bY5ba9PBcmoImRtTRtD6oABBPUp/13f1ess
- OegmIalT6g78KhG9yE2hN5x9jg8TZcBUvm9uFmg4GUNxvg6eBf6K0yAfSq481x3mBynI
- vDrQ==
+ bh=w0FvQWZuLK/AzauXscYjx34OM742bGa2222wnOY24Tk=;
+ b=YXj5O4qoEu1JBJlwPOhn0E9W16M0Bu8QwMEgvL64NPSBO6zw9/gQdap2hhN/E4ggwo
+ kOiia0AX65jOtZZ61OtL7wfa50/cEi4FCGBaukV9ipC4mq5emLXCfoYzcHqq6/S0uS5p
+ fr5mNMM8XCE4jL/QuMAZeoppxgxOruxoA8nD3A1ZZFFUQvjhC1dmi/Ez24OMxnmd4Om1
+ qGgxGHFVddNBEsfF0UUZNyqfx+Slt52xmMWpF7POliZLEYarCSEFAI8CTYiu4cf7he+7
+ HIYrKUUsY0YRW3zfAPC80lwi+bl8Y6j1iHmJEE3JgoxBUM/sLDm+GS3WiRndyoy1irq5
+ DDNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321568; x=1770926368;
+ d=1e100.net; s=20230601; t=1770321554; x=1770926354;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=X7UzQPgmBiRY/upCcfubCk3rZyvcBcdMj1LuFEKqEEs=;
- b=G2Ge2b55yGnfutjEmsjf0iUBz1SQSC5/ZbOoQ2RSVF441TSkEQO14FXE5evKSwvdPr
- 7FmHaNB9EDQojvOdTMH+ePpKBT5UTC4PTiqVrzrUYSWDgrlEZPdgLGXneKvDyobeluI1
- AB4AYNghH3E9zFBrDPGHlHzV//pSLZ4y1rSbMf2tzcLD1nPUQtY942EkbQZN1nR/uXAi
- 6Fo0ASFLjVhT7XyMzrzwvVm1ST2+ee92dw8TP7GBIBosDaDjlie3YCBi3znBXriZ69we
- 9gmQDNETUCRSLqXOMPVKSzW8VSSEsvoahniOMJcEA5r5qMdFwZ3w+V1dBcoNH6Jb2eEE
- nf3Q==
-X-Gm-Message-State: AOJu0Yy/3m/gjmE6SfeB+qVvI36GmhrW9uupoMARY0IXrHtpSifHhbns
- KoNaMbXK/YtUh1R+YbV7V7szoVwZpR2t3nnmQD2K5staEGnBo9f+QPsi8mV5qkEPc4I=
-X-Gm-Gg: AZuq6aK1JXPIsM6AxVAgi9eqU8MmR0MS+cmBWkOBvOR5M+KIQewzxTuMiVPxjAi23zX
- TfJe6cJUIYvKNtBP7cOLt8Kkv8sqwuhxkiqEIm5M6lH/z2vwYp+dlLA/h/o7dX71v5BdHNEnY7P
- kAYXZO+idqy3df/U8TiO5wm1VxlI4egOf1M+d77ifCx1DkXgXg0jEdUmLZ0LgwuEwJEaXAfdGuF
- P2I8ioWLssRE74gmdVjk8pUvP6Mp8VgUSmY+F66c2EO9JQRe7wIhfmnVyPnWRksp8ivd+cZevjR
- 28WwyqH7l9JScTams0TsXSSW1OdGX82nbUQX1xNirNmpwIimgqWXhu+9PAGjLlO7Gpu+rqXHxVf
- yhGsZOv2QIWLbQu+QfohkoRBsF6qSMPLCJNpY+xelTYneHw82hqALKzc5wbf8nfOZ6fNnfNyerR
- aGGkro/anb468Y4aEboTo=
-X-Received: by 2002:a5d:5f54:0:b0:435:9ce0:f93c with SMTP id
- ffacd0b85a97d-4362969509amr574711f8f.62.1770321567939; 
- Thu, 05 Feb 2026 11:59:27 -0800 (PST)
+ bh=w0FvQWZuLK/AzauXscYjx34OM742bGa2222wnOY24Tk=;
+ b=cijMJNMf0fKZ0KO2z9r5GUQu7dHtlkoAlQm41CvWUwLk1uENPlSq93DQZRevPy223s
+ 49EVW8ARQSjx0nlPYwce4HTb8scISy7SdFVOVVLMuOpXpQEWu6jcO0Lo1V9IDX6/Vag0
+ HPh2OoUS9C7XNGG9u5gYbMYx3OOzjQBRZtFJYd5LbVG38oChXVe2YzyCPVVrts8bYNGY
+ OvfGn7R7aDQ65O7U/YD15pFqNA5U4AkmjCn+pynPRp1cMeMdmLop9254K8YGYY3VpDcf
+ DricQEMEtVPj5DrSVjKDNp9XzFk3iZWdbwsG5IOUx5ipKa27/Llw+9VgwnjOun/y855j
+ egXA==
+X-Gm-Message-State: AOJu0YxvEnxkKfrACkhxX8u/o3IL3oVt4QSXCoMnBcTqoSvtq8Z6hIuc
+ SvYn3IBNI43tY3BOYnTd5xv4RxedQzpSiWoHZ2AYGlniHe9GDPxV+d2FVeb6p9oloCQ=
+X-Gm-Gg: AZuq6aIX3a3DWtH9cmpCIEJkr7firN5Qmd6xW1uMfVMrbwItwXyf37DWYfQect5SrPl
+ KSiXBi5Kzl7xmSkck7xdnXi/Wo4j3vDA3fZoXLkiblL9tOToCQFSl5ZrZOwDYd/eBxokQE0jNzE
+ WwlTLOk/u8nKZZ/Ct9G1H39pHVVBKk3E/iDryVOoqwQFqWkhDJur2q0sRAUxUHaj9NZTw5d266j
+ k7T/VGSmPzE2/11yTr+wt9n+1b3/4Z3Xm3fgUxmws9P3Q+eFXLw2D8vRizT+osn/M7Bcxg6Hd4U
+ 5AnuPVcZQoQTIxdb9Ul4zEdqKToHfTec52G4O4iCgb/Q0Tqds7fQELa+JHGXeh4AzI9c5rm+vyY
+ wpCFMRVwaSYAoP/NQBn15vFMDkhVYOJ6QqbFvrGoI+kiP7pg+73gHzxYKSXRrrRohh5VrbgmQyj
+ 6ghFOpTvBtEtYkNuTHsyQTBa9afB+9Ow==
+X-Received: by 2002:a5d:5f93:0:b0:435:dbbb:4516 with SMTP id
+ ffacd0b85a97d-4362934abc9mr694258f8f.29.1770321553698; 
+ Thu, 05 Feb 2026 11:59:13 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.26
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:59:27 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:13 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
- Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
-Subject: [PATCH 29/29] hw/core: Add ATS support to Remote Port memory slave
-Date: Thu,  5 Feb 2026 20:58:24 +0100
-Message-ID: <20260205195824.2610192-30-ruslichenko.r@gmail.com>
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH 20/29] hw/core: Add Remote Port GPIO/Interrupt bridge
+Date: Thu,  5 Feb 2026 20:58:15 +0100
+Message-ID: <20260205195824.2610192-21-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,324 +103,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
+From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Integrate Address Translation Services (ATS) into the Remote Port Memory Slave
-to support IOMMU translation for remote transactions.
+This patch adds the `remote-port-gpio` device, which enables
+GPIO levels exchange between QEMU and the remote peer.
 
-This patch implements:
-- Support for creation of RP ATS as RP Memory Slave subdevice
-- Dynamic configuration of the ATS device, linking it to the
-  same IOMMU context (iommu-id, stream-id) as the parent memory slave.
-- Update for FDT generic utility to parse 'remote-port-ats'
-  properties and propagate the configuration to the device.
+It maps QEMU's `qemu_irq` lines (GPIOs) to Remote Port `RP_CMD_interrupt`
+packets, enabling the synchronization of interrupt lines and logic signals
+across the simulation.
 
-This allows external masters to request address translations via the Remote
-Port protocol, which are then serviced by the QEMU IOMMU infrastructure.
+This is essential for wiring up interrupt controllers or discrete logic
+signals (reset lines, enable pins).
 
-Signed-off-by: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c                 | 10 +++
- hw/core/remote-port-ats.c                  | 97 +++++++++++++++++++++-
- hw/core/remote-port-memory-slave.c         | 36 +++++++-
- include/hw/core/remote-port-ats.h          |  3 +
- include/hw/core/remote-port-memory-slave.h |  4 +-
- 5 files changed, 145 insertions(+), 5 deletions(-)
+ hw/core/remote-port-gpio.c         | 183 +++++++++++++++++++++++++++++
+ hw/core/trace-events               |   4 +
+ include/hw/core/remote-port-gpio.h |  33 ++++++
+ 3 files changed, 220 insertions(+)
+ create mode 100644 hw/core/remote-port-gpio.c
+ create mode 100644 include/hw/core/remote-port-gpio.h
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 180038baf6..817e7209e1 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -1221,6 +1221,16 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-                 fprintf(stderr, "cant set device link for adaptor\n");
-                 break;
-             }
+diff --git a/hw/core/remote-port-gpio.c b/hw/core/remote-port-gpio.c
+new file mode 100644
+index 0000000000..b9bdbcc5a5
+--- /dev/null
++++ b/hw/core/remote-port-gpio.c
+@@ -0,0 +1,183 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
 +
-+            if (object_dynamic_cast(dev, TYPE_REMOTE_PORT_MEMORY_SLAVE)) {
-+                uint32_t rp_ats_id;
-+                rp_ats_id = qemu_fdt_getprop_cell(fdti->fdt, node_path,
-+                                                  "remote-port-ats", 0,
-+                                                  false, &errp);
++#include "qemu/osdep.h"
++#include "hw/core/sysbus.h"
++#include "system/system.h"
++#include "system/dma.h"
++#include "qemu/log.h"
++#include "qapi/qmp/qerror.h"
++#include "qapi/error.h"
++#include "migration/vmstate.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/irq.h"
++#include "trace.h"
 +
-+                object_property_set_int(OBJECT(dev), "rp-ats-id",
-+                                        rp_ats_id, &errp);
-+            }
-         }
-         errp = NULL;
-     }
-diff --git a/hw/core/remote-port-ats.c b/hw/core/remote-port-ats.c
-index 1f6c8d7410..27cf8c6c7b 100644
---- a/hw/core/remote-port-ats.c
-+++ b/hw/core/remote-port-ats.c
-@@ -33,10 +33,29 @@
- #include "migration/vmstate.h"
- #include "hw/core/qdev-properties.h"
- #include "trace.h"
-+#include "qemu/cutils.h"
- 
- #include "hw/core/remote-port-proto.h"
- #include "hw/core/remote-port-ats.h"
- 
-+#define RP_TRACE_LVL_NONE   (0u)
-+#define RR_TRACE_LVL_ERROR  (1u)
-+#define RP_TRACE_LVL_WARN   (2u)
-+#define RP_TRACE_LVL_INFO   (3u)
++#include "hw/core/remote-port.h"
++#include "hw/core/remote-port-proto.h"
++#include "hw/core/remote-port-gpio.h"
 +
-+#define RP_TRACE_LEVEL (RP_TRACE_LVL_INFO)
++#define CACHE_INVALID -1
 +
-+#ifndef RP_TRACE_LEVEL
-+#define RP_TRACE_LEVEL (RP_TRACE_LVL_NONE)
++static void rp_gpio_handler(void *opaque, int irq, int level)
++{
++    RemotePortGPIO *s = opaque;
++    struct rp_pkt pkt;
++    size_t len;
++    int64_t clk;
++    uint32_t id = rp_new_id(s->rp);
++    uint32_t flags = s->posted_updates ? RP_PKT_FLAGS_posted : 0;
++
++    /* If we hit the cache, return early.  */
++    if (s->cache[irq] != CACHE_INVALID && s->cache[irq] == level) {
++        return;
++    }
++    /* Update the cache and update the remote peer.  */
++    s->cache[irq] = level;
++
++    clk = rp_normalized_vmclk(s->rp);
++    len = rp_encode_interrupt_f(id, s->rp_dev, &pkt.interrupt, clk,
++                              irq, 0, level, flags);
++
++    trace_remote_port_gpio_tx_interrupt(id, flags, s->rp_dev, 0, irq, level);
++
++    if (s->peer->caps.wire_posted_updates && !s->posted_updates) {
++        rp_rsp_mutex_lock(s->rp);
++    }
++
++    rp_write(s->rp, (void *)&pkt, len);
++
++    /*
++     * If peer supports posted updates it will respect our flag and
++     * not respond.
++     */
++    if (s->peer->caps.wire_posted_updates && !s->posted_updates) {
++        RemotePortRespSlot *rsp_slot;
++        struct rp_pkt_interrupt *intr;
++
++        rsp_slot = rp_dev_wait_resp(s->rp, s->rp_dev, id);
++        assert(rsp_slot->rsp.pkt->hdr.id == id);
++
++        intr = &rsp_slot->rsp.pkt->interrupt;
++        trace_remote_port_gpio_rx_interrupt(intr->hdr.id, intr->hdr.flags,
++            intr->hdr.dev, intr->vector, intr->line, intr->val);
++
++        rp_resp_slot_done(s->rp, rsp_slot);
++        rp_rsp_mutex_unlock(s->rp);
++    }
++}
++
++static void rp_gpio_interrupt(RemotePortDevice *rpdev, struct rp_pkt *pkt)
++{
++    RemotePortGPIO *s = REMOTE_PORT_GPIO(rpdev);
++
++    trace_remote_port_gpio_rx_interrupt(pkt->hdr.id, pkt->hdr.flags,
++        pkt->hdr.dev, pkt->interrupt.vector, pkt->interrupt.line,
++        pkt->interrupt.val);
++
++    qemu_set_irq(s->gpio_out[pkt->interrupt.line], pkt->interrupt.val);
++
++    if (s->peer->caps.wire_posted_updates
++        && !(pkt->hdr.flags & RP_PKT_FLAGS_posted)) {
++        RemotePortDynPkt rsp = {0};
++        size_t len;
++
++        /* Need to reply.  */
++        rp_dpkt_alloc(&rsp, sizeof(struct rp_pkt_interrupt));
++        len = rp_encode_interrupt_f(pkt->hdr.id, pkt->hdr.dev,
++                                    &rsp.pkt->interrupt,
++                                    pkt->interrupt.timestamp,
++                                    pkt->interrupt.line,
++                                    pkt->interrupt.vector,
++                                    pkt->interrupt.val,
++                                    pkt->hdr.flags | RP_PKT_FLAGS_response);
++
++        trace_remote_port_gpio_tx_interrupt(pkt->hdr.id,
++            pkt->hdr.flags | RP_PKT_FLAGS_response, pkt->hdr.dev,
++            pkt->interrupt.vector, pkt->interrupt.line, pkt->interrupt.val);
++
++        rp_write(s->rp, (void *)rsp.pkt, len);
++    }
++}
++
++static void rp_gpio_reset(DeviceState *dev)
++{
++    RemotePortGPIO *s = REMOTE_PORT_GPIO(dev);
++
++    /* Mark as invalid.  */
++    memset(s->cache, CACHE_INVALID, s->num_gpios);
++}
++
++static void rp_gpio_realize(DeviceState *dev, Error **errp)
++{
++    RemotePortGPIO *s = REMOTE_PORT_GPIO(dev);
++    unsigned int i;
++
++    s->peer = rp_get_peer(s->rp);
++
++    s->gpio_out = g_new0(qemu_irq, s->num_gpios);
++    qdev_init_gpio_out(dev, s->gpio_out, s->num_gpios);
++    qdev_init_gpio_in(dev, rp_gpio_handler, s->num_gpios);
++
++    for (i = 0; i < s->num_gpios; i++) {
++        sysbus_init_irq(SYS_BUS_DEVICE(s), &s->gpio_out[i]);
++    }
++}
++
++static void rp_prop_allow_set_link(const Object *obj, const char *name,
++                                   Object *val, Error **errp)
++{
++}
++
++static void rp_gpio_init(Object *obj)
++{
++    RemotePortGPIO *rpms = REMOTE_PORT_GPIO(obj);
++
++    object_property_add_link(obj, "rp-adaptor0", "remote-port",
++                             (Object **)&rpms->rp,
++                             rp_prop_allow_set_link,
++                             OBJ_PROP_LINK_STRONG);
++}
++
++static Property rp_properties[] = {
++    DEFINE_PROP_UINT32("rp-chan0", RemotePortGPIO, rp_dev, 0),
++    DEFINE_PROP_UINT32("num-gpios", RemotePortGPIO, num_gpios, 16),
++    DEFINE_PROP_UINT16("cell-offset-irq-num", RemotePortGPIO,
++                       cell_offset_irq_num, 0),
++    DEFINE_PROP_BOOL("posted-updates", RemotePortGPIO, posted_updates, true),
++};
++
++static void rp_gpio_class_init(ObjectClass *oc, const void *data)
++{
++    RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    rpdc->ops[RP_CMD_interrupt] = rp_gpio_interrupt;
++    dc->legacy_reset = rp_gpio_reset;
++    dc->realize = rp_gpio_realize;
++    device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
++}
++
++static const TypeInfo rp_info = {
++    .name          = TYPE_REMOTE_PORT_GPIO,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RemotePortGPIO),
++    .instance_init = rp_gpio_init,
++    .class_init    = rp_gpio_class_init,
++    .interfaces    = (InterfaceInfo[]) {
++        { TYPE_REMOTE_PORT_DEVICE },
++        { },
++    },
++};
++
++static void rp_register_types(void)
++{
++    type_register_static(&rp_info);
++}
++
++type_init(rp_register_types)
+diff --git a/hw/core/trace-events b/hw/core/trace-events
+index ee77916010..fb3125b0eb 100644
+--- a/hw/core/trace-events
++++ b/hw/core/trace-events
+@@ -40,3 +40,7 @@ remote_port_memory_master_rx_busaccess(const char *cmd, uint32_t id, uint32_t fl
+ # remote-port-memory-slave.c
+ remote_port_memory_slave_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
+ remote_port_memory_slave_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
++
++# remote-port-memory-gpio.c
++remote_port_gpio_tx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
++remote_port_gpio_rx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
+diff --git a/include/hw/core/remote-port-gpio.h b/include/hw/core/remote-port-gpio.h
+new file mode 100644
+index 0000000000..940e2ec4fd
+--- /dev/null
++++ b/include/hw/core/remote-port-gpio.h
+@@ -0,0 +1,33 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
++#ifndef REMOTE_PORT_GPIO_H
++#define REMOTE_PORT_GPIO_H
++
++#define TYPE_REMOTE_PORT_GPIO "remote-port-gpio"
++#define REMOTE_PORT_GPIO(obj) \
++        OBJECT_CHECK(RemotePortGPIO, (obj), TYPE_REMOTE_PORT_GPIO)
++
++#define MAX_GPIOS 960
++
++typedef struct RemotePortGPIO {
++    /* private */
++    SysBusDevice parent;
++    /* public */
++
++    int8_t cache[MAX_GPIOS];
++    uint32_t num_gpios;
++    qemu_irq *gpio_out;
++    uint16_t cell_offset_irq_num;
++
++    bool posted_updates;
++    uint32_t rp_dev;
++    struct RemotePort *rp;
++    struct rp_peer_state *peer;
++} RemotePortGPIO;
 +#endif
-+
-+#define RP_TRACE(level, ...) do { \
-+    if (RP_TRACE_LEVEL >= level) { \
-+        fprintf(stderr,  "[TRACE] %s(): ", __func__); \
-+        fprintf(stderr, ## __VA_ARGS__); \
-+    } \
-+} while (0)
-+
- typedef struct ATSIOMMUNotifier {
-     IOMMUNotifier n;
-     MemoryRegion *mr;
-@@ -190,6 +209,17 @@ static void rp_ats_cache_insert(RemotePortATS *s,
-     iotlb->addr_mask = mask;
-     iotlb->target_as = target_as;
-     g_array_append_val(s->cache, iotlb);
-+
-+    char *target_as_name = strdup(iotlb->target_as->name);
-+    RP_TRACE(RP_TRACE_LVL_INFO, "IOMMUTLBEntry entry added to cache\r\n");
-+    RP_TRACE(RP_TRACE_LVL_INFO, "iova: 0x%" PRIx64 " translated_addr: 0x%" \
-+       PRIx64 " addr_mask: 0x%" PRIx64 " target_as: %s perm: 0x%" PRIx32 "\r\n",
-+        iotlb->iova,
-+        iotlb->translated_addr,
-+        iotlb->addr_mask,
-+        target_as_name,
-+        iotlb->perm);
-+    free(target_as_name);
- }
- 
- static void rp_ats_iommu_unmap_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-@@ -215,11 +245,20 @@ static bool ats_translate_address(RemotePortATS *s, struct rp_pkt *pkt,
-     mr = ats_do_translate(&s->as, pkt->ats.addr, phys_addr, phys_len,
-                           &target_as, &prot, attrs);
-     if (!mr) {
-+        RP_TRACE(RP_TRACE_LVL_INFO, "Remote Port ATS translation failed\r\n");
-         return false;
-     }
- 
-+    RP_TRACE(RP_TRACE_LVL_INFO,
-+        "Remote Port ATS translation succeeded - aka. ats_do_translate()\r\n");
-+    RP_TRACE(RP_TRACE_LVL_INFO,
-+        "phys_addr: 0x%" PRIx64 " phys_len: 0x%" PRIx64 "\r\n",
-+        *phys_addr, *phys_len);
-+
-     iommu_mr = memory_region_get_iommu(mr);
-     if (iommu_mr) {
-+        RP_TRACE(RP_TRACE_LVL_INFO,
-+        "Memory region obtained from ats_do_translate() is associated with IOMMU\r\n");
-         int iommu_idx = memory_region_iommu_attrs_to_index(iommu_mr, attrs);
-         ATSIOMMUNotifier *notifier;
-         int i;
-@@ -284,11 +323,23 @@ static void rp_ats_req(RemotePortDevice *dev, struct rp_pkt *pkt)
- 
-     assert(!(pkt->hdr.flags & RP_PKT_FLAGS_response));
- 
-+    RP_TRACE(RP_TRACE_LVL_INFO, "Remote Port ATS request is received\r\n")
-+    RP_TRACE(RP_TRACE_LVL_INFO, "cmd 0x%" PRIx32 " len: 0x%" PRIx32 " id: 0x%" \
-+        PRIx32 " flags: 0x%" PRIx32 " dev: 0x%" PRIx32 "\r\n",
-+        pkt->hdr.cmd, pkt->hdr.len, pkt->hdr.id, pkt->hdr.flags, pkt->hdr.dev);
-+    RP_TRACE(RP_TRACE_LVL_INFO, "timestamp 0x%" PRIx64 " attributes: 0x%" PRIx64
-+        " addr: 0x%" PRIx64 " len: 0x%" PRIx64 " result: 0x%" PRIx32 "\r\n",
-+        pkt->ats.timestamp, pkt->ats.attributes, pkt->ats.addr, pkt->ats.len,
-+        pkt->ats.result);
-+
-     rp_dpkt_alloc(&s->rsp, pktlen);
- 
-     result = ats_translate_address(s, pkt, &phys_addr, &phys_len) ?
-         RP_ATS_RESULT_ok : RP_ATS_RESULT_error;
- 
-+    RP_TRACE(RP_TRACE_LVL_INFO, "Remote Port ATS translation is %s\r\n",
-+            ((result == RP_ATS_RESULT_ok) ? "successful" : "unsuccessful"));
-+
-     /*
-      * delay here could be set to the annotated cost of doing issuing
-      * these accesses. QEMU doesn't support this kind of annotations
-@@ -307,18 +358,60 @@ static void rp_ats_req(RemotePortDevice *dev, struct rp_pkt *pkt)
-                              pkt->hdr.flags | RP_PKT_FLAGS_response);
-     assert(enclen == pktlen);
- 
-+    RP_TRACE(RP_TRACE_LVL_INFO, "Remote Port ATS response is generated\r\n")
-+    RP_TRACE(RP_TRACE_LVL_INFO, "cmd 0x%" PRIx32 " len: 0x%" PRIx32 " id: 0x%" \
-+        PRIx32 " flags: 0x%" PRIx32 " dev: 0x%" PRIx32 "\r\n",
-+        be32toh(s->rsp.pkt->hdr.cmd),
-+        be32toh(s->rsp.pkt->hdr.len),
-+        be32toh(s->rsp.pkt->hdr.id),
-+        be32toh(s->rsp.pkt->hdr.flags),
-+        be32toh(s->rsp.pkt->hdr.dev));
-+    RP_TRACE(RP_TRACE_LVL_INFO, "timestamp 0x%" PRIx64 " attributes: 0x%" \
-+    PRIx64 " addr: 0x%" PRIx64 " len: 0x%" PRIx64 " result: 0x%" PRIx32 "\r\n",
-+        be64toh(s->rsp.pkt->ats.timestamp),
-+        be64toh(s->rsp.pkt->ats.attributes),
-+        be64toh(s->rsp.pkt->ats.addr),
-+        be64toh(s->rsp.pkt->ats.len),
-+        be32toh(s->rsp.pkt->ats.result));
-+
-     rp_write(s->rp, (void *)s->rsp.pkt, enclen);
- }
- 
-+static AddressSpace *bus_iommu_address_space(BusState *iommu_bus,
-+                                             uint32_t iommu_id, uint16_t devid)
-+{
-+    if (iommu_bus && iommu_bus->iommu[iommu_id].iommu_ops) {
-+        return iommu_bus->iommu[iommu_id].iommu_ops->get_address_space(
-+            iommu_bus, iommu_bus->iommu[iommu_id].iommu_opaque, devid);
-+    }
-+    return &address_space_memory;
-+}
-+
-+static void rp_ats_init_done(Notifier *notifier, void *data)
-+{
-+    RemotePortATS *s = container_of(notifier, RemotePortATS, machine_done);
-+    AddressSpace *as;
-+
-+    if (s->rp_stream_id) {
-+        as = bus_iommu_address_space(sysbus_get_default(),
-+                                     s->iommu_id, s->rp_stream_id);
-+        address_space_init(&s->as, as->root, "dma");
-+    } else {
-+        address_space_init(&s->as, s->mr ? s->mr : get_system_memory(), "dma");
-+    }
-+}
-+
- static void rp_ats_realize(DeviceState *dev, Error **errp)
- {
-     RemotePortATS *s = REMOTE_PORT_ATS(dev);
- 
-     s->peer = rp_get_peer(s->rp);
--    address_space_init(&s->as, s->mr ? s->mr : get_system_memory(), "ats-as");
- 
-     s->iommu_notifiers = g_array_new(false, true, sizeof(ATSIOMMUNotifier *));
-     s->cache = g_array_new(false, true, sizeof(IOMMUTLBEntry *));
-+
-+    s->machine_done.notify = rp_ats_init_done;
-+    qemu_add_machine_init_done_notifier(&s->machine_done);
- }
- 
- static void rp_prop_allow_set_link(const Object *obj, const char *name,
-@@ -363,7 +456,9 @@ static void rp_ats_unrealize(DeviceState *dev)
- }
- 
- static Property rp_properties[] = {
-+    DEFINE_PROP_UINT32("iommu-id", RemotePortATS, iommu_id, 0),
-     DEFINE_PROP_UINT32("rp-chan0", RemotePortATS, rp_dev, 0),
-+    DEFINE_PROP_UINT32("rp-stream-id", RemotePortATS, rp_stream_id, 0),
- };
- 
- static void rp_ats_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/core/remote-port-memory-slave.c b/hw/core/remote-port-memory-slave.c
-index 0419e75bfa..2694f3edae 100644
---- a/hw/core/remote-port-memory-slave.c
-+++ b/hw/core/remote-port-memory-slave.c
-@@ -192,13 +192,38 @@ static AddressSpace *bus_iommu_address_space(BusState *iommu_bus,
-     return &address_space_memory;
- }
- 
-+static void rp_memory_slave_create_ats(RemotePortMemorySlave *s)
-+{
-+    Object *tmp_obj;
-+
-+    /* Create RP ATS dev. */
-+    tmp_obj = object_new(TYPE_REMOTE_PORT_ATS);
-+    s->rp_ats = REMOTE_PORT_ATS(tmp_obj);
-+    object_property_add_child(OBJECT(s), "rp-ats", tmp_obj);
-+    object_unref(tmp_obj);
-+
-+     /* Setup the RP ATS dev. */
-+    rp_device_attach(OBJECT(s->rp), OBJECT(s->rp_ats), 0,
-+                     s->rp_ats_id, &error_abort);
-+    object_property_set_int(OBJECT(s->rp_ats), "iommu-id",
-+                            s->iommu_id, &error_abort);
-+    object_property_set_int(OBJECT(s->rp_ats), "rp-stream-id",
-+                            s->rp_stream_id, &error_abort);
-+    object_property_set_bool(OBJECT(s->rp_ats), "realized",
-+                             true, &error_abort);
-+
-+    /* Setup the RP Slave dev. */
-+    object_property_set_link(OBJECT(s), "rp-ats-cache",
-+                             OBJECT(s->rp_ats), &error_abort);
-+}
-+
- static void rp_memory_slave_init_done(Notifier *notifier, void *data)
- {
-     RemotePortMemorySlave *s = container_of(notifier, RemotePortMemorySlave,
-                                             machine_done);
-     AddressSpace *as;
- 
--    if (s->channel_id) {
-+    if (s->rp_stream_id) {
-         as = bus_iommu_address_space(sysbus_get_default(), s->iommu_id,
-                                      s->rp_stream_id);
-         address_space_init(&s->as, as->root, "dma");
-@@ -212,6 +237,11 @@ static void rp_memory_slave_realize(DeviceState *dev, Error **errp)
-     RemotePortMemorySlave *s = REMOTE_PORT_MEMORY_SLAVE(dev);
- 
-     s->peer = rp_get_peer(s->rp);
-+
-+    if (s->rp_ats_id > 0) {
-+        rp_memory_slave_create_ats(s);
-+    }
-+
-     s->machine_done.notify = rp_memory_slave_init_done;
-     qemu_add_machine_init_done_notifier(&s->machine_done);
- }
-@@ -260,8 +290,8 @@ static void rp_memory_slave_unrealize(DeviceState *dev)
- 
- static Property rp_properties[] = {
-     DEFINE_PROP_UINT32("iommu-id", RemotePortMemorySlave, iommu_id, 0),
--    DEFINE_PROP_UINT32("rp-chan0", RemotePortMemorySlave, channel_id, 0),
--    DEFINE_PROP_END_OF_LIST()
-+    DEFINE_PROP_UINT32("rp-chan0", RemotePortMemorySlave, rp_stream_id, 0),
-+    DEFINE_PROP_UINT32("rp-ats-id", RemotePortMemorySlave, rp_ats_id, 0),
- };
- 
- static void rp_memory_slave_class_init(ObjectClass *oc, const void *data)
-diff --git a/include/hw/core/remote-port-ats.h b/include/hw/core/remote-port-ats.h
-index 8bdae1bce9..9e1a2cf419 100644
---- a/include/hw/core/remote-port-ats.h
-+++ b/include/hw/core/remote-port-ats.h
-@@ -45,6 +45,9 @@ typedef struct {
-     GArray *iommu_notifiers;
-     uint32_t rp_dev;
-     GArray *cache; /* Translation cache */
-+    Notifier machine_done;
-+    uint32_t rp_stream_id;
-+    uint32_t iommu_id;
- } RemotePortATS;
- 
- #define TYPE_REMOTE_PORT_ATS_CACHE "remote-port-ats-cache"
-diff --git a/include/hw/core/remote-port-memory-slave.h b/include/hw/core/remote-port-memory-slave.h
-index 3161073a3f..56959ee124 100644
---- a/include/hw/core/remote-port-memory-slave.h
-+++ b/include/hw/core/remote-port-memory-slave.h
-@@ -23,7 +23,6 @@ typedef struct RemotePortMemorySlave {
-     /* private */
-     SysBusDevice parent;
-     /* public */
--    uint32_t channel_id;
-     struct RemotePort *rp;
-     struct rp_peer_state *peer;
-     MemoryRegion *mr;
-@@ -32,6 +31,9 @@ typedef struct RemotePortMemorySlave {
-     RemotePortDynPkt rsp;
-     RemotePortATSCache *ats_cache;
-     Notifier machine_done;
-+    uint32_t rp_stream_id;
-+    RemotePortATS *rp_ats;
-+    uint32_t rp_ats_id;
-     uint32_t iommu_id;
- } RemotePortMemorySlave;
- #endif
 -- 
 2.43.0
 
