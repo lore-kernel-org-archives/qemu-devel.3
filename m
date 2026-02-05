@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C04EA795B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C95EA795B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnpnQ-000598-PP; Wed, 04 Feb 2026 22:12:44 -0500
+	id 1vnpnw-00061H-I2; Wed, 04 Feb 2026 22:13:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnP-00058g-4N
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:12:43 -0500
+ id 1vnpnp-0005sK-4z
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:09 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnN-0001w4-CA
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:12:42 -0500
+ id 1vnpnn-0001xZ-Bv
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770261161; x=1801797161;
+ t=1770261187; x=1801797187;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=7DJiYl9xqQzngP0iB+SNtHKnYdEDQEa+m9EuD7P+lmg=;
- b=hMgMrY5Ei44wBiJnekhFr6OEcj4QzP4otdHPuTLsDEy8sEUo5lOYUOgP
- aPnkp0iPvyJpJ5RszuPoAtBOUtlgweKPHy/AK3hRy2sUgb8BgLsKctxDk
- Rn9CJpbpTkWw3wp0ezEgR317Qk3RBdyx5DZE1koCbMTnToQf7ScE+C8tS
- lwznDTBklRZLh8GP+bF9YpsNCLQiCqj7NpZhm/2iMdAQodpctOC1Prati
- iM4d+IA1ZcLy3wXE3WTMAWZUfzGnhioDQXBGKD4wKfMJs4JOrg/x7xNV/
- bpggRW0SMfqTowiZm5130oht+yKVIYnbZG8mqBoW92kh9M9FvfmcydNU2 Q==;
-X-CSE-ConnectionGUID: yAVQw/CCRU6JGn2mqqEmww==
-X-CSE-MsgGUID: jc1vsQl9Q+aJZk5C7/zQHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910454"
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910454"
+ bh=cmZCbFWZBmy27uy8f1zyKQBCOzzDx+hRdvm7jVkNBNc=;
+ b=YXUw1aCkeC0L55sAL5APfZJa92Hux1LQWA5UP+eAZYTZP+2Q2muXRBlM
+ il0XsE2FEakEVTYbdWO9dPiRUho10hRNJze4AdfZTkT91VHbRxaKGpEV3
+ b9g9jx5GdziKq150+WgPJuvdrItiiyVBiQbpITaep2o120yFoVGHreNMd
+ BdUkKxMms0/qd/cUaZ4uVrAowdLxnyvkckaKpmjlVpNRbgHgklCU5d84v
+ HIzW06abgfeECaqoAsIHR50s9Fob1MWbGDXtjL2Aqh4zS7SXmLwo0URpD
+ R+kanJE50sO2/KNZf0NHB33EN/v48oxQOv299gHRZkbSYfcLmWiRfa2ok g==;
+X-CSE-ConnectionGUID: SQmXjoQLRiWmWcY+jpE72Q==
+X-CSE-MsgGUID: /YEFxEs5Roq8PuAeYU5gng==
+X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910531"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910531"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:12:40 -0800
-X-CSE-ConnectionGUID: J92nFbLKTKeVyvg2uUFNHQ==
-X-CSE-MsgGUID: EEBjy/5QSB6oR+bxBAvgBQ==
+ 04 Feb 2026 19:13:06 -0800
+X-CSE-ConnectionGUID: 1oNtGRgQTim8YQuNfbs4bA==
+X-CSE-MsgGUID: Br4UWhLNToCTG95Y6s79NA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209652028"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209652108"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:12:31 -0800
+ 04 Feb 2026 19:13:03 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [RFC PATCH 05/14] intel_iommu: Change pasid property from bool to
- uint8
-Date: Wed,  4 Feb 2026 22:11:23 -0500
-Message-ID: <20260205031133.74357-6-zhenzhong.duan@intel.com>
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>
+Subject: [RFC PATCH 13/14] intel_iommu: Drop pasid related check
+Date: Wed,  4 Feb 2026 22:11:31 -0500
+Message-ID: <20260205031133.74357-14-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260205031133.74357-1-zhenzhong.duan@intel.com>
 References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
@@ -87,70 +87,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'x-pasid-mode' is a bool property, we need an extra 'pss' property to
-represent PASID size supported. Because there is no any device in QEMU
-supporting pasid capability yet, no guest could use the pasid feature
-until now, 'x-pasid-mode' takes no effect.
+The check of 's->pasid && x86_iommu->dt_supported' is an overkill,
+because all emulated devices don't support PASID capability yet,
+they never send Requests-with-PASID, no pasid tagged iotlb entries
+are cached in the device. Even if guest send PASID-based-Device-TLB
+invalidation request, we can ignore it safely.
 
-So instead of an extra 'pss' property we can use a single 'pasid'
-property of uint8 type to represent if pasid is supported and the PASID
-bits size. A value of N > 0 means pasid is supported and N - 1 is the
-value in PSS field in ECAP register.
-
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h | 1 -
- include/hw/i386/intel_iommu.h  | 2 +-
- hw/i386/intel_iommu.c          | 4 ++--
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ hw/i386/intel_iommu.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index a2ca79f925..71cb3b662e 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -194,7 +194,6 @@
- #define VTD_ECAP_PRS                (1ULL << 29)
- #define VTD_ECAP_MHMV               (15ULL << 20)
- #define VTD_ECAP_SRS                (1ULL << 31)
--#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
- #define VTD_ECAP_PASID              (1ULL << 40)
- #define VTD_ECAP_SMTS               (1ULL << 43)
- #define VTD_ECAP_SSTS               (1ULL << 46)
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 6c61fd39c7..5e5779e460 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -315,7 +315,7 @@ struct IntelIOMMUState {
-     bool buggy_eim;                 /* Force buggy EIM unless eim=off */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
--    bool pasid;                     /* Whether to support PASID */
-+    uint8_t pasid;                  /* PASID supported in bits, 0 if not */
-     bool fs1gp;                     /* First Stage 1-GByte Page Support */
- 
-     /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index e8a6f50a5a..916eb0af5a 100644
+index 17252c804b..4ab50a9fd9 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4151,7 +4151,7 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
-     DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
--    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-+    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
-     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
-     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
-     DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
-@@ -4981,7 +4981,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
-     }
+@@ -5490,17 +5490,6 @@ static void vtd_realize(DeviceState *dev, Error **errp)
+     X86MachineState *x86ms = X86_MACHINE(ms);
+     PCIBus *bus = pcms->pcibus;
+     IntelIOMMUState *s = INTEL_IOMMU_DEVICE(dev);
+-    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+-
+-    if (s->pasid && x86_iommu->dt_supported) {
+-        /*
+-         * PASID-based-Device-TLB Invalidate Descriptor is not
+-         * implemented and it requires support from vhost layer which
+-         * needs to be implemented in the future.
+-         */
+-        error_setg(errp, "PASID based device IOTLB is not supported");
+-        return;
+-    }
  
-     if (s->pasid) {
--        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
-+        s->ecap = VTD_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid - 1);
-     }
- }
- 
+     if (!vtd_decide_config(s, errp)) {
+         return;
 -- 
 2.47.3
 
