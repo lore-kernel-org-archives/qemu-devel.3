@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C1FECD99C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EF0ECD999
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5VZ-0006sa-Hx; Thu, 05 Feb 2026 14:59:21 -0500
+	id 1vo5VM-0006k4-UF; Thu, 05 Feb 2026 14:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VT-0006pC-7p
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:18 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1vo5VK-0006ii-Jq
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:06 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VQ-000386-M9
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:14 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4359a316d89so1095515f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:12 -0800 (PST)
+ id 1vo5VJ-00036r-1H
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:06 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4362197d174so828581f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321551; x=1770926351; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321543; x=1770926343; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YNa6k84+p4NLUcl3AM/SAA8NkXll7Iajqtfasejwd8w=;
- b=cDiVPx7b7HuXo0k+KLaLGPOo36XxNfSNyBsWBXoyFz+ISc0suoZreLPeA766Rh7FtY
- kIru1nhayRHrpCfLu2aQLVTwVIvfdzSgGTs/SV55IVUwd6kRBagtRGB4bkB+pjQ42tZZ
- 44zQX/TlecYaAdrYHPBQbJUp8NA/kEQ9rT4myvRWh1Z4a4AuYZ0aN2ulkEMvjnwJ29yr
- 4htefsBDtI9YufL6qvfaw6C4kVBgZJanYIfvoC5F8TzZTeK7JGWa4KEVthSmJPYbTDHS
- uCG4y7CKQZw5F7sj7Skmu+5xKYSMh9y1UDYJ14b9039jJW86PrL/xjjSJfole3GB+Q1u
- 9A2Q==
+ bh=5qvuMaHRp0wLKOuMUSBaArgy1/39Q2HJlclOT444aA8=;
+ b=jpHbZtTem+jq5SEi4byKQZXOv/h6irGjWKppFzxaB3papJIh241zBCFPuaJ7BKcIQ/
+ mxjgtDudIy/I56i+/hFZn0NhMTGPcX8VVO8V7vhLH+Jekw1RUdy6jMQbr/m8HBo+ATkO
+ DaprmqrpjgF6ZMNFXQiDgR7FHBQqURmrr+XtvIFZMowdzeoPickVKk3jBy0OhA0yXnfY
+ MltOi/oAnltcEO+kSuDqd9ZSy5w5FDPpS8bc3NJfpFcbZWmSehRgSrqoRfdbO7LiVcSP
+ iBxrN4ejOgn2DCMpXsrRgLXe2m0KRAmTznc8wANjF3hjWwV1hXBFGQlmGeNdQ8xjVhR/
+ 7ICQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321551; x=1770926351;
+ d=1e100.net; s=20230601; t=1770321543; x=1770926343;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YNa6k84+p4NLUcl3AM/SAA8NkXll7Iajqtfasejwd8w=;
- b=kXJ2COrm4lQ7uI5A1L4IA9kXG9efiaImv5JLFXebw5v/0pgpdA5faPWnig4OH/zg+9
- SZoVJKxlk3Er42xNKAa9WIUqyPMmcWrpFSmtamp7V+PsPHVbevBOE744vEs0mmWlCuZ6
- Dttjf7VuYME6c95GZ8FpTl7Qr3nWIrF4PUZ7pxBDmn9mTD8tLlbqULDdyIYZN1jmWnq1
- X+V7xnKjQrCn+FV3ZdM8iD+GqmYwDjBwrdAQIzuvHeJdRPNAa96b9e98lzrN41owx5m1
- cNSEirbcw2sDBKlzReL95/Yc8dAe8pNrVWG1yhmbsh28H1vvvf6GFWyeX/P2AaWt8O3H
- GUpw==
-X-Gm-Message-State: AOJu0Ywe+06FenVF8n3ht/kjYPhXHboNbaEeYZl5AQy5aU3Z9I0ErAAI
- FTs8zlpsaLbOvr1GkuAmgVNCv+R4+74cGN7Pwu7eCRuVxul6TI9pulFKzjDYRJPBVoY=
-X-Gm-Gg: AZuq6aIadpLzulQa3gFwliBruEx9kqWkYatID9F65i4+AfyoDGsYYtgTY+CgL8YMc3j
- rVDfjLdDmH0mF7ERlspcNrVxPY0NStuMsnJNUn5nF08o5dGBqx9PBXPtkVoeZQ+jjI8SXYGP9uI
- 71+W9CAN4liKWu4W3FzIwNAoo9xukmh7h8cm2jlRUZlTYjInXR2yttTR/33s+SyYzVbSwMVGvSQ
- +MNphBFpnhoGIRKJfjY2iq+FdGDpkuagDqO2yh6yeBL/UPEPLEd05EbDFQJZoJH90qwJhktCor3
- mJ22QwWg2JW8bdSUHnuwnD2rx6lbjVLM25h19EQpcZqIQq0MXb4oB2nXXiP9x2L+hF3nwUKjnH0
- HMH7wYw5eULjqXl/5nsRqY9Xe/wP3hcQ0HKr58H7Tou3dKTNGZF4dWa4uZF1w6phcn1Ix/EyzxO
- Vdj/gUHnJ605XCmDasEJs=
-X-Received: by 2002:a05:6000:2386:b0:433:2f55:7cab with SMTP id
- ffacd0b85a97d-4362934bff8mr746555f8f.37.1770321550643; 
- Thu, 05 Feb 2026 11:59:10 -0800 (PST)
+ bh=5qvuMaHRp0wLKOuMUSBaArgy1/39Q2HJlclOT444aA8=;
+ b=pUjQuY9eIpH+iGsIcSN8Pr4OZ3jOx6qmUCrt0Ka1tyav9VhY6PQg1wooHi/Ly1IUy4
+ yEEOOm3r1nt+QtnJfvRBxHX9R+flRdETaH+AZ7pxasjs1H4Ta9lIzjA4vbCw3tkpWWaQ
+ Bxwm90UWJE/cxjjXhp/UWNphCcCkFOo59KScu0F+l/nTfxitxCFjHsJC0LOxJV9WRl9M
+ LcVf0b9J82NUeUTZdZEwzi8/KjXWt1hlXGlD1PgBWrJWiQJJQk+JeaQioKe4jazZePmE
+ XiHoB/p4dGsqhU77kj/ybV6fdGYK7Grnm8DWMLH+zW4+/wYGNYpVoK1mLwVkGuZmjseF
+ tQYA==
+X-Gm-Message-State: AOJu0YzyizQsH3jArKX1OHzi0Srmbuy2VVJWBTD9eHdH0Q2Hc1d7EyJv
+ NvlK/pfJrwguyOjSNCfvmp8rrYvtKInWeXCTIvoDd+9xSpb+B1pSUqnVbLLnQCTK2go=
+X-Gm-Gg: AZuq6aJeYsKhvEl/2dRwY8zqgA2jjUl6bhxSkjwTacTtQw53dbbb0n8AEgYohiN3rS7
+ jbiRBOLWXvPFIQrcxiqMlOcY/eHeutNhJpQcVd1+A7o0HCKjWnPTu4PSWUxqfW1qjGNufM/7QBk
+ 5ZHFONkVcYBwLG4EfeICER3z+MFaqOw6/4ADl3Txbf+X9vQKD8ghSFQkLaJ9RHMfo2P0Yy4e0Uf
+ CbRj1xTk4kpOqO4oMxtc3UfYVSjqy28jr3w6WqYACGPKLZQ1hGH9gyk03WPZquK6sh6Kd6BNVq9
+ OiW6SSvqlZDhhmyJg8MFR3L+NxuilmYzj2Cn+MtsNrhjpoFEKNJ0PItasGSm2Sj0sBTkq6esm7x
+ uexoNCBTvGGHLUYar+Uj2sVlUrXDaGrv/1XOdHRKUZMnr5Ao1plDNOalJ2rJqH+f966deOIUMYa
+ d/txcifcFdPH8w0V6vG9IEENqQTXM3lQ==
+X-Received: by 2002:a05:6000:2889:b0:436:1a24:df81 with SMTP id
+ ffacd0b85a97d-4362904b702mr635949f8f.2.1770321543005; 
+ Thu, 05 Feb 2026 11:59:03 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.09
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:59:10 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:01 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 18/29] hw/core: Implement Remote Port ATS logic and cache
- management
-Date: Thu,  5 Feb 2026 20:58:13 +0100
-Message-ID: <20260205195824.2610192-19-ruslichenko.r@gmail.com>
+Subject: [PATCH 13/29] system/memory: Introduce unified MemoryTransaction and
+ .access callback
+Date: Thu,  5 Feb 2026 20:58:08 +0100
+Message-ID: <20260205195824.2610192-14-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,249 +108,164 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Complete the Remote Port ATS implementation by adding the translation
-and cache management logic.
+Introduce a unified 'MemoryTransaction' structure to encapsulate all
+parameters of a memory access, including address, data, size, and
+attributes.
 
-This patch implements:
-- The logic for ats_translate_address to resolve addresses via the
-  QEMU IOMMU translation mechanism.
-- A local cache management system to store IOMMU entries for remote
-  masters.
-- Integration with IOMMU notifiers to handle invalidation requests
-  and maintain coherency with the peer.
+The logic in memory_region_dispatch_read/write is updated to prioritize
+the new 'access' callback when available.
 
-Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
+This change simplifies the integration of transaction-based subsystems,
+such as the Remote Port, by providing a standard container for memory
+access metadata.
+
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-ats.c | 207 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 205 insertions(+), 2 deletions(-)
+ include/system/memory.h | 23 ++++++++++++++
+ system/memory.c         | 66 +++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 87 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/remote-port-ats.c b/hw/core/remote-port-ats.c
-index c0e8150452..1f6c8d7410 100644
---- a/hw/core/remote-port-ats.c
-+++ b/hw/core/remote-port-ats.c
-@@ -57,14 +57,217 @@ static IOMMUTLBEntry *rp_ats_lookup_translation(RemotePortATSCache *cache,
-                                                 hwaddr translated_addr,
-                                                 hwaddr len)
- {
--    /* TBD */
-+    RemotePortATS *s = REMOTE_PORT_ATS(cache);
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 0562af3136..e1fb82608d 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -84,6 +84,28 @@ extern unsigned int global_dirty_tracking;
+ 
+ typedef struct MemoryRegionOps MemoryRegionOps;
+ 
++typedef struct MemoryTransaction {
++    union {
++        /*
++         * Data is passed by values up to 64bit sizes. Beyond
++         * that, a pointer is passed in p8.
++         *
++         * Note that p8 has no alignment restrictions.
++         */
++        uint8_t *p8;
++        uint64_t u64;
++        uint32_t u32;
++        uint16_t u16;
++        uint8_t  u8;
++    } data;
++    bool rw;
++    hwaddr addr;
++    unsigned int size;
++    MemTxAttrs attr;
++    void *opaque;
++} MemoryTransaction;
 +
-+    for (int i = 0; i < s->cache->len; i++) {
-+        IOMMUTLBEntry *iotlb = g_array_index(s->cache, IOMMUTLBEntry *, i);
-+        hwaddr masked_start = (translated_addr & ~iotlb->addr_mask);
-+        hwaddr masked_end = ((translated_addr + len - 1) & ~iotlb->addr_mask);
 +
-+        if (masked_start == iotlb->translated_addr &&
-+            masked_end == iotlb->translated_addr) {
-+            return iotlb;
-+        }
-+    }
-+
-     return NULL;
+ struct ReservedRegion {
+     Range range;
+     unsigned type;
+@@ -298,6 +320,7 @@ static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
+  * Memory region callbacks
+  */
+ struct MemoryRegionOps {
++    MemTxResult (*access)(MemoryTransaction *tr);
+     /* Read from the memory region. @addr is relative to @mr; @size is
+      * in bytes. */
+     uint64_t (*read)(void *opaque,
+diff --git a/system/memory.c b/system/memory.c
+index 0b1462f028..4f62796cd3 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -431,6 +431,31 @@ static int get_cpu_index(void)
+     return -1;
  }
  
-+static void rp_ats_cache_remove(RemotePortATS *s, IOMMUTLBEntry *iotlb)
++static MemTxResult memory_region_read_accessor_attr(MemoryRegion *mr,
++                                                    hwaddr addr,
++                                                    uint64_t *value,
++                                                    unsigned size,
++                                                    signed shift,
++                                                    uint64_t mask,
++                                                    MemTxAttrs attrs)
 +{
-+    for (int i = 0; i < s->cache->len; i++) {
-+        IOMMUTLBEntry *tmp = g_array_index(s->cache, IOMMUTLBEntry *, i);
-+        hwaddr masked_start = (tmp->iova & ~iotlb->addr_mask);
-+        hwaddr masked_end = ((tmp->iova | tmp->addr_mask) & ~iotlb->addr_mask);
++    MemoryTransaction tr = { { 0 } };
++    MemTxResult ret;
 +
-+        if (masked_start == iotlb->iova || masked_end == iotlb->iova) {
-+            g_array_remove_index_fast(s->cache, i);
-+        }
++    if (mr->flush_coalesced_mmio) {
++        qemu_flush_coalesced_mmio_buffer();
 +    }
++
++    tr.opaque = mr->opaque;
++    tr.addr = addr;
++    tr.size = size;
++    tr.attr = attrs;
++    ret = mr->ops->access(&tr);
++    *value |= (tr.data.u64 & mask) << shift;
++
++    return ret;
 +}
 +
-+static void rp_ats_invalidate(RemotePortATS *s, IOMMUTLBEntry *iotlb)
-+{
-+    size_t pktlen = sizeof(struct rp_pkt_ats);
-+    struct rp_pkt_ats pkt;
-+    RemotePortRespSlot *rsp_slot;
-+    RemotePortDynPkt *rsp;
-+    size_t enclen;
-+    int64_t clk;
-+    uint32_t id;
-+    hwaddr len = iotlb->addr_mask + 1;
-+
-+    id = rp_new_id(s->rp);
-+    clk = rp_normalized_vmclk(s->rp);
-+
-+    enclen = rp_encode_ats_inv(id, s->rp_dev,
-+                             &pkt,
-+                             clk,
-+                             0,
-+                             iotlb->iova,
-+                             len,
-+                             0,
-+                             0);
-+    assert(enclen == pktlen);
-+
-+    rp_rsp_mutex_lock(s->rp);
-+    rp_write(s->rp, (void *) &pkt, enclen);
-+
-+    rsp_slot = rp_dev_wait_resp(s->rp, s->rp_dev, id);
-+    rsp = &rsp_slot->rsp;
-+
-+    /* We dont support out of order answers yet.  */
-+    assert(rsp->pkt->hdr.id == id);
-+
-+    rp_resp_slot_done(s->rp, rsp_slot);
-+    rp_rsp_mutex_unlock(s->rp);
-+}
-+
-+static void rp_ats_cache_insert(RemotePortATS *s,
-+                                hwaddr iova,
-+                                hwaddr translated_addr,
-+                                hwaddr mask,
-+                                AddressSpace *target_as)
-+{
-+    IOMMUTLBEntry *iotlb;
-+
-+    /*
-+     * Invalidate all current translations that collide with the new one and
-+     * does not have the same target_as. This means that translated_addresses
-+     * towards the same addresses but in different target address spaces are
-+     * not allowed.
-+     */
-+    for (int i = 0; i < s->cache->len; i++) {
-+        iotlb = g_array_index(s->cache, IOMMUTLBEntry *, i);
-+        hwaddr masked_start = (translated_addr & ~iotlb->addr_mask);
-+        hwaddr masked_end = ((translated_addr | mask) & ~iotlb->addr_mask);
-+        bool spans_region = masked_start < iotlb->translated_addr &&
-+                             masked_end > iotlb->translated_addr;
-+
-+        if (masked_start == iotlb->translated_addr ||
-+            masked_end == iotlb->translated_addr || spans_region) {
-+            hwaddr masked_iova_start;
-+            hwaddr masked_iova_end;
-+
-+            /*
-+             * Invalidated & remove the mapping if the address range hit in the
-+             * cache but the target_as is different.
-+             */
-+            if (iotlb->target_as != target_as) {
-+                rp_ats_invalidate(s, iotlb);
-+                g_array_remove_index_fast(s->cache, i);
-+                continue;
-+            }
-+
-+            /*
-+             * Remove duplicates with a smaller range length since the new
-+             * mapping will span over it.
-+             */
-+            masked_iova_start = (iova & ~iotlb->addr_mask);
-+            masked_iova_end = ((iova | mask) & ~iotlb->addr_mask);
-+            spans_region = masked_iova_start < iotlb->iova &&
-+                            masked_iova_end > iotlb->iova;
-+
-+            if (masked_iova_start == iotlb->iova ||
-+                masked_iova_end == iotlb->iova || spans_region) {
-+
-+                if ((iotlb->addr_mask + 1) < (mask + 1)) {
-+                    g_array_remove_index_fast(s->cache, i);
-+                } else {
-+                    /*
-+                     * The new mapping is smaller or equal in size and is thus
-+                     * already cached.
-+                     */
-+                    return;
-+                }
-+            }
-+        }
-+    }
-+
-+    iotlb = g_new0(IOMMUTLBEntry, 1);
-+    iotlb->iova = iova;
-+    iotlb->translated_addr = translated_addr;
-+    iotlb->addr_mask = mask;
-+    iotlb->target_as = target_as;
-+    g_array_append_val(s->cache, iotlb);
-+}
-+
-+static void rp_ats_iommu_unmap_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-+{
-+    ATSIOMMUNotifier *notifier = container_of(n, ATSIOMMUNotifier, n);
-+    RemotePortATS *s = notifier->rp_ats;
-+
-+    rp_ats_invalidate(s, iotlb);
-+    rp_ats_cache_remove(s, iotlb);
-+}
-+
- static bool ats_translate_address(RemotePortATS *s, struct rp_pkt *pkt,
-                                   hwaddr *phys_addr, hwaddr *phys_len)
- {
--    /* TBD */
-+    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-+    IOMMUMemoryRegion *iommu_mr;
-+    AddressSpace *target_as;
-+    MemoryRegion *mr;
-+    int prot = 0;
-+
-+    RCU_READ_LOCK_GUARD();
-+
-+    mr = ats_do_translate(&s->as, pkt->ats.addr, phys_addr, phys_len,
-+                          &target_as, &prot, attrs);
-+    if (!mr) {
-+        return false;
-+    }
-+
-+    iommu_mr = memory_region_get_iommu(mr);
-+    if (iommu_mr) {
-+        int iommu_idx = memory_region_iommu_attrs_to_index(iommu_mr, attrs);
-+        ATSIOMMUNotifier *notifier;
-+        int i;
-+
-+        for (i = 0; i < s->iommu_notifiers->len; i++) {
-+            notifier = g_array_index(s->iommu_notifiers, ATSIOMMUNotifier *, i);
-+            if (notifier->mr == mr && notifier->iommu_idx == iommu_idx) {
-+                break;
-+            }
-+        }
-+
-+        /* Register a notifier if not found.  */
-+        if (i == s->iommu_notifiers->len) {
-+            Error *err = NULL;
-+            bool ret;
-+
-+            s->iommu_notifiers = g_array_set_size(s->iommu_notifiers, i + 1);
-+            notifier = g_new0(ATSIOMMUNotifier, 1);
-+            g_array_index(s->iommu_notifiers, ATSIOMMUNotifier *, i) = notifier;
-+
-+            notifier->mr = mr;
-+            notifier->iommu_idx = iommu_idx;
-+            notifier->rp_ats = s;
-+
-+            iommu_notifier_init(&notifier->n,
-+                                rp_ats_iommu_unmap_notify,
-+                                IOMMU_NOTIFIER_UNMAP,
-+                                0,
-+                                HWADDR_MAX,
-+                                iommu_idx);
-+
-+            ret = memory_region_register_iommu_notifier(mr, &notifier->n, &err);
-+            if (ret) {
-+                error_report_err(err);
-+                exit(1);
-+            }
-+        }
-+    }
-+
-+    if (!(prot & IOMMU_RO)) {
-+        pkt->ats.attributes &= ~(RP_ATS_ATTR_exec | RP_ATS_ATTR_read);
-+    }
-+    if (!(prot & IOMMU_WO)) {
-+        pkt->ats.attributes &= ~(RP_ATS_ATTR_write);
-+    }
-+
-+    rp_ats_cache_insert(s, pkt->ats.addr, *phys_addr, *phys_len - 1, target_as);
-+
-     return true;
+ static MemTxResult  memory_region_read_accessor(MemoryRegion *mr,
+                                                 hwaddr addr,
+                                                 uint64_t *value,
+@@ -476,6 +501,31 @@ static MemTxResult memory_region_read_with_attrs_accessor(MemoryRegion *mr,
+     return r;
  }
  
++static MemTxResult memory_region_write_accessor_attr(MemoryRegion *mr,
++                                                     hwaddr addr,
++                                                     uint64_t *value,
++                                                     unsigned size,
++                                                     signed shift,
++                                                     uint64_t mask,
++                                                     MemTxAttrs attrs)
++{
++    MemoryTransaction tr = { { 0 } };
++
++    if (mr->flush_coalesced_mmio) {
++        qemu_flush_coalesced_mmio_buffer();
++    }
++
++    tr.opaque = mr->opaque;
++    tr.rw = true;
++    tr.addr = addr;
++    tr.size = size;
++    tr.attr = attrs;
++    tr.data.u64 = (*value >> shift) & mask;
++    trace_memory_region_ops_write(get_cpu_index(), mr, tr.addr, tr.data.u64,
++                                  tr.size, memory_region_name(mr));
++    return mr->ops->access(&tr);
++}
++
+ static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
+                                                 hwaddr addr,
+                                                 uint64_t *value,
+@@ -1603,7 +1653,13 @@ static MemTxResult memory_region_dispatch_read1(MemoryRegion *mr,
+ {
+     *pval = 0;
+ 
+-    if (mr->ops->read) {
++    if (mr->ops->access) {
++        return access_with_adjusted_size(addr, pval, size,
++                                         mr->ops->impl.min_access_size,
++                                         mr->ops->impl.max_access_size,
++                                         memory_region_read_accessor_attr,
++                                         mr, attrs);
++    } else if (mr->ops->read) {
+         return access_with_adjusted_size(addr, pval, size,
+                                          mr->ops->impl.min_access_size,
+                                          mr->ops->impl.max_access_size,
+@@ -1698,7 +1754,13 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
+         return MEMTX_OK;
+     }
+ 
+-    if (mr->ops->write) {
++    if (mr->ops->access) {
++        return access_with_adjusted_size(addr, &data, size,
++                                         mr->ops->impl.min_access_size,
++                                         mr->ops->impl.max_access_size,
++                                         memory_region_write_accessor_attr,
++                                         mr, attrs);
++    } else if (mr->ops->write) {
+         return access_with_adjusted_size(addr, &data, size,
+                                          mr->ops->impl.min_access_size,
+                                          mr->ops->impl.max_access_size,
 -- 
 2.43.0
 
