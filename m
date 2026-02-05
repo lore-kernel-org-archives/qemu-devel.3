@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06409ECD9B1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDB0ECD9B1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo7iz-0001xn-0G; Thu, 05 Feb 2026 17:21:21 -0500
+	id 1vo7r0-0003YO-PL; Thu, 05 Feb 2026 17:29:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vo7iy-0001vb-85
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:21:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vo7iw-00036e-Ti
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:21:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770330077;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XsiIcvkjrtK5OTIyRKLSXlRE/xxsFUeGIdGzKWBzlOI=;
- b=JYQz4Gq0OkSJkjcKiu+xZw4Nx+6tDwGFgqLtXO2qjIPbq8SfAmzkNPoO7lS9WmD3/kOwtt
- P4QqDdiSJlMNoJhMUkLdpPAO6I3KJGZ6zQPTIOczAyezPrNUuIce4ngxyvVg6LSbEbdMJa
- K0q6X+pKczYOhpFgXQry1HUf4Z/SwrM=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-362-JOzyy3XhNQGsRZzClmZGww-1; Thu, 05 Feb 2026 17:21:16 -0500
-X-MC-Unique: JOzyy3XhNQGsRZzClmZGww-1
-X-Mimecast-MFC-AGG-ID: JOzyy3XhNQGsRZzClmZGww_1770330075
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8c52f07fbd0so17121785a.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 14:21:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vo7qz-0003YA-4t
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:29:37 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vo7qx-0004MU-K2
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:29:36 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-81ecbdfdcebso75910b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 14:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770330075; x=1770934875; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XsiIcvkjrtK5OTIyRKLSXlRE/xxsFUeGIdGzKWBzlOI=;
- b=W09w9eTBTK93suf6M3DoBneuEwk6ozgoNm2ygEZUxCjcvrDC29wBPki7xakmDjFIOs
- DXr9nXrU3UJhLY9lPrBv6ofmJCu+6JLRofh/lDQP81pu/ii/6C9hZ2+qQ2kNDMLLDtVe
- U8mFUussfH4TZkOv0YTdnL5qvZusnTLDCcjkFiMzdvZAFGtmgck00jAhwVJxSUR88URh
- SiN4E1eXS5AfwajdXawRsyx9BZBABPKZe63Mi8vwLve+qUa8uc1gYYP84m5pK0/9bp6q
- Eq12sQew+kKbXuhNZGnMUcxF9j5MIldZFpaEmhxqlXOaqzAAphclz5y2AGt7dmwpAsEj
- IoQg==
+ d=linaro.org; s=google; t=1770330573; x=1770935373; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=09jWMdr15BvFAbuq7rsBoKCGwxMj0jZwNnFD5Bsj3zw=;
+ b=HVjuV1UBg+C03BPSgxYmYricHFOigNkOENb/ndh90LtPDypQyDAsH9nXeOm+UqcAdI
+ Vs7GKlC87rdZifunMhqTtyNH5JYmnPb2IHIUYR9te8WtaVQH0jnAJIzYLofY3ax6Nvco
+ oU8frUtTrg8Jq1JUA1hVCWuTKweGDu3/eHgxDt6yPcku2dgjEYqG2sG+0AqJTldCCdvD
+ 1gB8XQ0Ae+NyCM4pn9tL74n8+xRHSC1C40gynt1d/6N2y/f2pcpmXH05I3CHCjoHKyt/
+ kHVknmyPNFStRSdTF/daA8ATFY36YQCg8qFKmV3Wj2p12Xij5i+D4CKPVHG3P/RVQp8a
+ BdrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770330075; x=1770934875;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XsiIcvkjrtK5OTIyRKLSXlRE/xxsFUeGIdGzKWBzlOI=;
- b=KrQUfiW+vvwhCptO82XuNdxoXUJy4/SkLvmZUq5WsbX+K8F3MwbhDERxYejStmT1ET
- kObS0aVORubs8QQojvwI0JOjq39SkRcFQhGxo4iz3r0/0jrZ6JEpUbVofmSkaV4HcTXu
- oJVAB/9UiyxEbmjR/h8NXJLp9SXzfDsWs3KG7oKKQfMUF3NkT5ZuUHYvgiYL0XmL3cFB
- 5JT/vvjucbKVhjffVQHGmtaf3Ni+JdwiIKwsy/gDiFAV4OXpp5YcF0BtxG9lfAwVR0uV
- sWhm6sX4J8bZNvSXeOW0F4DJgpf6hqddUH3vkoErZyc4JG6fA3Nu9eOfmRM6lz91cmNE
- tmAA==
-X-Gm-Message-State: AOJu0Ywi8AiBhmk+TNurAGkWoUkW8zRsqwMHVyuEyljsI18Y3x+HToZP
- pkMcR6Ga+UwvokJXWv27Fuzk0Mtp4Fzo9/9L7syuumxT+Wugon+EgVC3IA8Vf7wqmNy7yr+7I1u
- eAX+8uok2k7gWr9GwGTL5PDqP2RG+ftps+YbiiKdP9atwflUcx1tChL6/
-X-Gm-Gg: AZuq6aIW1g2ArQ3fL5wrXKMz7KSGaYQXDyBkLXM8EoAZ9YodI6AemiO1g8kAQYbQ6nP
- 3CzMLoU0gUyIjzYMKiMdobUvAHKxCLwBD7PsuWfPYqk8OH2oFVmMxEMR+vp+RONJs2PXZRovLVD
- SMtRX7G7D48kBRMPdXV0NFyR1r7hjbJpHsnvUYHooMJnHoaHRojnTApYV3j2Re7GMyILc7e2xlI
- Yh5+If3a+Gfx58duvu3buWESH6eE80IG7mVaN08JQTu0K730tTSV408LWATil7zKwfXN57UMvBr
- MAz8iB17OXonze+JVJgzHSGx9YymUvX6LXd+LnTyxZgK+XF7L3JKXxxe3O+Fy+R0RaX+3SBib9y
- Ojlg=
-X-Received: by 2002:a05:620a:4612:b0:8c5:2ce6:dca with SMTP id
- af79cd13be357-8caeef2fcbamr96457285a.6.1770330075480; 
- Thu, 05 Feb 2026 14:21:15 -0800 (PST)
-X-Received: by 2002:a05:620a:4612:b0:8c5:2ce6:dca with SMTP id
- af79cd13be357-8caeef2fcbamr96455185a.6.1770330075061; 
- Thu, 05 Feb 2026 14:21:15 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cafa4b6b8dsm26216885a.50.2026.02.05.14.21.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 14:21:14 -0800 (PST)
-Date: Thu, 5 Feb 2026 17:21:13 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
-Subject: Re: [PATCH v2 9/9] migration: Use migrate_params_free during finalize
-Message-ID: <aYUX2U7uc7jO72Ae@x1.local>
-References: <20260202224101.20568-1-farosas@suse.de>
- <20260202224101.20568-10-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1770330573; x=1770935373;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=09jWMdr15BvFAbuq7rsBoKCGwxMj0jZwNnFD5Bsj3zw=;
+ b=bWKMDACaJpLbLjzC8DUhrfZQFBTCN+cXtI2I6UEf6UFu3FvQLmzSgeygkz3vmv1psS
+ BGrleoHb0GsFfibK3ksfpHVqqPqkTr9oJq/k3DWqVGZn2kw5C1kizTShQG/zHKJ0e2rL
+ 68DnJ3hVZCypT58Xip/tVA7G3Pj3Nrh2Nv660e7N6ny8jARDJLzK63NTsZEw5Qc9zh++
+ PAp73z33uLVsImQUR/JIAR5E+BNvkkG0GxoawUArqMZMR2+FVzMGgdWzFoZe8jyZnbtR
+ a3VTucUn+e8f324uvCKrRcjUt8BoM5zXVpirEh9/GKsEZXvoDRO9YlAT7f1azw3gVvsx
+ QTYA==
+X-Gm-Message-State: AOJu0Yz8WpuJQmJCTWbcFd0xc39JeGkWk69wMC7saN9E2q3AzFKQWa64
+ HnarAWf/sfkqk6ElenEMjrHy3pt+HDTwM9uOKSubVPsdje8YAVkELcEImwEGGz4YXv4=
+X-Gm-Gg: AZuq6aINUXupDFSuIFwx7BRQDoGxZG4qTUSqRxDbWwdXJm5f6+Gdxs7W6CpYv/Bqrup
+ X1EdUt7o3A1ol+xDhULxsW+TBWHd0C6iDLWsKJfYv/zPb0PbGGYEx2Tc+/9OgjWvjaHto57QXQw
+ bIGT3DWZ/FRmd6ZYCj9PjBqMweN1fbxm6owp937DcAqPwc8boFE48YK/bPyiuS4Nz+RxTaCaUbS
+ ULZlIIBxLp7Bt6K/kcgvXtlF4RSb/VHvZbj5oIOwBRzRD6/3YFIsI9NzKBeNhEeEldWbXH3a6fg
+ x7gTPy/ByIM956Qgba4t2py3ECYTbDsJdfxMp354f85WTpMLpWi64OwKFGLqpBosGmpERjV1unF
+ qwo2QoBXDD19INBrPA5RLc5X570AQ8pNrYV5NSmxH1fq/zojy8Z+BUf1I/ieo9J5ImRob/Ty8Yz
+ pW7GTock7djEOu5lMiULVj0J8ETP6Pnvh46pnaqj5T3yl9IOQuoEHXA7qpSn8/KAmHkSqMTIKj
+X-Received: by 2002:a05:6a20:3d85:b0:366:14b0:4b04 with SMTP id
+ adf61e73a8af0-393ad39fbc7mr779165637.64.1770330573354; 
+ Thu, 05 Feb 2026 14:29:33 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:3c5e:852f:abc3:6539?
+ ([2401:d002:dc0f:2100:3c5e:852f:abc3:6539])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6dcb658243sm409489a12.34.2026.02.05.14.29.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 14:29:32 -0800 (PST)
+Message-ID: <c2cb0273-de90-439b-9058-c4b57df86fce@linaro.org>
+Date: Fri, 6 Feb 2026 08:29:26 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260202224101.20568-10-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
+ with shifts
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+References: <20260204052456.970605-1-richard.henderson@linaro.org>
+ <20260204052456.970605-7-richard.henderson@linaro.org>
+ <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
+ <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
+ <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
+ <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
+ <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,21 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 02, 2026 at 07:41:01PM -0300, Fabiano Rosas wrote:
-> Use the recently introduced migrate_params_free routine at
-> migration_instance_finalize() so that newly added pointers are already
-> freed by default.
+On 2/5/26 18:22, Paolo Bonzini wrote:
 > 
-> Special case: The TLS options are currently the only pointers that
-> also have a qdev property implementation, so they will be freed by
-> qdev using the .release method. Update the method so that a second
-> invocation of qapi_free_StrOrNull doesn't assert.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Il mer 4 feb 2026, 21:46 Richard Henderson <richard.henderson@linaro.org 
+> <mailto:richard.henderson@linaro.org>> ha scritto:
+> 
+>     On 2/4/26 20:41, Paolo Bonzini wrote:
+>      >     This is primarily for x86.
+>      >
+>      >     (1) movz is 2 operand, so that may avoid clobbering an input,
+>      >     (2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.
+>      >
+>      >     Because of these, there's a comment somewhere that says we'll prefer extract
+>     over and
+>      >     (perhaps in tcg_gen_andi_* or fold_and).  IIRC this also happens to simplify
+>     ppc and
+>      >     s390x
+>      >     insn selection (and vs rotate and mask).  AFAIK, no other hosts are penalized.
+>      >
+>      >
+>      > I think it would be better to pick a canonical form for AND with 2^n-1 and handle
+>      > conversion to extract (like PPC rotates or movz) in the backend.
+>      >
+>      > Picking AND as the canonical form also avoids makes the macros for extract validity
+>      > simpler too; adding an extra constraint for immediate 2^n-1 is easier and it
+>     generalizes
+>      > to other PPC rotate and mask cases.
+> 
+>     Picking AND means we have to use "r,0,ri" for x86, losing register allocation flexibility.
+> 
+> 
+> Then could you wrap the target specific extract_valid with one that allows ofs == 0 if AND 
+> allows the immediate 2^len-1? That would also simplify this series.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+I don't understand your suggestion here.
 
--- 
-Peter Xu
 
+r~
 
