@@ -4,96 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6251EECD981
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65081ECD984
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1ea-0003E0-Fz; Thu, 05 Feb 2026 10:52:24 -0500
+	id 1vo1js-0004Zv-Co; Thu, 05 Feb 2026 10:57:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1eY-0003Ds-73
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:52:22 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1eW-0007Y5-NQ
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:52:21 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-480142406b3so9464035e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:52:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770306739; x=1770911539; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BG3MeOcj7rfEQSRnsWYkeuAupQEMw9QQNCL71b1+WZg=;
- b=hLIwOeIcTmVmt2yEqKOTHUxe2HIzzwPuUNmCIVlusJ41+1WZsbEeAFKE/D+jJ+6tPw
- K6auOgDdDYv4KeYhLibQOt/lWOdhgbToLBUUpxt73ap3dCbHfK6kLoIEOw4IQ5DGwYH0
- Aiv2+cwUtkzhU0jdQtilSZk5M4r6QahbGQpRrjDup5soWgec0sL3XtC3TBWwLfi4D9ha
- iDnnFQzrNJ7U5TN++EedLUA4ZYE3WUhbVsNSvX2pPwjoKBUr1srSdNKCU3rb24jOyWYp
- efeR92//BwRDnmGwXG/I6ARpBriFVnbcvuRvjWGOAflUcDC469nF0SSMO/bhPC0qIAyY
- l3ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770306739; x=1770911539;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BG3MeOcj7rfEQSRnsWYkeuAupQEMw9QQNCL71b1+WZg=;
- b=Di9m+KK7MYXbK1AQoTG1JHkOLu5CJW0hJ5iTAJnAPyYq8sLxdmgMNB2XWlbCpMu2TH
- T9CCRpI+QiK7hyOcO6zZrvSbbXXe5TxXjDmkbCfp8qYGb4NWnnbuqFpUIxQwHRdx0EGU
- ppF9+Xc4ViH+v8IpFxzVCPrQc/H9IIhwd/7GwJzpaBpEe3lgA5sNfamPHRvPVZhMkddr
- Bgny3ET9sP7ubWTiHDWF48v4eQkUyr/P2DdNQ/9C2U5u5FX9pdKY48ft5HX0zsle6yaU
- pyGpa0jSsaHIiylO88Px+XQm/OkY4AY9OM3+WkIcz5M68cy0o3tPqJ48r/ERYl9bh2T7
- 6s1g==
-X-Gm-Message-State: AOJu0YzuBwLgQEulw5VbMkZ8wGlxt3tTb3H7IxGOy2kaZehj1GPrnv17
- xUlqIPs4zjh0/Vt+4Gmp97qOGQlvPFjeOLnil/b5ZyowfYcFGhx6W5HBXsZZ7Aks0N0=
-X-Gm-Gg: AZuq6aIk53Nh6NXY680fsYpK5vnRR5wTVTn/8sL3RNPecLmQeQEw89eAWFtko33LbMm
- 0tq6onYSnHE6no4DA70G506iK6utuMnZgMuvm5D6SJZ8GYf0MZ0EgOokTMwIcnYL+elNq28fh3G
- VBNbmPereu8V40aAxVgyIbC19E0YlvyLrZP4ledcbUHhp9tPQ9F5iLmM5GJdNyN+53ukBRKIuLO
- Afe506aQNcURJIdmGHA+9ImJqipkB66Bu/exqSXXm5IVV5orfAC9gfW/jwcjO+/h/+pI6ty72mk
- XcCUzTniwxoyJQOI74fdy+hhIdv/AHr8iTmAXWUTIS3prhyE7kRcLa5HBIstelxy79YdN/wH9IM
- Vpi4ZCm4uFDJYjTMeBcxTmX8CTx55Y4Jd8jo6PIiyrZ1FX4r4GhsjetLnxQQp6bs28jcCkt0IG6
- CkODQR3plFeZ7xQShp8CHsLhTqDTp/J96lQ+Aw8+SaBjt4Hi4ycEzmsg==
-X-Received: by 2002:a05:600c:c162:b0:477:afc5:fb02 with SMTP id
- 5b1f17b1804b1-4830e988f0amr87658825e9.21.1770306738714; 
- Thu, 05 Feb 2026 07:52:18 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4830ec4a5c6sm70116045e9.2.2026.02.05.07.52.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 07:52:18 -0800 (PST)
-Message-ID: <c576354d-5f22-4f7b-8a31-c34c95fba769@linaro.org>
-Date: Thu, 5 Feb 2026 16:52:17 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1jp-0004ZL-VU
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:57:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1jl-0008G0-FM
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:57:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770307064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rnef7B8v4j4es0Ww/agLLTWFcDAlbIZAHUvulO7nJnA=;
+ b=FvdUfRxn9Znp+v/YgSsbLoUK9VClcXTBNxs0uuK2apG/eMlJCHgGftuiViTAo7zdiv4qrN
+ Q7KC9a0PG3DpXCaq6mzbZkp4PnrD5wkANc1fCo76QmmSl2weINNsxWnmUf8811e5MUb8Ru
+ 96w/3O0i3krsRMWahH0Zzow9qSWpd1E=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-B0bDrLJfOrmsMywXoVGEMg-1; Thu,
+ 05 Feb 2026 10:57:41 -0500
+X-MC-Unique: B0bDrLJfOrmsMywXoVGEMg-1
+X-Mimecast-MFC-AGG-ID: B0bDrLJfOrmsMywXoVGEMg_1770307060
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B77811800464; Thu,  5 Feb 2026 15:57:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.198])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 351C718004BB; Thu,  5 Feb 2026 15:57:36 +0000 (UTC)
+Date: Thu, 5 Feb 2026 16:57:34 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, hreitz@redhat.com, fam@euphon.net
+Subject: Re: [PATCH 4/6] block/io: safeguard max transfer calculation in
+ bdrv_aligned_pwritev()
+Message-ID: <aYS97vFFCkVLKLdV@redhat.com>
+References: <20260109120837.2772961-1-f.ebner@proxmox.com>
+ <20260109120837.2772961-5-f.ebner@proxmox.com>
+ <20260119193452.GC834718@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/vmmouse: Fix hypercall clobbers
-Content-Language: en-US
-To: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Justin Forbes <jforbes@fedoraproject.org>,
- Alexey Makhalov <alexey.makhalov@broadcom.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <ae0b8f2c574abe8053e742260c794adcaeda975a.1769110562.git.jpoimboe@kernel.org>
- <479166c0-8135-4c99-a2bb-0532633d384d@linaro.org>
- <pdtkpdg52ijsmoknnuwe2geylnqonm7wvbwh2g77de4vyg6tdx@muqauymjdw5s>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <pdtkpdg52ijsmoknnuwe2geylnqonm7wvbwh2g77de4vyg6tdx@muqauymjdw5s>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="GnzmQQuJbf8TLTvW"
+Content-Disposition: inline
+In-Reply-To: <20260119193452.GC834718@fedora>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,22 +86,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/26 00:20, Josh Poimboeuf wrote:
-> On Sun, Feb 01, 2026 at 03:27:46PM +0100, Philippe Mathieu-Daudé wrote:
->>> @@ -221,7 +221,7 @@ static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
->>>    static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
->>>    {
->>>        VMMouseState *s = opaque;
->>> -    uint32_t data[6];
->>> +    target_ulong data[6];
->>
->> Could we use uint64_t instead (also in the callees) and let
->> the implicit 32-bit truncation when assigning env->regs[] on
->> 32-bit guests?
-> 
-> That would work, is there a reason that would be preferable?
 
-In preparation of the long-term heterogeneous emulation project,
-we figured the target_ulong should not be used by hardware models.
-We are slowly clearing our code base toward this goal.
+--GnzmQQuJbf8TLTvW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Am 19.01.2026 um 20:34 hat Stefan Hajnoczi geschrieben:
+> On Fri, Jan 09, 2026 at 01:08:31PM +0100, Fiona Ebner wrote:
+> > This partially fixes iotest 177 with qcow2, where max_transfer is
+> > 64KiB, but the cluster size and thus pwrite_zeroes_alignment is 1MiB.
+> > Previously, max_transfer would be calculated as 0, triggering an
+> > assertion later.
+> >=20
+> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> > ---
+> >  block/io.c | 6 ++++--
+> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/block/io.c b/block/io.c
+> > index 12dc153573..233b2617ea 100644
+> > --- a/block/io.c
+> > +++ b/block/io.c
+> > @@ -2087,8 +2087,10 @@ bdrv_aligned_pwritev(BdrvChild *child, BdrvTrack=
+edRequest *req,
+> >      assert(is_power_of_2(align));
+> >      assert((offset & (align - 1)) =3D=3D 0);
+> >      assert((bytes & (align - 1)) =3D=3D 0);
+> > -    max_transfer =3D QEMU_ALIGN_DOWN(MIN_NON_ZERO(bs->bl.max_transfer,=
+ INT_MAX),
+> > -                                   align);
+> > +    max_transfer =3D MIN_NON_ZERO(bs->bl.max_transfer, INT_MAX);
+> > +    if (max_transfer > align) {
+> > +        max_transfer =3D QEMU_ALIGN_DOWN(max_transfer, align);
+> > +    }
+>=20
+> max_transfer < align seems paradoxical. It's a situation where the
+> largest allowed I/O request cannot meet alignment requirements.
+>=20
+> Every other place that uses max_transfer in QEMU would also need to cope
+> with this.
+>=20
+> block/blkdebug.c:blkdebug_open() fails if max_transfer is not aligned,
+> indicating that there are assumptions at least in some places that
+> max_transfer is aligned.
+>=20
+> I hesitate to make this change because I fear it will break more things.
+> Why was max_transfer 64KB while pwrite_zeroes_alignment was 1MiB? Either
+> max_transfer should fit the alignment or pwrite_zeroes code needs to
+> distinguish between actual write zeroes operations and read-write-modify
+> I/O (which is plain read/write and not subject to
+> pwrite_zeroes_alignment).
+
+I don't think haing a 64k max_transfer for normal I/O where data is
+actually transferred and much larger write_zeroes requests should be
+inherently incompatible.
+
+In fact, in this specific case, I'm wondering how we even hit a
+problematic case where align =3D=3D pwrite_zeroes_alignment, but
+max_transfer is still used. Shouldn't we take the BDRV_REQ_ZERO_WRITE
+code path, which leaves max_transfer completely unused?
+
+Do we somehow end up with normal writes using pwrite_zeroes_alignment?
+Ah, yes. This seems to be a problem with patch 3. It doesn't consider
+that bdrv_co_do_zero_pwritev() deals both with write_zeroes requests
+(for the bulk in the middle) and with normal writes for the padding,
+which require different alignments. So changing 'align' for all calls
+seems wrong, it should probably be only for those requests that keep the
+BDRV_REQ_ZERO_WRITE flag set.
+
+Kevin
+
+--GnzmQQuJbf8TLTvW
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmmEve4ACgkQfwmycsiP
+L9a2+w/+Jmf3VEVknwM3ghoCnhTZ5b8WgYeRoui/lEYJ0gmJcuE9CCAQglTfSMMQ
+Lg9m1ySZb7qZ9YlthTCuLbsqq6XpU8pexvRC0SSQk8nGtAaaX1C6R0MSke6K5wpD
+D4U5BoGC0Z+T5XISrPGjt2xumGXdp4TwT1FoFb6HTVJzRtL4nsSFr3UsWPtzhu74
+t150NtEF4JOGPYpbquRoqWS7LGUolC/emJiLiRC8Lt8Kkvi10ay6hw5OKFNnfpY8
+Kdo7ILq/oCX8k5uaOQlDh0om+U+Z6zXs1K57tOuvD793/wsqor/E/A0b0yqID7cc
+i0KOsOJ8m77LYdghNn25WveFgf7XxlindBhHACUvvN4Oyeaum7aEmtLS1rXuo5WS
+TNkMTbqwbBr9LYchBXcABdxT43Fed+qW8WZBuHy9DkJiVXBJwWIddtxBl0P/o6l8
+9VxbaSVvnx1hTjLXxE7uH/DSW/+PxuMQs4MKwIV+zdD/Oa4W0C9BzgnQ6549C4Cr
+N6zivWCJvRu6O1h9JalekVElMDy/oU+AXm1B/fjj8ulMSfccI3rqlt0n7PTR4H4O
+havLs6HkdrHvi0ZU9R269kFo6rIcFAHabBqtbLKTYnqS9ERcrEhP5tVn3OgDsS4h
+6BCtjGzUNk8haqzoPDWZtSodCVfRUr5e3tlWF9qh5447tpkkczw=
+=VBBd
+-----END PGP SIGNATURE-----
+
+--GnzmQQuJbf8TLTvW--
+
 
