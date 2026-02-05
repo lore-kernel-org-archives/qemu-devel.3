@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADD4ECD9A8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E6BBECD997
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo742-00073R-5a; Thu, 05 Feb 2026 16:39:02 -0500
+	id 1vo74S-00077k-Nc; Thu, 05 Feb 2026 16:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo740-00072y-B9
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:39:00 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo73x-0003M1-In
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:39:00 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B15AA186528;
- Fri, 06 Feb 2026 00:38:06 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D489B35D95D;
- Fri, 06 Feb 2026 00:38:53 +0300 (MSK)
-Message-ID: <a6dae28e-2d15-40a7-b7c6-b452b7642ff8@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:38:53 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo74Q-00077S-LA
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:39:26 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo74O-0003U4-Q9
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:39:26 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4806f80cac9so459535e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 13:39:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770327560; x=1770932360; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4UGthzNFB3vNC7GAlY57Iu20J3KV0ME06Ss/wevElZE=;
+ b=S53qLGAFp2PNKH27xDI6mVuR6dbN/2AudGfpoeFGQNUgrSsrt9D87DUu6r42dtA0W7
+ cOjX+LuilYxI7ldEvOCufYwNHAssw5uPsdl9XNjdwNaiWOCdBMBrp4zyr7mAmAqfMiDO
+ elUi0uhiwU7KrkaaBwb8+S+dnIiT/RmJyvEoTMsnK4JKGku+Chw4JiuwkU0eqBIPQyF1
+ gyDyVvLd4XH9WCKyQwCDKyDscvtJonON6+a5gZjKAp2Hyx/ZlResRHhAHw7P/DLEJtsj
+ 0L42qdJpjOmoQdS9+2Yp/UKtmVMTpVP8bUKByHRQMkDrfpKU0sUe5v9z6at5XGiqnH8a
+ +l9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770327560; x=1770932360;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4UGthzNFB3vNC7GAlY57Iu20J3KV0ME06Ss/wevElZE=;
+ b=U6t8b/B2oVoMmQsxX7ldDzIK4tiv5ElXRG5Jgf6SawKv/f0CEwxNh6BPMfvCtZYAKi
+ yGPrbFMqkMULcVDMchiZ5LXFT+HkVblzUvmDWcuFFplufFtfjUAHU8IaUdXVvboA0WlZ
+ ZoGWspcCFBK9jYg6wT1ieTXJL49yF+Ag63iO4XtFxsmeJTGzy9OgWHgsNZXgVYphSFyZ
+ d8yxHcHh0jITliGqP+2ZH880OTMmvSIsHZVKzvxEZ/4bSWdfsZJcd7qK1bIsaHy40mOv
+ uh4UScpcbyHBEItRD9t3JL2jUvjNJKZdEjAFWInZiPrhubCWO/CYFam+vtNSDfTqNjlY
+ 0Ukw==
+X-Gm-Message-State: AOJu0YxUuBy2gqpuqYHIlwu6t5yNUpSn+9hWsDv1z4OC3+wZcUOTLPSU
+ PLcZQ/qH6gP7teejjQZqC4vzVeI9jjECOTyNjI/ZqkKjwa5oTHP1C2wsUx/jM66dBnZcQH4HQOI
+ AX8s+i3I=
+X-Gm-Gg: AZuq6aISlU4EN4Zht2WSRHSSNHtLEdwOBxsMqXu18X/nj4lcqq0Thy2Tm/bavWdKcu3
+ wbtENFXRyeBNZ711kFkTugdhnHtioJ8/nxnqgCk9+v54zOjkwZUJkT51SESbsWi6jla+THyu/8t
+ vYYh8IhtiI9qrw2uK3mKOGIizwUpYOWvBb1lfkSh6GuNTN9+1kWh32I/N3oNmKjkR8xDxTUJiLz
+ qOTai00ExXdRVEs5MHt0gaiF6YdZ+6yLg65CwXgF2BngNYo6ufV8Ym/GveODm46UdfshsBpxEMa
+ C+wB2z9sE3+hvw89zafQxyDm333Iv2v5v6ToNpQX3ctq1b16CPzR/udSF+qJeSeACFEBNrUh7ql
+ bSarA4HXMFCrtIL04mbKhckzC3n5E6m1nq+ZICnoSjKlnA73lZe5wtHONm+4i9dEFv5cJwiJpn5
+ eb5oaDwIKbl+qC4RhOhuHx89l0/qhCzdH8meaDyU3Xgs2hYudHU1Yt8qi6Yks7
+X-Received: by 2002:a05:600c:3b03:b0:480:1b65:b741 with SMTP id
+ 5b1f17b1804b1-483201e3b8cmr11416225e9.15.1770327560006; 
+ Thu, 05 Feb 2026 13:39:20 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483206cc7d3sm6994245e9.5.2026.02.05.13.39.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 05 Feb 2026 13:39:19 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] target/s390x: Expand tcg_global_mem_new() ->
+ tcg_global_mem_new_i64()
+Date: Thu,  5 Feb 2026 22:39:18 +0100
+Message-ID: <20260205213918.10956-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] vdpa: fix vhost-vdpa suspended state not be shared
-To: Wafer Xie <wafer@jaguarmicro.com>, qemu-devel@nongnu.org,
- eperezma@redhat.com, jasowang@redhat.com, mst@redhat.com
-Cc: angus.chen@jaguarmicro.com
-References: <20251119132452.3117-1-wafer@jaguarmicro.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251119132452.3117-1-wafer@jaguarmicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/19/25 16:24, Wafer Xie wrote:
-> When stopping a vhost-vdpa device, only the first queue pair is marked as suspended,
-> while the remaining queues are not updated to the suspended state.
-> As a result, when stopping a multi-queue vhost-vdpa device,
-> the following error message will be printed.
-> 
-> qemu-system-x86_64:vhost VQ 2 ring restore failed: -1: Operation not permitted (1)
-> 
-> qemu-system-x86_64:vhost VQ 3 ring restore failed: -1: Operation not permitted (1)
-> 
-> So move v->suspended to v->shared, and then all the vhost_vdpa devices cannot
-> have different suspended states.
-> 
-> Fixes: 0bb302a9960a ("vdpa: add vhost_vdpa_suspend")
+The s390x target is a 64-bit one, so tcg_global_mem_new()
+expands to tcg_global_mem_new_i64(). Use the latter which
+is more explicit.
 
-Is it a qemu-stable material?  To me it feels like it is.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+v2: Corrected $Subject
+---
+ target/s390x/tcg/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-(for 10.0.x, it needed small context fix due to missing
-v10.0.0-1280-g494c50dcc099 "vdpa: move memory listener register to
-vhost_vdpa_init")
-
-Please let me know if it isn't.
-
-Thanks,
-
-/mjt
-
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 4dabd49840f..203afe265bc 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -217,9 +217,9 @@ void s390x_translate_init(void)
+ 
+     for (i = 0; i < 16; i++) {
+         snprintf(cpu_reg_names[i], sizeof(cpu_reg_names[0]), "r%d", i);
+-        regs[i] = tcg_global_mem_new(tcg_env,
+-                                     offsetof(CPUS390XState, regs[i]),
+-                                     cpu_reg_names[i]);
++        regs[i] = tcg_global_mem_new_i64(tcg_env,
++                                         offsetof(CPUS390XState, regs[i]),
++                                         cpu_reg_names[i]);
+     }
+ }
+ 
+-- 
+2.52.0
 
 
