@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9063EA7960
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851C6EA7963
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 04:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnqMu-0007IP-E1; Wed, 04 Feb 2026 22:49:24 -0500
+	id 1vnqdZ-00035Q-9R; Wed, 04 Feb 2026 23:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vnqMr-0007Hx-Nn
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:49:22 -0500
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vnqMg-0006ZL-LG
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:49:13 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 2B42F7A011F;
- Wed,  4 Feb 2026 22:49:09 -0500 (EST)
-Received: from phl-imap-18 ([10.202.2.89])
- by phl-compute-02.internal (MEProxy); Wed, 04 Feb 2026 22:49:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1770263348;
- x=1770349748; bh=E5t3hV4qKnQhJNKykfQdk3Rnf+ulr6vW5yWgrGJKtL8=; b=
- VFfeBR0+J8if1BLg6Ex4hJnuILOXBJ4847umNsqf2PbTOyK2wIh9h7ut/yGvDmx/
- k9zlg3sT28Ca5PtR1oL0rOodr17lvsF7h5aCvgl6gvypVhFT79T14qy/AjgIpJ96
- P8wTpLo25fzqri4AcW5wibco7/7cGPAhvmStx5iTwSHu2g0GiO5oW4gSo2LSF/3L
- pw4UTvPlxyWbF7i6wKjeBLtbsF8p/1pm9KWqsK/OIak5JeHpNPWuqoO4DSvACREz
- 3UQ11iViSQoEzMub9dOmGcCRnP81q5h7QP9xvz0dRouBUrj6CAhJzyY1b9Q4xPdi
- fQWqGuOuGOnqjcaPUcO/2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770263348; x=
- 1770349748; bh=E5t3hV4qKnQhJNKykfQdk3Rnf+ulr6vW5yWgrGJKtL8=; b=I
- Z40CJwBqtHo5LA/6AGeu8WwZC9r/zG6jp6zJG5yrO6h0L7lx5aUZ0SRcMZk7DUXW
- T4JfkMiBrNDZZ+3AibMU5AP81n0Dx54LbEYVuNHwI+YUhS760ffiMJ/FcZtxCEiE
- iCAFy3UPUES9oz3UxYoI1f8wTJK3amJMr9fhuFvjSwzbqyp81IAYYGtX5tI+0cYH
- Z8wYWXfGczDVnc+jGLa3cXn4/DCDVh0sDGwUwdYGwQsTykzCh2/6Hd5sV99bkowP
- YZRqhZCjOh6IBvSsmdwuhI/8cS4Op8XLFCWGPzRJOJ+netqyZpcwTBetXCpGgUJO
- lO8tWY0wnpYggD3D1FqnA==
-X-ME-Sender: <xms:NBOEaYxMIatNEhoeOQFT65VzlpFoTkjiRQ6xQ0_x_Y-WsZ-2PhVrbQ>
- <xme:NBOEaXEzkpw4cA2XyNFen1cw9hVS5QlWtm8wPMosnk8opnr3yUic1d4B_quwYoPhc
- -MogChjJJ6vPFCJ44_mycLATBgzJv0USPeQFC4lb_wTr1NXxAHDRA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddukeegvdekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedftehlvgig
- ucghihhllhhirghmshhonhdfuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtf
- frrghtthgvrhhnpeeugfdtfeehieehtefhgefghfetudeihfffhfeileejieejgeeiffel
- veejieeugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
- hmpegrlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohephedpmhhouggv
- pehsmhhtphhouhhtpdhrtghpthhtohepuggvjhgrnhdrrghnughjvghlkhhovhhitgesrg
- hmugdrtghomhdprhgtphhtthhopehmrghnohhjlhhordhpvghkohhvihgtsegrmhgurdgt
- ohhmpdhrtghpthhtohepnhhikhholhgrrdhprhhitggrsegrmhgurdgtohhmpdhrtghpth
- htohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegtlhhg
- sehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:NBOEaSedpiq2julwIdGITHzfO3xfwF3YQ7IoZrK6QMibH-61fjRUPw>
- <xmx:NBOEaTHaQqfs1eWADNQdJpp8XVNbv9uTNgSczbkaAfr9gZS05fepxw>
- <xmx:NBOEab1_vY3vMS-Zf3VgF3TbQHq4i1_bkgIyh9BWjeNWXLgHNgUL7Q>
- <xmx:NBOEablbUMjZuwc29xYeha6Hg5X7MarK9c6Lj0dHldQ2LwR4_0XlvA>
- <xmx:NBOEaWfknCHMt92WHbCzrfpeEfHU5kKvMHGL8u-2-6nlXC-RPUYPAjvs>
-Feedback-ID: i03f14258:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 855D115C008C; Wed,  4 Feb 2026 22:49:08 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnqdT-00034z-3C
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 23:06:31 -0500
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnqdR-0000xh-4r
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 23:06:30 -0500
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2b729f4c154so775242eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 20:06:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770264387; x=1770869187; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=USTw0mKGA2VPqIAk81XWhkfH/gV/AfyfIWi3QierJYQ=;
+ b=RIgOZnmSjZAUBuEZNM6SQWM1FjtbkG4f2D6y1GFc43ewyj0aqTWVE+cgq/pV/OLP6O
+ tODfpFnOaytPFdwgv78ibQDn9Tk+RKhD/lS1XFuHsjrdhfMvxxNohEGhEAeYiU00R2cC
+ yqNDxj6aCeugF5js3IKRaZ5ooaxJZnU4FejIgT/6OKsDQ3dCdZ6IamNW7X4gNUgDHZf5
+ 8v6+pMFLgZyc/wNzW04DwgDlt8irGUkAdGqWZwX6l3RTB1+7f+JFpEybs0x+gwJeZ8Dx
+ vtaTOP2B8n69a4RNY8vvXGjOfhPq9YJBewvoVq5bdX5x/yJGpRnVU4FUpgumlGea+2zn
+ t9Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770264387; x=1770869187;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=USTw0mKGA2VPqIAk81XWhkfH/gV/AfyfIWi3QierJYQ=;
+ b=ZCejcbrnF3Pzo7/d1kX52AaMQRTlJ5CR8/XZDvDAwcSEni/bBmq0oM8U3mqb0fkVIi
+ kJoKmJbCjyJIcLgfL2NAoSYTfvEzT2kCmPOn0ANVgANoKsje9nzn3bNzQW9UvxYpHeAp
+ /q62UHtyc4B7xgVllV3NgAzFQ04bDkhxduM2AU2FF/gtclI07EzlHkEKIszM71HrGg2o
+ w8ObBeZdJRLC8OwSjy9LMWKWhoubpXmUYv/p66hQkEOteOtKdL/3oRdmZdNR3o0GHGXE
+ +X+0ma2egCgAw4nu0WmduResEHz6YOHDZ1VeFL58muGatVtiXqwpH5FY4CLRErCwKkG/
+ JorA==
+X-Gm-Message-State: AOJu0YwskYgTeV7MR+gfosopkRc9GYGS7cvJ0vKsedgm9m1yQxtFL3uS
+ YJ4YOgOSnb1m4l5Kae7J3GGDufyMG7XSet1L8iD/AEannfRLlJowIAO8JuoPIr7OfnU3RQ==
+X-Gm-Gg: AZuq6aLNuJ0XX/pP9PIJCc+r7HJt6fgoE850keHK/W01PRll3Zp/V0C0EpMyR29i+87
+ 8iXyolMLanMBY9dmvMAFT9AFtqARKSR6PTpz5cUwLv5kJqG0knm4dtpmpufFlAPErrqUN/ztM/T
+ RQkKJ6FqWDyw2wwKRGQ5isnk0+re683TjJnPS8d5WNV/Uz6bNE3shlRVn4hdHVW9l3vrUpbbT5z
+ 2v69B8CPIbRxVW9V+zyydWOJFA8z1f6kqcLERe9MiSky1XOQqgzM/B4TD452UWF4KWH7B8G1tcG
+ B73Txy+uADjFky8NNq6ORKFd2Wrw7TiVVYtJNFbfvwYQ/hPawBLF55rbUBkVG+oNNwqdmdxjBxl
+ TbtH1KFlQmVsya3L+SoHqb4l/h40GxbDQXKZCmkigx19P4yWl1TVoZbSHyVTOIKmMVdbzmdBiYf
+ u8kN2VcE5X6JYQmPWdrUqPl7is0FYDpJ/VFbCvUto3kiNiAGGcJpbQJuVuGQdDSJZzLqeCicUnN
+ rd2JciwX8IY1JoaBqc=
+X-Received: by 2002:a05:7301:1686:b0:2b8:711:ae6d with SMTP id
+ 5a478bee46e88-2b83296f237mr2059500eec.5.1770264387085; 
+ Wed, 04 Feb 2026 20:06:27 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b832e4d0b4sm2552864eec.9.2026.02.04.20.06.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Feb 2026 20:06:26 -0800 (PST)
+Date: Thu, 5 Feb 2026 12:06:11 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v3 17/19] target/riscv: rvv: Add vfext.vf2 instruction
+ for Zvfofp4min extension
+Message-ID: <aYQW8Zm-agycDgqH@ZEVORN-PC.localdomain>
+References: <20260204051756.667397-1-max.chou@sifive.com>
+ <20260204051756.667397-18-max.chou@sifive.com>
 MIME-Version: 1.0
-X-ThreadId: A_quthzHMDYc
-Date: Wed, 04 Feb 2026 20:48:48 -0700
-From: "Alex Williamson" <alex@shazbot.org>
-To: "Pekovic, Manojlo" <Manojlo.Pekovic@amd.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "Prica, Nikola" <Nikola.Prica@amd.com>,
- "Andjelkovic, Dejan" <Dejan.Andjelkovic@amd.com>
-Message-Id: <8b3e30e6-3c3e-49ab-b9db-8296aaf819d1@app.fastmail.com>
-In-Reply-To: <CH0PR12MB52833619AF8D222A463E9209FA98A@CH0PR12MB5283.namprd12.prod.outlook.com>
-References: <20260203154112.1668-1-manojlo.pekovic@amd.com>
- <20260203154112.1668-3-manojlo.pekovic@amd.com>
- <20260203212330.56e07330@shazbot.org>
- <CH0PR12MB52833619AF8D222A463E9209FA98A@CH0PR12MB5283.namprd12.prod.outlook.com>
-Subject: Re: [PATCH 2/2] vfio/pci: Support multifunction atomic ops capability
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=alex@shazbot.org;
- helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260204051756.667397-18-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,206 +110,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 4, 2026, at 11:18 AM, Pekovic, Manojlo wrote:
-> [AMD Official Use Only - AMD Internal Distribution Only]
->
-> Hi Alex,
-> before I submit a new patch according to Cedric's email, I want to mak=
-e=20
-> some clarifications
->
-> On Tue, 3 Feb 2026 16:41:12 +0100
-> Manojlo Pekovic <manojlo.pekovic@amd.com> wrote:
->
->> From: Manojlo Pekovic <mpekovic@amd.com>
->>
->> Extend PCIe Atomic Ops completer support to multifunction vfio-pci
->> devices by calculating the common subset of atomic capabilities across
->> all functions.
->>
->> For multifunction devices, we now:
->> 1. Calculate the intersection of atomic capabilities across all
->> functions 2. Only enable capabilities that ALL functions with atomic
->> support share 3. Functions without atomic support are skipped (not
->> penalized)
->>
->> During vfio_realize(), other functions in a multifunction device may
->> not be realized yet, making it impossible to enumerate all functions.
->> We defer atomic ops configuration to machine_done time for
->> multifunction devices, ensuring all functions are realized before
->> calculating common capabilities.
->
-> Exactly what are we trying to enable with this support?  Why do we nee=
-d=20
-> multifunction AtomicOps support versus multiple single function=20
-> assignments under separate root ports?
->
-> ++ While systems do allow separate assignments, we have come up on mor=
-e=20
-> than one occasion where the topology of the bare metal was mimicked by=20
-> VM's configuration.
-> ++ Current solutions were hacking and forcing atomics ops on the root=20
-> port, or changing the topology of the VM (which no longer represents=20
-> the same as bare metal)
-> ++ Right now, I cannot confirm that doing either has created any=20
-> faults, however, from UX standpoint, the correct way is that user=20
-> shouldn't think about it
-> ++ I understand your concerns, and I can either
-> ++ - Defer this patch and investigate further
-> ++ - Proceed with it for completeness, given its low risk
-> ++ What's your preference?
+On Wed, Feb 04, 2026 at 01:17:53PM +0800, Max Chou wrote:
+> The vfext.vf2 instruction converts a vector of OCP FP4 E2M1
+> floating-point numbers to a vector of OFP FP8 E4M3 floating-points
+> numbers.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>  target/riscv/helper.h                      |  3 ++
+>  target/riscv/insn32.decode                 |  3 ++
+>  target/riscv/insn_trans/trans_rvofp4.c.inc | 43 ++++++++++++++++++++++
+>  target/riscv/translate.c                   |  1 +
+>  target/riscv/vector_helper.c               | 33 +++++++++++++++++
+>  5 files changed, 83 insertions(+)
+>  create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
+> 
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 356c24d9fb..162303fb6c 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -1259,6 +1259,9 @@ DEF_HELPER_5(vfncvt_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+>  
+> +/* OFP4 function */
+> +DEF_HELPER_5(vfext_vf2, void, ptr, ptr, ptr, env, i32)
+> +
+>  /* Vector crypto functions */
+>  DEF_HELPER_6(vclmul_vv, void, ptr, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_6(vclmul_vx, void, ptr, ptr, tl, ptr, env, i32)
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index f2b413c7d4..c58223ebd8 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -754,6 +754,9 @@ vsext_vf2       010010 . ..... 00111 010 ..... 1010111 @r2_vm
+>  vsext_vf4       010010 . ..... 00101 010 ..... 1010111 @r2_vm
+>  vsext_vf8       010010 . ..... 00011 010 ..... 1010111 @r2_vm
+>  
+> +# Zvfofp4min Extension
+> +vfext_vf2       010010 . ..... 10110 010 ..... 1010111 @r2_vm
+> +
+>  vsetvli         0 ........... ..... 111 ..... 1010111  @r2_zimm11
+>  vsetivli        11 .......... ..... 111 ..... 1010111  @r2_zimm10
+>  vsetvl          1000000 ..... ..... 111 ..... 1010111  @r
+> diff --git a/target/riscv/insn_trans/trans_rvofp4.c.inc b/target/riscv/insn_trans/trans_rvofp4.c.inc
+> new file mode 100644
+> index 0000000000..0fb5d7d534
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvofp4.c.inc
+> @@ -0,0 +1,43 @@
+> +/*
+> + * RISC-V translation routines for the OFP4 Standard Extensions.
+> + *
+> + * Copyright (C) 2025 SiFive, Inc.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +static bool vext_zvfofp4min_check(DisasContext *s, arg_rmr *a)
+> +{
+> +    return s->cfg_ptr->ext_zvfofp4min &&
+> +           (s->sew == MO_8) &&
+> +           vext_check_altfmt(s, -1) &&
+> +           (s->lmul >= -2) &&
+> +           require_rvv(s) &&
+> +           vext_check_isa_ill(s) &&
+> +           (a->rd != a->rs2) &&
+> +           require_align(a->rd, s->lmul) &&
+> +           require_align(a->rs2, s->lmul - 1) &&
+> +           require_vm(a->vm, a->rd) &&
+> +           require_noover(a->rd, s->lmul, a->rs2, s->lmul - 1);
+> +}
+> +
+> +static bool trans_vfext_vf2(DisasContext *s, arg_rmr *a)
+> +{
+> +    if (vext_zvfofp4min_check(s, a)) {
+> +        uint32_t data = 0;
+> +
+> +        data = FIELD_DP32(data, VDATA, VM, a->vm);
+> +        data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
+> +        data = FIELD_DP32(data, VDATA, VTA, s->vta);
+> +        data = FIELD_DP32(data, VDATA, VMA, s->vma);
+> +        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, 0),
+> +                           vreg_ofs(s, a->rs2), tcg_env,
+> +                           s->cfg_ptr->vlenb, s->cfg_ptr->vlenb, data,
+> +                           gen_helper_vfext_vf2);
+> +        tcg_gen_movi_tl(cpu_vstart, 0);
+> +        finalize_rvv_inst(s);
+> +
+> +        return true;
+> +    }
+> +    return false;
+> +}
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 137022d7fb..bf403785b5 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1220,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>  #include "insn_trans/trans_svinval.c.inc"
+>  #include "insn_trans/trans_rvbf16.c.inc"
+>  #include "insn_trans/trans_rvofp8.c.inc"
+> +#include "insn_trans/trans_rvofp4.c.inc"
+>  #include "decode-xthead.c.inc"
+>  #include "decode-xmips.c.inc"
+>  #include "insn_trans/trans_xthead.c.inc"
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 418212973d..a87728f130 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -5121,6 +5121,7 @@ RVVCALL(OPFVV1, vfncvt_sat_f_f_q_ofp8e5m2, QOP_UU_B, H1, H4,
+>  GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e4m3, 1)
+>  GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e5m2, 1)
+>  
+> +/* Zvfofp4min: vfext.vf2 - OFP4 E2M1 to OFP8 E4M3 conversion */
+>  /*
+>   * Vector Reduction Operations
+>   */
+> @@ -5920,3 +5921,35 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
+>  GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
+>  GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
+>  GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
+> +
+> +
+> +void HELPER(vfext_vf2)(void *vd, void *v0, void *vs2, CPURISCVState *env,
+> +                       uint32_t desc)
+> +{
+> +    float_status fp_status = env->fp_status;
+> +    uint32_t vl = env->vl;
+> +    uint32_t vm = vext_vm(desc);
+> +    uint32_t esz = sizeof(uint8_t);
+> +    uint32_t total_elems = vext_get_total_elems(env, desc, esz);
+> +    uint32_t vta = vext_vta(desc);
+> +    uint32_t vma = vext_vma(desc);
+> +    uint32_t i;
+> +
+> +    VSTART_CHECK_EARLY_EXIT(env, vl);
+> +
+> +    for (i = env->vstart; i < vl; ++i) {
+> +        if (!vm && !vext_elem_mask(v0, i)) {
+> +            /* set masked-off elements to 1s */
+> +            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
+> +            continue;
+> +        }
+> +
+> +        uint8_t input = *((uint8_t *)vs2 + H1((i % 2 ? i - 1 : i) / 2));
+> +        input = (i % 2) ? ((input >> 4) & 0xf) : (input & 0xf);
+> +        *((uint8_t *)vd + H1(i)) = float4_e2m1_to_float8_e4m3(input,
+> +                                                              &fp_status);
+> +    }
+> +    env->vstart = 0;
+> +    /* set tail elements to 1s */
+> +    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
+> +}
+> -- 
+> 2.52.0
+> 
+> 
 
-Atomic ops routing is complicated though.  The current automatic setup f=
-ocuses on a specific use case.  The vfio interface *only* report atomic =
-ops support relative to the root bus, therefore we can effectively only =
-enable host->device or device->host atomic ops, thus automatic configura=
-tion is limited to the single function downstream of a root port, withou=
-t atomic ops routing enabled.
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-It's been a while since I implemented this and I should have left better=
- breadcrumbs as to the single function restriction, but I think it was n=
-ot simply determining the common set of capabilities between the devices=
-, but actually the implications relative to device->device atomic ops.
-
-For example, imagine that we want to create a virtual topology that enab=
-les atomic ops between two single function devices, each downstream of a=
- separate root port.  Before we can set the atomic ops routing flag on t=
-he root ports we need to evaluate whether the host system has atomic ops=
- routing on every physical interconnect between the devices.  The curren=
-t vfio interface doesn't tell us this.
-
-Now, instead of a virtual topology placing those devices under separate =
-root ports with explicit routing flags, what if we lump them together in=
-to a multifunction device.  Do these functions implicitly support device=
-->device atomic ops?  Such paths are typically implementation details be=
-yond the scope of the spec.
-
-Therefore, it's not really clear what gremlins we're unleashing in this =
-"low risk" extension.
-
-Back to the point, atomic ops routing is complicated, QEMU currently kic=
-ks anything beyond the trivial case back to the VM administrator.  If th=
-e VM administrator doesn't want to think about it, analyze the host topo=
-logy, create a compatible VM topology, and manually set appropriate atom=
-ic ops bits, then the burden probably needs to go in the direction of VM=
- builders and management tools rather than pushed down into QEMU.  QEMU =
-doesn't have the visibility to determine host routing and is forced to w=
-ork with the topology that's been specified.
-
->> +        /*
->> +         * A function with no atomic completer support simply cannot
->> +         * receive and execute atomic operations.
->> +         * This does NOT mean other functions in the same multifunct=
-ion
->> +         * device should be prevented from supporting atomics.
->> +         */
->> +        func_cap =3D vfio_get_atomic_cap(func_vdev);
->> +        if (func_cap !=3D 0) {
->> +            common_mask &=3D func_cap;
->> +        }
->
-> It's not clear to me that this is a valid interpretation:
->
-> PCIe 7.0, 6.15.2:
->
->         If any Function in a Multi-Function Device supports AtomicOp
->         Completer or AtomicOp routing capability, all Functions with
->         Memory Space BARs in that device must decode properly formed
->         AtomicOp Requests and handle any they don=E2=80=99t support as=
- an
->         Unsupported Request (UR). Note that in such devices, Functions
->         lacking AtomicOp Completer capability are forbidden to handle
->         properly formed AtomicOp Requests as Malformed TLPs.
->
-> If we're adding an arbitrary device that may not support AtomicOps int=
-o=20
-> a virtual multifunction package, how can we know that a device that=20
-> doesn't have an AtomicOps cap wouldn't respond with a Malformed TLP=20
-> error?
->
-> ++ My mistake in wording the comment. It is not that completer cannot=20
-> receive operations, but rather that the true state of the hardware=20
-> should be passed through, having same functionality on both VM and Bar=
-e=20
-> Metal
-
-But we cannot enforce that in QEMU.
-
-> ++ If the devices that doesn't support AtomicOps is passed through, it=20
-> will have same capabilities as actual hardware, having same properties=20
-> as bare metal (and same faults if hardware cannot respond with UR)
-
-Only if the function is part of the same multifunction device on bare me=
-tal.  QEMU cannot enforce that.
-
-> ++ Because of the check that we do for VFIOPCIDevice in lines before,=20
-> if non-vfio device is passed we will simply return
-
-We can compose multifunction devices in QEMU from separate multi- and si=
-ngle- function devices on bare metal.  The fact that they are VFIOPCIDev=
-ices tells us nothing about the physical association.
-
->> +    }
->> +
->> +    return common_mask;
->> +}
->> +
->>  static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)  {
->>      PCIBus *bus =3D pci_get_bus(&vdev->pdev); @@ -1948,8 +2009,7 @@
->> static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
->>      if (pci_bus_is_root(bus) || !parent || !parent->exp.exp_cap ||
->>          pcie_cap_get_type(parent) !=3D PCI_EXP_TYPE_ROOT_PORT ||
->>          pcie_cap_get_version(parent) !=3D PCI_EXP_FLAGS_VER2 ||
->> -        vdev->pdev.devfn ||
->> -        vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
->> +        vdev->pdev.devfn) {
->>          return;
->>      }
->>
->> @@ -1962,6 +2022,25 @@ static void vfio_pci_enable_rp_atomics(VFIOPCI=
-Device *vdev)
->>          return;
->>      }
->>
->> +    /*
->> +     * Single-function: All device info is available now, configure =
-immediately
->> +     * Multifunction: Other functions may not be realized yet, defer=
- to
->> +     *                machine_done time when all devices guaranteed =
-to exist
->> +     */
->
-> This also means that multifunction devices can only support cold-plug=20
-> whereas single function devices support AtomicOps with cold-plug and=20
-> hot-plug.  The cold-plug device can be unplugged and re-added and it=20
-> will have different behavior.
->
-> Additionally, it seems we only enable AtomicOps if function 0 supports=20
-> AtomicOps, what's the basis for that decision?  Based on the previous=20
-> comment, the more conservative approach might be that all functions=20
-> need to support AtomicOps, but...
->
-> Maybe what we really want is for each function to attempt to initializ=
-e=20
-> the AtomicOps bits on the root port.  The last realized function shoul=
-d=20
-> get it correct regardless of the order the functions are realized,=20
-> though we'll need to track our 'Abort if already configured' strategy=20
-> differently.
->
-> I tossed out this machine_done notifier as a possibility, but I'd=20
-> rather avoid it.
->
-> ++ Machine_done was something I hesitantly did, trying to not change a=
-s=20
-> much functionality as possible of the current code.
-> ++ If its appropriate, I can try with changing 'Abort if already=20
-> configured' logic, to support this approach
-> ++ What is your suggestion on this?
-
-I'm not convinced it's QEMU's job, or that QEMU is even capable of servi=
-ng the intended goal here.  Thanks,
-
-Alex
+Thanks,
+Chao
 
