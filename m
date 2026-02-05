@@ -4,127 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8495DECD9B5
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 23:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B97AECD9B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 23:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo8gc-0003x1-BV; Thu, 05 Feb 2026 18:22:58 -0500
+	id 1vo90O-0001VW-9g; Thu, 05 Feb 2026 18:43:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vo8ga-0003wt-M1
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 18:22:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vo90M-0001Th-Bb; Thu, 05 Feb 2026 18:43:22 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vo8gY-0004XH-Sk
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 18:22:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770333772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mRHj1SvQDtOvOuArJO7jd2129JpM4HdXRvRNkRjhPNk=;
- b=gqSGjqlpjPl4CruiejeXDOxBlSrjGb0uUjef3WrPIOZG+rlwZgZaxsuEHGrzWu3ewnjM3s
- IGLZLhqdystspwrYg0bb9BKFD5aEhMZPo7JlBa5GbGa/4akn/F1NRTt+eozPaNcSxTs2MH
- QPFUT0mfX1+h6rF3nzRG4NjGRFKLPFI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-oGBAeMoxPsuS-X7mDMMb3A-1; Thu, 05 Feb 2026 18:22:50 -0500
-X-MC-Unique: oGBAeMoxPsuS-X7mDMMb3A-1
-X-Mimecast-MFC-AGG-ID: oGBAeMoxPsuS-X7mDMMb3A_1770333769
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-435a11575ecso1278480f8f.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 15:22:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770333769; cv=none;
- d=google.com; s=arc-20240605;
- b=hRA5wPNLOKntwv493dRmcaqfl7FWSuNOFxyOKzVBpVazbpunPqx9VxeeWyFbFuhtzB
- +RE5JVK/Hfe/po6OA8nWQpLuV2mkhb8cVzWV826scjqQ5i+zy8R1pGq+97Geh2OUHsUf
- J2BJKoCeVGciomENn5ZowZ05B/Iwlz13KSt+CIqS0xQxy4mp/Y0qp8IGvB627s8P6huO
- tHJGKGbKxKcSnU4MzVqViZAt62TxyFXwFcsZnMUty7JD4xm3ZtVeRgLqHYWEFOq8Vnk2
- tVG9HbxfLZdqcx5SD27g/ZE+kDrbchRknbYoVsoPSENLxskDjqgm/m9Qy0OeNt80txu+
- Cqnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mRHj1SvQDtOvOuArJO7jd2129JpM4HdXRvRNkRjhPNk=;
- fh=w72gMzNHx+rOQeSQN99Ghrv1qiAWz3alirFKmSMpZ9U=;
- b=W3wgUeXVzqqPYvi6+ieHQygSN1YrleSGWm7LKTpVUefr7j8AUbsGAKcbcROCpAfeCM
- NQj0mqEBS5n2lW8Rl50WijIi8NPn6KeDI+ZKoJ3qaoD0cgo4l971gRJ1JxgEc5mRCm7Q
- qr2gNlhbzcgDCkTUFArVld7wzOiRHtli0TYX60OJHxHyAzY7kTJ2/jc0eLtqt5vs0PBx
- Z3ZKvur9q+elGnrFAUTPDHbK6AgKtZ+CjjB/LHytB6Io0DW6YgT5+RqwOOdu3WqQM1ls
- +Dm1+ePx9k5/nBEQU8lR6xEaqcFY8GzvXspzwgqijDs3jvd2u5/eTUy6/wtSwcy88PCl
- TiPg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770333769; x=1770938569; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mRHj1SvQDtOvOuArJO7jd2129JpM4HdXRvRNkRjhPNk=;
- b=cW0uxVASRI8zGpZ9Jo2RkK1Qj0PcAJQ1AfSDr8JRIbvjHBzGKXobNpEiwS4hBYeCrR
- E5rDtictlYy2NSonuouSubDsndear878ZmgdBpdMZLAjUkGlV69Jb5DIpxLcZ+BoTRHS
- 7xfrXISzuvQqrwemkn8MtrV8L0knnQHaX29v8p3ONo72cRv7FBLHND1ZObARoUO/PSL2
- e2xM24p18W9VM4mqSTeQqyVLu+KlBPLzbv4dl/DmcpmS8SPheQDVoaSjZ28fN6uVKyI3
- UuNxa3cz7xszsunbg9AbRmqlQYKxp/T7GfWYswnIkg41QQh3g857fJYIJfeaX8CSHEwR
- T2fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770333769; x=1770938569;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mRHj1SvQDtOvOuArJO7jd2129JpM4HdXRvRNkRjhPNk=;
- b=m9v15GtRlbq7F3gtJQU3xM/9+Lkvl1XQqmu3G5OHoSy3vutFtpTCd8YO7xS2N6mIRh
- t91focE3MQWr95VBP4wWR2bo1wnK18yi4GQ2KQQckHbvKW3IDIgUUzrS5Z3c0Wx5WSEM
- gMeC3xgMD+mGQvTarW5V+eu3yb5ixcLNWx59HqZRxh27A91WTh9oaxIuBDGcwMYowSDw
- g+BOl2dmkCnFd+qe6vD3RBLHhshYkcGteg5YGMItpfCSXqBnkqmzw3q+zs1CTwyqLrty
- KQvsSv4WQ2FyLh0n1nKsZCts8jZneNqT52f9qj6aiekq21+6Ip55QOM9wZxN43GCXzfK
- sumw==
-X-Gm-Message-State: AOJu0Yw+Qk4A92zPYvKtv+xgigfqLKIKbWpxpyTNka+/s8Yw8EYmo3Ja
- 2eXxEq/tuJ8RUl0sHB1xtMvJ5DgxzclorzAZGzzTrJacjM7iWHxZvi3HmTezkIXV7iv4CVvfIGq
- 6/UFjjTgfOPalES/dMKWtUNwsCgWdQln9Oqs++p3q1rwW1D+WOGOhuULDaznNJ1zLVH4Yi6rwO9
- UDdDyippA9IFF6Vr3pxAu+XB0HgzYG5BFVbGrtvgU=
-X-Gm-Gg: AZuq6aJvkTP/pKV7XJxzDkPMvqlJD1tIxRxBMABdecxWDxpTRaclQXCplgPZh0K8BZz
- NpI7IAWMHsiZchmyVa8qLlmLsd4ZGAM7/jQH0DhdYvcSy2P6jL5N6KkmcBoROSqCLs0EXdDl8PM
- 4NRgXAIWnNgMhgmvWvAIQZU5nbQFxPDsLngPJnAV87C5bU1uCojxaKno3Nbls1CJM89ORSD43gv
- 9TR7MPORI8d0cXVbovQEi5LPvOXjgCKxDcG/tC/AGsYnI6j3ey0VMOS4WSdp5DXTW43Fg==
-X-Received: by 2002:a05:6000:22c6:b0:435:9882:234e with SMTP id
- ffacd0b85a97d-4362938ff1emr1236623f8f.59.1770333768751; 
- Thu, 05 Feb 2026 15:22:48 -0800 (PST)
-X-Received: by 2002:a05:6000:22c6:b0:435:9882:234e with SMTP id
- ffacd0b85a97d-4362938ff1emr1236611f8f.59.1770333768372; Thu, 05 Feb 2026
- 15:22:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vo90J-0007JE-SE; Thu, 05 Feb 2026 18:43:21 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 615LdJYD027311;
+ Thu, 5 Feb 2026 23:43:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zzxVth
+ kXdZgQxIlCSit76vT459lsqPsYWzlyOq6QWlY=; b=C0Em0jTIVOFIgqfYzgHHr4
+ f1v1y2iUzser0tBQlgiAlkUui0eJKvuI8NOP6uMGfEqz7GdjtrPXe3OEYjb7j6YV
+ bgvo3tXlSWCSVFe1gJCIc7+LM8f6zad9/hP5EMzXW5ntm0yJTjS3Cu5STS6TbPw4
+ PwYXvWHyaEE0Uu3UA5c+T1ry2D8BE7dVyRzwh3XxWu5RjB61piR7GDVHKHHdk+vl
+ zcv7k4e4/jiOM02UFdkOG7gr7k303iW4wMxriJKM33Uju+ytuhJcYvE2l19uL46w
+ jJoo+B1Zi9oCYNo+Z57ykpiB0hFnVD832CGybHWGgpEHnj+slwZK1jNvpdic3PIQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c1986s9e5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Feb 2026 23:43:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 615JFKUx015734;
+ Thu, 5 Feb 2026 23:43:15 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c4gsgv8eg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Feb 2026 23:43:15 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 615NhDLF61800954
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Feb 2026 23:43:14 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C3C0558050;
+ Thu,  5 Feb 2026 23:43:13 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA6F358045;
+ Thu,  5 Feb 2026 23:43:12 +0000 (GMT)
+Received: from [9.61.250.67] (unknown [9.61.250.67])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Feb 2026 23:43:12 +0000 (GMT)
+Message-ID: <62317e7b-c992-46cf-9df8-faad2fcc4b9c@linux.ibm.com>
+Date: Thu, 5 Feb 2026 15:43:10 -0800
 MIME-Version: 1.0
-References: <20260204052456.970605-1-richard.henderson@linaro.org>
- <20260204052456.970605-7-richard.henderson@linaro.org>
- <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
- <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
- <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
- <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
- <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
- <c2cb0273-de90-439b-9058-c4b57df86fce@linaro.org>
-In-Reply-To: <c2cb0273-de90-439b-9058-c4b57df86fce@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 6 Feb 2026 00:22:36 +0100
-X-Gm-Features: AZwV_QjxedeNfu7AOlUQ3GebyZLrWQgau44TEUZacnmk1U3sRUhG1C-QPaNE4ME
-Message-ID: <CABgObfbBGw77LDuirj1xWVaecEv6oSOZVY7gY1R8FURiK8+_Wg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
- with shifts
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000065ef29064a1bf397"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/14] pc-bios/s390-ccw: Add support for virtio-blk-pci
+ IPL
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-12-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260127161547.459443-12-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDE3OSBTYWx0ZWRfX6/JRzpUZKESg
+ scHeRWl8zkdfLt8AwLyGKLbWLzlrufl9woysCuiJM3tsaaEVwEVUGV86Pv1as2AGZH0iUGfFIvl
+ Og+e1Kx8Dw3qJyWmtKwI0atkUr13V2W6BkAwhGrnYmzO3PxAuIibByLDpEF3YFV0GdXd8KziA8U
+ 3hRBaNXf1jEOBvcefjGOHjqB4qyoKkUP34Oe0oyzdVWt0I/z6XZUw/RfpedqpQTfYMvg5Y70DhN
+ cIPxGMwwGHBwZdvj666BfODAMgzbdJjCM7rimN5QDRznigdFUf4zyhwI0PDtwsSf3/cJmUHclan
+ ZD2PnnCD8EuAZYtbbXGtc/ow64iBZVn8ZOx2K1t9qqNXMjUb+l5TixPpQXbD7W0MDxWC4+CImW4
+ wXTzuhnj2tNm0f+JD1C9qZfd6GP5ot9dJi0BSWxgUiCUJPAPEIR2JxNPm/swbL4kY2GSBWTgq/e
+ yjdmGk44kiPjYRTuCkQ==
+X-Proofpoint-GUID: BPI5U0Q6IQCZwBu9_5W9DTgezvdd1g_r
+X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=69852b14 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=t_0_BxdfAAAA:20
+ a=VnNF1IyMAAAA:8 a=TqYFoeTA7eKLJz2AZNEA:9 a=QEXdDO2ut3YA:10
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: BPI5U0Q6IQCZwBu9_5W9DTgezvdd1g_r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-05_06,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602050179
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,96 +126,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000065ef29064a1bf397
-Content-Type: text/plain; charset="UTF-8"
+<...snip...>
 
-Il gio 5 feb 2026, 23:29 Richard Henderson <richard.henderson@linaro.org>
-ha scritto:
+On 1/27/2026 8:15 AM, jrossi@linux.ibm.com wrote:
+> int virtio_pci_setup(VDev *vdev)
+> +{
+> +    VRing *vr;
+> +    int rc;
+> +    uint8_t status;
+> +    int i = 0;
+> +
+> +    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+> +    vdev->cmd_vr_idx = 0;
+> +
+> +    if (virtio_reset(vdev)) {
+> +        return -EIO;
+> +    }
+> +
+> +    status = VPCI_S_ACKNOWLEDGE;
+> +    if (virtio_pci_set_status(status)) {
+> +        puts("Virtio-pci device Failed to ACKNOWLEDGE");
+> +        return -EIO;
+> +    }
+> +
+> +    rc = virtio_pci_read_pci_cap_config();
+> +    if (rc) {
+> +        puts("Invalid virtio PCI capabilities");
+> +        return -EIO;
+> +    }
+> +
+> +    vdev->guest_features[1] = VIRTIO_F_VERSION_1;
+> +    if (virtio_pci_negotiate()) {
+> +        panic("Virtio feature negotation failed!");
+> +    }
+> +
+> +    switch (vdev->dev_type) {
+> +    case VIRTIO_ID_BLOCK:
+> +        vdev->nr_vqs = 1;
+> +        vdev->cmd_vr_idx = 0;
+> +        vdev->config.blk.blk_size = 0;
+> +        virtio_pci_get_blk_config();
+> +        break;
+> +    default:
+> +        puts("Unsupported virtio device");
+> +        return -ENODEV;
+> +    }
+> +
+> +    status |= VPCI_S_DRIVER;
+> +    rc = virtio_pci_set_status(status);
+> +    if (rc) {
+> +        puts("Set status failed");
+> +        return -EIO;
+> +    }
+> +
+> +    /* Configure virt-queues for pci */
+> +    for (i = 0; i < vdev->nr_vqs; i++) {
+> +        VqInfo info = {
+> +            .queue = (unsigned long long) virtio_get_ring_area(i),
+> +            .align = KVM_S390_VIRTIO_RING_ALIGN,
+> +            .index = i,
+> +            .num = 0,
+> +        };
+> +
+> +        vr = &vdev->vrings[i];
+> +
+> +        if (vpci_read_flex(VPCI_C_COMMON_NUMQ, c_cap.bar, &info.num, 2)) {
+> +            return -EIO;
+> +        }
+> +
+> +        vring_init(vr, &info);
+> +
+> +        if (vpci_set_selected_vq(vr->id)) {
+> +            puts("Failed to set selected virt-queue");
+> +            return -EIO;
+> +        }
+> +
+> +        if (vpci_set_queue_size(VIRTIO_RING_SIZE)) {
+> +            puts("Failed to set virt-queue size");
+> +            return -EIO;
+> +        }
+> +
+> +        rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
+> +        rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
+> +        rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
+> +        if (rc) {
+> +            puts("Failed to configure virt-queue address");
+> +            return -EIO;
+> +        }
+> +
+> +        if (vpci_set_queue_enable(true)) {
+> +            puts("Failed to set virt-queue enabled");
+> +            return -EIO;
+> +        }
+> +    }
+> +
+> +    status |= VPCI_S_FEATURES_OK | VPCI_S_DRIVER_OK;
+> +    return virtio_pci_set_status(status);
 
-> >      > I think it would be better to pick a canonical form for AND with
-> 2^n-1 and handle
-> >      > conversion to extract (like PPC rotates or movz) in the backend.
-> >      >
-> >      > Picking AND as the canonical form also avoids makes the macros
-> for extract validity
-> >      > simpler too; adding an extra constraint for immediate 2^n-1 is
-> easier and it
-> >     generalizes
-> >      > to other PPC rotate and mask cases.
-> >
-> >     Picking AND means we have to use "r,0,ri" for x86, losing register
-> allocation flexibility.
-> >
-> >
-> > Then could you wrap the target specific extract_valid with one that
-> allows ofs == 0 if AND
-> > allows the immediate 2^len-1? That would also simplify this series.
->
-> I don't understand your suggestion here.
->
-
-I am not sure about it either... I am just not sure why extract is
-guaranteed to be cheaper or have better constraints than AND.
-
-It does happen to be true for x86, though only for len == 8 or 16; but is
-it true of all targets that have a more expansive extract instruction?
-
-Paolo
+Should we also enable Bus master bit as part of the device setup? QEMU 
+though has a workaround where if we have setup the ACKNOWLEDGE and 
+DRIVER status flags set then it would enable the Bus master by default 
+since older Linux virtio-pci drivers didn't do it 
+(https://github.com/qemu/qemu/blob/cd5a79dc98e3087e7658e643bdbbb0baec77ac8a/hw/virtio/virtio-pci.c#L480-L487). 
+But latest virtio-pci drivers seems to be doing the right thing, so not 
+sure how long this workaround would be supported :) .
 
 
+> +}
+> +
 
->
-> r~
->
->
+<..snip..>
 
---00000000000065ef29064a1bf397
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 5 feb 2026, 23:29 Richard=
- Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">richard.hend=
-erson@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">&gt;=C2=A0 =C2=A0 =C2=A0 &gt; I think it would be bett=
-er to pick a canonical form for AND with 2^n-1 and handle<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; conversion to extract (like PPC rotates or mo=
-vz) in the backend.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Picking AND as the canonical form also avoids=
- makes the macros for extract validity<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; simpler too; adding an extra constraint for i=
-mmediate 2^n-1 is easier and it<br>
-&gt;=C2=A0 =C2=A0 =C2=A0generalizes<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; to other PPC rotate and mask cases.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Picking AND means we have to use &quot;r,0,ri&quot;=
- for x86, losing register allocation flexibility.<br>
-&gt; <br>
-&gt; <br>
-&gt; Then could you wrap the target specific extract_valid with one that al=
-lows ofs =3D=3D 0 if AND <br>
-&gt; allows the immediate 2^len-1? That would also simplify this series.<br=
->
-<br>
-I don&#39;t understand your suggestion here.<br></blockquote></div></div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">I am not sure about it either..=
-. I am just not sure why extract is guaranteed to be cheaper or have better=
- constraints than AND.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I=
-t does happen to be true for x86, though only for len =3D=3D 8 or 16; but i=
-s it true of all targets that have a more expansive extract instruction?</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gm=
-ail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-<br>
-<br>
-r~<br>
-<br>
-</blockquote></div></div></div>
+> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+> index 96c17ac3c7..883b00e0c6 100644
+> --- a/pc-bios/s390-ccw/virtio-pci.h
+> +++ b/pc-bios/s390-ccw/virtio-pci.h
+> @@ -71,6 +71,8 @@ typedef struct VirtioPciCap  VirtioPciCap;
+>   void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+>   int virtio_pci_reset(VDev *vdev);
+>   long virtio_pci_notify(int vq_id);
+> +int virtio_pci_setup(VDev *vdev);
+> +int virtio_pci_setup_device(void);
+>   
+>   int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
+>   int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
+> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+> index 956b34ff33..f65571a920 100644
+> --- a/pc-bios/s390-ccw/virtio.c
+> +++ b/pc-bios/s390-ccw/virtio.c
+> @@ -17,6 +17,7 @@
+>   #include "virtio.h"
+>   #include "virtio-scsi.h"
+>   #include "virtio-ccw.h"
+> +#include "virtio-pci.h"
+>   #include "bswap.h"
+>   #include "helper.h"
+>   #include "s390-time.h"
+> @@ -112,6 +113,8 @@ bool vring_notify(VRing *vr)
+>       case S390_IPL_TYPE_CCW:
+>           vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
+>           break;
+> +    case S390_IPL_TYPE_PCI:
+> +        vr->cookie = virtio_pci_notify(vr->id);
+>       default:
+>           return 1;
+>       }
+> @@ -119,8 +122,43 @@ bool vring_notify(VRing *vr)
+>       return vr->cookie >= 0;
+>   }
+>   
+> +/*
+> + * Get endienness of the IPL type
+> + * Return true for s390x native big-endian
+> + */
+> +bool be_ipl(void)
+> +{
+> +    switch (virtio_get_device()->ipl_type) {
+> +    case S390_IPL_TYPE_QEMU_SCSI:
+> +    case S390_IPL_TYPE_CCW:
+> +        return true;
+> +    case S390_IPL_TYPE_PCI:
+> +        return false;
+> +    default:
+> +        return true;
+> +    }
+> +}
+> +
+> +/*
+> + * Format the virtio ring descriptor endianness
+> + * Return the available index increment in the appropriate endianness
+> + */
+> +static uint16_t vr_fmt_descriptor(VRingDesc *desc)
+> +{
+> +    if (!be_ipl()) {
+> +        desc->addr = bswap64(desc->addr);
+> +        desc->len = bswap32(desc->len);
+> +        desc->flags = bswap16(desc->flags);
+> +        desc->next = bswap16(desc->next);
+> +    }
+> +
+> +    return be_ipl() ? 1 : bswap16(1);
+> +}
+> +
+>   void vring_send_buf(VRing *vr, void *p, int len, int flags)
+>   {
+> +    uint16_t increment;
+> +
+>       /* For follow-up chains we need to keep the first entry point */
+>       if (!(flags & VRING_HIDDEN_IS_CHAIN)) {
+>           vr->avail->ring[vr->avail->idx % vr->num] = vr->next_idx;
+> @@ -131,11 +169,13 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags)
+>       vr->desc[vr->next_idx].flags = flags & ~VRING_HIDDEN_IS_CHAIN;
+>       vr->desc[vr->next_idx].next = vr->next_idx;
+>       vr->desc[vr->next_idx].next++;
+> +
+> +    increment = vr_fmt_descriptor(&vr->desc[vr->next_idx]);
 
---00000000000065ef29064a1bf397--
+If we are only returning 1 from the function vr_fmt_descriptor(), why 
+not just set increment=1 or remove it completely and keep 
+vr->avail->idx++? That way we don't need to do any endian conversion?
 
+Thanks
+
+Farhan
+
+
+>       vr->next_idx++;
+>   
+>       /* Chains only have a single ID */
+>       if (!(flags & VRING_DESC_F_NEXT)) {
+> -        vr->avail->idx++;
+> +        vr->avail->idx += increment;
+>       }
+>   }
 
