@@ -4,75 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAFBEC1EB1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92367EC1EB1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnyoh-0003Q5-E5; Thu, 05 Feb 2026 07:50:39 -0500
+	id 1vnyqd-00045x-Ib; Thu, 05 Feb 2026 07:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vnyod-0003Px-Eb
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:50:35 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vnyqb-00045g-RY; Thu, 05 Feb 2026 07:52:38 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vnyob-0006Qz-J0
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:50:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=o0OFaDPZVokASYXb24gtt2efhu04PBppuKZMNoPGxBo=; b=hpqzacrMKpr9eVtp
- RpHFPHp1SoITbQfB9oSXKlro02KQt5dTJE5jUHlFMUSwGzGJ1xL61YCD8NE0CnmuIS6rzJZBjv1Pv
- 2/pKG5y49Lx9qeE86VYhZO4yRm807Jfi1l6d4rDVg01Kw/MbI5W+4owwJvvD8BH9Y0GIBwatCfhVs
- njaNgKQn1xORZrNEtvoa2tvYuPxLrlnEJYyNSuJIe6BjcSk6pByfRd+qqSL0n/PZFPzSRN4NLuG6y
- zOIGVJdYI/ub1ydT7phsMxZGKfDTXPZKMTfDM7+VqHnGq2+rjArLAEfe1bS1Ova/5fVXRRErbr8iH
- TjkE5Nn+X0we3b461w==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vnyoY-00000001xE0-3gRR;
- Thu, 05 Feb 2026 12:50:30 +0000
-Date: Thu, 5 Feb 2026 12:50:30 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: Modern HMP
-Message-ID: <aYSSFo_HV6S0LQQS@gallifrey>
-References: <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
- <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
- <87ikctk5ss.fsf@suse.de> <aXJJkd8g0AGZ3EVv@redhat.com>
- <aX-boauFX2Ju7x8Z@gallifrey> <875x8d0w32.fsf@pond.sub.org>
- <aYPvN5fphSObsvGR@gallifrey> <87ms1nu1fj.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vnyqZ-0006bY-8u; Thu, 05 Feb 2026 07:52:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=RxNseIUWrwD/Kbs/AVkLZBxZWaZJefTxoSTuQWjI0f4=;
+ b=gGvOx9IjaGc06Op/783aDTLPXqUScVREAB76dnh06+gg5aytzOM3kss+
+ 5Nj8uUk03pTEXiWpDPof2r3YmXdeBQpDaiQm1RV/sOD8kux3sZ8Nfqj74
+ jKQGGhm0OKyr9zCoVI8CWTt1wvojC0ihBZJ3Ne6wqAACpglAz9ALndcsy g=;
+X-CSE-ConnectionGUID: HehZop7dSvCI5gFR+eB6lA==
+X-CSE-MsgGUID: t6DLQpbLSSaAzv6+iqW1Ig==
+Authentication-Results: mail2-relais-roc.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=SoftFail smtp.mailfrom=sebastien.michelland@inria.fr;
+ dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.21,274,1763420400"; d="scan'208";a="262068892"
+Received: from ptb-03250204.irisa.fr ([131.254.16.132])
+ by mail2-relais-roc.national.inria.fr with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2026 13:52:31 +0100
+From: =?UTF-8?q?S=C3=A9bastien=20Michelland?= <sebastien.michelland@inria.fr>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
+ qemu-riscv@nongnu.org, Jean-Michel Gorius <jean-michel.gorius@irisa.fr>,
+ =?UTF-8?q?S=C3=A9bastien=20Michelland?= <sebastien.michelland@inria.fr>
+Subject: [PATCH v2] target/riscv: fix require_rvv passing on non-RVV CPUs
+Date: Thu,  5 Feb 2026 13:52:34 +0100
+Message-ID: <20260205125255.1219082-1-sebastien.michelland@inria.fr>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ms1nu1fj.fsf@pond.sub.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 12:49:56 up 101 days, 12:26,  2 users,  load average: 0.04, 0.01,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.134.164.83;
+ envelope-from=sebastien.michelland@inria.fr;
+ helo=mail2-relais-roc.national.inria.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,31 +77,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Markus Armbruster (armbru@redhat.com) wrote:
-> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
-> 
-> [...]
-> 
-> > I did see you suggesting for Rust for it; which would work - although
-> > given it wouldn't be performance sensitive, Python would seem reasonable.
-> 
-> Marc-André suggested "Python or Rust (student choice)".
-> 
-> Daniel argued for Rust "as it allows the possibility to embed that Rust
-> impl inside the current QEMU binaries, to fully replace the C code and
-> retain broadly the same functionality."
-> 
-> If we're not interested in such embedding, then Python feels preferable
-> to me, because I'd expect it to get us to the finish line faster.
+trans_rvv.c.inc checks for the RVV extension through the function
+require_rvv. However, at least under CONFIG_USER_ONLY, the RVV extension
+status in DisasContex->mstatus_vs is always set to DIRTY, therefore
+treating RVV instructions as legal even when the extension is not
+present, e.g. with -cpu=rv32,v=false.
 
-Ah ok, the either-or embedding thing sounds neat; but does sound like
-it would complicate stuff.
+This bug manifests rarely because vset{i}vl{i} perform extra checks that
+do fail without RVV, thus raising SIGILL, and with no vtype set nearly
+all other RVV instructions still pass require_rvv but fail the vill check.
+Only instructions that don't depend on type (whole-register load/stores,
+such as vs*r.v) would show the bug by being executed when v=false.
 
-Dave
+This patch sets mstatus_vs to DISABLED when RVV is not present, meaning
+require_rvv now fails as intended.
 
+Signed-off-by: SÃ©bastien Michelland <sebastien.michelland@inria.fr>
+---
+Follow-up from v1 which (incorrectly) modified vs*r.v.
+
+ target/riscv/tcg/tcg-cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 988b2d905f..3ab1a4f0a7 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -153,7 +153,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+ 
+ #ifdef CONFIG_USER_ONLY
+     fs = EXT_STATUS_DIRTY;
+-    vs = EXT_STATUS_DIRTY;
++    vs = riscv_has_ext(env, RVV) ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
+ #else
+     flags = FIELD_DP32(flags, TB_FLAGS, PRIV, env->priv);
+ 
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.52.0
+
 
