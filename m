@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B97EC1EB2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 13:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621C0E8B39F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 14:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnzkM-0000ek-80; Thu, 05 Feb 2026 08:50:14 -0500
+	id 1vo0JF-0000wJ-Vq; Thu, 05 Feb 2026 09:26:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzkL-0000eX-6n
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:50:13 -0500
-Received: from p-west2-cluster4-host11-snip4-2.eps.apple.com ([57.103.69.133]
- helo=outbound.mr.icloud.com)
+ id 1vo0JC-0000vC-Ci
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:14 -0500
+Received: from qs-2003c-snip4-4.eps.apple.com ([57.103.86.27]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzkI-00014T-D8
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:50:12 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-10 (Postfix) with ESMTPS id
- 8E4DE180018C; Thu,  5 Feb 2026 13:50:02 +0000 (UTC)
+ id 1vo0J8-0007uL-W9
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:13 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPS id
+ 45674180010A; Thu,  5 Feb 2026 14:26:05 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770299407; x=1772891407;
- bh=+dpt6ShwB4Ce87Fe/dnhXnvIMu83O8iNTvTDfcNsJVs=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=bcONbXEtDQwkNjWofJAvWQImRLncetVmKuG5qKkHgKB13U1qSS2XpLDxJ+ZZ/D3JVjtU0M9ZB7H/fHsDLO9PZ3MHaQGi2eaDy6yAF63FEFgPUWZqaXZ7zvG+o3ltG3kUD9ISUTduop4Z9E7Xhkx1fFQPwvZqH1EjEwA27AvVptBRxevlyXDlPIYRDAeSBQx/rt6Y7SI520Z33zliZY8C5Zra7uWrJywJd/scgcu+mO6tKlMJbiRer55hzs9+0OgNfMYbGazC2emdRhYKxqUQwKFi4jMTRCWZyAd5naAldZxhXCahfcseLC147tGMoTUmKDjYCkp6sOSXsIlBAo99OQ==
+ s=sig1; t=1770301570; x=1772893570;
+ bh=FjtQ8XSoceu/POn4mLePgEXcXNSnO3IPji7VW8Vfg1M=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=SdqB3FjG5b40BlQQFyl5YYy0TCbpWm9iu1b55GMC1eSroeEMJcuRDQnfvN0Bgz9UuSWbxYv5aSOYl88cQWl/5Huw5K59+mK+uWQRY1D3Lf0BdlyrVzm1VfdR5mJL6Vhceo7wy3ZGQH3MFoaKY9O48K8KthHVrCCsXIsdED7Be8QutNh8TrwofDFqq7kBX+d8mMI18K1YTKCw968ph3W1PQIhYAkRTScla1ljv5S0csrwti0O8wTApPKpwEB+tAdXuFVJVsFqFPkvFE31PjAVGABWSn/plj9cWHFZfLGvl2a+IUkPiA/iq3up9JIu6gcSF6euEsn1Dq+q+v0uNXR7Tw==
 mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-10 (Postfix) with ESMTPSA id
- 5B365180028A; Thu,  5 Feb 2026 13:49:57 +0000 (UTC)
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPSA id
+ F0DA4180027C; Thu,  5 Feb 2026 14:25:59 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <990A675A-882C-416C-B491-308CE3FCF0C3@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_1CF4BAA6-D676-45B8-9E6C-41D001DEC9A7"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v20 00/22] WHPX support for Arm
-Date: Thu, 5 Feb 2026 14:49:45 +0100
-In-Reply-To: <CAFEAcA82FqmQekZAPhcrCfsxsjbXRx2rHk-TWG5FyxtBf5YpJQ@mail.gmail.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Cameron Esfahani <dirty@apple.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20260205131155.22780-1-mohamed@unpredictable.fr>
- <CAFEAcA82FqmQekZAPhcrCfsxsjbXRx2rHk-TWG5FyxtBf5YpJQ@mail.gmail.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-GUID: wveJy15WImUb6mDEKmY2OG_f8ax94PRi
-X-Proofpoint-ORIG-GUID: wveJy15WImUb6mDEKmY2OG_f8ax94PRi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwMyBTYWx0ZWRfX+FvjnJHPmSLJ
- k1INtS0AlVozMJaH7sA5GZFrJeaYkyZcxBw7XspU8Cn3l3V1yAIHXWbkw45V2XeuG7vREhmKAIj
- mJg8p9Kw8XiNP6Ib+XWwQLjgMlysr03xf8cfQoA91yyvjiL1hF/lzrohvpA8nizBm3ZdB7NtDV7
- HLBZXbEQmIUl8OmTOkCd02r1s3TvCFpV12MeflWQKVeed+u42Qe7AJiAgE4HUQMVQt7u045OYxi
- m4OncuQW8YgZYIqnY7WmkhTbxypMWpcFEeUVFz9AONqWAwqGLnGnjm5auL5ktb8vJqGfIFuE/wl
- O778kjvssuBvTsQTr7ChqqvlPpVECIVrhtgyIPZNddg8qD3MUjQ0pchh6Pg9HQ=
-X-Authority-Info-Out: v=2.4 cv=eZUwvrEH c=1 sm=1 tr=0 ts=6984a00d
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=KKAkSRfTAAAA:8 a=cKL5011BEmbuIUYcKbsA:9 a=lqcHg5cX4UMA:10
- a=CjuIK1q_8ugA:10 a=6adfjVMKI8_FotymHVcA:9 a=F4O9_Z5MoRRs3HHW:21
- a=_W_S_7VecoQA:10 a=cvBusfyB2V15izCimMoJ:22
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v21 05/22] tests: data: update AArch64 ACPI tables
+Date: Thu,  5 Feb 2026 15:25:23 +0100
+Message-ID: <20260205142543.64818-6-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260205142543.64818-1-mohamed@unpredictable.fr>
+References: <20260205142543.64818-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=QLNlhwLL c=1 sm=1 tr=0 ts=6984a880
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=kIK1FOY676eA-lZfg3QA:9 a=cvk_HSt5zwsbDY-e:21
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwOCBTYWx0ZWRfX/M9+l1tbfS5W
+ G/Fh7Mf8sgjYCz2uayhf4lbjJWFs0bApy7ouE5QYaUnNp3Wl9Dyrz+4PgD5BTrjo4WLRwwVZgpH
+ yUzhHHVpRkTUMcmqgSK0cBkFMcZKtViP0rbTI+w3rcwM3qLwFh5maUgy7Ywufpk7623aLn/XoGo
+ r5Bi71I9Frj21Jne+twcRdpGiY+HX+eDYGt3XrIASCCbKOfi7TjRwgCv6+TFXY70YRHM6o3iQp8
+ b8a3rYMWcUDAFFk/zDjr7weqLuRJsJFJ72XVtkHHsmwSl1yFvV5cfL351s/zHSq/bXhOPz54Cbu
+ yTeqVwhDbX6oVl2E9mvgtgEAZbkmR8sQTEbVOcp12c9V4AXiscGQBzlADgObXI=
+X-Proofpoint-GUID: f0TROGaGKPOlfYtPr3GHgLL2Pw7TC3Ne
+X-Proofpoint-ORIG-GUID: f0TROGaGKPOlfYtPr3GHgLL2Pw7TC3Ne
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- malwarescore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1030
- suspectscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602050103
-X-JNJ: AAAAAAABEOUv1uvo0K1+GaJzd3IufQBjD55n0HSRRcMeMXg3P4/tG/jRNTC92SauDGw/E1cHfC5PhymmgFrBelB5ImgT3yNPRVKMUL8/yiHnL4PZSH/MN4G7VnW8uc+uJPfsoYp9xJ50k5PYQXnKGNmkv7hYeHzwtsAGRmW0ZhnOaUn/UAWTdP4uwQAZIw7i5WVYSAQThflJrQSwEjQE7Wcp2eEWzHFsabTlO/F3SQ2EwLzPtS0X4OjJwGo1Bvl1N9Iw9xNsbEmLrc95iNm9CVsfy2uaNK2GGD2TfZggKTxbkPloF82ad9dAND2SINV/eSeKT3cEpAkIrKuH3FVIklX96NILtLcq2pOM64ZFQm4ZBr6UftHraIUefDLe2WlItPCM8b1UYadwWnZq9CUwDfCY/cZyfqNwobb7NkkvQ7UqfEYLo0KcrzGu8HK0iWgW2+kuKlfX+l4OP1LD0R+obi4DCtYbxYfME7XIPdKZrAnzPgkUkb24I9ABVM2eUB3ABoUY/YpkbCth6WRM0qRDYmAhtBURzRoPx9uL0qrbP0W3NzBvkhPkyIb+ymiIFDdyQQz0QaTILM1zeECDkqjjZ6po12uqZqs44y24IvloSVahlBc9+/SID8pKoFLinbOcsvC33cOH+RBbFYHOvFQawbaQpPW4nBXVVNtOpKpVhXiqYxL0deaHB0rrs6CEzY6KlapX+AIdqxNm5xes3GmQq83wv88KOgf26tFDFrbjaqnt3kzwVD5QLEVTyNoYt3eEZzJOS3ypZ+3sxUd5gRsG+5mzlTzEVT2qmSzSgTURopnq8/HxMYLo2boZXqb3jEKCFe6NfepuGG0Rx7l2EjqKjvJwMTTyfZzFHdG+esMB7wEy6gJ3d9AZOWDCvKjXgjHUWI8q0jUyZGBEqdNm1TQMTKG8Xb/uv13wu0Y3icO17sQeLAGpw9nR96yUdbqWDJ4=
-Received-SPF: pass client-ip=57.103.69.133;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ phishscore=0 adultscore=0 mlxscore=0 spamscore=0
+ bulkscore=0 clxscore=1030
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602050108
+X-JNJ: AAAAAAABppGMm0s31tsO9pxvKH28YHSru4yu3DiYsjZxRgEufYfkUsqbwEgXTC0Gw5YWsNuwGlcVnVgFMFBDD4RZwWKLfw4RIxpHqZWzO8z9bYuz12taGqJb+hPxA1SDTlac0q5O8zxVZFNeXtz6/xNCDfOpYcjb+V9ZStwJUmIx0jr1FkU4umLzEhZJWnppsXZq/Vn2eKZWYyPOlgEER1//yT/0q80SMCr9oRimXkaZvOfEmlpKfB5jZPjkKOEY18uNZi8Xeam6xVUjJRlJzDAzrE3e+hL6UQckizW0r6TKa0DSCBYXGVX17tUyhtudb7nPSVkXEE2RhbScHaHWKKDfshd/RKfhLsGHafHpmmmi7EB/2L6RA9iZHwiljKAk6MFFjpo/eSFLS7XheN45bD9KDH86bIEvNBA1HQ1Wu86WtyIYf5fSaqgjEbqxii1NAR8jEhHy3RLlFMT3m8wZTf9jCOxiOTMqv0Ne92ni2tCW8rYsd1a+m5NN9omrQb3a8Qtl30bG0jVByW7Xn78zpYbIETarnDZLQ82pxbDNhY+vKjeuTy6+TjbIYWeTsvqls9/73+UlcVtN8arLrPra14vGrFxkfx5o7oJnxrco3a6oovZK5XmIhfCz+VsLPphQEZLl07YOaKZuaw5HMZQbfNrWznq6H4JMySOJTyHHZMZvXwJVdduH0N1iCy7eCOhQNu1uhn4Q/qwPb5j7ziaAvJJgFpE24uIR/e6aVoW58a+pzwKgNMDVMU6gZ8oe5lbNy5kDxU4U2SuIO5nJkGmPKV34/L50VhzfdgtAClpdgfcp2xCQe1/jBWyH4b7ivmQqN+MfmHILRauRe30VAAb1lodKDGQgzIQwEfp2JpNN6W8+p/K+qyD50MkRv5lS5WwJLNPZw9EBSXd9fPJ9BVYSo4yltdQGjLlmwYfNLu4uolg6ZfAj4UZXpMzRF8q2BdTKn3n6aa3IgLUe4A==
+Received-SPF: pass client-ip=57.103.86.27;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,809 +108,592 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+After the previous commit introducing GICv3 + GICv2m configurations,
+update the AArch64 ACPI tables for the GICv2 case.
 
---Apple-Mail=_1CF4BAA6-D676-45B8-9E6C-41D001DEC9A7
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Changes to the ACPI tables:
 
+tests/data/acpi/aarch64/virt/IORT.dsl:
 
+@@ -11,68 +11,49 @@
+  */
 
-> On 5. Feb 2026, at 14:46, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Thu, 5 Feb 2026 at 13:12, Mohamed Mediouni =
-<mohamed@unpredictable.fr <mailto:mohamed@unpredictable.fr>> wrote:
->>=20
->> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this =
-submission: whpx-v19)
->>=20
->> Patches without a review: patches 3, 5, 6
->>=20
->> Missing features:
->> - VM save-restore: interrupt controller state notably
->> - SVE register sync: I didn't have the time to test this on =
-pre-release hardware with SVE2 support yet.
->> So SVE2 is currently masked for VMs when running this.
->>=20
->> Known bugs:
->> - U-Boot still doesn't work (hangs when trying to parse firmware) but =
-EDK2 does.
->>=20
->> Note:
->>=20
->> "target/arm/kvm: add constants for new PSCI versions" taken from the =
-mailing list.
->>=20
->> "accel/system: Introduce hwaccel_enabled() helper" taken from the =
-mailing list, added here
->> as part of this series to make it compilable as a whole.
->>=20
->> And another note:
->>=20
->> Seems that unlike HVF there isn't direct correspondence between WHv =
-registers and the actual register layout,
->> so didn't do changes there to a sysreg.inc.
->>=20
->> Updates for v20:
->> - Rebase on current origin/staging
->=20
-> origin/staging can be any old rubbish that's currently going through
-> the CI test loop; it is not a good target for rebasing on. (Though
-> that doesn't seem to have bitten you in this case judging from
-> your github whpx-v20 branch.)
->=20
-> This still doesn't apply to current master, unfortunately:
->=20
-> lanath:noble:qemu$ git log --oneline -1
-> 739ae3df7b Merge tag 'pull-aspeed-20260204' of
-> https://github.com/legoater/qemu into staging
-> lanath:noble:qemu$ patches apply -s
-> id:20260205131155.22780-1-mohamed@unpredictable.fr =
-<mailto:20260205131155.22780-1-mohamed@unpredictable.fr>
-> Applying: target/arm/kvm: add constants for new PSCI versions
-> Applying: accel/system: Introduce hwaccel_enabled() helper
-> Applying: qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
-> Applying: hw: arm: virt: rework MSI-X configuration
-> Applying: tests: data: update AArch64 ACPI tables
-> error: sha1 information is lacking or useless
-> (tests/data/acpi/aarch64/virt/IORT.dsl).
-> error: could not build fake ancestor
-> hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
-> Patch failed at 0005 tests: data: update AArch64 ACPI tables
-> When you have resolved this problem, run "git am --continue".
-> If you prefer to skip this patch, run "git am --skip" instead.
-> To restore the original branch and stop patching, run "git am =
---abort".
->=20
-> It doesn't apply on the commit your whpx-v20 is based on either:
-> lanath:noble:qemu$ git checkout 28a6ca268c
-> Note: switching to '28a6ca268c'.
-> [...]
-> lanath:noble:qemu$ git checkout -b test-apply
-> Switched to a new branch 'test-apply'
-> lanath:noble:qemu$ patches apply -s
-> id:20260205131155.22780-1-mohamed@unpredictable.fr =
-<mailto:20260205131155.22780-1-mohamed@unpredictable.fr>
-> Applying: target/arm/kvm: add constants for new PSCI versions
-> Applying: accel/system: Introduce hwaccel_enabled() helper
-> Applying: qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
-> Applying: hw: arm: virt: rework MSI-X configuration
-> Applying: tests: data: update AArch64 ACPI tables
-> error: sha1 information is lacking or useless
-> (tests/data/acpi/aarch64/virt/IORT.dsl).
-> error: could not build fake ancestor
-> hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
-> Patch failed at 0005 tests: data: update AArch64 ACPI tables
-> When you have resolved this problem, run "git am --continue".
-> If you prefer to skip this patch, run "git am --skip" instead.
-> To restore the original branch and stop patching, run "git am =
---abort".
+ [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
+-[004h 0004 004h]                Table Length : 00000080
++[004h 0004 004h]                Table Length : 00000054
+ [008h 0008 001h]                    Revision : 05
+-[009h 0009 001h]                    Checksum : B1
++[009h 0009 001h]                    Checksum : 3C
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-Hello,
+-[024h 0036 004h]                  Node Count : 00000002
++[024h 0036 004h]                  Node Count : 00000001
+ [028h 0040 004h]                 Node Offset : 00000030
+ [02Ch 0044 004h]                    Reserved : 00000000
 
-Replied on the other email, it considered the commit message for the =
-ACPI diff
-as part of the patch :(
+-[030h 0048 001h]                        Type : 00
+-[031h 0049 002h]                      Length : 0018
+-[033h 0051 001h]                    Revision : 01
++[030h 0048 001h]                        Type : 02
++[031h 0049 002h]                      Length : 0024
++[033h 0051 001h]                    Revision : 03
+ [034h 0052 004h]                  Identifier : 00000000
+ [038h 0056 004h]               Mapping Count : 00000000
+-[03Ch 0060 004h]              Mapping Offset : 00000000
++[03Ch 0060 004h]              Mapping Offset : 00000024
 
-Am re-sending a new rev with that sorted out.
+-[040h 0064 004h]                    ItsCount : 00000001
+-[044h 0068 004h]                 Identifiers : 00000000
+-
+-[048h 0072 001h]                        Type : 02
+-[049h 0073 002h]                      Length : 0038
+-[04Bh 0075 001h]                    Revision : 03
+-[04Ch 0076 004h]                  Identifier : 00000001
+-[050h 0080 004h]               Mapping Count : 00000001
+-[054h 0084 004h]              Mapping Offset : 00000024
+-
+-[058h 0088 008h]           Memory Properties : [IORT Memory Access Properties]
+-[058h 0088 004h]             Cache Coherency : 00000001
+-[05Ch 0092 001h]       Hints (decoded below) : 00
++[040h 0064 008h]           Memory Properties : [IORT Memory Access Properties]
++[040h 0064 004h]             Cache Coherency : 00000001
++[044h 0068 001h]       Hints (decoded below) : 00
+                                    Transient : 0
+                               Write Allocate : 0
+                                Read Allocate : 0
+                                     Override : 0
+-[05Dh 0093 002h]                    Reserved : 0000
+-[05Fh 0095 001h] Memory Flags (decoded below) : 03
++[045h 0069 002h]                    Reserved : 0000
++[047h 0071 001h] Memory Flags (decoded below) : 03
+                                    Coherency : 1
+                             Device Attribute : 1
+                Ensured Coherency of Accesses : 0
+-[060h 0096 004h]               ATS Attribute : 00000000
+-[064h 0100 004h]          PCI Segment Number : 00000000
+-[068h 0104 001h]           Memory Size Limit : 40
+-[069h 0105 002h]          PASID Capabilities : 0000
+-[06Bh 0107 001h]                    Reserved : 00
++[048h 0072 004h]               ATS Attribute : 00000000
++[04Ch 0076 004h]          PCI Segment Number : 00000000
++[050h 0080 001h]           Memory Size Limit : 40
++[051h 0081 002h]          PASID Capabilities : 0000
++[053h 0083 001h]                    Reserved : 00
 
-> thanks
-> -- PMM
+-[06Ch 0108 004h]                  Input base : 00000000
+-[070h 0112 004h]                    ID Count : 0000FFFF
+-[074h 0116 004h]                 Output Base : 00000000
+-[078h 0120 004h]            Output Reference : 00000030
+-[07Ch 0124 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++Raw Table Data: Length 84 (0x54)
 
+-Raw Table Data: Length 128 (0x80)
+-
+-    0000: 49 4F 52 54 80 00 00 00 05 B1 42 4F 43 48 53 20  // IORT......BOCHS
++    0000: 49 4F 52 54 54 00 00 00 05 3C 42 4F 43 48 53 20  // IORTT....<BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 02 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    0030: 00 18 00 01 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0040: 01 00 00 00 00 00 00 00 02 38 00 03 01 00 00 00  // .........8......
+-    0050: 01 00 00 00 24 00 00 00 01 00 00 00 00 00 00 03  // ....$...........
+-    0060: 00 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  // ........@.......
+-    0070: FF FF 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
++    0020: 01 00 00 00 01 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
++    0030: 02 24 00 03 00 00 00 00 00 00 00 00 24 00 00 00  // .$..........$...
++    0040: 01 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00  // ................
++    0050: 40 00 00 00                                      // @...
 
---Apple-Mail=_1CF4BAA6-D676-45B8-9E6C-41D001DEC9A7
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
+tests/data/acpi/aarch64/virt/IORT.smmuv3-dev.dsl:
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dus-ascii"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 5. Feb 2026, at 14:46, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On Thu, 5 Feb 2026 at 13:12, Mohamed =
-Mediouni &lt;</span><a href=3D"mailto:mohamed@unpredictable.fr" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px;">mohamed@unpredictable.fr</a><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; wrote:</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><br>Link to branch: https://github.com/mediouni-m/qemu whpx (tag =
-for this submission: whpx-v19)<br><br>Patches without a review: patches =
-3, 5, 6<br><br>Missing features:<br>- VM save-restore: interrupt =
-controller state notably<br>- SVE register sync: I didn't have the time =
-to test this on pre-release hardware with SVE2 support yet.<br>So SVE2 =
-is currently masked for VMs when running this.<br><br>Known bugs:<br>- =
-U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 =
-does.<br><br>Note:<br><br>"target/arm/kvm: add constants for new PSCI =
-versions" taken from the mailing list.<br><br>"accel/system: Introduce =
-hwaccel_enabled() helper" taken from the mailing list, added here<br>as =
-part of this series to make it compilable as a whole.<br><br>And another =
-note:<br><br>Seems that unlike HVF there isn't direct correspondence =
-between WHv registers and the actual register layout,<br>so didn't do =
-changes there to a sysreg.inc.<br><br>Updates for v20:<br>- Rebase on =
-current origin/staging<br></blockquote><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">origin/staging can be any old rubbish =
-that's currently going through</span><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">the CI test loop; it is not a good target =
-for rebasing on. (Though</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">that doesn't seem to have bitten you in =
-this case judging from</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">your github whpx-v20 branch.)</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">This still doesn't apply to current master, =
-unfortunately:</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">lanath:noble:qemu$ git log --oneline =
--1</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">739ae3df7b Merge tag 'pull-aspeed-20260204' of</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><a =
-href=3D"https://github.com/legoater/qemu" style=3D"font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: =
-0px;">https://github.com/legoater/qemu</a><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;"><span =
-class=3D"Apple-converted-space">&nbsp;</span>into staging</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">lanath:noble:qemu$ patches apply =
--s</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">id:</span><a =
-href=3D"mailto:20260205131155.22780-1-mohamed@unpredictable.fr" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: =
-0px;">20260205131155.22780-1-mohamed@unpredictable.fr</a><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: target/arm/kvm: add constants for =
-new PSCI versions</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: accel/system: Introduce =
-hwaccel_enabled() helper</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: qtest: hw/arm: virt: skip ACPI =
-test for IORT with GICv2</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: hw: arm: virt: rework MSI-X =
-configuration</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: tests: data: update AArch64 ACPI =
-tables</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">error: sha1 information is lacking or =
-useless</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline =
-!important;">(tests/data/acpi/aarch64/virt/IORT.dsl).</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">error: could not build fake =
-ancestor</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">hint: Use 'git am =
---show-current-patch=3Ddiff' to see the failed patch</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Patch failed at 0005 tests: data: update =
-AArch64 ACPI tables</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">When you have resolved this problem, run =
-"git am --continue".</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">If you prefer to skip this patch, run "git =
-am --skip" instead.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">To restore the original branch and stop =
-patching, run "git am --abort".</span><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">It doesn't apply on the commit your =
-whpx-v20 is based on either:</span><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">lanath:noble:qemu$ git checkout =
-28a6ca268c</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Note: switching to '28a6ca268c'.</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">[...]</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">lanath:noble:qemu$ git checkout -b =
-test-apply</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Switched to a new branch =
-'test-apply'</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">lanath:noble:qemu$ patches apply =
--s</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">id:</span><a =
-href=3D"mailto:20260205131155.22780-1-mohamed@unpredictable.fr" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: =
-0px;">20260205131155.22780-1-mohamed@unpredictable.fr</a><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: target/arm/kvm: add constants for =
-new PSCI versions</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: accel/system: Introduce =
-hwaccel_enabled() helper</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: qtest: hw/arm: virt: skip ACPI =
-test for IORT with GICv2</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: hw: arm: virt: rework MSI-X =
-configuration</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Applying: tests: data: update AArch64 ACPI =
-tables</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">error: sha1 information is lacking or =
-useless</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline =
-!important;">(tests/data/acpi/aarch64/virt/IORT.dsl).</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">error: could not build fake =
-ancestor</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">hint: Use 'git am =
---show-current-patch=3Ddiff' to see the failed patch</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Patch failed at 0005 tests: data: update =
-AArch64 ACPI tables</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">When you have resolved this problem, run =
-"git am --continue".</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">If you prefer to skip this patch, run "git =
-am --skip" instead.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">To restore the original branch and stop =
-patching, run "git am --abort".</span><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote><div><br></div>Hello,</div><div><br></div><div>=
-Replied on the other email, it considered the commit message for the =
-ACPI diff</div><div>as part of the patch :(</div><div><br></div><div>Am =
-re-sending a new rev with that sorted out.</div><div><br><blockquote =
-type=3D"cite"><div><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">thanks</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">-- =
-PMM</span></div></blockquote></div><br></body></html>=
+@@ -11,164 +11,120 @@
+  */
 
---Apple-Mail=_1CF4BAA6-D676-45B8-9E6C-41D001DEC9A7--
+ [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
+-[004h 0004 004h]                Table Length : 0000016C
++[004h 0004 004h]                Table Length : 00000104
+ [008h 0008 001h]                    Revision : 05
+-[009h 0009 001h]                    Checksum : C8
++[009h 0009 001h]                    Checksum : 49
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+-[024h 0036 004h]                  Node Count : 00000004
++[024h 0036 004h]                  Node Count : 00000003
+ [028h 0040 004h]                 Node Offset : 00000030
+ [02Ch 0044 004h]                    Reserved : 00000000
+
+-[030h 0048 001h]                        Type : 00
+-[031h 0049 002h]                      Length : 0018
+-[033h 0051 001h]                    Revision : 01
++[030h 0048 001h]                        Type : 04
++[031h 0049 002h]                      Length : 0044
++[033h 0051 001h]                    Revision : 04
+ [034h 0052 004h]                  Identifier : 00000000
+ [038h 0056 004h]               Mapping Count : 00000000
+ [03Ch 0060 004h]              Mapping Offset : 00000000
+
+-[040h 0064 004h]                    ItsCount : 00000001
+-[044h 0068 004h]                 Identifiers : 00000000
+-
+-[048h 0072 001h]                        Type : 04
+-[049h 0073 002h]                      Length : 0058
+-[04Bh 0075 001h]                    Revision : 04
+-[04Ch 0076 004h]                  Identifier : 00000001
+-[050h 0080 004h]               Mapping Count : 00000001
+-[054h 0084 004h]              Mapping Offset : 00000044
+-
+-[058h 0088 008h]                Base Address : 000000000C000000
+-[060h 0096 004h]       Flags (decoded below) : 00000001
++[040h 0064 008h]                Base Address : 000000000C000000
++[048h 0072 004h]       Flags (decoded below) : 00000001
+                              COHACC Override : 1
+                                HTTU Override : 0
+                       Proximity Domain Valid : 0
+                               DeviceID Valid : 0
+-[064h 0100 004h]                    Reserved : 00000000
+-[068h 0104 008h]               VATOS Address : 0000000000000000
+-[070h 0112 004h]                       Model : 00000000
+-[074h 0116 004h]                  Event GSIV : 00000090
+-[078h 0120 004h]                    PRI GSIV : 00000091
+-[07Ch 0124 004h]                   GERR GSIV : 00000093
+-[080h 0128 004h]                   Sync GSIV : 00000092
+-[084h 0132 004h]            Proximity Domain : 00000000
+-[088h 0136 004h]     Device ID Mapping Index : 00000000
++[04Ch 0076 004h]                    Reserved : 00000000
++[050h 0080 008h]               VATOS Address : 0000000000000000
++[058h 0088 004h]                       Model : 00000000
++[05Ch 0092 004h]                  Event GSIV : 00000090
++[060h 0096 004h]                    PRI GSIV : 00000091
++[064h 0100 004h]                   GERR GSIV : 00000093
++[068h 0104 004h]                   Sync GSIV : 00000092
++[06Ch 0108 004h]            Proximity Domain : 00000000
++[070h 0112 004h]     Device ID Mapping Index : 00000000
+
+-[08Ch 0140 004h]                  Input base : 00000000
+-[090h 0144 004h]                    ID Count : 0000FFFF
+-[094h 0148 004h]                 Output Base : 00000000
+-[098h 0152 004h]            Output Reference : 00000030
+-[09Ch 0156 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++[074h 0116 001h]                        Type : 04
++[075h 0117 002h]                      Length : 0044
++[077h 0119 001h]                    Revision : 04
++[078h 0120 004h]                  Identifier : 00000001
++[07Ch 0124 004h]               Mapping Count : 00000000
++[080h 0128 004h]              Mapping Offset : 00000000
+
+-[0A0h 0160 001h]                        Type : 04
+-[0A1h 0161 002h]                      Length : 0058
+-[0A3h 0163 001h]                    Revision : 04
+-[0A4h 0164 004h]                  Identifier : 00000002
+-[0A8h 0168 004h]               Mapping Count : 00000001
+-[0ACh 0172 004h]              Mapping Offset : 00000044
+-
+-[0B0h 0176 008h]                Base Address : 000000000C020000
+-[0B8h 0184 004h]       Flags (decoded below) : 00000001
++[084h 0132 008h]                Base Address : 000000000C020000
++[08Ch 0140 004h]       Flags (decoded below) : 00000001
+                              COHACC Override : 1
+                                HTTU Override : 0
+                       Proximity Domain Valid : 0
+                               DeviceID Valid : 0
+-[0BCh 0188 004h]                    Reserved : 00000000
+-[0C0h 0192 008h]               VATOS Address : 0000000000000000
+-[0C8h 0200 004h]                       Model : 00000000
+-[0CCh 0204 004h]                  Event GSIV : 00000094
+-[0D0h 0208 004h]                    PRI GSIV : 00000095
+-[0D4h 0212 004h]                   GERR GSIV : 00000097
+-[0D8h 0216 004h]                   Sync GSIV : 00000096
+-[0DCh 0220 004h]            Proximity Domain : 00000000
+-[0E0h 0224 004h]     Device ID Mapping Index : 00000000
++[090h 0144 004h]                    Reserved : 00000000
++[094h 0148 008h]               VATOS Address : 0000000000000000
++[09Ch 0156 004h]                       Model : 00000000
++[0A0h 0160 004h]                  Event GSIV : 00000094
++[0A4h 0164 004h]                    PRI GSIV : 00000095
++[0A8h 0168 004h]                   GERR GSIV : 00000097
++[0ACh 0172 004h]                   Sync GSIV : 00000096
++[0B0h 0176 004h]            Proximity Domain : 00000000
++[0B4h 0180 004h]     Device ID Mapping Index : 00000000
+
+-[0E4h 0228 004h]                  Input base : 00000000
+-[0E8h 0232 004h]                    ID Count : 0000FFFF
+-[0ECh 0236 004h]                 Output Base : 00000000
+-[0F0h 0240 004h]            Output Reference : 00000030
+-[0F4h 0244 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++[0B8h 0184 001h]                        Type : 02
++[0B9h 0185 002h]                      Length : 004C
++[0BBh 0187 001h]                    Revision : 03
++[0BCh 0188 004h]                  Identifier : 00000002
++[0C0h 0192 004h]               Mapping Count : 00000002
++[0C4h 0196 004h]              Mapping Offset : 00000024
+
+-[0F8h 0248 001h]                        Type : 02
+-[0F9h 0249 002h]                      Length : 0074
+-[0FBh 0251 001h]                    Revision : 03
+-[0FCh 0252 004h]                  Identifier : 00000003
+-[100h 0256 004h]               Mapping Count : 00000004
+-[104h 0260 004h]              Mapping Offset : 00000024
+-
+-[108h 0264 008h]           Memory Properties : [IORT Memory Access Properties]
+-[108h 0264 004h]             Cache Coherency : 00000001
+-[10Ch 0268 001h]       Hints (decoded below) : 00
++[0C8h 0200 008h]           Memory Properties : [IORT Memory Access Properties]
++[0C8h 0200 004h]             Cache Coherency : 00000001
++[0CCh 0204 001h]       Hints (decoded below) : 00
+                                    Transient : 0
+                               Write Allocate : 0
+                                Read Allocate : 0
+                                     Override : 0
+-[10Dh 0269 002h]                    Reserved : 0000
+-[10Fh 0271 001h] Memory Flags (decoded below) : 03
++[0CDh 0205 002h]                    Reserved : 0000
++[0CFh 0207 001h] Memory Flags (decoded below) : 03
+                                    Coherency : 1
+                             Device Attribute : 1
+                Ensured Coherency of Accesses : 0
+-[110h 0272 004h]               ATS Attribute : 00000000
+-[114h 0276 004h]          PCI Segment Number : 00000000
+-[118h 0280 001h]           Memory Size Limit : 40
+-[119h 0281 002h]          PASID Capabilities : 0000
+-[11Bh 0283 001h]                    Reserved : 00
++[0D0h 0208 004h]               ATS Attribute : 00000000
++[0D4h 0212 004h]          PCI Segment Number : 00000000
++[0D8h 0216 001h]           Memory Size Limit : 40
++[0D9h 0217 002h]          PASID Capabilities : 0000
++[0DBh 0219 001h]                    Reserved : 00
+
+-[11Ch 0284 004h]                  Input base : 00000000
+-[120h 0288 004h]                    ID Count : 000001FF
+-[124h 0292 004h]                 Output Base : 00000000
+-[128h 0296 004h]            Output Reference : 00000048
+-[12Ch 0300 004h]       Flags (decoded below) : 00000000
++[0DCh 0220 004h]                  Input base : 00000000
++[0E0h 0224 004h]                    ID Count : 000001FF
++[0E4h 0228 004h]                 Output Base : 00000000
++[0E8h 0232 004h]            Output Reference : 00000030
++[0ECh 0236 004h]       Flags (decoded below) : 00000000
+                               Single Mapping : 0
+
+-[130h 0304 004h]                  Input base : 00001000
+-[134h 0308 004h]                    ID Count : 000000FF
+-[138h 0312 004h]                 Output Base : 00001000
+-[13Ch 0316 004h]            Output Reference : 000000A0
+-[140h 0320 004h]       Flags (decoded below) : 00000000
++[0F0h 0240 004h]                  Input base : 00001000
++[0F4h 0244 004h]                    ID Count : 000000FF
++[0F8h 0248 004h]                 Output Base : 00001000
++[0FCh 0252 004h]            Output Reference : 00000074
++[100h 0256 004h]       Flags (decoded below) : 00000000
+                               Single Mapping : 0
+
+-[144h 0324 004h]                  Input base : 00000200
+-[148h 0328 004h]                    ID Count : 00000DFF
+-[14Ch 0332 004h]                 Output Base : 00000200
+-[150h 0336 004h]            Output Reference : 00000030
+-[154h 0340 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++Raw Table Data: Length 260 (0x104)
+
+-[158h 0344 004h]                  Input base : 00001100
+-[15Ch 0348 004h]                    ID Count : 0000EEFF
+-[160h 0352 004h]                 Output Base : 00001100
+-[164h 0356 004h]            Output Reference : 00000030
+-[168h 0360 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
+-
+-Raw Table Data: Length 364 (0x16C)
+-
+-    0000: 49 4F 52 54 6C 01 00 00 05 C8 42 4F 43 48 53 20  // IORTl.....BOCHS
++    0000: 49 4F 52 54 04 01 00 00 05 49 42 4F 43 48 53 20  // IORT.....IBOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 04 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    0030: 00 18 00 01 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0040: 01 00 00 00 00 00 00 00 04 58 00 04 01 00 00 00  // .........X......
+-    0050: 01 00 00 00 44 00 00 00 00 00 00 0C 00 00 00 00  // ....D...........
+-    0060: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0070: 00 00 00 00 90 00 00 00 91 00 00 00 93 00 00 00  // ................
+-    0080: 92 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0090: FF FF 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    00A0: 04 58 00 04 02 00 00 00 01 00 00 00 44 00 00 00  // .X..........D...
+-    00B0: 00 00 02 0C 00 00 00 00 01 00 00 00 00 00 00 00  // ................
+-    00C0: 00 00 00 00 00 00 00 00 00 00 00 00 94 00 00 00  // ................
+-    00D0: 95 00 00 00 97 00 00 00 96 00 00 00 00 00 00 00  // ................
+-    00E0: 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00  // ................
+-    00F0: 30 00 00 00 00 00 00 00 02 74 00 03 03 00 00 00  // 0........t......
+-    0100: 04 00 00 00 24 00 00 00 01 00 00 00 00 00 00 03  // ....$...........
+-    0110: 00 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  // ........@.......
+-    0120: FF 01 00 00 00 00 00 00 48 00 00 00 00 00 00 00  // ........H.......
+-    0130: 00 10 00 00 FF 00 00 00 00 10 00 00 A0 00 00 00  // ................
+-    0140: 00 00 00 00 00 02 00 00 FF 0D 00 00 00 02 00 00  // ................
+-    0150: 30 00 00 00 00 00 00 00 00 11 00 00 FF EE 00 00  // 0...............
+-    0160: 00 11 00 00 30 00 00 00 00 00 00 00              // ....0.......
++    0020: 01 00 00 00 03 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
++    0030: 04 44 00 04 00 00 00 00 00 00 00 00 00 00 00 00  // .D..............
++    0040: 00 00 00 0C 00 00 00 00 01 00 00 00 00 00 00 00  // ................
++    0050: 00 00 00 00 00 00 00 00 00 00 00 00 90 00 00 00  // ................
++    0060: 91 00 00 00 93 00 00 00 92 00 00 00 00 00 00 00  // ................
++    0070: 00 00 00 00 04 44 00 04 01 00 00 00 00 00 00 00  // .....D..........
++    0080: 00 00 00 00 00 00 02 0C 00 00 00 00 01 00 00 00  // ................
++    0090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
++    00A0: 94 00 00 00 95 00 00 00 97 00 00 00 96 00 00 00  // ................
++    00B0: 00 00 00 00 00 00 00 00 02 4C 00 03 02 00 00 00  // .........L......
++    00C0: 02 00 00 00 24 00 00 00 01 00 00 00 00 00 00 03  // ....$...........
++    00D0: 00 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  // ........@.......
++    00E0: FF 01 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
++    00F0: 00 10 00 00 FF 00 00 00 00 10 00 00 74 00 00 00  // ............t...
++    0100: 00 00 00 00                                      // ....
+
+tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy.dsl:
+
+@@ -11,129 +11,92 @@
+  */
+
+ [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
+-[004h 0004 004h]                Table Length : 00000114
++[004h 0004 004h]                Table Length : 000000C0
+ [008h 0008 001h]                    Revision : 05
+-[009h 0009 001h]                    Checksum : 4A
++[009h 0009 001h]                    Checksum : 1C
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+-[024h 0036 004h]                  Node Count : 00000003
++[024h 0036 004h]                  Node Count : 00000002
+ [028h 0040 004h]                 Node Offset : 00000030
+ [02Ch 0044 004h]                    Reserved : 00000000
+
+-[030h 0048 001h]                        Type : 00
+-[031h 0049 002h]                      Length : 0018
+-[033h 0051 001h]                    Revision : 01
++[030h 0048 001h]                        Type : 04
++[031h 0049 002h]                      Length : 0044
++[033h 0051 001h]                    Revision : 04
+ [034h 0052 004h]                  Identifier : 00000000
+ [038h 0056 004h]               Mapping Count : 00000000
+ [03Ch 0060 004h]              Mapping Offset : 00000000
+
+-[040h 0064 004h]                    ItsCount : 00000001
+-[044h 0068 004h]                 Identifiers : 00000000
+-
+-[048h 0072 001h]                        Type : 04
+-[049h 0073 002h]                      Length : 0058
+-[04Bh 0075 001h]                    Revision : 04
+-[04Ch 0076 004h]                  Identifier : 00000001
+-[050h 0080 004h]               Mapping Count : 00000001
+-[054h 0084 004h]              Mapping Offset : 00000044
+-
+-[058h 0088 008h]                Base Address : 0000000009050000
+-[060h 0096 004h]       Flags (decoded below) : 00000001
++[040h 0064 008h]                Base Address : 0000000009050000
++[048h 0072 004h]       Flags (decoded below) : 00000001
+                              COHACC Override : 1
+                                HTTU Override : 0
+                       Proximity Domain Valid : 0
+                               DeviceID Valid : 0
+-[064h 0100 004h]                    Reserved : 00000000
+-[068h 0104 008h]               VATOS Address : 0000000000000000
+-[070h 0112 004h]                       Model : 00000000
+-[074h 0116 004h]                  Event GSIV : 0000006A
+-[078h 0120 004h]                    PRI GSIV : 0000006B
+-[07Ch 0124 004h]                   GERR GSIV : 0000006D
+-[080h 0128 004h]                   Sync GSIV : 0000006C
+-[084h 0132 004h]            Proximity Domain : 00000000
+-[088h 0136 004h]     Device ID Mapping Index : 00000000
++[04Ch 0076 004h]                    Reserved : 00000000
++[050h 0080 008h]               VATOS Address : 0000000000000000
++[058h 0088 004h]                       Model : 00000000
++[05Ch 0092 004h]                  Event GSIV : 0000006A
++[060h 0096 004h]                    PRI GSIV : 0000006B
++[064h 0100 004h]                   GERR GSIV : 0000006D
++[068h 0104 004h]                   Sync GSIV : 0000006C
++[06Ch 0108 004h]            Proximity Domain : 00000000
++[070h 0112 004h]     Device ID Mapping Index : 00000000
+
+-[08Ch 0140 004h]                  Input base : 00000000
+-[090h 0144 004h]                    ID Count : 0000FFFF
+-[094h 0148 004h]                 Output Base : 00000000
+-[098h 0152 004h]            Output Reference : 00000030
+-[09Ch 0156 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++[074h 0116 001h]                        Type : 02
++[075h 0117 002h]                      Length : 004C
++[077h 0119 001h]                    Revision : 03
++[078h 0120 004h]                  Identifier : 00000001
++[07Ch 0124 004h]               Mapping Count : 00000002
++[080h 0128 004h]              Mapping Offset : 00000024
+
+-[0A0h 0160 001h]                        Type : 02
+-[0A1h 0161 002h]                      Length : 0074
+-[0A3h 0163 001h]                    Revision : 03
+-[0A4h 0164 004h]                  Identifier : 00000002
+-[0A8h 0168 004h]               Mapping Count : 00000004
+-[0ACh 0172 004h]              Mapping Offset : 00000024
+-
+-[0B0h 0176 008h]           Memory Properties : [IORT Memory Access Properties]
+-[0B0h 0176 004h]             Cache Coherency : 00000001
+-[0B4h 0180 001h]       Hints (decoded below) : 00
++[084h 0132 008h]           Memory Properties : [IORT Memory Access Properties]
++[084h 0132 004h]             Cache Coherency : 00000001
++[088h 0136 001h]       Hints (decoded below) : 00
+                                    Transient : 0
+                               Write Allocate : 0
+                                Read Allocate : 0
+                                     Override : 0
+-[0B5h 0181 002h]                    Reserved : 0000
+-[0B7h 0183 001h] Memory Flags (decoded below) : 03
++[089h 0137 002h]                    Reserved : 0000
++[08Bh 0139 001h] Memory Flags (decoded below) : 03
+                                    Coherency : 1
+                             Device Attribute : 1
+                Ensured Coherency of Accesses : 0
+-[0B8h 0184 004h]               ATS Attribute : 00000000
+-[0BCh 0188 004h]          PCI Segment Number : 00000000
+-[0C0h 0192 001h]           Memory Size Limit : 40
+-[0C1h 0193 002h]          PASID Capabilities : 0000
+-[0C3h 0195 001h]                    Reserved : 00
++[08Ch 0140 004h]               ATS Attribute : 00000000
++[090h 0144 004h]          PCI Segment Number : 00000000
++[094h 0148 001h]           Memory Size Limit : 40
++[095h 0149 002h]          PASID Capabilities : 0000
++[097h 0151 001h]                    Reserved : 00
+
+-[0C4h 0196 004h]                  Input base : 00000000
+-[0C8h 0200 004h]                    ID Count : 000001FF
+-[0CCh 0204 004h]                 Output Base : 00000000
+-[0D0h 0208 004h]            Output Reference : 00000048
+-[0D4h 0212 004h]       Flags (decoded below) : 00000000
++[098h 0152 004h]                  Input base : 00000000
++[09Ch 0156 004h]                    ID Count : 000001FF
++[0A0h 0160 004h]                 Output Base : 00000000
++[0A4h 0164 004h]            Output Reference : 00000030
++[0A8h 0168 004h]       Flags (decoded below) : 00000000
+                               Single Mapping : 0
+
+-[0D8h 0216 004h]                  Input base : 00001000
+-[0DCh 0220 004h]                    ID Count : 000000FF
+-[0E0h 0224 004h]                 Output Base : 00001000
+-[0E4h 0228 004h]            Output Reference : 00000048
+-[0E8h 0232 004h]       Flags (decoded below) : 00000000
++[0ACh 0172 004h]                  Input base : 00001000
++[0B0h 0176 004h]                    ID Count : 000000FF
++[0B4h 0180 004h]                 Output Base : 00001000
++[0B8h 0184 004h]            Output Reference : 00000030
++[0BCh 0188 004h]       Flags (decoded below) : 00000000
+                               Single Mapping : 0
+
+-[0ECh 0236 004h]                  Input base : 00000200
+-[0F0h 0240 004h]                    ID Count : 00000DFF
+-[0F4h 0244 004h]                 Output Base : 00000200
+-[0F8h 0248 004h]            Output Reference : 00000030
+-[0FCh 0252 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
++Raw Table Data: Length 192 (0xC0)
+
+-[100h 0256 004h]                  Input base : 00001100
+-[104h 0260 004h]                    ID Count : 0000EEFF
+-[108h 0264 004h]                 Output Base : 00001100
+-[10Ch 0268 004h]            Output Reference : 00000030
+-[110h 0272 004h]       Flags (decoded below) : 00000000
+-                              Single Mapping : 0
+-
+-Raw Table Data: Length 276 (0x114)
+-
+-    0000: 49 4F 52 54 14 01 00 00 05 4A 42 4F 43 48 53 20  // IORT.....JBOCHS
++    0000: 49 4F 52 54 C0 00 00 00 05 1C 42 4F 43 48 53 20  // IORT......BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 03 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    0030: 00 18 00 01 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0040: 01 00 00 00 00 00 00 00 04 58 00 04 01 00 00 00  // .........X......
+-    0050: 01 00 00 00 44 00 00 00 00 00 05 09 00 00 00 00  // ....D...........
+-    0060: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0070: 00 00 00 00 6A 00 00 00 6B 00 00 00 6D 00 00 00  // ....j...k...m...
+-    0080: 6C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // l...............
+-    0090: FF FF 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    00A0: 02 74 00 03 02 00 00 00 04 00 00 00 24 00 00 00  // .t..........$...
+-    00B0: 01 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00  // ................
+-    00C0: 40 00 00 00 00 00 00 00 FF 01 00 00 00 00 00 00  // @...............
+-    00D0: 48 00 00 00 00 00 00 00 00 10 00 00 FF 00 00 00  // H...............
+-    00E0: 00 10 00 00 48 00 00 00 00 00 00 00 00 02 00 00  // ....H...........
+-    00F0: FF 0D 00 00 00 02 00 00 30 00 00 00 00 00 00 00  // ........0.......
+-    0100: 00 11 00 00 FF EE 00 00 00 11 00 00 30 00 00 00  // ............0...
+-    0110: 00 00 00 00                                      // ....
++    0020: 01 00 00 00 02 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
++    0030: 04 44 00 04 00 00 00 00 00 00 00 00 00 00 00 00  // .D..............
++    0040: 00 00 05 09 00 00 00 00 01 00 00 00 00 00 00 00  // ................
++    0050: 00 00 00 00 00 00 00 00 00 00 00 00 6A 00 00 00  // ............j...
++    0060: 6B 00 00 00 6D 00 00 00 6C 00 00 00 00 00 00 00  // k...m...l.......
++    0070: 00 00 00 00 02 4C 00 03 01 00 00 00 02 00 00 00  // .....L..........
++    0080: 24 00 00 00 01 00 00 00 00 00 00 03 00 00 00 00  // $...............
++    0090: 00 00 00 00 40 00 00 00 00 00 00 00 FF 01 00 00  // ....@...........
++    00A0: 00 00 00 00 30 00 00 00 00 00 00 00 00 10 00 00  // ....0...........
++    00B0: FF 00 00 00 00 10 00 00 30 00 00 00 00 00 00 00  // ........0.......
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ tests/data/acpi/aarch64/virt/IORT               | Bin 128 -> 84 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 364 -> 260 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 192 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h     |   3 ---
+ 4 files changed, 3 deletions(-)
+
+diff --git a/tests/data/acpi/aarch64/virt/IORT b/tests/data/acpi/aarch64/virt/IORT
+index a234aae4c2d04668d34313836d32ca20e19c0880..389f7a8d7d6fa47a3e2b61169604e580afe0e07b 100644
+GIT binary patch
+delta 42
+ocmZo*4B_(h4+;rkU|?XinaCw2$_Qi`05J$KsW32u850Ag0fA}+)Bpeg
+
+literal 128
+zcmebD4+?2uU|?X~=;ZJ05v<@85#X!<1dKp25F11@0kHuPgMkDCNC*yK93~3}W)K^M
+VRiHGGVg_O`aDdYP|3ers^8jQ#3IPBB
+
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
+index 43a15fe2bf6cc650ffcbceff86919ea892928c0e..60cfed1361976ef26b280c11ba2e233f1cfd9383 100644
+GIT binary patch
+delta 107
+zcmaFE)WXE&=^qrr!pOkD>N$~1N|Kp@fx!TXL4d`Dfd#?>k`qJCc|ig|l@Ks-tvM%?
+f4+Aq3kjpfgkx^X+rjJ2@f#E+$5s)r{C}scviuDRY
+
+literal 364
+zcmZ{fJr2S!3`R{GHjrRr?7#sy0%{q`R0Iq?1S1FGpOxcq8m<tYlei!xEPeUx=g4uE
+z&3e1*iS(akQ`MWIY*$r5fJAe3hh`|mL=<&lg=@uWu3E(IK+XCQ#q)q2(HWg0>Q3)t
+zYVYaX4D^|s{hfQ^-WA=^4SmP&+-xs-&ISG36s0{Cg_tMzsZpm|Mj~NF{9%j*{g48;
+Ly=4r0!Ej@55yu$;
+
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
+index 5779d0e225a62b9cd70bebbacb7fd1e519c9e3c4..e2de4049f044bdfe5b3e656b94282ddf17832d9f 100644
+GIT binary patch
+delta 74
+zcmbQjbbyh|(?2NW00RR9tIR|$DM=<E%K(T$fW?J@1;PT76GP28nS2<S8G&r3i7V9^
+M4JKX`=71>$0E=4*h5!Hn
+
+literal 276
+zcmX|*F%E-33<NiD6e*BEqDV=R2jmF|QUDE6l7crRq2t|r;j%V1EA6d4KKX8#p6}`e
+zWMeyZ{i|;0M^{rskXkaOZ?x(HL5I8vGlJCOyH2ySgwGY(@nL@Hh5i}yh;gs{y<|n2
+l5C!^5+dlb{s<DhV=&eTq=ql#HxG3hl!1Vnn$u=^kvp;ma5&-}J
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 7acaf464dd..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,4 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/IORT",
+-"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+-"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
+-- 
+2.50.1 (Apple Git-155)
+
 
