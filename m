@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22D7EC1EAD
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EEEEC1EAC
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnyO5-0006wn-PN; Thu, 05 Feb 2026 07:23:09 -0500
+	id 1vnyP0-000790-UN; Thu, 05 Feb 2026 07:24:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vnyO4-0006wc-Aa
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:23:08 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vnyO2-0000Yb-GI
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:23:08 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b8d7f22d405so126761666b.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 04:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770294185; x=1770898985; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9kuYrUiRBrAVMf7ZBWeK7ZQ0HIrHRw4wT69PCHop86Q=;
- b=bUFCz91LgCoz9TUf8016YkCoT4YxadjL24d7+i+0vtm8IH38LM953ty3ST8TvRH8ez
- Kys1L0KhiHihky36bM/kD455ziWBgcSR6IeqTp3dghPQzdIH8kpgt9Ede3B36GAJj6om
- W9KngBguz4f+6mne8yCd9h/OTYOFjVOaF/w85PWpKbMbb+KWyO6spKTSfU1NvU9i6QPk
- SpJlT9dIFQMG7KQXMnvL3uK/bpe7u3WEgR28IgEiHXtKnZLyudLUop4x5pWMUHVyY9yt
- xUvvZNJaJx3I0EI2wxq+QhNEwWjPFFMWal34hU3z/7U1sZWTaeTIBgypHRcklSaVQJMS
- Kpag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770294185; x=1770898985;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9kuYrUiRBrAVMf7ZBWeK7ZQ0HIrHRw4wT69PCHop86Q=;
- b=BJm0xOZ/63G9s8zSWoQPoDZ7xHzS3OPsc5Wnz7hgg0gmzVRhAWbdVL9pXGynBnSgR8
- 9Gbpz+jKjqYkr4gqJDJwYSL4pNUqHYgrYRkpogoLRvt5Es9JpL9kSHdFVbT0IM8PAFVe
- bjc6tN6DBHM+/fD4oNa5HY7Y3Ljmuh/0Oc75+w0cCdTfzQtIEcbcVZoOjCVLpC0MTkhs
- R9hT0zgPAEMksip/ma/iEHIxKdiij5Jw0WtGxZj7SLbdFWXkgtKVL9TRH0OWi5nzq0jh
- rpToZsSJUCCxDVLR0GSfoPO3E/My3h2pMJ0CgzbLjxusGFVph4ig9AJlqTCIcVuPNX2W
- NqJw==
-X-Gm-Message-State: AOJu0YzDqGU6pmpIZzI+PcMfAoKyWCveDrFvFqZi7mGYx+Qd3yFFFPux
- D/oN5iqM4C2YeSeSX/ImSfA8V3TfTwBzUD45iyB3gsN8LlHrOQwq0bNxYgIpjEazBjg=
-X-Gm-Gg: AZuq6aLtRFXv59MQaqAO6M6t8zQnyR9ADA8LNyqg6+GSOaRcOkSq9gCnGGWLjt53UuQ
- u6p5ojafM+rRzr3RA0jiswimlq+kY4ZA9RXdlHTXMljMrPl8wgo2YeXfKm51QMESJnX5wrgPVjk
- /iPeSQgLk1JFIJUxVpmexDIjV/bvhdowqNTxjm7J9g3X/ecqRikcx64y2qMNc719vTDJrXhFSYE
- j/DMYnmjitymF8WCYnmQDiZazqKY9y0EOv1rRD39dFBUpAk1ktLxIJdwYBAYuX3RNyj5w+iwY/x
- 3zP4FW+uyqDqao/JymjhKsyzrvi0B1hd12BVRMKh8goarSXym0P49eTgqyN6IIk5ZzC133/mS/Z
- lIsj8OU8emmvj61C2GaZnBIqlJ7vgaq8NZeglX6Ul/71vxPKuI/U5wA7EDc9bxQRPFOykde/jMj
- 7GX/SKq0S6yak=
-X-Received: by 2002:a17:907:3e06:b0:b87:6d6b:1366 with SMTP id
- a640c23a62f3a-b8e9f3c8cf2mr422463066b.41.1770294184476; 
- Thu, 05 Feb 2026 04:23:04 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8e9fef0006sm224128566b.41.2026.02.05.04.23.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 04:23:03 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 28E925F798;
- Thu, 05 Feb 2026 12:23:02 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] target/arm: implement FEAT_E2H0
-In-Reply-To: <3e6ab807-37df-40ba-840e-4693071691f7@linaro.org> (Richard
- Henderson's message of "Thu, 5 Feb 2026 07:43:40 +1000")
-References: <20260204131353.2977855-1-alex.bennee@linaro.org>
- <3e6ab807-37df-40ba-840e-4693071691f7@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 05 Feb 2026 12:23:02 +0000
-Message-ID: <877bsrnzvd.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vnyOz-00078m-1r; Thu, 05 Feb 2026 07:24:05 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vnyOw-0000hk-Al; Thu, 05 Feb 2026 07:24:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=date:from:to:cc:message-id:in-reply-to:references:
+ subject:mime-version:content-transfer-encoding;
+ bh=4Gx2ZH2cSBkkdeGCtptbnTIiyX8Pf3a8Om1tEjwDOfc=;
+ b=mAqQwQ+StYZbMxqzcSgWWIJ0TLnTlT6QHtmp1G3wsVlBvRB6PvqI+tka
+ FXP/1I8rEtmfjAuuDryWNyJ2tfbu6Ux2/qfqYETM9kbuu02jju29+UpEM
+ sUSWcXycphVbCurS1pusOZy6dal/FvE1h1sDM0R82q3iQ4MTiavOIEJjs Q=;
+X-CSE-ConnectionGUID: S4o1cPMJTmKEaiXBSz4EjA==
+X-CSE-MsgGUID: liY6gEq/RV+3OfsN8AshBQ==
+Authentication-Results: mail2-relais-roc.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=Pass smtp.mailfrom=sebastien.michelland@inria.fr;
+ spf=None smtp.helo=postmaster@zcs2-store8.inria.fr
+Received-SPF: Pass (mail2-relais-roc.national.inria.fr: domain of
+ sebastien.michelland@inria.fr designates 128.93.142.6 as
+ permitted sender) identity=mailfrom; client-ip=128.93.142.6;
+ receiver=mail2-relais-roc.national.inria.fr;
+ envelope-from="sebastien.michelland@inria.fr";
+ x-sender="sebastien.michelland@inria.fr";
+ x-conformance=spf_only; x-record-type="v=spf1";
+ x-record-text="v=spf1 include:mailout.safebrands.com
+ a:basic-mail.safebrands.com a:basic-mail01.safebrands.com
+ a:basic-mail02.safebrands.com ip4:128.93.142.0/24
+ ip4:192.134.164.0/24 ip4:128.93.162.160 ip4:128.93.162.3
+ ip4:128.93.162.88 ip4:89.107.174.7 mx ~all"
+Received-SPF: None (mail2-relais-roc.national.inria.fr: no sender
+ authenticity information available from domain of
+ postmaster@zcs2-store8.inria.fr) identity=helo;
+ client-ip=128.93.142.6;
+ receiver=mail2-relais-roc.national.inria.fr;
+ envelope-from="sebastien.michelland@inria.fr";
+ x-sender="postmaster@zcs2-store8.inria.fr";
+ x-conformance=spf_only
+X-ThreatScanner-Verdict: Negative
+X-IronPort-AV: E=Sophos;i="6.21,274,1763420400"; d="scan'208";a="262062780"
+X-MGA-submission: =?us-ascii?q?MDGHH8u6zwjUOwVrasmT2UKFuIw8CO86R//vOl?=
+ =?us-ascii?q?e+RTv8lVVlCUKMFkgoAj4gVhIgLWa5JEhHyn/49Gco7h7gYBy1BM+No0?=
+ =?us-ascii?q?VAoRbhgFZtN48Lzafpz/6umnqyPbb35R5+PCt4IxiD3sZ6g/vH/GkZIl?=
+ =?us-ascii?q?rQJkqkGbT6BiMJaQOcAad0CQ=3D=3D?=
+Received: from zcs2-store8.inria.fr ([128.93.142.6])
+ by mail2-relais-roc.national.inria.fr with ESMTP; 05 Feb 2026 13:23:57 +0100
+Date: Thu, 5 Feb 2026 13:23:57 +0100 (CET)
+From: Sebastien Michelland <sebastien.michelland@inria.fr>
+To: Max Chou <max.chou@sifive.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-riscv <qemu-riscv@nongnu.org>, 
+ Jean-Michel Gorius <jean-michel.gorius@irisa.fr>
+Message-ID: <1553882346.22736589.1770294237295.JavaMail.zimbra@inria.fr>
+In-Reply-To: <aYNhZQC7_JRrBNlU@sifive.com>
+References: <20260126172246.2521444-1-sebastien.michelland@inria.fr>
+ <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
+ <2132391437.15681684.1769606774227.JavaMail.zimbra@inria.fr>
+ <aYNhZQC7_JRrBNlU@sifive.com>
+Subject: Re: [PATCH] target/riscv: fix vs*r.v missing SIGILL check
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Originating-IP: [131.254.16.132]
+X-Mailer: Zimbra 10.1.13_GA_4837 (ZimbraWebClient - FF147
+ (Linux)/10.1.14_GA_4838)
+Thread-Topic: target/riscv: fix vs*r.v missing SIGILL check
+Thread-Index: Unbzb0Ssqu4sWU7V5N/aXSFFNptt4A==
+Received-SPF: pass client-ip=192.134.164.83;
+ envelope-from=sebastien.michelland@inria.fr;
+ helo=mail2-relais-roc.national.inria.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,48 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Hi Max,
 
-> On 2/4/26 23:13, Alex Benn=C3=A9e wrote:
->> FEAT_E2H0 is a formalisation of the existing behaviour of HCR_EL2.E2H
->> being programmable to switch between EL2 host mode and the
->> "traditional" nVHE EL2 mode. This implies at some point we might want
->> to model CPUs without FEAT_E2H0 which will always have EL2 host mode
->> enabled.
->> There are two values to represent no E2H0 systems of which 0b1110
->> will
->> make HCR_EL2.NV1 RES0 for FEAT_NV systems. For FEAT_NV2 the NV1 bit is
->> always valid.
->> Message-ID: <20260130181648.628364-1-alex.bennee@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->> v2
->>    - new helper and properly handling NV1
->> ---
-<snip>
->
->> @@ -3801,10 +3802,13 @@ static void do_hcr_write(CPUARMState *env, uint6=
-4_t value, uint64_t valid_mask)
->>               valid_mask |=3D HCR_GPF;
->>           }
->>           if (cpu_isar_feature(aa64_nv, cpu)) {
->> -            valid_mask |=3D HCR_NV | HCR_NV1 | HCR_AT;
->> +            valid_mask |=3D HCR_NV | HCR_AT;
->> +            if (!cpu_isar_feature(aa64_noe2h0_and_nv1_res0, cpu)) {
->> +                valid_mask |=3D HCR_NV1;
->> +            }
->>           }
->>           if (cpu_isar_feature(aa64_nv2, cpu)) {
->> -            valid_mask |=3D HCR_NV2;
->> +            valid_mask |=3D HCR_NV1 | HCR_NV2;
->
-> Why add NV1 here?
+> But I think that the proposed fix of adding vext_check_isa_ill to whole
+> register load/store instructions will violate the RISC-V vector specifica=
+tion.
+>=20
+> With this patch, whole register load/store instructions would incorrectly
+> raise illegal instruction exceptions when vill=3D1, even though the V ext=
+ension
+> is enabled.
 
-My reading was if you had FEAT_NV2 then HCR_NV1 was always valid
-whatever E2H0 might say. Unless we can validate we don't get
-contradictory ID values elsewhere?
+You're entirely correct! I should probably have known or noticed that, oops=
+.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+So to sum up:
+
+* The bug is that vs*r currently don't raise SIGILL when using a non-RVV CP=
+U;
+* but vs*r.v not having a vill check is intended and not the cause;
+* instead the bug affects all instructions but the vill check just masks it=
+ for
+  everyone except vs*r.v.
+
+> I would recommend that we should fix this bug at riscv_get_tb_cpu_state b=
+y
+> checking the CPU configuration in CONFIG_USER_ONLY block (user mode) to
+> ensures require_rvv returns false when the vector is disabled.
+
+I'll start from here and come back with a v2 that (hopefully) does the righ=
+t thing.
+
+S=E9bastien
 
