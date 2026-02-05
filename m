@@ -4,85 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A69EA795C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE1BEA795C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnpz6-0003Fj-U5; Wed, 04 Feb 2026 22:24:49 -0500
+	id 1vnq3u-0003yK-4K; Wed, 04 Feb 2026 22:29:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnpz4-0003FZ-Rz
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:24:46 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vnq3r-0003xq-Vu
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:29:44 -0500
+Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnpz3-0003AM-09
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:24:46 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a12ed4d205so3061215ad.0
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:24:44 -0800 (PST)
+ id 1vnq3q-00044U-EP
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:29:43 -0500
+Received: by mail-pl1-x643.google.com with SMTP id
+ d9443c01a7336-2a871c8b171so3632365ad.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770261883; x=1770866683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770262181; x=1770866981; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lG3CL1RGA9OXsCATAM+EB+UkCHmSnfbwYz9SWKMkJ5E=;
- b=qB0hu8LP7948mus0QR/g0OG/IzLGwT/GZNaG7ByMSYA8bj0jpPNAPsl1tfaDIu2PDZ
- JYwfwPYLGBvT99KHxLapOAA2NdrweeU0Uv9dEqVAQerMhXwsstyaOpnwbYDyu1xqffzx
- wgiahF3YDgjnRT3S5iUmStxpM+rF69TZe0GmZPeQyVFOwGDdpWHpp+T9mb2FvIAIUj+3
- Vd2LtUofuunXCEGmCj9muq08UQuF7E0X9/+HmIDXgiml9VsGFNoGUBdauvOUQJiCtqOs
- 8UqXDNAcjUuGFk/01/XM5IX9T/u8R4hSB3YslkFUj3hv4rXKwNq0GgY8NIurZTkgOCFc
- ZkPg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D2dupEyo2F5Q60qDSaObJURHA7eYSG7joDbYoWuXVIo=;
+ b=ThMAy54komT2FPCtGER8S1Oy9M6kjZTvp0AFhpJVAuGGjUHw2/L8xgn88qsLC3VkN8
+ +s+D1wzCzt/6A4kQtyIOBWeX+buXSV+gaFUIhqKhlS8hPzjH2tcL4U2GjNnenlpGYPdw
+ 0Ni/lx/5EFWUbPDgaqSdDVYZe5DnzoUnnRAL2QbUO7UQh0MmL43Y4MgpgQrBnMuE796M
+ mdjStL7o55Jez89+DpEM8fQzGuCST6zHyRWQrqYAEkuC469LJlQCyRorwwj2btwE856G
+ Auxsc7uNnft5Z9X/DV2Eeh8CDKXQpNa8GIaqI7mSw6yHJkyqT4hEW7Dj8lbZH5MFrFpL
+ 9MtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770261883; x=1770866683;
+ d=1e100.net; s=20230601; t=1770262181; x=1770866981;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lG3CL1RGA9OXsCATAM+EB+UkCHmSnfbwYz9SWKMkJ5E=;
- b=m7o0pKPvNQgbf+vuTK/AuIfe1asj+5LBimD54+OllVBDrXvbl2TUu+gF3sSUHpv3kX
- XplmMJyltCsRzOE+AZOma5Lne7uN7nJ2nSZlWdXxpltJ05Uic53edWEoe5T1pVIZP+Ce
- BLoJ/JwEYJY1EIuX1mK4dYciFYZuNyivuQ/0m2M/nop+6xkr/2dL1rvGCt1d9+i7VOv+
- lsBrTNVYdKtXkNOeSSDQqxXiKeRJMFRu0/WVpoP4qRg4nTteJkI/f6BhJ6Mn7S7oROrU
- 76xLvgcUP6wPPAOldZuyA8wsm2tAojbRMTCHhJqyI3ak2z+0i8AJvwmw2ieWFJFo+/qZ
- ZARw==
-X-Gm-Message-State: AOJu0YxJQJ9PkXpjLlDnpT42CGjvYBnJktt6AgwsKDm4VSlX3zdgE6v3
- mE1YLRMlZwunkwosWEYtSNUWwSMxAn+RWltxcvvw/sq9ZsC2xXG5+zyNA8LqRFhR9pobZPtfBB4
- /R+cU8MA7Ig==
-X-Gm-Gg: AZuq6aLknKhwhmeOE1AwgbvAN8pyz66v8qpruOpkIKV2FoZFnhWNNSpxJfNSYnW/u2r
- xK6ePdBAUXlojJNUO3ehNLqdMC5Neuezl48mpgemM5c7yxb0TKwm33gtx9OlerLBUqoHg/E/pFP
- d9LRuYxO9Tvef+ktfh8cMSoKfW0pgyK2n3MUr6NXXUzpflqhBycOKOTauXZNyXwCh534MgoQw9j
- TwKhIXQT0xc5Kr5RpQRP3QKof3y4YxycGkFf4LnKKpoHjdMMYx48X740hnyiM+9Gq3aIn1skUmv
- 48tYo1bxOaxEiZp4CGGDTUG1930kFicFypS+TcBNlhFGWGFS7Ef0aCtxjFceCrzS313jz1LyARY
- tnkp+O1vZJVnaSQYPm1RIA15X/cRtinoIjjDVZt7ehDuhfjYx/9/3VT0Fvo6zeAq7hR1SMvb588
- M3BrFhVSiQ0aa45TYW35o+34ybCEn4HOcrntlSEQrAsBQkHxt4t7yMw2TanKBQV938JndjtoPZ
-X-Received: by 2002:a17:903:2f4c:b0:295:ceaf:8d76 with SMTP id
- d9443c01a7336-2a933fecee3mr58897225ad.47.1770261883076; 
- Wed, 04 Feb 2026 19:24:43 -0800 (PST)
+ bh=D2dupEyo2F5Q60qDSaObJURHA7eYSG7joDbYoWuXVIo=;
+ b=Et2Cl/tWXKK/XnpATvNxrJE45aMNS0ggBglqWxmpHLyr4l6f3PlzUJCcpmsTHn9ffC
+ Kl3d1OMmqqpqe6brRLZdVDOFGuQXlQCfOZPLolPvejTfH+6EOLevSnCwhOQp4g0z3oqQ
+ GeDbCgrza5zpqO/kOO8xS9jIppZktje9Mk1u8ChEc1sAiraUcwShOEl1OXqUM+H+Ye4c
+ bQBFyYby7MH3jWxHXJPlihjg9bmQmpJ/U+LuQLxPki+DEMpwldrMMiiDNKJlzgVLhHDB
+ 9eVdMOBjKhB+8Rr2fLRgwDJLjfJJnshHWoqIqsY6Z8e7QtYM1m18vBoZk0LHSVZUhxgm
+ y05g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0KD1B9fYcbjEokE3FK2qEpwUt5mgOCQcks0rVGIQ+g+xa0IJPGUvpcIv8SuA2jnRSSSrgEcCXHw9A@nongnu.org
+X-Gm-Message-State: AOJu0YzRghKPu/VgsaituagAO+ack0V4ZLhWQINMqg4e2ACSBgZFVShv
+ PrA1VfYl6JZkzeepLMBV1iihBeN1iyQ8I9yvuqDFmu5wDkQHqOdB1iD2YbHjLME/a9y3ubm2VpW
+ BRC9D51p1p4qC
+X-Gm-Gg: AZuq6aIM4C9n5Bueiov6k+d+C83YtEm9JqPF4QGRuOx6Jz+YCUf42yLjs7VDcjSAnFR
+ K1lYjDBtT/Oi2Q7wd3MufmuNnl2p0gnB2dD+r1MDu/FbzIhBBNK3upjPeZ50MGSOaE1a/8zXXyV
+ n2ahhL2mmHD+nOu9fUIy7EkTSYSr8S3jOTRUU8I1MVxQDpx5OOi8VOkMAI+uWPMLw8dnk3Ci4Vs
+ GCTE+GRFW0LymSUK3PgXJZzUdvgpWVq3yEpAhA8zGwr8TcBUeEaNsbd6MY5QbMh8nfoM4EnE76y
+ eTB5s9E+D3hreI5g5phHDmnHxAwJdeEdnnNZnRYXMfT9Ims5JcvMmaX/jKBPZvgr2s1Cm/hLhQt
+ vpLF5O1Ybb3KVK7LIAQqy6BK22XgiBB2IjHkbUP5mH5omWDipXtIMNLIILZ2NVQlutmRkZOPdvC
+ RYwm6Uw0W+qkjxQ5HW18v7PsnVd+1vVXcoSZdYM7uV8tBl+IroOZlYjwlT14h+nGlB07TVZOuO
+X-Received: by 2002:a17:903:b4f:b0:2a0:ccef:a5d3 with SMTP id
+ d9443c01a7336-2a933bca7camr54976165ad.3.1770262180654; 
+ Wed, 04 Feb 2026 19:29:40 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
  ([2401:d002:dc0f:2100:7515:513c:b646:18b8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a9338b71b7sm34253135ad.44.2026.02.04.19.24.41
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2a93385127bsm40255245ad.1.2026.02.04.19.29.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 19:24:42 -0800 (PST)
-Message-ID: <8ecca07b-7ff0-4a46-8de3-6a3f21173a00@linaro.org>
-Date: Thu, 5 Feb 2026 13:24:38 +1000
+ Wed, 04 Feb 2026 19:29:40 -0800 (PST)
+Message-ID: <0a70dfa3-7547-4928-885d-89577a8f3e27@linaro.org>
+Date: Thu, 5 Feb 2026 13:29:32 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm: handle demuxed ID registers
-To: qemu-devel@nongnu.org
-References: <20260204133229.297061-1-cohuck@redhat.com>
- <20260204133229.297061-2-cohuck@redhat.com>
+Subject: Re: [PATCH v3 02/19] fpu/softfloat: Refactor IEEE format NaN
+ classification to share code
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20260204051756.667397-1-max.chou@sifive.com>
+ <20260204051756.667397-3-max.chou@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260204133229.297061-2-cohuck@redhat.com>
+In-Reply-To: <20260204051756.667397-3-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x643.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,102 +117,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 23:32, Cornelia Huck wrote:
-> For some registers, we do not have a single ID register, but actually
-> an array of values (e.g. CCSIDR_EL1, where the actual value is
-> determined by whatever CSSELR_EL1 points to.) If we want to avoid
-> using a different way to handle registers like that for every
-> instance, we should provide some kind of infrastructure. Therefore,
-> add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-> we already use for regular ID registers.
+On 2/4/26 15:17, Max Chou wrote:
+> The floatN_is_[quiet|signaling]_nan functions for following formats
+> (float16, bfloat16, float32, float64, float128) contain duplicated
+> logic that should be shared.
+> This commit introduces
+> [float16|bfloat16|float32|float64|float128]_nan_is_snan that determine
+> if a NaN is signaling.
 > 
-> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Max Chou<max.chou@sifive.com>
 > ---
->   target/arm/cpu-sysregs.h | 13 +++++++++++++
->   target/arm/cpu.h         | 20 ++++++++++++++++++++
->   2 files changed, 33 insertions(+)
-> 
-> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-> index 7877a3b06a8e..911f54bc8a4f 100644
-> --- a/target/arm/cpu-sysregs.h
-> +++ b/target/arm/cpu-sysregs.h
-> @@ -35,6 +35,19 @@ typedef enum ARMSysRegs {
->   
->   #undef DEF
->   
-> +/* ID registers that vary based upon another register */
-> +typedef enum ARMIDRegisterDemuxIdx {
-> +    NUM_ID_DEMUX_IDX,
-> +} ARMIDRegisterDemuxIdx;
-> +
-> +/*
-> + * Number of register variants per demuxed register, trying to accommodate
-> + * possible use cases.
-> + * CCSIDR_EL1 currently needs 7*2, could be 7 more with FEAT_MTE2, in which
-> + * case we would need to bump this number.
-> + */
-> +#define ID_DEMUX_ARRAYLEN 16
-> +
->   extern const uint32_t id_register_sysreg[NUM_ID_IDX];
->   
->   int get_sysreg_idx(ARMSysRegs sysreg);
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 21fee5e840b7..f9d51c0fc187 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -906,6 +906,25 @@ typedef struct {
->           i_->idregs[REG ## _EL1_IDX];                                    \
->       })
->   
-> +#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-> +    ({                                                                  \
-> +        ARMISARegisters *i_ = (ISAR);                                   \
-> +        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX] = VALUE;         \
-> +    })
-> +
-> +#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-> +    ({                                                                  \
-> +        ARMISARegisters *i_ = (ISAR);                                   \
-> +        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX];                 \
-> +    })
-> +
-> +#define COPY_IDREG_DEMUX(ISAR, REG, FROM_INDEX, TO_INDEX)               \
-> +    ({                                                                  \
-> +        ARMISARegisters *i_ = (ISAR);                                   \
-> +        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][TO_INDEX] =             \
-> +            i_->idregs_demux[REG ## _EL1_DEMUX_IDX][FROM_INDEX];        \
-> +    })
-> +
->   /**
->    * ARMCPU:
->    * @env: #CPUARMState
-> @@ -1084,6 +1103,7 @@ struct ArchCPU {
->           uint32_t dbgdevid1;
->           uint64_t reset_pmcr_el0;
->           uint64_t idregs[NUM_ID_IDX];
-> +        uint64_t idregs_demux[NUM_ID_DEMUX_IDX][ID_DEMUX_ARRAYLEN];
+>   fpu/softfloat-specialize.c.inc | 176 ++++++++++++++-------------------
+>   1 file changed, 72 insertions(+), 104 deletions(-)
 
-I'm not keen on this.  Surely we don't expect all multiplexed ID registers to have the 
-same number of sub-registers?  A rectangular matrix isn't a great representation.  Also, 
-you're wasting a hole in idregs[] with CSSIDR_EL1_IDX.
-
-Why not just have the N sub-registers occupy N entries within the regular idregs[]? 
-Something like
-
-#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM) \
-     NAME##_DEMUX_IDX,                               \
-     NAME##_DEMUX_LAST = NAME##_DEMUX_IDX + NUM - 1,
-
-#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-     ({                                                                  \
-         ARMISARegisters *i_ = (ISAR);                                   \
-         i_->idregs_demux[REG ## _EL1_DEMUX_IDX + INDEX] = VALUE;        \
-     })
-
-etc.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
