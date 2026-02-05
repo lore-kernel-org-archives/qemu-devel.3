@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4260FE91297
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 14:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D837E9128F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 14:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo0JR-00011N-9H; Thu, 05 Feb 2026 09:26:29 -0500
+	id 1vo0J8-0000ot-2G; Thu, 05 Feb 2026 09:26:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo0JO-00010N-Rx
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:26 -0500
-Received: from qs-2003e-snip4-11.eps.apple.com ([57.103.86.53]
+ id 1vo0J6-0000oC-IX
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:08 -0500
+Received: from qs-2002g-snip4-1.eps.apple.com ([57.103.87.192]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo0JM-0007xX-Uh
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:26 -0500
+ id 1vo0J4-0007r8-GK
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 09:26:08 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPS id
- 37A9D1800D99; Thu,  5 Feb 2026 14:26:17 +0000 (UTC)
+ E514A1800276; Thu,  5 Feb 2026 14:26:01 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770301583; x=1772893583;
- bh=C1DYbSEFYo2ZgjBenQ83qKhjOaZ2uyIVgfAe3esAA4k=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=CLx3BuuSLQDUoNn5rdemxYO1XzMGT/HIpfEnNnjkSUQiKOvnGP67SuvlmHZN2cRG++ZuTv/Yn0hYYCxu7bWGDf+TJVeKAM/xNfmuzGKQP7C+dr04i6XmxoLFvCAbYbLHWoIZK7cv/YY2BCkVmVB6qMcTsnIRggy9MDVN3Ht8yRJQvFUMNDnn3CJ3MhJlMMhUxYAfp0dG2/jgn1KxaKUDlIY665MnnB2Fl5T0Z2KrKfvNVoopxoB6wvArzH/SnYWw1CDcFYJxU9XKwu0aH8b2RwmKhNXRn+8yXemm9tm+YQA70rK50El1PwzjU53YlJfCk9nQw+2Z6fUgTuRDNF8S5A==
+ s=sig1; t=1770301565; x=1772893565;
+ bh=XyBHHRZUjZrB24DOEIVWdZ5GavQ/FkCfYqY7wYjlLmk=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=bTapqeXfuNAh+kjBH0z6uUznvZv5gm+tInA76AgsKJiMKXG1QFMRNb6D/LK7Sp2hU3veW6S/CuAAsY2djx3qipM94e1Nr+YyLyrk57HFElpUzaVua+ppKdKGFJCKTXV1ZwLBp1+Xq6YE7tIGjaPvftVT6ZeWwySzfOLZAgJRrdXrbpYP9F7RRakwfYaAxkOEMA2tXfbJTMxmYRkdeezfPvWCt6HOM3Xj/2e0ErNpVd2944Jm2va85t9O/Knx+0pPEtXQpNo4eOayz4tnAyDFBeZqDmqY+2exvnXzx/48Alf9VRdxA8dYHd5iy4wzryUUy+oZLIxZ4jHVdYGRqaU6tw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPSA id
- 775F2180027A; Thu,  5 Feb 2026 14:26:11 +0000 (UTC)
+ 1A4AB1800D9C; Thu,  5 Feb 2026 14:25:57 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -54,50 +54,44 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v21 09/22] whpx: Move around files before introducing AArch64
- support
-Date: Thu,  5 Feb 2026 15:25:27 +0100
-Message-ID: <20260205142543.64818-10-mohamed@unpredictable.fr>
+Subject: [PATCH v21 04/22] hw: arm: virt: rework MSI-X configuration
+Date: Thu,  5 Feb 2026 15:25:22 +0100
+Message-ID: <20260205142543.64818-5-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260205142543.64818-1-mohamed@unpredictable.fr>
 References: <20260205142543.64818-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwOCBTYWx0ZWRfX+2pFtDEqcdsq
- /ajutdF+KodxDb01/yRK9X1UOjlkEgGq042Vrba/4+o0Ka0z5dVnwE0CvPtm8r3Dzn8tbtWW61L
- cqbWxiR5QLC+H3mxdbtCrwVDFjr0LOfKyCOaPKmUCVGACKjqZfR11rgbfPJ9u6lHuT3w6OM0g9l
- 5iPGWYY12RIPSceBjv6mKmnUSG1vu/wvZAjwF/RmE2nyXAWQjE1IkNVY02w5v/V81v72SstmzqC
- LwBzfqeYvPzGhCXXnMBK0LhnKIP7aOszFYxe7rKwU1uXHqJV85VRSLCzqNazMhWobW3tfo6XXQY
- lXEaV/OuDdvoBKibE7T6Od3y8ZjvmPU5wKrPGavZ8PfPtLd638T/JC9ox89kIQ=
-X-Authority-Info-Out: v=2.4 cv=G7MR0tk5 c=1 sm=1 tr=0 ts=6984a88e
+X-Proofpoint-ORIG-GUID: BjXVaoaUtxxZKSOSrqns56H76W7idzpq
+X-Authority-Info-Out: v=2.4 cv=MZthep/f c=1 sm=1 tr=0 ts=6984a87c
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=yMhMjlubAAAA:8
- a=5-iGLm-LtT_B5TT3xKgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: w_qlr_yM9IWLv9Nyrj7TZTiw__qhomQ1
-X-Proofpoint-ORIG-GUID: w_qlr_yM9IWLv9Nyrj7TZTiw__qhomQ1
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=XHbtxiRcFRs46boockMA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwOCBTYWx0ZWRfX6iZqVaRZmVW5
+ 4PTLGm+NEOWpp+g8mEW5Qo+DlH7dkMKmWg5lYzs0kSQptts6uqkp4vWYYRs+nLghHcaNaG8/aAZ
+ pyQTRiOkeFSXK2OuUvRn2fmuEEGo1fDszeNIPerKJml2o+r0hRFdVv4vrdNJicBoyBs7EAByZRF
+ ILYeiN7VrrZUi9fpgE+MzKwlttHCQcOT/yZQBGzcnnQhPYEWoBIRQvDcG505yxOuYCOsl/PkHQq
+ 82EIAa4lj47ub1LQN55NYoAmFLZBLtjRq8uwRmociP+YG/u4unvaFHtHsg9wwp9CzFtpZCm0gCN
+ CHDDm5x4Jw2c9drDtRmW0WdQfOBY+xG+6pejmKuBBBxpVoyI6fO9f9x/ddY7NM=
+X-Proofpoint-GUID: BjXVaoaUtxxZKSOSrqns56H76W7idzpq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- suspectscore=0 lowpriorityscore=0 mlxlogscore=999
- mlxscore=0 spamscore=0
- clxscore=1030 bulkscore=0 phishscore=0 adultscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1030 bulkscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602050108
-X-JNJ: AAAAAAABlSPzBGmD01DJa+s1gvjZLIvDP7x+wTkKQq3RJRZJ5PR1ZS7leDTS9Wlgj5m6ujlimZpWL6SIK0Tj/wNylv6hwqo3njcjCZlsNTXUygxBRWWcYsxZuZHrMmeP9bqQcUpw1wIXlFdujEf98xp32zICNEv4B5JY5AEF+9/wA70+vqWQJLUZJx8o4EWXplydCJTv6CosX9W/mC47vhaF+5pR+mHfPXxpwm17e9RM/YIZO6ZI7Oy8XPN/5wXgLE5AjNi8uZL9uPQYExUfKwHlULUX8g2fvmEjqONlSLD14379aqQX6/ra5+5YfMo8WOMLOV952yKRjWtzDJykWSC0RTrqbqXbMDz2ESpd5QhDJaigpgim642rIdOYmd/qiMZEs38WOgnbjR3+ixRwAupqB4rXNwKclyGSq/03iQLE6t0LT9j8iEk7dWQMNLwWxyEsUG9YboLSJbsdgmED2cDEJ6V140IzPcwevqHSJQ9y5HoxpGRhdlp9PvRpUswnPUMLDEW5PQSot2ecWpjdOEihWAiE6/FqeZLoBpmbDrUlOvDznjX27r6DLryefRzraz/JznvuMAM0Bitq9vDXIStYiuQ9CpuhLs8A4sQKRN75jHYqxlMnaBxTS0YwqysRz0/n7mn9gq7v04/SbDKSIBEFv/8MDdiyr+sxESJ58apKnkwfD0dUgRIjPnFn0D5vkqGBZwyM+EjsWgVEH57zXTnNqp8OiaDfnaOWXQYKeWc75930jn0iE7Y6tI23gXa9me9Y3UlJKxrpvYIy6ukq5T+CcZNiT2Rfd/eUaCrO4Z5r8lWn+m13zR7Y/Wp2NxloJwXk/UhsNWqwbCQV0DF5u75W8KiFEZMbarq4CdYHWRsSDbu/colbYFh6cvHy0VwjQK2swDkygPok+NXNJe8H7hEpcKWL8lUqhnTO5jQ0loCe/BD4Jj2OcyrSNuN6P0heUEK0fcpo2BjjwSAvqtA=
-Received-SPF: pass client-ip=57.103.86.53;
+X-JNJ: AAAAAAABS9ZhbR8uFuYsWCb634Foi+dQz6LkCrqz9kuiGm3agl9hvqgXe9aNYyHIJoqPtdBZwWvtSNSiHWlQGZUQJAsyTTV9ZjCClkZ6wWQjR9nugpHPOcrQUYsf9NsPP8SJ+U5Z6+rnWvrxHy63MCGk6YFUf72Q13sYB3QFtoK5Mwmpm9gP9cm4m+SbNlajTmcc+lzv62U0ZOOK4f8Orhp/vNleJPJP/AVMmvfVteV6hsuLxaxlOeAzRMrPl49DuLEuj1GHRTPWS+QNOTDOQP6MYu3D5vVM0w1FHnA3cTiPEEyrJbwmnxGJOIIiQZJiZnaT1Vi5hvp2W72UuekRtxlFbPAMxIBfjkdLvCmdVtt0NkgBLGGrKQRBH65jTMd2P/dtOKuCzE8NAhTWeVyboJa35m/B5FafL59ioIxTLbX+5JM3d3OI6WStoRxqChaLsOiOU9rkwKXAM2wQ8EfRRb0d+EDAKC9av1j8VJgOX8FHE5dRvfGI4d6qWw4aZcYAbVFDqKB9VWUpt9QRhPloSMfAxwauw27rUgbZ0+Yz+wiyYl4yygrgJEJ1bIESczcR2YRUEimNhJdTKxBxrZl1EkiEK4cpGEYZRLRRAQkNfmQf7aCi+CgZ7nU+XHOGfmCpRAEMOOYCRwfuZ6NANdfbs9bUqmJQ+7iAuFdqC1cm40zNjNObNqUgpqgLRB3AOBAscQOUmriyIbLfURCOY08HRExpIXJqi1hSu+EgibbPVBExLUIU69o8tz5Ea7p7raqAURFmWMSrWdDGe6n6dn++Be+77rTS4mONPToGht0gXODqubShqrsedBZGqjeHtZTZCp/AOl0v8XvdDES6cxYDGcWM/WEf426lp1RrCzRs5FNlHz0O52LGsF0OJ8QCnK7d+8QbQELVazxTYWx51AIOv2eV4Vd0VfRdPzghJEWPMjCJ5ZVS3kEeKBFad+i7
+Received-SPF: pass client-ip=57.103.87.192;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,167 +107,312 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
+Introduce a -M msi= argument to be able to control MSI-X support independently
+from ITS, as part of supporting GICv3 + GICv2m platforms.
+
+Remove vms->its as it's no longer needed after that change.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                                           | 2 ++
- accel/meson.build                                     | 1 +
- accel/whpx/meson.build                                | 6 ++++++
- {target/i386 => accel}/whpx/whpx-accel-ops.c          | 4 ++--
- {target/i386/whpx => include/system}/whpx-accel-ops.h | 4 ++--
- {target/i386/whpx => include/system}/whpx-internal.h  | 6 ++++--
- target/i386/whpx/meson.build                          | 1 -
- target/i386/whpx/whpx-all.c                           | 4 ++--
- target/i386/whpx/whpx-apic.c                          | 2 +-
- 9 files changed, 20 insertions(+), 10 deletions(-)
- create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (97%)
- rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- rename {target/i386/whpx => include/system}/whpx-internal.h (97%)
+ hw/arm/virt-acpi-build.c |  20 ++++---
+ hw/arm/virt.c            | 119 ++++++++++++++++++++++++++++++++++++---
+ include/hw/arm/virt.h    |   5 +-
+ 3 files changed, 128 insertions(+), 16 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4c35249a18..69a7a3567d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -564,9 +564,11 @@ WHPX CPUs
- M: Pedro Barbuda <pbarbuda@microsoft.com>
- M: Mohamed Mediouni <mohamed@unpredictable.fr>
- S: Supported
-+F: accel/whpx/
- F: target/i386/whpx/
- F: accel/stubs/whpx-stub.c
- F: include/system/whpx.h
-+F: include/system/whpx-accel-ops.h
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c145678185..544004615d 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -569,7 +569,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps_len;
  
- MSHV
- M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
-diff --git a/accel/meson.build b/accel/meson.build
-index 983dfd0bd5..289b7420ff 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -6,6 +6,7 @@ user_ss.add(files('accel-user.c'))
- subdir('tcg')
- if have_system
-   subdir('hvf')
-+  subdir('whpx')
-   subdir('qtest')
-   subdir('kvm')
-   subdir('xen')
-diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
-new file mode 100644
-index 0000000000..7b3d6f1c1c
---- /dev/null
-+++ b/accel/whpx/meson.build
-@@ -0,0 +1,6 @@
-+whpx_ss = ss.source_set()
-+whpx_ss.add(files(
-+  'whpx-accel-ops.c',
-+))
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * Knowing the ID ranges from the RC to the SMMU, it's possible to
+              * determine the ID ranges from RC that go directly to ITS.
+@@ -590,7 +590,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
+         }
+     } else {
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             nb_nodes = 2; /* RC and ITS */
+             rc_mapping_count = 1; /* Direct map to ITS */
+         } else {
+@@ -605,7 +605,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+ 
+-    if (vms->its) {
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+         /* Table 12 ITS Group Format */
+         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
+         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
+@@ -624,7 +624,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         int smmu_mapping_count, offset_to_id_array;
+         int irq = sdev->irq;
+ 
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             smmu_mapping_count = 1; /* ITS Group node */
+             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
+         } else {
+@@ -717,7 +717,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
+         }
+ 
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * Map bypassed (don't go through the SMMU) RIDs (input) to
+              * ITS Group node directly: RC -> ITS.
+@@ -735,7 +735,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+          * SMMU: RC -> ITS.
+          * Output IORT node is the ITS Group node (the first node).
+          */
+-        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
++            build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
++        }
+     }
+ 
+     build_iort_rmr_nodes(table_data, smmuv3_devs, &id);
+@@ -1053,7 +1055,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
+         }
+ 
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * ACPI spec, Revision 6.0 Errata A
+              * (original 6.0 definition has invalid Length)
+@@ -1067,7 +1069,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+             build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+         }
+-    } else {
++    }
 +
-+specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
-diff --git a/target/i386/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-similarity index 97%
-rename from target/i386/whpx/whpx-accel-ops.c
-rename to accel/whpx/whpx-accel-ops.c
-index f75886128d..c84a25c273 100644
---- a/target/i386/whpx/whpx-accel-ops.c
-+++ b/accel/whpx/whpx-accel-ops.c
-@@ -16,8 +16,8 @@
- #include "qemu/guest-random.h"
++    if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
+         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
  
- #include "system/whpx.h"
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
- 
- static void *whpx_cpu_thread_fn(void *arg)
+         /* 5.2.12.16 GIC MSI Frame Structure */
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 390845c503..aa5e992712 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -737,7 +737,6 @@ static void create_its(VirtMachineState *vms)
  {
-diff --git a/target/i386/whpx/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
-similarity index 92%
-rename from target/i386/whpx/whpx-accel-ops.h
-rename to include/system/whpx-accel-ops.h
-index 54cfc25a14..ed9d4c49f4 100644
---- a/target/i386/whpx/whpx-accel-ops.h
-+++ b/include/system/whpx-accel-ops.h
-@@ -7,8 +7,8 @@
-  * See the COPYING file in the top-level directory.
-  */
+     DeviceState *dev;
  
--#ifndef TARGET_I386_WHPX_ACCEL_OPS_H
--#define TARGET_I386_WHPX_ACCEL_OPS_H
-+#ifndef SYSTEM_WHPX_ACCEL_OPS_H
-+#define SYSTEM_WHPX_ACCEL_OPS_H
+-    assert(vms->its);
+     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
+         /*
+          * Do nothing if ITS is neither supported by the host nor emulated by
+@@ -957,9 +956,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  
- #include "system/cpus.h"
+     fdt_add_gic_node(vms);
  
-diff --git a/target/i386/whpx/whpx-internal.h b/include/system/whpx-internal.h
-similarity index 97%
-rename from target/i386/whpx/whpx-internal.h
-rename to include/system/whpx-internal.h
-index 2dcad1f565..041fa958b4 100644
---- a/target/i386/whpx/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -1,11 +1,13 @@
--#ifndef TARGET_I386_WHPX_INTERNAL_H
--#define TARGET_I386_WHPX_INTERNAL_H
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SYSTEM_WHPX_INTERNAL_H
-+#define SYSTEM_WHPX_INTERNAL_H
+-    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+         create_its(vms);
+-    } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
++    } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
+         create_v2m(vms);
+     }
+ }
+@@ -2137,6 +2136,44 @@ static void finalize_gic_version(VirtMachineState *vms)
+                                                gics_supported, max_cpus);
+ }
  
- #include <windows.h>
- #include <winhvplatform.h>
- #include <winhvemulation.h>
++static void finalize_msi_controller(VirtMachineState *vms)
++{
++    /*
++     * VIRT_MSI_LEGACY_OPT_ITS_OFF is an option to replicate
++     * behavior of its=off when running with a GICv2, where a
++     * GICv2m is still present. Otherwise, it behaves the same
++     * as msi=off.
++     */
++    if (vms->msi_controller == VIRT_MSI_LEGACY_OPT_ITS_OFF) {
++        if (vms->gic_version == 2) {
++            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        } else {
++            vms->msi_controller = VIRT_MSI_CTRL_NONE;
++        }
++    }
++    if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
++        if (vms->gic_version == VIRT_GIC_VERSION_2) {
++            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        } else {
++            vms->msi_controller = VIRT_MSI_CTRL_ITS;
++        }
++    }
++
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
++        if (vms->gic_version == VIRT_GIC_VERSION_2) {
++            /*
++             * The legacy its= option in earlier releases allowed specifying
++             * this configuration and treated it as GICv3 + GICv2m.
++             * Diagnose it as an error even for that case.
++             */
++            error_report("GICv2 + ITS is an invalid configuration.");
++            exit(1);
++        }
++    }
++
++    assert(vms->msi_controller != VIRT_MSI_CTRL_AUTO);
++}
++
+ /*
+  * virt_post_cpus_gic_realized() must be called after the CPUs and
+  * the GIC have both been realized.
+@@ -2256,6 +2293,7 @@ static void machvirt_init(MachineState *machine)
+      * KVM is not available yet
+      */
+     finalize_gic_version(vms);
++    finalize_msi_controller(vms);
  
- #include "hw/i386/apic.h"
-+#include "exec/vaddr.h"
+     if (vms->secure) {
+         /*
+@@ -2705,18 +2743,76 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+ }
  
- typedef enum WhpxBreakpointState {
-     WHPX_BP_CLEARED = 0,
-diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
-index 9c54aaad39..c3aaaff9fd 100644
---- a/target/i386/whpx/meson.build
-+++ b/target/i386/whpx/meson.build
-@@ -1,5 +1,4 @@
- i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-   'whpx-all.c',
-   'whpx-apic.c',
--  'whpx-accel-ops.c',
- ))
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index db184e1b0d..cef31fc1a8 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -31,8 +31,8 @@
- #include "accel/accel-cpu-target.h"
- #include <winerror.h>
++static char *virt_get_msi(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++    const char *val;
++
++    switch (vms->msi_controller) {
++    case VIRT_MSI_CTRL_NONE:
++    case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++        val = "off";
++        break;
++    case VIRT_MSI_CTRL_ITS:
++        val = "its";
++        break;
++    case VIRT_MSI_CTRL_GICV2M:
++        val = "gicv2m";
++        break;
++    case VIRT_MSI_CTRL_AUTO:
++        val = "auto";
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return g_strdup(val);
++}
++
++static void virt_set_msi(Object *obj, const char *value, Error **errp)
++{
++    ERRP_GUARD();
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    if (!strcmp(value, "auto")) {
++        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
++    } else if (!strcmp(value, "its")) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else if (!strcmp(value, "gicv2m")) {
++        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++    } else if (!strcmp(value, "off")) {
++        vms->msi_controller = VIRT_MSI_CTRL_NONE;
++    } else {
++        error_setg(errp, "Invalid msi value");
++        error_append_hint(errp, "Valid values are auto, gicv2m, its, off\n");
++    }
++}
++
+ static bool virt_get_its(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
  
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
+-    return vms->its;
++    switch (vms->msi_controller) {
++    case VIRT_MSI_CTRL_AUTO:
++    case VIRT_MSI_CTRL_ITS:
++        return true;
++    case VIRT_MSI_CTRL_NONE:
++    case VIRT_MSI_CTRL_GICV2M:
++    case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++        return false;
++    default:
++        g_assert_not_reached();
++    }
+ }
  
- #include <winhvplatform.h>
- #include <winhvemulation.h>
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index afcb25843b..b934fdcbe1 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -18,7 +18,7 @@
- #include "hw/pci/msi.h"
- #include "system/hw_accel.h"
- #include "system/whpx.h"
--#include "whpx-internal.h"
-+#include "system/whpx-internal.h"
+ static void virt_set_its(Object *obj, bool value, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
  
- struct whpx_lapic_state {
-     struct {
+-    vms->its = value;
++    if (value) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else {
++        vms->msi_controller = VIRT_MSI_LEGACY_OPT_ITS_OFF;
++    }
+ }
+ 
+ static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+@@ -3043,6 +3139,9 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+             db_start = base_memmap[VIRT_GIC_V2M].base;
+             db_end = db_start + base_memmap[VIRT_GIC_V2M].size - 1;
+             break;
++        case VIRT_MSI_CTRL_AUTO:
++        case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++            g_assert_not_reached();
+         }
+         resv_prop_str = g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u",
+                                         db_start, db_end,
+@@ -3463,6 +3562,12 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set on/off to enable/disable "
+                                           "ITS instantiation");
+ 
++    object_class_property_add_str(oc, "msi", virt_get_msi,
++                                  virt_set_msi);
++    object_class_property_set_description(oc, "msi",
++                                          "Set MSI settings. "
++                                          "Valid values are auto, gicv2m, its and off");
++
+     object_class_property_add_bool(oc, "dtb-randomness",
+                                    virt_get_dtb_randomness,
+                                    virt_set_dtb_randomness);
+@@ -3518,8 +3623,8 @@ static void virt_instance_init(Object *obj)
+     vms->highmem_mmio = true;
+     vms->highmem_redists = true;
+ 
+-    /* Default allows ITS instantiation */
+-    vms->its = true;
++    /* Default allows ITS instantiation if available */
++    vms->msi_controller = VIRT_MSI_CTRL_AUTO;
+     /* Allow ITS emulation if the machine version supports it */
+     vms->tcg_its = !vmc->no_tcg_its;
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 3b382bdf49..8069422769 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -101,6 +101,10 @@ typedef enum VirtIOMMUType {
+ 
+ typedef enum VirtMSIControllerType {
+     VIRT_MSI_CTRL_NONE,
++    /* This value is overriden at runtime.*/
++    VIRT_MSI_CTRL_AUTO,
++    /* Legacy option: its=off provides a GICv2m when using GICv2 */
++    VIRT_MSI_LEGACY_OPT_ITS_OFF,
+     VIRT_MSI_CTRL_GICV2M,
+     VIRT_MSI_CTRL_ITS,
+ } VirtMSIControllerType;
+@@ -146,7 +150,6 @@ struct VirtMachineState {
+     bool highmem_ecam;
+     bool highmem_mmio;
+     bool highmem_redists;
+-    bool its;
+     bool tcg_its;
+     bool virt;
+     bool ras;
 -- 
 2.50.1 (Apple Git-155)
 
