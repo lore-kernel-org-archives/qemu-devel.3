@@ -4,100 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE32ECD983
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 16:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F034ECD980
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 16:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1oM-0006Rm-Ml; Thu, 05 Feb 2026 11:02:30 -0500
+	id 1vo1oo-0006vJ-TW; Thu, 05 Feb 2026 11:02:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo1oK-0006RB-7r
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:02:28 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo1oH-0000VU-2Q
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:02:27 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-794baacdefcso10938497b3.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 08:02:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770307343; cv=none;
- d=google.com; s=arc-20240605;
- b=d4dMCmwtZVcZzMQk9Z1LK+0Qx6NUOR9kizhuNK/tDxRB5qD1wFkb7CMxgcDLjXNmTm
- 7HleRqw6FBs5motv+NfHuozta41Et3YLLhgn8+wn3f4SBZ9uxJvQXZBCX695rvOfFrh0
- Gopet4hpHrpzRYeRNUwAygnNWaSkXc2LCWOdFNjHuhYO/+qc1BzZikF6yKGWVENwAsmb
- Nc1ArM6dcxeOi5JVPQZ9LGTI06cpjmLpiWzpWC2gw/48KVjbW1a2IRXisGXy9RJYPBIy
- 7zhzno/20mKAMFyvu8ff0YEj9jlXSIBT6KIfY4/h0hVz5d7l5NqlhRMnam4ZUXHpaGaH
- sU2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=rGhMaRUQMWqDeVp6m6RSJekchnZbE32Xztw1Fe0jvPo=;
- fh=gMjfbdOkdsdyugoyuRb6DYWE7E1DjTHLX9jbWQ8ybu8=;
- b=J5OKPCa4eqBoanmx4uwDIfPt3BhBBVoftZHqAxcC320+Ligu3npyOWlKdPszWLTx/F
- 6OxULd9IT0PKyROOify/cyfo6tptcVpqORhL6l6kxof14V+pNeXiXRLU9nYQHqhXJGd7
- KfLs9bprBCqd3nMsPaA5g5jPWV6l3/UH9vobvJic2INe2cYh7kwl37azuc7GN8eK4gfc
- EiXnSPk/cA7sg5vrSaKroP93nQhelsrhTHhP9eQn5RyAXg+8rwO6p1tJQNtR11OSQGmS
- sKZxUlq+bOw+JsCJGgc+JoLDEXq90bf/qyYbEs4PPQSFbWPcSFq5bbe2fW+MwaagDiDQ
- lRSg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770307343; x=1770912143; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rGhMaRUQMWqDeVp6m6RSJekchnZbE32Xztw1Fe0jvPo=;
- b=FyIvrfc1wyIh8ym2Dh8mlYGUTSGAhUi81qsF0s6CyxIqlMDk9gF/W5kKi3+e83zyeU
- uJkymUuw1c6JmZJdKK0kpsUXFlM96uS6S3r2Mi8DXkJBmfuy+SzBn/lG/8hIWLFXUd+v
- RtgPZirpb+yHKv6eINTFOMthEiryHYZnaH5yJ3hxxgf2MDjws4DeY2z1db/ino2qneiY
- 2TmcyMnFVwyzGWD+8axVp2QvUS43QwTP9gdJhF/ngZ/TVw0DlVMC8eSVKCwYnuMHnjuT
- 9qP/02g9aCj1P9lrMOS6gFmCrUIL/541WoCTNlGbyZBmtxz+Ykc+UbUPaB0A05Xb8P4E
- sYSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770307343; x=1770912143;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rGhMaRUQMWqDeVp6m6RSJekchnZbE32Xztw1Fe0jvPo=;
- b=azhmcVinUJdwxWaAAuK929LnrmWMzPk6nVg/eXwXkVbcD8+OLdv8sD2W9X+TUNy4en
- prTOjpTUTrysQZGMP52PDtBPcuMfUdNMHr78tj4Tt/DqQzAlYBnsLOiTdCSGon9Fve17
- t2GG+5rHMynC3jQZvhOZnrEQWfN5CU+xNKGmWTQXeWGVsuwYf+QyVd5XTRvObx1IIWSs
- PovskaYCyNNdegDxhj0iZ3TS1MxksFzgdduOv3lkTDzeVbw4c5ZTgqARFj2YHWRliFA8
- YLsR5A5orHc2h88HhIDE3ujv/jJpSqIqE3sWa37kX3B3+PupsTAklBxXnaNiwEWk2Qs9
- 668Q==
-X-Gm-Message-State: AOJu0Yzt5bL4y1KpPf7y3y5jVUcCknFzh9PFN6mkUBTcrulpDf7FLTsY
- +E6XddAI/r5Mc8vd6kR+m2J0JE4LZVztaxdNAbs/bgHKGND6EHC8PNQCJKwJ11rJr7E9ota3u6S
- M3W3bhk0EFbJomZ5+hWJG1dN+Vo/q2Pgs5+jzcgahqQ==
-X-Gm-Gg: AZuq6aIJ8mODHk2GsKgvsGL9iur7HCs7w0gNnzC4qcgkgqbga04eVypfE9gylhA79el
- g17jIAtZDPgfUvqr8HkZTCAtSIE552YqJSiNzSaetg0iL+cNgMngSDpmGLqdmIXTBLYWLPfw2YL
- Mq2xqVjsjMQ0j9MaqIshIJ6BofOckLl/bI6rQ0TNuU29WMJgZPxHRgaoMIEhX93fm5TTKm3OYgk
- 5MpEc+SW5r162ipS4b29Nf3yIAUiTarxLIhB/V7YK4snmNPTFL6JmuN8WOmupGgHs1aBw==
-X-Received: by 2002:a05:690c:318:b0:794:f14c:462c with SMTP id
- 00721157ae682-794fe68a22emr126699067b3.28.1770307342879; Thu, 05 Feb 2026
- 08:02:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1ok-0006hR-TL
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:02:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1oi-0000aH-Vy
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 11:02:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770307366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bBBpKEmCF3wE5yHBDfw/MtoHhDq4l8H86CdxZFId09w=;
+ b=DZF55N4K0C8oXwzU0muir4eK9mQ9QlEiB7xlCn/5ymL7wCg4KRDoUBQ03bdgH54hjcluMC
+ aDul3nS9P7McdLgTyqamXxpXQ3k9kjaa2GMJQxdcEZ44jCTqPv59gDzyz0nq9bs9aq9aCi
+ x/c0+mGP8Yz8qjJCO4GAtEKxap9CS5U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-ylBui5EuOpmUwjKpY1CZ-A-1; Thu,
+ 05 Feb 2026 11:02:41 -0500
+X-MC-Unique: ylBui5EuOpmUwjKpY1CZ-A-1
+X-Mimecast-MFC-AGG-ID: ylBui5EuOpmUwjKpY1CZ-A_1770307360
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42E681955F3D; Thu,  5 Feb 2026 16:02:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.198])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2120300DDA8; Thu,  5 Feb 2026 16:02:37 +0000 (UTC)
+Date: Thu, 5 Feb 2026 17:02:35 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, hreitz@redhat.com, fam@euphon.net
+Subject: Re: [RFC v2 0/6] block/io: avoid failure caused by misaligned
+ BLKZEROOUT ioctl
+Message-ID: <aYS_G-QHlbucVpUd@redhat.com>
+References: <20260109120837.2772961-1-f.ebner@proxmox.com>
+ <20260202221634.GB429972@fedora>
+ <36a69637-d7b9-42cb-b16f-473091efb3ee@proxmox.com>
 MIME-Version: 1.0
-References: <cover.1770231744.git.mst@redhat.com>
- <cover.1770293044.git.mst@redhat.com>
-In-Reply-To: <cover.1770293044.git.mst@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 16:02:10 +0000
-X-Gm-Features: AZwV_QjTJEvVPoD8bgDVL6EADRMd921vDqRntjuKrurJv4QToa6fYH3nuj4zk_Q
-Message-ID: <CAFEAcA8Dw8eoY=6owh4UZXM4nbnt2GAr9j8wmuMcpSLhaMS=nw@mail.gmail.com>
-Subject: Re: [PULL v2 00/38] virtio,pci,pc: features, fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <36a69637-d7b9-42cb-b16f-473091efb3ee@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,48 +85,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Feb 2026 at 12:08, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> Dropped most cxl patches for now.
-> Dropped WADT due to author's request.
->
-> The following changes since commit b377abc220fc53e9cab2aac3c73fc20be6d85eea:
->
->   Merge tag 'hw-misc-20260202' of https://github.com/philmd/qemu into staging (2026-02-03 07:52:04 +1000)
->
-> are available in the Git repository at:
->
->   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
->
-> for you to fetch changes up to 25465c0e1fd74d2118dfec03912f2595eeb497d7:
->
->   hw/cxl: Take into account how many media operations are requested for param check (2026-02-05 05:06:46 -0500)
->
-> ----------------------------------------------------------------
-> virtio,pci,pc: features, fixes
->
-> intel_iommu:
->     SVM support
-> vhost:
->     support for indirect descriptors in shadow virtqueue
-> vhost-user:
->     vhost-user-spi support
->     vhost-user-blk inflight migration support
->     vhost-user-blk inflight migration support
->
-> misc fixes in pci, vhost, virtio, acpi, cxl
-> cleanups in acpi/ghes
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->
-> ----------------------------------------------------------------
+Am 05.02.2026 um 13:13 hat Fiona Ebner geschrieben:
+> Hi Stefan,
+> 
+> Am 02.02.26 um 11:15 PM schrieb Stefan Hajnoczi:
+> > On Fri, Jan 09, 2026 at 01:08:27PM +0100, Fiona Ebner wrote:
+> >> Previous discussion here:
+> >> https://lore.kernel.org/qemu-devel/20260105143416.737482-1-f.ebner@proxmox.com/
+> >>
+> >> Commit 5634622bcb ("file-posix: allow BLKZEROOUT with -t writeback")
+> >> enables the BLKZEROOUT ioctl when using 'writeback' cache, regressing
+> >> certain 'qemu-img convert' invocations, because of a pre-existing
+> >> issue. Namely, the BLKZEROOUT ioctl might fail with errno EINVAL when
+> >> the request is shorter than the block size of the block device.
+> >>
+> >> Stefan suggested prioritizing bl.pwrite_zeroes_alignment in
+> >> bdrv_co_do_zero_pwritev(). This RFC explores that approach and the
+> >> issues with qcow2 I encountered, where
+> >> bl.pwrite_zeroes_alignment = s->subcluster_size;
+> >> I would be happy to discuss potential solutions and whether we should
+> >> use this approach after all.
+> > 
+> > Hi Fiona,
+> > I wanted to continue this discussion. My thoughts are that making
+> > bdrv_co_do_zero_pwritev() use bl.pwrite_zeroes_alignment is the right
+> > long-term solution to keep all the padding logic in one place.
+> > 
+> > On the other hand, your series shows it involves fixing a bunch of test
+> > failures and that's not fun. The original bug that is being solved here
+> > is my doing, so feel free to hand this over to me if you decide you
+> > don't want to work on it.
+> 
+> in your other mail, you mentioned you'll ask Kevin for his opinion. So
+> in part, I was waiting for that. But I also was side-tracked by other
+> things, and it will be 1-2 more weeks until I can really focus on this
+> again. If that is too long, please go ahead and pick it up.
 
+I didn't review this thoroughly yet, but I agree that considering the
+alignment from the start is the better solution and also more consistent
+with what we're already doing for normal reads and writes.
 
+We just need to make sure that we use the right alignments in the right
+places, which can be a bit confusing with the fallbacks to buffered zero
+writes here and there.
 
-Applied, thanks.
+I assume that there is enough time left to do this before the 11.0
+release and there is no need to take something like v1 as an
+intermediate solution?
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+Kevin
 
--- PMM
 
