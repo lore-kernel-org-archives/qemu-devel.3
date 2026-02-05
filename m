@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE1BEA795C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0BA0EA795C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnq3u-0003yK-4K; Wed, 04 Feb 2026 22:29:46 -0500
+	id 1vnq5j-0004kZ-PP; Wed, 04 Feb 2026 22:31:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnq3r-0003xq-Vu
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:29:44 -0500
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ id 1vnq5i-0004kJ-VA
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:31:38 -0500
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnq3q-00044U-EP
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:29:43 -0500
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2a871c8b171so3632365ad.3
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:29:41 -0800 (PST)
+ id 1vnq5h-0004Pz-9d
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:31:38 -0500
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-c648bc907ebso292032a12.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:31:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770262181; x=1770866981; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770262295; x=1770867095; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D2dupEyo2F5Q60qDSaObJURHA7eYSG7joDbYoWuXVIo=;
- b=ThMAy54komT2FPCtGER8S1Oy9M6kjZTvp0AFhpJVAuGGjUHw2/L8xgn88qsLC3VkN8
- +s+D1wzCzt/6A4kQtyIOBWeX+buXSV+gaFUIhqKhlS8hPzjH2tcL4U2GjNnenlpGYPdw
- 0Ni/lx/5EFWUbPDgaqSdDVYZe5DnzoUnnRAL2QbUO7UQh0MmL43Y4MgpgQrBnMuE796M
- mdjStL7o55Jez89+DpEM8fQzGuCST6zHyRWQrqYAEkuC469LJlQCyRorwwj2btwE856G
- Auxsc7uNnft5Z9X/DV2Eeh8CDKXQpNa8GIaqI7mSw6yHJkyqT4hEW7Dj8lbZH5MFrFpL
- 9MtA==
+ bh=CIsgD0ryv2V2yhmYSNW9VtY8BnBIj+KrV00+24MC3K8=;
+ b=pnvrbAfI5iR2CCzh6Fxap5c7u8yaMTYENXCkLUZMnvYP4oJXSBRqD8v5h2fdRsLeHf
+ MJPPcqrh6xRDwV97aP0707KgmfqkuLs0agxACzlEmW8vI9Tg6NchqNXog7d2cWa0xBvN
+ JjWOKQ/JSJQRTIXZo3WAzT1O7XJJk0uWgsf5aV+7YdiUWDlXKewtM3fp+euzcQ8Rc3fJ
+ OmWiOFNW+Yh3hX784ecXhUEbtdCYnyYDYuREnuDH7C7/WgPVEZnd5lc/VQCRKEpSu/34
+ CrSIGwJRGoNJiIId95SfLESu/mKowvF4JlPZ1yeGN2jqK5JPByHsyH4pDJsLvMQUnglD
+ cq3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770262181; x=1770866981;
+ d=1e100.net; s=20230601; t=1770262295; x=1770867095;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D2dupEyo2F5Q60qDSaObJURHA7eYSG7joDbYoWuXVIo=;
- b=Et2Cl/tWXKK/XnpATvNxrJE45aMNS0ggBglqWxmpHLyr4l6f3PlzUJCcpmsTHn9ffC
- Kl3d1OMmqqpqe6brRLZdVDOFGuQXlQCfOZPLolPvejTfH+6EOLevSnCwhOQp4g0z3oqQ
- GeDbCgrza5zpqO/kOO8xS9jIppZktje9Mk1u8ChEc1sAiraUcwShOEl1OXqUM+H+Ye4c
- bQBFyYby7MH3jWxHXJPlihjg9bmQmpJ/U+LuQLxPki+DEMpwldrMMiiDNKJlzgVLhHDB
- 9eVdMOBjKhB+8Rr2fLRgwDJLjfJJnshHWoqIqsY6Z8e7QtYM1m18vBoZk0LHSVZUhxgm
- y05g==
+ bh=CIsgD0ryv2V2yhmYSNW9VtY8BnBIj+KrV00+24MC3K8=;
+ b=OVpu+U6kX0Jx3y+qqiQhk+SOQtGa7Lnk1Nz+OphW4gcdv+DHFY5hfmW+zCU1T2Xse0
+ jxJgBeXTPRCEgqjrM6XZc345+V33z/PnsObLYz5ocRtYgfpHCUUh1f1brSGCRITnPOuU
+ G45rDk8cq6bxbSAOuQABFoj7iC9mnjYVtGXgR4lkSgD3eQjkqHpSvwC5L9GmvVceCqfB
+ Sp2djkW8lxGaOmUuSihSmOrcFiSUcyPiIr9B3nNgwoDAdcRNuPWKl2Mdr39JblKLcJUs
+ +UBOSOQEMBgoFquOSEBym0P2VyVX4C+J5rWXI/hThKQvl+NsOD5JBr9dosgWxPZzsJMN
+ rLdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0KD1B9fYcbjEokE3FK2qEpwUt5mgOCQcks0rVGIQ+g+xa0IJPGUvpcIv8SuA2jnRSSSrgEcCXHw9A@nongnu.org
-X-Gm-Message-State: AOJu0YzRghKPu/VgsaituagAO+ack0V4ZLhWQINMqg4e2ACSBgZFVShv
- PrA1VfYl6JZkzeepLMBV1iihBeN1iyQ8I9yvuqDFmu5wDkQHqOdB1iD2YbHjLME/a9y3ubm2VpW
- BRC9D51p1p4qC
-X-Gm-Gg: AZuq6aIM4C9n5Bueiov6k+d+C83YtEm9JqPF4QGRuOx6Jz+YCUf42yLjs7VDcjSAnFR
- K1lYjDBtT/Oi2Q7wd3MufmuNnl2p0gnB2dD+r1MDu/FbzIhBBNK3upjPeZ50MGSOaE1a/8zXXyV
- n2ahhL2mmHD+nOu9fUIy7EkTSYSr8S3jOTRUU8I1MVxQDpx5OOi8VOkMAI+uWPMLw8dnk3Ci4Vs
- GCTE+GRFW0LymSUK3PgXJZzUdvgpWVq3yEpAhA8zGwr8TcBUeEaNsbd6MY5QbMh8nfoM4EnE76y
- eTB5s9E+D3hreI5g5phHDmnHxAwJdeEdnnNZnRYXMfT9Ims5JcvMmaX/jKBPZvgr2s1Cm/hLhQt
- vpLF5O1Ybb3KVK7LIAQqy6BK22XgiBB2IjHkbUP5mH5omWDipXtIMNLIILZ2NVQlutmRkZOPdvC
- RYwm6Uw0W+qkjxQ5HW18v7PsnVd+1vVXcoSZdYM7uV8tBl+IroOZlYjwlT14h+nGlB07TVZOuO
-X-Received: by 2002:a17:903:b4f:b0:2a0:ccef:a5d3 with SMTP id
- d9443c01a7336-2a933bca7camr54976165ad.3.1770262180654; 
- Wed, 04 Feb 2026 19:29:40 -0800 (PST)
+ AJvYcCX5aK9v8P/QsFUjyuwOIaJ4mlaJ6FDfCEuj1E39npoqiEubWfYE9CeE0/mJNV4pacuMpcbjA9LK7srI@nongnu.org
+X-Gm-Message-State: AOJu0YxNOatnK2hX4StsyGnMqZLxkbc9TLOc0bmF1Qw1ClLAk9AyXGUF
+ fHCytChZb/6hPdVW6vrngxrms0WqNoOID8VsqVOr6wCO0EoaAbLtsQ64zCVHqfLOt3c0Q7FAldr
+ jd2TTfNfjUnIm
+X-Gm-Gg: AZuq6aK8lCeJwzGU7WkT3L9zyQ/mHsCKZ3RTzD7rMKRIovNO6s40O4wPRxZCf26pnDf
+ xiH/Jn87WEAzcIfcl/ozckeWlMT91kR9OR6MycAvaK6HsLpuwRIryCOL1zFBmkLD6ZL360020Em
+ kaj6A/ymLNmnX6GPlE3QM0+ng2bQaAv1rjt7Y6tNpZAWOnC5HqLCFNXPEo1qCHjzoQFeQhPg80j
+ SjPD20D8jGWG65YtgeTX19VNhfo8tT72KhPiA6Ew8lAxsm9eYtUX9j7WkKrzqHrz//5ZL/V94S6
+ BzzsWw+FvF5H+G0dbX4bD+cFWIUzvFq6UugND3eqqiJ+GWADjdV8m81pz9tBR7+Eu9DKLwM7sA9
+ hlnoXsz3vwRTZ3Jj044X0tdyWdX4F20YZ91tSvtV3DXkkwIiLrEoxTjc/KhqSRk3DQjRkdBfH8i
+ 80LDlTIjLh3fATx89RQyAc2PfnKHkk6M5CaEoX4eO6c/4ECrgiBEJVR8Ej/NMtItFJBzyYOzLD
+X-Received: by 2002:a17:902:e884:b0:2a9:410:23fe with SMTP id
+ d9443c01a7336-2a933ea2e9dmr61890275ad.36.1770262295450; 
+ Wed, 04 Feb 2026 19:31:35 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
  ([2401:d002:dc0f:2100:7515:513c:b646:18b8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a93385127bsm40255245ad.1.2026.02.04.19.29.35
+ d9443c01a7336-2a933851336sm45194365ad.15.2026.02.04.19.31.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 19:29:40 -0800 (PST)
-Message-ID: <0a70dfa3-7547-4928-885d-89577a8f3e27@linaro.org>
-Date: Thu, 5 Feb 2026 13:29:32 +1000
+ Wed, 04 Feb 2026 19:31:35 -0800 (PST)
+Message-ID: <a2b61cab-788d-498f-9e35-152a6c77da35@linaro.org>
+Date: Thu, 5 Feb 2026 13:31:27 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/19] fpu/softfloat: Refactor IEEE format NaN
+Subject: Re: [PATCH v3 03/19] fpu/softfloat: Refactor floatx80 format NaN
  classification to share code
 To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
@@ -87,14 +87,14 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20260204051756.667397-1-max.chou@sifive.com>
- <20260204051756.667397-3-max.chou@sifive.com>
+ <20260204051756.667397-4-max.chou@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260204051756.667397-3-max.chou@sifive.com>
+In-Reply-To: <20260204051756.667397-4-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x643.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,18 +118,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/4/26 15:17, Max Chou wrote:
-> The floatN_is_[quiet|signaling]_nan functions for following formats
-> (float16, bfloat16, float32, float64, float128) contain duplicated
+> The floatx80_is_[quiet|signaling]_nan functions contain duplicated
 > logic that should be shared.
-> This commit introduces
-> [float16|bfloat16|float32|float64|float128]_nan_is_snan that determine
-> if a NaN is signaling.
+> This commit introduces floatx80_nan_is_snan helper function that
+> determine if a NaN is signaling and change the return type of
+> floatx80_is_[signaling|quiet]_nan to bool.
 > 
 > Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Max Chou<max.chou@sifive.com>
 > ---
->   fpu/softfloat-specialize.c.inc | 176 ++++++++++++++-------------------
->   1 file changed, 72 insertions(+), 104 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
