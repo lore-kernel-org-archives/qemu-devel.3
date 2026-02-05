@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C95EA795B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117E8EA7959
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnpnw-00061H-I2; Wed, 04 Feb 2026 22:13:16 -0500
+	id 1vnpny-00062J-AW; Wed, 04 Feb 2026 22:13:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnp-0005sK-4z
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:09 -0500
+ id 1vnpnu-0005wY-2i
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:15 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vnpnn-0001xZ-Bv
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:08 -0500
+ id 1vnpnr-0001yQ-83
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:13:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770261187; x=1801797187;
+ t=1770261191; x=1801797191;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cmZCbFWZBmy27uy8f1zyKQBCOzzDx+hRdvm7jVkNBNc=;
- b=YXUw1aCkeC0L55sAL5APfZJa92Hux1LQWA5UP+eAZYTZP+2Q2muXRBlM
- il0XsE2FEakEVTYbdWO9dPiRUho10hRNJze4AdfZTkT91VHbRxaKGpEV3
- b9g9jx5GdziKq150+WgPJuvdrItiiyVBiQbpITaep2o120yFoVGHreNMd
- BdUkKxMms0/qd/cUaZ4uVrAowdLxnyvkckaKpmjlVpNRbgHgklCU5d84v
- HIzW06abgfeECaqoAsIHR50s9Fob1MWbGDXtjL2Aqh4zS7SXmLwo0URpD
- R+kanJE50sO2/KNZf0NHB33EN/v48oxQOv299gHRZkbSYfcLmWiRfa2ok g==;
-X-CSE-ConnectionGUID: SQmXjoQLRiWmWcY+jpE72Q==
-X-CSE-MsgGUID: /YEFxEs5Roq8PuAeYU5gng==
-X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910531"
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910531"
+ bh=ur7GDkrzvnTeBh6YDKJdGCMGFr1zOjYfQZCRxpq7Olo=;
+ b=jA0LpRl2nr6NIuPummMhPi121eoU62zwiQGie5Y15outv36IFjZKz75l
+ gq5KE5o/hyPJTZb76f8rA9vt8EuyPjQmuQ4X9QN7IHji8mlahkIl3jRw7
+ TYV07IDw+GxMpMC2LzHkWMF5A6taLfMAnryuOMrEwu+cYWpQKRoaZrmwq
+ IDCMUjQa9yi0bwP/ehUasFdC85C3TqlDyeM3X2ulT/D4yy4YkTDAYoLi/
+ QWKMo3MnCFYHhhlRbKdr7Qtq63zzHMEYSzmdwg/xQv6yskJ6m07EbTF18
+ +Odhy2QXBOjeD09e/UVAzRdk41wDk3/DuKrWdcMdn4TU+ELDGCY/qp2f6 w==;
+X-CSE-ConnectionGUID: 4HKSSauxS4m0z/zbi74Pxg==
+X-CSE-MsgGUID: Jhgn7wqKRvSpwiWcUUxumA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11691"; a="96910537"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="96910537"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:13:06 -0800
-X-CSE-ConnectionGUID: 1oNtGRgQTim8YQuNfbs4bA==
-X-CSE-MsgGUID: Br4UWhLNToCTG95Y6s79NA==
+ 04 Feb 2026 19:13:10 -0800
+X-CSE-ConnectionGUID: AnFYNdwVQf+fV0iOjLj5Bg==
+X-CSE-MsgGUID: 9mg2eEq7SkiOJyLN7VtG0Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209652108"
+X-IronPort-AV: E=Sophos;i="6.21,273,1763452800"; d="scan'208";a="209652138"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Feb 2026 19:13:03 -0800
+ 04 Feb 2026 19:13:06 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>
-Subject: [RFC PATCH 13/14] intel_iommu: Drop pasid related check
-Date: Wed,  4 Feb 2026 22:11:31 -0500
-Message-ID: <20260205031133.74357-14-zhenzhong.duan@intel.com>
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [RFC PATCH 14/14] intel_iommu: Expose flag
+ VIOMMU_FLAG_PASID_SUPPORTED when configured
+Date: Wed,  4 Feb 2026 22:11:32 -0500
+Message-ID: <20260205031133.74357-15-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260205031133.74357-1-zhenzhong.duan@intel.com>
 References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
@@ -87,40 +87,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The check of 's->pasid && x86_iommu->dt_supported' is an overkill,
-because all emulated devices don't support PASID capability yet,
-they never send Requests-with-PASID, no pasid tagged iotlb entries
-are cached in the device. Even if guest send PASID-based-Device-TLB
-invalidation request, we can ignore it safely.
+VFIO device will check flag VIOMMU_FLAG_PASID_SUPPORTED and expose PASID
+capability, or else guest could not enable PASID of this device even if
+vIOMMU's pasid is configured.
 
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+This is the final knob to enable PASID.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ hw/i386/intel_iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 17252c804b..4ab50a9fd9 100644
+index 4ab50a9fd9..86998dad94 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -5490,17 +5490,6 @@ static void vtd_realize(DeviceState *dev, Error **errp)
-     X86MachineState *x86ms = X86_MACHINE(ms);
-     PCIBus *bus = pcms->pcibus;
-     IntelIOMMUState *s = INTEL_IOMMU_DEVICE(dev);
--    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
--
--    if (s->pasid && x86_iommu->dt_supported) {
--        /*
--         * PASID-based-Device-TLB Invalidate Descriptor is not
--         * implemented and it requires support from vhost layer which
--         * needs to be implemented in the future.
--         */
--        error_setg(errp, "PASID based device IOTLB is not supported");
--        return;
--    }
+@@ -4727,6 +4727,7 @@ static uint64_t vtd_get_viommu_flags(void *opaque)
+     uint64_t flags;
  
-     if (!vtd_decide_config(s, errp)) {
-         return;
+     flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
++    flags |= s->pasid ? VIOMMU_FLAG_PASID_SUPPORTED : 0;
+ 
+     return flags;
+ }
 -- 
 2.47.3
 
