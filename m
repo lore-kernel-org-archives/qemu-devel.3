@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9B1ECD992
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 18:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1E82ECD992
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 18:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo3vN-000640-8x; Thu, 05 Feb 2026 13:17:53 -0500
+	id 1vo3xF-0006sI-RG; Thu, 05 Feb 2026 13:19:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vo3vL-00063c-Tw
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:17:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vo3xD-0006rJ-Q4
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:19:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vo3vK-0002Z3-Ej
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:17:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vo3xC-0002lV-57
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:19:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770315469;
+ s=mimecast20190719; t=1770315585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=klb+KNssCGA/wZvcmw14O3dx6RltBPGe/bxZ8QADF30=;
- b=OIKiCFQxc0b6+0gCrUm5rSXH4HGvPC8eW4MZOyY0K2ectunvpAo6QUu4THMOXCFLUcJBLe
- Kybve7096yhKLXEYkI1mAc+LXTpu8u/m1VTZon+YAJt7mL779hlGrHHpEozj9iqP51mbMT
- YepX1AiAiHhcc9s5mWsjh2RZNcAMjBk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yC3TMuN1LqqkLzRsr3GGEfKHrNYT+UPbf8QiylGDG50=;
+ b=fAZ+E35qPuvbb/AV7C0CHLZu9S8wJeZrxQPkxBuLLG6Sdo2yxQDFQhs2D1o7xXpcP2RgiC
+ FlsEe+rOw+POL/IHApG0YaRmZVzKuK1ajLvpJ75PXwO11e0J3T6mVRbQ++ZptL8tDqBmsk
+ dhnhwWhCnD4Rwp1JuhnioEcS4XeGSdM=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-gwA3fQxxOkm7BTioWL2nhw-1; Thu, 05 Feb 2026 13:17:47 -0500
-X-MC-Unique: gwA3fQxxOkm7BTioWL2nhw-1
-X-Mimecast-MFC-AGG-ID: gwA3fQxxOkm7BTioWL2nhw_1770315466
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4358f90fe8dso869985f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 10:17:47 -0800 (PST)
+ us-mta-161-csmL5_faOuaqn8FiGRTIyA-1; Thu, 05 Feb 2026 13:19:43 -0500
+X-MC-Unique: csmL5_faOuaqn8FiGRTIyA-1
+X-Mimecast-MFC-AGG-ID: csmL5_faOuaqn8FiGRTIyA_1770315582
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-385d8bf4c53so14442091fa.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 10:19:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770315466; x=1770920266; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770315582; x=1770920382; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=klb+KNssCGA/wZvcmw14O3dx6RltBPGe/bxZ8QADF30=;
- b=MWVN/nqSz931aJjdQm9ZPrsdVBHXw5e1w6LfBOEy2CSmhfqtwjnOwla4F2Fd27UTL1
- agtepYMBsE3zD01hCJbqdkdX3kdw2QstCErR1WSMmhbyHrc9YbWg52M6Qa5m0XDC1YPY
- SFCyCaN5WApTx5qYrIQ/fTNdRGzqbnt3gzj3gs00EKeFPESy20VvDMhgz0zS7vVPLskW
- dMYGLXdgwcEAT5ocuMkwp0LGpE3fIK5My3vbAjm/74kqZSTribNNDihat1NS1dDyoBcx
- BMBKvu2D6uiv9bTBIZIFp+cbrEoADDQaE1yfmlhAA8dVE9hQtusQGAhks88X0lhv4TiT
- OlFQ==
+ bh=yC3TMuN1LqqkLzRsr3GGEfKHrNYT+UPbf8QiylGDG50=;
+ b=OiEjoqLS1pnOnkthcQ5q3S+NUxxT6NZ6IaMdm7WCUBvAS1iqnCHseLwHxs5Jel2fLO
+ g0GHJFMCEhFdi/M2txt6wrkHNUxjcM1ul86byocJKrZo0gbZK1Fxj82WE37S6FjzE4Z+
+ PvArTFJ1xFlr21aZf0evu8Y1teCWKXiMKqUIqBPegS66lOSDw2KDy9Ex2se33mjTK2Fy
+ NYJxWVyDDO9sRZ37A8cC74IcoBgfJiSjJ+KQk34bMhidxNsu/Q2nwYENkUsBouQEzYNY
+ C/U6cVpQxMcF6jcgnNPmyybbgEMfkDRTDqpveT0zrd2YYi0VYEkNXqATc8poiGq+P8eI
+ wXkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770315466; x=1770920266;
+ d=1e100.net; s=20230601; t=1770315582; x=1770920382;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=klb+KNssCGA/wZvcmw14O3dx6RltBPGe/bxZ8QADF30=;
- b=IPn53sUDS2ubeVxLvN0VYPvrzWr53ag3vdZRlIy3g0a70GliGFWW7l4xsPz2+TAfCI
- ubx7q5xTMvnOAkoR/4mNty7u4LKSK3s13Bi7GIdBCtsexb4lH/in3f9ynFSBMjDwtOIx
- s3nizShCuI7H2cQiTs1EdvDCUrD7Ql2f0OKC5GXR5UsSNjlAYDGen0LkiWfaJjsVpnbz
- JBLXylpBB4d81876wyPlueT3hrUadTcIrPGamfXObZ5JfJjO51iq9n/ChewKABeiipb8
- M9vZHbLK92gkXvB6uZ0XP9fxsy0XSwe0pC4DxnbcLyAoRRkWAj9/euQr/GnD23VNR+Xo
- FPoQ==
+ bh=yC3TMuN1LqqkLzRsr3GGEfKHrNYT+UPbf8QiylGDG50=;
+ b=vkaUlXex2hGmSFL+rclAYPXhlAnH736xJilSpVUwBbIW3p6NDoOy9hxBuxxsFZ7NUk
+ YBTnGxnuy1moVJMEpqU6KFU5sxfTFbNTGwlPObwGfU3v9R+wecCB+Forgj6m9K6PrxN6
+ vPUwuaf3OXt3DyuM8o3+WDehso6ETYpFl/Qo+qyqnJ0BdAKHU+LkvBgSUVGj5ku7R6ny
+ ixEdAWNthchGIKZNmRo3rU9LVODKyoSIDTKXYLUUyukM3t9PNEx51jRE+B1Nr6eYNgho
+ kxI5RGJjr7USM1lI+vuDBchWg8vKx67jlP60kfLXJAJkO0a4Rf+uZ9rE/CAjXYGSjCMQ
+ BPgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSfzVHsZV+S7y1wPgdSBhuXauEq4GwRYuvrshaJsLoiEgZkYwDMLgZiFnTt8t+Cq8hoRehaYpscsKY@nongnu.org
-X-Gm-Message-State: AOJu0YydMzKIfMPqqb11i9RMEecisAsRwqDq77LaqanZrfPIjBNArqfz
- iBjEUQaFk5/dfqbcpTKRfe9kpQLkczcwDDNNUOS2NEGgN7eKi1PkNkVDQ0Ob7p29NYo61jnHd2B
- MCTnyFCHHEexyHXKBE/WUtoMKta8WNQvK4AFm3IBpdd+0URb/GzX1FLqo
-X-Gm-Gg: AZuq6aLLhjMiXLi8CgHVvZmNuH4A4T7NyL4VRg9Q8mLKgyVnHSmbyfzbUYZAcHh9w/O
- DNaDw8PvKh5FBj3GQDyIAV6N7CzCQzyYqxeUm8tf9rscnRwMWaaVOqDqzeqxt/rfHCxhCIAGThA
- GBOGJpu3mfK8hFTgkn2mN0W63l7HCXh5s0J/OVpLvb4B2x67hE/CtUR+kkSn+N0TdUPy2Vi5Qhl
- RLLOrmCUi2xe+uaCnpd5DnDRrhd+rnlwfeV4SC/D+C8gQYgFcDrL+3MQdpdbA9suyGq9s/RuV8j
- qPLizpcOZkR+C0IMJLeoS21mT/jPy9kRftr1BPSBpTw5KhMYu+MMynGSPg44AW5zMbPt9U9iGf7
- wlTil/oE=
-X-Received: by 2002:a05:6000:26c3:b0:436:140d:b7ea with SMTP id
- ffacd0b85a97d-436290352a8mr317329f8f.4.1770315466366; 
- Thu, 05 Feb 2026 10:17:46 -0800 (PST)
-X-Received: by 2002:a05:6000:26c3:b0:436:140d:b7ea with SMTP id
- ffacd0b85a97d-436290352a8mr317291f8f.4.1770315465975; 
- Thu, 05 Feb 2026 10:17:45 -0800 (PST)
+ AJvYcCWqLSqfFu6Mm+7EHV8ek0JJZt1qJmnDOI8qoYXbDBLDnguU/TWw7q3Une596UGC5FUnL+RgzJdajId3@nongnu.org
+X-Gm-Message-State: AOJu0Yx1xxBk8mQk7Gxzlaq0b0Z0HjKJ6MRDsvtfatJ/k0aAW5r8nvxm
+ xMiuAHWuvFOh9yUuiTOhspJJpkYKoJraUQOMfC8x/YsnN1VzMkNQ04pkYoIvVytXk/vB+SO6IYy
+ s1vMMzudA5mFQVgqS8YyODo3ERFjfPylzppguhubD/p44jODsvuFY+FEh
+X-Gm-Gg: AZuq6aJ+zE4QsSps699k/hDWcEXz78I1ooXaYbv6blU3wPnn0OsmgtnunfdG5CjVxcA
+ 98vbomtOFBQu36+aXWseMtI9WtlxADRxdqD9RXmuOjTW5qh+5HemEsE5GZk+acgFGJKCuARtVcs
+ ko0wZnoQq5fpykhzPBCFnPulsDqomxy1fEoc3OO7qudWZQKyvorVFKEHWwwtFfXEJkGjx+U/WOh
+ qtqHAqENkwpSJ1frYzP+wZQs9HpbHMVoU55KMQ6lgOaE+gu+8VlryiGIajz+ZytqbJP3nynzO3J
+ 45Rg3y5cDVdM+N05un7XnjI6z6it1TJ4s3giQ97vft9mKsEzldrmBVtDKbJeYhprBsHF63UtY9e
+ HjhO/Hcw=
+X-Received: by 2002:a2e:9b12:0:b0:37e:6b29:111b with SMTP id
+ 38308e7fff4ca-386a0ad1b04mr12377951fa.2.1770315582135; 
+ Thu, 05 Feb 2026 10:19:42 -0800 (PST)
+X-Received: by 2002:a2e:9b12:0:b0:37e:6b29:111b with SMTP id
+ 38308e7fff4ca-386a0ad1b04mr12377801fa.2.1770315581706; 
+ Thu, 05 Feb 2026 10:19:41 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.115.203])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4361805fec6sm15629105f8f.32.2026.02.05.10.17.44
+ 38308e7fff4ca-38691f6e2d6sm11474031fa.5.2026.02.05.10.19.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 10:17:45 -0800 (PST)
-Message-ID: <64938de1-9fdd-47c7-a6a6-78e670f3a00e@redhat.com>
-Date: Thu, 5 Feb 2026 19:17:44 +0100
+ Thu, 05 Feb 2026 10:19:41 -0800 (PST)
+Message-ID: <d9316067-2aec-4f6d-b070-2169c4bfa406@redhat.com>
+Date: Thu, 5 Feb 2026 19:19:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
+Subject: Re: [PATCH v2 4/9] target/s390x: Replace %target_ulong -> %hwaddr
  where appropriate
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -100,7 +100,7 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
 References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-4-philmd@linaro.org>
+ <20260204182722.44062-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -145,7 +145,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260204182722.44062-4-philmd@linaro.org>
+In-Reply-To: <20260204182722.44062-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -174,15 +174,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/02/2026 19.27, Philippe Mathieu-Daudé wrote:
-> Use the %vaddr type for virtual addresses.
+> Use the %hwaddr type for physical addresses.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/s390x-internal.h  | 5 +++--
->   target/s390x/helper.c          | 2 +-
->   target/s390x/mmu_helper.c      | 6 +++---
->   target/s390x/tcg/excp_helper.c | 3 ++-
->   4 files changed, 9 insertions(+), 7 deletions(-)
+>   target/s390x/s390x-internal.h  |  9 +++++----
+>   target/s390x/helper.c          |  2 +-
+>   target/s390x/mmu_helper.c      | 16 ++++++++--------
+>   target/s390x/tcg/excp_helper.c |  2 +-
+>   4 files changed, 15 insertions(+), 14 deletions(-)
+
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
