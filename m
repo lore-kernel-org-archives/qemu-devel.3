@@ -4,89 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5EFEC1EA0
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA9DEC1EA1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnxMV-00054V-Qx; Thu, 05 Feb 2026 06:17:27 -0500
+	id 1vnxTP-0001A6-3s; Thu, 05 Feb 2026 06:24:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnxLg-0004gk-AW
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:43 -0500
-Received: from mail-pg1-x542.google.com ([2607:f8b0:4864:20::542])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnxLe-0003nB-GT
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:36 -0500
-Received: by mail-pg1-x542.google.com with SMTP id
- 41be03b00d2f7-c698873a1deso376372a12.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 03:16:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770290193; x=1770894993; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jYqIjIwuJjJ99LoW2+mJj8Co+SjC+NkMZqtAn40OcNI=;
- b=pDg3QuPCwPYzT4t7M7zJtIUED2dH4lbtmtPwXY4zYZyhmXneaYz02umqtdJr1bgPjH
- KV/Fv2DSIUhx3d3AmoXj1sTMvrjUDy25t9zSgTsTSwLIYJnNnmaOhsdGFZunpT9TvMUN
- +ZREVW6eM0AqpGj/HTHxXeN4UFI4hkWfdvadDRkcSAphSEopAaRHGuZSlxHZ2pzDJp7v
- tGxK1UGwMe5fVg0jRZ9L2OSMmqDnhOWctqopCM4uA6ofMyBQhi5wA8mXucF76MQBWTQZ
- ADUf0pb+5xRg0bDPPN9zeXDALl49hrCHjWLxyfr8B234EhmGkOfsSNmrb7bFGoOta3x7
- AOQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770290193; x=1770894993;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jYqIjIwuJjJ99LoW2+mJj8Co+SjC+NkMZqtAn40OcNI=;
- b=hgZK9DNECBE75wnQgnEDeUpm+NyXvBBZ2jOvv4QRo4ObOgt9GscQygYhlnEZ/8norV
- SMW7iUT/VbIZw6IguZ9ZYN/y0CvkC6PIXHLtupPB/6l+eZ6L1tdLkw+ITXmTU9KuRmAn
- Uw5CMnf7IRcFjb9HJD5KZlgQVgkH8uKPKasg+QqlPsovQcbJbxhiih+qm9jjqHGsUZDt
- E0/6WJCu5aJRceIsiHx/dp2NsYaEhXaJiDWNT0Ycwz17qVxZwODkgv5rTlzaSn8Kkdhy
- EZF25UgUOo5VrY9pboI71yGXuyrafUfLMSfU4qLmjCs1E3U0tk0zwW5snONWFGzoc2Tx
- jXgg==
-X-Gm-Message-State: AOJu0YzBVM1Cb/qjzo3zqhetWNqI//4XI6T71X48DhFiHHscTh6YME4M
- iSNwEo7cqzQHvjdWuK7HgxkaO8WK9bHSdzQumqnUjz3Apvw7PeSu9vV8wS7Gn7jEEVKsc2UWuA6
- R9hJsvhVLHABA
-X-Gm-Gg: AZuq6aJjWyLPC6UJBTNXKGsDcBAgHefv3Ixyt27eGyhPi9ASAK9a6DCJoGDj2gosgPE
- k0kJ0/lG4PXpNmToRmtGN2NByA6WeJfhi3Zc/h++8XeArT7DndIdCxOX12Xgx+lNzMgW3X8pxCv
- NHoU4KVBC2o551rid41JuacSNJ2BlvnNe8LsYM7uXjLyWUr+/7eixXzyb1yAwb3QKNzf5W7k/Y2
- M0M7COgrcoSq2nyHNbeZc2fceCh7EUsUJNKJw15A32BcCZr8a/onGZWfnQZvKCPoeLFVvO+kHlv
- G2K4mLh6yAdYgfhpf4u4q6KKarCdZYarGdBN9OelCOMDsevuQq2TDz4sO4W7MSTmfoYMxiv7feV
- +SpOCNOWtrPd+P9BlcojSY5/JhkPQCobGfGWjE/nmoCkLa85+qlrqFjEmmkzVtytO/s0CROJhDB
- 4BgiA54FFcMgKaq3GeZvGg
-X-Received: by 2002:a17:903:f85:b0:295:592f:94a3 with SMTP id
- d9443c01a7336-2a933fdd4edmr54397625ad.48.1770290192880; 
- Thu, 05 Feb 2026 03:16:32 -0800 (PST)
-Received: from stoup.. ([2401:d002:dc0f:2100:7515:513c:b646:18b8])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a933851685sm51088435ad.13.2026.02.05.03.16.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 03:16:32 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: max.chou@sifive.com,
-	Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PATCH v4 2/9] fpu/softfloat: Refactor floatx80 format NaN
- classification to share code
-Date: Thu,  5 Feb 2026 21:16:15 +1000
-Message-ID: <20260205111622.461497-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260205111622.461497-1-richard.henderson@linaro.org>
-References: <20260205111622.461497-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vnxTG-000193-0X
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:30 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vnxTE-00054J-7p
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:24:25 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6FGD2sz2zJ46l4;
+ Thu,  5 Feb 2026 19:23:32 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id F1B1940570;
+ Thu,  5 Feb 2026 19:24:22 +0800 (CST)
+Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 5 Feb 2026 11:24:22 +0000
+To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>,
+ <shiju.jose@huawei.com>, Ravi Shankar <venkataravis@micron.com>,
+ <armbru@redhat.com>, Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>
+Subject: [PATCH qemu v5 1/5] qapi: cxl: Refactor CXL event injection for
+ common commands arguments
+Date: Thu, 5 Feb 2026 11:23:46 +0000
+Message-ID: <20260205112350.60681-2-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260205112350.60681-1-Jonathan.Cameron@huawei.com>
+References: <20260205112350.60681-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::542;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x542.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,121 +68,180 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-The floatx80_is_[quiet|signaling]_nan functions contain duplicated
-logic that should be shared.
-This commit introduces floatx80_nan_is_snan helper function that
-determine if a NaN is signaling and change the return type of
-floatx80_is_[signaling|quiet]_nan to bool.
+Refactor CXL event injection to use struct for common command
+arguments.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260204051756.667397-4-max.chou@sifive.com>
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- include/fpu/softfloat.h        |  4 +--
- fpu/softfloat-specialize.c.inc | 53 ++++++++++++----------------------
- 2 files changed, 21 insertions(+), 36 deletions(-)
+ qapi/cxl.json | 89 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 58 insertions(+), 31 deletions(-)
 
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index c18ab2cb60..ac6a392375 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -978,8 +978,8 @@ floatx80 floatx80_rem(floatx80, floatx80, float_status *status);
- floatx80 floatx80_sqrt(floatx80, float_status *status);
- FloatRelation floatx80_compare(floatx80, floatx80, float_status *status);
- FloatRelation floatx80_compare_quiet(floatx80, floatx80, float_status *status);
--int floatx80_is_quiet_nan(floatx80, float_status *status);
--int floatx80_is_signaling_nan(floatx80, float_status *status);
-+bool floatx80_is_quiet_nan(floatx80, float_status *status);
-+bool floatx80_is_signaling_nan(floatx80, float_status *status);
- floatx80 floatx80_silence_nan(floatx80, float_status *status);
- floatx80 floatx80_scalbn(floatx80, int, float_status *status);
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index eeddb58d1d3f..55a088586e53 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -31,11 +31,10 @@
+  }
  
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 7d2515c1fa..9ed968c79b 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -357,53 +357,38 @@ bool float64_is_signaling_nan(float64 a_, float_status *status)
- }
- 
- /*----------------------------------------------------------------------------
--| Returns 1 if the extended double-precision floating-point value `a' is a
--| quiet NaN; otherwise returns 0. This slightly differs from the same
--| function for other types as floatx80 has an explicit bit.
-+| Determine if a floatx80 NaN is signaling NaN.
-+| The MSB of frac differs from the same function for other types as floatx80
-+| has an explicit bit.
- *----------------------------------------------------------------------------*/
- 
--int floatx80_is_quiet_nan(floatx80 a, float_status *status)
-+static bool floatx80_nan_is_snan(floatx80 a, float_status *status)
- {
-     if (no_signaling_nans(status)) {
--        return floatx80_is_any_nan(a);
--    } else {
--        if (snan_bit_is_one(status)) {
--            uint64_t aLow;
--
--            aLow = a.low & ~0x4000000000000000ULL;
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (aLow << 1)
--                && (a.low == aLow);
--        } else {
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (UINT64_C(0x8000000000000000) <= ((uint64_t)(a.low << 1)));
--        }
-+        return false;
-     }
-+    bool frac_msb_is_one = (a.low >> 62) & 1;
-+    return frac_msb_is_one == snan_bit_is_one(status);
- }
- 
- /*----------------------------------------------------------------------------
- | Returns 1 if the extended double-precision floating-point value `a' is a
--| signaling NaN; otherwise returns 0. This slightly differs from the same
--| function for other types as floatx80 has an explicit bit.
-+| quiet NaN; otherwise returns 0.
- *----------------------------------------------------------------------------*/
- 
--int floatx80_is_signaling_nan(floatx80 a, float_status *status)
-+bool floatx80_is_quiet_nan(floatx80 a, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        if (snan_bit_is_one(status)) {
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && ((a.low << 1) >= 0x8000000000000000ULL);
--        } else {
--            uint64_t aLow;
-+    return floatx80_is_any_nan(a) && !floatx80_nan_is_snan(a, status);
-+}
- 
--            aLow = a.low & ~UINT64_C(0x4000000000000000);
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (uint64_t)(aLow << 1)
--                && (a.low == aLow);
--        }
--    }
-+/*----------------------------------------------------------------------------
-+| Returns 1 if the extended double-precision floating-point value `a' is a
-+| signaling NaN; otherwise returns 0.
-+*----------------------------------------------------------------------------*/
+ ##
+-# @cxl-inject-general-media-event:
++# @CXLCommonEventBase:
+ #
+-# Inject an event record for a General Media Event (CXL r3.0
+-# 8.2.9.2.1.1).  This event type is reported via one of the event logs
+-# specified via the log parameter.
++# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
++# Table 8-42 Common Event Record Format).
+ #
+ # @path: CXL type 3 device canonical QOM path
+ #
+@@ -44,6 +43,16 @@
+ # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+ #     Record Format, Event Record Flags for subfield definitions.
+ #
++# Since: 8.1
++##
++{ 'struct': 'CXLCommonEventBase',
++  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
 +
-+bool floatx80_is_signaling_nan(floatx80 a, float_status *status)
-+{
-+    return floatx80_is_any_nan(a) && floatx80_nan_is_snan(a, status);
- }
++##
++# @CXLGeneralMediaEvent:
++#
++# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
++#
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
+ #     Media Event Record, Physical Address.
+@@ -74,26 +83,29 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-general-media-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+-            'dpa': 'uint64', 'descriptor': 'uint8',
++{ 'struct': 'CXLGeneralMediaEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8',
+             '*device': 'uint32', '*component-id': 'str' } }
  
- /*----------------------------------------------------------------------------
+ ##
+-# @cxl-inject-dram-event:
+-#
+-# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+-# This event type is reported via one of the event logs specified via
+-# the log parameter.
++# @cxl-inject-general-media-event:
+ #
+-# @path: CXL type 3 device canonical QOM path
++# Inject an event record for a General Media Event (CXL r3.0
++# 8.2.9.2.1.1).  This event type is reported via one of the event
++# logs specified via the log parameter.
+ #
+-# @log: Event log to add the event to
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-general-media-event',
++  'data': 'CXLGeneralMediaEvent' }
++
++##
++# @CXLDRAMEvent:
+ #
+-# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+-#     Record Format, Event Record Flags for subfield definitions.
++# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+ #
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
+@@ -133,9 +145,9 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-dram-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+-            'dpa': 'uint64', 'descriptor': 'uint8',
++{ 'struct': 'CXLDRAMEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
+             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
+@@ -143,18 +155,21 @@
+            }}
+ 
+ ##
+-# @cxl-inject-memory-module-event:
+-#
+-# Inject an event record for a Memory Module Event (CXL r3.0
+-# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
+-# at the time of the event.
++# @cxl-inject-dram-event:
+ #
+-# @path: CXL type 3 device canonical QOM path
++# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
++# This event type is reported via one of the event logs
++# specified via the log parameter.
+ #
+-# @log: Event Log to add the event to
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-dram-event',
++  'data': 'CXLDRAMEvent' }
++
++##
++# @CXLMemModuleEvent:
+ #
+-# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+-#     Record Format, Event Record Flags for subfield definitions.
++# Event record for a Memory Module Event (CXL r3.0 8.2.9.2.1.3).
+ #
+ # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
+ #     Event Record for bit definitions for bit definiions.
+@@ -185,9 +200,9 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-memory-module-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
+-            'type': 'uint8', 'health-status': 'uint8',
++{ 'struct': 'CXLMemModuleEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'type': 'uint8', 'health-status': 'uint8',
+             'media-status': 'uint8', 'additional-status': 'uint8',
+             'life-used': 'uint8', 'temperature' : 'int16',
+             'dirty-shutdown-count': 'uint32',
+@@ -195,6 +210,18 @@
+             'corrected-persistent-error-count': 'uint32'
+             }}
+ 
++##
++# @cxl-inject-memory-module-event:
++#
++# Inject an event record for a Memory Module Event (CXL r3.0
++# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
++# at the time of the event.
++#
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-memory-module-event',
++  'data': 'CXLMemModuleEvent' }
++
+ ##
+ # @cxl-inject-poison:
+ #
 -- 
-2.43.0
+2.51.0
 
 
