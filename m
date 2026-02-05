@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BD9ECD995
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 18:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC0FECD995
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 19:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo4VO-0008Kq-0P; Thu, 05 Feb 2026 13:55:06 -0500
+	id 1vo4cJ-0001bS-Oi; Thu, 05 Feb 2026 14:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vo4VM-0008Hk-Es
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:55:04 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1vo4cI-0001b4-BP
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:02:14 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vo4VJ-0000Vi-NY
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 13:55:04 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a94450ae14so7805575ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 10:55:01 -0800 (PST)
+ id 1vo4cG-0002Mx-Ew
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:02:14 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2a12ed4d205so8928675ad.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770317700; x=1770922500; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=nXTh9ADwPs6EJLkEFUVFofM3ZH9zqi3ifWjFED/6z5c=;
- b=p2bUnQSMjvF31WOQo0o/zXxrE1COouXxRfhcn091DMfJS7yCMfM9JhavB8gdEqzOdw
- jXYglDL/db1+hdUzz+Cdiv+05o+qJ2XWSOKoEwL8h5yDBRr47SzEHinFd6MRMhvdGGKt
- +YXWes6jWwBD4DLnNNNczvzOBGgrKM3CIGhvY5sQpU+6ecRu4W1wCjq73G/D7m3rRyoc
- 0pduTukkzlXKo5l3rrhHu9bhY1JA+vgB20sPOaVX61s4bFXVHLgnxlRghPHiHIxg/gzQ
- B/BZOZ6IZWGlYAkDzSFa2WT38+70jq8nilHQcXsuvqrD3vbjl/DlddHIoxJrNQMXpGaM
- W+EA==
+ d=linaro.org; s=google; t=1770318131; x=1770922931; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VzemhuQMeLYqzfURRhnK3Zc9G8vpn3DiZRQTv8M1bNg=;
+ b=b1hoUhigrzGby9q3WFQZZ9U6ADXZw7boFoqJSQzuIXewmmQKMbAjnaA+3sKH7l7lME
+ latmhEP0sr+NkhGbpklTIHAmcVLEViyvphCRjP1CVBh4r16qHRKDFQup9TcuWh6qe7J2
+ tSi3w1kEy5Y6EtFu9ZZ12qvEkc/F7dsaiBJUa91H/1qAAeDN2f3neWh8uke4VaHO/LYJ
+ z3Lhs/w3LjL32RxoANqhE/EVVm0Wg6FeQbBlPxbwp+MNXOmZ4gP1siKyaJjCTPfJbHR4
+ 7uoaA4I1IVh8lHF7mBSnqQwe+S3VLccbQHjB0mGmxLZ0X0ej7BKE4mW8Xmy1tOHnsCfX
+ lFWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770317700; x=1770922500;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nXTh9ADwPs6EJLkEFUVFofM3ZH9zqi3ifWjFED/6z5c=;
- b=VvFTfcbntiz1pLk/3Fw+JTCCPQMiXca3Bxny4Rx1Hb1229AtSYr4dUHdEsA8cSHrEF
- lHJN0tnucinDvDsU+CyiPlVaTvIzGOre+kOspeuevwzMW9Q66UMgY1oMuXSoYd/BA00a
- VnFKSUkyMofl2wI5Q/+rHc1GFdX1E76feqlh60fLZhwVvcHcbVeMPoKeFCmpA9jauw2U
- kekk5wIj2WbwY1Cw9zKSuQXnboSeQg3DRz9saqWqPz0Hd3DE97gYyUi/9Yr8iL1ZMOYN
- DlKlito8S004XgjKOVmzbG1uPYLxOM0SMxWaMra2GAZyRFkYwcpE4nbDUYDCuStyPL8N
- 4HBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUq/sigB/d1sXMDNZKC0YjpvGbewUPkLtYhkOQcmySgVIDTYZvbm5vl7gC1HaurPSwggf9rNxOeOalG@nongnu.org
-X-Gm-Message-State: AOJu0Yz1dP51WhMCoFvTP+7jePg21C1/3Xr5QEQ4/X3HIBusHVegPe9k
- H2ImVDcHOF3GgFMccMPcy9QtQupIQ75CuBQGURUr98RMBwGMXVfjSp+xmRfgaoZQlC3ZGBHa3m0
- XSBsj
-X-Gm-Gg: AZuq6aLkxlqN1cB6ATe0NwjEsBBv1x47v1STE0p0xNQXJnCCXiO7p+JZtAacj4wqCtC
- KkkYZ1/exlN/qFslRfSX+rGqfztqVHXUDchkCQD+vSuplPf1P53USfs8L4MUrrKisECN9QO0fAd
- v7tHb+/vRILt7HJXMk5X+BwsNijKlWejpCIS8tmwARxoFzwtKN4VcOAoxRdTbyvbp0y53PYO/Kk
- yguGDeRWANvAVAEwVEVXStquxf2T8NJACu6rX8fKWT83cf4ePyETS+ggcj+8EXrH5icfRfDaxpB
- rQ9ZJCybu+p0iL/3LqfdjQhBDxlhU/v+RW0prE1GyS+G5mfvL+vL4xrgPbKsfWtY5I5jsIWO9+r
- 6P5KRmNt/XATZOsZlcY8fNJo8Lc/hpObAynOIJkkjuP+mXBE2522UwQmDtnxKKuj/RDsZxrisb/
- a6CspwhAQRTZSvzwe5vX/pvin4fUZcqdoP/JlJps9HC1GijaYdT4IPdwC2
-X-Received: by 2002:a17:903:2310:b0:2a7:c340:4c48 with SMTP id
- d9443c01a7336-2a95180cda7mr1981325ad.32.1770317699985; 
- Thu, 05 Feb 2026 10:54:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770318131; x=1770922931;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VzemhuQMeLYqzfURRhnK3Zc9G8vpn3DiZRQTv8M1bNg=;
+ b=dolwZh8X8W8LmpfH++6i59LQ+lhthQ2hAEcBwO4RQGjhbgNTjuXqzM5EakWIxDS2V4
+ meg9qkv8FP9rnJ82dSt3n3izU8vDIwFlN4yXyYdkAwspsfLu+Ly/XYeimDlfzTspvmG4
+ Br419sWOEeEn40iV3hW8Az6Oh271IvyJyOc9uW8RoC3aWysGMck+fOC4HOyLCZpdfQ0E
+ DLH1dGCBrs6wgeGHz+sRCzi4u1CtAxkDMJwKkCOWjMsP7nU8UFiCWbz/Rfq/hDwEUIK3
+ BOj+rF7ytR+Gg9IYsY/uO5NOrjdFbr126H8lXlWYl+qCklYWY+UwghOplPT++EV5goef
+ Dusg==
+X-Gm-Message-State: AOJu0YzTvqbmZQ9tIfklf7PU/A8mC5UnQ8vYKf34e2MBGe01v+d3CE8v
+ 9GpRF2EdRX/6ZfsJPJYTK9vRpN8ArOYhURx54GXMGN6gmMOT+N9ZMTBNuJTEi/IzPhk=
+X-Gm-Gg: AZuq6aL0xJILNDku3NG0kKAIE/R9A7U/7rqK0rZYjsT07TScZC5+Eqzu2pNUUf+fFFp
+ dt3H9a4w1ESwHAZKyug7igugqgWxaC9W6Ulizzy8xizjXuiTZFLd3ixlnKrksnfAL1dgFaDz4gK
+ rqOCtaHbjbaJZ6seAwH+A4n4D3Oe1HXLNrixKypwvJaSBRibjDjYsU2VXpEi0sEO3jGk/dXMIoI
+ RsN9ezEeSVmffwtnAOAKUuSCSybW+yOgM8otxGa6KS3DCI5rdtKTYocEfRs5JaXjPN5+WXHjJAn
+ /ac+oB6URm55ACDAhPD7GuSVPed04X9wYUpN37H/ivy0J6qJJNERO0pSQLkwhae8x1oxlozUMdg
+ DMY5x+I0rtfcD911drKIUuVZj13dWuVdMvO3fsPlOePPj1VqQnpQdPlt/eikmV+4gV+YneGAJBr
+ LmKoRuK3FoIHYnzC1nf9XO53GS2jTpDs9wkTxYZK7CGDAY19mvt61YCI7E
+X-Received: by 2002:a17:902:ec8a:b0:2a9:44e2:8fb0 with SMTP id
+ d9443c01a7336-2a95196c3f0mr2155495ad.52.1770318130474; 
+ Thu, 05 Feb 2026 11:02:10 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a9522364c1sm699965ad.97.2026.02.05.10.54.58
+ d9443c01a7336-2a9521b8d84sm800285ad.55.2026.02.05.11.02.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 10:54:59 -0800 (PST)
-Message-ID: <3570030f-23fc-4c7f-9508-7b4573445ffb@linaro.org>
-Date: Thu, 5 Feb 2026 10:54:58 -0800
+ Thu, 05 Feb 2026 11:02:09 -0800 (PST)
+Message-ID: <85423dea-5964-4196-a531-40569839c707@linaro.org>
+Date: Thu, 5 Feb 2026 11:02:08 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/9] include/hw/virtio/virtio-access.h: remove target
- specifics define
+Subject: Re: [PATCH] target-info: set target_arch statically
 Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, richard.henderson@linaro.org
+References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
+ <878qd735dd.fsf@pond.sub.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-ppc@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260203205637.3109749-1-pierrick.bouvier@linaro.org>
- <20260203205637.3109749-6-pierrick.bouvier@linaro.org>
- <5b4fca48-2fab-4874-8e0e-4dc8b63087b6@linaro.org>
- <65f1a050-5822-4025-8292-9ca22062df0c@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -119,11 +111,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <65f1a050-5822-4025-8292-9ca22062df0c@linaro.org>
+In-Reply-To: <878qd735dd.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -146,114 +138,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 8:37 AM, Pierrick Bouvier wrote:
-> On 2/3/26 6:10 PM, Richard Henderson wrote:
->> On 2/4/26 06:56, Pierrick Bouvier wrote:
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>     include/hw/virtio/virtio-access.h | 26 +++++++++++++-------------
->>>     1 file changed, 13 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
->>> index f3b4d0075b5..1bea3445979 100644
->>> --- a/include/hw/virtio/virtio-access.h
->>> +++ b/include/hw/virtio/virtio-access.h
->>> @@ -17,27 +17,27 @@
->>>     #define QEMU_VIRTIO_ACCESS_H
->>>     
->>>     #include "exec/hwaddr.h"
->>> +#include "qemu/target-info.h"
->>>     #include "system/memory_cached.h"
->>>     #include "hw/virtio/virtio.h"
->>>     #include "hw/virtio/virtio-bus.h"
->>>     
->>> -#if defined(TARGET_PPC64) || defined(TARGET_ARM)
->>> -#define LEGACY_VIRTIO_IS_BIENDIAN 1
->>> -#endif
->>> -
->>>     static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
->>>     {
->>> -#if defined(LEGACY_VIRTIO_IS_BIENDIAN)
->>> -    return virtio_is_big_endian(vdev);
->>> -#elif TARGET_BIG_ENDIAN
->>> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
->>> -        /* Devices conforming to VIRTIO 1.0 or later are always LE. */
->>> -        return false;
->>> +    if (target_ppc64() || target_base_arm()) {
->>> +        return virtio_is_big_endian(vdev);
->>
->> Why use two predicates like this, effectively calling target_arch() twice?
->> Surely it's better to do
->>
+On 2/5/26 1:29 AM, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> Yes it can, I simply wrote the simplest change possible. Since this
-> function is called only once now at reset time, it definitely looks like
-> premature optimization IMHO.
-> 
->>        switch (target_arch()) {
->>        case SYS_EMU_TARGET_ARM:
->>        case SYS_EMU_TARGET_AARCH64:
->>        case SYS_EMU_TARGET_PPC64:
->>            return virtio_is_big_endian(vdev);
->>        default:
->>            break;
->>        }
+>> target_arch() function will reparse target_name() every time if it was
+>> not set to a proper SYS_EMU_TARGET_* value (when using
+>> target-info-stub.c), which is not efficient.
 >>
->> Definitely with a comment saying this is about legacy behaviour.
->> And does VIRTIO_F_VERSION_1 really not take priority?
+>> Since we want to preserve the constness of TargetInfo but C doesn't give
+>> us flexible compile time expressions, we simply set target_arch using a
+>> static constructor once instead.
 >>
-> 
-> Not sure about this one, but current implementation has same behaviour
-> than previous ifdef based one.
-> In case that's wrong, I would be happy to change it.
-> 
+>> This was found when doing changes to virtio_access_is_big_endian()
+>> function, having an overhead of 50% after switching to runtime checks.
+>> With this, overhead left is around 3%, due to indirect function
+>> calls.
 >>
->> r~
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   target-info-stub.c | 11 ++++++++++-
+>>   target-info.c      |  9 +--------
+>>   2 files changed, 11 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/target-info-stub.c b/target-info-stub.c
+>> index 8392d81e8f8..ff86a02247a 100644
+>> --- a/target-info-stub.c
+>> +++ b/target-info-stub.c
+>> @@ -10,13 +10,14 @@
+>>   #include "qemu/target-info.h"
+>>   #include "qemu/target-info-impl.h"
+>>   #include "hw/core/boards.h"
+>> +#include "qapi/error.h"
+>>   #include "cpu.h"
+>>   
+>>   /* Validate correct placement of CPUArchState. */
+>>   QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
+>>   QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
+>>   
+>> -static const TargetInfo target_info_stub = {
+>> +static TargetInfo target_info_stub = {
+>>       .target_name = TARGET_NAME,
+>>       .target_arch = SYS_EMU_TARGET__MAX,
+>>       .long_bits = TARGET_LONG_BITS,
+>> @@ -29,3 +30,11 @@ const TargetInfo *target_info(void)
+>>   {
+>>       return &target_info_stub;
+>>   }
+>> +
+>> +__attribute__((constructor))
+>> +static void init_target_arch(void)
+>> +{
+>> +    target_info_stub.target_arch = qapi_enum_parse(&SysEmuTarget_lookup,
+>> +                                                   target_name(), -1,
+>> +                                                   &error_abort);
+>> +}
 > 
-> Regards,
-> Pierrick
+> This is slightly unclean.  Constructors run before main().  If
+> qapi_enum_parse(..., &error_abort) fails here, error_handle() will
+> report the unexpected error with error_report() before main() calls
+> error_init().
+> 
+> See also
+> 
+>      From: Markus Armbruster <armbru@redhat.com>
+>      Subject: Re: [PATCH v3 02/20] monitor: initialize global data from a constructor
+>      Date: Thu, 18 Sep 2025 08:30:23 +0200
+>      Message-ID: <87frck1dds.fsf@pond.sub.org>
+> 
+> Observation, not objection.
+>
 
-For what it's worth, that's the patch I wrote when I was optimizing this 
-function and found -1.7% for performance:
+Good point.
 
-commit d497f71b5b1bcc46de97436e1ce31641ff792eb9
-Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Date:   Mon Feb 2 13:53:06 2026 -0800
+Richard posted a v2 tooking the build system approach here:
+https://lore.kernel.org/qemu-devel/20260205030617.266625-1-richard.henderson@linaro.org/
 
-     include/hw/virtio/virtio-access.h: optimize virtio_access_is_big_endian
+So it doesn't suffer from this issue.
+As well, it's cleaner and more efficient overall, so that's the best way 
+to do it.
 
-     By following benchmark recommended by Stefan [1], it was found that
-     previous commit introduced an overhead of 3% for this scenario.
-     By reading TargetInfo only once and using a jump table, we get to 1.7%.
-
-     [1] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
-
-     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-diff --git a/include/hw/virtio/virtio-access.h 
-b/include/hw/virtio/virtio-access.h
-index 1bea3445979..b7695f56fed 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -24,11 +24,17 @@
-
-  static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
-  {
--    if (target_ppc64() || target_base_arm()) {
-+    const TargetInfo *info = target_info();
-+    static const int may_be_big_endian[SYS_EMU_TARGET__MAX] = {
-+        [SYS_EMU_TARGET_ARM] = 1,
-+        [SYS_EMU_TARGET_AARCH64] = 1,
-+        [SYS_EMU_TARGET_PPC64] = 1,
-+    };
-+    if (may_be_big_endian[info->target_arch]) {
-          return virtio_is_big_endian(vdev);
-      }
-
--    if (target_big_endian()) {
-+    if (info->endianness == ENDIAN_MODE_BIG) {
-          if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
-              /* Devices conforming to VIRTIO 1.0 or later are always LE. */
-              return false;
-
+Regards,
+Pierrick
 
