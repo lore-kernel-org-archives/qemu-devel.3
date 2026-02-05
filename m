@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21478EC1E88
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA56EC1E89
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnw2x-0005jU-TN; Thu, 05 Feb 2026 04:53:11 -0500
+	id 1vnw64-0006SG-N3; Thu, 05 Feb 2026 04:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnw2w-0005jM-Kw
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:53:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnw2u-0003u7-Jy
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:53:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770285185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kDJzsWPv1ZnBRrec5irSjpHWoi212XZm/rbMef5DNyc=;
- b=gE/90ljHyaGPTXdwdB3UKguE6yIevZpaQaWrcuonoFXliiq4/55fFUQSs54cEUCRDySUS7
- n6Pa6rxMLLdMMWBzugj5oP0pJgMQwemqommuevhSrYH9kCsa0XHCTOqXw3H6hV7U2M4wXj
- mVJVlyRpT8LWaFf1621GdTiUwkDq6rs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-LyWwfR6xOH61-ox0BnW53g-1; Thu,
- 05 Feb 2026 04:53:01 -0500
-X-MC-Unique: LyWwfR6xOH61-ox0BnW53g-1
-X-Mimecast-MFC-AGG-ID: LyWwfR6xOH61-ox0BnW53g_1770285180
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 163C4195608F; Thu,  5 Feb 2026 09:53:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95AA11800465; Thu,  5 Feb 2026 09:52:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2653721E692D; Thu, 05 Feb 2026 10:52:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Brian Cain
- <brian.cain@oss.qualcomm.com>
-Subject: Re: [PATCH] target-info: set target_arch statically
-In-Reply-To: <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org> (Richard
- Henderson's message of "Thu, 5 Feb 2026 08:22:11 +1000")
-References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
- <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
- <5fd0062c-b474-4971-9a46-06af9ae4e0c7@linaro.org>
- <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org>
-Date: Thu, 05 Feb 2026 10:52:57 +0100
-Message-ID: <877bsr34au.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnw62-0006S7-Vq
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:56:22 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vnw61-0004TO-CV
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:56:22 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-79427f739b0so7474727b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 01:56:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770285379; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lNL2wEUna6ibpQ3gJEXNsCPkdYbXoX8GMWzZdtfTPzUT4l/UKeXDUGdG0UjbVgYn50
+ jFbRUAhEJOd3obm8QqbMUiIdHutQUzgii1e1E67zb5w8jkoSblXILqzDlVwiS6m2dPAt
+ 1nD6fDyONcsbeJZWzbdEF3imslYqExaNUuyoiLs0OMe4S58ioEsxq5fnIBgggRsnUQL/
+ Yhw0ZUgA7IlsxtnC7b+hcsAtaFYuAJQnJlfX/iWLfhamEPxlnzIxHeSq22JuDkAUG8GU
+ YgTGq3D6kr9vVff4M3l5NbB+tVgnVeX5cmEzETkh02v8JPR/ww8MRMqNJkBzDzCQCh28
+ 7lZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ctmW4lNLh/ktnztDCKETn3W/k3n1UIhBOTtar1aNBqQ=;
+ fh=gMjfbdOkdsdyugoyuRb6DYWE7E1DjTHLX9jbWQ8ybu8=;
+ b=TIymXKox8/ldoXILhpYdyOm9iowvRuOm2UsjoIq4lF+7AjdIbe3qxuOb15xUzbfsyS
+ 78cFPpcrS8nRvDatNeMvyFKFCNvz1nNFYXCafREV8lkONIKtnkWIz0m2QIrF6KirNz1S
+ aSP3yD7mhXjwTgpHBKU288eABPzQZDLrkPWsRwXUrKlkMTtsiB/7D+SolJSHYfEfMJzz
+ het4GIRNaX3yrx+gHLynN69FMVITRGjDYNh0/qfX4TsZxfqKZUXcNPDD9HNXUI8gy3WK
+ fHYVPXA0WsLWzMdWPLboRJxNTGpTNxgHkEDIAU2EGqXEaBz+gL6Kzf3TQKgHqel7xdG3
+ dejA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770285379; x=1770890179; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ctmW4lNLh/ktnztDCKETn3W/k3n1UIhBOTtar1aNBqQ=;
+ b=TdN/JExJdp6Sbfhq/W6YReg+Le7JBGJu08s5+8VRca5OqZtQxb/glfwOnjQA52Nd3D
+ O3Ho1kMzOB5/J03uhdMzTnE2ya2aC+4ud87MYs1NkTY7PPUXW2jcaiyCr/AdXSX22GI3
+ 6tRE+0dZ8GihWjpSNGoMRoyqzXhG/4ljGJRTpatzRUs84POZApZyRhCsjtwR9IRMnB0O
+ faHbaF6qUvJN8QDdalkOyc32N9y2xaopu+GOjFzzaWmOnv+EnJb3qDgerE5WLvNaDojL
+ pG7MSUz0bMLhJSdZvh0h5QaywI8G2Ocy8Fn71WGkLpHin2t11uSTBdLL299bRXotV4Ey
+ 9QBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770285379; x=1770890179;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ctmW4lNLh/ktnztDCKETn3W/k3n1UIhBOTtar1aNBqQ=;
+ b=QPdMtSFITlgnrfpQSWNUUYjDlhG/7VAB+vM9I9SaPEF9mR5OU6aC9QdQ1hlvi1kBqX
+ nqW3WR9ee3wPniLJD5H/dgs6glcfGT/mUT5Z6btcq/vBGE/CqDUNNUacASbGENKLN8Ts
+ cOYyPXn2tZPpdZ2YLrkTuyiudH44wyQl6hRVZY65V41mpHO2lhMugul7AXfapXOjI+Kr
+ wwDB2x0RDx22Dxx7kW2XpjVSIbFcZuUwgAzMX4NvtdQ6zsaq757+REa+em1259iTD0j9
+ V7aBLfnfh2GfZQhIeU9Zio5I4X0vLaiDCxbZjVwKhFhr3KmrohjshYKxhEB6hzxp9k4O
+ eMgw==
+X-Gm-Message-State: AOJu0YwcnrC1uOCI84/PN/S6gLWhteDeLqESii42U+wcrCs7c1FF01xu
+ PB2Z+R7HTyVp6+ix+DZDIF0ZImBWs1HxyTxmm5LBcDRFfSp8uql6ar07BgD1lAkg6RiXkxE1cHk
+ dl+A0gqnWLYnOMJkuzEF9i99xCEbakK9RvNJ1uVJUFw==
+X-Gm-Gg: AZuq6aIAEhD+fb/Q/r2tSnQeCUzVQ2MDoGj89NDCP8AI+ZZB5D2TbgEG2Qj/qcy7ymj
+ 73UuhepGoxItVZADFcBGyg/4orUj1CslTFmkvSQPBw8yFR4j1hEmom8g5NtIAKVNvKaimMfEJfN
+ EYZ9zOFy8ZAFYXVFsux9Upu9Ycxiso/lVrxmmLe/4ZSpPu9+1mvb4i+d5/eMgiJZZhOKbcnXV3g
+ rf+kt6B0XA/GUhMmolu7BgS9xO+7EqPbfDLwDUy7NfA+lQq98wNrsqGwAWKyB2oZxEQ3g==
+X-Received: by 2002:a05:690c:968f:b0:794:c5b8:7d1f with SMTP id
+ 00721157ae682-794fe6a7098mr49550897b3.23.1770285379568; Thu, 05 Feb 2026
+ 01:56:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <cover.1770231744.git.mst@redhat.com>
+ <20260205015022-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260205015022-mutt-send-email-mst@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Feb 2026 09:56:08 +0000
+X-Gm-Features: AZwV_QgGRTNoWc_kwy1DljWG6r73zGI2X4SLU-zb_OBRrFUYjl-QJWKA1bsNBhI
+Message-ID: <CAFEAcA_x3jc=UHm_D8jDVW-6DwV3hcabX3wU+jkfNyvg_Tehrg@mail.gmail.com>
+Subject: Re: [PULL 00/51] virtio,pci,pc: features, fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,66 +113,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
-
-> On 2/5/26 02:36, Pierrick Bouvier wrote:
->> On 2/3/26 5:36 PM, Richard Henderson wrote:
->>> On 2/4/26 05:41, Pierrick Bouvier wrote:
->>>> target_arch() function will reparse target_name() every time if it was
->>>> not set to a proper SYS_EMU_TARGET_* value (when using
->>>> target-info-stub.c), which is not efficient.
->>>>
->>>> Since we want to preserve the constness of TargetInfo but C doesn't gi=
-ve
->>>> us flexible compile time expressions, we simply set target_arch using a
->>>> static constructor once instead.
->>>
->>> A static constructor isn't static initialization.
->>> That said, we can do better with some extra help from meson; see attach=
-ed.
->>>
->>> I'm mildly annoyed with openrisc vs or1k.=C2=A0 We really ought to fix =
-that, but I haven't
->>> looked into what API breakage we get from selecting one or the other.
->>>
->> This was my first approach, and I noticed the or1k issue + missing hexag=
-on in SYS_EMU_TARGET enum. Having a hack for target name in meson.build is =
-*really* ugly IMHO.
+On Thu, 5 Feb 2026 at 06:51, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> I agree.
+> On Wed, Feb 04, 2026 at 02:16:23PM -0500, Michael S. Tsirkin wrote:
+> > The following changes since commit b377abc220fc53e9cab2aac3c73fc20be6d85eea:
+> >
+> >   Merge tag 'hw-misc-20260202' of https://github.com/philmd/qemu into staging (2026-02-03 07:52:04 +1000)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> >
+> > for you to fetch changes up to 1ef708ee4b765b9eac097192d54b69a603589f9b:
+> >
+> >   hw/cxl: Take into account how many media operations are requested for param check (2026-02-04 07:42:50 -0500)
 >
-> I assume the qapi string is the one that should take precedence; everythi=
-ng else appears to be merely qemu source level strings.  Marcus, can you co=
-nfirm?
-
-What exactly would you like me to confirm?
-
-I *guess* it's about the messy part of the patch you posted upthread.
-There, you have to normalize TARGET_ARCH value 'openrisc' to 'or1k'.
-
->> At the moment, hexagon is only linux-user, so I thought it didn't make s=
-ense to add it to SYS_EMU_TARGET, and I didn't want to go down the rabbit h=
-ole to rename or extend this qapi definition, as the initial goal is just t=
-o define a field before main, which I consider to be static initialization,=
- even though you might prefer to call it differently.
-
-I figure this is about adding 'hexagon' to SysEmuTarget even though it's
-not actually a system emulator target now.
-
-The fact that adding it there helps indicates SysEmuTarget has leaked
-into user emulators, and its name has become misleading.  Is this true?
-
-> I was only going to ask you to change "statically" to "at startup" there.
+> updated to 591fb214b96be2fab1dcf41282e567d6b64e613d now.
 >
-> On the other hand, system-mode patches for hexagon have been on the list =
-for a while, so I don't think it's jumping the gun too much to include it i=
-n SYS_EMU_TARGET at this time.
->
->> I'll let you upstream whatever changes you prefer, and I drop this patch.
->
-> Ok, will do.
->
->
-> r~
+> It is the same patchset with 5 patches dropped (and tag message
+> updated accordingly). So I am guessing it is better not
+> to resend the whole pull, but pls let me know.
 
+
+If you make minor changes to a pullreq, you don't need to
+send the whole thing again, but please do re-send the
+cover letter with "[PULL v2 00/51]" or whatever in the
+subject message. That way it's clear that there's a
+new version.
+
+thanks
+-- PMM
 
