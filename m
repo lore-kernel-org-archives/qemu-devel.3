@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0322EECD99C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA53ECD99F
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 19:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5VJ-0006i2-5d; Thu, 05 Feb 2026 14:59:05 -0500
+	id 1vo5VC-0006ab-2k; Thu, 05 Feb 2026 14:58:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VH-0006eV-Cl
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:03 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1vo5VA-0006Z2-El
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:56 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VF-00035x-Ip
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:03 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4362507f396so846559f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:01 -0800 (PST)
+ id 1vo5V8-00034E-NA
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:56 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4359a302794so1019757f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321539; x=1770926339; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321533; x=1770926333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=df/wFs+q0Kaqn119+4MxF9ugWU2c1oPewnTOVYoyE5k=;
- b=DZAr8CVi8yZrUN7thYQlMAnwtgba8g+M/Ei8He6yI33I/wc7RAwmxFOVAH7iUMw9cb
- pl2KihRiyiOQtz/m4u4HnuTgQ+USrWUDZDgYsgsxYWTowxca6/Ii6/lKQIWuVUAyNE8Y
- ko6shiwvUkmXcD2BdQgTkrdNIcRXXXOGWytoZMhYitkoqye37b3IVskjOryZ0jrRTI99
- crxz/mqPcWvVSHERvM6a7J3QYPHS3TVO5kQY8nOewS+QOmagWpcQdJeGZCUVHTzxv/F1
- nzzSK5R7q6FJciXJJ3iWYoPMO8EVbZVVf+HXcPMn7wjWITBLAEQ+o7qWTCMG+EavFe7l
- 3sSA==
+ bh=JeekGzv+w1I6deqskFXYc4GF+MRuiD3S4EOMsfhWNfc=;
+ b=nA3ZbbGeybPRw2tvZP164jpg4rWwqnCWTmOH3deTNnuyLmmg7bEvuhkzDR+BL2ZkFU
+ MoxRmQ+8sgI/q3RNsAUDisSLjTfUsoP6R+R+4NXVh1ztxFBqexZxJCHPYf4WKUbO3u0P
+ PDCGaRn4KUtIgAqSgpvwSorT+jGgZBcbdUvEaPbrIAPCLl4sp59tiB3E5YOdCZKJqrsY
+ rLSxKEDW8Xu4/n0QAAifEGkxzOMyREF+/XX3F6hG8SIoOFnZ2/waxONLr+sac7siZuqs
+ z2Dr2xii/nKNxTeT8VqlfbaDWpPo0xc+6Y+jKptG9gg8UkS3aMl9hfYJQqiVSrnaAfCc
+ r6kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321539; x=1770926339;
+ d=1e100.net; s=20230601; t=1770321533; x=1770926333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=df/wFs+q0Kaqn119+4MxF9ugWU2c1oPewnTOVYoyE5k=;
- b=EBWw8idFfYq+qDRAOih23Lsxsvfd4EJYBcAqzQ9FvEtXaCmOI1Hq4AxZY5azfaUGIK
- 3GifAm42VweL8zLgO7xWZQo6iGCEJ8qnsYjbYXmwT6cJ/8LYmrKJpFmyMzFuOuBYZTPM
- nuDnxrk/fV4oMqzZDJ1/Mf7jJw2rFqGnTJH38yimg/JnPGUQ0RjbRbrzI1IyTlKUjFO5
- FB41nooPeSGaM2uaf04US7WjQG2/wUEOJMCAKV1TMnU3GXNFjedTE2dY8VcA5fwFfYJw
- fyY8CE8QhNPh4ZoY/YLz5Ov4XbZxsDY2jZIyaZK8GURpesuNa9tSurOyibHslZxMb6E/
- j9LA==
-X-Gm-Message-State: AOJu0Ywv0tBSRG28mLlP0f+PvS1MbGiV/e0uHvpM2AvSiVHtzvWrLdxb
- BnPVlxQe5O+O3sq4Swvb28q4SFNhBzPLCzu7177M+0K9vQaxtP9UvpaCDGyO0vKKRB8=
-X-Gm-Gg: AZuq6aIMX2+wg2joNehqU2IF2NdAdKGCPXCrTCE+GU/hOrDGqufpTn4Ne/StcpwjHUr
- E8HrriUCTWdtxSc4DLmow1GNNyo6jtcp+SSyPdImozzK3aB9mKUz/788zDLfJU4DHv5m7J4FPlA
- E9PdnJUyfcNUpXVzXMSiej/jmJdqmMi2kl0B6mK+dKTStEfzirHtMmwnnUupZCl4K2dnWE2Y3tQ
- Pp5q/7PlWUc9JKBLd/0sUf6pjOSwk5yd9Np63s9Oz+zvdFxwbBbP0bt5dqesNdmIa3LmcOsTjeN
- eV1oWymhuAzgiY+iKbIPVMd86tEY4hymeaedlz0xiiYIAuxzkFQOX69o3jbKYW4E1ORzf4iWM6I
- YdNNd83PAY9VG2KBsPsGf3m3MklWVDcLWGG22a1/7NKqE9Nc85ubDQrgfFtH7tql7JAmZN5B3ls
- Mo9DQu5LWCyWVlLbFtcyQ=
-X-Received: by 2002:a5d:584c:0:b0:435:db9b:5883 with SMTP id
- ffacd0b85a97d-4362933a9b5mr679016f8f.2.1770321539186; 
- Thu, 05 Feb 2026 11:58:59 -0800 (PST)
+ bh=JeekGzv+w1I6deqskFXYc4GF+MRuiD3S4EOMsfhWNfc=;
+ b=hv8VuFypom+rvZQlUf15wu21XLd8YfuvwaxQHvxDI8EUnw0M0F3cBwOwleOAznoXBp
+ O45EZlOUzLp0B8mv966MUbxnkYLmNLjTvaBUyHLvECcvRfU5L3GuR7bWxotKCv/i7W2I
+ DsTE8x+O8yEjvgk4sELU4mg7ZEQV/NoQAznZbcuaoIij9ffPWntj2oECUR129beNGVdM
+ jaMl5obvoyZTATWEEFohXu0tfxAExyGRx3hwKi3dAXufbm2UAXonvCHzQm6ixD+DgjWW
+ pxms0UhFVrNYmOsQmkMIJUc5nOJUH+9mIS2X5M6rQ0gBx6j3v4Navz7vMBnVROop99Yz
+ To1w==
+X-Gm-Message-State: AOJu0YxVj0lysyXtSG9XjBzDfMJHLJ1WDT6exKXInjgYMxIx8y/U55Mg
+ YNZubtDm3YYFHjw06Bp2iQOhfBJpyoomGz5/lpa3S4YMoEuySEX6Gy6p9OQVmTSKdo8=
+X-Gm-Gg: AZuq6aKkCED3hn2Itv+5sgEeZGbhveljllBahicqH+TG3JNq8ISPpYvGBI+t0TJQftw
+ MaZWOM9qNts3Pww9bBIJfINJU5vwqY7HHD0kzv4f9ntMr50NgpPNluaNRIbE+P0Bqyo06ZVhW2/
+ ukDKd5ZncEV2I/fzYvxOPj2xZZNXps4oqiTWiwRHGizbrzyZdU8LwyOETW0JxK0G6Im9YskuwbE
+ X0um3EyorFzhz9kGZ/ev9zfHuZ7tcdCIr4HUc9A/YAInEed662YxTSykQNfIwG/RRcz6B5u1jzg
+ P2vSm613uVtNbj0JIE6QUbrds25WZ8mP0vmXLgEpXsV0DMUBElpGPpz1qY3edrafbqm4M//l6NN
+ sNwMrTD/auIY4HYl0iXqX8CTn8pM4AFLZF7Q2U2ITaH5GuLAXZr8Np89JhGcbdH1hTmXAzYNdZX
+ lZRTRqnIZ0vB/xfsPQZFE=
+X-Received: by 2002:a05:6000:420e:b0:435:a9ad:d21a with SMTP id
+ ffacd0b85a97d-43629380f81mr723561f8f.40.1770321532712; 
+ Thu, 05 Feb 2026 11:58:52 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.58.57
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.58.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:58:58 -0800 (PST)
+ Thu, 05 Feb 2026 11:58:52 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
@@ -71,23 +71,23 @@ Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 11/29] hw/core: Implement Remote Port response handling
-Date: Thu,  5 Feb 2026 20:58:06 +0100
-Message-ID: <20260205195824.2610192-12-ruslichenko.r@gmail.com>
+Subject: [PATCH 07/29] hw/core: Add Remote Port object skeleton
+Date: Thu,  5 Feb 2026 20:58:02 +0100
+Message-ID: <20260205195824.2610192-8-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,267 +105,248 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Add infrastructure to handle transaction responses from
-remote peers.
+Introduce the QOM skeleton for the Remote Port subsystem.
+This patch adds main types required for co-simulation:
 
-This patch enables QEMU to wait for replies when it initiates
-a memory access (Read/Write). It implements a mechanism to track
-outstanding transaction IDs and block the execution thread until
-the patching response is received.
+- remote-port: An object that manages the lifecycle of the
+co-simulation session and will handle the character device
+backend in future patches.
+
+- remote-port-device: An interface that allows other QEMU
+devices to be connected to the Remote Port.
+
+This infrastructure enables QEMU to be linked with external
+simulators (e.g. SystemC).
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port.c         | 136 +++++++++++++++++++++++++++++++++-
- include/hw/core/remote-port.h |  29 ++++++++
- 2 files changed, 163 insertions(+), 2 deletions(-)
+ hw/core/remote-port.c         | 140 ++++++++++++++++++++++++++++++++++
+ include/hw/core/remote-port.h |  67 ++++++++++++++++
+ 2 files changed, 207 insertions(+)
+ create mode 100644 hw/core/remote-port.c
+ create mode 100644 include/hw/core/remote-port.h
 
 diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
-index e44d9249c3..00c9529348 100644
---- a/hw/core/remote-port.c
+new file mode 100644
+index 0000000000..c909a825f3
+--- /dev/null
 +++ b/hw/core/remote-port.c
-@@ -59,6 +59,16 @@ static void rp_pkt_dump(const char *prefix, const char *buf, size_t len)
-     qemu_hexdump(stdout, prefix, buf, len);
- }
- 
-+void rp_rsp_mutex_lock(RemotePort *s)
+@@ -0,0 +1,140 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * QEMU remote attach
++ *
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
++
++#include "qemu/osdep.h"
++#include "system/system.h"
++#include "chardev/char.h"
++#include "system/cpus.h"
++#include "system/cpu-timers.h"
++#include "system/reset.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/hw-error.h"
++#include "qemu/sockets.h"
++#include "qemu/thread.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "migration/vmstate.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev-properties-system.h"
++#include "qemu/cutils.h"
++
++#ifndef _WIN32
++#include <sys/mman.h>
++#endif
++
++#include "hw/core/remote-port-proto.h"
++#include "hw/core/remote-port.h"
++
++#define D(x)
++#define SYNCD(x)
++
++#ifndef REMOTE_PORT_ERR_DEBUG
++#define REMOTE_PORT_DEBUG_LEVEL 0
++#else
++#define REMOTE_PORT_DEBUG_LEVEL 1
++#endif
++
++#define DB_PRINT_L(level, ...) do { \
++    if (REMOTE_PORT_DEBUG_LEVEL > level) { \
++        fprintf(stderr,  ": %s: ", __func__); \
++        fprintf(stderr, ## __VA_ARGS__); \
++    } \
++} while (0)
++
++#define REMOTE_PORT_CLASS(klass)    \
++     OBJECT_CLASS_CHECK(RemotePortClass, (klass), TYPE_REMOTE_PORT)
++
++
++static void rp_reset(DeviceState *dev)
 +{
-+    qemu_mutex_lock(&s->rsp_mutex);
++    RemotePort *s = REMOTE_PORT(dev);
++
++    if (s->reset_done) {
++        return;
++    }
++
++    s->reset_done = true;
 +}
 +
-+void rp_rsp_mutex_unlock(RemotePort *s)
++static void rp_realize(DeviceState *dev, Error **errp)
 +{
-+    qemu_mutex_unlock(&s->rsp_mutex);
 +}
 +
- static void rp_fatal_error(RemotePort *s, const char *reason)
- {
-     error_report("%s: %s", s->prefix, reason);
-@@ -104,6 +114,80 @@ static unsigned int rp_has_work(RemotePort *s)
-     return work;
- }
- 
-+/* Response handling.  */
-+RemotePortRespSlot *rp_dev_timed_wait_resp(RemotePort *s, uint32_t dev,
-+                                            uint32_t id, int timems)
++static void rp_unrealize(DeviceState *dev)
 +{
++    RemotePort *s = REMOTE_PORT(dev);
++
++    s->finalizing = true;
++}
++
++static const VMStateDescription vmstate_rp = {
++    .name = TYPE_REMOTE_PORT,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST(),
++    }
++};
++
++static void rp_prop_allow_set_link(const Object *obj, const char *name,
++                                   Object *val, Error **errp)
++{
++}
++
++static void rp_init(Object *obj)
++{
++    RemotePort *s = REMOTE_PORT(obj);
 +    int i;
 +
-+    assert(s->devs[dev]);
-+
-+    /* Find a free slot.  */
-+    for (i = 0; i < ARRAY_SIZE(s->dev_state[dev].rsp_queue); i++) {
-+        if (s->dev_state[dev].rsp_queue[i].used == false) {
-+            break;
-+        }
++    for (i = 0; i < REMOTE_PORT_MAX_DEVS; ++i) {
++        char *name = g_strdup_printf("remote-port-dev%d", i);
++        object_property_add_link(obj, name, TYPE_REMOTE_PORT_DEVICE,
++                             (Object **)&s->devs[i],
++                             rp_prop_allow_set_link,
++                             OBJ_PROP_LINK_STRONG);
++        g_free(name);
 +    }
-+
-+    if (i == ARRAY_SIZE(s->dev_state[dev].rsp_queue) ||
-+        s->dev_state[dev].rsp_queue[i].used == true) {
-+        error_report("Number of outstanding transactions exceeded! %d",
-+                      RP_MAX_OUTSTANDING_TRANSACTIONS);
-+        rp_fatal_error(s, "Internal error");
-+    }
-+
-+    /* Got a slot, fill it in.  */
-+    s->dev_state[dev].rsp_queue[i].id = id;
-+    s->dev_state[dev].rsp_queue[i].valid = false;
-+    s->dev_state[dev].rsp_queue[i].used = true;
-+
-+    while (!s->dev_state[dev].rsp_queue[i].valid) {
-+        rp_rsp_mutex_unlock(s);
-+        rp_event_read(s);
-+        rp_rsp_mutex_lock(s);
-+        if (s->dev_state[dev].rsp_queue[i].valid) {
-+            break;
-+        }
-+        if (!rp_has_work(s)) {
-+            if (timems) {
-+                if (!qemu_cond_timedwait(&s->progress_cond, &s->rsp_mutex,
-+                                       timems)) {
-+                    /*
-+                     * TimeOut!
-+                     */
-+                    break;
-+                }
-+            } else {
-+                qemu_cond_wait(&s->progress_cond, &s->rsp_mutex);
-+            }
-+        }
-+    }
-+    return &s->dev_state[dev].rsp_queue[i];
 +}
 +
-+RemotePortRespSlot *rp_dev_wait_resp(RemotePort *s, uint32_t dev, uint32_t id)
++static void rp_class_init(ObjectClass *klass, const void *data)
 +{
-+    return rp_dev_timed_wait_resp(s, dev, id, 0);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->legacy_reset = rp_reset;
++    dc->realize = rp_realize;
++    dc->unrealize = rp_unrealize;
++    dc->vmsd = &vmstate_rp;
 +}
 +
-+RemotePortDynPkt rp_wait_resp(RemotePort *s)
++static const TypeInfo rp_info = {
++    .name          = TYPE_REMOTE_PORT,
++    .parent        = TYPE_DEVICE,
++    .instance_size = sizeof(RemotePort),
++    .instance_init = rp_init,
++    .class_init    = rp_class_init,
++    .interfaces    = (InterfaceInfo[]) {
++        { },
++    },
++};
++
++static const TypeInfo rp_device_info = {
++    .name          = TYPE_REMOTE_PORT_DEVICE,
++    .parent        = TYPE_INTERFACE,
++    .class_size    = sizeof(RemotePortDeviceClass),
++};
++
++static void rp_register_types(void)
 +{
-+    while (!rp_dpkt_is_valid(&s->rspqueue)) {
-+        rp_rsp_mutex_unlock(s);
-+        rp_event_read(s);
-+        rp_rsp_mutex_lock(s);
-+        /* Need to recheck the condition with the rsp lock taken.  */
-+        if (rp_dpkt_is_valid(&s->rspqueue)) {
-+            break;
-+        }
-+        D(qemu_log("%s: wait for progress\n", __func__));
-+        if (!rp_has_work(s)) {
-+            qemu_cond_wait(&s->progress_cond, &s->rsp_mutex);
-+        }
-+    }
-+    return s->rspqueue;
++    type_register_static(&rp_info);
++    type_register_static(&rp_device_info);
 +}
 +
- static void rp_cmd_hello(RemotePort *s, struct rp_pkt *pkt)
- {
-     s->peer.version = pkt->hello.version;
-@@ -328,14 +412,52 @@ static bool rp_pt_process_pkt(RemotePort *s, RemotePortDynPkt *dpkt)
- {
-     struct rp_pkt *pkt = dpkt->pkt;
- 
--    D(qemu_log("%s: cmd=%x id=%d dev=%d\n", __func__, pkt->hdr.cmd,
--             pkt->hdr.id, pkt->hdr.dev));
-+    D(qemu_log("%s: cmd=%x id=%d dev=%d rsp=%d\n", __func__, pkt->hdr.cmd,
-+             pkt->hdr.id, pkt->hdr.dev,
-+             pkt->hdr.flags & RP_PKT_FLAGS_response));
- 
-     if (pkt->hdr.dev >= ARRAY_SIZE(s->devs)) {
-         /* FIXME: Respond with an error.  */
-         return true;
-     }
- 
-+    if (pkt->hdr.flags & RP_PKT_FLAGS_response) {
-+        uint32_t dev = pkt->hdr.dev;
-+        uint32_t id = pkt->hdr.id;
-+        int i;
-+
-+        if (pkt->hdr.flags & RP_PKT_FLAGS_posted) {
-+            printf("Drop response for posted packets\n");
-+            return true;
-+        }
-+
-+        qemu_mutex_lock(&s->rsp_mutex);
-+
-+        /* Try to find a per-device slot first.  */
-+        for (i = 0; i < ARRAY_SIZE(s->dev_state[dev].rsp_queue); i++) {
-+            if (s->devs[dev] && s->dev_state[dev].rsp_queue[i].used == true
-+                && s->dev_state[dev].rsp_queue[i].id == id) {
-+                break;
-+            }
-+        }
-+
-+        if (i < ARRAY_SIZE(s->dev_state[dev].rsp_queue)) {
-+            /* Found a per device one.  */
-+            assert(s->dev_state[dev].rsp_queue[i].valid == false);
-+
-+            rp_dpkt_swap(&s->dev_state[dev].rsp_queue[i].rsp, dpkt);
-+            s->dev_state[dev].rsp_queue[i].valid = true;
-+
-+            qemu_cond_signal(&s->progress_cond);
-+        } else {
-+            rp_dpkt_swap(&s->rspqueue, dpkt);
-+            qemu_cond_signal(&s->progress_cond);
-+        }
-+
-+        qemu_mutex_unlock(&s->rsp_mutex);
-+        return true;
-+    }
-+
-     switch (pkt->hdr.cmd) {
-     case RP_CMD_hello:
-         rp_cmd_hello(s, pkt);
-@@ -389,6 +511,7 @@ static void *rp_protocol_thread(void *arg)
- 
-     /* Make sure we have a decent bufsize to start with.  */
-     rp_dpkt_alloc(&s->rsp, sizeof s->rsp.pkt->busaccess + 1024);
-+    rp_dpkt_alloc(&s->rspqueue, sizeof s->rspqueue.pkt->busaccess + 1024);
-     for (i = 0; i < ARRAY_SIZE(s->rx_queue.pkt); i++) {
-         rp_dpkt_alloc(&s->rx_queue.pkt[i],
-                       sizeof s->rx_queue.pkt[i].pkt->busaccess + 1024);
-@@ -614,6 +737,7 @@ static void rp_prop_allow_set_link(const Object *obj, const char *name,
- static void rp_init(Object *obj)
- {
-     RemotePort *s = REMOTE_PORT(obj);
-+    int t;
-     int i;
- 
-     for (i = 0; i < REMOTE_PORT_MAX_DEVS; ++i) {
-@@ -623,6 +747,14 @@ static void rp_init(Object *obj)
-                              rp_prop_allow_set_link,
-                              OBJ_PROP_LINK_STRONG);
-         g_free(name);
-+
-+
-+        for (t = 0; t < RP_MAX_OUTSTANDING_TRANSACTIONS; t++) {
-+            s->dev_state[i].rsp_queue[t].used = false;
-+            s->dev_state[i].rsp_queue[t].valid = false;
-+            rp_dpkt_alloc(&s->dev_state[i].rsp_queue[t].rsp,
-+               sizeof s->dev_state[i].rsp_queue[t].rsp.pkt->busaccess + 1024);
-+        }
-     }
- }
- 
++type_init(rp_register_types)
 diff --git a/include/hw/core/remote-port.h b/include/hw/core/remote-port.h
-index 21dfbe89cd..c1b21eb573 100644
---- a/include/hw/core/remote-port.h
+new file mode 100644
+index 0000000000..db71071c8e
+--- /dev/null
 +++ b/include/hw/core/remote-port.h
-@@ -53,6 +53,13 @@ typedef struct RemotePortDeviceClass {
- #define TYPE_REMOTE_PORT "remote-port"
- #define REMOTE_PORT(obj) OBJECT_CHECK(RemotePort, (obj), TYPE_REMOTE_PORT)
- 
-+typedef struct RemotePortRespSlot {
-+            RemotePortDynPkt rsp;
-+            uint32_t id;
-+            bool used;
-+            bool valid;
-+} RemotePortRespSlot;
+@@ -0,0 +1,67 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * QEMU remote port.
++ *
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
++#ifndef REMOTE_PORT_H__
++#define REMOTE_PORT_H__
 +
- struct RemotePort {
-     DeviceState parent;
- 
-@@ -93,6 +100,13 @@ struct RemotePort {
-      */
-     RemotePortDynPkt rsp;
- 
-+    /*
-+     * rspqueue holds received responses from the remote side.
-+     * Only one for the moment but it might grow.
-+     * Used by the master.
++#include <stdbool.h>
++#include "hw/core/remote-port-proto.h"
++#include "chardev/char.h"
++#include "chardev/char-fe.h"
++#include "qobject/qdict.h"
++
++#define TYPE_REMOTE_PORT_DEVICE "remote-port-device"
++
++#define REMOTE_PORT_DEVICE_CLASS(klass) \
++     OBJECT_CLASS_CHECK(RemotePortDeviceClass, (klass), TYPE_REMOTE_PORT_DEVICE)
++#define REMOTE_PORT_DEVICE_GET_CLASS(obj) \
++    OBJECT_GET_CLASS(RemotePortDeviceClass, (obj), TYPE_REMOTE_PORT_DEVICE)
++#define REMOTE_PORT_DEVICE(obj) \
++     INTERFACE_CHECK(RemotePortDevice, (obj), TYPE_REMOTE_PORT_DEVICE)
++
++typedef struct RemotePort RemotePort;
++
++typedef struct RemotePortDevice {
++    /*< private >*/
++    Object parent_obj;
++} RemotePortDevice;
++
++typedef struct RemotePortDeviceClass {
++    /*< private >*/
++    InterfaceClass parent_class;
++
++    /*< public >*/
++    /**
++     * ops - operations to perform when remote port packets are recieved for
++     * this device. Function N will be called for a remote port packet with
++     * cmd == N in the header.
++     *
++     * @obj - Remote port device to recieve packet
++     * @pkt - remote port packets
 +     */
-+    RemotePortDynPkt rspqueue;
 +
-     const char *prefix;
-     const char *remote_prefix;
- 
-@@ -100,9 +114,24 @@ struct RemotePort {
-     bool reset_done;
- 
- #define REMOTE_PORT_MAX_DEVS 1024
-+#define RP_MAX_OUTSTANDING_TRANSACTIONS 32
-+    struct {
-+        RemotePortRespSlot rsp_queue[RP_MAX_OUTSTANDING_TRANSACTIONS];
-+    } dev_state[REMOTE_PORT_MAX_DEVS];
++    void (*ops[RP_CMD_max + 1])(RemotePortDevice *obj, struct rp_pkt *pkt);
 +
-     RemotePortDevice *devs[REMOTE_PORT_MAX_DEVS];
- };
- 
++} RemotePortDeviceClass;
 +
-+void rp_rsp_mutex_lock(RemotePort *s);
-+void rp_rsp_mutex_unlock(RemotePort *s);
++#define TYPE_REMOTE_PORT "remote-port"
++#define REMOTE_PORT(obj) OBJECT_CHECK(RemotePort, (obj), TYPE_REMOTE_PORT)
 +
-+RemotePortDynPkt rp_wait_resp(RemotePort *s);
++struct RemotePort {
++    DeviceState parent;
 +
-+RemotePortRespSlot *rp_dev_wait_resp(RemotePort *s, uint32_t dev, uint32_t id);
-+RemotePortRespSlot *rp_dev_timed_wait_resp(RemotePort *s, uint32_t dev,
-+                                           uint32_t id, int timems);
++    bool finalizing;
 +
- void rp_process(RemotePort *s);
- 
- ssize_t rp_write(RemotePort *s, const void *buf, size_t count);
++    bool reset_done;
++
++#define REMOTE_PORT_MAX_DEVS 1024
++    RemotePortDevice *devs[REMOTE_PORT_MAX_DEVS];
++};
++
++#endif
 -- 
 2.43.0
 
