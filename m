@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D0AECD980
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A47AECD981
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1W9-0000Ru-Ab; Thu, 05 Feb 2026 10:43:41 -0500
+	id 1vo1Yr-0001Jg-7M; Thu, 05 Feb 2026 10:46:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1W6-0000RL-Uy
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:43:38 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1Yo-0001ID-DO
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:46:26 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1W3-0006E0-UE
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:43:38 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-480706554beso11295525e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:43:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1Ym-0006iG-KL
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:46:26 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43628a01c32so48834f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:46:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770306214; x=1770911014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770306382; x=1770911182; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+WoeOm28m91v7yiwzsKJUC94/qSK6s8Cw29K4bwsQu4=;
- b=c6mcjtagE3slOvzGMn9V+asb2yvRt6sp/Qh8Cs8gcHlw5NiT9WW9BOLTbk/mwLc/Sl
- 4KUZ5I96HLBWpLRsNsPkc+W5wS3UsoNTbJ7AI4C4svSCqltD+OBHCLiHPrAvULhFby1a
- O4WbyrKwfC0T9/roCcwYGMSdMwfV4TLbYGpBf4hS8rkPk4rruYxBlGkypkoFUM4l4SHI
- 7cHJLev42Xsz5miW06uDZPLQQSgm6nn706IpjZv/NwTOnk2HKdLo8dmJ20oBAzcBusDt
- nX4dXZHlGOKAcnLxiQzEzLSI0VZ3TjegQ1fsqaQWULVQkXiNhcjv07c+loEAB/dpJk3d
- qMEw==
+ bh=LGGZlYNX//AY3489ZnoHGIdVTKj+NErPktciwKcwhbQ=;
+ b=jINug98g/cRkP9ofBLG5oUlsyLiGv+9AoDqrfdWecFwkWkH1bCaiWWuyza5a/6hTaP
+ 9ZzhHiAYZJTW30xC32IJ25mQPkJfo+S+qf086JoPT/uzKUgd89QORvZglomJuyC7btn6
+ S7anolOala4S4ZNI8yFKxu+4zisSBOx5V+X7NsR6krUlaJ8QBjDeXw551P8nWZWaBSZi
+ dtndyev67KJcwJmAT7C6c8OlEZFSAtIvSyXH1VNfvrk+DNxi8L+HwCozYS3POI9C+Ubu
+ EDh2xj9ytUfmRj4yp8CfltTT1Telt4BP+PzwIKJyNJhYcIZRIwiHGPkZQDruQOG+tZmk
+ fevA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770306214; x=1770911014;
+ d=1e100.net; s=20230601; t=1770306382; x=1770911182;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+WoeOm28m91v7yiwzsKJUC94/qSK6s8Cw29K4bwsQu4=;
- b=GxVmz71Fh3AsyWIitnrcOOpN9e32ve6165KC+caQuJFuBDklzXIwcPg0xSVbUW+5zW
- i/3evWm7+sxwGgZVSjsOpeY+E5Z0RhJZiGm2Nzb61kLI4pXNeCblDU+salOsWaIovjHg
- 4LXILucrrBBVs3vDcGD8+hFcn632Rr9ZjTYT2VgYbnd9DO1Wx7I/msAcqaWKOuEuMC+J
- neX0aHl+kfUjv4VMGu0gnA0+52N6Cg1BbKy+ZlfYssShuJTJuivNTqoAcr0sDfe1iiZj
- 90jNE/K8yRT4CsGEo0mMVbA2g9eXqvwmMcSRPoEGrl52Tn7BrMqyRotzVtoays07HyJt
- P33A==
+ bh=LGGZlYNX//AY3489ZnoHGIdVTKj+NErPktciwKcwhbQ=;
+ b=W96K8AYXF33fjQGPC7dgGzPHntivymMx2naLYrYnJPGqM9c5c2XlbxY11tiJQ4u6Eg
+ fWWYLziOe7JxdFkZl0msEVFJwHf0RO7kXoOt8PISAi6z4x6SGU5D9nR0BufAlBFTu7cZ
+ n96ibwrJY8qVeFht0d7YMokBFwLm1jBtnYNJFX0PpT+u2EctmypyxjqaFyzkZaoDNbSa
+ LFPCq1i8dQyCP4Aa+lCzT8AcinUg6Tf7dq+CcCN1/uiKeDjJDR3TR6aFG0LJaN7aA1Lm
+ m1po3mlYR20hZ5CZe1AadU3QnJgu7pLONlsYuOMWZnb/RL2KktMBsqML7utAfzzQ0vFk
+ bWqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW924Aj0eNBlzo9tkhYqRcYXZHWT67vbDYiq4bZbidQOrhXbo+ymHuo5EQETGHJ70sOVGs5DlGLRMQH@nongnu.org
-X-Gm-Message-State: AOJu0YzjQ+VOLUCcz97nzV+lHPGOhDB4syaoYm4faPOzg8N/iZOVTGfH
- Etv78R/6Fs8syd4Z72Yyq3/z0P53TnoLkxhfhgEeMpa0def5LZ6JyCc4wUs65jWCN7U6ovecr/n
- fpdt/IX0=
-X-Gm-Gg: AZuq6aI7VleAL063qckHUalV20rI5LXg34kRBvorhrQbqJfYxNmvZ5r4woXXpfhzHJd
- st8OMn7SokIxjTf7VfBw2Pjoa/MY6CRhw1/nejEP1Yj951jLPiM4+JezAbYtp5JyM4a3o0qDDmB
- GVVFZofoeujiXuF/c28CD65MzKuQarm0iS7ClW/HtKHqRdcUjWUcCxm6QaevrM9e52nPJ+CvUZF
- odhHwcKe2yWie0h9wO6cWdcBQha8A/kH40LS7eiUFxHU9wMQ77FtmCcv+/NWOG0bxxyhXineIqK
- 4NKR/mqqE/LrHqzqMNiBb4tNW+hqVVypzNS9ugvgexZPo/v200XCGKYYaZwpZ+pQYRVWlDE5PQ6
- SLj4mC9+64YORRWM9rOJlEQ6vxrdwwcy9rPqO/pUHSOrCE62pMEFavxVTODdBt6EZ4c/YfTHbET
- MWqbcC4iT1BqSu1PdKi5LUoBsuV5mRGlQ7jnBjn2j6adVE50nPg79Kc2j/0TT4ne5h
-X-Received: by 2002:a05:600c:5250:b0:47e:e20e:bbb2 with SMTP id
- 5b1f17b1804b1-4830e92ca43mr100025615e9.7.1770306214359; 
- Thu, 05 Feb 2026 07:43:34 -0800 (PST)
+ AJvYcCUB2Axd7fh8f/5wpihmZp0hr1A+e/t+bBZX+Z8N6+qvEMGxCgnpW2GeKuaU2Hxn9BRRsXINXdirShHf@nongnu.org
+X-Gm-Message-State: AOJu0Yy8bYFu04Dre6noQum0KmDa1DsH8oFjWhrkaPFOdYS4OQklKXdF
+ 8si+0U578+UbF06bj/XmfZViG6HeshPxJcv21DKFwewS3iNMu6kdsI3k7GbASvEgV/g=
+X-Gm-Gg: AZuq6aIToqyqpt+HJLJhsCpnt7+jL1Zgxq44q88BwNHP080B9LticUxHvobZs0Yy2C5
+ KP+QAWCNLiwRcjecAmiR0aJKBxWf8KJMdhV9qLLdAeF81IMSEYnBBwj61YmUivkiYTe+dYNgkna
+ ehA5Fl+ZjMd5U3ov54XbVQf8zRqkO/vJ7iApKdhYnvjpXHzGkV6YMzU1S73UftJdvwTwtkMS1aj
+ XdmWJUHPrQhS45Oteo8xJAVHaJiSGobw6DT55NmPYdP1Olol+whmPDtLMqf0Uv9nqd0E9G4nqPB
+ w3qUKtZblZtV3qK37OPvM7Ysaud0U2WK5fG61p5GoQNLJOgpOqDCNvNUJtokqUoj1JmR+GyBgmU
+ FDsIDJF1OqL4dEzRRl74JGujCJdugj1SaHc9Lb+n9Rmjg7Jh+ndNJsMjAJ/qELGEOZ3bEoHk2im
+ /bbLS8yqvVsnvHb8yoSTfptevSfOTQnFz9xBG+FMesnjwiEUmBts/B/A==
+X-Received: by 2002:a05:6000:26c8:b0:431:8f8:7f1a with SMTP id
+ ffacd0b85a97d-436180552femr12307568f8f.31.1770306381584; 
+ Thu, 05 Feb 2026 07:46:21 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d7a924sm97829815e9.10.2026.02.05.07.43.33
+ ffacd0b85a97d-43617e38fbbsm15531499f8f.13.2026.02.05.07.46.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 07:43:33 -0800 (PST)
-Message-ID: <e8629c21-500c-4561-b1f5-f58fc7329dea@linaro.org>
-Date: Thu, 5 Feb 2026 16:43:32 +0100
+ Thu, 05 Feb 2026 07:46:20 -0800 (PST)
+Message-ID: <c85e5d5f-f29b-4ce4-a98a-8a37d8d45d70@linaro.org>
+Date: Thu, 5 Feb 2026 16:46:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] hw/or1k: Rename from openrisc
+Subject: Re: [PATCH 1/6] target/or1k: Rename from openrisc
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, shorne@gmail.com
 References: <20260205030244.266447-1-richard.henderson@linaro.org>
- <20260205030244.266447-4-richard.henderson@linaro.org>
+ <20260205030244.266447-2-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260205030244.266447-4-richard.henderson@linaro.org>
+In-Reply-To: <20260205030244.266447-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,30 +104,86 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/2/26 04:02, Richard Henderson wrote:
+> This is the minimal change beginning with TARGET_ARCH in
+> configs/targets/or1k-* from openrisc to or1k, then adjust
+> TARGET_OR1K, QEMU_ARCH_OR1K, directory names,
+> and meson.build to match.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/{openrisc => or1k}/boot.c         | 0
->   hw/{openrisc => or1k}/cputimer.c     | 0
->   hw/{openrisc => or1k}/openrisc_sim.c | 0
->   hw/{openrisc => or1k}/virt.c         | 0
->   MAINTAINERS                          | 4 ++--
->   hw/Kconfig                           | 2 +-
->   hw/meson.build                       | 2 +-
->   hw/{openrisc => or1k}/Kconfig        | 0
->   hw/{openrisc => or1k}/meson.build    | 0
->   9 files changed, 4 insertions(+), 4 deletions(-)
->   rename hw/{openrisc => or1k}/boot.c (100%)
->   rename hw/{openrisc => or1k}/cputimer.c (100%)
->   rename hw/{openrisc => or1k}/openrisc_sim.c (100%)
->   rename hw/{openrisc => or1k}/virt.c (100%)
->   rename hw/{openrisc => or1k}/Kconfig (100%)
->   rename hw/{openrisc => or1k}/meson.build (100%)
+>   include/exec/poison.h                             | 2 +-
+>   include/system/arch_init.h                        | 2 +-
+>   include/user/abitypes.h                           | 2 +-
+>   linux-user/{openrisc => or1k}/sockbits.h          | 0
+>   linux-user/{openrisc => or1k}/target_cpu.h        | 0
+>   linux-user/{openrisc => or1k}/target_elf.h        | 0
+>   linux-user/{openrisc => or1k}/target_errno_defs.h | 0
+>   linux-user/{openrisc => or1k}/target_fcntl.h      | 0
+>   linux-user/{openrisc => or1k}/target_mman.h       | 0
+>   linux-user/{openrisc => or1k}/target_prctl.h      | 0
+>   linux-user/{openrisc => or1k}/target_proc.h       | 0
+>   linux-user/{openrisc => or1k}/target_ptrace.h     | 0
+>   linux-user/{openrisc => or1k}/target_resource.h   | 0
+>   linux-user/{openrisc => or1k}/target_signal.h     | 0
+>   linux-user/{openrisc => or1k}/target_structs.h    | 0
+>   linux-user/{openrisc => or1k}/target_syscall.h    | 0
+>   linux-user/{openrisc => or1k}/termbits.h          | 0
+>   linux-user/syscall_defs.h                         | 4 ++--
+>   target/{openrisc => or1k}/cpu-param.h             | 0
+>   target/{openrisc => or1k}/cpu-qom.h               | 0
+>   target/{openrisc => or1k}/cpu.h                   | 0
+>   target/{openrisc => or1k}/exception.h             | 0
+>   target/{openrisc => or1k}/helper.h                | 0
+>   linux-user/{openrisc => or1k}/cpu_loop.c          | 0
+>   linux-user/{openrisc => or1k}/elfload.c           | 0
+>   linux-user/{openrisc => or1k}/signal.c            | 0
+>   system/qdev-monitor.c                             | 2 +-
+>   target/{openrisc => or1k}/cpu.c                   | 0
+>   target/{openrisc => or1k}/disas.c                 | 0
+>   target/{openrisc => or1k}/exception.c             | 0
+>   target/{openrisc => or1k}/exception_helper.c      | 0
+>   target/{openrisc => or1k}/fpu_helper.c            | 0
+>   target/{openrisc => or1k}/gdbstub.c               | 0
+>   target/{openrisc => or1k}/interrupt.c             | 0
+>   target/{openrisc => or1k}/interrupt_helper.c      | 0
+>   target/{openrisc => or1k}/machine.c               | 0
+>   target/{openrisc => or1k}/mmu.c                   | 0
+>   target/{openrisc => or1k}/sys_helper.c            | 0
+>   target/{openrisc => or1k}/translate.c             | 0
+>   MAINTAINERS                                       | 2 +-
+>   configs/targets/or1k-linux-user.mak               | 2 +-
+>   configs/targets/or1k-softmmu.mak                  | 2 +-
+>   hw/openrisc/Kconfig                               | 4 ++--
+>   hw/openrisc/meson.build                           | 2 +-
+>   linux-user/meson.build                            | 2 +-
+>   linux-user/openrisc/meson.build                   | 5 -----
+>   linux-user/or1k/meson.build                       | 5 +++++
+>   linux-user/{openrisc => or1k}/syscall.tbl         | 0
+>   linux-user/{openrisc => or1k}/syscallhdr.sh       | 0
+>   target/Kconfig                                    | 2 +-
+>   target/meson.build                                | 2 +-
 
+s/openrisc_system_ss/or1k_system_ss/?
 
-> diff --git a/hw/openrisc/meson.build b/hw/or1k/meson.build
-> similarity index 100%
-> rename from hw/openrisc/meson.build
-> rename to hw/or1k/meson.build
+>   target/{openrisc => or1k}/Kconfig                 | 2 +-
+>   target/{openrisc => or1k}/insns.decode            | 0
+>   target/{openrisc => or1k}/meson.build             | 4 ++--
+>   54 files changed, 23 insertions(+), 23 deletions(-)
+>   rename linux-user/{openrisc => or1k}/sockbits.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_cpu.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_elf.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_errno_defs.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_fcntl.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_mman.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_prctl.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_proc.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_ptrace.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_resource.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_signal.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_structs.h (100%)
+>   rename linux-user/{openrisc => or1k}/target_syscall.h (100%)
+>   rename linux-user/{openrisc => or1k}/termbits.h (100%)
 
-Can we s/openrisc_ss/or1k_ss/ in this file?
+Being picky, we could also rename the header guards (i.e.
+OPENRISC_TARGET_CPU_H and OPENRISC_TARGET_*_H).
 
