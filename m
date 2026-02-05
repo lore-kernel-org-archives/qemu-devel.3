@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07179E9128C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 08:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 859A1E9128B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 08:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnuV4-0002hW-Fr; Thu, 05 Feb 2026 03:14:06 -0500
+	id 1vnuWR-0003G8-6Q; Thu, 05 Feb 2026 03:15:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnuV2-0002gx-5n
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:14:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnuWG-0003EY-Rz
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:15:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnuUz-0003dp-KV
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:14:03 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vnuWE-0003us-Su
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:15:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770279239;
+ s=mimecast20190719; t=1770279318;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pklfpZw5TAHQL53MnvXN+f+tIm2U0o3ItTdoFnjIA4g=;
- b=FBIfMQ8V8O930j0eC8RNcLqF5TDzU8ooBHSLu0GKqJbI/a80X+d/AW3dYm49z7SqzXDnFL
- SZ4dj9vlbWPo/76JPxbX8kBlkbc5BuLYT1l/jl69Y2yXSAIjDfE/C6LyxhIR847hR5hEWH
- AoHjXdLBE//0OudOWTd6qiL2mx/2grM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bc1BOQ3rsAm6eCmXX67HOx5s1L4t7ZLDykW/kGCNqLQ=;
+ b=JHONLMsXy0qaZM0eqqF4AyGcFuYhFzmHMeYMwAjhMwIb8CqBEijAhE5P3dM111/bIX3pa5
+ ghmz3WqgfgiTqZ20NzgJLItVpQuTSBK8B+Sq3MatFFYWknqEPSVe5nzjL46d0L+ow/KdyG
+ 4943DpNx0LehmuafcRQOyzLoNosA48k=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-9GmqoGiHOpavZoVzBfu--A-1; Thu, 05 Feb 2026 03:13:58 -0500
-X-MC-Unique: 9GmqoGiHOpavZoVzBfu--A-1
-X-Mimecast-MFC-AGG-ID: 9GmqoGiHOpavZoVzBfu--A_1770279237
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48079ae1001so5071415e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 00:13:58 -0800 (PST)
+ us-mta-404-uk3__rXHOr6AQJMvk2O7CA-1; Thu, 05 Feb 2026 03:15:14 -0500
+X-MC-Unique: uk3__rXHOr6AQJMvk2O7CA-1
+X-Mimecast-MFC-AGG-ID: uk3__rXHOr6AQJMvk2O7CA_1770279313
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42fb1c2c403so404162f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 00:15:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770279237; x=1770884037; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770279313; x=1770884113; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pklfpZw5TAHQL53MnvXN+f+tIm2U0o3ItTdoFnjIA4g=;
- b=T3vf+kepvIfJxQBqlJJrfpuv1WouavHTN/xItgi5mI9+EbuQvXufgHTl2zlqRb2bCS
- MVcvUgpKZg1OGlRfWlBzW1h/+EWK5+5MU2ZvkD1pv5mUroTrF2SOSD3Xz4V23INZYSL5
- 2uziY84hsIcxbFUHadr0KQWrVszGEE1BpsxO5XB3/ni1P6LtBnWlPO0eUhVnDPUm7/qT
- 5KBzxTrD2vFrkLSItCYfO21lSba0QS0xcbu5m06uRhJDuXYGLFEVlIDlsYE9pVJHeTAX
- MFt5ia7iRBz9MIHb+8v9ooiFo43ObOVGWlu0kqLOmdvVmClUnYt59014YCQpMVpOBFF0
- ACxQ==
+ bh=Bc1BOQ3rsAm6eCmXX67HOx5s1L4t7ZLDykW/kGCNqLQ=;
+ b=doM5PZbaKQ0STCXMLIJ02WABhpqJ95V3KhRStjbBR0e7Ax9dfbXoLNGMWuP7Q6uB1t
+ EWc8W82zufkrJmW/GAtX/YE7IuY7eXoUX5SVw5wbkJEpaaYprSBG9ug1hEPNTaygCRz7
+ TjqtHOic2587mS/zNp1V8XBYkaG5tAGR+FcwXBO0cR2o3xW4RCswLX0rwZXk3UAy5Qa7
+ OdZEFpn0FExapgswvlWee0dQOjlWEcJdykUwBnEmS28ZkdycMA79zIZXPyLuVCTnsBPk
+ i9tTFwZWMXM3WATluHCgYilpR+kK1fV+SO1iI10yXZE4MBs/TN7l05agkFNd44lE9fJP
+ 7IVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770279237; x=1770884037;
+ d=1e100.net; s=20230601; t=1770279313; x=1770884113;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pklfpZw5TAHQL53MnvXN+f+tIm2U0o3ItTdoFnjIA4g=;
- b=AfHUjZ99ysUVRNu5vVmsuEjb2ZMyHC1mrYUPRaJJhMDg2cQ60fcktdbGs0pDMT9vou
- dKva1d8hxKmQDkkLWw5nN8ZqlJR5fZYKqJbVE6m+McMB9KMKl6iSFXDjMp/owi3z7u6d
- q7suL5WuLJPLmuYqEbLIqApvY1QiYSACd6HJpOJLTQufh2WBY+JPCGXqwAtgHhfa2pNo
- 3jeIl88Kz3Xz4CoFI1a1jHOPF0Zd3jkcezLkQf5euezfsT+vzTb9vOU8i/U4RFlUiRd6
- v8cSkbyg7dTh8EBGKFwPeZsclCYYrf6ZYqtW2nSqf8dMoN8/cWxNLVsXqC9FeHwNXZkg
- fuxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX30A5oVvjLyqjEya6zzUszOI7GrFIMaRCjsa9cpFb1LygjC8pXRXLAyNqOwJCUX0jR51LERet4LbEV@nongnu.org
-X-Gm-Message-State: AOJu0YxmyQYIOX1rMT9MVpU8QnEs9CH6APEg4poC0G0AmubAe71dzuzV
- YZcFl5XJn/1+oEva3K1oanXJoQd3AGI3XDhVF4i1RHg+dS6hD2HYlnQpq7yQ/3c0zRUYCrzBbpL
- 6IzId+Pal0j8Fxe5p0muFxIT2O3xqSokB40Nuu+HWqWzh851Z4p4Gjfe+
-X-Gm-Gg: AZuq6aJ089B/aAU4uO+QkfZjdtvrU0yK6kxZa03+bBGOfCezfI+rqEu12lrQgaH93e9
- RrpTnvtTES+TYQPM1lNCSgPybxMtXCdMi3mkCsKhezsZf3f82GQozjeCI4dwxAZQecJ4az8GQQz
- grSyZ5vEtfQxHE5+EgUEvuELeqbEU1gYhyqI6IU1IiRq80pYbomOXVCOdn9b5kGDPJVCogs1mvL
- cKbwJcnWTJT+sfhu8O9lh6DxlqgXwWPhYvfEba+IlhztYNq/nDKjFAK/nwaQRpIzleOSpmX0o7N
- iy43tiAUvxmFXD4clD3/dEd/yrWR3fG35xvBQsdrebL11I15PEcAqFY1cqbFobDpBUU1mLHIhZP
- qPK/IAfrRxv03uz0jpPqL86qi8krb6eI61g==
-X-Received: by 2002:a05:600c:8b0f:b0:482:dbd7:a1c1 with SMTP id
- 5b1f17b1804b1-4830e99c380mr71303875e9.34.1770279236995; 
- Thu, 05 Feb 2026 00:13:56 -0800 (PST)
-X-Received: by 2002:a05:600c:8b0f:b0:482:dbd7:a1c1 with SMTP id
- 5b1f17b1804b1-4830e99c380mr71303625e9.34.1770279236542; 
- Thu, 05 Feb 2026 00:13:56 -0800 (PST)
+ bh=Bc1BOQ3rsAm6eCmXX67HOx5s1L4t7ZLDykW/kGCNqLQ=;
+ b=CA+pLFcl3mD5ESXEFOB4ZOLznHp3zAXSWjsq6UM64vBFlYxe1J6Kxd1oWfoDEHO+zj
+ 3Sv0w5vYrMaWH+UCi5b0hgwW00OLhwJdGtv/zMF8wUU88p6xhsn9V8RLZ+/iXjmvhqoT
+ JZOB/B3XB07/9P9cPFj6iLAnEF6b2LQuVdB4anTn2WpGISE/7rfYXwQtsDXknjl7+M0p
+ 3UUc/UFLXNrVg3r5a1eA/YS79jhtx1RPO5Xszvv4fnosgSIL6QUApyLRNNB4DFz/6Uqa
+ rGyWZl7+z/LhwtKc1XI3Os5Dlaby99zftEP62ECRUWDa3KP+UfKpHkmKrX0wX5gen2LD
+ f8JQ==
+X-Gm-Message-State: AOJu0YyskL3QiGHgkh6IiJP1t1PRrLkj04BX0BEco4yKOnhmzu9sf7s6
+ whOBCiMExJzgrPiPXnN5/WDw6aiRTWFUwKdbaFTidoA4AkjaT4r7r+5rilmQZk8LYXSy2waGCek
+ je9fcRIjqw7fdK4DRO0+TnXTpu3JRm4kTv3MnTYt6yT1saiSM4B+0mmZU
+X-Gm-Gg: AZuq6aJzy8ZPQkofRZhnrFwakcoqTUXTffi2Y7dh+QTQE5JFbFGLMWwZWH3B30TCuPx
+ xGV6vNdQg6qXfZ5kP/+qr0x1MaGLwkCS/Rxgo6D5JuA5WUHAYg8a0snHIIRu3Ntnjn74DU6kGuA
+ 8kdTBvLIuEnpUxfcaJxJ1BNuvwH828qdAAK5B2GLdmFWjrNGt/mAjIYJ5CQ1xNeD8hVSYsLW2U3
+ VMaNqUPkwY+Q8/PUXWa05YBJ6IHckzkwZ55nMQqe0losvW5YpkkHiGyPbYg6NzuM9Y8hJr50Bhp
+ XgNAlozk59FX+d8k+srDLWR0hdTDgeLyip7nTQMq8g1rZ/rGK3TxIpviXAeG09zXsL9ng9+D2Io
+ S8kVk5FL2//0XkUs1DC3q+6I9wcp5CFAznQ==
+X-Received: by 2002:a05:6000:2912:b0:435:9653:e151 with SMTP id
+ ffacd0b85a97d-43617e3459emr8453208f8f.3.1770279313141; 
+ Thu, 05 Feb 2026 00:15:13 -0800 (PST)
+X-Received: by 2002:a05:6000:2912:b0:435:9653:e151 with SMTP id
+ ffacd0b85a97d-43617e3459emr8453044f8f.3.1770279311148; 
+ Thu, 05 Feb 2026 00:15:11 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436180640f2sm11172237f8f.39.2026.02.05.00.13.55
+ ffacd0b85a97d-4361805edcfsm11518408f8f.35.2026.02.05.00.15.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 00:13:56 -0800 (PST)
-Date: Thu, 5 Feb 2026 03:13:53 -0500
+ Thu, 05 Feb 2026 00:15:10 -0800 (PST)
+Date: Thu, 5 Feb 2026 03:15:08 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
-Subject: Re: [PATCH] vhost-user: pass GPA instead of UVA
-Message-ID: <20260205031227-mutt-send-email-mst@kernel.org>
-References: <20260204092339.211650-1-vsementsov@yandex-team.ru>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Davidlohr Bueso <dave@stgolabs.net>,
+ linuxarm@huawei.com, linux-cxl@vger.kernel.org,
+ Ravi Shankar <venkataravis@micron.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH qemu v5 0/7] hw/cxl: Support Back-Invalidate (+ PCIe Flit
+ mode)
+Message-ID: <20260205031426-mutt-send-email-mst@kernel.org>
+References: <20260109144511.557781-1-Jonathan.Cameron@huawei.com>
+ <20260203153759-mutt-send-email-mst@kernel.org>
+ <20260204111202.000051d2@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260204092339.211650-1-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20260204111202.000051d2@huawei.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -117,86 +122,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 04, 2026 at 12:23:39PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Unlike the kernel, vhost-user backend knows nothing about QEMUs
-> userspace addresses. We can pass GPA instead and nothing changes.
+On Wed, Feb 04, 2026 at 11:12:02AM +0000, Jonathan Cameron wrote:
+> On Tue, 3 Feb 2026 15:39:22 -0500
+> "Michael S. Tsirkin" <mst@redhat.com> wrote:
 > 
-> The benefit: open the doors for further implementation of local
-> migration (live-update) with passing open vhost-releated FDs
-> through UNIX domain socket. This way the connection with backend
-> kept live and untouched.
+> > On Fri, Jan 09, 2026 at 02:45:04PM +0000, Jonathan Cameron wrote:
+> > > Lightly reworked version of Davidlohr's v4.
+> > > https://lore.kernel.org/qemu-devel/20251103195209.1319917-1-dave@stgolabs.net/
+> > > 
+> > > Whilst I have several other series posted for merge this applies fine
+> > > to upstream, so no dependencies.
+> > > Davidlohr, please check I didn't mess anthing up and perhaps give tags
+> > > for the 3 new patches.  
+> > 
+> > applying this on top does seem to conflict.
+> > let me get rest merged then this can be rebased.
+> Hi Michael
 > 
-> Without this change, we'll have to communicate with backend to
-> inform it about UVA addresses change, but better is simply use
-> more stable GPA numbers, like it's done for VDPA.
+> So I assume this is your v01-04-02-2026 branch.
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/virtio/vhost-user.c | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
+> I tried rebasing on that and ran into some issue.
 > 
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 63fa9a1b4b..f379408c95 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -386,6 +386,24 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
->      CharFrontend *chr = u->user->chr;
->      int ret, size = VHOST_USER_HDR_SIZE + msg->hdr.size;
->  
-> +    if (msg->hdr.request == VHOST_USER_REM_MEM_REG ||
-> +        msg->hdr.request == VHOST_USER_ADD_MEM_REG) {
-> +
-> +        /*
-> +         * In QEMU we pass guest physical addresses to vhost-user server
-> +         * instead of QEMUs virtual address. Server have no option to
-> +         * distinguesh,
+> Looks like you have a stale version of 
+> [PATCH qemu v4 0/5] cxl: r3.2 specification event updates.
+> https://lore.kernel.org/all/20260119111542.788389-1-Jonathan.Cameron@huawei.com/
+> 
+> Markus had some comments that needed a new version.
+> Mostly updating a few more version numbers in the comments to keep things consistent.
 
-what does this mean? "Servers don't really care"?
+Right and *that* now has review comments so  it looks like there will be
+v5 ...
 
-> but we get a benefit: guest physical address is
-> +         * stable during migration, and we don't have to reset memory
-> +         * regions.
+> 
+> Not sure that has anything to do with the merge conflict.
 
-curious if PA 0 is valid on some systems (as opposed to VA).
-
-
-> +         *
-> +         * Look also at vhost_user_vq_get_addr(): like in VDPA, we pass
-> +         * physical addresses instead of user.
-> +         */
-> +
-> +        msg->payload.mem_reg.region.userspace_addr =
-> +            msg->payload.mem_reg.region.guest_phys_addr;
-> +    }
-> +
->      /*
->       * Some devices, like virtio-scsi, are implemented as a single vhost_dev,
->       * while others, like virtio-net, contain multiple vhost_devs. For
-> @@ -3021,6 +3039,17 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
->      return 0;
->  }
->  
-> +static int vhost_user_vq_get_addr(struct vhost_dev *dev,
-> +                                  struct vhost_vring_addr *addr,
-> +                                  struct vhost_virtqueue *vq)
-> +{
-> +    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
-> +    addr->desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
-> +    addr->avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-> +    addr->used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
-> +    return 0;
-> +}
-> +
->  const VhostOps user_ops = {
->          .backend_type = VHOST_BACKEND_TYPE_USER,
->          .vhost_backend_init = vhost_user_backend_init,
-> @@ -3059,4 +3088,5 @@ const VhostOps user_ops = {
->          .vhost_supports_device_state = vhost_user_supports_device_state,
->          .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
->          .vhost_check_device_state = vhost_user_check_device_state,
-> +        .vhost_vq_get_addr = vhost_user_vq_get_addr,
->  };
-> -- 
-> 2.52.0
+> > 
+> > > v5 changes:
+> > > - Rebase much earlier in the CXL queue as Davidlohr had it beind some stuff
+> > >   I was carrying that is not ready for upstream just yet.
+> > > - Update the CFMWS flags directly as the patch doing restriction control needs
+> > >   some more thought.
+> > > - Bios tables test data updates.
+> > > - Don't provide flit mode control for gen_pcie_root_port as we don't need it
+> > >   for the rest of the series which is all about CXL.
+> > > 
+> > > The following allows support for component basic back invalidation discovery
+> > > and config, by exposing the BI routing table and decoder registers. Instead
+> > > of going the type2[0] route, this series proposes adding support for type3
+> > > hdm-db, which allows a more direct way of supporting BI in qemu.
+> > > 
+> > > As BI is a dependent on the larger flits introduced in PCIe (and CXL 3.0)
+> > > add support for enabling that for CXL components. Negotiation is handled
+> > > via an equivalent of what we do for link speed.
+> > > 
+> > > Davidlohr Bueso (3):
+> > >   hw/pcie: Support enabling flit mode
+> > >   hw/cxl: Support type3 HDM-DB
+> > >   hw/cxl: Remove register special_ops->read()
+> > > 
+> > > Ira Weiny (1):
+> > >   hw/cxl: Refactor component register initialization
+> > > 
+> > > Jonathan Cameron (3):
+> > >   tests/bios-tables-test: Excluded CEDT.cxl for BI restriction
+> > >     relaxation.
+> > >   hw/cxl: Update CXL Fixed Memory Window ACPI description to include
+> > >     Back Invalidate support.
+> > >   tests/acpi/cxl: Update CEDT.cxl to allow BI in CFWMS
+> > > 
+> > >  docs/system/devices/cxl.rst               |  23 +++
+> > >  include/hw/cxl/cxl_component.h            |  87 +++++++--
+> > >  include/hw/cxl/cxl_device.h               |   4 +
+> > >  include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+> > >  include/hw/pci/pcie.h                     |   2 +-
+> > >  include/hw/pci/pcie_port.h                |   1 +
+> > >  hw/acpi/cxl.c                             |   2 +-
+> > >  hw/cxl/cxl-component-utils.c              | 211 ++++++++++++++++------
+> > >  hw/mem/cxl_type3.c                        |  15 +-
+> > >  hw/pci-bridge/cxl_downstream.c            |  10 +-
+> > >  hw/pci-bridge/cxl_root_port.c             |  11 +-
+> > >  hw/pci-bridge/cxl_upstream.c              |  18 +-
+> > >  hw/pci-bridge/pci_expander_bridge.c       |   2 +-
+> > >  hw/pci/pcie.c                             |  23 ++-
+> > >  tests/data/acpi/x86/q35/CEDT.cxl          | Bin 184 -> 184 bytes
+> > >  15 files changed, 313 insertions(+), 97 deletions(-)
+> > > 
+> > > -- 
+> > > 2.48.1  
+> > 
+> > 
+> > 
 
 
