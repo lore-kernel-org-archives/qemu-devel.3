@@ -4,113 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E71ECD9A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504E7ECD997
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6pS-00024k-25; Thu, 05 Feb 2026 16:23:58 -0500
+	id 1vo6qh-0002ya-Df; Thu, 05 Feb 2026 16:25:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo6pP-00020C-0o; Thu, 05 Feb 2026 16:23:55 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo6qY-0002wf-P7
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:25:06 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo6pM-0001kx-Kh; Thu, 05 Feb 2026 16:23:54 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 615IZ0oO011190;
- Thu, 5 Feb 2026 21:23:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=8/18Kq
- fyrDcf/SiqebtyqP7VL1SKETGpPa+aWFBaaio=; b=KqJcQ//Cp7Qv4faPJeiOuy
- YC36Sb8z2YJMZXiyBM9B2WXaJieimWxMf04WRdgYJQr7qVD7fVcgHTshRZnVepys
- euPnVMTgIBqBgT/8WkbVbjbKAljux2ZRMqcyZ36fFbQxJiww3SDc2W+1o264ahpK
- Q20Jnh+9L4OeUUk5C1G4XO19HtlZuNCSUpb0GK5/i+ih4ssWlHAeKSluGrW8uZXy
- ZzUm8Ynf4fxI98Ql7CRHVBXrCoZCeINQlM36yxFjXVprVUKF/6E67zK/09qN7Boi
- 2KhRgfKoTfwXCebPw0ICa6M/HWSFAf2NtdbHXVVnJEKUrjiUKV9rAJKMWmcR7tcQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19f6rwc2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:23:43 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 615K0Lsc029047;
- Thu, 5 Feb 2026 21:23:42 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1v2skmwd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:23:42 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 615LNeOI19071550
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Feb 2026 21:23:41 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E42F35804E;
- Thu,  5 Feb 2026 21:23:40 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F0A975803F;
- Thu,  5 Feb 2026 21:23:37 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.132.67]) by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Feb 2026 21:23:37 +0000 (GMT)
-Message-ID: <2827f8b28c4a654cb1b37eaf1313a1d63fb58f05.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
- where appropriate
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, Matthew Rosato	
- <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, David
- Hildenbrand	 <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Anton Johansson	 <anjo@rev.ng>, Richard Henderson
- <richard.henderson@linaro.org>, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Date: Thu, 05 Feb 2026 16:23:36 -0500
-In-Reply-To: <20260204182722.44062-4-philmd@linaro.org>
-References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-4-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vo6qW-0001pc-Nz
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:25:06 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 16B2418651D;
+ Fri, 06 Feb 2026 00:24:15 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 377B035D952;
+ Fri, 06 Feb 2026 00:25:02 +0300 (MSK)
+Message-ID: <d0135462-3b9f-47c7-bbbe-b5bbbc2cc08e@tls.msk.ru>
+Date: Fri, 6 Feb 2026 00:25:02 +0300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Dyq_BTA1UDqH3xq5AjOZORklcXstyCP_
-X-Authority-Analysis: v=2.4 cv=drTWylg4 c=1 sm=1 tr=0 ts=69850a5f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=mCI5erPtfxGQ4REXV-wA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Dyq_BTA1UDqH3xq5AjOZORklcXstyCP_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDE2MyBTYWx0ZWRfX2+aexFbocjoD
- ffOBEmEEOTZOxlmvczyF5dV3Ww9LEHDrhDAwVy2na5ACOoes4jNH9fhKIIjym/1bY/BOT1rxI8R
- mUVy4eVgufsnILixGhlwo+XvZzHtfI6zsWmCag7xGoMDE0Dgvh7nj3lTHRjWG71ZmlAJLqLpIP5
- 6EZ2P29bUYI2vxVRfUPCfwfdTguaVT5I/eMZT/z0K2SBtGIWYBz5H24wY2D/hPHGHXckpm1lWIx
- gm/+jw/gfV1C3jDF+SBkW6ZJp4GO8Wvi5GYXVb9xh1EEEgH2Iup/rjjZsKBQmbhD7095JBZgH3O
- Kw4eU2RelCXy4/Cl0dNLC88jMZ0sOXMN8loQfSxT0jSiIHTFNpzy8gVFwfJiBWVhOS8omUrzwQR
- e1T2YIMvx8ThrcG3pg/1A2wOdCJ7u2Cu2ku0nr2AGzeYG98Fja1dr7qVzPx5UbzhUv4H+wehFtH
- 2GZ5LQ8MtlUeXdt8Fqw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_05,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 spamscore=0 malwarescore=0 bulkscore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602050163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pci/shpc: Do not unparent in instance_finalize()
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -128,113 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> Use the %vaddr type for virtual addresses.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 10/27/25 04:24, Akihiko Odaki wrote:
+> Children are automatically unparented so manually unparenting is
+> unnecessary.
+> 
+> Worse, automatic unparenting happens before the instance_finalize()
+> callback of the parent gets called, so object_unparent() calls in
+> the callback will refer to objects that are already unparented, which
+> is semantically incorrect.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Is this a qemu-stable material?
+
+Please let me know if it is -- I'm *not* queuing it up for now.
+
+Thanks,
+
+/mjt
+
 > ---
->  target/s390x/s390x-internal.h  | 5 +++--
->  target/s390x/helper.c          | 2 +-
->  target/s390x/mmu_helper.c      | 6 +++---
->  target/s390x/tcg/excp_helper.c | 3 ++-
->  4 files changed, 9 insertions(+), 7 deletions(-)
->=20
-> diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.=
-h
-> index a4b54dc441c..f0f7bb5cb11 100644
-> --- a/target/s390x/s390x-internal.h
-> +++ b/target/s390x/s390x-internal.h
-> @@ -10,6 +10,7 @@
->  #ifndef S390X_INTERNAL_H
->  #define S390X_INTERNAL_H
-> =20
-> +#include "exec/vaddr.h"
->  #include "cpu.h"
->  #include "fpu/softfloat.h"
-> =20
-> @@ -376,9 +377,9 @@ void probe_write_access(CPUS390XState *env, uint64_t =
-addr, uint64_t len,
->  bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
->  /* Special access mode only valid for mmu_translate() */
->  #define MMU_S390_LRA        -1
-> -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64=
-_t asc,
-> +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
->                    target_ulong *raddr, int *flags, uint64_t *tec);
-> -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
-> +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
+> See also:
+> https://lore.kernel.org/qemu-devel/20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp
+> ---
+>   hw/pci/shpc.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
+> index aac6f2d03459..938602866d77 100644
+> --- a/hw/pci/shpc.c
+> +++ b/hw/pci/shpc.c
+> @@ -735,7 +735,6 @@ void shpc_free(PCIDevice *d)
+>       if (!shpc) {
+>           return;
+>       }
+> -    object_unparent(OBJECT(&shpc->mmio));
+>       g_free(shpc->config);
+>       g_free(shpc->cmask);
+>       g_free(shpc->wmask);
+> 
+> ---
+> base-commit: c85ba2d7a4056595166689890285105579db446a
+> change-id: 20251027-shpc-d71bb72d67af
+> 
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
+> 
+> 
 
-I think this one should remain target_ulong, and become hwaddr in the next =
-patch, no?
-
->                         target_ulong *addr, int *flags, uint64_t *tec);
-> =20
-> =20
-> diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-> index d0c36d4a537..5002eebd4c8 100644
-> --- a/target/s390x/helper.c
-> +++ b/target/s390x/helper.c
-> @@ -71,7 +71,7 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr=
- vaddr)
->  hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr v_addr)
->  {
->      hwaddr phys_addr;
-> -    target_ulong page;
-> +    vaddr page;
-> =20
->      page =3D v_addr & TARGET_PAGE_MASK;
->      phys_addr =3D cpu_get_phys_page_debug(cs, page);
-> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-> index 30f09ec3de4..3313487b41d 100644
-> --- a/target/s390x/mmu_helper.c
-> +++ b/target/s390x/mmu_helper.c
-> @@ -122,7 +122,7 @@ static inline bool read_table_entry(CPUS390XState *en=
-v, hwaddr gaddr,
->      return ret =3D=3D MEMTX_OK;
->  }
-> =20
-> -static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
-> +static int mmu_translate_asce(CPUS390XState *env, vaddr vaddr,
->                                uint64_t asc, uint64_t asce, target_ulong =
-*raddr,
->                                int *flags)
->  {
-> @@ -381,7 +381,7 @@ static void mmu_handle_skey(target_ulong addr, int rw=
-, int *flags)
->   *               there is an exception to raise
->   * @return       0 =3D success, !=3D 0, the exception to raise
->   */
-> -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64=
-_t asc,
-> +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
->                    target_ulong *raddr, int *flags, uint64_t *tec)
->  {
->      uint64_t asce;
-> @@ -584,7 +584,7 @@ void s390_cpu_virt_mem_handle_exc(S390CPU *cpu, uintp=
-tr_t ra)
->   * @param flags  the PAGE_READ/WRITE/EXEC flags are stored to this point=
-er
->   * @return       0 =3D success, !=3D 0, the exception to raise
->   */
-> -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
-> +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
->                         target_ulong *addr, int *flags, uint64_t *tec)
->  {
->      const bool lowprot_enabled =3D env->cregs[0] & CR0_LOWPROT;
-> diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helpe=
-r.c
-> index 019eb4fba1f..292d130d03e 100644
-> --- a/target/s390x/tcg/excp_helper.c
-> +++ b/target/s390x/tcg/excp_helper.c
-> @@ -147,7 +147,8 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, i=
-nt size,
->                         bool probe, uintptr_t retaddr)
->  {
->      CPUS390XState *env =3D cpu_env(cs);
-> -    target_ulong vaddr, raddr;
-> +    vaddr vaddr;
-> +    target_ulong raddr;
->      uint64_t asc, tec;
->      int prot, excp;
-> =20
 
