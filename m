@@ -4,49 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6250EC1E9A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3038EC1E9A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnwrG-0006eb-8k; Thu, 05 Feb 2026 05:45:10 -0500
+	id 1vnx4G-000144-TH; Thu, 05 Feb 2026 05:58:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vnwrD-0006e8-VG
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:45:07 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1vnx4E-00012Y-7P
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:34 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vnwrB-0006nz-67
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:45:07 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B3C9747BDA;
- Thu, 05 Feb 2026 11:45:01 +0100 (CET)
-Message-ID: <d909ce08-c2eb-4eff-b973-498456dec12c@proxmox.com>
-Date: Thu, 5 Feb 2026 11:45:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (in guest) disk corruption during snapshots
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org,
- dionbosschieter@gmail.com
-References: <4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be>
- <aef520c2-3296-4eb4-999c-faa757c9b2a3@proxmox.com>
- <aYRi660MmeMtobZG@redhat.com>
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1vnx4B-00006s-8U
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:33 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6Dh23fDCzJ46ly;
+ Thu,  5 Feb 2026 18:57:22 +0800 (CST)
+Received: from dubpeml100006.china.huawei.com (unknown [7.214.145.132])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0FF2040570;
+ Thu,  5 Feb 2026 18:58:13 +0800 (CST)
+Received: from dubpeml500008.china.huawei.com (7.214.146.94) by
+ dubpeml100006.china.huawei.com (7.214.145.132) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Thu, 5 Feb 2026 10:58:12 +0000
+Received: from dubpeml500008.china.huawei.com ([7.214.146.94]) by
+ dubpeml500008.china.huawei.com ([7.214.146.94]) with mapi id 15.02.1544.011;
+ Thu, 5 Feb 2026 10:58:12 +0000
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>
+CC: Michael Tsirkin <mst@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "armbru@redhat.com" <armbru@redhat.com>, Linuxarm
+ <linuxarm@huawei.com>, "linux-cxl@vger.kernel.org"
+ <linux-cxl@vger.kernel.org>, Ravi Shankar <venkataravis@micron.com>
+Subject: RE: [PATCH qemu v4 3/5] hw/cxl/events: Updates for rev3.2 general
+ media event record
+Thread-Topic: [PATCH qemu v4 3/5] hw/cxl/events: Updates for rev3.2 general
+ media event record
+Thread-Index: AQHciTUr4LxvIobS5kmrIl1k4W36E7VzK8UAgADdjxA=
+Date: Thu, 5 Feb 2026 10:58:12 +0000
+Message-ID: <36df3469e1ac47d2a0474329a0f3c47c@huawei.com>
+References: <20260119111542.788389-1-Jonathan.Cameron@huawei.com>
+ <20260119111542.788389-4-Jonathan.Cameron@huawei.com>
+ <CALa+Y15jKXUH=9k5aBveN4WN0AK1QW6VHGLHTVVgTF+-2hXvhA@mail.gmail.com>
+In-Reply-To: <CALa+Y15jKXUH=9k5aBveN4WN0AK1QW6VHGLHTVVgTF+-2hXvhA@mail.gmail.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <aYRi660MmeMtobZG@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1770288223132
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.158.31]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -61,128 +79,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiju Jose <shiju.jose@huawei.com>
+From:  Shiju Jose via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.02.26 um 10:28 AM schrieb Kevin Wolf:
-> Am 05.02.2026 um 09:59 hat Fiona Ebner geschrieben:
->> Hi,
->>
->> Am 03.02.26 um 3:24 PM schrieb Jean-Louis Dupond:
->>> Hi,
->>>
->>> Since some months we were observing disk corruption within the VM when
->>> enabling backups (which triggers snapshots).
->>> After a lot of troubleshooting, we were able to track down the commit
->>> that caused it:
->>> https://gitlab.com/qemu-project/qemu/-/
->>> commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694
->>>
->>> More info in the issue:
->>> https://gitlab.com/qemu-project/qemu/-/issues/3273
->>>
->>> Now this seems to be caused by a race between disabling the
->>> dirty_bitmaps and the tracking implemented in the mirror top layer.
->>> Kevin shared me a possible solution:
->>>
->>> diff --git a/block/mirror.c b/block/mirror.c
->>> index b344182c747..f76e43f22c1 100644
->>> --- a/block/mirror.c
->>> +++ b/block/mirror.c
->>> @@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
->>>       * accessing it.
->>>       */
->>>      mirror_top_opaque->job = s;
->>> +    if (s->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
->>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>> +    }
->>>  
->>>      assert(!s->dbi);
->>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
->>> @@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
->>>       * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
->>>       * mode.
->>>       */
->>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>> +    if (s->copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
->>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>> +    }
->>>  
->>>      bdrv_graph_wrlock_drained();
->>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
->>>
->>>
->>> Running this for some hours already, and it seems to fix the issue.
->>>
->>> Let's open up the discussion if this is the proper way to fix it, or if
->>> there are better alternatives :)
->>
->> Yes, I do think this is the proper solution. I ended up with essentially
->> the same yesterday (see the Gitlab issue). I moved the disabling
->> unconditionally, but there should be no need to delay the disabling if
->> using write-blocking mode. I would suggest moving the comment on top of
->> the changed hunk in mirror_start_job() along to the new hunk in
->> mirror_run().
-> 
-> I didn't actually write this as a proper patch, but just as a quick
-> thing Jean-Louis could test, so yes, all of the details are up for
-> discussion.
-> 
-> You're right that there is no need to delay disabling the bitmap in
-> active mode, but it probably also doesn't hurt to keep it enabled for a
-> little while? Maybe we should do it like you did just to keep the code a
-> little simpler.
-
-Yes, it shouldn't hurt. Looking at the code again,
-should_copy_to_target() will evaluate to false before the job is set, so
-it might be necessary for write-blocking mode too?
-
-> There is another approach I had in mind, but wasn't as sure about, so I
-> didn't suggest it for the testing to see if this race is even the
-> problem we're seeing in practice: Is there a reason why populating the
-> initial dirty bitmap (i.e. the second part of mirror_dirty_init()) can't
-> just come after setting 'mirror_top_opaque->job'? Then we could simply
-> leave the bitmap disabled all the time and rely solely on the mirror
-> job's own tracking. That would feel a little more consistent than using
-> the block layer just to plug a small race window during startup.
-
-Interesting idea! In write-blocking mode, it will lead to writes during
-dirty bitmap initialization already being synced to the target, so
-leading to a bit of duplicate work.
-
-Git history tells me why setting the job ended up where it is now:
-
-> commit 32125b14606a454ed109ea6d9da32c747e94926f
-> Author: Kevin Wolf <kwolf@redhat.com>
-> Date:   Fri Feb 3 16:21:41 2023 +0100
-> 
->     mirror: Fix access of uninitialised fields during start
->     
->     bdrv_mirror_top_pwritev() accesses the job object when active mirroring
->     is enabled. It disables this code during early initialisation while
->     s->job isn't set yet.
->     
->     However, s->job is still set way too early when the job object isn't
->     fully initialised. For example, &s->ops_in_flight isn't initialised yet
->     and the in_flight bitmap doesn't exist yet. This causes crashes when a
->     write request comes in too early.
->     
->     Move the assignment of s->job to when the mirror job is actually fully
->     initialised to make sure that the mirror_top driver doesn't access it
->     too early.
-
-Right before initializing the dirty bitmap, the other fields of the job
-object are already initialized, so the problem described in that commit
-message should not resurface.
-
-That said, not sure I'm not missing something.
-
-Something else I'm wondering about: do we need to use atomics for
-setting and accessing MirrorBDSOpaque.job? At least with virtio-blk
-using iothread-vq-mapping, mirror_run() and bdrv_mirror_top_do_write()
-might be called in different threads.
-
-Best Regards,
-Fiona
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFJhdmkgSm9ubmFsYWdhZGRh
+IDxyYXZpcy5vcGVuc3JjQGdtYWlsLmNvbT4NCj5TZW50OiAwNCBGZWJydWFyeSAyMDI2IDIxOjQy
+DQo+VG86IEpvbmF0aGFuIENhbWVyb24gPGpvbmF0aGFuLmNhbWVyb25AaHVhd2VpLmNvbT4NCj5D
+YzogTWljaGFlbCBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9y
+ZzsgU2hpanUgSm9zZQ0KPjxzaGlqdS5qb3NlQGh1YXdlaS5jb20+OyBhcm1icnVAcmVkaGF0LmNv
+bTsgTGludXhhcm0NCj48bGludXhhcm1AaHVhd2VpLmNvbT47IGxpbnV4LWN4bEB2Z2VyLmtlcm5l
+bC5vcmc7IFJhdmkgU2hhbmthcg0KPjx2ZW5rYXRhcmF2aXNAbWljcm9uLmNvbT4NCj5TdWJqZWN0
+OiBSZTogW1BBVENIIHFlbXUgdjQgMy81XSBody9jeGwvZXZlbnRzOiBVcGRhdGVzIGZvciByZXYz
+LjIgZ2VuZXJhbA0KPm1lZGlhIGV2ZW50IHJlY29yZA0KPg0KPk9uIE1vbiwgSmFuIDE5LCAyMDI2
+IGF0IDM6MjHigK9BTSBKb25hdGhhbiBDYW1lcm9uDQo+PEpvbmF0aGFuLkNhbWVyb25AaHVhd2Vp
+LmNvbT4gd3JvdGU6DQo+Pg0KPj4gRnJvbTogU2hpanUgSm9zZSA8c2hpanUuam9zZUBodWF3ZWku
+Y29tPg0KPj4NCj4+IENYTCBzcGVjIHJldjMuMiBzZWN0aW9uIDguMi4xMC4yLjEuMSBUYWJsZSA4
+LTU3LCBnZW5lcmFsIG1lZGlhIGV2ZW50DQo+PiB0YWJsZSBoYXMgdXBkYXRlZCB3aXRoIGZvbGxv
+d2luZyBuZXcgZmllbGRzLg0KPj4gMS4gQWR2YW5jZWQgUHJvZ3JhbW1hYmxlIENvcnJlY3RlZCBN
+ZW1vcnkgRXJyb3IgVGhyZXNob2xkIEV2ZW50IEZsYWdzDQo+PiAyLiBDb3JyZWN0ZWQgTWVtb3J5
+IEVycm9yIENvdW50IGF0IEV2ZW50IDMuIE1lbW9yeSBFdmVudCBTdWItVHlwZSA0Lg0KPj4gU3Vw
+cG9ydCBmb3IgY29tcG9uZW50IElEIGluIHRoZSBQTERNIGZvcm1hdC4NCj4+DQo+PiBBZGQgdXBk
+YXRlcyBmb3IgdGhlIGFib3ZlIHNwZWMgY2hhbmdlcyBpbiB0aGUgQ1hMIGdlbmVyYWwgbWVkaWEg
+ZXZlbnQNCj4+IHJlcG9ydGluZyBhbmQgUU1QIGNvbW1hbmQgdG8gaW5qZWN0IGdlbmVyYWwgbWVk
+aWEgZXZlbnQuDQo+Pg0KPj4gSW4gb3JkZXIgdG8gaGF2ZSBvbmUgY29uc2lzdGVudCBzb3VyY2Ug
+b2YgcmVmZXJlbmNlcywgdXBkYXRlIGFsbCB0bw0KPj4gcmVmZXJlbmNlcyBmb3IgdGhpcyBjb21t
+YW5kIHRvIENYTCByMy4yLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6IFNoaWp1IEpvc2UgPHNoaWp1
+Lmpvc2VAaHVhd2VpLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IEpvbmF0aGFuIENhbWVyb24gPEpv
+bmF0aGFuLkNhbWVyb25AaHVhd2VpLmNvbT4NCj4+IC0tLQ0KPj4gdjQ6IFVwZGF0ZSB0aGUgc3Bl
+YyByZWZlcmVuY2UgaW4gdGhlIHJlbGF0ZWQgY29tbWFuZCB0byAzLjIgYXMgd2VsbC4NCj4+IChN
+YXJrdXMpDQo+PiB2MzogVXBkYXRlIGFsbCByZWZlcmVuY2VzIHRvIDMuMiBmb3IgY29uc2lzdGVu
+Y3kuDQo+PiAtLS0NCj4+ICBxYXBpL2N4bC5qc29uICAgICAgICAgICAgICAgfCAyOSArKysrKysr
+KysrKysrKysrKysrKystLS0tLS0tLQ0KPj4gIGluY2x1ZGUvaHcvY3hsL2N4bF9ldmVudHMuaCB8
+ICA3ICsrKysrLS0NCj4+ICBody9tZW0vY3hsX3R5cGUzLmMgICAgICAgICAgfCAyOSArKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKw0KPj4gIGh3L21lbS9jeGxfdHlwZTNfc3R1YnMuYyAgICB8
+ICA2ICsrKysrKw0KPj4gIDQgZmlsZXMgY2hhbmdlZCwgNjEgaW5zZXJ0aW9ucygrKSwgMTAgZGVs
+ZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL3FhcGkvY3hsLmpzb24gYi9xYXBpL2N4bC5q
+c29uIGluZGV4DQo+PiA4MjAwMWMwNTkxZDguLjRmZjY2ZmM2YzE2YyAxMDA2NDQNCj4+IC0tLSBh
+L3FhcGkvY3hsLmpzb24NCj4+ICsrKyBiL3FhcGkvY3hsLmpzb24NCj4+DQo+PiAgICAgIHN0d19s
+ZV9wKCZnZW0udmFsaWRpdHlfZmxhZ3MsIHZhbGlkX2ZsYWdzKTsNCj4+DQo+PiArICAgIGlmICho
+YXNfY21lX2V2X2ZsYWdzKSB7DQo+PiArICAgICAgICBnZW0uY21lX2V2X2ZsYWdzID0gY21lX2V2
+X2ZsYWdzOw0KPj4gKyAgICB9IGVsc2Ugew0KPj4gKyAgICAgICAgZ2VtLmNtZV9ldl9mbGFncyA9
+IDA7DQo+PiArICAgIH0NCj4+ICsNCj4+ICsgICAgaWYgKGhhc19jbWVfY291bnQpIHsNCj4+ICsg
+ICAgICAgIGRlc2NyaXB0b3IgfD0gQ1hMX0dNRVJfRVZfREVTQ19USFJFU0hPTERfRVZFTlQ7DQo+
+DQo+VGhlIG1vZGlmaWNhdGlvbiB0byAnZGVzY3JpcHRvcicgaGVyZSBpcyBub3Qgd3JpdHRlbiBi
+YWNrIHRvIGdlbS5kZXNjcmlwdG9yIHdoaWNoDQo+d2FzIGFzc2lnbmVkIGVhcmxpZXIgaW4gdGhp
+cyBmdW5jdGlvbi4NCj4NCj5TdWdnZXN0IG1vdmluZyBnZW0uZGVzY3JpcHRvciBhc3NpZ25tZW50
+IGFmdGVyIHRoaXMgYmxvY2ssIHNpbWlsYXIgdG8gaG93DQo+dmFsaWRfZmxhZ3MgaXMgaGFuZGxl
+ZCBpbiB0aGlzIHNhbWUgZnVuY3Rpb24uDQo+DQpUaGFua3MgUmF2aS4NCldpbGwgIGZpeC4NCg0K
+Pj4gIHZvaWQgcW1wX2N4bF9pbmplY3RfZHJhbV9ldmVudChjb25zdCBjaGFyICpwYXRoLCBDeGxF
+dmVudExvZyBsb2csDQo+PiAtLQ0KPj4gMi40OC4xDQo+Pg0KPj4NCg0KVGhhbmtzLA0KU2hpanUN
+Cg==
 
