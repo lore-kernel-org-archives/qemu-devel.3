@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3F4ECD993
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 17:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4762ECD992
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 17:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo384-0004Q8-P8; Thu, 05 Feb 2026 12:26:56 -0500
+	id 1vo38I-0004Ye-6h; Thu, 05 Feb 2026 12:27:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vo37v-0004NV-96
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 12:26:47 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vo38B-0004SU-Eg
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 12:27:03 -0500
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vo37r-0001NY-0w
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 12:26:45 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-409470ad5bbso567092fac.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 09:26:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vo387-0001Qq-O7
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 12:27:03 -0500
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-4042905015cso845591fac.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 09:26:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770312401; x=1770917201;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770312417; x=1770917217;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cUUECjbrAz0euz9yRx0bWvXG9kVcrE4vBJkqjCGo36k=;
- b=fuDNmS9ybqJ0B65E7NuQEVFMbk6ajbAW9OlenprHRpDW3tPMHV1cKBG+s6iTThI5W3
- 6IhfLXf35KV8dL5w5sxs8WW4b7g7D4akUQo1Jf45Oi6Utdr44RPbDaMo24BlsgbR+5px
- RfqHZ5Y5Mhrru4NEct7L+vlJIzrDZh6bo1sq8+Vh+BF3MZYcY6rSiaBERr9xtgJ2ddKJ
- +AcJ3FHnsnZeDXEAMsqIXrqQluXgFge948WdlOk//VKbBS/PBU4wGkp0/GqnPUymHaUi
- QV9r+V+PReAVSCLfRHMtg9/gljORVWsUFqJj4xixhtiu2uBf/40OM+fjWv/hiU8MJoi7
- 3IVw==
+ :reply-to; bh=eiLFo94DHhiGqnCCYLQLyni0ZoSPiQWxVfQRYkKfSjE=;
+ b=IfF8FVMkuVhokoqbHEG/KGXajDyDsYOjjDUPDjhrez6p97O9+ayYUfY64V+LyaAHEE
+ a8j4WcSqumCWomURfCvwNVe2ts6Vnww2xWbKAx97Pk8gZw8Dz/CqGvppI6SxlAbwnbD7
+ 2jqmpiTJOF1kAGmVDhzlA0BxHcAms4ON6pGz+8APSWtgF7vJ6ZnYs2UX7xQW98mvDuB9
+ V1e5fOsg5jUfvO4fA2kDHN2sE5LvslL8xnGhlvzPP827KMTlw08aXxESCYHT3kNNXanp
+ MMRQai2BRPdF72Diu5xwqSNbnxbwtai9ERUv04k+zwRvQ8SQCb5Ty8M2DtWbIfswpzjn
+ zcIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770312401; x=1770917201;
+ d=1e100.net; s=20230601; t=1770312417; x=1770917217;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cUUECjbrAz0euz9yRx0bWvXG9kVcrE4vBJkqjCGo36k=;
- b=LIcvl+rXdTGfjokwc1M0IQ9yebeLaTZ3nrIXzQQhfrcg4MSVOG1sOUYxsZOO24Nz/O
- XTHP4bsySBeeQWVm11XIOhEW8cKWNauehCWwzkQBEBeJrZEhLFAbkDXXVoiY8fvsRxjr
- QfSQzZ3dTYBzi4WKcB2iPaSYG0recz40lnAIGVBkvZiiGTq95I5Jda+CgUiJAM9RQ7MN
- qPaN9ymT7zrbo2f5ZxAsalR4ybrt5U7AZg02cZnvtoYJG9BoHd6oBgl3sF43x0YP0aIH
- wpZOO9N/KjfpdjUbPY+EGyJXNVwa7euWglotr4Zti0i8Cki2cMRLygBCo3kOZ6OJShhM
- xcEg==
-X-Gm-Message-State: AOJu0YymfddpaP+xZXuUlZ/j7O4msOyFAstYtK2JYYle7Qyn1rWHtmou
- fiG9MFo6ksmlFqnzHJWAkP56iOCrpkpfZvauGReKjb6kL6r6PfM/HT/mt+ZVupHdnso=
-X-Gm-Gg: AZuq6aKYwxRJbBkNZ4yiHHFUtwBJAGvwysiBvnE63nAM656rf5itDN5IfmAXTgQ/w/I
- j1ynJPdCfrKJHfJg8D+FAEB+W9Co7RJTh4UZrgrgK5UFrIHc1FFUVfHs6YTScfbYMLHbA0KphR5
- O5s6dmEGLY+G0+ykR40DXZR1+JkxYkvT4JjS/IQIZ98w31m34BL6qtI06koya/tTTkQno7FEBYQ
- DSsO0YYaaFkExONNw9kE2idKooJtM32GU9bS5sRScKcczPZP9YI1YP2mskgkcDGY107gzJrYw93
- C8O1fToRMgjdz5zdPmYov1RRxjGQflPSl7YLVYqEDKngDsiMKS7wbWXpsCh+wC/kbBPJGwl388A
- u/mFqI0C1bXlv9QuW2OD4mE9jT10UBt4Z+mFEfiRBBJKWvte9vd53082u4BWf9TQSUaiP55otVg
+ bh=eiLFo94DHhiGqnCCYLQLyni0ZoSPiQWxVfQRYkKfSjE=;
+ b=EJJf8yg8lurhd1PmPUf4uHiUoni/dFntBuw553YiwSdY63cmCZiP9R2YE5lp9eIjVT
+ 4b9Jw3PznuM2rmyQbffRZFQjyiFc2+bDqhUTn1ovGHoq+A7yPpUPijmuxIR5B3j/kSUK
+ CfaCujdU6u1OwMEFkbFQOKp93HSMjAdtSmA3dhRHKm56PWU0dGsmbcDE8HsEq4c7x5KL
+ dh9qsdrlZsxFVbgBohk2c9uyfylBOHCiTZe3T0i3pUnVAno5dQYsEUJMBiFavy9J6sRq
+ m3hMVrOl1Ldk3+WJY5+Yn1Lwx9/ktmpQGXgS09uUNB5D9qGzdIE3BcuODLjd62V660ea
+ UX8A==
+X-Gm-Message-State: AOJu0Yye3/J66fuQIrZQWZvEsZ1PF3aKK3p/wPFZZnRBgHwu67BGbC5m
+ 1p9mwlqL1x34uAPoADodW4Z8FuayPenTTBPN4z/HEexxjfVMIKxKyIiCEttN3dSnlKRu7WBdkMz
+ Vfy0ZlqY=
+X-Gm-Gg: AZuq6aLogFF3yFnmAgyKpfb3uqWpKr3/j6Q10Y/5IAtECh167wVm4rgIegHQU9Mubko
+ Y1uLC8P+cB8s7wJsH+hz+bM5gUZW+KTVyhrfzmgZVAeuc8BA24Qh9Yq6iga73VfWVgprIuJyV6P
+ +0q/u2tJIb5D7ksLgIjO3ampnP3uCUljwMz4XrHJPz3zrkadhz5p6wsdKfcp5Qt9NPtW/ZcyKPh
+ n4z+SdnvrYOGrQTMdPahrBi83RqU41HGL85c7zcMa/LIb2cVWJp5wJk4kPOmiyllmM74o9crs+4
+ 925VO3ewtQ1Euu0Z6cpaPcVf6ziXZoiZ9Qh4LD0d4evsTxQ3PxX8MgO3cKcGl5tdZc6nnLuC9u4
+ CBVV0n5muT3yuGSfjnRPnRlODA6HPg9GaE+7IGX5Ua3dqZrN/xSNIREYi0H0jKhfnICnCZrha0g
  ==
-X-Received: by 2002:a05:6871:7a12:b0:36d:287c:694f with SMTP id
- 586e51a60fabf-40a96e86872mr10756fac.30.1770312401052; 
- Thu, 05 Feb 2026 09:26:41 -0800 (PST)
+X-Received: by 2002:a05:6820:2208:b0:66a:b73:5e38 with SMTP id
+ 006d021491bc7-66d0ae30ffdmr59475eaf.37.1770312417449; 
+ Thu, 05 Feb 2026 09:26:57 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-40a5417f142sm4166291fac.5.2026.02.05.09.26.39
+ 586e51a60fabf-40a5417f142sm4166291fac.5.2026.02.05.09.26.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 09:26:40 -0800 (PST)
+ Thu, 05 Feb 2026 09:26:56 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 05 Feb 2026 10:26:34 -0700
-Subject: [PATCH 01/24] bsd-user: super-ugly hack : current doesn't have inotify
+Date: Thu, 05 Feb 2026 10:26:48 -0700
+Subject: [PATCH 15/24] bsd-user: Add do_bsd_uuidgen implementation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260205-bsd-user-claude-v1-1-8d8ff0035372@bsdimp.com>
+Message-Id: <20260205-bsd-user-claude-v1-15-8d8ff0035372@bsdimp.com>
 References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
 In-Reply-To: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,26 +78,27 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>
+ Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>, 
+ Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1377; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=JCsyaCvnic8vUQg6OJLOCWEPFQTOztpdyXCd8V4Ires=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBphNLZeVxvv37zhh8C0VgdQQD5sOm1PZGoYKzp2
- bs7Gyaun/OJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaYTS2QAKCRBsHNEofbAR
- AEL9D/0ZQ4m16+xIaModR2nJ+O/zv1j2/NzOs0wNQhdvkbSJ4JBFVHzv63V/pHCwnCORsKlH5AJ
- jWc7EE4uzKgvIkmVqS7oN8K2Iry+5tCW8wzev/ppb0/jufyXa+AFn6A6FfJEhUwX7KoM49tAuj/
- N1aCAGp3ChrMqn0WzX+WnHp19uQBoNy2b1hax2chSGYvgqPQ41PpRTtZFufyuTH3/VHOjgulmlb
- W/eab0aOE0H7glIoUoRP2tej4tGVjt0zpP4Fo1VGmqqaZY0VthuFmRGMxtLrs6RIcwXjVRf4Aov
- Q+BUj2smCxN3oYFVd5I2ZQHbyb+nPXxohS/XTxuW0xcFfGDCkYFTSSrM87ybZQ3BFNMonZCR4Hf
- S+hHjXQ1Z1uswXIS+TerFe5EAlExEErRLN8+QvM9qPj6Q0NLd+6+BxBmqEh0yoWdWQCJq5hY871
- gjBqqwP0n8S25yp6ShsyaNLnzGSoFN42Y48kyQsF91NCitjYneHQeEhLlYxGRhaoSuIYicvsK6F
- 1onX5105zINtO7n/zPtAzEAnA/rKbdZAAse2yPV0HAnJLPbhILBNo8KzH7fJQQiVipYc13jegnE
- fryTGvfun3G/mPOM+pjue3w1uRHc+Zky06nisj9T2cv2LQcJzS/7wd/nBvljq8fzDIlo6iE2FIu
- fluaxsydNy/xumg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1433; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=JkfwpXoKXr8HAyR1b563dnbCt5z99SC9HgzSGrWNKgk=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBphNLbuB4TfAVljjpijQR95LZDptNN+IrE385PV
+ jD8JXT4+pmJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaYTS2wAKCRBsHNEofbAR
+ AGLxD/93Ycbmd1XsmVezZJz4NmTQICT98CoxFGa3Jrwm4ZroSJnANXt5zZlG9Dk4w90RfAFB+cj
+ 2yBdUbuVC1IKSLPVeEZyTCg/XAovyQ34xxFb6RUJhxwSCM1nUFuBxJVW5t84ab3BHHgypRcWO57
+ v98u+OialBtAcBhghSakimFygkfdjYRqSq/cMiNJOTbIctMxIsFcrcEcOUjAbL/N6bdcFLJsESn
+ n/yAAyKDnbAbpaC9WlHbI2YeKjDCDMomCL2SmzMvvE/k6AssGYhScMJejEaJkMbng/ryynVFw3E
+ pxhjsJZAN+QzfHdWcAVyASVQ+ugRUDNbB/ScswYM0p3pIKhrIrKRH817UiR50LZdRjnQVjhhawf
+ 1IM9VfDC8EAysxh5LwSvXNEZTIWUF0129Cvc8ukRmmYme1DxBDydsfEF3Lbfu2oIchrx1t6E4ei
+ wvqaS7xG/0TcjfY70nsi93Qy5d0KvUbrUEbGf3d0JDvY9ukKmDHsupwGRtdY8J5dFZWyLmSQQ/9
+ bRPT5/d3DQyZWTKnjl6QUuFbKTE1PvLFzvgTxf8/uEivhhhBCdwJjACEfHimyKvpttLk57poYJR
+ mnflJePiyZ6c+Vp6D3GPtDzgaD8Z/dWuvcff4H3i418Ny/AaCRqdO6OwQlWDEyPuIRZVfMBY71+
+ dGjbgDb76lcr3Ag==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2001:4860:4864:20::2a;
- envelope-from=imp@bsdimp.com; helo=mail-oa1-x2a.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::34;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -118,45 +120,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ugly because we need the code I commented out in 14 and maybe 15. Don't
-let me upstream this...
+From: Stacey Son <sson@FreeBSD.org>
 
+Add implementation of uuidgen(2) syscall that generates UUIDs and
+converts them to target ABI format.
+
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- meson.build | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ bsd-user/bsd-misc.h | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index cc0dfed066..1e305d22ba 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2659,16 +2659,16 @@ config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
- have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
- have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
- inotify = not_found
--if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
--  # libinotify-kqueue
--  inotify = cc.find_library('inotify')
--  if have_inotify_init
--    have_inotify_init = inotify.found()
--  endif
--  if have_inotify_init1
--    have_inotify_init1 = inotify.found()
--  endif
--endif
-+#if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
-+#  # libinotify-kqueue
-+#  inotify = cc.find_library('inotify')
-+#  if have_inotify_init
-+#    have_inotify_init = inotify.found()
-+#  endif
-+#  if have_inotify_init1
-+#    have_inotify_init1 = inotify.found()
-+#  endif
-+#endif
- config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
- config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
+diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
+index d81b4fbaef..b722c63437 100644
+--- a/bsd-user/bsd-misc.h
++++ b/bsd-user/bsd-misc.h
+@@ -43,6 +43,40 @@ static inline abi_long do_bsd_reboot(abi_long how)
+     return -TARGET_ENOSYS;
+ }
  
++/* uuidgen(2) */
++static inline abi_long do_bsd_uuidgen(abi_ulong target_addr, int count)
++{
++    int i;
++    abi_long ret;
++    struct uuid *host_uuid;
++
++    if (count < 1 || count > 2048) {
++        return -TARGET_EINVAL;
++    }
++
++    host_uuid = g_malloc(count * sizeof(struct uuid));
++
++    if (host_uuid == NULL) {
++        return -TARGET_ENOMEM;
++    }
++
++    ret = get_errno(uuidgen(host_uuid, count));
++    if (is_error(ret)) {
++        goto out;
++    }
++    for (i = 0; i < count; i++) {
++        ret = host_to_target_uuid(target_addr +
++            (abi_ulong)(sizeof(struct target_uuid) * i), &host_uuid[i]);
++        if (is_error(ret)) {
++            goto out;
++        }
++    }
++
++out:
++    g_free(host_uuid);
++    return ret;
++}
++
+ /* getdtablesize(2) */
+ static inline abi_long do_bsd_getdtablesize(void)
+ {
 
 -- 
 2.52.0
