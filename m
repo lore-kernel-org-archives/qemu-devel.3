@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6347ECD9AF
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA18ECD9AF
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo7VR-0006bG-L7; Thu, 05 Feb 2026 17:07:23 -0500
+	id 1vo7aE-0007yu-Rx; Thu, 05 Feb 2026 17:12:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo7VI-0006Zc-DP; Thu, 05 Feb 2026 17:07:13 -0500
+ id 1vo7a5-0007sI-7q; Thu, 05 Feb 2026 17:12:09 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo7VG-0000dn-3x; Thu, 05 Feb 2026 17:07:12 -0500
+ id 1vo7Zv-0001L8-Vd; Thu, 05 Feb 2026 17:12:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 13A94186541;
- Fri, 06 Feb 2026 01:06:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 132A7186546;
+ Fri, 06 Feb 2026 01:11:08 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 281B335D988;
- Fri, 06 Feb 2026 01:07:07 +0300 (MSK)
-Message-ID: <39541134-0c64-439c-b270-22e59dcbe994@tls.msk.ru>
-Date: Fri, 6 Feb 2026 01:07:07 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 38D0135D98F;
+ Fri, 06 Feb 2026 01:11:55 +0300 (MSK)
+Message-ID: <3e767269-b39c-42e2-8283-598e16aa7b71@tls.msk.ru>
+Date: Fri, 6 Feb 2026 01:11:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v6 0/2] virtio-gpu: fix error handling and improve consistency
-To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
- dmitry.osipenko@collabora.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
- armbru@redhat.com
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260113015203.3643608-1-honghuan@amd.com>
+Subject: Re: [PATCH qemu 0/2] hw/cxl: Two media operations related fixes.
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
+ Vinayak Holikatti <vinayak.kh@samsung.com>
+Cc: linuxarm@huawei.com, linux-cxl@vger.kernel.org,
+ Ravi Shankar <venkataravis@micron.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260102154731.474859-1-Jonathan.Cameron@huawei.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260113015203.3643608-1-honghuan@amd.com>
+In-Reply-To: <20260102154731.474859-1-Jonathan.Cameron@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -107,57 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 04:52, Honglei Huang wrote:
-> This series addresses error handling issues in virtio-gpu and improves
-> code consistency across the virtio-gpu subsystem.
+On 1/2/26 18:47, Jonathan Cameron via wrote:
+> Peter reported both of these last cycle.  Both are related to sanity
+> checking parameters.
 > 
-> The first patch fixes a critical bug in virgl_cmd_resource_create_blob()
-> where an inverted error check causes the function to fail when it should
-> succeed. This is a standalone bug fix that should be backported.
+> Jonathan Cameron (2):
+>    hw/cxl: Check for overflow on santize media as both base and offset
+>      64bit.
+>    hw/cxl: Take into account how many media operations are requested for
+>      param check
 > 
-> The second patch improves code consistency by unifying the error checking
-> style for virtio_gpu_create_mapping_iov() in if-statement contexts across
-> virtio-gpu files, following the preferred QEMU coding convention.
-> 
-> Changes since v5:
-> - Reverted changes to virtio-gpu-rutabaga.c to keep CHECK macro usage
->    consistent with other error checks in the same file
-> - Updated patch 2 commit message to clarify that CHECK macro patterns
->    in rutabaga.c are intentionally left unchanged
-> 
-> Changes since v4:
-> - Split the single patch into two separate patches for better clarity
-> - Separated the critical bug fix from the style consistency improvements
-> - The bug fix (patch 1) can now be easily identified and backported
-> - The consistency improvements (patch 2) are clearly marked as cleanup
-> 
-> Changes since v3:
-> - Extended consistency improvements to virtio-gpu-rutabaga.c
-> - Changed CHECK(!ret) to CHECK(ret >= 0) and CHECK(!result) to
->    CHECK(result >= 0) in rutabaga functions for consistency
-> - Now covers all virtio-gpu files that use virtio_gpu_create_mapping_iov()
-> 
-> Changes since v2:
-> - Use 'if (ret < 0)' instead of 'if (ret != 0)' following maintainer's
->    feedback on preferred QEMU coding style for error checking functions
->    that return 0 on success and negative on error
-> - Updated all similar usages across virtio-gpu files for consistency
-> - Expanded scope from single function fix to codebase-wide style consistency
-> 
-> Honglei Huang (2):
->    virtio-gpu: fix error handling in virgl_cmd_resource_create_blob
->    virtio-gpu: use consistent error checking for
->      virtio_gpu_create_mapping_iov
-> 
->   hw/display/virtio-gpu-virgl.c | 4 ++--
->   hw/display/virtio-gpu.c       | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-Is this a qemu-stable material?  I'm a bit confused here.  The first
-patch looks like it is, the second I can't decide.
+>   hw/cxl/cxl-mailbox-utils.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 
-Please let me know if I should pick this up for qemu-stable or not.
-For now I'm picking up the first change.
+Is this one worth picking up for qemu-stable (10.1.x & 10.2.x)?
 
 Thanks,
 
