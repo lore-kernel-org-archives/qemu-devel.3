@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9970BECD9A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5BC5ECD997
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6Qc-0003PV-TR; Thu, 05 Feb 2026 15:58:20 -0500
+	id 1vo6Ut-00056l-2O; Thu, 05 Feb 2026 16:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6QV-0003Lx-Rw
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:58:12 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vo6Uq-00053X-Qm
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:02:40 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo6QU-0005UA-Ft
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 15:58:11 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-482f2599980so16211675e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 12:58:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vo6Up-000601-4O
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 16:02:40 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b872f1c31f1so170504966b.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 13:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770325089; x=1770929889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n4D2CnS9K7tcTjMbgFAUMfeZtEpxK9wYWNpQnQlf9D0=;
- b=cE4sC0sDuz5CpuHzaIS2TWUBpctsLcyTdwCc/ABOTduog4JDjAS6MtDA9hqB4+G0ev
- hO9I3/uNnpHBN/IX8Gil3en1SCA8YSaX3GPW8BuCJn12sLCFZFL7MYHtGu+dtpFteRvx
- 2MAY8bUFcpsUcOcwox7IxJ4Ocne524RCGkQFF0bi1He00uq+4LkwsEG4KLafDdTtAthZ
- I+JBwVTswsR6Trac8hpqkJmcsU/YOLEL6hBIb8xFGE/+Kb3+s3zlyvoN3/BZkVt7hsOE
- Xc6795JR4SO5qedYrEs+nkWB0ETGnvtZDVY0vIkB2Y6zOkprM7It0SVWKcPt49rPwaDh
- Kzgw==
+ d=linaro.org; s=google; t=1770325357; x=1770930157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sJMjrsjX50/IvKMVHiTfQNftWHBbwucOtBJ29lzZdd0=;
+ b=Z7BTWOVFVXQKtyNgXLhI2mPIAbVyXMzXZS7uZyHyt42NZcero+mqw09JQjzkDOFxoL
+ zIXUjwEjuN6613+zLBqzErOvgcBBTuVnnHSEHMrfYh+s8dY2Do+io6PPyuaHFvMFUTDw
+ si+pePRSn6Niu4IODtsV5HUd1GglR/Z3aLyfrc+zUh62YQcrdV77zkOADhuCV9KPikdn
+ IIaFxxm3YC45abRgubj/lmkYQSmQIRnJy1Eme48IGctUrJAuYFWfgWDZXOMblu/GAkkB
+ CWXQYtvgC6I4rwdn2C3dNEdl5Jb09cnIJee+pdHdpwc/EHqff0Pm7c2D/YOnLDY6bhQS
+ wZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770325089; x=1770929889;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n4D2CnS9K7tcTjMbgFAUMfeZtEpxK9wYWNpQnQlf9D0=;
- b=sOHhmfiOW05jjsYHDe/TOqI0EqabBB69M+Qx7PuHKFF3cSwR/p99CvRYmB3mMZNwz8
- cuCLI9l8niRvfQsboE5WeRTFjrJaSjIvvD1/0ZfevFCcUX/+2VxIM7D8yVKHLv7MJ6UN
- 43xQzEqRL4aJrUI6qBdZ9QHm3pHGmx5C7Pna5snP/G0zyn3Mx0R7+hn7JCvqK/Zx/v2A
- nYK6jsk915dOdtk8u4A8xz1VrzsIHg4nDbspA/mKd+W4y8NEC8xZ5fmgA5jBr/fIC9QH
- 8G2qC/O/0XItikjCpW3olwc2sMh6e/RFZ+DZlo/jVdhfGEeSQUaw6RkJ8kx3unmWNjrY
- Tceg==
-X-Gm-Message-State: AOJu0YwuWjZV8/DG9usb3soT28liy9czaC4abr3w+XMwyHW3RCfFKser
- eRvbR0Ai+sCmfHqlWJOVfnbLmjcgm4buK8BsTatTMTwEJ3CtksUEALe8PGv3Fhe6S7+yWKKv9hW
- bD0uNxnQ=
-X-Gm-Gg: AZuq6aKzpsUgpt00cLKCvn2qYUbaCYNSUIcvB+qXXPNb1SrN2yzHsWocdPq6UnYLy+f
- 4LLBA52kauBVZuJirkuQ1NuM0MEdY2A99hqKt/kXj4sW+gbSXoF3B5XmrFdhgOO8pOT/ondWVlv
- S6aE4luA9yDODeBQdlX8ISDY+iOl3L+pk0j8xwdi6VQDKZAyNJ+o+FLl2nNAaEbasonFFyA+zkz
- HQewqfDVyRkV3iX2Mmf3jSphlfMeSQj56ht+0VchNfJ+XMUsaYaPvp/Qejx0WRTKTKz4uUIbiid
- SFnljJaXxXCs5ljie/v9tv8YCqmqjI4btFYn9RHFOaxQNVtByifesYxwqcRJS2rjvIhkNOP3Sjq
- bM3Er8oyBbRqGHk1hVBPFP590hia4O5VapjKDn0yaDBsHA53nNyvyzXXrcOb3XypPgDYZdddTWC
- p86KOtQMUEPaYTAGQ8sLE56Ojn0ONQeK3fZm0sV3XitHV3MrOZ+ffnsQ==
-X-Received: by 2002:a05:600c:8719:b0:482:eec4:76d with SMTP id
- 5b1f17b1804b1-4832021b461mr10523835e9.17.1770325088989; 
- Thu, 05 Feb 2026 12:58:08 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436297460a5sm872692f8f.32.2026.02.05.12.58.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 12:58:07 -0800 (PST)
-Message-ID: <d637d1de-200c-45d7-9738-043493207f3f@linaro.org>
-Date: Thu, 5 Feb 2026 21:58:05 +0100
+ d=1e100.net; s=20230601; t=1770325357; x=1770930157;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sJMjrsjX50/IvKMVHiTfQNftWHBbwucOtBJ29lzZdd0=;
+ b=ExVeciqvhk+NJBn/jbaje/8s72PvJg8nT0A2alfhlPaU2/z5wP+UFt8ncS8ZTwdl1E
+ yP8Vo0N/c+23Lkfo0vjfn38LsN96pDaC/34U8i/VotKIJb15zK0r7vMwPlL0jS8tV0P0
+ c1dpR3TgoB+Sa3eZ4taKoWM0VpdZUyBrd20CdVntafkrJVFcA3gHcET9413Ksz590gSV
+ XQzXNP0UcTs98LjdGfJK0PyHJjpwRLP/7/gLu963z+d90+gYi/XJ0F5dVeQPrZanjCH9
+ OnW3ALO4SGQjkn2bKGc74kw7wPOT71p0SwFuMEnQNrFgtJ7tFR/s6G7EJoDNvvxC/+Ek
+ beiA==
+X-Gm-Message-State: AOJu0YzQnBKBfcw23KnvNU7kl5UQOjjilRT+YPDSxwQ1voMUVc9NSAwV
+ sa6S4gROuDKPjdWBLY2HmOrVdAZTg1SID9YinZswkYBgJHxe9JGSrNE2rW24YQhLoGg=
+X-Gm-Gg: AZuq6aKTWdlS/yXaR633g2eDv2wVAUR0BAwQ7IRYG8h3tzntdjrxjXezAEDNON59OnY
+ Rz1zPy309XJgkVWGudhU2Dr6FTTbCo3qdAx1GV1ADptf0NdCGR5PUq/6gm9IWDbCxfjapZ7ylFF
+ EIaDDG4Qgn6xSDK4rVAg8Rxp3V/RegI8H0orcvAv91xqKL3yjWw8pc+3z28bfRQDUtuISNEkMkK
+ /ceGX+liBL5OOHau6b91a92rZ2620ox4sHm2OYGz4QecVldpelO5wiWJcY1KPJHkWp2LrpnOpi4
+ gS756McoWoiHtPqj5QBWo2kBk32LJC+b8Klgsgq1DvzG5wwHEZzgmILgVya3z2usEWQE5NkHAPt
+ 9OCJWAV+Au+56JCypg9BSTaXM4pkXOpbezfYfd5J6Vo+W2VgcW2JKXnz6pIGQLij+VwXwmW6ZuD
+ wU3+hPvOaHkV0=
+X-Received: by 2002:a17:907:9723:b0:b88:4102:8932 with SMTP id
+ a640c23a62f3a-b8edf384485mr18822966b.44.1770325357070; 
+ Thu, 05 Feb 2026 13:02:37 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8edacf10b8sm17897966b.50.2026.02.05.13.02.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Feb 2026 13:02:36 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8473D5F8BF;
+ Thu, 05 Feb 2026 21:02:35 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH v3] target/arm: implement FEAT_E2H0
+Date: Thu,  5 Feb 2026 21:02:31 +0000
+Message-ID: <20260205210231.888199-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] qapi: Add hexagon to SysEmuTarget
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Brian Cain <brian.cain@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260205030617.266625-1-richard.henderson@linaro.org>
- <20260205030617.266625-2-richard.henderson@linaro.org>
- <CAEqNhNbw3EKT1Cra4-UjMxvNCa+4Acjg_OFwdLvBdW3rcLudLg@mail.gmail.com>
- <2473c90e-7171-421d-99ab-a2448210ba2c@linaro.org>
-In-Reply-To: <2473c90e-7171-421d-99ab-a2448210ba2c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +103,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/26 17:01, Philippe Mathieu-Daudé wrote:
-> On 5/2/26 04:49, Brian Cain wrote:
->> On Wed, Feb 4, 2026 at 9:06 PM Richard Henderson
->> <richard.henderson@linaro.org> wrote:
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+FEAT_E2H0 is a formalisation of the existing behaviour of HCR_EL2.E2H
+being programmable to switch between EL2 host mode and the
+"traditional" nVHE EL2 mode. This implies at some point we might want
+to model CPUs without FEAT_E2H0 which will always have EL2 host mode
+enabled.
 
-I suppose you meant 'Reviewed-by' ;)
+There are two values to represent no E2H0 systems of which 0b1110 will
+make HCR_EL2.NV1 RES0 for FEAT_NV systems. For FEAT_NV2 the NV1 bit is
+always valid.
 
->>
->>>   qapi/machine.json | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/qapi/machine.json b/qapi/machine.json
->>> index 907cb25f75..ef8575b6eb 100644
->>> --- a/qapi/machine.json
->>> +++ b/qapi/machine.json
->>> @@ -28,6 +28,8 @@
->>>   #
->>>   # @loongarch64: since 7.1
->>>   #
->>> +# @hexagon: since 11.0
->>
->> I-owe-you one hexagon sysemu :)
-> 
-> Please!
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Message-ID: <20260130181648.628364-1-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
+---
+v3
+  - treat E2H0 as a signed field
+  - don't duplicate FEAT_NV check
+  - fold HCR_E2H into wider FEAT_AARCH64 check along with HCR_RW
+  - don't force writable NV1 for FEAT_NV2
+v2
+  - new helper and properly handling NV1
+---
+ docs/system/arm/emulation.rst |  1 +
+ target/arm/cpu-features.h     | 15 +++++++++++++++
+ target/arm/helper.c           | 21 +++++++++++++++------
+ 3 files changed, 31 insertions(+), 6 deletions(-)
+
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index e0d5f9886e1..7787691853e 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -54,6 +54,7 @@ the following architecture extensions:
+ - FEAT_DotProd (Advanced SIMD dot product instructions)
+ - FEAT_DoubleFault (Double Fault Extension)
+ - FEAT_E0PD (Preventing EL0 access to halves of address maps)
++- FEAT_E2H0 (Programming of HCR_EL2.E2H)
+ - FEAT_EBF16 (AArch64 Extended BFloat16 instructions)
+ - FEAT_ECV (Enhanced Counter Virtualization)
+ - FEAT_EL0 (Support for execution at EL0)
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index b29e20eeb68..b683c9551a0 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -347,6 +347,7 @@ FIELD(ID_AA64MMFR3, ADERR, 56, 4)
+ FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+ 
+ FIELD(ID_AA64MMFR4, ASID2, 8, 4)
++FIELD(ID_AA64MMFR4, E2H0, 24, 4)
+ 
+ FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+ FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+@@ -1378,6 +1379,20 @@ static inline bool isar_feature_aa64_asid2(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) != 0;
+ }
+ 
++/*
++ * Note the E2H0 ID fields is signed, increasingly negative as more
++ * isn't implemented.
++ */
++static inline bool isar_feature_aa64_e2h0(const ARMISARegisters *id)
++{
++    return FIELD_SEX64_IDREG(id, ID_AA64MMFR4, E2H0) >= 0;
++}
++
++static inline bool isar_feature_aa64_nv1_res0(const ARMISARegisters *id)
++{
++    return FIELD_SEX64_IDREG(id, ID_AA64MMFR4, E2H0) <= -2;
++}
++
+ static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) != 0;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 390ea32c218..e12b2455d3f 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3776,7 +3776,8 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     }
+ 
+     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
+-        if (cpu_isar_feature(aa64_vh, cpu)) {
++        if (cpu_isar_feature(aa64_vh, cpu) &&
++            cpu_isar_feature(aa64_e2h0, cpu)) {
+             valid_mask |= HCR_E2H;
+         }
+         if (cpu_isar_feature(aa64_ras, cpu)) {
+@@ -3801,7 +3802,10 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+             valid_mask |= HCR_GPF;
+         }
+         if (cpu_isar_feature(aa64_nv, cpu)) {
+-            valid_mask |= HCR_NV | HCR_NV1 | HCR_AT;
++            valid_mask |= HCR_NV | HCR_AT;
++            if (!cpu_isar_feature(aa64_nv1_res0, cpu)) {
++                valid_mask |= HCR_NV1;
++            }
+         }
+         if (cpu_isar_feature(aa64_nv2, cpu)) {
+             valid_mask |= HCR_NV2;
+@@ -3817,10 +3821,15 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     /* Clear RES0 bits.  */
+     value &= valid_mask;
+ 
+-    /* RW is RAO/WI if EL1 is AArch64 only */
+-    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
+-        !cpu_isar_feature(aa64_aa32_el1, cpu)) {
+-        value |= HCR_RW;
++    if (arm_feature(env, ARM_FEATURE_AARCH64)) {
++        /* RW is RAO/WI if EL1 is AArch64 only */
++        if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
++            value |= HCR_RW;
++        }
++        /* Strictly E2H is RES1 unless FEAT_E2H0 relaxes the requirement */
++        if (!cpu_isar_feature(aa64_e2h0, cpu)) {
++            value |= HCR_E2H;
++        }
+     }
+ 
+     /*
+-- 
+2.47.3
 
 
