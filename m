@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DFD2ECD999
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7A1ECD99E
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5Vo-0007AB-DJ; Thu, 05 Feb 2026 14:59:36 -0500
+	id 1vo5Vp-0007E3-Md; Thu, 05 Feb 2026 14:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5Vf-0006zQ-5y
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:28 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1vo5Vi-000722-CA
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:30 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5Vc-0003Bj-Pq
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:26 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so14504485e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:24 -0800 (PST)
+ id 1vo5Vg-0003D0-9m
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:29 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4806f80cac9so9433495e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321563; x=1770926363; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321566; x=1770926366; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ODPdQ6CGlB8sV1EdByujVoiH2o+cygpKFap6nFlHY6I=;
- b=Q1OK6GAWjgpO4TFab8dGa1a5elPXISG4JgM2QQF1tK5lZBhbsnpzoeRwDr8HeTdNYG
- Fv7mG3uf5vYbDr84sW1lU8PldU2MExNqbgD4w1q4I+e2Kkc1wTaDfVblF5dUX5MRb+YK
- c8pzUOkP5Pq+RuEq/weMZeWwgv/0tygfQjnClwhcNxsvSx6zZSpnonZ9Gw7heKgkexEM
- uSAsfUkq4mpHAdhZmafAsG+wc3yBRtL5T8P5Rqn1fUEZNTaZfSh4bwQgddBsHB9vdpLa
- l40MVLpBrnUUYs15h+UPz0vQvoPNGg/ltKgzziyi9EGS9JBOb+vEJc0b+THu3ed/amE0
- v9Xg==
+ bh=EYgtnXWNUJT6Dac5zqSSe5+G0V1Qkagn78Y+hx3iUhk=;
+ b=nTCDWJlVMWpterN9WMR7KcWlh1EqNO+cb0HedIymucwJy1AQ39CdYB21JV3Boc5KP+
+ oZa2eNuRJkeUeatfI43dfhwaukriITa58vYLmwu2ISg0SUY06bQs8Lb3Pc2xlhIQ/Sah
+ RaP25peff9s7HjqrfuOkPEMMWWVhWTWcrKRAUepGtmBFDwfQann5xNDwDQFG7HARMYwc
+ m0FLjqWvkbXcL4wi6Di9TN0vNo33MUhoBhFn6rdsU9uSAUIL3VUib/GiUQsPEyb+GFHB
+ 2Ul8DIUIJCVAeQWpdnFWYbApTgk6zGmNUznv2M8psnBJotWJWM/kAm6kUzGUoWYMJ13F
+ v7pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321563; x=1770926363;
+ d=1e100.net; s=20230601; t=1770321566; x=1770926366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ODPdQ6CGlB8sV1EdByujVoiH2o+cygpKFap6nFlHY6I=;
- b=Ew1rEIocCewXukShVVeo7s6jrE4mw8Wl2xs9oV+W0xqjkb9QZgaxRARxmOWN8M+mjO
- mAIbzAiNvewvwm9baeW/ZjflGgP6OY2k7SMpj4mpkXcDdulVODstI23248lYVN5q0+58
- sJLqSYs8B8k+qR2B8CEkVwsYWF0jXamCg15dFH9i/V+F1JTa+ARN+MUYSBA267fSTGS7
- Ru0IDkjVX/S6vv9Lt8UHlO8uffHxRlxBbXlLn6f6fUq2nDkZO3jUS0xAtAOYab5vwvua
- Q4PqJNywYwch38abdAekY2LFxKgfP9r6LkFxyKR+qStpaJIOqZLIpwELU2LBoEiZTzLl
- b2FQ==
-X-Gm-Message-State: AOJu0Ywre7dS7Wj77Ya5wuMEQnytpTNbmFIo+08/hlRdBJrytNu9nWnF
- YNbmaeTI+6oFrzCZW+vGAmTKM7g6Xfb+FUyzezUetMlhiU6KBx0fPtyUHHwadhbknv0=
-X-Gm-Gg: AZuq6aKDVFwx+LEpI5rFo2C6inzatFCZ2lri8I3Vbdz4MLPO6jqVfQ8yY4fm0KMKJYh
- gpyXZLw+MyI4jxbC6+SegKgyJakYt8BBovCVUEjH0XT6bj+9c3qi+kBzfmRyfF38dmRF24bH1mN
- 78tWm+m6O7flf2v44/u/g/qKsjJheOAVoZAyj5348c3BIcVu0JjHp7BEhBSTFzzy/R7mL3EneZT
- 30j/oqCfFgRD2CrE8FeERO/OZIuv1p0sV6I+M50D+HuFMz+1ZM3tsdEWlDE2QBu5uop+6m/mFK4
- 4Y1MFqBBT5VaT2ULJGjQbtrtflesCbOhaoC4hTjlKvLv96iSwVdigDbu/MVM8AYlyvu9eUug9tw
- dec0P18EIcEWw5Jo4LKdUdaVAi8P48lsrrWP2VktRShWsDz9G1b5lPYxUKLclnfaPxYQ9wuZwqo
- GHpgqvmJXHvqG32Ak3/Qo=
-X-Received: by 2002:a05:6000:1844:b0:432:7d2a:2be4 with SMTP id
- ffacd0b85a97d-4362938023amr621859f8f.60.1770321562947; 
- Thu, 05 Feb 2026 11:59:22 -0800 (PST)
+ bh=EYgtnXWNUJT6Dac5zqSSe5+G0V1Qkagn78Y+hx3iUhk=;
+ b=NdmLL0CFCMD3mVUwsEFnVyMeu3+z1OLVNi3lKChYxSaIfRbV6WogCDffgp029rIbrq
+ sbBdcdfdT0qlJgU1BeJRYRcGT9dbWN/Kvifd/HgxRLOzfT03UUsKCuJZSewrT2hbixCa
+ 4/X1nKrSYm4FAOS4kIE/EXD/YTOLYryWan3ICmD4KlKjwYObClwuRSPkhpctaZaMVvpb
+ +RteWqdSy9Nd3FD2Jh509eiDFnJ1L+GbItlOWE9p8a9ZEzzy2nAPMu8FwadVc9CuVTZv
+ K2V6jcx4GCkw2zcZ0k7T6VlmNCiS+j6rCoNd3fLpLAjhbobwZ0LqiW+ingogZztpOzPo
+ jeWw==
+X-Gm-Message-State: AOJu0YzlwVH8lLytbVKExENp4eo5n6pgmEVli5xJSY9924f7s8PNNWcd
+ 1+sjnspxkDawT0fAnbJwPIYSRXEu6bWCl0r+upRD44yYlkaCw7ZYrHlmrEWlkn/u0Uw=
+X-Gm-Gg: AZuq6aKGS/E9XH0ZqZdWpu84l71e52nYxvgumdyoek383LJ0vlqq5LaucZHEX0YCiNe
+ T1/W4tJKuaNFVZqJ7SMqXHryXTL0h9tAsV4U5DvElBzYrK0nfyZleBCfYvSRbkfoSN8CYWKnIPF
+ VqM9zJi5vF9zWnLFPoQkmnuDDoQ5UJ68ahW/CjahyZOQb9uyoV65xmJNLH42KZosX/yfrEgCx5H
+ B9W5pMWSnEjGG1f8RobnZUq5fDTTV7sBB/0HIY1T8I54kG9TOtqeexgyuoKXcMV/0XE/9lFDEfh
+ eKUAfeq2gixEwb4ZmWosCHHylPvKhBr7z0z5EwbgbRPlFn9xtBwHmiffW3DEwBH6R6bEUKiEOoe
+ UTB5JMSsM3SWPNmae/XKt2qN2fPfmNRoNGGluxqYHrCdJbNUDWqDgnrh33HkFHbn7LkDTsH62x6
+ E5zXrwAN6W8OwyUCtesWI=
+X-Received: by 2002:a05:6000:2681:b0:42f:8816:a509 with SMTP id
+ ffacd0b85a97d-4362938f3f4mr725064f8f.62.1770321566414; 
+ Thu, 05 Feb 2026 11:59:26 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.21
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:59:22 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:25 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
+ Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 26/29] hw/core: Add Remote Port connection support to
- fdt-generic
-Date: Thu,  5 Feb 2026 20:58:21 +0100
-Message-ID: <20260205195824.2610192-27-ruslichenko.r@gmail.com>
+Subject: [PATCH 28/29] hw/core: Add Remote Port attachment helpers
+Date: Thu,  5 Feb 2026 20:58:23 +0100
+Message-ID: <20260205195824.2610192-29-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,188 +104,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+From: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
 
-Extend the fdt-generic utility to automatically configure Remote Port
-devices defined in the Device Tree.
+Introduce helper functions to dynamically attach and detach Remote Port
+devices to an adaptor.
 
-This patch enables the system to:
-- Identify Remote Port devices and their configuration parameters directly
-  from the Device Tree description.
-- Automatically establish connections between these devices and the
-  central Remote Port adaptor.
-- Register legacy reset handlers for devices instantiated via FDT,
-  as required by specific Remote Port devices to ensure they reset
-  properly.
-
-This allows users to define complex co-simulation environments purely
-through Device Tree data, removing the need for hardcoded initialization.
+This patch adds the logic to:
+- Connect devices to an adaptor via QOM links ('rp_device_attach').
+- Parse command-line options ('rp_device_add') to automatically wire up
+  devices using 'rp-adaptor' and 'rp-chan' properties.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
+Signed-off-by: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c | 120 +++++++++++++++++++++++++++++++++----
- 1 file changed, 107 insertions(+), 13 deletions(-)
+ hw/core/meson.build           |   1 +
+ hw/core/remote-port-qdev.c    | 181 ++++++++++++++++++++++++++++++++++
+ include/hw/core/remote-port.h |  27 +++++
+ 3 files changed, 209 insertions(+)
+ create mode 100644 hw/core/remote-port-qdev.c
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index d183a44433..180038baf6 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -61,6 +61,9 @@
-     } \
- } while (0)
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 7013638fcf..4638106e92 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_REMOTE_PORT', if_true: files(
+   'remote-port-gpio.c',
+   'remote-port-stream.c',
+   'remote-port-ats.c',
++  'remote-port-qdev.c'
+ ))
  
-+#include "hw/core/remote-port-memory-slave.h"
+ system_ss.add(files(
+diff --git a/hw/core/remote-port-qdev.c b/hw/core/remote-port-qdev.c
+new file mode 100644
+index 0000000000..35c9a6790d
+--- /dev/null
++++ b/hw/core/remote-port-qdev.c
+@@ -0,0 +1,181 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * QEMU remote attach
++ *
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/core/sysbus.h"
++#include "monitor/monitor.h"
++#include "monitor/qdev.h"
++#include "system/arch_init.h"
++#include "qapi/error.h"
++#include "qemu/config-file.h"
++#include "qemu/error-report.h"
++#include "qemu/help_option.h"
++#include "qemu/cutils.h"
++#include "qemu/option.h"
++
 +#include "hw/core/remote-port.h"
 +
- #define PROP_ARRAY_LEN_PREFIX "len-"
- 
- /* FIXME: wrap direct calls into libfdt */
-@@ -1097,6 +1100,20 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-     }
-     fdt_init_set_opaque(fdti, node_path, dev);
- 
-+    /*
-+     * Set the default sync-quantum based on the global one. Node properties
-+     * in the dtb can later override this value.
-+     */
-+    if (global_sync_quantum) {
-+        ObjectProperty *p;
++/* RP helper function to attach a device to an adaptor.  */
++void rp_device_attach(Object *adaptor, Object *dev,
++                      int rp_nr, int dev_nr,
++                      Error **errp)
++{
++    Error *err = NULL;
++    uint32_t nr_devs;
++    char *name;
++    int i;
 +
-+        p = object_property_find(OBJECT(dev), "sync-quantum");
-+        if (p) {
-+            object_property_set_int(OBJECT(dev), "sync-quantum",
-+                                    global_sync_quantum, &errp);
-+        }
++    assert(adaptor);
++    assert(dev);
++
++    /* Verify that the adaptor is of Remote Port type.  */
++    if (!object_dynamic_cast(adaptor, TYPE_REMOTE_PORT)) {
++        error_setg(errp, "%s is not a Remote-Port adaptor!",
++                   object_get_canonical_path(adaptor));
++        return;
 +    }
 +
-     props = qemu_devtree_get_props(fdti->fdt, node_path);
-     for (prop = props; prop->name; prop++) {
-         const char *propname = trim_vendor(prop->name);
-@@ -1142,25 +1159,99 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-         fdt_init_qdev_scalar_prop(OBJECT(dev), p, fdti, node_path, prop);
-     }
- 
-+    if (object_dynamic_cast(dev, TYPE_REMOTE_PORT_DEVICE)) {
-+        for (i = 0; ; ++i) {
-+            char adaptor_node_path[DT_PATH_LENGTH];
-+            uint32_t adaptor_phandle, chan;
-+            DeviceState *adaptor;
-+            char *name;
-+
-+            adaptor_phandle = qemu_fdt_getprop_cell(fdti->fdt, node_path,
-+                                                    "remote-ports",
-+                                                    2 * i, false, &errp);
-+            if (errp) {
-+                fprintf(stderr, "cant get phandle from \"remote-ports\" "
-+                            "property\n");
-+                break;
-+            }
-+            if (qemu_devtree_get_node_by_phandle(fdti->fdt, adaptor_node_path,
-+                                                 adaptor_phandle)) {
-+                fprintf(stderr, "cant get node from phandle\n");
-+                break;
-+            }
-+            while (!fdt_init_has_opaque(fdti, adaptor_node_path)) {
-+                fdt_init_yield(fdti);
-+            }
-+            adaptor = DEVICE(fdt_init_get_opaque(fdti, adaptor_node_path));
-+            name = g_strdup_printf("rp-adaptor%" PRId32, i);
-+            object_property_set_link(OBJECT(dev), name, OBJECT(adaptor), &errp);
-+            fprintf(stderr, "connecting RP to adaptor %s channel %d",
-+                        object_get_canonical_path(OBJECT(adaptor)), i);
-+            g_free(name);
-+            if (errp) {
-+                fprintf(stderr, "cant set adaptor link for device property\n");
-+                break;
-+            }
-+
-+            chan = qemu_fdt_getprop_cell(fdti->fdt, node_path, "remote-ports",
-+                                         2 * i + 1, false, &errp);
-+            if (errp) {
-+                fprintf(stderr, "cant get channel from \"remote-ports\" "
-+                            "property\n");
-+                break;
-+            }
-+
-+            name = g_strdup_printf("rp-chan%" PRId32, i);
-+            object_property_set_int(OBJECT(dev), name, chan, &errp);
-+            /*
-+             * Not critical - device has right to not care about channel
-+             * numbers if its a pure slave (only responses).
-+             */
-+            if (errp) {
-+                fprintf(stderr, "cant set %s property %s\n", name,
-+                        error_get_pretty(errp));
-+                errp = NULL;
-+            }
-+            g_free(name);
-+
-+            name = g_strdup_printf("remote-port-dev%d", chan);
-+            object_property_set_link(OBJECT(adaptor), name, OBJECT(dev), &errp);
-+            g_free(name);
-+            if (errp) {
-+                fprintf(stderr, "cant set device link for adaptor\n");
-+                break;
-+            }
-+        }
-+        errp = NULL;
++    name = g_strdup_printf("rp-adaptor%d", rp_nr);
++    object_property_set_link(dev, name, adaptor, &err);
++    g_free(name);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        return;
 +    }
 +
-     if (object_dynamic_cast(dev, TYPE_DEVICE)) {
-+        DeviceClass *dc = DEVICE_GET_CLASS(dev);
-         const char *short_name = qemu_devtree_get_node_name(fdti->fdt,
-                                                             node_path);
- 
--        /* Connect chardev if we can */
--        if (serial_hd(fdt_serial_ports)) {
--            Chardev *value = (Chardev *) serial_hd(fdt_serial_ports);
--            char *chardev;
--
--            /* Check if the device already has a chardev.  */
--            chardev = object_property_get_str(dev, "chardev", &errp);
--            if (!errp && !strcmp(chardev, "")) {
--                object_property_set_str(dev, "chardev", value->label, &errp);
--                if (!errp) {
--                    /* It worked, the device is a charecter device */
--                    fdt_serial_ports++;
++    name = g_strdup_printf("rp-chan%d", rp_nr);
++    object_property_set_int(dev, name, dev_nr, &err);
++    g_free(name);
++    if (err != NULL
++        && !object_dynamic_cast(dev, TYPE_REMOTE_PORT_DEVICE)) {
 +        /*
-+         * We don't want to connect remote port chardev's to the user facing
-+         * serial devices.
++         * RP devices that only receive requests may not need to
++         * know their channel/dev number. If not, treat this as
++         * an error.
 +         */
-+        if (!object_dynamic_cast(dev, TYPE_REMOTE_PORT)) {
-+            /* Connect chardev if we can */
-+            if (serial_hd(fdt_serial_ports)) {
-+                Chardev *value = (Chardev *) serial_hd(fdt_serial_ports);
-+                char *chardev;
++        error_propagate(errp, err);
++        return;
++    }
++    err = NULL;
 +
-+                /* Check if the device already has a chardev.  */
-+                chardev = object_property_get_str(dev, "chardev", &errp);
-+                if (!errp && !strcmp(chardev, "")) {
-+                    object_property_set_str(dev, "chardev", value->label,
-+                                            &errp);
-+                    if (!errp) {
-+                        /* It worked, the device is a charecter device */
-+                        fdt_serial_ports++;
-+                    }
-                 }
-+                errp = NULL;
-             }
--            errp = NULL;
-         }
- 
-         /* Regular TYPE_DEVICE houskeeping */
-@@ -1176,6 +1267,9 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-         } else {
-             object_property_set_bool(OBJECT(dev), "realized", true,
-                                      &error_fatal);
-+            if (dc->legacy_reset) {
-+                qemu_register_reset((void (*)(void *))dc->legacy_reset, dev);
++    nr_devs = object_property_get_int(dev, "nr-devs", &err);
++    if (err) {
++        nr_devs = 1;
++        err = NULL;
++    }
++
++    /* Multi-channel devs use consecutive numbering.  */
++    for (i = 0; i < nr_devs; i++) {
++        name = g_strdup_printf("remote-port-dev%d", dev_nr + i);
++        object_property_set_link(adaptor, name, dev, &err);
++        g_free(name);
++        if (err != NULL) {
++            error_propagate(errp, err);
++            return;
++        }
++    }
++}
++
++/* RP helper function to detach a device to an adaptor.  */
++void rp_device_detach(Object *adaptor, Object *dev,
++                      int rp_nr, int dev_nr,
++                      Error **errp)
++{
++    Error *err = NULL;
++    uint32_t nr_devs;
++    char *name;
++    int i;
++
++    assert(adaptor);
++    assert(dev);
++
++    name = g_strdup_printf("rp-adaptor%d", rp_nr);
++    object_property_set_link(dev, name, NULL, NULL);
++    g_free(name);
++
++    nr_devs = object_property_get_int(dev, "nr-devs", &err);
++    if (err) {
++        nr_devs = 1;
++        err = NULL;
++    }
++
++    for (i = 0; i < nr_devs; i++) {
++        name = g_strdup_printf("remote-port-dev%d", dev_nr + i);
++        object_property_set_link(adaptor, name, NULL, &err);
++        g_free(name);
++        if (err != NULL) {
++            error_propagate(errp, err);
++            return;
++        }
++    }
++}
++
++/* Scan for remote-port links to be setup.  */
++bool rp_device_add(const QDict *opts, DeviceState *dev, Error **errp)
++{
++    Error *err = NULL;
++    Object *adaptor;
++    bool ambiguous;
++    const char *path;
++    char *name;
++    int i;
++
++    /*
++     * Find the adaptor this remote-port device is connected to.
++     * At the moment, we only support one adaptor per device.
++     */
++    name = g_strdup_printf("rp-adaptor%d", 0);
++    path = qdict_get_try_str(opts, name);
++    g_free(name);
++    if (!path) {
++        /* This is not a remote-port device. Treat as success.  */
++        return true;
++    }
++    adaptor = object_resolve_path(path, &ambiguous);
++    if (!adaptor) {
++        error_setg(errp, "Did not find rp adaptor %s!", path);
++        return false;
++    }
++
++    /*
++     * Loop through the channels this device provides and attach
++     * them to the adaptor.
++     */
++    for (i = 0; i < INT_MAX; i++) {
++        unsigned long dev_nr;
++        const char *dev_nr_str;
++
++        name = g_strdup_printf("rp-chan%d", i);
++        dev_nr_str = qdict_get_try_str(opts, name);
++        g_free(name);
++
++        if (!dev_nr_str) {
++            if (i == 0) {
++                /* At least one channel must be provided.  */
++                error_setg(errp, "Did not find rp-chan%d!", i);
++                return false;
 +            }
-         }
-     }
++            return true;
++        }
++
++        if (qemu_strtoul(dev_nr_str, NULL, 0, &dev_nr)) {
++            error_setg(errp, "Invalid rp-chan%d!", i);
++            return false;
++        }
++
++        /* Now, attach the device to the adaptor.  */
++        rp_device_attach(adaptor, OBJECT(dev), 0, dev_nr, &err);
++        if (err != NULL) {
++            error_propagate(errp, err);
++            return false;
++        }
++    }
++    return true;
++}
+diff --git a/include/hw/core/remote-port.h b/include/hw/core/remote-port.h
+index 172c4b6204..252230961b 100644
+--- a/include/hw/core/remote-port.h
++++ b/include/hw/core/remote-port.h
+@@ -134,6 +134,33 @@ struct RemotePort {
+     RemotePortDevice *devs[REMOTE_PORT_MAX_DEVS];
+ };
  
++/**
++ * rp_device_attach:
++ * @adaptor: The adaptor onto which to attach the device
++ * @dev: The device to be attached to the adaptor
++ * @rp_nr: The remote-port adaptor nr. A device may attach to multiple
++ *         adaptors.
++ * @dev_nr: The device/channel number to bind the device to.
++ * @errp: returns an error if this function fails
++ *
++ * Attaches a device onto an adaptor and binds it to a device number.
++ */
++void rp_device_attach(Object *adaptor, Object *dev,
++                      int rp_nr, int dev_nr,
++                      Error **errp);
++void rp_device_detach(Object *adaptor, Object *dev,
++                      int rp_nr, int dev_nr,
++                      Error **errp);
++/**
++ * rp_device_add
++ * @opts:  qdev opts created by the qdev subsystem
++ * @dev: The device to be connected
++ * @errp: Returns an error if the function fails
++ *
++ * Function used in qdev-monitor.c to connect remote port devices.
++ * Returns teue on success and false on failure.
++ */
++bool rp_device_add(const QDict *opts, DeviceState *dev, Error **errp);
+ 
+ void rp_rsp_mutex_lock(RemotePort *s);
+ void rp_rsp_mutex_unlock(RemotePort *s);
 -- 
 2.43.0
 
