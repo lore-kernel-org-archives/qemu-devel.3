@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEC1ECD981
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6251EECD981
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1Ze-0001r9-1b; Thu, 05 Feb 2026 10:47:18 -0500
+	id 1vo1ea-0003E0-Fz; Thu, 05 Feb 2026 10:52:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1ZX-0001kt-Gr
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:47:13 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1eY-0003Ds-73
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:52:22 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1ZW-00070N-0D
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:47:11 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4801c2fae63so8655405e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:47:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1eW-0007Y5-NQ
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:52:21 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-480142406b3so9464035e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770306428; x=1770911228; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1770306739; x=1770911539; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FqATkUxZZH8+wS5pyc4liUaTdQjMbILnKne7rw7ECKE=;
- b=G8dTonmdvPuoDlK3sO8T/HIwwn84GoQWauMXDjg7Yu04gdHgUrch2ybZS4bUyP23Vr
- +23enuHlfj8q2eyXUBO71pdAfUBThJ3VFo1zkB8sQbXj2f6jsnhywTPuDl8omjUZuNRH
- cSqSSXLvIWPVov86+cm6w9c0P2eLP2e2aV5O5NRqxhlFxNDGGBqdZpVznUDDBBMZX8hS
- PwsNy4yp/sw3ry3yFlfQ1h7uPkOL0uMVEnHXqKIkO0vxBj07jd7/nC9M41+xuuWryi5v
- yhBY93srfLvXA1I899o/vZukeOepnbz7oG8nH84zU6zDLW4X+n+3rIyQ8Y35UQmxRdGj
- gRAQ==
+ bh=BG3MeOcj7rfEQSRnsWYkeuAupQEMw9QQNCL71b1+WZg=;
+ b=hLIwOeIcTmVmt2yEqKOTHUxe2HIzzwPuUNmCIVlusJ41+1WZsbEeAFKE/D+jJ+6tPw
+ K6auOgDdDYv4KeYhLibQOt/lWOdhgbToLBUUpxt73ap3dCbHfK6kLoIEOw4IQ5DGwYH0
+ Aiv2+cwUtkzhU0jdQtilSZk5M4r6QahbGQpRrjDup5soWgec0sL3XtC3TBWwLfi4D9ha
+ iDnnFQzrNJ7U5TN++EedLUA4ZYE3WUhbVsNSvX2pPwjoKBUr1srSdNKCU3rb24jOyWYp
+ efeR92//BwRDnmGwXG/I6ARpBriFVnbcvuRvjWGOAflUcDC469nF0SSMO/bhPC0qIAyY
+ l3ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770306428; x=1770911228;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1770306739; x=1770911539;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FqATkUxZZH8+wS5pyc4liUaTdQjMbILnKne7rw7ECKE=;
- b=Xf1M3tsPpL+K0pMzwwuP9GTFCbHxLkqGBHiNoWC56e8+jkHUZ8KeGWuGp9JIogPLvj
- utRzqb1q9zoOoMp76QDBeg+HNWZcGbMcIgkQoc01uI9CWNV7sGGwROCw+JgD2K7SOC0a
- E7fVzpWrlouFM70pKmDppSpui9ksuk9VLOoj4Zk78fu+YIOHNp7du36pwOQ0+WUOV2lU
- Ljkqjl3JreB6rjR6yzp3Y0Nxr4l/7ihZU2nc1f+8nQ2stVhKjmHJD3AMAoMy1cLq1kOQ
- MwsdW2YQoe1FsN5x6g/IKjUq76t3lYpIDJb37zeS9SOdisO5rnzHcV3WD52prfyYegDB
- 47WA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXElNpQD5UfcYxpIWbUsUsCxkOXFcuv2g/SYYio1k5CrNY/pUX/Ou7VY8NiWcaGs8ygb6mypVg5R2YE@nongnu.org
-X-Gm-Message-State: AOJu0YzayLgeKwNOK43U5Q8gg0pIyAgIZgPSe/ZXtnyJnYT5CUDPd0Uk
- 4PehoOEhI+6C5dLt69v5kJlYZrm3n6ffbLrXA2IKpPYIfR2pyKdSxNieUruOjGySOFo=
-X-Gm-Gg: AZuq6aJQrFg2f8/XoAHhAo28gKQ4thQTXRmc36skB1geuTNgLVswHY43ZxwJSC6/S8t
- vx6Ewgf19J9NcdsxCkukJ7RtcIzUh4+BY3bX8uAbmk/ztPwABTrqEjUO5rPCp22tinY8fsGSnAr
- d0v+9UyUBgpIZBzfG6TSRnewepKTr+9uCZF5RFqhCGthxAPVctQtKiYchI0G2VHyKYcQJ+QRUAY
- Dug3HhjbK13sfyh1ubIs5Iz1T3ZJR/DuYIp5454FgnnE9u9VrcRXFSFw3s0PYgki87AeOGfx91/
- 4W7zMPHKJyRh+LL/4wTgJiC29z5/HvO/H/I9aK26amc7qVwI5RsLT3YNl1oYbKNwK8HD6OTClkH
- AqcON+/uTpcnGS/nCAMm8PqVtTF19upMndV1Y/cMLHIwDU88t1MER2gyaZx8l5i3qHigJqUHiAj
- uFg4v4ssfc9z+gjCCQrV4JhC50qOXS168gJZ9t1ji/q1ote9SpNiUsrg==
-X-Received: by 2002:a05:600c:1d23:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-4830e93ebc7mr104854075e9.7.1770306427817; 
- Thu, 05 Feb 2026 07:47:07 -0800 (PST)
+ bh=BG3MeOcj7rfEQSRnsWYkeuAupQEMw9QQNCL71b1+WZg=;
+ b=Di9m+KK7MYXbK1AQoTG1JHkOLu5CJW0hJ5iTAJnAPyYq8sLxdmgMNB2XWlbCpMu2TH
+ T9CCRpI+QiK7hyOcO6zZrvSbbXXe5TxXjDmkbCfp8qYGb4NWnnbuqFpUIxQwHRdx0EGU
+ ppF9+Xc4ViH+v8IpFxzVCPrQc/H9IIhwd/7GwJzpaBpEe3lgA5sNfamPHRvPVZhMkddr
+ Bgny3ET9sP7ubWTiHDWF48v4eQkUyr/P2DdNQ/9C2U5u5FX9pdKY48ft5HX0zsle6yaU
+ pyGpa0jSsaHIiylO88Px+XQm/OkY4AY9OM3+WkIcz5M68cy0o3tPqJ48r/ERYl9bh2T7
+ 6s1g==
+X-Gm-Message-State: AOJu0YzuBwLgQEulw5VbMkZ8wGlxt3tTb3H7IxGOy2kaZehj1GPrnv17
+ xUlqIPs4zjh0/Vt+4Gmp97qOGQlvPFjeOLnil/b5ZyowfYcFGhx6W5HBXsZZ7Aks0N0=
+X-Gm-Gg: AZuq6aIk53Nh6NXY680fsYpK5vnRR5wTVTn/8sL3RNPecLmQeQEw89eAWFtko33LbMm
+ 0tq6onYSnHE6no4DA70G506iK6utuMnZgMuvm5D6SJZ8GYf0MZ0EgOokTMwIcnYL+elNq28fh3G
+ VBNbmPereu8V40aAxVgyIbC19E0YlvyLrZP4ledcbUHhp9tPQ9F5iLmM5GJdNyN+53ukBRKIuLO
+ Afe506aQNcURJIdmGHA+9ImJqipkB66Bu/exqSXXm5IVV5orfAC9gfW/jwcjO+/h/+pI6ty72mk
+ XcCUzTniwxoyJQOI74fdy+hhIdv/AHr8iTmAXWUTIS3prhyE7kRcLa5HBIstelxy79YdN/wH9IM
+ Vpi4ZCm4uFDJYjTMeBcxTmX8CTx55Y4Jd8jo6PIiyrZ1FX4r4GhsjetLnxQQp6bs28jcCkt0IG6
+ CkODQR3plFeZ7xQShp8CHsLhTqDTp/J96lQ+Aw8+SaBjt4Hi4ycEzmsg==
+X-Received: by 2002:a05:600c:c162:b0:477:afc5:fb02 with SMTP id
+ 5b1f17b1804b1-4830e988f0amr87658825e9.21.1770306738714; 
+ Thu, 05 Feb 2026 07:52:18 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43618058473sm14741809f8f.22.2026.02.05.07.47.06
+ 5b1f17b1804b1-4830ec4a5c6sm70116045e9.2.2026.02.05.07.52.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 07:47:06 -0800 (PST)
-Message-ID: <02fbfdd7-0148-4c2c-b20d-72824f69057a@linaro.org>
-Date: Thu, 5 Feb 2026 16:47:06 +0100
+ Thu, 05 Feb 2026 07:52:18 -0800 (PST)
+Message-ID: <c576354d-5f22-4f7b-8a31-c34c95fba769@linaro.org>
+Date: Thu, 5 Feb 2026 16:52:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] or1k: Rename the architecture from openrisc
+Subject: Re: [PATCH] hw/i386/vmmouse: Fix hypercall clobbers
 Content-Language: en-US
+To: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Justin Forbes <jforbes@fedoraproject.org>,
+ Alexey Makhalov <alexey.makhalov@broadcom.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <ae0b8f2c574abe8053e742260c794adcaeda975a.1769110562.git.jpoimboe@kernel.org>
+ <479166c0-8135-4c99-a2bb-0532633d384d@linaro.org>
+ <pdtkpdg52ijsmoknnuwe2geylnqonm7wvbwh2g77de4vyg6tdx@muqauymjdw5s>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, shorne@gmail.com
-References: <20260205030244.266447-1-richard.henderson@linaro.org>
- <ec2b9446-df98-46e3-b7aa-f486eb189dd0@linaro.org>
-In-Reply-To: <ec2b9446-df98-46e3-b7aa-f486eb189dd0@linaro.org>
+In-Reply-To: <pdtkpdg52ijsmoknnuwe2geylnqonm7wvbwh2g77de4vyg6tdx@muqauymjdw5s>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +109,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/26 16:39, Philippe Mathieu-Daudé wrote:
-> On 5/2/26 04:02, Richard Henderson wrote:
->> We have an odd mix of 'openrisc' and 'or1k' in use.
->> Standardize TARGET_ARCH and all of the filenames to use 'or1k'.
+On 5/2/26 00:20, Josh Poimboeuf wrote:
+> On Sun, Feb 01, 2026 at 03:27:46PM +0100, Philippe Mathieu-Daudé wrote:
+>>> @@ -221,7 +221,7 @@ static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
+>>>    static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
+>>>    {
+>>>        VMMouseState *s = opaque;
+>>> -    uint32_t data[6];
+>>> +    target_ulong data[6];
+>>
+>> Could we use uint64_t instead (also in the callees) and let
+>> the implicit 32-bit truncation when assigning env->regs[] on
+>> 32-bit guests?
 > 
-> I was confused thinking OpenRISC is the architecture, and 1k
-> (or 1000) is the first (processor model) implementation; since
-> there is also the 1200 one:
-> https://github.com/openrisc/or1200/blob/master/doc/openrisc1200_spec.txt
-> 
-> But then I read digging [*] I read "OR1200 is the original
-> implementation of the OpenRISC 1000 architecture."
-> 
-> [*] https://openrisc.io/implementations.html#OR1200
+> That would work, is there a reason that would be preferable?
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In preparation of the long-term heterogeneous emulation project,
+we figured the target_ulong should not be used by hardware models.
+We are slowly clearing our code base toward this goal.
 
