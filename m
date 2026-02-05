@@ -4,93 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B453EC1EB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 13:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFE1EC1EB2
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 13:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnzB7-0001Cn-4F; Thu, 05 Feb 2026 08:13:49 -0500
+	id 1vnzJ4-0001n0-G9; Thu, 05 Feb 2026 08:22:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzB5-000196-61
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:13:47 -0500
-Received: from p-west2-cluster1-host2-snip4-1.eps.apple.com ([57.103.68.14]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzB3-0001mN-MM
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:13:46 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-8 (Postfix) with ESMTPS id
- 64B57180015F; Thu,  5 Feb 2026 13:13:42 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770297224; x=1772889224;
- bh=yJUrkA3wK08ViV31cAOA/Pb+MGLmCaTb/RGoYUR01yw=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=AzTH7H3dnXCFQCA7cCDiVVH3CrfTz0BGTY2sBDSyFnwzLjKKFZA81540S3h9CBbVlcrEg5iGKaLxwA6DFMrxj+Ima2rwS4+N7HzJ6Udf4lGWAsFHccqDkZSEaQiEDbCXFEecy99QafrzN1jZEzuO23xeI7X7nDEQlVrNkjMeniGXQXqJ4EvB/A3T7U8LGzDXb7aJs+4a0zbVRV6A//SrDs2IxBAwO4/w9fsJLWYO0jlWmUoaM8M9Vm9p7mdGvSJir2x25YkPMlenNPFY6xBJC0g2c0zDX+xNKc6/WYrNHmtxFqYln59syLDtHCcRbgdj8j60i46bkmDmql99YXnl6Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-8 (Postfix) with ESMTPSA id
- 6D2BD18000B0; Thu,  5 Feb 2026 13:13:34 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnzJ2-0001lv-Cz
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:22:00 -0500
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vnzJ0-00049P-Bn
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:22:00 -0500
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-12460a7caa2so1258483c88.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 05:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770297714; x=1770902514; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CZ7cL0UTpw8Eo3kfIkOPHApx4PGcm+z0vOcu8vOa8NQ=;
+ b=VFTsgXe3JFRQ/zvHV/mxno7+8bn4dL+bbUkESGWh6oxMFV49zJGmpXi0xjGzZZ+h+c
+ 8x8FhMVA4pwvLmX4U1UPtOOypZLcRYFjtjujY/AenbwOuXeIjhI7JUy5jZvlFaS7oZhh
+ mbZmy+szR6JAYkSDccxLbjPlX7HR63+BUGqyqi+/JmJOTsY/z+B1DHPmDM2NRE6VjIN8
+ BzJADrMJ5U8cQKr4Z5Ee7TzaBQ76nSH2AMuwfDQWbqURNWAAsNyDqZOLFlRjclGK9Iu8
+ GMlespKhpKtk+c9qcN4HAXqLztYqurTDfN5I46YWi5IrTAOa0keNshS+2HzRDHr/sqyp
+ g1kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770297714; x=1770902514;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CZ7cL0UTpw8Eo3kfIkOPHApx4PGcm+z0vOcu8vOa8NQ=;
+ b=e30e54VqU4Xd20ocCfzwUU+uZ8N544CsvInSQrypPq4fTJZtvQTbEhiku5Hq+y+rT9
+ XoNhSseB3ocbkoyntPYpSoF7DFa9hBoPAF4EcbqGhEcWYmme+9HLNqYlxua9ixMRuoUR
+ 6BSH8OjUoHy51gqGWlczG1nflhK1SkP6BJrox2l1kUV5XxJz0gwrDh+JC0c7cZHgaTy7
+ OZKgowWrwo8uMpCFeAVsC7aE+z0t2T06l+PaV0nOyn/yOjBlOS2E+ff7s0QrUzci5DFd
+ Z5NHIHyrvdNmrQNH+JvrOQhLiSZhM0otKV6HRBZjKrmpcuXGDKJD2vcCxuX/NDttBmVZ
+ mIRQ==
+X-Gm-Message-State: AOJu0Yyv0oQP+73m26F06ckBsp5dlKP6d4BDz8C1PCkutTX/ZNu49vTo
+ lwhHRwouLIzZHq4wSXuS4Q/nfk+1K8v0fztgLTsKmgiojJL4gdGpAkY9
+X-Gm-Gg: AZuq6aJmvC+gOduL7ih5xChLy4YhpdVBh3BR/QMu4SwnEqfzAUBwiteUgm9rQ3OlpdU
+ 7erAc318uXyPT8yHXvZndzitahrHuYT9Cly4I8ZhlotUEsWKOOFDKLbRqiQM9pxL2NSI8i6f09F
+ uIvj1YCpww/yr3G3ya2WtBTiP9Bzr1e/vsYZFuZN93vlC9pQrnA6B053wvNYXtYDSMr/tEypkni
+ bE4Pk7z9REtNFo3VluFQRDxio/1k3XVh7Kjfx3PIrkamkkWPQSMQFpSUpEvfH34QJSirHwSFuMy
+ Co1d3oi6TnV79kpR5XwVSBqcIolaAHDmkhCY9XssOmT2tuwcN/b7k7wKp5uVkqGQ06QclSMZauJ
+ eUsm0V3MaTmACoRsW00AI9/GVNXZ6QFYPwOeQWfSDABqWCPGcqqNhvYbNGDi0APO7FRw9xisncj
+ BKCEHtiXTjXu6wychOh0l4cTYURFPnw6MfyQnOt9O8LdHJ2C7Oy4fod8fgU/kAKyLHpNMs4e0EO
+ fT4lf+l2Gr+SzJyzwmSdLScpTTSbQ==
+X-Received: by 2002:a05:7022:f8b:b0:11c:b3ae:c9f1 with SMTP id
+ a92af1059eb24-126f4779f4fmr2739761c88.1.1770297713549; 
+ Thu, 05 Feb 2026 05:21:53 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-126f503ea14sm4728984c88.16.2026.02.05.05.21.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Feb 2026 05:21:52 -0800 (PST)
+Date: Thu, 5 Feb 2026 21:21:34 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH v20 21/22] whpx: enable arm64 builds
-Date: Thu,  5 Feb 2026 14:11:50 +0100
-Message-ID: <20260205131155.22780-22-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260205131155.22780-1-mohamed@unpredictable.fr>
-References: <20260205131155.22780-1-mohamed@unpredictable.fr>
+ Eduardo Habkost <eduardo@habkost.net>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v3 05/19] fpu/softfloat: Support OCP(Open Compute
+ Project) OFP8 data type
+Message-ID: <aYSUzRnX4ImNeaVT@ZEVORN-PC.localdomain>
+References: <20260204051756.667397-1-max.chou@sifive.com>
+ <20260204051756.667397-6-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=JZCxbEKV c=1 sm=1 tr=0 ts=69849787
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 8pQvBFl5AzbIv_AUW2_76ypcncD_eJUj
-X-Proofpoint-GUID: 8pQvBFl5AzbIv_AUW2_76ypcncD_eJUj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDA5OSBTYWx0ZWRfX571yD7Tr/5nG
- cnrqwgHslzCte5sASVInx4Kd3UJk19aBc7JEXEauZWM9NMqo6ko4CJOicgkuAKCd4SFJAFk/wx3
- 3JjaZ8W+Z7YT3i1QQS9uCqT5J1oANhWpz2IBXFbemYrzfFlTMc4y46OFFYQbd12c4FUlNQfRIwo
- btxefpSlAAjzdaS4T6ejD8AqJ+VpsZMV9e93nIO2tAG1cTGFKIMYrxeuiZpZ+UJuGEDTOcEKvc8
- UlRRROKrZkDA7EK8utGZ5W/Y2RpxAYKwIFKBcwo5gqteP3+h3yTqoABQJg/w0w/P9PwqxCY3y6n
- 86hLnexCpZu8uZnIGJz1XHin0xqBAjDNZF9WZs5TENyOe3GBXI3bO5J299JRHI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_02,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- spamscore=0 mlxlogscore=955 phishscore=0 clxscore=1030 lowpriorityscore=0
- malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602050099
-X-JNJ: AAAAAAABOs8rz6s7zQzA7FlzJsMFvWbAWOG6lGtOUkrrgs+Z/UQ+btRCezmcfxptnJwUjQdrZpiHHFSvixMQpeXPohQ5M0BXZc9Vx2N/2CjgW0gHOQp7TW8jUGzRxwmMrmMivCrpQ9v2MTuHZVeLp0CYCmcjLks3k0NabI0j4OkRHuR+jDGpRBGPcrihIWZy/+UafkfJCPrai44VcKm6+DyNFyJIVa+cXnENUovvVnLGH3wNr4cByV0jFwBN+aOBg5voECAND3Y4SiYyAu5rMv1nojBnKP+WbOdGGa9UtkB2QXTpR1hLCv9W/4WSY+OWQXj8Yz3rd0W632VEtOc/ciK3Kdb0ngZPhe6F+5Fy2MoGFCvZAmNM8/4lUtWHEE97ZPUWCcvmCS1+pvbQhqV5abCKm9lSLqvuWwl6Pqvh8/6jmVf3NzQbJgTrU0claJLF1a/lsf181EeANsY9ASadVmnQWr/DOF12VmVEpF7cFoiJPm+4qfAPw09sqA0/IawWcvsAiEWhQ5HQXuwDL8dOZ4LQQlRYeRFJ9sqQZ6jFrINhBjsX6ANsQuinKP1KQIIEcUF2V6BTXKv9poYo1bfhObpXgV6CSThbdQ0UgioP6tzhIOeNk5pk9TzsQH5mwWU1rZxMcT7Wr9JJ0qULQKOmRBtQkBZlJLlUHP/3ZAaRwtmyVDWTDdR7iGef3qKuKDs8nHd9f92sUTvrKqZEioMpIN3CLTo5wK0ttY8yKZOe/51ncxDget5/m6tVP813RPZC0Mz/wR4dYigeQZy5rXXp7nZYZVrmT9uyz3GvA1vwLmdwQANUUOCNTHbjkRk6lLxdszF2FOlFcZhScxnRCSl+tygDptqgN1bBxn2ht2GPcJ0ho6bJo6mKTE/htKWY/UoteOgrgG8b1ftr6gDnV/jaaKzBCU6Rr3E2dujWI+44hm3ro9To
-Received-SPF: pass client-ip=57.103.68.14;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260204051756.667397-6-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,54 +111,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Hi Max,
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+I've been testing the OCP FP8 implementation by writing
+a simple test suite in tests/fp/ that covers various boundary cases for E4M3,
+E5M2, E2M1, and BFloat16 formats. During testing, I found some issues in the
+float_class_inf handling in partsN(uncanon_sat).
+
+On Wed, Feb 04, 2026 at 01:17:41PM +0800, Max Chou wrote:
+> This commit provides the implementation defined behavior flags and the basic
+> operation support for the OCP float8 data types(E4M3 & E5M2).
+> 
+> According to the definition in OFP8 spec, the conversion from a wider
+> format infinity depends on the saturation mode defined in the spec.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>  fpu/softfloat-parts.c.inc      | 159 +++++++++++++++++++++------
+>  fpu/softfloat-specialize.c.inc |  62 +++++++++++
+>  fpu/softfloat.c                | 191 +++++++++++++++++++++++++++++++--
+>  include/fpu/softfloat-types.h  |  12 +++
+>  include/fpu/softfloat.h        |  81 ++++++++++++++
+>  5 files changed, 467 insertions(+), 38 deletions(-)
+> 
+> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+> index 5e0438fc0b..eee7daae4d 100644
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+
+[...]
+
+> -static void partsN(uncanon)(FloatPartsN *p, float_status *s,
+> -                            const FloatFmt *fmt)
+> +static void partsN(uncanon_sat)(FloatPartsN *p, float_status *s,
+> +                                const FloatFmt *fmt, bool saturate)
+>  {
+>      if (likely(is_anynorm(p->cls))) {
+> -        parts_uncanon_normal(p, s, fmt);
+> +        parts_uncanon_normal(p, s, fmt, saturate);
+>      } else {
+>          switch (p->cls) {
+>          case float_class_zero:
+> @@ -434,13 +510,30 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
+>              frac_clear(p);
+>              return;
+>          case float_class_inf:
+> -            g_assert(!fmt->arm_althp);
+> -            p->exp = fmt->exp_max;
+> -            frac_clear(p);
+> +            /*
+> +             * Unified infinity handling using format capabilities.
+> +             * Formats with no_infinity must convert infinity to something else
+> +             */
+> +            if (!fmt->no_infinity) {
+> +                p->exp = fmt->exp_max;
+> +                frac_clear(p);
+The saturate flag is not checked here. For IEEE-like formats such as
+E5M2 that have infinity encoding, when saturate=true, the result should be
+the maximum normal value, not infinity.
+
+Per OCP FP8 specification Section 4.2 "Saturation", when saturation mode is
+enabled, infinity should be converted to the maximum finite value even for
+formats that support infinity representation.
+
+My case:
+  bfloat16_to_float8_e5m2(BF16_INF_POS, true, &status)
+  Expected: 0x7b (max normal)
+  Actual:   0x7c (infinity)
+
+Suggested fix:
+            if (!fmt->no_infinity && !saturate) {
+                p->exp = fmt->exp_max;
+                frac_clea
+                r(p);
+            } else if (!fmt->no_infinity && saturate) {
+                /* Saturate infinity to max normal for IEEE-like formats */
+                p->exp = fmt->exp_max - 1;
+                frac_allones(p);
+                frac_shr(p, fmt->frac_shift);
+            } else if ...
+
+> +            } else if (fmt_has_nan_encoding(fmt)) {
+> +                if (saturate) {
+> +                    parts_set_max_normal(p, fmt);
+Missing frac_shr() call after parts_set_max_normal().
+
+The parts_set_max_normal() function sets frac_hi to the normalized
+fraction value (with implicit bit at position 63). Before packing into
+the final format, the fraction must be shifted right by frac_shift to
+position it correctly.
+
+Compare with the float_class_qnan/snan case below which correctly calls
+frac_shr(p, fmt->frac_shift) before returning.
+
+My case:
+  bfloat16_to_float8_e4m3(BF16_INF_POS, true, &status)
+  Expected: 0x7e (max normal, exp=15, frac=6)
+  Actual:   0x78 (exp=15, frac=0 - incorrect due to missing shift)
+
+Suggested fix:
+                if (saturate) {
+                    parts_set_max_normal(p, fmt);
+                    frac_shr(p, fmt->frac_shift);
+
+> +                } else {
+> +                    uint8_t dnan = s->default_nan_pattern;
+> +                    p->cls = float_class_qnan;
+> +                    p->sign = dnan >> 7;
+> +                    p->exp = fmt->exp_max;
+> +                    frac_allones(p);
+Same issue - missing frac_shr() call after frac_allones().
+
+> +                }
+> +            } else {
+> +                parts_set_max_normal(p, fmt);
+Same issue - missing frac_shr() call after parts_set_max_normal().
+
+PS: This path is taken for formats without NaN encoding (like E2M1).
+
+> +            }
+>              return;
+>          case float_class_qnan:
+>          case float_class_snan:
+> -            g_assert(!fmt->arm_althp);
+> +            g_assert(fmt_has_nan_encoding(fmt));
+>              p->exp = fmt->exp_max;
+>              frac_shr(p, fmt->frac_shift); /* <-- This is correct */
+>              return;
+The qnan/snan case correctly calls frac_shr(), which is good, but the inf case above does not.
+
 ---
- meson.build | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 8c6c0a9a32..eeafd1d42b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -301,7 +301,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
- 
- if cpu == 'aarch64'
-   accelerator_targets += {
--    'CONFIG_HVF': ['aarch64-softmmu']
-+    'CONFIG_HVF': ['aarch64-softmmu'],
-+    'CONFIG_WHPX': ['aarch64-softmmu']
-   }
- elif cpu == 'x86_64'
-   accelerator_targets += {
-@@ -858,13 +859,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
- endif
- 
- if get_option('whpx').allowed() and host_os == 'windows'
--  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
--    error('WHPX requires 64-bit host')
--  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
--       cc.has_header('winhvemulation.h', required: get_option('whpx'))
--    accelerators += 'CONFIG_WHPX'
-+  if cpu == 'i386'
-+    if get_option('whpx').enabled()
-+     error('WHPX requires 64-bit host')
-+    endif
-+   # Leave CONFIG_WHPX disabled
-+  else
-+    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
-+      cc.has_header('winhvemulation.h', required: get_option('whpx'))
-+      accelerators += 'CONFIG_WHPX'
-+    endif
-   endif
--endif
-+ endif
- 
- hvf = not_found
- if get_option('hvf').allowed()
--- 
-2.50.1 (Apple Git-155)
+I've prepared a fix patch and a test suite (tests/fp/fp-test-ocp.c) with 97
+test cases covering:
 
+- Classification functions for E4M3, E5M2, E2M1, BFloat16
+- Format conversions with and without saturation
+- Rounding mode handling
+- Canonical NaN generation per Zvfofp8min specification
+
+
+git repo:
+https://github.com/zevorn/qemu/tree/riscv-zvfofp8min-zvfofp4min-v3
+
+command:
+cd $QEMU_SRC_PATH/build && ninja tests/fp/fp-test-ocp
+./pyvenv/bin/meson test --suite softfloat-ocp -v
+
+
+With the fix applied, all saturation tests pass:
+  PASS: BF16 +inf -> E4M3 max normal (with saturation), got 0x7e
+  PASS: BF16 +inf -> E5M2 max normal (with saturation), got 0x7b
+  PASS: F32 +inf -> E4M3 max normal (with saturation), got 0x7e
+  PASS: F32 +inf -> E5M2 max normal (with saturation), got 0x7b
+
+---
+
+@Richard: I noticed that the current tests/fp/ directory doesn't have test
+coverage for BFloat16, OCP FP8 (E4M3/E5M2), or FP4 (E2M1) formats.
+
+The existing fp-test relies on Berkeley TestFloat which doesn't support
+these newer formats. Would it be useful if I clean up and submit my test
+suite (fp-test-ocp.c) as a separate patch to provide basic test coverage
+for these OCP floating-point formats? It could help catch similar issues
+in future softfloat changes.
+
+Thanks,
+Chao
 
