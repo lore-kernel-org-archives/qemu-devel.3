@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D7BEC1EB5
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 13:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62AEEC1EBB
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 13:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnzUP-0004Et-Vl; Thu, 05 Feb 2026 08:33:46 -0500
+	id 1vnzaN-0005eZ-QY; Thu, 05 Feb 2026 08:39:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzUN-0004Eb-7q
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:33:43 -0500
-Received: from qs-2003d-snip4-11.eps.apple.com ([57.103.86.43]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnza9-0005cm-42
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:39:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vnzUK-0006Ha-Qe
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:33:42 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPS id
- 201F81800154; Thu,  5 Feb 2026 13:33:38 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770298419; x=1772890419;
- bh=NuUwqmD1LwUXLujIVgAF1hke2J9DN+/pBb2k3iXWC4M=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=JCf6ifd/JLBUfQPmsXGkLlU5y+k+5xLmYsRb3kRxqqxa4O46etiKeaHgP4oi+t40j2Ixq+jim/1Qlo/+AipwMQ4S7EkZEMqOp5BJPza0Qhv6CywzQ33JoaP6ojkReLIi3LC/kZZq9sE0cau/GwzbstomNb6UFNxy/DNK0R+VuiQfg36q1dnwayEuqUpaXw6fpGuOGZwlp7Mom0nKJ75jkbMgk1MqFmyOOSialX9cBGaIq8OrTnPYbsB9tjr3WZ2PhxnMGbleHHSjvpWg2IXnV5gmobILwOUD4zb57I3LKd1+RGBeNXWk7Gmrl1WqfyAAKyXWfMERp0CNDEqJdzbQag==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPSA id
- CFFCA180017F; Thu,  5 Feb 2026 13:33:35 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <46C8474B-9D50-40DA-9D54-46C26B04BA68@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_D725EB73-AECD-4F28-AE5A-3D88AFC30AC5"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v19 00/22] WHPX support for Arm
-Date: Thu, 5 Feb 2026 14:33:24 +0100
-In-Reply-To: <CAFEAcA-4-nwRQCaa9SRUv28SWveC7k0GG5HmA478FhKGuJb_fA@mail.gmail.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20260129192009.14707-1-mohamed@unpredictable.fr>
- <CAFEAcA-4-nwRQCaa9SRUv28SWveC7k0GG5HmA478FhKGuJb_fA@mail.gmail.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-ORIG-GUID: -tg4Oms2hwURGsi3jWVZczQ7zPsAwbYX
-X-Proofpoint-GUID: -tg4Oms2hwURGsi3jWVZczQ7zPsAwbYX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDEwMSBTYWx0ZWRfX0VvzoIatpHe2
- kWl5QUPPQHVXETLLsYQbqWzkG7NmQkhT/SvxVv3g2wjeSrVAejK6lN7vr+b1kXaEvRqjvzbnLU7
- IVI/asNFeh8+JKMVKbXyRLDPI5zh4E0cNnEdxuVVX/KljBvB5eA8jNZEC2kbrgddh1/yvoU9CZk
- oxBdUJKczLXfpDZ2S/WJ6T9CKcSilUZKKM4gq+dAkLUMxKoseMi8i3cnIqkX+kJUAWxxHfIbwxs
- vH0jbVHBLla356KtxpB+x9AfnDAhAO4eIVpa2u+3d4waqHwgEjf6ZLSTVXTl7a8KbcNtB56ph8L
- f1fodVGv+vZPlDXEwA1fmp7OYEEBhhXo3ub1hwdhH+Qj0pk5zH2OtfrIZG0Bxs=
-X-Authority-Info-Out: v=2.4 cv=UM3Q3Sfy c=1 sm=1 tr=0 ts=69849c32
- cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=KKAkSRfTAAAA:8 a=gTrZvUQ8vleWZgLE1FEA:9 a=lqcHg5cX4UMA:10
- a=QEXdDO2ut3YA:10 a=gCBkIiZbhVrsYSpyXHMA:9 a=OK2zlWkB7KHOYUhx:21
- a=_W_S_7VecoQA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_02,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 clxscore=1030
- adultscore=0 suspectscore=0 malwarescore=0 spamscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602050101
-X-JNJ: AAAAAAABi+zlUCYij2EE8S4+BmTC0VL5E/e/LnhSl485a8+zZjk7WPO/649ZIoHwuWE8rW27wOw65Ek53/ePonhCMRL/UXC/hogGE5RDH0TOU7povRJiOOxg6F+nvZy0L34SDhLXKHIe5Qdv9fFIcrKfI0w8hBokZSN8+grnyFekE2tyK94QRx2g3yUiA+r97jjV3TpS3OSMB9IyoIqBN3FquMgmqkOalCq7q7RyKT+t2gtEcAuUX7LoWHkFLvVMrO+w34Z+LefjZmwjZj0yxRavxd7Pz+DyeaNpPOS0n3Tg9bU76XTnvuQ+WDnPMxxDuNR3TfLYOhabc2cPM50EaKANHSvYSVK8I7xJwr/UYVmo16wxfgGWOZcvND23TkWrL0mMBVHUVN+W/T225hg1yWzLj09bef+07/ivTTi734amv4EdhE2Zn9Odo+uaOHeIasswVP8H+6nay0HlTYsa2uoPhL9FvyxrdhH+i9PMgg9SVnaWloS54U0PRUygKVdXf0rV8Nttw83K3s3fS9SiOB45eKX9TYyxHRLoZlZ0lr2s2zA4TdrFmKDuZ6+LIi//UTyBPr7s0VhRoXPrxPx+mAxdBRt0oja6fvdNe289d+3H7xAd6ChhRAa3M5wizmUlOvBKWUyKYTzluPef5JnblIxvv2HRYSdPx62iGgcMsbgv3HQ1GLlWlRqmDyEiTsEiJA16Ef3zp3HQwJvOM65om4VHHOAABG+QExI9JhocZFZ+nQGwe22xlr2TPkh/6alXiqUiZnVA+TAEf3JMQPoIgq2hRDc3XbcaCVH2XFnElXfROplMLV7i5HjvAUtuFwgHyyZyHLE0Oat/5kmhWM4s2OUlv1TM0trvdqIRYeQoXySjA6iOi8y3lzdvmBa0o57HO4EMrCAwyXWQG1GTaQ==
-Received-SPF: pass client-ip=57.103.86.43;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vnza5-0007V7-HX
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 08:39:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770298776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=43Pl6VVpoucYWDhLditxSpS40NK6l++RsukU4AMmf/o=;
+ b=XJ6objt2Xqu/LB80pn8NDedAWE0GjDvZ91x2OLLL45cY+qVyhvnvQnHQcVVRKfbuFXJEcv
+ fiupR6Yeccr5HSnSUCo5KsUMcqoBujFuuArJ219kaV6vUZYZ/8V1MmLDCw+pgrfTVKaOVb
+ Zq0atTXvAJGuwZgZd7MJZ8Kcd5jiB7s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-FtxnuaNMPqiqIaxNzg7JNg-1; Thu,
+ 05 Feb 2026 08:39:33 -0500
+X-MC-Unique: FtxnuaNMPqiqIaxNzg7JNg-1
+X-Mimecast-MFC-AGG-ID: FtxnuaNMPqiqIaxNzg7JNg_1770298772
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46A09195608E; Thu,  5 Feb 2026 13:39:32 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.72])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 53CAC18003F6; Thu,  5 Feb 2026 13:39:31 +0000 (UTC)
+Date: Thu, 5 Feb 2026 08:39:30 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Martin Wilck <mwilck@suse.com>, Benjamin Marzinski <bmarzins@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hannes Reinecke <hare@suse.de>,
+ afaria@redhat.com, qemu-devel@nongnu.org,
+ Mikulas Patocka <mpatocka@redhat.com>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+Message-ID: <20260205133930.GA36872@fedora>
+References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
+ <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
+ <20260203180437.GA527989@fedora>
+ <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
+ <20260204183201.GB610283@fedora>
+ <d6cfd9a22c397e3811eaa73409f4ab1499e3e63f.camel@suse.com>
+ <aYSGia2Zy_g5iop5@redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="RkHMEBw0D8U8PPdz"
+Content-Disposition: inline
+In-Reply-To: <aYSGia2Zy_g5iop5@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,213 +95,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---Apple-Mail=_D725EB73-AECD-4F28-AE5A-3D88AFC30AC5
+--RkHMEBw0D8U8PPdz
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-
-
-> On 5. Feb 2026, at 11:20, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
+On Thu, Feb 05, 2026 at 12:01:13PM +0000, Daniel P. Berrang=E9 wrote:
+> On Thu, Feb 05, 2026 at 12:52:33PM +0100, Martin Wilck wrote:
+> > On Wed, 2026-02-04 at 13:32 -0500, Stefan Hajnoczi wrote:
+> > > On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
+> > > > Hi Stefan,
+> > > >=20
+> > > > So the ioctls will pass through qemu into the kernel, to be
+> > > > intercepted
+> > > > by the dm-mpath driver, which will use an upcall to have them
+> > > > handled
+> > > > by mpathpersistd (for the actual command) and multipathd (for the
+> > > > path
+> > > > registrations).
+> > > >=20
+> > > > I don't fully understand the advantage, security and complexity-
+> > > > wise,
+> > > > of this concept, compared to intercepting them qemu and using a
+> > > > socket
+> > > > to talk to mpathpersistd directly. If we did this, we could even
+> > > > support both generic and SCSI PR commands.
+> > >=20
+> > > Hi Martin,
+> > > The simplification and security benefits are on the application side,
+> > > not on the DM-Multipath side, so I can see what you're getting at.
+> > > From
+> > > the DM-Multipath perspective things get a little more complex.
+> > >=20
+> > > From an application perspective, a single API that works across block
+> > > device types (SCSI, NVMe, DM-Multipath) and requires no privileges or
+> > > sockets (they are a pain in container environments) is the most
+> > > convenient. The <linux/pr.h> ioctl API offers exactly this.
+> >=20
+> > I may be missing something, but AFAICS the PR ioctls require having a
+> > block device open for writing, which does either require root
+> > privileges, or some file descriptor previously opened with privileges
+> > and forwarded to another, less privileged process. No?
 >=20
-> On Thu, 29 Jan 2026 at 19:20, Mohamed Mediouni =
-<mohamed@unpredictable.fr <mailto:mohamed@unpredictable.fr>> wrote:
->>=20
->> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this =
-submission: whpx-v19)
->>=20
->> Missing features:
->> - VM save-restore: interrupt controller state notably
->> - SVE register sync: I didn't have the time to test this on =
-pre-release hardware with SVE2 support yet.
->> So SVE2 is currently masked for VMs when running this.
->>=20
->> Known bugs:
->> - U-Boot still doesn't work (hangs when trying to parse firmware) but =
-EDK2 does.
->>=20
->> Note:
->>=20
->> "target/arm/kvm: add constants for new PSCI versions" taken from the =
-mailing list.
->>=20
->> "accel/system: Introduce hwaccel_enabled() helper" taken from the =
-mailing list, added here
->> as part of this series to make it compilable as a whole.
->>=20
->> And another note:
->>=20
->> Seems that unlike HVF there isn't direct correspondence between WHv =
-registers and the actual register layout,
->> so didn't do changes there to a sysreg.inc.
->=20
-> Hi; this doesn't apply on current master now that the SMMU changes
-> have landed, because of a conflict with the ACPI data table
-> update patch, but otherwise I think it is good to go. Could you
-> rebase it, please?
->=20
-> thanks
-> =E2=80=94 PMM
-Hello,
+> While QEMU is run unprivileged, libvirt will grant QEMU access any block
+> devices that have been configured for the guest in question. On Linux,
+> libvirt will create a new /dev tmpfs populated with the allow-list of
+> device nodes the guest is permitted to access, with suitable file
+> permissions, ownership & SELinux labels set.
 
-Patchew seems unhappy but the patches cherry-picks cleanly for me=E2=80=A6=
-=20
-(for v19, which is rebased on top of the SMMU patches and v20)
+Ultimately something does require privileges to give an unprivileged
+application access to a block device. That could be udev rules, it could
+be libvirt, etc.
 
-It looks to be due to the commit message being parsed as a patch,
-will edit the commit messages for the ACPI table change commits and =
-re-submit.
+I would say the real distinction is between the privileges needed so the
+application can access the block device vs the privileges needed to
+perform PR operations. If udev or libvirt has set up block device nodes,
+an unprivileged application can open them for read/write access. But it
+would require CAP_SYS_RAWIO for SG_IO PR operations on top of that
+whereas <linux/pr.h> ioctls do not require that.
 
-Thanks,
--Mohamed=
+Therefore there is a real advantages regarding privileges when using
+<linux/pr.h> ioctls vs libmpathpersist.
 
---Apple-Mail=_D725EB73-AECD-4F28-AE5A-3D88AFC30AC5
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+Stefan
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 5. Feb 2026, at 11:20, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On Thu, 29 Jan 2026 at 19:20, Mohamed =
-Mediouni &lt;</span><a href=3D"mailto:mohamed@unpredictable.fr" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px;">mohamed@unpredictable.fr</a><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; wrote:</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><br>Link to branch: https://github.com/mediouni-m/qemu whpx (tag =
-for this submission: whpx-v19)<br><br>Missing features:<br>- VM =
-save-restore: interrupt controller state notably<br>- SVE register sync: =
-I didn't have the time to test this on pre-release hardware with SVE2 =
-support yet.<br>So SVE2 is currently masked for VMs when running =
-this.<br><br>Known bugs:<br>- U-Boot still doesn't work (hangs when =
-trying to parse firmware) but EDK2 =
-does.<br><br>Note:<br><br>"target/arm/kvm: add constants for new PSCI =
-versions" taken from the mailing list.<br><br>"accel/system: Introduce =
-hwaccel_enabled() helper" taken from the mailing list, added here<br>as =
-part of this series to make it compilable as a whole.<br><br>And another =
-note:<br><br>Seems that unlike HVF there isn't direct correspondence =
-between WHv registers and the actual register layout,<br>so didn't do =
-changes there to a sysreg.inc.<br></blockquote><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Hi; this doesn't apply on current master =
-now that the SMMU changes</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">have landed, because of a conflict with the =
-ACPI data table</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">update patch, but otherwise I think it is =
-good to go. Could you</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">rebase it, please?</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">thanks</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">=E2=80=94 =
-PMM</span></div></blockquote></div>Hello,<div><br></div><div>Patchew =
-seems unhappy but the patches cherry-picks cleanly for =
-me=E2=80=A6&nbsp;</div><div>(for v19, which is rebased on top of the =
-SMMU patches and v20)</div><div><br></div><div>It looks to be due to the =
-commit message being parsed as a patch,</div><div>will edit the commit =
-messages for the ACPI table change commits and =
-re-submit.</div><div><br></div><div>Thanks,</div><div>-Mohamed</div></body=
-></html>=
+--RkHMEBw0D8U8PPdz
+Content-Type: application/pgp-signature; name=signature.asc
 
---Apple-Mail=_D725EB73-AECD-4F28-AE5A-3D88AFC30AC5--
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmEnZEACgkQnKSrs4Gr
+c8jJVgf/Xk9V4k7V5KTUyHppS/5yHdL41QnwkWqJVI6KAOJDjuijEugBOcfr52VW
+FKYoQHO/rJyhs34KS2RyonCy1W/7wZZ3LvqmKdFn748P5FfNYhH+Oe4FeB/mdSfR
+MlUHWTVh83kPhe9GfWY55467qBWpOBoI/CQLCo/Q0S9wFYMI2hiXJdtDgr2Drv72
+kI9IwEDbbYp2rqNfngdiEMBJvVlhKYbMI0fQuV/xwqouPBcaFz8ISa2M12/hekzY
+EiZO/R6saWydO00GF4SM4zMpl1Msar8Fq57gsBgFSZzkX4zVIrBJ8lCdB98Gophz
+G20rja6XhmjCzRWkL3xOJwnpDBkwLQ==
+=0rYN
+-----END PGP SIGNATURE-----
+
+--RkHMEBw0D8U8PPdz--
+
 
