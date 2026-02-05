@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7AAECD997
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D35BECD997
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6ZH-0007ar-UU; Thu, 05 Feb 2026 16:07:16 -0500
+	id 1vo6kG-0000uQ-Iv; Thu, 05 Feb 2026 16:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6ZG-0007Zm-2K; Thu, 05 Feb 2026 16:07:14 -0500
+ id 1vo6k7-0000tX-Lu; Thu, 05 Feb 2026 16:18:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6ZE-0006r0-EB; Thu, 05 Feb 2026 16:07:13 -0500
+ id 1vo6k3-00010Z-BK; Thu, 05 Feb 2026 16:18:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4329B1864F6;
- Fri, 06 Feb 2026 00:06:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C4DBC186517;
+ Fri, 06 Feb 2026 00:17:30 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3BDAE35D937;
- Fri, 06 Feb 2026 00:07:10 +0300 (MSK)
-Message-ID: <1c8418b2-dcb9-4682-a4a5-843e95d6dbfc@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:07:10 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D0BCB35D949;
+ Fri, 06 Feb 2026 00:18:17 +0300 (MSK)
+Message-ID: <7dcb1f35-07b2-46b1-b98a-1be8d9962741@tls.msk.ru>
+Date: Fri, 6 Feb 2026 00:18:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/arm/aspeed_ast27x0: Fix EHCI3/4 IRQ routing to
- GIC
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, kane_chen@aspeedtech.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+Subject: Re: [PATCH v2 4/8] hw/i2c/aspeed_i2c: Fix DMA moving data into
+ incorrect address
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "clg@kaod.org" <clg@kaod.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, "leetroy@gmail.com"
+ <leetroy@gmail.com>,
+ "andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
+ "joel@jms.id.au" <joel@jms.id.au>,
+ "pierrick.bouvier@linaro.org" <pierrick.bouvier@linaro.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260203020855.1642884-1-jamin_lin@aspeedtech.com>
- <20260203020855.1642884-2-jamin_lin@aspeedtech.com>
+References: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -87,9 +87,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260203020855.1642884-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -113,45 +113,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 05:08, Jamin Lin via qemu development wrote:
-> EHCI3 and EHCI4 were missing entries in aspeed_soc_ast2700a1_irqmap,
-> so their source IRQs were never routed through the INTC OR-gates.
+On 2/3/26 04:55, Jamin Lin wrote:
+> In the previous design, the I2C model updated dma_dram_offset only when
+> firmware programmed the RX/TX DMA buffer address registers. The firmware
+> used to rewrite these registers before issuing each DMA command.
 > 
-> As a result, EHCI3/4 interrupts were not propagated to the GIC,
-> causing incorrect interrupt behavior for these controllers.
+> The firmware driver behavior has changed to program the DMA address
+> registers only once during I2C initialization. As a result, the I2C model
+> no longer refreshes dma_dram_offset, causing DMA to move data into an
+> incorrect DRAM address.
 > 
-> Add EHCI3 and EHCI4 to the IRQ map and route them to the same INTC
-> group as other shared peripherals, ensuring their interrupts are
-> properly connected to the GIC.
+> Fix this by introducing helper functions to update dma_dram_offset from
+> the DMA address registers, and invoke them right before handling TX/RX
+> DMA operations. This guarantees DMA always uses the correct buffer
+> address even if the registers are programmed only once.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Fixes: ba27ba302a264117c8b8427f944ced1bed17c438 ("hw/arm: ast27x0: Wire up EHCI controllers")
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Fixes: c400c38854017eeccda63115814eba4c3ef2b51f ("hw/i2c/aspeed: Introduce a new dma_dram_offset attribute in AspeedI2Cbus")
 
-This looks like a qemu-stable material (10.1.x, 10.2.x).
+Again, this looks like qemu-stable material.
 
 Please let me know if it isn't.
 
 Thanks,
 
 /mjt
-
-> ---
->   hw/arm/aspeed_ast27x0.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index d17f446661..e16183c3b3 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -149,6 +149,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
->       [ASPEED_DEV_ETH1]      = 196,
->       [ASPEED_DEV_ETH2]      = 196,
->       [ASPEED_DEV_ETH3]      = 196,
-> +    [ASPEED_DEV_EHCI3]     = 196,
-> +    [ASPEED_DEV_EHCI4]     = 196,
->       [ASPEED_DEV_PECI]      = 197,
->       [ASPEED_DEV_SDHCI]     = 197,
->   };
 
 
