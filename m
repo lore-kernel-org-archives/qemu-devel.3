@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCF5EC1E92
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977FFEC1E99
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnx3x-0000zB-Jv; Thu, 05 Feb 2026 05:58:18 -0500
+	id 1vnx5s-0001xc-Hu; Thu, 05 Feb 2026 06:00:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnx3u-0000yf-DQ
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:14 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1vnx5q-0001x1-EM
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:00:14 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnx3s-00006P-J4
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:58:14 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-790b7b3e594so8014247b3.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:58:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770289091; cv=none;
+ id 1vnx5n-0000Sy-Hi
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:00:14 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-795232991adso1603737b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 03:00:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770289210; cv=none;
  d=google.com; s=arc-20240605;
- b=QBYb4crK90DFbZGCbfpKDQKMe8uMfxSAwN8vWc38zJYkEOQ5hc2B8qKiGxLizN7pwH
- +Z0QvxpvCnfGsQDBsL0H9Sk4lXi5yscQrsPKG846LX7ont8JksjJ2MmmwCwPeImOkY4Y
- iPScQO7bcZcUErnmOCN3haqLzmmxfnXl/ztcVqzrytECklj9TgznkoCxs7aaEXsO6FLU
- WcjT8qEUg81XyNH5sfR8KtOgufLENk0VCmFA+/1cX2aKNb2Vqeb9eo2P07aXOB69YJME
- VzCkRkPv+5fE3isgWtYv5PG2zr7d4qXhLyFnwcLz4Sys61T5vfRkoTYykBHoBwznT4Eu
- 8UHw==
+ b=GznDWvXi+SKzlnvIV4BSerG7u6ZLndCXCyUk548AYbm+g/TrXonn01ckT82WiwbX7i
+ AH62inKauUn7ikNM7crqnobRZn3M985pDlCJ7OeYlCHZ+qthzjjEhjHWLYvTPYp2LHxZ
+ bunnWeFolgxldyRWrTiz8TKSb5Z3sw8b97NEa/zwH1fezhioAnVgJuRFbVAtYsWb8yVL
+ RVduVHbNTslw28epWEifx2v2dGBhByTA3H3fmFuM4sjAnNc2J6FNy9U4Ul4yEgu1L1Du
+ jn7BPZ8NNEi6Ejl1qHZYYk0V0++EHMCsHJuc8+3Ju9AvuOKvko1ojGoNFBWFgFi1A+m7
+ aVSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
- fh=/H3IPXbHkfJ7U92CFkuy7ATs0nyti9jVtYEI7Xvu9DI=;
- b=ad/1INVOB+OvJI1fqch2g07XuZ/pfMITBxIFMTMYmpFPHPEb0eEEnUSFsVH7+mhjBG
- IOpL0njCZb5qzlWuEG9WJFzJ60slDU7wLoKojeARQu4z8GShT/9kgr+EfLXaN9Qewt96
- y9iSzDptzrx6Tw1qrLpMHhfLdi+3noBBR+B3p9Ahj8Su00XeDGSrnaK4Q0MTgiM9ysSU
- bon219Q1rRQVPRYJ2CtfHy48n3kFblhFCva0fT2n7qarQkRvNzDypvjUFs8+Zt3xhyPg
- jSN7Xd4ZgCIWdwNMo8H4E1zghcNxi/RKpoEx7CT7m/FOdgXBiDMWj8aCZE93H1BdOWYF
- CJsQ==; darn=nongnu.org
+ bh=UTXQ+hL5pOtgRw7c+pwlRgQW/90K168Dme8+mjUgRzY=;
+ fh=QjOJZvpe0caDFfsEs9xnM9LsntH7+V9ksuhIBgPTSj8=;
+ b=hGqgZiJNJf6EP9jmM5lUoCCLGz5v+kKYGoQ2Tw47XW/X/Xm/tMs6k3AlslRQTTZ3Mj
+ AfAGt5BCJ04bYIINrBDwjBOjS8jJW1NloFSfR0+opZA+HiRaVZadeKJOuwqfx9QV/hwJ
+ dnvDuLaQ2whNqOkqjRp4O2W0zG36mQujCV1QR5US0hM05QBwa1hG7acmc3aYFT5Jbmf8
+ xgmCN+2TlWsU1/PgbxOzSMJhAQ9NU1NyvgFgzeLLV0XjR2qMSz+Ehnz1sPprtuSi6ZYg
+ /VFCELLESWoGsEiB0GUjZF1moyC64UPGlc3uuTKWvaqIKErS6BeaKUu7jjK2G7qQWFSg
+ vqUw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770289091; x=1770893891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770289210; x=1770894010; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
- b=mUwArEEr1fvp1njk9EMru50pWNlAtzg5fWPc7n/sMeYceYYycocio1oXYWKEwTYSKn
- zIc2TV3XYMZweuso9UGiyBRRbrIXwMIgaO040CV2UPCGoRhgRWVlVfeql6Jl6VRq2jPo
- kqRVcect9DqsPajswvlsfn0ry+q1aDl4pk0P7vrnbVGVlKtSjNS8fnKvYTBAPY2+J1ps
- 7J3MMRmcZ0UCZxGuZIU5mQhnj6CJxOVQukWHUT3+ivr3cLYsdDj+Y1cAkBthuSf29HH6
- MyjDv+u0Wbet/4pStjxgxWucE0xtk1qjTz81thpnCvypUz2NrbbVWgIzbMspU67n0y5E
- qG+A==
+ bh=UTXQ+hL5pOtgRw7c+pwlRgQW/90K168Dme8+mjUgRzY=;
+ b=jpqSPlhL/ktDK8cu1giKLnIZlSrA1ZiuO5e3U3BiUeQsZYqmILWMNMpuEpUzAKThT7
+ 0TFSKIu6C2K12hReVxifsKK7NgASjC3nuQtMXZDj5A0Lvv2ZLpHO3yEvDLVk4/dPQAla
+ jlxe6mdOdQFSlK2JtlCmBsDpJf2YszriI0IZ6fv3foWIb0ffrNasBs9hwfexVW5yKTCa
+ oiwpOm/TR+1omL85vs0YeyT18QelFm4Fya8sOiQopaKpBqba1DJNRQXX/1w9/s4QfntD
+ tPhov9jF4dVYjTcnpbJmXTHoZC5aSx9eHyS8D93OYzLBthVqbUizIXyBHx8U3frp7fRr
+ TcHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770289091; x=1770893891;
+ d=1e100.net; s=20230601; t=1770289210; x=1770894010;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Xi1iokQkGw8GZF0xxDEjxZdLtwNuhyZxehAKTgy2E8s=;
- b=XUE8tUuLYxMsmMJtH70YuhI6jRgPc0U+wnWm8HJ567OEuqru8fH2tdxQ/5Zyso9xN4
- pY76+i1Suew84FShoGA1PkaRubsk4nvx/S1A/DDYIEz0B8Ykdm9NGrH7xC7WG3WpY3s/
- 57OcXdDQBryCJnoBRgdBYF/LoVBn4nevkgI/Loy/aRsRnLnZTWOgkxysi5MMNaht00is
- fYttzIQEXl70uEWDlurkBorIRLdjvJnn5oB9gtPGOE28drpy1lYQDNX+q7iY7CPOsqlE
- fYqNjryUtGlRkY0ep5cilOCThS+prsJJXaOlRV+o6lw0bs7NiqB67q+MZ7Fe5TfOsLmy
- 7D2A==
-X-Gm-Message-State: AOJu0YyDrtF8clPBU9v3nTXh++//bdzq6hYo9glHSqrZ/CVvqmCNKnr7
- FlhaNR0No+mpRmrL6EGAtpt26rktvvlIB3k+aHRE7TKepW5jgex2XtrH/+QYcLWPqx23ruvlQS9
- ZpCLgYsaDP6ksVTMDox84DieIcAuO2LQ9PzMR42gJIg==
-X-Gm-Gg: AZuq6aLdbCvTfpO3Jq7xGvv41v+o29WUWDmyFXJ3uBLkIrNbodwSPQqLCN7s5yzZw24
- 6yoKP5tziVf3NHzGVMS+7fBwlxXx4j0LShbrY1BgCR5pAcKlBfW+h0k/Ch8LN0kXxRlnJnfV1M+
- 8055NTME68Nz9ACj7PNjnYvJgWwKCSJpgtcqplPiA9UI9WOMbfTSpz5Mx5j2hU1Sp4zP/F2ZSLe
- gQ4Sb4EKvO7OqZSLaRwBp4/LJhFMziyzo9lEydNRFWuWdECTZ9r2RyrX3SM2V/t7r/KtHpHjM52
- Oqjs
-X-Received: by 2002:a05:690c:c190:b0:794:8853:53f7 with SMTP id
- 00721157ae682-794fe84fc60mr56277547b3.69.1770289091115; Thu, 05 Feb 2026
- 02:58:11 -0800 (PST)
+ bh=UTXQ+hL5pOtgRw7c+pwlRgQW/90K168Dme8+mjUgRzY=;
+ b=r3wb4Ak0hClg215lEIKWVcpBXIYP+XpRMPU+ANwlRs00KWOyZwcDDuZKA7gcAGx05u
+ qXkEiKo6eekQVJm0fBOyPYiakF7xXMk3cl43vXlU+V1M2F27aUAUtXg6CIshbb7hLNIs
+ MurgMwTEqQ/UQejMIGyUEzskts1eyjESYo0FnsQ4TUWhn8FVAsnH3HTui55jNQj37Gs9
+ BP46E2U/BsP+SfKqNAO6bo6oQHwh4QcTgYEOFIosRlnqdFE4cAVAoUY7TZ/2RGr3LLDD
+ 53orU3V8JrvNNRIOLzyH5F0FjLgHxzvft4PC+XiTEFKn3cEdnMKp9pO2/3Hx0dbYC/m/
+ D+7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVKp+qLJsCNApIysGmS3Be+qlI4Ee3D9cZQTuTOMbEJSjYCRN84rRYvI7YNZOkn/PLnAW5ygejXH32@nongnu.org
+X-Gm-Message-State: AOJu0YxwXgvnVxq8X70YaYUHIs9UH3UiMhtjO6eensyL/GzPO7DDSCOZ
+ RgCJrfdlNDWdYLam3WDmpzwi8ek6lqvvpDEryeOnqu6kIyxKju6WOTGuFlExKPS+c9PUxPOUwXb
+ fM9QupHi9BW0NJcM1OTZhpf5ZHiQiNYeZ6mIwbJb5jw==
+X-Gm-Gg: AZuq6aK3IzgvMrJbsQzyQ/Q7X57eH1NFg2Va7SxLXyVnrmGlppwcuhWVexGNVqv5Ur7
+ 5Hyi4Y/LSF7WfhnrjXHb+Bc4EQfzYHIxRacrH5HPWnR7XSbNdzbnepQ9+sOjy5LX8YThfkwnE0G
+ QSDnpu1qUJ6JAVCYLPeKlfw8OkWfgPJMhTbF9fTU7a3CCLRZFQ4D8E17PBv5tVWd5O7n+9xXAIn
+ N5OcmyiJRudlJZfHrUn99fu7rFXJ2qHl3h4zePDj7LsbaZiFDjurDwiDLxQARGMEKNgKMiU3vg+
+ umaX
+X-Received: by 2002:a05:690c:f:b0:794:d29b:4a3f with SMTP id
+ 00721157ae682-794fe695ea5mr62683867b3.29.1770289209502; Thu, 05 Feb 2026
+ 03:00:09 -0800 (PST)
 MIME-Version: 1.0
-References: <CGME20260203130603epcas5p4dfde087764b1131e855c39ac9ceb0326@epcas5p4.samsung.com>
- <20260203130257.3263336-1-ashish.a6@samsung.com>
-In-Reply-To: <20260203130257.3263336-1-ashish.a6@samsung.com>
+References: <20260204103136.1795455-1-clg@redhat.com>
+In-Reply-To: <20260204103136.1795455-1-clg@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 10:57:58 +0000
-X-Gm-Features: AZwV_Qh8xYUWFFL590jYYEvEnv-pkCUAabxE_KpJP4kNfDiKiIDUC2N_0xUoxqc
-Message-ID: <CAFEAcA-kV4JmjwmbByYAf5ws7No0HP372cjRWsnH6mbZwvouRw@mail.gmail.com>
-Subject: Re: [PATCH v3] target/arm: Implement WFE,
- SEV and SEVONPEND for Cortex-M
-To: Ashish Anand <ashish.a6@samsung.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, saurabh@samsung.com, 
- vishwa.mg@samsung.com, y.kaushal@samsung.com, ashish.anand202@gmail.com
+Date: Thu, 5 Feb 2026 10:59:58 +0000
+X-Gm-Features: AZwV_QjPAmVaqBP6vcgUxH9C4U5YcF0jFaGbAt6Ck5GLsu2fEdCNwV9ZVP2aggg
+Message-ID: <CAFEAcA8bbux4ZurMeKF4=qPijBs_BLDN8CNpMT1PB9G_hmeKjg@mail.gmail.com>
+Subject: Re: [PULL 00/45] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,108 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Feb 2026 at 13:06, Ashish Anand <ashish.a6@samsung.com> wrote:
+On Wed, 4 Feb 2026 at 10:31, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
-> simple yield. This causes high host CPU usage because guest
-> RTOS idle loops effectively become busy-wait loops.
+> The following changes since commit 28a6ca268c2cd3718b5bf24c2d97e3d1e95fc6=
+04:
 >
-> To improve efficiency, this patch transitions WFE to use the architectura=
-l
-> 'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
-> to sleep when the guest is idle.
+>   Merge tag 'single-binary-20260203' of https://github.com/philmd/qemu in=
+to staging (2026-02-04 01:57:26 +1000)
 >
-> To support this transition, we implement the full architectural behavior
-> required for WFE, specifically the 'Event Register', 'SEVONPEND' logic,
-> and 'R_BPBR' exception handling requirements defined in the ARM
-> Architecture Reference Manual.
+> are available in the Git repository at:
 >
-> This patch enables resource-efficient idle emulation for Cortex-M.
+>   https://github.com/legoater/qemu/ tags/pull-aspeed-20260204
 >
-> Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
-> ---
+> for you to fetch changes up to e56e45d5bdc808ed52f943d1a785e4d885b6f18f:
 >
-> Changes in v3:
-> 1. Changed event_register from uint32_t to bool, as it's architecturally
->    a single-bit register. (Alex Benn=C3=A9e)
-> 2. Refactored nvic_update_pending_state() to accept VecInfo* and scr_bank
->    as parameters instead of recalculating them from irq/secure. (Peter Ma=
-ydell)
+>   tests/functional/aarch64: Add I2C test for AST1700 IO expanders (2026-0=
+2-04 10:10:57 +0100)
 >
-> Link to v2 - https://lore.kernel.org/qemu-devel/20260121132421.2220928-1-=
-ashish.a6@samsung.com
+> ----------------------------------------------------------------
+> aspeed queue:
 >
+> * Added support for the new AST1700 IO expander, including several
+>   device models (LTPI, PWM, I2C, GPIO, etc.).
+> * Updated the AST2700 SoC with LTPI support, EHCI IRQ fixes, and other
+>   improvements.
+> * Updated test images and test cases for various Aspeed platforms.
+> * Fixed issues in the Aspeed I2C and ADC models.
+> * Added support for pca9535 GPIO expander.
+> * Updated documentation for Aspeed boards.
 >
->  hw/intc/armv7m_nvic.c      | 114 ++++++++++++++++++++++++++++++-------
->  target/arm/cpu.c           |   6 ++
->  target/arm/cpu.h           |   7 +++
->  target/arm/machine.c       |  19 +++++++
->  target/arm/tcg/helper.h    |   1 +
->  target/arm/tcg/m_helper.c  |   5 ++
->  target/arm/tcg/op_helper.c |  56 +++++++++++++++---
->  target/arm/tcg/t16.decode  |   5 +-
->  target/arm/tcg/t32.decode  |   5 +-
->  target/arm/tcg/translate.c |  29 ++++++++--
->  10 files changed, 212 insertions(+), 35 deletions(-)
->
-> diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
-> index 28b34e9944..0be8facb8e 100644
-> --- a/hw/intc/armv7m_nvic.c
-> +++ b/hw/intc/armv7m_nvic.c
-> @@ -221,6 +221,29 @@ static int exc_group_prio(NVICState *s, int rawprio,=
- bool targets_secure)
->      return rawprio;
->  }
->
-> +/*
-> + * Update the pending state of an exception vector.
-> + * This is the central function for all updates to vec->pending.
-> + * Handles SEVONPEND: if this is a 0->1 transition on an external interr=
-upt
-> + * and SEVONPEND is set in the appropriate SCR, sets the event register.
-> + */
-> +static void nvic_update_pending_state(NVICState *s, VecInfo *vec,
-> +                                      int irq, int scr_bank,
-> +                                      uint8_t next_pending_val)
-> +{
-> +    uint8_t prev_pending_val =3D vec->pending;
-> +    vec->pending =3D next_pending_val;
-> +
-> +    /* Check for 0->1 transition on interrupts (>=3D NVIC_FIRST_IRQ) onl=
-y */
-> +    if (!prev_pending_val && next_pending_val && irq >=3D NVIC_FIRST_IRQ=
-) {
-> +        /* SEVONPEND: interrupt going to pending is a WFE wakeup event *=
-/
-> +        if (s->cpu->env.v7m.scr[scr_bank] & R_V7M_SCR_SEVONPEND_MASK) {
-> +            s->cpu->env.event_register =3D true;
-> +            qemu_cpu_kick(CPU(s->cpu));
-> +        }
-> +    }
+> ----------------------------------------------------------------
 
-I looked a bit more closely at the SEVONPEND language in the Arm ARM,
-and it says
 
-# When SCR.SEVONPEND bit associated with a security state is one, interrupt=
-s
-# transitioning from the inactive to the pending state that target that
-# security state are wakeup events.
 
-So the thing that determines whether we are looking at the S or the NS
-SCR.SEVONPEND is "does this interrupt target S or NS security state?".
-We have a function for that:
- exc_targets_secure(s, irq)
+Applied, thanks.
 
-So we can determine which SCR to look at in this nvic_update_pending_state(=
-)
-function and we don't need the callers to pass in scr_bank to us.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
-exc_targets_secure() requires it to be called only for a non-banked
-exception, but we can call it only inside the irq >=3D NVIC_FIRST_IRQ
-condition, as all interrupts are non-banked.
-
-This should simplify the changes you're making at the callsites.
-
-thanks
 -- PMM
 
