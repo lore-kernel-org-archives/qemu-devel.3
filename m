@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E52ECD99C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770DAECD99C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5Vd-0006v8-I2; Thu, 05 Feb 2026 14:59:25 -0500
+	id 1vo5Va-0006tW-Fk; Thu, 05 Feb 2026 14:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VZ-0006sR-6o
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:21 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1vo5VX-0006pd-3D
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:19 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5VW-00039T-Qv
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:20 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso20143135e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:16 -0800 (PST)
+ id 1vo5VS-00038U-F5
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:16 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42fb0fc5aa9so1111669f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321555; x=1770926355; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321553; x=1770926353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uFKD2gCbF2L2yObzjuIkLcm5lMIH03Mpqiwzu3nD9ZU=;
- b=FlvYscnu7klN4jf9BVzu8sOHXQHQ4cht6Tb9J0M/HVpl7MTN7pcwtmHeG1K53yRLvj
- jTvQ0vXIW/hwi0hKcnX8HFCEJdWmkmgAjn5LJJwYmLfr4pAL0ojXhC1yHbswEiL0Qf6N
- HJ5fZfKqKSKhZ8OULwBDIPwnjbtnpnLzWVp21MyaiZ0Mh7qqIbmlOV36yLThCgpcV2YJ
- CuNkfJ56qRzV3Zjg8KPsvaVKXwIuDxugErzP1k9zK/Xp3uuNNIhRayNYqt/mMjys29Nq
- GrBP3sE7fLQDUV9liUd/MuZRJ2mrKE2eP6t744rlfEpH0pYJDhbDPR/Ow92dXO7bO1F0
- ZaeA==
+ bh=ixQk1sle3klw7RV4vbO5KDu3SkmSly8hO0cVOcN5dSQ=;
+ b=RK2B80mY5G5DknpuUDoFdzPDJTFVUqCgT+AAaBaATozHEQm9lzF4rtveQKH5mBAHsY
+ waDthAwyGVe38GW+oUHBKhVeLzGbkt51SuuHkJGF8ov2iSnzMR1y8QFFPADlpBIEg/UO
+ +uexuNNYfjeIuMtYk6BUICiH7Kk2N5jgPp70JH/lw8m4TKfhiY41HcCnuFeAmgxarOlq
+ /XGeJIRg+uzq2gdcSjABb6bYTLdrP/4RiQi28ubds2T6ERmzCzu1OeAY3/nzF2datWVW
+ yHIdFDEJ/iDwTp5y6u6ebJ7Gv+kHqrsoOpyTfBQAgsAqAOxeUvEhvBigjGHl4vanuJ5r
+ BqHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321555; x=1770926355;
+ d=1e100.net; s=20230601; t=1770321553; x=1770926353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uFKD2gCbF2L2yObzjuIkLcm5lMIH03Mpqiwzu3nD9ZU=;
- b=Vdlqkrl+R3BqsKi91Jjfa7EUz0aZCLjhLWpz+qUih5W3f1nDt9FUjhnVmL/6aSwyvI
- PGOYslqEycRQwxlv6AC/V8koZmOO1fiuXoo0Lj5OzBGobnFdjnsjqdrnMHQ7iWAaRXcv
- 4DBHhgkoo1GERjH6UUVhAzedUALZq4ATr7S8+M69/WsTgIa+dMBg6vHFAkTVMcjmXVnf
- 4wHDUnscs92TFmQ9gPnr3YKV9w8LUmrqhYnfILkeCBYrIyWy90zo60eDowaNIVLZqm9g
- OJR3Vfqq445sVki8Jjpl3cE4Ymh9BwS1jSfEZwB2efBFoGqb0hIJBQKZ6tbrs54qeJHG
- VLQg==
-X-Gm-Message-State: AOJu0YzmjPu5qI4BGB93PQooWB4eIDrwG6IxdgWwWtpM45+rHZiUA2AB
- D7Gp6bdGorx7PkbIVxFjqeSzX9tEvTNuM2+VbuaYG61Opp1Yt/PdschZhOB/vnO6XvM=
-X-Gm-Gg: AZuq6aI/4r5B8UG9VU5YvxqXaAv6CjB13RmQ6F8SvQSj4yQwXIgfZ7Jir5/AEd9xbL+
- /hyPWCq/lsn/UIBpmehspPWB7jmkMHSLkAVPXUiKBFWa8KagS7UaDYYN/lJTdLkIiMrkUP0bRLg
- v+mtYtYPepfnw0NNWMfYZdBca6NsIIOcmkofbu3csHNSzIIAn/Pv5axPxbAaGiJdga8Cj+CJgAt
- Uw+bJ0Z+p6FK2nmbjN8IaJPjf63b+MUb6GUo4yqxwYpBnzLLsW+E62mPCXNuHiPxdaPa879DTjR
- 7aE51GS7qhdF6xKjYhL7Nj5VfppeUWkSadvyDKQoSFMDieqlazMQbeSX+K/cDb4CSXAUUQv/I1O
- QyVQp8Wz39Td5GJRrEsPgadpqBaRaq0HW0+gIjSTvx8q5C6W5ME4fzhqgquwpKfpe+FCSMEvXeu
- gmTp7nZlQnqY5WIcHep3Q=
-X-Received: by 2002:a05:6000:200e:b0:435:932e:f924 with SMTP id
- ffacd0b85a97d-43629034d76mr777534f8f.2.1770321555303; 
- Thu, 05 Feb 2026 11:59:15 -0800 (PST)
+ bh=ixQk1sle3klw7RV4vbO5KDu3SkmSly8hO0cVOcN5dSQ=;
+ b=XguwUjt6MKGCuHgIC9H+8iRvnzb2bViZ3F00fnbZjQm6Cno+DibngXzcsJRjzNF5Bw
+ 3lxFaZdwT0Fx2cvoaX8CUHZaf0U44jH9jNMPMAYGUVjvkYDtIJHni9UZmlII+oNH0Rm+
+ fZvz5SDHoUOmF1SVuCCZM3JEPCrCpO8i+hunBf+7nYzKw7FONt+aqubUf61T9AUpBSX3
+ Jsds8mn9SZ6x0JplwejSk7JRhEICVhesw6psMh8H15hkvvSyeiOMqyCn6lYZBNuFGvEK
+ /AcwkU6TR9ylwYQPBG363jwkeB1dZxK1RoJQbNGa7i6IPImWZnuPe225D+aYYbt6p8OZ
+ 5a/Q==
+X-Gm-Message-State: AOJu0YwnEQA0YxRORqCAupQskrYZ8uWShHMnXu5sli34xYaLFhrPuiGZ
+ naOIjKB+rBx4SElmM265rxinu/ximvKy9UygKgezG6GzAwp4wudGkJPeQrYG0+rl6ok=
+X-Gm-Gg: AZuq6aIZwZijbozUBop0RRPu7EBygmxyhvweTQirmqfcDuGVWrL62CxhGyGSi7BW1+O
+ SiqDpRgGnzSrlz2+Szi17USUKtLfPspUESkd7pQYpQcpRubUvrA3fuv3am275zywqynwOemJ9Bk
+ /UXe6KatguWyNMvFqoJsFRMRRcPB4Z42hFppvyH8hChIdDO30L+xt+5RI+N2RMU0OS8VBz4FSqB
+ my27fveBIy3sIWX4uhGU+ZLQg7o/szYf1NNl1UvApdv+TYJzIgT64fAVJ57tnQFc7yF9Pc+TJmI
+ rRbtqi56D5rL9IVM13OaZLSwo+XNX0Td+I5Ulozv7eFFeb5Ya6Sm9nE2S/OfCWyAht0FrXbHakM
+ oOfU1MooHnUEdy59n1rOi7/yz+SsTtZz3B/6Ks9qtIM5UDhnaDyFGfA5Ix/6qNDJh6PiVhm4zc9
+ TCDM8URH0viBUthNnsF1Q=
+X-Received: by 2002:a05:6000:402a:b0:430:f742:fbc7 with SMTP id
+ ffacd0b85a97d-43629378247mr672697f8f.14.1770321552220; 
+ Thu, 05 Feb 2026 11:59:12 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.13
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:59:14 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:11 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
@@ -71,23 +71,23 @@ Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 21/29] hw/core: Add Remote Port Stream device
-Date: Thu,  5 Feb 2026 20:58:16 +0100
-Message-ID: <20260205195824.2610192-22-ruslichenko.r@gmail.com>
+Subject: [PATCH 19/29] hw/core: Add Remote Port memory slave device
+Date: Thu,  5 Feb 2026 20:58:14 +0100
+Message-ID: <20260205195824.2610192-20-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,211 +105,232 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Introduce the 'remote-port-stream' device to bridge QEMU StreamSink
-interfaces with the Remote Port protocol.
+Introduce the 'remote-port-memory-slave' device to allow remote
+peers to initiate memory transactions within QEMU.
 
-The patch implements the logic to translate local stream push
-operations into Remote Port bus-access packets and vice-versa.
-This enables bi-directional data streaming between QEMU and
-external simulators.
+The patch implements the logic to receive Remote Port bus access
+commands, execute them within the QEMU Address Space, and return
+the appropriate response.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-stream.c | 239 +++++++++++++++++++++++++++++++++++
- hw/core/trace-events         |   4 +
- 2 files changed, 243 insertions(+)
- create mode 100644 hw/core/remote-port-stream.c
+ hw/core/remote-port-memory-slave.c         | 263 +++++++++++++++++++++
+ hw/core/trace-events                       |   4 +
+ include/hw/core/remote-port-memory-slave.h |  34 +++
+ 3 files changed, 301 insertions(+)
+ create mode 100644 hw/core/remote-port-memory-slave.c
+ create mode 100644 include/hw/core/remote-port-memory-slave.h
 
-diff --git a/hw/core/remote-port-stream.c b/hw/core/remote-port-stream.c
+diff --git a/hw/core/remote-port-memory-slave.c b/hw/core/remote-port-memory-slave.c
 new file mode 100644
-index 0000000000..6baaf68f08
+index 0000000000..bb23325469
 --- /dev/null
-+++ b/hw/core/remote-port-stream.c
-@@ -0,0 +1,239 @@
++++ b/hw/core/remote-port-memory-slave.c
+@@ -0,0 +1,263 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
++ * QEMU remote port memory slave. Read and write transactions
++ * recieved from the remote port are translated into an address space.
++ *
 + * Copyright (c) 2013 Xilinx Inc
-+ * Copyright (c) 2013 Peter Crosthwaite <peter.crosthwaite@xilinx.com>
-+ * Copyright (c) 2013 Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
 + *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
++ * This code is licensed under the GNU GPL.
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/core/sysbus.h"
++#include "system/system.h"
++#include "system/dma.h"
 +#include "qemu/log.h"
-+
-+#include "qemu/bitops.h"
 +#include "qapi/qmp/qerror.h"
-+#include "hw/core/stream.h"
 +#include "qapi/error.h"
++#include "hw/core/sysbus.h"
 +#include "migration/vmstate.h"
 +#include "hw/core/qdev-properties.h"
-+#include "hw/core/remote-port.h"
++#include "qemu/error-report.h"
 +#include "trace.h"
++#include "qemu/cutils.h"
 +
-+#ifndef REMOTE_PORT_STREAM_ERR_DEBUG
-+#define REMOTE_PORT_STREAM_ERR_DEBUG 0
++#include "hw/core/remote-port-proto.h"
++#include "hw/core/remote-port-memory-slave.h"
++
++#ifndef REMOTE_PORT_ERR_DEBUG
++#define REMOTE_PORT_DEBUG_LEVEL 0
++#else
++#define REMOTE_PORT_DEBUG_LEVEL 1
 +#endif
 +
-+#define TYPE_REMOTE_PORT_STREAM "remote-port-stream"
++#define DB_PRINT_L(level, ...) do { \
++    if (REMOTE_PORT_DEBUG_LEVEL > level) { \
++        fprintf(stderr,  ": %s: ", __func__); \
++        fprintf(stderr, ## __VA_ARGS__); \
++    } \
++} while (0)
 +
-+#define REMOTE_PORT_STREAM(obj) \
-+     OBJECT_CHECK(RemotePortStream, (obj), TYPE_REMOTE_PORT_STREAM)
-+
-+typedef struct RemotePortStream RemotePortStream;
-+
-+struct RemotePortStream {
-+    DeviceState parent_obj;
-+
-+    RemotePort *rp;
-+    uint32_t rp_dev;
-+    uint16_t stream_width;
-+
-+    StreamSink *tx_dev;
-+
-+    StreamCanPushNotifyFn notify;
-+    void *notify_opaque;
-+
-+    uint8_t *buf;
-+    struct rp_pkt pkt;
-+
-+    bool rsp_pending;
-+    uint32_t current_id;
-+};
-+
-+static void rp_stream_notify(void *opaque)
++/* Slow path dealing with odd stuff like byte-enables.  */
++static MemTxResult process_data_slow(RemotePortMemorySlave *s,
++                                     AddressSpace *as,
++                                     struct rp_pkt *pkt,
++                                     DMADirection dir,
++                                     uint8_t *data, uint8_t *byte_en)
 +{
-+    RemotePortStream *s = REMOTE_PORT_STREAM(opaque);
++    unsigned int i;
++    unsigned int byte_en_len = pkt->busaccess_ext_base.byte_enable_len;
++    unsigned int sw = pkt->busaccess.stream_width;
++    MemTxResult ret = MEMTX_OK;
 +
-+    /* FIXME: This is completely bogus.  */
-+    if (s->buf && stream_can_push(s->tx_dev, rp_stream_notify, s)) {
-+        RemotePortDynPkt rsp;
-+        struct rp_encode_busaccess_in in = {0};
-+        size_t pktlen = sizeof(struct rp_pkt_busaccess_ext_base);
-+        size_t enclen;
-+        int64_t delay = 0; /* FIXME - Implement */
++    assert(sw);
 +
-+        size_t ret = stream_push(s->tx_dev, s->buf, 4, 0);
-+        assert(ret == 4);
-+        s->buf = NULL;
++    for (i = 0; i < pkt->busaccess.len; i++) {
++        if (byte_en && !byte_en[i % byte_en_len]) {
++            continue;
++        }
 +
-+        memset(&rsp, 0, sizeof(rsp));
-+        rp_dpkt_alloc(&rsp, pktlen);
-+        rp_encode_busaccess_in_rsp_init(&in, &s->pkt);
-+        in.clk = s->pkt.busaccess.timestamp + delay;
-+        enclen = rp_encode_busaccess(rp_get_peer(s->rp),
-+                                     &rsp.pkt->busaccess_ext_base,
-+                                     &in);
-+        assert(enclen <= pktlen);
-+        trace_remote_port_stream_tx_busaccess(rp_cmd_to_string(in.cmd),
-+            in.id, in.flags, in.dev, in.addr, in.size, in.attr);
++        ret = dma_memory_rw(as, pkt->busaccess.addr + i % sw,
++                                 data + i, 1, dir, s->attr);
 +
-+        rp_write(s->rp, (void *)rsp.pkt, pktlen);
++        if (ret != MEMTX_OK) {
++            break;
++        }
 +    }
++
++    return ret;
 +}
 +
-+static void rp_stream_write(RemotePortDevice *obj, struct rp_pkt *pkt)
++static AddressSpace *get_as_for_phys_busaccess(RemotePortMemorySlave *s,
++                                               struct rp_pkt *pkt)
 +{
-+    RemotePortStream *s = REMOTE_PORT_STREAM(obj);
++    if (s->ats_cache) {
++        IOMMUTLBEntry *iotlb =
++            rp_ats_cache_lookup_translation(s->ats_cache,
++                                            pkt->busaccess.addr,
++                                            pkt->busaccess.len);
++        if (iotlb) {
++            /* Return the matching address space found. */
++            return iotlb->target_as;
++        }
++    }
++    /* Emit a warning on errors since this really should not happen. */
++    warn_report("Physical address error detected (range address: 0x%"
++                HWADDR_PRIx ", len: 0x%" PRIx32 " contains untranslated "
++                "addresses)", pkt->busaccess.addr, pkt->busaccess.len);
++    return NULL;
++}
 +
-+    trace_remote_port_stream_rx_busaccess(rp_cmd_to_string(pkt->hdr.cmd),
++static void rp_cmd_rw(RemotePortMemorySlave *s, struct rp_pkt *pkt,
++                      DMADirection dir)
++{
++    size_t pktlen = sizeof(struct rp_pkt_busaccess_ext_base);
++    struct rp_encode_busaccess_in in = {0};
++    size_t enclen;
++    int64_t delay;
++    uint8_t *data = NULL;
++    uint8_t *byte_en;
++    MemTxResult ret;
++    AddressSpace *as;
++
++    byte_en = rp_busaccess_byte_en_ptr(s->peer, &pkt->busaccess_ext_base);
++
++    if (dir == DMA_DIRECTION_TO_DEVICE) {
++        pktlen += pkt->busaccess.len;
++    } else {
++        data = rp_busaccess_rx_dataptr(s->peer, &pkt->busaccess_ext_base);
++    }
++
++    assert(pkt->busaccess.width == 0);
++    assert(!(pkt->hdr.flags & RP_PKT_FLAGS_response));
++
++    rp_dpkt_alloc(&s->rsp, pktlen);
++    if (dir == DMA_DIRECTION_TO_DEVICE) {
++        data = rp_busaccess_tx_dataptr(s->peer,
++                                       &s->rsp.pkt->busaccess_ext_base);
++    }
++    if (dir == DMA_DIRECTION_FROM_DEVICE && REMOTE_PORT_DEBUG_LEVEL > 0) {
++        DB_PRINT_L(0, "address: %" PRIx64 "\n", pkt->busaccess.addr);
++        qemu_hexdump(stderr, ": write: ",
++                     (const char *) data, pkt->busaccess.len);
++    }
++    trace_remote_port_memory_slave_rx_busaccess(rp_cmd_to_string(pkt->hdr.cmd),
 +        pkt->hdr.id, pkt->hdr.flags, pkt->hdr.dev, pkt->busaccess.addr,
 +        pkt->busaccess.len, pkt->busaccess.attributes);
 +
-+    assert(pkt->busaccess.width == 0);
-+    assert(pkt->busaccess.stream_width == pkt->busaccess.len);
-+    assert(pkt->busaccess.addr == 0);
++    s->attr.secure = !!(pkt->busaccess.attributes & RP_BUS_ATTR_SECURE);
++    s->attr.requester_id = pkt->busaccess.master_id;
 +
-+    if (pkt->hdr.flags & RP_PKT_FLAGS_response) {
-+        /* FXIME - probably need to do syncs and stuff */
-+        assert(s->rsp_pending);
-+        s->rsp_pending = false;
-+        if (s->notify) {
-+            StreamCanPushNotifyFn notify = s->notify;
-+            s->notify = NULL;
-+            notify(s->notify_opaque);
++    if (pkt->busaccess.attributes & RP_BUS_ATTR_PHYS_ADDR) {
++        as = get_as_for_phys_busaccess(s, pkt);
++    } else {
++        as = &s->as;
++    }
++    if (as) {
++        if (byte_en || pkt->busaccess.stream_width != pkt->busaccess.len) {
++            ret = process_data_slow(s, as, pkt, dir, data, byte_en);
++        } else {
++            ret = dma_memory_rw(as, pkt->busaccess.addr, data,
++                                 pkt->busaccess.len, dir, s->attr);
 +        }
 +    } else {
-+        assert(!s->buf);
-+        s->buf = g_memdup2(pkt + 1, 4);
-+        s->pkt = *pkt;
-+        rp_stream_notify(s);
++        ret = MEMTX_ERROR;
 +    }
-+}
 +
-+static bool rp_stream_stream_can_push(StreamSink *obj,
-+                                            StreamCanPushNotifyFn notify,
-+                                            void *notify_opaque)
-+{
-+    RemotePortStream *s = REMOTE_PORT_STREAM(obj);
-+
-+    if (s->rsp_pending) {
-+        s->notify = notify;
-+        s->notify_opaque = notify_opaque;
-+        return false;
++    if (dir == DMA_DIRECTION_TO_DEVICE && REMOTE_PORT_DEBUG_LEVEL > 0) {
++        DB_PRINT_L(0, "address: %" PRIx64 "\n", pkt->busaccess.addr);
++        qemu_hexdump(stderr, ": read: ",
++                     (const char *) data, pkt->busaccess.len);
 +    }
-+    return true;
-+}
++    /*
++     * delay here could be set to the annotated cost of doing issuing
++     * these accesses. QEMU doesn't support this kind of annotations
++     * at the moment. So we just clear the delay.
++     */
++    delay = 0;
 +
-+static size_t rp_stream_stream_push(StreamSink *obj, uint8_t *buf,
-+                                    size_t len, bool eop)
-+{
-+    RemotePortStream *s = REMOTE_PORT_STREAM(obj);
-+    RemotePortDynPkt rsp;
-+    struct rp_pkt_busaccess_ext_base pkt;
-+    struct rp_encode_busaccess_in in = {0};
-+    uint64_t rp_attr = eop ? RP_BUS_ATTR_EOP : 0;
-+    int64_t clk;
-+    int enclen;
++    rp_encode_busaccess_in_rsp_init(&in, pkt);
++    in.clk = pkt->busaccess.timestamp + delay;
 +
-+    clk = rp_normalized_vmclk(s->rp);
++    switch (ret) {
++    case MEMTX_ERROR:
++        in.attr |= RP_RESP_BUS_GENERIC_ERROR << RP_BUS_RESP_SHIFT;
++        break;
++    case MEMTX_DECODE_ERROR:
++        in.attr |= RP_RESP_ADDR_ERROR << RP_BUS_RESP_SHIFT;
++        break;
++    default:
++        /* MEMTX_OK maps to RP_RESP_OK. */
++        break;
++    }
 +
-+    in.cmd = RP_CMD_write;
-+    in.id = rp_new_id(s->rp);
-+    in.dev = s->rp_dev;
-+    in.clk = clk;
-+    in.attr = rp_attr;
-+    in.size = len;
-+    in.stream_width = s->stream_width;
-+    enclen = rp_encode_busaccess(rp_get_peer(s->rp), &pkt, &in);
++    enclen = rp_encode_busaccess(s->peer, &s->rsp.pkt->busaccess_ext_base,
++                                 &in);
++    assert(enclen <= pktlen);
 +
-+    trace_remote_port_stream_tx_busaccess(rp_cmd_to_string(in.cmd),
++    trace_remote_port_memory_slave_tx_busaccess(rp_cmd_to_string(in.cmd),
 +        in.id, in.flags, in.dev, in.addr, in.size, in.attr);
 +
-+    rp_rsp_mutex_lock(s->rp);
-+    rp_write(s->rp, (void *) &pkt, enclen);
-+    rp_write(s->rp, buf, len);
-+    rsp = rp_wait_resp(s->rp);
-+    assert(rsp.pkt->hdr.id == be32_to_cpu(pkt.hdr.id));
++    rp_write(s->rp, (void *)s->rsp.pkt, enclen);
++}
 +
-+    trace_remote_port_stream_rx_busaccess(
-+        rp_cmd_to_string(rsp.pkt->hdr.cmd), rsp.pkt->hdr.id,
-+        rsp.pkt->hdr.flags, rsp.pkt->hdr.dev, rsp.pkt->busaccess.addr,
-+        rsp.pkt->busaccess.len, rsp.pkt->busaccess.attributes);
++static void rp_memory_slave_realize(DeviceState *dev, Error **errp)
++{
++    RemotePortMemorySlave *s = REMOTE_PORT_MEMORY_SLAVE(dev);
 +
-+    rp_dpkt_invalidate(&rsp);
-+    rp_rsp_mutex_unlock(s->rp);
-+    rp_restart_sync_timer(s->rp);
-+    return len;
++    s->peer = rp_get_peer(s->rp);
++    address_space_init(&s->as, s->mr ? s->mr : get_system_memory(), "dma");
++}
++
++static void rp_memory_slave_write(RemotePortDevice *s, struct rp_pkt *pkt)
++{
++    return rp_cmd_rw(REMOTE_PORT_MEMORY_SLAVE(s), pkt,
++                     DMA_DIRECTION_FROM_DEVICE);
++}
++
++static void rp_memory_slave_read(RemotePortDevice *s, struct rp_pkt *pkt)
++{
++    return rp_cmd_rw(REMOTE_PORT_MEMORY_SLAVE(s), pkt,
++                     DMA_DIRECTION_TO_DEVICE);
 +}
 +
 +static void rp_prop_allow_set_link(const Object *obj, const char *name,
@@ -317,68 +338,112 @@ index 0000000000..6baaf68f08
 +{
 +}
 +
-+static void rp_stream_init(Object *obj)
++static void rp_memory_slave_init(Object *obj)
 +{
-+    RemotePortStream *s = REMOTE_PORT_STREAM(obj);
++    RemotePortMemorySlave *rpms = REMOTE_PORT_MEMORY_SLAVE(obj);
 +
-+    object_property_add_link(obj, "axistream-connected", TYPE_STREAM_SINK,
-+                             (Object **)&s->tx_dev,
-+                             qdev_prop_allow_set_link_before_realize,
-+                             OBJ_PROP_LINK_STRONG);
 +    object_property_add_link(obj, "rp-adaptor0", "remote-port",
-+                             (Object **)&s->rp,
++                             (Object **)&rpms->rp,
 +                             rp_prop_allow_set_link,
 +                             OBJ_PROP_LINK_STRONG);
++    object_property_add_link(obj, "mr", TYPE_MEMORY_REGION,
++                             (Object **)&rpms->mr,
++                             qdev_prop_allow_set_link_before_realize,
++                             OBJ_PROP_LINK_STRONG);
++    object_property_add_link(obj, "rp-ats-cache", TYPE_REMOTE_PORT_ATS_CACHE,
++                             (Object **)&rpms->ats_cache,
++                             qdev_prop_allow_set_link_before_realize,
++                             OBJ_PROP_LINK_STRONG);
 +}
 +
-+static Property rp_properties[] = {
-+    DEFINE_PROP_UINT32("rp-chan0", RemotePortStream, rp_dev, 0),
-+    DEFINE_PROP_UINT16("stream-width", RemotePortStream, stream_width, 4),
-+};
-+
-+static void rp_stream_class_init(ObjectClass *oc, const void *data)
++static void rp_memory_slave_unrealize(DeviceState *dev)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    StreamSinkClass *ssc = STREAM_SINK_CLASS(oc);
-+    RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
++    RemotePortMemorySlave *s = REMOTE_PORT_MEMORY_SLAVE(dev);
 +
-+    ssc->push = rp_stream_stream_push;
-+    ssc->can_push = rp_stream_stream_can_push;
-+    device_class_set_props_n(dc, rp_properties, ARRAY_SIZE(rp_properties));
-+    rpdc->ops[RP_CMD_write] = rp_stream_write;
++    address_space_destroy(&s->as);
 +}
 +
-+static const TypeInfo rp_stream_info = {
-+    .name          = TYPE_REMOTE_PORT_STREAM,
++static void rp_memory_slave_class_init(ObjectClass *oc, const void *data)
++{
++    RemotePortDeviceClass *rpdc = REMOTE_PORT_DEVICE_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    rpdc->ops[RP_CMD_write] = rp_memory_slave_write;
++    rpdc->ops[RP_CMD_read] = rp_memory_slave_read;
++    dc->realize = rp_memory_slave_realize;
++    dc->unrealize = rp_memory_slave_unrealize;
++}
++
++static const TypeInfo rp_info = {
++    .name          = TYPE_REMOTE_PORT_MEMORY_SLAVE,
 +    .parent        = TYPE_DEVICE,
-+    .instance_size = sizeof(RemotePortStream),
-+    .class_init    = rp_stream_class_init,
-+    .instance_init = rp_stream_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_STREAM_SINK },
++    .instance_size = sizeof(RemotePortMemorySlave),
++    .instance_init = rp_memory_slave_init,
++    .class_init    = rp_memory_slave_class_init,
++    .interfaces    = (InterfaceInfo[]) {
 +        { TYPE_REMOTE_PORT_DEVICE },
 +        { },
-+    }
++    },
 +};
 +
-+static void rp_stream_register_types(void)
++static void rp_register_types(void)
 +{
-+    type_register_static(&rp_stream_info);
++    type_register_static(&rp_info);
 +}
 +
-+type_init(rp_stream_register_types)
++type_init(rp_register_types)
 diff --git a/hw/core/trace-events b/hw/core/trace-events
-index fb3125b0eb..5b4e5029fe 100644
+index 6332002d65..ee77916010 100644
 --- a/hw/core/trace-events
 +++ b/hw/core/trace-events
-@@ -44,3 +44,7 @@ remote_port_memory_slave_rx_busaccess(const char *cmd, uint32_t id, uint32_t fla
- # remote-port-memory-gpio.c
- remote_port_gpio_tx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
- remote_port_gpio_rx_interrupt(uint32_t id, uint32_t flags, uint32_t dev, uint64_t vector, uint32_t irq, uint32_t val) "id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", vector=0x%"PRIx64", irq=0x%"PRIx32", level=0x%"PRIx32
+@@ -36,3 +36,7 @@ cpu_reset(int cpu_index) "%d"
+ # remote-port-memory-master.c
+ remote_port_memory_master_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
+ remote_port_memory_master_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
 +
-+# remote-port-stream.c
-+remote_port_stream_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len,  uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
-+remote_port_stream_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len,  uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
++# remote-port-memory-slave.c
++remote_port_memory_slave_tx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
++remote_port_memory_slave_rx_busaccess(const char *cmd, uint32_t id, uint32_t flags, uint32_t dev, uint64_t addr, uint32_t len, uint64_t attr) "cmd=%s, id=0x%"PRIx32", flags=0x%"PRIx32", dev=0x%"PRIx32", addr=0x%"PRIx64", len=0x%"PRIx32", attr=0x%"PRIx64
+diff --git a/include/hw/core/remote-port-memory-slave.h b/include/hw/core/remote-port-memory-slave.h
+new file mode 100644
+index 0000000000..d88e806ed6
+--- /dev/null
++++ b/include/hw/core/remote-port-memory-slave.h
+@@ -0,0 +1,34 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * QEMU remote port memory slave. Read and write transactions
++ * recieved from the remote port are translated into an address space.
++ *
++ * Copyright (c) 2013 Xilinx Inc
++ * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
++ * Written by Peter Crosthwaite <peter.crosthwaite@xilinx.com>
++ *
++ * This code is licensed under the GNU GPL.
++ */
++#ifndef REMOTE_PORT_MEMORY_SLAVE_H
++#define REMOTE_PORT_MEMORY_SLAVE_H
++
++#include "hw/core/remote-port-ats.h"
++
++#define TYPE_REMOTE_PORT_MEMORY_SLAVE "remote-port-memory-slave"
++#define REMOTE_PORT_MEMORY_SLAVE(obj) \
++        OBJECT_CHECK(RemotePortMemorySlave, (obj), \
++                     TYPE_REMOTE_PORT_MEMORY_SLAVE)
++
++typedef struct RemotePortMemorySlave {
++    /* private */
++    SysBusDevice parent;
++    /* public */
++    struct RemotePort *rp;
++    struct rp_peer_state *peer;
++    MemoryRegion *mr;
++    AddressSpace as;
++    MemTxAttrs attr;
++    RemotePortDynPkt rsp;
++    RemotePortATSCache *ats_cache;
++} RemotePortMemorySlave;
++#endif
 -- 
 2.43.0
 
