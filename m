@@ -4,95 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D74AECD981
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DFAECD980
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1Ev-0004Gp-KC; Thu, 05 Feb 2026 10:25:53 -0500
+	id 1vo1SN-0007rv-0G; Thu, 05 Feb 2026 10:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo1Em-00045A-Mg
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:49 -0500
-Received: from p-west2-cluster2-host6-snip4-10.eps.apple.com ([57.103.68.243]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo1Ei-0001xb-Mh
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:43 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPS id
- CC133180076D; Thu,  5 Feb 2026 15:25:37 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770305139; x=1772897139;
- bh=c9xkU5JKUppgK3M6NvIGvHRbHv9MZvro5B1lYG+DJ2Y=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=clBMVJTiXYJmPvRRopm10x/CGex9EJuI/SE7qUyw7XWCCt0+ybYuIK2I6bFz9rf9y3qr8pS4XO8w93lNtJGY8Nz2HJOTgWwiLQr8IWejgtHkUJ1PtlCgmN1gyiGoNWGuQcBDciSb569hAw7DQgnkbCgor10lDrU1KtggCZwzdNnd/PY+hskXgQYPqKmitz6d/48L+PyATksQc2H/KGQHnci/mz/peCA31zEBfw2wOuhCou1VI/bsVqup253PO/i/qVX0XYmcTCiRUXcmrEgOuqNzhZhpnPheRqFkmP+xbF0yr8Zthze4xCXXiNzsNalSVNSZII+AXD61tTpHNWInZQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPSA id
- 3D8ED180018C; Thu,  5 Feb 2026 15:25:33 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH v22 12/22] whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
-Date: Thu,  5 Feb 2026 16:24:15 +0100
-Message-ID: <20260205152432.78208-13-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260205152432.78208-1-mohamed@unpredictable.fr>
-References: <20260205152432.78208-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1SL-0007rd-El
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:39:45 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vo1SJ-0005ga-MH
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:39:45 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4806dffc64cso9447205e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:39:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770305981; x=1770910781; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0QMMAt7u/W3kURzsiue9Mogq0i0g8HCQ3UJiZn7/BdI=;
+ b=rppfmYb5O3W6LoJFfYcRCI0g7QlbxUVxuMeDGTIZbZ4bG8GlFx0O1Uuy9n/uI6jz4E
+ 6K59JGqizbqa/K+60aWFIlbNSadKqdaLnS9Im1Fxbe4Qqpfs2sFYyJwW0QRZCkUX+ynq
+ cqu1Ug47x28ygD5QpIKlIvl0EQ/HEdeuK9NKdN33xvq2bzCLU4clCnm6RfI2IOR4dDkv
+ j1FY8iVTS3gkrmuckS94YOIrPcQvU10dT9YJhBv7Eg9KesnvPTZQjZGkDcozxQ3373A3
+ /gIU1av3WXYc1n20ZTkvmMeMRzQRTUDofkhQK1yzkpu2ZNApVhuid06a+GjwptH66upG
+ bn3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770305981; x=1770910781;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0QMMAt7u/W3kURzsiue9Mogq0i0g8HCQ3UJiZn7/BdI=;
+ b=SuseNmjJYt/BCxhg5ZqMpmNjQBT95hOzUX3xEeUKn8QSYyZuSExRvz7Ya1elKNyfqj
+ Gw6NRYNFVkf0hm4y3upiLllC3B0wJkbKCHu2kIwrhKFP2pg1g2vC9cmt3xHz+iaFH8xb
+ f4HHZYmlqhYRTOFAztJ63gw8R4UJBCslOXe4lMs+kVKSo/Yk/nU6AGi7GbNdntQUHBDp
+ Jm8KnOlUoBtpNj7s0MywVQJLd/X4qAciDejGdk2l0JJkj1Vpfpg7XoEGSHyJRsHMex7C
+ clBHE8YlEhjHAS/Wl1yh/C9qX7vLrWNCtQGCPT9MHKKnK/D3WF8gCfHutknwqazNVyoH
+ Hv3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrolT/l7x4G0V9vTmKyEDaMOOICkRbl//f4/0M/D+ngoipYF4w+iyEP05oJFx99GM03GpDypoZ/ukF@nongnu.org
+X-Gm-Message-State: AOJu0YxEQ3hjF9fww6CTDhZ9GhzCLzEy/1v78mJGvyWHrOD4PtpgGz82
+ b8St0yA+I95OlnoiWo/fUiPjs2s20cmqiVfsmSIxYDsS+KUqnT+6WGy8aHNLtqkVhnY=
+X-Gm-Gg: AZuq6aILq6HY91Fe6NJmnYESM1o68hgSeHnGws0UXxxGn8bqlw1WhDW27XiCr/QXFmz
+ ULpHZqF3d8OGr2x5+bMD1bRJIMtcWKh3O3WdaOQsuTzTYpY7SuhQbCrG3+ihNw+IKaHYQgU4olR
+ sGo+GdD0sGhAgq9AmpGyuYJ1OiyzbYQi0U97MqBO+DvtqCW/az7+sHlSuF/UFfrnaq99V9KKjAK
+ GliUbkASgmiT8iY7R+j2MzrVKP3Rx7Djh/7bNEfnCYvkr0A6OEF0Mh5R2w6C8e3w9FTJzma0XNE
+ Jdnro7qWfRrNhrSgifP1lObBq2RbW/xVEICmzZbIH4xcz3XLERpkPCfNybHnLYdGg1/PGwnsLsK
+ XkJSbqujgDOe92bY0oW46ozlTN4NUIgPOtbPCpBID5oAbjFt3mbZTdP1ex9oa6I/G4AIKoSQbvU
+ q3CnJ+G2j/E5RgNLWI/00GyohEK8mdoMlQiwKAKPCRYM/yNLYHS0MyOw==
+X-Received: by 2002:a05:600c:628b:b0:479:2f95:5179 with SMTP id
+ 5b1f17b1804b1-4830e931e2amr97658925e9.15.1770305981222; 
+ Thu, 05 Feb 2026 07:39:41 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48317d8341csm61415405e9.13.2026.02.05.07.39.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 07:39:40 -0800 (PST)
+Message-ID: <ec2b9446-df98-46e3-b7aa-f486eb189dd0@linaro.org>
+Date: Thu, 5 Feb 2026 16:39:39 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=dParWeZb c=1 sm=1 tr=0 ts=6984b673
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=2psWIPzlEfUqwKpUe20A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 4JESfsFHUK0Za1XDgooSILq_JIl7M-KA
-X-Proofpoint-GUID: 4JESfsFHUK0Za1XDgooSILq_JIl7M-KA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDExNiBTYWx0ZWRfX5jXA4uxlfIjG
- 4pDnSWH+AdyDJwv15zr7K7DyDYfQQ0stpyijq1I/iQla8Vk9BHtdS7YboY4/Q9HGToBBMWP38Ol
- BrY2rg5iSNZFDBsQXkxVz2Lp6s+K+Lse44mvxqEwP2/hF09BbdgxQiRpTxU7hgZbyXellODdsIh
- 128xbd/cA1JvtquS1aBDof4YFW1ER408sCWzwVhK8FZi/gir5z7wT1NRH+BLN9m2+AFzftvqLR4
- 1mnlpJUEo/cVXL0g2Z0gwDobXK7+LPFsd9QD16DnUqxN5PfevqPzYb+N2kC/m37tQ2m08qxSRTx
- 7SDomldwoqq6atlhdlGKv//9TOE1OWTU+aGDB1LwC471057jdtCe0S59K44PYs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1030 bulkscore=0
- malwarescore=0 mlxscore=0 mlxlogscore=999 phishscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602050116
-X-JNJ: AAAAAAABstmH7B+SU31Ddn8PLvUG8a5AB0rad0AabcKol4ImpC2ZOde2K5bDBgpelMTj8Znixf7C2yuEmpoP1v3t6GKylJFPI9YsHHpKa8IlYf17WlyOIRtI0EzxEziQscusmA+980/Isd2r9DtZBgzDQ6Oa/vjpCoXAf9WFj0muOZr2W930qXicPDyrFCIpd+l+OGrTV1VDd3Wz8vPZi6fCqCEH/71t4/2DG3kESEcw2A/vAjxF2bUy3opQ5xTbsMWNhm+Mh4OqyczINSMHOtxbPoGVNJUUByFPPJZVvYrxbHmRfKyaNo7awOnpRTI3LoC2N/VgU9/1o/owt1CLq5gAclxk0yvouplSQgnf7WeoN0vdWVHNnGyyN9qsV2YocFRNZ3ZNpSz1hjLgUT3ja6jfkS4TxkeK8UuZwTRwIY2jia0BsiGH2SswBZ29awZeFMDbXLOfsMKaYoW3bn8P/zVNQDtK3ubt3z75HsjhaVcxfVYFIUS18V78375nHycYRYr7dYBEsaCYcrj4kG85yUSO+7OrXEpUZ/ldZD+B2o+WoXp/X1N13diJY2uMh1GhHKE2HN1caW9t9bmvV6bmsbABJ9/7DFT93Wn0QK38TIx1faydTN5oSL78VJb75rqvW+ddC/6xk6QB8iWO3AWepGjtb134rq+RrwPbcUudFe/+i6s7A63z1D9WthKgAxtqV44FccP4Eo8AFIbLm/Rg1w6ZSkrgQOehi/+JJtDuzdeulvRp8ga2eWgE3C1II9BImTjnKN9LzXFvs+NJYoFaDu1ZpBcxkgv1+v1bwD58K5HekwZtMr07RtcjyhDkb95bUy4M/R+go6RLApt2a7qlNQZ1MCZFVmDVo0F2HOSP65k/TgWnFZtgZUuI2GoDxtTYJoWESBYvOPBk9ST5ZJxkEoA/0Ls21MTsuss8x7hTuz+T3wq+FqitiAb1AONKxqRUYLxG7xG660fL6OT5Cu5yCA==
-Received-SPF: pass client-ip=57.103.68.243;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] or1k: Rename the architecture from openrisc
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, shorne@gmail.com
+References: <20260205030244.266447-1-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260205030244.266447-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,45 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As of why: WHPX on arm64 doesn't have debug trap support as of today.
+On 5/2/26 04:02, Richard Henderson wrote:
+> We have an odd mix of 'openrisc' and 'or1k' in use.
+> Standardize TARGET_ARCH and all of the filenames to use 'or1k'.
 
-Keep the exception bitmap interface for now - despite that being entirely unavailable on arm64 too.
+I was confused thinking OpenRISC is the architecture, and 1k
+(or 1000) is the first (processor model) implementation; since
+there is also the 1200 one:
+https://github.com/openrisc/or1200/blob/master/doc/openrisc1200_spec.txt
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+But then I read digging [*] I read "OR1200 is the original
+implementation of the OpenRISC 1000 architecture."
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- accel/whpx/whpx-common.c     | 2 +-
- include/system/whpx-common.h | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index c58344cb61..c0610815d9 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -119,7 +119,7 @@ int whpx_first_vcpu_starting(CPUState *cpu)
-          * have one or more breakpoints enabled. Both require intercepting
-          * the WHvX64ExceptionTypeBreakpointTrap exception.
-          */
--        exception_mask = 1UL << WHvX64ExceptionTypeDebugTrapOrFault;
-+        exception_mask = 1UL << WHPX_INTERCEPT_DEBUG_TRAPS;
-     } else {
-         /* Let the guest handle all exceptions. */
-         exception_mask = 0;
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index 8f171d1397..b86fe9db6e 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -20,4 +20,7 @@ int whpx_first_vcpu_starting(CPUState *cpu);
- int whpx_last_vcpu_stopping(CPUState *cpu);
- void whpx_memory_init(void);
- struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address);
-+
-+/* On x64: same as WHvX64ExceptionTypeDebugTrapOrFault */
-+#define WHPX_INTERCEPT_DEBUG_TRAPS 1
- #endif
--- 
-2.50.1 (Apple Git-155)
-
+[*] https://openrisc.io/implementations.html#OR1200
 
