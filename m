@@ -4,114 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4185CE83F1F
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85845E9129A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo11v-0001tt-Nk; Thu, 05 Feb 2026 10:12:27 -0500
+	id 1vo1ES-0003xK-2o; Thu, 05 Feb 2026 10:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo11t-0001so-2X
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:12:25 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vo11p-0008Jm-VQ
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:12:23 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-78fc4425b6bso10126987b3.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:12:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770304341; cv=none;
- d=google.com; s=arc-20240605;
- b=VbT3UmR4mrW3O0refpNI4DuIhL3W/D+/+D8QbJwbS06Ln+NHS67VO//0k0920jGm/3
- bV4Wb7t8l6EABQQ7loDsLpGVEx4C0Sseu5QYPn9bsNIHbe1GKofUDrqBjNCIcqx8mcx9
- M2diHjdg83EXckn5U4AP1OgpvzuVxyg9dwRDDp3CyZNZKjKc618O7hZDBlgYG9HJFpwl
- b7HhCiIRHTJZpbO8OyGS2oP6I5oZrvFP/p8gUYfIW64ll4Bu/iHRYG671TB+fN4jV/lh
- ZC/FnB2xUOIxsfbM0DQcdMQGwEnl5b4v+hM/K/lEXIEVNxF3j1z3PrYoj45gZIk8yR+G
- u8ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cI5NC2Kni0Acuyjg8ldXu0EkyNdRKFpDNc/CvQJcYCs=;
- fh=oO+Uf7DHnPtcCTDesZVff5P/mPAwF3kyt9dPfvcK3cM=;
- b=YrHtsEcSqHGgo4UggHF9mQRYTLMzpy32PI+KRMyZxB8DlMMXiu+yquCLGDvan/iL5b
- GMLcKdtixrPYxMy5P05lNMQFKQYG1ZT6Aph8vLXw/HXJObWfjJK+8b3ke+59b4zP7GsV
- Gop5Z7wbR0SyQ3zQyVaByLPL1MKt/6j8dIKxNecHGS6p/7JKgvcoEDKgMa3YdNmMWsh8
- /+HjZgVmKk//KUk+FW0HpJD2LDoWIcLwJIrDfugDxrPKYDQRTLx71cav0OU0Eun+pdZN
- GJARx7V3VB1bvgEhROVpWTKxJ96XsaAeRD1JnwFv8XenMLnaK1EJfvqq1hIj8rHvv/qC
- 5YQA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770304341; x=1770909141; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cI5NC2Kni0Acuyjg8ldXu0EkyNdRKFpDNc/CvQJcYCs=;
- b=Xlc2XlZGMZQOYjYHxJyXN9e9E/CtMt318LqLAlCflrmdjj7Qc3z2uI5jV/6WLGsBUX
- zleTCulRDNfPrt5ThYqD0cg5Peg4SXgnkfOIoUGx1IInVPkDmhi94zK+lqz/3p5qPQwS
- Oy8TQuttmTKFuDQSoItF0wXKLqOB4YXwTAV1o0K5wVPtk/R6dsmH1OG+1vKDNQgA4b7/
- gQaqSNvL1zP89HcCuOtHxwqv5I44oNGbrU5cAWvO4/5qPqCzbfPkh/nmcPMHewu+WO5o
- +VI2+S56KUf2/ZKbAtS+8Rx5wVgULqH0TCi0p4s+mblIECTP+JuSP9WrZtzipo/mXj7D
- K5Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770304341; x=1770909141;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cI5NC2Kni0Acuyjg8ldXu0EkyNdRKFpDNc/CvQJcYCs=;
- b=VZDUzsNx1TESC0iu+4EGLmHbpUsk+Y61WwJVCg5CoTq952rHuawiIy6gx5zoVB312I
- rij6CAXrN1qzg1L+VVfviFO3oQ+BhrhCxZGvczeZnOiVtSDC0lBzA+41cUydbnkyEm89
- d9PiBpAz/cG/8vP3rngHcgJFCBHkmwYyn/BNN2Dr+IFoQdXf67nfqba9Oh+k8JMukf6l
- YYwMvBXPHuupcBQh8xW1mZOY3ZQ1sblaUKALEHeX6gVQkJOjmeGkGUZEdHsv+D/QWef7
- Q2uY27+lSPcbbIyO/SFl2Jy4DRNNdCfNoTlo5DbndYXjy57w1Wg/YZzZEUqlrUBtTXDf
- Sl+A==
-X-Gm-Message-State: AOJu0YxBII+sIpsLoMYljfmVeJiWiy/WjE1mQXcGvH6XZ7N1FRUGd+4X
- uKnkoPuls2nQw5eCYk8/H4106RKb3UU3tHm/C4GqidJ1C80U8aCJ/zGuUJWU+lveY7xjYbS0F1O
- fKe/VYZmBI0LAZt/NEg8+ceba72696MGKtZZxsbS8atqN+BROTq+mhCQ=
-X-Gm-Gg: AZuq6aLgXLKUQzNDXBl9w9mKgXn4sjwBjR7OpQn9T2zUXGGfBQcxqvI6uhlRMP+Aiso
- 2rJpqhaHZ6li8kO9gHm/DHtaQfpjkD2BHG3nmNW+ESzAzHY0sEEGu/9fHsrj/B/FrLmrRhwb+/e
- 2WvBH24sT4pZeaw/QJpPbcFC/AB5yWaIReqANebvL3LHG7xUJuPofyxh8R6WlC//0l8p3djGjRn
- 46gq1s5DxPVSOCxJe1885OMtDGsvkH00gCL8IlgiZmoci3LFdE0fXtp7n/4+sP6CUs/iA==
-X-Received: by 2002:a81:ff0b:0:b0:794:bb73:8a21 with SMTP id
- 00721157ae682-794fe827fefmr52744707b3.44.1770304340331; Thu, 05 Feb 2026
- 07:12:20 -0800 (PST)
-MIME-Version: 1.0
-References: <20260205142543.64818-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260205142543.64818-1-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 15:12:09 +0000
-X-Gm-Features: AZwV_QhwFyo4wHrNORTLssMnbNCUomQiKMUWT5MqIB1AmVdnA0_X464o8jydLXE
-Message-ID: <CAFEAcA9pBwSJ6PFM0qOJWau7H0sDY5Rk5NKg8OgTxr+fgOvFsw@mail.gmail.com>
-Subject: Re: [PATCH v21 00/22] WHPX support for Arm
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vo1EP-0003wG-4C
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:21 -0500
+Received: from p-west2-cluster4-host2-snip4-10.eps.apple.com ([57.103.69.211]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vo1EN-0001oV-Db
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:20 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPS id
+ 7C94918001D6; Thu,  5 Feb 2026 15:25:15 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1770305118; x=1772897118;
+ bh=tbfFbAve7fkxKDMXq+Hqdeacl/+zBPkkhOdplq2Wm74=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=bLMi4YTx2LNd74qYUgSUfNUGFU/CV/258tEBGKwWI7Od1f+T9nrxcxI8SpZm4AQ7eNNvU3yeZTPZoTZFxxq1b6/5BYWHHhB7x3dXQA0270UwqB6a00dE6+3FtHj4LlIUeqCp9ZkoiK5/R2h/vVOmWiz4BLjzHnatjktphnGK+dB+1xUOsCCFeIER/4xVSpvyVeXOBOmVY5ENrOU9yc0P43vSFCqJTZvJSDAaCElODhLxtoOH2F42P+SwRr/kDuBjMp7u14WVXMbyKdvs1L+E2biJHuNgSkwuFT/jRuoMqFOJCpIvwZrKgK0tKheNJrF0zUeF2rZUHQXZYYOXzi2PYg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPSA id
+ A72181800623; Thu,  5 Feb 2026 15:25:10 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>
+Subject: [PATCH v22 07/22] qtest: hw/arm: virt: add new test case for GICv3 +
+ GICv2m
+Date: Thu,  5 Feb 2026 16:24:10 +0100
+Message-ID: <20260205152432.78208-8-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260205152432.78208-1-mohamed@unpredictable.fr>
+References: <20260205152432.78208-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDExNiBTYWx0ZWRfX8tArYvH0XFXE
+ +a44NDegdok1wU9zYq2x62vY+xSc30VPNdGtVNMZhiqjbtoHumXqDy5FawAP+6XBY/IuU40QNGl
+ 4TH7jGttfv/DmWWCC+gNFkL61qicNzsvtFiu5YdHcRYN8atwbgOvFYqJVCFynz9+k9G4NLWou2n
+ R//MRzGaF9P242brRPT/FAPkRyGPRl4cYNOgrjVRCV9cI21QD0GUsB9Lp3VH1vbaUru6MtMH8TS
+ yziAUzMC/KiM6frG6Hc766KRr+GeoHxi27g/jXDSST6f57DYekF+3fJ4oEICiElR+iKd7dEfB6E
+ X3qRiH5eZKLBqJo1byJ1SgdlafQm90j04Sg1isRztsC/1JfkfoclaHk9LPENuM=
+X-Proofpoint-ORIG-GUID: 8OkwBfJ27Pk-U6qzKSCIe1wK7fqnvo9J
+X-Authority-Info-Out: v=2.4 cv=E5bAZKdl c=1 sm=1 tr=0 ts=6984b65d
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=WSkgWlIY1_Pf25iQiQAA:9
+X-Proofpoint-GUID: 8OkwBfJ27Pk-U6qzKSCIe1wK7fqnvo9J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 clxscore=1030 mlxlogscore=999
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2602050116
+X-JNJ: AAAAAAABR7vWvJnfUA8UYL/vy+s9eLrzPnAQdcZNEda4yGr2wPxffOodaDA4/AaX8BTgDpQxR+48sP6LEFf3qhV7dBW0BlBj3iPEO2Es9lNmkMFOLRBOb8pOJZBiwpukeOLzNwQPAxRnnxRfjajhB520Dz+VpajNuebs5W2A83ltVDerBxhNS51K2ddrp2keZ4J1Qi0lEgJojGcOHQT/56TvVqBtPtXbbriFuMr5xtJYFL1iRPiF0O8e8pSdE03dHqvCD2Ud6cKwsD8jSIdXq27Tc4eRYFrpDGc52h1ysv0hhQYuXCkX7kXjxQtsEN0jODrOTXGURSCpU96D7Yfwql51WoTDs+vP1Zs7AEgYAPwXBLRTq9/A1ptCkucJLpQg94bxXywDd7irX8FSBCCbW/UbRSzIKzrXFnnPm8UiRH0k4ex8q95UWwkIXnn3MNDNHVnX2BFElyirzpjHgzu+TSBnYgoQ3VdJgxS8M4EDg4h9mQ7eFvImZEhK9YRo/dS2ZfZQVh6RABrLmu+Jiwas/NvEmbCr8EpM80bymII6i1G+Wj8YeCt1uXLc5Ylvh7BZmpMk5aA3at2tg7zqlgkrLZvAuK2l4QtEgLUcpda/tRf/i2yKHDfXOgKs++wgQBScrBFRjfpJb0ifSuhzLWd34YnFQqp5IFUuLh6byJU5bR6s8rbdcUmHqKU3C9uC3etDKXaJVcZvGkuDjFNM16zR/Nc615SpOD8k+uHgmJubGGgRKZ+qv5d9U53TjjO9zlFoY70/7BwNNYkFCDgEDoz+PNheDauOAv5tXfg3ZBSXGWYfoLrrOigngq+rxKczKbyt4CIFanjKmeow29YLogT7eD6bzXFNGNbnZyCYG3w33UBD7DEqmzDJwsCAEDXS53I6vr0nTQudEQ8WUoMyAy91rKJ9bRHZRTj7ZQVpTnUYMbSMA75Ncdf80j9LM3vkQHtt41QgEKwXA2v5
+Received-SPF: pass client-ip=57.103.69.211;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,119 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Feb 2026 at 14:25, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v21)
->
-> Patches without a review: patches 3, 5, 6, 7
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-Thanks for the respin; this one applies, but fails "make check"
-on the aarch64/acpi/virt/msi_gicv2m subtest of the bios-tables-test:
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index e489d94331..a5a5b8807b 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2252,6 +2252,25 @@ static void test_acpi_aarch64_virt_tcg_its_off(void)
+     free_test_data(&data);
+ }
+ 
++static void test_acpi_aarch64_virt_tcg_msi_gicv2m(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "aarch64",
++        .variant = ".msi_gicv2m",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
++    };
++
++    test_acpi_one("-cpu cortex-a57 "
++                  "-M gic-version=3,iommu=smmuv3,msi=gicv2m", &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_q35_viot(void)
+ {
+     test_data data = {
+@@ -2834,6 +2853,8 @@ int main(int argc, char *argv[])
+                            test_acpi_aarch64_virt_tcg_topology);
+             qtest_add_func("acpi/virt/its_off",
+                            test_acpi_aarch64_virt_tcg_its_off);
++            qtest_add_func("acpi/virt/msi_gicv2m",
++                           test_acpi_aarch64_virt_tcg_msi_gicv2m);
+             qtest_add_func("acpi/virt/numamem",
+                            test_acpi_aarch64_virt_tcg_numamem);
+             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+-- 
+2.50.1 (Apple Git-155)
 
-lanath:noble:qemu$ (cd build/arm-clang &&
-QTEST_QEMU_BINARY=./qemu-system-aarch64 V=1
-./tests/qtest/bios-tables-test --verbose -p
-/aarch64/acpi/virt/msi_gicv2m)
-TAP version 13
-# random seed: R02Sd03fb0e0b32d3a49a936bee40a272caa
-# starting QEMU: exec ./qemu-system-aarch64 -qtest
-unix:/tmp/qtest-2950429.sock -qtest-log /dev/null -chardev
-socket,path=/tmp/qtest-2950429.qmp,id=char0 -mon
-chardev=char0,mode=control -display none -audio none -run-with
-exit-with-parent=on -machine none -accel qtest
-# starting QEMU: exec ./qemu-system-aarch64 -qtest
-unix:/tmp/qtest-2950429.sock -qtest-log /dev/null -chardev
-socket,path=/tmp/qtest-2950429.qmp,id=char0 -mon
-chardev=char0,mode=control -display none -audio none -run-with
-exit-with-parent=on -machine none -accel qtest
-# Start of aarch64 tests
-# Start of acpi tests
-# Start of virt tests
-acpi-test: Warning! IORT binary file mismatch. Actual
-[aml:/tmp/aml-VKZEK3], Expected
-[aml:tests/data/acpi/aarch64/virt/IORT.msi_gicv2m].
-See source file tests/qtest/bios-tables-test.c for instructions on how
-to update expected files.
-acpi-test: Warning! IORT mismatch. Actual [asl:/tmp/asl-RLZEK3.dsl,
-aml:/tmp/aml-VKZEK3], Expected [asl:/tmp/asl-F40EK3.dsl,
-aml:tests/data/acpi/aarch64/virt/IORT.msi_gicv2m].
---- /tmp/asl-F40EK3.dsl 2026-02-05 15:10:08.823721717 +0000
-+++ /tmp/asl-RLZEK3.dsl 2026-02-05 15:10:08.821977596 +0000
-@@ -1,32 +1,32 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/IORT.msi_gicv2m, Thu
-Feb  5 15:10:08 2026
-+ * Disassembly of /tmp/aml-VKZEK3, Thu Feb  5 15:10:08 2026
-  *
-  * ACPI Data Table [IORT]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName :
-FieldValue (in hex)
-  */
-
- [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
- [004h 0004 004h]                Table Length : 000000AC
--[008h 0008 001h]                    Revision : 03
--[009h 0009 001h]                    Checksum : 97
-+[008h 0008 001h]                    Revision : 05
-+[009h 0009 001h]                    Checksum : 95
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
-
- [024h 0036 004h]                  Node Count : 00000002
- [028h 0040 004h]                 Node Offset : 00000030
- [02Ch 0044 004h]                    Reserved : 00000000
-
- [030h 0048 001h]                        Type : 04
- [031h 0049 002h]                      Length : 0044
- [033h 0051 001h]                    Revision : 04
- [034h 0052 004h]                  Identifier : 00000000
- [038h 0056 004h]               Mapping Count : 00000000
- [03Ch 0060 004h]              Mapping Offset : 00000000
-@@ -67,27 +67,27 @@
-                             Device Attribute : 1
- [08Ch 0140 004h]               ATS Attribute : 00000000
- [090h 0144 004h]          PCI Segment Number : 00000000
- [094h 0148 001h]           Memory Size Limit : 40
- [095h 0149 002h]          PASID Capabilities : 0000
- [097h 0151 001h]                    Reserved : 00
-
- [098h 0152 004h]                  Input base : 00000000
- [09Ch 0156 004h]                    ID Count : 000000FF
- [0A0h 0160 004h]                 Output Base : 00000000
- [0A4h 0164 004h]            Output Reference : 00000030
- [0A8h 0168 004h]       Flags (decoded below) : 00000000
-                               Single Mapping : 0
-
--    0000: 49 4F 52 54 AC 00 00 00 03 97 42 4F 43 48 53 20  // IORT......BOCHS
-+    0000: 49 4F 52 54 AC 00 00 00 05 95 42 4F 43 48 53 20  // IORT......BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
-     0020: 01 00 00 00 02 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
-     0030: 04 44 00 04 00 00 00 00 00 00 00 00 00 00 00 00  // .D..............
-     0040: 00 00 05 09 00 00 00 00 01 00 00 00 00 00 00 00  // ................
-     0050: 00 00 00 00 00 00 00 00 00 00 00 00 6A 00 00 00  // ............j...
-     0060: 6B 00 00 00 6D 00 00 00 6C 00 00 00 00 00 00 00  // k...m...l.......
-     0070: 00 00 00 00 02 38 00 03 01 00 00 00 01 00 00 00  // .....8..........
-     0080: 24 00 00 00 01 00 00 00 00 00 00 03 00 00 00 00  // $...............
-     0090: 00 00 00 00 40 00 00 00 00 00 00 00 FF 00 00 00  // ....@...........
-     00A0: 00 00 00 00 30 00 00 00 00 00 00 00              // ....0.......
-**
-ERROR:../../tests/qtest/bios-tables-test.c:555:test_acpi_asl:
-assertion failed: (all_tables_match)
-not ok /aarch64/acpi/virt/msi_gicv2m -
-ERROR:../../tests/qtest/bios-tables-test.c:555:test_acpi_asl:
-assertion failed: (all_tables_match)
-Bail out!
-Aborted (core dumped)
-
-
-thanks
--- PMM
 
