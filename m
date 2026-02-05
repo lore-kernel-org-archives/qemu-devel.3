@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573BCECD9A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5858EECD997
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6UU-0004lx-5Z; Thu, 05 Feb 2026 16:02:18 -0500
+	id 1vo6W9-0005ms-Hw; Thu, 05 Feb 2026 16:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6UQ-0004kl-Dt; Thu, 05 Feb 2026 16:02:14 -0500
+ id 1vo6W7-0005m4-Fr; Thu, 05 Feb 2026 16:03:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6UN-0005ua-PD; Thu, 05 Feb 2026 16:02:14 -0500
+ id 1vo6W6-00067I-0w; Thu, 05 Feb 2026 16:03:59 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4085A1864E9;
- Fri, 06 Feb 2026 00:01:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D58821864F1;
+ Fri, 06 Feb 2026 00:03:08 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F06735D92E;
- Fri, 06 Feb 2026 00:01:59 +0300 (MSK)
-Message-ID: <4bf101a9-7de9-400e-80cb-92134eb1f457@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:01:59 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE6B735D92F;
+ Fri, 06 Feb 2026 00:03:55 +0300 (MSK)
+Message-ID: <16cba4f8-79c1-49b3-ac14-63f3bb64e235@tls.msk.ru>
+Date: Fri, 6 Feb 2026 00:03:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/adc: Fix out-of-bounds write in Aspeed ADC model
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Elhrj Saad <saadelhrj@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260126141820.719492-1-clg@redhat.com>
+Subject: Re: [PATCH] hw/i2c/aspeed_i2c.c: Add a check for dma_read
+To: Nabih Estefan <nabihestefan@google.com>, qemu-devel@nongnu.org
+Cc: clg@kaod.org, peter.maydell@linaro.org, steven_lee@aspeedtech.com,
+ leetroy@gmail.com, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au,
+ joel@jms.id.au, qemu-arm@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20260120211116.1367476-1-nabihestefan@google.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -82,9 +79,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260126141820.719492-1-clg@redhat.com>
+In-Reply-To: <20260120211116.1367476-1-nabihestefan@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -108,24 +105,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/26 17:18, Cédric Le Goater wrote:
-> The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
-> memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
-> function has an out-of-bounds write vulnerability when accessing
-> unimplemented registers.
+On 1/21/26 00:11, Nabih Estefan wrote:
+> If aspeed_i2c_dma_read fails in aspeed_i2c_bus_send currently, we get
+> stuck in an infinite retry loop. Add a check for the return value of
+> aspeed_i2c_dma_read that will break us out of said loop.
 > 
-> Fix this by using 'return' instead of 'break' in the default case,
-> which prevents execution from reaching the s->regs[reg] assignment for
-> unimplemented registers.
-> 
-> Reported-by: Elhrj Saad <saadelhrj@gmail.com>
-> Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/adc/aspeed_adc.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
 
-This feels like a qemu-stable material.
+This looks like a qemu-stable material.
 
 Please let me know if it isn't.
 
@@ -133,19 +120,26 @@ Thanks,
 
 /mjt
 
-> diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
-> index fd3af308296e..3cc75bbcd6e2 100644
-> --- a/hw/adc/aspeed_adc.c
-> +++ b/hw/adc/aspeed_adc.c
-> @@ -228,7 +228,8 @@ static void aspeed_adc_engine_write(void *opaque, hwaddr addr, uint64_t value,
->           qemu_log_mask(LOG_UNIMP, "%s: engine[%u]: "
->                         "0x%" HWADDR_PRIx " 0x%" PRIx64 "\n",
->                         __func__, s->engine_id, addr, value);
-> -        break;
-> +        /* Do not update the regs[] array */
-> +        return;
->       }
->   
->       s->regs[reg] = value;
+> ---
+>   hw/i2c/aspeed_i2c.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 1b8ac561c3..3de72db652 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -272,7 +272,11 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
+>           }
+>           while (bus->regs[reg_dma_len]) {
+>               uint8_t data;
+> -            aspeed_i2c_dma_read(bus, &data);
+> +            ret = aspeed_i2c_dma_read(bus, &data);
+> +            /* Check that we were able to read the DMA */
+> +            if (ret) {
+> +                break;
+> +            }
+>               trace_aspeed_i2c_bus_send("DMA", bus->regs[reg_dma_len],
+>                                         bus->regs[reg_dma_len], data);
+>               ret = i2c_send(bus->bus, data);
 
 
