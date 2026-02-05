@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F558ECD99F
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6B0ECD999
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 20:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo5VA-0006Yi-2I; Thu, 05 Feb 2026 14:58:56 -0500
+	id 1vo5VX-0006p1-0d; Thu, 05 Feb 2026 14:59:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5V7-0006XY-Bc
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:53 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1vo5VR-0006nT-Rs
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:13 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vo5V5-00032V-E0
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:58:53 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-42fb2314f52so911970f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:58:51 -0800 (PST)
+ id 1vo5VN-00037n-JO
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 14:59:13 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-483100e97d8so8450675e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 11:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770321529; x=1770926329; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770321548; x=1770926348; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cvKiWELxuJcWRYaqArTcXS0v2Sr7kfuoA6C4G3edWCw=;
- b=lul2BWga1UjabqQ3frzPQXkmh+5dRIDYUYKEQOZXnN0PiaxeVy8c0cxrJ5Is63XU+M
- /UdPinJH5ks1zBX02jucvs4SNAlMYprjNW6DLxWDyF3ygKSEbF4gsdL2F+3/Ew1BkLd1
- JqNvxfXvR1FOzvuqbwhpAd4fJPFLLGEwZFdME3d9iDa8NfWt4UdkxnZOaIxTBy0WDwvV
- pC22iU9SBYnNtHWqGijYTaWrIhuv7+hnQkSdgiH5AhzMV461Q9KYvb5CxmXVe56YCZyJ
- sR7OkNmYtuNYcySXIMBBaXEe0YMRPb2GOjB97+xsliWdz4WH2JEed9afE3htbHGmTOSK
- K6Fw==
+ bh=7JwGWXxuqSsQ++iisL/fCPRsKkpwKEoJ4MeC9qZ22M0=;
+ b=Zv+HXhmO+OblBs4KnpgFY4jGJihlkiX2Iy/Gxgw/eSN8rsuuD5H4aAPiuGJMQEJZCR
+ pM3hAcmrXs5mZ2Rt4CdU1UgUnUw/KjreB8pdBtkSF7j121sJjgtjlM44LlhOJjmTT/Se
+ JelB9lmTiiE7mlc4jg+qyLz+2nlJyR86PKem+q+8JgJJnsuN+8BCjcdcHCOpNwlvq7gH
+ Am+YdtHV/enxYw7+mrgBTpPieuaXeuHwfpoOSP31tfzqoHXSQkdm6HNDIHqtTF8zcmyF
+ 0NCgUSypEPtsraD/ifSludBOG5MkzvQlgjbLkHxVyWQNHQ5HMKtdRGIgnw8oOC6r9wIt
+ E0vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770321529; x=1770926329;
+ d=1e100.net; s=20230601; t=1770321548; x=1770926348;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cvKiWELxuJcWRYaqArTcXS0v2Sr7kfuoA6C4G3edWCw=;
- b=G8TdFD4LHDfXH1wrJ02EJyiEy33i22jxKccmjz9sVuC/UndOlHMpkAlMgjmZSKg4/0
- OycAweUxF1Tw6JYYKyOnKwOdcUEGS3GbD1vlZuOzlm/IdScTe+pv8ryIN0N4buY6JLnc
- SzsrKmkP8soY0gPffThuDMWuwieDbpVHj/NTpsPLXyUxFfLLIAQU2GWn7+r7Lt12rT5c
- tN1a7qhNAByGPY2deEn3Lepf0fdfuzxeIivNvYCS+G3u0slW/eHZGzPj7Taj9HGy4xOe
- VPlYaVt9OMGl1EkpZnhdQpuQFjPeGP7E3l5csjRwIkkOOanl28PRKuC9whUT9hdRYicc
- VbGQ==
-X-Gm-Message-State: AOJu0Yw3KOQykfp8jp8Dsf0Z4JZ4rZUSO15cCWaD9VKrX/pQcAE/QlVh
- FqcWfqFw+VpVjLowzcTNQzqEGgGKkxr89LKoCX6hZcGetyg1n7TEYs+n/GFFjClt9x4=
-X-Gm-Gg: AZuq6aJOxODh2a1RJ3XCPCQmh0pADHzCE4cGlkULsv50BSaT/fz2KJ4Zjuy8BEicVHY
- NG2M8hhdTOI1k9me4SxtAqepxTdPWv8O/tjxY/ad9brGL0mwCQLRNpJ58wRGKWvn5/i4gtpiCnG
- 5iRW1Eviwb3nOZgCia4IOqekEKcQ4SLSFjn1UBOVCXWLUnxzv6SuWbB3t5AXy4SgIv3E/XGFBDw
- 73e4PxPHlx+PNkvDO1WowIA4UpyrLpKTwWQWe+DSawBxcBvlExELNqyKP2oA+vxnPhZC788Cq41
- 5iRhI8aK3LnpkXMRBvjIzJtezhF3HpBzHtFxLPn50ggumKg6jxwfPWdUXkc2J0RFeKPkst/U5Vl
- UDEba0j7Zh3iTld/8RvEiO/ruIpTPUn3Vr4a91mJSKu8IdK1JreHQGZI9FiIsBhrDmkIzlD1pJJ
- FfMwcXw5T2NksZeHjoMJs=
-X-Received: by 2002:a05:6000:220c:b0:436:1a40:a6ae with SMTP id
- ffacd0b85a97d-4362923ed58mr793959f8f.15.1770321529519; 
- Thu, 05 Feb 2026 11:58:49 -0800 (PST)
+ bh=7JwGWXxuqSsQ++iisL/fCPRsKkpwKEoJ4MeC9qZ22M0=;
+ b=msUlsQE3ULj329yY4rewuEPSs0WiPfPjQP7r73cmQEiH28caJJO93NgZqld62OdXIJ
+ Sec83+jgrxoq7mQgPoUayfzboTwTlUPBxrpyBqebRbiA5PXt6XRAsJbu6BW89xncMPh7
+ 1KmPSs0yCHWhbjTQvtHl+eHSZpJFU4oqXbgnkkR3cia4d9zo/KdpZB8F9hX4nXBNvhlo
+ dxQx8Nx7lvsqL5izIZ+1vEcVIANXPCXJ4pNOzOD2FV4githT/nW51nhOwseYeloLPxh8
+ B9opS++ncWj+ckYbn8J3me+YWWTVSTKgWyKJtFs8LYBB+9TOuBoMyWb4qe7eWPwhgXaT
+ bpwg==
+X-Gm-Message-State: AOJu0YxMLAwfXa9pukQVciGtEHLxSKirlc67nXBXPXlC0dju7TrozvSO
+ sVrI7amhzCmduvmHY2FAkjHzioGlQqiBF5yVBnXzPBaKcmrX/D/oUjv3tNyfDosFod4=
+X-Gm-Gg: AZuq6aKh+18EftyghgTgyN+hl8P0Gt5xGGO8heXBQr8dl0fjAnjZkstcGe6zUtfrfII
+ r+CK3POJm2bzw2Ajf9CcdhiePK9y18SZ7WOp1V14mVzuDErBKT7O4PsfMvu4JYBXG+wD4pkvKPu
+ PI3xicAuz+eg4ilec/BbFxoackKhZ36y8cbMNrih2RY17rTi+ddkpIGGbjCTEJyi/nMFG+R4E2W
+ uiupOh+edyIxpfcREMITHRJi86ahFeXs/bEMpxaOlQG2+DiAlrCTBD5msirBXljoMR0el2OJn65
+ 4lKlBz/JA+m4mtcTMwg1UpzLpuaGREtjgIZIQhnfcYJ9n634jNXnxcRBxgGcUQ3o9AGqE2jPeNO
+ jSume9qWzFU1KbVyLh3AMKMHzANJKuDvWFc/pGRfw5N2Hmeq4PRFRckuCfvpzxDTR52C+ORiYmT
+ b8BEluNKo/3V3n1XIpe14=
+X-Received: by 2002:a05:6000:2087:b0:435:ab90:6f34 with SMTP id
+ ffacd0b85a97d-4362933ef81mr701258f8f.16.1770321547762; 
+ Thu, 05 Feb 2026 11:59:07 -0800 (PST)
 Received: from thinkpad-t470s.. ([93.140.16.93])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.58.48
+ ffacd0b85a97d-436297450b4sm514079f8f.34.2026.02.05.11.59.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 11:58:49 -0800 (PST)
+ Thu, 05 Feb 2026 11:59:07 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  francisco.iglesias@amd.com, Ruslan_Ruslichenko@epam.com,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH 05/29] hw/core: Implement Remote Port irq, sync and ATS helpers
-Date: Thu,  5 Feb 2026 20:58:00 +0100
-Message-ID: <20260205195824.2610192-6-ruslichenko.r@gmail.com>
+Subject: [PATCH 16/29] system/physmem: Add ats_do_translate helper
+Date: Thu,  5 Feb 2026 20:58:11 +0100
+Message-ID: <20260205195824.2610192-17-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,182 +107,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-The patch add support for encoding and decoding of following
-commands:
+Add 'ats_do_translate' method to enable manual IOMMU address
+translation.
 
-- RP_CMD_interrupt: propagate gpio and interrupt lines changes
-to external peers
-- RP_CMD_sync: support for synchronization between QEMU and the
-remote model
-- RP_CMD_ats_*: handling iommu transactoin request and invalidation
-accross the link.
+This allows the Remote Port subsystem to resolve guest virtual
+addresses to physical addresses by querying the QEMU IOMMU
+translation pipeline. This is required for the Remote Port
+subsystem to support translation  requests from external masters
+in a co-simulation environment.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/remote-port-proto.c         | 100 ++++++++++++++++++++++++++++
- include/hw/core/remote-port-proto.h |  29 ++++++++
- 2 files changed, 129 insertions(+)
+ include/system/memory.h |  8 +++++++
+ system/physmem.c        | 53 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-diff --git a/hw/core/remote-port-proto.c b/hw/core/remote-port-proto.c
-index 33a6769087..65551ad281 100644
---- a/hw/core/remote-port-proto.c
-+++ b/hw/core/remote-port-proto.c
-@@ -131,6 +131,24 @@ int rp_decode_payload(struct rp_pkt *pkt)
-         }
-         pkt->busaccess.master_id = master_id;
-         break;
-+    case RP_CMD_interrupt:
-+        pkt->interrupt.timestamp = be64_to_cpu(pkt->interrupt.timestamp);
-+        pkt->interrupt.vector = be64_to_cpu(pkt->interrupt.vector);
-+        pkt->interrupt.line = be32_to_cpu(pkt->interrupt.line);
-+        pkt->interrupt.val = pkt->interrupt.val;
-+        used += pkt->hdr.len;
-+        break;
-+    case RP_CMD_sync:
-+        pkt->sync.timestamp = be64_to_cpu(pkt->interrupt.timestamp);
-+        used += pkt->hdr.len;
-+        break;
-+    case RP_CMD_ats_req:
-+    case RP_CMD_ats_inv:
-+        pkt->ats.attributes = be64_to_cpu(pkt->ats.attributes);
-+        pkt->ats.addr = be64_to_cpu(pkt->ats.addr);
-+        pkt->ats.len = be64_to_cpu(pkt->ats.len);
-+        pkt->ats.result = be32_to_cpu(pkt->ats.result);
-+        break;
-     default:
-         break;
-     }
-@@ -294,6 +312,88 @@ size_t rp_encode_busaccess(struct rp_peer_state *peer,
-     return sizeof *pkt + ret_size;
+diff --git a/include/system/memory.h b/include/system/memory.h
+index e1fb82608d..c787c544ce 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2895,6 +2895,14 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
+                               addr, xlat, len, is_write, attrs);
  }
  
-+size_t rp_encode_interrupt_f(uint32_t id, uint32_t dev,
-+                             struct rp_pkt_interrupt *pkt,
-+                             int64_t clk,
-+                             uint32_t line, uint64_t vector, uint8_t val,
-+                             uint32_t flags)
-+{
-+    rp_encode_hdr(&pkt->hdr, RP_CMD_interrupt, id, dev,
-+                  sizeof *pkt - sizeof pkt->hdr, flags);
-+    pkt->timestamp = cpu_to_be64(clk);
-+    pkt->vector = cpu_to_be64(vector);
-+    pkt->line = cpu_to_be32(line);
-+    pkt->val = val;
-+    return sizeof *pkt;
-+}
++MemoryRegion *ats_do_translate(AddressSpace *as,
++    hwaddr addr,
++    hwaddr *xlat,
++    hwaddr *plen_out,
++    AddressSpace **target_as,
++    int *prot,
++    MemTxAttrs attrs);
 +
-+size_t rp_encode_interrupt(uint32_t id, uint32_t dev,
-+                           struct rp_pkt_interrupt *pkt,
-+                           int64_t clk,
-+                           uint32_t line, uint64_t vector, uint8_t val)
-+{
-+    return rp_encode_interrupt_f(id, dev, pkt, clk, line, vector, val, 0);
-+}
-+
-+static size_t rp_encode_ats_common(uint32_t cmd, uint32_t id, uint32_t dev,
-+                         struct rp_pkt_ats *pkt,
-+                         int64_t clk, uint64_t attr, uint64_t addr,
-+                         uint64_t len, uint64_t result, uint32_t flags)
-+{
-+    rp_encode_hdr(&pkt->hdr, cmd, id, dev,
-+                  sizeof *pkt - sizeof pkt->hdr, flags);
-+    pkt->timestamp = cpu_to_be64(clk);
-+    pkt->attributes = cpu_to_be64(attr);
-+    pkt->addr = cpu_to_be64(addr);
-+    pkt->len = cpu_to_be64(len);
-+    pkt->result = cpu_to_be32(result);
-+    return sizeof *pkt;
-+}
-+
-+size_t rp_encode_ats_req(uint32_t id, uint32_t dev,
-+                         struct rp_pkt_ats *pkt,
-+                         int64_t clk, uint64_t attr, uint64_t addr,
-+                         uint64_t len, uint64_t result, uint32_t flags)
-+{
-+    return rp_encode_ats_common(RP_CMD_ats_req, id, dev,
-+                                pkt, clk, attr,
-+                                addr, len, result, flags);
-+}
-+
-+size_t rp_encode_ats_inv(uint32_t id, uint32_t dev,
-+                         struct rp_pkt_ats *pkt,
-+                         int64_t clk, uint64_t attr, uint64_t addr,
-+                         uint64_t len, uint64_t result, uint32_t flags)
-+{
-+    return rp_encode_ats_common(RP_CMD_ats_inv, id, dev,
-+                                pkt, clk, attr,
-+                                addr, len, result, flags);
-+}
-+
-+static size_t rp_encode_sync_common(uint32_t id, uint32_t dev,
-+                                    struct rp_pkt_sync *pkt,
-+                                    int64_t clk, uint32_t flags)
-+{
-+    rp_encode_hdr(&pkt->hdr, RP_CMD_sync, id, dev,
-+                  sizeof *pkt - sizeof pkt->hdr, flags);
-+    pkt->timestamp = cpu_to_be64(clk);
-+    return sizeof *pkt;
-+}
-+
-+size_t rp_encode_sync(uint32_t id, uint32_t dev,
-+                      struct rp_pkt_sync *pkt,
-+                      int64_t clk)
-+{
-+    return rp_encode_sync_common(id, dev, pkt, clk, 0);
-+}
-+
-+size_t rp_encode_sync_resp(uint32_t id, uint32_t dev,
-+                           struct rp_pkt_sync *pkt,
-+                           int64_t clk)
-+{
-+    return rp_encode_sync_common(id, dev, pkt, clk, RP_PKT_FLAGS_response);
-+}
-+
- void rp_process_caps(struct rp_peer_state *peer,
-                      void *caps, size_t caps_len)
- {
-diff --git a/include/hw/core/remote-port-proto.h b/include/hw/core/remote-port-proto.h
-index f65f82195d..7322e0e357 100644
---- a/include/hw/core/remote-port-proto.h
-+++ b/include/hw/core/remote-port-proto.h
-@@ -478,6 +478,35 @@ size_t rp_encode_busaccess(struct rp_peer_state *peer,
-                            struct rp_pkt_busaccess_ext_base *pkt,
-                            struct rp_encode_busaccess_in *in);
+ /* address_space_access_valid: check for validity of accessing an address
+  * space range
+  *
+diff --git a/system/physmem.c b/system/physmem.c
+index 2fb0c25c93..b4c18f3a01 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -527,6 +527,59 @@ static MemoryRegionSection flatview_do_translate(FlatView *fv,
+     return *section;
+ }
  
-+size_t rp_encode_interrupt_f(uint32_t id, uint32_t dev,
-+                             struct rp_pkt_interrupt *pkt,
-+                             int64_t clk,
-+                             uint32_t line, uint64_t vector, uint8_t val,
-+                             uint32_t flags);
++/* This function is called from RCU critical section */
++MemoryRegion *ats_do_translate(AddressSpace *as,
++                               hwaddr addr,
++                               hwaddr *xlat,
++                               hwaddr *plen_out,
++                               AddressSpace **target_as,
++                               int *prot,
++                               MemTxAttrs attrs)
++{
++    MemoryRegionSection *section;
++    IOMMUMemoryRegion *iommu_mr;
++    hwaddr plen = (hwaddr)(-1);
++    FlatView *fv = address_space_to_flatview(as);
++    IOMMUMemoryRegionClass *imrc;
++    IOMMUTLBEntry iotlb;
++    int iommu_idx = 0;
 +
-+size_t rp_encode_interrupt(uint32_t id, uint32_t dev,
-+                           struct rp_pkt_interrupt *pkt,
-+                           int64_t clk,
-+                           uint32_t line, uint64_t vector, uint8_t val);
++    if (!plen_out) {
++        plen_out = &plen;
++    }
 +
-+size_t rp_encode_sync(uint32_t id, uint32_t dev,
-+                      struct rp_pkt_sync *pkt,
-+                      int64_t clk);
++    /* This can be MMIO, so setup MMIO bit. */
++    section = address_space_translate_internal(
++            flatview_to_dispatch(fv), addr, xlat,
++            plen_out, true);
 +
-+size_t rp_encode_sync_resp(uint32_t id, uint32_t dev,
-+                           struct rp_pkt_sync *pkt,
-+                           int64_t clk);
++    /* Illegal translation */
++    if (section->mr == &io_mem_unassigned) {
++        return NULL;
++    }
 +
-+size_t rp_encode_ats_req(uint32_t id, uint32_t dev,
-+                         struct rp_pkt_ats *pkt,
-+                         int64_t clk, uint64_t attr, uint64_t addr,
-+                         uint64_t size, uint64_t result, uint32_t flags);
++    iommu_mr = memory_region_get_iommu(section->mr);
++    if (!iommu_mr) {
++        return NULL;
++    }
 +
-+size_t rp_encode_ats_inv(uint32_t id, uint32_t dev,
-+                         struct rp_pkt_ats *pkt,
-+                         int64_t clk, uint64_t attr, uint64_t addr,
-+                         uint64_t size, uint64_t result, uint32_t flags);
++    imrc = memory_region_get_iommu_class_nocheck(iommu_mr);
 +
- void rp_process_caps(struct rp_peer_state *peer,
-                      void *caps, size_t caps_len);
- 
++    if (imrc->attrs_to_index) {
++        iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
++    }
++
++    iotlb = imrc->translate(iommu_mr, addr, IOMMU_RO, iommu_idx);
++
++    *xlat = ((iotlb.translated_addr & ~iotlb.addr_mask)
++            | (addr & iotlb.addr_mask));
++    *plen_out = MIN(*plen_out, (addr | iotlb.addr_mask) - addr + 1);
++    *prot = iotlb.perm;
++    *target_as = iotlb.target_as;
++
++    return section->mr;
++}
++
+ /* Called from RCU critical section */
+ IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
+                                             bool is_write, MemTxAttrs attrs)
 -- 
 2.43.0
 
