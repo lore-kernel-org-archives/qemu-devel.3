@@ -4,120 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26233EA794A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Feb 2026 23:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C54AEA794F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 00:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnmkp-0007GX-Rf; Wed, 04 Feb 2026 18:57:51 -0500
+	id 1vnnTe-0005MQ-Of; Wed, 04 Feb 2026 19:44:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1vnmkn-0007FX-Gj
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 18:57:49 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnnTc-0005Lu-O5
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 19:44:08 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1vnmkl-0006lF-Tb
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 18:57:49 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 675125BCF7;
- Wed,  4 Feb 2026 23:57:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770249463; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cI8WYS82FiAn6Gj1OfXe7QzY+ixqYj4g9DsAelpTAKU=;
- b=Nn580HQoAKALFDBQWtY6lK8yhNYcjKCLsekSZI4HKacPWIQx9ayex6Xr5mwr0GgTbyuxGA
- Y+uQ/Lch+Tw8EtWl8JW5qvqvTTFh7WueLcYtAHdH0lPO6DxlaUHqGJPh09yXbRMrPGPTqy
- vopcbse6TDV3gKaI3wlzsRKaonquczM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770249463;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cI8WYS82FiAn6Gj1OfXe7QzY+ixqYj4g9DsAelpTAKU=;
- b=Ksw5i60kVzRkh8Wv0cEpGXvf8wOhIe6JC4PFoyQfQofEk0dYJOtAx8XcZRUf9nNh8z4Kq2
- Fdx98lrMTyc7y5AA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Nn580HQo;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ksw5i60k
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770249463; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cI8WYS82FiAn6Gj1OfXe7QzY+ixqYj4g9DsAelpTAKU=;
- b=Nn580HQoAKALFDBQWtY6lK8yhNYcjKCLsekSZI4HKacPWIQx9ayex6Xr5mwr0GgTbyuxGA
- Y+uQ/Lch+Tw8EtWl8JW5qvqvTTFh7WueLcYtAHdH0lPO6DxlaUHqGJPh09yXbRMrPGPTqy
- vopcbse6TDV3gKaI3wlzsRKaonquczM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770249463;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cI8WYS82FiAn6Gj1OfXe7QzY+ixqYj4g9DsAelpTAKU=;
- b=Ksw5i60kVzRkh8Wv0cEpGXvf8wOhIe6JC4PFoyQfQofEk0dYJOtAx8XcZRUf9nNh8z4Kq2
- Fdx98lrMTyc7y5AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CBBB93EA63;
- Wed,  4 Feb 2026 23:57:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id An3DIvTcg2mbXgAAD6G6ig
- (envelope-from <hare@suse.de>); Wed, 04 Feb 2026 23:57:40 +0000
-Message-ID: <ff71f35e-06b5-4a82-98ec-8e0419f5ec62@suse.de>
-Date: Thu, 5 Feb 2026 00:57:38 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vnnTb-00061o-2G
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 19:44:08 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-81f4f4d4822so218733b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 16:44:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770252245; x=1770857045; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZIdWBqERGDkCuHAmynKNfKDnv+WTnjtlLCkOUkA+s9U=;
+ b=yYwBZuqpQuAFFmEM9/W/gPDJZFrAt5owy4UZdQg4eYe9OP2oeHA2YX8sGFRnnYkaAy
+ 4Hxk+aJ/m8yB9XiZE2W4WOtIA3KuWJb7FGy/JUOsBRRoJDKvdl+IeKceQdNSe473wBx+
+ Mho/7Kblqaoj2rjburVDhBwpLC9ZOgFMAOX7+epyN/5yhlQe+a9EDvLos2npAhIxYoN6
+ fHycJt1VsWwIztSFXUH1w+bkSxNCp8y1w87suMI/o71/G3rn8avFhEPBE2JC185z07+C
+ dbAIsdl3Fg9xd0TCw4Dcp3U48ZhIK65bzr8U+iKTqIpx70ZH3gcor2HrJNi9ojD3w1Tz
+ wrkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770252245; x=1770857045;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZIdWBqERGDkCuHAmynKNfKDnv+WTnjtlLCkOUkA+s9U=;
+ b=LE/pc6LTMJuXmWLcueAeth8s3TlG+CEkb5RjR0Kx8DEczJPoUeB6EGRSaFOHr1n5EF
+ +3Gpqwe1Ig8zzNG9D0MDgpiisKSoY+UkZeK+iJwdCjJ4AoVWkzmArSO3g+nGjs8JzsgF
+ RAZGRZzm1YYLlRErS2mKL9tRzZ+9Vp5Yl9ZVQgC4Ys4rMp1D6htBeuHVLNhf93uW0w0L
+ wLWSVE+MTibrGIHJpih5KKTc7aVp2rpaOxoSlXt57pCFA8JY6vZ48Nv3xbkwPWDm9/XK
+ pb9w/nrmnEarvtFpKhd7sqEcdBlfcgNzDQLwBfnlVAVzLHWvRaLMl+lUvvl8p00PFv/V
+ rhPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhT8wvV/UoSwL3354WLfn3G/Dj/2q8NY5+uXvss4PpOeI2G/KfKzyanoxkP9H01jzlOUaubbqO2tUz@nongnu.org
+X-Gm-Message-State: AOJu0YyoSdwRB270V5HEoi6phRAVcFT82YwlFOiyI+F+kxOiTHCyQ2AF
+ IV44nwEsIlVPdnICmX1UF6V+U1HpOx7ShQ8Ncn/csK6Uqa4YLsR5djrq1uJlBc58Wo8=
+X-Gm-Gg: AZuq6aIV/rFbdUtg38jxM8p9A6D2IL44wNNRGVr/vyxDWx4CEBTLKmq6m4jE3Yi4etc
+ BXg97hWuaQUY1iCH0urBM9fHyNx4NE38qiT9MbSReKAogHSl/x0bap57VuqwBsCpRdkujq6wBoj
+ tr8o7cKG1T8D937AOwkOVrxNDLmIxTDgLt9ZmDEn4lL55wzWr6QWzOkeWICAi6stXyZ37oLcNCn
+ VGGQ0bI5kRlW6JdoU41FotpmOCRNbcDxN0QPERREKLuEtZAIUUmm+9WxckHhjdX1dUQzi1hsASl
+ /u0VJvKrPB16iDCWoT5jrEIxbxR3L90+KIoBq2wCS20xqAJfPaNItcAHfQM+jk9O1oJ7BFtLFTq
+ lGm25yyYAok75kl6uDRQ+1d5PUS2VniZjpB6EodN6+IIjJ0dNXRV8GuulEL/5QOePoXmVLVQLcd
+ CrDbEenrl0372wUVRJ7QiTa1OZogp7draAUDD/2sGA8eXv01b6rmB888iKUmBmkwsMBja3uJdQ3
+ gRE9UIajauJYxYEbbCJwQGYONfO4V/nINon0PvEGg==
+X-Received: by 2002:a05:6a00:94c3:b0:81f:be3c:9c9e with SMTP id
+ d2e1a72fcca58-8241c5f5ef1mr4693031b3a.33.1770252245260; 
+ Wed, 04 Feb 2026 16:44:05 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
+ (bg30dhzygc4twf4fscxk.ip6.superloop.au.
+ [2401:d002:dc0f:2100:7515:513c:b646:18b8])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8241d437c74sm3619325b3a.35.2026.02.04.16.44.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Feb 2026 16:44:04 -0800 (PST)
+Message-ID: <1c6c21c5-da0a-4356-80a9-208d0e147356@linaro.org>
+Date: Thu, 5 Feb 2026 10:43:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Martin Wilck <mwilck@suse.com>
-Cc: Benjamin Marzinski <bmarzins@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, afaria@redhat.com, qemu-devel@nongnu.org,
- Mikulas Patocka <mpatocka@redhat.com>
-References: <20260127184743.GA77765@fedora> <aXkou8f97EvxK2K8@redhat.com>
- <20260203150939.GB445116@fedora> <aYI2CAjmHGklh3mi@redhat.com>
- <20260203180437.GA527989@fedora>
- <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
- <20260204183201.GB610283@fedora>
+Subject: Re: [PATCH 1/2] target/sparc: Replace legacy st_phys() ->
+ address_space_st()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260204215304.52757-1-philmd@linaro.org>
+ <20260204215304.52757-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <20260204183201.GB610283@fedora>
+In-Reply-To: <20260204215304.52757-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 675125BCF7
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=hare@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,58 +114,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/26 19:32, Stefan Hajnoczi wrote:
-> On Wed, Feb 04, 2026 at 02:19:48PM +0100, Martin Wilck wrote:
->> Hi Stefan,
->>
->> On Tue, 2026-02-03 at 13:04 -0500, Stefan Hajnoczi wrote:
-[ .. ]>>>
->>> It can be generic. The messages will contain the block device
->>> major:minor as well as information to describe <linux/pr.h> requests.
->>
->> So the ioctls will pass through qemu into the kernel, to be intercepted
->> by the dm-mpath driver, which will use an upcall to have them handled
->> by mpathpersistd (for the actual command) and multipathd (for the path
->> registrations).
->>
->> I don't fully understand the advantage, security and complexity-wise,
->> of this concept, compared to intercepting them qemu and using a socket
->> to talk to mpathpersistd directly. If we did this, we could even
->> support both generic and SCSI PR commands.
+On 2/5/26 07:53, Philippe Mathieu-Daudé wrote:
+> Prefer the address_space_ld/st API over the legacy ld_phys()
+> because it allow checking for bus access fault.
 > 
-> Hi Martin,
-> The simplification and security benefits are on the application side,
-> not on the DM-Multipath side, so I can see what you're getting at. From
-> the DM-Multipath perspective things get a little more complex.
+> get_physical_address() already accessed the PTE stored at
+> %pde_ptr and is going to update it. Assume the address space
+> is also writeable there. The SPARC v8 manual only mentions
+> faults (with error condition bits updated) in the READ path
+> but not on the WRITE (update) one.
 > 
->  From an application perspective, a single API that works across block
-> device types (SCSI, NVMe, DM-Multipath) and requires no privileges or
-> sockets (they are a pain in container environments) is the most
-> convenient. The <linux/pr.h> ioctl API offers exactly this.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/sparc/mmu_helper.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> Unfortunately, DM-Multipath currently does not fully support
-> <linux/pr.h>. It sends PR operations down each path, but that is only a
-> subset of libmpathpersist's logic and multipathd is not kept in sync.
-> 
-> My impression is that libmpathpersist and multipathd logic cannot be
-> easily moved into the kernel. This is where the upcall idea comes from.
-> Let's notify multipath-tools from DM-Multipath so it can do its work in
-> userspace.
-> 
-It _might_ be possible by extending the current path-switching
-code in the kernel to keep track of PRs. The we could move the
-registration upon path switching, and (ideally) could do away
-with upcalls.
-Not sure, though, how targets react when having to deal with a
-flood of PR commands ...
-But maybe worth a try.
+> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+> index 5a58239d65e..a6f76a1ab76 100644
+> --- a/target/sparc/mmu_helper.c
+> +++ b/target/sparc/mmu_helper.c
+> @@ -190,7 +190,9 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+>           if (is_dirty) {
+>               pde |= PG_MODIFIED_MASK;
+>           }
+> -        stl_be_phys(cs->as, pde_ptr, pde);
+> +        address_space_stl_be(cs->as, pde_ptr, pde,
+> +                             MEMTXATTRS_UNSPECIFIED, &result);
+> +        assert(result == MEMTX_OK);
+>       }
+>   
+>       /* the page can be put in the TLB */
 
-Cheers,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+r~
 
