@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D35BECD997
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 130B2ECD9A6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo6kG-0000uQ-Iv; Thu, 05 Feb 2026 16:18:37 -0500
+	id 1vo6p0-0001x9-Jd; Thu, 05 Feb 2026 16:23:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6k7-0000tX-Lu; Thu, 05 Feb 2026 16:18:27 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vo6oy-0001wc-Q5; Thu, 05 Feb 2026 16:23:28 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo6k3-00010Z-BK; Thu, 05 Feb 2026 16:18:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C4DBC186517;
- Fri, 06 Feb 2026 00:17:30 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0BCB35D949;
- Fri, 06 Feb 2026 00:18:17 +0300 (MSK)
-Message-ID: <7dcb1f35-07b2-46b1-b98a-1be8d9962741@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:18:17 +0300
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vo6ox-0001jd-9w; Thu, 05 Feb 2026 16:23:28 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 61593R0S030016;
+ Thu, 5 Feb 2026 21:23:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Ih1tkF
+ QGLhGSruBGvfONpF/B2jGaSQ7E0ZFQjAwRy/E=; b=brHTnlSHikC4Iz5Nh6bCtC
+ J8hd9FYDVoIpusbGj7JiXLlfZThVo3d6oqeb05ST5wPib67a4aUn5kj6WQGeOepS
+ bYBQE8Aj+PVnRtWdgp4vNaTdaNpGzqNgSKFGsH1ggrH2E0OVURyzpi4AEkQmiyX5
+ 4r61+HBT21MhCcLyovCcW4vHvo4LSAKVKJ5KORwDXAnBW/9HjSE/lj/V+1c5gXul
+ JUgqeXv9tr/9MsHTKEpoVM6tpt0HwO1jsFy+1SUMMClB2NYj/ifaXoD3nCk+JdZn
+ E27WBlFltlbTUBqBCCmwe/7tkxIzFJ992F83D9NfyoNV7WUxXUBDh2Brm87WXUkQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19f6rwb7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Feb 2026 21:23:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 615H8Bbo005933;
+ Thu, 5 Feb 2026 21:23:18 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1x9jk9c7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Feb 2026 21:23:18 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 615LNHqk32309960
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Feb 2026 21:23:17 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 285535805D;
+ Thu,  5 Feb 2026 21:23:17 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4429E58053;
+ Thu,  5 Feb 2026 21:23:15 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.132.67]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Feb 2026 21:23:15 +0000 (GMT)
+Message-ID: <208252b02ee6b5cd5a5ace98edd23a90e1fd7e18.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 1/9] target/s390x: Use address_space_ldl_be() in
+ read_table_entry()
+From: Eric Farman <farman@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, Matthew Rosato	
+ <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, David
+ Hildenbrand	 <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, Anton Johansson	 <anjo@rev.ng>, Richard Henderson
+ <richard.henderson@linaro.org>, Christian Borntraeger
+ <borntraeger@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Date: Thu, 05 Feb 2026 16:23:14 -0500
+In-Reply-To: <20260204182722.44062-2-philmd@linaro.org>
+References: <20260204182722.44062-1-philmd@linaro.org>
+ <20260204182722.44062-2-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] hw/i2c/aspeed_i2c: Fix DMA moving data into
- incorrect address
-To: Jamin Lin <jamin_lin@aspeedtech.com>, "clg@kaod.org" <clg@kaod.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, "leetroy@gmail.com"
- <leetroy@gmail.com>,
- "andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
- "joel@jms.id.au" <joel@jms.id.au>,
- "pierrick.bouvier@linaro.org" <pierrick.bouvier@linaro.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- qemu-stable <qemu-stable@nongnu.org>
-References: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <TYPPR06MB8206B8720FBC5ED9056DD561FC9BA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: WANB2rr1G1lJgbTMkivgUwkuqIPECbDU
+X-Authority-Analysis: v=2.4 cv=drTWylg4 c=1 sm=1 tr=0 ts=69850a47 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=ggoZYnHCubUy7uL1hNIA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: WANB2rr1G1lJgbTMkivgUwkuqIPECbDU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDE2MyBTYWx0ZWRfXytgo62o1Nw94
+ 9pS/a63ZzCbFHasBDDTZQseUnlKw/SL3/lOLRgK0d+zYO7OHxS0/t0Ve8SRF3w/9m1eqFw59Lpk
+ fr58G0TfiCpaWGFmsT3PNjG0lQaIRMbUE2kU1OG07lBphED3WDWLsWtqiOD7WDWCoEnIhdLwktr
+ V6l4ycgCsTKlfb33IxxGh3d7kBM+iwzj12Q7Spiw5+NAjVYUcrW/Xm6lJI7t3035jq4uYc2sNkJ
+ wlvqX2EzwUlTUbkiPR95lVTJBKSY0G08ED8XySx55D+/iKf15tVXd93UL19WTfazkmHYnlvKt5b
+ 7+wYwx2dT834kgGzNVD6rHn5oKMCkrd0Kn7kXlNlrKVz2R9xgQnhLQ3C/302sj76Sq01bP3Bmq8
+ k2VFzRpwIp2iYvJLXDBG3iMKGL3wtHz66htaSchNu2WG6PYE9u6Jy+/1rSxNS59XiEtmpRxmpPm
+ NApfhJ7V4Vc4u2nnbOA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-05_05,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 spamscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602050163
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,30 +129,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/26 04:55, Jamin Lin wrote:
-> In the previous design, the I2C model updated dma_dram_offset only when
-> firmware programmed the RX/TX DMA buffer address registers. The firmware
-> used to rewrite these registers before issuing each DMA command.
-> 
-> The firmware driver behavior has changed to program the DMA address
-> registers only once during I2C initialization. As a result, the I2C model
-> no longer refreshes dma_dram_offset, causing DMA to move data into an
-> incorrect DRAM address.
-> 
-> Fix this by introducing helper functions to update dma_dram_offset from
-> the DMA address registers, and invoke them right before handling TX/RX
-> DMA operations. This guarantees DMA always uses the correct buffer
-> address even if the registers are programmed only once.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Fixes: c400c38854017eeccda63115814eba4c3ef2b51f ("hw/i2c/aspeed: Introduce a new dma_dram_offset attribute in AspeedI2Cbus")
+$SUBJECT should be s/ldl/ldq/
 
-Again, this looks like qemu-stable material.
+On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
+> address_space_read/write() is meant for accessing random
+> amount of memory blobs.  When the access size is known,
+> use the address_space_ld/st() API which can directly swap
+> endianness.
+>=20
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/s390x/mmu_helper.c | 11 ++++-------
+>  1 file changed, 4 insertions(+), 7 deletions(-)
 
-Please let me know if it isn't.
-
-Thanks,
-
-/mjt
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
