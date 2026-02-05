@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A421EC1E9E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8146EC1EA0
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 11:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnxM1-0004nP-MQ; Thu, 05 Feb 2026 06:16:58 -0500
+	id 1vnxM2-0004o6-Tf; Thu, 05 Feb 2026 06:16:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnxLr-0004mT-A1
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:47 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1vnxLe-0004gX-Ep
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:41 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnxLp-0003oQ-2c
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:46 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a8ff2ca490so4399155ad.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 03:16:43 -0800 (PST)
+ id 1vnxLb-0003my-SE
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 06:16:34 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-2a871daa98fso6187715ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 03:16:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770290202; x=1770895002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770290190; x=1770894990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t9Trus/hz1i90FrTfwhpYx+wv92psw9rbjVx4v6GD0s=;
- b=ru9j2P7b7iGf8yiI78aZAdy0SziyZZd85WHc+O97Wnt9vDXbS1oxkjg4v9AlgWRrQe
- ACKvznJzxe9scrbfU4z+EuYz2OsOMM5X0+IAUTaCtCIRiZOnArRa4Vb1S4yaEgyDR5aM
- bQLbnCB9urUAy6D4C2mq16oqDnWnA9LuS5EsxATcZW/GtHIcpAroWeF5t5ZWafHojAdO
- c68t+b311MW8aYKxGtCBBf9tgiFGgtDVb3sieDbrDxxeTBnYwiQky+nYcoRGfqjT/qLr
- A+CZ30G0HRDyON2tinBDyiB9ulBR6R0ECKgUMOBTX/F5X3R8YSM9hUa7gvoUKsmuFRP8
- 2ARQ==
+ bh=jL1s5SV3cubFpJlsGLlbrnPoja1OfqVMQ1g/z28whqY=;
+ b=vaaCG0hQtp4wTPNg4DJkjoPXhGW7qu3xldD3MlK8a0262KfxBPScPrqBvA4hF8P86v
+ 4Eu3urgvcDNATrKDrKIvuUyUzkPzKwLFZhLgjXQZSHdl8s/rnXehSh1BAfsYdgvfMTqB
+ fxACLdEdOXxiKr83BQcY+Dg5wS4E7RFNbalG+BhJ94DQQfS108PDBXtCwilUV5CxAGZ6
+ 4lkp+UbiSwiXaUt7Qt0iqKrQwZw8H1uPcLyK2BNP+uP3dJbSugNsGiJnFSykj0CFKtvc
+ DDH1TRWOYXkK0GCwr/3RvOYRduSZBwqzwjwUXD8cuLh1IKXXBCPxfwtc2ykQ4DKdFtOb
+ o/zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770290202; x=1770895002;
+ d=1e100.net; s=20230601; t=1770290190; x=1770894990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=t9Trus/hz1i90FrTfwhpYx+wv92psw9rbjVx4v6GD0s=;
- b=SUyTehmxTL04AJDHresn8zhzwZ8NhIQip9nzE+8YDdMWZ7dcKPz4xIL7fp8B0iJqo1
- w5Wkb1mzQ41BAB9z03n6ss+QVDUDcTTsnA0HRVBc0S/vTFieDR5vQEXXA1w4Tf1i4rSJ
- hrc9daFndaQrTYO+CMPOqRaDQvoCDF6auolW74hj7E118loq93+qV3ipt7HWptFfHz7V
- qjv+1h5EcqiC8P5l5laq/VkXyVGRyq+8N9x8UZqQT4fUBGglhlLKct1BL/OIwF0tA5R6
- OSScfFGPigIbdoxbp4fcTJUY0tR3KGYv2bAnIZeazqssv/8TqYx5reSqJwLasjjWvguP
- XfVw==
-X-Gm-Message-State: AOJu0YxK0EUZ37koF049MQnRkG4EXZkcJh3/H9rVtdhbp/OxOhLpktuN
- IuAK86+cMXJfdIUay8lfYQwHpZK3TlJDNZuA96SdGgCpLaUuTji/4ZqevUGSBHx9lQKYaE3r9u3
- Bd+Wiq15K8A==
-X-Gm-Gg: AZuq6aL+ET2Kt5tX/VidE5DMEhLIMmme9hZk4e0WDtUpYxde2aiiehAveMTQCqp6Vrx
- RhMYuG5qUdwYVd34qQZ8ImPwafDr3aDbpmnghkQUp0m51zA8hvNpgGoZZ+9vuc23fGBzaqVfR0i
- P0luixciyGKYavruKId8P5cy6MYp0ZurYN9IGApPcYCST8ZT1nIRRITuEm+JaDqmXUOXSIElfZ1
- EOHF/+e2lIhA40CcYkIkI1auPzawA8ltcZ31w3+4Qqqxah/Ges8Xch/Gog3hspwLFKwIkwuF106
- mDUTFUsiLwjHsK7v3T4Bo37mfITyokxGHnTaoqcu/JzV3OeHcP2kEJ/lY3gczS6T9L6nbHr5yaq
- qLY7XfZdLYIz1ZgOZQRRTO376KBjIyxN79LeIva/msHWwe9XTBpfUSW3IsFXYt6Riw2sPyLfjJo
- 6hLuj68f3T1df6Z9unqWTM
-X-Received: by 2002:a17:902:f543:b0:29d:a26c:34b6 with SMTP id
- d9443c01a7336-2a934105868mr53918075ad.50.1770290202269; 
- Thu, 05 Feb 2026 03:16:42 -0800 (PST)
+ bh=jL1s5SV3cubFpJlsGLlbrnPoja1OfqVMQ1g/z28whqY=;
+ b=K9NohhQrEWlKhFrMNY7tcyu7Jh0kw8lae4Bd+8PEvHssVXL3SxEzSiCrkcCG/9drUN
+ T3u1xleWdzKa5q/NXYscc3PGKLPG9OyFJBzl4ICf8CMKXWLxQnP1f4tZm+SwQZMt2XYh
+ efKDxeze0R11A+n2yhGQC8TkzdtC2dDGcMMbdYVxx/htRt9Y0IYnd3Mts1e2fOqztJ45
+ ZX/gYHQ02B8OpqFYgH6NIeURwnj5jO41hMrmHpByo857eq4PiF56UZY8gomyJVJFGhNP
+ aK5iq0NmIjVEWr+ZwChOjvI+Ksj0/96ixd7OOzqiLTlQR/cJEBXDIuhaeFAlEsIzt5+g
+ Lo9g==
+X-Gm-Message-State: AOJu0YzqEoDQosO6YzGFdqs30mZcak6IdgAyaHqa34n24fieQULFjSMb
+ riPJ6cs1eXKEhR+I8vBJ3C1+yHH5pmoh1iGWnrVYD/8FAjltr3xBZCjVwM/h2LztTpeKIA/9mzP
+ mGlqPQBC8yYAF
+X-Gm-Gg: AZuq6aIaeyFo6XXhK1Vh/XS5vmsjNf7BNHT7UwjzMtsY+unYr7L8xchPrstQCFm+OJU
+ jCfAj/35n9d8M17KaB6bQPM4Q98ZbKM/cmSKFDDAStYnk7HxEGrapXxy010xW1uWCPTPQT3rh2w
+ 3OMrj4wVvXGkJt3JY3akfh1itgHtbat+XWLBSSFtQZr/PGLWZO+rIjcvct10HoEWVX+8O2bQNOS
+ DT/QYXKojcNQhmiSDD+N6INuQUL15xbutL+5ag++xTRCiC4c4Mk5IsfG81mi5p+Oag5UQAw2Itm
+ pw+MAtDHJatECu9x5pf1mQIYGix3kAVtCrf9Qg/kFx8IK5CeudZlHdiTBYrselP+Z0NsXyk6RwH
+ qkiZFG7S/t+j2Nr8HYwY5aqzBt9V9FaoEYvErfFegOKg/kcg7IjOjYtfeZQv7/dI+JoVvoEYsF/
+ VvZ8QABMTOH68kLhMBDil9GqQ5+IcmDRg=
+X-Received: by 2002:a17:902:d4d2:b0:297:e3c4:b2b0 with SMTP id
+ d9443c01a7336-2a93410a4d3mr63224465ad.54.1770290190286; 
+ Thu, 05 Feb 2026 03:16:30 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:7515:513c:b646:18b8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a933851685sm51088435ad.13.2026.02.05.03.16.40
+ d9443c01a7336-2a933851685sm51088435ad.13.2026.02.05.03.16.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Feb 2026 03:16:41 -0800 (PST)
+ Thu, 05 Feb 2026 03:16:29 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: max.chou@sifive.com
-Subject: [PATCH v4 6/9] fpu: Add saturate parameter to parts_uncanon
-Date: Thu,  5 Feb 2026 21:16:19 +1000
-Message-ID: <20260205111622.461497-7-richard.henderson@linaro.org>
+Cc: max.chou@sifive.com,
+	Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH v4 1/9] fpu/softfloat: Refactor IEEE format NaN classification
+ to share code
+Date: Thu,  5 Feb 2026 21:16:14 +1000
+Message-ID: <20260205111622.461497-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260205111622.461497-1-richard.henderson@linaro.org>
 References: <20260205111622.461497-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x641.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,230 +104,299 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
-The OCP FP8 conversion operations have a parameter to control
-saturate vs overflow.  Add a parameter, currently always false.
+The floatN_is_[quiet|signaling]_nan functions for following formats
+(float16, bfloat16, float32, float64, float128) contain duplicated
+logic that should be shared.
+This commit introduces
+[float16|bfloat16|float32|float64|float128]_nan_is_snan that determine
+if a NaN is signaling.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Max Chou <max.chou@sifive.com>
-[rth: Split out of a larger patch]
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260204051756.667397-3-max.chou@sifive.com>
 ---
- fpu/softfloat.c           | 44 +++++++++++++++++++--------------------
- fpu/softfloat-parts.c.inc | 15 +++++++------
- 2 files changed, 31 insertions(+), 28 deletions(-)
+ fpu/softfloat-specialize.c.inc | 192 ++++++++++++++-------------------
+ 1 file changed, 80 insertions(+), 112 deletions(-)
 
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 209eb59b48..a637d28fd3 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -771,20 +771,20 @@ static void parts128_canonicalize(FloatParts128 *p, float_status *status,
-     PARTS_GENERIC_64_128(canonicalize, A)(A, S, F)
- 
- static void parts64_uncanon_normal(FloatParts64 *p, float_status *status,
--                                   const FloatFmt *fmt);
-+                                   const FloatFmt *fmt, bool saturate);
- static void parts128_uncanon_normal(FloatParts128 *p, float_status *status,
--                                    const FloatFmt *fmt);
-+                                    const FloatFmt *fmt, bool saturate);
- 
--#define parts_uncanon_normal(A, S, F) \
--    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F)
-+#define parts_uncanon_normal(A, S, F, X) \
-+    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F, X)
- 
- static void parts64_uncanon(FloatParts64 *p, float_status *status,
--                            const FloatFmt *fmt);
-+                            const FloatFmt *fmt, bool saturate);
- static void parts128_uncanon(FloatParts128 *p, float_status *status,
--                             const FloatFmt *fmt);
-+                             const FloatFmt *fmt, bool saturate);
- 
--#define parts_uncanon(A, S, F) \
--    PARTS_GENERIC_64_128(uncanon, A)(A, S, F)
-+#define parts_uncanon(A, S, F, X) \
-+    PARTS_GENERIC_64_128(uncanon, A)(A, S, F, X)
- 
- static void parts64_add_normal(FloatParts64 *a, FloatParts64 *b);
- static void parts128_add_normal(FloatParts128 *a, FloatParts128 *b);
-@@ -1699,7 +1699,7 @@ static float16 float16a_round_pack_canonical(FloatParts64 *p,
-                                              float_status *s,
-                                              const FloatFmt *params)
- {
--    parts_uncanon(p, s, params);
-+    parts_uncanon(p, s, params, false);
-     return float16_pack_raw(p);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index ba4fa08b7b..7d2515c1fa 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -226,6 +226,19 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+     return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
  }
  
-@@ -1712,7 +1712,7 @@ static float16 float16_round_pack_canonical(FloatParts64 *p,
- static bfloat16 bfloat16_round_pack_canonical(FloatParts64 *p,
-                                               float_status *s)
++/*----------------------------------------------------------------------------
++| Determine if a float16 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool float16_nan_is_snan(float16 a, float_status *status)
++{
++    if (no_signaling_nans(status)) {
++        return false;
++    }
++    bool frac_msb_is_one = (a >> 9) & 1;
++    return frac_msb_is_one == snan_bit_is_one(status);
++}
++
+ /*----------------------------------------------------------------------------
+ | Returns 1 if the half-precision floating-point value `a' is a quiet
+ | NaN; otherwise returns 0.
+@@ -233,36 +246,7 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+ 
+ bool float16_is_quiet_nan(float16 a_, float_status *status)
  {
--    parts_uncanon(p, s, &bfloat16_params);
-+    parts_uncanon(p, s, &bfloat16_params, false);
-     return bfloat16_pack_raw(p);
+-    if (no_signaling_nans(status)) {
+-        return float16_is_any_nan(a_);
+-    } else {
+-        uint16_t a = float16_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
+-        } else {
+-
+-            return ((a >> 9) & 0x3F) == 0x3F;
+-        }
+-    }
+-}
+-
+-/*----------------------------------------------------------------------------
+-| Returns 1 if the bfloat16 value `a' is a quiet
+-| NaN; otherwise returns 0.
+-*----------------------------------------------------------------------------*/
+-
+-bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
+-{
+-    if (no_signaling_nans(status)) {
+-        return bfloat16_is_any_nan(a_);
+-    } else {
+-        uint16_t a = a_;
+-        if (snan_bit_is_one(status)) {
+-            return (((a >> 6) & 0x1FF) == 0x1FE) && (a & 0x3F);
+-        } else {
+-            return ((a >> 6) & 0x1FF) == 0x1FF;
+-        }
+-    }
++    return float16_is_any_nan(a_) && !float16_nan_is_snan(a_, status);
  }
  
-@@ -1726,7 +1726,7 @@ static void float32_unpack_canonical(FloatParts64 *p, float32 f,
- static float32 float32_round_pack_canonical(FloatParts64 *p,
-                                             float_status *s)
+ /*----------------------------------------------------------------------------
+@@ -272,35 +256,51 @@ bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
+ 
+ bool float16_is_signaling_nan(float16 a_, float_status *status)
  {
--    parts_uncanon(p, s, &float32_params);
-+    parts_uncanon(p, s, &float32_params, false);
-     return float32_pack_raw(p);
+-    if (no_signaling_nans(status)) {
+-        return 0;
+-    } else {
+-        uint16_t a = float16_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return ((a >> 9) & 0x3F) == 0x3F;
+-        } else {
+-            return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
+-        }
+-    }
++    return float16_is_any_nan(a_) && float16_nan_is_snan(a_, status);
  }
  
-@@ -1740,7 +1740,7 @@ static void float64_unpack_canonical(FloatParts64 *p, float64 f,
- static float64 float64_round_pack_canonical(FloatParts64 *p,
-                                             float_status *s)
+ /*----------------------------------------------------------------------------
+-| Returns 1 if the bfloat16 value `a' is a signaling
+-| NaN; otherwise returns 0.
++| Determine if a bfloat16 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool bfloat16_nan_is_snan(bfloat16 a, float_status *status)
++{
++    if (no_signaling_nans(status)) {
++        return false;
++    }
++    bool frac_msb_is_one = (a >> 6) & 1;
++    return frac_msb_is_one == snan_bit_is_one(status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the bfloat16 value `a' is a quiet NaN; otherwise returns 0.
++*----------------------------------------------------------------------------*/
++
++bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
++{
++    return bfloat16_is_any_nan(a_) && !bfloat16_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Returns 1 if the bfloat16 value `a' is a signaling NaN; otherwise returns 0.
+ *----------------------------------------------------------------------------*/
+ 
+ bool bfloat16_is_signaling_nan(bfloat16 a_, float_status *status)
++{
++    return bfloat16_is_any_nan(a_) && bfloat16_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Determine if a float32 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool float32_nan_is_snan(float32 a, float_status *status)
  {
--    parts_uncanon(p, s, &float64_params);
-+    parts_uncanon(p, s, &float64_params, false);
-     return float64_pack_raw(p);
- }
- 
-@@ -1789,7 +1789,7 @@ static float64 float64r32_pack_raw(FloatParts64 *p)
- static float64 float64r32_round_pack_canonical(FloatParts64 *p,
-                                                float_status *s)
- {
--    parts_uncanon(p, s, &float32_params);
-+    parts_uncanon(p, s, &float32_params, false);
-     return float64r32_pack_raw(p);
- }
- 
-@@ -1803,7 +1803,7 @@ static void float128_unpack_canonical(FloatParts128 *p, float128 f,
- static float128 float128_round_pack_canonical(FloatParts128 *p,
-                                               float_status *s)
- {
--    parts_uncanon(p, s, &float128_params);
-+    parts_uncanon(p, s, &float128_params, false);
-     return float128_pack_raw(p);
- }
- 
-@@ -1851,7 +1851,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
-     case float_class_normal:
-     case float_class_denormal:
-         if (s->floatx80_rounding_precision == floatx80_precision_x) {
--            parts_uncanon_normal(p, s, fmt);
-+            parts_uncanon_normal(p, s, fmt, false);
-             frac = p->frac_hi;
-             exp = p->exp;
-         } else {
-@@ -1860,7 +1860,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
-             p64.sign = p->sign;
-             p64.exp = p->exp;
-             frac_truncjam(&p64, p);
--            parts_uncanon_normal(&p64, s, fmt);
-+            parts_uncanon_normal(&p64, s, fmt, false);
-             frac = p64.frac;
-             exp = p64.exp;
-         }
-@@ -2258,7 +2258,7 @@ float16_muladd_scalbn(float16 a, float16 b, float16 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &float16_params);
-+    parts_uncanon(pr, status, &float16_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
+     if (no_signaling_nans(status)) {
+-        return 0;
+-    } else {
+-        uint16_t a = a_;
+-        if (snan_bit_is_one(status)) {
+-            return ((a >> 6) & 0x1FF) == 0x1FF;
+-        } else {
+-            return (((a >> 6) & 0x1FF) == 0x1FE) && (a & 0x3F);
+-        }
++        return false;
      }
-@@ -2283,7 +2283,7 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &float32_params);
-+    parts_uncanon(pr, status, &float32_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
-     }
-@@ -2302,7 +2302,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &float64_params);
-+    parts_uncanon(pr, status, &float64_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
-     }
-@@ -2461,7 +2461,7 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &float32_params);
-+    parts_uncanon(pr, status, &float32_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
-     }
-@@ -2479,7 +2479,7 @@ bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &bfloat16_params);
-+    parts_uncanon(pr, status, &bfloat16_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
-     }
-@@ -2497,7 +2497,7 @@ float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
-     /* Round before applying negate result. */
--    parts_uncanon(pr, status, &float128_params);
-+    parts_uncanon(pr, status, &float128_params, false);
-     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
-         pr->sign ^= 1;
-     }
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index eada83f7a4..1e1bbb14fd 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -258,9 +258,12 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
-  * are FRAC_SHIFT bits that may require rounding at the bottom of the
-  * fraction; these bits will be removed. The exponent will be biased
-  * by EXP_BIAS and must be bounded by [EXP_MAX-1, 0].
-+ *
-+ * The saturate parameter controls saturation behavior for formats that
-+ * support it -- when true, overflow produces max normal instead of infinity.
-  */
- static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
--                                   const FloatFmt *fmt)
-+                                   const FloatFmt *fmt, bool saturate)
- {
-     const int exp_max = fmt->exp_max;
-     const int frac_shift = fmt->frac_shift;
-@@ -269,7 +272,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-     const uint64_t frac_lsbm1 = round_mask ^ (round_mask >> 1);
-     const uint64_t roundeven_mask = round_mask | frac_lsb;
-     uint64_t inc;
--    bool overflow_norm = false;
-+    bool overflow_norm = saturate;
-     int exp, flags = 0;
- 
-     switch (s->float_rounding_mode) {
-@@ -294,11 +297,11 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-         break;
-     case float_round_up:
-         inc = p->sign ? 0 : round_mask;
--        overflow_norm = p->sign;
-+        overflow_norm |= p->sign;
-         break;
-     case float_round_down:
-         inc = p->sign ? round_mask : 0;
--        overflow_norm = !p->sign;
-+        overflow_norm |= !p->sign;
-         break;
-     case float_round_to_odd:
-         overflow_norm = true;
-@@ -445,10 +448,10 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
++    bool frac_msb_is_one = (a >> 22) & 1;
++    return frac_msb_is_one == snan_bit_is_one(status);
  }
  
- static void partsN(uncanon)(FloatPartsN *p, float_status *s,
--                            const FloatFmt *fmt)
-+                            const FloatFmt *fmt, bool saturate)
+ /*----------------------------------------------------------------------------
+@@ -310,16 +310,7 @@ bool bfloat16_is_signaling_nan(bfloat16 a_, float_status *status)
+ 
+ bool float32_is_quiet_nan(float32 a_, float_status *status)
  {
-     if (likely(is_anynorm(p->cls))) {
--        parts_uncanon_normal(p, s, fmt);
-+        parts_uncanon_normal(p, s, fmt, saturate);
-     } else {
-         switch (p->cls) {
-         case float_class_zero:
+-    if (no_signaling_nans(status)) {
+-        return float32_is_any_nan(a_);
+-    } else {
+-        uint32_t a = float32_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return (((a >> 22) & 0x1FF) == 0x1FE) && (a & 0x003FFFFF);
+-        } else {
+-            return ((uint32_t)(a << 1) >= 0xFF800000);
+-        }
+-    }
++    return float32_is_any_nan(a_) && !float32_nan_is_snan(a_, status);
+ }
+ 
+ /*----------------------------------------------------------------------------
+@@ -328,17 +319,21 @@ bool float32_is_quiet_nan(float32 a_, float_status *status)
+ *----------------------------------------------------------------------------*/
+ 
+ bool float32_is_signaling_nan(float32 a_, float_status *status)
++{
++    return float32_is_any_nan(a_) && float32_nan_is_snan(a_, status);
++}
++
++/*----------------------------------------------------------------------------
++| Determine if a float64 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool float64_nan_is_snan(float64 a, float_status *status)
+ {
+     if (no_signaling_nans(status)) {
+-        return 0;
+-    } else {
+-        uint32_t a = float32_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return ((uint32_t)(a << 1) >= 0xFF800000);
+-        } else {
+-            return (((a >> 22) & 0x1FF) == 0x1FE) && (a & 0x003FFFFF);
+-        }
++        return false;
+     }
++    bool frac_msb_is_one = (a >> 51) & 1;
++    return frac_msb_is_one == snan_bit_is_one(status);
+ }
+ 
+ /*----------------------------------------------------------------------------
+@@ -348,17 +343,7 @@ bool float32_is_signaling_nan(float32 a_, float_status *status)
+ 
+ bool float64_is_quiet_nan(float64 a_, float_status *status)
+ {
+-    if (no_signaling_nans(status)) {
+-        return float64_is_any_nan(a_);
+-    } else {
+-        uint64_t a = float64_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return (((a >> 51) & 0xFFF) == 0xFFE)
+-                && (a & 0x0007FFFFFFFFFFFFULL);
+-        } else {
+-            return ((a << 1) >= 0xFFF0000000000000ULL);
+-        }
+-    }
++    return float64_is_any_nan(a_) && !float64_nan_is_snan(a_, status);
+ }
+ 
+ /*----------------------------------------------------------------------------
+@@ -368,17 +353,7 @@ bool float64_is_quiet_nan(float64 a_, float_status *status)
+ 
+ bool float64_is_signaling_nan(float64 a_, float_status *status)
+ {
+-    if (no_signaling_nans(status)) {
+-        return 0;
+-    } else {
+-        uint64_t a = float64_val(a_);
+-        if (snan_bit_is_one(status)) {
+-            return ((a << 1) >= 0xFFF0000000000000ULL);
+-        } else {
+-            return (((a >> 51) & 0xFFF) == 0xFFE)
+-                && (a & UINT64_C(0x0007FFFFFFFFFFFF));
+-        }
+-    }
++    return float64_is_any_nan(a_) && float64_nan_is_snan(a_, status);
+ }
+ 
+ /*----------------------------------------------------------------------------
+@@ -444,6 +419,19 @@ floatx80 floatx80_silence_nan(floatx80 a, float_status *status)
+     return a;
+ }
+ 
++/*----------------------------------------------------------------------------
++| Determine if a float128 NaN is signaling NaN.
++*----------------------------------------------------------------------------*/
++
++static bool float128_nan_is_snan(float128 a, float_status *status)
++{
++    if (no_signaling_nans(status)) {
++        return false;
++    }
++    bool frac_msb_is_one = (a.high >> 47) & 1;
++    return frac_msb_is_one == snan_bit_is_one(status);
++}
++
+ /*----------------------------------------------------------------------------
+ | Returns 1 if the quadruple-precision floating-point value `a' is a quiet
+ | NaN; otherwise returns 0.
+@@ -451,17 +439,7 @@ floatx80 floatx80_silence_nan(floatx80 a, float_status *status)
+ 
+ bool float128_is_quiet_nan(float128 a, float_status *status)
+ {
+-    if (no_signaling_nans(status)) {
+-        return float128_is_any_nan(a);
+-    } else {
+-        if (snan_bit_is_one(status)) {
+-            return (((a.high >> 47) & 0xFFFF) == 0xFFFE)
+-                && (a.low || (a.high & 0x00007FFFFFFFFFFFULL));
+-        } else {
+-            return ((a.high << 1) >= 0xFFFF000000000000ULL)
+-                && (a.low || (a.high & 0x0000FFFFFFFFFFFFULL));
+-        }
+-    }
++    return float128_is_any_nan(a) && !float128_nan_is_snan(a, status);
+ }
+ 
+ /*----------------------------------------------------------------------------
+@@ -471,15 +449,5 @@ bool float128_is_quiet_nan(float128 a, float_status *status)
+ 
+ bool float128_is_signaling_nan(float128 a, float_status *status)
+ {
+-    if (no_signaling_nans(status)) {
+-        return 0;
+-    } else {
+-        if (snan_bit_is_one(status)) {
+-            return ((a.high << 1) >= 0xFFFF000000000000ULL)
+-                && (a.low || (a.high & 0x0000FFFFFFFFFFFFULL));
+-        } else {
+-            return (((a.high >> 47) & 0xFFFF) == 0xFFFE)
+-                && (a.low || (a.high & UINT64_C(0x00007FFFFFFFFFFF)));
+-        }
+-    }
++    return float128_is_any_nan(a) && float128_nan_is_snan(a, status);
+ }
 -- 
 2.43.0
 
