@@ -4,97 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EEEEC1EAC
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAFBEC1EB1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 12:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnyP0-000790-UN; Thu, 05 Feb 2026 07:24:06 -0500
+	id 1vnyoh-0003Q5-E5; Thu, 05 Feb 2026 07:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
- id 1vnyOz-00078m-1r; Thu, 05 Feb 2026 07:24:05 -0500
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vnyod-0003Px-Eb
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:50:35 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
- id 1vnyOw-0000hk-Al; Thu, 05 Feb 2026 07:24:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
- h=date:from:to:cc:message-id:in-reply-to:references:
- subject:mime-version:content-transfer-encoding;
- bh=4Gx2ZH2cSBkkdeGCtptbnTIiyX8Pf3a8Om1tEjwDOfc=;
- b=mAqQwQ+StYZbMxqzcSgWWIJ0TLnTlT6QHtmp1G3wsVlBvRB6PvqI+tka
- FXP/1I8rEtmfjAuuDryWNyJ2tfbu6Ux2/qfqYETM9kbuu02jju29+UpEM
- sUSWcXycphVbCurS1pusOZy6dal/FvE1h1sDM0R82q3iQ4MTiavOIEJjs Q=;
-X-CSE-ConnectionGUID: S4o1cPMJTmKEaiXBSz4EjA==
-X-CSE-MsgGUID: liY6gEq/RV+3OfsN8AshBQ==
-Authentication-Results: mail2-relais-roc.national.inria.fr;
- dkim=none (message not signed) header.i=none;
- spf=Pass smtp.mailfrom=sebastien.michelland@inria.fr;
- spf=None smtp.helo=postmaster@zcs2-store8.inria.fr
-Received-SPF: Pass (mail2-relais-roc.national.inria.fr: domain of
- sebastien.michelland@inria.fr designates 128.93.142.6 as
- permitted sender) identity=mailfrom; client-ip=128.93.142.6;
- receiver=mail2-relais-roc.national.inria.fr;
- envelope-from="sebastien.michelland@inria.fr";
- x-sender="sebastien.michelland@inria.fr";
- x-conformance=spf_only; x-record-type="v=spf1";
- x-record-text="v=spf1 include:mailout.safebrands.com
- a:basic-mail.safebrands.com a:basic-mail01.safebrands.com
- a:basic-mail02.safebrands.com ip4:128.93.142.0/24
- ip4:192.134.164.0/24 ip4:128.93.162.160 ip4:128.93.162.3
- ip4:128.93.162.88 ip4:89.107.174.7 mx ~all"
-Received-SPF: None (mail2-relais-roc.national.inria.fr: no sender
- authenticity information available from domain of
- postmaster@zcs2-store8.inria.fr) identity=helo;
- client-ip=128.93.142.6;
- receiver=mail2-relais-roc.national.inria.fr;
- envelope-from="sebastien.michelland@inria.fr";
- x-sender="postmaster@zcs2-store8.inria.fr";
- x-conformance=spf_only
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=Sophos;i="6.21,274,1763420400"; d="scan'208";a="262062780"
-X-MGA-submission: =?us-ascii?q?MDGHH8u6zwjUOwVrasmT2UKFuIw8CO86R//vOl?=
- =?us-ascii?q?e+RTv8lVVlCUKMFkgoAj4gVhIgLWa5JEhHyn/49Gco7h7gYBy1BM+No0?=
- =?us-ascii?q?VAoRbhgFZtN48Lzafpz/6umnqyPbb35R5+PCt4IxiD3sZ6g/vH/GkZIl?=
- =?us-ascii?q?rQJkqkGbT6BiMJaQOcAad0CQ=3D=3D?=
-Received: from zcs2-store8.inria.fr ([128.93.142.6])
- by mail2-relais-roc.national.inria.fr with ESMTP; 05 Feb 2026 13:23:57 +0100
-Date: Thu, 5 Feb 2026 13:23:57 +0100 (CET)
-From: Sebastien Michelland <sebastien.michelland@inria.fr>
-To: Max Chou <max.chou@sifive.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- qemu-riscv <qemu-riscv@nongnu.org>, 
- Jean-Michel Gorius <jean-michel.gorius@irisa.fr>
-Message-ID: <1553882346.22736589.1770294237295.JavaMail.zimbra@inria.fr>
-In-Reply-To: <aYNhZQC7_JRrBNlU@sifive.com>
-References: <20260126172246.2521444-1-sebastien.michelland@inria.fr>
- <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
- <2132391437.15681684.1769606774227.JavaMail.zimbra@inria.fr>
- <aYNhZQC7_JRrBNlU@sifive.com>
-Subject: Re: [PATCH] target/riscv: fix vs*r.v missing SIGILL check
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vnyob-0006Qz-J0
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 07:50:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=o0OFaDPZVokASYXb24gtt2efhu04PBppuKZMNoPGxBo=; b=hpqzacrMKpr9eVtp
+ RpHFPHp1SoITbQfB9oSXKlro02KQt5dTJE5jUHlFMUSwGzGJ1xL61YCD8NE0CnmuIS6rzJZBjv1Pv
+ 2/pKG5y49Lx9qeE86VYhZO4yRm807Jfi1l6d4rDVg01Kw/MbI5W+4owwJvvD8BH9Y0GIBwatCfhVs
+ njaNgKQn1xORZrNEtvoa2tvYuPxLrlnEJYyNSuJIe6BjcSk6pByfRd+qqSL0n/PZFPzSRN4NLuG6y
+ zOIGVJdYI/ub1ydT7phsMxZGKfDTXPZKMTfDM7+VqHnGq2+rjArLAEfe1bS1Ova/5fVXRRErbr8iH
+ TjkE5Nn+X0we3b461w==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vnyoY-00000001xE0-3gRR;
+ Thu, 05 Feb 2026 12:50:30 +0000
+Date: Thu, 5 Feb 2026 12:50:30 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>,
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: Modern HMP
+Message-ID: <aYSSFo_HV6S0LQQS@gallifrey>
+References: <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
+ <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
+ <87ikctk5ss.fsf@suse.de> <aXJJkd8g0AGZ3EVv@redhat.com>
+ <aX-boauFX2Ju7x8Z@gallifrey> <875x8d0w32.fsf@pond.sub.org>
+ <aYPvN5fphSObsvGR@gallifrey> <87ms1nu1fj.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [131.254.16.132]
-X-Mailer: Zimbra 10.1.13_GA_4837 (ZimbraWebClient - FF147
- (Linux)/10.1.14_GA_4838)
-Thread-Topic: target/riscv: fix vs*r.v missing SIGILL check
-Thread-Index: Unbzb0Ssqu4sWU7V5N/aXSFFNptt4A==
-Received-SPF: pass client-ip=192.134.164.83;
- envelope-from=sebastien.michelland@inria.fr;
- helo=mail2-relais-roc.national.inria.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87ms1nu1fj.fsf@pond.sub.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 12:49:56 up 101 days, 12:26,  2 users,  load average: 0.04, 0.01,
+ 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,36 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Max,
+* Markus Armbruster (armbru@redhat.com) wrote:
+> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+> 
+> [...]
+> 
+> > I did see you suggesting for Rust for it; which would work - although
+> > given it wouldn't be performance sensitive, Python would seem reasonable.
+> 
+> Marc-André suggested "Python or Rust (student choice)".
+> 
+> Daniel argued for Rust "as it allows the possibility to embed that Rust
+> impl inside the current QEMU binaries, to fully replace the C code and
+> retain broadly the same functionality."
+> 
+> If we're not interested in such embedding, then Python feels preferable
+> to me, because I'd expect it to get us to the finish line faster.
 
-> But I think that the proposed fix of adding vext_check_isa_ill to whole
-> register load/store instructions will violate the RISC-V vector specifica=
-tion.
->=20
-> With this patch, whole register load/store instructions would incorrectly
-> raise illegal instruction exceptions when vill=3D1, even though the V ext=
-ension
-> is enabled.
+Ah ok, the either-or embedding thing sounds neat; but does sound like
+it would complicate stuff.
 
-You're entirely correct! I should probably have known or noticed that, oops=
-.
+Dave
 
-So to sum up:
-
-* The bug is that vs*r currently don't raise SIGILL when using a non-RVV CP=
-U;
-* but vs*r.v not having a vill check is intended and not the cause;
-* instead the bug affects all instructions but the vill check just masks it=
- for
-  everyone except vs*r.v.
-
-> I would recommend that we should fix this bug at riscv_get_tb_cpu_state b=
-y
-> checking the CPU configuration in CONFIG_USER_ONLY block (user mode) to
-> ensures require_rvv returns false when the vector is disabled.
-
-I'll start from here and come back with a v2 that (hopefully) does the righ=
-t thing.
-
-S=E9bastien
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
