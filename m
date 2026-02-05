@@ -4,110 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDDEEC1E94
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6250EC1E9A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 10:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnwTt-0003Qv-Li; Thu, 05 Feb 2026 05:21:01 -0500
+	id 1vnwrG-0006eb-8k; Thu, 05 Feb 2026 05:45:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnwTs-0003Qb-7j
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:21:00 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vnwTp-0007jS-2Z
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:20:58 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-79518cc2bb4so4681607b3.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 02:20:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770286855; cv=none;
- d=google.com; s=arc-20240605;
- b=gPFQtGGSvWlTBpAI3Q7kD5h20aGQsx4eISOkc6B6OAyStAmNp9PUFmXgFtTrUMd49B
- YlxlNc27IfGEA2Bccuv3fzPNzoa8qu9chUMjqIg8WgfkN0IxdMHgmM5Hjdnm7dqUDIA0
- kLAaZXU6YPvdarP/uRXHP5CVrUYhV5T6WN7tY1wFGTTFpBEoD9ZXtc9NYDoHf2y7HOwn
- XxXIDaxJBoBQWAYvN4e2lf6cg5VVIoLVnZTXSlNISgrnaKKO17w9kpX4J5Q0xBqy78z2
- BGPfmGCngVogFlDT33ASgDlzo87o5s555i8kqKWVe5bOOc9zpvKx4O7UXLv7zLzPRJ4h
- 2sHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Q4E6LHdBSFXduGeeqWYUvrV147mNZsLrW4ry41IVI9U=;
- fh=09I2axr4uxBaQZWOq7eGnNEbjKYzXXuOZ/WYgxqbxRU=;
- b=KkKqdpTAxzaRRu4ftlKKQi5H3bucIu4wmBhCFSjK5m6k86zQ+neyqy5DtNnTljzBgh
- O+lVuiLeWFV6KhKgi2HbwigdpylCm4eZ2qqW/Jf5vJ9Hv3IuBDizBYTayhDC34QdL0nC
- xoAlqlGr2NtFouDNI6IP1wfYKX4L/jNbFVIyVIEOr+rvMpw/8p4zuiM63KEBI1hwC/95
- swbCXO+pZ8H0ltDR4M6hIyM6IxWfaj9KcaK1I5MSunrCmtfY1UpxR63BoOxigEP9nS39
- fYMxmV0Gdzfzd5y0iOU7rJGIDd4Ap+SHGWIcPEIBoZKusvqoXQLQMsJQk6W0Vd6yATY8
- f14w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770286855; x=1770891655; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Q4E6LHdBSFXduGeeqWYUvrV147mNZsLrW4ry41IVI9U=;
- b=sWP8egXS/eKDr12aowQ7c5btUPqbiI76IETv+d3Y2sMhsQg+//KLPCiUfFXWjVdpY5
- t9YGk1HCOglVG0GmioOXr9S8m5tdqWEj4IJSCcvyKPY1sx9EU09C1CPlVyp38dV+2upg
- /AX/cTPKZSqEPx6KpMjoDCCP5xMTX1ZV2FTszKSURKT/RPu5y++2FUlm3P7JQnADF98X
- NyTQovDVy3nImZzLq56JBTN8EZ+tmTa2j5siaWXcKaJ3j6TyRXuloZtjLiVXu9aSZYdR
- YTvgRgVBb25XBKbpzZEzQwSwm72j4wM+fKhIAUHnq+YEnqdcY/w8EM6tMEM3D4U4tu4u
- tCdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770286855; x=1770891655;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q4E6LHdBSFXduGeeqWYUvrV147mNZsLrW4ry41IVI9U=;
- b=mm6KB9Ai1tRyoPp+c8hpsjLMIILBb+PXmqoBmrp3ANb3LoOwkEG9lxGiks37nF2WQ9
- sA3wPSnxYhFhfPLzsyJ+tBYD1IAmbXJa1gPSW9uvbpb8oBgtFStTLRIpEIshL7XKS0Mv
- syxS1ROqeewRJ0cRIuiOohWIQg397XIjfLC26fuSay3BSrTKHEKEgmq4tNjue2tCcdQJ
- qVHdCSNTKne7BS1iEt995M+3B9WD1KsKxSY5Gm8w/CJaCpAwnzLOPyw6jSrg2fnGyXDP
- 27UyvAZpN/BXgCh1Li+AdV/kMF7Kwd9da7gEXoqeL1GZ8jHDw/7EQ8btFInAwlGhoMZt
- CG0g==
-X-Gm-Message-State: AOJu0Ywzu2U1pMplp2fXFlXTeoWWyNLNB6MBNd3aWpRrsLlwqBNOtXvS
- UZq9sE7W/TOs1q7omI6GYUWI+lkEa8TBOo+wF4kzzgrToBrgUeewJFR02hO+eighrOGWIuDLIeS
- HTFMTYyn9nTdLH2mKaCQjIuKjVgG+zHGyX+oFMI4UNQ==
-X-Gm-Gg: AZuq6aLhFBHKMZGktpJEOxmLIpWay8fBsThA1fOpawR6p+vm8+lVR/qWnpdkosvWpPp
- MxUH7gPvV4zkBIBYijyUncm3QRoaSdmEXDX1PZ81Mmpji3MdYWLpTvBcjBPIQ2ngur0TGzEWHrG
- aO0z9Ji3NhwLVNyvO/Uct0h+0WXNnDQT5bt6cLtNzow01kTO4k9PD/JYWEtwpgowgA/vmsHaJ7o
- sGm/qdK1F/ercoHKYw+c0ZznoiaO08hY0tWazwCu+QT5vSfETBRbKQWm2XgdtziHb54Mg==
-X-Received: by 2002:a05:690c:f14:b0:792:7745:72d0 with SMTP id
- 00721157ae682-794fe70f3b6mr52950947b3.23.1770286855563; Thu, 05 Feb 2026
- 02:20:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vnwrD-0006e8-VG
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:45:07 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vnwrB-0006nz-67
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 05:45:07 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B3C9747BDA;
+ Thu, 05 Feb 2026 11:45:01 +0100 (CET)
+Message-ID: <d909ce08-c2eb-4eff-b973-498456dec12c@proxmox.com>
+Date: Thu, 5 Feb 2026 11:45:00 +0100
 MIME-Version: 1.0
-References: <20260129192009.14707-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260129192009.14707-1-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Feb 2026 10:20:44 +0000
-X-Gm-Features: AZwV_QhwkRr6LRvTHk7X7jjSk2flE715Dw6qYSH7QRauPBTxA6SvPseQCCnBACw
-Message-ID: <CAFEAcA-4-nwRQCaa9SRUv28SWveC7k0GG5HmA478FhKGuJb_fA@mail.gmail.com>
-Subject: Re: [PATCH v19 00/22] WHPX support for Arm
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: (in guest) disk corruption during snapshots
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org,
+ dionbosschieter@gmail.com
+References: <4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be>
+ <aef520c2-3296-4eb4-999c-faa757c9b2a3@proxmox.com>
+ <aYRi660MmeMtobZG@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <aYRi660MmeMtobZG@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1770288223132
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,35 +64,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Jan 2026 at 19:20, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v19)
->
-> Missing features:
-> - VM save-restore: interrupt controller state notably
-> - SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
-> So SVE2 is currently masked for VMs when running this.
->
-> Known bugs:
-> - U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
->
-> Note:
->
-> "target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
->
-> "accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-> as part of this series to make it compilable as a whole.
->
-> And another note:
->
-> Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
-> so didn't do changes there to a sysreg.inc.
+Am 05.02.26 um 10:28 AM schrieb Kevin Wolf:
+> Am 05.02.2026 um 09:59 hat Fiona Ebner geschrieben:
+>> Hi,
+>>
+>> Am 03.02.26 um 3:24 PM schrieb Jean-Louis Dupond:
+>>> Hi,
+>>>
+>>> Since some months we were observing disk corruption within the VM when
+>>> enabling backups (which triggers snapshots).
+>>> After a lot of troubleshooting, we were able to track down the commit
+>>> that caused it:
+>>> https://gitlab.com/qemu-project/qemu/-/
+>>> commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694
+>>>
+>>> More info in the issue:
+>>> https://gitlab.com/qemu-project/qemu/-/issues/3273
+>>>
+>>> Now this seems to be caused by a race between disabling the
+>>> dirty_bitmaps and the tracking implemented in the mirror top layer.
+>>> Kevin shared me a possible solution:
+>>>
+>>> diff --git a/block/mirror.c b/block/mirror.c
+>>> index b344182c747..f76e43f22c1 100644
+>>> --- a/block/mirror.c
+>>> +++ b/block/mirror.c
+>>> @@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
+>>>       * accessing it.
+>>>       */
+>>>      mirror_top_opaque->job = s;
+>>> +    if (s->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
+>>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+>>> +    }
+>>>  
+>>>      assert(!s->dbi);
+>>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
+>>> @@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
+>>>       * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
+>>>       * mode.
+>>>       */
+>>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+>>> +    if (s->copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
+>>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+>>> +    }
+>>>  
+>>>      bdrv_graph_wrlock_drained();
+>>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
+>>>
+>>>
+>>> Running this for some hours already, and it seems to fix the issue.
+>>>
+>>> Let's open up the discussion if this is the proper way to fix it, or if
+>>> there are better alternatives :)
+>>
+>> Yes, I do think this is the proper solution. I ended up with essentially
+>> the same yesterday (see the Gitlab issue). I moved the disabling
+>> unconditionally, but there should be no need to delay the disabling if
+>> using write-blocking mode. I would suggest moving the comment on top of
+>> the changed hunk in mirror_start_job() along to the new hunk in
+>> mirror_run().
+> 
+> I didn't actually write this as a proper patch, but just as a quick
+> thing Jean-Louis could test, so yes, all of the details are up for
+> discussion.
+> 
+> You're right that there is no need to delay disabling the bitmap in
+> active mode, but it probably also doesn't hurt to keep it enabled for a
+> little while? Maybe we should do it like you did just to keep the code a
+> little simpler.
 
-Hi; this doesn't apply on current master now that the SMMU changes
-have landed, because of a conflict with the ACPI data table
-update patch, but otherwise I think it is good to go. Could you
-rebase it, please?
+Yes, it shouldn't hurt. Looking at the code again,
+should_copy_to_target() will evaluate to false before the job is set, so
+it might be necessary for write-blocking mode too?
 
-thanks
--- PMM
+> There is another approach I had in mind, but wasn't as sure about, so I
+> didn't suggest it for the testing to see if this race is even the
+> problem we're seeing in practice: Is there a reason why populating the
+> initial dirty bitmap (i.e. the second part of mirror_dirty_init()) can't
+> just come after setting 'mirror_top_opaque->job'? Then we could simply
+> leave the bitmap disabled all the time and rely solely on the mirror
+> job's own tracking. That would feel a little more consistent than using
+> the block layer just to plug a small race window during startup.
+
+Interesting idea! In write-blocking mode, it will lead to writes during
+dirty bitmap initialization already being synced to the target, so
+leading to a bit of duplicate work.
+
+Git history tells me why setting the job ended up where it is now:
+
+> commit 32125b14606a454ed109ea6d9da32c747e94926f
+> Author: Kevin Wolf <kwolf@redhat.com>
+> Date:   Fri Feb 3 16:21:41 2023 +0100
+> 
+>     mirror: Fix access of uninitialised fields during start
+>     
+>     bdrv_mirror_top_pwritev() accesses the job object when active mirroring
+>     is enabled. It disables this code during early initialisation while
+>     s->job isn't set yet.
+>     
+>     However, s->job is still set way too early when the job object isn't
+>     fully initialised. For example, &s->ops_in_flight isn't initialised yet
+>     and the in_flight bitmap doesn't exist yet. This causes crashes when a
+>     write request comes in too early.
+>     
+>     Move the assignment of s->job to when the mirror job is actually fully
+>     initialised to make sure that the mirror_top driver doesn't access it
+>     too early.
+
+Right before initializing the dirty bitmap, the other fields of the job
+object are already initialized, so the problem described in that commit
+message should not resurface.
+
+That said, not sure I'm not missing something.
+
+Something else I'm wondering about: do we need to use atomics for
+setting and accessing MirrorBDSOpaque.job? At least with virtio-blk
+using iothread-vq-mapping, mirror_run() and bdrv_mirror_top_do_write()
+might be called in different threads.
+
+Best Regards,
+Fiona
+
 
