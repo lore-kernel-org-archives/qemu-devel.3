@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0BA0EA795C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C909FEA795C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 03:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnq5j-0004kZ-PP; Wed, 04 Feb 2026 22:31:39 -0500
+	id 1vnq8T-0005Jq-VI; Wed, 04 Feb 2026 22:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnq5i-0004kJ-VA
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:31:38 -0500
-Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
+ id 1vnq8T-0005JY-57
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:34:29 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vnq5h-0004Pz-9d
- for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:31:38 -0500
-Received: by mail-pg1-x543.google.com with SMTP id
- 41be03b00d2f7-c648bc907ebso292032a12.3
- for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:31:36 -0800 (PST)
+ id 1vnq8R-00051X-Fi
+ for qemu-devel@nongnu.org; Wed, 04 Feb 2026 22:34:28 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3532aa9a77eso181497a91.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Feb 2026 19:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770262295; x=1770867095; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770262466; x=1770867266; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CIsgD0ryv2V2yhmYSNW9VtY8BnBIj+KrV00+24MC3K8=;
- b=pnvrbAfI5iR2CCzh6Fxap5c7u8yaMTYENXCkLUZMnvYP4oJXSBRqD8v5h2fdRsLeHf
- MJPPcqrh6xRDwV97aP0707KgmfqkuLs0agxACzlEmW8vI9Tg6NchqNXog7d2cWa0xBvN
- JjWOKQ/JSJQRTIXZo3WAzT1O7XJJk0uWgsf5aV+7YdiUWDlXKewtM3fp+euzcQ8Rc3fJ
- OmWiOFNW+Yh3hX784ecXhUEbtdCYnyYDYuREnuDH7C7/WgPVEZnd5lc/VQCRKEpSu/34
- CrSIGwJRGoNJiIId95SfLESu/mKowvF4JlPZ1yeGN2jqK5JPByHsyH4pDJsLvMQUnglD
- cq3Q==
+ bh=hyOnQ7dOiOMn7BXxCQ4LSW7EVqMgxa/BBy+rQ/7QIfc=;
+ b=a4gBvvl3RU26E8uAdnCRmBtetIARoC9tUQsnalTZjLWW9hDpexvTfNMkZRl62irbk3
+ X5PhVUy0a4H2aCBy5HfO/tkrBDhjCzCsjBzheTBDwZsO0jjXUVAPN84JIlH4hq5i9rVd
+ sdsEfd1IdjZwIKYcVWZQlPa9p3m8PjSZoFlSoV/KD8ic0kzWaRWHeeMBx6IMHc1f9OLk
+ f4K+F1lgePpA9DQIGyb5sGnHMwuC0lRAZwA7Gv/1cVqxpI6QSCs2I6yBTP2p0n7BxTTQ
+ ew2lXEXT7xKNICjSSIvKyD3WdSgmi18YQRtQZcsgFV3zCQO6CNW1yAOfd4UUUz2p9MSC
+ TTlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770262295; x=1770867095;
+ d=1e100.net; s=20230601; t=1770262466; x=1770867266;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CIsgD0ryv2V2yhmYSNW9VtY8BnBIj+KrV00+24MC3K8=;
- b=OVpu+U6kX0Jx3y+qqiQhk+SOQtGa7Lnk1Nz+OphW4gcdv+DHFY5hfmW+zCU1T2Xse0
- jxJgBeXTPRCEgqjrM6XZc345+V33z/PnsObLYz5ocRtYgfpHCUUh1f1brSGCRITnPOuU
- G45rDk8cq6bxbSAOuQABFoj7iC9mnjYVtGXgR4lkSgD3eQjkqHpSvwC5L9GmvVceCqfB
- Sp2djkW8lxGaOmUuSihSmOrcFiSUcyPiIr9B3nNgwoDAdcRNuPWKl2Mdr39JblKLcJUs
- +UBOSOQEMBgoFquOSEBym0P2VyVX4C+J5rWXI/hThKQvl+NsOD5JBr9dosgWxPZzsJMN
- rLdA==
+ bh=hyOnQ7dOiOMn7BXxCQ4LSW7EVqMgxa/BBy+rQ/7QIfc=;
+ b=KWuhCRZ7s5rwriqgFExNwDEN0BYU9xvYLyt17K0V4s9TtpQc6kIy5bqURbDJOc2NcM
+ 7vtNNpeFZsKB9f6yv5T45qxQ4T4wwELGyobcFr7Z0Q7rMq8vegyWH6Ht2i2rLUYN99Oq
+ HfSCXJu/pM1AWJUiMB/5NUulwAGA0n/Ke0EaRAxJxo3bJctywZwaWF30l+NNZsK7dN+p
+ Vb7ws7NbTMt/C7JwuokvJqSb/YSeUeKDsivkvmDz443hTXf9N/Y/qyGem+ooCrMR/2Xc
+ f9RgaKy4IYIArDV53h51cVkXlzWuz1dfe9R101KhhhxC7tMLmo00sCqp3yxNmuEcgISF
+ ilnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5aK9v8P/QsFUjyuwOIaJ4mlaJ6FDfCEuj1E39npoqiEubWfYE9CeE0/mJNV4pacuMpcbjA9LK7srI@nongnu.org
-X-Gm-Message-State: AOJu0YxNOatnK2hX4StsyGnMqZLxkbc9TLOc0bmF1Qw1ClLAk9AyXGUF
- fHCytChZb/6hPdVW6vrngxrms0WqNoOID8VsqVOr6wCO0EoaAbLtsQ64zCVHqfLOt3c0Q7FAldr
- jd2TTfNfjUnIm
-X-Gm-Gg: AZuq6aK8lCeJwzGU7WkT3L9zyQ/mHsCKZ3RTzD7rMKRIovNO6s40O4wPRxZCf26pnDf
- xiH/Jn87WEAzcIfcl/ozckeWlMT91kR9OR6MycAvaK6HsLpuwRIryCOL1zFBmkLD6ZL360020Em
- kaj6A/ymLNmnX6GPlE3QM0+ng2bQaAv1rjt7Y6tNpZAWOnC5HqLCFNXPEo1qCHjzoQFeQhPg80j
- SjPD20D8jGWG65YtgeTX19VNhfo8tT72KhPiA6Ew8lAxsm9eYtUX9j7WkKrzqHrz//5ZL/V94S6
- BzzsWw+FvF5H+G0dbX4bD+cFWIUzvFq6UugND3eqqiJ+GWADjdV8m81pz9tBR7+Eu9DKLwM7sA9
- hlnoXsz3vwRTZ3Jj044X0tdyWdX4F20YZ91tSvtV3DXkkwIiLrEoxTjc/KhqSRk3DQjRkdBfH8i
- 80LDlTIjLh3fATx89RQyAc2PfnKHkk6M5CaEoX4eO6c/4ECrgiBEJVR8Ej/NMtItFJBzyYOzLD
-X-Received: by 2002:a17:902:e884:b0:2a9:410:23fe with SMTP id
- d9443c01a7336-2a933ea2e9dmr61890275ad.36.1770262295450; 
- Wed, 04 Feb 2026 19:31:35 -0800 (PST)
+ AJvYcCVykUR3TOW6izSbWoaNNw78BFym1ChtA/wugJ29oPHyKDE7ev1WOAzMOXOpKA0Q1ZrZNrM+p5MyH2Nr@nongnu.org
+X-Gm-Message-State: AOJu0YyzPc2IbVWPgwqsYxYV+Eu8327FnzwcCD3Cndb+JNuyrPD8z/kR
+ 6FBIkOqn0ZIOf1PH23pJ82Rilt6nXbOloyDs3oGzm8VmEXHWoYmv1uaHeGAqQEMXqI4=
+X-Gm-Gg: AZuq6aLRwxpJb576ebk9GKNH59dB86m9BmQgLPEoMcIDQsyi1Z2dCf+lsCeuTd4nYR0
+ XD5jgaJy4j6hfwEIx8/MKnS7gNZ1PR0bbK7L6yzUMEKiS+qqIfa7ivbbH46eSd/BphZ8FqEesGh
+ IYnLIuET7IojpWjImCK2IlV3pw+6KN9cMyYrVtOlOUL/wDu0JouYS2Owmix1AYtALk86vrm3B1l
+ l6GFJGNqS/LMeLQUNCKHiE9M2+PtND+b6fipfXv5oUU3X+pnV7xMH6RqWBO6sUxoRYXAYQK19PY
+ dblb+41+GkK7/zlscDk+ywPYSw7xh8+VX4ESbcJyafZ7EPsWpf9+fau+Ha32hEqH4jjHIwO+Dr+
+ FybsPrRfZLpepIrK8+pvPl+cNKwh6GKxtV9vszwRMFnlW6nTwOXudnXPG1G2xK8WPLLq20GsEoN
+ cjPbcavjTI345y9RWgCetRTGSz2QdjyxndA7y+Z+h12CoRGv/Xn0od1JpBXb389gxSXOcxBiH7r
+ KE6t7VtfoiZuW8Y2CezZ1QxYbOOZ1VAlFKzVlWOaA==
+X-Received: by 2002:a17:90b:5188:b0:354:9c20:83e5 with SMTP id
+ 98e67ed59e1d1-3549c208652mr1484874a91.15.1770262465726; 
+ Wed, 04 Feb 2026 19:34:25 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:7515:513c:b646:18b8?
- ([2401:d002:dc0f:2100:7515:513c:b646:18b8])
+ (bg30dhzygc4twf4fscxk.ip6.superloop.au.
+ [2401:d002:dc0f:2100:7515:513c:b646:18b8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a933851336sm45194365ad.15.2026.02.04.19.31.30
+ 98e67ed59e1d1-3549c239c67sm825542a91.16.2026.02.04.19.34.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Feb 2026 19:31:35 -0800 (PST)
-Message-ID: <a2b61cab-788d-498f-9e35-152a6c77da35@linaro.org>
-Date: Thu, 5 Feb 2026 13:31:27 +1000
+ Wed, 04 Feb 2026 19:34:25 -0800 (PST)
+Message-ID: <9db1d65f-5363-49bf-b135-bd3cb9d640b9@linaro.org>
+Date: Thu, 5 Feb 2026 13:34:17 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/19] fpu/softfloat: Refactor floatx80 format NaN
- classification to share code
+Subject: Re: [PATCH v3 04/19] target/i386: Fix pseudo-NaN handling in
+ FPATAN/FYL2XP1/FYL2X helpers
 To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -87,14 +88,14 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20260204051756.667397-1-max.chou@sifive.com>
- <20260204051756.667397-4-max.chou@sifive.com>
+ <20260204051756.667397-5-max.chou@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260204051756.667397-4-max.chou@sifive.com>
+In-Reply-To: <20260204051756.667397-5-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x543.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,17 +119,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/4/26 15:17, Max Chou wrote:
-> The floatx80_is_[quiet|signaling]_nan functions contain duplicated
-> logic that should be shared.
-> This commit introduces floatx80_nan_is_snan helper function that
-> determine if a NaN is signaling and change the return type of
-> floatx80_is_[signaling|quiet]_nan to bool.
+> According to Intel's x87 FPU specification (Table 8-10, Vol. 1), arithmetic
+> operations on operands in unsupported formats (including pseudo-NaNs) must
+> return the QNaN floating-point indefinite value.
 > 
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> The helper functions for FPATAN, FYL2XP1, and FYL2X incorrectly check for
+> signaling NaN before checking for invalid encodings. This causes pseudo-NaNs
+> to be treated as valid signaling NaNs and silenced, rather than being
+> rejected as unsupported formats.
+> 
+> Reorder the checks to test floatx80_invalid_encoding before
+> floatx80_is_signaling_nan, matching the correct behavior already
+> implemented in helper_fscale.
+> 
 > Signed-off-by: Max Chou<max.chou@sifive.com>
 > ---
+>   target/i386/tcg/fpu_helper.c | 30 +++++++++++++++---------------
+>   1 file changed, 15 insertions(+), 15 deletions(-)
+
+Good catch.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
