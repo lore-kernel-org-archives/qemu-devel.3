@@ -4,64 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65081ECD984
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52AACECD981
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1js-0004Zv-Co; Thu, 05 Feb 2026 10:57:52 -0500
+	id 1vo1kY-0004om-CS; Thu, 05 Feb 2026 10:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1jp-0004ZL-VU
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:57:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vo1kO-0004m3-O2
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:58:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vo1jl-0008G0-FM
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:57:48 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vo1kL-0008NZ-LE
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:58:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770307064;
+ s=mimecast20190719; t=1770307099;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rnef7B8v4j4es0Ww/agLLTWFcDAlbIZAHUvulO7nJnA=;
- b=FvdUfRxn9Znp+v/YgSsbLoUK9VClcXTBNxs0uuK2apG/eMlJCHgGftuiViTAo7zdiv4qrN
- Q7KC9a0PG3DpXCaq6mzbZkp4PnrD5wkANc1fCo76QmmSl2weINNsxWnmUf8811e5MUb8Ru
- 96w/3O0i3krsRMWahH0Zzow9qSWpd1E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-B0bDrLJfOrmsMywXoVGEMg-1; Thu,
- 05 Feb 2026 10:57:41 -0500
-X-MC-Unique: B0bDrLJfOrmsMywXoVGEMg-1
-X-Mimecast-MFC-AGG-ID: B0bDrLJfOrmsMywXoVGEMg_1770307060
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B77811800464; Thu,  5 Feb 2026 15:57:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.198])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 351C718004BB; Thu,  5 Feb 2026 15:57:36 +0000 (UTC)
-Date: Thu, 5 Feb 2026 16:57:34 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, hreitz@redhat.com, fam@euphon.net
-Subject: Re: [PATCH 4/6] block/io: safeguard max transfer calculation in
- bdrv_aligned_pwritev()
-Message-ID: <aYS97vFFCkVLKLdV@redhat.com>
-References: <20260109120837.2772961-1-f.ebner@proxmox.com>
- <20260109120837.2772961-5-f.ebner@proxmox.com>
- <20260119193452.GC834718@fedora>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3NuuDISJQulnfXtrUhxsWq3tnHI0conwcIV5J6HWz/w=;
+ b=ZtMPar7jbVir1CqL12o9txZe+gfssuoxksyizDszS625Z0K3RHJBC53AuNi6fdU8oaUPYU
+ tkOIBLN+24QgU0Oi478MEM2vnecgM10FbzPvkwoN7eN90Otl5Qapj2uU0x2pF1hs5rpId/
+ rr+bd6uvMSldUGIajvaOXVmloge49xg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-363-StKJ0BrmMumvFs-G4IXm2g-1; Thu, 05 Feb 2026 10:58:17 -0500
+X-MC-Unique: StKJ0BrmMumvFs-G4IXm2g-1
+X-Mimecast-MFC-AGG-ID: StKJ0BrmMumvFs-G4IXm2g_1770307096
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-480711d09f1so14655255e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 07:58:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770307096; x=1770911896; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=3NuuDISJQulnfXtrUhxsWq3tnHI0conwcIV5J6HWz/w=;
+ b=lRcR6299VWvHGzgmEjyZGHf1IEAI/wiktd2Uif37wcw/n08X63LwdHxDZEY8y/KbG6
+ oJMv+MDQnJAW9OjdBtHUssc/+OMUKporeR1IkOEfRWpLm8Ds7sI/S/K0TJ0YPkxp8uIS
+ fhWXDOdzlPoO5TiqRjNPGzSfIGI4aOnkMPej5334y1GWR5wNSURn9dZBKjc7vD9zC/ng
+ zNQGzqyWgDRLKpUAnTE2sfPKai5g/2ROud9oEtQMLZcDW3l2mkOdfytVFzdYlxSUaEu6
+ i/uGCLsplkSduOTjhmWGk1ITYQtGEVVVwZw6JEGuv3BdwV6a0aPJDya9iTX+udwDJ+YZ
+ s6+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770307096; x=1770911896;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3NuuDISJQulnfXtrUhxsWq3tnHI0conwcIV5J6HWz/w=;
+ b=TR8zXy2uSW1wvZKrrBfzUNtA9JMsP5UyjO6km9DFdQbt1NUxjdF/WI29xpHBRd8YMx
+ /JFSFtpr0VNA8P7gMiq8fdE+eLCSBLjHtrJABp8EEiGr7QUWO6o9HVrlB9p5ATJV+FGx
+ o/jaGCKxaAlVrmUQRRBXgmtw60oSi4hoZz8amctiyxnimdmnmvW6jd8Aj9eCSEGuTFZj
+ POMr0UC3Fshodnk1ZUz459ZUe6lax6xggUEz6Ibzk+xHoVA3EKfPD/45/NcHSMGsuPWt
+ HjBO1qGZeTBnymMO9z0usb7S/CI3SejWlSWte/HkDPBI2nDCnsH3sNlLpwueL7OrzBby
+ ykug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWr4r2SKYks7FoBuaxD61qn4kzTTeLhZXonFsfBNH/FkfA0QG2xzO29w4rk3ByWAbAD7DjriGiCQt7c@nongnu.org
+X-Gm-Message-State: AOJu0YxzTUEd4PK4iAH+C6HSRmtbU/87iz0u+rb6uxXt7uWdUu3AcvsT
+ uDUqTG4CIQ7TG1Dq+jdwgwNpkqaUX5YbxSdKzHIg3EmXGCeHg6G0Si5KZfxnagjp2Y3eEYnbtZh
+ P5ZoxUIr5nzKu3ARqJQqj2cszffJhWgZgzbAU6beZ+oOLAvULZHcw3r3m
+X-Gm-Gg: AZuq6aJzyVO3ImjgRh3gxnUfqTB6WboodMN/0Rf+KPUdFKzqbLCDxiWVdqMzm04iFMi
+ PhuSe3MzMNlv/kYTW4Lb/9BvlQMfFqkWvtaTKuq2hVGsvYci3WCfvb6Mxjn3/w8ZgUufJBPJA1A
+ lpWyS0NUhGI290Fq3MYYkCXxcWGHLCxZwyfKDYoHqWlOR3K8jfxWzwdg0oGgzgHwG7UpmjgupAH
+ t02jkY02iFt0j2B+kdpVCcjdXl+3AOIEnGsacQWxJx6rko9z+2dhgkJMTummBjvjrWK7m/h2UeY
+ BqqqABRiXbmm3ASYSIP+5ShrFv2wkDE3rN6+E+WQMyYbsWelODnWOLWuDfuq2OGlG4LXBaqCRoe
+ rzq+PDmw9zKC9hkWmT4oS2sLxTH4beHX9L/IghwKvbE3n67De
+X-Received: by 2002:a05:600c:3106:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-4830e93e9b9mr90293205e9.4.1770307096087; 
+ Thu, 05 Feb 2026 07:58:16 -0800 (PST)
+X-Received: by 2002:a05:600c:3106:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-4830e93e9b9mr90292885e9.4.1770307095635; 
+ Thu, 05 Feb 2026 07:58:15 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48317d2c856sm66604715e9.4.2026.02.05.07.58.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 07:58:14 -0800 (PST)
+Message-ID: <a1bb1980-2927-4061-be6b-ba7aeb1613a3@redhat.com>
+Date: Thu, 5 Feb 2026 16:58:13 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="GnzmQQuJbf8TLTvW"
-Content-Disposition: inline
-In-Reply-To: <20260119193452.GC834718@fedora>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/45] aspeed queue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20260204103136.1795455-1-clg@redhat.com>
+ <CAFEAcA_w02hxyiCtOzWc9mmFR=6pLixObnSnenhBdJ4zixjfrA@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CAFEAcA_w02hxyiCtOzWc9mmFR=6pLixObnSnenhBdJ4zixjfrA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -70,7 +151,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,97 +167,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/5/26 14:49, Peter Maydell wrote:
+> On Wed, 4 Feb 2026 at 10:31, Cédric Le Goater <clg@redhat.com> wrote:
+>>
+>> The following changes since commit 28a6ca268c2cd3718b5bf24c2d97e3d1e95fc604:
+>>
+>>    Merge tag 'single-binary-20260203' of https://github.com/philmd/qemu into staging (2026-02-04 01:57:26 +1000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/legoater/qemu/ tags/pull-aspeed-20260204
+>>
+>> for you to fetch changes up to e56e45d5bdc808ed52f943d1a785e4d885b6f18f:
+>>
+>>    tests/functional/aarch64: Add I2C test for AST1700 IO expanders (2026-02-04 10:10:57 +0100)
+> 
+> I noticed this a bit late, but:
+> 
+>> ----------------------------------------------------------------
+>> Cédric Le Goater (3):
+>>        Merge tag 'pull-vbootrom-20260116-v3' into aspeed-next
+> 
+> could you not include merge commits in your pull requests, please?
 
---GnzmQQuJbf8TLTvW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok. I don't do that often. I will remember.
 
-Am 19.01.2026 um 20:34 hat Stefan Hajnoczi geschrieben:
-> On Fri, Jan 09, 2026 at 01:08:31PM +0100, Fiona Ebner wrote:
-> > This partially fixes iotest 177 with qcow2, where max_transfer is
-> > 64KiB, but the cluster size and thus pwrite_zeroes_alignment is 1MiB.
-> > Previously, max_transfer would be calculated as 0, triggering an
-> > assertion later.
-> >=20
-> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> > ---
-> >  block/io.c | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/block/io.c b/block/io.c
-> > index 12dc153573..233b2617ea 100644
-> > --- a/block/io.c
-> > +++ b/block/io.c
-> > @@ -2087,8 +2087,10 @@ bdrv_aligned_pwritev(BdrvChild *child, BdrvTrack=
-edRequest *req,
-> >      assert(is_power_of_2(align));
-> >      assert((offset & (align - 1)) =3D=3D 0);
-> >      assert((bytes & (align - 1)) =3D=3D 0);
-> > -    max_transfer =3D QEMU_ALIGN_DOWN(MIN_NON_ZERO(bs->bl.max_transfer,=
- INT_MAX),
-> > -                                   align);
-> > +    max_transfer =3D MIN_NON_ZERO(bs->bl.max_transfer, INT_MAX);
-> > +    if (max_transfer > align) {
-> > +        max_transfer =3D QEMU_ALIGN_DOWN(max_transfer, align);
-> > +    }
->=20
-> max_transfer < align seems paradoxical. It's a situation where the
-> largest allowed I/O request cannot meet alignment requirements.
->=20
-> Every other place that uses max_transfer in QEMU would also need to cope
-> with this.
->=20
-> block/blkdebug.c:blkdebug_open() fails if max_transfer is not aligned,
-> indicating that there are assumptions at least in some places that
-> max_transfer is aligned.
->=20
-> I hesitate to make this change because I fear it will break more things.
-> Why was max_transfer 64KB while pwrite_zeroes_alignment was 1MiB? Either
-> max_transfer should fit the alignment or pwrite_zeroes code needs to
-> distinguish between actual write zeroes operations and read-write-modify
-> I/O (which is plain read/write and not subject to
-> pwrite_zeroes_alignment).
+> We don't generally do that (the last one I think where we had it
+> was back in 2023), and it will definitely cause you problems if
+> I ever bounce a pullreq back to you with "please rebase"...
 
-I don't think haing a 64k max_transfer for normal I/O where data is
-actually transferred and much larger write_zeroes requests should be
-inherently incompatible.
+Sure ...
 
-In fact, in this specific case, I'm wondering how we even hit a
-problematic case where align =3D=3D pwrite_zeroes_alignment, but
-max_transfer is still used. Shouldn't we take the BDRV_REQ_ZERO_WRITE
-code path, which leaves max_transfer completely unused?
+Thanks,
 
-Do we somehow end up with normal writes using pwrite_zeroes_alignment?
-Ah, yes. This seems to be a problem with patch 3. It doesn't consider
-that bdrv_co_do_zero_pwritev() deals both with write_zeroes requests
-(for the bulk in the middle) and with normal writes for the padding,
-which require different alignments. So changing 'align' for all calls
-seems wrong, it should probably be only for those requests that keep the
-BDRV_REQ_ZERO_WRITE flag set.
-
-Kevin
-
---GnzmQQuJbf8TLTvW
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmmEve4ACgkQfwmycsiP
-L9a2+w/+Jmf3VEVknwM3ghoCnhTZ5b8WgYeRoui/lEYJ0gmJcuE9CCAQglTfSMMQ
-Lg9m1ySZb7qZ9YlthTCuLbsqq6XpU8pexvRC0SSQk8nGtAaaX1C6R0MSke6K5wpD
-D4U5BoGC0Z+T5XISrPGjt2xumGXdp4TwT1FoFb6HTVJzRtL4nsSFr3UsWPtzhu74
-t150NtEF4JOGPYpbquRoqWS7LGUolC/emJiLiRC8Lt8Kkvi10ay6hw5OKFNnfpY8
-Kdo7ILq/oCX8k5uaOQlDh0om+U+Z6zXs1K57tOuvD793/wsqor/E/A0b0yqID7cc
-i0KOsOJ8m77LYdghNn25WveFgf7XxlindBhHACUvvN4Oyeaum7aEmtLS1rXuo5WS
-TNkMTbqwbBr9LYchBXcABdxT43Fed+qW8WZBuHy9DkJiVXBJwWIddtxBl0P/o6l8
-9VxbaSVvnx1hTjLXxE7uH/DSW/+PxuMQs4MKwIV+zdD/Oa4W0C9BzgnQ6549C4Cr
-N6zivWCJvRu6O1h9JalekVElMDy/oU+AXm1B/fjj8ulMSfccI3rqlt0n7PTR4H4O
-havLs6HkdrHvi0ZU9R269kFo6rIcFAHabBqtbLKTYnqS9ERcrEhP5tVn3OgDsS4h
-6BCtjGzUNk8haqzoPDWZtSodCVfRUr5e3tlWF9qh5447tpkkczw=
-=VBBd
------END PGP SIGNATURE-----
-
---GnzmQQuJbf8TLTvW--
+C.
 
 
