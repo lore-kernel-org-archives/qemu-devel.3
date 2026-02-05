@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413ADECD983
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E64BAECD981
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 15:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo1F0-0004Zm-5j; Thu, 05 Feb 2026 10:25:58 -0500
+	id 1vo1Dv-0003iu-PH; Thu, 05 Feb 2026 10:24:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo1Ex-0004Qo-PL
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:55 -0500
-Received: from p-west2-cluster2-host9-snip4-2.eps.apple.com ([57.103.68.165]
+ id 1vo1Du-0003iO-93
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:24:50 -0500
+Received: from p-west2-cluster1-host7-snip4-5.eps.apple.com ([57.103.68.88]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vo1Et-00021s-MA
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:25:55 -0500
+ id 1vo1Dr-0001Pp-Ds
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 10:24:49 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPS id
- 710D918003C6; Thu,  5 Feb 2026 15:25:47 +0000 (UTC)
+ 18CF018001FF; Thu,  5 Feb 2026 15:24:42 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770305150; x=1772897150;
- bh=HkRHMpTl2uKI4wNS8ZKWqrFWgjwWuAAq5M2BiLLuN7c=;
+ s=sig1; t=1770305085; x=1772897085;
+ bh=TysnGqY+/4EVfnhYnAdleW0HdpjnKCo0dv/pt4Y9RBI=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=ZxR/ostikLdc7DEiWg9HswCjdLdcB4AqKRczZz9SXtag2CtKUE7eONju4gFEXKelhoiJDxN5FGw5Q6gW4XgY9PnXw8fgQQol2HWDLA3Mys+hxxAesc7JgHK38/y1Hr6wdLubKm5kTyiIwOccZoovfdW94L2uNOZF7dxzHYb7/oMFcYOzZ6+Qiyjh3P719N41uOjzSF8zy3G5GAi4pbS2iugF5Mgz7qKZlW04uCOfws6tty/sGIKla0b4lkn7H70EorLkacLx3Xy8kswNgGwsu4tact8wU7uGQOScv6f1ontFVv2VgUqqMzBaYqYqKYR9DhblB80mfDNx6NX2P2YILA==
+ b=SNY+XKzWKVBjYmk5MHPUWpsFuIcd/SJaPjzc0UcREjLHBIGLH/4G2F78QiNYkYCIdPEhkfpCP8X0lookiJmy5wDyTYTln7Hj78pCTo3Radq17qIkYB26U5wZDsjmlLnW8Jee39s9rt6JGpzfZMqiVz4Jis5Vfq0QuKEGXadHqEZtQDPTv+BGNgbL30+sL7v21MDFoI2uG/Ud1xBTDYWnHIPJ6dnKi7yAUE4CqJCywCzGzhts1UV7a+Dfx3T5V7rQHgTzk0aN1q3hMncj/Ys0Sk+3P+OizHRrJUnM6xOv5REup/X+2s2KrVpvEI+XIQInKgDmjoN0F9HNK9ang43mbA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-8 (Postfix) with ESMTPSA id
- 99DE11800613; Thu,  5 Feb 2026 15:25:42 +0000 (UTC)
+ 0EA071800755; Thu,  5 Feb 2026 15:24:34 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -54,47 +54,47 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH v22 14/22] whpx: add arm64 support
-Date: Thu,  5 Feb 2026 16:24:17 +0100
-Message-ID: <20260205152432.78208-15-mohamed@unpredictable.fr>
+Subject: [PATCH v22 00/22] WHPX support for Arm
+Date: Thu,  5 Feb 2026 16:24:03 +0100
+Message-ID: <20260205152432.78208-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260205152432.78208-1-mohamed@unpredictable.fr>
-References: <20260205152432.78208-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDExNiBTYWx0ZWRfX++0nAv977eoF
- Y/8rmGrvmv3WUoyp2ENHN/SXIfPbsh/jWY0S5seTQEnjck96UeERjIKGpdIUd3STgaHvJeZfGph
- vjwsgw2ucvJNihw87YIqxnBrSy4bqtHE15hB9yC1bIfIT4AsXd/no2/NLMUsQqQfZdEGVBWfUBU
- diNkUVVI4iUYbhIpi19xY4pNNbJ7vRucE8s8YWxxTesHtCkuyLVU4vzXuC6CHM08jmeasLWfJaL
- 0BQLBttK3HfZAtUvbj+f4Q0Ain2UKzeZYlgnGh8beSaofnBEvBqquKJBIeTSzNQRvIGPUCZqq3i
- 82I84VSDUq3HKfSie0Rxrb0aOUsGnSHGO8erCXvUbbZwvZEV1YUTengub9bQNU=
-X-Proofpoint-GUID: D1DXPsC68OwoIVUQrpEp7c6i634Z9VaJ
-X-Proofpoint-ORIG-GUID: D1DXPsC68OwoIVUQrpEp7c6i634Z9VaJ
-X-Authority-Info-Out: v=2.4 cv=ee8wvrEH c=1 sm=1 tr=0 ts=6984b67d
+X-Proofpoint-GUID: pvn1jX6pJ2R4px3iFOSEv0hB9wiG7UkA
+X-Proofpoint-ORIG-GUID: pvn1jX6pJ2R4px3iFOSEv0hB9wiG7UkA
+X-Authority-Info-Out: v=2.4 cv=adlsXBot c=1 sm=1 tr=0 ts=6984b63c
  cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
  a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=coTCL0kfoV_fbKzCm0sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=GaQpPoNlAAAA:8 a=KKAkSRfTAAAA:8
+ a=mDV3o1hIAAAA:8 a=1Fe2uPTpBdqolypXLAQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=xF5q_uoM5gZT5J3czcBi:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDExNiBTYWx0ZWRfX0Jjhc5caaVQn
+ YnGL499cX3DVKyrf/IMAZirkD/xN4VEgrIjyTSKyT6TCkGLXdLvS2ME8gWu8FoHOZDjiUXprNOb
+ LNVtLIotJH/z19LofD/SSBDBA0UGCr2Zbu26UBQcQekQPBgWebF57WgjPbVe91iGslhxglAIGGX
+ dRuN9bH+DH4w8bFLmhCNGq4pbzDscGHEvmQoCggqisNY8rFeC4ytRoJ84B8HMOyjqHqxoaTDQt7
+ 5qMDvhOtzPLWK3WgESWCz16qCNKLlZnmRgPLOB2g5NVfZMc1iIRlE52lG4opYwKru+4/ctEKsle
+ 3we4v+pPipszo2P05BXAAp7vdgzM0eMsMEmUvd+eeWfuap/jwRai99LhQ/uJC0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-05_03,2026-02-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
- clxscore=1030 mlxlogscore=999 adultscore=0 suspectscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0 malwarescore=0 adultscore=0 mlxscore=0
+ spamscore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=999 clxscore=1030 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602050116
-X-JNJ: AAAAAAAB2GPSRnjvh/UueHTQ/y/8gZ6adXKHotqW2RVswmde5QWyo6ZWxbz7youy0roLFecWuoqU/MOFFA3I+my7W5u2ujTFmN0AlficEtbdsHuLejS6/M1F1fNX+jTqDSIv2PBDUGCOZ+QICyPxHNbmqWMCdmcVe/2csWw4gQTWVC34oCwQ+9U3ijFkU6iuzDujNnIApHEFPajUG40RWvSiS2orD5PREwE5Q5oEMmk7cVw2dI7pUQ2mun/0o9b6IMvf7wpA1tm0o60jJDIQUt8vfLOCu2a4AFEMk1tO88FhIuieCwnyqAJVQLXOehIWzbyeHqswCQIuVuyVv4aGJWf4YsVExQ+BOgpzBbzy2fhpixFaZKi4UQFm8/giKfzlYyMId4Wd6+YpQ4LNNdSWMSl0S4zNSOVhD5iPXbMBBUbdYZDZcGOeFEpJ2vfAYWxcwBwso9CXskrsQplBe/JATtrYdj/A5go2syQhOytmQN07TzcJufx6b1pD/TMEn0fZ1eZdG6BG4K3tt2Tji+8NSX6TvIMg5S6Y6h1SBbc4NDV8Jr/eRej22nomB5jWdDvLdz6bp+HQqVQqGy7OXD/QFszFKEMbNnKoP44n2tjwwG9ByhNGbmvvCl93JZCtQEW6D9Tg1L2Cm65NiQKRmwcjeM1txc7WzARr7HqETTLh1iSz9gNYVTl5r3qem/E6catCYUAdL5NwUVBJxxaqjxyZbbjklQgp2HvCkOwhNSnyPSXDIZs52ZSbgeHs7EeEtflNxk/cPJGQzpbSZ6QVJmVnAqhGsIfpYEhg3mFlCBBrfA2v3v9r54kHpG1AtVMYpK5TvHK4eW42qZdFBQO6g+KyjToI4R6xgBNXQCqQbFQ3vwQx4ULxPgN0Cxd7SOeCVvXiaTpN+Hcy8hIKTOVbAzwYbEu63itTR8kkamHELb5b6yQ+jpWgxO5mBynkUXQ1mS4s
-Received-SPF: pass client-ip=57.103.68.165;
+X-JNJ: AAAAAAABzvqZlrmtDxeRD9oXevzh5wwZGh2zmpiE6uBoPbt/Xi/qIT9+HQSxOQgBYBrA9eeIymgrlR1N59+HTTKOEtb0rhPqJ797ebAI6bcKPRlcDdrFjp9xAstFF+N14PdbvQStL1Xh2h/ijpz04mtu/k2BtsNSvetLHuPFUs5MZOkwMLq7UJD7YFT4hQ6/bGwjG+JAUd1jIcvZoHS7G5VvK+A7/grNwB2BQBQKD/lb4A33/YFDshIzACF5bDMXE/NQ8cW8sO6/omD4+Z7uKuQ2d5uiS4ww+kDmGe++rGjF8Iw4SmfJ7h1RkgGTUyMpFdWSkCB9nRmXVJdJvAoR5zEJhsaeh+y5TZWLDmSKeDnUvD0mq5yqA3ImLg671vl24gLpbVHTRUvnWas6vr7lWYA47MQpUpYdeiverSXAzwerE5kO+JbfYdl+7PqoEwpWJoilTNxeRLG9iBKTHdf+Wo1a6Ko0KQfjYelYdtwMGgMDDc3mSoPniXSwaeJWMbolY7cCwxVGHugKUxwEY8nkqvKfIHXI2RqGkrwWm5TJvdGvqNuSN/dfy2S1m5+lOb4/evXKDAucVplNZY5ktL2kmL9NBPdyupDad7rpwCBaEskVEk5ZpkR6jCeP6B/2+Q41SbAX4jRV/Kvqa4OCL6uGYppciSAWKRLLTRODc+csXVhGdJ+wcrsr7yq42pgXHafPMtkjuQFlgs8pIU1wnZt2C1aVjFWs8o5QvCwI4GlcYK0ub77mZR2MLT5NXfbgnGBgcvWcYciBoiRGBOZsoaA3rolremU4q2UdA7wOo2DxyetCkX47XEi8+Jnscv1jcBpILvLXtpQvnB7y3HjWMsBr/sTjAkxI+9cb1DUqJH84mOkjBlwoKfuYDKlmZ5fX6k8Z76lWWEvjISfj8ijyC6358TOMp50z6JZtWTpo+m4rB36xZc23TanEFL604TUQ
+Received-SPF: pass client-ip=57.103.68.88;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,879 +110,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- MAINTAINERS                 |   1 +
- accel/whpx/whpx-common.c    |   1 +
- target/arm/meson.build      |   1 +
- target/arm/whpx/meson.build |   3 +
- target/arm/whpx/whpx-all.c  | 810 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 816 insertions(+)
+Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v21)
+
+Patches without a review: patches 3, 5, 6, 7
+
+Missing features:
+- VM save-restore: interrupt controller state notably
+- SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
+So SVE2 is currently masked for VMs when running this.
+
+Known bugs:
+- U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
+
+Note:
+
+"target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
+
+"accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
+as part of this series to make it compilable as a whole.
+
+And another note:
+
+Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
+so didn't do changes there to a sysreg.inc.
+
+Updates for v22:
+- Oops, add updated IORT now that the SMMU patches are merged
+The revision field in the IORT changed compared to the revision of the SMMU patches the artefact was built on.
+Ran a make test again in a clean tree to make sure...
+
+in side note: try to make certain that qemu-system-aarch64 is built as part of make test on macOS instead of
+the unsigned variant only as that might have been why I didn't observe this
+
+Updates for v21:
+- Change commit messsage a bit for the ACPI table updates so that it doesn't get parsed as a diff
+- Split "qtest: hw/arm: virt: add new test case for GICv3 + GICv2m" into two commits
+
+Updates for v20:
+- Rebase on current origin/staging
+
+Updates for v19:
+- Address review comments
+- Documentation update
+- Base on top of the current target-arm queue (https://patchew.org/QEMU/20260129160917.1415092-1-peter.maydell@linaro.org/)
+
+Updates for v18:
+- MSI-X config patch: remove workaround to keep existing ACPI tables, as even Ubuntu has hibernation support
+off in their stock kernel...
+- Fold patch "whpx: arm64: gicv3: add migration blocker" into "whpx: interrupt controller support"
+- address review for "whpx: interrupt controller support"
+
+Updates for v17:
+- Reworking the MSI-X configuration patches
+- Accordingly, its= retains the same behavior as before, so add a test case for GICv3 + GICv2m.
+- Squashing "whpx: arm64: check for physical address width after WHPX availability"
+with "whpx: arm64: clamp down IPA size"
+- Not worthwhile to have a separate GICv3 + GICv2m patch, squash it into the "rework MSI-X
+configuration" patch
+- Address review comment on "whpx: arm64: gicv3: add migration blocker"
+
+Updates since v16:
+- Address some last review comments
+- Rebase with the latest origin/staging
+
+Updates since v15:
+- Some last tiny changes addressed.
+
+Updates since v14:
+- Working around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87950
+
+It turns out that we can't avoid default: in case with an enum on GCC without warnings,
+although Clang allows that behavior.
+
+Updates since v13:
+- Addressing review comments from Akihiko Odaki
+- Squash GICv2 ACPI workaround patch and have it documented as a separate function
+- Rebase with current origin/staging
+
+Updates since v12:
+- Address review comments and make sure that checkpatch shows no errors, make test also ran
+- Tested the Windows x86_64 build too in addition to Windows arm64 and macOS arm64
+- Hopefully the last revision, should be ready to merge.
+
+Updates since v11:
+- Address review comments
+- Rebase up to latest staging
+- Switch to assuming Qemu 11.0 as the newest machine model
+
+Updates since v10:
+- Bring forward to latest Qemu
+- Fix a typo in the GICv3+GICv2m PR
+
+Updates since v9:
+- Adding partition reset on the reboot side of things...
+
+Updates since v8:
+- v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
+- v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
+- That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
+- Oopsie due to email provider ratelimiting.
+
+Updates since v7:
+- Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
+Other commits are unchanged.
+
+Updates since v6:
+- Rebasing
+- Fixing a bug in the GICv3+GICv2m case for ACPI table generation
+- getting rid of the slots infrastructure for memory management
+- Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
+as that's what switches ITS to a tristate.
+- Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
+
+Updates since v5:
+- Rebasing
+- Address review comments
+- Rework ITS enablement to a tristate
+- On x86: move away from deprecated APIs to get/set APIC state
+
+Updates since v4:
+- Taking into account review comments
+- Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
+- Debug register sync
+
+Updates since v3:
+- Disabling SVE on WHPX
+- Taking into account review comments incl:
+
+- fixing x86 support
+- reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
+which can be reduced even further down the road.
+- generalize get_physical_address_range into something common between hvf and whpx
+
+Updates since v2:
+- Fixed up a rebase screwup for whpx-internal.h
+- Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
+- Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
+
+Updates since v1:
+- Shutdowns and reboots
+- MPIDR_EL1 register sync
+- Fixing GICD_TYPER_LPIS value
+- IPA size clamping
+- -cpu host now implemented
+
+Mohamed Mediouni (20):
+  qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
+  hw: arm: virt: rework MSI-X configuration
+  tests: data: update AArch64 ACPI tables
+  qtest: hw/arm: virt: add ACPI tables for new GICv3 + GICv2m test case
+  qtest: hw/arm: virt: add new test case for GICv3 + GICv2m
+  docs: arm: update virt machine model description
+  whpx: Move around files before introducing AArch64 support
+  whpx: reshuffle common code
+  whpx: ifdef out winhvemulation on non-x86_64
+  whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
+  hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
+  whpx: add arm64 support
+  whpx: change memory management logic
+  target/arm: cpu: mark WHPX as supporting PSCI 1.3
+  whpx: arm64: clamp down IPA size
+  hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
+    and HVF
+  whpx: arm64: implement -cpu host
+  target/arm: whpx: instantiate GIC early
+  whpx: enable arm64 builds
+  whpx: arm64: add partition-wide reset on the reboot path
+
+Philippe Mathieu-Daudé (1):
+  accel/system: Introduce hwaccel_enabled() helper
+
+Sebastian Ott (1):
+  target/arm/kvm: add constants for new PSCI versions
+
+ MAINTAINERS                                   |   6 +
+ accel/hvf/hvf-all.c                           |   7 +-
+ accel/meson.build                             |   1 +
+ accel/stubs/whpx-stub.c                       |   1 +
+ accel/whpx/meson.build                        |   7 +
+ {target/i386 => accel}/whpx/whpx-accel-ops.c  |   6 +-
+ accel/whpx/whpx-common.c                      | 536 ++++++++++
+ docs/system/arm/virt.rst                      |  24 +-
+ hw/arm/virt-acpi-build.c                      |  20 +-
+ hw/arm/virt.c                                 | 141 ++-
+ hw/i386/x86-cpu.c                             |   4 +-
+ hw/intc/arm_gicv3_common.c                    |   3 +
+ hw/intc/arm_gicv3_whpx.c                      | 237 +++++
+ hw/intc/meson.build                           |   1 +
+ include/hw/arm/virt.h                         |   5 +-
+ include/hw/core/boards.h                      |   3 +-
+ include/hw/intc/arm_gicv3_common.h            |   3 +
+ include/system/hvf_int.h                      |   4 +
+ include/system/hw_accel.h                     |  13 +
+ .../whpx => include/system}/whpx-accel-ops.h  |   4 +-
+ include/system/whpx-all.h                     |  20 +
+ include/system/whpx-common.h                  |  26 +
+ .../whpx => include/system}/whpx-internal.h   |  16 +-
+ include/system/whpx.h                         |   5 +-
+ meson.build                                   |  20 +-
+ target/arm/cpu.c                              |   3 +
+ target/arm/cpu64.c                            |  17 +-
+ target/arm/hvf-stub.c                         |  20 -
+ target/arm/hvf/hvf.c                          |   6 +-
+ target/arm/hvf_arm.h                          |   3 -
+ target/arm/kvm-consts.h                       |   2 +
+ target/arm/meson.build                        |   2 +-
+ target/arm/whpx/meson.build                   |   5 +
+ target/arm/whpx/whpx-all.c                    | 994 ++++++++++++++++++
+ target/arm/whpx/whpx-stub.c                   |  15 +
+ target/arm/whpx_arm.h                         |  17 +
+ target/i386/cpu-apic.c                        |   2 +-
+ target/i386/hvf/hvf.c                         |  11 +
+ target/i386/whpx/meson.build                  |   1 -
+ target/i386/whpx/whpx-all.c                   | 569 +---------
+ target/i386/whpx/whpx-apic.c                  |   2 +-
+ tests/data/acpi/aarch64/virt/APIC.msi_gicv2m  | Bin 0 -> 188 bytes
+ tests/data/acpi/aarch64/virt/IORT             | Bin 128 -> 84 bytes
+ tests/data/acpi/aarch64/virt/IORT.msi_gicv2m  | Bin 0 -> 172 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 364 -> 260 bytes
+ .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 192 bytes
+ tests/qtest/bios-tables-test.c                |  21 +
+ 47 files changed, 2166 insertions(+), 637 deletions(-)
+ create mode 100644 accel/whpx/meson.build
+ rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
+ create mode 100644 accel/whpx/whpx-common.c
+ create mode 100644 hw/intc/arm_gicv3_whpx.c
+ rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
+ create mode 100644 include/system/whpx-all.h
+ create mode 100644 include/system/whpx-common.h
+ rename {target/i386/whpx => include/system}/whpx-internal.h (95%)
+ delete mode 100644 target/arm/hvf-stub.c
  create mode 100644 target/arm/whpx/meson.build
  create mode 100644 target/arm/whpx/whpx-all.c
+ create mode 100644 target/arm/whpx/whpx-stub.c
+ create mode 100644 target/arm/whpx_arm.h
+ create mode 100644 tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 126f72e587..a92cd7050f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -566,6 +566,7 @@ M: Mohamed Mediouni <mohamed@unpredictable.fr>
- S: Supported
- F: accel/whpx/
- F: target/i386/whpx/
-+F: target/arm/whpx/
- F: hw/intc/arm_gicv3_whpx.c
- F: accel/stubs/whpx-stub.c
- F: include/system/whpx.h
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 05f9e520b7..827f50f3e0 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -12,6 +12,7 @@
- #include "gdbstub/helpers.h"
- #include "qemu/accel.h"
- #include "accel/accel-ops.h"
-+#include "system/memory.h"
- #include "system/whpx.h"
- #include "system/cpus.h"
- #include "system/runstate.h"
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 462c71148d..ce155ba9b4 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -59,6 +59,7 @@ arm_common_system_ss.add(files(
- ))
- 
- subdir('hvf')
-+subdir('whpx')
- 
- if 'CONFIG_TCG' in config_all_accel
-    subdir('tcg')
-diff --git a/target/arm/whpx/meson.build b/target/arm/whpx/meson.build
-new file mode 100644
-index 0000000000..1de2ef0283
---- /dev/null
-+++ b/target/arm/whpx/meson.build
-@@ -0,0 +1,3 @@
-+arm_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-+  'whpx-all.c',
-+))
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-new file mode 100644
-index 0000000000..192d7ec7a8
---- /dev/null
-+++ b/target/arm/whpx/whpx-all.c
-@@ -0,0 +1,810 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QEMU Windows Hypervisor Platform accelerator (WHPX)
-+ *
-+ * Copyright (c) 2025 Mohamed Mediouni
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "system/address-spaces.h"
-+#include "system/ioport.h"
-+#include "gdbstub/helpers.h"
-+#include "qemu/accel.h"
-+#include "accel/accel-ops.h"
-+#include "system/whpx.h"
-+#include "system/cpus.h"
-+#include "system/runstate.h"
-+#include "qemu/main-loop.h"
-+#include "hw/core/boards.h"
-+#include "qemu/error-report.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-types-common.h"
-+#include "qapi/qapi-visit-common.h"
-+#include "migration/blocker.h"
-+#include "accel/accel-cpu-target.h"
-+#include <winerror.h>
-+
-+#include "syndrome.h"
-+#include "cpu.h"
-+#include "target/arm/cpregs.h"
-+#include "internals.h"
-+
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
-+#include "system/whpx-all.h"
-+#include "system/whpx-common.h"
-+#include "hw/arm/bsa.h"
-+#include "arm-powerctl.h"
-+
-+#include <winhvplatform.h>
-+#include <winhvplatformdefs.h>
-+
-+typedef struct WHPXRegMatch {
-+   WHV_REGISTER_NAME reg;
-+   uint64_t offset;
-+} WHPXRegMatch;
-+
-+static const WHPXRegMatch whpx_reg_match[] = {
-+    { WHvArm64RegisterX0,   offsetof(CPUARMState, xregs[0]) },
-+    { WHvArm64RegisterX1,   offsetof(CPUARMState, xregs[1]) },
-+    { WHvArm64RegisterX2,   offsetof(CPUARMState, xregs[2]) },
-+    { WHvArm64RegisterX3,   offsetof(CPUARMState, xregs[3]) },
-+    { WHvArm64RegisterX4,   offsetof(CPUARMState, xregs[4]) },
-+    { WHvArm64RegisterX5,   offsetof(CPUARMState, xregs[5]) },
-+    { WHvArm64RegisterX6,   offsetof(CPUARMState, xregs[6]) },
-+    { WHvArm64RegisterX7,   offsetof(CPUARMState, xregs[7]) },
-+    { WHvArm64RegisterX8,   offsetof(CPUARMState, xregs[8]) },
-+    { WHvArm64RegisterX9,   offsetof(CPUARMState, xregs[9]) },
-+    { WHvArm64RegisterX10,  offsetof(CPUARMState, xregs[10]) },
-+    { WHvArm64RegisterX11,  offsetof(CPUARMState, xregs[11]) },
-+    { WHvArm64RegisterX12,  offsetof(CPUARMState, xregs[12]) },
-+    { WHvArm64RegisterX13,  offsetof(CPUARMState, xregs[13]) },
-+    { WHvArm64RegisterX14,  offsetof(CPUARMState, xregs[14]) },
-+    { WHvArm64RegisterX15,  offsetof(CPUARMState, xregs[15]) },
-+    { WHvArm64RegisterX16,  offsetof(CPUARMState, xregs[16]) },
-+    { WHvArm64RegisterX17,  offsetof(CPUARMState, xregs[17]) },
-+    { WHvArm64RegisterX18,  offsetof(CPUARMState, xregs[18]) },
-+    { WHvArm64RegisterX19,  offsetof(CPUARMState, xregs[19]) },
-+    { WHvArm64RegisterX20,  offsetof(CPUARMState, xregs[20]) },
-+    { WHvArm64RegisterX21,  offsetof(CPUARMState, xregs[21]) },
-+    { WHvArm64RegisterX22,  offsetof(CPUARMState, xregs[22]) },
-+    { WHvArm64RegisterX23,  offsetof(CPUARMState, xregs[23]) },
-+    { WHvArm64RegisterX24,  offsetof(CPUARMState, xregs[24]) },
-+    { WHvArm64RegisterX25,  offsetof(CPUARMState, xregs[25]) },
-+    { WHvArm64RegisterX26,  offsetof(CPUARMState, xregs[26]) },
-+    { WHvArm64RegisterX27,  offsetof(CPUARMState, xregs[27]) },
-+    { WHvArm64RegisterX28,  offsetof(CPUARMState, xregs[28]) },
-+    { WHvArm64RegisterFp,   offsetof(CPUARMState, xregs[29]) },
-+    { WHvArm64RegisterLr,   offsetof(CPUARMState, xregs[30]) },
-+    { WHvArm64RegisterPc,   offsetof(CPUARMState, pc) },
-+};
-+
-+static const WHPXRegMatch whpx_fpreg_match[] = {
-+    { WHvArm64RegisterQ0,  offsetof(CPUARMState, vfp.zregs[0]) },
-+    { WHvArm64RegisterQ1,  offsetof(CPUARMState, vfp.zregs[1]) },
-+    { WHvArm64RegisterQ2,  offsetof(CPUARMState, vfp.zregs[2]) },
-+    { WHvArm64RegisterQ3,  offsetof(CPUARMState, vfp.zregs[3]) },
-+    { WHvArm64RegisterQ4,  offsetof(CPUARMState, vfp.zregs[4]) },
-+    { WHvArm64RegisterQ5,  offsetof(CPUARMState, vfp.zregs[5]) },
-+    { WHvArm64RegisterQ6,  offsetof(CPUARMState, vfp.zregs[6]) },
-+    { WHvArm64RegisterQ7,  offsetof(CPUARMState, vfp.zregs[7]) },
-+    { WHvArm64RegisterQ8,  offsetof(CPUARMState, vfp.zregs[8]) },
-+    { WHvArm64RegisterQ9,  offsetof(CPUARMState, vfp.zregs[9]) },
-+    { WHvArm64RegisterQ10, offsetof(CPUARMState, vfp.zregs[10]) },
-+    { WHvArm64RegisterQ11, offsetof(CPUARMState, vfp.zregs[11]) },
-+    { WHvArm64RegisterQ12, offsetof(CPUARMState, vfp.zregs[12]) },
-+    { WHvArm64RegisterQ13, offsetof(CPUARMState, vfp.zregs[13]) },
-+    { WHvArm64RegisterQ14, offsetof(CPUARMState, vfp.zregs[14]) },
-+    { WHvArm64RegisterQ15, offsetof(CPUARMState, vfp.zregs[15]) },
-+    { WHvArm64RegisterQ16, offsetof(CPUARMState, vfp.zregs[16]) },
-+    { WHvArm64RegisterQ17, offsetof(CPUARMState, vfp.zregs[17]) },
-+    { WHvArm64RegisterQ18, offsetof(CPUARMState, vfp.zregs[18]) },
-+    { WHvArm64RegisterQ19, offsetof(CPUARMState, vfp.zregs[19]) },
-+    { WHvArm64RegisterQ20, offsetof(CPUARMState, vfp.zregs[20]) },
-+    { WHvArm64RegisterQ21, offsetof(CPUARMState, vfp.zregs[21]) },
-+    { WHvArm64RegisterQ22, offsetof(CPUARMState, vfp.zregs[22]) },
-+    { WHvArm64RegisterQ23, offsetof(CPUARMState, vfp.zregs[23]) },
-+    { WHvArm64RegisterQ24, offsetof(CPUARMState, vfp.zregs[24]) },
-+    { WHvArm64RegisterQ25, offsetof(CPUARMState, vfp.zregs[25]) },
-+    { WHvArm64RegisterQ26, offsetof(CPUARMState, vfp.zregs[26]) },
-+    { WHvArm64RegisterQ27, offsetof(CPUARMState, vfp.zregs[27]) },
-+    { WHvArm64RegisterQ28, offsetof(CPUARMState, vfp.zregs[28]) },
-+    { WHvArm64RegisterQ29, offsetof(CPUARMState, vfp.zregs[29]) },
-+    { WHvArm64RegisterQ30, offsetof(CPUARMState, vfp.zregs[30]) },
-+    { WHvArm64RegisterQ31, offsetof(CPUARMState, vfp.zregs[31]) },
-+};
-+
-+struct whpx_sreg_match {
-+    WHV_REGISTER_NAME reg;
-+    uint32_t key;
-+    bool global;
-+    uint32_t cp_idx;
-+};
-+
-+static struct whpx_sreg_match whpx_sreg_match[] = {
-+    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) },
-+
-+    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) },
-+    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) },
-+    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) },
-+    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) },
-+#ifdef SYNC_NO_RAW_REGS
-+    /*
-+     * The registers below are manually synced on init because they are
-+     * marked as NO_RAW. We still list them to make number space sync easier.
-+     */
-+    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
-+    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
-+    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
-+#endif
-+    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), true },
-+    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), true },
-+    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), true },
-+    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 0), true },
-+    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 1), true },
-+#ifdef SYNC_NO_MMFR0
-+    /* We keep the hardware MMFR0 around. HW limits are there anyway */
-+    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 0) },
-+#endif
-+    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), true },
-+    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), true },
-+    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), true },
-+
-+    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
-+    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
-+    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
-+    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
-+    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
-+    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
-+
-+    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) },
-+    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) },
-+    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) },
-+    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) },
-+    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) },
-+    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) },
-+    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) },
-+    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) },
-+    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) },
-+    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) },
-+
-+    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
-+    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
-+    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
-+    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
-+    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
-+    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
-+    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
-+    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
-+    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 1) },
-+    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
-+    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) },
-+    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
-+    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
-+    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) },
-+    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) },
-+    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) },
-+    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
-+};
-+
-+static void flush_cpu_state(CPUState *cpu)
-+{
-+    if (cpu->vcpu_dirty) {
-+        whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+        cpu->vcpu_dirty = false;
-+    }
-+}
-+
-+HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
-+{
-+    if (exceptions != 0) {
-+        return E_NOTIMPL;
-+    }
-+    return ERROR_SUCCESS;
-+}
-+void whpx_apply_breakpoints(
-+    struct whpx_breakpoint_collection *breakpoints,
-+    CPUState *cpu,
-+    bool resuming)
-+{
-+    /* Breakpoints aren’t supported on this platform */
-+}
-+void whpx_translate_cpu_breakpoints(
-+    struct whpx_breakpoints *breakpoints,
-+    CPUState *cpu,
-+    int cpu_breakpoint_count)
-+{
-+    /* Breakpoints aren’t supported on this platform */
-+}
-+
-+static void whpx_get_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE* val)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    HRESULT hr;
-+
-+    flush_cpu_state(cpu);
-+
-+    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(whpx->partition, cpu->cpu_index,
-+         &reg, 1, val);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get register %08x, hr=%08lx", reg, hr);
-+    }
-+}
-+
-+static void whpx_set_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    HRESULT hr;
-+    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, cpu->cpu_index,
-+         &reg, 1, &val);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set register %08x, hr=%08lx", reg, hr);
-+    }
-+}
-+
-+static void whpx_get_global_reg(WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE *val)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    HRESULT hr;
-+
-+    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(whpx->partition, WHV_ANY_VP,
-+         &reg, 1, val);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get register %08x, hr=%08lx", reg, hr);
-+    }
-+}
-+
-+static void whpx_set_global_reg(WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    HRESULT hr;
-+    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, WHV_ANY_VP,
-+         &reg, 1, &val);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set register %08x, hr=%08lx", reg, hr);
-+    }
-+}
-+
-+static uint64_t whpx_get_gp_reg(CPUState *cpu, int rt)
-+{
-+    assert(rt <= 31);
-+    if (rt == 31) {
-+        return 0;
-+    }
-+    WHV_REGISTER_NAME reg = WHvArm64RegisterX0 + rt;
-+    WHV_REGISTER_VALUE val;
-+    whpx_get_reg(cpu, reg, &val);
-+
-+    return val.Reg64;
-+}
-+
-+static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
-+{
-+    assert(rt < 31);
-+    WHV_REGISTER_NAME reg = WHvArm64RegisterX0 + rt;
-+    WHV_REGISTER_VALUE reg_val = {.Reg64 = val};
-+
-+    whpx_set_reg(cpu, reg, reg_val);
-+}
-+
-+static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
-+{
-+    uint64_t syndrome = ctx->Syndrome;
-+
-+    bool isv = syndrome & ARM_EL_ISV;
-+    bool iswrite = (syndrome >> 6) & 1;
-+    bool sse = (syndrome >> 21) & 1;
-+    uint32_t sas = (syndrome >> 22) & 3;
-+    uint32_t len = 1 << sas;
-+    uint32_t srt = (syndrome >> 16) & 0x1f;
-+    uint32_t cm = (syndrome >> 8) & 0x1;
-+    uint64_t val = 0;
-+
-+    assert(!cm);
-+    assert(isv);
-+
-+    if (iswrite) {
-+        val = whpx_get_gp_reg(cpu, srt);
-+        address_space_write(&address_space_memory,
-+                            ctx->Gpa,
-+                            MEMTXATTRS_UNSPECIFIED, &val, len);
-+    } else {
-+        address_space_read(&address_space_memory,
-+                           ctx->Gpa,
-+                           MEMTXATTRS_UNSPECIFIED, &val, len);
-+        if (sse) {
-+            val = sextract64(val, 0, len * 8);
-+        }
-+        whpx_set_gp_reg(cpu, srt, val);
-+    }
-+
-+    return 0;
-+}
-+
-+static void whpx_psci_cpu_off(ARMCPU *arm_cpu)
-+{
-+    int32_t ret = arm_set_cpu_off(arm_cpu_mp_affinity(arm_cpu));
-+    assert(ret == QEMU_ARM_POWERCTL_RET_SUCCESS);
-+}
-+
-+int whpx_vcpu_run(CPUState *cpu)
-+{
-+    HRESULT hr;
-+    struct whpx_state *whpx = &whpx_global;
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    AccelCPUState *vcpu = cpu->accel;
-+    int ret;
-+
-+
-+    g_assert(bql_locked());
-+
-+    if (whpx->running_cpus++ == 0) {
-+        ret = whpx_first_vcpu_starting(cpu);
-+        if (ret != 0) {
-+            return ret;
-+        }
-+    }
-+
-+    bql_unlock();
-+
-+
-+    cpu_exec_start(cpu);
-+    do {
-+        bool advance_pc = false;
-+        if (cpu->vcpu_dirty) {
-+            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+            cpu->vcpu_dirty = false;
-+        }
-+
-+        if (qatomic_read(&cpu->exit_request)) {
-+            whpx_vcpu_kick(cpu);
-+        }
-+
-+        hr = whp_dispatch.WHvRunVirtualProcessor(
-+            whpx->partition, cpu->cpu_index,
-+            &vcpu->exit_ctx, sizeof(vcpu->exit_ctx));
-+
-+        if (FAILED(hr)) {
-+            error_report("WHPX: Failed to exec a virtual processor,"
-+                         " hr=%08lx", hr);
-+            ret = -1;
-+            break;
-+        }
-+
-+        switch (vcpu->exit_ctx.ExitReason) {
-+        case WHvRunVpExitReasonGpaIntercept:
-+        case WHvRunVpExitReasonUnmappedGpa:
-+            advance_pc = true;
-+
-+            if (vcpu->exit_ctx.MemoryAccess.Syndrome & BIT(8)) {
-+                error_report("WHPX: cached access to unmapped memory"
-+                "Pc = 0x%llx Gva = 0x%llx Gpa = 0x%llx",
-+                vcpu->exit_ctx.MemoryAccess.Header.Pc,
-+                vcpu->exit_ctx.MemoryAccess.Gpa,
-+                vcpu->exit_ctx.MemoryAccess.Gva);
-+                break;
-+            }
-+
-+            ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
-+            break;
-+        case WHvRunVpExitReasonCanceled:
-+            cpu->exception_index = EXCP_INTERRUPT;
-+            ret = 1;
-+            break;
-+        case WHvRunVpExitReasonArm64Reset:
-+            switch (vcpu->exit_ctx.Arm64Reset.ResetType) {
-+            case WHvArm64ResetTypePowerOff:
-+                qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-+                break;
-+            case WHvArm64ResetTypeReboot:
-+                qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
-+            bql_lock();
-+            if (arm_cpu->power_state != PSCI_OFF) {
-+                whpx_psci_cpu_off(arm_cpu);
-+            }
-+            bql_unlock();
-+            break;
-+        case WHvRunVpExitReasonNone:
-+        case WHvRunVpExitReasonUnrecoverableException:
-+        case WHvRunVpExitReasonInvalidVpRegisterValue:
-+        case WHvRunVpExitReasonUnsupportedFeature:
-+        default:
-+            error_report("WHPX: Unexpected VP exit code 0x%08x",
-+                         vcpu->exit_ctx.ExitReason);
-+            whpx_get_registers(cpu);
-+            bql_lock();
-+            qemu_system_guest_panicked(cpu_get_crash_info(cpu));
-+            bql_unlock();
-+            break;
-+        }
-+        if (advance_pc) {
-+            WHV_REGISTER_VALUE pc;
-+
-+            flush_cpu_state(cpu);
-+            pc.Reg64 = vcpu->exit_ctx.MemoryAccess.Header.Pc + 4;
-+            whpx_set_reg(cpu, WHvArm64RegisterPc, pc);
-+        }
-+    } while (!ret);
-+
-+    cpu_exec_end(cpu);
-+
-+    bql_lock();
-+    current_cpu = cpu;
-+
-+    if (--whpx->running_cpus == 0) {
-+        whpx_last_vcpu_stopping(cpu);
-+    }
-+
-+    qatomic_set(&cpu->exit_request, false);
-+
-+    return ret < 0;
-+}
-+
-+static void clean_whv_register_value(WHV_REGISTER_VALUE *val)
-+{
-+    memset(val, 0, sizeof(WHV_REGISTER_VALUE));
-+}
-+
-+void whpx_get_registers(CPUState *cpu)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    WHV_REGISTER_VALUE val;
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(whpx_reg_match); i++) {
-+        whpx_get_reg(cpu, whpx_reg_match[i].reg, &val);
-+        *(uint64_t *)((char *)env + whpx_reg_match[i].offset) = val.Reg64;
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
-+        whpx_get_reg(cpu, whpx_reg_match[i].reg, &val);
-+        memcpy((char *)env + whpx_fpreg_match[i].offset, &val, sizeof(val.Reg128));
-+    }
-+
-+    whpx_get_reg(cpu, WHvArm64RegisterPc, &val);
-+    env->pc = val.Reg64;
-+
-+    whpx_get_reg(cpu, WHvArm64RegisterFpcr, &val);
-+    vfp_set_fpcr(env, val.Reg32);
-+
-+    whpx_get_reg(cpu, WHvArm64RegisterFpsr, &val);
-+    vfp_set_fpsr(env, val.Reg32);
-+
-+    whpx_get_reg(cpu, WHvArm64RegisterPstate, &val);
-+    pstate_write(env, val.Reg32);
-+
-+    for (i = 0; i < ARRAY_SIZE(whpx_sreg_match); i++) {
-+        if (whpx_sreg_match[i].cp_idx == -1) {
-+            continue;
-+        }
-+
-+        if (whpx_sreg_match[i].global) {
-+            /* WHP disallows us from accessing global regs as a vCPU */
-+            whpx_get_global_reg(whpx_sreg_match[i].reg, &val);
-+        } else {
-+            whpx_get_reg(cpu, whpx_sreg_match[i].reg, &val);
-+        }
-+        arm_cpu->cpreg_values[whpx_sreg_match[i].cp_idx] = val.Reg64;
-+    }
-+
-+    assert(write_list_to_cpustate(arm_cpu));
-+    aarch64_restore_sp(env, arm_current_el(env));
-+}
-+
-+void whpx_set_registers(CPUState *cpu, int level)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    WHV_REGISTER_VALUE val;
-+    clean_whv_register_value(&val);
-+    int i;
-+
-+    assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
-+
-+    for (i = 0; i < ARRAY_SIZE(whpx_reg_match); i++) {
-+        val.Reg64 = *(uint64_t *)((char *)env + whpx_reg_match[i].offset);
-+        whpx_set_reg(cpu, whpx_reg_match[i].reg, val);
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
-+        memcpy(&val.Reg128, (char *)env + whpx_fpreg_match[i].offset, sizeof(val.Reg128));
-+        whpx_set_reg(cpu, whpx_reg_match[i].reg, val);
-+    }
-+
-+    clean_whv_register_value(&val);
-+    val.Reg64 = env->pc;
-+    whpx_set_reg(cpu, WHvArm64RegisterPc, val);
-+
-+    clean_whv_register_value(&val);
-+    val.Reg32 = vfp_get_fpcr(env);
-+    whpx_set_reg(cpu, WHvArm64RegisterFpcr, val);
-+    val.Reg32 = vfp_get_fpsr(env);
-+    whpx_set_reg(cpu, WHvArm64RegisterFpsr, val);
-+    val.Reg32 = pstate_read(env);
-+    whpx_set_reg(cpu, WHvArm64RegisterPstate, val);
-+
-+    aarch64_save_sp(env, arm_current_el(env));
-+
-+    assert(write_cpustate_to_list(arm_cpu, false));
-+
-+    /* Currently set global regs every time. */
-+    for (i = 0; i < ARRAY_SIZE(whpx_sreg_match); i++) {
-+        if (whpx_sreg_match[i].cp_idx == -1) {
-+            continue;
-+        }
-+
-+        val.Reg64 = arm_cpu->cpreg_values[whpx_sreg_match[i].cp_idx];
-+        if (whpx_sreg_match[i].global) {
-+            /* WHP disallows us from accessing global regs as a vCPU */
-+            whpx_set_global_reg(whpx_sreg_match[i].reg, val);
-+        } else {
-+            whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
-+        }
-+    }
-+}
-+
-+static uint32_t max_vcpu_index;
-+
-+static void whpx_cpu_update_state(void *opaque, bool running, RunState state)
-+{
-+}
-+
-+int whpx_init_vcpu(CPUState *cpu)
-+{
-+    HRESULT hr;
-+    struct whpx_state *whpx = &whpx_global;
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+
-+    uint32_t sregs_match_len = ARRAY_SIZE(whpx_sreg_match);
-+    uint32_t sregs_cnt = 0;
-+    WHV_REGISTER_VALUE val;
-+    int i;
-+
-+    hr = whp_dispatch.WHvCreateVirtualProcessor(
-+        whpx->partition, cpu->cpu_index, 0);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to create a virtual processor,"
-+                     " hr=%08lx", hr);
-+        return -EINVAL;
-+    }
-+
-+    /* Assumption that CNTFRQ_EL0 is the same between the VMM and the partition. */
-+    asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
-+
-+    cpu->vcpu_dirty = true;
-+    cpu->accel = g_new0(AccelCPUState, 1);
-+    max_vcpu_index = MAX(max_vcpu_index, cpu->cpu_index);
-+    qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
-+
-+    env->aarch64 = true;
-+
-+    /* Allocate enough space for our sysreg sync */
-+    arm_cpu->cpreg_indexes = g_renew(uint64_t, arm_cpu->cpreg_indexes,
-+                                     sregs_match_len);
-+    arm_cpu->cpreg_values = g_renew(uint64_t, arm_cpu->cpreg_values,
-+                                    sregs_match_len);
-+    arm_cpu->cpreg_vmstate_indexes = g_renew(uint64_t,
-+                                             arm_cpu->cpreg_vmstate_indexes,
-+                                             sregs_match_len);
-+    arm_cpu->cpreg_vmstate_values = g_renew(uint64_t,
-+                                            arm_cpu->cpreg_vmstate_values,
-+                                            sregs_match_len);
-+
-+    memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
-+
-+    /* Populate cp list for all known sysregs */
-+    for (i = 0; i < sregs_match_len; i++) {
-+        const ARMCPRegInfo *ri;
-+        uint32_t key = whpx_sreg_match[i].key;
-+
-+        ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
-+        if (ri) {
-+            assert(!(ri->type & ARM_CP_NO_RAW));
-+            whpx_sreg_match[i].cp_idx = sregs_cnt;
-+            arm_cpu->cpreg_indexes[sregs_cnt++] = cpreg_to_kvm_id(key);
-+        } else {
-+            whpx_sreg_match[i].cp_idx = -1;
-+        }
-+    }
-+    arm_cpu->cpreg_array_len = sregs_cnt;
-+    arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
-+
-+    assert(write_cpustate_to_list(arm_cpu, false));
-+
-+    /* Set CP_NO_RAW system registers on init */
-+    val.Reg64 = arm_cpu->midr;
-+    whpx_set_reg(cpu, WHvArm64RegisterMidrEl1,
-+                              val);
-+
-+    clean_whv_register_value(&val);
-+
-+    val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
-+    whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1, val);
-+
-+    return 0;
-+}
-+
-+void whpx_cpu_instance_init(CPUState *cs)
-+{
-+}
-+
-+int whpx_accel_init(AccelState *as, MachineState *ms)
-+{
-+    struct whpx_state *whpx;
-+    int ret;
-+    HRESULT hr;
-+    WHV_CAPABILITY whpx_cap;
-+    UINT32 whpx_cap_size;
-+    WHV_PARTITION_PROPERTY prop;
-+    WHV_CAPABILITY_FEATURES features;
-+
-+    whpx = &whpx_global;
-+    /* on arm64 Windows Hypervisor Platform, vGICv3 always used */
-+    whpx_irqchip_in_kernel = true;
-+
-+    if (!init_whp_dispatch()) {
-+        ret = -ENOSYS;
-+        goto error;
-+    }
-+
-+    whpx->mem_quota = ms->ram_size;
-+
-+    hr = whp_dispatch.WHvGetCapability(
-+        WHvCapabilityCodeHypervisorPresent, &whpx_cap,
-+        sizeof(whpx_cap), &whpx_cap_size);
-+    if (FAILED(hr) || !whpx_cap.HypervisorPresent) {
-+        error_report("WHPX: No accelerator found, hr=%08lx", hr);
-+        ret = -ENOSPC;
-+        goto error;
-+    }
-+
-+    memset(&features, 0, sizeof(features));
-+    hr = whp_dispatch.WHvGetCapability(
-+        WHvCapabilityCodeFeatures, &features, sizeof(features), NULL);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to query capabilities, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    if (!features.Arm64Support) {
-+        error_report("WHPX: host OS exposing pre-release WHPX implementation. "
-+            "Please update your operating system to at least build 26100.3915");
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    hr = whp_dispatch.WHvCreatePartition(&whpx->partition);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to create partition, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    memset(&prop, 0, sizeof(prop));
-+    prop.ProcessorCount = ms->smp.cpus;
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+        whpx->partition,
-+        WHvPartitionPropertyCodeProcessorCount,
-+        &prop,
-+        sizeof(prop));
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set partition processor count to %u,"
-+                     " hr=%08lx", prop.ProcessorCount, hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    if (!whpx->kernel_irqchip_allowed) {
-+        error_report("WHPX: on Arm, only kernel-irqchip=on is currently supported");
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    memset(&prop, 0, sizeof(prop));
-+
-+    hr = whp_dispatch.WHvSetupPartition(whpx->partition);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to setup partition, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    whpx_memory_init();
-+
-+    return 0;
-+
-+error:
-+    if (whpx->partition != NULL) {
-+        whp_dispatch.WHvDeletePartition(whpx->partition);
-+        whpx->partition = NULL;
-+    }
-+
-+    return ret;
-+}
 -- 
 2.50.1 (Apple Git-155)
 
