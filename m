@@ -4,37 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBECECD9AF
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AE0ECD9AF
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo7Lo-0004Oa-PN; Thu, 05 Feb 2026 16:57:24 -0500
+	id 1vo7Oq-00058g-DA; Thu, 05 Feb 2026 17:00:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo7Lm-0004No-2V; Thu, 05 Feb 2026 16:57:22 -0500
+ id 1vo7Og-00057k-4G; Thu, 05 Feb 2026 17:00:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vo7Li-0007O9-UL; Thu, 05 Feb 2026 16:57:21 -0500
+ id 1vo7OZ-0007wN-1G; Thu, 05 Feb 2026 17:00:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F23C7186539;
- Fri, 06 Feb 2026 00:56:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 723B118653C;
+ Fri, 06 Feb 2026 00:59:25 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1E6EF35D978;
- Fri, 06 Feb 2026 00:57:08 +0300 (MSK)
-Message-ID: <fad0fd0e-99bc-4455-822d-3cca651ab5c2@tls.msk.ru>
-Date: Fri, 6 Feb 2026 00:57:08 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 97FB835D97D;
+ Fri, 06 Feb 2026 01:00:12 +0300 (MSK)
+Message-ID: <f086941a-2080-4507-a6d6-6546c0a5a8ff@tls.msk.ru>
+Date: Fri, 6 Feb 2026 01:00:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio-gpu-virgl: correct parent for blob memory region
-To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20251223184023.1913-1-j@getutm.app>
+Subject: Re: [PATCH] virtio-pmem: ignore empty queue notifications
+To: Li Chen <me@linux.beauty>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20260106083859.380338-1-me@linux.beauty>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251223184023.1913-1-j@getutm.app>
+In-Reply-To: <20260106083859.380338-1-me@linux.beauty>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -106,53 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/23/25 21:40, Joelle van Dyne wrote:
-> When `owner` == `mr`, `object_unparent` will crash:
+On 1/6/26 11:38, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
 > 
-> object_unparent(mr) ->
-> object_property_del_child(mr, mr) ->
-> object_finalize_child_property(mr, name, mr) ->
-> object_unref(mr) ->
-> object_finalize(mr) ->
-> object_property_del_all(mr) ->
-> object_finalize_child_property(mr, name, mr) ->
-> object_unref(mr) ->
-> fail on g_assert(obj->ref > 0)
+> virtio_pmem_flush() treats a NULL return from virtqueue_pop() as a fatal
+> error and calls virtio_error(), which puts the device into NEEDS_RESET.
 > 
-> However, passing a different `owner` to `memory_region_init` is not
-> enough. `memory_region_ref` has an optimization where it takes a ref
-> only on the owner. It specifically warns against calling unparent on
-> the memory region. So we initialize the memory region first and then
-> patch in the owner with itself.
+> However, virtqueue handlers can be invoked when no element is available,
+> so an empty queue should be handled as a benign no-op.
 > 
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> With a Linux guest this avoids spurious NEEDS_RESET and the resulting
+> -EIO propagation (e.g. EXT4 journal abort and remount-ro).
 
-This one is quite a bit confusing.
+This feels like a qemu-stable material.
 
-Is it a qemu-stable material?
-I'm *not* picking it up automatically.
+Please let me know if it isn't.
 
 Thanks,
 
 /mjt
 
+> Signed-off-by: Li Chen <me@linux.beauty>
 > ---
->   hw/display/virtio-gpu-virgl.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   hw/virtio/virtio-pmem.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 18404be5892..70e0aff0ca3 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -123,7 +123,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->       vmr->g = g;
->   
->       mr = &vmr->mr;
-> -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
-> +    mr->owner = OBJECT(mr);
->       memory_region_add_subregion(&b->hostmem, offset, mr);
->       memory_region_set_enabled(mr, true);
+> diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
+> index 3416ea1827..cec1072f78 100644
+> --- a/hw/virtio/virtio-pmem.c
+> +++ b/hw/virtio/virtio-pmem.c
+> @@ -74,7 +74,6 @@ static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
+>       trace_virtio_pmem_flush_request();
+>       req_data = virtqueue_pop(vq, sizeof(VirtIODeviceRequest));
+>       if (!req_data) {
+> -        virtio_error(vdev, "virtio-pmem missing request data");
+>           return;
+>       }
 >   
 
 
