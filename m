@@ -4,125 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A08CE9128E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 08:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58991E91290
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 08:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnudJ-0005nO-0J; Thu, 05 Feb 2026 03:22:37 -0500
+	id 1vnuhO-000716-8Q; Thu, 05 Feb 2026 03:26:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vnudH-0005mu-0k
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:22:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vnuhM-00070S-97; Thu, 05 Feb 2026 03:26:48 -0500
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vnudF-0004gh-8j
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 03:22:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770279751;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZBoxe1eJdZBQgmUbqxKrW8e4d3IkmSbvin1LAk2ynUo=;
- b=A01cWKY421dBHn5XAgeymYk2I6a/CZJGutTJSg0gTy+sFkUMSxZC/GHO9nTat37q7IyZ46
- bcMD9aPZoCCHrOo+rZ0C7JZNDE9hX8HV0kmsXOPlsAezz7mzOoZlKxHpqpWFB9N1SREihO
- xKfTBweqgxyspM4Zy6fiHSwoela0iTs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-Ul3Abt90NACL8kkEm-1WGA-1; Thu, 05 Feb 2026 03:22:29 -0500
-X-MC-Unique: Ul3Abt90NACL8kkEm-1WGA-1
-X-Mimecast-MFC-AGG-ID: Ul3Abt90NACL8kkEm-1WGA_1770279749
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43284f60a8aso548293f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 00:22:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770279747; cv=none;
- d=google.com; s=arc-20240605;
- b=izaAXFaFrWkJBSuBxe3s6d9WkVMZ6SbchAIA41LoO+mjS+DmyMHBofr/w+tj4EXbhs
- SrINGXrac2bWg7KfxfWLC2hZFR93uqjY+qbQPtYWM/TufLxnBEMHb6paT4NvVbIuQN8E
- 7XDthaMAq7UCyh/t2vCyyZqo9j9hCSj9NPUnCSVnGtGqY2gr2lV/h420pNrxn2pS6pb/
- /rxJn+ioCawSnSzbGQSY8XPKuDryabEPR/ZfOYfBkOS/6mxltld9A9H5qCj+tTrbl/IH
- d4/FTmdd917L5wH04bw3bYXNzlC09J75bzi24TaYReG/aliNiwFLESyrhLUhb5iWMpcy
- 58ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZBoxe1eJdZBQgmUbqxKrW8e4d3IkmSbvin1LAk2ynUo=;
- fh=w72gMzNHx+rOQeSQN99Ghrv1qiAWz3alirFKmSMpZ9U=;
- b=UkYkAtcK3ifHQiIT77va/+EXdgvmE03mk9sOyONaMZe1br5OM/0ENSHvMGHwY2jqdL
- y8UZTjYhnV2TFlTIcHyfSkxem4ftR24HE/iCuFQVUhRDMOuLI3FdtwKT9jaNc2+ToroQ
- fzPaJ99YKQ1w3UwZGgAOomkiOVXTblV+wk0AhExViG4VbhpcgeSzAbGgw9iQl0y6S+uz
- 74XrLDIo6s0sixgiFI3EDVjjk9u4a0sZvSocQ4IS3KEP/q4wX713dxH/Nh6DaW1N6xOV
- 3uF+k4preZsMSce+I+hDbol7D+Pq9WgE0WAVDuGhbah4+Y9MyC15/aF50AVmPWWCb0Lh
- 1Qcw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770279747; x=1770884547; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZBoxe1eJdZBQgmUbqxKrW8e4d3IkmSbvin1LAk2ynUo=;
- b=GhmfAvYpNVoYwZGvfExDrFaqc/Alv05fdChmRjm076WK+O2hTB6q+QenoBSD12HdbM
- fVqsJseazV8nuXDYlzCjDzcGL2XpbLRjuBS6YywrZIf8tbLwFozS3dEK6worQCFi+DOx
- bNKIUkObP6i6ijCXmNP1pVNk4XBZLwrPlEkrP0q/HFQI0whpjgq2q+KwhQz0OF7dyLlY
- F1quPXXWrg4wqgQ+pp767CrYRn94s4TIWw8UDiiLFtkr81uX1STtiu1PTVOoJoSUThu7
- JCx1mobwTuHfNVbDviKGc5TzSkuqit7C2WglOxrfIn0g9tDhwrjLzKBJ4A3SwHA58R7K
- BPMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770279747; x=1770884547;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZBoxe1eJdZBQgmUbqxKrW8e4d3IkmSbvin1LAk2ynUo=;
- b=tiMqC64LBmXTFVrLJwwZ/p/ZyXHqaP2EiiN2EPm1o/GK5QBiF8EjEKdVliNwygomux
- OTLGQD7KRJwioaFTaALLM7nnsTKu2Ww55Wp0llh/PxoeOxfe9mlt9gxbGhtoDjYkToAf
- l/6OYRckRKqGFNdwCQ4CghQyeeWjUzwTUCHxd51XJCukOdPmYFV7HFQXDi2Qvjruwpua
- ZRWgakvquGkmiJgWfigWFKFeJNNLJwCNrR4y23ZPrbRfPBWMF4PQLd4EkXS8w84L/ulS
- hynbeEuM6MDSZSxXMjXkXNbC+x0H9QGJDvb/X7XbJuS/Orq1kHSpGxdG4nnmMKDsfgLQ
- dwPQ==
-X-Gm-Message-State: AOJu0YxM8BGw/xWCaaUbuKexpT9FjJwzFksPpdEzhUdEpEmuRx2aoIUq
- iBlmNUHAuVHJf2sMF++X+e/rOsGvBiZvbJdLpE/tpIbUga1MNa4ikyzmX6BerRydgzJrEh9aZST
- I0YA90qVQz5K2MDZWM3RYtn6b5xrtdgBqftfjcG5wkdewwUa1JN5j8wYeZsD6L9G2AAUSNhubt2
- /V3pAjnT3NfT8E+1z8obqh44KqHepr1VEczPEIH1k=
-X-Gm-Gg: AZuq6aLG9k1CgPmC/xBKdrmx5EPblXARgqDWQ5U4ZW0kW7oiDrCKGTRVFvhUz/FdS57
- udkGUjloQI1G9wMj9bP9THHV/K4AF04BaUM2YAVNva+ZapvHPUJrh4PeQGS7D6VXcQ/vYutKciZ
- 7rucPpdq1cuZL/D7IhVPHkGmbby+R7vzWkkVbXToT2ABHiA3FCT6lrsYerTVIEvUZBpab5ZGOE/
- Op7ogeRdFyU6upL3mVntCjM8cLp2kKr5Zgipeakj5eDRGgH4l0eOoJT5UObODZIwtTOXA==
-X-Received: by 2002:a05:6000:1885:b0:435:a815:dd86 with SMTP id
- ffacd0b85a97d-4361806142emr8478820f8f.62.1770279747293; 
- Thu, 05 Feb 2026 00:22:27 -0800 (PST)
-X-Received: by 2002:a05:6000:1885:b0:435:a815:dd86 with SMTP id
- ffacd0b85a97d-4361806142emr8478787f8f.62.1770279746900; Thu, 05 Feb 2026
- 00:22:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vnuhK-0005Bd-RY; Thu, 05 Feb 2026 03:26:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=a6z5W1XdYVTcERyGhBCXXfdludmqp4h/J+ajk/e2HahYaloQq0lJqpg1S5Q3He3Oe5pZKYbjZ1obCqHe1LqNOTO16UItr/zYuhhRnMdMLt+xbTedUOdgFDlJwaT+d8qborineFMQTCmkdygTMSZS4VNRkPtp1RwYP65e2W/tmHtQajXk5xWjHe3VXOtpgVxIG/jw/BHWm0cd0yLx4Wx4VCim12XjFmiyjPy/QnvLqYNqlKp6Kl1YlWrZs4n+OMAd7lqvUfVZk/LJbh7szggNoqFpC1o9NhZ+jHzLbCxVbETTQbjJ4mbc3tKZCF0Bqcy45z2Mt4HFHR8wBc0N4AKgWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9XLROWAeVhJYJrl+B5DM3SFMuj3ex52WYjKSTaQxckQ=;
+ b=rqU+cCqmwY+cMMVmxFM/HtC+AXwHgDQ5qft+WHr0GHTVMzo9qgq5Evhezu4yH9DEoG9cBuuTWzBVpd1XoWWhfaomqfvbSOzSNNn1HlBtL2ClAvF7eVFbzRxnqd9YBsVz61qcxXJhNisnlYeHKNj4gEtyUv3GT/Hu8aRorqHDBU4jOEu18Cu5gUo8OSFx/xp/q58AtMJNEIYcqi0jIVTkIxOnTW+OdhCrNAps4dKWimBIlR+Twi3lQO4IhAYJKuuHyQawhKuqGcSyK5BH9GoB78PcNbaE2DLAaSwDIQWBCnXOsUdfhDw5/4Qb1Pva3ahXlUyMrvF8JTODzY5SL6mlrg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9XLROWAeVhJYJrl+B5DM3SFMuj3ex52WYjKSTaQxckQ=;
+ b=HgiwTSXbEyzrrSm19rnamGapyuYt+qdeEwrPc8W8qpOolnHeJ5EVe1sypuF/LRgVY0EHEbaBu8hW3+nKTVmWD8tiO9q+oCZ0z/SaeghQuMfpVL6JrQuLUka2nOMPI/76uAQWygVzmozzXtaJEYw3WPbO9WT9tXilLEXXiAJejiZ49R8kh1x56vBycpVCv8RvdkKhqzcaiaBEiwJhfeRh5+ZI9lh5RcWOH3RiuMvxQGPfhcXShU2Jgzzv31e6mE39+PEyVygVU/2ZAbGM36MALdPYoYxgwtKADTXafs5BIW8dW3qpNTozB+QDoB468T55PQewn6H/Z47x2dtPCegnZg==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by IA1PR12MB7662.namprd12.prod.outlook.com (2603:10b6:208:425::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.16; Thu, 5 Feb
+ 2026 08:26:41 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9587.013; Thu, 5 Feb 2026
+ 08:26:40 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v4 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Topic: [PATCH v4 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Index: AQHclgipVdHWZsoTDkm9jZaLfut9hrVy9CgAgADQv/A=
+Date: Thu, 5 Feb 2026 08:26:40 +0000
+Message-ID: <CH3PR12MB7548F2E4B90928FDC2A0EFC7AB99A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260204190008.20070-1-skolothumtho@nvidia.com>
+ <20260204190008.20070-4-skolothumtho@nvidia.com>
+ <aYOkBm5Ghih0Uxzf@Asurada-Nvidia>
+In-Reply-To: <aYOkBm5Ghih0Uxzf@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA1PR12MB7662:EE_
+x-ms-office365-filtering-correlation-id: 62d861a1-f937-4873-fb74-08de64904986
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|38070700021|7053199007; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?HO3hkV0sRrrH8Z/ODMDGHqlbpJMcSebzBIdzcOV93H1cFINysEXyIBMzx2wI?=
+ =?us-ascii?Q?j5XLpX0nzT3UVrdBTW64tI/gw0YZU+/1guSJ7dRm/K2ylk4kTrnx1eeev/RQ?=
+ =?us-ascii?Q?iPZwF5ETqU370thTou3xJMkhiNqQTrNpFIlVzfUKTjq2E53QembRTDEvnFap?=
+ =?us-ascii?Q?PvPA/pbNinrfrq1bE/6rTNzJS7KXHBpBHX5gREXWDiu7cwscPscA76EZG3nB?=
+ =?us-ascii?Q?jbP12aVaNVBbjg/MKs7Y0ZPUuwXew12BrMW79jOFUG34MM+i/7dFIOz/wMjh?=
+ =?us-ascii?Q?pZTnkbAJzByF96gRIupvi/NDKmWmn4eacEmvp3hJuSJxZRgzIFMfK/E+50OX?=
+ =?us-ascii?Q?Uem/EQMX9waL9De6NRiz/Vx3xIg6MpLjiEWhCA8vMHkJtC4yZUKzT49guf9N?=
+ =?us-ascii?Q?RPXoOKmqxjgTcpxBmCX6zvcw688eMpHssRPyDZ2vCUxelUQf+NBEOtK/MkNj?=
+ =?us-ascii?Q?QxaPOonZoc4lp5r17Eujfc85SOEUhDj1dvZzH4zRxx1S48mmQqNJ1WUKtn6Z?=
+ =?us-ascii?Q?3LIHvTcODpJDbwqsGzIWodosHDopyD7a6//vtfOOxhbQJ2A4h5vUZSaHJPUh?=
+ =?us-ascii?Q?msvEGxxw9Q7VIj/KVQR3FuF8pc3om5TrCSdI8ShdTtXdo1pZZQbOvae6dNBa?=
+ =?us-ascii?Q?N4hg6LQGGuNYA9Sqvha62XYH1016yP2RKms0LdTH3w+usRr/wgfYlDPlU2Hk?=
+ =?us-ascii?Q?GvDPdSTIx0bAB7CwbF9Jo8wUY3POvBZ7+Hbw223q3nt1UDBlr9Kbuw0tyh8b?=
+ =?us-ascii?Q?1Be0AWS7Y8/2wqxDGgytBVUA/yqoHWVlxwS3PpENRNCzY+/b4gXL2ljZnEKf?=
+ =?us-ascii?Q?JypQgik19xV+FYTAl7DcMrgtHogiOOEFQ4A6uDoMbqBp8qyR74+ApWta9cH5?=
+ =?us-ascii?Q?q3vRMTQQqmkV5d2ehKCp4QHNPvw5aTFhMOPiEKUTyk47UALX6vZDQSqpraIL?=
+ =?us-ascii?Q?xX3nYlo0qa3SFq1isfyVpXKeHNoJeeT+hNLW7fYvsqtJ3A6DVvNSIN6lNeuE?=
+ =?us-ascii?Q?hEm/98vnpAOBIFsyWHUb459i3cVbCdxQqJc7bc06Fq0oep7HAlF2SYVeWtXF?=
+ =?us-ascii?Q?MEvBmfJDTegnifu4ByTPd22YHtDFHHuFtQYqy3h3lNRWVmKJ5EqPEjibpDHS?=
+ =?us-ascii?Q?c0xHP78f0Tja3lFzleozL4txEttnRzh4n3StJj9TdTM1OQGh8ClQ3EhLrf9H?=
+ =?us-ascii?Q?5dh2dtJPyiYnDphEUu088gM48OtX8JGvtd8tUjSiR15v777dWBtxd6Ew/jWx?=
+ =?us-ascii?Q?7x5LUV9Ejjojg6Gvi/0W3WOjb9/d1aejufKj3scyhiWYky9E2MaYuBmgOOg3?=
+ =?us-ascii?Q?jkEP+tCeRW7hh6VKqaLm1FzjZQiLt5eRcPgJPYbjnzK3eYOE85uk+4j15Yqd?=
+ =?us-ascii?Q?iMrulA7pUcP6PCCJpATx07hB6vPrtmVAkj/fI11i5mvj0fI/pK8fSmriWCiC?=
+ =?us-ascii?Q?kV05BgVB8CgLs95vMARJqxRPspSXXWZqP6GPbotQkrQfI0ISIgU36GXRrKld?=
+ =?us-ascii?Q?MtHHrGIKKP/Y4ohIIbuXwtO1Jqm1Sqq5QFkl0mGJuj3VezS4+JyvplT8kdrc?=
+ =?us-ascii?Q?mjC4O4CVsvc/ASpMp/PtB5BDLTpZeuyTDvZaFWV8EtfxXkw1jmO64oXYDGBM?=
+ =?us-ascii?Q?msrUNo/6p5UKTdxsnNoR16Q=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(7053199007); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?lNUQMydo4Z2UWqmtR1GyrC5/fJ7Oa8K98K2OmxseVOCWYfAMSPZIXZCn04G1?=
+ =?us-ascii?Q?k81ojxNbF+G9MmuKCUTy34Q53kA1PkyDT5J0STNHa5OhmQPwKDwCTDhOQv8D?=
+ =?us-ascii?Q?UfsByQGJzFEcMpEA3GeNUiElbkaB0W/7XZK7FMD8xwF+yB1xnf32a9EGkys4?=
+ =?us-ascii?Q?fUTSfwduOJKlyWqgtt5oZXLh+1SSb6fcblqUTzBiD5B7I1iCcxNqqsyHrT00?=
+ =?us-ascii?Q?FTLxe8GjC/ndP2SW4uG9Ejtu3MySFmP55CMT28rufo5oqv03ID49Y4hON1Vn?=
+ =?us-ascii?Q?UPioy0IKsLXjQglSgNJc51FRKLoLN6iysRcyWYnsUtRNEjo6mVOVL3hEHDQE?=
+ =?us-ascii?Q?rOdI8iUMVzLRThz/Rj+9hlpnbzKv/XxqrF6Uwdk8Q5JQtumYBnvUbpAxBKa1?=
+ =?us-ascii?Q?44tZ3T2PUpKPxLXfMdYCiHL3Ko9EthJk0+hUrofj2fpkGdVmcERULSUgmj7S?=
+ =?us-ascii?Q?fgUvbJ8LlSjMvm9RJhHE5+OyBtWzY60YkZCJaZD4Mtp1j53BG12GnQKL8RFM?=
+ =?us-ascii?Q?bUovSBfEZ91WRO9pIIbN30n4RgFqJfZhju+qtxF0iCXso0VinnejpaubfwQT?=
+ =?us-ascii?Q?FNWakmg/ORBlI5oxdzIa47Fa7WVW3cFm084adlIJlhzfgOkZwYjFEA31XGc0?=
+ =?us-ascii?Q?2JC6j7dNp/erRCOVzsdH8zRXYeKHzLxSfcVej5OUQFcm18yYI171cPnCd6qd?=
+ =?us-ascii?Q?FXg3YMrLaQUmm9UeozegThAIYSDGRzKHdj7gvmrjSlbkkqfTiB5LrSV0rYJ5?=
+ =?us-ascii?Q?lpY4oX8SUMuVaSl7KF2+LY/N+uo3YxjbD5FgY+i+rextc8WrHBWp06qDfhlk?=
+ =?us-ascii?Q?g1Cm0VqiIFZ6Dai5Pyip0ax7cvuZEC3YObJM7RyzAig1HdVYfE7fjQyBupQK?=
+ =?us-ascii?Q?WQI4xNbHyL0ORpIQvc5r0DFoSOdKR/iB3VwUdIRCCkygBWs6NB+OeNt78PG4?=
+ =?us-ascii?Q?4sawkua3UnV3wUT5u9CDKUefiKJ9P8riL+t8PUW/sox06IDa7vA/md9cDv3L?=
+ =?us-ascii?Q?KOtiUr4/NEzggdF9tx1ZQkE4ePmq5pUBoo6k2LFrhW+coIGf4ISZlUsXV07J?=
+ =?us-ascii?Q?FcafqFN786HvbCmPVJXQRTHF5XIGuX6ZJzEUkzC/9OKu7P7VFK5S+WbwRniF?=
+ =?us-ascii?Q?0yYBFip+7ui0hM3u+yMpfP5vEs0WaDZKGRJWd2S0GgCpQBR3q0LXw7KDzk8c?=
+ =?us-ascii?Q?rxbuzA56/UC4/BCC6KTfSI/npFzR3hbBiB/DcYjNlXgqp6eTKMHHnVHHRGsl?=
+ =?us-ascii?Q?PoI48J/2/nj20xQQPtSn//0kF8c86F3qwDrE6T2S0KAwOZxXANn3z5BAbswy?=
+ =?us-ascii?Q?Kbe+IYmkF6DSDLzsJ8ogh+F6lqu+d2PluOV3IFwwrV5MoGS/V7SRcpU82lS5?=
+ =?us-ascii?Q?wJlHGld0CvuJqkR1935uBl+0D9M5WqACzj8pgua+/VuLsKw8En4BgY9zJBCd?=
+ =?us-ascii?Q?zrolNF+rAYZ78bcocCORRWsxOv0aoEoP1X/JMUSkpFXsTruHul3uSRw7h568?=
+ =?us-ascii?Q?rUHq65osN9bnw3YpW/zTtoHAe90qENyZNF/qyTWVPYZKw8AVmUSkL35ztvG4?=
+ =?us-ascii?Q?ApvQP3nkku9y5lRUqPG7fnN2e+EpTckTMkvhcULf2wf+FC5nU4ONDb7L17YS?=
+ =?us-ascii?Q?aqt1S5kBWxYGqx0Pg49kz3twElIrH5ZBuitApgv8x6dUF7JD97D2LSalwLdO?=
+ =?us-ascii?Q?LZkK+lYYeSefMAqw/8RjiWmncBFAV71MVvCf5rxsvbHjSWRMcSIxOrK0Ns8j?=
+ =?us-ascii?Q?7z55jx0vkQ=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20260204052456.970605-1-richard.henderson@linaro.org>
- <20260204052456.970605-7-richard.henderson@linaro.org>
- <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
- <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
- <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
- <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
-In-Reply-To: <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 5 Feb 2026 09:22:15 +0100
-X-Gm-Features: AZwV_QgKIhqbJMUP-Zr_AfCvhAJ8QaEe3xrRWjkqDtGqiXP37o9An8u-vH6RwXQ
-Message-ID: <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
- with shifts
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000077ae2d064a0f5f22"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62d861a1-f937-4873-fb74-08de64904986
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Feb 2026 08:26:40.4443 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ibrPOXqj2z4a1zse5oUi07rARvSYnrq42Jri+c0rZceyP2IG7d5IOi2ZAhuq6SY6L+4jKbl8C4gg2Fr443PpaA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7662
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,104 +177,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000077ae2d064a0f5f22
-Content-Type: text/plain; charset="UTF-8"
-
-Il mer 4 feb 2026, 21:46 Richard Henderson <richard.henderson@linaro.org>
-ha scritto:
-
-> On 2/4/26 20:41, Paolo Bonzini wrote:
-> >     This is primarily for x86.
-> >
-> >     (1) movz is 2 operand, so that may avoid clobbering an input,
-> >     (2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.
-> >
-> >     Because of these, there's a comment somewhere that says we'll prefer
-> extract over and
-> >     (perhaps in tcg_gen_andi_* or fold_and).  IIRC this also happens to
-> simplify ppc and
-> >     s390x
-> >     insn selection (and vs rotate and mask).  AFAIK, no other hosts are
-> penalized.
-> >
-> >
-> > I think it would be better to pick a canonical form for AND with 2^n-1
-> and handle
-> > conversion to extract (like PPC rotates or movz) in the backend.
-> >
-> > Picking AND as the canonical form also avoids makes the macros for
-> extract validity
-> > simpler too; adding an extra constraint for immediate 2^n-1 is easier
-> and it generalizes
-> > to other PPC rotate and mask cases.
->
-> Picking AND means we have to use "r,0,ri" for x86, losing register
-> allocation flexibility.
->
-
-Then could you wrap the target specific extract_valid with one that allows
-ofs == 0 if AND allows the immediate 2^len-1? That would also simplify this
-series.
-
-Paolo
 
 
->
-> r~
->
->
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 04 February 2026 19:55
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Nathan Chen
+> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jason Gunthorpe
+> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> <kjaju@nvidia.com>
+> Subject: Re: [PATCH v4 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+> accelerated SMMUv3 devices
+>=20
+> On Wed, Feb 04, 2026 at 07:00:06PM +0000, Shameer Kolothum wrote:
+> > +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp) {
+> > +    SMMUv3AccelState *accel =3D s->s_accel;
+> > +    IOMMUFDVeventq *veventq;
+> > +    uint32_t veventq_id;
+> > +    uint32_t veventq_fd;
+> > +
+> > +    if (!accel->viommu) {
+> > +        return true;
+> > +    }
+>=20
+> This seems meaningless or should be an assert?
 
---00000000000077ae2d064a0f5f22
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hmm.. We need this check because, if there are no cold-plugged devices,
+when the guest boots and enables EventQ, the vIOMMU may not exist yet.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 4 feb 2026, 21:46 Richard=
- Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">richard.hend=
-erson@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">On 2/4/26 20:41, Paolo Bonzini wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0This is primarily for x86.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0(1) movz is 2 operand, so that may avoid clobbering=
- an input,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0(2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.=
-<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Because of these, there&#39;s a comment somewhere t=
-hat says we&#39;ll prefer extract over and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0(perhaps in tcg_gen_andi_* or fold_and).=C2=A0 IIRC=
- this also happens to simplify ppc and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0s390x<br>
-&gt;=C2=A0 =C2=A0 =C2=A0insn selection (and vs rotate and mask).=C2=A0 AFAI=
-K, no other hosts are penalized.<br>
-&gt; <br>
-&gt; <br>
-&gt; I think it would be better to pick a canonical form for AND with 2^n-1=
- and handle <br>
-&gt; conversion to extract (like PPC rotates or movz) in the backend.<br>
-&gt; <br>
-&gt; Picking AND as the canonical form also avoids makes the macros for ext=
-ract validity <br>
-&gt; simpler too; adding an extra constraint for immediate 2^n-1 is easier =
-and it generalizes <br>
-&gt; to other PPC rotate and mask cases.<br>
-<br>
-Picking AND means we have to use &quot;r,0,ri&quot; for x86, losing registe=
-r allocation flexibility.<br></blockquote></div></div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">Then could you wrap the target specific extract_va=
-lid with one that allows ofs =3D=3D 0 if AND allows the immediate 2^len-1? =
-That would also simplify this series.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div=
- class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-<br>
-<br>
-r~<br>
-<br>
-</blockquote></div></div></div>
+Isn't it?
 
---00000000000077ae2d064a0f5f22--
-
+Thanks,
+Shameer
 
