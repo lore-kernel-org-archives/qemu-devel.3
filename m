@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241A3EC1E81
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BC5EC1E81
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 09:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vnvg2-0000tP-Dl; Thu, 05 Feb 2026 04:29:30 -0500
+	id 1vnvgY-0000w6-SK; Thu, 05 Feb 2026 04:30:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vnvg1-0000tF-FR
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:29:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnvgW-0000vQ-UA
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:30:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vnvfy-0000jW-QL
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:29:29 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vnvgV-0000lQ-5s
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 04:30:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770283764;
+ s=mimecast20190719; t=1770283798;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fw7ITaaehPKwcJ8Vsr+UU/JzGj3KQjS6QKQPHJrOwL4=;
- b=NJwu4M/ZNkbYgbSms9WcLaYdS37GGhOos6UHyvMENmeWzPElj9tIXsa74I40w7Qx7ZoyY9
- Kna7yos3u+rM3mZNazNzIZQoC3CKjg83hJ4NVm33E6UyzZEFi639LKHCQyqtFFk6DbW7K9
- LB/ZVqc72cZdij7gJxVCre1EXr5ElM4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=nnXqLVMeIhQg6mPnu3MWMmlSO+K0fZA7JDPvKKR/7+0=;
+ b=Tft0+ftuysNFquzwJ4/BHIELxN0qVTgS1hmwWw27GJQLIclO5n93D0Pr7j8lKHEU6dx2ui
+ Xj9/akKQKrRPsqU39s7l+DWWG1c01x67n1Z3/myEN96FSoD16tJj44pnKSarM2ahJqF8Bu
+ V4JYwlduf19HYoswzUCu+GEItljkLB4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-4oFxLkZIPBG5jHvNpOR7QQ-1; Thu,
- 05 Feb 2026 04:29:21 -0500
-X-MC-Unique: 4oFxLkZIPBG5jHvNpOR7QQ-1
-X-Mimecast-MFC-AGG-ID: 4oFxLkZIPBG5jHvNpOR7QQ_1770283760
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-HEEAnrO2N2Wjv08Xy80prA-1; Thu,
+ 05 Feb 2026 04:29:54 -0500
+X-MC-Unique: HEEAnrO2N2Wjv08Xy80prA-1
+X-Mimecast-MFC-AGG-ID: HEEAnrO2N2Wjv08Xy80prA_1770283793
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6ECFF1800282; Thu,  5 Feb 2026 09:29:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.198])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E58F118003F6; Thu,  5 Feb 2026 09:29:17 +0000 (UTC)
-Date: Thu, 5 Feb 2026 10:29:15 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org,
- dionbosschieter@gmail.com
-Subject: Re: (in guest) disk corruption during snapshots
-Message-ID: <aYRi660MmeMtobZG@redhat.com>
-References: <4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be>
- <aef520c2-3296-4eb4-999c-faa757c9b2a3@proxmox.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A25D21800352; Thu,  5 Feb 2026 09:29:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FE21192C7C3; Thu,  5 Feb 2026 09:29:53 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D6E3D21E692D; Thu, 05 Feb 2026 10:29:50 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, richard.henderson@linaro.org
+Subject: Re: [PATCH] target-info: set target_arch statically
+In-Reply-To: <20260203194113.3026757-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 3 Feb 2026 11:41:13 -0800")
+References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
+Date: Thu, 05 Feb 2026 10:29:50 +0100
+Message-ID: <878qd735dd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aef520c2-3296-4eb4-999c-faa757c9b2a3@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,83 +85,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.02.2026 um 09:59 hat Fiona Ebner geschrieben:
-> Hi,
-> 
-> Am 03.02.26 um 3:24 PM schrieb Jean-Louis Dupond:
-> > Hi,
-> > 
-> > Since some months we were observing disk corruption within the VM when
-> > enabling backups (which triggers snapshots).
-> > After a lot of troubleshooting, we were able to track down the commit
-> > that caused it:
-> > https://gitlab.com/qemu-project/qemu/-/
-> > commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694
-> > 
-> > More info in the issue:
-> > https://gitlab.com/qemu-project/qemu/-/issues/3273
-> > 
-> > Now this seems to be caused by a race between disabling the
-> > dirty_bitmaps and the tracking implemented in the mirror top layer.
-> > Kevin shared me a possible solution:
-> > 
-> > diff --git a/block/mirror.c b/block/mirror.c
-> > index b344182c747..f76e43f22c1 100644
-> > --- a/block/mirror.c
-> > +++ b/block/mirror.c
-> > @@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-> >       * accessing it.
-> >       */
-> >      mirror_top_opaque->job = s;
-> > +    if (s->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
-> > +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> > +    }
-> >  
-> >      assert(!s->dbi);
-> >      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
-> > @@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
-> >       * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-> >       * mode.
-> >       */
-> > -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> > +    if (s->copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
-> > +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> > +    }
-> >  
-> >      bdrv_graph_wrlock_drained();
-> >      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-> > 
-> > 
-> > Running this for some hours already, and it seems to fix the issue.
-> > 
-> > Let's open up the discussion if this is the proper way to fix it, or if
-> > there are better alternatives :)
-> 
-> Yes, I do think this is the proper solution. I ended up with essentially
-> the same yesterday (see the Gitlab issue). I moved the disabling
-> unconditionally, but there should be no need to delay the disabling if
-> using write-blocking mode. I would suggest moving the comment on top of
-> the changed hunk in mirror_start_job() along to the new hunk in
-> mirror_run().
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-I didn't actually write this as a proper patch, but just as a quick
-thing Jean-Louis could test, so yes, all of the details are up for
-discussion.
+> target_arch() function will reparse target_name() every time if it was
+> not set to a proper SYS_EMU_TARGET_* value (when using
+> target-info-stub.c), which is not efficient.
+>
+> Since we want to preserve the constness of TargetInfo but C doesn't give
+> us flexible compile time expressions, we simply set target_arch using a
+> static constructor once instead.
+>
+> This was found when doing changes to virtio_access_is_big_endian()
+> function, having an overhead of 50% after switching to runtime checks.
+> With this, overhead left is around 3%, due to indirect function
+> calls.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  target-info-stub.c | 11 ++++++++++-
+>  target-info.c      |  9 +--------
+>  2 files changed, 11 insertions(+), 9 deletions(-)
+>
+> diff --git a/target-info-stub.c b/target-info-stub.c
+> index 8392d81e8f8..ff86a02247a 100644
+> --- a/target-info-stub.c
+> +++ b/target-info-stub.c
+> @@ -10,13 +10,14 @@
+>  #include "qemu/target-info.h"
+>  #include "qemu/target-info-impl.h"
+>  #include "hw/core/boards.h"
+> +#include "qapi/error.h"
+>  #include "cpu.h"
+>  
+>  /* Validate correct placement of CPUArchState. */
+>  QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
+>  QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
+>  
+> -static const TargetInfo target_info_stub = {
+> +static TargetInfo target_info_stub = {
+>      .target_name = TARGET_NAME,
+>      .target_arch = SYS_EMU_TARGET__MAX,
+>      .long_bits = TARGET_LONG_BITS,
+> @@ -29,3 +30,11 @@ const TargetInfo *target_info(void)
+>  {
+>      return &target_info_stub;
+>  }
+> +
+> +__attribute__((constructor))
+> +static void init_target_arch(void)
+> +{
+> +    target_info_stub.target_arch = qapi_enum_parse(&SysEmuTarget_lookup,
+> +                                                   target_name(), -1,
+> +                                                   &error_abort);
+> +}
 
-You're right that there is no need to delay disabling the bitmap in
-active mode, but it probably also doesn't hurt to keep it enabled for a
-little while? Maybe we should do it like you did just to keep the code a
-little simpler.
+This is slightly unclean.  Constructors run before main().  If
+qapi_enum_parse(..., &error_abort) fails here, error_handle() will
+report the unexpected error with error_report() before main() calls
+error_init().
 
-There is another approach I had in mind, but wasn't as sure about, so I
-didn't suggest it for the testing to see if this race is even the
-problem we're seeing in practice: Is there a reason why populating the
-initial dirty bitmap (i.e. the second part of mirror_dirty_init()) can't
-just come after setting 'mirror_top_opaque->job'? Then we could simply
-leave the bitmap disabled all the time and rely solely on the mirror
-job's own tracking. That would feel a little more consistent than using
-the block layer just to plug a small race window during startup.
+See also
 
-Kevin
+    From: Markus Armbruster <armbru@redhat.com>
+    Subject: Re: [PATCH v3 02/20] monitor: initialize global data from a constructor 
+    Date: Thu, 18 Sep 2025 08:30:23 +0200
+    Message-ID: <87frck1dds.fsf@pond.sub.org>
+
+Observation, not objection.
+
+> diff --git a/target-info.c b/target-info.c
+> index 24696ff4111..c3c0856d01a 100644
+> --- a/target-info.c
+> +++ b/target-info.c
+> @@ -10,7 +10,6 @@
+>  #include "qemu/target-info.h"
+>  #include "qemu/target-info-qapi.h"
+>  #include "qemu/target-info-impl.h"
+> -#include "qapi/error.h"
+>  
+>  const char *target_name(void)
+>  {
+> @@ -24,13 +23,7 @@ unsigned target_long_bits(void)
+>  
+>  SysEmuTarget target_arch(void)
+>  {
+> -    SysEmuTarget arch = target_info()->target_arch;
+> -
+> -    if (arch == SYS_EMU_TARGET__MAX) {
+> -        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+> -                               &error_abort);
+> -    }
+> -    return arch;
+> +    return target_info()->target_arch;
+>  }
+>  
+>  const char *target_cpu_type(void)
 
 
