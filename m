@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDB0ECD9B1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C858BECD9B1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 22:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo7r0-0003YO-PL; Thu, 05 Feb 2026 17:29:38 -0500
+	id 1vo7xa-0004j1-Gl; Thu, 05 Feb 2026 17:36:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vo7qz-0003YA-4t
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:29:37 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vo7xY-0004hY-6g
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:36:25 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vo7qx-0004MU-K2
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:29:36 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-81ecbdfdcebso75910b3a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 14:29:34 -0800 (PST)
+ id 1vo7xW-0005kU-Iq
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 17:36:23 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a77c1d5c3bso6277215ad.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 14:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770330573; x=1770935373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770330981; x=1770935781; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=09jWMdr15BvFAbuq7rsBoKCGwxMj0jZwNnFD5Bsj3zw=;
- b=HVjuV1UBg+C03BPSgxYmYricHFOigNkOENb/ndh90LtPDypQyDAsH9nXeOm+UqcAdI
- Vs7GKlC87rdZifunMhqTtyNH5JYmnPb2IHIUYR9te8WtaVQH0jnAJIzYLofY3ax6Nvco
- oU8frUtTrg8Jq1JUA1hVCWuTKweGDu3/eHgxDt6yPcku2dgjEYqG2sG+0AqJTldCCdvD
- 1gB8XQ0Ae+NyCM4pn9tL74n8+xRHSC1C40gynt1d/6N2y/f2pcpmXH05I3CHCjoHKyt/
- kHVknmyPNFStRSdTF/daA8ATFY36YQCg8qFKmV3Wj2p12Xij5i+D4CKPVHG3P/RVQp8a
- BdrA==
+ bh=RY8dbBJNl0iVtAqXIJI3knfeSwev1t6cHnxolir5B/w=;
+ b=u/Qpk0bzYIyKsQphxhYRUNlm1CCPyRmLbj3eq+sTsiVkM4L3jcTZ1yl9KhbJ8GmF+q
+ mS8PTDfhsHjCb2COJNYQMMY3VWJe0RqwoHiH/Nt6fwXq440QcXWTIxsD18jwG1tIUDJO
+ ck0YwqnEYZxYoYlbRp0Qga/sSgS7IbXNrJUAeyk0kZ9aMv35Z2P7A2maanLdtVgtyk6W
+ 46F/N9p0kemekqxCJptkpBOP70ZwFc6VTPF/TcNtjD0h68vxp15tn98jJ4lI87TnacJ8
+ TEd+bix0TSyD88AUMuxFlttbqCNaZQrWNJ6NMcnf1j7e9euNOvICxupWY/oWFmissMYw
+ bGEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770330573; x=1770935373;
+ d=1e100.net; s=20230601; t=1770330981; x=1770935781;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=09jWMdr15BvFAbuq7rsBoKCGwxMj0jZwNnFD5Bsj3zw=;
- b=bWKMDACaJpLbLjzC8DUhrfZQFBTCN+cXtI2I6UEf6UFu3FvQLmzSgeygkz3vmv1psS
- BGrleoHb0GsFfibK3ksfpHVqqPqkTr9oJq/k3DWqVGZn2kw5C1kizTShQG/zHKJ0e2rL
- 68DnJ3hVZCypT58Xip/tVA7G3Pj3Nrh2Nv660e7N6ny8jARDJLzK63NTsZEw5Qc9zh++
- PAp73z33uLVsImQUR/JIAR5E+BNvkkG0GxoawUArqMZMR2+FVzMGgdWzFoZe8jyZnbtR
- a3VTucUn+e8f324uvCKrRcjUt8BoM5zXVpirEh9/GKsEZXvoDRO9YlAT7f1azw3gVvsx
- QTYA==
-X-Gm-Message-State: AOJu0Yz8WpuJQmJCTWbcFd0xc39JeGkWk69wMC7saN9E2q3AzFKQWa64
- HnarAWf/sfkqk6ElenEMjrHy3pt+HDTwM9uOKSubVPsdje8YAVkELcEImwEGGz4YXv4=
-X-Gm-Gg: AZuq6aINUXupDFSuIFwx7BRQDoGxZG4qTUSqRxDbWwdXJm5f6+Gdxs7W6CpYv/Bqrup
- X1EdUt7o3A1ol+xDhULxsW+TBWHd0C6iDLWsKJfYv/zPb0PbGGYEx2Tc+/9OgjWvjaHto57QXQw
- bIGT3DWZ/FRmd6ZYCj9PjBqMweN1fbxm6owp937DcAqPwc8boFE48YK/bPyiuS4Nz+RxTaCaUbS
- ULZlIIBxLp7Bt6K/kcgvXtlF4RSb/VHvZbj5oIOwBRzRD6/3YFIsI9NzKBeNhEeEldWbXH3a6fg
- x7gTPy/ByIM956Qgba4t2py3ECYTbDsJdfxMp354f85WTpMLpWi64OwKFGLqpBosGmpERjV1unF
- qwo2QoBXDD19INBrPA5RLc5X570AQ8pNrYV5NSmxH1fq/zojy8Z+BUf1I/ieo9J5ImRob/Ty8Yz
- pW7GTock7djEOu5lMiULVj0J8ETP6Pnvh46pnaqj5T3yl9IOQuoEHXA7qpSn8/KAmHkSqMTIKj
-X-Received: by 2002:a05:6a20:3d85:b0:366:14b0:4b04 with SMTP id
- adf61e73a8af0-393ad39fbc7mr779165637.64.1770330573354; 
- Thu, 05 Feb 2026 14:29:33 -0800 (PST)
+ bh=RY8dbBJNl0iVtAqXIJI3knfeSwev1t6cHnxolir5B/w=;
+ b=Y4OXvyAePbhzPl/LT94aXYXLy0vUYcXwKcxCa8mGBTInA6+m8GTrGKBtDgEGLozbvf
+ GYIBJFYm7NXhSqPHtaA3sP93B4IY8VIjiUeIWDaE0P0mbCpSzC7gpt1RvzMD1bSW6Nxj
+ j/Va+/Nz/1vq+3SGTwtdMktWcN4E4alLqEFC/3SfQEa4geuSGsZyjSLcftpTJFtTTHSO
+ /0WjzMYyigg+KaBRPTwB9h2At+UdtfsUUYKk/L1wnqOeJWRF5jwKKW3nTARB+gdKodS6
+ Xb0FLzVJdVCjJiPTNxK7gHKS79THRd6C8LacWhxoLQ/XS1jUyRsQxRI3+0929NS5boVn
+ 3ghg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOECLCro8c6ke9s+oHXGE/8iFbl+1FsBGgAAo/MwB9EsA6tTkvWJ0AfNrz+IFclz/5TU99mNosb32z@nongnu.org
+X-Gm-Message-State: AOJu0YwJ2M4jd09gQbX8pzjQTYOSmtr2WfL5dAYXz7sMfTFW/totqLmS
+ m+XD75EG+8lXGDWwH/WqwcmrI8Lhc6f/QmzJd3/iiM34ohfNIGdQFibIwl5qZAOtV9Q=
+X-Gm-Gg: AZuq6aIIlQ+h8rNVooPg/ghHhd3f8zT07EZNdexska3c5frqxsrk0LxkkPagfIbjDOf
+ f7PA18+XWOiRgxqqHTL+qKpDpIRaq1w6sIDRA0/Trdibd7EqOvAeQ/eFJ8EFonk7qB2N+mwI1+E
+ 8vJdmz4SebNexZOPaCdF4eBLMoNiVQAWi9yS/TuKD6ZcQpsNx4K+w0VpYZJ+sBvCHlm6tXJ4oO8
+ 5WbKbHqd8FIW9D8PAXx7dpgW6v89x2sjD/oGREhFZ9sXlxySMrMZIUcK+8iNs1r6O3oWgzIO5Hs
+ 8d0umUDalbdF3+8ILo9qiPb85zfQtMsCcpfUsZxS8ULq4t/UC+AeLDhF8fQ/LLByZycfqE1ibkB
+ iqsMeP9ttcEi00Y+h9ndTcuz3teUvm2A1RJi7bS4D86xBR1n1XP3rtr1mQqAx4pg5+GqMm5WEqq
+ DAg8f6JP1NlIeYW6u1xqOkj8qfDgdf4xsQEzb5vLwn2E1Vn77yO7bcXYV2T/NQeSVRMtFthr5Ej
+ bDGix2D5q4ZHwS/n8S4APWucfhsKl6f1aACT69pew==
+X-Received: by 2002:a17:902:ebca:b0:2a0:a33f:3049 with SMTP id
+ d9443c01a7336-2a951607aeemr6807005ad.4.1770330980839; 
+ Thu, 05 Feb 2026 14:36:20 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:3c5e:852f:abc3:6539?
- ([2401:d002:dc0f:2100:3c5e:852f:abc3:6539])
+ (bg30dhzs8j4dh00m37sw.ip6.superloop.au.
+ [2401:d002:dc0f:2100:3c5e:852f:abc3:6539])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6dcb658243sm409489a12.34.2026.02.05.14.29.30
+ d9443c01a7336-2a951a6449asm3853195ad.3.2026.02.05.14.36.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 14:29:32 -0800 (PST)
-Message-ID: <c2cb0273-de90-439b-9058-c4b57df86fce@linaro.org>
-Date: Fri, 6 Feb 2026 08:29:26 +1000
+ Thu, 05 Feb 2026 14:36:20 -0800 (PST)
+Message-ID: <6ddad25a-192c-4b5a-80fc-b006436810a2@linaro.org>
+Date: Fri, 6 Feb 2026 08:36:14 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
- with shifts
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <20260204052456.970605-1-richard.henderson@linaro.org>
- <20260204052456.970605-7-richard.henderson@linaro.org>
- <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
- <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
- <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
- <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
- <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
+Subject: Re: [PATCH] target-info: set target_arch statically
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
+ <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
+ <5fd0062c-b474-4971-9a46-06af9ae4e0c7@linaro.org>
+ <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org>
+ <877bsr34au.fsf@pond.sub.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
+In-Reply-To: <877bsr34au.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,41 +113,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 18:22, Paolo Bonzini wrote:
+On 2/5/26 19:52, Markus Armbruster wrote:
+>> I assume the qapi string is the one that should take precedence; everything else appears to be merely qemu source level strings.  Marcus, can you confirm?
 > 
+> What exactly would you like me to confirm?
 > 
-> Il mer 4 feb 2026, 21:46 Richard Henderson <richard.henderson@linaro.org 
-> <mailto:richard.henderson@linaro.org>> ha scritto:
-> 
->     On 2/4/26 20:41, Paolo Bonzini wrote:
->      >     This is primarily for x86.
->      >
->      >     (1) movz is 2 operand, so that may avoid clobbering an input,
->      >     (2) movz is 3-4 byte whereas and r/i32 is 6-7 byte.
->      >
->      >     Because of these, there's a comment somewhere that says we'll prefer extract
->     over and
->      >     (perhaps in tcg_gen_andi_* or fold_and).  IIRC this also happens to simplify
->     ppc and
->      >     s390x
->      >     insn selection (and vs rotate and mask).  AFAIK, no other hosts are penalized.
->      >
->      >
->      > I think it would be better to pick a canonical form for AND with 2^n-1 and handle
->      > conversion to extract (like PPC rotates or movz) in the backend.
->      >
->      > Picking AND as the canonical form also avoids makes the macros for extract validity
->      > simpler too; adding an extra constraint for immediate 2^n-1 is easier and it
->     generalizes
->      > to other PPC rotate and mask cases.
-> 
->     Picking AND means we have to use "r,0,ri" for x86, losing register allocation flexibility.
-> 
-> 
-> Then could you wrap the target specific extract_valid with one that allows ofs == 0 if AND 
-> allows the immediate 2^len-1? That would also simplify this series.
+> I *guess* it's about the messy part of the patch you posted upthread.
+> There, you have to normalize TARGET_ARCH value 'openrisc' to 'or1k'.
 
-I don't understand your suggestion here.
+Yes.  I wanted you to confirm that changing the string in qapi is a non-starter, therefore 
+'or1k' is the string we should standardize on.
+
+> I figure this is about adding 'hexagon' to SysEmuTarget even though it's
+> not actually a system emulator target now.
+> 
+> The fact that adding it there helps indicates SysEmuTarget has leaked
+> into user emulators, and its name has become misleading.  Is this true?
+
+Yes.  The target_info structure is used for both user and system, and one of these fields 
+is the SysEmuTarget entry.
 
 
 r~
