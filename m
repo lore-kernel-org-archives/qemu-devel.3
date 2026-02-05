@@ -4,115 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB3BECD9AF
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBECECD9AF
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Feb 2026 21:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo7EN-0002w2-Sp; Thu, 05 Feb 2026 16:49:44 -0500
+	id 1vo7Lo-0004Oa-PN; Thu, 05 Feb 2026 16:57:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo7EM-0002vH-EZ; Thu, 05 Feb 2026 16:49:42 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vo7Lm-0004No-2V; Thu, 05 Feb 2026 16:57:22 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vo7EK-00062p-O0; Thu, 05 Feb 2026 16:49:42 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 615Kc3cs016214;
- Thu, 5 Feb 2026 21:49:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4gWLXv
- ZVK7/0QpaxDAeOKeJT1NrAdGe71Uv3bjRizuY=; b=eBfgKpDoxVv1HpecV+k9ee
- 9zkyQ+4oBq9h9OAl1MuhnBJiXuQzELUmM8jFHsclTLBP2Wazr4kvxtQXv7jUGVFl
- o1nPQyCYnZW0Zx3GkJwOjyn89kJpefyIn43m+FYZZC/TEtuSgZu4WS5Q75wYwORj
- LVkJ36QfQm8LdWf/6V5ZBYA9ClWRfFcv2RvREOnSIdOXN1rSPKCSophi3nXr+45B
- /7DJZnyyjhoLRWfd0BdvGRel+1PYCLlUFZuBr5O2tge18voxA9lXq5Lr/BY49AU5
- FA3je3Tmx6Y/Mbm6LgW/pQdkIrQpqmrPGWIZo6khgzrdW1SW73EMrP9iZcHb7l2g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19f6rywx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:49:36 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 615Jc4Zx029052;
- Thu, 5 Feb 2026 21:49:35 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1v2skpy6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Feb 2026 21:49:35 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 615LnX3q22938168
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Feb 2026 21:49:33 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5994158055;
- Thu,  5 Feb 2026 21:49:33 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAB6658063;
- Thu,  5 Feb 2026 21:49:31 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.132.67]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Feb 2026 21:49:31 +0000 (GMT)
-Message-ID: <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
- where appropriate
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, Matthew Rosato	
- <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, David
- Hildenbrand	 <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Anton Johansson	 <anjo@rev.ng>, Richard Henderson
- <richard.henderson@linaro.org>, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Date: Thu, 05 Feb 2026 16:49:31 -0500
-In-Reply-To: <4eb5b630-dad5-4cd8-97a6-d1d4a3499400@linaro.org>
-References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-4-philmd@linaro.org>
- <2827f8b28c4a654cb1b37eaf1313a1d63fb58f05.camel@linux.ibm.com>
- <4eb5b630-dad5-4cd8-97a6-d1d4a3499400@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vo7Li-0007O9-UL; Thu, 05 Feb 2026 16:57:21 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F23C7186539;
+ Fri, 06 Feb 2026 00:56:20 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E6EF35D978;
+ Fri, 06 Feb 2026 00:57:08 +0300 (MSK)
+Message-ID: <fad0fd0e-99bc-4455-822d-3cca651ab5c2@tls.msk.ru>
+Date: Fri, 6 Feb 2026 00:57:08 +0300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bnkhkAC7wwOnrSBN-yUa2JHdUXYGLxkI
-X-Authority-Analysis: v=2.4 cv=drTWylg4 c=1 sm=1 tr=0 ts=69851070 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=RP4XjpLoLUt4lZ2d1cgA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: bnkhkAC7wwOnrSBN-yUa2JHdUXYGLxkI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDE2MyBTYWx0ZWRfXwfSv6UYteAKr
- +QDYDBqzvjlThNZgtREof6smIIy0+Y6Ditc2W8lKsyDHcLanfScM5EEt+UxB441qjyWP4KbRYnf
- GUVRmuQC/YEDaZoMJmAy16RT8eMuO2K4e1eFaFjT6ZDm6d5xzkxCM5hDJ+VRO5Ss6vHFOVsRjL+
- RD7ZSMMLdWxKItSYD6I9F/l65jBpMx/9F6fobVUUHclmkwmfXpdS6dIyn4H2F4GhA+FF3QSp5hs
- ceOP8cgjVYa8f2eq+lfgDdM0I7ef5w+0qMxYVIVMytoFPEY29oPncpkbAzH/IPsTZWhOEEzXhV7
- IV86SmC9J2NWNNn9FTZPgONl7FPVav7ksPUCws5JtlPoBxSW5IwAmFPhmlf2UYC90WYawnFod6v
- WfL3BCl6dyVIInPc5ygvanxTOcmHy1nTdRX97vwX2oaQ3GWJBDiCMwXqOn58Tgy5cLTNiHwZ8dm
- sXOEPKznRvcqe6zdweA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-05_05,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 spamscore=0 malwarescore=0 bulkscore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602050163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio-gpu-virgl: correct parent for blob memory region
+To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20251223184023.1913-1-j@getutm.app>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251223184023.1913-1-j@getutm.app>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -130,56 +106,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-02-05 at 22:37 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> Hi Eric,
->=20
-> On 5/2/26 22:23, Eric Farman wrote:
-> > On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> > > Use the %vaddr type for virtual addresses.
-> > >=20
-> > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > ---
-> > >   target/s390x/s390x-internal.h  | 5 +++--
-> > >   target/s390x/helper.c          | 2 +-
-> > >   target/s390x/mmu_helper.c      | 6 +++---
-> > >   target/s390x/tcg/excp_helper.c | 3 ++-
-> > >   4 files changed, 9 insertions(+), 7 deletions(-)
->=20
->=20
-> > > @@ -376,9 +377,9 @@ void probe_write_access(CPUS390XState *env, uint6=
-4_t addr, uint64_t len,
-> > >   bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
-> > >   /* Special access mode only valid for mmu_translate() */
-> > >   #define MMU_S390_LRA        -1
-> > > -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, ui=
-nt64_t asc,
-> > > +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t =
-asc,
-> > >                     target_ulong *raddr, int *flags, uint64_t *tec);
-> > > -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int r=
-w,
-> > > +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
-> >=20
-> > I think this one should remain target_ulong, and become hwaddr in the n=
-ext patch, no?
->=20
-> Without s390x background, I don't understand well what real addresses
-> are. IFAICT the single caller s390_cpu_tlb_fill() provides a virtual
-> address. But then indeed mmu_real2abs() consumes a hwaddr as real addr.
+On 12/23/25 21:40, Joelle van Dyne wrote:
+> When `owner` == `mr`, `object_unparent` will crash:
+> 
+> object_unparent(mr) ->
+> object_property_del_child(mr, mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> object_finalize(mr) ->
+> object_property_del_all(mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> fail on g_assert(obj->ref > 0)
+> 
+> However, passing a different `owner` to `memory_region_init` is not
+> enough. `memory_region_ref` has an optimization where it takes a ref
+> only on the owner. It specifically warns against calling unparent on
+> the memory region. So we initialize the memory region first and then
+> patch in the owner with itself.
+> 
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
 
-Hi Philippe,
+This one is quite a bit confusing.
 
-Ah, I didn't go the other direction (my bad). The usage of "real" here is k=
-ind of halfway between
-virtual and -really- real. I suspect the caller is mistaken here, but I thi=
-nk that's a research
-project for tomorrow.
+Is it a qemu-stable material?
+I'm *not* picking it up automatically.
 
+Thanks,
 
->=20
-> >=20
-> > >                          target_ulong *addr, int *flags, uint64_t *te=
-c);
-> > >  =20
-> > >  =20
+/mjt
+
+> ---
+>   hw/display/virtio-gpu-virgl.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 18404be5892..70e0aff0ca3 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -123,7 +123,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>       vmr->g = g;
+>   
+>       mr = &vmr->mr;
+> -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+> +    mr->owner = OBJECT(mr);
+>       memory_region_add_subregion(&b->hostmem, offset, mr);
+>       memory_region_set_enabled(mr, true);
+>   
+
 
