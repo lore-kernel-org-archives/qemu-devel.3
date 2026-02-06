@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5CEEE6B48
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C72EE6B48
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQRx-0007o2-6x; Fri, 06 Feb 2026 13:21:03 -0500
+	id 1voQS1-0007vB-PB; Fri, 06 Feb 2026 13:21:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRq-0007mU-CW
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:55 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRy-0007rj-Iw
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:21:03 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRo-00055O-Tn
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:54 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4801d7c72a5so8871475e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:20:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRx-0005AN-5Z
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:21:02 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so22183745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:21:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770402050; x=1771006850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770402058; x=1771006858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ApZj1/uOnPVUnEhnGSPBwrshtRIOJ8WxMqGa4plL9Zs=;
- b=L3RyOIpeu4T3IAGixkepsWIJ688gW5WofNn9SscTxLhbQw10bMWAP0/Bhh5CJbJ0rQ
- 3WlwM1eMG8FWs8+VEmM0Fyg96vwythJN0bqSSdoKyTxBt69ZbbufgPJVxKmOBnF+b/nn
- bw84v18/3YzlFzFjb6dcis14gUMBS6sftprFY6JaMe5ERA7Bj9c5Lc0CTvsb2mTrD2gO
- HukOc4Zl7YpH3BG+ZscAvPaR8ugBJqLEXyvvHhGRJuYjT+sRgDMxIFPDvnGTV85+BljO
- WbLw387rbz8JKn/4uLnZn3doWUwBtoaDWNzMNGYPi/QVByZialBdxRIstsyLG+dk0nYM
- Fz6g==
+ bh=udl4u3wK1/as/9f00LKjlolu36IdtPxffb3xiDh4tWc=;
+ b=iKOkkyQBZ01BdNRJeyAmh31OV2GG6mFANV9HPFteN29cQGIE332MH8427oL46oX9ab
+ PHZBzoUyyzbWrKANorFlTYUsYnOz7kGfSQ62NoAjT6/x1cdXDNEN9MMfL/caYGvUheHF
+ b3JJTkOQZQ6oMSZM7JV0VQKaU5ex8RoIN7Nlsdp1dSzpC6wBoHWDELsqJV5QhSpPGlo0
+ cuhpl0+2MCowxHtU+GGnzsj9lP2Decebh18lVOM0p9Y0T+M6E4ZW/ZaES12wBnGnhi5z
+ ffa9Lzcsg0Q4NxrTKaWAUiNm8Be2qZ2ODw+xlbR8t/T91EfNA3r+7vn8ERn0tFl1IaGm
+ zpIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770402050; x=1771006850;
+ d=1e100.net; s=20230601; t=1770402058; x=1771006858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ApZj1/uOnPVUnEhnGSPBwrshtRIOJ8WxMqGa4plL9Zs=;
- b=CGSdv2HSqasX2cSStdAr3NSLZZkAgv4wI1AV0Q1nS4zF3c1KftrpxzBuYxUaUg+FlW
- quyKW83Zof0mJafYRbiANC0hI7JMWLoX0n4HkvJgvHE7nRStwulE0QpfJL3Bg2i5QS8D
- KgRAwgGHdBLDisxrumutyF252+F95VWPNwwQuuBKdh5B5UFY3P6PjdNxqygaXdwuw1xB
- iPXamlG0egcU1OT9Bmuu6e8GYMlNg4RAF93IZeT4PxSnNCA0DpJHJKaE0yJ/IHJWLH4y
- /IVPDL615KyHPyTpYxPF2nWIVxP0AUZ3P5fSecS1GQOlvO9xcDatj4sf7REFnYzPG/Z/
- cCtQ==
-X-Gm-Message-State: AOJu0YyML9RrWuRsqzpFThSrHjwk2Cc8SopvoMtD7a1aWwH9ht02wCUf
- sj2Du5mzGaDpd5T1cN5tyZqVdFPYU/vAT58BvxKdLdxkPE8Pwg2hlQv4o23jjQ6DRbCA88a1E7x
- s9zDd8UY=
-X-Gm-Gg: AZuq6aIz2dR1I17V24m6tvsg39ofRR8QawRH0u27pROCXDMfH4mOHbx7g6Qkxpzk1XA
- GwXfsdXhrxUEPZjt4a6QnD7RGwWbCEO2C+pAvXCFOEce1sXyL5uuVX2bD4YQwcfsgTKA0BsRLqJ
- 1Fs5ZPQAHzV7KF9y8Vvku9qxO1Xf/1jGjrFOr8uhaeE57j84PXWpogi7+iUmMl7maLmHV0x3JqM
- n+3Te/LXJ+niXpJ1vJl/SkgqVM+CRZanyvgYuspQ+lzpKNeEX3uv1BbjiImHW6xp2njrHEHEEP3
- T3tizNqgxbudlgjm3IzjlknzyENdiXKLtvDTsaH6tiJsj6IZsHQ0TjeeP0c0HlSsuAj2svsYPJj
- Y2Qdmmle0jA3AtKzHteQ2deAFsA8v3Hmc8obhwuJaxzI12HM1u7I8Akb0RPp0YhzTRfUIWy05HB
- t2JoSZcnXQ7EjlGPIlK4t+YhGRL7OD43oG4UVRSxPYWrEF1FD++m4djwLYNAgH
-X-Received: by 2002:a05:600c:1f16:b0:47a:814c:eea1 with SMTP id
- 5b1f17b1804b1-48320227d98mr56790005e9.35.1770402050316; 
- Fri, 06 Feb 2026 10:20:50 -0800 (PST)
+ bh=udl4u3wK1/as/9f00LKjlolu36IdtPxffb3xiDh4tWc=;
+ b=KmWnAwH43rdZDgB0x8/19WK7wSeT1e5wYTqY6bvlrqiFY8CAkVM2FVdIAgb9cM7u+D
+ TpKBqLHtRt87WCu9z79TQSC149XM29gUpCdrJE/bBHU3Ki6ho1RHZsk8SME2X0+S4bMT
+ CU/Ve+v2kyYK+kLPWpxJ/PgrDasGDh8A8/AwUcDx6lREgdE/etYr5nCP2YkHmNy50au7
+ uo2Z1j6j1yTwRd55s0G/Qqt0hXBnAR1HdXuK6CUAP38r9xvc698Qr3P1fcb7jBTnWkQA
+ Z657bhZR4lSGf5Buwr3li09Mg37NDG3npEeRvRXIMix7Nz19UNTKdcjD0jCb9SEGN7Q7
+ bXoQ==
+X-Gm-Message-State: AOJu0YwLbTLCWfKaDzhnFc9sYQ5dNqoH3rGzsKGOo661CuFiFMY77k0K
+ ax1x5yfilTRFQ75eX4sx4lNqyvrIvHzynLBGXtTDQ4bSwuGAZhjUoKXkZBJ3RxnsTxYCe68DAaF
+ FGKub62E=
+X-Gm-Gg: AZuq6aJIpgr3fNYyL8F1IeMXU58Ta4U7KStxrbMfrG4yu2PlJQbJGQjQ/RskxEd95rc
+ E47kR++baiaU0Vq5C+2AsTPVVkw53+RhAWqOFh5xoe8D4HWu+e4QHCoN3no9/GHPkyylYqWc1Jz
+ cxh6Qh6IdgdlP8K4C0ilROXQkx+1Jd2tXm5Xv9iFzNAratiyUg4SUh2T8Q+Ga3KQaXUNbP6IfvZ
+ zdBA+YLzmf9izukhawyQPH35yFLS+GuyxifM2nCZDg0rA0ZgDRUusskLpo4Lm8rTYe4cn3LwsuJ
+ GIQtjKDZE9l5dYZMZnRr8VI0uUqd4LvMNSwvpUliEfn83EedC2oBWvfcaxffxWD5PP28pVbpMOv
+ tK/IqrofsSWor2nmth4A2bhk6V34Pc0oz3WsF0ilCz3wRYDPMUk9RU4vK/fZmNB6Z01aSlrWCad
+ ZchqOymcpfsJMqPL4vde77n8dfN+DLcAB6oDrfh9oOqImwM2qWw7hGqUu5mQrU
+X-Received: by 2002:a05:600c:8489:b0:477:c478:46d7 with SMTP id
+ 5b1f17b1804b1-48320216cb8mr54156125e9.22.1770402057964; 
+ Fri, 06 Feb 2026 10:20:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48320719bd2sm64294185e9.11.2026.02.06.10.20.48
+ 5b1f17b1804b1-48317d3e245sm145169305e9.8.2026.02.06.10.20.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 10:20:49 -0800 (PST)
+ Fri, 06 Feb 2026 10:20:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
@@ -72,17 +72,17 @@ Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 07/10] target/s390x: Build system units in common source set
-Date: Fri,  6 Feb 2026 19:19:50 +0100
-Message-ID: <20260206181953.18683-8-philmd@linaro.org>
+Subject: [PATCH v3 08/10] target/s390x: Expand TCGv type as 64-bit target
+Date: Fri,  6 Feb 2026 19:19:51 +0100
+Message-ID: <20260206181953.18683-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206181953.18683-1-philmd@linaro.org>
 References: <20260206181953.18683-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,62 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Except the ioinst.c file which uses the TARGET_PAGE_SIZE
-definition in the ioinst_handle_chsc() method, all other
-files in meson's s390x_system_ss[] source set don't use
-any target-specific code. Moving them in the other
-s390x_common_system_ss[] set to build as common objects
-ensures these files won't use any target-specific API
-such target_ulong / TARGET_PAGE_SIZE, thus forcing to use
-the appropriate types instead (such vaddr, hwaddr, uint64_t,
-...).
+The s390x target is a 64-bit one, so TCGv expands to TCGv_i64.
+Use the latter which is already used about a hundred times in
+this file, and is also more explicit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/meson.build     | 8 +++++++-
- target/s390x/tcg/meson.build | 2 +-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ target/s390x/tcg/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-index 3b34ae034cb..096b7dcc42e 100644
---- a/target/s390x/meson.build
-+++ b/target/s390x/meson.build
-@@ -20,10 +20,15 @@ s390x_ss.add(gen_features_h)
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 540c5a569c0..437f5a4aeb7 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -3142,7 +3142,7 @@ static DisasJumpType op_mov2(DisasContext *s, DisasOps *o)
+ static DisasJumpType op_mov2e(DisasContext *s, DisasOps *o)
+ {
+     int b2 = get_field(s, b2);
+-    TCGv ar1 = tcg_temp_new_i64();
++    TCGv_i64 ar1 = tcg_temp_new_i64();
+     int r1 = get_field(s, r1);
  
- s390x_system_ss = ss.source_set()
- s390x_system_ss.add(files(
-+  'ioinst.c',
-+))
-+
-+s390x_common_system_ss = ss.source_set()
-+s390x_common_system_ss.add(gen_features_h)
-+s390x_common_system_ss.add(files(
-   'helper.c',
-   'arch_dump.c',
-   'diag.c',
--  'ioinst.c',
-   'machine.c',
-   'mmu_helper.c',
-   'sigp.c',
-@@ -41,4 +46,5 @@ subdir('kvm')
+     o->out = o->in2;
+@@ -5743,9 +5743,9 @@ static void in2_a2(DisasContext *s, DisasOps *o)
+ }
+ #define SPEC_in2_a2 0
  
- target_arch += {'s390x': s390x_ss}
- target_system_arch += {'s390x': s390x_system_ss}
-+target_common_system_arch += {'s390x': s390x_common_system_ss}
- target_user_arch += {'s390x': s390x_user_ss}
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index 515cb8b473d..17c9374d09e 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -12,6 +12,6 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'vec_int_helper.c',
-   'vec_string_helper.c',
- ))
--s390x_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-+s390x_common_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'debug.c',
- ))
+-static TCGv gen_ri2(DisasContext *s)
++static TCGv_i64 gen_ri2(DisasContext *s)
+ {
+-    TCGv ri2 = NULL;
++    TCGv_i64 ri2 = NULL;
+     bool is_imm;
+     int imm;
+ 
 -- 
 2.52.0
 
