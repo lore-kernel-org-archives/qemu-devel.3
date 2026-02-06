@@ -4,82 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A647EB28DB
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A71EB28D9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voGQA-00057x-97; Fri, 06 Feb 2026 02:38:30 -0500
+	id 1voGR8-0005Ed-Sg; Fri, 06 Feb 2026 02:39:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1voGQ9-00057p-Bp
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:38:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1voGQ6-0002sh-PT
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:38:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770363505;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FtiNBVoZZRIssaqZPn/hrs7+X+RVH7amQGE4uLCUelQ=;
- b=bk+0yU5q06eU0jheW1iLABj/0lL1HRvtsp2s29ZQwSP3Tg8/i4KK72IG/zhQ6dbJhtC7Hr
- QRM2VqFrTRwotxQvZGnun5LECfyOUjzpvcYuM7tqHcZCB9GtyVv5851Bvr72NwfgyTE+EY
- K4VhU/LFKLV9TOjNPro+pfDkOSGAYLQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-nzECAyqcNO2XO_m_JJGR_w-1; Fri,
- 06 Feb 2026 02:38:21 -0500
-X-MC-Unique: nzECAyqcNO2XO_m_JJGR_w-1
-X-Mimecast-MFC-AGG-ID: nzECAyqcNO2XO_m_JJGR_w_1770363500
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6ADB91956096; Fri,  6 Feb 2026 07:38:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D50CE18003F5; Fri,  6 Feb 2026 07:38:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6BFB321E692D; Fri, 06 Feb 2026 08:38:17 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,  Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
-Subject: Re: Renaming targets
-In-Reply-To: <d293019a-218f-49d9-963d-6411c9b453a0@linaro.org> (Pierrick
- Bouvier's message of "Thu, 5 Feb 2026 23:21:32 -0800")
-References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
- <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
- <5fd0062c-b474-4971-9a46-06af9ae4e0c7@linaro.org>
- <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org>
- <877bsr34au.fsf@pond.sub.org>
- <6ddad25a-192c-4b5a-80fc-b006436810a2@linaro.org>
- <878qd6xsrh.fsf_-_@pond.sub.org>
- <d293019a-218f-49d9-963d-6411c9b453a0@linaro.org>
-Date: Fri, 06 Feb 2026 08:38:17 +0100
-Message-ID: <87v7gawcd2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1voGR5-0005ES-Rh
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:39:27 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1voGR2-0002u8-Dc
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:39:27 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxnsOcmoVpoGgQAA--.53273S3;
+ Fri, 06 Feb 2026 15:39:08 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBxSeCWmoVpAd9AAA--.55899S3;
+ Fri, 06 Feb 2026 15:39:05 +0800 (CST)
+Subject: Re: [PATCH v2 0/7] Add LoongArch v1.1 instructions
+To: Jiajie Chen <c@jia.je>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, git@xen0n.name, wangliupu@loongson.cn,
+ bibo mao <maobibo@loongson.cn>
+References: <20251119122822.1513788-1-c@jia.je>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <98c32742-a116-48a6-f015-6f72d0e7be4e@loongson.cn>
+Date: Fri, 6 Feb 2026 15:40:08 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20251119122822.1513788-1-c@jia.je>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxSeCWmoVpAd9AAA--.55899S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtw4kurW8CrW8Kw1DZry8tFc_yoW3WF1xpF
+ WSkrn8GrW8tr4xGr1xXa4jvFyUtr4xG3WUJFy7ta4qy3yYqFWqqr18W3sFgF1UCw40gr1U
+ XFyUAw48ZF4DXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24So
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.384,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,30 +83,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> On 2/5/26 10:58 PM, Markus Armbruster wrote:
->> Richard Henderson <richard.henderson@linaro.org> writes:
->> 
->>> On 2/5/26 19:52, Markus Armbruster wrote:
-
-[...]
-
->> Then SysEmuTarget has become misleading.
->> 
->> We *can* fix that: QAPI type names are not part of the external
->> interface by design.
+在 2025/11/19 下午8:24, Jiajie Chen 写道:
+> Latest revision of LoongArch ISA is out at
+> https://www.loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf
+> (Chinese only). The revision includes the following updates:
 >
-> Do you mean it could be renamed to EmuTarget without any consequence?
+> - estimated fp reciporcal instructions: frecip -> frecipe, frsqrt ->
+>    frsqrte
+> - 128-bit width store-conditional instruction: sc.q
+> - ll.w/d with acquire semantic: llacq.w/d, sc.w/d with release semantic:
+>    screl.w/d
+> - compare and swap instructions: amcas[_db].b/w/h/d
+> - byte and word-wide amswap/add instructions: am{swap/add}[_db].{b/h}
+> - new definition for dbar hints
+> - clarify 32-bit division instruction hebavior
+> - clarify load ordering when accessing the same address
+> - introduce message signaled interrupt
+> - introduce hardware page table walker
+>
+> The new revision is implemented in the Loongson 3A6000 processor.
+>
+> This patch series implements all the new instructions. The v1 version
+> can be found at
+> https://patchew.org/QEMU/20231023153029.269211-2-c@jia.je/.
+>
+> A simple testcase to test the new fp and sc.q instructions:
+>
+> #include <assert.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+>
+> void test_fp() {
+>    float a = 3.0;
+>    float b;
+>
+>    asm volatile("frecip.s %0, %1" : "=f"(b) : "f"(a));
+>    printf("frecip: %f\n", b);
+>    asm volatile("frecipe.s %0, %1" : "=f"(b) : "f"(a));
+>    printf("frecipe: %f\n", b);
+>
+>    asm volatile("frsqrt.s %0, %1" : "=f"(b) : "f"(a));
+>    printf("frsqrt: %f\n", b);
+>    asm volatile("frsqrte.s %0, %1" : "=f"(b) : "f"(a));
+>    printf("frsqrte: %f\n", b);
+> }
+>
+> uint64_t rand64() { return ((uint64_t)rand() << 32) | rand(); }
+>
+> void test_sc_q() {
+>    __int128 val = rand64();
+>    val = (val << 64) | rand64();
+>    __int128 *ptr = &val;
+>    uint64_t add_lo = rand64();
+>    uint64_t add_hi = rand64();
+>    __int128 add = add_hi;
+>    add = (add << 64) | add_lo;
+>    __int128 expect = val + add;
+>    int res = 0;
+>
+>    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\nadd.d $t1, $t1, %2\nadd.d "
+>                 "$t2, $t2, %3\nsc.q $t1, $t2, %1\nmove %0, $t1"
+>                 : "=r"(res), "+r"(ptr)
+>                 : "r"(add_lo), "r"(add_hi)
+>                 : "$t1", "$t2", "memory");
+>    assert(res == 1);
+>    assert(val == expect);
+>
+>    // change memory content to make sc fail
+hi, jiajie,
 
-Yes!
+This method will not cause scfail.According to the manual
+https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.pdf　2.2.7.4  <https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.pdf%E3%80%802.2.7.4>
+During the execution of the paired LLSC, the following events will clear the LLbit to 0:
+• The ERTN instruction is executed and the KL0 bit in CSR.LLBCTL is not equal to 1 when executed;
+•*Other processor cores*  or Cache Coherent I/O masters perform a*store*  operation on the Cache line
+where the address corresponding to the LLbit is located.
 
-> It seemed to me that everything exported from the json files could
-> potentially be consumed by another entity (libvirt for instance).
+I conducted a multithreaded test where one thread continuously performed ll/sc operations,
+while another thread persistently wrote to this tag address. The test results aligned with
+expectations and matched the physical outcomes.
 
-No.  The QAPI schema ("the json files") is not meant for external
-consumption, and certainly not a stable interface.  The stable external
-interface is QMP introspection with query-qmp-schema.  I designed that
-command not to expose type names.  One of my smarter moves ;)
+so,
+For thie series
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+if you don't have time to rebase the code ,I can do it.
+
+here my test code.  test on tcg system model.
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdint.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+
+typedef struct {
+     volatile uint64_t low __attribute__((aligned(16)));
+     volatile uint64_t high;
+} aligned_uint128_t;
+
+aligned_uint128_t shared;
+volatile int running = 1;
+volatile  long long success = 0;
+volatile  long long fail = 0;
+
+void* thread_a(void* arg) {
+
+     int result;
+
+     long long last_success = 0;
+     long long last_fail = 0;
+     time_t last_time = time(NULL);
+
+     while (running) {
+         asm volatile(
+             "1:\n\t"
+             "ll.d $t0, %1, 0\n\t"
+             "ld.d $t1, %1, 8\n\t"
+             "addi.d $t0, $t0, 1\n\t"
+             "sc.q $t0, $t1, %1\n\t"
+             "move %0, $t0"
+             : "=r"(result)
+             : "r"(&shared)
+             : "$t0", "$t1", "memory"
+         );
+
+         if (result == 1) {
+             success++;
+         } else {
+             fail++;
+         }
+     }
+     return NULL;
+}
+
+void* thread_b(void* arg) {
+     uint64_t val = 0;
+     while (running) {
+         shared.low = val;
+         shared.high = ~val;
+         asm volatile("" ::: "memory");
+         val++;
+     }
+
+     return NULL;
+}
+
+void* thread_c(void* arg) {
+     int i=0;
+     while (i < 11) {
+     i++;
+         sleep(1);
+         printf("Thread C llsc success[%lld] fail[%lld]\n", success, fail);
+     }
+     running =0;
+     return NULL;
+}
+
+int main() {
+     printf("===  Test - Should see both fail and success ===\n");
+
+     printf("Shared address: %p\n", (void*)&shared);
+     printf("Alignment check: %s\n",
+            ((uintptr_t)&shared % 16 == 0) ? "16-byte aligned" : "NOT 
+aligned");
+
+     shared.low = 0x1111111111111111ULL;
+     shared.high = 0x2222222222222222ULL;
+
+     pthread_t ta, tb, tc;
+     pthread_create(&tc, NULL, thread_c, NULL);
+     printf("Thread C started\n");
+     usleep(2);
+     pthread_create(&tb, NULL, thread_b, NULL);
+     printf("Thread B started\n");
+     usleep(2);
+     pthread_create(&ta, NULL, thread_a, NULL);
+     printf("Thread A started\n");
+     pthread_join(ta, NULL);
+     sleep(2);
+     pthread_join(tb, NULL);
+     pthread_join(tc, NULL);
+     printf("Final value: low=0x%lx, high=0x%lx\n", shared.low, 
+shared.high);
+     printf("=== Test End ===\n");
+
+     return 0;
+}
+
+
+Thanks.
+Song Gao
+>    res = 1;
+>    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t1, $t1, 1\nst.d "
+>                 "$t1, %1, 0\nsc.q $t1, $t2, %1\nmove %0, $t1"
+>                 : "=r"(res), "+r"(ptr)
+>                 :
+>                 : "$t1", "$t2", "memory");
+>    assert(res == 0);
+>
+>    res = 1;
+>    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t2, $t2, 1\nst.d "
+>                 "$t2, %1, 8\nsc.q $t1, $t2, %1\nmove %0, $t1"
+>                 : "=r"(res), "+r"(ptr)
+>                 :
+>                 : "$t1", "$t2", "memory");
+>    assert(res == 0);
+>
+>    printf("SC.Q passed\n");
+> }
+>
+> int main(int argc, char *argv[]) {
+>    test_fp();
+>    test_sc_q();
+>    return 0;
+> }
+>
+> Compile and test by:
+>
+> loongarch64-linux-gnu-gcc test.c -o test -static && ./qemu-loongarch64 -cpu max test
+>
+> Jiajie Chen (7):
+>    target/loongarch: Require atomics to be aligned
+>    target/loongarch: Add am{swap/add}[_db].{b/h}
+>    target/loongarch: Add amcas[_db].{b/h/w/d}
+>    target/loongarch: Add estimated reciprocal instructions
+>    target/loongarch: Add llacq/screl instructions
+>    target/loongarch: Add sc.q instructions
+>    target/loongarch: Add LA v1.1 instructions to max cpu
+>
+>   target/loongarch/cpu.c                        |  11 +-
+>   target/loongarch/cpu.h                        |   7 +
+>   target/loongarch/disas.c                      |  33 ++++
+>   target/loongarch/insns.decode                 |  34 ++++
+>   .../tcg/insn_trans/trans_atomic.c.inc         | 145 ++++++++++++++++--
+>   .../tcg/insn_trans/trans_farith.c.inc         |   4 +
+>   .../tcg/insn_trans/trans_memory.c.inc         |  22 +++
+>   .../loongarch/tcg/insn_trans/trans_vec.c.inc  |   8 +
+>   target/loongarch/tcg/translate.c              |   6 +-
+>   target/loongarch/translate.h                  |  30 ++--
+>   10 files changed, 280 insertions(+), 20 deletions(-)
+>
 
 
