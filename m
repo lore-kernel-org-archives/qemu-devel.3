@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A97CECD98B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EABEB28FE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:01:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIdo-000344-6L; Fri, 06 Feb 2026 05:00:44 -0500
+	id 1voIe4-00036P-HA; Fri, 06 Feb 2026 05:01:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1voIdR-00032v-0b; Fri, 06 Feb 2026 05:00:25 -0500
-Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
+ id 1voIdp-00034k-8R; Fri, 06 Feb 2026 05:00:57 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1voIdN-0002OJ-Aa; Fri, 06 Feb 2026 05:00:20 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.86])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f6qMd0WcNz5w9b;
- Fri,  6 Feb 2026 10:00:13 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
+ id 1voIdn-0002xP-C9; Fri, 06 Feb 2026 05:00:44 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.134])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6qN84ZRYz5vpt;
+ Fri,  6 Feb 2026 10:00:40 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 11:00:11 +0100
+ 2026 11:00:39 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S0039f8ed769-07d6-4c00-b776-e1af5f808fd3,
+ (GARM-96R00126dd36ac-6ef6-4b06-b56b-e2efc8f2e21d,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4be69752-9494-4af2-a9a9-3af59f2a577c@kaod.org>
-Date: Fri, 6 Feb 2026 11:00:10 +0100
+Message-ID: <92e0156b-1dde-4d7c-ad34-4c994736a2df@kaod.org>
+Date: Fri, 6 Feb 2026 11:00:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 09/10] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
- machine to A2 SoC
+Subject: Re: [PATCH v1 10/10] tests/functional/aarch64/test_aspeed_ast2700fc:
+ Use AST2700 A2 SDK image for FC tests
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -45,7 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-11-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-12-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-11-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260206053340.3716041-12-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.109]
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.96]
 X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: beb0b5b7-7732-40a9-a50c-d191c5b3d361
-X-Ovh-Tracer-Id: 13523183783090686782
+X-Ovh-Tracer-GUID: 85cd1b30-8f0b-4b57-ae14-53ff54694635
+X-Ovh-Tracer-Id: 13531065084120697662
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEP0vc4DAghd+/e3G94zk+bLOyxWJuybdSvmXYy6+Im3SefZbywyIu2WB/aEceGZ/gn3K1a8lGp6FPM194nasAhh86QMpOuyC6ye6rGIVtjb1vJbrhiJDlgOM0NSOLTfoPYEsFgS6CxmA8RTDZ++0Bw0lrBd0q0qXt+7Gd5VXg74493v3X8fspkFz9kz3uJAqNjZUKlolB4ZEoBSnTzTeMPJRN8JutXIXGqGglmYfFUIS2OQ+8Me2WioGLdCss6fKluzMgVCMoLy91o2QQ8LBRg1HBU4AvVxO8ZMUdxMNJxr9/S9o51w5r1oJVw75XUf/BLxE0IxqUtUOn+YxS/WYJyWjwH4oAy2UAdjQ8CbA8/VbU2zIsi5LoVT5Ys8PRCJFmkMiz+AApPxwN5hEUUNuaVphbu/EgW+0zqVSm/YF4ByVRqMKmtzxIVwHe9Xs2NacuFDpiZ6hpEniCtZxcamP9pRDXzQKouISTKqexltqjE2LXPRQImuXKWD6OciLNQ7rAoYIMPEVS4PHt0eloX+YTo47LtBNcG05AM5qHISy95dmOBQlGOnRKeIDHwlazoeKxwx7YRF9tGW/DgqXwt/mGlMoK+b+zVHYl1HNoe4EisovsKUxkHc8uCf5C+BR76Mu/Lbgui18PjyILXyErFEqJVGREQPp3EgvKBkkW3jxqJnA
-DKIM-Signature: a=rsa-sha256; bh=amm/i8rI2NZygmaA0uxa0km7UtQf3PORJYhljkzQRqY=; 
+X-VR-SPAMCAUSE: dmFkZTGvj/+BBDe2JZbT0turgfPw/Ss2XeWMF38tgWZ1E7moszbdwpzxgvhqc2Z6P9IN7tAc1XWRTMMXqHAtreWQyWxv1jYCz2twTy729wkYMkC9TJj8sq0reWgRQIzUgpSdRoOK1bFf97i21dVnHsYAmwi45N1+9nNJcAB8PwizpC3wJygDigwNgFLRSpkzbFwXbGXLZQEsQaTDbNg08hLjrvabO7J5gEBEu1IEsHqd31Anhb1Ea9p6ENlVfVyD6US0PvJHSUVHPaSw/n2ARvmQsBmBvFuGUabfnq4BNbKVdbvQKfrErwLX1RuA5Hs5YAkH09CcrdAkNKWkrCcuRNnA540yDlS1dndtvdle4wlCP+GmZq0EXGyu/51mnZyawvjOI9wlkIt2jcbf5kUq3qEWUlTK8XYAt12LwJ9B5VgDsOwdpFdyCaYcDs46VbLR+O43jgyDC0MpPNnQlkjGoEKR9SGHWtLQsDd2Oy+wt4rVfcmmX4lUKI/7g5dSHijRjo7KQVuTJsp4B0RMDZS0jpTEwFtQXzI7YY8b3KL+Le1+GPW1btw0E2XjwN6SF1xeXVwgfKq1oy3B0oNnHK2txoAUJDqT/UZTHKVM9mLUNL0xYxB0Ohx8ZUxL4AkOft4vyrqo6bMP+qu51qYOedXuK3JVRfhbdvR7HnaZalTlFbjbCXqjUQ
+DKIM-Signature: a=rsa-sha256; bh=DXiAl/MdfirKJ37U/4XhC3QSJqkcaXnqV7X3DbZcKNk=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770372013; v=1;
- b=e5uU+Y5G7H6JmeqRwKO4zlROeVKaSAQjWFzruCYpnyOkCELWYCN6Yg5JXKRP7VyI7ha4sVUz
- XVaBw0oQtUjzcCJ+TE9CBhH0wFg8P4h2Y0anIbdA6T4ClqNHnqB154FB2JUDfyjp0v8sefhtlJG
- F+/O9X90nwA3uYA4w7GAdJsu5lpPii+9dboxXL2Oit32uEtI/MAYEJBOBISXKQaRh/BlIr8iwSX
- unsLDgO0zbkheUNIYm1n8rSO7TkBoh3IC5xwdu9AgyvaqlnZcuaFC7VEgPp07dL+H0qAouOvArn
- pIWL/Cvp4ttw+U9twkfwhzrAm3cODb0cN785FIFsSUVcA==
-Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
- helo=4.mo548.mail-out.ovh.net
+ t=1770372040; v=1;
+ b=U8ZpJFOuSK7HGRFmzeflZn2konQtHuvZ999Czjp0jCP22rjJ93R74/BMBtDqM6x5FVQQ7oQJ
+ xYofHNf3kl3+78j1ZK9ktVZ7V1OV2F6p+ve5qJv+sqVSLU5pl2yrhcb5xEjoThrnmWaFCyCSrN0
+ GYn3NKF6Qpup/atSZgqnQP+p1owxBQjmiqUOHuV7eKeEK9T8Srd83pFoxTAcJHVRn/7cjUzR/px
+ mvfHXDc0ImFJEyANxbhUfCwVkVkJLQf4oDXF9I7SU5kcdXedisnRtX3KfQjmhK5gTXghw7TI0ET
+ 8D3VJePIpItqro9S6wV5TnPfCgQL6UpR6wFgDuyb5qaiA==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -135,84 +135,75 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/26 06:33, Jamin Lin wrote:
-> Update the AST2700 FC machine to use the AST2700 A2 SoC model instead of
-> the A1-specific variant.
-> 
-> This change removes A1-specific naming and definitions from the FC
-> machine and aligns it with the newer AST2700 A2 silicon.
+> Update AST2700 FC functional tests to use the AST2700 A2 SDK v11.00 image.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 15 +++++++--------
->   1 file changed, 7 insertions(+), 8 deletions(-)
+>   .../functional/aarch64/test_aspeed_ast2700fc.py  | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 0502a137f3..5eb6680da9 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -24,8 +24,8 @@
->   #include "hw/arm/aspeed_coprocessor.h"
->   #include "hw/arm/machines-qom.h"
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> index 47e56dcfc5..51ee8bc787 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> @@ -62,8 +62,8 @@ def load_ast2700fc_coprocessor(self, name):
+>                                f'loader,file={file},cpu-num={cpu_num}')
 >   
-> -#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
-> -OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
-> +#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
-> +OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+>       ASSET_SDK_V1100_AST2700 = Asset(
+> -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-a1-obmc.tar.gz',
+> -            'd5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525')
+> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2700-default-obmc.tar.gz',
+> +            'e2b8f043fe8063dd3b6ded93422e38bd41914dc9c3202199507652df024de4dc')
 >   
->   static struct arm_boot_info ast2700fc_board_info = {
->       .board_id = -1, /* device-tree-only board */
-> @@ -48,8 +48,7 @@ struct Ast2700FCState {
->       Aspeed27x0CoprocessorState tsp;
->   };
+>       def do_ast2700_i2c_test(self):
+>           exec_command_and_wait_for_pattern(self,
+> @@ -98,7 +98,7 @@ def do_ast2700fc_ssp_test(self):
+>           exec_command_and_wait_for_pattern(self, 'version',
+>                                             'Zephyr version 3.7.1')
+>           exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
+> -                                          '[72c02000] 06010103')
+> +                                          '[72c02000] 06020103')
 >   
-> -#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
-> -#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
-> +#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+>       def do_ast2700fc_tsp_test(self):
+>           self.vm.shutdown()
+> @@ -109,7 +109,7 @@ def do_ast2700fc_tsp_test(self):
+>           exec_command_and_wait_for_pattern(self, 'version',
+>                                             'Zephyr version 3.7.1')
+>           exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
+> -                                          '[72c02000] 06010103')
+> +                                          '[72c02000] 06020103')
+>   
+>       def start_ast2700fc_test(self, name):
+>           ca35_core = 4
+> @@ -153,8 +153,8 @@ def test_aarch64_ast2700fc_sdk_v11_00(self):
+>           self.require_netdev('user')
+>   
+>           self.archive_extract(self.ASSET_SDK_V1100_AST2700)
+> -        self.start_ast2700fc_test('ast2700-a1')
+> -        self.verify_openbmc_boot_and_login('ast2700-a1')
+> +        self.start_ast2700fc_test('ast2700-default')
+> +        self.verify_openbmc_boot_and_login('ast2700-default')
+>           self.do_ast2700_i2c_test()
+>           self.do_ast2700_pcie_test()
+>           self.do_ast2700fc_ssp_test()
+> @@ -164,8 +164,8 @@ def test_aarch64_ast2700fc_sdk_vbootrom_v11_00(self):
+>           self.set_machine('ast2700fc')
+>   
+>           self.archive_extract(self.ASSET_SDK_V1100_AST2700)
+> -        self.start_ast2700fc_test_vbootrom('ast2700-a1')
+> -        self.verify_openbmc_boot_and_login('ast2700-a1')
+> +        self.start_ast2700fc_test_vbootrom('ast2700-default')
+> +        self.verify_openbmc_boot_and_login('ast2700-default')
+>           self.do_ast2700fc_ssp_test()
+>           self.do_ast2700fc_tsp_test()
+>   
 
-
-This is an unrelated change.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
->   #define AST2700FC_HW_STRAP1 0x000000C0
->   #define AST2700FC_HW_STRAP2 0x00000003
-> @@ -58,7 +57,7 @@ struct Ast2700FCState {
->   
->   static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *soc;
->       AspeedSoCClass *sc;
->       const char *bios_name = NULL;
-> @@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->       DeviceState *dev = NULL;
->       uint64_t rom_size;
->   
-> -    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-> +    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a2");
->       soc = ASPEED_SOC(&s->ca35);
->       sc = ASPEED_SOC_GET_CLASS(soc);
->   
-> @@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->   
->   static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->   
->       s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-> @@ -167,7 +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->   
->   static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->   
->       s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
+
 
 
