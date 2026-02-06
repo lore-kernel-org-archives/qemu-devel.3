@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A59BCEB28FE
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E77EB28FE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIC6-0001HO-Lc; Fri, 06 Feb 2026 04:32:06 -0500
+	id 1voIEC-00027O-9F; Fri, 06 Feb 2026 04:34:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIC4-0001Gu-U1
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:32:04 -0500
-Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIE8-00025f-EP; Fri, 06 Feb 2026 04:34:13 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIC2-000524-WB
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:32:04 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.214])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f6pl25S0Tz5vSC;
- Fri,  6 Feb 2026 09:31:58 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIE6-00056l-Iv; Fri, 06 Feb 2026 04:34:12 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6pnV0ccWz5wpf;
+ Fri,  6 Feb 2026 09:34:05 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 10:31:57 +0100
+ 2026 10:34:04 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-96R0011cfa0084-246b-4c2f-a75f-e8d256230cdf,
+ (GARM-99G003e1340c47-cb1f-419a-b67e-0b2f01c4a285,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d2c16b7c-db80-476e-8537-b83e7a625e53@kaod.org>
-Date: Fri, 6 Feb 2026 10:31:56 +0100
+Message-ID: <fd3c6343-22b6-4573-a177-46e14a0aa9f4@kaod.org>
+Date: Fri, 6 Feb 2026 10:34:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] tests/functional/aarch64/test_aspeed_ast2700fc:
- Use AST2700 A2 SDK image for FC tests
+Subject: Re: [PATCH v1 00/10] Support ASPEED AST2700 A2
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -45,7 +44,6 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.96]
+X-Originating-IP: [37.59.142.99]
 X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: f9f065f3-c38b-487d-9407-befaa90ade90
-X-Ovh-Tracer-Id: 13046365173850868542
+X-Ovh-Tracer-GUID: 0762a61e-dea6-4399-b75a-44a75a5b5075
+X-Ovh-Tracer-Id: 13082112495834008382
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGb79UhxAbLCWpDUX9t13fZNQ2lLa6LEAVEmCYyBNok3aH8zcllUd+Kxeih+plEQlfXLhUD3hYSUB7xiRDf5CqJGpblQMxiEvqbjHcxKJZU5Jsv+Wt4LQSkoy9dwWB5Emc0Hm6CbplZ3O4rMXDGJXI+8KlzNtZCpvTHegIkyK12CELJJn2kV59qkFMcOuzvBWTWpksYv5fO26utrLFEcCbDz97DtS524JgzVIHdTGV+qOvXv9hofqngDgOLtEWQAzIEEYw0czpbubnbihn/7bekI4rI9jTW48oOk7T4xF8vfNz2YNdpT/prwm6q6PbTQJvgpuvy2d5BNBM6F7D3Z0sbNWPSQvtTkR6YaejrgrGpM94qsU1BLb20G7SStZL0JZrRQbIgk5qRyBcjYikrp793DvDIisYlTAS9IQBAN/6nxPA8+5GmwwfJCJ5+TNy3ANkgkvLHDGXeSRkBRqE7SyNtvFpeQxN9RCBw5rIoRy00Gz0b+pOkLfLkHiN+ZarPiuyUVIeVz9EJLBiXTEk4Mgor9eG6frdaMsy3+NxYUFA7FcyfYCniVBHYmNKkwJ/ezgNSm2xr3kDmTYbDXSgKy/xwLEaO2QOQzgVk/tPFwgIdtR7DB65nnkXHcGgTHNTONpbOxrO1fmHuinM3T28IihvUWPG6PhpaeW35hcBmhtsGwQ
-DKIM-Signature: a=rsa-sha256; bh=h7Y3Ir11Cb7G6W8+9b+XXv+KD1i5O0e8hT2kUQdWI8I=; 
+X-VR-SPAMCAUSE: dmFkZTGbF+AnnC8hcSKygOyLLmIZZFotJjcdtj3ci5krQYWZ9yG+QZbITe6Y61Lf3pedUfHpLVevMabL7OBKQMgBOP1LLZ7lqhvaC8gr8HAqLnbRjgSyTHW7lJQuicq00yb4EuIRKnLQVyztvwvHBggULdNqg+BH2ebMhAFs/3I6FyOlUiEfZ3Z3kREPxMitTk/i68HZ55rrjVfuS6t8fy3GD4dPtEgmIOlkyNGCdCmuFXDGga1uke9NCT2N9S4Fu7viqt0Udv99gubPKoOdC1FmV8j2CurnJ9CT5T9h9gj3Kaf7Z2PXRd6of/8Ky3eSbv5NCayr2yLDjbj1jHvEUb+fyfk/rDZBAzv2w3EF9/HHwoU5N/8oDsqMGBR0cUiI4Q/owWGmFTcFsv3c4aZh5N4jddqZLjvnIJZoMIBJXdUe/JYKlD0uvJmHIFCTo+7jgY1c2LIuwEY0FLNlsdnYQKSVfDY7bG4f2YSge1rEi9Nz7Z7Bku7iGI3gAE8giTiFAi4Z42P0Fc08QE8Z45kOyAVtkoCyYdVi2gy4HplVZ/JF4xtN4DVAGwlT8LOcTRnDERTYHQ8aDKUVK1diT3A92AcAO/5FhN2DGtKeCBybgGnGRes0LmE8i8FE4sll9XmhB4ibxb8jnmgfaJ4SXljIyBo7igjqnltAfSWCPFgO4n3XwtQr8w
+DKIM-Signature: a=rsa-sha256; bh=w9jPa6vkr6q5YbzXIKU7nbkmEErnOGm62S0eTDRR3Hg=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770370320; v=1;
- b=kFYD3O5J5N1aq9FiLqYmLC/u0HK3T+WBvni+JYYppmj2GM80rZ9aci9ITNdH7hOm+4AOjHcL
- WOOvXwTZv35wU/VindKdCaDhq3770TZHe2wug5ThbsnrJQDYgDL0MU/DgwvK3t4T95Z8FXq/48G
- cBC7kEd0tcbxAuRRfIr0uoormXNBALf+EhNraB0B4RBU6lHzBAm/U6jezf1YT8l79fZMp52ACEj
- 7ankrHdFzkkXjVosxy/jaLDCl79YS2OJUJ6ri0JnXuGAjNz0Q8KqAE0WMpxwAEGThqKhMnE0iGA
- gzu7wwvOaUstFLgMn8+X/+4uzZceEgKWhTLylnRv93rdA==
-Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
- helo=2.mo548.mail-out.ovh.net
+ t=1770370447; v=1;
+ b=PfnBtL36m8pKaY/hdWMk1NLXtnvzHomXFRNVq+UmwefZAooeC8D7CF30+khG33WmSixypzoY
+ zLbx8p3B/7cvmSrivlrAtBVfVyVOUGgzIw8zi9MjW43SBPDjj50ssxNKoiE7AbUrLIzCsKO4A8K
+ mqzwnmh3psAYiAcM2UfMiTuNY0iZIC29tRcmsPnj9HUK8Eiw/oVumbApr07K8ooznOGOR5hP/an
+ ObYNlTEiLh7Qz2GZ3V9uqL1uKO+QAFaTF07S+wUt4x3/AF1KMyYSRdiU0Cv8QHq6BYbxVrA4NDv
+ exKyJyz8rlRIOvQ3ckz96bxhwK/cQl6kD7NZDg1m1W6Ag==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +116,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,18 +132,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Jamin,
+
 On 2/6/26 06:33, Jamin Lin wrote:
-> Update AST2700 FC functional tests to use the AST2700 A2 SDK v11.00 image.
+> v1
+>    1. Add AST2700 A2 SoC support
+>    2. Add AST2700 A2 EVB machine
+>    3. Alias ast2700-evb to ast2700a2-evb
+>    4. Switch AST2700 FC machine to use the A2 SoC
+>    5. Update functional tests for both AST2700 A1 and A2
+>    6. Fix I2C Fix Out-of-Bounds access issue
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   .../functional/aarch64/test_aspeed_ast2700fc.py  | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+> Jamin Lin (10):
+>    hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by using dynamic register
+>      array
+>    hw/i2c/aspeed_i2c: Increase I2C device register size to 0xA0
+>    hw/misc/aspeed_scu: Remove unused SoC silicon revision definitions
+>    hw/misc/aspeed_scu: Add AST2700 A2 silicon revisions
+>    hw/arm/aspeed_ast27x0: Add AST2700 A2 SoC support
+>    hw/arm/aspeed_ast27x0_evb: Add AST2700 A2 EVB machine
+>    tests/qtest/ast2700-hace-test: Use ast2700-evb alias for AST2700 HACE
+>      tests
+>    tests/functional/aarch64/test_aspeed_ast2700: Add AST2700 A2 EVB
+>      functional tests
+>    hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC machine to A2 SoC
+>    tests/functional/aarch64/test_aspeed_ast2700fc: Use AST2700 A2 SDK
+>      image for FC tests
+> 
+>   include/hw/i2c/aspeed_i2c.h                   |  4 +-
+>   include/hw/misc/aspeed_scu.h                  | 11 +---
+>   hw/arm/aspeed_ast27x0-fc.c                    | 15 +++---
+>   hw/arm/aspeed_ast27x0.c                       | 36 +++++++++++++
+>   hw/arm/aspeed_ast27x0_evb.c                   | 29 +++++++++-
+>   hw/i2c/aspeed_i2c.c                           | 54 +++++++++++--------
+>   hw/misc/aspeed_scu.c                          | 11 +---
+>   tests/qtest/ast2700-hace-test.c               | 22 ++++----
+>   .../functional/aarch64/test_aspeed_ast2700.py | 44 +++++++++++++++
+>   .../aarch64/test_aspeed_ast2700fc.py          | 16 +++---
+>   10 files changed, 169 insertions(+), 73 deletions(-)
 > 
 
-This patch is redundant with patch 10. Probably you had an extra
-patch file in the directory you used to send the series. I will
-ignore it for now but this confuses b4.
+
+It would nice if you could provide a summary of the changes
+introduced in the A2 revision compared to the A1. That in
+the cover letter and in the commit log of the patch adding
+support. We're curious !
+
+Thanks,
 
 C.
 
