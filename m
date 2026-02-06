@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B446EEE6B4D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 20:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1251DEE6B50
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 20:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voS3g-0004O4-8J; Fri, 06 Feb 2026 15:04:04 -0500
+	id 1voS3g-0004OD-M2; Fri, 06 Feb 2026 15:04:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1voS3M-0004Fy-AX
+ id 1voS3M-0004Fx-AH
  for qemu-devel@nongnu.org; Fri, 06 Feb 2026 15:03:46 -0500
 Received: from mout.web.de ([212.227.15.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1voS3E-0008Oi-QC
+ id 1voS3E-0008PD-NQ
  for qemu-devel@nongnu.org; Fri, 06 Feb 2026 15:03:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1770408207; x=1771013007; i=lukasstraub2@web.de;
- bh=NPRScifiTgK3qkFDsRha4RlRArQuLKMT7x2FOENuMxA=;
+ s=s29768273; t=1770408208; x=1771013008; i=lukasstraub2@web.de;
+ bh=DHQzHBoMt9UcskNHv5moJtho17FjGy9wLz2dMotNemw=;
  h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
  Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
  cc:content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=lWy24Jn1FPR88+Ll24JAIb3O4tzB8KwQmbi88D5M+kZR+msEIxXb0czkfRBkTRAJ
- jZUGUVscdnEVkzxcHV4JNCECnb5uJ5ra7rE+6Fdk1ZhMnWb9LrKpB4cJPBPObMNHa
- 6oW4teaDdUayA7LDJo6ptJXMyRj8PgbuSm3/SVkN2ft+iRWoXQMT6M3Iklz0k0lYA
- ATmEM2sUMl9kuy97cCpehDt/ZhGRjqvgtDKsA9XQp35hB5msoHZ3oyHr+iu/2lzio
- 2CZI/8oun9w5aKoULPKosCcuMEHasFaUh8FDBm3NZYz6HtOTMvuzrRSRo9Pmel40S
- iwfW5qKgvkUNUAZSYg==
+ b=sgGdbswT9yv6B9k/9emuS69saAIul+l9cbjZpbaj7J0BeVGsY1xb5qP3mfxaLRf4
+ KPZbVn+CtYeAcBrAADLeed4XPrCBXNOYCQisDZlsGLLO7WnDEH0TZNwi90mOR90cp
+ a5zQycTME22Kak9AVwYuJZm0L+kI/eU9Z/tr6TfDE60npx4Of79kkSWrUUqy0JuWN
+ zQA9T+/+ClvrDkWWqHcGxQrQilgqdaxWkdD9SvY/m/PDe06f4yfixNmQWSKLV+94b
+ 8d3IKAE7069ba/2hLn3aHv7KofSD3XCZhUVxqWWi7MrIEK73em9ZOp5VZfrJpWGVh
+ YA/Z3pGu10MsgJd3YQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [127.0.1.1] ([217.247.97.172]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MALiZ-1vzCcu1u5T-00Ajjl; Fri, 06
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4sbr-1vn58S3JO3-0033gr; Fri, 06
  Feb 2026 21:03:27 +0100
 From: Lukas Straub <lukasstraub2@web.de>
-Date: Fri, 06 Feb 2026 21:03:12 +0100
-Subject: [PATCH v6 14/18] migration-test: Add COLO migration unit test
+Date: Fri, 06 Feb 2026 21:03:13 +0100
+Subject: [PATCH v6 15/18] Convert colo main documentation to restructuredText
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20260206-colo_unit_test_multifd-v6-14-27779dda139d@web.de>
+Message-Id: <20260206-colo_unit_test_multifd-v6-15-27779dda139d@web.de>
 References: <20260206-colo_unit_test_multifd-v6-0-27779dda139d@web.de>
 In-Reply-To: <20260206-colo_unit_test_multifd-v6-0-27779dda139d@web.de>
 To: qemu-devel@nongnu.org
@@ -55,101 +55,101 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  Lukas Straub <lukasstraub2@web.de>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10625; i=lukasstraub2@web.de; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=41531; i=lukasstraub2@web.de; 
  h=from:subject:message-id;
- bh=HDldps4OP7KhV57NbTGLFlMs9pbZfQwO+rWwU50owsg=; 
- b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBphkkGQ7eMAZqU+1yk+NW9tH1vFeAMwDjIPs7w2
- sp9pGyOfRWJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaYZJBgAKCRA1qwsonF2y
- WP4mEACkySRHuYtXPmBqGhWt6oRFKfoUW+WmUYuAkpkzaBlwrksrlROuDxkKXaUClgeu8JYniMh
- IepqwkGX+6/9M8xTM2R0gpUr/Ze6tl8eXmZL/LMsZW2GLOrbVlaRHaAO/qF0iJdbo7YWVnimxwC
- HJ024q4bn2ZsTzLBkylxuhf/PKPC2Ya/OYOOAh3rjEy6f+gSkWykwVdmzXw84FlE0IEoWqCSrXB
- 9Kge1wnLPdPI8zLv2loaasX8Tzk2PaxJWS/qOaVZ1pEDgs+tTPhdPNlJgnDXazOocoO/tFD3hH3
- iQMVXFSGZkHJu6w1YumTi0pb1zYp8H5+xuZYJ4RMIBD6AxQsDMujCuwtsLHC0ICFms5aOPj9Ofk
- FhGDC1baFHfEIt40lAHkVoRppoZgge7KDtCcX9WyUX1GJAieVCqNvWmt9heOcmgHPke0Zb9Wtxe
- pbfSSFbD84/dopIQOaPVilVoegF0oUU84miM4HNbe7PBBoKqlS9KzeC0DfScSShIW8FAA2HE0W/
- z9mnI1HnsV8jNlg8rHaTcwOY5GALaz4qIrLFpxa+hx11MIlKsIzdo4gVv5TF7SNq6dWNbn0A8nQ
- MEXdIm3K1aLK2sJC4ho6fshk9+2yVvOhE4qmLX+egAriek4WiGX1wQBTzhmK8GDA0NdUdwKCwLU
- 6f9nPDeMk7DnjUg==
+ bh=0lpNjifnmfSQfDD2tpoOsffD4RYUt0R59Bfc2oHij+4=; 
+ b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBphkkGlT6mmu//SL69eKPfQBaj5g5ukKR+NBk1s
+ 7SETaMLRIWJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaYZJBgAKCRA1qwsonF2y
+ WDYGD/99doAkU1Xwq2d6gDfT1oP4bFbHkiMB1fgcxKLgWhTwSMRfQB86i5dDnjeyeBHSWlBtW8y
+ TFWl0uFTCVyh0SfzeO5KfOltja3xDe76qW/O17ZGohHjef4q3BQJVL5unGlkOvw35yC6/lUwe9P
+ 4+zQVcI3CdHnY6+D9h6FRwQtW1M/5qxKKDPiMsWgABq193I2uOfReZNxmeH1gGPtXCvTsoOPp1n
+ LSTcuCKUHyvBX8qbFOsDURB103dcIxROecm4zTPWcwLiA/twfSLgOtSB3n7y46hO9A3fLZehSp8
+ KlCsnrXn9YWOIyd3T7BX/IpCgqS/9fjf/BopH8zwTyzaWwIWPMjldFtNYxaN2DeeegM7UHpLA4b
+ PJhMY/Y1U995CtldsltRk7z6NODr0rnQIxr49Zj09gy5cIKLF5Y3oasm9FEO5WzxwCMR6j702+q
+ 9eMLgoYIaXVWy5SwZlCFBAA1aqU9RruTljZcA8kQowyidXTkqKpedyTWxKM7DO7vnPsTX1WfW7H
+ 345Hxpvvld9ioGYHPEnA9wTpt5LNDRfcOoAdepCQc3PajtfvQjBntvKuvgNKd37jaPzs3peNlAH
+ Il5xN0MIMoVStr9uPjm3r4mskjq2PUHLZ5d3cnzIHYyxbX32YYUHJVWQqHY81i1zuCNfc0WUFmY
+ oHEwx0UfgVu7jjA==
 X-Developer-Key: i=lukasstraub2@web.de; a=openpgp;
  fpr=83FAB158A0D9B8FB72628FA435AB0B289C5DB258
-X-Provags-ID: V03:K1:i97WwHSPSBQsJ++/fs4KbFUR2LEm88mU25OawOzOQ1ZwQKrK+vb
- FJzNX0PTORjeHeHf3MpPJqiWMo+7hYzijWzdKeierZ2PjLsMxIlWIwpm7lDjh0PqnvT+vTK
- V1GtVFSxrXNxqhIg56cnlAcVuXgrx5C2em+HOIyJICJEb56Y8oFVEgnpSfCpaENH5pqt2Za
- A/GBidbAlOXZTfmGNuorQ==
-UI-OutboundReport: notjunk:1;M01:P0:YrH2Ty2sSkg=;ZTBqLSgQhg+UQvrxi/9XaxefQcw
- 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
- 8ilUbO4bf/2X0/ylsRffqKPi7/hUy
+X-Provags-ID: V03:K1:oA/kQDf6UWaeTglfuhLvc7sS8BIUSL6QFMU1/nxA/ALwtqZ1bVp
+ 5qp+gHOyGmhAg9n450NBgwLaxBigUn4+uiIOmQU4wM9yuFiebL/rsnRbpancPs2tW4d65Bs
+ ffx25blGS/ZmkGxJOmevPNJ3VQC3DWMgPwbEw9ig7K5pxfTivlgjar2pLuEBcWwZ56dwRfe
+ bDf8PAB/pkPSWKHPmewXA==
+UI-OutboundReport: notjunk:1;M01:P0:6TiN8ezCHFc=;tkr9ExRPlQf+lzhnFadZWoHov1y
+ 0lJCMOeIjf6fsuJaTuNq/jYO8+i2JIc/0m8PAd9ESDtLENqG+9n0ghxAMvDpmgK4aSYMQk2h5
+ Pbqi3a9nBWJtk5FAQL9y0EzfLEIsazs4/uXOgq/RxoP1SnqsfiNViP2+HPzpUMaqNC+I4gaai
+ tcDiH4rzWJrU6cbaq3eGRs42sBIscvc2GEk0pKCLXg050OHIu36a9N7jJusLpRlvCyn4m0ZGP
+ MPiB9h6f8ciAkw9QqNfBmClQE1Y5YOYE6dHdoln/arlFkGegpwE4TCCaQingopDM7v2+FZV6J
+ 6XHi/iMHiz2Otgi6lHwq3G5lU9qbDlALF61t6VzNNg7H0M4HRCiFiGnqrhLTCeY6yJ/8DZo5w
+ CTltggIK5n3Dnj+9C8cmfjA/MOewxEDOP4f9xranVDKzNT2Ou2+WPnDJgk/rJ6cSSedqCUWwK
+ v1raxHv9sbdOVNa3+FaUpt5+BTGBMi61ekAj8kkDWxE3R7r24HlzBiH6HC+TC3U1dThZYyPbX
+ lyFvKNTFpGpXVdlTGIkViQNKgvwKMh+SR3a0mbSX3S6mzzOX+f7lnqYcfHOVj6iXovvsrfNJg
+ iCYfruj0NoedwlnNpop8aLe6GBUH5F/pUhf6aNYo21y5DxwAVeJtuPf2PC1ls6GZTRMFPh/wY
+ bmSG8yPvZwbmX8sa4ni7hMYXAgFaTMWAailIa1W3KcUT/qQ6Mnr5y+HvpOZ1+5L4iNqd5z9B0
+ iInhDjib3GzlOAR7bprZ3HmvAOjpYKqV2Sx3C6ZvBK8ilzaM/DJ5fNA0FEMMdZldi96gIJOFQ
+ F1/+Onqsv5z1aQmDHaZyNWGhwcLznluQtxGn1LF+I3fWbDWsM5b4uwFPpgQPdEVoLPKwDE+2K
+ lmyatJhvi809YX57XEMYRFxfHwEnkMUnpFnWVDhS+1BaXaD3Ox6TKEvnLc5SDQm6XOXEeFtc/
+ Qvmlr+9VHQx3artJ/lg+W1Q+r7g13Fe5ZFaS02s0Iqg/SlVX0uncDkebuMxh0FxhnPqo6ddq3
+ +jR4NS0OVrMDH/AXMdBCykjJ7rtkXjG2ZHGmNjKHjcwWyN+QnxpfEYiTfn1vuRdK4kqTrVUo2
+ m1HQKgeUp+UZcPDdjW6t3tn4c1nm08KhU5CmNrqq6VFjRLmqVVTtKYQHAtOvuvNGVJcGSQWzz
+ SOtb7rh6VKNqgA82HBg/tIJE0sLOvEmg9o/Y2JXHoqQWtxD4G/WvGZuGv2NNyyhiIY63hsc+o
+ eEUIc37FMaAO+orESpoU+ciOEk7IdahshLZ7ZDyaimXgoUfQ+1djj3C0n5Ej0CisfDn9YM+HU
+ nXt3Ht8NHYyauUsXZLoa1DQkdLiRtTix5uUpp5+DRXsICfFq3tcf5S3Vjt2y7rbgdt3smSEL4
+ tkpeMJQI0O+XyQKQwabMYDW+8+SNI66k9vPuVvA0kMFHrsJXKCcmxbgB66oWWqkHcMNZlhtE1
+ iGeNldgGV+YnlmrRs2cC4yv/l802R3aCJlSYLrV20tbstdmIIzh4vmm1DVoZsnSYBqWklRrX0
+ jGCvK2miV9JgVGDBjVL8Sq17uOws7lY8SVzMimNz6bBL4ldELcdCHraJYmzyTBJFI0AzzgXQg
+ 16dqGs4K09LibO6oemkC3X01DCB5sSqbZECiMwNrWOCYhjWYnsK/ymQuVfmpHZC87sNcKCBs7
+ Vm0aMxLTszj+38TZBWX8T/NvpMaq5XsukdvYZPYdYSzMoiFxX2ZHeanRxcr5wGdb/aOV1MM9M
+ 6lGab4pv2zDeaiZ796HqE4FdUHBON2TXaOTGilB4MQxgt51FA2q2w0wb6ch18r4tekyQSL9pw
+ /j0wSQbtBm/AcR9Fp0jZFKl226OTS65LQJf4koaUuOhYL1ec7T4Wcw0YzpJK52KP3uxiweF7v
+ BZRaUP+tCISTjRQo4RW8VEJ/hwD/8YkLiAMlYBCFVRXSdyHvFmzv1RuLoNVWLD6yIA2RfyDAo
+ 6DgE3aqrtXqLlvs8ZaDaOe9Pe1/GFbs2zsdFk+cWFTJZyGApEhuW9XBgeV0c1KWH24ZU4sWbb
+ 9SEolz0lgGsNzbWy4YwOKwxHm409T81OhFDIeDMyuZEEQAAjq6/qMZBMMNLeov/IEWY8dhttQ
+ 4mAPsQrFEe0nIMyCMN/+ASTLkmVMYW1lb70fAVTWhlqZEkY2Umgt9lqjX8+E8hbqCrSbT52K4
+ u536RV2RtpHQFiD9VGK64odymtOhdTH2jI9SzS2CTBiNjTlOKRQGoWlNUbejF/7zRnn8RvQ8z
+ qm2d48eJKsNAbgTdAx43f2W4bUXcd8ccaZFvueYknyV331yM/Z5VLR/4vTuByicZ//Y3118AP
+ qqv5S/jIaTRWXpKD3enw+1nRhqvnLFRBmhnnh3DaIkyvQD580RmGbphqJhCg23jB5RrMWtgAk
+ by8Ev1y2f+tUsHNwF1SHbPTBWam8iYveU/jnfhCzFc+omfGIft4saOnBVwWxVyeHusR90GdPm
+ 4l2t3FkFb+Xmw9MTYTR187468L5m+j9b95UdN26q7PDVF01fo2Kzc90M8gd+IR8EkKYUsOwfI
+ lcfOC4J8SZVkan0QAfLDVMwnP76EsggRfl9XjWD5NvjNswFgbmm0umI3WEOWy261t1I9Bo2R3
+ o1saZ00G78WVz1h7b7J3mJWs4L93k381CrixYVF6hucZiGvG+Dibe3ndO+Ujxqqo8Hqc6Jps8
+ fDEmDdPSEpYR8Mrd2oAuOOrRr0BffjW3+VzgQPej4Ikl/cNiWvjtcv7dD22tC4ffniAyiWYlx
+ xOgIyTfKctBEOjbUL4FGVGi21mQOe3CgIJa8Q6fJejwWu4+CqUQiH/pm/CwxAnARP1TZCzJcb
+ 9IuFlNqnnbKaOyLrJuLwTxsGzt+0bsX+N6hpzVYNBKGKQtQAM8ou8O8DiNcFu9dXibFGIb33u
+ LdXmzen95vZgcxVA0pkfWWTEX1XmRCnuAFfJ6c0un7wznkMkArEgt0SXEqWKSuuoRLKhHDIpp
+ JV7Dvma3iRpkA4oCkoCuImjsnQUK22iZ5JIeSBvvBW+JG/xQKL5HKMuL2BqDh5BglV/gePgcG
+ rWL3hpjLZ2Yj2W4MK0kwT17XiAE8Pn5SFrL8p1EZk1IrI9GHm7g2NlMcSMGMJBI/qGn1vYbv2
+ 4MeWuIvlqPf7o3csmozqBHr/Ez4Ix+JuVeHzarn5EZgzktV8HKq64IHvF1Pjt8iNKwvB3ozB5
+ jRUUW2DC/UbFxfmTwwG4fl7YFpAchy/yKE3BsQZK5I+v4xxQ+TlpVpeqytnxcbFbGqvozTW5s
+ +RzRMHk+SRy+GTJQHWP6qEUxyHaSXX7RGsl3KTBplVuS9VgW1ESU5HHF+hDaUp9XNed9qqqoR
+ dAIePf+1uokeM+kbLy4P/+BMicZL2OjG5CQVbX3Xtj+EKFVydhVC+GxOv2hNzbm6Pe6PNIyza
+ Xg1al3vP6iRA3RqpisPHEa/+Ahe/X8ABucej8H3yRsVDaraC5VAZWDECeSiSludZKEWM3P1qx
+ 7wA+yIEDrpcaHUNFNXBPhdaoFGAuAlhaVrKrjzL/geM32NYXbGYC14huv3rZA04VyGqZLqZBb
+ W9opooDxTX8W+5GZh8d5oRV42gLDmNx31rjnrQnETsPYglVEFznI7AyurAUbkewMn0m1/4U2O
+ uqTMJ5fgw0o3cMm1aXMT5st6Y6INol2H5YserUn/DuCgLud3Io+JwH4qEGiv7e6YSfQzjEVle
+ eY3dZVcDSFLe6RMH2KNMpxHziUvpP+G6w6S5Y3AKSmYPjj60H0J/QfyqkLI+YVq8zxNHFNSs8
+ OV5X2pLpl5vp3is7WNThiIFPLOOHjtstGDzxfA4jk43PPvo5Pj7eniQeH2ikebMytaXIJi9qj
+ 4t3bw6YLuSg5L8rH0qWgD+P8Hjg2d9fHxUneHU6mw0H+bQN4ryMDfSa8AevgHfKK1CXtwAoMq
+ GKDMUIm+VVmxS4mL1BvOD2qg5wGFAb265B0dM91Kiv4WKah+ST/WkAPL21sIDgOHjQ1Gd6wGk
+ f70bMpk3fz+uaC23mM/YYji08aivX+DeYQT30S4sKSkCIzM4TJeoi+Gjz5Lx5XC5MQ9c5uUmy
+ an1zIJGNjM3Ud+CkWjW1Ka6BQs9I0gNrWnhDaffVUn12Ta39fK+hcM/sV/4mY0VeWNgL0AvN9
+ csiLlGpGOytWlkmtXRSpGKOSVaWth8bipd1Kfzu0Hcgx8nR4FbjgOGBfKshHtWQTyECEGQ9Hn
+ 41DRJjRB7oPUuLlFIA6mccTOoAle23corsdlvpuS05K8m4Id4BfjlBlY2GsYCxJyWE49q27Qh
+ p2mjnUFwvB7qxAOoNl9OpBBOzcVB63nihiSFY6Aitw7zdoCDPMr28V5X6PuJdQ7rqKQmX+Vj6
+ gHQIaU8q3SN8ItwTdDkzeLdny55BXODtbqbfGhv6mFRzqAu+JUWeTgnre7qj1uryDtK+Y6tYg
+ 7DIKJGM+Ksmk/GGuOtutzs0jTpOsn9kyH1UvpJUDfE1U1HZo9Bbj0fJs8Otz1bxw6R0ybepRa
+ dMqyMVC+Nzz4nGNkpDgp8cpzjPEJhv/HYFArf6xHMwTeFU5II6HNAEUrYvSS0J0raHpsvyCyV
+ goumOYqwil3DvH36Yc8yVpIffO87qjTE/aZjVkK/51f1TkH1Gc5iWQqmpQU9SSp/+G4jNN47t
+ JaTG+kjpgKJNqHphZ+AVVzmRRYXeRiDaF9xADHxYcBufOXsSUB9gtv1SwGeoxOer9dKGj5X4Q
+ iOruis7OGNG29KZvnqV4sYzxE2pQ2AiFP7v12ffCJaxbFIooePZzcjVYASfxuzZsMyRqj2WgU
+ b512ZpSyOanCaC3tTcH07OEi0kBWxNbb/Gj/xe/BzpaZAHsu8/2ThTmQeJbDUIAAP6SOer8oS
+ rQT3tDN0P8ixxeQw5pqhmPbG0yR/U7YPsm82pMI+U2JrnTLgd3lFMjEsskxh9WTym37J+bwvF
+ cOaOZyjP5gk+O0bOqgnDiAuE1IZT2Qopg0wOBLzVQjXl8VxM5R8vSkvFYHLHSSLg+115nVNYG
+ Cd7Ng8bssqexYheaGn1knTQ5LKUsAQs5a4RWUebepnw7xK0YOY+NjV8h1FkBZQhlf4uZ0xqJw
+ 991RRupq9oFbzLkEIOvn2lwX5yOblnlwuKuhfxEZg6dYkbNwpI6hv2ajKMHrURG/wxA2jej9D
+ N75lunxv6zTG+QOUZHpXBuaCfeAR06Jdkcr3UniNxiaGiIMBnHgZcJqckPg5/MAXoET3KkqwE
+ Cy6avapjW5HmeBP7T1OoflQZ6YWYQ
 Received-SPF: pass client-ip=212.227.15.3; envelope-from=lukasstraub2@web.de;
  helo=mout.web.de
 X-Spam_score_int: -24
@@ -176,319 +176,1026 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a COLO migration test for COLO migration and failover.
-
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
 Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 =2D--
- MAINTAINERS                        |   1 +
- tests/qtest/meson.build            |   7 +-
- tests/qtest/migration-test.c       |   1 +
- tests/qtest/migration/colo-tests.c | 198 ++++++++++++++++++++++++++++++++=
+ MAINTAINERS               |   2 +-
+ docs/COLO-FT.txt          | 334 -----------------------------------------=
+-
+ docs/system/index.rst     |   1 +
+ docs/system/qemu-colo.rst | 360 +++++++++++++++++++++++++++++++++++++++++=
 +++++
- tests/qtest/migration/framework.h  |   5 +
- 5 files changed, 211 insertions(+), 1 deletion(-)
+ 4 files changed, 362 insertions(+), 335 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 70e8b9cae59a1768ad9966d1291bd358a0712573..8e63e0a08fc7417036986f27c2=
-d910eb99d8a96a 100644
+index 8e63e0a08fc7417036986f27c2d910eb99d8a96a..f645590b8b940919bdc84ad585=
+ee493f5452fc20 100644
 =2D-- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3854,6 +3854,7 @@ F: migration/colo*
- F: migration/multifd-colo.*
+@@ -3855,7 +3855,7 @@ F: migration/multifd-colo.*
  F: include/migration/colo.h
  F: include/migration/failover.h
-+F: tests/qtest/migration/colo-tests.c
- F: docs/COLO-FT.txt
+ F: tests/qtest/migration/colo-tests.c
+-F: docs/COLO-FT.txt
++F: docs/system/qemu-colo.rst
 =20
  COLO Proxy
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index dfb83650c643d884daad53a66034ab7aa8c45509..624f7744ec9bd81c8823075b96=
-6bc95f7750a667 100644
-=2D-- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -371,6 +371,11 @@ if gnutls.found()
-   endif
- endif
-=20
-+migration_colo_files =3D []
-+if get_option('replication').allowed()
-+  migration_colo_files =3D [files('migration/colo-tests.c')]
-+endif
-+
- qtests =3D {
-   'aspeed_hace-test': files('aspeed-hace-utils.c', 'aspeed_hace-test.c'),
-   'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
-@@ -382,7 +387,7 @@ qtests =3D {
-                              'migration/migration-util.c') + dbus_vmstate=
-1,
-   'erst-test': files('erst-test.c'),
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
--  'migration-test': test_migration_files + migration_tls_files,
-+  'migration-test': test_migration_files + migration_tls_files + migratio=
-n_colo_files,
-   'pxe-test': files('boot-sector.c'),
-   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
-                           'pnv-xive2-nvpg_bar.c'),
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 08936871741535c926eeac40a7d7c3f461c72fd0..e582f05c7dc2673dbd05a936df=
-8feb6c964b5bbc 100644
-=2D-- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -55,6 +55,7 @@ int main(int argc, char **argv)
-     migration_test_add_precopy(env);
-     migration_test_add_cpr(env);
-     migration_test_add_misc(env);
-+    migration_test_add_colo(env);
-=20
-     ret =3D g_test_run();
-=20
-diff --git a/tests/qtest/migration/colo-tests.c b/tests/qtest/migration/co=
-lo-tests.c
+ M: Zhang Chen <zhangckid@gmail.com>
+diff --git a/docs/COLO-FT.txt b/docs/COLO-FT.txt
+deleted file mode 100644
+index 2283a09c080b8996f9767eeb415e8d4fbdc940af..00000000000000000000000000=
+00000000000000
+=2D-- a/docs/COLO-FT.txt
++++ /dev/null
+@@ -1,334 +0,0 @@
+-COarse-grained LOck-stepping Virtual Machines for Non-stop Service
+=2D----------------------------------------
+-Copyright (c) 2016 Intel Corporation
+-Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
+-Copyright (c) 2016 Fujitsu, Corp.
+-
+-This work is licensed under the terms of the GNU GPL, version 2 or later.
+-See the COPYING file in the top-level directory.
+-
+-This document gives an overview of COLO's design and how to use it.
+-
+-=3D=3D Background =3D=3D
+-Virtual machine (VM) replication is a well known technique for providing
+-application-agnostic software-implemented hardware fault tolerance,
+-also known as "non-stop service".
+-
+-COLO (COarse-grained LOck-stepping) is a high availability solution.
+-Both primary VM (PVM) and secondary VM (SVM) run in parallel. They receiv=
+e the
+-same request from client, and generate response in parallel too.
+-If the response packets from PVM and SVM are identical, they are released
+-immediately. Otherwise, a VM checkpoint (on demand) is conducted.
+-
+-=3D=3D Architecture =3D=3D
+-
+-The architecture of COLO is shown in the diagram below.
+-It consists of a pair of networked physical nodes:
+-The primary node running the PVM, and the secondary node running the SVM
+-to maintain a valid replica of the PVM.
+-PVM and SVM execute in parallel and generate output of response packets f=
+or
+-client requests according to the application semantics.
+-
+-The incoming packets from the client or external network are received by =
+the
+-primary node, and then forwarded to the secondary node, so that both the =
+PVM
+-and the SVM are stimulated with the same requests.
+-
+-COLO receives the outbound packets from both the PVM and SVM and compares=
+ them
+-before allowing the output to be sent to clients.
+-
+-The SVM is qualified as a valid replica of the PVM, as long as it generat=
+es
+-identical responses to all client requests. Once the differences in the o=
+utputs
+-are detected between the PVM and SVM, COLO withholds transmission of the
+-outbound packets until it has successfully synchronized the PVM state to =
+the SVM.
+-
+-  Primary Node                                                           =
+ Secondary Node
+-+------------+  +-----------------------+       +------------------------=
++  +------------+
+-|            |  |       HeartBeat       +<----->+       HeartBeat        =
+|  |            |
+-| Primary VM |  +-----------+-----------+       +-----------+------------=
++  |Secondary VM|
+-|            |              |                               |            =
+   |            |
+-|            |  +-----------|-----------+       +-----------|------------=
++  |            |
+-|            |  |QEMU   +---v----+      |       |QEMU  +----v---+        =
+|  |            |
+-|            |  |       |Failover|      |       |      |Failover|        =
+|  |            |
+-|            |  |       +--------+      |       |      +--------+        =
+|  |            |
+-|            |  |   +---------------+   |       |   +---------------+    =
+|  |            |
+-|            |  |   | VM Checkpoint +-------------->+ VM Checkpoint |    =
+|  |            |
+-|            |  |   +---------------+   |       |   +---------------+    =
+|  |            |
+-|Requests<--------------------------\ /-----------------\ /--------------=
+=2D------>Requests|
+-|            |  |                   ^ ^ |       |       | |              =
+|  |            |
+-|Responses+---------------------\ /-|-|------------\ /-------------------=
+=2D-----+Responses|
+-|            |  |               | | | | |       |  | |  | |              =
+|  |            |
+-|            |  | +-----------+ | | | | |       |  | |  | | +----------+ =
+|  |            |
+-|            |  | | COLO disk | | | | | |       |  | |  | | | COLO disk| =
+|  |            |
+-|            |  | |   Manager +---------------------------->| Manager  | =
+|  |            |
+-|            |  | ++----------+ v v | | |       |  | v  v | +---------++ =
+|  |            |
+-|            |  |  |+-----------+-+-+-++|       | ++-+--+-+---------+ |  =
+|  |            |
+-|            |  |  ||   COLO Proxy     ||       | |   COLO Proxy    | |  =
+|  |            |
+-|            |  |  || (compare packet  ||       | |(adjust sequence | |  =
+|  |            |
+-|            |  |  ||and mirror packet)||       | |    and ACK)     | |  =
+|  |            |
+-|            |  |  |+------------+---+-+|       | +-----------------+ |  =
+|  |            |
+-+------------+  +-----------------------+       +------------------------=
++  +------------+
+-+------------+     |             |   |                                |  =
+   +------------+
+-| VM Monitor |     |             |   |                                |  =
+   | VM Monitor |
+-+------------+     |             |   |                                |  =
+   +------------+
+-+---------------------------------------+       +------------------------=
+=2D---------------+
+-|   Kernel         |             |   |  |       |   Kernel            |  =
+                |
+-+---------------------------------------+       +------------------------=
+=2D---------------+
+-                   |             |   |                                |
+-    +--------------v+  +---------v---+--+       +------------------+ +v--=
+=2D----------+
+-    |   Storage     |  |External Network|       | External Network | |   =
+Storage    |
+-    +---------------+  +----------------+       +------------------+ +---=
+=2D----------+
+-
+-
+-=3D=3D Components introduction =3D=3D
+-
+-You can see there are several components in COLO's diagram of architectur=
+e.
+-Their functions are described below.
+-
+-HeartBeat:
+-Runs on both the primary and secondary nodes, to periodically check platf=
+orm
+-availability. When the primary node suffers a hardware fail-stop failure,
+-the heartbeat stops responding, the secondary node will trigger a failove=
+r
+-as soon as it determines the absence.
+-
+-COLO disk Manager:
+-When primary VM writes data into image, the colo disk manager captures th=
+is data
+-and sends it to secondary VM's which makes sure the context of secondary =
+VM's
+-image is consistent with the context of primary VM 's image.
+-For more details, please refer to docs/block-replication.txt.
+-
+-Checkpoint/Failover Controller:
+-Modifications of save/restore flow to realize continuous migration,
+-to make sure the state of VM in Secondary side is always consistent with =
+VM in
+-Primary side.
+-
+-COLO Proxy:
+-Delivers packets to Primary and Secondary, and then compare the responses=
+ from
+-both side. Then decide whether to start a checkpoint according to some ru=
+les.
+-Please refer to docs/colo-proxy.txt for more information.
+-
+-Note:
+-HeartBeat has not been implemented yet, so you need to trigger failover p=
+rocess
+-by using 'x-colo-lost-heartbeat' command.
+-
+-=3D=3D COLO operation status =3D=3D
+-
+-+-----------------+
+-|                 |
+-|    Start COLO   |
+-|                 |
+-+--------+--------+
+-         |
+-         |  Main qmp command:
+-         |  migrate-set-capabilities with x-colo
+-         |  migrate
+-         |
+-         v
+-+--------+--------+
+-|                 |
+-|  COLO running   |
+-|                 |
+-+--------+--------+
+-         |
+-         |  Main qmp command:
+-         |  x-colo-lost-heartbeat
+-         |  or
+-         |  some error happened
+-         v
+-+--------+--------+
+-|                 |  send qmp event:
+-|  COLO failover  |  COLO_EXIT
+-|                 |
+-+-----------------+
+-
+-COLO use the qmp command to switch and report operation status.
+-The diagram just shows the main qmp command, you can get the detail
+-in test procedure.
+-
+-=3D=3D Test procedure =3D=3D
+-Note: Here we are running both instances on the same host for testing,
+-change the IP Addresses if you want to run it on two hosts. Initially
+-127.0.0.1 is the Primary Host and 127.0.0.2 is the Secondary Host.
+-
+-=3D=3D Startup qemu =3D=3D
+-1. Primary:
+-Note: Initially, $imagefolder/primary.qcow2 needs to be copied to all hos=
+ts.
+-You don't need to change any IP's here, because 0.0.0.0 listens on any
+-interface. The chardev's with 127.0.0.1 IP's loopback to the local qemu
+-instance.
+-
+-# imagefolder=3D"/mnt/vms/colo-test-primary"
+-
+-# qemu-system-x86_64 -enable-kvm -cpu qemu64,kvmclock=3Don -m 512 -smp 1 =
+-qmp stdio \
+-   -device piix3-usb-uhci -device usb-tablet -name primary \
+-   -netdev tap,id=3Dhn0,vhost=3Doff,helper=3D/usr/lib/qemu/qemu-bridge-he=
+lper \
+-   -device rtl8139,id=3De0,netdev=3Dhn0 \
+-   -chardev socket,id=3Dmirror0,host=3D0.0.0.0,port=3D9003,server=3Don,wa=
+it=3Doff \
+-   -chardev socket,id=3Dcompare1,host=3D0.0.0.0,port=3D9004,server=3Don,w=
+ait=3Don \
+-   -chardev socket,id=3Dcompare0,host=3D127.0.0.1,port=3D9001,server=3Don=
+,wait=3Doff \
+-   -chardev socket,id=3Dcompare0-0,host=3D127.0.0.1,port=3D9001 \
+-   -chardev socket,id=3Dcompare_out,host=3D127.0.0.1,port=3D9005,server=
+=3Don,wait=3Doff \
+-   -chardev socket,id=3Dcompare_out0,host=3D127.0.0.1,port=3D9005 \
+-   -object filter-mirror,id=3Dm0,netdev=3Dhn0,queue=3Dtx,outdev=3Dmirror0=
+ \
+-   -object filter-redirector,netdev=3Dhn0,id=3Dredire0,queue=3Drx,indev=
+=3Dcompare_out \
+-   -object filter-redirector,netdev=3Dhn0,id=3Dredire1,queue=3Drx,outdev=
+=3Dcompare0 \
+-   -object iothread,id=3Diothread1 \
+-   -object colo-compare,id=3Dcomp0,primary_in=3Dcompare0-0,secondary_in=
+=3Dcompare1,\
+-outdev=3Dcompare_out0,iothread=3Diothread1 \
+-   -drive if=3Dide,id=3Dcolo-disk0,driver=3Dquorum,read-pattern=3Dfifo,vo=
+te-threshold=3D1,\
+-children.0.file.filename=3D$imagefolder/primary.qcow2,children.0.driver=
+=3Dqcow2 -S
+-
+-2. Secondary:
+-Note: Active and hidden images need to be created only once and the
+-size should be the same as primary.qcow2. Again, you don't need to change
+-any IP's here, except for the $primary_ip variable.
+-
+-# imagefolder=3D"/mnt/vms/colo-test-secondary"
+-# primary_ip=3D127.0.0.1
+-
+-# qemu-img create -f qcow2 $imagefolder/secondary-active.qcow2 10G
+-
+-# qemu-img create -f qcow2 $imagefolder/secondary-hidden.qcow2 10G
+-
+-# qemu-system-x86_64 -enable-kvm -cpu qemu64,kvmclock=3Don -m 512 -smp 1 =
+-qmp stdio \
+-   -device piix3-usb-uhci -device usb-tablet -name secondary \
+-   -netdev tap,id=3Dhn0,vhost=3Doff,helper=3D/usr/lib/qemu/qemu-bridge-he=
+lper \
+-   -device rtl8139,id=3De0,netdev=3Dhn0 \
+-   -chardev socket,id=3Dred0,host=3D$primary_ip,port=3D9003,reconnect-ms=
+=3D1000 \
+-   -chardev socket,id=3Dred1,host=3D$primary_ip,port=3D9004,reconnect-ms=
+=3D1000 \
+-   -object filter-redirector,id=3Df1,netdev=3Dhn0,queue=3Dtx,indev=3Dred0=
+ \
+-   -object filter-redirector,id=3Df2,netdev=3Dhn0,queue=3Drx,outdev=3Dred=
+1 \
+-   -object filter-rewriter,id=3Drew0,netdev=3Dhn0,queue=3Dall \
+-   -drive if=3Dnone,id=3Dparent0,file.filename=3D$imagefolder/primary.qco=
+w2,driver=3Dqcow2 \
+-   -drive if=3Dnone,id=3Dchilds0,driver=3Dreplication,mode=3Dsecondary,fi=
+le.driver=3Dqcow2,\
+-top-id=3Dcolo-disk0,file.file.filename=3D$imagefolder/secondary-active.qc=
+ow2,\
+-file.backing.driver=3Dqcow2,file.backing.file.filename=3D$imagefolder/sec=
+ondary-hidden.qcow2,\
+-file.backing.backing=3Dparent0 \
+-   -drive if=3Dide,id=3Dcolo-disk0,driver=3Dquorum,read-pattern=3Dfifo,vo=
+te-threshold=3D1,\
+-children.0=3Dchilds0 \
+-   -incoming tcp:0.0.0.0:9998
+-
+-
+-3. On Secondary VM's QEMU monitor, issue command
+-{"execute":"qmp_capabilities"}
+-{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {=
+"capability": "x-colo", "state": true } ] } }
+-{"execute": "nbd-server-start", "arguments": {"addr": {"type": "inet", "d=
+ata": {"host": "0.0.0.0", "port": "9999"} } } }
+-{"execute": "nbd-server-add", "arguments": {"device": "parent0", "writabl=
+e": true } }
+-
+-Note:
+-  a. The qmp command nbd-server-start and nbd-server-add must be run
+-     before running the qmp command migrate on primary QEMU
+-  b. Active disk, hidden disk and nbd target's length should be the
+-     same.
+-  c. It is better to put active disk and hidden disk in ramdisk. They
+-     will be merged into the parent disk on failover.
+-
+-4. On Primary VM's QEMU monitor, issue command:
+-{"execute":"qmp_capabilities"}
+-{"execute": "human-monitor-command", "arguments": {"command-line": "drive=
+_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,file.h=
+ost=3D127.0.0.2,file.port=3D9999,file.export=3Dparent0,node-name=3Dreplica=
+tion0"}}
+-{"execute": "x-blockdev-change", "arguments":{"parent": "colo-disk0", "no=
+de": "replication0" } }
+-{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {=
+"capability": "x-colo", "state": true } ] } }
+-{"execute": "migrate", "arguments": {"uri": "tcp:127.0.0.2:9998" } }
+-
+-  Note:
+-  a. There should be only one NBD Client for each primary disk.
+-  b. The qmp command line must be run after running qmp command line in
+-     secondary qemu.
+-
+-5. After the above steps, you will see, whenever you make changes to PVM,=
+ SVM will be synced.
+-You can issue command '{ "execute": "migrate-set-parameters" , "arguments=
+":{ "x-checkpoint-delay": 2000 } }'
+-to change the idle checkpoint period time
+-
+-6. Failover test
+-You can kill one of the VMs and Failover on the surviving VM:
+-
+-If you killed the Secondary, then follow "Primary Failover". After that,
+-if you want to resume the replication, follow "Primary resume replication=
+"
+-
+-If you killed the Primary, then follow "Secondary Failover". After that,
+-if you want to resume the replication, follow "Secondary resume replicati=
+on"
+-
+-=3D=3D Primary Failover =3D=3D
+-The Secondary died, resume on the Primary
+-
+-{"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0", "c=
+hild": "children.1"} }
+-{"execute": "human-monitor-command", "arguments":{ "command-line": "drive=
+_del replication0" } }
+-{"execute": "object-del", "arguments":{ "id": "comp0" } }
+-{"execute": "object-del", "arguments":{ "id": "iothread1" } }
+-{"execute": "object-del", "arguments":{ "id": "m0" } }
+-{"execute": "object-del", "arguments":{ "id": "redire0" } }
+-{"execute": "object-del", "arguments":{ "id": "redire1" } }
+-{"execute": "x-colo-lost-heartbeat" }
+-
+-=3D=3D Secondary Failover =3D=3D
+-The Primary died, resume on the Secondary and prepare to become the new P=
+rimary
+-
+-{"execute": "nbd-server-stop"}
+-{"execute": "x-colo-lost-heartbeat"}
+-
+-{"execute": "object-del", "arguments":{ "id": "f2" } }
+-{"execute": "object-del", "arguments":{ "id": "f1" } }
+-{"execute": "chardev-remove", "arguments":{ "id": "red1" } }
+-{"execute": "chardev-remove", "arguments":{ "id": "red0" } }
+-
+-{"execute": "chardev-add", "arguments":{ "id": "mirror0", "backend": {"ty=
+pe": "socket", "data": {"addr": { "type": "inet", "data": { "host": "0.0.0=
+.0", "port": "9003" } }, "server": true } } } }
+-{"execute": "chardev-add", "arguments":{ "id": "compare1", "backend": {"t=
+ype": "socket", "data": {"addr": { "type": "inet", "data": { "host": "0.0.=
+0.0", "port": "9004" } }, "server": true } } } }
+-{"execute": "chardev-add", "arguments":{ "id": "compare0", "backend": {"t=
+ype": "socket", "data": {"addr": { "type": "inet", "data": { "host": "127.=
+0.0.1", "port": "9001" } }, "server": true } } } }
+-{"execute": "chardev-add", "arguments":{ "id": "compare0-0", "backend": {=
+"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "12=
+7.0.0.1", "port": "9001" } }, "server": false } } } }
+-{"execute": "chardev-add", "arguments":{ "id": "compare_out", "backend": =
+{"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "1=
+27.0.0.1", "port": "9005" } }, "server": true } } } }
+-{"execute": "chardev-add", "arguments":{ "id": "compare_out0", "backend":=
+ {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "=
+127.0.0.1", "port": "9005" } }, "server": false } } } }
+-
+-=3D=3D Primary resume replication =3D=3D
+-Resume replication after new Secondary is up.
+-
+-Start the new Secondary (Steps 2 and 3 above), then on the Primary:
+-{"execute": "drive-mirror", "arguments":{ "device": "colo-disk0", "job-id=
+": "resync", "target": "nbd://127.0.0.2:9999/parent0", "mode": "existing",=
+ "format": "raw", "sync": "full"} }
+-
+-Wait until disk is synced, then:
+-{"execute": "stop"}
+-{"execute": "block-job-cancel", "arguments":{ "device": "resync"} }
+-
+-{"execute": "human-monitor-command", "arguments":{ "command-line": "drive=
+_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,file.h=
+ost=3D127.0.0.2,file.port=3D9999,file.export=3Dparent0,node-name=3Dreplica=
+tion0"}}
+-{"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0", "n=
+ode": "replication0" } }
+-
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-mirror", "id"=
+: "m0", "netdev": "hn0", "queue": "tx", "outdev": "mirror0" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-redirector", =
+"id": "redire0", "netdev": "hn0", "queue": "rx", "indev": "compare_out" } =
+}
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-redirector", =
+"id": "redire1", "netdev": "hn0", "queue": "rx", "outdev": "compare0" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "iothread", "id": "io=
+thread1" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "colo-compare", "id":=
+ "comp0", "primary_in": "compare0-0", "secondary_in": "compare1", "outdev"=
+: "compare_out0", "iothread": "iothread1" } }
+-
+-{"execute": "migrate-set-capabilities", "arguments":{ "capabilities": [ {=
+"capability": "x-colo", "state": true } ] } }
+-{"execute": "migrate", "arguments":{ "uri": "tcp:127.0.0.2:9998" } }
+-
+-Note:
+-If this Primary previously was a Secondary, then we need to insert the
+-filters before the filter-rewriter by using the
+-""insert": "before", "position": "id=3Drew0"" Options. See below.
+-
+-=3D=3D Secondary resume replication =3D=3D
+-Become Primary and resume replication after new Secondary is up. Note
+-that now 127.0.0.1 is the Secondary and 127.0.0.2 is the Primary.
+-
+-Start the new Secondary (Steps 2 and 3 above, but with primary_ip=3D127.0=
+.0.2),
+-then on the old Secondary:
+-{"execute": "drive-mirror", "arguments":{ "device": "colo-disk0", "job-id=
+": "resync", "target": "nbd://127.0.0.1:9999/parent0", "mode": "existing",=
+ "format": "raw", "sync": "full"} }
+-
+-Wait until disk is synced, then:
+-{"execute": "stop"}
+-{"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
+-
+-{"execute": "human-monitor-command", "arguments":{ "command-line": "drive=
+_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,file.h=
+ost=3D127.0.0.1,file.port=3D9999,file.export=3Dparent0,node-name=3Dreplica=
+tion0"}}
+-{"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0", "n=
+ode": "replication0" } }
+-
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-mirror", "id"=
+: "m0", "insert": "before", "position": "id=3Drew0", "netdev": "hn0", "que=
+ue": "tx", "outdev": "mirror0" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-redirector", =
+"id": "redire0", "insert": "before", "position": "id=3Drew0", "netdev": "h=
+n0", "queue": "rx", "indev": "compare_out" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "filter-redirector", =
+"id": "redire1", "insert": "before", "position": "id=3Drew0", "netdev": "h=
+n0", "queue": "rx", "outdev": "compare0" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "iothread", "id": "io=
+thread1" } }
+-{"execute": "object-add", "arguments":{ "qom-type": "colo-compare", "id":=
+ "comp0", "primary_in": "compare0-0", "secondary_in": "compare1", "outdev"=
+: "compare_out0", "iothread": "iothread1" } }
+-
+-{"execute": "migrate-set-capabilities", "arguments":{ "capabilities": [ {=
+"capability": "x-colo", "state": true } ] } }
+-{"execute": "migrate", "arguments":{ "uri": "tcp:127.0.0.1:9998" } }
+-
+-=3D=3D TODO =3D=3D
+-1. Support shared storage.
+-2. Develop the heartbeat part.
+-3. Reduce checkpoint VM=E2=80=99s downtime while doing checkpoint.
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index 427b020483104f6589878bbf255a367ae114c61b..6268c41aea9c74dc3e59d896b5=
+ae082360bfbb1a 100644
+=2D-- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -41,3 +41,4 @@ or Hypervisor.Framework.
+    igvm
+    vm-templating
+    sriov
++   qemu-colo
+diff --git a/docs/system/qemu-colo.rst b/docs/system/qemu-colo.rst
 new file mode 100644
-index 0000000000000000000000000000000000000000..598a1d3821ed0a903187327020=
-27cebad47352fd
+index 0000000000000000000000000000000000000000..4b5fbbf398f8a5c4ea6baad615=
+bde94b2b4678d2
 =2D-- /dev/null
-+++ b/tests/qtest/migration/colo-tests.c
-@@ -0,0 +1,198 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QTest testcases for COLO migration
-+ *
-+ * Copyright (c) 2025 Lukas Straub <lukasstraub2@web.de>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or lat=
-er.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
++++ b/docs/system/qemu-colo.rst
+@@ -0,0 +1,360 @@
++Qemu COLO Fault Tolerance
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "migration/framework.h"
-+#include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
-+#include "qemu/module.h"
++| Copyright (c) 2016 Intel Corporation
++| Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
++| Copyright (c) 2016 Fujitsu, Corp.
 +
-+static int test_colo_common(MigrateCommon *args,
-+                            bool failover_during_checkpoint,
-+                            bool primary_failover)
-+{
-+    QTestState *from, *to;
-+    void *data_hook =3D NULL;
++This work is licensed under the terms of the GNU GPL, version 2 or later.
++See the COPYING file in the top-level directory.
 +
-+    /*
-+     * For the COLO test, both VMs will run in parallel. Thus both VMs wa=
-nt to
-+     * open the image read/write at the same time. Using read-only=3Don i=
-s not
-+     * possible here, because ide-hd does not support read-only backing i=
-mage.
-+     *
-+     * So use -snapshot, where each qemu instance creates its own writabl=
-e
-+     * snapshot internally while leaving the real image read-only.
-+     */
-+    args->start.opts_source =3D "-snapshot";
-+    args->start.opts_target =3D "-snapshot";
++This document gives an overview of COLO's design and how to use it.
 +
-+    /*
-+     * COLO migration code logs many errors when the migration socket
-+     * is shut down, these are expected so we hide them here.
-+     */
-+    args->start.hide_stderr =3D true;
++Background
++----------
++Virtual machine (VM) replication is a well known technique for providing
++application-agnostic software-implemented hardware fault tolerance,
++also known as "non-stop service".
 +
-+    /*
-+     * Test with yank with out of band capability since that is how it is
-+     * used in production.
-+     */
-+    args->start.oob =3D true;
-+    args->start.caps[MIGRATION_CAPABILITY_X_COLO] =3D true;
++COLO (COarse-grained LOck-stepping) is a high availability solution.
++Both primary VM (PVM) and secondary VM (SVM) run in parallel. They receiv=
+e the
++same request from client, and generate response in parallel too.
++If the response packets from PVM and SVM are identical, they are released
++immediately. Otherwise, a VM checkpoint (on demand) is conducted.
 +
-+    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+        return -1;
-+    }
++Architecture
++------------
++The architecture of COLO is shown in the diagram below.
++It consists of a pair of networked physical nodes:
++The primary node running the PVM, and the secondary node running the SVM
++to maintain a valid replica of the PVM.
++PVM and SVM execute in parallel and generate output of response packets f=
+or
++client requests according to the application semantics.
 +
-+    migrate_set_parameter_int(from, "x-checkpoint-delay", 300);
++The incoming packets from the client or external network are received by =
+the
++primary node, and then forwarded to the secondary node, so that both the =
+PVM
++and the SVM are stimulated with the same requests.
 +
-+    if (args->start_hook) {
-+        data_hook =3D args->start_hook(from, to);
-+    }
++COLO receives the outbound packets from both the PVM and SVM and compares=
+ them
++before allowing the output to be sent to clients.
 +
-+    migrate_ensure_converge(from);
-+    wait_for_serial("src_serial");
++The SVM is qualified as a valid replica of the PVM, as long as it generat=
+es
++identical responses to all client requests. Once the differences in the o=
+utputs
++are detected between the PVM and SVM, COLO withholds transmission of the
++outbound packets until it has successfully synchronized the PVM state to =
+the SVM.
 +
-+    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
++Overview::
 +
-+    wait_for_migration_status(from, "colo", NULL);
-+    wait_for_resume(to, get_dst());
++      Primary Node                                                       =
+     Secondary Node
++    +------------+  +-----------------------+       +--------------------=
+=2D---+  +------------+
++    |            |  |       HeartBeat       +<----->+       HeartBeat    =
+    |  |            |
++    | Primary VM |  +-----------+-----------+       +-----------+--------=
+=2D---+  |Secondary VM|
++    |            |              |                               |        =
+       |            |
++    |            |  +-----------|-----------+       +-----------|--------=
+=2D---+  |            |
++    |            |  |QEMU   +---v----+      |       |QEMU  +----v---+    =
+    |  |            |
++    |            |  |       |Failover|      |       |      |Failover|    =
+    |  |            |
++    |            |  |       +--------+      |       |      +--------+    =
+    |  |            |
++    |            |  |   +---------------+   |       |   +---------------+=
+    |  |            |
++    |            |  |   | VM Checkpoint +-------------->+ VM Checkpoint |=
+    |  |            |
++    |            |  |   +---------------+   |       |   +---------------+=
+    |  |            |
++    |Requests<--------------------------\ /-----------------\ /----------=
+=2D---------->Requests|
++    |            |  |                   ^ ^ |       |       | |          =
+    |  |            |
++    |Responses+---------------------\ /-|-|------------\ /---------------=
+=2D---------+Responses|
++    |            |  |               | | | | |       |  | |  | |          =
+    |  |            |
++    |            |  | +-----------+ | | | | |       |  | |  | | +--------=
+=2D-+ |  |            |
++    |            |  | | COLO disk | | | | | |       |  | |  | | | COLO di=
+sk| |  |            |
++    |            |  | |   Manager +---------------------------->| Manager=
+  | |  |            |
++    |            |  | ++----------+ v v | | |       |  | v  v | +--------=
+-++ |  |            |
++    |            |  |  |+-----------+-+-+-++|       | ++-+--+-+---------+=
+ |  |  |            |
++    |            |  |  ||   COLO Proxy     ||       | |   COLO Proxy    |=
+ |  |  |            |
++    |            |  |  || (compare packet  ||       | |(adjust sequence |=
+ |  |  |            |
++    |            |  |  ||and mirror packet)||       | |    and ACK)     |=
+ |  |  |            |
++    |            |  |  |+------------+---+-+|       | +-----------------+=
+ |  |  |            |
++    +------------+  +-----------------------+       +--------------------=
+=2D---+  +------------+
++    +------------+     |             |   |                               =
+ |     +------------+
++    | VM Monitor |     |             |   |                               =
+ |     | VM Monitor |
++    +------------+     |             |   |                               =
+ |     +------------+
++    +---------------------------------------+       +--------------------=
+=2D-------------------+
++    |   Kernel         |             |   |  |       |   Kernel           =
+ |                  |
++    +---------------------------------------+       +--------------------=
+=2D-------------------+
++                       |             |   |                               =
+ |
++        +--------------v+  +---------v---+--+       +------------------+ =
++v-------------+
++        |   Storage     |  |External Network|       | External Network | =
+|   Storage    |
++        +---------------+  +----------------+       +------------------+ =
++--------------+
 +
-+    wait_for_serial("src_serial");
-+    wait_for_serial("dest_serial");
++Components introduction
++^^^^^^^^^^^^^^^^^^^^^^^
++You can see there are several components in COLO's diagram of architectur=
+e.
++Their functions are described below.
 +
-+    /* wait for 3 checkpoints */
-+    for (int i =3D 0; i < 3; i++) {
-+        qtest_qmp_eventwait(to, "RESUME");
-+        wait_for_serial("src_serial");
-+        wait_for_serial("dest_serial");
-+    }
++HeartBeat
++~~~~~~~~~
++Runs on both the primary and secondary nodes, to periodically check platf=
+orm
++availability. When the primary node suffers a hardware fail-stop failure,
++the heartbeat stops responding, the secondary node will trigger a failove=
+r
++as soon as it determines the absence.
 +
-+    if (failover_during_checkpoint) {
-+        qtest_qmp_eventwait(to, "STOP");
-+    }
-+    if (primary_failover) {
-+        qtest_qmp_assert_success(from, "{'exec-oob': 'yank', 'id': 'yank-=
-cmd', "
-+                                            "'arguments': {'instances':"
-+                                                "[{'type': 'migration'}]}=
-}");
-+        qtest_qmp_assert_success(from, "{'execute': 'x-colo-lost-heartbea=
-t'}");
-+        wait_for_serial("src_serial");
-+    } else {
-+        qtest_qmp_assert_success(to, "{'exec-oob': 'yank', 'id': 'yank-cm=
-d', "
-+                                        "'arguments': {'instances':"
-+                                            "[{'type': 'migration'}]}}");
-+        qtest_qmp_assert_success(to, "{'execute': 'x-colo-lost-heartbeat'=
-}");
-+        wait_for_serial("dest_serial");
-+    }
++COLO disk Manager
++~~~~~~~~~~~~~~~~~
++When primary VM writes data into image, the colo disk manager captures th=
+is data
++and sends it to secondary VM's which makes sure the context of secondary =
+VM's
++image is consistent with the context of primary VM 's image.
++For more details, please refer to docs/block-replication.txt.
 +
-+    if (args->end_hook) {
-+        args->end_hook(from, to, data_hook);
-+    }
++Checkpoint/Failover Controller
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Modifications of save/restore flow to realize continuous migration,
++to make sure the state of VM in Secondary side is always consistent with =
+VM in
++Primary side.
 +
-+    migrate_end(from, to, !primary_failover);
++COLO Proxy
++~~~~~~~~~~
++Delivers packets to Primary and Secondary, and then compare the responses=
+ from
++both side. Then decide whether to start a checkpoint according to some ru=
+les.
++Please refer to docs/colo-proxy.txt for more information.
 +
-+    return 0;
-+}
++Note:
++HeartBeat has not been implemented yet, so you need to trigger failover p=
+rocess
++by using 'x-colo-lost-heartbeat' command.
 +
-+static void test_colo_plain_common(MigrateCommon *args,
-+                                   bool failover_during_checkpoint,
-+                                   bool primary_failover)
-+{
-+    args->listen_uri =3D "tcp:127.0.0.1:0";
-+    test_colo_common(args, failover_during_checkpoint, primary_failover);
-+}
++COLO operation status
++^^^^^^^^^^^^^^^^^^^^^
 +
-+static void *hook_start_multifd(QTestState *from, QTestState *to)
-+{
-+    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none"=
-);
-+}
++Overview::
 +
-+static void test_colo_multifd_common(MigrateCommon *args,
-+                                     bool failover_during_checkpoint,
-+                                     bool primary_failover)
-+{
-+    args->listen_uri =3D "defer";
-+    args->start_hook =3D hook_start_multifd;
-+    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] =3D true;
-+    test_colo_common(args, failover_during_checkpoint, primary_failover);
-+}
++    +-----------------+
++    |                 |
++    |    Start COLO   |
++    |                 |
++    +--------+--------+
++             |
++             |  Main qmp command:
++             |  migrate-set-capabilities with x-colo
++             |  migrate
++             |
++             v
++    +--------+--------+
++    |                 |
++    |  COLO running   |
++    |                 |
++    +--------+--------+
++             |
++             |  Main qmp command:
++             |  x-colo-lost-heartbeat
++             |  or
++             |  some error happened
++             v
++    +--------+--------+
++    |                 |  send qmp event:
++    |  COLO failover  |  COLO_EXIT
++    |                 |
++    +-----------------+
 +
-+static void test_colo_plain_primary_failover(char *name, MigrateCommon *a=
-rgs)
-+{
-+    test_colo_plain_common(args, false, true);
-+}
 +
-+static void test_colo_plain_secondary_failover(char *name, MigrateCommon =
-*args)
-+{
-+    test_colo_plain_common(args, false, false);
-+}
++COLO use the qmp command to switch and report operation status.
++The diagram just shows the main qmp command, you can get the detail
++in test procedure.
 +
-+static void test_colo_multifd_primary_failover(char *name, MigrateCommon =
-*args)
-+{
-+    test_colo_multifd_common(args, false, true);
-+}
++Test procedure
++--------------
++Note: Here we are running both instances on the same host for testing,
++change the IP Addresses if you want to run it on two hosts. Initially
++``127.0.0.1`` is the Primary Host and ``127.0.0.2`` is the Secondary Host=
+.
 +
-+static void test_colo_multifd_secondary_failover(char *name,
-+                                                 MigrateCommon *args)
-+{
-+    test_colo_multifd_common(args, false, false);
-+}
++Startup qemu
++^^^^^^^^^^^^
++**1. Primary**:
++Note: Initially, ``$imagefolder/primary.qcow2`` needs to be copied to all=
+ hosts.
++You don't need to change any IP's here, because ``0.0.0.0`` listens on an=
+y
++interface. The chardev's with ``127.0.0.1`` IP's loopback to the local qe=
+mu
++instance::
 +
-+static void test_colo_plain_primary_failover_checkpoint(char *name,
-+                                                        MigrateCommon *ar=
-gs)
-+{
-+    test_colo_plain_common(args, true, true);
-+}
++    # imagefolder=3D"/mnt/vms/colo-test-primary"
 +
-+static void test_colo_plain_secondary_failover_checkpoint(char *name,
-+                                                          MigrateCommon *=
-args)
-+{
-+    test_colo_plain_common(args, true, false);
-+}
++    # qemu-system-x86_64 -enable-kvm -cpu qemu64,kvmclock=3Don -m 512 -sm=
+p 1 -qmp stdio \
++       -device piix3-usb-uhci -device usb-tablet -name primary \
++       -netdev tap,id=3Dhn0,vhost=3Doff,helper=3D/usr/lib/qemu/qemu-bridg=
+e-helper \
++       -device rtl8139,id=3De0,netdev=3Dhn0 \
++       -chardev socket,id=3Dmirror0,host=3D0.0.0.0,port=3D9003,server=3Do=
+n,wait=3Doff \
++       -chardev socket,id=3Dcompare1,host=3D0.0.0.0,port=3D9004,server=3D=
+on,wait=3Don \
++       -chardev socket,id=3Dcompare0,host=3D127.0.0.1,port=3D9001,server=
+=3Don,wait=3Doff \
++       -chardev socket,id=3Dcompare0-0,host=3D127.0.0.1,port=3D9001 \
++       -chardev socket,id=3Dcompare_out,host=3D127.0.0.1,port=3D9005,serv=
+er=3Don,wait=3Doff \
++       -chardev socket,id=3Dcompare_out0,host=3D127.0.0.1,port=3D9005 \
++       -object filter-mirror,id=3Dm0,netdev=3Dhn0,queue=3Dtx,outdev=3Dmir=
+ror0 \
++       -object filter-redirector,netdev=3Dhn0,id=3Dredire0,queue=3Drx,ind=
+ev=3Dcompare_out \
++       -object filter-redirector,netdev=3Dhn0,id=3Dredire1,queue=3Drx,out=
+dev=3Dcompare0 \
++       -object iothread,id=3Diothread1 \
++       -object colo-compare,id=3Dcomp0,primary_in=3Dcompare0-0,secondary_=
+in=3Dcompare1,\
++    outdev=3Dcompare_out0,iothread=3Diothread1 \
++       -drive if=3Dide,id=3Dcolo-disk0,driver=3Dquorum,read-pattern=3Dfif=
+o,vote-threshold=3D1,\
++    children.0.file.filename=3D$imagefolder/primary.qcow2,children.0.driv=
+er=3Dqcow2 -S
 +
-+static void test_colo_multifd_primary_failover_checkpoint(char *name,
-+                                                          MigrateCommon *=
-args)
-+{
-+    test_colo_multifd_common(args, true, true);
-+}
 +
-+static void test_colo_multifd_secondary_failover_checkpoint(char *name,
-+                                                            MigrateCommon=
- *args)
-+{
-+    test_colo_multifd_common(args, true, false);
-+}
++**2. Secondary**:
++Note: Active and hidden images need to be created only once and the
++size should be the same as ``primary.qcow2``. Again, you don't need to ch=
+ange
++any IP's here, except for the ``$primary_ip`` variable::
 +
-+void migration_test_add_colo(MigrationTestEnv *env)
-+{
-+    if (!env->full_set) {
-+        return;
-+    }
++    # imagefolder=3D"/mnt/vms/colo-test-secondary"
++    # primary_ip=3D127.0.0.1
 +
-+    migration_test_add("/migration/colo/plain/primary_failover",
-+                       test_colo_plain_primary_failover);
-+    migration_test_add("/migration/colo/plain/secondary_failover",
-+                       test_colo_plain_secondary_failover);
++    # qemu-img create -f qcow2 $imagefolder/secondary-active.qcow2 10G
 +
-+    migration_test_add("/migration/colo/multifd/primary_failover",
-+                       test_colo_multifd_primary_failover);
-+    migration_test_add("/migration/colo/multifd/secondary_failover",
-+                       test_colo_multifd_secondary_failover);
++    # qemu-img create -f qcow2 $imagefolder/secondary-hidden.qcow2 10G
 +
-+    migration_test_add("/migration/colo/plain/primary_failover_checkpoint=
-",
-+                       test_colo_plain_primary_failover_checkpoint);
-+    migration_test_add("/migration/colo/plain/secondary_failover_checkpoi=
-nt",
-+                       test_colo_plain_secondary_failover_checkpoint);
++    # qemu-system-x86_64 -enable-kvm -cpu qemu64,kvmclock=3Don -m 512 -sm=
+p 1 -qmp stdio \
++       -device piix3-usb-uhci -device usb-tablet -name secondary \
++       -netdev tap,id=3Dhn0,vhost=3Doff,helper=3D/usr/lib/qemu/qemu-bridg=
+e-helper \
++       -device rtl8139,id=3De0,netdev=3Dhn0 \
++       -chardev socket,id=3Dred0,host=3D$primary_ip,port=3D9003,reconnect=
+-ms=3D1000 \
++       -chardev socket,id=3Dred1,host=3D$primary_ip,port=3D9004,reconnect=
+-ms=3D1000 \
++       -object filter-redirector,id=3Df1,netdev=3Dhn0,queue=3Dtx,indev=3D=
+red0 \
++       -object filter-redirector,id=3Df2,netdev=3Dhn0,queue=3Drx,outdev=
+=3Dred1 \
++       -object filter-rewriter,id=3Drew0,netdev=3Dhn0,queue=3Dall \
++       -drive if=3Dnone,id=3Dparent0,file.filename=3D$imagefolder/primary=
+.qcow2,driver=3Dqcow2 \
++       -drive if=3Dnone,id=3Dchilds0,driver=3Dreplication,mode=3Dsecondar=
+y,file.driver=3Dqcow2,\
++    top-id=3Dcolo-disk0,file.file.filename=3D$imagefolder/secondary-activ=
+e.qcow2,\
++    file.backing.driver=3Dqcow2,file.backing.file.filename=3D$imagefolder=
+/secondary-hidden.qcow2,\
++    file.backing.backing=3Dparent0 \
++       -drive if=3Dide,id=3Dcolo-disk0,driver=3Dquorum,read-pattern=3Dfif=
+o,vote-threshold=3D1,\
++    children.0=3Dchilds0 \
++       -incoming tcp:0.0.0.0:9998
 +
-+    migration_test_add("/migration/colo/multifd/primary_failover_checkpoi=
-nt",
-+                       test_colo_multifd_primary_failover_checkpoint);
-+    migration_test_add("/migration/colo/multifd/secondary_failover_checkp=
-oint",
-+                       test_colo_multifd_secondary_failover_checkpoint);
-+}
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/fra=
-mework.h
-index 40984d04930da2d181326d9f6a742bde49018103..80eef758932ce9c301ed6c0f63=
-83d18756144870 100644
-=2D-- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -264,5 +264,10 @@ void migration_test_add_file(MigrationTestEnv *env);
- void migration_test_add_precopy(MigrationTestEnv *env);
- void migration_test_add_cpr(MigrationTestEnv *env);
- void migration_test_add_misc(MigrationTestEnv *env);
-+#ifdef CONFIG_REPLICATION
-+void migration_test_add_colo(MigrationTestEnv *env);
-+#else
-+static inline void migration_test_add_colo(MigrationTestEnv *env) {};
-+#endif
-=20
- #endif /* TEST_FRAMEWORK_H */
++
++**3.** On Secondary VM's QEMU monitor, issue command::
++
++    {"execute":"qmp_capabilities"}
++    {"execute": "migrate-set-capabilities", "arguments": {"capabilities":=
+ [ {"capability": "x-colo", "state": true } ] } }
++    {"execute": "nbd-server-start", "arguments": {"addr": {"type": "inet"=
+, "data": {"host": "0.0.0.0", "port": "9999"} } } }
++    {"execute": "nbd-server-add", "arguments": {"device": "parent0", "wri=
+table": true } }
++
++Note:
++  a. The qmp command ``nbd-server-start`` and ``nbd-server-add`` must be =
+run
++     before running the qmp command migrate on primary QEMU
++  b. Active disk, hidden disk and nbd target's length should be the
++     same.
++  c. It is better to put active disk and hidden disk in ramdisk. They
++     will be merged into the parent disk on failover.
++
++**4.** On Primary VM's QEMU monitor, issue command::
++
++    {"execute":"qmp_capabilities"}
++    {"execute": "human-monitor-command", "arguments": {"command-line": "d=
+rive_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,fi=
+le.host=3D127.0.0.2,file.port=3D9999,file.export=3Dparent0,node-name=3Drep=
+lication0"}}
++    {"execute": "x-blockdev-change", "arguments":{"parent": "colo-disk0",=
+ "node": "replication0" } }
++    {"execute": "migrate-set-capabilities", "arguments": {"capabilities":=
+ [ {"capability": "x-colo", "state": true } ] } }
++    {"execute": "migrate", "arguments": {"uri": "tcp:127.0.0.2:9998" } }
++
++Note:
++  a. There should be only one NBD Client for each primary disk.
++  b. The qmp command line must be run after running qmp command line in
++     secondary qemu.
++
++**5.** After the above steps, you will see, whenever you make changes to =
+PVM, SVM will be synced.
++You can issue command ``{ "execute": "migrate-set-parameters" , "argument=
+s":{ "x-checkpoint-delay": 2000 } }``
++to change the idle checkpoint period time
++
++Failover test
++^^^^^^^^^^^^^
++You can kill one of the VMs and Failover on the surviving VM:
++
++If you killed the Secondary, then follow "Primary Failover".
++After that, if you want to resume the replication, follow "Primary resume=
+ replication"
++
++If you killed the Primary, then follow "Secondary Failover".
++After that, if you want to resume the replication, follow "Secondary resu=
+me replication"
++
++Primary Failover
++~~~~~~~~~~~~~~~~
++The Secondary died, resume on the Primary::
++
++    {"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0"=
+, "child": "children.1"} }
++    {"execute": "human-monitor-command", "arguments":{ "command-line": "d=
+rive_del replication0" } }
++    {"execute": "object-del", "arguments":{ "id": "comp0" } }
++    {"execute": "object-del", "arguments":{ "id": "iothread1" } }
++    {"execute": "object-del", "arguments":{ "id": "m0" } }
++    {"execute": "object-del", "arguments":{ "id": "redire0" } }
++    {"execute": "object-del", "arguments":{ "id": "redire1" } }
++    {"execute": "x-colo-lost-heartbeat" }
++
++Secondary Failover
++~~~~~~~~~~~~~~~~~~
++The Primary died, resume on the Secondary and prepare to become the new P=
+rimary::
++
++    {"execute": "nbd-server-stop"}
++    {"execute": "x-colo-lost-heartbeat"}
++
++    {"execute": "object-del", "arguments":{ "id": "f2" } }
++    {"execute": "object-del", "arguments":{ "id": "f1" } }
++    {"execute": "chardev-remove", "arguments":{ "id": "red1" } }
++    {"execute": "chardev-remove", "arguments":{ "id": "red0" } }
++
++    {"execute": "chardev-add", "arguments":{ "id": "mirror0", "backend": =
+{"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "0=
+.0.0.0", "port": "9003" } }, "server": true } } } }
++    {"execute": "chardev-add", "arguments":{ "id": "compare1", "backend":=
+ {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "=
+0.0.0.0", "port": "9004" } }, "server": true } } } }
++    {"execute": "chardev-add", "arguments":{ "id": "compare0", "backend":=
+ {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host": "=
+127.0.0.1", "port": "9001" } }, "server": true } } } }
++    {"execute": "chardev-add", "arguments":{ "id": "compare0-0", "backend=
+": {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host":=
+ "127.0.0.1", "port": "9001" } }, "server": false } } } }
++    {"execute": "chardev-add", "arguments":{ "id": "compare_out", "backen=
+d": {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host"=
+: "127.0.0.1", "port": "9005" } }, "server": true } } } }
++    {"execute": "chardev-add", "arguments":{ "id": "compare_out0", "backe=
+nd": {"type": "socket", "data": {"addr": { "type": "inet", "data": { "host=
+": "127.0.0.1", "port": "9005" } }, "server": false } } } }
++
++Primary resume replication
++~~~~~~~~~~~~~~~~~~~~~~~~~~
++Resume replication after new Secondary is up.
++
++Start the new Secondary (Steps 2 and 3 above), then on the Primary::
++
++    {"execute": "drive-mirror", "arguments":{ "device": "colo-disk0", "jo=
+b-id": "resync", "target": "nbd://127.0.0.2:9999/parent0", "mode": "existi=
+ng", "format": "raw", "sync": "full"} }
++
++Wait until disk is synced, then::
++
++    {"execute": "stop"}
++    {"execute": "block-job-cancel", "arguments":{ "device": "resync"} }
++
++    {"execute": "human-monitor-command", "arguments":{ "command-line": "d=
+rive_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,fi=
+le.host=3D127.0.0.2,file.port=3D9999,file.export=3Dparent0,node-name=3Drep=
+lication0"}}
++    {"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0"=
+, "node": "replication0" } }
++
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-mirror", =
+"id": "m0", "netdev": "hn0", "queue": "tx", "outdev": "mirror0" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-redirecto=
+r", "id": "redire0", "netdev": "hn0", "queue": "rx", "indev": "compare_out=
+" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-redirecto=
+r", "id": "redire1", "netdev": "hn0", "queue": "rx", "outdev": "compare0" =
+} }
++    {"execute": "object-add", "arguments":{ "qom-type": "iothread", "id":=
+ "iothread1" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "colo-compare", "=
+id": "comp0", "primary_in": "compare0-0", "secondary_in": "compare1", "out=
+dev": "compare_out0", "iothread": "iothread1" } }
++
++    {"execute": "migrate-set-capabilities", "arguments":{ "capabilities":=
+ [ {"capability": "x-colo", "state": true } ] } }
++    {"execute": "migrate", "arguments":{ "uri": "tcp:127.0.0.2:9998" } }
++
++Note:
++If this Primary previously was a Secondary, then we need to insert the
++filters before the filter-rewriter by using the
++""insert": "before", "position": "id=3Drew0"" Options. See below.
++
++Secondary resume replication
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Become Primary and resume replication after new Secondary is up. Note
++that now 127.0.0.1 is the Secondary and 127.0.0.2 is the Primary.
++
++Start the new Secondary (Steps 2 and 3 above, but with primary_ip=3D127.0=
+.0.2),
++then on the old Secondary::
++
++    {"execute": "drive-mirror", "arguments":{ "device": "colo-disk0", "jo=
+b-id": "resync", "target": "nbd://127.0.0.1:9999/parent0", "mode": "existi=
+ng", "format": "raw", "sync": "full"} }
++
++Wait until disk is synced, then::
++
++    {"execute": "stop"}
++    {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
++
++    {"execute": "human-monitor-command", "arguments":{ "command-line": "d=
+rive_add -n buddy driver=3Dreplication,mode=3Dprimary,file.driver=3Dnbd,fi=
+le.host=3D127.0.0.1,file.port=3D9999,file.export=3Dparent0,node-name=3Drep=
+lication0"}}
++    {"execute": "x-blockdev-change", "arguments":{ "parent": "colo-disk0"=
+, "node": "replication0" } }
++
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-mirror", =
+"id": "m0", "insert": "before", "position": "id=3Drew0", "netdev": "hn0", =
+"queue": "tx", "outdev": "mirror0" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-redirecto=
+r", "id": "redire0", "insert": "before", "position": "id=3Drew0", "netdev"=
+: "hn0", "queue": "rx", "indev": "compare_out" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "filter-redirecto=
+r", "id": "redire1", "insert": "before", "position": "id=3Drew0", "netdev"=
+: "hn0", "queue": "rx", "outdev": "compare0" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "iothread", "id":=
+ "iothread1" } }
++    {"execute": "object-add", "arguments":{ "qom-type": "colo-compare", "=
+id": "comp0", "primary_in": "compare0-0", "secondary_in": "compare1", "out=
+dev": "compare_out0", "iothread": "iothread1" } }
++
++    {"execute": "migrate-set-capabilities", "arguments":{ "capabilities":=
+ [ {"capability": "x-colo", "state": true } ] } }
++    {"execute": "migrate", "arguments":{ "uri": "tcp:127.0.0.1:9998" } }
++
++TODO
++----
++1. Support shared storage.
++2. Develop the heartbeat part.
++3. Reduce checkpoint VM=E2=80=99s downtime while doing checkpoint.
 
 =2D-=20
 2.39.5
