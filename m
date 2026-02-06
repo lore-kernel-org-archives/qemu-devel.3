@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA826ECD9BF
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C8A9E91297
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCcl-0004eG-Qd; Thu, 05 Feb 2026 22:35:15 -0500
+	id 1voCcY-0004Xl-Gp; Thu, 05 Feb 2026 22:35:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCcj-0004ds-Uk
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:14 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1voCcW-0004X3-I2
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:00 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCci-00051p-Bp
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:13 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a9296b3926so13015765ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:35:11 -0800 (PST)
+ id 1voCcU-0004g0-2k
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:00 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a7bced39cfso17706105ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770348910; x=1770953710; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770348884; x=1770953684; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=y+pB7M6C+Pi+dUxO5wPh0mjCgoVZ0PsV0VZ+zshKNtI=;
- b=jNEq5PlKx+xqpdxi1V3pN43s0gtROjEQ+yeSc+j+HJy+68OWacHvZpLcmSGUYlLCUW
- Ce0jqHttqYPGE5La4Y5qAFWNyMeljvS3Z4MWihucR+XnMant71kOZgMeFWP7t9DdWmAF
- EmpuXsm8EtfYshCQrpDtM2ZlNJI3jBQJDugkGDZ83wkju8CBemtQUUv953p3jgKIHW1J
- XQZ9WxZ/LsiTLdgTnf521agnO/DCzDM49EO5sK/GtUL97H8/WweqLmtv7nAO5qCWM7uj
- 1E3ABB34qjxZckcSlCJ0tGRGiiiVD+Tv/ZJSrxHCPACoiRH8yasrwhkmDSkRL3TklJnx
- +f4Q==
+ bh=4nIhgBYzj/pMMe7C5ff1M39odY/oil8Oq87UlRR6ips=;
+ b=nAS0iIcycz+8MRBQxW9AtXKlt4SDFcwZ9lAnL/U0j8ZnjaOBtbQGtAJdH66GF3ysK3
+ SZiYyzJ0M47/iybe10ZqvEDswoCDMbI+U6qpr5/BbW0GtlFW4UsJVDBCl9aPyjFiK7MK
+ psRJJcTVWE4bRc3o1SPn1iKEuKdqYFJUYlkWpyXXXOsWUPzgxrNpdwyTg3v3K0re+me0
+ FwUvf2agq+Jw9+UPFpRB89nkovahX4icrkTjiRMPcHbpXJlJ9DVbwR4NSF7Ai9QZpgdj
+ IGZs7xpcG/kCsKC5sMgmDZk9SEyfN8Zo1pYqDGw2oS0MFHSe4WZ5xvKD0RCNFM23mNdo
+ VmIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770348910; x=1770953710;
+ d=1e100.net; s=20230601; t=1770348884; x=1770953684;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=y+pB7M6C+Pi+dUxO5wPh0mjCgoVZ0PsV0VZ+zshKNtI=;
- b=ccoHauy2F8PfSs/OM2bYaDYTVMMwn4TGta6ePqq9vInCxXxxl6va01KxXPOLml+E5z
- 6mr1/ml+/sSd/t9Qo5IkB325N0W/89mC8CmMfd3/6ZGZIY48qOFo/h3iDwuJh2QavcJB
- i7zl1N2Pf+O9b6CNQFvmH9aSaqqjwXLE8BqFPMieGdkzAvSIiBFdTvtaH6TgDjHXCY9a
- MUVhsI0xzL2rI9uYlQK75PEneVvcNp7f3mZ1foa1h0kXaZSQHiYeSKMKsjXcUOVIdoRM
- jbaScYx3E2PKa6TPrlUacF5uX94ojV8K2XFRDN0gM7ogWzSn+MGPIm4pRo7FbhFrxgg5
- 92qA==
+ bh=4nIhgBYzj/pMMe7C5ff1M39odY/oil8Oq87UlRR6ips=;
+ b=sH6eLZrDo46iT7v0S6LybHNbovOYRvOSeyWIMTC0NKMhw+n2ghlSymGne9Mi7lshv/
+ 1Z0RyHiKHiFcdx7B3Z191XjlKlop5oaYArD+s/KjYmFQExLiNdLRNUXiYthiQLJw+vEv
+ 7fNN+Ho45VK/50uQnmkVOQkuPKN3c5sMiihG1sF9Fl3IbmdEehKt/eEctEXG++axKEka
+ MA+BX/GZEdYwQDWAdL6hrPPVhyUvVpDd32pSm82Wk8t0vIPav3YkRb9YgIf2M347xWvk
+ nXemKNKz8yJlnVmgtKH2blOUY2nqqUYJNxgE1izX81oSLpGTLOo2yZva0zkO/LS7hEjV
+ sMpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuWWumclVTOGPl/j9SiquFJvEZyYjjjkSYd/5sDbtnW/DonSjfUe+HiTbMOZvFEQnPcRgFMg6Lv36F@nongnu.org
-X-Gm-Message-State: AOJu0YwY7m3WDCTAMPgRCc0xD3gEa37h5wHV/3sxjC8SoctuG1nyiAHR
- BNNtHDfliDHGs7TPDDmiPLM3t+T75hm4gWnuJQUVJo0hXjRx6acVR/9W5ePINZTF4pcDAYYPoov
- AQb1gECaIEw==
-X-Gm-Gg: AZuq6aIjwtuxMhPmvI+nGouwx948e4nK3vMWMBsQMxq0G+io3T5GOdV/yKD1ptCEfRe
- SCyusIQPP5joONC/Xnz5xKivIq6oWTC1cSJBO52MaJBVvqg1OBjv1oUDWv5deP6M9oZZ/hCky3U
- wgcoJb+mV921JdZ8IdCAKZktgXxPjYdbh6DGlBVs/d41oR9K3iPDzJF+QWDCT9UER2jwRYdzzK6
- P3LsPfA5p1gYuxYXxC9q2IEO86iZwgtioWcKycefjwrMyDRq8EmHIWezG3/aAWvtWRcfa0eN6oZ
- WWUNBfKR/+/bYFQ0EN+jF126GVg97S206oktiz6GmgMLV0Y1xBC/fa1nQqTu5aW9Tq5FDQj0+oe
- +xFcqosBWt4w18wg+vkQffKB3//z3bAOFxTlhm0scY1pBQhPV5oCBbd3laco8RqxG3/U27qp3pw
- R6tIRqJKPAUt3frjw9wK8m/EGREg6amoxgGh/AdEjG5mlzY8o2hY8npvSvPHjxcqzTj7SuMXr4r
- aVF+ztmzU5rp7i9jZRy3bIhL/94gbenSGb0JioknbQ=
-X-Received: by 2002:a17:903:1b04:b0:2a0:d05c:7de3 with SMTP id
- d9443c01a7336-2a9516369f8mr14589665ad.15.1770348910478; 
- Thu, 05 Feb 2026 19:35:10 -0800 (PST)
+ AJvYcCWGrgkyksyLA9WxQRSjdH+AwAoTytexe0hMn6Cc7zBtmysQnbC6EKNvRrcCdJO+LfmOaH5umE9pjw4u@nongnu.org
+X-Gm-Message-State: AOJu0YydOK135B1pY5/VPWRSiac4p8i+DQaPxOPuSgNCmEnQ873s2f4X
+ RhbuHv1zNf0dJVhxxODsush7G460EVRligcWfHiIuUmQPpvacuNmTzOjArCK7A6oyJg=
+X-Gm-Gg: AZuq6aL0jCME+EFMgfzPfQhhAZ1ml5MC8shTSyiMgl2eOCe79SZkeX99wogs30YHpOY
+ +MsrfZNUcTcPgjglTn2Qyrm4D1u8aMh+tEKkxuNz9MEH6xS7ssA0antvc5MR4I/almOGsIzK+aR
+ pqJ1/K3x79CIEgW6k3/nq4TMm51/jo8iW5fiUXoUnuunhSS/8SG5l+HvJ5SP8LlpqWY8RvW7oKY
+ J68c/wHHuBkzay1q30IffQkD23kL4R0IaeLHVoKro2XJRjTrBXSTJJg6uPGvU9l75XOSvfHupis
+ aVvpyyZifpIfwgTNqnUBtfNpCUNpO4zek4WvmU8K4V1IlWK20Ys9bzjzKOfOwrW3nBXVKk8GynO
+ p2qpuLXSxJPE5mkiPxX+Am/yzUq+PJafUuTazUqgge8s1MOT+v0CvlX97odY3/nXqRT9EJqt1o4
+ IbQuneUBN6onrcIVIpHu8YdBDvjoRqZIZzaZErGFx7yZAnMqBEEryUqw5aJBVuuG2GvZ+4Hn8cn
+ OYZNq7RYKkNKlCQlRjAeLfdLMF47HK634PGVe+giZ4=
+X-Received: by 2002:a17:903:2351:b0:2a2:b293:27d2 with SMTP id
+ d9443c01a7336-2a9519beda3mr15502475ad.53.1770348884057; 
+ Thu, 05 Feb 2026 19:34:44 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
  (bg30dhzpdc341w7g29yn.ip6.superloop.au.
  [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824418b31c2sm726852b3a.50.2026.02.05.19.35.06
+ d9443c01a7336-2a951c7a047sm8139385ad.27.2026.02.05.19.34.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 19:35:09 -0800 (PST)
-Message-ID: <cad94913-b719-4c78-bc5d-073f454a8510@linaro.org>
-Date: Fri, 6 Feb 2026 13:35:03 +1000
+ Thu, 05 Feb 2026 19:34:43 -0800 (PST)
+Message-ID: <effcf620-704f-4d17-b3ce-1832742bd4e8@linaro.org>
+Date: Fri, 6 Feb 2026 13:34:36 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/24] bsd-user: Add System V message queue syscalls
+Subject: Re: [PATCH 22/24] bsd-user: Implement System V semaphore calls
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>,
@@ -84,14 +83,14 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
 References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-23-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-22-8d8ff0035372@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260205-bsd-user-claude-v1-23-8d8ff0035372@bsdimp.com>
+In-Reply-To: <20260205-bsd-user-claude-v1-22-8d8ff0035372@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,19 +116,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/6/26 03:26, Warner Losh wrote:
 > From: Stacey Son <sson@FreeBSD.org>
 > 
-> Connect the System V IPC message queue syscalls:
-> - msgctl(2): Message queue control
-> - msgget(2): Get message queue identifier
-> - msgsnd(2): Send message to queue
-> - msgrcv(2): Receive message from queue
+> Wire up semget(2) and semop(2) syscalls to get System V semaphore
+> implementation, as well the undocumented __semctl used to implement the
+> bits of the interface in libc.
 > 
 > Signed-off-by: Stacey Son <sson@FreeBSD.org>
 > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > ---
->   bsd-user/freebsd/os-syscall.c | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
+>   bsd-user/freebsd/os-syscall.c | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
+> 
+> diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+> index ca2f6fdb66..6e38007bdd 100644
+> --- a/bsd-user/freebsd/os-syscall.c
+> +++ b/bsd-user/freebsd/os-syscall.c
+> @@ -37,6 +37,7 @@
+>   #include "bsd-file.h"
+>   #include "bsd-mem.h"
+>   #include "bsd-proc.h"
+> +#include "bsd-misc.h"
+>   
+>   /* BSD dependent syscall shims */
+>   #include "os-stat.h"
+> @@ -879,6 +880,28 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+>           ret = do_bsd_shmdt(arg1);
+>           break;
+>   
+> +        /*
+> +         * System V Semaphores
+> +         */
+> +    case TARGET_FREEBSD_NR_semget: /* semget(2) */
+> +        ret = do_bsd_semget(arg1, arg2, arg3);
+> +        break;
+> +
+> +    case TARGET_FREEBSD_NR_semop: /* semop(2) */
+> +        ret = do_bsd_semop(arg1, arg2, arg3);
+> +        break;
+> +
+> +    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
+> +        /*
+> +         * The semun argument to semctl is passed by value, so dereference the
+> +         * ptr argument.
+> +         */
+> +        abi_ulong atptr;
+> +        get_user_ual(atptr, (abi_ulong)arg4);
+> +        ret = do_bsd___semctl(arg1, arg2, arg3,
+> +                (union target_semun)(abi_ulong) atptr);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Eh?  Does this really compile, casting an integer to a union?
+Something seems very confused here.
+
 
 r~
 
