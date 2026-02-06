@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED153ECD9BF
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E53ECD9BF
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCOh-0001vf-UM; Thu, 05 Feb 2026 22:20:43 -0500
+	id 1voCOe-0001iO-1F; Thu, 05 Feb 2026 22:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO9-0000Vd-4w; Thu, 05 Feb 2026 22:20:19 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1voCO5-0000Uu-WA; Thu, 05 Feb 2026 22:20:13 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO6-0008HM-7D; Thu, 05 Feb 2026 22:20:08 -0500
+ id 1voCO4-00006q-FA; Thu, 05 Feb 2026 22:20:05 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wio7xrj8z57d4ChpSMXkgkTvS2CMlVZf4KW9ojsv2nYoW8+skKdfZW2UeZD7NCSk7MtY6OtAEJZGgETglbD7eE3od0dOG7rnyZBSiFCVdYpkB6HY8rQnEuogCAjyS+U4L4atYzUwPG3J/0xy1vf3Nyg03343JFY4jHp8gQW5zG9qON02rzAHrh4I4y/TB5kXcTPLThpbicZPoz3qnQ/kL3WPEgrg0OhcA2raQNijibcscmn5Lm+HaB6AZv8fJGdxaArLOnRkgSHBU+oDStomNLRirGTUuFgrzCey6zERQT7X0yDNszHczc6aYoY+AXK/JEeldfHAb5cOggnFrXF8OA==
+ b=KjlloVFofUNcR8HLkku0dYuJqxkEdYWnEVPUJRjr/s+Gu4igIUJHxNYOgrdZzGTdXRD1wrTiuQeDQLp8rGMTNJgR7W5DNYCeAhPYkj5BkrtJ7gIRgd2ZZnT+ofoDmKcg+h/P1buD0q42A7gbLlkXy8wEaccIlMSfSL3NBJ3SNfZAlNmiJMeVLzMVt/C3CAKB8y+MfbnEj7KTwZ50FY4zwpnUVLy6mPe2vR2+ov4v6ih9AYZfKejqHsAB+2xfmknrYKea6wrYglTKcKZ4nUhqnUHp08P1lfsKrPy0m5Czu6zF89T4N76SU+xovPEBSMexSJaJlT6jnoN3AsQO1Vl1cQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eSsSPTyfKgXFuxsBcGKMtjX2k24Zj/mMd0eD6WqXFpM=;
- b=EQrdK7pEpvWjSAjNbOytTy/N1cGLTPb+dXKUUdlfjIoW+bhyxHrUtCDGI3vFvOY/LpoITjCNykDE6eH2nRx2NgiZbFguy1yl1B0PefNVZpylEVmG2JJU3iI8rzp1gdnO47xIPC6Bt5ncMJyCIOtKDV6qlnhbEpcAbvXZBAHuW28ghSd1Tt7WFxas9xIIy79XJs/Gv5hDBepT67dtpKkXOk48CbwuTWNvCLE8kHMWCEZFGlF6uScqukCu8gAk4Wl0X1Y0+PMNBTVsW5DJNh/CbS09qpXcsVqCJaKMlnjvXPAFe/VLvvQGO/FoLyPh1WhoK72rALcsVCDNOWKsly0qCA==
+ bh=L++TLYVsonwta4t3vrtzbphLQUrYihRExSXwWphaPXs=;
+ b=s5TK4lZRcCAIhHcvQdSrxYAeIz5BdTXH4UrjsDjtrSKPb4tR5hl9NidNqplTAoBkygocH23scXulBy4ujaIZrLOl3P8uDJZMe6aPAi/n8p3jMcrfPwpbn2JlCXdOXevW5dYAYXUTCpKPL5MVqkQzc53M8vpvMWxEl378SPMhBDA8i/tiSmZ0s4YDJ//TFbqZKJ8/fe3ljYqFHu3QhpwJF7DJ/2McaovRdZxIJzxl7bojz6MGkptZVGSWaXBGX8GbEH5Me48YWf4hMU/A+wsfc2qxxR3NjcDF9moDhIySfsiJ2GpmxQgx10cDvRAsQ57UUNGRHtmktyeH0AaVfgM9cQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eSsSPTyfKgXFuxsBcGKMtjX2k24Zj/mMd0eD6WqXFpM=;
- b=TGTwO+V7AZ7aq5AztqsGrVRHnCihliHcM0twbEsPyThRlMv9U+Q2Z6SLjrKdnJNNXwnR6802E6CVHIhab+TDlVP9IcHjBC9X+nMSoQPcHQT4D+MZM5ln/sKZxR6bbEMnO3ZUMiPizS1LtN/IkdAZ3KoJfeIRWLglgBQJIsC0vAd2FagbZ7fw8Am0OuaZCr79I40JAILseutM36LtF0bFlNIofaYsC6N+6DOttKPkdH5uAoipiuxagavLL3B7QiNff9mKesErQ+mIJwCns26CNDR/n/qIlRnjt11m/9J5r21dK37a9MIoerC4n3gALZTdfB1I89RaoIP6RnKw3lSwZQ==
+ bh=L++TLYVsonwta4t3vrtzbphLQUrYihRExSXwWphaPXs=;
+ b=eXWmyKr7FN7FpSPkrE+cD1a8TKJRETKOrkm/MNWZyojKKpSMiQZfUp3RkslCGJM1cg0+ol9RnK+kI4mJ5GnYa5/1PIZXvwDKPc6NlDqhI3QOu2LhuhGuPmwm6KwfzmGgNVKEFbAoMauKTMULTkRm6CjYSzhsQOQfmJFJP4UZBuPpgqJ9qe7bqVvpQdR5bJuxAGHd+b9W7s+7NGinx+Yvj9jfcYuaB7VRFjWIZlYkG8QGDYBYTPDrGN/NRzskfC+vBiKceOuwDDQ8Rcjs1NokILD3vpSA5LVzv52B85z9238ef0YU4WoJc2aYe/x3gFTAKnh1vKs8go+47lkcfhIvcQ==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by SEZPR06MB5762.apcprd06.prod.outlook.com (2603:1096:101:ac::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 03:19:46 +0000
+ by TY2PPF4DD1DCAD3.apcprd06.prod.outlook.com (2603:1096:408::78d)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Fri, 6 Feb
+ 2026 03:19:53 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 03:19:46 +0000
+ 03:19:53 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -54,14 +54,12 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <philmd@linaro.org>, "open list:All patches CC here" <qemu-devel@nongnu.org>, 
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
- Kane Chen <kane_chen@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Patrick Venture <venture@google.com>, Stephen Longfield
- <slongfield@google.com>
-Subject: [PATCH v3 13/20] hw/i3c/dw-i3c: Add IBI handling
-Thread-Topic: [PATCH v3 13/20] hw/i3c/dw-i3c: Add IBI handling
-Thread-Index: AQHclxdxcLv+NaapTE+sbayQFLnCeg==
-Date: Fri, 6 Feb 2026 03:19:46 +0000
-Message-ID: <20260206031926.3227848-14-jamin_lin@aspeedtech.com>
+ Kane Chen <kane_chen@aspeedtech.com>, Joe Komlodi <komlodi@google.com>
+Subject: [PATCH v3 16/20] hw/i3c/aspeed: Add I3C bus get function
+Thread-Topic: [PATCH v3 16/20] hw/i3c/aspeed: Add I3C bus get function
+Thread-Index: AQHclxd0I8j82tpUwESMBLBwsheTBQ==
+Date: Fri, 6 Feb 2026 03:19:50 +0000
+Message-ID: <20260206031926.3227848-17-jamin_lin@aspeedtech.com>
 References: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,93 +69,93 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB5762:EE_
-x-ms-office365-filtering-correlation-id: b0b8942c-720f-46bb-aadd-08de652e947f
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY2PPF4DD1DCAD3:EE_
+x-ms-office365-filtering-correlation-id: 5e078c0e-c369-4749-34c5-08de652e985c
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|921020|38070700021; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?svnTboP3/BtG2PDJtRpWT/YznXsEckoqRz1eeXujzByJK4p+hdHHDznW9T?=
- =?iso-8859-1?Q?3+CpAKfUHAgraADr4DZvPsH7Q30DGFgxqHU0dEH9pKiHQ2BEI25+AS4i7n?=
- =?iso-8859-1?Q?QPxI6hZ8+Cx/8ok4APHJRIJTC7S7vC2ky3BNZijpbo5yGlGTznFHj1q6wp?=
- =?iso-8859-1?Q?FEOj7DaM+yHBAOpfWCrI6sADTluktAj1r3T35DSsnUfwqB9yaWyzXN0bCh?=
- =?iso-8859-1?Q?HOjX9/+2cLziLSc2qQQeFzlw4k2nwzADz9VEUWZZG9RknMZhQVO3PYPO8u?=
- =?iso-8859-1?Q?rsie0nrAIaVhYvhnLW4u7m/r2fgSFN2XBxCJI99e6kKu/dQLNQsS7aJkWB?=
- =?iso-8859-1?Q?rQoIoafaPjhilW0zSWjk6Y8SDg434gv/uW34TqJd1od7XC9dvWjDN0zeye?=
- =?iso-8859-1?Q?Vx78o274o4c7hqhmzI8gNbloafTC3676facQ7Ck0Mjc+EJfiqhEwrU8hb7?=
- =?iso-8859-1?Q?Q4CwReG2czYhDrKlUc66rInLUnkTH2q2Q3D62kx/EJimMbL9oP1Ld/k/qS?=
- =?iso-8859-1?Q?ERoQ06a9dh6lIlWMSDrG89tPdAWiWOx8QsnSKLsjaIY1BNNWhSj5yS4Upl?=
- =?iso-8859-1?Q?YM7JojouZpDJIQZZOIsu1kJeWwWtAgSNVh7CK9h3X1xYQ7fDBwT0Ki03t6?=
- =?iso-8859-1?Q?latE124Oba42XXHXjYlUSK1TpEgAtPjBzp3TihFtfYVwIUfgwuXFJg0tdd?=
- =?iso-8859-1?Q?jyaVwhv5Q5/6kGR7aFaHIX+HBjCRrtn236XljTZyPdR760ODIHWwQT3XuE?=
- =?iso-8859-1?Q?bnlrx3dT2v3X+qrSOqJl1UvTYnxlq/1yrvBDQ/tsyqHC5VqZ3tt7TP0f0g?=
- =?iso-8859-1?Q?v7Kj+y3LaB8Xrrtob49Bgd2x4zncCCHNbxTGi1qTckVYu/jtMnu48XlK+5?=
- =?iso-8859-1?Q?eGOiR4Cb+g+s9SMKFfjBF09w12LcAd88H49XCAIetPe5J5zNiJylaK17Sb?=
- =?iso-8859-1?Q?VdgtJxbFaKCHI24ovXd/iDEPLf9c0Yyo+O2nOcUj7oA1yMu2qj2KbAkIwz?=
- =?iso-8859-1?Q?7zlV6ysWlBSURCNoy4S2BRQr2+dfv6uo3IKcvz061lNonsVbV9bzzR3jqw?=
- =?iso-8859-1?Q?MPJA3Pgbs8QSLJ9npsRjdgu8iynB4u7PWWblAHXp4Z4DhSXCTNNsQuLtju?=
- =?iso-8859-1?Q?eAETWMOezbBYBEwDAc+Q7ZxGxidh6aaXu30MaLBC/ckRH5rqqcVHsWlLXl?=
- =?iso-8859-1?Q?ewolY4IespC5EZvXL40Y+I7IB9XvKu0i+yfsbKEZKO7Ha/ZNMs8WS6gkxT?=
- =?iso-8859-1?Q?3Z9yaSD+afGfBlGkWwsxyswxg220Dea8Zs9lFhJxtdQOFEZXVkGOL7leUm?=
- =?iso-8859-1?Q?K1hCYJ5UWjFkuBnsLBAHD6nhY3iMyvftdpEBnlG5/xIL0RoD+Z2lwwzuU1?=
- =?iso-8859-1?Q?ajDLWQFatEDV0MWEbHkF4V4Ex9tOT2ldzVIPKtV9K5Lhf49mSNKUFQsYrc?=
- =?iso-8859-1?Q?9DnaGra+jTqAGuinlLbgd8kG7/lvBSOjKGH2acgAU7Ii9dqDrCBO/N9LE2?=
- =?iso-8859-1?Q?irf0bW2SfgAFE7j4o9aCeRhp5XzTcqj7EJX4reu0q00N96mlh2faCKUOXn?=
- =?iso-8859-1?Q?9prDET8TmS5OY9sbr9g3cW9llfTUaS6Hxa+/GXxSTgs5tQ0vIss5bj7B33?=
- =?iso-8859-1?Q?7if2AqvMaAzfKM3Aili9nYVMkhbSL4ZbCNQsqa8xcQ08NghLTX0AbP58g9?=
- =?iso-8859-1?Q?XYNUVPHlgy+M/k7OIVRdGpqxWtTKkhU/Z1jEKJV7?=
+ ARA:13230040|366016|1800799024|7416014|376014|38070700021|921020; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?2IjsJtdJZtsOtRjXvyPEVc4AxX6LO0gGuB7eT+s2mqzRYBL6ChSHOYkjZ6?=
+ =?iso-8859-1?Q?Rt/wSrocgYZcXqk4p6sGgbJeIz/MIzIZGCT7Uh0QDr275tdOHnOJX0kjfh?=
+ =?iso-8859-1?Q?6S67/YAAepi10KKz7kPkUmE0B5qo26cSXrqM51esnIyGrmD00cxDROSylZ?=
+ =?iso-8859-1?Q?EFmVQ7GxSEbh32+7XXQH3/0C8+z8yxZ+EhUd3IPhMYfdjdtoo3sDMUcdYh?=
+ =?iso-8859-1?Q?QprnSs0+RmmQzZkEg5IaCorUYuPm4WzOoNuWYTZWSZvkvOygY3XPlWyQB5?=
+ =?iso-8859-1?Q?JdQ/OpdSV05wVjRsfFwIaWYjFF95NgmbqTqVAqmvCeUXVwO8cVaK9XWS+E?=
+ =?iso-8859-1?Q?P13SzQzvUkhtqK4YlmrqM+fHVjq3UWLnwxFjeuh+nlw3+kKubbIFvp+DUG?=
+ =?iso-8859-1?Q?wPZ7pemoyo8PJ//ifUst8/ANYdICsV01ZeLOxlJtfqMhl1Ya55jxwUYyZW?=
+ =?iso-8859-1?Q?KCONIUekR7G86raxeSizzQVmNm8v0bwe5RbPpKbD9WSP6PTQy5z7uc/SQf?=
+ =?iso-8859-1?Q?kfe+bJ+R1eV0/xGnO3wG3pJnePcGeEjFY52eU6zKBpC4VIhdCW1XBVzdNU?=
+ =?iso-8859-1?Q?XCEeImemi5ruSwo03DGQBwjnlLui7pwsplPjXrvj78rITfIOYQV6FxumbZ?=
+ =?iso-8859-1?Q?k5aPSP4eQUe+QE20MurnK0LHDi4whRk+pls2N0QZjkcQof2zwDDsMbHo9E?=
+ =?iso-8859-1?Q?Zp+GbhzzOItN1IMo9OUkqXPOPY6Rwl0OdBJfKtaGureuti5CugAB+ML0kB?=
+ =?iso-8859-1?Q?4si74vJtr8lQJKTD27ChKAZlsMHMKsr9M1SjNhjfNc+oSKhC3dclBE2S+s?=
+ =?iso-8859-1?Q?NpQeB8YE+WcDg+jdr12l7dIEDGVanLJ78B0C0l/bo2mY9vhBM3m6qMNVz+?=
+ =?iso-8859-1?Q?3Q2Jaob8yq95PfrzWdzPf01GsKZKQ1/zIv5GJJNzdhnDkTnTTsQZ3mn4KS?=
+ =?iso-8859-1?Q?bfYFngvFMyvcMpLUypw28n+tPxBDdGpsGMfL/EmHlKfanKq+W6VmnYlOMO?=
+ =?iso-8859-1?Q?agLEDyN1pJjuPVPxlGn+A80YKhn+CuPRwyhtkUw8Lnl7ODeB6V5xpTC344?=
+ =?iso-8859-1?Q?SNI0Dj0zI7q1aK4eqFLznYJ4eibwpj7pibaLrhe2PCqVu5bqYqe7mWntSW?=
+ =?iso-8859-1?Q?IVxpav6tKYl8zyhcI+sgmcm99DdnfzH9ArLilgg7x0N+1PjTG2hEFeMryy?=
+ =?iso-8859-1?Q?oCkfZIZEjKh3OTcThaFhvrQLLuzPU4Xmx5ro6jQFdlbYUF2gYXZq+wM9Vq?=
+ =?iso-8859-1?Q?CLTKJ07YtdwxvoKZ2zfy1g5cC8Cg3V6/rFW2NAk1ccPlWl7fTOd9xTGaGp?=
+ =?iso-8859-1?Q?HLwKmzEHdBiKFyqbtG9B5B4qEVUGPNkG9gvOEvnPkl2L4q5HgyphPf6xhk?=
+ =?iso-8859-1?Q?fUSD5dw+VewS5VbKJFulnJAluPArZhX0v1yypUOxwscc0WrT+Ug9ECsU8G?=
+ =?iso-8859-1?Q?RohYdWWr+DnN4RoUlVNqRwGhrUmlXm4hhIfoMtO5Eal4fkKTv5q2vTIqmt?=
+ =?iso-8859-1?Q?gIf66URWvYJjsfpt0mJbOp5w0Ab2N5jWU0ayNH1PPPjnrEIZoXn5qwKnUe?=
+ =?iso-8859-1?Q?uJz44SbkDdgWC2wlFanNdIKMETzEeIlzYLiB03rn3j3YsrMOuoRLPSbal1?=
+ =?iso-8859-1?Q?MoPkrK0SJz61qm5ce1Txlzw+tlJH2rdkF5gvxklW3rydaxi09WUVVCUXWN?=
+ =?iso-8859-1?Q?BvlL7EMp8ieVRcUyOaqpl9VJ+uZsxPeP+ManA7YP?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(38070700021);
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ClcluOTkJ+TyQQvvr4gYF9U0UF6zngWqp1uRt9Si6Od3op1Afh45psOkoc?=
- =?iso-8859-1?Q?OP9U/52VaqXLAGRWBwRkUPYf3I763Hlo8DCEdQQsRvBdo6sVrEKikxTytg?=
- =?iso-8859-1?Q?rfO8/rhIQKcpmrdmoFyZf2TkVBDMkjTxEJPpWMogMJc1+tIWrKsBbG61r1?=
- =?iso-8859-1?Q?2ICmBOsYElDIvI4cJI+IyMO0HIH/nlmoJQGoyylAZRMrBRg2w1xXsKktlu?=
- =?iso-8859-1?Q?/WTNhTkXnhNXtjxfOmvZ1jWBoqyyGe1qWGB1pnOBhH7Wj5zERyC1nmVfLZ?=
- =?iso-8859-1?Q?NeULeVDIXv+xnFeyURcnXwYOiGXompJrCidxT8HMa8EZfi+bAxNIlQ0U58?=
- =?iso-8859-1?Q?TV4Z/XNd1t+uPYZwHrKXZX3BhKCsOPVxiGANHB+Jfg+ai1+6GTmqDI7NPc?=
- =?iso-8859-1?Q?n/XGt19qgplHUZrnbvKlh199XkEXeGr/t0Gz5B4Ux7gEn3K9YKFm8O/Vz6?=
- =?iso-8859-1?Q?TLGnuYxFAfpJdrs1lj8ssLgts6/qTfrRZZvs0y1878QqDKmA6+kS4XkIJN?=
- =?iso-8859-1?Q?pTdGiKt4Q7KRGh6nmtKzHj6GPmZoVFqdeEl5Nzmz50uFkTpXu7dEWXaA5+?=
- =?iso-8859-1?Q?hBLLpYfvm8CBk8X5mSBt8QjPALk/uhxvzvHeds1U7Mu6e58wmiNLLnF00j?=
- =?iso-8859-1?Q?wsitTHPLUh+RMivxy/8J+isxWOA50KrGR9I/xB3E+9zSiMXlCjVEoOZElT?=
- =?iso-8859-1?Q?KWtkuAIEDbSkoYWUbASW1QN90EQGm8Rwc1bLqMxHdcW2vnN3BJE9wmoRwp?=
- =?iso-8859-1?Q?6l8+bZj4SlUQIMzsdkOnJJo4ZJ7DzK//SskRsEikf/1unk2TwSLeWVfu0f?=
- =?iso-8859-1?Q?HtTCD3JJkyWuSEjxeaBYRSS566HT7NItLi3oBUb7xn84DxnnkUJU7fTesy?=
- =?iso-8859-1?Q?2wF6LsGh+OfF6pnaBW/wD9PUlHxGJzUN5BSNUfrhuTXwKIlkQebGXLHR1y?=
- =?iso-8859-1?Q?FZ643Lm7PHja6Ie+qLJvxZ/Q1x1cMIeeGHUtsU35jwuv6/YD2cjrJ17g/T?=
- =?iso-8859-1?Q?LINqdbc89fQ/JfPehwrsrYtAXaPG56jUKTAKK85IqSdwl9ccKDXLrXH5JK?=
- =?iso-8859-1?Q?uZ3IDjZphKguNucMizuBvdX+Ba9ppP9B6U3LljL43S/C5IQVv8caO1sgJB?=
- =?iso-8859-1?Q?JerSmdnaCJl8/TeBqc7bZIfwL32rJeRE44n9jSgdL4UUSwkmEBOFIjNH0m?=
- =?iso-8859-1?Q?f8npSzFzWXUW4jExGQDyxgCLyMzsdMDA9bAOpsdxCHxMrYCLBvUyR6rlas?=
- =?iso-8859-1?Q?uANcCYENU1ALKxQ/EQFHeOjtEYoXGnJJCbDtEy3zz4oEvnCQpEPn4x5qFY?=
- =?iso-8859-1?Q?7krGZAjMWqyXAjbo6wYTSzEZPy0Xkwu9n/epWl4xSap0WoaIIZfofye2SW?=
- =?iso-8859-1?Q?xYvkuJZ1gRjmNFFZWBRWbYXuYwMfV3p7J9sauEBVnhgwaAGMMXN/M/gUhH?=
- =?iso-8859-1?Q?4t5b8dMvHw3YLXyHpp9nLuv8klgLOopSf6fmzHjnH/O+vgz87p6QCh6Z6r?=
- =?iso-8859-1?Q?C5vtDSjIWNjuEDgfjRoQAXaWCFn8rhoTG0w08eE+E3BTI8lVoWgLz6wmOK?=
- =?iso-8859-1?Q?uWCHOAf9KGvB0EA1cXeBAub9I+/2V7RYgo1WPTgxFoaKBnQIQAmc4E+yrZ?=
- =?iso-8859-1?Q?ZKxnOhLUegWOGIAymMmXTHITALSmOK93040GuFgD98CWDZfnQIlH0sYPI0?=
- =?iso-8859-1?Q?W0pfQ/UYb4z3mSPPGAOHceM1YKRpGtSZOzNhWnHiJhHu+yBau52QGZFYeQ?=
- =?iso-8859-1?Q?O85Uo9Rk9Nq6pGK6mDrtc8skiSV5QzpLhJVmJvkIPHjdOvVBjUJJvevnHn?=
- =?iso-8859-1?Q?B0CvXY+/KA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?JP6ia8InsgCXuZcq9dofqKV91gb+fjXCZE8aPESrcyqQptkJ0XKX0ZlgIB?=
+ =?iso-8859-1?Q?90qjwc7vKi5uVhbAYxVhzdWqXTqS+OQH4Upwiqas18jPZcqqDeMhaFSMXo?=
+ =?iso-8859-1?Q?hDGW+oQbWv3LjEwoYlN0ZFw765fb9He8qiG/h1pRmjr5H7y56tpZetRZkG?=
+ =?iso-8859-1?Q?atGgzdoDK26U0Ni86Eh3hIna+X0qAEFEL6EBr5qBTEVx9LCKTLRxmSwCTq?=
+ =?iso-8859-1?Q?9VWQlfOJIGFhDxS0FeplvizduqGEnQm9CgJEYxvjlJal3VJaBgJsbtVPUU?=
+ =?iso-8859-1?Q?qWbdis0XdIlww++pEko6VcEUEySVSyczZBq6apwmN1MvP8Tq7/bzWPmkzU?=
+ =?iso-8859-1?Q?mWQYQDHZI8vtT/kYzVNSALl2Ii24GgRRPRz4HUyWQJFSrAPMZ6UDn9Hb/s?=
+ =?iso-8859-1?Q?ZFa/NxJSTBCEbqxheLhnuR6StmMeTx10aDwaIrAarxKVeVdBbx1psq3/a8?=
+ =?iso-8859-1?Q?Pf9KS28ogabAPaHEz4M3SSgvLk6KokWfuJs956BFrF8yGiQ0AjCowXmsEJ?=
+ =?iso-8859-1?Q?7jQh8ww4PQrBhk0xpMiGK7NZ8ntQK8YMaYT8KlHCo5CV5OTkOwsa+KIpj4?=
+ =?iso-8859-1?Q?WB0j/r6iqreqxPUyIPAW5IUdGdjwZbLzOO8igU3rVhy8cAshkkmnHOhFZK?=
+ =?iso-8859-1?Q?P5bbjUwgWrEO9/44MeuChCimm/xZAlLjePihZsVRh/tFEu+Oq9dggQRAra?=
+ =?iso-8859-1?Q?6Cd9CuxIWZ6FGu7JIwEVaL/eTdBOB9xRMJTKQkrd88T9XyxLgaK59uGnGQ?=
+ =?iso-8859-1?Q?z25IKfafDhFFv/KObNOOEpaezjhOBHXReKwK6WNmiX7diANC+j5W23QuFW?=
+ =?iso-8859-1?Q?/ZG5umxqT8z1rOY5EB6WIKBS009buQD9M3FPLxxUS4Wj5d4RGmyXyWJ2bH?=
+ =?iso-8859-1?Q?U6qHQJLFZdvwIF7aIj8NEedN9FwjSt33Zq/h0rTx0wqAoAvna3oUYmBuH6?=
+ =?iso-8859-1?Q?GzpsM/VXxbPvJmdpNAE42lYM+GCYMGyVQEssbci1y9Gi0j7jzW/5+VbI8W?=
+ =?iso-8859-1?Q?zgJiAwHet8tCQOTbRxP+BinrW5T/Dwi1oWn0ndN4EYZYQF/8otGpP2wd/p?=
+ =?iso-8859-1?Q?yNCU+mv5t0dIHDdnDuCSS8DnXo/uSOaj208yHDrbTtmGxBTkWJrlJ5Zizs?=
+ =?iso-8859-1?Q?DoWheIwLobLm1zFxP0vtKNV0FP7wm5kGaIBuUjLmDsvFcSj94aS1O7BGAp?=
+ =?iso-8859-1?Q?LKn6/aFCSgZBbYwRauaTsH6NIXJxTp58XatOjjCm/ID8X0yHIvsZt5E2Tb?=
+ =?iso-8859-1?Q?CZQA7YSGZc0GbHe5TVoIrrFZm+x8mSrDpiufj6ukElvzw+63/ZOr3Zy33H?=
+ =?iso-8859-1?Q?QCJfhjiDiWaH84K7aYsibkzOvlGux6ntC7QkyJNa9r/5G1I7kFIcNOf8f1?=
+ =?iso-8859-1?Q?WJvMQRHuaEnAdXkIueO9ZpHVFYcFy5aHoxVfUsSI/P9mjyWaJ0qrSpzAme?=
+ =?iso-8859-1?Q?HF/wxMv1ps9KdPVlCIO6gFGjfGulaWnZYDJfbVQopym8n+Onj03bGMdbZq?=
+ =?iso-8859-1?Q?cGx5jekcw2RO0R9PkRFHz2wB8ZZsT3RLJduos7Q8xaMZ/wqC/Gh/tLOrrz?=
+ =?iso-8859-1?Q?AbyqsCacA4hBeBxB1mwJgZW3MRdBVIyyY/16/77M/pEGVZnp5FVZSm1o/5?=
+ =?iso-8859-1?Q?0OiYu0JLN51/mp4yTR9knf0wKK9aFJifXrn6ZbsXJjUV8LEMXTBesmXt7v?=
+ =?iso-8859-1?Q?nY62Tfuh1TPcEnq+6eVVrhFz0yb/OH3k5PXOwvsFx6hHxz8Jtg+yY/OaWb?=
+ =?iso-8859-1?Q?onR8l3ZobTXqbsNJuULfM03P8u2A5leSw2J3grUgb/odY+bD4rcE5RJ8VZ?=
+ =?iso-8859-1?Q?k0dMV5q5XA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0b8942c-720f-46bb-aadd-08de652e947f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:46.6949 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5e078c0e-c369-4749-34c5-08de652e985c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:50.6256 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: znBP7oJ9O9YgVXP17ZUmpJUE+0UD1L4OjrA6wreKPJ/+ceJCrj8FR3dqyGr8zNokwV6o2VeDpHYUjFtsVJUsRWr5s+viKaLK0AZp7W7ykzA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5762
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-userprincipalname: Jy+QLjxXzF4gyU+Hv/0hvUN004zFII9rtsDJlgv0++kXcSChSOZ+GGBq3Ys7GhoMRTuH9WPulcSU6joIOWrd5rez6ghBWLEIkXTVMCvJecg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPF4DD1DCAD3
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -179,508 +177,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds handling for different IBI events that the controller can receive.=0A=
-This includes:=0A=
-- Handling a hot-join from a target=0A=
-- Handling a secondary controller on the bus requesting to be the=0A=
-  primary bus controller=0A=
-- Handling an interrupt request from a target.=0A=
-=0A=
-When receiving an IBI, the controller sets an interrupt to notify=0A=
-software about what happened.=0A=
-When the IBI is finished being serviced, the controller pushes the=0A=
-result of the IBI and any data received from the target into the IBI=0A=
-queue.=0A=
+To retrieve the I3C bus object normally, the order is Aspeed I3C -> DW=0A=
+I3C[n] -> bus object, so make a nice wrapper for people to use.=0A=
 =0A=
 Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-Reviewed-by: Patrick Venture <venture@google.com>=0A=
-Reviewed-by: Stephen Longfield <slongfield@google.com>=0A=
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/i3c/dw-i3c.h |  27 ++++=0A=
- hw/i3c/dw-i3c.c         | 317 ++++++++++++++++++++++++++++++++++++++++=0A=
- hw/i3c/trace-events     |   2 +=0A=
- 3 files changed, 346 insertions(+)=0A=
+ include/hw/i3c/aspeed_i3c.h | 2 ++=0A=
+ hw/i3c/aspeed_i3c.c         | 9 +++++++++=0A=
+ 2 files changed, 11 insertions(+)=0A=
 =0A=
-diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h=0A=
-index 4b592552b4..93a3ba784c 100644=0A=
---- a/include/hw/i3c/dw-i3c.h=0A=
-+++ b/include/hw/i3c/dw-i3c.h=0A=
-@@ -141,6 +141,28 @@ typedef union DWI3CCmdQueueData {=0A=
-     DWI3CAddrAssignCmd addr_assign_cmd;=0A=
- } DWI3CCmdQueueData;=0A=
+diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h=0A=
+index 436fb532b9..e4e8fda93b 100644=0A=
+--- a/include/hw/i3c/aspeed_i3c.h=0A=
++++ b/include/hw/i3c/aspeed_i3c.h=0A=
+@@ -34,3 +34,5 @@ typedef struct AspeedI3CState {=0A=
+     uint8_t id;=0A=
+ } AspeedI3CState;=0A=
+ #endif /* ASPEED_I3C_H */=0A=
++=0A=
++I3CBus *aspeed_i3c_get_bus(AspeedI3CState *s, uint8_t bus_num);=0A=
+diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c=0A=
+index bb41493c55..867909ebe2 100644=0A=
+--- a/hw/i3c/aspeed_i3c.c=0A=
++++ b/hw/i3c/aspeed_i3c.c=0A=
+@@ -153,6 +153,15 @@ static const MemoryRegionOps aspeed_i3c_ops =3D {=0A=
+     }=0A=
+ };=0A=
  =0A=
-+/*=0A=
-+ * When we receive an IBI with data, we need to store it temporarily until=
-=0A=
-+ * the target is finished sending data. Then we can set the IBI queue stat=
-us=0A=
-+ * appropriately.=0A=
-+ */=0A=
-+typedef struct DWI3CIBIData {=0A=
-+    /* Do we notify the user that an IBI was NACKed? */=0A=
-+    bool notify_ibi_nack;=0A=
-+    /* Intermediate storage of IBI_QUEUE_STATUS. */=0A=
-+    uint32_t ibi_queue_status;=0A=
-+    /* Temporary buffer to store IBI data from the target. */=0A=
-+    Fifo8 ibi_intermediate_queue;=0A=
-+    /* The address we should send a CCC_DISEC to. */=0A=
-+    uint8_t disec_addr;=0A=
-+    /* The byte we should send along with the CCC_DISEC. */=0A=
-+    uint8_t disec_byte;=0A=
-+    /* Should we send a direct DISEC CCC? (As opposed to global). */=0A=
-+    bool send_direct_disec;=0A=
-+    /* Was this IBI NACKed? */=0A=
-+    bool ibi_nacked;=0A=
-+} DWI3CIBIData;=0A=
-+=0A=
- typedef struct DWI3C {=0A=
-     /* <private> */=0A=
-     SysBusDevice parent;=0A=
-@@ -154,11 +176,16 @@ typedef struct DWI3C {=0A=
-     Fifo32 resp_queue;=0A=
-     Fifo32 tx_queue;=0A=
-     Fifo32 rx_queue;=0A=
-+    Fifo32 ibi_queue;=0A=
-+=0A=
-+    /* Temporary storage for IBI data. */=0A=
-+    DWI3CIBIData ibi_data;=0A=
- =0A=
-     struct {=0A=
-         uint8_t id;=0A=
-         uint8_t cmd_resp_queue_capacity_bytes;=0A=
-         uint16_t tx_rx_queue_capacity_bytes;=0A=
-+        uint8_t ibi_queue_capacity_bytes;=0A=
-         uint8_t num_addressable_devices;=0A=
-         uint16_t dev_addr_table_pointer;=0A=
-         uint16_t dev_addr_table_depth;=0A=
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
-index dd10230da8..9a0460cf31 100644=0A=
---- a/hw/i3c/dw-i3c.c=0A=
-+++ b/hw/i3c/dw-i3c.c=0A=
-@@ -19,6 +19,14 @@=0A=
- #include "trace.h"=0A=
- #include "hw/core/irq.h"=0A=
- =0A=
-+/*=0A=
-+ * Disable event command values. sent along with a DISEC CCC to disable ce=
-rtain=0A=
-+ * events on targets.=0A=
-+ */=0A=
-+#define DISEC_HJ 0x08=0A=
-+#define DISEC_CR 0x02=0A=
-+#define DISEC_INT 0x01=0A=
-+=0A=
- REG32(DEVICE_CTRL,                  0x00)=0A=
-     FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)=0A=
-     FIELD(DEVICE_CTRL, I2C_SLAVE_PRESENT,         7, 1)=0A=
-@@ -356,6 +364,23 @@ static inline bool dw_i3c_can_transmit(DWI3C *s)=0A=
-            !ARRAY_FIELD_EX32(s->regs, DEVICE_CTRL, I3C_RESUME);=0A=
- }=0A=
- =0A=
-+static inline uint8_t dw_i3c_ibi_slice_size(DWI3C *s)=0A=
++I3CBus *aspeed_i3c_get_bus(AspeedI3CState *s, uint8_t bus_num)=0A=
 +{=0A=
-+    uint8_t ibi_slice_size =3D ARRAY_FIELD_EX32(s->regs, QUEUE_THLD_CTRL,=
-=0A=
-+                                              IBI_DATA_THLD);=0A=
-+    /* The minimum supported slice size is 4 bytes. */=0A=
-+    if (ibi_slice_size =3D=3D 0) {=0A=
-+        ibi_slice_size =3D 1;=0A=
++    if (bus_num < ARRAY_SIZE(s->devices)) {=0A=
++        return s->devices[bus_num].bus;=0A=
 +    }=0A=
-+    ibi_slice_size *=3D sizeof(uint32_t);=0A=
-+    /* maximum supported size is 63 bytes. */=0A=
-+    if (ibi_slice_size >=3D 64) {=0A=
-+        ibi_slice_size =3D 63;=0A=
-+    }=0A=
-+=0A=
-+    return ibi_slice_size;=0A=
-+}=0A=
-+=0A=
- static inline uint8_t dw_i3c_fifo_threshold_from_reg(uint8_t regval)=0A=
- {=0A=
-     return regval =3D regval ? (2 << regval) : 1;=0A=
-@@ -509,6 +534,266 @@ static uint8_t dw_i3c_target_addr(DWI3C *s, uint16_t =
-offset)=0A=
-                       DEV_DYNAMIC_ADDR);=0A=
- }=0A=
- =0A=
-+static int dw_i3c_addr_table_index_from_addr(DWI3C *s, uint8_t addr)=0A=
-+{=0A=
-+    uint8_t table_size =3D ARRAY_FIELD_EX32(s->regs, DEVICE_ADDR_TABLE_POI=
-NTER,=0A=
-+                                          DEPTH);=0A=
-+    for (uint8_t i =3D 0; i < table_size; i++) {=0A=
-+        if (dw_i3c_target_addr(s, i) =3D=3D addr) {=0A=
-+            return i;=0A=
-+        }=0A=
-+    }=0A=
-+    return -1;=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_send_disec(DWI3C *s)=0A=
-+{=0A=
-+    uint8_t ccc =3D I3C_CCC_DISEC;=0A=
-+    if (s->ibi_data.send_direct_disec) {=0A=
-+        ccc =3D I3C_CCCD_DISEC;=0A=
-+    }=0A=
-+=0A=
-+    dw_i3c_send_start(s, I3C_BROADCAST, /*is_recv=3D*/false,=0A=
-+                                 /*is_i2c=3D*/false);=0A=
-+    dw_i3c_send_byte(s, ccc, /*is_i2c=3D*/false);=0A=
-+    if (s->ibi_data.send_direct_disec) {=0A=
-+        dw_i3c_send_start(s, s->ibi_data.disec_addr,=0A=
-+                                     /*is_recv=3D*/false, /*is_i2c=3D*/fal=
-se);=0A=
-+    }=0A=
-+    dw_i3c_send_byte(s, s->ibi_data.disec_byte, /*is_i2c=3D*/false);=0A=
-+}=0A=
-+=0A=
-+static int dw_i3c_handle_hj(DWI3C *s)=0A=
-+{=0A=
-+    if (ARRAY_FIELD_EX32(s->regs, IBI_QUEUE_CTRL, NOTIFY_REJECTED_HOT_JOIN=
-)) {=0A=
-+        s->ibi_data.notify_ibi_nack =3D true;=0A=
-+    }=0A=
-+=0A=
-+    bool nack_and_disable =3D ARRAY_FIELD_EX32(s->regs, DEVICE_CTRL,=0A=
-+                                             HOT_JOIN_ACK_NACK_CTRL);=0A=
-+    if (nack_and_disable) {=0A=
-+        s->ibi_data.ibi_queue_status =3D FIELD_DP32(s->ibi_data.ibi_queue_=
-status,=0A=
-+                                                  IBI_QUEUE_STATUS,=0A=
-+                                                  IBI_STATUS, 1);=0A=
-+        s->ibi_data.ibi_nacked =3D true;=0A=
-+        s->ibi_data.disec_byte =3D DISEC_HJ;=0A=
-+        return -1;=0A=
-+    }=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int dw_i3c_handle_ctlr_req(DWI3C *s, uint8_t addr)=0A=
-+{=0A=
-+    if (ARRAY_FIELD_EX32(s->regs, IBI_QUEUE_CTRL, NOTIFY_REJECTED_MASTER_R=
-EQ)) {=0A=
-+        s->ibi_data.notify_ibi_nack =3D true;=0A=
-+    }=0A=
-+=0A=
-+    int table_offset =3D dw_i3c_addr_table_index_from_addr(s, addr);=0A=
-+    /* Doesn't exist in the table, NACK it, don't DISEC. */=0A=
-+    if (table_offset < 0) {=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    /* / sizeof(uint32_t) because we're indexing into our 32-bit reg array=
-. */=0A=
-+    table_offset +=3D (ARRAY_FIELD_EX32(s->regs, DEVICE_ADDR_TABLE_POINTER=
-,=0A=
-+                                      ADDR) / sizeof(uint32_t));=0A=
-+    if (FIELD_EX32(s->regs[table_offset], DEVICE_ADDR_TABLE_LOC1, MR_REJEC=
-T)) {=0A=
-+        s->ibi_data.ibi_queue_status =3D FIELD_DP32(s->ibi_data.ibi_queue_=
-status,=0A=
-+                                                  IBI_QUEUE_STATUS,=0A=
-+                                                  IBI_STATUS, 1);=0A=
-+        s->ibi_data.ibi_nacked =3D true;=0A=
-+        s->ibi_data.disec_addr =3D addr;=0A=
-+        /* Tell the requester to disable controller role requests. */=0A=
-+        s->ibi_data.disec_byte =3D DISEC_CR;=0A=
-+        s->ibi_data.send_direct_disec =3D true;=0A=
-+        return -1;=0A=
-+    }=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int dw_i3c_handle_targ_irq(DWI3C *s, uint8_t addr)=0A=
-+{=0A=
-+    if (ARRAY_FIELD_EX32(s->regs, IBI_QUEUE_CTRL, NOTIFY_REJECTED_SLAVE_IR=
-Q)) {=0A=
-+        s->ibi_data.notify_ibi_nack =3D true;=0A=
-+    }=0A=
-+=0A=
-+    int table_offset =3D dw_i3c_addr_table_index_from_addr(s, addr);=0A=
-+    /* Doesn't exist in the table, NACK it, don't DISEC. */=0A=
-+    if (table_offset < 0) {=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    /* / sizeof(uint32_t) because we're indexing into our 32-bit reg array=
-. */=0A=
-+    table_offset +=3D (ARRAY_FIELD_EX32(s->regs, DEVICE_ADDR_TABLE_POINTER=
-,=0A=
-+                                      ADDR) / sizeof(uint32_t));=0A=
-+    if (FIELD_EX32(s->regs[table_offset], DEVICE_ADDR_TABLE_LOC1, SIR_REJE=
-CT)) {=0A=
-+        s->ibi_data.ibi_queue_status =3D FIELD_DP32(s->ibi_data.ibi_queue_=
-status,=0A=
-+                                                  IBI_QUEUE_STATUS,=0A=
-+                                                  IBI_STATUS, 1);=0A=
-+        s->ibi_data.ibi_nacked =3D true;=0A=
-+        s->ibi_data.disec_addr =3D addr;=0A=
-+        /* Tell the requester to disable interrupts. */=0A=
-+        s->ibi_data.disec_byte =3D DISEC_INT;=0A=
-+        s->ibi_data.send_direct_disec =3D true;=0A=
-+        return -1;=0A=
-+    }=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int dw_i3c_ibi_handle(I3CBus *bus, uint8_t addr, bool is_recv)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(bus->qbus.parent);=0A=
-+=0A=
-+    trace_dw_i3c_ibi_handle(s->cfg.id, addr, is_recv);=0A=
-+    s->ibi_data.ibi_queue_status =3D FIELD_DP32(s->ibi_data.ibi_queue_stat=
-us,=0A=
-+                                              IBI_QUEUE_STATUS, IBI_ID,=0A=
-+                                              (addr << 1) | is_recv);=0A=
-+    /* Is this a hot join request? */=0A=
-+    if (addr =3D=3D I3C_HJ_ADDR) {=0A=
-+        return dw_i3c_handle_hj(s);=0A=
-+    }=0A=
-+    /* Is secondary controller requesting access? */=0A=
-+    if (!is_recv) {=0A=
-+        return dw_i3c_handle_ctlr_req(s, addr);=0A=
-+    }=0A=
-+    /* Is this a target IRQ? */=0A=
-+    if (is_recv) {=0A=
-+        return dw_i3c_handle_targ_irq(s, addr);=0A=
-+    }=0A=
-+=0A=
-+    /* At this point the IBI should have been ACKed or NACKed. */=0A=
++    /* Developer error, fail fast. */=0A=
 +    g_assert_not_reached();=0A=
-+    return -1;=0A=
 +}=0A=
 +=0A=
-+static int dw_i3c_ibi_recv(I3CBus *bus, uint8_t data)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(bus->qbus.parent);=0A=
-+    if (fifo8_is_full(&s->ibi_data.ibi_intermediate_queue)) {=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    fifo8_push(&s->ibi_data.ibi_intermediate_queue, data);=0A=
-+    trace_dw_i3c_ibi_recv(s->cfg.id, data);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_ibi_queue_push(DWI3C *s)=0A=
-+{=0A=
-+    /* Stored value is in 32-bit chunks, convert it to byte chunks. */=0A=
-+    uint8_t ibi_slice_size =3D dw_i3c_ibi_slice_size(s);=0A=
-+    uint8_t num_slices =3D (fifo8_num_used(&s->ibi_data.ibi_intermediate_q=
-ueue) /=0A=
-+                         ibi_slice_size) +=0A=
-+                         ((fifo8_num_used(&s->ibi_data.ibi_intermediate_qu=
-eue) %=0A=
-+                         ibi_slice_size) ? 1 : 0);=0A=
-+    uint8_t ibi_status_count =3D num_slices;=0A=
-+    union {=0A=
-+        uint8_t b[sizeof(uint32_t)];=0A=
-+        uint32_t val32;=0A=
-+    } ibi_data =3D {=0A=
-+        .val32 =3D 0=0A=
-+    };=0A=
-+=0A=
-+    /* The report was suppressed, do nothing. */=0A=
-+    if (s->ibi_data.ibi_nacked && !s->ibi_data.notify_ibi_nack) {=0A=
-+        ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,=0A=
-+                         DW_I3C_TRANSFER_STATE_IDLE);=0A=
-+        ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_STATUS,=0A=
-+                         DW_I3C_TRANSFER_STATUS_IDLE);=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    /* If we don't have any slices to push, just push the status. */=0A=
-+    if (num_slices =3D=3D 0) {=0A=
-+        s->ibi_data.ibi_queue_status =3D=0A=
-+             FIELD_DP32(s->ibi_data.ibi_queue_status, IBI_QUEUE_STATUS,=0A=
-+                        LAST_STATUS, 1);=0A=
-+        fifo32_push(&s->ibi_queue, s->ibi_data.ibi_queue_status);=0A=
-+        ibi_status_count =3D 1;=0A=
-+    }=0A=
-+=0A=
-+    for (uint8_t i =3D 0; i < num_slices; i++) {=0A=
-+        /* If this is the last slice, set LAST_STATUS. */=0A=
-+        if (fifo8_num_used(&s->ibi_data.ibi_intermediate_queue) <=0A=
-+            ibi_slice_size) {=0A=
-+            s->ibi_data.ibi_queue_status =3D=0A=
-+                FIELD_DP32(s->ibi_data.ibi_queue_status, IBI_QUEUE_STATUS,=
-=0A=
-+                           IBI_DATA_LEN,=0A=
-+                           fifo8_num_used(&s->ibi_data.ibi_intermediate_qu=
-eue));=0A=
-+            s->ibi_data.ibi_queue_status =3D=0A=
-+                FIELD_DP32(s->ibi_data.ibi_queue_status, IBI_QUEUE_STATUS,=
-=0A=
-+                           LAST_STATUS, 1);=0A=
-+        } else {=0A=
-+            s->ibi_data.ibi_queue_status =3D=0A=
-+                FIELD_DP32(s->ibi_data.ibi_queue_status, IBI_QUEUE_STATUS,=
-=0A=
-+                           IBI_DATA_LEN, ibi_slice_size);=0A=
-+        }=0A=
-+=0A=
-+        /* Push the IBI status header. */=0A=
-+        fifo32_push(&s->ibi_queue, s->ibi_data.ibi_queue_status);=0A=
-+        /* Move each IBI byte into a 32-bit word and push it into the queu=
-e. */=0A=
-+        for (uint8_t j =3D 0; j < ibi_slice_size; ++j) {=0A=
-+            if (fifo8_is_empty(&s->ibi_data.ibi_intermediate_queue)) {=0A=
-+                break;=0A=
-+            }=0A=
-+=0A=
-+            ibi_data.b[j & 3] =3D fifo8_pop(&s->ibi_data.ibi_intermediate_=
-queue);=0A=
-+            /* We have 32-bits, push it to the IBI FIFO. */=0A=
-+            if ((j & 0x03) =3D=3D 0x03) {=0A=
-+                fifo32_push(&s->ibi_queue, ibi_data.val32);=0A=
-+                ibi_data.val32 =3D 0;=0A=
-+            }=0A=
-+        }=0A=
-+        /* If the data isn't 32-bit aligned, push the leftover bytes. */=
-=0A=
-+        if (ibi_slice_size & 0x03) {=0A=
-+            fifo32_push(&s->ibi_queue, ibi_data.val32);=0A=
-+        }=0A=
-+=0A=
-+        /* Clear out the data length for the next iteration. */=0A=
-+        s->ibi_data.ibi_queue_status =3D FIELD_DP32(s->ibi_data.ibi_queue_=
-status,=0A=
-+                                         IBI_QUEUE_STATUS, IBI_DATA_LEN, 0=
-);=0A=
-+    }=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, IBI_BUF_BLR,=0A=
-+                     fifo32_num_used(&s->ibi_queue));=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, IBI_STATUS_CNT,=0A=
-+                     ibi_status_count);=0A=
-+    /* Threshold is the register value + 1. */=0A=
-+    uint8_t threshold =3D ARRAY_FIELD_EX32(s->regs, QUEUE_THLD_CTRL,=0A=
-+                                         IBI_STATUS_THLD) + 1;=0A=
-+    if (fifo32_num_used(&s->ibi_queue) >=3D threshold) {=0A=
-+        ARRAY_FIELD_DP32(s->regs, INTR_STATUS, IBI_THLD, 1);=0A=
-+        dw_i3c_update_irq(s);=0A=
-+    }=0A=
-+=0A=
-+    /* State update. */=0A=
-+    ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,=0A=
-+                     DW_I3C_TRANSFER_STATE_IDLE);=0A=
-+    ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_STATUS,=0A=
-+                     DW_I3C_TRANSFER_STATUS_IDLE);=0A=
-+}=0A=
-+=0A=
-+static int dw_i3c_ibi_finish(I3CBus *bus)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(bus->qbus.parent);=0A=
-+    bool nack_and_disable_hj =3D ARRAY_FIELD_EX32(s->regs, DEVICE_CTRL,=0A=
-+                                                HOT_JOIN_ACK_NACK_CTRL);=
-=0A=
-+    if (nack_and_disable_hj || s->ibi_data.send_direct_disec) {=0A=
-+        dw_i3c_send_disec(s);=0A=
-+    }=0A=
-+    dw_i3c_ibi_queue_push(s);=0A=
-+=0A=
-+    /* Clear out the intermediate values. */=0A=
-+    s->ibi_data.ibi_queue_status =3D 0;=0A=
-+    s->ibi_data.disec_addr =3D 0;=0A=
-+    s->ibi_data.disec_byte =3D 0;=0A=
-+    s->ibi_data.send_direct_disec =3D false;=0A=
-+    s->ibi_data.notify_ibi_nack =3D false;=0A=
-+    s->ibi_data.ibi_nacked =3D false;=0A=
-+=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
- static uint32_t dw_i3c_intr_status_r(DWI3C *s)=0A=
+ static void aspeed_i3c_reset(DeviceState *dev)=0A=
  {=0A=
-     /* Only return the status whose corresponding EN bits are set. */=0A=
-@@ -569,6 +854,25 @@ static uint32_t dw_i3c_pop_rx(DWI3C *s)=0A=
-     return val;=0A=
- }=0A=
- =0A=
-+static uint32_t dw_i3c_ibi_queue_r(DWI3C *s)=0A=
-+{=0A=
-+    if (fifo32_is_empty(&s->ibi_queue)) {=0A=
-+        return 0;=0A=
-+    }=0A=
-+=0A=
-+    uint32_t val =3D fifo32_pop(&s->ibi_queue);=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, IBI_BUF_BLR,=0A=
-+                     fifo32_num_used(&s->ibi_queue));=0A=
-+    /* Threshold is the register value + 1. */=0A=
-+    uint8_t threshold =3D ARRAY_FIELD_EX32(s->regs, QUEUE_THLD_CTRL,=0A=
-+                                         IBI_STATUS_THLD) + 1;=0A=
-+    if (fifo32_num_used(&s->ibi_queue) < threshold) {=0A=
-+        ARRAY_FIELD_DP32(s->regs, INTR_STATUS, IBI_THLD, 0);=0A=
-+        dw_i3c_update_irq(s);=0A=
-+    }=0A=
-+    return val;=0A=
-+}=0A=
-+=0A=
- static uint32_t dw_i3c_resp_queue_port_r(DWI3C *s)=0A=
- {=0A=
-     if (fifo32_is_empty(&s->resp_queue)) {=0A=
-@@ -606,6 +910,9 @@ static uint64_t dw_i3c_read(void *opaque, hwaddr offset=
-, unsigned size)=0A=
-     case R_INTR_FORCE:=0A=
-         value =3D 0;=0A=
-         break;=0A=
-+    case R_IBI_QUEUE_DATA:=0A=
-+        value =3D dw_i3c_ibi_queue_r(s);=0A=
-+        break;=0A=
-     case R_INTR_STATUS:=0A=
-         value =3D dw_i3c_intr_status_r(s);=0A=
-         break;=0A=
-@@ -1345,8 +1652,16 @@ static void dw_i3c_realize(DeviceState *dev, Error *=
-*errp)=0A=
-     fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_bytes);=
-=0A=
-     fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_bytes);=0A=
-     fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_bytes);=0A=
-+    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_bytes);=0A=
-+    /* Arbitrarily large enough to not be an issue. */=0A=
-+    fifo8_create(&s->ibi_data.ibi_intermediate_queue,=0A=
-+                 s->cfg.ibi_queue_capacity_bytes * 8);=0A=
- =0A=
-     s->bus =3D i3c_init_bus(DEVICE(s), name);=0A=
-+    I3CBusClass *bc =3D I3C_BUS_GET_CLASS(s->bus);=0A=
-+    bc->ibi_handle =3D dw_i3c_ibi_handle;=0A=
-+    bc->ibi_recv =3D dw_i3c_ibi_recv;=0A=
-+    bc->ibi_finish =3D dw_i3c_ibi_finish;=0A=
- }=0A=
- =0A=
- static const Property dw_i3c_properties[] =3D {=0A=
-@@ -1355,6 +1670,8 @@ static const Property dw_i3c_properties[] =3D {=0A=
-                       cfg.cmd_resp_queue_capacity_bytes, 0x10),=0A=
-     DEFINE_PROP_UINT16("tx-rx-queue-capacity-bytes", DWI3C,=0A=
-                       cfg.tx_rx_queue_capacity_bytes, 0x40),=0A=
-+    DEFINE_PROP_UINT8("ibi-queue-capacity-bytes", DWI3C,=0A=
-+                      cfg.ibi_queue_capacity_bytes, 0x10),=0A=
-     DEFINE_PROP_UINT8("num-addressable-devices", DWI3C,=0A=
-                       cfg.num_addressable_devices, 8),=0A=
-     DEFINE_PROP_UINT16("dev-addr-table-pointer", DWI3C,=0A=
-diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events=0A=
-index 044ff06a01..a262fcce39 100644=0A=
---- a/hw/i3c/trace-events=0A=
-+++ b/hw/i3c/trace-events=0A=
-@@ -9,6 +9,8 @@ dw_i3c_read(uint32_t deviceid, uint64_t offset, uint64_t da=
-ta) "I3C Dev[%u] read=0A=
- dw_i3c_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%=
-u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
- dw_i3c_send(uint32_t deviceid, uint32_t num_bytes) "I3C Dev[%u] send %" PR=
-Id32 " bytes to bus"=0A=
- dw_i3c_recv_data(uint32_t deviceid, uint32_t num_bytes) "I3C Dev[%u] recv =
-%" PRId32 " bytes from bus"=0A=
-+dw_i3c_ibi_recv(uint32_t deviceid, uint8_t ibi_byte) "I3C Dev[%u] recv IBI=
- byte 0x%" PRIx8=0A=
-+dw_i3c_ibi_handle(uint32_t deviceid, uint8_t addr, bool rnw) "I3C Dev[%u] =
-handle IBI from address 0x%" PRIx8 " RnW=3D%d"=0A=
- dw_i3c_pop_rx(uint32_t deviceid, uint32_t data) "I3C Dev[%u] pop 0x%" PRIx=
-32 " from RX FIFO"=0A=
- dw_i3c_resp_queue_push(uint32_t deviceid, uint32_t data) "I3C Dev[%u] push=
- 0x%" PRIx32 " to response queue"=0A=
- dw_i3c_push_tx(uint32_t deviceid, uint32_t data) "I3C Dev[%u] push 0x%" PR=
-Ix32 " to TX FIFO"=0A=
+     AspeedI3CState *s =3D ASPEED_I3C(dev);=0A=
 -- =0A=
 2.43.0=0A=
 
