@@ -4,70 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A71EB28D9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2D1EB28DB
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voGR8-0005Ed-Sg; Fri, 06 Feb 2026 02:39:30 -0500
+	id 1voGTQ-00069v-HC; Fri, 06 Feb 2026 02:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1voGR5-0005ES-Rh
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:39:27 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1voGR2-0002u8-Dc
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:39:27 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxnsOcmoVpoGgQAA--.53273S3;
- Fri, 06 Feb 2026 15:39:08 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJBxSeCWmoVpAd9AAA--.55899S3;
- Fri, 06 Feb 2026 15:39:05 +0800 (CST)
-Subject: Re: [PATCH v2 0/7] Add LoongArch v1.1 instructions
-To: Jiajie Chen <c@jia.je>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, git@xen0n.name, wangliupu@loongson.cn,
- bibo mao <maobibo@loongson.cn>
-References: <20251119122822.1513788-1-c@jia.je>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <98c32742-a116-48a6-f015-6f72d0e7be4e@loongson.cn>
-Date: Fri, 6 Feb 2026 15:40:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voGTO-00069L-Mv
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:41:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voGTN-0003WW-2T
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:41:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770363708;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ZUuRaOhuIUJ6CZ9CTFDp9JOpbN5YIIa4N4PQGg39ECs=;
+ b=SQtrLBT5CjUcfTrRVRhz2nu9U3e77gEmGE+gQSwey/DAFow5hKS868cdwrMpVJc6gbvnyo
+ buQxV4HFVbjCeZOxkKZyAEfcR+6mA16QO0/dKp23Ctz3gqKCmqGUMUpopXGvwotInTI4Cp
+ /S0OTjz6dHaMLaNrkqaW9gGZiMC9i/Q=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-eJaKPVouOoOby0izi-gYAA-1; Fri, 06 Feb 2026 02:41:46 -0500
+X-MC-Unique: eJaKPVouOoOby0izi-gYAA-1
+X-Mimecast-MFC-AGG-ID: eJaKPVouOoOby0izi-gYAA_1770363705
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4325b182e3cso1629027f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 23:41:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770363705; x=1770968505; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZUuRaOhuIUJ6CZ9CTFDp9JOpbN5YIIa4N4PQGg39ECs=;
+ b=N9CttTpw6llcbFGoDqm6N/Fa6X+M2UgcxySNn7ktl4rorVsrY/Clte0e17/es4b3MT
+ BwfT+GwVDOb2KPA9t+njPVoXwsDuASyjDHSMkV9kfbj5kiUhirPcw1xK0x92rIDoSWav
+ z8FogYl3iRCr7eMWvlcaAgtw4Jr6JuaWnvagAa6WSzAKAXJvpwvtiUw2bcmZUgSwbw0M
+ Xvlq+6+BOAsO6DTlyACWzwaA/h682MdD/3DqItJTX85Kia2IDbSQP7ILCGee8vI0J7m8
+ AqDPtHMZzmS+aJK1zWW96tRegdrINgRpwbogfS8bQd2SlbzPNxfamrJSXnb07ZgE++jZ
+ nUUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770363705; x=1770968505;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZUuRaOhuIUJ6CZ9CTFDp9JOpbN5YIIa4N4PQGg39ECs=;
+ b=vJWhEkUoVN3QLCSvM13llLDMT2XhoB4WD5Zg8mN7RrIr5J2FgRLPEWVitmZqDWbxlO
+ /UKnB+LnE+DORmNXIYw5gFYMFkjim8argYIFT2OjT59Twcmcd1OIbiLbPsdlyt602RJv
+ 217x/sIaBN3sQOXYV33HLPAU5MfBha3gYMNEfyARjSue94Am1VdydoxJ9fQsZdlmuRZR
+ juAVxCZRvVTBec1cGw38O++o/G8RIbMlt4oN1xJHVdQhVs2rgDKMmjy1zTy4RUecvIzq
+ 2WTSuYL964LW71KemL7J5T4TPqOQMyJ68DASNJBFcwqRHE6YnJnm20AtIidgYiYmNVL1
+ +3kA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtnCw4H0qeC/wklA9fEO4OtESUrYi26yZ685Y+3BIFw9oqADB295vZVyha38KMorqOmy+F8//7PVhm@nongnu.org
+X-Gm-Message-State: AOJu0Yx9vxQsyf1XkkKjxycBRP2Fa7xyAV7pwfs8a8Jb9A27Qhx0NeAJ
+ hlYCvWYqziimB3uypqbtUvkkMyCauwCvt+CT6HKJ+X8bj/zKP1AUkX+cp3/4FjupwM4Jwe1Q7q5
+ S8yL/veHpQ7aaVRm9jT6zWG6/f/9OZvosR3YZgK8zj7gYlnMjfrLMIEoz
+X-Gm-Gg: AZuq6aIzV47ycT2aMjQOXyx0EbHqgEphI+xtOw8D/XsXpffiYnbeg1edYEqxQS5mi0U
+ N5WSfZWKu4z7tiQprTBQG5ibHfIo+MlDFjAwjMmiL1mZ3E3co3ayh+X4sQv6++OZ467KtojBRiU
+ SMy1SM0BrpKgoddG1eCE0PWdxopva42DXxUmMHO5pporSfORXMkO7Ce0ibNlGDxj91RSeD+qL+Z
+ 3gC9Bn7D+A3iAz14EltszpFUlG/1w1O4DbuTL8X7TuFcQwrMwcNDrXgbWok1Akygo5pTPzIbjEv
+ Mv4uJ7rS/Y8EQIxJDNwZXtk6I38Ywdag9vw8tEifYT/M0RFKQejmzoKfHnwGHawuhxIJUEiAWtT
+ 3vN4EXTc=
+X-Received: by 2002:a05:6000:2881:b0:435:dba0:736c with SMTP id
+ ffacd0b85a97d-43629384c6amr2616292f8f.56.1770363705078; 
+ Thu, 05 Feb 2026 23:41:45 -0800 (PST)
+X-Received: by 2002:a05:6000:2881:b0:435:dba0:736c with SMTP id
+ ffacd0b85a97d-43629384c6amr2616262f8f.56.1770363704674; 
+ Thu, 05 Feb 2026 23:41:44 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.115.203])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-436296bdc11sm3839864f8f.14.2026.02.05.23.41.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 23:41:44 -0800 (PST)
+Message-ID: <89621195-a2d7-4501-9746-c2ef0e611d2c@redhat.com>
+Date: Fri, 6 Feb 2026 08:41:42 +0100
 MIME-Version: 1.0
-In-Reply-To: <20251119122822.1513788-1-c@jia.je>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: bsd-user: Dropping the NetBSD and OpenBSD code
+To: Warner Losh <imp@bsdimp.com>, QEMU Developers <qemu-devel@nongnu.org>
+References: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-X-CM-TRANSID: qMiowJBxSeCWmoVpAd9AAA--.55899S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxtw4kurW8CrW8Kw1DZry8tFc_yoW3WF1xpF
- WSkrn8GrW8tr4xGr1xXa4jvFyUtr4xG3WUJFy7ta4qy3yYqFWqqr18W3sFgF1UCw40gr1U
- XFyUAw48ZF4DXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24So
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Cc: Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>,
+ Brad Smith <brad@comstyle.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.384,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,248 +165,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/11/19 下午8:24, Jiajie Chen 写道:
-> Latest revision of LoongArch ISA is out at
-> https://www.loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf
-> (Chinese only). The revision includes the following updates:
->
-> - estimated fp reciporcal instructions: frecip -> frecipe, frsqrt ->
->    frsqrte
-> - 128-bit width store-conditional instruction: sc.q
-> - ll.w/d with acquire semantic: llacq.w/d, sc.w/d with release semantic:
->    screl.w/d
-> - compare and swap instructions: amcas[_db].b/w/h/d
-> - byte and word-wide amswap/add instructions: am{swap/add}[_db].{b/h}
-> - new definition for dbar hints
-> - clarify 32-bit division instruction hebavior
-> - clarify load ordering when accessing the same address
-> - introduce message signaled interrupt
-> - introduce hardware page table walker
->
-> The new revision is implemented in the Loongson 3A6000 processor.
->
-> This patch series implements all the new instructions. The v1 version
-> can be found at
-> https://patchew.org/QEMU/20231023153029.269211-2-c@jia.je/.
->
-> A simple testcase to test the new fp and sc.q instructions:
->
-> #include <assert.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
->
-> void test_fp() {
->    float a = 3.0;
->    float b;
->
->    asm volatile("frecip.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frecip: %f\n", b);
->    asm volatile("frecipe.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frecipe: %f\n", b);
->
->    asm volatile("frsqrt.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frsqrt: %f\n", b);
->    asm volatile("frsqrte.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frsqrte: %f\n", b);
-> }
->
-> uint64_t rand64() { return ((uint64_t)rand() << 32) | rand(); }
->
-> void test_sc_q() {
->    __int128 val = rand64();
->    val = (val << 64) | rand64();
->    __int128 *ptr = &val;
->    uint64_t add_lo = rand64();
->    uint64_t add_hi = rand64();
->    __int128 add = add_hi;
->    add = (add << 64) | add_lo;
->    __int128 expect = val + add;
->    int res = 0;
->
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\nadd.d $t1, $t1, %2\nadd.d "
->                 "$t2, $t2, %3\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 : "r"(add_lo), "r"(add_hi)
->                 : "$t1", "$t2", "memory");
->    assert(res == 1);
->    assert(val == expect);
->
->    // change memory content to make sc fail
-hi, jiajie,
+On 06/02/2026 02.03, Warner Losh wrote:
+> So, it's been years since this code compiled by default, and even more years 
+> since they compiled at all.
+> 
+> Maybe 5 years ago, I contacted the OpenBSD folks, who said it had decayed 
+> beyond uselessness. So I plan on just removing the bsd-user/openbsd code 
+> shortly.
+> 
+> Maybe 4 years ago, someone from NetBSD popped up and said they had a fork 
+> and they'd share it with me, but they never did, and we never reconnected 
+> despite some email attempts since then. So, I'd like to remove the netbsd 
+> directory as well.
+> 
+> Both of these are finally getting enough in the way that they are causing me 
+> problems with upstreaming the bsd-user stuff. Now that I have a good head of 
+> steam on doing that, I'd like to finish that process. Expect me to flood 
+> your email in the coming months with way too many patches now that I've 
+> found a way to streamline the process enough for me to sneak it into what 
+> would otherwise be lost Friday afternoons...
+> 
+> Before I send the patch series to do this, I'd like to do a last and final 
+> call for collaboration. I kept it around for this long in the hopes someone 
+> would show up, but nobody ever did.
 
-This method will not cause scfail.According to the manual
-https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.pdf　2.2.7.4  <https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.pdf%E3%80%802.2.7.4>
-During the execution of the paired LLSC, the following events will clear the LLbit to 0:
-• The ERTN instruction is executed and the KL0 bit in CSR.LLBCTL is not equal to 1 when executed;
-•*Other processor cores*  or Cache Coherent I/O masters perform a*store*  operation on the Cache line
-where the address corresponding to the LLbit is located.
+Please make sure to CC: at least the related people who are listed in the 
+MAINTAINERS file (done now). But if nobody speaks up, yes, I'd say go ahead 
+and remove the bitrotten code.
 
-I conducted a multithreaded test where one thread continuously performed ll/sc operations,
-while another thread persistently wrote to this tag address. The test results aligned with
-expectations and matched the physical outcomes.
-
-so,
-For thie series
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-
-if you don't have time to rebase the code ,I can do it.
-
-here my test code.  test on tcg system model.
-
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdint.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <time.h>
-
-typedef struct {
-     volatile uint64_t low __attribute__((aligned(16)));
-     volatile uint64_t high;
-} aligned_uint128_t;
-
-aligned_uint128_t shared;
-volatile int running = 1;
-volatile  long long success = 0;
-volatile  long long fail = 0;
-
-void* thread_a(void* arg) {
-
-     int result;
-
-     long long last_success = 0;
-     long long last_fail = 0;
-     time_t last_time = time(NULL);
-
-     while (running) {
-         asm volatile(
-             "1:\n\t"
-             "ll.d $t0, %1, 0\n\t"
-             "ld.d $t1, %1, 8\n\t"
-             "addi.d $t0, $t0, 1\n\t"
-             "sc.q $t0, $t1, %1\n\t"
-             "move %0, $t0"
-             : "=r"(result)
-             : "r"(&shared)
-             : "$t0", "$t1", "memory"
-         );
-
-         if (result == 1) {
-             success++;
-         } else {
-             fail++;
-         }
-     }
-     return NULL;
-}
-
-void* thread_b(void* arg) {
-     uint64_t val = 0;
-     while (running) {
-         shared.low = val;
-         shared.high = ~val;
-         asm volatile("" ::: "memory");
-         val++;
-     }
-
-     return NULL;
-}
-
-void* thread_c(void* arg) {
-     int i=0;
-     while (i < 11) {
-     i++;
-         sleep(1);
-         printf("Thread C llsc success[%lld] fail[%lld]\n", success, fail);
-     }
-     running =0;
-     return NULL;
-}
-
-int main() {
-     printf("===  Test - Should see both fail and success ===\n");
-
-     printf("Shared address: %p\n", (void*)&shared);
-     printf("Alignment check: %s\n",
-            ((uintptr_t)&shared % 16 == 0) ? "16-byte aligned" : "NOT 
-aligned");
-
-     shared.low = 0x1111111111111111ULL;
-     shared.high = 0x2222222222222222ULL;
-
-     pthread_t ta, tb, tc;
-     pthread_create(&tc, NULL, thread_c, NULL);
-     printf("Thread C started\n");
-     usleep(2);
-     pthread_create(&tb, NULL, thread_b, NULL);
-     printf("Thread B started\n");
-     usleep(2);
-     pthread_create(&ta, NULL, thread_a, NULL);
-     printf("Thread A started\n");
-     pthread_join(ta, NULL);
-     sleep(2);
-     pthread_join(tb, NULL);
-     pthread_join(tc, NULL);
-     printf("Final value: low=0x%lx, high=0x%lx\n", shared.low, 
-shared.high);
-     printf("=== Test End ===\n");
-
-     return 0;
-}
-
-
-Thanks.
-Song Gao
->    res = 1;
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t1, $t1, 1\nst.d "
->                 "$t1, %1, 0\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 :
->                 : "$t1", "$t2", "memory");
->    assert(res == 0);
->
->    res = 1;
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t2, $t2, 1\nst.d "
->                 "$t2, %1, 8\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 :
->                 : "$t1", "$t2", "memory");
->    assert(res == 0);
->
->    printf("SC.Q passed\n");
-> }
->
-> int main(int argc, char *argv[]) {
->    test_fp();
->    test_sc_q();
->    return 0;
-> }
->
-> Compile and test by:
->
-> loongarch64-linux-gnu-gcc test.c -o test -static && ./qemu-loongarch64 -cpu max test
->
-> Jiajie Chen (7):
->    target/loongarch: Require atomics to be aligned
->    target/loongarch: Add am{swap/add}[_db].{b/h}
->    target/loongarch: Add amcas[_db].{b/h/w/d}
->    target/loongarch: Add estimated reciprocal instructions
->    target/loongarch: Add llacq/screl instructions
->    target/loongarch: Add sc.q instructions
->    target/loongarch: Add LA v1.1 instructions to max cpu
->
->   target/loongarch/cpu.c                        |  11 +-
->   target/loongarch/cpu.h                        |   7 +
->   target/loongarch/disas.c                      |  33 ++++
->   target/loongarch/insns.decode                 |  34 ++++
->   .../tcg/insn_trans/trans_atomic.c.inc         | 145 ++++++++++++++++--
->   .../tcg/insn_trans/trans_farith.c.inc         |   4 +
->   .../tcg/insn_trans/trans_memory.c.inc         |  22 +++
->   .../loongarch/tcg/insn_trans/trans_vec.c.inc  |   8 +
->   target/loongarch/tcg/translate.c              |   6 +-
->   target/loongarch/translate.h                  |  30 ++--
->   10 files changed, 280 insertions(+), 20 deletions(-)
->
+  Thomas
 
 
