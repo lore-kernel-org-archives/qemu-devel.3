@@ -4,62 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EF2EE20A6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B90EE20A4
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLl4-0006yh-4m; Fri, 06 Feb 2026 08:20:26 -0500
+	id 1voLl3-0006wy-90; Fri, 06 Feb 2026 08:20:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLkm-0006pU-3T
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:11 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1voLkZ-0006nW-LG
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:19:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLki-0005Of-V5
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:06 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1voLkI-0004ue-49
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:19:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770384001;
+ s=mimecast20190719; t=1770383856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=moCR76A0aSDUXjFrQ8JjGmzKKBV79+DaRdaItXA+qJ8=;
- b=WYbMoGaKvnxQg3plcFDsNCvV48E5c2KtjyMOLoDGCVCKH40Xha3t1G23PDLTMHb3dNnUay
- 1feSsxEKbCnF/CzlM4AZilOWGksIw8Dd0ohZJPprWVbC3mzBX2qeMy2+L59hw4D8Y3nXvp
- JjhtZTmYZ94jri833I4cYFwCM4aiEqQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-bjLzCiQkOCuz9BkdTgJVjA-1; Fri,
- 06 Feb 2026 08:14:48 -0500
-X-MC-Unique: bjLzCiQkOCuz9BkdTgJVjA-1
-X-Mimecast-MFC-AGG-ID: bjLzCiQkOCuz9BkdTgJVjA_1770383686
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96AFB1955DA0; Fri,  6 Feb 2026 13:14:43 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC6941800465; Fri,  6 Feb 2026 13:14:40 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Subject: [PATCH 00/11] Introduce ACPI watchdog for Q35 and arm/virt boards
-Date: Fri,  6 Feb 2026 14:14:27 +0100
-Message-ID: <20260206131438.1857182-1-imammedo@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PQYJv2yWI91YlCNUyKqKuCd3WL5Nk8ftwHnFon66cBg=;
+ b=H8dNmTSnTmkZRa3nKXSGCA0UZlT55Jq9xhSsM4riQAPHJoEJRNh3gKEGsHKQmAVnNL9piH
+ YGBap4BDwyY5RUxTFMsu6GCmLzQN6gPmyEO51SVfmhEMdl1z0dXzEQDWVk6IwxmAjIv9JQ
+ SGriw0BtTRw+eKWjl8VOdW0zoNKQsQw=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-91-zlE2oHyqMYugIrh4uwCjfA-1; Fri, 06 Feb 2026 08:12:27 -0500
+X-MC-Unique: zlE2oHyqMYugIrh4uwCjfA-1
+X-Mimecast-MFC-AGG-ID: zlE2oHyqMYugIrh4uwCjfA_1770383547
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88a2f8e7d8dso83937256d6.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:12:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770383547; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VNR4CwxXK+GqW34869RfKEesCs8RjlI7tKEExdjESx6iaau6eq4jK9tcrq577EUdq7
+ LI5gBV1oIw+5CnV7y1KO6Tgsl8iUGhaIEx2b4R0ZOj12/jE0nk1mwekB8W29Hn0MIo6T
+ C718Zbkw2qSjBXtebovxqh3Rc4/FeKD5nvXQpis7HJ8k6E8U+EhGfIPUhE9gMeyyqXM4
+ BliKpXACCDYbTXtNseH738iHWvgUMbKkSsA+xlcI4ng0Hj+xL4UaX3DIBrOPJ7lRERVr
+ 1KlvTl8HIkL2AqaqvJXvI0rtP8Rkomcld3r6iTiL2NeBPx4BG+ckLcVYz4GrE4hNRCiq
+ BRNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PQYJv2yWI91YlCNUyKqKuCd3WL5Nk8ftwHnFon66cBg=;
+ fh=i8u6pLRXSPxqwZUsqTjARdFnZP0TTi/728pDqZ3O9Pk=;
+ b=R2nvCMtHe+o3euXpW9uY4c7V038xtRY1Y6ciRgFksZ25+oUEyX/ye3+rrdepl9Skzm
+ UJka7MgXyUl4VKn8GYyD9NUcnnSIKMN2x0gx2jOhFAcfZDXxgBTA8S1jm2n73mLDVA/y
+ Z87hIpUUgLVjP1Q5zTM7xHmbpw4wm80SuCC5P22lbIltUYQ8W5IB9OzpDSYfEv35oq7C
+ tM7lCY9JksGz3cjDtnL5LMICUU8vO+Ln9SQwmlYxGJKrXR7YRg9D8iY1zeG+WhNnBTR7
+ /XclzjDCTtzYggBoyQDYg8ujVZygXK3IWs4mhFqczQX+pvwpgpmCUX6jr0oxstC7atoF
+ 4mkQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770383547; x=1770988347; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PQYJv2yWI91YlCNUyKqKuCd3WL5Nk8ftwHnFon66cBg=;
+ b=CXUfshYPIAjh7jIwMZx9Ku5gpV2DF6zMQlmpVvgp+zcKSXvjiboYNnSktd/LRpBUbT
+ G7hnN7xTxSkJBfliZQt6PoiiyIeIKn9sHQbfOaUs03e7xCpTaCjY2HaSZzLjEzkeRger
+ TmRFD7VLXTs+g9ipR4fFY6H3Ow3PnJ3sHbPzSHXAxvjoM5ZRnPqGnW08CI1XqQOR7DvH
+ OStrs6w+TPXcqa7TVUMdCsGBJnIVkDBZbxZeRKFgprJY0Zds9ZrhkXrr1HQhEr8TrvNB
+ 7vT0kvHPn7v4RfUa8v4Z2C790KU6zDs7K5KK5ZitAvhQ/X2SzG4g1X0DVp/xc4V6zJ/D
+ ceFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770383547; x=1770988347;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PQYJv2yWI91YlCNUyKqKuCd3WL5Nk8ftwHnFon66cBg=;
+ b=rwZRN8MGMfRJl5R0Kn6KVqwH7VySVociVK/aDpbiLgRllSKVqUDe+yisVMNwC+VbLo
+ mm7+S/yhjmb8msXKJ55LVutqOwohumV5iCcgwW9yUnLCfs+wHwi4ppy/CsGDN0mjEqeu
+ MmqrWrZqb/1U+qTGLYtlnmLrgGc74mrnFOz5OxwOzQ6wuBvxEYbX+ngrqmt75h1T53aX
+ 7JnPwLlLFXDlukifREmTMdVh1NKVopAaQG35Gsb7fDswaFpn9RpKfLhULjs0GDZo0Vdz
+ 0dRUrZRKBOf7RB3k0kwHxPwJpna1bHD+m0iVfXmU/TjDK4WkuS6QS3ps0MrWKY+fETwW
+ SMtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6Lje0SYfuhWdKeaKRwY+cIWUfVKUvHXHwiRz+AJOLjfMnTUhX4oXB5inEPVEC1+7+3IpjoPe5WAma@nongnu.org
+X-Gm-Message-State: AOJu0YwsJyUgcnesscNmaeNH7M/z5cjG7I6+UrQufmPyceUSAY8ug2fm
+ cp7kogLOQ5in7iEwVzkwJpBj/g9V2VMS4mI3oqNZCxmcdPti/TyHfbOOTQCCzP1c8r88fAtSkSN
+ sIS+xIfQVG6a1moH5zSwbK1mRjg9QjWarENQYSSI6ixETdcTpARiuTEzNsPnNK7vSqGwBml29X2
+ 105db5NOODJlxOWD01O31EO7TJcvwmQX0=
+X-Gm-Gg: AZuq6aLjwf/qFsI1nVpcTe7/KsUOdHAzAo4qUITe8E6DEBzSPCj5DKgrGNtccmhR7qW
+ fn7BnbVg9UyK1KbG9Z8reZRUcz0Ydz10rpP/+1ssLg7JJ50wK4xevfIpvoB4JOAfMIRw+9xaxPq
+ q6eGz5CF7Ww4MEzu//8NzP7SMY071/Z7QtU4BvxUSJd+xwc9/OM1BjxBwlR/vimUa/Cq3srZkOa
+ 7RF24j28DJ1jdfZbaUzi4c48Uno
+X-Received: by 2002:a05:6214:250b:b0:880:854:908f with SMTP id
+ 6a1803df08f44-8953c86e4camr37776806d6.38.1770383546906; 
+ Fri, 06 Feb 2026 05:12:26 -0800 (PST)
+X-Received: by 2002:a05:6214:250b:b0:880:854:908f with SMTP id
+ 6a1803df08f44-8953c86e4camr37776256d6.38.1770383546486; Fri, 06 Feb 2026
+ 05:12:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+References: <20260127051612.219475-1-anisinha@redhat.com>
+ <20260127051612.219475-28-anisinha@redhat.com>
+ <aa5e9335115b452870118b1c43c95ddb40e353af.camel@infradead.org>
+In-Reply-To: <aa5e9335115b452870118b1c43c95ddb40e353af.camel@infradead.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 6 Feb 2026 18:42:15 +0530
+X-Gm-Features: AZwV_Qgku-RlBBKiMn2Ic-_YkmbVZuzp_tcnQXGOTJwpnVxyAve--nfkV314OXY
+Message-ID: <CAK3XEhMJzbcTVL=1U6-yG2wxEL3Hd3N1cLPHtghaNHEa8QH7Tg@mail.gmail.com>
+Subject: Re: [PATCH v3 27/33] kvm/xen_evtchn: add support for confidential
+ guest reset
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, kraxel@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,96 +145,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows doesn't ship built-in TCO watchdog driver, and users are
-forced to install vendor specific driver(s) if such exists.
-However OS provides a generic watchdog driver that uses
-ACPI WDAT table [1] to abstract actual hardware behind it.
-The same applies to ARM version of Windows.
+On Wed, Jan 28, 2026 at 12:22=E2=80=AFAM David Woodhouse <dwmw2@infradead.o=
+rg> wrote:
+>
 
-This series adds
- *  WDAT table tailored for TCO watchdog that Q35 already
-    has as part of ICH9 chipset and a knob to enable it.
- *  SBSA GWDT to arm/vit machine with WDAT table tailored
-    for it and necessary tweaks to GWDT to make usable
-    with WDAT driver.
+> >
+>
+> I think 'kp' leaks in the error case there? And the next one in
+> assign_kernel_eventfd().
+>
+> I don't much like duplicating the code which performs the ioctls.
+> Couldn't you have a helper function which does that when given a
+> 'struct kernel_ports', then invoke *that* from both places?
+>
+> Or even better, make use of the fact that we *already* have the ability
+> to replay these for serialisation/deserialisation?
+>
+> But backing up a little more... if this is for rebooting guests,
+> shouldn't we be wiping the event channel setup completely, like a soft
+> reset? Do we preserve to do *any* of this? Are you sure you don't see a
+> soft reset wiping it all away, either before or after this code runs?
 
-Guest OS support is present since Windows Vista and Linux since 2016[2].
+Ah yes, good catch! I added the following assertions and they never
+failed has I walked through the code with gdb:
 
-One can test it launching VM with following options:
-   -machine acpi-watchdog=on
-to trace access to TCO registers one can add to CLI:
-    -trace "tco_*"
-to trace access to GWDT registers one can add to CLI:
-    -trace "sbsa_gwdt*"
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index 7802fa68ae..3c882d85bb 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1241,6 +1241,9 @@ int xen_evtchn_soft_reset(void)
+         kvm_update_msi_routes_all(NULL, true, 0, 0);
+     }
 
-To verify that guest uses WDAT (both Windows and Linux would use it if present),
-  * on linux make sure that watchdog service is configured/enabled
-   (use wdctl to check what watchdog device to use and confirm that it's
-    wadt based one) and then trigger kernel panic with command:
-      echo c > /proc/sysrq-trigger
-  * on Windows kill svchost process, running cmd in admin mode:
-      taskkill /f /im svchost.exe
++    assert(QLIST_EMPTY(&eventfd_list));
++    assert(QLIST_EMPTY(&kernel_port_list));
++
+     return 0;
+ }
 
-Tested with WS2025 & RHEL9.6 & Fedore 43 (aarch64)
+I reverted this patch and it does not break my Xen functional test. So
+it seems the soft reset calls
+xen_evtchn_soft_reset() -> close_port() -> deassign_kernel_port() and
+all ports are cleaned up, meaning they do not need preserving through
+the reset.
 
-git tree at: https://gitlab.com/imammedo/qemu/-/commits/gwdt_v2
-
-1) http://msdn.microsoft.com/en-us/windows/hardware/gg463320.aspx
-2) https://lwn.net/Articles/700524/
-
-PS:
- previous revision (q35 only):
- https://patchwork.ozlabs.org/project/qemu-devel/cover/20251030123750.136175-1-imammedo@redhat.com/
-
-Also CCing SBSA folks to see if they are interested in adding it to their
-reference machine
-
-Igor Mammedov (11):
-  acpi: add API to build WDAT instructions
-  machine: add "acpi-watchdog" property
-  x86: q35: generate WDAT ACPI table
-  tests: acpi: x86/q35: whitelist new WDAT table
-  tests: acpi: x86/q35: add WDAT table test case
-  tests: acpi: x86/q35: update expected WDAT blob
-  arm: add tracing events to sbsa_gwdt
-  arm: virt: create GWDT watchdog paired with WDAT ACPI table
-  tests: acpi: arm/virt: whitelist new WDAT table
-  tests: acpi: arm/virt: add WDAT table test case
-  tests: acpi: arm/virt: update expected WDAT blob
-
- include/hw/acpi/wdat-gwdt.h            |  19 ++++
- include/hw/acpi/wdat-ich9.h            |  15 ++++
- include/hw/acpi/wdat.h                 | 118 +++++++++++++++++++++++++
- include/hw/arm/virt.h                  |   3 +
- include/hw/core/boards.h               |   1 +
- hw/acpi/aml-build.c                    |  14 +++
- hw/acpi/meson.build                    |   5 +-
- hw/acpi/wdat-gwdt-stub.c               |  16 ++++
- hw/acpi/wdat-gwdt.c                    |  92 +++++++++++++++++++
- hw/acpi/wdat-ich9-stub.c               |  15 ++++
- hw/acpi/wdat-ich9.c                    |  87 ++++++++++++++++++
- hw/arm/Kconfig                         |   1 +
- hw/arm/virt-acpi-build.c               |  16 ++++
- hw/arm/virt.c                          |  26 ++++++
- hw/core/machine.c                      |  20 +++++
- hw/i386/acpi-build.c                   |  12 +++
- hw/watchdog/sbsa_gwdt.c                |   8 ++
- hw/watchdog/trace-events               |   9 ++
- tests/data/acpi/aarch64/virt/WDAT.wdat | Bin 0 -> 260 bytes
- tests/data/acpi/x86/q35/WDAT.wdat      | Bin 0 -> 308 bytes
- tests/qtest/bios-tables-test.c         |  34 +++++++
- 21 files changed, 510 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/acpi/wdat-gwdt.h
- create mode 100644 include/hw/acpi/wdat-ich9.h
- create mode 100644 include/hw/acpi/wdat.h
- create mode 100644 hw/acpi/wdat-gwdt-stub.c
- create mode 100644 hw/acpi/wdat-gwdt.c
- create mode 100644 hw/acpi/wdat-ich9-stub.c
- create mode 100644 hw/acpi/wdat-ich9.c
- create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
- create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
-
--- 
-2.47.3
+I will drop this patch in the next spin-up.
 
 
