@@ -4,106 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B41EE20AF
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B22EEE20AF
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voNcp-0001bu-KD; Fri, 06 Feb 2026 10:20:03 -0500
+	id 1voNlc-0003Pv-D1; Fri, 06 Feb 2026 10:29:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNcl-0001aa-Uy
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:20:00 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1voNla-0003P3-2V
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:29:06 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNck-0002yj-HT
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:19:59 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-79430ef54c3so8179067b3.2
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 07:19:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770391196; cv=none;
+ id 1voNlY-0004ox-As
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:29:05 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-790884840baso21904717b3.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 07:29:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770391743; cv=none;
  d=google.com; s=arc-20240605;
- b=G4VQfv893HMMPTt4i4BFr0kcWNN/QSa4EU2lK4ZKuk3koFsWCR1XiD2RiR2VQ7xxXs
- LR1JbFrfR9JqrHrvCpqsprW76XpcCoSEZMDfCppXXF6aIP3/7aiUigaCs6gsdiq1GIho
- fhSQW7C33R+/EtPVZEL2zYbeJwnk0AoiDPwTiNxmp6xQ9vFWm8sKj3oZBAj3nkL4aCdK
- tIdW4PPOfCJhee3/OnV1xwxbrZMWLr2t16gvUtOcf+NEKh5oe2M9ZVrNkM8xw0m05pAF
- p4f9+5B2wPnC9HtBhE1Z3+x/HyglCn7zO0kEiUt3OrvUQqBZ82zAZjtgxg+CE1Dh0Uel
- BvHA==
+ b=dvNlCrGvUYctIoomO5chFX4z6+Ewk+FVvb2D+LLZaj0TbT94k2yUwxbC4iKOEIVIJ4
+ SUnWRWhlbz86E0lmFGfaKtHYJ1Tnfp0Z3TsEwjsYgAk4rU8PkbCstLvSYLgIlc/SyBhW
+ vgeuprCf8EiwN2edczrXoo8ELwbcA+SEHKG26ACAeMAta33VzpMxR7UY/gyyBKcCD0Ko
+ QytQ9AHsSkcvOC274j1vKGQs+3A4f2Tsl6pxk6DoNY69eXapYNnnJriZggCznwqDuNDj
+ v3fRJ+4xYJOCRYW0yFX5DeCcTP0dZvWtFJXuL3/dwafcULH58MenzvJPudYq2W7jQl2+
+ AgQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
- fh=gF4tJPZZ+BLtU/HltKIrKDpuHOv58/ttGSsaTOAx7EM=;
- b=N8rsAdkPogEl2lB/TcPiqldS/rrOgyrOKH9RQQGUHVLrDYXUPDg4xzjKE9tLqDtTag
- z9HqGl/0P9tzeI1qgw9zUgrmXGsw0/A/Mr30+ifhlenp9ZHQ8baEkzgxs+LqpLdE9LGs
- Ei7711h77zwCwyuL1d8z1M9mL4/jrQNygZ6hdyR7P63nQypg8gZc99dAs8y1MNBsjFSP
- Fpg+kd/vlEbCJWqsKhSR6+qjFE0NZFHFVP6wOmwxFh3WGEw5RZOzsF6f/b4Dphb928HV
- YyVMBEb/ZCiuICPf0l8dfTzMVkUT2NLsXVeKOoP9mQFa1rI2/VNgBmb65bS5Jd/NpntO
- BJaQ==; darn=nongnu.org
+ bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
+ fh=jFEzzJxDUju1ncw/X5l3FawkPgjsFK5/Ab3CZmCEtxA=;
+ b=l3IVUFPMk7OQkBPnqG4jmroqBce6A4GzNLpcoqOzvkQbFTNekfo8CWNHpdZHdWeoYm
+ +wxf9UnsOMIC0CNyG4znjn6HBU/CCfXSx0aMIRHgzB9f+x2VRkJt74mFzcHraSr+CyXF
+ EjQpsUQBblp/O+nZpplkpS31RMZUpaD++++29ZwClwCSw8fCThSPlSfJFFcgIHCZVBMj
+ i69MFbVecMzbg68jneFFX3TVl0bZGSMXYBT+SkJ9lObiQU4PNZKSKdpokr8DLKfT0g2d
+ nYBv2ao0lK1oqWI3k+UNPG8IZ3aCF3xL8ixvZGkjWFJ3fWZOZrEXWRUv2NUCApm4kWkG
+ 3t6g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770391196; x=1770995996; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770391743; x=1770996543; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
- b=mMwpRx6FQaXGOq3Nxli7BgzvB1q5tzeLSjRyrxLYlUkk7URrS9GntRGMdadjPJvyZD
- B9NlmwK7Pj30W9CHytHSnbcn7Vz1ShdA7hb+ahmKrhH8GeZf0lW/+9C+uP4qGROy3/fV
- H8AS4ntJytOvCJ3oLsKHhJu/w5sCst0kfK4+HcitiwmZDVQL/kIf3c3iEThTxLLiVCbw
- WiATKXItzygJp8FauXQ7rHnwuHAG9f5CPms4qOGlzwqVHlDOfm3rIKzavv78RiKfwjWD
- 4/XN0FF85QjSqIKWkmwuYLCNbQhSu0SwcvJ2+9ashyiYcjBW0pk1nr7pDB4NqZeHSOEo
- 5cBQ==
+ bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
+ b=VYFACtZlAvEd3PXqvmrXfsPG1PZCf2fQ96OWfaQuwm4PIDBxDW3BXkJuBFMLTkMX7R
+ 3+bEzLj2MDJRg+mJ8Mt3NSsM/7kpC2FODUVXPj/73PZSi9JzZLHzS5kWGeMt8ARK8Mqv
+ RSb1xRas1W0lsEe1vsVl64M/7a+5sG6oeGWx+CHVCvoG/Yn7ijgp/aX49iZSeyyReriN
+ +91FxE1dmELQvJV3Q6negMPuvIzbYVuR6Z0/Zy908h3QhUpvq0BAHmENjNcepdWOWfcL
+ LUfetTZwSXrit/0ZGB1hRPYk9WTlKN3nZL+zi00xRvw27JQr+eVe4okPF4e85Q5azy1y
+ cC2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770391196; x=1770995996;
+ d=1e100.net; s=20230601; t=1770391743; x=1770996543;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
- b=RCTlhgPBmDkmQvMT5WDkbbzsQLuya21P12SGkeuywItjw9KF+CctksgObAzDyOXdfG
- 0A1llAUD5c2XfGiXL69aQ9gcxvILThQ2xETGfxzm9B6fJ8Dx967hDN2E3F4Abd49el9D
- Yu1yRTqJj+WBeXIs6vGgkOvsACDGNx1jzp0iCWbMBCZ/jz5dSuHUhsKVHhLL94vI9mAV
- g9uRnsPD/It2HH6lqcpKmwEv70nW3wcI2UjWn9vEZGt+cd1Ope86tP1RDpDsHQA4YZY3
- w4e9MmNmEY1dC898inrB+J/RD0zIapPGXpO7NAHJTfzA7ciMWx54pE8Dz37VKqRDPUON
- uI/w==
-X-Gm-Message-State: AOJu0Yx/Hz/Uu3n0ogAA1qpYAnqKHPsbgu2N4rBJy+QDalat6vtYw/jl
- RTDjnus94KpMgpN74pi++1Ee2rD8buk2FYT620CniLgjVdOJMkH7QBZQpRnlXtyVeouXUXcnm34
- VY2mPca4F+eD9AxAH7YJHPKeeS63tdQILNW8mtCEPWg9iegSaiRfWMeI=
-X-Gm-Gg: AZuq6aK4O/JNSsLL+Pb+OP7Zja6idiEb50lnIfpjSww6sW3CyWvT3OIxN9H7XlVbdNU
- edDgL44Q2BxMvEcFo+J4UREt+k8oKsrYnP6wkbMRmzLpM5kr/R7VjBNox5bohUQNVp8v/0lGk0e
- XQiR4pfk9JSJ0bd9oLj+Pq9XljeuoH0gzcrFOO7oh/0b2pZNNBMYKgBk9lcnC9WE50saAJgQHep
- +a3JXWLMRguCOK4LmZGvomMnIhqAIEK4/CbduQIDjhOlVQ8k49TCy5zP+205fxVTxB7puDIpNO8
- ZI2NIAjp92pnF0u69WO33DlRu7V7LTfZNgX+lHDDvEPos57SO0FOwRg=
-X-Received: by 2002:a05:690c:dc4:b0:794:a7d:6bc4 with SMTP id
- 00721157ae682-7952ab6f3f7mr29778237b3.58.1770391196400; Fri, 06 Feb 2026
- 07:19:56 -0800 (PST)
+ bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
+ b=wNyxdwt/bN0Hd2uG6Gr6StWce4EUxfiD6OE5L/bmzqPgXnfELVAoLo+k1PhMu21QlZ
+ +VGrBHM3BBjXpgE7Z6Rb3eny6kqumj2xceJnvhRfUdQ/+lBUBp8X7D2zsidRxcecghjN
+ dff2/TMJLEmVVrD1Vof+f+/dzULAYZ4ZR+3NTigYlxsvqo1OFSzTQFqpjrnQhwXaJAFb
+ hTkue5kFp8TrhQ/SvvnG2kwnFb2vYWkTF+/+XWh688gGXDOqiODcMIHgbo/oqGzrhqs4
+ J7jDXmw+myO9Bl0nLgjmTbsvUw2Kq1EJAk36rsx5NfOpG5TIV1IAwqRMzXocmliukB5m
+ tI+g==
+X-Gm-Message-State: AOJu0YwUDcBKWAYgLd4vy16voZjO+cyPDtprYFAu99ytdUXacH4BhrO5
+ g7sVcZVYBjMaMMl8t6ZGvE9EYCsG7igvF6DYDgTgUG0cidOIVkRirzJwtm4UFZltlRk5jp6Wb5x
+ OsiPZZQxs4EoT6ETl5xB1mxPkqGYYmOwAHzoClEcvEw==
+X-Gm-Gg: AZuq6aICq2z+xj1NDJqTPqmW5qBuHlgDxtv1uJv8UXd3X1071NgbNCx5X56UspjCl3c
+ WhIwLg3FKaAbyvS2XPJc8vYnWdvoapCLuH2tBTXlBKnoyLVTX97V0MIMxV3navDxeUu4VG7sVhJ
+ QwkvzEtIwW38xa3O8a+BexE1Vrr4Fqgx/nmg7m7lkdiJkC0Utgk0v4GB/7KaJx25CzpecbepPxo
+ DxafDnn+LSoNrdTvANzrv+MfINleUiFk2rb6q/ku64zVHlu64unYWR6g0EJvKo7eiNGPf+YMg7K
+ vw3IBWaFgD9+ZQUetdhmoTzIabSILEk0pVuHeNp+llEFj99p23MLuW4=
+X-Received: by 2002:a05:690c:f81:b0:795:1f65:4154 with SMTP id
+ 00721157ae682-7952ab7c6d9mr29299997b3.64.1770391742901; Fri, 06 Feb 2026
+ 07:29:02 -0800 (PST)
 MIME-Version: 1.0
 References: <20260202153618.78675-1-philmd@linaro.org>
- <20260202153618.78675-3-philmd@linaro.org>
-In-Reply-To: <20260202153618.78675-3-philmd@linaro.org>
+ <20260202153618.78675-2-philmd@linaro.org>
+In-Reply-To: <20260202153618.78675-2-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Feb 2026 15:19:44 +0000
-X-Gm-Features: AZwV_Qj1FcYgTWLOC3kd8lxNpxKD40eAcbqmEKy-BJuNj7ZXe3wExirsyiA6ehk
-Message-ID: <CAFEAcA9wK+r32zLwhwHTAmnXHm0_bQUuNpegGp7ymZFTCa-FMA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/arm: Deprecate '-cpu any' (remplaced by
- '-cpu max')
+Date: Fri, 6 Feb 2026 15:28:51 +0000
+X-Gm-Features: AZwV_Qg_0BcctXaQStDMgnJhrLIefby8I9YJsgSPR5ZP0MwknPs1oZ83uyNgsuU
+Message-ID: <CAFEAcA8CtzzyWQxeV+zBZMU0JEacctMGvC5dezR+n3J7xKYiNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] target/arm: Remove dead code
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@lists.libvirt.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,49 +120,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 2 Feb 2026 at 15:36, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
 > wrote:
 >
-> Since more then 5 years the '-cpu any' is aliased to '-cpu max'
-> (see commit a0032cc5427 "target/arm: Make 'any' CPU just an alias
-> for 'max'"). Time to deprecate the alias so we can eventually
-> remove the alias code. Emit a warnig meanwhile.
+> Since commit a0032cc5427 ("target/arm: Make 'any' CPU just
+> an alias for 'max'") the 'any' entry is never used (we use
+> 'max' instead): remove it.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/cpu32.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+> index 0b0bc96bac2..2127d456ad6 100644
+> --- a/target/arm/tcg/cpu32.c
+> +++ b/target/arm/tcg/cpu32.c
+> @@ -897,9 +897,6 @@ static const ARMCPUInfo arm_tcg_cpus[] =3D {
+>  #ifndef TARGET_AARCH64
+>      { .name =3D "max",         .initfn =3D arm_max_initfn },
+>  #endif
+> -#ifdef CONFIG_USER_ONLY
+> -    { .name =3D "any",         .initfn =3D arm_max_initfn },
+> -#endif
+>  };
 
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 586202071d0..da664c4e30a 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -2218,6 +2218,7 @@ static ObjectClass *arm_cpu_class_by_name(const cha=
-r *cpu_model)
->       * which has the same semantics as "-cpu max".
->       */
->      if (!strcmp(cpunamestr, "any")) {
-> +        warn_report("CPU type 'any' is deprecated, use 'max' instead.");
->          cpunamestr =3D "max";
->      }
+This is not entirely dead, because it's what causes
+"qemu-arm -cpu help" to include "any" in its list.
+But we already don't list "any" for the qemu-aarch64 help
+output, so it's not really a problem to drop it from the
+qemu-arm equivalent list.
 
-This doesn't compile:
+I've applied this patch to target-arm.next with the
+commit message adjusted accordingly:
 
-../../target/arm/cpu.c: In function =E2=80=98arm_cpu_class_by_name=E2=80=99=
-:
-../../target/arm/cpu.c:2224:9: error: implicit declaration of function
-=E2=80=98warn_report=E2=80=99 [-Werror=3Dimplicit-function-declaration]
- 2224 |         warn_report("CPU type 'any' is deprecated, use 'max' instea=
-d.");
-      |         ^~~~~~~~~~~
-../../target/arm/cpu.c:2224:9: error: nested extern declaration of
-=E2=80=98warn_report=E2=80=99 [-Werror=3Dnested-externs]
+=3D=3D=3Dbegin=3D=3D=3D
+target/arm: Remove entry for "any" from cpu32 arm_tcg_cpus[] list
 
+Since commit a0032cc5427 ("target/arm: Make 'any' CPU just an alias
+for 'max'") the 'any' CPU QOM type is never used, because we change
+"any" to "max" before creating the object.  The array entry means we
+have an unnecessary type in the system, and the only user-visible
+effect is that "any" is listed in the "-cpu help" output for
+qemu-arm.  (System emulation already doesn't include this array
+entry.)
 
-Also linux-user still asks for "any" by default in the
-arm and aarch64 get_elf_cpu_model() functions, as does
-bsd-user in its TARGET_DEFAULT_CPU_MODEL macros.
+Since qemu-aarch64 already doesn't include "any" in its "-cpu help"
+output, we can reasonably drop it for qemu-arm also; remove the
+not-very-useful array entry.
+=3D=3D=3Dendit=3D=3D=3D
 
-This seems to me like the kind of deprecation that is more
-effort than keeping the compat handling around, if it's only
-three lines of code in arm_cpu_class_by_name(). Or is this
-going to get in the way of some cleanup we'd like to do ?
-
-thanks
 -- PMM
 
