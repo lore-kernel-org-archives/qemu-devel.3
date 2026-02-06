@@ -4,106 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BB5EE20A5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EFAEE20A5
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voMD5-0000sA-Vs; Fri, 06 Feb 2026 08:49:24 -0500
+	id 1voMDC-0000vS-BQ; Fri, 06 Feb 2026 08:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voMCv-0000m7-1f
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:49:14 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voMCt-0003b2-HM
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:49:12 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-7962119ff2bso4378027b3.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:49:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770385749; cv=none;
- d=google.com; s=arc-20240605;
- b=hAUUPYORpiax1Za6ouhprXkYOTAQ1N0uCbnp1pufJrr6juu72f4UNs5/xl/UDqgkWq
- 7I7eS+fRltCasuWO/Js/cEZB5OesBbbrnHwReVV6ul/K53/lioj0z6Kh/kTuJUSDSlOq
- mBA7zyDEa3dHDr7EcuRVgxByUE54xJxAtFcKDnlhIEBZE1lQUqG2xv4TuNLWn0bSBhcW
- pZGkYUHUosFppsnIMGWCkY1d/X03EorZuLQIXRAlh7KG5PnzHE2Ayc1K0Nx0iFqxqEks
- DKN5Nwf2T0EqUsHWrSFNADmUdI8R+fVd94oENds9zTHZYv3bcxvWTUWE+CmYszeS5JFc
- jl1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=tAJxh5aYTSnA6OumxotnwqDrAnASnUjEjvi8Z615DvA=;
- fh=ab1LPBglT2PG/sPMvbpzGY6xH6vCw+rwfYiuOUOC5F4=;
- b=B/6zXudpqs9uXmS3uY7mbRRiKFzyEUKCShA+QCv5FVgt6TOBKwRSve00HWfAk4Q7JP
- shoUMkVVwuuISkMR5cFb2iCUk66zL0P2iAtO24OJjjDlQ025MKtIHo6yymf/fyyiloR6
- VGhwFrwTTz+hTzEFoo/83yfVDgSC8Nr9tmnA3sCS6OooyYaOrStCF/ZXTqWf3fS5Q5uu
- Pon20QUGoMB/mHIMHE+3W+/fX3u4fiQUNpET0NvShRQFJPoJ43PJZqbaPF20dHfOkb1K
- /MZufRNzrfxpLcEB6i02+iz2JzTVwGNHPuYNuS62M/6NAAENsBGSTtRzqlZX9L7CHw2l
- Zn2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voMCx-0000mQ-Ng
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:49:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voMCw-0003bT-3t
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:49:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770385753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=HMYNdXHdZterONrEcNKytTPOCRM0WILMkmfkSh1pI78=;
+ b=b5YoGs4O7iLq9bKcndeCxhytlDbES2J1D1ELpF8xEw2vlKGOmXzv4ueOZzbMl0GRspcOXf
+ +PaRoLMiqBc7HbVMguXwZjN3YW9m5G2fZjkW5rPIBJeJjjUnTjqnFU4sStGMK0ZoWLsr7B
+ G7zl/Qmq/PhE691Xbrf4sj929BhsagI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-WHIdmov8MTmPOSxB5BxQ8w-1; Fri, 06 Feb 2026 08:49:12 -0500
+X-MC-Unique: WHIdmov8MTmPOSxB5BxQ8w-1
+X-Mimecast-MFC-AGG-ID: WHIdmov8MTmPOSxB5BxQ8w_1770385751
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-435af2d3144so448468f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:49:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770385749; x=1770990549; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tAJxh5aYTSnA6OumxotnwqDrAnASnUjEjvi8Z615DvA=;
- b=lgBc51L9FV21Tjb/DwSlgAt8WxPfNFcZjcSSkQY1i+Oa5ZmJr7OAcR2RKeZYtC2YCI
- U3bO+5OyCXxIwxLUSltINoT4DZiViRwMQJKgXFWJmJCuIuLkT+wi8jnCD+ouE0LflzuB
- 4FoM3ph1v/123Lw/+Utr7e+skAu4nawmaF2g+QqHIu9gkg44FLdKqQg5i8det+tyyla8
- kdu4VV1kzsbdGzo67v+l4Z4EL+hcYMEc8hZnzd95D7BQhMTvJ6H9/nCe+6EnXJZfFRGb
- EnNU4AZ3zBGRkXGCLhvv/E4HUMUer9F56whOu/bVwTFfAM65PXQvAZX2j+Vwx+9lY72j
- ZNvg==
+ d=redhat.com; s=google; t=1770385751; x=1770990551; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=HMYNdXHdZterONrEcNKytTPOCRM0WILMkmfkSh1pI78=;
+ b=i3AUamB9oioiTLyULofDT7izExBO/dc4nZvFq1gPjX/uT7yMjPLbknd423R/lfmp+d
+ jPFUy6FJBKppU+YrcdFPsV02gMCCJMJOEseTC2safk8LcA9UEmJzITjB5AqftM2ab8oF
+ fi2cBgF42R+UrrkegXHfnVoyrJ+ydfhSE7NDLETx4n7uIV/0ZaBMARNLQ0+Xl0TPOn84
+ ipk+NucPd+d7jKOVW68bOxRwmX/lEPujnw+uhMjwjSskd7Ah2Wv1ymUvFHK7KaE18jjh
+ yMnVokG/NyXb9q4hTuAKye0kAaPA7E9Y/ZgRkEk25lBXSx4BQ6oo/IZSFpJhyZBjbLNQ
+ pl3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770385749; x=1770990549;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1770385751; x=1770990551;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tAJxh5aYTSnA6OumxotnwqDrAnASnUjEjvi8Z615DvA=;
- b=XwRluKtanD2kJYjfnzKGrMQNLb+etVrx1yRixLE9W4jYXblMROsyq7IsYbloIX+lVA
- ftZBQTorb3rPEQ1Ies1IMMmFC/BqIVuy+sWV2g5IlAG1UhEeGinWyUPPKLjyIaKhRh3i
- r6O8KLrrJHC9x8rFVbd9XFkn/WQV5zJcqI9D9WOXCmD/t9nCm6dvuCGrzA0G1ugXFMHY
- VvEWhzks/Vyx547HXtVeF4WDl2kuYQBHp7XwqlbrcxHW8pd+WbCU6K2dKX90gKK+Z/Eg
- t9qLfHtyu8V6FaGYQN0c9j5Qwr2GCOwaUE56OYkCEhTSjrOwv7DE83aPv+S2CXWNN+mU
- 8++A==
+ bh=HMYNdXHdZterONrEcNKytTPOCRM0WILMkmfkSh1pI78=;
+ b=KJNzxVUUNhijffToODzqvYmOyZLrWlggWOcUUm345fpqf2Ga10q/Dspl+xxo3gT3AI
+ tqpViiPHszFyuFF0JCQAlBppabkPavDGPLYTvvWMnSltUQfEw5+qbFlumOPuDgXn9MuP
+ OxGCUnujhRf8bhy3W7liTWNVoBn29UaZQjo9C+Pnz3WEq+Jlp2H8KAAt//cSTgQ4e6C3
+ DBtpGKyPkMFq0iFdBKU2uPQ1aSfS7afj542htFcLfzM5tawPRqYbcHWKBWvC9ChxEe8n
+ QIoa0qC6JomtmqamTAcp5ojPNBScEZW4ZWPlI+sUKdxD9aJfMhIf5O2ajq89RbZaOTBb
+ ddig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVttxvqsSzM439syYFaAQwvhB9TK3P57kPR7tRpOi8k8kQq02N4xUwBF5AUq32l1bCtZwdtMvxJH8a7@nongnu.org
-X-Gm-Message-State: AOJu0YyjIudZKCcxVnTtA0o7ClDGy6hOuaoWL/Uw2pUVoFd4od7HGOWg
- ssP4zPUrnQVJBYtbrJ4dJIsY6MBoZSTEmW6VmgUqRc6l2n5q4n37AaBy953rvGSqu60SA6l+OmW
- vOSTuXN2cs5oEYHJZztAS0MbvGu9O4O18Y30t68f5IQ==
-X-Gm-Gg: AZuq6aLbQnIVbEJgro0QrN98EHG6p2dlHxLbrVDERrWxeeE0Y4B6SDdzrroOJrTd0cw
- djQRD3vU8v7g+pmSL1iWXuypC0tRMTGpaKp4ujRM6zVBySF5gmamLkcMBVExk8xBxu68cAJ0TCH
- FI9fXlHmixMRPTUTV3ev1WqHUwCmi/eLVPl/WxX5NCtVyDR3XW8izWkvUzrP44FbYUzV6R+FhyK
- kHo8RanaHP7UFa7LDIut4AvEqN+ljRGmj9QnZeugZpBP9FinqYXSSpiukjogIknDkW0Q5KC+ZdS
- 2TbKX3L1QTZy4JbV2boqCRy9AyQgOukEiELBmMZvn/t+fvcdV3/WfXQ=
-X-Received: by 2002:a05:690c:89:b0:794:f3df:8343 with SMTP id
- 00721157ae682-7952ab6f609mr25881047b3.67.1770385748876; Fri, 06 Feb 2026
- 05:49:08 -0800 (PST)
+ AJvYcCWTo68fFFxm6fvX3F3wyTkjL1ukHaNxvcYVwh+y04hur7sTRf15EZqzrTEOyO2olIJ7aTBuyn/Z+o5z@nongnu.org
+X-Gm-Message-State: AOJu0YxXjhsdpdwMY25/Y25yZB1N1nT2FJ+JGkYsBD3mHrEGGIgjrbJb
+ tBy3VLdd5r6O+gSdfPwre3uGuZhDcTb0LWQ2RLU+xomiChHhpA9ec/lAYT8vYtDq8V9li9hORvL
+ XuN+4/ZVlPpVEkB84m1NCvOdTTpf+fDVFR1kzcV1LFr3OVnXpEsIfLYQT
+X-Gm-Gg: AZuq6aLcdBJRTrpl43No/N9WP2Ke4lMC7q75psTcMsMyGpaTM92kFtICtq/YuHmffa9
+ y+VfS2ed5AVxGYvyfEG2hepwXR+eVYG2Ia3CwD2uuiNWjrvcGJFw0+thCv/PR55nU5mnSuLoFA+
+ 6w0r7da95M7lFXaePf/mZakFpD6lZfY0Q+lE/V9QzFCuezrp7VxjYldxgO8zw+ssmuTLn+CVv/Y
+ odsXjfq/+gBr75muKyMwKY8EAKEA7t2pCFIvC7gdIVvxXtaETatykgoyCkyixw0wMCYcF1o/IVQ
+ 3usGqTUHVz1SxptjF/4ux2fYK6C+8ExkfAKpmQbvhzSC6yAuN16YS1stN+T4CCFXGNPdhECu3fZ
+ BNNIrpg0=
+X-Received: by 2002:a05:6000:2601:b0:430:f449:5f18 with SMTP id
+ ffacd0b85a97d-4362938a448mr4875578f8f.46.1770385750623; 
+ Fri, 06 Feb 2026 05:49:10 -0800 (PST)
+X-Received: by 2002:a05:6000:2601:b0:430:f449:5f18 with SMTP id
+ ffacd0b85a97d-4362938a448mr4875533f8f.46.1770385750185; 
+ Fri, 06 Feb 2026 05:49:10 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.115.203])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4362974527fsm6480757f8f.31.2026.02.06.05.49.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Feb 2026 05:49:09 -0800 (PST)
+Message-ID: <106811fe-4437-4a8c-9a39-33d64a287d6e@redhat.com>
+Date: Fri, 6 Feb 2026 14:49:08 +0100
 MIME-Version: 1.0
-References: <20260204075754.21078-1-heifetz@yandex-team.com>
- <20260204075754.21078-4-heifetz@yandex-team.com>
- <722eb7df-0eb2-49c1-af07-90004ad46a8e@vivier.eu>
- <67851770384370@mail.yandex-team.ru>
-In-Reply-To: <67851770384370@mail.yandex-team.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Feb 2026 13:48:56 +0000
-X-Gm-Features: AZwV_QgEKmkNY4zBoPMBcwxSvd5bLg_-fLouZnLmEuFw48BUT3MKJMZeri6Ni0Y
-Message-ID: <CAFEAcA9TFgGrXx9TfC1jr=VOOJzoAQqirbDOyf2PU3cMXc9iLw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] system/physmem.c: reorder usage and assertion of block
-To: Sergei Heifetz <heifetz@yandex-team.com>
-Cc: Laurent Vivier <laurent@vivier.eu>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] gitlab: ensure docker output is always displayed in CI
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260107130145.1495219-1-berrange@redhat.com>
+ <20260107130145.1495219-4-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260107130145.1495219-4-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,44 +168,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 at 13:33, Sergei Heifetz <heifetz@yandex-team.com> wrote:
->
->
->
-> According to coding style (docs/devel/style.rst):
->
-> Mixed declarations (interleaving statements and declarations within
-> blocks) are generally not allowed.
->
->
->        newsize = TARGET_PAGE_ALIGN(newsize);
->        newsize = REAL_HOST_PAGE_ALIGN(newsize);
->
->
->
-> Hello, Laurent. Please note that I didn't touch these lines.
+On 07/01/2026 14.01, Daniel P. Berrangé wrote:
+> Set the new $(DOCKER_V) variable from the previous commit, so that any
+> CI jobs invoking docker will show the full stdout content. This improves
+> the ability to diagnose any build failures in CI that involve docker.
+> 
+> For example, when a 'docker build' command fails, it lets us see which
+> command in the Dockerfile failed and why.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/base.yml | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+> index 921c562000..7640a1d52c 100644
+> --- a/.gitlab-ci.d/base.yml
+> +++ b/.gitlab-ci.d/base.yml
+> @@ -28,6 +28,9 @@ variables:
+>       # we don't need. The --filter options avoid blobs and tree references we aren't going to use
+>       # and we also avoid fetching tags.
+>       GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune --quiet
+> +    # Ensure docker.py / tests/docker/Makefile.include always displays stdout
+> +    # from any docker commands to aid debugging of failures
+> +    DOCKER_V: 1
 
-Laurent's comment is not about those two lines, but about
-the ones above, that you don't quote in your reply. (Laurent
-is following the usual mailing list style of interleaved commentary,
-so his remark follows the part of your email that it is in
-response to.)
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-> @@ -2054,11 +2054,11 @@ static int memory_try_enable_merging(void *addr, size_t len)
->    */
->   int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
->   {
-> +    assert(block);
-> +
->       const ram_addr_t oldsize = block->used_length;
->       const ram_addr_t unaligned_size = newsize;
->
-> -    assert(block);
-> -
-
-You've moved a code line (the assert) above the declaration lines, so
-the function used to follow this coding style rule, but now it doesn't.
-
-thanks
--- PMM
 
