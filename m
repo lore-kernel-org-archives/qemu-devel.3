@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D15DEE6B68
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CC1EE6B6B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTh6-0001pe-0z; Fri, 06 Feb 2026 16:48:52 -0500
+	id 1voTh7-0001ys-PM; Fri, 06 Feb 2026 16:48:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfZ-0007Vo-VQ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:18 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTgN-0000RW-EW
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:48:20 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfY-0002l0-5R
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:17 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43590777e22so757485f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:47:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTgL-0002pI-LA
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:48:06 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so10030185e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414430; x=1771019230; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414484; x=1771019284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4fTbdseFac75qijP8tqpFqMIQVx8MzamHm81dt2uo58=;
- b=zGHVeVdp0UYvqWzrv5wQ52zwczPP9VX02sDTaXAEr8lqpu0ZabwCVSJ7xmCqKWN/Q3
- LtIdDcNt7YakK8AkJ9VsYeHf3P64ch4I7E6eSBn9av+yx+LlOVQ/+gbpAPHnHcJ/WgZ3
- TaeGUCFY8FqsnPz6txEm5s6O68/RL/MM9U0iw0twbsoEyJU2niIrF3BpLzUEpTl1f+c6
- VqJ9C7UIO903kdy1MG9srdXrD1xzLkhTAd7SMyzZ9B+B3eM/c+7swjUH0SaBw2RQL4Yg
- mWp17GF9YEiXvKBFtJJlBPQ4Gplp/s0eqiHxCYMNd6iw1/42o1aEqEj7K+0kV3DLPTye
- lOcw==
+ bh=mbMjRnug+OPPrkK5xLx81UGaNUfrzIm4i5zHFkBaCN8=;
+ b=FKew3fxyeFmPTAQzS0FQX0XP/QkZjLore4OwrQOdlAJ29/wBDQjTcVgXgMEtcxipAn
+ fbkzkelXqhZw3TaBLeEp4yVYNIleyMUkoWE4+PMLqL/cy4NwLkn3+uvo601FFe0RrSUk
+ fL0NJDe/8kIit9Gv1hdCFSI7+peIQ5oxUd/GPXNceCSGyS9Cayl8UucuKioVL6F97Bz8
+ jYQWChG7jwdt8835zS/bcOiGzznKvGo6RifsJt13FQJ9KnVSzrbd3FMWIGmcWA9UF4ZT
+ 7v3Jfa13Ppbz0JFXo/27uqcqc/VzPyhgk0o0dNgc5QxOS8NibmtDqTtp3yttYBOPf8ok
+ YB5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414430; x=1771019230;
+ d=1e100.net; s=20230601; t=1770414484; x=1771019284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4fTbdseFac75qijP8tqpFqMIQVx8MzamHm81dt2uo58=;
- b=anqlgyNTUB+9zYHK+mKpT5uVmusXBd9DpBuysS1UC8BkpAYMGBSyZ3rcN/lBK09F40
- /FuCWHMZBy1Chlg5zGhzZeheF4x3GIGCHJ7blG77BD+hlKyYR2htjaDhM9iKEM2/KsZx
- gfdGRBpyxaDDUGN+WuzYm7IB9klYaOiU8gj+qd95sOPrrbcyrV/SlE9Mg6oEsWzmIUow
- GnFq1S7YKwkR3+bNczkNFUwcB4o1+f6u0Q+cgLDWZo4L2b2QNmZRieJayiNOxFIgh6I+
- 6ARm2Q81HbAw9f8Wsnd+759vjoBGYZrwbbPQUZC4XzRRjwkM/QdHvGrHwKaSEgUxji1t
- B+jg==
-X-Gm-Message-State: AOJu0YwgbJ7hV9Td6/g3dCHoDAq/4VeqDTmZSPKwbhwh3QJJ9U8CEWqz
- FRf8f2OQbv9at1nt9HqG3ly16P9FkK9VpeADepbgtmZ6a7tu5GrzCjHlGq8ygt4Rita9JY6TWwY
- nEzX5fDI=
-X-Gm-Gg: AZuq6aJq8J0trE1cJUDLdCb6Qn+Jg1RwiZkP/Ju5rqzg8E7L1Wd8/J5pNOP/7IdODbT
- 1hVtKFEz1HoPhQgzIebyIj54Hies9nFyg+xQhKCxjA8/phaMejw1e4tz9gshwIjLyYXsjNncuvQ
- Ckt9r4uwebzeKtc4RqttYEjFckiZjo9VxdgdLDl55o4cqpAPX9GloMCHtEp+9ZAoy4bXq34u9Ya
- kHVw/ntHOtl1gXOBjqkmk7SM5xXz2tpiwvMsqE7w6y0MFCxDOw7alSNTg/2lg5Sv3D0pJX2Lbes
- WGLrIWy3sN2pYq/FKklF+Vk/ZICoCaJfIVsK/cY9H9b6xnSNV8iWyepVvcC0Nz+4RWVmjX0hG0X
- y9EMNlluhbSRfnSYcdoK7fhrbt32S1xB4E4rELU3I7dCbcSOv+p3C9qRmuDaCuzWO/oagkkjiIq
- X/OxOBVHAbmsS4jr8Fq6X6F6+lOfaqp8U6eYBUVMhbBAgP+rDlujWcnPB8A3/U
-X-Received: by 2002:a5d:5d13:0:b0:435:af8a:2a6d with SMTP id
- ffacd0b85a97d-43629349fd2mr6740822f8f.11.1770414430569; 
- Fri, 06 Feb 2026 13:47:10 -0800 (PST)
+ bh=mbMjRnug+OPPrkK5xLx81UGaNUfrzIm4i5zHFkBaCN8=;
+ b=vG8xHw46n26HK5jfl/pGlC6B6GDfcdKv3sSVYDCh0Tr+0gjxfOdccGAjlqFcl3hCiN
+ ONq7SyRXsCAQorlprcSo07aK6YYdonz2V8G7SnB1eI4h8ULbHm6i+Yck37ft7isDDxaV
+ Y2bBQgBbCkDCEbP4C8/SyMzgXsIM4qDDrIS9n1ED0O/vWeCzNv+gf4ew3+P60UbVddhb
+ ZmQ/4bj1Y+2zhYo93kcaeIdTG/81JSt8g5CnIz5VgxcrC3NHGuhFFugoPGRVxFX9dcwe
+ Panv+8g6GW2SGLYnS907lsKLwjN5D4M/3WPMI8dLmLdRLzyUzZ7V5QoWCMoxOCtdN71w
+ oSsg==
+X-Gm-Message-State: AOJu0YxmmufSWmYptcJUAnhinQV5iWM7m1iC0t2c8VSD3xjY0myvYDNG
+ pww3KF5PzriyF0P3DNDOG0cqvh6xVg7neojkYQuc/fRUgWT6ccGKhGY0JQIOLcdDH0gwj5YXdPo
+ iHg4Ki1Q=
+X-Gm-Gg: AZuq6aJetXLBOREB/LxKU8lrcqR+JaCJT5COyRqhu3/ZAc9z2SL9l/OFPpaV8k6B1+K
+ ucNfNiVRV4piPyPOOkRmQ1okd1mwzv3pRFvdGrVRvk+eQoZQB/UV5atEfqMVwEpEGKyz4pBUy+V
+ OzZQ57fSDjuVk3t/TVjb7acRYYAJPhEVPEvpfR5bzXg2PQvtOAdomIF++jamHSPe75SxmSoPx9A
+ 0PSWpVe5iLdUsPNuhDRn5fiu2/Qe1TBuvpiEFNE2P8RmYvCZIKSJPmD4qZ3htHoT/atd6vGO1W8
+ 0e8qwq/qJSSiv1VgQQsTe36vahWSxHRwrqtl1L04WL4nxxela4mW/HfIVFoC+I5q7ISgI6pnhFs
+ VK4NfE4/JYTCcPd1F2a+Eh3jgomi381m0V3LPDOYrQBh9a1U7z+JLcN7VdcNbjCXdXJwJHex9KC
+ QC8CxzG6KyMnhGE6wlSS78Z26V16zNxIk98RRLPNMntOmUQLhT43MXRXKE9TTR
+X-Received: by 2002:a05:600c:6290:b0:47e:e78a:c834 with SMTP id
+ 5b1f17b1804b1-48320226676mr61118435e9.34.1770414483901; 
+ Fri, 06 Feb 2026 13:48:03 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436296b25d5sm9170067f8f.2.2026.02.06.13.47.09
+ 5b1f17b1804b1-483179dbdcfsm192309675e9.0.2026.02.06.13.48.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:47:09 -0800 (PST)
+ Fri, 06 Feb 2026 13:48:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 21/30] configs/targets: Restrict the legacy ldst_phys() API on
- x86 targets
-Date: Fri,  6 Feb 2026 22:44:39 +0100
-Message-ID: <20260206214448.22008-22-philmd@linaro.org>
+Subject: [PULL 29/30] meson: Add TARGET_ARCH to config_target_data
+Date: Fri,  6 Feb 2026 22:44:47 +0100
+Message-ID: <20260206214448.22008-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,37 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 targets don't use the legacy ldst_phys() API anymore.
-Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to hide
-the legacy API to the x86 binaries, avoiding further API uses
-to creep in.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260205030617.266625-3-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260204204103.46343-5-philmd@linaro.org>
 ---
- configs/targets/i386-softmmu.mak   | 1 +
- configs/targets/x86_64-softmmu.mak | 1 +
- 2 files changed, 2 insertions(+)
+ meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index e9d89e8ab41..19ef4a6690d 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -3,3 +3,4 @@ TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-32bit.xml
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index 5180560d4d6..151862158c7 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -4,3 +4,4 @@ TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-apx.xml
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/meson.build b/meson.build
+index 8c6c0a9a32f..2d114e90184 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3263,7 +3263,7 @@ host_kconfig = \
+   (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
+   (have_rust ? ['CONFIG_HAVE_RUST=y'] : [])
+ 
+-ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
++ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR' ]
+ 
+ default_targets = 'CONFIG_DEFAULT_TARGETS' in config_host
+ actual_target_dirs = []
+@@ -3353,6 +3353,8 @@ foreach target : target_dirs
+       # do nothing
+     elif ignored.contains(k)
+       # do nothing
++    elif k == 'TARGET_ARCH'
++      config_target_data.set(k, v.to_upper())
+     elif k == 'TARGET_BASE_ARCH'
+       # Note that TARGET_BASE_ARCH ends up in config-target.h but it is
+       # not used to select files from sourcesets.
 -- 
 2.52.0
 
