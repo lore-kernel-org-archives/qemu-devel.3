@@ -4,108 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6083EE6B44
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F95CEE6B44
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voPkT-0004hF-So; Fri, 06 Feb 2026 12:36:06 -0500
+	id 1voPnA-0005PR-Ls; Fri, 06 Feb 2026 12:38:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPkT-0004h7-7X
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:36:05 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPkQ-0002yg-Qs
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:36:04 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3545d66bb3aso468901a91.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:36:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770399359; cv=none;
- d=google.com; s=arc-20240605;
- b=HxDv5ilG+9PWOdLh+KmchA5UST9e9czUpLH/iw4pEoCbDg1OXN/ubdKroo4DI1t/Jv
- dSAxOQw0/JrCxJD5fBGS8ZlfkyoKlLkTaZA3iI0l3D2S8U/LwYic8tMRkR5N9GjdsUwm
- dX83mbJmC5CeclkdHn8BiYSG/faUlTPAP43lyrrxep71aE5285yhUKov0g/Ix0bzFGpS
- xMeVcZs8Ql1H2CMv0FwMPR+nwyuc0GoAY8QQcL7wB8kFagsSoSzN9485m4nWV4yruyqw
- De8EnmNBZd/IBiZMEpeWH8BR43AU94R22Pi1A84A8sRBwelrVEAw1yajqIBRD4Ygp8Kv
- Ozvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=w/BKo7jvZMk+0j/WApmd1igJXUBVRQa7Ty0AfdP4sRI=;
- fh=vX99oSypppU96q5NuBPJPnj1jnSm3PHdNBfQCXpkGWA=;
- b=bwuY9GAucZcH79Io7WKIPGVtFHwCIP7qxXLXg0b8mJvnEPDjSuR0dSo/qpRvyVMYzq
- LKPNmm4E9F9hL8Fo7kt36861EKN5azELtniQzvqfbeDMFa2VjTeEAWdGT/pWJuIMe0XK
- /KmBod9ftmIs+xiFlMsaR/FW4q4OwbnCtRLboebdxw0ve+JrFc2XqwJC6ZlRM+qWVe3n
- i4YozNaU/6uQhLsc9iBWsVCONmm5ajdUrQrHWdXa/o1WYYeP9h8UDyQj0HkCwPMKRRTs
- lIafmYA052GCGtJUJT9pXsPYvUD3cWUi4b6nThxzqCrvPy7PTrLr6Sk5g7qkY/mMVIRY
- xt3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voPn8-0005PD-Ja
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:38:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voPn5-000386-T4
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:38:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770399526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HKEcaVCG4FvbMspAZ4rJRk9EPr1f3IFn91TISV0R/eA=;
+ b=grhBct5ov5X8xKZzc5SsDERZY3Qrkuc2o2Z2t57SGMD1OilWz3ulZmdbmo4zLvAWuNutMW
+ OomYNjKGv6gjuaU6LBHW8pD8oWrlgMjcS31E+A0/kZIHapyj0kaVrreo917yw6SCzPoIOK
+ Oe0YsvgK1AqmZO3X0Kk+YR1BN/t03Ik=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-658-MQdxZvUrNJ-p7djGGYxnVg-1; Fri, 06 Feb 2026 12:38:44 -0500
+X-MC-Unique: MQdxZvUrNJ-p7djGGYxnVg-1
+X-Mimecast-MFC-AGG-ID: MQdxZvUrNJ-p7djGGYxnVg_1770399524
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8c6b315185aso421354785a.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:38:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770399359; x=1771004159;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=w/BKo7jvZMk+0j/WApmd1igJXUBVRQa7Ty0AfdP4sRI=;
- b=Va5kTtX8zOmTTPVAfUj8YLJZY9YF9gQqgz8sSEcVEtHIFFfRp51GVZmMTP5pTar6Ge
- ktgWhM+Ljjd10qsKePHB8Kc82qzzubwUc9kPOIyxOR9RY0WNHHB1LqJvJBJ9IHxV2g73
- zMcwDeUnrobzBzJiZzvKEcDqBTNYG5sAZLzTo2S6TKWlUHmGA6we4b9uVUZqIHxpVrlB
- 58GD3cwE2UPoiCTx4fxx3yCfqXzn3eFtFP7ZA4BDVYTLK6uGygEKbAE695n/TpHVEc0u
- M85w/ReZIPY4uNuNWl5ptz1hWu+kc4y914k/xDLWUszooz6vyFzw5F426CXDOBp3fy0N
- Imgg==
+ d=redhat.com; s=google; t=1770399524; x=1771004324; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HKEcaVCG4FvbMspAZ4rJRk9EPr1f3IFn91TISV0R/eA=;
+ b=LoV7KBkDas8CLyvkzqutRR7cuEwt329fgD9GBhTKLArp0RK2sA0nxtrmUyNFv4Bn6y
+ DiulTxlHBIlMRkYXYtZUOaUNXy68CuOlRhbL01x9CK/z47v+q4Nyv/1SoRtxbea6ZjyD
+ c2iFgeunhz3t2stXRX6xXCRJCoPZypuXAs/IHT8VRS1etGN9/RsKhthBe3NieAWRplI6
+ mV5xXcBXFDTHbIHMm+BLIwhg7IOqnTwtdimr2/zB+3h+zFfblOsEOP4Lp3yphP948FRF
+ M16ZQITgYGtcJOwHhZpL0F57IRR7I+mpp8Ay/HPukgCjImie6m4DN5Z7x+YQ+2/NsWYf
+ q0Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770399359; x=1771004159;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w/BKo7jvZMk+0j/WApmd1igJXUBVRQa7Ty0AfdP4sRI=;
- b=UlyxB3+ZI52PCJBi2kGK+997zkqSWnUlVtJ3vkFmU95vrZUVz4QHetmWBI9cHwxoxo
- 8B/RWTUFhZxC3M/MTEqaRrTxlvHNk4sxVyWIsnLgYehLNit6ogMOOqZ7ew4MlDW/43CL
- N+LrvJP2vTB+IVMtYyHIWtDWzcjv11M+i0ouxn4SyER3cN9CzuQcnB+9ayR51TwHyu2M
- xxBwaMxd/WKwizxLQADqSbYaDg5mRVObMnBt19zqeZkHKsE/9+7KRMy2Xnbrz+7NgTn4
- wlD9Dcum8elLqcsC+2GGqvIckOYO8dWVPaOOKE0UMgJvaMkFuHBvhV0ivfCJ9+RE8918
- /OvQ==
-X-Gm-Message-State: AOJu0YwnrYDbXEjJMGvFlgIqrvL2cFxvClbh67wn14iE7SAM7YfM+YKs
- ZJfa0wJfdD4vFK+OCjEQoF52Vz9ldQl2d7YrJDIMZwVzK+mEuuMWpyHhTIlokmBSR1RAVs2g4yF
- rzKFqOMPsvOyo0EUHnxgEv8tgLOGcTwYqNaE3kYuyJQ==
-X-Gm-Gg: AZuq6aJLyFjOGQGFkZSxQk9HPMohG+kHhd9E4rMn+sKgPE8m8hCs1o5PBFTBv12EqDM
- up6oor3Mski2EEJ12Gd3JEYVe8dYZ0Mxrb6RPsPTTH51jvSqI2XEedbrOtCy58ZmFvCrUrFy4JU
- EUjyuSsGbFRQMbAcmhRChIKk2DfHZgqDu+9WRL+5e6ya7AKXVe+IhLj6Sl+hzEy/j54VpWhAMoa
- CrPRTinVvNR2/Z6angEIYs5xmDRKx/wDe0dNYA7odHhQtFed5GTgtd+tmjdCSRs+X9MZ/B47ets
- 4E0D7Q==
-X-Received: by 2002:a17:90b:3a4b:b0:32e:528c:60ee with SMTP id
- 98e67ed59e1d1-354b3e2ee5fmr2833835a91.24.1770399359137; Fri, 06 Feb 2026
- 09:35:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770399524; x=1771004324;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HKEcaVCG4FvbMspAZ4rJRk9EPr1f3IFn91TISV0R/eA=;
+ b=btM+rZGLQ286kyIeiBBSVhNMtMdOFtZ7r/Y7oXjjtqGMX0dbTC4gV26aTHQraOnaTe
+ nT46ULapicw8rjPHxYKJAZ1i/v8yeQWGr/wTg3v+p+sVrH1M+b2YkZant3mEVYh8v6M3
+ nesHMZIDaaemE1kCjemQlS7rmPiHX5d7D5FxEK4b8UNjKEX3j3QqhKLJW9WV2uXEWB+2
+ 8H9v90jqoiQ3HHwOmr53BxbJi3bnT0YGSLjAHEfR4sw1DmEA/WRh2cKNFsb+/J/Z+Szy
+ TRoyWubhqNvaNEGQPylK2doMKmHoMwWhogYqV33XYOMu/Zkon2BPIlkzanhPDNOm51D5
+ 0vjQ==
+X-Gm-Message-State: AOJu0YzIe56wpoIBdCL6VQheUwUs4CfPkE8eNzoG+SsoGzqcjk+G7anH
+ zgStJN2S9FxJMlKN9GS1tkirPmM5hJYLmXVkO8B3xV3TZU2Rfj9WTioQLFUialBn2Kn525RFr3G
+ STBU8qbCon6/+4Umy/ZYxdzS6BlA2J2J2inw8FqjlV7lCZafABWuf0UT7
+X-Gm-Gg: AZuq6aJ7i69ySeFlCnx8gvs3T7DFoVJFKSSIWp0dkGzxrR/KGOJfRGFIpHWWWNqx/zo
+ KyEmcqCa7dTD3tR5opk2VSnaGWqvZerYmJ35g8MtSi43L42+1HMcnKCA3+P7898YS1xJQMegi+u
+ OVwB2eVsrSvRMOoC52sX60gHn+yALcQPRCOpzSnBKOkijjaV/0xmfIXqx5oIPbTmwjZyk60U5xn
+ oe7EeiMD5fAF8bD3pBBiYL17GnG43Mom6E7J0uBqSdhBzPTJbtHfq87DSF5tfcNxNx3NtNsGM1m
+ rS59n9R3+EgYmd0vxq4yfcOZK6c8MROXuk14EZ/ipvqpJDZ0cWMBs0wVmG6Adtb4F2dntR+m7pP
+ qPP4=
+X-Received: by 2002:a05:620a:1982:b0:8c7:16fb:ed45 with SMTP id
+ af79cd13be357-8caef7e16e5mr469457885a.27.1770399524139; 
+ Fri, 06 Feb 2026 09:38:44 -0800 (PST)
+X-Received: by 2002:a05:620a:1982:b0:8c7:16fb:ed45 with SMTP id
+ af79cd13be357-8caef7e16e5mr469454485a.27.1770399523708; 
+ Fri, 06 Feb 2026 09:38:43 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cafa4b49casm197168085a.49.2026.02.06.09.38.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 09:38:43 -0800 (PST)
+Date: Fri, 6 Feb 2026 12:38:42 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH v2 4/9] qapi: Implement qapi_dealloc_present_visitor
+Message-ID: <aYYnItBr-FOhgRNq@x1.local>
+References: <20260202224101.20568-1-farosas@suse.de>
+ <20260202224101.20568-5-farosas@suse.de>
+ <aYUPZ6ZnWCgxvLxh@x1.local> <87fr7eqd2u.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-12-8d8ff0035372@bsdimp.com>
- <e7e0033b-af4c-49ed-97ae-3ec87546c6ea@linaro.org>
-In-Reply-To: <e7e0033b-af4c-49ed-97ae-3ec87546c6ea@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 6 Feb 2026 10:35:47 -0700
-X-Gm-Features: AZwV_QhZnD8EvyylwRlyW5Wfb1hxVGl4CBN7Mp4-2OqbAiI_eZe0Wgko9baZirM
-Message-ID: <CANCZdfrdE=0rpGs+10Q4Vreyooo8gaT_RS9S0BA45-LhFc2CMA@mail.gmail.com>
-Subject: Re: [PATCH 12/24] bsd-user: Add host_to_target_msqid_ds for msgctl(2)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>, 
- Brooks Davis <brooks@one-eyed-alien.net>, Sean Bruno <sbruno@freebsd.org>, 
- Mikael Urankar <mikael.urankar@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000e98857064a2b3834"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87fr7eqd2u.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,178 +117,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e98857064a2b3834
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Feb 5, 2026 at 7:46=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> On 2/6/26 03:26, Warner Losh wrote:
-> > From: Stacey Son <sson@FreeBSD.org>
+On Fri, Feb 06, 2026 at 09:19:21AM -0300, Fabiano Rosas wrote:
+> >> +static void qapi_dealloc_push(Visitor *v, QObject *obj, void *qapi)
+> >> +{
+> >> +    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
+> >> +    QStackEntry *se = g_new0(QStackEntry, 1);
+> >> +
+> >> +    assert(obj);
+> >> +    se->obj = obj;
+> >> +    se->qapi = qapi;
+> >> +
+> >> +    if (qobject_type(obj) == QTYPE_QLIST) {
+> >> +        se->entry = qlist_first(qobject_to(QList, obj));
 > >
-> > Add host_to_target_msqid_ds() to convert host struct msqid_ds to target
-> > format for msgctl(2) IPC_STAT operations.
+> > I still don't yet understand why do we care about lists here.
 > >
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > Signed-off-by: Brooks Davis <brooks@one-eyed-alien.net>
-> > Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-> > Signed-off-by: Mikael Urankar <mikael.urankar@gmail.com>
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> >   bsd-user/bsd-misc.c | 33 +++++++++++++++++++++++++++++++++
-> >   1 file changed, 33 insertions(+)
+> > I'm trying to guess, what this code wanted to do: we pushed the 1st entry
+> > of the list into the stack, trying to make it as a reference for all the
+> > items later within the list.
 > >
-> > diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
-> > index e7031c5264..03773e2620 100644
-> > --- a/bsd-user/bsd-misc.c
-> > +++ b/bsd-user/bsd-misc.c
-> > @@ -187,3 +187,36 @@ abi_long target_to_host_msqid_ds(struct msqid_ds
-> *host_md,
+> > But IIUC we can still define the conditiona-dealloc visitor to be even
+> > simpler, right?  Say, if the ref qobject has the qlist object, then free
+> > the whole list?
 > >
-> >       return 0;
-> >   }
-> > +
-> > +abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-> > +        struct msqid_ds *host_md)
-> > +{
-> > +    struct target_msqid_ds *target_md;
-> > +
-> > +    if (!lock_user_struct(VERIFY_WRITE, target_md, target_addr, 0)) {
-> > +        return -TARGET_EFAULT;
-> > +    }
-> > +
-> > +    memset(target_md, 0, sizeof(struct target_msqid_ds));
-> > +    host_to_target_ipc_perm__locked(&target_md->msg_perm,
-> > +                                    &host_md->msg_perm);
-> > +
-> > +    /* msg_first and msg_last are not used by IPC_SET/IPC_STAT in
-> kernel. */
-> > +    target_md->msg_cbytes =3D tswapal(host_md->msg_cbytes);
-> > +    target_md->msg_qnum =3D tswapal(host_md->msg_qnum);
-> > +    target_md->msg_qbytes =3D tswapal(host_md->msg_qbytes);
-> > +    target_md->msg_lspid =3D tswapal(host_md->msg_lspid);
-> > +    target_md->msg_lrpid =3D tswapal(host_md->msg_lrpid);
-> > +#if defined(TARGET_I386)
-> > +    target_md->msg_stime =3D tswap32(host_md->msg_stime);
-> > +    target_md->msg_rtime =3D tswap32(host_md->msg_rtime);
-> > +    target_md->msg_ctime =3D tswap32(host_md->msg_ctime);
-> > +#else
-> > +    target_md->msg_stime =3D tswap64(host_md->msg_stime);
-> > +    target_md->msg_rtime =3D tswap64(host_md->msg_rtime);
-> > +    target_md->msg_ctime =3D tswap64(host_md->msg_ctime);
-> > +#endif
-> > +    unlock_user_struct(target_md, target_addr, 1);
-> > +
-> > +    return 0;
-> > +}
+> 
+> I need to look at this closely, but I think we need to hold the list ref
+> so we can walk each of the objects inside of it and free them, then free
+> the empty list. When you "free the whole list" that would mean
+> qapi_free_<something>, which we can't do here, being already inside
+> visitor code; and free(list) doesn't free it's children, of course.
+
+True.
+
+> 
+> > IMHO there're three things we need to manage on conditional deallocations:
+> > (1) struct, (2) list, (3) alternatives.  All the rest seem to be scalars.
 > >
->
-> Use __get_user and you won't need the ifdef, since the size of the type i=
-s
-> then
-> automatically handled.
->
+> > So I wonder if we could define this visitor, so that it treats both (2) and
+> > (3) the same way (to always dealloc as long as present).
+> >
+> > That sounds at least making more sense when I picture that in migration
+> > parameters: if we have a list in the parameters (e.g. cpr-exec-command), as
+> > long as the list is present in the ref, we should free the whole thing
+> > completely on the other one being visited.
+> >
+> 
+> Yes, that makes sense. I'm not expecting individual list items to be
+> ever updated separately. However, as I said above, I'm not sure whether
+> we can free the whole list without some sort of a walk of its
+> members. I'll check and get back to you.
 
-agreed,
+My QAPI kongfu is very limited.. but my current understanding is the
+visitor framework will make sure everything will be visited properly within
+the list, and after each visit to the list entry, it'll finally free the
+list structure (in case of dealloc visitor) via qapi_dealloc_next_list().
+I believe that's also what the new dealloc_present visitor should rely on.
 
-Warner
+So my understanding is maybe we don't need to hold any reference to the
+list being walked.  However maybe we want to remember we're walking this
+list, then no matter how deep we walk into this list, we should stop
+checking / referencing the ref object but just always free everything (aka,
+fallback to the basic dealloc operations).
 
---000000000000e98857064a2b3834
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+When thinking about that, I found maybe it's not that list is special; it's
+when the "top level" is special.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
-2026 at 7:46=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
- wrote:<br>
-&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; <br>
-&gt; Add host_to_target_msqid_ds() to convert host struct msqid_ds to targe=
-t<br>
-&gt; format for msgctl(2) IPC_STAT operations.<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Brooks Davis &lt;<a href=3D"mailto:brooks@one-eyed-alie=
-n.net" target=3D"_blank">brooks@one-eyed-alien.net</a>&gt;<br>
-&gt; Signed-off-by: Sean Bruno &lt;sbruno@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Mikael Urankar &lt;<a href=3D"mailto:mikael.urankar@gma=
-il.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.c | 33 +++++++++++++++++++++++++++++++++=
-<br>
-&gt;=C2=A0 =C2=A01 file changed, 33 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c<br>
-&gt; index e7031c5264..03773e2620 100644<br>
-&gt; --- a/bsd-user/bsd-misc.c<br>
-&gt; +++ b/bsd-user/bsd-misc.c<br>
-&gt; @@ -187,3 +187,36 @@ abi_long target_to_host_msqid_ds(struct msqid_ds =
-*host_md,<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt; +<br>
-&gt; +abi_long host_to_target_msqid_ds(abi_ulong target_addr,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct msqid_ds *host_md)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 struct target_msqid_ds *target_md;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!lock_user_struct(VERIFY_WRITE, target_md, target_a=
-ddr, 0)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 memset(target_md, 0, sizeof(struct target_msqid_ds));<b=
-r>
-&gt; +=C2=A0 =C2=A0 host_to_target_ipc_perm__locked(&amp;target_md-&gt;msg_=
-perm,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;host_md-&gt;m=
-sg_perm);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* msg_first and msg_last are not used by IPC_SET/IPC_S=
-TAT in kernel. */<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_cbytes =3D tswapal(host_md-&gt;msg_cb=
-ytes);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_qnum =3D tswapal(host_md-&gt;msg_qnum=
-);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_qbytes =3D tswapal(host_md-&gt;msg_qb=
-ytes);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_lspid =3D tswapal(host_md-&gt;msg_lsp=
-id);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_lrpid =3D tswapal(host_md-&gt;msg_lrp=
-id);<br>
-&gt; +#if defined(TARGET_I386)<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_stime =3D tswap32(host_md-&gt;msg_sti=
-me);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_rtime =3D tswap32(host_md-&gt;msg_rti=
-me);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_ctime =3D tswap32(host_md-&gt;msg_cti=
-me);<br>
-&gt; +#else<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_stime =3D tswap64(host_md-&gt;msg_sti=
-me);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_rtime =3D tswap64(host_md-&gt;msg_rti=
-me);<br>
-&gt; +=C2=A0 =C2=A0 target_md-&gt;msg_ctime =3D tswap64(host_md-&gt;msg_cti=
-me);<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 unlock_user_struct(target_md, target_addr, 1);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return 0;<br>
-&gt; +}<br>
-&gt; <br>
-<br>
-Use __get_user and you won&#39;t need the ifdef, since the size of the type=
- is then <br>
-automatically handled.<br></blockquote><div><br></div><div>agreed,</div><di=
-v><br></div><div>Warner=C2=A0</div></div></div>
+Consider if we have a migration parameter that is a nested struct:
 
---000000000000e98857064a2b3834--
+  - struct1
+    - struct2
+      - int
+    - struct3
+      - boolean
+
+Then if currently we have this value for this parameter:
+
+  - struct1
+    - struct2
+      - int=1
+    - struct3
+      - string="foobar"
+
+When we take an update from the user on this specific parameter, and if the
+user's input is:
+
+  - struct1
+    - struct2
+      - int=2
+    (omit struct3)
+
+With your current patch, you'll leave struct3 and the sub-field string
+untouched.  However, IIUC the current semantics (of migrate_set_parameters,
+at least) should be that we use the new data to fully replace the old
+struct1 tree, making sure struct3 alone with the string to be unset?
+
+So I wonder if we should just remember the top of the stack (which must be
+a qdict), then free anything below that whenever the top element is present
+in the ref.
+
+-- 
+Peter Xu
+
 
