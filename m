@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938B5EE6B66
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21803EE6B68
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTgB-0008Ju-8J; Fri, 06 Feb 2026 16:47:56 -0500
+	id 1voTfi-0007rG-03; Fri, 06 Feb 2026 16:47:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTen-0005xE-PD
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:30 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTet-00069g-PU
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:38 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTec-0002g1-4P
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:20 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4806ce0f97bso23184045e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:46:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTer-0002hE-4d
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:35 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4806fbc6bf3so13119935e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:46:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414376; x=1771019176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414391; x=1771019191; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j+b6+TDlKntW7zTY/b8CtNdbrq47FTBf8R9jWQuRs0E=;
- b=quyxR58d7JaWlmvdRjrp5M2IbrlfMrXJyr+m+x7ZE7itueX2Mpf7pN1p266jaTRfNi
- jGpeFOpN3x2qUZxrfK5LGmdZi8nSMacF85lFQC+EhFS9CcnZHnsrv0u8zecUdPZuoUqI
- 9ps5KsqjGPeNf9z81tHkbMzfdeYYhKWtrFcpO1Lv3pEP1LmvK0JfENqqDgNm92G5c2uW
- jc40wIF0zn2aEahBqupeh1p8R6V+pvp/x1Lum5sal8e1ZqqjISlYhOCQgnxOm5NOdhzH
- aeFRSOhaynpG0BwMTKHgDOe9YS5iCFcULYavQGbaQahXBkLCHhBrQCAYoJRMu7UxgDaK
- imag==
+ bh=ZpZtyXf20pDRBHXGipb/CH1eAlwIqfkOm5zEYUBKpGc=;
+ b=eqkYqbmoAUM1UbaqUuJzZm4aVc+FJx84S2WQuPk7qaJ+Y2Ua8sV/AprCzQHCFrgwZQ
+ 1fnUiVLfrHYVFksUQSiRz8ColuInLiuNwUeghd9O+SFXLplCBm+6T36LKMbp2vfuaZAy
+ HBoEI0beDpcaTb5ja85sEboyW2FpiZ5WYnomJOC4NPUJ1Syxd55le0WUzZStNqaKeVAL
+ qnWKjv51tNJyAOYJzkWSHw5PMfabsyG9DFCx7JfAJRFRvY+yUutc+FWDPTEw3etWcYxA
+ nl+XXdEkPtyzJFAV8FVuxa2DMy/VXDcM7s0NIsn3PGZiq3VSU7oTaTQ3K5B4s1AAoqhP
+ LKtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414376; x=1771019176;
+ d=1e100.net; s=20230601; t=1770414391; x=1771019191;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j+b6+TDlKntW7zTY/b8CtNdbrq47FTBf8R9jWQuRs0E=;
- b=bKEreRn8k+tor7ZW118Bt0/9foy72vfuhEP+4dj9zNNzc6uZ3llZHGAmbxzG7QEpMT
- ec/vWVQGZ28Pz79I/oDCVlJwbeoO7edgFlisCLrCSyQuvlAdW/NBSJoPpqVCeryET8+C
- PCoBOMt6FBQ3gNurGGH9s4wVFTDcY3nM7LbyvCxZRvt7xWZk8N/vpwO1i+LfvjQfkKKl
- 4RWUfT0g5pjwzUG/QFoYi3gCuWXeGreNEqF6gmLhjniEpsnJPBMd7oGKLeWmgeRKt9HR
- 5Ukm3VBH82xCDicyqFYXaoTN/JyHKzsKdcsfEzqLuGGNOCmoaaB+LvaXuNHz9U/Pm9MB
- B7rg==
-X-Gm-Message-State: AOJu0Yy/sMFPvC5wkhlX9gbW2WyZ7bCYoXqBbdJQKe8S0+x4SWp/oBmA
- tJkXAzqxWnmjM+T8vYk/bKTHMY6PXalp9tZ9XBDnbquggLGPDxd47kNjd6bF+PYNNKDW03QlgwV
- nxYzUhTw=
-X-Gm-Gg: AZuq6aKa1h03xCNOYYstPBnjH3mGmxTMSXMRSwypO6tRI+ai5Xq8UMQysNQppPont1I
- gMa4XDLzQZI019ra0bpK1SC5creLx2Et5KA/OsATcEdZjwh4XSl/4hRfr7KcU9JeP7TY3wZCc9r
- kLvFfGIYXLcMbTpx5SkIajDE6FZmCamK7Svthx5WunHaR6Jd3KiWAgoh5+06mwJXh8BJnn4L7Qm
- k4blwYiHEmDLN3GfCjWHiBRGrNzp3Y4+0Df0lUdcjLnsYz3JJbJBD3oZxPDUzBUFWK7M5olBoQx
- OYofVD8dLMpgTkXf3BmVOB5zJbyiKVexwu1UWEZekY0cVuQZOy84zkjX71iN5R2l/QPLLnRnbQR
- SVRFN3uCCXb+b+SwQFujVmI1/uv/PgyYDTqz4S2OMeO4wVTuqrXIWHGL8elvmipLo0qn5TWdGYx
- 0Jt/lyVpfgZCdsrFQcfSF/1ZX6zUIsIF5PuR5N+ShslQZSicWACW46TGbiNhjs
-X-Received: by 2002:a05:600c:6209:b0:480:690e:f14a with SMTP id
- 5b1f17b1804b1-483201ee840mr56401525e9.14.1770414376418; 
- Fri, 06 Feb 2026 13:46:16 -0800 (PST)
+ bh=ZpZtyXf20pDRBHXGipb/CH1eAlwIqfkOm5zEYUBKpGc=;
+ b=MC7NMQB1oOUjO8NhR4VnlN3SOdELJ8J3j78ppcLkDaZbxf61lELxeH/xbyROSebOq5
+ Hx/jxydHPzOw5tyWdNmJPgP3zm8XOlMsnOIADLxTb97JFs5FDCTUcEEfRAbeuxuI42dW
+ zaJ75MpGPgbS95MuJvXZvEcEHbYilPKivthzIEsS8i63mDbWkjRro5jxs1trZzJEMai5
+ PNaYImWoqAw+LBjE9whu7fTVUdyYeULRxUiPD6bRmx4phrQiMHYiQHj23qsxwWFWQYbw
+ /9Aratq6XE+DHDBHoJiPtNlIE5h6hBVbMhM5FLq0TYr/FD8+2vO9JPJmDZ58nR/OruS5
+ 0d8w==
+X-Gm-Message-State: AOJu0YyYtPsG8E0WGclKmQCFns5fMXwr+XfO/BcO7eGSMIHqEf1mTdWv
+ 5YIiRUMIBbiO5JxUPRNcX8kE0wD4lc2UYjcBAGEkHu+4grTW9vVRSZUiku1Bh1uMnfPtuJ+TrwB
+ 9VsjeVEY=
+X-Gm-Gg: AZuq6aJ/8IchTaq4Cg1YMpXE9fqE+6adpNHGI9Upak5dTD8ShXogBTTxu9CAVPApPzB
+ 6J6jrC0GnqxxYqH2whAM1cpcGC3rfsMvL6pKnECd+76EpnIuIBu53AfW70GYa9PbxAr6yquiK5z
+ BE3CoCS60Ch9tXAH5BkbQEFnTPg9+TLoZ878YkiUyjqLECA2NFY1zS/1/s6zHJulRfr+ilRY2G9
+ Npg2iHr58nhLcyN2re85njGtjbSZ79j0fltt9ncRl0v/BHwb1juvPnQDPDuTdLB55VwDyCnEk6r
+ /hMEvdo57DA73EcV2dteVqFjyvwfowCiHcKAjyfIe2urX9jseAiIQ2JVMEJeUlD42aOLfutjHbi
+ VrNZwXkg7/m/IjtqyfnMlcFjR3rQBBMKb0+A4E6nMZTI9VtElbN+6FIHCrWu0U+OsK+LRp+Qzij
+ n29w73lk2HmM73BxDwsnYJz78ZyGhRMEzyWwNSyszX4hghK2oXK+MyyTvn9dMlNv/K1cEcRmo=
+X-Received: by 2002:a05:600c:8b0f:b0:47e:e5c5:f3a3 with SMTP id
+ 5b1f17b1804b1-4832021613fmr61617135e9.24.1770414391165; 
+ Fri, 06 Feb 2026 13:46:31 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483179dbdcfsm192157375e9.0.2026.02.06.13.46.15
+ ffacd0b85a97d-436296b20fasm9180626f8f.6.2026.02.06.13.46.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:46:15 -0800 (PST)
+ Fri, 06 Feb 2026 13:46:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 13/30] target/sparc: Remove dubious swapping in LD_code() helper
-Date: Fri,  6 Feb 2026 22:44:31 +0100
-Message-ID: <20260206214448.22008-14-philmd@linaro.org>
+Subject: [PULL 15/30] configs/targets: Forbid SPARC to use legacy native
+ endianness APIs
+Date: Fri,  6 Feb 2026 22:44:33 +0100
+Message-ID: <20260206214448.22008-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the endianness is contained in %oi, cpu_ld*_code_mmu() has
-already honored it. Swapping again makes no sense. Remove the
-bswap() calls.
+All SPARC-related binaries are buildable without a single
+use of the legacy "native endian" API. Set the transitional
+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API definition to forbid
+further uses of the legacy API.
 
-Fixes: 2786a3f8d3a ("Use GET_ASI_CODE for ASI_KERNELTXT / ASI_USERTXT")
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260203230054.23667-4-philmd@linaro.org>
+Message-Id: <20260203230054.23667-6-philmd@linaro.org>
 ---
- target/sparc/ldst_helper.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ configs/targets/sparc-linux-user.mak       | 1 +
+ configs/targets/sparc-softmmu.mak          | 1 +
+ configs/targets/sparc32plus-linux-user.mak | 1 +
+ configs/targets/sparc64-linux-user.mak     | 1 +
+ configs/targets/sparc64-softmmu.mak        | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 3bc6a6827a4..4ec8799d1f7 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -1169,27 +1169,18 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
-         break;
-     case MO_16:
-         ret = cpu_ldw_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap16(ret);
--        }
-         if (mop & MO_SIGN) {
-             ret = (int16_t)ret;
-         }
-         break;
-     case MO_32:
-         ret = cpu_ldl_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap32(ret);
--        }
-         if (mop & MO_SIGN) {
-             ret = (int32_t)ret;
-         }
-         break;
-     case MO_64:
-         ret = cpu_ldq_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
--            ret = bswap64(ret);
--        }
-         break;
-     default:
-         g_assert_not_reached();
+diff --git a/configs/targets/sparc-linux-user.mak b/configs/targets/sparc-linux-user.mak
+index 4ff4b7287d2..d3f0716ca2d 100644
+--- a/configs/targets/sparc-linux-user.mak
++++ b/configs/targets/sparc-linux-user.mak
+@@ -3,3 +3,4 @@ TARGET_SYSTBL_ABI=common,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
+index 57801faf1fc..272fd46f6db 100644
+--- a/configs/targets/sparc-softmmu.mak
++++ b/configs/targets/sparc-softmmu.mak
+@@ -1,3 +1,4 @@
+ TARGET_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc32plus-linux-user.mak b/configs/targets/sparc32plus-linux-user.mak
+index 7a16934fd17..3e6c72e793e 100644
+--- a/configs/targets/sparc32plus-linux-user.mak
++++ b/configs/targets/sparc32plus-linux-user.mak
+@@ -6,3 +6,4 @@ TARGET_SYSTBL_ABI=common,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+ TARGET_LONG_BITS=64
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index 7c2ecb7be06..3bbd8495210 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -6,3 +6,4 @@ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+ TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index 8ee6d057682..8a0290c2093 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -4,3 +4,4 @@ TARGET_BIG_ENDIAN=y
+ TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 -- 
 2.52.0
 
