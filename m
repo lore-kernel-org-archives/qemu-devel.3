@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA102EE6B49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F60EE6B43
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQD8-00085O-40; Fri, 06 Feb 2026 13:05:42 -0500
+	id 1voQCs-0007yL-Ah; Fri, 06 Feb 2026 13:05:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCs-0007yy-Kt
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:26 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1voQCq-0007wc-Bl
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCr-0001Ri-1Y
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:26 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b8869cd7bb1so178883666b.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:24 -0800 (PST)
+ id 1voQCn-0001QY-DU
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6582e8831aeso4130722a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770401123; x=1771005923; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LDj3W3VJSOsTqOq/DOAQGw7i1dIQG9XZJxz/RTmuEbU=;
- b=WB78Y9ODdOaEc+wSxLvg6wbRfz9RPMCX5gXrk8xIlXeCRLg1/u/AsNa3LkqwLrC2h7
- l4xzgLqTsxpNSvM79cPprNK/31S3NgIarYPhcueJw4nKCbP/feh/pGjGtBFpbnsJ4KBF
- IDfSUm4QBhAV2jB1RWzcS929ldGTPwL3N53lPnXNLit8SbTh0RdUUNCbB6Hv2mG4ZF7f
- Uz5DCUMHZeTYuDc9uihmWDXkvIZR5u7Vd1P+yNLBJQ4fcR5f3wLUpkkebpAWsVZ1AEMt
- AZLk+TEnqNhxawX3C2ya9BVjOlapnVUwoXPne1q1G3oSpzt9u3hZw6/3kXUTVKlAZrx5
- a2JA==
+ d=linaro.org; s=google; t=1770401119; x=1771005919; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Zz+rNGH/Nf5KQWfwbH2Wczx0QoSWFsfc3orZ3scO6c=;
+ b=nEaI4ScaPeZBQ1p2haQWqeMJQllWP7WGJHIsc8nXYvL1Ak4zY8ld+A9WQXWN4OyfMg
+ f/vE41Gw/j65WiQm7TMjaMQBOM8Gy8BwEAwMWbFi9x2vglzNechAVLKVLLSu2/0oQ+94
+ ooz9fLnTomQjb4QGK3AdWeEQz3/0qtqMqNBQ/aQ1ps7SC3P1UC0BiwGEQPvrWs+R6uat
+ qBX4wwp8/53rGWEiq5gh44QVBPRpHClbBiLr3xbJpIPmKmx0dKYdRiV/4e/qBUITJGNG
+ MgvLE26dTH/uafhaWKhW3L43K2Ub5X73+o4v+pB3+o0sz8hTzyZKeZaaktWo6lkmcg52
+ rVyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401123; x=1771005923;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LDj3W3VJSOsTqOq/DOAQGw7i1dIQG9XZJxz/RTmuEbU=;
- b=Gg9dRWHMFacplGGjgygNkJmk/vr0sckALgYtjyYPhYWpQCUUGByzhWg+KlD6Ed8ez6
- Insdj7G4hcEZRA710Mt18fKmNGGxCIrbNpUSTnmkKcSvosQxV2FpLthCt7B3ApQH+pJO
- WDfH4suJ1up0OlDRlfbgTgY3XHKmXiVKVgAwUfB/3nU78LG0Yhk5AozYI9u+N1eeUZZn
- q3hjq75tOHBdkty4E1k6SRvhJviXZwayRMgFAIJUGmpci/ZDEZu+uibhwE3G4urWhqqm
- +0dXXmKf3cOKj/7JdPbjkVrB5x2x2GBdLhb4WsTSZLv3M83hwoFg8bZRDgdGGkHm6WZL
- MVUA==
-X-Gm-Message-State: AOJu0YwPaIzcquPqNWelUUPiDLy/QUz40kb7BjqjtxkGwhXf1PCVoYNV
- LL7Q1eULY4ESvSGIokj6eHIsTsUqOLOW0bDeIH6z3TYLXc0jvz2mVTEBJvQQne/ZqJY=
-X-Gm-Gg: AZuq6aJTPH0ATMSlBa7NyQcdr8X/K4UlE+SRzyEDTzas7OQpKCc+SoSgZ+YITqUc5Bt
- LynCAfQXeMvJmdZ47DtfemvfcWvCQpaernzhJmYi2IX/HYwfsaaKQwNfIYw337RB95f0abG6nd/
- X753poytVsbVLSO+365wQXmKnzcPcEw3l2DrGTAsIXQ71z2g/I7m01A8P09oIcf1PKlMG5RARub
- u6jluk0pX8eQvff2VebyAkfxgPJNOh00ASFYbGJT36vBJYcrTg5JlZQ2UbQ3AYv8SNTKQFyDm5E
- FCMkYf/gZy0bCXwREj6SJ1zkCtYjnBeSCfIVA5hfcMIWUNuPTJz+GVIHaHpLC8wW5ByR4d5vbE/
- DwOHkfGnuBBiiPdPOSMaL1/WpLyzdJ22dqE2K/mMb5ZFzKhYG+vrJE2uwlEoZdlAMNcX6PPgiCU
- 39F1Ic1TLcDVY=
-X-Received: by 2002:a17:907:2da2:b0:b87:711f:97b9 with SMTP id
- a640c23a62f3a-b8edf2fb575mr209458266b.31.1770401123424; 
- Fri, 06 Feb 2026 10:05:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770401119; x=1771005919;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5Zz+rNGH/Nf5KQWfwbH2Wczx0QoSWFsfc3orZ3scO6c=;
+ b=r2YGvhjwKnmRfWCxpiv4wnRjI5OPjqfeQrfw2/kYAolp+dLy1oldqyYMx+yu2P9Jzt
+ yTAnXpDTSokwmRX4ZfmM5+RwOEm7lm9a80HwAHS31fxTuqAKP5+Pdb1HaIr6J1jjr2N5
+ aj8XVXOU10c2q4ITl1CSYjznI2nLxXpnrfRzBi9HNoFCqWV6nU6DdpuDiWl5nTpdUajx
+ B6JmrxcdIRlbfmIqsVxkFWS78/zGugmC45s4rDzXlX3Z6YMSNxwL6kAQFxzWUI01z8hj
+ /7BddRh16Rt0CEJ7MkeV4K9WcNs533JP97b3sofKlt+UbjSlKVMmlKzx91JoAQn9I2q/
+ kTvw==
+X-Gm-Message-State: AOJu0YxYabe6DapBO/dXKV4sa3AihUoZEv6opVuPr/9pdAunkx9ivESX
+ euqKoDcjttKWZ9Sq9aUjdBJMu4EbOxyc/52lCzT0GbxoD9FZ7UxHv9vpGiTrd8BrnN0=
+X-Gm-Gg: AZuq6aKJq/8DaAajGCh/XftEIYMpcGPFZRC3p0OOdK/9J4ofkO9rh5ibdpJo/hoNaWk
+ NhqIabKByWnN+Lvf7PxlZma48rojhpJkaEw19nD2HlnxFJfUnyZF4ODrNhDQbd61Fsa1BMq8jeb
+ OH+Xo3sJ9oiqMkNWIacsTjWGb2Iu8jBNFb3+fGX6BKjElgZoaNeyZ1rr1iEd96O+DIsqwpxPqsd
+ VY1uKYoo5hZ16rjtCvzEAM3HfasH6K5lp2MzJ0fPfJRyQ1SZDTpshfFaLuWQL4H8L+z52Hl8/Nf
+ o1t0qMOgQcb5JSVJEMfRvGgVhUNGk+rYrnwOB2vjUSx98Crymnm1tz0YalSN9CLJE1UVCB9kIBj
+ sweGLMkXbVrU4sbKFsuUBgtApAEwfjshCLfqhnFyjoPdLi6Krz4daF3fidVwJE+8NBlsW9FR86S
+ S2S/8Uk3kHxdc=
+X-Received: by 2002:a17:907:d18:b0:b88:32a4:6123 with SMTP id
+ a640c23a62f3a-b8edf23efcemr217337666b.21.1770401119238; 
+ Fri, 06 Feb 2026 10:05:19 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8ef25388dcsm38965266b.54.2026.02.06.10.05.19
+ a640c23a62f3a-b8edacb18d0sm98730766b.40.2026.02.06.10.05.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 10:05:21 -0800 (PST)
+ Fri, 06 Feb 2026 10:05:18 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 52615607CF;
- Fri, 06 Feb 2026 18:05:18 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id B9EB75F806;
+ Fri, 06 Feb 2026 18:05:17 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yodel Eldar <yodel.eldar@yodel.dev>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 06/10] include/gdbstub/syscalls: Add EIO and ENOSYS GDB
- File-I/O errno values
-Date: Fri,  6 Feb 2026 18:05:13 +0000
-Message-ID: <20260206180517.1335861-7-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/10] gdbstub updates
+Date: Fri,  6 Feb 2026 18:05:07 +0000
+Message-ID: <20260206180517.1335861-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
-References: <20260206180517.1335861-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,40 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+The following changes since commit cd5a79dc98e3087e7658e643bdbbb0baec77ac8a:
 
-This patch adds the EIO and ENOSYS errno values that were missing from
-the GDB Manual [1] when the other errno values were defined.
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-02-05 13:54:50 +0000)
 
-[1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+are available in the Git repository at:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260116014612.226183-2-yodel.eldar@yodel.dev>
-Message-ID: <20260203115201.2387721-8-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+  https://gitlab.com/stsquad/qemu.git tags/pull-11.0-gdbstub-updates-060226-1
 
-diff --git a/include/gdbstub/syscalls.h b/include/gdbstub/syscalls.h
-index d63228e96b4..6200416f77a 100644
---- a/include/gdbstub/syscalls.h
-+++ b/include/gdbstub/syscalls.h
-@@ -22,6 +22,7 @@
- #define GDB_EPERM           1
- #define GDB_ENOENT          2
- #define GDB_EINTR           4
-+#define GDB_EIO             5
- #define GDB_EBADF           9
- #define GDB_EACCES         13
- #define GDB_EFAULT         14
-@@ -37,6 +38,7 @@
- #define GDB_ENOSPC         28
- #define GDB_ESPIPE         29
- #define GDB_EROFS          30
-+#define GDB_ENOSYS         88
- #define GDB_ENAMETOOLONG   91
- #define GDB_EUNKNOWN       9999
- 
+for you to fetch changes up to db13b4e262bfcd7b5f66a303bcb4b81d71029cfc:
+
+  gdbstub/user: rename and use bool for running_state (2026-02-06 12:43:07 +0000)
+
+----------------------------------------------------------------
+gdbstub updates:
+
+  - don't duplicate gdb help text in configure
+  - re-build meson-buildoptions.sh if the python updated
+  - re-factor stop packet handling
+  - add EIO and ENOSYS errno defines
+  - move host_to_gdb_errno into common gdbstub code
+  - return GDB errno values for F packets
+  - bool-ify user's running_state state
+
+----------------------------------------------------------------
+Alex Bennée (7):
+      meson-buildoptions: Remove duplicated entry of --gdb in the help text
+      Makefile: add python script dependency for meson-buildoptions.sh
+      gdbstub: remove the need for goto cleanup
+      gdbstub: extract stop reply message construction
+      gdbstub/user: localise variables for reading gdb socket
+      include/gdbstub: tweak language
+      gdbstub/user: rename and use bool for running_state
+
+Yodel Eldar (3):
+      include/gdbstub/syscalls: Add EIO and ENOSYS GDB File-I/O errno values
+      gdbstub: Export host_to_gdb_errno File-I/O helper function
+      gdbstub/user-target: Convert host errno to GDB File-I/O errno
+
+ Makefile                      |  2 +-
+ gdbstub/internals.h           | 10 ++++++++++
+ include/gdbstub/commands.h    |  2 +-
+ include/gdbstub/syscalls.h    | 11 +++++++++++
+ gdbstub/gdbstub.c             | 45 ++++++++++++++++++-------------------------
+ gdbstub/syscalls.c            | 36 ++++++++++++++++++++++++++++++++++
+ gdbstub/system.c              | 11 +++++++++++
+ gdbstub/user-target.c         | 13 +++++++++----
+ gdbstub/user.c                | 40 ++++++++++++++++++++++++--------------
+ target/m68k/m68k-semi.c       | 29 ----------------------------
+ scripts/meson-buildoptions.py |  9 ++++++++-
+ scripts/meson-buildoptions.sh |  1 -
+ 12 files changed, 132 insertions(+), 77 deletions(-)
+
 -- 
 2.47.3
 
