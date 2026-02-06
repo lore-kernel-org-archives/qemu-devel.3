@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11698ECD9B5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 00:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D08ECD9AA
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 00:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vo9XS-00079E-KD; Thu, 05 Feb 2026 19:17:34 -0500
+	id 1vo9Y5-0007VY-KR; Thu, 05 Feb 2026 19:18:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vo9XR-00078r-6M
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:17:33 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1vo9Y4-0007V0-Bq
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:18:12 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vo9XP-0003qE-FQ
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:17:32 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-34c93e0269cso1627242a91.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 16:17:31 -0800 (PST)
+ id 1vo9Y2-00043I-Sw
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:18:12 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-81e8a9d521dso115410b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 16:18:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770337050; x=1770941850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770337089; x=1770941889; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BHEiuLCGMeo1fGsVtgN5seNfOYDGki8nlRigwwL25F0=;
- b=pyhGKywndTlJmyOcYYAhYQYzmeUPJmgtBnPtUUl/Sw9MgDe0jc0XScpebsW5ZTply7
- cpyOrtGsYeerHGlAQ78WC4Ov0JorOVcVaLlpj4FcnD/YKz3xV4GM76okNEripk4WhoJY
- YmhBQ3k32oRv10NBKnhiAqhzAlwRs7YTe+LPS2tYYRJ4t3Pm7qUBN/nWIUg8GFpK5cdN
- h+5NBS2+RcoQhKbvGObhTrrgUQvmOGD7eHjhA1uhlOTDO4/O72uxOxLBvtbRJbTpKzk2
- 712k3Fulk5mSDNAXhdip0Gd7KnaffIVEO9h2waBaS4QJ0eMgrzDUGfQ7ofg0cqJbyESM
- PC5g==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0aSkFa+VAu6/lbANQzGBoudOeNbbgwGDwd/1BAMW++s=;
+ b=pPQCjlAbrhneQHzrhNHtiCM+gmAAw7w/OZN7UR5A4xJ0rpYNEKUGdCWIKCdS4ejaln
+ FynBLCHZEHpedkYFzff8moLatzCTF2Qi9/zm6cYoMsJgqg93jexv7bw58EfuDoVxP8Eb
+ 2yOBZ2sNFtsCnSEaQjf0aS/eMhgbd5zYjHjGprXip0YFIIRzoJm5fW4I6fruB/hjZb9X
+ WEGZkhg4uqlmFfPIr/G27EVqqw1D9q70ILRjp79U86w7MWUDTTUoI+pReCoj1Y/4FvdA
+ IaSfVYY1hnX+rPoMcrRma6jErAqqV68sf55ch9QdVjxynwzYFXVxS+9q2FgMhRo4FgMj
+ FmUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770337050; x=1770941850;
+ d=1e100.net; s=20230601; t=1770337089; x=1770941889;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BHEiuLCGMeo1fGsVtgN5seNfOYDGki8nlRigwwL25F0=;
- b=e8KKPoRq2bIWMcvr+i3W5Lqpv2WavaOpPHzl/LBzB7gfeK17qxdKgu8Y/V+DIH2hK7
- CMHxDrQ6sePXD24XHqCCVFhIymf5ECj1WUz7i26U/YyiA1IIaE7k+gotft+AjP0Nh8Qe
- VvVTc0aU1CNXTIcamJxVEUsDzC7C+meV4a+xk95K++0XOxadbWqsOlostRT4Hb+ph7Gd
- GXQiHf8Y38C2kohhC5T9PP9+mVVp2SV0dZd9ZiM0QaEy0eO8sFO+veeVPE4PzeVqdVfA
- RamN3VO+gLR49g+dPAv1M4XCr38MV12EIchEK92uCs/ZTN9rOM8qRwCmqedOopDtjq9z
- eMXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/Ds1X3kd56AkZw36otCfUIeG/aNrlhwTKqIIY7j3jzYJFLk7VWwZbcDk2Wg/2Itclpu1KiPE+Ckbe@nongnu.org
-X-Gm-Message-State: AOJu0Yyj8h6kqql2GBkFkNvjcsmM1iaHMmG4YxksaSdvjuMHseE5eJfm
- BbzjXqT93Gd3eOy6wTU1EpjxFOt9xjvlVR45V3gBC+ZaXanNiI7EKvUizylwBhlL7JU=
-X-Gm-Gg: AZuq6aLKb2LSBkn6mOsaqlCaA6qSqq+bJ4WT7sn0uJ8IDU0GtTebpuHl3/zNKrrs9v8
- gdlyDhJlVMdd/CgVFUEATW2Byu/UCj/381e2rUxuX212rTWSO0QCgqnLg104orNoT3ZdNnBuZyc
- H2NjbDsGhIVWIcZIcu+33Cy7JubRb/ckD06Rvz3Or4fa+SvWr/ueNgl3c3dFnsWepdg1sMzFy9o
- jsgORFbxlKWnpDCbL9h03OZb3m1cfg+dEYX9E+nZT0AObh2kmltBVtpzN6Hzgtv0BDPNP8kRlBi
- cTaMzj+U/cfc58oTYDdoznOhCQbi190kBkosQKrwlWpvzVdYwT+t4vIcJcfc1Bm8AFlXqjntr84
- T3JE5fiFM0kxz+P3bDCi9u4OhJkdfV8OaAfzB4QjplJAMjk2Ip1VcL09hii+sp87V66Jq4bLxln
- PH0tXReDJg6vtn0zRJI4M2aaisjdqmsBTDhiF/vDeEBy9v7F32T8FAmjw8vPD3IK5jJ7lR6SNdR
- +qsnnSIcguPMQcXHdSb0Cr5LsAFtqbsTjGEik6DsFZnHqsyzRm6
-X-Received: by 2002:a17:90b:2b43:b0:352:d0cf:9d18 with SMTP id
- 98e67ed59e1d1-3549bafc8d5mr3569674a91.5.1770337049894; 
- Thu, 05 Feb 2026 16:17:29 -0800 (PST)
+ bh=0aSkFa+VAu6/lbANQzGBoudOeNbbgwGDwd/1BAMW++s=;
+ b=ALE0BtEzNaANrPwOcp7rpuNJ39ch2dxtHAK1x0gZwpouSIt8ZJXIYdixy6oLwHraNa
+ jyoL98yk75Cany7sN1UyCbGezDHDp23zSgj3Fhq9lkR9aTD7yCZV1UkBrxFSMQrNfrFG
+ 4mgGmQZoJkcljySnoo2LmqJ/Z0QZYIom5k2L/d2fcWCjj9YXyPabWcxy4wnyPEegj24J
+ Lyn+b00tAhQmcI7kEwVJ6rIANMa3ZQ9nFo86C6asd5lyX3uyzuseS0BhuKthAZu5/i7V
+ 9LsoVXdTmw9l0cuK0y4t3bfKcqK3kcnXIX+QwAva02Ar8hoJWPx7W7wUC6LJb0+RaJa5
+ I9Vg==
+X-Gm-Message-State: AOJu0Yyj8i2CNcf6PzycYq/p2V1pkP3zvU8w3nJGF5UKO26QNtBJweVu
+ 72y3Ll+/Left7bkCPjg1SSQF3v0uC6dr9ZNaVVeuPz4SzzKT5p2c0k/fp25B5t8mZmHPrex1s3X
+ ZK6npX+QRVg==
+X-Gm-Gg: AZuq6aKnopARWqIUkPbtgUK8vuHz4yplCfNkFwTHxyhz5Ck3risokTNibA27rvZ6tnG
+ jO38Caz+2VOWGd5LAAHynfRBOxzN281S+yUQRCxozAuUfeZHhZPjdtwaneBryjPFnerZA4igrXT
+ 8AIL6olVNsrtH1R7cbxmjOgLLl6THdXNcjgEaZFesf89mopTxlcjlCeSNFAqnXMfdPnNQEsYE8r
+ inePtf617aIrkt0frj+3vZz3+hFxqMEZ/bv05aFAixixukVV0KkaU5+SwNgZ5FUfhg3vciWshSK
+ VoZijqQrXmlw1HEcjU8EWX15rkB9Lz5DNYNp1gy4krPjOjgOmw5Bjeck+HKdyN17snEThRJ9qUU
+ 1HFNdvF2A8M/W1YLJ9T5Nge8q7fSWdBvpL+NLZhzqRkobNVqqNlEXiIl4lYir1xICZSUO13pn83
+ HI0k+esBjzlE0oj3jSXmdkwYy3IaRbBTCxJcQB/ngp+HPtpIHbZQOsPnytE4yG6S9jLJ+duoc+m
+ dFhXjSo7UBpqDa0fE85kotrixJfc3hC8yLAMAiDsQ==
+X-Received: by 2002:a05:6a00:8c9:b0:81d:a1b1:731b with SMTP id
+ d2e1a72fcca58-824416213aamr783988b3a.19.1770337089450; 
+ Thu, 05 Feb 2026 16:18:09 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:3c5e:852f:abc3:6539?
  (bg30dhzs8j4dh00m37sw.ip6.superloop.au.
  [2401:d002:dc0f:2100:3c5e:852f:abc3:6539])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a951c78824sm5174695ad.24.2026.02.05.16.17.25
+ d2e1a72fcca58-82441882499sm397671b3a.36.2026.02.05.16.18.07
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 16:17:29 -0800 (PST)
-Message-ID: <a688dd34-a37e-46f1-8739-e01105ee4dc8@linaro.org>
-Date: Fri, 6 Feb 2026 10:17:22 +1000
+ Thu, 05 Feb 2026 16:18:09 -0800 (PST)
+Message-ID: <fd2895d9-436d-499d-8abb-94bba27548c1@linaro.org>
+Date: Fri, 6 Feb 2026 10:18:05 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/24] bsd-user: Add function declarations for bsd-misc.c
- conversions
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
+Subject: Re: [PATCH 06/24] bsd-user: Add host_to_target_uuid for uuidgen(2)
+To: qemu-devel@nongnu.org
 References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-5-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-6-8d8ff0035372@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260205-bsd-user-claude-v1-5-8d8ff0035372@bsdimp.com>
+In-Reply-To: <20260205-bsd-user-claude-v1-6-8d8ff0035372@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,46 +108,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/26 03:26, Warner Losh wrote:
-> Add function declarations for BSD System V IPC and UUID conversion
-> routines that will be implemented in bsd-misc.c.
+> From: Stacey Son<sson@FreeBSD.org>
 > 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> Add host_to_target_uuid() to convert host struct uuid to target ABI
+> for the uuidgen(2) syscall.
+> 
+> Signed-off-by: Stacey Son<sson@FreeBSD.org>
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
->   bsd-user/qemu-bsd.h | 15 +++++++++++++++
->   1 file changed, 15 insertions(+)
-> 
-> diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
-> index 56affcd31d..b98d1d76b2 100644
-> --- a/bsd-user/qemu-bsd.h
-> +++ b/bsd-user/qemu-bsd.h
-> @@ -54,4 +54,19 @@ abi_long target_to_host_shmid_ds(struct shmid_ds *host_sd,
->   abi_long host_to_target_shmid_ds(abi_ulong target_addr,
->           struct shmid_ds *host_sd);
->   
-> +/* bsd-misc.c */
-> +abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid);
-> +abi_long target_to_host_semarray(int semid, unsigned short **host_array,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-> +        unsigned short **host_array);
-> +abi_long target_to_host_semid_ds(struct semid_ds *host_sd,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_semid_ds(abi_ulong target_addr,
-> +        struct semid_ds *host_sd);
-> +abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-> +        struct msqid_ds *host_md);
-> +
->   #endif /* QEMU_BSD_H */
-> 
-
-Normally, the declarations should be added with the definition. But I won't insist that 
-you split this into the 6 following patches that add the definitions.
+>   bsd-user/bsd-misc.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 46 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
