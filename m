@@ -4,124 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FD8EE2085
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D64EE208C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 11:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJUI-0000zY-He; Fri, 06 Feb 2026 05:54:58 -0500
+	id 1voJcO-0002HJ-OP; Fri, 06 Feb 2026 06:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1voJUG-0000zF-Mx
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:54:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1voJcM-0002H5-E1
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:03:18 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1voJUB-0002zZ-O2
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:54:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770375289;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mvEETymdod3uwfeU/b+XHkoReYj+MHSbv9O0pi4K8lo=;
- b=c6UKcLB1rnX2J5jM9OSsqgocFVbnujM8HBo0MpwkPlEm6iiJgQfQaHfgtxtuUccO5gwoTo
- Sn161zk2KOBjArxKvhr2j9DbzXhqkbvN56CE6yn1K6t/XiXAtmCbIlpr7ZbXP3EW8zxpVs
- 4JkjyVcdMBnqj6sOYvH36XeSuFSgOmI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-8qmCp6rCM5WyrJidGrCvHg-1; Fri, 06 Feb 2026 05:54:48 -0500
-X-MC-Unique: 8qmCp6rCM5WyrJidGrCvHg-1
-X-Mimecast-MFC-AGG-ID: 8qmCp6rCM5WyrJidGrCvHg_1770375287
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43284f60a8aso1774606f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 02:54:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770375286; cv=none;
- d=google.com; s=arc-20240605;
- b=OiKLaGWWQLRMlu5/7XPg1fR5FgVIcHmdZu0vCyWBhvWifkA72qmAJa0fgnOEnT61Ck
- 17oh47DUQtYQso6qHa57i/k3Nvt6a3G2ghlKA8bENQGao3xi52rhkbdf2WF3+vaELTvI
- K9srw3R2WqMErXyB04YQArNGXVqu7xbTjHAXk59wPkb8Gs0VaSeGrg/PmU0SAcWTMTX8
- X+jTj40xm16GEA2yt20hgaFBRlwGOwoMCEfz31K42M/TSX9aIhnMCQCFO2ihvHvwkemB
- du/3YZh3ZLducVB4NpNcmg1c+tXPQc3Xv+I+5kkWJZz5xS1dqsGvPQErokTf/aUvAX+C
- Rf5g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mvEETymdod3uwfeU/b+XHkoReYj+MHSbv9O0pi4K8lo=;
- fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
- b=S7IepHbYE6leSyBVG2hXMuOslLP0TrZFOCz9Eze6QWwtO8S0wtaL9K+e+RgDIxMkuq
- 7yHSysFeuO4CGgyCuHNg+MoDU80x6wdlX+o09SRGyAjfvLgHyKN7TKPzgpGJ7KtmNH1X
- jMhaHrOZt89xu2om5lO0Abdyl1U9yw3mOCuhtwBKq/EqLLGo/lU7NQzuB9oUBNsZ4R9J
- RQV4HW/hL/oe3MkyMSlh4Gitq5/SCN24He6vt32YW9Si8+XKvNY6XgZMuaDN0A+d0AFa
- Qy4CfXj+mnkRYWSG+VhcNNYBYWGMZFdqlmI6s6i5eWV5IEz6U743XajvM69k89oFGELs
- Wlng==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770375286; x=1770980086; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mvEETymdod3uwfeU/b+XHkoReYj+MHSbv9O0pi4K8lo=;
- b=kYch1jXTGcLvrlEeOuoAxM27YHf6r+4X4ILL9y1jTzQgoLGg499Dfh1FQMiZyZ4BA4
- 5uPm+scTsTNe+TQ/Y7zjdxvt6qrGmgvedsi1CnzHOIRZIBSxsx4le71x0wFdhxRDn6Wn
- xFAR5zL7HSAlmGK3PS5aUxriTMn3Rr1h8SO+9KSHTLSoEZxiZv3Fll4XJ6dnT/4wthF4
- 7okpezEQfn70hu3TLw2FqCYUO8Rur+9umJAATOiAV2jJMm2bBB1Dgg+vQKLiaufGSl6Q
- ga9pFgVA3lOP48b/08PXI2vDfpZ1hFnISMbygQNbihCUvJqMyshB8tc7kZzN7dr6jPz9
- rCEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770375286; x=1770980086;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mvEETymdod3uwfeU/b+XHkoReYj+MHSbv9O0pi4K8lo=;
- b=N0tVtPzgU/BAhhYDTvHUOdjmlv7HOJQ6XwBZAsnpv/2XQ4T2MiCS/OmaUOQx82Hwp6
- MFzo9snK+rJoqGsVzWrM2b1qQnUSYsy++aqfcsAViOc6ekDhPLHhiuApFo8BQPrxPzKy
- byqNOn+HgOrwswPPKOkM+eeQQwNHiAvtgfbS55sLRZaz0TChTQyoiwELROVb5OxdOt6w
- cXAAleUFppSJecSyDDoMErUYPFNk291ekNnqWVhfxlbG/elIgPCdAgR1FRXj6qV7Xb9R
- d446SF3Y/WhEhAcV9FMmESpnUGxdauoHeATPW+UnjYa6ouzn/2VJg0lJG8ww8fk8RfoJ
- 1yHQ==
-X-Gm-Message-State: AOJu0Yx8UYH1ggvyXbWKCj/ZX36xPWBrN/TyNhskmhT78p7vxznHBC5I
- C6dv+363do9aRv+IaUXtG8ufkXRS7Ifxl4ZXh7dSxtI5ZPd3NTnu8p4e9QVBfMH/4It2YZWZ+fU
- /GVSmqKHK3DYuuDSZ7WwZGqbZTV9W8mmbfOIEaSoFlm+d4XvQsyROCOEHFYZxITuj9gEsk7j6q1
- P38inuS1+AJncPcvk5zA1aLWeXIHmCk83GaPQLDQ0=
-X-Gm-Gg: AZuq6aL7vGy/st8xRYF2Jm/tZR5oTWUurJ36b+cqsmJ1S9fZO15VSwnByDN7Qr3Xy/Q
- W1X5+xT9qK097MlR2IX+BtOqC6vUA7E1Vp4SnRtqyek81YIzwjhagE2ypZBuBS59vpI1TYRDUGM
- hC0yB8MFDGou1scFzCXKlI1gZqzQhlyPruPXXeFmCIOklnAuYzXa+Mr10G8cMJ3V1eshY5WD6fF
- lx2vljuMYypUR1nFnSD7lJLvA3RwvRqy0gXrhSZ92eUjd0552+Sy5XJWHreCV84Bw6m0Q==
-X-Received: by 2002:a05:6000:2303:b0:435:97f6:4f44 with SMTP id
- ffacd0b85a97d-436293b2300mr3452143f8f.56.1770375286605; 
- Fri, 06 Feb 2026 02:54:46 -0800 (PST)
-X-Received: by 2002:a05:6000:2303:b0:435:97f6:4f44 with SMTP id
- ffacd0b85a97d-436293b2300mr3452104f8f.56.1770375286162; Fri, 06 Feb 2026
- 02:54:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1voJcI-0004q2-8W
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:03:18 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6rm75pTLzHnH53;
+ Fri,  6 Feb 2026 19:03:03 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 198E540573;
+ Fri,  6 Feb 2026 19:03:08 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
+ 2026 11:03:07 +0000
+Date: Fri, 6 Feb 2026 11:03:05 +0000
+To: Gregory Price <gourry@gourry.net>
+CC: Andrew Morton <akpm@linux-foundation.org>, Cui Chao
+ <cuichao1753@phytium.com.cn>, <dan.j.williams@intel.com>, Mike Rapoport
+ <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
+ <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-mm@kvack.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
+ of CFMW
+Message-ID: <20260206110305.00001fbb@huawei.com>
+In-Reply-To: <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
+References: <20260106031042.1606729-1-cuichao1753@phytium.com.cn>
+ <20260106031042.1606729-2-cuichao1753@phytium.com.cn>
+ <20260108094812.8757ce3ad8370668eaafb29c@linux-foundation.org>
+ <9132054c-3017-4af0-84e0-e4359b0794a6@phytium.com.cn>
+ <20260115101858.85fd7b8e837c1c92a4fdc5f0@linux-foundation.org>
+ <696944eca1837_34d2a10056@dwillia2-mobl4.notmuch>
+ <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
+ <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
+ <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
+ <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
+ <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <20260107084840.150843-2-pbonzini@redhat.com>
- <871piyw3o9.fsf@pond.sub.org>
-In-Reply-To: <871piyw3o9.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 6 Feb 2026 11:54:33 +0100
-X-Gm-Features: AZwV_Qh5pNIMMYuH4TqP7wLQAGbRBX8NThKnEbTnLHmaTBUFzu-rct_HeoacCjI
-Message-ID: <CABgObfYCPzUxDhc=1WWeyc0kTJobTEsFBqe6tELOOP=84HA7+Q@mail.gmail.com>
-Subject: Re: [PATCH 1/5] json-parser: pass around lookahead token, constify
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,106 +80,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 6, 2026 at 11:46=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-> > In particular, because parse_array() and parse_object() can assume
-> > that the opening bracket/brace is not anymore in the token stream, it
-> > is now apparent that the first entry of an array incorrectly used the
-> > '[' character (stored in "token") as its location.
->
-> For a value of "apparent".  Not sure I would've seen it without your
-> heads up.
+On Thu, 5 Feb 2026 18:10:55 -0500
+Gregory Price <gourry@gourry.net> wrote:
 
-Me neither - I found it only while reviewing my own changes. :)
+> On Thu, Feb 05, 2026 at 02:58:42PM -0800, Andrew Morton wrote:
+> > On Mon, 26 Jan 2026 17:06:52 +0800 Cui Chao <cuichao1753@phytium.com.cn> wrote:
+> >   
+> > > > All that said, this does look harmless, and seems reasonable - but the
+> > > > changelog should reflect what the hardware is doing above.  
+> > > This issue was discovered on the QEMU platform. I need to apologize for 
+> > > my earlier imprecise statement (claiming it was hardware instead of 
+> > > QEMU). My core point at the time was to emphasize that this is a problem 
+> > > in the general code path when facing this scenario, not a QEMU-specific 
+> > > emulation issue, and therefore it could theoretically affect real 
+> > > hardware as well. I apologize for any confusion this may have caused.  
+> > 
+> > This patch doesn't sounds very urgent.  Perhaps we should do a v3 with
+> > updated changelog and handle that in the next -rc cycle?  
+> 
+> Mostly QEMU just needs to add SRAT entries associated with the
+> CEDT/CFMWS it adds.
 
-> I believe you're talking about
->
->         obj =3D parse_value(ctxt);
->         if (obj =3D=3D NULL) {
->             parse_error(ctxt, token, "expecting value");
->             goto out;
->         }
->
-> where @token indeed holds the array's '['.
+HI Gregory,
 
-Correct.
+I got a bit carried away - but the following basically says: No QEMU should not
+add SRAT Memory Affinity Structures. As to Andrew's question: I'm fine with this
+fix taking a little longer.
 
->         parse_error(ctxt, NULL, "premature EOI");
->
-> These bad arguments are all masked by parse_error() completely ignoring
-> its argument!  We tell users what's wrong with the input, but telling
-> them where it's wrong has been TODO since the initial commit in 2009[*].
-> I see your PATCH 5 finally takes care of it.
+I disagree. There is nothing in the specification to say it should do that and
+we have very intentionally not done so in QEMU - this is far from the first
+time this has come up!. We won't be doing so any time soon unless someone
+convinces me with clear spec references and tight reasoning for why it is the
+right thing to do.
 
-Yep, the clearer distinction between the parser and streamer helps a
-little in that respect.
+The only time providing SRAT Memory Affinity Structures for CEDT CXL Fixed
+Memory Window  Structures (CFMWSs) is definitely the right thing to do is
+if the BIOS has also programmed the full set of decoders etc. That is something
+we could do in QEMU as an option. Only if we do that would it be valid
+to provide SRAT Memory structures for the CXL memory. I'd suggest that's
+probably a job for EDK2 rather than QEMU but that's an implementation detail
+and there is a dance between EDK2 and QEMU for creating some of the tables
+anyway. This configuration reflects the pre hotplug / early CXL deployment
+situation. Now we have proper support in Linux we have moved beyond that.
+We do need to solve the dynamic NUMA node cases though and I'm hoping your
+current work will make that a bit easier.
 
-> > -    key_obj =3D parse_value(ctxt);
-> > +    key_obj =3D parse_value(ctxt, token);
-> >      key =3D qobject_to(QString, key_obj);
-> >      if (!key) {
-> > -        parse_error(ctxt, peek, "key is not a string in object");
-> > +        parse_error(ctxt, token, "key is not a string in object");
-> >          goto out;
-> >      }
-> >
->
-> @peek isn't exactly a great name, but @token tells me even less.
-> @first_token?
+Note that I give the same advice to our firmware folk I talk to. This stuff
+is policy - it belongs in OS control, not in a bunch of config menus in the
+BIOS or output of some unknown heuristic. BIOS authors are not clairvoyant.
+They have no way to know (in a non trivial topology) what makes sense for a
+given use case or what devices are going to be hotplugged later.
+I'd increasingly expect shipping BIOSes to have a "hands off" option in which
+they make not attempt to guess about what is beyond the host bridges.
 
-Possibly - though it all goes away since the parser becomes a state
-machine, and the only separate functions that survive are for
-one-token literals; which is why I just went simply with "token"
-everywhere (as in, "next token" or "lookahead that led the parser to
-call this function").
+One argument I have heard for why a BIOS could know an appropriate CFMWS to
+SRAT memory structure mapping is the CFWMS / QTG (Quality of Service)
+mapping implying a consistency of performance expectations in a given CFMWS.
+However that's very specific to particular designs. For others PA space is
+expensive thus they use one large CFMWS for everything and QoS handing in
+the uarch relies on information derived from the host bridge decoders. Often
+no one cares about cross host bridge interleave for same reason full system
+DRAM interleave is a niche thing. PA space is too expensive to provide the
+extra CFMWS to support it.
 
-> >  static QObject *parse_object(JSONParserContext *ctxt)
-> >  {
-> >      QDict *dict =3D NULL;
-> > -    JSONToken *token, *peek;
-> > -
-> > -    token =3D parser_context_pop_token(ctxt);
-> > -    assert(token && token->type =3D=3D JSON_LCURLY);
-> > +    const JSONToken *token;
->
-> Before the patch, parse_object() parses the entire object, as its name
-> indicates, with the precondition that the lookahead is '{'.
->
-> After the patch, it parses the part of the object after the '{'.  Hmm.
->
-> We could pass it the first token, like we do for all the other parsing
-> functions except this one and parse_array(), and keep the assertion.
-> I'd prefer that, but it's a matter of taste.
+If we are looking at forwards looking systems, that are built to work with full
+gamut of CXL then all that should be in SRAT for CXL topology is the Generic
+Port Structures (provide a handle for perf data in HMAT to the edge
+of the 'known world' - the host bridge / root ports). Nothing else.
 
-I see, yes we could. I can do this in v2, since I'm sure you'll
-(rightly) find something in the other patches that warrants a resend.
+If we do have BIOSes that are guessing what to put in SRAT and associated
+HMAT etc then there is a fairly strong argument that a good OS
+implementation should at most take such structures as a hint not a
+rule (though obviously we don't do that today).
 
-> This is the only call of parser_context_pop_token() that isn't
-> immediately followed by "if it returned null, report "premature EOI".
-> I went "let's factor this out", then realized the next patch replaces
-> all this.  Nevermind!
+> 
+> A system providing a CEDT/CFMWS entry without an SRAT entry is arguably
+> bad BIOS.
 
-Yeah, not an excuse for being sloppy but perhaps an excuse for not
-being too picky. :)
+I'd argue that if you aren't programming the decoder topology (and probably
+locking everything down) and are providing SRAT then you are providing
+a guess at best and that's a bad BIOS - not the other way around.
 
-> * parse_pair() and parse_value() now receive the first token as
->   argument.  Popping the first token moves to their callers.
->
-> * parse_keyword(), parse_interpolation(), and parse_literal() now
->   receive the token as argument.  Popping it moves to their callers.
->   parse_string() works like this even before the patch, and is not
->   changed.
->
-> * parse_object() and parse_array() now parse the part after the object's
->   / array's first token.
->
-> Works.
+Note we've supported this from the first in Linux so it's not like there
+is anything missing, just a corner case to tidy up.
 
-Good :)
+> 
+> But yeah, this is not urgent.
 
-Paolo
+I'd like to see it fixed, but given we don't know of a system where
+this applies today it doesn't need to be super rushed!
+
+Jonathan
+
+> 
+> ~Gregory
 
 
