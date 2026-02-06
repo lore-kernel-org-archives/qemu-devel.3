@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1DBEB28FE
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 153A2EB28FE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIGQ-0003AD-VO; Fri, 06 Feb 2026 04:36:34 -0500
+	id 1voIGo-0003YW-Jq; Fri, 06 Feb 2026 04:36:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIGO-00037k-DQ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:36:32 -0500
-Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIGe-0003Vj-V6; Fri, 06 Feb 2026 04:36:49 -0500
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIGM-0005Ov-AN
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:36:32 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.53])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f6prD0Kg7z5w7t;
- Fri,  6 Feb 2026 09:36:28 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIGd-0005Pk-7j; Fri, 06 Feb 2026 04:36:48 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.173])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6prW2klzz5vpp;
+ Fri,  6 Feb 2026 09:36:43 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 10:36:27 +0100
+ 2026 10:36:42 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002db651973-9e0d-42d8-94ce-f385670a1622,
+ (GARM-98R00290030bec-f737-423a-8065-aafc8690bb9a,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f36aded0-a047-4735-9781-d21e9e9b3829@kaod.org>
-Date: Fri, 6 Feb 2026 10:36:26 +0100
+Message-ID: <a4980ac0-2a0d-4114-92e6-3719272ef227@kaod.org>
+Date: Fri, 6 Feb 2026 10:36:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/10] hw/misc/aspeed_scu: Remove unused SoC silicon
- revision definitions
+Subject: Re: [PATCH v1 04/10] hw/misc/aspeed_scu: Add AST2700 A2 silicon
+ revisions
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -45,7 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-5-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-6-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,35 +90,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260206053340.3716041-6-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 4f7dd9cb-e7c5-4040-9832-3b3be29f2691
-X-Ovh-Tracer-Id: 13122081939365399358
+X-Ovh-Tracer-GUID: d362daad-02e5-43f6-ab2d-8f510380dfe3
+X-Ovh-Tracer-Id: 13126585539415477054
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGfm2vKn/U+gV80dYSZX37et3J0Q/ATXwTOA1MEco8f/ckLWSXYGOBWclTlGa0ISzID8O+X6E8ye34jNpHJfLd4zC0m0j2D5eprA8aLTZztG7a9X9oqPaTgFMM63OjuICEgg8jXVpwPP7Zr6zw05wkKymRrm9j5NAA3oTw9r73wOuIBappNBk6iu0Cl7gio1iTQvPWi0qFN0/aE5mnSEUdoCMSlX6yyycRhgtB0XfOuwu1DHbt1Q/YFH7CTFnwR1GnXEpA+SCTzwKvGYSvwHe8xUhPyM/xVAyG/ZLVCU6iLucsCrGReXSb5Pki2d6+498kFqjOrvqfvcYDO1L2fAxEKJXNwoHbP/bR7NXGEtuVEmxb9Ret+jXYbf7M9HkZbj08Y1tvZZTekG5hK9Ksl85Q58vVPFLM+DIb1/aYTe20s4taFjG4POHgv6gM8NqVAFCYGesOdNoPr57bJbNx8LUp5nq2l2zSZ6+Qq8jMWUcf/6BpgWTB6MCM6HEoE4Yi6278FI7JiCTa1/IrSE1jdwENb3MeJK3uLRu7RTnSdUKkEavZvK3ZdH5z/ppb1DC88eBgn+HuLSafwrnzyQOHr0mJttmupMMeJlHsllHao6Waq4cxZ3nAy4VWe+d5GAZsAvSzcRpcw4PaLRcCqIoqemGaLv2ieehhIhoNFvYl5Xw8Gcw
-DKIM-Signature: a=rsa-sha256; bh=qmXzDWYDlOPPgeUVBhGXEkLUr8il14IdhSmI9H7vu6E=; 
+X-VR-SPAMCAUSE: dmFkZTEECA4ihu89On7YIPdFP1YIGlKG0BQ4ELRzoIHN0wywv+CtmtGIgLbNZmWBTM1iFUVZuP2Wbez1r0xR9PL04j6hLoVXqWTSUHLU0TwWNvWZNDYat+3m6AOQGrZHSfZy7HZrbrQEREGRVb8DXjEPAia1FV2UzrXj7zTpZzTMREwyVrCk2s9xrH04TW0BB4ju4qjFLfV8Z+YZ+GhSGid79X2iwBz8VmWVFV1JzbbFphYZDmvTLWxvfyuTjmtobjgQ9X3ys/rz7GwHMzG6PwU1/cOUyVotMZywU26Ny5qJdJNMkVmNjiuxpRic6bMNrLh1ZqOWwRmjhgkybt2bi2fHvJJ0QChRW+a87D91n4LBzH7Wj/Ja6zJgRSuqXDE3Ne7yeZ+SjZReZTk/KId34U1WSDErkep/ZREQ1hwpf5ONmiXaclAH4aQCd2fMmUIYiYByzHOqqa3CnWXRWCYoFCCEESC/Yi1+ntLzj2SNdFf82A3uNK1VCuI9vkUXF5uSivSM+NBYrPbjR6evooWU3mwjgi/zvQlvvI4IOtr04GmXPJhdZFguzHMiTZH8G+k8SvtGq+Lvusu3EVu0Z71I7wZGYs2wL+nEsIwDKycvVI8O4OPQrSNEV/C4zlCE2GPEHfy4r6/J70QH5a8Uz0qDUSfXL24QSUdfbK6TBgHC2bRLIdruNg
+DKIM-Signature: a=rsa-sha256; bh=67ATAuXTVroGjq0fGB2RVC2oXHZfn76qOVPWbvok7nI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770370588; v=1;
- b=FFZgPzzAz+IPr2gY16QPJ46s67vbZ036hWm01m0r2UbA2LIU9czTUSuHIlSqLC5c3RNAu/Xa
- D4pxu1LISIMD+5s+LHnWAyjYS92S4LDATdLnwpK18VmI5WpklUeDBvuFCcwNPFnO9c/M7B4k5ch
- tGSTsvgtmvLSVCk2t/EMb20CDBgzd5BHdOSlIRn7RkW/toAE7NUE3tJ+unqX9wdgBftJEIdhN5f
- LG2gRQUZVh9IPBAGa5VmUtRzAPgy4WpPNAeRUSzA3h/BYYdsHFBRqisr8M3gHgYVVf0VqUxBiPR
- WSGRc8tHUXduVAQfPcnjR9lJxtnLllc8RxDA+ZqXklOkA==
-Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
- helo=2.mo552.mail-out.ovh.net
+ t=1770370603; v=1;
+ b=qJi/890myFyMjRxdcGQkpNTIqlsSvcS3GZ2rc/iMMw5xjghGmA8DLAZgETfeL2r5cEOjsXDe
+ ZWkUVXQat1NeO/ZieXx3yRTOM++uxhzrAjqnAPNog6r9QbDtBKyDbsLy6lDPm/xF8vE5+/DcpqT
+ VjTgpFJ7bE4sgqshbZGoeM/N9/LwgQIywwRb35h/8HF45eb1kV2mQMJWOcL92PNi8TH+rb8jcC0
+ 8uHhnerR1gTlnIre/tIScNVM+Id8NQFAV8MlSYx/3qROnxwUm4C0kYGCtAFWJYzfQtqzjgdvZzW
+ q1DvXyH0cyZXCvFgodFij8a746syEl7klM/cNNnH/DMmQ==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,72 +135,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/26 06:33, Jamin Lin wrote:
-> Several legacy Aspeed SoC silicon revision definitions are no longer
-> used by any machine models or runtime logic.
+> Add silicon revision definitions for AST2700 A2, and include
+> them in the list of supported Aspeed silicon revisions.
 > 
-> Remove unused silicon revision macros and corresponding entries from
-> the silicon revision table to reduce dead code and improve
-> maintainability.
-> 
-> No functional change intended.
+> This allows newer AST27x0 A2 silicon to be correctly identified via
+> the SCU silicon revision register.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/misc/aspeed_scu.h | 10 ----------
->   hw/misc/aspeed_scu.c         | 10 ----------
->   2 files changed, 20 deletions(-)
+>   include/hw/misc/aspeed_scu.h | 1 +
+>   hw/misc/aspeed_scu.c         | 1 +
+>   2 files changed, 2 insertions(+)
 > 
 > diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-> index 9e28bd4d2e..313a79f2f7 100644
+> index 313a79f2f7..d003955428 100644
 > --- a/include/hw/misc/aspeed_scu.h
 > +++ b/include/hw/misc/aspeed_scu.h
-> @@ -41,22 +41,12 @@ struct AspeedSCUState {
->       uint32_t hw_prot_key;
->   };
->   
-> -#define AST2400_A0_SILICON_REV   0x02000303U
->   #define AST2400_A1_SILICON_REV   0x02010303U
-> -#define AST2500_A0_SILICON_REV   0x04000303U
->   #define AST2500_A1_SILICON_REV   0x04010303U
-> -#define AST2600_A0_SILICON_REV   0x05000303U
-> -#define AST2600_A1_SILICON_REV   0x05010303U
-> -#define AST2600_A2_SILICON_REV   0x05020303U
->   #define AST2600_A3_SILICON_REV   0x05030303U
-> -#define AST1030_A0_SILICON_REV   0x80000000U
+> @@ -47,6 +47,7 @@ struct AspeedSCUState {
 >   #define AST1030_A1_SILICON_REV   0x80010000U
 >   #define AST1060_A2_SILICON_REV   0xA0030000U
-> -#define AST2700_A0_SILICON_REV   0x06000103U
-> -#define AST2720_A0_SILICON_REV   0x06000203U
-> -#define AST2750_A0_SILICON_REV   0x06000003U
 >   #define AST2700_A1_SILICON_REV   0x06010103U
-> -#define AST2750_A1_SILICON_REV   0x06010003U
+> +#define AST2700_A2_SILICON_REV   0x06020103U
 >   
 >   #define ASPEED_IS_AST2500(si_rev)     ((((si_rev) >> 24) & 0xff) == 0x04)
 >   
 > diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index 6829efa2dc..0edf9c1b16 100644
+> index 0edf9c1b16..e4160356e4 100644
 > --- a/hw/misc/aspeed_scu.c
 > +++ b/hw/misc/aspeed_scu.c
-> @@ -555,22 +555,12 @@ static void aspeed_scu_reset(DeviceState *dev)
->   }
->   
->   static uint32_t aspeed_silicon_revs[] = {
-> -    AST2400_A0_SILICON_REV,
->       AST2400_A1_SILICON_REV,
-> -    AST2500_A0_SILICON_REV,
->       AST2500_A1_SILICON_REV,
-> -    AST2600_A0_SILICON_REV,
-> -    AST2600_A1_SILICON_REV,
-> -    AST2600_A2_SILICON_REV,
->       AST2600_A3_SILICON_REV,
-> -    AST1030_A0_SILICON_REV,
+> @@ -561,6 +561,7 @@ static uint32_t aspeed_silicon_revs[] = {
 >       AST1030_A1_SILICON_REV,
 >       AST1060_A2_SILICON_REV,
-> -    AST2700_A0_SILICON_REV,
-> -    AST2720_A0_SILICON_REV,
-> -    AST2750_A0_SILICON_REV,
 >       AST2700_A1_SILICON_REV,
-> -    AST2750_A1_SILICON_REV,
+> +    AST2700_A2_SILICON_REV,
 >   };
 >   
 >   bool is_supported_silicon_rev(uint32_t silicon_rev)
