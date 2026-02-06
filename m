@@ -4,67 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2867CEA795E
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A47EB28FE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIX6-0001qV-Ik; Fri, 06 Feb 2026 04:53:48 -0500
+	id 1voIXF-0001wf-7j; Fri, 06 Feb 2026 04:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWc-0001lQ-0g
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:20 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1voIWi-0001mM-QE
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:28 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWa-0000FV-Ab
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:17 -0500
+ id 1voIWf-0000HE-S9
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:23 -0500
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 69C238043B;
- Fri, 06 Feb 2026 12:53:13 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2E696C01C1;
+ Fri, 06 Feb 2026 12:53:20 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:52d::1:1f])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2rKPQc0AN0U0-Kuns2DT7; Fri, 06 Feb 2026 12:53:12 +0300
+ ESMTPSA id 2rKPQc0AN0U0-rJGfCUXk; Fri, 06 Feb 2026 12:53:19 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770371592;
- bh=5LsdflNZHb4CrWOSNOp97LbJ59M5MGj4xO1MC/HSwD0=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=JItazYWwoNhruiJ3YvmqN+rx6DwaVLdVJBe5i/+X6RCtw9+YYLjGYUpg5e+sQyoYk
- TGVWRmms7EWNGdNyMSRB2MRaA/2ATlrYqK6HXVIttUdVGUHTtdJ6BprwE6OKHMLlp0
- NNkLIcjh+z9gz+/CFJGRDZR+vFZKzV/hx7iWjJeU=
+ s=default; t=1770371599;
+ bh=ri5cc3D5fk7yXPGMU6rD8v3lqXRi45/1yOdXOFQ24gw=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=buoQdo5PAwqjDI5I2FO9n/qXyJHoKfY5p3SIwNLJZYdh4Wk1Ee+IyaTFxdUDKh0fD
+ QN//wI18t2AjlmF/POWZiSJoQuDBX4oP0h76UOlxRgnPqpTiLzAtGJiBti4gjNX44O
+ 3GnZTXmB33U9yuNtOXu5+LLqymxHxieKTLM+emV4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v5 05/23] vhost-user-gpu: drop code duplication
-Date: Fri,  6 Feb 2026 12:52:39 +0300
-Message-ID: <20260206095258.894504-6-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v5 10/23] vhost-user: keep QIOChannelSocket for backend channel
+Date: Fri,  6 Feb 2026 12:52:44 +0300
+Message-ID: <20260206095258.894504-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 References: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,31 +76,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Obviously, this duplicated fragment doesn't make any sense.
+Keep QIOChannelSocket pointer instead of more generic
+QIOChannel. No real difference for now, but it would
+be simpler to migrate socket fd in further commit.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 ---
- hw/display/vhost-user-gpu.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/virtio/vhost-user.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 3f6fb7a803..8911b2a72f 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -644,10 +644,6 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
-         VIRTIO_GPU_F_RESOURCE_UUID)) {
-         g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
-     }
--    if (virtio_has_feature(g->vhost->dev.features,
--        VIRTIO_GPU_F_RESOURCE_UUID)) {
--        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
--    }
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 3937449e96..73ecc52a3f 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -244,7 +244,7 @@ struct vhost_user {
+     struct vhost_dev *dev;
+     /* Shared between vhost devs of the same virtio device */
+     VhostUserState *user;
+-    QIOChannel *backend_ioc;
++    QIOChannelSocket *backend_sioc;
+     GSource *backend_src;
+     NotifierWithReturn postcopy_notifier;
+     struct PostCopyFD  postcopy_fd;
+@@ -1801,8 +1801,8 @@ static void close_backend_channel(struct vhost_user *u)
+     g_source_destroy(u->backend_src);
+     g_source_unref(u->backend_src);
+     u->backend_src = NULL;
+-    object_unref(OBJECT(u->backend_ioc));
+-    u->backend_ioc = NULL;
++    object_unref(OBJECT(u->backend_sioc));
++    u->backend_sioc = NULL;
+ }
  
-     if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, errp)) {
-         return;
+ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+@@ -1914,7 +1914,6 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
+     bool reply_supported =
+         vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+     Error *local_err = NULL;
+-    QIOChannel *ioc;
+ 
+     if (!vhost_user_has_protocol_feature(
+             dev, VHOST_USER_PROTOCOL_F_BACKEND_REQ)) {
+@@ -1927,15 +1926,15 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
+         return -saved_errno;
+     }
+ 
+-    ioc = QIO_CHANNEL(qio_channel_socket_new_fd(sv[0], &local_err));
+-    if (!ioc) {
++    u->backend_sioc = qio_channel_socket_new_fd(sv[0], &local_err);
++    if (!u->backend_sioc) {
+         error_report_err(local_err);
+         return -ECONNREFUSED;
+     }
+-    u->backend_ioc = ioc;
+-    u->backend_src = qio_channel_add_watch_source(u->backend_ioc,
+-                                                G_IO_IN | G_IO_HUP,
+-                                                backend_read, dev, NULL, NULL);
++    u->backend_src = qio_channel_add_watch_source(QIO_CHANNEL(u->backend_sioc),
++                                                  G_IO_IN | G_IO_HUP,
++                                                  backend_read, dev,
++                                                  NULL, NULL);
+ 
+     if (reply_supported) {
+         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
+@@ -2353,7 +2352,7 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
+         close(u->postcopy_fd.fd);
+         u->postcopy_fd.handler = NULL;
+     }
+-    if (u->backend_ioc) {
++    if (u->backend_sioc) {
+         close_backend_channel(u);
+     }
+     g_free(u->region_rb);
 -- 
 2.52.0
 
