@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58934EE6B68
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C83EEE6B68
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTh0-0001AT-77; Fri, 06 Feb 2026 16:48:46 -0500
+	id 1voTh4-0001fM-6f; Fri, 06 Feb 2026 16:48:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfC-0006Yo-K4
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:54 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfu-000844-CU
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:45 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfA-0002jQ-Ga
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:46:54 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-482f2599980so30664865e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:46:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfp-0002mW-S9
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:37 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47ee937ecf2so24850585e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414411; x=1771019211; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414451; x=1771019251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5A6OGpssSqqoKEioGQUFiyllr2e7XdPAmCmuZAGsgrU=;
- b=ct/CMcGB3ogfnoPEt/jhBZX33BdoRXBZkQn2VnqQrwui8x7KcBOJcoD95cbdoN9krX
- NZcZw7i+I0FmDIfIaGxVix/UIK12EJvSR2vgtyDvpIa4VdqP8L6iticZlBK/XgDHL83g
- WqYeZAEC3+zfLLaW1K7AHiwomrRIBvJs/V17iJuwfsXtYemftBE/s1Ljql5tThafAChs
- MU/wmeA+bOeQl0o2rLSDDZGHXwUq+gj5HuIt17Rq+yPoqhdixu0mAsGBe5rWpRMT4Sj6
- AfGkwSjns+zeb1lEcMpcG6GQJqq03tyRh5HW0gRt2npUJOZF/kw4eSb70jluVmL1ZeZC
- eYwQ==
+ bh=4pDpFYj1WOxP0DSIY/DR9eX9oYTZMJu2fUxtJrREkj8=;
+ b=ZShoexsvP1QsHQn4ATPJV5XpYcm9fILhHlUxaiGovAkUIEhe//zCaDnorLCPn32Duq
+ AJma9fTXxC9Z4ufeVs3PwJLzRlo58Yij93uuw847P42G+Jv+r+zZXwO5Xm5wjvYzKTWN
+ 9NW0aXgC/SDMrD2RcRRCaih1N58nqCfyp8MaFRYqonguE2ngSZctSnZBbT+fyT0M+WJM
+ JjV8VdHSV3Mtpibd5sbGDTszAN/uRn/YZpF9jnuV1EL4vn+9F409SKce53ibV9zipT1X
+ 5tD/Ef7PFM09le2gDpAg3aOCU5CF5o71dk0IIbddN1ywcWtwkQyZFjWui2hmcNILJUCM
+ dOGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414411; x=1771019211;
+ d=1e100.net; s=20230601; t=1770414451; x=1771019251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5A6OGpssSqqoKEioGQUFiyllr2e7XdPAmCmuZAGsgrU=;
- b=Jk5GBzouN6NryVyyRmoGLLb0HQy+eUkI98CThO7y35EdfZZp5iTCuKab6Cm9OD1hsq
- hyYKka6Q0NtZb3QARJk1ZN1i/+STM92zPiqEvabGy6SpG51+0PUbf/4iAhvokCYCu4An
- uvp3WYQDVBD9cSpo5r1zpx8PSzFHLIf8NPOMOS1UaeMY4YYpBFzs6SS1+NOCcJ6xZAeR
- DY6L4QhW/YG768VRVHhGlHvkYnxRgFTQKJIEyNzHMZ6pevdccLahQMGzDqUTpmwug7Jd
- Omh3ZObAjMYsE6tbVDESV1KcFjswVLVcRkYyPHh6TXWdjuqyJgRFoPW/SNXBVck6Y5g7
- NHSA==
-X-Gm-Message-State: AOJu0YxW9XsupWiqmLVNyGBu57xmQ6W0/0S+xL3s/xAfPpwPSDWgFh47
- ANIMSOts3Cjvs7ELS0i216YVfKQ2Nii97qknKlSudMmgZUPMQUMPjr4G65PmxMD5sfQGHKy5iql
- Hm4lSshs=
-X-Gm-Gg: AZuq6aKY+QnjcAtUsJGJTQ0qXF0xbB8wIV53hX/da6XJGBeKT4qCLjhwzZcNd5tRuUA
- 3X/tZnsWzYKObZG5GSwdAKisVXORf+Q8BvSH4gDT4DjqYqkLJ00bBxFa5/SIAu3t0V+sks3t4+m
- qxf9VjVhO2ZQgl1GEQBq5aFlz2Abnifd00og8SALVuK2GFW/PrQ6ByaLX/P58ucnV2Ci7dKE2dM
- txe8gzgqeCh+y5VqItSORJn+Hjgimg7gu0001gCJgQoe1pu8tAup2AhiVUN8wOvd62HCZ0r8ezZ
- 1IZi481L8fLKbTfiekYP0vCY4sxP0Clim4bq+tAa9zhkPTL3or57tBjQUqz8BnV+BIan4b7uUGl
- j1ajbjIuU5Cwb7bx6Zck+BYZEK0wFrlGEhKiRCWY8HWaKejl0yid0BETXNtEYhyt6tEguNMz6On
- 4r/PMHV/5/3ntrrWMNYgJV5D7z4mJNYXm1qz087+Ol5oL2x1zk73Eb5hfGkN9+
-X-Received: by 2002:a05:600c:3509:b0:477:7a53:f493 with SMTP id
- 5b1f17b1804b1-4832021b711mr53436295e9.23.1770414410683; 
- Fri, 06 Feb 2026 13:46:50 -0800 (PST)
+ bh=4pDpFYj1WOxP0DSIY/DR9eX9oYTZMJu2fUxtJrREkj8=;
+ b=cTR7fzfulf0/CLD5lQ8i9xn4xBXpQjuV4/5dLKS7WA0/k10Fl57taATXLeGHacxBSe
+ giHmmhdlRWAa2TvtfNDmV2OnlBuUQZHWgbglzhdI0eEOSKgfHH5gLRh4YpSTKDJT4NZB
+ W1NSLUrO3cJwnYDlf+Hc1JtgODR02s8GlsNVnvAqnZ3qspffgRP8Cnm9kmUWuh0Mhvb8
+ tF5kHug7TGE81UkuSwyky74xdngZPbamRUb02GhHZVCnrBxHmnqGR+w/F/5DS6elh9PO
+ UzF2+DNrLfLLPrnpWOYZ4zjB9OhYuPOaxaZQwXMVZ+u6Hx3vVczWMGAZx9usGJYKiN8R
+ Rczg==
+X-Gm-Message-State: AOJu0Yx1oTm7782n1pqDe44KbCmKoGH6VjbO7NHGa9kTpNu7bvlrm7N6
+ h/Wz2+jFq3Q8Wf/b2hnCodCmEFoY9xJ9HnrmjSLftRcLMrG0qiAxOuBMAa8ZhRzrJ44sRc0Ve6i
+ d+Vodyrs=
+X-Gm-Gg: AZuq6aIazt20rSDg7vf4ywSBI7VHCm04cCNWKyp1Eqa128JXeJT3i2vu18I0CHW9x/4
+ HXoDAiNTqUoCbcfQQ6qMhd9/TXfJ3UoBsLWVADIZFqMY0/Zf+zJt0tvoEuLjJKoG6/WkueMtMAZ
+ 6YiZ2EDoybP16aCZZphG0d1T8zzBBzm3rSWeKlq12HFVBb/BfAnwwiuoQJ2/EdnppBd3kB0FpJ+
+ 6By2cbnDml3ZBzxpfZ4SaOXXOro8SQ4s/SBeB96bPBvG2EgWN8TKxNW/Ofpg+V8ft2Wp/HScgGB
+ 982KCojGMVOvvKu8Ca7dRKm/ALVENzERJ/+PlCvQCIH29Z7/0rXZDvwYPQwpQyaiO3wHaFhYn+U
+ ll5wXY7hI2Qb3mERdLs3Ww7SMhiTndOv7fwFXCmKnAJ4YDOhXCgfoBPIKMolBf8wVpJA6ewrk8q
+ uU6TqW17tZB5VxfJwyk8r9mryiucEa8YDKNUsJFQow52fCT7NAtzN657QS4GKY
+X-Received: by 2002:a05:600c:3e14:b0:46f:a2ba:581f with SMTP id
+ 5b1f17b1804b1-483203db77emr59501305e9.16.1770414451212; 
+ Fri, 06 Feb 2026 13:47:31 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436296bdc11sm8098693f8f.14.2026.02.06.13.46.49
+ 5b1f17b1804b1-48320728ac7sm75241615e9.13.2026.02.06.13.47.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:46:50 -0800 (PST)
+ Fri, 06 Feb 2026 13:47:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 18/30] target/i386: Use explicit little-endian LD/ST API
-Date: Fri,  6 Feb 2026 22:44:36 +0100
-Message-ID: <20260206214448.22008-19-philmd@linaro.org>
+Subject: [PULL 24/30] hw/or1k: Rename from openrisc
+Date: Fri,  6 Feb 2026 22:44:42 +0100
+Message-ID: <20260206214448.22008-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,122 +99,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 architecture uses little endianness. Directly use
-the little-endian LD/ST API.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Mechanical change running:
-
-  $ for a in uw w l q; do \
-      sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
-        $(git grep -wlE '(ld|st)u?[wlq]_p' target/i386/);
-    done
-
-Coding style adapted manually.
-
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260205030244.266447-4-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260204204103.46343-2-philmd@linaro.org>
 ---
- target/i386/helper.c                 | 12 ++++++------
- target/i386/tcg/system/misc_helper.c | 16 ++++++++--------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ MAINTAINERS                          | 4 ++--
+ hw/{openrisc => or1k}/boot.c         | 0
+ hw/{openrisc => or1k}/cputimer.c     | 0
+ hw/{openrisc => or1k}/openrisc_sim.c | 0
+ hw/{openrisc => or1k}/virt.c         | 0
+ hw/Kconfig                           | 2 +-
+ hw/meson.build                       | 2 +-
+ hw/{openrisc => or1k}/Kconfig        | 0
+ hw/{openrisc => or1k}/meson.build    | 0
+ 9 files changed, 4 insertions(+), 4 deletions(-)
+ rename hw/{openrisc => or1k}/boot.c (100%)
+ rename hw/{openrisc => or1k}/cputimer.c (100%)
+ rename hw/{openrisc => or1k}/openrisc_sim.c (100%)
+ rename hw/{openrisc => or1k}/virt.c (100%)
+ rename hw/{openrisc => or1k}/Kconfig (100%)
+ rename hw/{openrisc => or1k}/meson.build (100%)
 
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index f9f9488eb4d..c397a6fde5a 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -669,7 +669,7 @@ uint32_t x86_lduw_phys(CPUState *cs, hwaddr addr)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ea52060bfe7..5f06f8ba512 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -304,7 +304,7 @@ M: Stafford Horne <shorne@gmail.com>
+ S: Odd Fixes
+ F: docs/system/openrisc/cpu-features.rst
+ F: target/or1k/
+-F: hw/openrisc/
++F: hw/or1k/
+ F: include/hw/or1k/
+ F: tests/functional/or1k/meson.build
+ F: tests/tcg/openrisc/
+@@ -1495,7 +1495,7 @@ M: Jia Liu <proljc@gmail.com>
+ S: Maintained
+ F: docs/system/openrisc/or1k-sim.rst
+ F: hw/intc/ompic.c
+-F: hw/openrisc/openrisc_sim.c
++F: hw/or1k/openrisc_sim.c
+ F: tests/functional/or1k/test_sim.py
  
--    return address_space_lduw(as, addr, attrs, NULL);
-+    return address_space_lduw_le(as, addr, attrs, NULL);
- }
- 
- uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
-@@ -679,7 +679,7 @@ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
- 
--    return address_space_ldl(as, addr, attrs, NULL);
-+    return address_space_ldl_le(as, addr, attrs, NULL);
- }
- 
- uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
-@@ -689,7 +689,7 @@ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
- 
--    return address_space_ldq(as, addr, attrs, NULL);
-+    return address_space_ldq_le(as, addr, attrs, NULL);
- }
- 
- void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val)
-@@ -709,7 +709,7 @@ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
- 
--    address_space_stw(as, addr, val, attrs, NULL);
-+    address_space_stw_le(as, addr, val, attrs, NULL);
- }
- 
- void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
-@@ -719,7 +719,7 @@ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
- 
--    address_space_stl(as, addr, val, attrs, NULL);
-+    address_space_stl_le(as, addr, val, attrs, NULL);
- }
- 
- void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val)
-@@ -729,6 +729,6 @@ void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val)
-     MemTxAttrs attrs = cpu_get_mem_attrs(env);
-     AddressSpace *as = cpu_addressspace(cs, attrs);
- 
--    address_space_stq(as, addr, val, attrs, NULL);
-+    address_space_stq_le(as, addr, val, attrs, NULL);
- }
- #endif
-diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
-index 0c32424d36a..bb79d4e470e 100644
---- a/target/i386/tcg/system/misc_helper.c
-+++ b/target/i386/tcg/system/misc_helper.c
-@@ -42,26 +42,26 @@ target_ulong helper_inb(CPUX86State *env, uint32_t port)
- 
- void helper_outw(CPUX86State *env, uint32_t port, uint32_t data)
- {
--    address_space_stw(&address_space_io, port, data,
--                      cpu_get_mem_attrs(env), NULL);
-+    address_space_stw_le(&address_space_io, port, data,
-+                         cpu_get_mem_attrs(env), NULL);
- }
- 
- target_ulong helper_inw(CPUX86State *env, uint32_t port)
- {
--    return address_space_lduw(&address_space_io, port,
--                              cpu_get_mem_attrs(env), NULL);
-+    return address_space_lduw_le(&address_space_io, port,
-+                                 cpu_get_mem_attrs(env), NULL);
- }
- 
- void helper_outl(CPUX86State *env, uint32_t port, uint32_t data)
- {
--    address_space_stl(&address_space_io, port, data,
--                      cpu_get_mem_attrs(env), NULL);
-+    address_space_stl_le(&address_space_io, port, data,
-+                         cpu_get_mem_attrs(env), NULL);
- }
- 
- target_ulong helper_inl(CPUX86State *env, uint32_t port)
- {
--    return address_space_ldl(&address_space_io, port,
--                             cpu_get_mem_attrs(env), NULL);
-+    return address_space_ldl_le(&address_space_io, port,
-+                                cpu_get_mem_attrs(env), NULL);
- }
- 
- target_ulong helper_read_cr8(CPUX86State *env)
+ PowerPC Machines
+diff --git a/hw/openrisc/boot.c b/hw/or1k/boot.c
+similarity index 100%
+rename from hw/openrisc/boot.c
+rename to hw/or1k/boot.c
+diff --git a/hw/openrisc/cputimer.c b/hw/or1k/cputimer.c
+similarity index 100%
+rename from hw/openrisc/cputimer.c
+rename to hw/or1k/cputimer.c
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/or1k/openrisc_sim.c
+similarity index 100%
+rename from hw/openrisc/openrisc_sim.c
+rename to hw/or1k/openrisc_sim.c
+diff --git a/hw/openrisc/virt.c b/hw/or1k/virt.c
+similarity index 100%
+rename from hw/openrisc/virt.c
+rename to hw/or1k/virt.c
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 9e6c789ae7e..f8f92b5d03d 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -58,7 +58,7 @@ source loongarch/Kconfig
+ source m68k/Kconfig
+ source microblaze/Kconfig
+ source mips/Kconfig
+-source openrisc/Kconfig
++source or1k/Kconfig
+ source ppc/Kconfig
+ source riscv/Kconfig
+ source rx/Kconfig
+diff --git a/hw/meson.build b/hw/meson.build
+index 1022bdb8069..66e46b8090d 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -9,7 +9,7 @@ subdir('loongarch')
+ subdir('m68k')
+ subdir('microblaze')
+ subdir('mips')
+-subdir('openrisc')
++subdir('or1k')
+ subdir('ppc')
+ subdir('remote')
+ subdir('riscv')
+diff --git a/hw/openrisc/Kconfig b/hw/or1k/Kconfig
+similarity index 100%
+rename from hw/openrisc/Kconfig
+rename to hw/or1k/Kconfig
+diff --git a/hw/openrisc/meson.build b/hw/or1k/meson.build
+similarity index 100%
+rename from hw/openrisc/meson.build
+rename to hw/or1k/meson.build
 -- 
 2.52.0
 
