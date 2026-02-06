@@ -4,60 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE40EE2091
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1182FEE2091
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voL2A-00052g-51; Fri, 06 Feb 2026 07:34:02 -0500
+	id 1voL2S-00059K-Hw; Fri, 06 Feb 2026 07:34:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voL28-00052D-Qp
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:34:00 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voL27-00069J-39
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:34:00 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6tm11NF6zJ46ZL;
- Fri,  6 Feb 2026 20:33:05 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 78A4D40570;
- Fri,  6 Feb 2026 20:33:57 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
- 2026 12:33:56 +0000
-Date: Fri, 6 Feb 2026 12:33:55 +0000
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>, <eblake@redhat.com>,
- <armbru@redhat.com>, <berrange@redhat.com>, <pbonzini@redhat.com>,
- <mst@redhat.com>, <lizhijian@fujitsu.com>, <anisa.su@samsung.com>,
- <linux-cxl@vger.kernel.org>
-Subject: Re: [RFC PATCH 4/7] hw/cxl: Map lazy memory backend after host
- acceptance
-Message-ID: <20260206123355.00006698@huawei.com>
-In-Reply-To: <20251127225526.700-5-alireza.sanaee@huawei.com>
-References: <20251127225526.700-1-alireza.sanaee@huawei.com>
- <20251127225526.700-5-alireza.sanaee@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1voL2Q-00058k-T7
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:34:18 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1voL2P-00069Z-16
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:34:18 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3E0175BCC5;
+ Fri,  6 Feb 2026 12:34:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770381255; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RR48pqPsRZmekRfGfhAXqXlIZwpZqaixLiW4ztpam+Q=;
+ b=Sux3p0kvyj/c9SYYEMsSb55tr2GECD4SDKsFlbfj0RM3zuhPZb/XMPZGUrXhARAW6e4RBV
+ 0zduFsboFA8MYJL3OPVLL8XAcK2LDwbm+dc6LHva16bcPGdnD4Gi/WH0AYsE8sn9vnd/uJ
+ AbGBnUmbzkMGjkaXw++t7cjJgrE8/iY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770381255;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RR48pqPsRZmekRfGfhAXqXlIZwpZqaixLiW4ztpam+Q=;
+ b=ou2/KKeBf5lcuqCkmHE1qaWRZftFWbxWvHevRt3XQkk8vwBH3pD4XLQQTD60HB3ZBe6R/r
+ V0fCjx9O7d/3hmAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Sux3p0kv;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="ou2/KKeB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770381255; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RR48pqPsRZmekRfGfhAXqXlIZwpZqaixLiW4ztpam+Q=;
+ b=Sux3p0kvyj/c9SYYEMsSb55tr2GECD4SDKsFlbfj0RM3zuhPZb/XMPZGUrXhARAW6e4RBV
+ 0zduFsboFA8MYJL3OPVLL8XAcK2LDwbm+dc6LHva16bcPGdnD4Gi/WH0AYsE8sn9vnd/uJ
+ AbGBnUmbzkMGjkaXw++t7cjJgrE8/iY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770381255;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RR48pqPsRZmekRfGfhAXqXlIZwpZqaixLiW4ztpam+Q=;
+ b=ou2/KKeBf5lcuqCkmHE1qaWRZftFWbxWvHevRt3XQkk8vwBH3pD4XLQQTD60HB3ZBe6R/r
+ V0fCjx9O7d/3hmAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A637A3EA63;
+ Fri,  6 Feb 2026 12:34:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id D/bBGcbfhWnzJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 06 Feb 2026 12:34:14 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
+Subject: Re: [PATCH v2 0/9] qapi: Use visitors for migration parameters
+ handling
+In-Reply-To: <aYUUQ5sAiwR-nvul@x1.local>
+References: <20260202224101.20568-1-farosas@suse.de>
+ <aYUUQ5sAiwR-nvul@x1.local>
+Date: Fri, 06 Feb 2026 09:34:12 -0300
+Message-ID: <877bsqqce3.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 3E0175BCC5
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,133 +120,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Nov 2025 22:55:22 +0000
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+Peter Xu <peterx@redhat.com> writes:
 
-> Map relevant memory backend when host accepted an extent.
+> On Mon, Feb 02, 2026 at 07:40:52PM -0300, Fabiano Rosas wrote:
+>> Hi, just a few more patches until options.c is fully using QAPI_CLONE
+>> instead of open-coding options handling, we're almost there.
+>
+> While I'm reading your series, I found one thing that migration might be
+> racy against for a while, and this series should enlarge that window of
+> this issue: I don't think it's safe to free elements in MigrationParameters
+> in the main thread, even if we hold BQL. Because migration thread can
+> access parameters anytime without BQL... logically it can read any
+> parameter, then if it's not a scalar we need some luck not crashing.
+>
 
-Explain what works at this point.  Does the old non performant
-read / write land in this memory after this patch?
+Good point, I had thought of it and convinced myself it was ok
+somehow. I'll take another look.
 
-We could decide not to support that, but key is the patch
-should explain where we are at this point.
+> IMHO we may need to move faster on the "whitelist that can be dynamically
+> set during migration" plan on migration parameters and capabilities.
+>
 
-No comments inline.
+Or we make set-parameters always work on top of temporary
+MigrationParameter objects and switch the pointer atomically. Might be a
+good idea regardless.
 
-> 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 74 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 71 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index ae723c03ec..b785553225 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -2979,6 +2979,30 @@ static CXLRetCode cxl_detect_malformed_extent_list(CXLType3Dev *ct3d,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +static bool cxl_extent_find_extent_detail(CXLDCExtentGroupList *list,
-> +                                          uint64_t start_dpa,
-> +                                          uint64_t len,
-> +                                          uint8_t *tag,
-> +                                          HostMemoryBackend **hmb,
-> +                                          struct CXLFixedWindow **fw,
-> +                                          int *rid)
-> +{
-> +    CXLDCExtent *ent, *ent_next;
-> +    CXLDCExtentGroup *group = QTAILQ_FIRST(list);
-> +
-> +    QTAILQ_FOREACH_SAFE(ent, &group->list, node, ent_next) {
-> +        if (ent->start_dpa == start_dpa && ent->len == len) {
-> +            *fw = ent->fw;
-> +            *hmb = ent->hm;
-> +            memcpy(tag, ent->tag, 0x10);
-> +            *rid = ent->rid;
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
->  static CXLRetCode cxl_dcd_add_dyn_cap_rsp_dry_run(CXLType3Dev *ct3d,
->          const CXLUpdateDCExtentListInPl *in)
->  {
-> @@ -3029,8 +3053,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
->      CXLUpdateDCExtentListInPl *in = (void *)payload_in;
->      CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
->      CXLDCExtentList *extent_list = &ct3d->dc.extents;
-> +    struct CXLFixedWindow *fw;
-> +    HostMemoryBackend *hmb_dc;
-> +    uint8_t tag[0x10];
->      uint32_t i, num;
->      uint64_t dpa, len;
-> +    int rid;
->      CXLRetCode ret;
->  
->      if (len_in < sizeof(*in)) {
-> @@ -3065,12 +3093,52 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
->      }
->  
->      for (i = 0; i < in->num_entries_updated; i++) {
-> +        bool found;
-> +        MemoryRegion *mr;
-> +
->          dpa = in->updated_entries[i].start_dpa;
->          len = in->updated_entries[i].len;
->  
-> -        cxl_insert_extent_to_extent_list(extent_list, NULL,
-> -                                         NULL, dpa, len,
-> -                                         NULL, 0, 0);
-> +        if (ct3d->dc.total_capacity_cmd) {
-> +            found = cxl_extent_find_extent_detail(
-> +                &ct3d->dc.extents_pending, dpa, len, tag, &hmb_dc, &fw, &rid);
-> +
-> +            /*
-> +             * This only occurs when host accepts an extent where device does
-> +             * not know anything about it.
-> +             */
-> +            if (!found) {
-> +                qemu_log("Could not find the extent detail for DPA 0x%" PRIx64
-> +                         " LEN 0x%" PRIx64 "\n",
-> +                         dpa, len);
-> +                return CXL_MBOX_INVALID_PA;
-> +            }
-> +
-> +            /* The host memory backend should not be already mapped */
-> +            if (host_memory_backend_is_mapped(hmb_dc)) {
-> +                qemu_log("The host memory backend for DPA 0x%" PRIx64
-> +                         " LEN 0x%" PRIx64 " is already mapped\n",
-> +                         dpa, len);
-> +                return CXL_MBOX_INVALID_PA;
-> +            }
-> +
-> +            mr = host_memory_backend_get_memory(hmb_dc);
-> +            if (!mr) {
-> +                qemu_log("Could not get memory region from host memory "
-> +                         "backend\n");
-> +                return CXL_MBOX_INVALID_PA;
-> +            }
-> +
-> +            memory_region_set_nonvolatile(mr, false);
-> +            memory_region_set_enabled(mr, true);
-> +            host_memory_backend_set_mapped(hmb_dc, true);
-> +            cxl_insert_extent_to_extent_list(extent_list, hmb_dc, fw, dpa, len,
-> +                                             NULL, 0, rid);
-> +        } else {
-> +            cxl_insert_extent_to_extent_list(extent_list, NULL, NULL, dpa, len,
-> +                                             NULL, 0, -1);
-> +        }
-> +
->          ct3d->dc.total_extent_count += 1;
->          ct3d->dc.nr_extents_accepted += 1;
->          ct3_set_region_block_backed(ct3d, dpa, len);
+> I don't think any cap (after converted to parameters) should be on this
+> whitelist... for parameters, I'm trying to be conservative but I believe
+> the list should look like this:
+>
+> CPU throttle knobs:
+>
+>         throttle-trigger-threshold
+>         cpu-throttle-increment
+>         cpu-throttle-tailslow
+>         max-cpu-throttle
+>         x-vcpu-dirty-limit-period
+>         vcpu-dirty-limit
+>
+> Bandwith knobs:
+>
+>         max-bandwidth
+>         avail-switchover-bandwidth
+>         downtime-limit
+>         max-postcopy-bandwidth
+>
+> COLO knob:
+>
+>         x-checkpoint-delay
+>
+> That really should be all parameters we allow to change..  Luckily all of
+> them are scalars, so it's fine to keep the current migrate_params_free()
+> and logic to "free then update".
+>
+> I wonder if we should even consider having this whitelist alongside with
+> your this series if we want to be extra safe, but I'll let you decide.. I'm
+> also OK we do it later, but maybe we don't want it to be too late either.
 
+Yeah.. I'll see what I can do. Thanks for the reviews this far!
 
