@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646C2EE6B69
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 22:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F548EE6B69
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 22:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voUAg-00067h-S2; Fri, 06 Feb 2026 17:19:26 -0500
+	id 1voUAd-00063m-1u; Fri, 06 Feb 2026 17:19:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voUAd-000649-KG
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:23 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1voUAb-000629-A0
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:21 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voUAb-0007Au-8G
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:23 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c626bd75628so841859a12.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 14:19:20 -0800 (PST)
+ id 1voUAY-000792-HI
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:20 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a9057b2ec3so13062605ad.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 14:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770416360; x=1771021160; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770416357; x=1771021157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4/nPjF8I/jK1WRoDGu+6dSuf4liZEvyFrUCZ7ZeWLxs=;
- b=hf6o/S+M6gKaTmd519kaqg61zRAIHKAFXNqzPN0NiTNiKiOoj+3VJSIOtNpyBAorrY
- DwpAmyu0CgPtXiQlfIM/x2xQfF3GzCDdHrSHewGpfhfqH16hGxDSS4uK8KkdjKR0DXIh
- vCaAtb6MHhRwgAsBisHdND0TGW0UyDUpnkDx13u4zt1d0eI17qE5f9N4eIOEJLFJwWnz
- TGOsdoJc7xnKSupjnAHQk8PvvIFtPc4vwV3sX9ysY0R5cYaqqezBSDYBSa3rWmP3VQwz
- 6Av+o+wvATb2xpCxjF1481A6bM4IjA2QIO4YQAMgn3Zquh7W5eV4+5ts3RYfwKPDKJBt
- 9QPg==
+ bh=w7ciAN7O7/i54gZ3kSipLEjZsOBJSGqwrAABTmho6QI=;
+ b=vRITGetwvsvOWyu1Sejd9qB15lXkItTD8py78Z6t20sTJXGGWTCBDnejGwzvbxbA/0
+ j4mRr0sfudU12AMo3JTpolu0GaCFDPazh+i0Oe1Hcexn0YxT+rrm6CkuVL3DKVNyQFHr
+ cU0IK7tEcYJEp8PZ74Dq9CK6txFC9dKz0PY/eh3cnkiDG78i/J3xhGJ2JBD64yxYJHvF
+ OT6MM9Lt6EWa9gSC290m6cf31ucGKpfxJXSxmKtAkRR9THhdxk+AOAvDWmHZsxRd1gvf
+ pIHhZubBRZipuW+75iH+sZqqB5hgJh6QSnNMRK7vLuFf6VoiweRlrFStzPWDV4eL80Eq
+ ISNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770416360; x=1771021160;
+ d=1e100.net; s=20230601; t=1770416357; x=1771021157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4/nPjF8I/jK1WRoDGu+6dSuf4liZEvyFrUCZ7ZeWLxs=;
- b=H2BJALUILxzKuZ0PseW3EAAelbFVAYP033Yq4MQUcfg9bVQ0XqSeqFS98UFTbhT5zn
- 2SekpSoIaZF5oEocX3a8mQ2e7SDjGACHN1dtgIi7/T4u7aTUklMd9USirJT4ZRK0Sy3Q
- dIZwoGP1IMRd7lfso/O7ZR2CQJEQ4xOuGbc2rDzv1Blt/oCZJ/zf4G0AMXkB4jK4If/I
- PS1P2vLfgAuDTHr9zBKq0dqOksROTrhG6JzS/ToDBhBtdHTLpNa0OB5crolhK6XGAbIU
- Fn0iRp7UonJZFXZg5cscPtIB9B5WGLEqcmLKlBKz77yHwdTNTctdN34JljV5UaNIXXB3
- 2hqg==
-X-Gm-Message-State: AOJu0YzaRiBWzaq/Y0I3oELhjh9JiQiYm4PW9ltfLQQwOP4wzR1LPbFW
- CjP208C/VtWGEitlf319SMdd5bMQXOcLi+eKitYky4oPy47oZ6Q8/XBfCfp2AZdHa3gfrEeHffC
- CnGK0
-X-Gm-Gg: AZuq6aKfvmMPAaUJ7ovr2LhpCOfBeO9IAS3Hqgy/eeqb8u9742vo1VuSwU8mOW88x1v
- CWJvjYW1S/5pN9V/qwYdpEfw4/ZZ+qNABt1xnz71QyBCcuRXYm6v0F3qF/obetNQ0gcJi4ffIn4
- eHuFhIud2AVuE56EaATID5pzX/ZerE4irIu4B+BXxSXB2uETKH1agMBJ+1hQX4GDiUkYpuqxNjc
- CRnnT4QxJCqFrcRzcuzATtXaxWURTbwEGfWRPCmDq1DNqDlid7RD0/SOhR2XWmH20I10KQwlLu2
- LcwPGZ/9H5vcHLUVZS9ceGtPCYhYkeXKJXoCMx5oQZ7TrxJpKzdYNt7/8dIKnsj4cCHogtskrqi
- gD/fbB0iKO3wZP8OTnUjG3syZjwbEsfMNs+cg/bEE09OZ+8Ol+iDyeH0wBXxulM+nHOchk+S+ni
- 5kVmvO4NfSgOgIJmLBlq8KIuPRWxFoPSHZQLYYLXicxp9iZu6ycAYdMl65DEOJESWy
-X-Received: by 2002:a17:902:e541:b0:2a0:d629:903f with SMTP id
- d9443c01a7336-2a951607922mr39370405ad.9.1770416359667; 
- Fri, 06 Feb 2026 14:19:19 -0800 (PST)
+ bh=w7ciAN7O7/i54gZ3kSipLEjZsOBJSGqwrAABTmho6QI=;
+ b=ZEPZmsdXculVaSOyMaLgwqw7u8qpHdFmNa9wHkk0Em33/c2SjDWEM0HjGBMHkl0fuA
+ n1b7PWwbm72/3sQyNikVr80JgH1vS0WAN+743JzAwhKk0Mh2u0ukmW2k/fd9YZc7lBcc
+ J/7FR37oKEEE4FW3MAvHN8lB35xgMZ5OQOci3XkOQFCxr55lPCb08VXB6eEpkWZRNUmC
+ 9j31kUKao0OtMXLeJVRAYEdh/e88hbsYwv/7kqhYObnSNbTt16jxBs+pSh6GCgrULTN8
+ bgt+zIvKyC6fjVXB28VYSXmzAZqqdMMBThUcF9fYnEun4/iZn3udoYEL133poHSY03vX
+ i/BA==
+X-Gm-Message-State: AOJu0YxqRYoLNpx3q25GqppEnCKuvcA5uaDy7MjKuSKIgbqSKPd7/8af
+ elh/IILTW/rT4elM+t3eD0Ex+vv0kQpiqnkA+Dzaq8NA3nMiepm6XcZrnkyV/MSMhzX5KLNFfzb
+ XuQpM
+X-Gm-Gg: AZuq6aJEatl/T9UmEvv/tKFtsr2bYZ7i1v+GiKkIxrQaGP7m8WntYXk+iL58Fr/eKiR
+ KfmzsyJPbVjUv+G0THr/fKdrdx/dlb1nnkrw+rFnYl0/GFx8ILTo1FO9V/Kdwc/40WUiToA+pvs
+ 5/3VKVjNt1HUC1EG+ORSPZOF13dXiZSx/fLIdKHc48GQdBz+mAMnl6NaoH8OHw8sttOkt+ltSPY
+ YUCH3jlqblO+HJLhEKLpSi1xm6Kiq1WMlCBIOxIO0kShNQjxwc7ZDag/8Lx7C/egB5RL4ThGZxl
+ AQvswPG5snO2wq2kTpMOZ5Wmyyh1TYk9t3cHHub836EtskHcmXk7ds71KZdTwxn/2wU+Q/lPp4y
+ 9Nhc1RoVJkLOgDCX12kTc457jxYFbqlvBETCdRRAIyNrzqqO4nRCNSpm7xX3v+nRIpw8i256KHe
+ MY5vfveMwI+8+ycEuLl51duEWB7r2h6mCVv7SZdBtG5diJc4k4JAVGhJxfzuK8aVInwNJEahkfE
+ Ss=
+X-Received: by 2002:a17:903:17c7:b0:2a9:62ce:1c15 with SMTP id
+ d9443c01a7336-2a962ce20bcmr2663755ad.0.1770416356770; 
+ Fri, 06 Feb 2026 14:19:16 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a95bff42f7sm13316575ad.68.2026.02.06.14.19.19
+ d9443c01a7336-2a95bff42f7sm13316575ad.68.2026.02.06.14.19.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 14:19:19 -0800 (PST)
+ Fri, 06 Feb 2026 14:19:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -74,17 +75,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, stefanha@redhat.com,
  richard.henderson@linaro.org, qemu-ppc@nongnu.org
-Subject: [PATCH v5 5/9] include/hw/virtio/virtio-access.h: simplify
- virtio_access_is_big_endian
-Date: Fri,  6 Feb 2026 14:19:04 -0800
-Message-ID: <20260206221908.1451528-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 1/9] hw/virtio: Constify virtio_is_big_endian() argument
+Date: Fri,  6 Feb 2026 14:19:00 -0800
+Message-ID: <20260206221908.1451528-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
 References: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,47 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_is_big_endian already checks for VIRTIO_F_VERSION_1 feature, so
-this is redundant with big_endian_code.
-Also, clarify why we explicitly check for ppc64 and arm arch.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+VirtIODevice argument is accessed read-only, make it const.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/virtio/virtio-access.h | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ include/hw/virtio/virtio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index 1bea3445979..9aed3d1da4f 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -22,21 +22,16 @@
- #include "hw/virtio/virtio.h"
- #include "hw/virtio/virtio-bus.h"
- 
-+static inline bool legacy_virtio_is_biendian(void)
-+{
-+    return target_ppc64() || target_base_arm();
-+}
-+
- static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
- {
--    if (target_ppc64() || target_base_arm()) {
-+    if (target_big_endian() || legacy_virtio_is_biendian()) {
-         return virtio_is_big_endian(vdev);
-     }
--
--    if (target_big_endian()) {
--        if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
--            /* Devices conforming to VIRTIO 1.0 or later are always LE. */
--            return false;
--        } else {
--            return true;
--        }
--    }
--
-     return false;
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 27cd98d2fe1..65872f2c54c 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -468,7 +468,7 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+     return virtio_has_feature(vdev->host_features, fbit);
  }
  
+-static inline bool virtio_is_big_endian(VirtIODevice *vdev)
++static inline bool virtio_is_big_endian(const VirtIODevice *vdev)
+ {
+     if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+         assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
 -- 
 2.47.3
 
