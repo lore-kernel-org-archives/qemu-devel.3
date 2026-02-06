@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA006EE6B44
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0D4EE6B44
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voPsj-0007Rz-Hn; Fri, 06 Feb 2026 12:44:37 -0500
+	id 1voPtz-00085v-N6; Fri, 06 Feb 2026 12:45:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPsd-0007RA-Od
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:44:31 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1voPtw-00084v-VJ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:45:53 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPsb-0004gU-4C
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:44:31 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-8230f2140beso1977409b3a.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:44:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770399866; cv=none;
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1voPtu-00052n-2u
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:45:52 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-66a4780b4abso311942eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:45:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770399949; cv=none;
  d=google.com; s=arc-20240605;
- b=FnIoJIvaCPVkVpWqSBnK/rqX+8rgdMrPqSGBBiAT8BVtP5vlg/GlKblg9q8PK3sVat
- QJ/mDvJmlxUU3sXW3fPQPIRBd+TjMVsq8TdvYYClSm9bihb3GGKik2QMQ2U2blvIo5n+
- Vn1VFRGZWc8SrEeXDDd6AFUpp2Kyb3yiHSBToOmiKuMWm2C2AaYTXa4UvBV8Rmqt2x9H
- ZVPZv4KsXlKUPcrrEpMcpR9zSEZVL+CB8A7tU1ZLT2Y2zO+fSdIIJLM6z/OxXBGRC3l1
- AfWeVcSTH7BXvuwykSR5nc0Mej0sZFi4exqzU9fms3neAvfxmLy7CXBVDsUFzLcmcDZM
- zDZw==
+ b=RGKmhB8FvcSUI6XwxhXEccxKgueH00mZbgft+U0TUWGZnkODZvDsxbHwV0w22GXY5E
+ cwVhP0oQDeQJmn8674lBDr1yzyD2NZtdGx3+nOfSdUTKkorIndpdVn8uZT3UQ4lMfPX7
+ O0Yf4i/m0xVkHJs9FlcqvpG4Gtel/bbvxEfxuSyhJYR30R5tSM7VSvp5zx/1aeC46VnF
+ UViIidaQVVA8d7C68Br0S2eTvvx6j877GFDgHSMqzikFFEJX+RX5xzxXa9w6RZ4DLYJa
+ 8HUQLq+meAIKnVj0zIPDLYn6oEcewb6AS+Gn2awQkU2Ka9scarJGD4t04ZVAThQZ8ri5
+ 0vww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=K8kIve0Fu/k50TyD18KRPYviJMtAVkW7EvBiMFTbE84=;
- fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
- b=kJSpo992gFw7xYULSqTxu+45EYqyjonHi0Mvfr5NEnSKCKO5r5vtm+5CPi65/izioz
- zQftIqb1t47bNs3XFDzgItMEwoB2T+xeW7ZPO5ZeZai09TrMz+9YsGRbNq/mNxvXqpD5
- qHf9yt+HTIN92auPIZc9XRh5ax0scVUnGPhE6VLJThrVqCA8diCLXkE6boxr58gqr0TL
- pqlfLZa3MUwUBKnF4jSLEPS+3k+672FElmOJ+7eks4DC+EdToUt+8+jPiAm5isksB1gn
- 4c6R42wMwQLesHQjjS85CJHsFRN5pMNH5eNRThtZeRfOGRj4pcivN/iPYmt54h0vACwj
- audw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Eo7CP+XVtidcjtLY5cGx7zYrM1SKz8QfuI3uW5LNb9c=;
+ fh=9Xh+R7zIRm5O897kxCGh+dkL2L1w6BVeJfthgI/kLZI=;
+ b=Tkp/B5SOrCLyVAr4y08w0pYrDgHueL0pbXH5/YdAp2IkmI4qBz7RmOGMS1/EGIQPkr
+ 6gvI2zjKLf7TjDRaRzruEmetvv57PUVSpaWRdZLo4heJdstjfF0+tqEzy0YswuEiR1qz
+ F8wT0pG3g7k9oq/Sw5PEIKZqKuIfeC0j+OpxNLa3LDMy1f7kOttMKw79N5DsaUIF8Q4v
+ ZYZh5g808k9WEQn2ZvlWxCK6wonpcmJKLJ+tcoPbafI+G36Z7PNaES+qI4RFeh2UsXvB
+ IC1d/RhClSsyvk2anwEruveCI9huaw7BlA5yGUJLLKrt3EWxa9FluKnqsWsBp/mfX/7x
+ jtfQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770399866; x=1771004666;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=K8kIve0Fu/k50TyD18KRPYviJMtAVkW7EvBiMFTbE84=;
- b=akaqk+dGteRF51fK/pA1gmiE/h6spjhkDc5QI23Sm9Bew6gkTun1+qnQKIp+bxNfi2
- 8hSRPtsEMCY8fzhnFgYjkT99vA8Ufh/PV1auhGESZ8kRCxpIV3TX8FO1EOETkOVbHNAp
- wkISdLbIJYNCY6UnXwUcTZtN0iNqgg0Pt73+hx+0XCoUU8sV2txe/mTitC2u/pLnkAVJ
- xsrs2gpkMta3S+qVFmQg44k+iWyq1rlXRBDG6edEejJ6KFvogya4ZfvWLUj4YSUEx81o
- A63Wo7vmW9I4t/H34lN59c2TZdgAbio22TYfyBxwFHN5pko6M5DluhyhazRTGmNX+fgR
- cXlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770399866; x=1771004666;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1770399949; x=1771004749; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K8kIve0Fu/k50TyD18KRPYviJMtAVkW7EvBiMFTbE84=;
- b=ovBxIEfwMWNNVzODyDBkwnUp/rBtEqEgsi0JNdawooavw5WF5nWkoyf7Ihw1fHsQJM
- 6QB4wYlx+2Ag+i6648sdO2csq54Fv4BwOtiwdlpdgGTYKRuhHge0yJK4BTjOsMioZYkb
- zZQJp78ulgIceHb/KooGC5+QWwKICk5aT714+3gDazn9KD43v2IQetEeHLf3zK8bRN5a
- FWcBdaDwkSDzz03sR28pdjnH2rRmAd16xXNu6uDjfrnOpL99QcSTulAHZCugUiExj1X1
- 6T74VbYxZG7KsIHTopS8CBuAlRyDNHWat1l0q9E0MFC3KtI29LDrycYPT+0/w2+Q+2M1
- Qtkg==
-X-Gm-Message-State: AOJu0YyIAP3lVkmB53WcISUUiCySlDUXFOAKqUg0yy/tCBUfAkqhPJys
- C6qg83Z4+EWtQVZiJ9BvbcLsw2AASSXkZnVFdhIx13GhHOGRnsv0frhJ36e0ZllmgHxLJIx+nbH
- j+EV04KK+lLoBm37CgWJya98Aa6Uz1+nU4sPy4jjphqCUWKQOW2OFvm8=
-X-Gm-Gg: AZuq6aISHd+t/I1Homo9dagSuU1IB2mWrjNBneVxFjrwuSgbgvkxauHIQ3ba3EAMQ9l
- GqOBCeYH4F7wExCUwNLRU2EDxx3gENDv0P09Lc6/z8l2FemE0PyhakVe60IyQq8AkI+XYmkN7Jy
- 6D1+oKZkOb7MIj4Q+f7X68CkLCaxGbJbtumA/lK/IFevJsnBzWmU09HzAZ3lP6tMSwsiolBZ7ak
- z4ZXfrZnBJNv69uGf9ireG7oymynHWUZeYatk/MjnOrSQU3T6W4o0LB+qp7/JcgPw7seFw=
-X-Received: by 2002:a17:90b:50cb:b0:340:29a3:800f with SMTP id
- 98e67ed59e1d1-3549bc1482emr6294508a91.15.1770399866545; Fri, 06 Feb 2026
- 09:44:26 -0800 (PST)
+ bh=Eo7CP+XVtidcjtLY5cGx7zYrM1SKz8QfuI3uW5LNb9c=;
+ b=cjqRaxJmDnr6pjmmcW2ORZVXY0lKsAuhTQbJWagT+graUtrkjT6OPHDUVxlGWEAZw8
+ xBtOTBO4tzMfLWYgE8QTuZGgSou4xoUzPreM2oJqxVQ0qJdkeDP4N6Ef+Frco0EQWx2r
+ TGufIZQmG0WLvBatYPTR+cPYAZ5t1g7pZbDkDY1tHELxB2AF3zOpfKXUZIf95tDv3P4r
+ +vPuETgB02Or7eQUuIF1kajt7WFFObmgaxBDUfJTZ2M6GjbL0z0lXlT+gRfn11f5eLJh
+ mMD2zgmkpzuRWeEvFm/L/6Cqnm6w5qQdvVQwgTe0AGEXkxMbv1jP3pXZkWIrlpqIgg/7
+ 3foQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770399949; x=1771004749;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Eo7CP+XVtidcjtLY5cGx7zYrM1SKz8QfuI3uW5LNb9c=;
+ b=MGr6+P0fWh4x4UQg4k9lO2LklSaN992F3PGXaI6CoX1iHXozPLMNcjM7rlbIbtshuo
+ Qf/TKN2BSXOMGIbRqVwWXp9M1Cqf9c0ektAwcslYLIjAnpMSy8OD4kmr5MEuCgqCcDYi
+ 5rGdQsumxWJS4G5W4NHZq44CFV7erHTEpHBcPJim4OlFVm0q+Mgl+tzQQ+u8AoiQMOUE
+ cFcIK/7tBlH6kvaLbnSccZuLXh1gIiXb1HIliqkJzbHHHD9YG9/wlvdsNWANEfSdibcH
+ nrw50MuW2YLyuNiU+QZqSS9MCCVzNx3VaTHJ+VyGeTXSmiTmWjqwI9x0sWmlfxQBqwvJ
+ OlXQ==
+X-Gm-Message-State: AOJu0Yxja1caIsJ7R5fyfN16/nZZ6kuYGGw02XrgJdcMI8syvbT9Sma9
+ xRml6WCUPOzsPxQdBunHwMmGkmmBkbH3aD86D7v8+vFYN3fAZO32Se1K99yvz4mS7X0kM7RokJW
+ exLSxnGYfARW1WcK1ETPJA8g9cwHV8YQ=
+X-Gm-Gg: AZuq6aJrVv6T12U1cYUWTak733C8XH140wiglwFDh6YLy9Ul+8eyILdsm0xKDvAuYYM
+ rQI0CCQddJ8Znnf3ErAwodCZeTI/WuypNcZpxZN497wjiXIgYYgmW0wjBGBhgSJXRo78oUzGkoh
+ HV6dqSVaSNgETf1Lgdh/iq9CFUQQRkQTR1WlGOoh8THa0GYsNup1SCV/xAEyTcQVkOjLQW8g6kt
+ Y03KsQG9KWviCaYZhzIF/lYX2oGwfsNbixpbKnRd66KgUgBU48hu1J+44EjT6LRfNxwTseD
+X-Received: by 2002:a05:6820:818b:b0:662:f42e:7cfe with SMTP id
+ 006d021491bc7-66d0bea535fmr1624778eaf.54.1770399948687; Fri, 06 Feb 2026
+ 09:45:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-14-8d8ff0035372@bsdimp.com>
- <56609d1e-4d71-41cb-bbcc-2cea4e8544c3@linaro.org>
-In-Reply-To: <56609d1e-4d71-41cb-bbcc-2cea4e8544c3@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 6 Feb 2026 10:44:14 -0700
-X-Gm-Features: AZwV_Qj7rpmTlhBVUqalbv52JMeyHkWH3c-eFn_1wAvlrh0TZDSNCjut1I73diU
-Message-ID: <CANCZdfooet0hr-SkPf1r8NUNM_eXQga_5Gt0TzUkYa13vCeEJw@mail.gmail.com>
-Subject: Re: [PATCH 14/24] bsd-user: Add do_bsd_quotactl,
- do_bsd_reboot and do_bsd_getdtablesize
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
-Content-Type: multipart/alternative; boundary="00000000000027f775064a2b572a"
-Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
+ <20260205195824.2610192-2-ruslichenko.r@gmail.com>
+ <aYT_4NYQDbCyfS1c@redhat.com>
+In-Reply-To: <aYT_4NYQDbCyfS1c@redhat.com>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Fri, 6 Feb 2026 18:45:37 +0100
+X-Gm-Features: AZwV_QjB54-VahsoPMF85sMfreSW76Ko_2BCkX6qMXSB3cTC5fW0uU4KRDmkStY
+Message-ID: <CAN-aV1HdTaJEtLU8uWcatB-9EZkNu=AkB_ZC5CdwMo6zXe9yXQ@mail.gmail.com>
+Subject: Re: [PATCH 01/29] hw/core: Add Remote Port protocol packet definition
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org, 
+ artem_mygaiev@epam.com, volodymyr_babchuk@epam.com, 
+ takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, francisco.iglesias@amd.com, 
+ Ruslan_Ruslichenko@epam.com, "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,156 +120,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000027f775064a2b572a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Feb 5, 2026 at 7:56=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> On 2/6/26 03:26, Warner Losh wrote:
-> > From: Stacey Son <sson@FreeBSD.org>
+On Thu, Feb 5, 2026 at 9:39=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Thu, Feb 05, 2026 at 08:57:56PM +0100, Ruslan Ruslichenko wrote:
+> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 > >
-> > Add some trivial misc system calls: stub implementations for quotactl(2=
-)
-> > and reboot(2) syscall; a trivial do_bsd_getdtablesize that calls
-> > getdtablesize(2).
+> > Introduce packet definition for Remote Port protocol.
 > >
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > Remote Port is a socket based inter-simulation protocol
+> > designed to connect QEMU to external simulator (such as
+> > SystemC models, RTL simulators, etc) for hardware co-
+> > simulation.
+> >
+> > The protocol supports bidirectional communication for:
+> > - Connection setup, version negotiation (Hello/Cfg packets)
+> > - Memory and MMIO transactions (Read/Write packets)
+> > - Interrupts and GPIO signaling (Interrupt packets)
+> > - Time synchronization (Sync packets)
+> >
+> > The patch introduces header file with packet definition
+> > used by protocol.
+> >
+> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
+> > Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 > > ---
-> >   bsd-user/bsd-misc.h | 52
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 52 insertions(+)
+> >  include/hw/core/remote-port-proto.h | 305 ++++++++++++++++++++++++++++
+> >  1 file changed, 305 insertions(+)
+> >  create mode 100644 include/hw/core/remote-port-proto.h
 > >
-> > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
+> > diff --git a/include/hw/core/remote-port-proto.h b/include/hw/core/remo=
+te-port-proto.h
 > > new file mode 100644
-> > index 0000000000..d81b4fbaef
+> > index 0000000000..cbe1498df0
 > > --- /dev/null
-> > +++ b/bsd-user/bsd-misc.h
-> > @@ -0,0 +1,52 @@
+> > +++ b/include/hw/core/remote-port-proto.h
+> > @@ -0,0 +1,305 @@
+> > +// SPDX-License-Identifier: MIT
+>
+> Preferrably stick this inside the comment block below instead of
+> mixing C and C++ style comments.
+>
 > > +/*
-> > + *  miscellaneous BSD system call shims
+> > + * QEMU remote port protocol parts.
 > > + *
-> > + *  Copyright (c) 2013 Stacey D. Son
+> > + * Copyright (c) 2013 Xilinx Inc
+> > + * Written by Edgar E. Iglesias <edgar.iglesias@xilinx.com>
 > > + *
-> > + *  This program is free software; you can redistribute it and/or modi=
-fy
-> > + *  it under the terms of the GNU General Public License as published =
-by
-> > + *  the Free Software Foundation; either version 2 of the License, or
-> > + *  (at your option) any later version.
+> > + * Permission is hereby granted, free of charge, to any person obtaini=
+ng a copy
+> > + * of this software and associated documentation files (the "Software"=
+), to deal
+> > + * in the Software without restriction, including without limitation t=
+he rights
+> > + * to use, copy, modify, merge, publish, distribute, sublicense, and/o=
+r sell
+> > + * copies of the Software, and to permit persons to whom the Software =
+is
+> > + * furnished to do so, subject to the following conditions:
 > > + *
-> > + *  This program is distributed in the hope that it will be useful,
-> > + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> > + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> > + *  GNU General Public License for more details.
+> > + * The above copyright notice and this permission notice shall be incl=
+uded in
+> > + * all copies or substantial portions of the Software.
 > > + *
-> > + *  You should have received a copy of the GNU General Public License
-> > + *  along with this program; if not, see <http://www.gnu.org/licenses/
-> >.
+> > + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXP=
+RESS OR
+> > + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABI=
+LITY,
+> > + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT S=
+HALL
+> > + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES O=
+R OTHER
+> > + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARI=
+SING FROM,
+> > + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALI=
+NGS IN
+> > + * THE SOFTWARE.
+>
+> Including this is OK, since IIUC in this case you're carrying on
+> with someone else's code, and so aren't permitted to remove their
+> license comment.
+>
+> If there are any files later in the series that you wrote yourself
+> from scratch though, they can omit any license comments, only the
+> SPDX is need.
+>
+
+Understood.
+Basically all headers in the patch series were already present, which
+is the reason I left them.
+
+>
 > > + */
->
-> We now want SPDX-License-Identifier on all new files, and to *not* includ=
+> > +#ifndef REMOTE_PORT_PROTO_H__
+> > +#define REMOTE_PORT_PROTO_H__
+> > +
+> > +/*
+> > + * Remote-Port (RP) is an inter-simulator protocol. It assumes a relia=
+ble
+> > + * point to point communcation with the remote simulation environment.
+> > + *
+> > + * Setup
+> > + * In the SETUP phase a mandatory HELLO packet is exchanged with optio=
+nal
+> > + * CFG packets following. HELLO packets are useful to ensure that both
+> > + * sides are speaking the same protocol and using compatible versions.
+> > + *
+> > + * CFG packets are used to negotiate configuration options. At the mom=
+ent
+> > + * these remain unimplemented.
+> > + *
+> > + * Once the session is up, communication can start through various oth=
+er
+> > + * commands. The list can be found further down this document.
+> > + * Commands are carried over RP packets. Every RP packet contains a he=
+ader
+> > + * with length, flags and an ID to track potential responses.
+> > + * The header is followed by a packet specific payload. You'll find th=
 e
-> the
-> boilerplate.  Should be diagnosed by checkpatch.pl now too.
+> > + * details of the various commands packet layouts here. Some commands =
+can
+> > + * carry data/blobs in their payload.
+> > + */
+> > +
+> > +
+> > +#define RP_VERSION_MAJOR 4
+> > +#define RP_VERSION_MINOR 3
+> > +
+> > +#if defined(_WIN32) && defined(__MINGW32__)
+> > +/* mingw GCC has a bug with packed attributes.  */
+> > +#define PACKED __attribute__ ((gcc_struct, packed))
+> > +#else
+> > +#define PACKED __attribute__ ((packed))
+> > +#endif
+>
+> Is this comment & conditional #define still relevant today ?
+>
+> For the rest of QEMU we just use  QEMU_PACKED whose definition matches
+> the #else clause. Ideally change the patch to use QEMU_PACKED, if not,
+> mention in the commit message why it can't be used.
 >
 
-I had noted this in my cover letter. I cannot change the copyright and
-license grant for code I do not own. I've asked Stacey to give me the OK
-(and to do it globally so I can fix it everywhere). He's usually
-responsive. Both here and in bsd-misc.c. So I'll fix this in v2 if I hear
-back in time.
+I will double check. Might be some old mingw version which is not actual to=
+day.
 
-Warner
-
-
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 >
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
 >
-> r~
->
 
---00000000000027f775064a2b572a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
-2026 at 7:56=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
- wrote:<br>
-&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; <br>
-&gt; Add some trivial misc system calls: stub implementations for quotactl(=
-2)<br>
-&gt; and reboot(2) syscall; a trivial do_bsd_getdtablesize that calls<br>
-&gt; getdtablesize(2).<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.h | 52 +++++++++++++++++++++++++++++++++=
-+++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 52 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..d81b4fbaef<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/bsd-user/bsd-misc.h<br>
-&gt; @@ -0,0 +1,52 @@<br>
-&gt; +/*<br>
-&gt; + *=C2=A0 miscellaneous BSD system call shims<br>
-&gt; + *<br>
-&gt; + *=C2=A0 Copyright (c) 2013 Stacey D. Son<br>
-&gt; + *<br>
-&gt; + *=C2=A0 This program is free software; you can redistribute it and/o=
-r modify<br>
-&gt; + *=C2=A0 it under the terms of the GNU General Public License as publ=
-ished by<br>
-&gt; + *=C2=A0 the Free Software Foundation; either version 2 of the Licens=
-e, or<br>
-&gt; + *=C2=A0 (at your option) any later version.<br>
-&gt; + *<br>
-&gt; + *=C2=A0 This program is distributed in the hope that it will be usef=
-ul,<br>
-&gt; + *=C2=A0 but WITHOUT ANY WARRANTY; without even the implied warranty =
-of<br>
-&gt; + *=C2=A0 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.=C2=A0 S=
-ee the<br>
-&gt; + *=C2=A0 GNU General Public License for more details.<br>
-&gt; + *<br>
-&gt; + *=C2=A0 You should have received a copy of the GNU General Public Li=
-cense<br>
-&gt; + *=C2=A0 along with this program; if not, see &lt;<a href=3D"http://w=
-ww.gnu.org/licenses/" rel=3D"noreferrer" target=3D"_blank">http://www.gnu.o=
-rg/licenses/</a>&gt;.<br>
-&gt; + */<br>
-<br>
-We now want SPDX-License-Identifier on all new files, and to *not* include =
-the <br>
-boilerplate.=C2=A0 Should be diagnosed by <a href=3D"http://checkpatch.pl" =
-rel=3D"noreferrer" target=3D"_blank">checkpatch.pl</a> now too.<br></blockq=
-uote><div><br></div><div>I had noted this in my cover letter. I cannot chan=
-ge the copyright and license grant for code I do not own. I&#39;ve asked St=
-acey to give me the OK (and to do it globally so I can fix it everywhere). =
-He&#39;s usually responsive. Both here and in bsd-misc.c. So I&#39;ll fix t=
-his in v2 if I hear back in time.</div><div><br></div><div>Warner</div><div=
->=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-Otherwise,<br>
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
-<br>
-<br>
-r~<br>
-</blockquote></div></div>
-
---00000000000027f775064a2b572a--
+--
+BR,
+Ruslan
 
