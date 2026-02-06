@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0766BEE2080
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD3C7EE2084
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJ6N-0004a6-4G; Fri, 06 Feb 2026 05:30:15 -0500
+	id 1voJ8j-0005KS-Qg; Fri, 06 Feb 2026 05:32:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ6H-0004UR-Li
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:30:10 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ8i-0005Ju-8s
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:32:40 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ6D-0007nz-I7
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:30:08 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.239])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6r225bcrz5wpR;
- Fri,  6 Feb 2026 10:30:02 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ8g-00085i-9v
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:32:40 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.70])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6r5020krz5wpH;
+ Fri,  6 Feb 2026 10:32:36 +0000 (UTC)
+Received: from kaod.org (37.59.142.102) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 11:30:01 +0100
+ 2026 11:32:35 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R0060140b79a-6121-4427-bac4-28be1776c508,
+ (GARM-102R004e0f85601-e2ae-4a10-af1d-4369585e18af,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <bcd2beea-7411-4588-99ff-05897f3ea3e5@kaod.org>
-Date: Fri, 6 Feb 2026 11:30:00 +0100
+Message-ID: <53224b36-db6a-4790-8abc-d6aa79b95358@kaod.org>
+Date: Fri, 6 Feb 2026 11:32:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i2c/aspeed_i2c.c: Add a check for dma_read
-To: Michael Tokarev <mjt@tls.msk.ru>, Nabih Estefan <nabihestefan@google.com>, 
- <qemu-devel@nongnu.org>
-CC: <peter.maydell@linaro.org>, <steven_lee@aspeedtech.com>,
- <leetroy@gmail.com>, <jamin_lin@aspeedtech.com>,
- <andrew@codeconstruct.com.au>, <joel@jms.id.au>, <qemu-arm@nongnu.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260120211116.1367476-1-nabihestefan@google.com>
- <16cba4f8-79c1-49b3-ac14-63f3bb64e235@tls.msk.ru>
+Subject: Re: [PATCH v3 00/20] i3c: aspeed: Add I3C support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <16cba4f8-79c1-49b3-ac14-63f3bb64e235@tls.msk.ru>
+In-Reply-To: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG14EX2.mxp5.local
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.102]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 5c312c08-322a-4b19-ac1d-e98d1cbd2378
-X-Ovh-Tracer-Id: 14027023990716271605
+X-Ovh-Tracer-GUID: c68aefca-86b8-4f56-a98f-0bdd722ce5eb
+X-Ovh-Tracer-Id: 14070089664737610558
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTECON8fKyN0LahTaILWWNsH2tA7l4W2iqTc/sO31/UcDesbRBlw5o6ieydYB5xfwP+XUarQxq9sYKbSkPlOs1++VAQcsZ1+DsiTHLOzxkH1ZMlgwTMHSisaWF23t4gCRCvqE3grt2vYh3xiK18neg5KWrZqkphiM6ZUbkkRHjz5y+NEQd5tdYMhUxv3CcISXPaZS3cVSr1c6zY1fbGczxsAJ3ikTKq2PO/Y0dmtqta/RrUd9zuCYy7cG9iFBw4YUVZYIupGEekfP269ndSGTva5Xl6YPVPi+4sXmL/+fVOpqnFRJndM43snDrlEKhI0GKmzR0Gj76YvRoj0hmCpGs/LZj/lHh4/t8014lMzUKNshIkJUfV0pbbid+Rhlt02I8He42yJEY8BhqwOFWHpN/hS4LHBzU8j+bVOAvQ7kpKRZR4GtKw09ZgcvgaSNo93Pd/S+i1irpno5yWIwrpEiy/3sBIP5Gr5MKwPfUTkFR6lmrW8J2JE3BDwve8TxcKJ8j1HHeh/yuAS1m3w86u3lJYGVjUBH+6nCfE/eCTeK7LY+Ndka8YxL0Z5O1j85g8H9v/4E6pPYLgemofhGkTMc6At1CUEbf731jTv8J4BJ69DPj/3DwbOYAI5/Qb9lL68aCDGHpoQt+VUJvSI0mPaf3QjDKWMS8h1eVDP2/m7MXahRQ
-DKIM-Signature: a=rsa-sha256; bh=Yy0rdKVKsrHRlLypqXdxDITHdcvLUbfH5vr2Z71KpaM=; 
+X-VR-SPAMCAUSE: dmFkZTFJASbsri2qM0At1JoU0r5ANVzCdvGI09HhX1IGksvNqAP48WVAVgL18YxzJXiINYFJWCwjcPM8fnOk/OOSKrSNYoTx9BjHkpEJsnaHwp/Fz2XBM3PLeZrSBp/t0Cx7zDTZtR96MX18wSJK3zQcePKvjQgw0hohXIBPh84oUdHLRjOy71+QN7Q52Tq7VIN96h8i7ewdcqKLK9MDMcCmt05hlf2Kw4IpwDfhST3RCx4WOQMQ6g/m0OMbP3EUkDcxCU4RIyBcAFbns+rS5ahKHpt+Bsgx2zEXChzkZAwn77gMVcOcdBmEjXm8Susx5pJsZqGE/IcCJ3muN04utMQcoAfrk+ckLVJKq31Ni5ctBN3mlh4GxJEFurRlm96hZtdYx75alN8dJZ1GplxndbbMefaDMZbn5PJS8qzMhs2TW107Ipcuw/ZmMrwtWgjZC6+icyIuILCNYacKpfMSaOqrey4RxnrEsHuwQGXO57RHQCctLi+B3FJbQzAaxks92PG/EzkGJ6Rd3UAFfpCZGSlMvxdvbpeIRgy354NbtADnAf6Tfrx18tsUdJ9YVy+Rv01ZGjHKpAWOIDvfr23rOHlhezNB7C9QEavIMZ3pgROvu4+O8Bkh6j3/ilRTdXPMcLEg0GMirN6vMOUS2hyKjgIhuolKLvDM8gle+rc8n1LESaTkqw
+DKIM-Signature: a=rsa-sha256; bh=+VLPm7RM228KJIHm0JpQVS1N8LMtScXOKxzcdWx0W/U=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770373803; v=1;
- b=dTmEaAPUcsQ/QihiFQaDHpFegLF2x+1oUBhnZnGOuvrvWjnSKRZlCKx8Ug5h9fMrzuzoU52p
- 6lrJB4tcD4bSVH8GVdpXOYbRcg5kinFATe/0YME3QMHxeNozSK8sSjFDbyO4tdFP1ZssDVXVJxy
- cInmi7EcM7A7BxoOv2JX7Z1Nc4xG+60idX3banc+PBvOk1OGETWAle1xMsXx0xcL6dP7B+BOuv0
- Qy0QMQ6+p6ocdFcwmEP3ak0ljl5V4IvVPqHaAlUk7vr/me3mqEOL3Hg73XMA1opmgoW/A+L6W1W
- l/vb4VD5T2PIJvVkyUJbhK4OfPUmQViIHBDx4nP5pm/Nw==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+ t=1770373956; v=1;
+ b=hEz61CEsILOmOLTcC5k4ERUkF+kgD8Dcm9XdXHlsS9+z6gqD5WOBnwJsYjhjyJoKiXzbVu2a
+ k8tBnhkPq1Q8QJrm2YkAjF06Y4AOHXqrBR5Kfm+Z20EYa20fEJK3SnlwL9JczjIJNx3gvA5SCt0
+ VHHPF1R7Fqv+9rU90NVs6xMbim0uW6csXdriXr67lCzBUNNJXUN/xwuXImzmLQQtcUbHD2c/gVH
+ w8Tv7z9MkysDIm7RzuqhEmaXVaw3kTjqEMwce2d3m4VSXTkuR0EOZJYfYYxHssnPcYZ3L/7ptFS
+ 8/IBRLQd6wSMsz19cAInNQ+gnbq6ZujY8fqQxelIvBz7g==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,7 +117,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,51 +133,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 22:03, Michael Tokarev wrote:
-> On 1/21/26 00:11, Nabih Estefan wrote:
->> If aspeed_i2c_dma_read fails in aspeed_i2c_bus_send currently, we get
->> stuck in an infinite retry loop. Add a check for the return value of
->> aspeed_i2c_dma_read that will break us out of said loop.
->>
->> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+On 2/6/26 04:19, Jamin Lin wrote:
+> v1:
+>    The initial patch series was based on work by Joe Komlodi <komlodi@google.com>.
 > 
-> This looks like a qemu-stable material.
+>    This series adds I3C bus support to QEMU and adds more functionality to the
+>    Aspeed I3C controller.
+> 
+>    This implementation is a basic implementation that introduces IBIs
+>    (including hot-join), CCCs, and SDR data transfer. As-is, it doesn't support
+>    multi-controller buses or HDR transfers.
+> 
+>    First we add the I3C bus and controller model. With that added we extend
+>    the functionality of the Aspeed I3C controller so it can do transfers
+>    and handle IBIs.
+> 
+>    Next, we add a mock I3C target. It's intended to be a very simple target
+>    just to verify that I3C is working on the guest. Internally, we've used it
+>    on Linux to verify that i3C devices can be probed and can send/receive data
+>    and IBIs.
+>    This target is sort of like an EEPROM, and it can also send IBIs upon
+>    reception of a user-defined magic number.
+> 
+>    Lastly we add  hotplugging support. The hotplugging doesn't do anything too
+>    complicated, it just adds the device attempting to hotplug to the bus. It
+>    is the device's responsibility to hot-join and go through the DAA process
+>    to participate on the bus.
+> 
+> v2:
+>    Jamin Lin <jamin_lin@aspeedtech.com> has taken ownership of the I3C patch
+>    series for upstream submission.
+> 
+>    Changes in this version include:
+> 
+>    1. Added I3C functional tests.
+>    2. Updated patch 4 to refine register field definitions.
+>    3. Updated patch 7 to correct read-only register field masks.
+> 
+> v3:
+>    1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-yes.
-
-Thanks,
+Sob is still missing.
 
 C.
 
 
+
+>    2. Fix a typo
+>    3. Fix ASPEED mail server issue
 > 
-> Please let me know if it isn't.
+> Jamin Lin (1):
+>    tests/functional/arm/test_aspeed_ast2600_sdk: Add i3c functional test
 > 
-> Thanks,
+> Joe Komlodi (19):
+>    hw/misc/aspeed_i3c: Move to i3c directory
+>    hw/i3c: Add bus support
+>    hw/i3c: Split DesignWare I3C out of Aspeed I3C
+>    hw/i3c/dw-i3c: Add more register fields
+>    hw/i3c/aspeed_i3c: Add more register fields
+>    hw/i3c/dw-i3c: Add more reset values
+>    hw/i3c/aspeed_i3c: Add register RO field masks
+>    hw/i3c/dw-i3c: Add register RO field masks
+>    hw/i3c/dw-i3c: Treat more registers as read-as-zero
+>    hw/i3c/dw-i3c: Use 32 bits on MMIO writes
+>    hw/i3c/dw-i3c: Add IRQ MMIO behavior
+>    hw/i3c/dw-i3c: Add data TX and RX
+>    hw/i3c/dw-i3c: Add IBI handling
+>    hw/i3c/dw-i3c: Add ctrl MMIO handling
+>    hw/i3c/dw-i3c: Add controller resets
+>    hw/i3c/aspeed: Add I3C bus get function
+>    hw/i3c: Add Mock target
+>    hw/arm/aspeed: Build with I3C_DEVICES
+>    hw/i3c: Add hotplug support
 > 
-> /mjt
-> 
->> ---
->>   hw/i2c/aspeed_i2c.c | 6 +++++-
->>   1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
->> index 1b8ac561c3..3de72db652 100644
->> --- a/hw/i2c/aspeed_i2c.c
->> +++ b/hw/i2c/aspeed_i2c.c
->> @@ -272,7 +272,11 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
->>           }
->>           while (bus->regs[reg_dma_len]) {
->>               uint8_t data;
->> -            aspeed_i2c_dma_read(bus, &data);
->> +            ret = aspeed_i2c_dma_read(bus, &data);
->> +            /* Check that we were able to read the DMA */
->> +            if (ret) {
->> +                break;
->> +            }
->>               trace_aspeed_i2c_bus_send("DMA", bus->regs[reg_dma_len],
->>                                         bus->regs[reg_dma_len], data);
->>               ret = i2c_send(bus->bus, data);
+>   meson.build                                   |    1 +
+>   hw/i3c/trace.h                                |    2 +
+>   include/hw/arm/aspeed_soc.h                   |    2 +-
+>   include/hw/{misc => i3c}/aspeed_i3c.h         |   22 +-
+>   include/hw/i3c/dw-i3c.h                       |  201 ++
+>   include/hw/i3c/i3c.h                          |  277 +++
+>   include/hw/i3c/mock-i3c-target.h              |   52 +
+>   hw/i3c/aspeed_i3c.c                           |  261 +++
+>   hw/i3c/core.c                                 |  669 ++++++
+>   hw/i3c/dw-i3c.c                               | 1864 +++++++++++++++++
+>   hw/i3c/mock-i3c-target.c                      |  311 +++
+>   hw/misc/aspeed_i3c.c                          |  383 ----
+>   hw/Kconfig                                    |    1 +
+>   hw/arm/Kconfig                                |    3 +
+>   hw/i3c/Kconfig                                |   15 +
+>   hw/i3c/meson.build                            |    6 +
+>   hw/i3c/trace-events                           |   47 +
+>   hw/meson.build                                |    1 +
+>   hw/misc/meson.build                           |    1 -
+>   hw/misc/trace-events                          |    6 -
+>   .../functional/arm/test_aspeed_ast2600_sdk.py |   12 +
+>   21 files changed, 3730 insertions(+), 407 deletions(-)
+>   create mode 100644 hw/i3c/trace.h
+>   rename include/hw/{misc => i3c}/aspeed_i3c.h (63%)
+>   create mode 100644 include/hw/i3c/dw-i3c.h
+>   create mode 100644 include/hw/i3c/i3c.h
+>   create mode 100644 include/hw/i3c/mock-i3c-target.h
+>   create mode 100644 hw/i3c/aspeed_i3c.c
+>   create mode 100644 hw/i3c/core.c
+>   create mode 100644 hw/i3c/dw-i3c.c
+>   create mode 100644 hw/i3c/mock-i3c-target.c
+>   delete mode 100644 hw/misc/aspeed_i3c.c
+>   create mode 100644 hw/i3c/Kconfig
+>   create mode 100644 hw/i3c/meson.build
+>   create mode 100644 hw/i3c/trace-events
 > 
 
 
