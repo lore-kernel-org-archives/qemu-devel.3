@@ -4,106 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC20EE6B47
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C65EE6B48
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQCl-0007tf-3J; Fri, 06 Feb 2026 13:05:19 -0500
+	id 1voQCu-0007zl-AN; Fri, 06 Feb 2026 13:05:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQCj-0007t3-Sp
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:17 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1voQCq-0007wd-Bf
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQCh-0001PR-D0
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:17 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-354a5da7910so1074270a91.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770401114; cv=none;
- d=google.com; s=arc-20240605;
- b=Aexzetm7AQ+VDg9zLJThyfMZRG7fv8bt31QdcbSGWC0iCOV5AudHuZ37fny8w8b/8Y
- dgAPjHBmDrCJC9kbEghvSTgrgHlexWvNGWgiIKUO8Jwf3Hv/6xtuZ7XgubdKsjMS6Cy8
- VmV9fqQYblZ7dknOjKziltR/dVCWp6gUe2p6kJ3CvD6HgkGnvfWxRgZ6spbUygiAwa+F
- GJoMury33vCXaYBu8sulwDVjQimdusJthK6i9exncOW+rIOTwxRaN9gdxkdeCEdmjCOv
- rKkjyL4Etid0tJbcVbEfSu69uBV0bTKX+qotOizYzkootza363bjJjvaAO1uxigH1fND
- npOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
- fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
- b=jEm8wQiyix8dOevVUKifNhbNUL85pa4w/62gqIR21qIBRNuXjQ+8y9D3efUdW0KkT0
- RRmq35Km9hO31ddFkuIRpePfCBtRZ4dzOy1ZhljVJrmyTg3jf7trFPLRRcdCp5V3pjW9
- dTnFJI5IMmC5jxBzVUyHFbDVP29q2RDh4v3nSPHacnTYbHWvK8pN33bMapyDBAgYvXGj
- ivRgKtR39jojWT6k9dGOuLS6DflyciEyNZt0zqfM1RL5z6h9vdZ/SyvblG2a71iyqxLv
- OMb4Qn0DXlGEFnSBADbXX0vKDiadab1kDma8yj6L8ucF/PO6qHCQ9//H3jRIJrDAPM5y
- Wf9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1voQCo-0001R0-Ek
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b8838339fc6so46280866b.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770401114; x=1771005914;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
- b=LsE6GXVADFudAR6wQNe5r0Sqsz4bA6orXzf74qS+pKZH4oAgbxRLIlmayO0dpg7iU+
- D5iosH41t53LX8sKfIKyPCNMrvFXG5sTNx07L13tTUjO0P8+DeoyDOnerDcF7KSPp6EO
- JkXCYHpWQRRy4Xpu+5NoIMsVXHtNvQTv/wUgoH9Q8IYx1QH8aHFD2ehmLEgUbSCqlc9c
- y0BU84Or/OAc29P9YBbb6/G8mTALa/YHFUzN+g5CAMLh8tGeLxf3FIFoFBAvn24wvENJ
- hgwnSJNisJoCN2RQ2//SAoeCd9pQlGbRGOLjR+0rlFk521Ch1qNlkv6dIfWjOYZWwVEB
- ViuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401114; x=1771005914;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1770401120; x=1771005920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
- b=oheGEdeEcY99mTMeZtBpkhrWWRt3ZIDCAzr8dqy99Lw9MWGIp0kCkP4kC4Rq0562Ko
- uCOO/8CgM+RERuJxgNzUkpWmb6FxWBub6a2gqjdJnTDfVrYvpmZ2lTLDV0X2nWXDcovg
- CN8xlLvW+/VCABSfZmlaEH8PI5q/kod7HKFmFiGdVHjdlBK7TTSybcIEAd4A8YO1tTCX
- 3Wf83OYapP0hjEuPYBCgjdeMTfojIieHaa2jmzoP8TF5jESsB4fBrTMNew76zrO5WcfR
- srszdJPU30xKcAsURbcwGfygmP5hQFNOnE19CEZxFw/OWL8UZ2+NnUJ+E4vYgEuNmbSw
- W7vg==
-X-Gm-Message-State: AOJu0YyD12+RzyddcjWsl7FM/P5e/df179RxMFGQyFvIGIvZmHyR7h5D
- bUcej9j4Y0FLREkcLR2C4CHSTDHpvDL6fCdVCGpGn9FkmJTVcEwmwF2hJd+Zp0wPvZ/rNWHadZW
- zo6vErS0jcarfd9z4AtGZa18cvkD0iHecZVeN0zDD3g==
-X-Gm-Gg: AZuq6aK4VJbmxXfW+MkWPNWooz9QlTsAhPmnObmk/YNpWWAMB5FDkFefozDJUxNPHXw
- 8m3zoM13Q3vVHdsja6WGoLHERQtGzD6ImTcGYpGbmato4i4DN5MczDHO8KqEwnNKzBkSY/jxhPo
- 1g/Ltt3121WpQQCmUvmDotZO3RCzrps23G39xPNwAlIpITqTK1gD3EWUl239LzcZpTXW9e6ozS3
- KQG8pzvun5Fd+dq6rhuwc237w/S3I9SuQLMilgONJgMW7lhT/B2UXwqnNe3c6C1kQfjS7ZXoB/f
- BZgg6Q==
-X-Received: by 2002:a17:90b:2748:b0:354:aee0:cab2 with SMTP id
- 98e67ed59e1d1-354b3ba34bfmr2774456a91.2.1770401113702; Fri, 06 Feb 2026
- 10:05:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-19-8d8ff0035372@bsdimp.com>
- <1cdc9e1c-5c5b-4ef7-92e9-25085acd5ca5@linaro.org>
-In-Reply-To: <1cdc9e1c-5c5b-4ef7-92e9-25085acd5ca5@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 6 Feb 2026 11:05:02 -0700
-X-Gm-Features: AZwV_QgJcVFCXhHGuEV_qy7dbE2-ubjDly0UoGcZvvVXoCWF9pVhGBdKIYuUT5U
-Message-ID: <CANCZdfr5q=1-EkFET3hirHh7uVe=EfQJhfcd8rQSOJWXtExHQQ@mail.gmail.com>
-Subject: Re: [PATCH 19/24] bsd-user: Add do_bsd_msgctl implementation
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ bh=7rLTMaLaNyA13QPnQ+is080Z8HIDPH5vwzyyQGnqkxA=;
+ b=BUOrC4FEgbIxw1hSeJBP6kObMJ4siT5te0f/eAAmNNCkuZ3unwgZveNPg6U66IF7MC
+ lTU4W3Ak7o3E/ZX1qKWUcFUtJ2/I3CUxLP5G4dzY5KYQLQkh8TXgu+PjP6hDGsBYVKwr
+ jJMe7spq8HnLkTJiIN0OZ2CYrdpH8StmpiCVGyBFMzV/rcERQB3eXUgmtXSxAdNAffGC
+ umYZe1qWgaoVi4Lo3MKZYhl71QQasBi+cTR+NG5BR9zBBgv64YI+WMU8z7amJ6ZAY7yo
+ yJuz3qlj9I5rqfpSPkQNhjeHhiPu8BrXNOllPfggjzuDDIC8Pi9Z/qnavKKFJZXnfK7F
+ 14EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770401120; x=1771005920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7rLTMaLaNyA13QPnQ+is080Z8HIDPH5vwzyyQGnqkxA=;
+ b=XelgmjJ/LhrFTDqZWsF4OSD1HvT+Y/LJUquMdQ1fKMsxFcTPlQ6FqYUoyxivuHeMZn
+ qxthxal55H6BxpbGi6H+Hzf0zCSzYKTItjTi1tkjlklEXydcnF2MuheA9EXIImmbQ0PY
+ 2EGdyG66VLcKVhsCkV/15kEmKJ+sh4BCIl2wu8+C/hjomOXngmtxHU+Uk64+pJhlJUfL
+ dInS/zRA41r1oSrlgt/vVZkoRNJ6ukReqiQxjVgzDAU3FiG+0qoneajR7CKcOG0B+CTc
+ imrQU61xnTGlds10KFiUqE/lOlOcGZsCnhrEw7qx9OzEHIFyvr6Ur5IWGPSgyCd5e1Gz
+ XjYg==
+X-Gm-Message-State: AOJu0YyNd1cAzDSO5zYp6DeyplbHfO4zZT3P83D2yXb2XGJv7HWnvy/+
+ 1/NmYyxt7OwF+ZBC+7CGykYQOsl1Q4dFz9lrdCONLylKSMcSG5cyrYD/uc1PuO46kzQtGdNqUzj
+ VkZe7fAw=
+X-Gm-Gg: AZuq6aJwXv/J5Lwc9DxFPj5AWzyzDrAIHI10kQCdEZ6xWzxg3e1VciRwHMFetpBdSSW
+ g1ASPACLwVIORG7iyL1ZQ3ADvwylJZYaxI37JCEAYjNvUDq8GjcadoI8ysp7aldzr/k41uztdCP
+ AAHnvFW+Qzt3ZhKL4Sgezb0WhN3sYIYpbIFxNVXKbS5fkn+iNcx3WvuN5HIx3/nbCUgJwuGiR8k
+ Ga0ePP98Dx8hu3pg3hAa4b5gVE+vUbxs3HFY94n/gEXvr3tmsTOqir8tsE3M+613hq2h5AKZEll
+ 1HjomN8ftYoJfFMV6gCPcRSoePK3qwTDL+ks2R8Z7tJbo5gxGDC//v3sFTTGrBfv1DTFNqshYnu
+ wAyOCIcYYUjC1jkzGUNeYRgm16Gjd3Bm6Iofj4BlwyvJVsOKXEgBUG/j+E32kpSu0KXE1XcxUAa
+ VKVSBRRhidaz8=
+X-Received: by 2002:a17:907:c2a:b0:b87:763b:3da6 with SMTP id
+ a640c23a62f3a-b8edbbcf011mr252917366b.23.1770401119983; 
+ Fri, 06 Feb 2026 10:05:19 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8edacaffeesm99446066b.38.2026.02.06.10.05.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 10:05:18 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D3FD05FA07;
+ Fri, 06 Feb 2026 18:05:17 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
-Content-Type: multipart/alternative; boundary="0000000000007e1349064a2ba1a3"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PULL 01/10] meson-buildoptions: Remove duplicated entry of --gdb in
+ the help text
+Date: Fri,  6 Feb 2026 18:05:08 +0000
+Message-ID: <20260206180517.1335861-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
+References: <20260206180517.1335861-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,127 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007e1349064a2ba1a3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Since --gdb has recently been added to meson_options.txt, the help
+text shows up twice in the output of "./configure --help":
 
-On Thu, Feb 5, 2026 at 8:22=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+ $ ./configure --help | grep gdb
+   --gdb=GDB-path           gdb to use for gdbstub tests [/usr/bin/gdb]
+   --gdb=VALUE              Path to GDB
 
-> On 2/6/26 03:26, Warner Losh wrote:
-> > From: Stacey Son <sson@FreeBSD.org>
-> >
-> > Add implementation of msgctl(2) syscall for System V message queue
-> control
-> > operations. Handles command translation and structure conversions for
-> > IPC_STAT/IPC_SET/IPC_RMID operations.
-> >
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> >   bsd-user/bsd-misc.h | 53
-> +++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 53 insertions(+)
-> >
-> > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-> > index 81fdfd8351..27f4497d76 100644
-> > --- a/bsd-user/bsd-misc.h
-> > +++ b/bsd-user/bsd-misc.h
-> > @@ -28,6 +28,12 @@
-> >
-> >   #include "qemu-bsd.h"
-> >
-> > +#ifdef MSGMAX
-> > +static int bsd_msgmax =3D MSGMAX;
-> > +#else
-> > +static int bsd_msgmax;
-> > +#endif
->
-> (1) This isn't used in this patch, and probably generates a Werror.
->
+As the probed value is of interest we want to keep the configure text
+so make meson-buildoptions able to handle deferring to configure.
 
-Yes, but no actually: bsd-misc.c isn't in the build yet... However, it
-should be folded with later revs. I missed that in the prep.
+Fixes: b46b3818cf8 ("tests/functional: Provide GDB to the functional tests")
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260203115201.2387721-2-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+diff --git a/scripts/meson-buildoptions.py b/scripts/meson-buildoptions.py
+index e636d258e8a..9e3a75c8b11 100644
+--- a/scripts/meson-buildoptions.py
++++ b/scripts/meson-buildoptions.py
+@@ -53,6 +53,11 @@
+     "werror",
+ }
+ 
++# Options that configure prints help for, so we can skip
++CONFIGURE_HELP = {
++    "gdb",
++}
++
+ # Builtin options that should be definable via configure.  Some of the others
+ # we really do not want (e.g. c_args is defined via the native file, not
+ # via -D, because it's a mix of CFLAGS and --extra-cflags); for specific
+@@ -189,7 +194,9 @@ def print_help(options):
+         key = cli_help_key(opt)
+         # The first section includes options that have an arguments,
+         # and booleans (i.e., only one of enable/disable makes sense)
+-        if require_arg(opt):
++        if opt["name"] in CONFIGURE_HELP:
++            pass
++        elif require_arg(opt):
+             metavar = cli_metavar(opt)
+             left = f"--{key}={metavar}"
+             help_line(left, opt, 27, True)
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3d0d1323446..e8edc5252a3 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -58,7 +58,6 @@ meson_options_help() {
+   printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
+   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
+   printf "%s\n" '                           firmware]'
+-  printf "%s\n" '  --gdb=VALUE              Path to GDB'
+   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
+   printf "%s\n" '  --includedir=VALUE       Header file directory [include]'
+   printf "%s\n" '  --interp-prefix=VALUE    where to find shared libraries etc., use %M for'
+-- 
+2.47.3
 
-> (2) Does any supported FreeBSD version actually define MSGMAX anymore?
->      Grepping current source suggests one always has to probe at runtime.
->
-
-Yes. That's true. I'll remove the #ifdef. there is a define in the kernel,
-but it's confined to sysv_msg.c file.
-
-
-> Anyway, if you move this item to the next patch,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
-> for the rest of this one.
->
-> r~
->
-
---0000000000007e1349064a2ba1a3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
-2026 at 8:22=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
- wrote:<br>
-&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; <br>
-&gt; Add implementation of msgctl(2) syscall for System V message queue con=
-trol<br>
-&gt; operations. Handles command translation and structure conversions for<=
-br>
-&gt; IPC_STAT/IPC_SET/IPC_RMID operations.<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.h | 53 +++++++++++++++++++++++++++++++++=
-++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 53 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
-&gt; index 81fdfd8351..27f4497d76 100644<br>
-&gt; --- a/bsd-user/bsd-misc.h<br>
-&gt; +++ b/bsd-user/bsd-misc.h<br>
-&gt; @@ -28,6 +28,12 @@<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0#include &quot;qemu-bsd.h&quot;<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +#ifdef MSGMAX<br>
-&gt; +static int bsd_msgmax =3D MSGMAX;<br>
-&gt; +#else<br>
-&gt; +static int bsd_msgmax;<br>
-&gt; +#endif<br>
-<br>
-(1) This isn&#39;t used in this patch, and probably generates a Werror.<br>=
-</blockquote><div><br></div><div>Yes, but no actually: bsd-misc.c isn&#39;t=
- in the build yet... However, it should be folded with later revs. I missed=
- that in the prep.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-(2) Does any supported FreeBSD version actually define MSGMAX anymore?<br>
-=C2=A0 =C2=A0 =C2=A0Grepping current source suggests one always has to prob=
-e at runtime.<br></blockquote><div><br></div><div>Yes. That&#39;s true. I&#=
-39;ll remove the #ifdef. there is a define in the kernel, but it&#39;s conf=
-ined to sysv_msg.c file.</div><div>=C2=A0</div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-Anyway, if you move this item to the next patch,<br>
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
-<br>
-for the rest of this one.<br>
-<br>
-r~<br>
-</blockquote></div></div>
-
---0000000000007e1349064a2ba1a3--
 
