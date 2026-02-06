@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E676EE6B6A
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE53DEE6B6A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTdj-0005F2-RH; Fri, 06 Feb 2026 16:45:23 -0500
+	id 1voTfC-0006UZ-HW; Fri, 06 Feb 2026 16:46:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTdg-0005EL-Lf
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:45:20 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTe8-0005Pe-0a
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:45:58 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTde-0002Zs-G3
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:45:19 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-4359a16a400so2468831f8f.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:45:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTe3-0002bw-0J
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:45:47 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-482f2599980so30654165e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:45:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414317; x=1771019117; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414336; x=1771019136; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=swGHp40DlbWr+HsCT3VkrO9DpUhRbni5rdOb5/lh39w=;
- b=Xd4doYbWG8CUXIAByrhfbkyjjl3rWkPQOIt8Fs+GT8D1IDSZPWc2fPV2KLb4cb5qpV
- hL5ObenSU5efNnWzHn89rePL0rCZzDLkXDi35F8NnfW08j1YtPx2tBakBuIiQwPnzdLp
- 09csitUNeUQUsdo0UooO2CfmZrLeTAreAbnAuYhCHFibhTY7Ggu6GI0L6ucwspT9TBpL
- G+nhjehiVq8Ams+XACHIxbSvWvd65x42gMkaneAqV1IUn4j3P1lPkJnffG7mmv32bbst
- p5Gk+nVkgMe09kxXvTFoxaiIpetpud0J6DNXxJWJ1wHDvfeInUrXIKw5ldomnCXJNO1y
- FjoA==
+ bh=psfjES6GIpNdKTgkvXNnu0Jv8MKKp9lWAQ/C32Dzxf4=;
+ b=O3kUIChQrnBlMNRteKGzK9zxbxXDmfK9EElnYFnmMCDyTEfUe0CIGRuu8NQ0BzIj4z
+ g09be6AcKafQ9ZYtwA6XU0Lptr5AfNg5+hBkOLHDF0pl+ElXzAuFdFu1LafeBmsVPQ42
+ QLeFVMVy9nQFFD9f+WY90ecPhQgdPO8YbVbbXz0Xck6LILcObaNhPNt4R2Ecvemg6lDr
+ f5h1u+sWKgP95mYsSvHae5hjCe5z/3D+VpBColbDeIhMRXE0oPsREl+YmG5y5QDR+/7J
+ QvyRYuoztwYfd2h87MMUCtDbF4cY6yr3knqGfPL6O1peQOlb/7gz2sxudpm1+Eyul7nE
+ Q4Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414317; x=1771019117;
+ d=1e100.net; s=20230601; t=1770414336; x=1771019136;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=swGHp40DlbWr+HsCT3VkrO9DpUhRbni5rdOb5/lh39w=;
- b=QQaCTLbw2GA8i9cfpDaueUYyORKjWzfboMH/I0J/3jxWaGxzPdnUP494szm9mfplUd
- caQhIJbOUCfpzVR+eYnvB/27a4L21Jp6TNmVAhfh8p3hsk3BEsilXaI/kH+IbVKKFvCV
- +HgPo2wv5ZtxZNgGy02mBTlfKJdmvT74j6nO2wCYdHPLJuArqRWkmG0rZ7fLbr5ezj93
- CsvViwFb2tTpM2+0KAfld50NIJMkmFPCBHRBJXtw6+TRoZY5SfrUX8O5D/KAIvMA5p4T
- LwFVQ5UtoAbdkGEh+yhBnks9CqXTfiAlzDp39Ot7zjyNG2chkU5D/bZM8OiXJHLY+pyF
- LwRw==
-X-Gm-Message-State: AOJu0YzWhkBMDC+gF6IoFD84HYYnLvtWgVeSmeg4ksurplOUMQqHeFvv
- zREOD+2DC0XDBASINdSrTNb0FO5e47JlnvmWMYN/U9uX3uKLVH90MBPI5tCHSoExYiV7+mxokM0
- pv2gaIAg=
-X-Gm-Gg: AZuq6aIzm6rVnRYACSuLNtRbVsJ9D31BaBemYVf1112CrOnb/J3t0aV8veQVVQl0qys
- ITkr4kYe36VHMuOrtkGiSrBAvCYOkLv0pFbWw4/OKwmmJ9ivrQJlpkic2YsdjtSRbJ3hJ+mMx5+
- 9oUa8eY6Cgj3GYttFgc0CZjUF5TTeGGPtli94R+7/RgNYC8qtFEs84IaBaL/er9yxSWbyv0w7Nc
- /m8HeI/TgXwF289Wz8buwJLnDRrxfaYfeP+4gXsytTQBrOjWHcTTItbDcFXCVoBJQ/NTZvltWzW
- YJyjXaOeZ9O6IqpY/L+4RkGIfngCCJDizNVfGamKqJ7XIMQrpoDBU80ClrLdVpqvFHRnYDKlUBP
- YrZbhvj1wGhyS6+oAvAzThgzDmm8vaxZ0c6hPJt6FQ218hBXtZdoAjxUD8ZPI84VUIOD8gxbyyL
- hdo1LZ5K2XBBV2GLERZcD0+YvqjrlMsFAZ4lO5NyuQdSTUBuezGYxtKgYKKmZu
-X-Received: by 2002:a5d:6e8b:0:b0:436:216:98d8 with SMTP id
- ffacd0b85a97d-4362933ac4emr5456888f8f.12.1770414316634; 
- Fri, 06 Feb 2026 13:45:16 -0800 (PST)
+ bh=psfjES6GIpNdKTgkvXNnu0Jv8MKKp9lWAQ/C32Dzxf4=;
+ b=PNr2IAGwa4EjsG1g07XFhzeSWPObWBpbeTvobrv8dgAc9/gUcOkJ6DJVCWUdCIDQgR
+ 3m/7/w7oYgkFhIEjvY3RTF4rqu86uTCaAajDEzIr6i/I7jFmBFM2B6Q7pa7gJiwpNgq8
+ XLDa9qkFCJ6G3pPUzNyqx1Dz9xZCDuLz0Ogmst1dBHKVmZfIGaPPX8naxjENWmoorifr
+ pBXA6j+r+eRkxFalcpplmAdGwiknjVwG8lfiR17Grne+YO9FoZ8GygpI7Xp4iiTEnBM9
+ C8VJGVlAbg/6E50Aqwf0UGNkpQfOwjj9sq+6mctsAYIz+pM6Qa1BS6iXnJlFAusq3LdO
+ dpXg==
+X-Gm-Message-State: AOJu0YyeWlR4An2jVabRJu3y+9m308oqIuCw0NDuEPYl/8RuiVQvFM2H
+ 0TCA6rXQc+Y2v0WzaXcuI3sEQ7kHitZAMObHCFHAD94+aXFzdc6Ea4D9HkRbmvVVcVr22r7Rlye
+ owlUQGBI=
+X-Gm-Gg: AZuq6aJtBXE0Q5cBnbmKeNd6PI0yiVQwkCwVGsHvMXRQz/bXBpVwsBbRyUY0k1D7ryS
+ riDYXsKk1yB7G8stBJE24OSR2Qd8npfP5wLLofi7vM5DNqcaWuiOe8RiUzAmbksyoCBIkuqJmru
+ zNH1/KGJRVH8J3CtJ1WavKQlpLmKz5hOK1GVkTS0kkHZv5NkcUTXiZSmYmkLMIETajwuHmHFV+m
+ LGiV/v6Ry6eW5PyFdMqqgyKWiX2I5tVx5omNydYYzrABxQ1GwFq4SjoUQvI3pg/E4t0ffngljMp
+ j1VMJBZRoRvVKmol0nDdUKFTUVQc5COJTzNgjrLawxf27kSHXOhwY0xQGVb2KubrJubmvsyCqxw
+ IJBTnOaWu5HMhTffeKG16WKFFJiN3wO3zX14Y47HhNO+fcqKyyZIGMbLiP0HQz17J22b7I218cA
+ J00stGMvzataZFcRyjDUBevjHnnjvsW4JpY7FZwR9WWuHNhiQ2Y9h16pdHQFEH
+X-Received: by 2002:a05:600c:5253:b0:480:20f1:7aa6 with SMTP id
+ 5b1f17b1804b1-4832021b53dmr63696695e9.21.1770414336469; 
+ Fri, 06 Feb 2026 13:45:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43629664632sm8423509f8f.0.2026.02.06.13.45.15
+ 5b1f17b1804b1-4832041f1a3sm38552615e9.7.2026.02.06.13.45.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:45:16 -0800 (PST)
+ Fri, 06 Feb 2026 13:45:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 04/30] target/s390x: Replace %target_ulong -> %vaddr where
- appropriate
-Date: Fri,  6 Feb 2026 22:44:22 +0100
-Message-ID: <20260206214448.22008-5-philmd@linaro.org>
+Subject: [PULL 07/30] target/s390x: Add more unreachable KVM stubs
+Date: Fri,  6 Feb 2026 22:44:25 +0100
+Message-ID: <20260206214448.22008-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,88 +99,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the %vaddr type for virtual addresses.
+Next patch will move s390x system objects from the target
+specific source set to the common one. Unfortunately the
+kvm_enabled() macro won't be evaluable at built-time
+anymore. Add stubs for KVM symbols unreachable at runtime.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260206181953.18683-4-philmd@linaro.org>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Message-Id: <20260206181953.18683-7-philmd@linaro.org>
 ---
- target/s390x/s390x-internal.h  | 3 ++-
- target/s390x/helper.c          | 2 +-
- target/s390x/mmu_helper.c      | 4 ++--
- target/s390x/tcg/excp_helper.c | 3 ++-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ target/s390x/kvm/stubs.c | 76 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index a4b54dc441c..31e164c9b5a 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -10,6 +10,7 @@
- #ifndef S390X_INTERNAL_H
- #define S390X_INTERNAL_H
+diff --git a/target/s390x/kvm/stubs.c b/target/s390x/kvm/stubs.c
+index 046e1f922b7..196127baa51 100644
+--- a/target/s390x/kvm/stubs.c
++++ b/target/s390x/kvm/stubs.c
+@@ -4,8 +4,9 @@
  
-+#include "exec/vaddr.h"
- #include "cpu.h"
- #include "fpu/softfloat.h"
+ #include "qemu/osdep.h"
  
-@@ -376,7 +377,7 @@ void probe_write_access(CPUS390XState *env, uint64_t addr, uint64_t len,
- bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
- /* Special access mode only valid for mmu_translate() */
- #define MMU_S390_LRA        -1
--int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
-+int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
-                   target_ulong *raddr, int *flags, uint64_t *tec);
- int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
-                        target_ulong *addr, int *flags, uint64_t *tec);
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index d0c36d4a537..5002eebd4c8 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -71,7 +71,7 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
- hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr v_addr)
+-#include "kvm_s390x.h"
++#include "target/s390x/kvm/kvm_s390x.h"
+ #include "target/s390x/kvm/pv.h"
++#include "target/s390x/cpu_models.h"
+ 
+ int kvm_s390_get_protected_dump(void)
  {
-     hwaddr phys_addr;
--    target_ulong page;
-+    vaddr page;
- 
-     page = v_addr & TARGET_PAGE_MASK;
-     phys_addr = cpu_get_phys_page_debug(cs, page);
-diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-index 30f09ec3de4..39ff42da3a3 100644
---- a/target/s390x/mmu_helper.c
-+++ b/target/s390x/mmu_helper.c
-@@ -122,7 +122,7 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
-     return ret == MEMTX_OK;
+@@ -104,3 +105,76 @@ int kvm_s390_dump_completion_data(void *buff)
+ {
+     return 0;
  }
- 
--static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
-+static int mmu_translate_asce(CPUS390XState *env, vaddr vaddr,
-                               uint64_t asc, uint64_t asce, target_ulong *raddr,
-                               int *flags)
- {
-@@ -381,7 +381,7 @@ static void mmu_handle_skey(target_ulong addr, int rw, int *flags)
-  *               there is an exception to raise
-  * @return       0 = success, != 0, the exception to raise
-  */
--int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
-+int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
-                   target_ulong *raddr, int *flags, uint64_t *tec)
- {
-     uint64_t asce;
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 019eb4fba1f..292d130d03e 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -147,7 +147,8 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                        bool probe, uintptr_t retaddr)
- {
-     CPUS390XState *env = cpu_env(cs);
--    target_ulong vaddr, raddr;
-+    vaddr vaddr;
-+    target_ulong raddr;
-     uint64_t asc, tec;
-     int prot, excp;
- 
++
++bool kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_access_exception(S390CPU *cpu, uint16_t code, uint64_t te_code)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_mem_op(S390CPU *cpu, vaddr addr, uint8_t ar, void *hostbuf,
++                    int len, bool is_write)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_mem_op_pv(S390CPU *cpu, vaddr addr, void *hostbuf, int len,
++                       bool is_write)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_set_cpu_state(S390CPU *cpu, uint8_t cpu_state)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_vcpu_interrupt_pre_save(S390CPU *cpu)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_vcpu_interrupt_post_load(S390CPU *cpu)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_get_hpage_1m(void)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_enable_css_support(S390CPU *cpu)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_assign_subch_ioeventfd(EventNotifier *notifier, uint32_t sch,
++                                    int vq, bool assign)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_cmma_reset(void)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_crypto_reset(void)
++{
++    g_assert_not_reached();
++}
++
++void kvm_s390_set_diag318(CPUState *cs, uint64_t diag318_info)
++{
++    g_assert_not_reached();
++}
++
++int kvm_s390_topology_set_mtcr(uint64_t attr)
++{
++    g_assert_not_reached();
++}
 -- 
 2.52.0
 
