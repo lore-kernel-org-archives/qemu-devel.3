@@ -4,57 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68E8ECD9B5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 01:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55EE1ECD9B8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 02:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voB4l-0002jO-GE; Thu, 05 Feb 2026 20:56:03 -0500
+	id 1voB9V-0003fq-9y; Thu, 05 Feb 2026 21:00:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1voB4k-0002jF-4o
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:56:02 -0500
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1voB4i-0004Jk-3U
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:56:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nWXu4B3gg7m0RUXMwksIYW4IWPGjkVQGxnSuQHKYAJs=; b=IJvxsuuc81eim1G
- kawITN7g8z8MPCKfEncksJeva6evb31Hrunk65xzxgW7s6oCAebexVNAPzkX3+GNIjdQE1TY06hFN
- uigx2sB6aAKNwMM9U9DtmXKDCCs8Ml4/E3CUdopygIu8/ehl2dQtrsP+QzjuAiHQt4LJu+BwcBu5s
- l8=;
-Date: Fri, 6 Feb 2026 02:59:07 +0100
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- Richard Henderson <richard.henderson@linaro.org>, palmer@dabbelt.com,
- alistair.francis@wdc.com, 
- pbonzini@redhat.com, gaosong@loongson.cn, maobibo@loongson.cn
-Subject: Re: [PATCH v3 2/7] target/hppa: Define PA[20|1X] physical address
- space size
-Message-ID: <aYVB68PA1Qh7jEyZ@hive.localdomain>
-References: <20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng>
- <20260112-phys_addr-v3-2-5f90fdb4015f@rev.ng>
- <a96d6954-4242-4358-ad85-cc170749e736@linaro.org>
- <vny3gezfqo3wmwbjdcg64wxjt6mfhhp47pqfj5dlrbyr5urbwh@ijszrun7nwwq>
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voB9P-0003fS-6h
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 21:00:51 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voB9L-0004mv-H9
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 21:00:49 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-35456fcb79cso904258a91.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 18:00:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770343245; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VmqKwPej5US/6sOKBs5Le7u7udqn41uYqPtit2sBDiysAf5QZmHo8yLKJc06yo8qib
+ UYlkIteeyTr+J1t605h80bNFBSS82vg4fQIMkF/t97x6oLmz9QjrPr1wZHK1iVBfVQxs
+ omBCEsu8d/5dAXdgvuct+E5qqgnfNEp7VTmQThlX+6NszpzBwoGy/r8mQQWwr5CTzUvY
+ rROlwLNX2WCcr77GdMMsKI43XnkAa7fHP7ELd8cmrNuSpP/Jdziibp4FMjfy5RaLhjHr
+ PmLcLLuUsOX7RwlvL4ifCkHtrRV07fZcThRr0lsdYsfZYxgQVxHtZPINtvOXgTx7srtq
+ ygFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8kJFz0lMxEmBxgTQEqQ20ibwzW2lRMDCpVHE9If0IgU=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=YiytLRA0WFFrnjNLBF5FsBdYitQKgpZp0I3kvIkJsxzJWjTSclSbRtEErsoQMbQmiz
+ w+dGeYiH29Fcbudaql9n1dolT95ufV15tncbCs2JrHHpow3/onHtVcD7YtkPFgJRWeXF
+ A+WxXc8yGAE3rZd6YYnm/G8TgWm79NEGe7g72F+wL4FR4R123GixkCaD6z0C/W6Y8mVS
+ z5rrdk6xwE0ws2xTezUaY0V6iOi6Ug1soVvIe7RB1eLfjezzqoydca7vIzVB3Bb4NIUS
+ 11EIBVX7kvSt+LanLMW3ylxJJC6n4fY2Y7rzk9tbAkJfjAWgDRDZwiXyMBeFLEw9EAIC
+ eTRw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770343245; x=1770948045;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8kJFz0lMxEmBxgTQEqQ20ibwzW2lRMDCpVHE9If0IgU=;
+ b=XcCdoUmsw5pZShDkaRfodJd8Ksx5ZNhqsYnqLjMcdZbKpYOayrzYMbFhoH7CUwsDZo
+ YX/4bDEJ/75q5vJfz8dG8MQFAYWOEk+OXKkTugriXJz/VkgvojGe++CVVTjuCqDaWxwG
+ gblLzO9mKyXrMHVee4y+gnMoOV+lR9m/NMUFfgIOp56/qLsSa9UPKxI/fxSPgNTJRe2Z
+ V6W2wyenhQOO5pCfG7MZN/ArqUokuy2TkB/zI+4sjfKSK3LUHxr9rI/pevgtb3YbErNC
+ 8x6fl41WrG1wv7+xDA63uAXKiQcoxm18y9fAh3Qhy/guge6i/u6IaeykcTLirrJeuOLv
+ hMIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770343245; x=1770948045;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8kJFz0lMxEmBxgTQEqQ20ibwzW2lRMDCpVHE9If0IgU=;
+ b=wAEWIBS4VGA+p+oeYuHVIPhNdEGPDVZaylpPJSVi4p3WBXdWwuSBjq24Jf6YQVFLd3
+ PlxULZQNDhNW6Og0TV04Gvw8tKBILcTOHtdLSlF249vl7xbBekUK3GBEJrhqCbqQDWAJ
+ Qyvi2hJYOodtzzMqBIKUoi4tQfzIstqv0Sv6fA+z4wdE4tNGMd12Rn+7DeecJANyQh/H
+ sPUL+Vn9aeb7RWEB5jJ1LQ1AEg5fb3BCq03+2rZp6ftBjPsrsfyB297/yyIajEIZzqZF
+ qoNlqTTFwJyR02DuwQXxaUJFwGVPChI54SNBWqGP4wRPmo5ywq5TOHmkKeRCHKzaWlR2
+ +BTg==
+X-Gm-Message-State: AOJu0YxXklrJyLJtY/pam60CzDn5btq+AHJjDlcUREhGJ2D2aCOich/Y
+ /S+0VqV/BnnLixjhaDHN08DWZbxiI8f6yH866cGp94ngFPPZ9DWyEO/rzuqSuK5YdlTVdIubCRi
+ s7w6nnfYVfZBb4RIoEXaUgXfFbQcI/PrH6CL0e9FOxCvyHFC9VXMTah8=
+X-Gm-Gg: AZuq6aL2ZK2ffGHfByPGzL6t2ubW5AkiKNlx8cKkYpIsJVKM/wYrS9bU45oCAJBSd57
+ HwLls3mFjP3ljvyZfB8hJXZyUlzV6MPMcuNdFkqB4UekpuhFFwtXZcPlvwryDXmzMTDzQI6XZ06
+ 7YnrQeuXQDlOsBlx2F3SjChW4XiEdSG5oV/US1TRkLBq9FU8es6+wFCPDhkjNMr5x1FoX4VtHl8
+ nWZebvljFidIO+UGEFyiY6AbVTn1QmznSaL8uupRu0HyLqFFBbzPGVti3ay8rbzZ8zBRw8=
+X-Received: by 2002:a17:90b:3901:b0:354:a57c:65dd with SMTP id
+ 98e67ed59e1d1-354b3cae0d0mr866371a91.24.1770343244900; Thu, 05 Feb 2026
+ 18:00:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <vny3gezfqo3wmwbjdcg64wxjt6mfhhp47pqfj5dlrbyr5urbwh@ijszrun7nwwq>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-3-8d8ff0035372@bsdimp.com>
+ <973e564e-73a4-4b15-b83e-1aea1b043e47@linaro.org>
+In-Reply-To: <973e564e-73a4-4b15-b83e-1aea1b043e47@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Thu, 5 Feb 2026 19:00:33 -0700
+X-Gm-Features: AZwV_QjmXjY5Zkhhkw-lBWuLJCCJBnpd7U7L6LlRIGTHb-X7aYH4R_hb_2HVm7Q
+Message-ID: <CANCZdfr-3_MPadbpp6EVfPkt1zoDsdkp6LyvLZubnnUvh-fEZQ@mail.gmail.com>
+Subject: Re: [PATCH 03/24] bsd-user: Add target_semid_ds and target_msqid_ds
+ structures
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000003e3c38064a1e28b2"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,133 +110,133 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/01/26, Anton Johansson wrote:
-> On 12/01/26, Philippe Mathieu-Daudé wrote:
-> > On 12/1/26 13:22, Anton Johansson wrote:
-> > > When converting virtual to physical addresses,
-> > > TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
-> > > cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
-> > > more specific macro limited to mem_helper.c, and make the latter
-> > > conversion explicit by defining the size of the physical address space
-> > > for PA-RISC 1.X.
-> > > 
-> > > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > > ---
-> > >   target/hppa/mem_helper.c | 23 ++++++++++++++++++-----
-> > >   1 file changed, 18 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-> > > index cce82e6599..8563bb0e2a 100644
-> > > --- a/target/hppa/mem_helper.c
-> > > +++ b/target/hppa/mem_helper.c
-> > > @@ -29,6 +29,19 @@
-> > >   #include "hw/core/cpu.h"
-> > >   #include "trace.h"
-> > > +/*
-> > > + * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-> > > + * machines 7300LC.  This gives 44 and 32 bits of physical address space
-> > > + * respectively.
-> > > + *
-> > > + *   CPU model        Physical address space bits
-> > > + *   PA-7000--7300LC  32
-> > > + *   PA-8000--8600    40
-> > > + *   PA-8700--8900    44
-> > > + */
-> > > +#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 44
-> > > +#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
-> > > +
-> > >   hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-> > >   {
-> > >       /*
-> > > @@ -42,8 +55,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-> > >        * Since the supported physical address space is below 54 bits, the
-> > >        * H-8 algorithm is moot and all that is left is to truncate.
-> > >        */
-> > > -    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
-> > > -    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-> > > +    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
-> > > +    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-> > >   }
-> > >   hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-> > > @@ -67,7 +80,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-> > >            * is what can be seen on physical machines too.
-> > >            */
-> > >           addr = (uint32_t)addr;
-> > > -        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-> > > +        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-> > >       }
-> > >       return addr;
-> > >   }
-> > > @@ -217,7 +230,7 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
-> > >               if (hppa_is_pa20(env)) {
-> > >                   phys = hppa_abs_to_phys_pa2_w0(addr);
-> > >               } else {
-> > > -                phys = (uint32_t)addr;
-> > > +                phys = extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-> > >               }
-> > >               break;
-> > >           default:
-> > > @@ -558,7 +571,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-> > >       /* Align per the page size. */
-> > >       ent->pa &= TARGET_PAGE_MASK << mask_shift;
-> > >       /* Ignore the bits beyond physical address space. */
-> > > -    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-> > > +    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-> > >       ent->t = extract64(r2, 61, 1);
-> > >       ent->d = extract64(r2, 60, 1);
-> > > 
-> > 
-> > Patch LGTM but fails on CI on 2 distinct jobs...
-> > 
-> > 166/793 func-quick+func-hppa - qemu:func-hppa-seabios          TIMEOUT
-> > 90.05s   killed by signal 15 SIGTERM
-> > 
-> > 209/276 qemu:func-quick+func-hppa / func-hppa-seabios
-> > TIMEOUT         180.04s   (exit status 143 or signal 15 SIGTERM)
-> > 
-> > Works with:
-> > 
-> > -- >8 --
-> > diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-> > index 40d28435aa8..e7a26398c5a 100644
-> > --- a/target/hppa/mem_helper.c
-> > +++ b/target/hppa/mem_helper.c
-> > @@ -82,3 +82,3 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-> >          addr = (uint32_t)addr;
-> > -        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-> > +        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 8);
-> >      }
+--0000000000003e3c38064a1e28b2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Feb 5, 2026 at 5:15=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
+
+> On 2/6/26 03:26, Warner Losh wrote:
+> > Add the target ABI definitions for System V semaphore and message queue
+> > data structures, needed for semctl() and msgctl() syscall emulation.
+> >
+> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> > Signed-off-by: Mikael Urankar <mikael.urankar@gmail.com>
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > > ---
-> > 
-> > PA-8000--8600 case with 40 bits?
-> 
-> Ouch!
-> 
-> AFAICT SeaBIOS runs on a C3700 (PA-8700) which is supposed to have a
-> 44-bit physical address space.  I've tried to look around for any other
-> assumption of 40-bit physical addresses in QEMU and SeaBIOS but not
-> found anything yet..
+> >   bsd-user/syscall_defs.h | 33 +++++++++++++++++++++++++++++++++
+> >   1 file changed, 33 insertions(+)
+> >
+> > diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+> > index cc4b484f3a..98bdf8cc1a 100644
+> > --- a/bsd-user/syscall_defs.h
+> > +++ b/bsd-user/syscall_defs.h
+> > @@ -92,6 +92,39 @@ struct bsd_shm_regions {
+> >       abi_long size;
+> >   };
+> >
+> > +/*
+> > + * sys/sem.h
+> > + */
+> > +struct target_semid_ds {
+> > +    struct target_ipc_perm sem_perm; /* operation permission struct */
+> > +    abi_ulong   sem_base;   /* pointer to first semaphore in set */
+>
+> While they'll be the same underlying type, abi_ptr is "more correct".
+>
+> > +    uint16_t    sem_nsems;  /* number of sems in set */
+>
+> abi_ushort.
+>
+> > +struct target_msqid_ds {
+> > +    struct  target_ipc_perm msg_perm; /* msg queue permission bits */
+> > +    abi_ulong   msg_first;  /* first message in the queue */
+> > +    abi_ulong   msg_last;   /* last message in the queue */
+>
+> Both abi_ptr.
+>
 
-Gave this another go, from what I can tell SeaBIOS uses 40-bit physical
-addresses, see here for the firmware start and end addresses
 
-  https://github.com/hdeller/seabios-hppa/blob/master/src/parisc/hppa_hardware.h#L9
-  https://github.com/hdeller/seabios-hppa/blob/master/src/parisc/pafirmware.lds.S#L15
+Nice catch on all of these. Will fix in v2.
 
-taking firmware start as an example, with the 44-bit physical address
-space we map the 32-bit absolute address 0xf0000000 to the physical
-address 0xf00f0000000, instead of 0xf0f0000000 which is the start address
-in the SeaBIOS image.  Searching for f0f0* more 40-bit PDC address can
-be found.  So I guess the test should run on a PA-8000--8600 machine
-like C3600 instead..
+Warner
 
-I'll revert to using 40 bits for the physical address, and add a
-comment since I'm not sure if there are other discrepencies between
-C3600/3700 lurking.
+>
+> r~
+>
+>
+
+--0000000000003e3c38064a1e28b2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
+2026 at 5:15=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
+derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
+ wrote:<br>
+&gt; Add the target ABI definitions for System V semaphore and message queu=
+e<br>
+&gt; data structures, needed for semctl() and msgctl() syscall emulation.<b=
+r>
+&gt; <br>
+&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Mikael Urankar &lt;<a href=3D"mailto:mikael.urankar@gma=
+il.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/syscall_defs.h | 33 +++++++++++++++++++++++++++++=
+++++<br>
+&gt;=C2=A0 =C2=A01 file changed, 33 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h<br>
+&gt; index cc4b484f3a..98bdf8cc1a 100644<br>
+&gt; --- a/bsd-user/syscall_defs.h<br>
+&gt; +++ b/bsd-user/syscall_defs.h<br>
+&gt; @@ -92,6 +92,39 @@ struct bsd_shm_regions {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0abi_long size;<br>
+&gt;=C2=A0 =C2=A0};<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +/*<br>
+&gt; + * sys/sem.h<br>
+&gt; + */<br>
+&gt; +struct target_semid_ds {<br>
+&gt; +=C2=A0 =C2=A0 struct target_ipc_perm sem_perm; /* operation permissio=
+n struct */<br>
+&gt; +=C2=A0 =C2=A0 abi_ulong=C2=A0 =C2=A0sem_base;=C2=A0 =C2=A0/* pointer =
+to first semaphore in set */<br>
+<br>
+While they&#39;ll be the same underlying type, abi_ptr is &quot;more correc=
+t&quot;.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 uint16_t=C2=A0 =C2=A0 sem_nsems;=C2=A0 /* number of sem=
+s in set */<br>
+<br>
+abi_ushort.<br>
+<br>
+&gt; +struct target_msqid_ds {<br>
+&gt; +=C2=A0 =C2=A0 struct=C2=A0 target_ipc_perm msg_perm; /* msg queue per=
+mission bits */<br>
+&gt; +=C2=A0 =C2=A0 abi_ulong=C2=A0 =C2=A0msg_first;=C2=A0 /* first message=
+ in the queue */<br>
+&gt; +=C2=A0 =C2=A0 abi_ulong=C2=A0 =C2=A0msg_last;=C2=A0 =C2=A0/* last mes=
+sage in the queue */<br>
+<br>
+Both abi_ptr.<br></blockquote><div><br></div><div><br></div><div>Nice catch=
+ on all of these. Will fix in v2.</div><div><br></div><div>Warner=C2=A0</di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+r~<br>
+<br>
+</blockquote></div></div>
+
+--0000000000003e3c38064a1e28b2--
 
