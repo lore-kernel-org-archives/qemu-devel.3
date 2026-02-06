@@ -4,43 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8085DEE209E
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13007EE209E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLHT-0000NY-DL; Fri, 06 Feb 2026 07:49:51 -0500
+	id 1voLJM-0001MH-6s; Fri, 06 Feb 2026 07:51:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voLHS-0000NF-Gk
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:49:50 -0500
+ id 1voLJK-0001M9-V8
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:51:46 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voLHQ-00008Z-Gk
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:49:50 -0500
+ id 1voLJH-0000Re-Q7
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:51:46 -0500
 Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6v7B5Vz0zHnH9R;
- Fri,  6 Feb 2026 20:49:42 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6v8L0Qv7zJ46j1;
+ Fri,  6 Feb 2026 20:50:42 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 3342B40565;
- Fri,  6 Feb 2026 20:49:47 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 5BE8940539;
+ Fri,  6 Feb 2026 20:51:34 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
- 2026 12:49:46 +0000
-Date: Fri, 6 Feb 2026 12:49:42 +0000
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>, <eblake@redhat.com>,
- <armbru@redhat.com>, <berrange@redhat.com>, <pbonzini@redhat.com>,
- <mst@redhat.com>, <lizhijian@fujitsu.com>, <anisa.su@samsung.com>,
- <linux-cxl@vger.kernel.org>
-Subject: Re: [RFC PATCH 7/7] hw/cxl: Add tag-based removal functionality
-Message-ID: <20260206124942.00007fb0@huawei.com>
-In-Reply-To: <20251127225526.700-8-alireza.sanaee@huawei.com>
-References: <20251127225526.700-1-alireza.sanaee@huawei.com>
- <20251127225526.700-8-alireza.sanaee@huawei.com>
+ 2026 12:51:33 +0000
+Date: Fri, 6 Feb 2026 12:51:31 +0000
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, <linuxarm@huawei.com>
+CC: Alireza Sanaee <alireza.sanaee@huawei.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
+ "anisa.su887@gmail.com" <anisa.su887@gmail.com>, "mst@redhat.com"
+ <mst@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "ppbonzini@redhat.com" <ppbonzini@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "david@kernel.org" <david@kernel.org>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "xiaoguangrong.eric@gmail.com"
+ <xiaoguangrong.eric@gmail.com>, "venkataravis@micron.com"
+ <venkataravis@micron.com>, "gourry@gourry.net" <gourry@gourry.net>
+Subject: Re: [PATCH v2 1/2] hw/cxl: Use HPA in cxl_cfmws_find_device()
+ rather than offset in window.
+Message-ID: <20260206125131.00003c9d@huawei.com>
+In-Reply-To: <0829feee-2bae-4557-8c0f-9ec329a17b2d@fujitsu.com>
+References: <20260204150002.669-1-alireza.sanaee@huawei.com>
+ <20260204150002.669-2-alireza.sanaee@huawei.com>
+ <0829feee-2bae-4557-8c0f-9ec329a17b2d@fujitsu.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -74,95 +83,71 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Nov 2025 22:55:25 +0000
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+On Fri, 6 Feb 2026 09:57:15 +0000
+"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
 
-> Add tag based removal, in which alias tear down must be done properly.
+> On 04/02/2026 23:00, Alireza Sanaee wrote:
+> > This function will shortly be used to help find if there is a route to a
+> > device, serving an HPA, under a particular fixed memory window. Rather
+> > than having that new use case subtract the base address in the caller,
+> > only to add it again in cxl_cfmws_find_device(), push the responsibility
+> > for calculating the HPA to the caller.
+> > 
+> > This also reduces the inconsistency in the meaning of the hwaddr
+> > addr parameter between this function and the calls made within it
+> > that access the HDM decoders that operating on HPA.
+> > 
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > ---
+> >   hw/cxl/cxl-host.c | 6 ++----
+> >   1 file changed, 2 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > index f3479b1991..9633b01abf 100644
+> > --- a/hw/cxl/cxl-host.c
+> > +++ b/hw/cxl/cxl-host.c
+> > @@ -168,8 +168,6 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+> >       bool target_found;
+> >       PCIDevice *rp, *d;
+> >   
+> > -    /* Address is relative to memory region. Convert to HPA */
+> > -    addr += fw->base;
+> >   
+> >       rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+> >       hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+> > @@ -254,7 +252,7 @@ static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
+> >       CXLFixedWindow *fw = opaque;
+> >       PCIDevice *d;
+> >   
+> > -    d = cxl_cfmws_find_device(fw, addr);
+> > +    d = cxl_cfmws_find_device(fw, addr + fw->base, true);  
+> 
+> 
+> It seems you've added an extra parameter to the calls to cxl_cfmws_find_device(), but its function signature wasn't updated.
 
-I'd add the status check as as separate patch.
-Aim to keep the addition of the removal command super simple.
-
-I'm not sure how this interacts with the older handling.  Maybe it's
-worth adding a release by tag before all the rest of the series?
-
-Seems like a useful thing on it's own - as is the status check
-though I think that interface may need some more thought.
+Good spot. The extra parameter should be in the next patch.
 
 Jonathan
 
 > 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/mem/cxl_type3.c | 119 +++++++++++++++++++++++++++++++++++++++++++++
->  qapi/cxl.json      |  46 ++++++++++++++++++
->  2 files changed, 165 insertions(+)
 > 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index d3ea62ef3f..29355792da 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -2186,6 +2186,61 @@ void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
->      }
->  }
->  
-> +static void qmp_cxl_process_dynamic_capacity_tag_based(const char *path,
-> +        uint16_t hid, CXLDCEventType type, uint8_t rid, const char *tag,
-> +        CxlDynamicCapacityExtentList *records, Error **errp) {
-Check style...  I don't remember qemu doing { on that line.
-
-
-> +
-> +    Object *obj;
-> +    CXLType3Dev *dcd;
-> +    CXLDCExtentList *list = NULL;
-> +    CXLDCExtent *ent;
-> +    g_autofree CXLDCExtentRaw *extents = NULL;
-> +
-> +    obj = object_resolve_path_type(path, TYPE_CXL_TYPE3, NULL);
-> +    if (!obj) {
-> +        error_setg(errp, "Unable to resolve CXL type 3 device");
-> +        return;
-> +    }
-> +
-> +    dcd = CXL_TYPE3(obj);
-> +    if (!dcd->dc.num_regions) {
-> +        error_setg(errp, "No dynamic capacity support from the device");
-> +        return;
-> +    }
-> +
-> +    if (rid >= dcd->dc.num_regions) {
-> +        error_setg(errp, "region id is too large");
-> +        return;
-> +    }
-> +
-> +    QemuUUID uuid_req;
-> +    qemu_uuid_parse(tag, &uuid_req);
-> +
-> +    list = &dcd->dc.extents;
-> +    size_t cap = 8, n = 0;
-> +    extents = g_new0(CXLDCExtentRaw, cap);
-> +    QTAILQ_FOREACH(ent, list, node) {
-> +        QemuUUID uuid_ext;
-> +        memcpy(&uuid_ext.data, ent->tag, sizeof(ent->tag));
-> +        if (!qemu_uuid_is_equal(&uuid_req, &uuid_ext)) {
-> +            continue;
-> +        }
-> +
-> +        if (n == cap) {
-> +            cap = cap < 8 ? 8 : cap * 2;
-> +            extents = g_renew(CXLDCExtentRaw, extents, cap);
-> +        }
-> +
-> +        extents[n++] = (CXLDCExtentRaw){ .start_dpa = ent->start_dpa,
-> +                                         .len = ent->len,
-> +                                         .shared_seq = 0 };
-> +    }
-> +
-> +    extents = g_renew(CXLDCExtentRaw, extents, n);
-> +    cxl_create_dc_event_records_for_extents(dcd, type, extents, n);
-> +    return;
-> +}
-> +
-
+> 
+> Thanks
+> Zhijian
+> 
+> 
+> 
+> >       if (d == NULL) {
+> >           *data = 0;
+> >           /* Reads to invalid address return poison */
+> > @@ -271,7 +269,7 @@ static MemTxResult cxl_write_cfmws(void *opaque, hwaddr addr,
+> >       CXLFixedWindow *fw = opaque;
+> >       PCIDevice *d;
+> >   
+> > -    d = cxl_cfmws_find_device(fw, addr);
+> > +    d = cxl_cfmws_find_device(fw, addr + fw->base, true);
+> >       if (d == NULL) {
+> >           /* Writes to invalid address are silent */
+> >           return MEMTX_OK;  
 
 
