@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3998EEB28C7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 05:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C332DEB28C7
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 05:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voEaz-0000yV-7z; Fri, 06 Feb 2026 00:41:33 -0500
+	id 1voEcO-0001RW-BB; Fri, 06 Feb 2026 00:43:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voEax-0000y9-U0
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 00:41:31 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1voEcM-0001Qv-8I
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 00:42:58 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voEaw-0000Im-70
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 00:41:31 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-354a5da7910so694529a91.0
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 21:41:29 -0800 (PST)
+ id 1voEcI-0000Ok-D1
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 00:42:57 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a78e381fc1so8713025ad.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 21:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770356488; x=1770961288; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770356572; x=1770961372; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cKwUnyPyAsKTZtyMZ/uEK4MQhmtsMUq129ri3lVB8JQ=;
- b=HkvQtrx34fM/YC6JefEaDgJq9e/rq39Y5essk/tIuTHs5cDgxqXK8sXApvq+VnKEGK
- HdtWPe2fbRRWsE61map9vP9nwNAcz6XwnAYUUNbxw5mOc9R7sNtWX6pN/r/13nFIQsNv
- xqyDEGNRiFuczHMd8YUZNhdGBtzc486zoJl8vMCI6MeDDsOO7LBfR7pAIwI0/KBdBliu
- e3SBiNlzwazW0hpZfA82svcxA1aljn1YCTaBW4w0Rl2cr3hcQL1I8Ai4EvHivFtc+JDI
- gnnycJ3FI4d+7+VGYsRIDMnbhAfsLuoeY0I0cAGQDET77G+5rf/OAR81gMzPhnqqZQWh
- bQCA==
+ bh=hB57Gt7m82iH9wP0OXzPQalr3BNm8uSy4LXaMTnazo4=;
+ b=D4DU5Wj3myGSOzaXo8cOLxdOPXHKg9ib0jj51NBQCfOAXs13A9TbuX8GmpmQxLU0G+
+ HCxelwhRdf+FrjomFk4xfZib5DiovziPNwqdacK4LQQQOMp2ECnQv/TXUowQjmOhJblI
+ UlVA4X9Sl5hdgpsZoRUxfYVi6uZtN5TrWSe4rCKLyP4ZKEvYvHUNZRuPt8MsRYsCzjx8
+ 2aficdzV5Sin1ESEEhaP498fC24qUOXQvabASnXDfhf/JxHqOw5/LYhyxfPOmSbtF+p4
+ Xv6D5QFyvDokbXmRHSX2Vh+FEkDoEL35errYlaWpoPER36m4y9jdBzeBedOqukrlcjUN
+ NsGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770356488; x=1770961288;
+ d=1e100.net; s=20230601; t=1770356572; x=1770961372;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cKwUnyPyAsKTZtyMZ/uEK4MQhmtsMUq129ri3lVB8JQ=;
- b=hv+QwXwUe2rpYH7gFiu3qN0zrePMlceglDP2t2CAVYcGIMo3hgkPePkYBSdqOP3EfM
- gD+eKuaIJXRdw/SllwGJ/G2PD+fniU29Ru9eF0CJ9SMDZKowDRYjDQ9dNDtnNOM4DHM6
- a0KKOvRJixrkkTKP33dRFeJ5tsrj4JQ1t+x7KJ+YsOfEY+6MzJ3r8Auzcv6X2+fhUvaJ
- GdRwKNf0lKV02D/jRFcFcDs29fpEiAHtpBvbohcytuSmQ8QS5um6zh3UpGQQEM1WnoEm
- u1f+a1Z13vKQLGKNaLt+y94jv2ADgoTFFw+2FhQCnJd1fLIVd8sqD9RX7ZwAZps0Tzts
- gBMg==
+ bh=hB57Gt7m82iH9wP0OXzPQalr3BNm8uSy4LXaMTnazo4=;
+ b=HC/Rf2H/b4YXufguz4WhA7/Y0DKqIQKNTVGw4x8v5QFAdgz82YIIqtnpP3bv5ciwlz
+ MKxWPTVSi1axXKTP8Emzwr0YzgGoGhKhnADieAPi5WyJj31zW7dKodGIypw0OIAuHA6q
+ dwRgRIlaVBLCJQA1ZS9AJbtRxyl35XUkbm8QY8LBgTyy+D2uXZ29ZEt+9C0BVOaUnRQC
+ Whr29un9rSm9FgJhmZUDNE33LSt1YegHBQqbOyRXMd5zHszqDLxVlBwYMVBlWmblyhES
+ g/wM47KxUBAIXwWrGU1cSavVP4AWLBSiIedfxp+uBU5JUjG84pyhXpVuPlX8Ap2v0OfK
+ bvuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9ARKiVbJuftpkoyxdS3cZWr+5BlGEoQman/2s042FKJlvUqJbpa6Y0C0N5ajBarUB06KP/wiH9Fkk@nongnu.org
-X-Gm-Message-State: AOJu0YwNCHBWexgwXrmcWBJ34OuUsqSaTH01eQ6J/WSQ+pOa3Qk9mrNk
- pkbu3C41aKbmw1YEOtGqQQ2IsXiWMqwhxi24vjuc+iAGUmLC3ichBuHzXeGDRq1AZ0s=
-X-Gm-Gg: AZuq6aIwsBUrTABXLpXYY/3/YjVxvt6tZXCiGC/01y7GnTOEiFDvvWwV2M1lqZxQKjH
- ZOLDerwySM/nmd326ukmqNIvRXwmd8TL1okWxzOJFOylJNeIgrDG/m7NSgoqg77tW0IAyKko1bQ
- tBB7UIv/pWe4Yy0JZScyfEH7AAycEnUdXJ5c9CPvjov1zaEKzoCloGJPvXoG2ETVlS14osoLM8p
- b+889h4WWm0DNKvxRolEnpKNG0qR2h8PEIgGvChogmSJJfJVTXd7pwbU7qkfcuwK1h7KdhyzOx4
- y5ou4wGy7MfPYIaXK9KE1f7uayGgzABxoMjuTx+9b0RQw/KfSOig2f6wQ4mopYpYWdGPGmJB4tY
- 8hASe5AtS2duXRMxI9dnwPbrCubCBdMYwmgW4hvf/RS8houcFGKAxg/CyKMdkrpgs5jdz6/5vU1
- 2I1+6tyaiTMsS6o3cgBovXKbQOE8PfeCUh6LBzwSIfgeG4EMfwpLW5vpcKuyTkaq/PIkSufkmwG
- Q==
-X-Received: by 2002:a17:90b:3902:b0:330:7ff5:2c58 with SMTP id
- 98e67ed59e1d1-354b3ba343amr1238563a91.7.1770356487775; 
- Thu, 05 Feb 2026 21:41:27 -0800 (PST)
+ AJvYcCXPbzqhS2mkdohd7qy6PtgHfKs1t0lbBstlPqEeD+iG96N1IC00/fLSfQt9ab8tmu87g9rlh6U1E/zj@nongnu.org
+X-Gm-Message-State: AOJu0YyKxRZ2GDhdWtdBBGz8B5pwrDOzq14aIip8T7kQ8KWSFZ2JAduV
+ XWhp/hVTzZgop5JgD9ydKBvDwjaBAbj5HaB6LtFHesm4qQzCeq7/RplqfrInI7j8BcI=
+X-Gm-Gg: AZuq6aI3ZEqs5Mv2XU5fXmtbIlGekgo86I4cRbfrGZ9cQsyFxBfinylLyQJyJDUSQoI
+ /u9FQB3BV75aKLrUtED3VyUUb29Quc3nRRapzW8skSu48WJ+zxEcQLVGasUC1gDv7iLpHxNUNTy
+ d0Rqmd+L443cGCewFUj3W4PAaXNxTqbcu5WTpxXgOqTeflYCTykJR4g2z3D7XViEddbx4Fhlrpq
+ 69Daf5xrhNA4e7XvesWnq0DAlr9f8hr2KufXbihsYSXr7RxmjVYO+aCiHFFlGaicvwdXH2v13m1
+ BgC07+l29ud3hHsnikMapIQ+H6I8xN77/TprSMjhlOXkrpYlC56kAF1eqmwMgLl0d340NrsHiZH
+ otD57e3AsFCYb+S0fjstMnVYXFDxfoQGny4FoOVWMGDbsFbD0cF7Vf4l3mxkEw4Mavh9VPs8kg+
+ mznhDb52IbIvQaXWoM0BVVfEtpw5bFaA8W8uyHsl5mbGK6cc2D8PJd1OwJC1vUpbRsuyiqMl3e8
+ P0bDFBZSScCkecX7KIcB6sj4XzY/ODbZf2UIF68puM=
+X-Received: by 2002:a17:903:90f:b0:2a8:7814:47c9 with SMTP id
+ d9443c01a7336-2a9521f3ccemr19841915ad.36.1770356572323; 
+ Thu, 05 Feb 2026 21:42:52 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
- ([2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
+ (bg30dhzpdc341w7g29yn.ip6.superloop.au.
+ [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b2ebecd6sm549427a91.0.2026.02.05.21.41.24
+ d9443c01a7336-2a952217a43sm11198975ad.87.2026.02.05.21.42.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 21:41:27 -0800 (PST)
-Message-ID: <28f8521d-47c6-43a7-ab9f-24de3f0aaa9f@linaro.org>
-Date: Fri, 6 Feb 2026 15:41:21 +1000
+ Thu, 05 Feb 2026 21:42:51 -0800 (PST)
+Message-ID: <73405a0b-a12f-4a95-91be-627a44115323@linaro.org>
+Date: Fri, 6 Feb 2026 15:42:46 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/15] target/arm/tcg: Use "or SME" feature checks
- where needed
+Subject: Re: [PATCH v3 11/15] target/arm/tcg: Correct SVE/SME I8MM checks
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20260202133353.2231685-1-peter.maydell@linaro.org>
- <20260202133353.2231685-11-peter.maydell@linaro.org>
+ <20260202133353.2231685-12-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260202133353.2231685-11-peter.maydell@linaro.org>
+In-Reply-To: <20260202133353.2231685-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,31 +111,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/2/26 23:33, Peter Maydell wrote:
-> Many SVE instructions should be provided where the CPU implements
-> either SVE or SME. Currently we largely check only for features
-> aa64_sve or aa64_sve2. This happens to work because we forbid
-> creation of a CPU with SME but not SVE. To allow users to create
-> SME-only CPUs we need to update the conditions to use the "or SME"
-> versions of the feature tests instead.
-> 
-> This commit was created by going through translate-sve.c from
-> top to bottom looking for aa64_sve feature tests and cross
-> checking those against the instruction descriptions in the Arm ARM,
-> which will say "(FEAT_SVE || FEAT_SME)" for instructions that
-> are provided for both features, and "(FEAT_SME)" for the rarer
-> instructions that are SME only.
+> The I8MM field of ID_AA64ZFR0_EL1 is set when the CPU implements
+> FEAT_I8MM and either FEAT_SVE or FEAT_SME. Currently we assume
+> that it is only set for FEAT_SVE. Update the feature checks:
+>   * we rename the existing feature check function to sve_sme_i8mm
+>     to indicate that it is true for either SVE or SME I8MM
+>   * we add a new check function for FEAT_SVE && FEAT_I8MM (giving
+>     it the sve_i8mm name that the old function used to have)
+>   * the instructions which are (SVE || SME) && I8MM need their
+>     checks updating to sve_sme_i8mm: these are SUDOT, USDOT
+>   * instructions which are SVE && I8MM (i.e. really SVE-only) stay
+>     unchanged with sve_i8mm: these are SMMLA, USMMLA, UMMLA
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> This is a large commit, but pretty mechanical. My suggestion
-> for review is to look at translate-sve.c after it: the only
-> remaining uses of the plain aa64_sve and aa64_sve2 feature
-> checks should be in "nonstreaming" instructions, which are
-> mostly handled via the TRANS_FEAT_NONSTREAMING macro and
-> in some cases with open-coding of setting is_nonstreaming.
-> ---
->   target/arm/tcg/translate-sve.c | 854 ++++++++++++++++-----------------
->   1 file changed, 427 insertions(+), 427 deletions(-)
+>   target/arm/cpu-features.h      | 8 +++++++-
+>   target/arm/tcg/translate-sve.c | 6 +++---
+>   2 files changed, 10 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
