@@ -4,72 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72096EE20B2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC58EE20B3
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voOD1-0000Uh-FX; Fri, 06 Feb 2026 10:57:27 -0500
+	id 1voOK5-0001lu-Sm; Fri, 06 Feb 2026 11:04:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akpm@linux-foundation.org>)
- id 1voOCx-0000U3-CK
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:57:24 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akpm@linux-foundation.org>)
- id 1voOCu-0003Sq-PJ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:57:23 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id B20FE43C28;
- Fri,  6 Feb 2026 15:57:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B93C116C6;
- Fri,  6 Feb 2026 15:57:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
- s=korg; t=1770393430;
- bh=5yR2oXGuhV43ittUT6jpCwyyLEiU3bwv/gLoZQxn+1o=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=DdJZ/IUaKRT5oCG+okPUCt+1gPuCN14/rOSTrRAZpFXZIvK5xnRhrII4KhApFNFSH
- 31wpjF9PH6QjTFVP3fSzoe60mk+qo/1fDwTayK7yuee3INfoZYlVoBJhXVcaB9i/1O
- vbqyvtVEM4DnkPV7cSYnY1oogKmh6bCT+gyN4WZU=
-Date: Fri, 6 Feb 2026 07:57:09 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Gregory Price <gourry@gourry.net>, Cui Chao
- <cuichao1753@phytium.com.cn>, <dan.j.williams@intel.com>, Mike Rapoport
- <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, <qemu-devel@nongnu.org>, "David Hildenbrand (Arm)"
- <david@kernel.org>
-Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
- of CFMW
-Message-Id: <20260206075709.0f4b60dd5dd664894cbd15c7@linux-foundation.org>
-In-Reply-To: <20260206150941.000028ae@huawei.com>
-References: <20260108094812.8757ce3ad8370668eaafb29c@linux-foundation.org>
- <9132054c-3017-4af0-84e0-e4359b0794a6@phytium.com.cn>
- <20260115101858.85fd7b8e837c1c92a4fdc5f0@linux-foundation.org>
- <696944eca1837_34d2a10056@dwillia2-mobl4.notmuch>
- <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
- <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
- <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
- <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
- <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
- <20260206110305.00001fbb@huawei.com>
- <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
- <20260206150941.000028ae@huawei.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=akpm@linux-foundation.org; helo=sea.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.384,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1voOJt-0001lM-Is
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:04:33 -0500
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1voOJr-00042n-UN
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:04:33 -0500
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-894a2309a29so36492156d6.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:04:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770393869; cv=none;
+ d=google.com; s=arc-20240605;
+ b=f9mKZ5APaE7hFr3ePnQ/uta2jCY+necsedMomUIqW/DOce+gIRAga6t66gQGzJShrP
+ vVCbBJpydLUbeV79sr0meqn3EKoW1Lhs5J1OPqLEfmhAz8crwYwzhThPIFuL+cuo9fPD
+ V5nrgFmgibHA6waMbTWAXSpoS3nD8e1+bny9eueAbpT7lYwGjIuNLThOHSve1SOaKueK
+ AByqTvLNd36mdAqT//insYxWiqsIwYBlhysnUnhUgn5wBxyNeS56DBfCcKUsayieFVCA
+ ZjpVEWGF+NeWo4NDsyCJvrnzOUAmvmF8b8qLNbuHSkFfswxqoQBwqKdXegwRuagj2dH2
+ oY7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
+ fh=1N8JXxzPSb1qBuNPZu2F8wnafdJwgvfuO89xwhL6jkc=;
+ b=dhzxrcI8m1H2y0pKnO8Y208DmexnfnKL9CQ9o1qY07l1c4ndaPnIOkc7bVBZqrzRlF
+ vZwT2sP++/Wr7efiWWTR023v3GBIy1g9He8AuxFZfpZfAhRwuo4emc3/FOrPLL9jS1p2
+ nnqrWz7sZPfgFXrKBGhklOO/MxHH+KMuSSkzN4u/kV68WBszX+vw62SIOLoRZKF/8iYJ
+ FC8nFsbu84wP/8EbJwBLRQrlzriGOb5wysyk0K8movnY21JtixLY31NERf7Jppa/yMdf
+ +Njliav5bW100A8QcnYzh8p28U157z25So3jo6tPq0sKPFarLfrUfBmJuu19WgmxwIka
+ ptCA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770393869; x=1770998669; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
+ b=b5hxq86pwt7t3eqp0mfXlxKC6W/wQbbtFLuIbqjyw8X7ciujLsZYitSAMfkuomk712
+ P/XLWV+aRPKbxrDFPoiYXd97Dx7shvyHUXMS6bT9vQdJDku7PbEhhiJ8YoN0QIpDVV3Y
+ 9p0/m+Pwg6NdiLD4VglnB9x+kpcjk30gjm376MLCqJ5Zirunxg545kiznd4rCep6n+5P
+ 5na1PjXFmN1qC6tltmkg5asaxjzxyd3uxN7UbNOiGjDP6px9uQRKoVoETzsWCkUAB4zN
+ ytlDv9HlRp9ziBMP0lld8BXJZx3rdUyXltaW+kCAEBNXSJGGSndNsApHT60nx5Si4AhB
+ UyCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770393869; x=1770998669;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
+ b=DEwsgsajzFDGpcWSD6Nvl4wZ1pUcMW1ucgaEP874cYJLgLzVAaiPvFbD0Z5H0Yj2zS
+ 0B0DEpmDrnBC6nS4GFBLQOR+Df1De6ji/4SMIfFaUuIryQ3GqXLexUOtUbNXOtQa1cNb
+ Kf9bD5QEmnDAmpCwQI49rrxz9/MfNqwPXC0HBEgiaQ/VWADIdKA6rQOksnghO668Uulb
+ RaWsRRvhnawwoND5g3tpCmOSAoUEte/GmJgirBoyPOQhDpycQwF1YCPxqUVJn5ensJcR
+ qHbDQiTsgteU7nDqJdS7SrU8VOJRbC/ZVWNqMMtUDXPbFalO5QxlU5T8woeOVEaAFYbq
+ Xo7Q==
+X-Gm-Message-State: AOJu0YwYFLeJjtoaQhWahMDP0GzZu+XRz/t3lng45Exe3ZLjF5LS5O6r
+ /CSYLMUMcairb1w6UQfgSAzVCgGNsNfwVy3rPgTI0ReZ+r95QzUOEazxlZprYr3lGw03L+dXAB8
+ wE6nNiBI+b1OX2Ezn+qObuus78a+2d+s=
+X-Gm-Gg: AZuq6aJZ5yuoITcYqHmA2iGmk0HlWswixL9/RS2qD1AxOQQ1gMon+A7K9X74+4SXs6D
+ 7THnD6tJjPPW0dOg1SLt/feHoKI2au3hIt/mKLi1HBTilNkCfA8Yp9ivcDyqQonXY54VmN2ROr+
+ ZQRqaMpuKqMCFgymvbYryKAS2WEWhPMpcLBLluF/R1NHkpnEpZsPCJQUFwRf9Fz7ygZJ7FeyNNM
+ Rm/NQri/zefAezknUJxPWwkaAth8ycQBnIY9DAuFb/VjE5IOGB6L1Bj8imf14ibrgi7hU3nRSA2
+ qM7Tzs1pyBiQcw==
+X-Received: by 2002:a05:6214:1946:b0:894:7eb6:72e5 with SMTP id
+ 6a1803df08f44-8952fe8bf05mr98807266d6.0.1770393868520; Fri, 06 Feb 2026
+ 08:04:28 -0800 (PST)
+MIME-Version: 1.0
+References: <20260204014611.2267-1-ckeong.teo17@gmail.com>
+ <60a6e029-52a1-4482-9b01-702103e76ea5@redhat.com>
+In-Reply-To: <60a6e029-52a1-4482-9b01-702103e76ea5@redhat.com>
+From: Choon Keong Teo <ckeong.teo17@gmail.com>
+Date: Sat, 7 Feb 2026 00:04:16 +0800
+X-Gm-Features: AZwV_QisR8NHsW0ysvZn8u6u6QESluY5NFSTglfAneBlzltTD7CRAMDTEAZQRq8
+Message-ID: <CAOkKuiM-6jhhSLP31gWejH8BUykW4K38pHydvKkB6oRDv_+q4g@mail.gmail.com>
+Subject: Re: [PATCH] tests: add run-tcg-tests-TARGET-softmmu to make check-help
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
+ philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=ckeong.teo17@gmail.com; helo=mail-qv1-xf2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,144 +118,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 15:09:41 +0000 Jonathan Cameron <jonathan.cameron@huawei.com> wrote:
-
-> > Andrew if Jonathan is good with it then with changelog updates this can
-> > go in, otherwise I don't think this warrants a backport or anything.
-> 
-> Wait and see if anyone hits it on a real machine (or even non creative QEMU
-> setup!)  So for now no need to backport.
-
-Thanks, all.
-
-Below is the current state of this patch.  Is the changelog suitable?
+Thanks, Thomas! That makes sense, it should be a subset of check-tcg.
+I will amend it and resend the patch for review shortly.
 
 
-From: Cui Chao <cuichao1753@phytium.com.cn>
-Subject: mm: numa_memblks: identify the accurate NUMA ID of CFMW
-Date: Tue, 6 Jan 2026 11:10:42 +0800
+Best regards,
+Choon Keong.
 
-In some physical memory layout designs, the address space of CFMW (CXL
-Fixed Memory Window) resides between multiple segments of system memory
-belonging to the same NUMA node.  In numa_cleanup_meminfo, these multiple
-segments of system memory are merged into a larger numa_memblk.  When
-identifying which NUMA node the CFMW belongs to, it may be incorrectly
-assigned to the NUMA node of the merged system memory.
-
-When a CXL RAM region is created in userspace, the memory capacity of
-the newly created region is not added to the CFMW-dedicated NUMA node. 
-Instead, it is accumulated into an existing NUMA node (e.g., NUMA0
-containing RAM).  This makes it impossible to clearly distinguish
-between the two types of memory, which may affect memory-tiering
-applications.
-
-Example memory layout:
-
-Physical address space:
-    0x00000000 - 0x1FFFFFFF  System RAM (node0)
-    0x20000000 - 0x2FFFFFFF  CXL CFMW (node2)
-    0x40000000 - 0x5FFFFFFF  System RAM (node0)
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
-
-After numa_cleanup_meminfo, the two node0 segments are merged into one:
-    0x00000000 - 0x5FFFFFFF  System RAM (node0) // CFMW is inside the range
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
-
-So the CFMW (0x20000000-0x2FFFFFFF) will be incorrectly assigned to node0.
-
-To address this scenario, accurately identifying the correct NUMA node
-can be achieved by checking whether the region belongs to both
-numa_meminfo and numa_reserved_meminfo.
-
-
-1. Issue Impact and Backport Recommendation:
-
-This patch fixes an issue on hardware platforms (not QEMU emulation)
-where, during the dynamic creation of a CXL RAM region, the memory
-capacity is not assigned to the correct CFMW-dedicated NUMA node.  This
-issue leads to:
-
-    Failure of the memory tiering mechanism: The system is designed to
-    treat System RAM as fast memory and CXL memory as slow memory. For
-    performance optimization, hot pages may be migrated to fast memory
-    while cold pages are migrated to slow memory. The system uses NUMA
-    IDs as an index to identify different tiers of memory. If the NUMA
-    ID for CXL memory is calculated incorrectly and its capacity is
-    aggregated into the NUMA node containing System RAM (i.e., the node
-    for fast memory), the CXL memory cannot be correctly identified. It
-    may be misjudged as fast memory, thereby affecting performance
-    optimization strategies.
-
-    Inability to distinguish between System RAM and CXL memory even for
-    simple manual binding: Tools like |numactl|and other NUMA policy
-    utilities cannot differentiate between System RAM and CXL memory,
-    making it impossible to perform reasonable memory binding.
-
-    Inaccurate system reporting: Tools like |numactl -H|would display
-    memory capacities that do not match the actual physical hardware
-    layout, impacting operations and monitoring.
-
-This issue affects all users utilizing the CXL RAM functionality who
-rely on memory tiering or NUMA-aware scheduling.  Such configurations
-are becoming increasingly common in data centers, cloud computing, and
-high-performance computing scenarios.
-
-Therefore, I recommend backporting this patch to all stable kernel 
-series that support dynamic CXL region creation.
-
-2. Why a Kernel Update is Recommended Over a Firmware Update:
-
-In the scenario of dynamic CXL region creation, the association between
-the memory's HPA range and its corresponding NUMA node is established
-when the kernel driver performs the commit operation.  This is a
-runtime, OS-managed operation where the platform firmware cannot
-intervene to provide a fix.
-
-Considering factors like hardware platform architecture, memory
-resources, and others, such a physical address layout can indeed occur.
-This patch does not introduce risk; it simply correctly handles the
-NUMA node assignment for CXL RAM regions within such a physical address
-layout.
-
-Thus, I believe a kernel fix is necessary.
-
-Link: https://lkml.kernel.org/r/20260106031042.1606729-2-cuichao1753@phytium.com.cn
-Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
-Signed-off-by: Cui Chao <cuichao1753@phytium.com.cn>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Wang Yinfeng <wangyinfeng@phytium.com.cn>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Wang Yinfeng <wangyinfeng@phytium.com.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
-
- mm/numa_memblks.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
---- a/mm/numa_memblks.c~mm-numa_memblks-identify-the-accurate-numa-id-of-cfmw
-+++ a/mm/numa_memblks.c
-@@ -570,15 +570,16 @@ static int meminfo_to_nid(struct numa_me
- int phys_to_target_node(u64 start)
- {
- 	int nid = meminfo_to_nid(&numa_meminfo, start);
-+	int reserved_nid = meminfo_to_nid(&numa_reserved_meminfo, start);
- 
- 	/*
- 	 * Prefer online nodes, but if reserved memory might be
- 	 * hot-added continue the search with reserved ranges.
- 	 */
--	if (nid != NUMA_NO_NODE)
-+	if (nid != NUMA_NO_NODE && reserved_nid == NUMA_NO_NODE)
- 		return nid;
- 
--	return meminfo_to_nid(&numa_reserved_meminfo, start);
-+	return reserved_nid;
- }
- EXPORT_SYMBOL_GPL(phys_to_target_node);
- 
-_
-
+On Fri, Feb 6, 2026 at 10:53=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
+>
+>
+>   Hi!
+>
+> Thanks for your patch! A comment below...
+>
+> On 04/02/2026 02.46, ck wrote:
+> ...
+> > diff --git a/tests/Makefile.include b/tests/Makefile.include
+> > index 7728098981..5a99f0a920 100644
+> > --- a/tests/Makefile.include
+> > +++ b/tests/Makefile.include
+> > @@ -3,29 +3,30 @@
+> >   .PHONY: check-help
+> >   check-help:
+> >       @echo "Regression testing targets:"
+> > -     @echo " $(MAKE) check                    Run block, qapi-schema, =
+unit, softfloat, qtest and decodetree tests"
+> > -     @echo " $(MAKE) bench                    Run speed tests"
+> > +     @echo " $(MAKE) check                         Run block, qapi-sch=
+ema, unit, softfloat, qtest and decodetree tests"
+> > +     @echo " $(MAKE) bench                         Run speed tests"
+> >       @echo
+> >       @echo "Individual test suites:"
+> > -     @echo " $(MAKE) check-qtest-TARGET       Run qtest tests for give=
+n target"
+> > -     @echo " $(MAKE) check-qtest              Run qtest tests"
+> > -     @echo " $(MAKE) check-functional         Run python-based functio=
+nal tests"
+> > -     @echo " $(MAKE) check-functional-TARGET  Run functional tests for=
+ a given target"
+> > -     @echo " $(MAKE) check-unit               Run qobject tests"
+> > -     @echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
+> > -     @echo " $(MAKE) check-tracetool          Run tracetool generator =
+tests"
+> > -     @echo " $(MAKE) check-block              Run block tests"
+> > +     @echo " $(MAKE) check-qtest-TARGET            Run qtest tests for=
+ given target"
+> > +     @echo " $(MAKE) check-qtest                   Run qtest tests"
+> > +     @echo " $(MAKE) check-functional              Run python-based fu=
+nctional tests"
+> > +     @echo " $(MAKE) check-functional-TARGET       Run functional test=
+s for a given target"
+> > +     @echo " $(MAKE) check-unit                    Run qobject tests"
+> > +     @echo " $(MAKE) check-qapi-schema             Run QAPI schema tes=
+ts"
+> > +     @echo " $(MAKE) check-tracetool               Run tracetool gener=
+ator tests"
+> > +     @echo " $(MAKE) check-block                   Run block tests"
+> > +     @echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a=
+ given target"
+> >   ifneq ($(filter $(all-check-targets), check-softfloat),)
+> > -     @echo " $(MAKE) check-tcg                Run TCG tests"
+> > -     @echo " $(MAKE) check-softfloat          Run FPU emulation tests"
+> > +     @echo " $(MAKE) check-tcg                     Run TCG tests"
+>
+> Could you please move the new "run-tcg-tests..." line next to the check-t=
+cg
+> line, i.e. within the "ifneq" section? It's a subset of "check-tcg", i.e.
+> TCG-based tests, so it does not make sense that we show this new line whe=
+n
+> QEMU has been configured with "--disable-tcg", but not the "check-tcg" li=
+ne.
+>
+>   Thanks,
+>    Thomas
+>
+>
+> > +     @echo " $(MAKE) check-softfloat               Run FPU emulation t=
+ests"
+> >   endif
+> >       @echo
+> > -     @echo " $(MAKE) check-report.junit.xml   Generates an aggregated =
+XML test report"
+> > -     @echo " $(MAKE) check-venv               Creates a Python venv fo=
+r tests"
+> > -     @echo " $(MAKE) check-clean              Clean the tests and rela=
+ted data"
+> > +     @echo " $(MAKE) check-report.junit.xml        Generates an aggreg=
+ated XML test report"
+> > +     @echo " $(MAKE) check-venv                    Creates a Python ve=
+nv for tests"
+> > +     @echo " $(MAKE) check-clean                   Clean the tests and=
+ related data"
+> >       @echo
+> >       @echo "The following are useful for CI builds"
+> > -     @echo " $(MAKE) check-build              Build most test binaries=
+"
+> > +     @echo " $(MAKE) check-build                   Build most test bin=
+aries"
+> >       @echo
+> >       @echo
+> >       @echo "The variable SPEED can be set to control the gtester speed=
+ setting."
+>
 
