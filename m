@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B91EE6B69
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DE3EE6B6A
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 22:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voUAe-000652-Km; Fri, 06 Feb 2026 17:19:24 -0500
+	id 1voUAm-00068j-TE; Fri, 06 Feb 2026 17:19:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voUAc-00063D-Bp
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:22 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1voUAf-00066I-SW
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:26 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voUAZ-00079H-KJ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:22 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-81e821c3d4eso2283979b3a.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 14:19:19 -0800 (PST)
+ id 1voUAd-0007EX-Fp
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:25 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c075ec1a58aso937580a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 14:19:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770416358; x=1771021158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770416362; x=1771021162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=klAu5HgA/rCTewGXJZJRvxMK6aIVCdRxxwUdqNQ0dtE=;
- b=C0VAa9wfAAewNwxVtUayjl1Xo0LCcUgJw0bGDXuw6YZWC1SIxMSDiNbA31gV/yCgi0
- 0v9ORdxtkqzZBFU6yHdqH4bw+K0c2iz7TMukQGAA6wzmILS7lNK2IoIccgfoCjg9bHVf
- HgTg4svBTIy3rMk0IwahYR38co4TyGM/rE0MXQx5RzeXBeT8ySSOpUhzmsnlbpzX3d0o
- VIg5/W4BxS1rtNDLRGjWZL5iTiPX9IDFGeJ7OjVGNkqvxdeZuFsjt2zQ9QVaoPhlFm0k
- 4kzZNJFr73lKgBKgSlk7PVPpbzwEfGR+Gz5MNpaQE0w7LIf3b9R2kGC4RtM+jNBXrMJZ
- ZCdA==
+ bh=kZyVLIbEJo0Wk5YkLmH7yh3NiSpSnL/riDyzdg7xUbw=;
+ b=RB9puf77BEg4rtz/QNPkrJiVQ7fC1RqTi7TeiYb2jTQl24R3HgJt3Zbm7sL6Dr1g+W
+ ZcWpegoIFE6+qFeEZctqnTlMnHEuKhNPmuvgCPFaautIO/WpNubC9fvTIY9Zw1Ce9qQP
+ Pt4qL981cLSANdiToN03X0GMqZZJobZZ8JBSub7o7XPxAdyLzZ3Jvw1wRVYdiEP9CtiH
+ csYjHXjnJlwvg6Fs1zOZ3QhMxz1mIG6NbA6PkUeOksLSMByz+PyxTkfw69moovrIPN5B
+ tmR3ql7fv1dNpg+cqBcDHDgbQgv7wFCPj/GI0vR4j1mKnh98pPVESV/W1xGISKtmY0sq
+ 5X1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770416358; x=1771021158;
+ d=1e100.net; s=20230601; t=1770416362; x=1771021162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=klAu5HgA/rCTewGXJZJRvxMK6aIVCdRxxwUdqNQ0dtE=;
- b=skwoUouzljRgqQnxwTzSvgooTRMCQV1f+xwlLonqfXXUdt5qNxpa55Qq1Nz8MdP1JJ
- PRDMQ9nrYK2jlROLXtyLv4AxwFcblt7J1hq5kfFuIi0h6PIGhtR7yiC80EwmLplf0aq3
- ZN7pnTsYvfhdRZyc/V1MBx5honOyFuSFrXIbtb7DsIugWb13BnznaYURxmhgU6Y4XfI5
- gApajV3/di8RaHFhWPbAaUR1sEIehPjF+j9GzQ/UBOOfKSRU/LgPMf+yuNrpRiwHPcTQ
- emDgcMVsZ2pYBSnVIN5jdg5E72bwkUI/7/w4zTKXSFPZKG4WPJi6CybydWIaDWYGooxg
- qBgg==
-X-Gm-Message-State: AOJu0YyWrGCf/P2NYBFlDMjVgNzAzusVtpfCnrvcI3E9tHmwYxHGo9f/
- ddOvUW3ayRjJs0xAv+J6C1i8cGqrBSbvMugCoNkiLCH05j32KybbpYd08SK1dHdyZA9oNQGobkB
- zM8E0
-X-Gm-Gg: AZuq6aIaQ9RfDb5/qXZScYqOkTzqHxLgyxtIcPA6MnU202Nxy16Uqrk1vKOv9w2MRow
- W2wmZ8s+W/MBc/2BIaeat6xv1R1qnTtYcnP0i7LQZbwTa0TZWPrG8ba/86qeGZE6NimdSyUyf9n
- oa2/t5s4U0wRiZfiyCBKLZczT85qMiqClwD476YW8nNkxEhaU1GwZX68v+qznvqbgZ30n0pfw7a
- CRMJaiTt9ZP8xUod1qP19TMnDu5tX+amdLNzeoGnUhA7urHQh+TunaI6q5whYJezOzdgeDMEPir
- 0h9DyIszeoeFP394TSer2hlsaj5AW6ZatOjDjRGZETQbSQ7xgjMDQ8Yiqa/9nX4w8WcUEuL3tnr
- nuDGUGc2TdEZEyMaPCn/A1KEwTMF7uqbzOZ1PVbkQO1hk/QsvdmyF+6/Z47upHHqPni5urE+fvj
- TQ3suQq0ArVXU75ugDIui/Vp5gdGfTKpfX7/wZH0uMvVw6ryHlTmIIxC7khwjNLGOf
-X-Received: by 2002:a05:6300:618d:b0:384:d0fc:f51b with SMTP id
- adf61e73a8af0-393ad41a505mr4150791637.80.1770416358230; 
- Fri, 06 Feb 2026 14:19:18 -0800 (PST)
+ bh=kZyVLIbEJo0Wk5YkLmH7yh3NiSpSnL/riDyzdg7xUbw=;
+ b=UhVLJod6qmRHsnWD8Z6uma5zYpnWyLfMvDGYNDxxhG+X/mhlCMH9oBuwAzo3ZLHCpm
+ qUBIXSV2hruF/GXGRU56wI/3KZ3SLICX9c2QRn3N7+pFgCIiPV5tA4xPkbL3iYHbDk2O
+ gi0Ih2tv01se+kFXYTfJgsQrEtjFwaNaK4AEEiNN2Ahifg4s+IJma5K8KOSF3kC3UIHK
+ g170GfGWeFxAg2OWIWnVDzn5DwpNWD6gcTEr1nPgG8RW1dgOXiTJuH2sl/EHCBcuVKEA
+ MOI+q6fyzvMGtxKqVPFIMLfdAQWFe5FPBCObJYNKQGhNRMeTamNV+c2GqJEf8Izt1XGH
+ uHnQ==
+X-Gm-Message-State: AOJu0YxLpZd3IOI2oyudEDpt9/DZ7kwGNFnnFqCcV2d1cbUqLTAR4htP
+ 0j7zAoYuyj6XpF2yp4UAKB5d7B8HfQsiPbjfbS1zNwjGUPcJayq50Al0bCfr49M1tTrPJs0cS+P
+ eId9X
+X-Gm-Gg: AZuq6aJXIroe32z+zJyiUc1grf8hZqb29OWlD4GToqQNnq1PEai4oVhyxpZenx9XkFR
+ kONPgHFfTdpfIbvhdP1lk+E49Ar6NLaNo/Ge7R+lIsIvwSlE3yYcLV46IzsNle/ngXDBnwTo+Ic
+ /Y6b41DFXgMaaE/loNronYsFTeSTo9SNvUu8sTomXfDuhqtjGk2J+8oviFUmNx4nt7E6AuH7+zy
+ iELhayn077XS3O5yXTcmHzHB91UyR2ZwOpRl/iiytXlq1HAQeEykghLRWUBGWf5F5b7ctkm1eCi
+ iyHmSMMNBGkVfz9dHE6nDopLY3Okz/3333AEGQE75iZZjcREExG8vOfyl3w15YQyRNmYaeTAVj+
+ mV+I3ps+LgoCJcZYq14EWflf8GcQsntsaD7sgBovGBcVaDMylIagVfG+scSzS8eiIqbIkCLMRGa
+ yJ03w4jUvQkkRBOSfoMq3Dl8p1NeJzhHfr/2xCPbr+LFNKmsNE15n02SdlufoMxH7w
+X-Received: by 2002:a17:902:fc47:b0:2a7:3daa:583f with SMTP id
+ d9443c01a7336-2a951607b7dmr39057605ad.2.1770416361964; 
+ Fri, 06 Feb 2026 14:19:21 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a95bff42f7sm13316575ad.68.2026.02.06.14.19.17
+ d9443c01a7336-2a95bff42f7sm13316575ad.68.2026.02.06.14.19.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 14:19:17 -0800 (PST)
+ Fri, 06 Feb 2026 14:19:21 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -74,24 +74,23 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, stefanha@redhat.com,
  richard.henderson@linaro.org, qemu-ppc@nongnu.org
-Subject: [PATCH v5 3/9] hw/virtio: Use VirtIODevice::access_is_big_endian field
-Date: Fri,  6 Feb 2026 14:19:02 -0800
-Message-ID: <20260206221908.1451528-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 8/9] hw/virtio/virtio-qmp: make compilation unit common
+Date: Fri,  6 Feb 2026 14:19:07 -0800
+Message-ID: <20260206221908.1451528-9-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
 References: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,134 +106,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+All compile time conditionals have no impact at runtime, since they are
+representing only possible features for devices present at runtime.
 
-Endianness access is constant between device resets.
-Use the field instead of calling the same function.
+In case they are not present, associated features table will never be
+used. In case they are present but some features are not, matching bits
+will never be enabled, so those entries will be unused.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thus, simply expose everything and call it a day.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/virtio/virtio-access.h | 24 ++++++++++++------------
- hw/virtio/virtio.c                |  4 ++--
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ hw/virtio/virtio-qmp.c | 70 ------------------------------------------
+ hw/virtio/meson.build  |  2 +-
+ 2 files changed, 1 insertion(+), 71 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index cd17d0c87eb..f3b4d0075b5 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -42,7 +42,7 @@ static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 968299fda0c..f9cdca50d99 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -33,21 +33,17 @@
+ #include "standard-headers/linux/virtio_vsock.h"
+ #include "standard-headers/linux/virtio_gpio.h"
  
- static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         stw_be_p(ptr, v);
-     } else {
-         stw_le_p(ptr, v);
-@@ -51,7 +51,7 @@ static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
+-#include CONFIG_DEVICES
+-
+ #define FEATURE_ENTRY(name, desc) (qmp_virtio_feature_map_t) \
+     { .virtio_bit = name, .feature_desc = desc }
  
- static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         stl_be_p(ptr, v);
-     } else {
-         stl_le_p(ptr, v);
-@@ -60,7 +60,7 @@ static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t v)
+ /* Virtio transport features mapping */
+ static const qmp_virtio_feature_map_t virtio_transport_map[] = {
+     /* Virtio device transport features */
+-#ifndef VIRTIO_CONFIG_NO_LEGACY
+     FEATURE_ENTRY(VIRTIO_F_NOTIFY_ON_EMPTY, \
+             "VIRTIO_F_NOTIFY_ON_EMPTY: Notify when device runs out of avail. "
+             "descs. on VQ"),
+     FEATURE_ENTRY(VIRTIO_F_ANY_LAYOUT, \
+             "VIRTIO_F_ANY_LAYOUT: Device accepts arbitrary desc. layouts"),
+-#endif /* !VIRTIO_CONFIG_NO_LEGACY */
+     FEATURE_ENTRY(VIRTIO_F_VERSION_1, \
+             "VIRTIO_F_VERSION_1: Device compliant for v1 spec (legacy)"),
+     FEATURE_ENTRY(VIRTIO_F_IOMMU_PLATFORM, \
+@@ -149,7 +145,6 @@ static const qmp_virtio_feature_map_t virtio_config_status_map[] = {
+ };
  
- static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         stq_be_p(ptr, v);
-     } else {
-         stq_le_p(ptr, v);
-@@ -69,7 +69,7 @@ static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t v)
+ /* virtio-blk features mapping */
+-#ifdef CONFIG_VIRTIO_BLK
+ static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_BLK_F_SIZE_MAX, \
+             "VIRTIO_BLK_F_SIZE_MAX: Max segment size is size_max"),
+@@ -173,7 +168,6 @@ static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+             "VIRTIO_BLK_F_SECURE_ERASE: Secure erase supported"),
+     FEATURE_ENTRY(VIRTIO_BLK_F_ZONED, \
+             "VIRTIO_BLK_F_ZONED: Zoned block devices"),
+-#ifndef VIRTIO_BLK_NO_LEGACY
+     FEATURE_ENTRY(VIRTIO_BLK_F_BARRIER, \
+             "VIRTIO_BLK_F_BARRIER: Request barriers supported"),
+     FEATURE_ENTRY(VIRTIO_BLK_F_SCSI, \
+@@ -183,7 +177,6 @@ static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_BLK_F_CONFIG_WCE, \
+             "VIRTIO_BLK_F_CONFIG_WCE: Cache writeback and writethrough modes "
+             "supported"),
+-#endif /* !VIRTIO_BLK_NO_LEGACY */
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+@@ -191,10 +184,8 @@ static const qmp_virtio_feature_map_t virtio_blk_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
  
- static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         return lduw_be_p(ptr);
-     } else {
-         return lduw_le_p(ptr);
-@@ -78,7 +78,7 @@ static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
+ /* virtio-serial features mapping */
+-#ifdef CONFIG_VIRTIO_SERIAL
+ static const qmp_virtio_feature_map_t virtio_serial_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_CONSOLE_F_SIZE, \
+             "VIRTIO_CONSOLE_F_SIZE: Host providing console size"),
+@@ -204,10 +195,8 @@ static const qmp_virtio_feature_map_t virtio_serial_feature_map[] = {
+             "VIRTIO_CONSOLE_F_EMERG_WRITE: Emergency write supported"),
+     { -1, "" }
+ };
+-#endif
  
- static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         return ldl_be_p(ptr);
-     } else {
-         return ldl_le_p(ptr);
-@@ -87,7 +87,7 @@ static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
+ /* virtio-gpu features mapping */
+-#ifdef CONFIG_VIRTIO_GPU
+ static const qmp_virtio_feature_map_t virtio_gpu_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_GPU_F_VIRGL, \
+             "VIRTIO_GPU_F_VIRGL: Virgl 3D mode supported"),
+@@ -227,10 +216,8 @@ static const qmp_virtio_feature_map_t virtio_gpu_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
  
- static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         return ldq_be_p(ptr);
-     } else {
-         return ldq_le_p(ptr);
-@@ -97,9 +97,9 @@ static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
- static inline uint16_t virtio_tswap16(VirtIODevice *vdev, uint16_t s)
- {
- #if HOST_BIG_ENDIAN
--    return virtio_access_is_big_endian(vdev) ? s : bswap16(s);
-+    return vdev->access_is_big_endian ? s : bswap16(s);
- #else
--    return virtio_access_is_big_endian(vdev) ? bswap16(s) : s;
-+    return vdev->access_is_big_endian ? bswap16(s) : s;
- #endif
- }
+ /* virtio-input features mapping */
+-#ifdef CONFIG_VIRTIO_INPUT
+ static const qmp_virtio_feature_map_t virtio_input_feature_map[] = {
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+@@ -239,10 +226,8 @@ static const qmp_virtio_feature_map_t virtio_input_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
  
-@@ -111,9 +111,9 @@ static inline void virtio_tswap16s(VirtIODevice *vdev, uint16_t *s)
- static inline uint32_t virtio_tswap32(VirtIODevice *vdev, uint32_t s)
- {
- #if HOST_BIG_ENDIAN
--    return virtio_access_is_big_endian(vdev) ? s : bswap32(s);
-+    return vdev->access_is_big_endian ? s : bswap32(s);
- #else
--    return virtio_access_is_big_endian(vdev) ? bswap32(s) : s;
-+    return vdev->access_is_big_endian ? bswap32(s) : s;
- #endif
- }
+ /* virtio-net features mapping */
+-#ifdef CONFIG_VIRTIO_NET
+ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_NET_F_CSUM, \
+             "VIRTIO_NET_F_CSUM: Device handling packets with partial checksum "
+@@ -313,10 +298,8 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+             "device with same MAC addr. supported"),
+     FEATURE_ENTRY(VIRTIO_NET_F_SPEED_DUPLEX, \
+             "VIRTIO_NET_F_SPEED_DUPLEX: Device set linkspeed and duplex"),
+-#ifndef VIRTIO_NET_NO_LEGACY
+     FEATURE_ENTRY(VIRTIO_NET_F_GSO, \
+             "VIRTIO_NET_F_GSO: Handling GSO-type packets supported"),
+-#endif /* !VIRTIO_NET_NO_LEGACY */
+     FEATURE_ENTRY(VHOST_NET_F_VIRTIO_NET_HDR, \
+             "VHOST_NET_F_VIRTIO_NET_HDR: Virtio-net headers for RX and TX "
+             "packets supported"),
+@@ -341,10 +324,8 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+             "header"),
+     { -1, "" }
+ };
+-#endif
  
-@@ -125,9 +125,9 @@ static inline void virtio_tswap32s(VirtIODevice *vdev, uint32_t *s)
- static inline uint64_t virtio_tswap64(VirtIODevice *vdev, uint64_t s)
- {
- #if HOST_BIG_ENDIAN
--    return virtio_access_is_big_endian(vdev) ? s : bswap64(s);
-+    return vdev->access_is_big_endian ? s : bswap64(s);
- #else
--    return virtio_access_is_big_endian(vdev) ? bswap64(s) : s;
-+    return vdev->access_is_big_endian ? bswap64(s) : s;
- #endif
- }
+ /* virtio-scsi features mapping */
+-#ifdef CONFIG_VIRTIO_SCSI
+ static const qmp_virtio_feature_map_t virtio_scsi_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_SCSI_F_INOUT, \
+             "VIRTIO_SCSI_F_INOUT: Requests including read and writable data "
+@@ -364,10 +345,8 @@ static const qmp_virtio_feature_map_t virtio_scsi_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
  
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index a429ff7de39..c92a70a41c7 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -222,7 +222,7 @@ static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
-                                                MemoryRegionCache *cache,
-                                                hwaddr pa)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         return lduw_be_phys_cached(cache, pa);
-     }
-     return lduw_le_phys_cached(cache, pa);
-@@ -232,7 +232,7 @@ static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-                                           MemoryRegionCache *cache,
-                                           hwaddr pa, uint16_t value)
- {
--    if (virtio_access_is_big_endian(vdev)) {
-+    if (vdev->access_is_big_endian) {
-         stw_be_phys_cached(cache, pa, value);
-     } else {
-         stw_le_phys_cached(cache, pa, value);
+ /* virtio/vhost-user-fs features mapping */
+-#ifdef CONFIG_VHOST_USER_FS
+ static const qmp_virtio_feature_map_t virtio_fs_feature_map[] = {
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+@@ -376,10 +355,8 @@ static const qmp_virtio_feature_map_t virtio_fs_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio/vhost-user-i2c features mapping */
+-#ifdef CONFIG_VIRTIO_I2C_ADAPTER
+ static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_I2C_F_ZERO_LENGTH_REQUEST, \
+             "VIRTIO_I2C_F_ZERO_LEGNTH_REQUEST: Zero length requests supported"),
+@@ -390,10 +367,8 @@ static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio/vhost-vsock features mapping */
+-#ifdef CONFIG_VHOST_VSOCK
+ static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_VSOCK_F_SEQPACKET, \
+             "VIRTIO_VSOCK_F_SEQPACKET: SOCK_SEQPACKET supported"),
+@@ -404,10 +379,8 @@ static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio-balloon features mapping */
+-#ifdef CONFIG_VIRTIO_BALLOON
+ static const qmp_virtio_feature_map_t virtio_balloon_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_BALLOON_F_MUST_TELL_HOST, \
+             "VIRTIO_BALLOON_F_MUST_TELL_HOST: Tell host before reclaiming "
+@@ -424,19 +397,15 @@ static const qmp_virtio_feature_map_t virtio_balloon_feature_map[] = {
+             "VIRTIO_BALLOON_F_REPORTING: Page reporting VQ enabled"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio-crypto features mapping */
+-#ifdef CONFIG_VIRTIO_CRYPTO
+ static const qmp_virtio_feature_map_t virtio_crypto_feature_map[] = {
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio-iommu features mapping */
+-#ifdef CONFIG_VIRTIO_IOMMU
+ static const qmp_virtio_feature_map_t virtio_iommu_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_IOMMU_F_INPUT_RANGE, \
+             "VIRTIO_IOMMU_F_INPUT_RANGE: Range of available virtual addrs. "
+@@ -458,15 +427,11 @@ static const qmp_virtio_feature_map_t virtio_iommu_feature_map[] = {
+             "available"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio-mem features mapping */
+-#ifdef CONFIG_VIRTIO_MEM
+ static const qmp_virtio_feature_map_t virtio_mem_feature_map[] = {
+-#ifndef CONFIG_ACPI
+     FEATURE_ENTRY(VIRTIO_MEM_F_ACPI_PXM, \
+             "VIRTIO_MEM_F_ACPI_PXM: node_id is an ACPI PXM and is valid"),
+-#endif /* !CONFIG_ACPI */
+     FEATURE_ENTRY(VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE, \
+             "VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE: Unplugged memory cannot be "
+             "accessed"),
+@@ -475,10 +440,8 @@ static const qmp_virtio_feature_map_t virtio_mem_feature_map[] = {
+             "plugged when suspending+resuming"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio-rng features mapping */
+-#ifdef CONFIG_VIRTIO_RNG
+ static const qmp_virtio_feature_map_t virtio_rng_feature_map[] = {
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+@@ -487,10 +450,8 @@ static const qmp_virtio_feature_map_t virtio_rng_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ /* virtio/vhost-gpio features mapping */
+-#ifdef CONFIG_VHOST_USER_GPIO
+ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_GPIO_F_IRQ, \
+             "VIRTIO_GPIO_F_IRQ: Device supports interrupts on GPIO lines"),
+@@ -499,7 +460,6 @@ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
+             "negotiation supported"),
+     { -1, "" }
+ };
+-#endif
+ 
+ #define CONVERT_FEATURES(type, map, is_status, bitmap)   \
+     ({                                                   \
+@@ -595,96 +555,66 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
+ 
+     /* device features */
+     switch (device_id) {
+-#ifdef CONFIG_VIRTIO_SERIAL
+     case VIRTIO_ID_CONSOLE:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_serial_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_BLK
+     case VIRTIO_ID_BLOCK:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_blk_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_GPU
+     case VIRTIO_ID_GPU:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_gpu_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_NET
+     case VIRTIO_ID_NET:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_net_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_SCSI
+     case VIRTIO_ID_SCSI:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_scsi_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_BALLOON
+     case VIRTIO_ID_BALLOON:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_balloon_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_IOMMU
+     case VIRTIO_ID_IOMMU:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_iommu_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_INPUT
+     case VIRTIO_ID_INPUT:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_input_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VHOST_USER_FS
+     case VIRTIO_ID_FS:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_fs_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VHOST_VSOCK
+     case VIRTIO_ID_VSOCK:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_vsock_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_CRYPTO
+     case VIRTIO_ID_CRYPTO:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_crypto_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_MEM
+     case VIRTIO_ID_MEM:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_mem_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_I2C_ADAPTER
+     case VIRTIO_ID_I2C_ADAPTER:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_i2c_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VIRTIO_RNG
+     case VIRTIO_ID_RNG:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_rng_feature_map, bitmap);
+         break;
+-#endif
+-#ifdef CONFIG_VHOST_USER_GPIO
+     case VIRTIO_ID_GPIO:
+         features->dev_features =
+             CONVERT_FEATURES_EX(strList, virtio_gpio_feature_map, bitmap);
+         break;
+-#endif
+     /* No features */
+     case VIRTIO_ID_9P:
+     case VIRTIO_ID_PMEM:
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index ae33d403cf7..20356fba812 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -11,7 +11,7 @@ system_virtio_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev.c')
+ 
+ specific_virtio_ss = ss.source_set()
+ specific_virtio_ss.add(files('virtio.c'))
+-specific_virtio_ss.add(files('virtio-qmp.c'))
++system_virtio_ss.add(files('virtio-qmp.c'))
+ 
+ if have_vhost
+   system_virtio_ss.add(files('vhost.c'))
 -- 
 2.47.3
 
