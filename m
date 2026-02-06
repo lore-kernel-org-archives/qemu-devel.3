@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B48EEB28FA
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7352EB28FA
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIHh-00059M-6U; Fri, 06 Feb 2026 04:37:53 -0500
+	id 1voIIN-0006ft-Rw; Fri, 06 Feb 2026 04:38:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIHf-00050E-8P
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:37:51 -0500
-Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIIM-0006ab-61; Fri, 06 Feb 2026 04:38:34 -0500
+Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voIHd-0005U8-95
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:37:51 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.249.8])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f6psl0ft3z5vRn;
- Fri,  6 Feb 2026 09:37:47 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIIK-0005bD-B4; Fri, 06 Feb 2026 04:38:33 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.75])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f6ptY1YVPz5w9v;
+ Fri,  6 Feb 2026 09:38:29 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 10:37:46 +0100
+ 2026 10:38:28 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006ddde486d-113d-4a82-a362-86a55ece7129,
+ (GARM-98R002de42e544-e36a-4f38-ac08-c645ed912818,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <aa7417b1-e058-4b17-87a4-6214b6f79e7d@kaod.org>
-Date: Fri, 6 Feb 2026 10:37:44 +0100
+Message-ID: <53c7f3d1-a4f5-4c0e-a850-b3caa42126f6@kaod.org>
+Date: Fri, 6 Feb 2026 10:38:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 05/10] hw/arm/aspeed_ast27x0: Add AST2700 A2 SoC support
+Subject: Re: [PATCH v1 06/10] hw/arm/aspeed_ast27x0_evb: Add AST2700 A2 EVB
+ machine
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -44,7 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-7-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-8-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260206053340.3716041-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: ede2d9da-9134-4e8f-8e0c-e352bbed2c1a
-X-Ovh-Tracer-Id: 13144318463243684670
+X-Ovh-Tracer-GUID: 846c8853-d63a-4057-9134-b07b0586ff01
+X-Ovh-Tracer-Id: 13156421890157349694
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTELfx4rzf59fPXX+yNqOTiQnvW4EdMOtJAuky5f9x4T9Wq6aeomAxWS5ifyAyHKar4P+Y477uuQA6CMvxGophHDPoT/cPmG73ja2WnYYOkZFEZVXqh/Larg7bWOhT6Ri4Imv5dy3qLgrHaaw2ZJz29P5Ce+ALhOqr5cjakcLYIknr6dhmBeaqTOpamzDFxo4oshNuSW5NaMkqq1uRgoJhzyGyjb6laDsNb4zE3szn8aIqGVMogEhaRIxkJ6MpVr0jLJfXRvrA2R3dFynQZWNQtzCkJOmjOM1+HxPAlFb/tGpJCxnGBI0wx2S50ZjyRlP9AMvb9+8rwZkMFoQc5iTk+3P3JNETKio9KugBv+TeRpslVqGCYYNHnlObKaCXYOAhWKo9JItgEt5WZqp+IUETpr41dD2XaNuL1LRzdnw9IkzGs7uhDePLVfZhCNpLh3OS4vyOVt1hynMV3fJOBbc2qTVnQYBsU4u8oLDTMYxw4ttGBRuxIYFHL1bQdguAYrse7iCcnwkHpZnAytUZw3o8geYws2IEhgFgHUyWXEO3BDQvTtLNFRAjXchJvE5IbXNOMY2qW5RPU7ItLPitJM5x519ivh5fRPyCaDDMrxRO48HPFJ8rBL5a0YU3DIwXCDLD28i6TtkNVOIrpDKJtTWYHuyg1MDx0wY8nJxgJa8WVxsQ
-DKIM-Signature: a=rsa-sha256; bh=mHezrvoFMo7gSEmLFz1XKK3/b/7W+5JKj3X2vrj42tk=; 
+X-VR-SPAMCAUSE: dmFkZTGoPMn5Bnbo+pBYsJIUCc/4sB9bmUHdi1zUZ9CuPR36n5V1GfnbadXGu3/I2z79goPCEQdC6TNvmSLq8G26G+u442HzltxUnIg90qjDVbYP0gRy5iNHERSXGQmsmUGaII9u0CpADBrscAiVHxC9jVWbfLO9QkZAFpaxHegll6i8Q5BUXm9ZrTUGqLmWbLtcweTS+fOSwoXsBsi2PdqwnlxmJ9fgCFsJdXBP4p8XWbdUjcabRF4Y/n3McMDEuE3KBUYUG/celaBQj9hvfefbPgvXTIF3qt2DtjI7rtWZNK8xyVhi8AmgrGRLg3s/MYbeRGwvHhW1/M3oVnMraw45Bo37RzStKWnhzglPgVzE19/Ia82HZy9ojCM1VPYYJoq5XeyaavxVdDgZ6/fvhxroaT2hG1LcTcMilf6zEq/SgQweViO9OI1GiD5OGrojquQXTkl9wswg0+KEXSew7rNubAqmJNJsASmSmn9XZwZVQguTII1OXT2OZVcYJ15apukevLcWcnVL58+WIMtO/yt7N6jQSw4UzJ/GNFb46gZ53Gu8du6KjFZJCjGjR+R7J+GTLRRJrLWAOQaHXYdQQD4kkyfscqnmQgPLM2gfWwEtC7CSokZlhszzHviodelkA31Bt5VWfU1p0ngckDwFO2M3yX5yfY00BUpPj2i1lP6T04nOJg
+DKIM-Signature: a=rsa-sha256; bh=/6Xs1r6v8I+OtRCZQoC88v1s0dRscR+rmLvS5mEUEaY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770370667; v=1;
- b=X3xi1WAdPrxqmygP8L1iRNIpg5jwxgIe58cLMhvE3nxSOOvYkkqpxdVo2r/unVcKDmBjm09w
- ps7WOZhfFoTtuOYd6kG2V3eqpra7SK/H1dSi2khdWA0LHBN3n/YF/29qtoPt62O57a90WrMq156
- 08IqxpShGXfsS9Cr5ekC8htvfRL7xABLYTA7HAyeg7i24v2kwlSLHCH8uShKtjKu/oEYiWlPzuv
- cKLjr85r+YRcnzOmlNOUMy0kKi/C2OemlKEn4OAu+wQlsL7gA2xFUWZizOI9/If+N0AC//UljnB
- 8DhQ2l2PNr6VPNwkZRrAxUjZdj1avuAj2r5QX5UAYBseg==
-Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
- helo=6.mo552.mail-out.ovh.net
+ t=1770370709; v=1;
+ b=oj7G0JlG3KvUope4wqjv+GD9PB0Yuf1CdM54U3We9Z+s7ZrvATFUeazflimk9h1rdW+9irWI
+ 26S1+1tiVmoEoPo2hbH5M5DllshqWVbtKLThUND5DEqc20Hqwf9ZrnxqI0hP43xwPOKEYj94jKO
+ wG1azXOiyugNDI223iCOuGW1yjMCfLWbTaKKfXL+W3b3+5YDFSo5MJy3bRQddCfvRBJpTGfuvFJ
+ tJsPBNuSFmReQQ34Tq9VqVTAtuhs+pKfl9+YRutVDeyYeZ3YFiqZa9jFgQnsXi3OxhNPyfXkvVG
+ 4ilQAMH+AiDILNF774svKoGmvOiplMUMapNmwm05lLCVw==
+Received-SPF: pass client-ip=46.105.77.235; envelope-from=clg@kaod.org;
+ helo=10.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,79 +135,77 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/26 06:33, Jamin Lin wrote:
-> Introduce a new AST2700 A2 SoC variant by adding a dedicated class
-> initialization function.
+> Add a new AST2700 A2 EVB machine to model the newer A2 silicon.
 > 
-> This commit sets the A2 silicon revision and defines its SoC
-> capabilities, including CPU type, SRAM size, peripheral counts, and
-> CPU topology, while reusing the existing IRQ and memory maps.
+> The "ast2700-evb" machine alias is moved to the AST2700 A2 EVB, making
+> it the default AST2700 evaluation board. The existing AST2700 A1 EVB
+> machine remains available as "ast2700a1-evb".
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0_evb.c | 29 ++++++++++++++++++++++++++++-
+>   1 file changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
+> index 31f7d61117..0ff1bebeb0 100644
+> --- a/hw/arm/aspeed_ast27x0_evb.c
+> +++ b/hw/arm/aspeed_ast27x0_evb.c
+> @@ -34,7 +34,6 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+>   
+> -    mc->alias = "ast2700-evb";
 
-
-Could you please briefly document the differences with the A1 ?
+Please change the machine alias in a separate patch.
 
 Thanks,
 
 C.
 
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/aspeed_ast27x0.c | 36 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 36 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 61790ea1cc..87dcb82e1b 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -1166,6 +1166,36 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, const void *data)
->       sc->memmap       = aspeed_soc_ast2700_memmap;
+
+>       mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
+>       amc->soc_name  = "ast2700-a1";
+>       amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+> @@ -50,12 +49,40 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+>       aspeed_machine_class_init_cpus_defaults(mc);
 >   }
 >   
-> +static void aspeed_soc_ast2700a2_class_init(ObjectClass *oc, const void *data)
+> +static void aspeed_machine_ast2700a2_evb_class_init(ObjectClass *oc,
+> +                                                    const void *data)
 > +{
-> +    static const char * const valid_cpu_types[] = {
-> +        ARM_CPU_TYPE_NAME("cortex-a35"),
-> +        NULL
-> +    };
-> +    DeviceClass *dc = DEVICE_CLASS(oc);
-> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 > +
-> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
-> +    dc->user_creatable = false;
-> +    dc->realize      = aspeed_soc_ast2700_realize;
-> +
-> +    sc->valid_cpu_types = valid_cpu_types;
-> +    sc->silicon_rev  = AST2700_A2_SILICON_REV;
-> +    sc->sram_size    = 0x20000;
-> +    sc->pcie_num     = 3;
-> +    sc->spis_num     = 3;
-> +    sc->sgpio_num    = 2;
-> +    sc->ehcis_num    = 4;
-> +    sc->wdts_num     = 8;
-> +    sc->macs_num     = 3;
-> +    sc->uarts_num    = 13;
-> +    sc->num_cpus     = 4;
-> +    sc->ioexp_num    = 2;
-> +    sc->uarts_base   = ASPEED_DEV_UART0;
-> +    sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
-> +    sc->memmap       = aspeed_soc_ast2700_memmap;
+> +    mc->alias = "ast2700-evb";
+> +    mc->desc = "Aspeed AST2700 A2 EVB (Cortex-A35)";
+> +    amc->soc_name  = "ast2700-a2";
+> +    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+> +    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+> +    amc->fmc_model = "w25q01jvq";
+> +    amc->spi_model = "w25q512jv";
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+> +    amc->uart_default = ASPEED_DEV_UART12;
+> +    amc->i2c_init  = ast2700_evb_i2c_init;
+> +    amc->vbootrom = true;
+> +    mc->default_ram_size = 2 * GiB;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
 > +}
 > +
->   static const TypeInfo aspeed_soc_ast27x0_types[] = {
+>   static const TypeInfo aspeed_ast27x0_evb_types[] = {
 >       {
->           .name           = TYPE_ASPEED27X0_SOC,
-> @@ -1179,6 +1209,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
->           .instance_init  = aspeed_soc_ast2700_init,
->           .class_init     = aspeed_soc_ast2700a1_class_init,
->       },
-> +    {
-> +        .name           = "ast2700-a2",
-> +        .parent         = TYPE_ASPEED27X0_SOC,
-> +        .instance_init  = aspeed_soc_ast2700_init,
-> +        .class_init     = aspeed_soc_ast2700a2_class_init,
+>           .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+>           .interfaces    = aarch64_machine_interfaces,
 > +    },
+> +    {
+> +        .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_ast2700a2_evb_class_init,
+> +        .interfaces    = aarch64_machine_interfaces,
+>       }
 >   };
 >   
->   DEFINE_TYPES(aspeed_soc_ast27x0_types)
 
 
