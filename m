@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72578EE2084
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2EACEE2080
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJ3e-0001TE-0X; Fri, 06 Feb 2026 05:27:26 -0500
+	id 1voJ3N-0001RC-UZ; Fri, 06 Feb 2026 05:27:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voJ3P-0001Rp-Qw
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:12 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1voJ3K-0001Qw-Mi
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:06 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voJ3O-0007Sg-2T
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:11 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a7a9b8ed69so20865825ad.2
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 02:27:09 -0800 (PST)
+ id 1voJ3J-0007S7-56
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:06 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8217f2ad01eso1716662b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 02:27:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770373629; x=1770978429; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770373624; x=1770978424; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lOoNS+A0pRm92QNLedN5+q4NoV4t+NHh2EAOES94IVE=;
- b=tetvgEYTvtc41GU00ZOEZoLCsz9gBG2xfYsUXj1Za51ul8OsrzatFFL6McA3ETZTy4
- 5U8DtGT+vCqEnCLKy5kzvqtP27t5eAhyQHvqkxbbDkCoNFGeWkUREo3ciJponyJI50G0
- cI6ore0xE9U3cJoozkbK7EK6nf2viyg+XlMwJBpBWaNtQ75mw0woNzlAZVW8dcZFZ3im
- g2dm2zjYSYpC4P2RR4dmxot+zKD4ruJRgjZ+2GwI+Ui5zjdauEAOtru6WaKSA9H6vaQf
- K59gmCs9oDFmD27GJsqxrluCuvaNoumPo7HV5rfe44DSkS1L9QbB/SQLpM91QsDC1+Yg
- fJpg==
+ bh=w5B1mc9lktFkVX/c3UPr0j4SoEehm7jwPppWo5HwW/0=;
+ b=GWHt9I51S41EAx4Zr4FJoDX2R2Ruxx+QQI87VJxbaF3186wDJNcLJI6OlBZrTwK7ui
+ jAODJgJwRsgajisKM54DR41jdY1L4rSBiWaXzgsDyU3yuiw7Spk6J90Vn2Qw9CrcSqr5
+ 0JFilg7EsNkns6+BgIcW8nEuxuq7KGOS7dgqkfYDnuTsYBOzGQd6ZlzQlQTJ/9oKEiuN
+ KsYBN3PQbLGwSqqN0LnIUXwlMxQ6wDdH4Mb2xn/IepHoLsXOrZGXz18qXU3+i0N4n9Qk
+ 9uQWyUb1+NPaKGxO/kczJ21OhRJQRK2uyABaxwnI4biOX+zfb0JlkZM9wY64aeukm1S/
+ WErQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770373629; x=1770978429;
+ d=1e100.net; s=20230601; t=1770373624; x=1770978424;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lOoNS+A0pRm92QNLedN5+q4NoV4t+NHh2EAOES94IVE=;
- b=CWT7R89kTJBN8cbiTLj+v+lXIUjVrJDVbrOVTEaiUECBP2SWPl2XfSo9uBSKwTE8iW
- 58tWFXfNixtG5nyo00wVok8k25b1zkBCBNycISgtj3RWUoRjjbj8TYOk8z957re3iF3A
- XMskda2Fzt5OIxniA3qOXGud6zUBP9mGx5paSi3/Z4B9UaXZE6R1lCwDiOfUQ0JxClI3
- G37G8mpR4hJU9rTxYKQJacnuIJKH3EffGjIrigUgz8YzJ3P6JNPKwkqMTEQVhqcUrsGU
- GqNVdICYclv33pb1CWQYJ8uFweX0f/P676i+qhnyG6qfIWdQEX/AkC0Plc1sh+D+1t+A
- VroQ==
-X-Gm-Message-State: AOJu0YyR8xkFen/gVGCnp/5BfjPdLNzT5s9sFumxbYk4Nd8V1fcXEX0n
- +c1k6VtnRwaRHtsozq75Lpg0FFfy+yl3/aQm+UD8eNcR/uaMa2DH/Oj/D31eVv9ORAn8udmqNBn
- L+XrJnSiBGQ==
-X-Gm-Gg: AZuq6aJyMGEzoG7rE0TvQ+LY8fBNTE58/Hn+36uyZx+ZoNkztgj6cdUsm6rnZZdOCxd
- +TXT/9VEFx8EreoBdyDe7uHXS1JdHU9a/e9lU7jZbCkkBszLuAncK1tHsH6JaHDGY3o9zWtp2nB
- n++5tlNywStzIMK1c5MvckHyk7BSHk4GaFtTrFb3vekoDC8Jx3ICNDI1mR3kYxIUIetobRg0fgG
- Hr/PtTKHdCP2u0zt1/S3Xd6W5oUHRPPUM2FhFpXwYGrfZT5ntWVl0G7h9RGhB8AoV1OGrmeMuy+
- /vHzEP6REAxVQM4LOAbaaZjZjSSWp785hWHqMKldLPbVpmRNn89fCm/KHVroKQ8Ei1Zk9GVdTgo
- 22vWlXzJSWpn5ujNX2zj36dMqhcaKkqQrvdbg494pKb4JJrHHcG/jUVKoAk9EEYA2qellvEv8W5
- 2dTpcLdDd33f7vQ9q/GLl3i8A78syi928SGWWoepsz0D0wRLucUU2aiJ2RwvyiVwY=
-X-Received: by 2002:a17:90a:f947:b0:34c:fe57:2793 with SMTP id
- 98e67ed59e1d1-354b3e264e3mr1930895a91.20.1770373628647; 
- Fri, 06 Feb 2026 02:27:08 -0800 (PST)
+ bh=w5B1mc9lktFkVX/c3UPr0j4SoEehm7jwPppWo5HwW/0=;
+ b=vkEBtOA1gFUrcmhY+ipXaY325a+eyede8vE/dVK4FJULalj0/A7jvss5lI43Dpi7bl
+ oOfXVzdagiriKX3KbJcp1WgIKwngmMXKN6183+nmqDKEdQJCoZvAKlTDJLQFTfutqc9f
+ t/LxCQrezWgZ9dDwy45MPVd8giIgKPfreJz8uFclCGh80C2pWUc+4WqGBrpGuLRk1pGp
+ XL2XrRQnSn9OkSaqJEp94xOCrcQJ1v5xN7/2aKej2VtLhVpHJ8qEIQ27qukPWM+B1oJ6
+ y8YwD6O1fXuBwSinb7p3pDDvTvoXPjcS8yBTr0DikT3ypiQpkcpwp1xR1loz2oJMYJ60
+ ld7w==
+X-Gm-Message-State: AOJu0YyblNtKKQl03mBEJIIv31TfXTNwSguzRNWnPaImDyrZKUAEpGc1
+ ZJyOLxi4dGPAfNewYxmZuE3uInD8vE8bBUWt0xgcy+QUGtSo1vQxyHa3URLD/IUoSx2nRu9YwCw
+ zLLNT4Wl0lg==
+X-Gm-Gg: AZuq6aKE0XpXQ/9zo+FZ6b1XZqE19TMnLQog+/6P8vmxxwGOBHtPTVZwEv+CsG+cfAT
+ +HRGmtNk1wrn2Xo1QOzm+MPpMv8vSK/hI3xHeuSqidV8wCcs6PCX/haB0PCzyWKDaN74tCNecnc
+ nMpbCIm6n/5YCCsy70Hv0TNnqZQQNpVmo5eCcOM59WhGG9nRMKPF8guAnczZWF6d6XGTqfjg5rG
+ B/cSaCJEu5Equ/RPwygahznIWItiNKPNyDbxzdSd0UaGq36xxIkP2eAktUx3Q2dq6DQ/7wM4y+o
+ cldTLF9lmbH2EhF1U9ZHkMr0xcDtZGAZIBPV1dnbms+Gcwy2fFRCpsQSOn3OpnjsygsHbI1DIEJ
+ yOmfqWhjwnnTsZMLQiuXBPstHkS0XuA286RW3cH2kuKkNALUstD/d37Foq2N2YvfRSuuIxTDXTQ
+ Qt51zLz7pRAe/g02rNfpZFiQayN8xUXC5jLq/oNvwHjYvxwUSJpayyLPDZRjmH5rI=
+X-Received: by 2002:a05:6a20:d80d:b0:363:cb5a:61 with SMTP id
+ adf61e73a8af0-393ad01c843mr2550569637.27.1770373623613; 
+ Fri, 06 Feb 2026 02:27:03 -0800 (PST)
 Received: from stoup.. (bg30dhzpdc341w7g29yn.ip6.superloop.au.
  [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b1f49191sm2113723a91.7.2026.02.06.02.27.06
+ 98e67ed59e1d1-354b1f49191sm2113723a91.7.2026.02.06.02.27.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 02:27:08 -0800 (PST)
+ Fri, 06 Feb 2026 02:27:03 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Andreas Schwab <schwab@suse.de>
-Subject: [PULL 4/5] Revert "tcg/user: do not set exit_request gratuitously"
-Date: Fri,  6 Feb 2026 20:26:51 +1000
-Message-ID: <20260206102652.164018-5-richard.henderson@linaro.org>
+Cc: Panda Jiang <3160104094@zju.edu.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 2/5] accel/tcg: Fix uninitialized hostp in
+ get_page_addr_code_hostp
+Date: Fri,  6 Feb 2026 20:26:49 +1000
+Message-ID: <20260206102652.164018-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260206102652.164018-1-richard.henderson@linaro.org>
 References: <20260206102652.164018-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,43 +104,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+This uninitialized value violates the contract in the
+documentation comment, and may lead to a SEGV during
+translaton with -d in_asm.
 
-This reverts commit b422a7bff64eaf55b8250225533ca1df42c3777e.
+Change the documentation to disallow hostp NULL.
+Pass hostp to probe_access_internal directly.
 
-The reporter says "The commit breaks go; if you run go build in a loop,
-it eventually hangs uninterruptible (except -9) with a couple of zombie
-children left over".
-
-Reported-by: Andreas Schwab <schwab@suse.de>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reported-by: Panda Jiang <3160104094@zju.edu.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260202091753.28459-1-pbonzini@redhat.com>
 ---
- accel/tcg/cpu-exec.c | 2 --
- 1 file changed, 2 deletions(-)
+ accel/tcg/internal-common.h | 2 +-
+ accel/tcg/cputlb.c          | 8 ++++----
+ accel/tcg/user-exec.c       | 4 +---
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 7c20d9db12..ad94f96b25 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -751,7 +751,6 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 0ca13750f9..9e7be2d78d 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -82,7 +82,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
+  * See get_page_addr_code() (full-system version) for documentation on the
+  * return value.
+  *
+- * Sets *@hostp (when @hostp is non-NULL) as follows.
++ * Sets *@hostp as follows.
+  * If the return value is -1, sets *@hostp to NULL. Otherwise, sets *@hostp
+  * to the host address where @addr's content is kept.
+  *
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 76546c6651..3d75abbe68 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1545,18 +1545,18 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
  
- void tcg_kick_vcpu_thread(CPUState *cpu)
- {
--#ifndef CONFIG_USER_ONLY
-     /*
-      * Ensure cpu_exec will see the reason why the exit request was set.
-      * FIXME: this is not always needed.  Other accelerators instead
-@@ -759,7 +758,6 @@ void tcg_kick_vcpu_thread(CPUState *cpu)
-      * CPU thread; see kvm_arch_pre_run() for example.
-      */
-     qatomic_store_release(&cpu->exit_request, true);
--#endif
+     (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
+                                 cpu_mmu_index(env_cpu(env), true), false,
+-                                &p, &full, 0, false);
++                                hostp, &full, 0, false);
++
++    p = *hostp;
+     if (p == NULL) {
+         return -1;
+     }
  
-     /* Ensure cpu_exec will see the exit request after TCG has exited.  */
-     qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
+     if (full->lg_page_size < TARGET_PAGE_BITS) {
++        *hostp = NULL;
+         return -1;
+     }
+ 
+-    if (hostp) {
+-        *hostp = p;
+-    }
+     return qemu_ram_addr_from_host_nofail(p);
+ }
+ 
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index ddbdc0432d..f8b4a26711 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -822,9 +822,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+     flags = probe_access_internal(env, addr, 1, MMU_INST_FETCH, false, 0);
+     g_assert(flags == 0);
+ 
+-    if (hostp) {
+-        *hostp = g2h_untagged(addr);
+-    }
++    *hostp = g2h_untagged(addr);
+     return addr;
+ }
+ 
 -- 
 2.43.0
 
