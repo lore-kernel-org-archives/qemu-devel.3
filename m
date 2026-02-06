@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7985EE6B43
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F77EE6B43
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQD0-00082Z-1K; Fri, 06 Feb 2026 13:05:39 -0500
+	id 1voQCq-0007wr-Oo; Fri, 06 Feb 2026 13:05:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCt-0007za-5h
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:27 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1voQCp-0007wA-GB
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:23 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCr-0001Ry-Fd
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:26 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-64d1ef53cf3so2670945a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:25 -0800 (PST)
+ id 1voQCn-0001Qc-Ld
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:23 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b883c8dfb00so406095766b.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770401124; x=1771005924; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770401120; x=1771005920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wSmPsPtEqgdwdOtebkrXfxyaMmCrLsU35/EBxykfB3U=;
- b=nfD2bQSU4nWHxUOj//2PEQX9q2RAK9u2eRvMv77A1h+jCe0YrF757FbJTtD9HcDrzX
- 9uCIXEMwmXasma6VkZ/J7d+I/yoFrUyBj4jsXphqTtSH5mZ/ZlRy/7xPoYlcZV8YFpCm
- pySRmh+BblheHUl/rJtdKum3m7PqqguA5ACyDlXJSdxzjVg65cdR5fshkuQEwb0ECiIQ
- dfPyQYm/xRJNF3hm/15u/Ti/T9YAhv0wm/ycfcGW1McREIRKQNJcapqKjX0/Q4IeCAHC
- 0L7psZQ0R7gRqO5u/2vD7+6uoQ12chXsjon6fkweUykd3zXdpDiJICTG3gaG4RQfZp60
- OUKw==
+ bh=/u2G7YhxydUQhovvt9K1SlozqbVhhSVq7MznkHBatLo=;
+ b=FYu3+p46WflAUVJS0yv7ME2wuUt/hTvUlq3TDFOltq/GyA/G1tbXRt7RAInseHsWIZ
+ BpiIIfq3Wf5NKo8MAtUekEkGVLdlb23LgNT3gNsvGK/2aG8CJPeBBzBAwAxDv7QlxOdO
+ oyL0wWzGnwJLONC9P9Rg8j9IAmueMCp6k3+Jll0IutMtgEZ75uQfpc/UACDYBlHXbCTo
+ yYBAVLSuefmx1pTjW8LPcp5rejfGd71Jhyllc1UhGtxQh6pjVqVwZZqeUw5ymfbd3yst
+ 7db4FvRIZYlvU12gJ1nIdLpXT8TZS3x2JYHrVxJJ8ysWKpGhfsBQiJSF5x+dkx1iEdEv
+ aqww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401124; x=1771005924;
+ d=1e100.net; s=20230601; t=1770401120; x=1771005920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wSmPsPtEqgdwdOtebkrXfxyaMmCrLsU35/EBxykfB3U=;
- b=MTMI/VqXKUYmQtWxzYtCjdXTTFRc0eVHKfY1Cq2GgJtJEqaCduggHAEYmN1D13vZdp
- SQTWWCLpRHwmBEsdAUvRHpG5pkYEUZ7QDgKNLU9RCw1lLEErsOoaX/qTpIeCbO9gJRJP
- UqPump2fE0j3QYz3WYo1R4+RjEaxXUczabd8K4tIowK9uDq/3hhsV3HqRh+DuRrcInF3
- EmWSmUb9rGi3Ye127uMs6zFQ3Ve/u22KU3irGPe3lR5ZTd3Nk3FfNAdUMlhGd/7k7eNB
- F5cWdImrLMd7GLL2rCHcLodGhcJssA2UsBPdYJzDtkH0ZU9dOI8/4nVq5gqgoZD7C/tW
- Yumw==
-X-Gm-Message-State: AOJu0YwI3X5TCstWVlEY7amJ6Mo4+WeSJ/9Oldn1c1gWb2KlLpHyT9IV
- cW21uDHLxL9Y8wdJA7qd87J3GKWp36qRmRYMD8gwyDRrfBa4wukq7Hf9FWcQn5TV+eRztfeh7Nd
- zpuG4PMQ=
-X-Gm-Gg: AZuq6aJS7s6/pB5AJKUMCbYwgGqhobGgddTXXvIloEsTNu1T3Wp+/pNDHfTfm7wgZ1p
- 3CtBSs54/Z0XNj/YOxxSW0xxUx7n0FWZd82tdHfev4XTen7D3mEXGGBRdrNqe+J5Dl8xfvbKgkI
- mHAwd7rB1VbdQ9V7tmwdcF5vmt1gxifXyOdfHDsT12Pjpyc+hk7vQYbba5QlANb9ODNfDdlIYIR
- PF9FZ9Lv1v1yDUThDw5KOoYxbyC+o24xB0kKzupSEhyS7hNxq1iNyL286gwIZGptiYvt76pqXs8
- Z/2RimibIdRfRj/X4JfJJIi6Y3yGBCrWgycZUCLLTqT7NS5sUAm4pGqj/Ucb7clmoF4VhajYsE9
- xkWKp6isZPlFHLdakS545FdtS3eFffnIb2KoEo4aAzZVrd9Rn0ntguLrdSNFGD7nJOnIr5jFYvC
- X3RNi5R9QkoIbVc3zrdkSiuA==
-X-Received: by 2002:a17:907:3dac:b0:b8d:bf38:7025 with SMTP id
- a640c23a62f3a-b8edf1a6518mr188090866b.16.1770401124032; 
- Fri, 06 Feb 2026 10:05:24 -0800 (PST)
+ bh=/u2G7YhxydUQhovvt9K1SlozqbVhhSVq7MznkHBatLo=;
+ b=Aj6BV3jTcBiF0cwXvNzLguijySlZbfhXXPYKkLoppbvSQXGjKbxiOyHCpwQtX5FQbO
+ NphZao+85vZ4g5qTkkg40j3yd45R5M38gMY1fuHFp9jMF0iZkGfkedLqtXYu/jpO1SZH
+ H/gmiB7qBUz1oQomwRs74cuJwc/ypDvn4QRUaYxxy2ZA1a7OT/ynOUsqpnJjVsUfWyPC
+ cdpY2ZHf7KLSphKIADr7SCFlSGI9MHM/LszW1c4tn4U8hjvIBxYh1S7ghODFvBxNaErk
+ kkoXZZrhLVvI6w26cFKP7S3/Uu6FQttlVxUqJ7N5Vx1yT3zJ8isTHqsH9qVQcMxpVbin
+ lElw==
+X-Gm-Message-State: AOJu0Yz//xzanCR4iWHThyLNNaZkZrdxnxliZyHpfA4R6hSVdWBXkgH/
+ uLNhlkoYhijeozxqGQQS8ynJDFlmA8EZwdzcgSe9LU2Gh7j54if/jHiPNIBaRTPVMY0=
+X-Gm-Gg: AZuq6aKVnz/bmRrLSvvq8wMcEmSERDYTO+tL4C0OGJ3ciYoea6XIDqir5rRtpJ66fuj
+ Dt2Is26fSzagOdHzoFaZIKgYcx1CQGK198HjZZOhp5vxuKd2vIbTsroOMYd5B8jDs2+TlKA+Nrx
+ wNFRromuv1ddKvTChm8lhK/4cp6ckZNJHPUY31X/KLOpV+nFq2/k8tk8e33J4CyclPmWCFQgssJ
+ eezTezRFouQ9JXTapZ/NHm/GK2znnLlBeo8psmADGZjXoNdhWbuRiT2mo/9aj6ZXfnZLAVsxv4m
+ uZEH+Q3M+fR5un4fL6ik/jUSIQqZE3GaKVfsWzhKyyEeOzMptwxaFmUnd/j8NimGTMOVcWNhSRX
+ KKHWI+HmcKU3/KReYf4FSkTx5SWxJFR+3E+jnb5WL81e/kS32zaKbKQFthBC+nFZ1BnMCymjmWT
+ VOut5djjKwPxs=
+X-Received: by 2002:a17:907:980f:b0:b8e:12fa:ff2b with SMTP id
+ a640c23a62f3a-b8edf37871dmr224047466b.37.1770401119589; 
+ Fri, 06 Feb 2026 10:05:19 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8eda7a3004sm101816266b.15.2026.02.06.10.05.20
+ a640c23a62f3a-b8edacb18aesm100055166b.41.2026.02.06.10.05.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 10:05:21 -0800 (PST)
+ Fri, 06 Feb 2026 10:05:18 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 96908607F0;
- Fri, 06 Feb 2026 18:05:18 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EBA2D6077D;
+ Fri, 06 Feb 2026 18:05:17 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/10] include/gdbstub: tweak language
-Date: Fri,  6 Feb 2026 18:05:16 +0000
-Message-ID: <20260206180517.1335861-10-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 02/10] Makefile: add python script dependency for
+ meson-buildoptions.sh
+Date: Fri,  6 Feb 2026 18:05:09 +0000
+Message-ID: <20260206180517.1335861-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
 References: <20260206180517.1335861-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While "iff" means "if and only if" it might look like a typo to those
-not familiar with this mathematical abbreviation. A plain "if" is
-clear enough.
+If we update the script we should also make sure we regenerate the
+help text.
 
-Message-ID: <20260203115201.2387721-11-alex.bennee@linaro.org>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260203115201.2387721-3-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index bff3674872e..989a95c33f9 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -50,7 +50,7 @@ typedef union GdbCmdVariant {
-  * '.' -> Skip 1 char unless reached "\0"
-  * Any other value is treated as the delimiter value itself
-  *
-- * @allow_stop_reply: True iff the gdbstub can respond to this command with a
-+ * @allow_stop_reply: True if the gdbstub can respond to this command with a
-  * "stop reply" packet. The list of commands that accept such response is
-  * defined at the GDB Remote Serial Protocol documentation. See:
-  * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
+diff --git a/Makefile b/Makefile
+index 9fb55dcf330..54547a37b1a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -130,7 +130,7 @@ Makefile.mtest: build.ninja scripts/mtest2make.py
+ 
+ .PHONY: update-buildoptions
+ all update-buildoptions: $(SRC_PATH)/scripts/meson-buildoptions.sh
+-$(SRC_PATH)/scripts/meson-buildoptions.sh: $(SRC_PATH)/meson_options.txt
++$(SRC_PATH)/scripts/meson-buildoptions.sh: $(SRC_PATH)/meson_options.txt $(SRC_PATH)/scripts/meson-buildoptions.py
+ 	$(MESON) introspect --buildoptions $(SRC_PATH)/meson.build | $(PYTHON) \
+ 	  scripts/meson-buildoptions.py > $@.tmp && mv $@.tmp $@
+ endif
 -- 
 2.47.3
 
