@@ -4,88 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87480EE2080
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74131EE2080
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJ3K-0001Qp-1Q; Fri, 06 Feb 2026 05:27:06 -0500
+	id 1voJ5d-00042m-8B; Fri, 06 Feb 2026 05:29:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voJ3I-0001QC-8d
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:04 -0500
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voJ3G-0007Rr-Pm
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:27:04 -0500
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-81f47610542so1400965b3a.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 02:27:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770373621; x=1770978421; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fla6h4jLdKMGrrPAOvpc4PjnowUXEERvnLV1L7DC1cc=;
- b=j9Oj0ZGf7AvnUZXuEOeaVwcrcCZqpkckZDHDn6XiJAJvqzCvZ6rIkZKgg9abkXge1N
- BOaUsRyPr0+W/0kJ5AfET6LCVPsTvDhy3/nL/cRpps/tQPXEsTLghXCs4vGTK3QEEEwW
- XyWot2+PEeaF94O+XmGTTrsYmfbnzYXmDg+jEOkgOpDDju3fJH4kM8y0ppJ/bcA1UZvp
- JI9iUwUL6vAyxlL5Dxb+IBTLd1XeRAadKF3JQV1r5Ws5Wgtrvc+I7FV9vCBfEM1Q/JEg
- x/CLMQhEMhVg9hCn4M0JME/qqHSY+ume42/4zI2JOxsrh7i1nMUcwMLbA9YsjSlk2PSm
- a2nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770373621; x=1770978421;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fla6h4jLdKMGrrPAOvpc4PjnowUXEERvnLV1L7DC1cc=;
- b=jNqc+AT6GONhT5j+ENg3zgQQTGH4g5gFimBiNb5jVL8BsXshX3QSm6fpTWzfqpNTl7
- 7bE6Zo+mMk2rlRYx8IOooYDe4qiUpBI2jpJGAyHnOLNGzyZmr8golN6OzxeOi8IkkBv1
- +97BNZ/q6Go7t9mO9+Zpc93E5t7hbedvI66326AT6ASGP+CEerppTN0NgP1dKpFqQLx7
- XLZcXw/1orRH4A36nqNXlJpjq3CPhyIVKgY0YjWNpW+1nyqJFxKWr0lJCj3XHkslwC1e
- u1LvvxShCM7gRXdl8Gf5QpoRGRniwo7Po8zSQvcVup8+zKc/UIPv+DbhgHuGNL1FmGKc
- aHNw==
-X-Gm-Message-State: AOJu0YyYrNYdr9dvxqqG5IxAPzxCu8a7ds1hktntWP1MITPG+RXw7XxV
- EQNdzLpKKU/Z/GfRU0Z0+r3axUXEeKk5u1FuAO1gPWt+4ZfNV50e4pQcVwCy9FCuC7B2EVzzuWk
- /CUgwL/QLYBCi
-X-Gm-Gg: AZuq6aIglIjzgev3Zd/2heFWoqoV1qVKBvnB0EVo6xbl1gX26vaWDpSHrPWCP6wOxCO
- 5k1IyXt5mxVnUzIJgeYv3idn7dKZuXCm/Un43K3yH4mLOtvsuxSt6w7GhNjR7MAZ2XiuEG7bDtL
- 0LZ5Hnmw+KU+kNQYmrOSuTCbCTimh3UdyXwPllGG3CutkKp6THMiAGlE3MCMGkEamn855W2Xv6h
- tsJQ0+eBaE31vUYkk54BS821/5Tcp+VGoX2B3MMa3ds5qdvx5Reb1NjknQ61LiHO5wHcv7V64OW
- ql8djSOD4rkYy0bHlWS01R0bemjF0d21Lct84bdQAp7Pi4S2/f8ecdlHVSIl2YCOlETZ9+TO1XX
- sK4qQIGgReE30eEpzb2JZJ5MOV7oCA/e9cm9/B0317OmPCfNBbd2xGPiD2DcDkycZB/zw2zR2zu
- aj0OdeyMUMS/pCCwjE2Wkah9aiFMjczO/gDwiZRMJ1owi7X4AGD8UeankzmPu6Fx8=
-X-Received: by 2002:a05:6a20:cf8b:b0:341:9db0:61f1 with SMTP id
- adf61e73a8af0-393aeea9e25mr1994654637.16.1770373621174; 
- Fri, 06 Feb 2026 02:27:01 -0800 (PST)
-Received: from stoup.. (bg30dhzpdc341w7g29yn.ip6.superloop.au.
- [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b1f49191sm2113723a91.7.2026.02.06.02.26.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 02:27:00 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/5] accel/tcg: Don't pass NULL to get_page_addr_code_hostp
-Date: Fri,  6 Feb 2026 20:26:48 +1000
-Message-ID: <20260206102652.164018-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260206102652.164018-1-richard.henderson@linaro.org>
-References: <20260206102652.164018-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ5b-000421-Kd
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:29:27 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ5Y-0007bf-CI
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:29:26 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.9])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6r1F1L3vz5wpH;
+ Fri,  6 Feb 2026 10:29:21 +0000 (UTC)
+Received: from kaod.org (37.59.142.112) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
+ 2026 11:29:19 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-112S006a5fe1826-7530-4bbf-8fa0-9327f7c99526,
+ C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <8aff2a03-65d8-4d9f-8ed5-413e6233bcc5@kaod.org>
+Date: Fri, 6 Feb 2026 11:29:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x444.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/10] hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by
+ using dynamic register array
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-2-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260206053340.3716041-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.112]
+X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: 63527242-9e91-4125-941f-679eee3e9061
+X-Ovh-Tracer-Id: 14015202044187085630
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGyImf7dM1+SHjh4s4AbMXh16EYOdM3nLrVvLpNS10O+8YY+/Ag55l/4nlB86RY2JrgIXicPBPk5gTs9Ihrd7b9PHnK2puJLwnoBJTl+f2AcHsuCMbYG4ueoQYCaDdIx8eR7dbJ9pBo5fNcmhqz3md1O8rXOFCqAgR4ol8cyPtsX+qGxvzM3mUlMGDZBTq6fAlxHZJ5kRBmTAbIT9jjuc14o6PeYR1tQ+vUcxJhxRqOrpjaq7dmto0fkyaY/ZHK+h/U0odCJ0v11wvA74v1EWfP5tZFlfXJvwxBshBi+EAI2jSPPrL7E9tCfc1cBbDbAm/hL49sExxsEelXs51VaN01DbEaiV6dmFJKp4B0ZcEVToz+dBduQ4v+eanbURBexBYbaGJ4rBgsPMNGAeWT76mXQ/FGijKVzPI8Ae/WUmFRH0FsL7W74+R++hgMfbInAfCqKQSUB39PWH4nkoTISACCVUS42ViSr4NUAMCwRw9UABpL7jY0rHgXtdR4s+qSKSMig8sbzGnNEOgkwTWfIU7ZtLxqrY6acaoigMgCke9z6K3Uljpkj71ZZUSyswXrpAw2ONANammfTTd6qFkVBUvX9FZ3xsFbnQz82SmGuAJUB9Bx4Q2mcxe1RlcN2RwbWnwQqL6szVvudF/LJA96ASIaeapM/xYW84yT+oiq8MTJWA
+DKIM-Signature: a=rsa-sha256; bh=IcYiACwyHvZR80uNSWMGSjsvZdhm/X1alqUzVP1Y37w=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770373761; v=1;
+ b=hXqrMGXsrPTBVAeM4sPfy9G1hvFch4v6wMgaU3dUTOjeamN8WH7AGCLPwqlbrgNdZCetDHXz
+ ZpFZB2jJjPOWShhrSO60yb6i8fHzjn5GtKxC6h99R51RBB7LsBLGMJUhdRscnqTHt48mgGtwuQ6
+ oXe/4pnxP6a9cihda3na3T+iEcKq43cRvcNa3GLw9qo1xz8C4IGWJ2A1fMv4/B9A/jaa4t9wZTj
+ 2AvnlKnXp1kfTCulZOLXx+pg9i1AN3Nkr4ax2/yMP42tgqAFAh2DXogT3ERmDfhRo50Mn/05G/t
+ D8reomkiSoeC1p7SmeYBY4BPA1JIo8JE4CPvHC/QNL/oQ==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,30 +134,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass a dummy variable instead to let the value be discarded,
-in preparation for making the argument mandatory.
+On 2/6/26 06:33, Jamin Lin wrote:
+> The ASPEED I2C controller emulation used a fixed-size register array
+> (28 dwords) for all SoC variants, while multiple ASPEED SoCs
+> (AST2600, AST1030, AST2700) expose a larger MMIO register window
+> (e.g. reg_size = 0x80).
+> 
+> This mismatch allows MMIO accesses beyond the allocated register
+> array, leading to out-of-bounds reads in the I2C controller model.
+> 
+> Fix this by converting the register storage to a dynamically allocated
+> array sized according to the controller class reg_size. The register
+> array is now allocated during bus realize and free on unrealize,
+> ensuring safe access across different ASPEED SoC implementations.
+> 
+> This change eliminates I2C register out-of-bounds access caused by
+> SoC-specific register size differences.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/internal-common.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Please keep this patch separate from the A2 series.
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 6adfeefe13..0ca13750f9 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -105,7 +105,8 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
- static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
-                                                 vaddr addr)
- {
--    return get_page_addr_code_hostp(env, addr, NULL);
-+    void *discard;
-+    return get_page_addr_code_hostp(env, addr, &discard);
- }
- 
- /*
--- 
-2.43.0
+> ---
+>   include/hw/i2c/aspeed_i2c.h |  4 +---
+>   hw/i2c/aspeed_i2c.c         | 18 ++++++++++++++----
+>   2 files changed, 15 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+> index 68bd138026..205f0a58d2 100644
+> --- a/include/hw/i2c/aspeed_i2c.h
+> +++ b/include/hw/i2c/aspeed_i2c.h
+> @@ -36,8 +36,6 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+>   #define ASPEED_I2C_NR_BUSSES 16
+>   #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
+>   #define ASPEED_I2C_BUS_POOL_SIZE 0x20
+> -#define ASPEED_I2C_OLD_NUM_REG 11
+> -#define ASPEED_I2C_NEW_NUM_REG 28
+>   
+>   #define A_I2CD_M_STOP_CMD       BIT(5)
+>   #define A_I2CD_M_RX_CMD         BIT(3)
+> @@ -256,7 +254,7 @@ struct AspeedI2CBus {
+>       uint8_t id;
+>       qemu_irq irq;
+>   
+> -    uint32_t regs[ASPEED_I2C_NEW_NUM_REG];
+> +    uint32_t *regs;
+>       uint8_t pool[ASPEED_I2C_BUS_POOL_SIZE];
+>       uint64_t dma_dram_offset;
+>   };
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index fb3d6a5600..cf3a003978 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1091,10 +1091,9 @@ static const MemoryRegionOps aspeed_i2c_bus_pool_ops = {
+>   
+>   static const VMStateDescription aspeed_i2c_bus_vmstate = {
+>       .name = TYPE_ASPEED_I2C,
+> -    .version_id = 6,
+> -    .minimum_version_id = 6,
+> +    .version_id = 7,
+> +    .minimum_version_id = 7,
+>       .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT32_ARRAY(regs, AspeedI2CBus, ASPEED_I2C_NEW_NUM_REG),
+
+hmm, why not use VMSTATE_VARRAY_UINT32 ?
+
+>           VMSTATE_UINT8_ARRAY(pool, AspeedI2CBus, ASPEED_I2C_BUS_POOL_SIZE),
+>           VMSTATE_UINT64(dma_dram_offset, AspeedI2CBus),
+>           VMSTATE_END_OF_LIST()
+> @@ -1465,8 +1464,9 @@ static const TypeInfo aspeed_i2c_bus_slave_info = {
+>   static void aspeed_i2c_bus_reset(DeviceState *dev)
+>   {
+>       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
+> +    AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(s->controller);
+>   
+> -    memset(s->regs, 0, sizeof(s->regs));
+> +    memset(s->regs, 0, aic->reg_size);
+>       i2c_end_transfer(s->bus);
+>   }
+>   
+> @@ -1492,6 +1492,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+>       s->slave = i2c_slave_create_simple(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
+>                                          0xff);
+>   
+> +    s->regs = g_new(uint32_t, aic->reg_size >> 2);
+
+g_new0 ? even if the memset in reset will set regs[] contents to 0.
+
+>       memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
+>                             s, s->name, aic->reg_size);
+>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+> @@ -1501,6 +1502,14 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr_pool);
+>   }
+>   
+> +static void aspeed_i2c_bus_unrealize(DeviceState *dev)
+> +{
+> +    AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
+> +
+> +    g_free(s->regs);
+> +    s->regs = NULL;
+> +}
+> +
+>   static const Property aspeed_i2c_bus_properties[] = {
+>       DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
+>       DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
+> @@ -1514,6 +1523,7 @@ static void aspeed_i2c_bus_class_init(ObjectClass *klass, const void *data)
+>   
+>       dc->desc = "Aspeed I2C Bus";
+>       dc->realize = aspeed_i2c_bus_realize;
+> +    dc->unrealize = aspeed_i2c_bus_unrealize;
+>       device_class_set_legacy_reset(dc, aspeed_i2c_bus_reset);
+>       device_class_set_props(dc, aspeed_i2c_bus_properties);
+>   }
 
 
