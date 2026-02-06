@@ -4,105 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC58EE20B3
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AFCEE20B2
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voOK5-0001lu-Sm; Fri, 06 Feb 2026 11:04:46 -0500
+	id 1voOO4-0003QD-FL; Fri, 06 Feb 2026 11:08:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1voOJt-0001lM-Is
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:04:33 -0500
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1voOJr-00042n-UN
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:04:33 -0500
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-894a2309a29so36492156d6.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:04:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770393869; cv=none;
- d=google.com; s=arc-20240605;
- b=f9mKZ5APaE7hFr3ePnQ/uta2jCY+necsedMomUIqW/DOce+gIRAga6t66gQGzJShrP
- vVCbBJpydLUbeV79sr0meqn3EKoW1Lhs5J1OPqLEfmhAz8crwYwzhThPIFuL+cuo9fPD
- V5nrgFmgibHA6waMbTWAXSpoS3nD8e1+bny9eueAbpT7lYwGjIuNLThOHSve1SOaKueK
- AByqTvLNd36mdAqT//insYxWiqsIwYBlhysnUnhUgn5wBxyNeS56DBfCcKUsayieFVCA
- ZjpVEWGF+NeWo4NDsyCJvrnzOUAmvmF8b8qLNbuHSkFfswxqoQBwqKdXegwRuagj2dH2
- oY7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
- fh=1N8JXxzPSb1qBuNPZu2F8wnafdJwgvfuO89xwhL6jkc=;
- b=dhzxrcI8m1H2y0pKnO8Y208DmexnfnKL9CQ9o1qY07l1c4ndaPnIOkc7bVBZqrzRlF
- vZwT2sP++/Wr7efiWWTR023v3GBIy1g9He8AuxFZfpZfAhRwuo4emc3/FOrPLL9jS1p2
- nnqrWz7sZPfgFXrKBGhklOO/MxHH+KMuSSkzN4u/kV68WBszX+vw62SIOLoRZKF/8iYJ
- FC8nFsbu84wP/8EbJwBLRQrlzriGOb5wysyk0K8movnY21JtixLY31NERf7Jppa/yMdf
- +Njliav5bW100A8QcnYzh8p28U157z25So3jo6tPq0sKPFarLfrUfBmJuu19WgmxwIka
- ptCA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voOO1-0003O6-AW
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:08:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voONy-0005Oz-6s
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:08:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770394124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
+ b=ej/7ld2F36qCksMYEUsuGbDri4GY6eFemZ4qvR94xi3LqMTzU8nuxy1zCDKtGquLDAgtBk
+ +QTP2M8xTHjOF1gYcC6zQ9WwEVCoO0JmO6eWj+vn5fYoqRJCY8u9IeHQZul4ZfHrS9idJZ
+ dh53wEjlAVi/ma3LUMg9S/kR2hsayF4=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-N6KSsNv6NmyZWiqKWtTHTQ-1; Fri, 06 Feb 2026 11:08:43 -0500
+X-MC-Unique: N6KSsNv6NmyZWiqKWtTHTQ-1
+X-Mimecast-MFC-AGG-ID: N6KSsNv6NmyZWiqKWtTHTQ_1770394123
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-50335bd75bdso26896671cf.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770393869; x=1770998669; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
- b=b5hxq86pwt7t3eqp0mfXlxKC6W/wQbbtFLuIbqjyw8X7ciujLsZYitSAMfkuomk712
- P/XLWV+aRPKbxrDFPoiYXd97Dx7shvyHUXMS6bT9vQdJDku7PbEhhiJ8YoN0QIpDVV3Y
- 9p0/m+Pwg6NdiLD4VglnB9x+kpcjk30gjm376MLCqJ5Zirunxg545kiznd4rCep6n+5P
- 5na1PjXFmN1qC6tltmkg5asaxjzxyd3uxN7UbNOiGjDP6px9uQRKoVoETzsWCkUAB4zN
- ytlDv9HlRp9ziBMP0lld8BXJZx3rdUyXltaW+kCAEBNXSJGGSndNsApHT60nx5Si4AhB
- UyCA==
+ d=redhat.com; s=google; t=1770394123; x=1770998923; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
+ b=Y4lStnDUJFZnexBZAVVvWn7Qy6n+nzLJY113vRN2XsMMOuiwsdPoD1UfIL8QLF2V0N
+ nqEnnYgranyd/2mtHRF8g7X//nxamz0OE392SpYQvWLAZDX16chJtFxe/kn4cK6xArmM
+ k3yCe60Bxnzv8oxtxPTlbWxKOBz4D5jCM2AlS4EkGbfKEfWYW8+n+Anucq7Z5Y4pXVyi
+ tbg3sWNoITDkCdla+uRMTlIGeUgbZoKi5gyMupvTgVe/wPm0tHlL1SKSdJppgi2Hj9CK
+ fB3lpFtE6qqsf6oqHuyRqas4XYXqI481ulhAggnmtG4wCWsKo4xZGtVVySm9cyTQ76AG
+ uCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770393869; x=1770998669;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bwopqVA0bmz2cgeNNUWB9fnjhsfYJq3VDIvzcGlhufA=;
- b=DEwsgsajzFDGpcWSD6Nvl4wZ1pUcMW1ucgaEP874cYJLgLzVAaiPvFbD0Z5H0Yj2zS
- 0B0DEpmDrnBC6nS4GFBLQOR+Df1De6ji/4SMIfFaUuIryQ3GqXLexUOtUbNXOtQa1cNb
- Kf9bD5QEmnDAmpCwQI49rrxz9/MfNqwPXC0HBEgiaQ/VWADIdKA6rQOksnghO668Uulb
- RaWsRRvhnawwoND5g3tpCmOSAoUEte/GmJgirBoyPOQhDpycQwF1YCPxqUVJn5ensJcR
- qHbDQiTsgteU7nDqJdS7SrU8VOJRbC/ZVWNqMMtUDXPbFalO5QxlU5T8woeOVEaAFYbq
- Xo7Q==
-X-Gm-Message-State: AOJu0YwYFLeJjtoaQhWahMDP0GzZu+XRz/t3lng45Exe3ZLjF5LS5O6r
- /CSYLMUMcairb1w6UQfgSAzVCgGNsNfwVy3rPgTI0ReZ+r95QzUOEazxlZprYr3lGw03L+dXAB8
- wE6nNiBI+b1OX2Ezn+qObuus78a+2d+s=
-X-Gm-Gg: AZuq6aJZ5yuoITcYqHmA2iGmk0HlWswixL9/RS2qD1AxOQQ1gMon+A7K9X74+4SXs6D
- 7THnD6tJjPPW0dOg1SLt/feHoKI2au3hIt/mKLi1HBTilNkCfA8Yp9ivcDyqQonXY54VmN2ROr+
- ZQRqaMpuKqMCFgymvbYryKAS2WEWhPMpcLBLluF/R1NHkpnEpZsPCJQUFwRf9Fz7ygZJ7FeyNNM
- Rm/NQri/zefAezknUJxPWwkaAth8ycQBnIY9DAuFb/VjE5IOGB6L1Bj8imf14ibrgi7hU3nRSA2
- qM7Tzs1pyBiQcw==
-X-Received: by 2002:a05:6214:1946:b0:894:7eb6:72e5 with SMTP id
- 6a1803df08f44-8952fe8bf05mr98807266d6.0.1770393868520; Fri, 06 Feb 2026
- 08:04:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770394123; x=1770998923;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
+ b=QWmcXyS38HUgKEuWk65u84aDVDJiP9EhV+g5xjIR90M72uXfIWfdj7ZCn2o3o1j4FQ
+ jVypsB8aX6pOk2XySUBoq8WvKeq/uVOxLi4txeF9MjhG3/p+GYxyVOKBH1WTwg7ZlzB3
+ M7SgelmcO3LyP+RF6fqn+ufiNkdm0/tbkfxTAvWNGZFbFk0fuASVtLd2UuzWMmptzuWp
+ RJ8aDcOKj1Q3ssG4tpxhWiVCFZUFduj1OKH3wUHaJiGgkgEscMobpay//ZU752H/5t0G
+ bkFDoDMmWNohPTwMYgIe8HroRX2bPleRPFc9GRACKqlHd92ZwFVqcXnYbffv9viXsaXu
+ A9tw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnAUKLKiSfA/UJtM64mscwNv3MOIx+sX9P9hwvFyqYRwxk8dWmFkYQK1JuECZDZU0PjIJCa4We3xXC@nongnu.org
+X-Gm-Message-State: AOJu0YxJsDaKQnHoD12s/zgz44A/IzNa0RJ2/1XZ82tvu6IkMWPPbMKL
+ 6xgrRkeufixAOBZZcP4zVne9ydhdnM/5km1nXWSu4+cLc2wI/M/iu6at44ZfinvEzhAKTBLgt59
+ PK7isIHxecjwUq2qRCjl0Jd7RIQ1cp9b4H30pK2ccTY79deg/HopZxJkU
+X-Gm-Gg: AZuq6aLCYdzAUGJ3fIZzyeSZ9d2gcgMIeMditCfx7hW0qeFfgk8h6qkwMJHybnQXw24
+ oy8vdjQCXFmm7nn5VtMTz/RKZyvHmUhGxRgu0IWg/l0t8HrQ8p5CWl1TPZOjBIA1520JhLNi2Ve
+ 45lUciLZkZP6hFujRIgJeqEtYxGXC/c1olaTk/zF4KEud4IWIzlDw0SgQIlZ1JpK3fjo6cP3lPW
+ dvfLc3mp+BfTSUeO96RVOV8toB6wS3kQSdkpj45PRmvuHMSCXt6Ata7RPPqplfqurlNzvB9/kGK
+ EPQIMvYFhGA5KjGZDlu79g5waQ9SKHlZacqyPtmvX9Y0XNdnUnb6afkEEVUGNzaaWaD7XUb41lS
+ 8SCU=
+X-Received: by 2002:ac8:5795:0:b0:502:f26f:1388 with SMTP id
+ d75a77b69052e-50639a0c5f0mr40710691cf.65.1770394122644; 
+ Fri, 06 Feb 2026 08:08:42 -0800 (PST)
+X-Received: by 2002:ac8:5795:0:b0:502:f26f:1388 with SMTP id
+ d75a77b69052e-50639a0c5f0mr40709801cf.65.1770394121888; 
+ Fri, 06 Feb 2026 08:08:41 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8953bf56a5esm22705056d6.19.2026.02.06.08.08.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 08:08:41 -0800 (PST)
+Date: Fri, 6 Feb 2026 11:08:40 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
+ mst@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, eblake@redhat.com, farosas@suse.de,
+ zhao1.liu@intel.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com
+Subject: Re: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
+Message-ID: <aYYSCBQ5zjRN3djX@x1.local>
+References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
+ <20260201162001.296328-4-vsementsov@yandex-team.ru>
+ <aYOAAfzZQ3PeKf4q@x1.local> <87ecmzu0qx.fsf@pond.sub.org>
+ <f83e7888-8159-4522-a40d-352ed0a81be3@yandex-team.ru>
+ <aYTEhSjA6Dnvw1yf@x1.local>
+ <988c8747-708b-4ed7-9f4c-8d410a1c45db@yandex-team.ru>
 MIME-Version: 1.0
-References: <20260204014611.2267-1-ckeong.teo17@gmail.com>
- <60a6e029-52a1-4482-9b01-702103e76ea5@redhat.com>
-In-Reply-To: <60a6e029-52a1-4482-9b01-702103e76ea5@redhat.com>
-From: Choon Keong Teo <ckeong.teo17@gmail.com>
-Date: Sat, 7 Feb 2026 00:04:16 +0800
-X-Gm-Features: AZwV_QisR8NHsW0ysvZn8u6u6QESluY5NFSTglfAneBlzltTD7CRAMDTEAZQRq8
-Message-ID: <CAOkKuiM-6jhhSLP31gWejH8BUykW4K38pHydvKkB6oRDv_+q4g@mail.gmail.com>
-Subject: Re: [PATCH] tests: add run-tcg-tests-TARGET-softmmu to make check-help
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=ckeong.teo17@gmail.com; helo=mail-qv1-xf2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <988c8747-708b-4ed7-9f4c-8d410a1c45db@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,108 +128,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks, Thomas! That makes sense, it should be a subset of check-tcg.
-I will amend it and resend the patch for review shortly.
+On Fri, Feb 06, 2026 at 11:56:27AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 05.02.26 19:25, Peter Xu wrote:
+> > On Thu, Feb 05, 2026 at 11:06:03AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > On 05.02.26 10:07, Markus Armbruster wrote:
+> > > > Peter Xu <peterx@redhat.com> writes:
+> > > > 
+> > > > > On Sun, Feb 01, 2026 at 07:19:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > >    # @migrate-set-parameters:
+> > > > > > @@ -1004,6 +1005,13 @@
+> > > > > >    #     is @cpr-exec.  The first list element is the program's filename,
+> > > > > >    #     the remainder its arguments.  (Since 10.2)
+> > > > > >    #
+> > > > > > +# @backend-transfer: Enable backend-transfer feature for devices that
+> > > > > > +#     supports it.  In general that means that backend state and its
+> > > > > > +#     file descriptors are passed to the destination in the migraton
+> > > > > > +#     channel (which must be a UNIX socket).  Individual devices
+> > > > > > +#     declare the support for backend-transfer by per-device
+> > > > > > +#     backend-transfer option.  (Since 11.0)
+> > > > > 
+> > > > > I still think it'll be nice to either have "local" in the name of parameter
+> > > > > or at least document it with crystal clear terms.
+> > > > > 
+> > > > > I used to suggest fd-passing, but maybe you wanted to emphasize there's
+> > > > > more than fds to be migrated at least for tap?
+> > > 
+> > > For vhost-user-blk it's the same: not only FDs.
+> > > 
+> > > > > Then it can still be
+> > > > > "local-backend-transfer", because nobody stops a device to transfer backend
+> > > > > states in a remote migration either.. so "backend-transfer" seems to also
+> > > > > work for remote migrations, but it is not.
+> > > 
+> > > Hmm. I imagine a mechanism, where OS supports passing FDs to another host.
+> > > This needs support for actually migrating the corresponding kernel object
+> > > by OS automatically. But theoretically I think it can be done transparently
+> > > for userspace QEMU process, which will simply pass FDs to the some special
+> > > socket, similar to UNIX domain socket.
+> > > 
+> > > So, the key aspect is that we should be able to pass FDs to the migration
+> > > channel, which currently meant that it must be UNIX domain socket, and it
+> > > must be local migration. But in future it may change.
+> > 
+> > That's a nice vision, but IMHO we shouldn't take it into account when
+> > defining any QEMU interface, when it's only about pure imaginations..
+> > unless there is solid work in progress, or ideas proposed / known feasible
+> > at least.
+> > 
+> > > 
+> > > And yes, "backend-transfer" work for remote migration of backend.
+> > > If we ever implement remote backend migration, why not to
+> > > reuse "backend-transfer" for it? Even if there will not be transparent
+> > > support from OS, and we'll implement another mechanics, we may add
+> > > new parameter
+> > > 
+> > > 
+> > >     backend-transfer-mechanism = "scm-rights" | "something-other"
+> > 
+> > Yes, this will look much better.  We likely shouldn't make it "scm-rights",
+> > it should be generic terms that applies to all platforms like "local", even
+> > if the implication / implementation might be different on various
+> > platforms.
+> > 
+> > That's also the major confusion I got when I was reading the other
+> > vhost-user-blk series, thought it was a local migration but not.
+> > 
+> > I feel like the interface is simply wrong to make it one covering both, or
+> > at least it shouldn't be a boolean as you said because it represents more
+> > than one use case.
+> > 
+> > If it's a boolean, it also shouldn't rely on UNIX sockets if it was trying
+> > to describe a remote migration, right?  The vhost-usr-blk way of
+> > backend-migration doesn't require UNIX socket, or does it?
+> 
+> It does require UNIX socket too.
 
+I'm lost once more.. :( Could you share what requires the UNIX socket for
+the other work here?
 
-Best regards,
-Choon Keong.
+https://lore.kernel.org/all/20260115081103.655749-1-dtalexundeer@yandex-team.ru/#r
 
-On Fri, Feb 6, 2026 at 10:53=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
->
->   Hi!
->
-> Thanks for your patch! A comment below...
->
-> On 04/02/2026 02.46, ck wrote:
-> ...
-> > diff --git a/tests/Makefile.include b/tests/Makefile.include
-> > index 7728098981..5a99f0a920 100644
-> > --- a/tests/Makefile.include
-> > +++ b/tests/Makefile.include
-> > @@ -3,29 +3,30 @@
-> >   .PHONY: check-help
-> >   check-help:
-> >       @echo "Regression testing targets:"
-> > -     @echo " $(MAKE) check                    Run block, qapi-schema, =
-unit, softfloat, qtest and decodetree tests"
-> > -     @echo " $(MAKE) bench                    Run speed tests"
-> > +     @echo " $(MAKE) check                         Run block, qapi-sch=
-ema, unit, softfloat, qtest and decodetree tests"
-> > +     @echo " $(MAKE) bench                         Run speed tests"
-> >       @echo
-> >       @echo "Individual test suites:"
-> > -     @echo " $(MAKE) check-qtest-TARGET       Run qtest tests for give=
-n target"
-> > -     @echo " $(MAKE) check-qtest              Run qtest tests"
-> > -     @echo " $(MAKE) check-functional         Run python-based functio=
-nal tests"
-> > -     @echo " $(MAKE) check-functional-TARGET  Run functional tests for=
- a given target"
-> > -     @echo " $(MAKE) check-unit               Run qobject tests"
-> > -     @echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
-> > -     @echo " $(MAKE) check-tracetool          Run tracetool generator =
-tests"
-> > -     @echo " $(MAKE) check-block              Run block tests"
-> > +     @echo " $(MAKE) check-qtest-TARGET            Run qtest tests for=
- given target"
-> > +     @echo " $(MAKE) check-qtest                   Run qtest tests"
-> > +     @echo " $(MAKE) check-functional              Run python-based fu=
-nctional tests"
-> > +     @echo " $(MAKE) check-functional-TARGET       Run functional test=
-s for a given target"
-> > +     @echo " $(MAKE) check-unit                    Run qobject tests"
-> > +     @echo " $(MAKE) check-qapi-schema             Run QAPI schema tes=
-ts"
-> > +     @echo " $(MAKE) check-tracetool               Run tracetool gener=
-ator tests"
-> > +     @echo " $(MAKE) check-block                   Run block tests"
-> > +     @echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a=
- given target"
-> >   ifneq ($(filter $(all-check-targets), check-softfloat),)
-> > -     @echo " $(MAKE) check-tcg                Run TCG tests"
-> > -     @echo " $(MAKE) check-softfloat          Run FPU emulation tests"
-> > +     @echo " $(MAKE) check-tcg                     Run TCG tests"
->
-> Could you please move the new "run-tcg-tests..." line next to the check-t=
-cg
-> line, i.e. within the "ifneq" section? It's a subset of "check-tcg", i.e.
-> TCG-based tests, so it does not make sense that we show this new line whe=
-n
-> QEMU has been configured with "--disable-tcg", but not the "check-tcg" li=
-ne.
->
->   Thanks,
->    Thomas
->
->
-> > +     @echo " $(MAKE) check-softfloat               Run FPU emulation t=
-ests"
-> >   endif
-> >       @echo
-> > -     @echo " $(MAKE) check-report.junit.xml   Generates an aggregated =
-XML test report"
-> > -     @echo " $(MAKE) check-venv               Creates a Python venv fo=
-r tests"
-> > -     @echo " $(MAKE) check-clean              Clean the tests and rela=
-ted data"
-> > +     @echo " $(MAKE) check-report.junit.xml        Generates an aggreg=
-ated XML test report"
-> > +     @echo " $(MAKE) check-venv                    Creates a Python ve=
-nv for tests"
-> > +     @echo " $(MAKE) check-clean                   Clean the tests and=
- related data"
-> >       @echo
-> >       @echo "The following are useful for CI builds"
-> > -     @echo " $(MAKE) check-build              Build most test binaries=
-"
-> > +     @echo " $(MAKE) check-build                   Build most test bin=
-aries"
-> >       @echo
-> >       @echo
-> >       @echo "The variable SPEED can be set to control the gtester speed=
- setting."
->
+There's indeed the inflight->fd, but it's not migrated but allocated before
+taking the inflight buffer.  I don't see how it requires UNIX socket.
+
+> 
+> > 
+> > Especially, if we still want to have your new proposal try to work for CPR
+> > too or even replace it some day (or a continuous set of proposals in the
+> > future, from different developers based on this feature), we need to have a
+> > solid and clear way represents what CPR does, which is to do local fd
+> > sharing.  "backend-transfer: local" or something similar can be that.
+> > 
+> > > 
+> > > (or we can put this into "backend-transfer", supporting passing string to
+> > > it and deprecating boolean)
+> > 
+> > It can be a enum, something like NONE, LOCAL, REMOTE.  But before that..
+> > 
+> > > 
+> > > More over, this future "remote-backend-transfer" could be used for local
+> > > migration, so again, it should be called simply "backend-transfer"..
+> > 
+> > Yes, REMOTE might be slightly misleading.  And considering you seem to want
+> > to allow any of below to work:
+> > 
+> >    (1) enable fd migrations only,
+> >    (2) enable remote migrations on backends only,
+> >    (3) enable both of (1)+(2)
+> > 
+> > Maybe we should have two different feature bits?  The per-device one can be
+> > kept as backend-transfer, however we need to change the global migration
+> > knob to something describing a local migration.
+> > 
+> > In summary, still 1 new parameter for migration, 1 new parameter for
+> > device, but adjust to:
+> > 
+> >    - Migration parameter: "local", boolean, when set, the migration must be
+> >      a local migration within host (which requires UNIX sockets on Linux)
+> > 
+> >    - Per-device parameter "backend-transfer", boolean, when set, device will
+> >      migrate backends when migration happens.  Otherwise, backends are not
+> >      migrated; dest QEMU needs to re-initialize it.  The backends may or may
+> >      not contain FDs.
+> > 
+> >      When the backend device states contain FDs and FD migrations are
+> >      required, it requires "local" set first above, or it should fail the
+> >      migration when user requested backend-transfer=on.
+> > 
+> >      When it doesn't contain FD at all (or FD migration is not a must?), it
+> >      should either migrate the backend or not depending on the user's
+> >      selection.
+> > 
+> > For tap (your series here), you need to set both ON and required.
+> > 
+> > For vhost-usr-blk, that only needs to set per-device knob to ON, the other
+> > one shouldn't matter.
+> > 
+> > Then when we want to replace cpr, we request people switch (cpr-transfer
+> > only, keeping cpr-exec / cpr-reboot aside for now) from setting
+> > mode=cpr-transfer to local=on, which hopefully will start work as before.
+> > The per-device parameter doesn't matter in this case.
+> > 
+> > Would this be more reasonable?
+> > 
+> 
+> Hmm. So, with backend-transfer=on on device and local mig parameter set to false, it fails?
+> 
+> But this way we'll have to set backend-transfer to on/off before any migration (local or
+> remote) on all devices with help of set-qom. That's not comfortable.
+
+Personally as long as we can separate the two use cases with the two knobs
+properly, then it will look good to me.  It doesn't need to be strictly a
+failure on such conflictions indeed.
+
+E.g. we can also define this case (local=off, backend-transfer=on) the
+other way round if failing is not wanted; that is, allow migration to
+happen but skip the part of backend transfer that requires the locality.
+
+Fundamentally, we should accept two kinds of backend-transfer impl:
+
+  - When it is supported regardless of local=on/off.  I believe that's
+    vhost-usr-blk's case (but I'll now need to double check with you again
+    above on UNIX dependency).  Then this only relies on the per-dev knob.
+
+  - When it is supported only if local=on (this series).  This part is
+    where we can define the behavior of whether we fail the migration on
+    local=off, or we skip the feature instead.
+
+So I think we can choose to skip it for the latter.  It should almost be
+the same logic as what you have done in this patchset, afaict, besides the
+rename and re-definition of the migration knob.
+
+> 
+> The original idea was that backend-transfer is done for the device when both migration
+> parameter and device option are set to true. This way before the migration (local or
+> remote) we only have to set appropriate migration parameters. And backend-transfer
+> per-device options can be setup once (and the same way) when starting the QEMU, or
+> they may be inherited from Machine Type. And with such logic, it's good to have
+> similar names for migration parameter and device option.
+
+I hope above will solve this problem.  IIUC what you described should work
+if we tweat the new proposal on the local=off & backend-transfer=on case.
+
+> 
+> Considering all this, could we keep the logic as is (in this patch), but rename
+> backend-transfer parameter to local-backend-transfer, as you proposed before?
+> Or turn it into "backend-transfer" = "local" | "off" (but IMHO it's too optimistic:
+> who knows, will we really add something into this enum in the future? I don't have
+> such plans)
+
+IMHO "local" would be nicer because it's very simple, generic and clear on
+is own.  It almost says "requires UNIX sockets" on Linux and it also opens
+the door for this parameter to be reused when without a backend: for
+example, when some frontend or any-not-trivially-a-backend also want to
+migrate an FD in the future.  I'm not surprised to see it coming.
+
+But let's finish above disucssion and see if we can reach the same page.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
