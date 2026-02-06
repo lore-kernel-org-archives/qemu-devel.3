@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E39ECD9BC
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D465EECD9BC
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCOf-0001qZ-BW; Thu, 05 Feb 2026 22:20:41 -0500
+	id 1voCOX-000133-R6; Thu, 05 Feb 2026 22:20:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO5-0000Ut-6D; Thu, 05 Feb 2026 22:20:09 -0500
+ id 1voCNt-0000RA-08; Thu, 05 Feb 2026 22:19:54 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO1-0008VR-TY; Thu, 05 Feb 2026 22:20:04 -0500
+ id 1voCNn-0008HM-VJ; Thu, 05 Feb 2026 22:19:49 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EWugcbRIWfG4XjWQPFsuUZCl4TEq/gSfA+2eUqS5WtdD30G8Ddn/frIiKutgBif3MBeYPo3vUIjCdBtUceRuahNVKDsI5WN1bA1I4pfyTe06SFfoZDFgbX0Jkwj7kWGVEMa3AmJn6Y2OPjgMGSro+boml2b1L/BgTfaQBWC7aMCGz3leGpTcTXzn5zX9DqlQokzpYYAUBucT1SLOe0l6ucsayN15AJGUOjIrVfV9G5O3L92zUWRsPEL5auJuFKUhTfvZjejbasqTaTcMhN0PhXdZu7cKp4AKTBtk2+SYGIh4FmJjnLKVbf5igDwWbEahMfC5XRwKJPplAfYVrbXKmw==
+ b=k66BpNma3/jy3w8Q1IWcLyF2i0Z014cScLxac/rdMvnShiHgUDyZ5c8oZ0GfsbO04OFpmSTeOdf213meiOX/o6QKzRUyLopzEgmAFYxllmAN/W4smB3S5Khl/9WalaXQHfQ/sFIgxZ71os6gj7nqcYhpH9N5pg71BUSu9b1tsUoxZtSbsUHZr1fhuSKJQJagkSUiPQV4zMO6ObITLnlrB6KqM6Yaj5OsLGZ7SB79tFEnKd0+QokACd4RI6jU4A4Q9DWFmTmllDblBgoTfd5rlc9dVUU+myZqcqshS73QaUeDcbS10XDk5VkT7WmSkx8cmhZk3UbYu5UDVi0wNz7E3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9LHe08sXo0xDLYJlKJBsDA7nPDg7IVxNtEj1DPMBLg0=;
- b=Q4ifmHkB5Cn6HfPiv1KAWzuHYfS1rvybiQ7Shw2HmhHCMQ8Z+d+PNk3kNiWFakZQBvVBhY3gUlJQMaHPKX0+86tZmU/4eyJrIba3WVdcGfdYGSl/NbSuJtqnXoiY8CNUVYtkK7Xxn0Izo5JpxCnWvXNCoOCv7myZ8teivLIoKHFGD57ZTpnLtJNJUmEQeaHgeh+Z2nN5I/H9HpGeDD1yZmaKTVXc+uoorSJkZbzmcvbFQeVMbQRbAlAK2W+r2FPv+SwpMYB0HLp7e1RILU2IhMdVCGVZG9of6v7ZSp3QIwZXK+bNCKw1UPzUlMwEgQzQb011QAEzwQsD//oOqFioyg==
+ bh=r58DxkdQ+dm+tkkf9kG13atVGBB92OKwRekROdlcPQ8=;
+ b=djgGn7CmmweepaHu/gHJXdvMWhS1cqQADhNCG6GfYaDTCQdbMXWWeAlIj1aGxAhVHFIQG01huBV7Hf1B+5y/Cf0gCQpF7Q2H5BTzBvgAWHuP+EzwpMcEubCwKLnOBLQQSu2lF09Ofgn8G3c8JraQLNd1n/OZAbHV9PONSG8bp+IW1fJpRn9YLyX8De5HMThR+0RIAyD5hUTxATbKF17ofoq6v4t+Lks+chwWQW7KN2Z8LLgInuZNOPtAE6mXOwbrub/P4T743ADNctJFygv1Tpl6IiCXK33YsdjFIAU2uUowUHMwi/WH8uGcpoLPtRk0raloUifj88vICQzgFQ4MRg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9LHe08sXo0xDLYJlKJBsDA7nPDg7IVxNtEj1DPMBLg0=;
- b=DxocWNvTlO7a83t1lXTVvmMZ+fx9wgF9nDaIyCyGTsYKtNK7+uVTeLSaqDHw4e90LUfKbSLp037wcJwBAd9sMxOxNU4bJD/xrJnH9e0folzX+SS0C5xYSy3VhOfoC8saGwk1jqIZDVg2FDE7c2ia7uC46RNK98S74Ft70BZ1A6zY60Db0OpKvdBB/pQyluyDfc8TxpuFBxsyvQ52eMobk/Fb/LXv5yFzZVaFjxOt/c2ctnlwAGWrsY2AT+N6FjVF6V78y7+ZtHTU+34vQc/tGgZbRInlYMCVVzBD7p2P52g83+sSfOqZZ7gyCk06DeyimiLpPHW491IDhQbNvfrtkg==
+ bh=r58DxkdQ+dm+tkkf9kG13atVGBB92OKwRekROdlcPQ8=;
+ b=DiHctALLiv66cU5mw7BmR2+f8fEwK/MNa7OURz81TVHcsh3xU9yCKZe8zVPuESqOQCRjitAuHIbUlHdkRSln6JlCzeayo6cQXHDrD8Jvqmqev+fvV4mT67RcnVjXMg7zNkjLsCfk10JzaG619i/CEwPOqT/RQpw53dOu+HFKaAxVrMxWeAzbe9VK5bwvIMFWA82aEs5iF+9JaRoEyOijMGchOFaCK3ILrDLlMeDE8Jcoox+j6//MkCQGv7uMzBKNBfyEChpsLWmWVIw+4945Vlqh2WJycYZpnUMgS/8t0qto5t8B/o9RoXMuiIUZ3UwieSNX5KqD6dcZ6H8ASUEpkg==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by TY2PPF4DD1DCAD3.apcprd06.prod.outlook.com (2603:1096:408::78d)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Fri, 6 Feb
- 2026 03:19:52 +0000
+ by SEZPR06MB5762.apcprd06.prod.outlook.com (2603:1096:101:ac::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
+ 2026 03:19:35 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 03:19:52 +0000
+ 03:19:35 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -55,13 +55,12 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Patrick Venture <venture@google.com>, Stephen Longfield
- <slongfield@google.com>
-Subject: [PATCH v3 15/20] hw/i3c/dw-i3c: Add controller resets
-Thread-Topic: [PATCH v3 15/20] hw/i3c/dw-i3c: Add controller resets
-Thread-Index: AQHclxdzas1/eK2dlkmN7pQITbBLSg==
-Date: Fri, 6 Feb 2026 03:19:49 +0000
-Message-ID: <20260206031926.3227848-16-jamin_lin@aspeedtech.com>
+ Patrick Venture <venture@google.com>
+Subject: [PATCH v3 05/20] hw/i3c/aspeed_i3c: Add more register fields
+Thread-Topic: [PATCH v3 05/20] hw/i3c/aspeed_i3c: Add more register fields
+Thread-Index: AQHclxdrgpZwCqKkPkS5Nx9odxnxtg==
+Date: Fri, 6 Feb 2026 03:19:34 +0000
+Message-ID: <20260206031926.3227848-6-jamin_lin@aspeedtech.com>
 References: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,90 +70,90 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY2PPF4DD1DCAD3:EE_
-x-ms-office365-filtering-correlation-id: fff3e3be-7d17-4ff5-4925-08de652e981f
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB5762:EE_
+x-ms-office365-filtering-correlation-id: d50105d3-7527-42de-de6c-08de652e8d84
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|376014|38070700021|921020; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?HeirtXBWLNFJF0Ze8uuW3S6KzhpohU97Y8q6a05biL17bf6629KvRtpXs6?=
- =?iso-8859-1?Q?SunREe4792VCjTmZxw/CxL4IwdEmu1H4Bp1fTHIuAvpcV9pgj4Riaja5Id?=
- =?iso-8859-1?Q?98JqVNdceSY9XkjIdZ2VCRoR9i8lGhA50VKHzt2jtFHp4FVBY+1XM61OT5?=
- =?iso-8859-1?Q?ZK5wRvByWQUFbGJIurrRlu0+GuSCAkejdmtYf8bP+2qvdsRlSbrbdYk5pt?=
- =?iso-8859-1?Q?nWOC389GGNo8uB3e1YE91RWX2MnLAxBaQGTd59C7DWs/hLWKhnKgysUVKU?=
- =?iso-8859-1?Q?z9ZT2vudirkc/kefqp1rv4xnXbh85UJVPGK+fhXZy7TeryLVxvu0AHzYZK?=
- =?iso-8859-1?Q?Doj4gtwFVvDocymYagYLNOAnRBOZImMKoTAj/zgOu8C3lMKdjO3wotWMei?=
- =?iso-8859-1?Q?cdEN9FNygd3SutCSuHDovAC8RLgK5VXn54jKcwDwrYpxa2hTaKm0S31/H+?=
- =?iso-8859-1?Q?I537EMqhqgIlpKClnB4jnMKZqzCYHpA97UuIu4Z7M4g18nHVDmWuxXse4e?=
- =?iso-8859-1?Q?48tWHvPMtExqGkPhB6NjPLfNSfixWPxIrYFS4uKjJ3wcvq6sKYpVdOl/eJ?=
- =?iso-8859-1?Q?srGNBegNDjJ+rhRWlsibsV89RSIF54xdAjSvos5rR+xDMBoSO5nSuy2wO6?=
- =?iso-8859-1?Q?e61HMEa+h5X/LnP07xAkkoxzEcQLHOgDUtpS+6k9PFuXhj7t3PUHYdY/bX?=
- =?iso-8859-1?Q?QxO8qhjcHo7nmn3L+XbC3mg7hQwm5cH32q61VlNPdvnuYDRRcpqRllOhZb?=
- =?iso-8859-1?Q?+NbSeSQSFfyMIVpGYEzBMSkFx1uCGKEcoSA0gGi74xZo6iUOvVR30Zb9CN?=
- =?iso-8859-1?Q?I6LV3zqpN3E1AdqNwldyqiEJ2tdvUHBbxZxN8VcDj2yGpe1MVMEp+RRftQ?=
- =?iso-8859-1?Q?AQxon9jUGSwxM5S0giLQoqNfI0mG0Zl7WdXqB9DSTgSHBHinFRxErENacj?=
- =?iso-8859-1?Q?fv94FRX304BxldiNHyx/1szC1i6y9MP89CkzeoCO42tCCslFFCDQmLfVoJ?=
- =?iso-8859-1?Q?XDy9zD54ZW+OmkrBmRkgRKe0wxYkHcNuCvserQfvXMVDX+2/4dRguSKzHY?=
- =?iso-8859-1?Q?4c3ob2S1bJTCqbSVW2ekLyz1I3jMfo+HNvfPx+ir9TitDFvxP86zbVZRGv?=
- =?iso-8859-1?Q?/PZVXzsB5fqRFPwmZ0Af2S5plYF05fa8eZBDMYJKzOXdVQ2zCndBCnW3/l?=
- =?iso-8859-1?Q?Lua35uL2sfVqzPaydOCPm+G/z+Gju8wwskPWqloqw2Yqf0p38V1ofdBkCW?=
- =?iso-8859-1?Q?3lO43Z7MzZZ5uvO/5Y8PaupyDOcEbR+TaBj+fKjZrO6wxiR/DcNaigUz2/?=
- =?iso-8859-1?Q?gYiTFpAJztC5XiDdRno+n6BPZ/BGDQ1QHuKX5cSq4NU28GzzAhAcWPSaMu?=
- =?iso-8859-1?Q?qMad0/0ZRPicXVh/Vcb5xVB2B6xgx1nFlVsnfX01LqMEEPm3rRULZWDT+K?=
- =?iso-8859-1?Q?7POdM307YS0t/tfKZ1XGI/vekHqTubwwW7Y3GlZnT+tnVfNp9JSmAqbWrJ?=
- =?iso-8859-1?Q?lidn37lFAeNZGqVrI6vleFRWgbXG/PNLRIxjKUdVjWIKZcsUYwU0U8f0c3?=
- =?iso-8859-1?Q?giP4g07ObZ2Ncjw6zyJbr/e1PQynLHQ5FwUrFdj23OrD4OhAXj9j4X46L7?=
- =?iso-8859-1?Q?60a2Z52t3bqfRI2gNr7Y3os+ugpmkQsbbEN4C+SLsfGxMhugQD+Zou0ibW?=
- =?iso-8859-1?Q?CLKOr2LvKtja74ZIAPYhUK8yAH7aFdO7ttmTK1v1?=
+ ARA:13230040|1800799024|366016|376014|7416014|921020|38070700021; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?EyZeME1gq9QUqHahMde3SOelCx5yFMmzq18n6mHzsUzdb/dC3miAbRvS9l?=
+ =?iso-8859-1?Q?HN7d3wYWp9V1DG02dByoguTsJSzsQRcp1DfSuGWiOY4WVpoOeyMgt6eXzQ?=
+ =?iso-8859-1?Q?xNs2xSKI2B9rqeEPPwgfoHnYqKzHDOiXu9ejP5Qz8FJMfBNwioeiQ1RHn2?=
+ =?iso-8859-1?Q?1Z3HvVtaPpVNDh0jA424bgBZUUAUjcLllR0Yi9/j2Z6SniFSVJLlSNnpmb?=
+ =?iso-8859-1?Q?CnkfKsn1TUj8Vf4dAfspTHdCR4oOmI6ARRQH3vFw/38FuzbyEk1KNvk0Vi?=
+ =?iso-8859-1?Q?Evb+XHiY13kOfPnjej+racTJDDBu5Bv85ukuxKbBr9b9EA2Ik6cjRyCV3R?=
+ =?iso-8859-1?Q?CW4ZQ4axNjXenQVQ7QeIh1TmgU+D1bZmleZCe2nCsIC5GBUd5a9nyAHJ2d?=
+ =?iso-8859-1?Q?Wb9mc5cXprbbcl7iOC4AgtQy90qEKRjAvewkUURU/cye95AFMWHRIwLR2P?=
+ =?iso-8859-1?Q?xoF7sxVojp1k3WCDvNURAoJV1xCGGngnlF0N/ynbAjnrLSjWt7ghS6jxpg?=
+ =?iso-8859-1?Q?NQ3J3aVAe7TH75kr6jhd2x94gONjmQXW6jtASiKuh5MtmwCBA4Lq6M+Fg6?=
+ =?iso-8859-1?Q?fY/QFxd9KWnK73M0920rXKpcRJgEurGG0Lc1vRoBU0Nhg1HzhwiLnmGEtp?=
+ =?iso-8859-1?Q?g8wv+qQsCr+ZcmNUFhbNGyJf+Iaru0L3lNPTCb7ZYqB0/ueqt6jzMe9id1?=
+ =?iso-8859-1?Q?iDzSlygrjVEBJ6xbHzwWhg0mphvbxJ5X3INnQ4LairrqwkH8zsLsk3jkMz?=
+ =?iso-8859-1?Q?qrZZ/Rcc3a8dO45WFvS3gFKTlAk1j+kidsb3tx0DqHjYRmRD90ZNbyjiF4?=
+ =?iso-8859-1?Q?QrDXqLhNkPnaBbVkthsJ4Pn83/IdqLuwhGRaOGQt3TnqxwsPX4KnBYrLg1?=
+ =?iso-8859-1?Q?pZlPYGUFF3x5hs8fxJWbsudCzBS4UUfKtDDdcFmIVIiPNmo9bPIjLR64jS?=
+ =?iso-8859-1?Q?O+PY/Lqx93QBR3zKCx5o/n6MVN7dtWn6qx57Dr+A6btZkRXWNCkF7jXnnf?=
+ =?iso-8859-1?Q?58y8QRD8mXWIORKsCXngp962Gk+1baD33gsuBz3TzzByU9mp29NweDsKxl?=
+ =?iso-8859-1?Q?6ACn9hEsL/HLSjKUejfcDovNC2X1lMKNK7fiASrOvi0BX1OQetT9rrmnq9?=
+ =?iso-8859-1?Q?KtjlPoVMky1IAOtNVhowGeENW23T/hfPgDY11rf+F8P24LwkVBC+N8mIDn?=
+ =?iso-8859-1?Q?s7pW5TcpIov3sizhRVkRGQSGFRkPXea2LarKDzR1aOaRgvDN9gkhc9pvC8?=
+ =?iso-8859-1?Q?oswJLE+kYM8rVts4TiSBNPb39JmBXyPPR1OUZ0EZnHDa/EUHWfuj+PxOv2?=
+ =?iso-8859-1?Q?qIQIYQ8hmwN3kMK/00P+b9dFexcalIzCnQORZkygtExJY6mvIe8p0eK8pV?=
+ =?iso-8859-1?Q?l6/pZFUwbrSE+APXxSgNIhbi3D59E69tfyYP2JkoNQ0HZBLAZvsgz6KYUV?=
+ =?iso-8859-1?Q?zoKSLOXBPtjqLgrEFSx6zy1pyQJ0NRKVxiX3OzMM999f81TQhAx+A/SxxC?=
+ =?iso-8859-1?Q?3SChlaMiWHqVM/wyqLUSCAKfpo8bwUe+d95gTcGFPHD/KjGX3ExQ6FTuxm?=
+ =?iso-8859-1?Q?hkVfxZLm+/Q33ZCdXidcxUT5ZKoWt/tMqGdWpVZUn2F3M2HSdXa1Sf+nWx?=
+ =?iso-8859-1?Q?GSBedU8E8LIwTN6yO/T6JAKlFbwvr6eZ3jfi0zbxwWETJiMmkHrmQujCtZ?=
+ =?iso-8859-1?Q?rygzWyx5CTH+d1TvO9GD8imfWaiTz1hxt/ChaGBi?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021)(921020);
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?utixSc5kY8P4mL90OR5KttY3oJjks8E+j9HjNyEcm3t2IuF9cfzH/ZJpgi?=
- =?iso-8859-1?Q?rtMQZjyG87P+6bLcLhM/S6t4ecYZIZgQdkq+xFuXDpe6vfegZCcrk+HalX?=
- =?iso-8859-1?Q?LTQ+9HiOjtN+GUihBf8VxxV53RxMiQxQDgSqxiPb3wFReGp9fYNX42K0BH?=
- =?iso-8859-1?Q?vZCIEMsVfzOWOFCRjBRg3xs8C5YFl08uppiSaCbkAEIbt3X+QNh4SuLUHM?=
- =?iso-8859-1?Q?O6kqVzXxLuQyO2v1z1oKF0kKSlHtgfUj4njomRq5RqakonpZL4NRxN4CnK?=
- =?iso-8859-1?Q?kno6Zm+/siNWpuhHdqCuADU7qwzQUHGK0w/Qy8dhud+djHAnGqlH5AMYVa?=
- =?iso-8859-1?Q?3Qib6ZQSUldVLBxssckUqpBsZtGJ8/dlb4YrsEvmj2cdCwUIRrZ/qrw7lc?=
- =?iso-8859-1?Q?mcnmgZaV8j2UEPSsldX7IzCof5R6k14XCySBjAR5vgPeFMggTae6QW+YUT?=
- =?iso-8859-1?Q?puJGZvzl0RHbGVZWun6NbIaNJjwQJ2zYlZVtbVQZmmh/RA2UmCDSWakZZ1?=
- =?iso-8859-1?Q?Aupe7UZPt3XSeEobwKkyvqsEDCBa6MQVFEBvH1ucDdy0extkV4Z2exsv2F?=
- =?iso-8859-1?Q?qQiXkeUHfT0ugVE+JLURt779FcU0m6Sb/6WQcYMlYRJ2L5d0NK+iD1apL9?=
- =?iso-8859-1?Q?GYuxVqc76rzpmx4NtGSc+KKIN0eGSZHTAO6oMwqOo7zm4xB5WI6MgvVzXi?=
- =?iso-8859-1?Q?QbV0g4XInUcZ9C1rtCRMoqpplUSKI+D0OFH3iOWUiLyiOXug+AzL5trfTZ?=
- =?iso-8859-1?Q?CNaVqW9GKfhAQ7aVfKb4PKhhR629x8ZZY4Pk/e46z2sjC/6cdpAjNLhjz4?=
- =?iso-8859-1?Q?mZEQUMVzilzUBavb6MyomWSfS4WpAxigiesGIcTVJAK5tAulmaXpVo5c0O?=
- =?iso-8859-1?Q?0/DtKZPg4UMqtpjcWMVOV9992tNR+CLQ+p7Oyv6NqjaWUSqOA86xVE2CGf?=
- =?iso-8859-1?Q?oV1q/DxVDL1fYlWaGzxviScjL0Jnlz18ajY1fNYo8OcR9frQVQ8oa1LIWc?=
- =?iso-8859-1?Q?fjD1TlSbrgIB27JmlqXARHPlk5KFk2jUG2+P6VPKjOa2i6M9MC1aSYNiha?=
- =?iso-8859-1?Q?1t+tPIBbsIV9x+zucZMPuo/J5qMamYGrh6vzc9Wlbd++kIyVrni0WTuDRt?=
- =?iso-8859-1?Q?FjYpaARmAOI0LjJLA5H2SdDX1kk8P46wvUHw34EesLW7Nx0JH64m5k0Idb?=
- =?iso-8859-1?Q?infh91pCZpzawfOO2AopievgUdv+sKFivp6oIhXQwOE4offLiKDrp+199L?=
- =?iso-8859-1?Q?cVuOG9WQ2jqLiXT0rN8uuHu9KB+TEUEbh82IhmIDkTRmzu6bZd2YUOHC9e?=
- =?iso-8859-1?Q?8YrtYk+D+5Bg7duwGoIBLJodUMVArCTJx0dubfAp14VhXgOYlNpF8sBfSF?=
- =?iso-8859-1?Q?3w8UTQ4mAaTWmw1rbKTY7U9Xu9QIMB48guzuS+R6rTZ9LIC3pL3UJSmtOA?=
- =?iso-8859-1?Q?lICPzI4Zhm+quGWMbMsybTMRnDdiBA8JsfiVYpiTIZ4mnd6ULOXkjf0XX0?=
- =?iso-8859-1?Q?xzLQ/sQcV0fjFRhDIaaTnawbR2kpHAvtMnVuqKDSAP2Vav6DB+5U1trBSZ?=
- =?iso-8859-1?Q?OrbjOloOCKHg3nJ64bKXNyZoJKA8iL9aEDI2zHMYEusphqU9RJg8WQ4ugE?=
- =?iso-8859-1?Q?4LT/Uj/oC+iululLb+p1zNwuw9w6R+ny8BF70mIzHP2cnXwBx2RiAMqiwo?=
- =?iso-8859-1?Q?JGZowTMghe3/bTDzQL+zNHNwyPnzgmHfE06r/r9+FBwQI1xknYCdOjLJga?=
- =?iso-8859-1?Q?GZqRXxU256Yn8nj1KAjK7b9BAxnM9s3ykr+RNSHfvE94zF/++Ls2EUnmKx?=
- =?iso-8859-1?Q?TWcJ9MAmMA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?N53JqKuqZFoXBaNFXH4ijN+r48jtWCPoLWOQIAOEPClRZKDxHJpKJv6geI?=
+ =?iso-8859-1?Q?qa1ey0CZ0SGlPUenNTG43gPSeMIUpoBEcG+VvEeIcaF55D89o0tpiq4nCM?=
+ =?iso-8859-1?Q?bgr5qZvv24uaZJMfwijWj3dU0NYuMrQ1kt7+t0403p54GRu7pPwSPd4okL?=
+ =?iso-8859-1?Q?GDvkojUZ3errDTq9pi3KsIcRb6KiqcbzES70Ld8ElbQNqIlOwu3jbrp9eG?=
+ =?iso-8859-1?Q?Iy0hm3IlKvpU0OYdBu5coA8+2aD2zTH9i+CWXaqNNR7nmioRYgesPILex1?=
+ =?iso-8859-1?Q?P4/CQo3H3MXv91sadNgltCHLiEEyQZhx0sEHtZY0cCkOyPcwUUec/UVhAI?=
+ =?iso-8859-1?Q?Ci1tttsrRLg+qAHdGyyVW94iMLy3259sMFQk1gdNenATv+OC+nTD2LayID?=
+ =?iso-8859-1?Q?/NxEBv4WZVwyY1K0nVJL7WnXkNdCBWflEnA+A25E6/wvxUDa2o0RRDgY4/?=
+ =?iso-8859-1?Q?aNDkOLe02enH6FzGzJVdVm/ll7Y338weOA2ybM2mbNMCFawV3fB/QLU45F?=
+ =?iso-8859-1?Q?FKq4fa1BbaFweyJxq9LJUeIjSceV7az1R2S1SmcrZZQ1bfJxYcI4I0M+Sj?=
+ =?iso-8859-1?Q?l9z2UHODOlY/hvBAIf5DmNsmZUnS9WaI9BvXHPgIIVYBloGpqzR6Pe0O/f?=
+ =?iso-8859-1?Q?MG7VddYbHjBUic6Uw+vsm2oSiCiYYJHexivZr65fVh4VhvArqqz7h+AhUI?=
+ =?iso-8859-1?Q?BzJkhM7l/+lEcqhCSGAZ9rUImE15r0qpo2t70Qh/nWAujxO/SN2xX17GPo?=
+ =?iso-8859-1?Q?FvlmWrHl7XsFV5YlIAsqRq/YISY/YmlS3Y2d8k5JcWCpJ73vKlWRMEuqD7?=
+ =?iso-8859-1?Q?7jnmnMHhYW1dn4C1uNc1RaIl4RGvIrbeTHTP77Bl0whzdUvOLVbb6b3mwX?=
+ =?iso-8859-1?Q?OKMmdb12V651jPEbZD9/9Xk/SgoJamDtR6FVcCZZ4HaI2ck9rHQDaYd1w1?=
+ =?iso-8859-1?Q?q05p2W2uZNEdpRK8RUq2q1m1QTW7cWktjfTo/9uyCpD/Btg1NdA8VLacH6?=
+ =?iso-8859-1?Q?rYspnN7TK5fhAwcSsEMsHYrDU2/C6o6xdEZFzHiYJb2VCYO1wmkanjrn1a?=
+ =?iso-8859-1?Q?GKDtQH38FoTu7/gkiZr4VypXSECE/wNdEWk4vHtamiqZcDMOAlqGgrPaur?=
+ =?iso-8859-1?Q?EiWJTv2mXPNDKESeHd1OjYCpWrGrhVUJlGLEXM3PjcRBZU4qiCqrftnz7B?=
+ =?iso-8859-1?Q?XRIyFSj4DUGzB7b7DEuKjwbGqnJuUXU6ZGsfxyB9wXuG8FZOIqT4IFk/OE?=
+ =?iso-8859-1?Q?vzd9LH5RqGVv9IEpuGMqtVl7JwODMzLE9KLcxCJQGynhBSKrWoZz3/WYeB?=
+ =?iso-8859-1?Q?i8g0jkyr0tTgK6GlEqvBSXloIyzZ38T5qP6mR/wA+IVoV30ydnp/x3NyAj?=
+ =?iso-8859-1?Q?wGjf+0zeq2qqDnOk0I0RlHgs2fqpgON2KsSkTyAoV//oPAQ1CG9J275JFa?=
+ =?iso-8859-1?Q?LcFu5W9+zfvgJMaUYLAJUN1cqGHr6lz8bRBKhxIhgb5Nk1e5PStDaUhc4F?=
+ =?iso-8859-1?Q?vsM8GA7XVQhVHlcpUIfCFMPtmLUNHOPmc78wWdXLLB6Xj7U3Linmlj3M+M?=
+ =?iso-8859-1?Q?sgfRPExeOO/FjzHT/58Qlt3nRg3r11HssK7jZGXozqila++21vmGH3gMRV?=
+ =?iso-8859-1?Q?qogv7qjzXeKsyDUQwA80cP4lsBLLcl1uGD3QgpxDrhwHqhzpjNx8SGjRx3?=
+ =?iso-8859-1?Q?fNZ/MFrKsC8qu8cZ9XSeiRhgW2T8ECVM1ek59j+Po7A0yV/PJMEwpT0heZ?=
+ =?iso-8859-1?Q?6IJQpX0XQ9PDz3qG0lbzRtmKlY/CJLjTE7cATirWWPHt4kGu/b2MeaS0dH?=
+ =?iso-8859-1?Q?XUi8yF2hiw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fff3e3be-7d17-4ff5-4925-08de652e981f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:49.3493 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d50105d3-7527-42de-de6c-08de652e8d84
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:34.9843 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WLV2aGtfDzjzDUZ6/buBMMwCoYmfVoNisqkOlZj9+UZHn/YxVCAF+D442L8tCFnwq0hkPXwJLv8s+1FtqLMEWvV8Y80/ZZnPCqkHl+bAX6Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPF4DD1DCAD3
+X-MS-Exchange-CrossTenant-userprincipalname: q8ZN9jooMHbCaYgDYLO2xx8sUS5dOpCi+Hs/aDxtMstsrsF8UZWnyKfWLg1QywuOQ+ZTHCSLDn026P+7hfEpzS3ksb23TIRv9TB5XRZnMAw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5762
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
  helo=TYPPR03CU001.outbound.protection.outlook.com
@@ -163,7 +162,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,181 +178,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds behavior to the device reset register.=0A=
+Adds the rest of the Aspeed I3C controller register fields.=0A=
 =0A=
 Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 Reviewed-by: Patrick Venture <venture@google.com>=0A=
-Reviewed-by: Stephen Longfield <slongfield@google.com>=0A=
 Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/i3c/dw-i3c.c     | 117 ++++++++++++++++++++++++++++++++++++++++++++=0A=
- hw/i3c/trace-events |   1 +=0A=
- 2 files changed, 118 insertions(+)=0A=
+ hw/i3c/aspeed_i3c.c | 54 +++++++++++++++++++++++++++++++++++----------=0A=
+ 1 file changed, 42 insertions(+), 12 deletions(-)=0A=
 =0A=
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
-index 7a1f79e10d..87ad344e5d 100644=0A=
---- a/hw/i3c/dw-i3c.c=0A=
-+++ b/hw/i3c/dw-i3c.c=0A=
-@@ -860,6 +860,122 @@ static void dw_i3c_intr_force_w(DWI3C *s, uint32_t va=
-l)=0A=
-     dw_i3c_update_irq(s);=0A=
- }=0A=
+diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c=0A=
+index b0844d4da2..f0352aaca0 100644=0A=
+--- a/hw/i3c/aspeed_i3c.c=0A=
++++ b/hw/i3c/aspeed_i3c.c=0A=
+@@ -21,28 +21,58 @@=0A=
+ /* I3C Controller Registers */=0A=
+ REG32(I3C1_REG0, 0x10)=0A=
+ REG32(I3C1_REG1, 0x14)=0A=
+-    FIELD(I3C1_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C1_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C1_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C1_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C1_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C1_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C1_REG1, SA,            8,  7)=0A=
++    FIELD(I3C1_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C1_REG1, INST_ID,       16, 4)=0A=
+ REG32(I3C2_REG0, 0x20)=0A=
+ REG32(I3C2_REG1, 0x24)=0A=
+-    FIELD(I3C2_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C2_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C2_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C2_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C2_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C2_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C2_REG1, SA,            8,  7)=0A=
++    FIELD(I3C2_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C2_REG1, INST_ID,       16, 4)=0A=
+ REG32(I3C3_REG0, 0x30)=0A=
+ REG32(I3C3_REG1, 0x34)=0A=
+-    FIELD(I3C3_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C3_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C3_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C3_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C3_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C3_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C3_REG1, SA,            8,  7)=0A=
++    FIELD(I3C3_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C3_REG1, INST_ID,       16, 4)=0A=
+ REG32(I3C4_REG0, 0x40)=0A=
+ REG32(I3C4_REG1, 0x44)=0A=
+-    FIELD(I3C4_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C4_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C4_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C4_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C4_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C4_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C4_REG1, SA,            8,  7)=0A=
++    FIELD(I3C4_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C4_REG1, INST_ID,       16, 4)=0A=
+ REG32(I3C5_REG0, 0x50)=0A=
+ REG32(I3C5_REG1, 0x54)=0A=
+-    FIELD(I3C5_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C5_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C5_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C5_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C5_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C5_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C5_REG1, SA,            8,  7)=0A=
++    FIELD(I3C5_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C5_REG1, INST_ID,       16, 4)=0A=
+ REG32(I3C6_REG0, 0x60)=0A=
+ REG32(I3C6_REG1, 0x64)=0A=
+-    FIELD(I3C6_REG1, I2C_MODE,  0,  1)=0A=
+-    FIELD(I3C6_REG1, SA_EN,     15, 1)=0A=
++    FIELD(I3C6_REG1, I2C_MODE,      0,  1)=0A=
++    FIELD(I3C6_REG1, SLV_TEST_MODE, 1,  1)=0A=
++    FIELD(I3C6_REG1, ACT_MODE,      2,  2)=0A=
++    FIELD(I3C6_REG1, PENDING_INT,   4,  4)=0A=
++    FIELD(I3C6_REG1, SA,            8,  7)=0A=
++    FIELD(I3C6_REG1, SA_EN,         15, 1)=0A=
++    FIELD(I3C6_REG1, INST_ID,       16, 4)=0A=
  =0A=
-+static void dw_i3c_cmd_queue_reset(DWI3C *s)=0A=
-+{=0A=
-+    fifo32_reset(&s->cmd_queue);=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,=0A=
-+                     fifo32_num_free(&s->cmd_queue));=0A=
-+    uint8_t empty_threshold =3D ARRAY_FIELD_EX32(s->regs, QUEUE_THLD_CTRL,=
-=0A=
-+                                               CMD_BUF_EMPTY_THLD);=0A=
-+    if (fifo32_num_free(&s->cmd_queue) >=3D empty_threshold) {=0A=
-+        ARRAY_FIELD_DP32(s->regs, INTR_STATUS, CMD_QUEUE_RDY, 1);=0A=
-+        dw_i3c_update_irq(s);=0A=
-+    };=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_resp_queue_reset(DWI3C *s)=0A=
-+{=0A=
-+    fifo32_reset(&s->resp_queue);=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, RESP_BUF_BLR,=0A=
-+                     fifo32_num_used(&s->resp_queue));=0A=
-+    /*=0A=
-+     * This interrupt will always be cleared because the threshold is a mi=
-nimum=0A=
-+     * of 1 and the queue size is 0.=0A=
-+     */=0A=
-+    ARRAY_FIELD_DP32(s->regs, INTR_STATUS, RESP_RDY, 0);=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_ibi_queue_reset(DWI3C *s)=0A=
-+{=0A=
-+    fifo32_reset(&s->ibi_queue);=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, IBI_BUF_BLR,=0A=
-+                     fifo32_num_used(&s->resp_queue));=0A=
-+    /*=0A=
-+     * This interrupt will always be cleared because the threshold is a mi=
-nimum=0A=
-+     * of 1 and the queue size is 0.=0A=
-+     */=0A=
-+    ARRAY_FIELD_DP32(s->regs, INTR_STATUS, IBI_THLD, 0);=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_tx_queue_reset(DWI3C *s)=0A=
-+{=0A=
-+    fifo32_reset(&s->tx_queue);=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC,=
-=0A=
-+                     fifo32_num_free(&s->tx_queue));=0A=
-+    /* TX buf is empty, so this interrupt will always be set. */=0A=
-+    ARRAY_FIELD_DP32(s->regs, INTR_STATUS, TX_THLD, 1);=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_rx_queue_reset(DWI3C *s)=0A=
-+{=0A=
-+    fifo32_reset(&s->rx_queue);=0A=
-+=0A=
-+    ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, RX_BUF_BLR,=0A=
-+                     fifo32_num_used(&s->resp_queue));=0A=
-+    /*=0A=
-+     * This interrupt will always be cleared because the threshold is a mi=
-nimum=0A=
-+     * of 1 and the queue size is 0.=0A=
-+     */=0A=
-+    ARRAY_FIELD_DP32(s->regs, INTR_STATUS, RX_THLD, 0);=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_reset(DeviceState *dev)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(dev);=0A=
-+    trace_dw_i3c_reset(s->cfg.id);=0A=
-+=0A=
-+    memcpy(s->regs, dw_i3c_resets, sizeof(s->regs));=0A=
-+    /*=0A=
-+     * The user config for these may differ from our resets array, set the=
-m=0A=
-+     * manually.=0A=
-+     */=0A=
-+    ARRAY_FIELD_DP32(s->regs, DEVICE_ADDR_TABLE_POINTER, ADDR,=0A=
-+                     s->cfg.dev_addr_table_pointer);=0A=
-+    ARRAY_FIELD_DP32(s->regs, DEVICE_ADDR_TABLE_POINTER, DEPTH,=0A=
-+                     s->cfg.dev_addr_table_depth);=0A=
-+    ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER,=0A=
-+                     P_DEV_CHAR_TABLE_START_ADDR,=0A=
-+                     s->cfg.dev_char_table_pointer);=0A=
-+    ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH=
-,=0A=
-+                     s->cfg.dev_char_table_depth);=0A=
-+=0A=
-+    dw_i3c_cmd_queue_reset(s);=0A=
-+    dw_i3c_resp_queue_reset(s);=0A=
-+    dw_i3c_ibi_queue_reset(s);=0A=
-+    dw_i3c_tx_queue_reset(s);=0A=
-+    dw_i3c_rx_queue_reset(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_reset_ctrl_w(DWI3C *s, uint32_t val)=0A=
-+{=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, CORE_RESET)) {=0A=
-+        dw_i3c_reset(DEVICE(s));=0A=
-+    }=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, CMD_QUEUE_RESET)) {=0A=
-+        dw_i3c_cmd_queue_reset(s);=0A=
-+    }=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, RESP_QUEUE_RESET)) {=0A=
-+        dw_i3c_resp_queue_reset(s);=0A=
-+    }=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, TX_BUF_RESET)) {=0A=
-+        dw_i3c_tx_queue_reset(s);=0A=
-+    }=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, RX_BUF_RESET)) {=0A=
-+        dw_i3c_rx_queue_reset(s);=0A=
-+    }=0A=
-+    if (FIELD_EX32(val, RESET_CTRL, IBI_QUEUE_RESET)) {=0A=
-+        dw_i3c_ibi_queue_reset(s);=0A=
-+    }=0A=
-+}=0A=
-+=0A=
- static uint32_t dw_i3c_pop_rx(DWI3C *s)=0A=
+ static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int si=
+ze)=0A=
  {=0A=
-     if (fifo32_is_empty(&s->rx_queue)) {=0A=
-@@ -1617,6 +1733,7 @@ static void dw_i3c_write(void *opaque, hwaddr offset,=
- uint64_t value,=0A=
-         dw_i3c_cmd_queue_port_w(s, val32);=0A=
-         break;=0A=
-     case R_RESET_CTRL:=0A=
-+        dw_i3c_reset_ctrl_w(s, val32);=0A=
-         break;=0A=
-     case R_INTR_STATUS:=0A=
-         dw_i3c_intr_status_w(s, val32);=0A=
-diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events=0A=
-index a262fcce39..39f33d9a50 100644=0A=
---- a/hw/i3c/trace-events=0A=
-+++ b/hw/i3c/trace-events=0A=
-@@ -11,6 +11,7 @@ dw_i3c_send(uint32_t deviceid, uint32_t num_bytes) "I3C D=
-ev[%u] send %" PRId32 "=0A=
- dw_i3c_recv_data(uint32_t deviceid, uint32_t num_bytes) "I3C Dev[%u] recv =
-%" PRId32 " bytes from bus"=0A=
- dw_i3c_ibi_recv(uint32_t deviceid, uint8_t ibi_byte) "I3C Dev[%u] recv IBI=
- byte 0x%" PRIx8=0A=
- dw_i3c_ibi_handle(uint32_t deviceid, uint8_t addr, bool rnw) "I3C Dev[%u] =
-handle IBI from address 0x%" PRIx8 " RnW=3D%d"=0A=
-+dw_i3c_reset(uint32_t deviceid) "I3C Dev[%u] reset"=0A=
- dw_i3c_pop_rx(uint32_t deviceid, uint32_t data) "I3C Dev[%u] pop 0x%" PRIx=
-32 " from RX FIFO"=0A=
- dw_i3c_resp_queue_push(uint32_t deviceid, uint32_t data) "I3C Dev[%u] push=
- 0x%" PRIx32 " to response queue"=0A=
- dw_i3c_push_tx(uint32_t deviceid, uint32_t data) "I3C Dev[%u] push 0x%" PR=
-Ix32 " to TX FIFO"=0A=
 -- =0A=
 2.43.0=0A=
 
