@@ -4,55 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07787EA795E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D3FEB28FE
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIXA-0001st-DG; Fri, 06 Feb 2026 04:53:52 -0500
+	id 1voIXA-0001sx-Ir; Fri, 06 Feb 2026 04:53:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWe-0001lW-DO; Fri, 06 Feb 2026 04:53:20 -0500
+ id 1voIWq-0001nG-7h
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:35 -0500
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWd-0000GO-0j; Fri, 06 Feb 2026 04:53:20 -0500
+ id 1voIWn-0000KZ-Jl
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:30 -0500
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 97D6AC01C3;
- Fri, 06 Feb 2026 12:53:16 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 512DFC01C0;
+ Fri, 06 Feb 2026 12:53:28 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:52d::1:1f])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2rKPQc0AN0U0-XC03yE6m; Fri, 06 Feb 2026 12:53:16 +0300
+ ESMTPSA id 2rKPQc0AN0U0-z3k0khxd; Fri, 06 Feb 2026 12:53:27 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770371596;
- bh=6nZ/Ugp0qM1nB8yAWkoxwVcWCChUPUTOGmoIYrlH+Qw=;
+ s=default; t=1770371607;
+ bh=ZcXfUtVkxITl5CQyOyRt/lF8tOqHHIHJp3fs/U+1WPM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=mGYadpcWTPRi5Z05ewMwDyiGNNBxJCFm1YtZ8mw31qNK9s5U8YIq35ejb25AgWEJ1
- OcTzZ32skEJvizh4CFiy1J3gTPsdKAYlgSpuol0BCsUtkUeg/9R1ucraySEOcSYjug
- PlPKm5k8JGVxpWKa99h0FiTnQy7BLn3MtQSae8kY=
+ b=YlUJ884txzJJrm7y0UT4vBjhZMCHiqksNNxWBF9Y84Kc4KeNe0wqWOmgU193EO1LL
+ KjCLUCBkdRHGt+nvgbmEkRobOSyNJqfKeGAo0a1ftVv2AT1DJBm89T1M4znAiHjVdi
+ uE9ujztSvAFzS3Pxx8vgW3Ozi1ULDy53bwaSz7yQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:virtio-ccw)
-Subject: [PATCH v5 07/23] virtio-ccw: virtio_ccw_set_guest_notifier(): fix
- failure path
-Date: Fri,  6 Feb 2026 12:52:41 +0300
-Message-ID: <20260206095258.894504-8-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v5 18/23] vhost: move busyloop timeout initialization to
+ vhost_virtqueue_init()
+Date: Fri,  6 Feb 2026 12:52:52 +0300
+Message-ID: <20260206095258.894504-19-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 References: <20260206095258.894504-1-vsementsov@yandex-team.ru>
@@ -81,29 +76,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We leak notifier initialization on that failure path. Let's
-cleanup it.
+Let's all per-virtqueue initializations be in one place.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 ---
- hw/s390x/virtio-ccw.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/vhost.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index 6855e20d09..ba55bf4fe9 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -1038,6 +1038,7 @@ static int virtio_ccw_set_guest_notifier(VirtioCcwDevice *dev, int n,
-             if (r) {
-                 virtio_queue_set_guest_notifier_fd_handler(vq, false,
-                                                            with_irqfd);
-+                event_notifier_cleanup(notifier);
-                 return r;
-             }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index f3e6a38a70..c3903d314d 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1499,7 +1499,8 @@ static void vhost_virtqueue_error_notifier(EventNotifier *n)
+ }
+ 
+ static int vhost_virtqueue_init(struct vhost_dev *dev,
+-                                struct vhost_virtqueue *vq, int n)
++                                struct vhost_virtqueue *vq, int n,
++                                bool busyloop_timeout)
+ {
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, n);
+     struct vhost_vring_file file = {
+@@ -1536,6 +1537,14 @@ static int vhost_virtqueue_init(struct vhost_dev *dev,
+                                    vhost_virtqueue_error_notifier);
+     }
+ 
++    if (busyloop_timeout) {
++        r = vhost_virtqueue_set_busyloop_timeout(dev, n, busyloop_timeout);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "Failed to set busyloop timeout");
++            goto fail_err;
++        }
++    }
++
+     return 0;
+ 
+ fail_err:
+@@ -1614,24 +1623,14 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     }
+ 
+     for (i = 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
+-        r = vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index + i);
++        r = vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index + i,
++                                 busyloop_timeout);
+         if (r < 0) {
+             error_setg_errno(errp, -r, "Failed to initialize virtqueue %d", i);
+             goto fail;
          }
+     }
+ 
+-    if (busyloop_timeout) {
+-        for (i = 0; i < hdev->nvqs; ++i) {
+-            r = vhost_virtqueue_set_busyloop_timeout(hdev, hdev->vq_index + i,
+-                                                     busyloop_timeout);
+-            if (r < 0) {
+-                error_setg_errno(errp, -r, "Failed to set busyloop timeout");
+-                goto fail;
+-            }
+-        }
+-    }
+-
+     virtio_features_copy(hdev->_features_ex, features);
+ 
+     hdev->memory_listener = (MemoryListener) {
 -- 
 2.52.0
 
