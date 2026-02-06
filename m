@@ -4,110 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B0AEE20B5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D16FEE20B5
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voOTY-0005cU-To; Fri, 06 Feb 2026 11:14:32 -0500
+	id 1voOZu-0007fI-Bv; Fri, 06 Feb 2026 11:21:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1voOTX-0005c8-Fy; Fri, 06 Feb 2026 11:14:31 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voOZr-0007ey-UC
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:21:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1voOTT-0006Rd-4L; Fri, 06 Feb 2026 11:14:29 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 616Clwdn013135;
- Fri, 6 Feb 2026 16:14:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rWmslC
- O9ILl70z4eTpnXQImCigHCpsxJqsnnHk8yesU=; b=FsNS6wdWiaghnnGvA4NkNz
- TPPgIw7fdJuSmZQLz3WFAIh3BycchwT3eZz1V9ZxaarJSvkuRIhNqyW2mdszS0mQ
- HXhoYfqgwyL9P06lQRzaEC7nCeLePo6k/raGTy1lgtK94CIpw9lD0iXebs9ZF2Mo
- 8fxhvFaZaXzs+NG+my9ZM/0AU4+m9IT6W/5blOmr4C0UuVB29NVi3HuqxR4cMC72
- 0IyqstWSZfOxQP0a4kf2bNfiR0Wrqvc02R/aHE20KckF9sVAs6/bmistEU9/yJYF
- 4jKdAc0bTVheAIcc+zt+KVKXBKB1ZppfovNGQ2hmb9Y+ng/Rwgv7c80zpYPOTzbg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c185h9762-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Feb 2026 16:14:22 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616FZ79j009198;
- Fri, 6 Feb 2026 16:14:22 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1veyex2a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Feb 2026 16:14:22 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 616GEK9Q3015512
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Feb 2026 16:14:20 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE0AC58045;
- Fri,  6 Feb 2026 16:14:20 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AAD9958056;
- Fri,  6 Feb 2026 16:14:19 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.130.235]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Feb 2026 16:14:19 +0000 (GMT)
-Message-ID: <1a13623d1ae1744ba14c6b8f71c2d6b75728d463.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 10/14] pc-bios/s390-ccw: Introduce virtio-pci functions
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-Date: Fri, 06 Feb 2026 11:14:19 -0500
-In-Reply-To: <20260127161547.459443-11-jrossi@linux.ibm.com>
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-11-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voOZo-0007M7-FR
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:21:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770394857;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=s9FhSHYXnLFHsUJRGV2klsaMP4YegyMHfyhG8cxCLqY=;
+ b=PB/Df7NaLfdm/6YVL/8uFKh67cQXM4ZZI0d4UrNlRveYvSQa1B01ljfEtWm+sO7olUBPbO
+ JnGYtf0IHPPBNmyOtxh2KcZwoZScDIGTgVctLM8Q3IiUi4Smh/Otw5iASdNLn1ww/aZnLX
+ Fl8PMNONsixOcJ0dzJ9t9tK+qNIGwJw=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-616-_lUoQ3B8PPamGtK53WhCtA-1; Fri, 06 Feb 2026 11:20:56 -0500
+X-MC-Unique: _lUoQ3B8PPamGtK53WhCtA-1
+X-Mimecast-MFC-AGG-ID: _lUoQ3B8PPamGtK53WhCtA_1770394855
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8823f4666abso23453996d6.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:20:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770394855; x=1770999655; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=s9FhSHYXnLFHsUJRGV2klsaMP4YegyMHfyhG8cxCLqY=;
+ b=kJ3rP4gHy3Gc7MJ5Mp7vD/gKxz+AXAbt7jnqRQNlVOQc2h2ABW9Cn5aGaRUk/dcc+U
+ FMV0c6OPxTw9/AVhhWQPLmcgGtxeIUI+Z69G/8EmuBTCiAn0e8n2y7oLhqiH17CaQvJt
+ FikXB/rILXqIPbhkGGD5/p9BX6AL5+67v6Qy7s2YccrDr9HkUadPfl1xfAckVe0mpP4l
+ mAO4CwrQCfX0aw9bIZgRyABDr2wPLecKNfaRMpAsb6bKk7ENH2xBK9QD+KcB4HLX3VL1
+ akFaBGJSUPmxx96EKyk9yLQ+S+XZ4HN3MZnlkqsb8DxkMykzb8xa6qlnQHPCEP97EPQo
+ rxdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770394855; x=1770999655;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s9FhSHYXnLFHsUJRGV2klsaMP4YegyMHfyhG8cxCLqY=;
+ b=UdfZpKkB0tGNYR8gy3WQ29qxyCz1pia3znMu8v76gFQiTYzeXN57EnZG0TN9m6SGaC
+ 3EpDHwXI11ofQcQA+WMMEgdEexaC7WskpQEUQbjCLidIqtItyoI0Q4aPd8/XMuBqGUMo
+ arqkpuChhaOdvK7C4toaKDbUe1OxgoWwraVmNimSkzeXCXZyZtDdzDX8lUoXwEo1xquy
+ BAovtdwhWNs/FFyC/L/gRrXjXrQOAkNxs/UgqHbeTVkKZ6Kx1TbE0QkptaIim1SviRE2
+ e1c3pN74n0NxLLDMhH2b14ll+5hypVHCwIjC32wESAaKIlEemw3Rcu2rB+gX3ixFDxIE
+ KIDQ==
+X-Gm-Message-State: AOJu0YxjyB5seD1PxoPB9uX5HIMA7CwxC6cY2l/ERaCtYPFJaKbKPkA4
+ IXH2ZiNvUIhl1pAHr8BPpqKn3ujKpbRcXy1k8BdYwM5TsXedYAT+g1Fy0gdyXIdKUN9LuhjrS8M
+ gxKcfwYkBnLKYQrCiAyOhPvkjaiyv0WjahDjkhRtc5xEqHz5C/XQpisi+
+X-Gm-Gg: AZuq6aI0B1O5qElTqWnqy9bJvpq4ln2bTW8V3o96SWsxmzUaIN6D65+bM4FF6doaPqI
+ fvP+5yycqeWifaI08uReAurXx7VCT8elC4lzcH1k61IJTjVmVFjywOxXSCEI34WtltMWTRpaNMq
+ 8cXRg39eJ4ejuiV0h2FfxIGPA5xMafC9KoZWWaKmTiFdVKYwHIA4K9yl7QYK/1dtiO4bIYeed/s
+ Dlbp3/j5j4lsviceVfcmI95TYysrj7P4DIIEzyGTZaXtVRXv8jYDsRtgMmhw+eyUMBCXaBkzh/c
+ Ufky0tklXc9etxbCN1XUjDxrBuk17LAHn27fZq3DsUnkutl1hgtti3bb1YlUPXubtP+UFHEp+gc
+ //Dk=
+X-Received: by 2002:a05:6214:3016:b0:894:81ba:50bc with SMTP id
+ 6a1803df08f44-8953c80e12dmr48343986d6.30.1770394855409; 
+ Fri, 06 Feb 2026 08:20:55 -0800 (PST)
+X-Received: by 2002:a05:6214:3016:b0:894:81ba:50bc with SMTP id
+ 6a1803df08f44-8953c80e12dmr48343346d6.30.1770394854795; 
+ Fri, 06 Feb 2026 08:20:54 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8953bf3c740sm20723876d6.11.2026.02.06.08.20.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 08:20:54 -0800 (PST)
+Date: Fri, 6 Feb 2026 11:20:53 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
+Subject: Re: [PATCH v2 8/9] migration/options: Stop freeing s->parameters
+ members individually
+Message-ID: <aYYU5fbU5l4grFav@x1.local>
+References: <20260202224101.20568-1-farosas@suse.de>
+ <20260202224101.20568-9-farosas@suse.de>
+ <aYUWwSxnsWn1Dfu0@x1.local> <87a4xmqcmn.fsf@suse.de>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=UdxciaSN c=1 sm=1 tr=0 ts=6986135e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=5uILobFg11BtxNOoY8UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 63U5Mp_ifuzd0NtCSrMVbX8Io6tBytTG
-X-Proofpoint-ORIG-GUID: 63U5Mp_ifuzd0NtCSrMVbX8Io6tBytTG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDExNSBTYWx0ZWRfX9eT1ag2fKeJ+
- BaHyu1Z7mb8BfN7JJIbxWm/+UdkNQ99M3B0orLpQLHTS2wmBptS6E0vgpqU68cAneDFJNPcEnr0
- 5VB0/CQwdyG+kJgNwzSdRR22rw0l3XpOIcGvRVuSG2Z2X4daDoOsfD93h0/QG11A4HaAZNT0S4f
- AXlksRTIEEXy4tvP5KhLZR6KWarv+PQzxJlczCTp3pj92B2Hcw0Ghr9y5N6Nx4XjaaRHbqz3e4A
- KzEPhXDQDs1jHgqShtoQ5wSTiHx4bVSH0N5yetfueVSDJyMO3gDREHmRY8jtRKw67jQCbvbSWqu
- kMdq5PzgZ3k84RKoPcvdxXCbP2QGTibTJ5bclqtGgp3WNmEIgXXCY9gUlXe8oy5fgTfAbpc+2m9
- /7qdK01zM11gE334iiGM/LMRAD1IW7iyZEHAta1ziBOUOgddkVSEkeO763oTz2CRktvaWbgU7mk
- b5utnybgt5u3k0w87Lg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-06_04,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 bulkscore=0 spamscore=0 phishscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602060115
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87a4xmqcmn.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,333 +117,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> Define common functionality for interacting with virtio-pci devices.
->=20
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/Makefile     |   2 +-
->  pc-bios/s390-ccw/virtio-pci.c | 168 ++++++++++++++++++++++++++++++++++
->  pc-bios/s390-ccw/virtio-pci.h |  86 +++++++++++++++++
->  pc-bios/s390-ccw/virtio.h     |   1 +
->  4 files changed, 256 insertions(+), 1 deletion(-)
->  create mode 100644 pc-bios/s390-ccw/virtio-pci.c
->  create mode 100644 pc-bios/s390-ccw/virtio-pci.h
->=20
-> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-> index a62fc9d766..3e5dfb64d5 100644
-> --- a/pc-bios/s390-ccw/Makefile
-> +++ b/pc-bios/s390-ccw/Makefile
-> @@ -35,7 +35,7 @@ QEMU_DGFLAGS =3D -MMD -MP -MT $@ -MF $(@D)/$(*F).d
-> =20
->  OBJECTS =3D start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o =
-\
->  	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o =
-\
-> -	  virtio-ccw.o clp.o pci.o
-> +	  virtio-ccw.o clp.o pci.o virtio-pci.o
-> =20
->  SLOF_DIR :=3D $(SRC_PATH)/../../roms/SLOF
-> =20
-> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.=
-c
-> new file mode 100644
-> index 0000000000..70abac0256
-> --- /dev/null
-> +++ b/pc-bios/s390-ccw/virtio-pci.c
-> @@ -0,0 +1,168 @@
-> +/*
-> + * Functionality for virtio-pci
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "clp.h"
-> +#include "pci.h"
-> +#include "helper.h"
-> +#include "virtio.h"
-> +#include "bswap.h"
-> +#include "virtio-pci.h"
-> +#include "s390-time.h"
-> +#include <stdio.h>
-> +
-> +/* Variable offsets used for reads/writes to modern memory regions */
-> +VirtioPciCap c_cap; /* Common capabilities  */
-> +VirtioPciCap d_cap; /* Device capabilities  */
-> +VirtioPciCap n_cap; /* Notify capabilities  */
-> +uint32_t notify_mult;
-> +uint16_t q_notify_offset;
-> +
-> +static int virtio_pci_set_status(uint8_t status)
-> +{
-> +    int rc =3D vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.b=
-ar, status);
-> +    if (rc) {
-> +        puts("Failed to write virtio-pci status");
-> +        return -EIO;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int virtio_pci_get_status(uint8_t *status)
-> +{
-> +    int rc =3D vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.ba=
-r, status);
-> +    if (rc) {
-> +        puts("Failed to read virtio-pci status");
-> +        return -EIO;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +/* virtio spec v1.3 section 4.1.2.1 */
-> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
-> +{
-> +    switch (device_id) {
-> +    case 0x1001:
-> +        vdev->dev_type =3D VIRTIO_ID_BLOCK;
-> +        break;
-> +    case 0x1000: /* Other valid but currently unsupported virtio device =
-types */
-> +    case 0x1004:
-> +    default:
-> +        vdev->dev_type =3D 0;
-> +    }
-> +}
-> +
-> +int virtio_pci_reset(VDev *vdev)
-> +{
-> +    int rc;
-> +    uint8_t status =3D VPCI_S_RESET;
-> +
-> +    rc =3D virtio_pci_set_status(status);
-> +    rc |=3D virtio_pci_get_status(&status);
-> +
-> +    if (rc || status) {
-> +        puts("Failed to reset virtio-pci device");
-> +        return 1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +long virtio_pci_notify(int vq_id)
-> +{
-> +    uint32_t offset =3D n_cap.off + notify_mult * q_notify_offset;
-> +    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
-> +}
-> +
-> +/*
-> + * Wrappers to byte swap common data sizes then write
-> + */
-> +int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data)
-> +{
-> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, (uint64=
-_t) data, 1);
-> +}
-> +
-> +int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data)
-> +{
-> +    uint64_t le_data =3D bswap16(data);
-> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
-, 2);
-> +}
-> +
-> +int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data)
-> +{
-> +    uint64_t le_data =3D bswap32(data);
-> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
-, 4);
-> +}
-> +
-> +int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data)
-> +{
-> +    uint64_t le_data =3D bswap64(data);
-> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
-, 8);
-> +}
-> +
-> +/*
-> + * Wrappers to read common data sizes then byte swap
-> + */
-> +int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf)
-> +{
-> +    return pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 1);
-> +}
-> +
-> +int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf)
-> +{
-> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
- 2);
-> +    *buf =3D bswap16(*buf);
-> +    return rc;
-> +}
-> +
-> +int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf)
-> +{
-> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
- 4);
-> +    *buf =3D bswap32(*buf);
-> +    return rc;
-> +}
-> +
-> +int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf)
-> +{
-> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
- 8);
-> +    *buf =3D bswap64(*buf);
-> +    return rc;
-> +}
-> +
-> +/*
-> + * Read to an arbitrary length buffer without byte swapping
-> + */
-> +int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
-> +{
-> +    uint8_t readlen;
-> +    int rc;
-> +    int remaining =3D len;
-> +
-> +    /* Read bytes in powers of 2, up to a maximum of 8 bytes per read */
-> +    while (remaining) {
-> +        for (int i =3D 3; i >=3D 0; i--) {
-> +            readlen =3D 1 << i;
-> +            if (remaining >=3D readlen) {
-> +                break;
-> +            }
-> +        }
-> +
-> +        rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
- readlen);
-> +        if (rc) {
-> +            return -1;
-> +        }
-> +
-> +        remaining -=3D readlen;
-> +        buf +=3D readlen;
-> +        offset +=3D readlen;
-> +    }
-> +
-> +    return 0;
-> +}
-> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.=
-h
-> new file mode 100644
-> index 0000000000..96c17ac3c7
-> --- /dev/null
-> +++ b/pc-bios/s390-ccw/virtio-pci.h
-> @@ -0,0 +1,86 @@
-> +/*
-> + * Definitions for virtio-pci
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef VIRTIO_PCI_H
-> +#define VIRTIO_PCI_H
-> +
-> +/* Common configuration */
-> +#define VPCI_CAP_COMMON_CFG          1
-> +/* Notifications */
-> +#define VPCI_CAP_NOTIFY_CFG          2
-> +/* ISR access */
-> +#define VPCI_CAP_ISR_CFG             3
-> +/* Device specific configuration */
-> +#define VPCI_CAP_DEVICE_CFG          4
-> +/* PCI configuration access */
-> +#define VPCI_CAP_PCI_CFG             5
-> +/* Additional shared memory capability */
-> +#define VPCI_CAP_SHARED_MEMORY_CFG   8
-> +/* PCI vendor data configuration */
-> +#define VPCI_CAP_VENDOR_CFG          9
-> +
-> +/* Offsets within capability header */
-> +#define VPCI_CAP_VNDR        0
-> +#define VPCI_CAP_NEXT        1
-> +#define VPCI_CAP_LEN         2
-> +#define VPCI_CAP_CFG_TYPE    3
-> +#define VPCI_CAP_BAR         4
-> +#define VPCI_CAP_OFFSET      8
-> +#define VPCI_CAP_LENGTH      12
-> +
-> +#define VPCI_N_CAP_MULT 16 /* Notify multiplier, VPCI_CAP_NOTIFY_CFG onl=
-y */
-> +
-> +/* Common Area Offsets for virtio-pci queue */
-> +#define VPCI_C_OFFSET_DFSELECT      0
-> +#define VPCI_C_OFFSET_DF            4
-> +#define VPCI_C_OFFSET_GFSELECT      8
-> +#define VPCI_C_OFFSET_GF            12
-> +#define VPCI_C_COMMON_NUMQ          18
-> +#define VPCI_C_OFFSET_STATUS        20
-> +#define VPCI_C_OFFSET_Q_SELECT      22
-> +#define VPCI_C_OFFSET_Q_SIZE        24
-> +#define VPCI_C_OFFSET_Q_ENABLE      28
-> +#define VPCI_C_OFFSET_Q_NOFF        30
-> +#define VPCI_C_OFFSET_Q_DESCLO      32
-> +#define VPCI_C_OFFSET_Q_DESCHI      36
-> +#define VPCI_C_OFFSET_Q_AVAILLO     40
-> +#define VPCI_C_OFFSET_Q_AVAILHI     44
-> +#define VPCI_C_OFFSET_Q_USEDLO      48
-> +#define VPCI_C_OFFSET_Q_USEDHI      52
-> +
-> +#define VPCI_S_RESET            0
-> +#define VPCI_S_ACKNOWLEDGE      1
-> +#define VPCI_S_DRIVER           2
-> +#define VPCI_S_DRIVER_OK        4
-> +#define VPCI_S_FEATURES_OK      8
+On Fri, Feb 06, 2026 at 09:29:04AM -0300, Fabiano Rosas wrote:
+> There's some amount of rigidness caused by qdev requirements
+> unfortunately.
+> 
+> I'm not sure if I ever posted it, but I wrote some code to move the
+> parameters into a MigrationOptions object so we could make
+> MigrationState not be a TYPE_DEVICE anymore. But then we'd end up with
+> something like -global migration-options by default, so it kinda killed
+> the idea.
 
-How are these status values different from VIRTIO_CONFIG_S_* in pc-bios/s39=
-0-ccw/virtio.h? Maybe
-expand that list instead?
+It's not strictly about TYPE_DEVICE, but reusing of qdev properties, right?
+At least the issue described by your comment was about offseting and it
+sounds like so.
 
-The rest of this seems fine to me, though I do need another coffee.
+I just want to double check with you that I think the problem you described
+will also present even after applying my other series:
 
-> +
-> +#define VIRTIO_F_VERSION_1      (1 << (32 - 32)) /* Feature bit 32 */
-> +
-> +struct VirtioPciCap {
-> +    uint8_t bar;     /* Which PCIAS it's in */
-> +    uint32_t off;    /* Offset within bar */
-> +};
-> +typedef struct VirtioPciCap  VirtioPciCap;
-> +
-> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
-> +int virtio_pci_reset(VDev *vdev);
-> +long virtio_pci_notify(int vq_id);
-> +
-> +int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
-> +int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
-> +int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf);
-> +int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf);
-> +int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf);
-> +
-> +int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data);
-> +int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data);
-> +int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data);
-> +int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data);
-> +
-> +#endif
-> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-> index 0fdee8468c..0c34d59be2 100644
-> --- a/pc-bios/s390-ccw/virtio.h
-> +++ b/pc-bios/s390-ccw/virtio.h
-> @@ -255,6 +255,7 @@ struct VDev {
->      uint8_t scsi_dev_heads;
->      bool scsi_device_selected;
->      ScsiDevice selected_scsi_device;
-> +    uint32_t pci_fh;
->      uint32_t max_transfer;
->      uint32_t guest_features[2];
->  };
+https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
+
+That series only removes the TYPE_DEVICE dependency, but not qdev
+properties.  I think it's the qdev property trick that is relevant at least
+to the offset issue you mentioned so MigrationParameters cannot be
+g_new()ed.
+
+The major use case for this qdev reuse is: (1) help scripting, so as to use
+-global migration.XXX=YYY, (2) support migration in machine compat
+properties.  IIUC (1) isn't a major thing we ask for (again, maybe I used
+the most of it.. but maybe only me; I'm not sure..), as long as anything
+can keep (2) working then we can consider.
+
+-- 
+Peter Xu
+
 
