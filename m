@@ -4,67 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D3FEB28FE
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A97CECD98B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIXA-0001sx-Ir; Fri, 06 Feb 2026 04:53:52 -0500
+	id 1voIdo-000344-6L; Fri, 06 Feb 2026 05:00:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWq-0001nG-7h
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:35 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIdR-00032v-0b; Fri, 06 Feb 2026 05:00:25 -0500
+Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWn-0000KZ-Jl
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:30 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 512DFC01C0;
- Fri, 06 Feb 2026 12:53:28 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:52d::1:1f])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2rKPQc0AN0U0-z3k0khxd; Fri, 06 Feb 2026 12:53:27 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770371607;
- bh=ZcXfUtVkxITl5CQyOyRt/lF8tOqHHIHJp3fs/U+1WPM=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=YlUJ884txzJJrm7y0UT4vBjhZMCHiqksNNxWBF9Y84Kc4KeNe0wqWOmgU193EO1LL
- KjCLUCBkdRHGt+nvgbmEkRobOSyNJqfKeGAo0a1ftVv2AT1DJBm89T1M4znAiHjVdi
- uE9ujztSvAFzS3Pxx8vgW3Ozi1ULDy53bwaSz7yQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Subject: [PATCH v5 18/23] vhost: move busyloop timeout initialization to
- vhost_virtqueue_init()
-Date: Fri,  6 Feb 2026 12:52:52 +0300
-Message-ID: <20260206095258.894504-19-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260206095258.894504-1-vsementsov@yandex-team.ru>
-References: <20260206095258.894504-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1voIdN-0002OJ-Aa; Fri, 06 Feb 2026 05:00:20 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.86])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f6qMd0WcNz5w9b;
+ Fri,  6 Feb 2026 10:00:13 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
+ 2026 11:00:11 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S0039f8ed769-07d6-4c00-b776-e1af5f808fd3,
+ C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <4be69752-9494-4af2-a9a9-3af59f2a577c@kaod.org>
+Date: Fri, 6 Feb 2026 11:00:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 09/10] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
+ machine to A2 SoC
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-11-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260206053340.3716041-11-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: beb0b5b7-7732-40a9-a50c-d191c5b3d361
+X-Ovh-Tracer-Id: 13523183783090686782
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEP0vc4DAghd+/e3G94zk+bLOyxWJuybdSvmXYy6+Im3SefZbywyIu2WB/aEceGZ/gn3K1a8lGp6FPM194nasAhh86QMpOuyC6ye6rGIVtjb1vJbrhiJDlgOM0NSOLTfoPYEsFgS6CxmA8RTDZ++0Bw0lrBd0q0qXt+7Gd5VXg74493v3X8fspkFz9kz3uJAqNjZUKlolB4ZEoBSnTzTeMPJRN8JutXIXGqGglmYfFUIS2OQ+8Me2WioGLdCss6fKluzMgVCMoLy91o2QQ8LBRg1HBU4AvVxO8ZMUdxMNJxr9/S9o51w5r1oJVw75XUf/BLxE0IxqUtUOn+YxS/WYJyWjwH4oAy2UAdjQ8CbA8/VbU2zIsi5LoVT5Ys8PRCJFmkMiz+AApPxwN5hEUUNuaVphbu/EgW+0zqVSm/YF4ByVRqMKmtzxIVwHe9Xs2NacuFDpiZ6hpEniCtZxcamP9pRDXzQKouISTKqexltqjE2LXPRQImuXKWD6OciLNQ7rAoYIMPEVS4PHt0eloX+YTo47LtBNcG05AM5qHISy95dmOBQlGOnRKeIDHwlazoeKxwx7YRF9tGW/DgqXwt/mGlMoK+b+zVHYl1HNoe4EisovsKUxkHc8uCf5C+BR76Mu/Lbgui18PjyILXyErFEqJVGREQPp3EgvKBkkW3jxqJnA
+DKIM-Signature: a=rsa-sha256; bh=amm/i8rI2NZygmaA0uxa0km7UtQf3PORJYhljkzQRqY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770372013; v=1;
+ b=e5uU+Y5G7H6JmeqRwKO4zlROeVKaSAQjWFzruCYpnyOkCELWYCN6Yg5JXKRP7VyI7ha4sVUz
+ XVaBw0oQtUjzcCJ+TE9CBhH0wFg8P4h2Y0anIbdA6T4ClqNHnqB154FB2JUDfyjp0v8sefhtlJG
+ F+/O9X90nwA3uYA4w7GAdJsu5lpPii+9dboxXL2Oit32uEtI/MAYEJBOBISXKQaRh/BlIr8iwSX
+ unsLDgO0zbkheUNIYm1n8rSO7TkBoh3IC5xwdu9AgyvaqlnZcuaFC7VEgPp07dL+H0qAouOvArn
+ pIWL/Cvp4ttw+U9twkfwhzrAm3cODb0cN785FIFsSUVcA==
+Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
+ helo=4.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,72 +134,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's all per-virtqueue initializations be in one place.
+On 2/6/26 06:33, Jamin Lin wrote:
+> Update the AST2700 FC machine to use the AST2700 A2 SoC model instead of
+> the A1-specific variant.
+> 
+> This change removes A1-specific naming and definitions from the FC
+> machine and aligns it with the newer AST2700 A2 silicon.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0-fc.c | 15 +++++++--------
+>   1 file changed, 7 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+> index 0502a137f3..5eb6680da9 100644
+> --- a/hw/arm/aspeed_ast27x0-fc.c
+> +++ b/hw/arm/aspeed_ast27x0-fc.c
+> @@ -24,8 +24,8 @@
+>   #include "hw/arm/aspeed_coprocessor.h"
+>   #include "hw/arm/machines-qom.h"
+>   
+> -#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
+> -OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
+> +#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
+> +OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+>   
+>   static struct arm_boot_info ast2700fc_board_info = {
+>       .board_id = -1, /* device-tree-only board */
+> @@ -48,8 +48,7 @@ struct Ast2700FCState {
+>       Aspeed27x0CoprocessorState tsp;
+>   };
+>   
+> -#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
+> -#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
+> +#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
----
- hw/virtio/vhost.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index f3e6a38a70..c3903d314d 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1499,7 +1499,8 @@ static void vhost_virtqueue_error_notifier(EventNotifier *n)
- }
- 
- static int vhost_virtqueue_init(struct vhost_dev *dev,
--                                struct vhost_virtqueue *vq, int n)
-+                                struct vhost_virtqueue *vq, int n,
-+                                bool busyloop_timeout)
- {
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, n);
-     struct vhost_vring_file file = {
-@@ -1536,6 +1537,14 @@ static int vhost_virtqueue_init(struct vhost_dev *dev,
-                                    vhost_virtqueue_error_notifier);
-     }
- 
-+    if (busyloop_timeout) {
-+        r = vhost_virtqueue_set_busyloop_timeout(dev, n, busyloop_timeout);
-+        if (r < 0) {
-+            VHOST_OPS_DEBUG(r, "Failed to set busyloop timeout");
-+            goto fail_err;
-+        }
-+    }
-+
-     return 0;
- 
- fail_err:
-@@ -1614,24 +1623,14 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-     }
- 
-     for (i = 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
--        r = vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index + i);
-+        r = vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index + i,
-+                                 busyloop_timeout);
-         if (r < 0) {
-             error_setg_errno(errp, -r, "Failed to initialize virtqueue %d", i);
-             goto fail;
-         }
-     }
- 
--    if (busyloop_timeout) {
--        for (i = 0; i < hdev->nvqs; ++i) {
--            r = vhost_virtqueue_set_busyloop_timeout(hdev, hdev->vq_index + i,
--                                                     busyloop_timeout);
--            if (r < 0) {
--                error_setg_errno(errp, -r, "Failed to set busyloop timeout");
--                goto fail;
--            }
--        }
--    }
--
-     virtio_features_copy(hdev->_features_ex, features);
- 
-     hdev->memory_listener = (MemoryListener) {
--- 
-2.52.0
+This is an unrelated change.
+
+Thanks,
+
+C.
+
+>   #define AST2700FC_HW_STRAP1 0x000000C0
+>   #define AST2700FC_HW_STRAP2 0x00000003
+> @@ -58,7 +57,7 @@ struct Ast2700FCState {
+>   
+>   static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *soc;
+>       AspeedSoCClass *sc;
+>       const char *bios_name = NULL;
+> @@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>       DeviceState *dev = NULL;
+>       uint64_t rom_size;
+>   
+> -    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
+> +    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a2");
+>       soc = ASPEED_SOC(&s->ca35);
+>       sc = ASPEED_SOC_GET_CLASS(soc);
+>   
+> @@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>   
+>   static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
+>   
+>       s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+> @@ -167,7 +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+>   
+>   static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
+>   
+>       s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
 
 
