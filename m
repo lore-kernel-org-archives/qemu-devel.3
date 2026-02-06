@@ -4,104 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B22EEE20AF
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1495AEE20AB
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voNlc-0003Pv-D1; Fri, 06 Feb 2026 10:29:08 -0500
+	id 1voO5M-0006bt-5Z; Fri, 06 Feb 2026 10:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNla-0003P3-2V
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:29:06 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNlY-0004ox-As
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:29:05 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-790884840baso21904717b3.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 07:29:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770391743; cv=none;
- d=google.com; s=arc-20240605;
- b=dvNlCrGvUYctIoomO5chFX4z6+Ewk+FVvb2D+LLZaj0TbT94k2yUwxbC4iKOEIVIJ4
- SUnWRWhlbz86E0lmFGfaKtHYJ1Tnfp0Z3TsEwjsYgAk4rU8PkbCstLvSYLgIlc/SyBhW
- vgeuprCf8EiwN2edczrXoo8ELwbcA+SEHKG26ACAeMAta33VzpMxR7UY/gyyBKcCD0Ko
- QytQ9AHsSkcvOC274j1vKGQs+3A4f2Tsl6pxk6DoNY69eXapYNnnJriZggCznwqDuNDj
- v3fRJ+4xYJOCRYW0yFX5DeCcTP0dZvWtFJXuL3/dwafcULH58MenzvJPudYq2W7jQl2+
- AgQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
- fh=jFEzzJxDUju1ncw/X5l3FawkPgjsFK5/Ab3CZmCEtxA=;
- b=l3IVUFPMk7OQkBPnqG4jmroqBce6A4GzNLpcoqOzvkQbFTNekfo8CWNHpdZHdWeoYm
- +wxf9UnsOMIC0CNyG4znjn6HBU/CCfXSx0aMIRHgzB9f+x2VRkJt74mFzcHraSr+CyXF
- EjQpsUQBblp/O+nZpplkpS31RMZUpaD++++29ZwClwCSw8fCThSPlSfJFFcgIHCZVBMj
- i69MFbVecMzbg68jneFFX3TVl0bZGSMXYBT+SkJ9lObiQU4PNZKSKdpokr8DLKfT0g2d
- nYBv2ao0lK1oqWI3k+UNPG8IZ3aCF3xL8ixvZGkjWFJ3fWZOZrEXWRUv2NUCApm4kWkG
- 3t6g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770391743; x=1770996543; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
- b=VYFACtZlAvEd3PXqvmrXfsPG1PZCf2fQ96OWfaQuwm4PIDBxDW3BXkJuBFMLTkMX7R
- 3+bEzLj2MDJRg+mJ8Mt3NSsM/7kpC2FODUVXPj/73PZSi9JzZLHzS5kWGeMt8ARK8Mqv
- RSb1xRas1W0lsEe1vsVl64M/7a+5sG6oeGWx+CHVCvoG/Yn7ijgp/aX49iZSeyyReriN
- +91FxE1dmELQvJV3Q6negMPuvIzbYVuR6Z0/Zy908h3QhUpvq0BAHmENjNcepdWOWfcL
- LUfetTZwSXrit/0ZGB1hRPYk9WTlKN3nZL+zi00xRvw27JQr+eVe4okPF4e85Q5azy1y
- cC2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770391743; x=1770996543;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W/EC1oBs1ewzyTH+kZEMtwhXVAiWd9mTj1Nuyn37lIg=;
- b=wNyxdwt/bN0Hd2uG6Gr6StWce4EUxfiD6OE5L/bmzqPgXnfELVAoLo+k1PhMu21QlZ
- +VGrBHM3BBjXpgE7Z6Rb3eny6kqumj2xceJnvhRfUdQ/+lBUBp8X7D2zsidRxcecghjN
- dff2/TMJLEmVVrD1Vof+f+/dzULAYZ4ZR+3NTigYlxsvqo1OFSzTQFqpjrnQhwXaJAFb
- hTkue5kFp8TrhQ/SvvnG2kwnFb2vYWkTF+/+XWh688gGXDOqiODcMIHgbo/oqGzrhqs4
- J7jDXmw+myO9Bl0nLgjmTbsvUw2Kq1EJAk36rsx5NfOpG5TIV1IAwqRMzXocmliukB5m
- tI+g==
-X-Gm-Message-State: AOJu0YwUDcBKWAYgLd4vy16voZjO+cyPDtprYFAu99ytdUXacH4BhrO5
- g7sVcZVYBjMaMMl8t6ZGvE9EYCsG7igvF6DYDgTgUG0cidOIVkRirzJwtm4UFZltlRk5jp6Wb5x
- OsiPZZQxs4EoT6ETl5xB1mxPkqGYYmOwAHzoClEcvEw==
-X-Gm-Gg: AZuq6aICq2z+xj1NDJqTPqmW5qBuHlgDxtv1uJv8UXd3X1071NgbNCx5X56UspjCl3c
- WhIwLg3FKaAbyvS2XPJc8vYnWdvoapCLuH2tBTXlBKnoyLVTX97V0MIMxV3navDxeUu4VG7sVhJ
- QwkvzEtIwW38xa3O8a+BexE1Vrr4Fqgx/nmg7m7lkdiJkC0Utgk0v4GB/7KaJx25CzpecbepPxo
- DxafDnn+LSoNrdTvANzrv+MfINleUiFk2rb6q/ku64zVHlu64unYWR6g0EJvKo7eiNGPf+YMg7K
- vw3IBWaFgD9+ZQUetdhmoTzIabSILEk0pVuHeNp+llEFj99p23MLuW4=
-X-Received: by 2002:a05:690c:f81:b0:795:1f65:4154 with SMTP id
- 00721157ae682-7952ab7c6d9mr29299997b3.64.1770391742901; Fri, 06 Feb 2026
- 07:29:02 -0800 (PST)
-MIME-Version: 1.0
-References: <20260202153618.78675-1-philmd@linaro.org>
- <20260202153618.78675-2-philmd@linaro.org>
-In-Reply-To: <20260202153618.78675-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Feb 2026 15:28:51 +0000
-X-Gm-Features: AZwV_Qg_0BcctXaQStDMgnJhrLIefby8I9YJsgSPR5ZP0MwknPs1oZ83uyNgsuU
-Message-ID: <CAFEAcA8CtzzyWQxeV+zBZMU0JEacctMGvC5dezR+n3J7xKYiNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] target/arm: Remove dead code
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@lists.libvirt.org, 
- Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1voO5J-0006bD-QD; Fri, 06 Feb 2026 10:49:29 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1voO5E-0001x2-Kt; Fri, 06 Feb 2026 10:49:27 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6161NOKt023248;
+ Fri, 6 Feb 2026 15:49:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sjySMu
+ I4pIaI7slxBkMErSsFKTV0jQ4OSyB5sdG4+2M=; b=ZBFm3T5nvqB8+SeOFtwqN/
+ kLJBBTShhxQ8bYIgXng58gokneuhliVa42m82p7DlcnheGuu9vVqoYhXmakDd8sq
+ ttwzmFxFFU81ZxRkcUcfNNBIWrj1SEEMmioZg79ffscQDWerJMu1dqyulay+t6wX
+ P25vfBCH2b3GgCaZ6QnDhN3rygnbk+lZMKf4R/dB6+j5/UzFfVSzOaqvb1WFDqRE
+ ggiH8kFg7hzpv8sKz1XTQkQTCfcrNd+4MNnoz9QvhF0q2XoRiNJ/hZDnKIFBWVa/
+ h4ZIlzN7JMBk1MjoanvUyfVASU0HOeWBSRAdeQBwpJPbhkNth6rIpahxXqfR9sZw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c1986vb4u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 15:49:21 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616FZ74D009198;
+ Fri, 6 Feb 2026 15:49:20 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1veyeu95-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 15:49:20 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 616FnI2m24969770
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Feb 2026 15:49:18 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4CB958060;
+ Fri,  6 Feb 2026 15:49:18 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 151635805A;
+ Fri,  6 Feb 2026 15:49:18 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.130.235]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Feb 2026 15:49:17 +0000 (GMT)
+Message-ID: <39547b13fa4ad8f7060732bc9718551d04a6343d.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 08/14] s390x: Add definitions for PCI IPL type
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Fri, 06 Feb 2026 10:49:17 -0500
+In-Reply-To: <20260127161547.459443-9-jrossi@linux.ibm.com>
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-9-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDExMSBTYWx0ZWRfX+zGeyDx+tM5j
+ AdO5GaqXFLs4KigY+/+0lwLgF8Pwwncisd8Y9KyED1jR+0XmrDfAHsltHkHFi4ZYyAQ4iSg9q73
+ +2ptMw5IPJpa7g3rqcDhaBeGfPTbkLnr6iSKXiC2wkdqjKqMG70BZU57UskzJk0ULKAbWZzE801
+ xKtdnmbDtjcnXFvMohebP4G1sXMLegbOuxfdyA/cl5JXV2bA/Rt9v/YFkq1cBYSJIgXBKKvPcXv
+ KY9eS4EJ5J6RCBZkGidEw09ibQDWefNjPjNAtmsWWKoZN0ybeORG5LJeEN01B7siySaFs1JqjWq
+ EOmId2U5QhYvaOONl+NjlrFiZ0o5ntwj80lJLUga/9yfwzufv974+lHXzB5FIufntGHOrM8/kxu
+ b8aSJUJlL7R8NQsaDCziQav3UZSf2cX6kR970Idlx5wujzpzm/zoK01KmUH7uM+TZtMbKs3YNge
+ kfYHGbMSW2B3loCracA==
+X-Proofpoint-GUID: FTyCKzH7WyRwlIgRVwTEKuGVN-6elNKC
+X-Authority-Analysis: v=2.4 cv=DbAaa/tW c=1 sm=1 tr=0 ts=69860d81 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=cUnqiC08biq_tdeLAnAA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: FTyCKzH7WyRwlIgRVwTEKuGVN-6elNKC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-06_04,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602060111
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,56 +123,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Feb 2026 at 15:36, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> Since commit a0032cc5427 ("target/arm: Make 'any' CPU just
-> an alias for 'max'") the 'any' entry is never used (we use
-> 'max' instead): remove it.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> Define a new PBT code and IPLB layout in preperation for supporting PCI d=
+evice
+
+s/preperation/preparation/
+
+> IPL on s390x.
+>=20
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  target/arm/tcg/cpu32.c | 3 ---
->  1 file changed, 3 deletions(-)
->
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index 0b0bc96bac2..2127d456ad6 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -897,9 +897,6 @@ static const ARMCPUInfo arm_tcg_cpus[] =3D {
->  #ifndef TARGET_AARCH64
->      { .name =3D "max",         .initfn =3D arm_max_initfn },
->  #endif
-> -#ifdef CONFIG_USER_ONLY
-> -    { .name =3D "any",         .initfn =3D arm_max_initfn },
-> -#endif
->  };
+>  include/hw/s390x/ipl/qipl.h | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 
-This is not entirely dead, because it's what causes
-"qemu-arm -cpu help" to include "any" in its list.
-But we already don't list "any" for the qemu-aarch64 help
-output, so it's not really a problem to drop it from the
-qemu-arm equivalent list.
-
-I've applied this patch to target-arm.next with the
-commit message adjusted accordingly:
-
-=3D=3D=3Dbegin=3D=3D=3D
-target/arm: Remove entry for "any" from cpu32 arm_tcg_cpus[] list
-
-Since commit a0032cc5427 ("target/arm: Make 'any' CPU just an alias
-for 'max'") the 'any' CPU QOM type is never used, because we change
-"any" to "max" before creating the object.  The array entry means we
-have an unnecessary type in the system, and the only user-visible
-effect is that "any" is listed in the "-cpu help" output for
-qemu-arm.  (System emulation already doesn't include this array
-entry.)
-
-Since qemu-aarch64 already doesn't include "any" in its "-cpu help"
-output, we can reasonably drop it for qemu-arm also; remove the
-not-very-useful array entry.
-=3D=3D=3Dendit=3D=3D=3D
-
--- PMM
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
