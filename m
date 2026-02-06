@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C8A9E91297
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A23ECD9BE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCcY-0004Xl-Gp; Thu, 05 Feb 2026 22:35:02 -0500
+	id 1voCp4-00079v-Rc; Thu, 05 Feb 2026 22:47:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCcW-0004X3-I2
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:00 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1voCp3-00079n-Nu
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:47:57 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCcU-0004g0-2k
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:00 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a7bced39cfso17706105ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:34:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1voCp1-0007Et-QQ
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:47:57 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-65939428896so2532347a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:47:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770349674; cv=none;
+ d=google.com; s=arc-20240605;
+ b=X9/PBQ3uS2AX7ghRSgruFKzm2iuZNeztGBbXs4mksdCercBfq9WwxaljAZU0mGchln
+ s0aOrasX6PxwvOeGQF1QcRdXxItkyBLvXs1oQ8lZ2IwvbNxkZZ9nxiiJaLv5CRABhuFG
+ y8Owuisjnore3LNzWKAMduE2GP7FCUh5pue9sww8EE72exIHQ83o1YrndgHlbNMvYh6B
+ exW5G4G742a3ieZKTooHAWkq+FQqTND+AesqLOJ+7Rclcg2/YxEdgpPPbNweN0+yJ+iP
+ rf5cXtXBKpq7urjBjBt4rVFRwQDFAZG0arieTg5dFtcYPhsIgyEeZGKAimKM6hllSzlj
+ GpXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=WwC4tkgHzw41DzD8gBE/5yQIPKNmrcSY5GOhv7uCegA=;
+ fh=cQ7hnC6fLJLg4X0VdG++3DarxbRbY0MROLW3rb9G9r4=;
+ b=U3eBzZHJzkM59p1+aD3jlRcKKLpM5qXhVlaWjFSnXhsg79tw8bNPZ4xA7Wb3Clw2PT
+ V5px36kuy0j0jGND3HJmpu+0gdY/BZM69E0WUuh63w70T008TPBHoLWFB7+9mW+2vwmR
+ P4sIGs6Z2KVpGD/MaY+rVXybY2Ncuq6OQNCXKMlKlz2usO1Ww/lMvMxMv25vZBCpbjpc
+ NgEWK2LHGeKqEgBe1l+7omIOVt23fKwUH6hyWAjRmFfKQBIFcX9ReaH1LIDPVSsIav55
+ eSmps20dws3X6Hat7vebgrK28pweka1MxK8CiodhnqJheDz7WcY5SKoZ1xECZsYeM6io
+ PvQw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770348884; x=1770953684; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4nIhgBYzj/pMMe7C5ff1M39odY/oil8Oq87UlRR6ips=;
- b=nAS0iIcycz+8MRBQxW9AtXKlt4SDFcwZ9lAnL/U0j8ZnjaOBtbQGtAJdH66GF3ysK3
- SZiYyzJ0M47/iybe10ZqvEDswoCDMbI+U6qpr5/BbW0GtlFW4UsJVDBCl9aPyjFiK7MK
- psRJJcTVWE4bRc3o1SPn1iKEuKdqYFJUYlkWpyXXXOsWUPzgxrNpdwyTg3v3K0re+me0
- FwUvf2agq+Jw9+UPFpRB89nkovahX4icrkTjiRMPcHbpXJlJ9DVbwR4NSF7Ai9QZpgdj
- IGZs7xpcG/kCsKC5sMgmDZk9SEyfN8Zo1pYqDGw2oS0MFHSe4WZ5xvKD0RCNFM23mNdo
- VmIQ==
+ d=gmail.com; s=20230601; t=1770349674; x=1770954474; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WwC4tkgHzw41DzD8gBE/5yQIPKNmrcSY5GOhv7uCegA=;
+ b=meXI7NnfziaGLeNg7xBV15Zf64VCV0nSLmGiC1R22IAI/EGm2m8pqjOB/LqLrBiAJJ
+ jLo/Hk5CBAMfxpGKjRvt21JxUzCsB6jL8XZFI0on44cf2V8zShmcU9OteKApqztwWCnw
+ RYzPobDeNRhHa8VpI+51sYzC9NqmaH8fBrDvu3Rqppi7F5zva4aolWEFhtKRPBHBaiSW
+ /uMv8KolE2Ulr5Ok1tcO5+/ovo2jvSr6UwYgGI9LDkmSQ58UnxBPzIJ8Tm12sAYTfhdF
+ ub8snsB3qxYd0EGxnPQESaOh2EEpGqonu/CFbviA2NfFL+1FYH7fireVKX4Tmyp6T5sU
+ j3kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770348884; x=1770953684;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4nIhgBYzj/pMMe7C5ff1M39odY/oil8Oq87UlRR6ips=;
- b=sH6eLZrDo46iT7v0S6LybHNbovOYRvOSeyWIMTC0NKMhw+n2ghlSymGne9Mi7lshv/
- 1Z0RyHiKHiFcdx7B3Z191XjlKlop5oaYArD+s/KjYmFQExLiNdLRNUXiYthiQLJw+vEv
- 7fNN+Ho45VK/50uQnmkVOQkuPKN3c5sMiihG1sF9Fl3IbmdEehKt/eEctEXG++axKEka
- MA+BX/GZEdYwQDWAdL6hrPPVhyUvVpDd32pSm82Wk8t0vIPav3YkRb9YgIf2M347xWvk
- nXemKNKz8yJlnVmgtKH2blOUY2nqqUYJNxgE1izX81oSLpGTLOo2yZva0zkO/LS7hEjV
- sMpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGrgkyksyLA9WxQRSjdH+AwAoTytexe0hMn6Cc7zBtmysQnbC6EKNvRrcCdJO+LfmOaH5umE9pjw4u@nongnu.org
-X-Gm-Message-State: AOJu0YydOK135B1pY5/VPWRSiac4p8i+DQaPxOPuSgNCmEnQ873s2f4X
- RhbuHv1zNf0dJVhxxODsush7G460EVRligcWfHiIuUmQPpvacuNmTzOjArCK7A6oyJg=
-X-Gm-Gg: AZuq6aL0jCME+EFMgfzPfQhhAZ1ml5MC8shTSyiMgl2eOCe79SZkeX99wogs30YHpOY
- +MsrfZNUcTcPgjglTn2Qyrm4D1u8aMh+tEKkxuNz9MEH6xS7ssA0antvc5MR4I/almOGsIzK+aR
- pqJ1/K3x79CIEgW6k3/nq4TMm51/jo8iW5fiUXoUnuunhSS/8SG5l+HvJ5SP8LlpqWY8RvW7oKY
- J68c/wHHuBkzay1q30IffQkD23kL4R0IaeLHVoKro2XJRjTrBXSTJJg6uPGvU9l75XOSvfHupis
- aVvpyyZifpIfwgTNqnUBtfNpCUNpO4zek4WvmU8K4V1IlWK20Ys9bzjzKOfOwrW3nBXVKk8GynO
- p2qpuLXSxJPE5mkiPxX+Am/yzUq+PJafUuTazUqgge8s1MOT+v0CvlX97odY3/nXqRT9EJqt1o4
- IbQuneUBN6onrcIVIpHu8YdBDvjoRqZIZzaZErGFx7yZAnMqBEEryUqw5aJBVuuG2GvZ+4Hn8cn
- OYZNq7RYKkNKlCQlRjAeLfdLMF47HK634PGVe+giZ4=
-X-Received: by 2002:a17:903:2351:b0:2a2:b293:27d2 with SMTP id
- d9443c01a7336-2a9519beda3mr15502475ad.53.1770348884057; 
- Thu, 05 Feb 2026 19:34:44 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
- (bg30dhzpdc341w7g29yn.ip6.superloop.au.
- [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a951c7a047sm8139385ad.27.2026.02.05.19.34.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 19:34:43 -0800 (PST)
-Message-ID: <effcf620-704f-4d17-b3ce-1832742bd4e8@linaro.org>
-Date: Fri, 6 Feb 2026 13:34:36 +1000
+ d=1e100.net; s=20230601; t=1770349674; x=1770954474;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WwC4tkgHzw41DzD8gBE/5yQIPKNmrcSY5GOhv7uCegA=;
+ b=U09ENUEtKxCTfbp+brTXGmlipHvouDm0nJTDXTUwJaKNSIxr021YUaMlTV+S2RY/RT
+ vq6OdWX5866CHgW9vZgCwu3jS/3AHNl0P40BKTFa6ySxpFi1UXsT5Z5J2NCqbpCEhxzs
+ FHynkyG0WaAqsf0DzNUXnqnzYGy8vHLdPG/hZgJy8yv5lXRXF0/GbkZZK4tII2Gjww6P
+ Z1m0iAYiUN2tQ/J5zozzuuHB2T/9Exar5Y+LWt6CDZWjONPy7wVaSEj0s9SR0UDWxSRu
+ eG90znQ0ZT58G2rpnetbZo68VPY1Mba99bQyq0jF4ohui5W1WCnGufd/dilyeBBBLrM1
+ idXQ==
+X-Gm-Message-State: AOJu0Yy7A1pIGXz77cEHi8Hthoe7Wd8rQzjPCIo2zC+zDYiaVr75OspW
+ 3edpqz1Hkeu64DmiIN6bHfoov2MtYT7XJI2jbaecqTwSw8xgmZw3xPVrUeD5HG2lHfHRqIQMZ+S
+ FJiHZkn5laIckpKnMaMvtyjMYKbXywYs=
+X-Gm-Gg: AZuq6aKMpw69urKs3/mSWbFH6Vgye5hHXw3SjyYyO6InH9hz4cTNG5n0WXKxrUF8cPE
+ 1yUqgh/EdoBV3AD30EeqV/BKZoetcS84v8Vmge71KxkMS2yHKD3GZfZIxRXGh0u/k//HUJGAyjA
+ ul5/13LECxFnNB7g+lQq+6PER6x2msVo4OPKdc1P4r5R0mQb47O4LhlpchIb+lGVQKlchmZDDzQ
+ BZAuQDkdGQfK68OkJDiCz39L9qZccA6NyWk4n7ENNLWxRy6vdWVAmWQIOO8Q+F4zTHwy6giaDnI
+ fPCTow==
+X-Received: by 2002:a17:907:940e:b0:b83:b7c5:de2c with SMTP id
+ a640c23a62f3a-b8edf166657mr75400466b.10.1770349673326; Thu, 05 Feb 2026
+ 19:47:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/24] bsd-user: Implement System V semaphore calls
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
-References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-22-8d8ff0035372@bsdimp.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260205-bsd-user-claude-v1-22-8d8ff0035372@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+References: <20260126094422.23116-1-zhangckid@gmail.com>
+ <20260126094422.23116-3-zhangckid@gmail.com>
+ <CAJSP0QWRNwXGgC4ZGMpkD=LQ27DeD7BybEqsKkRr7zrnw+ZhDQ@mail.gmail.com>
+In-Reply-To: <CAJSP0QWRNwXGgC4ZGMpkD=LQ27DeD7BybEqsKkRr7zrnw+ZhDQ@mail.gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Fri, 6 Feb 2026 11:47:16 +0800
+X-Gm-Features: AZwV_QiTtG8Ugbx_nVdM5L4E9VOlBWZxwgfXb9Zp3JJ9-Gks0MolwdI-yaT_hVE
+Message-ID: <CAK3tnvJZtawvPS1rqQZ0P_SaHyFHRFqLn2fkyc17aZfKavYxpQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH V3 3/3] qapi: Add attached flag for iothread
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,59 +119,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/26 03:26, Warner Losh wrote:
-> From: Stacey Son <sson@FreeBSD.org>
-> 
-> Wire up semget(2) and semop(2) syscalls to get System V semaphore
-> implementation, as well the undocumented __semctl used to implement the
-> bits of the interface in libc.
-> 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   bsd-user/freebsd/os-syscall.c | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
-> 
-> diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-> index ca2f6fdb66..6e38007bdd 100644
-> --- a/bsd-user/freebsd/os-syscall.c
-> +++ b/bsd-user/freebsd/os-syscall.c
-> @@ -37,6 +37,7 @@
->   #include "bsd-file.h"
->   #include "bsd-mem.h"
->   #include "bsd-proc.h"
-> +#include "bsd-misc.h"
->   
->   /* BSD dependent syscall shims */
->   #include "os-stat.h"
-> @@ -879,6 +880,28 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
->           ret = do_bsd_shmdt(arg1);
->           break;
->   
-> +        /*
-> +         * System V Semaphores
-> +         */
-> +    case TARGET_FREEBSD_NR_semget: /* semget(2) */
-> +        ret = do_bsd_semget(arg1, arg2, arg3);
-> +        break;
-> +
-> +    case TARGET_FREEBSD_NR_semop: /* semop(2) */
-> +        ret = do_bsd_semop(arg1, arg2, arg3);
-> +        break;
-> +
-> +    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
-> +        /*
-> +         * The semun argument to semctl is passed by value, so dereference the
-> +         * ptr argument.
-> +         */
-> +        abi_ulong atptr;
-> +        get_user_ual(atptr, (abi_ulong)arg4);
-> +        ret = do_bsd___semctl(arg1, arg2, arg3,
-> +                (union target_semun)(abi_ulong) atptr);
+On Fri, Feb 6, 2026 at 12:25=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
+> wrote:
+>
+> On Mon, Jan 26, 2026 at 4:52=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> =
+wrote:
+> >
+> > The attached flag depends on struct IOThreadInfo's
+> > 'attached': 'bool'. It can show whether the iothread
+> > is attached to an actual device. Show in the qmp/hmp
+> > CMD with "attached": true/false.
+>
+> I mentioned that a ref/unref API is needed in my reply to Patch 2/3.
+> The API could look like:
+>
+> void iothread_ref(IOThread *iothread, const char *holder);
+>
+> And the holder string is added to a list inside iothread. That way the
+> monitor commands can report an actual list of holders rather than just
+> true/false:
+>
+>   attached =3D ["/qom/path/to/virtio-blk-0", "/qom/path/to/block/export/n=
+bd-0"]
+>
+> The QOM path would be a useful string to use as a unique identifier.
 
-Eh?  Does this really compile, casting an integer to a union?
-Something seems very confused here.
+OK, this looks more specific.
+I will try to add it next version.
 
+>
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  iothread.c         |  1 +
+> >  monitor/hmp-cmds.c |  2 ++
+> >  qapi/misc.json     | 12 ++++++++++++
+> >  3 files changed, 15 insertions(+)
+> >
+> > diff --git a/iothread.c b/iothread.c
+> > index 38e38fb44d..fb4898e491 100644
+> > --- a/iothread.c
+> > +++ b/iothread.c
+> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void =
+*opaque)
+> >      info =3D g_new0(IOThreadInfo, 1);
+> >      info->id =3D iothread_get_id(iothread);
+> >      info->thread_id =3D iothread->thread_id;
+> > +    info->attached =3D iothread->attached;
+> >      info->poll_max_ns =3D iothread->poll_max_ns;
+> >      info->poll_grow =3D iothread->poll_grow;
+> >      info->poll_shrink =3D iothread->poll_shrink;
+> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> > index 5a673cddb2..7463f34bf5 100644
+> > --- a/monitor/hmp-cmds.c
+> > +++ b/monitor/hmp-cmds.c
+> > @@ -202,6 +202,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *=
+qdict)
+> >          value =3D info->value;
+> >          monitor_printf(mon, "%s:\n", value->id);
+> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->thre=
+ad_id);
+> > +        monitor_printf(mon, "  attached=3D%s" "\n",
+> > +                       value->attached ? "true" : "false");
+> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->po=
+ll_max_ns);
+> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->poll=
+_grow);
+> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->po=
+ll_shrink);
+> > diff --git a/qapi/misc.json b/qapi/misc.json
+> > index 1f5062df2a..cb865d6e48 100644
+> > --- a/qapi/misc.json
+> > +++ b/qapi/misc.json
+> > @@ -76,6 +76,15 @@
+> >  #
+> >  # @thread-id: ID of the underlying host thread
+> >  #
+> > +# @attached: The attached parameter is a flag indicating whether
+> > +#     the IOThread is currently associated with an active device
+> > +#     (e.g., virtio-blk).  In hotplug scenarios, users can
+> > +#     pre-allocate multiple iothread objects to serve as a persistent
+> > +#     thread pool.  When a device is hot-unplugged, the corresponding
+> > +#     IOThread is released but remains available, allowing subsequent
+> > +#     hot-plugged devices to attach to and reuse the existing thread.
+> > +#     (since 12.0)
+>
+> How is this supposed to work since Patch 2 does not support hot unplug
+> (attached remains true)?
 
-r~
+Will fix it next version.
+
+>
+> I'm also curious what the use case for this property is. First I
+> thought it's for debugging, but based on this documentation it sounds
+> like maybe you want to use it to avoid having to keep track of which
+> IOThreads are used in a management tool?
+
+Debugging is a use case, but more is for some cloud-native use
+cases(like kata container).
+The VM life cycle may not sync with the real workload(container
+running in the VM),
+As we know, elastic computing focuses on the dynamic management of resource=
+s.
+So this series try to optimize hotplug/unplug path by keep the iothread poo=
+l.
+After the previous task, the management tool need to unplug a virtio-blk de=
+vice,
+When the next task comes, the managent tool need API to check which
+iothread in idle state,
+and attach some iothreads to another hot plug virtio-blk device.
+
+Thanks
+Chen
+
+>
+> > +#
+> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+> >  #     disabled (since 2.9)
+> >  #
+> > @@ -93,6 +102,7 @@
+> >  { 'struct': 'IOThreadInfo',
+> >    'data': {'id': 'str',
+> >             'thread-id': 'int',
+> > +           'attached': 'bool',
+> >             'poll-max-ns': 'int',
+> >             'poll-grow': 'int',
+> >             'poll-shrink': 'int',
+> > @@ -118,6 +128,7 @@
+> >  #              {
+> >  #                 "id":"iothread0",
+> >  #                 "thread-id":3134,
+> > +#                 "attached":false,
+> >  #                 "poll-max-ns":32768,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
+> > @@ -126,6 +137,7 @@
+> >  #              {
+> >  #                 "id":"iothread1",
+> >  #                 "thread-id":3135,
+> > +#                 "attached":true,
+> >  #                 "poll-max-ns":32768,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
+> > --
+> > 2.49.0
+> >
+> >
 
