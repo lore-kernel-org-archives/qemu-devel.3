@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F2EEE6B68
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D0AEE6B6B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 22:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTh7-0001xg-HO; Fri, 06 Feb 2026 16:48:53 -0500
+	id 1voUAp-00069h-GC; Fri, 06 Feb 2026 17:19:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTgY-0000bM-BB
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:48:24 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1voUAf-00066J-Sx
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:26 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTgU-0002pb-2r
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:48:15 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47ee0291921so11045415e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:48:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1voUAe-0007Em-8n
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 17:19:25 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-29f102b013fso12161625ad.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 14:19:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414491; x=1771019291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770416363; x=1771021163; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SsyDcZvUn4Ye1SpbslgvYtB+Ajf37CUHv5TqhZgKD5I=;
- b=pLYog0vunAyzpIG1f9NHX2ElloOweOwfYAqKsF+lOqGJ2/R+laa/1Xmh96l/gTJBez
- yJKVsbF8mAI0bLGWyCTH2pDLJT7F1HN4jB7eEa2qrTfc45JmA7IqhxHA9IIFJ8NMXjSS
- bvvR8N756hzdnZYIE3FNrcJoJW0kY/bb9yN0wBAiHto4Yyn8RMUDAvDL7EBrlsG0oZKX
- nzXtvxYBu7CWlx3fDy5zIRb84mAJvCYEURXpmFPqhZEOsFtZCjetf3aEhnmyypmGfSEd
- Jf9NWhmpIssmF2UFETFNr2Y3qK55rZUvb6nYPXog89MYoUvW3OZacXBwopz2oE7o/cEx
- 8R5g==
+ bh=3PhMuVFYdPnBkd5n0hx4mNEJNR/NbmY6F8F2L8WVLKE=;
+ b=gwkGALvSyD4B95gT0P518JMFz83L9S2SJegMnsRu/z/sDhLsgqjRZYNGzfia8DSVLI
+ EnbRKK+vq1u2gqBX1G2QM2EN+smaTkfOOQXXrnDhYyMRCwOvzoLkn+nwmv29uLch80o7
+ bJ023RcKdKVCpCf2Quzt0mjjjxBCneBgbi5TIDVCKm2cEPMw/6aupYkHNug7JqcxdVAy
+ Zyq+/GC8P9Cq0mP8Ps4hPzT9dyu9kciP7KJDafeP9129DNK7skdIcDSvR2ROmtHhq15E
+ ZhDPVX9g5M8iK/wJeBHWN8jqhBisrx7v9pdr/vUGMM2FJEm6bhrX4SgT4AvACusBiZtc
+ F6Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414491; x=1771019291;
+ d=1e100.net; s=20230601; t=1770416363; x=1771021163;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SsyDcZvUn4Ye1SpbslgvYtB+Ajf37CUHv5TqhZgKD5I=;
- b=KzvS1SLVKp4lN7wbfWhK/ooV0/z62z3qnpBjcwaC+V3eRsz2j4cG+lTcVfbjeiiALG
- 19VAYswGRo2kp8b5uQ/BKD9YZRqTMH/WsfeBjUDxA6pWWQ3KAw9uYrNy3aNOueYF/9z6
- dmBO99PUBBjDc+E9k225anCLgpxEqNSeuK943qpEnx5XyYVmbZYQbS6kJ/CzLDVzgeSE
- 8lwbSK3kij9giYSjXOmuxMp86AVou2+1LWLBop24xPYSa6KfwCeFcB0gP1YlhMAApgWf
- TukRPmbwn3r8otDiUmifamFodaN3GVmsDLzbbzgH7n2PrSE3uSCcj6Htu8FQT3UE5l5J
- 6coQ==
-X-Gm-Message-State: AOJu0YyIhQaIgmCsUWFOKbkUd5R6VskMzVMMLaJyv3nEsuWjBCLXeQ2R
- xSNeP8TMqUkv0V3NTwu8C27bw8qh+Vt8FzrS6Bs2l0Ff0Ai+JWF/rsI3a2Q18JVy9YkYlyStdGS
- MaNY5xA0=
-X-Gm-Gg: AZuq6aKpQTAWHCP5y337LkAqj/q6fiW4TCHk1M2F3GUo9meYXZumH+orNJ8erqYQm6p
- W/y6xbKCBhUYigwPEBTo5n4YP6GGvIfQpzWoatXmj2+ygpKie+vJLlHOxGmeVyPCCsvsCc4HvDT
- xxNZmHJ9sXXrxQ0YPT6NYQE2HBa8kgEVy0WalQKs+P+eMmCdIT6aSyJP7/FiQEYUQQfWGiraNjY
- HKCTUeayrSBF5KaazV4h6vcVNvXelJzAZxYM3LB4AA7tLkVyS8EYwVKesJ9sBM9abSpxDge9coQ
- 4nDWHfZteiUet0iQT+zurp10qmB0HouRHnrYAM20imnQiVerJdEngkDZWKoqkPwV6m1uL9Xy3S7
- DquBilBZLQVsthd9/EN1tKvyZmuiNZtM3T4zy7BMU2w/w/yQpKtfYPjYDMdBEErINqX45+EB4SC
- i5DMDHnieo6IUn/G3spSJfP6ai8Tcb57COE0xyInQ7PTdU3XvsnaiDzX4VRp5S
-X-Received: by 2002:a05:600c:c165:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-48320213840mr56506655e9.18.1770414490548; 
- Fri, 06 Feb 2026 13:48:10 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d7a99asm167883245e9.11.2026.02.06.13.48.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:48:09 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=3PhMuVFYdPnBkd5n0hx4mNEJNR/NbmY6F8F2L8WVLKE=;
+ b=vyjTEx1b3uBML9TY9i8qzkZynQVIWRGdR1usmdGTduQzYBd6llq6J1zVkMsPS9g5dW
+ K2vPN2UlpK38hkL/sHVHr4LdEIALYh+E7d2WHJe8kWvsd4XvBw+vziWsa9jwfZ+Ql5dg
+ ryEIbi9uLZUWHVvXpaAKjBuDKaMoOQZYSrdK3GPFCVf275sdaR374pRNcfevPu4BymY/
+ Ml/niDxZbwcOPfhIlyxfSL1bskBc8ye7q7rm9eOxZjSqjBEmA2aiqnzUVD7RfqU8L8D6
+ 6w/J/WNzA4XS2zbHDjG3mkkTYshxgmgAxp89pLa8Qo64bAPWBbJ0dTRuZGI7xfRZV8Bi
+ i82A==
+X-Gm-Message-State: AOJu0YzTacYBxm1N5BuVWlo2PH0fu/M3kEEodECzK+1EM5upzmcWJq8H
+ kbx+CBnqzaJqFkbwG0lrkDWVGGQO0Pek+POO+k571hNxK0VdcVqcxX/drlG06iucZrYlTwF+Zli
+ BxX1d
+X-Gm-Gg: AZuq6aIUEQhqviNlA/bGsp/ZrHLvDdpodiTYrWk7n24G4rG8Xj3p+P+jDYV6ImlDCZb
+ 3SP7RchAfhALgndDD1xWOVjs3g3j1hOfOuU7oEY8cfKXyuNFOci/G36ueXizQ9Jmg6Re1EiHtoN
+ rds2MV94y5HWU28BqT7EER/p1efMZ203NQ8GWjPk2cfdn42dGEZudgccbQ9bVoAnknIbnkjuUJA
+ fKoPj+aOdJ92EgdLdWeLn0IH7r+P5cJlBiB850lMWuNg/01JubVTZuJtLz4WIf2HCOUVSORzQRW
+ zHzg+uGf5ZnxtujdmHbRcfLibDFjy6HJKkz/GpOvjRaOJu5aEyLBQ+g157xyvh7jns8rrnFx/BD
+ +sMf/B23SBfY1wqdBqe/o5Ag45HtQdk9j4JccefnVbg9Py/F2PAZKKJ7BKQcv1UiOj5mrrBke1R
+ pZnu751smFny6HkbX7i6R7dM81YbyUORQTV0KawxY4xnMbSMhmYPwcuHEQJvEEm7U2
+X-Received: by 2002:a17:902:fc4e:b0:2a9:4c2:e47 with SMTP id
+ d9443c01a7336-2a9519b5dadmr39036905ad.56.1770416362740; 
+ Fri, 06 Feb 2026 14:19:22 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a95bff42f7sm13316575ad.68.2026.02.06.14.19.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 14:19:22 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org
-Subject: [PULL 30/30] target-info: Statically initialize target_arch
-Date: Fri,  6 Feb 2026 22:44:48 +0100
-Message-ID: <20260206214448.22008-31-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
-References: <20260206214448.22008-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, stefanha@redhat.com,
+ richard.henderson@linaro.org, qemu-ppc@nongnu.org
+Subject: [PATCH v5 9/9] hw/virtio/: make all compilation units common
+Date: Fri,  6 Feb 2026 14:19:08 -0800
+Message-ID: <20260206221908.1451528-10-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
+References: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
-
-Use TARGET_ARCH and token pasting to initialize
-target_arch from SYS_EMU_TARGET_*.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260205030617.266625-4-richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target-info-stub.c | 2 +-
- target-info.c      | 8 +-------
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ hw/virtio/meson.build | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/target-info-stub.c b/target-info-stub.c
-index 8392d81e8f8..65220cc7820 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -18,7 +18,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 20356fba812..821366f5e90 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -9,8 +9,7 @@ system_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK_COMMON', if_true: files('vhost-vs
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_IOMMU', if_true: files('virtio-iommu.c'))
+ system_virtio_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev.c'))
  
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
--    .target_arch = SYS_EMU_TARGET__MAX,
-+    .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
-     .long_bits = TARGET_LONG_BITS,
-     .cpu_type = CPU_RESOLVING_TYPE,
-     .machine_typename = TYPE_MACHINE,
-diff --git a/target-info.c b/target-info.c
-index 5a6d7282524..a26532f660f 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -24,13 +24,7 @@ unsigned target_long_bits(void)
+-specific_virtio_ss = ss.source_set()
+-specific_virtio_ss.add(files('virtio.c'))
++system_virtio_ss.add(files('virtio.c'))
+ system_virtio_ss.add(files('virtio-qmp.c'))
  
- SysEmuTarget target_arch(void)
- {
--    SysEmuTarget arch = target_info()->target_arch;
--
--    if (arch == SYS_EMU_TARGET__MAX) {
--        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
--                               &error_abort);
--    }
--    return arch;
-+    return target_info()->target_arch;
- }
+ if have_vhost
+@@ -55,10 +54,10 @@ endif
+ system_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
  
- const char *target_cpu_type(void)
+-specific_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon.c'))
+-specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
+-specific_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
+-specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
++system_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon.c'))
++system_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
++system_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
++system_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: files('virtio-nsm.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('cbor-helpers.c'), libcbor])
+@@ -100,5 +99,4 @@ system_ss.add(when: ['CONFIG_VIRTIO_MD', 'CONFIG_VIRTIO_PCI'],
+ 
+ system_ss.add(files('virtio-hmp-cmds.c'))
+ 
+-specific_ss.add_all(when: 'CONFIG_VIRTIO', if_true: specific_virtio_ss)
+ system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
 -- 
-2.52.0
+2.47.3
 
 
