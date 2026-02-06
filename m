@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E77EB28FE
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D02E8B364
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIEC-00027O-9F; Fri, 06 Feb 2026 04:34:16 -0500
+	id 1voIG9-0002yk-5K; Fri, 06 Feb 2026 04:36:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1voIE8-00025f-EP; Fri, 06 Feb 2026 04:34:13 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ id 1voIG7-0002wW-2U; Fri, 06 Feb 2026 04:36:15 -0500
+Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1voIE6-00056l-Iv; Fri, 06 Feb 2026 04:34:12 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6pnV0ccWz5wpf;
- Fri,  6 Feb 2026 09:34:05 +0000 (UTC)
-Received: from kaod.org (37.59.142.99) by DAG14EX2.mxp5.local (172.16.2.142)
+ id 1voIG5-0005Nz-9z; Fri, 06 Feb 2026 04:36:14 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.199])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f6pqs0Zjdz5vqG;
+ Fri,  6 Feb 2026 09:36:09 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 10:34:04 +0100
+ 2026 10:36:08 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003e1340c47-cb1f-419a-b67e-0b2f01c4a285,
+ (GARM-106R006e264fffc-df02-4fb4-b080-3ce4621e512e,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <fd3c6343-22b6-4573-a177-46e14a0aa9f4@kaod.org>
-Date: Fri, 6 Feb 2026 10:34:04 +0100
+Message-ID: <ba061380-7377-4814-b0ff-2a95743fcb8d@kaod.org>
+Date: Fri, 6 Feb 2026 10:36:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 00/10] Support ASPEED AST2700 A2
+Subject: Re: [PATCH v1 02/10] hw/i2c/aspeed_i2c: Increase I2C device register
+ size to 0xA0
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -44,6 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
+ <20260206053340.3716041-4-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260206053340.3716041-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.99]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 0762a61e-dea6-4399-b75a-44a75a5b5075
-X-Ovh-Tracer-Id: 13082112495834008382
+X-Ovh-Tracer-GUID: 2e4fe875-f8fe-4202-adc9-3559c01965c9
+X-Ovh-Tracer-Id: 13116733916223736638
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGbF+AnnC8hcSKygOyLLmIZZFotJjcdtj3ci5krQYWZ9yG+QZbITe6Y61Lf3pedUfHpLVevMabL7OBKQMgBOP1LLZ7lqhvaC8gr8HAqLnbRjgSyTHW7lJQuicq00yb4EuIRKnLQVyztvwvHBggULdNqg+BH2ebMhAFs/3I6FyOlUiEfZ3Z3kREPxMitTk/i68HZ55rrjVfuS6t8fy3GD4dPtEgmIOlkyNGCdCmuFXDGga1uke9NCT2N9S4Fu7viqt0Udv99gubPKoOdC1FmV8j2CurnJ9CT5T9h9gj3Kaf7Z2PXRd6of/8Ky3eSbv5NCayr2yLDjbj1jHvEUb+fyfk/rDZBAzv2w3EF9/HHwoU5N/8oDsqMGBR0cUiI4Q/owWGmFTcFsv3c4aZh5N4jddqZLjvnIJZoMIBJXdUe/JYKlD0uvJmHIFCTo+7jgY1c2LIuwEY0FLNlsdnYQKSVfDY7bG4f2YSge1rEi9Nz7Z7Bku7iGI3gAE8giTiFAi4Z42P0Fc08QE8Z45kOyAVtkoCyYdVi2gy4HplVZ/JF4xtN4DVAGwlT8LOcTRnDERTYHQ8aDKUVK1diT3A92AcAO/5FhN2DGtKeCBybgGnGRes0LmE8i8FE4sll9XmhB4ibxb8jnmgfaJ4SXljIyBo7igjqnltAfSWCPFgO4n3XwtQr8w
-DKIM-Signature: a=rsa-sha256; bh=w9jPa6vkr6q5YbzXIKU7nbkmEErnOGm62S0eTDRR3Hg=; 
+X-VR-SPAMCAUSE: dmFkZTE7t8tx8KKcdEwFt5SZ5M1fCvER61nVQOn2KImXy0KSMJrRe9eiA1vrXcOjCJ9cDyf3tUqW3nytcxkDuaniYc1EcXEAAmByb1U1xStA8oeSOZ+JLW5j7kT7XQnThutFPMZUD6DkQwdgTk/kJTq3CDjXbC9r3XmZXTx4mq7zCgd5UGjoYYCwzG8ZqcpQLybDe4mqAVgmBecTljRHaqtdyuGgUBQyrBnm93huWhR2zVNBunrcww0ZXL1J7O1bFL4QQiMwdqiDIMdHf8gxsFPW9voGgqWbUOXU9gaQIkkYWTr37h6CghuuzvJLhy3FKktZLcgggxJUxZLjZkGvpEl//+LNClfs8EyyNqy1g0XxHVX7O00JuFgnasU4MYf7rgF3KsOR8C/nWwbhvqvZuIJgm5nLnEYztOR5sqpsfL/1klHxL67D3FATuIQ5jsb8HCrO2SZ9Zuk0KE5sOV8mGO6T7+cQg1A5WdnePo6HX6nsBnEmciHhJIBP34qbBGnpQNFq4qV7IIrvkYQvUJ6ZW2NflR9qqHLVcYIbv5my83u4A7LsOA2Y4RzsDCffOvzGmlWVgNmR68ru+ff7mv8QtlJWi0n9fzUBw4u8ng+VVGTzfkORCcFFlUXsrWQdg70ovmqgiFSB/I5dTDOg/ECaVxu4X2Kecdeev6W8n1kH63YUyBEj6Q
+DKIM-Signature: a=rsa-sha256; bh=xx67vB0iA2zPiTa2bBi6S2pRxoji1DEP41DfTh2ug+k=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770370447; v=1;
- b=PfnBtL36m8pKaY/hdWMk1NLXtnvzHomXFRNVq+UmwefZAooeC8D7CF30+khG33WmSixypzoY
- zLbx8p3B/7cvmSrivlrAtBVfVyVOUGgzIw8zi9MjW43SBPDjj50ssxNKoiE7AbUrLIzCsKO4A8K
- mqzwnmh3psAYiAcM2UfMiTuNY0iZIC29tRcmsPnj9HUK8Eiw/oVumbApr07K8ooznOGOR5hP/an
- ObYNlTEiLh7Qz2GZ3V9uqL1uKO+QAFaTF07S+wUt4x3/AF1KMyYSRdiU0Cv8QHq6BYbxVrA4NDv
- exKyJyz8rlRIOvQ3ckz96bxhwK/cQl6kD7NZDg1m1W6Ag==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+ t=1770370569; v=1;
+ b=mhNgygn3tj5mC6Gi30Ti4rUE/d7EEFkXJqoqrkUv3DjUp919LEoSCCUhStKNlAieqU+NDWRy
+ WjeK+BvxM2TCkJQSGqR6yjWUx5mLMNyvPav2O24enyghrPjBRjrABHBQ3EYwy6XFCZuSXlAw/zv
+ 5O41V/QsCRnJYndIdg8PMNDWFe41E60EF2scrZY4sT09vB4UFphz7TXzsdV53NEgjSKKMq3z+JD
+ iRrghigueqV7h9xRt7m1iRTpouXdpA2MVHf/1eTFtTKYejG+hLod8/urCNFmbBjN0egWzJJnhrZ
+ 199rswmQcfR6HJ0VB84THP4FAj7XMgQkxRBu8l3JT9qjQ==
+Received-SPF: pass client-ip=87.98.187.244; envelope-from=clg@kaod.org;
+ helo=10.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,54 +134,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
-
 On 2/6/26 06:33, Jamin Lin wrote:
-> v1
->    1. Add AST2700 A2 SoC support
->    2. Add AST2700 A2 EVB machine
->    3. Alias ast2700-evb to ast2700a2-evb
->    4. Switch AST2700 FC machine to use the A2 SoC
->    5. Update functional tests for both AST2700 A1 and A2
->    6. Fix I2C Fix Out-of-Bounds access issue
-> 
-> Jamin Lin (10):
->    hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by using dynamic register
->      array
->    hw/i2c/aspeed_i2c: Increase I2C device register size to 0xA0
->    hw/misc/aspeed_scu: Remove unused SoC silicon revision definitions
->    hw/misc/aspeed_scu: Add AST2700 A2 silicon revisions
->    hw/arm/aspeed_ast27x0: Add AST2700 A2 SoC support
->    hw/arm/aspeed_ast27x0_evb: Add AST2700 A2 EVB machine
->    tests/qtest/ast2700-hace-test: Use ast2700-evb alias for AST2700 HACE
->      tests
->    tests/functional/aarch64/test_aspeed_ast2700: Add AST2700 A2 EVB
->      functional tests
->    hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC machine to A2 SoC
->    tests/functional/aarch64/test_aspeed_ast2700fc: Use AST2700 A2 SDK
->      image for FC tests
-> 
->   include/hw/i2c/aspeed_i2c.h                   |  4 +-
->   include/hw/misc/aspeed_scu.h                  | 11 +---
->   hw/arm/aspeed_ast27x0-fc.c                    | 15 +++---
->   hw/arm/aspeed_ast27x0.c                       | 36 +++++++++++++
->   hw/arm/aspeed_ast27x0_evb.c                   | 29 +++++++++-
->   hw/i2c/aspeed_i2c.c                           | 54 +++++++++++--------
->   hw/misc/aspeed_scu.c                          | 11 +---
->   tests/qtest/ast2700-hace-test.c               | 22 ++++----
->   .../functional/aarch64/test_aspeed_ast2700.py | 44 +++++++++++++++
->   .../aarch64/test_aspeed_ast2700fc.py          | 16 +++---
->   10 files changed, 169 insertions(+), 73 deletions(-)
-> 
+> According to the AST2700 A1 datasheet, the register space for each I2C
+> device instance has been expanded from 0x80 bytes to 0xA0 bytes.
 
-
-It would nice if you could provide a summary of the changes
-introduced in the A2 revision compared to the A1. That in
-the cover letter and in the commit log of the patch adding
-support. We're curious !
+Was that change introduced with the A1 ? or A0 ?
 
 Thanks,
 
 C.
+
+
+> Update the AST2700 I2C controller configuration to reflect the new
+> register layout by increasing the per-device register size to 0xA0
+> and adjusting the register gap size accordingly.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/i2c/aspeed_i2c.c | 36 ++++++++++++++++++------------------
+>   1 file changed, 18 insertions(+), 18 deletions(-)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index cf3a003978..e1682c9bdd 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1206,37 +1206,37 @@ static void aspeed_i2c_instance_init(Object *obj)
+>    *
+>    * Address Definitions (AST2700)
+>    *   0x000 ... 0x0FF: Global Register
+> - *   0x100 ... 0x17F: Device 0
+> + *   0x100 ... 0x19F: Device 0
+>    *   0x1A0 ... 0x1BF: Device 0 buffer
+> - *   0x200 ... 0x27F: Device 1
+> + *   0x200 ... 0x29F: Device 1
+>    *   0x2A0 ... 0x2BF: Device 1 buffer
+> - *   0x300 ... 0x37F: Device 2
+> + *   0x300 ... 0x39F: Device 2
+>    *   0x3A0 ... 0x3BF: Device 2 buffer
+> - *   0x400 ... 0x47F: Device 3
+> + *   0x400 ... 0x49F: Device 3
+>    *   0x4A0 ... 0x4BF: Device 3 buffer
+> - *   0x500 ... 0x57F: Device 4
+> + *   0x500 ... 0x59F: Device 4
+>    *   0x5A0 ... 0x5BF: Device 4 buffer
+> - *   0x600 ... 0x67F: Device 5
+> + *   0x600 ... 0x69F: Device 5
+>    *   0x6A0 ... 0x6BF: Device 5 buffer
+> - *   0x700 ... 0x77F: Device 6
+> + *   0x700 ... 0x79F: Device 6
+>    *   0x7A0 ... 0x7BF: Device 6 buffer
+> - *   0x800 ... 0x87F: Device 7
+> + *   0x800 ... 0x89F: Device 7
+>    *   0x8A0 ... 0x8BF: Device 7 buffer
+> - *   0x900 ... 0x97F: Device 8
+> + *   0x900 ... 0x99F: Device 8
+>    *   0x9A0 ... 0x9BF: Device 8 buffer
+> - *   0xA00 ... 0xA7F: Device 9
+> + *   0xA00 ... 0xA9F: Device 9
+>    *   0xAA0 ... 0xABF: Device 9 buffer
+> - *   0xB00 ... 0xB7F: Device 10
+> + *   0xB00 ... 0xB9F: Device 10
+>    *   0xBA0 ... 0xBBF: Device 10 buffer
+> - *   0xC00 ... 0xC7F: Device 11
+> + *   0xC00 ... 0xC9F: Device 11
+>    *   0xCA0 ... 0xCBF: Device 11 buffer
+> - *   0xD00 ... 0xD7F: Device 12
+> + *   0xD00 ... 0xD9F: Device 12
+>    *   0xDA0 ... 0xDBF: Device 12 buffer
+> - *   0xE00 ... 0xE7F: Device 13
+> + *   0xE00 ... 0xE9F: Device 13
+>    *   0xEA0 ... 0xEBF: Device 13 buffer
+> - *   0xF00 ... 0xF7F: Device 14
+> + *   0xF00 ... 0xF9F: Device 14
+>    *   0xFA0 ... 0xFBF: Device 14 buffer
+> - *   0x1000 ... 0x107F: Device 15
+> + *   0x1000 ... 0x109F: Device 15
+>    *   0x10A0 ... 0x10BF: Device 15 buffer
+>    */
+>   static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+> @@ -1670,8 +1670,8 @@ static void aspeed_2700_i2c_class_init(ObjectClass *klass, const void *data)
+>       dc->desc = "ASPEED 2700 I2C Controller";
+>   
+>       aic->num_busses = 16;
+> -    aic->reg_size = 0x80;
+> -    aic->reg_gap_size = 0x80;
+> +    aic->reg_size = 0xa0;
+> +    aic->reg_gap_size = 0x60;
+>       aic->gap = -1; /* no gap */
+>       aic->bus_get_irq = aspeed_2600_i2c_bus_get_irq;
+>       aic->pool_size = 0x20;
 
 
