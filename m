@@ -4,88 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B00AEE20B8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFFBEE20B9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voPEE-0002tT-Al; Fri, 06 Feb 2026 12:02:46 -0500
+	id 1voPJp-0005ZC-FP; Fri, 06 Feb 2026 12:08:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1voPDk-0002fF-RC
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:02:21 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1voPDh-0003Lo-HD
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:02:16 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c075ec1a58aso850327a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:02:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770397332; x=1771002132; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o5PGBM113VNBl9Zg18me20J5Yyoe4Tn8ie4ZakB18ZU=;
- b=E2PL4MfVXK3o5Rm7VnmyeRHAilJxhsVMBseOyV38pAtE0hn7Ze+X0zTFB+APOmf1a9
- lYue4BTPeoUr6+ORJn4BeXAzPWPiCCfAh3jYEnwj68I6qAvUIlXXdmW2tZbjGwCuDO/g
- 8aA6ncie04Jx+M71sUW8NVo6Bowu7RGTxkI2mt3Kbth0VN4HzwlWdK/4/wiutdveooHV
- OUNZx88ET3/fxWDKYU6AvCcvjIurEuEBEWDGXPrQdx3lGw3BopSPs3jWHwiosE+o0iXm
- l9jklvxUhDhn87pZqZfoMRu4hfSNaHSLDamPFC89nicCfOnSmIKd8NjWGPau55+fYSm8
- TFaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770397332; x=1771002132;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o5PGBM113VNBl9Zg18me20J5Yyoe4Tn8ie4ZakB18ZU=;
- b=bWzrhRYC8cSwCq5ipBqQGDqhT6xVzpjWitZWe5Lj5PoaSkEsxVncVmhVYa/pIUXoUN
- 2mJ/nC9u3paR+S/Du5/Zosxysmt1WnTVWr7dqRyWYBqnfWTiJSVZQLZdlHVEZx603qRP
- otPQZlGOzE909dFF5ZHvyOFbDzJAFsS7cOhnm/CqJXZkjQ3IwqZ00J3NWx/rXKWT3MOH
- 10YIR0mGqUL6VLduyBRXZHSbNzV4ONbHIoKJTq5WS1M3r9Rsc0F1hxSWGXh1iFkd8AUO
- dsDhSClaok890q4peNLWy6QO+myGpVk1r42kRW4EPHEGbI05lEXbyMFWIut2xq4DAD2B
- hvhw==
-X-Gm-Message-State: AOJu0YzPKwVQcZ1/oTj8xk1srLXRXBYElkiQLOtD57imOh5HIRWs0Hdk
- EObFshrIyByU5N7NjvvIamunePjw9V2165gllkAwcUp59nPXJn1wwob8TUQFB31M
-X-Gm-Gg: AZuq6aLzOFSNloET9vFFmwsro8UyAEhsbgsnc2nVdgnSpF7n/5bT2aEUUhtV/Gl+XwD
- fng8YvLkw7D4g5GAxr6T/lHNBcY0w+58BbREeaRQHr/TU0h/69loVNlZvLWwPUIrDbIJ7MFvTFf
- SDzZwhYlUCEBCkmbo7L3RYQ6TdlIyLvfdGT2QTNCsUQlqyDU9Es0RbU8als/O4wzNZdctT1CMq1
- iIPHqxsKBgEeYwXJwPNUGs6gxRahA5P0eG+VPsvKVFU6tphyrc0BH33ytOMn2Qw1ioGxayGhFMy
- Pv6eRS+I0w9M1c3OYj5phneCaPa2osK8hwBjlnMc5YqWbG1KU6BHkvU1Wr4BjatN5p9nhZlcWWv
- J8Y7tBbp7+5iAA/xGx2FYIg25Si8GDSiZc9CIIS+CjdBq0Ud7h3Un96dwtQT69MKNnQWREWElMe
- iztbIT/nO34epBIXLBTpHXhWb9DhAKi+UseOnoT1UwFARp
-X-Received: by 2002:a17:903:2343:b0:2a1:243:94a8 with SMTP id
- d9443c01a7336-2a9518188bcmr32760015ad.49.1770397331435; 
- Fri, 06 Feb 2026 09:02:11 -0800 (PST)
-Received: from localhost.localdomain ([119.234.105.12])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a951c7a047sm28547455ad.27.2026.02.06.09.02.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 09:02:10 -0800 (PST)
-From: ck <ckeong.teo17@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com,
- ck <ckeong.teo17@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] tests/Makefile.include: add run-tcg-tests-TARGET to
- check-help
-Date: Fri,  6 Feb 2026 17:00:59 +0000
-Message-ID: <20260206170059.4913-1-ckeong.teo17@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1voPJm-0005Xo-7w; Fri, 06 Feb 2026 12:08:30 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1voPJh-00064Y-TA; Fri, 06 Feb 2026 12:08:27 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 616CgmkL023258;
+ Fri, 6 Feb 2026 17:08:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=eSZPGd
+ ZtjSuQYIhjkMH17ONr2g6G+a64Aryiz2XogBA=; b=Iad6WmhiX8rXsXmm92v5fR
+ nETwvpjMK8aLQCUHOIypIVSI1ijrLOFYfYs7lOEjffHJAKlvkgVbzN/eQODH7zdL
+ tyXR7IJd7L96CI+1MWP8FWsDgh6mko+SfIbjjeDW4+WYan1XNKhs6QZzzZMJjKcS
+ N24H4RwHfLKsMflkb/gHMJpogHmCJMgqYeSA+4EMQ0UlcfX9iPhDIN5cWISb/uKb
+ 1h1fYSpQRol7fyzX9auCaeOM2dV/CP5iX5Vi2/UuqS8lYxS9WYVHPClnV2SANfA7
+ ASzdzgwyUTos/ZiMmIXCSkDvKuGizfLr15DJGDXlN1x7oizcIX6mXyJVbNF3lzpQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19f6vpwe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 17:08:21 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616GEsYi015800;
+ Fri, 6 Feb 2026 17:08:19 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c4gsgybgb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 17:08:19 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 616H8Ick7864834
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Feb 2026 17:08:18 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4ECD95805D;
+ Fri,  6 Feb 2026 17:08:18 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3EDF58056;
+ Fri,  6 Feb 2026 17:08:17 +0000 (GMT)
+Received: from [9.24.20.109] (unknown [9.24.20.109])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Feb 2026 17:08:17 +0000 (GMT)
+Message-ID: <92933127-8c06-44b9-8db0-cbb4c8b00431@linux.ibm.com>
+Date: Fri, 6 Feb 2026 11:08:16 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=ckeong.teo17@gmail.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] s390x/pci: Fix endianness for zPCI BAR values.
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org
+References: <20260206164645.1845366-1-jhkim@linux.ibm.com>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <20260206164645.1845366-1-jhkim@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: cMUdXiYMjVDUHEqXkVLVYZznfPT_Nvw8
+X-Authority-Analysis: v=2.4 cv=drTWylg4 c=1 sm=1 tr=0 ts=69862005 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=5dwcVOLGD4cZohy6t3cA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: cMUdXiYMjVDUHEqXkVLVYZznfPT_Nvw8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDEyMyBTYWx0ZWRfX3egyzEbBd/40
+ 2yIjUZegljMeUUJjbSnVAk+DdEG9QzPetmRbXbeJrkBtGCkJiPr1NxyJvGeIb/1dsOz1OjBVZVp
+ 7eqeXl8WeMOKTehoIORP88/JVAJSXp2nz8eQHJUmA6hIh8WqP7gb5Yimx4AUfrfXbKPtcORsQ7d
+ RyK66M987u+cp9DVXESIv2BZKJKqvA33WyOBGFLHy21pxPmEAiiVNXQ77ohWQMHIZsqrWvEYUoU
+ 6RfNpz+qpwDFxS8IgWzrFUR37Hve+vuXL4moAvO1RET/J70VcteMX43Y+QBHVrSxjTUWp+81qsD
+ KYO+861xR05mi6VxAdilUItkaBcnrTS06PVe91kdVmNZE/frjdeo+3pY63zQ0mfO5W3uiGN1qjn
+ lQqmcxIJnAR6uKuKkDGI9pfY/ozGQQSxBBw+YgJnaNqRh79HrXylnG23Z1ss/LRrTA8jZr7bU1K
+ y0kcpw+Uaxw4fhXmCQQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-06_05,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1011 spamscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602060123
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,81 +123,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User can execute TCG tests for a specific TARGET using the command:
-$ make run-tcg-tests-TARGET-softmmu
+On 2/6/2026 10:46 AM, Jaehoon Kim wrote:
 
-However, this command is not showing in 'make check-help'
-documentation, making it hard for new contributors to
-discover.
+The previous mail didn't reach one reviewer; resending to the correct address.
 
-This commit help to resolve this by adding the description
-for the command, to the "check-tcg" section, as suggested
-by Thomas, in tests/Makefile.include.
+> During zPCI scan, BAR configuration data retrieved via CLP Query was
+> misinterpreted due to an endianness mismatch between QEMU and the guest
+> kernel.
+>
+> The guest kernel's clp_store_query_pci_fn() expects BAR values in
+> little-endian format and converts them with le32_to_cpu(). However, QEMU
+> was incorrectly sending them in big-endian format, not following the
+> architecture specification. This caused incorrect bit-swapping in the
+> kernel, leading zpci_setup_bus_resources() to perform registration checks
+> against invalid flags, making the process ineffective.
+>
+> Observation values for zPCI device (NVMe passthrough):
+> LPAR from real CLP:
+> [    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
+> [    0.865597]  start: 0x4000000000000000
+> [    0.865598]  end:   0x4000000000003fff
+> [    0.865600]  flags: 0x100200
+>
+> QEMU before fix (wrong):
+> [    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
+> [    0.601085]  start: 0x4003000000000000
+> [    0.601086]  end:   0x4003000000003fff
+> [    0.601087]  flags: 0x200
+>
+> QEMU after fix (correct):
+> [    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
+> [    0.601117]  start: 0x4003000000000000
+> [    0.601118]  end:   0x4003000000003fff
+> [    0.601119]  flags: 0x100200
+>
+> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-inst.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+> index 6b67c3c109..10066ca618 100644
+> --- a/hw/s390x/s390-pci-inst.c
+> +++ b/hw/s390x/s390-pci-inst.c
+> @@ -307,7 +307,7 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
+>               uint32_t data = pci_get_long(pbdev->pdev->config +
+>                   PCI_BASE_ADDRESS_0 + (i * 4));
+>   
+> -            stl_be_p(&resquery->bar[i], data);
+> +            stl_le_p(&resquery->bar[i], data);
+>               resquery->bar_size[i] = pbdev->pdev->io_regions[i].size ?
+>                                       ctz64(pbdev->pdev->io_regions[i].size) : 0;
+>               trace_s390_pci_bar(i,
 
-Additionally, reformat the alignment to accommodate
-the length of the new command, ensuring the
-consistency of the output.
-
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/228
-Signed-off-by: ck <ckeong.teo17@gmail.com>
----
- tests/Makefile.include | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
-
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 7728098981..be3b78fdfb 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -3,29 +3,30 @@
- .PHONY: check-help
- check-help:
- 	@echo "Regression testing targets:"
--	@echo " $(MAKE) check                    Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
--	@echo " $(MAKE) bench                    Run speed tests"
-+	@echo " $(MAKE) check                         Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
-+	@echo " $(MAKE) bench                         Run speed tests"
- 	@echo
- 	@echo "Individual test suites:"
--	@echo " $(MAKE) check-qtest-TARGET       Run qtest tests for given target"
--	@echo " $(MAKE) check-qtest              Run qtest tests"
--	@echo " $(MAKE) check-functional         Run python-based functional tests"
--	@echo " $(MAKE) check-functional-TARGET  Run functional tests for a given target"
--	@echo " $(MAKE) check-unit               Run qobject tests"
--	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
--	@echo " $(MAKE) check-tracetool          Run tracetool generator tests"
--	@echo " $(MAKE) check-block              Run block tests"
-+	@echo " $(MAKE) check-qtest-TARGET            Run qtest tests for given target"
-+	@echo " $(MAKE) check-qtest                   Run qtest tests"
-+	@echo " $(MAKE) check-functional              Run python-based functional tests"
-+	@echo " $(MAKE) check-functional-TARGET       Run functional tests for a given target"
-+	@echo " $(MAKE) check-unit                    Run qobject tests"
-+	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
-+	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
-+	@echo " $(MAKE) check-block                   Run block tests"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
--	@echo " $(MAKE) check-tcg                Run TCG tests"
--	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
-+	@echo " $(MAKE) check-tcg                     Run TCG tests"
-+	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
-+	@echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a given target"
- endif
- 	@echo
--	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
--	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
--	@echo " $(MAKE) check-clean              Clean the tests and related data"
-+	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
-+	@echo " $(MAKE) check-venv                    Creates a Python venv for tests"
-+	@echo " $(MAKE) check-clean                   Clean the tests and related data"
- 	@echo
- 	@echo "The following are useful for CI builds"
--	@echo " $(MAKE) check-build              Build most test binaries"
-+	@echo " $(MAKE) check-build                   Build most test binaries"
- 	@echo
- 	@echo
- 	@echo "The variable SPEED can be set to control the gtester speed setting."
--- 
-2.43.0
 
 
