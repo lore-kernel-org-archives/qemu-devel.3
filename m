@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D89EB28D6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 08:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD58CEB28F1
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 08:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voHFS-00067X-ID; Fri, 06 Feb 2026 03:31:30 -0500
+	id 1voHdq-0001FM-Me; Fri, 06 Feb 2026 03:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1voHFL-00062b-4i
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 03:31:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1voHdo-0001Ew-Gl
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 03:56:40 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1voHFJ-0002Mn-5F
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 03:31:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770366678;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=cUx/pXQT3kGMZklXaBFrGsNcnwsqfMvZ6eQN9v7GuOM=;
- b=KihQnyLDURglwE/526TQJmsbwqm6XBtAFzY+s7CkT5ZAwptR9DQVDOiAuZj1kZHfw8FicA
- kdKU/uCVqNsFfXi/Y/eyrobK6pBla5TtpO2+aLdG7iTTlh95IZNPewzedqoUd5j5xCIXa/
- IoVEYwO6ziSHpRQf0ZLJsh+k3xmmX+4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-NAbZOMN2PEqHtHnQGJh9nA-1; Fri,
- 06 Feb 2026 03:31:14 -0500
-X-MC-Unique: NAbZOMN2PEqHtHnQGJh9nA-1
-X-Mimecast-MFC-AGG-ID: NAbZOMN2PEqHtHnQGJh9nA_1770366674
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C32B11956059; Fri,  6 Feb 2026 08:31:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.75])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C6F919560A7; Fri,  6 Feb 2026 08:31:12 +0000 (UTC)
-Date: Fri, 6 Feb 2026 08:31:08 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: bsd-user: Dropping the NetBSD and OpenBSD code
-Message-ID: <aYWmzBy9TMQd0cra@redhat.com>
-References: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1voHdl-0007uq-4P
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 03:56:39 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0487FC0159;
+ Fri, 06 Feb 2026 11:56:30 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:52d::1:1f] (unknown
+ [2a02:6bf:8080:52d::1:1f])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id RuJOjX0BnCg0-5z8zpXeR; Fri, 06 Feb 2026 11:56:29 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1770368189;
+ bh=ElwrQjAUlqSUUyYwKMown+MRxzGyKzdsvYbYOtaWolw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=pgzcOq6apvzKhwK4y3749MhNZb3qCYp0InK8d7Oj8H1/ggX92xKy0XF9bf9tIjtVJ
+ V0BPUW/gK03iwWewK+fIFt/8yVWKDJ+G8qW4UxE4RvSEg5B2PgW0kIrz//T0ZhkVXn
+ hxyzxhdg0qqVEfWXu215DFV0DxXjyfhaCk8aNXCM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <988c8747-708b-4ed7-9f4c-8d410a1c45db@yandex-team.ru>
+Date: Fri, 6 Feb 2026 11:56:27 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
+ mst@redhat.com, pbonzini@redhat.com, berrange@redhat.com, thuth@redhat.com,
+ eblake@redhat.com, farosas@suse.de, zhao1.liu@intel.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, leiyang@redhat.com, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com
+References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
+ <20260201162001.296328-4-vsementsov@yandex-team.ru>
+ <aYOAAfzZQ3PeKf4q@x1.local> <87ecmzu0qx.fsf@pond.sub.org>
+ <f83e7888-8159-4522-a40d-352ed0a81be3@yandex-team.ru>
+ <aYTEhSjA6Dnvw1yf@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aYTEhSjA6Dnvw1yf@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,52 +83,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 05, 2026 at 06:03:56PM -0700, Warner Losh wrote:
-> So, it's been years since this code compiled by default, and even more
-> years since they compiled at all.
+On 05.02.26 19:25, Peter Xu wrote:
+> On Thu, Feb 05, 2026 at 11:06:03AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 05.02.26 10:07, Markus Armbruster wrote:
+>>> Peter Xu <peterx@redhat.com> writes:
+>>>
+>>>> On Sun, Feb 01, 2026 at 07:19:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>>>    # @migrate-set-parameters:
+>>>>> @@ -1004,6 +1005,13 @@
+>>>>>    #     is @cpr-exec.  The first list element is the program's filename,
+>>>>>    #     the remainder its arguments.  (Since 10.2)
+>>>>>    #
+>>>>> +# @backend-transfer: Enable backend-transfer feature for devices that
+>>>>> +#     supports it.  In general that means that backend state and its
+>>>>> +#     file descriptors are passed to the destination in the migraton
+>>>>> +#     channel (which must be a UNIX socket).  Individual devices
+>>>>> +#     declare the support for backend-transfer by per-device
+>>>>> +#     backend-transfer option.  (Since 11.0)
+>>>>
+>>>> I still think it'll be nice to either have "local" in the name of parameter
+>>>> or at least document it with crystal clear terms.
+>>>>
+>>>> I used to suggest fd-passing, but maybe you wanted to emphasize there's
+>>>> more than fds to be migrated at least for tap?
+>>
+>> For vhost-user-blk it's the same: not only FDs.
+>>
+>>>> Then it can still be
+>>>> "local-backend-transfer", because nobody stops a device to transfer backend
+>>>> states in a remote migration either.. so "backend-transfer" seems to also
+>>>> work for remote migrations, but it is not.
+>>
+>> Hmm. I imagine a mechanism, where OS supports passing FDs to another host.
+>> This needs support for actually migrating the corresponding kernel object
+>> by OS automatically. But theoretically I think it can be done transparently
+>> for userspace QEMU process, which will simply pass FDs to the some special
+>> socket, similar to UNIX domain socket.
+>>
+>> So, the key aspect is that we should be able to pass FDs to the migration
+>> channel, which currently meant that it must be UNIX domain socket, and it
+>> must be local migration. But in future it may change.
 > 
-> Maybe 5 years ago, I contacted the OpenBSD folks, who said it had decayed
-> beyond uselessness. So I plan on just removing the bsd-user/openbsd code
-> shortly.
+> That's a nice vision, but IMHO we shouldn't take it into account when
+> defining any QEMU interface, when it's only about pure imaginations..
+> unless there is solid work in progress, or ideas proposed / known feasible
+> at least.
 > 
-> Maybe 4 years ago, someone from NetBSD popped up and said they had a fork
-> and they'd share it with me, but they never did, and we never reconnected
-> despite some email attempts since then. So, I'd like to remove the netbsd
-> directory as well.
+>>
+>> And yes, "backend-transfer" work for remote migration of backend.
+>> If we ever implement remote backend migration, why not to
+>> reuse "backend-transfer" for it? Even if there will not be transparent
+>> support from OS, and we'll implement another mechanics, we may add
+>> new parameter
+>>
+>>
+>>     backend-transfer-mechanism = "scm-rights" | "something-other"
 > 
-> Both of these are finally getting enough in the way that they are causing
-> me problems with upstreaming the bsd-user stuff. Now that I have a good
-> head of steam on doing that, I'd like to finish that process. Expect me to
-> flood your email in the coming months with way too many patches now that
-> I've found a way to streamline the process enough for me to sneak it into
-> what would otherwise be lost Friday afternoons...
+> Yes, this will look much better.  We likely shouldn't make it "scm-rights",
+> it should be generic terms that applies to all platforms like "local", even
+> if the implication / implementation might be different on various
+> platforms.
 > 
-> Before I send the patch series to do this, I'd like to do a last and final
-> call for collaboration. I kept it around for this long in the hopes someone
-> would show up, but nobody ever did.
+> That's also the major confusion I got when I was reading the other
+> vhost-user-blk series, thought it was a local migration but not.
+> 
+> I feel like the interface is simply wrong to make it one covering both, or
+> at least it shouldn't be a boolean as you said because it represents more
+> than one use case.
+> 
+> If it's a boolean, it also shouldn't rely on UNIX sockets if it was trying
+> to describe a remote migration, right?  The vhost-usr-blk way of
+> backend-migration doesn't require UNIX socket, or does it?
 
-We probably should have marked the feature deprecated a while ago, but since
-you indicate it can't even compile, I think that's sufficient justification
-to simply delete it. The period of time when it failed to compile can be
-considered to count as the deprecation count down
+It does require UNIX socket too.
 
-Personally I'd suggest just sending the patches to do the deletion, and
-CC'ing the relevant people on those.  An actual deletion proposal is more
-likely to wake any interested person from their slumber. If someone does
-show up we can debate whether to none the less go ahead with deletion,
-and let someone pull it back out of git history later if they want to
-work on making it build again.
+> 
+> Especially, if we still want to have your new proposal try to work for CPR
+> too or even replace it some day (or a continuous set of proposals in the
+> future, from different developers based on this feature), we need to have a
+> solid and clear way represents what CPR does, which is to do local fd
+> sharing.  "backend-transfer: local" or something similar can be that.
+> 
+>>
+>> (or we can put this into "backend-transfer", supporting passing string to
+>> it and deprecating boolean)
+> 
+> It can be a enum, something like NONE, LOCAL, REMOTE.  But before that..
+> 
+>>
+>> More over, this future "remote-backend-transfer" could be used for local
+>> migration, so again, it should be called simply "backend-transfer"..
+> 
+> Yes, REMOTE might be slightly misleading.  And considering you seem to want
+> to allow any of below to work:
+> 
+>    (1) enable fd migrations only,
+>    (2) enable remote migrations on backends only,
+>    (3) enable both of (1)+(2)
+> 
+> Maybe we should have two different feature bits?  The per-device one can be
+> kept as backend-transfer, however we need to change the global migration
+> knob to something describing a local migration.
+> 
+> In summary, still 1 new parameter for migration, 1 new parameter for
+> device, but adjust to:
+> 
+>    - Migration parameter: "local", boolean, when set, the migration must be
+>      a local migration within host (which requires UNIX sockets on Linux)
+> 
+>    - Per-device parameter "backend-transfer", boolean, when set, device will
+>      migrate backends when migration happens.  Otherwise, backends are not
+>      migrated; dest QEMU needs to re-initialize it.  The backends may or may
+>      not contain FDs.
+> 
+>      When the backend device states contain FDs and FD migrations are
+>      required, it requires "local" set first above, or it should fail the
+>      migration when user requested backend-transfer=on.
+> 
+>      When it doesn't contain FD at all (or FD migration is not a must?), it
+>      should either migrate the backend or not depending on the user's
+>      selection.
+> 
+> For tap (your series here), you need to set both ON and required.
+> 
+> For vhost-usr-blk, that only needs to set per-device knob to ON, the other
+> one shouldn't matter.
+> 
+> Then when we want to replace cpr, we request people switch (cpr-transfer
+> only, keeping cpr-exec / cpr-reboot aside for now) from setting
+> mode=cpr-transfer to local=on, which hopefully will start work as before.
+> The per-device parameter doesn't matter in this case.
+> 
+> Would this be more reasonable?
+> 
 
+Hmm. So, with backend-transfer=on on device and local mig parameter set to false, it fails?
 
-With regards,
-Daniel
+But this way we'll have to set backend-transfer to on/off before any migration (local or
+remote) on all devices with help of set-qom. That's not comfortable.
+
+The original idea was that backend-transfer is done for the device when both migration
+parameter and device option are set to true. This way before the migration (local or
+remote) we only have to set appropriate migration parameters. And backend-transfer
+per-device options can be setup once (and the same way) when starting the QEMU, or
+they may be inherited from Machine Type. And with such logic, it's good to have
+similar names for migration parameter and device option.
+
+Considering all this, could we keep the logic as is (in this patch), but rename
+backend-transfer parameter to local-backend-transfer, as you proposed before?
+Or turn it into "backend-transfer" = "local" | "off" (but IMHO it's too optimistic:
+who knows, will we really add something into this enum in the future? I don't have
+such plans)
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Best regards,
+Vladimir
 
