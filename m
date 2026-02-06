@@ -4,109 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9B4EE2092
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C693EEE2091
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 12:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voKxW-0003Ta-Cr; Fri, 06 Feb 2026 07:29:14 -0500
+	id 1voKzD-00047q-Eg; Fri, 06 Feb 2026 07:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1voKxU-0003SE-Py
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:29:12 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1voKxT-0004Tb-BG
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:29:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 21D133E6FB;
- Fri,  6 Feb 2026 12:29:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770380948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+fMkAk9hoqA17k67gRajMzajcz4AJWlozYS1BtkbtIw=;
- b=R+X5CV1R1GD6eEIfdB+EX4jbZBw1V3QmJhyhZe3X6btHfcguePFJD4zjb00UwTLaIFE0A2
- 75Ob/ncxd2MVgwdpj16s0urqiO3w5uKlEymgcFccVIvV+mx7eiMJ54+HxcxEMwhCUE1k7v
- 6gPJPqIFe1GXwxx7bvRaRnPri/7XXIE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770380948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+fMkAk9hoqA17k67gRajMzajcz4AJWlozYS1BtkbtIw=;
- b=gkvZKDr4BkwgmCuPfMGp9iJhwjJT2A5eTLhAgMMD9Xu80SzrhJ4PqywOe4KnC+r5a/MQYz
- IX325OGPaeUNgJDw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=R+X5CV1R;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gkvZKDr4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770380948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+fMkAk9hoqA17k67gRajMzajcz4AJWlozYS1BtkbtIw=;
- b=R+X5CV1R1GD6eEIfdB+EX4jbZBw1V3QmJhyhZe3X6btHfcguePFJD4zjb00UwTLaIFE0A2
- 75Ob/ncxd2MVgwdpj16s0urqiO3w5uKlEymgcFccVIvV+mx7eiMJ54+HxcxEMwhCUE1k7v
- 6gPJPqIFe1GXwxx7bvRaRnPri/7XXIE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770380948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+fMkAk9hoqA17k67gRajMzajcz4AJWlozYS1BtkbtIw=;
- b=gkvZKDr4BkwgmCuPfMGp9iJhwjJT2A5eTLhAgMMD9Xu80SzrhJ4PqywOe4KnC+r5a/MQYz
- IX325OGPaeUNgJDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8D7773EA63;
- Fri,  6 Feb 2026 12:29:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fvLNE5PehWkuVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Feb 2026 12:29:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
-Subject: Re: [PATCH v2 8/9] migration/options: Stop freeing s->parameters
- members individually
-In-Reply-To: <aYUWwSxnsWn1Dfu0@x1.local>
-References: <20260202224101.20568-1-farosas@suse.de>
- <20260202224101.20568-9-farosas@suse.de> <aYUWwSxnsWn1Dfu0@x1.local>
-Date: Fri, 06 Feb 2026 09:29:04 -0300
-Message-ID: <87a4xmqcmn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1voKzB-00046u-0c
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:30:57 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1voKz9-00053G-De
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 07:30:56 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6thS4ZblzJ46Cf;
+ Fri,  6 Feb 2026 20:30:00 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id E633240584;
+ Fri,  6 Feb 2026 20:30:52 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
+ 2026 12:30:51 +0000
+Date: Fri, 6 Feb 2026 12:30:50 +0000
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>, <eblake@redhat.com>,
+ <armbru@redhat.com>, <berrange@redhat.com>, <pbonzini@redhat.com>,
+ <mst@redhat.com>, <lizhijian@fujitsu.com>, <anisa.su@samsung.com>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [RFC PATCH 3/7] hw/cxl: Change Extent add/remove APIs for lazy
+ memory backend.
+Message-ID: <20260206123050.00000ddb@huawei.com>
+In-Reply-To: <20251127225526.700-4-alireza.sanaee@huawei.com>
+References: <20251127225526.700-1-alireza.sanaee@huawei.com>
+ <20251127225526.700-4-alireza.sanaee@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 21D133E6FB
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,62 +70,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Thu, 27 Nov 2025 22:55:21 +0000
+Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-> On Mon, Feb 02, 2026 at 07:41:00PM -0300, Fabiano Rosas wrote:
->> Expecting every pointer member from s->parameters to be freed
->> individually is prone to leave some fields forgotten when the code is
->> eventually updated. Use a dealloc visitor to free them all at once.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/options.c | 24 +++++++++++++++++-------
->>  1 file changed, 17 insertions(+), 7 deletions(-)
->> 
->> diff --git a/migration/options.c b/migration/options.c
->> index 733aae51a8..cc5a66750c 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -1002,11 +1002,21 @@ AnnounceParameters *migrate_announce_params(void)
->>      return &ap;
->>  }
->>  
->> -static void migrate_tls_opts_free(MigrationParameters *params)
->> +static bool migrate_params_free(MigrationParameters *params, Error **errp)
->>  {
->> -    qapi_free_StrOrNull(params->tls_creds);
->> -    qapi_free_StrOrNull(params->tls_hostname);
->> -    qapi_free_StrOrNull(params->tls_authz);
->> +    Visitor *v = qapi_dealloc_visitor_new();
->> +    bool ret;
->> +
->> +    /*
->> +     * qapi_free_MigrationParameters can't be used here because
->> +     * MigrationParameters is embedded in MigrationState due to qdev
->> +     * needing to access the offset of the migration properties inside
->> +     * the migration object.
->> +     */
->
-> Ohhhhhhhh.... thanks for the comment!
->
+> Add extra information in each extent about fix memory window and
 
-There's some amount of rigidness caused by qdev requirements
-unfortunately.
+fixed
 
-I'm not sure if I ever posted it, but I wrote some code to move the
-parameters into a MigrationOptions object so we could make
-MigrationState not be a TYPE_DEVICE anymore. But then we'd end up with
-something like -global migration-options by default, so it kinda killed
-the idea.
+> memory backend, because extent might be backed by different memory
+because each extent might be backed by a different memory backend
 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
->> +    ret = visit_type_MigrationParameters_members(v, params, errp);
->> +    visit_free(v);
->> +
->> +    return ret;
->>  }
+(under new scheme they are one to one)
+
+> backends, thus such information must be stored in the extent object.
+> Consequently, APIs should be changes to support extra members.
+> 
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> ---
+>  hw/cxl/cxl-host.c           |  2 ++
+>  hw/cxl/cxl-mailbox-utils.c  | 42 ++++++++++++++++++++++++-------------
+>  hw/mem/cxl_type3.c          | 23 +++++++++++++++-----
+>  include/hw/cxl/cxl_device.h | 17 ++++++++++++---
+>  4 files changed, 61 insertions(+), 23 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index 3a563af3bc..7c8fde4646 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -365,6 +365,8 @@ static int cxl_fmws_direct_passthrough(Object *obj, void *opaque)
+>          return 0;
+>      }
+>  
+> +    ct3d->dc.fw = fw;
+> +
+>      if (state->commit) {
+>          MemoryRegion *mr = NULL;
+>          uint64_t vmr_size = 0, pmr_size = 0;
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 68c7cc9891..ae723c03ec 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -2840,10 +2840,13 @@ CXLDCRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len)
+>  }
+>  
+>  void cxl_insert_extent_to_extent_list(CXLDCExtentList *list,
+> +                                             HostMemoryBackend *host_mem,
+> +                                             struct CXLFixedWindow *fw,
+>                                               uint64_t dpa,
+>                                               uint64_t len,
+>                                               uint8_t *tag,
+> -                                             uint16_t shared_seq)
+> +                                             uint16_t shared_seq,
+> +                                             int rid)
+
+I'm not sure what rid is...  Maybe there is a better name?
+The dynamic capacity region index?
+
+
+
 
