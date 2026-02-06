@@ -4,111 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00EDEE20AA
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 14:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BA6EE20A6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 14:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voMjl-0002Cj-Vh; Fri, 06 Feb 2026 09:23:09 -0500
+	id 1voMpT-0003JZ-Vk; Fri, 06 Feb 2026 09:29:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voMjk-0002Ba-3X
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:23:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voMji-0002JY-41
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:23:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770387785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+GUZOc9sUELE2R2A87iudQr2VueiG04ykfs8t8XQTyg=;
- b=JMCpnCRqdCnBdZy1SKjCoXC/5WKgCH+BzAZxYbJjQe0AMuFHyMHLAlEA5ih50YeZj1Jjzc
- iT3dvIc/Z6UfOCFH6PWfu9YGbysNwAufcBjUgGHUJDRHjCAFby9xgDQ3tJ842RC5UN+bHO
- 6nxcgl2WHKQqoNQjOkJnOvuMEuezuRs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-PP-HfFinMNG3VBhK5rVgSA-1; Fri, 06 Feb 2026 09:23:03 -0500
-X-MC-Unique: PP-HfFinMNG3VBhK5rVgSA-1
-X-Mimecast-MFC-AGG-ID: PP-HfFinMNG3VBhK5rVgSA_1770387782
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-435ab9ed85dso495807f8f.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 06:23:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1voMpS-0003JD-4e
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:29:02 -0500
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1voMpQ-000301-LO
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:29:01 -0500
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-81df6a302b1so896535b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 06:28:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770387782; x=1770992582; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+GUZOc9sUELE2R2A87iudQr2VueiG04ykfs8t8XQTyg=;
- b=pVy/QIJwwx3BWE4i/fam6+ZHegazB1llbXui5btXUIk0khmO8owF+BT8qi9Zj9K4/r
- jlzdhcqrItol6Rqie2RoRpy/QcwzkIOPMMvMVCVY1V+CzpBn9DzLD5l16SiBA+N/TtGH
- Fk0Ak82sSjqAc3XWvJwwM+ELQCriQNBA3JlAymwidwEZyWRaFEYXCq4a+3B9dClrLIBG
- uBCqt9EfDb+XJ73OGg7DzTDjYoQdcyq49t/cNl8PkXRlHedgs97ME2FC+SjOKzzy3imd
- cwc7mi3Dhouk20S+UK0aqjsQk1bhkxlZ97uZbLw3lW6npeUfrwR4rhB+PJRr9iXbA5lN
- NNpQ==
+ d=sifive.com; s=google; t=1770388139; x=1770992939; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=O4hz/azmyyJUlUPO03ad1VWmLBfDGeDcIIrxf5r19jo=;
+ b=L4oXKbTsXR4sGUFUbb+zW+2YcQwgbw04iI1iKLCMq8Bq7/ljAoc0I7HgIXM57NOGCZ
+ g/P9K7KDFOmf2yoWcLLBeJfTWVaXdfB7Xg/hjetDUto1PhlwFNWTHeJj3x1K3Ex01pjj
+ WG0jPgjd+g75DEbtfY+rKH+cJAkIqEtK0+xoChoHmJ64xDToraZnU35injudfGr5+ieG
+ 8h1zfxGz3+/tPIaXEWeQnTdaoWjDvBpXgx+KqHEEAbrit7Y6xPYiRQMEnGdTy6qAizrE
+ G7c/rQ1XQJdSel2iEoZ8nYQ7zZ2zM7ig2mqVWWp4dqnPm+Bs+jC2eeaaPd9XcPDs2SDS
+ nGLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770387782; x=1770992582;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+GUZOc9sUELE2R2A87iudQr2VueiG04ykfs8t8XQTyg=;
- b=mUoLd1YXosgCTsro9IRUlX85J1vionhWe68G3Qb4wQ2yci7P1gYfZ7wLUZKwRBYG5I
- ONHbGO+Im/n/bEqXqvClQOuf6NejTo/m/hJ5238sS5qOR9gXpMiKDeQp0Ia/Nu1GFHtY
- 0/EYFRYceyMT9k9c6mFNuGfPWkabHIuoS51syiAK6js908asbQYtzHjNmmfyNE/Rujlw
- YRH/qDlnunDQXF6VCyVn61QG/jaTUgKv1n2wJnqEgEFbdIc3FHtYprlMxANqJ5izWY+C
- mLE9HlJsHczpIIvzWXyYq1COfWyXR5A6FRz3s0QHd4YGAQwyUVHyb34OUdURNPmXpo0F
- +ESQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYEyqqUn1ILr0QfgVF94Fn3KbE9EIapqdztsIPHVMjdw9s7RmUc6VlB/6Nut4Mm+WGXipzx8T00v5D@nongnu.org
-X-Gm-Message-State: AOJu0YxvxulW5pIDLtmxw5q+9QzL10Y4iS1nzDAxeJMYGzo5ClxsCryc
- gSo1lgLciLyHA29+skZErMvxlOh2dvQIMViDqpW8N5aXWFXBGJNJE3xeDao6jIZAa1xmvU5RIRJ
- KYBmSDbVdJrSWB+N+Y9cULUS6qDQZmm2CWrS+MzHJXJ+4/HveU47y7d5S
-X-Gm-Gg: AZuq6aIHoK++pGZ7ycMPpU9Hvm9jRj6MkifilxLzP3v2WUt2o4JLaARloTs01yTUCrV
- UgmOmCLh83T9ECbH/ogjHFcCJhkz01Cio9RM726h+8FZEZDU9WfVrZFStpnWUo9HAuxm5yXVxdc
- j5VdFO63nG3CTmjz4sG6Pdtl0i+lDrttfZEoo3CtlQvHSEhQ8Y4g34gCCIKH0AgmnC31f/rtMIr
- qezrtr0HqI+RdvFjHF8poIymeR4OHRBcfUffHnW/VcZx1lgZe7iNY910FleLerDdGBRRumqk6vH
- B8ObbWqBvpsIPOc4/GdPP9O/uIHCwQZuX5b/8eX1UB/M3DIY4VYb2NALmQaNoPI9NGK+vw==
-X-Received: by 2002:a05:6000:40e1:b0:435:a8e7:62de with SMTP id
- ffacd0b85a97d-4362938f7e2mr4462532f8f.58.1770387782326; 
- Fri, 06 Feb 2026 06:23:02 -0800 (PST)
-X-Received: by 2002:a05:6000:40e1:b0:435:a8e7:62de with SMTP id
- ffacd0b85a97d-4362938f7e2mr4462487f8f.58.1770387781849; 
- Fri, 06 Feb 2026 06:23:01 -0800 (PST)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43629745f7asm5630011f8f.33.2026.02.06.06.22.59
+ d=1e100.net; s=20230601; t=1770388139; x=1770992939;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O4hz/azmyyJUlUPO03ad1VWmLBfDGeDcIIrxf5r19jo=;
+ b=ZQVbJHuHA3Q7HOqrnDnzyvLOlrHeqp1GGNtvL2U7MaWntUrHkB0Ok5oNLDsqX33EAB
+ Cvev61LPscqODfsHNiK3wtEB8CE9E/fu8lPbnGPJX6Yy3zJ6Wj7Y1wY6vXsSHaZVh2qW
+ o1njkAdBJcdi6q7Uf5xtzgEDgwgviR1+uSaX+tEKRfacCVM+0Ii+NlbH5T2ttAWEEph1
+ lzhAWCVk+zCWm0HwSu6MXroBY6iT/K4oyo67M9W8fxQvHqIR3Uy14pxFDyFG3+18rvY1
+ y9MJjUdbIb6Ft1yII6+hsFIxAIaUUuQqnRNToQoQI8ovEO3zwcCsVsRywB25cPrVhuJe
+ SdIg==
+X-Gm-Message-State: AOJu0Yzb70fF1f50OKHt2USKGQrrCddpGCpl5dQPWPXSF9dx85tmWeOc
+ b9DTu8FXZKYyf85uNsczPgX6Q1BV0IdA+3M4YwPrSJV6ByT2WRRuQc/HbzdW2dAzalM=
+X-Gm-Gg: AZuq6aIP4Dk3GPr2DhXOsRCgKO4UMecbQGHznH/vmZJ2U1XfzU6gpxnhY/gacoUy+01
+ 1NMJJFpeEtcMosKL05d4NGiEazfTQwI2D2lVCIy0i97BRSG/T0A0W244m6WjNt/qgTx0Typ50Gr
+ fokLHHD0OJkKYHBeI41RqnIRDFACxIAg7W4YmKon+1ThMXON5zSSiYu/bjBOzAjTijZWJ9Ej1UZ
+ V7/1klJXPK4l1NtlANMZ7Cf9S4Fqo9DKvbKAe1iXIRy5Fw5qnXzYlCfCuB1z4bkDjkfvnPQWi/T
+ iLs59ltvaOX4gY3/1yf20PeqJSWG3mjI4+HztYzZMPO+JLXeWyIqqlAmpJ+lTQX2MBZq/iSdiVd
+ ha/lktnhhkcw9EV1iLc17+uE8zivQrOL1XPNhyx8tGZep3UeCfMKPqoTvXgVSZj/mg1CyjJ2aLF
+ fYZaRfAwFDVI6uDSjIuU0cVD52CS51+f6Jtw0r8N4UTnqPiJNN7SiP
+X-Received: by 2002:a05:6a20:c70e:b0:35e:6c3:c8d6 with SMTP id
+ adf61e73a8af0-393ad310b27mr2961800637.41.1770388138861; 
+ Fri, 06 Feb 2026 06:28:58 -0800 (PST)
+Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-354b2253c70sm2759603a91.17.2026.02.06.06.28.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 06:23:01 -0800 (PST)
-Date: Fri, 6 Feb 2026 15:22:58 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: <liu.xuemei1@zte.com.cn>
-Cc: <alistair.francis@wdc.com>, <dbarboza@ventanamicro.com>,
- <sunilvl@ventanamicro.com>, <anisinha@redhat.com>, <pbonzini@redhat.com>,
- <palmer@dabbelt.com>, <liwei1518@gmail.com>,
- <zhiwei_liu@linux.alibaba.com>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
- <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v5 2/4] hw/riscv/virt: Add acpi ged support
-Message-ID: <20260206152258.4ed0b84e@imammedo>
-In-Reply-To: <20260204182349717JK25oWZ6r2DzYQ6XTSj1D@zte.com.cn>
-References: <20260204182041057hohVHgmaAJborE1DrghXH@zte.com.cn>
- <20260204182349717JK25oWZ6r2DzYQ6XTSj1D@zte.com.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ Fri, 06 Feb 2026 06:28:58 -0800 (PST)
+Date: Fri, 6 Feb 2026 22:28:55 +0800
+From: Max Chou <max.chou@sifive.com>
+To: =?utf-8?Q?S=C3=A9bastien?= Michelland <sebastien.michelland@inria.fr>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Jean-Michel Gorius <jean-michel.gorius@irisa.fr>
+Subject: Re: [PATCH v3] target/riscv: fix require_rvv passing on non-RVV CPUs
+Message-ID: <aYX6NunB_f3alpLh@sifive.com>
+References: <20260206100256.1360597-1-sebastien.michelland@inria.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260206100256.1360597-1-sebastien.michelland@inria.fr>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,150 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Feb 2026 18:23:49 +0800 (CST)
-<liu.xuemei1@zte.com.cn> wrote:
-
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
->=20
-> This patch adds ACPI Generic Event Device (GED) support to
-> the RISC-V virt machine.
->=20
-> Co-authored-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+On 2026-02-06 11:01, Sébastien Michelland wrote:
+> trans_rvv.c.inc checks for the RVV extension through the function
+> require_rvv. However, at least under CONFIG_USER_ONLY, the RVV extension
+> status in DisasContex->mstatus_vs is always set to DIRTY, therefore
+> treating RVV instructions as legal even when the extension is not
+> present, e.g. with -cpu=rv32,v=false.
+> 
+> This bug manifests rarely because vset{i}vl{i} perform extra checks that
+> do fail without RVV, thus raising SIGILL, and with no vtype set nearly
+> all other RVV instructions still pass require_rvv but fail the vill check.
+> Only instructions that don't depend on type (whole-register load/stores,
+> such as vs*r.v) would show the bug by being executed when v=false.
+> 
+> This patch sets mstatus_vs to DISABLED when RVV is not present (checked
+> with the minimalistic Zve32x), meaning require_rvv now fails as intended.
+> 
+> Signed-off-by: Sébastien Michelland <sebastien.michelland@inria.fr>
 > ---
->  hw/riscv/Kconfig           |  1 +
->  hw/riscv/virt-acpi-build.c |  8 ++++++++
->  hw/riscv/virt.c            | 23 +++++++++++++++++++++++
->  include/hw/riscv/virt.h    |  3 +++
->  4 files changed, 35 insertions(+)
->=20
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index 0222c93f87..3dad43669f 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -68,6 +68,7 @@ config RISCV_VIRT
->      select PLATFORM_BUS
->      select ACPI
->      select ACPI_PCI
-> +    select ACPI_HW_REDUCED
->=20
->  config SHAKTI_C
->      bool
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index f1406cb683..07d1024316 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -27,6 +27,7 @@
->  #include "hw/acpi/acpi-defs.h"
->  #include "hw/acpi/acpi.h"
->  #include "hw/acpi/aml-build.h"
-> +#include "hw/acpi/generic_event_device.h"
->  #include "hw/acpi/pci.h"
->  #include "hw/acpi/utils.h"
->  #include "hw/intc/riscv_aclint.h"
-> @@ -498,6 +499,13 @@ static void build_dsdt(GArray *table_data,
->          acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURC=
-ES * 2);
->      }
->=20
-> +    if (s->acpi_ged) {
-is this check necessary?
-You probably won't get here at all if acpi is not enabled
-and in hunk below you always create GED if acpi is enabled
+> Thanks Max for your patience with this patch.
 
-other than that LGTM
+Reviewed-by: Max Chou <max.chou@sifive.com>
 
-> +        build_ged_aml(scope, "\\_SB."GED_DEVICE,
-> +                      HOTPLUG_HANDLER(s->acpi_ged),
-> +                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
-> +                      s->memmap[VIRT_ACPI_GED].base);
-> +    }
-> +
->      aml_append(dsdt, scope);
->=20
->      /* copy AML table into ACPI tables blob and patch header there */
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index bd8608ea5b..1d7011b952 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -55,6 +55,7 @@
->  #include "hw/pci-host/gpex.h"
->  #include "hw/display/ramfb.h"
->  #include "hw/acpi/aml-build.h"
-> +#include "hw/acpi/generic_event_device.h"
->  #include "qapi/qapi-visit-common.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "hw/uefi/var-service-api.h"
-> @@ -95,6 +96,7 @@ static const MemMapEntry virt_memmap[] =3D {
->      [VIRT_UART0] =3D        { 0x10000000,         0x100 },
->      [VIRT_VIRTIO] =3D       { 0x10001000,        0x1000 },
->      [VIRT_FW_CFG] =3D       { 0x10100000,          0x18 },
-> +    [VIRT_ACPI_GED] =3D     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
->      [VIRT_FLASH] =3D        { 0x20000000,     0x4000000 },
->      [VIRT_IMSIC_M] =3D      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
->      [VIRT_IMSIC_S] =3D      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-> @@ -1270,6 +1272,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRe=
-gion *sys_mem,
->      return dev;
->  }
->=20
-> +static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqc=
-hip)
-> +{
-> +    DeviceState *dev;
-> +    uint32_t event =3D ACPI_GED_PWR_DOWN_EVT;
-> +
-> +    dev =3D qdev_new(TYPE_ACPI_GED);
-> +    qdev_prop_set_uint32(dev, "ged-event", event);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].bas=
-e);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-> +                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
-> +
-> +    return dev;
-> +}
-> +
->  static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
->  {
->      FWCfgState *fw_cfg;
-> @@ -1702,6 +1720,11 @@ static void virt_machine_init(MachineState *machin=
-e)
->=20
->      create_platform_bus(s, mmio_irqchip);
->=20
-> +    /* acpi ged */
-> +    if (virt_is_acpi_enabled(s)) {
-> +        s->acpi_ged =3D create_acpi_ged(s, mmio_irqchip);
-> +    }
-> +
->      serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
->          0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
->          serial_hd(0), DEVICE_LITTLE_ENDIAN);
-> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index 18a2a323a3..9ea0b3b7b6 100644
-> --- a/include/hw/riscv/virt.h
-> +++ b/include/hw/riscv/virt.h
-> @@ -47,6 +47,7 @@ struct RISCVVirtState {
->=20
->      /*< public >*/
->      Notifier machine_done;
-> +    DeviceState *acpi_ged;
->      DeviceState *platform_bus_dev;
->      RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
->      DeviceState *irqchip[VIRT_SOCKETS_MAX];
-> @@ -88,9 +89,11 @@ enum {
->      VIRT_PLATFORM_BUS,
->      VIRT_PCIE_ECAM,
->      VIRT_IOMMU_SYS,
-> +    VIRT_ACPI_GED,
->  };
->=20
->  enum {
-> +    ACPI_GED_IRQ =3D 9,
->      UART0_IRQ =3D 10,
->      RTC_IRQ =3D 11,
->      VIRTIO_IRQ =3D 1, /* 1 to 8 */
-
+rnax
 
