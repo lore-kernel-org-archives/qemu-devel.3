@@ -4,112 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17238EE6B44
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441DAEE6B45
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQ4p-00044Z-2y; Fri, 06 Feb 2026 12:57:07 -0500
+	id 1voQ5G-0004C0-4Z; Fri, 06 Feb 2026 12:57:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1voQ4j-00043n-0W; Fri, 06 Feb 2026 12:57:02 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1voQ4h-0007OB-8y; Fri, 06 Feb 2026 12:57:00 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 61666b1H025324;
- Fri, 6 Feb 2026 17:56:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UUnmz8
- vUIuPV+RZpavxWbmI6zGgMXyl7pA7qxI6R9b4=; b=VEuWKFP8Ejls8YroTNmFSu
- b0LK4tlclqP6/RyYslzsupahyXWelNMEEA/OvFhO43b24jgUXNhCqg/fpgAThoBw
- blQQpCErgOwsOzdsVnRVYPNjyJoFb9LMf3tyUf3ziJb2Qzz6+BG55Z9EH6dOE3CK
- RmGKACJB4lHFKwUqHAHtF5UpLV7VY+OxL0RYMaTvmhEfnTMmOv3Vk00lyx1h9No8
- 7iuiL75+gNx7/SekvVi59QSZGQJh2DYDEqMn4kMXwkU9BizMlBOx6K01JtrZRbs/
- uV/HfZov4dux3/oJBI0glMobhQiPuqaVwN9BrZrg5cpkPcP1H+cLR3HOPFQBBbWQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19f6vvqe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Feb 2026 17:56:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616HDuNX005928;
- Fri, 6 Feb 2026 17:56:54 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c1x9jpy1e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Feb 2026 17:56:54 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 616HurMU30868140
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Feb 2026 17:56:53 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4C63958059;
- Fri,  6 Feb 2026 17:56:53 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 36C6E58053;
- Fri,  6 Feb 2026 17:56:52 +0000 (GMT)
-Received: from [9.61.245.175] (unknown [9.61.245.175])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Feb 2026 17:56:52 +0000 (GMT)
-Message-ID: <316b9567-8c75-4047-938e-4f39d9ae3186@linux.ibm.com>
-Date: Fri, 6 Feb 2026 09:56:51 -0800
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1voQ5E-0004BX-14
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:57:32 -0500
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1voQ5C-0007ZQ-4B
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:57:31 -0500
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-663170b9472so1416728eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:57:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770400648; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WBRO65pdcgaeLLA2X60EbPAQzL8FZ8LnVBBgit/lJoH002Dqfi1PctCyiQN6eLq0Fe
+ 6mnsfrCaw3zpedLnV0UDZ8oVBphxkbbrH8F4HbL3pOoqZ0YdNynMicER4zK3xnAQdF7F
+ c+ZpFhRr3YwzAYQCBnRZyrp4DH2ybwa83KATvoozeayN23oeA62Ez/AJJyYAxkt12LMg
+ qy4wt/PefU3Wf4ApKLfpH4cxcdfcaUnbxSVecWqe21CesivHVRZ3qw1TRxxepvROTe/Y
+ M19Jx8uNJooLlg/aFuqXb4Gd0nbKF93fNGLOmN9Yoj1MtMhHGilXTq6trklZk3AoH/JQ
+ QKag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=0YBih/ZicORW04UORhc/Z/2Kq8EF4UlrY2jP5IEB4O0=;
+ fh=s9TmceJyPzTYuZ9yDMeO/HCEH8m+AE5Vpu9ovICunJo=;
+ b=i1+DXR7v/ZUmzpOTqOIiPJrQDAg5r9edBlOD+4TijTECyou6mjQyWed4zqv8oqPqBq
+ T28DnNdfRtWCXXtL3R4MYrisVHzJiCOqZRUra6eZSVXQVsRC3Px2Xfr7jdas5JOt5n22
+ mO8elD/RX64aj9ZM/eNiYXz+IayPg8AQtsY+zb9OAzvQ+jAxnyBGGX734BX5XzXxeciN
+ TuC4SkxvA+JxoAhjKMDPB5g/1Q9r4byl6MTB3EPYGaE6jy05ph9Kyojgn8iKubEJROIe
+ AdWLtGjiuVsnD/YnRKjYu08yH4yxgMRZMu9m01Ao3obNDE43v/R5/ku7rJhWX0aldjUt
+ BXnw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770400648; x=1771005448; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0YBih/ZicORW04UORhc/Z/2Kq8EF4UlrY2jP5IEB4O0=;
+ b=Rm+aJd+0lLTu13wdAiulseLWyGFuIV7pbD/dUIvM56E+VrPVlMd1TEPesaro/Dj/nd
+ 7Z2rP81143h9xz5r4MHWy2ydtL2hwi65wsNPuirb8kIW79+xUqV5AMkSHb9ZvGLsw5b8
+ NUBEaVCB13Qat+EgDsQCNzIAHVapaytlueTrj6l2A/GverY0bOOwbvb2vlgSDSSdxKGR
+ FwSZri7lhRgUgk/kxaoD04LwWfDQ60SqMRO31cNkH+If969+Ri4x0ecHKrXvMj/qidHa
+ bMGmuRTBkHg/Mt+TUeu5enNLS1j0U0G+2ACHzul/aYICI/e95A37keEoAuqrJscPsip7
+ 1ozw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770400648; x=1771005448;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0YBih/ZicORW04UORhc/Z/2Kq8EF4UlrY2jP5IEB4O0=;
+ b=CPEYKc0VbCFUfA5VMMvjiyNthzn/nf+U3yW+v/RSZObGW//Iao22WzIbx54RLiWHqD
+ +zPOMEuAjkDbSVpEc0rOJ0s6eIyNgrl22AABubLXN2P2fRJxXUAzhZdHxJXWJdAEeMQk
+ 9C/jLzc/73rbWBpTWFbRtQgjtbnDbn4SiWFq4mziMEDzgSln+KVzIGfPhMwS2ERYlUy0
+ zxQCnS8v7RSJVKKO2YyuxCkEBQZoDz9yUUQpwkmL14sQqlm39dnzk0oKkAJ+1l8B7Y/M
+ c8V3PTv2xwcx4d5tzkkfhcCNFg1NM7n3QyecKsHW7KP8aKl/ykfBqVxfGYmZ915gWHxs
+ 66/w==
+X-Gm-Message-State: AOJu0Yx1mLMHwFDqdV5QPOsjbqoh3WGi0QtCFt/LDzYCK665pBe2fN1Z
+ 4XQa46IyHlQNcYn8VJq1mL6lXkyHTbTICag/zPxJUkU9K8NUAGU+PuRHSkSeRSgH8kE2xFsqH25
+ n+6CANf63b2JzUyj6dUy7hzIBnOGCKxs=
+X-Gm-Gg: AZuq6aJX94O2ahrrUqu3bzU4cn2LZSsK9oBK6I1Ir34swCn9NrOiefsyTcYZBJ7m3Ww
+ vZE1MXP6pdfbt64Zdu8gxhxMHYbtHtbDsjZJuvwL6ikK69W1VOOj/XlnPq9X2jRVXNxe9v1FE5L
+ 2bCV75+Ll+OUJnj2TIAbUP+GfbRQri+IZY5SYHQIVHPs8v0be4QZVh/9ceKEZWahfbIsvt5Tom7
+ CORMAgTNTJH4DECvM4/zDkOzPuzOMy+nn10pBofDfA/cfdOr8rn4SlcwmArFzwAIcorHaI9ilID
+ ErXO7xo=
+X-Received: by 2002:a05:6820:207:b0:662:fd74:61d5 with SMTP id
+ 006d021491bc7-66d09abf9b4mr1479918eaf.3.1770400648267; Fri, 06 Feb 2026
+ 09:57:28 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] s390x/pci: Fix endianness for zPCI BAR values.
-To: Jaehoon Kim <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com
-References: <20260206164645.1845366-1-jhkim@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260206164645.1845366-1-jhkim@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: keQMfavUem-Ey2vIMuAaT3Gs-fb4Dqe-
-X-Authority-Analysis: v=2.4 cv=drTWylg4 c=1 sm=1 tr=0 ts=69862b68 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=5dwcVOLGD4cZohy6t3cA:9 a=lqcHg5cX4UMA:10 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: keQMfavUem-Ey2vIMuAaT3Gs-fb4Dqe-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDEzMSBTYWx0ZWRfX9BU5X+PW4LcW
- OCLgcE9Wo3o1pvujIkMvsap4OFjAs2h83Xt1zXRTAgM2YLWl5cYf9KJccGfnixbj+1boysxEVRD
- /VZqnuWQTTFAAY5k8QBaXnvXdn17a2i4e8xhj8+W4SGSPbxq9L7j2OE5UEh3bKS819TZZxucqjQ
- i/iKnIOASJshdgpc+FulWowXUAWWWjaXs2tBx/qIIXfTj2E7AY+mB7VkQYdxEqkPPUOv4MFbOMN
- CLLuq6H4ipZfGEDBENECvEX+sh/ipaoH3YptVfsMwkYN3xO8ylu/KwZ6Z30f51Vlgb36O4gtFTo
- baXKUApFX778vhEASOT9qzGkAlHq/p5ZxYZujYKVjJkQnniyomdfCknTx/T8kkFoEkAYM5bUopD
- XVgUAYj+aTPR2KAgsQtfzBwFokIQGUse0B2bob95gDMr+mWWDDKUyBxiBwF9ewbZkVcnPtUDD0O
- yZbI2msw+2wtBhSXwGg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-06_05,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 spamscore=0 malwarescore=0 bulkscore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2602060131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260205195824.2610192-1-ruslichenko.r@gmail.com>
+ <20260205195824.2610192-24-ruslichenko.r@gmail.com>
+ <aYUAWw9Rfuu7KWjA@redhat.com>
+In-Reply-To: <aYUAWw9Rfuu7KWjA@redhat.com>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Fri, 6 Feb 2026 18:57:16 +0100
+X-Gm-Features: AZwV_QhmBnAMee9tSiOrObNARSNoNehaIHvvXYS2fjqFH_Wiz1BvEWDcjz4ULQU
+Message-ID: <CAN-aV1E1D_8Q9hCR4OBXx0ZU2uziiQ3jN05aPTUwm-AmFs9=QA@mail.gmail.com>
+Subject: Re: [PATCH 23/29] system: Introduce -sync-quantum command line option
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org, 
+ artem_mygaiev@epam.com, volodymyr_babchuk@epam.com, 
+ takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, francisco.iglesias@amd.com, 
+ Ruslan_Ruslichenko@epam.com, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-oo1-xc30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,60 +122,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Feb 5, 2026 at 9:41=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Thu, Feb 05, 2026 at 08:58:18PM +0100, Ruslan Ruslichenko wrote:
+> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >
+> > Add a new global option '-sync-quantum' to specify the maximum time
+> > interval, in nanoseconds, between synchronizations with remote peers.
+>
+> Again, we don't really want to introduced new top level command
+> line options, so try to find an existing place that's suitable
+> to fit this in, perhaps a prop -machine.
+>
 
-On 2/6/2026 8:46 AM, Jaehoon Kim wrote:
-> During zPCI scan, BAR configuration data retrieved via CLP Query was
-> misinterpreted due to an endianness mismatch between QEMU and the guest
-> kernel.
->
-> The guest kernel's clp_store_query_pci_fn() expects BAR values in
-> little-endian format and converts them with le32_to_cpu(). However, QEMU
-> was incorrectly sending them in big-endian format, not following the
-> architecture specification. This caused incorrect bit-swapping in the
-> kernel, leading zpci_setup_bus_resources() to perform registration checks
-> against invalid flags, making the process ineffective.
->
-> Observation values for zPCI device (NVMe passthrough):
-> LPAR from real CLP:
-> [    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
-> [    0.865597]  start: 0x4000000000000000
-> [    0.865598]  end:   0x4000000000003fff
-> [    0.865600]  flags: 0x100200
->
-> QEMU before fix (wrong):
-> [    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
-> [    0.601085]  start: 0x4003000000000000
-> [    0.601086]  end:   0x4003000000003fff
-> [    0.601087]  flags: 0x200
->
-> QEMU after fix (correct):
-> [    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
-> [    0.601117]  start: 0x4003000000000000
-> [    0.601118]  end:   0x4003000000003fff
-> [    0.601119]  flags: 0x100200
->
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-inst.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-> index 6b67c3c109..10066ca618 100644
-> --- a/hw/s390x/s390-pci-inst.c
-> +++ b/hw/s390x/s390-pci-inst.c
-> @@ -307,7 +307,7 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
->               uint32_t data = pci_get_long(pbdev->pdev->config +
->                   PCI_BASE_ADDRESS_0 + (i * 4));
->   
-> -            stl_be_p(&resquery->bar[i], data);
-> +            stl_le_p(&resquery->bar[i], data);
->               resquery->bar_size[i] = pbdev->pdev->io_regions[i].size ?
->                                       ctz64(pbdev->pdev->io_regions[i].size) : 0;
->               trace_s390_pci_bar(i,
+Understood, not sure machine options are applicable here,
+but encapsulating it within remote-port itself may be possible. I will
+investigate it for v2.
 
+> >
+> > In co-simulation environments (such as QEMU coupled with a SystemC
+> > simulator), time must be synchronized periodically to ensure functional
+> > accuracy. The 'sync-quantum' defines the maximum amount of time QEMU
+> > can simulate ahead of its remote peers before a mandatory synchronizati=
+on
+> > event (sync packet) occurs.
+> >
+> > This value is stored in the global 'global_sync_quantum' variable and
+> > serves as a default hint for device models and Remote Port instances
+> > to manage their simulation time.
+> >
+> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
+> > Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> > ---
+> >  include/system/system.h |  2 ++
+> >  qemu-options.hx         | 11 +++++++++++
+> >  system/vl.c             |  8 ++++++++
+> >  3 files changed, 21 insertions(+)
+> >
+> > diff --git a/include/system/system.h b/include/system/system.h
+> > index 0cd012004d..f187544147 100644
+> > --- a/include/system/system.h
+> > +++ b/include/system/system.h
+> > @@ -59,6 +59,8 @@ extern MlockState mlock_state;
+> >
+> >  extern const char *machine_path;
+> >
+> > +extern uint64_t global_sync_quantum;
+> > +
+> >  #define MAX_OPTION_ROMS 16
+> >  typedef struct QEMUOptionRom {
+> >      const char *name;
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index b7dd2a64f0..8ef0c57507 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -765,6 +765,17 @@ SRST
+> >      Preallocate memory when using -mem-path.
+> >  ERST
+> >
+> > +DEF("sync-quantum", HAS_ARG, QEMU_OPTION_sync_quantum,
+> > +    "-sync-quantum Max time between synchroniation, nanoseconds.\n",
+> > +    QEMU_ARCH_ALL)
+> > +SRST
+> > +``-sync-quantum val``
+> > +    Maximum time between synchronization <val>.
+> > +    This value is used to drive periodic synchronization with remote p=
+ort peers.
+> > +    It is also used to set device models sync-quantum properties contr=
+olling
+> > +    the maximum amount of ahead of time simulation that is prefered (o=
+nly a hint).
+> > +ERST
+> > +
+> >  DEF("machine-path", HAS_ARG, QEMU_OPTION_machine_path,
+> >      "-machine-path DIR A directory in which to create machine nodes\n"=
+,
+> >      QEMU_ARCH_ALL)
+> > diff --git a/system/vl.c b/system/vl.c
+> > index 4750b1cf69..467646c3ff 100644
+> > --- a/system/vl.c
+> > +++ b/system/vl.c
+> > @@ -182,6 +182,7 @@ static QemuPluginList plugin_list =3D QTAILQ_HEAD_I=
+NITIALIZER(plugin_list);
+> >  static BlockdevOptionsQueue bdo_queue =3D QSIMPLEQ_HEAD_INITIALIZER(bd=
+o_queue);
+> >  static bool nographic =3D false;
+> >  static int mem_prealloc; /* force preallocation of physical target mem=
+ory */
+> > +uint64_t global_sync_quantum;
+> >  const char *machine_path;
+> >  static const char *vga_model =3D NULL;
+> >  static DisplayOptions dpy;
+> > @@ -3129,6 +3130,13 @@ void qemu_init(int argc, char **argv)
+> >              case QEMU_OPTION_mem_prealloc:
+> >                  mem_prealloc =3D 1;
+> >                  break;
+> > +            case QEMU_OPTION_sync_quantum:
+> > +                if (qemu_strtou64(optarg, &optarg, 10,
+> > +                                  &global_sync_quantum)) {
+> > +                    error_report("failed to parse sync_quantum");
+> > +                    exit(1);
+> > +                }
+> > +                break;
+> >              case QEMU_OPTION_machine_path:
+> >                  machine_path =3D optarg;
+> >                  break;
+> > --
+> > 2.43.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
-This is indeed correct architecturally, thanks for fixing this.
-
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com> <mailto:alifm@linux.ibm.com>
-
+--
+BR,
+Ruslan
 
