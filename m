@@ -4,115 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AFCEE20B2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B0AEE20B5
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voOO4-0003QD-FL; Fri, 06 Feb 2026 11:08:52 -0500
+	id 1voOTY-0005cU-To; Fri, 06 Feb 2026 11:14:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voOO1-0003O6-AW
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:08:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1voOTX-0005c8-Fy; Fri, 06 Feb 2026 11:14:31 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1voONy-0005Oz-6s
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:08:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770394124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
- b=ej/7ld2F36qCksMYEUsuGbDri4GY6eFemZ4qvR94xi3LqMTzU8nuxy1zCDKtGquLDAgtBk
- +QTP2M8xTHjOF1gYcC6zQ9WwEVCoO0JmO6eWj+vn5fYoqRJCY8u9IeHQZul4ZfHrS9idJZ
- dh53wEjlAVi/ma3LUMg9S/kR2hsayF4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-N6KSsNv6NmyZWiqKWtTHTQ-1; Fri, 06 Feb 2026 11:08:43 -0500
-X-MC-Unique: N6KSsNv6NmyZWiqKWtTHTQ-1
-X-Mimecast-MFC-AGG-ID: N6KSsNv6NmyZWiqKWtTHTQ_1770394123
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50335bd75bdso26896671cf.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:08:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770394123; x=1770998923; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
- b=Y4lStnDUJFZnexBZAVVvWn7Qy6n+nzLJY113vRN2XsMMOuiwsdPoD1UfIL8QLF2V0N
- nqEnnYgranyd/2mtHRF8g7X//nxamz0OE392SpYQvWLAZDX16chJtFxe/kn4cK6xArmM
- k3yCe60Bxnzv8oxtxPTlbWxKOBz4D5jCM2AlS4EkGbfKEfWYW8+n+Anucq7Z5Y4pXVyi
- tbg3sWNoITDkCdla+uRMTlIGeUgbZoKi5gyMupvTgVe/wPm0tHlL1SKSdJppgi2Hj9CK
- fB3lpFtE6qqsf6oqHuyRqas4XYXqI481ulhAggnmtG4wCWsKo4xZGtVVySm9cyTQ76AG
- uCag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770394123; x=1770998923;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oinRdqg9PPGK4WDnDLidQMskBbnbJ5Ta4SBWOFec0i8=;
- b=QWmcXyS38HUgKEuWk65u84aDVDJiP9EhV+g5xjIR90M72uXfIWfdj7ZCn2o3o1j4FQ
- jVypsB8aX6pOk2XySUBoq8WvKeq/uVOxLi4txeF9MjhG3/p+GYxyVOKBH1WTwg7ZlzB3
- M7SgelmcO3LyP+RF6fqn+ufiNkdm0/tbkfxTAvWNGZFbFk0fuASVtLd2UuzWMmptzuWp
- RJ8aDcOKj1Q3ssG4tpxhWiVCFZUFduj1OKH3wUHaJiGgkgEscMobpay//ZU752H/5t0G
- bkFDoDMmWNohPTwMYgIe8HroRX2bPleRPFc9GRACKqlHd92ZwFVqcXnYbffv9viXsaXu
- A9tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnAUKLKiSfA/UJtM64mscwNv3MOIx+sX9P9hwvFyqYRwxk8dWmFkYQK1JuECZDZU0PjIJCa4We3xXC@nongnu.org
-X-Gm-Message-State: AOJu0YxJsDaKQnHoD12s/zgz44A/IzNa0RJ2/1XZ82tvu6IkMWPPbMKL
- 6xgrRkeufixAOBZZcP4zVne9ydhdnM/5km1nXWSu4+cLc2wI/M/iu6at44ZfinvEzhAKTBLgt59
- PK7isIHxecjwUq2qRCjl0Jd7RIQ1cp9b4H30pK2ccTY79deg/HopZxJkU
-X-Gm-Gg: AZuq6aLCYdzAUGJ3fIZzyeSZ9d2gcgMIeMditCfx7hW0qeFfgk8h6qkwMJHybnQXw24
- oy8vdjQCXFmm7nn5VtMTz/RKZyvHmUhGxRgu0IWg/l0t8HrQ8p5CWl1TPZOjBIA1520JhLNi2Ve
- 45lUciLZkZP6hFujRIgJeqEtYxGXC/c1olaTk/zF4KEud4IWIzlDw0SgQIlZ1JpK3fjo6cP3lPW
- dvfLc3mp+BfTSUeO96RVOV8toB6wS3kQSdkpj45PRmvuHMSCXt6Ata7RPPqplfqurlNzvB9/kGK
- EPQIMvYFhGA5KjGZDlu79g5waQ9SKHlZacqyPtmvX9Y0XNdnUnb6afkEEVUGNzaaWaD7XUb41lS
- 8SCU=
-X-Received: by 2002:ac8:5795:0:b0:502:f26f:1388 with SMTP id
- d75a77b69052e-50639a0c5f0mr40710691cf.65.1770394122644; 
- Fri, 06 Feb 2026 08:08:42 -0800 (PST)
-X-Received: by 2002:ac8:5795:0:b0:502:f26f:1388 with SMTP id
- d75a77b69052e-50639a0c5f0mr40709801cf.65.1770394121888; 
- Fri, 06 Feb 2026 08:08:41 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8953bf56a5esm22705056d6.19.2026.02.06.08.08.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 08:08:41 -0800 (PST)
-Date: Fri, 6 Feb 2026 11:08:40 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
- mst@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
- thuth@redhat.com, eblake@redhat.com, farosas@suse.de,
- zhao1.liu@intel.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, leiyang@redhat.com,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: Re: [PATCH v10 3/8] qapi: add backend-transfer migration parameter
-Message-ID: <aYYSCBQ5zjRN3djX@x1.local>
-References: <20260201162001.296328-1-vsementsov@yandex-team.ru>
- <20260201162001.296328-4-vsementsov@yandex-team.ru>
- <aYOAAfzZQ3PeKf4q@x1.local> <87ecmzu0qx.fsf@pond.sub.org>
- <f83e7888-8159-4522-a40d-352ed0a81be3@yandex-team.ru>
- <aYTEhSjA6Dnvw1yf@x1.local>
- <988c8747-708b-4ed7-9f4c-8d410a1c45db@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1voOTT-0006Rd-4L; Fri, 06 Feb 2026 11:14:29 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 616Clwdn013135;
+ Fri, 6 Feb 2026 16:14:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rWmslC
+ O9ILl70z4eTpnXQImCigHCpsxJqsnnHk8yesU=; b=FsNS6wdWiaghnnGvA4NkNz
+ TPPgIw7fdJuSmZQLz3WFAIh3BycchwT3eZz1V9ZxaarJSvkuRIhNqyW2mdszS0mQ
+ HXhoYfqgwyL9P06lQRzaEC7nCeLePo6k/raGTy1lgtK94CIpw9lD0iXebs9ZF2Mo
+ 8fxhvFaZaXzs+NG+my9ZM/0AU4+m9IT6W/5blOmr4C0UuVB29NVi3HuqxR4cMC72
+ 0IyqstWSZfOxQP0a4kf2bNfiR0Wrqvc02R/aHE20KckF9sVAs6/bmistEU9/yJYF
+ 4jKdAc0bTVheAIcc+zt+KVKXBKB1ZppfovNGQ2hmb9Y+ng/Rwgv7c80zpYPOTzbg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c185h9762-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 16:14:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616FZ79j009198;
+ Fri, 6 Feb 2026 16:14:22 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1veyex2a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 16:14:22 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 616GEK9Q3015512
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Feb 2026 16:14:20 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE0AC58045;
+ Fri,  6 Feb 2026 16:14:20 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AAD9958056;
+ Fri,  6 Feb 2026 16:14:19 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.130.235]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Feb 2026 16:14:19 +0000 (GMT)
+Message-ID: <1a13623d1ae1744ba14c6b8f71c2d6b75728d463.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 10/14] pc-bios/s390-ccw: Introduce virtio-pci functions
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Fri, 06 Feb 2026 11:14:19 -0500
+In-Reply-To: <20260127161547.459443-11-jrossi@linux.ibm.com>
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-11-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <988c8747-708b-4ed7-9f4c-8d410a1c45db@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=UdxciaSN c=1 sm=1 tr=0 ts=6986135e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=5uILobFg11BtxNOoY8UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 63U5Mp_ifuzd0NtCSrMVbX8Io6tBytTG
+X-Proofpoint-ORIG-GUID: 63U5Mp_ifuzd0NtCSrMVbX8Io6tBytTG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDExNSBTYWx0ZWRfX9eT1ag2fKeJ+
+ BaHyu1Z7mb8BfN7JJIbxWm/+UdkNQ99M3B0orLpQLHTS2wmBptS6E0vgpqU68cAneDFJNPcEnr0
+ 5VB0/CQwdyG+kJgNwzSdRR22rw0l3XpOIcGvRVuSG2Z2X4daDoOsfD93h0/QG11A4HaAZNT0S4f
+ AXlksRTIEEXy4tvP5KhLZR6KWarv+PQzxJlczCTp3pj92B2Hcw0Ghr9y5N6Nx4XjaaRHbqz3e4A
+ KzEPhXDQDs1jHgqShtoQ5wSTiHx4bVSH0N5yetfueVSDJyMO3gDREHmRY8jtRKw67jQCbvbSWqu
+ kMdq5PzgZ3k84RKoPcvdxXCbP2QGTibTJ5bclqtGgp3WNmEIgXXCY9gUlXe8oy5fgTfAbpc+2m9
+ /7qdK01zM11gE334iiGM/LMRAD1IW7iyZEHAta1ziBOUOgddkVSEkeO763oTz2CRktvaWbgU7mk
+ b5utnybgt5u3k0w87Lg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-06_04,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 bulkscore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2602060115
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,206 +123,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 06, 2026 at 11:56:27AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 05.02.26 19:25, Peter Xu wrote:
-> > On Thu, Feb 05, 2026 at 11:06:03AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > On 05.02.26 10:07, Markus Armbruster wrote:
-> > > > Peter Xu <peterx@redhat.com> writes:
-> > > > 
-> > > > > On Sun, Feb 01, 2026 at 07:19:55PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > >    # @migrate-set-parameters:
-> > > > > > @@ -1004,6 +1005,13 @@
-> > > > > >    #     is @cpr-exec.  The first list element is the program's filename,
-> > > > > >    #     the remainder its arguments.  (Since 10.2)
-> > > > > >    #
-> > > > > > +# @backend-transfer: Enable backend-transfer feature for devices that
-> > > > > > +#     supports it.  In general that means that backend state and its
-> > > > > > +#     file descriptors are passed to the destination in the migraton
-> > > > > > +#     channel (which must be a UNIX socket).  Individual devices
-> > > > > > +#     declare the support for backend-transfer by per-device
-> > > > > > +#     backend-transfer option.  (Since 11.0)
-> > > > > 
-> > > > > I still think it'll be nice to either have "local" in the name of parameter
-> > > > > or at least document it with crystal clear terms.
-> > > > > 
-> > > > > I used to suggest fd-passing, but maybe you wanted to emphasize there's
-> > > > > more than fds to be migrated at least for tap?
-> > > 
-> > > For vhost-user-blk it's the same: not only FDs.
-> > > 
-> > > > > Then it can still be
-> > > > > "local-backend-transfer", because nobody stops a device to transfer backend
-> > > > > states in a remote migration either.. so "backend-transfer" seems to also
-> > > > > work for remote migrations, but it is not.
-> > > 
-> > > Hmm. I imagine a mechanism, where OS supports passing FDs to another host.
-> > > This needs support for actually migrating the corresponding kernel object
-> > > by OS automatically. But theoretically I think it can be done transparently
-> > > for userspace QEMU process, which will simply pass FDs to the some special
-> > > socket, similar to UNIX domain socket.
-> > > 
-> > > So, the key aspect is that we should be able to pass FDs to the migration
-> > > channel, which currently meant that it must be UNIX domain socket, and it
-> > > must be local migration. But in future it may change.
-> > 
-> > That's a nice vision, but IMHO we shouldn't take it into account when
-> > defining any QEMU interface, when it's only about pure imaginations..
-> > unless there is solid work in progress, or ideas proposed / known feasible
-> > at least.
-> > 
-> > > 
-> > > And yes, "backend-transfer" work for remote migration of backend.
-> > > If we ever implement remote backend migration, why not to
-> > > reuse "backend-transfer" for it? Even if there will not be transparent
-> > > support from OS, and we'll implement another mechanics, we may add
-> > > new parameter
-> > > 
-> > > 
-> > >     backend-transfer-mechanism = "scm-rights" | "something-other"
-> > 
-> > Yes, this will look much better.  We likely shouldn't make it "scm-rights",
-> > it should be generic terms that applies to all platforms like "local", even
-> > if the implication / implementation might be different on various
-> > platforms.
-> > 
-> > That's also the major confusion I got when I was reading the other
-> > vhost-user-blk series, thought it was a local migration but not.
-> > 
-> > I feel like the interface is simply wrong to make it one covering both, or
-> > at least it shouldn't be a boolean as you said because it represents more
-> > than one use case.
-> > 
-> > If it's a boolean, it also shouldn't rely on UNIX sockets if it was trying
-> > to describe a remote migration, right?  The vhost-usr-blk way of
-> > backend-migration doesn't require UNIX socket, or does it?
-> 
-> It does require UNIX socket too.
+On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> Define common functionality for interacting with virtio-pci devices.
+>=20
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>  pc-bios/s390-ccw/Makefile     |   2 +-
+>  pc-bios/s390-ccw/virtio-pci.c | 168 ++++++++++++++++++++++++++++++++++
+>  pc-bios/s390-ccw/virtio-pci.h |  86 +++++++++++++++++
+>  pc-bios/s390-ccw/virtio.h     |   1 +
+>  4 files changed, 256 insertions(+), 1 deletion(-)
+>  create mode 100644 pc-bios/s390-ccw/virtio-pci.c
+>  create mode 100644 pc-bios/s390-ccw/virtio-pci.h
+>=20
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index a62fc9d766..3e5dfb64d5 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -35,7 +35,7 @@ QEMU_DGFLAGS =3D -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+> =20
+>  OBJECTS =3D start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o =
+\
+>  	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o =
+\
+> -	  virtio-ccw.o clp.o pci.o
+> +	  virtio-ccw.o clp.o pci.o virtio-pci.o
+> =20
+>  SLOF_DIR :=3D $(SRC_PATH)/../../roms/SLOF
+> =20
+> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.=
+c
+> new file mode 100644
+> index 0000000000..70abac0256
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/virtio-pci.c
+> @@ -0,0 +1,168 @@
+> +/*
+> + * Functionality for virtio-pci
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include "pci.h"
+> +#include "helper.h"
+> +#include "virtio.h"
+> +#include "bswap.h"
+> +#include "virtio-pci.h"
+> +#include "s390-time.h"
+> +#include <stdio.h>
+> +
+> +/* Variable offsets used for reads/writes to modern memory regions */
+> +VirtioPciCap c_cap; /* Common capabilities  */
+> +VirtioPciCap d_cap; /* Device capabilities  */
+> +VirtioPciCap n_cap; /* Notify capabilities  */
+> +uint32_t notify_mult;
+> +uint16_t q_notify_offset;
+> +
+> +static int virtio_pci_set_status(uint8_t status)
+> +{
+> +    int rc =3D vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.b=
+ar, status);
+> +    if (rc) {
+> +        puts("Failed to write virtio-pci status");
+> +        return -EIO;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int virtio_pci_get_status(uint8_t *status)
+> +{
+> +    int rc =3D vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.ba=
+r, status);
+> +    if (rc) {
+> +        puts("Failed to read virtio-pci status");
+> +        return -EIO;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +/* virtio spec v1.3 section 4.1.2.1 */
+> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+> +{
+> +    switch (device_id) {
+> +    case 0x1001:
+> +        vdev->dev_type =3D VIRTIO_ID_BLOCK;
+> +        break;
+> +    case 0x1000: /* Other valid but currently unsupported virtio device =
+types */
+> +    case 0x1004:
+> +    default:
+> +        vdev->dev_type =3D 0;
+> +    }
+> +}
+> +
+> +int virtio_pci_reset(VDev *vdev)
+> +{
+> +    int rc;
+> +    uint8_t status =3D VPCI_S_RESET;
+> +
+> +    rc =3D virtio_pci_set_status(status);
+> +    rc |=3D virtio_pci_get_status(&status);
+> +
+> +    if (rc || status) {
+> +        puts("Failed to reset virtio-pci device");
+> +        return 1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +long virtio_pci_notify(int vq_id)
+> +{
+> +    uint32_t offset =3D n_cap.off + notify_mult * q_notify_offset;
+> +    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
+> +}
+> +
+> +/*
+> + * Wrappers to byte swap common data sizes then write
+> + */
+> +int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data)
+> +{
+> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, (uint64=
+_t) data, 1);
+> +}
+> +
+> +int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data)
+> +{
+> +    uint64_t le_data =3D bswap16(data);
+> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
+, 2);
+> +}
+> +
+> +int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data)
+> +{
+> +    uint64_t le_data =3D bswap32(data);
+> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
+, 4);
+> +}
+> +
+> +int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data)
+> +{
+> +    uint64_t le_data =3D bswap64(data);
+> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data=
+, 8);
+> +}
+> +
+> +/*
+> + * Wrappers to read common data sizes then byte swap
+> + */
+> +int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf)
+> +{
+> +    return pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 1);
+> +}
+> +
+> +int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf)
+> +{
+> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
+ 2);
+> +    *buf =3D bswap16(*buf);
+> +    return rc;
+> +}
+> +
+> +int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf)
+> +{
+> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
+ 4);
+> +    *buf =3D bswap32(*buf);
+> +    return rc;
+> +}
+> +
+> +int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf)
+> +{
+> +    int rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
+ 8);
+> +    *buf =3D bswap64(*buf);
+> +    return rc;
+> +}
+> +
+> +/*
+> + * Read to an arbitrary length buffer without byte swapping
+> + */
+> +int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
+> +{
+> +    uint8_t readlen;
+> +    int rc;
+> +    int remaining =3D len;
+> +
+> +    /* Read bytes in powers of 2, up to a maximum of 8 bytes per read */
+> +    while (remaining) {
+> +        for (int i =3D 3; i >=3D 0; i--) {
+> +            readlen =3D 1 << i;
+> +            if (remaining >=3D readlen) {
+> +                break;
+> +            }
+> +        }
+> +
+> +        rc =3D pci_read(virtio_get_device()->pci_fh, offset, pcias, buf,=
+ readlen);
+> +        if (rc) {
+> +            return -1;
+> +        }
+> +
+> +        remaining -=3D readlen;
+> +        buf +=3D readlen;
+> +        offset +=3D readlen;
+> +    }
+> +
+> +    return 0;
+> +}
+> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.=
+h
+> new file mode 100644
+> index 0000000000..96c17ac3c7
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/virtio-pci.h
+> @@ -0,0 +1,86 @@
+> +/*
+> + * Definitions for virtio-pci
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef VIRTIO_PCI_H
+> +#define VIRTIO_PCI_H
+> +
+> +/* Common configuration */
+> +#define VPCI_CAP_COMMON_CFG          1
+> +/* Notifications */
+> +#define VPCI_CAP_NOTIFY_CFG          2
+> +/* ISR access */
+> +#define VPCI_CAP_ISR_CFG             3
+> +/* Device specific configuration */
+> +#define VPCI_CAP_DEVICE_CFG          4
+> +/* PCI configuration access */
+> +#define VPCI_CAP_PCI_CFG             5
+> +/* Additional shared memory capability */
+> +#define VPCI_CAP_SHARED_MEMORY_CFG   8
+> +/* PCI vendor data configuration */
+> +#define VPCI_CAP_VENDOR_CFG          9
+> +
+> +/* Offsets within capability header */
+> +#define VPCI_CAP_VNDR        0
+> +#define VPCI_CAP_NEXT        1
+> +#define VPCI_CAP_LEN         2
+> +#define VPCI_CAP_CFG_TYPE    3
+> +#define VPCI_CAP_BAR         4
+> +#define VPCI_CAP_OFFSET      8
+> +#define VPCI_CAP_LENGTH      12
+> +
+> +#define VPCI_N_CAP_MULT 16 /* Notify multiplier, VPCI_CAP_NOTIFY_CFG onl=
+y */
+> +
+> +/* Common Area Offsets for virtio-pci queue */
+> +#define VPCI_C_OFFSET_DFSELECT      0
+> +#define VPCI_C_OFFSET_DF            4
+> +#define VPCI_C_OFFSET_GFSELECT      8
+> +#define VPCI_C_OFFSET_GF            12
+> +#define VPCI_C_COMMON_NUMQ          18
+> +#define VPCI_C_OFFSET_STATUS        20
+> +#define VPCI_C_OFFSET_Q_SELECT      22
+> +#define VPCI_C_OFFSET_Q_SIZE        24
+> +#define VPCI_C_OFFSET_Q_ENABLE      28
+> +#define VPCI_C_OFFSET_Q_NOFF        30
+> +#define VPCI_C_OFFSET_Q_DESCLO      32
+> +#define VPCI_C_OFFSET_Q_DESCHI      36
+> +#define VPCI_C_OFFSET_Q_AVAILLO     40
+> +#define VPCI_C_OFFSET_Q_AVAILHI     44
+> +#define VPCI_C_OFFSET_Q_USEDLO      48
+> +#define VPCI_C_OFFSET_Q_USEDHI      52
+> +
+> +#define VPCI_S_RESET            0
+> +#define VPCI_S_ACKNOWLEDGE      1
+> +#define VPCI_S_DRIVER           2
+> +#define VPCI_S_DRIVER_OK        4
+> +#define VPCI_S_FEATURES_OK      8
 
-I'm lost once more.. :( Could you share what requires the UNIX socket for
-the other work here?
+How are these status values different from VIRTIO_CONFIG_S_* in pc-bios/s39=
+0-ccw/virtio.h? Maybe
+expand that list instead?
 
-https://lore.kernel.org/all/20260115081103.655749-1-dtalexundeer@yandex-team.ru/#r
+The rest of this seems fine to me, though I do need another coffee.
 
-There's indeed the inflight->fd, but it's not migrated but allocated before
-taking the inflight buffer.  I don't see how it requires UNIX socket.
-
-> 
-> > 
-> > Especially, if we still want to have your new proposal try to work for CPR
-> > too or even replace it some day (or a continuous set of proposals in the
-> > future, from different developers based on this feature), we need to have a
-> > solid and clear way represents what CPR does, which is to do local fd
-> > sharing.  "backend-transfer: local" or something similar can be that.
-> > 
-> > > 
-> > > (or we can put this into "backend-transfer", supporting passing string to
-> > > it and deprecating boolean)
-> > 
-> > It can be a enum, something like NONE, LOCAL, REMOTE.  But before that..
-> > 
-> > > 
-> > > More over, this future "remote-backend-transfer" could be used for local
-> > > migration, so again, it should be called simply "backend-transfer"..
-> > 
-> > Yes, REMOTE might be slightly misleading.  And considering you seem to want
-> > to allow any of below to work:
-> > 
-> >    (1) enable fd migrations only,
-> >    (2) enable remote migrations on backends only,
-> >    (3) enable both of (1)+(2)
-> > 
-> > Maybe we should have two different feature bits?  The per-device one can be
-> > kept as backend-transfer, however we need to change the global migration
-> > knob to something describing a local migration.
-> > 
-> > In summary, still 1 new parameter for migration, 1 new parameter for
-> > device, but adjust to:
-> > 
-> >    - Migration parameter: "local", boolean, when set, the migration must be
-> >      a local migration within host (which requires UNIX sockets on Linux)
-> > 
-> >    - Per-device parameter "backend-transfer", boolean, when set, device will
-> >      migrate backends when migration happens.  Otherwise, backends are not
-> >      migrated; dest QEMU needs to re-initialize it.  The backends may or may
-> >      not contain FDs.
-> > 
-> >      When the backend device states contain FDs and FD migrations are
-> >      required, it requires "local" set first above, or it should fail the
-> >      migration when user requested backend-transfer=on.
-> > 
-> >      When it doesn't contain FD at all (or FD migration is not a must?), it
-> >      should either migrate the backend or not depending on the user's
-> >      selection.
-> > 
-> > For tap (your series here), you need to set both ON and required.
-> > 
-> > For vhost-usr-blk, that only needs to set per-device knob to ON, the other
-> > one shouldn't matter.
-> > 
-> > Then when we want to replace cpr, we request people switch (cpr-transfer
-> > only, keeping cpr-exec / cpr-reboot aside for now) from setting
-> > mode=cpr-transfer to local=on, which hopefully will start work as before.
-> > The per-device parameter doesn't matter in this case.
-> > 
-> > Would this be more reasonable?
-> > 
-> 
-> Hmm. So, with backend-transfer=on on device and local mig parameter set to false, it fails?
-> 
-> But this way we'll have to set backend-transfer to on/off before any migration (local or
-> remote) on all devices with help of set-qom. That's not comfortable.
-
-Personally as long as we can separate the two use cases with the two knobs
-properly, then it will look good to me.  It doesn't need to be strictly a
-failure on such conflictions indeed.
-
-E.g. we can also define this case (local=off, backend-transfer=on) the
-other way round if failing is not wanted; that is, allow migration to
-happen but skip the part of backend transfer that requires the locality.
-
-Fundamentally, we should accept two kinds of backend-transfer impl:
-
-  - When it is supported regardless of local=on/off.  I believe that's
-    vhost-usr-blk's case (but I'll now need to double check with you again
-    above on UNIX dependency).  Then this only relies on the per-dev knob.
-
-  - When it is supported only if local=on (this series).  This part is
-    where we can define the behavior of whether we fail the migration on
-    local=off, or we skip the feature instead.
-
-So I think we can choose to skip it for the latter.  It should almost be
-the same logic as what you have done in this patchset, afaict, besides the
-rename and re-definition of the migration knob.
-
-> 
-> The original idea was that backend-transfer is done for the device when both migration
-> parameter and device option are set to true. This way before the migration (local or
-> remote) we only have to set appropriate migration parameters. And backend-transfer
-> per-device options can be setup once (and the same way) when starting the QEMU, or
-> they may be inherited from Machine Type. And with such logic, it's good to have
-> similar names for migration parameter and device option.
-
-I hope above will solve this problem.  IIUC what you described should work
-if we tweat the new proposal on the local=off & backend-transfer=on case.
-
-> 
-> Considering all this, could we keep the logic as is (in this patch), but rename
-> backend-transfer parameter to local-backend-transfer, as you proposed before?
-> Or turn it into "backend-transfer" = "local" | "off" (but IMHO it's too optimistic:
-> who knows, will we really add something into this enum in the future? I don't have
-> such plans)
-
-IMHO "local" would be nicer because it's very simple, generic and clear on
-is own.  It almost says "requires UNIX sockets" on Linux and it also opens
-the door for this parameter to be reused when without a backend: for
-example, when some frontend or any-not-trivially-a-backend also want to
-migrate an FD in the future.  I'm not surprised to see it coming.
-
-But let's finish above disucssion and see if we can reach the same page.
-
-Thanks,
-
--- 
-Peter Xu
-
+> +
+> +#define VIRTIO_F_VERSION_1      (1 << (32 - 32)) /* Feature bit 32 */
+> +
+> +struct VirtioPciCap {
+> +    uint8_t bar;     /* Which PCIAS it's in */
+> +    uint32_t off;    /* Offset within bar */
+> +};
+> +typedef struct VirtioPciCap  VirtioPciCap;
+> +
+> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+> +int virtio_pci_reset(VDev *vdev);
+> +long virtio_pci_notify(int vq_id);
+> +
+> +int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
+> +int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
+> +int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf);
+> +int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf);
+> +int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf);
+> +
+> +int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data);
+> +int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data);
+> +int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data);
+> +int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data);
+> +
+> +#endif
+> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+> index 0fdee8468c..0c34d59be2 100644
+> --- a/pc-bios/s390-ccw/virtio.h
+> +++ b/pc-bios/s390-ccw/virtio.h
+> @@ -255,6 +255,7 @@ struct VDev {
+>      uint8_t scsi_dev_heads;
+>      bool scsi_device_selected;
+>      ScsiDevice selected_scsi_device;
+> +    uint32_t pci_fh;
+>      uint32_t max_transfer;
+>      uint32_t guest_features[2];
+>  };
 
