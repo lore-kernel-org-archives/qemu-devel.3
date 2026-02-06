@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C83EEE6B68
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2286EEE6B6A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTh4-0001fM-6f; Fri, 06 Feb 2026 16:48:50 -0500
+	id 1voThA-00024d-1G; Fri, 06 Feb 2026 16:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfu-000844-CU
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:45 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfm-00082N-Jx
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:40 -0500
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfp-0002mW-S9
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:37 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47ee937ecf2so24850585e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:47:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfi-0002m4-OC
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:28 -0500
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-4362d18bb65so715398f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414451; x=1771019251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414445; x=1771019245; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4pDpFYj1WOxP0DSIY/DR9eX9oYTZMJu2fUxtJrREkj8=;
- b=ZShoexsvP1QsHQn4ATPJV5XpYcm9fILhHlUxaiGovAkUIEhe//zCaDnorLCPn32Duq
- AJma9fTXxC9Z4ufeVs3PwJLzRlo58Yij93uuw847P42G+Jv+r+zZXwO5Xm5wjvYzKTWN
- 9NW0aXgC/SDMrD2RcRRCaih1N58nqCfyp8MaFRYqonguE2ngSZctSnZBbT+fyT0M+WJM
- JjV8VdHSV3Mtpibd5sbGDTszAN/uRn/YZpF9jnuV1EL4vn+9F409SKce53ibV9zipT1X
- 5tD/Ef7PFM09le2gDpAg3aOCU5CF5o71dk0IIbddN1ywcWtwkQyZFjWui2hmcNILJUCM
- dOGA==
+ bh=J5U5YnRpZtzep6rG1Rz5ZkUjCGOhyK2lDXh0XgoJd98=;
+ b=WyRNdddstejomLK/LcLlemE06PS5M8J73q8FmfeKNZGJDjhJs1Bfzzzp6+K1jSbJa3
+ FOcl+hZsALzEwneIVhTdsyXxFcifukI+K57y97FFKAFD2apuEgZr+6WB6hMhpJBD35rK
+ rweNBD4wL6uYwxBQNHt1rhwGUu/OmC3Lak7MVOVlRjUTpZLnDLGK1mEgT/rM3jHSydC7
+ PTQxD9y008ORiVJiVshRoOlAO/xewGWoc7olPpNPGwL35QcjkO2C+RKL3MpZzbZXY3yY
+ qYmhNo+Z5dqen/ripjmpkhGcHHFwc5VEmY0vh1aHXJom0JfqVoMxTmOU55Q8cdKk2XGE
+ h6sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414451; x=1771019251;
+ d=1e100.net; s=20230601; t=1770414445; x=1771019245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4pDpFYj1WOxP0DSIY/DR9eX9oYTZMJu2fUxtJrREkj8=;
- b=cTR7fzfulf0/CLD5lQ8i9xn4xBXpQjuV4/5dLKS7WA0/k10Fl57taATXLeGHacxBSe
- giHmmhdlRWAa2TvtfNDmV2OnlBuUQZHWgbglzhdI0eEOSKgfHH5gLRh4YpSTKDJT4NZB
- W1NSLUrO3cJwnYDlf+Hc1JtgODR02s8GlsNVnvAqnZ3qspffgRP8Cnm9kmUWuh0Mhvb8
- tF5kHug7TGE81UkuSwyky74xdngZPbamRUb02GhHZVCnrBxHmnqGR+w/F/5DS6elh9PO
- UzF2+DNrLfLLPrnpWOYZ4zjB9OhYuPOaxaZQwXMVZ+u6Hx3vVczWMGAZx9usGJYKiN8R
- Rczg==
-X-Gm-Message-State: AOJu0Yx1oTm7782n1pqDe44KbCmKoGH6VjbO7NHGa9kTpNu7bvlrm7N6
- h/Wz2+jFq3Q8Wf/b2hnCodCmEFoY9xJ9HnrmjSLftRcLMrG0qiAxOuBMAa8ZhRzrJ44sRc0Ve6i
- d+Vodyrs=
-X-Gm-Gg: AZuq6aIazt20rSDg7vf4ywSBI7VHCm04cCNWKyp1Eqa128JXeJT3i2vu18I0CHW9x/4
- HXoDAiNTqUoCbcfQQ6qMhd9/TXfJ3UoBsLWVADIZFqMY0/Zf+zJt0tvoEuLjJKoG6/WkueMtMAZ
- 6YiZ2EDoybP16aCZZphG0d1T8zzBBzm3rSWeKlq12HFVBb/BfAnwwiuoQJ2/EdnppBd3kB0FpJ+
- 6By2cbnDml3ZBzxpfZ4SaOXXOro8SQ4s/SBeB96bPBvG2EgWN8TKxNW/Ofpg+V8ft2Wp/HScgGB
- 982KCojGMVOvvKu8Ca7dRKm/ALVENzERJ/+PlCvQCIH29Z7/0rXZDvwYPQwpQyaiO3wHaFhYn+U
- ll5wXY7hI2Qb3mERdLs3Ww7SMhiTndOv7fwFXCmKnAJ4YDOhXCgfoBPIKMolBf8wVpJA6ewrk8q
- uU6TqW17tZB5VxfJwyk8r9mryiucEa8YDKNUsJFQow52fCT7NAtzN657QS4GKY
-X-Received: by 2002:a05:600c:3e14:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-483203db77emr59501305e9.16.1770414451212; 
- Fri, 06 Feb 2026 13:47:31 -0800 (PST)
+ bh=J5U5YnRpZtzep6rG1Rz5ZkUjCGOhyK2lDXh0XgoJd98=;
+ b=L04TRJ+me0jiEufzwDfv9Ch6O3YJiSBbmX65cA/DvwVa/rkytzx6lpoYxuoq+obAwx
+ THWjLKwk/Lh87hngJ9Q8xdBfLfBEVrgg1BgP3pd8lgx9g6He9oafwzpVToS1fqh4XzJD
+ 4gk7zbLFQfoGDoRC5+zk3B2vuorYN+b6eK8hfAPvHqatImyTHil5eBF3StwvIiDO6u/w
+ mId+YIbGUXrxQ1JlM7ruLDjl9RRC5jypC+T3XEtXTtDKURnb5jUDp1ghrYvNaHP5O1jd
+ dsw82bVW+x7jzT31Rc+FNyrtNjk/v85LYCLAhKTsXr6D0bMpSBTmKhI6PsQmS/mKLEm7
+ WGfg==
+X-Gm-Message-State: AOJu0YwcdupFkpk2JMlB1Ay1fwSaTf168RsAaxqywB+Tc/4OrVRdiQvK
+ 6qI22Gdv5NZ1OYPjkEJCdJk1Fvx13qn15wKzU7reWjmmNS1OmoEEOeDZaoemvlxXpSOr5dfOWWU
+ ExFC5fx0=
+X-Gm-Gg: AZuq6aKMIfMYMvrxE4hnlEVZeu5jGkUttF+Nu6Qun7ONYcxLidLZHou8fwHKQXT2Z85
+ SNVvn6ktrL4B/NouIfeF/3r8DGiRM/pvc16iBQp2hJ2AcWU7LIxpP4TvfgXlMk6L4iHjKaUcAdo
+ ryW3QsICBkPwsg5HByloiGrMHqmRDrFKO+YoD6GmGjZhMbk+ps56OrTMi9knwntVAWNrrN1iri/
+ TY33r8LzRja3waZNRs72vO+iIV27clV3/SSDSlUHoVxR81TSQLNDbgqXdEnzxCCfsVb0eZXlBpn
+ hlZiHK+5wU5nltMAMyJ0t04YeZpNoxlig8ezD2LuPA+ibF9TeBJX2S+tFFEBrv9NEH3b9Y+SSGk
+ n3uVWAhZtpU2JCBqDhz54lRpkIBQWe7C+0t9bTOoSNekm2RTqxh80cafE/mfg3TdghUVLdSjX8a
+ tbX7IoPyBHbHgY+iGR4V3VtttsHD29nkPOePiH4q2A28XFJwFWF6DwQtQ/uOAH
+X-Received: by 2002:a05:6000:250f:b0:431:7a0:dbc2 with SMTP id
+ ffacd0b85a97d-43629378686mr6155086f8f.31.1770414444725; 
+ Fri, 06 Feb 2026 13:47:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48320728ac7sm75241615e9.13.2026.02.06.13.47.30
+ ffacd0b85a97d-4362972fc1bsm8784731f8f.28.2026.02.06.13.47.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:47:30 -0800 (PST)
+ Fri, 06 Feb 2026 13:47:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 24/30] hw/or1k: Rename from openrisc
-Date: Fri,  6 Feb 2026 22:44:42 +0100
-Message-ID: <20260206214448.22008-25-philmd@linaro.org>
+Subject: [PULL 23/30] include/hw/or1k: Rename from openrisc
+Date: Fri,  6 Feb 2026 22:44:41 +0100
+Message-ID: <20260206214448.22008-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,98 +104,94 @@ From: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260205030244.266447-4-richard.henderson@linaro.org>
+Acked-by: Stafford Horne <shorne@gmail.com>
+Message-ID: <20260205030244.266447-3-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                          | 4 ++--
- hw/{openrisc => or1k}/boot.c         | 0
- hw/{openrisc => or1k}/cputimer.c     | 0
- hw/{openrisc => or1k}/openrisc_sim.c | 0
- hw/{openrisc => or1k}/virt.c         | 0
- hw/Kconfig                           | 2 +-
- hw/meson.build                       | 2 +-
- hw/{openrisc => or1k}/Kconfig        | 0
- hw/{openrisc => or1k}/meson.build    | 0
- 9 files changed, 4 insertions(+), 4 deletions(-)
- rename hw/{openrisc => or1k}/boot.c (100%)
- rename hw/{openrisc => or1k}/cputimer.c (100%)
- rename hw/{openrisc => or1k}/openrisc_sim.c (100%)
- rename hw/{openrisc => or1k}/virt.c (100%)
- rename hw/{openrisc => or1k}/Kconfig (100%)
- rename hw/{openrisc => or1k}/meson.build (100%)
+ MAINTAINERS                          | 2 +-
+ include/hw/{openrisc => or1k}/boot.h | 6 +++---
+ hw/openrisc/boot.c                   | 2 +-
+ hw/openrisc/openrisc_sim.c           | 2 +-
+ hw/openrisc/virt.c                   | 2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
+ rename include/hw/{openrisc => or1k}/boot.h (93%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ea52060bfe7..5f06f8ba512 100644
+index 08bcd8892ac..ea52060bfe7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -304,7 +304,7 @@ M: Stafford Horne <shorne@gmail.com>
- S: Odd Fixes
+@@ -305,7 +305,7 @@ S: Odd Fixes
  F: docs/system/openrisc/cpu-features.rst
  F: target/or1k/
--F: hw/openrisc/
-+F: hw/or1k/
- F: include/hw/or1k/
+ F: hw/openrisc/
+-F: include/hw/openrisc/
++F: include/hw/or1k/
  F: tests/functional/or1k/meson.build
  F: tests/tcg/openrisc/
-@@ -1495,7 +1495,7 @@ M: Jia Liu <proljc@gmail.com>
- S: Maintained
- F: docs/system/openrisc/or1k-sim.rst
- F: hw/intc/ompic.c
--F: hw/openrisc/openrisc_sim.c
-+F: hw/or1k/openrisc_sim.c
- F: tests/functional/or1k/test_sim.py
  
- PowerPC Machines
-diff --git a/hw/openrisc/boot.c b/hw/or1k/boot.c
-similarity index 100%
-rename from hw/openrisc/boot.c
-rename to hw/or1k/boot.c
-diff --git a/hw/openrisc/cputimer.c b/hw/or1k/cputimer.c
-similarity index 100%
-rename from hw/openrisc/cputimer.c
-rename to hw/or1k/cputimer.c
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/or1k/openrisc_sim.c
-similarity index 100%
-rename from hw/openrisc/openrisc_sim.c
-rename to hw/or1k/openrisc_sim.c
-diff --git a/hw/openrisc/virt.c b/hw/or1k/virt.c
-similarity index 100%
-rename from hw/openrisc/virt.c
-rename to hw/or1k/virt.c
-diff --git a/hw/Kconfig b/hw/Kconfig
-index 9e6c789ae7e..f8f92b5d03d 100644
---- a/hw/Kconfig
-+++ b/hw/Kconfig
-@@ -58,7 +58,7 @@ source loongarch/Kconfig
- source m68k/Kconfig
- source microblaze/Kconfig
- source mips/Kconfig
--source openrisc/Kconfig
-+source or1k/Kconfig
- source ppc/Kconfig
- source riscv/Kconfig
- source rx/Kconfig
-diff --git a/hw/meson.build b/hw/meson.build
-index 1022bdb8069..66e46b8090d 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -9,7 +9,7 @@ subdir('loongarch')
- subdir('m68k')
- subdir('microblaze')
- subdir('mips')
--subdir('openrisc')
-+subdir('or1k')
- subdir('ppc')
- subdir('remote')
- subdir('riscv')
-diff --git a/hw/openrisc/Kconfig b/hw/or1k/Kconfig
-similarity index 100%
-rename from hw/openrisc/Kconfig
-rename to hw/or1k/Kconfig
-diff --git a/hw/openrisc/meson.build b/hw/or1k/meson.build
-similarity index 100%
-rename from hw/openrisc/meson.build
-rename to hw/or1k/meson.build
+diff --git a/include/hw/openrisc/boot.h b/include/hw/or1k/boot.h
+similarity index 93%
+rename from include/hw/openrisc/boot.h
+rename to include/hw/or1k/boot.h
+index 3c481bdea68..2e6131580c7 100644
+--- a/include/hw/openrisc/boot.h
++++ b/include/hw/or1k/boot.h
+@@ -16,8 +16,8 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#ifndef OPENRISC_BOOT_H
+-#define OPENRISC_BOOT_H
++#ifndef OR1K_BOOT_H
++#define OR1K_BOOT_H
+ 
+ #include "exec/cpu-defs.h"
+ #include "hw/core/boards.h"
+@@ -32,4 +32,4 @@ hwaddr openrisc_load_initrd(void *fdt, const char *filename,
+ uint32_t openrisc_load_fdt(MachineState *ms, void *fdt, hwaddr load_start,
+                            uint64_t mem_size);
+ 
+-#endif /* OPENRISC_BOOT_H */
++#endif /* OR1K_BOOT_H */
+diff --git a/hw/openrisc/boot.c b/hw/openrisc/boot.c
+index 6256babc42a..c18f4a6a9fc 100644
+--- a/hw/openrisc/boot.c
++++ b/hw/openrisc/boot.c
+@@ -12,7 +12,7 @@
+ #include "exec/target_page.h"
+ #include "elf.h"
+ #include "hw/core/loader.h"
+-#include "hw/openrisc/boot.h"
++#include "hw/or1k/boot.h"
+ #include "system/device_tree.h"
+ #include "system/qtest.h"
+ #include "system/reset.h"
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index 603d8ca0d99..f1b1f63274b 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -26,7 +26,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/char/serial-mm.h"
+ #include "net/net.h"
+-#include "hw/openrisc/boot.h"
++#include "hw/or1k/boot.h"
+ #include "hw/core/qdev-properties.h"
+ #include "system/address-spaces.h"
+ #include "system/device_tree.h"
+diff --git a/hw/openrisc/virt.c b/hw/openrisc/virt.c
+index 54ce96666e5..39f54058ab3 100644
+--- a/hw/openrisc/virt.c
++++ b/hw/openrisc/virt.c
+@@ -16,7 +16,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/char/serial-mm.h"
+ #include "hw/core/split-irq.h"
+-#include "hw/openrisc/boot.h"
++#include "hw/or1k/boot.h"
+ #include "hw/misc/sifive_test.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-host/gpex.h"
 -- 
 2.52.0
 
