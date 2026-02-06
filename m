@@ -4,73 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E054EE20A2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7AFEE20A0
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLlA-00070P-GP; Fri, 06 Feb 2026 08:20:32 -0500
+	id 1voLvc-0004fv-67; Fri, 06 Feb 2026 08:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLkp-0006q5-CJ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLkm-0005bD-JZ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770384006;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lnKc8ChwALLEnut766Pw5c8QdTxY5iSz14xAR+/k7/M=;
- b=fzT74PAaAdHFBqMy9Ms1/k/U0dl9pkCjU3I0+QRu0iO1RuUalCxvEmfuUNQmp+GwJVJmQo
- rdMJ355yVWBRSapFads7Jljetv/1ehPLNz9GjyTswe548dYnxAxrYyIQxI1bSzX7ySpigX
- m5H+CMhQ8VzHNkBjVUcwd6VDBZup5BA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-Ljm4MYWiP9Ck8oi_gM0seQ-1; Fri,
- 06 Feb 2026 08:15:00 -0500
-X-MC-Unique: Ljm4MYWiP9Ck8oi_gM0seQ-1
-X-Mimecast-MFC-AGG-ID: Ljm4MYWiP9Ck8oi_gM0seQ_1770383698
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5542119540FE; Fri,  6 Feb 2026 13:14:52 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 072BD1800352; Fri,  6 Feb 2026 13:14:49 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Subject: [PATCH 03/11] x86: q35: generate WDAT ACPI table
-Date: Fri,  6 Feb 2026 14:14:30 +0100
-Message-ID: <20260206131438.1857182-4-imammedo@redhat.com>
-In-Reply-To: <20260206131438.1857182-1-imammedo@redhat.com>
-References: <20260206131438.1857182-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1voLvX-0004fb-L5
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:31:15 -0500
+Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1voLvW-0007jt-7D
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:31:15 -0500
+Received: by mail-qv1-xf36.google.com with SMTP id
+ 6a1803df08f44-895075a3be1so23722706d6.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:31:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gourry.net; s=google; t=1770384673; x=1770989473; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Di9rrCemg3Phd+bFA7xXmyQkZ2Pz85YWhx7g/X7oYx4=;
+ b=Sd679ui/OpLFa2hFD5k8g7KVCVHw42LAEKnSr1mqQs6pgswstyRcx+83XBm+tATqzn
+ d/dkgCcUebZ57N3vza1r+N+7SmqAQZFgJXAh1aTT/Wp3urS3xB6ukvstpDfp4m2FnGLJ
+ eCbb+tz9T31t/h9kfXfC+Ef3pRQZ4lU48eeI0psht2NO92rOHdNNA07vmVFWLRb4XytY
+ X35GPxbDXgEhM6o6mrFc6HMngOcbVW802YcVKn/RBcmT6xcrP1cjgWSHl9L0npAge7fb
+ mIEONIqoZw7nsX+nfyTTbgad/Fio9INNE4HOfnraHDMxKnWjiFLEw3SeLKCMy+v1VApk
+ A9Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770384673; x=1770989473;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Di9rrCemg3Phd+bFA7xXmyQkZ2Pz85YWhx7g/X7oYx4=;
+ b=xHaFzbjACaO6xe+uTpyMVqtlhNsxpqVYif6u1FKqT0oBf6VQrsDkBrmxbZa49b1qtf
+ GyFGtbqXBM3Xp3pmDgcX51p/7QsI0KovNu9T3LTQM26Bng2meNRN0FiCQreuFrtDhUBQ
+ QzWeNvDoSVTfuCMG/iDwX6IrHXiKSuxJuGu2DMFac2tKtnDDW6MJMjZ1pULTOza4ffh3
+ S9d6RypskBM4Je8VzhZy9m37xz5guy4jGJkkzL+++GOxrV19SnYSG940bWjovoI3Qo1U
+ 6LjNd3p/Aymdi5w6j4reaSPupS17Uspru2yz2EKvmNXTcChHAI4SvJH2aQb8mI39tuA8
+ 326g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT+kqXYNgK2E/IHPT1pmftOEdQhXsJ6k+zw+6dkzZ8OoHM1j0NWSGNJzmb5noz0nWBrUU7lMUZmrqY@nongnu.org
+X-Gm-Message-State: AOJu0YwomOdszptIbeC1ck1tCIBVE9dfcu5SwHmPU9zYpx7Un3U8GeJF
+ c4zc0HnDSONWcnpGj53OnBZhKqNfSGWRohNn6oTtkbbspfR+iDVVxJNfAnQE/lC6ARo=
+X-Gm-Gg: AZuq6aLNVytKifJPn84HhyLRiN+TnMYqijgEThg522ciowgN1Y30412b9fpSZtSKn9b
+ Hk/bNjndGzPbdUVHpGXRaf1B4PFV6am7E/JwcoLebT/aLZPIn3PltbEDtA8/1j0INRSjzFBr7/8
+ n2XHfkMpmxEuvvfn1cbYDgnwkyeZKW8Z3dpaNNamnhitbmc1J4T+VSMm5OuwDPFgfwBKEY0KY+X
+ nfGsM4gLUxusOCivcyZl7fi8uFwpWdiP9689PRPVKqBlHm3VFzwA1BGnR5wF+3XZ6EK34NZYBeI
+ TbnOWTlXD+139+73hvkLBMMCiLjpfTPwhRibomgZh058+Mw8vpGcoKM5MAS/L6ztKD3PDrTs00x
+ G/Mtyo6ZAQgxkvxeTgFggxmOHMkuJrIEc1QWTws8ldNvoUUJGOpbPfogrHHeHAnISM6Qt9P5uHX
+ 3uYTIoZ4l+6FYT04Jox/oqzmqv7DaG9Mjn+d8reIdniVzT8M/Bw3pTD4OSVYFG1pi4wITYhA==
+X-Received: by 2002:a05:6214:2428:b0:894:6540:9112 with SMTP id
+ 6a1803df08f44-8953c150d50mr35637556d6.33.1770384672493; 
+ Fri, 06 Feb 2026 05:31:12 -0800 (PST)
+Received: from gourry-fedora-PF4VCD3F
+ (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8caf9ee9fbasm152145985a.39.2026.02.06.05.31.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Feb 2026 05:31:11 -0800 (PST)
+Date: Fri, 6 Feb 2026 08:31:09 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Cui Chao <cuichao1753@phytium.com.cn>, dan.j.williams@intel.com,
+ Mike Rapoport <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
+ of CFMW
+Message-ID: <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
+References: <20260108094812.8757ce3ad8370668eaafb29c@linux-foundation.org>
+ <9132054c-3017-4af0-84e0-e4359b0794a6@phytium.com.cn>
+ <20260115101858.85fd7b8e837c1c92a4fdc5f0@linux-foundation.org>
+ <696944eca1837_34d2a10056@dwillia2-mobl4.notmuch>
+ <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
+ <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
+ <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
+ <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
+ <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
+ <20260206110305.00001fbb@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260206110305.00001fbb@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
+ envelope-from=gourry@gourry.net; helo=mail-qv1-xf36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,242 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It will generate WDAT table [1] customized for TCO watchdog.
-This allows Windows guests (Windows Server 2008/Vista+) to
-use TCO watchdog using built-in generic driver, which
-aleviates need to install vendor specific drivers.
+On Fri, Feb 06, 2026 at 11:03:05AM +0000, Jonathan Cameron wrote:
+> On Thu, 5 Feb 2026 18:10:55 -0500
+> Gregory Price <gourry@gourry.net> wrote:
+> 
+> I disagree. There is nothing in the specification to say it should do that and
+> we have very intentionally not done so in QEMU - this is far from the first
+> time this has come up!. We won't be doing so any time soon unless someone
+> convinces me with clear spec references and tight reasoning for why it is the
+> right thing to do.
+> 
 
-Given that enabling it might change guest behaviour
-(both Windows/Linux) the feature is disabled by default.
+Interestingly I've had this exact conversation - in reverse - with other
+platform folks, who think CFMWS w/o SRAT is broken.  It was a zealous
+enough opinion that I may have over-indexed on it (plus i've read the
+numa mapping code and making this more dynamic seems difficult).
 
-Users that need it can enable the feature with
-following CLI option.
-    -machine 'acpi-watchdog=on'
+> This configuration reflects the pre hotplug / early CXL deployment
+> situation. Now we have proper support in Linux we have moved beyond that.
+> We do need to solve the dynamic NUMA node cases though and I'm hoping your
+> current work will make that a bit easier.
 
-1)
-   "Hardware Watchdog Timers Design Specification"
-    https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
+If we want flexibility to ship HPAs around to different nodes at
+runtime, that might cause issues. The page-to-nid / pa-to-nid mapping
+code is somewhat expected to be immutable after __init, so there could
+be nasty assumptions sprinkled all over the kernel.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+That will take some time.
 ---
- include/hw/acpi/wdat-ich9.h | 15 +++++++
- hw/acpi/meson.build         |  3 +-
- hw/acpi/wdat-ich9-stub.c    | 15 +++++++
- hw/acpi/wdat-ich9.c         | 87 +++++++++++++++++++++++++++++++++++++
- hw/i386/acpi-build.c        | 12 +++++
- 5 files changed, 131 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/acpi/wdat-ich9.h
- create mode 100644 hw/acpi/wdat-ich9-stub.c
- create mode 100644 hw/acpi/wdat-ich9.c
 
-diff --git a/include/hw/acpi/wdat-ich9.h b/include/hw/acpi/wdat-ich9.h
-new file mode 100644
-index 0000000000..60a2a6a112
---- /dev/null
-+++ b/include/hw/acpi/wdat-ich9.h
-@@ -0,0 +1,15 @@
-+/*
-+ * Copyright Red Hat, Inc. 2026
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef QEMU_HW_ACPI_WDAT_ICH9_H
-+#define QEMU_HW_ACPI_WDAT_ICH9_H
-+
-+#include "hw/acpi/aml-build.h"
-+
-+void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                     const char *oem_table_id, uint64_t tco_base);
-+
-+#endif /* QEMU_HW_ACPI_WDAT_ICH9_H */
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 56b5d1ec96..ba974b2f0f 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
--acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c', 'wdat-ich9.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
- acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
- acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
-@@ -33,6 +33,7 @@ if have_tpm
- endif
- system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
- system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
-+system_ss.add(when: 'CONFIG_ACPI_ICH9', if_false: files('wdat-ich9-stub.c'))
- system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
- system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
- system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.c'))
-diff --git a/hw/acpi/wdat-ich9-stub.c b/hw/acpi/wdat-ich9-stub.c
-new file mode 100644
-index 0000000000..7c30ef3558
---- /dev/null
-+++ b/hw/acpi/wdat-ich9-stub.c
-@@ -0,0 +1,15 @@
-+/*
-+ * Copyright Red Hat, Inc. 2026
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/acpi/wdat-ich9.h"
-+
-+void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                const char *oem_table_id, uint64_t tco_base)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/hw/acpi/wdat-ich9.c b/hw/acpi/wdat-ich9.c
-new file mode 100644
-index 0000000000..b1930dc71d
---- /dev/null
-+++ b/hw/acpi/wdat-ich9.c
-@@ -0,0 +1,87 @@
-+/*
-+ * TCO Watchdog Action Table (WDAT)
-+ *
-+ * Copyright Red Hat, Inc. 2026
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/acpi/wdat.h"
-+#include "hw/acpi/wdat-ich9.h"
-+#include "hw/southbridge/ich9.h"
-+
-+#define TCO_REG(base, reg_offset, reg_width) { .space_id = AML_AS_SYSTEM_IO, \
-+            .address = base + reg_offset, .bit_width = reg_width, \
-+            .access_width = AML_WORD_ACC, };
-+
-+/*
-+ *   "Hardware Watchdog Timers Design Specification"
-+ *       https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
-+ *
-+ *   ICH9 specific implementation.
-+ */
-+void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-+                     const char *oem_table_id, uint64_t tco_base)
-+{
-+    AcpiTable table = { .sig = "WDAT", .rev = 1, .oem_id = oem_id,
-+                        .oem_table_id = oem_table_id };
-+    struct AcpiGenericAddress tco_rld =  TCO_REG(tco_base, 0x0, 16);
-+    struct AcpiGenericAddress tco2_sts = TCO_REG(tco_base, 0x6, 16);
-+    struct AcpiGenericAddress tco1_cnt = TCO_REG(tco_base, 0x8, 16);
-+    struct AcpiGenericAddress tco_tmr =  TCO_REG(tco_base, 0x12, 16);
-+
-+    acpi_table_begin(&table, table_data);
-+    build_append_int_noprefix(table_data, 0x20, 4); /* Watchdog Header Length */
-+    build_append_int_noprefix(table_data, 0xff, 2); /* PCI Segment */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Bus Number */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Device Number */
-+    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Function Number */
-+    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
-+    build_append_int_noprefix(table_data, 0x258, 4);/* Timer Period, ms */
-+    build_append_int_noprefix(table_data, 0x3ff, 4);/* Maximum Count */
-+    build_append_int_noprefix(table_data, 0x4, 4);  /* Minimum Count */
-+    /*
-+     * WATCHDOG_ENABLED & WATCHDOG_STOPPED_IN_SLEEP_STATE
-+     */
-+    build_append_int_noprefix(table_data, 0x81, 1); /* Watchdog Flags */
-+    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
-+    /*
-+     * watchdog instruction entries
-+     */
-+    build_append_int_noprefix(table_data, 10, 4);
-+    /* Action table */
-+    build_append_wdat_ins(table_data, WDAT_ACTION_RESET,
-+        WDAT_INS_WRITE_VALUE,
-+        tco_rld, 0x1, 0x1ff);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_RUNNING_STATE,
-+        WDAT_INS_READ_VALUE,
-+        tco1_cnt, 0x0, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_RUNNING_STATE,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco1_cnt, 0, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_STOPPED_STATE,
-+        WDAT_INS_READ_VALUE,
-+        tco1_cnt, 0x800, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_STOPPED_STATE,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco1_cnt, 0x800, 0x800);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_COUNTDOWN_PERIOD,
-+        WDAT_INS_WRITE_COUNTDOWN,
-+        tco_tmr, 0x0, 0x3FF);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_COUNTDOWN_PERIOD,
-+        WDAT_INS_READ_COUNTDOWN,
-+        tco_tmr, 0x0, 0x3FF);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_WATCHDOG_STATUS,
-+        WDAT_INS_READ_VALUE,
-+        tco2_sts, 0x2, 0x2);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco2_sts, 0x2, 0x2);
-+    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
-+        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
-+        tco2_sts, 0x4, 0x4);
-+
-+    acpi_table_end(linker, &table);
-+}
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 19c62362e3..abb3e936fd 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -77,6 +77,7 @@
- 
- #include "hw/acpi/hmat.h"
- #include "hw/acpi/viot.h"
-+#include "hw/acpi/wdat-ich9.h"
- 
- #include CONFIG_DEVICES
- 
-@@ -109,6 +110,7 @@ typedef struct AcpiPmInfo {
-     uint16_t cpu_hp_io_base;
-     uint16_t pcihp_io_base;
-     uint16_t pcihp_io_len;
-+    uint64_t tco_io_base;
- } AcpiPmInfo;
- 
- typedef struct AcpiMiscInfo {
-@@ -203,6 +205,7 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
-     pm->pcihp_io_len = 0;
-     pm->smi_on_cpuhp = false;
-     pm->smi_on_cpu_unplug = false;
-+    pm->tco_io_base = 0;
- 
-     assert(obj);
-     init_common_fadt_data(machine, obj, &pm->fadt);
-@@ -224,6 +227,8 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
-             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT));
-         pm->smi_on_cpu_unplug =
-             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
-+        pm->tco_io_base = object_property_get_uint(obj, ACPI_PM_PROP_PM_IO_BASE,
-+            NULL) + ICH9_PMIO_TCO_RLD;
-     }
-     pm->pcihp_io_base =
-         object_property_get_uint(obj, ACPI_PCIHP_IO_BASE_PROP, NULL);
-@@ -2079,6 +2084,13 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-     acpi_add_table(table_offsets, tables_blob);
-     build_waet(tables_blob, tables->linker, x86ms->oem_id, x86ms->oem_table_id);
- 
-+    if (machine->acpi_watchdog) {
-+        g_assert(pm.tco_io_base);
-+        acpi_add_table(table_offsets, tables_blob);
-+        build_ich9_wdat(tables_blob, tables->linker, x86ms->oem_id,
-+                        x86ms->oem_table_id, pm.tco_io_base);
-+    }
-+
-     /* Add tables supplied by user (if any) */
-     for (u = acpi_table_first(); u; u = acpi_table_next(u)) {
-         unsigned len = acpi_table_len(u);
--- 
-2.47.3
+Andrew if Jonathan is good with it then with changelog updates this can
+go in, otherwise I don't think this warrants a backport or anything.
 
+~Gregory
 
