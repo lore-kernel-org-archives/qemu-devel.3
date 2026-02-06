@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA60EE2084
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 11:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FD2EE208E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 11:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJoZ-0004fU-14; Fri, 06 Feb 2026 06:15:55 -0500
+	id 1voJpE-0004rX-E0; Fri, 06 Feb 2026 06:16:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1voJoX-0004de-48
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:15:53 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1voJp9-0004r0-M4
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:16:32 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1voJoU-0006hY-SA
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:15:52 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4806dffc64cso17256375e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 03:15:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1voJp7-0006nY-4p
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 06:16:31 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48068127f00so18885635e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 03:16:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770376549; x=1770981349; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770376586; x=1770981386; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Ta4TTHyAkS6lM/UndoQEF21/rcTn2yE80qwE9t/lEUk=;
- b=cpfec8qB87oFt9jNh2iF3vvj0ZExccXbkiBH8Yr++W//ZFXTlsgMrS3vXOWWHVvyi5
- BrjpkOYnUDxF5tAoBi+eMnamSHx3o2ZbdRc3xftcdGR+ueSy+uihCUBZQlwsM+08BxfX
- 3dW7F7maGV4FcdPiYHap2g9i2LiiwygbLljlGuVodfliDC/azBzhA091fm+gz0gEaBSt
- pb4fbCTpLeKLHTOBrKkRxrWFFY3JT7KXu+WQzdWqbNE9YbrK4xQZNasiIzP5ROuQsYvr
- GQqS1ZJ99iRocwGuI3MRu0GKTkV/I9RjkaDttY1nNb+Q8pMySU4Saptmz+2+hYWUP29A
- HCbw==
+ bh=Pzn5Tsk0JyZx8knQaGoq3pk04RWwGqrEIOwN+7HOX0U=;
+ b=OERIQjNoZZ1fAdHtbnPw35ncW6yRowivDt7/rls4waxgcIDOmIKLqzIGFDJ/Me0XL/
+ 5jHRz45cNwY6rw5a24uzVYhmkG8t00cq0n7MKW/wE5dy4OUMiCto4xlJ1goC0gnb3uOS
+ GK/RcwZxIuweb0Ju4B3QIiHzi/tEd1DdE7GSxRVwSFI8lcZjEnXu2Ga9PXbEUis8zfcK
+ cFT1O8vFETFnq6vgZUa/d2f9yo0oRvYt6UlVONlVMqQaSgVP5jxzFcWckNJewG+8+qw0
+ 7fGa+eQ4vI/hLQToZx4mbV4S0MOvq+vLqf56te0SAIVz67+v1q3kVfLvoCBUnTHCAkfF
+ dqRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770376549; x=1770981349;
+ d=1e100.net; s=20230601; t=1770376586; x=1770981386;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ta4TTHyAkS6lM/UndoQEF21/rcTn2yE80qwE9t/lEUk=;
- b=gLxWXo2cH/jZi2G6dGIhee7ORq6oYR6A6uycpNnr+vrgryd9fBqnthoPJCm0Kawa3e
- EJbwCYKO8/Rt3z2LcxMFh6nNrnFbbxKTToNYY4GXvWMmVs/tGWMEtAjE8h+7mXD48Oho
- eHEifwImaqbyuHK92BNfUyyGO0gjQInkHu0iU3GZSMpfAt4eiHZRFecrMA5uW9X/scL8
- JSLKvRSj5NTPMX81gchaLxWl33o0gSslH1CWPa/OYUOnasUrkw3KzIO28hEd18kGr4HM
- tipFoRRWllnZn4b3co5+C3FQdoiNeMCA5GKpULtQ2HfnUZQ7f2OgQwguEUhByex+LJwo
- er6w==
-X-Gm-Message-State: AOJu0YyG4OaoIEeU4938erQfFCNw0C3mPjs7zEKUi9DwVhaFLqENTdpl
- Zxuhhvb3Jdpf8fmcuO0Ri2ohOQ1AxkAOZxYJPyVtrfPTRQ1sDLhPVlTbcojnEGsj
-X-Gm-Gg: AZuq6aLA+U446Z3UNng7fBtmM65UzblPeM2x1haWmYI9sNomncap/7tbs24cVLorDPR
- Y2lKdv+XfkisX+u+dgtoXDeYCNVBHGEIqq0Kitht5A6G+XhGPcDw+jqvp7k71532pE0wUFVxV+/
- QBjTx6+WzVmP+lop8f2Bd2Ye64BC3ObGlwOEqEdIc6gRMhHhgDYPn90dnJjjFLYmTHKU/OUVj2W
- 32HcegyBdKt5cXqN9AW4mRChHJetSJ0xYzXZnUYYfMadHGx1Hctt8m5gtaxpUQGQlkoHVjSvT6V
- 2tMzNUACB6FQbf3MHwRQK3KK63SX8N72+lz24QTMmw76q/twleciAcVdLeuCqnv/5zKVzm6L29J
- cT5lFxarBjyxwnhN/1ejfybrwcfJW/ul80zlC5UzaXBo1mrKe0njjU/b2pw9hYnJwIkDvArsyCh
- vQsUoJApga0/I6aIOiaAQsUTQoo6f8AghcnVozz5G3WQ1Jbto/dbmeGoe99la0RLiW
-X-Received: by 2002:a05:600c:19d1:b0:477:9a28:b09a with SMTP id
- 5b1f17b1804b1-483208b9470mr28350835e9.0.1770376548393; 
- Fri, 06 Feb 2026 03:15:48 -0800 (PST)
+ bh=Pzn5Tsk0JyZx8knQaGoq3pk04RWwGqrEIOwN+7HOX0U=;
+ b=jTyN8Y1Zr2UbunmZ9U0BzcP292ap9jJz4SLD7UJrDJC0W5phDqBeecPtKMXBZYGqqA
+ Y3SxNPm2XCWDFtpXtwdiGhQBdVsnAC03a0M9ST41S13EGTa8zgMErkQvhwp9n1ae8QxU
+ h7SxqW36Po0TakJdKRc4Bues6ewi3VwI7Sb5G4p2cPRq4Vb5hSz8KePA9E8dm0P3xHCN
+ ovTVNJfdIqcILbgYN5g2PW+lUlb2iHrqLseyF2JSgV6FtypXIUijKYqeXnIDtOIUJwzD
+ 4DKFNtPPDxLmautxAiIlpyrBqe0hMrhLd5TEhbqaIqntk2z/QSjRQwF+jX2cq1B7Umwv
+ OH3Q==
+X-Gm-Message-State: AOJu0Yz3OOqDEmRv1+EsCFmcqrjMo3bv99isIk9ZVbJmpZiPrXN3Ja/x
+ yPI6Jp5zjtTRIaDc3t1MQoGy1+n4VwtAc2/4QRlbNQcj+OSLVnx3nQeG
+X-Gm-Gg: AZuq6aKQpy5J3ggf9DAaWS5YCD8gRIwd6pd2SjnNlBfcK9eY+bEYaJKwoD0a6xswGtV
+ 3G3JAfUXUb1VTu40/qzSfy+qgjpOhk39RY6K4XSaXYdwzSWYASe3fHTZ9y5clqillzr7bPjdQbA
+ odfVEfq1kaJ9ZhF2LZwYToWOn4Pc04mm7LWW5RTFPe3f4iAhOzIOkocI8uUqFl9aXVzPK2kqymP
+ Qh8dj3L0tJp8/tyA4jFkr3EUu0+sqbRnTTu56eXTgERfG0bsa727uudMigk3+kATE/NPS/w7zGS
+ uBewTHoU77Etu1CIgSGZ27ce0PdTHrG2h5WErHq+GjTyVLLf3C2lBCJ8SRHheftnYwS8ndh8WqR
+ qxkaZqhP7Di5f20eeSs141H7Urv2KZBzfAnol0xNZ0D96cTwlSmpf3jSdXHuYTeL6Hogv48zxfs
+ j2GyjkRn45MrhUG6SK2nivnZvOL9sGah3MFvujWfmlPDlCtYbphWlYHgEZHOJZehmXoWV2cZ/Il
+ l5tGOZG+kZraNQ=
+X-Received: by 2002:a05:600c:1d24:b0:477:7c7d:d9b2 with SMTP id
+ 5b1f17b1804b1-48320236b1emr30523645e9.32.1770376584992; 
+ Fri, 06 Feb 2026 03:16:24 -0800 (PST)
 Received: from localhost
  (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483203e126dsm34863755e9.2.2026.02.06.03.15.47
+ 5b1f17b1804b1-48320719bf4sm45174355e9.10.2026.02.06.03.16.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 03:15:47 -0800 (PST)
-Date: Fri, 6 Feb 2026 11:15:46 +0000
+ Fri, 06 Feb 2026 03:16:24 -0800 (PST)
+Date: Fri, 6 Feb 2026 11:16:23 +0000
 From: Stafford Horne <shorne@gmail.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 2/6] include/hw/or1k: Rename from openrisc
-Message-ID: <aYXNYtGl6fVk3_7a@antec>
+Subject: Re: [PATCH 4/6] tests/tcg/or1k: Rename from openrisc
+Message-ID: <aYXNh5vuojddKmaQ@antec>
 References: <20260205030244.266447-1-richard.henderson@linaro.org>
- <20260205030244.266447-3-richard.henderson@linaro.org>
+ <20260205030244.266447-5-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260205030244.266447-3-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=shorne@gmail.com; helo=mail-wm1-x336.google.com
+In-Reply-To: <20260205030244.266447-5-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=shorne@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +101,342 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Richard,
 
-On Thu, Feb 05, 2026 at 01:02:40PM +1000, Richard Henderson wrote:
+On Thu, Feb 05, 2026 at 01:02:42PM +1000, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-This looks fine to me.
+OK.
 
 Acked-by: Stafford Horne <shorne@gmail.com>
 
 > ---
->  include/hw/{openrisc => or1k}/boot.h | 6 +++---
->  hw/openrisc/boot.c                   | 2 +-
->  hw/openrisc/openrisc_sim.c           | 2 +-
->  hw/openrisc/virt.c                   | 2 +-
->  MAINTAINERS                          | 2 +-
->  5 files changed, 7 insertions(+), 7 deletions(-)
->  rename include/hw/{openrisc => or1k}/boot.h (93%)
+>  tests/tcg/{openrisc => or1k}/test_add.c    | 0
+>  tests/tcg/{openrisc => or1k}/test_addc.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_addi.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_addic.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_and_or.c | 0
+>  tests/tcg/{openrisc => or1k}/test_bf.c     | 0
+>  tests/tcg/{openrisc => or1k}/test_bnf.c    | 0
+>  tests/tcg/{openrisc => or1k}/test_div.c    | 0
+>  tests/tcg/{openrisc => or1k}/test_divu.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_extx.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_fx.c     | 0
+>  tests/tcg/{openrisc => or1k}/test_j.c      | 0
+>  tests/tcg/{openrisc => or1k}/test_jal.c    | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_add.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_div.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_eqs.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_ges.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_gts.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_les.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_lts.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_mul.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_nes.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_rem.c | 0
+>  tests/tcg/{openrisc => or1k}/test_lf_sub.c | 0
+>  tests/tcg/{openrisc => or1k}/test_logic.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_lx.c     | 0
+>  tests/tcg/{openrisc => or1k}/test_movhi.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_mul.c    | 0
+>  tests/tcg/{openrisc => or1k}/test_muli.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_mulu.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_sfeq.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_sfeqi.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfges.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgesi.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgeu.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgeui.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgts.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgtsi.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgtu.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfgtui.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfles.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sflesi.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfleu.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfleui.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sflts.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfltsi.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfltu.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sfltui.c | 0
+>  tests/tcg/{openrisc => or1k}/test_sfne.c   | 0
+>  tests/tcg/{openrisc => or1k}/test_sfnei.c  | 0
+>  tests/tcg/{openrisc => or1k}/test_sub.c    | 0
+>  MAINTAINERS                                | 2 +-
+>  tests/tcg/{openrisc => or1k}/Makefile      | 0
+>  53 files changed, 1 insertion(+), 1 deletion(-)
+>  rename tests/tcg/{openrisc => or1k}/test_add.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_addc.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_addi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_addic.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_and_or.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_bf.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_bnf.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_div.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_divu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_extx.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_fx.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_j.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_jal.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_add.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_div.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_eqs.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_ges.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_gts.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_les.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_lts.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_mul.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_nes.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_rem.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lf_sub.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_logic.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_lx.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_movhi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_mul.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_muli.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_mulu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfeq.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfeqi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfges.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgesi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgeu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgeui.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgts.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgtsi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgtu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfgtui.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfles.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sflesi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfleu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfleui.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sflts.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfltsi.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfltu.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfltui.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfne.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sfnei.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/test_sub.c (100%)
+>  rename tests/tcg/{openrisc => or1k}/Makefile (100%)
 > 
-> diff --git a/include/hw/openrisc/boot.h b/include/hw/or1k/boot.h
-> similarity index 93%
-> rename from include/hw/openrisc/boot.h
-> rename to include/hw/or1k/boot.h
-> index 3c481bdea6..2e6131580c 100644
-> --- a/include/hw/openrisc/boot.h
-> +++ b/include/hw/or1k/boot.h
-> @@ -16,8 +16,8 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> -#ifndef OPENRISC_BOOT_H
-> -#define OPENRISC_BOOT_H
-> +#ifndef OR1K_BOOT_H
-> +#define OR1K_BOOT_H
->  
->  #include "exec/cpu-defs.h"
->  #include "hw/core/boards.h"
-> @@ -32,4 +32,4 @@ hwaddr openrisc_load_initrd(void *fdt, const char *filename,
->  uint32_t openrisc_load_fdt(MachineState *ms, void *fdt, hwaddr load_start,
->                             uint64_t mem_size);
->  
-> -#endif /* OPENRISC_BOOT_H */
-> +#endif /* OR1K_BOOT_H */
-> diff --git a/hw/openrisc/boot.c b/hw/openrisc/boot.c
-> index 6256babc42..c18f4a6a9f 100644
-> --- a/hw/openrisc/boot.c
-> +++ b/hw/openrisc/boot.c
-> @@ -12,7 +12,7 @@
->  #include "exec/target_page.h"
->  #include "elf.h"
->  #include "hw/core/loader.h"
-> -#include "hw/openrisc/boot.h"
-> +#include "hw/or1k/boot.h"
->  #include "system/device_tree.h"
->  #include "system/qtest.h"
->  #include "system/reset.h"
-> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-> index 603d8ca0d9..f1b1f63274 100644
-> --- a/hw/openrisc/openrisc_sim.c
-> +++ b/hw/openrisc/openrisc_sim.c
-> @@ -26,7 +26,7 @@
->  #include "hw/core/boards.h"
->  #include "hw/char/serial-mm.h"
->  #include "net/net.h"
-> -#include "hw/openrisc/boot.h"
-> +#include "hw/or1k/boot.h"
->  #include "hw/core/qdev-properties.h"
->  #include "system/address-spaces.h"
->  #include "system/device_tree.h"
-> diff --git a/hw/openrisc/virt.c b/hw/openrisc/virt.c
-> index 54ce96666e..39f54058ab 100644
-> --- a/hw/openrisc/virt.c
-> +++ b/hw/openrisc/virt.c
-> @@ -16,7 +16,7 @@
->  #include "hw/core/boards.h"
->  #include "hw/char/serial-mm.h"
->  #include "hw/core/split-irq.h"
-> -#include "hw/openrisc/boot.h"
-> +#include "hw/or1k/boot.h"
->  #include "hw/misc/sifive_test.h"
->  #include "hw/pci/pci.h"
->  #include "hw/pci-host/gpex.h"
+> diff --git a/tests/tcg/openrisc/test_add.c b/tests/tcg/or1k/test_add.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_add.c
+> rename to tests/tcg/or1k/test_add.c
+> diff --git a/tests/tcg/openrisc/test_addc.c b/tests/tcg/or1k/test_addc.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_addc.c
+> rename to tests/tcg/or1k/test_addc.c
+> diff --git a/tests/tcg/openrisc/test_addi.c b/tests/tcg/or1k/test_addi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_addi.c
+> rename to tests/tcg/or1k/test_addi.c
+> diff --git a/tests/tcg/openrisc/test_addic.c b/tests/tcg/or1k/test_addic.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_addic.c
+> rename to tests/tcg/or1k/test_addic.c
+> diff --git a/tests/tcg/openrisc/test_and_or.c b/tests/tcg/or1k/test_and_or.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_and_or.c
+> rename to tests/tcg/or1k/test_and_or.c
+> diff --git a/tests/tcg/openrisc/test_bf.c b/tests/tcg/or1k/test_bf.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_bf.c
+> rename to tests/tcg/or1k/test_bf.c
+> diff --git a/tests/tcg/openrisc/test_bnf.c b/tests/tcg/or1k/test_bnf.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_bnf.c
+> rename to tests/tcg/or1k/test_bnf.c
+> diff --git a/tests/tcg/openrisc/test_div.c b/tests/tcg/or1k/test_div.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_div.c
+> rename to tests/tcg/or1k/test_div.c
+> diff --git a/tests/tcg/openrisc/test_divu.c b/tests/tcg/or1k/test_divu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_divu.c
+> rename to tests/tcg/or1k/test_divu.c
+> diff --git a/tests/tcg/openrisc/test_extx.c b/tests/tcg/or1k/test_extx.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_extx.c
+> rename to tests/tcg/or1k/test_extx.c
+> diff --git a/tests/tcg/openrisc/test_fx.c b/tests/tcg/or1k/test_fx.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_fx.c
+> rename to tests/tcg/or1k/test_fx.c
+> diff --git a/tests/tcg/openrisc/test_j.c b/tests/tcg/or1k/test_j.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_j.c
+> rename to tests/tcg/or1k/test_j.c
+> diff --git a/tests/tcg/openrisc/test_jal.c b/tests/tcg/or1k/test_jal.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_jal.c
+> rename to tests/tcg/or1k/test_jal.c
+> diff --git a/tests/tcg/openrisc/test_lf_add.c b/tests/tcg/or1k/test_lf_add.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_add.c
+> rename to tests/tcg/or1k/test_lf_add.c
+> diff --git a/tests/tcg/openrisc/test_lf_div.c b/tests/tcg/or1k/test_lf_div.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_div.c
+> rename to tests/tcg/or1k/test_lf_div.c
+> diff --git a/tests/tcg/openrisc/test_lf_eqs.c b/tests/tcg/or1k/test_lf_eqs.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_eqs.c
+> rename to tests/tcg/or1k/test_lf_eqs.c
+> diff --git a/tests/tcg/openrisc/test_lf_ges.c b/tests/tcg/or1k/test_lf_ges.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_ges.c
+> rename to tests/tcg/or1k/test_lf_ges.c
+> diff --git a/tests/tcg/openrisc/test_lf_gts.c b/tests/tcg/or1k/test_lf_gts.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_gts.c
+> rename to tests/tcg/or1k/test_lf_gts.c
+> diff --git a/tests/tcg/openrisc/test_lf_les.c b/tests/tcg/or1k/test_lf_les.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_les.c
+> rename to tests/tcg/or1k/test_lf_les.c
+> diff --git a/tests/tcg/openrisc/test_lf_lts.c b/tests/tcg/or1k/test_lf_lts.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_lts.c
+> rename to tests/tcg/or1k/test_lf_lts.c
+> diff --git a/tests/tcg/openrisc/test_lf_mul.c b/tests/tcg/or1k/test_lf_mul.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_mul.c
+> rename to tests/tcg/or1k/test_lf_mul.c
+> diff --git a/tests/tcg/openrisc/test_lf_nes.c b/tests/tcg/or1k/test_lf_nes.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_nes.c
+> rename to tests/tcg/or1k/test_lf_nes.c
+> diff --git a/tests/tcg/openrisc/test_lf_rem.c b/tests/tcg/or1k/test_lf_rem.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_rem.c
+> rename to tests/tcg/or1k/test_lf_rem.c
+> diff --git a/tests/tcg/openrisc/test_lf_sub.c b/tests/tcg/or1k/test_lf_sub.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lf_sub.c
+> rename to tests/tcg/or1k/test_lf_sub.c
+> diff --git a/tests/tcg/openrisc/test_logic.c b/tests/tcg/or1k/test_logic.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_logic.c
+> rename to tests/tcg/or1k/test_logic.c
+> diff --git a/tests/tcg/openrisc/test_lx.c b/tests/tcg/or1k/test_lx.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_lx.c
+> rename to tests/tcg/or1k/test_lx.c
+> diff --git a/tests/tcg/openrisc/test_movhi.c b/tests/tcg/or1k/test_movhi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_movhi.c
+> rename to tests/tcg/or1k/test_movhi.c
+> diff --git a/tests/tcg/openrisc/test_mul.c b/tests/tcg/or1k/test_mul.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_mul.c
+> rename to tests/tcg/or1k/test_mul.c
+> diff --git a/tests/tcg/openrisc/test_muli.c b/tests/tcg/or1k/test_muli.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_muli.c
+> rename to tests/tcg/or1k/test_muli.c
+> diff --git a/tests/tcg/openrisc/test_mulu.c b/tests/tcg/or1k/test_mulu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_mulu.c
+> rename to tests/tcg/or1k/test_mulu.c
+> diff --git a/tests/tcg/openrisc/test_sfeq.c b/tests/tcg/or1k/test_sfeq.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfeq.c
+> rename to tests/tcg/or1k/test_sfeq.c
+> diff --git a/tests/tcg/openrisc/test_sfeqi.c b/tests/tcg/or1k/test_sfeqi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfeqi.c
+> rename to tests/tcg/or1k/test_sfeqi.c
+> diff --git a/tests/tcg/openrisc/test_sfges.c b/tests/tcg/or1k/test_sfges.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfges.c
+> rename to tests/tcg/or1k/test_sfges.c
+> diff --git a/tests/tcg/openrisc/test_sfgesi.c b/tests/tcg/or1k/test_sfgesi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgesi.c
+> rename to tests/tcg/or1k/test_sfgesi.c
+> diff --git a/tests/tcg/openrisc/test_sfgeu.c b/tests/tcg/or1k/test_sfgeu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgeu.c
+> rename to tests/tcg/or1k/test_sfgeu.c
+> diff --git a/tests/tcg/openrisc/test_sfgeui.c b/tests/tcg/or1k/test_sfgeui.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgeui.c
+> rename to tests/tcg/or1k/test_sfgeui.c
+> diff --git a/tests/tcg/openrisc/test_sfgts.c b/tests/tcg/or1k/test_sfgts.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgts.c
+> rename to tests/tcg/or1k/test_sfgts.c
+> diff --git a/tests/tcg/openrisc/test_sfgtsi.c b/tests/tcg/or1k/test_sfgtsi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgtsi.c
+> rename to tests/tcg/or1k/test_sfgtsi.c
+> diff --git a/tests/tcg/openrisc/test_sfgtu.c b/tests/tcg/or1k/test_sfgtu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgtu.c
+> rename to tests/tcg/or1k/test_sfgtu.c
+> diff --git a/tests/tcg/openrisc/test_sfgtui.c b/tests/tcg/or1k/test_sfgtui.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfgtui.c
+> rename to tests/tcg/or1k/test_sfgtui.c
+> diff --git a/tests/tcg/openrisc/test_sfles.c b/tests/tcg/or1k/test_sfles.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfles.c
+> rename to tests/tcg/or1k/test_sfles.c
+> diff --git a/tests/tcg/openrisc/test_sflesi.c b/tests/tcg/or1k/test_sflesi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sflesi.c
+> rename to tests/tcg/or1k/test_sflesi.c
+> diff --git a/tests/tcg/openrisc/test_sfleu.c b/tests/tcg/or1k/test_sfleu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfleu.c
+> rename to tests/tcg/or1k/test_sfleu.c
+> diff --git a/tests/tcg/openrisc/test_sfleui.c b/tests/tcg/or1k/test_sfleui.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfleui.c
+> rename to tests/tcg/or1k/test_sfleui.c
+> diff --git a/tests/tcg/openrisc/test_sflts.c b/tests/tcg/or1k/test_sflts.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sflts.c
+> rename to tests/tcg/or1k/test_sflts.c
+> diff --git a/tests/tcg/openrisc/test_sfltsi.c b/tests/tcg/or1k/test_sfltsi.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfltsi.c
+> rename to tests/tcg/or1k/test_sfltsi.c
+> diff --git a/tests/tcg/openrisc/test_sfltu.c b/tests/tcg/or1k/test_sfltu.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfltu.c
+> rename to tests/tcg/or1k/test_sfltu.c
+> diff --git a/tests/tcg/openrisc/test_sfltui.c b/tests/tcg/or1k/test_sfltui.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfltui.c
+> rename to tests/tcg/or1k/test_sfltui.c
+> diff --git a/tests/tcg/openrisc/test_sfne.c b/tests/tcg/or1k/test_sfne.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfne.c
+> rename to tests/tcg/or1k/test_sfne.c
+> diff --git a/tests/tcg/openrisc/test_sfnei.c b/tests/tcg/or1k/test_sfnei.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sfnei.c
+> rename to tests/tcg/or1k/test_sfnei.c
+> diff --git a/tests/tcg/openrisc/test_sub.c b/tests/tcg/or1k/test_sub.c
+> similarity index 100%
+> rename from tests/tcg/openrisc/test_sub.c
+> rename to tests/tcg/or1k/test_sub.c
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index a0422936ad..508d37ab7a 100644
+> index 00aa4f2a41..208628cb8b 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -305,7 +305,7 @@ S: Odd Fixes
->  F: docs/system/openrisc/cpu-features.rst
->  F: target/or1k/
->  F: hw/openrisc/
-> -F: include/hw/openrisc/
-> +F: include/hw/or1k/
+> @@ -307,7 +307,7 @@ F: target/or1k/
+>  F: hw/or1k/
+>  F: include/hw/or1k/
 >  F: tests/functional/or1k/meson.build
->  F: tests/tcg/openrisc/
+> -F: tests/tcg/openrisc/
+> +F: tests/tcg/or1k/
 >  
+>  PowerPC TCG CPUs
+>  M: Nicholas Piggin <npiggin@gmail.com>
+> diff --git a/tests/tcg/openrisc/Makefile b/tests/tcg/or1k/Makefile
+> similarity index 100%
+> rename from tests/tcg/openrisc/Makefile
+> rename to tests/tcg/or1k/Makefile
 > -- 
 > 2.43.0
 > 
