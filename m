@@ -4,109 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504CEEE209D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43B3EE209D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLVq-0004mQ-11; Fri, 06 Feb 2026 08:04:42 -0500
+	id 1voLai-0005sh-Om; Fri, 06 Feb 2026 08:09:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1voLVo-0004m5-I1
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:04:40 -0500
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1voLVm-0002qx-Pu
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:04:40 -0500
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-502a26e8711so12373251cf.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:04:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770383076; cv=none;
- d=google.com; s=arc-20240605;
- b=L1gsx4PwnATUI392FhoiIbNAb4N8B36Sp6Q4UD6Winlm5DBQK00HbqDIjRE5sI1ZSf
- dNH50q8/cy01Z05+HhAWdrKZRQCpOunbtVhk115TIwKk9CQgoJEVRVNwyf4LGXfObIxi
- 3bJs4CX6b+uN6DjUG7R1yY9Hn6Xa04lQxSQ36EQPw2iqa6pHh1eWwIv1BI1aJsckQimS
- HogLH0mkOvSj+6aUJ+1n+6ZHX8VGwUNSOKJlfxm7KmrjmdiYk7o/4A8ptO5KKaBa3xwt
- uCohZVoHRLuCPkAiPnfgmMY9xbIAaJppm/CmkUZT/vJ5IcFp2n4LXp3rm5gh9QlHr91b
- ab0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=uN5a1DrDWXGRz+zFu33pBYxU2DW9vVuEnFvgK3//06g=;
- fh=7YH/6k/j25NNwwt5Z0aNR+l5vsUJilkY+EqN5Ef/xhY=;
- b=XugZH6ZD5sdKecUoKNW9ryigGH+2czfPSQ6RKllXfp6dPn+Exjo1oKmxp+pzVf+fj6
- bHFYhT395wQHL+YycKubddUmWFn908K0FLFmx0GqgpjWu0mdsXT/tXDpq1Xy7/OzqPs3
- K5q7ylTxVQDC30J1t3+SN2n4DbLlhRPNvkHIoWnw0PnOX1wB9JNSg8+h6cTgLXAYQ8g/
- hzgKlMirGAsXajPYv5vjQ9ampRCnDPViTPAK+5ygqE88cwlY3sWBdGVve4thvifC+lNf
- lcfEd8wHge0yOdjH8lFTQCY3VwqpymRIyk+Nm8WQnmzNcXG/IXM79/oks+SSDwpFRyUQ
- JCEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voLac-0005s3-KC
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:09:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voLaU-0003u7-CY
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:09:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770383367;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
+ b=Zfcx8ew2o/qgvIT3J3oBWJMJDrHATumklFbkooo+thamsGOyQWU7GeaWj4K2Ymbcxec/Tw
+ InUDG6lkRGu/0P4yN/uxAT6lsf3bPIgopte0HihmsJoN1nN9s16T7siBLaBeLDPEn/RLsu
+ ODqSqyuwO3ggUoXJdGjk28Q26bWZN24=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-364-bj8_TQTINRKz4YNQV1QgsA-1; Fri, 06 Feb 2026 08:09:26 -0500
+X-MC-Unique: bj8_TQTINRKz4YNQV1QgsA-1
+X-Mimecast-MFC-AGG-ID: bj8_TQTINRKz4YNQV1QgsA_1770383365
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-435db9425ebso2140256f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:09:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770383076; x=1770987876; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uN5a1DrDWXGRz+zFu33pBYxU2DW9vVuEnFvgK3//06g=;
- b=AMPBJqQrPm4NQ3jjoEVGqgzXB3tgjBQkK/nQcpRUWlNMw0L1mqW6SakcBz2J3OLs75
- hNWCmk5ji0BKui0S4WT0Ct2l22zIutzBEoT5IBy89GlEM+dUJVXDnKjSmfeH61xkldTP
- bd8ZUz7FAB4x3wcKYwoasKJvPG3ERn7awKd+qEm5TA1YrrzO1n3JBTpfjeTnl4vA/1dv
- FFxSOYTz1X+Nii82VR7kJDsYw5dX119Y/rfI4rL06pQJEgtCMMsz57y1suzgW77NKMpn
- jRVwzS+pMn2hmNZd+4eAPOZYlJFe7CzV3vrAp5Mv7zS4APkEFiNhdAvh+HZISKaBenwB
- GJPg==
+ d=redhat.com; s=google; t=1770383365; x=1770988165; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
+ b=AgMkve8+0UxvazAdlrInsoynUMca6kjusSVm0dnIYsITNwubIHDDuZYA42KGG0IIsj
+ Y2WypH5T8LYVKk+cN3YS7OFDvlo9DfDZWd8PRVgyCKNs2c+x47zB6x98IJJm8c6rdscY
+ 1eeApGt3xvlnHup58Sxx9Z8BWw8bs8l9LsCWtXvckQlkHEcXxb465TPzNz9/gZheUa4F
+ ZaLwWIWVPmciYo4yf1rFkVD9HgjsYGKKi/Ij9mYBvA9CZAZuzSKS9Dy3H+Qw4JfOjgdT
+ aiTmE82AVJYwTDa+RsK1hY/0mpy/uNMwYXNBgwzolaXsMZ1w60kYH+sZpR/X3yGdZbk0
+ q/JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770383076; x=1770987876;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uN5a1DrDWXGRz+zFu33pBYxU2DW9vVuEnFvgK3//06g=;
- b=tMHL6Wp0NJDGUEPnOWVMQtC71weKZKxi37gzsjNcx+TpG85LrdyhtA8nucj4pDpSuH
- CZTtOeWu2nhn+2QCORM62ZgiUR0Zemm5LrKgmFJc5/72cdnXSkReA/7rVGOL8bSo+WGk
- z7AMI4MKG+MZAN+/FsW4YSaLnU7sJK+cbbgeuOVdIl8sYuvpwJkGxpL0IcaYM0uynxkZ
- 0dApac4qaOK0sxe3LC/30C9ngYjTxnli59c6hqro0Hs9VMDoln7lPq8OFtUb8OuIbhyg
- fkFA/lEmtbgk4mopRAmJ1ALeHgzPCBWSXJ/nkk/RLcENkIYwda3TvXeJYK9UgpOKChqj
- Kdkg==
-X-Gm-Message-State: AOJu0YwaXU2CQNa/1fYywY+Umbjy1O/krnzfIdOAdlxLtesDMpp61r6I
- TwryxU7a8danb8bFYwdu6LLhn0Vwi22VsgU3rfDYagqGquI63GjyRluCkgryHLVuZowN0GoHNN+
- R86atvqgMrcnJexmJWPp+VTOXKiG37Pk=
-X-Gm-Gg: AZuq6aIZaLRZ9KEatqbmQ+KMthiKuTZAs3bwfisoDbBu4UGOhefhQxSwHG7UQyz9grd
- ahffzHzksF9uSvKUzp9s0jL4dOjOM9vk7RR7FqhmsrM3Wvxz7ylTMBEGzyv/Uxsoznr3PuVCwLF
- z4I2BdjACWf2YBu8OIhPY5LQfQbuTKhOuwmVYVQrCcUOzNBV/k/izHom5rDzvoeOXIUKqKF8YoK
- h3Z0jmJIghxcyk2BWdqLAhkZqi9TozGJ1GCgc+G/mGMtSu0AoKc7QV6Zh79jb20yCDfsVJbC1t1
- g3WUGt6qsilkFsB7WQF/0WplAFI=
-X-Received: by 2002:a05:622a:34a:b0:503:29df:3919 with SMTP id
- d75a77b69052e-50639a1e3a4mr33522851cf.81.1770383075643; Fri, 06 Feb 2026
- 05:04:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770383365; x=1770988165;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
+ b=HGLkG4cIwFTnIfIPB74Z/qzDPfP8HVdR4o8xAIcav2yqE6j6E8ZI2JCrDNK6OeyOhm
+ 11eXhK0PL3sC0D0cCvd6gUOi7qiK1moEVKotFxxLGXVBJ+ta3UHY4ERh06Kpbz2pZFKU
+ Hxl643uQsEBjceJXXNdua1lGYbDi52W5KAkD85agFQ0YJYttvwWnMyblxUOURQ8NMY/v
+ C3BkJM3NmfVWzxl5ToVhVKpMr2Itoqj7WCf513zb8dJ7JNtyzodESRqCqVanfBVYrSrf
+ VwNu1uKgBT9+Ut/3D/fmaUYHesZH7qTfX/Fu/BBvcjergBh/SKmyN5k/qOEkhF6AoNNB
+ MLBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0VVZR6nwHxByQtVRy9d92u9GzYaq5XN8YUbnywNud8p1CZIUFy+Qia/S6Miu9COhqQk1gVptXDLb6@nongnu.org
+X-Gm-Message-State: AOJu0Yys28FuZ+IO45PqsuM7ymCj6kWATsODH9Il+6BZsfVaLg5ErULP
+ iaM+41j+ALmtJaPQGWkzXiFx2rrQyiA5TdJRpsI3sKMYEUfkC4LgS9tnZbYO9ebn37cbhIwLGj+
+ q93hYFUxFKRkGnBEvMTY10i+7R01e3nYPkBl1xERs2iEK9g6LlEQzV9gT
+X-Gm-Gg: AZuq6aLnW1RjciE47WB2s/F7pSZt0hhnUDUUMaXlmfdTbuRIjlYuwIJb1iWZN587H9K
+ 7V4igNkAvfcmA5IEQUDIT+gvW3q7q+5pdRZ/xhBPFcgm6l97yEhQzQGVMDkxTgSIWCMJs5/HES5
+ lnzIrKDZKHRGDppnZKLOs5wrLOvQjo8PIZPzGUcC/GH4O7mwm6QdA0uagfENE+gyELOY9/mqGoK
+ p558pS4TKxCAJfI7zNRJz2hACBRMCIbmmjPHmL4K9pOr2ysZEGSTBKFlDqCnJ5jzC2uZdbIvEjT
+ 6IYu9bj5/HU76RktQm3OzqiVSHs1SuO1SUgdE4YxoBEouD1Iztd6wAejL+tu/cVDvrHNAUQ2Ctt
+ AzxFdDjE=
+X-Received: by 2002:a5d:5d02:0:b0:436:213c:7784 with SMTP id
+ ffacd0b85a97d-43629381b5amr4068879f8f.30.1770383364969; 
+ Fri, 06 Feb 2026 05:09:24 -0800 (PST)
+X-Received: by 2002:a5d:5d02:0:b0:436:213c:7784 with SMTP id
+ ffacd0b85a97d-43629381b5amr4068825f8f.30.1770383364476; 
+ Fri, 06 Feb 2026 05:09:24 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.115.203])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4362972fc1bsm5905715f8f.28.2026.02.06.05.09.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Feb 2026 05:09:24 -0800 (PST)
+Message-ID: <665666b9-69a8-4b47-b706-341295d96371@redhat.com>
+Date: Fri, 6 Feb 2026 14:09:22 +0100
 MIME-Version: 1.0
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-6-marcandre.lureau@redhat.com>
- <b28fd63e-063c-41d3-a9dc-54929e7adfaa@nutanix.com>
- <CAJ+F1CKauYDpB0+_ggGP9mMkvYTDTbcsp2LX+twm8dvMggpSuQ@mail.gmail.com>
- <1f9dfd2f-9586-4f08-afc9-113b7ecab135@nutanix.com>
-In-Reply-To: <1f9dfd2f-9586-4f08-afc9-113b7ecab135@nutanix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 6 Feb 2026 17:04:24 +0400
-X-Gm-Features: AZwV_Qg--nij5t8Zl0ukBtx7VP9696oY7FPKE4s8byTnO5BZ3uGtAh55Ij4uYd8
-Message-ID: <CAJ+F1CKsXKU9J-cqKT=L8MJP_Xsztoy_Z9TNGOpDUJVxH9xCEw@mail.gmail.com>
-Subject: Re: [PATCH 05/37] qemu-options.hx: clarify default audio backend
- selection
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
+ where appropriate
+To: Eric Farman <farman@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20260204182722.44062-1-philmd@linaro.org>
+ <20260204182722.44062-4-philmd@linaro.org>
+ <2827f8b28c4a654cb1b37eaf1313a1d63fb58f05.camel@linux.ibm.com>
+ <4eb5b630-dad5-4cd8-97a6-d1d4a3499400@linaro.org>
+ <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,128 +177,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 05/02/2026 22.49, Eric Farman wrote:
+> On Thu, 2026-02-05 at 22:37 +0100, Philippe Mathieu-Daudé wrote:
+>> Hi Eric,
+>>
+>> On 5/2/26 22:23, Eric Farman wrote:
+>>> On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daudé wrote:
+>>>> Use the %vaddr type for virtual addresses.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>    target/s390x/s390x-internal.h  | 5 +++--
+>>>>    target/s390x/helper.c          | 2 +-
+>>>>    target/s390x/mmu_helper.c      | 6 +++---
+>>>>    target/s390x/tcg/excp_helper.c | 3 ++-
+>>>>    4 files changed, 9 insertions(+), 7 deletions(-)
+>>
+>>
+>>>> @@ -376,9 +377,9 @@ void probe_write_access(CPUS390XState *env, uint64_t addr, uint64_t len,
+>>>>    bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
+>>>>    /* Special access mode only valid for mmu_translate() */
+>>>>    #define MMU_S390_LRA        -1
+>>>> -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
+>>>> +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
+>>>>                      target_ulong *raddr, int *flags, uint64_t *tec);
+>>>> -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
+>>>> +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
+>>>
+>>> I think this one should remain target_ulong, and become hwaddr in the next patch, no?
+>>
+>> Without s390x background, I don't understand well what real addresses
+>> are. IFAICT the single caller s390_cpu_tlb_fill() provides a virtual
+>> address. But then indeed mmu_real2abs() consumes a hwaddr as real addr.
+> 
+> Hi Philippe,
+> 
+> Ah, I didn't go the other direction (my bad). The usage of "real" here is kind of halfway between
+> virtual and -really- real.
 
-On Thu, Feb 5, 2026 at 8:19=E2=80=AFPM Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> On 04/02/2026 12:27, Marc-Andr=C3=A9 Lureau wrote:
->
-> > Hi Mark
-> >
-> > On Tue, Feb 3, 2026 at 7:49=E2=80=AFPM Mark Cave-Ayland
-> > <mark.caveayland@nutanix.com> wrote:
-> >>
-> >> On 23/01/2026 07:49, marcandre.lureau@redhat.com wrote:
-> >>
-> >>> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>>
-> >>> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>> ---
-> >>>    qemu-options.hx | 22 +++++++++++++++-------
-> >>>    1 file changed, 15 insertions(+), 7 deletions(-)
-> >>>
-> >>> diff --git a/qemu-options.hx b/qemu-options.hx
-> >>> index 455b8be8903..732934a6fa8 100644
-> >>> --- a/qemu-options.hx
-> >>> +++ b/qemu-options.hx
-> >>> @@ -896,11 +896,16 @@ DEF("audiodev", HAS_ARG, QEMU_OPTION_audiodev,
-> >>>        QEMU_ARCH_ALL)
-> >>>    SRST
-> >>>    ``-audiodev [driver=3D]driver,id=3Did[,prop[=3Dvalue][,...]]``
-> >>> -    Adds a new audio backend driver identified by id. There are glob=
-al
-> >>> -    and driver specific properties. Some values can be set different=
-ly
-> >>> -    for input and output, they're marked with ``in|out.``. You can s=
-et
-> >>> -    the input's property with ``in.prop`` and the output's property =
-with
-> >>> -    ``out.prop``. For example:
-> >>> +    Adds a new audio backend driver identified by id.
-> >>> +
-> >>> +    If no audio backend is specified, QEMU will attempt to select a
-> >>> +    default one. The ``-display`` option may influence which backend=
- is
-> >>> +    selected.
-> >>> +
-> >>> +    There are global and driver specific properties. Some values can=
- be
-> >>> +    set differently for input and output, they're marked with ``in|o=
-ut.``.
-> >>> +    You can set the input's property with ``in.prop`` and the output=
-'s
-> >>> +    property with ``out.prop``. For example:
-> >>>
-> >>>        ::
-> >>>
-> >>> @@ -2172,8 +2177,11 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
-> >>>        , QEMU_ARCH_ALL)
-> >>>    SRST
-> >>>    ``-display type``
-> >>> -    Select type of display to use. Use ``-display help`` to list the=
- available
-> >>> -    display types. Valid values for type are
-> >>> +    Select type of display to use. This may also influence the defau=
-lt
-> >>> +    audio backend selection.
-> >>> +
-> >>> +    Use ``-display help`` to list the available display types. Valid=
- values
-> >>> +    for type are
-> >>>
-> >>>        ``spice-app[,gl=3Don|off]``
-> >>>            Start QEMU as a Spice server and launch the default Spice =
-client
-> >>
-> >> The documentation changes look fine in terms of describing how one
-> >> option may influence the other, however there is no explicit mention i=
-n
-> >> the documentation that selecting a dbus display with no audio backend
-> >> will also use dbus for audio.
-> >>
-> >> Is it possible to mention this somewhere? Otherwise someone would have
-> >> to go digging through the code to figure this out.
-> >
-> > would something like that help?
-> >
-> > @@ -2191,6 +2192,9 @@ SRST
-> >       ``dbus``
-> >           Export the display over D-Bus interfaces. (Since 7.0)
-> >
-> > +        When no audio backend is specified, the dbus audio backend is =
-used
-> > +        by default.
-> > +
->
-> That definitely helps. Is it possible to tweak the wording to something
-> along the lines of:
->
-> If no audio backend is specified and the dbus display backend is
-> specified, the dbus audio backend is used by default.
->
+Yes, real addresses are like physical addresses in s390 land - except for 
+the two so-called low-core pages that might be swapped with two other pages 
+in memory.
 
-ok
+> I suspect the caller is mistaken here, but I think that's a research
+> project for tomorrow.
 
-> Another question: is there any documentation for -audiodev dbus and its
-> properties anywhere at all? I had a look at
-> https://qemu.readthedocs.io/en/master/system/invocation.html but I can't
-> see an entry for it in the audiodev section anywhere?
+The caller s390_cpu_tlb_fill() seems to deal with both, real a virtual 
+addresses, and uses the same variable for both, so I think that's fine there.
+But I agree with Eric mmu_translate_real() should use "hwaddr" for the raddr 
+parameter instead. Philippe, could you please adjust the patch?
 
-Good catch, what about?:
+  Thanks,
+   Thomas
 
-+``-audiodev dbus,id=3Did[,prop[=3Dvalue][,...]]``
-+    Creates a D-Bus backend. It must be associated with the display
-+    (as ``-display dbus,audiodev=3Did``). (Since 7.0)
-+
-+    D-Bus specific options are:
-+
-+    ``nsamples``
-+        Number of samples per read/write (default to 480, 10ms at 48kHz)
-+        (Since 10.0)
-
-thanks
-
---=20
-Marc-Andr=C3=A9 Lureau
 
