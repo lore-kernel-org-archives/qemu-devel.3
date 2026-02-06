@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B050E91297
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA826ECD9BF
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCWA-00039J-EY; Thu, 05 Feb 2026 22:28:26 -0500
+	id 1voCcl-0004eG-Qd; Thu, 05 Feb 2026 22:35:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCW9-00038v-8Q
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:28:25 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1voCcj-0004ds-Uk
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:14 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voCW7-0003XV-N8
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:28:25 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-81f5381d168so1847371b3a.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:28:23 -0800 (PST)
+ id 1voCci-00051p-Bp
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:35:13 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a9296b3926so13015765ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770348502; x=1770953302; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770348910; x=1770953710; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9yYtGnX/CWNdZTGI03s9FtfddMn097cFw6gzNbDz+iE=;
- b=vjxxo3jMUVApG85lY/I8e4mT4bMXZKyWHEL1ia1TQte0gW3NalqfNPKUSJsiUo9mhV
- OS1raDJYLzsYfyBYf8dA72Q3Z6ij/rstdgqQ+dBpOCHdvyy30Z1MY2k7GuMAxjPwlX/D
- UDRw5+vghPnYib4758EoQQ0xNByYGxNRkY0FD2GBDBk5ElXnuYf57UGAeFBr1W1gXXvE
- RvLbAp6y+I499g37InrPJbfwH8exb3FNsdaoPcG5Z4ahH3mzFTn0a/jkqY2+o2qaTrb/
- uVFJO6Izusbq1A00hE202tbdPIMmVFRtn9F4TvAaLQtqnuVXwOcfLISazo5vcM41Ow+s
- rqDw==
+ bh=y+pB7M6C+Pi+dUxO5wPh0mjCgoVZ0PsV0VZ+zshKNtI=;
+ b=jNEq5PlKx+xqpdxi1V3pN43s0gtROjEQ+yeSc+j+HJy+68OWacHvZpLcmSGUYlLCUW
+ Ce0jqHttqYPGE5La4Y5qAFWNyMeljvS3Z4MWihucR+XnMant71kOZgMeFWP7t9DdWmAF
+ EmpuXsm8EtfYshCQrpDtM2ZlNJI3jBQJDugkGDZ83wkju8CBemtQUUv953p3jgKIHW1J
+ XQZ9WxZ/LsiTLdgTnf521agnO/DCzDM49EO5sK/GtUL97H8/WweqLmtv7nAO5qCWM7uj
+ 1E3ABB34qjxZckcSlCJ0tGRGiiiVD+Tv/ZJSrxHCPACoiRH8yasrwhkmDSkRL3TklJnx
+ +f4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770348502; x=1770953302;
+ d=1e100.net; s=20230601; t=1770348910; x=1770953710;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9yYtGnX/CWNdZTGI03s9FtfddMn097cFw6gzNbDz+iE=;
- b=whxl+PJbf7cjXDkP5jsfpLBsRyGYMkk+iwveTWxXGlQMIAj9WQe02s39DSikJ+rSZZ
- yLBgCm9ylvj92BPYo/zUjPl0QMGngVuFKkBQlHF7NNd2yrnRqrXNbrta2PALHdLmiJpD
- HdPABP9gMoApgT9pBonyFHls9aawGaG43zd36e1JhoOe3EHBF8WfAQzcQ+xKuslGd+MC
- MyDvGRvXgTFKHE4GKPJUBoUj5I7IvlqMVYq8Wgbr/ujlTq9/2CAn3x5iwwr4fd1j3i0O
- 8FN/qYvgrKU4lGCYvmbsbJjMJHbj0w4Yr6t57ZmcwCEYbRtlEthWNKDQu+WFr3IMP8K5
- P7Mg==
+ bh=y+pB7M6C+Pi+dUxO5wPh0mjCgoVZ0PsV0VZ+zshKNtI=;
+ b=ccoHauy2F8PfSs/OM2bYaDYTVMMwn4TGta6ePqq9vInCxXxxl6va01KxXPOLml+E5z
+ 6mr1/ml+/sSd/t9Qo5IkB325N0W/89mC8CmMfd3/6ZGZIY48qOFo/h3iDwuJh2QavcJB
+ i7zl1N2Pf+O9b6CNQFvmH9aSaqqjwXLE8BqFPMieGdkzAvSIiBFdTvtaH6TgDjHXCY9a
+ MUVhsI0xzL2rI9uYlQK75PEneVvcNp7f3mZ1foa1h0kXaZSQHiYeSKMKsjXcUOVIdoRM
+ jbaScYx3E2PKa6TPrlUacF5uX94ojV8K2XFRDN0gM7ogWzSn+MGPIm4pRo7FbhFrxgg5
+ 92qA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYZqozg3S+kaK57ifey6a/lw2xoIelWbI9AnqrneJtxTatF3azuS9tHrUy2SPLJGWrIGCqPDO4Fhbn@nongnu.org
-X-Gm-Message-State: AOJu0YxX1HLzWD5ZCLH/mNc0MnA1ulJOKrzDIbL4prMa5YW+QpNsrKum
- 4XPjnjXk51x+v/jSZSsFlwzPsPbMpWuoVFnsXU1G8FiHOeA0eWLGb0Ga5uoWmgafW/g=
-X-Gm-Gg: AZuq6aI3NguqopQYckpYGcETEcHeJ6/0w2TRR+Ge+7BUCkcE5TAn4893ZtpMZJNnrRC
- mzmNWp7EKJznUbp8y4f+L7Lj53zUbqnlxB2sNQOjZx6XZOSh93oG0gCOMUX0Ewr21YsMD0M6IOW
- DbAi2xLZ2DeimWBmlhqXfxGtqggybw7+29PAixCFPiZtnA/Qi9seqcw8YDLBD/QJK1b0IR7CzAE
- IyJGPV8TwztQzfLngKOpF7W7dScNsi6Fyl3ctTDhbFg7iEWYCCxuagaGznUB5cYvsSgbE8+Z8I/
- Z2X6Rp+juRmkGWEithMjF8eDIFd4jody1i3Gp1X6HW96EjiFVysxtUQ2G4ZnaIO7ddi6eVTUZqq
- nKEPD2E0wlAqD3Ka6ufKQ3nOdGy9PXDIWmk7e5yTJGsOjhK06DaUMf/DwLZWLDC1OPFIiJaTdHU
- tRj4eAjkA8grH1kFfHtxpWMrEfomnzRJhGp2U8o6jq85n9arixh3+xnHcv4IcJwaaJFicWTOM38
- kQUFj+IqP7xgdzge3fVL4kqxVONy1JL/TyRdQeWRGI=
-X-Received: by 2002:a05:6a00:1a06:b0:81f:3c34:fa78 with SMTP id
- d2e1a72fcca58-824416350cbmr1144765b3a.25.1770348501948; 
- Thu, 05 Feb 2026 19:28:21 -0800 (PST)
+ AJvYcCWuWWumclVTOGPl/j9SiquFJvEZyYjjjkSYd/5sDbtnW/DonSjfUe+HiTbMOZvFEQnPcRgFMg6Lv36F@nongnu.org
+X-Gm-Message-State: AOJu0YwY7m3WDCTAMPgRCc0xD3gEa37h5wHV/3sxjC8SoctuG1nyiAHR
+ BNNtHDfliDHGs7TPDDmiPLM3t+T75hm4gWnuJQUVJo0hXjRx6acVR/9W5ePINZTF4pcDAYYPoov
+ AQb1gECaIEw==
+X-Gm-Gg: AZuq6aIjwtuxMhPmvI+nGouwx948e4nK3vMWMBsQMxq0G+io3T5GOdV/yKD1ptCEfRe
+ SCyusIQPP5joONC/Xnz5xKivIq6oWTC1cSJBO52MaJBVvqg1OBjv1oUDWv5deP6M9oZZ/hCky3U
+ wgcoJb+mV921JdZ8IdCAKZktgXxPjYdbh6DGlBVs/d41oR9K3iPDzJF+QWDCT9UER2jwRYdzzK6
+ P3LsPfA5p1gYuxYXxC9q2IEO86iZwgtioWcKycefjwrMyDRq8EmHIWezG3/aAWvtWRcfa0eN6oZ
+ WWUNBfKR/+/bYFQ0EN+jF126GVg97S206oktiz6GmgMLV0Y1xBC/fa1nQqTu5aW9Tq5FDQj0+oe
+ +xFcqosBWt4w18wg+vkQffKB3//z3bAOFxTlhm0scY1pBQhPV5oCBbd3laco8RqxG3/U27qp3pw
+ R6tIRqJKPAUt3frjw9wK8m/EGREg6amoxgGh/AdEjG5mlzY8o2hY8npvSvPHjxcqzTj7SuMXr4r
+ aVF+ztmzU5rp7i9jZRy3bIhL/94gbenSGb0JioknbQ=
+X-Received: by 2002:a17:903:1b04:b0:2a0:d05c:7de3 with SMTP id
+ d9443c01a7336-2a9516369f8mr14589665ad.15.1770348910478; 
+ Thu, 05 Feb 2026 19:35:10 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
  (bg30dhzpdc341w7g29yn.ip6.superloop.au.
  [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82441674f53sm685068b3a.1.2026.02.05.19.28.17
+ d2e1a72fcca58-824418b31c2sm726852b3a.50.2026.02.05.19.35.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 19:28:21 -0800 (PST)
-Message-ID: <8a42b85a-9fa0-4053-a4d1-dd6c6d046c03@linaro.org>
-Date: Fri, 6 Feb 2026 13:28:14 +1000
+ Thu, 05 Feb 2026 19:35:09 -0800 (PST)
+Message-ID: <cad94913-b719-4c78-bc5d-073f454a8510@linaro.org>
+Date: Fri, 6 Feb 2026 13:35:03 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/24] bsd-user: Add bsd-misc.c to build
+Subject: Re: [PATCH 23/24] bsd-user: Add System V message queue syscalls
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>,
@@ -83,14 +84,14 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
 References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-21-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-23-8d8ff0035372@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260205-bsd-user-claude-v1-21-8d8ff0035372@bsdimp.com>
+In-Reply-To: <20260205-bsd-user-claude-v1-23-8d8ff0035372@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,28 +115,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/26 03:26, Warner Losh wrote:
-> Build bsd-misc.c for routines to support System V IPC, UUID, quotactl,
-> reboot and getdtablesize.
+> From: Stacey Son <sson@FreeBSD.org>
+> 
+> Connect the System V IPC message queue syscalls:
+> - msgctl(2): Message queue control
+> - msgget(2): Get message queue identifier
+> - msgsnd(2): Send message to queue
+> - msgrcv(2): Receive message from queue
 > 
 > Signed-off-by: Stacey Son <sson@FreeBSD.org>
 > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > ---
->   bsd-user/meson.build | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/bsd-user/meson.build b/bsd-user/meson.build
-> index 37b7cd6de8..00428fc2f8 100644
-> --- a/bsd-user/meson.build
-> +++ b/bsd-user/meson.build
-> @@ -8,6 +8,7 @@ common_user_inc += include_directories('include')
->   
->   bsd_user_ss.add(files(
->     'bsd-mem.c',
-> +  'bsd-misc.c',
->     'bsd-proc.c',
->     'bsdload.c',
->     'elfload.c',
-> 
+>   bsd-user/freebsd/os-syscall.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
