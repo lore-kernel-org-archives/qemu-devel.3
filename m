@@ -4,134 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CB8EB28D6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF309EB28DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voGdP-0007yl-0X; Fri, 06 Feb 2026 02:52:11 -0500
+	id 1voGeN-0008My-VJ; Fri, 06 Feb 2026 02:53:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voGdN-0007yL-AK
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:52:09 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1voGeM-0008Ma-6N
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:53:10 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voGdL-0004Ve-QT
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:52:09 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a9042df9a2so2455065ad.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 23:52:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1voGeK-0004Xc-HQ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:53:09 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-658034ce0e3so3060943a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 23:53:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770364387; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PCPf5+Hw6kTfMdThioIPK8y5Fw1uU6DEVDdbvHu7V+cAI65prcWvt65FcNkqTzwadW
+ Ppkx/HCh+qxPgOdmskSZ7LzAhIILa/dB8q3xefLsw65vObf7BpvoDLCSAbAdn3BsS96k
+ xKWnCw9aJh+tGAd02iImQELB1/326RP7RxQhPKDg2YcSDADCJKmZNIbKhBNi8blOHift
+ MG4j78qQiVRvJR0d8GZSlexklpYvlVt2HsK1wS814eFcp82R34Qiz1j842yw/tt9LTcP
+ HzlpQksvRFwNTQsbwen1pniuHCnu7vlBoXrrQk5U8R6DmUnCE17iIptYIHYkgMXNXTOA
+ f8KQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Qz+O1RxwsCl2DFXQTb/qqa4Jg2AOFdVRPjtNDenk+go=;
+ fh=Q60oc1Mwo+n6KVl0/HzulOCo07LbH2MP95czanFwixA=;
+ b=QkqQbUzbQVxIzPAT64csQareJ2gty4WV/ZxFZdBsY1zLzGbfkvtUYTx68FFOFa5h7N
+ 7JCKdqFmuuJxaodN93qVoy0I2dlxU7/pjNK1mi0zhxswdrzO7+/xfrUmnQlJtd0c/ezk
+ 7W7Tq0KRBMayRtPmWsqqOoxkpRwzhfx+glYh4Xun00hHSAdvy0po695eYGEOWhXgFFmI
+ dkhLEeJjpp70MaJVN0mmv0IITDPlSo/Igvu+dAbL9azXt8w4L0c0gSf+/NGIEGOYzO9w
+ AUdv0Kee0FhmlZdYXeerHtDvMn/+sKEFPOxsGk20iEFuoFxoSRurSeheuFmOWypak+3Z
+ ejvg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770364326; x=1770969126; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xNVGNEbT2bLf5rt/DoSurm2uSDnaYGJp5EIFXhqPFl4=;
- b=xq7/ejT+jwE0eq4ET95ilxHI5VDK0ZZp+OyLNwGxETAE6fbc8Egbcz7VGbdiWZG4Ta
- wxeuyALzn7sOTgFfXPmd+Vf8CCF27FVAHRP2YeGV8gzCSJ3C4sqEM+M8yapRqxR/h9aF
- /srnPgLO4X3Fd7VrYmdtptoQ1LrPlulHA22zqNZAgRrR35JYYu8zwi77I8JlVlzjnzvU
- J2HIw2ig8cYwAFqlKVBYx7sUn4AZzo4t0y5TDC/NZL9sQ4rtgtgKYvANLdtTEnnrM7UB
- jF1EIVV5HBVJeoLw+HdDbbLFmR0GR6B5uw283hyjMz2uBf5GZL1t2qDgEHT3Mey256P0
- K9AA==
+ d=gmail.com; s=20230601; t=1770364387; x=1770969187; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qz+O1RxwsCl2DFXQTb/qqa4Jg2AOFdVRPjtNDenk+go=;
+ b=AKeO8OWkbNvWXdsR1QKwYY1Ax53fZp3j/+tZ28xYhMrkdH927IjRYby48mXR/3uxRV
+ B+rxM8/S0+IerdOX3Kbxm+iyc6Px306HhIvWEcE27MP9Tsl9p4R+5LAJBJLc54e0HWGx
+ i9DFjcYtkHU6TvlE88U9G0JZJgyqXk0Vxmwhl0qvBNgY6MH+h//0B5r3au5G/ka3lXKm
+ FU6kZ/8BteGRw9KKzW1FZA/wICDa9+119rIC1yM09YwKEScqRJTjrkt6hsnnxCMDMmI4
+ TlKO/DBy+SMTd83Veu/GdmxXVFuPFvRGdvrHPHP9TJbtwHmFmG4Y0vdeZ/7+KAYlvGGM
+ dmfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770364326; x=1770969126;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xNVGNEbT2bLf5rt/DoSurm2uSDnaYGJp5EIFXhqPFl4=;
- b=fGSJSpinu8QNrb+MuvoVetKqsZLYKZrqzcmf6GgegsE7rTZKpMPGlWCx9WPMOdNYwf
- Q3hHYXaLDzG2AlWu+0yBIC0bftruxuvH2QaCMNf3SfWqXznJWP9l+HxCUvrMxMpJyAC5
- nWBFIa8Ql4efzrA0QBu4brFxhkgYoE0PoiS4Utwld6FoLZfsmT9Cbi5sjfZ5EXg4yUmi
- 8wd2pdkACrWG6rDAz3rnQ+HNGavVWQdvSg+Nh1w3tG0aECOXHSxupJHgtrarfLWNvHdV
- yMkg2IkRgjjtAWYDMwwceEzrqNBIzIuROamHgXW+5p4N+9/CRNcLGoFGHUcjoww9Ueqd
- xCaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlFGcE49O+kRNZzjs8xWhLS//wXWogi/uPdfb5K8jO6BI6F7/pTKqvBFyXZJ2E2Rj36RudfWKL7gPZ@nongnu.org
-X-Gm-Message-State: AOJu0Yy38AjGvGTp7UdtyzgklvxqBagUEteZG3G3wD2GzuT15x67dLWu
- rN0OXWtHNARStD6hH2+716Zmm4RbC4QFeS5mCPDxAqWf3zyYkXYE18oO0nu7WBlzNI4=
-X-Gm-Gg: AZuq6aIwY7AdXV7Asfi3dmcxubZSDbgYK8+Pv76BAaCUlNT0f9AevHHuz0cf/SUiA/a
- 356/X1uTS8CRipHPgYSZ79/Kc/jbbxjybSaUBxR1IXFTFcJg83Kg8tUGB37G2mOlWTIDDyp+Rdu
- y9X8ljT2+VqY4F2y9ZNGl2MQy5NUsscUH6nqcdOWf2XLg52WkZfOLIMx4A2On8ecxgx6NwVVZT+
- b12VTqqMPTCWIX8ZksG7JpfA0X4/tldGfE/d2Mpkp+UJF9XLikShjutgAoJdWgeOuwN2EBVs/eg
- NQ9tQc8ybHf32h6gq2eHWPHDH2RI4gimAHo4eIhk54qtckNA18mVj4wqFqQuIiAwepB06r88iXs
- +jLv6d1twJpgJRMhu5oCR6MGqVW3dUHz0DMYeM7pkfBYu3s6lAwyGJEKL6KKlQWKfY55RwKC7vf
- j9dw39c0VVFSfQsl2xkDZ5eyEDNKSpD5xS+0FecCdCTXe2qR1tjNvh2hqp
-X-Received: by 2002:a17:903:3bcb:b0:2a7:a9b8:ebae with SMTP id
- d9443c01a7336-2a951979e24mr20753165ad.58.1770364325975; 
- Thu, 05 Feb 2026 23:52:05 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a9521b9f47sm14890555ad.53.2026.02.05.23.52.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 23:52:05 -0800 (PST)
-Message-ID: <143b8d75-59aa-414c-b6cc-10018273e4f3@linaro.org>
-Date: Thu, 5 Feb 2026 23:52:05 -0800
+ d=1e100.net; s=20230601; t=1770364387; x=1770969187;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Qz+O1RxwsCl2DFXQTb/qqa4Jg2AOFdVRPjtNDenk+go=;
+ b=vZp5Qgja9z0XiKPcDwvy7t2yrA22eiE+2Y4CdYy5FftHSjjDHhwSXXIsthUItXXxUi
+ xbQhe+0wMeMhE1HLuy7tyN+z8iHU6z+nzvG8Bczqsy1uWeWk8UPaGKMxzoI8GJgNBz0g
+ 9Jl7CDXCu7IIsO3DDVomRFkwvxItkVSJgTxfJOfeHWTEkm2rL8BaRXY3YfD1Rf01hc86
+ hSzt3oriKlzue4sdmiTMZXRN71f3dlKudZGoQFXFltN6Ww/Z5/eYB1GfvY18ZabfQ7oJ
+ dc+BQ7BFKqe8xWvlDLUEjpBDfm7VwrQ0JwRMotGY1OkuUBV3U7MskUdEvDDDe/jLQNwN
+ +sjw==
+X-Gm-Message-State: AOJu0YxkzRyGz5I/Q+roj9sXLtOwrNd6y8cjpkUdJNswwhgJD3DJmlVc
+ 0OxNz8Bb0RNvv9NL1rROmYV52gVLnhcb9yyQR9s+klYPpdvleXXpUYWnoZe0HeycuYPDV3njjxz
+ yZH0UxEX0+YF5hKFWZ7ZtC+ygE3fVLF8=
+X-Gm-Gg: AZuq6aJqeaOjiU6WNzTLDz/OG/I2UbIq9chfGrQl0/AXQ0Sr9ZNfRuae5A7SARq20LV
+ 8TAlePuGq7I508In/88pLZsSQts/Ps+RH6XfgqOgZ29hpVO8XlbxBYrsMYTAcxIpbeyg3d+B6xr
+ rScL1ZscCBG1Qg/2/uDWA6N/fUto7B8kZT5MtDz74OCQj3ZNzubOBiBm3v06nfoVaB/40LHTLU4
+ 7QyCevWoX8fZGON4t0EyjMYZIwvRQLh/2UD02S91KahNpuhafUWxwOV8H5RvAD4lSpwMmKV
+X-Received: by 2002:a17:907:940f:b0:b87:298a:da9c with SMTP id
+ a640c23a62f3a-b8edf174393mr79673166b.6.1770364386514; Thu, 05 Feb 2026
+ 23:53:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Renaming targets
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
- <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
- <5fd0062c-b474-4971-9a46-06af9ae4e0c7@linaro.org>
- <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org>
- <877bsr34au.fsf@pond.sub.org>
- <6ddad25a-192c-4b5a-80fc-b006436810a2@linaro.org>
- <878qd6xsrh.fsf_-_@pond.sub.org>
- <d293019a-218f-49d9-963d-6411c9b453a0@linaro.org>
- <87v7gawcd2.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87v7gawcd2.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+References: <20260203-colo_unit_test_multifd-v5-0-57508b7389f6@web.de>
+ <20260203-colo_unit_test_multifd-v5-14-57508b7389f6@web.de>
+In-Reply-To: <20260203-colo_unit_test_multifd-v5-14-57508b7389f6@web.de>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Fri, 6 Feb 2026 15:52:30 +0800
+X-Gm-Features: AZwV_Qg1aH6Zgm5Fxp3Feb3-UNM7-RvQ8YUQK348LFWKQxq1R2fSZGlkP6vNFLU
+Message-ID: <CAK3tnvLzy9CW3jEqTOuhjMLph_E+11GETr=o8kkXoUOzA2pM_w@mail.gmail.com>
+Subject: Re: [PATCH v5 14/16] qemu-colo.rst: Miscellaneous changes
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -149,41 +119,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 11:38 PM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-> 
->> On 2/5/26 10:58 PM, Markus Armbruster wrote:
->>> Richard Henderson <richard.henderson@linaro.org> writes:
->>>
->>>> On 2/5/26 19:52, Markus Armbruster wrote:
-> 
-> [...]
-> 
->>> Then SysEmuTarget has become misleading.
->>>
->>> We *can* fix that: QAPI type names are not part of the external
->>> interface by design.
->>
->> Do you mean it could be renamed to EmuTarget without any consequence?
-> 
-> Yes!
+On Tue, Feb 3, 2026 at 6:16=E2=80=AFPM Lukas Straub <lukasstraub2@web.de> w=
+rote:
 >
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-That's pretty good news. So yeah, it makes sense to extend it to 
-represent all targets, including user ones.
 
->> It seemed to me that everything exported from the json files could
->> potentially be consumed by another entity (libvirt for instance).
-> 
-> No.  The QAPI schema ("the json files") is not meant for external
-> consumption, and certainly not a stable interface.  The stable external
-> interface is QMP introspection with query-qmp-schema.  I designed that
-> command not to expose type names.  One of my smarter moves ;)
-> 
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+By the way, I will move the docs/colo-proxy.txt file in this way.
 
-😎
-We can thank you, and you can thank yourself :)
+Thanks
+Chen
 
-Thanks,
-Pierrick
+> ---
+>  docs/system/qemu-colo.rst | 35 ++++++++++++++++++-----------------
+>  1 file changed, 18 insertions(+), 17 deletions(-)
+>
+> diff --git a/docs/system/qemu-colo.rst b/docs/system/qemu-colo.rst
+> index 4b5fbbf398f8a5c4ea6baad615bde94b2b4678d2..a70e61aa09391cda933031535=
+fa982d27cf6654b 100644
+> --- a/docs/system/qemu-colo.rst
+> +++ b/docs/system/qemu-colo.rst
+> @@ -1,13 +1,6 @@
+>  Qemu COLO Fault Tolerance
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+>
+> -| Copyright (c) 2016 Intel Corporation
+> -| Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
+> -| Copyright (c) 2016 Fujitsu, Corp.
+> -
+> -This work is licensed under the terms of the GNU GPL, version 2 or later=
+.
+> -See the COPYING file in the top-level directory.
+> -
+>  This document gives an overview of COLO's design and how to use it.
+>
+>  Background
+> @@ -82,8 +75,8 @@ Overview::
+>          |   Storage     |  |External Network|       | External Network |=
+ |   Storage    |
+>          +---------------+  +----------------+       +------------------+=
+ +--------------+
+>
+> -Components introduction
+> -^^^^^^^^^^^^^^^^^^^^^^^
+> +Components
+> +^^^^^^^^^^
+>  You can see there are several components in COLO's diagram of architectu=
+re.
+>  Their functions are described below.
+>
+> @@ -157,14 +150,21 @@ in test procedure.
+>
+>  Test procedure
+>  --------------
+> -Note: Here we are running both instances on the same host for testing,
+> +
+> +Setup
+> +^^^^^
+> +
+> +Here we are running both instances on the same host for testing,
+>  change the IP Addresses if you want to run it on two hosts. Initially
+>  ``127.0.0.1`` is the Primary Host and ``127.0.0.2`` is the Secondary Hos=
+t.
+>
+> +COLO uses double the guest ram size on the secondary side. The Qemu vers=
+ion
+> +should be the same on both hosts.
+> +
+>  Startup qemu
+>  ^^^^^^^^^^^^
+>  **1. Primary**:
+> -Note: Initially, ``$imagefolder/primary.qcow2`` needs to be copied to al=
+l hosts.
+> +Initially, ``$imagefolder/primary.qcow2`` needs to be copied to all host=
+s.
+>  You don't need to change any IP's here, because ``0.0.0.0`` listens on a=
+ny
+>  interface. The chardev's with ``127.0.0.1`` IP's loopback to the local q=
+emu
+>  instance::
+> @@ -192,7 +192,7 @@ instance::
+>
+>
+>  **2. Secondary**:
+> -Note: Active and hidden images need to be created only once and the
+> +Active and hidden images need to be created only once and the
+>  size should be the same as ``primary.qcow2``. Again, you don't need to c=
+hange
+>  any IP's here, except for the ``$primary_ip`` variable::
+>
+> @@ -353,8 +353,9 @@ Wait until disk is synced, then::
+>      {"execute": "migrate-set-capabilities", "arguments":{ "capabilities"=
+: [ {"capability": "x-colo", "state": true } ] } }
+>      {"execute": "migrate", "arguments":{ "uri": "tcp:127.0.0.1:9998" } }
+>
+> -TODO
+> -----
+> -1. Support shared storage.
+> -2. Develop the heartbeat part.
+> -3. Reduce checkpoint VM=E2=80=99s downtime while doing checkpoint.
+> +| Copyright (c) 2016 Intel Corporation
+> +| Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
+> +| Copyright (c) 2016 Fujitsu, Corp.
+> +
+> +This work is licensed under the terms of the GNU GPL, version 2 or later=
+.
+> +See the COPYING file in the top-level directory.
+>
+> --
+> 2.39.5
+>
 
