@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B702AEE6B49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF95EE6B48
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQRF-0007R3-Iq; Fri, 06 Feb 2026 13:20:17 -0500
+	id 1voQR9-0007Oi-B8; Fri, 06 Feb 2026 13:20:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRD-0007PQ-Q4
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:15 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQR7-0007OE-Ic
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:09 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQRC-0004nc-8K
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:15 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43629377370so1120466f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:20:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQR5-0004fi-EJ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:20:08 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47f5c2283b6so22007825e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770402012; x=1771006812; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770402004; x=1771006804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UimlxoJjON/bhMTscr34JsqLf8392tVb5tXpZcah2yY=;
- b=EiDnOZDJC/CwGqpWtC0NLNZJ2gOTpcf4QfWaKiwCMB9Cvs7hMiQcDawKSRYq3PJCcN
- 66OYSqEXfA4Elb3kT/8MYzH55FAbOA/Hg8kcld5rXd/c78YGNvohP7ce0HuwG1G14YzP
- fXilY5pyGhdVpR4v5P6ImbG8+VLqLnpg5EFUKLOyXuOk1jefoLR9vpxu8TVSJD7wJEAq
- UVL6mnBsRtptdcM8PAMCC97KebgQVvmKXgrH8T2sduVwxy8QAfuRuv9UFnX5kudVQ9Ei
- uSs2e94UmmgwV0G//p8HgRaZDd1gA+iXTQhJP3XKP+tYNY6A7VgMIg1Im8QSKHp9rYCL
- Ciqw==
+ bh=m0XJalfC5IqgU2W7JDKFGQzzc/v7gEN8vJtThzS7KrY=;
+ b=aN2kvCyZgUXK2hvw4PyfahCtC4h2v5FF7L0peT0HcML0aoRdtZCmTixNrzc6WLrIlg
+ A4qNm5F88ewY8OWkWvmgeN6ctbxpcL0l+V6iUu2XLn3rsaI1gK5+dFgMz6hkiizLWa9G
+ hsnEJDbEWXTNSr64LTjNc0c2jeWq4T3eW3Xy231gDzyX1lqkIKnkxp2J3wpI9UABqhDC
+ qPMYJPD3/tJF+9S7O570c5bugb++jygFxLovDAvRql1OTqxW39LG76JJknPTcip/wsDe
+ JW8mU8e+ZSWjBbsoWByd9jEOba0totOAoPNb14lGFQALn0r3kfgJpxqFD+97HmVxzrjs
+ eRKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770402012; x=1771006812;
+ d=1e100.net; s=20230601; t=1770402004; x=1771006804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UimlxoJjON/bhMTscr34JsqLf8392tVb5tXpZcah2yY=;
- b=KFREZPyfJlaqvXdlLFSVvRwCNHxJbKxFbVo8Z+SweOmg4GYWpwPNxsuN51PX1w1y7f
- aZ8TnHjMvg7WUmhyFGTAavswH0W4YLjIPvI0HBXEbtI+e13KeKd7GIejy+l/t5vYQQS6
- QyzC9aBTQdABwniZG/hAVXcsLZYtz7fqcC8cMPN8iWTXYoRRukkknQY1XyncRUY1dZ5V
- WlAg64h7B9qpShokX253RxH8KrPDKbPLsyMEKMkiCpY+GZuRLZyyP53nejMUzYfHf0io
- pLHFRPHB3RUAay21FK1qczePhd/sv8L457Aoe8APYGzDqE/ziFEt7iVQUuT1NhhgvRvh
- hXaA==
-X-Gm-Message-State: AOJu0Yy15y+r6QiHesW3ls1N9f7cZwoQfQo+6SieVSo1xkmbFJUJ8OuB
- e1RquwcSW5THBTwTyLmeXZIT1VOx8WP91SAwund0N/KLuWikpXnY2gRZu/yUntJrl7JN9XOLdjO
- uIvNSk7s=
-X-Gm-Gg: AZuq6aIalVAU4iPXaisamUbjQ/Ngv2vlGwT/uaFGZ3c9r8p9xj3ChvmG93pnywSUMim
- nIlOAtK8Mnj21/4TpNFfst41oBiBWGJRaAqgkrnQ4/LHC1mHvhJbwfO+EkzfzvRU6ZTVpee3aNL
- C35P0MFqBbXiT4qIffghCMUZLNTrrdHIaAeQhPLPcD8/q6nFtADkac8Wvonq+5I/xxlMbK+UvoZ
- iQUHusId+FSzxkx4+t+/FPdE7YVhHjPkN97SOcsah4dI+IHnXP365FcDfiXPei2EJ5POthFNE9X
- zzvyRLZ4opHuyj0bfgvBw/zce9SFwiY7XMO8b1IiQoA4M6UppfHKf8XuKCjOWve/RJR2ZLzY01y
- au6MwDpZUFBVq5wrscOkxTyZMiEISjdKnMV8ShubkUm+QNyAnkba1K3OJjAh9Dy7LUJIDNz61o0
- qtrlPVSyYFk0AuZAP+5xd5ywMWWJth2tOTEXCUnrF3BLTrOmqNpdaSmalrWBwr
-X-Received: by 2002:a05:6000:2311:b0:436:18e5:48 with SMTP id
- ffacd0b85a97d-43629341c55mr5755737f8f.15.1770402011684; 
- Fri, 06 Feb 2026 10:20:11 -0800 (PST)
+ bh=m0XJalfC5IqgU2W7JDKFGQzzc/v7gEN8vJtThzS7KrY=;
+ b=vuhguFbAWRGqLMxzqGUh3lBiRxuXGP9icQlowGnP97cE4IXMzDPs3A26UWGPskd2N7
+ byH6VsVGiiYoFW1iuwBBgsg51z7lDNANKiB71ygfCq9oQVGilkUvKF8zuyZGRvwaQRyu
+ Vfvy4b4PlD6TUCS04NOPApIM5BOj14WweC1t9g0HZngNcuOj1ILK0AIq8mxpQ+41HNDp
+ HlbFAROvMEtUEE7k8NH7dG20Pta9xBQh1bEp3HbpV6YZyKYO+2uwZE8v1GRIOyR8HgGc
+ KMMgvDQSbTsOnZLTkU98PMkltLnz1pcXZrPcZnVjS77Z008Ovha86GgnUjqH7HAFsD6u
+ ikpw==
+X-Gm-Message-State: AOJu0Yx8SqZQvWssiggcaZkA69QtPpzfwHLrIKMJZBelAUZu0kf8pN2y
+ pN9BQuRm69svKv+H2PcpWnqiLs2AzYWw94uVt/OgA7KK4Iq1WOyaFln8XGnpad95r0x7z2hLOZk
+ fJxWgaDA=
+X-Gm-Gg: AZuq6aLup0Efkc5QFMANMismZkZzvUCPbrp4TJE7Gx+Xpfp3abfjJSlE27tQXdS4PUE
+ 05/hWXSSA95nhCRdJqeQOl7XZqUYVtgSwha+ukD/SzKPUwDoWgbrR1kW1aktHmCqSEL3eu05q/0
+ d7kxmCe1kQb2FJq5ly9EE6EYfywIxRsFvHixtM2Wx2jf3VvadYHmy8VNQmcH1KtjQIHKHKqtBKm
+ 9Fg9dJqwNLtMy9kXptK56dQ4d0GWvbtZHyOW4fQGYbudWXK99zB0rbMczclMN2ScIoUOwGEk/3+
+ za+S5VBTesQ2D2RZHLZv+VBh4IqnTX+icB8w5wyNAge+AXt4hzlsK2ErHViNTyI8w38g4PgGa1x
+ 3wLCS2MHdYMKnvxLMIt2+WB1G29pEz3dbEKKykeulWWhqD6jP2bw6ocL7vnnfsp45CnUhgvblFV
+ hqT9wLwihs85LCKHDF9lPPQnJ7aBvgYI9U9CmK+1wSDVl6GMQufeYfQT4X05YhiAnH+0FOZk8=
+X-Received: by 2002:a05:600c:6289:b0:47d:18b0:bb9a with SMTP id
+ 5b1f17b1804b1-483203393b7mr60222085e9.33.1770402004199; 
+ Fri, 06 Feb 2026 10:20:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4362974b176sm7022248f8f.37.2026.02.06.10.20.10
+ 5b1f17b1804b1-483209c1a64sm23607335e9.12.2026.02.06.10.20.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 10:20:10 -0800 (PST)
+ Fri, 06 Feb 2026 10:20:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
@@ -72,18 +72,18 @@ Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 02/10] target/s390x: Rename get_phys_page_debug() @vaddr
- argument as @v_addr
-Date: Fri,  6 Feb 2026 19:19:45 +0100
-Message-ID: <20260206181953.18683-3-philmd@linaro.org>
+Subject: [PATCH v3 01/10] target/s390x: Use address_space_ldl_be() in
+ read_table_entry()
+Date: Fri,  6 Feb 2026 19:19:44 +0100
+Message-ID: <20260206181953.18683-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206181953.18683-1-philmd@linaro.org>
 References: <20260206181953.18683-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,37 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to use the %vaddr type in s390_cpu_get_phys_page_debug()
-in the next commit, rename the argument @vaddr -> @v_addr.
+address_space_read/write() is meant for accessing random
+amount of memory blobs.  When the access size is known,
+use the address_space_ld/st() API which can directly swap
+endianness.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 ---
- target/s390x/helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/s390x/mmu_helper.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index a6c89ed0af3..d0c36d4a537 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -68,14 +68,14 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
-     return raddr;
- }
- 
--hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr vaddr)
-+hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr v_addr)
+diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+index 026502a3e40..30f09ec3de4 100644
+--- a/target/s390x/mmu_helper.c
++++ b/target/s390x/mmu_helper.c
+@@ -108,6 +108,7 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
+                                     uint64_t *entry)
  {
-     hwaddr phys_addr;
-     target_ulong page;
+     CPUState *cs = env_cpu(env);
++    MemTxResult ret;
  
--    page = vaddr & TARGET_PAGE_MASK;
-+    page = v_addr & TARGET_PAGE_MASK;
-     phys_addr = cpu_get_phys_page_debug(cs, page);
--    phys_addr += (vaddr & ~TARGET_PAGE_MASK);
-+    phys_addr += (v_addr & ~TARGET_PAGE_MASK);
- 
-     return phys_addr;
+     /*
+      * According to the PoP, these table addresses are "unpredictably real
+@@ -116,13 +117,9 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
+      *
+      * We treat them as absolute addresses and don't wrap them.
+      */
+-    if (unlikely(address_space_read(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED,
+-                                    entry, sizeof(*entry)) !=
+-                 MEMTX_OK)) {
+-        return false;
+-    }
+-    *entry = be64_to_cpu(*entry);
+-    return true;
++    *entry = address_space_ldq_be(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED, &ret);
++
++    return ret == MEMTX_OK;
  }
+ 
+ static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
 -- 
 2.52.0
 
