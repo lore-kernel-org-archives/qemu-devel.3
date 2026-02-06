@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74131EE2080
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0766BEE2080
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 10:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voJ5d-00042m-8B; Fri, 06 Feb 2026 05:29:29 -0500
+	id 1voJ6N-0004a6-4G; Fri, 06 Feb 2026 05:30:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ5b-000421-Kd
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:29:27 -0500
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ6H-0004UR-Li
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:30:10 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ5Y-0007bf-CI
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:29:26 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.9])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6r1F1L3vz5wpH;
- Fri,  6 Feb 2026 10:29:21 +0000 (UTC)
-Received: from kaod.org (37.59.142.112) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voJ6D-0007nz-I7
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 05:30:08 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.239])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f6r225bcrz5wpR;
+ Fri,  6 Feb 2026 10:30:02 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
- 2026 11:29:19 +0100
+ 2026 11:30:01 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-112S006a5fe1826-7530-4bbf-8fa0-9327f7c99526,
+ (GARM-106R0060140b79a-6121-4427-bac4-28be1776c508,
  C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <8aff2a03-65d8-4d9f-8ed5-413e6233bcc5@kaod.org>
-Date: Fri, 6 Feb 2026 11:29:18 +0100
+Message-ID: <bcd2beea-7411-4588-99ff-05897f3ea3e5@kaod.org>
+Date: Fri, 6 Feb 2026 11:30:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/10] hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by
- using dynamic register array
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+Subject: Re: [PATCH] hw/i2c/aspeed_i2c.c: Add a check for dma_read
+To: Michael Tokarev <mjt@tls.msk.ru>, Nabih Estefan <nabihestefan@google.com>, 
  <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-2-jamin_lin@aspeedtech.com>
+CC: <peter.maydell@linaro.org>, <steven_lee@aspeedtech.com>,
+ <leetroy@gmail.com>, <jamin_lin@aspeedtech.com>,
+ <andrew@codeconstruct.com.au>, <joel@jms.id.au>, <qemu-arm@nongnu.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260120211116.1367476-1-nabihestefan@google.com>
+ <16cba4f8-79c1-49b3-ac14-63f3bb64e235@tls.msk.ru>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +86,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260206053340.3716041-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <16cba4f8-79c1-49b3-ac14-63f3bb64e235@tls.msk.ru>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.112]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG14EX2.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 63527242-9e91-4125-941f-679eee3e9061
-X-Ovh-Tracer-Id: 14015202044187085630
+X-Ovh-Tracer-GUID: 5c312c08-322a-4b19-ac1d-e98d1cbd2378
+X-Ovh-Tracer-Id: 14027023990716271605
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGyImf7dM1+SHjh4s4AbMXh16EYOdM3nLrVvLpNS10O+8YY+/Ag55l/4nlB86RY2JrgIXicPBPk5gTs9Ihrd7b9PHnK2puJLwnoBJTl+f2AcHsuCMbYG4ueoQYCaDdIx8eR7dbJ9pBo5fNcmhqz3md1O8rXOFCqAgR4ol8cyPtsX+qGxvzM3mUlMGDZBTq6fAlxHZJ5kRBmTAbIT9jjuc14o6PeYR1tQ+vUcxJhxRqOrpjaq7dmto0fkyaY/ZHK+h/U0odCJ0v11wvA74v1EWfP5tZFlfXJvwxBshBi+EAI2jSPPrL7E9tCfc1cBbDbAm/hL49sExxsEelXs51VaN01DbEaiV6dmFJKp4B0ZcEVToz+dBduQ4v+eanbURBexBYbaGJ4rBgsPMNGAeWT76mXQ/FGijKVzPI8Ae/WUmFRH0FsL7W74+R++hgMfbInAfCqKQSUB39PWH4nkoTISACCVUS42ViSr4NUAMCwRw9UABpL7jY0rHgXtdR4s+qSKSMig8sbzGnNEOgkwTWfIU7ZtLxqrY6acaoigMgCke9z6K3Uljpkj71ZZUSyswXrpAw2ONANammfTTd6qFkVBUvX9FZ3xsFbnQz82SmGuAJUB9Bx4Q2mcxe1RlcN2RwbWnwQqL6szVvudF/LJA96ASIaeapM/xYW84yT+oiq8MTJWA
-DKIM-Signature: a=rsa-sha256; bh=IcYiACwyHvZR80uNSWMGSjsvZdhm/X1alqUzVP1Y37w=; 
+X-VR-SPAMCAUSE: dmFkZTECON8fKyN0LahTaILWWNsH2tA7l4W2iqTc/sO31/UcDesbRBlw5o6ieydYB5xfwP+XUarQxq9sYKbSkPlOs1++VAQcsZ1+DsiTHLOzxkH1ZMlgwTMHSisaWF23t4gCRCvqE3grt2vYh3xiK18neg5KWrZqkphiM6ZUbkkRHjz5y+NEQd5tdYMhUxv3CcISXPaZS3cVSr1c6zY1fbGczxsAJ3ikTKq2PO/Y0dmtqta/RrUd9zuCYy7cG9iFBw4YUVZYIupGEekfP269ndSGTva5Xl6YPVPi+4sXmL/+fVOpqnFRJndM43snDrlEKhI0GKmzR0Gj76YvRoj0hmCpGs/LZj/lHh4/t8014lMzUKNshIkJUfV0pbbid+Rhlt02I8He42yJEY8BhqwOFWHpN/hS4LHBzU8j+bVOAvQ7kpKRZR4GtKw09ZgcvgaSNo93Pd/S+i1irpno5yWIwrpEiy/3sBIP5Gr5MKwPfUTkFR6lmrW8J2JE3BDwve8TxcKJ8j1HHeh/yuAS1m3w86u3lJYGVjUBH+6nCfE/eCTeK7LY+Ndka8YxL0Z5O1j85g8H9v/4E6pPYLgemofhGkTMc6At1CUEbf731jTv8J4BJ69DPj/3DwbOYAI5/Qb9lL68aCDGHpoQt+VUJvSI0mPaf3QjDKWMS8h1eVDP2/m7MXahRQ
+DKIM-Signature: a=rsa-sha256; bh=Yy0rdKVKsrHRlLypqXdxDITHdcvLUbfH5vr2Z71KpaM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770373761; v=1;
- b=hXqrMGXsrPTBVAeM4sPfy9G1hvFch4v6wMgaU3dUTOjeamN8WH7AGCLPwqlbrgNdZCetDHXz
- ZpFZB2jJjPOWShhrSO60yb6i8fHzjn5GtKxC6h99R51RBB7LsBLGMJUhdRscnqTHt48mgGtwuQ6
- oXe/4pnxP6a9cihda3na3T+iEcKq43cRvcNa3GLw9qo1xz8C4IGWJ2A1fMv4/B9A/jaa4t9wZTj
- 2AvnlKnXp1kfTCulZOLXx+pg9i1AN3Nkr4ax2/yMP42tgqAFAh2DXogT3ERmDfhRo50Mn/05G/t
- D8reomkiSoeC1p7SmeYBY4BPA1JIo8JE4CPvHC/QNL/oQ==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
+ t=1770373803; v=1;
+ b=dTmEaAPUcsQ/QihiFQaDHpFegLF2x+1oUBhnZnGOuvrvWjnSKRZlCKx8Ug5h9fMrzuzoU52p
+ 6lrJB4tcD4bSVH8GVdpXOYbRcg5kinFATe/0YME3QMHxeNozSK8sSjFDbyO4tdFP1ZssDVXVJxy
+ cInmi7EcM7A7BxoOv2JX7Z1Nc4xG+60idX3banc+PBvOk1OGETWAle1xMsXx0xcL6dP7B+BOuv0
+ Qy0QMQ6+p6ocdFcwmEP3ak0ljl5V4IvVPqHaAlUk7vr/me3mqEOL3Hg73XMA1opmgoW/A+L6W1W
+ l/vb4VD5T2PIJvVkyUJbhK4OfPUmQViIHBDx4nP5pm/Nw==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +114,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,119 +130,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/26 06:33, Jamin Lin wrote:
-> The ASPEED I2C controller emulation used a fixed-size register array
-> (28 dwords) for all SoC variants, while multiple ASPEED SoCs
-> (AST2600, AST1030, AST2700) expose a larger MMIO register window
-> (e.g. reg_size = 0x80).
+On 2/5/26 22:03, Michael Tokarev wrote:
+> On 1/21/26 00:11, Nabih Estefan wrote:
+>> If aspeed_i2c_dma_read fails in aspeed_i2c_bus_send currently, we get
+>> stuck in an infinite retry loop. Add a check for the return value of
+>> aspeed_i2c_dma_read that will break us out of said loop.
+>>
+>> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
 > 
-> This mismatch allows MMIO accesses beyond the allocated register
-> array, leading to out-of-bounds reads in the I2C controller model.
+> This looks like a qemu-stable material.
+
+yes.
+
+Thanks,
+
+C.
+
+
 > 
-> Fix this by converting the register storage to a dynamically allocated
-> array sized according to the controller class reg_size. The register
-> array is now allocated during bus realize and free on unrealize,
-> ensuring safe access across different ASPEED SoC implementations.
+> Please let me know if it isn't.
 > 
-> This change eliminates I2C register out-of-bounds access caused by
-> SoC-specific register size differences.
+> Thanks,
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
-
-Please keep this patch separate from the A2 series.
-
-> ---
->   include/hw/i2c/aspeed_i2c.h |  4 +---
->   hw/i2c/aspeed_i2c.c         | 18 ++++++++++++++----
->   2 files changed, 15 insertions(+), 7 deletions(-)
+> /mjt
 > 
-> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-> index 68bd138026..205f0a58d2 100644
-> --- a/include/hw/i2c/aspeed_i2c.h
-> +++ b/include/hw/i2c/aspeed_i2c.h
-> @@ -36,8 +36,6 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
->   #define ASPEED_I2C_NR_BUSSES 16
->   #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
->   #define ASPEED_I2C_BUS_POOL_SIZE 0x20
-> -#define ASPEED_I2C_OLD_NUM_REG 11
-> -#define ASPEED_I2C_NEW_NUM_REG 28
->   
->   #define A_I2CD_M_STOP_CMD       BIT(5)
->   #define A_I2CD_M_RX_CMD         BIT(3)
-> @@ -256,7 +254,7 @@ struct AspeedI2CBus {
->       uint8_t id;
->       qemu_irq irq;
->   
-> -    uint32_t regs[ASPEED_I2C_NEW_NUM_REG];
-> +    uint32_t *regs;
->       uint8_t pool[ASPEED_I2C_BUS_POOL_SIZE];
->       uint64_t dma_dram_offset;
->   };
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index fb3d6a5600..cf3a003978 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -1091,10 +1091,9 @@ static const MemoryRegionOps aspeed_i2c_bus_pool_ops = {
->   
->   static const VMStateDescription aspeed_i2c_bus_vmstate = {
->       .name = TYPE_ASPEED_I2C,
-> -    .version_id = 6,
-> -    .minimum_version_id = 6,
-> +    .version_id = 7,
-> +    .minimum_version_id = 7,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_UINT32_ARRAY(regs, AspeedI2CBus, ASPEED_I2C_NEW_NUM_REG),
-
-hmm, why not use VMSTATE_VARRAY_UINT32 ?
-
->           VMSTATE_UINT8_ARRAY(pool, AspeedI2CBus, ASPEED_I2C_BUS_POOL_SIZE),
->           VMSTATE_UINT64(dma_dram_offset, AspeedI2CBus),
->           VMSTATE_END_OF_LIST()
-> @@ -1465,8 +1464,9 @@ static const TypeInfo aspeed_i2c_bus_slave_info = {
->   static void aspeed_i2c_bus_reset(DeviceState *dev)
->   {
->       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
-> +    AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(s->controller);
->   
-> -    memset(s->regs, 0, sizeof(s->regs));
-> +    memset(s->regs, 0, aic->reg_size);
->       i2c_end_transfer(s->bus);
->   }
->   
-> @@ -1492,6 +1492,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
->       s->slave = i2c_slave_create_simple(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
->                                          0xff);
->   
-> +    s->regs = g_new(uint32_t, aic->reg_size >> 2);
-
-g_new0 ? even if the memset in reset will set regs[] contents to 0.
-
->       memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
->                             s, s->name, aic->reg_size);
->       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
-> @@ -1501,6 +1502,14 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
->       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr_pool);
->   }
->   
-> +static void aspeed_i2c_bus_unrealize(DeviceState *dev)
-> +{
-> +    AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
-> +
-> +    g_free(s->regs);
-> +    s->regs = NULL;
-> +}
-> +
->   static const Property aspeed_i2c_bus_properties[] = {
->       DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
->       DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
-> @@ -1514,6 +1523,7 @@ static void aspeed_i2c_bus_class_init(ObjectClass *klass, const void *data)
->   
->       dc->desc = "Aspeed I2C Bus";
->       dc->realize = aspeed_i2c_bus_realize;
-> +    dc->unrealize = aspeed_i2c_bus_unrealize;
->       device_class_set_legacy_reset(dc, aspeed_i2c_bus_reset);
->       device_class_set_props(dc, aspeed_i2c_bus_properties);
->   }
+>> ---
+>>   hw/i2c/aspeed_i2c.c | 6 +++++-
+>>   1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+>> index 1b8ac561c3..3de72db652 100644
+>> --- a/hw/i2c/aspeed_i2c.c
+>> +++ b/hw/i2c/aspeed_i2c.c
+>> @@ -272,7 +272,11 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
+>>           }
+>>           while (bus->regs[reg_dma_len]) {
+>>               uint8_t data;
+>> -            aspeed_i2c_dma_read(bus, &data);
+>> +            ret = aspeed_i2c_dma_read(bus, &data);
+>> +            /* Check that we were able to read the DMA */
+>> +            if (ret) {
+>> +                break;
+>> +            }
+>>               trace_aspeed_i2c_bus_send("DMA", bus->regs[reg_dma_len],
+>>                                         bus->regs[reg_dma_len], data);
+>>               ret = i2c_send(bus->bus, data);
+> 
 
 
