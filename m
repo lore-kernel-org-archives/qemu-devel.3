@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3B3EE6B46
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7985EE6B43
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQCs-0007zJ-WD; Fri, 06 Feb 2026 13:05:27 -0500
+	id 1voQD0-00082Z-1K; Fri, 06 Feb 2026 13:05:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCq-0007wu-Qx
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1voQCt-0007za-5h
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:27 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCp-0001RC-3C
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b8838339fc6so46286066b.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:22 -0800 (PST)
+ id 1voQCr-0001Ry-Fd
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:26 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-64d1ef53cf3so2670945a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770401121; x=1771005921; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770401124; x=1771005924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YLNn3Uva6SjJeQYlOxn8DYVVkX41Y1BiZ46SMJcyHmw=;
- b=p8/bmDXAoVj0j/XVOYGDxYn7yuEQdz0MMZUWFdZN1ze3NAYlfXsjYpNjqNVnGDmdMp
- UPmGPTMygEQCO4ddB5XL6ee8ldiFhlrxGEoQB6bhFTbcE3+TKAS2blzeUyC/+k8erlyI
- oBq+wvoCNEsffdgifWljxlfzGbI7bkcYOMz43/vmXAQ108t5e+KD23ia7of9kZf56Gl/
- tvL0V6euyhW4RlsnROMsOAv/JyFDRLuMB8lV8o6D2J+3VRS+o7YSyj/rsL1sKb8DGWbE
- DQL8Q0oZXD/o17k61TEV0+UH6ERJMOFT23P7kDJwdwRLxMEMEHr9UXlvCwl/x4RHpf7V
- 8V+g==
+ bh=wSmPsPtEqgdwdOtebkrXfxyaMmCrLsU35/EBxykfB3U=;
+ b=nfD2bQSU4nWHxUOj//2PEQX9q2RAK9u2eRvMv77A1h+jCe0YrF757FbJTtD9HcDrzX
+ 9uCIXEMwmXasma6VkZ/J7d+I/yoFrUyBj4jsXphqTtSH5mZ/ZlRy/7xPoYlcZV8YFpCm
+ pySRmh+BblheHUl/rJtdKum3m7PqqguA5ACyDlXJSdxzjVg65cdR5fshkuQEwb0ECiIQ
+ dfPyQYm/xRJNF3hm/15u/Ti/T9YAhv0wm/ycfcGW1McREIRKQNJcapqKjX0/Q4IeCAHC
+ 0L7psZQ0R7gRqO5u/2vD7+6uoQ12chXsjon6fkweUykd3zXdpDiJICTG3gaG4RQfZp60
+ OUKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401121; x=1771005921;
+ d=1e100.net; s=20230601; t=1770401124; x=1771005924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YLNn3Uva6SjJeQYlOxn8DYVVkX41Y1BiZ46SMJcyHmw=;
- b=VNYEOuKgGrQlDsBSI2QnfwQ+U7OqQmZS5sqPutIuQZ6q6Yuol5id8ud2MMQ7pXeu0B
- RWZUOr/zVb3AcSjhJ8SLlsUFaf+sCC8j7loMnryUU3CWAGNaRT/2vVrRGFI+MSC7z3+M
- v3wYrCkKUdQ9hcdYjTs0vbCc1bgtdo4brrU8rwwlu0upVusMXg0ICAqREzpbA79qIZCo
- uOkAG4BMVPo9JbN3PcQV9L+3+OCmWFZPngTTfRYqMgUqc+6o+heb7saEXZdWLvsO9qW6
- lrXTi92DuDxSct0RR7+Dp68U4M6FGfscgnP7uw+f8L+2cjONJIaBuaraOtsxD5WyrEfR
- LOWw==
-X-Gm-Message-State: AOJu0YxYQXPf9fkKui90iirxJqu30/C1hSqfaDcwYAcrdKarkrF+NuG+
- occPAoxCLUWUxwRLYdpID841EEEnFDk+TAQmN9cX9WnRUA6ewIIoE0/mzZbGgpI8g14=
-X-Gm-Gg: AZuq6aLYeEmApx58b+uF+E+EnTjk3+faSX8KpVTKkX6bhqT6Ma2Omvo1Nx9xWgaq8IE
- +IDQpNZiJQiy9KJkp6AdGc0TUwDc76u9Y4DC6XD2u2abiXZxasuLhnohWxiUDu7x6yRz3Ih3zhz
- cnUuU8QXJEOG9F8REoRYDiF+VvFWsLYUy8eXx27IHcQqIaPLBBFKOkJA106wtL8ev+ByMBjnEc6
- y0zfDPcfkClodI7eFcQsIFTSLD9VQKdGknRPyVA3NbXau6zZ1PacFmWG25iNSxy8kypVr83s65L
- Gf6jKfBTD4E4Y4oYp0Sd4din+4Ubla7LLnHZpit8ok/deohtLFHBqqgaoeJWDp5AWDVCoUoYtyS
- drLo9oXrZ5R6Lk5K8wkH1NpeRhh82wvNwnQx2NMua6Z5/pfkxj06qRVzkByi2FyqoR2bYKhrQ8a
- Qx9pzwyNWDtSU=
-X-Received: by 2002:a17:906:f598:b0:b79:eba9:83b4 with SMTP id
- a640c23a62f3a-b8edb7e3aa3mr269242366b.6.1770401121360; 
- Fri, 06 Feb 2026 10:05:21 -0800 (PST)
+ bh=wSmPsPtEqgdwdOtebkrXfxyaMmCrLsU35/EBxykfB3U=;
+ b=MTMI/VqXKUYmQtWxzYtCjdXTTFRc0eVHKfY1Cq2GgJtJEqaCduggHAEYmN1D13vZdp
+ SQTWWCLpRHwmBEsdAUvRHpG5pkYEUZ7QDgKNLU9RCw1lLEErsOoaX/qTpIeCbO9gJRJP
+ UqPump2fE0j3QYz3WYo1R4+RjEaxXUczabd8K4tIowK9uDq/3hhsV3HqRh+DuRrcInF3
+ EmWSmUb9rGi3Ye127uMs6zFQ3Ve/u22KU3irGPe3lR5ZTd3Nk3FfNAdUMlhGd/7k7eNB
+ F5cWdImrLMd7GLL2rCHcLodGhcJssA2UsBPdYJzDtkH0ZU9dOI8/4nVq5gqgoZD7C/tW
+ Yumw==
+X-Gm-Message-State: AOJu0YwI3X5TCstWVlEY7amJ6Mo4+WeSJ/9Oldn1c1gWb2KlLpHyT9IV
+ cW21uDHLxL9Y8wdJA7qd87J3GKWp36qRmRYMD8gwyDRrfBa4wukq7Hf9FWcQn5TV+eRztfeh7Nd
+ zpuG4PMQ=
+X-Gm-Gg: AZuq6aJS7s6/pB5AJKUMCbYwgGqhobGgddTXXvIloEsTNu1T3Wp+/pNDHfTfm7wgZ1p
+ 3CtBSs54/Z0XNj/YOxxSW0xxUx7n0FWZd82tdHfev4XTen7D3mEXGGBRdrNqe+J5Dl8xfvbKgkI
+ mHAwd7rB1VbdQ9V7tmwdcF5vmt1gxifXyOdfHDsT12Pjpyc+hk7vQYbba5QlANb9ODNfDdlIYIR
+ PF9FZ9Lv1v1yDUThDw5KOoYxbyC+o24xB0kKzupSEhyS7hNxq1iNyL286gwIZGptiYvt76pqXs8
+ Z/2RimibIdRfRj/X4JfJJIi6Y3yGBCrWgycZUCLLTqT7NS5sUAm4pGqj/Ucb7clmoF4VhajYsE9
+ xkWKp6isZPlFHLdakS545FdtS3eFffnIb2KoEo4aAzZVrd9Rn0ntguLrdSNFGD7nJOnIr5jFYvC
+ X3RNi5R9QkoIbVc3zrdkSiuA==
+X-Received: by 2002:a17:907:3dac:b0:b8d:bf38:7025 with SMTP id
+ a640c23a62f3a-b8edf1a6518mr188090866b.16.1770401124032; 
+ Fri, 06 Feb 2026 10:05:24 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8edacaffeesm99446266b.38.2026.02.06.10.05.18
+ a640c23a62f3a-b8eda7a3004sm101816266b.15.2026.02.06.10.05.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 10:05:18 -0800 (PST)
+ Fri, 06 Feb 2026 10:05:21 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0D355607B5;
+ by draig.lan (Postfix) with ESMTP id 96908607F0;
  Fri, 06 Feb 2026 18:05:18 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/10] gdbstub: remove the need for goto cleanup
-Date: Fri,  6 Feb 2026 18:05:10 +0000
-Message-ID: <20260206180517.1335861-4-alex.bennee@linaro.org>
+Subject: [PULL 09/10] include/gdbstub: tweak language
+Date: Fri,  6 Feb 2026 18:05:16 +0000
+Message-ID: <20260206180517.1335861-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
 References: <20260206180517.1335861-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,74 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already set a default error reply which we can only overwrite if we
-successfully follow the chain of checks. Initialise the variables as
-NULL and use that to gate the construction of the filled out
-stop/reply packet.
+While "iff" means "if and only if" it might look like a typo to those
+not familiar with this mathematical abbreviation. A plain "if" is
+clear enough.
 
-Message-ID: <20260203115201.2387721-4-alex.bennee@linaro.org>
+Message-ID: <20260203115201.2387721-11-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 1f8cd118924..aeff467fdd6 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1413,36 +1413,33 @@ static void handle_v_cont(GArray *params, void *user_ctx)
- 
- static void handle_v_attach(GArray *params, void *user_ctx)
- {
--    GDBProcess *process;
--    CPUState *cpu;
-+    GDBProcess *process = NULL;
-+    CPUState *cpu = NULL;
- 
-+    /* Default error reply */
-     g_string_assign(gdbserver_state.str_buf, "E22");
--    if (!params->len) {
--        goto cleanup;
--    }
--
--    process = gdb_get_process(gdb_get_cmd_param(params, 0)->val_ul);
--    if (!process) {
--        goto cleanup;
-+    if (params->len) {
-+        process = gdb_get_process(gdb_get_cmd_param(params, 0)->val_ul);
-     }
- 
--    cpu = gdb_get_first_cpu_in_process(process);
--    if (!cpu) {
--        goto cleanup;
-+    if (process) {
-+        cpu = gdb_get_first_cpu_in_process(process);
-     }
- 
--    process->attached = true;
--    gdbserver_state.g_cpu = cpu;
--    gdbserver_state.c_cpu = cpu;
-+    if (cpu) {
-+        process->attached = true;
-+        gdbserver_state.g_cpu = cpu;
-+        gdbserver_state.c_cpu = cpu;
- 
--    if (gdbserver_state.allow_stop_reply) {
--        g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
--        gdb_append_thread_id(cpu, gdbserver_state.str_buf);
--        g_string_append_c(gdbserver_state.str_buf, ';');
--        gdbserver_state.allow_stop_reply = false;
--cleanup:
--        gdb_put_strbuf();
-+        if (gdbserver_state.allow_stop_reply) {
-+            g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
-+            gdb_append_thread_id(cpu, gdbserver_state.str_buf);
-+            g_string_append_c(gdbserver_state.str_buf, ';');
-+            gdbserver_state.allow_stop_reply = false;
-+        }
-     }
-+
-+    gdb_put_strbuf();
- }
- 
- static void handle_v_kill(GArray *params, void *user_ctx)
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
+index bff3674872e..989a95c33f9 100644
+--- a/include/gdbstub/commands.h
++++ b/include/gdbstub/commands.h
+@@ -50,7 +50,7 @@ typedef union GdbCmdVariant {
+  * '.' -> Skip 1 char unless reached "\0"
+  * Any other value is treated as the delimiter value itself
+  *
+- * @allow_stop_reply: True iff the gdbstub can respond to this command with a
++ * @allow_stop_reply: True if the gdbstub can respond to this command with a
+  * "stop reply" packet. The list of commands that accept such response is
+  * defined at the GDB Remote Serial Protocol documentation. See:
+  * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
 -- 
 2.47.3
 
