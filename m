@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2060EB28D4
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA28FEB28D6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 07:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voG9s-0002Th-B5; Fri, 06 Feb 2026 02:21:40 -0500
+	id 1voGFB-0003Hs-IW; Fri, 06 Feb 2026 02:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voG9p-0002TV-O7
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:21:37 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1voGF9-0003HO-UJ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:27:07 -0500
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1voG9n-0007gk-56
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:21:37 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-29f102b013fso3750655ad.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 23:21:34 -0800 (PST)
+ id 1voGF8-0008GE-1a
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 02:27:07 -0500
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-81e821c3d4eso1583552b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 23:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770362493; x=1770967293; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770362824; x=1770967624; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=l8g2vzEaydvB1DAsR6FJp/2X4dFGE78RDOVY4g90UZs=;
- b=wN1AGaxTg/qNcVjUep2oT94vabhnI3ya5uiAcuuKhfQwg4pQBjCG8UnIp8I6h9E4t6
- Cj6p5CZXBX8+lroMttwiWHXlFlIflcpJ3bEJIbe3DOmLCzY6FMXx2FkPO5bVSohXgQF8
- gii38A5rpmZqfdb7iJJGWxJ1vUOngulPcMdY6MIEAjr4l1rh8SOh0sfdW3boo2BhxduC
- PL7vIulNN2703Mr2IavK3NCRyJ6GTZqVWds31bTDA2xhUqTitKcfhpgeUGA8r7Z8+/dV
- uIiGYMIKJ4Qnbs7GodEspe0+NxuKyVyexVQuLX86IcvkrNLuf7UerJKgUj8RY4obWccH
- EphA==
+ bh=Esn80IcBye1lZWW7gqCmY3N+KkEqhxRG4dc5qwdW4Hc=;
+ b=c57pygJ2X5WBs2edoLQHbJw3Co4ZxzA+UHejG30Qgh9WnZ/oDMyv1L0Qs2qqxJwtrz
+ aa3PSNgu7PTtClS/PwTFx8avDximTrL1A6EnQxzvY6IwNmXhFhjh4MAlAM43fvmoDO8q
+ x2QxPp97MPDbRR64K6l0JtxaZtwgqdHcIxBw+zZX+zwYCG0mbPvs2ZQJ36NyOdTFA7TN
+ GjAAYGrQ9MG5iN4D1zOqpK8wTyXnkTz26VxRYasXfYww5t17/iantTpi9Q7+wHp6Wn5s
+ EusHOirDvcxPa6yc16vhwNQ4zofuoODb24TR+ObQQcyMof3ExO+394sk7gBCx1dKQ7QR
+ fEkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770362493; x=1770967293;
+ d=1e100.net; s=20230601; t=1770362824; x=1770967624;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=l8g2vzEaydvB1DAsR6FJp/2X4dFGE78RDOVY4g90UZs=;
- b=ZoMHc2Aw/VOO7cHGOZVLmOeGDjtxg/cmBd3WJiePbTcIx+9dxA2FKqarCvMAskia+/
- SBrfk+WdpT5euWoPlBZtgRJJj8bbelmBgvXzZ4J4rJShTlXPJ00kjmCem/UFCIzLWSkS
- H0uwDgnYQGn5SGPqnPs7vnf4UZqYEUG5ufPOQe87BVGWEYOokAPuvlxGY0iJc5qNzeCm
- Mmu7EN91QrHi93OCpsBfX5kCJv1/GnU50Cjg4rcBxbiHy9wt+QN7vTKlaTqsWKxtT+QW
- idMIsn4F/v1gEiF699+9p1aEzOu0wJGCNNdNklE8RRqs8JfH+MWmHiknESwa7GRTALHQ
- 8LGg==
-X-Gm-Message-State: AOJu0YzynyfNyQeRir0f7L91tgHtj5+dA9Yp8HYAz3iM/1kGJIOyw8SB
- dvx5NMvitzvvh+R7dC7n9muhTRIP1fH/aqgxjCB6cswWuvrNTNhKkf1QKN1DirPict0=
-X-Gm-Gg: AZuq6aKDhGAydqbt+LQycn81E/IWmfaum1dH0Kmf6L/CUbMm7AJP/faYIntWRTPVNbk
- +gk/3QplM7WBnJoKVHbc7FxD58ux8EsxXT5CWe9tytBEUZD7VIfarsCN1lJzUAVVJQE6bgPvSK4
- dO4TjVJ5/sRtpP5u5HRrtN2QGvsLfILBz2yiumxQFLBYYGu4laxpkol2udZpqpFj7a1PyuWhCPr
- zUuRrDp9K2/295eoU6cMlaSNN1XQv1X+smjsLRfk7sbTyFCWt96uoavrCZI8xOKQ6cj+Nuqr5uk
- FLjZ/4wJuIrD0gHiPan6C9GTMUwul0GNIRii90m/4ECulg06q8rskCs6FtSyx0s9dsuL/bibKoF
- 50uraiTz+rj2lsL7jXqrGzG7A0Nsxsw4SL/pIlPKCY91Jk03ny1+p43ccowcnj9fORo9Cp6G5dK
- 7c2/m1lMJIqy4qVyF0VGVFrl4eJv9OPoFUpg/mrbuNPY61nEx/Eo5ElQiF
-X-Received: by 2002:a17:902:e84c:b0:295:62d:5004 with SMTP id
- d9443c01a7336-2a9516c4cb8mr21654425ad.26.1770362493064; 
- Thu, 05 Feb 2026 23:21:33 -0800 (PST)
+ bh=Esn80IcBye1lZWW7gqCmY3N+KkEqhxRG4dc5qwdW4Hc=;
+ b=baaGE+nPF6y7WHylWGC/uXBpVniKCPm3yLwLc4lpfWh38Ylp24F1Uv65WNWLXdIvHB
+ uUOcEAgKNV6GytUFI75BnVd7/qNp2I+SK4QC4RYRhT8ZD+wbBDGmp1CsfAduoFI5XtJX
+ zOmNHWP54IlTcio2YlLRIFlvjPPS19+8/sFjxOlYFjlQrVOjZIHDCVZAm/RubJEWRyKK
+ 8PzYVCi9hAT66pQvTMphjvf5vjKdkyrqfos1/Pz/gBc9iW3mkGOaRFx5+2OMfucHEd7m
+ RNTRNfEJlCe5O+S+PY4lQEEbPsUuFmknfxyK3ek04cwRMqGrZIhIrEbynlkRsF8KqG27
+ MU9A==
+X-Gm-Message-State: AOJu0Yz+8PjI2Xo3jtaZqiWKQ+ob/Bt0OpmW68fZAhyvM98gBFk7oWo+
+ byiAJva/QFJ9EFZWm/JHnhvF62y5t7znYSV1Vl69TApr58C4Hh9nsU55q8fCFMSMvFa5LsAwcqs
+ 4DNYQ3IM=
+X-Gm-Gg: AZuq6aKb04fCzlg4/etQSH0Ba4mnYACcqhO83A0LPjB0RMJhYu6TE6Oa2Em7vfW9zF/
+ 9VEmZ0v9BzTSUl2+tDYPGO3/hy9A4yt8VzXZh69WIVMj+DHIgDyVdrlZrK0LgCYlhgtSrmpGkGa
+ b9X+VqZbp594OGQI07Ig5GwuHS9LPWU/nL/qW762wlpMBQ58p7sO93x+04KTHbENqV5yjVzPJFG
+ dGrXKrA/eY0FpGfHlMbQ70jlmtMknsZBXoGxi2Iy57j2yvwMkelVNhMNfwtXp2Z2kzwaoR8pVdx
+ Oi51HowfDhcu2u69siJHCIRXRhkbEtmV/68tfro8ScjjsE4JTKFMQeERIq0mqlQvzxfzx/RB+yV
+ HVdbmkq3zHoB+oJxSwTql8S5eGtKtxy39wAo592cQpqNY0gkBAyj142UJ7PTKx8D3G7hXY0zTt5
+ YpmrjBV2m4WHQo8YIGJ+cTUG+yGmR0sW44sXxluiXmUNWcDY3NrTBt4qbo
+X-Received: by 2002:a05:6a00:1253:b0:81f:997e:59a0 with SMTP id
+ d2e1a72fcca58-8244176e218mr1649354b3a.64.1770362824013; 
+ Thu, 05 Feb 2026 23:27:04 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a9521bae5csm13711525ad.60.2026.02.05.23.21.32
+ d2e1a72fcca58-82441882481sm1339129b3a.35.2026.02.05.23.27.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 23:21:32 -0800 (PST)
-Message-ID: <d293019a-218f-49d9-963d-6411c9b453a0@linaro.org>
-Date: Thu, 5 Feb 2026 23:21:32 -0800
+ Thu, 05 Feb 2026 23:27:03 -0800 (PST)
+Message-ID: <934c333d-c081-46d0-9058-cc7eda075d1b@linaro.org>
+Date: Thu, 5 Feb 2026 23:27:03 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Renaming targets
+Subject: Re: [PATCH v2 12/12] target/arm/tcg/translate.h: replace target_long
+ with int64_t
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260203194113.3026757-1-pierrick.bouvier@linaro.org>
- <7645fcac-c4b2-4a9f-91c8-4990e9c92ef9@linaro.org>
- <5fd0062c-b474-4971-9a46-06af9ae4e0c7@linaro.org>
- <e1495603-4ac2-44bb-8b0d-74c45e5f2e66@linaro.org>
- <877bsr34au.fsf@pond.sub.org>
- <6ddad25a-192c-4b5a-80fc-b006436810a2@linaro.org>
- <878qd6xsrh.fsf_-_@pond.sub.org>
+To: qemu-devel@nongnu.org
+Cc: anjo@rev.ng, Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, kvm@vger.kernel.org, qemu-arm@nongnu.org
+References: <20260206042150.912578-1-pierrick.bouvier@linaro.org>
+ <20260206042150.912578-13-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,18 +117,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <878qd6xsrh.fsf_-_@pond.sub.org>
+In-Reply-To: <20260206042150.912578-13-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,65 +144,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 10:58 PM, Markus Armbruster wrote:
-> Richard Henderson <richard.henderson@linaro.org> writes:
+On 2/5/26 8:21 PM, Pierrick Bouvier wrote:
+> target_long is used to represent a pc diff. Checked all call sites to
+> make sure we were already passing signed values, so extending works as
+> expected.
 > 
->> On 2/5/26 19:52, Markus Armbruster wrote:
->>>> I assume the qapi string is the one that should take precedence; everything else appears to be merely qemu source level strings.  Marcus, can you confirm?
->>>
->>> What exactly would you like me to confirm?
->>>
->>> I *guess* it's about the messy part of the patch you posted upthread.
->>> There, you have to normalize TARGET_ARCH value 'openrisc' to 'or1k'.
->>
->> Yes.  I wanted you to confirm that changing the string in qapi is a non-starter, therefore
->> 'or1k' is the string we should standardize on.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/tcg/translate-a32.h |  2 +-
+>   target/arm/tcg/translate.h     | 12 ++++++------
+>   target/arm/tcg/translate.c     | 18 +++++++++---------
+>   3 files changed, 16 insertions(+), 16 deletions(-)
 > 
-> Yes, changing enum value @or1k is problematic.
-> 
-> Enum SysEmuTarget is visible in QMP: query-target return member @arch,
-> query-cpus-fast return member @target.  These are stable interfaces.
-> 
-> I can see two ways to change the enum value to @openrisc:
-> 
-> 1. We create a new qemu-system-openrisc, identical to qemu-system-or1k
->     except for the target name.  We deprecate qemu-system-or1k and
->     SysEmuTarget member @or1k, and remove them after the grace period.
-> 
->     I doubt it's worth the bother.
-> 
-> 2. We cheat: we rename with the excuse that the target is bottom support
->     tier, and our compatibility promise doesn't apply there.
-> 
->     I don't think that's a good idea.  If we want to qualify our
->     compatibility promise with tiers, we better define the tiers and what
->     they mean for the promise *first*.  Related:
-> 
->      From: Daniel P. Berrangé <berrange@redhat.com>
->      Subject: [PATCH] docs/about: propose OS platform/arch support tiers
->      Date: Thu, 15 Jan 2026 18:01:23 +0000
->      Message-ID: <20260115180123.848640-1-berrange@redhat.com>
->      https://lore.kernel.org/qemu-devel/20260115180123.848640-1-berrange@redhat.com/
-> 
->>> I figure this is about adding 'hexagon' to SysEmuTarget even though it's
->>> not actually a system emulator target now.
->>>
->>> The fact that adding it there helps indicates SysEmuTarget has leaked
->>> into user emulators, and its name has become misleading.  Is this true?
->>
->> Yes.  The target_info structure is used for both user and system, and one of these fields
->> is the SysEmuTarget entry.
-> 
-> Then SysEmuTarget has become misleading.
-> 
-> We *can* fix that: QAPI type names are not part of the external
-> interface by design.
-> 
+> diff --git a/target/arm/tcg/translate-a32.h b/target/arm/tcg/translate-a32.h
+> index 0b1fa57965c..a8df364171b 100644
+> --- a/target/arm/tcg/translate-a32.h
+> +++ b/target/arm/tcg/translate-a32.h
+> @@ -40,7 +40,7 @@ void write_neon_element64(TCGv_i64 src, int reg, int ele, MemOp memop);
+>   TCGv_i32 add_reg_for_lit(DisasContext *s, int reg, int ofs);
+>   void gen_set_cpsr(TCGv_i32 var, uint32_t mask);
+>   void gen_set_condexec(DisasContext *s);
+> -void gen_update_pc(DisasContext *s, target_long diff);
+> +void gen_update_pc(DisasContext *s, int64_t diff);
+>   void gen_lookup_tb(DisasContext *s);
+>   long vfp_reg_offset(bool dp, unsigned reg);
+>   long neon_full_reg_offset(unsigned reg);
+> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+> index 2c8358dd7fa..1f455e4c434 100644
+> --- a/target/arm/tcg/translate.h
+> +++ b/target/arm/tcg/translate.h
+> @@ -27,8 +27,8 @@ typedef struct DisasLabel {
+>   typedef struct DisasDelayException {
+>       struct DisasDelayException *next;
+>       TCGLabel *lab;
+> -    target_long pc_curr;
+> -    target_long pc_save;
+> +    int64_t pc_curr;
+> +    int64_t pc_save;
 
-Do you mean it could be renamed to EmuTarget without any consequence?
+An amend mistake changed my branch, so this commit was not updated 
+correctly when sending the series. It has vaddr has requested on v1.
 
-It seemed to me that everything exported from the json files could
-potentially be consumed by another entity (libvirt for instance).
+I'll update for v3.
 
 Regards,
 Pierrick
