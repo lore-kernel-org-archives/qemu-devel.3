@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7A4EE6B43
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC20EE6B47
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQCs-0007yu-Jo; Fri, 06 Feb 2026 13:05:26 -0500
+	id 1voQCl-0007tf-3J; Fri, 06 Feb 2026 13:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCr-0007x1-7r
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:25 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQCj-0007t3-Sp
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:17 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCp-0001RJ-Bq
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:24 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b8e9c8ada38so375540366b.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQCh-0001PR-D0
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:17 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-354a5da7910so1074270a91.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770401114; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Aexzetm7AQ+VDg9zLJThyfMZRG7fv8bt31QdcbSGWC0iCOV5AudHuZ37fny8w8b/8Y
+ dgAPjHBmDrCJC9kbEghvSTgrgHlexWvNGWgiIKUO8Jwf3Hv/6xtuZ7XgubdKsjMS6Cy8
+ VmV9fqQYblZ7dknOjKziltR/dVCWp6gUe2p6kJ3CvD6HgkGnvfWxRgZ6spbUygiAwa+F
+ GJoMury33vCXaYBu8sulwDVjQimdusJthK6i9exncOW+rIOTwxRaN9gdxkdeCEdmjCOv
+ rKkjyL4Etid0tJbcVbEfSu69uBV0bTKX+qotOizYzkootza363bjJjvaAO1uxigH1fND
+ npOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
+ fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
+ b=jEm8wQiyix8dOevVUKifNhbNUL85pa4w/62gqIR21qIBRNuXjQ+8y9D3efUdW0KkT0
+ RRmq35Km9hO31ddFkuIRpePfCBtRZ4dzOy1ZhljVJrmyTg3jf7trFPLRRcdCp5V3pjW9
+ dTnFJI5IMmC5jxBzVUyHFbDVP29q2RDh4v3nSPHacnTYbHWvK8pN33bMapyDBAgYvXGj
+ ivRgKtR39jojWT6k9dGOuLS6DflyciEyNZt0zqfM1RL5z6h9vdZ/SyvblG2a71iyqxLv
+ OMb4Qn0DXlGEFnSBADbXX0vKDiadab1kDma8yj6L8ucF/PO6qHCQ9//H3jRIJrDAPM5y
+ Wf9Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770401122; x=1771005922; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ejrh02Mk/KLMeodWKeL7ZGQn7Gm+puDkYZVo16Fx7oo=;
- b=SOX9IzE+yTj+7znl1NrnYkF6IYH1OweLl1DzqCfaLHIo1KVXv9nomjBA/jM53mdoL2
- yPwMDSAoeNbs6ZohoIPlMC1OftrgZ5FCWEwd5d14A8RMpSAQ3Qazy/rG2r5iO9o0c/2/
- ik4/ELs5cevQFGrPNPVkXphzVMWR5jQ5dCJ8+5jqhjNlU3ndoU0IdRgipLF2LsfLvz9e
- 9W7SeUR1qIidzJpNREDxValrCKGcFOWO266M5tZJgcPyjkoTj2Ib1DUQIwYcTDYwP8Cj
- BUJpkHM96UBiLKE4PasYf8qPvF6cFnc0ddjut6NZspJ/dRT0sNIQM3Ci2TuLhwUsSB2X
- n1vA==
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770401114; x=1771005914;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
+ b=LsE6GXVADFudAR6wQNe5r0Sqsz4bA6orXzf74qS+pKZH4oAgbxRLIlmayO0dpg7iU+
+ D5iosH41t53LX8sKfIKyPCNMrvFXG5sTNx07L13tTUjO0P8+DeoyDOnerDcF7KSPp6EO
+ JkXCYHpWQRRy4Xpu+5NoIMsVXHtNvQTv/wUgoH9Q8IYx1QH8aHFD2ehmLEgUbSCqlc9c
+ y0BU84Or/OAc29P9YBbb6/G8mTALa/YHFUzN+g5CAMLh8tGeLxf3FIFoFBAvn24wvENJ
+ hgwnSJNisJoCN2RQ2//SAoeCd9pQlGbRGOLjR+0rlFk521Ch1qNlkv6dIfWjOYZWwVEB
+ ViuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401122; x=1771005922;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ejrh02Mk/KLMeodWKeL7ZGQn7Gm+puDkYZVo16Fx7oo=;
- b=SfECP+AKShiStdRu2CvqKonjHIzVxqDxmI3WUex2s8z5fDSuBE70o6O+HwY2/vr5xy
- tIbs6rka4pYxsc01Guom64ZbnyrdZGNEvPUl6kFwMuRGkrtT5968ackhjrFsdQzGv3W2
- cOCHVd9k4RD3XJ1M1txnI6mRP8sr+UO3qR4XY1YtEi4FDLrd2/LOnvrr6hkQ8Ry/jOnU
- ThTY7UotiQEYMPdnEKeoeLDqgkLZtC8zkbhJ2VWf1TjOlKFKh/pm4/YPmpG1c3pEFI/A
- EzY9fLl9srs4HY84Kcv0V7YZ7TYypXXB6I/SQtEsau11votdZQxv7VoF/+/c9tOAsR1A
- MT6A==
-X-Gm-Message-State: AOJu0YzDdbZSzc6a7JldSNihq561GegVQi+arOlYc8Yjag5YLpgfkzB7
- gQ5D/5AB8rBHIBCJ55zVP1ZgVw8OMUB5tbXYwqat1yBUwmAGaHqh7x2vnLkW9GhFQ0s=
-X-Gm-Gg: AZuq6aJ/xUVpJy2rrxiFhp131/VGuo6JnMokdN/ZIKAWXW3QXlBo/3KHcUcSXI7u/uR
- muVIvNUN/D9YqyQ3Oh7G/KWA2V540QIwgSr9V0ts9LlUj6zDVwFGWFOYnvKmDTzSxhZo8ly6WJ/
- EhEVtjeimx5NX7EGoBQeEN95HxFFZJ1bP7+dtWJHQghhm5QyjS6y3h+z4aAyQjzrZL0YbuvMlxt
- HvHgBLmpvkVko+NOABkQdHH6OEoESsGRod6g6v68Xo27Z0DEz8lUPRgh40497R5sTAV84lbUlVj
- S1THcG9Jeo+Fv+bOd9jy3CpbebbwlFE+F5WnQQ22sIp74JjEBlNx5UJyrQAjtbA7z/a1NqhRkAM
- kDiMPBJngVCFdAj6Uf8BBkqPK8NI6U5K2BlcdgCONIa6pFEf3lQo9wX0ulN+IjHUjYBYL7yl+kb
- uM8fxqi5yv4Pw=
-X-Received: by 2002:a17:907:1c9e:b0:b87:bb45:bd5c with SMTP id
- a640c23a62f3a-b8edf42c682mr234686366b.58.1770401121727; 
- Fri, 06 Feb 2026 10:05:21 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8eda7a3372sm102786666b.20.2026.02.06.10.05.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 10:05:19 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 24D25607BE;
- Fri, 06 Feb 2026 18:05:18 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/10] gdbstub: extract stop reply message construction
-Date: Fri,  6 Feb 2026 18:05:11 +0000
-Message-ID: <20260206180517.1335861-5-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
-References: <20260206180517.1335861-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1770401114; x=1771005914;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IQ1RuZS4tcepVxa8gISRjCOllsUJ5Oh6WexV+0Yfyi0=;
+ b=oheGEdeEcY99mTMeZtBpkhrWWRt3ZIDCAzr8dqy99Lw9MWGIp0kCkP4kC4Rq0562Ko
+ uCOO/8CgM+RERuJxgNzUkpWmb6FxWBub6a2gqjdJnTDfVrYvpmZ2lTLDV0X2nWXDcovg
+ CN8xlLvW+/VCABSfZmlaEH8PI5q/kod7HKFmFiGdVHjdlBK7TTSybcIEAd4A8YO1tTCX
+ 3Wf83OYapP0hjEuPYBCgjdeMTfojIieHaa2jmzoP8TF5jESsB4fBrTMNew76zrO5WcfR
+ srszdJPU30xKcAsURbcwGfygmP5hQFNOnE19CEZxFw/OWL8UZ2+NnUJ+E4vYgEuNmbSw
+ W7vg==
+X-Gm-Message-State: AOJu0YyD12+RzyddcjWsl7FM/P5e/df179RxMFGQyFvIGIvZmHyR7h5D
+ bUcej9j4Y0FLREkcLR2C4CHSTDHpvDL6fCdVCGpGn9FkmJTVcEwmwF2hJd+Zp0wPvZ/rNWHadZW
+ zo6vErS0jcarfd9z4AtGZa18cvkD0iHecZVeN0zDD3g==
+X-Gm-Gg: AZuq6aK4VJbmxXfW+MkWPNWooz9QlTsAhPmnObmk/YNpWWAMB5FDkFefozDJUxNPHXw
+ 8m3zoM13Q3vVHdsja6WGoLHERQtGzD6ImTcGYpGbmato4i4DN5MczDHO8KqEwnNKzBkSY/jxhPo
+ 1g/Ltt3121WpQQCmUvmDotZO3RCzrps23G39xPNwAlIpITqTK1gD3EWUl239LzcZpTXW9e6ozS3
+ KQG8pzvun5Fd+dq6rhuwc237w/S3I9SuQLMilgONJgMW7lhT/B2UXwqnNe3c6C1kQfjS7ZXoB/f
+ BZgg6Q==
+X-Received: by 2002:a17:90b:2748:b0:354:aee0:cab2 with SMTP id
+ 98e67ed59e1d1-354b3ba34bfmr2774456a91.2.1770401113702; Fri, 06 Feb 2026
+ 10:05:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-19-8d8ff0035372@bsdimp.com>
+ <1cdc9e1c-5c5b-4ef7-92e9-25085acd5ca5@linaro.org>
+In-Reply-To: <1cdc9e1c-5c5b-4ef7-92e9-25085acd5ca5@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Fri, 6 Feb 2026 11:05:02 -0700
+X-Gm-Features: AZwV_QgJcVFCXhHGuEV_qy7dbE2-ubjDly0UoGcZvvVXoCWF9pVhGBdKIYuUT5U
+Message-ID: <CANCZdfr5q=1-EkFET3hirHh7uVe=EfQJhfcd8rQSOJWXtExHQQ@mail.gmail.com>
+Subject: Re: [PATCH 19/24] bsd-user: Add do_bsd_msgctl implementation
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
+Content-Type: multipart/alternative; boundary="0000000000007e1349064a2ba1a3"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,110 +119,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stop reply message we send can include a lot of extra information
-and a bunch is mode dependant. Extract the construction into a helper
-and add specialised versions for system and user mode.
+--0000000000007e1349064a2ba1a3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The correct response for system mode should be of the form:
+On Thu, Feb 5, 2026 at 8:22=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-  T05core:N;
+> On 2/6/26 03:26, Warner Losh wrote:
+> > From: Stacey Son <sson@FreeBSD.org>
+> >
+> > Add implementation of msgctl(2) syscall for System V message queue
+> control
+> > operations. Handles command translation and structure conversions for
+> > IPC_STAT/IPC_SET/IPC_RMID operations.
+> >
+> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > ---
+> >   bsd-user/bsd-misc.h | 53
+> +++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 53 insertions(+)
+> >
+> > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
+> > index 81fdfd8351..27f4497d76 100644
+> > --- a/bsd-user/bsd-misc.h
+> > +++ b/bsd-user/bsd-misc.h
+> > @@ -28,6 +28,12 @@
+> >
+> >   #include "qemu-bsd.h"
+> >
+> > +#ifdef MSGMAX
+> > +static int bsd_msgmax =3D MSGMAX;
+> > +#else
+> > +static int bsd_msgmax;
+> > +#endif
+>
+> (1) This isn't used in this patch, and probably generates a Werror.
+>
 
-Where N is the core ID. We pass GString to gdb_build_stop_packet as
-other functions we are going to clean-up work variously with their own
-dynamically allocated GStrings or with the common shared buffer.
+Yes, but no actually: bsd-misc.c isn't in the build yet... However, it
+should be folded with later revs. I missed that in the prep.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260203115201.2387721-5-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 92466b28c18..9b25bf58b8e 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -237,4 +237,14 @@ void gdb_breakpoint_remove_all(CPUState *cs);
- int gdb_target_memory_rw_debug(CPUState *cs, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write);
- 
-+/**
-+ * gdb_build_stop_packet() - craft the stop packet
-+ * @buf: GString buffer for building the packet
-+ * @cs: CPUState
-+ *
-+ * Craft the Stop/Reply packet when we halt.
-+ */
-+
-+void gdb_build_stop_packet(GString *buf, CPUState *cs);
-+
- #endif /* GDBSTUB_INTERNALS_H */
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index aeff467fdd6..b45eb7c7b2b 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1432,9 +1432,7 @@ static void handle_v_attach(GArray *params, void *user_ctx)
-         gdbserver_state.c_cpu = cpu;
- 
-         if (gdbserver_state.allow_stop_reply) {
--            g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
--            gdb_append_thread_id(cpu, gdbserver_state.str_buf);
--            g_string_append_c(gdbserver_state.str_buf, ';');
-+            gdb_build_stop_packet(gdbserver_state.str_buf, cpu);
-             gdbserver_state.allow_stop_reply = false;
-         }
-     }
-@@ -2038,11 +2036,9 @@ static void handle_gen_set(GArray *params, void *user_ctx)
- static void handle_target_halt(GArray *params, void *user_ctx)
- {
-     if (gdbserver_state.allow_stop_reply) {
--        g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
--        gdb_append_thread_id(gdbserver_state.c_cpu, gdbserver_state.str_buf);
--        g_string_append_c(gdbserver_state.str_buf, ';');
--        gdb_put_strbuf();
-+        gdb_build_stop_packet(gdbserver_state.str_buf, gdbserver_state.c_cpu);
-         gdbserver_state.allow_stop_reply = false;
-+        gdb_put_strbuf();
-     }
-     /*
-      * Remove all the breakpoints when this query is issued,
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 79f80256e3a..8ec8b7ea336 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -662,3 +662,14 @@ void gdb_breakpoint_remove_all(CPUState *cs)
-         ops->remove_all_breakpoints(cs);
-     }
- }
-+
-+/*
-+ * The minimal system-mode stop reply packet is:
-+ *   T05core:{id};
-+ */
-+
-+void gdb_build_stop_packet(GString *buf, CPUState *cs)
-+{
-+    g_string_printf(buf,
-+                    "T%02xcore:%02x;", GDB_SIGNAL_TRAP, gdb_get_cpu_index(cs));
-+}
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index a2327c61352..14369b9ce5e 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -974,3 +974,15 @@ void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
-     gdb_put_packet_binary(gdbserver_state.str_buf->str,
-                           gdbserver_state.str_buf->len, true);
- }
-+
-+/*
-+ * The minimal user-mode stop reply packet is:
-+ *   T05thread:{id};
-+ */
-+
-+void gdb_build_stop_packet(GString *buf, CPUState *cs)
-+{
-+    g_string_printf(buf, "T%02xthread:", GDB_SIGNAL_TRAP);
-+    gdb_append_thread_id(cs, buf);
-+    g_string_append_c(buf, ';');
-+}
--- 
-2.47.3
+> (2) Does any supported FreeBSD version actually define MSGMAX anymore?
+>      Grepping current source suggests one always has to probe at runtime.
+>
 
+Yes. That's true. I'll remove the #ifdef. there is a define in the kernel,
+but it's confined to sysv_msg.c file.
+
+
+> Anyway, if you move this item to the next patch,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+> for the rest of this one.
+>
+> r~
+>
+
+--0000000000007e1349064a2ba1a3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
+2026 at 8:22=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
+derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
+ wrote:<br>
+&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; <br>
+&gt; Add implementation of msgctl(2) syscall for System V message queue con=
+trol<br>
+&gt; operations. Handles command translation and structure conversions for<=
+br>
+&gt; IPC_STAT/IPC_SET/IPC_RMID operations.<br>
+&gt; <br>
+&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.h | 53 +++++++++++++++++++++++++++++++++=
+++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A01 file changed, 53 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
+&gt; index 81fdfd8351..27f4497d76 100644<br>
+&gt; --- a/bsd-user/bsd-misc.h<br>
+&gt; +++ b/bsd-user/bsd-misc.h<br>
+&gt; @@ -28,6 +28,12 @@<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#include &quot;qemu-bsd.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +#ifdef MSGMAX<br>
+&gt; +static int bsd_msgmax =3D MSGMAX;<br>
+&gt; +#else<br>
+&gt; +static int bsd_msgmax;<br>
+&gt; +#endif<br>
+<br>
+(1) This isn&#39;t used in this patch, and probably generates a Werror.<br>=
+</blockquote><div><br></div><div>Yes, but no actually: bsd-misc.c isn&#39;t=
+ in the build yet... However, it should be folded with later revs. I missed=
+ that in the prep.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+(2) Does any supported FreeBSD version actually define MSGMAX anymore?<br>
+=C2=A0 =C2=A0 =C2=A0Grepping current source suggests one always has to prob=
+e at runtime.<br></blockquote><div><br></div><div>Yes. That&#39;s true. I&#=
+39;ll remove the #ifdef. there is a define in the kernel, but it&#39;s conf=
+ined to sysv_msg.c file.</div><div>=C2=A0</div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">
+Anyway, if you move this item to the next patch,<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
+<br>
+for the rest of this one.<br>
+<br>
+r~<br>
+</blockquote></div></div>
+
+--0000000000007e1349064a2ba1a3--
 
