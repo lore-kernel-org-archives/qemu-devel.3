@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37574ECD9B5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 00:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86187ECD9B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 01:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voA9T-0002sM-9m; Thu, 05 Feb 2026 19:56:51 -0500
+	id 1voAGc-0004AJ-2r; Thu, 05 Feb 2026 20:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voA9R-0002qk-1u
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:56:49 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voAGa-00049t-2l
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:04:12 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voA9O-0003FL-QP
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 19:56:48 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2a8ff2ca490so8016325ad.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 16:56:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770339400; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voAGY-0004Jn-Kc
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:04:11 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-34be2be4b7cso810835a91.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 17:04:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770339848; cv=none;
  d=google.com; s=arc-20240605;
- b=dljrITPzXzkv01Vmaa1fMEbRrVcqBKb9e2PKhcT40vg0zCpVYKhxsYMVIp9ZFH54Cz
- 5rEkliA/gYxybjeONrMKjrxtRN7gI13qfnIppOaOr14Wy80Gj1n7X53sGCxTu5cVrcme
- 1lYTK/zFun6unVJ6/JaENwSXJ42xWr0PjhbzEOmvfK/1/Maiq47dzWBHewllITGzSkWI
- R5SWmUzZJLmsN+SXHiacY2Ix3+wOB7Dv022yqzLBB/nWKrGZUpmISCtaDtWwyDVBabTV
- sjWynVjb8Ypz8zlI6bJ/lVVpfWJ11IwahGWJ4nnoeYRgIJHmZvQ2PP2Jkeh3kOngqq5I
- T1+w==
+ b=ku7snInvMxWFBNBa5qxgwZsM3EZ4GeVDLf+Hqm/wtCqzGErAnWCYqn+5URKtPdYwzV
+ H6hxY3qpzi9xOmIHI2vBy5vg6RAx2ZXS8+jaAphJGkVs42c1THjeAwbQxAZz+O8kN0+8
+ YZSunXqdKfhT/1q4K5cUfPVEFzEljK7Nm3Ai0IakPb/8pWVUiHiKU09lpoOmUpQgpjUu
+ xhvNik2Z3gcI8CAvDUYGa4DQvgsldt3bhFUVlq6o/OD7DlNzbU+OuEgjq7wdp9knrtEt
+ 38SvSxxzRUswDHhtDI4fh0NlYSpBhSL8dPJk7v9Rf72I/kYEk04dGAqiO8gow0cMEMHZ
+ XEAg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=qgob1d9+8Sg2LXR53DXvH1KFyDaIOJNZFhDePWO7iso=;
- fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
- b=C7JkyCmjQ1KeFYq5qOWS9Ke+8kGsRgJVYbJMabs8HYi/zZn8zxxf/6c0JGTkQiE+Dx
- fLKP3hpb8Y9QxrXinqSY4hpkCRz/idbqz/Zyy9LBIy59JvpPqcb3Yhaa9N2bBPMYdLAP
- Me57Dm6DtFVF3gSDhnE+lyIvSUTcxf+42c4YT29cUzaDiCRzXPor+sD2dcTo/wXN9GV2
- ucfHVnMzmombEsoXXU34zkffaankHo34fdTg9F78AwMx+QWqSk18Yl9IpDaHhzoWvivO
- +CqE6fZLK0gAwnuAnIVaP/EazYTA8wyH98u/dv1NcS5w3HWrBA9pL5dHhpTrbxi02I+a
- w5uA==; darn=nongnu.org
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
+ fh=VqS+tPLsGlswY454e0dYtkegTr3u8RL39VDhCWIP5Lk=;
+ b=T1UA+ZYSGy1/FSsiaMdWUAxkEkGzsrW0z8Asw3QngOaRhvt+R3a6gI+aejQxLSSgik
+ xwpwoPCsRWdEzIDIFId6V7rB096on4h+cnoWO6YOXYmg/WKWdcpgRq9h3xoqt4ldTAQE
+ wLHv6CaN9w0NuKXL+XMv7UGOT/mGnsif+egDNlD2J8KD8iLV2MHI6ctwWcEA0LuVxquQ
+ 3vaudAZ2k0OPIHR2hXVFQFEYxNlziKZNr1f6Gt8tRpeq/rYGl/PO7pINjFhml+pqvwJ0
+ rDvt8Y97mh+MtFsksUK2hAEeX8FrLnAatx+i7cJoMz4GFbG8bBH+NX0RylySz/uUWjQM
+ /uXg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770339400; x=1770944200;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770339848; x=1770944648;
  darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qgob1d9+8Sg2LXR53DXvH1KFyDaIOJNZFhDePWO7iso=;
- b=rUcgntZ7c8HmGx43oLFirN4E7BIDMk7QHNP024XcCFw97RKvb4T9SoTkhEb/nBnnn5
- Y8PhjMuzuiR8TASetM+76Zw4ieyP6Mlga/OjBAJ1ukGROmUf7ixovFUf09A/rgT6yRFa
- WMP80apBgfYJ/hUm5W/A+4eWukowAgvn7Ce+ZiAM/wyV6yWvcZOQqc7jPqZpeZHGLmHz
- 2Cu1IZXzKZ6Lg4TbyYaaHlSF3idViFfwfU/NPuOWGuurdEJciKQjnQJg+kONwDOIKTKP
- 4uL0294MwMMvB9lV//QC6cf83yNqCuiy942/8Z/xRffsPLLFCyGiqWm6Ypn4DRP6W50g
- UEWQ==
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
+ b=2IiB88unhOwd4JpcC5PZsT0rrpOssKHNd/NUmpbzbHvVc1kkA38orzzaC3odjquHzf
+ odcf4xQjBW9a53vny2oKdEe83CKR14qXm7b2thYXzN7qCCQH/kJumEKof9BaNYZV/Wtu
+ vgsZvp0eVggcbms1JDqWt6KUUdKH0jNETrIw5pLYPXFpMNVDthAwc7Fn6KeYJ5JTyRNf
+ Zpki14XAOw6yDlJhLf7muSpflQLjXh+uMEQ5SPexTsmKgBwZ87Kg5T1AaPrugHODj5RI
+ 3iq5NzL2nT4X6T6S9eFCyKKdWddhMnA7/N+bBFEfDZnPyvKAejVnVqVWf0r1ZMlUYJu2
+ AM0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770339400; x=1770944200;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qgob1d9+8Sg2LXR53DXvH1KFyDaIOJNZFhDePWO7iso=;
- b=AABEH5I3+c7+5JLVda3hZGC+Rhjlaw1sh+YgPhtvMz87SN2095CZbcCbwMBMtuk2O0
- Hhni2srGkEwcwsH+Wlq/Ujx1uXXnsvDQ0KjAmNcmjXHrFb9RIF3+54ZxRprQnaDEagRm
- MTuK29lwSSn44+zWr51Ejgzme1z03jDp/MtU0JCbLQwMhVEQty89+v5h91Q6w94OMK0B
- h4yzRsOT/tlenkcQbAOZ5FqlydRlYjnfdEN8dvYoMKsJJVy0ZS+mAu+IEgQVF4H+hgFh
- X0ao9yT+dNF45dog330hE+0/084mm8tsOacihAShZByw09WF1SFlzFt6v0+9wJUHpCY1
- JIZg==
-X-Gm-Message-State: AOJu0YxKfUMnAXHmWCLylTE8REp+XM6pznWu3P122WeONEKbKzQfeUBt
- 44Lxo4aCxpeU/ks1S5mDXlGyycb9DmNi6XBdrP7zTtpy8r8zcdIxlhTSAl69EJXs8GOVE4fp7rq
- qObvh9vyevjragvxIvcRhA7Jbe2KOJXji7TcxfidNAA==
-X-Gm-Gg: AZuq6aJcJ+q6ccnM3r47N5bXS1/4Cv+ns40frEycZA1kfN8jvIVww/XtMh6ptthnX+Q
- Vkbs+MuNMNx88g1bymjNKuqTJ3U8M1csvVf4vHh4jKU16rYPcM+83wTqblm4sRueaMB6IVmllnV
- 3mpNqsOl8p9BHysKss6Wl7PQ8j78NJGW//4DrgAsWOQsMDMMajyJTC+azjcKzgoXXnXKj9qgRFH
- P8kQN7OGGJKxx632jERtOXl4qjv1b/z/wsBofnRcRp/5C6oG5om+yLJL8svnzibzZp8XhE=
-X-Received: by 2002:a17:903:3c4d:b0:2a9:327f:a8ff with SMTP id
- d9443c01a7336-2a9516fb4abmr8502085ad.33.1770339400563; Thu, 05 Feb 2026
- 16:56:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770339848; x=1770944648;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
+ b=EhGuWip1LimXnI0nc+aJeIbsrlECwnZEwCeWk2LiCNIpHc63ELfUOGqbFEk5qAIRCw
+ nA19SqVR/Ez3lq+luufZNdFt5rkFVtup94jOpqQ9u2I1fVaItkPxY4lCh7jX6gCn5ZXP
+ 4yAmAfM147woxwovcjv90TZl0RDzJIGQxFw/fANSLU7itcVDRooQfKcU80/6lDweSJsB
+ Zw1YXCSu73YIyeDXR134jf6oe+YkmuFEQAYNx4pUo5L3qab3kCerWivY3R8l6uV/NleO
+ V4ZBbJG2FIEnnZ9Rs7itdi8bdYVFln6ToYYP1CCbNhGUYjftFztRKFv+hC3ryI8dWJmb
+ u5Fg==
+X-Gm-Message-State: AOJu0YyUIOaCZipDXtkCPa+GGHK609NEqhW6omsGRbPZjmJMd6j98+ok
+ X4nS7iUy11+tVt21dfxCTgI3EyuBACwtsj2rAoribrvxWuykzhpPzlL9E7e+N1fgfID/E66a4U/
+ 8bqSp3viJDN6C4yc90HZryR/TKpWGTAeKMtOa09BpENUwQCb6ZqgoTP4=
+X-Gm-Gg: AZuq6aLYayaFT3ioRHdWPApUguZYIf3Uhxbi3yifD5GgxsfurUWOqo0DF27n8KIZrXi
+ fduk6lZ2cHdkHHIQbSSPOD9IVOA1JSgnMF/OjCw3G/8rLnHmjNODZhNM3SbF5NZScwED28IxO9J
+ EIST1jzWfr8SZlJPIw04q6ZGJf8Nj9VnLH3HGHf3AMsY/PzCd8EdcRd07LatrQMZ2EhF05RdwEO
+ oRlbLWFNl/gGqimArzuclANridQ6FrnGp3o7KYqF0EsWTpaTU0R/W+qoEgmyi6D6ygG/Gw=
+X-Received: by 2002:a17:90b:586b:b0:32e:3829:a71c with SMTP id
+ 98e67ed59e1d1-354b3cad4acmr782244a91.16.1770339847678; Thu, 05 Feb 2026
+ 17:04:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-5-8d8ff0035372@bsdimp.com>
- <a688dd34-a37e-46f1-8739-e01105ee4dc8@linaro.org>
-In-Reply-To: <a688dd34-a37e-46f1-8739-e01105ee4dc8@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 5 Feb 2026 17:56:29 -0700
-X-Gm-Features: AZwV_Qg-XD2ocd6t0lr7vP2ckCnmPwnv2TiugoMRH-43XwH5J2AvYOKyqiANE-s
-Message-ID: <CANCZdfrXi1CeHh0XrG0mY2C-dbukQ5evM1YA+gj3M3QxCj-38Q@mail.gmail.com>
-Subject: Re: [PATCH 05/24] bsd-user: Add function declarations for bsd-misc.c
- conversions
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
-Content-Type: multipart/alternative; boundary="0000000000001a4e71064a1d43a3"
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x632.google.com
+Date: Thu, 5 Feb 2026 18:03:56 -0700
+X-Gm-Features: AZwV_QiZTe6Q_OaAt5i0JOQ0YGWYcx6Yrs2d0cqQ-E2z8JilEvlMRcEQGwgS0VM
+Message-ID: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
+Subject: bsd-user: Dropping the NetBSD and OpenBSD code
+To: QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000c0bd71064a1d5de7"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,138 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001a4e71064a1d43a3
+--000000000000c0bd71064a1d5de7
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 5, 2026 at 5:17=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+So, it's been years since this code compiled by default, and even more
+years since they compiled at all.
 
-> On 2/6/26 03:26, Warner Losh wrote:
-> > Add function declarations for BSD System V IPC and UUID conversion
-> > routines that will be implemented in bsd-misc.c.
-> >
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> >   bsd-user/qemu-bsd.h | 15 +++++++++++++++
-> >   1 file changed, 15 insertions(+)
-> >
-> > diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
-> > index 56affcd31d..b98d1d76b2 100644
-> > --- a/bsd-user/qemu-bsd.h
-> > +++ b/bsd-user/qemu-bsd.h
-> > @@ -54,4 +54,19 @@ abi_long target_to_host_shmid_ds(struct shmid_ds
-> *host_sd,
-> >   abi_long host_to_target_shmid_ds(abi_ulong target_addr,
-> >           struct shmid_ds *host_sd);
-> >
-> > +/* bsd-misc.c */
-> > +abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid
-> *host_uuid);
-> > +abi_long target_to_host_semarray(int semid, unsigned short **host_arra=
-y,
-> > +        abi_ulong target_addr);
-> > +abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-> > +        unsigned short **host_array);
-> > +abi_long target_to_host_semid_ds(struct semid_ds *host_sd,
-> > +        abi_ulong target_addr);
-> > +abi_long host_to_target_semid_ds(abi_ulong target_addr,
-> > +        struct semid_ds *host_sd);
-> > +abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-> > +        abi_ulong target_addr);
-> > +abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-> > +        struct msqid_ds *host_md);
-> > +
-> >   #endif /* QEMU_BSD_H */
-> >
->
-> Normally, the declarations should be added with the definition. But I
-> won't insist that
-> you split this into the 6 following patches that add the definitions.
->
+Maybe 5 years ago, I contacted the OpenBSD folks, who said it had decayed
+beyond uselessness. So I plan on just removing the bsd-user/openbsd code
+shortly.
 
-Thanks! I'll adjust for the subsequent patch chains. I still have huge
-diffs:
+Maybe 4 years ago, someone from NetBSD popped up and said they had a fork
+and they'd share it with me, but they never did, and we never reconnected
+despite some email attempts since then. So, I'd like to remove the netbsd
+directory as well.
 
- 131 files changed, 5141 insertions(+), 587 deletions(-)
+Both of these are finally getting enough in the way that they are causing
+me problems with upstreaming the bsd-user stuff. Now that I have a good
+head of steam on doing that, I'd like to finish that process. Expect me to
+flood your email in the coming months with way too many patches now that
+I've found a way to streamline the process enough for me to sneak it into
+what would otherwise be lost Friday afternoons...
 
-But it was down from a high of I think 13k.
+Before I send the patch series to do this, I'd like to do a last and final
+call for collaboration. I kept it around for this long in the hopes someone
+would show up, but nobody ever did.
 
+Warner
 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
->
-> r~
->
-
---0000000000001a4e71064a1d43a3
+--000000000000c0bd71064a1d5de7
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
-2026 at 5:17=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
- wrote:<br>
-&gt; Add function declarations for BSD System V IPC and UUID conversion<br>
-&gt; routines that will be implemented in bsd-misc.c.<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/qemu-bsd.h | 15 +++++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 15 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h<br>
-&gt; index 56affcd31d..b98d1d76b2 100644<br>
-&gt; --- a/bsd-user/qemu-bsd.h<br>
-&gt; +++ b/bsd-user/qemu-bsd.h<br>
-&gt; @@ -54,4 +54,19 @@ abi_long target_to_host_shmid_ds(struct shmid_ds *h=
-ost_sd,<br>
-&gt;=C2=A0 =C2=A0abi_long host_to_target_shmid_ds(abi_ulong target_addr,<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct shmid_ds *host_sd);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +/* bsd-misc.c */<br>
-&gt; +abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host=
-_uuid);<br>
-&gt; +abi_long target_to_host_semarray(int semid, unsigned short **host_arr=
-ay,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong target_addr);<br>
-&gt; +abi_long host_to_target_semarray(int semid, abi_ulong target_addr,<br=
->
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned short **host_array);<br>
-&gt; +abi_long target_to_host_semid_ds(struct semid_ds *host_sd,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong target_addr);<br>
-&gt; +abi_long host_to_target_semid_ds(abi_ulong target_addr,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct semid_ds *host_sd);<br>
-&gt; +abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong target_addr);<br>
-&gt; +abi_long host_to_target_msqid_ds(abi_ulong target_addr,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct msqid_ds *host_md);<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0#endif /* QEMU_BSD_H */<br>
-&gt; <br>
-<br>
-Normally, the declarations should be added with the definition. But I won&#=
-39;t insist that <br>
-you split this into the 6 following patches that add the definitions.<br></=
-blockquote><div><br></div><div>Thanks! I&#39;ll adjust for the subsequent p=
-atch chains. I still have huge diffs:</div><div><br></div><div>=C2=A0131 fi=
-les changed, 5141 insertions(+), 587 deletions(-)</div><div><br></div><div>=
-But it was down from a high of I think 13k.</div><div>=C2=A0</div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
-<br>
-<br>
-r~<br>
-</blockquote></div></div>
+<div dir=3D"ltr">So, it&#39;s been years since this code compiled by defaul=
+t, and even more years since they compiled at all.<div><br></div><div>Maybe=
+ 5 years ago, I contacted the OpenBSD folks, who said it had decayed beyond=
+ uselessness. So I plan on just removing the bsd-user/openbsd code shortly.=
+</div><div><br></div><div>Maybe 4 years ago, someone from NetBSD popped up =
+and said they had a fork and they&#39;d share it with me, but they never di=
+d, and we never reconnected despite some email attempts since then. So, I&#=
+39;d like to remove the netbsd directory as well.</div><div><br></div><div>=
+Both of these are finally getting enough in the way that they are causing m=
+e problems with upstreaming the bsd-user stuff. Now that I have a good head=
+ of steam on doing that, I&#39;d like to finish that process. Expect me to =
+flood your email in the coming months with way too many patches now that I&=
+#39;ve found a way to streamline the process enough for me to sneak it into=
+ what would otherwise be lost Friday afternoons...</div><div><br></div><div=
+>Before I send the patch series to do this, I&#39;d like to do a last and f=
+inal call for collaboration. I kept it around for this long in the hopes so=
+meone would show up, but nobody ever did.</div><div><br></div><div>Warner</=
+div><div><br></div><div><br></div></div>
 
---0000000000001a4e71064a1d43a3--
+--000000000000c0bd71064a1d5de7--
 
