@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576E3EE6B44
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B70EE6B45
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 17:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voPwm-00017t-6G; Fri, 06 Feb 2026 12:48:48 -0500
+	id 1voPxR-0002J2-AL; Fri, 06 Feb 2026 12:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1voPwk-0000xg-08
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:48:46 -0500
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPxP-0002C6-Kh
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:49:27 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1voPwh-0005MJ-0F
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:48:45 -0500
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-8946a794e4fso10066996d6.2
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:48:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voPxN-0005Rr-Fb
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 12:49:26 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-34be2be4b7cso1389824a91.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 09:49:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770400163; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fBmXMwFSkB6i79/SCa8D/D73Pd6XpzvqdRZ8GsUZzGcHDICTCaxAs3jVSW2QkjY0/v
+ 8lX+wIr9lG0k7zV9LMg9ybLs3Wka1gGD9w2WoDhrvCDf2rPpSWumIDXOR5kKgwlebepK
+ D/KkHCvrH2fn3zONMa2rhZkrNtgFXmg28plvRhmu7mtZOD9k91ubIhrM0k0QhzV1KBHV
+ QZb+yqA0Tw7WL6uANNpvULqr9if9d7pNG+U3+eVJf9uJb1ClkqoCr3Q+gsc+4lBtmz6e
+ ayh3O6FLXmQj9siGTy+RKSqBp6ItDosVHYOv7haIKrj8cHx1F0A50TYLa7H6ESpFPh0M
+ rMGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=WZTMVztiD88Zq/8BA0XwI4410TcwDLl8RZXNipWI6e0=;
+ fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
+ b=KQn0/gMClIy3Axh6VLXkKu1oFhkj2+z0Gawn+gaqx057RQZMSksHkI/go4q3NKnvuO
+ zmSgRjVYrUOeMUaAIFr4o00dl/m99Qx3Yi455M+4e5eyffruqWGCtgkBcNk8PGpmVFyI
+ o2Xx8VL71I9SlH7lJfMJXLvLtRbpuaM1phO/ArZNna9lqTy0MKd5hynr2NWBscL6I0DW
+ XAlJthh4djZ6OP4s2uYmkTladaoLoOOluN5JtY0Y2iPX2M4pTWW4avz7oYJ5Rd1YNvZM
+ S2Z9zwPdsvePxL3Yj3TNi9X/q86VrwbS8VA4Qw/tbMpcWLGVGCrTzHU21POK9Q/6hA7Y
+ 6keg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1770400122; x=1771004922; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D42i9RZogG8L67xp3F4nvgjOu9b2AnGGK/Y7fYO2z6E=;
- b=IzhgjVxqL+xZY0lzdmUIAmmR9yTG808ERIpGjV7qNz+EXkRpfLboSY4VvXyRA6RRDe
- r0j8xm4mTe+sQ9cSbj0ZfhRqK/A2UastM8udFaWW7QvBEHyQQPye9EJCaInZ/E8Lo23k
- C4fXBSCEcN9G/gLA7HQc7myrUfAfOafHX8iaICsNTQxir/2wTfDeH4HGtg2RB8v6fnPq
- upV0848N9HABls1FJr70xYuBh96fDrgp1UXF1L5dGuUbFAvTC/qd+blNAlfCGk62E/UJ
- 9IMdqWXjZPBeAebI9FzT6pfR+QVEEKYhBvGQUTc9hro6dWvCVES+wN7TdTc2/ZwQgyyV
- a1eQ==
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770400163; x=1771004963;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WZTMVztiD88Zq/8BA0XwI4410TcwDLl8RZXNipWI6e0=;
+ b=OYy96PZGIm3SuKSDswC+T7/0MqtmzysWHSATez7sxEfuIWvcHN0P10T0KoVab2tK+M
+ 8i68+gjWR+IAbvxDoRD/6JHVm4IdqU7m4sXZ58PQrs3ZQ+40/OWUqfnefGLYUSPzb2YK
+ MuX9qdoXAwXuSYrz1OKutuK2ETpr31ncsacnyd51BfBFaVbk8vvW1Ms/r/NoB5WQXhj1
+ 6xP6Lkop+swfa4R8/xFzh2J/VHfzEvUrISnzDZAh7qXBuq37TiJbkCKWtCZ06q80U+Iu
+ JP5NI7npfflNCCiuNQWXYSwNGD70lGq3MdYdfWtphZQdASP9uotzxCz9ZRdSJUWK59u/
+ JZQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770400122; x=1771004922;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D42i9RZogG8L67xp3F4nvgjOu9b2AnGGK/Y7fYO2z6E=;
- b=u5p5OUSIvWF3SlrSbbZIxnd5U10d5wh2P9H4crnC3mpqd477XJy0e3ybfpBeZrVoOo
- vzBppCvbK2W5bG7U/1+Gn75r2QeBoWs3CZPLhhSRdDVQy+PzK6Vj/R+tPO9OE01cEtPh
- q4Lyh0gGMYQsVeCnA99o+o+j6loUE9JS8tEycWV0rE0PNTqpoTVBuyQFNBGpcjT54l1p
- tScdz2TIcO22jW5K1jT/mSbgYEnmJ9xlzy7S8TTilKkztix7ebZpWfwgagUHITxgmaak
- 20lBM5VM+LHBXLmuvqjcIUoGqqtI8EAckO19qnVwOxnx2S9U30XoCRh6ZSgY6HpUX1aG
- XdIg==
-X-Gm-Message-State: AOJu0YzL5QPH2i8ar54A8AkB7/a7fZbNsyVJtLTi/iNChG6i4avO8Kms
- SNZ4ob9NNhcOsI89GsK4rzi8muIF+cdbFBkL7bsCeTqn/WDk6go9dFEzwNe7FWvyMAY=
-X-Gm-Gg: AZuq6aJVsl1Jk7oJ4fJ72sNa50PRU2jz+mOMYb9TaeOr2bCqVPZV/G2A0fUdMJb7rEB
- GQi7OicAj0FS/jSXTnPolj0qW7QSEoszdjheWJWbZ5z8zKN4NP+zEq5i2Cmi4mCYQc4OWdaw/R5
- dYbkF2xQt2y49x1gqtG11rKEzlgxRfy3QTafKOpTyOxh3jzKBHr1BuP+J8hLcTobfUzAovvchrS
- sr6WmZLSdr/RlwYoF1ozvjLfbQyfJyxx/PnYM7x79fy3YA7j+z+SqMVGj2mHuiuLjj+fMeMS/vs
- DTcEXT60tmj5HXhAB/a17BlcN8tvGLtpkOmzUH7/sfn1GUoWgge6MlSLJWmIh3QXs6Iu4/zGMML
- t7a6AYtjx/c8e92l92a1rCm7GQnI7KOVQye2AMnqPgaf17C341oVsoSx29GLHDUeS8SlhOxgW+Z
- TURiJylQKKJnF475QxRn8z4cEy7bTDBl8pAJ+obQ==
-X-Received: by 2002:a05:6214:e66:b0:894:7200:4d76 with SMTP id
- 6a1803df08f44-8953ca84152mr49236096d6.44.1770400121773; 
- Fri, 06 Feb 2026 09:48:41 -0800 (PST)
-Received: from [192.168.68.104] ([179.193.9.245])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89547aa3478sm4004676d6.35.2026.02.06.09.48.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Feb 2026 09:48:41 -0800 (PST)
-Message-ID: <9350a58e-2f11-48ce-a7fd-3bffdb8f8b94@ventanamicro.com>
-Date: Fri, 6 Feb 2026 14:48:39 -0300
+ d=1e100.net; s=20230601; t=1770400163; x=1771004963;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WZTMVztiD88Zq/8BA0XwI4410TcwDLl8RZXNipWI6e0=;
+ b=jSvSmTb7RYRnzsVLjRZCPcbfaKK6oaWglkMGFariKqSIUVvAdWa7KLwd6KbE85hJla
+ qjxG06J7MJeOZFQ9/xRLpvNKm68ZvZE/CL1Ldae1wrQe/9v5w0XAXwDGIn25r7g7HN6/
+ dbSBELHra7rBm7QcCUmtq4QCLBzD9AH3tdUpQtoVfCP14eKvXBn+R4HUH+RaBu08BQnc
+ aMMSlchSbCkDs9vcn4i7E1MZOIwZsTxlSVbPGRq47B5GXES5ZpJ5ByinD9alU6L2/50y
+ kb4Qt2AsVcvSHEw8SQs3lXRgnvf+FodypZq+oD5bC0s1d8b4WpC3cCkBx0B5DXDScuaY
+ 5nXQ==
+X-Gm-Message-State: AOJu0YxCavgwcXJEs7bMQ7P7KbYKDHD/kEz9hrw2/zBTh0yaCAp7Ws50
+ g1Nhro4ZvIHVX3GDaTR2m3xNjS7HtlD0vswqLPoNfD+TDO9p4g/rJBcf4kh8ZIzaHabvw2fUkKu
+ 5b7yXgqpVjy1Ilzo72YIFQWl1D6r6/AMu9sAVLv52eg==
+X-Gm-Gg: AZuq6aIlyscd3nBydrQerDmbxf4t1svH30zq4xyaPwLMYP+0cMVOvmNqQZhie37BA+J
+ hMM7Ll4P/mvrO4NXdqAhlzIu32GQ3whNUk3K4hWByd6FHl5L5Ol6/50oL/b0U5P9512pHLDqj2d
+ UxW4pbQfJolj1NTn9MjQJzLFFRXXt/XnyvHPszct5CsDzxcrMo4y5taVvH/6c/BkcZ37mzTWUo/
+ zuLaxAPlsa812rg9EouwIMsxOl0j+vMwQbQOUuSOrFtx5KLjzhOawSK0me/4CjcZkfUndo=
+X-Received: by 2002:a17:90a:d40e:b0:340:bc27:97bd with SMTP id
+ 98e67ed59e1d1-354b3c84050mr2561166a91.9.1770400163113; Fri, 06 Feb 2026
+ 09:49:23 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
-To: chao.liu.zevorn@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Tao Tang <tangtao1634@phytium.com.cn>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- hust-os-kernel-patches@googlegroups.com
-References: <cover.1770127918.git.chao.liu.zevorn@gmail.com>
- <35f046c8d21aa6d5f9a531258762e01be198d8cf.1770127918.git.chao.liu.zevorn@gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <35f046c8d21aa6d5f9a531258762e01be198d8cf.1770127918.git.chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-15-8d8ff0035372@bsdimp.com>
+ <4c338621-eb9e-4048-9f1d-cb4f3ab6b259@linaro.org>
+In-Reply-To: <4c338621-eb9e-4048-9f1d-cb4f3ab6b259@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Fri, 6 Feb 2026 10:49:11 -0700
+X-Gm-Features: AZwV_QgmKTsuK-R-qnyTdNjpNsHJ3RbEMDjnTbAOXU_Bwzhqwfaa6KdscQ_i9nY
+Message-ID: <CANCZdfqeJ1kKXTZtedUdbBZg-ygviGRGJN03kBDHitSPQW=RHA@mail.gmail.com>
+Subject: Re: [PATCH 15/24] bsd-user: Add do_bsd_uuidgen implementation
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000d53c9e064a2b68af"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,350 +118,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000d53c9e064a2b68af
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Feb 5, 2026 at 8:08=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-On 2/3/2026 11:27 AM, chao.liu.zevorn@gmail.com wrote:
-> From: Chao Liu <chao.liu.zevorn@gmail.com>
-> 
-> Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
-> The test exercises bare, S-stage, G-stage, and nested translation paths
-> using iommu-testdev and the qos-riscv-iommu helpers.
-> 
-> The test validates:
-> - Device context (DC) configuration
-> - SV39 page table walks for S-stage translation
-> - SV39x4 page table walks for G-stage translation
-> - Nested translation combining both stages
-> - FCTL register constraints
-> 
-> This provides regression coverage for the RISC-V IOMMU implementation
-> without requiring a full guest OS boot.
-> 
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> ---
+> On 2/6/26 03:26, Warner Losh wrote:
+> > From: Stacey Son <sson@FreeBSD.org>
+> >
+> > Add implementation of uuidgen(2) syscall that generates UUIDs and
+> > converts them to target ABI format.
+> >
+> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > ---
+> >   bsd-user/bsd-misc.h | 34 ++++++++++++++++++++++++++++++++++
+> >   1 file changed, 34 insertions(+)
+> >
+> > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
+> > index d81b4fbaef..b722c63437 100644
+> > --- a/bsd-user/bsd-misc.h
+> > +++ b/bsd-user/bsd-misc.h
+> > @@ -43,6 +43,40 @@ static inline abi_long do_bsd_reboot(abi_long how)
+> >       return -TARGET_ENOSYS;
+> >   }
+> >
+> > +/* uuidgen(2) */
+> > +static inline abi_long do_bsd_uuidgen(abi_ulong target_addr, int count=
+)
+> > +{
+> > +    int i;
+> > +    abi_long ret;
+> > +    struct uuid *host_uuid;
+> > +
+> > +    if (count < 1 || count > 2048) {
+> > +        return -TARGET_EINVAL;
+> > +    }
+> > +
+> > +    host_uuid =3D g_malloc(count * sizeof(struct uuid));
+> > +
+> > +    if (host_uuid =3D=3D NULL) {
+>
+> g_malloc will never return null.
+>
+> > +        return -TARGET_ENOMEM;
+> > +    }
+> > +
+> > +    ret =3D get_errno(uuidgen(host_uuid, count));
+> > +    if (is_error(ret)) {
+> > +        goto out;
+> > +    }
+> > +    for (i =3D 0; i < count; i++) {
+> > +        ret =3D host_to_target_uuid(target_addr +
+> > +            (abi_ulong)(sizeof(struct target_uuid) * i), &host_uuid[i]=
+);
+> > +        if (is_error(ret)) {
+> > +            goto out;
+> > +        }
+> > +    }
+> > +
+> > +out:
+> > +    g_free(host_uuid);
+> > +    return ret;
+> > +}
+>
+> Can be improved with g_autofree instead of goto.
+>
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Will fix both...
 
->   MAINTAINERS                    |   1 +
->   tests/qtest/iommu-riscv-test.c | 279 +++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build        |   5 +-
->   3 files changed, 284 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/iommu-riscv-test.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 830f56376b..73daaad841 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -349,6 +349,7 @@ F: common-user/host/riscv*
->   F: tests/functional/riscv32
->   F: tests/functional/riscv64
->   F: tests/tcg/riscv64/
-> +F: tests/qtest/iommu-riscv-test.c
->   
->   RISC-V XThead* extensions
->   M: Christoph Muellner <christoph.muellner@vrull.eu>
-> diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
-> new file mode 100644
-> index 0000000000..2638024891
-> --- /dev/null
-> +++ b/tests/qtest/iommu-riscv-test.c
-> @@ -0,0 +1,279 @@
-> +/*
-> + * QTest testcase for RISC-V IOMMU with iommu-testdev
-> + *
-> + * This QTest file is used to test the RISC-V IOMMU with iommu-testdev so that
-> + * we can test RISC-V IOMMU without any guest kernel or firmware.
-> + *
-> + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqos/generic-pcihost.h"
-> +#include "hw/pci/pci_regs.h"
-> +#include "hw/misc/iommu-testdev.h"
-> +#include "hw/riscv/riscv-iommu-bits.h"
-> +#include "libqos/qos-riscv-iommu.h"
-> +#include "libqos/riscv-iommu.h"
-> +
-> +#define DMA_LEN           4
-> +
-> +/* RISC-V virt machine PCI configuration */
-> +#define RISCV_GPEX_PIO_BASE        0x3000000
-> +#define RISCV_BUS_PIO_LIMIT        0x10000
-> +#define RISCV_BUS_MMIO_ALLOC_PTR   0x40000000
-> +#define RISCV_BUS_MMIO_LIMIT       0x80000000
-> +#define RISCV_ECAM_ALLOC_PTR       0x30000000
-> +
-> +typedef struct RiscvIommuTestState {
-> +    QTestState *qts;
-> +    QGenericPCIBus gbus;
-> +    QPCIDevice *iommu_dev;
-> +    QPCIDevice *testdev;
-> +    QPCIBar testdev_bar;
-> +    uint64_t iommu_base;
-> +} RiscvIommuTestState;
-> +
-> +static void riscv_config_qpci_bus(QGenericPCIBus *qpci)
-> +{
-> +    qpci->gpex_pio_base = RISCV_GPEX_PIO_BASE;
-> +    qpci->bus.pio_limit = RISCV_BUS_PIO_LIMIT;
-> +    qpci->bus.mmio_alloc_ptr = RISCV_BUS_MMIO_ALLOC_PTR;
-> +    qpci->bus.mmio_limit = RISCV_BUS_MMIO_LIMIT;
-> +    qpci->ecam_alloc_ptr = RISCV_ECAM_ALLOC_PTR;
-> +}
-> +
-> +static uint64_t riscv_iommu_expected_gpa(uint64_t iova)
-> +{
-> +    return QRIOMMU_SPACE_OFFS + QRIOMMU_L2_PTE_VAL + (iova & 0xfff);
-> +}
-> +
-> +static void save_fn(QPCIDevice *dev, int devfn, void *data)
-> +{
-> +    QPCIDevice **pdev = (QPCIDevice **) data;
-> +    uint16_t vendor = qpci_config_readw(dev, 0);
-> +    uint16_t device = qpci_config_readw(dev, 2);
-> +
-> +    g_test_message("Found PCI device: vendor=0x%04x device=0x%04x devfn=0x%02x",
-> +                   vendor, device, devfn);
-> +
-> +    if (!*pdev) {
-> +        *pdev = dev;
-> +    }
-> +}
-> +
-> +static QPCIDevice *find_riscv_iommu_pci(QGenericPCIBus *gbus,
-> +                                        uint64_t *iommu_base)
-> +{
-> +    QPCIDevice *iommu_dev = NULL;
-> +    QPCIBar iommu_bar;
-> +
-> +    g_test_message("Searching for riscv-iommu-pci "
-> +                   "(vendor=0x%04x, device=0x%04x)",
-> +                   RISCV_IOMMU_PCI_VENDOR_ID, RISCV_IOMMU_PCI_DEVICE_ID);
-> +
-> +    qpci_device_foreach(&gbus->bus, RISCV_IOMMU_PCI_VENDOR_ID,
-> +                        RISCV_IOMMU_PCI_DEVICE_ID, save_fn, &iommu_dev);
-> +
-> +    if (!iommu_dev) {
-> +        g_test_message("riscv-iommu-pci device not found!");
-> +        return NULL;
-> +    }
-> +
-> +    g_test_message("Found riscv-iommu-pci at devfn=0x%02x", iommu_dev->devfn);
-> +
-> +    qpci_device_enable(iommu_dev);
-> +    iommu_bar = qpci_iomap(iommu_dev, 0, NULL);
-> +    g_assert_false(iommu_bar.is_io);
-> +
-> +    *iommu_base = iommu_bar.addr;
-> +    g_test_message("RISC-V IOMMU MMIO base address: 0x%" PRIx64, *iommu_base);
-> +
-> +    return iommu_dev;
-> +}
-> +
-> +static QPCIDevice *find_iommu_testdev(QGenericPCIBus *gbus, QPCIBar *bar)
-> +{
-> +    QPCIDevice *dev = NULL;
-> +
-> +    g_test_message("Searching for iommu-testdev (vendor=0x%04x, device=0x%04x)",
-> +                   IOMMU_TESTDEV_VENDOR_ID, IOMMU_TESTDEV_DEVICE_ID);
-> +
-> +    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
-> +                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
-> +    g_assert(dev);
-> +
-> +    qpci_device_enable(dev);
-> +    *bar = qpci_iomap(dev, 0, NULL);
-> +    g_assert_false(bar->is_io);
-> +
-> +    return dev;
-> +}
-> +
-> +static bool riscv_iommu_test_setup(RiscvIommuTestState *state)
-> +{
-> +    if (!qtest_has_machine("virt")) {
-> +        g_test_skip("virt machine not available");
-> +        return false;
-> +    }
-> +
-> +    state->qts = qtest_init("-machine virt,acpi=off "
-> +                            "-cpu max -smp 1 -m 512 -net none "
-> +                            "-device riscv-iommu-pci "
-> +                            "-device iommu-testdev");
-> +
-> +    qpci_init_generic(&state->gbus, state->qts, NULL, false);
-> +    riscv_config_qpci_bus(&state->gbus);
-> +
-> +    state->iommu_dev = find_riscv_iommu_pci(&state->gbus, &state->iommu_base);
-> +    g_assert(state->iommu_dev);
-> +
-> +    state->testdev = find_iommu_testdev(&state->gbus, &state->testdev_bar);
-> +    g_assert(state->testdev);
-> +
-> +    return true;
-> +}
-> +
-> +static void riscv_iommu_test_teardown(RiscvIommuTestState *state)
-> +{
-> +    g_free(state->iommu_dev);
-> +    g_free(state->testdev);
-> +    qtest_quit(state->qts);
-> +}
-> +
-> +static uint64_t riscv_iommu_check(QTestState *qts, uint64_t iommu_base,
-> +                                  QRIOMMUTransMode mode)
-> +{
-> +    uint64_t cap;
-> +    uint64_t ddtp;
-> +    uint32_t cqcsr;
-> +    uint32_t fqcsr;
-> +    uint32_t pqcsr;
-> +    uint32_t fctl;
-> +    uint32_t fctl_mask;
-> +    uint32_t fctl_desired;
-> +    uint32_t igs;
-> +
-> +    cap = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_CAP);
-> +    g_assert_cmpuint((uint32_t)(cap & RISCV_IOMMU_CAP_VERSION), ==,
-> +                     RISCV_IOMMU_SPEC_DOT_VER);
-> +
-> +    fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
-> +    igs = (cap & RISCV_IOMMU_CAP_IGS) >> 28;
-> +    g_assert_cmpuint(igs, <=, RISCV_IOMMU_CAP_IGS_BOTH);
-> +
-> +    fctl_mask = RISCV_IOMMU_FCTL_BE | RISCV_IOMMU_FCTL_WSI |
-> +                RISCV_IOMMU_FCTL_GXL;
-> +    fctl_desired = fctl & ~fctl_mask;
-> +    if (igs == RISCV_IOMMU_CAP_IGS_WSI) {
-> +        fctl_desired |= RISCV_IOMMU_FCTL_WSI;
-> +    }
-> +
-> +    if ((fctl & fctl_mask) != (fctl_desired & fctl_mask)) {
-> +        ddtp = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_DDTP);
-> +        cqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_CQCSR);
-> +        fqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FQCSR);
-> +        pqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_PQCSR);
-> +
-> +        g_assert_cmpuint((uint32_t)(ddtp & RISCV_IOMMU_DDTP_MODE), ==,
-> +                         RISCV_IOMMU_DDTP_MODE_OFF);
-> +        g_assert_cmpuint(cqcsr & RISCV_IOMMU_CQCSR_CQON, ==, 0);
-> +        g_assert_cmpuint(fqcsr & RISCV_IOMMU_FQCSR_FQON, ==, 0);
-> +        g_assert_cmpuint(pqcsr & RISCV_IOMMU_PQCSR_PQON, ==, 0);
-> +
-> +        qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FCTL, fctl_desired);
-> +        fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
-> +    }
-> +
-> +    g_assert_cmpuint(fctl & fctl_mask, ==, fctl_desired & fctl_mask);
-> +
-> +    if (mode == QRIOMMU_TM_S_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
-> +        g_assert((cap & RISCV_IOMMU_CAP_SV39) != 0);
-> +    }
-> +    if (mode == QRIOMMU_TM_G_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
-> +        g_assert((cap & RISCV_IOMMU_CAP_SV39X4) != 0);
-> +        g_assert_cmpuint(fctl & RISCV_IOMMU_FCTL_GXL, ==, 0);
-> +    }
-> +
-> +    return cap;
-> +}
-> +
-> +static void run_riscv_iommu_translation(const QRIOMMUTestConfig *cfg)
-> +{
-> +    RiscvIommuTestState state = { 0 };
-> +
-> +    if (!riscv_iommu_test_setup(&state)) {
-> +        return;
-> +    }
-> +
-> +    riscv_iommu_check(state.qts, state.iommu_base, cfg->trans_mode);
-> +
-> +    g_test_message("### RISC-V IOMMU translation mode=%d ###",
-> +                   cfg->trans_mode);
-> +    qriommu_run_translation_case(state.qts, state.testdev, state.testdev_bar,
-> +                                 state.iommu_base, cfg);
-> +    riscv_iommu_test_teardown(&state);
-> +}
-> +
-> +static void test_riscv_iommu_bare(void)
-> +{
-> +    QRIOMMUTestConfig cfg = {
-> +        .trans_mode = QRIOMMU_TM_BARE,
-> +        .dma_gpa = QRIOMMU_IOVA,
-> +        .dma_len = DMA_LEN,
-> +        .expected_result = 0,
-> +    };
-> +
-> +    run_riscv_iommu_translation(&cfg);
-> +}
-> +
-> +static void test_riscv_iommu_s_stage_only(void)
-> +{
-> +    QRIOMMUTestConfig cfg = {
-> +        .trans_mode = QRIOMMU_TM_S_STAGE_ONLY,
-> +        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-> +        .dma_len = DMA_LEN,
-> +        .expected_result = 0,
-> +    };
-> +
-> +    run_riscv_iommu_translation(&cfg);
-> +}
-> +
-> +static void test_riscv_iommu_g_stage_only(void)
-> +{
-> +    QRIOMMUTestConfig cfg = {
-> +        .trans_mode = QRIOMMU_TM_G_STAGE_ONLY,
-> +        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-> +        .dma_len = DMA_LEN,
-> +        .expected_result = 0,
-> +    };
-> +
-> +    run_riscv_iommu_translation(&cfg);
-> +}
-> +
-> +static void test_riscv_iommu_nested(void)
-> +{
-> +    QRIOMMUTestConfig cfg = {
-> +        .trans_mode = QRIOMMU_TM_NESTED,
-> +        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-> +        .dma_len = DMA_LEN,
-> +        .expected_result = 0,
-> +    };
-> +
-> +    run_riscv_iommu_translation(&cfg);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +    qtest_add_func("/iommu-testdev/translation/bare",
-> +                   test_riscv_iommu_bare);
-> +    qtest_add_func("/iommu-testdev/translation/s-stage-only",
-> +                   test_riscv_iommu_s_stage_only);
-> +    qtest_add_func("/iommu-testdev/translation/g-stage-only",
-> +                   test_riscv_iommu_g_stage_only);
-> +    qtest_add_func("/iommu-testdev/translation/ns-nested",
-> +                   test_riscv_iommu_nested);
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index dfb83650c6..25fdbc7980 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -287,7 +287,10 @@ qtests_riscv32 = \
->     (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
->   
->   qtests_riscv64 = ['riscv-csr-test'] + \
-> -  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
-> +  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-> +  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-> +   config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-> +   ['iommu-riscv-test'] : [])
->   
->   qos_test_ss = ss.source_set()
->   qos_test_ss.add(
+Warner
 
+--000000000000d53c9e064a2b68af
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
+2026 at 8:08=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
+derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
+ wrote:<br>
+&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; <br>
+&gt; Add implementation of uuidgen(2) syscall that generates UUIDs and<br>
+&gt; converts them to target ABI format.<br>
+&gt; <br>
+&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.h | 34 +++++++++++++++++++++++++++++++++=
++<br>
+&gt;=C2=A0 =C2=A01 file changed, 34 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
+&gt; index d81b4fbaef..b722c63437 100644<br>
+&gt; --- a/bsd-user/bsd-misc.h<br>
+&gt; +++ b/bsd-user/bsd-misc.h<br>
+&gt; @@ -43,6 +43,40 @@ static inline abi_long do_bsd_reboot(abi_long how)<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return -TARGET_ENOSYS;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +/* uuidgen(2) */<br>
+&gt; +static inline abi_long do_bsd_uuidgen(abi_ulong target_addr, int coun=
+t)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 int i;<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 struct uuid *host_uuid;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (count &lt; 1 || count &gt; 2048) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EINVAL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 host_uuid =3D g_malloc(count * sizeof(struct uuid));<br=
+>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (host_uuid =3D=3D NULL) {<br>
+<br>
+g_malloc will never return null.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_ENOMEM;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(uuidgen(host_uuid, count));<br>
+&gt; +=C2=A0 =C2=A0 if (is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; count; i++) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D host_to_target_uuid(target_addr +=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (abi_ulong)(sizeof(struct t=
+arget_uuid) * i), &amp;host_uuid[i]);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +out:<br>
+&gt; +=C2=A0 =C2=A0 g_free(host_uuid);<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+<br>
+Can be improved with g_autofree instead of goto.<br></blockquote><div><br><=
+/div><div>Will fix both...</div><div><br></div><div>Warner=C2=A0</div></div=
+></div>
+
+--000000000000d53c9e064a2b68af--
 
