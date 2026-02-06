@@ -4,148 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825B0EE20A6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 14:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4177DEE20AC
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:00:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voNCX-0004Wq-V7; Fri, 06 Feb 2026 09:52:54 -0500
+	id 1voNJI-0004Rt-Gi; Fri, 06 Feb 2026 09:59:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1voNAr-0001LN-D4; Fri, 06 Feb 2026 09:51:12 -0500
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1voNAn-0007XB-TK; Fri, 06 Feb 2026 09:51:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Wnn8K53GOV+0WvT/ed2/nxnah/BsHlODzv1m9lc/M/+lynafEIDOxb9LTGJfYEJ2zRh6EsScGD0SNIpviCPOiB96oG6p6JCw0sdoTR7s86g8ZIU/nQ5ixj+F45F0+y1FmtTF7LNBOhQYbwbIxqMDe2gsdHpub4ogCTQq7qvy3MU1jaAACJUBenVmXjk7BO97EcT2eCjZdXt6sFU0JhDsyDrmYkUvBYxFYL1FxBl0FE5CZ4ZC+kpVjBXeneGicMj8YO6PEXrTrXdkit6FQuPDp76UVwVUL+BAqiFMV8CNKDFR/m5Q7VCnIrm7P8eH/KjCtVBTC3uGQ9PwXHixsUL5Yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BxEvi2yIM5TRWsx7QAo0u+6KQiTsfOsc1NQg/VQKAQw=;
- b=pzzRnlfVD0eC+yEQNtQarctW5s65h3HPu5FHizpBiCsEKBIxf+67e4IuXC4iC84XNB0PZm8A3LazeIJ7XUMOru9j/S+604TiqPCZ9++StGoiINXq8lSpuwMsybwKN3irrBtWOO11nLbxkpm3AcBLiaNR5FF6j6K//NQmp+VwDJcqHzqx+y0Qh+5LjLhWEooHMSYmoSFW1Oc/rXZT1Z1ZCkrSJ4TX8hZ++kN/fJaBnpWG5jcxj8GkH+XjLqyh/FbAJMiNKq2tM8spMnEPV8m6T88OUfExomyqEdZRYbxQQEi0hvziapq2tQrSsiWbSDkx7e185hGTk4swidhjJs+oGg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BxEvi2yIM5TRWsx7QAo0u+6KQiTsfOsc1NQg/VQKAQw=;
- b=ErkSx2La5sMfcUqlU8p3tx8PlyniXr4Pb0lSqa02ikl5LM63yjFqLoX+mg/YMNbdhrC0aWAeD28Nuur19yzuehRjeTQjKrGpelklq19R2nY/QSKhgzrwxG0zZ2Ljxd0F/LEsXh5Ep10OelQlePl/cSYdNtQ3vHneDGhZtE6ZTV3iSTmD3cXouJCDPRvW22iU2IZolbAhZmJviVNSKJ2ru+Q6x1OTV0tJmqL8QppxBFBDbZqTfUsuYGQOGEGF4Nb5FMww2hLnPImc0K34I6THKx0st9uBD74A2QadBpq5IilToHmRJnlD46DwFnPNOtN96cj/7DkxbaLiXAJB5vPQ1g==
-Received: from CYZPR12CA0009.namprd12.prod.outlook.com (2603:10b6:930:8b::24)
- by BY5PR12MB4323.namprd12.prod.outlook.com (2603:10b6:a03:211::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 14:50:59 +0000
-Received: from CY4PEPF0000EE33.namprd05.prod.outlook.com
- (2603:10b6:930:8b:cafe::3d) by CYZPR12CA0009.outlook.office365.com
- (2603:10b6:930:8b::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.16 via Frontend Transport; Fri,
- 6 Feb 2026 14:50:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CY4PEPF0000EE33.mail.protection.outlook.com (10.167.242.39) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9587.10 via Frontend Transport; Fri, 6 Feb 2026 14:50:59 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 6 Feb
- 2026 06:50:34 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 6 Feb
- 2026 06:50:30 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
- <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <skolothumtho@nvidia.com>
-Subject: [PATCH v2 22/24] hw/arm/smmuv3: Add per-device identifier poroperty
-Date: Fri, 6 Feb 2026 14:48:21 +0000
-Message-ID: <20260206144823.80655-23-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260206144823.80655-1-skolothumtho@nvidia.com>
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1voNIw-00047T-MZ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:59:33 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1voNIu-0000BZ-3i
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:59:30 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-79456d5ebf9so8758417b3.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 06:59:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770389967; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Z/MatQ/eoZpOIhymUSl+7boAWhv57v8b+qQf4Vng5L4j0IOQefFyL+SUyP/AgSJli8
+ HYUYUjHdxcifAEeENrp/Pn2mSIclyDBUYMqNhdudBGfYmFzguDSsVwgR+iEei7gRIQiW
+ RXd+5vasS2cq69k1ca+bvNtcPyPWYYqMJ8HyfJ/Q6ID/E2+m0iQEFL6v640H9wpn9svo
+ DcJAzmeu5vu9cib5apGkJNxiWQ3xqDc9qjJZj1iJBSP1rw9US6xvqMHij/lG/yHF2B6S
+ OmFChrHCUZ+fFu1YGZvQydrhuJ9agphTrJNCK/1C2e9Yv878SbPbkByiJ7isHqZnTgY5
+ RJTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
+ fh=EQxqgLWoW3xrRuA0t22tcEV7rqDjFpaH8wIk1fjO7wU=;
+ b=N56Au+jjFUJlwCr/dzYdzZ73CCe536gM9HPYmXtQkFwrC9N7UUXOQ1hoNO3yzUkzWL
+ cKYTjJE0KXOlrNdVvQJJrD66H84RfjL6doF3FjpJhcZTHoprspqYSS2zYu69R1OZe8L8
+ ER6qOTH4lRyG2b33/AfrYki9LUGMyQxSs+g9uFhypWeFDZ5gSCWi23OKa8Qmz1lgvTzr
+ yOPFl3oTJ24mQhzSw43DxWVoO3Kqbdb0yskHK9IQ0GovmAQE9Zaukns/rJBJISLHIQ64
+ p4QUhkqsHVpy9N/R/YYmG8tGU6f5yHdoFHosYvyOmsz9ZPoTS/GbLkQjyQI3Wz4EjNNe
+ fM1A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770389967; x=1770994767; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
+ b=zO5J7aIkjGdjVnYht3yp5JypW3O2H4v0yBkwgKEo9dquR9w4JNqyttrBo40UGSe3De
+ Lvy+oJJ47//0sEV8E0eO5DBh4Mxit0tojq+d3ll29P85zDkNlvLm783NNFWlfcZX6buU
+ sWNW+xS8HMhnVaVhC1g8b7F4ts7qUoTgDdHwt5HcXpzxzt4HETUCwkdzZf8ZfJp695mA
+ okdsnjJ6Xe5S1JLap1sRFRm/sSaDu8lws/xYtOPxkDVu4YEB5kNV8kFjuzE1SBb1t8Al
+ nixt+wewHy+49jGVcBEssfwn5sKKx511rizjsfSZIJx0G/7mFa6cZ4cTZ7DBtsX46YJr
+ 4+nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770389967; x=1770994767;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
+ b=RA2XH/fRGPEl1kp/1jt/JAgyB5qGo1rn0/Ra7fn8EXdYhon1MBvfplVE/+uglQi48J
+ hm2wUJFMP+tBURT5ipyjNZ39M2as5ZawV/UileyMRuaq3nu/Ey0HsZ6+/52UTNebanw0
+ 3iSVVKI0oTp6Ebv/VCF+HUN1figQKXFaqbrLGwUMX3MsspPSSKF82o88KEJrmiqGzMNS
+ tnPyQyINLjNYIvbJximBrikyJBcd/VkhZ3L+fUK+hk8TkjFFRwUBPEIjVIi2I62tvvuH
+ tk9FHy7iEDJMKih963PKgr9uFnjMIGEuwWU3AkfnrAulXn05K0XfEnJuYRku3YCatH4w
+ 81bg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVx2Nf8h5jCaLrgFnBFXrBL/uT2WO2xiadbaPvNd1mqSv4XzUk0JfMoOp8UkHWk135AoYg4/OYrmnXy@nongnu.org
+X-Gm-Message-State: AOJu0Yz2KNe36ihei2JMH7nnL/Xo5Fo9j2IY8mTM3Osq4eAZecMSwpP5
+ oL2bSenK5FysIdru6Ajo+rhoOAk7fgsY4zuu4/eR/I9zx7t7gZPmYtsMUpefBHgepyScn4R2c0b
+ SxZVB974F4dDZl3QWvQ+uatRX7QvnpBuw+u9r9rKoPw==
+X-Gm-Gg: AZuq6aLocYjPveRaX/xQL9nFv9/IklV7gR52kC0pw/iAqMihWVqxv5dVhQXtUrwNo8I
+ 7Z5shqtr0b2Z6QCaHyVqIftJTip06YTck3dBtTFMov4Zjo3XGw5yBoYJGArDvmowA21KouMiCKA
+ WHLWYh82PfQuN0+cRSrzgWP3boyr5efhSXs9Vu4wfRknKeQtdRbCjF3dVb4xPXWKNexlRALd6PG
+ uXFeAQMZsu3JbpkLL4rNRw2cSQBvrlGO6mYWUXOu53xaXygRJKEQ7SFTS9Mkcvyzp4C+/v7oGpw
+ nyosdnpDMHiGKOkUE3Gq/Rri1bd6QIpFp48GDk+IUhMyvSNkl+a8iR8=
+X-Received: by 2002:a05:690c:88a:b0:796:2976:a452 with SMTP id
+ 00721157ae682-7962976ac35mr4095557b3.23.1770389966783; Fri, 06 Feb 2026
+ 06:59:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE33:EE_|BY5PR12MB4323:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6539242-c052-4f55-875c-08de658f2450
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|376014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?VtRLgUMqcDd6q8eHU42/4gOXBenvNT118KB8doIog36UygzwBjg4HfXnIWUN?=
- =?us-ascii?Q?g1ZqAikKIc5QMLlpx9fYTGBZTyk7xqqGEnV/JqDkkHt3AEaKY1KlI+DfvuCI?=
- =?us-ascii?Q?49qUhqaGCrqtQtxhYZQnxuOsbxDyAcsT2CsCokXr3rpUtOZji22P7Paf2HOm?=
- =?us-ascii?Q?TkqDYdhqPy5eg/xGFBmgjnTSOCt6P4ANTLKW2EvqvXGPV2nOFVmqZbaxDeM8?=
- =?us-ascii?Q?ivbP7jL3+A2kVJmcB0vDm95Ie/7m1ZaOjTSw8kPMhN/MLWI6rCrWGx6HebeB?=
- =?us-ascii?Q?QZffDol+nkMO90frhqusCBlpipcSyRh3zA7byZnA7Gbon320hnqXUAprWfc/?=
- =?us-ascii?Q?gy7F43sWxmnhpfEuMlQNc54+lezh+oAeBcCXvUhqbxujvpMmUXEWk+K2RB9O?=
- =?us-ascii?Q?LmCodsnwJUWU5gMTCgo/5xeYPM5cNXp1MlixvRd+JLvQEaWmvjcFG7i1yQEN?=
- =?us-ascii?Q?wyPLcKopB+XxUrdzXo+Us7oDF+BUBIbtB8qWIKO2gr9bmRr89vRIH9dWgFlA?=
- =?us-ascii?Q?T5DJvh0zvAOtFWxaNLcy2h4CfBoNtihwsXVVjCN4n4TSxYFDR5SRU52JS2AF?=
- =?us-ascii?Q?zHkFocxdenSQ++GgcFk+PID/tN4em40TvJLMTtU0g5aXH4npHnXAIUaJtgOh?=
- =?us-ascii?Q?PQGvG8yS8GHdw/AWJZBIQk/+Zc+ErjlXsK3FdsH5EsB1rPzZk9MBHXN9Um4f?=
- =?us-ascii?Q?eYNVzpVqLNnRw9FzNPbkZ2nskMJ4cf9e1j1EWZXGlMWC2f3wm8vH8yACqW5i?=
- =?us-ascii?Q?bYxMtlWU+6bQCIF55Z4KTvw/vyUYYruiheUNz8BZxuiRBWGVV74U41Rc0NH5?=
- =?us-ascii?Q?0nPg6h7SAFLT4ouC0eRScDlw07MC0oQ8PXjSgC0ecqWSGcqC5L6TfR4nbFn3?=
- =?us-ascii?Q?Z1G8SrnMU+S9RTPb/0MFenM2v9mmkJ6fJCVAPHFFJfuGzTUV+CKJ/20lvrJU?=
- =?us-ascii?Q?l7/HwBJyo4Q5NARDw8cGy0WnOQKkJZN+Qpvs31w05uIE/KQ/RRYSQAAlslJp?=
- =?us-ascii?Q?znUnXCy7H+/XVavXxCkHVEuepIepVIhMmfTGgph1SEgIYPrdJMCFpbweIQkZ?=
- =?us-ascii?Q?rOhHpElk+fBeX0fkCE4j780ZIU6mwlpqYqD/Q7Bbi0uzHj8+pnp0rO8jkAwN?=
- =?us-ascii?Q?hqMzUWDy0xu+akUPmyIaK4AoD2fU9AmBPXpepZbAeTGyY8HXdTby7D9gWr9g?=
- =?us-ascii?Q?svn+6D7IYoKSaYGLaJu5FrL697r5gFlP3W0txhpLOpNrnpz4JML24keQhpJ6?=
- =?us-ascii?Q?oZN8VkkAtva20URxCLqmLNMz/PbXI8rvZD24Gb2P6dAN/rpJ5o4U2D5qazSG?=
- =?us-ascii?Q?qi3uiBzD8ulZkUZWKsDtZwfdP2WhKf3SUfA75ooQ64El4elpFVilRuo8CYmI?=
- =?us-ascii?Q?txVDuAWZ4RkbQXLZq+LscyQhr/xdGfacRhuiSStFful0MRMrnHlAQhHZkit+?=
- =?us-ascii?Q?UnRMSjFHup5hvzfcczqeYkeKI2xU+dC+y4xF+sVuRwPH5U7SXwNGvkQAloNa?=
- =?us-ascii?Q?3PidLI/sdwO+Lz3+aq4eMBo4PU2/Z7MtRIIsZjOkXuV41XAD6jkB6/FvLZET?=
- =?us-ascii?Q?z3PjjUuqSDYgaBfTOfOy8QKMCtrg/83H5KBKXWLP8w1ecdirvzDi28zZgsTH?=
- =?us-ascii?Q?BgTpyRol/3x2Ljoz4COYLwXPc+XNhZ0rRHdnr3Ez8AMO3E6H9EC0ZOFDF3AQ?=
- =?us-ascii?Q?SPpJTg=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(376014)(36860700013); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: WJVdgIiIjC1Whez8qUSiOhcY7xw1OM11Z7ri92yxbcnx7xorrOcVuY7cK7kMjjNVTw232nrJNZ2s+h7CKH7nEsZxG5jpFsDrp0fg6ucLR7OZIvlQPKQLCR7obwg8neIzdlgmK6LvWQK29CJOUzZb5dk9oknei0zEWrjbvRavwPIY8/EV8TD7bAXCpVURaTZmY4/jV0vBIVZ14KOzdNzWweR9zKEvB+tIGBHq54YzmUHkeCBIuSZq3svCVHl0Gc7Nw+Q+yu0uhVRWglt7flYj+uTm/wHXeygrTkYAulXie2UbnSUnPLegei5iAXanc77FpePNfKJ6jbHEV8HwC8jy0EdZOjzPlNDYcuOcCosUo/9pVeOWpFZuivtukZKqdzdrrFdRNaRhh0PtlN30Clf9Gd8v/dfnkz1w80WNCI+mcNsFJrcHsTqgQYYVPNfd60cL
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 14:50:59.6100 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6539242-c052-4f55-875c-08de658f2450
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE33.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4323
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20251202160853.22560-1-sebott@redhat.com>
+ <20251202160853.22560-3-sebott@redhat.com>
+In-Reply-To: <20251202160853.22560-3-sebott@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Feb 2026 14:59:14 +0000
+X-Gm-Features: AZwV_QgieJzeeTFJCFpBW88yIXQg35x305xf0x9-4d4AF9icH8OLR1uAx6S_ojM
+Message-ID: <CAFEAcA8oi1Xs2kv66dFV9NZore+Q2vHUsgMikveVdN1c+3SBJQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] target/arm/kvm: add kvm-psci-version vcpu property
+To: Sebastian Ott <sebott@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,97 +118,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an "identifier" property to the SMMUv3 device and use it when
-building the ACPI IORT SMMUv3 node Identifier field.
+On Tue, 2 Dec 2025 at 16:09, Sebastian Ott <sebott@redhat.com> wrote:
+>
+> Provide a kvm specific vcpu property to override the default
+> (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
+> by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+>
+> Note: in order to support PSCI v0.1 we need to drop vcpu
+> initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+>
+> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>  docs/system/arm/cpu-features.rst |  5 +++
+>  target/arm/cpu.h                 |  6 +++
+>  target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
+>  3 files changed, 74 insertions(+), 1 deletion(-)
 
-This avoids relying on enumeration order and provides a stable
-per-device identifier. This is useful when we add support for
-Tegra241 CMDQV DSDT in subsequent patch.
+Hi; this patch seems generally reasonable to me as a way to handle
+this kind of "control" register; for more discussion I wrote a
+longer email in reply to Eric's series handling other kinds of
+migration failure:
+https://lore.kernel.org/qemu-devel/CAFEAcA-gi42JObOjLuPudABX8WRdWf5SzSbkzU-bd06ecF1Vog@mail.gmail.com/T/#me03ebff8dbd8f58189cd98c3a21812781693277e
 
-No functional change intended.
+Unless discussion in that thread reveals that we have so many of
+this kind of "control" knob that we would prefer a generic
+solution rather than per-knob user-friendly names and values,
+I'm OK with taking this patch without completely resolving the
+design discussion on that other series first.
 
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/smmuv3.c          | 1 +
- hw/arm/virt-acpi-build.c | 4 +++-
- hw/arm/virt.c            | 3 +++
- include/hw/arm/smmuv3.h  | 1 +
- 4 files changed, 8 insertions(+), 1 deletion(-)
+My review comments below are fairly minor, and patch 1 of
+this series has already been applied upstream now.
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 7858bf2c33..7f84c87a46 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -2114,6 +2114,7 @@ static const Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
-     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
-     /* GPA of MSI doorbell, for SMMUv3 accel use. */
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index ae3b4aac52..046e930ca5 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -342,6 +342,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
- typedef struct AcpiSMMUv3Dev {
-     int irq;
-     hwaddr base;
-+    uint8_t id;
- 
-     /*
-      * IORT-only fields.
-@@ -407,6 +408,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
-     bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
-     sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-     sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
-+    sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
-     pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-     sbdev = SYS_BUS_DEVICE(obj);
-     sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-@@ -642,7 +644,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                      (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
-         build_append_int_noprefix(table_data, node_size, 2); /* Length */
-         build_append_int_noprefix(table_data, 4, 1); /* Revision */
--        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-+        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
-         /* Number of ID mappings */
-         build_append_int_noprefix(table_data, smmu_mapping_count, 4);
-         /* Reference to ID Array */
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 390845c503..22ee5c4a41 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3059,12 +3059,15 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                        (vms->legacy_smmuv3_present) ?
-                        "iommu=smmuv3" : "virtio-iommu");
-         } else if (vms->iommu == VIRT_IOMMU_NONE) {
-+            static uint8_t id;
-+
-             /* The new SMMUv3 device is specific to the PCI bus */
-             object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
-             object_property_set_link(OBJECT(dev), "memory",
-                                      OBJECT(vms->sysmem), NULL);
-             object_property_set_link(OBJECT(dev), "secure-memory",
-                                      OBJECT(vms->secure_sysmem), NULL);
-+            object_property_set_uint(OBJECT(dev), "identifier", id++, NULL);
-         }
-         if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-             hwaddr db_start = 0;
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 87926f8cb3..39cb43506e 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -63,6 +63,7 @@ struct SMMUv3State {
-     qemu_irq     irq[4];
-     QemuMutex mutex;
-     char *stage;
-+    uint8_t identifier;
- 
-     /* SMMU has HW accelerator support for nested S1 + s2 */
-     bool accel;
--- 
-2.43.0
+> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+> index 37d5dfd15b..1d32ce0fee 100644
+> --- a/docs/system/arm/cpu-features.rst
+> +++ b/docs/system/arm/cpu-features.rst
+> @@ -204,6 +204,11 @@ the list of KVM VCPU features and their descriptions.
+>    the guest scheduler behavior and/or be exposed to the guest
+>    userspace.
+>
+> +``kvm-psci-version``
+> +  Override the default (as of kernel v6.13 that would be PSCI v1.3)
+> +  PSCI version emulated by the kernel. Current valid values are:
+> +  0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
 
+I think we could be a little more detailed here.
+
+
+``kvm-psci-version``
+
+  Set the Power State Coordination Interface (PSCI) firmware ABI version
+  that KVM provides to the guest. By default KVM will use the newest
+  version that it knows about (which is PSCI v1.3 in Linux v6.13).
+
+  You only need to set this if you want to be able to migrate this
+  VM to a host machine running an older kernel that does not
+  recognize the PSCI version that this host's kernel defaults to.
+
+  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
+
+
+> +
+>  TCG VCPU Features
+>  =================
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 39f2b2e54d..e2b6b587ea 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1035,6 +1035,12 @@ struct ArchCPU {
+>      bool kvm_vtime_dirty;
+>      uint64_t kvm_vtime;
+>
+> +    /*
+> +     * Intermediate value used during property parsing.
+> +     * Once finalized, the value should be read from psci_version.
+> +     */
+> +    uint32_t kvm_prop_psci_version;
+> +
+>      /* KVM steal time */
+>      OnOffAuto kvm_steal_time;
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 0d57081e69..cf2de87287 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -484,6 +484,49 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
+>      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>  }
+>
+> +struct psci_version {
+
+Nit: our coding style says struct type names should be in
+CamelCase, and structs should have a typedef rather than
+being used as "struct foo".
+
+> +    uint32_t number;
+> +    const char *str;
+> +};
+> +
+> +static const struct psci_version psci_versions[] = {
+> +    { QEMU_PSCI_VERSION_0_1, "0.1" },
+> +    { QEMU_PSCI_VERSION_0_2, "0.2" },
+> +    { QEMU_PSCI_VERSION_1_0, "1.0" },
+> +    { QEMU_PSCI_VERSION_1_1, "1.1" },
+> +    { QEMU_PSCI_VERSION_1_2, "1.2" },
+> +    { QEMU_PSCI_VERSION_1_3, "1.3" },
+> +    { -1, NULL },
+> +};
+> +
+> +static char *kvm_get_psci_version(Object *obj, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +    const struct psci_version *ver;
+> +
+> +    for (ver = psci_versions; ver->number != -1; ver++) {
+
+Using ARRAY_SIZE() to set the loop bound is nicer than requiring
+a sentinel value at the end of the array.
+
+> +        if (ver->number == cpu->psci_version)
+> +            return g_strdup(ver->str);
+> +    }
+> +
+> +    return g_strdup_printf("Unknown PSCI-version: %x", cpu->psci_version);
+
+Is this ever possible?
+
+> +}
+> +
+> +static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +    const struct psci_version *ver;
+> +
+> +    for (ver = psci_versions; ver->number != -1; ver++) {
+> +        if (!strcmp(value, ver->str)) {
+> +            cpu->kvm_prop_psci_version = ver->number;
+> +            return;
+> +        }
+> +    }
+> +
+> +    error_setg(errp, "Invalid PSCI-version value");
+
+"PSCI version".
+
+> +}
+> +
+>  /* KVM VCPU properties should be prefixed with "kvm-". */
+>  void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+>  {
+> @@ -505,6 +548,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+>                               kvm_steal_time_set);
+>      object_property_set_description(obj, "kvm-steal-time",
+>                                      "Set off to disable KVM steal time.");
+> +
+> +    object_property_add_str(obj, "kvm-psci-version", kvm_get_psci_version,
+> +                            kvm_set_psci_version);
+> +    object_property_set_description(obj, "kvm-psci-version",
+> +                                    "Set PSCI version. "
+> +                                    "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3");
+>  }
+>
+>  bool kvm_arm_pmu_supported(void)
+> @@ -1959,7 +2008,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      if (cs->start_powered_off) {
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
+>      }
+> -    if (kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
+> +    if (cpu->kvm_prop_psci_version != QEMU_PSCI_VERSION_0_1 &&
+> +        kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
+> +        /*
+> +         * Versions >= v0.2 are backward compatible with v0.2
+> +         * omit the feature flag for v0.1 .
+> +         */
+>          cpu->psci_version = QEMU_PSCI_VERSION_0_2;
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
+>      }
+> @@ -1998,6 +2052,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>          }
+>      }
+>
+> +    if (cpu->kvm_prop_psci_version) {
+> +        psciver = cpu->kvm_prop_psci_version;
+> +        ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
+> +        if (ret) {
+> +            error_report("PSCI version %"PRIx64" is not supported by KVM", psciver);
+
+Could we make the PSCI version human-readable rather than hex here?
+If hex, we need the leading 0x.
+
+We can also suggest to the user the solution to this problem:
+
+  error_report("KVM in this kernel does not support PSCI version 0x%" PRIx64 ");
+  error_printf("Consider setting the kvm-psci-version property on the
+migration source.\n")
+
+(watch out that error_report() strings end without a trailing \n
+but error_printf() ones must have a \n.)
+
+thanks
+-- PMM
 
