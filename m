@@ -4,93 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F82EE6B43
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CAFEE6B48
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQS7-00089Q-J7; Fri, 06 Feb 2026 13:21:11 -0500
+	id 1voQUw-0003Rc-7A; Fri, 06 Feb 2026 13:24:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQS5-00082q-T9
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:21:09 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQUu-0003Qy-3e
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:24:04 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQS4-0005Av-0g
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:21:09 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso28823195e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:21:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voQUs-0005Ic-38
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:24:03 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-354c16d83b2so175574a91.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:24:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770402240; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FN2zPoQ3Hj73OVtHh+2EfyNauHwmRrRUGdLMgOcjKaBm/EQ2KJLuNdM7ulDS5oQvZK
+ zZqXMCfh0KPOpeNVPz1FseCm2M8jiwmLsJbA81BE+4m8bhPdalf2QxVWlN5WEE1Tv+z5
+ 3Dx1haJuIMXP2PA7+fGVFXHjf2nZFwXcF0uyFC+wvA87du25DI6BOIEdFaBdX0eJ/gpT
+ H13jwM5YXGbuE0imvLd7eMCUnefDJGO42EQ1mBPBjWQ5oVbXd+rUSYrTgjcJdVvET8cd
+ YmEnEVYPAip8G11j14wqzfrREhmqoXUzDAIbdmo1Pyq2CEniGtkdter2HXptk+wSSm4j
+ a7QA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=r7fAz8RAfmfVPV61fGVqLgnpA+YrHnbKevnii93h3w4=;
+ fh=KZjezXCSrxx39dO31pbOeDiyxGEGLz3PIZWBEAGptp8=;
+ b=ML47dHeVhrfbSkvnjfOLgaR+0dEwYCF6XjiVn35MVMdp4nsx/zVfwM0e/F6B8tcc6/
+ abOcjAXnQMcab06Gj3ORRiWYp/C60ekOupg8w0dwDPWFtCU7CpAFOlmUhOYKsKb4Wl/7
+ EblqUF6iLfSktoVQuilfPgZlA6AhTR+ZFTWuqpkgc1yNwjVLnUumDuW+WT2ATr0TCG4r
+ CpFLKxgRUnbe+TpiVH39JCFMG2Gx5UWuKAj6rt+ACXK7Qb8AQ9CbgS+AlxzaORPhw6bu
+ zC3jvMS5731gowmKQHtCN/fUAgQkluPlf3RSsJQwcwsw/KY4Fhi+s/xBn4YTykY/fEw5
+ CXyg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770402065; x=1771006865; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wzES1qng8rWM3+acoSyUBkVai5xaMJnvu2yQlPPQ03I=;
- b=uI4jHFXIxSCp20HFnl59aShDpoIewDYJQlCY/S+khBDNFxwXd54TfzPXUr94rAmAPo
- 9FFzNp/ihrAbPeuibSMEGU72FuzkO4QrL0jEsQNRFJLb6eu2/Y7SMd38fCiwg5DSYssW
- 0Ki/PIFeAV4RmxTwKruQP5lokUfq8GbCBMf809DsA2bSCbaB7Dy0AmauoujJ+XoRR2gj
- lhdzrenCHZFVUpVpilmbchVg6rWkhxnika9RdMVkhkyOwDVFPjb18Aod8yPzxkaBs94e
- P5tWFUXxE06io14tSdtNxNtN9+BqCxbImsGWh0eQbW1QgxEAqmgAOhpgD40h7zvrgumz
- 9jTA==
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770402240; x=1771007040;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=r7fAz8RAfmfVPV61fGVqLgnpA+YrHnbKevnii93h3w4=;
+ b=pWDmFVPPhdGs/bZL49bJ7DW3nizWKUKsDqZ3M3EVJPP+3+ZCHhRhuPl0wlxsSyP6E1
+ 3I37kNrMUNVEdDJeu0gR0OV7nwznudQR/3MWQpi6BaPgmWXobGK4QUQwr2/hJidhLUix
+ ruaBA9Q9QMmFV7qLN5TWhvF/T8IiCwbyNYV2TOK/1DBh3DxYWHcR7ifJTQrTShSYwq7e
+ 0w9AXVpig+UWNLr7RnO6hfbsTVCBT5EZd0+EhjDNblh0KSjrmMDNjH8kcb0e6NVa+0z4
+ bnqyMB2qHz67B9urn2irZgGVLrIUTXc+qauOoGKApAHlzexP4xeIseLJ0cTQP6kkt6IH
+ sTww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770402065; x=1771006865;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wzES1qng8rWM3+acoSyUBkVai5xaMJnvu2yQlPPQ03I=;
- b=ksC8+XfbB1z5eXbxTTqyBBsGoz42blbS5CrOjShYTQhiXCWeH3maQWGYr5/gR/bMt1
- hKeKCi3/nCfN2pP4KRitJz85Bw93UJpdh3xSW/7/U/8Atu8JhbAF5T0kC1Rw63KR2BGE
- TCtMI9KnSA9iMXL403SlAc8dbN3HWDwJKnbWy61Jb/VpNc2NTmhuo10DSCKSipSGaL2B
- Z8K/3km1UjXZrbiANALS5kwyDR4JoliAEav+HtbVBC5C6Hg6dzS6/24F4MMwgGYwo/Sc
- TckqjERzfOJWpicXlaI7tegT7CXtNfUBf5V51+Of7pXvXZ8suMxwx6kAKBi3JgBhw3cg
- m/0w==
-X-Gm-Message-State: AOJu0YzlH4hw7BgCfziqYfz4zGe143SlsywBy12qQSbYFw7YhfOJNprS
- dqd0OxR5diI+gZLiA6tYp/1YaD0IspCv8hNxsuu9qmsrxnVz6450QXXoChSrcL2dOLRGj+Mj8wO
- saF5fFAU=
-X-Gm-Gg: AZuq6aKt4rbKpgyuEsLpNgvYaQAYKG3f3/cfSJjpBHnYjT/flitF+RN5JINECm1QggV
- 1wFlLqwIBvbDMQaWCaMkixRLiGByKqPBughl5l4DcW3R1KeMBFSuidcDFGz1hnq/kWiod15f+gT
- u45GUaPXNeQLlgO6hZ5qToCyS1CgV9iOPmLFNV8K/gEaLQwl2igd9adw4NFR/yTAK1s34ZkWb5c
- m4fnbsZHL640zWcFDYvHSHmtIYDQUNHi2Ag8eS07/vuvwkAtBkQFqclMhoQvz1iUdcfclzG3AO1
- DohuMNV7hRnxrGiiiIdfpRVVP4Rwme2bsI/M0nWdbRbO0rd4b30to9JRsY0pOAUQpMwhwkWeYMC
- y1vZ2LSy8p5xoJbhYZ0mAWX3g+3zONAyTJnBRehOkFdumNYUSWE6CSFQNvoss4Y21cK+f0Nbvxc
- HFEohMGqeq2u3/nGzM0BnjWsjkQfvp4P57WQcHvdMuRf26kX3pX358ikkw0GH8OjTuRz2dXqQ=
-X-Received: by 2002:a05:6000:2210:b0:435:92c6:d556 with SMTP id
- ffacd0b85a97d-4362933ec62mr6116926f8f.16.1770402065436; 
- Fri, 06 Feb 2026 10:21:05 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-436296bd1bcsm6372721f8f.12.2026.02.06.10.21.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 10:21:04 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 09/10] target/s390x: Expand tcg_gen_qemu_ld/st_tl() as
- 64-bit target
-Date: Fri,  6 Feb 2026 19:19:52 +0100
-Message-ID: <20260206181953.18683-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260206181953.18683-1-philmd@linaro.org>
-References: <20260206181953.18683-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1770402240; x=1771007040;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r7fAz8RAfmfVPV61fGVqLgnpA+YrHnbKevnii93h3w4=;
+ b=bn0yTvIfddKESVoYF1qdMZnIXOOl+f9uXcueufTn/TWhgXAzmPdGJahEjCsm20CWJp
+ TMkrxHvibhtotjXlZ92SIFQS9mcdQask+f0QjOj3u1l/szIhLp6KdyM/HkBrsqoPEFZg
+ uB6RTt7WSEXbrhZuj1Z+JMZcyhMJm5cq5SiIY64sgIyI/VoPu7sojPQJCZu3OUm3qREG
+ fJGnqL2RaXCymk8DkkMj6wuRnXPtQ4hBRAbMEgMyrDA4XLxKjDhkrLwbOa5QXFCV8GUf
+ gWve6Ui18Htsv3imUHfDxjFbGOS0l2qLbnMELScqK5X1xYHSIs8enpbNLIm6f1pnc4Ih
+ a+rA==
+X-Gm-Message-State: AOJu0YyTJrZIiP8NE6Fj1d164LKuDaOMUjtiJOIIPAS7te1j/FRJYciV
+ CxhkugzrYzVaUVh1j6wVy9+xwYrKfwA1vUk4DvASMnOmwwSy8ve9LT9vc24WeWvDG4tx09I6k/k
+ PhRut/kNAmlMGVqi3TEE86/UBMdCRSFhwzcJJDKHBXg==
+X-Gm-Gg: AZuq6aJHOALQNTxqd2yrxKqcj3nFDzuoCfOz3szsl4LBtS5+tsYBr7J6vOauNL8H7hv
+ XGz4w5MnAFBd/5FZalF+Yk0jRPdSYCMxzW33GOusFKIThMG9dm4ORyMV9SvKcZ6Z6VE9quDLdvu
+ Jrj92q954IoNaez+wD18My/x0KwQEv5WOcb8EbTKeQ/Ed7xjr9cDwEqQZzHCdIhlLMKR1gVFqN3
+ pBn3tYPKctQplQfwLhPh5aIfSk2l93gvSkd/C7+LZ9CiO2CxrV0vVeOc0hYrGh68/sMDRhn19qb
+ GkuxUsA=
+X-Received: by 2002:a17:90b:3c8b:b0:352:e27e:79c5 with SMTP id
+ 98e67ed59e1d1-354b3cfeca9mr2853786a91.31.1770402240179; Fri, 06 Feb 2026
+ 10:24:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-22-8d8ff0035372@bsdimp.com>
+ <effcf620-704f-4d17-b3ce-1832742bd4e8@linaro.org>
+In-Reply-To: <effcf620-704f-4d17-b3ce-1832742bd4e8@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Fri, 6 Feb 2026 11:23:49 -0700
+X-Gm-Features: AZwV_QjCjCybYzke750_DpStHYbHx50RkVR-BW6sFCwh-5aLbW8aGPwRYMlU4Zg
+Message-ID: <CANCZdfoB-P4Sg7OjWdNt0__oijcqDdO0H_Jn7FhvXwqFkcjyxA@mail.gmail.com>
+Subject: Re: [PATCH 22/24] bsd-user: Implement System V semaphore calls
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000a2c0c8064a2be42b"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,224 +119,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The s390x target is a 64-bit one, so we have these expansions
-in the "tcg/tcg-op.h" header:
+--000000000000a2c0c8064a2be42b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- . tcg_gen_qemu_ld_tl() -> tcg_gen_qemu_ld_i64()
- . tcg_gen_qemu_st_tl() -> tcg_gen_qemu_st_i64()
+On Thu, Feb 5, 2026 at 8:34=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-Use the expanded form which is more explicit when a target
-isn't built for different words size.
+> On 2/6/26 03:26, Warner Losh wrote:
+> > From: Stacey Son <sson@FreeBSD.org>
+> >
+> > Wire up semget(2) and semop(2) syscalls to get System V semaphore
+> > implementation, as well the undocumented __semctl used to implement the
+> > bits of the interface in libc.
+> >
+> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > ---
+> >   bsd-user/freebsd/os-syscall.c | 23 +++++++++++++++++++++++
+> >   1 file changed, 23 insertions(+)
+> >
+> > diff --git a/bsd-user/freebsd/os-syscall.c
+> b/bsd-user/freebsd/os-syscall.c
+> > index ca2f6fdb66..6e38007bdd 100644
+> > --- a/bsd-user/freebsd/os-syscall.c
+> > +++ b/bsd-user/freebsd/os-syscall.c
+> > @@ -37,6 +37,7 @@
+> >   #include "bsd-file.h"
+> >   #include "bsd-mem.h"
+> >   #include "bsd-proc.h"
+> > +#include "bsd-misc.h"
+> >
+> >   /* BSD dependent syscall shims */
+> >   #include "os-stat.h"
+> > @@ -879,6 +880,28 @@ static abi_long freebsd_syscall(void *cpu_env, int
+> num, abi_long arg1,
+> >           ret =3D do_bsd_shmdt(arg1);
+> >           break;
+> >
+> > +        /*
+> > +         * System V Semaphores
+> > +         */
+> > +    case TARGET_FREEBSD_NR_semget: /* semget(2) */
+> > +        ret =3D do_bsd_semget(arg1, arg2, arg3);
+> > +        break;
+> > +
+> > +    case TARGET_FREEBSD_NR_semop: /* semop(2) */
+> > +        ret =3D do_bsd_semop(arg1, arg2, arg3);
+> > +        break;
+> > +
+> > +    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
+> > +        /*
+> > +         * The semun argument to semctl is passed by value, so
+> dereference the
+> > +         * ptr argument.
+> > +         */
+> > +        abi_ulong atptr;
+> > +        get_user_ual(atptr, (abi_ulong)arg4);
+> > +        ret =3D do_bsd___semctl(arg1, arg2, arg3,
+> > +                (union target_semun)(abi_ulong) atptr);
+>
+> Eh?  Does this really compile, casting an integer to a union?
+> Something seems very confused here.
+>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- target/s390x/tcg/translate.c | 54 ++++++++++++++++++------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+It works, but it's kinda nutso code. I wouldn't have thought you could cast
+a long to a union...
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 437f5a4aeb7..4dabd49840f 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -1259,7 +1259,7 @@ static DisasJumpType op_asi(DisasContext *s, DisasOps *o)
- 
-     o->in1 = tcg_temp_new_i64();
-     if (non_atomic) {
--        tcg_gen_qemu_ld_tl(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_ld_i64(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-     } else {
-         /* Perform the atomic addition in memory. */
-         tcg_gen_atomic_fetch_add_i64(o->in1, o->addr1, o->in2, get_mem_index(s),
-@@ -1270,7 +1270,7 @@ static DisasJumpType op_asi(DisasContext *s, DisasOps *o)
-     tcg_gen_add_i64(o->out, o->in1, o->in2);
- 
-     if (non_atomic) {
--        tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), s->insn->data);
-     }
-     return DISAS_NEXT;
- }
-@@ -1281,7 +1281,7 @@ static DisasJumpType op_asiu64(DisasContext *s, DisasOps *o)
- 
-     o->in1 = tcg_temp_new_i64();
-     if (non_atomic) {
--        tcg_gen_qemu_ld_tl(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_ld_i64(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-     } else {
-         /* Perform the atomic addition in memory. */
-         tcg_gen_atomic_fetch_add_i64(o->in1, o->addr1, o->in2, get_mem_index(s),
-@@ -1293,7 +1293,7 @@ static DisasJumpType op_asiu64(DisasContext *s, DisasOps *o)
-     tcg_gen_add2_i64(o->out, cc_src, o->in1, cc_src, o->in2, cc_src);
- 
-     if (non_atomic) {
--        tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), s->insn->data);
-     }
-     return DISAS_NEXT;
- }
-@@ -1374,7 +1374,7 @@ static DisasJumpType op_ni(DisasContext *s, DisasOps *o)
-     o->in1 = tcg_temp_new_i64();
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_ld_tl(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_ld_i64(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-     } else {
-         /* Perform the atomic operation in memory. */
-         tcg_gen_atomic_fetch_and_i64(o->in1, o->addr1, o->in2, get_mem_index(s),
-@@ -1385,7 +1385,7 @@ static DisasJumpType op_ni(DisasContext *s, DisasOps *o)
-     tcg_gen_and_i64(o->out, o->in1, o->in2);
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), s->insn->data);
-     }
-     return DISAS_NEXT;
- }
-@@ -1917,8 +1917,8 @@ static DisasJumpType op_clc(DisasContext *s, DisasOps *o)
-         mop = ctz32(l + 1) | MO_BE;
-         /* Do not update cc_src yet: loading cc_dst may cause an exception. */
-         src = tcg_temp_new_i64();
--        tcg_gen_qemu_ld_tl(src, o->addr1, get_mem_index(s), mop);
--        tcg_gen_qemu_ld_tl(cc_dst, o->in2, get_mem_index(s), mop);
-+        tcg_gen_qemu_ld_i64(src, o->addr1, get_mem_index(s), mop);
-+        tcg_gen_qemu_ld_i64(cc_dst, o->in2, get_mem_index(s), mop);
-         gen_op_update2_cc_i64(s, CC_OP_LTUGTU_64, src, cc_dst);
-         return DISAS_NEXT;
-     default:
-@@ -2747,15 +2747,15 @@ static DisasJumpType op_ld16u(DisasContext *s, DisasOps *o)
- 
- static DisasJumpType op_ld32s(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_ld_tl(o->out, o->in2, get_mem_index(s),
--                       MO_BESL | s->insn->data);
-+    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s),
-+                        MO_BESL | s->insn->data);
-     return DISAS_NEXT;
- }
- 
- static DisasJumpType op_ld32u(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_ld_tl(o->out, o->in2, get_mem_index(s),
--                       MO_BEUL | s->insn->data);
-+    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s),
-+                        MO_BEUL | s->insn->data);
-     return DISAS_NEXT;
- }
- 
-@@ -3087,7 +3087,7 @@ static DisasJumpType op_lpq(DisasContext *s, DisasOps *o)
- #ifndef CONFIG_USER_ONLY
- static DisasJumpType op_lura(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_ld_tl(o->out, o->in2, MMU_REAL_IDX, s->insn->data);
-+    tcg_gen_qemu_ld_i64(o->out, o->in2, MMU_REAL_IDX, s->insn->data);
-     return DISAS_NEXT;
- }
- #endif
-@@ -3506,7 +3506,7 @@ static DisasJumpType op_oi(DisasContext *s, DisasOps *o)
-     o->in1 = tcg_temp_new_i64();
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_ld_tl(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_ld_i64(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-     } else {
-         /* Perform the atomic operation in memory. */
-         tcg_gen_atomic_fetch_or_i64(o->in1, o->addr1, o->in2, get_mem_index(s),
-@@ -3517,7 +3517,7 @@ static DisasJumpType op_oi(DisasContext *s, DisasOps *o)
-     tcg_gen_or_i64(o->out, o->in1, o->in2);
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), s->insn->data);
-     }
-     return DISAS_NEXT;
- }
-@@ -4334,7 +4334,7 @@ static DisasJumpType op_stnosm(DisasContext *s, DisasOps *o)
- 
- static DisasJumpType op_stura(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_st_tl(o->in1, o->in2, MMU_REAL_IDX, s->insn->data);
-+    tcg_gen_qemu_st_i64(o->in1, o->in2, MMU_REAL_IDX, s->insn->data);
- 
-     if (s->base.tb->flags & FLAG_MASK_PER_STORE_REAL) {
-         update_cc_op(s);
-@@ -4367,8 +4367,8 @@ static DisasJumpType op_st16(DisasContext *s, DisasOps *o)
- 
- static DisasJumpType op_st32(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_st_tl(o->in1, o->in2, get_mem_index(s),
--                       MO_BEUL | s->insn->data);
-+    tcg_gen_qemu_st_i64(o->in1, o->in2, get_mem_index(s),
-+                        MO_BEUL | s->insn->data);
-     return DISAS_NEXT;
- }
- 
-@@ -4836,7 +4836,7 @@ static DisasJumpType op_xi(DisasContext *s, DisasOps *o)
-     o->in1 = tcg_temp_new_i64();
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_ld_tl(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_ld_i64(o->in1, o->addr1, get_mem_index(s), s->insn->data);
-     } else {
-         /* Perform the atomic operation in memory. */
-         tcg_gen_atomic_fetch_xor_i64(o->in1, o->addr1, o->in2, get_mem_index(s),
-@@ -4847,7 +4847,7 @@ static DisasJumpType op_xi(DisasContext *s, DisasOps *o)
-     tcg_gen_xor_i64(o->out, o->in1, o->in2);
- 
-     if (!s390_has_feat(S390_FEAT_INTERLOCKED_ACCESS_2)) {
--        tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), s->insn->data);
-+        tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), s->insn->data);
-     }
-     return DISAS_NEXT;
- }
-@@ -5291,7 +5291,7 @@ static void wout_m1_16(DisasContext *s, DisasOps *o)
- #ifndef CONFIG_USER_ONLY
- static void wout_m1_16a(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), MO_BEUW | MO_ALIGN);
-+    tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), MO_BEUW | MO_ALIGN);
- }
- #define SPEC_wout_m1_16a 0
- #endif
-@@ -5305,7 +5305,7 @@ static void wout_m1_32(DisasContext *s, DisasOps *o)
- #ifndef CONFIG_USER_ONLY
- static void wout_m1_32a(DisasContext *s, DisasOps *o)
- {
--    tcg_gen_qemu_st_tl(o->out, o->addr1, get_mem_index(s), MO_BEUL | MO_ALIGN);
-+    tcg_gen_qemu_st_i64(o->out, o->addr1, get_mem_index(s), MO_BEUL | MO_ALIGN);
- }
- #define SPEC_wout_m1_32a 0
- #endif
-@@ -5816,7 +5816,7 @@ static void in2_m2_32u(DisasContext *s, DisasOps *o)
- static void in2_m2_32ua(DisasContext *s, DisasOps *o)
- {
-     in2_a2(s, o);
--    tcg_gen_qemu_ld_tl(o->in2, o->in2, get_mem_index(s), MO_BEUL | MO_ALIGN);
-+    tcg_gen_qemu_ld_i64(o->in2, o->in2, get_mem_index(s), MO_BEUL | MO_ALIGN);
- }
- #define SPEC_in2_m2_32ua 0
- #endif
-@@ -5862,16 +5862,16 @@ static void in2_mri2_16u(DisasContext *s, DisasOps *o)
- static void in2_mri2_32s(DisasContext *s, DisasOps *o)
- {
-     o->in2 = tcg_temp_new_i64();
--    tcg_gen_qemu_ld_tl(o->in2, gen_ri2(s), get_mem_index(s),
--                       MO_BESL | MO_ALIGN);
-+    tcg_gen_qemu_ld_i64(o->in2, gen_ri2(s), get_mem_index(s),
-+                        MO_BESL | MO_ALIGN);
- }
- #define SPEC_in2_mri2_32s 0
- 
- static void in2_mri2_32u(DisasContext *s, DisasOps *o)
- {
-     o->in2 = tcg_temp_new_i64();
--    tcg_gen_qemu_ld_tl(o->in2, gen_ri2(s), get_mem_index(s),
--                       MO_BEUL | MO_ALIGN);
-+    tcg_gen_qemu_ld_i64(o->in2, gen_ri2(s), get_mem_index(s),
-+                        MO_BEUL | MO_ALIGN);
- }
- #define SPEC_in2_mri2_32u 0
- 
--- 
-2.52.0
+It's even more nutso inside do_bsd__semctl()! I think that we need to honor
+that this is really a pointer to a union and pass that in as such and then
+__get/put_user rather than doing the tswap dance twice.
 
+Warner
+
+--000000000000a2c0c8064a2be42b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, =
+2026 at 8:34=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
+derson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">On 2/6/26 03:26, Warner Losh=
+ wrote:<br>
+&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; <br>
+&gt; Wire up semget(2) and semop(2) syscalls to get System V semaphore<br>
+&gt; implementation, as well the undocumented __semctl used to implement th=
+e<br>
+&gt; bits of the interface in libc.<br>
+&gt; <br>
+&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/freebsd/os-syscall.c | 23 +++++++++++++++++++++++=
+<br>
+&gt;=C2=A0 =C2=A01 file changed, 23 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-sysca=
+ll.c<br>
+&gt; index ca2f6fdb66..6e38007bdd 100644<br>
+&gt; --- a/bsd-user/freebsd/os-syscall.c<br>
+&gt; +++ b/bsd-user/freebsd/os-syscall.c<br>
+&gt; @@ -37,6 +37,7 @@<br>
+&gt;=C2=A0 =C2=A0#include &quot;bsd-file.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;bsd-mem.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;bsd-proc.h&quot;<br>
+&gt; +#include &quot;bsd-misc.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0/* BSD dependent syscall shims */<br>
+&gt;=C2=A0 =C2=A0#include &quot;os-stat.h&quot;<br>
+&gt; @@ -879,6 +880,28 @@ static abi_long freebsd_syscall(void *cpu_env, in=
+t num, abi_long arg1,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D do_bsd_shmdt(arg1);<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* System V Semaphores<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 case TARGET_FREEBSD_NR_semget: /* semget(2) */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D do_bsd_semget(arg1, arg2, arg3);<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 case TARGET_FREEBSD_NR_semop: /* semop(2) */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D do_bsd_semop(arg1, arg2, arg3);<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocu=
+mented */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* The semun argument to semctl is p=
+assed by value, so dereference the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* ptr argument.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong atptr;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 get_user_ual(atptr, (abi_ulong)arg4);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D do_bsd___semctl(arg1, arg2, arg3,=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (union target=
+_semun)(abi_ulong) atptr);<br>
+<br>
+Eh?=C2=A0 Does this really compile, casting an integer to a union?<br>
+Something seems very confused here.<br></blockquote><div><br></div><div>It =
+works, but it&#39;s kinda nutso code. I wouldn&#39;t have thought you could=
+ cast a long to a union...</div><div><br></div><div>It&#39;s even more nuts=
+o inside do_bsd__semctl()! I think that we need to honor that this is reall=
+y a pointer to a union and pass that in as such and then __get/put_user rat=
+her than doing the tswap dance twice.</div><div><br></div><div>Warner</div>=
+</div></div>
+
+--000000000000a2c0c8064a2be42b--
 
