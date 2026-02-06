@@ -4,155 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43B3EE209D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF61EE20A2
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLai-0005sh-Om; Fri, 06 Feb 2026 08:09:45 -0500
+	id 1voLlg-0007C4-B5; Fri, 06 Feb 2026 08:21:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voLac-0005s3-KC
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:09:38 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1voLlI-000768-UR
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1voLaU-0003u7-CY
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:09:34 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1voLlG-0005g5-I7
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770383367;
+ s=mimecast20190719; t=1770384036;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
- b=Zfcx8ew2o/qgvIT3J3oBWJMJDrHATumklFbkooo+thamsGOyQWU7GeaWj4K2Ymbcxec/Tw
- InUDG6lkRGu/0P4yN/uxAT6lsf3bPIgopte0HihmsJoN1nN9s16T7siBLaBeLDPEn/RLsu
- ODqSqyuwO3ggUoXJdGjk28Q26bWZN24=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-bj8_TQTINRKz4YNQV1QgsA-1; Fri, 06 Feb 2026 08:09:26 -0500
-X-MC-Unique: bj8_TQTINRKz4YNQV1QgsA-1
-X-Mimecast-MFC-AGG-ID: bj8_TQTINRKz4YNQV1QgsA_1770383365
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-435db9425ebso2140256f8f.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 05:09:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770383365; x=1770988165; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
- b=AgMkve8+0UxvazAdlrInsoynUMca6kjusSVm0dnIYsITNwubIHDDuZYA42KGG0IIsj
- Y2WypH5T8LYVKk+cN3YS7OFDvlo9DfDZWd8PRVgyCKNs2c+x47zB6x98IJJm8c6rdscY
- 1eeApGt3xvlnHup58Sxx9Z8BWw8bs8l9LsCWtXvckQlkHEcXxb465TPzNz9/gZheUa4F
- ZaLwWIWVPmciYo4yf1rFkVD9HgjsYGKKi/Ij9mYBvA9CZAZuzSKS9Dy3H+Qw4JfOjgdT
- aiTmE82AVJYwTDa+RsK1hY/0mpy/uNMwYXNBgwzolaXsMZ1w60kYH+sZpR/X3yGdZbk0
- q/JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770383365; x=1770988165;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JlJdHheWUH60uns2qEpK41jJlsH14qkH1xN4MzBEETc=;
- b=HGLkG4cIwFTnIfIPB74Z/qzDPfP8HVdR4o8xAIcav2yqE6j6E8ZI2JCrDNK6OeyOhm
- 11eXhK0PL3sC0D0cCvd6gUOi7qiK1moEVKotFxxLGXVBJ+ta3UHY4ERh06Kpbz2pZFKU
- Hxl643uQsEBjceJXXNdua1lGYbDi52W5KAkD85agFQ0YJYttvwWnMyblxUOURQ8NMY/v
- C3BkJM3NmfVWzxl5ToVhVKpMr2Itoqj7WCf513zb8dJ7JNtyzodESRqCqVanfBVYrSrf
- VwNu1uKgBT9+Ut/3D/fmaUYHesZH7qTfX/Fu/BBvcjergBh/SKmyN5k/qOEkhF6AoNNB
- MLBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0VVZR6nwHxByQtVRy9d92u9GzYaq5XN8YUbnywNud8p1CZIUFy+Qia/S6Miu9COhqQk1gVptXDLb6@nongnu.org
-X-Gm-Message-State: AOJu0Yys28FuZ+IO45PqsuM7ymCj6kWATsODH9Il+6BZsfVaLg5ErULP
- iaM+41j+ALmtJaPQGWkzXiFx2rrQyiA5TdJRpsI3sKMYEUfkC4LgS9tnZbYO9ebn37cbhIwLGj+
- q93hYFUxFKRkGnBEvMTY10i+7R01e3nYPkBl1xERs2iEK9g6LlEQzV9gT
-X-Gm-Gg: AZuq6aLnW1RjciE47WB2s/F7pSZt0hhnUDUUMaXlmfdTbuRIjlYuwIJb1iWZN587H9K
- 7V4igNkAvfcmA5IEQUDIT+gvW3q7q+5pdRZ/xhBPFcgm6l97yEhQzQGVMDkxTgSIWCMJs5/HES5
- lnzIrKDZKHRGDppnZKLOs5wrLOvQjo8PIZPzGUcC/GH4O7mwm6QdA0uagfENE+gyELOY9/mqGoK
- p558pS4TKxCAJfI7zNRJz2hACBRMCIbmmjPHmL4K9pOr2ysZEGSTBKFlDqCnJ5jzC2uZdbIvEjT
- 6IYu9bj5/HU76RktQm3OzqiVSHs1SuO1SUgdE4YxoBEouD1Iztd6wAejL+tu/cVDvrHNAUQ2Ctt
- AzxFdDjE=
-X-Received: by 2002:a5d:5d02:0:b0:436:213c:7784 with SMTP id
- ffacd0b85a97d-43629381b5amr4068879f8f.30.1770383364969; 
- Fri, 06 Feb 2026 05:09:24 -0800 (PST)
-X-Received: by 2002:a5d:5d02:0:b0:436:213c:7784 with SMTP id
- ffacd0b85a97d-43629381b5amr4068825f8f.30.1770383364476; 
- Fri, 06 Feb 2026 05:09:24 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.115.203])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4362972fc1bsm5905715f8f.28.2026.02.06.05.09.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Feb 2026 05:09:24 -0800 (PST)
-Message-ID: <665666b9-69a8-4b47-b706-341295d96371@redhat.com>
-Date: Fri, 6 Feb 2026 14:09:22 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=1OXuss0BgAHi09ltJLjDt0QMiXvX47zpTxxxC3R00SM=;
+ b=XvApLOiKiKIWcOlkTgtlow9Lno+sfx6GHo6/ZwNTnwepj6NQikuHifNbIT2It5rEW/7T/s
+ XCaPxEdP6Adpq4CVXDKpwdVRb90dR+yfffhW8z6zRHuEvNYd1nkMW8har1+A4+Q6ICia2U
+ W1eFLGyN8Vv12xmgUIuoTdNqZSyzEJw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-tup0UNbuMxWYq2b0LWn-hQ-1; Fri,
+ 06 Feb 2026 08:15:26 -0500
+X-MC-Unique: tup0UNbuMxWYq2b0LWn-hQ-1
+X-Mimecast-MFC-AGG-ID: tup0UNbuMxWYq2b0LWn-hQ_1770383724
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D97C21830310; Fri,  6 Feb 2026 13:15:15 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8997518003F5; Fri,  6 Feb 2026 13:15:13 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
+Subject: [PATCH 11/11] tests: acpi: arm/virt: update expected WDAT blob
+Date: Fri,  6 Feb 2026 14:14:38 +0100
+Message-ID: <20260206131438.1857182-12-imammedo@redhat.com>
+In-Reply-To: <20260206131438.1857182-1-imammedo@redhat.com>
+References: <20260206131438.1857182-1-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
- where appropriate
-To: Eric Farman <farman@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20260204182722.44062-1-philmd@linaro.org>
- <20260204182722.44062-4-philmd@linaro.org>
- <2827f8b28c4a654cb1b37eaf1313a1d63fb58f05.camel@linux.ibm.com>
- <4eb5b630-dad5-4cd8-97a6-d1d4a3499400@linaro.org>
- <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -161,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,57 +87,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2026 22.49, Eric Farman wrote:
-> On Thu, 2026-02-05 at 22:37 +0100, Philippe Mathieu-Daudé wrote:
->> Hi Eric,
->>
->> On 5/2/26 22:23, Eric Farman wrote:
->>> On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daudé wrote:
->>>> Use the %vaddr type for virtual addresses.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>    target/s390x/s390x-internal.h  | 5 +++--
->>>>    target/s390x/helper.c          | 2 +-
->>>>    target/s390x/mmu_helper.c      | 6 +++---
->>>>    target/s390x/tcg/excp_helper.c | 3 ++-
->>>>    4 files changed, 9 insertions(+), 7 deletions(-)
->>
->>
->>>> @@ -376,9 +377,9 @@ void probe_write_access(CPUS390XState *env, uint64_t addr, uint64_t len,
->>>>    bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
->>>>    /* Special access mode only valid for mmu_translate() */
->>>>    #define MMU_S390_LRA        -1
->>>> -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
->>>> +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
->>>>                      target_ulong *raddr, int *flags, uint64_t *tec);
->>>> -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
->>>> +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
->>>
->>> I think this one should remain target_ulong, and become hwaddr in the next patch, no?
->>
->> Without s390x background, I don't understand well what real addresses
->> are. IFAICT the single caller s390_cpu_tlb_fill() provides a virtual
->> address. But then indeed mmu_real2abs() consumes a hwaddr as real addr.
-> 
-> Hi Philippe,
-> 
-> Ah, I didn't go the other direction (my bad). The usage of "real" here is kind of halfway between
-> virtual and -really- real.
+replace blank table with a new one:
 
-Yes, real addresses are like physical addresses in s390 land - except for 
-the two so-called low-core pages that might be swapped with two other pages 
-in memory.
+[000h 0000   4]                    Signature : "WDAT"    [Watchdog Action Table]
+[004h 0004   4]                 Table Length : 00000104
+[008h 0008   1]                     Revision : 01
+[009h 0009   1]                     Checksum : EB
+[00Ah 0010   6]                       Oem ID : "BOCHS "
+[010h 0016   8]                 Oem Table ID : "BXPC    "
+[018h 0024   4]                 Oem Revision : 00000001
+[01Ch 0028   4]              Asl Compiler ID : "BXPC"
+[020h 0032   4]        Asl Compiler Revision : 00000001
 
-> I suspect the caller is mistaken here, but I think that's a research
-> project for tomorrow.
+[024h 0036   4]                Header Length : 00000020
+[028h 0040   2]                  PCI Segment : 00FF
+[02Ah 0042   1]                      PCI Bus : FF
+[02Bh 0043   1]                   PCI Device : FF
+[02Ch 0044   1]                 PCI Function : FF
+[02Dh 0045   3]                     Reserved : 000000
+[030h 0048   4]                 Timer Period : 00000001
+[034h 0052   4]                    Max Count : 000927C0
+[038h 0056   4]                    Min Count : 00001388
+[03Ch 0060   1]        Flags (decoded below) : 81
+                                     Enabled : 1
+                         Stopped When Asleep : 1
+[03Dh 0061   3]                     Reserved : 000000
+[040h 0064   4]         Watchdog Entry Count : 00000008
 
-The caller s390_cpu_tlb_fill() seems to deal with both, real a virtual 
-addresses, and uses the same variable for both, so I think that's fine there.
-But I agree with Eric mmu_translate_real() should use "hwaddr" for the raddr 
-parameter instead. Philippe, could you please adjust the patch?
+[044h 0068   1]              Watchdog Action : 08
+[045h 0069   1]                  Instruction : 00
+[046h 0070   2]                     Reserved : 0000
 
-  Thanks,
-   Thomas
+[048h 0072  12]              Register Region : [Generic Address Structure]
+[048h 0072   1]                     Space ID : 00 [SystemMemory]
+[049h 0073   1]                    Bit Width : 20
+[04Ah 0074   1]                   Bit Offset : 00
+[04Bh 0075   1]         Encoded Access Width : 03 [DWord Access:32]
+[04Ch 0076   8]                      Address : 00000000090D1000
+
+[054h 0084   4]                        Value : 00000001
+[058h 0088   4]                Register Mask : 00000001
+
+[05Ch 0092   1]              Watchdog Action : 01
+[05Dh 0093   1]                  Instruction : 02
+[05Eh 0094   2]                     Reserved : 0000
+
+[060h 0096  12]              Register Region : [Generic Address Structure]
+[060h 0096   1]                     Space ID : 00 [SystemMemory]
+[061h 0097   1]                    Bit Width : 20
+[062h 0098   1]                   Bit Offset : 00
+[063h 0099   1]         Encoded Access Width : 03 [DWord Access:32]
+[064h 0100   8]                      Address : 00000000090D0000
+
+[06Ch 0108   4]                        Value : 00000001
+[070h 0112   4]                Register Mask : 00000007
+
+[074h 0116   1]              Watchdog Action : 06
+[075h 0117   1]                  Instruction : 03
+[076h 0118   2]                     Reserved : 0000
+
+[078h 0120  12]              Register Region : [Generic Address Structure]
+[078h 0120   1]                     Space ID : 00 [SystemMemory]
+[079h 0121   1]                    Bit Width : 20
+[07Ah 0122   1]                   Bit Offset : 00
+[07Bh 0123   1]         Encoded Access Width : 03 [DWord Access:32]
+[07Ch 0124   8]                      Address : 00000000090D1008
+
+[084h 0132   4]                        Value : 00000000
+[088h 0136   4]                Register Mask : FFFFFFFF
+
+[08Ch 0140   1]              Watchdog Action : 09
+[08Dh 0141   1]                  Instruction : 82
+[08Eh 0142   2]                     Reserved : 0000
+
+[090h 0144  12]              Register Region : [Generic Address Structure]
+[090h 0144   1]                     Space ID : 00 [SystemMemory]
+[091h 0145   1]                    Bit Width : 20
+[092h 0146   1]                   Bit Offset : 00
+[093h 0147   1]         Encoded Access Width : 03 [DWord Access:32]
+[094h 0148   8]                      Address : 00000000090D1000
+
+[09Ch 0156   4]                        Value : 00000001
+[0A0h 0160   4]                Register Mask : 00000001
+
+[0A4h 0164   1]              Watchdog Action : 0A
+[0A5h 0165   1]                  Instruction : 00
+[0A6h 0166   2]                     Reserved : 0000
+
+[0A8h 0168  12]              Register Region : [Generic Address Structure]
+[0A8h 0168   1]                     Space ID : 00 [SystemMemory]
+[0A9h 0169   1]                    Bit Width : 20
+[0AAh 0170   1]                   Bit Offset : 00
+[0ABh 0171   1]         Encoded Access Width : 03 [DWord Access:32]
+[0ACh 0172   8]                      Address : 00000000090D1000
+
+[0B4h 0180   4]                        Value : 00000000
+[0B8h 0184   4]                Register Mask : 00000001
+
+[0BCh 0188   1]              Watchdog Action : 0B
+[0BDh 0189   1]                  Instruction : 82
+[0BEh 0190   2]                     Reserved : 0000
+
+[0C0h 0192  12]              Register Region : [Generic Address Structure]
+[0C0h 0192   1]                     Space ID : 00 [SystemMemory]
+[0C1h 0193   1]                    Bit Width : 20
+[0C2h 0194   1]                   Bit Offset : 00
+[0C3h 0195   1]         Encoded Access Width : 03 [DWord Access:32]
+[0C4h 0196   8]                      Address : 00000000090D1000
+
+[0CCh 0204   4]                        Value : 00000000
+[0D0h 0208   4]                Register Mask : 00000001
+
+[0D4h 0212   1]              Watchdog Action : 20
+[0D5h 0213   1]                  Instruction : 00
+[0D6h 0214   2]                     Reserved : 0000
+
+[0D8h 0216  12]              Register Region : [Generic Address Structure]
+[0D8h 0216   1]                     Space ID : 00 [SystemMemory]
+[0D9h 0217   1]                    Bit Width : 20
+[0DAh 0218   1]                   Bit Offset : 00
+[0DBh 0219   1]         Encoded Access Width : 03 [DWord Access:32]
+[0DCh 0220   8]                      Address : 00000000090D1000
+
+[0E4h 0228   4]                        Value : 00000004
+[0E8h 0232   4]                Register Mask : 00000004
+
+[0ECh 0236   1]              Watchdog Action : 21
+[0EDh 0237   1]                  Instruction : 82
+[0EEh 0238   2]                     Reserved : 0000
+
+[0F0h 0240  12]              Register Region : [Generic Address Structure]
+[0F0h 0240   1]                     Space ID : 00 [SystemMemory]
+[0F1h 0241   1]                    Bit Width : 20
+[0F2h 0242   1]                   Bit Offset : 00
+[0F3h 0243   1]         Encoded Access Width : 03 [DWord Access:32]
+[0F4h 0244   8]                      Address : 00000000090D0000
+
+[0FCh 0252   4]                        Value : 00000004
+[100h 0256   4]                Register Mask : 00000004
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/aarch64/virt/WDAT.wdat      | Bin 0 -> 260 bytes
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 135186b40b..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/WDAT.wdat",
+diff --git a/tests/data/acpi/aarch64/virt/WDAT.wdat b/tests/data/acpi/aarch64/virt/WDAT.wdat
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..bac7a101c3d349e0b9555963526d5e497af27c67 100644
+GIT binary patch
+literal 260
+zcmZ9GK?=e^3`O5`itQ+Z;05B!bJ)6Yr=XzMv8x`d_vs-bX){<F2uVIKpZ~sIUS)tV
+zHuv`Sl;-njMMMH%yG;QURR!!G&WZjAU!e9zh#d9_XN(KQ^c>-@SHLFDdhNWGs%q+-
+cU-@heSom9+|8B)+-SRH^5~e<7-t%Pr2hLL!0RR91
+
+literal 0
+HcmV?d00001
+
+-- 
+2.47.3
 
 
