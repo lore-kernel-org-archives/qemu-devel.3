@@ -4,101 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD66EE20B5
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49320EE20B6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 16:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voOkp-0004Ri-9p; Fri, 06 Feb 2026 11:32:23 -0500
+	id 1voOyw-0006xk-Ft; Fri, 06 Feb 2026 11:46:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1voOkm-0004R6-Vm
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:32:21 -0500
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1voOkg-0003Of-HS
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 11:32:17 -0500
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-89545bd3324so4460426d6.1
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 08:32:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1770395532; x=1771000332; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zudsOAj0AfzZbqg1Lmjm4tJJgjoNQsiYFBqGBNU0cc8=;
- b=gy7qmSylzYTlP3/snLttnDX1vgJtYR0r5zdNIbDvv7y7AQl+krYNtZBgLJJI7TLnTs
- OMl31oTB4G6q6IKSVZaKo6QUIlOQWK583Tgw1A4RtAQbbuxi5l6o9DWldMvM7uiCYVSd
- gSydiKKAQyDMD+AfbhD1ksFbf0l7n+NDo1AhDuPlCplHQDq86fQ276VY6UbJ9wlhndtc
- 7kNSOItA2IybO5FbE1UYRsbAxHQWBQ9edEQzaPCp8krHZlOrtmVl13EeHhSAkFINOE7S
- l7nY9GEDM09tB3HVNdH0vI0WUNS4QwAF2yLc2A/i2w2Wxtw6Vl52yYyeXWUNsmnpiNay
- EmiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770395532; x=1771000332;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zudsOAj0AfzZbqg1Lmjm4tJJgjoNQsiYFBqGBNU0cc8=;
- b=pgoWqoQ8cqDY1mKMwTH4BVA8id0vCrZR2URMrjWoGAmUE5qJx5CgeZGFc/VmGNwelf
- OpqDGmI+gqjlQr9RDsesz+VTjPnkth/VvWJQ5nr+MhrdG4hdJpr7DGpC1/2XVH9qb2Sg
- 3RLz7jxmlOt8Bv14WwvzUjZsteOxkbwNgO6dJmy4xL2opHJ25IDrCx5Pj7O3W1wJsu0r
- Pz1nvXDC2wgpjQPYProNbU2LsPsAW1jUUoZB+F32huA4AYerXH5L6bNHykMG8XjVmU4b
- LzsyTBmIDtrn6v9L7oQ+cfe8Srcl2BdfwQwrSbS306XNkbwPXM1vo/fvtL4r6kKtbHBy
- pjAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXo/twcM8gVDZGZnswuk30Ujgr+rnYSJLDrX6tfINVNkUQ/z/uQVp1UIZrh4L0xmeu1az1NTaeYB35S@nongnu.org
-X-Gm-Message-State: AOJu0Yxiak1J3MOw7Cpk0F5rqpThHZfGLo140PAld6bgtF28T/g5h9i+
- vs5dP/ZUWDFcuTMIDY4E14MY5baSLnhJVTfZF0PF+QBwWdP9Rs4gQUa08t8l/czemFU=
-X-Gm-Gg: AZuq6aLELH3khPRNM3osPzUMu+JQv2VAEc3JszXVdasYNgT2vRoKFbtMI6bm0FFgsss
- Zv7I1E8lLnSQopBtrs4Q/JTbPmrWZDGkv/Ae/yH+PJ3EC16u6ZcCruQP3vLMn6cWrUC/Ixh4qzl
- U1uGbywaaDBnJXjX/WStnqTt/K21b/e78XUf9zL6fkJQwAe2EIJ5dEjPiizEfB5GuwcAAyvjLVe
- 2kEGLbsgBOP0K0gryfE1WNmNzxJFKHftyICtd6FFrFAeGD4eYmlZ2LRa9seMWR3Kqb0J7PkH7kn
- dNWYxqLGzQLNlsawaNdAu1cS2WhIMSBLHNRjL61++OMdCaycWXh4BWHWRUOQGjewnSKfBkBQRbZ
- 1DdfMrEQbeTSy5akgdyNDD0LvjSuMM/q/P9rwNaGh0y3l8S9mS7DJlGTHhV/C6xAYixw3S1Z2+X
- E+jFIQXjEYIYB+Qm+wLEbgn2PUef4PczmcdIHENBoDCun9/hCdKN9TV8fOszlVZ/SMk4e0NA==
-X-Received: by 2002:a05:6214:2522:b0:882:4c83:af43 with SMTP id
- 6a1803df08f44-8953c86f554mr44159066d6.42.1770395532119; 
- Fri, 06 Feb 2026 08:32:12 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8953bf37b9asm21134616d6.9.2026.02.06.08.32.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 08:32:11 -0800 (PST)
-Date: Fri, 6 Feb 2026 11:32:09 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Cui Chao <cuichao1753@phytium.com.cn>, dan.j.williams@intel.com,
- Mike Rapoport <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, qemu-devel@nongnu.org,
- "David Hildenbrand (Arm)" <david@kernel.org>
-Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
- of CFMW
-Message-ID: <aYYXif7IPXnXZPnn@gourry-fedora-PF4VCD3F>
-References: <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
- <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
- <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
- <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
- <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
- <20260206110305.00001fbb@huawei.com>
- <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
- <20260206150941.000028ae@huawei.com>
- <aYYOZ1TK5dpX_h_Q@gourry-fedora-PF4VCD3F>
- <20260206162644.000050fe@huawei.com>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1voOyu-0006xM-1h; Fri, 06 Feb 2026 11:46:56 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1voOys-00013x-Ja; Fri, 06 Feb 2026 11:46:55 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 616ERlcH016796;
+ Fri, 6 Feb 2026 16:46:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=KyBmiNjYfAQTjnFNdUCfuH/+a/RXBpqRAOB7G/7My
+ Vg=; b=hO56Z8JHpTlUoQOKnJXPBajXUdJ7sPdtATE6Ek2CjfH8DzlKvAHd0+Ui/
+ 0VV6GGGD2cdZeyaAXk74IWr9//nGTwF7VyWnKhNXR8xEd5TWqqPIC/6XxhnPLIoC
+ e4NK4rPws6WbAA0EnWFFCANOE7I5JdJiQDJCqvUYA56/07D02KC944Q6xKqpcIF8
+ JqfaTIGvlFocI/8dX/KMwNMhMVma0zrxMkwMjKfD6LApwgDWmb4eRpkhVyJo+42Z
+ ZBGnT8J+NoNSSnx1fYwCptJiIe5Sbqg28c+2lXWgbVvpleSeC5UGD1xudixUXJOz
+ RaiBgHD2NZM/YJhEzE/PPphjXoJvg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c19dtme7k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 16:46:51 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 616FtmCG009163;
+ Fri, 6 Feb 2026 16:46:50 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c1veyf1h5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Feb 2026 16:46:50 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 616GkmTe20120274
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Feb 2026 16:46:49 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C9BD65805F;
+ Fri,  6 Feb 2026 16:46:48 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 063F058058;
+ Fri,  6 Feb 2026 16:46:48 +0000 (GMT)
+Received: from IBM-GLTZVH3.austin.ibm.com (unknown [9.24.20.109])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Feb 2026 16:46:47 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH v1] s390x/pci: Fix endianness for zPCI BAR values.
+Date: Fri,  6 Feb 2026 10:46:02 -0600
+Message-ID: <20260206164645.1845366-1-jhkim@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260206162644.000050fe@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=gourry@gourry.net; helo=mail-qv1-xf34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDExOSBTYWx0ZWRfX02LI/wMV8AQL
+ f6UXNM8s/WStIVbEJ2kGQv0qbRdyhopifJbIB86cphE1zcCdoOzOpmqg8EFAqZCrnX9VKraetQ8
+ zarDwEOn2BK+LHEONdEhPfY5X4sQqrGuvJ7zUESvTHVRA09CgeUWtMtXMphPibcWKe/2uLU7qE4
+ oDguuz9xgyl6Ca4bK0hIjvZDtWadVg35VG/Jt6xW6t74HGJXxgBM1QvHtoiuTF0CXaZmg09whf5
+ QO8VKXM/wOXg9OkJwW+6nR3ROZc+dD5Dtui724AVYp2oQLJ0OU/IZAfWeTYikHWsKh2NurErE/v
+ Y0sC9SW5DAxUFK+WN4wYy7TVzNoHrSIIA8O18Y3BJ9ugvH8QKOwfiTk3Yv53PJ7AUA+QwwEBVJl
+ Do86dHYhAYMQw2a0XEzfe9ZIrkYVKfFSpQGBZ7m6vvCSx0tr4iQkNLmrADIsofh/c6lPVmq09Ii
+ wIs1rtGdV6hcjqCtnhA==
+X-Proofpoint-GUID: baOoMsaDxe0GDZnCTOTSfG4FFYPAj54X
+X-Proofpoint-ORIG-GUID: baOoMsaDxe0GDZnCTOTSfG4FFYPAj54X
+X-Authority-Analysis: v=2.4 cv=LesxKzfi c=1 sm=1 tr=0 ts=69861afb cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=GXBL7daYbpBQRAEtB7kA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-06_05,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
+ adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2602060119
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,26 +117,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 06, 2026 at 04:26:44PM +0000, Jonathan Cameron wrote:
-> > 
-> > This should fall out cleanly.
-> > 
-> > The additional nodes won't be associated with anything, but could be
-> > used for hotplug - I imagine.
-> > 
-> 
-> That aligns with what I was thinking as a first solution to allowing this
-> to be more dynamic.   We can get clever later if this doesn't prove sufficient.
-> 
+During zPCI scan, BAR configuration data retrieved via CLP Query was
+misinterpreted due to an endianness mismatch between QEMU and the guest
+kernel.
 
-I can get this out pretty quickly, hopefully sometime next week.
+The guest kernel's clp_store_query_pci_fn() expects BAR values in
+little-endian format and converts them with le32_to_cpu(). However, QEMU
+was incorrectly sending them in big-endian format, not following the
+architecture specification. This caused incorrect bit-swapping in the
+kernel, leading zpci_setup_bus_resources() to perform registration checks
+against invalid flags, making the process ineffective.
 
-I had a long talk with Dan about this topic previously, and I'm not sure
-how we get more dynamic than this to be honest.  nr_possible_nodes is
-*definitely* expected to be immutable after __init all over the kernel,
-it's used to allocate a memory.
+Observation values for zPCI device (NVMe passthrough):
+LPAR from real CLP:
+[    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
+[    0.865597]  start: 0x4000000000000000
+[    0.865598]  end:   0x4000000000003fff
+[    0.865600]  flags: 0x100200
 
-Surface area is very large here.
+QEMU before fix (wrong):
+[    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
+[    0.601085]  start: 0x4003000000000000
+[    0.601086]  end:   0x4003000000003fff
+[    0.601087]  flags: 0x200
 
-~Gregory
+QEMU after fix (correct):
+[    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
+[    0.601117]  start: 0x4003000000000000
+[    0.601118]  end:   0x4003000000003fff
+[    0.601119]  flags: 0x100200
+
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+---
+ hw/s390x/s390-pci-inst.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index 6b67c3c109..10066ca618 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -307,7 +307,7 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
+             uint32_t data = pci_get_long(pbdev->pdev->config +
+                 PCI_BASE_ADDRESS_0 + (i * 4));
+ 
+-            stl_be_p(&resquery->bar[i], data);
++            stl_le_p(&resquery->bar[i], data);
+             resquery->bar_size[i] = pbdev->pdev->io_regions[i].size ?
+                                     ctz64(pbdev->pdev->io_regions[i].size) : 0;
+             trace_s390_pci_bar(i,
+-- 
+2.50.1
+
 
