@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6585EE6B66
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6FEEE6B66
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 21:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voTh4-0001hb-FE; Fri, 06 Feb 2026 16:48:50 -0500
+	id 1voThF-0002su-IN; Fri, 06 Feb 2026 16:49:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfI-0006tZ-Q8
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:02 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTgA-0008Nk-Qo
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:55 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTfH-0002jt-8K
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:00 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-481188b7760so18854765e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:46:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voTg8-0002nO-KQ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 16:47:54 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43591b55727so952173f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 13:47:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770414417; x=1771019217; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770414471; x=1771019271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FVgFJOhS1I2J9+yXL0ZvkiFeEqlWKf+HWm9fxkPrcD4=;
- b=aFmqGIOi7op99qdNFP7PFAK7/YYUZ38Q/cbJioeGRInriKZ7bFfS0hZmHatXOUbE2k
- GhympdEV1gDp26vli+417ZlWewIxSUigF+zKOm1nhm8qGgrEOAlJZ2N55WJQz+VcFzXT
- utk1AZMld+tI2bUcnAGGz8FWI2JYfXOqKKTc8Uzijiwnd+VnwAamDnKUm92oCn++0zzp
- 8BBgNlBreU+UxyxrsNXqB9YNJFyCFqo/hONf8pRZj96UImo99MUHZo4niBT3kZbrFX6w
- W+if+Jut4+0ud0k/uaPAJniVSqxACKt2xTXVttK1CHWhgXHdDT9QOhl5h6eKmBuOrLxP
- CxhQ==
+ bh=gKnWqMlFdhfT5+UmlR1BBig60NqWA7q7tTMMaOLNvRI=;
+ b=yKMoJxyz9opXYrKq8+0WqLAjftzBOLBO7XrGhMP3OKL7evxkCbCNPzC/E1Yp+Fl7VE
+ hyBUGfFJpmvqlFCqivu6YGL9pFdxGUKieTD/n4F8CY2QX6PjP8jQR5xKbniIDLEvqA4z
+ dGylTP43JvvpmI+bCbHzSawjKztioGR3D45y+KbIH+DhQ6XnF4SMIP2T+WMoQoStt6Kl
+ ZV9pUUxQNKt81mcI1PM4RglOP1i+Su1oS9eOVQDrP57XhKngjce2Vr4c2gakFwCehfFu
+ uVWV1UH+sElitMf2reDh7Fk224PjDF34OXmUWEpW0hnqW0teTef3zQsUAlja9ida2U1k
+ gamQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770414417; x=1771019217;
+ d=1e100.net; s=20230601; t=1770414471; x=1771019271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FVgFJOhS1I2J9+yXL0ZvkiFeEqlWKf+HWm9fxkPrcD4=;
- b=LCnyOQk+VKs8Yq0DjVnfAz+N1GfuO3agAzTMYjM3eyWEm5FJQ3uU3fU6QYwYYjovvf
- heOZTxF0VgnccCuC7HfhFbBdJ6GIQSpx+iBts2nwKMWEF5GIF5NVSCGyIajd2lrntfMr
- 08hIGwC9c5eEXvmNohWI/6ZhYXZkQiQ53PsibvLlWF9rQ9AiKb87Z/KbSURI/VwuIhFl
- 1Nwkq1YEwUgrLV0puDxGzSDzHhTdUJUB8ljFiJk0+uA9KRfMP9j+lB5p+AFZGvVqpIWb
- uRyC4ZkEkbzpgYEyQubUpsa1sTI+BUIeb7J7BaogVywJQnjomzLPDYLA9Fb67sFV6fw8
- 4V+g==
-X-Gm-Message-State: AOJu0YzU1XAE08a6AUlRa4efCACsofx70/238Ded2QbtNUREBWzHiMjJ
- fqes2dQPVfZaNapw47U/+LoN6UUVl6zYZ6ORkjJCiu0YiRELxrsNG9K8uaZc8h2WZvFtL9SN4e6
- OjseYOUA=
-X-Gm-Gg: AZuq6aJLsm9zrjABAfT6XmX0MS8/TaRrGt1NzRZ2/sSzu2mXwpgdS7F/Rn29z+7iu0O
- JZj1FaEH3h3kkvlFT29nWFrWQyUiLXRwlZZf7zGoiCrQIYRc8g3131f58xNT3BefdvK12Lj6fGs
- u2tUoA0DEr/vilw3W++Vvs8h01Dm25esd4FG8PSmbn+cIerRQbCoNFPPgOwYJ4L/DSnBh5SWlE/
- fqqlrqP+E11P1kFUydPbedLGbvcRpyQ200YGhrF4kjbvmhgnOMhsF+/p5vHY5t1zG1UVpRbPRTZ
- Lq9nbWqpO0HQ7BTDcrg+sJFRwOLe5OZ9OZWUnCEOL2VQ+TOHr3Uqhm2NJRS12G7wBejdyMtDtxm
- uz0BTostTm/SjzywDNT6E5VTMmOGCDeoUEiXhw6/00qd4EKHO/YgvD5tG6+VeePkcZ7Onth51G8
- 3BX6FccApJp/Ax1/dOvC69A5wcKKcT745O5gxk05iiRjyjMcldIjvvTI5Xgpqw
-X-Received: by 2002:a05:600c:3492:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-483209339d2mr50883615e9.14.1770414417301; 
- Fri, 06 Feb 2026 13:46:57 -0800 (PST)
+ bh=gKnWqMlFdhfT5+UmlR1BBig60NqWA7q7tTMMaOLNvRI=;
+ b=q59mzd/oDCsAwrT34XETweE0Vz850tcERKT3dYM4klFIarvWAy+AXEDaB8M0Cg0yZE
+ X8eUzs/CAmXvQneq6nBl208eApXaDG/L2OorjEIl51LyO77X5KLoFKAl9Y8fTWWbNhb2
+ dIV7qsMmBCZGBCDxVRov62jqAvmzoiDLthKJSmjfFjco05BWw0cDcatAD33+iYtWiKiY
+ pKNRt5bF3RaIkmmUCnQ+ltBnW05YTPN5tzr67dQMTnZwGw5Z1IaYIG60k1YK5d4Z0aea
+ 1lGKdrza7WTXG6lL5HK720I2OIVU0MNbkZFOg126t9g1nA4j+S/qHKV/OKD+nHt6vq04
+ ed0w==
+X-Gm-Message-State: AOJu0YzghKeyhCxkIZOBK3DueAuBliCoDYciU9/3MarI7h4XZKN/qEBH
+ nBFfClt/IlLKI3S1E0xBbXHwiM64lfiU7KImPOvNReJqB7wHGcFsonsgsSMjGfpzUOpkdY6JycW
+ nYxPdHqw=
+X-Gm-Gg: AZuq6aIL7gXxXYWUUH1fIobAOIxe4x/Hzv9Nw6djkwGBcMIbyOuhsFK9msZtr+Saq1+
+ mBXK29KDnOuBOeVfQGKQWiJJcdp3Bw843Gr2im6rZJJqE4ebSjNF8RG2KYbqj93e7qyWyh2PRUB
+ y7Y8OeSJ+JIKhzpvUMZkrcp37LmQF+zThs8r5otIYL32ZN4ik9CCOAdJhiMicDLcOMpJu0UZkPo
+ Wetm8O6yUw+soRZEZ+paqQEa7iishuTSzQIlTYOJ3Uckm+bGeKwUWph69CIp0uAChL6fedGJ9QE
+ mMrDnKcVQdM954KiKtZnguVyMErFe/BhLOrASzcVOJuIhhYWEJTx56F4/CMiC1Wy9HPToe+5nvx
+ ER7lYCJCbGrH0dIVC4XAH8DVOK2DVPEN7SfpFVmGkqyN7Ru7A3bpekFdNRHJkNpxLGBO+pY0ugi
+ JP9wXnXEz1wVZJxM4QUWfDThvmhHUogqERxlHsTAMOTVbbdO75GV51jJr1iMBjtFXvWX8tp58=
+X-Received: by 2002:a05:600c:3b03:b0:47d:403e:4eaf with SMTP id
+ 5b1f17b1804b1-483201e4011mr63412645e9.10.1770414470789; 
+ Fri, 06 Feb 2026 13:47:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48320736953sm73150645e9.15.2026.02.06.13.46.56
+ 5b1f17b1804b1-48317d8342dsm131683005e9.12.2026.02.06.13.47.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 06 Feb 2026 13:46:56 -0800 (PST)
+ Fri, 06 Feb 2026 13:47:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org
-Subject: [PULL 19/30] hw/intc: Mark x86-specific [IO]APIC peripherals as
- little-endian
-Date: Fri,  6 Feb 2026 22:44:37 +0100
-Message-ID: <20260206214448.22008-20-philmd@linaro.org>
+Subject: [PULL 27/30] hw/or1k: Rename or1k-sim.c from openrisc_sim.c
+Date: Fri,  6 Feb 2026 22:44:45 +0100
+Message-ID: <20260206214448.22008-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
 References: <20260206214448.22008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,46 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These devices are only used by the x86 targets, which are
-only built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
-definition expand to DEVICE_LITTLE_ENDIAN (besides, the
-DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
-using DEVICE_LITTLE_ENDIAN.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Match the filename to the machine type: or1k-sim.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Stafford Horne <shorne@gmail.com>
+Message-ID: <20260205030244.266447-7-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260204204103.46343-3-philmd@linaro.org>
 ---
- hw/intc/apic.c   | 2 +-
- hw/intc/ioapic.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ MAINTAINERS                            | 2 +-
+ hw/or1k/{openrisc_sim.c => or1k-sim.c} | 0
+ hw/or1k/meson.build                    | 2 +-
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename hw/or1k/{openrisc_sim.c => or1k-sim.c} (100%)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index dd8c77f8180..8766ed00b92 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -1108,7 +1108,7 @@ static const MemoryRegionOps apic_io_ops = {
-     .impl.max_access_size = 4,
-     .valid.min_access_size = 1,
-     .valid.max_access_size = 4,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e973e21709a..29f88d48f30 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1495,7 +1495,7 @@ M: Jia Liu <proljc@gmail.com>
+ S: Maintained
+ F: docs/system/or1k/or1k-sim.rst
+ F: hw/intc/ompic.c
+-F: hw/or1k/openrisc_sim.c
++F: hw/or1k/or1k-sim.c
+ F: tests/functional/or1k/test_sim.py
  
- static void apic_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 98de6ca8108..87ca1af5421 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -429,7 +429,7 @@ ioapic_mem_write(void *opaque, hwaddr addr, uint64_t val,
- static const MemoryRegionOps ioapic_io_ops = {
-     .read = ioapic_mem_read,
-     .write = ioapic_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+ PowerPC Machines
+diff --git a/hw/or1k/openrisc_sim.c b/hw/or1k/or1k-sim.c
+similarity index 100%
+rename from hw/or1k/openrisc_sim.c
+rename to hw/or1k/or1k-sim.c
+diff --git a/hw/or1k/meson.build b/hw/or1k/meson.build
+index 49c274b8483..a5c23f4f5a5 100644
+--- a/hw/or1k/meson.build
++++ b/hw/or1k/meson.build
+@@ -1,7 +1,7 @@
+ openrisc_ss = ss.source_set()
+ openrisc_ss.add(files('cputimer.c'))
+ openrisc_ss.add(files('boot.c'))
+-openrisc_ss.add(when: 'CONFIG_OR1K_SIM', if_true: files('openrisc_sim.c'))
++openrisc_ss.add(when: 'CONFIG_OR1K_SIM', if_true: files('or1k-sim.c'))
+ openrisc_ss.add(when: 'CONFIG_OR1K_VIRT', if_true: files('virt.c'))
  
- static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ hw_arch += {'or1k': openrisc_ss}
 -- 
 2.52.0
 
