@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D5AEA795E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD38AEB28FE
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voIXF-0001x7-Mg; Fri, 06 Feb 2026 04:53:57 -0500
+	id 1voIWp-0001mB-JK; Fri, 06 Feb 2026 04:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWb-0001lP-V1; Fri, 06 Feb 2026 04:53:20 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1voIWW-0001kM-B8
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:13 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1voIWZ-0000FE-Q9; Fri, 06 Feb 2026 04:53:17 -0500
+ id 1voIWT-0000ER-9a
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:53:12 -0500
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 282C5C0158;
- Fri, 06 Feb 2026 12:53:12 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E0D2BC0158;
+ Fri, 06 Feb 2026 12:53:04 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:52d::1:1f])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2rKPQc0AN0U0-7PQkcSaE; Fri, 06 Feb 2026 12:53:11 +0300
+ ESMTPSA id 2rKPQc0AN0U0-1lpZpgFm; Fri, 06 Feb 2026 12:53:04 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770371591;
- bh=058MxVQZGKVo8nX/5iG3yONT3f3JaIJVKUCxeAWsFcs=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=wYmR0mDcvrVep5FodJihz7omoVfJrLH9FAM10j68Brv2OHMhXeZWRrgaE8W3UPuZQ
- 6C/GAqemP4kjbFogd2ZJwn7mwecw0Ivd2kW4V+B3cMh8EuowMPvMm+4t9DNeZ0hE72
- U8WqiWGzlGDJxdu2+S4wZx+jLkEaxzBUR3/W8nXg=
+ s=default; t=1770371584;
+ bh=7CcRF9WD8xuoUSHulVPQ2+aOUIDraE9kwi2zDzSQ9DU=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=V55mBLnP9aoFQCXkzI7p2PGnwU6s89X0SNnkl/+74Ct335+fKT2bZr49UOMs/rEdC
+ u2f9KG5t791zULCuL52H52vu8v1lmmanp8XfULVSNZc9fuBJCSEoK19MmUWe3sw0N9
+ VgIziL1TQxaqxl6J/NgZJah2hx7bbdabEJCNW02A=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v5 04/23] vhost: move protocol_features to vhost_user
-Date: Fri,  6 Feb 2026 12:52:38 +0300
-Message-ID: <20260206095258.894504-5-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru
+Subject: [PATCH v5 00/23] vhost refactoring and fixes
+Date: Fri,  6 Feb 2026 12:52:34 +0300
+Message-ID: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260206095258.894504-1-vsementsov@yandex-team.ru>
-References: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,206 +75,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As comment says: it's only for vhost-user. So, let's move it
-to corresponding vhost backend realization.
+Hi all. That's a preparation for vhost-user-blk backend-transfer
+feature.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- backends/cryptodev-vhost.c     |  1 -
- hw/block/vhost-user-blk.c      |  6 ++----
- hw/net/vhost_net.c             |  2 --
- hw/virtio/vhost-user.c         | 36 +++++++++++++++++++++++++++-------
- hw/virtio/virtio-qmp.c         |  6 ++++--
- include/hw/virtio/vhost-user.h |  4 ++++
- include/hw/virtio/vhost.h      |  8 --------
- 7 files changed, 39 insertions(+), 24 deletions(-)
+v5:
+04: make vhost_user_has_protocol_feature() public,
+    to support new use case in vhost-user-blk.c,
+    drop r-b marks
+07: add r-bs by Thomas, Eric, Halil
+08: keep a-b by Eric
+    rename new functions to more generic names
+11,15,16,21: add r-b by Raphael
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index abdfce33af..c6069f4e5b 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -60,7 +60,6 @@ cryptodev_vhost_init(
- 
-     crypto->cc = options->cc;
- 
--    crypto->dev.protocol_features = 0;
-     crypto->backend = -1;
- 
-     /* vhost-user needs vq_index to initiate a specific queue pair */
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index dc99de0263..2831f3c053 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -572,10 +572,8 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
- {
-     struct VHostUserBlk *s = opaque;
- 
--    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
--                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
--
--    return inflight_migration;
-+    return vhost_user_has_protocol_feature(
-+        &s->dev, VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
- }
- 
- static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fda90e231e..ca19983126 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -265,9 +265,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-             goto fail;
-         }
-         net->backend = r;
--        net->dev.protocol_features = 0;
-     } else {
--        net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-         /* vhost-user needs vq_index to initiate a specific queue pair */
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 2de82ac466..de8ead3e94 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/virtio/virtio-dmabuf.h"
-+#include "hw/virtio/virtio-qmp.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-crypto.h"
- #include "hw/virtio/vhost-user.h"
-@@ -264,6 +265,14 @@ struct vhost_user {
-     /* Our current regions */
-     int num_shadow_regions;
-     struct vhost_memory_region shadow_regions[VHOST_USER_MAX_RAM_SLOTS];
-+
-+    /**
-+     * @protocol_features: the vhost-user protocol feature set by
-+     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-+     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-+     * by the backend (see @features).
-+     */
-+    uint64_t protocol_features;
- };
- 
- struct scrub_regions {
-@@ -272,10 +281,13 @@ struct scrub_regions {
-     int fd_idx;
- };
- 
--static bool vhost_user_has_protocol_feature(struct vhost_dev *dev,
--                                            uint64_t feature)
-+bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t feature)
- {
--    return virtio_has_feature(dev->protocol_features, feature);
-+    struct vhost_user *u = dev->opaque;
-+
-+    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
-+
-+    return virtio_has_feature(u->protocol_features, feature);
- }
- 
- static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
-@@ -1343,8 +1355,8 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
-     int ret;
-     int fds[VHOST_USER_MAX_RAM_SLOTS];
-     size_t fd_num = 0;
--    bool reply_supported = virtio_has_feature(dev->protocol_features,
--                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
-+    bool reply_supported =
-+        vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
-     VhostUserMsg msg = {
-         .hdr.request = request,
-         .hdr.flags = VHOST_USER_VERSION,
-@@ -2244,8 +2256,8 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-         }
- 
-         /* final set of protocol features */
--        dev->protocol_features = protocol_features;
--        err = vhost_user_set_protocol_features(dev, dev->protocol_features);
-+        u->protocol_features = protocol_features;
-+        err = vhost_user_set_protocol_features(dev, u->protocol_features);
-         if (err < 0) {
-             error_setg_errno(errp, EPROTO, "vhost_backend_init failed");
-             return -EPROTO;
-@@ -3036,6 +3048,16 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-     return 0;
- }
- 
-+void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
-+{
-+    struct vhost_user *u = dev->opaque;
-+
-+    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
-+
-+    status->vhost_dev->protocol_features =
-+        qmp_decode_protocols(u->protocol_features);
-+}
-+
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
-         .vhost_backend_init = vhost_user_backend_init,
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 916972e331..5e42b7b540 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -821,12 +821,14 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-         status->vhost_dev->acked_features =
-             qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
- 
--        status->vhost_dev->protocol_features =
--            qmp_decode_protocols(hdev->protocol_features);
-         status->vhost_dev->max_queues = hdev->max_queues;
-         status->vhost_dev->backend_cap = hdev->backend_cap;
-         status->vhost_dev->log_enabled = hdev->log_enabled;
-         status->vhost_dev->log_size = hdev->log_size;
-+
-+        if (hdev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER) {
-+            vhost_user_qmp_status(hdev, status);
-+        }
-     }
- 
-     return status;
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 53fe996686..0e576fc538 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -10,6 +10,7 @@
- 
- #include "chardev/char-fe.h"
- #include "hw/virtio/virtio.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- enum VhostUserProtocolFeature {
-     VHOST_USER_PROTOCOL_F_MQ = 0,
-@@ -113,4 +114,7 @@ void vhost_user_async_close(DeviceState *d,
-                             CharFrontend *chardev, struct vhost_dev *vhost,
-                             vu_async_close_fn cb);
- 
-+void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status);
-+bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t feature);
-+
- #endif
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index e139e05985..4a9bd3effe 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -104,14 +104,6 @@ struct vhost_dev {
-     VIRTIO_DECLARE_FEATURES(features);
-     VIRTIO_DECLARE_FEATURES(acked_features);
- 
--    /**
--     * @protocol_features: is the vhost-user only feature set by
--     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
--     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
--     * by the backend (see @features).
--     */
--    uint64_t protocol_features;
--
-     uint64_t max_queues;
-     uint64_t backend_cap;
-     /* @started: is the vhost device started? */
+Vladimir Sementsov-Ogievskiy (23):
+  vhost-user: rework enabling vrings
+  vhost: drop backend_features field
+  vhost-user: introduce vhost_user_has_protocol_feature() helper
+  vhost: move protocol_features to vhost_user
+  vhost-user-gpu: drop code duplication
+  vhost: make vhost_dev.features private
+  virtio-ccw: virtio_ccw_set_guest_notifier(): fix failure path
+  virtio: move common part of _set_guest_notifier to generic code
+  virtio: drop *_set_guest_notifier_fd_handler() helpers
+  vhost-user: keep QIOChannelSocket for backend channel
+  vhost: vhost_virtqueue_start(): fix failure path
+  vhost: make vhost_memory_unmap() null-safe
+  vhost: simplify calls to vhost_memory_unmap()
+  vhost: move vrings mapping to the top of vhost_virtqueue_start()
+  vhost: vhost_virtqueue_start(): drop extra local variables
+  vhost: final refactoring of vhost vrings map/unmap
+  vhost: simplify vhost_dev_init() error-path
+  vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+  vhost: vhost_dev_init(): simplify features initialization
+  hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+  vhost-user: make trace events more readable
+  vhost-user-blk: add some useful trace-points
+  vhost: add some useful trace-points
+
+ backends/cryptodev-vhost.c     |   9 +-
+ hw/block/trace-events          |  10 ++
+ hw/block/vhost-user-blk.c      |  26 +++-
+ hw/display/vhost-user-gpu.c    |  11 +-
+ hw/net/vhost_net.c             |  35 ++---
+ hw/s390x/virtio-ccw.c          |  34 ++---
+ hw/scsi/vhost-scsi.c           |   1 -
+ hw/scsi/vhost-user-scsi.c      |   1 -
+ hw/virtio/trace-events         |  16 +-
+ hw/virtio/vdpa-dev.c           |   3 +-
+ hw/virtio/vhost-user-base.c    |   8 +-
+ hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
+ hw/virtio/vhost.c              | 238 +++++++++++++++---------------
+ hw/virtio/virtio-bus.c         |  18 +--
+ hw/virtio/virtio-hmp-cmds.c    |   2 -
+ hw/virtio/virtio-mmio.c        |  41 +-----
+ hw/virtio/virtio-pci.c         |  34 +----
+ hw/virtio/virtio-qmp.c         |  12 +-
+ hw/virtio/virtio.c             |  48 +++---
+ include/hw/virtio/vhost-user.h |   4 +
+ include/hw/virtio/vhost.h      |  63 +++++---
+ include/hw/virtio/virtio-pci.h |   3 -
+ include/hw/virtio/virtio.h     |  15 +-
+ net/vhost-vdpa.c               |   7 +-
+ qapi/virtio.json               |   3 -
+ 25 files changed, 491 insertions(+), 411 deletions(-)
+
 -- 
 2.52.0
 
