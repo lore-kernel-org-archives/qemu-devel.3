@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E17ECD9BF
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 02:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11377ECD9BE
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voC1i-0005A2-Da; Thu, 05 Feb 2026 21:56:58 -0500
+	id 1voCDO-0006mK-PI; Thu, 05 Feb 2026 22:09:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voC1g-00059r-Uh
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 21:56:56 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1voCDN-0006mC-K2
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:09:01 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1voC1e-0006cX-LE
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 21:56:56 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-34c868b197eso1205893a91.2
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 18:56:54 -0800 (PST)
+ id 1voCDL-0003dF-RN
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 22:09:01 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a93210fcc2so1686445ad.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 19:08:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770346613; x=1770951413; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770347338; x=1770952138; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1ppvAZhEFrgFsUzJHqgMf3NCM0+FYWWmKJC7LF4CeuY=;
- b=DMr6cimjN8EPESIXTMSmSr4JoARVegS6RQ2mqoClDZw63hvr1gWNUZ/2rPsHgRRoSy
- 84ME7IwQQlCdanWhm9CiK+BcWNFUkZUHqJXBEsywie7bgEEAgZu8AoeqKhVBwudSr4m8
- w+CILhXICiOeaUeRukuSz7s+Yo//qMMreBTqbxkaOQvXt8UBDTYWYjMI03yamlADd50w
- du3ZkICyrkY5Za4hAreX4G70qFYMmja5FVxeYICJHBTh2r00OC8Dirig7Ho7FhH7zgrZ
- XIB4XjeTZ4XMpHhe0JaSQuAYNIhVdWk6d3z+D3m3Ss/KNLSO8LAQ/P0C3YjZabELkviL
- T3yQ==
+ bh=yUbEx6tu8H6xfY+P9ys9g1iDB4fNhn4oZ7DEeBYj3ig=;
+ b=d+ipgNnP6caqBFswoFZJnPX1MgtMUVKjE/BOmiFE26s2cUphE0BYQTpjqo9KTWtTRM
+ 3iQ5Dsj1CwE3ucn1pTqth9eVfCiW5X+yS9u6LO5t8FxyN47QUqIkmvH2P+LYPYq+HObG
+ CRNXCQS1B4fo/YRx5St6YxInEvLkh2p+3YpM141IFhKh6sv6cQwUB75aFKDO6HDdE1iA
+ gKw3bJZJ3j3I4XSyCkexOaFtM+PaIxMwMC0m1S2Z9NbktIKxt1pow5SAl86ayXmVPwBs
+ DjdBLYeOMjoLuxyT4QenRDd2eLnN/zbZWGtNkIElideAPynn9ZSb3FTbII4436N0Q0aB
+ 1c4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770346613; x=1770951413;
+ d=1e100.net; s=20230601; t=1770347338; x=1770952138;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1ppvAZhEFrgFsUzJHqgMf3NCM0+FYWWmKJC7LF4CeuY=;
- b=knkR65M4dYprWdlPRn03nMY/ubRUzOWFVIT+7FMie/U0aEpICCIIGQwywK2c8rNnU1
- SSGV7Bl3CVe2HAEeF5nnhGDLzOQX8g7kGl4KCedjprzAlWX7TELks9CFNQUx9TuorCnE
- p0PskmaI6C4o/Lb9AYn/a40MztNaOxnaoOFE3Et0hc78iLmL71bq9uHGUuVcTGkxoUY7
- n5Z+6On7EbfV4UNxjPQ+UL6wpF5VMSqBiZ3rocwf8dccAdfiD+WVI/asFNB4Cw8/QbJ0
- SmAUDrQRApm/PdO8yeN0aygGNA9a+w5VeFexTs+PkLCZlXxWskGoK3tQQw8HMZX3lJfd
- 8WkQ==
+ bh=yUbEx6tu8H6xfY+P9ys9g1iDB4fNhn4oZ7DEeBYj3ig=;
+ b=ky7XvKIJOuQLBHL6Y+zDRP8Hc1abWEUOuSFX5Q0j9N9N/biSxIDO+QXQaDDTKCYUHO
+ NqJ4bzx6Yagu5YQXFnT+cmGj1cLFMo2bBck+ei1vIIzKC0+Y5RIr//1rueGilVHLraHM
+ VX/URWaSn5Zyd1OfWgW7lEjcjmGVwZlITy+p8YlpaxiHyk+Qwbdsy4WqzLMVijgB9JK+
+ Zu20op3tm9F/wfVQX0abciuNtINkUi40rqPMQKa09Gxfv2DqbzJNO35UDCOrgkt127xQ
+ 0CiZBBmGJNgqo6LMNre+hSq8EyAdP3Rs0hfP9BWBjKERShZmdCYxyMs9qoTlLK6aQ2zP
+ 1WXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDcck1WhQpl5DQAfO2rQM7pHBNzGFCa6qE+URFkfsKi0Nz17g2qFobzdH1VDRCeY3TmlqgGm6AtBg7@nongnu.org
-X-Gm-Message-State: AOJu0Yygn7yq50YdfSH+j+1++woDTgxwZeaIq7qxLCN0UO+/TJ+rAWrQ
- ocA7/zR/U4p06CR3KSrlNpyJhT8IMmU+WHYVCG5l7l5JkSe7uES0ASTJan4CD9Mb3Q4=
-X-Gm-Gg: AZuq6aKMn12T/hcLWkB1w7WcjK2w0PvB5pjx1n+/1u6o+BfUhwi7X4Qmkhx346t//2r
- 2Z6wlLSwZ4XsAAQGebegDabXm7oSUlUnnDY6yKoebQ/uNeKRMNdkbyB9Uer6sKCAzpZGoPtbdcl
- jLPRD5fYrftFTWCEVdaPpQp+ZWi0FFIQ4nYqLhyXJRrBo+gX6QSYS2eK6FFphigh/ZbkBm/wy0o
- vkiIhrERe74pyORJ7ztaL/X34ccSgGvSQ9vXlSmTVvxIryoQQkOvKK8zf4ielyZ8lUe8HdUB7Ox
- mXYPpGgkjrwy1DcV5QbzLfkWY7CaOy1w+SKDnbz3Er37aS9WBa0+0o6XfISxAt0WiGFNoOl4Tsa
- Y2eA/UvKQiucO2gn3pJqXO/+cCSrl+hUEBupctJLPC1PmBFVqkT3g/LjYk3P1dKU9LAX2kcD6ZS
- wDcpY3vXmFlOPXQ5Xaoiqq4Cx8fG2mHo0zFrKIY3NTXBlBB0e5dtdTZeXoaDcCJaaw7ccyrJ4qi
- Q0uxXD571tgN8tX5WlnObR4OmUzBD97C+lTwGI39H8=
-X-Received: by 2002:a17:90b:4a83:b0:353:41e:1f51 with SMTP id
- 98e67ed59e1d1-354b3ce907bmr861590a91.32.1770346612914; 
- Thu, 05 Feb 2026 18:56:52 -0800 (PST)
+ AJvYcCURWZiDPMO9EKOmIsJCAzuFYRIldaMf4tfS9/PokscarfVpFQVNHNPxspcUdOMDYolw/+VL1tZH8ftZ@nongnu.org
+X-Gm-Message-State: AOJu0YzpZH5VhozcUX6AlUG+OnltgXqwIYDAnTLPMCxmkm9f1NZNg4NZ
+ e9+MNA600gQIhPwh07yhIk2ubDtw3TH996oxytp/SuodYz4aWE+ce0QP/NbiY3E7BQs=
+X-Gm-Gg: AZuq6aKZE1n5BoukWqsxipbw7iIAn7bSNOrDaDVE1Yey3n1pQH5tvxzuaaBpCqWhP3K
+ BWyl9CTYiQPYpC6JbuEnswvCpEHCsBPD3ZANZh0KJReuMKBKiHlm7dFX+M4Ytd6zSCmrdpUyw/L
+ U2UNn+2rzJNrGVtZTnFgXEecPKFZ888VYn8Tr1s8h08a/A9lFiXy6XW2fZ7LH0auaRvehoobHUB
+ 4sp1Pyl04IZtgQ5/IC5etsh5zlv13NwH78CS0/xS/Kt3QAvxCWDJOYy1PaL78nvKimAhPuSjvYg
+ QfR3mIMW5ymooPYPNeX6Efnxx5DnzhBCgBIXxIiQRz6Sct1JcqlW9Ak8u93kjClYToMa8KXpMzG
+ v7fnTNI/Dm+fJa6IB5flwWUe03Uq+wXHMCZUb9ddwBU8tyNDbbFZCvb27NQEZfHynPAugCEFWBU
+ 9NPJ1Gtu2bJ4fgeftWjZdTcSc1ATftoZLcKEdA1qFCENGdmOhMa3G+wKiMSeYAmIeX28vxjLA1D
+ zyESC+X/dt9NCVS2HlF+m0lvoW23R9OEn+6+y8gUm8=
+X-Received: by 2002:a17:903:3d0e:b0:2a9:484c:ff19 with SMTP id
+ d9443c01a7336-2a95194a492mr12853315ad.42.1770347337700; 
+ Thu, 05 Feb 2026 19:08:57 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
  (bg30dhzpdc341w7g29yn.ip6.superloop.au.
  [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b2253c70sm914235a91.17.2026.02.05.18.56.49
+ d2e1a72fcca58-824416746cesm684989b3a.11.2026.02.05.19.08.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Feb 2026 18:56:52 -0800 (PST)
-Message-ID: <56609d1e-4d71-41cb-bbcc-2cea4e8544c3@linaro.org>
-Date: Fri, 6 Feb 2026 12:56:46 +1000
+ Thu, 05 Feb 2026 19:08:57 -0800 (PST)
+Message-ID: <4c338621-eb9e-4048-9f1d-cb4f3ab6b259@linaro.org>
+Date: Fri, 6 Feb 2026 13:08:47 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/24] bsd-user: Add do_bsd_quotactl, do_bsd_reboot and
- do_bsd_getdtablesize
+Subject: Re: [PATCH 15/24] bsd-user: Add do_bsd_uuidgen implementation
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>,
@@ -84,14 +83,14 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
 References: <20260205-bsd-user-claude-v1-0-8d8ff0035372@bsdimp.com>
- <20260205-bsd-user-claude-v1-14-8d8ff0035372@bsdimp.com>
+ <20260205-bsd-user-claude-v1-15-8d8ff0035372@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260205-bsd-user-claude-v1-14-8d8ff0035372@bsdimp.com>
+In-Reply-To: <20260205-bsd-user-claude-v1-15-8d8ff0035372@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,46 +116,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/6/26 03:26, Warner Losh wrote:
 > From: Stacey Son <sson@FreeBSD.org>
 > 
-> Add some trivial misc system calls: stub implementations for quotactl(2)
-> and reboot(2) syscall; a trivial do_bsd_getdtablesize that calls
-> getdtablesize(2).
+> Add implementation of uuidgen(2) syscall that generates UUIDs and
+> converts them to target ABI format.
 > 
 > Signed-off-by: Stacey Son <sson@FreeBSD.org>
 > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > ---
->   bsd-user/bsd-misc.h | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 52 insertions(+)
+>   bsd-user/bsd-misc.h | 34 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 34 insertions(+)
 > 
 > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-> new file mode 100644
-> index 0000000000..d81b4fbaef
-> --- /dev/null
+> index d81b4fbaef..b722c63437 100644
+> --- a/bsd-user/bsd-misc.h
 > +++ b/bsd-user/bsd-misc.h
-> @@ -0,0 +1,52 @@
-> +/*
-> + *  miscellaneous BSD system call shims
-> + *
-> + *  Copyright (c) 2013 Stacey D. Son
-> + *
-> + *  This program is free software; you can redistribute it and/or modify
-> + *  it under the terms of the GNU General Public License as published by
-> + *  the Free Software Foundation; either version 2 of the License, or
-> + *  (at your option) any later version.
-> + *
-> + *  This program is distributed in the hope that it will be useful,
-> + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + *  GNU General Public License for more details.
-> + *
-> + *  You should have received a copy of the GNU General Public License
-> + *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> + */
+> @@ -43,6 +43,40 @@ static inline abi_long do_bsd_reboot(abi_long how)
+>       return -TARGET_ENOSYS;
+>   }
+>   
+> +/* uuidgen(2) */
+> +static inline abi_long do_bsd_uuidgen(abi_ulong target_addr, int count)
+> +{
+> +    int i;
+> +    abi_long ret;
+> +    struct uuid *host_uuid;
+> +
+> +    if (count < 1 || count > 2048) {
+> +        return -TARGET_EINVAL;
+> +    }
+> +
+> +    host_uuid = g_malloc(count * sizeof(struct uuid));
+> +
+> +    if (host_uuid == NULL) {
 
-We now want SPDX-License-Identifier on all new files, and to *not* include the 
-boilerplate.  Should be diagnosed by checkpatch.pl now too.
+g_malloc will never return null.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> +        return -TARGET_ENOMEM;
+> +    }
+> +
+> +    ret = get_errno(uuidgen(host_uuid, count));
+> +    if (is_error(ret)) {
+> +        goto out;
+> +    }
+> +    for (i = 0; i < count; i++) {
+> +        ret = host_to_target_uuid(target_addr +
+> +            (abi_ulong)(sizeof(struct target_uuid) * i), &host_uuid[i]);
+> +        if (is_error(ret)) {
+> +            goto out;
+> +        }
+> +    }
+> +
+> +out:
+> +    g_free(host_uuid);
+> +    return ret;
+> +}
+
+Can be improved with g_autofree instead of goto.
 
 
 r~
