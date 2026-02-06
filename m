@@ -4,62 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12AEEB28F8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9DEEB28FA
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 09:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voI7c-00082P-SJ; Fri, 06 Feb 2026 04:27:29 -0500
+	id 1voI9b-0000Gi-8j; Fri, 06 Feb 2026 04:29:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1voI7a-00082G-V5
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:27:26 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voI9Z-0000GC-BX
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:29:29 -0500
+Received: from 1.mo552.mail-out.ovh.net ([178.32.96.117])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1voI7Y-0004Oz-73
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:27:26 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6pdN4XkQzHnHGx;
- Fri,  6 Feb 2026 17:27:04 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id C223140570;
- Fri,  6 Feb 2026 17:27:08 +0800 (CST)
-Received: from localhost (10.47.70.160) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
- 2026 09:27:07 +0000
-Date: Fri, 6 Feb 2026 09:27:00 +0000
-To: Gregory Price <gourry@gourry.net>
-CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>,
- <jonathan.cameron@huawei.com>, <nifan.cxl@gmail.com>,
- <anisa.su887@gmail.com>, <mst@redhat.com>, <armbru@redhat.com>,
- <lizhijian@fujitsu.com>, <ppbonzini@redhat.com>, <peterx@redhat.com>,
- <philmd@linaro.org>, <david@kernel.org>, <imammedo@redhat.com>,
- <xiaoguangrong.eric@gmail.com>, <venkataravis@micron.com>
-Subject: Re: [PATCH v2 0/2] Performant CXL type 3 non-interleaved regions
-Message-ID: <20260206092700.0000028f.alireza.sanaee@huawei.com>
-In-Reply-To: <aYTcR4mfYbCiewTI@gourry-fedora-PF4VCD3F>
-References: <20260204150002.669-1-alireza.sanaee@huawei.com>
- <aYTcR4mfYbCiewTI@gourry-fedora-PF4VCD3F>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1voI9W-0004YH-N7
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 04:29:29 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.168])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f6ph1044Wz5vwy;
+ Fri,  6 Feb 2026 09:29:20 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 6 Feb
+ 2026 10:29:19 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G0045eba34ac-4198-414f-99c3-c99af7eb4131,
+ C2DCEC2B1261BCA5104DC73024CD17A0EB88A4A8) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <e1022ef7-08f9-4a20-b7da-ce101ee1bfa7@kaod.org>
+Date: Fri, 6 Feb 2026 10:29:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/20] i3c: aspeed: Add I3C support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.70.160]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: bca6e3fd-b112-4e7e-a174-6138926e1094
+X-Ovh-Tracer-Id: 13001892125497330494
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTE1r8WYB1+gKv9tfviHut1q4Urc9POaG3G8MTuN4yx+skdntHFQidlWdrSrhXjVGVG5QpAbNHLUHy9fhderUIrIR+gDu3Jai9S8CVdmqSYobyk96y5KSaIZlRkADn5txvLdCrTOjbbpSfI9JDf0E3PPaxZJIAsGWl3IX/Clk+i3VByDXCskj3Maf8FnKVvmLNogMyJ1rw3z4AsUSWwll5C3enQk2l0emcAkyYX/4RlLIl96zbvSMqtfdyMQe5m0/XRbKsYRppFWPOD+0OvyuQQGZ0fn5PJinIfTWwBpnGgNP6cbPJLV/MSFnKDZu1DIMxlIc8gdIwh6DctHZC3OJZ6MVcHt/8d/1Hq2bTblyDmp4UtdvImV07DIsAXEdpkTokEn2I2dWT9+lK9P4lZM8rn3niPgrNgcy/7W6N5rliexNkL0U/sh7S2tuLwXn+YxCFprunPdzvsz+ZLvAwOOmlEvTtJAYLWmR+fXAMCPfe6x1GyRn/1rEfoZtzJ+VAs5FaYgyXQRpF3Xvq7d1Bu+BLCjyr4rFvaKKsNDruxEUjIvtcykUA0G0Ep45A9Qudk6omfTyATfmSdRC58Wm9fxelXGOHuT/xVYgKHl2gqekRhACcxfqngVoiJ6SNsdnV5R8Na7i0jW3PtXrBF5y+qbSRVHoBmdke6NSZsxLJy987t/WA
+DKIM-Signature: a=rsa-sha256; bh=+/7N9Or5uUcBsKCIsxuT1oiN2TxWxCb5EKg7W09wHos=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770370162; v=1;
+ b=ZKzu37gZLywwVZum+TQ+hYw4rc+jkjGB9+0cAnLFIH/tMdOA3QfKBwF1gjRtXUwB7bvq74+d
+ eESM+kqXAJtIpX7/wjgLfIxCdaoS53EoNjCHM5ZiNZEIm9Qj8HNLJSqfOHlRe0uf0ABcB1/i9vH
+ rTokcLXkbO38a5vwFkMvkvJYi6x97YM8rbH06mFtzgtxEUMgF6qxUH2ja8q1psS2ejr8qC4foHS
+ UfC5CSbLukgBJ3LbVoXY/K2cWP8m0KMrgXB0Tu1inicwnr77Erq/X1PMcevj8nnjavqCxF4+zw+
+ zWNQ6y3/t1ev/CW8l+kjfVJ9rRhb0tFm/FXSExHb1i2tA==
+Received-SPF: pass client-ip=178.32.96.117; envelope-from=clg@kaod.org;
+ helo=1.mo552.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,32 +130,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Feb 2026 13:07:03 -0500
-Gregory Price <gourry@gourry.net> wrote:
-
-> On Wed, Feb 04, 2026 at 02:59:59PM +0000, Alireza Sanaee via qemu development wrote:
-> > The CXL address to device decoding logic is complex because of the need
-> > to correctly decode fine grained interleave. The current implementation
-> > prevents use with KVM where executed instructions may reside in that
-> > memory and gives very slow performance even in TCG.
-> >   
+On 2/6/26 04:19, Jamin Lin wrote:
+> v1:
+>    The initial patch series was based on work by Joe Komlodi <komlodi@google.com>.
 > 
-> what was the base-commit of this set? I'm having trouble trying to get
-> it applied.
+>    This series adds I3C bus support to QEMU and adds more functionality to the
+>    Aspeed I3C controller.
 > 
-> ~Gregory
+>    This implementation is a basic implementation that introduces IBIs
+>    (including hot-join), CCCs, and SDR data transfer. As-is, it doesn't support
+>    multi-controller buses or HDR transfers.
+> 
+>    First we add the I3C bus and controller model. With that added we extend
+>    the functionality of the Aspeed I3C controller so it can do transfers
+>    and handle IBIs.
+> 
+>    Next, we add a mock I3C target. It's intended to be a very simple target
+>    just to verify that I3C is working on the guest. Internally, we've used it
+>    on Linux to verify that i3C devices can be probed and can send/receive data
+>    and IBIs.
+>    This target is sort of like an EEPROM, and it can also send IBIs upon
+>    reception of a user-defined magic number.
+> 
+>    Lastly we add  hotplugging support. The hotplugging doesn't do anything too
+>    complicated, it just adds the device attempting to hotplug to the bus. It
+>    is the device's responsibility to hot-join and go through the DAA process
+>    to participate on the bus.
+> 
+> v2:
+>    Jamin Lin <jamin_lin@aspeedtech.com> has taken ownership of the I3C patch
+>    series for upstream submission.
+> 
+>    Changes in this version include:
+> 
+>    1. Added I3C functional tests.
+>    2. Updated patch 4 to refine register field definitions.
+>    3. Updated patch 7 to correct read-only register field masks.
+> 
+> v3:
+>    1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>    2. Fix a typo
+>    3. Fix ASPEED mail server issue
 
-Hi Gregory,
+Looks good. I received the series correctly and b4 can fetch the patches.
 
-It is on top of bunch of patches Jonathan's sending to be picked up. Not sure which one is picked up but here is my tree here including Jonathan's patches.
+Thanks for the time you all spent on these email issues ,
 
-https://github.com/sarsanaee/qemu-lab/commits/performant-v2-E/
-
-Thanks,
-Ali
+C.
 
