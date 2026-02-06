@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13CF0ECD9BC
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C65ECD9BF
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 03:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voCOc-0001au-W0; Thu, 05 Feb 2026 22:20:39 -0500
+	id 1voCOZ-0001C0-61; Thu, 05 Feb 2026 22:20:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO4-0000Ui-M0; Thu, 05 Feb 2026 22:20:09 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1voCNt-0000RB-1F; Thu, 05 Feb 2026 22:19:54 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1voCO1-0008HM-Ue; Thu, 05 Feb 2026 22:20:04 -0500
+ id 1voCNn-0008F6-UE; Thu, 05 Feb 2026 22:19:49 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z2A8xhMYZtCYL1abCQvLTi+4cyFJ3kb8XOeYZxb6r1mo1pLjf/hUtcJQWjR+8DFRln5L9gefOabHjVgtYfO6aBZcBdKh1RxJNmb0zI+0JCQd+Dh9lNryVYeH8HqF3QkvpYrDIUV4XbnKRSbnq+bLcvTw87Iq/CBTtACryjZZaBwb7Xgler91J4mRXdzgKMEtuVX7wKJZbT5Vo1UQWS3oyRk3FohKfsXRA7YTq4qp6rt7nBwh7auvPSMKv74tUipGS4aLyHnSmFjjqBKDIt8CmPy6Gof2UCc5gSiZLLsJzSIoVUTsLalXQAow5q03Re4nRhHBp9uxuUQhhAMLbfEsqw==
+ b=M8zxFVVfP0l58lAyPqgzP5DevokS399Ln71iPuDJGwVOJ6K3pWKjAjjEIQAxeLLoVsDMHC83vqdusvu74gfERk/hvDeW2ssDdk5jHPcCsIYg9uaeagH1okNWOStDR6nu7xXYg+mGD34CUZfPi8rjDouZj+6M6BpN1jvdrrWlzZBamXxQd1ppuSaLS1R12XbJ+PfxXWwO0S/ZTUw0jHOPBdO/jzkBdrHU9aDYbdJIYa2ziZCKU2NGmz8imNsca4RBX5yU7reRybu1K92g5OjDfazLTkk8wYWAzkNnjpjNuK+0tJdbN2F8NpKtqfVZYvsr+K4JZ7Bcw1+deFoyYM4CrQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w3Vyh9nMfjUlddy2WHRpBAPuYAohqFPPdut9xn61tt8=;
- b=lUgCnuUyBBYeOY5Dm2w0K3BAgZDa9I9zwB78vNAtOwXTrcbeEsTCtS+9HkWeqH6gqW9VMGCICXUNRT+bWArH0cOnNDSYgFmoIw9L2YnjY7yxU0+l6M9U+o06s+4/iowo55/DRP8DI6qRosND3juNVOLJxa9v1V9Rjha6K9C3NY8mRPOsMjZAjZBDLSwPEunv8xnffqnCxxZnn3wN3LzVX/XcKsmMldSzVTRKbaBCOa+KEINS/Oto2AFfDuzanda9mGaSy6igZHExOvG928N6080olcIUSQhrrv9XXVaOEhotc/Yh/nuWVGYQ/gKKYGayRafVy6bZQz+RL9C561cJqg==
+ bh=g/MD1gHOCR7Q1j47JSQMbUBb+TNvYSt1dx9HRn59BQg=;
+ b=m+X/uaXUBdf1FrnBljyuHtkAOaXUcDfAgLb+C+e9CqQpwLbrbuUf+1+QUV6hyuCKQzs+Ysbu9nyk7vfI6h4r5e/T8dBDEfblD4UhWDyBmN9fa4hDXXMQq78h7pw1h88QShQ1gqmB2yNomPlifCj7VO9RtlZ7OX+dFZmKEQj7LFzaaLEhP0iGd1Ije7JiUr/ZtSfj/Xy4LGxkmDReA5B5a3xdN48sqw3Q3lq6kd53UcVA249Y5GzcgQYcKJfQ2QBBFZlFcVPDEUsj0p5S9H1ZPfObFpTpteDBAUuvxNyQu88gjK6gB881BRpBV0m9tlLm+3axfbIXszHKePBfpGO5kA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w3Vyh9nMfjUlddy2WHRpBAPuYAohqFPPdut9xn61tt8=;
- b=Ex7xC4lRDNOpJywM9bjQvsA5NyMoSNPJ+MLekBK1DI5FasVGI9OfLl4vcjDRzzJD5d/ALT/R8Uaia8lZ/HubgCsLrYzxg6Bh3e75rv+s5thQlwFV1ain13q5dv8dtSROudqwgjrp6teQ8EYQsZn1cfrCL5XWh+OEEoHCnnR7tVI20YhtfSDpkEN4ShFYvZ7RQRoFT4n90JQmxXSzjY9flIfaUWTRedpAPfQNTnTJ4L3UVyNf432qhD1fHW2O7Ejqf4c7D8Bnh0XIt3OzkKzufXCRGBfCt6oIvjnosUuVUkawmOWCluNKCUCPvoCKhiiRTdDtntHyADbn7O6IPdMc0w==
+ bh=g/MD1gHOCR7Q1j47JSQMbUBb+TNvYSt1dx9HRn59BQg=;
+ b=e+2d0LIl9p045D7g7PfXJ8JXyjzt+Tvls/PQgX4nsMgpcdaz/2M+3bQz4odS/K88ky68zXuy9tHJhqd3/+zkT35Ax7L+7yueKdEI05faihJT4icq5Cj/Jlue6/sLkxjc4nVd5CFeoKNu6n2iiYxkjnfWdBnggRvlDAGhYKk0tO+qJaiXWKxzTid5mZns8XQ/t1pupFj7w3xEvxl7/guKNIMYzpREw+8DSyswZlyjWg2T7/xWyak3pit1OjcMf1g5qNVx7JWXOxAjWI8GS2Z1EZhObbKJVlOitL6L7Qh0g/mYWLMvbxD0XZTN1mOOnBn90QV/U6DbB4igW+uTStO3Rg==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by SEZPR06MB5762.apcprd06.prod.outlook.com (2603:1096:101:ac::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 03:19:43 +0000
+ 2026 03:19:33 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 03:19:43 +0000
+ 03:19:33 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -55,12 +55,12 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Patrick Venture <venture@google.com>, Hao Wu <wuhaotsh@google.com>
-Subject: [PATCH v3 11/20] hw/i3c/dw-i3c: Add IRQ MMIO behavior
-Thread-Topic: [PATCH v3 11/20] hw/i3c/dw-i3c: Add IRQ MMIO behavior
-Thread-Index: AQHclxdwS8nRR9ze6Uqk472dKK371w==
-Date: Fri, 6 Feb 2026 03:19:43 +0000
-Message-ID: <20260206031926.3227848-12-jamin_lin@aspeedtech.com>
+ Patrick Venture <venture@google.com>
+Subject: [PATCH v3 04/20] hw/i3c/dw-i3c: Add more register fields
+Thread-Topic: [PATCH v3 04/20] hw/i3c/dw-i3c: Add more register fields
+Thread-Index: AQHclxdqzgTZBG1LmEeEOJrSiDZ8Rg==
+Date: Fri, 6 Feb 2026 03:19:33 +0000
+Message-ID: <20260206031926.3227848-5-jamin_lin@aspeedtech.com>
 References: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260206031926.3227848-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,98 +71,98 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB5762:EE_
-x-ms-office365-filtering-correlation-id: e811feb6-1d5c-4f0f-c47d-08de652e92a9
+x-ms-office365-filtering-correlation-id: 1494c076-1032-4d66-46c9-08de652e8cb3
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|7416014|921020|38070700021; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?dRW5oG/z92wiayC1iIgGwAN2bBwePIsd4qNaZ6zVyzezLgi2UHlVtQ/YG+?=
- =?iso-8859-1?Q?DsNNKpt+zQH2ZWiH8WhhHUp08gTUlnY3ZM+X4ArqQixNVF+M3bnfqJNLZR?=
- =?iso-8859-1?Q?4yZIeODrBAT+ATl/zXL6tHBPrq1XFF/Ld4mMr5NOpRTMmKjG/sfLB48b4C?=
- =?iso-8859-1?Q?/DBRYPc30EvihKxod/l9KtI1EiUUbnOIQ20OnvzparD2U5DBQx7w3/1/PS?=
- =?iso-8859-1?Q?ziO4Irly7KuibXz36f6s24SHAFQP2+0jBb7aeEVH7I/BWy/aeqRCByzdJm?=
- =?iso-8859-1?Q?c+o4cAF967DR1PIvyyxucSEslt50zsTztRuNAburCN8JDGWxt9Cu9dNmWC?=
- =?iso-8859-1?Q?StvsDHBOKOZkRWcuOHYQdOgHaC4jklVNQ5nbQ3G2mGZcjEcD1D7Rp5wBW/?=
- =?iso-8859-1?Q?X4RPHULVx4zzLbFRxTANFRBiK7OsGrYOnFAsecNc17ZYT4nx76YRQOaNK4?=
- =?iso-8859-1?Q?WDtzSMGyCO+0N2ltC0ZjSxtdu0nNYWl8JNpjzNRJAMQ2iM4iZr91k3FtUM?=
- =?iso-8859-1?Q?qND3R9Mt4bYuUSb7OJZYVdfgZ2F2ZxLDzY8tm0uHbRVcSSktdRYuhO/GC1?=
- =?iso-8859-1?Q?aXvMigyOsAi9EXtuQBTVxGDtXjAXbfaSuap9iqs4bWZMLA+27qbkG2IJff?=
- =?iso-8859-1?Q?SGMu1yRDnU5dk/52wavGlfTrbs5IZV0h23nrSPb6Fc4Yi5ewcv7O+dkpRT?=
- =?iso-8859-1?Q?WT2R8r+LECkePO3mB0iv9brBMz05RyzP+JNol6hf9eHjIk3BU/QiSFEe7R?=
- =?iso-8859-1?Q?VfmEQ5BklN4aqBOdlp6PcvoZnGCVhBQ8xYWe8yRlUfF0oLzwesDqoXFf5A?=
- =?iso-8859-1?Q?HnayaTJNFrlmlxQVK5w8YMQNsuz4cquoYoQQ1vIEKejn9MmrJQ1kD2sHOf?=
- =?iso-8859-1?Q?/OIh3zgzNtpzAt6FZFzw78ubMuaImHvesFdh4MbTcOzWjesfqOTj6IzeKq?=
- =?iso-8859-1?Q?r5qVgoZ3DSCQr5vn4j24pd5Gz8IaXbv2alLJNFBP4rGNiuYf8kSiD+/aKZ?=
- =?iso-8859-1?Q?gZboiCHb0SpnSh8P+RCZuwpq8W3516KpQ8NcyzTLkP4yPmWUBO9m1kArw0?=
- =?iso-8859-1?Q?ZljTTgZaq3mL4HyzYVzftvLVUNCk3D+atjt9/EWLnkJz9Uzl/NuqdOv9Cz?=
- =?iso-8859-1?Q?EGunawNpp98VeLLTrQrNo0GNpfuS8I5CTirpGL78xcXgHZW1AQ1JyV964A?=
- =?iso-8859-1?Q?mmDa4h8ztjN3dhKtrsBZGrCKrSg+LAGO4o9084sArcOXXsnnXAwCdDOhMY?=
- =?iso-8859-1?Q?Y4VfcEy+dzA1DJCWZOAs1P6JeamNSjmvnRIZBbDM0k1EjAKrcouQeC8/tx?=
- =?iso-8859-1?Q?6AlOL5idDuyuNcTaqdPuYja2COWfmDsVBwRvhWTcSOk6QKAT1ibxA/3taf?=
- =?iso-8859-1?Q?SmEmv5/iP8YJovqF+U1XTJiRxtHeI36C7D4YMX9PMLClMdwvX6pe7tDV/q?=
- =?iso-8859-1?Q?xWZ62W+5MzYX+HqCRIptr1oChRffnh1OwYzCuSiWCsNNmod6d3ZPPUodAg?=
- =?iso-8859-1?Q?9oNAbYEAqMTnLSDZUex2o5Npf0M7S23kyGuWHOKhf15f1JXK1/01BkiRWa?=
- =?iso-8859-1?Q?X66d9niCyunOWTiWpaHy7U2v8JnDt31shT3kKbDMU5pMD9QzMq4yMjocvP?=
- =?iso-8859-1?Q?N+wFnauOcKskp8sd29Yt5cWvQTs8Q1amAaNF64L3xFaajvOU0beZsz+Irx?=
- =?iso-8859-1?Q?y1K5rpWtS3B+ampzmW8z9YK2nknVU+ZSn5F0mTJa?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?ZZJbR/KyvdYWcPn/mJrvbKuasOf6A4GOkR9+VAd0SbAaO6s8gXX9DosZ9N?=
+ =?iso-8859-1?Q?79eC5bCoA7466oAPHJ+UyY3hm+0ncc1h6NQAOwjPjIgHa+ZHq+ffeWjtBL?=
+ =?iso-8859-1?Q?xotmz4LtFCmYZM4v9ZYFp4QLUhL7iqvahgWOmGQuvANuOx6QYAdV6QyTsJ?=
+ =?iso-8859-1?Q?hYg7iG9AwS9GSlNZ2EMN58g2TThD+GjT5QxTTW1ACmxMdKR9EHBWdV6ayZ?=
+ =?iso-8859-1?Q?h4Lqgdk0ccQ9ijUjAV6zk5EZsM53/7og/gzojvdtKSSJcH3HboGZGseyVh?=
+ =?iso-8859-1?Q?B2iGxRcG7cAwrhXrMaLZZ5aEYU/okZrHKxgq3LlbarcDNO1qTgaj/IJslo?=
+ =?iso-8859-1?Q?d9NTIjr5hqnYMXuXtxc9ct597G5yasp5Zzq6+XjkzBoDEXFkfxzvL8Nw14?=
+ =?iso-8859-1?Q?bm09TlSd+SvAqziWglxSfAEBi6EswqtXTz63g7OSYMbXa1VF8e6Rv9Fthq?=
+ =?iso-8859-1?Q?hsCi5i9Azcnb8iBToX/AWR2Awyw/k0ajVOVkfiTFTVtPVccPa8Vm5blJ6s?=
+ =?iso-8859-1?Q?V/kZujj35X3EqXoQ3pzzklpD4+fTepiytwdwYHPqf4/ewlx1rMbQac38l9?=
+ =?iso-8859-1?Q?HOLVcRic6kE40ZlXqur694dTFxaGD1NLirXEdrGL81zqps+Jm8o4eGyKbN?=
+ =?iso-8859-1?Q?Trn+yfHBaItSG9+pelrTUhrdh6kLoJZcNz8nlidVic1TTgDOKNosTGRlAk?=
+ =?iso-8859-1?Q?hykXgRe2GggTjrDc87HgWkAPbhtugl1xKs9OR7hrBUrRhRUvvlJPfiulhb?=
+ =?iso-8859-1?Q?5fdSJFCB+H3HT0tFlwt2ufA14XeFioH+K0s6vMReGVS9qRCg9+jdJYKcyb?=
+ =?iso-8859-1?Q?upDTe9YAwGyGThdFn9dxGwMM4XmorBZTm3YbCPFQZgqwgbCxcx9pFYABHG?=
+ =?iso-8859-1?Q?0Iic1bVFxM4+YdqTsPWfkIOD3AlRyWkG9KL9dSnYB7oj67i9+RipQDYO1X?=
+ =?iso-8859-1?Q?0pkVBdLW2EOkqwCWlzJ66IkNN1/r65SWQr9/QFSU0uSHBhC5JSFkT+yJI8?=
+ =?iso-8859-1?Q?CIlWVxcWbQslXw1jvA2EFUhEIp+SCjAxmCXjFKvJK8vbbANC0a9UwsLndO?=
+ =?iso-8859-1?Q?brNI6lLGyFcb9ppk49SXlpFQKWGIZC6gTP55wqzLnPJi5mmjfsEN4dcwz+?=
+ =?iso-8859-1?Q?ZSY6hyZxtcJjnNlHGLWg5sIG8IVGFnQH/XYcx3khLjyU5LT2ESNSWbzg5S?=
+ =?iso-8859-1?Q?vFk7rzK60my2WMgIcX0ZLLfsahQnUUscHXhRwsQv5hpZFWSYpL8419nLkA?=
+ =?iso-8859-1?Q?GGPEAxJsbRS6CwDjV6XjnXM3g98wRx5gk/b465FFNr2+B4TkTDu6ptG1Dq?=
+ =?iso-8859-1?Q?xRMX5/CbQ5Qx4SPvVDuzz5Lpep+mPJjp0IU8yPtkLN18aDYxFB4mIEd+ta?=
+ =?iso-8859-1?Q?Y8rVJzrvk54lfHR8/3QPbc7vuMrxQnww5jK1LWAZf26HTKmI5jlWc5bSKr?=
+ =?iso-8859-1?Q?5Z6Hxedl3a0/UU+PC4FpL/hQYc/dtZwhWG5jObOQWJMz6vfzTtqfaNivrd?=
+ =?iso-8859-1?Q?cHqW3zpbyrpKcw4RfTu/+gFCtHdevl9vWWU50/EvbYNXtf7JczGGjNcIvr?=
+ =?iso-8859-1?Q?xaF6OTHNuxmrCS51BdwzfCFe1fVwWaLVbZKTtByZhBvdqKJwU9Ni1OTw4W?=
+ =?iso-8859-1?Q?t8r1OVw9LEjfRivru51P53LJUmsZ7WwhOQXYn0PCWkccf9n4SU/BrnEvsM?=
+ =?iso-8859-1?Q?x90lScGJxGYLUwRmP5DNKUSo231JNMWs65Zjav1V?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?GCzF9SBqVaKEVhcUVC0Y2qxSd9sgsJ2iWzWkI5S9NX+WVxixksYFmTjoyr?=
- =?iso-8859-1?Q?atc1gE0ro/f2hm/6v3nGNbFA+1q8ifzuMgrx32BG0nJpR1OeZ/2FOVfvXq?=
- =?iso-8859-1?Q?qeNfMO8O1Ti9xqxzdVR38AoL/ANy6PeF7osC9maz/etBSaIkHo2XMzy6RX?=
- =?iso-8859-1?Q?KCIBDeabmi/ZtAYJdw6PvehiJmLhbZg+xNIopXkjErgteVjDuhTqn2fkfN?=
- =?iso-8859-1?Q?uQ307LGjb1BGXNItMbbYzBkA3gTYab/vj3CDBRFBh+pExAX/FRJppvhn0e?=
- =?iso-8859-1?Q?zhzGfZiCFc+rUm1f1XpGPQXZPxK6IhGohw9oQeE5wXAH1t0ikmorn9892o?=
- =?iso-8859-1?Q?Mj4ndiw0PFvNq+Y1ykkDQSeoutD72WHjtstEjQPjRmQ6mKSm9T3TfMYZaw?=
- =?iso-8859-1?Q?wRLBP3sELezSpcEC5HeRVe49vXIAYSOfwbaPTca2UENrdTxchK0xaZ8PNV?=
- =?iso-8859-1?Q?NKF2gSv3MQJj4+SpZqJYRpX19TR6OUOKIhF6ylSzlNAgwFno22CJlFYSZo?=
- =?iso-8859-1?Q?1IkTAn8kmBna35rqA6GMBai66ZS0fh1LAAPhVegWBgkriiuyGG5y0/wZ+4?=
- =?iso-8859-1?Q?pjEIpx69y5ATBv2NV1OvQxiXX82LBIXRSH5HjNi5DD6GFub0uJrZQEQndf?=
- =?iso-8859-1?Q?gSX6E3NdsBIw4A4y0m50w7V7Zcas/T6sNQe7YsAuivijX/0UZ04W4ilR1M?=
- =?iso-8859-1?Q?a6fDMcKRNoOZma72XnuubyUjqfUY6sUVggC6NRSoaI6NaisGJziRL2e02y?=
- =?iso-8859-1?Q?qdXVg4jrCFK5Y213UM+8vBeT3o/bobl0i8IFBCrUC1+E1YcX2xwnpq3ClR?=
- =?iso-8859-1?Q?a5FqkYnzWV12KoM8E/Cpy4pF9gJJ0/vUhB3rHC3+X2PDTWjPgCX0aqbM3y?=
- =?iso-8859-1?Q?cRXVGAcAmJ9NcSSBwQROsor5UbIBcWpg/hwEjPn5hPrPTI5Dg+vGe7UGww?=
- =?iso-8859-1?Q?wepY2AT8vYftyVi0yWLzgT4MmA5yxLKmC/2soXmRvLCzuaBgjC6S7ZeCOJ?=
- =?iso-8859-1?Q?44dZ5+GfOC1I17pzoUYMdIi8/jg6UDr6bnIczvZf1+trkaGeVrYJ2SXuMO?=
- =?iso-8859-1?Q?10QmgEoT52SOft68NsEQyMWjGZh5t5PgPesxvRksGe2tYmvPHFo53JrZE5?=
- =?iso-8859-1?Q?QPsUM6D11h1mHNsFXGCl8FlaUH0fLYGLMR3q6UIoT8aqZELa3ApurxJMtE?=
- =?iso-8859-1?Q?ozlUtUEoEfWiEDbo4b/pU8RmycVN1kANG05zlzPNZjOSJ4TovUa7s5mrPP?=
- =?iso-8859-1?Q?OW0TsUPLGXBTjVCpzf4uvmo6Rtd2jYX6g2yKBbCvVTzkrwsFcJMoI/WCEH?=
- =?iso-8859-1?Q?XjGmObxmZD+qQfduQpKpmwF8N26YRZj7dtpRy/KOWIWzlvrhZuNNQBuuX+?=
- =?iso-8859-1?Q?KxeAMRIsqFIbeOBeY8YJKpA7G07ck7BW0HPRKayu6zg8ux6rHaggLQytUq?=
- =?iso-8859-1?Q?JwPDmXvUNgJosQuuhurYZ028o2hS71tKJFHaQHQAPr4FWXAkS1j9Q8t5Dr?=
- =?iso-8859-1?Q?LiItxY93I4eSHMj5ZZEgfU3lLvpK3WKemXbzXWo7GNlcbB3+3iN7vKv9G1?=
- =?iso-8859-1?Q?XqLaVELZsAxYBXWhlPzz/9FerLVivAeeKwXcohfSn75wH3llYOaOA6mlec?=
- =?iso-8859-1?Q?S34DbPRWgl4ljvU3SuWpMn+jBWZ4SVBNepSzyqPOmVs7nOLOdyqJom/AlO?=
- =?iso-8859-1?Q?i5B9NnpWpNjD/DtgOuifn8CLnDU4grgt/UE3yZURxNzZQT17/3DSHD8M9N?=
- =?iso-8859-1?Q?oOu64lBKtUW6PY61c7QEy4LGIQfOvHpSqoq1ofrYQg6A0g3nlliA8SBIA6?=
- =?iso-8859-1?Q?G5gvIKSbfw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?NjtNVtyE83vdjDxW+kh5uvn+yqNl9vf6X97xjyMzDefgMukh3q7QQcyBnc?=
+ =?iso-8859-1?Q?jzXo57iJ8IEzWfCIp9Qpdsl62Zr7YS1JYhFweM0kAd/vKfxv46kfsckhsn?=
+ =?iso-8859-1?Q?h903OemCIPglzLlpCcDeH6gi7lvjg3SBN7nVAUhdEeetBhzR1izeftbSlH?=
+ =?iso-8859-1?Q?J+NwCy9n3ljJrv7M/+PwZ0ZjXtneiaI6AzItu+T0/LUjQeskQnGOL+cyX/?=
+ =?iso-8859-1?Q?Pilakv1MWuGqBGoLBNMvHOtDF7EWF1BEU5SOlsB6akVCwQNZS6/E0q+8RX?=
+ =?iso-8859-1?Q?Os3Vt4mkD/GvXxlmNsnL6uTBhmZCFPS/rzEDFCEYEi7B6IBIi+qXnau2BE?=
+ =?iso-8859-1?Q?nqHLK1bWjqulJOccc7HCkiQYxbyJgF4UiFhJt6Xo5YjspbnDvVeW3djkz2?=
+ =?iso-8859-1?Q?hETd15sC15Q/s6MwmwdrSx/exr34yvGfEAD2PTRxy5E9tmGNMOub+wbJ5G?=
+ =?iso-8859-1?Q?pewnSaf6UEx04zo7PkkwL5loc65DRkcG+uIR0wzXWmjeoZxYl36LnK4fxa?=
+ =?iso-8859-1?Q?OOP5/0LMJP5FrYmsERjyIx1dqTCmHtXvWSmL5EUG1GP7ePmxLqOdhvtIQ0?=
+ =?iso-8859-1?Q?hUxF8ak+OLuToq4L6V6fanYkXPDykTOdXeNR1W4c+ukCMHozjbsv09JdAM?=
+ =?iso-8859-1?Q?NO48mpyct/zHEcCyn2h+hZHi+YJmpe3IOOgBRiLkYynvvT2DhaI68AJ3uC?=
+ =?iso-8859-1?Q?TVDz53b0OB3Di6tPMYlnxWF93xCRD9JAxKnCCTwGJ6zOfMLeC3cSttNWz1?=
+ =?iso-8859-1?Q?8U9M5/c9XWpgWsO+/tRVPIWHE8JnYVne9aq54XI1zolFjvsj3J+Wpkvo7R?=
+ =?iso-8859-1?Q?p89ZQfQU8mPIXSqcoSUlb8QToEY6hZdTwcGeGswp4eHbboNwDg5AosePOb?=
+ =?iso-8859-1?Q?iLUZlSdoWMXzXvhFB1upwytd2DYTCduJNz7KaLrRYjuU2p/1Fj6jLrAZKn?=
+ =?iso-8859-1?Q?x6C8hJ73NiD+gQ/5zMD3CM19wtG7W7bsdLrRmWRensCCJKjlAymwiWCJmf?=
+ =?iso-8859-1?Q?+nLyQdlzxoJWBSdgE8LRlYojsE0ZDXO8PEEg+7uvX1SumptmJoNhT7dr7j?=
+ =?iso-8859-1?Q?0vgfjJIszQ5wvtiXFmXkz7l/BY5/Agh6yIPCUoL6CcfGfNkaBdvRIUbpqG?=
+ =?iso-8859-1?Q?pWGTYNfcSH26A6AvIiYcQILH6gLG6ZxMtH4kCcdjYjg/nTTsyfwx6ZOWDV?=
+ =?iso-8859-1?Q?CIjsXkUqcf/c3nuE5UhtiA5mO4lxlhJE+eekmgZpTcJeptKxHWf1i0Ar/I?=
+ =?iso-8859-1?Q?c6bCqr9Np3QV4XzOIIPRPYzxhhBGC6SJed/MldIDHV5AxRR4BsBLTM5bB2?=
+ =?iso-8859-1?Q?qVe/RrPt3GW7zMfqEHQmNX++zVIgXAWFAZyOA4b/QfeNRGiGskI2HjwaKm?=
+ =?iso-8859-1?Q?eGLUJ7TIdDdAq/SBGetQ9pQPY4VnplU+51y2rLadNxL0FrQ6AbEEg9MtT8?=
+ =?iso-8859-1?Q?9QD7pEM1bWvIWhl44+DMmDYtzbFxb+w2pzB+HQr+FtOW+OArKbFLjbJjiV?=
+ =?iso-8859-1?Q?RGNF5MtxVdO4d96GYwv5Lh6ZNxyVIIjYVnFuVEYuaPPSmgQcJ9L78G6bNC?=
+ =?iso-8859-1?Q?PDEtCnavmXsHpJILQ6WQvJT0iL7YBeYxf4/kIPo2cFO7XRaGuMMtvzl1dw?=
+ =?iso-8859-1?Q?uKVL7QA78w335YMgNGp+FPR+D7EzhwTVieQCCIep0h63I8dRyUUuD3s/cw?=
+ =?iso-8859-1?Q?nUaBpVKqVTe+OM1q5UbFTOyeDtDqyDvIwwKmakCa/uQAgzo87Ill081EnZ?=
+ =?iso-8859-1?Q?uYDWM2G9s2Fh4BHN078cjdQlqpnpjedckI0q6EbQB2qfMmAzKPuJfec15V?=
+ =?iso-8859-1?Q?6P0Aad/rrQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e811feb6-1d5c-4f0f-c47d-08de652e92a9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:43.6210 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1494c076-1032-4d66-46c9-08de652e8cb3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Feb 2026 03:19:33.6256 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: X+Wwt4YMQwmRneYRdu04gXkvQ4mDdsJunrHNTAGTypPF02FOHvNiUBQolMOxJzN/VcFlhPvneYVgk/TpUQ+QVVcFAf9PfDVNA/MTTQidBAc=
+X-MS-Exchange-CrossTenant-userprincipalname: 1li9trQBqA87EfO+uUl4uXQA0hQWiuiCjWoZruucxgo4smMkJKKz6RcNAxdL8VvzJ/xTr56rXRPPoa1PBI16jeKyHlRq+AdD8U2iZL8zaOQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5762
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,108 +178,277 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Adds the rest of the Designware register fields.=0A=
+=0A=
 Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+=0A=
 Reviewed-by: Patrick Venture <venture@google.com>=0A=
-Reviewed-by: Hao Wu <wuhaotsh@google.com>=0A=
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/i3c/dw-i3c.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++++=0A=
- 1 file changed, 56 insertions(+)=0A=
+ hw/i3c/dw-i3c.c | 199 ++++++++++++++++++++++++++++++++++++++++++++++++=0A=
+ 1 file changed, 199 insertions(+)=0A=
 =0A=
 diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
-index 9dc71aa3d8..bda8ab5d51 100644=0A=
+index c949579ea1..2f04c69320 100644=0A=
 --- a/hw/i3c/dw-i3c.c=0A=
 +++ b/hw/i3c/dw-i3c.c=0A=
-@@ -17,6 +17,7 @@=0A=
- #include "qapi/error.h"=0A=
- #include "migration/vmstate.h"=0A=
+@@ -19,54 +19,253 @@=0A=
  #include "trace.h"=0A=
-+#include "hw/core/irq.h"=0A=
  =0A=
  REG32(DEVICE_CTRL,                  0x00)=0A=
-     FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)=0A=
-@@ -335,6 +336,46 @@ static const uint32_t dw_i3c_ro[DW_I3C_NR_REGS] =3D {=
++    FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)=0A=
++    FIELD(DEVICE_CTRL, I2C_SLAVE_PRESENT,         7, 1)=0A=
++    FIELD(DEVICE_CTRL, HOT_JOIN_ACK_NACK_CTRL,    8, 1)=0A=
++    FIELD(DEVICE_CTRL, IDLE_CNT_MULTIPLIER,       24, 2)=0A=
++    FIELD(DEVICE_CTRL, SLV_ADAPT_TO_I2C_I3C_MODE, 27, 1)=0A=
++    FIELD(DEVICE_CTRL, DMA_HANDSHAKE_EN,          28, 1)=0A=
++    FIELD(DEVICE_CTRL, I3C_ABORT,                 29, 1)=0A=
++    FIELD(DEVICE_CTRL, I3C_RESUME,                30, 1)=0A=
++    FIELD(DEVICE_CTRL, I3C_EN,                    31, 1)=0A=
+ REG32(DEVICE_ADDR,                  0x04)=0A=
++    FIELD(DEVICE_ADDR, STATIC_ADDR,         0, 7)=0A=
++    FIELD(DEVICE_ADDR, STATIC_ADDR_VALID,   15, 1)=0A=
++    FIELD(DEVICE_ADDR, DYNAMIC_ADDR,        16, 7)=0A=
++    FIELD(DEVICE_ADDR, DYNAMIC_ADDR_VALID,  31, 1)=0A=
+ REG32(HW_CAPABILITY,                0x08)=0A=
++    FIELD(HW_CAPABILITY, DEVICE_ROLE_CONFIG,  0, 3)=0A=
++    FIELD(HW_CAPABILITY, HDR_DDR, 3, 1)=0A=
++    FIELD(HW_CAPABILITY, HDR_TS,  4, 1)=0A=
+ REG32(COMMAND_QUEUE_PORT,           0x0c)=0A=
++    FIELD(COMMAND_QUEUE_PORT, CMD_ATTR, 0, 3)=0A=
++    /* Transfer command structure */=0A=
++    FIELD(COMMAND_QUEUE_PORT, TID, 3, 4)=0A=
++    FIELD(COMMAND_QUEUE_PORT, CMD, 7, 8)=0A=
++    FIELD(COMMAND_QUEUE_PORT, CP, 15, 1)=0A=
++    FIELD(COMMAND_QUEUE_PORT, DEV_INDEX, 16, 5)=0A=
++    FIELD(COMMAND_QUEUE_PORT, SPEED, 21, 3)=0A=
++    FIELD(COMMAND_QUEUE_PORT, ROC, 26, 1)=0A=
++    FIELD(COMMAND_QUEUE_PORT, SDAP, 27, 1)=0A=
++    FIELD(COMMAND_QUEUE_PORT, RNW, 28, 1)=0A=
++    FIELD(COMMAND_QUEUE_PORT, TOC, 30, 1)=0A=
++    FIELD(COMMAND_QUEUE_PORT, PEC, 31, 1)=0A=
++    /* Transfer argument data structure */=0A=
++    FIELD(COMMAND_QUEUE_PORT, DB, 8, 8)=0A=
++    FIELD(COMMAND_QUEUE_PORT, DL, 16, 16)=0A=
++    /* Short data argument data structure */=0A=
++    FIELD(COMMAND_QUEUE_PORT, BYTE_STRB, 3, 3)=0A=
++    FIELD(COMMAND_QUEUE_PORT, BYTE0, 8, 8)=0A=
++    FIELD(COMMAND_QUEUE_PORT, BYTE1, 16, 8)=0A=
++    FIELD(COMMAND_QUEUE_PORT, BYTE2, 24, 8)=0A=
++    /* Address assignment command structure */=0A=
++    /*=0A=
++     * bits 3..21 and 26..31 are the same as the transfer command structur=
+e, or=0A=
++     * marked as reserved.=0A=
++     */=0A=
++    FIELD(COMMAND_QUEUE_PORT, DEV_COUNT, 21, 3)=0A=
+ REG32(RESPONSE_QUEUE_PORT,          0x10)=0A=
++    FIELD(RESPONSE_QUEUE_PORT, DL, 0, 16)=0A=
++    FIELD(RESPONSE_QUEUE_PORT, CCCT, 16, 8)=0A=
++    FIELD(RESPONSE_QUEUE_PORT, TID, 24, 3)=0A=
++    FIELD(RESPONSE_QUEUE_PORT, ERR_STATUS, 28, 4)=0A=
+ REG32(RX_TX_DATA_PORT,              0x14)=0A=
+ REG32(IBI_QUEUE_STATUS,             0x18)=0A=
++    FIELD(IBI_QUEUE_STATUS, IBI_DATA_LEN,   0, 8)=0A=
++    FIELD(IBI_QUEUE_STATUS, IBI_ID,         8, 8)=0A=
++    FIELD(IBI_QUEUE_STATUS, LAST_STATUS,    24, 1)=0A=
++    FIELD(IBI_QUEUE_STATUS, ERROR,          30, 1)=0A=
++    FIELD(IBI_QUEUE_STATUS, IBI_STATUS,     31, 1)=0A=
+ REG32(IBI_QUEUE_DATA,               0x18)=0A=
+ REG32(QUEUE_THLD_CTRL,              0x1c)=0A=
++    FIELD(QUEUE_THLD_CTRL, CMD_BUF_EMPTY_THLD,  0, 8);=0A=
++    FIELD(QUEUE_THLD_CTRL, RESP_BUF_THLD, 8, 8);=0A=
++    FIELD(QUEUE_THLD_CTRL, IBI_DATA_THLD, 16, 5);=0A=
++    FIELD(QUEUE_THLD_CTRL, IBI_STATUS_THLD,     24, 8);=0A=
+ REG32(DATA_BUFFER_THLD_CTRL,        0x20)=0A=
++    FIELD(DATA_BUFFER_THLD_CTRL, TX_BUF_THLD,   0, 3)=0A=
++    FIELD(DATA_BUFFER_THLD_CTRL, RX_BUF_THLD,   8, 3)=0A=
++    FIELD(DATA_BUFFER_THLD_CTRL, TX_START_THLD, 16, 3)=0A=
++    FIELD(DATA_BUFFER_THLD_CTRL, RX_START_THLD, 24, 3)=0A=
+ REG32(IBI_QUEUE_CTRL,               0x24)=0A=
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_HOT_JOIN,   0, 1)=0A=
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_MASTER_REQ, 1, 1)=0A=
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_SLAVE_IRQ,  3, 1)=0A=
+ REG32(IBI_MR_REQ_REJECT,            0x2c)=0A=
+ REG32(IBI_SIR_REQ_REJECT,           0x30)=0A=
+ REG32(RESET_CTRL,                   0x34)=0A=
++    FIELD(RESET_CTRL, CORE_RESET,       0, 1)=0A=
++    FIELD(RESET_CTRL, CMD_QUEUE_RESET,  1, 1)=0A=
++    FIELD(RESET_CTRL, RESP_QUEUE_RESET, 2, 1)=0A=
++    FIELD(RESET_CTRL, TX_BUF_RESET,     3, 1)=0A=
++    FIELD(RESET_CTRL, RX_BUF_RESET,     4, 1)=0A=
++    FIELD(RESET_CTRL, IBI_QUEUE_RESET,  5, 1)=0A=
+ REG32(SLV_EVENT_CTRL,               0x38)=0A=
++    FIELD(SLV_EVENT_CTRL, SLV_INTERRUPT,      0, 1)=0A=
++    FIELD(SLV_EVENT_CTRL, MASTER_INTERRUPT,   1, 1)=0A=
++    FIELD(SLV_EVENT_CTRL, HOT_JOIN_INTERRUPT, 3, 1)=0A=
++    FIELD(SLV_EVENT_CTRL, ACTIVITY_STATE,     4, 2)=0A=
++    FIELD(SLV_EVENT_CTRL, MRL_UPDATED,        6, 1)=0A=
++    FIELD(SLV_EVENT_CTRL, MWL_UPDATED,        7, 1)=0A=
+ REG32(INTR_STATUS,                  0x3c)=0A=
++    FIELD(INTR_STATUS, TX_THLD,           0, 1)=0A=
++    FIELD(INTR_STATUS, RX_THLD,           1, 1)=0A=
++    FIELD(INTR_STATUS, IBI_THLD,          2, 1)=0A=
++    FIELD(INTR_STATUS, CMD_QUEUE_RDY,     3, 1)=0A=
++    FIELD(INTR_STATUS, RESP_RDY,          4, 1)=0A=
++    FIELD(INTR_STATUS, TRANSFER_ABORT,    5, 1)=0A=
++    FIELD(INTR_STATUS, CCC_UPDATED,       6, 1)=0A=
++    FIELD(INTR_STATUS, DYN_ADDR_ASSGN,    8, 1)=0A=
++    FIELD(INTR_STATUS, TRANSFER_ERR,      9, 1)=0A=
++    FIELD(INTR_STATUS, DEFSLV,            10, 1)=0A=
++    FIELD(INTR_STATUS, READ_REQ_RECV,     11, 1)=0A=
++    FIELD(INTR_STATUS, IBI_UPDATED,       12, 1)=0A=
++    FIELD(INTR_STATUS, BUSOWNER_UPDATED,  13, 1)=0A=
+ REG32(INTR_STATUS_EN,               0x40)=0A=
++    FIELD(INTR_STATUS_EN, TX_THLD,          0, 1)=0A=
++    FIELD(INTR_STATUS_EN, RX_THLD,          1, 1)=0A=
++    FIELD(INTR_STATUS_EN, IBI_THLD,         2, 1)=0A=
++    FIELD(INTR_STATUS_EN, CMD_QUEUE_RDY,    3, 1)=0A=
++    FIELD(INTR_STATUS_EN, RESP_RDY,         4, 1)=0A=
++    FIELD(INTR_STATUS_EN, TRANSFER_ABORT,   5, 1)=0A=
++    FIELD(INTR_STATUS_EN, CCC_UPDATED,      6, 1)=0A=
++    FIELD(INTR_STATUS_EN, DYN_ADDR_ASSGN,   8, 1)=0A=
++    FIELD(INTR_STATUS_EN, TRANSFER_ERR,     9, 1)=0A=
++    FIELD(INTR_STATUS_EN, DEFSLV,           10, 1)=0A=
++    FIELD(INTR_STATUS_EN, READ_REQ_RECV,    11, 1)=0A=
++    FIELD(INTR_STATUS_EN, IBI_UPDATED,      12, 1)=0A=
++    FIELD(INTR_STATUS_EN, BUSOWNER_UPDATED, 13, 1)=0A=
+ REG32(INTR_SIGNAL_EN,               0x44)=0A=
++    FIELD(INTR_SIGNAL_EN, TX_THLD,          0, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, RX_THLD,          1, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, IBI_THLD,         2, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, CMD_QUEUE_RDY,    3, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, RESP_RDY,         4, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, TRANSFER_ABORT,   5, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, CCC_UPDATED,      6, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, DYN_ADDR_ASSGN,   8, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, TRANSFER_ERR,     9, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, DEFSLV,           10, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, READ_REQ_RECV,    11, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, IBI_UPDATED,      12, 1)=0A=
++    FIELD(INTR_SIGNAL_EN, BUSOWNER_UPDATED, 13, 1)=0A=
+ REG32(INTR_FORCE,                   0x48)=0A=
++    FIELD(INTR_FORCE, TX_THLD,          0, 1)=0A=
++    FIELD(INTR_FORCE, RX_THLD,          1, 1)=0A=
++    FIELD(INTR_FORCE, IBI_THLD,         2, 1)=0A=
++    FIELD(INTR_FORCE, CMD_QUEUE_RDY,    3, 1)=0A=
++    FIELD(INTR_FORCE, RESP_RDY,         4, 1)=0A=
++    FIELD(INTR_FORCE, TRANSFER_ABORT,   5, 1)=0A=
++    FIELD(INTR_FORCE, CCC_UPDATED,      6, 1)=0A=
++    FIELD(INTR_FORCE, DYN_ADDR_ASSGN,   8, 1)=0A=
++    FIELD(INTR_FORCE, TRANSFER_ERR,     9, 1)=0A=
++    FIELD(INTR_FORCE, DEFSLV,           10, 1)=0A=
++    FIELD(INTR_FORCE, READ_REQ_RECV,    11, 1)=0A=
++    FIELD(INTR_FORCE, IBI_UPDATED,      12, 1)=0A=
++    FIELD(INTR_FORCE, BUSOWNER_UPDATED, 13, 1)=0A=
+ REG32(QUEUE_STATUS_LEVEL,           0x4c)=0A=
++    FIELD(QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,  0, 8)=0A=
++    FIELD(QUEUE_STATUS_LEVEL, RESP_BUF_BLR,         8, 8)=0A=
++    FIELD(QUEUE_STATUS_LEVEL, IBI_BUF_BLR,          16, 8)=0A=
++    FIELD(QUEUE_STATUS_LEVEL, IBI_STATUS_CNT,       24, 5)=0A=
+ REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)=0A=
++    FIELD(DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC, 0, 8)=0A=
++    FIELD(DATA_BUFFER_STATUS_LEVEL, RX_BUF_BLR,       16, 8)=0A=
+ REG32(PRESENT_STATE,                0x54)=0A=
++    FIELD(PRESENT_STATE, SCL_LINE_SIGNAL_LEVEL, 0, 1)=0A=
++    FIELD(PRESENT_STATE, SDA_LINE_SIGNAL_LEVEL, 1, 1)=0A=
++    FIELD(PRESENT_STATE, CURRENT_MASTER,        2, 1)=0A=
++    FIELD(PRESENT_STATE, CM_TFR_STATUS,         8, 6)=0A=
++    FIELD(PRESENT_STATE, CM_TFR_ST_STATUS,      16, 6)=0A=
++    FIELD(PRESENT_STATE, CMD_TID,               24, 4)=0A=
+ REG32(CCC_DEVICE_STATUS,            0x58)=0A=
++    FIELD(CCC_DEVICE_STATUS, PENDING_INTR,      0, 4)=0A=
++    FIELD(CCC_DEVICE_STATUS, PROTOCOL_ERR,      5, 1)=0A=
++    FIELD(CCC_DEVICE_STATUS, ACTIVITY_MODE,     6, 2)=0A=
++    FIELD(CCC_DEVICE_STATUS, UNDER_ERR,         8, 1)=0A=
++    FIELD(CCC_DEVICE_STATUS, SLV_BUSY,          9, 1)=0A=
++    FIELD(CCC_DEVICE_STATUS, OVERFLOW_ERR,      10, 1)=0A=
++    FIELD(CCC_DEVICE_STATUS, DATA_NOT_READY,    11, 1)=0A=
++    FIELD(CCC_DEVICE_STATUS, BUFFER_NOT_AVAIL,  12, 1)=0A=
+ REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)=0A=
+     FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)=0A=
+     FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)=0A=
+ REG32(DEV_CHAR_TABLE_POINTER,       0x60)=0A=
++    FIELD(DEV_CHAR_TABLE_POINTER, P_DEV_CHAR_TABLE_START_ADDR,  0, 12)=0A=
++    FIELD(DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,         12, 7)=0A=
++    FIELD(DEV_CHAR_TABLE_POINTER, PRESENT_DEV_CHAR_TABLE_INDEX, 19, 3)=0A=
+ REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)=0A=
++    FIELD(VENDOR_SPECIFIC_REG_POINTER, P_VENDOR_REG_START_ADDR, 0, 16)=0A=
+ REG32(SLV_MIPI_PID_VALUE,           0x70)=0A=
+ REG32(SLV_PID_VALUE,                0x74)=0A=
++    FIELD(SLV_PID_VALUE, SLV_PID_DCR, 0, 12)=0A=
++    FIELD(SLV_PID_VALUE, SLV_INST_ID, 12, 4)=0A=
++    FIELD(SLV_PID_VALUE, SLV_PART_ID, 16, 16)=0A=
+ REG32(SLV_CHAR_CTRL,                0x78)=0A=
++    FIELD(SLV_CHAR_CTRL, BCR,     0, 8)=0A=
++    FIELD(SLV_CHAR_CTRL, DCR,     8, 8)=0A=
++    FIELD(SLV_CHAR_CTRL, HDR_CAP, 16, 8)=0A=
+ REG32(SLV_MAX_LEN,                  0x7c)=0A=
++    FIELD(SLV_MAX_LEN, MWL, 0, 16)=0A=
++    FIELD(SLV_MAX_LEN, MRL, 16, 16)=0A=
+ REG32(MAX_READ_TURNAROUND,          0x80)=0A=
+ REG32(MAX_DATA_SPEED,               0x84)=0A=
+ REG32(SLV_DEBUG_STATUS,             0x88)=0A=
+ REG32(SLV_INTR_REQ,                 0x8c)=0A=
++    FIELD(SLV_INTR_REQ, SIR,          0, 1)=0A=
++    FIELD(SLV_INTR_REQ, SIR_CTRL,     1, 2)=0A=
++    FIELD(SLV_INTR_REQ, MIR,          3, 1)=0A=
++    FIELD(SLV_INTR_REQ, TS,           4, 1)=0A=
++    FIELD(SLV_INTR_REQ, IBI_STS,      8, 2)=0A=
++REG32(SLV_TSX_SYMBL_TIMING,         0x90)=0A=
++    FIELD(SLV_TSX_SYMBL_TIMING, SLV_TSX_SYMBL_CNT, 0, 6)=0A=
+ REG32(DEVICE_CTRL_EXTENDED,         0xb0)=0A=
++    FIELD(DEVICE_CTRL_EXTENDED, MODE, 0, 2)=0A=
++    FIELD(DEVICE_CTRL_EXTENDED, REQMST_ACK_CTRL, 3, 1)=0A=
+ REG32(SCL_I3C_OD_TIMING,            0xb4)=0A=
++    FIELD(SCL_I3C_OD_TIMING, I3C_OD_LCNT, 0, 8)=0A=
++    FIELD(SCL_I3C_OD_TIMING, I3C_OD_HCNT, 16, 8)=0A=
+ REG32(SCL_I3C_PP_TIMING,            0xb8)=0A=
++    FIELD(SCL_I3C_PP_TIMING, I3C_PP_LCNT, 0, 8)=0A=
++    FIELD(SCL_I3C_PP_TIMING, I3C_PP_HCNT, 16, 8)=0A=
+ REG32(SCL_I2C_FM_TIMING,            0xbc)=0A=
+ REG32(SCL_I2C_FMP_TIMING,           0xc0)=0A=
++    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_LCNT, 0, 16)=0A=
++    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_HCNT, 16, 8)=0A=
+ REG32(SCL_EXT_LCNT_TIMING,          0xc8)=0A=
+ REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)=0A=
+ REG32(BUS_FREE_TIMING,              0xd4)=0A=
+ REG32(BUS_IDLE_TIMING,              0xd8)=0A=
++    FIELD(BUS_IDLE_TIMING, BUS_IDLE_TIME, 0, 20)=0A=
+ REG32(I3C_VER_ID,                   0xe0)=0A=
+ REG32(I3C_VER_TYPE,                 0xe4)=0A=
+ REG32(EXTENDED_CAPABILITY,          0xe8)=0A=
+ REG32(SLAVE_CONFIG,                 0xec)=0A=
++/* Device characteristic table fields */=0A=
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC1, 0x200)=0A=
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, 0x200)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DYNAMIC_ADDR, 0, 8)=
 =0A=
-     [R_SLAVE_CONFIG]                =3D 0xffffffff,=0A=
- };=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DCR, 8, 8)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, BCR, 16, 8)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, STATIC_ADDR, 24, 8)=
+=0A=
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC2, 0x204)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC2, MSB_PID, 0, 16)=0A=
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC3, 0x208)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, DCR, 0, 8)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, BCR, 8, 8)=0A=
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC4, 0x20c)=0A=
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC4, DEV_DYNAMIC_ADDR, 0, 8)=0A=
++/* Dev addr table fields */=0A=
++REG32(DEVICE_ADDR_TABLE_LOC1, 0x280)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_STATIC_ADDR, 0, 7)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_PEC_EN, 11, 1)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_WITH_DATA, 12, 1)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, SIR_REJECT, 13, 1)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, MR_REJECT, 14, 1)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_DYNAMIC_ADDR, 16, 8)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_ADDR_MASK, 24, 2)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_NACK_RETRY_CNT, 29, 2)=0A=
++    FIELD(DEVICE_ADDR_TABLE_LOC1, LEGACY_I2C_DEVICE, 31, 1)=0A=
  =0A=
-+static void dw_i3c_update_irq(DWI3C *s)=0A=
-+{=0A=
-+    bool level =3D !!(s->regs[R_INTR_SIGNAL_EN] & s->regs[R_INTR_STATUS]);=
-=0A=
-+    qemu_set_irq(s->irq, level);=0A=
-+}=0A=
-+=0A=
-+static uint32_t dw_i3c_intr_status_r(DWI3C *s)=0A=
-+{=0A=
-+    /* Only return the status whose corresponding EN bits are set. */=0A=
-+    return s->regs[R_INTR_STATUS] & s->regs[R_INTR_STATUS_EN];=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_intr_status_w(DWI3C *s, uint32_t val)=0A=
-+{=0A=
-+    /* INTR_STATUS[13:5] is w1c, other bits are RO. */=0A=
-+    val &=3D 0x3fe0;=0A=
-+    s->regs[R_INTR_STATUS] &=3D ~val;=0A=
-+=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_intr_status_en_w(DWI3C *s, uint32_t val)=0A=
-+{=0A=
-+    s->regs[R_INTR_STATUS_EN] =3D val;=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_intr_signal_en_w(DWI3C *s, uint32_t val)=0A=
-+{=0A=
-+    s->regs[R_INTR_SIGNAL_EN] =3D val;=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_intr_force_w(DWI3C *s, uint32_t val)=0A=
-+{=0A=
-+    /* INTR_FORCE is WO, just set the corresponding INTR_STATUS bits. */=
-=0A=
-+    s->regs[R_INTR_STATUS] =3D val;=0A=
-+    dw_i3c_update_irq(s);=0A=
-+}=0A=
-+=0A=
- static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)=0A=
- {=0A=
-     DWI3C *s =3D DW_I3C(opaque);=0A=
-@@ -348,6 +389,9 @@ static uint64_t dw_i3c_read(void *opaque, hwaddr offset=
-, unsigned size)=0A=
-     case R_INTR_FORCE:=0A=
-         value =3D 0;=0A=
-         break;=0A=
-+    case R_INTR_STATUS:=0A=
-+        value =3D dw_i3c_intr_status_r(s);=0A=
-+        break;=0A=
-     default:=0A=
-         value =3D s->regs[addr];=0A=
-         break;=0A=
-@@ -392,6 +436,18 @@ static void dw_i3c_write(void *opaque, hwaddr offset, =
-uint64_t value,=0A=
-         break;=0A=
-     case R_RESET_CTRL:=0A=
-         break;=0A=
-+    case R_INTR_STATUS:=0A=
-+        dw_i3c_intr_status_w(s, val32);=0A=
-+        break;=0A=
-+    case R_INTR_STATUS_EN:=0A=
-+        dw_i3c_intr_status_en_w(s, val32);=0A=
-+        break;=0A=
-+    case R_INTR_SIGNAL_EN:=0A=
-+        dw_i3c_intr_signal_en_w(s, val32);=0A=
-+        break;=0A=
-+    case R_INTR_FORCE:=0A=
-+        dw_i3c_intr_force_w(s, val32);=0A=
-+        break;=0A=
-     default:=0A=
-         s->regs[addr] =3D val32;=0A=
-         break;=0A=
+ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] =3D {=0A=
+     [R_HW_CAPABILITY]               =3D 0x000e00bf,=0A=
 -- =0A=
 2.43.0=0A=
 
