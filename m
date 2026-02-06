@@ -4,71 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACBCEE20A6
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B41EE20AF
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voNT8-0000HE-Eb; Fri, 06 Feb 2026 10:10:06 -0500
+	id 1voNcp-0001bu-KD; Fri, 06 Feb 2026 10:20:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voNSz-0000Gx-BY
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:09:53 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1voNSw-0001pY-5S
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:09:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f6yCl0cVZzJ46Ck;
- Fri,  6 Feb 2026 23:08:51 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 645DB40086;
- Fri,  6 Feb 2026 23:09:43 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Feb
- 2026 15:09:42 +0000
-Date: Fri, 6 Feb 2026 15:09:41 +0000
-To: Gregory Price <gourry@gourry.net>
-CC: Andrew Morton <akpm@linux-foundation.org>, Cui Chao
- <cuichao1753@phytium.com.cn>, <dan.j.williams@intel.com>, Mike Rapoport
- <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, <qemu-devel@nongnu.org>, "David Hildenbrand (Arm)"
- <david@kernel.org>
-Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
- of CFMW
-Message-ID: <20260206150941.000028ae@huawei.com>
-In-Reply-To: <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
-References: <20260108094812.8757ce3ad8370668eaafb29c@linux-foundation.org>
- <9132054c-3017-4af0-84e0-e4359b0794a6@phytium.com.cn>
- <20260115101858.85fd7b8e837c1c92a4fdc5f0@linux-foundation.org>
- <696944eca1837_34d2a10056@dwillia2-mobl4.notmuch>
- <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
- <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
- <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
- <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
- <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
- <20260206110305.00001fbb@huawei.com>
- <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1voNcl-0001aa-Uy
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:20:00 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1voNck-0002yj-HT
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:19:59 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-79430ef54c3so8179067b3.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 07:19:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770391196; cv=none;
+ d=google.com; s=arc-20240605;
+ b=G4VQfv893HMMPTt4i4BFr0kcWNN/QSa4EU2lK4ZKuk3koFsWCR1XiD2RiR2VQ7xxXs
+ LR1JbFrfR9JqrHrvCpqsprW76XpcCoSEZMDfCppXXF6aIP3/7aiUigaCs6gsdiq1GIho
+ fhSQW7C33R+/EtPVZEL2zYbeJwnk0AoiDPwTiNxmp6xQ9vFWm8sKj3oZBAj3nkL4aCdK
+ tIdW4PPOfCJhee3/OnV1xwxbrZMWLr2t16gvUtOcf+NEKh5oe2M9ZVrNkM8xw0m05pAF
+ p4f9+5B2wPnC9HtBhE1Z3+x/HyglCn7zO0kEiUt3OrvUQqBZ82zAZjtgxg+CE1Dh0Uel
+ BvHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
+ fh=gF4tJPZZ+BLtU/HltKIrKDpuHOv58/ttGSsaTOAx7EM=;
+ b=N8rsAdkPogEl2lB/TcPiqldS/rrOgyrOKH9RQQGUHVLrDYXUPDg4xzjKE9tLqDtTag
+ z9HqGl/0P9tzeI1qgw9zUgrmXGsw0/A/Mr30+ifhlenp9ZHQ8baEkzgxs+LqpLdE9LGs
+ Ei7711h77zwCwyuL1d8z1M9mL4/jrQNygZ6hdyR7P63nQypg8gZc99dAs8y1MNBsjFSP
+ Fpg+kd/vlEbCJWqsKhSR6+qjFE0NZFHFVP6wOmwxFh3WGEw5RZOzsF6f/b4Dphb928HV
+ YyVMBEb/ZCiuICPf0l8dfTzMVkUT2NLsXVeKOoP9mQFa1rI2/VNgBmb65bS5Jd/NpntO
+ BJaQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770391196; x=1770995996; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
+ b=mMwpRx6FQaXGOq3Nxli7BgzvB1q5tzeLSjRyrxLYlUkk7URrS9GntRGMdadjPJvyZD
+ B9NlmwK7Pj30W9CHytHSnbcn7Vz1ShdA7hb+ahmKrhH8GeZf0lW/+9C+uP4qGROy3/fV
+ H8AS4ntJytOvCJ3oLsKHhJu/w5sCst0kfK4+HcitiwmZDVQL/kIf3c3iEThTxLLiVCbw
+ WiATKXItzygJp8FauXQ7rHnwuHAG9f5CPms4qOGlzwqVHlDOfm3rIKzavv78RiKfwjWD
+ 4/XN0FF85QjSqIKWkmwuYLCNbQhSu0SwcvJ2+9ashyiYcjBW0pk1nr7pDB4NqZeHSOEo
+ 5cBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770391196; x=1770995996;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SvTBzAJzAOl8XXIQCF1doyuIcJREGlonAbssikLKClo=;
+ b=RCTlhgPBmDkmQvMT5WDkbbzsQLuya21P12SGkeuywItjw9KF+CctksgObAzDyOXdfG
+ 0A1llAUD5c2XfGiXL69aQ9gcxvILThQ2xETGfxzm9B6fJ8Dx967hDN2E3F4Abd49el9D
+ Yu1yRTqJj+WBeXIs6vGgkOvsACDGNx1jzp0iCWbMBCZ/jz5dSuHUhsKVHhLL94vI9mAV
+ g9uRnsPD/It2HH6lqcpKmwEv70nW3wcI2UjWn9vEZGt+cd1Ope86tP1RDpDsHQA4YZY3
+ w4e9MmNmEY1dC898inrB+J/RD0zIapPGXpO7NAHJTfzA7ciMWx54pE8Dz37VKqRDPUON
+ uI/w==
+X-Gm-Message-State: AOJu0Yx/Hz/Uu3n0ogAA1qpYAnqKHPsbgu2N4rBJy+QDalat6vtYw/jl
+ RTDjnus94KpMgpN74pi++1Ee2rD8buk2FYT620CniLgjVdOJMkH7QBZQpRnlXtyVeouXUXcnm34
+ VY2mPca4F+eD9AxAH7YJHPKeeS63tdQILNW8mtCEPWg9iegSaiRfWMeI=
+X-Gm-Gg: AZuq6aK4O/JNSsLL+Pb+OP7Zja6idiEb50lnIfpjSww6sW3CyWvT3OIxN9H7XlVbdNU
+ edDgL44Q2BxMvEcFo+J4UREt+k8oKsrYnP6wkbMRmzLpM5kr/R7VjBNox5bohUQNVp8v/0lGk0e
+ XQiR4pfk9JSJ0bd9oLj+Pq9XljeuoH0gzcrFOO7oh/0b2pZNNBMYKgBk9lcnC9WE50saAJgQHep
+ +a3JXWLMRguCOK4LmZGvomMnIhqAIEK4/CbduQIDjhOlVQ8k49TCy5zP+205fxVTxB7puDIpNO8
+ ZI2NIAjp92pnF0u69WO33DlRu7V7LTfZNgX+lHDDvEPos57SO0FOwRg=
+X-Received: by 2002:a05:690c:dc4:b0:794:a7d:6bc4 with SMTP id
+ 00721157ae682-7952ab6f3f7mr29778237b3.58.1770391196400; Fri, 06 Feb 2026
+ 07:19:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260202153618.78675-1-philmd@linaro.org>
+ <20260202153618.78675-3-philmd@linaro.org>
+In-Reply-To: <20260202153618.78675-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Feb 2026 15:19:44 +0000
+X-Gm-Features: AZwV_Qj1FcYgTWLOC3kd8lxNpxKD40eAcbqmEKy-BJuNj7ZXe3wExirsyiA6ehk
+Message-ID: <CAFEAcA9wK+r32zLwhwHTAmnXHm0_bQUuNpegGp7ymZFTCa-FMA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] target/arm: Deprecate '-cpu any' (remplaced by
+ '-cpu max')
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@lists.libvirt.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,166 +116,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 08:31:09 -0500
-Gregory Price <gourry@gourry.net> wrote:
+On Mon, 2 Feb 2026 at 15:36, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Since more then 5 years the '-cpu any' is aliased to '-cpu max'
+> (see commit a0032cc5427 "target/arm: Make 'any' CPU just an alias
+> for 'max'"). Time to deprecate the alias so we can eventually
+> remove the alias code. Emit a warnig meanwhile.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> On Fri, Feb 06, 2026 at 11:03:05AM +0000, Jonathan Cameron wrote:
-> > On Thu, 5 Feb 2026 18:10:55 -0500
-> > Gregory Price <gourry@gourry.net> wrote:
-> > 
-> > I disagree. There is nothing in the specification to say it should do that and
-> > we have very intentionally not done so in QEMU - this is far from the first
-> > time this has come up!. We won't be doing so any time soon unless someone
-> > convinces me with clear spec references and tight reasoning for why it is the
-> > right thing to do.
-> >   
-> 
-> Interestingly I've had this exact conversation - in reverse - with other
-> platform folks, who think CFMWS w/o SRAT is broken.  It was a zealous
-> enough opinion that I may have over-indexed on it (plus i've read the
-> numa mapping code and making this more dynamic seems difficult).
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 586202071d0..da664c4e30a 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2218,6 +2218,7 @@ static ObjectClass *arm_cpu_class_by_name(const cha=
+r *cpu_model)
+>       * which has the same semantics as "-cpu max".
+>       */
+>      if (!strcmp(cpunamestr, "any")) {
+> +        warn_report("CPU type 'any' is deprecated, use 'max' instead.");
+>          cpunamestr =3D "max";
+>      }
 
-I'd be curious to why they thought it was broken.  What info did they
-think SRAT conveyed in this case?  Or was this, today's OS doesn't get
-this right therefore it's broken?  It's only relative recently that
-everything (perf reporting etc) has been in place without the SRAT
-entries and associated SLIT + HMAT, so maybe that was their usecase.
+This doesn't compile:
 
-Note I've run into a bunch of cases over the years of the 'correct'
-description for a system in ACPI not working in Linux. Often
-no one fixes that, they just lie in ACPI instead. :(
-
-> 
-> > This configuration reflects the pre hotplug / early CXL deployment
-> > situation. Now we have proper support in Linux we have moved beyond that.
-> > We do need to solve the dynamic NUMA node cases though and I'm hoping your
-> > current work will make that a bit easier.  
-> 
-> If we want flexibility to ship HPAs around to different nodes at
-> runtime, that might cause issues. The page-to-nid / pa-to-nid mapping
-> code is somewhat expected to be immutable after __init, so there could
-> be nasty assumptions sprinkled all over the kernel.
-
-Why?  The numa-memblk stuff makes that assumption but the keeping that around
-after initial boot is mostly just about 'where' to put the memory if we have
-no other way of knowing. The node assignment for tradition memory
-hotplug doesn't even look at numa-memblk - it uses the node provided
-in the ACPI blob for the DIMM that is arriving.
-
-The following is from the school of 'what if I' + 'what could possibly go
-wrong?' - and a vague recollection of how this works in practice.
-
-To do this with QEMU just spin up with something like (hand typed from
-wrong machine so beware silly errors):
-
-Now a fun corner is that a node isn't created unless there is something
-in it - the whole SRAT is the source of truth for what nodes exist
-- so we need 'something' in it - a cpu will do, or a GI, probably a GP.
-Otherwise memory ends up in node0.  However, fallback lists etc happen
-as normal when first mem in a node is added.
-
-qemu-system-aarch64 -M virt,gic-verson=3 -m 4g,maxmem=8g,slots=4 -cpu max \
--smp 4 ... \
--monitor telnet:127.0.0.1:1234 \
--object memory-backend-ram,size=4G,id=mem0 \
--numa node,nodeid=0,cpus=0,memdev=mem0 \
--numa node,nodeid=1,cpus=1 \
--numa node,nodeid=2,cpus=2 \
--numa node,nodeid=3,cpus=3 
-
-.. hmat stuff if you like.
-
-Then from the monitor via telnet
-
-object_add memory-backend-ram,id=mema,size=1G
-object_add memory-backend-ram,id=memb,size=1G
-object_add memory-backend-ram,id=memc,size=1G
-object_add memory-backend-ram,id=memd,size=1G
-device_add pc-dimm,id=dimm1,memdev=mema,node=0
-device_add pc-dimm,id=dimm2,memdev=memb,node=1
-device_add pc-dimm,id=dimm3,memdev=memc,node=2
-device_add pc-dimm,id=dimm4,memdev=memd,node=3
-
-and you'll get 1G added to the first node and 1G added to the 2nd one
-
-SRAT has:
-
-[078h 0120 001h]               Subtable Type : 01 [Memory Affinity]
-[079h 0121 001h]                      Length : 28
-
-[07Ah 0122 004h]            Proximity Domain : 00000000
-[07Eh 0126 002h]                   Reserved1 : 0000
-[080h 0128 008h]                Base Address : 0000000040000000
-[088h 0136 008h]              Address Length : 0000000100000000
-[090h 0144 004h]                   Reserved2 : 00000000
-[094h 0148 004h]       Flags (decoded below) : 00000001
-                                     Enabled : 1
-                               Hot Pluggable : 0
-                                Non-Volatile : 0
-[098h 0152 008h]                   Reserved3 : 0000000000000000
-
-[0A0h 0160 001h]               Subtable Type : 01 [Memory Affinity]
-[0A1h 0161 001h]                      Length : 28
-
-[0A2h 0162 004h]            Proximity Domain : 00000003
-[0A6h 0166 002h]                   Reserved1 : 0000
-[0A8h 0168 008h]                Base Address : 0000000140000000
-[0B0h 0176 008h]              Address Length : 0000000200000000
-[0B8h 0184 004h]                   Reserved2 : 00000000
-[0BCh 0188 004h]       Flags (decoded below) : 00000003
-                                     Enabled : 1
-                               Hot Pluggable : 1
-                                Non-Volatile : 0
-[0C0h 0192 008h]                   Reserved3 : 0000000000000000
-
-So it thought the extra space in SRAT was in PXM 3...
-A fun question for another day is why that is twice as big as it should be
-given the presence of 4G at boot on domain 0 (which is taken into account
-when you try to hotplug anything!)
-
-Resulting kernel log:
-
-memblock_add_node: [0x0000000140000000-0x000000017fffffff] nid=0 flags=0 add_memory_resource+0x110/0x5a0
-memblock_add_node: [0x0000000180000000-0x00000001bfffffff] nid=1 flags=0 add_memory_resource+0x110/0x5a0
-memblock_add_node: [0x00000001c0000000-0x00000001ffffffff] nid=2 flags=0 add_memory_resource+0x110/0x5a0
-memblock_add_node: [0x0000000200000000-0x000000023fffffff] nid=3 flags=0 add_memory_resource+0x110/0x5a0
-
-I ran some brief stress tests - basic stuff all looks fine.
-
-FWIW before numa-memblk got fixed up on Arm CXL memory always showed up on
-node 0 even if we had CFWMS entries and had instantiated nodes for them.
-I don't recall anything functionally breaking (other than obvious
-performance issue of it appearing to have much better performance than
-it actually did).
-
-It will take more work to make this stuff as dynamic as we'd like but at
-least from dumb testing it looks like there is nothing fundamental.
-(I'm too lazy to spin a test up on x86 just to check if it's different ;)
-
-For now I 'suspect' we could hack things to provide lots of waiting numa nodes
-and merrily assign HPA into them as we like whatever SRAT provides
-in the way of 'hints' :) 
+../../target/arm/cpu.c: In function =E2=80=98arm_cpu_class_by_name=E2=80=99=
+:
+../../target/arm/cpu.c:2224:9: error: implicit declaration of function
+=E2=80=98warn_report=E2=80=99 [-Werror=3Dimplicit-function-declaration]
+ 2224 |         warn_report("CPU type 'any' is deprecated, use 'max' instea=
+d.");
+      |         ^~~~~~~~~~~
+../../target/arm/cpu.c:2224:9: error: nested extern declaration of
+=E2=80=98warn_report=E2=80=99 [-Werror=3Dnested-externs]
 
 
+Also linux-user still asks for "any" by default in the
+arm and aarch64 get_elf_cpu_model() functions, as does
+bsd-user in its TARGET_DEFAULT_CPU_MODEL macros.
 
-> 
-> That will take some time.
-> ---
-> 
-> Andrew if Jonathan is good with it then with changelog updates this can
-> go in, otherwise I don't think this warrants a backport or anything.
+This seems to me like the kind of deprecation that is more
+effort than keeping the compat handling around, if it's only
+three lines of code in arm_cpu_class_by_name(). Or is this
+going to get in the way of some cleanup we'd like to do ?
 
-Wait and see if anyone hits it on a real machine (or even non creative QEMU
-setup!)  So for now no need to backport.
-
-Jonathan
-
-> 
-> ~Gregory
-
+thanks
+-- PMM
 
