@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D7FEE20A2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E054EE20A2
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 13:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voLmD-0007K7-Qk; Fri, 06 Feb 2026 08:21:37 -0500
+	id 1voLlA-00070P-GP; Fri, 06 Feb 2026 08:20:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLmA-0007Jw-So
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:21:35 -0500
+ id 1voLkp-0006q5-CJ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1voLm6-0005ip-L3
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:21:32 -0500
+ id 1voLkm-0005bD-JZ
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 08:20:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770384086;
+ s=mimecast20190719; t=1770384006;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pLosUc2TXWsp1+xaUszMVDKVRFgr8TLp73vacGr5xYs=;
- b=d7gO6jCQw+WvFSQEWuJkAFuKdmPthnZWyyRyMDotVH8ZkkQYKxtI2vA8fGmidSuae8mhA7
- xjzdb1wJec8gi9TboIVzA3n5Y6KoL1EE0Gf27ebqFYhz92QZjrOhETh08wE2xjIpC72aKN
- ywYa5jJlLu/Aey8cxCItr4cK0EGHD2I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lnKc8ChwALLEnut766Pw5c8QdTxY5iSz14xAR+/k7/M=;
+ b=fzT74PAaAdHFBqMy9Ms1/k/U0dl9pkCjU3I0+QRu0iO1RuUalCxvEmfuUNQmp+GwJVJmQo
+ rdMJ355yVWBRSapFads7Jljetv/1ehPLNz9GjyTswe548dYnxAxrYyIQxI1bSzX7ySpigX
+ m5H+CMhQ8VzHNkBjVUcwd6VDBZup5BA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-4bKnUCyMPHKUZVPu_F8Hvg-1; Fri,
- 06 Feb 2026 08:15:24 -0500
-X-MC-Unique: 4bKnUCyMPHKUZVPu_F8Hvg-1
-X-Mimecast-MFC-AGG-ID: 4bKnUCyMPHKUZVPu_F8Hvg_1770383722
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-Ljm4MYWiP9Ck8oi_gM0seQ-1; Fri,
+ 06 Feb 2026 08:15:00 -0500
+X-MC-Unique: Ljm4MYWiP9Ck8oi_gM0seQ-1
+X-Mimecast-MFC-AGG-ID: Ljm4MYWiP9Ck8oi_gM0seQ_1770383698
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FA391828A99; Fri,  6 Feb 2026 13:15:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5542119540FE; Fri,  6 Feb 2026 13:14:52 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D6BA718003F5; Fri,  6 Feb 2026 13:15:10 +0000 (UTC)
+ id 072BD1800352; Fri,  6 Feb 2026 13:14:49 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
  peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
  zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Subject: [PATCH 10/11] tests: acpi: arm/virt: add WDAT table test case
-Date: Fri,  6 Feb 2026 14:14:37 +0100
-Message-ID: <20260206131438.1857182-11-imammedo@redhat.com>
+Subject: [PATCH 03/11] x86: q35: generate WDAT ACPI table
+Date: Fri,  6 Feb 2026 14:14:30 +0100
+Message-ID: <20260206131438.1857182-4-imammedo@redhat.com>
 In-Reply-To: <20260206131438.1857182-1-imammedo@redhat.com>
 References: <20260206131438.1857182-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
@@ -87,50 +87,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It will generate WDAT table [1] customized for TCO watchdog.
+This allows Windows guests (Windows Server 2008/Vista+) to
+use TCO watchdog using built-in generic driver, which
+aleviates need to install vendor specific drivers.
+
+Given that enabling it might change guest behaviour
+(both Windows/Linux) the feature is disabled by default.
+
+Users that need it can enable the feature with
+following CLI option.
+    -machine 'acpi-watchdog=on'
+
+1)
+   "Hardware Watchdog Timers Design Specification"
+    https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
+
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ include/hw/acpi/wdat-ich9.h | 15 +++++++
+ hw/acpi/meson.build         |  3 +-
+ hw/acpi/wdat-ich9-stub.c    | 15 +++++++
+ hw/acpi/wdat-ich9.c         | 87 +++++++++++++++++++++++++++++++++++++
+ hw/i386/acpi-build.c        | 12 +++++
+ 5 files changed, 131 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/acpi/wdat-ich9.h
+ create mode 100644 hw/acpi/wdat-ich9-stub.c
+ create mode 100644 hw/acpi/wdat-ich9.c
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 25345dd035..c2d235e686 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2252,6 +2252,25 @@ static void test_acpi_aarch64_virt_tcg_its_off(void)
-     free_test_data(&data);
- }
- 
-+static void test_acpi_aarch64_virt_tcg_wdat(void)
+diff --git a/include/hw/acpi/wdat-ich9.h b/include/hw/acpi/wdat-ich9.h
+new file mode 100644
+index 0000000000..60a2a6a112
+--- /dev/null
++++ b/include/hw/acpi/wdat-ich9.h
+@@ -0,0 +1,15 @@
++/*
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef QEMU_HW_ACPI_WDAT_ICH9_H
++#define QEMU_HW_ACPI_WDAT_ICH9_H
++
++#include "hw/acpi/aml-build.h"
++
++void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                     const char *oem_table_id, uint64_t tco_base);
++
++#endif /* QEMU_HW_ACPI_WDAT_ICH9_H */
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index 56b5d1ec96..ba974b2f0f 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c', 'wdat-ich9.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+ acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
+ acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+@@ -33,6 +33,7 @@ if have_tpm
+ endif
+ system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
+ system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
++system_ss.add(when: 'CONFIG_ACPI_ICH9', if_false: files('wdat-ich9-stub.c'))
+ system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.c'))
+diff --git a/hw/acpi/wdat-ich9-stub.c b/hw/acpi/wdat-ich9-stub.c
+new file mode 100644
+index 0000000000..7c30ef3558
+--- /dev/null
++++ b/hw/acpi/wdat-ich9-stub.c
+@@ -0,0 +1,15 @@
++/*
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/acpi/wdat-ich9.h"
++
++void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                const char *oem_table_id, uint64_t tco_base)
 +{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .variant = ".wdat",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * MiB,
-+    };
-+
-+    test_acpi_one("-cpu cortex-a57 "
-+                  "-machine acpi-watchdog=on", &data);
-+    free_test_data(&data);
++    g_assert_not_reached();
 +}
+diff --git a/hw/acpi/wdat-ich9.c b/hw/acpi/wdat-ich9.c
+new file mode 100644
+index 0000000000..b1930dc71d
+--- /dev/null
++++ b/hw/acpi/wdat-ich9.c
+@@ -0,0 +1,87 @@
++/*
++ * TCO Watchdog Action Table (WDAT)
++ *
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- static void test_acpi_q35_viot(void)
- {
-     test_data data = {
-@@ -2868,6 +2887,8 @@ int main(int argc, char *argv[])
-                 qtest_add_func("acpi/virt/smmuv3-dev",
-                                test_acpi_aarch64_virt_smmuv3_dev);
-             }
-+            qtest_add_func("acpi/virt/acpi-watchdog",
-+                           test_acpi_aarch64_virt_tcg_wdat);
-         }
-     } else if (strcmp(arch, "riscv64") == 0) {
-         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
++#include "qemu/osdep.h"
++#include "hw/acpi/wdat.h"
++#include "hw/acpi/wdat-ich9.h"
++#include "hw/southbridge/ich9.h"
++
++#define TCO_REG(base, reg_offset, reg_width) { .space_id = AML_AS_SYSTEM_IO, \
++            .address = base + reg_offset, .bit_width = reg_width, \
++            .access_width = AML_WORD_ACC, };
++
++/*
++ *   "Hardware Watchdog Timers Design Specification"
++ *       https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
++ *
++ *   ICH9 specific implementation.
++ */
++void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
++                     const char *oem_table_id, uint64_t tco_base)
++{
++    AcpiTable table = { .sig = "WDAT", .rev = 1, .oem_id = oem_id,
++                        .oem_table_id = oem_table_id };
++    struct AcpiGenericAddress tco_rld =  TCO_REG(tco_base, 0x0, 16);
++    struct AcpiGenericAddress tco2_sts = TCO_REG(tco_base, 0x6, 16);
++    struct AcpiGenericAddress tco1_cnt = TCO_REG(tco_base, 0x8, 16);
++    struct AcpiGenericAddress tco_tmr =  TCO_REG(tco_base, 0x12, 16);
++
++    acpi_table_begin(&table, table_data);
++    build_append_int_noprefix(table_data, 0x20, 4); /* Watchdog Header Length */
++    build_append_int_noprefix(table_data, 0xff, 2); /* PCI Segment */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Bus Number */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Device Number */
++    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Function Number */
++    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
++    build_append_int_noprefix(table_data, 0x258, 4);/* Timer Period, ms */
++    build_append_int_noprefix(table_data, 0x3ff, 4);/* Maximum Count */
++    build_append_int_noprefix(table_data, 0x4, 4);  /* Minimum Count */
++    /*
++     * WATCHDOG_ENABLED & WATCHDOG_STOPPED_IN_SLEEP_STATE
++     */
++    build_append_int_noprefix(table_data, 0x81, 1); /* Watchdog Flags */
++    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
++    /*
++     * watchdog instruction entries
++     */
++    build_append_int_noprefix(table_data, 10, 4);
++    /* Action table */
++    build_append_wdat_ins(table_data, WDAT_ACTION_RESET,
++        WDAT_INS_WRITE_VALUE,
++        tco_rld, 0x1, 0x1ff);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_RUNNING_STATE,
++        WDAT_INS_READ_VALUE,
++        tco1_cnt, 0x0, 0x800);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_RUNNING_STATE,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        tco1_cnt, 0, 0x800);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_STOPPED_STATE,
++        WDAT_INS_READ_VALUE,
++        tco1_cnt, 0x800, 0x800);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_STOPPED_STATE,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        tco1_cnt, 0x800, 0x800);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_COUNTDOWN_PERIOD,
++        WDAT_INS_WRITE_COUNTDOWN,
++        tco_tmr, 0x0, 0x3FF);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_COUNTDOWN_PERIOD,
++        WDAT_INS_READ_COUNTDOWN,
++        tco_tmr, 0x0, 0x3FF);
++    build_append_wdat_ins(table_data, WDAT_ACTION_QUERY_WATCHDOG_STATUS,
++        WDAT_INS_READ_VALUE,
++        tco2_sts, 0x2, 0x2);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        tco2_sts, 0x2, 0x2);
++    build_append_wdat_ins(table_data, WDAT_ACTION_SET_WATCHDOG_STATUS,
++        WDAT_INS_WRITE_VALUE | WDAT_INS_PRESERVE_REGISTER,
++        tco2_sts, 0x4, 0x4);
++
++    acpi_table_end(linker, &table);
++}
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 19c62362e3..abb3e936fd 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -77,6 +77,7 @@
+ 
+ #include "hw/acpi/hmat.h"
+ #include "hw/acpi/viot.h"
++#include "hw/acpi/wdat-ich9.h"
+ 
+ #include CONFIG_DEVICES
+ 
+@@ -109,6 +110,7 @@ typedef struct AcpiPmInfo {
+     uint16_t cpu_hp_io_base;
+     uint16_t pcihp_io_base;
+     uint16_t pcihp_io_len;
++    uint64_t tco_io_base;
+ } AcpiPmInfo;
+ 
+ typedef struct AcpiMiscInfo {
+@@ -203,6 +205,7 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
+     pm->pcihp_io_len = 0;
+     pm->smi_on_cpuhp = false;
+     pm->smi_on_cpu_unplug = false;
++    pm->tco_io_base = 0;
+ 
+     assert(obj);
+     init_common_fadt_data(machine, obj, &pm->fadt);
+@@ -224,6 +227,8 @@ static void acpi_get_pm_info(MachineState *machine, AcpiPmInfo *pm)
+             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT));
+         pm->smi_on_cpu_unplug =
+             !!(smi_features & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
++        pm->tco_io_base = object_property_get_uint(obj, ACPI_PM_PROP_PM_IO_BASE,
++            NULL) + ICH9_PMIO_TCO_RLD;
+     }
+     pm->pcihp_io_base =
+         object_property_get_uint(obj, ACPI_PCIHP_IO_BASE_PROP, NULL);
+@@ -2079,6 +2084,13 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+     acpi_add_table(table_offsets, tables_blob);
+     build_waet(tables_blob, tables->linker, x86ms->oem_id, x86ms->oem_table_id);
+ 
++    if (machine->acpi_watchdog) {
++        g_assert(pm.tco_io_base);
++        acpi_add_table(table_offsets, tables_blob);
++        build_ich9_wdat(tables_blob, tables->linker, x86ms->oem_id,
++                        x86ms->oem_table_id, pm.tco_io_base);
++    }
++
+     /* Add tables supplied by user (if any) */
+     for (u = acpi_table_first(); u; u = acpi_table_next(u)) {
+         unsigned len = acpi_table_len(u);
 -- 
 2.47.3
 
