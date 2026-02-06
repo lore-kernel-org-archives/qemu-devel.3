@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86187ECD9B0
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 01:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDC5ECD9B0
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 01:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voAGc-0004AJ-2r; Thu, 05 Feb 2026 20:04:14 -0500
+	id 1voAM2-0004vY-2V; Thu, 05 Feb 2026 20:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voAGa-00049t-2l
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:04:12 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1voALy-0004vP-Sx
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:09:46 -0500
 Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1voAGY-0004Jn-Kc
- for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:04:11 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1voALw-0006MV-4e
+ for qemu-devel@nongnu.org; Thu, 05 Feb 2026 20:09:45 -0500
 Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-34be2be4b7cso810835a91.3
- for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 17:04:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770339848; cv=none;
- d=google.com; s=arc-20240605;
- b=ku7snInvMxWFBNBa5qxgwZsM3EZ4GeVDLf+Hqm/wtCqzGErAnWCYqn+5URKtPdYwzV
- H6hxY3qpzi9xOmIHI2vBy5vg6RAx2ZXS8+jaAphJGkVs42c1THjeAwbQxAZz+O8kN0+8
- YZSunXqdKfhT/1q4K5cUfPVEFzEljK7Nm3Ai0IakPb/8pWVUiHiKU09lpoOmUpQgpjUu
- xhvNik2Z3gcI8CAvDUYGa4DQvgsldt3bhFUVlq6o/OD7DlNzbU+OuEgjq7wdp9knrtEt
- 38SvSxxzRUswDHhtDI4fh0NlYSpBhSL8dPJk7v9Rf72I/kYEk04dGAqiO8gow0cMEMHZ
- XEAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
- fh=VqS+tPLsGlswY454e0dYtkegTr3u8RL39VDhCWIP5Lk=;
- b=T1UA+ZYSGy1/FSsiaMdWUAxkEkGzsrW0z8Asw3QngOaRhvt+R3a6gI+aejQxLSSgik
- xwpwoPCsRWdEzIDIFId6V7rB096on4h+cnoWO6YOXYmg/WKWdcpgRq9h3xoqt4ldTAQE
- wLHv6CaN9w0NuKXL+XMv7UGOT/mGnsif+egDNlD2J8KD8iLV2MHI6ctwWcEA0LuVxquQ
- 3vaudAZ2k0OPIHR2hXVFQFEYxNlziKZNr1f6Gt8tRpeq/rYGl/PO7pINjFhml+pqvwJ0
- rDvt8Y97mh+MtFsksUK2hAEeX8FrLnAatx+i7cJoMz4GFbG8bBH+NX0RylySz/uUWjQM
- /uXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ 98e67ed59e1d1-3530e7b3dc2so1287553a91.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Feb 2026 17:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770339848; x=1770944648;
- darn=nongnu.org; 
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
- b=2IiB88unhOwd4JpcC5PZsT0rrpOssKHNd/NUmpbzbHvVc1kkA38orzzaC3odjquHzf
- odcf4xQjBW9a53vny2oKdEe83CKR14qXm7b2thYXzN7qCCQH/kJumEKof9BaNYZV/Wtu
- vgsZvp0eVggcbms1JDqWt6KUUdKH0jNETrIw5pLYPXFpMNVDthAwc7Fn6KeYJ5JTyRNf
- Zpki14XAOw6yDlJhLf7muSpflQLjXh+uMEQ5SPexTsmKgBwZ87Kg5T1AaPrugHODj5RI
- 3iq5NzL2nT4X6T6S9eFCyKKdWddhMnA7/N+bBFEfDZnPyvKAejVnVqVWf0r1ZMlUYJu2
- AM0g==
+ d=linaro.org; s=google; t=1770340182; x=1770944982; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I+yDbtKy85w0+sd3PzqEIedMcAM9PBjhd5NU/UanDpE=;
+ b=ujdR/a60uoVFemAe7bBjH5qFu+S5usdi2RD5pprOgjSHcNy3UXUARQUfDlzOIPhPZ9
+ ITJkqpWPHkFOgC00osPbtbQ/BQZFnMlwiN5dZ2qHbLtKRtpqs+ufPMM1b+7Uw5Zjxe1W
+ J+EM1JcPLwzSZeAOcSAv6gutpnpP8WYMdKOLZ35WrMszA/oce4hLs9wFBfGeRC4edFJN
+ UCAfDNV0Zbzc7NT49DcR9eAR4+2mAT2Il5aCo397VZgkDww72wu9wSlz3LOhyHpSaDig
+ e3T5Mo31IoYaNwsvji8ddiJAd+qsOzWLNemex1qYi4lVi45dt1l1ri6tXAxvo8ToM/V7
+ ni6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770339848; x=1770944648;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EH16F70p/RgO0Atr7fd2qe3zWUKTbNq/+FhY3+TH7No=;
- b=EhGuWip1LimXnI0nc+aJeIbsrlECwnZEwCeWk2LiCNIpHc63ELfUOGqbFEk5qAIRCw
- nA19SqVR/Ez3lq+luufZNdFt5rkFVtup94jOpqQ9u2I1fVaItkPxY4lCh7jX6gCn5ZXP
- 4yAmAfM147woxwovcjv90TZl0RDzJIGQxFw/fANSLU7itcVDRooQfKcU80/6lDweSJsB
- Zw1YXCSu73YIyeDXR134jf6oe+YkmuFEQAYNx4pUo5L3qab3kCerWivY3R8l6uV/NleO
- V4ZBbJG2FIEnnZ9Rs7itdi8bdYVFln6ToYYP1CCbNhGUYjftFztRKFv+hC3ryI8dWJmb
- u5Fg==
-X-Gm-Message-State: AOJu0YyUIOaCZipDXtkCPa+GGHK609NEqhW6omsGRbPZjmJMd6j98+ok
- X4nS7iUy11+tVt21dfxCTgI3EyuBACwtsj2rAoribrvxWuykzhpPzlL9E7e+N1fgfID/E66a4U/
- 8bqSp3viJDN6C4yc90HZryR/TKpWGTAeKMtOa09BpENUwQCb6ZqgoTP4=
-X-Gm-Gg: AZuq6aLYayaFT3ioRHdWPApUguZYIf3Uhxbi3yifD5GgxsfurUWOqo0DF27n8KIZrXi
- fduk6lZ2cHdkHHIQbSSPOD9IVOA1JSgnMF/OjCw3G/8rLnHmjNODZhNM3SbF5NZScwED28IxO9J
- EIST1jzWfr8SZlJPIw04q6ZGJf8Nj9VnLH3HGHf3AMsY/PzCd8EdcRd07LatrQMZ2EhF05RdwEO
- oRlbLWFNl/gGqimArzuclANridQ6FrnGp3o7KYqF0EsWTpaTU0R/W+qoEgmyi6D6ygG/Gw=
-X-Received: by 2002:a17:90b:586b:b0:32e:3829:a71c with SMTP id
- 98e67ed59e1d1-354b3cad4acmr782244a91.16.1770339847678; Thu, 05 Feb 2026
- 17:04:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770340182; x=1770944982;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I+yDbtKy85w0+sd3PzqEIedMcAM9PBjhd5NU/UanDpE=;
+ b=oDcbr7bxnsM0Qj7H2Wz4OjmR+oM9jpbauk3PkFypAXJMZx599pfXIE4cMkzwZOnCDt
+ AANYtXKk3ffyn96+CpfJMhr/WjGu6m4Ao+k59oG/PfOnLe8nQQV3xHB9q/Cb4VWhIFQt
+ YGx0YrLSQNkcfpWX65Lzd/CGZQ38Gegjs2Pt9YV7Nd4zbLtvf5nA1zToVpE+h1xShHrx
+ uIprXCXa3x7htPXorktKUdomIB2SkDD3Nloh2aCrH14EL88hL7yUuq+sp+p/k1zKxivF
+ /A7ScgZ2uTCV3GjsgocvCBvFRuP8hzHOesvo2qR7nVZLaDNMauJn8PgoqSCiVQ3tkMLp
+ LUMw==
+X-Gm-Message-State: AOJu0Yw+ZGM4AMQ4XrkUxkNzF7ndbyoaUOzMCNUUDEgdtdfoVYhf7pG0
+ zh9mhd2JBGqlzaUqXfYlNtNcc2EVNLG369ovNteGtZEjvDLqKNmmaLp6t1Q6MwFxMVZOqJXIFe5
+ wh1NtJKyQfg==
+X-Gm-Gg: AZuq6aKCIT18e1HuoJzhx7jjeWeBWjfUVQQStVwQ+t1E9Np3GM1EA4AKuGDcBH2B+KU
+ 5sgFukJQdmYin3D3Uf3IYDNtX51HL7Xosa4siJzWLHDnnBPQe0HXSwHNB7fBiezCf/lTBt9hqGU
+ jTzbsVCV+AhSy0dG7a9NfNnoEt3MlbaTZM2e0NDhr6T69AyJif1i1H2CHqvyIT9THXSIgEWIx/R
+ JEUO9CNo1P4ZHgddtpFQTZl1JEnyO5duxntH7jXr0ETTIsppo0BMzQmynhTEn6Zv6mElU8A13sD
+ coKE4ZpyCcTbjvmcXPcoC3NChlIIYiOCYkdSP4LCWU/MAG4jltwEM/rYWFzkqtlmQGWx2e3Vqls
+ Ktjd3Hvgw7Da92b7/WOTo1hZ816pgMNgIXpp7fEQ0AbwAMDgkovAGoJ7W28aXimuCAqKypi5dwX
+ 3A+EBTLltYJkFARA6jmfEA0sFBHNCTWwpy/WyacIAl7iGaxEXdkkhTQPK5g8yIg/V0pMQWAqgPX
+ 3dn/5ocQrM2onkCD8H+5T0UlFvr5rfsILF6SxyFoXCY5iSz1ttPMQ==
+X-Received: by 2002:a17:90b:4e88:b0:34c:2db6:57d5 with SMTP id
+ 98e67ed59e1d1-354b3ac0385mr787202a91.0.1770340182367; 
+ Thu, 05 Feb 2026 17:09:42 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:1ced:e57b:71bf:567a?
+ (bg30dhzpdc341w7g29yn.ip6.superloop.au.
+ [2401:d002:dc0f:2100:1ced:e57b:71bf:567a])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-354b465df46sm226451a91.7.2026.02.05.17.09.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Feb 2026 17:09:41 -0800 (PST)
+Message-ID: <1c5dc895-f2cf-44f1-adf9-c843a39de681@linaro.org>
+Date: Fri, 6 Feb 2026 11:09:36 +1000
 MIME-Version: 1.0
-From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 5 Feb 2026 18:03:56 -0700
-X-Gm-Features: AZwV_QiZTe6Q_OaAt5i0JOQ0YGWYcx6Yrs2d0cqQ-E2z8JilEvlMRcEQGwgS0VM
-Message-ID: <CANCZdfq74R8fLc9+NURynkKz+D1FOtxKRGno9EwjN--hPpdf6Q@mail.gmail.com>
-Subject: bsd-user: Dropping the NetBSD and OpenBSD code
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000c0bd71064a1d5de7"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] tcg/optimize: possibly expand deposit into zero
+ with shifts
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+References: <20260204052456.970605-1-richard.henderson@linaro.org>
+ <20260204052456.970605-7-richard.henderson@linaro.org>
+ <4bfd463a-f7ba-4bea-9fd5-27c1a05045f4@redhat.com>
+ <4f299aca-b1f5-473e-9cd8-dc1fe997d19d@linaro.org>
+ <CABgObfb3zP3TYCz04Rmg+2HZbXZjKFvuACqznJm56ET9NhBhzw@mail.gmail.com>
+ <5c46d3a3-e046-46a1-ac5c-5588a2179441@linaro.org>
+ <CABgObfZArFHKHjwbWBmWP09OegtfiCpAQuQLtSrWax0tzc_hSA@mail.gmail.com>
+ <c2cb0273-de90-439b-9058-c4b57df86fce@linaro.org>
+ <CABgObfbBGw77LDuirj1xWVaecEv6oSOZVY7gY1R8FURiK8+_Wg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CABgObfbBGw77LDuirj1xWVaecEv6oSOZVY7gY1R8FURiK8+_Wg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,56 +115,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c0bd71064a1d5de7
-Content-Type: text/plain; charset="UTF-8"
+On 2/6/26 09:22, Paolo Bonzini wrote:
+> 
+> 
+> Il gio 5 feb 2026, 23:29 Richard Henderson <richard.henderson@linaro.org 
+> <mailto:richard.henderson@linaro.org>> ha scritto:
+> 
+>      >      > I think it would be better to pick a canonical form for AND with 2^n-1 and
+>     handle
+>      >      > conversion to extract (like PPC rotates or movz) in the backend.
+>      >      >
+>      >      > Picking AND as the canonical form also avoids makes the macros for extract
+>     validity
+>      >      > simpler too; adding an extra constraint for immediate 2^n-1 is easier and it
+>      >     generalizes
+>      >      > to other PPC rotate and mask cases.
+>      >
+>      >     Picking AND means we have to use "r,0,ri" for x86, losing register allocation
+>     flexibility.
+>      >
+>      >
+>      > Then could you wrap the target specific extract_valid with one that allows ofs == 0
+>     if AND
+>      > allows the immediate 2^len-1? That would also simplify this series.
+> 
+>     I don't understand your suggestion here.
+> 
+> 
+> I am not sure about it either... I am just not sure why extract is guaranteed to be 
+> cheaper or have better constraints than AND.
+> 
+> It does happen to be true for x86, though only for len == 8 or 16; but is it true of all 
+> targets that have a more expansive extract instruction?
 
-So, it's been years since this code compiled by default, and even more
-years since they compiled at all.
+x86 includes len == 32 via 'movl', fwiw.
 
-Maybe 5 years ago, I contacted the OpenBSD folks, who said it had decayed
-beyond uselessness. So I plan on just removing the bsd-user/openbsd code
-shortly.
+Similarly, riscv64 has quite a number of filter conditions for extract, mostly because of 
+a 12-bit signed argument for AND, and a collection of other zero-extend insns.
 
-Maybe 4 years ago, someone from NetBSD popped up and said they had a fork
-and they'd share it with me, but they never did, and we never reconnected
-despite some email attempts since then. So, I'd like to remove the netbsd
-directory as well.
+AArch64, loongarch64, and ppc64 all emit ANDI if possible during tgen_extract.
 
-Both of these are finally getting enough in the way that they are causing
-me problems with upstreaming the bsd-user stuff. Now that I have a good
-head of steam on doing that, I'd like to finish that process. Expect me to
-flood your email in the coming months with way too many patches now that
-I've found a way to streamline the process enough for me to sneak it into
-what would otherwise be lost Friday afternoons...
+So it really is all about using extract if valid, and allowing the backend to use the more 
+favorable set of constraints.
 
-Before I send the patch series to do this, I'd like to do a last and final
-call for collaboration. I kept it around for this long in the hopes someone
-would show up, but nobody ever did.
 
-Warner
-
---000000000000c0bd71064a1d5de7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">So, it&#39;s been years since this code compiled by defaul=
-t, and even more years since they compiled at all.<div><br></div><div>Maybe=
- 5 years ago, I contacted the OpenBSD folks, who said it had decayed beyond=
- uselessness. So I plan on just removing the bsd-user/openbsd code shortly.=
-</div><div><br></div><div>Maybe 4 years ago, someone from NetBSD popped up =
-and said they had a fork and they&#39;d share it with me, but they never di=
-d, and we never reconnected despite some email attempts since then. So, I&#=
-39;d like to remove the netbsd directory as well.</div><div><br></div><div>=
-Both of these are finally getting enough in the way that they are causing m=
-e problems with upstreaming the bsd-user stuff. Now that I have a good head=
- of steam on doing that, I&#39;d like to finish that process. Expect me to =
-flood your email in the coming months with way too many patches now that I&=
-#39;ve found a way to streamline the process enough for me to sneak it into=
- what would otherwise be lost Friday afternoons...</div><div><br></div><div=
->Before I send the patch series to do this, I&#39;d like to do a last and f=
-inal call for collaboration. I kept it around for this long in the hopes so=
-meone would show up, but nobody ever did.</div><div><br></div><div>Warner</=
-div><div><br></div><div><br></div></div>
-
---000000000000c0bd71064a1d5de7--
+r~
 
