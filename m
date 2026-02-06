@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0348EE6B46
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B4DEE6B43
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 18:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voQDD-0008Hn-NO; Fri, 06 Feb 2026 13:05:47 -0500
+	id 1voQGA-0005B7-By; Fri, 06 Feb 2026 13:08:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCv-00080S-Gp
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:29 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQG8-0005AJ-Ie
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:08:48 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1voQCt-0001UD-L7
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:05:29 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b8860d6251bso319551366b.3
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:05:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1voQG7-0001ut-1O
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 13:08:48 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4806f3fc50bso11059735e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 10:08:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770401126; x=1771005926; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z414qbu3KY7qWY009bsyWelCEU/9PsgauzjNkRD3FqE=;
- b=nTdQpZ17Y3FKejvmCiqxC3N7WLDg9uEi8tVT0qBc4h0JsDY3+UZNQ823zaXwY3RXCT
- 8W2MNTQbmP6ZoOexAYnQsOF3x236yJ9jgzJeBjx5qgbFGfJP5vlbqRw5L0l16/pY01hS
- kvVOT+I6wFJ+os7iokZNLN1Ivz9ZH3PYuAVm2yMyLNzynDCymAD3ye/dzUCQWz7+Dk9Z
- RDbf8x/Nk9h1crCQ8+X2daGQkI24rM64beVRYg7oQXxc6bQ4YtqpDwYBw3TMXcvlUx5q
- hb2zGXciz+ZX0DNYL3arwbLBBZZNTv5Pw33H8lG7pD5K009FZyNOmHTAJ/bFd1yqrgU5
- aSwg==
+ d=linaro.org; s=google; t=1770401325; x=1771006125; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EWrLBdWK4hMyWa5JkEVJvQfN4IH6vhLUH92xvjRaLzQ=;
+ b=LGcwoqS69rWp5u+/TNc3Aaeq9MmFcetx/jqFWtEAi6szH27LALIMyWooGkv6iZ7V5U
+ xp5bwUUmA1uQr7yNQRkVoxtK8gpW/iamxLi+xpEh5/rzQWX1w2N8duC+jH4KNRzv3gGu
+ A+j/INbhfUBASjYLHTioSPyGo1NtHYopZWR1TniL3cKwNo9lp7p7+myZE7L7ZuIaO9HP
+ m+ypuYeUNZ5GI4ote7J+KtG2b5jj1wph+/FpDebIRdBht9Lwh7M+hrFHjEYE4Eny1Qsd
+ 3EbFRlbFwkQzTRZFpOSgqfiG3GVJrYj4eRAW4Mrkl9p7PJshaxIKsJ89QsehFvfcM6FL
+ wWAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770401126; x=1771005926;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=z414qbu3KY7qWY009bsyWelCEU/9PsgauzjNkRD3FqE=;
- b=wuxO8qc/SG7L2xX0HG0tf/LtO7gL5dxjZkkwrzFcddtNKce9pVDxNVgTO577uchG/j
- LKRSkXmbhddwqkKJEU1SQyekv1w5o6TtbF6ndqqbN5ZH/n1AeefxIX9FYbADr8vrzBU8
- AzSZxH+0UOECVgMu3OZfgsErKK+c60tF/xf7fr620mrPu+DpXFTWS/E13X7rTUA/nq2N
- vB5qZ/35W5dS0EnXmwU01BI5pGUk2bdMQANKCzXHN444wpIizjH8CYGL5vikg11ohmvb
- dFWZnVXFCUidNTsdOb/QzuZSJxeq299SsChvonhv5t11145lxIHKb1svPs/06j9IO4cf
- wflg==
-X-Gm-Message-State: AOJu0YwA5OS3IDvx6Abjnllb1Hy9FRVDAF6UHwhYc0tgMxqOqh36njWx
- KohoQgnDL/lKsocDfEJ3Hep8W7Uo3To+FpaxnKgrMEI04wARUJqoCpnhjNqHJ64zzvkcMzvxHZY
- EKFfh+g0=
-X-Gm-Gg: AZuq6aK+yT87khJvxfcRz13g8z+T/V6GwSg98BxhUbMSedWks6YrcTHvlyLIpInvrMo
- jQ36g9PgSo4G9poy5wKua89ySWO/b43tBZaPmU9YWDHpaVKfpEYyu6FptUOlmHikutr1Eb3avWT
- 8atoAdSxsbkaZpupgmHc/SsgGaTZUZt7VL+Ea8b3tg/ef+I6qwen3PqcIAr3ERYsatiUWzTF4dS
- 9mGzqGywCGYVPyWCq53qLPbnFA+MSD1Udpk+RWLhike6hDSPjlS6d6NW+wfB5bXLGwnyc1xoG7o
- 1lX3XB6ntEFOX6Iw5Pa3IcLB94y9uLF8v0MY0fxg2XzB0eas8LbKkWPfHuuFWnjDHI5w+xvhyWw
- a66f24rYO4XIU+fHShZtb3ZzIuoic1TgYk//D+6UCg7ggKjV9OfsZqUdobdHucALYm3DxadwWeo
- A9HwSoW3EINr4=
-X-Received: by 2002:a17:906:478b:b0:b80:149b:badd with SMTP id
- a640c23a62f3a-b8edf34b329mr196658966b.37.1770401125979; 
- Fri, 06 Feb 2026 10:05:25 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8edacb18c5sm103615366b.43.2026.02.06.10.05.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Feb 2026 10:05:24 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6DF26607D4;
- Fri, 06 Feb 2026 18:05:18 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Yodel Eldar <yodel.eldar@yodel.dev>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 07/10] gdbstub: Export host_to_gdb_errno File-I/O helper
- function
-Date: Fri,  6 Feb 2026 18:05:14 +0000
-Message-ID: <20260206180517.1335861-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260206180517.1335861-1-alex.bennee@linaro.org>
-References: <20260206180517.1335861-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1770401325; x=1771006125;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EWrLBdWK4hMyWa5JkEVJvQfN4IH6vhLUH92xvjRaLzQ=;
+ b=tFf9CABdf9CVASyVaGICy+a19UL5LsoVrAZneYpz+6Wf7LeL9J0QbU2G4MpbELvjd4
+ nr0sX9qDfhD+02AX/o1GSwcN0ZrU/wQJjCzNI8DqtREt/YHShARd0HAj29p8PQe0m1em
+ +cD1N958tr3aTDTYBQZp8ICPkD737uuo4zg3kCb6Ca3IOohRrb6QBNlIqn7nBE9wNEaQ
+ PYnY99qF1YB9bPCfceeYGiDlQhkfk9eXq4bMoKomNxWjrjW4TKxeywDKAioF8ZEI6BgC
+ YWzF3YK1T0kGcPS+GMoIeohgqZ6BE5+ZuOjbQxwpJBNGNPXzW5gMTKfFRAUXHuhoi5eD
+ Yj3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVw02ipRj+NRLyqRP5wyfgiik54HE8hpXAXyMijp9V7MxMrcfSL1RAsEKDUPtydxUWwpufWRXXUIA/i@nongnu.org
+X-Gm-Message-State: AOJu0YwGSxyT0ny+DuwK8lGZiEowGKOyvaGYjTbhYmhMvmR0l3NO7ug9
+ VjurGHooBcvdpoy3Iyrr7/MQRoFEjulVxezXft63bEjCh7y1pwJmXuJmnPQiaj1NgB0=
+X-Gm-Gg: AZuq6aK0ra/Q4Dsd1uoq3/rld4Mv7PHGwBlf9fRnYaqrVnaeMfx1X+ohD+Mkp6VR86D
+ /ijiK3hJk/E2GYthAFtdI2WGnihiIFxr9AOphY3U6hmZBGNDTY71JEq7tRAcg+gQ3ZSUcKjx+hf
+ 4zkZkuLbTRq3LNzxXS7ynE0T3yogGU1+njWwbXqPtZkHtVtQdq7t4Yd/LFWgVQdx6Uq2p1xas59
+ KIo4APSkT5wbiEDMipaITOg1qr7Y3hXpuZ+sd0tqe7xy2kWfEveSRajDclLYvDrmEkJeX5UApxi
+ jOrQreqbFBDqYdOnx8gIrBKEIAkTYcWzBvdjDqCKqWIYCcSdhUMPvaC3X1yDM6lR/5ZdMVgiElr
+ pGwIgHcs4w7rCsXiF6u3TZjsSAEnXcLLNLOZy1XpulbZMcRcaSzTw9fnHQ5FCwUlzuBQPEH2j2u
+ FhN/cL0qKDJo+qLVueBRnuWbdY0IZwNYrEKaKnWnOApQY/BzMlQddBUg==
+X-Received: by 2002:a05:600c:3589:b0:480:4a4f:c363 with SMTP id
+ 5b1f17b1804b1-483201e4022mr54458775e9.9.1770401325554; 
+ Fri, 06 Feb 2026 10:08:45 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483209c6de6sm23284695e9.13.2026.02.06.10.08.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Feb 2026 10:08:44 -0800 (PST)
+Message-ID: <cfbbfbc4-f1dd-4a6d-8554-afaf08d85ac5@linaro.org>
+Date: Fri, 6 Feb 2026 19:08:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] target/s390x: Replace %target_ulong -> %vaddr
+ where appropriate
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20260204182722.44062-1-philmd@linaro.org>
+ <20260204182722.44062-4-philmd@linaro.org>
+ <2827f8b28c4a654cb1b37eaf1313a1d63fb58f05.camel@linux.ibm.com>
+ <4eb5b630-dad5-4cd8-97a6-d1d4a3499400@linaro.org>
+ <1c30cbc9f0c04b3da5a48bc20f8d9cacfeb11911.camel@linux.ibm.com>
+ <665666b9-69a8-4b47-b706-341295d96371@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <665666b9-69a8-4b47-b706-341295d96371@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,129 +115,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+On 6/2/26 14:09, Thomas Huth wrote:
+> On 05/02/2026 22.49, Eric Farman wrote:
+>> On Thu, 2026-02-05 at 22:37 +0100, Philippe Mathieu-Daudé wrote:
+>>> Hi Eric,
+>>>
+>>> On 5/2/26 22:23, Eric Farman wrote:
+>>>> On Wed, 2026-02-04 at 19:27 +0100, Philippe Mathieu-Daudé wrote:
+>>>>> Use the %vaddr type for virtual addresses.
+>>>>>
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> ---
+>>>>>    target/s390x/s390x-internal.h  | 5 +++--
+>>>>>    target/s390x/helper.c          | 2 +-
+>>>>>    target/s390x/mmu_helper.c      | 6 +++---
+>>>>>    target/s390x/tcg/excp_helper.c | 3 ++-
+>>>>>    4 files changed, 9 insertions(+), 7 deletions(-)
+>>>
+>>>
+>>>>> @@ -376,9 +377,9 @@ void probe_write_access(CPUS390XState *env, 
+>>>>> uint64_t addr, uint64_t len,
+>>>>>    bool mmu_absolute_addr_valid(target_ulong addr, bool is_write);
+>>>>>    /* Special access mode only valid for mmu_translate() */
+>>>>>    #define MMU_S390_LRA        -1
+>>>>> -int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, 
+>>>>> uint64_t asc,
+>>>>> +int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, 
+>>>>> uint64_t asc,
+>>>>>                      target_ulong *raddr, int *flags, uint64_t *tec);
+>>>>> -int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int 
+>>>>> rw,
+>>>>> +int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
+>>>>
+>>>> I think this one should remain target_ulong, and become hwaddr in 
+>>>> the next patch, no?
+>>>
+>>> Without s390x background, I don't understand well what real addresses
+>>> are. IFAICT the single caller s390_cpu_tlb_fill() provides a virtual
+>>> address. But then indeed mmu_real2abs() consumes a hwaddr as real addr.
+>>
+>> Hi Philippe,
+>>
+>> Ah, I didn't go the other direction (my bad). The usage of "real" here 
+>> is kind of halfway between
+>> virtual and -really- real.
+> 
+> Yes, real addresses are like physical addresses in s390 land - except 
+> for the two so-called low-core pages that might be swapped with two 
+> other pages in memory.
+> 
+>> I suspect the caller is mistaken here, but I think that's a research
+>> project for tomorrow.
+> 
+> The caller s390_cpu_tlb_fill() seems to deal with both, real a virtual 
+> addresses, and uses the same variable for both, so I think that's fine 
+> there.
+> But I agree with Eric mmu_translate_real() should use "hwaddr" for the 
+> raddr parameter instead. Philippe, could you please adjust the patch?
 
-Move host_to_gdb_errno from target/m68k/m68k-semi.c to
-gdbstub/syscalls.c. Declare it in include/gdbstub/syscalls.h.
-
-Add both newly added GDB File-I/O supported errno values, EIO and
-ENOSYS, to the mapping.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260116014612.226183-3-yodel.eldar@yodel.dev>
-Message-ID: <20260203115201.2387721-9-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
-diff --git a/include/gdbstub/syscalls.h b/include/gdbstub/syscalls.h
-index 6200416f77a..a09559128b1 100644
---- a/include/gdbstub/syscalls.h
-+++ b/include/gdbstub/syscalls.h
-@@ -102,6 +102,15 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...);
-  */
- int use_gdb_syscalls(void);
- 
-+/**
-+ * host_to_gdb_errno: convert host errno to GDB errno value
-+ * @err: errno from host
-+ *
-+ * Given an error number from the host, this helper function returns
-+ * its GDB File-I/O specified representation.
-+ */
-+int host_to_gdb_errno(int err);
-+
- /**
-  * gdb_exit: exit gdb session, reporting inferior status
-  * @code: exit code reported
-diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
-index d8bb90cc1c7..15050984a04 100644
---- a/gdbstub/syscalls.c
-+++ b/gdbstub/syscalls.c
-@@ -145,6 +145,42 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
-     gdb_syscall_handling(gdbserver_syscall_state.syscall_buf);
- }
- 
-+/*
-+ * Map host error numbers to their GDB protocol counterparts.
-+ * For the list of GDB File-I/O supported error numbers, please consult:
-+ * https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
-+ */
-+int host_to_gdb_errno(int err)
-+{
-+#define E(X)  case E##X: return GDB_E##X
-+    switch (err) {
-+    E(PERM);
-+    E(NOENT);
-+    E(INTR);
-+    E(IO);
-+    E(BADF);
-+    E(ACCES);
-+    E(FAULT);
-+    E(BUSY);
-+    E(EXIST);
-+    E(NODEV);
-+    E(NOTDIR);
-+    E(ISDIR);
-+    E(INVAL);
-+    E(NFILE);
-+    E(MFILE);
-+    E(FBIG);
-+    E(NOSPC);
-+    E(SPIPE);
-+    E(ROFS);
-+    E(NOSYS);
-+    E(NAMETOOLONG);
-+    default:
-+        return GDB_EUNKNOWN;
-+    }
-+#undef E
-+}
-+
- /*
-  * GDB Command Handlers
-  */
-diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-index 578a08dfee8..bdc798a28cb 100644
---- a/target/m68k/m68k-semi.c
-+++ b/target/m68k/m68k-semi.c
-@@ -46,35 +46,6 @@
- #define HOSTED_ISATTY 12
- #define HOSTED_SYSTEM 13
- 
--static int host_to_gdb_errno(int err)
--{
--#define E(X)  case E##X: return GDB_E##X
--    switch (err) {
--    E(PERM);
--    E(NOENT);
--    E(INTR);
--    E(BADF);
--    E(ACCES);
--    E(FAULT);
--    E(BUSY);
--    E(EXIST);
--    E(NODEV);
--    E(NOTDIR);
--    E(ISDIR);
--    E(INVAL);
--    E(NFILE);
--    E(MFILE);
--    E(FBIG);
--    E(NOSPC);
--    E(SPIPE);
--    E(ROFS);
--    E(NAMETOOLONG);
--    default:
--        return GDB_EUNKNOWN;
--    }
--#undef E
--}
--
- static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
- {
-     CPUM68KState *env = cpu_env(cs);
--- 
-2.47.3
-
+Sure!
 
