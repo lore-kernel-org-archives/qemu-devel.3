@@ -4,105 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4177DEE20AC
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3C6EE20A6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Feb 2026 15:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voNJI-0004Rt-Gi; Fri, 06 Feb 2026 09:59:54 -0500
+	id 1voNLp-00068D-JX; Fri, 06 Feb 2026 10:02:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNIw-00047T-MZ
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:59:33 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1voNIu-0000BZ-3i
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 09:59:30 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-79456d5ebf9so8758417b3.2
- for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 06:59:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770389967; cv=none;
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1voNLY-00061Z-5G
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:02:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1voNLV-0000ue-Q8
+ for qemu-devel@nongnu.org; Fri, 06 Feb 2026 10:02:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770390127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1kpBS61qhw+Aryhv7qZCKZ5W2ViG1DM1eZjAnwbVQDE=;
+ b=S9j7itdWoT0isw/4rG7s5bNUmx0FM+M7JEi7FgB4wSEoiblt+7fSsJ8BJ3CmsbrhcCMlbu
+ ju8sXxGVL+YyEtivh73Avad1IjfalE+Reu/mcrDVgCZ/quMmGBLrx/OC0HlAH/3SHrWXti
+ fnj7J2AOBqUXkAQhIB16RN3yEh11RAc=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-333-MZMafP2ENQK9Fi7W8MtNBA-1; Fri, 06 Feb 2026 10:00:47 -0500
+X-MC-Unique: MZMafP2ENQK9Fi7W8MtNBA-1
+X-Mimecast-MFC-AGG-ID: MZMafP2ENQK9Fi7W8MtNBA_1770390046
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-6640dc1ca05so8262353eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Feb 2026 07:00:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770390046; cv=none;
  d=google.com; s=arc-20240605;
- b=Z/MatQ/eoZpOIhymUSl+7boAWhv57v8b+qQf4Vng5L4j0IOQefFyL+SUyP/AgSJli8
- HYUYUjHdxcifAEeENrp/Pn2mSIclyDBUYMqNhdudBGfYmFzguDSsVwgR+iEei7gRIQiW
- RXd+5vasS2cq69k1ca+bvNtcPyPWYYqMJ8HyfJ/Q6ID/E2+m0iQEFL6v640H9wpn9svo
- DcJAzmeu5vu9cib5apGkJNxiWQ3xqDc9qjJZj1iJBSP1rw9US6xvqMHij/lG/yHF2B6S
- OmFChrHCUZ+fFu1YGZvQydrhuJ9agphTrJNCK/1C2e9Yv878SbPbkByiJ7isHqZnTgY5
- RJTA==
+ b=L9ApzMEcLqTLXeJxU0gl4n5iR4ErVXU57+JEey1KidV/OkiEpaFVgoah3j4A3jPiAN
+ zDShL8O0hS1q/X8fK5y0OR0o6LngZFyC03sK2xFEQxHmTXEVQBP0tzVI860hX7XxwjL/
+ sYgoxwll0rz6Y2YPVRPmv44Qrzy/CLDOSpDaAXVjx+KvP+T73JZPVQc3nNEc7GiE7S0n
+ hnq3QqKe2K1I38vkv8HoOhZgGWkk7auupaGJyi0Vk16co6ZD+e1y658sbIapcwoJN2a/
+ YiQzsN94RjkbuA2FuEPkAyXKdgcZwMhcP739u9NtWszOhoIqUI7Lsx5vV6srH+BrfhXm
+ jwKQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
- fh=EQxqgLWoW3xrRuA0t22tcEV7rqDjFpaH8wIk1fjO7wU=;
- b=N56Au+jjFUJlwCr/dzYdzZ73CCe536gM9HPYmXtQkFwrC9N7UUXOQ1hoNO3yzUkzWL
- cKYTjJE0KXOlrNdVvQJJrD66H84RfjL6doF3FjpJhcZTHoprspqYSS2zYu69R1OZe8L8
- ER6qOTH4lRyG2b33/AfrYki9LUGMyQxSs+g9uFhypWeFDZ5gSCWi23OKa8Qmz1lgvTzr
- yOPFl3oTJ24mQhzSw43DxWVoO3Kqbdb0yskHK9IQ0GovmAQE9Zaukns/rJBJISLHIQ64
- p4QUhkqsHVpy9N/R/YYmG8tGU6f5yHdoFHosYvyOmsz9ZPoTS/GbLkQjyQI3Wz4EjNNe
- fM1A==; darn=nongnu.org
+ bh=1kpBS61qhw+Aryhv7qZCKZ5W2ViG1DM1eZjAnwbVQDE=;
+ fh=E8s3wkEWEK5ohdKRCvTVy/P6M1dl9RN2hwPVtv/Xezs=;
+ b=P8U+t2oAQNyJ6KxLdgIMqJq+HJAWEbDkoSkDlp4Wcndpq8OLTGbwzmUO1hj/BX1l34
+ JOv5rOlg/MOn4W3r5uPPeFHOsdMuu1sXf+H/YawxowNzr/r9xajhEwaXXL5/Jnej4AfR
+ Ank07R+gp42PyZjqCNX1afzwXEipQ8EWW9TBf7Giv7oq4wlJPmXA+f4I91toOiF/Bs80
+ UwW2FXNmcSgGxNIid00ec4xeaCCEowPxEgflnuoktBvC7pdqtLn7hQeX0W0plELebBxb
+ i/fObtE6bUSRmkWtF3trbbJGn69PP7Lp9qusNx5e8j73lyvfZbdmtPxPoUJGxFAbofGO
+ SO3g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770389967; x=1770994767; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770390046; x=1770994846; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
- b=zO5J7aIkjGdjVnYht3yp5JypW3O2H4v0yBkwgKEo9dquR9w4JNqyttrBo40UGSe3De
- Lvy+oJJ47//0sEV8E0eO5DBh4Mxit0tojq+d3ll29P85zDkNlvLm783NNFWlfcZX6buU
- sWNW+xS8HMhnVaVhC1g8b7F4ts7qUoTgDdHwt5HcXpzxzt4HETUCwkdzZf8ZfJp695mA
- okdsnjJ6Xe5S1JLap1sRFRm/sSaDu8lws/xYtOPxkDVu4YEB5kNV8kFjuzE1SBb1t8Al
- nixt+wewHy+49jGVcBEssfwn5sKKx511rizjsfSZIJx0G/7mFa6cZ4cTZ7DBtsX46YJr
- 4+nw==
+ bh=1kpBS61qhw+Aryhv7qZCKZ5W2ViG1DM1eZjAnwbVQDE=;
+ b=sCVlKCFAfePr5ydvbUOSsRzdoVcbG2tdFscYiH4JrEF4o/UtE+o7M5d/edhGMH+iGd
+ F/AqoodQ8VdFWR8ZrYLKkfjwQb8MCc4KUN4YP7ufRO5341DQE5mykwUrhM8lBkAvyqBp
+ nsCUj/VW294Fd9//136lJ2zqhAPwMwtLbyY5fcMVggpQeIeiObO0Ve33hg8c+FflCK9l
+ 9ckRhex9kkBUKzVxFrGqw/nkQtyCBLmK/aYx1iWqcGl9biU00pxeXxLqvo7ODqs2+d4d
+ aNPyk1codzNuttqPNKizhDBzRgg2j5hj6Qn+x76pBOx8Xj95bDBWw2/sM3TcWA0giO5e
+ kuFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770389967; x=1770994767;
+ d=1e100.net; s=20230601; t=1770390046; x=1770994846;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Djjd+78eL/gLTndXMnYafFf7JN6pIz42e4sPAJ7o4XM=;
- b=RA2XH/fRGPEl1kp/1jt/JAgyB5qGo1rn0/Ra7fn8EXdYhon1MBvfplVE/+uglQi48J
- hm2wUJFMP+tBURT5ipyjNZ39M2as5ZawV/UileyMRuaq3nu/Ey0HsZ6+/52UTNebanw0
- 3iSVVKI0oTp6Ebv/VCF+HUN1figQKXFaqbrLGwUMX3MsspPSSKF82o88KEJrmiqGzMNS
- tnPyQyINLjNYIvbJximBrikyJBcd/VkhZ3L+fUK+hk8TkjFFRwUBPEIjVIi2I62tvvuH
- tk9FHy7iEDJMKih963PKgr9uFnjMIGEuwWU3AkfnrAulXn05K0XfEnJuYRku3YCatH4w
- 81bg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVx2Nf8h5jCaLrgFnBFXrBL/uT2WO2xiadbaPvNd1mqSv4XzUk0JfMoOp8UkHWk135AoYg4/OYrmnXy@nongnu.org
-X-Gm-Message-State: AOJu0Yz2KNe36ihei2JMH7nnL/Xo5Fo9j2IY8mTM3Osq4eAZecMSwpP5
- oL2bSenK5FysIdru6Ajo+rhoOAk7fgsY4zuu4/eR/I9zx7t7gZPmYtsMUpefBHgepyScn4R2c0b
- SxZVB974F4dDZl3QWvQ+uatRX7QvnpBuw+u9r9rKoPw==
-X-Gm-Gg: AZuq6aLocYjPveRaX/xQL9nFv9/IklV7gR52kC0pw/iAqMihWVqxv5dVhQXtUrwNo8I
- 7Z5shqtr0b2Z6QCaHyVqIftJTip06YTck3dBtTFMov4Zjo3XGw5yBoYJGArDvmowA21KouMiCKA
- WHLWYh82PfQuN0+cRSrzgWP3boyr5efhSXs9Vu4wfRknKeQtdRbCjF3dVb4xPXWKNexlRALd6PG
- uXFeAQMZsu3JbpkLL4rNRw2cSQBvrlGO6mYWUXOu53xaXygRJKEQ7SFTS9Mkcvyzp4C+/v7oGpw
- nyosdnpDMHiGKOkUE3Gq/Rri1bd6QIpFp48GDk+IUhMyvSNkl+a8iR8=
-X-Received: by 2002:a05:690c:88a:b0:796:2976:a452 with SMTP id
- 00721157ae682-7962976ac35mr4095557b3.23.1770389966783; Fri, 06 Feb 2026
- 06:59:26 -0800 (PST)
+ bh=1kpBS61qhw+Aryhv7qZCKZ5W2ViG1DM1eZjAnwbVQDE=;
+ b=NoflrqRltsZsNCjbklobCLKx0UGVMTcV9ukJyW0hXUz2NlBEvQV0kE4Ld5x+r3uKQ0
+ bRDGTXqhlSE3odOqfwa9FFGDfMvV4s8f8hwC+EGeXkDJeSAhuU+NjfgmsgIVKgci5XUV
+ tdZd3pqi1AXOw75ZNaqEKgYM/mTs+heVV+wWHZhOBuqGCdHfBGikHfFIvEukmQr2v8mj
+ 6zz/GFiql9BCFzYP1skwRfuXLyfnEuGZQIK+GYx2YOM5R9i1bJG3rbh12lC7FUMxG4+y
+ L4HMmlFN91ITr6mIJbG3Z7JzuN4TJ/w97k83g8ahzIBV76keJjbWFixkwbcUuDiJnNi9
+ UEmQ==
+X-Gm-Message-State: AOJu0YzWdBklymFxvd1Rh3EVUOebNZtxpOmOSHDhetdlcOtB8YA9U0qD
+ RJu3PG9i4HZsYafLTVvOw6E7pQ1fuackQfm8QXr4xEHRiizley7z8iUFEn9MRP2QO4SuLg6YkFM
+ XZou3ga0mVbBDq3OehBaTdt9Pv8U5Iyfx32TeX/138T9d1xV3z6Q/09SaOLn3CXWbs64i2O4UDw
+ uhnBihrQIBP3o21oYUbjQkbQ9vsgYcThw=
+X-Gm-Gg: AZuq6aI82wi4GGY+ykBexJj59Mfni2B4fxlkRvwTzKoeIApN2m5jZIlJNnRXMYYZDgU
+ daEXUAZo3XGFgW3B3wEp0Bt8MfXNcNmZ48TW64QFu+CVawggpIvDATYlU97NoA0EX4fHw8Bmnf/
+ +/ZvUzzC77pIk4KlAKpLlEGO5VVztKnqoVnGCt0DVQ4RYaFrIr/PdQ5gEFyJvL87IwqglU
+X-Received: by 2002:a4a:cb8d:0:b0:66d:cfec:bf37 with SMTP id
+ 006d021491bc7-66dcfecc03cmr376366eaf.22.1770390045876; 
+ Fri, 06 Feb 2026 07:00:45 -0800 (PST)
+X-Received: by 2002:a4a:cb8d:0:b0:66d:cfec:bf37 with SMTP id
+ 006d021491bc7-66dcfecc03cmr376335eaf.22.1770390044477; Fri, 06 Feb 2026
+ 07:00:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20251202160853.22560-1-sebott@redhat.com>
- <20251202160853.22560-3-sebott@redhat.com>
-In-Reply-To: <20251202160853.22560-3-sebott@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Feb 2026 14:59:14 +0000
-X-Gm-Features: AZwV_QgieJzeeTFJCFpBW88yIXQg35x305xf0x9-4d4AF9icH8OLR1uAx6S_ojM
-Message-ID: <CAFEAcA8oi1Xs2kv66dFV9NZore+Q2vHUsgMikveVdN1c+3SBJQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] target/arm/kvm: add kvm-psci-version vcpu property
-To: Sebastian Ott <sebott@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+References: <20251204162129.262745-1-dbassey@redhat.com>
+ <55f06323-a0f6-40f0-9f37-743245203c77@tls.msk.ru>
+In-Reply-To: <55f06323-a0f6-40f0-9f37-743245203c77@tls.msk.ru>
+From: Dorinda Bassey <dbassey@redhat.com>
+Date: Fri, 6 Feb 2026 16:00:33 +0100
+X-Gm-Features: AZwV_QigoufJXs2oQasXopqdsie6C44QWyO2EmJ3eh3ByTyjxmIOjEN4qiOGo4g
+Message-ID: <CACzuRyxeeATksqQQGfGkKVnCP7QMwTaKy_q+dioEPwPka9xzbw@mail.gmail.com>
+Subject: Re: [PATCH v3] virtio-dmabuf: Ensure UUID persistence for hash table
+ insertion
+To: mjt@tls.msk.ru
+Cc: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com, 
+ aesteve@redhat.com, marcandre.lureau@redhat.com, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000b76559064a290d10"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dbassey@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,206 +135,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Dec 2025 at 16:09, Sebastian Ott <sebott@redhat.com> wrote:
+--000000000000b76559064a290d10
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+Again, this feels like a qemu-stable material.  However, I'm not
+> sure under which circumstances the uuid key can be freed before
+> referencing.
 >
-> Provide a kvm specific vcpu property to override the default
-> (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
-> by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+> Please let me know if I shouldn't pick this up for qemu stable
+> releases.
+
+I don't think there's a need to pick this up for stable, I found this issue
+when testing the `resource_assign_uuid` feature, which is not yet fully
+implemented in rust-vmm vhost-device-gpu backend that uses it. So safe to
+say no existing users are hitting this code path in the current stable.
+
+Br,
+Dorinda.
+
+
+On Thu, Feb 5, 2026 at 10:50=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+
+> On 12/4/25 19:20, Dorinda Bassey wrote:
+> > In `virtio_add_resource` function, the UUID used as a key for
+> > `g_hash_table_insert` was temporary, which could lead to
+> > invalid lookups when accessed later. This patch ensures that
+> > the UUID remains valid by duplicating it into a newly allocated
+> > memory space. The value is then inserted into the hash table
+> > with this persistent UUID key to ensure that the key stored in
+> > the hash table remains valid as long as the hash table entry
+> > exists.
+> >
+> > Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
+> > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> > Reviewed-by: Albert Esteve <aesteve@redhat.com>
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
-> Note: in order to support PSCI v0.1 we need to drop vcpu
-> initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+> Again, this feels like a qemu-stable material.  However, I'm not
+> sure under which circumstances the uuid key can be freed before
+> referencing.
 >
-> Signed-off-by: Sebastian Ott <sebott@redhat.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> ---
->  docs/system/arm/cpu-features.rst |  5 +++
->  target/arm/cpu.h                 |  6 +++
->  target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
->  3 files changed, 74 insertions(+), 1 deletion(-)
-
-Hi; this patch seems generally reasonable to me as a way to handle
-this kind of "control" register; for more discussion I wrote a
-longer email in reply to Eric's series handling other kinds of
-migration failure:
-https://lore.kernel.org/qemu-devel/CAFEAcA-gi42JObOjLuPudABX8WRdWf5SzSbkzU-bd06ecF1Vog@mail.gmail.com/T/#me03ebff8dbd8f58189cd98c3a21812781693277e
-
-Unless discussion in that thread reveals that we have so many of
-this kind of "control" knob that we would prefer a generic
-solution rather than per-knob user-friendly names and values,
-I'm OK with taking this patch without completely resolving the
-design discussion on that other series first.
-
-My review comments below are fairly minor, and patch 1 of
-this series has already been applied upstream now.
-
-> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-> index 37d5dfd15b..1d32ce0fee 100644
-> --- a/docs/system/arm/cpu-features.rst
-> +++ b/docs/system/arm/cpu-features.rst
-> @@ -204,6 +204,11 @@ the list of KVM VCPU features and their descriptions.
->    the guest scheduler behavior and/or be exposed to the guest
->    userspace.
+> Please let me know if I shouldn't pick this up for qemu stable
+> releases.
 >
-> +``kvm-psci-version``
-> +  Override the default (as of kernel v6.13 that would be PSCI v1.3)
-> +  PSCI version emulated by the kernel. Current valid values are:
-> +  0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
-
-I think we could be a little more detailed here.
-
-
-``kvm-psci-version``
-
-  Set the Power State Coordination Interface (PSCI) firmware ABI version
-  that KVM provides to the guest. By default KVM will use the newest
-  version that it knows about (which is PSCI v1.3 in Linux v6.13).
-
-  You only need to set this if you want to be able to migrate this
-  VM to a host machine running an older kernel that does not
-  recognize the PSCI version that this host's kernel defaults to.
-
-  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
-
-
-> +
->  TCG VCPU Features
->  =================
+> Thanks,
 >
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 39f2b2e54d..e2b6b587ea 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1035,6 +1035,12 @@ struct ArchCPU {
->      bool kvm_vtime_dirty;
->      uint64_t kvm_vtime;
+> /mjt
 >
-> +    /*
-> +     * Intermediate value used during property parsing.
-> +     * Once finalized, the value should be read from psci_version.
-> +     */
-> +    uint32_t kvm_prop_psci_version;
-> +
->      /* KVM steal time */
->      OnOffAuto kvm_steal_time;
+> > ---
+> > v3: removed blank line between trailers
+> >
+> >   hw/display/virtio-dmabuf.c | 6 ++++--
+> >   1 file changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+> > index 3dba4577ca..5e0395be77 100644
+> > --- a/hw/display/virtio-dmabuf.c
+> > +++ b/hw/display/virtio-dmabuf.c
+> > @@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid,
+> VirtioSharedObject *value)
+> >       if (resource_uuids =3D=3D NULL) {
+> >           resource_uuids =3D g_hash_table_new_full(qemu_uuid_hash,
+> >                                                  uuid_equal_func,
+> > -                                               NULL,
+> > +                                               g_free,
+> >                                                  g_free);
+> >       }
+> >       if (g_hash_table_lookup(resource_uuids, uuid) =3D=3D NULL) {
+> > -        g_hash_table_insert(resource_uuids, uuid, value);
+> > +        g_hash_table_insert(resource_uuids,
+> > +                            g_memdup2(uuid, sizeof(*uuid)),
+> > +                            value);
+> >       } else {
+> >           result =3D false;
+> >       }
 >
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 0d57081e69..cf2de87287 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -484,6 +484,49 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
->      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->  }
 >
-> +struct psci_version {
 
-Nit: our coding style says struct type names should be in
-CamelCase, and structs should have a typedef rather than
-being used as "struct foo".
+--000000000000b76559064a290d10
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +    uint32_t number;
-> +    const char *str;
-> +};
-> +
-> +static const struct psci_version psci_versions[] = {
-> +    { QEMU_PSCI_VERSION_0_1, "0.1" },
-> +    { QEMU_PSCI_VERSION_0_2, "0.2" },
-> +    { QEMU_PSCI_VERSION_1_0, "1.0" },
-> +    { QEMU_PSCI_VERSION_1_1, "1.1" },
-> +    { QEMU_PSCI_VERSION_1_2, "1.2" },
-> +    { QEMU_PSCI_VERSION_1_3, "1.3" },
-> +    { -1, NULL },
-> +};
-> +
-> +static char *kvm_get_psci_version(Object *obj, Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +    const struct psci_version *ver;
-> +
-> +    for (ver = psci_versions; ver->number != -1; ver++) {
-
-Using ARRAY_SIZE() to set the loop bound is nicer than requiring
-a sentinel value at the end of the array.
-
-> +        if (ver->number == cpu->psci_version)
-> +            return g_strdup(ver->str);
-> +    }
-> +
-> +    return g_strdup_printf("Unknown PSCI-version: %x", cpu->psci_version);
-
-Is this ever possible?
-
-> +}
-> +
-> +static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +    const struct psci_version *ver;
-> +
-> +    for (ver = psci_versions; ver->number != -1; ver++) {
-> +        if (!strcmp(value, ver->str)) {
-> +            cpu->kvm_prop_psci_version = ver->number;
-> +            return;
-> +        }
-> +    }
-> +
-> +    error_setg(errp, "Invalid PSCI-version value");
-
-"PSCI version".
-
-> +}
-> +
->  /* KVM VCPU properties should be prefixed with "kvm-". */
->  void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->  {
-> @@ -505,6 +548,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->                               kvm_steal_time_set);
->      object_property_set_description(obj, "kvm-steal-time",
->                                      "Set off to disable KVM steal time.");
-> +
-> +    object_property_add_str(obj, "kvm-psci-version", kvm_get_psci_version,
-> +                            kvm_set_psci_version);
-> +    object_property_set_description(obj, "kvm-psci-version",
-> +                                    "Set PSCI version. "
-> +                                    "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3");
->  }
+<div dir=3D"ltr"><div>Hi,</div><div><br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">Again, this feels like a qemu-stable material.=C2=A0 H=
+owever, I&#39;m not<br>
+sure under which circumstances the uuid key can be freed before<br>
+referencing.<br>
+<br>
+Please let me know if I shouldn&#39;t pick this up for qemu stable<br>
+releases.</blockquote><div>I don&#39;t think there&#39;s a need to pick thi=
+s up for stable, I found this issue when testing the `resource_assign_uuid`=
+ feature, which is not yet fully implemented in rust-vmm vhost-device-gpu b=
+ackend that uses it. So safe to say no existing users are hitting this code=
+ path in the current stable.</div><div><br></div><div>Br,</div><div>Dorinda=
+.</div><div><br></div></div><br><div class=3D"gmail_quote gmail_quote_conta=
+iner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 5, 2026 at 10:50=E2=
+=80=AFPM Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.=
+ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">On 12/4/25 19:20, Dorinda Bassey wrote:<br>
+&gt; In `virtio_add_resource` function, the UUID used as a key for<br>
+&gt; `g_hash_table_insert` was temporary, which could lead to<br>
+&gt; invalid lookups when accessed later. This patch ensures that<br>
+&gt; the UUID remains valid by duplicating it into a newly allocated<br>
+&gt; memory space. The value is then inserted into the hash table<br>
+&gt; with this persistent UUID key to ensure that the key stored in<br>
+&gt; the hash table remains valid as long as the hash table entry<br>
+&gt; exists.<br>
+&gt; <br>
+&gt; Fixes: faefdba847 (&quot;hw/display: introduce virtio-dmabuf&quot;)<br=
 >
->  bool kvm_arm_pmu_supported(void)
-> @@ -1959,7 +2008,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      if (cs->start_powered_off) {
->          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
->      }
-> -    if (kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-> +    if (cpu->kvm_prop_psci_version != QEMU_PSCI_VERSION_0_1 &&
-> +        kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-> +        /*
-> +         * Versions >= v0.2 are backward compatible with v0.2
-> +         * omit the feature flag for v0.1 .
-> +         */
->          cpu->psci_version = QEMU_PSCI_VERSION_0_2;
->          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
->      }
-> @@ -1998,6 +2052,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          }
->      }
->
-> +    if (cpu->kvm_prop_psci_version) {
-> +        psciver = cpu->kvm_prop_psci_version;
-> +        ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
-> +        if (ret) {
-> +            error_report("PSCI version %"PRIx64" is not supported by KVM", psciver);
+&gt; Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dbassey@redhat.com=
+" target=3D"_blank">dbassey@redhat.com</a>&gt;<br>
+&gt; Reviewed-by: Stefano Garzarella &lt;<a href=3D"mailto:sgarzare@redhat.=
+com" target=3D"_blank">sgarzare@redhat.com</a>&gt;<br>
+&gt; Reviewed-by: Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.com" t=
+arget=3D"_blank">aesteve@redhat.com</a>&gt;<br>
+&gt; Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
+reau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+<br>
+Again, this feels like a qemu-stable material.=C2=A0 However, I&#39;m not<b=
+r>
+sure under which circumstances the uuid key can be freed before<br>
+referencing.<br>
+<br>
+Please let me know if I shouldn&#39;t pick this up for qemu stable<br>
+releases.<br>
+<br>
+Thanks,<br>
+<br>
+/mjt<br>
+<br>
+&gt; ---<br>
+&gt; v3: removed blank line between trailers<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0hw/display/virtio-dmabuf.c | 6 ++++--<br>
+&gt;=C2=A0 =C2=A01 file changed, 4 insertions(+), 2 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c<b=
+r>
+&gt; index 3dba4577ca..5e0395be77 100644<br>
+&gt; --- a/hw/display/virtio-dmabuf.c<br>
+&gt; +++ b/hw/display/virtio-dmabuf.c<br>
+&gt; @@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, Vi=
+rtioSharedObject *value)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (resource_uuids =3D=3D NULL) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0resource_uuids =3D g_hash_tabl=
+e_new_full(qemu_uuid_hash,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uuid_equal_func,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0NULL,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0g_free,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (g_hash_table_lookup(resource_uuids, uuid=
+) =3D=3D NULL) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_uuids, uuid,=
+ value);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_uuids,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_memdup2(uuid, sizeof(*uuid)),<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 value);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D false;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+</blockquote></div>
 
-Could we make the PSCI version human-readable rather than hex here?
-If hex, we need the leading 0x.
+--000000000000b76559064a290d10--
 
-We can also suggest to the user the solution to this problem:
-
-  error_report("KVM in this kernel does not support PSCI version 0x%" PRIx64 ");
-  error_printf("Consider setting the kvm-psci-version property on the
-migration source.\n")
-
-(watch out that error_report() strings end without a trailing \n
-but error_printf() ones must have a \n.)
-
-thanks
--- PMM
 
