@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E31EE0AF1
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 21:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D649DEE0AF1
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 21:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voq8z-0004GF-H1; Sat, 07 Feb 2026 16:47:09 -0500
+	id 1voqJz-0006iP-Hs; Sat, 07 Feb 2026 16:58:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1voq8y-0004Fl-0F
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 16:47:08 -0500
-Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1voqJr-0006i3-CN
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 16:58:23 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1voq8w-0004RE-Fx
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 16:47:07 -0500
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-8c6ac42b91eso390024885a.3
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 13:47:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770500825; cv=none;
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1voqJp-0005iR-Hv
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 16:58:23 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a9042df9a2so9858355ad.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 13:58:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770501500; cv=none;
  d=google.com; s=arc-20240605;
- b=Id8iwNR6YN4XSxx68wvZPy3v9uFT2mnD2BhSVwc0e7qrybHm1jdPSmGHcSi70FF2wf
- CshYaZQ++E35qCqbN67fXvy1iimqEEAkTpJT4t/yOGIOqdCFHBFUPoulm6mPF8gmwZc2
- 7PAiru/rzi+pQOR2OauyP9/RF3kBhKKMqcHuEJRXy2Y/nv7w3CvArVdAZbpzfqJDBM3u
- vYYWdS4ovlAyaP3fglY8rCkbi7XcOQWNyK2iIhS8PplZsRBfQDQs64mn5C8d2+ZLEAiZ
- ex3UZDasn3YB+aryoTrRLK6CO7+p3EtiSNtq47a/HA4ihqkCw2kIIM0T5LaQGOOfi25c
- vZ3A==
+ b=SnmhSLJi3AZYbhSv8KOtcXMk1qkqeWHqIhDtqEw1e1bnnVUNLDBFArGcI4qXX2K5Py
+ RN8nfXzSwouJVlGWUmWaqQN/LXIlqL/s5xwIF7KvAt80J9MiFhuJyoeehOilMao1dLUn
+ lhQpQnVUoni2SMwL0e7tjezLWPn9GHJbDIYrBUUdsco0QS4jcFdpQoiocjHEP9oTTgIE
+ 19zMLZxeZfcGYQcFcqAS45CRHYMUTyiNJPTAoj+W+IJpCPRSHNaLHOjx7HiOUVk/dbz9
+ Y0gpzCKhxVvqxQjmvPdfLN7vpry8xTQEgNzNN1zEyV37Tqy7XJ3kspxwyL6Bkt2stE6h
+ j7hA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RUsFhCXMgFpRVv3Et0M87bPXJH2fTGb+t5byJlfjU8Q=;
- fh=HTnfI7TkK90NwUX8trJ+uJcY/rWcyVT6rjxtD9deuaU=;
- b=TvjAEh6BmTVEV3BD5VcO/oJR8AAVHz0laxnUmd/l4eymzH4fpz0aZqZiYjMBqB8EP+
- hT24RIErty22L0k8/Z3Yfg4Guoea4f+b4RJ0wXwhjkFlzQyZI1y1SVIVZEm3gAGjHRyj
- 9aYzx4yfoGjfyB6aDQuOBP6L4DGcVqz9o/eMRbh8VeZv1CNuY/Ui7UrrlpzvzjPW3PlA
- ll37S7+hkeGS62UISCymN7ts9FO6yPyFkNBLMWAFRgyRi4sTxgOxDI+dKw3NwUgDRPCX
- VPBWIkaU4vIvEh5EUMgzNOL2IbabHi09ntsPLdAcA5jkodq1vezWzH8lX36CinTigqPs
- gIrg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Qw7w9+WdaMXeH6uwe83It4wrVF/857gReZ1FfSJYaj8=;
+ fh=3m1aKdVwiiAQeDysI/JPLFyw7hm3fA2/ymZW6NmRwXE=;
+ b=XIF6+khTKj7Kyr7qL0wAmzPHwPokVpm3YNR8gH6qc6FAB2TVmurbnVrMLfdYx8IRCE
+ UQSCcuuIJTZfqxt84J4x4jUY9d6csZH+UrjkStlDd2e2JTfOUMVNDNKeHIWaIncJfr4R
+ Y6ehCuMQ/m7A8wkeRIuHX4/ukueJlt4DvzKETQ9ZaCQtbmumbpCZQw1/sSeLurOw2CRE
+ 6fdxc3sgrcw3Q3psyjIw9QDvft3xiKKwCigahfOmtegUpzHlT7JwP03382N8lV2F1gJm
+ aSezPD/vWf1Ef3PJNihERqLQLfroiILveiA3xF3Vu6RmFDH6kmaDszHa2EJsqMrn4W1L
+ 8aFQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770500825; x=1771105625; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RUsFhCXMgFpRVv3Et0M87bPXJH2fTGb+t5byJlfjU8Q=;
- b=fQ7yVMY6nvIDZB6hfxIbZUNa1uvMJdvr9/BVC2OwD8erGRNw2ipueQcA1x9MUyUdFc
- KMqDB3HD3xq7naYotZi47v9oEThN+exDYghJom1kEmJYlIPPUZySTaLcC2qVdsx9tah1
- Um3p4rzDXVUV1HkV7ZG4Ty7Qp0OKZMKPDHEyouXgiab+t0axCWphyPRqKvs7D8UCd5zV
- SBC0u9sBa7DbZZ2EjADwACoftKAclLJxfdgl0xOLCo14V6NItXAcPaHt/dyaO8mY22mW
- hQFKj5y1VjO1D89Qgvm2Pn6Dt5aasc7Xa6o8I2dlLQSgLzqcZqSelko+ZNJem3vwOizf
- 82vQ==
+ d=gmail.com; s=20230601; t=1770501500; x=1771106300; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Qw7w9+WdaMXeH6uwe83It4wrVF/857gReZ1FfSJYaj8=;
+ b=Rj+D69G7f0zAngHoLsz72M9imYnNkJVYCk6ZonzTuZ8nAv5Rvnl3nHmc4bDeZ02xuo
+ fMBVOirwyfe83EuK3JB+LGgd4ERfnpzXPMiu2/VRBIyv02r7bn8WsfOmd28ppulrIadB
+ vgFalRMRBXJvPq+YNg1rrGxF0gaqa01/FKgJODNZZP8MVxQhDujbus+XXJZJK9mrlrwm
+ K+BH1DpEIDanpAGUCAQbsIch1RqpaW7LxEW8qjSgaNAejREbjfO5VuW9lw40PGaSo7n+
+ vdgnZcG6XmbycmHb4WbxMDzFLAzjDxNtjD5SwuRnxqydVnpKB6Jv6zRNdGP1dad6xxJ9
+ boOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770500825; x=1771105625;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RUsFhCXMgFpRVv3Et0M87bPXJH2fTGb+t5byJlfjU8Q=;
- b=vfjubAruCGOCDopH8S8k7+MPjUWPRKegEDtA3B4ez561gtMFlKM9+KDq4TuDrQ9oCu
- P5IPGh+xcSjOtTAOXN59Mqabgp1MO3J35MjyaWeC1BIKyhHi+lVD36hnwnh62Q+OBayy
- lRZW+NDsm0fov86ZNXcIanQxoNGUUPEUrvhXPjUNsHCQQZIBKZOOeFebJdaBaUshUmUn
- 4Qizs9nt6SOZjHPhdIEx/8wesPTQ/Ojb5HpkPno6M9435iw9pjP5XBQoIxUCDf+eZePE
- 7b5w3WBPH8G/pk1FnLyaZQfCXiQ8+T+V6byASKXYSsYZzeByxb2zLyNb+G6/yJNU+cYH
- Mb0g==
-X-Gm-Message-State: AOJu0Yw+joG9ek4fpehjqj7WVruIeqF6IiJupzK1dP5DojwFbqtTHIUP
- o2mzc3wOhB8UKDJQUt2ctIoi5VCRmER6Th2MCsDo03Jx6nsvvjgU7xl9KmA9LCgzy/4TAID9s3T
- UrqT1Pk6Lk5IMBUwJYhhYSrQ1roIlK/E=
-X-Gm-Gg: AZuq6aIwtxdzhGZAA216A5LvHm3mW5/+H+yawimvCJ1HMby8PZcxuf4ncNl+5sBapIs
- GliBKxSlsH1E0ywroEfLw5gPC2QBaMdgt+8tgGUbOuEpPZ7F8X3ktVXAdlmTGnI7tkBOX6KIZhF
- dxfyVi3fuHfthUGF0P45/TH+/E/lpa2HResgbn9QTAo9rfa2Vy6VNtmJnsl7CsW8JgznTRk1qVL
- VJYVNmIHafMwhsLivx8Vr0jQ3JEoEo/XkbZLIg/gUTPSdS3D0NcRlHFQWHHM97yLkw00HPiUKu4
- eakM3YMGtvI5SjFv5+wnX7N10ljkwrK5DCTCp4ieHfzmy5m+yur5qeU=
-X-Received: by 2002:a05:622a:1113:b0:4ff:a946:7958 with SMTP id
- d75a77b69052e-506398d055emr94114041cf.32.1770500824803; Sat, 07 Feb 2026
- 13:47:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770501500; x=1771106300;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qw7w9+WdaMXeH6uwe83It4wrVF/857gReZ1FfSJYaj8=;
+ b=T0NhRt57nQhdoRWXkeOthtK7OI+d0FoIsatoTjNmVXB3+8gL/Rzwqf0crZ34ua+Poz
+ RdRmfHd3Zv4dnzPINu6mIyjpHePx6Io61QTqYHksDDJBleWoBXoSBwqhLz/N/tAy0zbq
+ QuSmIx1J2dHeUXN1b148SFYByzPZBiWlDmpAgnw7Vw6avuZLPa1UeNFgVtlveMHZpto+
+ dI2WAmk0kGpu3Wd1s88yP3AKD6QvgZTJyTxueesxWcPKP8dgPAAv7kQgqrp16gy7AqPU
+ 1RXnxSTNRu0TNumsFy0yaPMtph3E8Bjce4QtWcBFpQREUk2CdNY/8dRbxqc2SHz1/W21
+ wxBg==
+X-Gm-Message-State: AOJu0YyJx/ixuV3ySc5qhciZZN24sYb/FUI8dE0cvKA78+4T2uZ88ZmS
+ v2Pr9mTxL/gxpA88s6ypUl/lwtZ/JPbGe0SDif1j2kh4sU/GxbEylw6MgbIPhCjiEyFYq6qKxr4
+ m3c2Z1pANCnzq5X6bIGygHJp2vbNHvvU=
+X-Gm-Gg: AZuq6aIf5ep+omwP0ZVcCZmdFRcx7aAM4VUURSvx7dES6tvweH3z6ATS5pf9WitI/lS
+ CxKLf23vxiuOWghLn1pcaanQmZ2Z4Hh6UI0tNJCBS5eSce87njsEDBzmwD0qAQr0IZ7ruDUZPac
+ Vi+mjw+LTxxn6u+Y8KXld1cMhqPEwaiaqBOsLtb3RyTFhNe7NUzvc1WpowNKjZP5wY2m9TSQ1bR
+ BZBua+7qvg78BM12HMPfxjSEJipRV7doWvgy0o4ImndF3oka6nXDxmW+0mGhHARPconyl2oFudK
+ BQi/02HfshN+NfLcILy6rnL8cVs=
+X-Received: by 2002:a17:902:ce12:b0:2a0:97d2:a264 with SMTP id
+ d9443c01a7336-2a95180ea22mr62438945ad.37.1770501499874; Sat, 07 Feb 2026
+ 13:58:19 -0800 (PST)
 MIME-Version: 1.0
-References: <CALjG0Qw_MJ2sgTSiCB2UJ6jS+zMcsJYVTCzh4s=CSvrrH9ySVg@mail.gmail.com>
-In-Reply-To: <CALjG0Qw_MJ2sgTSiCB2UJ6jS+zMcsJYVTCzh4s=CSvrrH9ySVg@mail.gmail.com>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Sat, 7 Feb 2026 13:46:53 -0800
-X-Gm-Features: AZwV_QhSk-tpM-E-REOrxA5sE0d-VkCJAn-uWm8T8AuyYfv2v2EdEfOavZVagOQ
-Message-ID: <CAMo8BfJ9kJ8B+32EC9iH9borKmcHLC3Ceq49LLbM3vbrE0-vDQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/xtensa: convert calloc to g_new0 in mx_pic.c
-To: Manish <manishyoudumb@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x72f.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260207180632.1042754-1-brian.cain@oss.qualcomm.com>
+ <20260207180632.1042754-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260207180632.1042754-3-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Sat, 7 Feb 2026 14:58:08 -0700
+X-Gm-Features: AZwV_QiAUnwu_qUEw2crbHBQ4AfejRVuB84PAFdIrvTEAM9kCCaFXCudYsydAnI
+Message-ID: <CAATN3Noay=pVLA5-d8MMYMLq=QDSwX2zQZwdt1mzA-cjdCV0Eg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] target/hexagon: Reject duplex encodings with
+ duplicate dest registers
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, alex@alexrp.com, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000f96fb7064a4300e1"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,45 +116,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 7, 2026 at 10:16=E2=80=AFAM Manish <manishyoudumb@gmail.com> wr=
-ote:
+--000000000000f96fb7064a4300e1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, Feb 7, 2026 at 11:06=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
+
+> A duplex encoding like 0x00000000 decodes as two loads that both write r0=
+.
 >
-> From cef7f1f3d7b47338b7359ad4b815e04bc965d427 Mon Sep 17 00:00:00 2001
-> From: "Manish." <manishyoudumb@gmail.com>
-> Date: Sat, 7 Feb 2026 23:26:09 +0530
-> Subject: [PATCH] hw/xtensa: convert calloc to g_new0 in mx_pic.c
+> Add a check in decode_insns() after both sub-instructions decode
+> successfully to verify they don't write the same destination register.
 >
-> Convert the calloc allocation in xtensa_mx_pic_init() to use
-> g_new0() for consistency.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1798
->
-> Signed-off-by: Manish. <manishyoudumb@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2696
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
-> hw/xtensa/mx_pic.c | 3 +--
-> 1 file changed, 1 insertion(+), 2 deletions(-)
+>  target/hexagon/decode.c              | 12 ++++++++++++
+>  tests/tcg/hexagon/invalid-encoding.c | 29 ++++++++++++++++++++++++++++
+>  2 files changed, 41 insertions(+)
+>
+> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+> index 69ba1ec96c..90499fc320 100644
+> --- a/target/hexagon/decode.c
+> +++ b/target/hexagon/decode.c
+> @@ -501,12 +501,24 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_=
+t
+> encoding)
+>
+>          /* The slot1 subinsn needs to be in the packet first */
+>          if (decode_slot1_subinsn(ctx, slot1_subinsn)) {
+> +            Insn *slot1_insn =3D insn;
+>              insn->generate =3D opcode_genptr[insn->opcode];
+>              insn->iclass =3D iclass_bits(encoding);
+>              ctx->insn =3D ++insn;
+>              if (decode_slot0_subinsn(ctx, slot0_subinsn)) {
+>                  insn->generate =3D opcode_genptr[insn->opcode];
+>                  insn->iclass =3D iclass_bits(encoding);
+> +                /*
+> +                 * Check that the two sub-instructions don't write the
+> same
+> +                 * destination register (e.g., encoding 0x0 decodes as t=
+wo
+> +                 * loads both writing R0, which is an invalid packet).
+> +                 */
+> +                if (insn->dest_idx >=3D 0 && slot1_insn->dest_idx >=3D 0=
+ &&
+> +                    insn->regno[insn->dest_idx] =3D=3D
+> +                        slot1_insn->regno[slot1_insn->dest_idx]) {
+> +                    ctx->insn =3D --insn;
+> +                    return 0;
+> +                }
+>
+> Isn't this a more general problem than what is checked here?  What if two
+non-duplex instructions write the same register?  What if an instruction
+writes more than one register (e.g., post-increment load)?
 
-The patch is damaged and would not apply, but the change looks good to me.
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+Let the decoding go ahead and finish, then add a check for duplicate writes
+for the whole packet.  Look at ctx_log_reg_write - called during
+analyze_packet.
 
-> diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
-> index 07c3731aef..ab308c9490 100644
-> --- a/hw/xtensa/mx_pic.c
-> +++ b/hw/xtensa/mx_pic.c
-> @@ -316,8 +316,7 @@ static void xtensa_mx_pic_set_irq(void *opaque,
-> int irq, int active)
-> XtensaMxPic *xtensa_mx_pic_init(unsigned n_irq)
-> {
-> - XtensaMxPic *mx =3D calloc(1, sizeof(XtensaMxPic));
-> -
-> + XtensaMxPic *mx =3D g_new0(XtensaMxPic, 1);
-> mx->n_irq =3D n_irq + 1;
-> mx->irq_inputs =3D qemu_allocate_irqs(xtensa_mx_pic_set_irq, mx,
-> mx->n_irq);
-> --
-> 2.52.0
+Thanks,
+Taylor
 
---=20
-Thanks.
--- Max
+--000000000000f96fb7064a4300e1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Feb 7, =
+2026 at 11:06=E2=80=AFAM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">A duplex encoding like 0x00000000 de=
+codes as two loads that both write r0.<br>
+<br>
+Add a check in decode_insns() after both sub-instructions decode<br>
+successfully to verify they don&#39;t write the same destination register.<=
+br>
+<br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2696" re=
+l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
+ssues/2696</a><br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
+.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/decode.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 | 12 ++++++++++++<br>
+=C2=A0tests/tcg/hexagon/invalid-encoding.c | 29 +++++++++++++++++++++++++++=
++<br>
+=C2=A02 files changed, 41 insertions(+)<br>
+<br>
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c<br>
+index 69ba1ec96c..90499fc320 100644<br>
+--- a/target/hexagon/decode.c<br>
++++ b/target/hexagon/decode.c<br>
+@@ -501,12 +501,24 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t =
+encoding)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* The slot1 subinsn needs to be in the p=
+acket first */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (decode_slot1_subinsn(ctx, slot1_subin=
+sn)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Insn *slot1_insn =3D insn;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0insn-&gt;generate =3D opcod=
+e_genptr[insn-&gt;opcode];<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0insn-&gt;iclass =3D iclass_=
+bits(encoding);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;insn =3D ++insn;<br=
+>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (decode_slot0_subinsn(ct=
+x, slot0_subinsn)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0insn-&gt;gene=
+rate =3D opcode_genptr[insn-&gt;opcode];<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0insn-&gt;icla=
+ss =3D iclass_bits(encoding);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Check that=
+ the two sub-instructions don&#39;t write the same<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* destinatio=
+n register (e.g., encoding 0x0 decodes as two<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* loads both=
+ writing R0, which is an invalid packet).<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (insn-&gt;dest_=
+idx &gt;=3D 0 &amp;&amp; slot1_insn-&gt;dest_idx &gt;=3D 0 &amp;&amp;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 insn=
+-&gt;regno[insn-&gt;dest_idx] =3D=3D<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 slot1_insn-&gt;regno[slot1_insn-&gt;dest_idx]) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-=
+&gt;insn =3D --insn;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 retu=
+rn 0;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br><br></blockqu=
+ote><div>Isn&#39;t this a more general problem than what is checked here?=
+=C2=A0 What if two non-duplex instructions write the same register?=C2=A0 W=
+hat if an instruction writes more than one register (e.g., post-increment l=
+oad)?</div><div><br></div><div>Let the decoding go ahead and finish, then a=
+dd a check for duplicate writes for the whole packet.=C2=A0 Look at ctx_log=
+_reg_write - called during analyze_packet.</div><div><br></div><div>Thanks,=
+</div><div>Taylor</div><div><br></div></div></div>
+
+--000000000000f96fb7064a4300e1--
 
