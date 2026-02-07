@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEA1EE0ADA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:10:59 +0000 (UTC)
-Received: from localhost ([::1] helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75287EE0ADA
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:12:01 +0000 (UTC)
+Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voh8U-00079p-P5; Sat, 07 Feb 2026 07:10:02 -0500
+	id 1voh8v-0007W3-Kn; Sat, 07 Feb 2026 07:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8S-00079G-Uj
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:00 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1voh8m-0007GI-Lj
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:21 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8Q-0002sl-UI
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:00 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-354a4ef0c1eso1500407a91.2
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:09:58 -0800 (PST)
+ id 1voh8k-00038S-Ng
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:20 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3530715386cso1260650a91.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770466198; x=1771070998; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770466217; x=1771071017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G85lH42gCcMibdBM9mV1RiEav8F/CH9MqgVmO0gS/Qk=;
- b=FrOS+C8k1+yKx52ZeADia87/PrxwTgqEhMPvV2QR2L+omnfLjPpkT9Y9rQuLXal9uA
- RDsnO3DNQ6inSXbYuYibrTz49OR8cOaxSydmous5n5/DFuCiNA8F/AiqozvjijlnpQcB
- IhMl1FIaPjVUCGv+LnBbI4wYU+iCbnAlDkJvxzzIqGtI39F8DDFbedRWiENjFPbq+zcH
- oUEfupIFq4z7CSgw1SoUyLbyQnxvU4aLhLd6Ze6P4k/6DSBAcctW/YrbFiYYl/pMINIk
- qZzLjKzkMovlnc5pIy+2sRIl0uJ2UX7LGYTQQHNpON86JftyU8S/Pv+TRw2IA4+HnUFY
- t5QA==
+ bh=JCy3i99i+qLbs/wAQI3hvrm5l/vGSJb2OpG7ZQh/YMA=;
+ b=LNVSBaasX0HGb4h/d0CaoETSNAsUhQtvqCemdbZvTnhzjhKXtF94Vj80QebxVJqsIO
+ VZ14NzV2LRvK7D7M+0HPsrrog48DlhIBRlk188AWLmsGDULMjF+Vtpbwc8IWcZjKMuKz
+ 5Vk2+Ws/v7WONu4tAc47E0lGwagl2ym3XQUsEa+CGeTjf4rehgIIpUfIJbCvdlVNNxKC
+ ffsOBfFvF55XtRFVZ5IwS4Rey/KchINAcD6uce2iuxzUNZ80ksVq6/pty0kz78305avc
+ NDvugQYSL1Jw+mj78OVxXnc7T7wEAOss9nAYUeL4qmaTSI3V/koHlqdyu13jrF0EvXYs
+ CqIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770466198; x=1771070998;
+ d=1e100.net; s=20230601; t=1770466217; x=1771071017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G85lH42gCcMibdBM9mV1RiEav8F/CH9MqgVmO0gS/Qk=;
- b=BxjqqaDeba4T+lreO9dzt0uqeHEXbvrPvZalSt8iwGj/2MIDDmtJJwiISMCN9bsqWh
- kfTdY7EEToMNsalcm6a+/DOX++NZJpzJFXhBm4geg/5TuzwuD+28EOAlqsNRjZ7rO3SU
- 7z6KJu6EzD/TF9m6NS3gVbHmY1QCAKDXMU50Jp1RP7eRQVMuiQw/hJuyVGN7y6SRPwVV
- Itkr7oNndw+KhxeVo5RPJChOc2jJl9zSc1eEue3MQLuq6sIMWHq7gk40vk2c+TH+pVE9
- /OV5G+FwVdgVIsX+HUZFAz2SmCQVyC5940DOjKEnknC/vG3sqyn6MlbbycDTrOz6sU/T
- knaA==
-X-Gm-Message-State: AOJu0YwFJitdwVTOoUZshGV1bEs1K6W98nbBePJ5cO8WBn6d/y7N6Xh3
- Sim0sCfVNmd8GhF1SmuhUfwoalHv1Pj60L81oHaAEG04kApZ0Bqrtfmn
-X-Gm-Gg: AZuq6aLnW8YzVCCTJ6GJp8UWZa6VTHvz89mQtibiHuwrhmMR2kWDliNyYXAB6G5QBMO
- tEy88kST7VdqxJ1Z5aFL9XJT3yKwvCYm/cthM5ZyEu7YsB+Wqv4rNlGxAiV1pfDrNtoLiDK7cFk
- NAI770FY87+aYzzd9NDm9px5VZ+8xowi5723RxTy8dVL5ZyqrX6R4DEoqm/zM8acJMHlKnWBZD7
- TB16DnlODIiG1I1ckirP1LqJ+ijNWo9VsSk1swU89+NJwii2JwTpIdFH9XLFMLP7bs8uIQhMzu3
- VXmhZiwHVjKhwArKdhDyBC47JUn6lLdylgfdQUtM6Vk+vyn4H3eqnzf21mCPMxf+O+0e+ymRA9S
- 51m69+8qzuyrksp6K5q9YI/UQ05RUjjFWRWDuvbPqyvHDEkpFhK5Or+NspJTMxUUqRN7henhVv9
- WWbZYKbnicfTVWEe2+NIi2bXw7qqFYVNeqZug7
-X-Received: by 2002:a17:90b:4f49:b0:34c:2f3f:d27e with SMTP id
- 98e67ed59e1d1-354b3c52e02mr4587459a91.3.1770466197548; 
- Sat, 07 Feb 2026 04:09:57 -0800 (PST)
+ bh=JCy3i99i+qLbs/wAQI3hvrm5l/vGSJb2OpG7ZQh/YMA=;
+ b=M9bYv9I6/7EC2KOK0knOq1FgbJhvVC3Hx1BttBG1C/hlO91TCDKqI5eDbLVgHZxDVk
+ 0J9hqqgzpqeJ0NN61dcgovv7WM9cP77YxRwm9VM/QTJaCcpO5oUnEwxalxVvErwkol7w
+ VSQr7xgIaBiFyfu4Ap/CKDzSBX0nugInO9s6+LlEwQTZUexlP8Y335bxYz2C/yivTAkX
+ Pri7xVw2ULgjxbDqEdYkYTUqmQDX3v7D3y4+TR3fzB+nAO/5jOGBph4j0hTzddeZinOb
+ Z7Dvj8hbSJSTKZqvgEkggVULiivV7/w4mnqkWHR/ElH6t8ClgOPlUv7N1PivjC1enZlm
+ 81RA==
+X-Gm-Message-State: AOJu0YyTiOm6JCpedXoc4MW5oIfNkoFjiWWzTwuLthwESrO7axo6CjVH
+ fOkc93ANKEpBBwOmVnoxbHghFrvv1xPxB/7+3jSf2NaBnVPTm2GTsmkX
+X-Gm-Gg: AZuq6aI8W2u1dX0Rhhfs9ONe+esXFwv0th08gZkOc0fR/NogTOYTAaw7+G5b6hkciKJ
+ 2r//kh5/8ilyFk/cyDBSoyClA1Qb3NRIytT7LWjBIV4ZrIdTFPImyo5/0a+6HxrR5NrMAD/xAg6
+ bNqBCmDmbJG3ofIP8PyiIJCh6N3gUPhB5cGQxl61282PJ5eFbsYWk8OidXUtYAMZXdTkjjiWTs5
+ u6jPpXL2sUwI5y5fG2wnbwa//ZCy81pDJ/KAs8sEAhi+aIczS3+xoY3HUsjg6g1WgjXlMeLzBBW
+ zXS0n0hwoKPfY6IjJZNuFrokOjGJR+1mW8bO5tJbSARgz03/4/dW8Rx0AyNnQIJZh6Y+I/bq04c
+ W6mehdfOJBYkz3TtmBFXGVzZJsyqWtCflrqg7myQRcqbpG6oaQYrWQ1KQG8ugKaL/YbTK1YVqvx
+ /0Rp8vuDNHnj1aJ/w+QCjAef8hEYPKBeP0KY0p
+X-Received: by 2002:a17:90b:380b:b0:340:ca7d:936a with SMTP id
+ 98e67ed59e1d1-354b3e338d5mr4916969a91.18.1770466216716; 
+ Sat, 07 Feb 2026 04:10:16 -0800 (PST)
 Received: from brian.. (n058152022104.netvigator.com. [58.152.22.104])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b30f899csm2178530a91.3.2026.02.07.04.09.53
+ 98e67ed59e1d1-354b30f899csm2178530a91.3.2026.02.07.04.10.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Feb 2026 04:09:56 -0800 (PST)
+ Sat, 07 Feb 2026 04:10:16 -0800 (PST)
 From: Brian Song <hibriansong@gmail.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hibriansong@gmail.com, hreitz@redhat.com,
  kwolf@redhat.com, eblake@redhat.com, armbru@redhat.com,
  stefanha@redhat.com, fam@euphon.net, bernd@bsbernd.com
-Subject: [Patch v4 3/7] fuse: uring support for write ops
-Date: Sat,  7 Feb 2026 20:08:57 +0800
-Message-ID: <20260207120901.17222-4-hibriansong@gmail.com>
+Subject: [Patch v4 7/7] fuse: add io_uring test support
+Date: Sat,  7 Feb 2026 20:09:01 +0800
+Message-ID: <20260207120901.17222-8-hibriansong@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260207120901.17222-1-hibriansong@gmail.com>
 References: <20260207120901.17222-1-hibriansong@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=hibriansong@gmail.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=hibriansong@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,121 +101,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The payload of each uring entry serves as the buffer holding file data
-for read/write operations. In this patch, fuse_co_write is refactored
-to support using different buffer sources for write operations in
-legacy and io_uring modes.
+This patch adds support for testing FUSE-over-io_uring. It can be
+enabled by setting the environment variable FUSE_OVER_IO_URING=1.
+
+    $ FUSE_OVER_IO_URING=1 ./check -fuse
+
+Additionally, the unmount detection logic is switched from `df` to
+`mount`. Using `df` triggers `statfs()`, which attempts to communicate
+with the FUSE daemon. During test teardown (when the daemon is being
+killed), this often fails or returns stale data, causing the test to
+misjudge the mount status.
 
 Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Brian Song <hibriansong@gmail.com>
 ---
- block/export/fuse.c | 55 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 37 insertions(+), 18 deletions(-)
+ tests/qemu-iotests/check     |  2 ++
+ tests/qemu-iotests/common.rc | 47 +++++++++++++++++++++++++-----------
+ 2 files changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index ae7490b2a1..867752555a 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -1299,6 +1299,9 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
-  * Data in @in_place_buf is assumed to be overwritten after yielding, so will
-  * be copied to a bounce buffer beforehand.  @spillover_buf in contrast is
-  * assumed to be exclusively owned and will be used as-is.
-+ * In FUSE-over-io_uring mode, the actual req_payload content is stored in
-+ * @spillover_buf. To ensure this buffer is used for writing, @in_place_buf
-+ * is explicitly set to NULL.
-  * Return the number of bytes written to *out on success, and -errno on error.
-  */
- static ssize_t coroutine_fn
-@@ -1306,8 +1309,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-               uint64_t offset, uint32_t size,
-               const void *in_place_buf, const void *spillover_buf)
- {
--    size_t in_place_size;
--    void *copied;
-+    size_t in_place_size = 0;
-+    void *copied = NULL;
-     int64_t blk_len;
-     int ret;
-     struct iovec iov[2];
-@@ -1322,10 +1325,12 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-         return -EACCES;
-     }
+diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
+index 545f9ec7bd..c6fa0f9e3d 100755
+--- a/tests/qemu-iotests/check
++++ b/tests/qemu-iotests/check
+@@ -94,6 +94,8 @@ def make_argparser() -> argparse.ArgumentParser:
+         mg.add_argument('-' + fmt, dest='imgfmt', action='store_const',
+                         const=fmt, help=f'test {fmt}')
 
--    /* Must copy to bounce buffer before potentially yielding */
--    in_place_size = MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
--    copied = blk_blockalign(exp->common.blk, in_place_size);
--    memcpy(copied, in_place_buf, in_place_size);
-+    if (in_place_buf) {
-+        /* Must copy to bounce buffer before potentially yielding */
-+        in_place_size = MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
-+        copied = blk_blockalign(exp->common.blk, in_place_size);
-+        memcpy(copied, in_place_buf, in_place_size);
-+    }
-
-     /**
-      * Clients will expect short writes at EOF, so we have to limit
-@@ -1349,26 +1354,38 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-         }
-     }
-
--    iov[0] = (struct iovec) {
--        .iov_base = copied,
--        .iov_len = in_place_size,
--    };
--    if (size > FUSE_IN_PLACE_WRITE_BYTES) {
--        assert(size - FUSE_IN_PLACE_WRITE_BYTES <= FUSE_SPILLOVER_BUF_SIZE);
--        iov[1] = (struct iovec) {
--            .iov_base = (void *)spillover_buf,
--            .iov_len = size - FUSE_IN_PLACE_WRITE_BYTES,
-+    if (in_place_buf) {
-+        iov[0] = (struct iovec) {
-+            .iov_base = copied,
-+            .iov_len = in_place_size,
-         };
--        qemu_iovec_init_external(&qiov, iov, 2);
-+        if (size > FUSE_IN_PLACE_WRITE_BYTES) {
-+            assert(size - FUSE_IN_PLACE_WRITE_BYTES <= FUSE_SPILLOVER_BUF_SIZE);
-+            iov[1] = (struct iovec) {
-+                .iov_base = (void *)spillover_buf,
-+                .iov_len = size - FUSE_IN_PLACE_WRITE_BYTES,
-+            };
-+            qemu_iovec_init_external(&qiov, iov, 2);
-+        } else {
-+            qemu_iovec_init_external(&qiov, iov, 1);
-+        }
-     } else {
-+        /* fuse over io_uring */
-+        iov[0] = (struct iovec) {
-+            .iov_base = (void *)spillover_buf,
-+            .iov_len = size,
-+        };
-         qemu_iovec_init_external(&qiov, iov, 1);
-     }
++    # To test FUSE-over-io_uring, set the environment variable
++    # FUSE_OVER_IO_URING=1. This applies only when using the 'fuse' protocol
+     protocol_list = ['file', 'rbd', 'nbd', 'ssh', 'nfs', 'fuse']
+     g_prt = p.add_argument_group(
+         '  image protocol options',
+diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+index e977cb4eb6..a3e0ccb3d2 100644
+--- a/tests/qemu-iotests/common.rc
++++ b/tests/qemu-iotests/common.rc
+@@ -546,10 +546,37 @@ _make_test_img()
+         # iotests.  The default allow-other=auto has the downside of printing a
+         # fusermount error on its first attempt if allow_other is not
+         # permissible, which we would need to filter.
+-        QSD_NEED_PID=y $QSD \
+-              --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
+-              --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
+-              &
++        if [ -n "$FUSE_OVER_IO_URING" ]; then
++            # The current Linux kernel requires registering `nr_cpu` Ring Queues
++            # when FUSE-over-io_uring is enabled. Here, we set half of the
++            # Ring Queues to FUSE Queues (`nr_iothreads`) to test the queue
++            # distribution feature.
++            # See the comments in fuse.c regarding the round-robin distribution
++            # between Ring Queues and FUSE Queues.
++            nr_cpu=$(nproc 2>/dev/null || echo 1)
++            nr_iothreads=$((nr_cpu / 2))
++            if [ $nr_iothreads -lt 1 ]; then
++                nr_iothreads=1
++            fi
 +
-     ret = blk_co_pwritev(exp->common.blk, offset, size, &qiov, 0);
-     if (ret < 0) {
-         goto fail_free_buffer;
-     }
++            iothread_args=""
++            iothread_export_args=""
++            for ((i=0; i<$nr_iothreads; i++)); do
++                iothread_args="$iothread_args --object iothread,id=iothread$i"
++                iothread_export_args="$iothread_export_args,iothread.$i=iothread$i"
++            done
++
++            QSD_NEED_PID=y $QSD \
++                    $iothread_args \
++                    --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
++                    --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off,io-uring=on$iothread_export_args \
++                &
++        else
++            QSD_NEED_PID=y $QSD \
++                --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
++                --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
++                &
++        fi
 
--    qemu_vfree(copied);
-+    if (in_place_buf) {
-+        qemu_vfree(copied);
-+    }
+         pidfile="$QEMU_TEST_DIR/qemu-storage-daemon.pid"
 
-     *out = (struct fuse_write_out) {
-         .size = size,
-@@ -1376,7 +1393,9 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-     return sizeof(*out);
+@@ -595,16 +622,8 @@ _rm_test_img()
+         # Wait until the mount is gone
+         timeout=10 # *0.5 s
+         while true; do
+-            # Will show the mount point; if the mount is still there,
+-            # it will be $img.
+-            df_output=$(df "$img" 2>/dev/null)
+-
+-            # But df may also show an error ("Transpoint endpoint not
+-            # connected"), so retry in such cases
+-            if [ -n "$df_output" ]; then
+-                if ! echo "$df_output" | grep -q "$img"; then
+-                    break
+-                fi
++            if ! mount | grep -q "$img"; then
++                break
+             fi
 
- fail_free_buffer:
--    qemu_vfree(copied);
-+    if (in_place_buf) {
-+        qemu_vfree(copied);
-+    }
-     return ret;
- }
-
+             sleep 0.5
 --
 2.43.0
 
