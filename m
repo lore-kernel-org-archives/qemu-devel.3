@@ -4,68 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78127EE0ADC
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 13:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBB8EE0AE0
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 14:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voigp-0004jT-Ub; Sat, 07 Feb 2026 08:49:36 -0500
+	id 1voiv2-0003S1-6A; Sat, 07 Feb 2026 09:04:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voiga-0003t2-AZ
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1)
+ (envelope-from <22296f2db9f17f9954f85de9e99b09498936eb51@kylie.crudebyte.com>)
+ id 1voiuz-0003Rd-AG
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 09:04:14 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voigY-0003IZ-Iy
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770472157;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2bUnt00SkKmzXgkXF9v5vh1BRVBWlK52wAXmRAjVjC8=;
- b=IV5lEaf/K/i0hG/2K1kpjj+/eO2yG2FjU9GBrCrNnJIxkohqN/Ais9tnmQiXL1+RCbn/QK
- +H3mihYN4y1qNBllLjHb+BZGFCR1KppMf7OCBoEhAKRYBXLcFJc2vQd6L+b9id5vc6dSRh
- oppPNp/WFoVeXD5EiW0xJuURHqSHD9g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-zGtJ3BM1OF6Wrjf-WIMqXA-1; Sat,
- 07 Feb 2026 08:49:16 -0500
-X-MC-Unique: zGtJ3BM1OF6Wrjf-WIMqXA-1
-X-Mimecast-MFC-AGG-ID: zGtJ3BM1OF6Wrjf-WIMqXA_1770472155
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F6B31956096; Sat,  7 Feb 2026 13:49:15 +0000 (UTC)
-Received: from S2.redhat.com (unknown [10.72.112.15])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2467F18004AD; Sat,  7 Feb 2026 13:49:11 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
- lizhijian@fujitsu.com, qemu-devel@nongnu.org
-Subject: [PATCH 12/12] net/filter-mirror: keep mirroring while stopped
-Date: Sat,  7 Feb 2026 21:47:28 +0800
-Message-ID: <20260207134728.1495932-12-lulu@redhat.com>
-In-Reply-To: <20260207134728.1495932-1-lulu@redhat.com>
-References: <20260207134728.1495932-1-lulu@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1)
+ (envelope-from <22296f2db9f17f9954f85de9e99b09498936eb51@kylie.crudebyte.com>)
+ id 1voiux-0005jY-LD
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 09:04:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=kz874Y4LL8BIAsP3NfhIr4ERHLswagX7zKXSQF9iv3w=; b=P8tvR
+ TBF5tTyGiG6uxOboCrruo8cH4pP1g8Qx+3x+DEFfIyZ3N7Ai+J9ikt4wodMl6FXqn+tI9q4RkYhJW
+ Fx+RYg/B9riMCcrEycVRBudu7OLB6TSuu96l0H+Ay6p5wpELp6uuyxQIFPsVMxxgIxD8IbO17cYcA
+ tyUHakrQL3+7TSRVZZJbHt7H3GSPqNfePFtOkTUr7iNmLu+gH/QZlN+17BfMkmBpj8WG4N/TkEsym
+ +BLVEW5vQiSruZv7iGALc9W/c+d3cgkGMxBoM6jPEc7729IgSRkEOE897HExINDk6hNmtU4YlsrAK
+ QmzFB7JzlU9TLdXxyq/fRtMuaw5BeeQQ2ge4BGh6jB/jWXmmYaK7xb4fUoYkRCiS5fYCABOoHcXdd
+ E86o/V0uBLh6yB2mDa1xqzwiwfdjcv/4RE8yxOcBq63tKKs8il1TXgY3iJQsuOFTu5+yosybHuzn6
+ i88xkrcIKd/j3l/7hTjtoN2t60G9eYziYttPty7pmSrV4s8Nn9hBfs55XLq0usbbS9cCg9eXhzFI+
+ 2SALsS2WvHepq0XZldD7gaFGx7LsNE0qrpZ2JR23nFXWuwkhn7gx8QZIgNEjroEyq26s7IFdtqUnC
+ 3PMmyaMXoeoIevxmtQd4iPb/vTzhWJqvDqV0DWhIWzsVyPREiwH5S6R05QlKjM=;
+Message-ID: <22296f2db9f17f9954f85de9e99b09498936eb51.1770470220.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1770470220.git.qemu_oss@crudebyte.com>
+References: <cover.1770470220.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Sat, 07 Feb 2026 14:17:00 +0100
+Subject: [PULL 1/1] 9pfs: local: read native symlinks when
+ security-model=mapped
+To: qemu-devel@nongnu.org,
+    Peter Maydell <peter.maydell@linaro.org>
+Cc: Greg Kurz <groug@kaod.org>, Andrey Erokhin <language.lawyer@gmail.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=22296f2db9f17f9954f85de9e99b09498936eb51@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,154 +70,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During migration pre-switchover the VM runstate is stopped, which can cause tap read_poll to be disabled (qemu_send_packet_async() returns 0) and incoming tap frames stop reaching the redirector/mirror filter.
+From: Andrey Erokhin <language.lawyer@gmail.com>
 
-Re-enable tap read_poll when swredir is turned on while stopped, and allow the redirector outdev path to keep draining packets while stopped by adding a per-NetClientState allow_send_when_stopped bit used by qemu_can_send_packet().
+Directories attached using virtfs with security-model=mapped
+may contain native symlinks
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
+This can happen e.g. when booting from a rootfs directory tree
+(usually with a writable overlay set up on the host side)
+
+Currently, when security-model=mapped[-xattr|-file],
+QEMU assumes that host-side "symlinks" are in the mapped format,
+i.e. are regular files storing the linked path,
+so it tries to open with O_NOFOLLOW
+and fails with ELOOP on native symlinks
+
+This patch introduces a fallback for such cases:
+reuse security-model=[none|passthrough] else if branch logic
+where readlink will be called for the path basename
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/173
+Signed-off-by: Andrey Erokhin <language.lawyer@gmail.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Link: https://lore.kernel.org/qemu-devel/3c35955d-a57e-4203-81c5-395146e23f83@gmail.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- include/net/net.h   |  6 ++++++
- net/filter-mirror.c | 49 +++++++++++++++++++++++++++++++++++++--------
- net/net.c           | 10 ++++++++-
- 3 files changed, 56 insertions(+), 9 deletions(-)
+ hw/9pfs/9p-local.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index d2b2e6fc44..bde052acbb 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -126,6 +126,12 @@ struct NetClientState {
-     char *name;
-     char info_str[256];
-     unsigned receive_disabled : 1;
-+    /*
-+     * Allow this sender to keep draining packets while VM is stopped.
-+     * Used by COLO-style pre-switchover mirroring, where netfilter needs to
-+     * see incoming tap frames even when runstate is not running.
-+     */
-+    unsigned allow_send_when_stopped:1;
-     NetClientDestructor *destructor;
-     unsigned int queue_index;
-     unsigned rxfilter_notify_enabled:1;
-diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-index de32028246..ad99bebec6 100644
---- a/net/filter-mirror.c
-+++ b/net/filter-mirror.c
-@@ -268,6 +268,10 @@ static void filter_redirector_cleanup(NetFilterState *nf)
-     qemu_chr_fe_deinit(&s->chr_in, false);
-     qemu_chr_fe_deinit(&s->chr_out, false);
-     qemu_del_vm_change_state_handler(s->vmsentry);
-+
-+    if (nf->netdev) {
-+        nf->netdev->allow_send_when_stopped = 0;
-+    }
- }
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index c3745f2839..24cb1da90a 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -469,12 +469,16 @@ static ssize_t local_readlink(FsContext *fs_ctx, V9fsPath *fs_path,
  
- static void filter_mirror_setup(NetFilterState *nf, Error **errp)
-@@ -322,6 +326,27 @@ static void redirector_rs_finalize(SocketReadState *rs)
-     redirector_to_filter(nf, QEMU_NET_PACKET_FLAG_RAW, buf, len);
- }
- 
-+static void
-+filter_redirector_refresh_allow_send_when_stopped(NetFilterState *nf)
-+{
-+    MirrorState *s = FILTER_REDIRECTOR(nf);
-+    NetClientState *nc = nf->netdev;
-+
-+    if (!nc) {
-+        return;
-+    }
-+
-+    /*
-+     * Allow sending when stopped if enable_when_stopped is set and we have
-+     * an outdev. This must be independent of nf->on (status) so that packets
-+     * can still flow through the filter chain to other filters even when this
-+     * redirector is disabled. Otherwise, tap_send() will disable read_poll
-+     * when qemu_can_send_packet() returns false, preventing further packet
-+     * processing.
-+     */
-+    nc->allow_send_when_stopped = (s->enable_when_stopped && s->outdev);
-+}
-+
- static void filter_redirector_vm_state_change(void *opaque, bool running,
-                                               RunState state)
- {
-@@ -409,24 +434,30 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
-         filter_redirector_vm_state_change, nf);
- 
-     filter_redirector_maybe_enable_read_poll(nf);
-+
-+    filter_redirector_refresh_allow_send_when_stopped(nf);
- }
- 
- static void filter_redirector_status_changed(NetFilterState *nf, Error **errp)
- {
-     MirrorState *s = FILTER_REDIRECTOR(nf);
- 
--    if (!s->indev) {
--        return;
-+    if (s->indev) {
-+        if (nf->on) {
-+            qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read,
-+                                     redirector_chr_read, redirector_chr_event,
-+                                     NULL, nf, NULL, true);
-+        } else {
-+            qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
-+                                     NULL, NULL, NULL, true);
-+        }
-     }
- 
-     if (nf->on) {
--        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read,
--                                 redirector_chr_read, redirector_chr_event,
--                                 NULL, nf, NULL, true);
--    } else {
--        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
--                                 NULL, NULL, NULL, true);
-+        filter_redirector_maybe_enable_read_poll(nf);
-     }
-+
-+    filter_redirector_refresh_allow_send_when_stopped(nf);
- }
- 
- static char *filter_redirector_get_indev(Object *obj, Error **errp)
-@@ -538,6 +569,8 @@ static void filter_redirector_set_enable_when_stopped(Object *obj,
-     if (value) {
-         filter_redirector_maybe_enable_read_poll(nf);
-     }
-+
-+    filter_redirector_refresh_allow_send_when_stopped(nf);
- }
- 
- static void filter_mirror_class_init(ObjectClass *oc, const void *data)
-diff --git a/net/net.c b/net/net.c
-index b15f4db65e..06f54eebb4 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -632,7 +632,7 @@ int qemu_can_send_packet(NetClientState *sender)
- {
-     int vm_running = runstate_is_running();
- 
--    if (!vm_running) {
-+    if (!vm_running && !sender->allow_send_when_stopped) {
-         return 0;
-     }
- 
-@@ -640,6 +640,14 @@ int qemu_can_send_packet(NetClientState *sender)
-         return 1;
-     }
- 
-+    /*
-+     * When VM is stopped (e.g. migration pre-switchover), allow draining tap
-+     * packets so netfilters (redirector/mirror) can operate.
-+     */
-+    if (!vm_running && sender->allow_send_when_stopped) {
-+        return 1;
-+    }
-+
-     return qemu_can_receive_packet(sender->peer);
- }
- 
+         fd = local_open_nofollow(fs_ctx, fs_path->data, O_RDONLY, 0);
+         if (fd == -1) {
++            if (errno == ELOOP) {
++                goto native_symlink;
++            }
+             return -1;
+         }
+         tsize = RETRY_ON_EINTR(read(fd, (void *)buf, bufsz));
+         close_preserve_errno(fd);
+     } else if ((fs_ctx->export_flags & V9FS_SM_PASSTHROUGH) ||
+                (fs_ctx->export_flags & V9FS_SM_NONE)) {
++    native_symlink:;
+         char *dirpath = g_path_get_dirname(fs_path->data);
+         char *name = g_path_get_basename(fs_path->data);
+         int dirfd;
 -- 
-2.52.0
+2.47.3
 
 
