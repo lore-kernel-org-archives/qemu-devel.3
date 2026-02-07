@@ -4,88 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8CAEE0ADA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203C3EE0ADC
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voh8d-0007Cc-0g; Sat, 07 Feb 2026 07:10:11 -0500
+	id 1vohHT-0004hj-9B; Sat, 07 Feb 2026 07:19:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8a-0007CE-2R
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:08 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8X-00035R-4V
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:07 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-34c93e0269cso2498824a91.1
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:10:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770466203; x=1771071003; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nqUt3VRnKO0/pU94K0c5xLOUyYWLmsrVycHnTDp9Wik=;
- b=dmlNpVNNMripvANhoQ1+eA3oI0Q0mEodomP0mMB4JLrl2eO7BH8HF1vG/cMcoNfaqu
- 1KmDiN1ZANVIBuQinr7bJPrNSiMDfxqb40EWhLoyi9N3rKNfBBsHaxOej8/bVvIWi23+
- Fpu/AbFN5XLRyN8gtyQdvCMCF0LjwKCSuwKYReX0tjlqArY21g7w26UnXW6o3RCHUjT1
- xvg9F1yQXTqg/xk0WvTKr9VkAgWqsD6cJHx5YyYOR6si6cN+rVi1fPxY8Kv7ooceIIDt
- xFaoy+5hCcQFWPKARGaBuX+zgl3j/9DfhARtHm0kppGDnwDRf+QWHxvPP8/vApMIWC1a
- 76SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770466203; x=1771071003;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nqUt3VRnKO0/pU94K0c5xLOUyYWLmsrVycHnTDp9Wik=;
- b=i3HTlR0cHg3xmZp73Hw+Hn643QmIlv2LHCG0J9qcywuy1i2iD3KBuFS6kXXBVOBKP6
- 42EF+7+QzJnqnaMKfI6ZdP9TGbF9hLXQbYaN6acO9jQTtPDdy2/UsI68QsfZpnZLS1uO
- cB+KCq994OT8IFqNiRZ7Exa8gGT7UqlcAiNr7ToUa3U9KOCcQvg5nH/ZPVAAXnpnd6vf
- 7lLyeZpljXOxd0sjsJP5R49h9WVBQ+nP8sQPFhqxTfU/jCJ9sVkBj+EUeRjEPjUzTEJ7
- JVikxqL3V4ow8Mgr9c1krLauFLLmenBtiQFdK547z53SngyZ7t4IDDqqG6hH3S474GvW
- zxAw==
-X-Gm-Message-State: AOJu0YwbdaSXe5yAFi/5E4DJOdTPNWMKS6jp36RumK4lMvc+OVVjjooO
- a37fnRY+xdZ7ES7ImeZ9+JfnApvIEkURCkwhXuhAyHfM+9NWSsp/uego
-X-Gm-Gg: AZuq6aLdONoNOJ1Va1uy3FJNweJ1dh0ET2QZlui+2+u0X6Pp23EkkEJ5FNpgWeqc0PB
- 81wqBqrh5RGMntZH9Dq1llD0KaLbzD8robe/p/8enzC7qOw5t/cIiyOnTPTauUZ4u0phEjcMVvg
- 8SwfjH8Pg1sUSpvnQkbCDn1u792Z+Hmt5KcmJZCexliTZzl6ZGoaY+aZBVrRXEc0dbwoFYNiLz3
- j6paDAbNW062rsZWUiHtIViTbQqzayr2rtvvD3qvtf3T53xYcFMeGhT2obVpx8SV06uhlXNPRQx
- 2+1yjn0BGVz4fG6fh8/2qEXpCocWxZ2h1+p4MFlks4JiV/HTyKvohekUs2VvsoPGf5tOduNk40N
- 7cBSWgogMkZQJSZFzXVC4AuHJaidkB5JU2usMYSA/QaCBObyZsTf9H2jSwPHT5tJyWUyu9sD1Jx
- 6bJFR4/JQaKvkzsTigLDLmmO7ybWO75K1rJh36WM+x1B/MM8E=
-X-Received: by 2002:a17:90b:4c8f:b0:354:7e46:4ab8 with SMTP id
- 98e67ed59e1d1-3549bc3e1f4mr8070810a91.18.1770466203215; 
- Sat, 07 Feb 2026 04:10:03 -0800 (PST)
-Received: from brian.. (n058152022104.netvigator.com. [58.152.22.104])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b30f899csm2178530a91.3.2026.02.07.04.09.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Feb 2026 04:10:02 -0800 (PST)
-From: Brian Song <hibriansong@gmail.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hibriansong@gmail.com, hreitz@redhat.com,
- kwolf@redhat.com, eblake@redhat.com, armbru@redhat.com,
- stefanha@redhat.com, fam@euphon.net, bernd@bsbernd.com
-Subject: [Patch v4 4/7] fuse: refactor FUSE request handler
-Date: Sat,  7 Feb 2026 20:08:58 +0800
-Message-ID: <20260207120901.17222-5-hibriansong@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260207120901.17222-1-hibriansong@gmail.com>
-References: <20260207120901.17222-1-hibriansong@gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vohHQ-0004hC-5x
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:19:16 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vohHM-0004Wz-OK
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:19:15 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A0C338083E;
+ Sat, 07 Feb 2026 15:19:06 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:129::1:13] (unknown
+ [2a02:6bf:8080:129::1:13])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 5JOReL1AAW20-8W05PDOb; Sat, 07 Feb 2026 15:19:05 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1770466745;
+ bh=a8E+Z5PsPSnT8yuePLI8HO8JQpeHTApdYDNti2DjGKA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=xsiZWocDp1O6H7hlpKRRkzDKEYaAx5azhqOjfGflxw2An7vzYunf1fYrIEKsOuBC8
+ ec2J1ZVGKo9b1DJqhxR/Vh4dfTvYj71H1UYkMLlvvp6+CmSxr2CmoYJnMWLBEZ9lb/
+ 9zj7wlEoHg91GORjN8YDZOCzqSRX3zBjx/77BAWo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e69d5e72-043b-4ae4-915a-4b638503fca5@yandex-team.ru>
+Date: Sat, 7 Feb 2026 15:19:04 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=hibriansong@gmail.com; helo=mail-pj1-x102a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: pass GPA instead of UVA
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
+References: <20260204092339.211650-1-vsementsov@yandex-team.ru>
+ <20260205031227-mutt-send-email-mst@kernel.org>
+ <23c05b17-f993-48fd-bf41-06d358fd74d9@yandex-team.ru>
+ <20260205033629-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260205033629-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,566 +79,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements the CQE handler for FUSE-over-io_uring. Upon
-receiving a FUSE request via a Completion Queue Entry (CQE), the
-handler processes the request and submits the response back to the
-kernel via the FUSE_IO_URING_CMD_COMMIT_AND_FETCH command.
+On 05.02.26 11:37, Michael S. Tsirkin wrote:
+> On Thu, Feb 05, 2026 at 11:22:26AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 05.02.26 11:13, Michael S. Tsirkin wrote:
+>>> On Wed, Feb 04, 2026 at 12:23:39PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> Unlike the kernel, vhost-user backend knows nothing about QEMUs
+>>>> userspace addresses. We can pass GPA instead and nothing changes.
+>>>>
+>>>> The benefit: open the doors for further implementation of local
+>>>> migration (live-update) with passing open vhost-releated FDs
+>>>> through UNIX domain socket. This way the connection with backend
+>>>> kept live and untouched.
+>>>>
+>>>> Without this change, we'll have to communicate with backend to
+>>>> inform it about UVA addresses change, but better is simply use
+>>>> more stable GPA numbers, like it's done for VDPA.
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> ---
+>>>>    hw/virtio/vhost-user.c | 30 ++++++++++++++++++++++++++++++
+>>>>    1 file changed, 30 insertions(+)
+>>>>
+>>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>>>> index 63fa9a1b4b..f379408c95 100644
+>>>> --- a/hw/virtio/vhost-user.c
+>>>> +++ b/hw/virtio/vhost-user.c
+>>>> @@ -386,6 +386,24 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
+>>>>        CharFrontend *chr = u->user->chr;
+>>>>        int ret, size = VHOST_USER_HDR_SIZE + msg->hdr.size;
+>>>> +    if (msg->hdr.request == VHOST_USER_REM_MEM_REG ||
+>>>> +        msg->hdr.request == VHOST_USER_ADD_MEM_REG) {
+>>>> +
+>>>> +        /*
+>>>> +         * In QEMU we pass guest physical addresses to vhost-user server
+>>>> +         * instead of QEMUs virtual address. Server have no option to
+>>>> +         * distinguesh,
+>>>
+>>> what does this mean? "Servers don't really care"?
+>>
+>> Yes. Still, we can't be sure, what servers care about. But I think, as
+>> they don't have any access to QEMUs virtual address space, they can't
+>> have any logic that breaks if we start to pass GPA instead of UVA
+>> (imagine, that "accidentally" GPA and UVA are the same for the case).
+> 
+> right, just write something understandable pls.
+> 
+>>>
+>>>> but we get a benefit: guest physical address is
+>>>> +         * stable during migration, and we don't have to reset memory
+>>>> +         * regions.
+>>>
+>>> curious if PA 0 is valid on some systems (as opposed to VA).
+>>
+>> Hmm, you are right, that's visible thing which differs for UVA and GPA.
+>> Still, checking UVA to be non-zero on server side seems rather strange,
+>> as the only use for these UVA addresses in the server is to calculate
+>> offsets. The server is only interested in offsets inside given memory
+>> region, not absolute UVA values.
+>>
+>> And we don't write in spec that UVA can't be zero, and we already use
+>> GPA for VDPA.
+> 
+> poking at some servers to make sure can't hurt.
 
-Additionally, the request processing logic shared between legacy and
-io_uring modes has been extracted into fuse_co_process_request_common().
-The execution flow now dispatches requests to the appropriate
-mode-specific logic based on the uring_started flag.
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Brian Song <hibriansong@gmail.com>
----
- block/export/fuse.c | 400 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 301 insertions(+), 99 deletions(-)
+I can't believe it. I checked DPDK vhost-user implementation - it seems OK.
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 867752555a..c117e081cd 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -138,8 +138,8 @@ struct FuseQueue {
-      * FUSE_MIN_READ_BUFFER (from linux/fuse.h) bytes.
-      * This however is just the first part of the buffer; every read is given
-      * a vector of this buffer (which should be enough for all normal requests,
--     * which we check via the static assertion in FUSE_IN_OP_STRUCT()) and the
--     * spill-over buffer below.
-+     * which we check via the static assertion in FUSE_IN_OP_STRUCT_LEGACY())
-+     * and the spill-over buffer below.
-      * Therefore, the size of this buffer plus FUSE_SPILLOVER_BUF_SIZE must be
-      * FUSE_MIN_READ_BUFFER or more (checked via static assertion below).
-      */
-@@ -912,6 +912,7 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+But our own vhost-user server in QEMU does this:
+
+static bool
+vu_is_vq_usable(VuDev *dev, VuVirtq *vq)
+{
+     if (unlikely(dev->broken)) {
+         return false;
      }
 
-     fuse_co_process_request(q, spillover_buf);
-+    qemu_vfree(spillover_buf);
+     if (likely(vq->vring.avail)) {
+         return true;
+     }
 
- no_request:
-     fuse_dec_in_flight(exp);
-@@ -1684,100 +1685,75 @@ static int fuse_write_buf_response(int fd, uint32_t req_id,
- }
-
- /*
-- * For use in fuse_co_process_request():
-+ * For use in fuse_co_process_request_common():
-  * Returns a pointer to the parameter object for the given operation (inside of
-- * queue->request_buf, which is assumed to hold a fuse_in_header first).
-- * Verifies that the object is complete (queue->request_buf is large enough to
-- * hold it in one piece, and the request length includes the whole object).
-+ * in_buf, which is assumed to hold a fuse_in_header first).
-+ * Verifies that the object is complete (in_buf is large enough to hold it in
-+ * one piece, and the request length includes the whole object).
-+ * Only performs verification for legacy FUSE.
-  *
-  * Note that queue->request_buf may be overwritten after yielding, so the
-  * returned pointer must not be used across a function that may yield!
-  */
--#define FUSE_IN_OP_STRUCT(op_name, queue) \
-+#define FUSE_IN_OP_STRUCT_LEGACY(op_name, queue) \
-     ({ \
-         const struct fuse_in_header *__in_hdr = \
-             (const struct fuse_in_header *)(queue)->request_buf; \
-         const struct fuse_##op_name##_in *__in = \
-             (const struct fuse_##op_name##_in *)(__in_hdr + 1); \
-         const size_t __param_len = sizeof(*__in_hdr) + sizeof(*__in); \
--        uint32_t __req_len; \
-         \
--        QEMU_BUILD_BUG_ON(sizeof((queue)->request_buf) < __param_len); \
-+        QEMU_BUILD_BUG_ON(sizeof((queue)->request_buf) < \
-+                          (sizeof(struct fuse_in_header) + \
-+                           sizeof(struct fuse_##op_name##_in))); \
-         \
--        __req_len = __in_hdr->len; \
-+        uint32_t __req_len = __in_hdr->len; \
-         if (__req_len < __param_len) { \
-             warn_report("FUSE request truncated (%" PRIu32 " < %zu)", \
-                         __req_len, __param_len); \
-             ret = -EINVAL; \
--            break; \
-+            __in = NULL; \
-         } \
-         __in; \
-     })
-
- /*
-- * For use in fuse_co_process_request():
-+ * For use in fuse_co_process_request_common():
-  * Returns a pointer to the return object for the given operation (inside of
-  * out_buf, which is assumed to hold a fuse_out_header first).
-- * Verifies that out_buf is large enough to hold the whole object.
-+ * Only performs verification for legacy FUSE.
-+ * Note: Buffer size verification is done via static assertions in the caller
-+ * (fuse_co_process_request) where out_buf is a local array.
-  *
-- * (out_buf should be a char[] array.)
-+ * (out_buf should be a char[] array in the caller.)
-  */
--#define FUSE_OUT_OP_STRUCT(op_name, out_buf) \
-+#define FUSE_OUT_OP_STRUCT_LEGACY(op_name, out_buf) \
-     ({ \
-         struct fuse_out_header *__out_hdr = \
-             (struct fuse_out_header *)(out_buf); \
-         struct fuse_##op_name##_out *__out = \
-             (struct fuse_##op_name##_out *)(__out_hdr + 1); \
-         \
--        QEMU_BUILD_BUG_ON(sizeof(*__out_hdr) + sizeof(*__out) > \
--                          sizeof(out_buf)); \
--        \
-         __out; \
-     })
-
- /**
-- * Process a FUSE request, incl. writing the response.
-- *
-- * Note that yielding in any request-processing function can overwrite the
-- * contents of q->request_buf.  Anything that takes a buffer needs to take
-- * care that the content is copied before yielding.
-- *
-- * @spillover_buf can contain the tail of a write request too large to fit into
-- * q->request_buf.  This function takes ownership of it (i.e. will free it),
-- * which assumes that its contents will not be overwritten by concurrent
-- * requests (as opposed to q->request_buf).
-+ * Shared helper for FUSE request processing. Handles both legacy and io_uring
-+ * paths.
-  */
--static void coroutine_fn
--fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-+static void coroutine_fn fuse_co_process_request_common(
-+    FuseExport *exp,
-+    uint32_t opcode,
-+    uint64_t req_id,
-+    void *in_buf,
-+    void *spillover_buf,
-+    void *out_buf,
-+    void (*send_response)(void *opaque, uint32_t req_id, int ret,
-+                          const void *buf, void *out_buf),
-+    void *opaque /* FuseQueue* or FuseUringEnt* */)
- {
--    FuseExport *exp = q->exp;
--    uint32_t opcode;
--    uint64_t req_id;
--    /*
--     * Return buffer.  Must be large enough to hold all return headers, but does
--     * not include space for data returned by read requests.
--     * (FUSE_IN_OP_STRUCT() verifies at compile time that out_buf is indeed
--     * large enough.)
--     */
--    char out_buf[sizeof(struct fuse_out_header) +
--                 MAX_CONST(sizeof(struct fuse_init_out),
--                 MAX_CONST(sizeof(struct fuse_open_out),
--                 MAX_CONST(sizeof(struct fuse_attr_out),
--                 MAX_CONST(sizeof(struct fuse_write_out),
--                           sizeof(struct fuse_lseek_out)))))];
--    struct fuse_out_header *out_hdr = (struct fuse_out_header *)out_buf;
--    /* For read requests: Data to be returned */
-     void *out_data_buffer = NULL;
--    ssize_t ret;
--
--    /* Limit scope to ensure pointer is no longer used after yielding */
--    {
--        const struct fuse_in_header *in_hdr =
--            (const struct fuse_in_header *)q->request_buf;
--
--        opcode = in_hdr->opcode;
--        req_id = in_hdr->unique;
--    }
-+    int ret = 0;
-
- #ifdef CONFIG_LINUX_IO_URING
      /*
-@@ -1794,15 +1770,32 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-
-     switch (opcode) {
-     case FUSE_INIT: {
--        const struct fuse_init_in *in = FUSE_IN_OP_STRUCT(init, q);
--        ret = fuse_co_init(exp, FUSE_OUT_OP_STRUCT(init, out_buf),
--                           in->max_readahead, in);
-+        FuseQueue *q = opaque;
-+        const struct fuse_init_in *in =
-+            FUSE_IN_OP_STRUCT_LEGACY(init, q);
-+        if (!in) {
-+            break;
-+        }
-+
-+        struct fuse_init_out *out =
-+            FUSE_OUT_OP_STRUCT_LEGACY(init, out_buf);
-+
-+        ret = fuse_co_init(exp, out, in->max_readahead, in);
-         break;
+      * In corner cases, we might temporarily remove a memory region that
+      * mapped a ring. When removing a memory region we make sure to
+      * unmap any rings that would be impacted. Let's try to remap if we
+      * already succeeded mapping this ring once.
+      */
+     if (!vq->vra.desc_user_addr || !vq->vra.used_user_addr ||   <<<<<<<<<<<<<<<<<<<<
+         !vq->vra.avail_user_addr) {
+         return false;
      }
-
--    case FUSE_OPEN:
--        ret = fuse_co_open(exp, FUSE_OUT_OP_STRUCT(open, out_buf));
-+    case FUSE_OPEN: {
-+        struct fuse_open_out *out;
-+
-+        if (exp->uring_started) {
-+            out = out_buf;
-+        } else {
-+            out = FUSE_OUT_OP_STRUCT_LEGACY(open, out_buf);
-+        }
-+
-+        ret = fuse_co_open(exp, out);
-         break;
-+    }
-
-     case FUSE_RELEASE:
-         ret = 0;
-@@ -1812,37 +1805,105 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-         ret = -ENOENT; /* There is no node but the root node */
-         break;
-
--    case FUSE_GETATTR:
--        ret = fuse_co_getattr(exp, FUSE_OUT_OP_STRUCT(attr, out_buf));
-+    case FUSE_GETATTR: {
-+        struct fuse_attr_out *out;
-+
-+        if (exp->uring_started) {
-+            out = out_buf;
-+        } else {
-+            out = FUSE_OUT_OP_STRUCT_LEGACY(attr, out_buf);
-+        }
-+
-+        ret = fuse_co_getattr(exp, out);
-         break;
-+    }
-
-     case FUSE_SETATTR: {
--        const struct fuse_setattr_in *in = FUSE_IN_OP_STRUCT(setattr, q);
--        ret = fuse_co_setattr(exp, FUSE_OUT_OP_STRUCT(attr, out_buf),
--                              in->valid, in->size, in->mode, in->uid, in->gid);
-+        const struct fuse_setattr_in *in;
-+        struct fuse_attr_out *out;
-+
-+        if (exp->uring_started) {
-+            in = in_buf;
-+            out = out_buf;
-+        } else {
-+            FuseQueue *q = opaque;
-+            in = FUSE_IN_OP_STRUCT_LEGACY(setattr, q);
-+            if (!in) {
-+                break;
-+            }
-+
-+            out = FUSE_OUT_OP_STRUCT_LEGACY(attr, out_buf);
-+        }
-+
-+        ret = fuse_co_setattr(exp, out, in->valid, in->size, in->mode,
-+                              in->uid, in->gid);
-         break;
+     if (map_ring(dev, vq)) {
+         vu_panic(dev, "remapping queue on access");
+         return false;
      }
+     return true;
+}
 
-     case FUSE_READ: {
--        const struct fuse_read_in *in = FUSE_IN_OP_STRUCT(read, q);
-+        const struct fuse_read_in *in;
-+
-+        if (exp->uring_started) {
-+            in = in_buf;
-+        } else {
-+            FuseQueue *q = opaque;
-+            in = FUSE_IN_OP_STRUCT_LEGACY(read, q);
-+            if (!in) {
-+                break;
-+            }
-+        }
-+
-         ret = fuse_co_read(exp, &out_data_buffer, in->offset, in->size);
-         break;
-     }
 
-     case FUSE_WRITE: {
--        const struct fuse_write_in *in = FUSE_IN_OP_STRUCT(write, q);
--        uint32_t req_len;
--
--        req_len = ((const struct fuse_in_header *)q->request_buf)->len;
--        if (unlikely(req_len < sizeof(struct fuse_in_header) + sizeof(*in) +
--                               in->size)) {
--            warn_report("FUSE WRITE truncated; received %zu bytes of %" PRIu32,
--                        req_len - sizeof(struct fuse_in_header) - sizeof(*in),
--                        in->size);
--            ret = -EINVAL;
--            break;
--        }
-+        const struct fuse_write_in *in;
-+        struct fuse_write_out *out;
-+        const void *in_place_buf;
-+        const void *spill_buf;
-+
-+        if (exp->uring_started) {
-+            FuseUringEnt *ent = opaque;
-+
-+            in = in_buf;
-+            out = out_buf;
-+
-+            assert(in->size <= ent->req_header.ring_ent_in_out.payload_sz);
+It really check whether the received "userspace" addresses are zero. Fantastic.
 
-+            /*
-+             * In uring mode, the "out_buf" (ent->payload) actually holds the
-+             * input data for WRITE requests.
-+             */
-+            in_place_buf = NULL;
-+            spill_buf = out_buf;
-+        } else {
-+            FuseQueue *q = opaque;
-+            in = FUSE_IN_OP_STRUCT_LEGACY(write, q);
-+            if (!in) {
-+                break;
-+            }
-+
-+            out = FUSE_OUT_OP_STRUCT_LEGACY(write, out_buf);
-+
-+            /* Additional check for WRITE: verify the request includes data */
-+            uint32_t req_len =
-+                ((const struct fuse_in_header *)(q->request_buf))->len;
-+
-+            if (unlikely(req_len < sizeof(struct fuse_in_header) + sizeof(*in) +
-+                        in->size)) {
-+                warn_report("FUSE WRITE truncated; received %zu bytes of %"
-+                    PRIu32,
-+                    req_len - sizeof(struct fuse_in_header) - sizeof(*in),
-+                    in->size);
-+                ret = -EINVAL;
-+                break;
-+            }
-+
-+            /* Legacy buffer setup */
-+            in_place_buf = in + 1;
-+            spill_buf = spillover_buf;
-+        }
-         /*
-          * poll_fuse_fd() has checked that in_hdr->len matches the number of
-          * bytes read, which cannot exceed the max_write value we set
-@@ -1856,13 +1917,24 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-          * fuse_co_write() takes care to copy its contents before potentially
-          * yielding.
-          */
--        ret = fuse_co_write(exp, FUSE_OUT_OP_STRUCT(write, out_buf),
--                            in->offset, in->size, in + 1, spillover_buf);
-+        ret = fuse_co_write(exp, out, in->offset, in->size,
-+                            in_place_buf, spill_buf);
-         break;
-     }
+Hmm.. Seems that we need a feature flag to live without UVA addresses. In the long
+run, it's better than hacking.
 
-     case FUSE_FALLOCATE: {
--        const struct fuse_fallocate_in *in = FUSE_IN_OP_STRUCT(fallocate, q);
-+        const struct fuse_fallocate_in *in;
-+
-+        if (exp->uring_started) {
-+            in = in_buf;
-+        } else {
-+            FuseQueue *q = opaque;
-+            in = FUSE_IN_OP_STRUCT_LEGACY(fallocate, q);
-+            if (!in) {
-+                break;
-+            }
-+        }
-+
-         ret = fuse_co_fallocate(exp, in->offset, in->length, in->mode);
-         break;
-     }
-@@ -1877,9 +1949,23 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
 
- #ifdef CONFIG_FUSE_LSEEK
-     case FUSE_LSEEK: {
--        const struct fuse_lseek_in *in = FUSE_IN_OP_STRUCT(lseek, q);
--        ret = fuse_co_lseek(exp, FUSE_OUT_OP_STRUCT(lseek, out_buf),
--                            in->offset, in->whence);
-+        const struct fuse_lseek_in *in;
-+        struct fuse_lseek_out *out;
-+
-+        if (exp->uring_started) {
-+            in = in_buf;
-+            out = out_buf;
-+        } else {
-+            FuseQueue *q = opaque;
-+            in = FUSE_IN_OP_STRUCT_LEGACY(lseek, q);
-+            if (!in) {
-+                break;
-+            }
-+
-+            out = FUSE_OUT_OP_STRUCT_LEGACY(lseek, out_buf);
-+        }
-+
-+        ret = fuse_co_lseek(exp, out, in->offset, in->whence);
-         break;
-     }
- #endif
-@@ -1888,20 +1974,12 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-         ret = -ENOSYS;
-     }
+> 
+>>>
+>>>
+>>>> +         *
+>>>> +         * Look also at vhost_user_vq_get_addr(): like in VDPA, we pass
+>>>> +         * physical addresses instead of user.
+>>>> +         */
+>>>> +
+>>>> +        msg->payload.mem_reg.region.userspace_addr =
+>>>> +            msg->payload.mem_reg.region.guest_phys_addr;
+>>>> +    }
+>>>> +
+>>>>        /*
+>>>>         * Some devices, like virtio-scsi, are implemented as a single vhost_dev,
+>>>>         * while others, like virtio-net, contain multiple vhost_devs. For
+>>>> @@ -3021,6 +3039,17 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
+>>>>        return 0;
+>>>>    }
+>>>> +static int vhost_user_vq_get_addr(struct vhost_dev *dev,
+>>>> +                                  struct vhost_vring_addr *addr,
+>>>> +                                  struct vhost_virtqueue *vq)
+>>>> +{
+>>>> +    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
+>>>> +    addr->desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
+>>>> +    addr->avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
+>>>> +    addr->used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>>    const VhostOps user_ops = {
+>>>>            .backend_type = VHOST_BACKEND_TYPE_USER,
+>>>>            .vhost_backend_init = vhost_user_backend_init,
+>>>> @@ -3059,4 +3088,5 @@ const VhostOps user_ops = {
+>>>>            .vhost_supports_device_state = vhost_user_supports_device_state,
+>>>>            .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
+>>>>            .vhost_check_device_state = vhost_user_check_device_state,
+>>>> +        .vhost_vq_get_addr = vhost_user_vq_get_addr,
+>>>>    };
+>>>> -- 
+>>>> 2.52.0
+>>>
+>>
+>>
+>> -- 
+>> Best regards,
+>> Vladimir
+> 
 
--    /* Ignore errors from fuse_write*(), nothing we can do anyway */
-+    send_response(opaque, req_id, ret, out_data_buffer, out_buf);
-+
-     if (out_data_buffer) {
--        assert(ret >= 0);
--        fuse_write_buf_response(q->fuse_fd, req_id, out_hdr,
--                                out_data_buffer, ret);
-         qemu_vfree(out_data_buffer);
--    } else {
--        fuse_write_response(q->fuse_fd, req_id, out_hdr,
--                            ret < 0 ? ret : 0,
--                            ret < 0 ? 0 : ret);
-     }
 
--    qemu_vfree(spillover_buf);
--
- #ifdef CONFIG_LINUX_IO_URING
-     if (unlikely(opcode == FUSE_INIT) && uring_initially_enabled) {
-         if (exp->is_uring && !exp->uring_started) {
-@@ -1910,7 +1988,8 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-              * If io_uring mode was requested for this export but it has not
-              * been started yet, start it now.
-              */
--            struct fuse_init_out *out = FUSE_OUT_OP_STRUCT(init, out_buf);
-+            struct fuse_init_out *out =
-+                FUSE_OUT_OP_STRUCT_LEGACY(init, out_buf);
-             fuse_uring_start(exp, out);
-         } else if (ret == -EOPNOTSUPP) {
-             /*
-@@ -1923,12 +2002,135 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-     }
- #endif
- }
-+/* Helper to send response for legacy */
-+static void send_response_legacy(void *opaque, uint32_t req_id, int ret,
-+                                 const void *buf, void *out_buf)
-+{
-+    FuseQueue *q = (FuseQueue *)opaque;
-+    struct fuse_out_header *out_hdr = (struct fuse_out_header *)out_buf;
-+    if (buf) {
-+        assert(ret >= 0);
-+        fuse_write_buf_response(q->fuse_fd, req_id, out_hdr, buf, ret);
-+    } else {
-+        fuse_write_response(q->fuse_fd, req_id, out_hdr,
-+                            ret < 0 ? ret : 0,
-+                            ret < 0 ? 0 : ret);
-+    }
-+}
-+
-+static void coroutine_fn
-+fuse_co_process_request(FuseQueue *q, void *spillover_buf)
-+{
-+    FuseExport *exp = q->exp;
-+    uint32_t opcode;
-+    uint64_t req_id;
-+
-+    /*
-+     * Return buffer.  Must be large enough to hold all return headers, but does
-+     * not include space for data returned by read requests.
-+     */
-+    char out_buf[sizeof(struct fuse_out_header) +
-+        MAX_CONST(sizeof(struct fuse_init_out),
-+        MAX_CONST(sizeof(struct fuse_open_out),
-+        MAX_CONST(sizeof(struct fuse_attr_out),
-+        MAX_CONST(sizeof(struct fuse_write_out),
-+                  sizeof(struct fuse_lseek_out)))))] = {0};
-+
-+    /* Verify that out_buf is large enough for all output structures */
-+    QEMU_BUILD_BUG_ON(sizeof(struct fuse_out_header) +
-+        sizeof(struct fuse_init_out) > sizeof(out_buf));
-+    QEMU_BUILD_BUG_ON(sizeof(struct fuse_out_header) +
-+        sizeof(struct fuse_open_out) > sizeof(out_buf));
-+    QEMU_BUILD_BUG_ON(sizeof(struct fuse_out_header) +
-+        sizeof(struct fuse_attr_out) > sizeof(out_buf));
-+    QEMU_BUILD_BUG_ON(sizeof(struct fuse_out_header) +
-+        sizeof(struct fuse_write_out) > sizeof(out_buf));
-+#ifdef CONFIG_FUSE_LSEEK
-+    QEMU_BUILD_BUG_ON(sizeof(struct fuse_out_header) +
-+        sizeof(struct fuse_lseek_out) > sizeof(out_buf));
-+#endif
-+
-+    /* Limit scope to ensure pointer is no longer used after yielding */
-+    {
-+        const struct fuse_in_header *in_hdr =
-+            (const struct fuse_in_header *)q->request_buf;
-+
-+        opcode = in_hdr->opcode;
-+        req_id = in_hdr->unique;
-+    }
-+
-+    fuse_co_process_request_common(exp, opcode, req_id, NULL, spillover_buf,
-+                                   out_buf, send_response_legacy, q);
-+}
-
- #ifdef CONFIG_LINUX_IO_URING
-+static void fuse_uring_prep_sqe_commit(struct io_uring_sqe *sqe, void *opaque)
-+{
-+    FuseUringEnt *ent = opaque;
-+    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
-+
-+    ent->last_cmd = FUSE_IO_URING_CMD_COMMIT_AND_FETCH;
-+
-+    fuse_uring_sqe_prepare(sqe, ent->rq->q, ent->last_cmd);
-+    fuse_uring_sqe_set_req_data(req, ent->rq->rqid, ent->req_commit_id);
-+}
-+
-+static void
-+fuse_uring_send_response(FuseUringEnt *ent, uint32_t req_id, int ret,
-+                         const void *out_data_buffer)
-+{
-+    FuseExport *exp = ent->rq->q->exp;
-+
-+    struct fuse_uring_req_header *rrh = &ent->req_header;
-+    struct fuse_out_header *out_header = (struct fuse_out_header *)&rrh->in_out;
-+    struct fuse_uring_ent_in_out *ent_in_out =
-+        (struct fuse_uring_ent_in_out *)&rrh->ring_ent_in_out;
-+
-+    /* FUSE_READ */
-+    if (out_data_buffer && ret > 0) {
-+        memcpy(ent->req_payload, out_data_buffer, ret);
-+    }
-+
-+    out_header->error  = ret < 0 ? ret : 0;
-+    out_header->unique = req_id;
-+    ent_in_out->payload_sz = ret > 0 ? ret : 0;
-+
-+    /* Commit and fetch a uring entry */
-+    blk_exp_ref(&exp->common);
-+    aio_add_sqe(fuse_uring_prep_sqe_commit, ent, &ent->fuse_cqe_handler);
-+}
-+
-+/* Helper to send response for uring */
-+static void send_response_uring(void *opaque, uint32_t req_id, int ret,
-+                                const void *out_data_buffer, void *payload)
-+{
-+    FuseUringEnt *ent = (FuseUringEnt *)opaque;
-+
-+    fuse_uring_send_response(ent, req_id, ret, out_data_buffer);
-+}
-+
- static void coroutine_fn fuse_uring_co_process_request(FuseUringEnt *ent)
- {
--    /* TODO */
--    (void)ent;
-+    FuseExport *exp = ent->rq->q->exp;
-+    struct fuse_uring_req_header *rrh = &ent->req_header;
-+    struct fuse_uring_ent_in_out *ent_in_out =
-+        (struct fuse_uring_ent_in_out *)&rrh->ring_ent_in_out;
-+    struct fuse_in_header *in_hdr =
-+        (struct fuse_in_header *)&rrh->in_out;
-+    uint32_t opcode = in_hdr->opcode;
-+    uint64_t req_id = in_hdr->unique;
-+
-+    ent->req_commit_id = ent_in_out->commit_id;
-+
-+    if (unlikely(ent->req_commit_id == 0)) {
-+        error_report("If this happens kernel will not find the response - "
-+            "it will be stuck forever - better to abort immediately.");
-+        fuse_export_halt(exp);
-+        return;
-+    }
-+
-+    fuse_co_process_request_common(exp, opcode, req_id, &rrh->op_in,
-+        NULL, ent->req_payload, send_response_uring, ent);
- }
- #endif /* CONFIG_LINUX_IO_URING */
-
---
-2.43.0
-
+-- 
+Best regards,
+Vladimir
 
