@@ -4,105 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F2BEE0AEE
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 19:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 270F2EE0AF3
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 20:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voncI-0002H2-LD; Sat, 07 Feb 2026 14:05:14 -0500
+	id 1voops-0002JG-Nv; Sat, 07 Feb 2026 15:23:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1voncF-0002GN-UC
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 14:05:11 -0500
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1voncD-0006bU-Oz
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 14:05:11 -0500
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 039D71400143;
- Sat,  7 Feb 2026 14:05:07 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-08.internal (MEProxy); Sat, 07 Feb 2026 14:05:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1770491106; x=1770577506; bh=ucMR9luIo5
- jvcGoHDLdJB3fP86ThLUhSFcOFGEW4vBs=; b=SX89BXtn7MZvnGFs6QeqpWc3Y/
- QFqRFD4ufh4P4D/iaxBGKzCeKXXFDIFbOIZUoVRu747ByN2za+sITVPTMSz7P+9M
- JXeSccDo6B7NE3Bc1KYrANlRUDjlF1hvOGsEGkGX2Zp9By1FfLh9LxRD/WCzoUlF
- W+nbnX7YRkS7ox/hUMQfzlJQO/6xl4NGQg2ca7G7zraAeHULMTTWFUy8re9hnVG2
- jhxarmPoMtcQEgApLHNiNXyBnksoppJAeKazyTaIxZxU7nP0aaE2WqlANfYOJILH
- hHxIs5U7MSt2VzXMseq0qtx9f4AxEssVLtfW95KpjnrFXbUJJs6c6yAWY8qw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1770491106; x=1770577506; bh=ucMR9luIo5jvcGoHDLdJB3fP86ThLUhSFcO
- FGEW4vBs=; b=iezzlxY8TvtHZqlT8FpZxnwFZteqXTuuPX0Ccb7cp1aTxc9ir7R
- hNtd/mX6M1jEnx1lE102+I0HeEG1eqDayN6Lm2AVd9GTeBijdi8efurUNRMGNIFH
- F48D2TU7zjGgwp19JzdnRFGWqlwcunxZlek1mrRfNIq+ghTJ+ebwDpY1+y/hskuJ
- ABbwgV3/EkCh2kjmhujkY4YCq5FhGeYmqyooWWx5J4sS6lNDItR7VAKJJCuLiGis
- 31xlo+NBpmvNl8JsLB6zYdX5tVmVrMCpFk00u1PjF2jpuGqGEYBjSVE4N/Uf9qW5
- Sw9PkVX+f7nPo2PLmq9Fhi6VgHrLL/Di/7Q==
-X-ME-Sender: <xms:4oyHadFSQfBxpCRjqa-xXaRXfwnEDlvZe1xNRZhdPKEgIrllC4Ysww>
- <xme:4oyHaX5ol0YqiLt9dI2qK4buk9EuUZKR7-FtqFDUJTT9JnjrQIs06WNjgi17a0BPj
- dE9KPmO55qBG4ga2-lVPVNnrNWSIEya6JJBLtmYBCcFkIEM-6t0Sw>
-X-ME-Received: <xmr:4oyHaYs50sKaOau-Yj3Z-jFSBl6KiKw6OohP0zypLbjaoaNAXjsj9Lq3EfQrD_xc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduledukeegucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefujghffffkgggtsehgtderredttddtnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeeiudffue
- eilefgtefgtddttdekkeehkefgheekudefveetgeefiefftedvteeuveenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtohepudejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
- pehsthgvvhgvnhhsugestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrd
- gsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrnhhoshdrphhithhs
- ihguihgrnhgrkhhisheslhhinhgrrhhordhorhhgpdhrtghpthhtohepphhhihhlmhguse
- hlihhnrghrohdrohhrghdprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrhes
- lhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuh
- drohhrghdprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgrthdrtghomhdprhgtphht
- thhopegusggrshhsvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrg
- hnghesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:4oyHaT-g30jfc6skWaoFXmsJ4Gp4X4j1dZrGfyGgiGw4D25Oo75f0A>
- <xmx:4oyHaanwP8PRW1UIwPG6A2g2P8sg9NDoYCsQZHCaIyDYdQdEAQoUVQ>
- <xmx:4oyHabOZo89ewzl5deax2VTufsN0lpo5T-8Z0eHMKW7VHcvKM5YxDw>
- <xmx:4oyHaRKBwh-lDJVUk0JP83J_CqdWzmRk9JI2AuCzO5EzHXCLsOPIYA>
- <xmx:4oyHaR9CeB-1wwYuzU6RrUfcfHkHBZ7657drodtCo6Rqt7wQZ4-vWUGJ>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Feb 2026 14:05:06 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id C6CB973DB080; Thu, 05 Feb 2026 14:53:35 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, slp@redhat.com, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Laurent Vivier <lvivier@redhat.com>,
- manos.pitsidianakis@linaro.org, stevensd@chromium.org, dbassey@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
- <peterx@redhat.com>,
- stefanha@redhat.com, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- mst@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v12 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-In-Reply-To: <20260204093758.1250167-2-aesteve@redhat.com>
-References: <20260204093758.1250167-1-aesteve@redhat.com>
- <20260204093758.1250167-2-aesteve@redhat.com>
-Date: Thu, 05 Feb 2026 14:53:27 +0100
-Message-ID: <87cy2jl2js.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1voopm-0002Ff-Q9
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 15:23:14 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1voopk-00066B-Ij
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 15:23:14 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-823210d1d8eso1013590b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 12:23:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770495789; x=1771100589; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=14h26wfj6u/n4/H5W4z/tOTalQTkUaWEXLpn13fi124=;
+ b=HUdHGxQ/ZJUrlnh/30pi7p4qaxlSlVEt/UNCXi7Pw/AcQw+oUS9NPMHA5yjkCQ0PCZ
+ A+g+iCHhCrra5hXWWOja7GJr3w/mNVXm7RkjT8s8XgKxOTXjU89ThbVRPSnxmGEVghLI
+ GJ8lUj5rbjOwxx1GsaEKmcDn3BTIMlE3R4O5mnb+dR//A/0+SASa1wj1Sdp92ZN9cT61
+ fy6hQ5POpb4HqDHIMOExu4bRAHMikmffH6IOajslr8vfAbyxdeYoKhh/LXUxwLs3L99Y
+ Q9EFklNxw4ZbhPkfdVFLvfgrDsofOptXzClc1SRONJqI4uMDMLOzI1mI3WzQ+lYCyPpW
+ R24A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770495789; x=1771100589;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=14h26wfj6u/n4/H5W4z/tOTalQTkUaWEXLpn13fi124=;
+ b=qyhor163CgLe1bQegyL4bRcJ3uwGqUr0xuB3ZUwtf9g+iJU2jDHtX2suQ2E1UCn7iN
+ mFNF4bmH769QVWmFzjNACk0JpmzI4RndJhJtS9JfVNdYnYc4aWJN4wXaeq2IFTR3MJT+
+ B74TVHsSciNdmdGers3B7uAViabkPQylQ4bHIb8+s7j5yR0/vt34AJ8vGGp8kkqMh0w1
+ QFsN8hzLS/kOdnvIPQgxQABgVG3D/87ljzc981oP26tNNUsRzIwm62F2k+qjJqlwajC2
+ 8O4/jbPaqqK5oBYi6FYGTYVF85rilgcBIJlGPKQuSVC7q2vHhukGro05AGfkbTMqFozt
+ 6mtw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURCHEq0xyZHgt7sxFvrY1aBVkltag1HSMv+UjZVLD7RtX0ls10K72vrDSGlks4EkwR/kFezVHyfN1q@nongnu.org
+X-Gm-Message-State: AOJu0YwFrl3r1WXA/hELMj/t6Su62fKNzERqPrm7/YXbMAFx4X1kh53z
+ qRnPI4aB7mNAyXeFyScSOzP3pVVWIaOpDeMnLt+cOcgZdIMNwxdcaehM7EoU/m9WqHI=
+X-Gm-Gg: AZuq6aIGG+3v1p4GZ4Z1uqxLrh5ZjvYKcBli3rojYPlP9Tgi5qqMiyIPJ51wky1JW5s
+ JhpwOkTPevRtj4Io5ZxSzjBlxegk/M+rMuhDDoBbWUQVvEcuXHHXgYc5pEDsaOPe5dq1hmVaTly
+ AY35nagJgjY3SP/aXeqn+3QiFWGOsWt37Ucp0m+AcuMa3aCPSMdypuR/dlPSfmlCyVveAjDoqHP
+ Ydv9zPmoPWG2iBGXqcqEPh2ScHJEp+m/9Ro8t+66Wj/gXHpoWPjJoMiwo8IeitpgApBepC6Le0a
+ bGL0N6iOgt4y+WPDL/1L13V6GCRSU7z3P5oLB+jNmdKht2GdYXHWn0JRzBtb6XJKOh1X7Vs/Tz3
+ AHLQX4MMXct4GXR89Y61mlHwZLdnHx1YFNXfA3RP3L4E1Xlwa8JHb+oBRLj/8iCN4KnapDJbFwF
+ hMyPtt8i85seNzethtGHAi2LgwvQhcL425E9HubbL0D8cMjEpoVEdLLaqV
+X-Received: by 2002:a05:6a21:107:b0:38d:fbb3:d577 with SMTP id
+ adf61e73a8af0-393ad395726mr5945530637.66.1770495788876; 
+ Sat, 07 Feb 2026 12:23:08 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6dcb526610sm5835356a12.13.2026.02.07.12.23.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Feb 2026 12:23:08 -0800 (PST)
+Message-ID: <d419de22-21cb-4af5-b6fd-1db7a349c231@linaro.org>
+Date: Sat, 7 Feb 2026 12:23:06 -0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=hi@alyssa.is;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] tests/tcg/hexagon: Handle SIGILL internally in
+ invalid-slots test
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, alex@alexrp.com
+References: <20260207180632.1042754-1-brian.cain@oss.qualcomm.com>
+ <20260207180632.1042754-5-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260207180632.1042754-5-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,63 +140,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain
+On 2/7/26 10:06 AM, Brian Cain wrote:
+> Rewrite invalid-slots.c to catch and verify SIGILL using a sigaction
+> handler that modifies the ucontext, matching the pattern used by
+> invalid-encoding.c.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   tests/tcg/hexagon/invalid-slots.c | 76 ++++++++++++++++++++++++-------
+>   tests/tcg/hexagon/Makefile.target |  6 ---
+>   2 files changed, 59 insertions(+), 23 deletions(-)
+> 
 
-Albert Esteve <aesteve@redhat.com> writes:
-
-> +``VHOST_USER_BACKEND_SHMEM_MAP``
-> +  :id: 9
-> +  :equivalent ioctl: N/A
-> +  :request payload: fd and ``struct VhostUserMMap``
-> +  :reply payload: N/A
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends to
-> +  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
-> +  Upon receiving the message, the front-end will mmap the given fd into the
-> +  VIRTIO Shared Memory Region with the requested ``shmid``.
-> +  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-> +  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-> +  must respond with zero when operation is successfully completed,
-> +  or non-zero otherwise.
-> +
-> +  Mapping over an already existing map is not allowed and requests shall fail.
-> +  Therefore, the memory range in the request must correspond with a valid,
-> +  free region of the VIRTIO Shared Memory Region. Also, note that mappings
-> +  consume resources and that the request can fail when there are no resources
-> +  available. Lastly, mappings are automatically unmapped by the front-end
-> +  across device reset operation.
-> +
-> +``VHOST_USER_BACKEND_SHMEM_UNMAP``
-> +  :id: 10
-> +  :equivalent ioctl: N/A
-> +  :request payload: ``struct VhostUserMMap``
-> +  :reply payload: N/A
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends so
-> +  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
-> +  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-> +  given range shall correspond to the entirety of a valid mapped region.
-> +  A reply is generated indicating whether unmapping succeeded.
-
-Shouldn't this be phrased like VHOST_USER_BACKEND_SHMEM_MAP above,
-since as we've established replies are only generated if negotiated?
-
-  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and the back-end
-  sets the ``VHOST_USER_NEED_REPLY`` flag, the front-end must respond with
-  zero when operation is successfully completed, or non-zero otherwise.
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaYSg1wAKCRBbRZGEIw/w
-otB+AP9ttgZDsytu+Aas7AX0/9Zm9KbKcnOwDHuNYpDh3Lc0RgEApkLyPGjb3MBs
-17/VSgyma3PkrnXgqVBQknXUA+vd6w0=
-=ecZY
------END PGP SIGNATURE-----
---=-=-=--
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
