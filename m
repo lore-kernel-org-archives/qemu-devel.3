@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971E3EE0AE0
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 17:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1760EEE0AEF
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 17:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vom2m-0002nt-Fv; Sat, 07 Feb 2026 12:24:28 -0500
+	id 1vomHt-0005uc-RC; Sat, 07 Feb 2026 12:40:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vom2l-0002nQ-6P
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 12:24:27 -0500
+ id 1vomHs-0005tx-9p
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 12:40:04 -0500
 Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vom2j-0004SO-Oi
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 12:24:26 -0500
+ id 1vomHq-0007Dc-Ih
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 12:40:04 -0500
 Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-79518cc2bb4so28945297b3.0
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 09:24:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770485063; cv=none;
+ 00721157ae682-794f701a3e6so30543137b3.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 09:40:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770486001; cv=none;
  d=google.com; s=arc-20240605;
- b=F0EX+e2tBiRfHyOnPYOpNqaNsdB+m07ftHjmh3+UhqHwsRxlLRpPh/6OcO0x7LMZTy
- iwpCz/1M1AU35N+J/bJcOx8TfVcgPP7XKalcHrgUeebqDdXVFvZnM28Uh7dz9WHqUCOY
- yaBH9oezkLSGp5ve9St59PSG+P6j9ukNuCBiWnji0BvYGWSP7oboKX3D41soOAIE7cWK
- jdktoGxXXFxMbHBoMRLN6VZK0tMtcm/ixfDEAisgGRz2dzfc1yDoJc13gbGOTSjQr6P7
- HzeA281IzSEiGfukFLklmccRAGcNxnJZUe5F+/T3KnT1Zav5q5BEdgTmym7ECLOJmnWS
- nBRA==
+ b=aE5z3xsDbpxEQqPaGOWV/8uA5MFOWScbABaj3VakYXVXAOhRr9TKFs1FKPd0FvsG97
+ 5wGxfo0iclIFpZL5+vCV1AlH7ayXQoiUJ8bpCgOUK7gkz4GPwZYn7OB1wbFwKv/15KtP
+ zNHpdXMw/bV30KQZRaALhsfpB4Kv5XNumvIiUgUZ7LivlAaLugXOh3T2Jdc4ormAOCXK
+ ex9MPyp2DtS614rryly6KFDBlWFpJZLkYTBPvSY3FM6I+YqtC7EqgXWwLy2dDJB1CSUD
+ HojfggaUYjhln7aYoe37c7pXRI7uJHCFJ9mf9xIWW42D0O0PANkgtGdf8wczQlXpbf7R
+ fcbQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fG9u+rhxAnoWtIzvg4BuCMilcgm3foUHCd2T822XsRU=;
- fh=NJvA+NjT+zC/TtqXLu7zu89CQzUbnrg3KKbKPzV7ePs=;
- b=awajo9GjorRYwsGvk4t8SJBqRBXDoX/u0WBXKZPk3Xm8niSYmsvES6WUenVdy51LOZ
- uNQAmY0qsh0tfWdlK4/H8j4DOf8hhphOzDBZYc6iGBtZfxjZcq7TiMmfsLCCwfGedOy9
- mCWL5+V1jyuWXWVd02K+xeHXcU4BS5MLuWlrgDQd2Nhj6NXS5Jn6iHTBkOIyYTFT+MwF
- RNN/prQUZh8pji1f2yefuAc97IhnbY3I1RUOV7vfdtxtfWNyH0Fe/0MW/XwvcFYgRBsV
- kbDN0+s4RylQI1n1CDP7i/p6tdWdTUlB73zYxx0cL3CQtX9LYVQN3HXH5J4vpYitpkRL
- FrOg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=29WB7zZXjLjBP/uVYuh5X/432rmm2UDKkA4Yr82QwaY=;
+ fh=4K+h5x9go7ApuLQDfQifwDquWyjO4cvidf25ma8RBTg=;
+ b=QzP52JPsk/xnr/l+775WD3+iA7FdLib8MwUoPMaU1N+FE10Yt/tJw82cZe7QvSJ9m8
+ NHnvsjLDiXNRpLrdwGyrSUIXldUPR0AqnPOuBwlNzzhPpsOaoZcesq0GHkqI/qTxyEi2
+ mi7PmSlH7nz8B36C5R2UaRTm9p5nj8uxHNBgkZC0XIc9wG1gu5U1QFxK37JYhcOOe4f6
+ BOXZufPYOQXtMSeYVRCw1Vx71LvRQCoNMYyhMJC6tz/9Xf/BcMZnwVsYI+hqVlK7OXZ5
+ /Nq9cLF2qorG22XXZqZF/gw/rPj2otTKot6R/OIWflFHS4dMHjw3bZgu14UqaxrCf+7M
+ wuNQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770485063; x=1771089863; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fG9u+rhxAnoWtIzvg4BuCMilcgm3foUHCd2T822XsRU=;
- b=DD4E6RvwaDZuZsx6C7DtMTZ+kC1s/5LZDdDVkMSLeZ7Nl8YAY3vQTiBvDLbdshm+2Q
- 50DIlkxRfnL19kM7/45ETrGczqW6SHDf2DAPX4EJwKg5JCSpDGc/n7+qJM1ZUcUY6lEH
- qjEqximjpuzEaMD5nDFDZQoAE9db+rhNIJ2iQ6KrmfV9a4OR1BPqvyr//KlKOPEAVZEq
- YSbxLXc14RIajVoJXzzR69gjfG3kS5yCX8GIa+x00ZV2MmueILMHsrWJsf8/IAtG7vkq
- +zPUjGefRuGHmvTmCq/+PxTZFn05C3ZD4kXK6syI/csOSB/KwLI5QO89rvyqnysC9GR/
- +tRw==
+ d=linaro.org; s=google; t=1770486001; x=1771090801; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=29WB7zZXjLjBP/uVYuh5X/432rmm2UDKkA4Yr82QwaY=;
+ b=ljeRtx5nEIC/rZNi/Hscl9vQ/FDFHmbH2Frj+Y5swCzk0NtVKExSj4+D4uM2bEU6pN
+ gHNqbXgXH2vNJF8NGduvx365d6j4uVY9IBj6gnM3beZqZPxhSYZhdVVygND9Gr4GAijB
+ tV1oHqFZCDhytqHgB6bFHiffWttgoxrBuDJEW7rLk8jzPuasEXCETuYnN/DjgsYpdsNC
+ 5g+Mrfs1RyAFwvy7Agrb1GGuXnAMyYZWy2WyfMP1u1GcCBoPFxdVZi2O11FU63Inb36E
+ zXEXd0tlqjlQzZXvP9n5LZEhwhUITGEuKDs47dByPOp2AvhQCW3Wkc/xHpR2Ku3/DuvG
+ rAGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770485063; x=1771089863;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fG9u+rhxAnoWtIzvg4BuCMilcgm3foUHCd2T822XsRU=;
- b=V1BLU4Gx4WCpkt70PHjTpwhwmADXhslnP+GXgFJ0UE8diiVt/O7Sem+6cn1O4j4NP+
- mD81Md7NSgVQlCZ9x/fFzNGlCQHA2ghHfsIJNGq3t/IRXkFbICOdBmujlJ/2QGcNCyCu
- AGaV2M0fsgLOHkJ7X9TjXPRoWD40ikR2qlZ//QX8I+TTkPBytApBJ8fcOgPwYmAzkBb+
- 7wSmKLdy8yU/qPyDsXHVLF7mqRkRBKKvp4jyuzRFWsYTSb+MdF7t42Okp+7ED2frQNQK
- USN2pUDbqkEXeYW4ouwVe9t0PWiL458JaINaoQXlGY3KBRbY4KsCCjIMu2HrutTxVL6f
- DYQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXU4g1cQYiJLfDHCOY9wqdCYrzblaUTG33kwUUfD9zDPSQnQri9t8fT+8yV1Y82LO3KYZsxShGCfKlv@nongnu.org
-X-Gm-Message-State: AOJu0Yz1K39PMb2FCS4EI1NhS9+pZRkm6MyU1JnGF4OAIfaWPUVI8vMl
- 9NzOY0t774xavNs0YFdRtcluIWHlY+rGX8QbeCmgy6dexGBaLhqNXnybK1Yx8k5lvv4cdY19FNW
- No0er8BQDk0mBH8KgHe5/MHykOpJK3WbT5VQNS9s58Hf0dUK/503N
-X-Gm-Gg: AZuq6aKbZmecb/9b6DfrXc3thMK3DxPFxcbsxQNWSRH+3GUZL8jU6WR2TKr1B80DmFH
- MYzDaDNoTA1kPWwqE1Af4s23iglLI+/fu2LvHbtG2/zzoduUz6We9oNSS2C4pVoGx4cAZp2IIjM
- rrBzZtHd2Zzt5WHtyuXe78TDkJBuF/NhWVjPzRJwtQhOx+vY/TxJ85gIK3NqFp7wWbPLoeTlQH5
- A4EG7QP7nvWQLA03h1inMxL5eyGfLjoNpuIBGZ9M/Gn240V31IiUVnrTeXxgnSWnkZ0plPWpI8I
- fYMnKJ5tnfLQ3iZ/Nyibs7fMqgAKflyHEBvAnNw/Z7vlEX2W5/0Tj3Q=
-X-Received: by 2002:a05:690c:ed5:b0:796:371c:7afd with SMTP id
- 00721157ae682-796371c7fbcmr13257257b3.13.1770485063503; Sat, 07 Feb 2026
- 09:24:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770486001; x=1771090801;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=29WB7zZXjLjBP/uVYuh5X/432rmm2UDKkA4Yr82QwaY=;
+ b=ERCxyfYLL+9AamJ+R0XHQcmELNhbKrDO0f/vt0ZCWRJUb6sNC6WY1b1qGe6/A1pTpf
+ O3TzJj5Waplh5AH6V35mrUc5hx4I97+ZX8YN54dS0IiAz68lFoEPef6B+uk/gQgbKxOj
+ 9P649DFhFQxKBaB5ctuYFaTRKSXFn2FZjURMSDLSYmN05S9xqwdjsxpHLsqgXOHf79Ug
+ IID6sbilFP2fv8xBVsj3x3/86ZjxgzHeyqTpfsM2m1pnSEi1kmvR9++zz7VZIy/lAbXB
+ jUMZD8mNAKvC9o840r++x8bCCvTi10P7XUs0yAk+qeqcT+j6U3DH6SCCEmlYS5WJOqml
+ Sa7Q==
+X-Gm-Message-State: AOJu0YwfRPsWTAOMLFDM0aWUnK5IdeYwz9y2mxd6XfEERKEShQ5qz8+/
+ yxUEOtqF8zTfkpGhxpqtdCe+fzs0ig00ZvvJx1nboXq79Mc2Mv3I+7IIcCasDFmLy1RgfmPb6Pj
+ 3UBYswsQaSqZ6QfTSj2q8/8w6MGQKsl+RzCSSEMB5e0d3QyUxGNQQscA=
+X-Gm-Gg: AZuq6aJTvMWg1UXF5WcB4Ofqy3NK34mG0u84hnny84sZiQILESebnu7px6ipUmo74Gz
+ LU2B4PrVh9WDcOqmSdZON58mBfDrNU3rYM2y0QdadCaGt05KK1UnY08kbfStMG6EnvZ1Wuoo2zM
+ oiUF91Z3Vd2sBNxa/CFu/mQF5MBEimi30lnK4xqXy1ve9mSNVh6xp3Q0qd587q5vwv671iOdPnb
+ dfqwP2Uc8msQ1ydUR5bbCpcFkgOOqPTvogI3DH2d3DNyRynTrijXBOGDjd3YjqzX3+dvnUHAyiD
+ gDj91KRrcAkJcNo6D9t56DnREdto+FpVKXeSXKI+UWV3fINyDhDZIY8=
+X-Received: by 2002:a05:690c:6501:b0:793:a3c9:795d with SMTP id
+ 00721157ae682-7952ab71be9mr57406727b3.59.1770486000871; Sat, 07 Feb 2026
+ 09:40:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20260204075754.21078-1-heifetz@yandex-team.com>
- <20260204075754.21078-4-heifetz@yandex-team.com>
- <722eb7df-0eb2-49c1-af07-90004ad46a8e@vivier.eu>
- <14605571-e078-4d93-9f0b-411889a70076@yandex-team.com>
-In-Reply-To: <14605571-e078-4d93-9f0b-411889a70076@yandex-team.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 7 Feb 2026 17:24:11 +0000
-X-Gm-Features: AZwV_QgEBrWldqgA2gYP70QraDkDO_XqjXSe-RWbno73vDrTGCEFxif4EnAZyO8
-Message-ID: <CAFEAcA_Kzy9DCnwM0CyO+X_RveRavhkSrBGoW_MXEeGstkgWsA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] system/physmem.c: reorder usage and assertion of block
-To: Sergei Heifetz <heifetz@yandex-team.com>
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
+Date: Sat, 7 Feb 2026 17:39:49 +0000
+X-Gm-Features: AZwV_Qhidlo1tVLhzwFoui6OYvrGO-j-Tj1ThJXJOBxLeBtfWzn2h0_7QR3esmw
+Message-ID: <CAFEAcA8M6AL1xQsiiS1f5nA4XVV6n6mOhi1T3QWfhLb_01+8Tg@mail.gmail.com>
+Subject: handling of non-page-aligned addresses in get_phys_page_debug
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
@@ -105,7 +93,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,67 +109,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 7 Feb 2026 at 10:24, Sergei Heifetz <heifetz@yandex-team.com> wrote=
-:
->
-> On 2/4/26 17:53, Laurent Vivier wrote:
-> > Le 04/02/2026 =C3=A0 08:57, Sergei Heifetz a =C3=A9crit :
-> >> Reorder the code so the assertion of block occurs before it is
-> >> used in the subsequent lines.
-> >>
-> >> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-> >> ---
-> >>   system/physmem.c | 4 ++--
-> >>   1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/system/physmem.c b/system/physmem.c
-> >> index b0311f4531..4308e02940 100644
-> >> --- a/system/physmem.c
-> >> +++ b/system/physmem.c
-> >> @@ -2054,11 +2054,11 @@ static int memory_try_enable_merging(void
-> >> *addr, size_t len)
-> >>    */
-> >>   int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **err=
-p)
-> >>   {
-> >> +    assert(block);
-> >> +
-> >>       const ram_addr_t oldsize =3D block->used_length;
-> >>       const ram_addr_t unaligned_size =3D newsize;
-> >>   -    assert(block);
-> >> -
-> >
-> > According to coding style (docs/devel/style.rst):
-> >
-> > Mixed declarations (interleaving statements and declarations within
-> > blocks) are generally not allowed.
-> >
-> >>       newsize =3D TARGET_PAGE_ALIGN(newsize);
-> >>       newsize =3D REAL_HOST_PAGE_ALIGN(newsize);
-> >
-> > Thanks,
-> > Laurent
->
-> Should I remove the assertion altogether, then? I think the const
-> qualifier on oldsize is more useful than the assertion.
+I was looking at a reported bug about semihosting when the MPU
+is being used on Arm CPUs:
+https://gitlab.com/qemu-project/qemu/-/issues/3292
+which turns out to be because in cpu_memory_rw_debug() instead
+of passing in the vaddr we're given to get_phys_page_debug() we
+first round it down to a target-page, then translate it, then
+add the page offset back in. This doesn't work if the target
+is dealing with memory protection/validity at a granularity
+smaller than a target-page, as the Arm MPU does.
 
-I think personally I would drop the assertion. This falls into a
-category I think of as "assertion doesn't buy us anything".
-If block is NULL we're going to crash immediately when we
-dereference it, so the assert doesn't help to turn a hard-to-debug
-bug into an easy-to-debug bug (e.g. by catching incorrect values
-long before they're used) or to turn a nasty kind of failure
-into a safer one (e.g. by turning an array overrun into
-an assertion).
+I thought this was a bit odd, because the Arm page-table
+walk code will happily translate a non-page-aligned address
+for you, so I had a bit of a dig into our implementations and
+callers, and we seem to be inconsistent about whether you're
+supposed to handle non-page-aligned addresses here. (By "handle"
+I mean both "can take a non-page-aligned input" and also "the
+resulting physaddr includes the bits for the offset within the
+page and has not been rounded down to a page-base address".)
 
-And looking more closely, we call this function in only
-two places:
- * migration/ram.c, where we've already dereferenced block
-   in the code just before the call
- * system/memory.c, which asserts mr->ram_block before passing it in
+Implementations that don't handle non-aligned addresses:
+ * alpha, microblaze, sparc, x86, riscv, s390x
+   (but riscv only because it explicitly masks out the low bits
+   just before returning the physaddr!)
+Implementations that do handle non-aligned addresses:
+ * arm, avr, hppa, loongarch, m68k, mips, openrisc, rx, sh4,
+   tricore, xtensa
+Implementations that were too complex for me to determine the
+answer with a quick look:
+ * ppc
 
-So I think the assert in this function isn't buying us anything,
-and the simplest thing is to delete it.
+And at the callsites we have:
+
+Callers that naturally always use page aligned addresses:
+ * hw/i386/vapic.c : always uses page-aligned addresses
+ * target/sparc/mmu_helper.c: uses in dump_mmu() are always page aligned
+
+Callers that assume non-aligned addresses are handled:
+ * hw/xtensa/sim.c,xtfpga.c : we translate ELF program header p_addrs
+ * target/xtensa/xtensa-semi.c
+   (these two only work because xtensa is in the "handles" this group)
+
+Callers that do some kind of "work around getting the page base",
+and mostly-work with both:
+ * monitor/hmp-cmds.c: in hmp_gva2gpa we round to a page base then
+   add back in the offset within the page
+ * plugins/api.c: ORs in the low bits, so can cope with both "get
+   exact answer" and "gives page base"
+ * target/s390x/helper.c: s390_cpu_get_phys_addr_debug is a wrapper
+   implementing "give actual page" in terms of cpu_get_phys_page_debug
+   by the usual "mask and put the page offset back in" approach
+ * physmem.c: cpu_memory_rw_debug rounds to a page base then adds
+   back in the offset within the page afterwards
+
+Looking at this, my feeling is that we should:
+ * define that these APIs must handle non-page-aligned addresses
+ * fix the six or seven implementations that don't (either "properly" or
+   by adding in the "mask to page base then OR back in the page offset"
+   code to their get_phys_page_debug functions)
+ * clean up the callsites to not work around the lack of handling
+   of non-page-aligned addresses
+ * add/extend the get_phys_page_debug API so that a caller can get
+   the lg_page_size
+ * fix the cpu_memory_rw_debug vs Arm MPU bug by having it use that
+   lg_page_size to determine how much memory to access at once rather
+   than assuming it can read to the end of the page
+
+Opinions ?
 
 thanks
 -- PMM
