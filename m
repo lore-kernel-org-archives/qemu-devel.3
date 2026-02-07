@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75287EE0ADA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:12:01 +0000 (UTC)
-Received: from [::1] (helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA354EE0ADC
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:12:02 +0000 (UTC)
+Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voh8v-0007W3-Kn; Sat, 07 Feb 2026 07:10:31 -0500
+	id 1voh8h-0007FR-76; Sat, 07 Feb 2026 07:10:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8m-0007GI-Lj
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:21 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1voh8d-0007DV-GK
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:12 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1voh8k-00038S-Ng
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:20 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3530715386cso1260650a91.2
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:10:17 -0800 (PST)
+ id 1voh8a-00036L-TH
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:10:10 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3530e7b3dc2so2570090a91.3
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:10:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770466217; x=1771071017; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770466207; x=1771071007; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JCy3i99i+qLbs/wAQI3hvrm5l/vGSJb2OpG7ZQh/YMA=;
- b=LNVSBaasX0HGb4h/d0CaoETSNAsUhQtvqCemdbZvTnhzjhKXtF94Vj80QebxVJqsIO
- VZ14NzV2LRvK7D7M+0HPsrrog48DlhIBRlk188AWLmsGDULMjF+Vtpbwc8IWcZjKMuKz
- 5Vk2+Ws/v7WONu4tAc47E0lGwagl2ym3XQUsEa+CGeTjf4rehgIIpUfIJbCvdlVNNxKC
- ffsOBfFvF55XtRFVZ5IwS4Rey/KchINAcD6uce2iuxzUNZ80ksVq6/pty0kz78305avc
- NDvugQYSL1Jw+mj78OVxXnc7T7wEAOss9nAYUeL4qmaTSI3V/koHlqdyu13jrF0EvXYs
- CqIw==
+ bh=H78Df0v0meU3GDrKU4J2lfRzsB4Ror34DjemRoX9SzM=;
+ b=fKn5MkuZlDjaeZwMGaXkYQl+JYdNYMv0Ljh8y+pwyqAW42XUroEEpyOQb+rXR2SC0L
+ rTveQBD8nZvh8sX/C9Xe06by/uuN4PEIPeINxdNj7HPcF+KI28iBXSDl/w83CaL7exbB
+ CwxMJ/ha0lypORF3mW+DSAzVcf41i661BChEcx0718/J3he6Q6s7lnIgA/WB/MdjAk4H
+ A9S8biGAhMitiiQSWQue1x47ErzL4czESS5mZsc0nB4ylItrUQdZ5atOHibrFLU6wVBZ
+ Qtxzy2myHK32MWxgLZNxmGpKucPGDuKQL6MJRsbTEvNz5HYnCQcj5LEJWh3TxFBMVY8C
+ uNyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770466217; x=1771071017;
+ d=1e100.net; s=20230601; t=1770466207; x=1771071007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JCy3i99i+qLbs/wAQI3hvrm5l/vGSJb2OpG7ZQh/YMA=;
- b=M9bYv9I6/7EC2KOK0knOq1FgbJhvVC3Hx1BttBG1C/hlO91TCDKqI5eDbLVgHZxDVk
- 0J9hqqgzpqeJ0NN61dcgovv7WM9cP77YxRwm9VM/QTJaCcpO5oUnEwxalxVvErwkol7w
- VSQr7xgIaBiFyfu4Ap/CKDzSBX0nugInO9s6+LlEwQTZUexlP8Y335bxYz2C/yivTAkX
- Pri7xVw2ULgjxbDqEdYkYTUqmQDX3v7D3y4+TR3fzB+nAO/5jOGBph4j0hTzddeZinOb
- Z7Dvj8hbSJSTKZqvgEkggVULiivV7/w4mnqkWHR/ElH6t8ClgOPlUv7N1PivjC1enZlm
- 81RA==
-X-Gm-Message-State: AOJu0YyTiOm6JCpedXoc4MW5oIfNkoFjiWWzTwuLthwESrO7axo6CjVH
- fOkc93ANKEpBBwOmVnoxbHghFrvv1xPxB/7+3jSf2NaBnVPTm2GTsmkX
-X-Gm-Gg: AZuq6aI8W2u1dX0Rhhfs9ONe+esXFwv0th08gZkOc0fR/NogTOYTAaw7+G5b6hkciKJ
- 2r//kh5/8ilyFk/cyDBSoyClA1Qb3NRIytT7LWjBIV4ZrIdTFPImyo5/0a+6HxrR5NrMAD/xAg6
- bNqBCmDmbJG3ofIP8PyiIJCh6N3gUPhB5cGQxl61282PJ5eFbsYWk8OidXUtYAMZXdTkjjiWTs5
- u6jPpXL2sUwI5y5fG2wnbwa//ZCy81pDJ/KAs8sEAhi+aIczS3+xoY3HUsjg6g1WgjXlMeLzBBW
- zXS0n0hwoKPfY6IjJZNuFrokOjGJR+1mW8bO5tJbSARgz03/4/dW8Rx0AyNnQIJZh6Y+I/bq04c
- W6mehdfOJBYkz3TtmBFXGVzZJsyqWtCflrqg7myQRcqbpG6oaQYrWQ1KQG8ugKaL/YbTK1YVqvx
- /0Rp8vuDNHnj1aJ/w+QCjAef8hEYPKBeP0KY0p
-X-Received: by 2002:a17:90b:380b:b0:340:ca7d:936a with SMTP id
- 98e67ed59e1d1-354b3e338d5mr4916969a91.18.1770466216716; 
- Sat, 07 Feb 2026 04:10:16 -0800 (PST)
+ bh=H78Df0v0meU3GDrKU4J2lfRzsB4Ror34DjemRoX9SzM=;
+ b=ngQyok/NClFUyJYi4BXkwy2efA9nqh0SZye/KNTeHXtSA7c2QmG8712irl8u6bEbde
+ 4Oni6dCs+uL8+jfhz0Wd9Z6D5/dMhM63MOJFQu5nto0FUWi9rv2MBTw3skXV4CNIKGDn
+ imjHAWi3uUUPe5oddmtdfDLxu9CEWbr0dCwaCYqSqa5JLH4OU9FJyE/TBuQJ/XUCJ+0v
+ QUbZvyCod14s9G6x+9wiRFykm36fHn2Oy0sQnz/uvejQY9GpoePo39fKDSbTGpt6hVbB
+ Ux37OL/UHLl3SRJedWjL0D/2slh7SHTRD1meir68C5IG3bBOqZrcAVqOOIJOdWVy+uSv
+ FNAQ==
+X-Gm-Message-State: AOJu0YwraELw4cgNbsLGhTYtARwsDoA+/Tn5kSeyQpl6U9A8tLCW3dDb
+ NlHsBbpWu18ulAdUZPc+BiHtIyQl7ZRCsIUlyDHLXbQORD/+ZQYsHizf
+X-Gm-Gg: AZuq6aKIyl/8aJm2RAm+kB3fxrVkMBfHO4qPxXcCnPDJejs3bUfBGb+N7uOmzGSSH0k
+ NcNcafnvXWsXvRL2zq8UE1N06jaj2QhZiseJV315r1ujRxqQCrSSgOTuB8EZ3vcyyXBifYYM8XH
+ 2RqFpCNhDtmqYdAK7L229t4R3xCz1zOSlki7OVP0wYK4dZzq1ljYSydsTxeCDWwt1NuEeCLUpYW
+ ZVvCm71JSexaKsjQmmf/KGqpzhi02+HAMoV2fUIlhL2ufxIgBdSo6qfGthVctY1g5WVnhIwMW8D
+ BJvtgBzB7d9j36sT4J7XEuSnoLLKFJsq+OsEjLueBlWUnfEH5xIMUh7CTeLxizOUciDzykJK/+N
+ dEx4b+34+59wsEW+WU+6TEyz0l0wQ6drW+LG9p6ezlbW+M9WOIFvC7K/wHDIcjWcgNe7xSmKBlU
+ ZUxtxcJHrOim6Lh3WdmX4F13XLsiqIbDenh2V2UHEnwqBK5W6Q
+X-Received: by 2002:a17:90b:35cc:b0:353:5595:3247 with SMTP id
+ 98e67ed59e1d1-354b3c74a3fmr6051387a91.12.1770466207514; 
+ Sat, 07 Feb 2026 04:10:07 -0800 (PST)
 Received: from brian.. (n058152022104.netvigator.com. [58.152.22.104])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354b30f899csm2178530a91.3.2026.02.07.04.10.13
+ 98e67ed59e1d1-354b30f899csm2178530a91.3.2026.02.07.04.10.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Feb 2026 04:10:16 -0800 (PST)
+ Sat, 07 Feb 2026 04:10:06 -0800 (PST)
 From: Brian Song <hibriansong@gmail.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hibriansong@gmail.com, hreitz@redhat.com,
  kwolf@redhat.com, eblake@redhat.com, armbru@redhat.com,
  stefanha@redhat.com, fam@euphon.net, bernd@bsbernd.com
-Subject: [Patch v4 7/7] fuse: add io_uring test support
-Date: Sat,  7 Feb 2026 20:09:01 +0800
-Message-ID: <20260207120901.17222-8-hibriansong@gmail.com>
+Subject: [Patch v4 5/6] fuse: safe termination for io_uring
+Date: Sat,  7 Feb 2026 20:08:59 +0800
+Message-ID: <20260207120901.17222-6-hibriansong@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260207120901.17222-1-hibriansong@gmail.com>
 References: <20260207120901.17222-1-hibriansong@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=hibriansong@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=hibriansong@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,103 +101,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support for testing FUSE-over-io_uring. It can be
-enabled by setting the environment variable FUSE_OVER_IO_URING=1.
+When a termination signal is received, the storage-export-daemon stops
+the export, exits the main loop (main_loop_wait), and begins resource
+cleanup. However, some FUSE_IO_URING_CMD_COMMIT_AND_FETCH SQEs may
+remain pending in the kernel, waiting for incoming FUSE requests.
 
-    $ FUSE_OVER_IO_URING=1 ./check -fuse
+Currently, there is no way to manually cancel these pending CQEs in the
+kernel. As a result, after export termination, the related data
+structures might be deleted before the pending CQEs return, causing the
+CQE handler to be invoked after it has been freed, which may lead to a
+segfault.
 
-Additionally, the unmount detection logic is switched from `df` to
-`mount`. Using `df` triggers `statfs()`, which attempts to communicate
-with the FUSE daemon. During test teardown (when the daemon is being
-killed), this often fails or returns stale data, causing the test to
-misjudge the mount status.
+As a workaround, when submitting an SQE to the kernel, we increment the
+block reference (blk_exp_ref) to prevent the CQE handler from being
+deleted during export termination. Once the CQE is received, we
+decrement the reference (blk_exp_unref).
+
+However, this introduces a new issue: if no new FUSE requests arrive,
+the pending SQEs held by the kernel will never complete. Consequently,
+the export reference count never drops to zero, preventing the export
+from shutting down cleanly.
+
+To resolve this, we schedule a Bottom Half (BH) for each FUSE queue
+during the export shutdown phase. The BH closes the fuse_fd to prevent
+race conditions, while the session is unmounted during the remainder of
+the shutdown sequence. This explicitly aborts all pending SQEs in the
+kernel, forcing the corresponding CQEs to return. This triggers the
+release of held references, allowing the export to be freed safely.
 
 Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Brian Song <hibriansong@gmail.com>
 ---
- tests/qemu-iotests/check     |  2 ++
- tests/qemu-iotests/common.rc | 47 +++++++++++++++++++++++++-----------
- 2 files changed, 35 insertions(+), 14 deletions(-)
+ block/export/fuse.c | 100 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 90 insertions(+), 10 deletions(-)
 
-diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
-index 545f9ec7bd..c6fa0f9e3d 100755
---- a/tests/qemu-iotests/check
-+++ b/tests/qemu-iotests/check
-@@ -94,6 +94,8 @@ def make_argparser() -> argparse.ArgumentParser:
-         mg.add_argument('-' + fmt, dest='imgfmt', action='store_const',
-                         const=fmt, help=f'test {fmt}')
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index c117e081cd..abae83041b 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -934,6 +934,57 @@ static void read_from_fuse_fd(void *opaque)
+     qemu_coroutine_enter(co);
+ }
 
-+    # To test FUSE-over-io_uring, set the environment variable
-+    # FUSE_OVER_IO_URING=1. This applies only when using the 'fuse' protocol
-     protocol_list = ['file', 'rbd', 'nbd', 'ssh', 'nfs', 'fuse']
-     g_prt = p.add_argument_group(
-         '  image protocol options',
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index e977cb4eb6..a3e0ccb3d2 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -546,10 +546,37 @@ _make_test_img()
-         # iotests.  The default allow-other=auto has the downside of printing a
-         # fusermount error on its first attempt if allow_other is not
-         # permissible, which we would need to filter.
--        QSD_NEED_PID=y $QSD \
--              --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
--              --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
--              &
-+        if [ -n "$FUSE_OVER_IO_URING" ]; then
-+            # The current Linux kernel requires registering `nr_cpu` Ring Queues
-+            # when FUSE-over-io_uring is enabled. Here, we set half of the
-+            # Ring Queues to FUSE Queues (`nr_iothreads`) to test the queue
-+            # distribution feature.
-+            # See the comments in fuse.c regarding the round-robin distribution
-+            # between Ring Queues and FUSE Queues.
-+            nr_cpu=$(nproc 2>/dev/null || echo 1)
-+            nr_iothreads=$((nr_cpu / 2))
-+            if [ $nr_iothreads -lt 1 ]; then
-+                nr_iothreads=1
-+            fi
++#ifdef CONFIG_LINUX_IO_URING
++static void fuse_export_delete_uring(FuseExport *exp)
++{
++    exp->is_uring = false;
++    exp->uring_started = false;
 +
-+            iothread_args=""
-+            iothread_export_args=""
-+            for ((i=0; i<$nr_iothreads; i++)); do
-+                iothread_args="$iothread_args --object iothread,id=iothread$i"
-+                iothread_export_args="$iothread_export_args,iothread.$i=iothread$i"
-+            done
++    for (int i = 0; i < exp->num_uring_queues; i++) {
++        FuseUringQueue *rq = &exp->uring_queues[i];
 +
-+            QSD_NEED_PID=y $QSD \
-+                    $iothread_args \
-+                    --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
-+                    --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off,io-uring=on$iothread_export_args \
-+                &
-+        else
-+            QSD_NEED_PID=y $QSD \
-+                --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
-+                --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
-+                &
-+        fi
++        for (int j = 0; j < FUSE_DEFAULT_URING_QUEUE_DEPTH; j++) {
++            g_free(rq->ent[j].req_payload);
++        }
++        g_free(rq->ent);
++    }
++
++    g_free(exp->uring_queues);
++}
++#endif
++
++/**
++ * The Linux kernel currently lacks support for asynchronous cancellation
++ * of FUSE-over-io_uring SQEs. This can lead to a race where an IOThread may
++ * access fuse_fd after it is closed but before pending SQEs are canceled,
++ * potentially operating on a newly reused file descriptor.
++ *
++ * Therefore, schedule a BH in the IOThread to close and invalidate fuse_fd,
++ * to avoid races on fuse_fd.
++ */
++#ifdef CONFIG_LINUX_IO_URING
++static void close_fuse_fd(void *opaque)
++{
++    FuseQueue *q = opaque;
++
++    if (q->fuse_fd >= 0) {
++        close(q->fuse_fd);
++        q->fuse_fd = -1;
++    }
++}
++#endif
++
++/**
++ * During exit in FUSE-over-io_uring mode, qemu-storage-daemon requests
++ * shutdown in main() and then immediately tears down the block export.
++ * However, SQEs already submitted under FUSE-over-io_uring may still complete
++ * and generate CQEs that continue to hold references to the block export,
++ * preventing it from being freed cleanly.
++ *
++ * Since the Linux kernel currently lacks support for asynchronous cancellation
++ * of FUSE-over-io_uring SQEs, this function aborts the connection and cancels
++ * all pending SQEs to ensure a safe teardown.
++ */
+ static void fuse_export_shutdown(BlockExport *blk_exp)
+ {
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
+@@ -949,18 +1000,42 @@ static void fuse_export_shutdown(BlockExport *blk_exp)
+          */
+         g_hash_table_remove(exports, exp->mountpoint);
+     }
++
++#ifdef CONFIG_LINUX_IO_URING
++    if (exp->uring_started) {
++        for (size_t i = 0; i < exp->num_fuse_queues; i++) {
++            FuseQueue *q = &exp->queues[i];
++
++            /* Queue 0's FD belongs to the FUSE session */
++            if (i > 0) {
++                aio_bh_schedule_oneshot(q->ctx, close_fuse_fd, q);
++            }
++        }
++
++        /* To cancel all pending SQEs */
++        if (exp->fuse_session) {
++            if (exp->mounted) {
++                fuse_session_unmount(exp->fuse_session);
++            }
++            fuse_session_destroy(exp->fuse_session);
++        }
++        g_free(exp->mountpoint);
++    }
++#endif
+ }
 
-         pidfile="$QEMU_TEST_DIR/qemu-storage-daemon.pid"
+ static void fuse_export_delete(BlockExport *blk_exp)
+ {
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
 
-@@ -595,16 +622,8 @@ _rm_test_img()
-         # Wait until the mount is gone
-         timeout=10 # *0.5 s
-         while true; do
--            # Will show the mount point; if the mount is still there,
--            # it will be $img.
--            df_output=$(df "$img" 2>/dev/null)
+-    for (int i = 0; i < exp->num_fuse_queues; i++) {
++    for (size_t i = 0; i < exp->num_fuse_queues; i++) {
+         FuseQueue *q = &exp->queues[i];
+
+-        /* Queue 0's FD belongs to the FUSE session */
+-        if (i > 0 && q->fuse_fd >= 0) {
+-            close(q->fuse_fd);
++        if (!exp->uring_started) {
++            /* Queue 0's FD belongs to the FUSE session */
++            if (i > 0 && q->fuse_fd >= 0) {
++                close(q->fuse_fd);
++            }
+         }
+         if (q->spillover_buf) {
+             qemu_vfree(q->spillover_buf);
+@@ -968,15 +1043,20 @@ static void fuse_export_delete(BlockExport *blk_exp)
+     }
+     g_free(exp->queues);
+
+-    if (exp->fuse_session) {
+-        if (exp->mounted) {
+-            fuse_session_unmount(exp->fuse_session);
++    if (exp->uring_started) {
++#ifdef CONFIG_LINUX_IO_URING
++        fuse_export_delete_uring(exp);
++#endif
++    } else {
++        if (exp->fuse_session) {
++            if (exp->mounted) {
++                fuse_session_unmount(exp->fuse_session);
++            }
++            fuse_session_destroy(exp->fuse_session);
+         }
+
+-        fuse_session_destroy(exp->fuse_session);
++        g_free(exp->mountpoint);
+     }
 -
--            # But df may also show an error ("Transpoint endpoint not
--            # connected"), so retry in such cases
--            if [ -n "$df_output" ]; then
--                if ! echo "$df_output" | grep -q "$img"; then
--                    break
--                fi
-+            if ! mount | grep -q "$img"; then
-+                break
-             fi
+-    g_free(exp->mountpoint);
+ }
 
-             sleep 0.5
+ /**
 --
 2.43.0
 
