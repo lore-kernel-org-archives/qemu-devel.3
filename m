@@ -4,66 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203C3EE0ADC
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C405EE0ADC
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 12:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vohHT-0004hj-9B; Sat, 07 Feb 2026 07:19:19 -0500
+	id 1vohgE-0002xe-Sh; Sat, 07 Feb 2026 07:44:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vohHQ-0004hC-5x
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:19:16 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vohgD-0002xG-FQ
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:44:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vohHM-0004Wz-OK
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:19:15 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1593:0:640:6beb:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A0C338083E;
- Sat, 07 Feb 2026 15:19:06 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:129::1:13] (unknown
- [2a02:6bf:8080:129::1:13])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5JOReL1AAW20-8W05PDOb; Sat, 07 Feb 2026 15:19:05 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770466745;
- bh=a8E+Z5PsPSnT8yuePLI8HO8JQpeHTApdYDNti2DjGKA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=xsiZWocDp1O6H7hlpKRRkzDKEYaAx5azhqOjfGflxw2An7vzYunf1fYrIEKsOuBC8
- ec2J1ZVGKo9b1DJqhxR/Vh4dfTvYj71H1UYkMLlvvp6+CmSxr2CmoYJnMWLBEZ9lb/
- 9zj7wlEoHg91GORjN8YDZOCzqSRX3zBjx/77BAWo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <e69d5e72-043b-4ae4-915a-4b638503fca5@yandex-team.ru>
-Date: Sat, 7 Feb 2026 15:19:04 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vhost-user: pass GPA instead of UVA
-To: "Michael S. Tsirkin" <mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vohgA-0000qh-Qb
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 07:44:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770468288;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vnKfluWkbgWXVBr0wqEZT5Kz9iQa3HpHmsP4eTiwLRE=;
+ b=aHU/t/cF1mJtuDSGF9eX1j0PurMD/cPosCrVz0VGj2lFZrn9uysu9x1AQIOs9rVlegrFC8
+ yNTwQi5uZ/9WOGAhZQDhmeS1vtkko41yoOptfz4iTL5wg0Qp/Feot6IJYrtWttfngdxEY8
+ GJcvhqOsuP98BXe/gFTk+x4OTt2/CrQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-r0xHO2cIN0CUiE3nifA5Ow-1; Sat, 07 Feb 2026 07:44:46 -0500
+X-MC-Unique: r0xHO2cIN0CUiE3nifA5Ow-1
+X-Mimecast-MFC-AGG-ID: r0xHO2cIN0CUiE3nifA5Ow_1770468286
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48079ae1001so13943525e9.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 04:44:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770468285; x=1771073085; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vnKfluWkbgWXVBr0wqEZT5Kz9iQa3HpHmsP4eTiwLRE=;
+ b=HYN2wFvP5/haLJRNRlPXpizwjfXgcVf97HU5mCSZamezYg6rCd5Xo81yE3crTBhH3l
+ Vzfaff2IjNMpzdRs0V8QMXdBgjFSnMuGoEsm9p+M3XcaansOA4rxbE80bx3Na6426Ool
+ 3l6F1jOjLtriHKEfXKrDXkz9rC31X8x/1B1jglvBdUk9ThjUM5EEdCo+UYu5+5lvJkUT
+ aboz0SZ8Wy4avg+VOJLpUYXa0Q0WhekfTIyz+rC1guf+9QSEnIlGXTZUJtmpITKHyL2a
+ 8sGygA9E1+n3oLf+041Ejn6QXN4pI2pTkvO8YcjIhTSSIT9gBtRjAkRd4agWJwTpf2AT
+ gNmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770468285; x=1771073085;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vnKfluWkbgWXVBr0wqEZT5Kz9iQa3HpHmsP4eTiwLRE=;
+ b=pGZiwxB3NFGPaXG1omNMQdLWl6/VGQ45gDkTTMOM/pRFoF2Do6FLhOTQO2ei5MMpRa
+ ccmWbepP5RdvIjJnDLM2YWRkEOQefPQuM1OVtzpnPIxuhmc/2SefbTXEbF80qHLk7bNc
+ S2uulGNaPlISGe/ime/uwFYBIZ7PNUjH5wPIWjygNlBE4uO2Jb0okWf301UVkSj/3Q5M
+ Bb8/bP2mKOB5IEQRH1Q893W/3Wimvr8SpaXihLG1ahMJADpUt5ixxBdjb+2s3BFlurTw
+ mJYgIlS8ewDqIRwlSI0/h6QJ+EDc5et49MTtfu7cAaaQNQIwsHkDrLRL6/SZVjkdYkNb
+ PW6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvnyMo8JIT6Hc3d8e8TPwgi+wU9IWJq4DrhYf7WvnLKtHUD+o0iIZRdNCUY/0W1v/GjvlCPGwbM/I9@nongnu.org
+X-Gm-Message-State: AOJu0YzSpQf7xtdl2WBzy9OuUnnBvYLqJD35eUXlHoALxT+Ifw2/sVsw
+ dYMCiMMk2Czd7VcN3ZpqIWn/xRky3qJfNZu+3PIiOPG3oV2qZwfuag94uDNIqBL8/dXj1M2rk2p
+ FLHg9eIqZXShK+drXYbeh2yaPw4USm43vgAgaMD50QwzUjSWZ0QUiYJfG
+X-Gm-Gg: AZuq6aJxlNpn4i/77AMLcwf3k0UuZrTg4MCWZnrTmy2QlR/b7qfwIIOCFEJINWOQfon
+ hF/F07cCbsQ+w91E5ShTfs/DqiiZWcGDzD+EvCLUsaACDL8JB//11hW1oIXsWgymW6O9nC+esTr
+ MvnCQwlTy4QrvySxJKnDth58mF1Wz/+Uk4HogIsqCWxY8/TlbCl0uur63zcup7VcQZ3XYFWfimw
+ fY7DI+NvI7goiPHNi15VFOJkAmn7hWlTTAm/ZCzJdM+z/nVDbSpnR+/aUHhcI9PZYCmkQL9NXYt
+ pKVFrspJg6KEv3dYQI+dtYfNGWoEWBqLXM+IYWq84S/LvqbeLaecBpiKkD0uJuAbSNCQpmOuL1v
+ I1yW7uh5OAGrYSYN3hh7jvImYfwD55kUnGA==
+X-Received: by 2002:a05:600c:46d0:b0:46e:4a13:e6c6 with SMTP id
+ 5b1f17b1804b1-48320212c49mr80089325e9.19.1770468285422; 
+ Sat, 07 Feb 2026 04:44:45 -0800 (PST)
+X-Received: by 2002:a05:600c:46d0:b0:46e:4a13:e6c6 with SMTP id
+ 5b1f17b1804b1-48320212c49mr80089035e9.19.1770468284908; 
+ Sat, 07 Feb 2026 04:44:44 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48317d8341csm186633395e9.13.2026.02.07.04.44.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Feb 2026 04:44:44 -0800 (PST)
+Date: Sat, 7 Feb 2026 07:44:41 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
+Subject: Re: [PATCH] vhost-user: pass GPA instead of UVA
+Message-ID: <20260207074418-mutt-send-email-mst@kernel.org>
 References: <20260204092339.211650-1-vsementsov@yandex-team.ru>
  <20260205031227-mutt-send-email-mst@kernel.org>
  <23c05b17-f993-48fd-bf41-06d358fd74d9@yandex-team.ru>
  <20260205033629-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260205033629-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+ <e69d5e72-043b-4ae4-915a-4b638503fca5@yandex-team.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e69d5e72-043b-4ae4-915a-4b638503fca5@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,159 +121,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.02.26 11:37, Michael S. Tsirkin wrote:
-> On Thu, Feb 05, 2026 at 11:22:26AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 05.02.26 11:13, Michael S. Tsirkin wrote:
->>> On Wed, Feb 04, 2026 at 12:23:39PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> Unlike the kernel, vhost-user backend knows nothing about QEMUs
->>>> userspace addresses. We can pass GPA instead and nothing changes.
->>>>
->>>> The benefit: open the doors for further implementation of local
->>>> migration (live-update) with passing open vhost-releated FDs
->>>> through UNIX domain socket. This way the connection with backend
->>>> kept live and untouched.
->>>>
->>>> Without this change, we'll have to communicate with backend to
->>>> inform it about UVA addresses change, but better is simply use
->>>> more stable GPA numbers, like it's done for VDPA.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> ---
->>>>    hw/virtio/vhost-user.c | 30 ++++++++++++++++++++++++++++++
->>>>    1 file changed, 30 insertions(+)
->>>>
->>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->>>> index 63fa9a1b4b..f379408c95 100644
->>>> --- a/hw/virtio/vhost-user.c
->>>> +++ b/hw/virtio/vhost-user.c
->>>> @@ -386,6 +386,24 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
->>>>        CharFrontend *chr = u->user->chr;
->>>>        int ret, size = VHOST_USER_HDR_SIZE + msg->hdr.size;
->>>> +    if (msg->hdr.request == VHOST_USER_REM_MEM_REG ||
->>>> +        msg->hdr.request == VHOST_USER_ADD_MEM_REG) {
->>>> +
->>>> +        /*
->>>> +         * In QEMU we pass guest physical addresses to vhost-user server
->>>> +         * instead of QEMUs virtual address. Server have no option to
->>>> +         * distinguesh,
->>>
->>> what does this mean? "Servers don't really care"?
->>
->> Yes. Still, we can't be sure, what servers care about. But I think, as
->> they don't have any access to QEMUs virtual address space, they can't
->> have any logic that breaks if we start to pass GPA instead of UVA
->> (imagine, that "accidentally" GPA and UVA are the same for the case).
-> 
-> right, just write something understandable pls.
-> 
->>>
->>>> but we get a benefit: guest physical address is
->>>> +         * stable during migration, and we don't have to reset memory
->>>> +         * regions.
->>>
->>> curious if PA 0 is valid on some systems (as opposed to VA).
->>
->> Hmm, you are right, that's visible thing which differs for UVA and GPA.
->> Still, checking UVA to be non-zero on server side seems rather strange,
->> as the only use for these UVA addresses in the server is to calculate
->> offsets. The server is only interested in offsets inside given memory
->> region, not absolute UVA values.
->>
->> And we don't write in spec that UVA can't be zero, and we already use
->> GPA for VDPA.
-> 
-> poking at some servers to make sure can't hurt.
+On Sat, Feb 07, 2026 at 03:19:04PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Hmm.. Seems that we need a feature flag to live without UVA addresses. In the long
+> run, it's better than hacking.
 
-
-I can't believe it. I checked DPDK vhost-user implementation - it seems OK.
-
-But our own vhost-user server in QEMU does this:
-
-static bool
-vu_is_vq_usable(VuDev *dev, VuVirtq *vq)
-{
-     if (unlikely(dev->broken)) {
-         return false;
-     }
-
-     if (likely(vq->vring.avail)) {
-         return true;
-     }
-
-     /*
-      * In corner cases, we might temporarily remove a memory region that
-      * mapped a ring. When removing a memory region we make sure to
-      * unmap any rings that would be impacted. Let's try to remap if we
-      * already succeeded mapping this ring once.
-      */
-     if (!vq->vra.desc_user_addr || !vq->vra.used_user_addr ||   <<<<<<<<<<<<<<<<<<<<
-         !vq->vra.avail_user_addr) {
-         return false;
-     }
-     if (map_ring(dev, vq)) {
-         vu_panic(dev, "remapping queue on access");
-         return false;
-     }
-     return true;
-}
-
-
-It really check whether the received "userspace" addresses are zero. Fantastic.
-
-Hmm.. Seems that we need a feature flag to live without UVA addresses. In the long
-run, it's better than hacking.
-
-
-> 
->>>
->>>
->>>> +         *
->>>> +         * Look also at vhost_user_vq_get_addr(): like in VDPA, we pass
->>>> +         * physical addresses instead of user.
->>>> +         */
->>>> +
->>>> +        msg->payload.mem_reg.region.userspace_addr =
->>>> +            msg->payload.mem_reg.region.guest_phys_addr;
->>>> +    }
->>>> +
->>>>        /*
->>>>         * Some devices, like virtio-scsi, are implemented as a single vhost_dev,
->>>>         * while others, like virtio-net, contain multiple vhost_devs. For
->>>> @@ -3021,6 +3039,17 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
->>>>        return 0;
->>>>    }
->>>> +static int vhost_user_vq_get_addr(struct vhost_dev *dev,
->>>> +                                  struct vhost_vring_addr *addr,
->>>> +                                  struct vhost_virtqueue *vq)
->>>> +{
->>>> +    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
->>>> +    addr->desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
->>>> +    addr->avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
->>>> +    addr->used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
->>>> +    return 0;
->>>> +}
->>>> +
->>>>    const VhostOps user_ops = {
->>>>            .backend_type = VHOST_BACKEND_TYPE_USER,
->>>>            .vhost_backend_init = vhost_user_backend_init,
->>>> @@ -3059,4 +3088,5 @@ const VhostOps user_ops = {
->>>>            .vhost_supports_device_state = vhost_user_supports_device_state,
->>>>            .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
->>>>            .vhost_check_device_state = vhost_user_check_device_state,
->>>> +        .vhost_vq_get_addr = vhost_user_vq_get_addr,
->>>>    };
->>>> -- 
->>>> 2.52.0
->>>
->>
->>
->> -- 
->> Best regards,
->> Vladimir
-> 
-
+Right.
 
 -- 
-Best regards,
-Vladimir
+MST
+
 
