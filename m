@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D63EE0AE0
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 13:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93824EE0ADC
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 13:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voia1-00014v-NV; Sat, 07 Feb 2026 08:42:33 -0500
+	id 1voiaI-00019F-P0; Sat, 07 Feb 2026 08:42:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1voiZz-00014m-4w
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:42:31 -0500
+ id 1voiaG-00018j-T0
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:42:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1voiZw-0002hX-M8
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:42:30 -0500
+ id 1voiaF-0002mr-88
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:42:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770471745;
+ s=mimecast20190719; t=1770471766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=W8OisJpRxYve1TVsihBY5EFx069uyfydRLrtqZq8bAc=;
- b=dIOoroA00bCKskiF98p5J3hBCR6kD4yVHUg44mn3J2fccb1gN1OZTduqfVKE0kwc69KRc4
- sFVeyBY3HUFEjPUtbaMJuIcLCdleCf13w27bf+kLIcVNdKEg8QsYIv1AnepGN5G62vVNuG
- osHmFEGmFN8ex+oj+VMDflcl3lMIIDQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=QqKZyGN5M2NdUnuiW4e3p0VFyUtxOUzWVBHRDyQjvYqeFyCBt57DAjxB+spCVysPmMv3nK
+ mKHtiTvjfPY8O8cNf0Njb9v89fv7WzdBlPIdzlDwSttCh+ny6FdiWuW+vcRDba7MSuE4Dd
+ cQvcB+Kfd/oqK/N/EnX0hlxq+CAZoTU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-176-IUImrB3jN_u9SVsOXJt5eA-1; Sat, 07 Feb 2026 08:42:24 -0500
-X-MC-Unique: IUImrB3jN_u9SVsOXJt5eA-1
-X-Mimecast-MFC-AGG-ID: IUImrB3jN_u9SVsOXJt5eA_1770471743
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4361765dc85so2760485f8f.0
- for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 05:42:24 -0800 (PST)
+ us-mta-6-ebvRzyYZOX-w1iLPG8xJ-g-1; Sat, 07 Feb 2026 08:42:44 -0500
+X-MC-Unique: ebvRzyYZOX-w1iLPG8xJ-g-1
+X-Mimecast-MFC-AGG-ID: ebvRzyYZOX-w1iLPG8xJ-g_1770471763
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-482eec44485so24329855e9.3
+ for <qemu-devel@nongnu.org>; Sat, 07 Feb 2026 05:42:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770471743; x=1771076543; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:fcc:content-language:from
+ d=redhat.com; s=google; t=1770471763; x=1771076563; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
  bh=W8OisJpRxYve1TVsihBY5EFx069uyfydRLrtqZq8bAc=;
- b=lFEYvzUjr7WxwrjjY6Gbbv9cEtkJRZ+kPXGa7q9FseAdKrbX6vunWjJu7SD1vrXTkY
- U3czecHCmt91SQYz+TU2/o0TDGwhbQWxr/82Exs7aqOgVZiMbvpuRPt4JZ00e2la644E
- K1jIwIrJWb4fKdatcsaNd/raiSRsTMyweurkeCo7PYb7uF2FqcBVTob3Jk74qwJTNO0p
- BOvzfK/SHs+Mn3x6u55sa4pXpTf+RGJeBFMVioHVOaRTl/WCS8X17ztvzCACb+4sLQcf
- 9D3KdLjuvfmLMKToUrNU7j63cjwaxFG4D5WFAmtmI3M/ZuobglORD7qbjuJ/bb0XgF5d
- 3sCA==
+ b=EzXr2i1wArsyWU1w/eZ83QyqNxg7yjMd2Ws3YC2HzoAeKLce0xNfY7mNwAwaHifAyJ
+ phgOqt3X54aZfg3XSpKGNexGEi7sb6SqRY8opNKeBKObsFwRwCVyuwDKztUblwYkePWf
+ QhjQAtfbT5ovrwwsRGhxtH5eHr0+JZa+SITUTCX4alerHha8TyEobQCH++N13jO4xrvT
+ jwa/ib4pKcr1cYUB3L2Xnnji44sgpw3sfEsnnPsYgTqmeTvVfiUpfzrLhSOLGF37JZhC
+ HOhk1k/ZyMCfvfCFP467JChuDFH7IClC5TuZ9yhhcjSQXJFCMmWd6AGCB/ZslBMzb5xn
+ 0qDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770471743; x=1771076543;
- h=content-transfer-encoding:in-reply-to:fcc:content-language:from
+ d=1e100.net; s=20230601; t=1770471763; x=1771076563;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
  bh=W8OisJpRxYve1TVsihBY5EFx069uyfydRLrtqZq8bAc=;
- b=mO6Q6z/1guwA/IYWtO5xlKRUX3y2/+CA+sAx72xgMU15SBaNKxPCdiTxsW6N+5rCtB
- RNPnKcyrypNfPbkYbfSXB+9LmYBEyqlirsEcFg6RLEDWq/PYJ69DFRMF9Tlwo6K/XwUT
- 5v9mbaGQfZNI05FAVm6/r3aCnk1qR2usqfG8zr72uW1nyrga/irSLq749ETRMpCDKFru
- FZ3FtqNvSsZmwCepdwwFwC3A4sEOBjpYUMMTeWTQagDwgaY0AHjSVdwJOccneT92J0ts
- 4OefOlOzzqF+JN+ZtxRfU0tzCQreXgTIA6L1hQOEGtK2oiUOetiHzeHVkpLzEnxjKBrO
- I9Dw==
+ b=ATvqaq6fJem7k+gDkpk3l+vHk78EuIYUulS27sOfyaJ+YeHLFOv2FF1N9QX+fbltv8
+ jV82HyQsnkuWP3gBg9C4jfjfcwg6y3Zeny68n+LOWB1HS1OEgJC4n6P1MOsjUg1cSgoM
+ wSSTB9FqtjR16h9G56AoIMjtIgfUK9K0KfuSnHezLeZa5pyDLfayh9DlKRsRCoUNLBiP
+ 2eHKROCxvz504M1M7OvdX45fMFSJSHktHNOAzjb+xbpnDPOkOMsmv13/4VzThy8yAbLk
+ n2PgGvKTptuu7MHnoE1Vsdb7h9wBO5cRtu4qFqdR+rsx6VBjNQycKIdvvWnexnIfmFNe
+ CexQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGkslL3wLhlIDSosJxIO2Wyf2rZ6FCrhHDI4R978R1CncwuSKTS+0VzE55nqva2HiRJyk5KIc9bwIQ@nongnu.org
-X-Gm-Message-State: AOJu0Ywjn41lEAyGeCPeLa2fVhk952lFk4zEkJdArMRsk/yvr9Kr3AfW
- KZ9kAC9FnSkSI3rj4KaF36cRBRNiLwVAy8GGRbSj14mFnklyjP4aQbfnaxrpWRMe4Fy1jQYtgmf
- CMPrGE8xCrHQ5IC0z9SRu6ks1SyWlUORee1ARBwjKAfJ7Cc26bWgEvYSjtfNmtJhy
-X-Gm-Gg: AZuq6aKZNkKvgBF94std+AA0swvDchEbx4BkjX/aJcPDuWUoHoheDrFfO9zoYQFa1iZ
- 1Lq8+IwborVEbS+D7PmsXiUDWJXrxEknBYcemH/eh0AVBzOnc8oM2GuQ2npGspBGUoB19iC6dLg
- wnyTN7rpfg/0uKakmwZL+5gcyCgmd7OUh52cu9IbTg3eeUgXcI0B/KMp9F+1rFrNbaVWTrm3fTi
- h71uVXBMcxTwS1LxzcIFcABqgMj+ZivXZvYH5dLL1Gqjg4fM8K/ozfmt7bHAQNfY5coQd0lkBMx
- wTDAMHjQBqvAO2eyV/71eJfQ6mf6VQsEkCuU9GQHSjO4F7cH0jIOkJ5WIFA66rLQ9+wnsFN0tJb
- +lYS/SaFDFlj/oryop8g05E9RzY3T3JLUS4GjRxIsnumV3Ky+dSn7uNMT2nknWvPHS5GXaWF8m2
- ZYNPEzBstOcQ5GSlAQgEo6RoU4iAx/6o1b/n9+QLADOQ==
-X-Received: by 2002:a05:6000:240e:b0:436:23a2:5e25 with SMTP id
- ffacd0b85a97d-4362938fe8dmr9309689f8f.44.1770471742732; 
- Sat, 07 Feb 2026 05:42:22 -0800 (PST)
-X-Received: by 2002:a05:6000:240e:b0:436:23a2:5e25 with SMTP id
- ffacd0b85a97d-4362938fe8dmr9309659f8f.44.1770471742213; 
- Sat, 07 Feb 2026 05:42:22 -0800 (PST)
+ AJvYcCWLC8RROEkJTuBy+RDbAkM/Ltdn4heDkWI9kU4ZNNaoWcTq+O+X2jMcGrX/HX+jon/69EcJgpjkOC4G@nongnu.org
+X-Gm-Message-State: AOJu0YzvQSUfV5b8SSm5VudmJXwP6oLbImxPGB5mrXGKnPd1hh90INNG
+ vZeeObh7bFklT2ef2FbqYrrikqSc6yqFmfersJ1DvXYIxxJvGvaOt4+MVy0/kG7WegilyfQ0txl
+ Ufn9+736q7c7fUTjGpDGs0jN8NT/yBM+WWGLqHjqPvqQye5UemQNpCZGB
+X-Gm-Gg: AZuq6aLsnHSOuMEFZw3S8CYAt/HAywMxHfmYQoRYU8gV+62QJ5+4VljDy077JYGa9Ih
+ s293cO4mYF26+0Jpl1DuicnZ72co9mfAZm5XTjcWSx86MaQauyNxdK7TngxJki+VDfQSM75W18j
+ f4TED7AiSCEdoKiPFiFStbOL8a9iQ4DHeUX7G5cEXAg09hPrl2cBFHrC7ob3REwFCYBdgtrG7x4
+ o8YBtrZYEsrKltx8kqHUuL39Igfa3r9nIUjHt1yZdJn2L+7FgYgfXhOcTsLajiAptxjRGdjfJbH
+ 9oMetXiWY3OymypYWzJhRNNo+7YAI0jhwGBdvXE6f1vO9erxr6fUy656r0rCOkzJj0xugDzg7Fc
+ O9wT6gCIv56mG8cNDynapYiwWcFgOfyKXbLEoU88U55Wq+3Ki8VcUq4xN+99mcZGahsYGGYVD93
+ vBhy6L40NUv8ZrbR/kDBHoD3sI9WaeFlg9beRPTfrJog==
+X-Received: by 2002:a05:600c:5253:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-483201ee7f4mr83257285e9.15.1770471763243; 
+ Sat, 07 Feb 2026 05:42:43 -0800 (PST)
+X-Received: by 2002:a05:600c:5253:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-483201ee7f4mr83256915e9.15.1770471762823; 
+ Sat, 07 Feb 2026 05:42:42 -0800 (PST)
 Received: from [10.58.49.123] (93-44-32-35.ip95.fastwebnet.it. [93.44.32.35])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-436296bd4a1sm12761505f8f.17.2026.02.07.05.42.21
+ ffacd0b85a97d-436296b2110sm12850055f8f.3.2026.02.07.05.42.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Feb 2026 05:42:21 -0800 (PST)
-Message-ID: <9ab2b8ac-525d-48c5-b42a-c732dae75668@redhat.com>
-Date: Sat, 7 Feb 2026 14:42:20 +0100
+ Sat, 07 Feb 2026 05:42:42 -0800 (PST)
+Message-ID: <d5c37f7b-cbc5-45fc-a0e3-dd2fe4368b14@redhat.com>
+Date: Sat, 7 Feb 2026 14:42:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 0/5] scsi: persistent reservation live migration
@@ -103,10 +103,6 @@ Cc: qemu-block@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
 References: <20260129212035.219676-1-stefanha@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; DSN=0; uuencode=0;
- attachmentreminder=0; deliveryformat=0
-X-Identity-Key: id7
-Fcc: imap://pbonzini%40redhat.com@imap.gmail.com/[Gmail]/Sent Mail
 In-Reply-To: <20260129212035.219676-1-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
