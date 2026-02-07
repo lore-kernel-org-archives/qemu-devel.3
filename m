@@ -4,62 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F193EE6B74
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 03:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1831BEE6B74
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 06:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voYxU-0006tG-OU; Fri, 06 Feb 2026 22:26:09 -0500
+	id 1voc6q-0003f2-Jq; Sat, 07 Feb 2026 01:48:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1voYxR-0006t6-Lq
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 22:26:06 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1voc6n-0003et-T3
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 01:47:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1voYxN-0002MB-N4
- for qemu-devel@nongnu.org; Fri, 06 Feb 2026 22:26:05 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6173OSag070414
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Feb 2026 12:25:50 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2bQsrotEBoNfXQyvrIgUEGLWfkG1di1K0/4cbtNegaw=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1770434751; v=1;
- b=vUj6NJd/uR3gWoW+i0RNWWBK4GtMFqZ4j9B5BNq837RVmsImqk9hTMq/FIA36fR4
- U4m2PJ8zkJoX75RtG/lKwGN+9UE9gY6x2KbpSURPPsxqGDgBQFBPMlWRx5h/rbZx
- 9aL/zAWqIecoqsNwrbqUFQv3YcN43c1nORxIX9wWoykB/bIqfBPGfgQSIfCUddrX
- CXAtoBwfJE442s5opxBm+hd3kZ516K2K98iGwfwBP4MayuSj00BHcZtSOQtt+nzh
- ynL25cZdlVxj//b2PPWMyy3Ex1QRPi/YRgvIuFGi/qjCNFxW3OxvkgGaJ+9pRJOV
- i705nPtnDcxZN+Skok90TQ==
-Message-ID: <9cb0ad2d-07c3-4acc-8b67-83c8c34821c1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Feb 2026 12:24:28 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1voc6l-0000mL-5g
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 01:47:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770446872;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jgANyiTbmgTMuxaDKrLzkQCKWlksMQ6/XtxVHSxWcA4=;
+ b=EsITkKMNJOPpRxCqExw5uBkuqkPuF/aaDsgeHIompMiKZyXbcTJ03fNncSNZ6UFWJYc7y1
+ VROo2uN/kMy0JDxVQ8bGcJfP4eacf6EJDvarGdxTt6ue41Nm23z6TpRPF6MO99YpMLRVgc
+ 81drQysBFymts9Cm1OYkY/WSfSXCz50=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-8aUNHa64PvW_Xv_46eEumg-1; Sat,
+ 07 Feb 2026 01:47:48 -0500
+X-MC-Unique: 8aUNHa64PvW_Xv_46eEumg-1
+X-Mimecast-MFC-AGG-ID: 8aUNHa64PvW_Xv_46eEumg_1770446867
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 207E31955F20; Sat,  7 Feb 2026 06:47:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8663919560BA; Sat,  7 Feb 2026 06:47:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1DA7021E692D; Sat, 07 Feb 2026 07:47:44 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Andrew Keesler <ankeesler@google.com>
+Cc: alex.bennee@linaro.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 1/1] Support per-head resolutions with virtio-gpu
+In-Reply-To: <CAGZECHOuMEhotdv7YB7GL71cKF4dzbYhbLE4DN39f-ype=Gc3A@mail.gmail.com>
+ (Andrew Keesler's message of "Fri, 6 Feb 2026 11:23:13 -0500")
+References: <20260109202740.362506-1-ankeesler@google.com>
+ <20260109202740.362506-2-ankeesler@google.com>
+ <CAGZECHP9i9zeZP4wLtDtx44OsPesOC3hG=bmpjsGrYUVAG-mXg@mail.gmail.com>
+ <87ikccy8sm.fsf@pond.sub.org>
+ <CAGZECHOuMEhotdv7YB7GL71cKF4dzbYhbLE4DN39f-ype=Gc3A@mail.gmail.com>
+Date: Sat, 07 Feb 2026 07:47:44 +0100
+Message-ID: <87wm0pgicv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci/shpc: Do not unparent in instance_finalize()
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
- <d0135462-3b9f-47c7-bbbe-b5bbbc2cc08e@tls.msk.ru>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <d0135462-3b9f-47c7-bbbe-b5bbbc2cc08e@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,66 +88,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/06 6:25, Michael Tokarev wrote:
-> On 10/27/25 04:24, Akihiko Odaki wrote:
->> Children are automatically unparented so manually unparenting is
->> unnecessary.
->>
->> Worse, automatic unparenting happens before the instance_finalize()
->> callback of the parent gets called, so object_unparent() calls in
->> the callback will refer to objects that are already unparented, which
->> is semantically incorrect.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> Is this a qemu-stable material?
+Andrew Keesler <ankeesler@google.com> writes:
 
-I don't think so. It's semantically incorrect but I don't see a 
-possibility that it causes a real problem. Cherry-picking it shouldn't 
-cause a harm though. Having this patch or not shouldn't make any 
-behavioral change.
+>> So when exactly one of @xres or @yes is present, it's silently ignored?
+>
+> That is the currently proposed behavior, yes.
+>
+> Here is the related review comment.
+>
+>   https://mail.gnu.org/archive/html/qemu-devel/2025-08/msg04584.html
+>
+> WDYT?
 
-Regards,
-Akihiko Odaki
+I think nonsensical configuration should be an error.
 
-> 
-> Please let me know if it is -- I'm *not* queuing it up for now.
-> 
-> Thanks,
-> 
-> /mjt
-> 
->> ---
->> See also:
->> https://lore.kernel.org/qemu-devel/20250924-use- 
->> v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp
->> ---
->>   hw/pci/shpc.c | 1 -
->>   1 file changed, 1 deletion(-)
->>
->> diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
->> index aac6f2d03459..938602866d77 100644
->> --- a/hw/pci/shpc.c
->> +++ b/hw/pci/shpc.c
->> @@ -735,7 +735,6 @@ void shpc_free(PCIDevice *d)
->>       if (!shpc) {
->>           return;
->>       }
->> -    object_unparent(OBJECT(&shpc->mmio));
->>       g_free(shpc->config);
->>       g_free(shpc->cmask);
->>       g_free(shpc->wmask);
->>
->> ---
->> base-commit: c85ba2d7a4056595166689890285105579db446a
->> change-id: 20251027-shpc-d71bb72d67af
->>
->> Best regards,
->> -- 
->> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->>
->>
-> 
+>> (since 11.0)
+>
+> ACK, fixed in next patch.
+>
+>> Mentioning this in the commit message wouldn't hurt.
+>
+> ACK, fixed in next patch.
+>
+>> Recovering from the coughing plague.
+>
+> Hope you feel better.
+
+Much improved, thanks!
+
+[...]
 
 
