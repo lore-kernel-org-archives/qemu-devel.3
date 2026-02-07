@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C95BEE0AF1
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 22:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D94EE0AEC
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 22:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vorDp-0001fN-TA; Sat, 07 Feb 2026 17:56:13 -0500
+	id 1vorDo-0001ct-Ts; Sat, 07 Feb 2026 17:56:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <SRS0=SWPb=AL=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1vorDl-0001Yz-LB
+ id 1vorDl-0001Yw-IX
  for qemu-devel@nongnu.org; Sat, 07 Feb 2026 17:56:09 -0500
 Received: from sonata.ens-lyon.org ([140.77.166.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <SRS0=SWPb=AL=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1vorDj-0007gd-7u
+ id 1vorDj-0007gc-7s
  for qemu-devel@nongnu.org; Sat, 07 Feb 2026 17:56:09 -0500
 Received: from localhost (localhost [127.0.0.1])
- by sonata.ens-lyon.org (Postfix) with ESMTP id 42424A7500;
+ by sonata.ens-lyon.org (Postfix) with ESMTP id 4AE91A74FE;
  Sat,  7 Feb 2026 23:56:02 +0100 (CET)
 Received: from sonata.ens-lyon.org ([127.0.0.1])
  by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V17Dumbjc34A; Sat,  7 Feb 2026 23:56:02 +0100 (CET)
+ with ESMTP id oD1A9ozKHHPW; Sat,  7 Feb 2026 23:56:02 +0100 (CET)
 Received: from end (lfbn-orl-1-1611-126.w90-107.abo.wanadoo.fr
  [90.107.165.126])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
  SHA256) (No client certificate requested)
- by sonata.ens-lyon.org (Postfix) with ESMTPSA id 168BCA74FE;
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id 1CA67A74FF;
  Sat,  7 Feb 2026 23:56:02 +0100 (CET)
 Received: from samy by end with local (Exim 4.99.1)
  (envelope-from <samuel.thibault@ens-lyon.org>)
- id 1vorDd-00000004DOT-2fKA; Sat, 07 Feb 2026 23:56:01 +0100
+ id 1vorDd-00000004DOW-2o2M; Sat, 07 Feb 2026 23:56:01 +0100
 From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
 Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>, stefanha@redhat.com,
  jan.kiszka@siemens.com
-Subject: [PULL 0/1] baum: Add copy/paste bindings
-Date: Sat,  7 Feb 2026 23:55:59 +0100
-Message-ID: <20260207225600.1004788-1-samuel.thibault@ens-lyon.org>
+Subject: [PULL 1/1] baum: Add copy/paste bindings
+Date: Sat,  7 Feb 2026 23:56:00 +0100
+Message-ID: <20260207225600.1004788-2-samuel.thibault@ens-lyon.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260207225600.1004788-1-samuel.thibault@ens-lyon.org>
+References: <20260207225600.1004788-1-samuel.thibault@ens-lyon.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=140.77.166.138;
@@ -73,20 +75,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e8cffa556dd85be1ff7fbe9d19b19f33a0fb18d9:
+---
+ chardev/baum.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-  baum: Add copy/paste bindings (2026-02-07 23:53:41 +0100)
+diff --git a/chardev/baum.c b/chardev/baum.c
+index 157f8b9519..57fe60fe18 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -1,7 +1,7 @@
+ /*
+  * QEMU Baum Braille Device
+  *
+- * Copyright (c) 2008, 2010-2011, 2016-2017 Samuel Thibault
++ * Copyright (c) 2008, 2010-2011, 2016-2017, 2026 Samuel Thibault
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  * of this software and associated documentation files (the "Software"), to deal
+@@ -564,6 +564,30 @@ static void baum_chr_read(void *opaque)
+                 baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
+                 baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
+                 break;
++            case BRLAPI_KEY_CMD_CLIP_NEW:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_CLIP_ADD:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL2);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_COPY_LINE:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_COPY_RECT:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR2);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
+             case 0:
+                 switch (code & BRLAPI_KEY_CMD_ARG_MASK) {
+                 case BRLAPI_KEY_CMD_FWINLT:
+@@ -606,6 +630,10 @@ static void baum_chr_read(void *opaque)
+                     baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_TL3|BAUM_TR1);
+                     baum_send_key(baum, BAUM_RSP_TopKeys, 0);
+                     break;
++                case BRLAPI_KEY_CMD_PASTE:
++                    baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_TL2|BAUM_TL3|BAUM_TR1);
++                    baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                    break;
+                 }
+             }
+             break;
+-- 
+2.51.0
 
-are available in the Git repository at:
-
-  https://people.debian.org/~sthibault/qemu.git tags/samuel-thibault
-
-for you to fetch changes up to e8cffa556dd85be1ff7fbe9d19b19f33a0fb18d9:
-
-  baum: Add copy/paste bindings (2026-02-07 23:53:41 +0100)
-
-----------------------------------------------------------------
-baum: Add copy/paste bindings
-
-----------------------------------------------------------------
 
