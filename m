@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6315EE0AE9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BA6EE0AE8
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Feb 2026 13:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voign-0004QV-2y; Sat, 07 Feb 2026 08:49:33 -0500
+	id 1voigi-00042s-Ns; Sat, 07 Feb 2026 08:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voiga-0003t1-2i
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:23 -0500
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voigT-0003mK-63
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voigX-0003IV-4f
- for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:19 -0500
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1voigP-0003Hv-7K
+ for qemu-devel@nongnu.org; Sat, 07 Feb 2026 08:49:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770472156;
+ s=mimecast20190719; t=1770472147;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hgR+tk+UJ3NFFcdM8r6q6wQSuI+asu9PhIQYUGAd+/o=;
- b=EavbAWgM0XwhWBRrxtAiVtX5jduWGF5GqyAHbKG5c88B3WntCGudUrCpEdc8L1wbrkmlfQ
- IS3f71JWa+A5ydofEBtDpXsmfFPNVqvjbY6mhEfUXRAthhUq68hxvyoNQV5LCt5WdtpbA1
- zpezsGLGTmHYfQfEcYBQ7dZ6GVWeJmY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=sp9aBnO3KajDA7xQyQybSz68hMVXM/FTvW8kMmAJ+XA=;
+ b=Kb+YoDnv003Dks2jh2kuZH3GrGc7QYfX+9WNCwcMyoNozZUT0g7eoUW/4XJ1Aga2QssaX5
+ x/2EAozlwXvy/REaQIlfpPqcHQqAqFHrZRbEmu1eKTC7lePQyr64WMvFTQoQ1ycGLrXduC
+ Et/SbutBy9lrV8Ap6dwNKK+DiQNXafA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-2r4o3HLJO-ux3JRUtAMImA-1; Sat,
- 07 Feb 2026 08:49:12 -0500
-X-MC-Unique: 2r4o3HLJO-ux3JRUtAMImA-1
-X-Mimecast-MFC-AGG-ID: 2r4o3HLJO-ux3JRUtAMImA_1770472151
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-oTZFbYC7Pn2iSCEScRZhbA-1; Sat,
+ 07 Feb 2026 08:49:04 -0500
+X-MC-Unique: oTZFbYC7Pn2iSCEScRZhbA-1
+X-Mimecast-MFC-AGG-ID: oTZFbYC7Pn2iSCEScRZhbA_1770472143
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B3141800464; Sat,  7 Feb 2026 13:49:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 107451956088; Sat,  7 Feb 2026 13:49:03 +0000 (UTC)
 Received: from S2.redhat.com (unknown [10.72.112.15])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45D8C18004AD; Sat,  7 Feb 2026 13:49:07 +0000 (UTC)
+ id B822318004AD; Sat,  7 Feb 2026 13:48:59 +0000 (UTC)
 From: Cindy Lu <lulu@redhat.com>
 To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
  lizhijian@fujitsu.com, qemu-devel@nongnu.org
-Subject: [PATCH 11/12] virtio-net: re-apply vnet_hdr state after virtio_load
-Date: Sat,  7 Feb 2026 21:47:27 +0800
-Message-ID: <20260207134728.1495932-11-lulu@redhat.com>
+Subject: [PATCH 09/12] net/filter-mirror: treat redirector injections as raw
+ frames
+Date: Sat,  7 Feb 2026 21:47:25 +0800
+Message-ID: <20260207134728.1495932-9-lulu@redhat.com>
 In-Reply-To: <20260207134728.1495932-1-lulu@redhat.com>
 References: <20260207134728.1495932-1-lulu@redhat.com>
 MIME-Version: 1.0
@@ -81,41 +82,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_load() restores guest_features after vmstate post_load hooks. Re-apply
-vnet_hdr related state in virtio_net_post_load_virtio() so backend header
-lengths match the migrated feature set (important for netfilter pipelines).
+Packets injected from the redirector chardev are raw Ethernet frames without a
+vnet_hdr prefix. Mark them as RAW so downstream filters (e.g. dump) do not skip
+vnet_hdr_len bytes, and strip the vnet_hdr prefix only when vnet_hdr_support is
+enabled and a valid prefix is present.
 
 Signed-off-by: Cindy Lu <lulu@redhat.com>
 ---
- hw/net/virtio-net.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/filter-mirror.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index d6d2188863..125aa0108d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3282,6 +3282,21 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
- static int virtio_net_post_load_virtio(VirtIODevice *vdev)
+diff --git a/net/filter-mirror.c b/net/filter-mirror.c
+index c1b9dabacd..de32028246 100644
+--- a/net/filter-mirror.c
++++ b/net/filter-mirror.c
+@@ -146,6 +146,7 @@ static int filter_send(MirrorState *s,
+ }
+ 
+ static void redirector_to_filter(NetFilterState *nf,
++                                 unsigned flags,
+                                  const uint8_t *buf,
+                                  int len)
  {
-     VirtIONet *n = VIRTIO_NET(vdev);
-+    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
+@@ -156,13 +157,13 @@ static void redirector_to_filter(NetFilterState *nf,
+ 
+     if (nf->direction == NET_FILTER_DIRECTION_ALL ||
+         nf->direction == NET_FILTER_DIRECTION_TX) {
+-        qemu_netfilter_pass_to_next(nf->netdev, 0, &iov, 1, nf);
++        qemu_netfilter_pass_to_next(nf->netdev, flags, &iov, 1, nf);
+     }
+ 
+     if (nf->direction == NET_FILTER_DIRECTION_ALL ||
+         nf->direction == NET_FILTER_DIRECTION_RX) {
+-        qemu_netfilter_pass_to_next(nf->netdev->peer, 0, &iov, 1, nf);
+-     }
++        qemu_netfilter_pass_to_next(nf->netdev->peer, flags, &iov, 1, nf);
++    }
+ }
+ 
+ static int redirector_chr_can_read(void *opaque)
+@@ -294,12 +295,31 @@ static void redirector_rs_finalize(SocketReadState *rs)
+ {
+     MirrorState *s = container_of(rs, MirrorState, rs);
+     NetFilterState *nf = NETFILTER(s);
++    const uint8_t *buf = rs->buf;
++    int len = rs->packet_len;
+ 
+     /* Update indev statistics */
+     s->indev_packets++;
+-    s->indev_bytes += rs->packet_len;
++    s->indev_bytes += len;
 +
 +    /*
-+     * virtio_load() restores guest_features after vmstate post_load hooks.
-+     * Re-apply vnet_hdr related state here so the backend vnet_hdr_len and
-+     * n->host_hdr_len match the migrated feature set (important for receiving
-+     * packets from netfilters like redirector/buffer during COLO/migration).
++     * If the sender enables vnet_hdr_support, received data includes a
++     * vnet_hdr prefix. Skip vnet_hdr_len bytes and pass the Ethernet frame.
 +     */
-+    peer_test_vnet_hdr(n);
-+    virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-+                               virtio_vdev_has_feature(vdev,
-+                                                       VIRTIO_F_VERSION_1),
-+                               virtio_vdev_has_feature(vdev,
-+                                                      VIRTIO_NET_F_HASH_REPORT),
-+                               has_tunnel_hdr);
-     /*
-      * The actual needed state is now in saved_guest_offloads,
-      * see virtio_net_post_load_device for detail.
++    if (s->vnet_hdr) {
++        if (rs->vnet_hdr_len <= 0 || rs->vnet_hdr_len >= len) {
++            return;
++        }
++        buf += rs->vnet_hdr_len;
++        len -= rs->vnet_hdr_len;
++    }
+ 
+-    redirector_to_filter(nf, rs->buf, rs->packet_len);
++    /*
++     * Packets injected from the chardev are raw Ethernet frames without a
++     * vnet_hdr prefix. Mark them as RAW so downstream filters (e.g. dump)
++     * won't try to skip a vnet_hdr_len.
++     */
++    redirector_to_filter(nf, QEMU_NET_PACKET_FLAG_RAW, buf, len);
+ }
+ 
+ static void filter_redirector_vm_state_change(void *opaque, bool running,
 -- 
 2.52.0
 
