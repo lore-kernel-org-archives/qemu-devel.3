@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9446EF06E2
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 06:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06776EF06E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 06:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voxpR-0000MB-4x; Sun, 08 Feb 2026 00:59:30 -0500
+	id 1voxqU-0000w2-1R; Sun, 08 Feb 2026 01:00:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1voxpL-0000LU-Sf
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 00:59:24 -0500
+ id 1voxpn-0000Rg-Vm; Sun, 08 Feb 2026 00:59:56 -0500
 Received: from mail-4317.protonmail.ch ([185.70.43.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1voxpI-0007Sn-0K
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 00:59:23 -0500
+ id 1voxpm-0007Vp-Lz; Sun, 08 Feb 2026 00:59:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
- s=protonmail3; t=1770530356; x=1770789556;
- bh=l6zV3VfoX0Jfo79QCVIaB38GIKo3wJCYcks/wu4vMS0=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=k8cRubfomQ1EaM2RJcPK4PeKMganjR9s1KY8fuZZkmgwpdNE83FKkzyCV7QUA1nob
- PnUrs6l1DNmkN3L2o0qT1uIGXWmB5QciLfSv5DAkoOxA+U8HH72e22RB+mhEtISy0i
- sIvPFIeECfqo8lfFeJ1tO+D5Ty61uAwuGz1XDwvic1ahnA3Sj7V59OPBLvMWaKdHOY
- bLwH9P5uMcKHDQW0pOHa3NBBF7f7ZMH4TMBropwuVbqcE2qqSov2gpJfT/DzEhBqFY
- CM1DC0cIpNd3ySxf8vBjcpZCiQbiaF1WXw8mIJswH1gC9hMFaX/a/yKYXBRo9iE1rn
- 9WQ0cv/t7Y+hg==
-Date: Sun, 08 Feb 2026 05:59:13 +0000
+ s=protonmail3; t=1770530388; x=1770789588;
+ bh=LHZqZzgOwh2kAijmgY5Qb41C5r1zRUYNLCfwaw141aI=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=maZXDzAnLsLdQPlD/DN6tffhX2a/AKkTZddvOlEEqjpGBEwmOgprkKf5nm4oiPY8O
+ TauUqV5jYS4KsFP6y9dl5VxGB65SjbjW/ZyKwBM3mIB88py9Vq2R8XKH4YzuGFUq72
+ wdTCSapd2Nw2uP3+LyzyDZ2XWwIwhKpVUzqHD5yzWiO3gaqHUl4JdrAWUsdb29KrDy
+ hOaVRzOMAY3gdjdju4v704E5ygwglMTh+96kL43IKsS8IJyPCaT/roUwIcqMlwCed/
+ fsnQ6CZiLWlfDverXCNjI829CPooJ6Tl/lf+WxaoanmHfHkRccV7mmyq51yFQn7Bm0
+ 7JWRkct6f6QEg==
+Date: Sun, 08 Feb 2026 05:59:45 +0000
 To: bug-hurd@gnu.org
 From: Damien Zammit <damien@zamaudio.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
  pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
  kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
-Subject: [PATCH v5 0/5 qemu] GNU/Hurd support
-Message-ID: <20260208055858.2166524-1-damien@zamaudio.com>
+Subject: [PATCH v5 5/5 qemu] Make copy_file_range non-static on GNU/Hurd
+Message-ID: <20260208055858.2166524-6-damien@zamaudio.com>
+In-Reply-To: <20260208055858.2166524-1-damien@zamaudio.com>
+References: <20260208055858.2166524-1-damien@zamaudio.com>
 Feedback-ID: 43209410:user:proton
-X-Pm-Message-ID: 27c7a87555fe4fee10747d1c7f0a5908f28f56f1
+X-Pm-Message-ID: bb873a593fddc65868e1436febfb423f5d5dcad0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -53,7 +54,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,28 +70,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+glibc has a stubs mechanism: a function can be declared in the
+system headers, but only implemented as a stub that always fails with
+ENOSYS, for example.  Therefore when implementing this function
+we cannot use static.
 
-This patchset is hopefully my final attempt to upstream qemu support for GN=
-U/Hurd.
-All review comments have been considered and addressed in the patches.
-Some people want minimal diff to tpm header, others want me to delete code.
-I went with the reduced diff because it's only one line of code change to f=
-ix it,
-and passed review originally in other attempts.
+Signed-off-by: Damien Zammit <damien@zamaudio.com>
+---
+ block/file-posix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This has been rebased onto:
-* cd5a79dc98 (origin/master, origin/HEAD) Merge tag 'for_upstream' of ...=
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 8a3ba5eecb..b9a7786827 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -2106,7 +2106,7 @@ static int handle_aiocb_write_zeroes_unmap(void *opaq=
+ue)
+ }
 =20
-
-TESTED: Compiles on GNU/Hurd using:
-=09../configure --target-list=3Di386-softmmu,x86_64-softmmu
-=09ninja
-
-Executed qemu-system-{i386,x86_64} on GNU/Hurd x86_64 successfully.
-
-Thanks,
-Damien
+ #ifndef HAVE_COPY_FILE_RANGE
+-#ifndef EMSCRIPTEN
++#if !defined(EMSCRIPTEN) && !defined(__GNU__)
+ static
+ #endif
+ ssize_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
+--=20
+2.51.0
 
 
 
