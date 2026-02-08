@@ -4,80 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAC8EF06E2
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 08:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68B9EF06E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 09:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vp07H-0000ky-Q6; Sun, 08 Feb 2026 03:26:03 -0500
+	id 1vp1UT-0002Tl-6i; Sun, 08 Feb 2026 04:54:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vp07G-0000kp-SI
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 03:26:02 -0500
-Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vp1UN-0002S9-6G; Sun, 08 Feb 2026 04:53:59 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vp07C-0003zm-N9
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 03:26:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1770539158; x=1802075158;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=C5hjxpopGC8KhVf5BeBDT3IdeMMhGZqqRh9FeUo9hBA=;
- b=Rftj/wntkVVu15vIPERJPmpV4sr2crnXDDX7N+yT7sExW9TO3eESDbd8
- G3ODvzK5ebfh25yWkA7LIHcb7ixNqZGJoe8wtPRewn7/LQFA50zwOIj5z
- pKvD8JFWHvqFqGSQbyWFnyqwWvT8aZnk93Xih4apdLQVXehqdmfncypd3
- euUcqleE+ihc+93EPJQi8utAPAYc21vm6dnYl0/gqNXVLxpVzOgFB4Yyf
- 76jEqJiRgxd5rMezwlV3JDLHErK6RRMj58gZNUQTn8D8pdCB4rDs/aJ3k
- zT/EE9gmTsY2AuNoUXFnZCSC/hor1swgCER4EbTXAms3yX6d3dlsZwOeu g==;
-X-CSE-ConnectionGUID: AJX8+2OOSDC5kbzRIu7laQ==
-X-CSE-MsgGUID: EK2SX1IlSYWbAlN+xNPbhQ==
-X-IronPort-AV: E=Sophos;i="6.21,279,1763420400"; d="scan'208";a="824682994"
-X-MGA-submission: =?us-ascii?q?MDHWJ/EG4BFs71hpbiILMefWnWs77FPrQWkCGM?=
- =?us-ascii?q?xDrwjF6AAhB0QtRtKJsmSyRXjQXtalWqpB3afNumnk3XCQqv7dVtbGbc?=
- =?us-ascii?q?RBKtEv+LwfgSc3Dhxw/J9N5QxJkwJfR8qLwlX7egv4925zfSNzBmWk+m?=
- =?us-ascii?q?kk?=
-Received: from smtp0.atos-infogerance.fr ([193.56.241.18])
- by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 08 Feb 2026 09:25:54 +0100
-Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
- [193.56.47.18])
- by smtp0.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 6188PrKL044134
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Sun, 8 Feb 2026 09:25:53 +0100
-Received: from rocky.hd2c.dom ([129.181.244.14])
- by smtp-hub.atos-infogerance.fr (envelope-from
- clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
- 6188Prfv035233; Sun, 8 Feb 2026 09:25:53 +0100
-Received: from openbmc (unknown [10.22.85.22])
- by rocky.hd2c.dom (Postfix) with ESMTP id 0A8BA256CA5;
- Sun,  8 Feb 2026 09:25:53 +0100 (CET)
-Received: by openbmc (Postfix, from userid 0)
- id 05EE9812AF4D; Sun, 08 Feb 2026 08:25:53 +0000 (UTC)
-From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, mst@redhat.com, 
- jasowang@redhat.com, zhenzhong.duan@intel.com, kevin.tian@intel.com,
- yi.l.liu@intel.com, joao.m.martins@oracle.com,
- Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Subject: [PATCH] intel_iommu: Do not report recoverable faults to host
-Date: Sun,  8 Feb 2026 08:22:52 +0000
-Message-ID: <20260208082252.288-1-clement.mathieu--drif@eviden.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vp1UK-0000HS-2X; Sun, 08 Feb 2026 04:53:58 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 93099C058C;
+ Sun, 08 Feb 2026 12:53:49 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d25::1:35] (unknown
+ [2a02:6bf:8080:d25::1:35])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id lrMnSh1BgSw0-3CbLBpzj; Sun, 08 Feb 2026 12:53:49 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1770544429;
+ bh=3D7f4ChWPkeDcvuOLeeyxzRoYz4VTgihEx/IVNJTy2M=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=A27YpN9ea4k/LITWLT/lSHz53so6VKq5XAqMHzUq82R6Ghuw8b6LLpOmE2xZ5kDX5
+ siVKSs+nIDMoaUh2EZgdCjaX5YzHV2NeEMxLfhm2oNG8hswAHuGIVoJstWf4n4VWgM
+ g8JC8L1pxisMORT/Pnv0gadT2KKHqf4Bb/Y8UQ0M=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+Message-ID: <5bd45e4e-db27-4ee1-8df8-648ac1c0cfd9@yandex-team.com>
+Date: Sun, 8 Feb 2026 14:53:47 +0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] system/physmem.c: reorder usage and assertion of block
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+References: <20260204075754.21078-1-heifetz@yandex-team.com>
+ <20260204075754.21078-4-heifetz@yandex-team.com>
+ <722eb7df-0eb2-49c1-af07-90004ad46a8e@vivier.eu>
+ <14605571-e078-4d93-9f0b-411889a70076@yandex-team.com>
+ <CAFEAcA_Kzy9DCnwM0CyO+X_RveRavhkSrBGoW_MXEeGstkgWsA@mail.gmail.com>
+Content-Language: en-US
+From: Sergei Heifetz <heifetz@yandex-team.com>
+In-Reply-To: <CAFEAcA_Kzy9DCnwM0CyO+X_RveRavhkSrBGoW_MXEeGstkgWsA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=193.56.114.177;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +79,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
----
- hw/i386/intel_iommu.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+On 2/7/26 22:24, Peter Maydell wrote:
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index dd00079a40..0735b24ac0 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1857,6 +1857,21 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_MAX] = false,
- };
- 
-+static const bool vtd_recoverable_faults[] = {
-+    [VTD_FR_WRITE] = true,
-+    [VTD_FR_READ] = true,
-+    [VTD_FR_PASID_DIR_ENTRY_P] = true,
-+    [VTD_FR_PASID_ENTRY_P] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_P] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_RSVD] = true,
-+    [VTD_FR_PASID_ENTRY_FSPTPTR_INV] = true,
-+    [VTD_FR_FS_NON_CANONICAL] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_US] = true,
-+    [VTD_FR_SM_WRITE] = true,
-+    [VTD_FR_MAX] = false,
-+};
-+
- /* To see if a fault condition is "qualified", which is reported to software
-  * only if the FPD field in the context-entry used to process the faulting
-  * request is 0.
-@@ -1866,6 +1881,11 @@ static inline bool vtd_is_qualified_fault(VTDFaultReason fault)
-     return vtd_qualified_faults[fault];
- }
- 
-+static inline bool vtd_is_recoverable_fault(VTDFaultReason fault, int iommu_idx)
-+{
-+    return iommu_idx == VTD_IDX_ATS && vtd_recoverable_faults[fault];
-+}
-+
- static inline bool vtd_is_interrupt_addr(hwaddr addr)
- {
-     return VTD_INTERRUPT_ADDR_FIRST <= addr && addr <= VTD_INTERRUPT_ADDR_LAST;
-@@ -2237,8 +2257,10 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     }
- 
-     if (ret_fr) {
--        vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
--                         addr, is_write, pasid != PCI_NO_PASID, pasid);
-+        if (!vtd_is_recoverable_fault(-ret_fr, iommu_idx)) {
-+            vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-+                            addr, is_write, pasid != PCI_NO_PASID, pasid);
-+        }
-         goto error;
-     }
- 
--- 
-2.53.0
-
+> On Sat, 7 Feb 2026 at 10:24, Sergei Heifetz <heifetz@yandex-team.com> wrote:
+>> On 2/4/26 17:53, Laurent Vivier wrote:
+>>> Le 04/02/2026 à 08:57, Sergei Heifetz a écrit :
+>>>> Reorder the code so the assertion of block occurs before it is
+>>>> used in the subsequent lines.
+>>>>
+>>>> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+>>>> ---
+>>>>    system/physmem.c | 4 ++--
+>>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/system/physmem.c b/system/physmem.c
+>>>> index b0311f4531..4308e02940 100644
+>>>> --- a/system/physmem.c
+>>>> +++ b/system/physmem.c
+>>>> @@ -2054,11 +2054,11 @@ static int memory_try_enable_merging(void
+>>>> *addr, size_t len)
+>>>>     */
+>>>>    int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
+>>>>    {
+>>>> +    assert(block);
+>>>> +
+>>>>        const ram_addr_t oldsize = block->used_length;
+>>>>        const ram_addr_t unaligned_size = newsize;
+>>>>    -    assert(block);
+>>>> -
+>>> According to coding style (docs/devel/style.rst):
+>>>
+>>> Mixed declarations (interleaving statements and declarations within
+>>> blocks) are generally not allowed.
+>>>
+>>>>        newsize = TARGET_PAGE_ALIGN(newsize);
+>>>>        newsize = REAL_HOST_PAGE_ALIGN(newsize);
+>>> Thanks,
+>>> Laurent
+>> Should I remove the assertion altogether, then? I think the const
+>> qualifier on oldsize is more useful than the assertion.
+> I think personally I would drop the assertion. This falls into a
+> category I think of as "assertion doesn't buy us anything".
+> If block is NULL we're going to crash immediately when we
+> dereference it, so the assert doesn't help to turn a hard-to-debug
+> bug into an easy-to-debug bug (e.g. by catching incorrect values
+> long before they're used) or to turn a nasty kind of failure
+> into a safer one (e.g. by turning an array overrun into
+> an assertion).
+>
+> And looking more closely, we call this function in only
+> two places:
+>   * migration/ram.c, where we've already dereferenced block
+>     in the code just before the call
+>   * system/memory.c, which asserts mr->ram_block before passing it in
+>
+> So I think the assert in this function isn't buying us anything,
+> and the simplest thing is to delete it.
+>
+> thanks
+> -- PMM
+Thanks a lot for your detailed feedback. I completely agree with your 
+points and will resubmit the patch without the assert.
 
