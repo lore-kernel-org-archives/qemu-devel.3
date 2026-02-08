@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3437EF06E3
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE09EF06E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vp2EI-0004D6-7G; Sun, 08 Feb 2026 05:41:26 -0500
+	id 1vp2EK-0004Fu-Ua; Sun, 08 Feb 2026 05:41:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp2EG-0004Af-BF; Sun, 08 Feb 2026 05:41:24 -0500
+ id 1vp2EJ-0004F0-Hd; Sun, 08 Feb 2026 05:41:27 -0500
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp2EE-00078y-N3; Sun, 08 Feb 2026 05:41:24 -0500
+ id 1vp2EI-0007AU-2V; Sun, 08 Feb 2026 05:41:27 -0500
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 26F84804EB;
- Sun, 08 Feb 2026 13:41:21 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 70E4E804EB;
+ Sun, 08 Feb 2026 13:41:24 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d25::1:35])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id WeNYFo1Apa60-xYi2SYyo; 
- Sun, 08 Feb 2026 13:41:20 +0300
+ (smtpcorp/Yandex) with ESMTPSA id WeNYFo1Apa60-mydBr3xg; 
+ Sun, 08 Feb 2026 13:41:24 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1770547281;
- bh=O7UmaUaZH2MwuV93uGlmz+EHInB8iHY0nDVJhhkIj6A=;
+ s=default; t=1770547284;
+ bh=Qsul4O4z95xq9yphmhSiylpmeGjeIrFHxIxrbO2rFYY=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=jn+aI2p0QaxnKENYaIgswDrTXXEJzCMiCJOD5chnHLIGmU1fRV9e6LQeuDlWhTO0W
- VHlgG//qiCfYRD4pv/86pVB15K6TNSGZVP90StvA64rhzBLlc0rO6dcVjkC44v1T9H
- EDcy/gKqF6rytgrQQx+K1eaMh40fkHexU3uZkZ3w=
+ b=Sstpthd170VKNh4zJFVwttUuTMpCvaP70QsOnNmUeViIjZrCVwjj5Z2K8O9UFg0K0
+ ukMZ1JJrW878F9f7eqM0RHu0J2lLrbAj69fYXO5T4Q122T6o20L0D9WFJ0bxwir1kE
+ QW8fdKjIMq55yZd74Op+riy8l0GgVmGZvDV2bNOQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH v3 2/4] dump/dump.c: reorder usage and assertion of block
-Date: Sun,  8 Feb 2026 15:39:56 +0500
-Message-Id: <20260208103958.121455-3-heifetz@yandex-team.com>
+Subject: [PATCH v3 4/4] hw/usb/core.c: reorder usage and assertion of p->ep
+Date: Sun,  8 Feb 2026 15:39:58 +0500
+Message-Id: <20260208103958.121455-5-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260208103958.121455-1-heifetz@yandex-team.com>
 References: <20260208103958.121455-1-heifetz@yandex-team.com>
@@ -72,34 +72,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorder the code so the assertion of block occurs before it is
+Reorder the code so the assertion of p->ep occurs before it is
 used in the subsequent lines.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 ---
- dump/dump.c | 2 +-
+ hw/usb/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/dump/dump.c b/dump/dump.c
-index f7a99a7af2..80ed6c8d21 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1288,6 +1288,7 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-     /* block == NULL means the start of the iteration */
-     if (!block) {
-         block = QTAILQ_FIRST(&s->guest_phys_blocks.head);
-+        assert(block);
-         *blockptr = block;
-         addr = block->target_start;
-         *pfnptr = dump_paddr_to_pfn(s, addr);
-@@ -1295,7 +1296,6 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-         *pfnptr += 1;
-         addr = dump_pfn_to_paddr(s, *pfnptr);
+diff --git a/hw/usb/core.c b/hw/usb/core.c
+index b3f811c513..9572a870cc 100644
+--- a/hw/usb/core.c
++++ b/hw/usb/core.c
+@@ -423,10 +423,10 @@ void usb_handle_packet(USBDevice *dev, USBPacket *p)
+         p->status = USB_RET_NODEV;
+         return;
      }
--    assert(block != NULL);
++    assert(p->ep);
+     assert(dev == p->ep->dev);
+     assert(dev->state == USB_STATE_DEFAULT);
+     usb_packet_check_state(p, USB_PACKET_SETUP);
+-    assert(p->ep != NULL);
  
-     while (1) {
-         if (addr >= block->target_start && addr < block->target_end) {
+     /* Submitting a new packet clears halt */
+     if (p->ep->halted) {
 -- 
 2.34.1
 
