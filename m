@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20472EF06E2
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7C6EF06E2
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vp1eJ-0004Ll-6h; Sun, 08 Feb 2026 05:04:15 -0500
+	id 1vp2Db-0003tL-E5; Sun, 08 Feb 2026 05:40:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp1eB-0004JX-J7; Sun, 08 Feb 2026 05:04:07 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vp2DZ-0003ry-5J; Sun, 08 Feb 2026 05:40:41 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp1e6-0001oR-34; Sun, 08 Feb 2026 05:04:06 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 26B0580896;
- Sun, 08 Feb 2026 13:03:58 +0300 (MSK)
+ id 1vp2DV-0006yf-To; Sun, 08 Feb 2026 05:40:40 -0500
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 98DBC80605;
+ Sun, 08 Feb 2026 13:40:33 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d25::1:35])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id t3Njcn1A4eA0-phArVM8v; 
- Sun, 08 Feb 2026 13:03:57 +0300
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (smtpcorp/Yandex) with ESMTPSA id WeNYFo1Apa60-Lf0iCb3J; 
+ Sun, 08 Feb 2026 13:40:33 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1770545037;
- bh=Qsul4O4z95xq9yphmhSiylpmeGjeIrFHxIxrbO2rFYY=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=HvRUyCUjcCQ3aRa+wlY01og3TEhNpHIduXFAB40A/QxPKrfaRNpc1HWK1RKDyWTLj
- MuXsbG0hGBqw9YMlzp0uxpcIv0OFrOpqOIZzcfFZeDYtG8ZZph9zbyGzc5A7O2L3dj
- /A125ttGlzO2N12VUaOi5mxoNnO5aak2DdMKTFsY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ s=default; t=1770547233;
+ bh=gDWh/+XCKtt831Uf17PqcbUmy24afzXLJ4ZHWo1hmP4=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=r1UTFurMHnOy0DjO3NAWmPGp+eyJsCzdJotj0NG8ZFMgsoiL6e/X8XICwPGMrK+Fr
+ HHIkqi4PWEyp6wnD4ggQ1oZbOfT9H1voJ4XCYoMjP5WuEWeZH7GBy9TRomKpmc5ey7
+ ei2bNngUJvSHG6pJ699cSv7ZgRKPlYdCxloTlIKI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH 4/4] hw/usb/core.c: reorder usage and assertion of p->ep
-Date: Sun,  8 Feb 2026 15:03:54 +0500
-Message-Id: <20260208100354.116102-5-heifetz@yandex-team.com>
+Subject: [PATCH v3 0/4] Fix a few minor issues reported by Coverity
+Date: Sun,  8 Feb 2026 15:39:54 +0500
+Message-Id: <20260208103958.121455-1-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260208100354.116102-1-heifetz@yandex-team.com>
-References: <20260208100354.116102-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,30 +70,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorder the code so the assertion of p->ep occurs before it is
-used in the subsequent lines.
+Hi. This patch series fixes several minor issues reported by our local
+Coverity installation.
 
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
----
- hw/usb/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v3:
+- Nothing. I sent the second version of the series without the corresponding 'v2'
+  suffix by mistake. I apologise.
 
-diff --git a/hw/usb/core.c b/hw/usb/core.c
-index b3f811c513..9572a870cc 100644
---- a/hw/usb/core.c
-+++ b/hw/usb/core.c
-@@ -423,10 +423,10 @@ void usb_handle_packet(USBDevice *dev, USBPacket *p)
-         p->status = USB_RET_NODEV;
-         return;
-     }
-+    assert(p->ep);
-     assert(dev == p->ep->dev);
-     assert(dev->state == USB_STATE_DEFAULT);
-     usb_packet_check_state(p, USB_PACKET_SETUP);
--    assert(p->ep != NULL);
- 
-     /* Submitting a new packet clears halt */
-     if (p->ep->halted) {
+Changes in v2:
+- Remove assert(block) in system/physmem.c instead of placing it
+  before the dereference.
+
+Sergei Heifetz (4):
+  migration/savevm.c: reorder usage and assertion of mis->from_src_file
+  dump/dump.c: reorder usage and assertion of block
+  system/physmem.c: remove useless assertion of block
+  hw/usb/core.c: reorder usage and assertion of p->ep
+
+ dump/dump.c        | 2 +-
+ hw/usb/core.c      | 2 +-
+ migration/savevm.c | 3 ++-
+ system/physmem.c   | 2 --
+ 4 files changed, 4 insertions(+), 5 deletions(-)
+
 -- 
 2.34.1
 
