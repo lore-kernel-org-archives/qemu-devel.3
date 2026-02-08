@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E256DEF06EA
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 20:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29349EF06E7
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 20:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpBQ1-0000mW-CJ; Sun, 08 Feb 2026 15:30:09 -0500
+	id 1vpBSo-0002tw-5P; Sun, 08 Feb 2026 15:33:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vpBPz-0000mC-Jb
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 15:30:07 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vpBST-0002Tp-KW
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 15:32:42 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vpBPx-0000GF-6F
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 15:30:07 -0500
+ id 1vpBSR-0001S3-PH
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 15:32:41 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DBE485969F6;
- Sun, 08 Feb 2026 21:30:03 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8CB4A5969F6;
+ Sun, 08 Feb 2026 21:32:38 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id YNoX45YGXf0F; Sun,  8 Feb 2026 21:30:01 +0100 (CET)
+ id ludxHiTychVe; Sun,  8 Feb 2026 21:32:36 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E77E15969F3; Sun, 08 Feb 2026 21:30:01 +0100 (CET)
+ id 8C7EC5969F3; Sun, 08 Feb 2026 21:32:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E61885969F1;
- Sun, 08 Feb 2026 21:30:01 +0100 (CET)
-Date: Sun, 8 Feb 2026 21:30:01 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8AF215969F2;
+ Sun, 08 Feb 2026 21:32:36 +0100 (CET)
+Date: Sun, 8 Feb 2026 21:32:36 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
 cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 14/18] ati-vga: Remove ATIVGAState param from
- ati_2d_do_blt
-In-Reply-To: <20260204164606.3425246-15-chad@jablonski.xyz>
-Message-ID: <f55903f3-66cc-a290-2ab9-233227d9fc1a@eik.bme.hu>
+Subject: Re: [PATCH v8 15/18] ati-vga: Move source bounds validation to
+ ati_2d_blt
+In-Reply-To: <20260204164606.3425246-16-chad@jablonski.xyz>
+Message-ID: <358c1758-be3e-31ba-58ef-98f2049ddd6e@eik.bme.hu>
 References: <20260204164606.3425246-1-chad@jablonski.xyz>
- <20260204164606.3425246-15-chad@jablonski.xyz>
+ <20260204164606.3425246-16-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,42 +68,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 4 Feb 2026, Chad Jablonski wrote:
-> This completes the decoupling from the ATIVGAState struct.
+> A call to ati_2d_blt implies that the source will be vram. Checking
+> bounds is useful in that case. Other sources (HOST_DATA) will not make
+> sense to check against vram bounds.
 >
 > Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-
 > ---
-> hw/display/ati_2d.c | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+> hw/display/ati_2d.c | 13 ++++++-------
+> 1 file changed, 6 insertions(+), 7 deletions(-)
 >
 > diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-> index 063928c442..8a820bc91f 100644
+> index 8a820bc91f..463da001d9 100644
 > --- a/hw/display/ati_2d.c
 > +++ b/hw/display/ati_2d.c
-> @@ -123,12 +123,12 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
->             (ctx->top_to_bottom ? 'v' : '^'));
-> }
+> @@ -153,13 +153,6 @@ static void ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+>             return;
+>         }
+>         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
+> -        if (ctx->src.x > 0x3fff || ctx->src.y > 0x3fff
+> -            || ctx->src_bits >= ctx->vram_end
+> -            || ctx->src_bits + ctx->src.x + (ctx->src.y + ctx->dst.height)
+> -             * ctx->src_stride >= ctx->vram_end) {
+> -            qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+> -            return;
+> -        }
 >
-> -static void ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx)
-> +static void ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-> {
->     /* FIXME it is probably more complex than this and may need to be */
->     /* rewritten but for now as a start just to get some output: */
-> -    bool use_pixman_fill = s->use_pixman & BIT(0);
-> -    bool use_pixman_blt = s->use_pixman & BIT(1);
-> +    bool use_pixman_fill = use_pixman & BIT(0);
-> +    bool use_pixman_blt = use_pixman & BIT(1);
->     if (!ctx->bpp) {
->         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
->         return;
-> @@ -267,6 +267,6 @@ void ati_2d_blt(ATIVGAState *s)
+>         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
+>                 ctx->src_bits, ctx->dst_bits, src_stride_words,
+> @@ -267,6 +260,12 @@ void ati_2d_blt(ATIVGAState *s)
 > {
 >     ATI2DCtx ctx;
 >     setup_2d_blt_ctx(s, &ctx);
-> -    ati_2d_do_blt(s, &ctx);
-> +    ati_2d_do_blt(&ctx, s->use_pixman);
+> +    if (ctx.src.x > 0x3fff || ctx.src.y > 0x3fff
+> +        || ctx.src_bits >= ctx.vram_end || ctx.src_bits + ctx.src.x
+> +         + (ctx.src.y + ctx.dst.height) * ctx.src_stride >= ctx.vram_end) {
+
+Maybe a good opportunity to move || and + from beginning of line to 
+previous line as it is more usually wrapped elsewhere. But anyway:
+
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+> +        qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+> +        return;
+> +    }
+>     ati_2d_do_blt(&ctx, s->use_pixman);
 >     ati_set_dirty(&s->vga, &ctx);
 > }
 >
