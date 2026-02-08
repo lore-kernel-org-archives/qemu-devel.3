@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A953EF06E2
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 07:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAC8EF06E2
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 08:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1voz4G-0007pb-A0; Sun, 08 Feb 2026 02:18:52 -0500
+	id 1vp07H-0000ky-Q6; Sun, 08 Feb 2026 03:26:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1voz4E-0007ol-LT; Sun, 08 Feb 2026 02:18:50 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vp07G-0000kp-SI
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 03:26:02 -0500
+Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1voz4C-0001vL-KO; Sun, 08 Feb 2026 02:18:50 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F1C9186D6A;
- Sun, 08 Feb 2026 10:17:35 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 317F535F9A6;
- Sun, 08 Feb 2026 10:18:27 +0300 (MSK)
-Message-ID: <28baf1fa-1e25-4381-9c52-7c0cdd4cb641@tls.msk.ru>
-Date: Sun, 8 Feb 2026 10:18:26 +0300
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vp07C-0003zm-N9
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 03:26:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1770539158; x=1802075158;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=C5hjxpopGC8KhVf5BeBDT3IdeMMhGZqqRh9FeUo9hBA=;
+ b=Rftj/wntkVVu15vIPERJPmpV4sr2crnXDDX7N+yT7sExW9TO3eESDbd8
+ G3ODvzK5ebfh25yWkA7LIHcb7ixNqZGJoe8wtPRewn7/LQFA50zwOIj5z
+ pKvD8JFWHvqFqGSQbyWFnyqwWvT8aZnk93Xih4apdLQVXehqdmfncypd3
+ euUcqleE+ihc+93EPJQi8utAPAYc21vm6dnYl0/gqNXVLxpVzOgFB4Yyf
+ 76jEqJiRgxd5rMezwlV3JDLHErK6RRMj58gZNUQTn8D8pdCB4rDs/aJ3k
+ zT/EE9gmTsY2AuNoUXFnZCSC/hor1swgCER4EbTXAms3yX6d3dlsZwOeu g==;
+X-CSE-ConnectionGUID: AJX8+2OOSDC5kbzRIu7laQ==
+X-CSE-MsgGUID: EK2SX1IlSYWbAlN+xNPbhQ==
+X-IronPort-AV: E=Sophos;i="6.21,279,1763420400"; d="scan'208";a="824682994"
+X-MGA-submission: =?us-ascii?q?MDHWJ/EG4BFs71hpbiILMefWnWs77FPrQWkCGM?=
+ =?us-ascii?q?xDrwjF6AAhB0QtRtKJsmSyRXjQXtalWqpB3afNumnk3XCQqv7dVtbGbc?=
+ =?us-ascii?q?RBKtEv+LwfgSc3Dhxw/J9N5QxJkwJfR8qLwlX7egv4925zfSNzBmWk+m?=
+ =?us-ascii?q?kk?=
+Received: from smtp0.atos-infogerance.fr ([193.56.241.18])
+ by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 08 Feb 2026 09:25:54 +0100
+Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
+ [193.56.47.18])
+ by smtp0.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 6188PrKL044134
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Sun, 8 Feb 2026 09:25:53 +0100
+Received: from rocky.hd2c.dom ([129.181.244.14])
+ by smtp-hub.atos-infogerance.fr (envelope-from
+ clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
+ 6188Prfv035233; Sun, 8 Feb 2026 09:25:53 +0100
+Received: from openbmc (unknown [10.22.85.22])
+ by rocky.hd2c.dom (Postfix) with ESMTP id 0A8BA256CA5;
+ Sun,  8 Feb 2026 09:25:53 +0100 (CET)
+Received: by openbmc (Postfix, from userid 0)
+ id 05EE9812AF4D; Sun, 08 Feb 2026 08:25:53 +0000 (UTC)
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, mst@redhat.com, 
+ jasowang@redhat.com, zhenzhong.duan@intel.com, kevin.tian@intel.com,
+ yi.l.liu@intel.com, joao.m.martins@oracle.com,
+ Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Subject: [PATCH] intel_iommu: Do not report recoverable faults to host
+Date: Sun,  8 Feb 2026 08:22:52 +0000
+Message-ID: <20260208082252.288-1-clement.mathieu--drif@eviden.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] virtio-dmabuf: Ensure UUID persistence for hash table
- insertion
-To: Dorinda Bassey <dbassey@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com,
- aesteve@redhat.com, marcandre.lureau@redhat.com,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251204162129.262745-1-dbassey@redhat.com>
- <55f06323-a0f6-40f0-9f37-743245203c77@tls.msk.ru>
- <CACzuRyxeeATksqQQGfGkKVnCP7QMwTaKy_q+dioEPwPka9xzbw@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CACzuRyxeeATksqQQGfGkKVnCP7QMwTaKy_q+dioEPwPka9xzbw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=193.56.114.177;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,28 +93,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/26 18:00, Dorinda Bassey wrote:
-> Hi,
-> 
->     Again, this feels like a qemu-stable material.  However, I'm not
->     sure under which circumstances the uuid key can be freed before
->     referencing.
-> 
->     Please let me know if I shouldn't pick this up for qemu stable
->     releases.
-> 
-> I don't think there's a need to pick this up for stable, I found this 
-> issue when testing the `resource_assign_uuid` feature, which is not yet 
-> fully implemented in rust-vmm vhost-device-gpu backend that uses it. So 
-> safe to say no existing users are hitting this code path in the current 
-> stable.
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+---
+ hw/i386/intel_iommu.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-This makes sense.  I'm dropping this one from the stable series.
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index dd00079a40..0735b24ac0 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -1857,6 +1857,21 @@ static const bool vtd_qualified_faults[] = {
+     [VTD_FR_MAX] = false,
+ };
+ 
++static const bool vtd_recoverable_faults[] = {
++    [VTD_FR_WRITE] = true,
++    [VTD_FR_READ] = true,
++    [VTD_FR_PASID_DIR_ENTRY_P] = true,
++    [VTD_FR_PASID_ENTRY_P] = true,
++    [VTD_FR_FS_PAGING_ENTRY_INV] = true,
++    [VTD_FR_FS_PAGING_ENTRY_P] = true,
++    [VTD_FR_FS_PAGING_ENTRY_RSVD] = true,
++    [VTD_FR_PASID_ENTRY_FSPTPTR_INV] = true,
++    [VTD_FR_FS_NON_CANONICAL] = true,
++    [VTD_FR_FS_PAGING_ENTRY_US] = true,
++    [VTD_FR_SM_WRITE] = true,
++    [VTD_FR_MAX] = false,
++};
++
+ /* To see if a fault condition is "qualified", which is reported to software
+  * only if the FPD field in the context-entry used to process the faulting
+  * request is 0.
+@@ -1866,6 +1881,11 @@ static inline bool vtd_is_qualified_fault(VTDFaultReason fault)
+     return vtd_qualified_faults[fault];
+ }
+ 
++static inline bool vtd_is_recoverable_fault(VTDFaultReason fault, int iommu_idx)
++{
++    return iommu_idx == VTD_IDX_ATS && vtd_recoverable_faults[fault];
++}
++
+ static inline bool vtd_is_interrupt_addr(hwaddr addr)
+ {
+     return VTD_INTERRUPT_ADDR_FIRST <= addr && addr <= VTD_INTERRUPT_ADDR_LAST;
+@@ -2237,8 +2257,10 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+     }
+ 
+     if (ret_fr) {
+-        vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
+-                         addr, is_write, pasid != PCI_NO_PASID, pasid);
++        if (!vtd_is_recoverable_fault(-ret_fr, iommu_idx)) {
++            vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
++                            addr, is_write, pasid != PCI_NO_PASID, pasid);
++        }
+         goto error;
+     }
+ 
+-- 
+2.53.0
 
-But I wonder - for example, 10.0.x is currently a long-term stable
-release.  If rust-vmm changes and implements this feature, won't we
-hit this issue there?  But this time, with a painful debugging session
-because the current context is forgotten already? :)
-
-Thank you
 
