@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF58EF06E3
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00321EF06E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vp1eJ-0004Lo-6O; Sun, 08 Feb 2026 05:04:15 -0500
+	id 1vp1eL-0004NV-DO; Sun, 08 Feb 2026 05:04:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp1e9-0004JE-CV; Sun, 08 Feb 2026 05:04:05 -0500
+ id 1vp1eB-0004JY-Jg; Sun, 08 Feb 2026 05:04:07 -0500
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp1e5-0001oJ-V4; Sun, 08 Feb 2026 05:04:05 -0500
+ id 1vp1e6-0001oH-3W; Sun, 08 Feb 2026 05:04:06 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 545AC8084D;
- Sun, 08 Feb 2026 13:03:57 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 37F1E807A0;
+ Sun, 08 Feb 2026 13:03:56 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d25::1:35])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id t3Njcn1A4eA0-zke9jLxO; 
- Sun, 08 Feb 2026 13:03:57 +0300
+ (smtpcorp/Yandex) with ESMTPSA id t3Njcn1A4eA0-XEyaHE3N; 
+ Sun, 08 Feb 2026 13:03:55 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1770545037;
- bh=O7UmaUaZH2MwuV93uGlmz+EHInB8iHY0nDVJhhkIj6A=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=dys8MQGqlhK8tzz9rTe09bO6KKzUdSSDY/BD3wOu1vG3PfnBdG4KHP8BKXEfbI5Z9
- QBCdSPcEsHYHvGkfOIfGWRLJaBM53wERWl/jFyqHOP/mF931df11W13v4c7ofwJf2J
- HZZEPnPX5Wm5eP+9jtOv7yiNurJ6Jvca5AmooDXU=
+ s=default; t=1770545036;
+ bh=NcVTgQfdltUFZ8vG0tz1Y0VI7M2ieT6pmXKo4Edx40U=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=WfgEpcrt7/Q//tIY7z0IOv2/IzHFad5X9hoOrZVPOBla9fi9Ol9t4ysaM2Ws9g1to
+ W2nhoOqju0DlrSlIxcdn8cMovZ4EjxkGvKm3qq8PBvYt+PwJyWAaujhpwsG0DFem3/
+ /5BnBJkBy0gt6KdqQqjeP6UrOL3qLJHSLIn+Ayno=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH 2/4] dump/dump.c: reorder usage and assertion of block
-Date: Sun,  8 Feb 2026 15:03:52 +0500
-Message-Id: <20260208100354.116102-3-heifetz@yandex-team.com>
+Subject: [PATCH v2 0/4] Fix a few minor issues reported by Coverity 
+Date: Sun,  8 Feb 2026 15:03:50 +0500
+Message-Id: <20260208100354.116102-1-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260208100354.116102-1-heifetz@yandex-team.com>
-References: <20260208100354.116102-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
@@ -72,34 +70,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorder the code so the assertion of block occurs before it is
-used in the subsequent lines.
+Hi. This patch series fixes several minor issues reported by our local
+Coverity installation.
 
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
----
- dump/dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v2:
+- Remove assert(block) in system/physmem.c instead of placing it
+  before the dereference.
 
-diff --git a/dump/dump.c b/dump/dump.c
-index f7a99a7af2..80ed6c8d21 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1288,6 +1288,7 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-     /* block == NULL means the start of the iteration */
-     if (!block) {
-         block = QTAILQ_FIRST(&s->guest_phys_blocks.head);
-+        assert(block);
-         *blockptr = block;
-         addr = block->target_start;
-         *pfnptr = dump_paddr_to_pfn(s, addr);
-@@ -1295,7 +1296,6 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-         *pfnptr += 1;
-         addr = dump_pfn_to_paddr(s, *pfnptr);
-     }
--    assert(block != NULL);
- 
-     while (1) {
-         if (addr >= block->target_start && addr < block->target_end) {
+Sergei Heifetz (4):
+  migration/savevm.c: reorder usage and assertion of mis->from_src_file
+  dump/dump.c: reorder usage and assertion of block
+  system/physmem.c: remove useless assertion of block
+  hw/usb/core.c: reorder usage and assertion of p->ep
+
+ dump/dump.c        | 2 +-
+ hw/usb/core.c      | 2 +-
+ migration/savevm.c | 3 ++-
+ system/physmem.c   | 2 --
+ 4 files changed, 4 insertions(+), 5 deletions(-)
+
 -- 
 2.34.1
 
