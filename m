@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A59EF06E1
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 19:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B53EF06E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 19:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpASj-0001TN-GX; Sun, 08 Feb 2026 14:28:53 -0500
+	id 1vpASc-0001Hg-EB; Sun, 08 Feb 2026 14:28:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vpARA-0000dR-7Y
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vpARG-0000e9-EZ
  for qemu-devel@nongnu.org; Sun, 08 Feb 2026 14:27:23 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vpAQs-00007U-T5
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 14:27:14 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-45c8e85deffso738052b6e.1
- for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 11:26:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vpAR9-0008VQ-Tf
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 14:27:22 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7d1916d1e24so2928960a34.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 11:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770578813; x=1771183613;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770578793; x=1771183593;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zHW6LQFaIzwSaKkoHeZZjH30Ksax78GgwX4zPL/ZVxM=;
- b=VEalQyKak4aiFX77FVQ94GfN1slti+l7a1iXFMlQ/imGyLwGQ6HMEsHmiikt6pdT+y
- w/NPtB6MsJgAazD0vdtbYP0MdlPR38BGbY4WtrX0B1OQA2Fff6ZQEdaQM9r9uGpFwapH
- pAuOjhVkqGo36pnZ37kZZGJp7ByIDbi0u5qEh82i/kVOOxpHjcEkdZv20byPko9Qu99J
- kKTnva1PTZ2MKpR2+p0ouFqNcpc6U8dCQviv0hnqybE93oLwzXifvEoXN/ZbqUOi3ItS
- GzQEKujnx9wdV44Zfgb6/qI620M9m45LlsCIJbkvYA/fFE7VijF/Mq7DVoP4O5TqDeiY
- gFxQ==
+ :reply-to; bh=eIS23kxbxczTkTd9fyqEVyBaAcPXCz4C/tWVuntegW0=;
+ b=oedlN70xy0qto/Z14DpGIkfGR2JO0M+/2nJjtruPRnvasd7mKp+IRzqKrwAt5pgGgo
+ sM+IVTq3ygAI3JaFgbLQeijt+FWDuv/WY8OIX36hcPEcyKcB2EbhfED3ZnRwK57OmBbJ
+ DhOyrSNa/gzT0ZhChgpGk0blPlHkUK9PJc1B9nQrkWT6K+Q0j90HUReituYI+F+ZLXP1
+ q+hSqGz/nsWEQ9APdiAv83y5MtZnEp6R4bLhD+pSUM668kwW2aIZ1h6Au8Nrrl5tun5c
+ 9heonbw1Qce/2j2dOFL1xJW1wYytqRwBkewvKzh/Fmhuyj2eAp9e3MEhXIbEgPOBYAbc
+ sTqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770578813; x=1771183613;
+ d=1e100.net; s=20230601; t=1770578793; x=1771183593;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zHW6LQFaIzwSaKkoHeZZjH30Ksax78GgwX4zPL/ZVxM=;
- b=bxpC8Qpoy3pjUp0UXLzqtAuyBYmOcKT1oXk6SehVBnmhKDB+WgxYwnFNX5AN3Ot8vS
- 9eZ6CgPfWrpxoBua3J6Iveff7NMKIR+JXdn4kOIM+2dEblUXFmibxwDZ8qfpL7I86RKV
- 5RdZF8HECwXD+3Q7r671vLYkiSSDvPQRk3OwAWKwBZZbmaOzMxUpHtj4meHVbKHAJSpn
- ShVClcCL44FuGNwbWzWemWV9mzWsWxtGZ7gyktkF9mmHDG5l+iz7ZKF0EzrDJP5HfEIb
- 18lvFQYOcH/4BFWsi7utLwYzUWC//3z4H3vb22Ny3WTFyCZywv7tMasvi4xwvDpCjqZF
- ZNog==
-X-Gm-Message-State: AOJu0YzsdBuS6LOMoTimHYur4TTWd9Xkz8FkmBmdCF2s3b6M/TJEVYi3
- /xXEO44tUts9yBtSYOPa3JpCa/Aquf6Yfgy2ZTiwKjAljU9fcp/ZdSjuMC7H1idqEnU=
-X-Gm-Gg: AZuq6aJ3GSUSJ4YB6G5t7Z+TDcSZX9MOidPymtIqQEVt79QRNevon4laOQJWJVvkye6
- yL9N0fZGzZ6TFNfpdgZ4LMZFOijq5cVFNbCbpFOYvSfAQ6fHDqZI+N7ME+TmfxfK52bMEJIAEDD
- Q/6Sj4XmlDto3/2RVa/viBGYt0I/Z5M+kSd+oobOzqquNCHbZrolAwte0hlHaLLkCf91xmI1IsM
- kcN0QGlxsiDlfdPNndJB8AaaZFjwsAj5hRmcvv9et+iSn+pZLfTvjaUSGCpZR7kl5aYP5hX6AlF
- D4ELyG+3bnvG1f0mfJ0PrcyUBxC9j6OY51LxdPTdsj3zn4HGWpL0MFYf6aWX2IkC2hGdJYPR+KS
- SscgHsk/pmB2B90TUM/AdwK4j+2/xTZUl0myoEB+ESQEkmqVNdDgtGUdA7dFDs5meKe4z09jXR2
- eWQW1MWhcd
-X-Received: by 2002:a05:6820:2d42:b0:65c:f019:ccca with SMTP id
- 006d021491bc7-66d0a37cedamr4599346eaf.21.1770578812650; 
- Sun, 08 Feb 2026 11:26:52 -0800 (PST)
+ bh=eIS23kxbxczTkTd9fyqEVyBaAcPXCz4C/tWVuntegW0=;
+ b=aUxAvjw/PBysxqKlE6DP11wMAQvUCy9Bz1YMME+N6VmHeiWynYF+4K0XxyLQPGsFM+
+ MaOMKxFe1riybVgcGUSCxThMsx7Y8RLrb3Ug2WxfHCGwnpgHQhEA9EAY4aTbWU9rAOwh
+ PNZYAdL8pO2MiUOBh9O9p80ltSFnLxhiY2MgFiZrL3QKwscL/93DpELrxOtNf8MfNV2j
+ 4lbc8+IiQ75CVF4hlfYFV+HXfFSxcmzQa/5QeT/9rUetCjgD9L8HskCkORUtGeDNw2Jd
+ yfB8478l0BGmBtZPL+kltBG1L4hLhjxELrqMm3XxygYofHii3szrMP9qTqYwfh7N/d3J
+ Wv4w==
+X-Gm-Message-State: AOJu0YylpPWXV//5O5Nj/J+qP5xXFaA3Ol2/pVOV6u/M0lQOcADh6sNR
+ iNTy2dyQk2InM9P+dxIOUJ7Hv+db+QI+U1RmxRpyjfEFXz/lIdKjHsmec4ZZhjkr3nM=
+X-Gm-Gg: AZuq6aJg14uXH2ldD/B2Zq6FGs16AXzL7S6+Fqs+u0JVWiV7JYjs6lwLtBxmZdGUfK8
+ LGd8CKoGCVrBsLFlzABz+5STus7ESXGSu3lQG/1yeGni9A1akXDdjNKUDgq1ZPnIh1r8e2cHxeB
+ LIA7ZiJkpwwJWf8H4sgY4Tg+q2lnjlmlNL/K+geMyakNkKUPkSLhnX3XYdKQ1j8Wuvf01YZ+nac
+ JWU8hxaBlcOKvlukk1b5wjoNlJXe1pgBswUkMDb2jFCm1yJMoRyFNoInNsqXpjmF2OCPpaUUDSB
+ oZFMyTl04yBqrZF1ufjAmjwF0kUXAJsmhYt0ainBAgpSe1S7puywZYHbBWusA47+li64dRPBOYs
+ 6VTCjAOST9EfadWiWhWQGUwWFAGaMNuhAKSUSe7NHDC2hgwOy+dAHkLAiR5oNObn7MmA1nlaCih
+ G9VlX6sQeP4A==
+X-Received: by 2002:a05:6820:207:b0:663:c86:e9e6 with SMTP id
+ 006d021491bc7-66d09ac045cmr3618835eaf.1.1770578793157; 
+ Sun, 08 Feb 2026 11:26:33 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-66fdf303607sm1741301eaf.14.2026.02.08.11.26.51
+ 006d021491bc7-66fdf303607sm1741301eaf.14.2026.02.08.11.26.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Feb 2026 11:26:51 -0800 (PST)
+ Sun, 08 Feb 2026 11:26:32 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 08 Feb 2026 12:26:29 -0700
-Subject: [PATCH v2 20/24] bsd-user: Add message queue implementations
+Date: Sun, 08 Feb 2026 12:26:16 -0700
+Subject: [PATCH v2 07/24] bsd-user: Add target_to_host_semarray for
+ semaphore operations
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260208-bsd-user-claude-v2-20-58e5fcfdb84f@bsdimp.com>
+Message-Id: <20260208-bsd-user-claude-v2-7-58e5fcfdb84f@bsdimp.com>
 References: <20260208-bsd-user-claude-v2-0-58e5fcfdb84f@bsdimp.com>
 In-Reply-To: <20260208-bsd-user-claude-v2-0-58e5fcfdb84f@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,27 +79,26 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>, 
- Stacey Son <sson@FreeBSD.org>, 
- Richard Henderson <richard.henderson@linaro.org>
+ Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3717; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=MFUKW2hCFFpmO24KyOwSzU6K7ikVw+umbnly3Xmf3hs=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpiONhZmgirpDto1qpbJSzre480uHCeths7limQ
- o0FyjjJpE6JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaYjjYQAKCRBsHNEofbAR
- AEXSEACp+tdnupBS+nkVZ9KW57DYRbsMdOtvZH2aIIHrAAkNcdSZyIK7j7ab73RcSDahy1QDZGn
- EkOPy4nTzl4zaaZQsV9GeQeT6dcB4rDEPPefu3xCm1bGu8lTx/8mmX+eBn4yW3RbNhxm0ELuKLP
- skt1tjldCRommb8yGPaVAKrx4HGKh5Cdn2SKN8MFyQoP0wCivhZrvfyoo/tRMu+praRZosrW0VY
- En5dygH586wH7axAGzffIMlk6DhpzRBnNEEo8BJ7jLtWdf7EYavJQmeCKKq9wwATGpQy7B8uXmJ
- yeP/br5etuII4+pNJZFFrlLbdkTWy4J/YZzBWZWufWkRrTwrdVJw05BgvpzbRsKuEFItAdOJfb7
- bamVNLT5UAIHbcr8Bwgmu3sbijZ92+Fu8PR4sqKd7ixA1SvnXdzu56PRd1A76wXLjT7QIBj3EOb
- Oo7tkgY3YFmtuCePDSbC/1XTc9Cd1IvZx7N/oWHVinY0qPlKgQkODcI+dFjiQAfwgkVWA8hkp4d
- IkaGGEQ25dodUM1IyOjdlPEt2XuCy9szavWkEUpQo69weOdstnw9nD7w8LUh2Bl2YVjdbMAflip
- mJjr9HnufBNVUUiNSGjtRuMzhnuthty86tQEHm+TnKlIKTFDI6b+VUrWaVY9sPwbbhTebhVQ93e
- mZyTpCKvo9rRcvw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1714; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=fQTTJZxWvRkDOzmjm7pqV62DkOeFQ0ZfEtEDegHj38s=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpiONgFqIGcnBUjwQ1WQmCEp8vwloPWD2M2BGJ4
+ gccMYixtmKJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaYjjYAAKCRBsHNEofbAR
+ ANTJEADspGEMqDGXUgIozzYeX3aVVmZc/ANjl+9rTCLf7/WkzZMX74AffArXCRnoxTl4a4PgpbA
+ MXFiTPQGPfaX+09Wflu6AOcEUdM7TwiaYs5ERNRQXdn+JzFsTYYm+k0r0YV62uTQof6XO8IXcwa
+ tFjqhxzIrT6sianWf8w7b0/JTRG7vUFE2FViqnmyGAhV+MbJuHVJ83FMXJBw4d3ATDT8QIVuDQy
+ mzpYLOxnyU6Jvn1efF3zK2QuUGhV4wBYhSNObBVUI+TPpSLGHw6jZhm0hy2jJ44q+4oYK+6iLMR
+ TzkCTjdlL5ycroNzI1n4aOT04Zi3GcUPweRUBqkUPsKBUEyNGBLi5348creotpKjfEkb8x232z5
+ Z4CZg7YxYkuBk3w8lmrBKw4U8DSS04FLBk71FKmlsKERwo5z21t9uSEvQ4azUntROQXBX1LhhWe
+ VS/WeyCjh+haCOh65QY3XArv0Jv8KEvfupuE74kt7JqaOCbY2hblmmbSlpMwimyVd0w2dLC5idJ
+ 5HGNLOx1oWW0zJk5bYTyvpJL9+Iw+RBQmcHkNKnAv0NxOfaZgKmcze+JA+PKnoJg0mLQxcvvcss
+ FnltvjPKaYGEHZEPudpfbgnzsSDN0/UQWmpk6x9D+nWT7MikP/Hslka1Pbbbk4gp5zZxCoBJI4N
+ YIwAQWUpfC4FAHA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::22e;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x22e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::334;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -122,133 +122,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Add implementations for:
-- msgsnd(2): Send message to queue with size validation
-- msgget(2): Get message queue identifier
-- msgrcv(2): Receive message from queue with size validation
+Add target_to_host_semarray() to convert target semaphore array to host
+format for semctl(2) SETALL operations.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.h | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ bsd-user/bsd-misc.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index a45fe8edb5..ff27f94944 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -28,6 +28,8 @@
+diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
+index d2107b2f85..d9eb87db80 100644
+--- a/bsd-user/bsd-misc.c
++++ b/bsd-user/bsd-misc.c
+@@ -18,6 +18,11 @@
+  */
+ #include "qemu/osdep.h"
  
- #include "qemu-bsd.h"
++#define _WANT_SEMUN
++#include <sys/types.h>
++#include <sys/ipc.h>
++#include <sys/msg.h>
++#include <sys/sem.h>
+ #include <sys/uuid.h>
  
-+static int bsd_msgmax;
-+
- /* quotactl(2) */
- static inline abi_long do_bsd_quotactl(abi_ulong path, abi_long cmd,
-         __unused abi_ulong target_addr)
-@@ -268,6 +270,101 @@ static inline abi_long do_bsd_msgctl(int msgid, int target_cmd, abi_long ptr)
-     return ret;
+ #include "qemu.h"
+@@ -44,3 +49,33 @@ abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid)
+     unlock_user_struct(target_uuid, target_addr, 1);
+     return 0;
  }
- 
-+struct kern_mymsg {
-+    long mtype;
-+    char mtext[1];
-+};
 +
-+static inline abi_long bsd_validate_msgsz(abi_ulong msgsz)
++abi_long target_to_host_semarray(int semid, unsigned short **host_array,
++        abi_ulong target_addr)
 +{
-+    /* Fetch msgmax the first time we need it. */
-+    if (bsd_msgmax == 0) {
-+        size_t len = sizeof(bsd_msgmax);
++    abi_long ret;
++    int nsems, i;
++    unsigned short *array;
++    union semun semun;
++    struct semid_ds semid_ds;
 +
-+        if (sysctlbyname("kern.ipc.msgmax", &bsd_msgmax, &len, NULL, 0) == -1) {
-+            return -TARGET_EINVAL;
-+        }
++    semun.buf = &semid_ds;
++    ret = semctl(semid, 0, IPC_STAT, semun);
++    if (ret == -1) {
++        return get_errno(ret);
 +    }
++    nsems = semid_ds.sem_nsems;
++    *host_array = (unsigned short *)g_malloc(nsems * sizeof(unsigned short));
++    array = lock_user(VERIFY_READ, target_addr,
++        nsems * sizeof(unsigned short), 1);
++    if (array == NULL) {
++        free(*host_array);
++        return -TARGET_EFAULT;
++    }
++    for (i = 0; i < nsems; i++) {
++        __get_user((*host_array)[i], array + i);
++    }
++    unlock_user(array, target_addr, 0);
 +
-+    if (msgsz > bsd_msgmax) {
-+        return -TARGET_EINVAL;
-+    }
 +    return 0;
 +}
-+
-+/* msgsnd(2) */
-+static inline abi_long do_bsd_msgsnd(int msqid, abi_long msgp,
-+        abi_ulong msgsz, int msgflg)
-+{
-+    struct target_msgbuf *target_mb;
-+    struct kern_mymsg *host_mb;
-+    abi_long ret;
-+
-+    ret = bsd_validate_msgsz(msgsz);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    if (!lock_user_struct(VERIFY_READ, target_mb, msgp, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    host_mb = g_malloc(msgsz + sizeof(long));
-+    host_mb->mtype = (abi_long) tswapal(target_mb->mtype);
-+    memcpy(host_mb->mtext, target_mb->mtext, msgsz);
-+    ret = get_errno(msgsnd(msqid, host_mb, msgsz, msgflg));
-+    g_free(host_mb);
-+    unlock_user_struct(target_mb, msgp, 0);
-+
-+    return ret;
-+}
-+
-+/* msgget(2) */
-+static inline abi_long do_bsd_msgget(abi_long key, abi_long msgflag)
-+{
-+    abi_long ret;
-+
-+    ret = get_errno(msgget(key, msgflag));
-+    return ret;
-+}
-+
-+/* msgrcv(2) */
-+static inline abi_long do_bsd_msgrcv(int msqid, abi_long msgp,
-+        abi_ulong msgsz, abi_long msgtyp, int msgflg)
-+{
-+    struct target_msgbuf *target_mb = NULL;
-+    char *target_mtext;
-+    struct kern_mymsg *host_mb;
-+    abi_long ret = 0;
-+
-+    ret = bsd_validate_msgsz(msgsz);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    if (!lock_user_struct(VERIFY_WRITE, target_mb, msgp, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    host_mb = g_malloc(msgsz + sizeof(long));
-+    ret = get_errno(msgrcv(msqid, host_mb, msgsz, tswapal(msgtyp), msgflg));
-+    if (ret > 0) {
-+        abi_ulong target_mtext_addr = msgp + sizeof(abi_ulong);
-+        target_mtext = lock_user(VERIFY_WRITE, target_mtext_addr, ret, 0);
-+        if (target_mtext == NULL) {
-+            ret = -TARGET_EFAULT;
-+            goto end;
-+        }
-+        memcpy(target_mb->mtext, host_mb->mtext, ret);
-+        unlock_user(target_mtext, target_mtext_addr, ret);
-+    }
-+    if (!is_error(ret)) {
-+        target_mb->mtype = tswapal(host_mb->mtype);
-+    }
-+end:
-+    if (target_mb != NULL) {
-+        unlock_user_struct(target_mb, msgp, 1);
-+    }
-+    g_free(host_mb);
-+    return ret;
-+}
-+
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
 
 -- 
 2.52.0
