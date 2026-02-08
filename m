@@ -4,58 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE09EF06E3
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 10:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E26EF06E2
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Feb 2026 13:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vp2EK-0004Fu-Ua; Sun, 08 Feb 2026 05:41:28 -0500
+	id 1vp4r0-0005q9-8G; Sun, 08 Feb 2026 08:29:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp2EJ-0004F0-Hd; Sun, 08 Feb 2026 05:41:27 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vp2EI-0007AU-2V; Sun, 08 Feb 2026 05:41:27 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 70E4E804EB;
- Sun, 08 Feb 2026 13:41:24 +0300 (MSK)
-Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d25::1:35])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id WeNYFo1Apa60-mydBr3xg; 
- Sun, 08 Feb 2026 13:41:24 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1770547284;
- bh=Qsul4O4z95xq9yphmhSiylpmeGjeIrFHxIxrbO2rFYY=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Sstpthd170VKNh4zJFVwttUuTMpCvaP70QsOnNmUeViIjZrCVwjj5Z2K8O9UFg0K0
- ukMZ1JJrW878F9f7eqM0RHu0J2lLrbAj69fYXO5T4Q122T6o20L0D9WFJ0bxwir1kE
- QW8fdKjIMq55yZd74Op+riy8l0GgVmGZvDV2bNOQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-From: Sergei Heifetz <heifetz@yandex-team.com>
+ (Exim 4.90_1) (envelope-from <manishyoudumb@gmail.com>)
+ id 1vp4qq-0005pK-EY
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 08:29:24 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manishyoudumb@gmail.com>)
+ id 1vp4qo-0001Hw-LI
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 08:29:24 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3562258142fso477842a91.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 05:29:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770557360; x=1771162160; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hVaj8lSk2x+ox2BqGp0oGSbNfcP5O7ZC/H0c7Il1T4I=;
+ b=jcf689p7E1UV7SWkyK70toDilgFLyACrVs6Z4/Wqvg1Q1/G9dSr+fPbMTx2AERcGhB
+ IKe95DYEpG9tKkdBkHL9PEdpwBavnyBuw8OluTmBfATyiAUnWxYnaZoGVGzdOEsVTGnE
+ ZRGqdVxkLDWTKZ/WlZUq1uIv3DxQ+zHnVItmEz7JJYR4/nHPwU6PD/+syg8OFvYi+o9T
+ tXjuhj+S8eWSVGQW8qmhuuvE1/WlyI6dGcVISfGkPSkudH80UxXf84CSIeRPatjI6mEh
+ mUS1eZMfq4vVsNa6+RxWBaCM43B5rwIrr/xkIu24rAsjZuzbcBOK7aouDTpeS0QyRN8Q
+ AE/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770557360; x=1771162160;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hVaj8lSk2x+ox2BqGp0oGSbNfcP5O7ZC/H0c7Il1T4I=;
+ b=osU/P2F24nkdoQ7wrYwYWUwA9eY8J45LL2mTMKJFGK48uJcryqqu/FGoz9Om83dZrX
+ KSqka5WVIT8IUJ4si2NAeiri0h40zKZdxBXeAo/ESHPgdR/aFq25mKXSbLGhBADwW2YZ
+ 4mlXwQYAr01Kn8XKyjld7CUZwn0Qlq2JCRTNE7+HrT2Vcm8L/8La+AEd5ukeUUNcp94o
+ z9FMSIK6Rk01wDQQhaXA2D3uE5gRyUsB6Kjhb0e96rrf+ljZqLS0tYYJskZ29KeLHOko
+ 6YxvuUyChxh29LRhXWg/ciCnXDJb4QWzwF9z3mDmMU2a6u8F2qZOKlsnJ3E8VMi6D6Qi
+ HkCw==
+X-Gm-Message-State: AOJu0YyMRpeIHolqima+yf0vwYqXViupJDtScxxY7z4XD5EeaeZg7855
+ b4mG3D2Q1BcDED80E2GKHaQQ3Vg7Kx0+l9hk9jMMY0CLKABqZz6FgUCVqYhehzkd5JdS1g==
+X-Gm-Gg: AZuq6aIj+aQm003m+Jb/O+l6hkqSgjQvYfkIWUw3MEnsD7qkbNVO/TxAjmepmnDZD6j
+ fCHdv/PaL8ku0R7qHDZZTddGEGL/ejUaYERtiJi7MUlkCHDxtTqUVx7T1CntEo1Pk5cNsYrRO9a
+ WKllhUKqUaw4zb9YmYg2OUOVURTBfmM9qFFCl4nOuwOdKGZiBDrNTglTyXSSCAMowcLR6crYi9I
+ 3bL9jhTojX353sOA0dyIvuTC2UjUAk59iCIIjjbj6PcB1307tgJKH2P47+R4S2cPwe0nSSpgzWD
+ N72iRZl8z465K8xexT1h/n1Aju0MnFeCH8yDDA4NjVwnevW8m2WV6J48fMaTfkilVwxdKUTPrpP
+ R4ygN5KdGl5Ei2QRgs9wV0Kg0zYLRbs/iDzWRvIDZbq8IXL0BYoynXTj3fj+NCC+o8x+VfE01B5
+ bl8zk1TZSwQzoOMFjLx9QrqoSWVJvADyLhv1YQ5uM7+FQQN6Lfw64oM9mMwx9IhPYviO/ucqSEw
+ YGmMRB68NTW+MWj7Qpau2bIbDpN9dRgd4RJ7gysPCvni2nZIg==
+X-Received: by 2002:a17:90b:1d85:b0:353:49f2:1e7a with SMTP id
+ 98e67ed59e1d1-354b3e2be90mr8213515a91.17.1770557360449; 
+ Sun, 08 Feb 2026 05:29:20 -0800 (PST)
+Received: from localhost ([2409:40e2:1008:bc1d:9205:403a:2318:6cbc])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-354b2253c70sm8003747a91.17.2026.02.08.05.29.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 08 Feb 2026 05:29:19 -0800 (PST)
+From: "Manish." <manishyoudumb@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Subject: [PATCH v3 4/4] hw/usb/core.c: reorder usage and assertion of p->ep
-Date: Sun,  8 Feb 2026 15:39:58 +0500
-Message-Id: <20260208103958.121455-5-heifetz@yandex-team.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260208103958.121455-1-heifetz@yandex-team.com>
-References: <20260208103958.121455-1-heifetz@yandex-team.com>
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+	"Manish." <manishyoudumb@gmail.com>
+Subject: [PATCH] hw/xtensa: convert calloc to g_new0 in mx_pic.c
+Date: Sun,  8 Feb 2026 18:59:13 +0530
+Message-ID: <20260208132913.41498-1-manishyoudumb@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=manishyoudumb@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,31 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorder the code so the assertion of p->ep occurs before it is
-used in the subsequent lines.
+Convert the calloc allocation in xtensa_mx_pic_init() to use
+g_new0() for consistency.
 
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1798
+
+Signed-off-by: Manish. <manishyoudumb@gmail.com>
 ---
- hw/usb/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/xtensa/mx_pic.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/usb/core.c b/hw/usb/core.c
-index b3f811c513..9572a870cc 100644
---- a/hw/usb/core.c
-+++ b/hw/usb/core.c
-@@ -423,10 +423,10 @@ void usb_handle_packet(USBDevice *dev, USBPacket *p)
-         p->status = USB_RET_NODEV;
-         return;
-     }
-+    assert(p->ep);
-     assert(dev == p->ep->dev);
-     assert(dev->state == USB_STATE_DEFAULT);
-     usb_packet_check_state(p, USB_PACKET_SETUP);
--    assert(p->ep != NULL);
+diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
+index 07c3731aef..ab308c9490 100644
+--- a/hw/xtensa/mx_pic.c
++++ b/hw/xtensa/mx_pic.c
+@@ -316,8 +316,7 @@ static void xtensa_mx_pic_set_irq(void *opaque, int irq, int active)
  
-     /* Submitting a new packet clears halt */
-     if (p->ep->halted) {
+ XtensaMxPic *xtensa_mx_pic_init(unsigned n_irq)
+ {
+-    XtensaMxPic *mx = calloc(1, sizeof(XtensaMxPic));
+-
++    XtensaMxPic *mx = g_new0(XtensaMxPic, 1);
+     mx->n_irq = n_irq + 1;
+     mx->irq_inputs = qemu_allocate_irqs(xtensa_mx_pic_set_irq, mx,
+                                         mx->n_irq);
 -- 
-2.34.1
+2.52.0
 
 
