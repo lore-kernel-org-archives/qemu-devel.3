@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA68E7C708
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B589EB28F7
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpM1v-0006vY-J8; Mon, 09 Feb 2026 02:49:59 -0500
+	id 1vpM2j-0007BM-0i; Mon, 09 Feb 2026 02:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM1u-0006v9-Hg
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:49:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM2g-00079d-4k
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:50:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM1s-0007JQ-7W
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:49:57 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM2e-0007Xv-Kf
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:50:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770623393;
+ s=mimecast20190719; t=1770623443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+6uuC4NAAYCxCFYi4gun1C/hL8WAm0cD7MzJbUAhnvQ=;
- b=dHn7ZpqWeeFc/wkTa91I8ZT3SggBayUHGUUmTA2T1l6OC7ukL6qKwPmrt6Tps2Ld/vTRSS
- rLSrLBn7985pQGxubIU5t9oIWgURZw3OjnPXH0XTgrfF6/Xasrh8UE1PYP2BZ7gHKTFmwV
- HKeOosVbx8wbdX/ebhwd0+8hEltNQXE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=opIb2a0ToGwKXxrr49qhulMKAnvJuLw8iXUqsSWQhlQ=;
+ b=T0GBMWc80gVpI3rScV9snlJ5TdT7MQhE36a8JnL+zj+eUjO05/zeypi8PIKgHS3xrgU8Gp
+ lkiflhe2OzhgHJ/cZyO2mm3qe6wde2RGMDLNunx0Co6p4d3XzMzfVdBvWHwxVIV+u+esWi
+ SfroJqNL67CmdWuWy7Rjdmw87W62eH0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-uFkH0-hsPv6aptbSZwOFpA-1; Mon,
- 09 Feb 2026 02:49:47 -0500
-X-MC-Unique: uFkH0-hsPv6aptbSZwOFpA-1
-X-Mimecast-MFC-AGG-ID: uFkH0-hsPv6aptbSZwOFpA_1770623386
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-dzBCXVA4M6aBMFF2Qm1mKQ-1; Mon,
+ 09 Feb 2026 02:50:42 -0500
+X-MC-Unique: dzBCXVA4M6aBMFF2Qm1mKQ-1
+X-Mimecast-MFC-AGG-ID: dzBCXVA4M6aBMFF2Qm1mKQ_1770623440
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4B90195609F; Mon,  9 Feb 2026 07:49:45 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96A9B180034A; Mon,  9 Feb 2026 07:50:40 +0000 (UTC)
 Received: from [10.44.32.227] (unknown [10.44.32.227])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E235030001A8; Mon,  9 Feb 2026 07:49:40 +0000 (UTC)
-Message-ID: <76f876d0-42ad-4718-a61d-9e1bed4a4fee@redhat.com>
-Date: Mon, 9 Feb 2026 08:49:39 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7A9FB18004BB; Mon,  9 Feb 2026 07:50:35 +0000 (UTC)
+Message-ID: <9ff93406-1fcc-4d0e-b5b6-8571bb999af6@redhat.com>
+Date: Mon, 9 Feb 2026 08:50:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] target/s390x: Prohibit target_ulong and
- TARGET_PAGE_SIZE uses
+Subject: Re: [PATCH v3 01/10] target/s390x: Use address_space_ldl_be() in
+ read_table_entry()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
@@ -59,6 +59,7 @@ Cc: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@kernel.org>
 References: <20260206181953.18683-1-philmd@linaro.org>
+ <20260206181953.18683-2-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -103,10 +104,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260206181953.18683-1-philmd@linaro.org>
+In-Reply-To: <20260206181953.18683-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -132,13 +133,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+
+Still:
+s/address_space_ldl_be/address_space_ldq_be/
+in the subject.
+
+  Thomas
+
+
 On 06/02/2026 19.19, Philippe Mathieu-Daudé wrote:
-> Series fully reviewed (Thomas if you don't mind I'll merge it
-> via my single-binary tree).
-
-Fine for me, please go ahead!
-
-  Thanks,
-   Thomas
+> address_space_read/write() is meant for accessing random
+> amount of memory blobs.  When the access size is known,
+> use the address_space_ld/st() API which can directly swap
+> endianness.
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> ---
+>   target/s390x/mmu_helper.c | 11 ++++-------
+>   1 file changed, 4 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+> index 026502a3e40..30f09ec3de4 100644
+> --- a/target/s390x/mmu_helper.c
+> +++ b/target/s390x/mmu_helper.c
+> @@ -108,6 +108,7 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
+>                                       uint64_t *entry)
+>   {
+>       CPUState *cs = env_cpu(env);
+> +    MemTxResult ret;
+>   
+>       /*
+>        * According to the PoP, these table addresses are "unpredictably real
+> @@ -116,13 +117,9 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
+>        *
+>        * We treat them as absolute addresses and don't wrap them.
+>        */
+> -    if (unlikely(address_space_read(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED,
+> -                                    entry, sizeof(*entry)) !=
+> -                 MEMTX_OK)) {
+> -        return false;
+> -    }
+> -    *entry = be64_to_cpu(*entry);
+> -    return true;
+> +    *entry = address_space_ldq_be(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED, &ret);
+> +
+> +    return ret == MEMTX_OK;
+>   }
+>   
+>   static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
 
 
