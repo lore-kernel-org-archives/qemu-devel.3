@@ -4,97 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996EAEF071C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC130EF071C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpLRR-0002bX-F5; Mon, 09 Feb 2026 02:12:17 -0500
+	id 1vpLnU-0007rr-Bl; Mon, 09 Feb 2026 02:35:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpLRP-0002aF-5a
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:12:15 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpLRN-0000Ud-Cn
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:12:14 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-82318702afbso2356142b3a.1
- for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 23:12:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770621132; x=1771225932; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R7ZO7/r9TnJ4WFv2EFr1+qCa2vL0XHJSurK7b1EVkkQ=;
- b=M5rUa2FGp+f33mLzSsbh4hoyvCcBOGPfaKNjcLTA0PhDvsxyw/tUHpzTRnXiryMVs0
- F+xv2264PF7jjuf3L6uifF9XIipnLzVbCblRi8k9vfCdUVzJV5SCFBNn3CCyARQKdQcV
- a1IeMD097mpaKU71/nEit5RGvxT8RXTzGf/EKA9LMpU/izaWkGSR+bHRPulNkxyExBHm
- 0w6n+orosMKwvPwA+UHFUFKeF4OyVxtZy2TEvy0p92tz81gB15jnbOpwdyaeZwX4Z/2u
- TvalnowSyeOIY9ZCA8RIVCR47VL4rW3yNBGG6tCRLDxw0THkL+JoBvnZWqDBzmV2Mr1F
- EOeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770621132; x=1771225932;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R7ZO7/r9TnJ4WFv2EFr1+qCa2vL0XHJSurK7b1EVkkQ=;
- b=s6HgQefEOQ+Gv+rYNzVm+8KlJKr/wjX57x8pZIclaLuFib/pFqnpqk2YT1Jlw9oCzp
- QypM1uMffQLBGT+Q0Ks856E+9Z9c3n+N1ZLy5NTxo8x13w4EaYjKs0ljrUK2sgDs1rs5
- OpsKjsqrhmyTjnIsPVCoHDkDPZ6epOdLUnnGWIxgwTM6NY8fnEyXHJnpihhDNEW+lIKV
- W5sPehTk0HvL1uqrWzlhNtyclg0SjBYrDO15IPBiRDapkLjUziUpjHwOEbiZqte4PZ5X
- R/NDgSyQ8xpVzYMmmUgLhtOMwMrIewOeysi+w4OSktOlCwufApxWl6luTfCk6RigNP6f
- Wd/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuREf3ylFDOb57TP+Fq1sfpuE6CY6Cetqw5ny0GkOuR0hcDjjDFFPvlYe+Xw6+hQhc3LM/EM+styh/@nongnu.org
-X-Gm-Message-State: AOJu0Yz6GD5U68zhL436+LNALOQNikxRhmvoHK8tTLmBqT9wzXYhhtmt
- do5dg7Ocpd9FUbOx282WBbgFq05MQY6bVwHomCg4xJJG9byUwPPdRDUdkEfL8/9GXQ8=
-X-Gm-Gg: AZuq6aJYlg9SkLSFjY8GPI4+jyDl6/u1zwZTDTSJ/cTHVBTQhv8ddwnP686cjlf/1XF
- KkJcxEz6Pws001o3WC/awjK/IuqXdVSQeNLGK42VuZtagtnwUgwvbD9F88+NVjTSWes54OJpLNs
- 3Q5xnwAanz+1iVtUoDk+DRjXOB1ydQDG9qArigSB+47bPO4T/fGSiG99qltj36F/tSmfkAJ4KzG
- gJtky0jkrABZjHSMuihe1D/dES1+RjmQEJQOmr5+u+rcDPi6grdGi9swKZJ3p81QvDWRWje3uH7
- 4cQUuQJHmGsYOP/46Yu789jQ5k7AZuQcdXMZqWB5fGUrx16JHmPDYUVZfLqe5plcg1joeuKI/Mw
- gjU35ZaXwvbfxYlfIxIXmPyJ61lUfN8g06kVuiXM3wjQdNvvTD83vW9ZUxbkbyk2gfw1tb6bwQ7
- Fgsnc0d4HsiiGe5CWXx5zlJHI6RkZk3cxMTbwheq2k/KNla67orwmxHRef7ucl2R7myWmlMQKyU
- Rt2RGbKTBGW
-X-Received: by 2002:a05:6a00:2296:b0:7f1:4:66b with SMTP id
- d2e1a72fcca58-824416f87cdmr10889671b3a.44.1770621131863; 
- Sun, 08 Feb 2026 23:12:11 -0800 (PST)
-Received: from ?IPV6:2001:8003:e109:dd00:7b35:2dcc:ff07:8193?
- ([2001:8003:e109:dd00:7b35:2dcc:ff07:8193])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82441695f7dsm9806795b3a.23.2026.02.08.23.12.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Feb 2026 23:12:11 -0800 (PST)
-Message-ID: <995711f7-52a4-4ecb-b888-af766d4e3b4e@linaro.org>
-Date: Mon, 9 Feb 2026 17:12:03 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 9/9] hw/virtio/: make all compilation units common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
- <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, stefanha@redhat.com,
- qemu-ppc@nongnu.org
-References: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
- <20260206221908.1451528-10-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vpLnR-0007rX-SQ
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:35:01 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vpLnP-0004I7-0u
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:35:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770622499; x=1802158499;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=KytTCziPYjX7dNi0+3lm6DLbAnMLxjzGEDq1HEJtRfU=;
+ b=RYtUC8lYI3DFrMH1IrhXMr/8xnxmzlF5kzmEwPCNgejrtS9DAQtacUJh
+ 38G9S3L+Mym/uSDG15zpNxCIrfIgMcbOdWmChxiAP/LkA9gJxtR89blTr
+ zpaaKFV1Y/qPNZ3iWz0pLyjc++sedfxxU/8/CXy8Nwio7kx5/9ZZ12EMF
+ JDdanz64oes5SsTCuSi+kh9kqjOwzfYYH8bRuEHcccOR6Ns6XSL5OyeWx
+ 8u4ZB+slR8RepTNbkiZ/7eQPCL0dNHsgaaS+eAyS8JD8Jt9MXKAdNDclh
+ p09exUvqq1A+Zj249BAJ//nXj24asZLlNFtUSQzRoBR2VjDI/JMZbG/vX A==;
+X-CSE-ConnectionGUID: 8S7/WtDIS/ih47oYYESg5A==
+X-CSE-MsgGUID: c9+iaN3oTWSMd6P1O3cXHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11695"; a="71912149"
+X-IronPort-AV: E=Sophos;i="6.21,281,1763452800"; d="scan'208";a="71912149"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2026 23:34:54 -0800
+X-CSE-ConnectionGUID: 49r/i0SGQDK0wV+7ZiH5DQ==
+X-CSE-MsgGUID: x2cZFXpGTFibjdeqHsDPag==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,281,1763452800"; d="scan'208";a="242134885"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2026 23:34:54 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Sun, 8 Feb 2026 23:34:53 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35 via Frontend Transport; Sun, 8 Feb 2026 23:34:53 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.26) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Sun, 8 Feb 2026 23:34:53 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=frcYY4TIvT5Q8X3hpyAW3iu26yimV2KQWa7gFdUpglRgAsLXbtZbTDxWmwcYnndFRt5RpYio8eRpC5FgTU6vFskteQE6MS8jGWzyHT3mBux7MnQEUKqDGZsRqGLgf4ne7WoIU93kIx9YgDUVOBpOxtQk2gyg2zxcfugc3rO4Gytb6IfYYpJkETlIyfZbRUEcgSOVcP2WTy4GEkpoklS4b4QXMPl3L8TZOY8VUeOAKaOpucvKqukSxRcePFNFpEQFsevV4e4XjkVVCPsnvTtFRmauLnluvmJU92w1GCAVd7Cbt51nn4g+CS7P3IxhBBrqtn7bnfOXlIMgWOggZzmY+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wAtcVia1FObieBiIWiJuK6waWdb+GcPHQhgn6CXHAHw=;
+ b=oNozAZOyWnFglx7irkZyRSWAnRTARbwfUxxIpeeqAN6vDkQ9WooC8ue1ikKsif9huSZUoGSQ3gw4B3oftZfG2O7bmLaZaf+J9VP4ik7+2ruE8NRMFHn2J9CH8ZOb7orNMa7WFuzdBzwQgCnXaN4pBb4uLFVGeh5N6qFdB5xFg9tD/Kn4h5f0fgTPxWEADyBdqy2giVZ+wYaEHA+/vtVIDMTiOocp3wTpwNQahi5R99tBpOMMhUG+0bD6zJqotzassd9QHs0ICsk77Bu+L9rpnnj+6eX+vA2/T7dh+OkVBKmSE1OkUWBYlxjuGh5P5SmZ9hVb+BDslYmIf5qEkQSlHQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DM6PR11MB4722.namprd11.prod.outlook.com (2603:10b6:5:2a7::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.19; Mon, 9 Feb
+ 2026 07:34:50 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9587.017; Mon, 9 Feb 2026
+ 07:34:50 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "david@redhat.com" <david@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>, "Tian, Kevin"
+ <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>
+Subject: RE: [PATCH] intel_iommu: Do not report recoverable faults to host
+Thread-Topic: [PATCH] intel_iommu: Do not report recoverable faults to host
+Thread-Index: AQHcmNSX9m4zaFg2WU+PK2nSuD+sw7V5913g
+Date: Mon, 9 Feb 2026 07:34:49 +0000
+Message-ID: <IA3PR11MB9136AACA4BFA95DBE6B92B599265A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260208082252.288-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20260208082252.288-1-clement.mathieu--drif@eviden.com>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <20260206221908.1451528-10-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DM6PR11MB4722:EE_
+x-ms-office365-filtering-correlation-id: 02e13be5-8454-4c00-52e6-08de67adb516
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?HnO6UsQJT/wPGgnRNbU1ir6fwSlLAzn9pShAM2Ozj53QDjC3upuYmVXvmMb1?=
+ =?us-ascii?Q?hrCflVOgmKYOcjZrOQuBiW2MZvLZI4mj5HElrG9BFMWfNL43e+pT+TiPeKzm?=
+ =?us-ascii?Q?RUu7ZRPee2QG68aogGs5pTdzYg7/tBkdOKlymClaB8zGa4kRDRTPfVH1Tym2?=
+ =?us-ascii?Q?W1mRcePue4p3z8/QtbTmoAdQvsyBE/7eh+bKz8TiwbdApXBRPDsG1oHyw2tE?=
+ =?us-ascii?Q?lUIA932dxOiq6Yrap1tXRVWOzWthZEE5hanhJCXMMIuZWUH/zlEhD9MA370T?=
+ =?us-ascii?Q?96ggBX0U7lLD9v6G/aIawS0qXBaJYtSFxGoZOn/KsTbXSx/crstk32TE5L5U?=
+ =?us-ascii?Q?e/p3lck8P62rv19zQefZryHVAguz9bAKVH+c95/ufJO0IwccABGb5zjvrYYg?=
+ =?us-ascii?Q?3pJZ68RELMXKvuR2Z7daqmiidukkeNptSLMT5LTrYFIqNRyxi5aBzkfbdg4i?=
+ =?us-ascii?Q?SgRXg3It4gdEDpq4KsUOx7AN4Sb+kZMKSRfsFhti1bID13A9SKb6W+PzB0Vh?=
+ =?us-ascii?Q?bYEarllsor6/+S4sHUSz3yKMgm28N8xEBJNdTbn0bxqxfsTZO+eZQfb/wm0m?=
+ =?us-ascii?Q?axaq9l+nA5lJ1lFvjh2TK+PMHPawFO93m4gxk/uJyYQ1Nd+g196a7Fuj3u0h?=
+ =?us-ascii?Q?hHxAgvlUbZwkjZSeWZlyvhGznYX7b7bS1CHms+j4CYPrAYsuIoiuZoeuUoS5?=
+ =?us-ascii?Q?A5hqKsCSA8RI8VxfuKYaY0mcFXTszZxu7YORb/JyUI9bx0Y2/YcDTzc5LMyd?=
+ =?us-ascii?Q?d0cx/Tq8jycyq7JsoUFElDPZ94Oa4755cIs0gZVI/WYvgxX/alwM7sVCUq/+?=
+ =?us-ascii?Q?BDO1PhkLEwZrec5zDgchwSy5imInjaCxjR9pWgu4izLc2ASB9s8QzhVYS6KX?=
+ =?us-ascii?Q?luXLH48kqmlrjWq4xpP/Li2s1Vtqzh1n28xOT4NuYgFbi6/8tctZlau+Uoge?=
+ =?us-ascii?Q?g6bWlCS+BUxU8uYBpe6+vPZrvTrd8XlsXdDNN/oumZmCVe8XD/wwtLD2jBl/?=
+ =?us-ascii?Q?CNvg3mfMr4vXf2h8QwMpJyGrw88nxesxIJvaPE5PCHdYEdWYN/idDMG7KAoC?=
+ =?us-ascii?Q?FUtMnMY/tty9Py+ddyVLyadMBx3uqdSrJZPa9tlhmZu6xCt8Os7oYTKpukdo?=
+ =?us-ascii?Q?+4GAJ4hd/s+auVjFXtKN+540MynrY8ytVaZmM5iCWLYS+G6YYPvE3lEaf/7K?=
+ =?us-ascii?Q?2Z1+s0u6vurwkw8pxy2X4dhkRkRm9V56fru4JDeGMSdBTAYdeiArg0cf6W5H?=
+ =?us-ascii?Q?mwPgYMknzbn+N/a2z3j4asGWOXhZs4y5FmM9SeTiNJfAAb6Tn2m9BvFFZ2Et?=
+ =?us-ascii?Q?vpd1kvhh2uNQxBBvLzEOn/H4TOlVo8vSFR2kjfDuQOcJEAMvAzVC7NNaGvDW?=
+ =?us-ascii?Q?Oye88DV362zU5ecGujO492jr1H0GEIF6fPFd7A5uH4WIo1ISUfyu2KeSBEqk?=
+ =?us-ascii?Q?jupib5loKQJRVA9KLuxtTe+xXtNXUICmDQG8q/qLLvbI/6C3g83DrAhwbMGR?=
+ =?us-ascii?Q?1509s0XcyDn07u/1XQwnuC7EQPBY5vJCtt8VfnSPU8Fa5Qtm8u1xAmLTBzIB?=
+ =?us-ascii?Q?JiQCs7NpGUYGhPnW3yKjPbRilW4MmoNYZp0RlsxooLyc/Ooo+6X6xIqjCezu?=
+ =?us-ascii?Q?cMqpoHLo6imU5I/NRHwWTjg=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?oK1Ei9IwKENJagcFEINq6CSPR7teCHvBmarBXYr8Tf4XHgd6FOnHzJSp9PZx?=
+ =?us-ascii?Q?LU39U7sQNrmx4bPA+E3Tm9oObI5KgAIwURmpR+igZRwpY31ljTPpmouG44uJ?=
+ =?us-ascii?Q?H05zkiYb+Q3A8cgaKSStSaAwQYAypGdQsqXH3AUyHy6Gh6FAOyz1xxrcwwT2?=
+ =?us-ascii?Q?kSuIZZ8HYIzoiFovoAo+bz6gbCXaT1z5bND/bC4whJzaARY7tuolXZh/k6Mm?=
+ =?us-ascii?Q?wcZZHmSPXOtqrRgO5UrD2Me8FtiA+w9xAt/isaIuok8fp/iICY+QSLYFOTFu?=
+ =?us-ascii?Q?+cVFLRoNZ4ws7gdiTJu6rBCl7Kz4fTFT6FXQWsC3+iJzytlIQxO2p9ajF2r8?=
+ =?us-ascii?Q?C7xp/IMCwlvJxEhKeXaORttOsj/R2NhNI6uCM128UB2PaHfY1L+c5WFb4rl/?=
+ =?us-ascii?Q?QmIvzX7k+TqiYnBfLYxlPKwMDjXRrxB8hGfGlVvUdEZgKa1sQc8G5/dj1KKz?=
+ =?us-ascii?Q?eRTIwE5Yo4YsDLUiTe5GC/ckYOoC/yZStPezQVY9mjtME13RGhYC5bMf5+bq?=
+ =?us-ascii?Q?Ioag5u7cJlFJgwg3/EhktkCNINLKC8NmSTdHB3Fer4yvEgn9vrzBihTxWqXB?=
+ =?us-ascii?Q?qm1s6CD/zrg7ocMxPbh28aC1qRYtgtYAlmJ2EN1JJNL4U9zI4aNvrRDksZu4?=
+ =?us-ascii?Q?oow1rcxzn7SPCjWnxQJr36VD9Xufy3Lhezee0LvAUrkbvT15J51mMmP4m9co?=
+ =?us-ascii?Q?5JxiyGws4w0V3pJHyodVfH/GiaDpZT2rROVysyGSVhvkq9h1+tD2TrA+IJ5+?=
+ =?us-ascii?Q?uKudyq12LIaEZImrDPTpWu6VJ3NrGj9U+Fw3j9cXg5Hi3sfiWyZ1VwoTN4/q?=
+ =?us-ascii?Q?DuqZeW+Rq4wjcZaTTsyAF20/+M0+aNDlMF1XtNg+p2TRwE33QqwoPLnvDard?=
+ =?us-ascii?Q?JQTg1FIFD6k00w1vcQrG/lgCfrM8gITuYWA3WMyspB1nDHw0T5a2dKHUO4nP?=
+ =?us-ascii?Q?WG7K3kz2lo7gTK6aAka9C64BYNSOLvKcOWXEsh2Atvw9ntKVaTSvKnPpW4uV?=
+ =?us-ascii?Q?kE6mnlbcF+W3XpoVYWEbtfxkuC/QMP0sZjFqqLaUuDUmg75/EMwLp/cWyQOT?=
+ =?us-ascii?Q?oFRX6KgIM0NTGTIvsfe6LzAaU9KKnul0t1C7NoTtw4dxqF8WyGxpPss1ZT14?=
+ =?us-ascii?Q?P796qXoRf63g90BQoqjlTIrvfU+BNMQYcIuBRBPmUuI42Ocf4MNg/EmpUI69?=
+ =?us-ascii?Q?WoID8BIGLZRpf2pIXVfRkeOTuKYMEwjrKP84QIA3+/T9uMWgsblUXYs1RJ1o?=
+ =?us-ascii?Q?fnSm/7gxvw7a2sbRUbqtLdqlK4omS1Nn2QvWRvvIgYm60BqAzzvpNFEx+dFO?=
+ =?us-ascii?Q?2JYRnljcVe5w36HI6d5XTYCicJ22FdQtPfRwANb5r+wJEgfgFbciuU++klzM?=
+ =?us-ascii?Q?GOhAjLzQ3jS34tLxPLbXjU3bBNh8uDmAhf+KmYiEcXZYjeOekjLo/VhlOg8t?=
+ =?us-ascii?Q?Rw5G4CzCGprBgTBY9dsus5pAIY3dqwg3c/amYJOaiLL1t+En62b4zyz1XvpK?=
+ =?us-ascii?Q?LaraRi72FbayS5PRudKKXufPV4N+FBHB9iu/ShUENe4emCAXO3dJakXUMc3a?=
+ =?us-ascii?Q?dOTJHAyocHo9rOMBpeIMx/iuW+Ax3NRMRDgunIrZIV5bECrMm4qdyQcBIMvv?=
+ =?us-ascii?Q?0qG5mytSSOKPVAFCCms+IbKgolZr/m1R9x0hTT/T6LBbbaQjlsbpLcSl05JT?=
+ =?us-ascii?Q?AagD3HIVpnLa2gL55Ic69BBnIcN09l02pqA7FeuT98SbKZ+iTY325fv3+hGh?=
+ =?us-ascii?Q?0R2bzX2dVg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 02e13be5-8454-4c00-52e6-08de67adb516
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Feb 2026 07:34:49.7949 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KKDomcj0Ojo5p0pb7aLfPcfpT3ezKqMGJuKW5H4n5MCf6KLPMe0RGx1xSH3C8d4hqrnXv8dXZnCD069Co378tViCuIzTvmtn2zD151HxaNc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB4722
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,49 +204,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/26 08:19, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/virtio/meson.build | 12 +++++-------
->   1 file changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> index 20356fba812..821366f5e90 100644
-> --- a/hw/virtio/meson.build
-> +++ b/hw/virtio/meson.build
-> @@ -9,8 +9,7 @@ system_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK_COMMON', if_true: files('vhost-vs
->   system_virtio_ss.add(when: 'CONFIG_VIRTIO_IOMMU', if_true: files('virtio-iommu.c'))
->   system_virtio_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev.c'))
->   
-> -specific_virtio_ss = ss.source_set()
-> -specific_virtio_ss.add(files('virtio.c'))
-> +system_virtio_ss.add(files('virtio.c'))
->   system_virtio_ss.add(files('virtio-qmp.c'))
->   
->   if have_vhost
-> @@ -55,10 +54,10 @@ endif
->   system_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
->   system_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
->   
-> -specific_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon.c'))
-> -specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
-> -specific_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
-> -specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
-> +system_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon.c'))
-> +system_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
-> +system_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
-> +system_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
->   system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
->   system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: files('virtio-nsm.c'))
->   system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('cbor-helpers.c'), libcbor])
-> @@ -100,5 +99,4 @@ system_ss.add(when: ['CONFIG_VIRTIO_MD', 'CONFIG_VIRTIO_PCI'],
->   
->   system_ss.add(files('virtio-hmp-cmds.c'))
->   
-> -specific_ss.add_all(when: 'CONFIG_VIRTIO', if_true: specific_virtio_ss)
->   system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
+Hi Clement,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>-----Original Message-----
+>From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+>Subject: [PATCH] intel_iommu: Do not report recoverable faults to host
+>
+>Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+>---
+> hw/i386/intel_iommu.c | 26 ++++++++++++++++++++++++--
+> 1 file changed, 24 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>index dd00079a40..0735b24ac0 100644
+>--- a/hw/i386/intel_iommu.c
+>+++ b/hw/i386/intel_iommu.c
+>@@ -1857,6 +1857,21 @@ static const bool vtd_qualified_faults[] =3D {
+>     [VTD_FR_MAX] =3D false,
+> };
+>
+>+static const bool vtd_recoverable_faults[] =3D {
+>+    [VTD_FR_WRITE] =3D true,
+>+    [VTD_FR_READ] =3D true,
+>+    [VTD_FR_PASID_DIR_ENTRY_P] =3D true,
+>+    [VTD_FR_PASID_ENTRY_P] =3D true,
+>+    [VTD_FR_FS_PAGING_ENTRY_INV] =3D true,
+>+    [VTD_FR_FS_PAGING_ENTRY_P] =3D true,
+>+    [VTD_FR_FS_PAGING_ENTRY_RSVD] =3D true,
+>+    [VTD_FR_PASID_ENTRY_FSPTPTR_INV] =3D true,
+>+    [VTD_FR_FS_NON_CANONICAL] =3D true,
+>+    [VTD_FR_FS_PAGING_ENTRY_US] =3D true,
+>+    [VTD_FR_SM_WRITE] =3D true,
 
-r~
+Which fault reason is classified as recoverable fault?
+Is this documented somewhere?
+
+Thanks
+Zhenzhong
+
+>+    [VTD_FR_MAX] =3D false,
+>+};
+>+
+> /* To see if a fault condition is "qualified", which is reported to softw=
+are
+>  * only if the FPD field in the context-entry used to process the faultin=
+g
+>  * request is 0.
+>@@ -1866,6 +1881,11 @@ static inline bool
+>vtd_is_qualified_fault(VTDFaultReason fault)
+>     return vtd_qualified_faults[fault];
+> }
+>
+>+static inline bool vtd_is_recoverable_fault(VTDFaultReason fault, int iom=
+mu_idx)
+>+{
+>+    return iommu_idx =3D=3D VTD_IDX_ATS && vtd_recoverable_faults[fault];
+>+}
+>+
+> static inline bool vtd_is_interrupt_addr(hwaddr addr)
+> {
+>     return VTD_INTERRUPT_ADDR_FIRST <=3D addr && addr <=3D
+>VTD_INTERRUPT_ADDR_LAST;
+>@@ -2237,8 +2257,10 @@ static bool
+>vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+>     }
+>
+>     if (ret_fr) {
+>-        vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
+>-                         addr, is_write, pasid !=3D PCI_NO_PASID, pasid);
+>+        if (!vtd_is_recoverable_fault(-ret_fr, iommu_idx)) {
+>+            vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
+>+                            addr, is_write, pasid !=3D PCI_NO_PASID, pasi=
+d);
+>+        }
+>         goto error;
+>     }
+>
+>--
+>2.53.0
+
 
