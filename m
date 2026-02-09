@@ -4,73 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7055DE7E0B2
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 09:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335B3E7E0B4
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 09:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpNhS-00010C-8l; Mon, 09 Feb 2026 04:36:58 -0500
+	id 1vpNnE-0002Vq-Qv; Mon, 09 Feb 2026 04:42:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpNhQ-0000zw-Cb
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 04:36:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vpNml-0002Ie-FV; Mon, 09 Feb 2026 04:42:28 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpNhM-00020u-9n
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 04:36:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770629810;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bpQmOWePxve9nhFeK4GH7bRfCaJvW34zGTA4jKkHfZo=;
- b=IpEQrhruyeH1Z5Z5salweFNy+XJtKHezchPMkh1Rgm3tBiruwku7nLn+ejXQrZPbr10e+o
- 26E1A+YYtcYjMj2I06NshtE5GaPsYihQR+GZ2hWukBEIiEhQr3c1+tqYh7nV4PqUVvtibf
- 2RU8bMx8JhqxltTx+ORcvI1thuCHfKk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-OZxp12EhOGGEKtanrEKmrQ-1; Mon,
- 09 Feb 2026 04:36:48 -0500
-X-MC-Unique: OZxp12EhOGGEKtanrEKmrQ-1
-X-Mimecast-MFC-AGG-ID: OZxp12EhOGGEKtanrEKmrQ_1770629808
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3F221955F12
- for <qemu-devel@nongnu.org>; Mon,  9 Feb 2026 09:36:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3640319560B8
- for <qemu-devel@nongnu.org>; Mon,  9 Feb 2026 09:36:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B30E821E692D; Mon, 09 Feb 2026 10:36:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/5] json-parser: replace with a push parser
-In-Reply-To: <20260107084840.150843-3-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Wed, 7 Jan 2026 09:48:37 +0100")
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <20260107084840.150843-3-pbonzini@redhat.com>
-Date: Mon, 09 Feb 2026 10:36:44 +0100
-Message-ID: <87sebab6mr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vpNmh-0002m9-9X; Mon, 09 Feb 2026 04:42:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VjQ6Zz8PPyNycZpfjQ4ygZFxOYYhBzfwA+fZxfSs9i19iqDcMo98Uc2JF15Wj54l9V1mBZHyjtaDM5RIoW4K90MWrJ5owXxrrZ0EQ1T1Z1h8PW1YqbcujXxrDO1P8YKMn7hX09eUE6UnnnDYTLyiB4J+dW/6BNE537SW5NgfqLX4QLjpVZIzUGu79/KPSijAhnvSYCx8xnQVnIXbv7/JXWG428ChLb/R8Yj171m+9fC+ivZjYgsWiMhVccMSK2WC+GNoZ5cG/C6CbVBsreEvuEbUwRclO5Up+9s1OleJECDlTwwpp7W7ils6fp+TRqE9Xuarx2388jQZRU0AC8e0Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5x3onXWeIfLeIYg2LsiJEKKjyqjMANf+wIyqiXGWkAQ=;
+ b=XGSNQJlgvHk0qp9n1vybBRaGOzSpgjT/tzG9TTvKKaHm8JmPbJVXSpkV2jQ8muAqqhMxgby3Was9IORrwt/kAwK72bGnAbdAWeyor4z8OY6OsaSTdDfVcq/9tXEYR2OfdKzM8wMu9wvOvp8ZmMZvLhH5nvqFj8hljGDq+YWqeSM34QyCYkJ7Ig1SaOTL9DDXZNSFg1Jd8CJxWThOOlJqJe0ilUbp1TW1hXrmp1Y+ee4H08D58vgHGVdjcYaHe9ojsgz1UsxXOm+piulRlO8O0NrqLxhn/A4vcmA/5e9cxqcR9wi54nArAyxGZISmPHg6digdhMshHSuK/VDoMTa71g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5x3onXWeIfLeIYg2LsiJEKKjyqjMANf+wIyqiXGWkAQ=;
+ b=i9sTQG5tVkc6YZRPRYDa5FjCd96dCIJ9aa6VA78LEorFIZ94HUMGx5GG1AWMw4Qn/unaBR5jxaHXdgpWSJKA2LnU3aHjNg+C4KN2BcaeEJSgbNeuFJD/hTRWIlAKpbQ4/szO2DfxTgEzdfGkQffRCbTysWVduntxifOPecMh7yn7pmXlkOm0HzmXKqd044XympxwKjHbSbPkxLqpmV4Y9Ub8zWI0rH01ZhTzomkHougTAZFi6qFg+7IgFP1uNIpTjQTKGALveJR934Khk91RAdGQ4BMjBywQnfK+osWklTlCjmelT56W0ZZaJ02bLmdK4LZgfYGXotKb83SCLnB1KQ==
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
+ by SEZPR06MB5198.apcprd06.prod.outlook.com (2603:1096:101:72::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Mon, 9 Feb
+ 2026 09:42:12 +0000
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c%4]) with mapi id 15.20.9587.017; Mon, 9 Feb 2026
+ 09:42:12 +0000
+From: Kane Chen <kane_chen@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
+ =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>
+Subject: RE: [PATCH 1/2] tests/functional: Split Aspeed ARM tests into
+ separate files
+Thread-Topic: [PATCH 1/2] tests/functional: Split Aspeed ARM tests into
+ separate files
+Thread-Index: AQHcmZ53IZu0ok7GIEK1jv3u+UAjOLV6EoNQgAAIwoCAAADtIA==
+Date: Mon, 9 Feb 2026 09:42:12 +0000
+Message-ID: <SI6PR06MB763153AD074A77902C35FC8AF765A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+References: <20260209065044.239378-1-clg@redhat.com>
+ <20260209065044.239378-2-clg@redhat.com>
+ <5e9e55de-77fe-4871-97b3-8627892abdac@kaod.org>
+ <SI6PR06MB7631CD6C25E9E4AC9D1286F6F765A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <b0c0c671-b983-42df-84fe-2f8ac0be58ab@kaod.org>
+In-Reply-To: <b0c0c671-b983-42df-84fe-2f8ac0be58ab@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|SEZPR06MB5198:EE_
+x-ms-office365-filtering-correlation-id: c7e4bbda-6e5d-4c9b-ea36-08de67bf807a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?V1UxRFFnelFUT0RiU29BdURGZ0pKY1ZQTG4xbjZ3M2svVEhVWVpYQTU2cytI?=
+ =?utf-8?B?dkpLZ1lKQko3YzZaamlSeSthcEJpVktQWXhlc1pUV0QwZlNlcFBwbHZWZWVN?=
+ =?utf-8?B?WWc5ano5RUIxTWNFd0FmZm5CMmtpa3RIM2JoMDVkNW95c0x0OVJTUWFtOFk0?=
+ =?utf-8?B?ajZnOUx0MHE5bmNIdE5neUt0cE1iUVFodUxQK0NtYmNZNFJ2NUZSdTNLZWQ4?=
+ =?utf-8?B?SC94TGdtTGFmWHhoUFBCVUl5aUFBZG1vVSsxdWNKYzVrUGhKU3BuU0J2amtI?=
+ =?utf-8?B?eTlaQnZBWWdMdCtvMG9ySi9lUjB4Q3N3MDZzc3UxeHJBdTQyTnVvaTA2OWk0?=
+ =?utf-8?B?dEZIeE8xZnhrSFdrYmV4N0NkQkxPeWEyOEdvU0V2VDlhYk1WWUJha3pXQXgy?=
+ =?utf-8?B?Z3VTeExoMENEZzlkb0lMdm5oWENjWFU1eEdnNlBVaHZEQSt1THBkOFhUUTRs?=
+ =?utf-8?B?WXc5ckhHeEY0UmlsQU9LS3VkZ3hYWHYvbDJjL2xVUCtlV1RVbjlJdEZxQ1lp?=
+ =?utf-8?B?bm1ya01NSzNDanU4MW81U3RoVTBsVWpNUGxtZjBEUllESnJWMEYrRW1qd3d4?=
+ =?utf-8?B?aENTclAxYVdpd09Objlnc1R4ZEY2TVpaWE90aVFUdGl3MkVvOTc2S1dLaXJS?=
+ =?utf-8?B?ZjZyYWIwM0Nwa1pBNS9xbjYwNGJSVWk1azlpelpEQjhJWm85WWFiSmQ2K1hC?=
+ =?utf-8?B?cExLUWc5MGdFNU9ESXlVYkZSSFJZaGNrS1piL2VXc2dDVFNUYmh0QmhPK0NQ?=
+ =?utf-8?B?ZGVJaVlnbXZ4RWlrZkFzNW03dHAyRlhTY09ZRlZoRTlDandYYmdPYTF3ZGVU?=
+ =?utf-8?B?QVN0RGR2anlIR291OGFZclJ4dCtBV01lUW8raUc5VGQrS3FCd1FQM01JYWlC?=
+ =?utf-8?B?amFuZmFIcVBORFI5QUNxTFE4NnVGZ2xYRVVIMG1UZnVPdG5WTVI4cnJZQnl1?=
+ =?utf-8?B?TVY4KytXK0V5bWc0NDFBWmNOaXB6b0Q0aE5FYXlKL21uT0QwWHRYbmN1RnVX?=
+ =?utf-8?B?enBsZDZQZVVueUUxa25HNnRWcXZ5MGsvSFZaS0l4VnZBN1hkaDkwL0t0UUZY?=
+ =?utf-8?B?UmQwWElQT1RWUzBEK2YzaUR1U2tmMDU3eWpWUS9Xazh3RVFXVnQ2Sm1nUzBX?=
+ =?utf-8?B?Ull4bWl0WG10d2RqNW5IbThrK2xMSFZDT3c1TFFYa2JidG9KQnIrWWk2R0Vl?=
+ =?utf-8?B?Z1Q2YTZLOXNSZmpnTGlzUWxmTEhyS2tid2pQbDUxRGZEZ044ZllsV3JyNk1l?=
+ =?utf-8?B?NEwzWE81RjdLVVp5Vy9EcWJvQTBqQldDTWdrWTJkZHFiWW1zNlV6cGJPSXBj?=
+ =?utf-8?B?U1dWZVM5YkdOb1V5bFlxNnk5MGg2WFU1RTZuUjZjWld3cTNpWWtvWWx6aWxL?=
+ =?utf-8?B?enZLcGNDcFNsQU44UXA5M2tZNFNEaFN0MTlLcmtOaDAxUEpiRmczQ2NxTGhS?=
+ =?utf-8?B?c2dnL0g2Zm9aa3pscWRrbVdjQnpaVlFPUnY2Y0M1YUpWV0RlZ3YzTW9SanNz?=
+ =?utf-8?B?WlRpYkV2THN1czR2ckk3UzZLNTM0U0k2cVZIUW8zemdrZ2NEV0w3Um1zVERI?=
+ =?utf-8?B?dUdCMG1pVFF4UnlUUzRKSmNXTzdjME9jMUdyWDdoRldUVmp0VDNBS1hJTzdT?=
+ =?utf-8?B?bDltUEtyaEhKUmg1T0NIRFY0WUJzKzlTL0pXT3JwZ1l4b0ozbG9SSFB4aDZJ?=
+ =?utf-8?B?dmdPc2h2TEFPUTBnTHJHcldLVlVocDBJMDBZek8rN1lBNHpCMkZhcm4xMDN4?=
+ =?utf-8?B?dWszd25sMVlBL0poNnJWUG43NnlwWEpNeVZHUEZjMTZZSjZpMEdpY01Kd1l3?=
+ =?utf-8?B?UnZTMEFCMHBTSGxhS2prZnhjUXMvb2IxRG1rWU1TeE9aWDJ4ZEsvbTdvSUNM?=
+ =?utf-8?B?SGYzZUJRdjV1Q0RoeDNLZ2tia2FrTWk3ay9OWkM4bTJYYUQ0Yjk2V00xdnNk?=
+ =?utf-8?B?c1pnakR1b1oxNzVPWlZML3NRemdqUklLYjJqTUdnQXNtcW8wUVBXZVFwRHpp?=
+ =?utf-8?B?MnpXQ3BNdVp3cmxQbE5EcXMvRll2SUMzU21iTWNuZ3hCN0NVTTA1TDlGc0Zs?=
+ =?utf-8?B?Rm03eERjUlQrRENZVVlONnhqamltMVpJalhSMnFGckJlRCtGRUxJYkNjTXRG?=
+ =?utf-8?B?WTBuR2k1a2ZoMFRLeVRSVjRjZXhjdklOdjI4NVhtZXpTRUJnc1JtZmc4bTdW?=
+ =?utf-8?Q?KRQvyVcrzjFstijODpp4y8k=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SGdRR3hJWlBMSlN0d2dFbFVhWnZ5TkFLTnM3M0ZrLzBvOEtUdGkwaWtHVkhL?=
+ =?utf-8?B?K2wyK08xbGVoRmxXV1NZZlNwdkpJMEVQejVibHBSUUFnU0E5alpHZklMc1ZU?=
+ =?utf-8?B?VzFJb1dKRmlCNGk2NW5OVXFsL21DUzVvT1k4QWVkM2V2ZzBUMXVtME1PbWxW?=
+ =?utf-8?B?S1FLV2ZJZ21GNVdDZ01QaWpVV1BzT0Jqbi9SL0tSUXZxMU4velQ4S0lkVGVj?=
+ =?utf-8?B?elJPUGxvL1VqUUdHeVdSQ0FVUlZtZm5Td2tMV05maEVwMm4xYjhoQ21CRDFp?=
+ =?utf-8?B?cHp6WkJPenp2VS90bDFsSDdxc21wMy8zdXRTdW5yOUdMZXQwNHNXYWkxS2JE?=
+ =?utf-8?B?T0x5NDkwZEhsSUtkWFpGRW9BTzl4VmgxMVdxTXJNMFNBY2NHY1B0T1J1VTBO?=
+ =?utf-8?B?c0FUUUhEOUYzWThYa2ZhSmFvYWI4VzAwZ1d3Q0ZLK25OWkRwdFd2NG94UUEv?=
+ =?utf-8?B?NGN1cU1vcldqWTZtTlh3VVJvbXc0dXdaWStMbWF1cjU5RlErN0Y0RkpUTDk0?=
+ =?utf-8?B?TkNiL1hndy9NS0hxa0JWdy96TkxzbGhNMEZzb3JVNDVTTmlzOUJQYU1sd3R0?=
+ =?utf-8?B?Mmh4Z3R6N0h2MVp4Y3d3S3JPRmJDNGNMcGFrVmpwWFg0c2lWUlJaY2FoRjRH?=
+ =?utf-8?B?YlN3dy8zNTVnYit3N0dabGFDcXFpNWNkK0k2SzFVendPWW1Sb3cxSmNLMkZt?=
+ =?utf-8?B?Yk1vWWhpYTNvcWxBUFUwZUMyWjhmdS93cmhaMFBBSHpGTlNYTHRUVG1PMXBv?=
+ =?utf-8?B?a1NhNjEvQWt0MmNSSzhVeE5yUktXM1BBWkxhaHdDS0pJdjdub25qdWQvV1hC?=
+ =?utf-8?B?NjBDS3hFbGgweW5mQ0pDcVRiWUJaVnBER0UvWXpKUm5Fei9hZDZMc2FQajdH?=
+ =?utf-8?B?L3l6ME1NUWJ2N3ZQN1hINnU3VCtodFErakoxZGxOeDlMKzZFL2dmVHpBdldu?=
+ =?utf-8?B?RnprYUEvRzh6OHdjVG5SQmZLN0h1eXNudlJYSEl4TDRFN1g1QVN0c3Z6dFdo?=
+ =?utf-8?B?UHU4ZnY1OUZPMXhHWTBwU1RDTENKRUlOVUlYSnZRdFpmUytPY3JzTndIbXFU?=
+ =?utf-8?B?dDMyU2FUQk9kcmdtL1NCT1NPZGhTNUZMdk9QMUVXREVyVUlnV1c0SDlpVTFz?=
+ =?utf-8?B?WHRvOWZwdHRlVTFHZFZHaGJyQWJvVTVuK3ZTRTZVTXNUMjZQc0daMzRqb294?=
+ =?utf-8?B?MUFoSURBWThkS2dvVzAwZDExYXU1eXNYdlBPc3hnNU02MVlzMFBxeDlueWFz?=
+ =?utf-8?B?b1lVK3djdWU0Vkpodnp5NFFlT0FIUUkrbTYyQzdMOVBaVUcvYzBUOU5uaTA1?=
+ =?utf-8?B?L2F5TU9oOFlwTW9NN09zaFptS3MzaXVrSTN2RnZiZkF3T2cwekFlME9CRVNG?=
+ =?utf-8?B?ZzRXelQwNE9KeVZVWlpkSThBQldYZFdSVkhxVHI5ZXMwTnN6Qi9uekMrajJs?=
+ =?utf-8?B?YTdMOWFuOEVVRkx2b2xiZkJaYmRXSlRVSzhrQzhiWkFZZjdka2JvZkpWWHFy?=
+ =?utf-8?B?SmtQYlNGQXZuTm8rT0loK1hIdFU3UjlwdEdFVnFXYURrbzNzNjk1elB6cThN?=
+ =?utf-8?B?L1Nib0VsWnljZ3NFUTdDbU4wR0Jpb2hUWnZGeksrdnFUMnk1SmFMNVBQemJB?=
+ =?utf-8?B?RHB3RDBzSm8wSkpDV0dHSksvaU9Rbm1DRk1tSXU2ZGRIRWVYRmF4MHhyZEtW?=
+ =?utf-8?B?U3Q4czBrWVVCaHJoSkRKUHFBN1hyRlc5Qml2Y0pHVS96Wnp1bmdBb3A0cEpI?=
+ =?utf-8?B?Y1NsVHljN3llT3BBWEJ4V3hMOVoxYjNuRWVWU05tSTlFZ2pzcEIzS24yZ3BV?=
+ =?utf-8?B?MzdQcWNtUWxUbG9vbEdsRWl2U0lqWm8zMHhzSDNFQWdVZC9VUzcxSTlzUnJy?=
+ =?utf-8?B?cjNOODdCWGVlbk1GQkw5d2ZvMUh4MHN5cDhESWlSdEgyVms1NVpXNGo1QUty?=
+ =?utf-8?B?MEpBQmhoaFVlYnhIMUVXWnJoTUxlRGxEY296UEgzR0hOYVRHL21TZkxVcm5s?=
+ =?utf-8?B?SFFjMWwzZ2RFYmE2bjVBb0lZS0NRS2F2dXc0WktYTWg1R0ltYTJ6QjJNUjJz?=
+ =?utf-8?B?NjU3V3Nsc1lyRDlWZDN4TkdCdThyaGk5a2RpcHFXaDZCa1JXeEpIVGowQThj?=
+ =?utf-8?B?R0pxcHpMUFFsVEcyM0RXMUJOYjNyKzNWbXpPdTlwZFpaOE9nQk1DOXNRRi8w?=
+ =?utf-8?B?SmhkdTBzZTJ2YWRNV3R6NVk1MVVSSXJVS291UFI3c3NUenNYQlBiT1l2bzlW?=
+ =?utf-8?B?NUg0NWNydng4NzB6Wk1kcGpmUXpZakxkbXN1eC9NZ25nRmFLdHczVE12REdI?=
+ =?utf-8?B?Y0JvKzYyd1JTK0FXRkhLbDFZb0xucFQwY0JMaXY3NE51WU1hTGd3dz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7e4bbda-6e5d-4c9b-ea36-08de67bf807a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Feb 2026 09:42:12.4896 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LNQN2y2qdGzk2UBdobqz0YUsLPTIVQdDUJlKwhDutHZ6ERv7Gzwjj5v+SaLpdTuXCKZUdlHykxpUTlbi2jUTjj2G3obd0RWlNxyqfEdLSkQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5198
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=kane_chen@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,716 +195,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> In order to avoid stashing all the tokens corresponding to a JSON value,
-> embed the parsing stack and state machine in JSONParser.  This is more
-> efficient and allows for more prompt error recovery; it also does not
-> make the code substantially larger than the current recursive descent
-> parser, though the state machine is probably a bit harder to follow.
-
-I figure that's tolerable, because we don't expect to change the parser
-much.
-
-> The stack consists of QLists and QDicts corresponding to open
-> brackets and braces, plus optionally a QString with the current
-> key on top of each QDict.
->
-> After each value is parsed, it is added to the top array or dictionary
-> or, if the stack is empty, json_parser_feed returns the complete
-> QObject.
->
-> For now, json-streamer.c keeps tracking the tokens up until braces
-> and brackets are balanced, and then shoves the whole queue of tokens
-> into the push parser.
-
-Peeking ahead...  the next patch will make the streamer stream tokens as
-they arrive?
-
->                        The only logic change is that JSON_END_OF_INPUT
-> always triggers the emptying of the queue; the parser takes notice and
-> checks that there is nothing on the stack.  Not using brace_count
-> and bracket_count for this is the first step towards improved separation
-> of concerns between json-parser.c and json-streamer.c.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  include/qobject/json-parser.h |   6 +
->  qobject/json-parser-int.h     |   4 +-
->  qobject/json-parser.c         | 430 +++++++++++++++++-----------------
->  qobject/json-streamer.c       |  21 +-
->  4 files changed, 245 insertions(+), 216 deletions(-)
->
-> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-> index 7345a9bd5cb..05346fa816b 100644
-> --- a/include/qobject/json-parser.h
-> +++ b/include/qobject/json-parser.h
-> @@ -20,6 +20,12 @@ typedef struct JSONLexer {
->      int x, y;
->  } JSONLexer;
->  
-> +typedef struct JSONParserContext {
-> +    Error *err;
-> +    GQueue *stack;
-
-This tells us we have a stack of something, but not what the something
-is.  Further down, we'll see what the something is.
-
-The commit message explains what the stack means.
-
-Worth a comment here?
-
-We know the stack is at most 1024 deep (MAX_NESTING).  Have you
-considered using an array instead of GQueue?
-
-> +    va_list *ap;
-> +} JSONParserContext;
-> +
-
-Having to move struct definitions to headers is always a bit sad.  Could
-this go into json-parser-int.h instead?
-
->  typedef struct JSONMessageParser {
->      void (*emit)(void *opaque, QObject *json, Error *err);
->      void *opaque;
-> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
-> index 8c01f236276..05e2e8e1831 100644
-> --- a/qobject/json-parser-int.h
-> +++ b/qobject/json-parser-int.h
-> @@ -49,6 +49,8 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->  
->  /* json-parser.c */
->  JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
-> -QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp);
-> +void json_parser_init(JSONParserContext *ctxt, va_list *ap);
-> +QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
-
-checkpatch points out
-
-    0002-json-parser-replace-with-a-push-parser.patch:64: WARNING: line over 80 characters
-
-The line is easy enough to break.
-
-Several more long lines below, not flagging them.
-
-> +void json_parser_destroy(JSONParserContext *ctxt);
->  
->  #endif
-
-Note: I'm jumping down to qobject/json-streamer.c further down before I
-continue here.  Suggest you do the same.
-
-> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
-> index eabc9f8358c..338f0c5aae6 100644
-> --- a/qobject/json-parser.c
-> +++ b/qobject/json-parser.c
-> @@ -31,12 +31,36 @@ struct JSONToken {
->      char str[];
->  };
->  
-> -typedef struct JSONParserContext {
-> -    Error *err;
-> -    JSONToken *current;
-> -    GQueue *buf;
-> -    va_list *ap;
-> -} JSONParserContext;
-> +/*
-> + * Objects: { } | { members }
-> + * - Empty: { -> AFTER_LCURLY -> }
-> + * - Non-empty: { -> AFTER_LCURLY -> BEFORE_KEY -> string -> END_OF_KEY -> : ->
-> + *              BEFORE_VALUE -> value -> END_OF_VALUE -> , -> BEFORE_KEY -> ... -> }
-> + *
-> + * Arrays: [ ] | [ elements ]
-> + * - Empty: [ -> AFTER_LSQUARE -> ]
-> + * - Non-empty: [ -> AFTER_LSQUARE -> BEFORE_VALUE -> value -> END_OF_VALUE -> , ->
-> + *              BEFORE_VALUE -> ... -> ]
-> + *
-> + * The two cases for END_OF_VALUE are distinguished based on the type of QObject at
-> + * top-of-stack.
-> + */
-
-I'm afraid I need a comment telling me how to read this comment.
-
-> +typedef enum JSONParserState {
-> +    AFTER_LCURLY,
-> +    AFTER_LSQUARE,
-> +    BEFORE_KEY,
-> +    BEFORE_VALUE,
-> +    END_OF_KEY,
-> +    END_OF_VALUE,
-> +} JSONParserState;
-> +
-> +typedef struct JSONParserStackEntry {
-> +    /* A QString with the last parsed key, or a QList/QDict for the current container.  */
-> +    QObject *partial;
-> +
-> +    /* Needed to distinguish whether the parser is waiting for a colon or comma.  */
-> +    JSONParserState state;
-
-If the comment was 100% accurate, a bool would do.
-
-> +} JSONParserStackEntry;
-
-This is the "something" in the stack of something.  Not locally obvious.
-
->  
->  #define BUG_ON(cond) assert(!(cond))
->  
-> @@ -49,7 +73,29 @@ typedef struct JSONParserContext {
->   * 4) deal with premature EOI
->   */
->  
-> -static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token);
-> +static inline JSONParserStackEntry *current_entry(JSONParserContext *ctxt)
-> +{
-> +    return g_queue_peek_tail(ctxt->stack);
-> +}
-> +
-> +static void push_entry(JSONParserContext *ctxt, QObject *partial, JSONParserState state)
-> +{
-> +    JSONParserStackEntry *entry = g_new(JSONParserStackEntry, 1);
-
-I'd like a blank line between declarations and statements, please.  More
-of the same below, not flagging it again.
-
-> +    entry->partial = partial;
-> +    entry->state = state;
-> +    g_queue_push_tail(ctxt->stack, entry);
-> +}
-> +
-> +/* Note that entry->partial does *not* lose its reference count even if value == NULL.  */
-> +static JSONParserStackEntry *pop_entry(JSONParserContext *ctxt, QObject **value)
-> +{
-> +    JSONParserStackEntry *entry = g_queue_pop_tail(ctxt->stack);
-> +    if (value) {
-> +        *value = entry->partial;
-> +    }
-> +    g_free(entry);
-> +    return current_entry(ctxt);
-> +}
-
-This is a rather peculiar function.  If you disagree, try writing a
-contract for it :)
-
->  
->  /**
->   * Error handler
-> @@ -235,189 +281,7 @@ out:
->      return NULL;
->  }
->  
-> -/* Note: the token object returned by parser_context_pop_token is
-> - * deleted as soon as parser_context_pop_token is called again.
-> - */
-> -static const JSONToken *parser_context_pop_token(JSONParserContext *ctxt)
-> -{
-> -    g_free(ctxt->current);
-> -    ctxt->current = g_queue_pop_head(ctxt->buf);
-> -    return ctxt->current;
-> -}
-> -
-> -/**
-> - * Parsing rules
-> - */
-> -static int parse_pair(JSONParserContext *ctxt, const JSONToken *token, QDict *dict)
-> -{
-> -    QObject *key_obj = NULL;
-> -    QString *key;
-> -    QObject *value;
-> -
-> -    key_obj = parse_value(ctxt, token);
-> -    key = qobject_to(QString, key_obj);
-> -    if (!key) {
-> -        parse_error(ctxt, token, "key is not a string in object");
-> -        goto out;
-> -    }
-> -
-> -    token = parser_context_pop_token(ctxt);
-> -    if (token == NULL) {
-> -        parse_error(ctxt, NULL, "premature EOI");
-> -        goto out;
-> -    }
-> -
-> -    if (token->type != JSON_COLON) {
-> -        parse_error(ctxt, token, "missing : in object pair");
-> -        goto out;
-> -    }
-> -
-> -    token = parser_context_pop_token(ctxt);
-> -    if (token == NULL) {
-> -        parse_error(ctxt, NULL, "premature EOI");
-> -        goto out;
-> -    }
-> -
-> -    value = parse_value(ctxt, token);
-> -    if (value == NULL) {
-> -        parse_error(ctxt, token, "Missing value in dict");
-> -        goto out;
-> -    }
-> -
-> -    if (qdict_haskey(dict, qstring_get_str(key))) {
-> -        parse_error(ctxt, token, "duplicate key");
-> -        goto out;
-> -    }
-> -
-> -    qdict_put_obj(dict, qstring_get_str(key), value);
-> -
-> -    qobject_unref(key_obj);
-> -    return 0;
-> -
-> -out:
-> -    qobject_unref(key_obj);
-> -    return -1;
-> -}
-> -
-> -static QObject *parse_object(JSONParserContext *ctxt)
-> -{
-> -    QDict *dict = NULL;
-> -    const JSONToken *token;
-> -
-> -    dict = qdict_new();
-> -
-> -    token = parser_context_pop_token(ctxt);
-> -    if (token == NULL) {
-> -        parse_error(ctxt, NULL, "premature EOI");
-> -        goto out;
-> -    }
-> -
-> -    if (token->type != JSON_RCURLY) {
-> -        if (parse_pair(ctxt, token, dict) == -1) {
-> -            goto out;
-> -        }
-> -
-> -        token = parser_context_pop_token(ctxt);
-> -        if (token == NULL) {
-> -            parse_error(ctxt, NULL, "premature EOI");
-> -            goto out;
-> -        }
-> -
-> -        while (token->type != JSON_RCURLY) {
-> -            if (token->type != JSON_COMMA) {
-> -                parse_error(ctxt, token, "expected separator in dict");
-> -                goto out;
-> -            }
-> -
-> -            token = parser_context_pop_token(ctxt);
-> -            if (token == NULL) {
-> -                parse_error(ctxt, NULL, "premature EOI");
-> -                goto out;
-> -            }
-> -
-> -            if (parse_pair(ctxt, token, dict) == -1) {
-> -                goto out;
-> -            }
-> -
-> -            token = parser_context_pop_token(ctxt);
-> -            if (token == NULL) {
-> -                parse_error(ctxt, NULL, "premature EOI");
-> -                goto out;
-> -            }
-> -        }
-> -    }
-> -
-> -    return QOBJECT(dict);
-> -
-> -out:
-> -    qobject_unref(dict);
-> -    return NULL;
-> -}
-> -
-> -static QObject *parse_array(JSONParserContext *ctxt)
-> -{
-> -    QList *list = NULL;
-> -    const JSONToken *token;
-> -
-> -    list = qlist_new();
-> -
-> -    token = parser_context_pop_token(ctxt);
-> -    if (token == NULL) {
-> -        parse_error(ctxt, NULL, "premature EOI");
-> -        goto out;
-> -    }
-> -
-> -    if (token->type != JSON_RSQUARE) {
-> -        QObject *obj;
-> -
-> -        obj = parse_value(ctxt, token);
-> -        if (obj == NULL) {
-> -            parse_error(ctxt, token, "expecting value");
-> -            goto out;
-> -        }
-> -
-> -        qlist_append_obj(list, obj);
-> -
-> -        token = parser_context_pop_token(ctxt);
-> -        if (token == NULL) {
-> -            parse_error(ctxt, NULL, "premature EOI");
-> -            goto out;
-> -        }
-> -
-> -        while (token->type != JSON_RSQUARE) {
-> -            if (token->type != JSON_COMMA) {
-> -                parse_error(ctxt, token, "expected separator in list");
-> -                goto out;
-> -            }
-> -
-> -            token = parser_context_pop_token(ctxt);
-> -            if (token == NULL) {
-> -                parse_error(ctxt, NULL, "premature EOI");
-> -                goto out;
-> -            }
-> -
-> -            obj = parse_value(ctxt, token);
-> -            if (obj == NULL) {
-> -                parse_error(ctxt, token, "expecting value");
-> -                goto out;
-> -            }
-> -
-> -            qlist_append_obj(list, obj);
-> -
-> -            token = parser_context_pop_token(ctxt);
-> -            if (token == NULL) {
-> -                parse_error(ctxt, NULL, "premature EOI");
-> -                goto out;
-> -            }
-> -        }
-> -    }
-> -
-> -    return QOBJECT(list);
-> -
-> -out:
-> -    qobject_unref(list);
-> -    return NULL;
-> -}
-> +/* Terminals  */
->  
->  static QObject *parse_keyword(JSONParserContext *ctxt, const JSONToken *token)
->  {
-> @@ -516,13 +380,17 @@ static QObject *parse_literal(JSONParserContext *ctxt, const JSONToken *token)
->      }
->  }
->  
-
-The parser's interesting part follows.  The parser is a pushdown
-automaton.  The pushdown automaton is coded in C.  On the one hand,
-d'oh!  Of course it is.  On the other hand, it's hard to see the actual
-automaton in C.  May I have a comment explaining state and state
-transitions?  Perhaps we better start with an informal description,
-discuss it, then distill the discussion into a comment.
-
-> -static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token)
-> +/* Parsing state machine  */
-> +
-> +static QObject *parse_begin_value(JSONParserContext *ctxt, const JSONToken *token)
->  {
->      switch (token->type) {
->      case JSON_LCURLY:
-> -        return parse_object(ctxt);
-> +        push_entry(ctxt, QOBJECT(qdict_new()), AFTER_LCURLY);
-> +        return NULL;
->      case JSON_LSQUARE:
-> -        return parse_array(ctxt);
-> +        push_entry(ctxt, QOBJECT(qlist_new()), AFTER_LSQUARE);
-> +        return NULL;
->      case JSON_INTERP:
->          return parse_interpolation(ctxt, token);
->      case JSON_INTEGER:
-> @@ -537,6 +405,130 @@ static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token)
->      }
->  }
->  
-> +static QObject *json_parser_parse_token(JSONParserContext *ctxt, const JSONToken *token)
-
-Rename to parse_token()?  Or inline into json_parser_feed()?
-
-> +{
-> +    JSONParserStackEntry *entry;
-> +    JSONParserState state;
-> +    QString *key;
-> +    QObject *value = NULL;
-> +
-> +    entry = current_entry(ctxt);
-> +    state = entry ? entry->state : BEFORE_VALUE;
-
-Blank line here, please.
-
-> +    switch (state) {
-> +    case AFTER_LCURLY:
-> +        /* Grab '}' for empty object or fall through to BEFORE_KEY */
-> +        if (token->type == JSON_RCURLY) {
-> +            entry = pop_entry(ctxt, &value);
-> +            break;
-> +        }
-> +        entry->state = BEFORE_KEY;
-> +        /* fall through */
-> +
-> +    case BEFORE_KEY:
-> +        /* Expecting object key */
-> +        if (token->type == JSON_STRING) {
-> +            key = parse_string(ctxt, token);
-> +            if (!key) {
-> +                return NULL;
-> +            }
-
-Key to understand the switch is the meaning of "break" and "return
-NULL".
-
-We do the latter when we're done for this token.
-
-We do the former when this token completed a (sub-)value.  @value holds
-it.  If the stack is empty, @value is the result of the parse, and the
-code after the switch returns it.  Else, @value is a sub-value, and the
-code after the switch stores it in the object being constructed.
-
-> +
-> +            /* Store key in a special entry on the stack */
-> +            push_entry(ctxt, QOBJECT(key), END_OF_KEY);
-> +        } else {
-> +            parse_error(ctxt, token, "expecting key");
-
-What's the state machine's parse error recovery story?
-
-> +        }
-> +        return NULL;
-> +
-> +    case END_OF_KEY:
-> +        /* Expecting ':' after key */
-> +        if (token->type == JSON_COLON) {
-> +            entry->state = BEFORE_VALUE;
-> +        } else {
-> +            parse_error(ctxt, token, "expecting ':'");
-> +        }
-> +        return NULL;
-> +
-> +    case AFTER_LSQUARE:
-> +        /* Grab ']' for empty array or fall through to BEFORE_VALUE */
-> +        if (token->type == JSON_RSQUARE) {
-> +            entry = pop_entry(ctxt, &value);
-> +            break;
-> +        }
-> +        entry->state = BEFORE_VALUE;
-> +        /* fall through */
-> +
-> +    case BEFORE_VALUE:
-> +        /* Expecting value */
-> +        value = parse_begin_value(ctxt, token);
-> +        if (!value) {
-> +            /* Error or '['/'{' */
-> +            return NULL;
-> +        }
-> +        /* Return value or insert it into a container */
-> +        break;
-> +
-> +    case END_OF_VALUE:
-> +        /* Grab ',' or ']' for array; ',' or '}' for object */
-> +        if (qobject_to(QList, entry->partial)) {
-> +            /* Array */
-> +            if (token->type != JSON_RSQUARE) {
-> +                if (token->type == JSON_COMMA) {
-> +                    entry->state = BEFORE_VALUE;
-> +                } else {
-> +                    parse_error(ctxt, token, "expected ',' or ']'");
-> +                }
-> +                return NULL;
-> +            }
-> +        } else if (qobject_to(QDict, entry->partial)) {
-> +            /* Object */
-> +            if (token->type != JSON_RCURLY) {
-> +                if (token->type == JSON_COMMA) {
-> +                    entry->state = BEFORE_KEY;
-> +                } else {
-> +                    parse_error(ctxt, token, "expected ',' or '}'");
-> +                }
-> +                return NULL;
-> +            }
-> +        } else {
-> +            g_assert_not_reached();
-> +        }
-> +
-> +        /* Got ']' or '}', return value or insert into parent container */
-> +        entry = pop_entry(ctxt, &value);
-> +        break;
-> +    }
-> +
-> +    assert(value);
-> +    if (entry == NULL) {
-> +        /* The toplevel value is complete.  */
-> +        return value;
-> +    }
-> +
-> +    key = qobject_to(QString, entry->partial);
-> +    if (key) {
-> +        const char *key_str;
-> +        QDict *dict;
-> +
-> +        entry = pop_entry(ctxt, NULL);
-> +        dict = qobject_to(QDict, entry->partial);
-> +        assert(dict);
-> +        key_str = qstring_get_str(key);
-> +        if (qdict_haskey(dict, key_str)) {
-> +            parse_error(ctxt, token, "duplicate key");
-> +            qobject_unref(value);
-> +            return NULL;
-> +        }
-> +        qdict_put_obj(dict, key_str, value);
-> +        qobject_unref(key);
-> +    } else {
-> +        /* Add to array */
-> +        qlist_append_obj(qobject_to(QList, entry->partial), value);
-> +    }
-> +
-> +    entry->state = END_OF_VALUE;
-> +    return NULL;
-> +}
-> +
->  JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
->  {
->      JSONToken *token = g_malloc(sizeof(JSONToken) + tokstr->len + 1);
-> @@ -549,27 +541,43 @@ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
->      return token;
->  }
->  
-> -QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp)
-> +void json_parser_init(JSONParserContext *ctxt, va_list *ap)
->  {
-> -    JSONParserContext ctxt = { .buf = tokens, .ap = ap };
-> -    QObject *result;
-> -    const JSONToken *token;
-> +    ctxt->err = NULL;
-> +    ctxt->stack = g_queue_new();
-> +    ctxt->ap = ap;
-> +}
->  
-> -    token = parser_context_pop_token(&ctxt);
-> -    if (token == NULL) {
-> -        parse_error(&ctxt, NULL, "premature EOI");
-> -        return NULL;
-> +void json_parser_destroy(JSONParserContext *ctxt)
-> +{
-> +    JSONParserStackEntry *entry;
-> +
-> +    while ((entry = g_queue_pop_tail(ctxt->stack)) != NULL) {
-> +        qobject_unref(entry->partial);
-> +        g_free(entry);
-> +    }
-> +    g_queue_free(ctxt->stack);
-> +    ctxt->stack = NULL;
-> +}
-> +
-> +QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp)
-
-The return value isn't immediately obvious.  A brief function contract
-could help the reader.
-
-> +{
-> +    QObject *result = NULL;
-> +
-> +    assert(!ctxt->err);
-> +    switch (token->type) {
-> +    case JSON_END_OF_INPUT:
-> +        /* Check for premature end of input */
-> +        if (!g_queue_is_empty(ctxt->stack)) {
-> +            parse_error(ctxt, token, "premature end of input");
-> +        }
-> +        break;
-> +
-> +    default:
-> +        result = json_parser_parse_token(ctxt, token);
-> +        break;
->      }
->  
-> -    result = parse_value(&ctxt, token);
-> -    assert(ctxt.err || g_queue_is_empty(ctxt.buf));
-> -
-> -    error_propagate(errp, ctxt.err);
-> -
-> -    while (!g_queue_is_empty(ctxt.buf)) {
-> -        parser_context_pop_token(&ctxt);
-> -    }
-> -    g_free(ctxt.current);
-> -
-> +    error_propagate(errp, ctxt->err);
->      return result;
->  }
-> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-> index b93d97b995f..6c93e6fd78d 100644
-> --- a/qobject/json-streamer.c
-> +++ b/qobject/json-streamer.c
-> @@ -32,6 +32,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->                                  JSONTokenType type, int x, int y)
->  {
->      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
-> +    JSONParserContext ctxt;
->      QObject *json = NULL;
->      Error *err = NULL;
->      JSONToken *token;
-> @@ -56,8 +57,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->          if (g_queue_is_empty(&parser->tokens)) {
->              return;
->          }
-> -        json = json_parser_parse(&parser->tokens, parser->ap, &err);
-> -        goto out_emit;
-> +        break;
-
-Before the patch: flush the queue on end of input.
-
-Afterwards: push a JSON_END_OF_INPUT token into the queue.
-
->      default:
->          break;
->      }
-> @@ -85,11 +85,24 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->      g_queue_push_tail(&parser->tokens, token);
->  
->      if ((parser->brace_count > 0 || parser->bracket_count > 0)
-> -        && parser->brace_count >= 0 && parser->bracket_count >= 0) {
-> +        && parser->brace_count >= 0 && parser->bracket_count >= 0
-> +        && type != JSON_END_OF_INPUT) {
->          return;
-
-Before the patch: flush the queue when both counts are zero or at least
-one is negative.
-
-After the patch: additionally flush it on end of input.
-
-I figure the two hunks together make the parser see a JSON_END_OF_INPUT
-token at the end of input.  Correct?
-
->      }
->  
-> -    json = json_parser_parse(&parser->tokens, parser->ap, &err);
-> +    json_parser_init(&ctxt, parser->ap);
-> +
-> +    /* Process all tokens in the queue */
-> +    while (!g_queue_is_empty(&parser->tokens)) {
-> +        token = g_queue_pop_head(&parser->tokens);
-> +        json = json_parser_feed(&ctxt, token, &err);
-> +        g_free(token);
-> +        if (json || err) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    json_parser_destroy(&ctxt);
-
-This is where we switch from feeding the parser balanced expressions to
-feeding it tokens one by one.
-
-When we break the loop early, parser->tokens is not empty here.  Fine,
-because...
-
->  
->  out_emit:
->      parser->brace_count = 0;
-       parser->bracket_count = 0;
-       json_message_free_tokens(parser);
-
-... we drain it here.
-
-       parser->token_size = 0;
-       parser->emit(parser->opaque, json, err);
-   }
-
-Back to qobject/json-parser.c now.
-
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmljIExlIEdvYXRlciA8
+Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBNb25kYXksIEZlYnJ1YXJ5IDksIDIwMjYgNTozNCBQTQ0K
+PiBUbzogS2FuZSBDaGVuIDxrYW5lX2NoZW5AYXNwZWVkdGVjaC5jb20+OyBDw6lkcmljIExlIEdv
+YXRlcg0KPiA8Y2xnQHJlZGhhdC5jb20+OyBxZW11LWRldmVsQG5vbmdudS5vcmc7IHFlbXUtYXJt
+QG5vbmdudS5vcmcNCj4gQ2M6IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJvLm9y
+Zz47IFN0ZXZlbiBMZWUNCj4gPHN0ZXZlbl9sZWVAYXNwZWVkdGVjaC5jb20+OyBUcm95IExlZSA8
+bGVldHJveUBnbWFpbC5jb20+OyBKYW1pbiBMaW4NCj4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNv
+bT47IEFuZHJldyBKZWZmZXJ5DQo+IDxhbmRyZXdAY29kZWNvbnN0cnVjdC5jb20uYXU+OyBKb2Vs
+IFN0YW5sZXkgPGpvZWxAam1zLmlkLmF1PjsgVGhvbWFzDQo+IEh1dGggPHRodXRoQHJlZGhhdC5j
+b20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggMS8yXSB0ZXN0cy9mdW5jdGlvbmFsOiBTcGxpdCBB
+c3BlZWQgQVJNIHRlc3RzIGludG8NCj4gc2VwYXJhdGUgZmlsZXMNCj4gDQo+IEhlbGxvIEthbmUs
+DQo+IA0KPiA+IFRoYW5rcyBmb3IgdGhlIGZlZWRiYWNrLiBJIHdpbGwgZXh0ZW5kIHRoZSB0ZXN0
+IGNhc2UgYXMgc3VnZ2VzdGVkLg0KPiA+DQo+ID4gSSBwbGFuIHRvIGltcGxlbWVudCB0aGUgT1RQ
+IHZlcmlmaWNhdGlvbiBhdCB0aGUgVS1Cb290IHN0YWdlIHVzaW5nIHRoZQ0KPiA+IFUtQm9vdCBP
+VFAgdG9vbCwgYXMgdGhpcyB3aWxsIHNpZ25pZmljYW50bHkgc3BlZWQgdXAgdGhlIHRlc3QNCj4g
+PiBleGVjdXRpb24uIEhvd2V2ZXIsIGlmIHlvdSB3b3VsZCBwcmVmZXIgdGhlIHRlc3RpbmcgdG8g
+YmUgZG9uZSBsYXRlciB3aXRoaW4NCj4gdGhlIEJNQyBMaW51eCBzdGFnZSwgcGxlYXNlIGxldCBt
+ZSBrbm93Lg0KPiANCj4gSSB3b3VsZCBzYXkgdGhlIGZhc3RlciB0aGUgYmV0dGVyIGJ1dCBpZiB5
+b3UgdGhpbmsgdGhhdCBjaGVja2luZyBmcm9tIFUtQm9vdA0KPiAqYW5kKiBmcm9tIExpbnV4IGlz
+IHVzZWZ1bC4gTGV0J3MgaGF2ZSBib3RoLg0KPiANCj4gUGxlYXNlIHNlbmQgY2hhbmdlcyBvbiB0
+b3Agb2YgdGhpcyBzZXJpZXMsIG9yIGFzcGVlZC1uZXh0Lg0KPiANCj4gUmV2aWV3cyBhcmUgd2Vs
+Y29tZS4NCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQoNCkhpIEPDqWRyaWMsDQoNCk5vIHByb2Js
+ZW0uIEkgYWdyZWUgdGhhdCBoYXZpbmcgYm90aCBpcyBtb3JlIHJvYnVzdC4gSSB3aWxsIHVwZGF0
+ZQ0KdGhlIHRlc3QgZmxvdyBhcyBmb2xsb3dzOg0KDQoxLiBCb290IHRvIFUtQm9vdCB0byBjaGFu
+Z2UgdGhlIE9UUCBzZXR0aW5nLg0KMi4gQm9vdCB0byBMaW51eCB0byB2ZXJpZnkgdGhlIGNoYW5n
+ZS4NCjMuIFJlYm9vdCBiYWNrIHRvIFUtQm9vdCB0byBwZXJmb3JtIGEgZmluYWwgdmVyaWZpY2F0
+aW9uLg0KDQpUaGlzIHNob3VsZCBjb3ZlciB0aGUgdmFsaWRhdGlvbiBpbiBib3RoIHN0YWdlcyBh
+bmQgZW5zdXJlIHRoZQ0Kc2V0dGluZ3MgcGVyc2lzdC4gSSdsbCBzdWJtaXQgdGhlIGNoYW5nZXMg
+dG8gYXNwZWVkLW5leHQgc2hvcnRseS4NCg0KQmVzdCBSZWdhcmRzLA0KS2FuZQ0K
 
