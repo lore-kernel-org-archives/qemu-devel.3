@@ -4,111 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B589EB28F7
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8990BEF06E3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpM2j-0007BM-0i; Mon, 09 Feb 2026 02:50:49 -0500
+	id 1vpM9a-0000fr-Qg; Mon, 09 Feb 2026 02:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM2g-00079d-4k
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:50:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpM9Y-0000f6-83
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:57:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpM2e-0007Xv-Kf
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:50:45 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpM9W-0008Bw-JC
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:57:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770623443;
+ s=mimecast20190719; t=1770623869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=opIb2a0ToGwKXxrr49qhulMKAnvJuLw8iXUqsSWQhlQ=;
- b=T0GBMWc80gVpI3rScV9snlJ5TdT7MQhE36a8JnL+zj+eUjO05/zeypi8PIKgHS3xrgU8Gp
- lkiflhe2OzhgHJ/cZyO2mm3qe6wde2RGMDLNunx0Co6p4d3XzMzfVdBvWHwxVIV+u+esWi
- SfroJqNL67CmdWuWy7Rjdmw87W62eH0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=EuDPFKH0CUApxSbETMSMJcVSp7F1dhGPLx2r7P3FWrA=;
+ b=WtofMPo+O1B8NHC3eBMEXQU4/RSLSffnxVcx5ECrNhJldvmuPWKMNjYCN5XWN6sGEGFYH5
+ RFc2mKZJfSFErIpAlb3OGRKWh2Q0HhBLJdqVo8VAY7WvSrrv0NQ/5n6AkrsjiOL0SX5RSQ
+ ocua7yW9u2Aqf/GwDSoHE81B+BLHpeE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-dzBCXVA4M6aBMFF2Qm1mKQ-1; Mon,
- 09 Feb 2026 02:50:42 -0500
-X-MC-Unique: dzBCXVA4M6aBMFF2Qm1mKQ-1
-X-Mimecast-MFC-AGG-ID: dzBCXVA4M6aBMFF2Qm1mKQ_1770623440
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-cCTSg3wwMKCEDfbTthxr2A-1; Mon,
+ 09 Feb 2026 02:57:45 -0500
+X-MC-Unique: cCTSg3wwMKCEDfbTthxr2A-1
+X-Mimecast-MFC-AGG-ID: cCTSg3wwMKCEDfbTthxr2A_1770623864
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96A9B180034A; Mon,  9 Feb 2026 07:50:40 +0000 (UTC)
-Received: from [10.44.32.227] (unknown [10.44.32.227])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A9FB18004BB; Mon,  9 Feb 2026 07:50:35 +0000 (UTC)
-Message-ID: <9ff93406-1fcc-4d0e-b5b6-8571bb999af6@redhat.com>
-Date: Mon, 9 Feb 2026 08:50:34 +0100
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFC441955F1D; Mon,  9 Feb 2026 07:57:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35C2018004AD; Mon,  9 Feb 2026 07:57:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id ADF1321E692D; Mon, 09 Feb 2026 08:57:40 +0100 (CET)
+Resent-To: bernd@bsbernd.com, fam@euphon.net, hibriansong@gmail.com,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 09 Feb 2026 08:57:40 +0100
+Resent-Message-ID: <87ms1icpsb.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  hreitz@redhat.com,
+ kwolf@redhat.com,  eblake@redhat.com,  stefanha@redhat.com,
+ fam@euphon.net,  bernd@bsbernd.com
+Subject: Re: [Patch v4 6/7] fuse: add 'io-uring' option
+In-Reply-To: <20260207120901.17222-7-hibriansong@gmail.com> (Brian Song's
+ message of "Sat, 7 Feb 2026 20:09:00 +0800")
+References: <20260207120901.17222-1-hibriansong@gmail.com>
+ <20260207120901.17222-7-hibriansong@gmail.com>
+Date: Mon, 09 Feb 2026 06:24:00 +0100
+Message-ID: <87ikc6ebgv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/10] target/s390x: Use address_space_ldl_be() in
- read_table_entry()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@kernel.org>
-References: <20260206181953.18683-1-philmd@linaro.org>
- <20260206181953.18683-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260206181953.18683-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -133,55 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Brian Song <hibriansong@gmail.com> writes:
 
-Still:
-s/address_space_ldl_be/address_space_ldq_be/
-in the subject.
+> This patch adds a new storage export option for storage-export-daemon
+> to enable FUSE-over-io_uring via 'io-uring=on|off' (default: off).
+>
+> The initialization phase performs a protocol handshake via the legacy
+> /dev/fuse interface before transitioning to the io_uring mode.
+> If multiple IOThreads are configured, the export distributes the uring
+> queues to handle requests concurrently.
+>
+> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Brian Song <hibriansong@gmail.com>
 
-  Thomas
+[...]
 
+> diff --git a/qapi/block-export.json b/qapi/block-export.json
+> index 9ae703ad01..37f2fc47e2 100644
+> --- a/qapi/block-export.json
+> +++ b/qapi/block-export.json
+> @@ -184,12 +184,15 @@
+>  #     mount the export with allow_other, and if that fails, try again
+>  #     without.  (since 6.1; default: auto)
+>  #
+> +# @io-uring: Use FUSE-over-io-uring.  (since 10.2; default: false)
 
-On 06/02/2026 19.19, Philippe Mathieu-Daudé wrote:
-> address_space_read/write() is meant for accessing random
-> amount of memory blobs.  When the access size is known,
-> use the address_space_ld/st() API which can directly swap
-> endianness.
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   target/s390x/mmu_helper.c | 11 ++++-------
->   1 file changed, 4 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-> index 026502a3e40..30f09ec3de4 100644
-> --- a/target/s390x/mmu_helper.c
-> +++ b/target/s390x/mmu_helper.c
-> @@ -108,6 +108,7 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
->                                       uint64_t *entry)
->   {
->       CPUState *cs = env_cpu(env);
-> +    MemTxResult ret;
->   
->       /*
->        * According to the PoP, these table addresses are "unpredictably real
-> @@ -116,13 +117,9 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
->        *
->        * We treat them as absolute addresses and don't wrap them.
->        */
-> -    if (unlikely(address_space_read(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED,
-> -                                    entry, sizeof(*entry)) !=
-> -                 MEMTX_OK)) {
-> -        return false;
-> -    }
-> -    *entry = be64_to_cpu(*entry);
-> -    return true;
-> +    *entry = address_space_ldq_be(cs->as, gaddr, MEMTXATTRS_UNSPECIFIED, &ret);
-> +
-> +    return ret == MEMTX_OK;
->   }
->   
->   static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
+since 11.0
+
+> +#
+>  # Since: 6.0
+>  ##
+>  { 'struct': 'BlockExportOptionsFuse',
+>    'data': { 'mountpoint': 'str',
+>              '*growable': 'bool',
+> -            '*allow-other': 'FuseExportAllowOther' },
+> +            '*allow-other': 'FuseExportAllowOther',
+> +            '*io-uring': 'bool' },
+>    'if': 'CONFIG_FUSE' }
+>
+>  ##
+
+With that
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
+[...]
 
 
