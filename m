@@ -4,104 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2CBE7E0BE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 10:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97EBE7E0C7
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 10:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpOEB-0002QY-8o; Mon, 09 Feb 2026 05:10:48 -0500
+	id 1vpOxE-0005TN-RD; Mon, 09 Feb 2026 05:57:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vpOE6-0002Nr-EW
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 05:10:43 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vpOE2-0001FF-T3
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 05:10:42 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-352de4c94adso557360a91.3
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 02:10:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770631832; cv=none;
- d=google.com; s=arc-20240605;
- b=X6BExJhS0z+aRehxG8FBiS7RCrKBK2w0dxiH1fo7XfCnu2yXahF5MUAa7keH1VkHWx
- cvZCab2VEEYQSGXngsY4xZUgYfK30gNBifR/Tv1vtu9nOSeGJXpB/bnDgFtD5Pl0NEHa
- 8bsdhCJ+vFnj1YuLHC37AlQOWrB10iqUpV0oxpQllvDU5NnA7uSV4L3Ikk1XndTTPR3v
- qyUjsW/fwZoxLE7S8jxPyzMD25uqQpLzWUNc9KcQiu+QPFGe0YlBEgxnEecRtFn0gIfT
- Xzblyw1IP/rhnooZsAkK+9Ln5uN4cLUrHEBSSHEGejPtK4KxW7d+0M+EGmnfPY9SCnsD
- rXLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=M1LSeqYuCU+fX8KAb8k3dUhuByviS47TZSWU5zVigQ8=;
- fh=abAjvIVq6GNlRbG6+RaUvVOE8RswVb0aLrLpbE8QBok=;
- b=iYauqcK4xFndSo6nTnCaRVyeA4OjupEB+x/9d923+g96xH35gBtb6LOHa5iAgWFYvc
- TFxX6l+GAPaZZJFlgBq8aLbqNUsC44SRvfiJp932057tkTHEP63MMP3du3MxzOazuaKZ
- i7Td94sEIuc2dpryl9QbwFjOlJalyKWgrC4wQrqFLErJ+GodmU6dfaBGpwowUMS3J9xE
- Yas1dzQ6RNX3zL1QiLJssrUVuUCGM7YSbe86VeMw2cB0DWDyLxGZ0PLQ1JtlUiuVPU0s
- BNOcguxIXswcex8qBF4kMq1lz3gSzrYJnetjkyXD9BSst2nLB2bv71aa42AfFWJisUME
- 4yRA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpOvy-0004pI-Kz
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 05:56:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpOvw-0004sL-10
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 05:56:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770634558;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TK7dMFwD7Qry9p4nvhcJqmu0xwXs++0I2zminyyhmLI=;
+ b=D5KuPUe32Dppx97SylIwiYvJz98stivs9ohV43Lof2/l5C2FixyVvxLwtQ0voxGierWTCR
+ RJhPSvb6REtJXGKB7xNR5R+sz9a7NKEvAv9fLTBo1ebdl0TSyymUYZA6BrQeBOZRQsvBkZ
+ ZfknzkcKX5TIwAVN5ISCTlBNTaP8RA8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-218-H0pBHZjYPW-_n5LOvBY1vw-1; Mon, 09 Feb 2026 05:55:57 -0500
+X-MC-Unique: H0pBHZjYPW-_n5LOvBY1vw-1
+X-Mimecast-MFC-AGG-ID: H0pBHZjYPW-_n5LOvBY1vw_1770634556
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b8e9c967910so546363166b.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 02:55:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770631832; x=1771236632; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M1LSeqYuCU+fX8KAb8k3dUhuByviS47TZSWU5zVigQ8=;
- b=CdkT70yQUxOVeeY6weYAG6TBZhpBDJOZb7V36NZROFJ5/vQBbyrkwIahbOZsW0G2mK
- vUpSNajsGXYAa2S0KCDi4+virqAFjfnxStYzMm3ni9yWLmK0zsmO3GWkoBKtdhLl+Rd1
- KFxJHUqDfeZVeGKpusQKKxbzfQ2ZeZIVW09WetI2NFD7Q2wKXCMP8oGR+exPpkFlLhsp
- kzSga3SyGfmaM6DtGAvIkYk8dfYJ5aD8ZYACGs8IRw1XW1wYuvXIAEK96iGpaCKmHFqt
- PaYtD1uuZJAjrou39mJi6zgevMTBdsAHElnDBOv5JVy0dwHuPoSKJxYUEmR4GzIIy43O
- WLOA==
+ d=redhat.com; s=google; t=1770634555; x=1771239355; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TK7dMFwD7Qry9p4nvhcJqmu0xwXs++0I2zminyyhmLI=;
+ b=H/dBiwesjsH2nMR7c6H4mq0+6aVuttP9e5xluXmXiGAa4EDQoNLAeR3kpDuj/CLgOI
+ yvnfK/dv+xtKbMgKbYtX6rKDVwyJgvOUfYGaYgzRo8BGSv07AQk9ijviY6YgtPR/uQHQ
+ 6xC/GvZtWBFf8QGBAY4bFiY3k0yKnhhPxIKUjoysjqYTWBbDZ1hZkQJ5jrah4t79UUGK
+ 7clDhM4a1pBGEd9GN1tIeDqblnqUQqe9YWxqIQxw9v1KK8z7gD/UMWCQcsZw81nUu3V3
+ wnr0KD6ny+us80oSD18iToDPaMIt+VBQRJlwehjgHwV1MFpxpgR1NDqP1pTyhm4BN0pi
+ uc8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770631832; x=1771236632;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M1LSeqYuCU+fX8KAb8k3dUhuByviS47TZSWU5zVigQ8=;
- b=Q5WmMjp1RZ4bV6kVsPPt6ScyFFBBvk9GF6YgPH/X9vqxCmk91pqlAbwHPwOLE3FsGL
- Gs0uEc83fGdBojdfuUzEE4MNJrnhSegcOr9KXHw3zucq/Ul1crNMKSAEwVLqR4g3Szpb
- DuUWfpAlAfQJQ3THsGl5LOniSXY7nUJnQ39vyRLKNpatAs+6ceJRQ0BICuUODp7zj0IT
- fs/EhZ0wIycu9IdaysDAasXMiMRErKcBsdr7qJVtPPMR3TOVEe/wM5c8OtirhDsdvSbG
- 4OGUD3AqySQDquYtvx2fJnBLJI2AnmMIoX2fBPlpcKIOY0hzZIUSsXNVLV0a5Yt4Mr+P
- pHIQ==
-X-Gm-Message-State: AOJu0Ywxd++bNku9NPxgj2TeGezgXkg9Bpo6w4uQSOKb3QVbGv4zEfir
- to9bn+OZIy7P+vSiS2QRUAq0Z8tkg5NayRJPHPyPXeX7LL7TXLmOPq4TyrdZ467aFgGVpolrRsK
- 7FDdv1UYt96Qvw4c6PbZP6jnLzv7+zpjNrtq0
-X-Gm-Gg: AZuq6aI1M6Um7XnVCIE/rD6J4ZA4TduN/74XMzymMyT4mNUoS5vODZQDE8Ee8z5IIUm
- l1sbE5cqRbt2D+ugzTHr+spX02B0KHfwsTAANnE9TWnG0Jy+6zR5N3JwajwDZrSsVWGwtNzb4dN
- 8cxecuhS70DdHDz9OKWIvyfHNOceWLkORQK6ZN0kcH23I7GJZcSS3NkVxY9325HwPGFcdBjPTTX
- iLQEudqVUlfhCA2Vgsgv2iVjfX6pz/TpCqfP1m1/gkurGg54JRIxYhVl2Bidpt2cCsWMhcm9FPq
- btvyHElqXcBXVF/cXbshwimodkRw3w==
-X-Received: by 2002:a17:90b:254d:b0:354:c3a4:394 with SMTP id
- 98e67ed59e1d1-354c3a40b5emr4872145a91.6.1770631832052; Mon, 09 Feb 2026
- 02:10:32 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770634555; x=1771239355;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TK7dMFwD7Qry9p4nvhcJqmu0xwXs++0I2zminyyhmLI=;
+ b=um+Fkk2xMSbh5dcCnrPUOUzm0NGsIoBQoQifd9zsaYAvqFdYXegaOiS7vNUiWJKdxW
+ l/loRPBsbH1vS8dffxjVKyTs3LcrYyQ22wEN/Eyy74uXSzlloXDFpcOmULjo+I/7Ey0i
+ cVUxLG094T5amPeDeM4Xdo+fBUi5HzCxxLsqCKiUceO3hiP5L9w47ZIFXn9PmPSePDYe
+ TE+SVnC1Ttma7J3STE9IURpaUHYyjZ+2KGK7tYidY6bVPCrZziGjgyr4QbIsfFs2pKVV
+ MdMAxbxX3QAIHqvKaI1whDO2vGkZ6G6Vnt7hMf9u7AarkAvGssmxq6wIdwJF86PhJatA
+ yuRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVScIln3PP2bp4o5rDyc6aHHFgnPnH/P6d3yF2ik88CsMO71loOIM0ruog3s0P5SjVk1VxuOokEuUWl@nongnu.org
+X-Gm-Message-State: AOJu0YxCGUIXbeVceZs/SM8H+TydrnRk16aqDgNYOaEf5ZMeyqbn6A+6
+ kI2FlInavtZTdFmqLWzXVBDOLa7akvptOej9uH9p3yDHtiHLlnMkmepx7ARWbLrq2S1CjXc6yjT
+ x1HE38R+erOG4gywei4SPyhzgO1iJmoTAorGeeTpsV4x89W+HK0sSt1in
+X-Gm-Gg: AZuq6aLhqTecqiE4PKNZ6uUTpHIGnSHHpL+BqHWk5uQhhjx78HWpyHJM1zswFgeVh6b
+ jOEYt8Vlz3x9cRD1nD9OpOWznAiBn33VNx85OqBjhWq0cAoIMkMOOKWa9ooe1ji6u1rXcjqdTai
+ r+S5h7MGn15f7UcQ+77fZdlaEpkB7yj+T381xw22C8Pwqos9FlCYGSqL36Sx583qxjvlmld+Y99
+ 2TWBvdDhoA8aUcWKFgJuTq5nOMOAR43q61cBz3yIMp60nxaXI0r9SI+LWBpGoEuBg5u4BZ42MIY
+ oAITmz2nY+b05/EB9wNZsN6Xt+c9dHv4CyZDMVnQApn23oGObeZYvIdQv+st5Nd4Qu0v5byWKUT
+ b6UEiDRbLN4tZSOus/mucEAbzq7N+XB8PtMgjQooE3UkZMB9bAK0M7URHsMAl80mszjCn01OIuv
+ MHvMmLWoOsh50fpw==
+X-Received: by 2002:a17:907:7b9e:b0:b87:6d6b:1366 with SMTP id
+ a640c23a62f3a-b8edf377411mr649831666b.41.1770634554735; 
+ Mon, 09 Feb 2026 02:55:54 -0800 (PST)
+X-Received: by 2002:a17:907:7b9e:b0:b87:6d6b:1366 with SMTP id
+ a640c23a62f3a-b8edf377411mr649829066b.41.1770634554257; 
+ Mon, 09 Feb 2026 02:55:54 -0800 (PST)
+Received: from [192.168.10.81] ([151.61.26.160])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b8edacf1532sm377095466b.55.2026.02.09.02.55.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Feb 2026 02:55:53 -0800 (PST)
+Message-ID: <c3b39124-ee51-4930-b760-969c6c9bd496@redhat.com>
+Date: Mon, 9 Feb 2026 11:55:52 +0100
 MIME-Version: 1.0
-References: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
- <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
-In-Reply-To: <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
-From: Joel Bueno <buenocalvachejoel@gmail.com>
-Date: Mon, 9 Feb 2026 11:10:20 +0100
-X-Gm-Features: AZwV_Qj4FuDMIrhdWN8N875D7CpXTm10Mp401XaOYVt5nJQOjYlEf617f9J03cE
-Message-ID: <CAPDLHD4XhjpmiJPNJi5kO20bbe51=RBgDoy1LF2wJ7sCaLbCzQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>, 
- "jsnow@redhat.com" <jsnow@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000060a788064a61596c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=buenocalvachejoel@gmail.com; helo=mail-pj1-x102d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/mshv: Remove remap overlapping mappings code
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>
+References: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,105 +126,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000060a788064a61596c
-Content-Type: text/plain; charset="UTF-8"
+On 1/13/26 16:37, Magnus Kulke wrote:
+> This change removes userland code that worked around a restriction
+> in the mshv driver in the 6.18 kernel: regions from userland
+> couldn't be mapped to multiple regions in the kernel. We maintained a
+> shadow mapping table in qemu and used a heuristic to swap in a requested
+> region in case of UNMAPPED_GPA exits.
+> 
+> However, this heuristic wasn't reliable in all cases, since HyperV
+> behaviour is not 100% reliable across versions. HyperV itself doesn't
+> prohibit to map regions at multiple places into the guest, so the
+> restriction has been removed in the mshv driver.
+> 
+> Hence we can remove the remapping code. Effectively this will mandate a
+> 6.19 kernel, if the workload attempt to map e.g. BIOS to multiple
+> reagions. I still think it's the right call to remove this logic:
+> 
+> - The workaround only seems to work reliably with a certain revision
+>    of HyperV as a nested hypervisor.
+> - We expect Direct Virtualization (L1VH) to be the main platform for
+>    the mshv accelerator, which also requires a 6.19 kernel
+> 
+> This reverts commit efc4093358511a58846a409b965213aa1bb9f31a.
 
-Adding jsnow, I forgot to initially add him! Also, bumping again. Thanks
-and sorry for the bumps.
+Queued, thanks.
 
-On Wed, Jan 7, 2026 at 12:29 Joel Bueno <buenocalvachejoel@gmail.com> wrote:
+Paolo
 
-> Is there any feedback on this patch series?
->
-> On Sun, Dec 21, 2025 at 11:53 Joel Bueno <buenocalvachejoel@gmail.com>
-> wrote:
->
->> The Fast Read (0Bh) instruction requires 8 dummy clock cycles
->> according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
->> However, the current code adds 8 to needed_bytes, which represents
->> bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
->> communication (1 bit per clock edge), this results in 64 dummy
->> clock cycles instead of 8.
->>
->> Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
->> (64 clocks), matching the existing implementation for SST flash and
->> the datasheet specifications.
->>
->> Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
->> ---
->>  hw/block/m25p80.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
->> index a5336d92ff..21c2118b33 100644
->> --- a/hw/block/m25p80.c
->> +++ b/hw/block/m25p80.c
->> @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
->>          s->needed_bytes += 1;
->>          break;
->>      case MAN_WINBOND:
->> -        s->needed_bytes += 8;
->> +        s->needed_bytes += 1;
->>          break;
->>      case MAN_NUMONYX:
->>          s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
->> --
->> 2.51.0
->>
->>
-
---00000000000060a788064a61596c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Adding jsnow, I forgot to initially add him! Also, bumpin=
-g again. Thanks and sorry for the bumps.</div><div><br><div class=3D"gmail_=
-quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, =
-Jan 7, 2026 at 12:29 Joel Bueno &lt;<a href=3D"mailto:buenocalvachejoel@gma=
-il.com">buenocalvachejoel@gmail.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
-dding-left:1ex"><div dir=3D"auto">Is there any feedback on this patch serie=
-s?</div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
-_attr">On Sun, Dec 21, 2025 at 11:53 Joel Bueno &lt;<a href=3D"mailto:bueno=
-calvachejoel@gmail.com" target=3D"_blank">buenocalvachejoel@gmail.com</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
-.8ex;border-left:1px #ccc solid;padding-left:1ex">The Fast Read (0Bh) instr=
-uction requires 8 dummy clock cycles<br>
-according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).<br>
-However, the current code adds 8 to needed_bytes, which represents<br>
-bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI<br>
-communication (1 bit per clock edge), this results in 64 dummy<br>
-clock cycles instead of 8.<br>
-<br>
-Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes<br>
-(64 clocks), matching the existing implementation for SST flash and<br>
-the datasheet specifications.<br>
-<br>
-Signed-off-by: Joel Bueno &lt;<a href=3D"mailto:buenocalvachejoel@gmail.com=
-" target=3D"_blank">buenocalvachejoel@gmail.com</a>&gt;<br>
----<br>
-=C2=A0hw/block/m25p80.c | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c<br>
-index a5336d92ff..21c2118b33 100644<br>
---- a/hw/block/m25p80.c<br>
-+++ b/hw/block/m25p80.c<br>
-@@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;needed_bytes +=3D 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0case MAN_WINBOND:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 8;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0case MAN_NUMONYX:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;needed_bytes +=3D numonyx_extract_c=
-fg_num_dummies(s);<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
-</blockquote></div></div>
-
---00000000000060a788064a61596c--
 
