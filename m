@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107C5E7C706
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 08:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0982BEE20BD
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 08:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpMOL-0006bZ-WE; Mon, 09 Feb 2026 03:13:10 -0500
+	id 1vpMVm-0007r2-Da; Mon, 09 Feb 2026 03:20:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpMOK-0006bH-4g
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 03:13:08 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vpMVc-0007qV-7f
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 03:20:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpMOI-0002Te-8z
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 03:13:07 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vpMVa-0003RO-6l
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 03:20:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770624785;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1770625236;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SJ4qqd0DHvy/gr0t7MaXLGkWYoBIwXUT6vTtdbrzoJo=;
- b=b7USmYClPS7I1kaV2GjKXudQBBX0XnhjTxPmufvP8mNgwPL1Rv12D0xvTWnlhi9BWadI0d
- ynQSnz2lh2k5omLybtHIMLHiXxcVldlIvTAr3G5oxfI1gdLrnk1nmHpej76qFWBS2ErJYk
- d+cCoXBm1hlU2tbWDrseMz+qDNAqyIc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-qv5PagC8NoOGrVODa062Dg-1; Mon,
- 09 Feb 2026 03:13:01 -0500
-X-MC-Unique: qv5PagC8NoOGrVODa062Dg-1
-X-Mimecast-MFC-AGG-ID: qv5PagC8NoOGrVODa062Dg_1770624780
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 463C41956095; Mon,  9 Feb 2026 08:12:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FB051800465; Mon,  9 Feb 2026 08:12:51 +0000 (UTC)
-Date: Mon, 9 Feb 2026 08:12:47 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Yonggang Luo <luoyonggang@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v5 13/16] tests: remove "make check-venv" target
-Message-ID: <aYmWy0yMzyF3E310@redhat.com>
-References: <20260203203512.672552-1-jsnow@redhat.com>
- <20260203203512.672552-14-jsnow@redhat.com>
- <87y0l7m829.fsf@draig.linaro.org>
- <CAFn=p-a3BK5PiFQv2C0FX8z8PhQ91A3xWLoDv9fw-yJAGHMCUg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFn=p-a3BK5PiFQv2C0FX8z8PhQ91A3xWLoDv9fw-yJAGHMCUg@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ bh=2tj37+zWtlUvsymJAzKAOZD4uyurQbHW9wAllGRNydU=;
+ b=WkdHK7jjns7d6mJoyr4p9I7V/Fe1nLrplasbb7uF0+MLkFCziZMB2g4simtZjGz4ulpJvI
+ XQbuSJ+Vd7yA0g1RDZsFyi5bjC/UmJmNuj8/huZf4noHbkr2aTr6GmGLQEYjITCA81bhC2
+ rKhMu6xI7RHoVz2+eMliIzQTsgoJliw=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-173-dtOiOJ-4MXifBOBstDrvnA-1; Mon, 09 Feb 2026 03:20:34 -0500
+X-MC-Unique: dtOiOJ-4MXifBOBstDrvnA-1
+X-Mimecast-MFC-AGG-ID: dtOiOJ-4MXifBOBstDrvnA_1770625234
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-353c9d644b0so2111563a91.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 00:20:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770625233; x=1771230033; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2tj37+zWtlUvsymJAzKAOZD4uyurQbHW9wAllGRNydU=;
+ b=PqV0WFQx1fNKbbYIhfE/CHqoeRhC7l0SBaCFFW4B7lRQrqBPfDV0MXrJcjd8YZU8Nq
+ kW3zl59wTuIM2HooRRsIeLyPjDi0tyJGXgSnB+1eJ3KTUzw7+zj8TlvVbf4z+cHuQmN4
+ HaxdCVqsPva9aVuDeRwDL9WBUeIUXWtQ7/y51chtOWp//bSHz10USy7CftklDKrVhw/z
+ mnKw5IygtopVMJBGi9y+V7UmFfCgZyewjwsM2eaep0MxeJvaSp/kAsQulX78YUkUJc/I
+ /vETAGpYyziGJKKZJ10B040beIIkNvcNvLptJwUwx8TxHeZZDcpuwnzrocp+a1dYSo/R
+ ronw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770625233; x=1771230033;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2tj37+zWtlUvsymJAzKAOZD4uyurQbHW9wAllGRNydU=;
+ b=TpQOwKw3FD5xXuNkLig3uANCxWhURCB591obO2ZA6wzBO5ZVNj7dfQ3lnQ07kJofCV
+ JslnwVMEJ1/1o4FhOKFC1rb2YiPBsVg27EtHVDdkto2IjbJ4zd3CL2vWBCsM4lTwMSrc
+ Le0vy9rCOX8d/Z2etYbO/TgtKLXhvahJHiwY1nLQY7d8t2p/ZRSKeEprxM9co+qfT2qn
+ +PZYjisYi48diZjE0RKo6kNKs6z3t6LW6Wa/Ch5T4yFmWyIElQX6Bhx4fjoL8xYELOYu
+ 7peS13SbF1+iWfX51uNt7Low5DP3gVfECDmYYdcgIfTgoH2Rp4fi5gQw6sD3QMIplKEY
+ KwkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXFr1hL0A8JKCCzlve31JTpSzzlZdZyxopYRa4PzY9zs8NJMxngHCsQLpSzCUfnwxRJRHcCTmt9HLt@nongnu.org
+X-Gm-Message-State: AOJu0YxZ4gF95YZPlpKmFNfQOssY1+FykaGLUjszCjjV+90QuTV7vgQ1
+ J+LPr9pUzykv/1dyV2Diw1/vtHNbkAyLKsIQsR8Yj9jnI/7G2cgQ6P4RUA1N2zIUxtdutcWPI04
+ 0YUkhjULnZJWmczftl/PiC2n3XCxXhIzFf7evAA1E8Q5DkXiYCiF3I1uh21TV/8pb
+X-Gm-Gg: AZuq6aLJA+FHPEk6zB1K7x0wYff6XQb0dJ6QFswuVJ/3gCwnWiVyGaiNpoUiSHsZDua
+ aTnYizM2FaN0bpb7UEpEwGVcsCeD7cIDT2TIInkEnz7DUfRWFgIiN/2F3ACR/wCD2B4uw62JX0K
+ BIxC80NLuIg1uPCCDoucUSWgYJHWbB2l8Vpccgp4g7ri9Mb7J8sgZorqOl133VQ6SQGiMzE/A90
+ fDn+Hem8vJF6sITe/KuqfWBYVtrOPzqL0EHpNi1XI2Eu1zXOb3AAYN92kI+Aif1l0F7Qo6H8mZW
+ mdON2Z2D3ZYYhZRVzhNFV95jKzWKio+FhspPHxkbb77ZKUfZIBn5crPhCq896lMgLgGwEIbn+JC
+ vK4xpwkNoGPPzAuqm9Mz4Dp7fNXpif90ITy/E/PNZLj32sHkDT1HlNLq+4eU=
+X-Received: by 2002:a05:6a21:7748:b0:393:fb81:ac66 with SMTP id
+ adf61e73a8af0-393fb81b858mr1667833637.5.1770625233456; 
+ Mon, 09 Feb 2026 00:20:33 -0800 (PST)
+X-Received: by 2002:a05:6a21:7748:b0:393:fb81:ac66 with SMTP id
+ adf61e73a8af0-393fb81b858mr1667810637.5.1770625232970; 
+ Mon, 09 Feb 2026 00:20:32 -0800 (PST)
+Received: from smtpclient.apple ([106.202.227.239])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a951c50206sm94161125ad.19.2026.02.09.00.20.30
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 09 Feb 2026 00:20:32 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: Re: [PATCH v3 22/33] hw/vfio: generate new file fd for pseudo device
+ and rebind existing descriptors
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <7feb4327-fbe6-4ed3-bfe5-e0f8adf8022e@redhat.com>
+Date: Mon, 9 Feb 2026 13:50:19 +0530
+Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3E8E2592-AB5D-4A40-98B3-C2814E6746BD@redhat.com>
+References: <20260127051612.219475-1-anisinha@redhat.com>
+ <20260127051612.219475-23-anisinha@redhat.com>
+ <7feb4327-fbe6-4ed3-bfe5-e0f8adf8022e@redhat.com>
+To: Cedric Le Goater <clg@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,156 +124,209 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 06, 2026 at 05:41:35PM -0500, John Snow wrote:
-> On Thu, Feb 5, 2026 at 12:09 PM Alex Bennée <alex.bennee@linaro.org> wrote:
-> >
-> > John Snow <jsnow@redhat.com> writes:
-> >
-> > > With the qemu.qmp and qemu.machine dependencies now installed by default
-> > > at configure time and additional dependencies required by functional
-> > > testing installed on demand, there is no longer any reason to have an
-> > > explicit target.
-> > >
-> > > FIXME: This forces image regeneration for vm tests whenever Make
-> > > determines that the image needs to be rebuilt; which is a regression
-> > > over the previous behavior.
-> > >
-> > > Signed-off-by: John Snow <jsnow@redhat.com>
-> > > ---
-> > >  tests/Makefile.include    | 22 ++--------------------
-> > >  tests/vm/Makefile.include | 24 +++++++-----------------
-> > >  2 files changed, 9 insertions(+), 37 deletions(-)
-> > >
-> > > diff --git a/tests/Makefile.include b/tests/Makefile.include
-> > > index f28c9e329aa..2a203e23718 100644
-> > > --- a/tests/Makefile.include
-> > > +++ b/tests/Makefile.include
-> > > @@ -21,7 +21,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
-> > >  endif
-> > >       @echo
-> > >       @echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
-> > > -     @echo " $(MAKE) check-venv               Creates a Python venv for tests"
-> > >       @echo " $(MAKE) check-clean              Clean the tests and related data"
-> > >       @echo
-> > >       @echo "The following are useful for CI builds"
-> > > @@ -92,33 +91,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
-> > >  .PHONY: distclean-tcg
-> > >  distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
-> > >
-> > > -# Python venv for running tests
-> > > -
-> > > -.PHONY: check-venv
-> > > -
-> > >  # Build up our target list from the filtered list of ninja targets
-> > >  TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
-> > >
-> > > -TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
-> > > -
-> > > -quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
-> > > -    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
-> > > -    "VENVPIP","$1")
-> > > -
-> > > -$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
-> > > -     $(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
-> > > -     $(MKVENV_ENSUREGROUP) $< tooling functests
-> > > -     $(call quiet-command, touch $@)
-> > > -
-> > > -check-venv: $(TESTS_VENV_TOKEN)
-> > > -
-> > >  FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
-> > >  .PHONY: $(FUNCTIONAL_TARGETS)
-> > > -$(FUNCTIONAL_TARGETS): check-venv
-> > > +$(FUNCTIONAL_TARGETS):
-> > >       @$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
-> > >
-> > >  .PHONY: check-functional
-> > > -check-functional: check-venv
-> > > +check-functional:
-> > >       @$(NINJA) precache-functional
-> > >       @$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
-> > >       @QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
-> > > diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
-> > > index 14188bba1c6..095ec2eefa3 100644
-> > > --- a/tests/vm/Makefile.include
-> > > +++ b/tests/vm/Makefile.include
-> > > @@ -1,14 +1,5 @@
-> > >  # Makefile for VM tests
-> > >
-> > > -# Hack to allow running in an unconfigured build tree
-> > > -ifeq ($(realpath $(SRC_PATH)),$(realpath .))
-> > > -VM_PYTHON = PYTHONPATH=$(SRC_PATH)/python /usr/bin/env python3
-> > > -VM_VENV =
-> > > -else
-> > > -VM_PYTHON = $(PYTHON)
-> > > -VM_VENV = check-venv
-> > > -endif
-> > > -
-> >
-> > It's a shame to loose this because the build directory should have no
-> > influence on what we build in the VM. Surely if we have qmp installed on
-> > the system (and therefor its deps) we should still want the ability to
-> > build in the src dir. Currently I get:
-> >
-> >   ➜  make vm-build-netbsd V=1
-> >   tests/vm/netbsd  --debug     --source-path . --image "/home/alex/.cache/qemu-vm/images/netbsd.img" --force --build-image /home/alex/.cache/qemu-vm/images/netbsd.img
-> >   Traceback (most recent call last):
-> >     File "/home/alex/lsrc/qemu.git/tests/vm/netbsd", line 19, in <module>
-> >       import basevm
-> >     File "/home/alex/lsrc/qemu.git/tests/vm/basevm.py", line 32, in <module>
-> >       from qemu.machine import QEMUMachine
-> >   ModuleNotFoundError: No module named 'qemu'
-> >   make: *** [tests/vm/Makefile.include:86: /home/alex/.cache/qemu-vm/images/netbsd.img] Error 1
-> 
-> Ah, I see.... it used to be possible to run the VM tests *without a
-> build directory at all*.
-> 
-> So, this used to work because of this bit in tests/vm/Makefile.include:
-> 
-> # Hack to allow running in an unconfigured build tree
-> ifeq ($(realpath $(SRC_PATH)),$(realpath .))
-> VM_PYTHON = PYTHONPATH=$(SRC_PATH)/python /usr/bin/env python3
-> VM_VENV =
-> else
-> VM_PYTHON = $(PYTHON)
-> VM_VENV = check-venv
-> endif
-> 
-> What this did was effectively treat qemu.git/python/ as an installed
-> package directory and picked the most likely culprit for your actual
-> python interpreter location. (Note that the configure script is a bit
-> more thorough in picking a python interpreter to use that is bypassed
-> here.) It's possible we can continue to do this, however, it will
-> begin requiring that you just-so-happen to have qemu.qmp available in
-> your python environment. The list of dependencies you might need for
-> this to work successfully may increase as the years go by, so this is
-> a little bit "porcelain". I'm not sure I like this, just because I
-> don't wanna be on the hook for mysterious failures down the line.
-> 
-> Otherwise, to get all of the dependencies and python configuration
-> managed for you, you have to do this:
-> 
-> mkdir build && pushd build && ../configure && make vm-test-netbsd
-> 
-> ... But you don't actually have to build, and in fact you don't even
-> really need to actually run configure either, so, hm.... yeah, how
-> about this, using a new "vm-venv" folder in the source tree as the
-> virtual environment location, using a dependency hook like check-venv
-> but now localized specifically for VM tests benefit and only when it
-> is run from the source tree:
-
-IMHO just keep life simple and expect configure to be run so we
-have the regular venv setup.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> On 9 Feb 2026, at 12:18=E2=80=AFPM, C=C3=A9dric Le Goater =
+<clg@redhat.com> wrote:
+>=20
+> On 1/27/26 06:15, Ani Sinha wrote:
+>> Normally the vfio pseudo device file descriptor lives for the life of =
+the VM.
+>> However, when the kvm VM file descriptor changes, a new file =
+descriptor
+>> for the pseudo device needs to be generated against the new kvm VM =
+descriptor.
+>> Other existing vfio descriptors needs to be reattached to the new =
+pseudo device
+>> descriptor. This change performs the above steps.
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>>  hw/vfio/helpers.c | 86 =
++++++++++++++++++++++++++++++++++++++++++++++--
+>>  1 file changed, 83 insertions(+), 3 deletions(-)
+>> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+>> index f68f8165d0..d467875b4b 100644
+>> --- a/hw/vfio/helpers.c
+>> +++ b/hw/vfio/helpers.c
+>> @@ -110,12 +110,71 @@ bool vfio_get_info_dma_avail(struct =
+vfio_iommu_type1_info *info,
+>>  #ifdef CONFIG_KVM
+>>  /*
+>>   * We have a single VFIO pseudo device per KVM VM.  Once created it =
+lives
+>> - * for the life of the VM.  Closing the file descriptor only drops =
+our
+>> - * reference to it and the device's reference to kvm.  Therefore =
+once
+>> - * initialized, this file descriptor is only released on QEMU exit =
+and
+>> + * for the life of the VM except when the vm file descriptor changes =
+for
+>> + * confidential virtual machines. In that case, the old file =
+descriptor is
+>> + * closed and a new file descriptor is recreated.  Closing the file =
+descriptor
+>> + * only drops our reference to it and the device's reference to kvm.
+>> + * Therefore once initialized, this file descriptor is normally only =
+released
+>> + * on QEMU exit (except for confidential VMs as stated above) and
+>=20
+> Instead of changing this paragraph, I would prefer having, below
+> the vfio_kvm_device_fd definition, a new section starting with
+> comment "Confidential virtual machines"
+>=20
+>>   * we'll re-use it should another vfio device be attached before =
+then.
+>>   */
+>>  int vfio_kvm_device_fd =3D -1;
+>=20
+> /*
+> * Confidential virtual machines
+>=20
+>   <what is different from non confidential VMs>
+>=20
+> */
+>  <Code>
+>=20
+>> +
+>> +typedef struct KVMVfioFileFd {
+>> +    int fd;
+>> +    QLIST_ENTRY(KVMVfioFileFd) node;
+>> +} KVMVfioFileFd;
+>> +
+>> +static QLIST_HEAD(, KVMVfioFileFd) kvm_vfio_file_fds =3D
+>> +    QLIST_HEAD_INITIALIZER(kvm_vfio_file_fds);
+>> +
+>> +static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void =
+*data,
+>> +                                  Error **errp);
+>=20
+> This declaration could be avoided.
+>=20
+>> +static struct NotifierWithReturn kvm_vfio_vmfd_change_notifier =3D {
+>> +    .notify =3D kvm_vfio_filefd_rebind,
+>> +};
+>> +
+>> +static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void =
+*data,
+>> +                                  Error **errp)
+>> +{
+>> +    KVMVfioFileFd *file_fd;
+>> +    int ret =3D 0;
+>> +    struct kvm_device_attr attr =3D {
+>> +        .group =3D KVM_DEV_VFIO_FILE,
+>> +        .attr =3D KVM_DEV_VFIO_FILE_ADD,
+>> +    };
+>> +    struct kvm_create_device cd =3D {
+>> +        .type =3D KVM_DEV_TYPE_VFIO,
+>> +    };
+>> +
+>> +    /* we are not interested in pre vmfd change notification */
+>> +    if (((VmfdChangeNotifier *)data)->pre) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
+>> +        error_setg_errno(errp, errno, "Failed to create KVM VFIO =
+device");
+>> +        return -errno;
+>> +    }
+>> +
+>> +    if (vfio_kvm_device_fd) {
+>=20
+> May be "vfio_kvm_device_fd !=3D -1" ?
+>=20
+>> +        close(vfio_kvm_device_fd);
+>> +    }
+>> +
+>> +    vfio_kvm_device_fd =3D cd.fd;
+>> +
+>> +    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
+>> +        attr.addr =3D (uint64_t)(unsigned long)&file_fd->fd;
+>> +        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+>> +            error_setg_errno(errp, errno,
+>> +                             "Failed to add fd %d to KVM VFIO =
+device",
+>> +                             file_fd->fd);
+>> +            ret =3D -errno;
+>> +        }
+>> +    }
+>> +    return ret;
+>> +}
+>> +
+>>  #endif
+>>    void vfio_kvm_device_close(void)
+>> @@ -137,6 +196,7 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+>>          .attr =3D KVM_DEV_VFIO_FILE_ADD,
+>>          .addr =3D (uint64_t)(unsigned long)&fd,
+>>      };
+>> +    KVMVfioFileFd *file_fd;
+>>        if (!kvm_enabled()) {
+>>          return 0;
+>> @@ -153,6 +213,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+>>          }
+>>            vfio_kvm_device_fd =3D cd.fd;
+>> +        /*
+>> +         * If the vm file descriptor changes, add a notifier so that =
+we can
+>> +         * re-create the vfio_kvm_device_fd.
+>> +         */
+>> +        =
+kvm_vmfd_add_change_notifier(&kvm_vfio_vmfd_change_notifier);
+>>      }
+>>        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+>> @@ -160,6 +225,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+>>                           fd);
+>>          return -errno;
+>>      }
+>> +
+>> +    file_fd =3D g_malloc0(sizeof(*file_fd));
+>> +    file_fd->fd =3D fd;
+>> +    QLIST_INSERT_HEAD(&kvm_vfio_file_fds, file_fd, node);
+>> +
+>=20
+> Please introduce a helper routine.
+>=20
+>=20
+>>  #endif
+>>      return 0;
+>>  }
+>> @@ -172,6 +242,7 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+>>          .attr =3D KVM_DEV_VFIO_FILE_DEL,
+>>          .addr =3D (uint64_t)(unsigned long)&fd,
+>>      };
+>> +    KVMVfioFileFd *file_fd;
+>>        if (vfio_kvm_device_fd < 0) {
+>>          error_setg(errp, "KVM VFIO device isn't created yet");
+>> @@ -183,6 +254,15 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+>>                           "Failed to remove fd %d from KVM VFIO =
+device", fd);
+>>          return -errno;
+>>      }
+>> +
+>> +    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
+        ^^^^^^^^^^^^^
+I believe this should be QLIST_FOREACH_SAFE . Will fix in next version.
+
+>> +        if (file_fd->fd =3D=3D fd) {
+>> +            QLIST_REMOVE(file_fd, node);
+>> +            g_free(file_fd);
+>> +            break;
+>> +        }
+>> +    }
+>=20
+> and a second helper for removal.
+>=20
+> Thanks,
+>=20
+> C.
+>=20
+>>  #endif
+>>      return 0;
+>>  }
+
 
 
