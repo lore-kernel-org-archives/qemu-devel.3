@@ -4,48 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404F9E81BCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 14:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23845E81BCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 14:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpSQZ-0005kL-Ht; Mon, 09 Feb 2026 09:39:52 -0500
+	id 1vpSWO-00071n-WF; Mon, 09 Feb 2026 09:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpSQV-0005jv-Eh
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:39:47 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vpSVv-00071Q-Cw
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:45:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpSQS-0002qA-An
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:39:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date
- :Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=7RFLQTI+Oj8Lan3GP+KehjwbPPH+4XneoDZ9Lj4EX0s=; b=S7D1JU2AhRPVU4X
- BlpCRTI3tzBDhRrqqN/Gq9HEG77jWKTEeRI0d2OaqxS6whXF0svigVPxb3AF+naEDHkdd8iXbVVAa
- XC0nx2b+dYrtX6zQU3AyqCY0O3jPqXcGOS2jycAWp0/HFAUn1d6+hC5rEsIXLzGqUSyVcDv5AnfEP
- BQ=;
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vpSVt-0005i9-3P
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:45:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770648319;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Fjg2XA3k6lRaEX4G75LHD1D6E31xSrKXEWM7OyyyF4E=;
+ b=LVe/+VR2Cado3ZwAZeV+2Aknb/bA73avi3h8sUL/T3BRpSmI9dOweYwINHBBd2UZQR4cjR
+ isFqGCbZgoKrnRmiD6457O1r0P8l6aPzhfoiH5wqzIkT9cCMswXxgRNZ4emwtYZHOPwgrt
+ Iarl5cb3od2/sx8TUnblrp4B/os5xXY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-VAG3KnLINlSGMRZbZUJgyw-1; Mon,
+ 09 Feb 2026 09:45:13 -0500
+X-MC-Unique: VAG3KnLINlSGMRZbZUJgyw-1
+X-Mimecast-MFC-AGG-ID: VAG3KnLINlSGMRZbZUJgyw_1770648311
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 412491955DCA; Mon,  9 Feb 2026 14:45:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.94])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30CC018004AD; Mon,  9 Feb 2026 14:45:09 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v3] target/hexagon: Widen MemLog::width to 32 bits
-Date: Mon,  9 Feb 2026 15:42:49 +0100
-Message-ID: <20260209144249.7234-1-anjo@rev.ng>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, qemu-block@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ pkrempa@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 0/9] Block patches
+Date: Mon,  9 Feb 2026 09:44:58 -0500
+Message-ID: <20260209144508.45268-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,179 +85,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MemLog::width is a uint8_t value mapped to a TCGv (32 bit), the only
-reason this currently works is because MemLog::width is padded to 32
-bits.  Widen the field to uint32_t and fix the size of the TCGv
-operations as well.  Use uint32_t when referencing and passing around
-the field, as valid values are asserted in commit_store().
+The following changes since commit c4a9d49c7b23a02c646ebac756519c15a24f7ecc:
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
+  Merge tag 'pull-9p-20260207' of https://github.com/cschoenebeck/qemu into staging (2026-02-07 17:46:15 +0000)
 
---
-Changes in v3:
-- Added reviewed-by
-Changes in v2:
-- Removed truncation to uint8_t, valid values of 1,2,4,8 are checked in
-  commit_store() already.
----
- target/hexagon/cpu.h       | 2 +-
- target/hexagon/genptr.h    | 2 +-
- target/hexagon/op_helper.h | 4 ++--
- target/hexagon/translate.h | 2 +-
- target/hexagon/genptr.c    | 6 +++---
- target/hexagon/op_helper.c | 8 ++++----
- target/hexagon/translate.c | 4 ++--
- 7 files changed, 14 insertions(+), 14 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 656b7dc044..85afd59277 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -46,7 +46,7 @@
- 
- typedef struct {
-     target_ulong va;
--    uint8_t width;
-+    uint32_t width;
-     uint32_t data32;
-     uint64_t data64;
- } MemLog;
-diff --git a/target/hexagon/genptr.h b/target/hexagon/genptr.h
-index 228d7f1d7d..45ee038ca9 100644
---- a/target/hexagon/genptr.h
-+++ b/target/hexagon/genptr.h
-@@ -24,7 +24,7 @@
- 
- extern const SemanticInsn opcode_genptr[];
- 
--void gen_store32(TCGv vaddr, TCGv src, int width, uint32_t slot);
-+void gen_store32(TCGv vaddr, TCGv src, uint32_t width, uint32_t slot);
- void gen_store1(TCGv_env cpu_env, TCGv vaddr, TCGv src, uint32_t slot);
- void gen_store2(TCGv_env cpu_env, TCGv vaddr, TCGv src, uint32_t slot);
- void gen_store4(TCGv_env cpu_env, TCGv vaddr, TCGv src, uint32_t slot);
-diff --git a/target/hexagon/op_helper.h b/target/hexagon/op_helper.h
-index 66119cf3d4..e8fdabddb3 100644
---- a/target/hexagon/op_helper.h
-+++ b/target/hexagon/op_helper.h
-@@ -20,8 +20,8 @@
- 
- /* Misc functions */
- void log_store64(CPUHexagonState *env, target_ulong addr,
--                 int64_t val, int width, int slot);
-+                 int64_t val, uint32_t width, int slot);
- void log_store32(CPUHexagonState *env, target_ulong addr,
--                 target_ulong val, int width, int slot);
-+                 target_ulong val, uint32_t width, int slot);
- 
- #endif
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index a0102b6cbd..b37cb49238 100644
---- a/target/hexagon/translate.h
-+++ b/target/hexagon/translate.h
-@@ -272,7 +272,7 @@ extern TCGv hex_pred[NUM_PREGS];
- extern TCGv hex_slot_cancelled;
- extern TCGv hex_new_value_usr;
- extern TCGv hex_store_addr[STORES_MAX];
--extern TCGv hex_store_width[STORES_MAX];
-+extern TCGv_i32 hex_store_width[STORES_MAX];
- extern TCGv hex_store_val32[STORES_MAX];
- extern TCGv_i64 hex_store_val64[STORES_MAX];
- extern TCGv hex_llsc_addr;
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 36968549d5..9eb21da6f3 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -387,10 +387,10 @@ static TCGv gen_slotval(DisasContext *ctx)
- }
- #endif
- 
--void gen_store32(TCGv vaddr, TCGv src, int width, uint32_t slot)
-+void gen_store32(TCGv vaddr, TCGv src, uint32_t width, uint32_t slot)
- {
-     tcg_gen_mov_tl(hex_store_addr[slot], vaddr);
--    tcg_gen_movi_tl(hex_store_width[slot], width);
-+    tcg_gen_movi_i32(hex_store_width[slot], width);
-     tcg_gen_mov_tl(hex_store_val32[slot], src);
- }
- 
-@@ -430,7 +430,7 @@ void gen_store4i(TCGv_env tcg_env, TCGv vaddr, int32_t src, uint32_t slot)
- void gen_store8(TCGv_env tcg_env, TCGv vaddr, TCGv_i64 src, uint32_t slot)
- {
-     tcg_gen_mov_tl(hex_store_addr[slot], vaddr);
--    tcg_gen_movi_tl(hex_store_width[slot], 8);
-+    tcg_gen_movi_i32(hex_store_width[slot], 8);
-     tcg_gen_mov_i64(hex_store_val64[slot], src);
- }
- 
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index bfeadd65fc..368391bb84 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -52,7 +52,7 @@ G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
- }
- 
- void log_store32(CPUHexagonState *env, target_ulong addr,
--                 target_ulong val, int width, int slot)
-+                 target_ulong val, uint32_t width, int slot)
- {
-     env->mem_log_stores[slot].va = addr;
-     env->mem_log_stores[slot].width = width;
-@@ -60,7 +60,7 @@ void log_store32(CPUHexagonState *env, target_ulong addr,
- }
- 
- void log_store64(CPUHexagonState *env, target_ulong addr,
--                 int64_t val, int width, int slot)
-+                 int64_t val, uint32_t width, int slot)
- {
-     env->mem_log_stores[slot].va = addr;
-     env->mem_log_stores[slot].width = width;
-@@ -69,7 +69,7 @@ void log_store64(CPUHexagonState *env, target_ulong addr,
- 
- static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
- {
--    uint8_t width = env->mem_log_stores[slot_num].width;
-+    uint32_t width = env->mem_log_stores[slot_num].width;
-     target_ulong va = env->mem_log_stores[slot_num].va;
- 
-     switch (width) {
-@@ -363,7 +363,7 @@ static void probe_store(CPUHexagonState *env, int slot, int mmu_idx,
-                         bool is_predicated, uintptr_t retaddr)
- {
-     if (!is_predicated || !(env->slot_cancelled & (1 << slot))) {
--        size1u_t width = env->mem_log_stores[slot].width;
-+        uint32_t width = env->mem_log_stores[slot].width;
-         target_ulong va = env->mem_log_stores[slot].va;
-         probe_write(env, va, width, mmu_idx, retaddr);
-     }
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index e88e19cc1a..a49e131f78 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -55,7 +55,7 @@ TCGv hex_pred[NUM_PREGS];
- TCGv hex_slot_cancelled;
- TCGv hex_new_value_usr;
- TCGv hex_store_addr[STORES_MAX];
--TCGv hex_store_width[STORES_MAX];
-+TCGv_i32 hex_store_width[STORES_MAX];
- TCGv hex_store_val32[STORES_MAX];
- TCGv_i64 hex_store_val64[STORES_MAX];
- TCGv hex_llsc_addr;
-@@ -1103,7 +1103,7 @@ void hexagon_translate_init(void)
-             store_addr_names[i]);
- 
-         snprintf(store_width_names[i], NAME_LEN, "store_width_%d", i);
--        hex_store_width[i] = tcg_global_mem_new(tcg_env,
-+        hex_store_width[i] = tcg_global_mem_new_i32(tcg_env,
-             offsetof(CPUHexagonState, mem_log_stores[i].width),
-             store_width_names[i]);
- 
+  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
+
+for you to fetch changes up to a67819adb2212977360e9290bd005badb07dd2e4:
+
+  docs: add SCSI migrate-pr documentation (2026-02-09 09:27:30 -0500)
+
+----------------------------------------------------------------
+Pull request
+
+Andrey Drobyshev's qemugdb script improvements and my --device
+scsi-block,migrate-pr=on|off live migration support for SCSI Persistent
+Reservations.
+
+----------------------------------------------------------------
+
+Andrey Drobyshev (4):
+  scripts/qemugdb: mtree: Fix OverflowError in mtree with 128-bit
+    addresses
+  scripts/qemugdb: timers: Fix KeyError in 'qemu timers' command
+  scripts/qemugdb: timers: Improve 'qemu timers' command readability
+  scripts/qemugdb: coroutine: Add option for obtaining detailed trace in
+    coredump
+
+Stefan Hajnoczi (5):
+  scsi: generalize scsi_SG_IO_FROM_DEV() to scsi_SG_IO()
+  scsi: add error reporting to scsi_SG_IO()
+  scsi: track SCSI reservation state for live migration
+  scsi: save/load SCSI reservation state
+  docs: add SCSI migrate-pr documentation
+
+ docs/system/device-emulation.rst        |   1 +
+ docs/system/devices/scsi/index.rst      |  10 +
+ docs/system/devices/scsi/migrate-pr.rst |  54 +++++
+ include/hw/scsi/scsi.h                  |  15 +-
+ include/scsi/constants.h                |  21 ++
+ hw/core/machine.c                       |   4 +-
+ hw/scsi/scsi-bus.c                      |   3 +
+ hw/scsi/scsi-disk.c                     |  90 +++++++-
+ hw/scsi/scsi-generic.c                  | 291 +++++++++++++++++++++++-
+ hw/scsi/trace-events                    |   2 +
+ scripts/qemugdb/coroutine.py            | 257 +++++++++++++++++++--
+ scripts/qemugdb/mtree.py                |   2 +-
+ scripts/qemugdb/timers.py               |  54 ++++-
+ 13 files changed, 765 insertions(+), 39 deletions(-)
+ create mode 100644 docs/system/devices/scsi/index.rst
+ create mode 100644 docs/system/devices/scsi/migrate-pr.rst
+
 -- 
 2.52.0
 
