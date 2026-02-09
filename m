@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBE4E7E0BC
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 18:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E17CE7E0BC
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 18:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpVdI-0006ll-3X; Mon, 09 Feb 2026 13:05:12 -0500
+	id 1vpVi1-0007lL-7w; Mon, 09 Feb 2026 13:10:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpVdF-0006km-Sd
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:05:09 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vpVhm-0007kS-2K
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:09:52 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpVdD-0006h5-Vi
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:05:09 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2aad802a27aso11321175ad.1
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 10:05:07 -0800 (PST)
+ id 1vpVhj-0007Wy-TV
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:09:49 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c613161b489so1263421a12.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 10:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770660306; x=1771265106; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3Lu3Iqwxu5L/v1BCbgEcBq9k3jFyJtKxCnIscFcwWyE=;
- b=IyXzWgB97jYB93qKIq4bUTtDQOxI1XrkOmf4RF1pnu9+Zwa46LHYpUWc8oh8fI6lbS
- 7h7RaI+MDjNapMPQUZeoHo4ygTU0iPXSt0d7Pu2oAoWsTpdFZR3hNG0dpzsazUJ+J86n
- 5RBk1DrnRwTkqiAAKaw4FR5vTsh3fNVgoWADgJCFSxiY8vr05MwkVPeqHM2eiawA8KwQ
- K/L0sm1EClklCpBprBR4sqbxGSOI9//XdBN1bl9rv915NAeHzjzL2JHkobpgzpVBesxl
- TzgJxEbZ6qQIiMyn7OGWyXjaFhp33iCfcu++MMo+MZJ8nkke264aBGrgBW9q5+XxoMA8
- gxDQ==
+ d=linaro.org; s=google; t=1770660585; x=1771265385; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=4VdLeIrwJMAH8yGmQkTq1zd7aoi6HuCk3sy2WloJSSI=;
+ b=NnJ4FxrznDSeAHFiPUTvs8sroSF20tuxNGMk/nqfXqvnxIi4dygsuZGtMRoabAGqmK
+ 1+BO6H7eXsA5ekKhaKHY7uTn6zmOzKRBJA4In7kLfzZpu6plLe35bnAqOhuNajB6lf65
+ 3P3ZkW5DHr/F1I/6ZZ8jpp94zDtu1KnQxb79/JxEJSmhT6ULIRLAtRZO16Y2uICCmHzJ
+ cdwO/FgdOKw7VD00PbSKkAFTqCSIcvD0jFhP+1uXBSts3jj3fiYg+2LJ8WwoUchi4YHy
+ RK6iceFbB0RZWmgj8ElE7D656d2GC/+jks0zc69FVjXrjcW4ayhFP/8ReI/wTrArmK8X
+ PRQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770660306; x=1771265106;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3Lu3Iqwxu5L/v1BCbgEcBq9k3jFyJtKxCnIscFcwWyE=;
- b=GUzVH38GffRiHQpws39ZhzqaSPBD2fs/Fg35d59BtrEDCGFMhJ0uo1m29qWjfFWp3a
- enoTTIjWNSktWWwdV7VskqKOiDvY9A4JiFMDCF8OFP7IbQNP6zlA3DQow0euI+zn8H0t
- s8H5MovE/HCOWEZDxf1gpZjh5sLTa9fBMVA2PHxog26cx83En9rMbXkiDyBaAGncAKaH
- DXSv3i0j6lrKnGtC3AAThudvxe+1fxdUyQgT+rW2KfOcbGhCKD6wMhAzV3ofBGNiKIPp
- iYYHnOatt4GKC1wILAmJuUWkd28F61Sr4SWoF/Z8bPF0PO+f6nppcGzBmo1/0DuN2xyl
- suFg==
+ d=1e100.net; s=20230601; t=1770660585; x=1771265385;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4VdLeIrwJMAH8yGmQkTq1zd7aoi6HuCk3sy2WloJSSI=;
+ b=rRdV8LaCPveuMTexzYslzy1oFN9oCtth3EK71qX0CVQ2aFdUkoqQS0k/AWrdfX6on6
+ iYRepqnaHrneYgukEm1upnr+TWe3lJ0kEmvVcNqp89XLIRFP2tBV9/nq8spUKqQo+6Pa
+ OrQpRSWd3f5HUA1ol6dBZ0LMtdRX4yftrhiDPolA+xGfTTlAGCWiaTFLWlyao9gfaC+t
+ XwSZrI0Xn9aDYy3T2bRy6fFTnjpNO8Y3Msgyfy5Oxv4ztwIfRQCfKYKXWbhkvCiRL9N1
+ MVZfeVqjhBqyjjU/JMIyXrePvoGWqPmfIS/aWvC2k9eQmZgHLSh6EwHs9lACtcE3Rw2n
+ zelQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeouqISFqSBANRk2MDRjVarrCXfYrgmqOJkLyHigi0810aAEtW+xK3sG0qk7yB61fWkl6ehqOQbw1U@nongnu.org
-X-Gm-Message-State: AOJu0YxGfoHX7XdASXFfw81wKDgRgH3BZfo8xRntlnkzj0hXmjecsgJm
- M33sqRc8so4cb6pcA3REHfZhX015fkH6/6e2OmkFye2nrW86hDx3UvnXF6u2g9mJdsg=
-X-Gm-Gg: AZuq6aJvQID5gtke3n+PPzYB7Ikj1jx8r7b89Izy5g9DTGeVRW+PLWMGWivx8feHiyB
- lFSPz4cpbj68CRvyX/CoyGLNScy5Cjyslhzbvo2RjWtnU5/H7Yn9mgZ7pUdVeDnlVKjIbDCSWpZ
- 8x54sWT0crtrj0th11JzLnEyEjecSILGTvNtoMz7x7tNNg55YVqq3CMRltGgEvtv9fS3ixQLXQi
- 5CLljaMCDJc0pXVX1K4rCcPbW3fsxllv25VxUvCDzql21NqMV6HWft7//q033hpORiXI1mLyuXz
- nSr+OqfDCnhMiz24If08ip6GxkH9CigLiWDH7JSH/4M6LvAz1OwkakCBSiub3bo4G2qiqt/ZuXJ
- xWuZVWiuJdtlZBxmzqMxk0A9VH6LhavTGM50fbf/1ZtHSpvqzJRHVXAVsy44JyHBsh9046VFpCL
- HUMWCP3plI0o9w3JHuRMz9CTTACuUSyGjhWkW5QrlNRHY8U7NkgMFAEe87
-X-Received: by 2002:a17:902:fc86:b0:295:5132:1a99 with SMTP id
- d9443c01a7336-2a951934b1cmr109746735ad.44.1770660305996; 
- Mon, 09 Feb 2026 10:05:05 -0800 (PST)
+ AJvYcCVivTs4mLPtebxp9wX+pp/mBw1R3sC7bIYQfQSSGL8KUjUo5CF1WTEfHHMNM1pD4hHE4Xrib/DJJPre@nongnu.org
+X-Gm-Message-State: AOJu0Yxs9Db6kQMqWrQsITnmKw9RNXcU1UyvSJjHtOTJzhAGhAHR/aO8
+ pjwYCmsFAiy0hil/GQVEeZgQFSeHrZguSYMHAyJ7v8G784eAJg5ko0Ev7fkLEK9sHFM=
+X-Gm-Gg: AZuq6aJBiKNyMiGvr9ieMt3XMOw/hO0mVzzilhNKAzyyOjoPPvhn4l6Gwu0HOukqI09
+ zY/EQUdYpyMatQlIJVx0iEI9Wk1NM2+uTt6TtZbR+K0SRMIUVjVCqjlsiZ56exCk5Wc6drOnrks
+ wztnUmQ5aJ5im8CSyUM6iBcuCvTPQr1va7/zEFO1VhYNgYVfGbsWFA9U6cmzPs2n6XxTV+wzX9/
+ MO7tJHKJr693hn5OkL6RCqY7BhmxJdFlY7TzKmK3g42bNQ0UM99iy89K4iTJ7QeaOAdXrlYDMK9
+ toqYMqL5XeISMN2JdLo3IfIeliZVhmP9oXwZxGDRD9uX6iIXR1pZ1rPLb657NLjEbbZno1byqsY
+ PODJPo1o2mb7l5NwPF0tjObvntxxVvG9G62I5+xuYlyOaDTzZM0Anz2buxhRRw3Yl9v7uHOW+cI
+ 2ioPifSLApWLWbyEtUyy9y4MEmlD/Qbi29lMuJHZ/+MNnh4hzmUVMvDDGl
+X-Received: by 2002:a17:903:b4e:b0:2a9:322e:2473 with SMTP id
+ d9443c01a7336-2a951969ef2mr104356885ad.48.1770660585235; 
+ Mon, 09 Feb 2026 10:09:45 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82446e81823sm13496784b3a.12.2026.02.09.10.05.05
+ d2e1a72fcca58-824490442cfsm10910468b3a.16.2026.02.09.10.09.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Feb 2026 10:05:05 -0800 (PST)
-Message-ID: <8e23079b-32dc-48a5-88a4-ce72d075053d@linaro.org>
-Date: Mon, 9 Feb 2026 10:05:04 -0800
+ Mon, 09 Feb 2026 10:09:44 -0800 (PST)
+Message-ID: <b23e5d00-19cd-4eca-9cff-38ec78f87929@linaro.org>
+Date: Mon, 9 Feb 2026 10:09:44 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: handling of non-page-aligned addresses in get_phys_page_debug
+Subject: Re: [PATCH v2 06/12] target/arm/tcg: duplicate tcg/arith_helper.c and
+ tcg/crypto_helper.c between user/system
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <CAFEAcA8M6AL1xQsiiS1f5nA4XVV6n6mOhi1T3QWfhLb_01+8Tg@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, kvm@vger.kernel.org, qemu-arm@nongnu.org
+References: <20260206042150.912578-1-pierrick.bouvier@linaro.org>
+ <20260206042150.912578-7-pierrick.bouvier@linaro.org>
+ <6c5eb308-56e6-487a-ad7b-8f0da70ab7cd@linaro.org>
+ <e291f290-a188-4106-8648-48d4c464dfed@linaro.org>
+ <a6320ab4-7ece-4618-8d73-549df7a34886@linaro.org>
+ <c0b0691b-3cef-4ec7-8d68-227420167481@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -112,11 +121,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFEAcA8M6AL1xQsiiS1f5nA4XVV6n6mOhi1T3QWfhLb_01+8Tg@mail.gmail.com>
+In-Reply-To: <c0b0691b-3cef-4ec7-8d68-227420167481@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,88 +148,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/26 9:39 AM, Peter Maydell wrote:
-> I was looking at a reported bug about semihosting when the MPU
-> is being used on Arm CPUs:
-> https://gitlab.com/qemu-project/qemu/-/issues/3292
-> which turns out to be because in cpu_memory_rw_debug() instead
-> of passing in the vaddr we're given to get_phys_page_debug() we
-> first round it down to a target-page, then translate it, then
-> add the page offset back in. This doesn't work if the target
-> is dealing with memory protection/validity at a granularity
-> smaller than a target-page, as the Arm MPU does.
+On 2/9/26 9:57 AM, Pierrick Bouvier wrote:
+> On 2/8/26 11:08 PM, Richard Henderson wrote:
+>> On 2/9/26 15:52, Pierrick Bouvier wrote:
+>>> On 2/8/26 9:00 PM, Richard Henderson wrote:
+>>>> On 2/6/26 14:21, Pierrick Bouvier wrote:
+>>>>> In next commit, we'll apply same helper pattern for base helpers
+>>>>> remaining.
+>>>>>
+>>>>> Our new helper pattern always include helper-*-common.h, which ends up
+>>>>> including include/tcg/tcg.h, which contains one occurrence of
+>>>>> CONFIG_USER_ONLY.
+>>>>> Thus, common files not being duplicated between system and target
+>>>>> relying on helpers will fail to compile. Existing occurrences are:
+>>>>> - target/arm/tcg/arith_helper.c
+>>>>> - target/arm/tcg/crypto_helper.c
+>>>>>
+>>>>> There is a single occurrence of CONFIG_USER_ONLY, for defining variable
+>>>>> tcg_use_softmmu. The fix seemed simple, always define it.
+>>>>> However, it prevents some dead code elimination which ends up triggering:
+>>>>> include/qemu/osdep.h:283:35: error: call to 'qemu_build_not_reached_always' declared
+>>>>> with attribute error: code path is reachable
+>>>>>       283 | #define qemu_build_not_reached()  qemu_build_not_reached_always()
+>>>>>           |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>>>> tcg/x86_64/tcg-target.c.inc:1907:45: note: in expansion of macro 'qemu_build_not_reached'
+>>>>>      1907 | # define x86_guest_base (*(HostAddress *)({ qemu_build_not_reached(); NULL; }))
+>>>>>           |                                             ^~~~~~~~~~~~~~~~~~~~~~
+>>>>> tcg/x86_64/tcg-target.c.inc:1934:14: note: in expansion of macro 'x86_guest_base'
+>>>>>      1934 |         *h = x86_guest_base;
+>>>>>           |              ^~~~~~~~~~~~~~
+>>>>>
+>>>>> So, roll your eyes, then rollback code, and simply duplicate the two
+>>>>> files concerned. We could also do a "special include trick" to prevent
+>>>>> pulling helper-*-common.h but it would be sad since the whole point of
+>>>>> the series up to here is to have something coherent using the exact same
+>>>>> pattern.
+>>>>
+>>>> tcg_use_softmmu is a stub, waiting for softmmu to be enabled for user-only.
+>>>> Which is a long way away.
+>>>>
+>>>> It's also not used outside of tcg/, which means we should move it to tcg/tcg-internal.h.
+>>>>
+>>>
+>>> Thanks, I didn't think about moving it somewhere else.
+>>> This does the trick indeed.
+>>
+>> You can also make it always a #define.  The variable for user-only is never set to true.
+>>
+>>
+>> r~
 > 
-> I thought this was a bit odd, because the Arm page-table
-> walk code will happily translate a non-page-aligned address
-> for you, so I had a bit of a dig into our implementations and
-> callers, and we seem to be inconsistent about whether you're
-> supposed to handle non-page-aligned addresses here. (By "handle"
-> I mean both "can take a non-page-aligned input" and also "the
-> resulting physaddr includes the bits for the offset within the
-> page and has not been rounded down to a page-base address".)
+> Sure, let's go for a define then. :)
 > 
-> Implementations that don't handle non-aligned addresses:
->   * alpha, microblaze, sparc, x86, riscv, s390x
->     (but riscv only because it explicitly masks out the low bits
->     just before returning the physaddr!)
-> Implementations that do handle non-aligned addresses:
->   * arm, avr, hppa, loongarch, m68k, mips, openrisc, rx, sh4,
->     tricore, xtensa
-> Implementations that were too complex for me to determine the
-> answer with a quick look:
->   * ppc
-> 
-> And at the callsites we have:
-> 
-> Callers that naturally always use page aligned addresses:
->   * hw/i386/vapic.c : always uses page-aligned addresses
->   * target/sparc/mmu_helper.c: uses in dump_mmu() are always page aligned
-> 
-> Callers that assume non-aligned addresses are handled:
->   * hw/xtensa/sim.c,xtfpga.c : we translate ELF program header p_addrs
->   * target/xtensa/xtensa-semi.c
->     (these two only work because xtensa is in the "handles" this group)
-> 
-> Callers that do some kind of "work around getting the page base",
-> and mostly-work with both:
->   * monitor/hmp-cmds.c: in hmp_gva2gpa we round to a page base then
->     add back in the offset within the page
->   * plugins/api.c: ORs in the low bits, so can cope with both "get
->     exact answer" and "gives page base"
->   * target/s390x/helper.c: s390_cpu_get_phys_addr_debug is a wrapper
->     implementing "give actual page" in terms of cpu_get_phys_page_debug
->     by the usual "mask and put the page offset back in" approach
->   * physmem.c: cpu_memory_rw_debug rounds to a page base then adds
->     back in the offset within the page afterwards
-> 
-> Looking at this, my feeling is that we should:
->   * define that these APIs must handle non-page-aligned addresses
->   * fix the six or seven implementations that don't (either "properly" or
->     by adding in the "mask to page base then OR back in the page offset"
->     code to their get_phys_page_debug functions)
->   * clean up the callsites to not work around the lack of handling
->     of non-page-aligned addresses
->   * add/extend the get_phys_page_debug API so that a caller can get
->     the lg_page_size
->   * fix the cpu_memory_rw_debug vs Arm MPU bug by having it use that
->     lg_page_size to determine how much memory to access at once rather
->     than assuming it can read to the end of the page
-> 
-> Opinions ?
-> 
-> thanks
-> -- PMM
-> 
+> Regards,
+> Pierrick
 
-Given the initial need, it seems that yes, the only choice is that these 
-API should handle non-page-aligned addresses.
+Does a simple #define tcg_use_softmmu false/true is enough for you, or 
+do you expect to see proper ifdef blocks in all tcg-target.c.inc?
 
-However, we should as well check how many use cases really need to check 
-memory protection with a granularity lower than page, because it does 
-not seem to be something very common.
-Is the Arm MPU the only one?
-If yes, maybe something specific should be done for it instead of 
-changing that for all arch/use cases.
+If that's the latter, I would prefer to do it out of the scope of this 
+series, as it's not a priority now.
 
 Regards,
 Pierrick
