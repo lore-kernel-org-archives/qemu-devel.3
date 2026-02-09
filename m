@@ -4,129 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4282E81BAC
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 12:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01792E81BAF
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 12:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpQL4-0002iA-TW; Mon, 09 Feb 2026 07:26:02 -0500
+	id 1vpQYM-0006xn-7a; Mon, 09 Feb 2026 07:39:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vpQL2-0002hl-HY
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 07:26:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vpQYL-0006xc-1w
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 07:39:45 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vpQL0-00008i-Kq
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 07:26:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770639955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3YA2rhIJPzb0gHlkZF0sV50+XzXC6raUhE3rMw9/FDE=;
- b=eDxvGe4GMCYLUhpZW7MsKfNWpxjpTpPp+oT6iFabY5ogZy8rW9WilnlVrjSbZWsgB7LXr9
- RWGzuBSRt91a1Eg37YJPvmI8iHjZKYYu8wNNZY1oa0cwhVuZOUmWtc3/XSiHDVUwzpHzuN
- 7cgXy65N5pGGC6Sw8Q+Cgm3IXnbMZx0=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-gROdxjv1PpGZWR9FINaVdA-1; Mon, 09 Feb 2026 07:25:53 -0500
-X-MC-Unique: gROdxjv1PpGZWR9FINaVdA-1
-X-Mimecast-MFC-AGG-ID: gROdxjv1PpGZWR9FINaVdA_1770639952
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2a79164b686so56464935ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 04:25:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770639952; cv=none;
- d=google.com; s=arc-20240605;
- b=HvWvV3eOMcHKdBiE98VrOXx/GStXr4IlUe43+k8Apv0DWl2gQtb909EkWSXaNtQx0w
- OwvcTrJi77YcG+C3bijLExpaWVm5Bf3JOAW585nImdM+l7WhIWxzM+LYkW05IZ6uAD+0
- fzaImzU6HZhluTQRj49edwQJzT7oLAByC8lFD2li3zMrQfSw5eWmCUNegFThiKss7tVV
- iM7IHfacNUCsezIQnXLeR8nDq1Ci4HaEna0x4nPnTYqeY+WhFpU+jCdpEusRRgwlLTke
- csKxiEkg16fmsLLfb3jy5Y5xWmkws12sDo+1TGnlypLRn6KdDilgkd4/a040Ka0sO54F
- sFrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3YA2rhIJPzb0gHlkZF0sV50+XzXC6raUhE3rMw9/FDE=;
- fh=h0ZoEG5U1FASe64sqFkBdBCcpkS3SnOYO0cH5Qr5s2o=;
- b=RlebhaJx3ywQJhKyutata0Jw35uvIdn0Pa7RqLKAtGU9vHSERIlVRMY2eG1tOkPU9k
- ndIPbG3xV0Hfc2b69VtliCwIHeS1pH8xzcfARbk2MQK2sgHvHTh7RnsVAKooEhHPmc6j
- 0nycDJcM4g/K4MzcVosts+yIU4L0UZvRur6FheTdNPvKaAWi9hci2PbfOZHRWSgjbtJN
- 6MZXvAFX+tHny6+Ocq8hpewBbB9WN3t3m98Qp4eHfPjDtsTv/P+Wt9jSg2Kx18M1uR9Z
- aNcE/XJH2Hxojr8k4qyU1kUQMTLV3J2/DmH10I0sDKc5zbnzsTrMJGQ1uQj6R15vXMqQ
- QRxw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770639952; x=1771244752; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3YA2rhIJPzb0gHlkZF0sV50+XzXC6raUhE3rMw9/FDE=;
- b=Sj5m8aL6hrG6KpXNH3Y+IhnkiWvnQvRAKzgjT0iMB9y3Bi+a7UUhysjpjcZgiwzqwV
- aeee61tEleUTiw43QbkL7l5xgG1n3HnOYR1hQiYBSisSpWa5jeOrSfa6usp8sKOTjJYO
- NC6A48k9tAs6o46yoyvyylKtScDqpMbRRLj+tbEGg6Dy53auRuYqphY3eEd4v3Grrwt/
- Kzet3ZLoLVtuxGIouLeuEemyI5mLso3Ydf5RXK/iWJoMCheB7TARJFDKywN9B4rqe8L9
- HN7vR9gYYbTgXY4xebp5Ajx7oh4YxoFj4hB5yT7FO9Ke/JrCm5wvtJu0psz8D98vlDPk
- x3DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770639952; x=1771244752;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3YA2rhIJPzb0gHlkZF0sV50+XzXC6raUhE3rMw9/FDE=;
- b=QpYeS446Wjn6Bml76ep98kJgJLnobehMSYe1V2OFOR7zzEWl7HgaKVbJSRHTGF46Vu
- Sv8kzm7KmgFRO04g52bxMqqprfadNVsnEqBeVMfjEYlr4st7fGtnbWNoy3je7pZmyUNN
- HYmrA0nRH5gANdA6AgZXhyVjbnzEnXgKhXa3AZeCA+Okv/q2fYiKN+BNuwVa3AClc3Y1
- FTBWF6MIIoiBN7Afj8CCrhoysRGZYlzMidLB0568CprEJrNB5f1S4XyR6jJF+UyCCSqQ
- wxWxEteyx6dF8KAr9lEicp89lnOpSgns437pVpy/9G/RCyatFIzmK79sO2sbmqGN54gj
- qh3g==
-X-Gm-Message-State: AOJu0YxyFQy1txqxfDAb8PXrZCycFPpmCIGTU/ME25vq6t4SDlw9Cy7t
- AR6Nsik+eNWmb6m4czJl7OSPfQNwz4X8aqMfBJ0CNx/K8cPAPkPbHvPpDskNinZKcgPlBEysOu0
- qT77ek6vxrmHLre6jmkQ9a0lJrYpA4RAw/CLcoy2E/jYTy7EzTQXSw7edYwFLp07+qxsxvxohra
- TJE0VIu2Wpo4b+9IIrGrwacSvSbLkP5Y8=
-X-Gm-Gg: AZuq6aL+1Vy7AgNX2Rvw3kdf2ZnduXHE+fN1OVpLkAwDebIAhcZ18VbJJwHLR3Wp1hZ
- 3ypYJjJPAPFu5XmnUTcmzyV35H5GgNOaH2ebxXBS+yIl9FhyfMFB9JwimedDcekK0EL+JU8uo0M
- FAmCwDxRwYds+P3XXMJ9qBptCzK4zlUvP2N4De1kg5sDU6YgGTZCzSpTANuOdU+DjaL5PQ83NDD
- 32xlmV6Q2RIkzMoiUWh6fZ5BA==
-X-Received: by 2002:a17:903:1b04:b0:2a2:f0cb:dfa2 with SMTP id
- d9443c01a7336-2a951625455mr102519835ad.13.1770639952178; 
- Mon, 09 Feb 2026 04:25:52 -0800 (PST)
-X-Received: by 2002:a17:903:1b04:b0:2a2:f0cb:dfa2 with SMTP id
- d9443c01a7336-2a951625455mr102519665ad.13.1770639951763; Mon, 09 Feb 2026
- 04:25:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vpQYI-0002GE-Ln
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 07:39:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f8kkn4xSGzJ46Zr;
+ Mon,  9 Feb 2026 20:38:25 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id E0FC040539;
+ Mon,  9 Feb 2026 20:39:22 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 9 Feb
+ 2026 12:39:21 +0000
+Date: Mon, 9 Feb 2026 12:39:19 +0000
+To: Gregory Price <gourry@gourry.net>, <linuxarm@huawei.com>
+CC: Alireza Sanaee <alireza.sanaee@huawei.com>, <qemu-devel@nongnu.org>,
+ <jonathan.cameron@huawei.com>, <nifan.cxl@gmail.com>,
+ <anisa.su887@gmail.com>, <mst@redhat.com>, <armbru@redhat.com>,
+ <lizhijian@fujitsu.com>, <ppbonzini@redhat.com>, <peterx@redhat.com>,
+ <philmd@linaro.org>, <david@kernel.org>, <imammedo@redhat.com>,
+ <xiaoguangrong.eric@gmail.com>, <venkataravis@micron.com>
+Subject: Re: [PATCH v2 0/2] Performant CXL type 3 non-interleaved regions
+Message-ID: <20260209123904.00006237@huawei.com>
+In-Reply-To: <aYlR2loIsnf8Q6YR@gourry-fedora-PF4VCD3F>
+References: <20260204150002.669-1-alireza.sanaee@huawei.com>
+ <aYlR2loIsnf8Q6YR@gourry-fedora-PF4VCD3F>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-17-marcandre.lureau@redhat.com>
- <f660298d-6a92-4b6f-a113-e0bd239818d5@nutanix.com>
- <CAMxuvawiiAMOfPfO1jdXXXf4b6BxD7X1+AeqmXY0FdGsv+6evQ@mail.gmail.com>
- <a6b42494-4abe-4651-a61b-5a6b3b1c2ecd@nutanix.com>
-In-Reply-To: <a6b42494-4abe-4651-a61b-5a6b3b1c2ecd@nutanix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 9 Feb 2026 16:25:40 +0400
-X-Gm-Features: AZwV_QiKxEhdIjJVRBLiBbxVXQgNk9t0FndcAWqc99HGSZNWdHUQOWJT3NVXPaI
-Message-ID: <CAMxuvaw3sRONVTsnLDR5SrapJ=rXd9fdLwUA5JwPvbfiRuDWfA@mail.gmail.com>
-Subject: Re: [PATCH 16/37] tests: start manual audio backend test
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,76 +71,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Sun, 8 Feb 2026 22:17:46 -0500
+Gregory Price <gourry@gourry.net> wrote:
 
-On Thu, Feb 5, 2026 at 8:23=E2=80=AFPM Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> On 04/02/2026 12:47, Marc-Andr=C3=A9 Lureau wrote:
->
-> > Hi Mark
-> >
-> > On Wed, Feb 4, 2026 at 2:38=E2=80=AFPM Mark Cave-Ayland
-> > <mark.caveayland@nutanix.com> wrote:
-> >>
-> >> On 23/01/2026 07:49, marcandre.lureau@redhat.com wrote:
-> >>
-> >>> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>>
-> >>> Start a simple test program that will exercise the QEMU audio APIs.
-> >>>
-> >>> It is meant to run manually for now, as it accesses the sound system =
-and
-> >>> produces sound by default, and also runs for a few seconds. We may wa=
-nt
-> >>> to make it silent or use the "none" (noaudio) backend by default thou=
-gh,
-> >>> so it can run as part of the automated test suite.
-> >>
-> >> I wonder if it makes sense to have some kind of qtest audio backend th=
-at
-> >> can write the resulting data to a file for tests like this without
-> >> generating audio?
-> >
-> > Yes, we could have some tests using the "wav" backend. Although I
-> > think this is pretty limited. I'd rather leave that for now.
-> >
-> >>
-> >>> +
-> >>> +# manual audio test - not part of automated test suite
-> >>> +# as it relies on audio system
-> >>> +executable('test-audio',
-> >>> +    sources: files('test-audio.c', 'audio-stubs.c'),
-> >>> +    dependencies: [audio, qemuutil, spice, modinfo_dep],
-> >>
-> >> Does this test really need spice to function?
-> >>
-> >>> +    build_by_default: false)
-> >>
-> >> It took me a few seconds to see why the test-audio executable wasn't
-> >> being produced, even if it has to be run manually. Is there any reason
-> >> it shouldn't be built by default?
-> >
-> > No, I thought if it is manual it should perhaps be that way, but
-> > that's also not a good idea. I will change it.
-> >
-> > btw, I also fixed the test so it can run with -a wav,file=3Doutput.wav
-> > (the test currently requires input handling, which is not handled by
-> > wav)
->
-> This sounds great. Did you manage to find out if the spice dependency
-> above is still necessary for the test? I don't build with spice by
-> default here, so I wouldn't ordinarily be able to run it.
+> On Wed, Feb 04, 2026 at 02:59:59PM +0000, Alireza Sanaee wrote:
+> > The CXL address to device decoding logic is complex because of the need
+> > to correctly decode fine grained interleave. The current implementation
+> > prevents use with KVM where executed instructions may reside in that
+> > memory and gives very slow performance even in TCG.
+> > 
+> > In many real cases non interleaved memory configurations are useful and
+> > for those we can use a more conventional memory region alias allowing
+> > similar performance to other memory in the system.
+> > 
+> > Whether this fast path is applicable can be established once the full
+> > set of HDM decoders has been committed (in whatever order the guest
+> > decides to commit them). As such a check is performed on each commit /
+> > uncommit of HDM decoder to establish if the alias should be added or
+> > removed.
+> >   
+> 
+> Tested this on top of Jonathan's most recent draft branch, works nicely
+> (with obvious fixups mentioned here). Has been working nicely.
+> 
+> Tested-by: Gregory Price <gourry@gourry.net>
+> 
+> 
+> ----
+> 
+> Jonathan the HACK patch was giving me issues with registers getting
+> plopped in the middle of a CFMW, not sure if this is the right fix or not
+> 
+> Fixes: 9a1b11bc03 hw/i386/pc: Add Aspeed i2c controller + MCTP with ACPI table
 
-spice is not required to build the test, I'll drop it from the
-explicit dependencies.
+I'm kind of planning to drop the I2C / MCTP stuff anyway very soon as the
+USB route is much less hacky and avoids need for hiding these registers somewhere.
 
-There was a hurdle to support both modules & non-modules and default
-build, but it should be ok now.
+I'll push a new draft branch soon (probably later this week) - Ideally that'll have
+the DCD equivalent of this fast path as well.
 
-thanks
+The code definitely looks wrong.  If I keep the I2C stuff in my tree I'll
+try and figure out what it should be doing...
+
+Note if anyone sees this and really wants the I2C stuff then shout.
+If not I'll drop it and see if anyone shouts ;)
+
+Thanks!
+
+Jonathan
+
+
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index f9d0bb3b41..9c244d40a7 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -957,8 +957,8 @@ void pc_memory_init(PCMachineState *pcms,
+>          memory_region_init(mr, OBJECT(machine), "cxl_host_reg", cxl_size);
+>          memory_region_add_subregion(system_memory, cxl_base, mr);
+>          cxl_base = ROUND_UP(cxl_base + cxl_size, 256 * MiB);
+> -        pcms->i2c_base = cxl_base + cxl_size - 0x4000;
+
+At first glance I thing this is misplaced and should be before the line
+above that updates the cxl_base.  It's still a horrible hack as it
+will be grabbing a bit of the host reg space and relying on their
+not being so many host bridges that we run out of space and get an overlap
+for that.
+
+>          cxl_resv_end = cxl_fmws_set_memmap(cxl_base, maxphysaddr);
+> +        pcms->i2c_base = cxl_resv_end + 0x1000;
+>          cxl_fmws_update_mmio();
+>      }
+> 
 
 
