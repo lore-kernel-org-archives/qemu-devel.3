@@ -4,103 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF359E81BD3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 15:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6DDE81BD7
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 15:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpTL1-0008O6-HN; Mon, 09 Feb 2026 10:38:13 -0500
+	id 1vpTRI-0001cB-Dk; Mon, 09 Feb 2026 10:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTKw-0008N7-GF
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:38:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpTR7-0001WK-WA
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:44:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTKs-0008NJ-1f
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:38:04 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpTR1-0001Dn-KP
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:44:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770651480;
+ s=mimecast20190719; t=1770651861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
- b=h1wwu+qRi86j/LCw+Z6XlTzVyJaacrbS++JG7dlZKM1cQazDaP+G+aqrFRYim22m2g1eY2
- To8Ct7ig1+Ly3LpWqhaHhInA51DKk8c0oTUUjFXEUorgZhGcKFKVzHZb1Pok3RAkCdz1s9
- HRQybX/HLcdu1JXMrRmVmkIP2qWeW6A=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=grK5JBegGbFz8UZKIhp4g1STJxPgukIKzIdhQ9zmJAg=;
+ b=V3AiE2S2+Np7lGzlkzzeOFkbotup8girXPpFFbQ71pyneOsphk/Hkbtala+l5iMIHDQKSg
+ Wob+aUoItv+cJbLgUseQC8EPc40WurQ9s/FlkDc9fILZtYhiGhH1AQd42Avxxfrh5yD7Nm
+ /RX1BqpOw9gYOVCes8ij5zvQPnqNSug=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-ssJ7F9w1OZebOZMNqRqHaA-1; Mon, 09 Feb 2026 10:37:59 -0500
-X-MC-Unique: ssJ7F9w1OZebOZMNqRqHaA-1
-X-Mimecast-MFC-AGG-ID: ssJ7F9w1OZebOZMNqRqHaA_1770651478
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8c70ab7f67fso1372924585a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 07:37:59 -0800 (PST)
+ us-mta-74-ADaBOPdjNd2dMG_-CSPu-A-1; Mon, 09 Feb 2026 10:44:20 -0500
+X-MC-Unique: ADaBOPdjNd2dMG_-CSPu-A-1
+X-Mimecast-MFC-AGG-ID: ADaBOPdjNd2dMG_-CSPu-A_1770651860
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-7960db651d9so35878947b3.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 07:44:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770651860; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OiPqaGXoEbdGoLRo4CBKGGN2SSCcVuvW7udnYwLjkqfz3/2DFfcmqDFvh8V3VCBu4l
+ YwYxxB5J4aky+9QuWLtlFFiqIIsXR0Eq5M3qC1WwWIOJdUnE19bq5AVuZ6dfYla8d4K7
+ HGGEQDevWpD0BPnnfHFJYEkLq9Uaz2atXmf2xRFUvmQx/+stqmpK29oq4BBwMtATRKMf
+ kWfET6qD/k6dQ3Udy+jFrFzLhWWybZsH5mmJLLIsH6yZvE8tP7hjamxPfmSoDhJ3DQeo
+ IqfEFbUqfDufQwNgmGecCUb9hhgOhF4BMgYjhbPX4302/94QB0gPmTCs70PYALxs66/O
+ Eb/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=grK5JBegGbFz8UZKIhp4g1STJxPgukIKzIdhQ9zmJAg=;
+ fh=Y5pWXNVsVgZka3sahhnq/iFl48x5DO/Rtu1CO0xPoEE=;
+ b=CzJBK/Mhkt+k+dxdLHCBtNVdMzXQgQ5zuNoUNkelZ/VlnHJwcKkljdRBCSGWeAHayj
+ V4JVj30c4h331FPAUUtEX72vZAAYXYkAYameJfOz+x7OGzYJVjRfo6hWH1ohuSeCPfCe
+ BKKwdZVpsRDSgrfsM/O15URoF5ZVx5kFe2BKWvXKmb+Ras1GkcfRTn63qIt1DobkT5/Q
+ LCL0dMXF/uVgihB9K6PrCRnLtjgcIqmhefLAcXjeXDzCkJbjb+k15oTHOpXH4OUTtz3e
+ HCi1AZYjgEkR6ej+U8ryc0COqbM5l2ccCIkT8sNkr6daC5Mza+2sHPDoWcrrESTuz0ev
+ 9QBw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770651478; x=1771256278; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
- b=MpicW1xLCUCmwFdhce7bC6rZFfh2jnc6c5+fgPkk0DbUr8l7x/HcWhYhCqe4d4Xd5A
- iDe5PLMiXDoGTHeQy5AbjrG3V60AyYpORgRpU4zS6wTV7sEYtRsVFTsKYlr7NJhla4oX
- o+8jk/56gbKyqi6I1oKxXVK6luntFdZSRPCEj5Iie5XJvnYvcnfMhUF5EOO8uBWLY2kU
- BXIiLlsc2XKcFyi2+PezU+Mw98l4V6QTsU16GEkpEIen6kJSrCGCu3X5bIsnKucSBuZt
- Jf4mrPJzwB+BldKe6EHjU+v8A9d1BPd+6s+lZb7uSIhwstHOsjAiv7fsRAMPeCjeRmmj
- kQeA==
+ d=redhat.com; s=google; t=1770651860; x=1771256660; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=grK5JBegGbFz8UZKIhp4g1STJxPgukIKzIdhQ9zmJAg=;
+ b=riIN7d0Sz8VyU0IUs1lL+RqHMP/LujOzuBN5iV1ebWmRme2yorlQOvrgxdD+4v8P5i
+ FbSa7ntCHkp0pdqoJqcxtc9K8dxWd7VogOxbSRchTw8IvoQitYyAmCgBX3BQjiu7BEKb
+ roXqQI7YigiewhyM7KwEtcyype8CtFM7iMys8WznvA8gyBVcoYvhdjtfZk4luqGJ3Db/
+ 6HulN466v0EH/8/w/iAxevwFtUp2kMyFF3r63dFRg5MBuaH1XQXPjHbwLAbBu6AC41v6
+ AePa0SeoCjRvzLaqD3SNKzQUF+aRptKpN0607DuVwNdMEcqbIjdrjtW3Helk4B7DdP7p
+ CYOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770651478; x=1771256278;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
- b=etB0A7Qde66KywdwoRyYWojmiGAPBy2O9uymY0KSvdS/k1dAPNzoc9cQCJQ9biJ+5r
- /tZIJpcgLrrsVhTsR8YATCd9JQAGJDNdI4BgNCOrcTe3lioYW1MdrDJU0QliN1Kd0g5Z
- ytPsM+mijtnWYES5z9qzS3sJgz3ex3LUi6NlmS7FlxzplrulzZCqxqXt4S1gyhMicKPi
- PDJkXV92J0aeG/REnklVwthgZOzaND0FzMM6dQtnVThZG9ncE0HfQImTqYBHgFfNxHSm
- i2XDG8kRqTJQSV8W8Bu616Fs0tL7MN9pqBnLa+2GiYu7Y4IdIOxaOnkDlhs+711zbqbg
- 6TKg==
-X-Gm-Message-State: AOJu0YwQCShvhIZT81/vLQ9HP7cDf392eAXkVFmzqmRnY8UG2z2wm/cG
- i/Ahs6xMB6bYlduZADdwT6f4BcnJotp8vjkdaBSX5RkxaCIlJ2dDCtcnrGyRj0GhQlcyjke6Gdx
- mzvGB0TTslFb4GG6Xqf/gfZZXZZRNlkSGdGnGAF/nMBeFgff05QL/h9tjk4+6K6gu
-X-Gm-Gg: AZuq6aLrckyJgD0bhYu/NheAC6Eg7p4WsMmpEBa6hNsoiUw36OxUE5PWmu48pDSfdKm
- Kr/C44xXbk5IxcwKZ56t4d+goXqoIR8uE6RKGqR7yCDmkM8sbVrTBviSySfflshLM1KEA5ZXbuu
- LYvkZggtNxTPefPHWRL6ZaPihcjQMUWBN+bFcU+B+5N+99ChKCqVJp71AUAiBu8RJrnHb4VkeVp
- 4XJEgHaX4IkRfoWqXPFg9onJUaKf/RN469bLoOO/MSROMdRwERfhHBG1qZL773zK3FUiVBtyqpc
- H1WjnKtmxmp50QSnyNSTYlCwQGu4v9FAd1YKaIBYV+64U4iFhuCaCS0Oef0N1qTyZzSEiMM48mJ
- cCng=
-X-Received: by 2002:a05:620a:192a:b0:8b2:767c:31ab with SMTP id
- af79cd13be357-8caf15f3b87mr1514545285a.60.1770651478158; 
- Mon, 09 Feb 2026 07:37:58 -0800 (PST)
-X-Received: by 2002:a05:620a:192a:b0:8b2:767c:31ab with SMTP id
- af79cd13be357-8caf15f3b87mr1514541785a.60.1770651477608; 
- Mon, 09 Feb 2026 07:37:57 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8caf9a16240sm836785585a.35.2026.02.09.07.37.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Feb 2026 07:37:57 -0800 (PST)
-Date: Mon, 9 Feb 2026 10:37:56 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
-Subject: Re: [PATCH v2 8/9] migration/options: Stop freeing s->parameters
- members individually
-Message-ID: <aYn_VBkEGVpAZUEh@x1.local>
-References: <20260202224101.20568-1-farosas@suse.de>
- <20260202224101.20568-9-farosas@suse.de>
- <aYUWwSxnsWn1Dfu0@x1.local> <87a4xmqcmn.fsf@suse.de>
- <aYYU5fbU5l4grFav@x1.local> <87343dd53c.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1770651860; x=1771256660;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=grK5JBegGbFz8UZKIhp4g1STJxPgukIKzIdhQ9zmJAg=;
+ b=mbCeWeF2FzMkIFTjrKB7wJxWMWUwqpRnSLY3ojrhWR+xn4bQAqwBpdMjG9nFaQeDlV
+ CJAAkK8o6UXe21h4MqYx0AVyDLJXECl36SZV/Avb6W8bA7mAnWbidxHOM3vRlrGQsfgr
+ LUz1c0izGWwZt0vqdUxEHR+y7cFGjBYivtzBDwAWLZUBok2rnMU4Zj3iBbrVaUYd6MLa
+ CdkCiaikgGKBBaSn/dzTxykyAUZL+OnPz8NBIL75lKnptPf3M6CiGX8pQvEG1it4muQc
+ LQ7lwIkfUtU0tBsQVFtnslGh7FCyLx6qVo0DIMuyoEfacbWRmH8kCOaBAcvg/ptSZPxR
+ j70g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyLcYMz7MtizNAiQ+DcGLF6aZPg+rOnkaElI1DRx57G81UJGpIbbUDZibkOK/81aWfxI3Qr3AqxVjW@nongnu.org
+X-Gm-Message-State: AOJu0YwFzKZlUH+MNFcjSKNk3CzxFsx02AIRWXsAXEU+2mt4eNhUF/mv
+ puBuY086qLzw5GajsO6x8NHXJbRpM5t59PuRprrlA5f9G32Vo1Ir6AYiVcMPPsXmLF2CxVXg/BT
+ cnwMyDz4RZwBnM5jmcvVTmOeFim8hh5XdpjSN8vf0uzP+cu3KndF7mVXI2lDzTMSnTUqA75CNWf
+ gyQ0MSzbSPYn7MY5YaVxsH8RBWdQOLb3TZSWo8lmk=
+X-Gm-Gg: AZuq6aJfUrvTog6j6PKoAlEqVf6T4A6EhnkUXIQUk/ntpsXLg8jr7+uFITJreu3fS/2
+ 6rrtNIhyU7a55nUk49QvYWR+AimBzmywJzIZg8Ks73HK+OCUtjkewDy3fxgUcUkye+7Gxww8nmc
+ Jms08WQvykx3LV/vKj/3SxbsIB5WOG7sF17TeNfQvzpwxQaS8M47c4rk+tQDl2R5VUGoYyz4EM2
+ jZBM+AaIdL4OCqU0ZzKp8toVA==
+X-Received: by 2002:a05:690e:1c1d:b0:64a:d716:c8e8 with SMTP id
+ 956f58d0204a3-64ad716cb2bmr6066347d50.13.1770651859722; 
+ Mon, 09 Feb 2026 07:44:19 -0800 (PST)
+X-Received: by 2002:a05:690e:1c1d:b0:64a:d716:c8e8 with SMTP id
+ 956f58d0204a3-64ad716cb2bmr6066322d50.13.1770651859218; Mon, 09 Feb 2026
+ 07:44:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87343dd53c.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20260203203512.672552-1-jsnow@redhat.com>
+ <20260203203512.672552-14-jsnow@redhat.com>
+ <87y0l7m829.fsf@draig.linaro.org>
+ <CAFn=p-a3BK5PiFQv2C0FX8z8PhQ91A3xWLoDv9fw-yJAGHMCUg@mail.gmail.com>
+ <aYmWy0yMzyF3E310@redhat.com>
+In-Reply-To: <aYmWy0yMzyF3E310@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 9 Feb 2026 10:44:05 -0500
+X-Gm-Features: AZwV_QjR7fT8VnsuQS6psIChv6q2-wUYHB04SJCU9PlQyCD8l-sdSgekbcws4nA
+Message-ID: <CAFn=p-Y5W2kU2YfSLA+yYEp3eyCNR14Fn_O6CtqUkWRveqJgUQ@mail.gmail.com>
+Subject: Re: [PATCH v5 13/16] tests: remove "make check-venv" target
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,117 +153,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 06, 2026 at 04:50:15PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Fri, Feb 06, 2026 at 09:29:04AM -0300, Fabiano Rosas wrote:
-> >> There's some amount of rigidness caused by qdev requirements
-> >> unfortunately.
-> >> 
-> >> I'm not sure if I ever posted it, but I wrote some code to move the
-> >> parameters into a MigrationOptions object so we could make
-> >> MigrationState not be a TYPE_DEVICE anymore. But then we'd end up with
-> >> something like -global migration-options by default, so it kinda killed
-> >> the idea.
+On Mon, Feb 9, 2026 at 3:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Fri, Feb 06, 2026 at 05:41:35PM -0500, John Snow wrote:
+> > On Thu, Feb 5, 2026 at 12:09=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@l=
+inaro.org> wrote:
+> > >
+> > > John Snow <jsnow@redhat.com> writes:
+> > >
+> > > > With the qemu.qmp and qemu.machine dependencies now installed by de=
+fault
+> > > > at configure time and additional dependencies required by functiona=
+l
+> > > > testing installed on demand, there is no longer any reason to have =
+an
+> > > > explicit target.
+> > > >
+> > > > FIXME: This forces image regeneration for vm tests whenever Make
+> > > > determines that the image needs to be rebuilt; which is a regressio=
+n
+> > > > over the previous behavior.
+> > > >
+> > > > Signed-off-by: John Snow <jsnow@redhat.com>
+> > > > ---
+> > > >  tests/Makefile.include    | 22 ++--------------------
+> > > >  tests/vm/Makefile.include | 24 +++++++-----------------
+> > > >  2 files changed, 9 insertions(+), 37 deletions(-)
+> > > >
+> > > > diff --git a/tests/Makefile.include b/tests/Makefile.include
+> > > > index f28c9e329aa..2a203e23718 100644
+> > > > --- a/tests/Makefile.include
+> > > > +++ b/tests/Makefile.include
+> > > > @@ -21,7 +21,6 @@ ifneq ($(filter $(all-check-targets), check-softf=
+loat),)
+> > > >  endif
+> > > >       @echo
+> > > >       @echo " $(MAKE) check-report.junit.xml   Generates an aggrega=
+ted XML test report"
+> > > > -     @echo " $(MAKE) check-venv               Creates a Python ven=
+v for tests"
+> > > >       @echo " $(MAKE) check-clean              Clean the tests and =
+related data"
+> > > >       @echo
+> > > >       @echo "The following are useful for CI builds"
+> > > > @@ -92,33 +91,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+> > > >  .PHONY: distclean-tcg
+> > > >  distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
+> > > >
+> > > > -# Python venv for running tests
+> > > > -
+> > > > -.PHONY: check-venv
+> > > > -
+> > > >  # Build up our target list from the filtered list of ninja targets
+> > > >  TARGETS=3D$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja=
+-targets)))
+> > > >
+> > > > -TESTS_VENV_TOKEN=3D$(BUILD_DIR)/pyvenv/tests.group
+> > > > -
+> > > > -quiet-venv-pip =3D $(quiet-@)$(call quiet-command-run, \
+> > > > -    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
+> > > > -    "VENVPIP","$1")
+> > > > -
+> > > > -$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+> > > > -     $(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+> > > > -     $(MKVENV_ENSUREGROUP) $< tooling functests
+> > > > -     $(call quiet-command, touch $@)
+> > > > -
+> > > > -check-venv: $(TESTS_VENV_TOKEN)
+> > > > -
+> > > >  FUNCTIONAL_TARGETS=3D$(patsubst %-softmmu,check-functional-%, $(fi=
+lter %-softmmu,$(TARGETS)))
+> > > >  .PHONY: $(FUNCTIONAL_TARGETS)
+> > > > -$(FUNCTIONAL_TARGETS): check-venv
+> > > > +$(FUNCTIONAL_TARGETS):
+> > > >       @$(MAKE) SPEED=3Dthorough $(subst -functional,-func,$@)
+> > > >
+> > > >  .PHONY: check-functional
+> > > > -check-functional: check-venv
+> > > > +check-functional:
+> > > >       @$(NINJA) precache-functional
+> > > >       @$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
+> > > >       @QEMU_TEST_NO_DOWNLOAD=3D1 $(MAKE) SPEED=3Dthorough check-fun=
+c check-func-quick
+> > > > diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+> > > > index 14188bba1c6..095ec2eefa3 100644
+> > > > --- a/tests/vm/Makefile.include
+> > > > +++ b/tests/vm/Makefile.include
+> > > > @@ -1,14 +1,5 @@
+> > > >  # Makefile for VM tests
+> > > >
+> > > > -# Hack to allow running in an unconfigured build tree
+> > > > -ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+> > > > -VM_PYTHON =3D PYTHONPATH=3D$(SRC_PATH)/python /usr/bin/env python3
+> > > > -VM_VENV =3D
+> > > > -else
+> > > > -VM_PYTHON =3D $(PYTHON)
+> > > > -VM_VENV =3D check-venv
+> > > > -endif
+> > > > -
+> > >
+> > > It's a shame to loose this because the build directory should have no
+> > > influence on what we build in the VM. Surely if we have qmp installed=
+ on
+> > > the system (and therefor its deps) we should still want the ability t=
+o
+> > > build in the src dir. Currently I get:
+> > >
+> > >   =E2=9E=9C  make vm-build-netbsd V=3D1
+> > >   tests/vm/netbsd  --debug     --source-path . --image "/home/alex/.c=
+ache/qemu-vm/images/netbsd.img" --force --build-image /home/alex/.cache/qem=
+u-vm/images/netbsd.img
+> > >   Traceback (most recent call last):
+> > >     File "/home/alex/lsrc/qemu.git/tests/vm/netbsd", line 19, in <mod=
+ule>
+> > >       import basevm
+> > >     File "/home/alex/lsrc/qemu.git/tests/vm/basevm.py", line 32, in <=
+module>
+> > >       from qemu.machine import QEMUMachine
+> > >   ModuleNotFoundError: No module named 'qemu'
+> > >   make: *** [tests/vm/Makefile.include:86: /home/alex/.cache/qemu-vm/=
+images/netbsd.img] Error 1
 > >
-> > It's not strictly about TYPE_DEVICE, but reusing of qdev properties, right?
-> > At least the issue described by your comment was about offseting and it
-> > sounds like so.
+> > Ah, I see.... it used to be possible to run the VM tests *without a
+> > build directory at all*.
 > >
-> 
-> Absolutely, I was just rambling.
-> 
-> Of course, TYPE_DEVICE brings us weirdness such as:
-> 
-> (qemu) device_add migration,help                             
-> migration options:                                           
->   announce-initial=<size> -  (default: 50)         
->   announce-max=<size>    -  (default: 550)        
->   announce-rounds=<size> -  (default: 5)    
-> ...
-> 
-> So it would be nice to drop this dependency.
-
-Yep.  I'll move my (below) series higher priority to respin, likely I can
-drop the QOBJECT_COMPAT idea that didn't attract much attention, but
-instead I can stick with exporting the qdev property helpers.  It'll be
-enough for us to make migration object to get rid of TYPE_DEVICE.
-
-> 
-> > I just want to double check with you that I think the problem you described
-> > will also present even after applying my other series:
+> > So, this used to work because of this bit in tests/vm/Makefile.include:
 > >
-> > https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
+> > # Hack to allow running in an unconfigured build tree
+> > ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+> > VM_PYTHON =3D PYTHONPATH=3D$(SRC_PATH)/python /usr/bin/env python3
+> > VM_VENV =3D
+> > else
+> > VM_PYTHON =3D $(PYTHON)
+> > VM_VENV =3D check-venv
+> > endif
 > >
-> > That series only removes the TYPE_DEVICE dependency, but not qdev
-> > properties.  I think it's the qdev property trick that is relevant at least
-> > to the offset issue you mentioned so MigrationParameters cannot be
-> > g_new()ed.
+> > What this did was effectively treat qemu.git/python/ as an installed
+> > package directory and picked the most likely culprit for your actual
+> > python interpreter location. (Note that the configure script is a bit
+> > more thorough in picking a python interpreter to use that is bypassed
+> > here.) It's possible we can continue to do this, however, it will
+> > begin requiring that you just-so-happen to have qemu.qmp available in
+> > your python environment. The list of dependencies you might need for
+> > this to work successfully may increase as the years go by, so this is
+> > a little bit "porcelain". I'm not sure I like this, just because I
+> > don't wanna be on the hook for mysterious failures down the line.
 > >
-> > The major use case for this qdev reuse is: (1) help scripting, so as to use
-> > -global migration.XXX=YYY, (2) support migration in machine compat
-> > properties.  IIUC (1) isn't a major thing we ask for (again, maybe I used
-> > the most of it.. but maybe only me; I'm not sure..), as long as anything
-> > can keep (2) working then we can consider.
-> 
-> The properties are also useful in providing defaults for the migration
-> options and perhaps we could make use of the .get/.set methods in a more
-> convenient way in the migration code, such as implementing per-option
-> input validation instead of checking all options always. (although I
-> haven't thought about the overlap with QAPI)
+> > Otherwise, to get all of the dependencies and python configuration
+> > managed for you, you have to do this:
+> >
+> > mkdir build && pushd build && ../configure && make vm-test-netbsd
+> >
+> > ... But you don't actually have to build, and in fact you don't even
+> > really need to actually run configure either, so, hm.... yeah, how
+> > about this, using a new "vm-venv" folder in the source tree as the
+> > virtual environment location, using a dependency hook like check-venv
+> > but now localized specifically for VM tests benefit and only when it
+> > is run from the source tree:
+>
+> IMHO just keep life simple and expect configure to be run so we
+> have the regular venv setup.
+>
 
-Yes good point.
-
-Said that, currently if we're still with qdev properties we can't easily
-inject those checks due to the hard-coded get()/set() for qdev properties,
-e.g. qdev_prop_uint8 will provide its static get()/set() hooks.  We either
-need to teach qdev props to take check functions, or impl our own (then
-we'll need to provide the default_val and machine compat features).  Maybe
-it's easier to do the former, and maybe some other qdev props can leverage
-too.  Not an immediate concern.
-
-> 
-> About -global, we should do better to separate the compat options from
-> the regular options. (and no, a blank line in options.c is not enough
-> separation!). I worry someday we'll break something in compat while
-> trying to change the regular options.
-
-Normally if we have something in machine compat properties, those shouldn't
-be used for normal users.  Those, importantly, also shouldn't be present in
-QMP set parameters.  That should IMHO be the line to identify a real compat
-option v.s. a real parameter, because we do not expect normaly user to use
--global, only advanced, so one knows what one is doing and taking the
-risks.
-
-It actually makes sense to still be able to adjust some internal compat
-behaviors if an advanced user really wants; that might be handy for
-debugging in some cases to overwrite machine compat properties, even if
-extremely rare.
-
-> 
-> Another point is that even after all the recent changes to options.c, we
-> are still left with a list of migration_properties that is optional to
-> use. Which means setting defaults is also optional.
-> 
-> If we decide to retroactively add a default we'll suddenly have a new
-> option showing up in -global! Having to discover mid-way through the
-> implementation of a new migration feature that setting a default like
-> the other options do will also add property code to your option and now
-> you have one more source of SIGSEGV is not super fun either.
-> 
-> I had the intention to somehow force every option to have an equivalent
-> in migration_properties so that every option would have a default
-> explicitly set, but seeing the recent work on fixing the StrOrNull
-> property, I don't think it's worth it to ask that people go through the
-> hassle of implementing a property (when the new option cannot use the
-> existing types).
-
-Right. We can discuss this case by case, normally I think we should always
-welcome the same parameter to be added into migration_properties[], most of
-them will be simple scalars so we shouldn't worry.  We can make it optional
-if it needs extensive work on new types.
-
--- 
-Peter Xu
+I'm sending a version that reflects Alex's desires, but it'd be nice
+if the two of you could reach a consensus. The "no-configure" venv is
+perhaps a little hacky, but it does otherwise use the same exact
+pathways as the normal configure venv uses, so I am OK with it as a
+convenience - and it is easy to remove in the future if it becomes a
+hassle.
 
 
