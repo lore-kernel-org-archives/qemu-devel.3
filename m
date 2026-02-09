@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3029E7C706
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADEDAE7C706
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpLrp-0000q2-IQ; Mon, 09 Feb 2026 02:39:33 -0500
+	id 1vpLrs-0000qe-TY; Mon, 09 Feb 2026 02:39:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vpLrg-0000n7-R1
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:26 -0500
+ id 1vpLrh-0000nA-0Q
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:27 -0500
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vpLrb-0004gA-Dt
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:24 -0500
+ id 1vpLrb-0004fc-CK
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:23 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 39935807F7;
- Mon, 09 Feb 2026 10:39:18 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 65F868075A;
+ Mon, 09 Feb 2026 10:39:15 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:129::1:13])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id BdLXu72As8c0-vI9MJv00; Mon, 09 Feb 2026 10:39:17 +0300
+ ESMTPSA id BdLXu72As8c0-eKWgaYqz; Mon, 09 Feb 2026 10:39:15 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770622757;
- bh=IrKi0wkNb4EqfoJsPMr+89zx9dQBD2rZEgN7gLm9Wuc=;
+ s=default; t=1770622755;
+ bh=2+BGCbjgcTW3vo09EmDCFSrvobdDCXvLg87DyZZkk4Y=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=UN9tpCFePLsDELbdRh2f4TR51dilj6Jw9e1PKCJUDApwlAq4y2e2klvm4ZHNt/Ouv
- Gvv4BMpKDnpE60stBLPFNi59dJ34+J8FxYF5tseFtUOLXRUIanA6haIQN6FJH1b+xE
- 4IsvYpDp1ut4usgOWyU6p6ikYRcSrNBpE5Pg9Y6U=
+ b=nUC/JHL+NWxmAmNI82xlWNLA2EsTZQiZAvF7dPySJW1YU/SwKtNehG2tfuSxvGYsJ
+ N+Cm1gF90UlW08d/X1v1zHj0MmOFPtzhj4EYHDyRaGnpdS8g6QqRlRYTqlJPZzUfra
+ YYPZqeJSDKb2obceEjlG1MtBC8qMunTk9M2C+zlY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH 08/10] vhost: rename vring pointer fields to reflect user
- addresses
-Date: Mon,  9 Feb 2026 10:39:05 +0300
-Message-ID: <20260209073908.2125178-9-vsementsov@yandex-team.ru>
+Subject: [PATCH 03/10] vhost: rename vhost-backend.c to vhost-kernel.c
+Date: Mon,  9 Feb 2026 10:39:00 +0300
+Message-ID: <20260209073908.2125178-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260209073908.2125178-1-vsementsov@yandex-team.ru>
 References: <20260209073908.2125178-1-vsementsov@yandex-team.ru>
@@ -75,133 +74,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename vq->desc/avail/used to vq->desc_user/avail_user/used_user to
-clearly indicate these fields contain user space addresses, not
-physical addresses.
+This file is totally about vhost-kernel implementation, not generic
+code. Let's finally give it corresponding name.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost.c         | 37 +++++++++++++++++++------------------
- include/hw/virtio/vhost.h |  6 +++---
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ hw/virtio/meson.build                         | 2 +-
+ hw/virtio/{vhost-backend.c => vhost-kernel.c} | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (99%)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 659efee2b0..1cde1aaebf 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -489,11 +489,11 @@ static void vhost_vrings_unmap(struct vhost_dev *dev,
-         return;
-     }
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 6675b63ce6..9506a2185c 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -15,7 +15,7 @@ specific_virtio_ss.add(files('virtio-qmp.c'))
  
--    vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
-+    vhost_memory_unmap(dev, &vq->used_user, vq->used_size, touched,
-                        touched ? vq->used_size : 0);
--    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
-+    vhost_memory_unmap(dev, &vq->avail_user, vq->avail_size, 0,
-                        touched ? vq->avail_size : 0);
--    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0,
-+    vhost_memory_unmap(dev, &vq->desc_user, vq->desc_size, 0,
-                        touched ? vq->desc_size : 0);
- }
- 
-@@ -504,13 +504,13 @@ static int vhost_vrings_map(struct vhost_dev *dev,
- {
-     vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
-     vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
--    vq->desc = NULL;
-+    vq->desc_user = NULL;
-     vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
-     vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
--    vq->avail = NULL;
-+    vq->avail_user = NULL;
-     vq->used_size = virtio_queue_get_used_size(vdev, idx);
-     vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
--    vq->used = NULL;
-+    vq->used_user = NULL;
- 
-     if (vq->desc_phys == 0) {
-         /* Queue might not be ready for start */
-@@ -521,16 +521,17 @@ static int vhost_vrings_map(struct vhost_dev *dev,
-         return 1;
-     }
- 
--    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
--    if (!vq->desc) {
-+    vq->desc_user = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
-+    if (!vq->desc_user) {
-         goto fail;
-     }
--    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
--    if (!vq->avail) {
-+    vq->avail_user = vhost_memory_map(dev, vq->avail_phys, vq->avail_size,
-+                                      false);
-+    if (!vq->avail_user) {
-         goto fail;
-     }
--    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
--    if (!vq->used) {
-+    vq->used_user = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
-+    if (!vq->used_user) {
-         goto fail;
-     }
- 
-@@ -594,7 +595,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j = 0;
-         r = vhost_verify_ring_part_mapping(
--                vq->desc, vq->desc_phys, vq->desc_size,
-+                vq->desc_user, vq->desc_phys, vq->desc_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -602,7 +603,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->avail, vq->avail_phys, vq->avail_size,
-+                vq->avail_user, vq->avail_phys, vq->avail_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -610,7 +611,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->used, vq->used_phys, vq->used_size,
-+                vq->used_user, vq->used_phys, vq->used_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -1106,9 +1107,9 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
-         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-         addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
-     } else {
--        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc;
--        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail;
--        addr.used_user_addr = (uint64_t)(unsigned long)vq->used;
-+        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_user;
-+        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_user;
-+        addr.used_user_addr = (uint64_t)(unsigned long)vq->used_user;
-     }
-     addr.index = idx;
-     addr.log_guest_addr = vq->used_phys;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index b292e9f0fe..684bafcaad 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -24,9 +24,9 @@ struct vhost_inflight {
- struct vhost_virtqueue {
-     int kick;
-     int call;
--    void *desc;
--    void *avail;
--    void *used;
-+    void *desc_user;
-+    void *avail_user;
-+    void *used_user;
-     int num;
-     unsigned long long desc_phys;
-     unsigned desc_size;
+ if have_vhost
+   system_virtio_ss.add(files('vhost.c'))
+-  system_virtio_ss.add(files('vhost-backend.c', 'vhost-iova-tree.c'))
++  system_virtio_ss.add(files('vhost-kernel.c', 'vhost-iova-tree.c'))
+   if have_vhost_user
+     # fixme - this really should be generic
+     specific_virtio_ss.add(files('vhost-user.c'))
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-kernel.c
+similarity index 99%
+rename from hw/virtio/vhost-backend.c
+rename to hw/virtio/vhost-kernel.c
+index caeadd069b..3390b48c6f 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-kernel.c
+@@ -1,5 +1,5 @@
+ /*
+- * vhost-backend
++ * vhost-kernel
+  *
+  * Copyright (c) 2013 Virtual Open Systems Sarl.
+  *
 -- 
 2.52.0
 
