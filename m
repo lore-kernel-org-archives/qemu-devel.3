@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82EB7EF06FE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 01:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7879DEF06FC
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 02:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpGQd-000585-SN; Sun, 08 Feb 2026 20:51:07 -0500
+	id 1vpGak-00070x-34; Sun, 08 Feb 2026 21:01:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpGQb-00057x-Nt
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 20:51:05 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1vpGai-00070p-MZ
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 21:01:32 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpGQa-0002Gf-0r
- for qemu-devel@nongnu.org; Sun, 08 Feb 2026 20:51:05 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c698873a1deso1908395a12.0
- for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 17:51:03 -0800 (PST)
+ id 1vpGah-0004Or-5Y
+ for qemu-devel@nongnu.org; Sun, 08 Feb 2026 21:01:32 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-81e821c3d4eso3365186b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 18:01:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770601862; x=1771206662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770602489; x=1771207289; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2eE4rz3D3/NhnaIHHFK/7dN1a2eyjvptA6gvdGwk/7U=;
- b=p30XwNpO7d0XyuuHg8eWnWCgns9rb+oVs1FLvyA1JasJiaIXZea/x5syjtEn9Rd6q4
- 1W1mbHCzNjcQBfj+MrQtY6ESq5TNZWGvoUvbz1k1tRTcWtTLgFwQmc6Ot0f4FN5T+LDf
- jScvFjTPZgtg9HYQE8Yo8u7QKAsds95VK17p8upoIZHMyzlcwzKUsOqWNFs+74wvUWBy
- cVegZNfol0Q6UBs4Be0bb5TbQSJ9VUiC0P9TiYE54/mWhHdpnJKM9P8B0ReWDhO8sYfu
- mLyZ9fWNOkXxP5rDjUPFff+6fkRAnAaCC3I5SGxe+cQZvMARycmOyq5jx9aVYK84Gf7g
- 1/Cg==
+ bh=69DGvaWDWc9u21cVlbRrK6OVBcbt4x20a8ckSeY18yQ=;
+ b=t8IZE0IV/Nw7tUKUMA9yTYaErLkFAcZ/YYfE3yBXATqjDPt9h387zhuzmcl56Cqgf/
+ UUkQRhiXXHIiSted4cbUNvCF2FJdMufE0plrOvHIfoOu9vRUneYus9pax/gG7IqihMPq
+ JpLxXsjdQhQVufOmGOomRsF7IJHjBiWllbRIgf0x5JF8csAXLt9b1S9hjuJ+DoY5qU8I
+ heS4MTreQH6DijQ5w4FYSz/kpXVfhw5URIXod9p/PQqBuVip4jhU9sQK+c6ftTnZFlGK
+ jDdHkavRr6NR04ofPw85Ew1tYuNMn+Ty8H+edLqMKzobNy6aQUa4NEfX9MTD1fBpZqUl
+ GgEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770601862; x=1771206662;
+ d=1e100.net; s=20230601; t=1770602489; x=1771207289;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2eE4rz3D3/NhnaIHHFK/7dN1a2eyjvptA6gvdGwk/7U=;
- b=fMe7kdmbULiDb5N/SJ2d/f0dQNFXNrcVrzIx0hdxll2McXRznle/ZDd25Z/0P/KxrX
- kyVBrmqRWd0OaAmJkoXnTXOSqZEO8O0Izard0e0NcCI8DBPMD/WT0pmHDHvZbPm0eD63
- mxZOWlN+T2htNmHtsLAiY67Jrse9OaPHa50lyjm4A9evZ/Gk+NVX2nbLS5Ags2OzGxF7
- njsFzryKk1xzPdRiVaAqjJ8SuXfpmxsudPabCJCBt6i9Qoi1HfXE/N/dCymz0tUAx1bA
- JmlgTsvE3QPyOfWD+nu+phsnE1enV7K9sv8QfDLEaef2HlUQZUCwgZOOEOPn5drBiiHw
- DANQ==
-X-Gm-Message-State: AOJu0YxG5XQUNGC19YZTS+2gNS4R+NB8Wr8RO0hSm+jrxaR0ZeLZ+Sff
- xre/Dn6ybXdKm9KRWx54Cjxmtl5TCZv4HQAUj8X9eAcX8lDqzsfsquX26AmATWt1EHHF4vz3X7z
- N6mVrhkU=
-X-Gm-Gg: AZuq6aLoEO+Yn+K67u5bsqEco06Y4cxj2ItKjQZl7SF1mlUj0qf7hTae42iUOZB9Rb/
- wGSryPj0q8Z4SSbhp1QQcEXnhrWCNZakLHx/lmNG+vS9wwXZzIYEzlhZd/fMySf52ojvCDfMfS+
- NzeZw/HhWs2YQ/HwDBVpNjQedBq4PvXbmRhJj9WokWEAcuWkzMQoPbQ3FSagIPW19mUkdiU0AY8
- UEYxVUUxLtopPuZ4hxfsZS3vibq8oOLLpTKU6LsI+f13mBZ31h7WzkO6rXQLsSwAjzzKdVmHNnR
- 70+aRtLTQQQdEuknRJCqtzuDxyezAmSVCb3KowwEiTyYEcopbnTdsm93EKEpY+DkI8kxjYZ1yvE
- l3zUmduMBKQik48UzYhfFlL90CyztiDwE9a1YqE/8OGOnrSqmeQJp2Wz94F+cxyTT5DKo2dDeWX
- IAYaxFvQrU9nEfNomE7ZB8ZFSqrYDPEhNRqWnqvjsaK77/fLgajyQDK7oBdjGkQpc=
-X-Received: by 2002:a05:6a20:394b:b0:366:2341:4980 with SMTP id
- adf61e73a8af0-393acf9950fmr8884867637.11.1770601862008; 
- Sun, 08 Feb 2026 17:51:02 -0800 (PST)
+ bh=69DGvaWDWc9u21cVlbRrK6OVBcbt4x20a8ckSeY18yQ=;
+ b=u6f23v0SXuA6V/oSrpE5sI4OZFihaOIoZdJA9meTfHHNKfrpgAnxMAfahTTGKPeTPz
+ DjFuX6VHZrBVSFAXaQOgh7gzqezZJsKZnpEY5/Jjp6RxsyD1Ae8qyx3NcQqg+zBGTMTC
+ 5wQlU4trY0N1KLKPdZIoezm2RyLYgI6NoiPdcenuN79h3cIX2iN4Heok/Dw61m26gzf3
+ vAdI3YHMaNs3T3UwJ9WoMTNA2B+AFyKj7En5/eLObtC94/8E+NYVg+76ktSslvYrTjOn
+ 8OZ7VfMyhvXc+ciJjV1yrIyhVwibKkT/X8GvRyQpplOJ7Mi51mtrg2Z6QvMjkK/N7Onq
+ frWA==
+X-Gm-Message-State: AOJu0YyW0d0fahxE0JFq8K5eo2uHMX24QwpampJRFGZtYwiyv3fnpB4H
+ LIYQM9OUnJl7NuCzizH/Us20/OTgps7JKvt+lk4qCulp/OQnJJnM1KImbLZ3Cfj0tar8N/8oFba
+ UFnIqefI=
+X-Gm-Gg: AZuq6aLA2sHpB4MlSlgRuJ04Vivwv256wVRGDDTww+Pf5LJQjkN289NYllute/uIqdH
+ /eF41EOWEhaHG2aHvsTNcrK7uFY48zw18mJ7Dujp7zMiJCtvcgmpBELbaV+vx6i2i6qgXGMxxis
+ AgwgdXnYzeod7WlvVduDnP28z6GzS/Q+srmTToyq5zKAGd0is4xmWKhL/b1os60iEDMr7cCx5C4
+ 5dqJaoUgclAmi+OK/If0WyVZ9/IzEMXg+cBiac1hNbg85+KITubmdDGVLHTTnzmObkB0+wWQXe+
+ 7Cglg/VSfdGr1l3TWYDajhE8nHDBr5lT3bX53imz47YHsjBWWxtbuLY2kP+FAdtT0tYCb+MUi3C
+ rkefn3ThXhbwqK+m9xEPyIPSvIsM2fECbJlw1H7UeODNlSaM2zWcMWYuPPTsIXI86zT3Iu0ZbG1
+ iCQdEhyD74XINPdkrO/1EV6m7lSULMF5e/3mGh5b2UEWoxiQSOIqXQrSkjUiBQkMY=
+X-Received: by 2002:a05:6a00:9098:b0:823:120a:d09a with SMTP id
+ d2e1a72fcca58-82441655aa8mr7875453b3a.31.1770602488966; 
+ Sun, 08 Feb 2026 18:01:28 -0800 (PST)
 Received: from ?IPV6:2001:8003:e109:dd00:9c4:a3d:914:f9b?
  ([2001:8003:e109:dd00:9c4:a3d:914:f9b])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-354bcf67079sm3088626a91.11.2026.02.08.17.51.00
+ d2e1a72fcca58-824418a70fesm8207629b3a.45.2026.02.08.18.01.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Feb 2026 17:51:01 -0800 (PST)
-Message-ID: <829510bd-38e7-4f5f-93ee-e2de708f67d8@linaro.org>
-Date: Mon, 9 Feb 2026 11:50:56 +1000
+ Sun, 08 Feb 2026 18:01:28 -0800 (PST)
+Message-ID: <a7253e6b-8d19-48a9-84ed-7e0ff828eaae@linaro.org>
+Date: Mon, 9 Feb 2026 12:01:24 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/24] bsd-user: Add target_to_host_semid_ds for
- semctl(2)
+Subject: Re: [PATCH v2 11/24] bsd-user: Add target_to_host_msqid_ds for
+ msgctl(2)
 To: qemu-devel@nongnu.org
 References: <20260208-bsd-user-claude-v2-0-58e5fcfdb84f@bsdimp.com>
- <20260208-bsd-user-claude-v2-9-58e5fcfdb84f@bsdimp.com>
+ <20260208-bsd-user-claude-v2-11-58e5fcfdb84f@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260208-bsd-user-claude-v2-9-58e5fcfdb84f@bsdimp.com>
+In-Reply-To: <20260208-bsd-user-claude-v2-11-58e5fcfdb84f@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,15 +109,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/9/26 05:26, Warner Losh wrote:
 > From: Stacey Son<sson@FreeBSD.org>
 > 
-> Add target_to_host_semid_ds() to convert target struct semid_ds to host
-> format for semctl(2) IPC_SET operations.
+> Add target_to_host_msqid_ds() to convert target struct msqid_ds to host
+> format for msgctl(2) IPC_SET operations. Uses memset to zero the struct
+> rather than directly accessing kernel-only members. Handles FreeBSD
+> 64-bit time_t except on i386.
 > 
 > Signed-off-by: Stacey Son<sson@FreeBSD.org>
+> Signed-off-by: Brooks Davis<brooks@one-eyed-alien.net>
+> Signed-off-by: Sean Bruno<sbruno@FreeBSD.org>
 > Signed-off-by: Mikael Urankar<mikael.urankar@gmail.com>
 > Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
->   bsd-user/bsd-misc.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+>   bsd-user/bsd-misc.c | 27 +++++++++++++++++++++++++++
+>   1 file changed, 27 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
