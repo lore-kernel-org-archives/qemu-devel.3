@@ -4,104 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9896E94607
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 21:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A73E94614
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 22:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpYpT-00075U-QC; Mon, 09 Feb 2026 16:29:59 -0500
+	id 1vpZfN-0000JO-6o; Mon, 09 Feb 2026 17:23:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vpYpS-000756-1y
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 16:29:58 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vpYpP-0005Jn-CJ
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 16:29:57 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-653780e9eb3so166987a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 13:29:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770672593; x=1771277393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xQR6DXJmNhE6nvINFAipdW4ooh65QhuW3BopxiLShro=;
- b=gondNOFda4SVOxaWpHEDMZjx4vjk/DrXepd+4tDmG0Qqo/3CWv97p76voQjf87lO9R
- MnCts1Q4+rBlarE6n/1V5wzR9mn6ZXLEFhEToNhv/Pd8W6QHh4B91CfCkR5jfLcI0XgK
- xrdxczDzrRJjOk7jkvPFyjK5OcuSqwsCL9ar67z8wcriFaBU7zFXaZIRV0w7Fm7AhK4x
- j/9sdCdeuagVQNtoF6i0a5S/qBd8rDLoRtFbPt3Iyd34jOsAgv52CCVUXFJPDbpkyUrJ
- o2pK0WjxQIknl2SID2oanv6SN7ND5/A3IK4Yk8uystzhgcsAO8gZeftKvgwrcDNRYKXL
- vUTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770672593; x=1771277393;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xQR6DXJmNhE6nvINFAipdW4ooh65QhuW3BopxiLShro=;
- b=gjjw6mY3MrgU9EVRzUHQRY4ZgtiYkBhyV0DKVAQBD4IB1hLUOwQKm3Y26JPqV+sCf7
- gGE4Q0Q0N1g6WrayGfk1TxmGAvOdMrKMjGOUeSdbWtNZdd7DL4hex/sJpOSVcQZuN2A5
- ENtyGa0Qx7iS65OcNxa45DlpbqFVldLAEUh/8vRJZRJ3A0v2y1ykfLn7kYVi+y9EA2r0
- r9bse2oCvkcLSc7ww4+CV6TuZRfq77CFYtMlhY3b/Q1wQz6QWu4Yf2h7x7SkBwJFP+Uh
- PSzIPAxaBtlA1PFvE55RLmQKwgZVqvSZ7onjjJh+ysNoXD0Rgx+wcsQ+RBPKGcHKsqjM
- n0/Q==
-X-Gm-Message-State: AOJu0YwMgWN4tfYkpl5Goqz3ycIK5Bt4qnWHpqspFptGp/1FlFY6qF0u
- xI7rKKuScrpVJx9zBy7tlICIqCLrGUzlSjy/GfxtG38oySyddQy/K2NPzt2C2omNP+M=
-X-Gm-Gg: AZuq6aJkHdzAlUz7Y92kVx7DmPzLmwbiv0uHQu+DQA41IF+tqRbnWAmY8utzkE36Z5e
- mKnoi9zdp/ycaj9w/r/QjuBLDWXtYkU5cXMbkRXAPebTRmw925OSd9hWJXa152Mv8SKQVby62T+
- 2fGmMTNPBjCR/DUEgk2O043ORFpY5u5Qh483yv0gVTG8LxVvfCkpZz2iH5x+ogqzhqn2MCLTBrO
- rv9O+DWvstL5lTVNSvJTs91UM28qkUVB3DdHJdcz9jR/718iS0H9U0NL+StdryMzqWmUdC2AICD
- QiOU9ZDWNDPDC/Fggev0DZJt/nGKad0XfhOhKaOr5KL25tMm8v50HVg1cd79ietGYrYJKZJ6SJj
- 72f6XP7+Vzkca7Y+P7BJ2+qaEw1uHzCWYfuIMHCV2ygfblqrNSlYOWdEfQ85jcmJoNLOR/iCGt2
- jTlVQHkL4XCtg=
-X-Received: by 2002:a17:906:c10c:b0:b8a:f225:ede8 with SMTP id
- a640c23a62f3a-b8edf3498e0mr751333966b.41.1770672592885; 
- Mon, 09 Feb 2026 13:29:52 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6598400f182sm3332157a12.20.2026.02.09.13.29.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Feb 2026 13:29:52 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3D6295F810;
- Mon, 09 Feb 2026 21:29:51 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Maksim Davydov <davydov-max@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>,  Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  Peter Xu <peterx@redhat.com>,  =?utf-8?Q?Ma?=
- =?utf-8?Q?rc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Ed Maste <emaste@freebsd.org>,  Li-Wen Hsu
- <lwhsu@freebsd.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  qemu-block@nongnu.org
-Subject: Re: [PATCH v6 13/16] tests: replace check-venv with vm-venv target
-In-Reply-To: <20260209184124.1263625-14-jsnow@redhat.com> (John Snow's message
- of "Mon, 9 Feb 2026 13:41:20 -0500")
-References: <20260209184124.1263625-1-jsnow@redhat.com>
- <20260209184124.1263625-14-jsnow@redhat.com>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Mon, 09 Feb 2026 21:29:51 +0000
-Message-ID: <87v7g5y59s.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vpZfC-0000HP-UZ; Mon, 09 Feb 2026 17:23:26 -0500
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vpZf9-00073F-KS; Mon, 09 Feb 2026 17:23:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IdtkLqo93JL0pdGnkwN1u7z5RFHwduJchA6tvOLLQt+M93J/GmcM3VY2B6DAz0D93PWQsqBNO1s1cxLhBjB/CgZLIiZhyWVXPPeELF1IJAotlXStJcGOkmlYcd/8DbOu15iIV7YIVYVzaH2kCeBVhtM7Q+tDzrmnEqYi3NSAlcMhB15a5hGWYzAtnCuB1dLvOFbbrGnmFO9VZEFrHLXNQsjZH93gHZl64VBoBmLfBTHYgW5LsPpr8I36kgPwpYV4POWd3YCmo4Yfi0N/wjlBXo0usZS1jhqYChKXg0JFx8jGXThkP+bgqcqh7RTqgFE6FB5u3uh46FXyAC+Lf62IaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lsdygl7Hoqhjha1ULZkdrbpnfvwC20AQoavdCL42Tls=;
+ b=FbbUkey7L3ZgNAifMw8yTn4WAqUCI27+7/ATjHiYiU2/JILQGHvy9b9/UOjAPszCMZA9VUeSBAC7C5GrahnUKAymCTOdh7dU1cPd0T4Q2VnYrrMhRhbhM34dE1wWUwFD0Sg3ch/wdLq93QvkozFvc9o2YNtbOwZ7U0gwOgaxykDLwJrsVRh6xAPn3ycMDgifqnYMzZ6zq208ghSegBvBDiw0do3tlXvFNZIbW+X3rV3ihKRZ8FST9C6+c3b5NdzHq6hPu3sB7ewptO4HRkNzGyX/aqVHC3uf3DV4AfYqj+lsjP6007ri9oFT5oA0Z0KUGm69Cjwo1DudTMG28QQcvg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lsdygl7Hoqhjha1ULZkdrbpnfvwC20AQoavdCL42Tls=;
+ b=HG764SfCEafyXm6BChY9acHt9xg3uG0cigd9U+jXpb7iwuVzoVdJBstMLx1iVEoOJ01dj3hIbA71nuz3pFwNYFKQDYSGDhkqeNDkxtDMdrGS/i/2+AzlGbbFmPw0Lw/oGEhZWmYAiyfOFlSVDJ48B5u2Xoac1ANRPinndpyU7YpOTxcWFSaKq3LklvuVmfr97YHO5bn+Ao8ESsAmgpYtvP6O8cmAhKkFkVdDmV/mxYPaVU576cLFG8ruV64n/slRBED7oZVGc0DEfS7bXx579p8/7zHMWmhyKw88iBPuzxs5T/J/DudOU48cs2PJf3m3e9LKWb6NornBh60sbeYMpA==
+Received: from CH0PR04CA0118.namprd04.prod.outlook.com (2603:10b6:610:75::33)
+ by MW5PR12MB5599.namprd12.prod.outlook.com (2603:10b6:303:194::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.19; Mon, 9 Feb
+ 2026 22:23:15 +0000
+Received: from CH1PEPF0000AD79.namprd04.prod.outlook.com
+ (2603:10b6:610:75:cafe::8a) by CH0PR04CA0118.outlook.office365.com
+ (2603:10b6:610:75::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.18 via Frontend Transport; Mon,
+ 9 Feb 2026 22:23:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH1PEPF0000AD79.mail.protection.outlook.com (10.167.244.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.10 via Frontend Transport; Mon, 9 Feb 2026 22:23:14 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Feb
+ 2026 14:22:58 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 9 Feb 2026 14:22:57 -0800
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 9 Feb 2026 14:22:56 -0800
+Date: Mon, 9 Feb 2026 14:22:55 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Message-ID: <aYpeP5sv75JBQ+Bc@Asurada-Nvidia>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-6-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260206144823.80655-6-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD79:EE_|MW5PR12MB5599:EE_
+X-MS-Office365-Filtering-Correlation-Id: 91147f40-0c96-4598-d0c6-08de6829d164
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?XBx6EEmsMW/6OI1Icp712jDhk5y3uDDnmCZ3x6tkaqduF3uYiuXWEx8SOUOb?=
+ =?us-ascii?Q?z0/zzEVi6KXkuTA1WFF+Mo5yZZ3LVJ0zIXScVjHbQ9UnLJpb0smMyaSg/YZW?=
+ =?us-ascii?Q?bR17U5+LDN6u4z/VSSvcGTUtw3Su83gWnYPED4tp2mJ/LvjldJrXhp79wIm+?=
+ =?us-ascii?Q?Bn3frdqVtaN9hbriptY3MRqG1j0vMxGq+kM8ecZOr6JXd6qsqUqL03/6cikm?=
+ =?us-ascii?Q?uRQYHpB//T/3zHm0gWZCra8ioGgQpi47fl0ZlWflO4IjZu6cUa9aF45qx+A9?=
+ =?us-ascii?Q?PvH56eb8KFwYpJm1ObqOeE0tMJHxR+ZGUHAJYuvTqXK6nq1dpdtAdkonzHMR?=
+ =?us-ascii?Q?iszU0abkHeMZwNSbq/NS1lZwPcdv2vUd+NOKMRBciFRsHrWHD+MXLnhdnWtB?=
+ =?us-ascii?Q?JjREAANnRTnljpj7PU3YvOn98m76EihXpDoejKEerPm5UxTEabV31mTb7RN6?=
+ =?us-ascii?Q?n3+3mIk7f9HsOvWDAKcGIoZ5ytlEbfNMDCyHmxzjLRw12k7AlIcTL/73o70t?=
+ =?us-ascii?Q?aHufYeLQCHtim87Nw8XI+XrVEYFiu79wAicHQJj0vX1S917CSKBlZd7N3Osq?=
+ =?us-ascii?Q?tN2A3HveVO54hC2eOT/7ysbtHy0nSbKYZDBg0qdqaS4qLk8JFBzp4fNrJua0?=
+ =?us-ascii?Q?O/VDoPwuMf/Sjey2bWcxzeYjwLboXDDyEm/owrF3BzggX/M4RiuSMq9kMR5p?=
+ =?us-ascii?Q?h8hJG4GdZur/nI7u8LDsFCmu+yZz2W3Uhn9+40Ouyrg+jRpBPwDcyVr5T9I1?=
+ =?us-ascii?Q?sQChp6S6HV2/Z1WYzVhgzDYbDE3Yf1bE0yGxIDp4BnIyqsSODqoB5gV4XI5L?=
+ =?us-ascii?Q?rJF51XOWTr8GdH1s4NjoIyPipqBRgRSMXkimEgQx3x44ug4zgcRUzHVJqwkx?=
+ =?us-ascii?Q?kkGUdQlgwH82cXLhKh7F+cdF4SJMtB5NLcjyWZx7kG+JY4KXSx64k2y+67P9?=
+ =?us-ascii?Q?LT6XweyhA+la8qwk+f5O508qve/tBJ9bI1Q/GX55O4ZO3ATfNFK8eeVEm7zg?=
+ =?us-ascii?Q?3NVE46UVLq8xAppKdXezxlgXaQJmXZEFCNVzeGd9LOpuJdIOtGM7a32J70JA?=
+ =?us-ascii?Q?Hr6T9lLSUZx9IYEW++BV3Z542ow9O3Yu2B3itakJh63g9z+fJBEgQvzJDOPu?=
+ =?us-ascii?Q?rEZa5dDOhotC0xeyd4kRBgBvs/AARzSKhsDdwiugsbGp2VYwe7BEm/OeKHHl?=
+ =?us-ascii?Q?ru15aZybjP/Qe9je8Am1W1gwDiXbhm+VDRIV9v9L/lZx31zADMFIVhOgHxnz?=
+ =?us-ascii?Q?bI5YUJIgD9Ro3QDoL4ZzfdvAzM4nlhgfVrsUBStluOgfSHx5zBSEw9NOUwnT?=
+ =?us-ascii?Q?wwsCdJH2isWmYbzd0pfmtmM0bQzJAxT4cK2f2jtda9AbdhA48z1uuSPIbWvj?=
+ =?us-ascii?Q?N6zjVcbPFKpAYurof6vjUKnIRvtPjUZmNjGQbU2359bQQDE8C28dml/0N3dx?=
+ =?us-ascii?Q?VNEi1juYnR7r3lw9wKmun7J+nFhVYBafMzOGB+GaqH7oyqxhCg1uHX9m1aKB?=
+ =?us-ascii?Q?xck3IqchAkDll2Dtl4UCipaFJt0YlhHVN5dchq1rOkSgHjRbQdX0Q24knAzf?=
+ =?us-ascii?Q?uCaSD4HUpbA8Kpr7WbqVyE2XvRyDtPLpHm9BsXaHZSDoWvf31C7i/qZjJZdP?=
+ =?us-ascii?Q?UJSRJaC52iyllhpWCDnl1CMnIoqcjYMDTVVzxGWRDWqe/vHaAHC4meEhwKZF?=
+ =?us-ascii?Q?/P17Tw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: BTXpkXj0YOLw9rq70fdovdwCwO4V4zgH7RZ23ICcaGIATw3LNYzsJf+fG/TFJOP8ks2vNjIn/dI7jTqG6SpBvUJlZkJP2OQ+RtijdevExbRwLslLQI8Yn/QPzP39f9MeKbFpiXXw3uzbmhfiJ9ECdTkGav5obhn4qRlVt50COIprZdpkztMMt8bemCelIrYEqR0UGyFUQZ5cSz7woaonwdVVjv+6ETpqxBjmbMfsBMbrK73zFicYKGYes1B4DlybhVb2GtWednJZBqVnyp1ahT6NehtVT3OzUvOBJm9NnfOb59wW2JmiJC/wmmEAcZw/sf8bocLyVn76sRmnkOzZ0vg8qLilsfAKHrmxDyH3Gj9fkLwYIcqGqjPNICeyq69pCd5svtzd+Y4Hz9H1dj++D2LkeQpv09bkvYEZAFZw+f8PACOHEaLIvC1Njv/5SvfJ
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Feb 2026 22:23:14.7749 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91147f40-0c96-4598-d0c6-08de6829d164
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD79.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5599
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,344 +164,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Fri, Feb 06, 2026 at 02:48:04PM +0000, Shameer Kolothum wrote:
+> CMDQ-Virtualization (CMDQV) is a hardware extension to SMMUv3 that enables
+> virtualization of multiple command queues (VCMDQs).
 
-> With the qemu.qmp and qemu.machine dependencies now installed by default
-> at configure time and additional dependencies required by functional
-> testing installed on demand, we do not need the explicit "check-venv" tar=
-get.
->
-> ...However, to facilitate running VM tests without running configure, we
-> move some of the former logic into tests/vm/Makefile.include to create a
-> new venv (vm-venv) on-demand when running VM tests from the source tree.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+Let's mention "NVIDIA", noting it's a non-standard extension.
+
+> CMDQV support is a specialization of the IOMMUFD backed accelerated
+> SMMUv3 path. Introduce an ops interface to factor CMDQV specific
+> initialization and CMDQV vIOMMU/vEVENTQ allocation behavior out of
+> the base implementation. The ops pointer and associated state are
+> stored in the accelerated SMMUv3 state.
+> 
+> No functional change
+> 
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->  tests/Makefile.include    | 22 ++--------------------
->  tests/vm/Makefile.include | 18 ++++++++++++++----
->  2 files changed, 16 insertions(+), 24 deletions(-)
->
-> diff --git a/tests/Makefile.include b/tests/Makefile.include
-> index f28c9e329aa..2a203e23718 100644
-> --- a/tests/Makefile.include
-> +++ b/tests/Makefile.include
-> @@ -21,7 +21,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
->  endif
->  	@echo
->  	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML te=
-st report"
-> -	@echo " $(MAKE) check-venv               Creates a Python venv for test=
-s"
->  	@echo " $(MAKE) check-clean              Clean the tests and related da=
-ta"
->  	@echo
->  	@echo "The following are useful for CI builds"
-> @@ -92,33 +91,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
->  .PHONY: distclean-tcg
->  distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
->=20=20
-> -# Python venv for running tests
-> -
-> -.PHONY: check-venv
-> -
->  # Build up our target list from the filtered list of ninja targets
->  TARGETS=3D$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targe=
-ts)))
->=20=20
-> -TESTS_VENV_TOKEN=3D$(BUILD_DIR)/pyvenv/tests.group
-> -
-> -quiet-venv-pip =3D $(quiet-@)$(call quiet-command-run, \
-> -    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
-> -    "VENVPIP","$1")
-> -
-> -$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
-> -	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
-> -	$(MKVENV_ENSUREGROUP) $< tooling functests
-> -	$(call quiet-command, touch $@)
-> -
-> -check-venv: $(TESTS_VENV_TOKEN)
-> -
->  FUNCTIONAL_TARGETS=3D$(patsubst %-softmmu,check-functional-%, $(filter %=
--softmmu,$(TARGETS)))
->  .PHONY: $(FUNCTIONAL_TARGETS)
-> -$(FUNCTIONAL_TARGETS): check-venv
-> +$(FUNCTIONAL_TARGETS):
->  	@$(MAKE) SPEED=3Dthorough $(subst -functional,-func,$@)
->=20=20
->  .PHONY: check-functional
-> -check-functional: check-venv
-> +check-functional:
->  	@$(NINJA) precache-functional
->  	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
->  	@QEMU_TEST_NO_DOWNLOAD=3D1 $(MAKE) SPEED=3Dthorough check-func check-fu=
-nc-quick
-> diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
-> index 14188bba1c6..217bc706c20 100644
-> --- a/tests/vm/Makefile.include
-> +++ b/tests/vm/Makefile.include
-> @@ -2,13 +2,23 @@
->=20=20
->  # Hack to allow running in an unconfigured build tree
->  ifeq ($(realpath $(SRC_PATH)),$(realpath .))
-> -VM_PYTHON =3D PYTHONPATH=3D$(SRC_PATH)/python /usr/bin/env python3
-> -VM_VENV =3D
-> +VM_PYTHON =3D $(SRC_PATH)/vm-venv/bin/python3
-> +VM_VENV =3D vm-venv
->  else
->  VM_PYTHON =3D $(PYTHON)
-> -VM_VENV =3D check-venv
-> +VM_VENV =3D
->  endif
->=20=20
-> +VM_VENV_TOKEN=3D$(SRC_PATH)/vm-venv/tooling.group $(SRC_PATH)/vm-venv/fu=
-nctests.group
+>  hw/arm/smmuv3-accel.h | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index c9c10e55c3..ca087240e5 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -16,6 +16,23 @@
+>  #endif
+>  #include CONFIG_DEVICES
+>  
+> +/*
+> + * CMDQ-Virtualization (CMDQV) hardware support, extends the SMMUv3 to
+> + * support multiple VCMDQs with virtualization capabilities.
 
-Which group should the following be fixed in?
+Ditto
 
-  make vm-build-openbsd V=3D1
+> + * CMDQV specific behavior is factored behind this ops interface.
+> + */
+> +typedef struct SMMUv3AccelCmdqvOps {
+> +    bool (*init)(SMMUv3State *s, Error **errp);
+> +    bool (*alloc_viommu)(SMMUv3State *s,
+> +                         HostIOMMUDeviceIOMMUFD *idev,
+> +                         uint32_t *out_viommu_id,
+> +                         Error **errp);
+> +    void (*free_viommu)(SMMUv3State *s);
 
-leads too:
+I don't see much value of having alloc/free_viommu..
 
-  DEBUG:root:ssh_cmd: ssh -t -o StrictHostKeyChecking=3Dno -o UserKnownHost=
-sFile=3D/dev/null -o ConnectTimeout=3D1 -p 34187 -i /home/alex/lsrc/qemu.gi=
-t/vm-test-0fzv014h.tmp/id_rsa -o IdentitiesOnly=3Dyes -o SendEnv=3Dhttps_pr=
-oxy -o SendEnv=3Dhttp_proxy -o SendEnv=3Dftp_proxy -o SendEnv=3Dno_proxy qe=
-mu@127.0.0.1
-          set -e;
-          rm -rf /home/qemu/qemu-test.*
-          cd $(mktemp -d /home/qemu/qemu-test.XXXXXX);
-          mkdir src build; cd src;
-          tar -xf /dev/rsd1c;
-          cd ../build;
-          ../src/configure --cc=3Dcc  --extra-cflags=3D-I/usr/local/include=
-                          --extra-ldflags=3D-L/usr/local/lib ;
-          gmake --output-sync -j16 all check V=3D1;
+Type and data structure are the only difference from the standard
+viommu routine, and both are already in the uAPI header. 
 
-  Warning: Permanently added '[127.0.0.1]:34187' (ED25519) to the list of k=
-nown hosts.
-  python determined to be '/usr/local/bin/python3'
-  python version: Python 3.12.11
-  mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-  mkvenv: checking for meson>=3D1.5.0
-  mkvenv: checking for pycotap>=3D1.1.0
-  mkvenv: checking for qemu.qmp>=3D0.0.5
-  mkvenv: installing meson=3D=3D1.10.0, pycotap=3D=3D1.3.1, qemu.qmp=3D=3D0=
-.0.5
-  mkvenv: installing /home/qemu/qemu-test.lk7TCA/src/python
-  ERROR: Exception:
-  Traceback (most recent call last):
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/cli/base_command.py", line 106, in _run_wrapper
-      status =3D _inner_run()
-               ^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/cli/base_command.py", line 97, in _inner_run
-      return self.run(options, args)
-             ^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/cli/req_command.py", line 67, in wrapper
-      return func(self, options, args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/commands/install.py", line 386, in run
-      requirement_set =3D resolver.resolve(
-                        ^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/resolver.py", line 76, in resolve
-      collected =3D self.factory.collect_root_requirements(root_reqs)
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/factory.py", line 545, in collect_=
-root_requirements
-      reqs =3D list(
-             ^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/factory.py", line 501, in _make_re=
-quirements_from_install_req
-      cand =3D self._make_base_candidate_from_link(
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/factory.py", line 212, in _make_ba=
-se_candidate_from_link
-      self._editable_candidate_cache[link] =3D EditableCandidate(
-                                             ^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/candidates.py", line 329, in __ini=
-t__
-      super().__init__(
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/candidates.py", line 159, in __ini=
-t__
-      self.dist =3D self._prepare()
-                  ^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/candidates.py", line 236, in _prep=
-are
-      dist =3D self._prepare_distribution()
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/resolution/resolvelib/candidates.py", line 339, in _prep=
-are_distribution
-      return self._factory.preparer.prepare_editable_requirement(self._ireq)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/operations/prepare.py", line 698, in prepare_editable_re=
-quirement
-      dist =3D _get_prepared_distribution(
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/operations/prepare.py", line 72, in _get_prepared_distri=
-bution
-      abstract_dist.prepare_distribution_metadata(
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/distributions/sdist.py", line 69, in prepare_distributio=
-n_metadata
-      self.req.prepare_metadata()
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/req/req_install.py", line 567, in prepare_metadata
-      and self.supports_pyproject_editable
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/usr/local/lib/python3.12/functools.py", line 998, in __get__
-      val =3D self.func(instance)
-            ^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_internal/req/req_install.py", line 258, in supports_pyproject_edi=
-table
-      return "build_editable" in self.pep517_backend._supported_features()
-                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_vendor/pyproject_hooks/_impl.py", line 180, in _supported_features
-      return self._call_hook("_supported_features", {})
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/build/pyvenv/lib/python3.12/site-pack=
-ages/pip/_vendor/pyproject_hooks/_impl.py", line 402, in _call_hook
-      raise BackendUnavailable(
-  pip._vendor.pyproject_hooks._impl.BackendUnavailable: Cannot import 'setu=
-ptools.build_meta'
-  mkvenv did not complete successfully:
-  Traceback (most recent call last):
-    File "/home/qemu/qemu-test.lk7TCA/src/python/scripts/mkvenv.py", line 9=
-65, in main
-      ensure_group(
-    File "/home/qemu/qemu-test.lk7TCA/src/python/scripts/mkvenv.py", line 8=
-59, in ensure_group
-      result =3D _do_ensure(to_install, online, wheels_dir)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/home/qemu/qemu-test.lk7TCA/src/python/scripts/mkvenv.py", line 8=
-01, in _do_ensure
-      pip_install(
-    File "/home/qemu/qemu-test.lk7TCA/src/python/scripts/mkvenv.py", line 6=
-89, in pip_install
-      subprocess.run(
-    File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
-      raise CalledProcessError(retcode, process.args,
-  subprocess.CalledProcessError: Command '['/home/qemu/qemu-test.lk7TCA/bui=
-ld/pyvenv/bin/python3', '-m', 'pip', 'install', '--disable-pip-version-chec=
-k', '-q', '--no-index', '--find-links', '/home/qemu/qemu-test.lk7TCA/src/py=
-thon/wheels', '--no-build-isolation', '-e', '/home/qemu/qemu-test.lk7TCA/sr=
-c/python']' returned non-zero exit status 2.
-  Connection to 127.0.0.1 closed.
-  DEBUG:qemu.machine.machine:Shutting down VM appliance; timeout=3D90
-  DEBUG:qemu.machine.machine:Attempting graceful termination
-  DEBUG:qemu.machine.machine:Closing console socket
-  DEBUG:qemu.machine.machine:Politely asking QEMU to terminate
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:--> {
-    "execute": "quit"
-  }
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:<-- {
-    "timestamp": {
-      "seconds": 1770671483,
-      "microseconds": 668804
-    },
-    "event": "NIC_RX_FILTER_CHANGED",
-    "data": {
-      "path": "/machine/peripheral-anon/device[0]/virtio-backend"
-    }
-  }
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:<-- {
-    "timestamp": {
-      "seconds": 1770671497,
-      "microseconds": 530684
-    },
-    "event": "SHUTDOWN",
-    "data": {
-      "guest": false,
-      "reason": "host-qmp-quit"
-    }
-  }
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:<-- {
-    "return": {}
-  }
-  INFO:qemu.qmp.protocol.7f9dfba48ec0:Task.Reader: EOFError
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Task.Reader: failure:
-    | Traceback (most recent call last):
-    |   File "/home/alex/lsrc/qemu.git/vm-venv/lib/python3.13/site-packages=
-/qemu/qmp/protocol.py", line 914, in _bh_loop_forever
-    |     await async_fn()
-    |   File "/home/alex/lsrc/qemu.git/vm-venv/lib/python3.13/site-packages=
-/qemu/qmp/protocol.py", line 952, in _bh_recv_message
-    |     msg =3D await self._recv()
-    |           ^^^^^^^^^^^^^^^^^^
-    |   File "/home/alex/lsrc/qemu.git/vm-venv/lib/python3.13/site-packages=
-/qemu/qmp/protocol.py", line 1053, in _recv
-    |     message =3D await self._do_recv()
-    |               ^^^^^^^^^^^^^^^^^^^^^
-    |   File "/home/alex/lsrc/qemu.git/vm-venv/lib/python3.13/site-packages=
-/qemu/qmp/qmp_client.py", line 459, in _do_recv
-    |     msg_bytes =3D await self._readline()
-    |                 ^^^^^^^^^^^^^^^^^^^^^^
-    |   File "/home/alex/lsrc/qemu.git/vm-venv/lib/python3.13/site-packages=
-/qemu/qmp/protocol.py", line 1021, in _readline
-    |     raise EOFError
-    | EOFError
+> +    bool (*alloc_veventq)(SMMUv3State *s,  Error **errp);
+> +    void (*free_veventq)(SMMUv3State *s);
 
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Transitioning from 'Runstate.RUNNING=
-' to 'Runstate.DISCONNECTING'.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Scheduling disconnect.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Task.Reader: exiting.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Cancelling writer task.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Waiting for tasks to complete ...
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:disconnect() called.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Task.Writer: cancelled.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Task.Writer: exiting.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Closing StreamWriter.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Waiting for StreamWriter to close ...
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:StreamWriter closed.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Disconnected.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:QMP Disconnected.
-  DEBUG:qemu.qmp.protocol.7f9dfba48ec0:Transitioning from 'Runstate.DISCONN=
-ECTING' to 'Runstate.IDLE'.
-  DEBUG:qemu.machine.machine:Waiting (timeout=3D90) for QEMU process (pid=
-=3D2646179) to terminate
-  DEBUG:qemu.machine.machine:Cleaning up after VM process
-  make: *** [tests/vm/Makefile.include:121: vm-build-openbsd] Error 3
+alloc_/free_veventq can be moved into alloc/free_viommu functions.
 
-Hmm maybe that failure is in the build itself...
+> +    void (*reset)(SMMUv3State *s);
+> +} SMMUv3AccelCmdqvOps;
 
-> +
-> +$(VM_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
-> +		/usr/bin/env python3 $(SRC_PATH)/python/scripts/mkvenv.py create vm-ve=
-nv
-> +		$(SRC_PATH)/vm-venv/bin/python3 $(SRC_PATH)/python/scripts/mkvenv.py e=
-nsuregroup --online $(SRC_PATH)/pythondeps.toml tooling functests
-> +
-> +.PHONY: vm-venv
-> +vm-venv: $(VM_VENV_TOKEN)
-> +# end hackery
-> +
->  .PHONY: vm-build-all vm-clean-all
->=20=20
->  EFI_AARCH64 =3D $(wildcard $(BUILD_DIR)/pc-bios/edk2-aarch64-code.fd)
-> @@ -102,7 +112,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
->  		$(if $(LOG_CONSOLE),--log-console) \
->  		--source-path $(SRC_PATH) \
->  		--image "$@" \
-> -		$(if $(filter-out check-venv, $?), --force) \
-> +		--force \
->  		--build-image $@, \
->  		"  VM-IMAGE $*")
+Overall, an ops structure feels unnecessary to me. Maybe init and
+reset are somewhat plausible. But nobody else would reuse this ops
+structure that is defined exclusively for Tegra241CMDQV?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>  /*
+>   * Represents an accelerated SMMU instance backed by an iommufd vIOMMU object.
+>   * Holds bypass and abort proxy HWPT IDs used for device attachment.
+> @@ -28,6 +45,8 @@ typedef struct SMMUv3AccelState {
+>      uint32_t bypass_hwpt_id;
+>      uint32_t abort_hwpt_id;
+>      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+> +    const SMMUv3AccelCmdqvOps *cmdqv_ops;
+> +    void *cmdqv;
+
+Having two pointers for the same extension feels redundant. Maybe
+merge them with:
+
+typedef struct SMMUv3AccelCmdqv {
+    void *private; // points to Tegra241CMDQV
+    struct iommu_viommu_tegra241_cmdqv viommu_data;
+} SMMUv3AccelCmdqv;
+
+...
+
+SMMUv3AccelState {
+    ...
+    SMMUv3AccelCmdqv *cmdqv;
+};
+
+?
+
+Nicolin 
 
