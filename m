@@ -4,144 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F28E81BD3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 15:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF359E81BD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 15:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpTI9-0007Nw-Oy; Mon, 09 Feb 2026 10:35:13 -0500
+	id 1vpTL1-0008O6-HN; Mon, 09 Feb 2026 10:38:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpTI7-0007M6-Li
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:35:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTKw-0008N7-GF
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:38:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpTI5-00083Q-7S
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:35:11 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTKs-0008NJ-1f
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 10:38:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770651306;
+ s=mimecast20190719; t=1770651480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HkkqsGe2lUfdPf4uwuH3biqh+Xm+JhrEt/KOrYTBOXw=;
- b=F6FK3EbKgyImy3f2wo8G0vxWHHW2mnsPnkFTVvBIsGMwd//sl4mq6nOvuGdRorVqVJX1ZJ
- FCkmr0B54X2gRivNsbMjK87XR8SRPYN+gkugaC2raahOqJEyr8uK7ftTz60AD1XEFlQTSk
- XJdJLPRwa2CEi7gtP1lTXGhgpHAsLd0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
+ b=h1wwu+qRi86j/LCw+Z6XlTzVyJaacrbS++JG7dlZKM1cQazDaP+G+aqrFRYim22m2g1eY2
+ To8Ct7ig1+Ly3LpWqhaHhInA51DKk8c0oTUUjFXEUorgZhGcKFKVzHZb1Pok3RAkCdz1s9
+ HRQybX/HLcdu1JXMrRmVmkIP2qWeW6A=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-yopxXfcmPgmXujKCvgY1VA-1; Mon, 09 Feb 2026 10:35:05 -0500
-X-MC-Unique: yopxXfcmPgmXujKCvgY1VA-1
-X-Mimecast-MFC-AGG-ID: yopxXfcmPgmXujKCvgY1VA_1770651305
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-7962e684413so35370547b3.1
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 07:35:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770651305; cv=none;
- d=google.com; s=arc-20240605;
- b=PRyXdqCeB8e5ZG5Q2IEHW6CTlul6QPift0gw8BLLzi2W3g4cK7aTgio3OQPFU835gK
- 2eyfXpiIZ7obL4MSv4RRmObo3lfZ0dSNnlukukKdRPPqUqzoWn8arfUQmidTtSXwj8AX
- aTX1Wv7OoooVthyZRAU4wxgqrvPfrAE0jVX1xcDKPdkVg3Pw4Rzx6/NCzTxEJNSJ2EiD
- w1iY/rTBlfXAr9stK4PXw2q6mZjnDVLdTz/s1FNyOxYdLAgFavumdjNvEArYvLd/677H
- TnhZXU8l8wJYvLHlth87qc+Ea0tMhUwALR2oKL54MN1wvw8A9H8wxIEgQsP1cKPkbhjd
- vwpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=HkkqsGe2lUfdPf4uwuH3biqh+Xm+JhrEt/KOrYTBOXw=;
- fh=f0DsqyzYnC8d8x0wCFNQTT7sVRqvPmtvFhArQ12Mx/c=;
- b=JjNZ/cD4LlPt0dtG8IaNib4EtkzpKBXn4PJI+PqN8bxs55p2C54jz/qlcBqo3yryoY
- 5YXhsogH5CR4NR8PXgpwoqnMaI/APTyM7XubzEOjfx6pOuZ3uycK7lHNjLQ0/dPSBzN9
- 6SwlWMEdod/Yy4085RhPpEYHS0GMAxxElmIyPXKlPJcT2SdjQ0dWJKxfRL9DWO7prL71
- oM6kmjO9Sp68mWBrqYWv5LWW+Zo9P98B6KVk9oCCT5sMPwsylKReEc31XWw7nzk7leka
- TfnD5aNpkwD1Cb3Np3yna4cAI28WZDSzW3bG9iCWinAJoAplFUN4uimfHzHatOYTpFV/
- xspg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-379-ssJ7F9w1OZebOZMNqRqHaA-1; Mon, 09 Feb 2026 10:37:59 -0500
+X-MC-Unique: ssJ7F9w1OZebOZMNqRqHaA-1
+X-Mimecast-MFC-AGG-ID: ssJ7F9w1OZebOZMNqRqHaA_1770651478
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8c70ab7f67fso1372924585a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 07:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770651305; x=1771256105; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HkkqsGe2lUfdPf4uwuH3biqh+Xm+JhrEt/KOrYTBOXw=;
- b=hrjmm95/EPmnwgAv+6mCbLIu9Q2x4kS1nSdvztNoXJ8bajseudPWOaSF+jdPM2s2gR
- tXcoXSW2qSxz8wGrCqvegALlS3dKJzxDmJu5aczHv2AvhDdzTS/Ls2BZ9cUQp0raapsV
- aTMBVNWS+O6ow88Qu+DfzaNpk6lClOdELyzDwbM1EJ+vbNzr+Fk8Stdujn0XM1j86gAo
- FjW7CF4a/TE0M9wh6pBQX8wbVgzcS1vAjvGm7IDZpsBUB+lM6kdPeX8lRm0GIYYYKHnJ
- /35ZshwoFQMribYnvwKMAYJnjTTXRzLA98FfkRmI8DdmKDdDhXnxIKzecd/TuMPuvwl2
- R6Wg==
+ d=redhat.com; s=google; t=1770651478; x=1771256278; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
+ b=MpicW1xLCUCmwFdhce7bC6rZFfh2jnc6c5+fgPkk0DbUr8l7x/HcWhYhCqe4d4Xd5A
+ iDe5PLMiXDoGTHeQy5AbjrG3V60AyYpORgRpU4zS6wTV7sEYtRsVFTsKYlr7NJhla4oX
+ o+8jk/56gbKyqi6I1oKxXVK6luntFdZSRPCEj5Iie5XJvnYvcnfMhUF5EOO8uBWLY2kU
+ BXIiLlsc2XKcFyi2+PezU+Mw98l4V6QTsU16GEkpEIen6kJSrCGCu3X5bIsnKucSBuZt
+ Jf4mrPJzwB+BldKe6EHjU+v8A9d1BPd+6s+lZb7uSIhwstHOsjAiv7fsRAMPeCjeRmmj
+ kQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770651305; x=1771256105;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HkkqsGe2lUfdPf4uwuH3biqh+Xm+JhrEt/KOrYTBOXw=;
- b=ka62Bc/q00oms1cdpouYTqEDsSWqOSoFdQQLsY08I9cvDaL9QP6+0EjPvjqotmUnAH
- m+fC/KZK8kV4KiaW7meeUB3dYqJjmHGMd2B8GlL/4hJHE/mtJ53LQkvZ5nZmbb0oWxO8
- QI4jVGrFF4Kt7s5bA4n5mhhpcqc6J4xXC8iOEGfzvAOQGMd2o0lrh0bhqyhCe7oHaIST
- 2qIO20U0CV7f4M7dhUYM+ms0Ft91r3Nea87FCyuikPTqL7/QLWiUhRzWr1vwnypp8yQL
- X45RR/FHMP85UNXKCI2WD79yi4sk26nA4N6h+8w1GqYW/O+GZMySyWJPyq6ak2RoYS93
- x6jQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrL8kfv9OcEgYYEh8R2dMCYgmsd9TXTHk6krj/UVLiCHZA5Qh2J7v+OWC2QRNXFPQvgaRSmmLCsYnY@nongnu.org
-X-Gm-Message-State: AOJu0YzgJw0Z6I+XXE2M23LpN/hEbygY41Duql7oABBJ/yqp6AuT5WRU
- NwqeT/c6bVlhqRjgA9jQy/5Dd/GJur1H/8gmJ+8ajNosNgBK25fzxp2RxiXvgkMEo7BQI7g8d1s
- NeBbfzDWOjfanOR2IncmH1B2JupzsWvSW8GIGBuFmLkAJNUKPVIdkiZd0b0m/tElY7wjYF4KgRF
- AHu7ZtFZKj1HDJ7G+4nbdly5Pg4iEXNi0=
-X-Gm-Gg: AZuq6aIAeNWERA1aRgJ3BZsvfPh6MBFBBt2RmjdyJHS+jXxGXtzWgSmOshiVuYBsu/+
- MM828vJQ21KH/EsGs52ZlP0wJ1+CdhwtxAyDLE9+XNTrgZGp1vGEgn0PyYAwaA+w5JUk7TNvw8+
- zDndcfpC61Dlrz7smKBa7LUn16+irTeRaOXVncdfGSz+B9i/AB3szEBB1E4Evc81AHi0e4ox3oG
- G17KwXH6/i6zVI8iKJQif5BAQ==
-X-Received: by 2002:a53:acc2:0:10b0:649:e546:62e2 with SMTP id
- 956f58d0204a3-649f1f42018mr8756743d50.44.1770651304700; 
- Mon, 09 Feb 2026 07:35:04 -0800 (PST)
-X-Received: by 2002:a53:acc2:0:10b0:649:e546:62e2 with SMTP id
- 956f58d0204a3-649f1f42018mr8756715d50.44.1770651304174; Mon, 09 Feb 2026
- 07:35:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770651478; x=1771256278;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4fVkCMeSefvAGS9QMhKynYAx0VQQYLmAa7qJeVRuQ1Q=;
+ b=etB0A7Qde66KywdwoRyYWojmiGAPBy2O9uymY0KSvdS/k1dAPNzoc9cQCJQ9biJ+5r
+ /tZIJpcgLrrsVhTsR8YATCd9JQAGJDNdI4BgNCOrcTe3lioYW1MdrDJU0QliN1Kd0g5Z
+ ytPsM+mijtnWYES5z9qzS3sJgz3ex3LUi6NlmS7FlxzplrulzZCqxqXt4S1gyhMicKPi
+ PDJkXV92J0aeG/REnklVwthgZOzaND0FzMM6dQtnVThZG9ncE0HfQImTqYBHgFfNxHSm
+ i2XDG8kRqTJQSV8W8Bu616Fs0tL7MN9pqBnLa+2GiYu7Y4IdIOxaOnkDlhs+711zbqbg
+ 6TKg==
+X-Gm-Message-State: AOJu0YwQCShvhIZT81/vLQ9HP7cDf392eAXkVFmzqmRnY8UG2z2wm/cG
+ i/Ahs6xMB6bYlduZADdwT6f4BcnJotp8vjkdaBSX5RkxaCIlJ2dDCtcnrGyRj0GhQlcyjke6Gdx
+ mzvGB0TTslFb4GG6Xqf/gfZZXZZRNlkSGdGnGAF/nMBeFgff05QL/h9tjk4+6K6gu
+X-Gm-Gg: AZuq6aLrckyJgD0bhYu/NheAC6Eg7p4WsMmpEBa6hNsoiUw36OxUE5PWmu48pDSfdKm
+ Kr/C44xXbk5IxcwKZ56t4d+goXqoIR8uE6RKGqR7yCDmkM8sbVrTBviSySfflshLM1KEA5ZXbuu
+ LYvkZggtNxTPefPHWRL6ZaPihcjQMUWBN+bFcU+B+5N+99ChKCqVJp71AUAiBu8RJrnHb4VkeVp
+ 4XJEgHaX4IkRfoWqXPFg9onJUaKf/RN469bLoOO/MSROMdRwERfhHBG1qZL773zK3FUiVBtyqpc
+ H1WjnKtmxmp50QSnyNSTYlCwQGu4v9FAd1YKaIBYV+64U4iFhuCaCS0Oef0N1qTyZzSEiMM48mJ
+ cCng=
+X-Received: by 2002:a05:620a:192a:b0:8b2:767c:31ab with SMTP id
+ af79cd13be357-8caf15f3b87mr1514545285a.60.1770651478158; 
+ Mon, 09 Feb 2026 07:37:58 -0800 (PST)
+X-Received: by 2002:a05:620a:192a:b0:8b2:767c:31ab with SMTP id
+ af79cd13be357-8caf15f3b87mr1514541785a.60.1770651477608; 
+ Mon, 09 Feb 2026 07:37:57 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8caf9a16240sm836785585a.35.2026.02.09.07.37.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Feb 2026 07:37:57 -0800 (PST)
+Date: Mon, 9 Feb 2026 10:37:56 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, ppandit@redhat.com
+Subject: Re: [PATCH v2 8/9] migration/options: Stop freeing s->parameters
+ members individually
+Message-ID: <aYn_VBkEGVpAZUEh@x1.local>
+References: <20260202224101.20568-1-farosas@suse.de>
+ <20260202224101.20568-9-farosas@suse.de>
+ <aYUWwSxnsWn1Dfu0@x1.local> <87a4xmqcmn.fsf@suse.de>
+ <aYYU5fbU5l4grFav@x1.local> <87343dd53c.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260203203512.672552-1-jsnow@redhat.com>
- <20260203203512.672552-12-jsnow@redhat.com>
- <CABgObfYtKr88BvhPUL4KfX464u=T4d7BP70XRLMdn28sXSKU4g@mail.gmail.com>
- <CAFn=p-bq8siBh0f2bs=x6ZeHQn6y2_2RuwKVnVrH+CvOTe-4ig@mail.gmail.com>
- <CABgObfYA12a08yXPsn84hX8dv59x7DDDLW0X3u5Cre3od6iMFw@mail.gmail.com>
- <CAFn=p-aforipvpRhUyLbStYPSRC4Pc0Oadcq8HzT7GzEGL+BnQ@mail.gmail.com>
- <CABgObfYOYykc+af+HawH9-vVj7vpUikrVPYDmY-ykD8cEVv-TQ@mail.gmail.com>
- <f26f58c0-cae5-471c-a12c-0a429b8875cb@redhat.com>
-In-Reply-To: <f26f58c0-cae5-471c-a12c-0a429b8875cb@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 9 Feb 2026 10:34:53 -0500
-X-Gm-Features: AZwV_QjKCk8I_YLPFWlmUMWqrO83JQSp4rExiBMGgjBylPq24qAxMB6_JThfsnA
-Message-ID: <CAFn=p-Ydefd1Ej0r7YZo=1Rg7byQoF7aCBZA1_H47EqZ9APpow@mail.gmail.com>
-Subject: Re: [PATCH v5 11/16] meson, mkvenv: add qemu.git/python/qemu package
- to pythondeps.toml
-To: Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- "open list:Block layer core" <qemu-block@nongnu.org>,
- Maksim Davydov <davydov-max@yandex-team.ru>, 
- Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Kevin Wolf <kwolf@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87343dd53c.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,51 +118,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 5, 2026 at 2:52=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote=
-:
->
-> On 04/02/2026 18.53, Paolo Bonzini wrote:
-> > On Wed, Feb 4, 2026 at 6:03=E2=80=AFPM John Snow <jsnow@redhat.com> wro=
-te:
-> >>> Use whatever is in bookworm or 22.04?
-> >>>
-> >>
-> >> OpenSUSE Leap 15.6 and 22.04 until April
->
-> I don't think we really really have to support OpenSUSE 15 anymore, do we=
-?
-> 16.0 has been released since a while, and we state that "The project aims=
- to
-> support the most recent major version at all times for up to five years
-> after its initial release." - and OpenSUSE 15.0 has been released more th=
-an
-> 5 years ago.
->
+On Fri, Feb 06, 2026 at 04:50:15PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Fri, Feb 06, 2026 at 09:29:04AM -0300, Fabiano Rosas wrote:
+> >> There's some amount of rigidness caused by qdev requirements
+> >> unfortunately.
+> >> 
+> >> I'm not sure if I ever posted it, but I wrote some code to move the
+> >> parameters into a MigrationOptions object so we could make
+> >> MigrationState not be a TYPE_DEVICE anymore. But then we'd end up with
+> >> something like -global migration-options by default, so it kinda killed
+> >> the idea.
+> >
+> > It's not strictly about TYPE_DEVICE, but reusing of qdev properties, right?
+> > At least the issue described by your comment was about offseting and it
+> > sounds like so.
+> >
+> 
+> Absolutely, I was just rambling.
+> 
+> Of course, TYPE_DEVICE brings us weirdness such as:
+> 
+> (qemu) device_add migration,help                             
+> migration options:                                           
+>   announce-initial=<size> -  (default: 50)         
+>   announce-max=<size>    -  (default: 550)        
+>   announce-rounds=<size> -  (default: 5)    
+> ...
+> 
+> So it would be nice to drop this dependency.
 
-15.6 was released much more recently, and 16.0 only came out recently,
-so I think we are still on the hook. However, 15.6 does have a full
-set of Python 3.11 packages, so it doesn't matter. 22.04 is the
-blocker until April.
+Yep.  I'll move my (below) series higher priority to respin, likely I can
+drop the QOBJECT_COMPAT idea that didn't attract much attention, but
+instead I can stick with exporting the qdev property helpers.  It'll be
+enough for us to make migration object to get rid of TYPE_DEVICE.
 
-> > Technically for OpenSUSE we would use py3XX-setuptools;
-> > py310-setuptools in particular is 67.6. But yeah, 22.04 is the oldest
-> > at this point and we might as well pick that one for our accepted
-> > version.
-> Sounds reasonable. But in case it's causing trouble, 22.04 goes EOL on
-> 2026-04-25 and the next QEMU release is planned for 2026-04-14, so IMHO
-> that's close enough to at least consider to ignore it?
+> 
+> > I just want to double check with you that I think the problem you described
+> > will also present even after applying my other series:
+> >
+> > https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
+> >
+> > That series only removes the TYPE_DEVICE dependency, but not qdev
+> > properties.  I think it's the qdev property trick that is relevant at least
+> > to the offset issue you mentioned so MigrationParameters cannot be
+> > g_new()ed.
+> >
+> > The major use case for this qdev reuse is: (1) help scripting, so as to use
+> > -global migration.XXX=YYY, (2) support migration in machine compat
+> > properties.  IIUC (1) isn't a major thing we ask for (again, maybe I used
+> > the most of it.. but maybe only me; I'm not sure..), as long as anything
+> > can keep (2) working then we can consider.
+> 
+> The properties are also useful in providing defaults for the migration
+> options and perhaps we could make use of the .get/.set methods in a more
+> convenient way in the migration code, such as implementing per-option
+> input validation instead of checking all options always. (although I
+> haven't thought about the overlap with QAPI)
 
-Not causing enough trouble to drop it early, we can give it one more
-release IMHO.
+Yes good point.
 
-The real problem with mandating certain levels of Python ecosystem
-packages right now is actually the large number of cross compiler
-containers we are still using that are running Debian 11, I have since
-learned, so I am dropping the suggestion for the time being until that
-can be addressed.
+Said that, currently if we're still with qdev properties we can't easily
+inject those checks due to the hard-coded get()/set() for qdev properties,
+e.g. qdev_prop_uint8 will provide its static get()/set() hooks.  We either
+need to teach qdev props to take check functions, or impl our own (then
+we'll need to provide the default_val and machine compat features).  Maybe
+it's easier to do the former, and maybe some other qdev props can leverage
+too.  Not an immediate concern.
 
->
->   Thomas
->
+> 
+> About -global, we should do better to separate the compat options from
+> the regular options. (and no, a blank line in options.c is not enough
+> separation!). I worry someday we'll break something in compat while
+> trying to change the regular options.
+
+Normally if we have something in machine compat properties, those shouldn't
+be used for normal users.  Those, importantly, also shouldn't be present in
+QMP set parameters.  That should IMHO be the line to identify a real compat
+option v.s. a real parameter, because we do not expect normaly user to use
+-global, only advanced, so one knows what one is doing and taking the
+risks.
+
+It actually makes sense to still be able to adjust some internal compat
+behaviors if an advanced user really wants; that might be handy for
+debugging in some cases to overwrite machine compat properties, even if
+extremely rare.
+
+> 
+> Another point is that even after all the recent changes to options.c, we
+> are still left with a list of migration_properties that is optional to
+> use. Which means setting defaults is also optional.
+> 
+> If we decide to retroactively add a default we'll suddenly have a new
+> option showing up in -global! Having to discover mid-way through the
+> implementation of a new migration feature that setting a default like
+> the other options do will also add property code to your option and now
+> you have one more source of SIGSEGV is not super fun either.
+> 
+> I had the intention to somehow force every option to have an equivalent
+> in migration_properties so that every option would have a default
+> explicitly set, but seeing the recent work on fixing the StrOrNull
+> property, I don't think it's worth it to ask that people go through the
+> hassle of implementing a property (when the new option cannot use the
+> existing types).
+
+Right. We can discuss this case by case, normally I think we should always
+welcome the same parameter to be added into migration_properties[], most of
+them will be simple scalars so we shouldn't worry.  We can make it optional
+if it needs extensive work on new types.
+
+-- 
+Peter Xu
 
 
