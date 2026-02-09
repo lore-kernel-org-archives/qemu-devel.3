@@ -4,116 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BA5EF070B
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 05:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7BFEF06FF
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 05:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpK4i-0003Dn-7a; Mon, 09 Feb 2026 00:44:44 -0500
+	id 1vpKCr-0004su-RE; Mon, 09 Feb 2026 00:53:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vpK4g-0003DZ-2e
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:44:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vpK4b-0007YZ-93
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:44:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770615875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W6MZWyiZqKOwnVELgJVmJsgV5eB4OjkUhoa5pjoael0=;
- b=DjpR9M4vM83Kw+7qC6b7IAer06uWKBKFu7ruRy8nxLP1UWp5Z6hewqxXHBHowVAtIeefUc
- By3BAlPJWCaC4mDcZ2vj8SwqhVz1vvGoJIj2LQoX0Wm/VZL//4Z0sxeaDORM6wijTyjnlb
- 139uJx8I2GD2HqjwLDn73l4z5MXWMEk=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-HE17rg2UOUi06T6cuBiTZQ-1; Mon, 09 Feb 2026 00:44:33 -0500
-X-MC-Unique: HE17rg2UOUi06T6cuBiTZQ-1
-X-Mimecast-MFC-AGG-ID: HE17rg2UOUi06T6cuBiTZQ_1770615872
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-354e7e705e3so1319375a91.1
- for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 21:44:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpKCi-0004sW-42
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:53:00 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpKCg-0001A6-HX
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:52:59 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-82318b640beso2051747b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 21:52:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770615872; x=1771220672; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W6MZWyiZqKOwnVELgJVmJsgV5eB4OjkUhoa5pjoael0=;
- b=Sqzrp1it0XDGC501C2munAfUjUP1dJ84Tl2RWuZyFBSWyb3dxUEGe5uTjk7qLNPClb
- XeWjAuiwMvyipRkCIevFGMzYDCMsDnWX9hkl97p0lRCduWtQ7WI7M5uTQpnApNdJdpHV
- 35t/KgRs/U4QKuHo74rYaKh2Lg8bmHe3FmqvD1+6pX470c1pcUC2SK5iq36OGxpMbhu9
- VFeqWhNUwH4mGfA8jUi8Gt1ZeWIiBkKrMZhEuPS/j0z4WCoMuRDnSlkiQCxnfLcRT0Ws
- ylYoRQ5zLye/rwc++vMFr9wf1nd1Rp5YKF4v/XGRcPPoUWjtfT4auzDXSeJBWhK/zIGW
- 0FxQ==
+ d=linaro.org; s=google; t=1770616376; x=1771221176; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=aX1sQxtYdIMYAlVOMRcTE5905DWAYEmviChFaYJJ7N8=;
+ b=m43UpfQtpYNNkqJha1KrAxtf18ffloI0p+gMoiMW0knD3Qu8xsN6ZrPEkDCidXg1+H
+ cuvLmlSrmS1j0pM/1D6ZhNzbU3rYTjLyVryXMR8UcrVoCQOvgF+qy8c7ttHFOtPeBosv
+ rzjs/gPtpom1H1UnkI+6obxDKziKcCkE7KldRZ/QK9leS5ZPnFbOPAVEMUxruwctv47P
+ Goz31rX9lwFvP4vYidTnmwmF1jjBfsK5t0JBlh6QO4foyEVWSsgPUOxREfpjp003HXAr
+ x35ZdLL099WQMUdLmjCKaNZEFDjhiONeNnwgWrqKe+kPrDXwF5T7b1G7uq9FoglSAS7n
+ 7P7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770615872; x=1771220672;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W6MZWyiZqKOwnVELgJVmJsgV5eB4OjkUhoa5pjoael0=;
- b=sGQLPNv5srhhZTLtZ2xRE9v7Z0Br8QzvpgMCa63PiGRH1oUHyE3j3BFRxCijmFiCgS
- ZbsFWRYBbTEbR5JlWjQD0qqLFp2de4DXaoV4/q2aF5IjHxqZDaK+1eqEFk3sAhD34hlq
- cn1twaMh85viRvZfU5P2BCeqUEV1vtEvGY1SUtc5Ja11iilHU8KQPppuabElui9TcYln
- oc5VL5qF8JsUhq/S/Pj5jLkjOGIL2xaw343R4T8h+AELAiIfDXzmivTVde9Z0k2pr2JB
- hboTs/QjXW/xNw9J2hxy26O29FJZT6+Qlf5ezETEDLyXZ0kwt4lsQBhYDJW9iDMrmd6H
- 79Zg==
+ d=1e100.net; s=20230601; t=1770616376; x=1771221176;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aX1sQxtYdIMYAlVOMRcTE5905DWAYEmviChFaYJJ7N8=;
+ b=a7Hc//qz8YSwypyjcLxUL7CqS9CONcHijCCJY4zalBc1sqw0ICiZhvsYr7X8BItiRl
+ l12V8FIEt8BRuHSdfD12QhP0mv1JQwNc06Kih5l2J63yJxejwZGkMRi9vKg0DJ93esDj
+ JhnO4sQVY/aU5QHhKNS0y35hyswfMQK2bSRuMss/lMeZJd6NF+9sGsXDLB/6KYfGIEBZ
+ /kuUkLDHWvRMq+NB1XcolVoLmtSQvdrmKutBPGQ9UUqHqGPdra+btDARwaJumMOTzvuJ
+ EhwI5CwfjscpQFM4UZ0XjDIXHIQ7W7AvVITtA7H+SE/vicufkN+DsY+uycnb84Owe75p
+ 7SXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWk2jIzeHrNZinknwwVxfdd0eESyjmVOZokaBRMxRSQJeUeg0vNiF+aTi4dlywpXVBMCRz1GtTtUim9@nongnu.org
-X-Gm-Message-State: AOJu0YxI+/GMV+ow7jB9f12jzhtdoDWdCVc0SjY2Fqzpi85XauCd4ah8
- NhITtdl8+ceStkFddX+L6b+BfAVZxHfAaUF4RHrGgijZT6pjZ3agt/s3Nit0vdxeDb4GrY/q0TL
- 3Zdoxxc2DO69ga5zqKgqRq+/YVMxA4IMFwAUbZqFYIP6U5vdooWjF+L02
-X-Gm-Gg: AZuq6aL3i6MUWWx75Nq8bPo3/heVGUw7tH7n+hocw6WKn8MaFLvdB0X+Sr41C2jtrbf
- mtSadrz6gLBxkE8sbc8cpF2m2IrEZ4ltB/uifUk5ZTfDAICIhV5ChBD5nEVKyz+P0VyNMndVtPJ
- PTPNoytsasS40aYvz9quUjj428E+AWSS6nx0c0Y17TIQYA9vT/QSocWoS+4rPuG0jnwlIPluidD
- ung7IIrNP5rmTV9FMY74p5ZEPuRzQMzcJh8BxnQu4ii8mm7IC2IHc6ziP5L39x88vDlfP95KBuR
- SFROh/mojqBcFt7J2QTrMpx2q8woJU5cQjyNpmh7Dxa0bh2ZVH9xITUPf/roZOH7i4b7rY3GJS3
- 3vzyuuQoiJgJcrX0ciEDUheRMNBi8txHJKAXBq7yST6/97wkOc71pUxF0nHc=
-X-Received: by 2002:a17:90b:3901:b0:354:a57c:65dd with SMTP id
- 98e67ed59e1d1-354b3cae0d0mr7931026a91.24.1770615872049; 
- Sun, 08 Feb 2026 21:44:32 -0800 (PST)
-X-Received: by 2002:a17:90b:3901:b0:354:a57c:65dd with SMTP id
- 98e67ed59e1d1-354b3cae0d0mr7931013a91.24.1770615871577; 
- Sun, 08 Feb 2026 21:44:31 -0800 (PST)
-Received: from smtpclient.apple ([106.202.227.239])
+ AJvYcCUoBNF+kdvJTjR0hAWrCuwxHjTdLWBD5wXrDqhmm8Ko7+1XKUVZ6VUQI4xhcl9BQ+cfkS+SKehwRsHA@nongnu.org
+X-Gm-Message-State: AOJu0YzwGJv+YWs9ebQFKoWWANPstcepWLOn8edM5qCTetyhxIwcgX1p
+ 2N0TcF59gMrpq0NyZgLqxZwLNUzpJFAzzPFzW4zhOK8S0Ype7dsSnr3jofWlAQcHI9c=
+X-Gm-Gg: AZuq6aKOuOt6Z5QRDG/kRijtss2l353sxLKLEmNSyM5RNXOKrbV6+Thmm2bCgI7TYOx
+ QA7E7E/RsXLZiT61TPbhJGDQ5r3FRQUI7MDGYrqiBiavlWJbJyMLWT2PdrlisN3UtqKUz0ngJH7
+ ckiGSE8fxyYwGirn99aLqbvSXTZYXiMny9dlhreyHx6pZXl7UaQyvSCXPyhTWb+HuWFoALfkyUu
+ FHB2OkKk1xBmaeypIqW/9dViMC7HIrd1qYSwCvb4KLABf+7ylEK9T0fvnZm6XYmWIpUQ2hXFEg/
+ mnbFEF/qssSs4Na74sXqdEGq1LlKOqM5BkAqpvG+0PTYPXcalGRLq19xxKWi7BPQ+SlHvB2w7BT
+ Of+wFX7VGqASVcsZ+PE5AqWotxDExfoKSp4RTlBBM9CbIMj1RhlRfJkWJFt21llkevHT2/5mSSE
+ hRr9UZmRaOhHyT/4PbvroGiCmF7ME/m3HTISf3GjkazzKdkSP6wABHtH4C
+X-Received: by 2002:a05:6a00:3989:b0:823:f04:e89b with SMTP id
+ d2e1a72fcca58-824417242admr8351763b3a.48.1770616376277; 
+ Sun, 08 Feb 2026 21:52:56 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3549c38fa4fsm14345035a91.13.2026.02.08.21.44.29
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 08 Feb 2026 21:44:31 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v3 22/33] hw/vfio: generate new file fd for pseudo device
- and rebind existing descriptors
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <CAK3XEhN6gbALmc4xewbh0FmsaZzwOzd1gYnP96WtfYfyD0g_pA@mail.gmail.com>
-Date: Mon, 9 Feb 2026 11:14:12 +0530
-Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9A3531C1-1A3A-4D03-9B8C-E2E40B349C75@redhat.com>
-References: <20260127051612.219475-1-anisinha@redhat.com>
- <20260127051612.219475-23-anisinha@redhat.com>
- <CAK3XEhOet2pFNT2PLOHuBZFNAbXtYq3Hghr0XNvd4FKyPPX7bw@mail.gmail.com>
- <76421356-de3a-4941-bd4d-7c362fbb228f@redhat.com>
- <CAK3XEhN6gbALmc4xewbh0FmsaZzwOzd1gYnP96WtfYfyD0g_pA@mail.gmail.com>
-To: Cedric Le Goater <clg@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ d2e1a72fcca58-8244152456asm9451125b3a.0.2026.02.08.21.52.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 08 Feb 2026 21:52:55 -0800 (PST)
+Message-ID: <e291f290-a188-4106-8648-48d4c464dfed@linaro.org>
+Date: Sun, 8 Feb 2026 21:52:54 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/12] target/arm/tcg: duplicate tcg/arith_helper.c and
+ tcg/crypto_helper.c between user/system
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, kvm@vger.kernel.org, qemu-arm@nongnu.org
+References: <20260206042150.912578-1-pierrick.bouvier@linaro.org>
+ <20260206042150.912578-7-pierrick.bouvier@linaro.org>
+ <6c5eb308-56e6-487a-ad7b-8f0da70ab7cd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <6c5eb308-56e6-487a-ad7b-8f0da70ab7cd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,254 +145,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/8/26 9:00 PM, Richard Henderson wrote:
+> On 2/6/26 14:21, Pierrick Bouvier wrote:
+>> In next commit, we'll apply same helper pattern for base helpers
+>> remaining.
+>>
+>> Our new helper pattern always include helper-*-common.h, which ends up
+>> including include/tcg/tcg.h, which contains one occurrence of
+>> CONFIG_USER_ONLY.
+>> Thus, common files not being duplicated between system and target
+>> relying on helpers will fail to compile. Existing occurrences are:
+>> - target/arm/tcg/arith_helper.c
+>> - target/arm/tcg/crypto_helper.c
+>>
+>> There is a single occurrence of CONFIG_USER_ONLY, for defining variable
+>> tcg_use_softmmu. The fix seemed simple, always define it.
+>> However, it prevents some dead code elimination which ends up triggering:
+>> include/qemu/osdep.h:283:35: error: call to 'qemu_build_not_reached_always' declared with attribute error: code path is reachable
+>>     283 | #define qemu_build_not_reached()  qemu_build_not_reached_always()
+>>         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> tcg/x86_64/tcg-target.c.inc:1907:45: note: in expansion of macro 'qemu_build_not_reached'
+>>    1907 | # define x86_guest_base (*(HostAddress *)({ qemu_build_not_reached(); NULL; }))
+>>         |                                             ^~~~~~~~~~~~~~~~~~~~~~
+>> tcg/x86_64/tcg-target.c.inc:1934:14: note: in expansion of macro 'x86_guest_base'
+>>    1934 |         *h = x86_guest_base;
+>>         |              ^~~~~~~~~~~~~~
+>>
+>> So, roll your eyes, then rollback code, and simply duplicate the two
+>> files concerned. We could also do a "special include trick" to prevent
+>> pulling helper-*-common.h but it would be sad since the whole point of
+>> the series up to here is to have something coherent using the exact same
+>> pattern.
+> 
+> tcg_use_softmmu is a stub, waiting for softmmu to be enabled for user-only.
+> Which is a long way away.
+> 
+> It's also not used outside of tcg/, which means we should move it to tcg/tcg-internal.h.
+>
 
+Thanks, I didn't think about moving it somewhere else.
+This does the trick indeed.
 
-> On 9 Feb 2026, at 9:37=E2=80=AFAM, Ani Sinha <anisinha@redhat.com> =
-wrote:
->=20
-> On Mon, Feb 9, 2026 at 3:38=E2=80=AFAM C=C3=A9dric Le Goater =
-<clg@redhat.com> wrote:
->>=20
->> On 2/8/26 15:39, Ani Sinha wrote:
->>> On Tue, Jan 27, 2026 at 10:47=E2=80=AFAM Ani Sinha =
-<anisinha@redhat.com> wrote:
->>>>=20
->>>> Normally the vfio pseudo device file descriptor lives for the life =
-of the VM.
->>>> However, when the kvm VM file descriptor changes, a new file =
-descriptor
->>>> for the pseudo device needs to be generated against the new kvm VM =
-descriptor.
->>>> Other existing vfio descriptors needs to be reattached to the new =
-pseudo device
->>>> descriptor. This change performs the above steps.
->>>=20
->>> I have not been able to test this change. Can someone suggest a way =
-to
->>> add a functional test and/or test this manually?
->>=20
->> Automated VFIO testing [*] is tough because it depends on a "real"
->> physical PCI device.
->>=20
->> I have tested you series using a sev-snp guest with an assigned =
-device
->> (SATA controller) and verified that the guest could reboot. The SATA
->> controller has no disks connected, so further testing is required.
->>=20
->> However, a 'system_reset' command issued from the QEMU monitor leaves
->> the guest hanging. May be this is expected ?
->=20
-> I do not think so. On non-coco, I just tried it and it reboots fine
-> with x-change-vmfd-on-reset turned on.
+> 
+> r~
 
-Sorry I had some issues with my testing. Neither non-coco reset not coco =
-reset was using vmfd change path when the QMP reset command was used.
-In non-coco, it was the normal reset which obviously works.
-
-I fixed it. See =
-https://gitlab.com/anisinha/qemu/-/commit/c5514dbb2b52d474397220cfa3a0b8fa=
-a26cda0c
-
-Please use this patch and test. I have tasted this on SNP and seems to =
-work. I will make it part of next spin-up.
-
-Thanks for testing.
-
-> I tried a RHEL 10 guest image as well as a simple UKI kernel.
-> Maybe there is some bug in this patch, not sure. In QEMU the code path
-> should be the same for both.
->=20
->>=20
->>=20
->>> Otherwise I am going to add a comment in the next spin up that this
->>> change is not tested.
->>=20
->> I will provide some more comments on the code. Please give me a day
->> or two before resending.
->=20
-> Sure, please take all the time you need.
->=20
->>=20
->> Thanks,
->>=20
->> C.
->>=20
->> [*] One way to address this constraint for VFIO testing would be
->>     to run the test in a nested environment using emulated devices,
->>     like IGB, attached to an L1 which would be assigned to an L2.
->>     But that's unrelated to this series.
->>>=20
->>>>=20
->>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->>>> ---
->>>>  hw/vfio/helpers.c | 86 =
-+++++++++++++++++++++++++++++++++++++++++++++--
->>>>  1 file changed, 83 insertions(+), 3 deletions(-)
->>>>=20
->>>> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
->>>> index f68f8165d0..d467875b4b 100644
->>>> --- a/hw/vfio/helpers.c
->>>> +++ b/hw/vfio/helpers.c
->>>> @@ -110,12 +110,71 @@ bool vfio_get_info_dma_avail(struct =
-vfio_iommu_type1_info *info,
->>>>  #ifdef CONFIG_KVM
->>>>  /*
->>>>   * We have a single VFIO pseudo device per KVM VM.  Once created =
-it lives
->>>> - * for the life of the VM.  Closing the file descriptor only drops =
-our
->>>> - * reference to it and the device's reference to kvm.  Therefore =
-once
->>>> - * initialized, this file descriptor is only released on QEMU exit =
-and
->>>> + * for the life of the VM except when the vm file descriptor =
-changes for
->>>> + * confidential virtual machines. In that case, the old file =
-descriptor is
->>>> + * closed and a new file descriptor is recreated.  Closing the =
-file descriptor
->>>> + * only drops our reference to it and the device's reference to =
-kvm.
->>>> + * Therefore once initialized, this file descriptor is normally =
-only released
->>>> + * on QEMU exit (except for confidential VMs as stated above) and
->>>>   * we'll re-use it should another vfio device be attached before =
-then.
->>>>   */
->>>>  int vfio_kvm_device_fd =3D -1;
->>>> +
->>>> +typedef struct KVMVfioFileFd {
->>>> +    int fd;
->>>> +    QLIST_ENTRY(KVMVfioFileFd) node;
->>>> +} KVMVfioFileFd;
->>>> +
->>>> +static QLIST_HEAD(, KVMVfioFileFd) kvm_vfio_file_fds =3D
->>>> +    QLIST_HEAD_INITIALIZER(kvm_vfio_file_fds);
->>>> +
->>>> +static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, =
-void *data,
->>>> +                                  Error **errp);
->>>> +static struct NotifierWithReturn kvm_vfio_vmfd_change_notifier =3D =
-{
->>>> +    .notify =3D kvm_vfio_filefd_rebind,
->>>> +};
->>>> +
->>>> +static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, =
-void *data,
->>>> +                                  Error **errp)
->>>> +{
->>>> +    KVMVfioFileFd *file_fd;
->>>> +    int ret =3D 0;
->>>> +    struct kvm_device_attr attr =3D {
->>>> +        .group =3D KVM_DEV_VFIO_FILE,
->>>> +        .attr =3D KVM_DEV_VFIO_FILE_ADD,
->>>> +    };
->>>> +    struct kvm_create_device cd =3D {
->>>> +        .type =3D KVM_DEV_TYPE_VFIO,
->>>> +    };
->>>> +
->>>> +    /* we are not interested in pre vmfd change notification */
->>>> +    if (((VmfdChangeNotifier *)data)->pre) {
->>>> +        return 0;
->>>> +    }
->>>> +
->>>> +    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
->>>> +        error_setg_errno(errp, errno, "Failed to create KVM VFIO =
-device");
->>>> +        return -errno;
->>>> +    }
->>>> +
->>>> +    if (vfio_kvm_device_fd) {
->>>> +        close(vfio_kvm_device_fd);
->>>> +    }
->>>> +
->>>> +    vfio_kvm_device_fd =3D cd.fd;
->>>> +
->>>> +    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
->>>> +        attr.addr =3D (uint64_t)(unsigned long)&file_fd->fd;
->>>> +        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) =
-{
->>>> +            error_setg_errno(errp, errno,
->>>> +                             "Failed to add fd %d to KVM VFIO =
-device",
->>>> +                             file_fd->fd);
->>>> +            ret =3D -errno;
->>>> +        }
->>>> +    }
->>>> +    return ret;
->>>> +}
->>>> +
->>>>  #endif
->>>>=20
->>>>  void vfio_kvm_device_close(void)
->>>> @@ -137,6 +196,7 @@ int vfio_kvm_device_add_fd(int fd, Error =
-**errp)
->>>>          .attr =3D KVM_DEV_VFIO_FILE_ADD,
->>>>          .addr =3D (uint64_t)(unsigned long)&fd,
->>>>      };
->>>> +    KVMVfioFileFd *file_fd;
->>>>=20
->>>>      if (!kvm_enabled()) {
->>>>          return 0;
->>>> @@ -153,6 +213,11 @@ int vfio_kvm_device_add_fd(int fd, Error =
-**errp)
->>>>          }
->>>>=20
->>>>          vfio_kvm_device_fd =3D cd.fd;
->>>> +        /*
->>>> +         * If the vm file descriptor changes, add a notifier so =
-that we can
->>>> +         * re-create the vfio_kvm_device_fd.
->>>> +         */
->>>> +        =
-kvm_vmfd_add_change_notifier(&kvm_vfio_vmfd_change_notifier);
->>>>      }
->>>>=20
->>>>      if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
->>>> @@ -160,6 +225,11 @@ int vfio_kvm_device_add_fd(int fd, Error =
-**errp)
->>>>                           fd);
->>>>          return -errno;
->>>>      }
->>>> +
->>>> +    file_fd =3D g_malloc0(sizeof(*file_fd));
->>>> +    file_fd->fd =3D fd;
->>>> +    QLIST_INSERT_HEAD(&kvm_vfio_file_fds, file_fd, node);
->>>> +
->>>>  #endif
->>>>      return 0;
->>>>  }
->>>> @@ -172,6 +242,7 @@ int vfio_kvm_device_del_fd(int fd, Error =
-**errp)
->>>>          .attr =3D KVM_DEV_VFIO_FILE_DEL,
->>>>          .addr =3D (uint64_t)(unsigned long)&fd,
->>>>      };
->>>> +    KVMVfioFileFd *file_fd;
->>>>=20
->>>>      if (vfio_kvm_device_fd < 0) {
->>>>          error_setg(errp, "KVM VFIO device isn't created yet");
->>>> @@ -183,6 +254,15 @@ int vfio_kvm_device_del_fd(int fd, Error =
-**errp)
->>>>                           "Failed to remove fd %d from KVM VFIO =
-device", fd);
->>>>          return -errno;
->>>>      }
->>>> +
->>>> +    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
->>>> +        if (file_fd->fd =3D=3D fd) {
->>>> +            QLIST_REMOVE(file_fd, node);
->>>> +            g_free(file_fd);
->>>> +            break;
->>>> +        }
->>>> +    }
->>>> +
->>>>  #endif
->>>>      return 0;
->>>>  }
->>>> --
->>>> 2.42.0
->>>>=20
->>>=20
->>=20
-
+Regards,
+Pierrick
 
