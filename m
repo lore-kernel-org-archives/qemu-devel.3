@@ -4,65 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A424E81BC1
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 13:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70EE3E81BB1
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 13:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpREc-0007pf-6L; Mon, 09 Feb 2026 08:23:26 -0500
+	id 1vpROz-0004i2-Il; Mon, 09 Feb 2026 08:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vpREZ-0007pE-Fj
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:23:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vpROx-0004ho-Ts
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:34:08 -0500
+Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vpREW-0004tw-TF
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:23:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770643397;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=CQ5JhLdklh1M0bxNtIFElNxvJv+k27w8cUhmUtKlBNc=;
- b=fsF+VqLw0QMW9JNqygoCxKDbHz+qxLzXVzo6TWVsQWhzFd6wcg08J2pf6QSUt/jLVaBCuS
- 9jNXekmI37f8D/BWRIXApFV8H+mbDfUcZyPQrq/9uDY8OvwkSeOs/U4ftWjZXIz5cy024T
- B7SrxED9tLtcGFgMzVszbkQ/h2jsK7A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-VPR-eKCROr2S1Tmqpq-Jew-1; Mon,
- 09 Feb 2026 08:23:14 -0500
-X-MC-Unique: VPR-eKCROr2S1Tmqpq-Jew-1
-X-Mimecast-MFC-AGG-ID: VPR-eKCROr2S1Tmqpq-Jew_1770643393
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36DB119560B2; Mon,  9 Feb 2026 13:23:13 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.80.230])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 914F218003F6; Mon,  9 Feb 2026 13:23:10 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v1] migration: introduce MIGRATION_STATUS_FAILING
-Date: Mon,  9 Feb 2026 18:53:03 +0530
-Message-ID: <20260209132303.717784-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vpROv-0007Li-V1
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:34:07 -0500
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id DADEA14000F2;
+ Mon,  9 Feb 2026 08:34:03 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Mon, 09 Feb 2026 08:34:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm2; t=1770644043; x=1770730443; bh=fJtYQ5wMI8
+ fG1u+3xZ/vaQtPBMltxkyXZFL+6r4IElw=; b=bUovGtYHoEG3/IUmhiIyPn3J/3
+ /foPFx0VW77j1iM2iysxn9pdns6zBs0lmIgUvn8uOp5STkdB9bSpRE/Ga/9mfuHr
+ w8cMemUi6e4pCrnZmm9Xl+t1zlvdhC/VO5LqOgCO97A/GgAl3an2mU28v72eqObf
+ AEq36ylAQxlBXkhuCAingmrseWdSoCoxtnhk2S34NCBSpPVhTMm8veRdTLFuyJBW
+ Vxl23FoUY5Ihx+eiopTP04VAJsMi/Bet5F4Qn5MbKAEZ/kpyoRCeb0gMIY8IsNED
+ 4lUq93NG2VjgSMABJpZ6rlwOnBPe1MCWY8WTnVnEx3jmsdE+QRMEblNkU+Zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1770644043; x=1770730443; bh=fJtYQ5wMI8fG1u+3xZ/vaQtPBMltxkyXZFL
+ +6r4IElw=; b=rCfM6defbnyiu6rftXi3MdziF83kg4mHwFwnWOj/+ltQ2QWRnLO
+ 9DdFwjGIJroK2T7NWc4S7ZTI6XproI9r+shoFQbQ0dcECvtEJzlG442YQpAUdRbf
+ 9vh2ZpJDrMKPjlV9tAUpnnYm293If1HfOZ/SBLFzDV50onFpn4F+73TTswSm2E93
+ XAl9+0WSNWwaP+lVFuVPGWEUPvp5O4jWNcUGo2bn9NENFBspkI0yerRnP2vSe7vu
+ K0f12+GvoxVN5/JGM6DnzwSFl6a2+/ny1yblv4o4LCxGKGr3JgyfPcKCY+CGQYGW
+ V2iGReJBgv80+hE402tN87o4tKksUzy3YyQ==
+X-ME-Sender: <xms:S-KJaY3xFq0W7dgvNcZZJM0k-feEN_GO2Fnh33zWER-BqlJXfQAWSQ>
+ <xme:S-KJaYrmePeHt-8LytfKEDNzYFrC5HOmAks4W64JxUiHD3aObd-Lh16YyiMJeeo2A
+ g_gCStV_uBR-dUqtrK5B1hz-oNj469T6Hia_VBIw3H42fzYXbYNkg>
+X-ME-Received: <xmr:S-KJaaesI0VaxWt1ie-22c4jv3JyvLxWZm9S6E8KWctIq3sS2et8buNGtxNU9KlVfNRpnvakC-7f9k_KbnK8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleeileegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefujghffffkgggtsehgtderredttdejnecuhfhrohhmpeetlhihshhsrgcu
+ tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeetheevud
+ fgjefghefhieejudelkeeljeegvdekueeuhffhgedvveefteevgeetieenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
+ hishdpnhgspghrtghpthhtohepudejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+ pehsthgvvhgvnhhsugestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrd
+ gsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrnhhoshdrphhithhs
+ ihguihgrnhgrkhhisheslhhinhgrrhhordhorhhgpdhrtghpthhtohepphhhihhlmhguse
+ hlihhnrghrohdrohhrghdprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrhes
+ lhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuh
+ drohhrghdprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgrthdrtghomhdprhgtphht
+ thhopegusggrshhsvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrg
+ hnghesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:S-KJaSvLyFjewdQ4l88BAGQ5p07Uk8XM-Sgn-iisMI1ratPgokAt0g>
+ <xmx:S-KJaSU_pz-cfMrYsEnFMv9jiwAIyvGThfzXagIzikAx_Z325HZhwg>
+ <xmx:S-KJaX9sc3or5ENzWOZTL2IvzvU1Tz1vWJLz81MuC3S4ybbdlw8vtQ>
+ <xmx:S-KJae6Jss2gPVkhtF-j3-aGH4EJvH1S7Fak47uEoGdu-B9urbts8w>
+ <xmx:S-KJaWtkamf9SFAJPBBUPsAquY1K9OkiVH68Uwvf_bfKUKp6uygnKMCD>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Feb 2026 08:34:03 -0500 (EST)
+Received: by mbp.qyliss.net (Postfix, from userid 1000)
+ id 60B0473DF568; Mon, 09 Feb 2026 12:39:22 +0100 (CET)
+From: Alyssa Ross <hi@alyssa.is>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, slp@redhat.com, Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, manos.pitsidianakis@linaro.org,
+ stevensd@chromium.org, dbassey@redhat.com, Stefano Garzarella
+ <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>,
+ stefanha@redhat.com, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ mst@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v12 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
+In-Reply-To: <CADSE00+gUyRdKpkx910Um0KtS=LkzRhrq2h4hA2irPmrZvUs=w@mail.gmail.com>
+References: <20260204093758.1250167-1-aesteve@redhat.com>
+ <20260204093758.1250167-4-aesteve@redhat.com> <87a4xnl2gr.fsf@alyssa.is>
+ <CADSE00+gUyRdKpkx910Um0KtS=LkzRhrq2h4hA2irPmrZvUs=w@mail.gmail.com>
+Date: Mon, 09 Feb 2026 12:39:15 +0100
+Message-ID: <871piu5eos.fsf@alyssa.is>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=103.168.172.154; envelope-from=hi@alyssa.is;
+ helo=fhigh-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,313 +121,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-When migration connection is broken, the QEMU and libvirtd(8)
-process on the source side receive TCP connection reset
-notification. QEMU sets the migration status to FAILED and
-proceeds to migration_cleanup(). Meanwhile, Libvirtd(8) sends
-a QMP command to migrate_set_capabilities().
+Albert Esteve <aesteve@redhat.com> writes:
 
-The migration_cleanup() and qmp_migrate_set_capabilities()
-calls race with each other. When the latter is invoked first,
-since the migration is not running (FAILED), migration
-capabilities are reset to false, so during migration_cleanup()
-the QEMU process crashes with assertion failure.
+> On Sat, Feb 7, 2026 at 8:05=E2=80=AFPM Alyssa Ross <hi@alyssa.is> wrote:
+>>
+>> Albert Esteve <aesteve@redhat.com> writes:
+>>
+>> > Add GET_SHMEM_CONFIG vhost-user frontend
+>> > message to the spec documentation.
+>> >
+>> > Reviewed-by: Alyssa Ross <hi@alyssa.is>
+>> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>> > ---
+>> >  docs/interop/vhost-user.rst | 41 +++++++++++++++++++++++++++++++++++++
+>> >  1 file changed, 41 insertions(+)
+>> >
+>> > diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>> > index 6c1d66d7d3..e314313806 100644
+>> > --- a/docs/interop/vhost-user.rst
+>> > +++ b/docs/interop/vhost-user.rst
+>> > @@ -371,6 +371,22 @@ MMAP request
+>> >    - 0: Pages are mapped read-only
+>> >    - 1: Pages are mapped read-write
+>> >
+>> > +VIRTIO Shared Memory Region configuration
+>> > +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> > +
+>> > ++-------------+---------+------------+----+--------------+
+>> > +| num regions | padding | mem size 0 | .. | mem size 255 |
+>> > ++-------------+---------+------------+----+--------------+
+>> > +
+>> > +:num regions: a 32-bit number of regions
+>> > +
+>> > +:padding: 32-bit
+>> > +
+>> > +:mem size: an array of 256 64-bit fields representing the size of each
+>> > +           VIRTIO Shared Memory Region. ``num regions`` specifies the
+>> > +           number of valid regions (non-zero size). The array index
+>> > +           corresponds to the shared memory ID (shmid).
+>> > +
+>> >  C structure
+>> >  -----------
+>> >
+>> > @@ -397,6 +413,7 @@ In QEMU the vhost-user message is implemented with=
+ the following struct:
+>> >            VhostUserShared object;
+>> >            VhostUserTransferDeviceState transfer_state;
+>> >            VhostUserMMap mmap;
+>> > +          VhostUserShMemConfig shmem;
+>> >        };
+>> >    } QEMU_PACKED VhostUserMsg;
+>> >
+>> > @@ -1761,6 +1778,30 @@ Front-end message types
+>> >    Using this function requires prior negotiation of the
+>> >    ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
+>> >
+>> > +``VHOST_USER_GET_SHMEM_CONFIG``
+>> > +  :id: 44
+>> > +  :equivalent ioctl: N/A
+>> > +  :request payload: N/A
+>> > +  :reply payload: ``struct VhostUserShMemConfig``
+>> > +
+>> > +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+>> > +  successfully negotiated, this message can be submitted by the front=
+-end
+>> > +  to gather the VIRTIO Shared Memory Region configuration. The back-e=
+nd will
+>> > +  respond with the number of VIRTIO Shared Memory Regions it requires=
+, and
+>> > +  each shared memory region size in an array. The shared memory IDs a=
+re
+>> > +  represented by the array index. The information returned shall comp=
+ly
+>> > +  with the following rules:
+>> > +
+>> > +  * The shared information will remain valid and unchanged for the en=
+tire
+>> > +    lifetime of the connection.
+>> > +
+>> > +  * The Shared Memory Region size must be a multiple of the page size
+>> > +    supported by mmap(2).
+>> > +
+>> > +  * The size may be 0 if the region is unused. This can happen when t=
+he
+>> > +    device does not support an optional feature but does support a fe=
+ature
+>> > +    that uses a higher shmid.
+>>
+>> This is still phrased as if unused regions after the last used one can
+>> be ommitted.  If 256 sizes are always sent, then size must be 0 for all
+>> unused regions.
+>
+> Had to read it a couple of times to see what you meant. But yeah, it
+> implies that a zero is always followed by some valid region and is not
+> always the case. I guess I can keep only the first sentence and delete
+> the rest.
 
-Introduce a new migration status FAILING and use it as an
-interim status when an error occurs. Once migration_cleanup()
-is done, it sets the migration status to FAILED. This helps
-to avoid the above race condition and ensuing failure.
+Sounds good to me.
 
-Interim status FAILING is set wherever the execution moves
-towards migration_cleanup():
-  - postcopy_start()
-  - migration_thread()
-  - migration_cleanup()
-  - multifd_send_setup()
-  - bg_migration_thread()
-  - migration_completion()
-  - migration_detect_error()
-  - bg_migration_completion()
-  - multifd_send_error_propagate()
-  - migration_connect_error_propagate()
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The migration status finally moves to FAILED and reports an
-appropriate error to the user.
+-----BEGIN PGP SIGNATURE-----
 
-Interim status FAILING is _NOT_ set in the following routines
-because they do not follow the migration_cleanup() path to the
-FAILED state:
-  - cpr_exec_cb()
-  - qemu_savevm_state()
-  - postcopy_listen_thread()
-  - process_incoming_migration_co()
-  - multifd_recv_terminate_threads()
-  - migration_channel_process_incoming()
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- migration/migration.c                 | 34 +++++++++++++++++----------
- migration/multifd.c                   |  4 ++--
- qapi/migration.json                   |  8 ++++---
- tests/qtest/migration/migration-qmp.c |  3 ++-
- tests/qtest/migration/precopy-tests.c |  3 ++-
- 5 files changed, 32 insertions(+), 20 deletions(-)
-
-v1:
- - Rebase patch on the latest upstream version
- - Add list of functions where interim state FAILING is set
-   and where it is not changed.
-
-67/67 qtest+qtest-x86_64 - qemu:qtest-x86_64/migration-test                 OK             113.97s   84 subtests passed
-68/68 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             107.20s   84 subtests passed
-
-v0:
- - https://lore.kernel.org/qemu-devel/20251222114822.327623-1-ppandit@redhat.com/T/#u
-
-diff --git a/migration/migration.c b/migration/migration.c
-index b103a82fc0..16c71e502a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1016,6 +1016,7 @@ bool migration_is_running(void)
-     case MIGRATION_STATUS_DEVICE:
-     case MIGRATION_STATUS_WAIT_UNPLUG:
-     case MIGRATION_STATUS_CANCELLING:
-+    case MIGRATION_STATUS_FAILING:
-     case MIGRATION_STATUS_COLO:
-         return true;
-     default:
-@@ -1158,6 +1159,7 @@ static void fill_source_migration_info(MigrationInfo *info)
-     case MIGRATION_STATUS_POSTCOPY_PAUSED:
-     case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-     case MIGRATION_STATUS_POSTCOPY_RECOVER:
-+    case MIGRATION_STATUS_FAILING:
-         /* TODO add some postcopy stats */
-         populate_time_info(info, s);
-         populate_ram_info(info, s);
-@@ -1210,6 +1212,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
-     case MIGRATION_STATUS_POSTCOPY_PAUSED:
-     case MIGRATION_STATUS_POSTCOPY_RECOVER:
-     case MIGRATION_STATUS_FAILED:
-+    case MIGRATION_STATUS_FAILING:
-     case MIGRATION_STATUS_COLO:
-         info->has_status = true;
-         break;
-@@ -1331,6 +1334,9 @@ static void migration_cleanup(MigrationState *s)
-     if (s->state == MIGRATION_STATUS_CANCELLING) {
-         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
-                           MIGRATION_STATUS_CANCELLED);
-+    } else if (s->state == MIGRATION_STATUS_FAILING) {
-+        migrate_set_state(&s->state, MIGRATION_STATUS_FAILING,
-+                          MIGRATION_STATUS_FAILED);
-     }
-
-     type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
-@@ -1383,7 +1389,7 @@ void migration_connect_error_propagate(MigrationState *s, Error *error)
-
-     switch (current) {
-     case MIGRATION_STATUS_SETUP:
--        next = MIGRATION_STATUS_FAILED;
-+        next = MIGRATION_STATUS_FAILING;
-         break;
-
-     case MIGRATION_STATUS_POSTCOPY_PAUSED:
-@@ -1397,9 +1403,10 @@ void migration_connect_error_propagate(MigrationState *s, Error *error)
-         break;
-
-     case MIGRATION_STATUS_CANCELLING:
-+    case MIGRATION_STATUS_FAILING:
-         /*
--         * Don't move out of CANCELLING, the only valid transition is to
--         * CANCELLED, at migration_cleanup().
-+         * Keep the current state, next transition is to be done
-+         * in migration_cleanup().
-          */
-         break;
-
-@@ -1547,6 +1554,7 @@ bool migration_has_failed(MigrationState *s)
- {
-     return (s->state == MIGRATION_STATUS_CANCELLING ||
-             s->state == MIGRATION_STATUS_CANCELLED ||
-+            s->state == MIGRATION_STATUS_FAILING ||
-             s->state == MIGRATION_STATUS_FAILED);
- }
-
-@@ -2472,7 +2480,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-         if (postcopy_preempt_establish_channel(ms)) {
-             if (ms->state != MIGRATION_STATUS_CANCELLING) {
-                 migrate_set_state(&ms->state, ms->state,
--                                  MIGRATION_STATUS_FAILED);
-+                                  MIGRATION_STATUS_FAILING);
-             }
-             error_setg(errp, "%s: Failed to establish preempt channel",
-                        __func__);
-@@ -2635,7 +2643,7 @@ fail_closefb:
-     qemu_fclose(fb);
- fail:
-     if (ms->state != MIGRATION_STATUS_CANCELLING) {
--        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-+        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
-     }
-     migration_block_activate(NULL);
-     migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
-@@ -2828,7 +2836,7 @@ fail:
-     }
-
-     if (s->state != MIGRATION_STATUS_CANCELLING) {
--        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-+        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILING);
-     }
- }
-
-@@ -2865,7 +2873,7 @@ static void bg_migration_completion(MigrationState *s)
-
- fail:
-     migrate_set_state(&s->state, current_active_state,
--                      MIGRATION_STATUS_FAILED);
-+                      MIGRATION_STATUS_FAILING);
- }
-
- typedef enum MigThrError {
-@@ -3066,7 +3074,7 @@ static MigThrError migration_detect_error(MigrationState *s)
-          * For precopy (or postcopy with error outside IO, or before dest
-          * starts), we fail with no time.
-          */
--        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
-+        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILING);
-         trace_migration_thread_file_err();
-
-         /* Time to stop the migration, now. */
-@@ -3297,7 +3305,7 @@ static void migration_iteration_finish(MigrationState *s)
-         migrate_start_colo_process(s);
-         s->vm_old_state = RUN_STATE_RUNNING;
-         /* Fallthrough */
--    case MIGRATION_STATUS_FAILED:
-+    case MIGRATION_STATUS_FAILING:
-     case MIGRATION_STATUS_CANCELLED:
-     case MIGRATION_STATUS_CANCELLING:
-         if (!migration_block_activate(&local_err)) {
-@@ -3356,7 +3364,7 @@ static void bg_migration_iteration_finish(MigrationState *s)
-     switch (s->state) {
-     case MIGRATION_STATUS_COMPLETED:
-     case MIGRATION_STATUS_ACTIVE:
--    case MIGRATION_STATUS_FAILED:
-+    case MIGRATION_STATUS_FAILING:
-     case MIGRATION_STATUS_CANCELLED:
-     case MIGRATION_STATUS_CANCELLING:
-         break;
-@@ -3541,7 +3549,7 @@ static void *migration_thread(void *opaque)
-     if (ret) {
-         migrate_error_propagate(s, local_err);
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
--                          MIGRATION_STATUS_FAILED);
-+                          MIGRATION_STATUS_FAILING);
-         goto out;
-     }
-
-@@ -3664,7 +3672,7 @@ static void *bg_migration_thread(void *opaque)
-     if (ret) {
-         migrate_error_propagate(s, local_err);
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
--                          MIGRATION_STATUS_FAILED);
-+                          MIGRATION_STATUS_FAILING);
-         goto fail_setup;
-     }
-
-@@ -3727,7 +3735,7 @@ static void *bg_migration_thread(void *opaque)
- fail:
-     if (early_fail) {
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
--                MIGRATION_STATUS_FAILED);
-+                MIGRATION_STATUS_FAILING);
-         bql_unlock();
-     }
-
-diff --git a/migration/multifd.c b/migration/multifd.c
-index ad6261688f..178c6b3350 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -431,7 +431,7 @@ static void multifd_send_error_propagate(Error *err)
-             s->state == MIGRATION_STATUS_DEVICE ||
-             s->state == MIGRATION_STATUS_ACTIVE) {
-             migrate_set_state(&s->state, s->state,
--                              MIGRATION_STATUS_FAILED);
-+                              MIGRATION_STATUS_FAILING);
-         }
-     }
- }
-@@ -986,7 +986,7 @@ bool multifd_send_setup(void)
-
- err:
-     migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
--                      MIGRATION_STATUS_FAILED);
-+                      MIGRATION_STATUS_FAILING);
-     return false;
- }
-
-diff --git a/qapi/migration.json b/qapi/migration.json
-index f925e5541b..903c1d9618 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -158,7 +158,9 @@
- #
- # @completed: migration is finished.
- #
--# @failed: some error occurred during migration process.
-+# @failing: error occurred during migration, clean-up underway.
-+#
-+# @failed: error occurred during migration, clean-up done.
- #
- # @colo: VM is in the process of fault tolerance, VM can not get into
- #     this state unless colo capability is enabled for migration.
-@@ -181,8 +183,8 @@
-   'data': [ 'none', 'setup', 'cancelling', 'cancelled',
-             'active', 'postcopy-device', 'postcopy-active',
-             'postcopy-paused', 'postcopy-recover-setup',
--            'postcopy-recover', 'completed', 'failed', 'colo',
--            'pre-switchover', 'device', 'wait-unplug' ] }
-+            'postcopy-recover', 'completed', 'failing', 'failed',
-+            'colo', 'pre-switchover', 'device', 'wait-unplug' ] }
-
- ##
- # @VfioStats:
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 5c46ceb3e6..8279504db1 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -241,7 +241,8 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
-     do {
-         status = migrate_query_status(from);
-         bool result = !strcmp(status, "setup") || !strcmp(status, "failed") ||
--            (allow_active && !strcmp(status, "active"));
-+            (allow_active && !strcmp(status, "active")) ||
-+            !strcmp(status, "failing");
-         if (!result) {
-             fprintf(stderr, "%s: unexpected status status=%s allow_active=%d\n",
-                     __func__, status, allow_active);
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index a5423ca33c..f17dc5176d 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -1247,7 +1247,7 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-     }
-
-     /* ensure new status don't go unnoticed */
--    assert(MIGRATION_STATUS__MAX == 16);
-+    assert(MIGRATION_STATUS__MAX == 17);
-
-     for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
-         switch (i) {
-@@ -1259,6 +1259,7 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-         case MIGRATION_STATUS_POSTCOPY_PAUSED:
-         case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-         case MIGRATION_STATUS_POSTCOPY_RECOVER:
-+        case MIGRATION_STATUS_FAILING:
-             continue;
-         default:
-             migration_test_add_suffix("/migration/cancel/src/after/",
---
-2.53.0
-
+iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaYnHYwAKCRBbRZGEIw/w
+ojALAP0Qus2Pj7NNoP8BW8LyUeF4gl0pVeaYm0W9w5i9aDafigEAvpXJ8M3tc7re
+HsII7cS/0F73chW8YUiV6jmAhtt2OQ0=
+=/V9m
+-----END PGP SIGNATURE-----
+--=-=-=--
 
