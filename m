@@ -4,81 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AFBE81BDC
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 16:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDF8E81BD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 16:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpToX-0003QT-Dm; Mon, 09 Feb 2026 11:08:43 -0500
+	id 1vpTqa-0003z3-8B; Mon, 09 Feb 2026 11:10:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vpToM-0003Q4-Bm
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 11:08:32 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vpToI-0006si-Ls
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 11:08:30 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 60d7339544822972f0e8519ba5e1e1935cf7f5424221e30418ebc9edb98a229f with SMTP id
- 698a06709ac41031d69f0933; Mon, 09 Feb 2026 16:08:16 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1770653295;
- bh=IRW9y5sksTmYFzPGHzob03PJ/KPsPvOO/DM2EoS8Ksg=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=YsqPNiig2A5R1Dlax/hWV+Txf+fO8PTq58r2kTobmkfXBqxaUV5aDvXNsEgUpmFA2
- RvsZru4tMrINEOWz4pdMG2SSCuUrcQsbGh+0hW4OtHOe1OGCiYGPxryatUay6VAcLX
- c1xQtE16L2bkuetTP4welJ+OaWsXAQEyCEESUpp3JPAjHJHlha2PbHAYh+0drILpKt
- qP6chVfE/6Ut0o2luFTyHODDmkL6ThOTF2wmX9md1Ld0yq4i94z7HnBx3nPU/HN0lH
- XeEwEI7TlxyUHBnnRkRMdOT3J0z9BgKqJaGlQ1hX/YSKy2YlwZ7ko7TSGvsUPF2YFi
- RvqyY4urhf1/w==
-Message-ID: <cba38de0-38c0-4d99-9d50-a028fa6510e0@yodel.dev>
-Date: Mon, 9 Feb 2026 10:08:14 -0600
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTq2-0003t4-Em
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 11:10:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpTpz-0007Gz-7t
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 11:10:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770653407;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DCaiAlBvAUplbRFd6E4sqlHLaxO0QdoSD58SLhn3I/I=;
+ b=aqaNCRI1Y7p7ErLNQLSB2UKK1l8TEtndRQIT5r/amFlcM5AzI3w84VPkUXQR/7c/oJPRyW
+ 8zuaCP9UWhh6PrY3mSsYbfMnCFNCpvL1Ja0fVtEPRXut8fWulUKZ4pY2X19WG5czk1xD3q
+ 1FG6DxRcVWPRj/AcOFUGdWv5Nv5/E5k=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-576-DF9pAwWnMxafYcABp8pTag-1; Mon, 09 Feb 2026 11:10:05 -0500
+X-MC-Unique: DF9pAwWnMxafYcABp8pTag-1
+X-Mimecast-MFC-AGG-ID: DF9pAwWnMxafYcABp8pTag_1770653405
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8946f51b8c8so129404326d6.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 08:10:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770653405; x=1771258205; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DCaiAlBvAUplbRFd6E4sqlHLaxO0QdoSD58SLhn3I/I=;
+ b=elUV+iz5CbajPoQ0oz0+sl0K+V7cUQexwObUs3klFYOPkIurjdf/n48g5Bw2NBecdq
+ abC/XqFsmhEV1Lc0DmYKRH/p+/0SZ6izMyvEoYrcjB6ChOaT++aSeHWSWcCGYLv3Mhj/
+ G6sdXYSWY0uN4nWY9HJbrgmU2M8QWpnSpmEUpztfFMKMH3xLlOv7iqWaTjFOv2kqdFNb
+ tH1w8XuyeWkeIFy1NFT9Zqb3ARxJm2bW2LmVjOgSUz43fNdDCHXy33As2BFsHhUkItO9
+ D0FmhTMHRf5x4YowR9vDJYcFkjBqIOv7tCifFv4C7x+/XxH+cmXSlcC74J1AkUmG2Zvh
+ siAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770653405; x=1771258205;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DCaiAlBvAUplbRFd6E4sqlHLaxO0QdoSD58SLhn3I/I=;
+ b=lL8mIMN2Qkpr66BzpRHKO1LEFozJnWOKjWgoGRENhXOJw3lTnGMDLHl/qVmPOYGgr+
+ f8/TZi63fxOuZdU3F5f0EniShHeQt9Bp18Wle3gpeT/9gm/FwbCMDBDNgppbH/gA+Vwr
+ 6+/vgTfjygtkqgZog5KlSN4ykez/DOUO9U0dGe8bVKJEEWiwEu0OzBnHFYJWhamrQee5
+ EB2f+aVjAsGK6T6VAEO4fciSDUCMHQLNez8PftoNcTl2BP067K0GetzCFkmP/GuPwRYS
+ kzF2Ia1RnWvExVafl8W5nLor3d0ANwbbrl9Nkz5FbAS7UgW+NgfoqhR21mOTYVw8Kc9Z
+ B8xw==
+X-Gm-Message-State: AOJu0YxIFCQ0TXjL7HxC3hUmbfrGb9kCEEMKHEb570wbfK5E5hJTAc8h
+ yV05X+uGDjVyT3SOyzvU+OY/zdq1OIug3nxo2JIyAda05ZdFbwQotCwgVTGsSozOgZ454Y6PkLt
+ UUnlVWKYlLelIdRg93eNl5BCBvN/A123o3vn/rUibs+vMyZQu7rz2Kpek
+X-Gm-Gg: AZuq6aKKO118ssJNrwXYneCfc/jQMi1qxIMQXLv/+pkMyvPvF/w5M4W+rB1H2W+/Rd1
+ Kd7RRakg2IOKJBxUPdMCiQfaVj8NpQ243a0QEIsbonMdnOXwMiKSIbwWCnBmzw+ggmonh9XrjNf
+ AusxmrLf9x1cs5I2zgIae8IBPT72qxEMyaanm3Hg0t4Smkpvc5D8x2I+GmlXGlPSLbuvA8seYKC
+ hqdKPhc5MnCgVBfOAYqORWAtKqj3zgveiCQvwoB2rZdeIy0n4yKuuIqJxMnBtFxokazFlRbK7aj
+ j5nQkR/lY+pd94NodLN7TXULSG41Y+Y5gy1Yx4xGMIK5fPCRSTm6UeBhq1t6wTltts4+f3Lsu+b
+ bmOk=
+X-Received: by 2002:ad4:5b86:0:b0:897:1ff:a7c with SMTP id
+ 6a1803df08f44-89701ff0d32mr44888786d6.1.1770653404803; 
+ Mon, 09 Feb 2026 08:10:04 -0800 (PST)
+X-Received: by 2002:ad4:5b86:0:b0:897:1ff:a7c with SMTP id
+ 6a1803df08f44-89701ff0d32mr44887836d6.1.1770653404040; 
+ Mon, 09 Feb 2026 08:10:04 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8caf7aef19asm839447785a.21.2026.02.09.08.10.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Feb 2026 08:10:03 -0800 (PST)
+Date: Mon, 9 Feb 2026 11:10:02 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v5 03/16] colo: Setup ram cache in normal migration path
+Message-ID: <aYoG2rzTkfk6SDiR@x1.local>
+References: <20260203-colo_unit_test_multifd-v5-0-57508b7389f6@web.de>
+ <20260203-colo_unit_test_multifd-v5-3-57508b7389f6@web.de>
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 0/3] vhost-user-bridge housekeeping and test
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260129133049.119829-1-yodel.eldar@yodel.dev>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <20260129133049.119829-1-yodel.eldar@yodel.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260203-colo_unit_test_multifd-v5-3-57508b7389f6@web.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,138 +120,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Tue, Feb 03, 2026 at 11:15:09AM +0100, Lukas Straub wrote:
+> Since
+> 121ccedc2b migration: block incoming colo when capability is disabled
+> 
+> x-colo capability needs to be always enabled on the incoming side.
+> So migration_incoming_colo_enabled() and migrate_colo() are equivalent
+> with migrate_colo() being easier to reason about since it is always true
+> during the whole migration.
+> 
+> Use migrate_colo() to initialize the ram cache in the normal migration path.
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-On 29/01/2026 07:30, Yodel Eldar wrote:
-> Hi,
+Since the goal of this patch is to drop the COLO migration command, this
+looks an improvement indeed,
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+I'll still comment though for possible future updates..
+
+> ---
+>  migration/migration.c | 18 ++++++++++++++----
+>  migration/savevm.c    | 14 +-------------
+>  2 files changed, 15 insertions(+), 17 deletions(-)
 > 
-> The existence check of the vhost-user-bridge file checks for None
-> when it should check for False to determine whether the test should be
-> skipped; a trivial fix.
+> diff --git a/migration/migration.c b/migration/migration.c
+> index b103a82fc0b83009d01d238ff16c0a542d83509f..a73d842ad8b060dc84273ade36ef7dc8b87421f3 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -630,10 +630,6 @@ int migration_incoming_enable_colo(Error **errp)
+>          return -EINVAL;
+>      }
+>  
+> -    if (ram_block_discard_disable(true)) {
+> -        error_setg(errp, "COLO: cannot disable RAM discard");
+> -        return -EBUSY;
+> -    }
+>      migration_colo_enabled = true;
+>      return 0;
+>  }
+> @@ -770,6 +766,20 @@ process_incoming_migration_co(void *opaque)
+>  
+>      assert(mis->from_src_file);
+>  
+> +    if (migrate_colo()) {
+> +        if (ram_block_discard_disable(true)) {
+
+IMHO this is something we could have done at migrate_incoming and fail the
+QMP command directly, rather than waiting until this late.
+
+> +            error_setg(&local_err, "COLO: cannot disable RAM discard");
+> +            goto fail;
+> +        }
+> +
+> +        ret = colo_init_ram_cache(&local_err);
+
+This might be more suitable to be put in ram's load_setup() (which should
+happen at the initial migration phase, before colo taking snapshots), then
+I believe this function can be unexported too.
+
+> +        if (ret) {
+> +            error_prepend(&local_err, "failed to init colo RAM cache: %d: ",
+> +                          ret);
+> +            goto fail;
+> +        }
+> +    }
+> +
+>      mis->largest_page_size = qemu_ram_pagesize_largest();
+>      postcopy_state_set(POSTCOPY_INCOMING_NONE);
+>      migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 3dc812a7bbb4e8f5321114c9919d4619798fed5e..0353ac2d0de819b6547a1f771e6a4c3b8fb1e4ef 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2407,19 +2407,7 @@ static int loadvm_process_enable_colo(MigrationIncomingState *mis,
+>                                        Error **errp)
+>  {
+>      ERRP_GUARD();
+> -    int ret;
+> -
+> -    ret = migration_incoming_enable_colo(errp);
+> -    if (ret < 0) {
+> -        return ret;
+> -    }
+> -
+> -    ret = colo_init_ram_cache(errp);
+> -    if (ret) {
+> -        error_prepend(errp, "failed to init colo RAM cache: %d: ", ret);
+> -        migration_incoming_disable_colo();
+> -    }
+> -    return ret;
+> +    return migration_incoming_enable_colo(errp);
+>  }
+>  
+>  static int loadvm_postcopy_handle_switchover_start(Error **errp)
 > 
-> Changes since v3:
-> --------------------
-> - Fix is_readable_executable_file() check of vubr for skipping test
-> 
-> Link to v3:
-> -----------
-> https://lore.kernel.org/qemu-devel/20260120215021.30711-1-yodel.eldar@yodel.dev/
-> 
-> Thanks,
-> Yodel
-> 
-> Cover letter from v3:
-> =====================
-> 
-> This series (1) moves vhost-user-bridge (vubr) from tests/ to
-> contrib/vhost-user-bridge/, (2) introduces a basic functional test of
-> vubr, and (3) adds UDP receive packet logging to vubr:
-> 
-> Patch 1: Moving vhost-user-bridge
-> ---------------------------------
-> After the introduction of vhost-user-bridge and libvhost-user, new
-> vhost-user backend daemons were placed in dedicated subdirectories of
-> contrib/. An F: line under the vhost section in MAINTAINERS grants these
-> daemons coverage; in tests/, however, vhost-user-bridge lacks coverage
-> and appears orphaned there. So, let's give it a home with the rest of
-> the vhost-user backend family.
-> 
-> As part of the move, vhost-user-bridge also gains a section in the
-> vhost-user-contrib document. More can be said about vubr there, like its
-> client mode feature added in aef8486ede8b by Marc-André, but for now a
-> short description and usage example will help folks interested in using
-> the daemon to expand vhost-user support in QEMU.
-> 
-> Lastly, Patch 1 makes the necessary changes to the meson build files in
-> tests/ and root, and the new one in contrib/vhost-user-bridge/.
-> 
-> Patch 2: Introducing a functional test
-> --------------------------------------
-> This test was inspired by discussions with Cédric regarding build errors
-> from recent glibc const changes and was the subject of the first RFC.
-> 
-> The functional test introduced in the second patch starts vubr as a
-> subprocess, then launches a single QEMU instance that provides a slirp
-> stack and serves as the frontend of the vhost-user protocol, much like
-> the testing setup described in vhost-user-bridge's initial commit in
-> 3595e2eb0a23.
-> 
-> For additional details about the test, please see Patch 2's commit
-> message and/or the test's header; in short: the host serves a file to
-> the guest via tftp, then the guest serves a file to the host via http.
-> 
-> The guest's kernel image was built with Buildroot in a Containerfile
-> that is based on a snapshot Debian container image, so that the kernel
-> image remains bit-for-bit reproducible indefinitely. For the image and
-> its build files, please see:
->      https://github.com/yodel/vhost-user-bridge-test
-> The repo will be placed in archive (read-only) mode if/when the series
-> is pulled.
-> 
-> Patch 3: Adding UDP RX logging
-> ------------------------------
-> An existing transmit hexdump of UDP packets provides valuable data;
-> adding a receive hexdump to complement TX doubles the fun (read:
-> visibility). Like TX, the RX hexdump is gated behind a currently
-> hardcoded-on macro. Another new debug print separates transmit blocks
-> from receives.
-> 
-> Changes since RFCv2:
-> --------------------
-> - Promoted to PATCH
-> - Collect R-b's (thanks to Marc-André and Thomas)
-> - Add test to .../x86_64/meson.build thorough suite (Marc-André)
-> - Add encoding= args to open() (Thomas)
-> - Add pylint disable=unbalanced-tuple-unpacking on find_free_ports()
-> - Minor commit message rewording
-> 
-> Changes since RFCv1:
-> --------------------
-> - Remove external host dependency (Marc-André)
-> - Use user netdev tftp feature (Thomas)
-> - Use check_http_download (Thomas)
-> - Remove wget
-> - Inherit from LinuxKernelTest instead of QemuSystemTest
-> - Use hardcoded UUIDs in files on the guest and host for data transfer
-> - Use a Popen context manager to terminate and wait on vubr
-> - Add test to MAINTAINERS under the vhost section (Michael)
-> - New patch to move from tests/ to contrib/vhost-user-bridge/ and add
->    docs section
-> - New patch to add RX debug logging in vhost-user-bridge.c
-> 
-> Links
-> -----
-> RFCv2:
-> https://lore.kernel.org/qemu-devel/20260112230127.99125-1-yodel.eldar@yodel.dev/
-> RFCv1:
-> https://lore.kernel.org/qemu-devel/20251230002604.113632-1-yodel.eldar@yodel.dev/
-> 
-> Yodel Eldar (3):
->    tests/vhost-user-bridge: Move to contrib/vhost-user-bridge/
->    tests/functional/x86_64: Add vhost-user-bridge test
->    contrib/vhost-user-bridge: Add UDP receive hexdump
-> 
->   MAINTAINERS                                   |   1 +
->   contrib/vhost-user-bridge/meson.build         |   4 +
->   .../vhost-user-bridge}/vhost-user-bridge.c    |   7 +
->   .../devices/virtio/vhost-user-contrib.rst     |  39 +++++
->   meson.build                                   |   1 +
->   tests/functional/x86_64/meson.build           |   1 +
->   .../x86_64/test_vhost_user_bridge.py          | 147 ++++++++++++++++++
->   tests/meson.build                             |   6 -
->   8 files changed, 200 insertions(+), 6 deletions(-)
->   create mode 100644 contrib/vhost-user-bridge/meson.build
->   rename {tests => contrib/vhost-user-bridge}/vhost-user-bridge.c (98%)
->   create mode 100755 tests/functional/x86_64/test_vhost_user_bridge.py
+> -- 
+> 2.39.5
 > 
 
-Ping?
+-- 
+Peter Xu
 
-Note: All patches have been reviewed.
-
-Link to v4:
-https://lore.kernel.org/qemu-devel/20260129133049.119829-1-yodel.eldar@yodel.dev/
-
-Thanks,
-Yodel
 
