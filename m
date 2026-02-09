@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 846EAE7C706
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B56BE7C706
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpLru-0000rE-2r; Mon, 09 Feb 2026 02:39:38 -0500
+	id 1vpLrr-0000qH-0v; Mon, 09 Feb 2026 02:39:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vpLrg-0000n5-WE
+ id 1vpLrh-0000nB-10
  for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:27 -0500
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vpLrb-0004fw-C3
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:23 -0500
+ id 1vpLrc-0004gE-2V
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:39:24 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2815F80763;
- Mon, 09 Feb 2026 10:39:17 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C500380806;
+ Mon, 09 Feb 2026 10:39:18 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:129::1:13])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id BdLXu72As8c0-naTsUbWE; Mon, 09 Feb 2026 10:39:16 +0300
+ ESMTPSA id BdLXu72As8c0-uVpxpN4P; Mon, 09 Feb 2026 10:39:18 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1770622756;
- bh=N7Y3+PNpN2n1dgpOKkVd1tmp+fVyA4qEBEbIYqsqYtg=;
+ s=default; t=1770622758;
+ bh=orjmREBgPvbPh48epQjL6aVQxb7OCGxdvmtAJJ+3lbY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=IgvnkpTZGdQaCcUOZV5OfcmDsrWsPfImlJr9q5EGBt6K+1GaKQHkC3oGAe1i7wDPy
- L0d52Fth8f9lXyqQOPTFf5OXSNjxgGuPK4VCOYsQBlv+lY7Wo9JSr8U5gpxtMLk2Oh
- 1hRzX5GZForrlukqa6LE/CRRm1y7PCTEu+frNu9A=
+ b=jUZqnmPLsSIoh0WMv4YC/DgE3AwnSWc5h/uwoxGeBqD2jQM6lDVKo3SkzjW8uGe3J
+ SK0L/ZKwMXjxSNGUR3edBCp8GiYM5QRUNUSH7+qVUZMOSPr44iYI663vrmPzILJgOf
+ 1RxrMF2lTnv+25/sszs5tjeEQopkteXfiUq4ETZM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- d-tatianin@yandex-team.ru, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 06/10] qapi: remove user addresses from
- x-query-virtio-vhost-queue-status
-Date: Mon,  9 Feb 2026 10:39:03 +0300
-Message-ID: <20260209073908.2125178-7-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru
+Subject: [PATCH 09/10] vhost: add .vhost_phys_iotlb_msg() handler
+Date: Mon,  9 Feb 2026 10:39:06 +0300
+Message-ID: <20260209073908.2125178-10-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260209073908.2125178-1-vsementsov@yandex-team.ru>
 References: <20260209073908.2125178-1-vsementsov@yandex-team.ru>
@@ -76,104 +74,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove desc, avail, and used fields as they expose process address space
-information and violate ASLR. Since this is an experimental command, we
-can safely remove these potentially sensitive fields.
+Allow backends to chose, which addr to put into vhost_iotlb_msg:
+user or physical. To be used in further commit.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-hmp-cmds.c |  3 ---
- hw/virtio/virtio-qmp.c      |  3 ---
- qapi/virtio.json            | 15 ---------------
- 3 files changed, 21 deletions(-)
+ hw/virtio/vhost.c                 | 11 ++++++++---
+ include/hw/virtio/vhost-backend.h |  3 +++
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 4bf9a3109d..a91bb7dbed 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -203,15 +203,12 @@ void hmp_vhost_queue_status(Monitor *mon, const QDict *qdict)
-     monitor_printf(mon, "  call:                 %"PRId64"\n", s->call);
-     monitor_printf(mon, "  VRing:\n");
-     monitor_printf(mon, "    num:         %"PRId64"\n", s->num);
--    monitor_printf(mon, "    desc:        0x%016"PRIx64"\n", s->desc);
-     monitor_printf(mon, "    desc_phys:   0x%016"PRIx64"\n",
-                    s->desc_phys);
-     monitor_printf(mon, "    desc_size:   %"PRId32"\n", s->desc_size);
--    monitor_printf(mon, "    avail:       0x%016"PRIx64"\n", s->avail);
-     monitor_printf(mon, "    avail_phys:  0x%016"PRIx64"\n",
-                    s->avail_phys);
-     monitor_printf(mon, "    avail_size:  %"PRId32"\n", s->avail_size);
--    monitor_printf(mon, "    used:        0x%016"PRIx64"\n", s->used);
-     monitor_printf(mon, "    used_phys:   0x%016"PRIx64"\n",
-                    s->used_phys);
-     monitor_printf(mon, "    used_size:   %"PRId32"\n", s->used_size);
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index f0c15ba27c..b4d0542a72 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -864,9 +864,6 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
-     status->name = g_strdup(vdev->name);
-     status->kick = hdev->vqs[queue].kick;
-     status->call = hdev->vqs[queue].call;
--    status->desc = (uintptr_t)hdev->vqs[queue].desc;
--    status->avail = (uintptr_t)hdev->vqs[queue].avail;
--    status->used = (uintptr_t)hdev->vqs[queue].used;
-     status->num = hdev->vqs[queue].num;
-     status->desc_phys = hdev->vqs[queue].desc_phys;
-     status->desc_size = hdev->vqs[queue].desc_size;
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 53ddc6b6a4..cad0388b1e 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -650,12 +650,6 @@
- #
- # @call: vhost_virtqueue call
- #
--# @desc: vhost_virtqueue desc
--#
--# @avail: vhost_virtqueue avail
--#
--# @used: vhost_virtqueue used
--#
- # @num: vhost_virtqueue num
- #
- # @desc-phys: vhost_virtqueue desc_phys (descriptor area physical
-@@ -678,9 +672,6 @@
-   'data': { 'name': 'str',
-             'kick': 'int',
-             'call': 'int',
--            'desc': 'uint64',
--            'avail': 'uint64',
--            'used': 'uint64',
-             'num': 'int',
-             'desc-phys': 'uint64',
-             'desc-size': 'uint32',
-@@ -720,12 +711,9 @@
- #              "avail-size": 2054,
- #              "desc-size": 16384,
- #              "used-size": 8198,
--#              "desc": 140141447430144,
- #              "num": 1024,
- #              "call": 0,
--#              "avail": 140141447446528,
- #              "desc-phys": 5216108544,
--#              "used": 140141447448640,
- #              "kick": 0
- #          }
- #        }
-@@ -744,12 +732,9 @@
- #              "avail-size": 262,
- #              "desc-size": 2048,
- #              "used-size": 1030,
--#              "desc": 140141413580800,
- #              "num": 128,
- #              "call": 0,
--#              "avail": 140141413582848,
- #              "desc-phys": 5182259200,
--#              "used": 140141413583168,
- #              "kick": 0
- #          }
- #        }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 1cde1aaebf..36e43e0af5 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -920,14 +920,18 @@ static void vhost_region_addnop(MemoryListener *listener,
+ }
+ 
+ static int vhost_update_device_iotlb(struct vhost_dev *dev,
+-                                     uint64_t iova, uint64_t uaddr,
++                                     uint64_t iova,
++                                     uint64_t paddr,
++                                     uint64_t uaddr,
+                                      uint64_t len,
+                                      IOMMUAccessFlags perm)
+ {
++    bool phys = dev->vhost_ops->vhost_phys_iotlb_msg &&
++        dev->vhost_ops->vhost_phys_iotlb_msg(dev);
+     struct vhost_iotlb_msg imsg;
+ 
+     imsg.iova =  iova;
+-    imsg.uaddr = uaddr;
++    imsg.uaddr = phys ? paddr : uaddr;
+     imsg.size = len;
+     imsg.type = VHOST_IOTLB_UPDATE;
+ 
+@@ -1387,7 +1391,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write)
+         len = MIN(iotlb.addr_mask + 1, len);
+         iova = iova & ~iotlb.addr_mask;
+ 
+-        ret = vhost_update_device_iotlb(dev, iova, uaddr, len, iotlb.perm);
++        ret = vhost_update_device_iotlb(dev, iova, iotlb.translated_addr, uaddr,
++                                        len, iotlb.perm);
+         if (ret) {
+             trace_vhost_iotlb_miss(dev, 4);
+             error_report("Fail to update device iotlb");
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index 7cc3bb5441..00881a0bd4 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -143,6 +143,8 @@ typedef int (*vhost_dev_start_op)(struct vhost_dev *dev, bool started);
+ 
+ typedef bool (*vhost_phys_vring_addr_op)(struct vhost_dev *dev);
+ 
++typedef bool (*vhost_phys_iotlb_msg_op)(struct vhost_dev *dev);
++
+ typedef int (*vhost_get_device_id_op)(struct vhost_dev *dev, uint32_t *dev_id);
+ 
+ typedef bool (*vhost_force_iommu_op)(struct vhost_dev *dev);
+@@ -210,6 +212,7 @@ typedef struct VhostOps {
+     vhost_set_inflight_fd_op vhost_set_inflight_fd;
+     vhost_dev_start_op vhost_dev_start;
+     vhost_phys_vring_addr_op vhost_phys_vring_addr;
++    vhost_phys_iotlb_msg_op vhost_phys_iotlb_msg;
+     vhost_get_device_id_op vhost_get_device_id;
+     vhost_force_iommu_op vhost_force_iommu;
+     vhost_set_config_call_op vhost_set_config_call;
 -- 
 2.52.0
 
