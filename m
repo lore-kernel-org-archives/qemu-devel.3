@@ -4,53 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3BAE81BA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 11:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A7EE81BA4
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 12:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpPeq-0008OW-Ov; Mon, 09 Feb 2026 06:42:24 -0500
+	id 1vpPuv-00048c-Lq; Mon, 09 Feb 2026 06:59:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vpPeo-0008O1-NN
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 06:42:22 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vpPel-0007bC-7D
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 06:42:22 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id CFDC24919C;
- Mon, 09 Feb 2026 12:42:09 +0100 (CET)
-Message-ID: <85464bcb-2cb5-4cef-b6ef-8f309d6f7d8e@proxmox.com>
-Date: Mon, 9 Feb 2026 12:42:03 +0100
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vpPus-00047I-5u
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 06:58:58 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vpPuq-00021s-Fs
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 06:58:57 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-81f4f4d4822so2305630b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 03:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1770638334; x=1771243134; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=X79gSuktp59m2ZjRB205eWTFvosz4VAdKX9YgjOiL9c=;
+ b=OeFpnQrBc7asQF0zl3wXfbmmaKgWxkjKA8aAdhwBbuO5wIZa9YXHzQhupHld+Z6unn
+ gzUzil/Fpn8OHScbnRO8uQIPQ+FPF57FHdwDk8PKxYY7VsowtDGTl2D1O4jfj24HyPVs
+ bXnYtV0pal7iTn8Tb5ROvoGTxsXi0UcpDZA8QBM2aMSjsIYDxlxSV65Z2VTtEQE9yM0S
+ n2P6xCL1WHW74nGzlwvr4XGTAkUWOHb0OK0Yx5yKIoFAmVAgUk8bIZbnovcR9xKpkThL
+ LpwnX5dZs2isaKFn/KbJzP0tiCuOMP3G09xm/AUmhd2MQBdnBqNpkptgtfeYH9tb7puw
+ ReXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770638334; x=1771243134;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X79gSuktp59m2ZjRB205eWTFvosz4VAdKX9YgjOiL9c=;
+ b=knzo6z0OpHrWFcxmIAfmWIqNy1hK/xExP2vZ+BfWkajhUmA1q7+WutaM4ERbQTrxKo
+ 5FD80nLHrBWSypmzk3I7qj2nO1aUvw/rkEsqIuf8J/KhFrKe4T8cNcZHjrHgrc4L1JAV
+ ZHhNlxmEHhGk290Cw/IQj2hXmLCXJyAZ55vp78M2TXqwR/9uaM2yUZE3vK6ynZhtct/T
+ XfK0POta1TfI/CUOTGpQokPzfNqo3Ae79VnPHivDO40pavVuod3HMnpuZsrPZ2xGPiB5
+ 3volgV+n8/ySKQUg/l75n0vQT22RMW25wxhPfJvSflRC7TUHL7FmtoZWFsfZndq0vY6c
+ bClw==
+X-Gm-Message-State: AOJu0YzlufHXUS8OJkvbXBt8y7xvveKAktujb3S/jBjX3k4AJcb+btfG
+ 7Jlso0InWM4qqo7Icoy5hqpU0xSJa6OxDhhoiIF8X9SOkVzexwvttFSn+fC+hks3nl2DX0YO4u3
+ tcIyHMe6oFLKA8ODW9RnBcQZxUS8H4/SumryINCjhGvlG+rJNdtqCxgNolwhn8g9fqMjdMIWn5W
+ Aybgna87L+pq92exgNF/t37FFFycdWGP6Vor3KzA==
+X-Gm-Gg: AZuq6aJIzIkxQJmKfQiS6H2FYPwqsqnf8NBwYtIfgtYBJq1Ygy8PO61ztr2Bh98Ovky
+ d2/oqbvj1FbDC/U6eZd57YVztiJVpxVs6F2JKOy0ZvVjNQSdaDWah8vxCwaZQBThPr7Zq1x59WL
+ 0xeQeD9EWMZ8oT70KnaPK1r7lyjhZC7O/7GroHymm15Syvt8m15tAl1QH6KCYQAt982dixQB45J
+ 257WAKK2WjAXXxnHkm4AM5i3O6UYV1HBE2E9H9JvSF8BvrBbGqiY1s4a9MNn6Ua8ke3kiX2po28
+ OB6dogPxZIa6niC/iSqmxVMuSFYU/koFTzXar+2NnJU2v7CRRrZWSMU+HH0HOT14MHBo9vufG4g
+ JmxYD1X1hGrQpQDfjuhcf7atZ+iqm7iKgn9xYnEvyVh9/bSyIZttwoOpgs62wcIEbt0zeErMa7Q
+ eRkuHTqTbBtqRrO32IxWomQYt1PBVtsOG+
+X-Received: by 2002:a05:6a21:4d8b:b0:35d:ce99:cc23 with SMTP id
+ adf61e73a8af0-393ad3071e4mr9130878637.49.1770638333914; 
+ Mon, 09 Feb 2026 03:58:53 -0800 (PST)
+Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6dcb5e406asm13566216a12.22.2026.02.09.03.58.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Feb 2026 03:58:53 -0800 (PST)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@kernel.org>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Jim Shu <jim.shu@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
+Date: Mon,  9 Feb 2026 19:58:44 +0800
+Message-ID: <20260209115846.2276651-1-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (in guest) disk corruption during snapshots
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org,
- dionbosschieter@gmail.com
-References: <4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be>
- <aef520c2-3296-4eb4-999c-faa757c9b2a3@proxmox.com>
- <aYRi660MmeMtobZG@redhat.com>
- <d909ce08-c2eb-4eff-b973-498456dec12c@proxmox.com>
- <aYTE9hf0mMTOUUTJ@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <aYTE9hf0mMTOUUTJ@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1770637245083
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,170 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.02.26 um 5:26 PM schrieb Kevin Wolf:
-> Am 05.02.2026 um 11:45 hat Fiona Ebner geschrieben:
->> Am 05.02.26 um 10:28 AM schrieb Kevin Wolf:
->>> Am 05.02.2026 um 09:59 hat Fiona Ebner geschrieben:
->>>> Hi,
->>>>
->>>> Am 03.02.26 um 3:24 PM schrieb Jean-Louis Dupond:
->>>>> Hi,
->>>>>
->>>>> Since some months we were observing disk corruption within the VM when
->>>>> enabling backups (which triggers snapshots).
->>>>> After a lot of troubleshooting, we were able to track down the commit
->>>>> that caused it:
->>>>> https://gitlab.com/qemu-project/qemu/-/
->>>>> commit/058cfca5645a9ed7cb2bdb77d15f2eacaf343694
->>>>>
->>>>> More info in the issue:
->>>>> https://gitlab.com/qemu-project/qemu/-/issues/3273
->>>>>
->>>>> Now this seems to be caused by a race between disabling the
->>>>> dirty_bitmaps and the tracking implemented in the mirror top layer.
->>>>> Kevin shared me a possible solution:
->>>>>
->>>>> diff --git a/block/mirror.c b/block/mirror.c
->>>>> index b344182c747..f76e43f22c1 100644
->>>>> --- a/block/mirror.c
->>>>> +++ b/block/mirror.c
->>>>> @@ -1122,6 +1122,9 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
->>>>>       * accessing it.
->>>>>       */
->>>>>      mirror_top_opaque->job = s;
->>>>> +    if (s->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
->>>>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>>>> +    }
->>>>>  
->>>>>      assert(!s->dbi);
->>>>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
->>>>> @@ -2018,7 +2021,9 @@ static BlockJob *mirror_start_job(
->>>>>       * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
->>>>>       * mode.
->>>>>       */
->>>>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>>>> +    if (s->copy_mode == MIRROR_COPY_MODE_WRITE_BLOCKING) {
->>>>> +        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>>>> +    }
->>>>>  
->>>>>      bdrv_graph_wrlock_drained();
->>>>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
->>>>>
->>>>>
->>>>> Running this for some hours already, and it seems to fix the issue.
->>>>>
->>>>> Let's open up the discussion if this is the proper way to fix it, or if
->>>>> there are better alternatives :)
->>>>
->>>> Yes, I do think this is the proper solution. I ended up with essentially
->>>> the same yesterday (see the Gitlab issue). I moved the disabling
->>>> unconditionally, but there should be no need to delay the disabling if
->>>> using write-blocking mode. I would suggest moving the comment on top of
->>>> the changed hunk in mirror_start_job() along to the new hunk in
->>>> mirror_run().
->>>
->>> I didn't actually write this as a proper patch, but just as a quick
->>> thing Jean-Louis could test, so yes, all of the details are up for
->>> discussion.
->>>
->>> You're right that there is no need to delay disabling the bitmap in
->>> active mode, but it probably also doesn't hurt to keep it enabled for a
->>> little while? Maybe we should do it like you did just to keep the code a
->>> little simpler.
->>
->> Yes, it shouldn't hurt. Looking at the code again,
->> should_copy_to_target() will evaluate to false before the job is set, so
->> it might be necessary for write-blocking mode too?
-> 
-> I didn't check that part yet, but that is actually a very good point!
-> 
-> Yes, I agree, so your version of the fix is even more correct. It seems
-> write blocking mode is not actually write blocking until the very same
-> point in the code. (We should mention that in the comment as well.)
-> 
->>> There is another approach I had in mind, but wasn't as sure about, so I
->>> didn't suggest it for the testing to see if this race is even the
->>> problem we're seeing in practice: Is there a reason why populating the
->>> initial dirty bitmap (i.e. the second part of mirror_dirty_init()) can't
->>> just come after setting 'mirror_top_opaque->job'? Then we could simply
->>> leave the bitmap disabled all the time and rely solely on the mirror
->>> job's own tracking. That would feel a little more consistent than using
->>> the block layer just to plug a small race window during startup.
->>
->> Interesting idea! In write-blocking mode, it will lead to writes during
->> dirty bitmap initialization already being synced to the target, so
->> leading to a bit of duplicate work.
-> 
-> That's true, and I don't see an easy way to avoid it if we do things in
-> this order. Probably not a big deal in practice, but also a bit ugly.
+RISC-V WorldGuard [1] will add 5-bit world_id (WID) to the each memory
+transaction on the bus. The wgChecker in front of RAM or peripherals
+MMIO could do the access control based on the WID. It is similar to ARM
+TrustZone NS bit, but the WID is a 5-bit value.
 
-We do support changing the copy mode after the job is started (see
-mirror_change()). If we really want to avoid the duplicate work, we
-could always start in background mode and switch to write-blocking only
-after initializing the bitmap, if that's what the user wanted. There is
-a comment in mirror_change() stating:
+WID is usually implemented in AXI AxUSER signal (user-defined signals)
+in the AXI transaction. As we have a secure bit in MemTxAttrs to emulate
+the TrustZone NS bit, which is implemented in AXI AxPROT[1] signal,
+I'd like to propose to add world_id field into MemTxAttrs struct.
 
-The implementation relies on the fact that copy_mode is only written
-under the BQL. Otherwise, further synchronization would be required.
+Since the '_reserved*' fields in MemTxAttr are for padding the struct
+to be 8-byte [2], we change the reserved fields from 3 to 2 bytes when
+adding 5-bit world_id field.
 
-so we'd need to be careful if going for this. Discussion from back then:
-https://lore.kernel.org/qemu-devel/ZTAO+TJuztCHDsUW@redhat.com/
+[1] RISC-V WG:
+    https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
 
-> 
->> Git history tells me why setting the job ended up where it is now:
->>
->>> commit 32125b14606a454ed109ea6d9da32c747e94926f
->>> Author: Kevin Wolf <kwolf@redhat.com>
->>> Date:   Fri Feb 3 16:21:41 2023 +0100
->>>
->>>     mirror: Fix access of uninitialised fields during start
->>>     
->>>     bdrv_mirror_top_pwritev() accesses the job object when active mirroring
->>>     is enabled. It disables this code during early initialisation while
->>>     s->job isn't set yet.
->>>     
->>>     However, s->job is still set way too early when the job object isn't
->>>     fully initialised. For example, &s->ops_in_flight isn't initialised yet
->>>     and the in_flight bitmap doesn't exist yet. This causes crashes when a
->>>     write request comes in too early.
->>>     
->>>     Move the assignment of s->job to when the mirror job is actually fully
->>>     initialised to make sure that the mirror_top driver doesn't access it
->>>     too early.
->>
->> Right before initializing the dirty bitmap, the other fields of the job
->> object are already initialized, so the problem described in that commit
->> message should not resurface.
->>
->> That said, not sure I'm not missing something.
-> 
-> Yes, I think it requires splitting mirror_dirty_init() as I said, but
-> otherwise I don't see a problem at the moment. I could still be missing
-> something, of course.
-> 
->> Something else I'm wondering about: do we need to use atomics for
->> setting and accessing MirrorBDSOpaque.job? At least with virtio-blk
->> using iothread-vq-mapping, mirror_run() and bdrv_mirror_top_do_write()
->> might be called in different threads.
-> 
-> This might not even be enough. At first I thought that barriers might be
-> enough to make sure that MirrorBDSOpaque.job is set before the bitmap is
-> disabled. But bdrv_set_dirty() with its check if the dirty bitmap is
-> enabled happens only in bdrv_co_write_req_finish() after the request
-> completes. So we have a race where the switch could happen while a
-> request is in the middle between mirror_top_bs and bdrv_set_dirty() and
-> neither place would mark the request dirty.
+[2] Commit 5014e33b1e00d330f13df33c09a3932ac88f8d94
+    Link: https://lore.kernel.org/r/20250121151322.171832-2-zhao1.liu@intel.com
 
-This is for the approach with setting job and then disabling the bitmap
-in mirror_run().
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ include/exec/memattrs.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-With your suggestion of having the bitmap disabled from the beginning
-and setting the job before initializing the bitmap, using barriers would
-be enough, or?
-
-How should we proceed, i.e. which approach and who should write the patch?
-
-Best Regards,
-Fiona
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index 52ee9552491..6bde90d482f 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -57,6 +57,11 @@ typedef struct MemTxAttrs {
+     /* PCI - IOMMU operations, see PCIAddressType */
+     unsigned int address_type:1;
+ 
++    /*
++     * RISC-V WorldGuard: the 5-bit WID field of memory access.
++     */
++    unsigned int world_id:5;
++
+     /*
+      * Bus masters which don't specify any attributes will get this
+      * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
+@@ -66,8 +71,7 @@ typedef struct MemTxAttrs {
+      */
+     bool unspecified;
+ 
+-    uint8_t _reserved1;
+-    uint16_t _reserved2;
++    uint16_t _reserved1;
+ } MemTxAttrs;
+ 
+ QEMU_BUILD_BUG_ON(sizeof(MemTxAttrs) > 8);
+-- 
+2.43.0
 
 
