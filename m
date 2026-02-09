@@ -4,79 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8329AEF070B
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 05:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3804EF070B
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 05:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpJje-0007pG-08; Mon, 09 Feb 2026 00:22:58 -0500
+	id 1vpJwl-0001eL-NS; Mon, 09 Feb 2026 00:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
- id 1vpJja-0007ol-L7
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:22:54 -0500
-Received: from mailout3.samsung.com ([203.254.224.33])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vpJwf-0001di-Pz; Mon, 09 Feb 2026 00:36:25 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
- id 1vpJjW-0002cv-Km
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 00:22:54 -0500
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20260209052239epoutp0311b83262492875d534971625ba8cbb0f~SfI96nlq70967409674epoutp03E
- for <qemu-devel@nongnu.org>; Mon,  9 Feb 2026 05:22:39 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20260209052239epoutp0311b83262492875d534971625ba8cbb0f~SfI96nlq70967409674epoutp03E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1770614559;
- bh=juNaRrWDo4GQDp3nBOsF/0BME6e3zW9FUkvdZPAYw4Y=;
- h=From:To:Cc:Subject:Date:References:From;
- b=HoNCN0lzTR1T03geDZmf4O25OoaGAyKi8gQKYTeacfmZoLeNJ7vezmrdUE2eVQ2bs
- hygm84slZrIdFOYc3kwSuXTxunw9eEDtD5MF19g3w4g/BeIHYU6nih6r9RmUR1Zf//
- cV+pIN4Jtz2YWPsFTRy5j9E1DVhLAn0ezq+v+lOs=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
- 20260209052238epcas5p2504c25e9cedae41140f6ea400e04d032~SfI9XrODq3048530485epcas5p26;
- Mon,  9 Feb 2026 05:22:38 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.94]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4f8Y3x49K0z2SSKX; Mon,  9 Feb
- 2026 05:22:37 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20260209052236epcas5p4039ffceb22c042b5d12a01f4694ccee3~SfI7TntcN1005610056epcas5p4z;
- Mon,  9 Feb 2026 05:22:36 +0000 (GMT)
-Received: from test-System-Product-Name.samsungds.net (unknown
- [107.99.41.85]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20260209052233epsmtip279e0203f54b67a81188b8de97e8f8248~SfI494M_w1548415484epsmtip2_;
- Mon,  9 Feb 2026 05:22:33 +0000 (GMT)
-From: Ashish Anand <ashish.a6@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org, saurabh@samsung.com,
- vishwa.mg@samsung.com, y.kaushal@samsung.com, ashish.anand202@gmail.com,
- Ashish Anand <ashish.a6@samsung.com>
-Subject: [PATCH v4] target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M
-Date: Mon,  9 Feb 2026 10:49:31 +0530
-Message-ID: <20260209051931.122531-1-ashish.a6@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vpJwa-0005yr-5g; Mon, 09 Feb 2026 00:36:25 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6189umbA3167883; Mon, 9 Feb 2026 05:36:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=OmQu+mSLkQ79fLGBfsw/svvQYRtpou
+ llHucfjMts3wM=; b=BGvcMzV9kWwbU92PzQnKPq3g7ZMVKIsYKJT2vbHPfJT7H9
+ gPtOn5JRrXs9/9OnVsF5IDnVjKIdwLdZknRXd5oPMhfZMYIdrEQeU7F2GKptjkTc
+ S7V6otkQM1IjckW63b5RxQYz3ZkISbDHyGmd4XkG+EldX9KVmzIIuS2DN7i9aKbq
+ mrg5klhS5VBVQgoEAGUGRaeARy7p/UNXGe5n4N1DsP3+zlQMJn8lApwnxDoeF97z
+ PrYcBnP/Emkw6YYjya0H4iSOOKnAYPHyVma5tu0zvwAu+K70ua6dHvLzXBEOlal+
+ I7Qs6jkh5/I6XuMfDCwLwpoU0jOwzdVfaCt6tfwQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696vwdnt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Feb 2026 05:36:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61953Ejp001833;
+ Mon, 9 Feb 2026 05:36:06 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je1umb2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Feb 2026 05:36:06 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6195a5Q223069236
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Feb 2026 05:36:05 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B07C58050;
+ Mon,  9 Feb 2026 05:36:05 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA89058045;
+ Mon,  9 Feb 2026 05:36:00 +0000 (GMT)
+Received: from [9.113.191.152] (unknown [9.113.191.152])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Feb 2026 05:36:00 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------iUkL8b80i86R11W0CDkCE1Ab"
+Message-ID: <f541e7eb-d0fa-4f6f-b1e2-0dbc0e054e8b@linux.vnet.ibm.com>
+Date: Mon, 9 Feb 2026 11:05:59 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260209052236epcas5p4039ffceb22c042b5d12a01f4694ccee3
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260209052236epcas5p4039ffceb22c042b5d12a01f4694ccee3
-References: <CGME20260209052236epcas5p4039ffceb22c042b5d12a01f4694ccee3@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=ashish.a6@samsung.com; helo=mailout3.samsung.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/9] pnv/phb4: Implement read-only and write-only bits
+ of registers
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com
+References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
+ <20251230102156.886288-5-saif.abrar@linux.vnet.ibm.com>
+ <20260204000148-mutt-send-email-mst@kernel.org>
+ <20260204001123-mutt-send-email-mst@kernel.org>
+ <20260204001948-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+In-Reply-To: <20260204001948-mutt-send-email-mst@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=69897247 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=r77TgQKjGQsHNAKrUKIA:9 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=9s0uGIbYrKYc-Rg074YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=VwQbUJbxAAAA:8 a=elkRiU-h1DB1_nXJey0A:9
+ a=-YNEarg4db1I86fI:21 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: g2q5zdPo4qkB-dqOeIzRvL7f1ufDlOjC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA5MDA0MiBTYWx0ZWRfXyQn5TgAX3wga
+ rptLCMrDbOO1G3KNA2QZaXydDP/blr6nqpx49ip93IiQM8Vm2ewvM799dt85uLMon7ZZ2L9pXsw
+ e9mvQ8LjhAvPo0UR88/8jPlQSW4lSRjDLEpwLkk1R0Lz2KfUSwKjXEo8L5TKb3w748NpHJDSFua
+ swSv6Y+ITyngYIgvT9771f//MXbKjhZ3B6fhl3nPQ43t2f/nd6NQPFUg9FubYsJNEz3bSPwhaW6
+ FCJQ+L2qPR34+RpEUzZq+zhiCGA0jJc+iJiYruIjqlAjnC6Pq0bzZQfpzIZQJPK9urQzt+dnfU6
+ x7lPbhqeHlT07/BIlKOWdN2zp/v9Y1zK6DLF7v9Vm3hQhf9CESO7lGhGRiCM37V1/IrONcO5xdx
+ KksS6Gnv2G/beIPenwMw2h3TlRlQw7u4iiXAx0DsQhLQclujFrCV/0/ChF8j6tc6omi/pm4G8wN
+ A3creDik+Ra8+kMf48A==
+X-Proofpoint-ORIG-GUID: A6fmWgmNea4hAgPv-VJDJoLbnr8Lilyj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-08_05,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1011 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602090042
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,471 +132,1033 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
-simple yield. This causes high host CPU usage because guest
-RTOS idle loops effectively become busy-wait loops.
+This is a multi-part message in MIME format.
+--------------iUkL8b80i86R11W0CDkCE1Ab
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-To improve efficiency, this patch transitions WFE to use the architectural
-'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
-to sleep when the guest is idle.
+Hello Michael,
 
-To support this transition, we implement the full architectural behavior
-required for WFE, specifically the 'Event Register', 'SEVONPEND' logic,
-and 'R_BPBR' exception handling requirements defined in the ARM
-Architecture Reference Manual.
+Thanks for the analysis!
 
-This patch enables resource-efficient idle emulation for Cortex-M.
+I'll send the next patchset with your fix.
 
-Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
----
+Regards,
 
-Changes in v4:
-1. Simplified nvic_update_pending_state() to determine scr_bank internally
-   using exc_targets_secure() instead of requiring it as a parameter. (Peter Maydell)
+Saif
 
-Link to v3 - https://lore.kernel.org/qemu-devel/20260203130257.3263336-1-ashish.a6@samsung.com
 
- hw/intc/armv7m_nvic.c      | 79 +++++++++++++++++++++++++++++---------
- target/arm/cpu.c           |  6 +++
- target/arm/cpu.h           |  7 ++++
- target/arm/machine.c       | 19 +++++++++
- target/arm/tcg/helper.h    |  1 +
- target/arm/tcg/m_helper.c  |  5 +++
- target/arm/tcg/op_helper.c | 56 +++++++++++++++++++++++----
- target/arm/tcg/t16.decode  |  5 ++-
- target/arm/tcg/t32.decode  |  5 ++-
- target/arm/tcg/translate.c | 29 ++++++++++++--
- 10 files changed, 179 insertions(+), 33 deletions(-)
+On 04-02-2026 12:12 pm, Michael S. Tsirkin wrote:
+> On Wed, Feb 04, 2026 at 12:12:01AM -0500, Michael S. Tsirkin wrote:
+>> On Wed, Feb 04, 2026 at 12:04:20AM -0500, Michael S. Tsirkin wrote:
+>>> On Tue, Dec 30, 2025 at 04:21:22AM -0600, Saif Abrar wrote:
+>>>> SW cannot write the read-only(RO) bits of a register
+>>>> and write-only(WO) bits of a register return 0 when read.
+>>>>
+>>>> Added ro_mask[] for each register that defines which
+>>>> bits in that register are RO.
+>>>> When writing to a register, the RO-bits are not updated.
+>>>>
+>>>> When reading a register, clear the WO bits and return the updated value.
+>>>>
+>>>> Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
+>>>> PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
+>>>> by writing all 1's and reading back the value.
+>>>> The WO bits in these registers should read back as 0.
+>>>>
+>>>> Signed-off-by: Saif Abrar<saif.abrar@linux.vnet.ibm.com>
+>>>> Reviewed-by: Cédric Le Goater<clg@kaod.org>
+>>> causes a crash in boot-serial-test:
+>>> https://gitlab.com/mstredhat/qemu/-/jobs/12975819193
+>> I forgot to say - with tci:
+>>
+>>    ../configure --enable-tcg-interpreter --target-list=ppc64-softmmu
+> triggered with tcg now, too.
+>
+>    Core was generated by `/scm/qemu-bisect/build/qemu-system-ppc64 -qtest unix:/tmp/qtest-194326.sock -qtest-log /dev/null -chardev
+>       socket,path=/tmp/qtest-194326.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with
+>      exit-with-parent=on -M powernv9 -no-shutdown -chardev file,id=serial0,path=/tmp/qtest-boot-serial-sVOZKK3 -serial
+>      chardev:serial0 -accel tcg -accel kvm -accel qtest'.
+>      Program terminated with signal SIGSEGV, Segmentation fault.
+>      #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871
+>      1871            if (lprop->flags & OBJ_PROP_LINK_DIRECT) {
+>      [Current thread is 1 (Thread 0x7f2716e774c0 (LWP 194336))]
+>      warning: File "/scm/qemu/.gdbinit" auto-loading has been declined by your `auto-load safe-path' set to
+>      "$debugdir:$datadir/auto-load:/usr/lib/golang/src/runtime/runtime-gdb.py".
+>      To enable execution of this file add
+>          add-auto-load-safe-path /scm/qemu/.gdbinit
+>      line to your configuration file "/home/mst/.config/gdb/gdbinit".
+>      To completely disable this security protection add
+>          set auto-load safe-path /
+>      line to your configuration file "/home/mst/.config/gdb/gdbinit".
+>      For more information about this security protection see the
+>      "Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+>          info "(gdb)Auto-loading safe path"
+>      #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871
+>      #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,
+>       errp=0x7ffe749d2a00) at ../qom/object.c:1945
+>      #2  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", v=0x55fe8ebc81a0,
+>      errp=0x7ffe749d2a00) at ../qom/object.c:1450
+>      #3  0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebc8520,
+>      errp=0x7ffe749d2a00) at ../qom/qom-qobject.c:28
+>      #4  0x000055fe6e84ab7b in object_property_set_str (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebbc8e0
+>      "/machine/chip[0]/pec[0]", errp=0x7ffe749d2a00) at ../qom/object.c:1458
+>      #5  0x000055fe6e84ad30 in object_property_set_link (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8e654330,
+>      errp=0x7ffe749d2a00) at ../qom/object.c:1495
+>      #6  0x000055fe6e7fb1ff in pnv_phb_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2a00) at ../hw/pci-host/pnv_phb.c:156
+>      #7  0x000055fe6e8435be in device_set_realized (obj=0x55fe8ebbb960, value=true, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:523
+>      #8  0x000055fe6e84d060 in property_set_bool (obj=0x55fe8ebbb960, v=0x55fe8e70db20, name=0x55fe6efb2979 "realized",
+>      opaque=0x55fe8e2595f0, errp=0x7ffe749d2d60) at ../qom/object.c:2376
+>      #9  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", v=0x55fe8e70db20,
+>      errp=0x7ffe749d2d60) at ../qom/object.c:1450
+>      #10 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=0x55fe8ebbc860,
+>       errp=0x7ffe749d2d60) at ../qom/qom-qobject.c:28
+>      #11 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=true,
+>      errp=0x7ffe749d2d60) at ../qom/object.c:1520
+>      #12 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8ebbb960, bus=0x55fe8e6164d0, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:276
+>      #13 0x000055fe6e1ee440 in sysbus_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2d60) at ../hw/core/sysbus.c:249
+>      #14 0x000055fe6e7f9901 in pnv_pec_default_phb_realize (pec=0x55fe8e654330, stack_no=0, errp=0x7ffe749d2d60) at
+>      ../hw/pci-host/pnv_phb4_pec.c:194
+>      #15 0x000055fe6e7f9bc0 in pnv_pec_realize (dev=0x55fe8e654330, errp=0x7ffe749d2d60) at ../hw/pci-host/pnv_phb4_pec.c:258
+>      #16 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e654330, value=true, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:523
+>      #17 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e654330, v=0x55fe8e63ea90, name=0x55fe6efb2979 "realized",
+>      opaque=0x55fe8e2595f0, errp=0x7ffe749d2fe8) at ../qom/object.c:2376
+>      #18 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", v=0x55fe8e63ea90,
+>      errp=0x7ffe749d2fe8) at ../qom/object.c:1450
+>      #19 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=0x55fe8ebbb0f0,
+>       errp=0x7ffe749d2fe8) at ../qom/qom-qobject.c:28
+>      #20 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=true,
+>      errp=0x7ffe749d2fe8) at ../qom/object.c:1520
+>      #21 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e654330, bus=0x0, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:276
+>      #22 0x000055fe6e676fef in pnv_chip_power9_pec_realize (chip=0x55fe8e64e4f0, errp=0x7ffe749d2fe8) at ../hw/ppc/pnv.c:1892
+>      #23 0x000055fe6e677b1b in pnv_chip_power9_realize (dev=0x55fe8e64e4f0, errp=0x7ffe749d3080) at ../hw/ppc/pnv.c:2108
+>      #24 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e64e4f0, value=true, errp=0x7ffe749d3190) at ../hw/core/qdev.c:523
+>      #25 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e64e4f0, v=0x55fe8e623cf0, name=0x55fe6efb2979 "realized",
+>      opaque=0x55fe8e2595f0, errp=0x7ffe749d3190) at ../qom/object.c:2376
+>      #26 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", v=0x55fe8e623cf0,
+>      errp=0x7ffe749d3190) at ../qom/object.c:1450
+>      #27 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=0x55fe8e63eb90,
+>       errp=0x55fe6f599380 <error_fatal>) at ../qom/qom-qobject.c:28
+>      #28 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=true,
+>      errp=0x55fe6f599380 <error_fatal>) at ../qom/object.c:1520
+>      #29 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 <error_fatal>) at
+>      ../hw/core/qdev.c:276
+>      #30 0x000055fe6e842ca4 in qdev_realize_and_unref (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 <error_fatal>) at
+>      ../hw/core/qdev.c:283
+>      #31 0x000055fe6e1ee488 in sysbus_realize_and_unref (dev=0x55fe8e64e4f0, errp=0x55fe6f599380 <error_fatal>) at
+>      ../hw/core/sysbus.c:254
+>      #32 0x000055fe6e675245 in pnv_init (machine=0x55fe8e615c80) at ../hw/ppc/pnv.c:1221
+>      #33 0x000055fe6e1e62de in machine_run_board_init (machine=0x55fe8e615c80, mem_path=0x0, errp=0x7ffe749d3420) at
+>      ../hw/core/machine.c:1747
+>      #34 0x000055fe6e44f235 in qemu_init_board () at ../system/vl.c:2715
+>      #35 0x000055fe6e44f5c8 in qmp_x_exit_preconfig (errp=0x55fe6f599380 <error_fatal>) at ../system/vl.c:2809
+>      #36 0x000055fe6e452a22 in qemu_init (argc=28, argv=0x7ffe749d37d8) at ../system/vl.c:3849
+>      #37 0x000055fe6e99bb52 in main (argc=28, argv=0x7ffe749d37d8) at ../system/main.c:71
+>       
+>
+>
+> Looking at it:
+>
+>      #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871
+>      #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,
+>       errp=0x7ffe749d2a00) at ../qom/object.c:1945
+>                
+>
+>    The opaque=0xf (15) is being passed as lprop but it should be a pointer to an ObjectLinkProperty.
+>
+> Could be this:
+>    -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
+>    +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
+>
+> The following seems to fix it:
+>
+> $ git diff
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index 48caba9e79..0eb1e7c2bf 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -1998,6 +1998,7 @@ static const TypeInfo pnv_phb4_type_info = {
+>       .parent        = TYPE_DEVICE,
+>       .instance_init = pnv_phb4_instance_init,
+>       .instance_size = sizeof(PnvPHB4),
+> +    .class_size    = sizeof(PnvPHB4Class),
+>       .class_init    = pnv_phb4_class_init,
+>       .interfaces = (const InterfaceInfo[]) {
+>               { TYPE_XIVE_NOTIFIER },
+>
+>
+> without .class_size, QOM will allocate sizeof(DeviceClass) and heap is
+> corrupted.
+>
+>>> bisect script:
+>>>
+>>> #!/bin/bash
+>>> cd /scm/qemu-bisect/build
+>>> make -j$(nproc) || exit 125
+>>> ninja tests/qtest/boot-serial-test || exit 125
+>>> QTEST_QEMU_BINARY=./qemu-system-ppc64 timeout 60 ./tests/qtest/boot-serial-test -p /ppc64/boot-serial/powernv9 && exit 0 || exit 1
+>>>
+>>>
+>>>> ---
+>>>> v1 -> v2: New PnvPHB4Class to hold each register's RO mask.
+>>>>
+>>>>   hw/pci-host/pnv_phb4.c              | 78 ++++++++++++++++++++++++++---
+>>>>   include/hw/pci-host/pnv_phb4.h      | 13 ++++-
+>>>>   include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
+>>>>   tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
+>>>>   4 files changed, 157 insertions(+), 14 deletions(-)
+>>>>
+>>>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+>>>> index 70f5af21fa..48caba9e79 100644
+>>>> --- a/hw/pci-host/pnv_phb4.c
+>>>> +++ b/hw/pci-host/pnv_phb4.c
+>>>> @@ -707,6 +707,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>>>>           return;
+>>>>       }
+>>>>   
+>>>> +    /* Update 'val' according to the register's RO-mask */
+>>>> +    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
+>>>> +    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
+>>>> +                                            (val & ~(k->ro_mask[off >> 3]));
+>>>> +
+>>>>       /* Record whether it changed */
+>>>>       changed = phb->regs[off >> 3] != val;
+>>>>   
+>>>> @@ -781,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>>>>       case PHB_TCE_TAG_ENABLE:
+>>>>       case PHB_INT_NOTIFY_ADDR:
+>>>>       case PHB_INT_NOTIFY_INDEX:
+>>>> -    case PHB_DMARD_SYNC:
+>>>> +    case PHB_DMA_SYNC:
+>>>>          break;
+>>>>   
+>>>>       /* Noise on anything else */
+>>>> @@ -819,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>>>>       case PHB_VERSION:
+>>>>           return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
+>>>>   
+>>>> -        /* Read-only */
+>>>> +    /* Read-only */
+>>>>       case PHB_PHB4_GEN_CAP:
+>>>>           return 0xe4b8000000000000ull;
+>>>>       case PHB_PHB4_TCE_CAP:
+>>>> @@ -829,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>>>>       case PHB_PHB4_EEH_CAP:
+>>>>           return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
+>>>>   
+>>>> +    /* Write-only, read will return zeros */
+>>>> +    case PHB_LEM_ERROR_AND_MASK:
+>>>> +    case PHB_LEM_ERROR_OR_MASK:
+>>>> +        return 0;
+>>>> +    case PHB_PCIE_DLP_TRWCTL:
+>>>> +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
+>>>> +        return val;
+>>>>       /* IODA table accesses */
+>>>>       case PHB_IODA_DATA0:
+>>>>           return pnv_phb4_ioda_read(phb);
+>>>>   
+>>>> +    /*
+>>>> +     * DMA sync: make it look like it's complete,
+>>>> +     *           clear write-only read/write start sync bits.
+>>>> +     */
+>>>> +    case PHB_DMA_SYNC:
+>>>> +        val = PHB_DMA_SYNC_RD_COMPLETE |
+>>>> +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
+>>>> +        return val;
+>>>> +
+>>>> +    /*
+>>>> +     * PCI-E Stack registers
+>>>> +     */
+>>>> +    case PHB_PCIE_SCR:
+>>>> +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+>>>> +        break;
+>>>> +
+>>>>       /* Link training always appears trained */
+>>>>       case PHB_PCIE_DLP_TRAIN_CTL:
+>>>>           /* TODO: Do something sensible with speed ? */
+>>>> -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+>>>> +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+>>>> +        return val;
+>>>> +
+>>>> +    case PHB_PCIE_HOTPLUG_STATUS:
+>>>> +        /* Clear write-only bit */
+>>>> +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+>>>> +        return val;
+>>>>   
+>>>> -    /* DMA read sync: make it look like it's complete */
+>>>> -    case PHB_DMARD_SYNC:
+>>>> -        return PHB_DMARD_SYNC_COMPLETE;
+>>>> +    /* Link Management Register */
+>>>> +    case PHB_PCIE_LMR:
+>>>> +        /* These write-only bits always read as 0 */
+>>>> +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
+>>>> +        return val;
+>>>>   
+>>>>       /* Silent simple reads */
+>>>>       case PHB_LSI_SOURCE_ID:
+>>>> @@ -1685,6 +1721,32 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+>>>>       .get_address_space = pnv_phb4_dma_iommu,
+>>>>   };
+>>>>   
+>>>> +static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+>>>> +{
+>>>> +    PnvPHB4Class *phb4c = PNV_PHB4_GET_CLASS(phb);
+>>>> +
+>>>> +    /*
+>>>> +     * Set register specific RO-masks
+>>>> +     */
+>>>> +
+>>>> +    /* PBL - Error Injection Register (0x1910) */
+>>>> +    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
+>>>> +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
+>>>> +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
+>>>> +
+>>>> +    /* Reserved bits[60:63] */
+>>>> +    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
+>>>> +    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
+>>>> +    /* Reserved bits[36:63] */
+>>>> +    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
+>>>> +    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
+>>>> +    /* Reserved bits[40:63] */
+>>>> +    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
+>>>> +    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
+>>>> +
+>>>> +    /* TODO: Add more RO-masks as regs are implemented in the model */
+>>>> +}
+>>>> +
+>>>>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>>>>   {
+>>>>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+>>>> @@ -1743,6 +1805,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+>>>>       pnv_phb4_err_reg_reset(phb);
+>>>>       pnv_phb4_pcie_stack_reg_reset(phb);
+>>>>       pnv_phb4_regb_err_reg_reset(phb);
+>>>> +    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+>>>>   }
+>>>>   
+>>>>   static void pnv_phb4_instance_init(Object *obj)
+>>>> @@ -1753,6 +1816,9 @@ static void pnv_phb4_instance_init(Object *obj)
+>>>>   
+>>>>       /* XIVE interrupt source object */
+>>>>       object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
+>>>> +
+>>>> +    /* Initialize RO-mask of registers */
+>>>> +    pnv_phb4_ro_mask_init(phb);
+>>>>   }
+>>>>   
+>>>>   void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
+>>>> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+>>>> index 47a5c3edf5..bea0684724 100644
+>>>> --- a/include/hw/pci-host/pnv_phb4.h
+>>>> +++ b/include/hw/pci-host/pnv_phb4.h
+>>>> @@ -19,7 +19,7 @@
+>>>>   
+>>>>   
+>>>>   #define TYPE_PNV_PHB4 "pnv-phb4"
+>>>> -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
+>>>> +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
+>>>>   
+>>>>   typedef struct PnvPhb4PecStack PnvPhb4PecStack;
+>>>>   
+>>>> @@ -156,6 +156,17 @@ struct PnvPHB4 {
+>>>>       QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
+>>>>   };
+>>>>   
+>>>> +typedef struct PnvPHB4Class {
+>>>> +    DeviceClass parent_class;
+>>>> +
+>>>> +    /*
+>>>> +     * Read-only bitmask for registers
+>>>> +     * Bit value: 1 => RO bit
+>>>> +     *            0 => RW bit
+>>>> +     */
+>>>> +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
+>>>> +} PnvPHB4Class;
+>>>> +
+>>>>   void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
+>>>>   int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
+>>>>   PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
+>>>> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+>>>> index df5e86d29a..dfd0e01d1e 100644
+>>>> --- a/include/hw/pci-host/pnv_phb4_regs.h
+>>>> +++ b/include/hw/pci-host/pnv_phb4_regs.h
+>>>> @@ -180,9 +180,11 @@
+>>>>   #define PHB_M64_AOMASK                  0x1d0
+>>>>   #define PHB_M64_UPPER_BITS              0x1f0
+>>>>   #define PHB_NXLATE_PREFIX               0x1f8
+>>>> -#define PHB_DMARD_SYNC                  0x200
+>>>> -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
+>>>> -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
+>>>> +#define PHB_DMA_SYNC                    0x200
+>>>> +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
+>>>> +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
+>>>> +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
+>>>> +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+>>>>   #define PHB_RTC_INVALIDATE              0x208
+>>>>   #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
+>>>>   #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
+>>>> @@ -370,6 +372,7 @@
+>>>>   #define P32_CAP                                 0x228
+>>>>   #define P32_CTL                                 0x22C
+>>>>   #define P32_STAT                                0x230
+>>>> +
+>>>>   /* PHB4 REGB registers */
+>>>>   
+>>>>   /* PBL core */
+>>>> @@ -395,8 +398,8 @@
+>>>>   #define PHB_PCIE_SCR                    0x1A00
+>>>>   #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
+>>>>   #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
+>>>> +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
+>>>>   #define PHB_PCIE_BNR                    0x1A08
+>>>> -
+>>>>   #define PHB_PCIE_CRESET                 0x1A10
+>>>>   #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
+>>>>   #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
+>>>> @@ -405,7 +408,14 @@
+>>>>   #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+>>>>   #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+>>>>   #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+>>>> +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
+>>>> +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+>>>>   #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
+>>>> +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
+>>>> +#define PHB_PCIE_LMR                    0x1A30
+>>>> +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
+>>>> +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
+>>>> +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
+>>>>   
+>>>>   #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+>>>>   #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+>>>> @@ -433,7 +443,7 @@
+>>>>   
+>>>>   #define PHB_PCIE_DLP_TRWCTL             0x1A80
+>>>>   #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+>>>> -
+>>>> +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+>>>>   #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+>>>>   #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+>>>>   #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+>>>> diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+>>>> index f186efaf0d..841306ae3f 100644
+>>>> --- a/tests/qtest/pnv-phb4-test.c
+>>>> +++ b/tests/qtest/pnv-phb4-test.c
+>>>> @@ -73,7 +73,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
+>>>>        * Sticky reset test of PHB_PBL_ERR_STATUS.
+>>>>        *
+>>>>        * Write all 1's to reg PHB_PBL_ERR_INJECT.
+>>>> -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
+>>>> +     * RO-only bits will not be written and
+>>>> +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
+>>>>        *
+>>>>        * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+>>>>        * Verify the sticky bits are still set.
+>>>> @@ -81,7 +82,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
+>>>>       phb4_xscom_write(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
+>>>>       phb4_xscom_write(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
+>>>>       val = phb4_xscom_read(PHB_PBL_ERR_STATUS);
+>>>> -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
+>>>> +    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
+>>>> +}
+>>>> +
+>>>> +/* Check that write-only bits/regs return 0 when read */
+>>>> +static void phb4_writeonly_read_test(QTestState *qts)
+>>>> +{
+>>>> +    uint64_t val;
+>>>> +
+>>>> +    /*
+>>>> +     * Set all bits of PHB_DMA_SYNC,
+>>>> +     * bits 0 and 2 are write-only and should be read as 0.
+>>>> +     */
+>>>> +    phb4_xscom_write(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_DMA_SYNC);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
+>>>> +
+>>>> +    /*
+>>>> +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
+>>>> +     * bit 9 is write-only and should be read as 0.
+>>>> +     */
+>>>> +    phb4_xscom_write(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_PCIE_HOTPLUG_STATUS);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
+>>>> +
+>>>> +    /*
+>>>> +     * Set all bits of PHB_PCIE_LMR,
+>>>> +     * bits 0 and 1 are write-only and should be read as 0.
+>>>> +     */
+>>>> +    phb4_xscom_write(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_PCIE_LMR);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+>>>> +
+>>>> +    /*
+>>>> +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
+>>>> +     * write-only bit-1 should be read as 0.
+>>>> +     */
+>>>> +    phb4_xscom_write(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_PCIE_DLP_TRWCTL);
+>>>> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+>>>> +
+>>>> +    /*
+>>>> +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
+>>>> +     * both regs are write-only and should be read as 0.
+>>>> +     */
+>>>> +    phb4_xscom_write(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_LEM_ERROR_AND_MASK);
+>>>> +    g_assert_cmpuint(val, ==, 0x0);
+>>>> +
+>>>> +    phb4_xscom_write(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
+>>>> +    val = phb4_xscom_read(PHB_LEM_ERROR_OR_MASK);
+>>>> +    g_assert_cmpuint(val, ==, 0x0);
+>>>>   }
+>>>>   
+>>>>   static void phb4_tests(void)
+>>>> @@ -96,6 +149,9 @@ static void phb4_tests(void)
+>>>>       /* Check sticky reset of a register */
+>>>>       phb4_sticky_rst_test(qts);
+>>>>   
+>>>> +    /* Check write-only logic */
+>>>> +    phb4_writeonly_read_test(qts);
+>>>> +
+>>>>       qtest_quit(qts);
+>>>>   }
+>>>>   
+>>>> -- 
+>>>> 2.47.3
+--------------iUkL8b80i86R11W0CDkCE1Ab
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
-index 28b34e9944..a7651f831e 100644
---- a/hw/intc/armv7m_nvic.c
-+++ b/hw/intc/armv7m_nvic.c
-@@ -221,6 +221,29 @@ static int exc_group_prio(NVICState *s, int rawprio, bool targets_secure)
-     return rawprio;
- }
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hello <span style="white-space: pre-wrap">Michael,</span></p>
+    <p><span style="white-space: pre-wrap">Thanks for the analysis!</span></p>
+    <p><span style="white-space: pre-wrap">I'll send the next patchset with your fix.</span></p>
+    <p><span style="white-space: pre-wrap">
+</span></p>
+    <p><span style="white-space: pre-wrap">Regards,</span></p>
+    <p><span style="white-space: pre-wrap">Saif</span></p>
+    <p><span style="white-space: pre-wrap"> </span><br>
+    </p>
+    <div class="moz-cite-prefix">On 04-02-2026 12:12 pm, Michael S.
+      Tsirkin wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20260204001948-mutt-send-email-mst@kernel.org">
+      <pre wrap="" class="moz-quote-pre">On Wed, Feb 04, 2026 at 12:12:01AM -0500, Michael S. Tsirkin wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">On Wed, Feb 04, 2026 at 12:04:20AM -0500, Michael S. Tsirkin wrote:
+</pre>
+        <blockquote type="cite">
+          <pre wrap="" class="moz-quote-pre">On Tue, Dec 30, 2025 at 04:21:22AM -0600, Saif Abrar wrote:
+</pre>
+          <blockquote type="cite">
+            <pre wrap="" class="moz-quote-pre">SW cannot write the read-only(RO) bits of a register
+and write-only(WO) bits of a register return 0 when read.
+
+Added ro_mask[] for each register that defines which
+bits in that register are RO.
+When writing to a register, the RO-bits are not updated.
+
+When reading a register, clear the WO bits and return the updated value.
+
+Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
+PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
+by writing all 1's and reading back the value.
+The WO bits in these registers should read back as 0.
+
+Signed-off-by: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.vnet.ibm.com">&lt;saif.abrar@linux.vnet.ibm.com&gt;</a>
+Reviewed-by: Cédric Le Goater <a class="moz-txt-link-rfc2396E" href="mailto:clg@kaod.org">&lt;clg@kaod.org&gt;</a>
+</pre>
+          </blockquote>
+          <pre wrap="" class="moz-quote-pre">
+causes a crash in boot-serial-test:
+<a class="moz-txt-link-freetext" href="https://gitlab.com/mstredhat/qemu/-/jobs/12975819193">https://gitlab.com/mstredhat/qemu/-/jobs/12975819193</a>
+</pre>
+        </blockquote>
+        <pre wrap="" class="moz-quote-pre">
+I forgot to say - with tci:
+
+  ../configure --enable-tcg-interpreter --target-list=ppc64-softmmu                                                                      
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+triggered with tcg now, too.
+
+  Core was generated by `/scm/qemu-bisect/build/qemu-system-ppc64 -qtest unix:/tmp/qtest-194326.sock -qtest-log /dev/null -chardev     
+     socket,path=/tmp/qtest-194326.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with                      
+    exit-with-parent=on -M powernv9 -no-shutdown -chardev file,id=serial0,path=/tmp/qtest-boot-serial-sVOZKK3 -serial                    
+    chardev:serial0 -accel tcg -accel kvm -accel qtest'.                                                                                 
+    Program terminated with signal SIGSEGV, Segmentation fault.                                                                          
+    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
+    1871            if (lprop-&gt;flags &amp; OBJ_PROP_LINK_DIRECT) {                                                                           
+    [Current thread is 1 (Thread 0x7f2716e774c0 (LWP 194336))]                                                                           
+    warning: File "/scm/qemu/.gdbinit" auto-loading has been declined by your `auto-load safe-path' set to                               
+    "$debugdir:$datadir/auto-load:/usr/lib/golang/src/runtime/runtime-gdb.py".                                                           
+    To enable execution of this file add                                                                                                 
+        add-auto-load-safe-path /scm/qemu/.gdbinit                                                                                       
+    line to your configuration file "/home/mst/.config/gdb/gdbinit".                                                                     
+    To completely disable this security protection add                                                                                   
+        set auto-load safe-path /                                                                                                        
+    line to your configuration file "/home/mst/.config/gdb/gdbinit".                                                                     
+    For more information about this security protection see the                                                                          
+    "Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:                                                       
+        info "(gdb)Auto-loading safe path"                                                                                               
+    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
+    #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,     
+     errp=0x7ffe749d2a00) at ../qom/object.c:1945                                                                                        
+    #2  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", v=0x55fe8ebc81a0,                      
+    errp=0x7ffe749d2a00) at ../qom/object.c:1450                                                                                         
+    #3  0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebc8520,          
+    errp=0x7ffe749d2a00) at ../qom/qom-qobject.c:28                                                                                      
+    #4  0x000055fe6e84ab7b in object_property_set_str (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8ebbc8e0               
+    "/machine/chip[0]/pec[0]", errp=0x7ffe749d2a00) at ../qom/object.c:1458                                                              
+    #5  0x000055fe6e84ad30 in object_property_set_link (obj=0x55fe8ebbca10, name=0x55fe6ef9d504 "pec", value=0x55fe8e654330,             
+    errp=0x7ffe749d2a00) at ../qom/object.c:1495                                                                                         
+    #6  0x000055fe6e7fb1ff in pnv_phb_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2a00) at ../hw/pci-host/pnv_phb.c:156                  
+    #7  0x000055fe6e8435be in device_set_realized (obj=0x55fe8ebbb960, value=true, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:523         
+    #8  0x000055fe6e84d060 in property_set_bool (obj=0x55fe8ebbb960, v=0x55fe8e70db20, name=0x55fe6efb2979 "realized",                   
+    opaque=0x55fe8e2595f0, errp=0x7ffe749d2d60) at ../qom/object.c:2376                                                                  
+    #9  0x000055fe6e84aad7 in object_property_set (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", v=0x55fe8e70db20,                 
+    errp=0x7ffe749d2d60) at ../qom/object.c:1450                                                                                         
+    #10 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=0x55fe8ebbc860,     
+     errp=0x7ffe749d2d60) at ../qom/qom-qobject.c:28                                                                                     
+    #11 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8ebbb960, name=0x55fe6efb2979 "realized", value=true,                  
+    errp=0x7ffe749d2d60) at ../qom/object.c:1520                                                                                         
+    #12 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8ebbb960, bus=0x55fe8e6164d0, errp=0x7ffe749d2d60) at ../hw/core/qdev.c:276        
+    #13 0x000055fe6e1ee440 in sysbus_realize (dev=0x55fe8ebbb960, errp=0x7ffe749d2d60) at ../hw/core/sysbus.c:249                        
+    #14 0x000055fe6e7f9901 in pnv_pec_default_phb_realize (pec=0x55fe8e654330, stack_no=0, errp=0x7ffe749d2d60) at                       
+    ../hw/pci-host/pnv_phb4_pec.c:194                                                                                                    
+    #15 0x000055fe6e7f9bc0 in pnv_pec_realize (dev=0x55fe8e654330, errp=0x7ffe749d2d60) at ../hw/pci-host/pnv_phb4_pec.c:258             
+    #16 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e654330, value=true, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:523         
+    #17 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e654330, v=0x55fe8e63ea90, name=0x55fe6efb2979 "realized",                   
+    opaque=0x55fe8e2595f0, errp=0x7ffe749d2fe8) at ../qom/object.c:2376                                                                  
+    #18 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", v=0x55fe8e63ea90,                 
+    errp=0x7ffe749d2fe8) at ../qom/object.c:1450                                                                                         
+    #19 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=0x55fe8ebbb0f0,     
+     errp=0x7ffe749d2fe8) at ../qom/qom-qobject.c:28                                                                                     
+    #20 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e654330, name=0x55fe6efb2979 "realized", value=true,                  
+    errp=0x7ffe749d2fe8) at ../qom/object.c:1520                                                                                         
+    #21 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e654330, bus=0x0, errp=0x7ffe749d2fe8) at ../hw/core/qdev.c:276                   
+    #22 0x000055fe6e676fef in pnv_chip_power9_pec_realize (chip=0x55fe8e64e4f0, errp=0x7ffe749d2fe8) at ../hw/ppc/pnv.c:1892             
+    #23 0x000055fe6e677b1b in pnv_chip_power9_realize (dev=0x55fe8e64e4f0, errp=0x7ffe749d3080) at ../hw/ppc/pnv.c:2108                  
+    #24 0x000055fe6e8435be in device_set_realized (obj=0x55fe8e64e4f0, value=true, errp=0x7ffe749d3190) at ../hw/core/qdev.c:523         
+    #25 0x000055fe6e84d060 in property_set_bool (obj=0x55fe8e64e4f0, v=0x55fe8e623cf0, name=0x55fe6efb2979 "realized",                   
+    opaque=0x55fe8e2595f0, errp=0x7ffe749d3190) at ../qom/object.c:2376                                                                  
+    #26 0x000055fe6e84aad7 in object_property_set (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", v=0x55fe8e623cf0,                 
+    errp=0x7ffe749d3190) at ../qom/object.c:1450                                                                                         
+    #27 0x000055fe6e84fcc3 in object_property_set_qobject (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=0x55fe8e63eb90,     
+     errp=0x55fe6f599380 &lt;error_fatal&gt;) at ../qom/qom-qobject.c:28                                                                       
+    #28 0x000055fe6e84ae8a in object_property_set_bool (obj=0x55fe8e64e4f0, name=0x55fe6efb2979 "realized", value=true,                  
+    errp=0x55fe6f599380 &lt;error_fatal&gt;) at ../qom/object.c:1520                                                                           
+    #29 0x000055fe6e842c6b in qdev_realize (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 &lt;error_fatal&gt;) at                
+    ../hw/core/qdev.c:276                                                                                                                
+    #30 0x000055fe6e842ca4 in qdev_realize_and_unref (dev=0x55fe8e64e4f0, bus=0x55fe8e6164d0, errp=0x55fe6f599380 &lt;error_fatal&gt;) at      
+    ../hw/core/qdev.c:283                                                                                                                
+    #31 0x000055fe6e1ee488 in sysbus_realize_and_unref (dev=0x55fe8e64e4f0, errp=0x55fe6f599380 &lt;error_fatal&gt;) at                        
+    ../hw/core/sysbus.c:254                                                                                                              
+    #32 0x000055fe6e675245 in pnv_init (machine=0x55fe8e615c80) at ../hw/ppc/pnv.c:1221                                                  
+    #33 0x000055fe6e1e62de in machine_run_board_init (machine=0x55fe8e615c80, mem_path=0x0, errp=0x7ffe749d3420) at                      
+    ../hw/core/machine.c:1747                                                                                                            
+    #34 0x000055fe6e44f235 in qemu_init_board () at ../system/vl.c:2715                                                                  
+    #35 0x000055fe6e44f5c8 in qmp_x_exit_preconfig (errp=0x55fe6f599380 &lt;error_fatal&gt;) at ../system/vl.c:2809                            
+    #36 0x000055fe6e452a22 in qemu_init (argc=28, argv=0x7ffe749d37d8) at ../system/vl.c:3849                                            
+    #37 0x000055fe6e99bb52 in main (argc=28, argv=0x7ffe749d37d8) at ../system/main.c:71                                                 
+     
+
+
+Looking at it:
+
+    #0  0x000055fe6e84bcc8 in object_link_get_targetp (obj=0x55fe8ebbca10, lprop=0xf) at ../qom/object.c:1871                            
+    #1  0x000055fe6e84c00f in object_set_link_property (obj=0x55fe8ebbca10, v=0x55fe8ebc81a0, name=0x55fe6ef9d504 "pec", opaque=0xf,     
+     errp=0x7ffe749d2a00) at ../qom/object.c:1945                                                                                        
+              
+
+  The opaque=0xf (15) is being passed as lprop but it should be a pointer to an ObjectLinkProperty.
+
+Could be this:
+  -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)                                                                                         
+  +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)                                                                                  
+
+The following seems to fix it:
+
+$ git diff
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 48caba9e79..0eb1e7c2bf 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -1998,6 +1998,7 @@ static const TypeInfo pnv_phb4_type_info = {
+     .parent        = TYPE_DEVICE,
+     .instance_init = pnv_phb4_instance_init,
+     .instance_size = sizeof(PnvPHB4),
++    .class_size    = sizeof(PnvPHB4Class),
+     .class_init    = pnv_phb4_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+             { TYPE_XIVE_NOTIFIER },
+
+
+without .class_size, QOM will allocate sizeof(DeviceClass) and heap is
+corrupted.
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">
+</pre>
+        <blockquote type="cite">
+          <pre wrap="" class="moz-quote-pre">bisect script:
+
+#!/bin/bash                                                                                                                            
+cd /scm/qemu-bisect/build                                                                                                              
+make -j$(nproc) || exit 125                                                                                                            
+ninja tests/qtest/boot-serial-test || exit 125                                                                                         
+QTEST_QEMU_BINARY=./qemu-system-ppc64 timeout 60 ./tests/qtest/boot-serial-test -p /ppc64/boot-serial/powernv9 &amp;&amp; exit 0 || exit 1     
+
+
+</pre>
+          <blockquote type="cite">
+            <pre wrap="" class="moz-quote-pre">---
+v1 -&gt; v2: New PnvPHB4Class to hold each register's RO mask.
+
+ hw/pci-host/pnv_phb4.c              | 78 ++++++++++++++++++++++++++---
+ include/hw/pci-host/pnv_phb4.h      | 13 ++++-
+ include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
+ tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
+ 4 files changed, 157 insertions(+), 14 deletions(-)
+
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 70f5af21fa..48caba9e79 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -707,6 +707,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         return;
+     }
  
-+/*
-+ * Update the pending state of an exception vector.
-+ * This is the central function for all updates to vec->pending.
-+ * Handles SEVONPEND: if this is a 0->1 transition on an external interrupt
-+ * and SEVONPEND is set in the appropriate SCR, sets the event register.
-+ */
-+static void nvic_update_pending_state(NVICState *s, VecInfo *vec,
-+                                      int irq, uint8_t next_pending_val)
-+{
-+    uint8_t prev_pending_val = vec->pending;
-+    vec->pending = next_pending_val;
++    /* Update 'val' according to the register's RO-mask */
++    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
++    val = (phb-&gt;regs[off &gt;&gt; 3] &amp; k-&gt;ro_mask[off &gt;&gt; 3]) |
++                                            (val &amp; ~(k-&gt;ro_mask[off &gt;&gt; 3]));
 +
-+    /* Check for 0->1 transition on interrupts (>= NVIC_FIRST_IRQ) only */
-+    if (!prev_pending_val && next_pending_val && irq >= NVIC_FIRST_IRQ) {
-+        int scr_bank = exc_targets_secure(s, irq) ? M_REG_S : M_REG_NS;
-+        /* SEVONPEND: interrupt going to pending is a WFE wakeup event */
-+        if (s->cpu->env.v7m.scr[scr_bank] & R_V7M_SCR_SEVONPEND_MASK) {
-+            s->cpu->env.event_register = true;
-+            qemu_cpu_kick(CPU(s->cpu));
-+        }
-+    }
-+}
-+
- /* Recompute vectpending and exception_prio for a CPU which implements
-  * the Security extension
-  */
-@@ -516,7 +539,7 @@ static void armv7m_nvic_clear_pending(NVICState *s, int irq, bool secure)
-     }
-     trace_nvic_clear_pending(irq, secure, vec->enabled, vec->prio);
-     if (vec->pending) {
--        vec->pending = 0;
-+        nvic_update_pending_state(s, vec, irq, 0);
-         nvic_irq_update(s);
-     }
- }
-@@ -656,7 +679,7 @@ static void do_armv7m_nvic_set_pending(void *opaque, int irq, bool secure,
-     }
+     /* Record whether it changed */
+     changed = phb-&gt;regs[off &gt;&gt; 3] != val;
  
-     if (!vec->pending) {
--        vec->pending = 1;
-+        nvic_update_pending_state(s, vec, irq, 1);
-         nvic_irq_update(s);
-     }
- }
-@@ -753,7 +776,7 @@ void armv7m_nvic_set_pending_lazyfp(NVICState *s, int irq, bool secure)
-         s->cpu->env.v7m.hfsr |= R_V7M_HFSR_FORCED_MASK;
-     }
-     if (!vec->pending) {
--        vec->pending = 1;
-+        nvic_update_pending_state(s, vec, irq, 1);
-         /*
-          * We do not call nvic_irq_update(), because we know our caller
-          * is going to handle causing us to take the exception by
-@@ -790,7 +813,7 @@ void armv7m_nvic_acknowledge_irq(NVICState *s)
-     trace_nvic_acknowledge_irq(pending, s->vectpending_prio);
+@@ -781,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+     case PHB_TCE_TAG_ENABLE:
+     case PHB_INT_NOTIFY_ADDR:
+     case PHB_INT_NOTIFY_INDEX:
+-    case PHB_DMARD_SYNC:
++    case PHB_DMA_SYNC:
+        break;
  
-     vec->active = 1;
--    vec->pending = 0;
-+    nvic_update_pending_state(s, vec, pending, 0);
+     /* Noise on anything else */
+@@ -819,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_VERSION:
+         return PNV_PHB4_PEC_GET_CLASS(phb-&gt;pec)-&gt;version;
  
-     write_v7m_exception(env, s->vectpending);
+-        /* Read-only */
++    /* Read-only */
+     case PHB_PHB4_GEN_CAP:
+         return 0xe4b8000000000000ull;
+     case PHB_PHB4_TCE_CAP:
+@@ -829,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_PHB4_EEH_CAP:
+         return phb-&gt;big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
  
-@@ -898,7 +921,7 @@ int armv7m_nvic_complete_irq(NVICState *s, int irq, bool secure)
-          * happens for external IRQs
-          */
-         assert(irq >= NVIC_FIRST_IRQ);
--        vec->pending = 1;
-+        nvic_update_pending_state(s, vec, irq, 1);
-     }
- 
-     nvic_irq_update(s);
-@@ -1657,7 +1680,7 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
-         }
-         /* We don't implement deep-sleep so these bits are RAZ/WI.
-          * The other bits in the register are banked.
--         * QEMU's implementation ignores SEVONPEND and SLEEPONEXIT, which
-+         * QEMU's implementation ignores SLEEPONEXIT, which
-          * is architecturally permitted.
-          */
-         value &= ~(R_V7M_SCR_SLEEPDEEP_MASK | R_V7M_SCR_SLEEPDEEPS_MASK);
-@@ -1722,38 +1745,57 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
-                 (value & (1 << 10)) != 0;
-             s->sec_vectors[ARMV7M_EXCP_SYSTICK].active =
-                 (value & (1 << 11)) != 0;
--            s->sec_vectors[ARMV7M_EXCP_USAGE].pending =
--                (value & (1 << 12)) != 0;
--            s->sec_vectors[ARMV7M_EXCP_MEM].pending = (value & (1 << 13)) != 0;
--            s->sec_vectors[ARMV7M_EXCP_SVC].pending = (value & (1 << 15)) != 0;
-+            nvic_update_pending_state(s, &s->sec_vectors[ARMV7M_EXCP_USAGE],
-+                                      ARMV7M_EXCP_USAGE,
-+                                      (value & (1 << 12)) != 0);
-+            nvic_update_pending_state(s, &s->sec_vectors[ARMV7M_EXCP_MEM],
-+                                      ARMV7M_EXCP_MEM,
-+                                      (value & (1 << 13)) != 0);
-+            nvic_update_pending_state(s, &s->sec_vectors[ARMV7M_EXCP_SVC],
-+                                      ARMV7M_EXCP_SVC,
-+                                      (value & (1 << 15)) != 0);
-             s->sec_vectors[ARMV7M_EXCP_MEM].enabled = (value & (1 << 16)) != 0;
-             s->sec_vectors[ARMV7M_EXCP_BUS].enabled = (value & (1 << 17)) != 0;
-             s->sec_vectors[ARMV7M_EXCP_USAGE].enabled =
-                 (value & (1 << 18)) != 0;
--            s->sec_vectors[ARMV7M_EXCP_HARD].pending = (value & (1 << 21)) != 0;
-+            nvic_update_pending_state(s, &s->sec_vectors[ARMV7M_EXCP_HARD],
-+                                      ARMV7M_EXCP_HARD,
-+                                      (value & (1 << 21)) != 0);
-             /* SecureFault not banked, but RAZ/WI to NS */
-             s->vectors[ARMV7M_EXCP_SECURE].active = (value & (1 << 4)) != 0;
-             s->vectors[ARMV7M_EXCP_SECURE].enabled = (value & (1 << 19)) != 0;
--            s->vectors[ARMV7M_EXCP_SECURE].pending = (value & (1 << 20)) != 0;
-+            nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_SECURE],
-+                                      ARMV7M_EXCP_SECURE,
-+                                      (value & (1 << 20)) != 0);
-         } else {
-             s->vectors[ARMV7M_EXCP_MEM].active = (value & (1 << 0)) != 0;
-             if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
-                 /* HARDFAULTPENDED is not present in v7M */
--                s->vectors[ARMV7M_EXCP_HARD].pending = (value & (1 << 21)) != 0;
-+                nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_HARD],
-+                                          ARMV7M_EXCP_HARD,
-+                                          (value & (1 << 21)) != 0);
-             }
-             s->vectors[ARMV7M_EXCP_USAGE].active = (value & (1 << 3)) != 0;
-             s->vectors[ARMV7M_EXCP_SVC].active = (value & (1 << 7)) != 0;
-             s->vectors[ARMV7M_EXCP_PENDSV].active = (value & (1 << 10)) != 0;
-             s->vectors[ARMV7M_EXCP_SYSTICK].active = (value & (1 << 11)) != 0;
--            s->vectors[ARMV7M_EXCP_USAGE].pending = (value & (1 << 12)) != 0;
--            s->vectors[ARMV7M_EXCP_MEM].pending = (value & (1 << 13)) != 0;
--            s->vectors[ARMV7M_EXCP_SVC].pending = (value & (1 << 15)) != 0;
-+            nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_USAGE],
-+                                      ARMV7M_EXCP_USAGE,
-+                                      (value & (1 << 12)) != 0);
-+            nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_MEM],
-+                                      ARMV7M_EXCP_MEM,
-+                                      (value & (1 << 13)) != 0);
-+            nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_SVC],
-+                                      ARMV7M_EXCP_SVC,
-+                                      (value & (1 << 15)) != 0);
-             s->vectors[ARMV7M_EXCP_MEM].enabled = (value & (1 << 16)) != 0;
-             s->vectors[ARMV7M_EXCP_USAGE].enabled = (value & (1 << 18)) != 0;
-         }
-         if (attrs.secure || (cpu->env.v7m.aircr & R_V7M_AIRCR_BFHFNMINS_MASK)) {
-             s->vectors[ARMV7M_EXCP_BUS].active = (value & (1 << 1)) != 0;
--            s->vectors[ARMV7M_EXCP_BUS].pending = (value & (1 << 14)) != 0;
-+            nvic_update_pending_state(s, &s->vectors[ARMV7M_EXCP_BUS],
-+                                      ARMV7M_EXCP_BUS,
-+                                      (value & (1 << 14)) != 0);
-             s->vectors[ARMV7M_EXCP_BUS].enabled = (value & (1 << 17)) != 0;
-         }
-         /* NMIACT can only be written if the write is of a zero, with
-@@ -2389,7 +2431,8 @@ static MemTxResult nvic_sysreg_write(void *opaque, hwaddr addr,
-                 (attrs.secure || s->itns[startvec + i]) &&
-                 !(setval == 0 && s->vectors[startvec + i].level &&
-                   !s->vectors[startvec + i].active)) {
--                s->vectors[startvec + i].pending = setval;
-+                nvic_update_pending_state(s, &s->vectors[startvec + i],
-+                                          startvec + i, setval);
-             }
-         }
-         nvic_irq_update(s);
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 586202071d..e9bf516c92 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -143,6 +143,12 @@ static bool arm_cpu_has_work(CPUState *cs)
- {
-     ARMCPU *cpu = ARM_CPU(cs);
- 
-+    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
-+        if (cpu->env.event_register) {
-+            return true;
-+        }
-+    }
-+
-     return (cpu->power_state != PSCI_OFF)
-         && cpu_test_interrupt(cs,
-                CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 21fee5e840..5ea9accba3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -760,6 +760,13 @@ typedef struct CPUArchState {
-     /* Optional fault info across tlb lookup. */
-     ARMMMUFaultInfo *tlb_fi;
++    /* Write-only, read will return zeros */
++    case PHB_LEM_ERROR_AND_MASK:
++    case PHB_LEM_ERROR_OR_MASK:
++        return 0;
++    case PHB_PCIE_DLP_TRWCTL:
++        val &amp;= ~PHB_PCIE_DLP_TRWCTL_WREN;
++        return val;
+     /* IODA table accesses */
+     case PHB_IODA_DATA0:
+         return pnv_phb4_ioda_read(phb);
  
 +    /*
-+     * The event register is shared by all ARM profiles (A/R/M),
-+     * so it is stored in the top-level CPU state.
-+     * WFE/SEV handling is currently implemented only for M-profile.
++     * DMA sync: make it look like it's complete,
++     *           clear write-only read/write start sync bits.
 +     */
-+    bool event_register;
++    case PHB_DMA_SYNC:
++        val = PHB_DMA_SYNC_RD_COMPLETE |
++            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
++        return val;
 +
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
++    /*
++     * PCI-E Stack registers
++     */
++    case PHB_PCIE_SCR:
++        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
++        break;
++
+     /* Link training always appears trained */
+     case PHB_PCIE_DLP_TRAIN_CTL:
+         /* TODO: Do something sensible with speed ? */
+-        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++        return val;
++
++    case PHB_PCIE_HOTPLUG_STATUS:
++        /* Clear write-only bit */
++        val &amp;= ~PHB_PCIE_HPSTAT_RESAMPLE;
++        return val;
  
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 0befdb0b28..bbaae34449 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -508,6 +508,24 @@ static const VMStateDescription vmstate_m_mve = {
-     },
+-    /* DMA read sync: make it look like it's complete */
+-    case PHB_DMARD_SYNC:
+-        return PHB_DMARD_SYNC_COMPLETE;
++    /* Link Management Register */
++    case PHB_PCIE_LMR:
++        /* These write-only bits always read as 0 */
++        val &amp;= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
++        return val;
+ 
+     /* Silent simple reads */
+     case PHB_LSI_SOURCE_ID:
+@@ -1685,6 +1721,32 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+     .get_address_space = pnv_phb4_dma_iommu,
  };
  
-+static bool event_needed(void *opaque)
++static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
 +{
-+    ARMCPU *cpu = opaque;
++    PnvPHB4Class *phb4c = PNV_PHB4_GET_CLASS(phb);
 +
-+    return cpu->env.event_register;
++    /*
++     * Set register specific RO-masks
++     */
++
++    /* PBL - Error Injection Register (0x1910) */
++    phb4c-&gt;ro_mask[PHB_PBL_ERR_INJECT &gt;&gt; 3] =
++        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
++        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
++
++    /* Reserved bits[60:63] */
++    phb4c-&gt;ro_mask[PHB_TXE_ERR_LEM_ENABLE &gt;&gt; 3] =
++    phb4c-&gt;ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(60, 63);
++    /* Reserved bits[36:63] */
++    phb4c-&gt;ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE &gt;&gt; 3] =
++    phb4c-&gt;ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(36, 63);
++    /* Reserved bits[40:63] */
++    phb4c-&gt;ro_mask[PHB_ERR_LEM_ENABLE &gt;&gt; 3] =
++    phb4c-&gt;ro_mask[PHB_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(40, 63);
++
++    /* TODO: Add more RO-masks as regs are implemented in the model */
 +}
 +
-+static const VMStateDescription vmstate_event = {
-+    .name = "cpu/event",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = event_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(env.event_register, ARMCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
+ static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+ {
+     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+@@ -1743,6 +1805,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+     pnv_phb4_err_reg_reset(phb);
+     pnv_phb4_pcie_stack_reg_reset(phb);
+     pnv_phb4_regb_err_reg_reset(phb);
++    phb-&gt;regs[PHB_PCIE_CRESET &gt;&gt; 3] = 0xE000000000000000;
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+@@ -1753,6 +1816,9 @@ static void pnv_phb4_instance_init(Object *obj)
+ 
+     /* XIVE interrupt source object */
+     object_initialize_child(obj, "source", &amp;phb-&gt;xsrc, TYPE_XIVE_SOURCE);
 +
- static const VMStateDescription vmstate_m = {
-     .name = "cpu/m",
-     .version_id = 4,
-@@ -1210,6 +1228,7 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_wfxt_timer,
-         &vmstate_syndrome64,
-         &vmstate_pstate64,
-+        &vmstate_event,
-         NULL
-     }
++    /* Initialize RO-mask of registers */
++    pnv_phb4_ro_mask_init(phb);
+ }
+ 
+ void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
+diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+index 47a5c3edf5..bea0684724 100644
+--- a/include/hw/pci-host/pnv_phb4.h
++++ b/include/hw/pci-host/pnv_phb4.h
+@@ -19,7 +19,7 @@
+ 
+ 
+ #define TYPE_PNV_PHB4 "pnv-phb4"
+-OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
++OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
+ 
+ typedef struct PnvPhb4PecStack PnvPhb4PecStack;
+ 
+@@ -156,6 +156,17 @@ struct PnvPHB4 {
+     QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
  };
-diff --git a/target/arm/tcg/helper.h b/target/arm/tcg/helper.h
-index 4636d1bc03..5a10a9fba3 100644
---- a/target/arm/tcg/helper.h
-+++ b/target/arm/tcg/helper.h
-@@ -60,6 +60,7 @@ DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
- DEF_HELPER_2(pre_smc, void, env, i32)
- DEF_HELPER_1(vesb, void, env)
-+DEF_HELPER_1(sev, void, env)
  
- DEF_HELPER_3(cpsr_write, void, env, i32, i32)
- DEF_HELPER_2(cpsr_write_eret, void, env, i32)
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index 3fb24c7790..0c3832a47f 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -962,7 +962,9 @@ static void v7m_exception_taken(ARMCPU *cpu, uint32_t lr, bool dotailchain,
-      * Now we've done everything that might cause a derived exception
-      * we can go ahead and activate whichever exception we're going to
-      * take (which might now be the derived exception).
-+     * Exception entry sets the event register (ARM ARM R_BPBR)
-      */
-+    env->event_register = true;
-     armv7m_nvic_acknowledge_irq(env->nvic);
- 
-     /* Switch to target security state -- must do this before writing SPSEL */
-@@ -1906,6 +1908,9 @@ static void do_v7m_exception_exit(ARMCPU *cpu)
-     /* Otherwise, we have a successful exception exit. */
-     arm_clear_exclusive(env);
-     arm_rebuild_hflags(env);
++typedef struct PnvPHB4Class {
++    DeviceClass parent_class;
 +
-+    /* Exception return sets the event register (ARM ARM R_BPBR) */
-+    env->event_register = true;
-     qemu_log_mask(CPU_LOG_INT, "...successful exception return\n");
- }
++    /*
++     * Read-only bitmask for registers
++     * Bit value: 1 =&gt; RO bit
++     *            0 =&gt; RW bit
++     */
++    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
++} PnvPHB4Class;
++
+ void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
+ int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
+ PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
+diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+index df5e86d29a..dfd0e01d1e 100644
+--- a/include/hw/pci-host/pnv_phb4_regs.h
++++ b/include/hw/pci-host/pnv_phb4_regs.h
+@@ -180,9 +180,11 @@
+ #define PHB_M64_AOMASK                  0x1d0
+ #define PHB_M64_UPPER_BITS              0x1f0
+ #define PHB_NXLATE_PREFIX               0x1f8
+-#define PHB_DMARD_SYNC                  0x200
+-#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
+-#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
++#define PHB_DMA_SYNC                    0x200
++#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
++#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
++#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
++#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+ #define PHB_RTC_INVALIDATE              0x208
+ #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
+ #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
+@@ -370,6 +372,7 @@
+ #define P32_CAP                                 0x228
+ #define P32_CTL                                 0x22C
+ #define P32_STAT                                0x230
++
+ /* PHB4 REGB registers */
  
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 4fbd219555..c7ab462d1d 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -469,16 +469,58 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
- #endif
- }
+ /* PBL core */
+@@ -395,8 +398,8 @@
+ #define PHB_PCIE_SCR                    0x1A00
+ #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
+ #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
++#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
+ #define PHB_PCIE_BNR                    0x1A08
+-
+ #define PHB_PCIE_CRESET                 0x1A10
+ #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
+ #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
+@@ -405,7 +408,14 @@
+ #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+ #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+ #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
++#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
++#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+ #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
++#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
++#define PHB_PCIE_LMR                    0x1A30
++#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
++#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
++#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
  
-+void HELPER(sev)(CPUARMState *env)
-+{
-+    CPUState *cs = env_cpu(env);
-+    CPU_FOREACH(cs) {
-+        ARMCPU *target_cpu = ARM_CPU(cs);
-+        if (arm_feature(&target_cpu->env, ARM_FEATURE_M)) {
-+            target_cpu->env.event_register = true;
-+        }
-+        if (!qemu_cpu_is_self(cs)) {
-+            qemu_cpu_kick(cs);
-+        }
-+    }
+ #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+ #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+@@ -433,7 +443,7 @@
+ 
+ #define PHB_PCIE_DLP_TRWCTL             0x1A80
+ #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+-
++#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+ #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+ #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+ #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+index f186efaf0d..841306ae3f 100644
+--- a/tests/qtest/pnv-phb4-test.c
++++ b/tests/qtest/pnv-phb4-test.c
+@@ -73,7 +73,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
+      * Sticky reset test of PHB_PBL_ERR_STATUS.
+      *
+      * Write all 1's to reg PHB_PBL_ERR_INJECT.
+-     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
++     * RO-only bits will not be written and
++     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
+      *
+      * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+      * Verify the sticky bits are still set.
+@@ -81,7 +82,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
+     phb4_xscom_write(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
+     phb4_xscom_write(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
+     val = phb4_xscom_read(PHB_PBL_ERR_STATUS);
+-    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
++    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
 +}
 +
- void HELPER(wfe)(CPUARMState *env)
- {
--    /* This is a hint instruction that is semantically different
--     * from YIELD even though we currently implement it identically.
--     * Don't actually halt the CPU, just yield back to top
--     * level loop. This is not going into a "low power state"
--     * (ie halting until some event occurs), so we never take
--     * a configurable trap to a different exception level.
-+#ifdef CONFIG_USER_ONLY
-+    /*
-+     * WFE in the user-mode emulator is a NOP. Real-world user-mode code
-+     * shouldn't execute WFE, but if it does, we make it a NOP rather than
-+     * aborting when we try to raise EXCP_HLT.
-+     */
-+    return;
-+#else
-+    /*
-+     * WFE (Wait For Event) is a hint instruction.
-+     * For Cortex-M (M-profile), we implement the strict architectural behavior:
-+     * 1. Check the Event Register (set by SEV or SEVONPEND).
-+     * 2. If set, clear it and continue (consume the event).
-      */
--    HELPER(yield)(env);
-+    if (arm_feature(env, ARM_FEATURE_M)) {
-+        CPUState *cs = env_cpu(env);
-+
-+        if (env->event_register) {
-+            env->event_register = false;
-+            return;
-+        }
-+
-+        cs->exception_index = EXCP_HLT;
-+        cs->halted = 1;
-+        cpu_loop_exit(cs);
-+    } else {
-+        /*
-+         * For A-profile and others, we rely on the existing "yield" behavior.
-+         * Don't actually halt the CPU, just yield back to top
-+         * level loop. This is not going into a "low power state"
-+         * (ie halting until some event occurs), so we never take
-+         * a configurable trap to a different exception level
-+         */
-+        HELPER(yield)(env);
-+    }
-+#endif
- }
- 
- void HELPER(yield)(CPUARMState *env)
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 646c74929d..778fbf1627 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -228,8 +228,9 @@ REVSH           1011 1010 11 ... ...            @rdm
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
- 
--    # TODO: Implement SEV, SEVL; may help SMP performance.
--    # SEV       1011 1111 0100 0000
-+    # M-profile SEV is implemented.
-+    # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-+    SEV         1011 1111 0100 0000
-     # SEVL      1011 1111 0101 0000
- 
-     # The canonical nop has the second nibble as 0000, but the whole of the
-diff --git a/target/arm/tcg/t32.decode b/target/arm/tcg/t32.decode
-index d327178829..49b8d0037e 100644
---- a/target/arm/tcg/t32.decode
-+++ b/target/arm/tcg/t32.decode
-@@ -369,8 +369,9 @@ CLZ              1111 1010 1011 ---- 1111 .... 1000 ....      @rdm
-         WFE      1111 0011 1010 1111 1000 0000 0000 0010
-         WFI      1111 0011 1010 1111 1000 0000 0000 0011
- 
--        # TODO: Implement SEV, SEVL; may help SMP performance.
--        # SEV    1111 0011 1010 1111 1000 0000 0000 0100
-+        # M-profile SEV is implemented.
-+        # TODO: Implement SEV for other profiles, and SEVL for all profiles; may help SMP performance.
-+        SEV      1111 0011 1010 1111 1000 0000 0000 0100
-         # SEVL   1111 0011 1010 1111 1000 0000 0000 0101
- 
-         ESB      1111 0011 1010 1111 1000 0000 0001 0000
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 63735d9789..c90b0106f7 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3241,14 +3241,30 @@ static bool trans_YIELD(DisasContext *s, arg_YIELD *a)
-     return true;
- }
- 
-+static bool trans_SEV(DisasContext *s, arg_SEV *a)
++/* Check that write-only bits/regs return 0 when read */
++static void phb4_writeonly_read_test(QTestState *qts)
 +{
-+    /*
-+     * Currently SEV is a NOP for non-M-profile and in user-mode emulation.
-+     * For system-mode M-profile, it sets the event register.
-+     */
-+#ifndef CONFIG_USER_ONLY
-+    if (arm_dc_feature(s, ARM_FEATURE_M)) {
-+        gen_helper_sev(tcg_env);
-+    }
-+#endif
-+    return true;
-+}
++    uint64_t val;
 +
- static bool trans_WFE(DisasContext *s, arg_WFE *a)
- {
-     /*
-      * When running single-threaded TCG code, use the helper to ensure that
--     * the next round-robin scheduled vCPU gets a crack.  In MTTCG mode we
--     * just skip this instruction.  Currently the SEV/SEVL instructions,
--     * which are *one* of many ways to wake the CPU from WFE, are not
--     * implemented so we can't sleep like WFI does.
-+     * the next round-robin scheduled vCPU gets a crack.
-+     *
-+     * For Cortex-M, we implement the architectural WFE behavior (sleeping
-+     * until an event occurs or the Event Register is set).
-+     * For other profiles, we currently treat this as a NOP or yield,
-+     * to preserve existing performance characteristics.
-      */
-     if (!(tb_cflags(s->base.tb) & CF_PARALLEL)) {
-         gen_update_pc(s, curr_insn_len(s));
-@@ -6807,6 +6823,11 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             break;
-         case DISAS_WFE:
-             gen_helper_wfe(tcg_env);
-+            /*
-+             * The helper can return if the event register is set, so we
-+             * must go back to the main loop to check for events.
-+             */
-+            tcg_gen_exit_tb(NULL, 0);
-             break;
-         case DISAS_YIELD:
-             gen_helper_yield(tcg_env);
++    /*
++     * Set all bits of PHB_DMA_SYNC,
++     * bits 0 and 2 are write-only and should be read as 0.
++     */
++    phb4_xscom_write(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_DMA_SYNC);
++    g_assert_cmpuint(val &amp; PPC_BIT(0), ==, 0x0);
++    g_assert_cmpuint(val &amp; PPC_BIT(2), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
++     * bit 9 is write-only and should be read as 0.
++     */
++    phb4_xscom_write(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_PCIE_HOTPLUG_STATUS);
++    g_assert_cmpuint(val &amp; PPC_BIT(9), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_LMR,
++     * bits 0 and 1 are write-only and should be read as 0.
++     */
++    phb4_xscom_write(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_PCIE_LMR);
++    g_assert_cmpuint(val &amp; PPC_BIT(0), ==, 0x0);
++    g_assert_cmpuint(val &amp; PPC_BIT(1), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_DLP_TRWCTL,
++     * write-only bit-1 should be read as 0.
++     */
++    phb4_xscom_write(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_PCIE_DLP_TRWCTL);
++    g_assert_cmpuint(val &amp; PPC_BIT(1), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
++     * both regs are write-only and should be read as 0.
++     */
++    phb4_xscom_write(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_LEM_ERROR_AND_MASK);
++    g_assert_cmpuint(val, ==, 0x0);
++
++    phb4_xscom_write(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
++    val = phb4_xscom_read(PHB_LEM_ERROR_OR_MASK);
++    g_assert_cmpuint(val, ==, 0x0);
+ }
+ 
+ static void phb4_tests(void)
+@@ -96,6 +149,9 @@ static void phb4_tests(void)
+     /* Check sticky reset of a register */
+     phb4_sticky_rst_test(qts);
+ 
++    /* Check write-only logic */
++    phb4_writeonly_read_test(qts);
++
+     qtest_quit(qts);
+ }
+ 
 -- 
-2.43.0
+2.47.3
+</pre>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------iUkL8b80i86R11W0CDkCE1Ab--
 
 
