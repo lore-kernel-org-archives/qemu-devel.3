@@ -4,53 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E98EEF0718
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAA9EF070F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 07:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpLJu-0007Mo-9h; Mon, 09 Feb 2026 02:04:31 -0500
+	id 1vpLJy-0007Nm-4P; Mon, 09 Feb 2026 02:04:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vpLJp-0007Ld-Bi
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:04:25 -0500
-Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vpLJw-0007NT-4o
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:04:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vpLCf-0005bf-3A
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:04:20 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.167])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f8b7d2RxKz5vwc;
- Mon,  9 Feb 2026 06:55:56 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG14EX2.mxp5.local (172.16.2.142)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Mon, 9 Feb
- 2026 07:55:51 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0021233b300-29db-4d02-8d07-5bdd04c13e93,
- ECF38C093296ADD45142D325C9F6EF635D78D8A6) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <febaa27a-3fc9-400e-9e13-f7044fe980e9@kaod.org>
-Date: Mon, 9 Feb 2026 07:55:50 +0100
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vpLJq-0005jL-0o
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 02:04:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770620500;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NbgW+9xqD7q7L3Gi19+WXACOaJJ71iwHRjugq+6Pyio=;
+ b=J0rdWJnLYnCPe5HZPHmcfK/3uylHJRZ/VAHQh2nyeP7QOCapRDXHm2i6lPLJsDsaPyceUC
+ HjcBl/3+j0tG4/hiW05Z6RU0NG6jSuIr5VXmLVgTsFN2hOrE4Y4Huy0NYcJ3WeMM7RXTkz
+ qyTnACy9LWJkYBCGHHpZPaTq/6aQ6i4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500-pwVlArxDM76oa62nOvt-JA-1; Mon, 09 Feb 2026 02:01:36 -0500
+X-MC-Unique: pwVlArxDM76oa62nOvt-JA-1
+X-Mimecast-MFC-AGG-ID: pwVlArxDM76oa62nOvt-JA_1770620496
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4802bb29400so39353115e9.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Feb 2026 23:01:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770620495; x=1771225295; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=NbgW+9xqD7q7L3Gi19+WXACOaJJ71iwHRjugq+6Pyio=;
+ b=Pwh3mopMn8CYsz27Hd541ToQlBtdQUNcGaLU4qekRdQ85hO6VF2+lQN3FVViVYNVFU
+ zjyQ2wfR5/u0b8RgsvQ4BAJa+QVVVCzvuATyaeaS/kMw5rIDZWT1G1QJPnLitsfNeYlP
+ Fl3kulxZJ/lQ4vfOLON7Jm53sthhEnLvX2RJYftCQSeQAjQT4AS9H26cGlqpx7NuFc6D
+ cwdr2gkx2NH43b7iNA0oCFJWBiqHWbznz9O58C+JNYJ5fdKcjNaU+OCu7/Axzsu4JTl6
+ 5A1bge/C/KhaiuxN/hk85m8f9M2MpxpVsCjGs6zc5hLoS0p+BUGtuWte3ELqqoohQDik
+ Tl8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770620495; x=1771225295;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NbgW+9xqD7q7L3Gi19+WXACOaJJ71iwHRjugq+6Pyio=;
+ b=U+P1N48kMp1FpmMriSxC7f+4whwRw4jyWga9EKabN6aG8zx4w2Iwm/9b17PTGpo+Yp
+ W6wyggR0Px4vwh/iuZ9ILto7VLnx2er3lMoXE/y//2G1dN+hBGG/HQU+ndHWnbKD6ULb
+ NMH+6fKd6pLR6NEiubfuhFUaUwUkm4mB8DC98df1xnwrvBj79VK2ZqraZUIt61PgWAOL
+ hAkXL1GWvpqV7/e+cMchRlazNyJ6If3GjRFd4DWphTgJfmKzA6goYQU4mgvaVtgrEToq
+ CashMHVphB2ff1g7RKLgOyjDvmUgrmwHj8FxpDFMpN6bQxATG6jTyzCcvRlCobIKXnpV
+ HMXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVM7s0Lv8fGqjY7GOE9sq7O/qbW4TXTYM02LYtbbEBWqaGky9UnEesddokKmACFTw5xVpTbqCoaXBo+@nongnu.org
+X-Gm-Message-State: AOJu0YwG6Xhgl4liwKWuQ8OLFTYPtom4euWnJngt+I4VzvoePpGwfa/0
+ qufgXgwLfRq95vOKIV6uP5bNFkbAZl7X4vKebutfGS6UFCbA4me32PEWrxUerCiNpB3ry1EIkX8
+ flgHBt6kJoieKB3M1KhcSJVzCLPb6phK7qvLfhaTE0yVEguxkyFfYg/f3
+X-Gm-Gg: AZuq6aI/+tiBAqGn423Gs0He1DdPnq+XcQxCWJfkmSbgSOfhx1wqKiiqrljJZVYrbfs
+ GPQAqZbGk9AvwuzOS8uwsCMuiaXN6fskx8V9Um2rgMNes96OgRYKPiHC8Lcro+SmlJZd4a3cae5
+ Ioolh/oeSUartI9kgMMlzI92cjF2Bk5vMJoX58DdkixEeQhZQutPdWhuaDHFIS0URJPkMY4fFi0
+ SSJFHWJABT2oDjVHLhkNmCRuqo0bw4A93K0iWubQbVcYCQWsu5RwbTfWeTlL9L0Qccu7MteKAGb
+ 4Et7Ur8eHJxwQapsqEEAD2hdtYv1FUwTZGXEkpS0hzYicmDEG4juzoJqsnQnTtXtfqxBeLfYP65
+ wIEHY5DYb98qdqyiSngmJcwAptXx6ndZCnEfiz2z3r5nXfhqsxwtcyjxz7tNq
+X-Received: by 2002:a05:600c:1f16:b0:482:eec4:758 with SMTP id
+ 5b1f17b1804b1-4832021fe37mr152182405e9.26.1770620495284; 
+ Sun, 08 Feb 2026 23:01:35 -0800 (PST)
+X-Received: by 2002:a05:600c:1f16:b0:482:eec4:758 with SMTP id
+ 5b1f17b1804b1-4832021fe37mr152181825e9.26.1770620494746; 
+ Sun, 08 Feb 2026 23:01:34 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-436296b25casm25194066f8f.4.2026.02.08.23.01.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 08 Feb 2026 23:01:34 -0800 (PST)
+Message-ID: <6a44c66f-1e4b-4d22-aba3-235bbd7337a7@redhat.com>
+Date: Mon, 9 Feb 2026 08:01:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 09/10] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
- machine to A2 SoC
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260206053340.3716041-1-jamin_lin@aspeedtech.com>
- <20260206053340.3716041-11-jamin_lin@aspeedtech.com>
- <4be69752-9494-4af2-a9a9-3af59f2a577c@kaod.org>
- <TYPPR06MB8206C31A5D92AD88CBD53950FC65A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Subject: Re: [PATCH v3 22/33] hw/vfio: generate new file fd for pseudo device
+ and rebind existing descriptors
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20260127051612.219475-1-anisinha@redhat.com>
+ <20260127051612.219475-23-anisinha@redhat.com>
+ <CAK3XEhOet2pFNT2PLOHuBZFNAbXtYq3Hghr0XNvd4FKyPPX7bw@mail.gmail.com>
+ <76421356-de3a-4941-bd4d-7c362fbb228f@redhat.com>
+ <CAK3XEhN6gbALmc4xewbh0FmsaZzwOzd1gYnP96WtfYfyD0g_pA@mail.gmail.com>
+ <9A3531C1-1A3A-4D03-9B8C-E2E40B349C75@redhat.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -60,67 +112,52 @@ Autocrypt: addr=clg@kaod.org; keydata=
  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
- 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
-In-Reply-To: <TYPPR06MB8206C31A5D92AD88CBD53950FC65A@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <9A3531C1-1A3A-4D03-9B8C-E2E40B349C75@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG14EX2.mxp5.local
- (172.16.2.142)
-X-Ovh-Tracer-GUID: 4cd84d2d-78bd-4dab-a9df-d8807a33cbea
-X-Ovh-Tracer-Id: 9581408207897987902
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEVG6KGSE+H6t7vwJGJRVKI8J6BNUc6tYahGtKEb9hKggjq9NEJVpGjIYDdyy1slpsR7K3/RMOl5aMfA2RGMbXfA9O0SCJdUglcFyg9cduickE7HyPMbx1MdCMd3SguasEoTGDWbv5/N4JprVnQZfhuL9N9l2xT4tpmpqAYrCnxDo9vkzhbj3WhSiQ5TPaMHhj8mi56+hck3ZFfj9sNgARmj4/kLPODtMs8JJ4Os7PZWQ7uhO4OXY0edFbwCuYeV2ZFhXBZhImQrIpEtQGz4cdL04liWc9G2cCKKCd00kO8kMINuGKMwhTJpgWBELbjG5y6b0YHMlr3wxWqtMTPVqrvh076mWj9+mO89BVtF5GWbajpXJzdDGuoVKUrxT0lzvGYBhv7Rkt4AG6JhyEjmOPVErwDBsXWU3fpRiEn/ma3m4fPp8+VD7sjIo+nCnjFoSGJ3AR9oWg7QjStyhHW1q5O3U3QM8iiUIjSD36hWWM5TE39+PXSXX414oLwO9KastYL32Gdkp3CoqgeQJCHPaYOFY0oRZSfh0LjW4gLuw86dCmihmtoUj3NX14AGejM+ov7Bp2XbOZ+/7zDp0i5JUaxuSdqSq3XBwmn5kIdabvE2JmBEqraTX7IR08pUBb45MmPzVqImQFJbbh+MKklhOY7A/kVhjkZH58fe7ER54/Sxw
-DKIM-Signature: a=rsa-sha256; bh=Gfh1z4tYMbg5DcpsukYoeIStVTLxQRIUJNWrCseHYf8=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770620158; v=1;
- b=nH9sC9MryHPGpH1g9Oc4/TOsLE9MHxqMC5YZyjilZ5mRS5ahmMQivsUTs2pGXy2jkgUE8pZH
- ViAbTreJZkcZfwmTzGtMcOzGT19HXdAMQdPP3moEK0yhnlTe2w0+dS+aUnACcjnJWV1Fm7B/7GL
- Xt3uv+mhxCD3WbCQRhXfV92nZSp2Li6h6ZMs/u8O1XqX/uepFiv5aehESmNsrbZs/cm8KkB2PSt
- vr4ch6dVWpMHR+742ppyDoy91ICRo7XyOVvYBoZ6yS50n7MxEix7KEx6qsgRfVhm0pnRX3mkTmO
- GHmEF2CLa0vVEl1eWWb10zuVvlT6e/3VdcMyqfsNPEHxg==
-Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
- helo=5.mo552.mail-out.ovh.net
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,114 +173,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/26 03:31, Jamin Lin wrote:
-> Hi Cédric
+On 2/9/26 06:44, Ani Sinha wrote:
 > 
->> Subject: Re: [PATCH v1 09/10] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
->> machine to A2 SoC
+> 
+>> On 9 Feb 2026, at 9:37 AM, Ani Sinha <anisinha@redhat.com> wrote:
 >>
->> On 2/6/26 06:33, Jamin Lin wrote:
->>> Update the AST2700 FC machine to use the AST2700 A2 SoC model instead
->>> of the A1-specific variant.
+>> On Mon, Feb 9, 2026 at 3:38 AM Cédric Le Goater <clg@redhat.com> wrote:
 >>>
->>> This change removes A1-specific naming and definitions from the FC
->>> machine and aligns it with the newer AST2700 A2 silicon.
+>>> On 2/8/26 15:39, Ani Sinha wrote:
+>>>> On Tue, Jan 27, 2026 at 10:47 AM Ani Sinha <anisinha@redhat.com> wrote:
+>>>>>
+>>>>> Normally the vfio pseudo device file descriptor lives for the life of the VM.
+>>>>> However, when the kvm VM file descriptor changes, a new file descriptor
+>>>>> for the pseudo device needs to be generated against the new kvm VM descriptor.
+>>>>> Other existing vfio descriptors needs to be reattached to the new pseudo device
+>>>>> descriptor. This change performs the above steps.
+>>>>
+>>>> I have not been able to test this change. Can someone suggest a way to
+>>>> add a functional test and/or test this manually?
 >>>
->>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>> ---
->>>    hw/arm/aspeed_ast27x0-fc.c | 15 +++++++--------
->>>    1 file changed, 7 insertions(+), 8 deletions(-)
+>>> Automated VFIO testing [*] is tough because it depends on a "real"
+>>> physical PCI device.
 >>>
->>> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
->>> index 0502a137f3..5eb6680da9 100644
->>> --- a/hw/arm/aspeed_ast27x0-fc.c
->>> +++ b/hw/arm/aspeed_ast27x0-fc.c
->>> @@ -24,8 +24,8 @@
->>>    #include "hw/arm/aspeed_coprocessor.h"
->>>    #include "hw/arm/machines-qom.h"
+>>> I have tested you series using a sev-snp guest with an assigned device
+>>> (SATA controller) and verified that the guest could reboot. The SATA
+>>> controller has no disks connected, so further testing is required.
 >>>
->>> -#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
->>> -OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
->>> +#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
->>> +OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
->>>
->>>    static struct arm_boot_info ast2700fc_board_info = {
->>>        .board_id = -1, /* device-tree-only board */ @@ -48,8 +48,7 @@
->>> struct Ast2700FCState {
->>>        Aspeed27x0CoprocessorState tsp;
->>>    };
->>>
->>> -#define AST2700FC_BMC_RAM_SIZE (1 * GiB) -#define
->>> AST2700FC_CM4_DRAM_SIZE (32 * MiB)
->>> +#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+>>> However, a 'system_reset' command issued from the QEMU monitor leaves
+>>> the guest hanging. May be this is expected ?
 >>
-> The ast2700a2-evb machine is largely identical to ast2700a1-evb.
-> The only difference is the default DRAM size, which is increased
-> to 2 GB. So, I updated the DRAM size to 2GiB.
-> Should I separate the patch to update the DRAM size?
+>> I do not think so. On non-coco, I just tried it and it reboots fine
+>> with x-change-vmfd-on-reset turned on.
+> 
+> Sorry I had some issues with my testing. Neither non-coco reset not coco reset was using vmfd change path when the QMP reset command was used.
+> In non-coco, it was the normal reset which obviously works.
+> 
+> I fixed it. See https://gitlab.com/anisinha/qemu/-/commit/c5514dbb2b52d474397220cfa3a0b8faa26cda0c
+> 
+> Please use this patch and test. I have tasted this on SNP and seems to work. I will make it part of next spin-up.
 
-That would be nice.
-
-
-I let you decide if a Fixes tag is needed.
+Looks to me.
 
 Thanks,
 
 C.
 
-
-> 
-> Thanks,
-> Jamin
->>
->> This is an unrelated change.
->>
->> Thanks,
->>
->> C.
->>
->>>    #define AST2700FC_HW_STRAP1 0x000000C0
->>>    #define AST2700FC_HW_STRAP2 0x00000003 @@ -58,7 +57,7 @@ struct
->>> Ast2700FCState {
->>>
->>>    static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->>>    {
->>> -    Ast2700FCState *s = AST2700A1FC(machine);
->>> +    Ast2700FCState *s = AST2700FC(machine);
->>>        AspeedSoCState *soc;
->>>        AspeedSoCClass *sc;
->>>        const char *bios_name = NULL;
->>> @@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState
->> *machine, Error **errp)
->>>        DeviceState *dev = NULL;
->>>        uint64_t rom_size;
->>>
->>> -    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
->>> +    object_initialize_child(OBJECT(s), "ca35", &s->ca35,
->>> + "ast2700-a2");
->>>        soc = ASPEED_SOC(&s->ca35);
->>>        sc = ASPEED_SOC_GET_CLASS(soc);
->>>
->>> @@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState
->>> *machine, Error **errp)
->>>
->>>    static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->>>    {
->>> -    Ast2700FCState *s = AST2700A1FC(machine);
->>> +    Ast2700FCState *s = AST2700FC(machine);
->>>        AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->>>
->>>        s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK"); @@ -167,7
->>> +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error
->>> **errp)
->>>
->>>    static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
->>>    {
->>> -    Ast2700FCState *s = AST2700A1FC(machine);
->>> +    Ast2700FCState *s = AST2700FC(machine);
->>>        AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->>>
->>>        s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-> 
 
 
