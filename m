@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97527E7E0DB
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 18:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1A3E7E0D0
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 18:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpWFq-0007i6-A0; Mon, 09 Feb 2026 13:45:02 -0500
+	id 1vpWEd-0006Pd-8E; Mon, 09 Feb 2026 13:43:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpWDt-0006C4-9n
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:43:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpWDQ-0005nh-9A
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:42:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpWDh-000083-Lb
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:42:59 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vpWDO-000056-99
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 13:42:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770662566;
+ s=mimecast20190719; t=1770662547;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qM4jbO7HG0YEAOdAEbvAEnO6xXe/qKnbTHm6UO/Jgw8=;
- b=ijDdSWKy70iIXzXU007MTip3wuseqNtas9XC3/0RRoypybVRZVo/4vLu4eTxZdI3WYf0qL
- QUE7S2tl2p7sHRBD8TdjzIC+Gyh2/kjB1+QKLuCaZkG8bL1WNVU/5xx2Lny3380VlRPElQ
- nLr1cd6iJwtD/R4lu31oEi4zVpkd6oA=
+ bh=BArgXWsw393gHgaIKjzFiFcfhLHr13DbAuiyT+dlZxA=;
+ b=OcJQxsoQcL5G8hwVusi6/4HQhGREzF7BUkrVttjeZwfhbdtaYIY8Lqx+OFI017RdaUgemw
+ gXU/xCYuBV/dIclKBJaX7ia9RAyg7PifZr4DHxsMp0iz6Xs5t4aBykdptnJaBz9+T9mS5H
+ NtVVRucHA+UuNXAZfTuexiKrC6CJt9c=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573--jVHC29qPkWaXwCB4DJx6A-1; Mon,
- 09 Feb 2026 13:42:41 -0500
-X-MC-Unique: -jVHC29qPkWaXwCB4DJx6A-1
-X-Mimecast-MFC-AGG-ID: -jVHC29qPkWaXwCB4DJx6A_1770662560
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-oNcuQOUWOmC73d45ptLM6w-1; Mon,
+ 09 Feb 2026 13:42:22 -0500
+X-MC-Unique: oNcuQOUWOmC73d45ptLM6w-1
+X-Mimecast-MFC-AGG-ID: oNcuQOUWOmC73d45ptLM6w_1770662541
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAEB718003F5; Mon,  9 Feb 2026 18:42:39 +0000 (UTC)
+ id E658F1800451; Mon,  9 Feb 2026 18:42:20 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.77])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1FF1218003F6; Mon,  9 Feb 2026 18:42:33 +0000 (UTC)
+ id D87C5180066C; Mon,  9 Feb 2026 18:42:14 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
@@ -63,23 +63,24 @@ Cc: John Snow <jsnow@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
  Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PATCH v6 11/16] meson,
- mkvenv: add qemu.git/python/qemu package to pythondeps.toml
-Date: Mon,  9 Feb 2026 13:41:18 -0500
-Message-ID: <20260209184124.1263625-12-jsnow@redhat.com>
+Subject: [PATCH v6 08/16] tests/lcitool: add python3 wheel and setuptools deps
+ for qemu
+Date: Mon,  9 Feb 2026 13:41:15 -0500
+Message-ID: <20260209184124.1263625-9-jsnow@redhat.com>
 In-Reply-To: <20260209184124.1263625-1-jsnow@redhat.com>
 References: <20260209184124.1263625-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -97,27 +98,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the local python package group into pythondeps.toml for the
-tooling This makes qemu.qmp, qemu.machine and qemu.utils
-packages unconditionally available for tests and scripts.
+Installing local dependencies while offline, without PyPI access,
+requires the python3-setuptools and python3-wheel packages. Most
+distributions have these available anyway for one reason or another, but
+not all of them.
+
+If you are asking yourself "Wait, aren't these packages guaranteed via
+installation of pip, via the ensurepip module, which mkvenv takes
+immense pains to provide for us?" - Well... since Python 3.13, "pip"
+does not actually come with "setuptools" or "wheel" anymore, and so if
+we want to build and install a python package, we actually need these
+available in the host environment.
+
+(Note that you don't need these packages just to install a pre-built
+package, you only need them to *build* a package. With cutting edge
+setuptools and pip, all locally installed packages, even in editable
+mode, must be "built" first before being installed. Thus, these
+dependencies are being added specifically to facilitate installing
+qemu.git/python/qemu to the configure-time venv.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- pythondeps.toml | 1 +
- 1 file changed, 1 insertion(+)
+ .gitlab-ci.d/cirrus/freebsd-14.vars     | 2 +-
+ .gitlab-ci.d/cirrus/macos-14.vars       | 2 +-
+ .gitlab-ci.d/windows.yml                | 2 ++
+ tests/docker/dockerfiles/alpine.docker  | 2 ++
+ tests/docker/dockerfiles/centos9.docker | 2 ++
+ tests/lcitool/projects/qemu.yml         | 2 ++
+ tests/vm/generated/freebsd.json         | 2 ++
+ 7 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 743e2a8848c..89256132fee 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
- # system packages, or python packages we vendor.
- [tooling]
- "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-+"qemu" = { path = "python/" }
- 
- # This test group is for functional tests, and can include dependencies
- # fetched from PyPI.
+diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
+index 6477440ef30..98fbde6cc64 100644
+--- a/.gitlab-ci.d/cirrus/freebsd-14.vars
++++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
+@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
+ NINJA='/usr/local/bin/ninja'
+ PACKAGING_COMMAND='pkg'
+ PIP3='/usr/local/bin/pip'
+-PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka coreutils ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 vulkan-tools xorriso zstd'
++PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka coreutils ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-setuptools py311-sphinx py311-sphinx_rtd_theme py311-tomli py311-wheel python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 vulkan-tools xorriso zstd'
+ PYPI_PKGS=''
+ PYTHON='/usr/local/bin/python3'
+diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
+index 4701c388e14..6ad20733cd4 100644
+--- a/.gitlab-ci.d/cirrus/macos-14.vars
++++ b/.gitlab-ci.d/cirrus/macos-14.vars
+@@ -12,5 +12,5 @@ NINJA='/opt/homebrew/bin/ninja'
+ PACKAGING_COMMAND='brew'
+ PIP3='/opt/homebrew/bin/pip3'
+ PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+-PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
++PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli setuptools wheel'
+ PYTHON='/opt/homebrew/bin/python3'
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 5ef4d34d1ea..145500ae464 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -89,6 +89,8 @@ msys2-64bit:
+       mingw-w64-x86_64-pkgconf
+       mingw-w64-x86_64-python
+       mingw-w64-x86_64-python-certifi
++      mingw-w64-x86_64-python-setuptools
++      mingw-w64-x86_64-python-wheel
+       mingw-w64-x86_64-rust
+       mingw-w64-x86_64-rust-bindgen
+       mingw-w64-x86_64-zstd"
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index 03dd6851f60..75c70068683 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -87,8 +87,10 @@ RUN apk update && \
+         py3-numpy \
+         py3-pillow \
+         py3-pip \
++        py3-setuptools \
+         py3-sphinx \
+         py3-sphinx_rtd_theme \
++        py3-wheel \
+         py3-yaml \
+         python3 \
+         rpm2cpio \
+diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
+index 670e22be5ad..9bdf983fdcb 100644
+--- a/tests/docker/dockerfiles/centos9.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -101,9 +101,11 @@ RUN dnf distro-sync -y && \
+         python3-numpy \
+         python3-pillow \
+         python3-pip \
++        python3-setuptools \
+         python3-sphinx \
+         python3-sphinx_rtd_theme \
+         python3-tomli \
++        python3-wheel \
+         rdma-core-devel \
+         rust \
+         rust-std-static \
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index 1ee7dcf3d46..5e34e953514 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -98,11 +98,13 @@ packages:
+  - python3-pillow
+  - python3-pip
+  - python3-PyYAML
++ - python3-setuptools
+  - python3-sphinx
+  - python3-sphinx-rtd-theme
+  - python3-sqlite3
+  - python3-tomli
+  - python3-venv
++ - python3-wheel
+  - rpm2cpio
+  - rust
+  - rust-std
+diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
+index f586827b136..08b6eb61553 100644
+--- a/tests/vm/generated/freebsd.json
++++ b/tests/vm/generated/freebsd.json
+@@ -57,9 +57,11 @@
+     "py311-pillow",
+     "py311-pip",
+     "py311-pyyaml",
++    "py311-setuptools",
+     "py311-sphinx",
+     "py311-sphinx_rtd_theme",
+     "py311-tomli",
++    "py311-wheel",
+     "python3",
+     "rpm2cpio",
+     "rust",
 -- 
 2.52.0
 
