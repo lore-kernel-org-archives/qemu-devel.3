@@ -4,107 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BA37E81BC3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 13:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86883E81BC3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 13:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpRXU-0006sl-18; Mon, 09 Feb 2026 08:42:56 -0500
+	id 1vpRcK-00084A-UO; Mon, 09 Feb 2026 08:47:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vpRXN-0006sK-8q
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:42:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vpRcI-00083s-1q
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:47:55 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vpRXK-0000PV-As
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:42:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770644565;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FFV+4zM/+75D5D0pn17t2xOXo9mQBa2p4jqWIyIv230=;
- b=huaLzGz+albJiLlO3WqfIMj78f6itWzNhM5q5WWsYWHSxezNV3r0SSiUW7ckYp/6PTyt2+
- pZbPBluE6wNIV9EX2/urRK7fd2ie+AgJxFlkLT08uutv+WxuqUOHesM+hyoTNAviSCPUbR
- fnMDALx8mpDhUqhWYxgXephr5XezGrw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-350-iDPQoNzKMwGCI16DFwy24g-1; Mon, 09 Feb 2026 08:42:44 -0500
-X-MC-Unique: iDPQoNzKMwGCI16DFwy24g-1
-X-Mimecast-MFC-AGG-ID: iDPQoNzKMwGCI16DFwy24g_1770644563
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4802bb29400so42697285e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 05:42:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770644563; x=1771249363;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FFV+4zM/+75D5D0pn17t2xOXo9mQBa2p4jqWIyIv230=;
- b=BQN5qZDOyT36Iuu+DChjsORsJAv31C9o+zFuCjdmIT9S8bNI+vwi5BZEpDsfFwCxkD
- M6BRkl9Ymx4wkrjuwSLgH51xha9aT+NqMs3f6euQQjix/tin8KrfsExWa/keltja6Pb0
- BNf6diSgdA/mgPt9SUX1VsuUQUxjZKxYoYeWVtbt9fTitxkXIW8hHBIOZfwKt4RH4VNI
- Duffl1ZOSGucd8RiznXPFdg1QZjwjLT8d5xR8SbxU0PvnDXir3s+r/x3/urUhN5CPPbg
- qXYhDcm0LRc0SKpk02eg8zkG/n+WgURhhsE2tReZRV4yNuU3nlFQE8gbnG1VxzXbY13T
- Jh8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxyBfoT2C+L7hWt2UnZjuqNjIZvDtl32Q6StDfLZOxjVE2lYtcenS1ayC/Iuvq004NAksNYwAt/7fq@nongnu.org
-X-Gm-Message-State: AOJu0YyrEirCDIZkB1LlBFtZ7ob6AbHwxp1Zzv6oajmNVnnsLiF15zdP
- Zm9iAwHZ5W9ir8P1E3fzm7UaU+kFnpvZPx6PO701tnB/dXMwybMTEV7H+aBTSTGi12D4DENHh8g
- KfUyhrj3+3ovos3a3qwG4JvNUU25kbyinLDbs1HTaw2ip5Y4SrIkkTOu4
-X-Gm-Gg: AZuq6aK5ypN4GnfsubocbnpFlXSBCIkrQqZfweV8V99kvBUdQRroFZa07krKHjiTgDt
- ZeQRTDHigcwlh7QmN6DS8BAnC+rE4lrLZN0N4XIgkkwO3Aa3ZIlCC9C6enYeHnZUOJ2A/2GI7pV
- IWI8anzsBIwq8WcqNnrHn0n2Xnf85E2x324wy9UtDppTqz8P1GQVBLyRklbXf3RvGeRjnpg7K+u
- PtSVdLx22VkhfPmxyphsWpNC1l2PwP/IDvM4Sz6lp1xjvgJTfMbiN7I2bt2QwFcEvjH5S8uPbgn
- zF3BtcYZuDKcFYtKYBU/WUjDD1F9fNo5nSBe65+QrC8bck+MrHOAH7+0MguGJw+KyVckw7VCZFe
- uDuLF0jzzPWG4/DTZhTHWI+3UWbSABqEmXkKOcWbxZQwuB9/eKsAWLRTK3w==
-X-Received: by 2002:a05:600c:c11c:b0:483:2c98:4368 with SMTP id
- 5b1f17b1804b1-4832c98458bmr91956075e9.18.1770644562539; 
- Mon, 09 Feb 2026 05:42:42 -0800 (PST)
-X-Received: by 2002:a05:600c:c11c:b0:483:2c98:4368 with SMTP id
- 5b1f17b1804b1-4832c98458bmr91955765e9.18.1770644562062; 
- Mon, 09 Feb 2026 05:42:42 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48317d7a924sm491063325e9.10.2026.02.09.05.42.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Feb 2026 05:42:41 -0800 (PST)
-Message-ID: <f05da8d8-2134-4551-81bc-7c77b2769d5a@redhat.com>
-Date: Mon, 9 Feb 2026 14:42:39 +0100
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vpRcF-0001IP-7Y
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 08:47:53 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f8mFb0m9vzJ46d5;
+ Mon,  9 Feb 2026 21:46:43 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 64C2040569;
+ Mon,  9 Feb 2026 21:47:40 +0800 (CST)
+Received: from localhost (10.203.177.99) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 9 Feb
+ 2026 13:47:39 +0000
+Date: Mon, 9 Feb 2026 13:47:34 +0000
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "linuxarm@huawei.com"
+ <linuxarm@huawei.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
+ "anisa.su887@gmail.com" <anisa.su887@gmail.com>, "mst@redhat.com"
+ <mst@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "ppbonzini@redhat.com" <ppbonzini@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "david@kernel.org" <david@kernel.org>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "xiaoguangrong.eric@gmail.com"
+ <xiaoguangrong.eric@gmail.com>, "venkataravis@micron.com"
+ <venkataravis@micron.com>, "gourry@gourry.net" <gourry@gourry.net>
+Subject: Re: [PATCH v2 2/2] hw/cxl: Add a performant (and correct) path for
+ the non interleaved cases
+Message-ID: <20260209134734.00003598.alireza.sanaee@huawei.com>
+In-Reply-To: <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
+References: <20260204150002.669-1-alireza.sanaee@huawei.com>
+ <20260204150002.669-3-alireza.sanaee@huawei.com>
+ <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/11] target/arm/machine: Improve traces on register
- mismatch during migration
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- cohuck@redhat.com, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com,
- philmd@linaro.org, pbonzini@redhat.com
-References: <20260126165445.3033335-1-eric.auger@redhat.com>
- <20260126165445.3033335-3-eric.auger@redhat.com>
- <CAFEAcA8dVLEa9gJ6y=hP94ZZtcNQemRawpfyWo1kLusBdy25kw@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA8dVLEa9gJ6y=hP94ZZtcNQemRawpfyWo1kLusBdy25kw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,105 +79,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Mon, 9 Feb 2026 03:06:00 +0000
+"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
 
-On 2/6/26 3:31 PM, Peter Maydell wrote:
-> On Mon, 26 Jan 2026 at 16:55, Eric Auger <eric.auger@redhat.com> wrote:
->> Currently when the number of KVM registers exposed by the source is
->> larger than the one exposed on the destination, the migration fails
->> with: "failed to load cpu:cpreg_vmstate_array_len"
->>
->> This gives no information about which registers are causing the trouble.
->>
->> This patch reworks the target/arm/machine code so that it becomes
->> able to handle an input stream with a larger set of registers than
->> the destination and print useful information about which registers
->> are causing the trouble. The migration outcome is unchanged:
->> - unexpected registers still will fail the migration
->> - missing ones are printed but will not fail the migration, as done today.
-> Improving the diagnostics here is a great idea.
->
->> The input stream can contain MAX_CPREG_VMSTATE_ANOMALIES(10) extra
->> registers compared to what exists on the target.
->>
->> If there are more registers we will still hit the previous
->> "load cpu:cpreg_vmstate_array_len" error.
->>
->> At most, MAX_CPREG_VMSTATE_ANOMALIES missing registers
->> and MAX_CPREG_VMSTATE_ANOMALIES unexpected registers are printed.
->>
->> Example:
->>
->> qemu-system-aarch64: kvm_arm_cpu_post_load Missing register in input stream: 0 0x6030000000160003 fw feat reg 3
->> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 0 0x603000000013c103 op0:3 op1:0 crn:2 crm:0 op2:3
->> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 1 0x603000000013c512 op0:3 op1:0 crn:10 crm:2 op2:2
->> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 2 0x603000000013c513 op0:3 op1:0 crn:10 crm:2 op2:3
->> qemu-system-aarch64: error while loading state for instance 0x0 of device 'cpu'
->> qemu-system-aarch64: load of migration failed: Operation not permitted
->>
->> With TCG there is no user friendly formatting of the faulting
->> register indexes as with KVM. However the 2 added trace points
->> help to identify the culprit indexes.
-> Could we move kvm_print_register_name() out of kvm.c and into
-> somewhere that the TCG code can use it? (I did think when I
-> was reviewing the patch that added that that we might want it
-> for TCG too eventually.)
->
->> @@ -990,7 +991,13 @@ static int cpu_pre_load(void *opaque)
->>  {
->>      ARMCPU *cpu = opaque;
->>      CPUARMState *env = &cpu->env;
->> +    int arraylen = cpu->cpreg_vmstate_array_len + MAX_CPREG_VMSTATE_ANOMALIES;
->>
->> +    cpu->cpreg_vmstate_indexes = g_renew(uint64_t, cpu->cpreg_vmstate_indexes,
->> +                                         arraylen);
->> +    cpu->cpreg_vmstate_values = g_renew(uint64_t, cpu->cpreg_vmstate_values,
->> +                                        arraylen);
->> +    cpu->cpreg_vmstate_array_len = arraylen;
-> It seems a bit odd to extend these on cpu_pre_load, especially
-> since it means we'll do so on every cpu_pre_load call, which I
-> think can happen if you try an inbound migration, it fails, and
-> then you retry it.
-yes in that case g_renew would be called several times with
-cpu->cpreg_vmstate_array_len increased each time I guess. However with
-the current way cpreg_vmstate_indexes/values arrays were statically
-allocated I did not have other solution than using pre_load() I think.
+> On 04/02/2026 23:00, Alireza Sanaee wrote:
+> > The CXL address to device decoding logic is complex because of the need
+> > to correctly decode fine grained interleave. The current implementation
+> > prevents use with KVM where executed instructions may reside in that
+> > memory and gives very slow performance even in TCG.  
+> 
+> 
+> Do you mean KVM will work after this patch in 1-way case
 
->
-> I think it ought to be possible to both avoid this reallocation
-> and the problem noted in the commit message where more than 10
-> extra registers results in an unhelpful message, if we can
-> convert the vmstate fields from VMSTATE_VARRAY_INT32 to
-> VMSTATE_VARRAY_INT32_ALLOC. (That latter doesn't exist yet but
-> will be the INT32 equivalent of VMSTATE_VARRAY_UINT32_ALLOC.)
+Yes
 
-VMSTATE_VARRAY_INT32_ALLOC sounds a great idea indeed. I was not aware of its existence. I will try this out.
+> 
+> 
+> > 
+> > In many real cases non interleaved memory configurations are useful and
+> > for those we can use a more conventional memory region alias allowing
+> > similar performance to other memory in the system.  
+> 
+> 
+> Do you have any benchmark data to demonstrate the performance improvement?
 
->
-> If I have read the code correctly, these should work by
-> having the inbound migration code allocate the buffer for the
-> array data instead of expecting it to be pre-allocated -- that
-> means our post_load function can look at all the data it got
-> without imposing a length limitation.
->
-> I think (but we should check :-)) that the data in the migration
-> stream is the same in both cases, so this will not be a compat break.
+Yes, if you setup a simple devdax application which sweeps through the region with reads and writes, it is easy to see the performance difference, in KVM/TCG. I can share more if you will.
 
-OK I will test this.
-
-Thank you for the review!
-
-Eric
->
-> (Some existing code will need adjustment to avoid a memory leak,
-> e.g. g_free any existing array in pre_load.)
->
-> thanks
-> -- PMM
->
-
+> 
+> 
+> 
+> > 
+> > Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > ---
+> >   hw/cxl/cxl-component-utils.c |   8 ++
+> >   hw/cxl/cxl-host.c            | 197 ++++++++++++++++++++++++++++++++++-
+> >   hw/mem/cxl_type3.c           |   4 +
+> >   include/hw/cxl/cxl.h         |   1 +
+> >   include/hw/cxl/cxl_device.h  |   1 +
+> >   5 files changed, 206 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> > index d36162e91b..d459d04b6d 100644
+> > --- a/hw/cxl/cxl-component-utils.c
+> > +++ b/hw/cxl/cxl-component-utils.c
+> > @@ -142,6 +142,14 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+> >           value = FIELD_DP32(value, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
+> >       }
+> >       stl_le_p((uint8_t *)cache_mem + offset, value);
+> > +
+> > +    if (should_commit) {
+> > +        cfmws_update_non_interleaved(true);
+> > +    }
+> > +
+> > +    if (should_uncommit) {
+> > +        cfmws_update_non_interleaved(false);
+> > +    }  
+> 
+> 
+> This might be slightly better as an if-else block, since should_commit and should_uncommit are mutually exclusive:
+> 
+> 
+> if (should_commit) {
+> 	cfmws_update_non_interleaved(true);;
+> } else if (should_uncommit) {
+> 	cfmws_update_non_interleaved(false);
+> }
+> 
+> 
+> >   }
+> >   
+> >   static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > index 9633b01abf..1fcfe01164 100644
+> > --- a/hw/cxl/cxl-host.c
+> > +++ b/hw/cxl/cxl-host.c
+> > @@ -104,7 +104,7 @@ void cxl_fmws_link_targets(Error **errp)
+> >   }
+> >   
+> >   static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> > -                                uint8_t *target)
+> > +                                uint8_t *target, bool *interleaved)
+> >   {
+> >       int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+> >       unsigned int hdm_count;
+> > @@ -138,6 +138,11 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> >           found = true;
+> >           ig_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG);
+> >           iw_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW);
+> > +
+> > +        if (interleaved) {
+> > +            *interleaved = iw_enc != 0;
+> > +        }
+> > +
+> >           target_idx = (addr / cxl_decode_ig(ig_enc)) % (1 << iw_enc);
+> >   
+> >           if (target_idx < 4) {
+> > @@ -157,7 +162,8 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> >       return found;  
+> 
+> [...]
+> 
+> > +
+> > +static int update_non_interleaved(Object *obj, void *opaque)
+> > +{
+> > +    const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+> > +    bool commit = *(bool *)opaque;
+> > +    CXLType3Dev *ct3d;
+> > +    uint32_t *cache_mem;
+> > +    unsigned int hdm_count, i;
+> > +    uint32_t cap;
+> > +    uint64_t dpa_base = 0;
+> > +
+> > +    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    ct3d = CXL_TYPE3(obj);
+> > +    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
+> > +    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
+> > +    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
+> > +                                                 CXL_HDM_DECODER_CAPABILITY,
+> > +                                                 DECODER_COUNT));
+> > +    /*
+> > +     * Walk the decoders and find any committed with iw set to 0
+> > +     * (non interleaved).
+> > +     */
+> > +    for (i = 0; i < hdm_count; i++) {
+> > +        uint64_t decoder_base, decoder_size, skip;
+> > +        uint32_t hdm_ctrl, low, high;
+> > +        int iw, committed;
+> > +
+> > +        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
+> > +        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
+> > +        if (commit ^ committed) {  
+> 
+> 
+> Is there any specific reason for using ^ here instead of '==' ?
+> 
+> 
+> 
+> Thanks
+> Zhijian
 
