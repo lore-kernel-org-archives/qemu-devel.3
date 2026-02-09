@@ -4,21 +4,21 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8835FE81BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 14:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC64E81BD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Feb 2026 14:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpSWs-0007G8-0c; Mon, 09 Feb 2026 09:46:22 -0500
+	id 1vpSWs-0007GG-CM; Mon, 09 Feb 2026 09:46:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vpSVz-000729-Ac
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:45:31 -0500
+ id 1vpSW0-00072g-4A
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:45:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vpSVx-0005jW-MU
+ id 1vpSVx-0005jL-He
  for qemu-devel@nongnu.org; Mon, 09 Feb 2026 09:45:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1770648324;
@@ -26,27 +26,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XIiudUTMNNN0/LJEZJOC2fdLoE2aboeP06B1vEbAhME=;
- b=BcWtQrkRNVXtUZUfyBgVeWUh8rf9aiGOB4Opplq4AUWJKg+vUoMxP8lL8jdqVv7Szn+yXu
- yHj+ANDoH+bf7gx9eWjTGMS33r1v68aGN8sDnR68ffKnaIOS3pciXJ8JkAg3gwlLcZX8Jx
- cBIzfn5dIWQ9/cxIoMTs9EFd2hCdaMI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7GPYTbIijqvYuqXnn3XuXd7bbQuY3nUYJe0SRBL25F8=;
+ b=eZLrLLt/SD33zNZOnNrCqmzRheetZ043WzsqFrDw6R3ku80ZWU4oY2/HL8CZ2cFhiRNJlr
+ L9dkGx5PziPmbUohjuUty4qImR+Kh6PavMkXlwht73vLrKkF6M+RBgVcEQgTCcCy1xOpoH
+ FMiREJ5kX/cVSewpv/PZHhDBFP1FEeY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-L4VKO4kDPFyZqvrAhXEgRw-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-2bkRSxdBNoaUKsjwYWSt4g-1; Mon,
  09 Feb 2026 09:45:21 -0500
-X-MC-Unique: L4VKO4kDPFyZqvrAhXEgRw-1
-X-Mimecast-MFC-AGG-ID: L4VKO4kDPFyZqvrAhXEgRw_1770648316
+X-MC-Unique: 2bkRSxdBNoaUKsjwYWSt4g-1
+X-Mimecast-MFC-AGG-ID: 2bkRSxdBNoaUKsjwYWSt4g_1770648319
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF8A819560A6; Mon,  9 Feb 2026 14:45:16 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10DA719560B3; Mon,  9 Feb 2026 14:45:19 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.94])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2C3D0180066C; Mon,  9 Feb 2026 14:45:15 +0000 (UTC)
+ id EBAF418004BB; Mon,  9 Feb 2026 14:45:17 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -57,11 +57,14 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Yanan Wang <wangyanan55@huawei.com>, qemu-block@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
  pkrempa@redhat.com, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 3/9] scripts/qemugdb: timers: Improve 'qemu timers' command
- readability
-Date: Mon,  9 Feb 2026 09:45:01 -0500
-Message-ID: <20260209144508.45268-4-stefanha@redhat.com>
+Subject: [PULL 4/9] scripts/qemugdb: coroutine: Add option for obtaining
+ detailed trace in coredump
+Date: Mon,  9 Feb 2026 09:45:02 -0500
+Message-ID: <20260209144508.45268-5-stefanha@redhat.com>
 In-Reply-To: <20260209144508.45268-1-stefanha@redhat.com>
 References: <20260209144508.45268-1-stefanha@redhat.com>
 MIME-Version: 1.0
@@ -76,7 +79,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,84 +97,395 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-* Add the 'attributes' field from QEMUTimer;
-* Stringify the field's value in accordance with macros from
-  include/qemu/timer.h;
-* Make timer expiration times human-readable by converting from nanoseconds
-  to appropriate units (ms/s/min/hrs/days) and showing the scale factor
-  (ns/us/ms/s).
+Commit 772f86839f ("scripts/qemu-gdb: Support coroutine dumps in
+coredumps") introduced coroutine traces in coredumps using raw stack
+unwinding.  While this works, this approach does not allow to view the
+function arguments in the corresponding stack frames.
 
+As an alternative, we can obtain saved registers from the coroutine's
+jmpbuf, patch them into the coredump's struct elf_prstatus in place, and
+execute another gdb subprocess to get backtrace from the patched temporary
+coredump.
+
+While providing more detailed info, this alternative approach, however, is
+more invasive as it might potentially corrupt the coredump file. We do take
+precautions by saving the original registers values into a separate binary
+blob /path/to/coredump.ptregs, so that it can be restores in the next
+GDB session.  Still, instead of making it a new deault, let's keep raw unwind
+the default behaviour, but add the '--detailed' option for 'qemu bt' and
+'qemu coroutine' command which would enforce the new behaviour.
+
+That's how this looks:
+
+  (gdb) qemu coroutine 0x7fda9335a508
+  #0  0x5602bdb41c26 in qemu_coroutine_switch<+214> () at ../util/coroutine-ucontext.c:321
+  #1  0x5602bdb3e8fe in qemu_aio_coroutine_enter<+493> () at ../util/qemu-coroutine.c:293
+  #2  0x5602bdb3c4eb in co_schedule_bh_cb<+538> () at ../util/async.c:547
+  #3  0x5602bdb3b518 in aio_bh_call<+119> () at ../util/async.c:172
+  #4  0x5602bdb3b79a in aio_bh_poll<+457> () at ../util/async.c:219
+  #5  0x5602bdb10f22 in aio_poll<+1201> () at ../util/aio-posix.c:719
+  #6  0x5602bd8fb1ac in iothread_run<+123> () at ../iothread.c:63
+  #7  0x5602bdb18a24 in qemu_thread_start<+355> () at ../util/qemu-thread-posix.c:393
+
+  (gdb) qemu coroutine 0x7fda9335a508 --detailed
+  patching core file /tmp/tmpq4hmk2qc
+  found "CORE" at 0x10c48
+  assume pt_regs at 0x10cbc
+  write r15 at 0x10cbc
+  write r14 at 0x10cc4
+  write r13 at 0x10ccc
+  write r12 at 0x10cd4
+  write rbp at 0x10cdc
+  write rbx at 0x10ce4
+  write rip at 0x10d3c
+  write rsp at 0x10d54
+
+  #0  0x00005602bdb41c26 in qemu_coroutine_switch (from_=0x7fda9335a508, to_=0x7fda8400c280, action=COROUTINE_ENTER) at ../util/coroutine-ucontext.c:321
+  #1  0x00005602bdb3e8fe in qemu_aio_coroutine_enter (ctx=0x5602bf7147c0, co=0x7fda8400c280) at ../util/qemu-coroutine.c:293
+  #2  0x00005602bdb3c4eb in co_schedule_bh_cb (opaque=0x5602bf7147c0) at ../util/async.c:547
+  #3  0x00005602bdb3b518 in aio_bh_call (bh=0x5602bf714a40) at ../util/async.c:172
+  #4  0x00005602bdb3b79a in aio_bh_poll (ctx=0x5602bf7147c0) at ../util/async.c:219
+  #5  0x00005602bdb10f22 in aio_poll (ctx=0x5602bf7147c0, blocking=true) at ../util/aio-posix.c:719
+  #6  0x00005602bd8fb1ac in iothread_run (opaque=0x5602bf42b100) at ../iothread.c:63
+  #7  0x00005602bdb18a24 in qemu_thread_start (args=0x5602bf7164a0) at ../util/qemu-thread-posix.c:393
+  #8  0x00007fda9e89f7f2 in start_thread (arg=<optimized out>) at pthread_create.c:443
+  #9  0x00007fda9e83f450 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Peter Xu <peterx@redhat.com>
+Originally-by: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20251204105019.455060-4-andrey.drobyshev@virtuozzo.com
+Message-id: 20251204105019.455060-5-andrey.drobyshev@virtuozzo.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- scripts/qemugdb/timers.py | 49 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 5 deletions(-)
+ scripts/qemugdb/coroutine.py | 257 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 242 insertions(+), 15 deletions(-)
 
-diff --git a/scripts/qemugdb/timers.py b/scripts/qemugdb/timers.py
-index 1219a96b32..916c71b74a 100644
---- a/scripts/qemugdb/timers.py
-+++ b/scripts/qemugdb/timers.py
-@@ -21,14 +21,53 @@ def __init__(self):
-         gdb.Command.__init__(self, 'qemu timers', gdb.COMMAND_DATA,
+diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
+index e98fc48a4b..29f57ae84e 100644
+--- a/scripts/qemugdb/coroutine.py
++++ b/scripts/qemugdb/coroutine.py
+@@ -9,10 +9,119 @@
+ # This work is licensed under the terms of the GNU GPL, version 2
+ # or later.  See the COPYING file in the top-level directory.
+ 
++import atexit
+ import gdb
++import os
++import pty
++import re
++import struct
++import textwrap
++
++from collections import OrderedDict
++from copy import deepcopy
+ 
+ VOID_PTR = gdb.lookup_type('void').pointer()
+ 
++# Registers in the same order they're present in ELF coredump file.
++# See asm/ptrace.h
++PT_REGS = ['r15', 'r14', 'r13', 'r12', 'rbp', 'rbx', 'r11', 'r10', 'r9',
++           'r8', 'rax', 'rcx', 'rdx', 'rsi', 'rdi', 'orig_rax', 'rip', 'cs',
++           'eflags', 'rsp', 'ss']
++
++coredump = None
++
++
++class Coredump:
++    _ptregs_suff = '.ptregs'
++
++    def __init__(self, coredump, executable):
++        atexit.register(self._cleanup)
++
++        self.coredump = coredump
++        self.executable = executable
++        self._ptregs_blob = coredump + self._ptregs_suff
++        self._dirty = False
++
++        with open(coredump, 'rb') as f:
++            while f.read(4) != b'CORE':
++                pass
++            gdb.write(f'core file {coredump}: found "CORE" at 0x{f.tell():x}\n')
++
++            # Looking for struct elf_prstatus and pr_reg field in it (an array
++            # of general purpose registers).  See sys/procfs.h.
++
++            # lseek(f.fileno(), 4, SEEK_CUR): go to elf_prstatus
++            f.seek(4, 1)
++
++            # lseek(f.fileno(), 112, SEEK_CUR):
++            # offsetof(struct elf_prstatus, pr_reg)
++            f.seek(112, 1)
++
++            self._ptregs_offset = f.tell()
++
++            # If binary blob with the name /path/to/coredump + '.ptregs'
++            # exists, that means proper cleanup didn't happen during previous
++            # GDB session with the same coredump, and registers in the dump
++            # itself might've remained patched.  Thus we restore original
++            # registers values from this blob
++            if os.path.exists(self._ptregs_blob):
++                with open(self._ptregs_blob, 'rb') as b:
++                    orig_ptregs_bytes = b.read()
++                self._dirty = True
++            else:
++                orig_ptregs_bytes = f.read(len(PT_REGS) * 8)
++
++            values = struct.unpack(f"={len(PT_REGS)}q", orig_ptregs_bytes)
++            self._orig_ptregs = OrderedDict(zip(PT_REGS, values))
++
++            if not os.path.exists(self._ptregs_blob):
++                gdb.write(f'saving original pt_regs in {self._ptregs_blob}\n')
++                with open(self._ptregs_blob, 'wb') as b:
++                    b.write(orig_ptregs_bytes)
++
++        gdb.write('\n')
++
++    def patch_regs(self, regs):
++        # Set dirty flag early on to make sure regs are restored upon cleanup
++        self._dirty = True
++
++        gdb.write(f'patching core file {self.coredump}\n')
++        patched_ptregs = deepcopy(self._orig_ptregs)
++        int_regs = {k: int(v) for k, v in regs.items()}
++        patched_ptregs.update(int_regs)
++
++        with open(self.coredump, 'ab') as f:
++            gdb.write(f'assume pt_regs at 0x{self._ptregs_offset:x}\n')
++            f.seek(self._ptregs_offset, 0)
++            gdb.write('writing regs:\n')
++            for reg in self._orig_ptregs.keys():
++                if reg in int_regs:
++                    gdb.write(f"  {reg}: {int_regs[reg]:#16x}\n")
++            f.write(struct.pack(f"={len(PT_REGS)}q", *patched_ptregs.values()))
++
++        gdb.write('\n')
++
++    def restore_regs(self):
++        if not self._dirty:
++            return
++
++        gdb.write(f'\nrestoring original regs in core file {self.coredump}\n')
++        with open(self.coredump, 'ab') as f:
++            gdb.write(f'assume pt_regs at 0x{self._ptregs_offset:x}\n')
++            f.seek(self._ptregs_offset, 0)
++            f.write(struct.pack(f"={len(PT_REGS)}q",
++                                *self._orig_ptregs.values()))
++
++        self._dirty = False
++        gdb.write('\n')
++
++    def _cleanup(self):
++        if os.path.exists(self._ptregs_blob):
++            self.restore_regs()
++            gdb.write(f'\nremoving saved pt_regs file {self._ptregs_blob}\n')
++            os.unlink(self._ptregs_blob)
++
++
+ def pthread_self():
+     '''Fetch the base address of TLS.'''
+     return gdb.parse_and_eval("$fs_base")
+@@ -77,6 +186,55 @@ def symbol_lookup(addr):
+ 
+     return f"{func_str} at {path}:{line}"
+ 
++def run_with_pty(cmd):
++    # Create a PTY pair
++    master_fd, slave_fd = pty.openpty()
++
++    pid = os.fork()
++    if pid == 0:  # Child
++        os.close(master_fd)
++        # Attach stdin/stdout/stderr to the PTY slave side
++        os.dup2(slave_fd, 0)
++        os.dup2(slave_fd, 1)
++        os.dup2(slave_fd, 2)
++        os.close(slave_fd)
++        os.execvp("gdb", cmd) # Runs gdb and doesn't return
++
++    # Parent
++    os.close(slave_fd)
++
++    output = bytearray()
++    try:
++        while True:
++            data = os.read(master_fd, 65536)
++            if not data:
++                break
++            output.extend(data)
++    except OSError: # in case subprocess exits and we get EBADF on read()
++        pass
++    finally:
++        try:
++            os.close(master_fd)
++        except OSError: # in case we get EBADF on close()
++            pass
++
++    # Wait for child to finish (reap zombie)
++    os.waitpid(pid, 0)
++
++    return output.decode('utf-8')
++
++def dump_backtrace_patched(regs):
++    cmd = ['gdb', '-batch',
++           '-ex', 'set debuginfod enabled off',
++           '-ex', 'set complaints 0',
++           '-ex', 'set style enabled on',
++           '-ex', 'python print("----split----")',
++           '-ex', 'bt', coredump.executable, coredump.coredump]
++
++    coredump.patch_regs(regs)
++    out = run_with_pty(cmd).split('----split----')[1]
++    gdb.write(out)
++
+ def dump_backtrace(regs):
+     '''
+     Backtrace dump with raw registers, mimic GDB command 'bt'.
+@@ -120,7 +278,7 @@ def dump_backtrace_live(regs):
+ 
+     selected_frame.select()
+ 
+-def bt_jmpbuf(jmpbuf):
++def bt_jmpbuf(jmpbuf, detailed=False):
+     '''Backtrace a jmpbuf'''
+     regs = get_jmpbuf_regs(jmpbuf)
+     try:
+@@ -128,8 +286,12 @@ def bt_jmpbuf(jmpbuf):
+         # but only works with live sessions.
+         dump_backtrace_live(regs)
+     except:
+-        # If above doesn't work, fallback to poor man's unwind
+-        dump_backtrace(regs)
++        if detailed:
++            # Obtain detailed trace by patching regs in copied coredump
++            dump_backtrace_patched(regs)
++        else:
++            # If above doesn't work, fallback to poor man's unwind
++            dump_backtrace(regs)
+ 
+ def co_cast(co):
+     return co.cast(gdb.lookup_type('CoroutineUContext').pointer())
+@@ -138,28 +300,90 @@ def coroutine_to_jmpbuf(co):
+     coroutine_pointer = co_cast(co)
+     return coroutine_pointer['env']['__jmpbuf']
+ 
++def init_coredump():
++    global coredump
++
++    files = gdb.execute('info files', False, True).split('\n')
++
++    if not 'core dump' in files[1]:
++        return False
++
++    core_path = re.search("`(.*)'", files[2]).group(1)
++    exec_path = re.match('^Symbols from "(.*)".$', files[0]).group(1)
++
++    if coredump is None:
++        coredump = Coredump(core_path, exec_path)
++
++    return True
+ 
+ class CoroutineCommand(gdb.Command):
+-    '''Display coroutine backtrace'''
++    __doc__ = textwrap.dedent("""\
++        Display coroutine backtrace
++
++        Usage: qemu coroutine COROPTR [--detailed]
++        Show backtrace for a coroutine specified by COROPTR
++
++          --detailed       obtain detailed trace by copying coredump, patching
++                           regs in it, and runing gdb subprocess to get
++                           backtrace from the patched coredump
++        """)
++
+     def __init__(self):
+         gdb.Command.__init__(self, 'qemu coroutine', gdb.COMMAND_DATA,
                               gdb.COMPLETE_NONE)
  
-+    def _format_expire_time(self, expire_time, scale):
-+        "Return human-readable expiry time (ns) with scale info."
-+        secs = expire_time / 1e9
++    def _usage(self):
++        gdb.write('usage: qemu coroutine <coroutine-pointer> [--detailed]\n')
++        return
 +
-+        # Select unit and compute value
-+        if secs < 1:
-+            val, unit = secs * 1000, "ms"
-+        elif secs < 60:
-+            val, unit = secs, "s"
-+        elif secs < 3600:
-+            val, unit = secs / 60, "min"
-+        elif secs < 86400:
-+            val, unit = secs / 3600, "hrs"
-+        else:
-+            val, unit = secs / 86400, "days"
+     def invoke(self, arg, from_tty):
+         argv = gdb.string_to_argv(arg)
+-        if len(argv) != 1:
+-            gdb.write('usage: qemu coroutine <coroutine-pointer>\n')
++        argc = len(argv)
++        if argc == 0 or argc > 2 or (argc == 2 and argv[1] != '--detailed'):
++            return self._usage()
++        detailed = True if argc == 2 else False
 +
-+        scale_map = {1: "ns", 1000: "us", 1000000: "ms",
-+                     1000000000: "s"}
-+        scale_str = scale_map.get(scale, f"scale={scale}")
-+        return f"{val:.2f} {unit} [{scale_str}]"
-+
-+    def _format_attribute(self, attr):
-+        "Given QEMUTimer attributes value, return a human-readable string"
-+
-+        # From include/qemu/timer.h
-+        if attr == 0:
-+            value = 'NONE'
-+        elif attr == 1 << 0:
-+            value = 'ATTR_EXTERNAL'
-+        elif attr == int(0xffffffff):
-+            value = 'ATTR_ALL'
-+        else:
-+            value = 'UNKNOWN'
-+        return f'{attr} <{value}>'
-+
-     def dump_timers(self, timer):
-         "Follow a timer and recursively dump each one in the list."
-         # timer should be of type QemuTimer
--        gdb.write("    timer %s/%s (cb:%s,opq:%s)\n" % (
--            timer['expire_time'],
--            timer['scale'],
--            timer['cb'],
--            timer['opaque']))
-+        scale = int(timer['scale'])
-+        expire_time = int(timer['expire_time'])
-+        attributes = int(timer['attributes'])
-+
-+        time_str = self._format_expire_time(expire_time, scale)
-+        attr_str = self._format_attribute(attributes)
-+
-+        gdb.write(f"    timer at {time_str} (attr:{attr_str}, "
-+                  f"cb:{timer['cb']}, opq:{timer['opaque']})\n")
++        is_coredump = init_coredump()
++        if detailed and not is_coredump:
++            gdb.write('--detailed is only valid when debugging core dumps\n')
+             return
  
-         if int(timer['next']) > 0:
-             self.dump_timers(timer['next'])
+-        bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])))
++        try:
++            bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])),
++                      detailed=detailed)
++        finally:
++            coredump.restore_regs()
+ 
+ class CoroutineBt(gdb.Command):
+-    '''Display backtrace including coroutine switches'''
++    __doc__ = textwrap.dedent("""\
++        Display backtrace including coroutine switches
++
++        Usage: qemu bt [--detailed]
++
++          --detailed       obtain detailed trace by copying coredump, patching
++                           regs in it, and runing gdb subprocess to get
++                           backtrace from the patched coredump
++        """)
++
+     def __init__(self):
+         gdb.Command.__init__(self, 'qemu bt', gdb.COMMAND_STACK,
+                              gdb.COMPLETE_NONE)
+ 
++    def _usage(self):
++        gdb.write('usage: qemu bt [--detailed]\n')
++        return
++
+     def invoke(self, arg, from_tty):
++        argv = gdb.string_to_argv(arg)
++        argc = len(argv)
++        if argc > 1 or (argc == 1 and argv[0] != '--detailed'):
++            return self._usage()
++        detailed = True if argc == 1 else False
++
++        is_coredump = init_coredump()
++        if detailed and not is_coredump:
++            gdb.write('--detailed is only valid when debugging core dumps\n')
++            return
+ 
+         gdb.execute("bt")
+ 
+@@ -173,13 +397,16 @@ def invoke(self, arg, from_tty):
+         if co_ptr == False:
+             return
+ 
+-        while True:
+-            co = co_cast(co_ptr)
+-            co_ptr = co["base"]["caller"]
+-            if co_ptr == 0:
+-                break
+-            gdb.write("Coroutine at " + str(co_ptr) + ":\n")
+-            bt_jmpbuf(coroutine_to_jmpbuf(co_ptr))
++        try:
++            while True:
++                co = co_cast(co_ptr)
++                co_ptr = co["base"]["caller"]
++                if co_ptr == 0:
++                    break
++                gdb.write("\nCoroutine at " + str(co_ptr) + ":\n")
++                bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), detailed=detailed)
++        finally:
++            coredump.restore_regs()
+ 
+ class CoroutineSPFunction(gdb.Function):
+     def __init__(self):
 -- 
 2.52.0
 
