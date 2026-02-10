@@ -4,107 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E71EA3F0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00844EA3F09
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphnY-0001AG-F2; Tue, 10 Feb 2026 02:04:36 -0500
+	id 1vphqn-0002CB-VY; Tue, 10 Feb 2026 02:07:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vphnV-00019w-R0; Tue, 10 Feb 2026 02:04:33 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vphql-0002Bg-Qp
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:07:55 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vphnU-0004zs-9A; Tue, 10 Feb 2026 02:04:33 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 619Gf4Iq614323; Tue, 10 Feb 2026 07:04:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=xO617q2d3V/0iJUeS+S0sqpXU45bCE
- k4rhxbGSU5nWA=; b=RNdTvuY+FXdeH6aDwOX5LQn7YC04gHtFQkeDhnjK2h20dT
- aLUrh/odxLjY+Tni4woo0CHpV7UUqebC0pd/Y1h09h8bQ6nXq1/qHh26VVOqFl7T
- J/UA8S7zCkjuMWwixPV1YVBL+1fkW6llqPGdR/6oOAyo0zQJgpdcXSnbo0HxBNz9
- CESyY6fZnsd8yxmwVdf4BL+AKddca0+bT2iS979BFmFebMcqgvMBEQmtXi5iOFJ1
- Bukmq7+jiDTenzNIBVk0RcFDIU51tbRgKnwUpNBJQw7W6MvHk98QOjto9jjb4pnK
- UoC4FuBECmIVnUPIkU6tYWt/bIurSJfJhvjTGPlQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696w2wsa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 07:04:28 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A4poDs001407;
- Tue, 10 Feb 2026 07:04:27 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6gqn0a17-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 07:04:27 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61A74NxN48497074
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 07:04:23 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F1482004B;
- Tue, 10 Feb 2026 07:04:23 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B80B520049;
- Tue, 10 Feb 2026 07:04:21 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.109.199.210])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 10 Feb 2026 07:04:21 +0000 (GMT)
-Date: Tue, 10 Feb 2026 12:34:19 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, chalapathi.v@linux.ibm.com, harshpb@linux.ibm.com
-Subject: Re: [PATCH v2 2/3] ppc/pnv: Add unimplemented quad and core regs
-Message-ID: <aYrXdeZol4koVzYX@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260126135507.771552-1-calebs@linux.ibm.com>
- <20260126135507.771552-3-calebs@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vphqk-0005LK-4I
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:07:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770707274; x=1802243274;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=VCHm+1U7yx0luMTFJ4dTIegtYJP0FVqEZIZriluU/LE=;
+ b=Co0HwO8l1+lKqi3Ma5ICurouMA1ZCh7+ofleirTSwpYn0HFR0OKQqZU4
+ FlZkoqslMJdNuGJ77CvsaW53A3BvZEnZf9dgDd4SlEe30wCwM5yMj0G9f
+ g/8eET6hLsgYIfNhfRXUxOJ6UxnKfAlI7V0oY2vsnSj+xxlOtrUHYV+O/
+ m6Dksx0Tw+sr6mUbagQjJJ4w7rI4IKD2dEBK3ADp67ixUko6cwEhrAAl9
+ WEEyQuUKOPfXdabGpfmbaHQJbFuKwhG7++nQefvD8mCLJxL9U+MHRnn1B
+ MTnlml7QgHhYHxoxrsm4hgt1XLr3UMFno5fduNuLZn5ESHFDkQM7XpJ1R w==;
+X-CSE-ConnectionGUID: zi2Jm6FrS++zG6hQpowtZA==
+X-CSE-MsgGUID: NvmK9mT8S0izEF5VcjSJQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71039004"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71039004"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:07:52 -0800
+X-CSE-ConnectionGUID: GRhIKsADTVSQ1t+LQYmsqA==
+X-CSE-MsgGUID: 9spyRXT5SyWOs1i1oC+1Uw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211038275"
+Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
+ ([10.238.1.184])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:07:49 -0800
+Message-ID: <aebb7e2a-9690-45d2-8410-3d27bb3fa715@linux.intel.com>
+Date: Tue, 10 Feb 2026 15:07:47 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260126135507.771552-3-calebs@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=698ad87c cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=L_DLxeZRvcLHnZ-rSf8A:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: WRmrGMpd74ZUbN4F49A8Up61PJCecKPV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA1NSBTYWx0ZWRfX2bAR8KUE3gSA
- AKv+1K1SLyX+oebHz0ktMHT5AQPtC8ggNf6r9j8n8KTXMchjec/IpX3Nwr+X8CIfILjMXjM6K7I
- Q7i1pwouVbcUEXpikl9myc1V5tNm4sx46ORRAXJxw32L51ySn8kFuvffdhHpmOqC8hWbmG7hjPM
- Ix40RpFqXr7FEdoFUDkTFyoYPGrKJ44FwnlMxpGjQf9+ACrBDYNzaZ6ZVmKLToxmnZHz3muPOEj
- oKj1mkmdKSr1QVVLvbXKV4lCekWeLavpKv4Fo+/4TWU4iccFMeILBFG/jx15W9xdkj/CwLgrqDS
- eq0WEwtMEJM1G3vICRS9P0Rk8oJ3vMD2RtkVbcD4r4YwhYdsV487dOjdy/GYNrmsSN+CGvtlLw/
- UWNT04rZBsYwqToWHxUUxoF0PdiSyLT6EgoELUC5SaupjbRiOxFfRegwrKx/9xi96SQJl3BC5oB
- rT+qVhN5GQ/ypMRta0w==
-X-Proofpoint-ORIG-GUID: x3tNdKBaeuSsD7j6Cj8rYydWnph1no0V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100055
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 08/11] target/i386: Clean up LBR format handling
+To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260128231003.268981-1-zide.chen@intel.com>
+ <20260128231003.268981-9-zide.chen@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260128231003.268981-9-zide.chen@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.18;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,40 +88,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Caleb,
 
-Was going through the patch again. Can we add a comment doc, about the
-scoms for which the unimplemented warning is getting hidden ?
-
-On 26/01/26 07:55AM, Caleb Schlossin wrote:
-> <...snip...>
+On 1/29/2026 7:09 AM, Zide Chen wrote:
+> Since the lbr-fmt property is masked with PERF_CAP_LBR_FMT in
+> DEFINE_PROP_UINT64_CHECKMASK(), there is no need to explicitly validate
+> user-requested lbr-fmt values.
 >
-> @@ -284,6 +305,15 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
->          }
->          break;
+> The PMU feature is only supported when running under KVM, so initialize
+> cpu->lbr_fmt in kvm_cpu_instance_init().  Use -1 as the default lbr-fmt,
+> rather than initializing it with ~PERF_CAP_LBR_FMT, which is misleading
+> as it suggests a semantic relationship that does not exist.
+>
+> Rename requested_lbr_fmt to a more generic guest_fmt.  When lbr-fmt is
+> not specified and cpu->migratable is false, the guest lbr_fmt value is
+> not user-requested.
+>
+> Signed-off-by: Zide Chen <zide.chen@intel.com>
+> ---
+> V2:
+> - New patch.
+>
+>  target/i386/cpu.c         | 18 ++++++------------
+>  target/i386/kvm/kvm-cpu.c |  2 ++
+>  2 files changed, 8 insertions(+), 12 deletions(-)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index f2c83b4f259c..09180c718d58 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9788,7 +9788,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>      X86CPUClass *xcc = X86_CPU_GET_CLASS(dev);
+>      CPUX86State *env = &cpu->env;
+>      Error *local_err = NULL;
+> -    unsigned requested_lbr_fmt;
+> +    unsigned guest_fmt;
 >  
-> +    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
-> +    case PNV10_XSCOM_EC_CORE_FIRMASK:
-> +    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
-> +    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
-> +    case PNV10_XSCOM_EC_SPATTN_OR:
-> +    case PNV10_XSCOM_EC_SPATTN_AND:
-> +    case PNV10_XSCOM_EC_SPATTN:
-> +    case PNV10_XSCOM_EC_SPATTN_MASK:
-> +        break;
->      default:
->          qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+>      if (!kvm_enabled())
+>          cpu->enable_pmu = false;
+> @@ -9828,11 +9828,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>       * Override env->features[FEAT_PERF_CAPABILITIES].LBR_FMT
+>       * with user-provided setting.
+>       */
+> -    if (cpu->lbr_fmt != ~PERF_CAP_LBR_FMT) {
+> -        if ((cpu->lbr_fmt & PERF_CAP_LBR_FMT) != cpu->lbr_fmt) {
+> -            error_setg(errp, "invalid lbr-fmt");
+> -            return;
+> -        }
+> +    if (cpu->lbr_fmt != -1) {
+>          env->features[FEAT_PERF_CAPABILITIES] &= ~PERF_CAP_LBR_FMT;
+>          env->features[FEAT_PERF_CAPABILITIES] |= cpu->lbr_fmt;
+>      }
+> @@ -9841,9 +9837,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>       * vPMU LBR is supported when 1) KVM is enabled 2) Option pmu=on and
+>       * 3)vPMU LBR format matches that of host setting.
+>       */
+> -    requested_lbr_fmt =
+> -        env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
+> -    if (requested_lbr_fmt && kvm_enabled()) {
+> +    guest_fmt = env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
+> +    if (guest_fmt) {
+>          uint64_t host_perf_cap =
+>              x86_cpu_get_supported_feature_word(NULL, FEAT_PERF_CAPABILITIES);
+>          unsigned host_lbr_fmt = host_perf_cap & PERF_CAP_LBR_FMT;
+> @@ -9852,10 +9847,10 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>              error_setg(errp, "vPMU: LBR is unsupported without pmu=on");
+>              return;
+>          }
+> -        if (requested_lbr_fmt != host_lbr_fmt) {
+> +        if (guest_fmt != host_lbr_fmt) {
+>              error_setg(errp, "vPMU: the lbr-fmt value (0x%x) does not match "
+>                          "the host value (0x%x).",
+> -                        requested_lbr_fmt, host_lbr_fmt);
+> +                        guest_fmt, host_lbr_fmt);
+>              return;
+>          }
+>      }
+> @@ -10279,7 +10274,6 @@ static void x86_cpu_initfn(Object *obj)
+>      object_property_add_alias(obj, "sse4_2", obj, "sse4.2");
+>  
+>      object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
+> -    cpu->lbr_fmt = ~PERF_CAP_LBR_FMT;
+>      object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
+>  
+>      if (xcc->model) {
+> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+> index 33a8c26bc27c..b4500ab69f82 100644
+> --- a/target/i386/kvm/kvm-cpu.c
+> +++ b/target/i386/kvm/kvm-cpu.c
+> @@ -231,6 +231,8 @@ static void kvm_cpu_instance_init(CPUState *cs)
+>          kvm_cpu_max_instance_init(cpu);
+>      }
+>  
+> +    cpu->lbr_fmt = -1;
+> +
+>      kvm_cpu_xsave_init();
+>  }
+>  
 
-Here, the unimp warning is getting skipped, by ignoring writes to those
-scoms.
-Similarly in other places, you return 0 as default value for few scom
-reads.
-
-A comment about the special treatment will help future developers to
-read the code.
-
-Thanks,
-- Aditya G
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
 
 
