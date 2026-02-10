@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC4BEA8109
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2402EA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmiz-00019b-T7; Tue, 10 Feb 2026 07:20:15 -0500
+	id 1vpmj3-0001Jn-3q; Tue, 10 Feb 2026 07:20:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmil-0000rs-RE; Tue, 10 Feb 2026 07:19:59 -0500
+ id 1vpmhJ-0005ui-FH; Tue, 10 Feb 2026 07:18:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmij-00027m-R7; Tue, 10 Feb 2026 07:19:59 -0500
+ id 1vpmhF-0001JJ-Tg; Tue, 10 Feb 2026 07:18:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 248CA187DE5;
- Tue, 10 Feb 2026 15:16:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 97766187DC5;
+ Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B5BA1360CF9;
- Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 33F48360CEA;
+ Tue, 10 Feb 2026 15:15:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joelle van Dyne <j@getutm.app>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 81/85] virtio-gpu-virgl: correct parent for blob
- memory region
-Date: Tue, 10 Feb 2026 15:16:45 +0300
-Message-ID: <20260210121657.69363-12-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 93/95] hw/cxl: Take into account how many media
+ operations are requested for param check
+Date: Tue, 10 Feb 2026 15:15:15 +0300
+Message-ID: <20260210121526.68598-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
-References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
+References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -61,61 +61,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joelle van Dyne <j@getutm.app>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-When `owner` == `mr`, `object_unparent` will crash:
+Whilst the spec doesn't speak to it directly my assumption is that
+a request for more operations than exist should result in an invalid
+input error return.
 
-object_unparent(mr) ->
-object_property_del_child(mr, mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-object_finalize(mr) ->
-object_property_del_all(mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-fail on g_assert(obj->ref > 0)
-
-However, passing a different `owner` to `memory_region_init` does not
-work. `memory_region_ref` has an optimization where it takes a ref
-only on the owner. That means when flatviews are created, it does not
-take a ref on the region and you can get a UAF from `flatview_destroy`
-called from RCU.
-
-The correct fix therefore is to use `NULL` as the name which will set
-the `owner` but not the `parent` (which is still NULL). This allows us
-to use `memory_region_ref` on itself while not having to rely on unparent
-for cleanup.
-
-Signed-off-by: Joelle van Dyne <j@getutm.app>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: 77a8e9fe0ecb ("hw/cxl/cxl-mailbox-utils: Add support for Media operations discovery commands cxl r3.2 (8.2.10.9.5.3)")
+Closes: https://lore.kernel.org/qemu-devel/CAFEAcA-p5wZkNxK7wNVq_3PAzEE-muOd1Def-0O-FSpck4DrBQ@mail.gmail.com/
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260103214400.71694-1-j@getutm.app>
-(cherry picked from commit e27194e087aede62dbe3d2805c6f1aa30d3465df)
+Message-Id: <20260102154731.474859-3-Jonathan.Cameron@huawei.com>
+(cherry picked from commit 25465c0e1fd74d2118dfec03912f2595eeb497d7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 94ddc01f91..ca34704acb 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -120,7 +120,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     vmr->g = g;
- 
-     mr = &vmr->mr;
--    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
-@@ -182,7 +182,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         /* memory region owns self res->mr object and frees it by itself */
-         memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
--        object_unparent(OBJECT(mr));
-+        object_unref(OBJECT(mr));
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 03fbc9a9d1..5dfb129082 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2011,7 +2011,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+      * sub class command.
+      */
+     if (media_op_in_disc_pl->dpa_range_count ||
+-        start_index > ARRAY_SIZE(media_op_matrix)) {
++        start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
+         return CXL_MBOX_INVALID_INPUT;
      }
  
-     return 0;
 -- 
 2.47.3
 
