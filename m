@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A1AEA810D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB01EA810E
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpnOY-00043B-9e; Tue, 10 Feb 2026 08:03:10 -0500
+	id 1vpnNm-0003xR-VP; Tue, 10 Feb 2026 08:02:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNj-0003s0-G5
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:19 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNi-0003rS-1M
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:18 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNh-0002rR-Nd
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:19 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNf-0002rF-3f
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/Cuf+Ucx9P/5YzPKylvJUXVJV5Pm6GGJQgztlq4/zoI=; b=OEKdbJQDx7/kvho
- Bp2gMVAZgVnYphNdC0IYz9k42ZCPXeFtufrFYk8GRKI+gdAPSeT1STq3xNepPA4pABNqqITq1+E0v
- gJ+1dCMGvklNPEzZABXepZKvB91XuLPsxkwSrHNmRFFbNrDetDboGsZOJMN1qfGkIwb/m2dQYqqwL
- CM=;
-Date: Tue, 10 Feb 2026 14:04:58 +0100
-Subject: [PATCH 4/4] hppa: Add C3600 machine with PA-8600 CPU
+ List-Help; bh=mGZqekR5KuigYMAGEYYO6SIER9j/yw9F40Czkb0c+0s=; b=QuCQrtVI5YxvN0f
+ X6ltlOsBNu6M0BM0/v86jhiaZmsofB6OV0jB7ti8ZPV1jBbBEIZwW25q6s+CzS9DMw0fWhHdqh2B6
+ Ytachs7tC8UHszvOmEty41cfJL9vWJkFRpIWyG/Ik3+dW2rLRWJDsKASW69VXsFoiCezBveOr9eYZ
+ 7U=;
+Date: Tue, 10 Feb 2026 14:04:56 +0100
+Subject: [PATCH 2/4] hppa: Introduce HPPACPUDef
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260210-hppa-c3600-v1-4-a17ec58f053f@rev.ng>
+Message-Id: <20260210-hppa-c3600-v1-2-a17ec58f053f@rev.ng>
 References: <20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng>
 In-Reply-To: <20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,157 +65,138 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a C3600/PA-8600 machine/CPU, which from the perspective of
-QEMU differ only in the size of the physical address, compared to
-C3700/PA-8700.
+In preparation for adding a C3600 machine with 40 bits of physical
+address space, and moving C3700 to 44 bits, a CPU model configuration
+struct is added to HPPACPUClass.
 
-With this addition, PA-8700 is changed to use the correct 44 bit
-physical address space.
+Two fields are added describing the size of the physical address space,
+and whether or not the CPU uses the PA-RISC 2.0 architecture.  The
+latter was previously a field in CPUHPPAState.
+
+phys_addr_bits is currently set but unused, and will be used in the
+following commit.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/cpu-qom.h                 |  1 +
- hw/hppa/machine.c                     | 41 ++++++++++++++++++++++++++++++-----
- target/hppa/cpu.c                     | 10 ++++++++-
- tests/functional/hppa/test_seabios.py |  3 +++
- 4 files changed, 48 insertions(+), 7 deletions(-)
+ target/hppa/cpu.h | 24 ++++++++++++++++++++----
+ target/hppa/cpu.c | 27 +++++++++++++++++++--------
+ 2 files changed, 39 insertions(+), 12 deletions(-)
 
-diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
-index c6b82dc09b..078aa3b08a 100644
---- a/target/hppa/cpu-qom.h
-+++ b/target/hppa/cpu-qom.h
-@@ -28,6 +28,7 @@
- #define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 092e647ccf..43b4882fb4 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -270,8 +270,6 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
  
- #define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
-+#define TYPE_HPPA_CPU_PA_8600   HPPA_CPU_TYPE_NAME("pa-8600")
- #define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
- 
- OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 8246f6bf65..ab5b8b6422 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -689,9 +689,9 @@ static AstroState *astro_init(void)
- }
- 
- /*
-- * Create HP C3700 workstation
-+ * Create HP C3000 series workstation
-  */
--static void machine_HP_C3700_init(MachineState *machine)
-+static void machine_HP_C3000_init(MachineState *machine)
- {
-     PCIBus *pci_bus;
-     AstroState *astro;
-@@ -804,9 +804,30 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
-     mc->default_ram_size = 512 * MiB;
- }
- 
-+static void HP_C3600_machine_init_class_init(ObjectClass *oc, const void *data)
-+{
-+    static const char * const valid_cpu_types[] = {
-+        TYPE_HPPA_CPU_PA_8600,
-+        NULL
-+    };
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "HP C3600 workstation";
-+    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8600;
-+    mc->valid_cpu_types = valid_cpu_types;
-+    mc->init = machine_HP_C3000_init;
-+    mc->max_cpus = HPPA_MAX_CPUS;
-+    mc->default_ram_size = 1024 * MiB;
-+}
-+
- static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
- {
-+    /*
-+     * SeaBIOS for C3700 currently uses a 40 bit physical address space,
-+     * allow use of use the PA-8600.
-+     */
-     static const char * const valid_cpu_types[] = {
-+        TYPE_HPPA_CPU_PA_8600,
-         TYPE_HPPA_CPU_PA_8700,
-         NULL
-     };
-@@ -815,7 +836,7 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "HP C3700 workstation";
-     mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
-     mc->valid_cpu_types = valid_cpu_types;
--    mc->init = machine_HP_C3700_init;
-+    mc->init = machine_HP_C3000_init;
-     mc->max_cpus = HPPA_MAX_CPUS;
-     mc->default_ram_size = 1024 * MiB;
- }
-@@ -855,15 +876,23 @@ static const TypeInfo hppa_machine_types[] = {
-             { TYPE_NMI },
-             { }
-         },
--    }, {
-+    },
-+    {
-         .name = MACHINE_TYPE_NAME("B160L"),
-         .parent = TYPE_HPPA_COMMON_MACHINE,
-         .class_init = HP_B160L_machine_init_class_init,
--    }, {
-+    },
-+    {
-+        .name = MACHINE_TYPE_NAME("C3600"),
-+        .parent = TYPE_HPPA_COMMON_MACHINE,
-+        .class_init = HP_C3600_machine_init_class_init,
-+    },
-+    {
-         .name = MACHINE_TYPE_NAME("C3700"),
-         .parent = TYPE_HPPA_COMMON_MACHINE,
-         .class_init = HP_C3700_machine_init_class_init,
--    }, {
-+    },
-+    {
-         .name = MACHINE_TYPE_NAME("715"),
-         .parent = TYPE_HPPA_COMMON_MACHINE,
-         .class_init = HP_715_machine_init_class_init,
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 1ba281df20..c88252e071 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -335,13 +335,21 @@ static const TypeInfo hppa_cpu_type_infos[] = {
-         },
-     },
-     {
--        .name = TYPE_HPPA_CPU_PA_8700,
-+        .name = TYPE_HPPA_CPU_PA_8600,
-         .parent = TYPE_HPPA_CPU,
-         .class_data = &(const HPPACPUDef) {
-             .phys_addr_bits = 40,
-             .is_pa20 = true,
-         },
-     },
-+    {
-+        .name = TYPE_HPPA_CPU_PA_8700,
-+        .parent = TYPE_HPPA_CPU,
-+        .class_data = &(const HPPACPUDef) {
-+            .phys_addr_bits = 44,
-+            .is_pa20 = true,
-+        },
-+    },
+-    bool is_pa20;
+-
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
+@@ -290,6 +288,18 @@ struct ArchCPU {
+     QEMUTimer *alarm_timer;
  };
  
- DEFINE_TYPES(hppa_cpu_type_infos)
-diff --git a/tests/functional/hppa/test_seabios.py b/tests/functional/hppa/test_seabios.py
-index 661b2464e1..41a429d4c4 100755
---- a/tests/functional/hppa/test_seabios.py
-+++ b/tests/functional/hppa/test_seabios.py
-@@ -29,6 +29,9 @@ def test_hppa_32(self):
++/**
++ * HPPACPUDef:
++ * @phys_addr_bits: Number of bits in the physical address space.
++ * @is_pa20: Whether the CPU model follows the PA-RISC 2.0 or 1.1 spec.
++ *
++ * Configuration options for a HPPA CPU model.
++ */
++typedef struct HPPACPUDef {
++    uint8_t phys_addr_bits;
++    bool is_pa20;
++} HPPACPUDef;
++
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
+@@ -302,11 +312,17 @@ struct HPPACPUClass {
  
-     def test_hppa_64(self):
-         self.set_machine('C3700')
-+        # SeaBIOS for C3700 currently uses a 40 bit physical address space,
-+        # use the PA-8600 CPU instead of the default PA-8700.
-+        self.cpu = 'pa-8600'
-         self.boot_seabios()
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
++    const HPPACPUDef *def;
+ };
  
- if __name__ == '__main__':
+-static inline bool hppa_is_pa20(const CPUHPPAState *env)
++static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
++{
++    return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
++}
++
++static inline bool hppa_is_pa20(CPUHPPAState *env)
+ {
+-    return env->is_pa20;
++    return hppa_def(env)->is_pa20;
+ }
+ 
+ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index c8079016bf..1ba281df20 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -203,13 +203,6 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+     tcg_cflags_set(cs, CF_PCREL);
+ }
+ 
+-static void hppa_cpu_initfn(Object *obj)
+-{
+-    CPUHPPAState *env = cpu_env(CPU(obj));
+-
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU_PA_8700);
+-}
+-
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ {
+     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
+@@ -284,6 +277,16 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
++static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
++{
++    HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    /* Make sure all CPU models define a HPPACPUDef */
++    g_assert(!object_class_is_abstract(oc) && data != NULL);
++    if (data) {
++        acc->def = data;
++    }
++}
++
+ static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -318,18 +321,26 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+-        .instance_init = hppa_cpu_initfn,
+         .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
++        .class_base_init = hppa_cpu_class_base_init,
+     },
+     {
+         .name = TYPE_HPPA_CPU_PA_7300LC,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 32,
++            .is_pa20 = false,
++        },
+     },
+     {
+         .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
+     },
+ };
+ 
 
 -- 
 2.52.0
