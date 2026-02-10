@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB7CEA8105
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 145F6EA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmjI-0002M3-V0; Tue, 10 Feb 2026 07:20:33 -0500
+	id 1vpmkG-000579-1a; Tue, 10 Feb 2026 07:21:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmjD-0001yg-LW; Tue, 10 Feb 2026 07:20:27 -0500
+ id 1vpmio-00012t-RI; Tue, 10 Feb 2026 07:20:05 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmjB-0002u6-Nl; Tue, 10 Feb 2026 07:20:27 -0500
+ id 1vpmin-0002B2-2K; Tue, 10 Feb 2026 07:20:02 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D367187DE9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 42159187DE6;
  Tue, 10 Feb 2026 15:16:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B68C360CFD;
- Tue, 10 Feb 2026 15:17:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C8D3D360CFA;
+ Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 85/85] scripts/qemugdb: timers: Fix KeyError in 'qemu
- timers' command
-Date: Tue, 10 Feb 2026 15:16:49 +0300
-Message-ID: <20260210121657.69363-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Li Chen <chenl311@chinatelecom.cn>,
+ Li Chen <me@linux.beauty>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 82/85] virtio-pmem: ignore empty queue notifications
+Date: Tue, 10 Feb 2026 15:16:46 +0300
+Message-ID: <20260210121657.69363-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
@@ -60,36 +60,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Li Chen <chenl311@chinatelecom.cn>
 
-Currently invoking 'qemu timers' command results into: "gdb.error: There
-is no member named last".  Let's remove the legacy 'last' field from
-QEMUClock, as it was removed in v4.2.0 by the commit 3c2d4c8aa6a
-("timer: last, remove last bits of last").
+virtio_pmem_flush() treats a NULL return from virtqueue_pop() as a fatal
+error and calls virtio_error(), which puts the device into NEEDS_RESET.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20251204105019.455060-3-andrey.drobyshev@virtuozzo.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 80c97930a93c32e2e666f5420af2d5734021a135)
+However, virtqueue handlers can be invoked when no element is available,
+so an empty queue should be handled as a benign no-op.
+
+With a Linux guest this avoids spurious NEEDS_RESET and the resulting
+-EIO propagation (e.g. EXT4 journal abort and remount-ro).
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260106083859.380338-1-me@linux.beauty>
+(cherry picked from commit efd581a8cd4405ca183ecd017072b0c878802d69)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/qemugdb/timers.py b/scripts/qemugdb/timers.py
-index 46537b27cf..0538677288 100644
---- a/scripts/qemugdb/timers.py
-+++ b/scripts/qemugdb/timers.py
-@@ -37,10 +37,9 @@ def dump_timers(self, timer):
- 
-     def process_timerlist(self, tlist, ttype):
-         gdb.write("Processing %s timers\n" % (ttype))
--        gdb.write("  clock %s is enabled:%s, last:%s\n" % (
-+        gdb.write("  clock %s is enabled:%s\n" % (
-             tlist['clock']['type'],
--            tlist['clock']['enabled'],
--            tlist['clock']['last']))
-+            tlist['clock']['enabled']))
-         if int(tlist['active_timers']) > 0:
-             self.dump_timers(tlist['active_timers'])
+diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
+index adb3268bd4..16c7367ab0 100644
+--- a/hw/virtio/virtio-pmem.c
++++ b/hw/virtio/virtio-pmem.c
+@@ -74,7 +74,6 @@ static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
+     trace_virtio_pmem_flush_request();
+     req_data = virtqueue_pop(vq, sizeof(VirtIODeviceRequest));
+     if (!req_data) {
+-        virtio_error(vdev, "virtio-pmem missing request data");
+         return;
+     }
  
 -- 
 2.47.3
