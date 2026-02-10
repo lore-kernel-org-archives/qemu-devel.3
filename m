@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE033EB2714
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:45:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81AB3EB2714
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpubd-0000in-Is; Tue, 10 Feb 2026 15:45:09 -0500
+	id 1vpuca-0001C9-7v; Tue, 10 Feb 2026 15:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpubc-0000ic-BP
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:45:08 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vpucH-00019w-T4
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:45:50 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpuba-0005hR-D5
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:45:08 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-81e8a9d521dso2917345b3a.2
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:45:05 -0800 (PST)
+ id 1vpucG-0005kj-3g
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:45:49 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2aadc18f230so19257605ad.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770756304; x=1771361104; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770756346; x=1771361146; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=J3DA9TlpBUHYt1VbylJqk13ZlvweQpsII6b9er2CXF8=;
- b=jOWMLjE1NEmXJ4hNXtoaTPzrB8SR7Z1/rqKeYNGnLRrt1h1IXMpKyllEHRayf8UebP
- /wYssS3UaxrPGbiIW5j74r3bxEezYZKDuyTBL18pNRjMarqGEfw3NxGTAqRv54OAXhZc
- rNRmeT7j1Xx3Hfv9nxWT2jgNbPgxvIxBWDIf9G7fbMVXgZx45tR6qc9ixavlh7ZIGZ2E
- Ng61Dh3rauGjl2+Ig8fygumTZBKp4Edxk7ueWr7XDvTTWEJRa4zbQrloBOhSlH5g54vl
- vDQSYxakV/QdHAhdEVS8u25rtMekCNj40J6wRStS49sv/VHRZcdCqSYj8T6ayJz+PYsY
- OPsQ==
+ bh=LpWfv89cTEW2lDnFmRmsb6tYCtaFP6mlcRJtptspNtU=;
+ b=PwAYDhWCvMyXjNUYo8utkUSv8ev3YamItMyAXcuVH42VLbFk3IpkOb1mRn1B3ukghN
+ pbOJH8qVUZOkSyOHQEI5RPvupKm/MK9nBCbmcXW+UHyU7yWumS1jbwA5KGpxfVQHchvh
+ X0JXOmidjbXVL3qRjT8OxHNqIfyp+Tezshq8pNCaDXYHJoLJ55mEnmtwrLOdtnIzmSi9
+ 7U2TjzkMPsQlfAoto4f24umluCkYV2g2oPIdE7JWie2uVnLmqpcSAn4rUhfd9nezDiR7
+ UpHIgNn0JVRNai/hfwWK0RZol4IGXJjgJ49vmp7mP4mki84Ir2ERjekvaOAdvXJ2wJEL
+ O76Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770756304; x=1771361104;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770756346; x=1771361146;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=J3DA9TlpBUHYt1VbylJqk13ZlvweQpsII6b9er2CXF8=;
- b=xVbchD009UVPpSGUQeuGLjeeVV0dlhbxIqF+f3CSXR/gKE6QM2raqCCXj9XyiYuLJI
- r7C3fBVmyNtzkdG8hmv059gt1MvKc44zpbQJTU55maZJ8VH4vJUZzWqDq6jsO7zPVFKm
- DMCggWOz/TGyU+uptpRiccJ3PHblOIK229BNuRKGkJHnioyU/OwgPszAQcxwRJAVJEWe
- 3zOjI8MiuF4PAE7p5jQHSq9nBNu7jMOSedim5mrycFOWrCLaVZs0TAm2RH81t22Rd+nV
- 9sOG9Yn93Hh1pd3+TKruA1xPpVvTJMvENwsPDNdRNrP5kJTOeQ0lyalalirmhoqCqrPC
- 58yw==
-X-Gm-Message-State: AOJu0YxzMavIQxqbp3OFg/No5Qunn6lV6YqGlkdbTwF1vIjGuikj05Rm
- NLZAU+nJ3AOudOXnhYyG28otbEMwW9jqJ4k3ORysPoZxY9vAF3HT7rxR4RmygElZhD4=
-X-Gm-Gg: AZuq6aKbm4cYvYAqFnWcpRaMbRhCZkM62QuCNFwJBJLosPIrHvCXtSoaIxfESSRy3lH
- GrCNYKglVlBhgpQOz7YpfiiCi2v3G+dmKvBGqrHKLTe1mT7FVzGkdV0dSbIJJ3R7kQkKCaCJxS7
- x5aKkifaBs31kXCpw1tVLUYGFCuoPopMjQpOGyFwyF/nf3Y7BhXmfE/QCzc81XrrCYEP0hxjD4J
- ZRZsIG09Puv8w/8cLoXLeI2r+dbN5wF7BwGetbEP0HFOYB++JTI4PUIg+plozoGcs/w9RWtYq/h
- bCfX9f+jOZTAujBx/04Z9ZYDiROb+ht60dG5+2whzRqAVdeZwH37SZmKtIwOzXYy3wWGP8D3kwc
- Z2h4zs20455+G9aW6Ic8GSvEwweruUiy6/LO5pKLUnClSlaCGYpsk20AJ+m7aRxHnhAbs0lIUCO
- 74PbcxFCCCTCqlDXxNfxVOv2rGwzMQM1q65BreUzEbqIX7qwMHyK0Z40TUpD3IY41J21DU
-X-Received: by 2002:a05:6a00:71c5:b0:81e:a228:f0d8 with SMTP id
- d2e1a72fcca58-8249b0d850dmr299620b3a.34.1770756304094; 
- Tue, 10 Feb 2026 12:45:04 -0800 (PST)
+ bh=LpWfv89cTEW2lDnFmRmsb6tYCtaFP6mlcRJtptspNtU=;
+ b=CpXIREXo2Db3geHAIM+PeHS4Kcz4EwVQKEZheSlbx7Tk3sWEE5ZT5/baBBznXSr6+p
+ oc+N01bEqFoAINJRajhh5rMmQ8WWprszY1fFgo18L0y5V77K6nXtJJ72/HD5dIXdaGMh
+ sultZ3g86Kt9zeKuKSdviMYmSU84IEDCV5Rgn1s5wGesO/77DZ1C2/78nrT55LBRnN3A
+ sCaZ0rSbH/QiIVl+hlK+cfvOJdyuzaZB/smj8ncfxiIEJqoW4CcISY9uFI+Qpa1CBwu4
+ YWyBbI8tjoZ9CpWxH+BBuXakfdyIJjbw+dX8oGIIx79vJvrD4mL9QsVqJB5Xj7hTR5HA
+ 8HRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcH5hWveMsnSnPnxu7Yj9BlGdn91erEm4rdn+qVN2gnlU5ROLXh2m/GENyFwASF251jLmGV7lBsh5W@nongnu.org
+X-Gm-Message-State: AOJu0YyFXke8wMO6Do+yg6rSCuqb7F6D4CcUW4Y7DOi7/QptEZPVfVHd
+ Ucu713auwQM92A/ZJhJzv05uHx8GJ8S5zaJt/talByjg9J0/lrK45qMyazdv8W3BBtE=
+X-Gm-Gg: AZuq6aJ0AQ+mAgd8d/fjwv7jpkXZL8WEWqXZaPSZC6mIU0WLFvrx4LixWQlgIHHm7eM
+ bPCnC1ODpwznO1n25aAbUeNp4j2opLJ3iRec5/LwhH4uCP/A+HqkDixEWbZN5IGBcpNR0vewvVr
+ QwxQhFMeF5rZqp3b6aJV2O7rQiQa293Oy+G3PI4ca4V0BwJxU2vXN0W3IJO5yVdnNypJFUr/TAv
+ zVYxYHhD6L14wvv9yGbbH4/ymgkpZh3Nln+XmkDUYATKgGDI9xZCKdCIVB55zDqZ7yU4LJPOCG+
+ CG0Y7ke/IXn35hYxXrpV9Uubvp7P77/aujClcUzwE0e5PU9vAZYVBwMntdImhv6Xfaz2V2Twa/d
+ Dius82Sc+EQ1WS9AmZNOcs1lRGToi3QjCtUzTxL5qWRmIhhmTYP3RQvjTPHWz3fovZqUOcw0IOt
+ 6upLHHFXkjHP3Ehk8b+hkAZiV3YKXnFeiFU/blYlYAEyIkMIzzH4pveFDaifhQZAfurYnS
+X-Received: by 2002:a17:902:e74b:b0:2aa:e114:2f5b with SMTP id
+ d9443c01a7336-2ab279103c6mr4664275ad.17.1770756346485; 
+ Tue, 10 Feb 2026 12:45:46 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82441677569sm14041285b3a.4.2026.02.10.12.45.03
+ d9443c01a7336-2a9521b9f53sm183015715ad.57.2026.02.10.12.45.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 12:45:03 -0800 (PST)
-Message-ID: <08268821-626a-4a61-b2d0-7b4c6e973ba3@linaro.org>
-Date: Tue, 10 Feb 2026 12:45:03 -0800
+ Tue, 10 Feb 2026 12:45:46 -0800 (PST)
+Message-ID: <461df3a1-b3ae-4be3-aae4-598bfa56575f@linaro.org>
+Date: Tue, 10 Feb 2026 12:45:45 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/1] plugins: fix cross-build using LLVM for Windows
  targets
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
 References: <20260210040722.11375-1-mohamed@unpredictable.fr>
- <508e49cd-a37e-4388-827f-9e692c5f9905@linaro.org>
- <C933BE09-BFA4-4F13-87FA-2FD2994CCEE7@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <C933BE09-BFA4-4F13-87FA-2FD2994CCEE7@unpredictable.fr>
+In-Reply-To: <20260210040722.11375-1-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,65 +139,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 12:04 AM, Mohamed Mediouni wrote:
+On 2/9/26 8:07 PM, Mohamed Mediouni wrote:
+> llvm-dlltool assumes that it's by default targeting the host architecture
+> it's running on. That assumption doesn't hold true when cross-compiling.
 > 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   plugins/meson.build | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
->> On 10. Feb 2026, at 07:39, Pierrick Bouvier 
->> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 2/9/26 8:07 PM, Mohamed Mediouni wrote:
->>> llvm-dlltool assumes that it's by default targeting the host architecture
->>> it's running on. That assumption doesn't hold true when cross-compiling.
->>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->>> ---
->>>  plugins/meson.build | 9 ++++++++-
->>>  1 file changed, 8 insertions(+), 1 deletion(-)
->>> diff --git a/plugins/meson.build b/plugins/meson.build
->>> index 34643e2cea..9899f166ee 100644
->>> --- a/plugins/meson.build
->>> +++ b/plugins/meson.build
->>> @@ -41,9 +41,16 @@ if host_os == 'windows'
->>>    # to find missing symbols in current program.
->>>    win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
->>>    if meson.get_compiler('c').get_id() == 'clang'
->>> +    if host_machine.cpu() == 'x86_64'
->>> +      dlltool_target = 'i386:x86-64'
->>> +    elif host_machine.cpu() == 'aarch64'
->>> +      dlltool_target = 'arm64'
->>> +    else
->>> +      error('Unknown machine')
->>> +    endif
->>>      # With LLVM/lld, delaylib is specified at link time (-delayload)
->>>      dlltool = find_program('llvm-dlltool', required: true)
->>> -    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 
->>> 'qemu.exe']
->>> +    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '- 
->>> l', '@OUTPUT@', '-D', 'qemu.exe']
->>>      win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
->>>    else
->>>      # With gcc/ld, delay lib is built with a specific delay parameter.
->>
->> Interesting, on which setup did you find this?
->>
->> Regards,
->> Pierrick
-> Hello,
-> 
-> Was found on my macOS arm64 laptop w/ using llvm-mingw and an MXE fork 
-> to build all the libs QEMU needed.
-> Cross-compiled for arm64 Windows initially from there, and came across 
-> this when targeting x86_64 from that setup.
-> 
-> 
+> diff --git a/plugins/meson.build b/plugins/meson.build
+> index 34643e2cea..9899f166ee 100644
+> --- a/plugins/meson.build
+> +++ b/plugins/meson.build
+> @@ -41,9 +41,16 @@ if host_os == 'windows'
+>     # to find missing symbols in current program.
+>     win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
+>     if meson.get_compiler('c').get_id() == 'clang'
+> +    if host_machine.cpu() == 'x86_64'
+> +      dlltool_target = 'i386:x86-64'
+> +    elif host_machine.cpu() == 'aarch64'
+> +      dlltool_target = 'arm64'
+> +    else
+> +      error('Unknown machine')
+> +    endif
+>       # With LLVM/lld, delaylib is specified at link time (-delayload)
+>       dlltool = find_program('llvm-dlltool', required: true)
+> -    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+> +    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+>       win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
+>     else
+>       # With gcc/ld, delay lib is built with a specific delay parameter.
 
-Ok thanks.
-When I cross compiled windows-arm64 -> windows-x86_64, I don't remember 
-having to set it. That said, it does not hurt anyway, and everything 
-still builds fine natively with it.
+This is a good candidate for qemu-stable.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Regards,
+Thanks,
 Pierrick
 
