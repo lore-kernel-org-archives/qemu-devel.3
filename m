@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF98EE9462A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC1E7E9462A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdxI-00061I-LP; Mon, 09 Feb 2026 21:58:24 -0500
+	id 1vpdxR-00064t-PZ; Mon, 09 Feb 2026 21:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdxG-00060p-Ne
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:22 -0500
+ id 1vpdxQ-00063G-Hm
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:32 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdxF-000463-5c
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:22 -0500
+ id 1vpdxO-00046a-6J
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770692301; x=1802228301;
+ t=1770692310; x=1802228310;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CWUHty8oWVEh0GsmmVaaCPC+SG+FQrP8WKByiVj3sqs=;
- b=NkKOd1hZqxEZO2d0VPi7bLdvM3AG9pCxEj/LkxBjXkIJtJM2L4koy3p7
- uah3yT+2cLJOldd4lHMDTb6Wl88AGJAg8TnOGTzoA45loPUj2bfjha5t5
- 9f5RSKRqJb/K8U93ftz51cNTnluNlHAORDAEV/+pKICkYkiA35ik0aicT
- 6Mk11WbkYE88yiHhqbuQSozdCyzruAfl2Z7tObW3Sc7bhHw0CJEISOvuM
- aYvL3zfV30lD3oyDyITSq3MSZXMRER2bYRMOxSu7TpNNipH50mt7tHmgT
- Oexcve2wUYfnO9NDHNypi3ay3KkjYFyNwS0PX2DKY0cJhszkajZdWNr47 w==;
-X-CSE-ConnectionGUID: 7bIDi00/QAiQJ7NyvtbLSA==
-X-CSE-MsgGUID: Dvh454NER0Cnu3cmPtsRGA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71854221"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71854221"
+ bh=s/JlYnxjXvIrGB6oJxc/D12Kh0TiBPjCTqhRHSqsD3A=;
+ b=G4qMGfIZIZp3jfSRQFS98glvRTFdBp8QmCdccNfMjpvF/H6jeWjUpeCX
+ aRRrfNOZ0rmU1Ns0vuhoOuXr8djJPFTy6jxR4D8UCJLw9e2Ht4IHkRh+E
+ 9PMkobyfauf9eQn7MdlZUY2IsXjDLJdNHAuZgL3MLdok0addHZ9hj1Uzq
+ EyCQx5R4Dof9/qWpqxZkYehYRxwa+ldXI2qIym4bLJoUxU6UFVXy0IvNO
+ yhc/5xiw3lxsBPq3mlT8yHpvXoQBTSsV7L0J0QZU44fX+BD65e0f4DHXy
+ 23bp51+e8tPuxuPCJoU42iUOjaJuKa3Nlut3cJ8srYk2xsRlHA6W5Qjf1 A==;
+X-CSE-ConnectionGUID: +lwqZmhjTFuotFOWmovjEQ==
+X-CSE-MsgGUID: zulYyosESueEYcFGPlZ50A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71854249"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71854249"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 18:58:20 -0800
-X-CSE-ConnectionGUID: ormuF/qsTyyK52BYmVAydA==
-X-CSE-MsgGUID: QoEjIvx8S4KQ4LtJq64cbA==
+ 09 Feb 2026 18:58:30 -0800
+X-CSE-ConnectionGUID: ayAaCdiVSB2REoX++RGXJw==
+X-CSE-MsgGUID: XikgiVXbTQyXeA48f7Z3eQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800416"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800457"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:58:14 -0800
+ by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:58:24 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -61,9 +61,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: [PATCH v2 01/21] qom/object: use BIT macro for ObjectPropertyFlags
-Date: Tue, 10 Feb 2026 11:23:28 +0800
-Message-Id: <20260210032348.987549-2-zhao1.liu@intel.com>
+Subject: [PATCH v2 03/21] qom/object: factor out
+ object_class_property_try_add()
+Date: Tue, 10 Feb 2026 11:23:30 +0800
+Message-Id: <20260210032348.987549-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
@@ -94,39 +95,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Standardize the definition of ObjectPropertyFlags by using the BIT()
-macro instead of manual bit shifts to improve readability.
+Similar to object_property_try_add(), factor out
+object_class_property_try_add().
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
+This allows adding more arguments to the core implementation without
+changing the signature of object_class_property_add(), avoiding the
+need to modify the extensive number of callers distributed throughout
+the code tree.
+
+While at it, add documentation for these functions.
+
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/qom/object.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/qom/object.h | 56 ++++++++++++++++++++++++++++++++++++++++++++
+ qom/object.c         | 34 ++++++++++++++++++++-------
+ 2 files changed, 82 insertions(+), 8 deletions(-)
 
 diff --git a/include/qom/object.h b/include/qom/object.h
-index 26df6137b911..6226b88c1eda 100644
+index 05706d4d7e3a..060db136988b 100644
 --- a/include/qom/object.h
 +++ b/include/qom/object.h
-@@ -16,6 +16,7 @@
+@@ -1147,6 +1147,62 @@ ObjectProperty *object_property_add(Object *obj, const char *name,
  
- #include "qapi/qapi-builtin-types.h"
- #include "qemu/module.h"
-+#include "qemu/bitops.h"
+ void object_property_del(Object *obj, const char *name);
  
- struct TypeImpl;
- typedef struct TypeImpl *Type;
-@@ -1841,9 +1842,9 @@ ObjectProperty *object_class_property_add_tm(ObjectClass *klass,
++/**
++ * object_class_property_try_add:
++ * @klass: the object class to add a property to
++ * @name: the name of the property.  This can contain any character except for
++ *  a forward slash.  In general, you should use hyphens '-' instead of
++ *  underscores '_' when naming properties.
++ * @type: the type name of the property.  This namespace is pretty loosely
++ *   defined.  Sub namespaces are constructed by using a prefix and then
++ *   to angle brackets.  For instance, the type 'virtio-net-pci' in the
++ *   'link' namespace would be 'link<virtio-net-pci>'.
++ * @get: The getter to be called to read a property.  If this is NULL, then
++ *   the property cannot be read.
++ * @set: the setter to be called to write a property.  If this is NULL,
++ *   then the property cannot be written.
++ * @release: called when the property is removed from the object.  This is
++ *   meant to allow a property to free its opaque upon object
++ *   destruction.  This may be NULL.
++ * @opaque: an opaque pointer to pass to the callbacks for the property
++ * @errp: pointer to error object
++ *
++ * Returns: The #ObjectProperty; this can be used to set the @resolve
++ * callback for child and link properties.
++ */
++ObjectProperty *object_class_property_try_add(ObjectClass *klass, const char *name,
++                                              const char *type,
++                                              ObjectPropertyAccessor *get,
++                                              ObjectPropertyAccessor *set,
++                                              ObjectPropertyRelease *release,
++                                              void *opaque, Error **errp);
++
++
++/**
++ * object_class_property_add:
++ * Same as object_class_property_try_add() with @errp hardcoded to
++ * &error_abort.
++ *
++ * @klass: the object class to add a property to
++ * @name: the name of the property.  This can contain any character except for
++ *  a forward slash.  In general, you should use hyphens '-' instead of
++ *  underscores '_' when naming properties.
++ * @type: the type name of the property.  This namespace is pretty loosely
++ *   defined.  Sub namespaces are constructed by using a prefix and then
++ *   to angle brackets.  For instance, the type 'virtio-net-pci' in the
++ *   'link' namespace would be 'link<virtio-net-pci>'.
++ * @get: The getter to be called to read a property.  If this is NULL, then
++ *   the property cannot be read.
++ * @set: the setter to be called to write a property.  If this is NULL,
++ *   then the property cannot be written.
++ * @release: called when the property is removed from the object.  This is
++ *   meant to allow a property to free its opaque upon object
++ *   destruction.  This may be NULL.
++ * @opaque: an opaque pointer to pass to the callbacks for the property
++ *
++ * Returns: The #ObjectProperty; this can be used to set the @resolve
++ * callback for child and link properties.
++ */
+ ObjectProperty *object_class_property_add(ObjectClass *klass, const char *name,
+                                           const char *type,
+                                           ObjectPropertyAccessor *get,
+diff --git a/qom/object.c b/qom/object.c
+index f5801f4624c8..f101b48154d1 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1310,17 +1310,22 @@ object_property_add(Object *obj, const char *name, const char *type,
+ }
  
- typedef enum {
-     /* Automatically add a getter to the property */
--    OBJ_PROP_FLAG_READ = 1 << 0,
-+    OBJ_PROP_FLAG_READ = BIT(0),
-     /* Automatically add a setter to the property */
--    OBJ_PROP_FLAG_WRITE = 1 << 1,
-+    OBJ_PROP_FLAG_WRITE = BIT(1),
-     /* Automatically add a getter and a setter to the property */
-     OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
- } ObjectPropertyFlags;
+ ObjectProperty *
+-object_class_property_add(ObjectClass *klass,
+-                          const char *name,
+-                          const char *type,
+-                          ObjectPropertyAccessor *get,
+-                          ObjectPropertyAccessor *set,
+-                          ObjectPropertyRelease *release,
+-                          void *opaque)
++object_class_property_try_add(ObjectClass *klass,
++                              const char *name,
++                              const char *type,
++                              ObjectPropertyAccessor *get,
++                              ObjectPropertyAccessor *set,
++                              ObjectPropertyRelease *release,
++                              void *opaque, Error **errp)
+ {
+     ObjectProperty *prop;
+ 
+-    assert(!object_class_property_find(klass, name));
++    if (object_class_property_find(klass, name) != NULL) {
++        error_setg(errp, "attempt to add duplicate property '%s'"
++                   " to object class (type '%s')",
++                   name, object_class_get_name(klass));
++        return NULL;
++    }
+ 
+     prop = g_malloc0(sizeof(*prop));
+ 
+@@ -1337,6 +1342,19 @@ object_class_property_add(ObjectClass *klass,
+     return prop;
+ }
+ 
++ObjectProperty *
++object_class_property_add(ObjectClass *klass,
++                          const char *name,
++                          const char *type,
++                          ObjectPropertyAccessor *get,
++                          ObjectPropertyAccessor *set,
++                          ObjectPropertyRelease *release,
++                          void *opaque)
++{
++    return object_class_property_try_add(klass, name, type, get, set, release,
++                                         opaque, &error_abort);
++}
++
+ ObjectProperty *object_property_find(Object *obj, const char *name)
+ {
+     ObjectProperty *prop;
 -- 
 2.34.1
 
