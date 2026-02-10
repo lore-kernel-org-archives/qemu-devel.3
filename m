@@ -4,100 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E44E94626
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 00:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241F7E94627
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 01:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpbZe-00060b-6W; Mon, 09 Feb 2026 19:25:50 -0500
+	id 1vpcqq-0005Ll-Ix; Mon, 09 Feb 2026 20:47:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpbZX-000600-Nb
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 19:25:44 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpcql-0005Kf-BN
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 20:47:35 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpbZV-0004gF-1S
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 19:25:43 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c2a9a9b43b1so2075461a12.2
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 16:25:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpcqf-0007M0-5x
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 20:47:34 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-35621aa8c7fso1513611a91.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 17:47:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770683139; x=1771287939; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1770688047; x=1771292847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Colt130nD1noiKDWS+SAYetwNy6nxeSAj9L8rg6UCGs=;
- b=Kn7Klc/WO2FnytPCisQJaV1Fpn8GDKK5cO+SESl5bfSlvtSbC53/EKDQik8yfKSXyG
- EjvDtvDX7MCkJ1E/zK2BK+L0HqtfjKUXpN2yzIzph7dUY9iOtvfD8BTLU6BApJ0jLxFh
- ne27Px44978cfsHtOL7fXQH6TkCjZv+pbeJ9wZnkMYjZlSb6UHi/LFMxb+w1vqPOgdj2
- I3g6MriX1JBYFavwfDc+Qf1tN8TKUmipNJy0NadzoXqw2xXZFWnWFHYlJWgH2PCklHi+
- 79JB/54Ipu1TGv/wYt+zTNAaOIdwz6KykPsgSIt2XiueMmvhZzsn4ul6kQ1nD3GfS50j
- z+XQ==
+ bh=agyQXYm8q45XDWxJ8HnkgjLfntrVp3T4MFkHZX2a5ew=;
+ b=YuxpIqxjZtzRnCMHJePxXnjRI/4J7qiV+Wsz1V8P7RInmypDFi0teJT46RmKsdBVCa
+ i9XGnRDMPrDou3EPMS7hRUzO8kwEGQBA16clXhvm9M9YUByysG82cmU4AmqmlJUrJpql
+ vL45Q+WGH2BB1/al/FinWeusA9V1R9N9h1xxsKsZU650yhV1zn3LNHqxDaT3gt84oux/
+ 9er+cQfTSZAsdi7wdJC+9vKPED0NI2oe742Pi6+pvLBtCSecEQDQQw3KXO/66Zh3g5ej
+ 7c0iTiutVY/PxjCe9hv9VHd4EACtpU1wIwYy8pF9X89juzPvkJ+aer/i/Ng5xQ1Y4Scg
+ TpQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770683139; x=1771287939;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1770688047; x=1771292847;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Colt130nD1noiKDWS+SAYetwNy6nxeSAj9L8rg6UCGs=;
- b=MkrfMphVl+uAtO6ob84YKhvBxsa9IQv1WxQPzJp3VxBSEU3IxbDg7M605UfMckvQM4
- JdoyvhIfQ3Zwugjol2LULe56FG5NMEVR9x08ByrMGXv0O0FJKUTFhrkYjr2YlfclOM0t
- wKjNuZsWzdR8te9+0f49i9UmkP8bDwMnyVXW5CkmQrx0xP9jFTT+3qr/VOl3O7GRH9i4
- IQIz3Uwwy2mjruhSLpT5rEPEKDwVoe7lWp3DXEPdbTJHqNJm/lZcFyqdLRSDVRxL6a7K
- ofa9BL1znKb8gMTqhW/PCC7Y0LnaucnEbZ1lTS4JMpXlu8h2hRU0m+585CbagQdIDrDA
- 3mBQ==
+ bh=agyQXYm8q45XDWxJ8HnkgjLfntrVp3T4MFkHZX2a5ew=;
+ b=veHvt1xcVbGcs+ozN5QqWDrHC/lPNh3VOpukevqdZqDZGPiUHakXzRD8d8ZGz9rCt+
+ ejsnzgxPf0MY5RpwQ4cGjI+fEkvpzvM4YR+CSZ28r2UxAJjLE53iZeoiEkpk6PtWscHS
+ 9o4ZeMns7vC0fmfxFbLSwCTkC8EPaHcvHOPyOgFYy09FvUL0+YSL3fQW7cEm3/UaisLV
+ paoEqafxTJqRi5RswdF/OR9dYW8e/k2mP+v8Up/zd/xonJ2qolz0foCcCilSq125IgHy
+ /veC6Y0Sgo7ZfE922uNdGEAl1UhMKAsE0Au2mHrxq/GGWvCKByyf2MnuVrar5XkxQ8fb
+ lR+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzC/pSjAdMIZ/G5chqp3eoHFYKYkETzKyOH+uj+kais/67O4LduDi0AgVQrj0xIOYV119dDyvFLM9N@nongnu.org
-X-Gm-Message-State: AOJu0Yzu5l+90Feh7/tcX4KPsZePbnn+Ypq2HRX1/zAQz61DDHGvu2zk
- 8e8g9OkFO2qgbO4oFjV52I6BjY6pyqxD1elLmlABcQTn00wSnbNnWf2qFX43T5ZaafU=
-X-Gm-Gg: AZuq6aJav3/+5ZRfyQ746UKBchJXuuyXKMt9U2x6VMmCycoNV2RUwCWRa7W6nJXuDId
- 9sd80ZAti3kDaSbaL3ECyz4BEAKNgcAcvfPaZ4rMVC9jqpQufZ9ymanxtE+GGk2tpyLVwGxWYZp
- 5rAb7ccpGbzAwyRl/8ipUGIraypu5/f5FOeTlQ9FZxCKvY3mP8PD92Fiic/lZNfe2cg/Pj/chMF
- 2L8Z8cXT4wHARzE9HExhNNg2wjoczGULzAPkt1JqOgdJca8kfJlA9GtqSkuyIpvM0uLkaGOTjfN
- NRQBVWVtKrePF+CLUf8orP5PHvT0ZwHNBn6MQ0QXHQWrscyfEAdoyvRmIvYAq+ukQPzpci0r+6K
- keetHcdMSlfDPepLTzZfHj8RC2M+NFCCXzG+TnN5FIOne8zpXUB9TGFfLWy/qBPyFGb/FFGh69F
- Qtpx1oC8cY2H9EZjkTNSXepKQIV+Wj8oqF51xZVAdcupPAr7bwKnRTm5vgtl6NELV7B+tMA7IFU
- Q==
-X-Received: by 2002:a17:903:18a:b0:2aa:dee9:1ad3 with SMTP id
- d9443c01a7336-2aadee91cc5mr58535865ad.11.1770683138683; 
- Mon, 09 Feb 2026 16:25:38 -0800 (PST)
-Received: from ?IPV6:2001:8003:e109:dd00:bc29:21c6:e150:bc42?
- ([2001:8003:e109:dd00:bc29:21c6:e150:bc42])
+ AJvYcCXsHJr7DZ6Srpoil89UalSpA323YKluulbnKLW0sq9NR49k9EKMwa8/vBLSfqGN/q+Hofyrz4Da2W+l@nongnu.org
+X-Gm-Message-State: AOJu0Ywk1OenjNOtC0iCliQzLYL9PNaQXY85a4QipCQdFrlUq64BQ2Ca
+ xc7d8EqmsU6MiiOzMQ6rDPCJjlPDf8EM/wRfq5ErhpEfWljgB6jdfBfXYp6H62jK8zq2fuTfMtx
+ wbkrG
+X-Gm-Gg: AZuq6aIlHwKQOQ8IAJ0DbVF2qTzy54QUNC+jrLB1yVGyI5GGgMS8EGpJ4pRiG7I2que
+ Ty7UJlq46OMgkPYt1JDo44bSVVP5EusPDdWk/Po3M0REqF6Ng2u0My4U/zJbOPO2rQdtTgykQJn
+ q8LJlG1t6xfwIkGvjJqxuaLrA7MPVtUJoqgEXzbE0jAqFW0tc4UquW2suzTt6TDrlwKhWURHtlN
+ 9AQoJmuiAw6sEQ6E/3Tq5qA/+B1MyGm9XlW8q74Y3/NVQVre1M+9pLtpCpb+uTV4Yq9yIEHzBy9
+ 2w6bM8yJ1ncV60n4NY0Y3zU5fUHnIh7lCAPAFvH8cYtPAMMoi639/C9aztSsYMn7Xmon6OrXWju
+ g3nzsyDjuTAVOYGejSbh/PdeR4IWMjK4uZMQf8O/L7Y+IVw+ny5ERAxud5cJAF838I7BSxA7K3r
+ 6sMxJJq2BQqmwRrOOjL+7119TKmZK70WDO5sZG/mfRwPS6xvc6Ky8TOIywLb58Ju/JNfqG5d8PS
+ 60XAX4=
+X-Received: by 2002:a17:90b:58cb:b0:340:b572:3b7d with SMTP id
+ 98e67ed59e1d1-354b3e2b23amr11796943a91.19.1770688047317; 
+ Mon, 09 Feb 2026 17:47:27 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a95bff42f7sm98466615ad.68.2026.02.09.16.25.33
+ 98e67ed59e1d1-35662f6bbe9sm779407a91.12.2026.02.09.17.47.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Feb 2026 16:25:38 -0800 (PST)
-Message-ID: <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
-Date: Tue, 10 Feb 2026 10:25:29 +1000
+ Mon, 09 Feb 2026 17:47:26 -0800 (PST)
+Message-ID: <1c992628-3fb4-4190-9ed6-87024dfeac4c@linaro.org>
+Date: Mon, 9 Feb 2026 17:47:26 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260209115846.2276651-1-jim.shu@sifive.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 5/9] include/hw/virtio/virtio-access.h: simplify
+ virtio_access_is_big_endian
 Content-Language: en-US
-In-Reply-To: <20260209115846.2276651-1-jim.shu@sifive.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, stefanha@redhat.com,
+ qemu-ppc@nongnu.org
+References: <20260206221908.1451528-1-pierrick.bouvier@linaro.org>
+ <20260206221908.1451528-6-pierrick.bouvier@linaro.org>
+ <31906e49-62b2-47a3-9cda-cd90d5e29f4a@linaro.org>
+ <701835b4-3bfa-4f8b-b788-f6d1779bf48e@linaro.org>
+ <bbb8625c-35a2-41e9-9b38-ce8286260251@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <bbb8625c-35a2-41e9-9b38-ce8286260251@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,73 +149,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/26 21:58, Jim Shu wrote:
-> RISC-V WorldGuard [1] will add 5-bit world_id (WID) to the each memory
-> transaction on the bus. The wgChecker in front of RAM or peripherals
-> MMIO could do the access control based on the WID. It is similar to ARM
-> TrustZone NS bit, but the WID is a 5-bit value.
+On 2/9/26 4:17 PM, Richard Henderson wrote:
+> On 2/9/26 18:04, Pierrick Bouvier wrote:
+>> On 2/8/26 9:19 PM, Richard Henderson wrote:
+>>> On 2/7/26 08:19, Pierrick Bouvier wrote:
+>>>> virtio_is_big_endian already checks for VIRTIO_F_VERSION_1 feature, so
+>>>> this is redundant with big_endian_code.
+>>>> Also, clarify why we explicitly check for ppc64 and arm arch.
+>>>>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> ---
+>>>>     include/hw/virtio/virtio-access.h | 17 ++++++-----------
+>>>>     1 file changed, 6 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+>>>> index 1bea3445979..9aed3d1da4f 100644
+>>>> --- a/include/hw/virtio/virtio-access.h
+>>>> +++ b/include/hw/virtio/virtio-access.h
+>>>> @@ -22,21 +22,16 @@
+>>>>     #include "hw/virtio/virtio.h"
+>>>>     #include "hw/virtio/virtio-bus.h"
+>>>> +static inline bool legacy_virtio_is_biendian(void)
+>>>> +{
+>>>> +    return target_ppc64() || target_base_arm();
+>>>> +}
+>>>> +
+>>>>     static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+>>>>     {
+>>>> -    if (target_ppc64() || target_base_arm()) {
+>>>> +    if (target_big_endian() || legacy_virtio_is_biendian()) {
+>>>>             return virtio_is_big_endian(vdev);
+>>>>         }
+>>>
+>>> This now calls the hook for all big-endian, not just bi-endian.
+>>> I don't think you need to change anything here...
+>>>
+>>
+>> If I'm correct, that's what original code was doing:
+>>
+>> #if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+>>       return virtio_is_big_endian(vdev);
+>> #elif TARGET_BIG_ENDIAN
+>>       /* duplicated code for virtio_is_big_endian(vdev) */
+>>       if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+>>           /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+>>           return false;
+>>       }
+>>       return true;
+>> #else
+>>       return false;
+>>
+>>   From what I understand, legacy virtio devices follow host endianness (thus considering
+>> all big-endian arch), while virtio >= 1.0 devices are always little endian.
+>>
+>> What did I miss to consider it should only be called for bi-endian arch?
 > 
-> WID is usually implemented in AXI AxUSER signal (user-defined signals)
-> in the AXI transaction. As we have a secure bit in MemTxAttrs to emulate
-> the TrustZone NS bit, which is implemented in AXI AxPROT[1] signal,
-> I'd like to propose to add world_id field into MemTxAttrs struct.
+>     if (target_big_endian() || ...) {
+>       return virtio_is_big_endian(vdev);
+>     }
 > 
-> Since the '_reserved*' fields in MemTxAttr are for padding the struct
-> to be 8-byte [2], we change the reserved fields from 3 to 2 bytes when
-> adding 5-bit world_id field.
+> invokes virtio_is_big_endian for e.g. sparc, which it never did before.
 > 
-> [1] RISC-V WG:
->      https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
+> The first #if defined(LEGACY_VIRTIO_IS_BIENDIAN) is exactly your
+> legacy_virtio_is_biendian(), and is the only time that should ever be invoked.
 > 
-> [2] Commit 5014e33b1e00d330f13df33c09a3932ac88f8d94
->      Link: https://lore.kernel.org/r/20250121151322.171832-2-zhao1.liu@intel.com
+> Separately, you noticed that virtio_device_endian_needed already checks
+> VIRTIO_F_VERSION_1, so checking it a second time here (possibly with the rest of the
+> changes in this patch set), is unnecessary.  Which allows you do remove the big-endian
+> check entirely.
 > 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   include/exec/memattrs.h | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+> I do think that (again, possibly with the rest of the changes in the patch set) the
+> function virtio_access_is_big_endian should be merged into its single caller, so that (1)
+> it's obvious no further check vs VERSION is required and (2) no further calls of
+> virtio_access_is_big_endian can be introduced.
 > 
-> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-> index 52ee9552491..6bde90d482f 100644
-> --- a/include/exec/memattrs.h
-> +++ b/include/exec/memattrs.h
-> @@ -57,6 +57,11 @@ typedef struct MemTxAttrs {
->       /* PCI - IOMMU operations, see PCIAddressType */
->       unsigned int address_type:1;
->   
-> +    /*
-> +     * RISC-V WorldGuard: the 5-bit WID field of memory access.
-> +     */
-> +    unsigned int world_id:5;
-> +
->       /*
->        * Bus masters which don't specify any attributes will get this
->        * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
-> @@ -66,8 +71,7 @@ typedef struct MemTxAttrs {
->        */
->       bool unspecified;
->   
-> -    uint8_t _reserved1;
-> -    uint16_t _reserved2;
-> +    uint16_t _reserved1;
->   } MemTxAttrs;
+> 
+> r~
+> 
 
-Hmm.  This really overlaps the secure and space fields from arm, and possibly some of the 
-others as well (e.g. user, requester_id, pid).
+We had a call with Richard, and talked about this problem, so I get a 
+better insight about his position.
+In short, he's not convinced that checking runtime endianness is solving 
+any problem, whether for virtio or other components.
+However, we don't really have a choice to deal with it: legacy virtio 
+has this flaw by design and we have to live with it.
 
-I don't really have a good suggestion for that right now, but it would be nice to not keep 
-expanding the count of these sorts of fields that somehow specify the originator, but 
-clearly cannot overlap.
+Ideally, it would be nice to get rid of legacy virtio, which is a dead 
+end since it has been proposed by Philippe and rejected by community. So 
+what we can try to do is to make it more simple.
 
-I'm reasonably sure we've had this discussion before, but nothing has come of it.
+The good news is that we identified that for biendian arch (ppc64 and 
+arm/aarch64), the cached value is correct, since it's set dynamically on 
+(guest) reset through set_features (see patch 2 for reference).
+So having a precached field for checking this on every access is 
+correct, and thus allows us to preserve the performance we have with 
+this series.
 
-Time to paint the bikeshed again?
+I'll try to simplify code further to split the concepts of legacy/modern 
+and cpu endianness, which seems to be the source of confusion for everyone.
 
-
-r~
+Regards,
+Pierrick
 
