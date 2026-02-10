@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E0A1EA3F2A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1E1EA3F2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpkK5-0002qk-8P; Tue, 10 Feb 2026 04:46:23 -0500
+	id 1vpkNc-0003jF-RL; Tue, 10 Feb 2026 04:50:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vpkJt-0002iZ-EO
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:46:11 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vpkJp-0006KJ-C2
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:46:07 -0500
-Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
- by smtp-out2.suse.de (Postfix) with ESMTP id 132905BCD3;
- Tue, 10 Feb 2026 09:46:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770716763; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=fZSqrlvkWiCmxgzf/P0uEo5wzC8ItzFC/hD3xRCaDSQ=;
- b=KmO39hqSfX+tTr1dh/cglacBIIzN7bPuB2iyOSrSmARTpXdRpf05uZZeiSKnUCMOghAE11
- rzVLs4HK8sYGleaYUuzDSRLujtt3Vsi4Tx8g0X/ljgFfYxSaGTPxigOGVXSl5QZFri2qNl
- NTkH6yc/QqAhIkOn7UgxL0bZEaNr07M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770716763;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=fZSqrlvkWiCmxgzf/P0uEo5wzC8ItzFC/hD3xRCaDSQ=;
- b=905G1jtyjnq6Huqdlrcym+VOfYya/K7FMttBS1F0nO9Hfhd/zvzj//sjjHraelfBGlwdA3
- it6eDh3BAYcdXmBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770716762; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=fZSqrlvkWiCmxgzf/P0uEo5wzC8ItzFC/hD3xRCaDSQ=;
- b=iYHm19SmOwQy1cdOhbE48z+o8IfGA3oEZFXe2sAuqUcLeP1dGWys6cmlVUg1XdVXx7IcnZ
- eiJllbiggHKtJmb+XV3ignj0Cjuebfp9wpRw4ZqT2zVY/8YBHiZ9RGAXgM+6kTyMgK+O8T
- gIiB2mFoxeHOz+qT57Nobb85/nbAAwY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770716762;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=fZSqrlvkWiCmxgzf/P0uEo5wzC8ItzFC/hD3xRCaDSQ=;
- b=9VRzTLzoWZG5wZfePAMlbSsl5siqir1AG36DlCo7qIsqCThQttxYLIxidCqPlxHBTspW6x
- TPx7mdtBEdVEoPBQ==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 04C764A0A2A; Tue, 10 Feb 2026 10:46:02 +0100 (CET)
-From: Andreas Schwab <schwab@suse.de>
-To: Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH] linux-user: fix matching ioctl numbers in print_ioctl
-CC: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Date: Tue, 10 Feb 2026 10:46:01 +0100
-Message-ID: <mvmldh19bja.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vpkNb-0003ir-7H
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:49:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vpkNZ-0006UF-E1
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:49:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770716996;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=1Kk3u2RKO694KJeZV8NCYpa98dl1MX6eHuvS8q2D2HA=;
+ b=ahNvSor60+y/FuScrksZxmPwv82FIt4GAKZR1TnnX7IAYpnxtOcgJRRBSMqx63zYa3EY9H
+ v+pwTIDrNS997kMXPvaAfj2aX+veDGYDGwb9tlnLRJorMM36oacsYbHfYTRf2RspsZezlL
+ bXTByJKIsbWaVTavbXYNeBOimQnYPiU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-lVCh-q8QNsy3LfQ7X39_Qw-1; Tue,
+ 10 Feb 2026 04:49:52 -0500
+X-MC-Unique: lVCh-q8QNsy3LfQ7X39_Qw-1
+X-Mimecast-MFC-AGG-ID: lVCh-q8QNsy3LfQ7X39_Qw_1770716990
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 318B1180047F; Tue, 10 Feb 2026 09:49:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.137])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9A8419560A3; Tue, 10 Feb 2026 09:49:43 +0000 (UTC)
+Date: Tue, 10 Feb 2026 09:49:40 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 07/21] qom/object: introduce user interaction flags
+ for properties
+Message-ID: <aYr_NE0c0LsVz8zx@redhat.com>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <20260210032348.987549-8-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.20 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.990]; RCVD_NO_TLS_LAST(0.10)[];
- MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- RCVD_COUNT_ONE(0.00)[1]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[hawking.nue2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=schwab@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260210032348.987549-8-zhao1.liu@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,52 +95,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_cmd in struct IOCTLEntry is a signed int.  Make sure the ioctl cmd
-argument in the syscall is converted to int when matching, so that it
-works correctly with an ioctl cmd that has bit 31 set.
+On Tue, Feb 10, 2026 at 11:23:34AM +0800, Zhao Liu wrote:
+> Introduce three new flags to `ObjectPropertyFlags` to better manage
+> property interactions with external users (CLI, QMP, HMP):
+> 
+> 1. OBJ_PROP_FLAG_USER_SET:
+>    Marks a property as having been modified by an external user.
+> 
+>    This flag is designed to be "sticky": once set, it persists even if
+>    the property value is subsequently overwritten by internal logic.
+>    It allows the QEMU system to distinguish user intent.
+> 
+>    The advantage of this design is that it is not needed to manually
+>    clear the USER_SET flag on every internal write. This simplifies the
+>    logic and decouples flag management from the current property setting
+>    path (object_property_set()).
+> 
+>    This is chosen over a strict "current origin" approach (where
+>    internal writes would clear the flag) for a practical reason: QEMU
+>    code often modifies underlying struct fields (which are defined as
+>    properties) directly, bypassing the property API entirely. This makes
+>    it impossible to "accurately" track whether the *current* value truly
+>    comes from the user. Therefore, a sticky "user touched this" flag is
+>    the only meaningful and robust solution.
+> 
+> 2. OBJ_PROP_FLAG_DEPRECATED:
+>    Marks a property as deprecated.
+> 
+> 3. OBJ_PROP_FLAG_INTERNAL:
+>    Marks a property as internal-only, disallowing external user access.
+> 
+> Additionally, update object_property_set_flags() to implement the
+> enforcement logic. When a property is flagged with
+> OBJ_PROP_FLAG_USER_SET:
+>  - If the property is also marked OBJ_PROP_FLAG_DEPRECATED, report a
+>    warning.
+>  - If the property is also marked OBJ_PROP_FLAG_INTERNAL, raise an error
+>    and stop the operation.
+> 
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  include/qom/object.h | 24 ++++++++++++++++++++++++
+>  qom/object.c         | 15 +++++++++++++++
+>  2 files changed, 39 insertions(+)
+> 
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 856b12e7289c..1b77429aa28b 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -109,6 +109,30 @@ typedef enum {
+>       * will automatically add a getter and a setter to this property.
+>       */
+>      OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+> +    /*
+> +     * The property was explicitly set by an external user.
+> +     *
+> +     * This flag is set whenever the property is modified via external interfaces
+> +     * (CLI, QMP, HMP). It allows internal code to distinguish whether the
+> +     * property has been modified by the user.
+> +     *
+> +     * Once set, this flag persists even if the property value is subsequently
+> +     * overwritten by internal logic. It is NOT automatically cleared and must
+> +     * be explicitly cleared using object_property_clear_flags().
+> +     */
+> +    OBJ_PROP_FLAG_USER_SET = BIT(2),
+> +    /*
+> +     * The property is deprecated and will be removed in the future version.
+> +     *
+> +     * Any setting to this property by the user will raise a deprecation warning.
+> +     */
+> +    OBJ_PROP_FLAG_DEPRECATED = BIT(3),
+> +    /*
+> +     * The property is internal only and cannot be set by the user.
+> +     *
+> +     * Any setting to this property by the user will raise an error.
+> +     */
+> +    OBJ_PROP_FLAG_INTERNAL = BIT(4),
+>  } ObjectPropertyFlags;
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
----
- linux-user/strace.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I don't think this single enum design is very desirable, as it is mixing up
+pieces of information with three distinct lifetimes / scopes.
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index ca67cfd09d..8e026e5d8e 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1017,12 +1017,12 @@ print_syscall_ret_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-         int target_size;
- 
-         for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
--            if (ie->target_cmd == arg1) {
-+            if (ie->target_cmd == (int)arg1) {
-                 break;
-             }
-         }
- 
--        if (ie->target_cmd == arg1 &&
-+        if (ie->target_cmd == (int)arg1 &&
-            (ie->access == IOC_R || ie->access == IOC_RW)) {
-             arg_type = ie->arg_type;
-             qemu_log(" (");
-@@ -4338,7 +4338,7 @@ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-     int target_size;
- 
-     for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
--        if (ie->target_cmd == arg1) {
-+        if (ie->target_cmd == (int)arg1) {
-             break;
-         }
-     }
+The OBJ_PROP_FLAD_{READ,WRITE,READWRITE} values are scoped to the execution
+of the property adder methods.
+
+The OBJ_PROP_FLAG_{DEPRECATED,INTERNAL} values are scoped to the lifetime
+of the class.
+
+The OBJ_PROP_FLAG_USER_SET value is scoped to the lifetime of the instance.
+
+With regards,
+Daniel
 -- 
-2.53.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
 
