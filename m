@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FEDEA3F0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 06:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9BAEA3F09
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphh4-0003Wc-9q; Tue, 10 Feb 2026 01:57:54 -0500
+	id 1vphlN-0004wz-1Q; Tue, 10 Feb 2026 02:02:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vphh1-0003WJ-NK
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:51 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vphlL-0004wb-R4
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:02:19 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vphgy-0004Ig-Ok
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:51 -0500
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vphlJ-0004oY-Oa
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:02:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770706669; x=1802242669;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=3IVJkycU5hEphx7Ql2+tJjdu+UWIEVQMVzOp9oBWOhY=;
- b=FqEfPWIv+IShoJnL0BxphmkHzASZWMVQ+zDxDnwhuLwWNfNU5i0K0rbI
- 3jHpqXfrKAVDDiHQVVkb6FV0DUWGEcl3ggn7aTE/AHQvl2DEUJ3BivEW9
- rI2A/2tBzMIhPE0o5lMrSHlr0W3E/w4ZXjhrHmz4egvJqBqM8ooHU9XtP
- y4c4oBXlJ4DKwFaatpgm3X4qCESZZpjAyUt691tCJfkYpBysVTIpMg5kN
- yyE1ciEni+mwcJyHhEa+/dnhcA0H2PGvw3Wz8PYhRglc74gJbHi02RpXz
- OVQuaaV29pZJ8ewFb+DkQVYFDahGSUoVWSog0zdMOWSQGRJ5lsshIjw9d Q==;
-X-CSE-ConnectionGUID: XUMk5QJZSYSoFhNmu0PMLQ==
-X-CSE-MsgGUID: wTgoNcRTQDecMrjMDS4NQg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="83198780"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="83198780"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 22:57:45 -0800
-X-CSE-ConnectionGUID: uCnxIYa7R/+7I7o3xiyebQ==
-X-CSE-MsgGUID: u3CkQEc9SL2mean7Vs3S5Q==
+ t=1770706938; x=1802242938;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=BU+2P8UJQiCNZ6B+Dn1fq51GInHfsJ6cD01Wea2i1DY=;
+ b=WqG9XwN1CKWi7qg8oweP+DiJPJWhrwg2DTwkLejTy2tpW6W36Bd/Bo9P
+ Hm87cnci+jT7h8bkycZsPnyfOWxg0+jal0DwPG/OxfrnEvMDNRsBKfSOo
+ YbRSXSRLIa7AeBBTb0bwCIj+hnmvOWAPkcLk8BIC0Pq9aq4WmEk4kchK0
+ 4kb0x+96hSmKEO5C+euHLzAriFjzyOw4H6JPYOn/770bvW82+c+XC5Gjp
+ Myml8rerFF9Cew5M61DPJXn7LxrUAMJyRQTnYHbHKfcge5HHe/cQZdH41
+ V8AICAAJRgsxv0hUW3XuScbEa2q7eQwpt1A2VddhPd0gRN4l09vey/Ru1 A==;
+X-CSE-ConnectionGUID: 50DCcgjqRk6ZEL9ptO7aZQ==
+X-CSE-MsgGUID: FGbDY1rSTvuVQpc3AgbMBg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="72012138"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="72012138"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:02:13 -0800
+X-CSE-ConnectionGUID: DsnPPYCRTIemF9e+t/ZsKQ==
+X-CSE-MsgGUID: tmzpdZanTBeHW2gOWwaqvQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211365351"
-Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
- ([10.238.1.184])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 22:57:43 -0800
-Message-ID: <9ac55e27-7667-4b4a-a4bc-b0bdafdbb3b1@linux.intel.com>
-Date: Tue, 10 Feb 2026 14:57:41 +0800
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="210920532"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:02:13 -0800
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v6 01/11] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Date: Mon,  9 Feb 2026 22:59:41 -0800
+Message-ID: <20260210070155.1176081-2-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
+References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 05/11] target/i386: Increase MSR_BUF_SIZE and split
- KVM_[GET/SET]_MSRS calls
-To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
-References: <20260128231003.268981-1-zide.chen@intel.com>
- <20260128231003.268981-6-zide.chen@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260128231003.268981-6-zide.chen@intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,198 +90,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+There are cases when a blob resource's backing might get detached
+and re-attached again such as when the underlying object is getting
+migrated in the Guest. In these situations, we need to obtain a new
+dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
 
-On 1/29/2026 7:09 AM, Zide Chen wrote:
-> Newer Intel server CPUs support a large number of PMU MSRs.  Currently,
-> QEMU allocates cpu->kvm_msr_buf as a single-page buffer, which is not
-> sufficient to hold all possible MSRs.
->
-> Increase MSR_BUF_SIZE to 8192 bytes, providing space for up to 511 MSRs.
-> This is sufficient even for the theoretical worst case, such as
-> architectural LBR with a depth of 64.
->
-> KVM_[GET/SET]_MSRS is limited to 255 MSRs per call.  Raising this limit
-> to 511 would require changes in KVM and would introduce backward
-> compatibility issues.  Instead, split requests into multiple
-> KVM_[GET/SET]_MSRS calls when the number of MSRs exceeds the API limit.
->
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
-> ---
-> V2:
-> - No changes.
->
->  target/i386/kvm/kvm.c | 109 +++++++++++++++++++++++++++++++++++-------
->  1 file changed, 92 insertions(+), 17 deletions(-)
->
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 530f50e4b218..a2cf9b5df35d 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -98,9 +98,12 @@
->  #define KVM_APIC_BUS_CYCLE_NS       1
->  #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
->  
-> -/* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
-> - * 255 kvm_msr_entry structs */
-> -#define MSR_BUF_SIZE 4096
-> +/* A 8192-byte buffer can hold the 8-byte kvm_msrs header, plus
-> + * 511 kvm_msr_entry structs */
-> +#define MSR_BUF_SIZE      8192
-> +
-> +/* Maximum number of MSRs in one single KVM_[GET/SET]_MSRS call. */
-> +#define KVM_MAX_IO_MSRS   255
->  
->  typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
->  typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
-> @@ -3878,23 +3881,102 @@ static void kvm_msr_entry_add_perf(X86CPU *cpu, FeatureWordArray f)
->      }
->  }
->  
-> -static int kvm_buf_set_msrs(X86CPU *cpu)
-> +static int __kvm_buf_set_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
->  {
-> -    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, cpu->kvm_msr_buf);
-> +    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, msrs);
->      if (ret < 0) {
->          return ret;
->      }
->  
-> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
-> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
-> +    if (ret < msrs->nmsrs) {
-> +        struct kvm_msr_entry *e = &msrs->entries[ret];
->          error_report("error: failed to set MSR 0x%" PRIx32 " to 0x%" PRIx64,
->                       (uint32_t)e->index, (uint64_t)e->data);
->      }
->  
-> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
-> +    assert(ret == msrs->nmsrs);
-> +    return ret;
-> +}
-> +
-> +static int __kvm_buf_get_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
-> +{
-> +    int ret;
-> +
-> +    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, msrs);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    if (ret < msrs->nmsrs) {
-> +        struct kvm_msr_entry *e = &msrs->entries[ret];
-> +        error_report("error: failed to get MSR 0x%" PRIx32,
-> +                     (uint32_t)e->index);
-> +    }
-> +
-> +    assert(ret == msrs->nmsrs);
-> +    return ret;
-> +}
-> +
-> +static int kvm_buf_set_or_get_msrs(X86CPU *cpu, bool is_write)
-> +{
-> +    struct kvm_msr_entry *entries = cpu->kvm_msr_buf->entries;
-> +    struct kvm_msrs *buf = NULL;
-> +    int current, remaining, ret = 0;
-> +    size_t buf_size;
-> +
-> +    buf_size = KVM_MAX_IO_MSRS * sizeof(struct kvm_msr_entry) +
-> +               sizeof(struct kvm_msrs);
-> +    buf = g_malloc(buf_size);
-> +
-> +    remaining = cpu->kvm_msr_buf->nmsrs;
-> +    current = 0;
-> +    while (remaining) {
-> +        size_t size;
-> +
-> +        memset(buf, 0, buf_size);
-> +
-> +        if (remaining > KVM_MAX_IO_MSRS) {
-> +            buf->nmsrs = KVM_MAX_IO_MSRS;
-> +        } else {
-> +            buf->nmsrs = remaining;
-> +        }
-> +
-> +        size = buf->nmsrs * sizeof(entries[0]);
-> +        memcpy(buf->entries, &entries[current], size);
-> +
-> +        if (is_write) {
-> +            ret = __kvm_buf_set_msrs(cpu, buf);
-> +        } else {
-> +            ret = __kvm_buf_get_msrs(cpu, buf);
-> +        }
-> +
-> +        if (ret < 0) {
-> +            goto out;
-> +        }
-> +
-> +        if (!is_write)
-> +            memcpy(&entries[current], buf->entries, size);
-> +
-> +        current += buf->nmsrs;
-> +        remaining -= buf->nmsrs;
-> +    }
-> +
-> +out:
-> +    g_free(buf);
-> +    return ret < 0 ? ret : cpu->kvm_msr_buf->nmsrs;
-> +}
-> +
-> +static int kvm_buf_set_msrs(X86CPU *cpu)
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Better add inline.
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index f23eec6862..3d58cebf4b 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
+     }
++
++    if (res->blob_size) {
++        virtio_gpu_init_udmabuf(res);
++    }
+ }
+ 
+ static void
+-- 
+2.50.1
 
-
-> +{
-> +    kvm_buf_set_or_get_msrs(cpu, true);
->      return 0;
-
-why not directly return the return value of kvm_buf_set_or_get_msrs().
-
-
->  }
->  
-> +static int kvm_buf_get_msrs(X86CPU *cpu)
-
-inline.
-
-Others look good to me.
-
-
-> +{
-> +    return kvm_buf_set_or_get_msrs(cpu, false);
-> +}
-> +
->  static void kvm_init_msrs(X86CPU *cpu)
->  {
->      CPUX86State *env = &cpu->env;
-> @@ -3928,7 +4010,7 @@ static void kvm_init_msrs(X86CPU *cpu)
->      if (has_msr_ucode_rev) {
->          kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
->      }
-> -    assert(kvm_buf_set_msrs(cpu) == 0);
-> +    kvm_buf_set_msrs(cpu);
->  }
->  
->  static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-> @@ -4746,18 +4828,11 @@ static int kvm_get_msrs(X86CPU *cpu)
->          }
->      }
->  
-> -    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
-> +    ret = kvm_buf_get_msrs(cpu);
->      if (ret < 0) {
->          return ret;
->      }
->  
-> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
-> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
-> -        error_report("error: failed to get MSR 0x%" PRIx32,
-> -                     (uint32_t)e->index);
-> -    }
-> -
-> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
->      /*
->       * MTRR masks: Each mask consists of 5 parts
->       * a  10..0: must be zero
 
