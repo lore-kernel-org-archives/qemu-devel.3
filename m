@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE652EA8105
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D869EA810A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmhh-0006N9-Ls; Tue, 10 Feb 2026 07:18:54 -0500
+	id 1vpmjB-0001rP-Ni; Tue, 10 Feb 2026 07:20:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmff-0002LK-L5; Tue, 10 Feb 2026 07:16:51 -0500
+ id 1vpmhn-0006f9-H9; Tue, 10 Feb 2026 07:18:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmfc-0000YT-1x; Tue, 10 Feb 2026 07:16:47 -0500
+ id 1vpmhl-0001au-JD; Tue, 10 Feb 2026 07:18:59 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 44590187DB5;
- Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 67735187DDC;
+ Tue, 10 Feb 2026 15:16:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3F09360CDA;
- Tue, 10 Feb 2026 15:15:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0208B360CF0;
+ Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
@@ -31,13 +31,13 @@ Cc: qemu-stable@nongnu.org,
  Elhrj Saad <saadelhrj@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 77/95] hw/adc: Fix out-of-bounds write in Aspeed ADC
+Subject: [Stable-10.0.8 72/85] hw/adc: Fix out-of-bounds write in Aspeed ADC
  model
-Date: Tue, 10 Feb 2026 15:14:59 +0300
-Message-ID: <20260210121526.68598-3-mjt@tls.msk.ru>
+Date: Tue, 10 Feb 2026 15:16:36 +0300
+Message-ID: <20260210121657.69363-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
+References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,7 +84,7 @@ Signed-off-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
-index 3e820cae1e..5f2b8566f5 100644
+index 1cc554f179..95c85a6f40 100644
 --- a/hw/adc/aspeed_adc.c
 +++ b/hw/adc/aspeed_adc.c
 @@ -228,7 +228,8 @@ static void aspeed_adc_engine_write(void *opaque, hwaddr addr, uint64_t value,
