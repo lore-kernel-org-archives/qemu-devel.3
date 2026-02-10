@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A224EB270B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FD4EB2705
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vptwZ-0000uC-13; Tue, 10 Feb 2026 15:02:43 -0500
+	id 1vptwV-0000sg-GM; Tue, 10 Feb 2026 15:02:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vptwG-0000p0-AZ
+ id 1vptwG-0000p1-At
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:02:25 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vptwE-00052F-3H
+ id 1vptwE-00052E-3A
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:02:23 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8526E596E9E;
- Tue, 10 Feb 2026 21:02:16 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 725C2596E8D;
+ Tue, 10 Feb 2026 21:02:15 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id RXhpb9tbmoVs; Tue, 10 Feb 2026 21:02:14 +0100 (CET)
+ id htiIWvj2qxTT; Tue, 10 Feb 2026 21:02:13 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 82FEC596E91; Tue, 10 Feb 2026 21:02:14 +0100 (CET)
-Message-ID: <d2407882ecc62a51781dec51791c91d331802fa3.1770753117.git.balaton@eik.bme.hu>
+ id 77808596E8E; Tue, 10 Feb 2026 21:02:13 +0100 (CET)
+Message-ID: <6573e1b154ac5123a96ec2a246fcb6a1b0407fdd.1770753117.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1770753117.git.balaton@eik.bme.hu>
 References: <cover.1770753117.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 6/6] hw/xtensa/xtfpga: Fix leaking memory region
+Subject: [PATCH v3 5/6] hw/pci-host/articia: Add variable for common type cast
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -44,7 +44,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 10 Feb 2026 21:02:14 +0100 (CET)
+Date: Tue, 10 Feb 2026 21:02:13 +0100 (CET)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -67,41 +67,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use memory_region_new_ram to avoid leaking memory region. This would
-be a migration break but the machines using this don't seem to support
-migration and even if they did we make no compatibility guarantee for
-these machines.
+We need the device casted to OBJECT often enough in realize to store
+it in a local variable that also makes function calls more readable.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/xtensa/xtfpga.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ hw/pci-host/articia.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index b025cc53a8..b8ae1994d8 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -50,7 +50,6 @@
- #include "xtensa_memory.h"
- #include "hw/xtensa/mx_pic.h"
- #include "exec/cpu-common.h"
--#include "migration/vmstate.h"
+diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
+index 203e0646df..d7676a166f 100644
+--- a/hw/pci-host/articia.c
++++ b/hw/pci-host/articia.c
+@@ -174,24 +174,24 @@ static void articia_realize(DeviceState *dev, Error **errp)
+ {
+     ArticiaState *s = ARTICIA(dev);
+     PCIHostState *h = PCI_HOST_BRIDGE(dev);
++    Object *o = OBJECT(dev);
+     MemoryRegion *mr;
+     PCIDevice *pdev;
  
- typedef struct XtfpgaFlashDesc {
-     hwaddr base;
-@@ -162,10 +161,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-     memory_region_add_subregion(address_space, descriptors,
-             sysbus_mmio_get_region(s, 1));
+     bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
+-    memory_region_init_io(&s->gpio_reg, OBJECT(s), &articia_gpio_ops, s,
++    memory_region_init_io(&s->gpio_reg, o, &articia_gpio_ops, s,
+                           TYPE_ARTICIA, 4);
  
--    ram = g_malloc(sizeof(*ram));
--    memory_region_init_ram_flags_nomigrate(ram, OBJECT(s), "open_eth.ram",
--                                           16 * KiB, 0, &error_fatal);
--    vmstate_register_ram_global(ram);
-+    ram = memory_region_new_ram(OBJECT(s), "open_eth.ram", 16 * KiB,
-+                                &error_fatal);
-     memory_region_add_subregion(address_space, buffers, ram);
- }
+-    memory_region_init(&s->mem, OBJECT(dev), "pci-mem", UINT64_MAX);
+-    memory_region_init(&s->io, OBJECT(dev), "pci-io", 0xc00000);
+-    memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
++    memory_region_init(&s->mem, o, "pci-mem", UINT64_MAX);
++    memory_region_init(&s->io, o, "pci-io", 0xc00000);
++    memory_region_init_io(&s->reg, o, &articia_reg_ops, s,
+                           TYPE_ARTICIA, 0x1000000);
+     memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
  
+-    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
+-                                 PCI_LOW_SIZE);
++    mr = memory_region_new_alias(o, "pci-mem-low", &s->mem, 0, PCI_LOW_SIZE);
+     memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
+-    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
+-                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
++    mr = memory_region_new_alias(o, "pci-mem-high", &s->mem, PCI_HIGH_ADDR,
++                                 PCI_HIGH_SIZE);
+     memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
+ 
+     /* devfn_min is 8 that matches first PCI slot in AmigaOne */
 -- 
 2.41.3
 
