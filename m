@@ -4,108 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E74EA8123
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F734EA8124
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpotN-0007aS-8i; Tue, 10 Feb 2026 09:39:05 -0500
+	id 1vpow9-0000Wg-6r; Tue, 10 Feb 2026 09:41:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpotL-0007Zp-Ck
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:39:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vpow6-0000WD-MX
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:41:54 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpotJ-00084d-54
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:39:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770734339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6H1Duy4KHWFh3Qn/Jjvd+VckborwkoT/GYKOryjCy2U=;
- b=OqfKij0R6Jnitn4lV+AZtJi/JQ6ql3JfMVX9zclHsJQ1ToTiId0DBIwL3rTsPWWNRGDq+P
- RjtKr6oV123Djfiq/1eUpKENzzTx8OWMub+E2QKLOwMkqrIpSZcoGJZ4Gk9SzCIwIbgEyL
- 0hfv5f7yEzp9lLSk3bQX/fbp9lXC8HI=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-SX4vdRElM1CneaU2e_NrIw-1; Tue, 10 Feb 2026 09:38:56 -0500
-X-MC-Unique: SX4vdRElM1CneaU2e_NrIw-1
-X-Mimecast-MFC-AGG-ID: SX4vdRElM1CneaU2e_NrIw_1770734336
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50341fddb89so174813811cf.3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 06:38:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770734336; x=1771339136; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6H1Duy4KHWFh3Qn/Jjvd+VckborwkoT/GYKOryjCy2U=;
- b=kqGU1Gb1BCr2C8evaz54S+Zb7RJXoaYAYcudDcO+Opv8w9DZWlnd9pg1YO1q0oNiaN
- gVU6SNJlqjq/svS2nOnwYMsIz/lPK2MoSuDwCqQmqFiLLn88kOl+VH0tcjQo9rEViADI
- 61SB7EaD1lGXkjFzTIZKoCm9UevrYzybJxOMAkQR4b6gIAkl08qDAhyPa97Q41HWgYDk
- 51HJd6ksqf1OBRhXHrqvt6K9X3lshmpqWi3wNkSOyyu2yavj2T4fYOYtZjivGuJSh7cS
- YlzklRUl/R3iPU4aQLPklDfGlhdNBpFTfK+xgVSvLGspiEIcRcEQV3BGObXxMAj1yHtO
- PhTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770734336; x=1771339136;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6H1Duy4KHWFh3Qn/Jjvd+VckborwkoT/GYKOryjCy2U=;
- b=LJ/P+lV7zpKSW9/kB5Cn/DbYsqKvTsVqb8Du4xB0nEJ82/UwAw1xAYfFledQBZSA6C
- vdex8b2YKsPtR4TA2yo6la0L2U9FhQcZnAODZ4SlPL7tgQX+GPItK6JK2pbi+LDf4VH2
- hrbOKCzfKvCz39Ci0f5b+a1dwFF9Mj1r/PzPQrbOKa3zmxu99HLXjxhVvJiSdQIwzCdv
- sDFcY9xyvEt5QPfJERpDIHk/RGyCl9uQwAnwpy50nKX4Q29R+sEamYhz+lwk0TwHKcu+
- 5SSsJCWVv62bFTSOftf6PHQs7118GoGsF7XPBn1AhtfIIg4j4wE9kwu9JAuMUbAbT/0K
- mBHw==
-X-Gm-Message-State: AOJu0Yz/piCHDW2BN1XftvJNoFOx4/sCK9QfdtL3knBbPpsLb4EUrx44
- yP9uFGkHZuY22Osi2kqbuJ+JLg9FdZLkAzvxaWQUrfFHcupwNDCGFI7QE1p0EdAqIR7Qkbp3rYE
- Fc5RQQ4GDllbHM70Q/3VAps1fTszSshyeeSj+5lD39usR6jceTV0nPDHm
-X-Gm-Gg: AZuq6aItCvz1R9mr6B4XuHvRedqQ4ZajiALWhUpq+yPD8X0JXJpY+sUSfW1mPQA38B2
- pn+lM0+2qQZvs3fQSC28tlQ65BXDW7Gd4TqYcFMmZKjCVMBJOdW8hOMBE6KSP9TRWIggtWsDMSp
- QF5HNJ9uYHwzUgyU0smxJPleetRdY/n2sRx/nc0NITIZ+jgtmXSmn+yJ5S/49P4Tdw56oeuNdQH
- MN3PhmLQl7FFD0j2rEhsBRxS1UfPpKyQcnL20D+6lOL/tNQ9gcfseFZAij4GTpq6CCAOmMnGDoZ
- /WL7E2a0COA0dWn08QlfUBtV91M1v8YcyRHJ0WyTJWYHB63i5cZfO19xH+FGRZ9fBKtB9Ljd6y9
- AuYAGn2XFPLu9aA==
-X-Received: by 2002:a05:622a:4b:b0:503:41f2:df94 with SMTP id
- d75a77b69052e-5063995282fmr228001501cf.52.1770734335781; 
- Tue, 10 Feb 2026 06:38:55 -0800 (PST)
-X-Received: by 2002:a05:622a:4b:b0:503:41f2:df94 with SMTP id
- d75a77b69052e-5063995282fmr228001011cf.52.1770734335308; 
- Tue, 10 Feb 2026 06:38:55 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50639e26b9fsm104015561cf.15.2026.02.10.06.38.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 06:38:54 -0800 (PST)
-Date: Tue, 10 Feb 2026 09:38:43 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v5 05/16] colo: Remove ENABLE_COLO loadvm command functions
-Message-ID: <aYtC8yxRQPxh7tKn@x1.local>
-References: <20260203-colo_unit_test_multifd-v5-0-57508b7389f6@web.de>
- <20260203-colo_unit_test_multifd-v5-5-57508b7389f6@web.de>
- <aYoHn5DSsia4mxMW@x1.local> <20260210142835.6622e72e@penguin>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vpow4-0000T7-EV
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:41:54 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C07D25969FF;
+ Tue, 10 Feb 2026 15:41:50 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id UsHd-fdY1sAU; Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AD19D5969FA; Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AAF815969F6;
+ Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+Date: Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Zhao Liu <zhao1.liu@intel.com>
+cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>, 
+ qemu-devel@nongnu.org, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 03/21] qom/object: factor out
+ object_class_property_try_add()
+In-Reply-To: <20260210032348.987549-4-zhao1.liu@intel.com>
+Message-ID: <42a44ab0-feb6-6e9d-df20-2e6d8d50a30c@eik.bme.hu>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <20260210032348.987549-4-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260210142835.6622e72e@penguin>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,40 +79,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 02:28:35PM +0100, Lukas Straub wrote:
-> On Mon, 9 Feb 2026 11:13:19 -0500
-> Peter Xu <peterx@redhat.com> wrote:
-> 
-> > On Tue, Feb 03, 2026 at 11:15:11AM +0100, Lukas Straub wrote:
-> > > No need for it anymore now that x-colo capability is required
-> > > on incoming side.
-> > > 
-> > > Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>  
-> > 
-> > IIUC this patch needs to be squashed into the next or it will break COLO..
-> > 
-> 
-> No it's fine actually. Now when we receive the MIG_CMD_ENABLE_COLO
-> command, we just go to the return 0 at the end of
-> loadvm_process_command().
+On Tue, 10 Feb 2026, Zhao Liu wrote:
+> Similar to object_property_try_add(), factor out
+> object_class_property_try_add().
+>
+> This allows adding more arguments to the core implementation without
+> changing the signature of object_class_property_add(), avoiding the
+> need to modify the extensive number of callers distributed throughout
+> the code tree.
+>
+> While at it, add documentation for these functions.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> include/qom/object.h | 56 ++++++++++++++++++++++++++++++++++++++++++++
+> qom/object.c         | 34 ++++++++++++++++++++-------
+> 2 files changed, 82 insertions(+), 8 deletions(-)
+>
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 05706d4d7e3a..060db136988b 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -1147,6 +1147,62 @@ ObjectProperty *object_property_add(Object *obj, const char *name,
+>
+> void object_property_del(Object *obj, const char *name);
+>
+> +/**
+> + * object_class_property_try_add:
 
-Indeed, but we should actually raise an error when receiving deprecated
-commands because they're unexpected.
+This is renamed two patches later so maybe should be named like that here 
+and drop the renaming patch.
 
-Please still consider merging these two patches.  When at it, we could
-change the previous check into a "default" here:
-
-    if (cmd >= MIG_CMD_MAX || cmd == MIG_CMD_INVALID) {
-        error_setg(errp, "MIG_CMD 0x%x unknown (len 0x%x)", cmd, len);
-        return -EINVAL;
-    }
-
-Or we just add a "default" to cover deprecated commands.
-
-Thanks,
-
--- 
-Peter Xu
-
+Regards,
+BALATON Zoltan
 
