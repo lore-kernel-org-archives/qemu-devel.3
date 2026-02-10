@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31133EB271F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 22:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BA8EB271F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 22:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpwJ4-0000oN-ES; Tue, 10 Feb 2026 17:34:06 -0500
+	id 1vpwZa-0003tJ-JZ; Tue, 10 Feb 2026 17:51:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vpwJ1-0000ny-Cv
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:34:03 -0500
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vpwIz-0004B4-E3
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:34:03 -0500
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id ED63714001EB;
- Tue, 10 Feb 2026 17:33:58 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-03.internal (MEProxy); Tue, 10 Feb 2026 17:33:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1770762838;
- x=1770849238; bh=cYpHJudm79NGQ5a5wZTV6sctterPC7rsVi/ZLGiMzYA=; b=
- G/tYpDUIVx5NRXMxOja05YFU3uhIz1SaOrXFeA3OPae/c1Dv1Icinau7o4M461iV
- je8QLKygsMU+eb8zxBU2l5iCPuRqJHWDRRCqHb9VJG56ypGsHAQNA+Qb+wkfosG5
- Tvq/QSEBtwK3Nn5tXVkjC4c98EsgwalPEwwhD6XZDRv7m+Mrwvjlt5Hg8zc8H6Hf
- E6jNpo1rrE9lEJggMGhP+apsfH5J5AYjkdJ1YWViS0wWyXc3XRumPiwWyc1uIixV
- ovuILNFpO0HsEf2T8zZNL3gvZoV7qcSkFNXGSqMGufj0uf71QAI8zg/B2ef5m7uV
- VM/sAER0Odkjm4HuVpCuGg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770762838; x=
- 1770849238; bh=cYpHJudm79NGQ5a5wZTV6sctterPC7rsVi/ZLGiMzYA=; b=T
- i0qfeDYxMoLgGq+AuaaypsWOEcooag1a4WCKR0JDH5gLK3TK54k0eEK8C6MqdS2a
- AGnTiZtoOPvIQyAUltY9YvXWyHVjWSp395QdDg+YWKf7peevyl/k2ExAEp9cpKMs
- otpVla+cMRerEl7ydU0v2Ejlil/tu7ZvIJPOc2zg6M0q360eVrG2PSAkC8sPMVdE
- afRe2eBtCg3r7vgGotGGWNC2iMTxQpz/8qtrS8jXBwbQLMdPQhneSy57rvbXDwFC
- ByOu+q93JBSTHLBFnpi8qlKse1JkntB6DmJojzNOWGuF4RL4O5Q2r79yaEi9CLmK
- YipCvMRpqFoJgvdBzvRgw==
-X-ME-Sender: <xms:VrKLabBwo2rv_hJnezkidUMuQdOUD-u723KpMH0i9533y9gnTmCM0w>
- <xme:VrKLaad0EcU9S7V9ACGuHHIKhU8pW-E0zWRteGplLQ-JdjvmBehL87CpkHnpOhzuj
- XgycjfstJYy9bE4F_jPnKK_WvBVFuvJJJvIiY1FB00kylGlZvnvsA>
-X-ME-Received: <xmr:VrKLaSL9aUkiS45oGEtWnIRWMinbOhFIH_0IjN9BVvRr4H5i_KazLJMklrs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddtkeelucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfesthhqre
- dtredtjeenucfhrhhomheptehlvgigucghihhllhhirghmshhonhcuoegrlhgvgiesshhh
- rgiisghothdrohhrgheqnecuggftrfgrthhtvghrnhepgeduvefhjeeufeevudeiueeuie
- eftedtkeevkefhgfdvteefleeuhefgtdehfffhnecuvehluhhsthgvrhfuihiivgeptden
- ucfrrghrrghmpehmrghilhhfrhhomheprghlvgigsehshhgriigsohhtrdhorhhgpdhnsg
- gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnnhhmlhhi
- nhhugieslhhinhhugidrihgsmhdrtghomhdprhgtphhtthhopegtlhhgsehrvgguhhgrth
- drtghomhdprhgtphhtthhopehvrghisghhrghvsehlihhnuhigrdhisghmrdgtohhmpdhr
- tghpthhtohephhgrrhhshhhpsgeslhhinhhugidrihgsmhdrtghomhdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:VrKLad2UVkqO-iweyA_X6Jc-KSq8TTfwxbmH6gu7A5M4EEOgMOVicg>
- <xmx:VrKLachKG5v6RwNkDTRqWOnComljIOg0qJTH4Tr0QQIijzDit1ORXw>
- <xmx:VrKLaeX2G9Q2pbh9kzxYHBrnJTI6FNGg2k8FxXtcZ0vg5lh2yqGdZQ>
- <xmx:VrKLabWsSweW8LR3bsmIAzaXxuZTJBi4nfMLZT4_SC0CbGLX8G8VaQ>
- <xmx:VrKLaUmyI-ppu3Cj95LB8V1uf1SE2tX6ujhbhRQjdsRSIPwO4N0cUREQ>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Feb 2026 17:33:58 -0500 (EST)
-Date: Tue, 10 Feb 2026 15:33:56 -0700
-From: Alex Williamson <alex@shazbot.org>
-To: Narayana Murty N <nnmlinux@linux.ibm.com>
-Cc: clg@redhat.com, vaibhav@linux.ibm.com, harshpb@linux.ibm.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/1] vfio/pci: Ensure D0 power state before guest access
-Message-ID: <20260210153356.01f79f4b@shazbot.org>
-In-Reply-To: <20260209162242.11317-1-nnmlinux@linux.ibm.com>
-References: <20260209162242.11317-1-nnmlinux@linux.ibm.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpwZY-0003t1-Pq
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:51:08 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpwZW-0005jO-CP
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:51:08 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a7d98c1879so35159575ad.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 14:51:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770763864; x=1771368664; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=K1aIOziDuDsl5PmJsCFUlKmIRcmKVdsVef5jhLtgAhI=;
+ b=FgADgUVQzaHKZJU+JZj5L2v3fyj5qJf3ahErUJ0mPm0q9Pipp0DSRvB9CT0/NPG5sH
+ BoA71alWgqg5Ci5fUOf2W9G5+CP/JFumyTqd8euJbLtjoJxdN85ksbl8kck/9YKkgDC9
+ WQ0++oiYovg/dUb2OBpPHEy4/7zWwGHsMmGruz9KxUxAy+4JkiPjqy7ezOtPShDs1Ojq
+ kQT9KI+9iA6JRBJ7RRVCGRcGWTLnzUTfP1TM+VaWz9oZl3u5gC9nS+T0CcT/0v0m93Hj
+ Kkn7tcDpcHtKz543MYWBOfdqNVcTkKy/yM2rLCU45ZNjZTzvkNQNUQrk5/UCwwzErcIP
+ 4uFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770763864; x=1771368664;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K1aIOziDuDsl5PmJsCFUlKmIRcmKVdsVef5jhLtgAhI=;
+ b=II6lKPUlsm5mg4yEHkfVRjsvEdaRLlFngLI4QBKg25N7eJnHBQXIBU818mASj0ZL0F
+ OdXG91CBSRHyxvf5qHz9X93ejzrAiHAxuOwUldqLXjZiuTDDjnRZqUTzAtQba6fPTbJP
+ KGcHnPZ/TdrdviO88vOlFb/dEG4QWBnlqBQSK5+pAIJQjc4pmPdYTMOxIJKd3t9gB1vp
+ apw0sv+pzTZXc29DA9N3cGhbUVj7O3TCiJmyuCzUvfpbhOCqQ7G+NfeX8poQpVBAtTzQ
+ Bsn9E6hqWPe+z6Kb0Bc7ddELREaJrgaFGTm6fXVKjiqqoT/cih9j2SiK19uZrS9vPJm5
+ Pvow==
+X-Gm-Message-State: AOJu0Yw36IkwrhhDo0A9IbqExWFNgyk/fD7UT6CnSuE01lc4nHIufBGy
+ /4cgcQz3g3N5yXYm4Cyj9OsFY8suoHyIuQSmdo/KstBGFlAHDZt8mGzKVG3Twf1oOm+faFJQCe4
+ sxhmk
+X-Gm-Gg: AZuq6aLELW/q6+2XjUiMQ/+E4nETfVUZesJoGxNtcQNW/yZsf547ekGMCPUM108s8Ij
+ zm9efG3noNlRS2t78r+RlFfkW8a8PBXXVWA/Qn8yz2IVQmTEs2nB+Em35YdrEBnanu4PZ4lJhkE
+ NPS/zpta45a9TrMJvVWG8w3R1qTuyswm3LfqcTUfm5k7cRighLe4KX9VLp4Y8i6oIjL98TKwZeN
+ CxrGQlzdgaPHXQ8Rcfv1m7mgD2+pbOCDahm1Y/muQUCfcYFnyt28G4eMHSNfQ69Cjw0yYHb9Tgx
+ h9xnetH3P8Pka9oYhudP5SenSdo4EXJyCKSg5R7MAGYJjZWpsGmavpObjTi1Hkl3qX0mNyvWgSr
+ uNCs93U6eeMVBjAjHN/3y5QK+/kITwRmhzLoCHO0Yzf81EiFuijoUJqFR5fSy7F8riO3gRQyCF9
+ qPW+rzQYjha5ffHoDHZejeObfHn2ffOYEBwsHVwLPyybEKIeLHvZ1c4vLZkZHcK3fme90bhnT+2
+ y9z
+X-Received: by 2002:a17:902:f547:b0:2a0:b7d3:eec5 with SMTP id
+ d9443c01a7336-2ab106e69e3mr37787085ad.33.1770763864475; 
+ Tue, 10 Feb 2026 14:51:04 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ab29999ce2sm1197055ad.92.2026.02.10.14.51.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 14:51:04 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 0/1] Plugins: fix windows cross compilation
+Date: Tue, 10 Feb 2026 14:50:59 -0800
+Message-ID: <20260210225100.1573968-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=alex@shazbot.org;
- helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,120 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  9 Feb 2026 21:50:48 +0530
-Narayana Murty N <nnmlinux@linux.ibm.com> wrote:
+The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
 
-> Add vfio_ensure_d0_state() to safely transition PCI devices from D3hot/D3=
-cold
-> to D0 before QEMU guest access, preventing config space inaccessibility a=
-nd
-> tg3 IRQ crashes during VFIO realize.
->=20
-> Key changes:
-> - D3hot: Direct PMCSR write (offset 0x44) to force PowerState=3D00 (D0)
-> - D3cold: pm_runtime_resume() + pm_runtime_get_sync() for full power rest=
-ore
-> - Polling loop verifies D0 transition completion
-> - No-op for already D0 devices
->=20
-> Fixes PowerPC EEH races where devices enter low-power states during VFIO
-> handover, causing config space access failures.
->=20
-> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
-> ---
->  hw/vfio/pci.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 52 insertions(+)
+  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
 
-NAK.  This is very broken.
+are available in the Git repository at:
 
-QEMU cannot write to arbitrary sysfs attributes.  QEMU should not write
-power state controls to sysfs nor impose a device power state policy.
-vbasedev->fd is more than likely invalid where we're performing an
-ioctl test, making the entire premise of the test invalid.
+  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins_llvm_dlltool-20260210
 
-When the device is opened by QEMU, vfio-pci will issues a
-pm_runtime_resume_and_get(), incrementing the PM usage counter and
-waking the device.  This should properly bring the device to the D0
-power state and keep it there regardless of any ill-timed race to low
-power state.  If it does not, then fix it in the kernel or block
-vfio-pci from using low power states, ie. disable_idle_d3.  Thanks,
+for you to fetch changes up to b0353beebb0c4fa4059c88362561a8362ada8b4c:
 
-Alex
+  plugins: fix cross-build using LLVM for Windows targets (2026-02-10 12:58:31 -0800)
 
->=20
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c734472721..851cd789aa 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3392,6 +3392,51 @@ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev,=
- Error **errp)
->      return true;
->  }
-> =20
-> +static int write_sysfs(const char *path, const char *value)
-> +{
-> +    FILE *f =3D fopen(path, "w");
-> +    if (!f) {
-> +        return -1;
-> +    }
-> +    int ret =3D fprintf(f, "%s", value);
-> +    fclose(f);
-> +    return (ret > 0) ? 0 : -1;
-> +}
-> +
-> +static void vfio_ensure_d0_state(VFIOPCIDevice *vdev)
-> +{
-> +    VFIODevice *vbasedev =3D &vdev->vbasedev;
-> +    char sysfs_power_path[PATH_MAX];
-> +
-> +    /*
-> +     * Test config region accessibility (D3cold-safe, no PCI config
-> +     * reads!)
-> +     */
-> +    struct vfio_region_info reg_info =3D {
-> +        .argsz =3D sizeof(reg_info),
-> +        .index =3D VFIO_PCI_CONFIG_REGION_INDEX,
-> +        .offset =3D 0,
-> +        .size =3D 0
-> +    };
-> +
-> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, &reg_info) < 0)=
- {
-> +        warn_report("vfio: %s config region probe failed (D3cold): %s",
-> +                    vbasedev->name, strerror(errno));
-> +
-> +        /* D3cold confirmed =E2=86=92 sysfs power control (EEH-safe) */
-> +        snprintf(sysfs_power_path, sizeof(sysfs_power_path),
-> +                 "/sys/bus/pci/devices/%s/power/control", vbasedev->name;
-> +
-> +        /* Force runtime resume */
-> +        if (write_sysfs(sysfs_power_path, "on") =3D=3D 0) {
-> +            g_usleep(10000);  /* 10ms settle */
-> +            write_sysfs(sysfs_power_path, "auto");
-> +            info_report("vfio: %s D3cold =E2=86=92 D0 via sysfs", vbased=
-ev->name);
-> +        }
-> +    }
-> +    return;
-> +}
-> +
->  static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->  {
->      ERRP_GUARD();
-> @@ -3401,6 +3446,13 @@ static void vfio_pci_realize(PCIDevice *pdev, Erro=
-r **errp)
->      char uuid[UUID_STR_LEN];
->      g_autofree char *name =3D NULL;
-> =20
-> +    /*
-> +     * ensure the power state of the pci device to D0,
-> +     * otherwise it will set to D0, before accessing the
-> +     * config space.
-> +     */
-> +    vfio_ensure_d0_state(vdev);
-> +
->      if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
->          if (!(~vdev->host.domain || ~vdev->host.bus ||
->                ~vdev->host.slot || ~vdev->host.function)) {
+----------------------------------------------------------------
+plugins: fix cross-build using LLVM for Windows targets (Mohamed Mediouni <mohamed@unpredictable.fr>)
 
+----------------------------------------------------------------
+Mohamed Mediouni (1):
+      plugins: fix cross-build using LLVM for Windows targets
+
+ plugins/meson.build | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
