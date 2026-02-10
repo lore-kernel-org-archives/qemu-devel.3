@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6307BEA8109
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E56EA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmif-00008l-9R; Tue, 10 Feb 2026 07:19:53 -0500
+	id 1vpmj9-0001k8-Dt; Tue, 10 Feb 2026 07:20:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgj-0004FW-G2; Tue, 10 Feb 2026 07:17:53 -0500
+ id 1vpmhE-0005jk-9S; Tue, 10 Feb 2026 07:18:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgh-0000nY-FH; Tue, 10 Feb 2026 07:17:53 -0500
+ id 1vpmhC-00018Q-82; Tue, 10 Feb 2026 07:18:23 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F1448187DBE;
- Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 718FB187DC3;
+ Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BDBF360CE3;
- Tue, 10 Feb 2026 15:15:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 09239360CE8;
+ Tue, 10 Feb 2026 15:15:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Andrey Ryabinin <arbn@yandex-team.com>,
+Cc: qemu-stable@nongnu.org, Honglei Huang <honghuan@amd.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 86/95] q35: Fix migration of SMRAM state
-Date: Tue, 10 Feb 2026 15:15:08 +0300
-Message-ID: <20260210121526.68598-12-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 91/95] virtio-gpu: fix error handling in
+ virgl_cmd_resource_create_blob
+Date: Tue, 10 Feb 2026 15:15:13 +0300
+Message-ID: <20260210121526.68598-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,122 +64,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Honglei Huang <honghuan@amd.com>
 
-When migrating, dst QEMU by default has SMRAM unlocked,
-and since wmask is not migrated, the migrated value of
-MCH_HOST_BRIDGE_F_SMBASE in config space fall to prey of
+Fix inverted error check in virgl_cmd_resource_create_blob() that causes
+the function to return error when virtio_gpu_create_mapping_iov() succeeds.
 
-  mch_update_smbase_smram()
-    ...
-    if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
-        *reg = 0x00;
+virtio_gpu_create_mapping_iov() returns 0 on success and negative values
+on error. The check 'if (!ret)' incorrectly treats success (ret=0) as an
+error condition, causing the function to fail when it should succeed.
 
-and is getting cleared and leads to unlocked smram
-on dst even if on source it's been locked.
+Change the condition to 'if (ret != 0)' to properly detect errors.
 
-As Andrey has pointed out [1], we should derive wmask
-from config and not other way around.
-
-Drop offending chunk and resync wmask based on MCH_HOST_BRIDGE_F_SMBASE
-register value. That would preserve the register during
-migration and set smram regions into corresponding state.
-
-What that changes is:
-that it would let guest write junk values in register
-(with no apparent effect) until it's stumbles upon
-reserved 0x1 [|] 0x2 values, at which point it
-would be only possible to lock register and trigger
-switch to SMRAM blackhole in CPU AS.
-
-While at it, fix up test by removing junk discard before negotiation hunk.
-
-PS2:
-Instead of adding a dedicated post_load handler for it,
-reuse mch_update->mch_update_smbase_smram call chain
-that is called on write/reset/post_load to be consistent
-with how we handle mch registers.
-
-PS3:
-for prosterity here is erro message Andrey got due to this bug:
-    qemu: vfio_container_dma_map(0x..., 0x0, 0xa0000, 0x....) = -22 (Invalid argument)
-    qemu: hardware error: vfio: DMA mapping failed, unable to continue
-
-1) https://patchew.org/QEMU/20251203180851.6390-1-arbn@yandex-team.com/
-
-Fixes: f404220e279c ("q35: implement 128K SMRAM at default SMBASE address")
-Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Andrey Ryabinin <arbn@yandex-team.com>
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251211165454.288476-1-imammedo@redhat.com>
-(cherry picked from commit 66cf169e29b06dca104c5a229fba0da4ce33599c)
+Message-Id: <20260113015203.3643608-2-honghuan@amd.com>
+(cherry picked from commit 3560b51979577afc3ab937fd8b02597515bdfbae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 1951ae440c..3fe79c9b7a 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -432,30 +432,27 @@ static void mch_update_smbase_smram(MCHPCIState *mch)
-     }
- 
-     if (*reg == MCH_HOST_BRIDGE_F_SMBASE_QUERY) {
--        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] =
--            MCH_HOST_BRIDGE_F_SMBASE_LCK;
-+        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
-         *reg = MCH_HOST_BRIDGE_F_SMBASE_IN_RAM;
-         return;
-     }
- 
-     /*
--     * default/reset state, discard written value
--     * which will disable SMRAM balackhole at SMBASE
-+     * reg value can come from register write/reset/migration source,
-+     * update wmask to be in sync with it regardless of source
-      */
--    if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
--        *reg = 0x00;
-+    if (*reg == MCH_HOST_BRIDGE_F_SMBASE_IN_RAM) {
-+        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
-+        return;
-     }
--
--    memory_region_transaction_begin();
-     if (*reg & MCH_HOST_BRIDGE_F_SMBASE_LCK) {
--        /* disable all writes */
--        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] &=
--            ~MCH_HOST_BRIDGE_F_SMBASE_LCK;
-+        /* lock register at 0x2 and disable all writes */
-+        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
-         *reg = MCH_HOST_BRIDGE_F_SMBASE_LCK;
--        lck = true;
--    } else {
--        lck = false;
-     }
-+
-+    lck = *reg & MCH_HOST_BRIDGE_F_SMBASE_LCK;
-+    memory_region_transaction_begin();
-     memory_region_set_enabled(&mch->smbase_blackhole, lck);
-     memory_region_set_enabled(&mch->smbase_window, lck);
-     memory_region_transaction_commit();
-diff --git a/tests/qtest/q35-test.c b/tests/qtest/q35-test.c
-index 62fff49fc8..4e3a4457f6 100644
---- a/tests/qtest/q35-test.c
-+++ b/tests/qtest/q35-test.c
-@@ -206,12 +206,6 @@ static void test_smram_smbase_lock(void)
-     qtest_writeb(qts, SMBASE, SMRAM_TEST_PATTERN);
-     g_assert_cmpint(qtest_readb(qts, SMBASE), ==, SMRAM_TEST_PATTERN);
- 
--    /* check that writing junk to 0x9c before before negotiating is ignored */
--    for (i = 0; i < 0xff; i++) {
--        qpci_config_writeb(pcidev, MCH_HOST_BRIDGE_F_SMBASE, i);
--        g_assert(qpci_config_readb(pcidev, MCH_HOST_BRIDGE_F_SMBASE) == 0);
--    }
--
-     /* enable SMRAM at SMBASE */
-     qpci_config_writeb(pcidev, MCH_HOST_BRIDGE_F_SMBASE, 0xff);
-     g_assert(qpci_config_readb(pcidev, MCH_HOST_BRIDGE_F_SMBASE) == 0x01);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ca34704acb..b25ddc0746 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+                                             cmd, &res->base.addrs,
+                                             &res->base.iov, &res->base.iov_cnt);
+-        if (!ret) {
++        if (ret != 0) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             return;
+         }
 -- 
 2.47.3
 
