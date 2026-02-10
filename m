@@ -4,130 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C284EEA8114
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450E4EA811A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpnsv-0005fe-CQ; Tue, 10 Feb 2026 08:34:33 -0500
+	id 1vpo06-0001BD-WD; Tue, 10 Feb 2026 08:41:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vpnsn-0005dz-04
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:34:25 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vpnzw-00013h-7n; Tue, 10 Feb 2026 08:41:48 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vpnsj-0001mr-NR
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:34:24 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61AAQMxZ1940437
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:34:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=KlxvotwJGugCYYVUhE6iu/
- 1yh9rGWdS80COE/20q904=; b=lWs+kCa+CO3xPgZKMuellJXjwvrVTem1X0Aieu
- XO2SXXr+MDle7QpHRYpvQwDJNnikl6TqL+Ai1kXmPX/dijH98dhoSxJNQmOdRsiR
- tCzdl44io6DQhHsthaFMFw9YLzC+/p9ctrJKpA8HBFibhnq+P5RSQX8djZKG2V4M
- wYANkCPyeC8c26kyXlfdnRRL9Dbir39Os0i86AcodlvaL45N1QRhRrgMaYsEFLfS
- 6M+VLAWMeH73W4Gh5VCaHpWmcXefa3YV0KLJE/mQb42ZJj8NinmRUh0N7CPG+RSQ
- uJuXpt8au8KRifutG6Xxuvz3r7eDCJdIQIdbTf1D7yg9yq1Q==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c7w1jsq6c-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:34:17 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2b6b9c1249fso4503510eec.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:34:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1770730457; x=1771335257; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KlxvotwJGugCYYVUhE6iu/1yh9rGWdS80COE/20q904=;
- b=ClUDK8At2fh3jVElknjLy2sALJ8dPxD0/UFveo3cP+PQYiqYv657nOU6Zcc5RI/sPn
- VmX8nq3XIpkYXvH58QW4/uawio38zB4HVmuH1fwbKyns0CMiAIhfR/IZAryAD1UGo0TI
- CSuFFs5nWNVyxVv/vctk/DfYzLiKwXqW3nvQaf4O8TTaQpx7KqsnutFgAhkDmGduyyMv
- AE+/3NIwSJko3Po7/fvZWK3rexE2fp71uFEOBHvBuOekC7y3JG6g2ptNcF6Snl25QERn
- /fPQcC8Zm1cGw2DcoG9MlHJvzth5rpsFOOtu/Fsw4HiWmwsiC7bHsRL+RdJE2/hVpjTL
- 540g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770730457; x=1771335257;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KlxvotwJGugCYYVUhE6iu/1yh9rGWdS80COE/20q904=;
- b=UhczQiK6BVoryBarosAfcUf346UtRsdTD0t1QXnUKo10O2HUcup1zDTjTy2QlNWxNk
- 5dziWm6EJhJQRC6aUlveoOVPtqRXTvJoS1AsmAAxRlfbzWxgvyR86K+aAEUwFWwX3hT1
- cATZSbtEYBbmU4xD1gZqD2Ahl4YpvL3m2v252mEJw9ZC8xWStNxKppe7xNkChFc0i5z2
- Rjyf8DNfK4QbKsFo7lYxqI/7tmccjbgXPIEK+KNqE6B2Mx9Cjv300X/J5fm2f2qoRPfb
- wAlgwJGAEPjK0ZRiIEE1HpLurUMHixGTb7ubC7Mh6Y7XTmSOsinIWEawFHlTDWFqCv6E
- W/Fg==
-X-Gm-Message-State: AOJu0YyYmUXlyLzBu1pHSfqI62YFcFHw2cvychfLACMrZZZq55Wnu+VW
- FcJb1vvmNXyhdtbquv1JggRfHzJKeOkbrCVyYaf2G8mnx1STYow3xUr/lMxlzLC4pEw6BxqzUrU
- 6fE8Q9uemdJUJHuliS5yqC/k6kIIvf/UyuFtcTQHlo7QU3sDIbaoMXSL5kJZO1+aDVA==
-X-Gm-Gg: AZuq6aJffBMCp33MpwfHBkiSFlnR6LVyhiXMYpAjhXeuOjOobH3bOAoBscuY5FYfy0A
- 5yguFCDtz1jzLhZXmRSkKWoabYCTE3NQ9OpQL3GjWGKKtt8nVnMi2NOIjrMEnoTXC9Exn3aLJxj
- sWi5QX8g1LZkF4CrG4flEoIBrVP4zjy8F680GhxwLUBiEhdhOufxQJOOBYHaGT9pSBZe2riQcpt
- 6CSCWlffQVYQDEAYFDKwYjsiOfrEASvCZ6SDyLO+WJuZlTG51tdew/FlsAPBC/aOs1CUPDYComm
- VrFttm5Cx30wYUQzOtAtOTC6FRPboBqvRV5yNdKwh77BmNBXhUDImECvNwZVKd5OQKu0EpM5GcV
- vzNvqucTLpUJ2nJj/tYTSrVFCXVr85UK972KiYwKwblQA6xUkT9VSfSRdrSVXllB2ImWKpQ==
-X-Received: by 2002:a05:7300:572c:b0:2ae:55f0:f2be with SMTP id
- 5a478bee46e88-2b85683e423mr6838554eec.31.1770730456503; 
- Tue, 10 Feb 2026 05:34:16 -0800 (PST)
-X-Received: by 2002:a05:7300:572c:b0:2ae:55f0:f2be with SMTP id
- 5a478bee46e88-2b85683e423mr6838542eec.31.1770730455926; 
- Tue, 10 Feb 2026 05:34:15 -0800 (PST)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ba7e149c58sm2716162eec.26.2026.02.10.05.34.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:34:15 -0800 (PST)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com, alex@alexrp.com
-Subject: [PATCH v3 0/4] Handle some invalid encodings
-Date: Tue, 10 Feb 2026 05:33:50 -0800
-Message-Id: <20260210133355.16093-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vpnzu-00034j-Ae; Tue, 10 Feb 2026 08:41:47 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 619IxNhT1915889; Tue, 10 Feb 2026 13:41:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=H8mHFG
+ TieOahfb67i6yRuO7Y/g80NWvwNIA6BFKycbk=; b=rYWPeTgNceIh+Z3WgKgpTB
+ Y6yy6hDuFxyjYbnFrbz0bSM5zb8co3Dm3EzWIzJU1V2z5L1zcKQRGDYPFwUnoa60
+ mFZgnym2cSw+emz1aDD18OpITOdFAlOFjBT2w0MSld9GdwkhPXcovqmdB810AdcP
+ YAZM6Goubka84UZTIOpWWvJxDOfq26o53+smvBfxYSJVCblGoRCS9ssgx9TLIyoB
+ 8sFpRcxNl9ph5h8JxZFooIHOYpuuJGoMSTrQOo025oMVUeKCSDUtL9Iuu9jqyGzq
+ FVsXYRLINaVrwiOo/d5WoWxX2QJ6+xCmbYT6X0QD1gwAZ0YySRA64NRp3N/+gdTg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ucfv3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 13:41:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A9g5hY001471;
+ Tue, 10 Feb 2026 13:41:35 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6gqn1gbt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 13:41:35 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61ADfEIg23986840
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 13:41:14 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2DA745805C;
+ Tue, 10 Feb 2026 13:41:34 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 01F6258054;
+ Tue, 10 Feb 2026 13:41:33 +0000 (GMT)
+Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Feb 2026 13:41:32 +0000 (GMT)
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ saif.abrar@linux.vnet.ibm.com
+Subject: [PATCH v3 1/9] qtest/phb4: Add testbench for PHB4
+Date: Tue, 10 Feb 2026 07:40:51 -0600
+Message-ID: <20260210134110.1515322-2-saif.abrar@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
+ <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: J3VYMkr2j9P1wHY6SJ6XG3h4EHTg203h
-X-Proofpoint-ORIG-GUID: J3VYMkr2j9P1wHY6SJ6XG3h4EHTg203h
-X-Authority-Analysis: v=2.4 cv=YrIChoYX c=1 sm=1 tr=0 ts=698b33d9 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=7OUETykng6pzQwdykssA:9 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExNCBTYWx0ZWRfX3peXTGbIzHfe
- 7rWWTQ+RR59Mli4y7Nc2Ff3TrL/NbWjnvY14oDR7jh3bFfUY21Yb5X4Jv883fycQvMvAkgAxJ71
- M/g4dW81xMv1hOOvjRjh0cMmhNCD6vSbQfcWOzMAZvB0Ab7DED3B5MGGtNPnmscFH+YzBjeuMuB
- KIxscUAh46I6bMV/a2aShTyMu0aGujJlaHrWslEUDypnl8juRMl0kBPQvRb7iRXnyWR8YHPkagH
- FmZ9fA3vOslhWko9d0NDQLCjCJbwbEAJHJnKUurU0Ili9bC81Fxxixj5KinWxNFx73kBP763hXZ
- oPfSfyZ9ZkF+n1IP9OvfK+LjLYZGYGlAQRTEIIx/9Lbkevx1eX+owM+M28vsi9vb+urDr8QV5or
- 78d2MV+7ZqMZnyQ/vO53QzUy3P2G+qr8VuUhSCyETE2aOqbrjoVMmv/OnNtOcR+XxsBIcuswAZB
- IUH1RHuRlXdKGkLp+zg==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=KZnfcAYD c=1 sm=1 tr=0 ts=698b3591 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=IezeUUPc-1SGbE2r020A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExMiBTYWx0ZWRfXx/glpVvo7Gyu
+ i/32HHclLQ4IOp0Fptp3IJ1ZUTGCUkMit2RFY8a491m4giCnWT1Dkr0rEDSQ9gsYlBX9njLUW89
+ ssm5jGup7dte4Iv3uBWtIw98oe9wWEQhUK+WbUS39cDzp+leYbSN/ItoXVjBaeW2tj5T6dwhQTN
+ dl3GuSsXodZZfUfY0PTXAGld/d7DevoUGI0FPLgOQemKd/YzZ4mrquHl67vqJpkddp0Lb/nR1mG
+ Wma3RZJBmdOunmAlquTNcKUVrn+FndHIbjTrH7Gu5+aWjYbaGGI5YfkuZwAeOitFz/AILd/35h8
+ 4hJdqExOeXBbAnxcjvm/5GiXKaLlxB30vg8WRZQs4DeWKhpFj0YwJtFAaX65D07lh0h1E8SRvME
+ AmGLBHH0SYl22qWefBAN850cVIrw3N30d5uExkbS/pO4WYkh06sKs6G7erDT+qGPDgC7M8QuPB/
+ L2hDL2Ncb+qzST3TbGg==
+X-Proofpoint-ORIG-GUID: mXsPg1T8bzbm_55dO7vE2jjcGKcUmzcx
+X-Proofpoint-GUID: xiaObr088Jn7_RngN_-OFEvYWWLD_ARF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100114
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602100112
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,32 +125,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rml4IHRoZSBpc3N1ZXMgcmVwb3J0ZWQgYnkgQWxleCBSw7hubmUgUGV0ZXJzZW4gY2F1c2luZyB6
-aWcgdGVzdCBzdWl0ZQpmYWlsdXJlcy4gIFRoZSAweDAgY2FzZSBpcyBhIGNvbmZsaWN0aW5nICJt
-dWx0aXBsZSByZWdpc3RlciB3cml0ZSIgLSB0aGUKaGFuZGxlciBoZXJlIHdpbGwgY292ZXIgZHVw
-bGV4ZXMgYnV0IG5vdCB0aGUgbW9yZSBnZW5lcmFsIGNhc2Ugb2YgbXVsdGlwbGUKcmVnaXN0ZXIg
-d3JpdGVzLiAgSSdsbCBpbmNsdWRlIHRoYXQgaW4gYSBzdWJzZXF1ZW50IHBhdGNoc2V0LgoKdjI6
-IHVzZSBhIHNpZ25hbCBoYW5kbGVyIGZvciBTSUdJTEwsIGNvbWJpbmUgdGhlIHRlc3RzLiAgUy1i
-IFBpZXJyaWNrLgoKdjM6CiAgRHJvcHBlZCAiUmVqZWN0IGR1cGxleCBlbmNvZGluZ3MiIGFuZCBh
-ZGRlZCAiRGV0ZWN0IHJlZ2lzdGVyIHdyaXRlCiAgY29uZmxpY3RzLi4uIiAtPiBtb3JlIGdlbmVy
-YWwgYWxnbyBTLWIgVGF5bG9yLiAgVGhpcyBwYXRjaCBtb3ZlZCBvdmVyIHRoZQogIHRlc3RfemVy
-bygpIGNhc2UgY292ZXJpbmcgdGhlIHNhbWUgMHgwMDAwMDAwMCBpbnN0IGVuY29kaW5nIFItYiBB
-bGV4LgoKQnJpYW4gQ2FpbiAoNCk6CiAgdGFyZ2V0L2hleGFnb246IEZpeCBpbnZhbGlkIGR1cGxl
-eCBkZWNvZGluZwogIHRhcmdldC9oZXhhZ29uOiBSZXR1cm4gZGVjb2RlIGZhaWx1cmUgZm9yIGlu
-dmFsaWQgbm9uLWR1cGxleCBlbmNvZGluZ3MKICB0ZXN0cy90Y2cvaGV4YWdvbjogSGFuZGxlIFNJ
-R0lMTCBpbnRlcm5hbGx5IGluIGludmFsaWQtc2xvdHMgdGVzdAogIHRhcmdldC9oZXhhZ29uOiBE
-ZXRlY3QgcmVnaXN0ZXIgd3JpdGUgY29uZmxpY3RzIHdpdGggYml0bWFwIGFsZ29yaXRobQoKIHRh
-cmdldC9oZXhhZ29uL2NwdV9iaXRzLmggICAgICAgICAgICB8ICAgMSArCiB0YXJnZXQvaGV4YWdv
-bi9pbnNuLmggICAgICAgICAgICAgICAgfCAgIDYgKwogbGludXgtdXNlci9oZXhhZ29uL2NwdV9s
-b29wLmMgICAgICAgIHwgICA1ICsKIHRhcmdldC9oZXhhZ29uL2RlY29kZS5jICAgICAgICAgICAg
-ICB8ICA1OSArKysrKysrKystCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYyAgICAgICAgICAg
-fCAgMzkgKysrKysrLQogdGVzdHMvdGNnL2hleGFnb24vaW52YWxpZC1lbmNvZGluZy5jIHwgMTA2
-ICsrKysrKysrKysrKysrKysrCiB0ZXN0cy90Y2cvaGV4YWdvbi9pbnZhbGlkLXNsb3RzLmMgICAg
-fCAgNzYgKysrKysrKysrLS0tCiB0ZXN0cy90Y2cvaGV4YWdvbi9tdWx0aXBsZS13cml0ZXMuYyAg
-fCAxNjkgKysrKysrKysrKysrKysrKysrKysrKysrKysrCiB0YXJnZXQvaGV4YWdvbi9nZW5fdHJh
-bnNfZnVuY3MucHkgICAgfCAgMTAgKysKIHRlc3RzL3RjZy9oZXhhZ29uL01ha2VmaWxlLnRhcmdl
-dCAgICB8ICAgOCArLQogMTAgZmlsZXMgY2hhbmdlZCwgNDQ5IGluc2VydGlvbnMoKyksIDMwIGRl
-bGV0aW9ucygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3RjZy9oZXhhZ29uL2ludmFsaWQt
-ZW5jb2RpbmcuYwogY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3RjZy9oZXhhZ29uL211bHRpcGxl
-LXdyaXRlcy5jCgotLSAKMi4zNC4xCgo=
+New qtest testbench added for PHB[345].
+Testbench reads PHB Version register and asserts that
+bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
+
+Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+---
+v3: Updates for coding guidelines.
+
+v2: Added version check for PHB3 and PHB4 also.
+
+ tests/qtest/meson.build     |  1 +
+ tests/qtest/pnv-phb4-test.c | 98 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+)
+ create mode 100644 tests/qtest/pnv-phb4-test.c
+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index dfb83650c6..593c3c4560 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -184,6 +184,7 @@ qtests_ppc64 = \
+   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
+   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
+   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
++  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb4-test'] : []) +                  \
+   (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
+   (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
+   (slirp.found() ? ['pxe-test'] : []) +              \
+diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+new file mode 100644
+index 0000000000..797f6b6c87
+--- /dev/null
++++ b/tests/qtest/pnv-phb4-test.c
+@@ -0,0 +1,98 @@
++/*
++ * QTest testcase for PowerNV PHB4
++ *
++ * Copyright (c) 2025, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "hw/pci-host/pnv_phb4_regs.h"
++#include "pnv-xscom.h"
++
++#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
++#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
++
++#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
++#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
++
++/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
++#define PNV_P10_CHIP_INDEX      3
++#define PHB4_XSCOM              0x40084800ull
++
++/*
++ * Indirect XSCOM read::
++ * - Write 'Indirect Address Register' with register-offset to read.
++ * - Read 'Indirect Data Register' to get the value.
++ */
++static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
++        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
++        uint64_t reg)
++{
++    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_addr), reg);
++    return qtest_readq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_data));
++}
++
++/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
++static void phb_version_test(const void *data)
++{
++    const PnvChip *chip = (PnvChip *)data;
++    QTestState *qts;
++    const char *machine = "powernv8";
++    uint64_t phb_xscom = 0x4809e000;
++    uint64_t reg_phb_version = PHB_VERSION;
++    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
++    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
++    uint32_t expected_ver = 0xA3;
++    uint64_t ver;
++
++    if (chip->chip_type == PNV_CHIP_POWER9) {
++        machine = "powernv9";
++        phb_xscom = 0x68084800;
++        indirect_addr = PHB_SCOM_HV_IND_ADDR;
++        indirect_data = PHB_SCOM_HV_IND_DATA;
++        reg_phb_version |= PPC_BIT(0);
++        expected_ver = 0xA4;
++    } else if (chip->chip_type == PNV_CHIP_POWER10) {
++        machine = "powernv10";
++        phb_xscom = PHB4_XSCOM;
++        indirect_addr = PHB_SCOM_HV_IND_ADDR;
++        indirect_data = PHB_SCOM_HV_IND_DATA;
++        reg_phb_version |= PPC_BIT(0);
++        expected_ver = 0xA5;
++    }
++
++    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
++
++    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
++                                indirect_addr, indirect_data, reg_phb_version);
++
++    /* PHB Version register bits [24:31] */
++    ver = ver >> (63 - 31);
++    g_assert_cmpuint(ver, ==, expected_ver);
++
++    qtest_quit(qts);
++}
++
++/* Verify versions of all supported PHB's */
++static void add_phbX_version_test(void)
++{
++    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
++        char *tname = g_strdup_printf("pnv-phb/%s",
++                                      pnv_chips[i].cpu_model);
++        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
++        g_free(tname);
++    }
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    /* PHB[345] tests */
++    add_phbX_version_test();
++
++    return g_test_run();
++}
+-- 
+2.47.3
+
 
