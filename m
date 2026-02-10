@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BB3EA810A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521E3EA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmim-0000tg-Pd; Tue, 10 Feb 2026 07:20:01 -0500
+	id 1vpmhv-0007Ai-C2; Tue, 10 Feb 2026 07:19:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhJ-0005v0-JT; Tue, 10 Feb 2026 07:18:31 -0500
+ id 1vpmhE-0005jr-LU; Tue, 10 Feb 2026 07:18:25 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhG-0001JU-9G; Tue, 10 Feb 2026 07:18:28 -0500
+ id 1vpmhC-0001HS-JA; Tue, 10 Feb 2026 07:18:24 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A900D187DC6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 849CF187DC4;
  Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 473CC360CEB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 216C7360CE9;
  Tue, 10 Feb 2026 15:15:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aleksandr Sergeev <sergeev0xef@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 94/95] linux-user/syscall.c: Prevent acquiring
- clone_lock while fork()
-Date: Tue, 10 Feb 2026 15:15:16 +0300
-Message-ID: <20260210121526.68598-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 92/95] hw/cxl: Check for overflow on santize media as
+ both base and offset 64bit.
+Date: Tue, 10 Feb 2026 15:15:14 +0300
+Message-ID: <20260210121526.68598-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
@@ -61,83 +61,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aleksandr Sergeev <sergeev0xef@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-By the spec, fork() copies only the thread which executes it.
-So it may happen, what while one thread is doing a fork,
-another thread is holding `clone_lock` mutex
-(e.g. doing a `fork()` or `exit()`).
-So the child process is born with the mutex being held,
-and there are nobody to release it.
+The both the size and base of a media sanitize operation are both provided
+by the VM, an overflow is possible which may result in checks on valid
+range passing when they should not.  Close that by checking for overflow
+on the addition.
 
-As the thread executing do_syscall() is not considered running,
-start_exclusive() does not protect us from the case.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3226
-Signed-off-by: Aleksandr Sergeev <sergeev0xef@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260126151612.2176451-1-sergeev0xef@gmail.com>
-(cherry picked from commit d22e9aec572396836782e993cb18d598e6012688)
+Fixes: 40ab4ed10775 ("hw/cxl/cxl-mailbox-utils: Media operations Sanitize and Write Zeros commands CXL r3.2(8.2.10.9.5.3)")
+Closes: https://lore.kernel.org/qemu-devel/CAFEAcA8Rqop+ju0fuxN+0T57NBG+bep80z45f6pY0ci2fz_G3A@mail.gmail.com/
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260102154731.474859-2-Jonathan.Cameron@huawei.com>
+(cherry picked from commit 87f8e5a71d061964c9bfa4d6e02db47f54dd61f7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 68972f00a1..7932f9f03b 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -146,6 +146,7 @@ unsigned long guest_stack_size = TARGET_DEFAULT_STACK_SIZE;
- void fork_start(void)
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 68c7cc9891..03fbc9a9d1 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1875,7 +1875,7 @@ static uint64_t get_dc_size(CXLType3Dev *ct3d, MemoryRegion **dc_mr)
+ static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+                              size_t length)
  {
-     start_exclusive();
-+    clone_fork_start();
-     mmap_fork_start();
-     cpu_list_lock();
-     qemu_plugin_user_prefork_lock();
-@@ -175,6 +176,7 @@ void fork_end(pid_t pid)
-         cpu_list_unlock();
-     }
-     gdbserver_fork_end(thread_cpu, pid);
-+    clone_fork_end(child);
-     /*
-      * qemu_init_cpu_list() reinitialized the child exclusive state, but we
-      * also need to keep current_cpu consistent, so call end_exclusive() for
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9c7a5837eb..37ff060e8b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6736,6 +6736,20 @@ static void *clone_func(void *arg)
-     return NULL;
- }
+-    uint64_t vmr_size, pmr_size, dc_size;
++    uint64_t vmr_size, pmr_size, dc_size, dpa_end;
  
-+void clone_fork_start(void)
-+{
-+    pthread_mutex_lock(&clone_lock);
-+}
-+
-+void clone_fork_end(bool child)
-+{
-+    if (child) {
-+        pthread_mutex_init(&clone_lock, NULL);
-+    } else {
-+        pthread_mutex_unlock(&clone_lock);
+     if ((dpa_addr % CXL_CACHE_LINE_SIZE) ||
+         (length % CXL_CACHE_LINE_SIZE)  ||
+@@ -1887,7 +1887,12 @@ static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+     pmr_size = get_pmr_size(ct3d, NULL);
+     dc_size = get_dc_size(ct3d, NULL);
+ 
+-    if (dpa_addr + length > vmr_size + pmr_size + dc_size) {
++    /* sanitize 64 bit values coming from guest */
++    if (uadd64_overflow(dpa_addr, length, &dpa_end)) {
++        return -EINVAL;
 +    }
-+}
 +
- /* do_fork() Must return host values and target errnos (unlike most
-    do_*() functions). */
- static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 191e01c3a8..267c3930d7 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -67,6 +67,8 @@ abi_long get_errno(abi_long ret);
- const char *target_strerror(int err);
- int get_osversion(void);
- void init_qemu_uname_release(void);
-+void clone_fork_start(void);
-+void clone_fork_end(bool child);
- void fork_start(void);
- void fork_end(pid_t pid);
++    if (dpa_end > vmr_size + pmr_size + dc_size) {
+         return -EINVAL;
+     }
  
 -- 
 2.47.3
