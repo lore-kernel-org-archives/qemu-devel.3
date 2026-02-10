@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60DB1EA811B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A7CEA811F
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpoAE-00028S-OI; Tue, 10 Feb 2026 08:52:26 -0500
+	id 1vpoAM-0002Ep-1a; Tue, 10 Feb 2026 08:52:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA8-00020L-CW
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:23 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1vpoAI-0002C6-Ap
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:30 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA6-0006LC-Fz
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:20 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47edd6111b4so82574115e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:18 -0800 (PST)
+ id 1vpoAG-0006NF-Rq
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:30 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4801eb2c0a5so53544655e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770731537; x=1771336337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770731547; x=1771336347; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IM/zaN3DN3FDZg2qGJSyS3KoNBrzk/mO9OYYTNEvs3Q=;
- b=tws5eV5d6jd17tvoUn/cKBFMcP68LSePWK+/+xUY8ES6rXnuCISSl3LS7Ga6MiTXnM
- 4KAy3TjZ9gMIFFzxrBtkpn7O1TwKIo3zXIQagyz4Pd8nnsaY4IQwOLaDhYOKdFyAHzV/
- FusyZgASpsRYN4llxamMT6xxMjkhCNt9UV2U68HyAuQzC81ruwi8HiI0NipsXnsK/i1J
- 8IM5OeTch8WbVP39CdbJkvqtOTTZ3GEE1V3XS2Kh8iGFobFUlBaOiHVsH5E5Beno78eo
- d24Ui628/IaqP4vUVd3oNQU0hyHewZAe6PAE3DgemS1g3nL/0O8HGNq45V3qeYL331Mv
- Ltyg==
+ :reply-to; bh=dCm7KHoJAqs8SA7JjFZDtnB2gN/PwqLJzcqLgMLX7XU=;
+ b=uGa0vdTRmy9GClKQcSKqyMcOY/YWykTt3m+H0P65iALt/7A/FfAhS+gTrNC2eemWdL
+ Pfpb4H1pnekdV7zYfm7ZozOyZHP9D5SXEjLRD/DtjnbbCU3bBD9niS3+fVz9yqtsLZxN
+ gQdagfwVA3KHgWG5/a8shKzFGgnWaB3RzMT5SssEOQSqv+++CB/bQFY/FgTJlJt8w88K
+ NoDcbE6V7lRGEPKoCVxxnkBggOEFYeyD9z7I4vr+pUkneSqmZRcpAhQysza2LDwZPV7k
+ QHv8aRhlxwyMrJHhICSTF3cywnjp0Pl8X4b59Vz7wC3RG0Nui8T/OJBTQO06vAiwAQd6
+ b78w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770731537; x=1771336337;
+ d=1e100.net; s=20230601; t=1770731547; x=1771336347;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IM/zaN3DN3FDZg2qGJSyS3KoNBrzk/mO9OYYTNEvs3Q=;
- b=tt5wThod1cW5HDh82m9rFftI9hS2POQaFg8j7mcNLYbGL2jwFMLxZQnmX48ssR7xMM
- cnJdLezz3/KPi+zmJMo5RNT181vvT0yot/8eJ2e/NDP43qUldZc65Lv6z8BVcbSYEqKy
- +2q53CLIWyRv11b+PptrTUUeGsLZa5vKGkYlPYJRjT55L4zXDoWMfGw86+AUb6WzILUS
- 2u7IOmCqGL1wEWR9I4DgMa8fXPX4eCxbsVUgNLDD0IRNOVr7N0XbeUCWQoLYDSZexXz8
- N43TlUklqH6GRltoljptfm3tvjInTkD4DD3DQ6g2l3kLVCueguJl83aIy+cLuQiQn+jP
- D/5g==
-X-Gm-Message-State: AOJu0YyABzjQdz0UzKZiDOt1XUPWLvywVv/blWj4Q//waCMIKyYYhxIg
- kXx2ANRyq6AYbK8peos9fQ1Kh7nA3DwbLJLZQm61reubP6luh7TbChRQqYiDAEe2YC2EdWQpUMn
- 6WE2K
-X-Gm-Gg: AZuq6aIsppRN+V94gzwvU0Hi/dhocOuIvJK2Sf1huwF2jsJ6gOGMI0PRRXLVu3IpB8H
- vOp4CfpN0FqMPScOt2yxinMKPuoyOfiKCHnj71BDv8bmcu0F7l+zK+6HvucufqVYRwnJKNpw6BK
- dsU3OSHXEWojfyRM8FRhBQoB84BrWY9BAqaZ8BlMTfkcKXImJZuB1WOzxmT2ePWgNIQ/+/Aswdx
- 3+zOyyKQyHLSfBDm1frcW8k/0h7JpOk0NmYbr5bilua3oB3EoC23L+TPo2GU8r9aVyr53WC+X83
- /U1IglLt17isDYxc1MsAqDhmSRUKXgU+KY0vlevujPpQ3qquAFbTrU/YWXU9uFAVtgPSa1btJr/
- NRAKCIUWcjGKXhOkJNXzO2/F3KULSKWIkKcNC1NpkG2uB9jAzCvmIEKVIpmA/rJjlklaUJ1Eh7X
- fGM9aX+cm27GpO6lvN1XrhyuXkOcpNETLlYM+v/EuOaplkfF0l08LgjRIiw9rnO4ow9v1INev7p
- Z3TUsAEtUf8QjOK1R4Y0Ld/ZB2YT6w=
-X-Received: by 2002:a05:600c:3487:b0:47d:3690:7490 with SMTP id
- 5b1f17b1804b1-483507e16b1mr32351755e9.9.1770731536966; 
- Tue, 10 Feb 2026 05:52:16 -0800 (PST)
+ bh=dCm7KHoJAqs8SA7JjFZDtnB2gN/PwqLJzcqLgMLX7XU=;
+ b=Mv6QlMgECyPUywF2xLsXpNK89Q+qdmMSYkjd3zJsb5xYQvu9xE1PWm4G3QluAQCqIy
+ 7VObPOoGzFgDgti62JyjTr/R860gVrGm9hfOFvLoofOemRPi3lpoJmA3Rz/yyEBvbUHr
+ nqW236blIA7b4lVxHzhh9SUJCZa0c5B5jdHykEuF/OcL1wezYD+hAnMzI2bdBUkmPBx6
+ BXmT4RtRWmmJ4CMB+QawLBiLqdl4rCpAbQlbd7LO31zMdqAy7vzD4783/jKVJ7+X3mNZ
+ FaNKXd5RpngMLFydsltyn1WmI80fJ6ZyAOJsFZJRqKc31RQd5phJX1DG5IE+aD3kn2zw
+ 5CwQ==
+X-Gm-Message-State: AOJu0Yx9sqcDn6d1zjOcTMjSCijiyt4nR71VYqr7Slz2i+ljxSB6ObHP
+ YTT73UigYIb/3Vy1vw4haIZjDTnbUerjSVA01121S45HPwOLfh9yH54hkcce0bmuaxH11dYeQ6y
+ JRW7i
+X-Gm-Gg: AZuq6aKAVgRVVXLfX3BUmjQDCprtC1xOmEkJ9k4N9EX4FoBHLd3e/JQqDRPQ/6nJb/H
+ v+qzlKIcw96P0lv4OlRZwqyOjvaA006W+Bm/42kZUp6e0O7qazWYPdMloF2iAoBfkGb9s3Xhod+
+ dQr+IK/6fT2IFeFlw6hPR6MnBiaZvUtwI1DiCEHFZDazIqp/16t437hcXaDGIcY/R9L+KwCmdCi
+ ZEiS0HOEz0QZ7zM15Ov/isCws2W3OxQYljiodb+8epZQtT9KUwsLPV/MBDZv7VFSRqiPxh+MwEC
+ Zcq8CvPZ9+Gchm8/ppqVaAYz3RMg1eOgcxMxogzgwUHj8hQsdD4r7WaoqncnlyWSy3X/MLKFqGQ
+ rppqDV6Tss/VZvw48Bs+4sv2PpD1KXqRmn4Qe8bUAl7hrkuTxWEBrDl32wsPYCOiJMizhiSswoR
+ AQQmdVnDf0YITC9jxOINjsx6b07ypzElHYnFfE5342rlGfJb9rKdxXo0mIH1WDvCIwOqZsjkzQx
+ hF6c2KG2+Z3GTi/2t/Y+5H6rk3oBP+f9MJE9msCLA==
+X-Received: by 2002:a05:600c:4e8b:b0:477:7bca:8b2b with SMTP id
+ 5b1f17b1804b1-483507f2bb3mr31237915e9.15.1770731547236; 
+ Tue, 10 Feb 2026 05:52:27 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.16
+ 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:52:16 -0800 (PST)
+ Tue, 10 Feb 2026 05:52:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/26] whpx: ifdef out winhvemulation on non-x86_64
-Date: Tue, 10 Feb 2026 13:51:51 +0000
-Message-ID: <20260210135206.229528-12-peter.maydell@linaro.org>
+Subject: [PULL 22/26] whpx: arm64: add partition-wide reset on the reboot path
+Date: Tue, 10 Feb 2026 13:52:02 +0000
+Message-ID: <20260210135206.229528-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260210135206.229528-1-peter.maydell@linaro.org>
 References: <20260210135206.229528-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,132 +102,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-winhvemulation is x86_64 only.
-
-In the future, we might want to get rid of winhvemulation usage
-entirely.
+This resets non-architectural state to allow for reboots to succeed.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- accel/whpx/whpx-common.c       | 14 ++++++++++++--
- include/system/whpx-common.h   |  2 ++
- include/system/whpx-internal.h |  7 ++++++-
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ include/system/whpx-internal.h | 2 ++
+ target/arm/whpx/whpx-all.c     | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 0a6068fdde..c58344cb61 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -37,7 +37,9 @@
- bool whpx_allowed;
- static bool whp_dispatch_initialized;
- static HMODULE hWinHvPlatform;
-+#ifdef HOST_X86_64
- static HMODULE hWinHvEmulation;
-+#endif
- 
- struct whpx_state whpx_global;
- struct WHPDispatch whp_dispatch;
-@@ -232,8 +234,10 @@ void whpx_destroy_vcpu(CPUState *cpu)
-     struct whpx_state *whpx = &whpx_global;
- 
-     whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
-+#ifdef HOST_X86_64
-     AccelCPUState *vcpu = cpu->accel;
-     whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
-+#endif
-     g_free(cpu->accel);
- }
- 
-@@ -408,8 +412,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
-         LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
-         break;
-     case WINHV_EMULATION_FNS_DEFAULT:
-+#ifdef HOST_X86_64
-         WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
-         LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
-+#else
-+        g_assert_not_reached();
-+#endif
-         break;
-     case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
-         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
-@@ -535,11 +543,11 @@ bool init_whp_dispatch(void)
-     if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
-         goto error;
-     }
--
-+#ifdef HOST_X86_64
-     if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
-         goto error;
-     }
--
-+#endif
-     assert(load_whp_dispatch_fns(&hWinHvPlatform,
-         WINHV_PLATFORM_FNS_SUPPLEMENTAL));
-     whp_dispatch_initialized = true;
-@@ -549,9 +557,11 @@ error:
-     if (hWinHvPlatform) {
-         FreeLibrary(hWinHvPlatform);
-     }
-+#ifdef HOST_X86_64
-     if (hWinHvEmulation) {
-         FreeLibrary(hWinHvEmulation);
-     }
-+#endif
-     return false;
- }
- 
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index e549c7539c..8f171d1397 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -3,7 +3,9 @@
- #define SYSTEM_WHPX_COMMON_H
- 
- struct AccelCPUState {
-+#ifdef HOST_X86_64
-     WHV_EMULATOR_HANDLE emulator;
-+#endif
-     bool window_registered;
-     bool interruptable;
-     bool ready_for_pic_interrupt;
 diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 041fa958b4..609d0e1c08 100644
+index 8ded54a39b..ad6ade223e 100644
 --- a/include/system/whpx-internal.h
 +++ b/include/system/whpx-internal.h
-@@ -4,8 +4,9 @@
+@@ -86,6 +86,8 @@ void whpx_apic_get(APICCommonState *s);
+   X(HRESULT, WHvSetVirtualProcessorInterruptControllerState2, \
+         (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, PVOID State, \
+          UINT32 StateSize)) \
++  X(HRESULT, WHvResetPartition, \
++        (WHV_PARTITION_HANDLE Partition)) \
  
- #include <windows.h>
- #include <winhvplatform.h>
-+#ifdef HOST_X86_64
- #include <winhvemulation.h>
--
-+#endif
- #include "hw/i386/apic.h"
- #include "exec/vaddr.h"
- 
-@@ -101,12 +102,16 @@ void whpx_apic_get(APICCommonState *s);
- 
- /* Define function typedef */
- LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
-+#ifdef HOST_X86_64
- LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
-+#endif
- LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
- 
- struct WHPDispatch {
-     LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
-+#ifdef HOST_X86_64
-     LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
-+#endif
-     LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
- };
- 
+ #define LIST_WINHVEMULATION_FUNCTIONS(X) \
+   X(HRESULT, WHvEmulatorCreateEmulator, (const WHV_EMULATOR_CALLBACKS* Callbacks, WHV_EMULATOR_HANDLE* Emulator)) \
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 44ef42307b..36c5e30a03 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -497,6 +497,8 @@ int whpx_vcpu_run(CPUState *cpu)
+             if (arm_cpu->power_state != PSCI_OFF) {
+                 whpx_psci_cpu_off(arm_cpu);
+             }
++            /* Partition-wide reset, to reset state for reboots to succeed. */
++            whp_dispatch.WHvResetPartition(whpx->partition);
+             bql_unlock();
+             break;
+         case WHvRunVpExitReasonNone:
 -- 
 2.43.0
 
