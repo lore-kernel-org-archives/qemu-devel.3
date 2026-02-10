@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90110EA3F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35B2EA3F13
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpieG-00027J-88; Tue, 10 Feb 2026 02:59:04 -0500
+	id 1vpiji-00030v-Qv; Tue, 10 Feb 2026 03:04:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpieC-000270-LP
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:59:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vpijh-00030X-65
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:04:41 -0500
+Received: from p-west3-cluster6-host6-snip4-10.eps.apple.com ([57.103.75.123]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpieA-0007ru-33
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:59:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770710336;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lq9xdh238CQACAJTyxElMbaXFlmV/VQDDf06qqMVSCY=;
- b=Tad/QSH5bm/fN35SQEMakDJ1EcR7jmCJKYFjmq+ANgdlTE29Z1cB8RPxRqakv7R1SnVU+5
- G+L8EPYJyQPjGfIyZMIJU2G8wTK9mQi/bYPjq2W4aSfLkF097flnSgjpSFtFIxACkjf+62
- av9FN5Q7z0rYHiAYNmEMY+tMnPr35rQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-9VACNYpEMEuI4hzHNRKxNQ-1; Tue,
- 10 Feb 2026 02:58:54 -0500
-X-MC-Unique: 9VACNYpEMEuI4hzHNRKxNQ-1
-X-Mimecast-MFC-AGG-ID: 9VACNYpEMEuI4hzHNRKxNQ_1770710334
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A9C6A1800365
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 07:58:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27D1F19560A3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 07:58:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 93F1E21E692D; Tue, 10 Feb 2026 08:58:50 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/5] json-streamer: remove token queue
-In-Reply-To: <20260107084840.150843-4-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Wed, 7 Jan 2026 09:48:38 +0100")
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <20260107084840.150843-4-pbonzini@redhat.com>
-Date: Tue, 10 Feb 2026 08:58:50 +0100
-Message-ID: <87v7g581xh.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vpije-0008Uy-EK
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:04:40 -0500
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPS id
+ 6D7EA180010E; Tue, 10 Feb 2026 08:04:35 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1770710676; x=1773302676;
+ bh=Z4sS8E8ZIdEk6OlxeNg1g+Znt7DUJvm0kKF+g6MmumU=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=XG/j6pLdFCH7L5YczREoDrWbxx+PQFQb9i0HXjD5i5wFwVTxT/ydCFPStLYM0SShrHapSQ3Xri5NQXeC2SACzHGJODiHZtnuDB2e+2RIEidm9rz+PIuz2tZZ1EyF4oD8BpBRkndVScgPbDoFl6sDTFDMASeAewn3IpEuVzIk08nko+BTvAIOZhUDpHF5YCnvYfV5OmaSxv4FzjHduUUqbIZDWxgWq0QCj3vENUjqGYMOTcfA8CgMiLwUpG73kciHaryOgaSSkHTtY3HqH4CWMFZtbdNMc2cFhTztmSWIb+58yhjuvy6keLWyZnZ9mf9aUrgbBiMt7/hP/sF1ulcdrw==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-7 (Postfix) with ESMTPSA id
+ B0FE118000BE; Tue, 10 Feb 2026 08:04:33 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <C933BE09-BFA4-4F13-87FA-2FD2994CCEE7@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_49A92ACC-7662-43A4-B029-5820492421AE"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH 1/1] plugins: fix cross-build using LLVM for Windows
+ targets
+Date: Tue, 10 Feb 2026 09:04:21 +0100
+In-Reply-To: <508e49cd-a37e-4388-827f-9e692c5f9905@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260210040722.11375-1-mohamed@unpredictable.fr>
+ <508e49cd-a37e-4388-827f-9e692c5f9905@linaro.org>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA2NyBTYWx0ZWRfX3tEmLokMOppO
+ p4zgqaBRY+cqlPjeiinmq+U2n02FwIxSGCCSyCJKdAMnMPiYkiyafX7gxvfNffjQMRBm1FAy424
+ WLQMyCd2hw5qTGCZpjJ3uKLb1tFP39XGFNpC2+siuze5hGK+2sw7Jdvu37LY9/srpUos3KGi7CU
+ o14oHerUgt0RPJdVgL4+0i89EzB7GdE3hmfADKKXAP+Ycl8avpUp/plzLa3pTgrwMIrprsacBIz
+ wbD6Ef1Ao5VzxnPSmmdlQ4gwkhIpPh9i7sDTwUY54iZPc4oCPD6kBYC8MRu6xD95iN8tPYULlYT
+ a5GRwTHkx1ORRHrn9PsxS0sYWDehkxgSHmfNnkFIhR9HAt1yTd77epDZhAE2So=
+X-Authority-Info-Out: v=2.4 cv=N9Uk1m9B c=1 sm=1 tr=0 ts=698ae693
+ cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=KKAkSRfTAAAA:8 a=UnDhwNk8kEjN3BYE-zAA:9 a=CjuIK1q_8ugA:10
+ a=SZZrIOB_cXa7thZNgYcA:9 a=IvuJopzxlzhv5ibf:21 a=_W_S_7VecoQA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: hEHRDxuDfA3LsVC21UrDKJ2AgoWwVlhE
+X-Proofpoint-GUID: hEHRDxuDfA3LsVC21UrDKJ2AgoWwVlhE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ suspectscore=0 adultscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
+ bulkscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602100067
+X-JNJ: AAAAAAABDsRJn1173U1R9wAc9D61m1wBQ9XM1y3d/MPIl0J2UQ5+K99Uc178uh/LxJDPfSgeIXHaRr3UhdRaIptZcOTIiIW4QzCc+OZAFXr7POsOKx1tFxlyEDs0jRD5gMZ9SwS67n534QLCchIkWoL7bx05WXXde3++3senwluZDCCfk+7CtDdEv32+I8MR6+xh5mw/46Ra8LiBa2kOF/tKHhUB5BqGuuV97bGvfpROpIkCFao+R+5GDYmcAYtdtnvZPkCGwdBSg7w/P6YlSiMj2coZF8U+3/xrWmc5z2wWGK0ufqLeyXDpRO95DyVUqGhWboW2nlRVcGtrKjdzIqe7A75fxRqCk40kagsUL1LUuOHaQHOjIqqPJm2e8JpLDanJ6aGybIoU2bbOznfGOaz66tNsmyUo9UGu9Ghg8SA93ofPLIz+qFNVaWPd/gTUBoSsb2ouGx3XLjzIry/t9hVn3P7QOQ9VCrRM40Sxj8IY1wbOfDp1nlzkOeTyEha5Wc+FNg35lD4VxSO9k+FMDUxW2LmOOcxAoUag+bRQ+zNIrI9GH/H16F5xCVJAygFVFsLO/A8Da1oJMhIRCPw6pW8IKDPCrsPH6sCST+80Zh2nXrAYRxebU/BAuxF568nQ7VWa3WivOZE0vudiXuW87SkWhL4yDFO8Er+7nCDOiQTJeSIu
+Received-SPF: pass client-ip=57.103.75.123;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,351 +97,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Now fully exploit the push parser, feeding it one token at a time
-> without having to wait until braces and brackets are balanced.
->
-> While the nesting counts are retained for error recovery purposes,
-> the system can now report the first parsing error without waiting
-> for delimiters to be balanced.  This also means that JSON_ERROR
-> can be handled in json-parser.c, not json-streamer.c.
->
-> After reporting the error, json-streamer.c then enters an error recovery
-> mode where subsequent errors are suppressed.  This mimics the previous
-> error reporting behavior, but it provides prompt feedback on parsing
-> errors.  As an example, here is an example interaction with qemu-ga.
->
-> BEFORE (error reported only once braces are balanced):
->
->    >> {'execute':foo
->    >> }
->    << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
->    >> {'execute':'somecommand'}
->    << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
->
-> AFTER (error reported immediately, but similar error recovery as before):
->
->    >> {'execute':foo
->    << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
->    >> }
->    >> {'execute':'qmp_capabilities'}
->    << {"error": {"class": "CommandNotFound", "desc": "The command qmp_capabilities has not been found"}}
+--Apple-Mail=_49A92ACC-7662-43A4-B029-5820492421AE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Welcome quality of life improvement for human use of QMP, such as manual
-testing.  The experience is still sub-par when you miss closing
-parenthesis: you get the silent treatment.
 
-Nitpick #1: Single quotes are an syntax extension made to enable more
-readable QMP input in C strings.  Letting it leak into the external
-interface was a mistake.  The less we show their use, the better.  Let's
-stick to doublequotes here.
 
-Nitpick #2: example input differs needlessly between BEFORE and AFTER.
+> On 10. Feb 2026, at 07:39, Pierrick Bouvier =
+<pierrick.bouvier@linaro.org> wrote:
+>=20
+> On 2/9/26 8:07 PM, Mohamed Mediouni wrote:
+>> llvm-dlltool assumes that it's by default targeting the host =
+architecture
+>> it's running on. That assumption doesn't hold true when =
+cross-compiling.
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> ---
+>>  plugins/meson.build | 9 ++++++++-
+>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>> diff --git a/plugins/meson.build b/plugins/meson.build
+>> index 34643e2cea..9899f166ee 100644
+>> --- a/plugins/meson.build
+>> +++ b/plugins/meson.build
+>> @@ -41,9 +41,16 @@ if host_os =3D=3D 'windows'
+>>    # to find missing symbols in current program.
+>>    win32_qemu_plugin_api_link_flags =3D ['-Lplugins', =
+'-lqemu_plugin_api']
+>>    if meson.get_compiler('c').get_id() =3D=3D 'clang'
+>> +    if host_machine.cpu() =3D=3D 'x86_64'
+>> +      dlltool_target =3D 'i386:x86-64'
+>> +    elif host_machine.cpu() =3D=3D 'aarch64'
+>> +      dlltool_target =3D 'arm64'
+>> +    else
+>> +      error('Unknown machine')
+>> +    endif
+>>      # With LLVM/lld, delaylib is specified at link time (-delayload)
+>>      dlltool =3D find_program('llvm-dlltool', required: true)
+>> -    dlltool_cmd =3D [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', =
+'-D', 'qemu.exe']
+>> +    dlltool_cmd =3D [dlltool, '-m', dlltool_target,'-d', '@INPUT@', =
+'-l', '@OUTPUT@', '-D', 'qemu.exe']
+>>      win32_qemu_plugin_api_link_flags +=3D =
+['-Wl,-delayload=3Dqemu.exe']
+>>    else
+>>      # With gcc/ld, delay lib is built with a specific delay =
+parameter.
+>=20
+> Interesting, on which setup did you find this?
+>=20
+> Regards,
+> Pierrick
+Hello,
 
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  include/qobject/json-parser.h |   5 +-
->  qobject/json-parser-int.h     |   1 +
->  qobject/json-parser.c         |  26 +++++---
->  qobject/json-streamer.c       | 116 ++++++++++++++--------------------
->  4 files changed, 68 insertions(+), 80 deletions(-)
->
-> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-> index 05346fa816b..923eb74ca00 100644
-> --- a/include/qobject/json-parser.h
-> +++ b/include/qobject/json-parser.h
-> @@ -29,11 +29,12 @@ typedef struct JSONParserContext {
->  typedef struct JSONMessageParser {
->      void (*emit)(void *opaque, QObject *json, Error *err);
->      void *opaque;
-> -    va_list *ap;
->      JSONLexer lexer;
-> +    JSONParserContext parser;
->      int brace_count;
->      int bracket_count;
-> -    GQueue tokens;
-> +    int token_count;
-> +    bool error;
->      uint64_t token_size;
->  } JSONMessageParser;
->  
-> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
-> index 05e2e8e1831..1f435cb8eb2 100644
-> --- a/qobject/json-parser-int.h
-> +++ b/qobject/json-parser-int.h
-> @@ -50,6 +50,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->  /* json-parser.c */
->  JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
->  void json_parser_init(JSONParserContext *ctxt, va_list *ap);
-> +void json_parser_reset(JSONParserContext *ctxt);
->  QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
->  void json_parser_destroy(JSONParserContext *ctxt);
->  
-> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
-> index 338f0c5aae6..7abdea4dacb 100644
-> --- a/qobject/json-parser.c
-> +++ b/qobject/json-parser.c
-> @@ -541,21 +541,27 @@ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
->      return token;
->  }
->  
-> -void json_parser_init(JSONParserContext *ctxt, va_list *ap)
-> -{
-> -    ctxt->err = NULL;
-> -    ctxt->stack = g_queue_new();
-> -    ctxt->ap = ap;
-> -}
-> -
-> -void json_parser_destroy(JSONParserContext *ctxt)
-> +void json_parser_reset(JSONParserContext *ctxt)
->  {
->      JSONParserStackEntry *entry;
->  
-> +    ctxt->err = NULL;
->      while ((entry = g_queue_pop_tail(ctxt->stack)) != NULL) {
->          qobject_unref(entry->partial);
->          g_free(entry);
->      }
-> +}
-> +
-> +void json_parser_init(JSONParserContext *ctxt, va_list *ap)
-> +{
-> +    ctxt->stack = g_queue_new();
-> +    ctxt->ap = ap;
-> +    json_parser_reset(ctxt);
-> +}
-> +
-> +void json_parser_destroy(JSONParserContext *ctxt)
-> +{
-> +    json_parser_reset(ctxt);
->      g_queue_free(ctxt->stack);
->      ctxt->stack = NULL;
->  }
-> @@ -566,6 +572,10 @@ QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error
->  
->      assert(!ctxt->err);
->      switch (token->type) {
-> +    case JSON_ERROR:
-> +        parse_error(ctxt, token, "JSON parse error, stray '%s'", token->str);
-> +        break;
-> +
->      case JSON_END_OF_INPUT:
->          /* Check for premature end of input */
->          if (!g_queue_is_empty(ctxt->stack)) {
-> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-> index 6c93e6fd78d..a1210128ac1 100644
-> --- a/qobject/json-streamer.c
-> +++ b/qobject/json-streamer.c
-> @@ -1,5 +1,5 @@
->  /*
-> - * JSON streaming support
-> + * JSON parser - callback interface and error recovery
+Was found on my macOS arm64 laptop w/ using llvm-mingw and an MXE fork =
+to build all the libs QEMU needed.
+Cross-compiled for arm64 Windows initially from there, and came across =
+this when targeting x86_64 from that setup.
 
-"Streaming" has always been misleading.  This isn't a streaming parser,
-and never was.  It's a conventional parser wed to a push lexer with a
-hack before this series, and a push parser afterwards.
 
->   *
->   * Copyright IBM, Corp. 2009
->   *
-> @@ -19,97 +19,73 @@
->  #define MAX_TOKEN_COUNT (2ULL << 20)
->  #define MAX_NESTING (1 << 10)
->  
-> -static void json_message_free_tokens(JSONMessageParser *parser)
-> -{
-> -    JSONToken *token;
-> -
-> -    while ((token = g_queue_pop_head(&parser->tokens))) {
-> -        g_free(token);
-> -    }
-> -}
-> -
->  void json_message_process_token(JSONLexer *lexer, GString *input,
->                                  JSONTokenType type, int x, int y)
->  {
->      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
-> -    JSONParserContext ctxt;
-> -    QObject *json = NULL;
-> +    g_autofree JSONToken *token = json_token(type, x, y, input);
->      Error *err = NULL;
-> -    JSONToken *token;
->  
-> +    parser->token_size += input->len;
-> +    parser->token_count++;
-> +
-> +    /* Detect message boundaries for error recovery purposes.  */
 
-I like the comment.
+--Apple-Mail=_49A92ACC-7662-43A4-B029-5820492421AE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
 
->      switch (type) {
->      case JSON_LCURLY:
->          parser->brace_count++;
->          break;
->      case JSON_RCURLY:
-> -        parser->brace_count--;
-> +        if (parser->brace_count > 0) {
-> +            parser->brace_count--;
-> +        }
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dus-ascii"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 10. Feb 2026, at 07:39, Pierrick Bouvier =
+&lt;pierrick.bouvier@linaro.org&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">On 2/9/26 8:07 PM, Mohamed Mediouni =
+wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;">llvm-dlltool assumes that it's by default targeting the host =
+architecture<br>it's running on. That assumption doesn't hold true when =
+cross-compiling.<br>Signed-off-by: Mohamed Mediouni =
+&lt;mohamed@unpredictable.fr&gt;<br>---<br>&nbsp;plugins/meson.build | 9 =
+++++++++-<br>&nbsp;1 file changed, 8 insertions(+), 1 =
+deletion(-)<br>diff --git a/plugins/meson.build =
+b/plugins/meson.build<br>index 34643e2cea..9899f166ee 100644<br>--- =
+a/plugins/meson.build<br>+++ b/plugins/meson.build<br>@@ -41,9 +41,16 @@ =
+if host_os =3D=3D 'windows'<br>&nbsp;&nbsp;&nbsp;# to find missing =
+symbols in current =
+program.<br>&nbsp;&nbsp;&nbsp;win32_qemu_plugin_api_link_flags =3D =
+['-Lplugins', '-lqemu_plugin_api']<br>&nbsp;&nbsp;&nbsp;if =
+meson.get_compiler('c').get_id() =3D=3D 'clang'<br>+ =
+&nbsp;&nbsp;&nbsp;if host_machine.cpu() =3D=3D 'x86_64'<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool_target =3D 'i386:x86-64'<br>+ =
+&nbsp;&nbsp;&nbsp;elif host_machine.cpu() =3D=3D 'aarch64'<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool_target =3D 'arm64'<br>+ =
+&nbsp;&nbsp;&nbsp;else<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error('Unknown =
+machine')<br>+ =
+&nbsp;&nbsp;&nbsp;endif<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# With =
+LLVM/lld, delaylib is specified at link time =
+(-delayload)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool =3D =
+find_program('llvm-dlltool', required: true)<br>- =
+&nbsp;&nbsp;&nbsp;dlltool_cmd =3D [dlltool, '-d', '@INPUT@', '-l', =
+'@OUTPUT@', '-D', 'qemu.exe']<br>+ &nbsp;&nbsp;&nbsp;dlltool_cmd =3D =
+[dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', =
+'qemu.exe']<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;win32_qemu_plugin_api_link_fl=
+ags +=3D =
+['-Wl,-delayload=3Dqemu.exe']<br>&nbsp;&nbsp;&nbsp;else<br>&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;# With gcc/ld, delay lib is built with a specific delay =
+parameter.<br></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Interesting, on which setup did you find =
+this?</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Regards,</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline =
+!important;">Pierrick</span></div></blockquote>Hello,</div><div><br></div>=
+<div>Was found on my macOS arm64 laptop w/ using llvm-mingw and an MXE =
+fork to build all the libs QEMU needed.</div><div>Cross-compiled for =
+arm64 Windows initially from there, and came across this when targeting =
+x86_64 from that =
+setup.</div><div><br></div><div><br></div></body></html>=
 
-Looks like you're keeping @brace_count (here) and @bracket_count (below)
-non-negative.  Any particular reason?
-
-Make them unsigned?
-
->          break;
->      case JSON_LSQUARE:
->          parser->bracket_count++;
->          break;
->      case JSON_RSQUARE:
-> -        parser->bracket_count--;
-> -        break;
-> -    case JSON_ERROR:
-> -        error_setg(&err, "JSON parse error, stray '%s'", input->str);
-> -        goto out_emit;
-> -    case JSON_END_OF_INPUT:
-> -        if (g_queue_is_empty(&parser->tokens)) {
-> -            return;
-> +        if (parser->bracket_count > 0) {
-> +            parser->bracket_count--;
->          }
->          break;
->      default:
->          break;
->      }
->  
-> -    /*
-> -     * Security consideration, we limit total memory allocated per object
-> -     * and the maximum recursion depth that a message can force.
-> -     */
-> -    if (parser->token_size + input->len + 1 > MAX_TOKEN_SIZE) {
-> -        error_setg(&err, "JSON token size limit exceeded");
-> -        goto out_emit;
-> -    }
-> -    if (g_queue_get_length(&parser->tokens) + 1 > MAX_TOKEN_COUNT) {
-> -        error_setg(&err, "JSON token count limit exceeded");
-> -        goto out_emit;
-> -    }
-> -    if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
-> -        error_setg(&err, "JSON nesting depth limit exceeded");
-> -        goto out_emit;
-> -    }
-> +    /* during error recovery eat tokens until parentheses balance */
-> +    if (!parser->error) {
-
-I think I'd write this as
-
-       if (parser->error) {
-           /* error recovery: eat tokens until parentheses balance */
-       } else {
-
-> +        /*
-> +         * Security consideration, we limit total memory allocated per object
-> +         * and the maximum recursion depth that a message can force.
-> +         */
-
-This comment now needs rephrasing: there's no recursion anymore.  In the
-previous commit if we're feeling persnickety.
-
-Suggest s/security/safety/ while there.
-
-> +        if (parser->token_size > MAX_TOKEN_SIZE) {
-> +            error_setg(&err, "JSON token size limit exceeded");
-> +        } else if (parser->token_count > MAX_TOKEN_COUNT) {
-> +            error_setg(&err, "JSON token count limit exceeded");
-> +        } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
-> +            error_setg(&err, "JSON nesting depth limit exceeded");
-> +        } else {
-> +            QObject *json = json_parser_feed(&parser->parser, token, &err);
-> +            if (json) {
-> +                parser->emit(parser->opaque, json, NULL);
-> +            }
-> +        }
->  
-> -    token = json_token(type, x, y, input);
-> -    parser->token_size += input->len;
-> -
-> -    g_queue_push_tail(&parser->tokens, token);
-> -
-> -    if ((parser->brace_count > 0 || parser->bracket_count > 0)
-> -        && parser->brace_count >= 0 && parser->bracket_count >= 0
-> -        && type != JSON_END_OF_INPUT) {
-> -        return;
-> -    }
-> -
-> -    json_parser_init(&ctxt, parser->ap);
-> -
-> -    /* Process all tokens in the queue */
-> -    while (!g_queue_is_empty(&parser->tokens)) {
-> -        token = g_queue_pop_head(&parser->tokens);
-> -        json = json_parser_feed(&ctxt, token, &err);
-> -        g_free(token);
-> -        if (json || err) {
-> -            break;
-> +        if (err) {
-> +            parser->emit(parser->opaque, NULL, err);
-> +            /* start recovery */
-> +            parser->error = true;
->          }
->      }
->  
-> -    json_parser_destroy(&ctxt);
-> -
-> -out_emit:
-> -    parser->brace_count = 0;
-> -    parser->bracket_count = 0;
-> -    json_message_free_tokens(parser);
-> -    parser->token_size = 0;
-> -    parser->emit(parser->opaque, json, err);
-> +    if ((parser->brace_count == 0 && parser->bracket_count == 0)
-> +        || type == JSON_END_OF_INPUT) {
-> +        parser->error = false;
-> +        parser->brace_count = 0;
-> +        parser->bracket_count = 0;
-> +        parser->token_count = 0;
-> +        parser->token_size = 0;
-> +        json_parser_reset(&parser->parser);
-> +    }
->  }
->  
->  void json_message_parser_init(JSONMessageParser *parser,
-> @@ -119,12 +95,13 @@ void json_message_parser_init(JSONMessageParser *parser,
->  {
->      parser->emit = emit;
->      parser->opaque = opaque;
-> -    parser->ap = ap;
-> +    parser->error = false;
->      parser->brace_count = 0;
->      parser->bracket_count = 0;
-> -    g_queue_init(&parser->tokens);
-> +    parser->token_count = 0;
->      parser->token_size = 0;
->  
-> +    json_parser_init(&parser->parser, ap);
->      json_lexer_init(&parser->lexer, !!ap);
->  }
->  
-> @@ -137,11 +114,10 @@ void json_message_parser_feed(JSONMessageParser *parser,
->  void json_message_parser_flush(JSONMessageParser *parser)
->  {
->      json_lexer_flush(&parser->lexer);
-> -    assert(g_queue_is_empty(&parser->tokens));
->  }
->  
->  void json_message_parser_destroy(JSONMessageParser *parser)
->  {
->      json_lexer_destroy(&parser->lexer);
-> -    json_message_free_tokens(parser);
-> +    json_parser_destroy(&parser->parser);
->  }
-
-Not mentioned in the commit message: before the patch, the "streamer"
-calls json_parser_init() and json_parser_destroy() for each balanced
-expression.  Afterwards, it calls them once, and instea calls
-json_parser_reset() between balanced expressions.
-
-I wonder whether it could be a separate patch.
-
+--Apple-Mail=_49A92ACC-7662-43A4-B029-5820492421AE--
 
