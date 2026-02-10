@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329D9E94625
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13B8E9462C
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 03:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdz8-0001m9-FZ; Mon, 09 Feb 2026 22:00:18 -0500
+	id 1vpdy6-0007Pe-9P; Mon, 09 Feb 2026 21:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdyp-0001FT-2m
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 22:00:04 -0500
+ id 1vpdy4-0007Je-6Y
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:12 -0500
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdyj-0004En-8w
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:56 -0500
+ id 1vpdy2-00049n-2I
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770692393; x=1802228393;
+ t=1770692350; x=1802228350;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=k4278D/unK5bwhnrNdxt3ByvRIvl2uTcZ+7sAYt5EQ8=;
- b=FTCQRrhlGPaeb6EDicFIoNZ8bnxUx1Hzm6NT1O5Vzf9+lLZ37evmDVss
- E0N3htA0YzNNNCiHcCtCaaZSi2NeVaje96Xmutp7/YD67AO3B0ejICUUA
- XhMF3YjfQHdiS+ffqG5EM1Zp9poS5+kaKJGGVdeM3fQS9je8GYzvQR+7o
- fW+gt8XnZWnPgmFMdjKG1bxeAWRC5m143VD7FpfvV61fMGGfMz3R3ezEf
- VtPAhmajQrYmLUXoPhXmAx2rhOy4JQJT0j2Gm0jP2oVJZCTzNbBnfECGN
- jCKGk8evC1UdgXutgYTu4gkWr8xasd7A+hhmdQ7X1JFmid4E07PjQWGX2 Q==;
-X-CSE-ConnectionGUID: LhZvm5wETU6soCoDWHn4aQ==
-X-CSE-MsgGUID: YuQwNruzQ2C4TA/xXjl/IA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75660026"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75660026"
+ bh=Ur3cP7AdR8VrQnIvQ0EdVQ5za3tvkhFVl8axcCzeabY=;
+ b=dJarETUDtp+nof+cblgbR84K8jhKCP6mDeS8r1eLMwBd9pYLuCXVKF7o
+ mtZVV68c98YUvS0H+cv9IRdod8eUVkCrwT9DmS1i4oX6Xus6E9Ukj+35O
+ Hjm0uA4BTNNKUWydQWEUVuyCLiKNM9ecUcOBn+GLP6VYnGzoGWfocVAee
+ khJECA3Iiu6uj0wpr/9n3egsSyAg4Fpu+dFimzsmfrExTX/r0nXoVB5n1
+ zZVm4h/lJhewBCYy7+u+MmPgOaaIE+ijy0HMDRfhJgv1kMetR+4qzPmSC
+ SKo8p02eWeP2JfyqZRUybSD4fCCj7OBmJ/vlf4cLUaBYKpcHb1j0d/cpY A==;
+X-CSE-ConnectionGUID: SnBwJP2iTu6VLEaMjZ/qog==
+X-CSE-MsgGUID: A3toLx1PTLCdFXbE0zkiew==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75659921"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75659921"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 18:59:52 -0800
-X-CSE-ConnectionGUID: R1aMdRTGRnSweM0ElxSd+Q==
-X-CSE-MsgGUID: rOuhMUKASpSp2/7FEzorpg==
+ 09 Feb 2026 18:59:08 -0800
+X-CSE-ConnectionGUID: HHl1rtJiQKCIo1glINaQuA==
+X-CSE-MsgGUID: KMlXl724Rea8r68Mkmdn9w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800818"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800645"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:48 -0800
+ by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -61,10 +61,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: [PATCH v2 21/21] hw/core/qdev-properties: support valid default value
- for DEFINE_PROP_UINT64_CHECKMASK
-Date: Tue, 10 Feb 2026 11:23:48 +0800
-Message-Id: <20260210032348.987549-22-zhao1.liu@intel.com>
+Subject: [PATCH v2 11/21] qom/qom-qmp-cmd: mark properties set from QMP/HMP
+ (JSON) "qom-set" as USER_SET
+Date: Tue, 10 Feb 2026 11:23:38 +0800
+Message-Id: <20260210032348.987549-12-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
@@ -95,96 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DEFINE_PROP_UINT64_CHECKMASK is designed to detect and check user's
-property setting:
- * checking: check property value against a bitmask.
- * detection: ask caller to provide an invalid value as the initial
-     "sentinel" value, which is impossible to be set by users. However,
-     this detection is not strict, since the property could be also
-     set internally.
+The QMP/HMP (JSON) command - "qom-set" is be used to set object property
+by external users, so it's from user and should be marked as USER_SET.
 
-The entire mechanism is not easy to use.
+Semantically, object_property_set_qobject() is used to convert a QObject
+into a property value, rather than directly parsing user input.
+Therefore, it is not suitable for adding a "from_user" argument like
+object_property_parse() does.
 
-Now there's USER_SET flag in place (and the current unique use case
-"lbr-fmt" has been converted to checking USER_SET way), manual setting
-of invalid initial values is no longer required.
-
-Thus, extend DEFINE_PROP_UINT64_CHECKMASK to support *valid* default
-value, and for "lbr-fmt" case, replace the invalid initialization value
-`~PERF_CAP_LBR_FMT` with a valid value `0`.
-
-In addition, considering DEFINE_PROP_UINT64_CHECKMASK itself actually
-doesn't identify whether the property is set by the user or not, remove
-"user-supplied" related description in its document.
+Instead, use object_property_set_flags() to set USER_SET flag
+immediately after object_property_set_qobject().
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/core/qdev-properties.c         |  1 +
- include/hw/core/qdev-properties.h | 14 +++++++-------
- target/i386/cpu.c                 |  4 +---
- 3 files changed, 9 insertions(+), 10 deletions(-)
+ qom/qom-qmp-cmds.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 91c4010e7dc9..b84214e60f19 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -507,6 +507,7 @@ const PropertyInfo qdev_prop_uint64_checkmask = {
-     .type  = "uint64",
-     .get   = get_uint64,
-     .set   = set_uint64_checkmask,
-+    .set_default_value = qdev_propinfo_set_default_value_uint,
- };
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 48b38d2b7f73..5a98ea276da2 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -134,7 +134,12 @@ void qmp_qom_set(const char *path, const char *property, QObject *value,
+         return;
+     }
  
- /* --- pointer-size integer --- */
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index c06de37b1e9d..2ac784bb5e9c 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -128,14 +128,14 @@ extern const PropertyInfo qdev_prop_link;
-                 ##__VA_ARGS__)
+-    object_property_set_qobject(obj, property, value, errp);
++    if (!object_property_set_qobject(obj, property, value, errp)) {
++        return;
++    }
++
++    object_property_set_flags(obj, property,
++                              OBJ_PROP_FLAG_USER_SET, errp);
+ }
  
- /**
-- * The DEFINE_PROP_UINT64_CHECKMASK macro checks a user-supplied value
-- * against corresponding bitmask, rejects the value if it violates.
-- * The default value is set in instance_init().
-+ * The DEFINE_PROP_UINT64_CHECKMASK macro checks a value against corresponding
-+ * bitmask, rejects the value if it violates.
-  */
--#define DEFINE_PROP_UINT64_CHECKMASK(_name, _state, _field, _bitmask)   \
--    DEFINE_PROP(_name, _state, _field, qdev_prop_uint64_checkmask, uint64_t, \
--                .bitmask    = (_bitmask),                     \
--                .set_default = false)
-+#define DEFINE_PROP_UINT64_CHECKMASK(_name, _state, _field, _bitmask, _defval) \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_uint64_checkmask, uint64_t,   \
-+                .bitmask    = (_bitmask),                                      \
-+                .set_default = true,                                           \
-+                .defval.u    = (_defval))
- 
- /**
-  * DEFINE_PROP_ARRAY:
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index a6d943c53a3f..56735570d66c 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10265,9 +10265,7 @@ static void x86_cpu_initfn(Object *obj)
-     object_property_add_alias(obj, "pause_filter", obj, "pause-filter");
-     object_property_add_alias(obj, "sse4_1", obj, "sse4.1");
-     object_property_add_alias(obj, "sse4_2", obj, "sse4.2");
--
-     object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
--    cpu->lbr_fmt = ~PERF_CAP_LBR_FMT;
-     object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
- 
-     if (xcc->model) {
-@@ -10439,7 +10437,7 @@ static const Property x86_cpu_properties[] = {
- #endif
-     DEFINE_PROP_INT32("node-id", X86CPU, node_id, CPU_UNSET_NUMA_NODE_ID),
-     DEFINE_PROP_BOOL("pmu", X86CPU, enable_pmu, false),
--    DEFINE_PROP_UINT64_CHECKMASK("lbr-fmt", X86CPU, lbr_fmt, PERF_CAP_LBR_FMT),
-+    DEFINE_PROP_UINT64_CHECKMASK("lbr-fmt", X86CPU, lbr_fmt, PERF_CAP_LBR_FMT, 0),
- 
-     DEFINE_PROP_UINT32("hv-spinlocks", X86CPU, hyperv_spinlock_attempts,
-                        HYPERV_SPINLOCK_NEVER_NOTIFY),
+ QObject *qmp_qom_get(const char *path, const char *property, Error **errp)
 -- 
 2.34.1
 
