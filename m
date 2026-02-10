@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC1E7E9462A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8BEE9462B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdxR-00064t-PZ; Mon, 09 Feb 2026 21:58:33 -0500
+	id 1vpdxH-00061C-Ix; Mon, 09 Feb 2026 21:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdxQ-00063G-Hm
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:32 -0500
+ id 1vpdxF-00060X-7K
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:21 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdxO-00046a-6J
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:32 -0500
+ id 1vpdxC-00045e-5A
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:58:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770692310; x=1802228310;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=s/JlYnxjXvIrGB6oJxc/D12Kh0TiBPjCTqhRHSqsD3A=;
- b=G4qMGfIZIZp3jfSRQFS98glvRTFdBp8QmCdccNfMjpvF/H6jeWjUpeCX
- aRRrfNOZ0rmU1Ns0vuhoOuXr8djJPFTy6jxR4D8UCJLw9e2Ht4IHkRh+E
- 9PMkobyfauf9eQn7MdlZUY2IsXjDLJdNHAuZgL3MLdok0addHZ9hj1Uzq
- EyCQx5R4Dof9/qWpqxZkYehYRxwa+ldXI2qIym4bLJoUxU6UFVXy0IvNO
- yhc/5xiw3lxsBPq3mlT8yHpvXoQBTSsV7L0J0QZU44fX+BD65e0f4DHXy
- 23bp51+e8tPuxuPCJoU42iUOjaJuKa3Nlut3cJ8srYk2xsRlHA6W5Qjf1 A==;
-X-CSE-ConnectionGUID: +lwqZmhjTFuotFOWmovjEQ==
-X-CSE-MsgGUID: zulYyosESueEYcFGPlZ50A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71854249"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71854249"
+ t=1770692298; x=1802228298;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=MBWhbuEMR6Y77nJEzexrdp7Mno+tXNDIxsjfWWTPNCA=;
+ b=oBucaVKZ8IMTYPUYwh05viocavydC7ia5NEeTXwo4PYQyBl5Pzeky/0a
+ zIWQx6NT1NO/4bXG/uJx7XS2oI6TmYvFNFq65J9vdJo2oC8w3pp0qYaLA
+ C10/p0ytAz0ZekjL7J3+HMdp5QeDP5IKQtBBOjbuFbdDLLaMPl8rNYJyj
+ Pm5CozswYjPZdrMEIqwBQiQ8vB7fQ5LukuCuFPimYymNW+WFAjwINfNI5
+ iBNxPzd3j0PTORSOKFQtUD2fJoXnT1dXsMHVXIURQYJYx7LeKxEMfzYmh
+ LAl6d/lpXeaMiCkUpDoMQsQ0Be6KJm5Qk5u6EQpk3XHF7/LtI75dXkdT/ Q==;
+X-CSE-ConnectionGUID: NZcmfSwmTKGj5igw4OC2pQ==
+X-CSE-MsgGUID: gReANuMnT524cAVk9OIwHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71854202"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71854202"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 18:58:30 -0800
-X-CSE-ConnectionGUID: ayAaCdiVSB2REoX++RGXJw==
-X-CSE-MsgGUID: XikgiVXbTQyXeA48f7Z3eQ==
+ 09 Feb 2026 18:58:14 -0800
+X-CSE-ConnectionGUID: Oj5cZtgsT8eulW6/KvlAhA==
+X-CSE-MsgGUID: 4rbwkhmQRP6Werqvt4M86A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800457"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800388"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:58:24 -0800
+ by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:58:09 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -61,13 +61,11 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: [PATCH v2 03/21] qom/object: factor out
- object_class_property_try_add()
-Date: Tue, 10 Feb 2026 11:23:30 +0800
-Message-Id: <20260210032348.987549-4-zhao1.liu@intel.com>
+Subject: [PATCH v2 00/21] qom: introduce property flags to track external user
+ input
+Date: Tue, 10 Feb 2026 11:23:27 +0800
+Message-Id: <20260210032348.987549-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
-References: <20260210032348.987549-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
@@ -95,144 +93,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar to object_property_try_add(), factor out
-object_class_property_try_add().
+Hi,
 
-This allows adding more arguments to the core implementation without
-changing the signature of object_class_property_add(), avoiding the
-need to modify the extensive number of callers distributed throughout
-the code tree.
+This is the v2 trying to introduce property flags to detect user's
+property setting (from CLI/QMP/HMP). I dropped RFC tag since previous
+RFC v1 [1].
 
-While at it, add documentation for these functions.
+Though this work the follow-up of v2.6 & v2.7 machines' removal [2],
+now it is decoupled from [2] totally since v2 doesn't detect compat
+property and only focuses on external user setting, so this series is
+based on master branch at the commit 28a6ca268c2c ("Merge tag 'single-
+binary-20260203' of https://github.com/philmd/qemu into staging"). And
+you can also find the code here:
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+https://gitlab.com/zhao.liu/qemu/-/tree/prop-flags-v2.3-02-08-2026
+
+This series introduces 3 property flags:
+ * USER_SET:
+   Any external user property setting (from CLI/HMP/QMP) is marked as
+   USER_SET.
+ * DEPRECATED:
+   Once a property is marked as DEPRECATED, any external user property
+   setting will trigger a warning.
+ * INTERNAL:
+   Once a  property is marked as INTERNAL, any external user property
+   setting will cause an error.
+
+More details or document for these 3 flags, you can refer patch 7.
+
+
+Compared with RFC v1, v2 mainly:
+ * introduce USER_SET property flag to identify all user's setting.
+   - patch 7 for document.
+ * construct DEPRECATED & INTERNAL flag on USER_SET.
+   - patch 7 for document.
+ * cover more comprehensive user set cases.
+   - patch 8-13.
+ * provide examples about new flags (USER_SET/DEPRECATED/INTELNAL).
+   - patch 15/16/17 are examples for DEPRECATED flag.
+   - patch 18 is the example for INTERNAL flag.
+   - patch 20 is the example for USER_SET flag.
+
+I think v2 should now cover "nearly" all cases (patch 8-13) where users
+set properties: one approach is to trace the call chain of
+object_property_set().
+
+Even if there are cases that were missed, they can be easily addressed
+based on this series:
+
+  object_property_set(obj, ...);
+  /* Insert this call after object_property_set(). */
+  object_property_set_flags(obj, ..., OBJ_PROP_FLAG_USER_SET, ...);
+
+[1]: RFC v1:
+     https://lore.kernel.org/qemu-devel/20251202170502.3228625-1-zhao1.liu@intel.com/
+[2]: hw/i386/pc: Remove deprecated 2.6 and 2.7 PC machines
+     https://lore.kernel.org/qemu-devel/20260108033051.777361-1-zhao1.liu@intel.com/
+
+Thanks and Best Regards,
+Zhao
 ---
- include/qom/object.h | 56 ++++++++++++++++++++++++++++++++++++++++++++
- qom/object.c         | 34 ++++++++++++++++++++-------
- 2 files changed, 82 insertions(+), 8 deletions(-)
+Zhao Liu (21):
+  qom/object: use BIT macro for ObjectPropertyFlags
+  qom/object: cache ObjectPropertyFlags in ObjectProperty
+  qom/object: factor out object_class_property_try_add()
+  qom/object: add flags argument in object_{class_}property_try_add()
+  qom/object: rename object_{class_}property_try_add() to
+    object_{class_}property_add_full()
+  qom/object: add helpers to set/get/clear property flags
+  qom/object: introduce user interaction flags for properties
+  qom/object: add from_user argument in object_property_parse()
+  qom/object: mark global property set from CLI as USER_SET
+  qom/qom-hmp-cmd: mark properties set from HMP (non-JSON) "qom-set" as
+    USER_SET
+  qom/qom-qmp-cmd: mark properties set from QMP/HMP (JSON) "qom-set" as
+    USER_SET
+  qom/object_interfaces: mark properties set from qdict & keyval as
+    USER_SET
+  system/vl: mark property set in object_parse_property_opt() as
+    USER_SET
+  hw/core/qdev-properties: allow qdev properties accept flags
+  target/i386: deprecate fill-mtrr-mask property
+  target/i386: deprecate cpuid-0xb property
+  hw/intc/ioapic: deprecate version property
+  target/i386: mark x-consistent-cache property as internal-only
+  target/i386: remove redundant validation for lbr-fmt property
+  target/i386: detect user provided lbr-fmt via property flag
+  hw/core/qdev-properties: support valid default value for
+    DEFINE_PROP_UINT64_CHECKMASK
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 05706d4d7e3a..060db136988b 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1147,6 +1147,62 @@ ObjectProperty *object_property_add(Object *obj, const char *name,
- 
- void object_property_del(Object *obj, const char *name);
- 
-+/**
-+ * object_class_property_try_add:
-+ * @klass: the object class to add a property to
-+ * @name: the name of the property.  This can contain any character except for
-+ *  a forward slash.  In general, you should use hyphens '-' instead of
-+ *  underscores '_' when naming properties.
-+ * @type: the type name of the property.  This namespace is pretty loosely
-+ *   defined.  Sub namespaces are constructed by using a prefix and then
-+ *   to angle brackets.  For instance, the type 'virtio-net-pci' in the
-+ *   'link' namespace would be 'link<virtio-net-pci>'.
-+ * @get: The getter to be called to read a property.  If this is NULL, then
-+ *   the property cannot be read.
-+ * @set: the setter to be called to write a property.  If this is NULL,
-+ *   then the property cannot be written.
-+ * @release: called when the property is removed from the object.  This is
-+ *   meant to allow a property to free its opaque upon object
-+ *   destruction.  This may be NULL.
-+ * @opaque: an opaque pointer to pass to the callbacks for the property
-+ * @errp: pointer to error object
-+ *
-+ * Returns: The #ObjectProperty; this can be used to set the @resolve
-+ * callback for child and link properties.
-+ */
-+ObjectProperty *object_class_property_try_add(ObjectClass *klass, const char *name,
-+                                              const char *type,
-+                                              ObjectPropertyAccessor *get,
-+                                              ObjectPropertyAccessor *set,
-+                                              ObjectPropertyRelease *release,
-+                                              void *opaque, Error **errp);
-+
-+
-+/**
-+ * object_class_property_add:
-+ * Same as object_class_property_try_add() with @errp hardcoded to
-+ * &error_abort.
-+ *
-+ * @klass: the object class to add a property to
-+ * @name: the name of the property.  This can contain any character except for
-+ *  a forward slash.  In general, you should use hyphens '-' instead of
-+ *  underscores '_' when naming properties.
-+ * @type: the type name of the property.  This namespace is pretty loosely
-+ *   defined.  Sub namespaces are constructed by using a prefix and then
-+ *   to angle brackets.  For instance, the type 'virtio-net-pci' in the
-+ *   'link' namespace would be 'link<virtio-net-pci>'.
-+ * @get: The getter to be called to read a property.  If this is NULL, then
-+ *   the property cannot be read.
-+ * @set: the setter to be called to write a property.  If this is NULL,
-+ *   then the property cannot be written.
-+ * @release: called when the property is removed from the object.  This is
-+ *   meant to allow a property to free its opaque upon object
-+ *   destruction.  This may be NULL.
-+ * @opaque: an opaque pointer to pass to the callbacks for the property
-+ *
-+ * Returns: The #ObjectProperty; this can be used to set the @resolve
-+ * callback for child and link properties.
-+ */
- ObjectProperty *object_class_property_add(ObjectClass *klass, const char *name,
-                                           const char *type,
-                                           ObjectPropertyAccessor *get,
-diff --git a/qom/object.c b/qom/object.c
-index f5801f4624c8..f101b48154d1 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1310,17 +1310,22 @@ object_property_add(Object *obj, const char *name, const char *type,
- }
- 
- ObjectProperty *
--object_class_property_add(ObjectClass *klass,
--                          const char *name,
--                          const char *type,
--                          ObjectPropertyAccessor *get,
--                          ObjectPropertyAccessor *set,
--                          ObjectPropertyRelease *release,
--                          void *opaque)
-+object_class_property_try_add(ObjectClass *klass,
-+                              const char *name,
-+                              const char *type,
-+                              ObjectPropertyAccessor *get,
-+                              ObjectPropertyAccessor *set,
-+                              ObjectPropertyRelease *release,
-+                              void *opaque, Error **errp)
- {
-     ObjectProperty *prop;
- 
--    assert(!object_class_property_find(klass, name));
-+    if (object_class_property_find(klass, name) != NULL) {
-+        error_setg(errp, "attempt to add duplicate property '%s'"
-+                   " to object class (type '%s')",
-+                   name, object_class_get_name(klass));
-+        return NULL;
-+    }
- 
-     prop = g_malloc0(sizeof(*prop));
- 
-@@ -1337,6 +1342,19 @@ object_class_property_add(ObjectClass *klass,
-     return prop;
- }
- 
-+ObjectProperty *
-+object_class_property_add(ObjectClass *klass,
-+                          const char *name,
-+                          const char *type,
-+                          ObjectPropertyAccessor *get,
-+                          ObjectPropertyAccessor *set,
-+                          ObjectPropertyRelease *release,
-+                          void *opaque)
-+{
-+    return object_class_property_try_add(klass, name, type, get, set, release,
-+                                         opaque, &error_abort);
-+}
-+
- ObjectProperty *object_property_find(Object *obj, const char *name)
- {
-     ObjectProperty *prop;
+ docs/about/deprecated.rst         |  31 +++++
+ hw/core/qdev-properties.c         |  29 ++--
+ hw/i386/sgx.c                     |   2 +-
+ hw/intc/ioapic.c                  |   3 +-
+ include/hw/core/qdev-properties.h |  38 +++---
+ include/qom/object.h              | 215 +++++++++++++++++++++++++++---
+ qom/object.c                      | 177 ++++++++++++++++++++----
+ qom/object_interfaces.c           |   5 +
+ qom/qom-hmp-cmds.c                |   2 +-
+ qom/qom-qmp-cmds.c                |   7 +-
+ system/vl.c                       |   6 +-
+ target/i386/cpu.c                 |  28 ++--
+ 12 files changed, 448 insertions(+), 95 deletions(-)
+
 -- 
 2.34.1
 
