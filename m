@@ -4,77 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C82EA3F11
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E71EA3F0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphlT-0004zk-MY; Tue, 10 Feb 2026 02:02:27 -0500
+	id 1vphnY-0001AG-F2; Tue, 10 Feb 2026 02:04:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vphlO-0004xW-Mx
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:02:23 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vphnV-00019w-R0; Tue, 10 Feb 2026 02:04:33 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vphlM-0004p7-EP
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:02:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770706940; x=1802242940;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ztabUCwYVEnXrUXpODUpIX/j6IsbTnuLW3gEfsQfQNk=;
- b=Y3mykoQ8x85BGbt4Ef9q30T3aqcc40hpezG9CZy2tEyH8o7Gp0ODXHjT
- p6QxZpScfIVsQVAgG+vQyN1LRHM9dWvEMuIgn+YhQhm0xeXms6Rz7JNGl
- QrlECosFxNLzpjGUsnQir4FdDHrgEcw5U/pdTVQkI3BJOpSO+x9Rfg0X2
- VbDLOZfwqY3iNlkmN8ppHL8lN5aSgUSqgpDs8XxmCUyck17XtE3v9nTDF
- d37DOZWGZdG3QZfSHDQppSkqERmjBoPakF1tuway6Ry783wNSuvDTlKUg
- zxON0B8SWTUL9O+ORLd8WUQHsxTUogptL3DokSKHY4KVfreBoV3mLfbon w==;
-X-CSE-ConnectionGUID: QiC7RoCoSOqoGrqOL4OkFQ==
-X-CSE-MsgGUID: rINlG4pKQkqcgdilDshKow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="72012150"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="72012150"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 23:02:14 -0800
-X-CSE-ConnectionGUID: DJBiikBhTwWSj4fOc7gyUw==
-X-CSE-MsgGUID: grm4R24qQsOSjaw6Qe5oWw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="210920538"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 23:02:13 -0800
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v6 03/11] virtio-gpu: Rename udmabuf files and helpers to
- dmabuf
-Date: Mon,  9 Feb 2026 22:59:43 -0800
-Message-ID: <20260210070155.1176081-4-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
-References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vphnU-0004zs-9A; Tue, 10 Feb 2026 02:04:33 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 619Gf4Iq614323; Tue, 10 Feb 2026 07:04:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=xO617q2d3V/0iJUeS+S0sqpXU45bCE
+ k4rhxbGSU5nWA=; b=RNdTvuY+FXdeH6aDwOX5LQn7YC04gHtFQkeDhnjK2h20dT
+ aLUrh/odxLjY+Tni4woo0CHpV7UUqebC0pd/Y1h09h8bQ6nXq1/qHh26VVOqFl7T
+ J/UA8S7zCkjuMWwixPV1YVBL+1fkW6llqPGdR/6oOAyo0zQJgpdcXSnbo0HxBNz9
+ CESyY6fZnsd8yxmwVdf4BL+AKddca0+bT2iS979BFmFebMcqgvMBEQmtXi5iOFJ1
+ Bukmq7+jiDTenzNIBVk0RcFDIU51tbRgKnwUpNBJQw7W6MvHk98QOjto9jjb4pnK
+ UoC4FuBECmIVnUPIkU6tYWt/bIurSJfJhvjTGPlQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696w2wsa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 07:04:28 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A4poDs001407;
+ Tue, 10 Feb 2026 07:04:27 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6gqn0a17-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 07:04:27 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61A74NxN48497074
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 07:04:23 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F1482004B;
+ Tue, 10 Feb 2026 07:04:23 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B80B520049;
+ Tue, 10 Feb 2026 07:04:21 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.109.199.210])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 10 Feb 2026 07:04:21 +0000 (GMT)
+Date: Tue, 10 Feb 2026 12:34:19 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com, harshpb@linux.ibm.com
+Subject: Re: [PATCH v2 2/3] ppc/pnv: Add unimplemented quad and core regs
+Message-ID: <aYrXdeZol4koVzYX@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260126135507.771552-1-calebs@linux.ibm.com>
+ <20260126135507.771552-3-calebs@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260126135507.771552-3-calebs@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=698ad87c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=L_DLxeZRvcLHnZ-rSf8A:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: WRmrGMpd74ZUbN4F49A8Up61PJCecKPV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA1NSBTYWx0ZWRfX2bAR8KUE3gSA
+ AKv+1K1SLyX+oebHz0ktMHT5AQPtC8ggNf6r9j8n8KTXMchjec/IpX3Nwr+X8CIfILjMXjM6K7I
+ Q7i1pwouVbcUEXpikl9myc1V5tNm4sx46ORRAXJxw32L51ySn8kFuvffdhHpmOqC8hWbmG7hjPM
+ Ix40RpFqXr7FEdoFUDkTFyoYPGrKJ44FwnlMxpGjQf9+ACrBDYNzaZ6ZVmKLToxmnZHz3muPOEj
+ oKj1mkmdKSr1QVVLvbXKV4lCekWeLavpKv4Fo+/4TWU4iccFMeILBFG/jx15W9xdkj/CwLgrqDS
+ eq0WEwtMEJM1G3vICRS9P0Rk8oJ3vMD2RtkVbcD4r4YwhYdsV487dOjdy/GYNrmsSN+CGvtlLw/
+ UWNT04rZBsYwqToWHxUUxoF0PdiSyLT6EgoELUC5SaupjbRiOxFfRegwrKx/9xi96SQJl3BC5oB
+ rT+qVhN5GQ/ypMRta0w==
+X-Proofpoint-ORIG-GUID: x3tNdKBaeuSsD7j6Cj8rYydWnph1no0V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602100055
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,180 +122,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is prep-work for adding the ability to create dmabuf fds from
-VFIO devices in addition to udmabuf.
+Hello Caleb,
 
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Alex Williamson <alex@shazbot.org>
-Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- hw/display/meson.build                               |  4 ++--
- ...gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |  4 ++--
- .../{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c}    | 12 ++++++------
- hw/display/virtio-gpu.c                              |  8 ++++----
- include/hw/virtio/virtio-gpu.h                       |  6 +++---
- 5 files changed, 17 insertions(+), 17 deletions(-)
- rename hw/display/{virtio-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} (79%)
- rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (94%)
+Was going through the patch again. Can we add a comment doc, about the
+scoms for which the unimplemented warning is getting hidden ?
 
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 90e6c041bd..f5f92b1068 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -69,9 +69,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
-   virtio_gpu_ss.add(when: 'CONFIG_VIRTIO_GPU',
-                     if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
-   if host_os == 'linux'
--    virtio_gpu_ss.add(files('virtio-gpu-udmabuf.c'))
-+    virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
-   else
--    virtio_gpu_ss.add(files('virtio-gpu-udmabuf-stubs.c'))
-+    virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
-   endif
-   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
-   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
-diff --git a/hw/display/virtio-gpu-udmabuf-stubs.c b/hw/display/virtio-gpu-dmabuf-stubs.c
-similarity index 79%
-rename from hw/display/virtio-gpu-udmabuf-stubs.c
-rename to hw/display/virtio-gpu-dmabuf-stubs.c
-index f692e13510..01067e246d 100644
---- a/hw/display/virtio-gpu-udmabuf-stubs.c
-+++ b/hw/display/virtio-gpu-dmabuf-stubs.c
-@@ -7,12 +7,12 @@ bool virtio_gpu_have_udmabuf(void)
-     return false;
- }
- 
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     /* nothing (stub) */
- }
- 
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     /* nothing (stub) */
- }
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-similarity index 94%
-rename from hw/display/virtio-gpu-udmabuf.c
-rename to hw/display/virtio-gpu-dmabuf.c
-index d804f321aa..c34d4c85bc 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-dmabuf.c
-@@ -68,7 +68,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-     g_free(list);
- }
- 
--static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
-+static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     res->remapped = mmap(NULL, res->blob_size, PROT_READ,
-                          MAP_SHARED, res->dmabuf_fd, 0);
-@@ -79,7 +79,7 @@ static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
-     }
- }
- 
--static void virtio_gpu_destroy_udmabuf(struct virtio_gpu_simple_resource *res)
-+static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     if (res->remapped) {
-         munmap(res->remapped, res->blob_size);
-@@ -128,7 +128,7 @@ bool virtio_gpu_have_udmabuf(void)
-     return memfd_backend;
- }
- 
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     void *pdata = NULL;
- 
-@@ -141,7 +141,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-         if (res->dmabuf_fd < 0) {
-             return;
-         }
--        virtio_gpu_remap_udmabuf(res);
-+        virtio_gpu_remap_dmabuf(res);
-         if (!res->remapped) {
-             return;
-         }
-@@ -151,10 +151,10 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-     res->blob = pdata;
- }
- 
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
- {
-     if (res->remapped) {
--        virtio_gpu_destroy_udmabuf(res);
-+        virtio_gpu_destroy_dmabuf(res);
-     }
- }
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 9930a21317..bc4d33c4dc 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -360,7 +360,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    virtio_gpu_init_udmabuf(res);
-+    virtio_gpu_init_dmabuf(res);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
- }
- 
-@@ -917,7 +917,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-     res->addrs = NULL;
- 
-     if (res->blob) {
--        virtio_gpu_fini_udmabuf(res);
-+        virtio_gpu_fini_dmabuf(res);
-     }
- }
- 
-@@ -954,7 +954,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-     }
- 
-     if (res->blob_size) {
--        virtio_gpu_init_udmabuf(res);
-+        virtio_gpu_init_dmabuf(res);
-     }
- }
- 
-@@ -1440,7 +1440,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
- 
--        virtio_gpu_init_udmabuf(res);
-+        virtio_gpu_init_dmabuf(res);
- 
-         resource_id = qemu_get_be32(f);
-     }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 58e0f91fda..e3d351a2d4 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -354,10 +354,10 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-                                    struct virtio_gpu_set_scanout_blob *ss,
-                                    uint64_t blob_size);
- 
--/* virtio-gpu-udmabuf.c */
-+/* virtio-gpu-dmabuf.c */
- bool virtio_gpu_have_udmabuf(void);
--void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
--void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
-+void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res);
-+void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res);
- int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-                              uint32_t scanout_id,
-                              struct virtio_gpu_simple_resource *res,
--- 
-2.50.1
+On 26/01/26 07:55AM, Caleb Schlossin wrote:
+> <...snip...>
+>
+> @@ -284,6 +305,15 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+>          }
+>          break;
+>  
+> +    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
+> +    case PNV10_XSCOM_EC_SPATTN_OR:
+> +    case PNV10_XSCOM_EC_SPATTN_AND:
+> +    case PNV10_XSCOM_EC_SPATTN:
+> +    case PNV10_XSCOM_EC_SPATTN_MASK:
+> +        break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+
+Here, the unimp warning is getting skipped, by ignoring writes to those
+scoms.
+Similarly in other places, you return 0 as default value for few scom
+reads.
+
+A comment about the special treatment will help future developers to
+read the code.
+
+Thanks,
+- Aditya G
+
 
 
