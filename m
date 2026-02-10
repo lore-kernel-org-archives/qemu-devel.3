@@ -4,77 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF49EB26FD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 19:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D814EB2705
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 19:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpt3P-0000qh-66; Tue, 10 Feb 2026 14:05:43 -0500
+	id 1vptMr-0000jw-4s; Tue, 10 Feb 2026 14:25:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vpt3I-0000oy-Ih
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 14:05:37 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vpt3F-0007XJ-BA
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 14:05:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770750334; x=1802286334;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=ylcl4fb3NHyomkpp/UlE8A9D2DVzsDW11g1wPGUvirE=;
- b=ERJNFB0CxpdRm6yutqDViLXtGWFAp07vM0djfk9EV3idjToCluUXAWcy
- 8TJWufGoTVYEBvnG2To6OaFSswLlTSdU7c0S9mdfhekjsvW08iH0wuxmS
- IlN5RMmJ7OtgAQfQou3+D+CJnO2o3awuaHVwaH1sEiML4aBhg4Pfx1WFH
- FkVpnoqi2KxOz5p9IYpdlegRBeAwu3SdIuXMtrunxmTABF83e379WyQU/
- 2eavpscBnE/ySeVL0O7KXTQsWmLPcH33mCekFMwbHFoMc+vdeL4OLN8WH
- m/HYZhZwaqXi5JHZoWHjTxW+/oo1gvNrqvMq3TdtHoDWdJoeqID1WHurv g==;
-X-CSE-ConnectionGUID: nXYNsNWHTXmKdvbXQv/UHA==
-X-CSE-MsgGUID: K5aQEIGOSEmf8ydPVxUzTA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="71789401"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71789401"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2026 11:05:28 -0800
-X-CSE-ConnectionGUID: zCijB2DbQZuWXl8byfvD5w==
-X-CSE-MsgGUID: AHHvJZfgS02KcdI2813xiA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="212098802"
-Received: from unknown (HELO [10.241.241.84]) ([10.241.241.84])
- by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2026 11:05:27 -0800
-Message-ID: <488a2ea7-062d-4561-89ec-f053af234cdd@intel.com>
-Date: Tue, 10 Feb 2026 11:05:26 -0800
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vptMf-0000jB-9Z
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 14:25:37 -0500
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vptMd-0003Xt-Fx
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 14:25:36 -0500
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-505d3baf1a7so48391cf.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 11:25:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770751533; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HLH0db+wQvR+2+b3JbXaPyzPzfL3aJW8711q0eDuLA9ZXcREYqNY8Z1Esqmy/goMKf
+ fApQE2PC5+3zqOGjmdrueHwvNdncyFGStSLFRNBBIGlpM5He+BPqNgb85gpd+em+ofgK
+ h3iSBBYzGhu8os4GP0DEPZNQpDUgJT2GD6HcCwejoMPQybM+QcYPKLIdgigdrcpNmuYj
+ ucUiTthvhzquBYV/slQiFBS2xtu5DSMwd6SDolJN3LZlTz9MxsiDmuFUtQj7MBgbJ9Ph
+ syEIa78UdcC0jxFc8qT2oYfDxqGzCG2HdXofOwNi597PZg9/yM6jLkkJ0gh+BAFYEIz1
+ MZJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=IYXaxxlBgc8Kqkh4DZ+jrMOV88/UOIu8btwWCvjGJBs=;
+ fh=P3Dm9LZuEo0LHY52zz8EmUqeQRAXmTXFgTurHEaky60=;
+ b=R06jguas4PblLaE0f+IrSjfKAEuh42itzLW35Q/fi79o0kIxV9puww+YU+uN1Xxf/K
+ HARaj4X6UD8UhyP+Rr4n2VwYgG3tXqRRfSBe5NLwPnJGeWdVH+xpKP82uTQ4m/SNj6I+
+ Dyldoz+eM2TIr8wBgMF3tLpGYLnxXZJOTTibxid0kDzdusklx4rq0XfNwVwlGpEpC4q0
+ r5RM3KLKmelu3+vA2CFmUDVdVBRxx3Tl2f0kfcIisAxyDXVQv565E6rmq4vBHU6hmilG
+ WR7AXaHO/DwAaBV7BBWXSchDlX3upONg3vydekRKPdNgS4hVYd4qwmFqWSkfhwV4lLLK
+ Xgrg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1770751533; x=1771356333; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IYXaxxlBgc8Kqkh4DZ+jrMOV88/UOIu8btwWCvjGJBs=;
+ b=t28JaZymDK/yIzfrCNQhM0QeRbwOcDsSwhbwSz+LVh5keZY3GojcqvvEHKndwbAdC4
+ gRbsoGulWm0uQ1heUJ+2xLXqkKpTOvxHNonau8BucMPKq0inhQonvXtWoJu02DyZU5u0
+ v6cRqOTjtrI0JiSb2yG23hyhd+yWuz6B6GgTAINmRSvRdG12DN3xypMsW46K5pJjfmZi
+ vEr3HUsX/nRHDgdN0e4VEhk/dWVAAqt1qpAVDDTNgHgD9B7oE8M2yEp+aDTXpqAcdKIX
+ oLxH9FuNpEUb/Ae8Ig0iSyyRUgggSda0wwtHfuugfk4ARxlhdZZXA6g73o+f34HLOhLy
+ OpUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770751533; x=1771356333;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IYXaxxlBgc8Kqkh4DZ+jrMOV88/UOIu8btwWCvjGJBs=;
+ b=iPNxVLq/fXSBCu2lxG0lp5woTqX4s63WDQMenL1EiOppuKXL11EEeolZ/We+oBHkX4
+ cvqXzCyHZkfA8lEu0nnskLXdykzix1sq0gaEQSCXWg5z45Ed52rEHAMucOJYPehxPT6y
+ hE9e5+5gYb2ZgarZFb8HbqmsFq5OFw1qirzd5SJaETZWeN4cSAbs+kA2IjKn0Kytv1SP
+ vbSogWt3dwwUdxYMhQAV4LaTnrbuuUNzHo4fKTENY1irkFSkkLgd+MJoYJ8DxIWYwgMF
+ o2kADszPt/PKfEpwZuuvEoyLCMYDWFX3KsJilb1ELhRhAtrZpnubseEt31lmSR9UZw//
+ BxOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyvx+qOaGNgBaJu1RLMyDtLJuKRii6BbxaapsYSPQg3DLFs2Ui1kQdrGvGP9FuIdUklMFyim+UHIpj@nongnu.org
+X-Gm-Message-State: AOJu0YwBthprn7ELAwa7LrR2oBWayFFdx0VQJoezh2FHub+K8JpXyvCh
+ /WOoo8jUKj+0jRNa2Zz/MYptunB9QkAxhjBrtwROFjppedQRuuAhcpkZDoB7KGRJswstGUgMM47
+ Xv3pYwI5XWsso5mfn5DjqfhRN0SdtXqiuCd7AAwbI
+X-Gm-Gg: AZuq6aL+qNiKOphlJpxSx9cSVX7ehKPGY4YkkHr0otOMQSlWBnzCTpJ2QFOoyzvn7nK
+ aM+GTvQ6yMWs8YbwsNSps+pHihnMgKQ3mtejrrQOUll89x6bjMHmBSPk6qL6vinF5pV/ecX8M54
+ 35z0mTZn/ZFmG5V790iUS6+B5pHSwTfr9IoG9pzaj3lJLfRVerH/5d7wZVtY5gcXQ8FhZ52e5uo
+ S+ZT8Ae3VI8AypF3SNaPYYzCzD5v7LeXAe5IGOvuyd0Y8CgkeFjC65BTX8B5NTIPjAWr7gRI40K
+ gLcykm/WclNKBD/+ohyn8oJ6htljFObBLadfpSVr6EHx1AoE5JeO2Ga+R2DzOJvGUAAy5O2w784
+ oPVr40YZ7MO/2uAQyA1on4xLZkYc/Kgz+nh6z
+X-Received: by 2002:a05:622a:181e:b0:4f1:9c3f:2845 with SMTP id
+ d75a77b69052e-50681698b91mr1199401cf.9.1770751532817; Tue, 10 Feb 2026
+ 11:25:32 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 11/11] target/i386: Disable guest PEBS capability when
- not enabled
-To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
-References: <20260128231003.268981-1-zide.chen@intel.com>
- <20260128231003.268981-12-zide.chen@intel.com>
- <576b57e3-92df-4a35-ba7c-00bf12833313@linux.intel.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <576b57e3-92df-4a35-ba7c-00bf12833313@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20260210051008.355149-1-jamin_lin@aspeedtech.com>
+ <20260210051008.355149-4-jamin_lin@aspeedtech.com>
+ <209dc94c-080b-49fa-afd0-d89d43b318e6@kaod.org>
+In-Reply-To: <209dc94c-080b-49fa-afd0-d89d43b318e6@kaod.org>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Tue, 10 Feb 2026 11:25:21 -0800
+X-Gm-Features: AZwV_QiXX0lIrUovR96uGyKhGgKuHxyY0dsqY6eriDCvxKbghRyk07xLJ9lR-Ng
+Message-ID: <CA+QoejU4FBKwUEK2FCVmdLydjBcCKvtGdLq=1GxBHXOEAGYSVQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/11] hw/arm/aspeed_ast27x0: Add AST2700 A2 SoC support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,74 +129,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Feb 9, 2026 at 11:14=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.org=
+> wrote:
+>
+> On 2/10/26 06:10, Jamin Lin wrote:
+> > AST2700 A2 is functionally identical to AST2700 A1.
+> > There are no changes to the IRQ layout, memory map, or peripheral
+> > configuration. The only difference is the silicon revision.
+> >
+> > This commit introduces a dedicated AST2700 A2 SoC type by reusing
+> > the existing AST2700 A1 implementation and setting the A2 silicon
+> > revision accordingly.
+> >
+> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> > ---
+> >   hw/arm/aspeed_ast27x0.c | 36 ++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 36 insertions(+)
+> >
+> > diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> > index 61790ea1cc..87dcb82e1b 100644
+> > --- a/hw/arm/aspeed_ast27x0.c
+> > +++ b/hw/arm/aspeed_ast27x0.c
+> > @@ -1166,6 +1166,36 @@ static void aspeed_soc_ast2700a1_class_init(Obje=
+ctClass *oc, const void *data)
+> >       sc->memmap       =3D aspeed_soc_ast2700_memmap;
+> >   }
+> >
+> > +static void aspeed_soc_ast2700a2_class_init(ObjectClass *oc, const voi=
+d *data)
+> > +{
+> > +    static const char * const valid_cpu_types[] =3D {
+> > +        ARM_CPU_TYPE_NAME("cortex-a35"),
+> > +        NULL
+> > +    };
+> > +    DeviceClass *dc =3D DEVICE_CLASS(oc);
+> > +    AspeedSoCClass *sc =3D ASPEED_SOC_CLASS(oc);
+> > +
+> > +    /* Reason: The Aspeed SoC can only be instantiated from a board */
+> > +    dc->user_creatable =3D false;
+> > +    dc->realize      =3D aspeed_soc_ast2700_realize;
+> > +
+> > +    sc->valid_cpu_types =3D valid_cpu_types;
+> > +    sc->silicon_rev  =3D AST2700_A2_SILICON_REV;
+> > +    sc->sram_size    =3D 0x20000;
+> > +    sc->pcie_num     =3D 3;
+> > +    sc->spis_num     =3D 3;
+> > +    sc->sgpio_num    =3D 2;
+> > +    sc->ehcis_num    =3D 4;
+> > +    sc->wdts_num     =3D 8;
+> > +    sc->macs_num     =3D 3;
+> > +    sc->uarts_num    =3D 13;
+> > +    sc->num_cpus     =3D 4;
+> > +    sc->ioexp_num    =3D 2;
+> > +    sc->uarts_base   =3D ASPEED_DEV_UART0;
+> > +    sc->irqmap       =3D aspeed_soc_ast2700a1_irqmap;
+> > +    sc->memmap       =3D aspeed_soc_ast2700_memmap;
+> > +}
+> > +
+> >   static const TypeInfo aspeed_soc_ast27x0_types[] =3D {
+> >       {
+> >           .name           =3D TYPE_ASPEED27X0_SOC,
+> > @@ -1179,6 +1209,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[]=
+ =3D {
+> >           .instance_init  =3D aspeed_soc_ast2700_init,
+> >           .class_init     =3D aspeed_soc_ast2700a1_class_init,
+> >       },
+> > +    {
+> > +        .name           =3D "ast2700-a2",
+> > +        .parent         =3D TYPE_ASPEED27X0_SOC,
+> > +        .instance_init  =3D aspeed_soc_ast2700_init,
+> > +        .class_init     =3D aspeed_soc_ast2700a2_class_init,
+> > +    },
+> >   };
+> >
+> >   DEFINE_TYPES(aspeed_soc_ast27x0_types)
+>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>
+> Thanks,
+>
+> C.
+>
+>
+Technically applies to the whole patchset, but specifically pointing
+our internal machines to use this SoC so sending it to the relevant
+patch.
+Machines boot and work as intended once the SoC is updated, thank you Jamin=
+!
 
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+Tested-by: Nabih Estefan <nabihestefan@google.com>
 
-On 2/9/2026 11:30 PM, Mi, Dapeng wrote:
-> 
-> On 1/29/2026 7:09 AM, Zide Chen wrote:
->> When PMU is disabled, guest CPUID must not advertise Debug Store
->> support.  Clear both CPUID.01H:EDX[21] (DS) and CPUID.01H:ECX[2]
->> (DS64) in this case.
->>
->> Set IA32_MISC_ENABLE[12] (PEBS_UNAVAILABLE) when Debug Store is not
->> exposed to the guest.
->>
->> Note: Do not infer that PEBS is unsupported from
->> IA32_PERF_CAPABILITIES[11:8] (PEBS_FMT) being 0.  A value of 0 is a
->> valid PEBS record format on some CPUs.
->>
->> Signed-off-by: Zide Chen <zide.chen@intel.com>
->> ---
->> V2:
->> - New patch.
->>
->>  target/i386/cpu.c | 6 ++++++
->>  target/i386/cpu.h | 1 +
->>  2 files changed, 7 insertions(+)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index ec6f49916de3..445361ab7a06 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -9180,6 +9180,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
->>          env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_MWAIT;
->>      }
->>  
->> +    if (!(env->features[FEAT_1_EDX] & CPUID_DTS)) {
->> +        env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL;
->> +    }
->> +
->>      memset(env->dr, 0, sizeof(env->dr));
->>      env->dr[6] = DR6_FIXED_1;
->>      env->dr[7] = DR7_FIXED_1;
->> @@ -9474,6 +9478,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->>              env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
->>          }
->>  
->> +        env->features[FEAT_1_ECX] &= ~CPUID_EXT_DTES64;
->> +        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
-> 
-> Strictly speaking, we need to check BTS as well before clearing DS. BTS
-> also depends on DS.
-
-But BTS is already unconditionally disabled from the guest in patch 1/11.
-
-
-> 
->>          env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
->>      }
->>  
->> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
->> index 5ab107dfa29f..0fecf561173e 100644
->> --- a/target/i386/cpu.h
->> +++ b/target/i386/cpu.h
->> @@ -483,6 +483,7 @@ typedef enum X86Seg {
->>  /* Indicates good rep/movs microcode on some processors: */
->>  #define MSR_IA32_MISC_ENABLE_FASTSTRING    (1ULL << 0)
->>  #define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
->> +#define MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL  (1ULL << 12)
->>  #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
->>  #define MSR_IA32_MISC_ENABLE_DEFAULT    (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
->>                                           MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
-
+Thanks,
+Nabih
 
