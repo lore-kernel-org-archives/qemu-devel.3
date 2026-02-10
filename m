@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A841BEA3F0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64782EA3F0D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphz8-0006zg-KJ; Tue, 10 Feb 2026 02:16:35 -0500
+	id 1vphzQ-0007sQ-Sy; Tue, 10 Feb 2026 02:16:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphyr-0006kK-N2
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:20 -0500
-Received: from 9.mo552.mail-out.ovh.net ([87.98.180.222])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphzP-0007rg-VJ
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:51 -0500
+Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphyp-0006ek-ER
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:17 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.106])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f9CXX0Fpzz5w1V;
- Tue, 10 Feb 2026 07:16:11 +0000 (UTC)
-Received: from kaod.org (37.59.142.111) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphzO-0006l1-1i
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:51 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.99])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f9CYC6xWWz5vsg;
+ Tue, 10 Feb 2026 07:16:47 +0000 (UTC)
+Received: from kaod.org (37.59.142.107) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 10 Feb
- 2026 08:16:10 +0100
+ 2026 08:16:46 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-111S0059732a1b5-4316-41d7-b2d7-55783dd6e6fd,
+ (GARM-107S0010e58220d-c877-4a99-b6fe-9dc8f161db1c,
  013E132ABECAD38B5622F7607EFF7317793E1520) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <1432073f-8353-4745-a4fb-8956a1abb099@kaod.org>
-Date: Tue, 10 Feb 2026 08:16:09 +0100
+Message-ID: <10b8e006-cc94-47a6-9a98-3d54fd4116b9@kaod.org>
+Date: Tue, 10 Feb 2026 08:16:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/11] hw/arm/aspeed_ast27x0-fc: Increase BMC DRAM size
- to 2GB for AST2700 A2
+Subject: Re: [PATCH v2 09/11] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
+ machine to A2 SoC
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -45,7 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260210051008.355149-1-jamin_lin@aspeedtech.com>
- <20260210051008.355149-11-jamin_lin@aspeedtech.com>
+ <20260210051008.355149-10-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260210051008.355149-11-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260210051008.355149-10-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.111]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.107]
+X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 9a66978a-84d4-4765-8a9a-def3733bf11e
-X-Ovh-Tracer-Id: 15797220120553950014
+X-Ovh-Tracer-GUID: 1c386f0a-095e-4d33-9fe3-e56a1edf0a3b
+X-Ovh-Tracer-Id: 15807353219301018430
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTENCufGM7gboJ5ARzNT89byzym2cLkH8+cAJwjM6lJ9xFPrWvHoKG0dFLu8AWOmoChILrDjMyU/UPhfrKY4Ed5oDsKpq/hLkaijqUT1fkGbpE0UDLHcdS8ov8boiGRxIufebRi44X4NJriLS6QexFZcqI7nMePdj2MBhCTYfO8XG6qQnJtoKi6vQpmj5s83+TnEU0ujXEFU34vvQtwWeScvkXg+aagydwqJydb5q8tFfmLigEtLETeOdh8aM72DTQgYs0ybWYKCFNIG6NLtUzoGNU/2DC7bbWS9QF2M7hYIsYrKqH/GYbfqOzt7ku3pCBAeTo44s3lL5pBn5nPGEPAdOq6BgHQYMIMlMR+i76rU99WkL5QpUds+q82NIZtFsv4r0aRgqe6Iko1h6kLt6ylNy6jbeT+XYQ27rlnSQKT66e+uTyn7dPh6qexSGxD55keHbVEcpR/R+pdI5y39Vng/VboQETVUm6Oa9oGSF7i9q5/lpNR7xXCPex/kfvP0AHFFwcXsiIXlLKj65TJVX5coJ8KOrozLyLhnj0jiPmkLiF9WGAP21NVwYpMXiiaQJNgZoQcvUqvyuDENIvtx9lKTikHE0b+ClJcnkYwEFNWyXynZhATH1JEd7yDnFpPHqGjWpsv/gjvDQKARx2sk0KHMTqCB2tIob1Bto2NC0c7qJw
-DKIM-Signature: a=rsa-sha256; bh=qVNWizo99GgEcM9Fxbp7UC2TKFqbtlnxqD0991d9Jj4=; 
+X-VR-SPAMCAUSE: dmFkZTEJxVPhl0bSn6fR0lUOxO1OawB5DXQOHomAL/eBoP5A4NXhfM/ulufRZDBfTuNwqqzh0O/Wancy6K9o4O6kJ9wEDVCQ+dwGzBay3oUDBeIkZ5GcDDQWZmGtC/YnDNxp+HrPCGPNUDmF5VF677TkyOdMrU8V6SeQV8RYKepgN3Q2KxwJjNSI1fbysLeXgRHgx/R6NxzIlWJ/+s/6/j6Eu6oIidD61hdWBMN7BWelFDNWbRNCEN7wGi56W18gEejvdrY5MCWe14o1XX+POziahmsQwEg2LZBgocgWrGXHXFHmkSpJd+2QbgvSAXJX/VS/+85eFEYq5UxCD4jFOt9BD0UgYPNeAAltKtF2rzsarzEWH9w7gbmsB+fStnfT9XB67IjDdQWkkZ+hc6xfUUJQtn6dPo5zCHHZU9yKga3Hr9NJjbNU4k8jdC+xTYsGR1WaMSgV7wR9jumz0ocgxlKu38pCpH8AyZcJMptPHN1bMtb+81WjAJuZKffq6+p/xU+Md676ieAvlF9brTWLT71WpscPBrEvQW3PU2P7QKmmP1z+riqlvW/OP9b0oEO6/6nn9XSEMD3pPEamK7FvyN6N0FxnNW6JQI5iJU+nFBhoITwe9gqYXZX8KvNkVmr7odxcT6cT8EAtBNfXKdxT9mYf6vDzFq8calYAjZt3JW0n2YSKnw
+DKIM-Signature: a=rsa-sha256; bh=hRCFRqGccOROaZZqUENOuEAlKwS5d6Gs2mspWLDPnnM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770707773; v=1;
- b=BdsiNK6+fk4gL0EpxrzQH6fcsNJodq/Qmasyjrwn0CXbJ+BtHH5DaKPaPovGD6MqxDtSgW3R
- CVwe+2+J+RZ1mNvmumQj4JVy5r+qqkP8BRV4l89oSmwes1jE2o0b3NYdjq58DCpdi11z1PHVZct
- uax6Fe44LyZy2rszxfO0AwydbEYeRwdPamoshdSMAYHIY3VoYs0i7EZ4ePGLO942pAzjpu6YH+M
- HhxSDRVZMDo65Q8Q7yyH/rgRg93FRowtvx7KRUCalod4eHPy7VADBrF0dHxKDQ11Hn28ScaSBm7
- OU0S16eoOoPJOyY0/vx3KaIXYy4qIOYTlARZCpP3LBndg==
-Received-SPF: pass client-ip=87.98.180.222; envelope-from=clg@kaod.org;
- helo=9.mo552.mail-out.ovh.net
+ t=1770707808; v=1;
+ b=ndVCCCbIT/RNH/qNEXlb0Apv/7hH+y3/WDGN3oDC4jtMoQpum1bLELsn/g+MlhVZTVnVy0Nu
+ R3bbR4LxnNbK5NUil/qCOdm5mnvz6g99VhgtlRh2IgNbeIhg1dyhbdqTTTG/ih6LovopYKAqi5L
+ GA4L8jcxUhPfG/TPgTEuitmwoBWZ885HCXz7CnyA6t+B3/YWcxObjHBWGBAQKWnGozaULe1yD7S
+ +dELqwwoCh++CW1qiNpXpIDxc2zORyH5/EgTB6OrB3BhcewStVVHtoJW2Sh1z0oRbllTAzgQpAG
+ kMiY19NIS9Wxgp9dkXM+UTBOM9ZI1ILlojZlz9HS9B+EA==
+Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
+ helo=6.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +118,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,31 +135,76 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/10/26 06:10, Jamin Lin wrote:
-> The AST2700 A1 EVB is equipped with 1GB of DRAM, while the AST2700 A2
-> EVB increases the DRAM size to 2GB.
+> Update the AST2700 FC machine to use the AST2700 A2 SoC model instead of
+> the A1-specific variant.
 > 
-> The ast2700fc machine is updated to support the AST2700 A2. Increase
-> the BMC DRAM size to 2GB to match the hardware configuration of
-> AST2700 A2.
+> This change removes A1-specific naming and definitions from the FC
+> machine and aligns it with the newer AST2700 A2 silicon.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
+>   1 file changed, 6 insertions(+), 7 deletions(-)
 > 
 > diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 9b9bb2df75..5eb6680da9 100644
+> index 0502a137f3..9b9bb2df75 100644
 > --- a/hw/arm/aspeed_ast27x0-fc.c
 > +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -48,7 +48,7 @@ struct Ast2700FCState {
->       Aspeed27x0CoprocessorState tsp;
+> @@ -24,8 +24,8 @@
+>   #include "hw/arm/aspeed_coprocessor.h"
+>   #include "hw/arm/machines-qom.h"
+>   
+> -#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
+> -OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
+> +#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
+> +OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+>   
+>   static struct arm_boot_info ast2700fc_board_info = {
+>       .board_id = -1, /* device-tree-only board */
+> @@ -49,7 +49,6 @@ struct Ast2700FCState {
 >   };
 >   
-> -#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
-> +#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+>   #define AST2700FC_BMC_RAM_SIZE (1 * GiB)
+> -#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
 >   
 >   #define AST2700FC_HW_STRAP1 0x000000C0
 >   #define AST2700FC_HW_STRAP2 0x00000003
+> @@ -58,7 +57,7 @@ struct Ast2700FCState {
+>   
+>   static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *soc;
+>       AspeedSoCClass *sc;
+>       const char *bios_name = NULL;
+> @@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>       DeviceState *dev = NULL;
+>       uint64_t rom_size;
+>   
+> -    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
+> +    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a2");
+>       soc = ASPEED_SOC(&s->ca35);
+>       sc = ASPEED_SOC_GET_CLASS(soc);
+>   
+> @@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+>   
+>   static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
+>   
+>       s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+> @@ -167,7 +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+>   
+>   static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
+>   {
+> -    Ast2700FCState *s = AST2700A1FC(machine);
+> +    Ast2700FCState *s = AST2700FC(machine);
+>       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
+>   
+>       s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
