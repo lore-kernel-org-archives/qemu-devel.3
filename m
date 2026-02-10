@@ -4,106 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50167EA3F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE8DEA3F36
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 10:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpkVw-0005xq-CY; Tue, 10 Feb 2026 04:58:36 -0500
+	id 1vpkjq-0000LV-Bd; Tue, 10 Feb 2026 05:12:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpkVu-0005xc-RM
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:58:34 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vpkjo-0000L3-Ai
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 05:12:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vpkVt-0007d5-32
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:58:34 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vpkjm-0001SM-JD
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 05:12:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770717512;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TIp4GOFNIHDpWan/C2cfFu+E0UWWLwd3cQZw9z3syzA=;
- b=PY2sLjumd5udOXJ0q8H2czqcumflXRTKag5R9MWCGifBlQXvYqcBNiJehBu6OkHum3krXA
- M3DgMhfiAWYebWc6aZQDQCIOce9SiWjU/7ggrAnmQU9FWPVluwsrfEUyh3Qnt5n6a+6jP5
- kFFJlesFXLivnw75ZJ8ZERd95by5VLc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1770718373;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=XI+6DKCUY+n+UWuzxiN3M1JMWhbblcM5FSLfpw9IWDY=;
+ b=Kw/G9ZWa7L1fyKWEuX52h+kdkJzDaycNLivV5d63HVZ5SKEnGXCPZx9qltMexdyKOfDikV
+ gYHpxC43vvwdnYPZIP5cKinB7fJhZATXeVx+81HHTOOTW1PRVoCXgZNCg8uXSV964+aHMf
+ dduEMs4xpDZMS9Q3eQEGAjWBZyfYTEc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-uhHFwwHEN8u1Hn0Zc3Qq2A-1; Tue,
- 10 Feb 2026 04:58:28 -0500
-X-MC-Unique: uhHFwwHEN8u1Hn0Zc3Qq2A-1
-X-Mimecast-MFC-AGG-ID: uhHFwwHEN8u1Hn0Zc3Qq2A_1770717507
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-RUtUxmG1Me61-swfh0EaWA-1; Tue,
+ 10 Feb 2026 05:12:49 -0500
+X-MC-Unique: RUtUxmG1Me61-swfh0EaWA-1
+X-Mimecast-MFC-AGG-ID: RUtUxmG1Me61-swfh0EaWA_1770718367
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A7F41956094; Tue, 10 Feb 2026 09:58:27 +0000 (UTC)
-Received: from [10.44.32.90] (unknown [10.44.32.90])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B2B4718003F5; Tue, 10 Feb 2026 09:58:25 +0000 (UTC)
-Message-ID: <cad6f399-1607-44a0-b0cc-6f18bf9be1b5@redhat.com>
-Date: Tue, 10 Feb 2026 10:58:24 +0100
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE6C91955E7C; Tue, 10 Feb 2026 10:12:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.137])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F11918004AD; Tue, 10 Feb 2026 10:12:41 +0000 (UTC)
+Date: Tue, 10 Feb 2026 10:12:38 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
+ user input
+Message-ID: <aYsElqDoGXQ_xMBD@redhat.com>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/Makefile.include: add run-tcg-tests-TARGET to
- check-help
-To: ck <ckeong.teo17@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, alex.bennee@linaro.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260206170059.4913-1-ckeong.teo17@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260206170059.4913-1-ckeong.teo17@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -125,85 +94,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/02/2026 18.00, ck wrote:
-> User can execute TCG tests for a specific TARGET using the command:
-> $ make run-tcg-tests-TARGET-softmmu
+On Tue, Feb 10, 2026 at 11:23:27AM +0800, Zhao Liu wrote:
+> Hi,
 > 
-> However, this command is not showing in 'make check-help'
-> documentation, making it hard for new contributors to
-> discover.
-> 
-> This commit help to resolve this by adding the description
-> for the command, to the "check-tcg" section, as suggested
-> by Thomas, in tests/Makefile.include.
-> 
-> Additionally, reformat the alignment to accommodate
-> the length of the new command, ensuring the
-> consistency of the output.
-> 
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/228
-> Signed-off-by: ck <ckeong.teo17@gmail.com>
-> ---
->   tests/Makefile.include | 33 +++++++++++++++++----------------
->   1 file changed, 17 insertions(+), 16 deletions(-)
-> 
-> diff --git a/tests/Makefile.include b/tests/Makefile.include
-> index 7728098981..be3b78fdfb 100644
-> --- a/tests/Makefile.include
-> +++ b/tests/Makefile.include
-> @@ -3,29 +3,30 @@
->   .PHONY: check-help
->   check-help:
->   	@echo "Regression testing targets:"
-> -	@echo " $(MAKE) check                    Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
-> -	@echo " $(MAKE) bench                    Run speed tests"
-> +	@echo " $(MAKE) check                         Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
-> +	@echo " $(MAKE) bench                         Run speed tests"
->   	@echo
->   	@echo "Individual test suites:"
-> -	@echo " $(MAKE) check-qtest-TARGET       Run qtest tests for given target"
-> -	@echo " $(MAKE) check-qtest              Run qtest tests"
-> -	@echo " $(MAKE) check-functional         Run python-based functional tests"
-> -	@echo " $(MAKE) check-functional-TARGET  Run functional tests for a given target"
-> -	@echo " $(MAKE) check-unit               Run qobject tests"
-> -	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
-> -	@echo " $(MAKE) check-tracetool          Run tracetool generator tests"
-> -	@echo " $(MAKE) check-block              Run block tests"
-> +	@echo " $(MAKE) check-qtest-TARGET            Run qtest tests for given target"
-> +	@echo " $(MAKE) check-qtest                   Run qtest tests"
-> +	@echo " $(MAKE) check-functional              Run python-based functional tests"
-> +	@echo " $(MAKE) check-functional-TARGET       Run functional tests for a given target"
-> +	@echo " $(MAKE) check-unit                    Run qobject tests"
-> +	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
-> +	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
-> +	@echo " $(MAKE) check-block                   Run block tests"
->   ifneq ($(filter $(all-check-targets), check-softfloat),)
-> -	@echo " $(MAKE) check-tcg                Run TCG tests"
-> -	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
-> +	@echo " $(MAKE) check-tcg                     Run TCG tests"
-> +	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
-> +	@echo " $(MAKE) run-tcg-tests-TARGET-softmmu  Run TCG tests for a given target"
->   endif
->   	@echo
-> -	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
-> -	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
-> -	@echo " $(MAKE) check-clean              Clean the tests and related data"
-> +	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
-> +	@echo " $(MAKE) check-venv                    Creates a Python venv for tests"
-> +	@echo " $(MAKE) check-clean                   Clean the tests and related data"
->   	@echo
->   	@echo "The following are useful for CI builds"
-> -	@echo " $(MAKE) check-build              Build most test binaries"
-> +	@echo " $(MAKE) check-build                   Build most test binaries"
->   	@echo
->   	@echo
->   	@echo "The variable SPEED can be set to control the gtester speed setting."
+> This is the v2 trying to introduce property flags to detect user's
+> property setting (from CLI/QMP/HMP). I dropped RFC tag since previous
+> RFC v1 [1].
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This says what the series is proposing, but IMHO what is more important
+here is explaining why this either desirable or appropriate to add as
+general facility in QOM.
+
+The idea that code should take different action for a given fixed value,
+based on whether the value was set by the user, or left on the default,
+makes me very uncomfortable.
+
+There have been a number of situations where something that was initially 
+a boolean flag, actually needed to be a tri-state instead, to provide
+semantics like "On", "Off", "Auto".
+
+This "user set" flag could support such behaviour indirectly, but since
+"user set" is an internal concept we'd still be only exposing a boolean
+externally, while using a tri-state internally. That does not give the
+full flexibility of a tri-state, because internally if we wanted to
+have the default to be "yes", it offers no way for the mgmt app to
+put it back to "auto".
+
+For properties that are not booleans, it is much less obvious to me
+whether we actually need a distinct "not set" concept at all.
+
+
+So overall, at a conceptual level, I don't think that QOM should care
+about /how/ a value came to be set. It should have no direct awareness
+of the "user input", rather it just represents the configuration of the
+system at a given point in time,  however that came to pass.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
