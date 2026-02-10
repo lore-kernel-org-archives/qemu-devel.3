@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10499EA8107
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D098EA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmgf-0003pf-57; Tue, 10 Feb 2026 07:17:49 -0500
+	id 1vpmdy-0000j7-AD; Tue, 10 Feb 2026 07:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmfb-0002Jm-UV; Tue, 10 Feb 2026 07:16:46 -0500
+ id 1vpmdu-0000iP-Qp; Tue, 10 Feb 2026 07:14:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmfY-0000Xx-SV; Tue, 10 Feb 2026 07:16:42 -0500
+ id 1vpmdr-0008Qf-E8; Tue, 10 Feb 2026 07:14:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30339187DB4;
- Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C1A2E187D9F;
+ Tue, 10 Feb 2026 15:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA47B360CD9;
- Tue, 10 Feb 2026 15:15:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5EEB1360CC1;
+ Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 76/95] hw/uefi: fix size negotiation
-Date: Tue, 10 Feb 2026 15:14:58 +0300
-Message-ID: <20260210121526.68598-2-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 61/78] hw/arm/aspeed_ast27x0: Fix EHCI3/4 IRQ routing
+ to GIC
+Date: Tue, 10 Feb 2026 15:14:14 +0300
+Message-ID: <20260210121438.67781-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
+References: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,30 +62,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Payload size is the variable request size, not the total buffer size.
-Take that into account and subtract header sizes.
+EHCI3 and EHCI4 were missing entries in aspeed_soc_ast2700a1_irqmap,
+so their source IRQs were never routed through the INTC OR-gates.
 
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260114104745.3465860-1-kraxel@redhat.com>
-(cherry picked from commit 46dee71a945d50639586ca3365be29aa9f368bfd)
+As a result, EHCI3/4 interrupts were not propagated to the GIC,
+causing incorrect interrupt behavior for these controllers.
+
+Add EHCI3 and EHCI4 to the IRQ map and route them to the same INTC
+group as other shared peripherals, ensuring their interrupts are
+properly connected to the GIC.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Fixes: ba27ba302a264117c8b8427f944ced1bed17c438 ("hw/arm: ast27x0: Wire up EHCI controllers")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260203020855.1642884-2-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 7d64f04863ed23f6a142fb8f47c5a470c0e081f9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 8533533ea5..5607763525 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -592,7 +592,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
--    ps->payload_size = uv->buf_size;
-+    ps->payload_size = uv->buf_size - sizeof(*mhdr) - sizeof(*mvar);
-     mvar->status = EFI_SUCCESS;
-     return length;
- }
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 95f155fcf1..ff86020064 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -193,6 +193,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
+     [ASPEED_DEV_ETH1]      = 196,
+     [ASPEED_DEV_ETH2]      = 196,
+     [ASPEED_DEV_ETH3]      = 196,
++    [ASPEED_DEV_EHCI3]     = 196,
++    [ASPEED_DEV_EHCI4]     = 196,
+     [ASPEED_DEV_PECI]      = 197,
+     [ASPEED_DEV_SDHCI]     = 197,
+ };
 -- 
 2.47.3
 
