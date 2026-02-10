@@ -4,72 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A59EB26E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 16:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6D1EB26E9
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 17:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpqir-0006ax-L8; Tue, 10 Feb 2026 11:36:21 -0500
+	id 1vpr98-0005OC-MD; Tue, 10 Feb 2026 12:03:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqiq-0006ag-5M
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpr74-0004sf-5r
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 12:01:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqio-00016R-SY
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:19 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vpr70-0006X6-60
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 12:01:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770741378;
+ s=mimecast20190719; t=1770742875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VkZ13fHgm0IL9s80N0RZAPnj0tJsjuKDxYVQAVbsPQw=;
- b=SlnVxAl/T3jc8jd9n2iz/FyUTYIkG8WOrGVPGtz5oTyrittaakv5ScI6oYmCMIvJqvZ3vN
- 02uV/l79KAVSpg03eaj8qZMyOblWjGWL7ufzdVbbipKpP/AV/VXBTF2zqCA5JPZDfmNsHG
- RflBAb0VG1mK3WcMbbnx46/o6HW1ZbA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-BrkMYq_VPQiJu8G5PLIK_w-1; Tue,
- 10 Feb 2026 11:36:14 -0500
-X-MC-Unique: BrkMYq_VPQiJu8G5PLIK_w-1
-X-Mimecast-MFC-AGG-ID: BrkMYq_VPQiJu8G5PLIK_w_1770741373
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B442193E898; Tue, 10 Feb 2026 16:36:13 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.44.34.137])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A4BA19560B4; Tue, 10 Feb 2026 16:36:10 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 4/4] gitlab: ensure docker output is always displayed in CI
-Date: Tue, 10 Feb 2026 16:35:56 +0000
-Message-ID: <20260210163556.713841-5-berrange@redhat.com>
-In-Reply-To: <20260210163556.713841-1-berrange@redhat.com>
-References: <20260210163556.713841-1-berrange@redhat.com>
+ bh=5q311A4DLq/hHpVhbJVn/VbIWwwO616F9+BUhUdAMz4=;
+ b=Du88tl2TkoVVqHpomsDyCL7p4fCQnVyBgj9OemCpMzxngMtR52/DJNTcS0khqkrG55SvPQ
+ QPLyivnCP+AZw2MW5T2qo/mevOd28ruj41nWEPW7sO01btsHDtrbyp/1sGCytni5kZLEUl
+ EOzwYRtMBOUOQdDhf5AimRGVehIjQ1c=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-320-KP0d0_NvPa27ujTReokz7Q-1; Tue, 10 Feb 2026 12:01:10 -0500
+X-MC-Unique: KP0d0_NvPa27ujTReokz7Q-1
+X-Mimecast-MFC-AGG-ID: KP0d0_NvPa27ujTReokz7Q_1770742869
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8c881d0c617so1223538885a.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 09:01:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770742869; x=1771347669; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5q311A4DLq/hHpVhbJVn/VbIWwwO616F9+BUhUdAMz4=;
+ b=lJQAp5dcXynvK3bQzZE84mEVrEQfYYpdfM0Yrn21EfSQwTjCC7vzrwFuW+cqdhP3y3
+ w4klRPxyobDjMgMYfW/paohg7RVgdSzmXedb95Z3WGtuprqIrLrBwlI1Dej7nQMEbNGM
+ 1Me+uxy1WCYv/rmU5+rvdd9hLebv9NTAtF5A/3Ee8COfc9y/8ojGAvLn4BMRfeIPbNic
+ PW16uHNnhOUlTr/isuuW8xHcMglHgrsTEP7xbCA4ol4wSuBb5BDjPEPdtWu/HRxgKo5s
+ DQ+o8cDPV/xWFrudWTHUEw+F+VlJ+Tt72vkVHGvBFIZcLBBBGdPKTV8spnAyyeaI/lTi
+ +ONw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770742869; x=1771347669;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5q311A4DLq/hHpVhbJVn/VbIWwwO616F9+BUhUdAMz4=;
+ b=Exlm6LPdk3pOLZOt+/sGOV1yHaxWqX3u+DzR7qIvV8fVAnvPX2OpE/efRbg0yb/H62
+ XLizAxo1CA/Nu0lmjN2g166sZ3A4brSJmyCknJKWPs1qymP85WdZdqGBk+X7oPb3WoJf
+ p0EcS9LK2e7jx9PmC4sV/75HMhlNdm8tj1b0Zo4Mq55n7pyFyxGgb/tRBbJ1npqL+W4V
+ f1VKQYxW+31HSfuKd2ON02qrWDb0MBDDJBrJVKNcswkiGLuPKxWfi6QhFx8oEAQDK1jt
+ MbjCW/lJgYQkWtzRPbbFX+va4vwy4iqFZzbqn5GmnBUltIyWvKpMkrBdarrlWKBFe8KZ
+ fw6Q==
+X-Gm-Message-State: AOJu0Yxqup5FtxSoU/gjN42uTYTdV20TO3d4GE3gbY3Z3m1KrZRQcjoX
+ xR5rPySuFxP/nrXau6wgzKlF5IfFU89NZAjDdxTm7Bula8kF8aObNEJB2kQgawrW4XswugOsvZo
+ YAYhVb0NF8A//zoWrAim1AuoczFjMNBhC3ZkkOBcgtn70dEPw494q1Gr4
+X-Gm-Gg: AZuq6aKw8Ma39IRVL4sOSAdKRzBjQRiwCENQQYzG0fqW1RzXAqFp8YJI5a1ArGvo4da
+ tfM1MZAW9MGfki9SvNt5dqh0z8By4u+/eH8qR9jriCRqeWMKgoqezBGxQ2qzOaMkrC0q61Sx2NN
+ NIA2Lc1ufh81V52+PHE1obMR3R9VYNtluqQX8OIQCh4IBlJmy8/9H4gMgYXeZmgebMRYFGcNBkx
+ HcFOE5g5ITRVlk0hYXS5va0ajWRFBpq3jHd/zTA75Xo17CSMBWPldTuYuuLJ35ibLZx59qaqqqZ
+ UCE5MelVtIrtsZhlhOdqURxpv2Ch7HDiTWZ7qTE1ed0ArHqR98fuGKg4LlPI/JksnBDPyIok5X5
+ te9dlcfgSeLL2lw==
+X-Received: by 2002:a05:620a:2954:b0:8c9:f4ed:c383 with SMTP id
+ af79cd13be357-8caef408eeamr1975340985a.33.1770742859063; 
+ Tue, 10 Feb 2026 09:00:59 -0800 (PST)
+X-Received: by 2002:a05:620a:2954:b0:8c9:f4ed:c383 with SMTP id
+ af79cd13be357-8caef408eeamr1975186385a.33.1770742849404; 
+ Tue, 10 Feb 2026 09:00:49 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8caf982b851sm1118292085a.33.2026.02.10.09.00.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 09:00:48 -0800 (PST)
+Date: Tue, 10 Feb 2026 12:00:36 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v8 05/17] colo: Remove ENABLE_COLO savevm command and
+ mark it as deprecated
+Message-ID: <aYtkNGvsimVxCwZf@x1.local>
+References: <20260210-colo_unit_test_multifd-v8-0-7f9e5f7d082b@web.de>
+ <20260210-colo_unit_test_multifd-v8-5-7f9e5f7d082b@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260210-colo_unit_test_multifd-v8-5-7f9e5f7d082b@web.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,34 +121,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the new $(DOCKER_V) variable from the previous commit, so that any
-CI jobs invoking docker will show the full stdout content. This improves
-the ability to diagnose any build failures in CI that involve docker.
+On Tue, Feb 10, 2026 at 05:23:03PM +0100, Lukas Straub wrote:
+> No need for it anymore now that x-colo capability is required
+> on incoming side. There is also no need to send it for backwards
+> compatibility since we only support COLO with the same version on
+> both sides.
+> 
+> We mark the command code as deprecated and now error out if such
+> a unhandled command is encountered in loadvm_process_command().
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-For example, when a 'docker build' command fails, it lets us see which
-command in the Dockerfile failed and why.
+Thanks,
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- .gitlab-ci.d/base.yml | 3 +++
- 1 file changed, 3 insertions(+)
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-index 921c562000..7640a1d52c 100644
---- a/.gitlab-ci.d/base.yml
-+++ b/.gitlab-ci.d/base.yml
-@@ -28,6 +28,9 @@ variables:
-     # we don't need. The --filter options avoid blobs and tree references we aren't going to use
-     # and we also avoid fetching tags.
-     GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune --quiet
-+    # Ensure docker.py / tests/docker/Makefile.include always displays stdout
-+    # from any docker commands to aid debugging of failures
-+    DOCKER_V: 1
- 
-   interruptible: true
- 
 -- 
-2.53.0
+Peter Xu
 
 
