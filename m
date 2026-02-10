@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EA6EA8109
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A042EA810A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmih-0000Mc-8F; Tue, 10 Feb 2026 07:19:55 -0500
+	id 1vpmgp-00050d-V3; Tue, 10 Feb 2026 07:18:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhk-0006We-2j; Tue, 10 Feb 2026 07:18:56 -0500
+ id 1vpmg3-0002rP-Hc; Tue, 10 Feb 2026 07:17:13 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhi-0001ZR-EK; Tue, 10 Feb 2026 07:18:55 -0500
+ id 1vpmg1-0000bE-QF; Tue, 10 Feb 2026 07:17:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 36BBF187DDA;
- Tue, 10 Feb 2026 15:16:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7A968187DB8;
+ Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C5EB1360CEE;
- Tue, 10 Feb 2026 15:17:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 18A9C360CDD;
+ Tue, 10 Feb 2026 15:15:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 70/85] hw/nvme: Fix bootindex suffix use-after-free
-Date: Tue, 10 Feb 2026 15:16:34 +0300
-Message-ID: <20260210121657.69363-1-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 80/95] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
+ I2CM_DMA_TX/RX_ADDR set first
+Date: Tue, 10 Feb 2026 15:15:02 +0300
+Message-ID: <20260210121526.68598-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
-References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
+References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,49 +62,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The bootindex suffix can be used as long as the property is alive.
+In the previous design, the I2C model would update I2CC_DMA_LEN (0x54) based on
+the value of I2CM_DMA_LEN (0x1C) when the firmware set either I2CM_DMA_TX_ADDR
+(0x30) or I2CM_DMA_RX_ADDR (0x34). However, this only worked correctly if the
+firmware set I2CM_DMA_LEN before setting I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit eda9baa17a2854494709a8094419ba6a6901721d)
+If the firmware instead set I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR before setting
+I2CM_DMA_LEN, the value written to I2CC_DMA_LEN would be incorrect.
+
+To fix this issue, the model should be updated to set I2CC_DMA_LEN when the
+firmware writes to the I2CM_DMA_LEN register, rather than when it writes to the
+I2CM_DMA_RX_ADDR and I2CM_DMA_TX_ADDR registers.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Fixes: ba2cccd64e90 ("aspeed: i2c: Add new mode support")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260102090746.1130033-4-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 9cbd8ee7f67fceee51d3c993a282e5adc397b6b9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 4ab8ba74f5..e895e7d950 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -822,12 +822,11 @@ static void nvme_ns_class_init(ObjectClass *oc, void *data)
- static void nvme_ns_instance_init(Object *obj)
- {
-     NvmeNamespace *ns = NVME_NS(obj);
--    char *bootindex = g_strdup_printf("/namespace@%d,0", ns->params.nsid);
- 
--    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
--                                  bootindex, DEVICE(obj));
-+    sprintf(ns->bootindex_suffix, "/namespace@%" PRIu32 ",0", ns->params.nsid);
- 
--    g_free(bootindex);
-+    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
-+                                  ns->bootindex_suffix, DEVICE(obj));
- }
- 
- static const TypeInfo nvme_ns_info = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index b5c9378ea4..4bd64ae718 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -229,6 +229,7 @@ typedef struct NvmeNamespace {
-     DeviceState  parent_obj;
-     BlockConf    blkconf;
-     int32_t      bootindex;
-+    char         bootindex_suffix[24];
-     int64_t      size;
-     int64_t      moff;
-     NvmeIdNs     id_ns;
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index 765a98b698..93b8fd1661 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -660,8 +660,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         bus->dma_dram_offset =
+             deposit64(bus->dma_dram_offset, 0, 32,
+                       FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+-        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+-                                                     TX_BUF_LEN) + 1;
+         break;
+     case A_I2CM_DMA_RX_ADDR:
+         bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
+@@ -669,8 +667,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         bus->dma_dram_offset =
+             deposit64(bus->dma_dram_offset, 0, 32,
+                       FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+-        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+-                                                     RX_BUF_LEN) + 1;
+         break;
+     case A_I2CM_DMA_LEN:
+         w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
+@@ -683,10 +679,16 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         if (FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T)) {
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, RX_BUF_LEN,
+                              FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN));
++            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
++                                                         I2CM_DMA_LEN,
++                                                         RX_BUF_LEN) + 1;
+         }
+         if (FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN_W1T)) {
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, TX_BUF_LEN,
+                              FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN));
++            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
++                                                         I2CM_DMA_LEN,
++                                                         TX_BUF_LEN) + 1;
+         }
+         break;
+     case A_I2CM_DMA_LEN_STS:
 -- 
 2.47.3
 
