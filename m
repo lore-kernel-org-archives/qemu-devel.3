@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 709C9E7E0DB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE27E94619
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vplrK-0003bH-Lf; Tue, 10 Feb 2026 06:24:46 -0500
+	id 1vplrM-0003l3-LV; Tue, 10 Feb 2026 06:24:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vplrJ-0003TX-PR
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:24:45 -0500
+ id 1vplrL-0003ke-Nr
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:24:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vplrI-0007Ln-EN
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:24:45 -0500
+ id 1vplrK-0007Lw-28
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:24:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770722682;
+ s=mimecast20190719; t=1770722685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=gQ4jr51YjaR25OCImP7WOzuImLKDDD44whSl438+Qxw=;
- b=UJzfud4ofDsnqZbn/orvjrdpcfRh1Uvdfu4OKdQaCMXcmCQXhypcUti4FXeD8LTDRSixXA
- 4daU8eNER4UsUUU8ioD4jNrhFw9phN+KCFvyJFObTUvMNXY2L3aSY45cfBM7qfiRfO9LiH
- Ayy6NSEpspSa7y3iWLGCk1B25V+hAkg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w+P+r8J1Ki0gjCmax5Qvp7m+UKxoCgT5HwqLkgCdBAU=;
+ b=jNw0zy1txwivZrR4MH6myeLRRHpulzlpjvAAi5hjkTyeIjUbLV0Va6+MndpTtM5oKsXTTt
+ R53IWrjYT2vGb9mS2NMXd5JVNTtcGVFO5M8YbTNYM7xiM9nSHokTqL6VSqQo7y+z9V+hAF
+ MgPfJesEO29pWYt/rqZZUM5ge0raqU8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-_q3Kjk--MrCOmODqvl8hZA-1; Tue,
- 10 Feb 2026 06:24:41 -0500
-X-MC-Unique: _q3Kjk--MrCOmODqvl8hZA-1
-X-Mimecast-MFC-AGG-ID: _q3Kjk--MrCOmODqvl8hZA_1770722680
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-KLLloTtcODyObOuwRKDASQ-1; Tue,
+ 10 Feb 2026 06:24:44 -0500
+X-MC-Unique: KLLloTtcODyObOuwRKDASQ-1
+X-Mimecast-MFC-AGG-ID: KLLloTtcODyObOuwRKDASQ_1770722683
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AFBF1956052
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 11:24:40 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 299881800465
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 11:24:43 +0000 (UTC)
 Received: from osteffen-thinkpadx1carbongen12.rmtde.csb (unknown [10.44.32.26])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 92B1718003F6; Tue, 10 Feb 2026 11:24:38 +0000 (UTC)
+ id 46A7418003F5; Tue, 10 Feb 2026 11:24:40 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH 0/1] igvm: Add NULL checks for igvm_get_buffer()
-Date: Tue, 10 Feb 2026 12:24:35 +0100
-Message-ID: <20260210112436.315197-1-osteffen@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 1/1] igvm: Add NULL checks for igvm_get_buffer()
+Date: Tue, 10 Feb 2026 12:24:36 +0100
+Message-ID: <20260210112436.315197-2-osteffen@redhat.com>
+In-Reply-To: <20260210112436.315197-1-osteffen@redhat.com>
+References: <20260210112436.315197-1-osteffen@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -89,12 +91,137 @@ check on the buffers returned by igvm_get_buffer() (part of the IGVM C
 library).
 Add these checks in the IGVM backend.
 
-Oliver Steffen (1):
-  igvm: Add NULL checks for igvm_get_buffer()
-
+Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+---
  backends/igvm.c | 86 ++++++++++++++++++++++++++++++++-----------------
  1 file changed, 56 insertions(+), 30 deletions(-)
 
+diff --git a/backends/igvm.c b/backends/igvm.c
+index b01a19ba46..049cb36891 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -152,9 +152,17 @@ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+                 (int)header_handle);
+             return -1;
+         }
+-        header_data = igvm_get_buffer(ctx->file, header_handle) +
+-                      sizeof(IGVM_VHS_VARIABLE_HEADER);
+-        result = handlers[handler].handler(ctx, header_data, errp);
++        header_data = igvm_get_buffer(ctx->file, header_handle);
++        if (header_data != NULL) {
++            header_data += sizeof(IGVM_VHS_VARIABLE_HEADER);
++            result = handlers[handler].handler(ctx, header_data, errp);
++        } else {
++            error_setg(errp,
++                    "IGVM: No buffer for handle %d: "
++                    "(type 0x%X)",
++                    header_handle, type);
++            result = -1;
++        }
+         igvm_free_buffer(ctx->file, header_handle);
+         return result;
+     }
+@@ -316,7 +324,13 @@ static int qigvm_process_mem_region(QIgvm *ctx, unsigned start_index,
+                 return -1;
+             }
+             data = igvm_get_buffer(ctx->file, data_handle);
+-            memcpy(&region[page_index * page_size], data, data_size);
++            if (data != NULL) {
++                memcpy(&region[page_index * page_size], data, data_size);
++            } else {
++                error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
++                igvm_free_buffer(ctx->file, data_handle);
++                return -1;
++            }
+             igvm_free_buffer(ctx->file, data_handle);
+         }
+     }
+@@ -426,6 +440,11 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+     }
+ 
+     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
++    if (data == NULL) {
++        error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
++        result = -1;
++        goto exit;
++    }
+ 
+     if (ctx->machine_state->cgs) {
+         result = ctx->cgsc->set_guest_state(
+@@ -441,6 +460,7 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+         result = -1;
+     }
+ 
++exit:
+     igvm_free_buffer(ctx->file, data_handle);
+     if (result < 0) {
+         return result;
+@@ -778,33 +798,39 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+             }
+             platform =
+                 (IGVM_VHS_SUPPORTED_PLATFORM *)(igvm_get_buffer(ctx->file,
+-                                                                header_handle) +
+-                                                sizeof(
+-                                                    IGVM_VHS_VARIABLE_HEADER));
+-            if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
+-                ctx->machine_state->cgs) {
+-                if (ctx->cgsc->check_support(
+-                        CGS_PLATFORM_SEV_ES, platform->platform_version,
+-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+-                    compatibility_mask_sev_es = platform->compatibility_mask;
+-                }
+-            } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
+-                       ctx->machine_state->cgs) {
+-                if (ctx->cgsc->check_support(
+-                        CGS_PLATFORM_SEV, platform->platform_version,
+-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+-                    compatibility_mask_sev = platform->compatibility_mask;
++                                                                header_handle));
++            if (platform != NULL) {
++                platform = (IGVM_VHS_SUPPORTED_PLATFORM *)((void *)platform
++                                            + sizeof(IGVM_VHS_VARIABLE_HEADER));
++                if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
++                    ctx->machine_state->cgs) {
++                    if (ctx->cgsc->check_support(
++                            CGS_PLATFORM_SEV_ES, platform->platform_version,
++                            platform->highest_vtl, platform->shared_gpa_boundary)) {
++                        compatibility_mask_sev_es = platform->compatibility_mask;
++                    }
++                } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
++                        ctx->machine_state->cgs) {
++                    if (ctx->cgsc->check_support(
++                            CGS_PLATFORM_SEV, platform->platform_version,
++                            platform->highest_vtl, platform->shared_gpa_boundary)) {
++                        compatibility_mask_sev = platform->compatibility_mask;
++                    }
++                } else if ((platform->platform_type ==
++                            IGVM_PLATFORM_TYPE_SEV_SNP) &&
++                        ctx->machine_state->cgs) {
++                    if (ctx->cgsc->check_support(
++                            CGS_PLATFORM_SEV_SNP, platform->platform_version,
++                            platform->highest_vtl, platform->shared_gpa_boundary)) {
++                        compatibility_mask_sev_snp = platform->compatibility_mask;
++                    }
++                } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
++                    compatibility_mask = platform->compatibility_mask;
+                 }
+-            } else if ((platform->platform_type ==
+-                        IGVM_PLATFORM_TYPE_SEV_SNP) &&
+-                       ctx->machine_state->cgs) {
+-                if (ctx->cgsc->check_support(
+-                        CGS_PLATFORM_SEV_SNP, platform->platform_version,
+-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+-                    compatibility_mask_sev_snp = platform->compatibility_mask;
+-                }
+-            } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
+-                compatibility_mask = platform->compatibility_mask;
++            } else {
++                error_setg(errp, "IGVM: No buffer for handle %d: ", header_handle);
++                igvm_free_buffer(ctx->file, header_handle);
++                return -1;
+             }
+             igvm_free_buffer(ctx->file, header_handle);
+         }
 -- 
 2.53.0
 
