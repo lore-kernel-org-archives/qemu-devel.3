@@ -4,163 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FABAEA3F3F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C523BE7E0DB
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 10:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vplEa-0007V6-4P; Tue, 10 Feb 2026 05:44:44 -0500
+	id 1vplEw-0007by-1n; Tue, 10 Feb 2026 05:45:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vplEX-0007UJ-V2; Tue, 10 Feb 2026 05:44:41 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vplEt-0007ZK-TR
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 05:45:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vplEW-0007z6-HP; Tue, 10 Feb 2026 05:44:41 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=H33/SM1hLHgui1mnQkUtoAAt7I11AyjLnvpH43xd/muyEXMAj7gz8A/eGutnm7LYuv6mIRltrZDQQjFsIxCqtUC51cEQ4g1waGHyKMvFFE6JYv2bGUaybm84GaglstPF3yLIS2rtqycvOrc9XlXiuJnJgWE/M14UHOF0C5rDw2ae5ds038IR6URHJ9lghvPy/Z3SjzLBC07v/5F/yxGMj8rIuIigVjMMR3w2ao2z/ebAULrmyOgNVamSL8UIYy6t36f+3e0YmsIJRFH32Mul1fp3D7y/G3eH0R1hZvRvsAEMYXKGwpJKtAJgavylwotxILS3LDAOjGZcmqksBERX/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nyacWF3sA0uP8RRbQC97ZMq3zWDlEs+ClBsGe2DnedA=;
- b=wy3zn7vtBRDJAKzCAjZ4xBqVL23sMWG7BZI32JzP82VAAmiMUHgjgbB4We/rC5mAz64qHpMERhH3nWq27y8GUbA7lgUl3lWwKiNmVz5eUtZ+0KQ9g/WkyAvYQBVA9Hxeo+GYD8uczyWVHPSd3jZWkQN5ZycBlZi24EhqBiVHMiElf28NdNaI6i3jgHW36hfxWyJ/0ZQendD99QdAzQxy4R8ojNOX6cKG/lfekEsPs037f9xzpzVVj6+2+EiqGE9voaKM/K0oazYy48aWQHawH6/qnXxOgHsyCsEPX5plxHmJdDhsD3MV54B8FvMF0R5w9zTtjjPkKsjJbH/S7drgjA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nyacWF3sA0uP8RRbQC97ZMq3zWDlEs+ClBsGe2DnedA=;
- b=dovvqtzzIH6qx3n5S5JcjQ4buYnwKzq2EhoQPvB0rYJtlovVRndaepPgKj9C5yVlJrSIvFnJJQIVQbjB8vVXjD+V+14FxJNz8rYPSiwLPMS0aqtHUvmDUakDBWqXrra8mF0QSCOmeYKdsH/VqsGfZb2zCjj64RKlP/mQI6eYZC/779SwAmof2cQQbqx9ONZD+gxPFhATnhTYYQvXFfYfVBk50MjRx2r94VTxJBJgYTzHdreOMViRS/O4fQFno9ozgzLj/yysvRmBBL/zQRgQ8hh3FRswiyXFdxs5iC+fX6VjAY4m/AS6ZK4uopLhjSeBJzPS+GfzqN7/ePTK55y+ow==
-Received: from SEZPR06MB7619.apcprd06.prod.outlook.com (2603:1096:101:249::5)
- by TYPPR06MB8077.apcprd06.prod.outlook.com (2603:1096:405:31b::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.19; Tue, 10 Feb
- 2026 10:44:34 +0000
-Received: from SEZPR06MB7619.apcprd06.prod.outlook.com
- ([fe80::c8d3:efda:b73:f6a6]) by SEZPR06MB7619.apcprd06.prod.outlook.com
- ([fe80::c8d3:efda:b73:f6a6%5]) with mapi id 15.20.9587.017; Tue, 10 Feb 2026
- 10:44:34 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "kaeluno1@gmail.com"
- <kaeluno1@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 1/1] tests/functional/arm/aspeed_ast2600: Enhance OTP test
- with functional validation
-Thread-Topic: [PATCH v2 1/1] tests/functional/arm/aspeed_ast2600: Enhance OTP
- test with functional validation
-Thread-Index: AQHcmno+PDcPaf0Z80SQUT2EpjOSXA==
-Date: Tue, 10 Feb 2026 10:44:34 +0000
-Message-ID: <20260210104428.424420-2-kane_chen@aspeedtech.com>
-References: <20260210104428.424420-1-kane_chen@aspeedtech.com>
-In-Reply-To: <20260210104428.424420-1-kane_chen@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7619:EE_|TYPPR06MB8077:EE_
-x-ms-office365-filtering-correlation-id: 09b505a0-3bbd-4134-ddb9-08de68916119
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|7142099003|38070700021; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?eC+s1acns8ikhPB4kOjs3kUN6EomxgkBjS3mjxW6Moqq2NfipgWTxRO/9K?=
- =?iso-8859-1?Q?IvqxwmwFKFqMQjJOsBvtLQvCoK/38nwcXsZdSrAOfG6LuLzIPr4KkwwbHz?=
- =?iso-8859-1?Q?vswjzexq5xjShYas2cTZlJnSo9mYSXdLXRmjHXcxCvBDbP6uJfBRpIpv5L?=
- =?iso-8859-1?Q?A2SQ8FaoQ1hCA7dBoU8nYbLp40GcUTd1R5Qt1g7vdkOBguD0ONx5YauIAb?=
- =?iso-8859-1?Q?OiK3/fjuHOS8SZagqVaKmgHb9BdRCksYTtoMsBMKWG8Gpq6mxURlriTWUX?=
- =?iso-8859-1?Q?TAg//HlCWt4c8RNLJegurd1Muj+vOJwKkfQBFeERSx1Mad/s/vXL6MBORs?=
- =?iso-8859-1?Q?We2teTH2NT7G79PtSz+ZWUUCoDr1k9F4zhxAUoNxI6DlYk87H2fUL0U4Nv?=
- =?iso-8859-1?Q?nKbAwYiljT6CgJvEkoPk+h2ApW+Z0CcJSVc4xAQjcLDKdcBewmQ199dgsG?=
- =?iso-8859-1?Q?RyROdxvWRe18e8a0SukFBLhWBwDHRrSs9xRA/GjGD30xWnkqm+LgCvkYqS?=
- =?iso-8859-1?Q?HndTLq/g40VWw6VZP4GbOd2Fu/1SN1xqVA5AbjbSqHRYHMQPvLvZ3f9RA5?=
- =?iso-8859-1?Q?qxUpZ0LuoZTMj9lc5Y/GjCpby3wjfsWAs1elHAdzVPRkx2HXeqtNB3TFUj?=
- =?iso-8859-1?Q?w9MUg693pCMpCrm5KRzAF5rtmgP8M1qZgAGtcM0trzQCPB0UC38+v37kch?=
- =?iso-8859-1?Q?XrBkVicqwKuafymsDOQ9dsLttjVYUfY8dnJAl3/hDRMTtoCvFek+zUy2vu?=
- =?iso-8859-1?Q?I9hZe0OUzyz7FKMiOKnUVi9JCcHE2QrfpkUhwol6cry5iAoqiptOqt8/lq?=
- =?iso-8859-1?Q?B8MiDePT/W1dj+F+/TpN/l6NHL6/zzHiuL8RP3FZHCqrVxRgvCuUmcSRDI?=
- =?iso-8859-1?Q?WuDET7lpd6xfV53Yl/BULWIFOGZceebcfVuBIg8GU8HdhScamhknwVeCjc?=
- =?iso-8859-1?Q?NPvCOR1Z1Dn5VlyHCaqRWS0qTjaZiujsdCWvdC121iBlvvg6ooMDMpLyRK?=
- =?iso-8859-1?Q?0Z9GQWBGlb8gz2Xk4pJ6VTXzJUHhBrzkA2Ag/9kjyfW1Yk7yqncVTDeELR?=
- =?iso-8859-1?Q?ASlyzs/C4rpeRjvpnrgSaswHYczUnz54o1YUZ9lmQ8V7mqoTTN8WSfimz2?=
- =?iso-8859-1?Q?+6fFy7/HYzGKjk8HT1t+FOd43CEFe3RsC/ALdBMrBBJOY7GtsNvRCxuttA?=
- =?iso-8859-1?Q?eQDixYQzCAtSQTaBNgm/uZHUYjsuYJesaptwrfiKAV2aRGf71CuCC8SvoN?=
- =?iso-8859-1?Q?osK0s11nfoYkt5piCHK/G7AHsPozVblR8poDe4s6eWW+SuxhNcfHMEf/J8?=
- =?iso-8859-1?Q?L0TqbITHAlqfJTwHb1VZjOu4mdB+X16kwmX7Gr7lwjN6JD8VB5s28Q8+RJ?=
- =?iso-8859-1?Q?1ZIg+IgUbbZo4spNq2dAipieiZO77J7eB3JyauK4zG7/SC/BtvPJ3DHO8h?=
- =?iso-8859-1?Q?cOiOIChQFjoWmkv/rVVw5hty8+3H0phqHAH/sqqbMA3DB86KJi2iW3w/kU?=
- =?iso-8859-1?Q?tuXEqs136P9tooWcB5+3BfFxPxyckonAMvxJV1NXJSeVrsOcF2yy+k/FEO?=
- =?iso-8859-1?Q?wY0/aqtgmpgbDwR31xrFpCElXjICtiHIZ6SREIjCg2fDXJ2vOW58KaZs7r?=
- =?iso-8859-1?Q?mE4QQPVEXNEjYjpj+hsaTYF4zIlNr7Ln33wONMQkr1KFXBYrzL8kDoh5n0?=
- =?iso-8859-1?Q?MXC4BMuE6PTqZNpde9M=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SEZPR06MB7619.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7142099003)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?uiH/uIUvpGBTU1MeSGX5qidLbToTxgcJ1Da13rHldACoEVknUWYRy8dyOH?=
- =?iso-8859-1?Q?SDPQPcxMGLa06S3EZhlIIP1WXaijA+y9gEXoXO0KjPQsdXn1yxD9K0UOWf?=
- =?iso-8859-1?Q?7lqv2HR1O1bCN8W3Op496qsVdMV3BRsimoDB8AHevDUi33vOvLKek3pL2N?=
- =?iso-8859-1?Q?gCY/kTjNAJBFJdGqLi0PGI+M0FLfDSNyQSdzsgwhc0+FpfYz0XDiU/w7tZ?=
- =?iso-8859-1?Q?NNyD9wv4xfIPH0IdkBxIAvh8DoM9FalxjHR5Cq2DuGplaCL05wrmgCfU6A?=
- =?iso-8859-1?Q?eBjEx2S7Yx7RfzT0wUTwTclHmWhBqqO5/RqhQGWRPcCceJoq767pQXtAes?=
- =?iso-8859-1?Q?JbI+tpeQUklPte4jp+x+l4cKZK71u7tM+ghUuo61XugWnK6ArIuaMkuspw?=
- =?iso-8859-1?Q?z/nA4AyQEv4o1cYha5TfoitMS0ru2ylkyQv4/vuIEM+qJvy6ddeGBX0cAb?=
- =?iso-8859-1?Q?C75gay/8plO1MFnA8RHqP9S3c/mnw5+fh85BWSgSTc0TGtM5eoLjc4oHlu?=
- =?iso-8859-1?Q?RAZiZIuxigoUnMjMCa9ti7I4YIwkUgcrTSZKfdaFZsKsIYSM3UBIKM385N?=
- =?iso-8859-1?Q?xVSRgEVrK7XuTIt7svF0ORykdfL4RaUFldPHhF80oOp5WeMLau2LeJ/45p?=
- =?iso-8859-1?Q?vMgvY+vE3sj5zxeLAl0sm8oeyv/nYe07to1prBc3pczt/sbhKczEI7VN2Z?=
- =?iso-8859-1?Q?99vD8j5VCGW692Fl+2OmqbIKRdZSDuRDzSnzUPyYZWk6xZDHH/zg3Yce0p?=
- =?iso-8859-1?Q?bot7OKwkFZkuJeC5Y0aywW91w/53OOWk7jbwfVE8ERDR7gy8N8bFx5uNOi?=
- =?iso-8859-1?Q?frWQX/ebMmhRc9CEs66Mc4dODkH40x4A7qz+RZlqUmArafeZcgBvTLQKrq?=
- =?iso-8859-1?Q?AlJr20Sb2u6GtousHxHD8r9tYRghtBmk+/C9C/mUI34r2hZQXtXGtITOOg?=
- =?iso-8859-1?Q?aIvqkvLUEXKp91Imv0oe74aFp0Eeh0m/xoASG+mBazxPxGs06gisyIWIrL?=
- =?iso-8859-1?Q?4kAK36/9m96ZJDi4BaNNC6tChqmTqPd2BlXwcGft9W4GKqR75OVs5MV1Xs?=
- =?iso-8859-1?Q?abUgSAgeknS6WCx11sF6lkefTS2xsPV4shxdrLyd04RD1Ai4bq4IedL72l?=
- =?iso-8859-1?Q?ndVi+og1CSmrQFWrRUvmNKw6lqi2deQvrqUXxeRaT1kbF0DuefNzSsUl0X?=
- =?iso-8859-1?Q?SAkMyhFNABp73T+0XEPB78PHn+erIazQCRotikGLeV/3SkWC26QPWBNK0o?=
- =?iso-8859-1?Q?5eCC3zgkH0Gvx/YkeyH14UEzurHxP18B7/jM1XTQP1CTG725HmLmHXSqyl?=
- =?iso-8859-1?Q?IWqsy1X6PAhzLbFDhsL2fvnmej3f1oLCRaywH81ZGHt7WetZR+2aOXUxhe?=
- =?iso-8859-1?Q?/sMBLjBF3D7Sfsec3MSa/Xn1gLV7+Nd4/Yw8tM8qLW2P2ayzyubkgJKibh?=
- =?iso-8859-1?Q?80G++KLGprOVJfgsZT0J9QkEP6cXNtz+7uhXNGtAwzbbfe7zdA6CEkKBZW?=
- =?iso-8859-1?Q?1r+0k3hYeM6DjlehLtDRsM4vPf8xGRTZ4j4WtYnlxewQNvB5FA/046Pxwc?=
- =?iso-8859-1?Q?vLH8zVxKrJ4XeQA8i9JbqXEIcMUSfkRNIbRmmJbfDSW8MEgI+ZYDiD3oF4?=
- =?iso-8859-1?Q?oU+QC1dEGGtve/JoqjnChPmTvoqPt1Bqw9YBUw33xQbEGQZi/iFaueNG3I?=
- =?iso-8859-1?Q?cX55P2GIx+VFMGKZeRY5OHV1QyAV6VfnZvl0DVN50GMKU/Kd6Elkra2pf0?=
- =?iso-8859-1?Q?hW/8VmoYkqR9f/nd/579rqa1TQ5FVWLE53PMQ90tzagYi8cvaqKdtYWVXc?=
- =?iso-8859-1?Q?EDHP/YbhAA=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vplEr-00083H-UI
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 05:45:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770720299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iXVl8YNJim+B9QaM/E0zAAZWvvprDwFXsq6EdyQQHR0=;
+ b=gUOxllmeT0BFWCvZQ20k1I6WCKnyqghwKcsp+CGV2V0/4XhM1i4gnjiZb5k6tBGHiZWmwh
+ XsM4+cmylUXH0oKNz5kqMBB/W+ROOVo9P1OmQOq2c3fxQPKy9sguH4hMP5X+7p/eEfJhzW
+ YJNqwTDSPrxKzRX7XHuFB03icYm4+68=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613-IhhSGZjRMnK3zE2zuLEevg-1; Tue, 10 Feb 2026 05:44:57 -0500
+X-MC-Unique: IhhSGZjRMnK3zE2zuLEevg-1
+X-Mimecast-MFC-AGG-ID: IhhSGZjRMnK3zE2zuLEevg_1770720297
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47ee33324e8so9243465e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 02:44:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770720297; x=1771325097; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=iXVl8YNJim+B9QaM/E0zAAZWvvprDwFXsq6EdyQQHR0=;
+ b=YoH53BScw/ywKYWeFzSosF/ibzGuXmWS4BmIDrPzF494/J60uX0115J/BwU8qDVrPT
+ K7DeLSPc776Cyq9uHEZt3zRs91h7dork3SoU1L7jWgXzNvYsWvBF1Snu2vMLsUCCea/I
+ vJfJwDZSbKsw1KQPdBlBPgLERn/s25rWQorH96ydo1w+gHI6PbtNVbHstuNXJg+I9HFi
+ jilib5nx466ekbiSe+UO3EZeGOdfiqQ0Z74BqWgudkirOK9W+VJrigPqcOLevFEcP2PD
+ uaEcOU6mS/D3UJ96cOqYljKKtZ+aHYxtKvTRKb9mx3f3sOqvNzPmaIrCHrJFSYEhLjWw
+ 81OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770720297; x=1771325097;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iXVl8YNJim+B9QaM/E0zAAZWvvprDwFXsq6EdyQQHR0=;
+ b=TplOTr98MVdbWN52YjVHSmlpAC6AvztZKXlZljqCz9tn6pGPoCWDaYB/f2oFtb1+Lk
+ vSCn/5wIIig3A16kB7oMlx65JNbzwRNMct8YzaLJRP5amP+4WtvH8okeAkgjaWpYk8hi
+ YQUVCCLN5j6UGsvj3iuSL4/8qgpkHmgfnOh2zQXrA8s14M077G2oTDfq1wOLJuD0dl6R
+ UoDMMv6oxu8U+rIM54nsoT2/iuv7puXxlzUi3yRAjBP/TM5PDZ4a7isPGoc94MGzSQJd
+ FA5Mg6q82vjCr5ZYp/j3zEKEi7spUrVcwQyeWQcIHIbiATQ8O2q9RanG39hYaiFk3KJa
+ P5IA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrG9Y+Is+DrKv8dIK6KCxUWq3Vncc43h4KFK+e6UbrOfTFSPwSFq+4U6LAWECMdeWoQLKSsCPgJGfL@nongnu.org
+X-Gm-Message-State: AOJu0YyOaV+tfTm/vBQy/GtrolGwux37aH4RJc73QrfhTs5xC3jLbMvZ
+ n2TkDo4mOoG2cbNx2icX+VPP64LoK2umw8EhMLJzA6xp4khL0uXkSBfHbo1MshQb1sWk/1MUEYD
+ QIuDEkgHAIy1BqjKTiRvdDFum5XH8sy5F1ALvI+Z4ILSZ+S/4Tt5l9RnA
+X-Gm-Gg: AZuq6aLVYznctcEu7yYK8c9DNYlsadpAJ1zZmrwDwPo5hXrTqBHYLO1QRjqMWAL267Q
+ 7fVc0cWlF5EtW+vmJUg8HqFr0ruktdFQak6/DuyAS73e0hnrSYSoWhITmza0sPAd2KBTUoqsEdw
+ zfMgZy+r8HT/VzIuktDqngmbm3uf52amZl+zI+MtwKMsqoc5UqGf3jK5/9icY25Vsu7wDPXv1Rq
+ JVDX2OQawiBsTxs1alW1l01touQRA6RVprsWOuvTOiUnKnVn3P+lu87HpDOMIppWujlyitWm7ku
+ wxPwonUorjPLKRhVj7vpo4qSiSCLb0S1P5zRbV2jrQJn80CsaJRxynPp1V/40utLrXkoRaraFSM
+ fyF+kJ/llS3IYxlA42GmF8JGR9wLUA1au1r7FsgZ9dl6Huw==
+X-Received: by 2002:a05:600c:6214:b0:483:887:59b0 with SMTP id
+ 5b1f17b1804b1-4832022ff38mr236998465e9.35.1770720296473; 
+ Tue, 10 Feb 2026 02:44:56 -0800 (PST)
+X-Received: by 2002:a05:600c:6214:b0:483:887:59b0 with SMTP id
+ 5b1f17b1804b1-4832022ff38mr236997975e9.35.1770720295991; 
+ Tue, 10 Feb 2026 02:44:55 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5d77f9sm54863025e9.3.2026.02.10.02.44.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 02:44:54 -0800 (PST)
+Date: Tue, 10 Feb 2026 05:44:50 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
+ user input
+Message-ID: <20260210054244-mutt-send-email-mst@kernel.org>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <aYsElqDoGXQ_xMBD@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7619.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 09b505a0-3bbd-4134-ddb9-08de68916119
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 10:44:34.1451 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VTr/zwH1lvPpk81g9v+4I1jghghikDBTT6lOVxlel/p9tF2PLZZ8XwPctcjIbAbiGxzcq5zRXDrObxb/18EQbZe2fm6aSRudCyvTNeLlAfY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR06MB8077
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aYsElqDoGXQ_xMBD@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,75 +134,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve the OTP test script by adding functional verification of OTP=0A=
-strap registers. The test now validates that OTP modifications made=0A=
-in U-Boot persist through the Linux boot process and survive a=0A=
-subsequent reboot.=0A=
-=0A=
-Key changes:=0A=
-- Added interactive console commands for U-Boot and Linux.=0A=
-- Implemented verification for OTP register 0x30 across reboots.=0A=
-=0A=
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>=0A=
----=0A=
- .../arm/test_aspeed_ast2600_sdk_otp.py        | 35 ++++++++++++++++---=0A=
- 1 file changed, 31 insertions(+), 4 deletions(-)=0A=
-=0A=
-diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py b/tests/fu=
-nctional/arm/test_aspeed_ast2600_sdk_otp.py=0A=
-index 4066532d5d..90f283ea09 100644=0A=
---- a/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py=0A=
-+++ b/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py=0A=
-@@ -6,7 +6,8 @@=0A=
- =0A=
- from qemu_test import Asset=0A=
- from aspeed import AspeedTest=0A=
--=0A=
-+from qemu_test import wait_for_console_pattern, exec_command=0A=
-+from qemu_test import exec_command_and_wait_for_pattern=0A=
- =0A=
- class AST2600Machine(AspeedTest):=0A=
- =0A=
-@@ -25,9 +26,35 @@ def test_arm_ast2600_otp_blockdev_device(self):=0A=
-             "-blockdev", f"driver=3Dfile,filename=3D{otp_img},node-name=3D=
-otp",=0A=
-             "-global", "aspeed-otp.drive=3Dotp",=0A=
-         )=0A=
--        self.do_test_arm_aspeed_sdk_start(=0A=
--            self.scratch_file("ast2600-default", "image-bmc"))=0A=
--        self.wait_for_console_pattern("ast2600-default login:")=0A=
-+        self.require_netdev('user')=0A=
-+        self.vm.add_args('-drive', 'file=3D' +=0A=
-+                self.scratch_file("ast2600-default", "image-bmc") +=0A=
-+                ',if=3Dmtd,format=3Draw',=0A=
-+                '-net', 'nic', '-net', 'user', '-snapshot')=0A=
-+        self.vm.launch()=0A=
-+=0A=
-+        # Set OTP value via uboot command=0A=
-+        wait_for_console_pattern(self, 'Hit any key to stop autoboot:')=0A=
-+        exec_command_and_wait_for_pattern(self, '\012', 'ast#')=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'otp pb strap  o 0x30 1', 'ast#')=0A=
-+        # Validate OTP value in uboot stage=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'otp read strap 0x30', '0x30      1')=0A=
-+        exec_command_and_wait_for_pattern(self, 'boot',=0A=
-+            "ast2600-default login:")=0A=
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:')=0A=
-+        exec_command_and_wait_for_pattern(self, '0penBmc',=0A=
-+            'root@ast2600-default:~#')=0A=
-+        # Validate OTP value in BMC stage=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'otp read strap 0x30', '0x30      1')=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'reboot', 'Hit any key to stop autoboot')=0A=
-+        exec_command_and_wait_for_pattern(self, '\012', 'ast#')=0A=
-+        # Validate OTP value in uboot stage=0A=
-+        exec_command_and_wait_for_pattern(self,=0A=
-+            'otp read strap 0x30', '0x30      1')=0A=
- =0A=
- =0A=
- if __name__ =3D=3D '__main__':=0A=
--- =0A=
-2.51.0=0A=
+On Tue, Feb 10, 2026 at 10:12:38AM +0000, Daniel P. Berrangé wrote:
+> On Tue, Feb 10, 2026 at 11:23:27AM +0800, Zhao Liu wrote:
+> > Hi,
+> > 
+> > This is the v2 trying to introduce property flags to detect user's
+> > property setting (from CLI/QMP/HMP). I dropped RFC tag since previous
+> > RFC v1 [1].
+> 
+> This says what the series is proposing, but IMHO what is more important
+> here is explaining why this either desirable or appropriate to add as
+> general facility in QOM.
+> 
+> The idea that code should take different action for a given fixed value,
+> based on whether the value was set by the user, or left on the default,
+> makes me very uncomfortable.
+> 
+> There have been a number of situations where something that was initially 
+> a boolean flag, actually needed to be a tri-state instead, to provide
+> semantics like "On", "Off", "Auto".
+
+But "auto" is exactly a property specific way to work around this.
+With this, we could allow "auto" for any property (except strings I
+guess) without per property code.
+
+
+> This "user set" flag could support such behaviour indirectly, but since
+> "user set" is an internal concept we'd still be only exposing a boolean
+> externally, while using a tri-state internally. That does not give the
+> full flexibility of a tri-state, because internally if we wanted to
+> have the default to be "yes", it offers no way for the mgmt app to
+> put it back to "auto".
+
+I do not get it. Of course user set is an external concept.
+It is user controllable!
+
+
+> For properties that are not booleans, it is much less obvious to me
+> whether we actually need a distinct "not set" concept at all.
+> 
+> 
+> So overall, at a conceptual level, I don't think that QOM should care
+> about /how/ a value came to be set. It should have no direct awareness
+> of the "user input", rather it just represents the configuration of the
+> system at a given point in time,  however that came to pass.
+> 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
