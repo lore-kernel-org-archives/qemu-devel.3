@@ -4,76 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A618DEA3F14
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE86EA3F14
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpiCg-00037u-Kz; Tue, 10 Feb 2026 02:30:35 -0500
+	id 1vpiFn-0003wg-7s; Tue, 10 Feb 2026 02:33:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vpiCb-00037L-4m
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:30:29 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vpiFl-0003wX-1o
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:33:45 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vpiCX-0002t7-Hp
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:30:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770708626; x=1802244626;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=bkxxnCSWasqzl4BwY4SfrzYfepMb9ikusxFGVrsSAjE=;
- b=irAuPvHzi8bO/mSQ6LvhTT6ZQFmb4A4447JB6m3O5sVizD9oDMFrH+zG
- hQ3UQ6+4YSvGKCUPd9gQRHHvCFuLw7TfZjlO27d8T0Rml9gEUYnLUiI3Q
- 5EvYV+sSzmNMWW9vTwTAWn9+z+S779aPqhcw+ZNF7Gd1hHGsKqrQfk8m3
- cQqwj4RfE62U8szgRkxNxhc7fIWuj6Tq1rdnYw+j3u+IxKOjFAeHB42bS
- R5WYFJVtWyCTvnB5C7l3Lg0d0ymAEXRyDUcz9YlJgauAmGAmtxm5n4Pux
- a0Yigs3o4ZU0b74axB9+qr3K/6OIhmkw33mS+8/gtGJ4wyr/GpSBo9GMT A==;
-X-CSE-ConnectionGUID: dymtetLyRKOS5CWCUIbGNQ==
-X-CSE-MsgGUID: cPzJDWY6RgGrXgOU0Q49Ug==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71728961"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71728961"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 23:30:22 -0800
-X-CSE-ConnectionGUID: Abr3k+VpR7OjOiVPAgnZfg==
-X-CSE-MsgGUID: PTSTsl53RqmlZUhTlU6hBw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211869368"
-Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
- ([10.238.1.184])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 23:30:20 -0800
-Message-ID: <576b57e3-92df-4a35-ba7c-00bf12833313@linux.intel.com>
-Date: Tue, 10 Feb 2026 15:30:16 +0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vpiFh-00036o-FQ
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:33:44 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61A7X7GO073164
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 10 Feb 2026 16:33:30 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/KPGNDlg3H9U9EGyHz+5fk83Elj2Len5kCZWXLB0N+M=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1770708810; v=1;
+ b=Zmzi20astjwp14D1Rv5KAxx00a9NPq7d5PIWr9/RkMw4bBCqM4doNq08jJ5aTnv9
+ PmIEiZmMAphvDrQSY9AoR9POgZwU97Da3RYSUT4HdnlQ++cOnq0aHxS6eSosLrje
+ W0CugGshrar1QaofT0qx0gaYqy5RY8yVtyUcJ21qxk872mq+8W8uub2mr92HxWkh
+ J6iw9ahFi+DoBuXWtoRCOQtvG8o/Zphxl8duWRUmoYOe46baWgR+oHlOCeE1+yp9
+ kOcI8N6CpShzS+kZSdLtqXJmKJwu5fMqMpJ46Lm0veGppdy7fhcZKyHoyNupC655
+ SCVc9XXK8rUHX0fsdwMb8Q==
+Message-ID: <15ad210e-1464-461e-b113-7fa01f4ece3e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 10 Feb 2026 16:33:06 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 11/11] target/i386: Disable guest PEBS capability when
- not enabled
-To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
-References: <20260128231003.268981-1-zide.chen@intel.com>
- <20260128231003.268981-12-zide.chen@intel.com>
+Subject: Re: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error handling by
+ introducing 'Error **'
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
+ <20260210070155.1176081-7-vivek.kasireddy@intel.com>
 Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260128231003.268981-12-zide.chen@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260210070155.1176081-7-vivek.kasireddy@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,67 +79,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 1/29/2026 7:09 AM, Zide Chen wrote:
-> When PMU is disabled, guest CPUID must not advertise Debug Store
-> support.  Clear both CPUID.01H:EDX[21] (DS) and CPUID.01H:ECX[2]
-> (DS64) in this case.
->
-> Set IA32_MISC_ENABLE[12] (PEBS_UNAVAILABLE) when Debug Store is not
-> exposed to the guest.
->
-> Note: Do not infer that PEBS is unsupported from
-> IA32_PERF_CAPABILITIES[11:8] (PEBS_FMT) being 0.  A value of 0 is a
-> valid PEBS record format on some CPUs.
->
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
+On 2026/02/10 15:59, Vivek Kasireddy wrote:
+> Make the error handling more robust in virtio_gpu_init_udmabuf()
+> by passing in 'Error **' parameter to capture errors from
+> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+> And, since they now take in 'Error **' parameter, have them
+> return a bool to adhere to best practices.
+> 
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Alex Williamson <alex@shazbot.org>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > ---
-> V2:
-> - New patch.
->
->  target/i386/cpu.c | 6 ++++++
->  target/i386/cpu.h | 1 +
->  2 files changed, 7 insertions(+)
->
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index ec6f49916de3..445361ab7a06 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -9180,6 +9180,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
->          env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_MWAIT;
->      }
->  
-> +    if (!(env->features[FEAT_1_EDX] & CPUID_DTS)) {
-> +        env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL;
-> +    }
+>   hw/display/virtio-gpu-dmabuf.c | 45 ++++++++++++++++++++++------------
+>   1 file changed, 30 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+> index 8d67ef7c2a..d9b2ecaf31 100644
+> --- a/hw/display/virtio-gpu-dmabuf.c
+> +++ b/hw/display/virtio-gpu-dmabuf.c
+> @@ -27,7 +27,8 @@
+>   #include "standard-headers/linux/udmabuf.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
+>   
+> -static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+> +static bool virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
+> +                                      Error **errp)
+>   {
+>       g_autofree struct udmabuf_create_list *list = NULL;
+>       RAMBlock *rb;
+> @@ -36,7 +37,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>       udmabuf = udmabuf_fd();
+>       if (udmabuf < 0) {
+> -        return;
+> +        error_setg(errp, "udmabuf device not available");
+> +        return false;
+>       }
+>   
+>       list = g_malloc0(sizeof(struct udmabuf_create_list) +
+> @@ -45,7 +47,10 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>       for (i = 0; i < res->iov_cnt; i++) {
+>           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+>           if (!rb || rb->fd < 0) {
+> -            return;
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: Could not find valid ramblock\n",
+> +                          __func__);
+> +            return false;
+>           }
+>   
+>           list->list[i].memfd  = rb->fd;
+> @@ -58,20 +63,26 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>       res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>       if (res->dmabuf_fd < 0) {
+> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+> -                    strerror(errno));
+> +        error_setg_errno(errp, -res->dmabuf_fd,
+> +                         "Could not create dmabuf fd via udmabuf driver");
+
+This is a guest error since it indicates that the guest specified wrong 
+addresses.
+
+Regards,
+Akihiko Odaki
+
+> +        return false;
+>       }
+> +    return true;
+>   }
+>   
+> -static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+> +static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
+> +                                    Error **errp)
+>   {
+> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+> -                         MAP_SHARED, res->dmabuf_fd, 0);
+> -    if (res->remapped == MAP_FAILED) {
+> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+> -                    strerror(errno));
+> +    void *map;
 > +
->      memset(env->dr, 0, sizeof(env->dr));
->      env->dr[6] = DR6_FIXED_1;
->      env->dr[7] = DR7_FIXED_1;
-> @@ -9474,6 +9478,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->              env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
->          }
->  
-> +        env->features[FEAT_1_ECX] &= ~CPUID_EXT_DTES64;
-> +        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
+> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
+> +    if (map == MAP_FAILED) {
+> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>           res->remapped = NULL;
+> +        return false;
+>       }
+> +    res->remapped = map;
+> +    return true;
+>   }
+>   
+>   static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
+> @@ -125,6 +136,7 @@ bool virtio_gpu_have_udmabuf(void)
+>   
+>   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+> +    Error *local_err = NULL;
+>       void *pdata = NULL;
+>   
+>       res->dmabuf_fd = -1;
+> @@ -132,12 +144,15 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>           res->iov[0].iov_len < 4096) {
+>           pdata = res->iov[0].iov_base;
+>       } else {
+> -        virtio_gpu_create_udmabuf(res);
+> -        if (res->dmabuf_fd < 0) {
+> +        if (!virtio_gpu_create_udmabuf(res, &local_err)) {
+> +            if (local_err) {
+> +                error_report_err(local_err);
+> +            }
+>               return;
+>           }
+> -        virtio_gpu_remap_dmabuf(res);
+> -        if (!res->remapped) {
+> +
+> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
+> +            error_report_err(local_err);
+>               return;
+>           }
+>           pdata = res->remapped;
 
-Strictly speaking, we need to check BTS as well before clearing DS. BTS
-also depends on DS.
-
-
->          env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
->      }
->  
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 5ab107dfa29f..0fecf561173e 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -483,6 +483,7 @@ typedef enum X86Seg {
->  /* Indicates good rep/movs microcode on some processors: */
->  #define MSR_IA32_MISC_ENABLE_FASTSTRING    (1ULL << 0)
->  #define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
-> +#define MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL  (1ULL << 12)
->  #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
->  #define MSR_IA32_MISC_ENABLE_DEFAULT    (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
->                                           MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
 
