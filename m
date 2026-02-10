@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E98E9462E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4B7EA3F3A
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vplx4-0005R9-At; Tue, 10 Feb 2026 06:30:42 -0500
+	id 1vplwn-0005Kk-3N; Tue, 10 Feb 2026 06:30:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwv-0005Om-Mk
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:38 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwl-0005KU-Or
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:23 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwu-0008Kl-7x
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:33 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwk-0008JX-Cn
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Yvjn4hcvICFMZZkelelqcz1XeQe1JxSatdUgrAWmycM=; b=Z4whQu8lbobT7lt
- RsEfF51fIxFOpqalJbgbwBXOhQERtbIafpIjEO/KLTIQTE9Cw+5rjR9XBsTJJ87BpaLsn5dxbJYbm
- Ad1rSMsSegq/YX1Ak+alhp8Xdor1DgSW1IsHUt4v9XJ4/sz155ipIBevpag2cmO4TVdnLS5BzpwDC
- og=;
-Date: Tue, 10 Feb 2026 12:33:18 +0100
-Subject: [PATCH v4 7/8] hw/riscv: Fix IOMMU PAS capability to 56 bits
+ List-Help; bh=B6igatEMjsC0RKOlyW4bsYPSobRk1IZSYSyjMkpKf8o=; b=jQzsvmSaPgDQaef
+ uURAyF7OjoZCrZkzCcqtiRtesqqFqM1f8soPuPq9iQFkDSBtIZip7mfiL5fo85dqP7fwvXHC878Yb
+ 8u7S9QyDJtB1nenTX1LxHEiEGAbF5/GqHmNLR7S4FeQB4We6RT4yeSPBfmdaN5mpurwT7zAOm/+yS
+ GQ=;
+Date: Tue, 10 Feb 2026 12:33:14 +0100
+Subject: [PATCH v4 3/8] hw/hppa: Use hppa_abs_to_phys_pa1x()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260210-phys_addr-v4-7-725a589e83c8@rev.ng>
+Message-Id: <20260210-phys_addr-v4-3-725a589e83c8@rev.ng>
 References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
 In-Reply-To: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
 To: qemu-devel@nongnu.org
@@ -68,41 +68,27 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
-with the fixed size of the riscv64 physical address space.
-
-Better would be to somehow determine if a 32-bit or 64-bit cpu is
-running and set accordingly, but I'm not sure how that would be done
-from the device instance init function. This field is unused anyway.
+Makes the physical address space conversion for 32 bit machines more
+explicit, using the translation function defined in mem_helper.c.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/riscv/riscv-iommu.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ hw/hppa/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index b46b337375..c3d48541b7 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2453,9 +2453,15 @@ static void riscv_iommu_instance_init(Object *obj)
-     /* Enable translation debug interface */
-     s->cap = RISCV_IOMMU_CAP_DBG;
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 960aefc9e2..472b90aab0 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -181,7 +181,7 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
  
--    /* Report QEMU target physical address space limits */
--    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
--                       TARGET_PHYS_ADDR_SPACE_BITS);
-+    /*
-+     * Report QEMU target physical address space limits.
-+     *
-+     * Currently set to the riscv64 limit of 56 bits (44 bit PPN),
-+     * riscv32 would use 34 bits (22 bit PPN).
-+     *
-+     * This field is currently unused.
-+     */
-+    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, 56);
+ static uint64_t translate_pa10(void *dummy, uint64_t addr)
+ {
+-    return (uint32_t)addr;
++    return hppa_abs_to_phys_pa1x(addr);
+ }
  
-     /* TODO: method to report supported PID bits */
-     s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
+ static uint64_t translate_pa20(void *dummy, uint64_t addr)
 
 -- 
 2.52.0
