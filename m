@@ -4,130 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F25EB2711
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0CDEB2711
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpuCy-0007ED-HQ; Tue, 10 Feb 2026 15:19:40 -0500
+	id 1vpuUL-0007Eh-3q; Tue, 10 Feb 2026 15:37:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpuCw-0007Dm-TG
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:19:38 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpuCv-0000Sb-4f
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:19:38 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2aad1bb5058so13829835ad.0
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:19:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770754776; x=1771359576; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S8A0p8XkZmyMhYbKZktWyakNNU+WLUQpbvCNmbLPKmY=;
- b=BGeZR1xvWFviYmmAtmjGZGgkcvNcmXGOpGJS8HTzgREEsGJrOKpGZMJ1aB6JLpLuVJ
- eORnop6KX6mFiTYujRSjVJ98mXpAJBeTtsmmRbE3E5Zxr68KuX6pqVP07eam5i0rUvp6
- 86IXqqJgHfXrcPoMpAFY2KRi6texEsH9LTTSVmqTCTZV1BYW3HCmFVcDjs8XxBvKtTlr
- Ldhea0iB9ARK+mN/9toqor6g9HEblBFQAIXuOUOGAnoUz+F5BJzgkSoRZ3wChHh2hCxB
- Gm+kZcm0qpszszUhRcSC8HYyBSE52ePtPiX7LNgPTtkHzza8gr0EeJswzdhIfx4GAU8Z
- NJdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770754776; x=1771359576;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S8A0p8XkZmyMhYbKZktWyakNNU+WLUQpbvCNmbLPKmY=;
- b=q4qiCD95QTGRKE2FLYbzbw2gs8x4U4KkJcvTFXha++ypm+PKUWTchBw30ZQxx6nr9j
- XJ9kkaKcb3ZJEpEJGDNMi74kFGHwuWjr7TzZczP3wxIRP/J/MKT8outcFbjYkoTlJUnX
- lR7koLom+D/H5ocrgHLe+swGzJwcC4XiL8pm5heeV3V54LE6u4c2Sj62f4+OctAFIi25
- e/Wk4D4sihZhXiPIc/PTHTGXW3MhFUuB3DXEDIA44mVzejx82kQjtnDC7PIkXZKUD5kH
- 5Y2C9+RYWyNxPdO0zVDZ+yeT6ElyG63Ol9HFhzbqWojxS0eD4LHo2jqsPxC24GZDZ0n1
- GWwQ==
-X-Gm-Message-State: AOJu0Yy1+dgBWDRwd7bSjsTVyl7+RGX51+qoV9d/2ixB52R8T+C4yPBP
- 1a8XFHe1fNPd93+fuHP02wv0/dIDwkf/K2aSehtzBQByYtSqVB5JpDWQxdtGMNqISVEkYoG4/JT
- q2jQs
-X-Gm-Gg: AZuq6aKkL2pm9+P1Xf7dIKSDAJS2WnMRldSvOhMk0pMhhSuWGKvJd/v2/bRI/rB9mKW
- MWyoT8wPzC3MNgI0xGv1osHOgXApK3XzmqeBDRK4xSQtW97B7we58/Xhphaz75ITZ5as6uyvfcD
- pGOFR1iE6kiUT09c1BnvAAQYEdVnsGOmK8POofEa53yYHxtly+LbpeD7XudFe8Cc/y4N/EkQ0dB
- gmKEhPFgNsjKsBpZxXPMWjZVZ5khnshTJLzf+HD4dNg7Ld5AmWPCQ0ZmG41uOkJ39hCoc/mtn3N
- GMo20M1kHnMAtXaotVaY+7CUVoJodBCutpagZrrU22kSN5mwETzRblwLK+HGA0K5/8Cg1oIzMRR
- jgY3DkCScMoCa2WQUE9MMgRy1zDaO7UbVw0+0/oRCiHeEIzcmYkql58r4oNcUbMa9txcg6a2PYa
- XhGhp+iiFSAAdbucVdcno0D5YehVXu65T97GA7FAQlhYPU0NBb3BAUD8kgfZ9cuWslPoXc75w2e
- 1M5QqU=
-X-Received: by 2002:a17:902:db07:b0:2a5:8c1c:7451 with SMTP id
- d9443c01a7336-2a9519f5b02mr181168565ad.58.1770754775772; 
- Tue, 10 Feb 2026 12:19:35 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab017c0461sm52081175ad.27.2026.02.10.12.19.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 12:19:35 -0800 (PST)
-Message-ID: <93f8f250-7899-4528-b277-1ddd469c192c@linaro.org>
-Date: Tue, 10 Feb 2026 12:19:34 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/12] target/arm: single-binary
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1vpuUJ-0007ES-JW
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:37:35 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1vpuUH-0004h6-Ip
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:37:35 -0500
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61AJ3tRd3799102; Tue, 10 Feb 2026 20:37:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=nyzTzNYRcyCLqxotWAo6S5hwXflch
+ oMdaYB35OTZdZ8=; b=X26rXHrNEgRIyVL6UgYWQ+UjGQBmHag82LtBE46ErPCe3
+ w+2GkLN2rGuJHi4PFTwYrvhITLXRm5E3racTxxUmUN7USQpfLw8/YLZI2wT1B52k
+ Ttk7lmj3VmbvDuSezAAWcfEKQq1CGKT/o8oEic55w1bZwFKyOFuRaBp+0ur7le2a
+ Wng0dk3x0Xz7xKYu/i7QOS+bifVtEnR0LdlqYO5mD8rrjoz5hCn3W1Ncc8e7xj4V
+ qcSDx9039vWE0JHNK85NMCZXqEiXqVaYSndGXyLZPQtNHBppqoh+B7Q3IiBknUh7
+ NMzjnsdoFyKMb1t0UsQHAslzFnP8hFiaIByk6EgsQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4c7s7rst12-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 20:37:11 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 61AJocJG013058; Tue, 10 Feb 2026 20:37:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4c826yju2r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 20:37:11 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 61AKSGNe026095;
+ Tue, 10 Feb 2026 20:37:10 GMT
+Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4c826yju1x-1; Tue, 10 Feb 2026 20:37:10 +0000
+From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: kvm@vger.kernel.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ dwmw2@infradead.org, joe.jin@oracle.com
+Subject: [PATCH 1/1] target/i386/kvm: set VM ioctl KVM_SET_TSC_KHZ to maintain
+ TSC synchronization
+Date: Tue, 10 Feb 2026 12:20:41 -0800
+Message-ID: <20260210202041.153736-1-dongli.zhang@oracle.com>
+X-Mailer: git-send-email 2.43.5
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-10_03,2026-02-10_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ bulkscore=0 spamscore=0
+ adultscore=0 phishscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2601150000
+ definitions=main-2602100170
+X-Authority-Analysis: v=2.4 cv=PZbyRyhd c=1 sm=1 tr=0 ts=698b96f7 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117
+ a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
+ a=G1uzyK3xrw_hqu8813EA:9 cc=ntf awl=host:13697
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDE3MCBTYWx0ZWRfX8p9EzsyH8TGp
+ o7CHaaiUWrNDF++bBeJmusnqiSk4o99V5LRRkok5/o4VmUqX+iDt9nK29ZSAdZncoJiD/Hfi+Aw
+ gLSYRCgLXlM+NNCkL/kjO5LYCwG1Vah3Npl2MCpgXvSKvH5FHXcnSDxJP1SxmI0mwlpMdnLjRaD
+ Qq+wqNj+QxWT2jiYNsZu/5ohgHP8GIZRUwqbwlZDIZOwGmlE4EwAPg8bpQ13A7xdM7N3XgnZPEw
+ gOI5EbHhwxJeIh/Bj370EqTPiMVdHRRfUg4C9/bJKMf4ML+CcRbfSn34TyZQmOxgeE4ImYsqrTn
+ 8O6VyEaSkKSHlVQJEBxmi/AOwwzkvWRIsWjcduT0WQaaQVHQ6HndkPvRKLnoLmh0//hfkLmmpKx
+ Oq7knAuZ3D4zrIos0Odi1uy0kEdA0wLsmTa5bLhpC407t8xvyTd5doBroSM60B0VVKW2ulqtKc0
+ GmcW13F1RTGrraxOh50AOxKiJl6QCQfRAkj6g01I=
+X-Proofpoint-ORIG-GUID: G9me7-3UeWT2L_J0yMvgxJpmrNL77kdP
+X-Proofpoint-GUID: G9me7-3UeWT2L_J0yMvgxJpmrNL77kdP
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,139 +113,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 12:15 PM, Pierrick Bouvier wrote:
-> This series continues cleaning target/arm, especially tcg folder.
-> 
-> For now, it contains some cleanups in headers, and it splits helpers per
-> category, thus removing several usage of TARGET_AARCH64.
-> First version was simply splitting 32 vs 64-bit helpers, and Richard asked
-> to split per sub category.
-> 
-> v3
-> --
-> 
-> - translate.h: missing vaddr replacement
-> - move tcg_use_softmmu to tcg/tcg-internal.h to avoid duplicating compilation
->    units between system and user builds.
-> - eradicate TARGET_INSN_START_EXTRA_WORDS by calling tcg_gen_insn_start with
->    additional 0 parameters if needed.
-> 
-> v2
-> --
-> 
-> - add missing kvm_enabled() in arm-qmp-cmds.c
-> - didn't extract arm_wfi for tcg/psci.c. If that's a hard requirement, I can do
->    it in next version.
-> - restricted scope of series to helper headers, so we can validate things one
->    step at a time. Series will keep on growing once all patches are reviewed.
-> - translate.h: use vaddr where appropriate, as asked by Richard.
-> 
-> Pierrick Bouvier (12):
->    target/arm: extract helper-mve.h from helper.h
->    target/arm: extract helper-a64.h from helper.h
->    target/arm: extract helper-sve.h from helper.h
->    target/arm: extract helper-sme.h from helper.h
->    tcg: move tcg_use_softmmu to tcg/tcg-internal.h
->    target/arm: move exec/helper-* plumbery to helper.h
->    target/arm/tcg/psci.c: make compilation unit common
->    target/arm/tcg/cpu-v7m.c: make compilation unit common
->    target/arm/tcg/vec_helper.c: make compilation unit common
->    target/arm/tcg/translate.h: replace target_ulong with vaddr
->    target/arm/tcg/translate.h: replace target_long with int64_t
->    include/tcg/tcg-op.h: eradicate TARGET_INSN_START_EXTRA_WORDS
-> 
->   include/tcg/tcg-op-common.h                   |   8 +
->   include/tcg/tcg-op.h                          |  29 ---
->   include/tcg/tcg.h                             |   6 -
->   target/alpha/cpu-param.h                      |   2 -
->   target/arm/cpu-param.h                        |   7 -
->   target/arm/helper-a64.h                       |  14 ++
->   target/arm/helper-mve.h                       |  14 ++
->   target/arm/helper-sme.h                       |  14 ++
->   target/arm/helper-sve.h                       |  14 ++
->   target/arm/helper.h                           |  17 +-
->   .../tcg/{helper-a64.h => helper-a64-defs.h}   |   0
->   target/arm/tcg/{helper.h => helper-defs.h}    |   0
->   .../tcg/{helper-mve.h => helper-mve-defs.h}   |   0
->   .../tcg/{helper-sme.h => helper-sme-defs.h}   |   0
->   .../tcg/{helper-sve.h => helper-sve-defs.h}   |   0
->   target/arm/tcg/translate-a32.h                |   2 +-
->   target/arm/tcg/translate.h                    |  22 +-
->   target/arm/tcg/vec_internal.h                 |  49 ++++
->   target/avr/cpu-param.h                        |   2 -
->   target/hexagon/cpu-param.h                    |   2 -
->   target/hppa/cpu-param.h                       |   2 -
->   target/i386/cpu-param.h                       |   2 -
->   target/loongarch/cpu-param.h                  |   2 -
->   target/m68k/cpu-param.h                       |   2 -
->   target/microblaze/cpu-param.h                 |   2 -
->   target/mips/cpu-param.h                       |   2 -
->   target/or1k/cpu-param.h                       |   2 -
->   target/ppc/cpu-param.h                        |   2 -
->   target/riscv/cpu-param.h                      |   7 -
->   target/rx/cpu-param.h                         |   2 -
->   target/s390x/cpu-param.h                      |   2 -
->   target/sh4/cpu-param.h                        |   2 -
->   target/sparc/cpu-param.h                      |   2 -
->   target/tricore/cpu-param.h                    |   2 -
->   target/xtensa/cpu-param.h                     |   2 -
->   tcg/tcg-internal.h                            |   6 +
->   target/alpha/translate.c                      |   4 +-
->   target/arm/debug_helper.c                     |   4 +-
->   target/arm/helper.c                           |   5 +-
->   target/arm/tcg/arith_helper.c                 |   4 +-
->   target/arm/tcg/crypto_helper.c                |   4 +-
->   target/arm/tcg/gengvec64.c                    |   3 +-
->   target/arm/tcg/helper-a64.c                   |   6 +-
->   target/arm/tcg/hflags.c                       |   4 +-
->   target/arm/tcg/m_helper.c                     |   2 +-
->   target/arm/tcg/mte_helper.c                   |   3 +-
->   target/arm/tcg/mve_helper.c                   |   6 +-
->   target/arm/tcg/neon_helper.c                  |   4 +-
->   target/arm/tcg/op_helper.c                    |   2 +-
->   target/arm/tcg/pauth_helper.c                 |   3 +-
->   target/arm/tcg/psci.c                         |   4 +-
->   target/arm/tcg/sme_helper.c                   |   5 +-
->   target/arm/tcg/sve_helper.c                   |   6 +-
->   target/arm/tcg/tlb_helper.c                   |   4 +-
->   target/arm/tcg/translate-a64.c                |   3 +
->   target/arm/tcg/translate-mve.c                |   1 +
->   target/arm/tcg/translate-sme.c                |   3 +
->   target/arm/tcg/translate-sve.c                |   3 +
->   target/arm/tcg/translate.c                    |  25 +-
->   target/arm/tcg/vec_helper.c                   | 224 ++----------------
->   target/arm/tcg/vec_helper64.c                 | 142 +++++++++++
->   target/arm/tcg/vfp_helper.c                   |   4 +-
->   target/avr/translate.c                        |   2 +-
->   target/hexagon/translate.c                    |   2 +-
->   target/i386/tcg/translate.c                   |   2 +-
->   target/loongarch/tcg/translate.c              |   2 +-
->   target/m68k/translate.c                       |   2 +-
->   target/microblaze/translate.c                 |   2 +-
->   target/or1k/translate.c                       |   2 +-
->   target/ppc/translate.c                        |   2 +-
->   target/rx/translate.c                         |   2 +-
->   target/sh4/translate.c                        |   4 +-
->   target/sparc/translate.c                      |   2 +-
->   target/tricore/translate.c                    |   2 +-
->   target/xtensa/translate.c                     |   2 +-
->   tcg/tcg.c                                     |   4 -
->   target/arm/tcg/meson.build                    |  11 +-
->   77 files changed, 383 insertions(+), 381 deletions(-)
->   create mode 100644 target/arm/helper-a64.h
->   create mode 100644 target/arm/helper-mve.h
->   create mode 100644 target/arm/helper-sme.h
->   create mode 100644 target/arm/helper-sve.h
->   rename target/arm/tcg/{helper-a64.h => helper-a64-defs.h} (100%)
->   rename target/arm/tcg/{helper.h => helper-defs.h} (100%)
->   rename target/arm/tcg/{helper-mve.h => helper-mve-defs.h} (100%)
->   rename target/arm/tcg/{helper-sme.h => helper-sme-defs.h} (100%)
->   rename target/arm/tcg/{helper-sve.h => helper-sve-defs.h} (100%)
->   create mode 100644 target/arm/tcg/vec_helper64.c
-> 
+When the guest and host use different TSC frequencies - specifically when
+"tsc-frequency" is configured - the guest TSC becomes unsynchronized after
+additional vCPUs are added.
 
-Patches 1-11 are reviewed and ready to be pulled.
+Suppose the host TSC frequency is 2596.102 MHz. Here are steps to
+reproduce:
 
-Regards,
-Pierrick
+Create the QEMU instance with a different TSC frequency 2596.100 MHz.
+
+-cpu host,tsc-frequency=2596100000 \
+-smp 2,maxcpus=8 \
+
+After the guest VM has booted, add two additional vCPUs.
+
+(qemu) device_add host-x86_64-cpu,id=core2,socket-id=0,core-id=2,thread-id=0
+(qemu) device_add host-x86_64-cpu,id=core3,socket-id=0,core-id=3,thread-id=0
+
+The guest TSC becomes unsynchronized. The vCPUs end up with different TSC
+offsets.
+
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu0/tsc-offset
+-345550695701016
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu1/tsc-offset
+-345550695701016
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu2/tsc-offset
+-345700146347894
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu3/tsc-offset
+-345700945993728
+
+This issue occurs because KVM synchronizes the guest TSC twice for each
+newly added vCPU. In other words, kvm_synchronize_tsc() is invoked twice
+per vCPU by KVM.
+
+During the first synchronization, kvm->arch.default_tsc_khz is used. During
+the second synchronization, the TSC frequency configured by QEMU is used.
+Because different TSC frequencies are used during these two synchronization
+steps, the guest TSC becomes unsynchronized in KVM.
+
+Linux kernel commit ffbb61d09fc5 ("KVM: x86: Accept KVM_[GS]ET_TSC_KHZ as
+a VM ioctl.") introduced support in KVM to help mitigate this issue. QEMU
+should add corresponding support to address the problem on its side.
+
+Always issue the VM ioctl KVM_SET_TSC_KHZ before creating any vCPUs, so
+that the default TSC frequency is set correctly for all subsequently
+created vCPUs.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
+This is based on the latest QEMU commit, along with the patchset below,
+which has already been queued by Paolo.
+https://lore.kernel.org/qemu-devel/20260207134620.638214-1-pbonzini@redhat.com
+
+ target/i386/kvm/kvm.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9f1a4d4cbb..56bba9460d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2065,6 +2065,9 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+     int ret;
+ 
+     if (first) {
++        X86CPU *x86cpu = X86_CPU(cpu);
++        CPUX86State *env = &x86cpu->env;
++
+         first = false;
+ 
+         /*
+@@ -2086,6 +2089,17 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+                 return ret;
+             }
+         }
++
++        if (!is_tdx_vm() && env->tsc_khz &&
++            kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
++            ret = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
++            if (ret < 0) {
++                error_setg_errno(errp, -ret,
++                           "Unable to set TSC frequency to %"PRId64" kHz",
++                           env->tsc_khz);
++                return ret;
++            }
++        }
+     }
+ 
+     if (is_tdx_vm()) {
+-- 
+2.39.3
+
 
