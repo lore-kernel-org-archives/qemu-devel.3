@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E590EA811C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4B6EA8118
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpoAB-0001zz-6o; Tue, 10 Feb 2026 08:52:23 -0500
+	id 1vpoA6-0001z8-Ba; Tue, 10 Feb 2026 08:52:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA1-0001vw-GL
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:13 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vpoA4-0001wl-Ch
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:16 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpo9z-0006JI-Ry
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:13 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4834826e5a0so9780955e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:11 -0800 (PST)
+ id 1vpoA2-0006K1-ST
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:16 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4806e0f6b69so43254925e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770731530; x=1771336330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770731533; x=1771336333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kRnQjA9jSF81pcrYcyyCazxZX5v6kwI9Yceq4/A0UbA=;
- b=mFU8Hhplivkc0cojLcWM+36U0mikYcT2SpZKZ58LYz6eHtyVKPyWotI/aCJQYGdivJ
- mVHORUmu7p6cq031DccXqR2OgGjlVt/wrv3FDORj4ZJ8gBIsmMU5XhwtHxQOyrPWpv85
- u4F8iD6V5Aa0DbFmKmNROszhgXkb9o5CqaP/10VEunOg25OoxeDE3kau24RWbS2IUENj
- MBERhJAo8aW7Ciz7vVAAsUeg6rZ9T7OnuHfkbsLlrc54IojgAT1mvA/M+R+a8+8Z5mC7
- xde0ki41yRtbuRBvAjDYrYIKKEe3LgEzF0XhuDsOxJdz/BwF5Uv+O7SHCag/kdpIkIZw
- nxsw==
+ :reply-to; bh=R0wmLJLjqxq45RUQOtCvknbHxTskZboCDzivlPkD7iw=;
+ b=cuYQPKXrroVjzJB4EEjENiwP0GT2YgVFjkJuyh/k4Oie3cGYofIHM8dj5ksaGn2FGa
+ /At1sl9SN9HnR/h4/3vyDi+Qzf1SQ9xcIqFPczMa/nhnhOwEOeB+jYsMnntAPvqO982q
+ diDYMb/G1eSW1xi6sqOp2xwniVC0y3JyqyfwdWOl5BJeX6b+k5dxoHS+qJ1V2YejczhP
+ uj1CXPqrAqmFJ4KgOpypYMxdZzcJ4fpXfT8LL5kWKwlxleXvDKQwytsceq1IJO5xA+G6
+ zqnyUSP885iQZvApm6YFjIi/+Te+4DPkppZCr0Vn3n7fKHasxghmu7Qmzm4gh6h65tXa
+ VXDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770731530; x=1771336330;
+ d=1e100.net; s=20230601; t=1770731533; x=1771336333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kRnQjA9jSF81pcrYcyyCazxZX5v6kwI9Yceq4/A0UbA=;
- b=RtzPu5PxCPdoQuui6jNc4Zvu/AU5Cp/JAnMPZ7eCgnMAgS0/7IYsLyaqnb36msS1fs
- 1/cBmOLeIYZ5dM5b1Cul+n5xiwRgd027/dT2Ktu62s9vHz+xR+gvpWxTUXSgQ9rFyss1
- 8bZFZ8rU6PKA7aiQU/Nf26E+CHSmucs2c1+xX9N9luMyuvHFO/yTVo7ZlTFG07TvAUFG
- tsXq9bmnjK8pp6hiG2PbGFj4UbLnqj9eG1oHk06/81jlQ3FEFmZNSElWJUFbPhEbfyMM
- /EgxoljMWeTgO1XyA3C+l188EC/gkHuO/LeBebOP3SJMqG1g100N9sm8dx1T+4iOnF8H
- uRRw==
-X-Gm-Message-State: AOJu0YzocIDuPV8aJFtTk0WjCT/QPmNy1JLO3RqIFs0F5DP5rNa0yIRL
- XkPhJqR94iBEofP0LN/dwE4adkoPzIAxAHWQrD3t84ZC9xi/ZCwSvvKzm3/OOUbUVq2WtEfqtlN
- tG4Cz
-X-Gm-Gg: AZuq6aL34YaLxTNNTrKXn+QFBKMaYqHIJtajEjXsy8m2ab2kryH3r0FsH6Wf9wgZikO
- WTKJkJiw2Clgod3je5XHj3qBAtRoY+5x06ggAFT/EPfnhyO4Q7UKD9N6OI5iMxHGrP+egpTLjGY
- x1kIv44IN/ERMWtmh6TwPL3ehheWndvaYfiiGbX9MO1StObT330wBXpXREEYItcDv2sGwXwT95h
- 2kNT+Z9pJyQX69qMwOAwuQ1sPNbYjbzKdAqSFiany+67KSxCfwqocaO/WByUhc7Px9qj8GSqSlP
- 3uDBkOXZT04Wq8nNkeuHSsh3pquW/v9x7rC0/1t0mtQODKEUDf9a7W+dWuWPMARLz6G8MG/7pK9
- NKMW0cHZF0PRE7khByP00sAbXDlv39c1IzggeyQmjNjX6WTtKwTAKHkfEN3MAUWVbeZT6/tGuFy
- qI0rnCBDVTw5bZlUGpaa1dHoAHQOt1ZhHVNIWt9artfNgiSTLn9ENaQI2uhJz9yUkkKh9OAkS5K
- dSHZylwto6Vm5+E3JLLBb4jfGV1FdQ=
-X-Received: by 2002:a05:600c:3f08:b0:465:a51d:d4 with SMTP id
- 5b1f17b1804b1-483201dd06bmr224740775e9.6.1770731530369; 
- Tue, 10 Feb 2026 05:52:10 -0800 (PST)
+ bh=R0wmLJLjqxq45RUQOtCvknbHxTskZboCDzivlPkD7iw=;
+ b=F7Fhdm50nY4JQ1RCwsAPohVjO8c2nqZOQoHtknRxQEkWwWwoznEXwns9LlMsUvMf/+
+ v0CW2adwhB741gdB7SgSfFbqLcLs2Mns3EWYct6ZBSazxEbkdXpftyKf7FwDK9QJGm6e
+ jiePp+pU41IRRM8u7KiFaxRhbEMF7NGIgnNA3IDlLWd8ChegfWIbyI9tgOCzYPxxdegD
+ lI7/yN+XMzYVnxjKrn5BXDCTKLbFwBXgich8jqyJYVWFHZfjVLZvMRS5pv/Fr0IOiD0y
+ KkUxLL4g6uajfiYfn0mvFJwSDzYjzLaslXFlcmm1xc7h5EMbr3BD70hTYEPliLXh/SOY
+ 2Y3g==
+X-Gm-Message-State: AOJu0YxLoOx+JvOSFSlSWWM2PGwqCLoe3DDuljnA171ycKmzg28LATG4
+ ZIMfzH54uPHZe1evx+9TSQrtjRX72+9PWJlUMdQXsSTJtxyP59jJSHZYnRh9nKV9ksLnVzmjADp
+ 697s8
+X-Gm-Gg: AZuq6aJ7SgQ3y+E32UO/rQ8cg5F7Vx/CYg++rpCeJHLpcCJ9u7n0rx67liQEGlH3Rsx
+ IOtINqCDOO92QLh8aZELe9We4Hl7Bd2Mc2foTx24zhF6jbFm+uZTtYr0e7GwExTfLZkHZY6yEj7
+ yX6iqYafDyRYoRrF0lNDvqabn6Nn/qGJKbtQ/2s8emCuM+3702DUyvwJ7p7AMEB4LmS5oQcXmaS
+ ymcHnWbPMFKdS/mI+3wLSUh6A9j1dOs0UIBkRq2+n1tZkP1po/7ORRYPeHg+rOZwDTSCMdd0aoP
+ eZABhacOonr6dPcEkjIiYjJcdtqli7SOKc0LLkfgJffKBW2eVdubUslvwp2ZNXViuy79GEQCFCE
+ lqLrM5rWuZ56WApfC98FNxe5uZdiG9iaV9XP0IrRcmfHkr1cBddwKMYhmPI0Ga6aogyohJQkkT2
+ UwKkE2fcML8vDyD/Fx6nk0p2esG12r0e/EmA3mbhB0cFEmjXK8BMHCaghpiqLR7V/UXhsT08iTy
+ 67kpUSzWai8VhrHT7C6MPPrmjotahU=
+X-Received: by 2002:a05:600c:1548:b0:47e:e20e:bb9c with SMTP id
+ 5b1f17b1804b1-483507cff93mr33300125e9.8.1770731532886; 
+ Tue, 10 Feb 2026 05:52:12 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.09
+ 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:52:09 -0800 (PST)
+ Tue, 10 Feb 2026 05:52:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/26] qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
-Date: Tue, 10 Feb 2026 13:51:43 +0000
-Message-ID: <20260210135206.229528-4-peter.maydell@linaro.org>
+Subject: [PULL 06/26] qtest: hw/arm: virt: add ACPI tables for new GICv3 +
+ GICv2m test case
+Date: Tue, 10 Feb 2026 13:51:46 +0000
+Message-ID: <20260210135206.229528-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260210135206.229528-1-peter.maydell@linaro.org>
 References: <20260210135206.229528-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +107,34 @@ Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/data/acpi/aarch64/virt/APIC.msi_gicv2m | Bin 0 -> 188 bytes
+ tests/data/acpi/aarch64/virt/IORT.msi_gicv2m | Bin 0 -> 172 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..7acaf464dd 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,4 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/IORT",
-+"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
-+"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
+diff --git a/tests/data/acpi/aarch64/virt/APIC.msi_gicv2m b/tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
+new file mode 100644
+index 0000000000000000000000000000000000000000..16a01a17c0af605daf64f3cd2de3572be9e60cab
+GIT binary patch
+literal 188
+zcmZ<^@O0k8z`(#_;N<V@5v<@85#X!<1dKp25F13p0FMNW#lQh$F#{Rg0Wcl|15CX*
+dLWpD*p8!Y;7u1e#47_lAnZRNoI~*7S7y#H%2>}2A
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/aarch64/virt/IORT.msi_gicv2m b/tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
+new file mode 100644
+index 0000000000000000000000000000000000000000..0cf52b52f671637bf4dbc9e0fc80c3c73d0b01d3
+GIT binary patch
+literal 172
+zcmebD4+>esz`(#d)yd!4BUr&HBEVSz2pEB4AU23*0%8Lo1_2fq1{MelMzV5(SRi%i
+nAPXpv4aB)XoP#9EWWm4;QV+r^P#Q=v12GslK<WQb8fG^DHhT*J
+
+literal 0
+HcmV?d00001
+
 -- 
 2.43.0
 
