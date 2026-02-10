@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75341EA8115
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8223EA8118
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpo57-0007VX-Pq; Tue, 10 Feb 2026 08:47:11 -0500
+	id 1vpo5D-0007X2-Ht; Tue, 10 Feb 2026 08:47:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vpo52-0007TI-Na; Tue, 10 Feb 2026 08:47:05 -0500
+ id 1vpo50-0007SY-S4; Tue, 10 Feb 2026 08:47:02 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vpo51-00052r-3w; Tue, 10 Feb 2026 08:47:04 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1vpo4y-00052Y-6B; Tue, 10 Feb 2026 08:47:01 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61ACpZIb693544; Tue, 10 Feb 2026 13:47:01 GMT
+ 619Nd8xn3286208; Tue, 10 Feb 2026 13:46:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=cdBVwGCxSnxrDjWE2
- y41YmM3oFnGfVhqTyW79zwjnm4=; b=UR6kNHqtXJnnPz1DZ6gHzFOI9EXOA9GEP
- wIoXRfUAmgfbOzk3Hmwx7udbIkxdIOzsFb1elDndCnL2Xq6YdeKcqgBWTwCa5UnV
- GapyHAThL+bNsfmYRwEYFEVa31hItUU5LjQVUuSoSgPBfjS9ZBVe6ly1gbE+4iF3
- PhEntCL+b0xENCNvhEl/OuHwKx/Pr/qg1qVpsQx4RSbz0GPRoLi87+nxzWrXqsOG
- rWZ6NN9lNTBICfKjKbeSUBm5/c4ArhRuhGI7Dqy4EuuRBFx8LYzZ70GwQk37qv/F
- UkP+150X8Y3vLkedHkPuptV6KNhQCoW63Bt9ihlqe9ixlL43KRlnA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696w4fdr-1
+ :mime-version:references:subject:to; s=pp1; bh=r64brsEFXIrJYIYqV
+ v1xKmVK++ZiYAxOnnPBb59Azso=; b=NFvQ3BdAwpvnVIYJJyKIZOlZIbvHP8TOu
+ qPQJfOnMcu9/BcDFsau4gFOW3FFLFj8c1F8/EYtOBrYqujJwEy/phufoB129qdiI
+ WgcoMn/Z7wak6IC2LsGIHOcGu41danyurIQPrglljns+Fk/iiBbH6g9Bf477f3bz
+ cZHwB65Ctbx6gI4IZbm4hlUVrSQj82gtkDF6+MtIZnAtXBfhkgujWNyTIkDFfloc
+ XXUU/gD39IvsngrK1CNS2S+Isim50cBtNpLjnxN7vV5d2XfeTAv89Gp0K08rsCWi
+ HIFkppc4LkqNo2d82BH4KN/k6S/AqTTdXOFkeFNVw/1OQPVDUK0XA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ucgf1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:47:00 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61ADag0g002570;
- Tue, 10 Feb 2026 13:46:59 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6fqshp6r-1
+ Tue, 10 Feb 2026 13:46:57 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61AAeELS019277;
+ Tue, 10 Feb 2026 13:46:57 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6hxk1a95-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:46:59 +0000
+ Tue, 10 Feb 2026 13:46:57 +0000
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61ADkbUC17105582
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61ADktg760883442
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 13:46:37 GMT
+ Tue, 10 Feb 2026 13:46:55 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8592458050;
- Tue, 10 Feb 2026 13:46:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 44F3558050;
+ Tue, 10 Feb 2026 13:46:55 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 78F7858052;
- Tue, 10 Feb 2026 13:46:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 865D058045;
+ Tue, 10 Feb 2026 13:46:54 +0000 (GMT)
 Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Feb 2026 13:46:56 +0000 (GMT)
+ Tue, 10 Feb 2026 13:46:54 +0000 (GMT)
 From: Caleb Schlossin <calebs@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
  milesg@linux.ibm.com, chalapathi.v@linux.ibm.com,
  harshpb@linux.ibm.com, calebs@linux.ibm.com
-Subject: [PATCH v2 3/3] ppc/pnv: Add OCC FLAG registers
-Date: Tue, 10 Feb 2026 07:46:47 -0600
-Message-ID: <20260210134647.2050821-4-calebs@linux.ibm.com>
+Subject: [PATCH v2 2/3] ppc/pnv: Add unimplemented quad and core regs
+Date: Tue, 10 Feb 2026 07:46:46 -0600
+Message-ID: <20260210134647.2050821-3-calebs@linux.ibm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260210134647.2050821-1-calebs@linux.ibm.com>
 References: <20260210134647.2050821-1-calebs@linux.ibm.com>
@@ -72,29 +72,28 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=698b36d4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=KZnfcAYD c=1 sm=1 tr=0 ts=698b36d2 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=C6aVSkDANSdmHkZ1WT0A:9
-X-Proofpoint-GUID: WbqG-GKoTm8N6qVWTnXr2swSj6EnplAO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExNiBTYWx0ZWRfX77ZSgSLBPct/
- p017PCMlqiiqGUXAu/007QIW+JHIAQAX2WwPJXMM92F3R7698UeidPFfSkXN7lAqv16M3QFlAdW
- uLn6md63+J30xrb1Aqknc/yMnlTJtkGoa15OCDaBWqgPbbQJwMtN+1QacRGTExJwCCnekk9/Hg1
- qZODfrQ4CBVfsDnz5wlLHoGNX4gKL0PWHFMSjF8nceZgp6w5Sp60qRRtwZLP5pTN4NweoOcHNzs
- iqRYD2uQCbVKlvo7vCvfhmuzm744c7A3HdNPDKGBid4VsvMuw+cBamI0ynihkxK308d6qWIJeLg
- zS5nj0tASxHRcs8ThHprIeoo+R0OMNg3XegYpRFsyMCTX3OCerPAbzxjo9PerQZwXD3nx8dx8Tc
- 9CT/ilD3oEd+YtvgTBiXcB3xDl7gQt4B4QttZJ5tmCjOL0Htg2so8dbIPciGvJBI2PEJWq02p4y
- sEGT8+kF8Jz+rQN5bow==
-X-Proofpoint-ORIG-GUID: sroMu-xwT8OnZWEbNmlvzqi4x4n-a1_6
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=cJSdteDuGY5sE08ftSAA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExNiBTYWx0ZWRfX9ux6Ry4AJzwS
+ nEobKhn+hs9AOfnGyBlq+IGl1sToH5vMF01aYg3Gnd35ziyIz6IeFsNErM77MetgHBXrYMDAUAR
+ +ldHzZX9JsEJe1txCBZlBJha8gkG58E4YEFTCbs412BffzSUXbyFgi/sK84TysAweZ8ng6vK2Fi
+ DjaRxYD8iPpgn9BlVFRosDRBXsudem3/pGQN1XGIbTchfQYwDAQey0OWjo3DpUkhb+16CiS/9GU
+ H376LoqYAcafNZvO5rG0f6FIRKl7Cq7epEsnWvQe6cUdsigAFux8Ar4urltTsKfnDQyhDyC0Z62
+ XSyV/WRZh5Dco4qnNU/ftXfHpYpqCy8iD+kOXvbyJaJxg/FR0gDwQrDlk0Okl/vKshOQyT7hh90
+ IgdHZHrA6JERHgOBt30ODQumsEJktHDEOyHLHXr7J+Be6U2RU5r+AMw6HYbEfOPCEb1Yda9Zj7p
+ 6cKrBs8Wzbn9jicospA==
+X-Proofpoint-ORIG-GUID: 12libQTqIXPOjpN4Ltax24pZ5nKIP9x1
+X-Proofpoint-GUID: hGwfgF6LoBLY05pU5i_5st_Aj3lqYBGS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100116
+ spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602100116
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -120,11 +119,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OCCFLG are scratch registers that can be shared with OCC firmware.
-Log reads and writes to the registers as a reminder when we run
-into more OCC code.
-
-Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
+This commit adds the read/write functionality for few core and
+quad registers for Power Hypervisor development.
 
 Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
@@ -132,107 +128,148 @@ Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
- include/hw/ppc/pnv_occ.h |  4 +++
- 2 files changed, 56 insertions(+), 3 deletions(-)
+ hw/ppc/pnv_core.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 87 insertions(+)
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 64cab3e9dc..b9f69daffc 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
- #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
- #define P9_OCB_OCI_OCCMISC_OR           0x6082
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 8939515c2c..a95934710f 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -183,12 +183,22 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
  
-+/* OCC scratch registers for flag setting */
-+#define P9_OCCFLG0                      0x60ac
-+#define P9_OCCFLG7_OR                   0x60c3
-+
-+enum ScomType {
-+    SCOM_TYPE_RW          = 0,
-+    SCOM_TYPE_WO_CLEAR    = 1,
-+    SCOM_TYPE_WO_OR       = 2,
-+};
-+
-+static void rw_occ_flag_regs(PnvOCC *occ, uint32_t offset, bool read,
-+        uint64_t *val)
-+{
-+    int flag_num;
-+    int flag_type;
-+
+ /*
+  * POWER10 core controls
++ *   Adding additional SCOM register support needed by the
++ *   Power Hypervisor team for their development
+  */
+ 
++#define PNV10_XSCOM_EC_IMA_EVENT_MASK       0x400
+ #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
+ #define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
++#define PNV10_XSCOM_EC_CORE_FIRMASK         0x443
++#define PNV10_XSCOM_EC_CORE_FIRMASK_AND     0x444
++#define PNV10_XSCOM_EC_CORE_FIRMASK_OR      0x445
+ #define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
+ #define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
++#define PNV10_XSCOM_EC_SPATTN_OR            0x497
++#define PNV10_XSCOM_EC_SPATTN_AND           0x498
++#define PNV10_XSCOM_EC_SPATTN               0x499
++#define PNV10_XSCOM_EC_SPATTN_MASK          0x49A
+ 
+ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+                                            unsigned int width)
+@@ -224,6 +234,19 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+             }
+         }
+         break;
++    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
++    case PNV10_XSCOM_EC_CORE_FIRMASK:
++        return 0;
++    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
++    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
++    case PNV10_XSCOM_EC_SPATTN_OR:
++    case PNV10_XSCOM_EC_SPATTN_AND:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Write only register, ignoring "
++                              "xscom read at 0x%08x\n", __func__, offset);
++        break;
++    case PNV10_XSCOM_EC_SPATTN:
++    case PNV10_XSCOM_EC_SPATTN_MASK:
++        return 0;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+                       offset);
+@@ -284,6 +307,19 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+         }
+         break;
+ 
 +    /*
-+     * Each OCCFLG register has SCOM0 - RW, SCOM1 - WO_CLEAR, SCOM2 - WO_OR
-+     * hence divide by 3 to get flag index and mod 3 to get SCOM type.
++     * Allow writes to these SCOMs for Power Hypervisor development.
++     * Behavior is not needed, just to allow writes to these SCOMs.
 +     */
-+    flag_num = (offset - P9_OCCFLG0) / 3;
-+    flag_type = (offset - P9_OCCFLG0) % 3;
-+
-+    if (read) {
-+        if (flag_type) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "OCC: Write only register: Ox%"
-+                      PRIx32 "\n", offset);
-+            return;
-+        }
-+        *val = occ->occflags[flag_num];
-+    } else {
-+        switch (flag_type) {
-+        case SCOM_TYPE_RW:
-+            occ->occflags[flag_num] = *val;
-+            break;
-+        case SCOM_TYPE_WO_CLEAR:
-+            occ->occflags[flag_num] &= ~(*val);
-+            break;
-+        case SCOM_TYPE_WO_OR:
-+            occ->occflags[flag_num] |= *val;
-+        }
-+    }
-+}
- 
- static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
-                                           unsigned size)
-@@ -207,8 +250,11 @@ static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
-     case P9_OCB_OCI_OCCMISC:
-         val = occ->occmisc;
-         break;
-+    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
-+        rw_occ_flag_regs(occ, offset, 1, &val);
++    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
++    case PNV10_XSCOM_EC_CORE_FIRMASK:
++    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
++    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
++    case PNV10_XSCOM_EC_SPATTN_OR:
++    case PNV10_XSCOM_EC_SPATTN_AND:
++    case PNV10_XSCOM_EC_SPATTN:
++    case PNV10_XSCOM_EC_SPATTN_MASK:
 +        break;
      default:
--        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
-+        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register read: Ox%"
-                       HWADDR_PRIx "\n", addr >> 3);
-     }
-     return val;
-@@ -229,9 +275,12 @@ static void pnv_occ_power9_xscom_write(void *opaque, hwaddr addr,
-         break;
-     case P9_OCB_OCI_OCCMISC:
-         pnv_occ_set_misc(occ, val);
--       break;
-+        break;
-+    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
-+        rw_occ_flag_regs(occ, offset, 0, &val);
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
+@@ -579,6 +615,23 @@ static const MemoryRegionOps pnv_quad_power9_xscom_ops = {
+  * POWER10 Quads
+  */
+ 
++#define P10_XSCOM_EQ3_MODE_REG1         0x1160a
++#define P10_XSCOM_EQ3_NCU_SPEC_BAR_REG  0x11650
++#define P10_XSCOM_EQ3_HTM_MODE          0x11680
++#define P10_XSCOM_EQ3_HTM_IMA_PDBAR     0x1168b
++#define P10_XSCOM_EQ2_MODE_REG1         0x1260a
++#define P10_XSCOM_EQ2_NCU_SPEC_BAR_REG  0x12650
++#define P10_XSCOM_EQ2_HTM_MODE          0x12680
++#define P10_XSCOM_EQ2_HTM_IMA_PDBAR     0x1268b
++#define P10_XSCOM_EQ1_MODE_REG1         0x1460a
++#define P10_XSCOM_EQ1_NCU_SPEC_BAR_REG  0x14650
++#define P10_XSCOM_EQ1_HTM_MODE          0x14680
++#define P10_XSCOM_EQ1_HTM_IMA_PDBAR     0x1468b
++#define P10_XSCOM_EQ0_MODE_REG1         0x1860a
++#define P10_XSCOM_EQ0_NCU_SPEC_BAR_REG  0x18650
++#define P10_XSCOM_EQ0_HTM_MODE          0x18680
++#define P10_XSCOM_EQ0_HTM_IMA_PDBAR     0x1868b
++
+ static uint64_t pnv_quad_power10_xscom_read(void *opaque, hwaddr addr,
+                                             unsigned int width)
+ {
+@@ -586,6 +639,23 @@ static uint64_t pnv_quad_power10_xscom_read(void *opaque, hwaddr addr,
+     uint64_t val = -1;
+ 
+     switch (offset) {
++    case P10_XSCOM_EQ0_MODE_REG1:
++    case P10_XSCOM_EQ0_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ0_HTM_MODE:
++    case P10_XSCOM_EQ0_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ1_MODE_REG1:
++    case P10_XSCOM_EQ1_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ1_HTM_MODE:
++    case P10_XSCOM_EQ1_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ2_MODE_REG1:
++    case P10_XSCOM_EQ2_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ2_HTM_MODE:
++    case P10_XSCOM_EQ2_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ3_MODE_REG1:
++    case P10_XSCOM_EQ3_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ3_HTM_MODE:
++    case P10_XSCOM_EQ3_HTM_IMA_PDBAR:
++        return 0;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+                       offset);
+@@ -600,6 +670,23 @@ static void pnv_quad_power10_xscom_write(void *opaque, hwaddr addr,
+     uint32_t offset = addr >> 3;
+ 
+     switch (offset) {
++    case P10_XSCOM_EQ0_MODE_REG1:
++    case P10_XSCOM_EQ0_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ0_HTM_MODE:
++    case P10_XSCOM_EQ0_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ1_MODE_REG1:
++    case P10_XSCOM_EQ1_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ1_HTM_MODE:
++    case P10_XSCOM_EQ1_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ2_MODE_REG1:
++    case P10_XSCOM_EQ2_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ2_HTM_MODE:
++    case P10_XSCOM_EQ2_HTM_IMA_PDBAR:
++    case P10_XSCOM_EQ3_MODE_REG1:
++    case P10_XSCOM_EQ3_NCU_SPEC_BAR_REG:
++    case P10_XSCOM_EQ3_HTM_MODE:
++    case P10_XSCOM_EQ3_HTM_IMA_PDBAR:
 +        break;
      default:
--        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
-+        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register write: Ox%"
-                       HWADDR_PRIx "\n", addr >> 3);
-     }
- }
-diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
-index 84bdf5004d..92a4dbf1a0 100644
---- a/include/hw/ppc/pnv_occ.h
-+++ b/include/hw/ppc/pnv_occ.h
-@@ -47,6 +47,10 @@ struct PnvOCC {
-     /* OCC Misc interrupt */
-     uint64_t occmisc;
- 
-+    /* OCC Flags */
-+#define NR_FLAG_REGS 8
-+    uint32_t occflags[NR_FLAG_REGS];
-+
-     qemu_irq psi_irq;
- 
-     /* OCCs operate on regions of HOMER memory */
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
 -- 
 2.47.3
 
