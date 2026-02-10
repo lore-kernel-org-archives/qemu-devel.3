@@ -4,90 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B35FEA3F2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB536EA3F2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpkJ8-0001nt-6M; Tue, 10 Feb 2026 04:45:22 -0500
+	id 1vpkJQ-0002HO-TE; Tue, 10 Feb 2026 04:45:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vpkJ4-0001n9-PG
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:45:20 -0500
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vpkJ2-0006G8-Nr
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:45:18 -0500
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-382f9930e54so45811731fa.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 01:45:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpkJP-0002Ec-1T
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:45:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpkJM-0006HR-V5
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:45:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770716736;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yYR4ACTZxw6c3AoV00aOWFHLlNH8Ypgbc/kjhLStVO0=;
+ b=LFi2OWNMfIoJ5EPZRx0cn168j8pswRy23S4BR2D72Q+bwvugPqbaixKUHwEC25UDAZMWEn
+ SiInijgHVb+POVgQ9VyY9Ft0KXVV8zI3HjAEkYhw8rWbsanNeT/UfW2GhPDhjQ1XiU3wlb
+ Rk4iw2XKrN/CyQCvoIZUCLbg/mfuzWQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-676-PNlAzuDnOW2Majol5RWMdw-1; Tue, 10 Feb 2026 04:45:34 -0500
+X-MC-Unique: PNlAzuDnOW2Majol5RWMdw-1
+X-Mimecast-MFC-AGG-ID: PNlAzuDnOW2Majol5RWMdw_1770716733
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4377274682fso383616f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 01:45:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770716733; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SqLwbUwvMyFrG+bC3NUocGO5+8Cp7P0W86kPQEKff42zrX1LnEv6OK1v8sjtrUfyIw
+ Nyaj3hfCZUJSeD17+ReK6kj+ZMQjcYjr5tMkI6ChBPq+pEYe0uxAP87UuuuNV1JCHF7I
+ L7/hmSsirrOmVH8jzSLihj5b4oOpJ4ex95ZNk0B4m3G2HowtBCdINaYAxGQSrXmCYi5b
+ bqOKWmg1cvfStedwiU9vYcBNn1Rl6pJ2CBTTy2SzFlGtnzvz/MkNNz9tgf+u1kdtkbRJ
+ I8YYpayjqQFE92W8R/Q/xHjTOy3Gir5C1HDijhgEkBR2vETCU/6CQKtPbtm5ZhhviBZq
+ jhAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yYR4ACTZxw6c3AoV00aOWFHLlNH8Ypgbc/kjhLStVO0=;
+ fh=iCHo9JwxOgdLXVP3ccjoUbSsXbgp3QFJWlZpgq6e8HI=;
+ b=lE86TTSofKEKUkXGLuDsweS1WwpNzo1m6hx9yCKk3/mKLVqCFoIEp/E3Qf3H6GXERi
+ p2hRn0Ey8qjqT7pZnWppMewUDstC+XQiDnE5LAX57eHkNHwWUICYDoE2PrzRljylZndj
+ 16GhcrKVkS9xowbNpumXSD2eVh/NOfmNU57u9d3veNGPHIXlT2dnbhzV/GM319D7NX/y
+ GZ9a11KppOfKqfM7kM8678xx7vDkYoBmOfIcK2uoKbR+OqHcEHptBiWE2ofGOgvVuw/U
+ MNZCYsf93rCdTOjiJ0jqXOeexURE89dy8Uu4vzhfFEn83/vMTaF7cbTN0AVGXi5sJLAt
+ 8rLQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770716714; x=1771321514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hYf7M6vYBmCdx++pfrHosz7EkcgNmIGIs7/SS9YD8yc=;
- b=dz+b07eLfNG4fFr+s+IzQc3yUHP12ZXV8rKRI05njAt2dL/XlVlAAGFXeI5H/AB6qv
- TrxrPWJaiG95N6E+m2SnpIIs6HgpRI2/eD6SjB5MnN5ZRtxZE65jgy0CUe2Vv1BXSlqN
- a/dleRcu5ZTzB+2p/lzssCMFeRjyRzVUzH88a8BEpHkimzRxUX/NAow0BYupDU/jM4i/
- sRogzNIuRxXL04jUTyE4dovdXyGF401K+XVSe4DBsGALAUvdKAOlW7Jo5Ewm8hcY6EY9
- RVgyPwpA3K64TlEubLykC6aNxFcvnxgxYhIPW5FEAsxrW1cVYPFphjzmzkvd1DfvdXAX
- 78MQ==
+ d=redhat.com; s=google; t=1770716733; x=1771321533; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yYR4ACTZxw6c3AoV00aOWFHLlNH8Ypgbc/kjhLStVO0=;
+ b=gGS7fR7eDP96yemF9I0NTsVa3YTGE/r1jSclab3qYVYZHSXtrOh656c2TiPIU59zj9
+ 2wZOyCc/LwnektYFslqx9Uy/jrJIYWKg8IB8n1J2cJYIjveME57rd0tNbl5pFO4wJasZ
+ nLVf5ZbF2m5IdE0HOC3YD5ZC4rMlyb0EDQP6q0CUzwB/NB6X/CKDbEFFme7mmiWrsQyY
+ 65Jgh68cXfugKUmugkVv17pnyqNupNIRQ1YxrjEl2M6DTmgGY0cWod1UigCSCTsz6ela
+ 1MkjaGRviYpU1i8QSIJgWpQ/UhQJ2BR0Xe4G9CHcU+tgxUlNNLGbSwSB65CU2HGaXgN9
+ FC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770716714; x=1771321514;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hYf7M6vYBmCdx++pfrHosz7EkcgNmIGIs7/SS9YD8yc=;
- b=GJRIhRtrrHHJ1cA5JcxaBqCIm9FD7FI69eL/ncF7c21wEWMtttQrD7DEw/0iat+26j
- JKSSxBk3PdAUlWqmo8yH9mB7sUCGFZbmDCeQIQs+smEiuXpA3TntKheqxnDaic4EHiFn
- yS8uJz0yYJh3QTAl1cqv1Ho+n3lTZmRXQv/YjkIXzuYvNxD4Q3TnGah3OWerqG3mKE9x
- 8aSputEBRITwMSBJneCgDH/QvXwwo2oJqvo0UeYSVnIHQrEXlnh4mujQvI9tkkhbJKbQ
- K7vmrzDt2lbt/CVR40rzwOJlC+4oAZS9eILdQSGSDhYkfsY8dh3LAKbhXsrnh8PPcabO
- e40g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDusoojvkw3JcK4xhzR1ynx5q1kzY0WF4DckZFEojw114ze07FRWAB+ca/Lqo+P8pqmWP90iB/af/i@nongnu.org
-X-Gm-Message-State: AOJu0YzrzsJ318ySdgn0eKO3ekB8YY0Bt27B5Q2SZ+fB4tCLO4+4OcMd
- BipA/p2y9SH8Slfi3rVlc6tiEgjx7DMnzazsLSKFS4gCyFVehk/NmZ6l
-X-Gm-Gg: AZuq6aL7n39WquyD8ITW1ard9CCTTv+iPZnTUMwTr1JAmYNiVUFnnhu9tkVMm5O+lLP
- aJszbBJRd0W3R0Hr672ldMpZC0iQyzZ+Ntk5FWoWdj3iylM4ZdmW8xL1b6yd3DdfAuBlp7O6agp
- a1i3o6gX9c+U6sdGfvc0tgbUGjSER6TlFwi1IDAsmc7lh4foCV5f8BAPWZ2OCIQEOyxnf6GF81g
- TZ6D1AJBY2xBWQowzq35dGHRJ4pkVsKtX0UI2Q9E59VcSxkHii5oZLphSQ5fwaYcERuo0QuhgdB
- 6XUHVaJ0/YzX0zOfPSbw4NTwzqS81uX1p5ooJwNnNpGNTyc6/f47+7yFpRsaIMnvC4nrbl8X4kV
- HbHZzrubgSNBG7au+1AwKHfiAL3bltFmPnFCttkBiw2860JhSsdvembjzVKy8dqdnPdgHa0vSmS
- R+9AbJiU9NaQ6dKnp8rtiCAjAKA+v6J0D3nv/Zn6b4Ib2i
-X-Received: by 2002:a05:651c:3134:b0:386:78ba:efda with SMTP id
- 38308e7fff4ca-386ee661ab0mr8325791fa.19.1770716713744; 
- Tue, 10 Feb 2026 01:45:13 -0800 (PST)
-Received: from [192.168.88.253] ([82.215.83.93])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-386b6408bc5sm30860671fa.40.2026.02.10.01.45.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 01:45:13 -0800 (PST)
-Message-ID: <5e904364-240a-4853-ad28-b2e3c5ac8f83@gmail.com>
-Date: Tue, 10 Feb 2026 14:45:09 +0500
+ d=1e100.net; s=20230601; t=1770716733; x=1771321533;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yYR4ACTZxw6c3AoV00aOWFHLlNH8Ypgbc/kjhLStVO0=;
+ b=O7PcLW8nWN8r/v4Lc7Ya3RnY0TeT18TlmMOS3lpN7bY9dPsNVR1Vw+51wZR20qbjlq
+ rphnLdDfjexCJK4x39IAqMp9ajgOEAr6NtShBeGqFysyo3IDbT3wgLXCudaaDSVYWHfa
+ cWbdl4e20VS5MST+fLzSaamwbmPgu/cKpryS48Fv8jSej2Ww9pIQ2Na+mQsgA4lVZw2Z
+ snK+egKg1xP4nTDUCNyI4oN2knswYVlfhNxvhlX9w0yrgoEP40XS4kSRg3iQxqHeCv2k
+ OqVIvM4FJAxE7CDOkGo1ftyrxJdDI0iq/pkXqLHgsAFdJEYQRLVztqM4kyQdIHWYZy2j
+ WCtg==
+X-Gm-Message-State: AOJu0Yxsk5sP26mFp/zcXWt8NspsjaVjNqApH3Ci5fYFLIgd1QtV5Nz9
+ GgWjfJGc73DrHZ4gGqA40yD1DM1zzT4KOHfDxhmWUBM+L6RzLMta6OUhJnetq19qDxjRCieFiwz
+ J+TMOt1pMuBU93nGGXPANV12DVccJNr8pM/72Reizk7F4UIuX8UlV8HwLrewsOGmtWH16J9TNvQ
+ pQLoqX77uSZ3H3rnifxg1No3ymzaCOEd4=
+X-Gm-Gg: AZuq6aJ2yyg5aYg9Nlyr47rxMdFRAA2wLchkul4Op5l7CtXWyB4ZZ67wvxZgWa6Mp2s
+ xFKInuvcshxuwRxaBWPgUnMj4+tkKLc5jarjxyzIMYMIG9zGrPgLY6xS0oyb5p6XdvD3IobZFzy
+ Ft/OB0bccN3zSdd4EC2X6kDseAV8QhobX/k7uUbMSgqMrKebiltNB68CVrCnJqDbmoVGzfr78J3
+ Kpxk4OTSPmvWx2ZlhYvtJhW2ifkt4s0EE/vmHIOJH7i7zsfYJ7KZLaNgteg2SIcdlQxfMFOtobc
+ D5iAHw==
+X-Received: by 2002:a05:6000:22c4:b0:435:95ce:84cd with SMTP id
+ ffacd0b85a97d-4362937e1bemr24098585f8f.54.1770716733392; 
+ Tue, 10 Feb 2026 01:45:33 -0800 (PST)
+X-Received: by 2002:a05:6000:22c4:b0:435:95ce:84cd with SMTP id
+ ffacd0b85a97d-4362937e1bemr24098548f8f.54.1770716733015; Tue, 10 Feb 2026
+ 01:45:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Andrey Erokhin <language.lawyer@gmail.com>
-Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
- <d3cd5506-1ba0-492a-9eee-51f814da6087@gmail.com> <5961971.DvuYhMxLoT@weasel>
-Content-Language: en-US
-In-Reply-To: <5961971.DvuYhMxLoT@weasel>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=language.lawyer@gmail.com; helo=mail-lj1-x233.google.com
+References: <20260202091753.28459-1-pbonzini@redhat.com>
+ <9d0467df-a704-4058-be5e-68df9873a9b5@tls.msk.ru>
+In-Reply-To: <9d0467df-a704-4058-be5e-68df9873a9b5@tls.msk.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 10 Feb 2026 10:45:21 +0100
+X-Gm-Features: AZwV_QjoeKSKUBBXVOZoEbmb87AhK6zuDQwjCIZV3or9uVrgjm6AjfjbfxzNUDg
+Message-ID: <CABgObfZL4inrCbGAMBmAETvvhE74FJ01-B6gvqWO+ii4822BFw@mail.gmail.com>
+Subject: Re: [PATCH] Revert "tcg/user: do not set exit_request gratuitously"
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Andreas Schwab <schwab@suse.de>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,257 +138,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/01/2026 19:30, Christian Schoenebeck wrote:
-> On Wednesday, 28 January 2026 20:13:45 CET Andrey Erokhin wrote:
->>> I was trying to boot from a directory tree owned by an ordinary user,
->>> and some daemons weren't happy about non-root ownership of some files
->>>
->>> Example use:
->>> -virtfs local,path=rootfs,mount_tag=root,security_model=mapped,uid=0,gid=0
->>
->> I personally switched from fuse-overlayfs to user namespaces+kernel overlay
->> fs (for writeable overlay for rootfs) long time ago, so I do not need
->> uid=0,gid=0, I'm being mapped to 0:0 in the user namespace. I wanted to
->> publish this change to support users which can't use user namespaces, but
->> yesterday I realized I could just run QEMU (with fuse-overlayfs) under
->> fakeroot 🤦‍♂️
-> 
-> Nevertheless you already came more than half way to finish this. All it would take is adding some lines to the command line docs.
+On Tue, Feb 10, 2026 at 10:44=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
+rote:
+> On 2/2/26 12:17, Paolo Bonzini wrote:
+> I'm picking this one up for stable-10.2.x
+> (where the original commit is).
+>
+> Please let me know if I shouldn't.
 
-Do you mean smth. like this?
-(BTW, is it OK that there is no fmode/dmode processing in system/vl.c?)
+Yes, that's good.
 
----
- fsdev/file-op-9p.h      |  4 ++++
- fsdev/qemu-fsdev-opts.c | 12 ++++++++++++
- fsdev/qemu-fsdev.c      |  2 ++
- hw/9pfs/9p-local.c      | 25 +++++++++++++++++++++++++
- hw/9pfs/9p.c            |  2 ++
- qemu-options.hx         | 24 ++++++++++++++++++++----
- system/vl.c             |  9 +++++++++
- 7 files changed, 74 insertions(+), 4 deletions(-)
+Paolo
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b9dae8c84c..10f3a7270c 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -94,6 +94,8 @@ typedef struct FsDriverEntry {
-     FsThrottle fst;
-     mode_t fmode;
-     mode_t dmode;
-+    uid_t dflt_uid;
-+    gid_t dflt_gid;
- } FsDriverEntry;
- 
- struct FsContext {
-@@ -107,6 +109,8 @@ struct FsContext {
-     void *private;
-     mode_t fmode;
-     mode_t dmode;
-+    uid_t dflt_uid;
-+    gid_t dflt_gid;
- };
- 
- struct V9fsPath {
-diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
-index 07a18c6e48..c99abb3de6 100644
---- a/fsdev/qemu-fsdev-opts.c
-+++ b/fsdev/qemu-fsdev-opts.c
-@@ -46,6 +46,12 @@ static QemuOptsList qemu_fsdev_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "uid",
-+            .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "gid",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         THROTTLE_OPTS,
-@@ -92,6 +98,12 @@ static QemuOptsList qemu_virtfs_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "uid",
-+            .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "gid",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         { /*End of list */ }
-diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
-index 57877dad0a..faa84dc033 100644
---- a/fsdev/qemu-fsdev.c
-+++ b/fsdev/qemu-fsdev.c
-@@ -58,6 +58,8 @@ static FsDriverTable FsDrivers[] = {
-             "writeout",
-             "fmode",
-             "dmode",
-+            "uid",
-+            "gid",
-             "multidevs",
-             "throttling.bps-total",
-             "throttling.bps-read",
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 5ce97b76a6..f20b1c5d1a 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -198,6 +198,12 @@ static int local_lstat(FsContext *fs_ctx, V9fsPath *fs_path, struct stat *stbuf)
-     if (err) {
-         goto err_out;
-     }
-+    if (fs_ctx->dflt_uid != -1) {
-+        stbuf->st_uid = fs_ctx->dflt_uid;
-+    }
-+    if (fs_ctx->dflt_gid != -1) {
-+        stbuf->st_gid = fs_ctx->dflt_gid;
-+    }
-     if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
-         /* Actual credentials are part of extended attrs */
-         uid_t tmp_uid;
-@@ -788,6 +794,12 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
-     if (err) {
-         return err;
-     }
-+    if (fs_ctx->dflt_uid != -1) {
-+        stbuf->st_uid = fs_ctx->dflt_uid;
-+    }
-+    if (fs_ctx->dflt_gid != -1) {
-+        stbuf->st_gid = fs_ctx->dflt_gid;
-+    }
-     if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
-         /* Actual credentials are part of extended attrs */
-         uid_t tmp_uid;
-@@ -1587,6 +1599,19 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-         }
-     }
- 
-+    if (fse->export_flags & V9FS_SM_PASSTHROUGH) {
-+        if (qemu_opt_find(opts, "uid")) {
-+            error_setg(errp, "uid is invalid in the passthrough security mode");
-+            return -1;
-+        }
-+        if (qemu_opt_find(opts, "gid")) {
-+            error_setg(errp, "gid is invalid in the passthrough security mode");
-+            return -1;
-+        }
-+    }
-+    fse->dflt_uid = qemu_opt_get_number(opts, "uid", -1);
-+    fse->dflt_gid = qemu_opt_get_number(opts, "gid", -1);
-+
-     fse->path = g_strdup(path);
- 
-     return 0;
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index acfa7db4e1..492379d361 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -4317,6 +4317,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
- 
-     s->ctx.fmode = fse->fmode;
-     s->ctx.dmode = fse->dmode;
-+    s->ctx.dflt_uid = fse->dflt_uid;
-+    s->ctx.dflt_gid = fse->dflt_gid;
- 
-     s->fids = g_hash_table_new(NULL, NULL);
-     qemu_co_rwlock_init(&s->rename_lock);
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ab23f14d21..84f108d9ad 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1806,7 +1806,7 @@ ERST
- 
- DEF("fsdev", HAS_ARG, QEMU_OPTION_fsdev,
-     "-fsdev local,id=id,path=path,security_model=mapped-xattr|mapped-file|passthrough|none\n"
--    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode]\n"
-+    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,uid=uid][,gid=gid]\n"
-     " [[,throttling.bps-total=b]|[[,throttling.bps-read=r][,throttling.bps-write=w]]]\n"
-     " [[,throttling.iops-total=i]|[[,throttling.iops-read=r][,throttling.iops-write=w]]]\n"
-     " [[,throttling.bps-total-max=bm]|[[,throttling.bps-read-max=rm][,throttling.bps-write-max=wm]]]\n"
-@@ -1816,7 +1816,7 @@ DEF("fsdev", HAS_ARG, QEMU_OPTION_fsdev,
-     QEMU_ARCH_ALL)
- 
- SRST
--``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode] [,throttling.option=value[,throttling.option=value[,...]]]``
-+``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode][,uid=uid][,gid=gid] [,throttling.option=value[,throttling.option=value[,...]]]``
-   \ 
- ``-fsdev synth,id=id[,readonly=on]``
-     Define a new file system device. Valid options are:
-@@ -1870,6 +1870,14 @@ SRST
-         host. Works only with security models "mapped-xattr" and
-         "mapped-file".
- 
-+    ``uid=uid``
-+        Specifies the default uid for files and directories. Works with
-+        security models "mapped-xattr", "mapped-file" and "none".
-+
-+    ``gid=gid``
-+        Specifies the default gid for files and directories. Works with
-+        security models "mapped-xattr", "mapped-file" and "none".
-+
-     ``throttling.bps-total=b,throttling.bps-read=r,throttling.bps-write=w``
-         Specify bandwidth throttling limits in bytes per second, either
-         for all request types or for reads or writes only.
-@@ -1911,12 +1919,12 @@ ERST
- 
- DEF("virtfs", HAS_ARG, QEMU_OPTION_virtfs,
-     "-virtfs local,path=path,mount_tag=tag,security_model=mapped-xattr|mapped-file|passthrough|none\n"
--    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,multidevs=remap|forbid|warn]\n"
-+    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,uid=uid][,gid=gid][,multidevs=remap|forbid|warn]\n"
-     "-virtfs synth,mount_tag=tag[,id=id][,readonly=on]\n",
-     QEMU_ARCH_ALL)
- 
- SRST
--``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,multidevs=multidevs]``
-+``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,uid=uid][,gid=gid][,multidevs=multidevs]``
-   \ 
- ``-virtfs synth,mount_tag=mount_tag``
-     Define a new virtual filesystem device and expose it to the guest using
-@@ -1980,6 +1988,14 @@ SRST
-         host. Works only with security models "mapped-xattr" and
-         "mapped-file".
- 
-+    ``uid=uid``
-+        Specifies the default uid for files and directories. Works with
-+        security models "mapped-xattr", "mapped-file" and "none".
-+
-+    ``gid=gid``
-+        Specifies the default gid for files and directories. Works with
-+        security models "mapped-xattr", "mapped-file" and "none".
-+
-     ``mount_tag=mount_tag``
-         Specifies the tag name to be used by the guest to mount this
-         export point.
-diff --git a/system/vl.c b/system/vl.c
-index 3b7057e6c6..d363b046a6 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3253,6 +3253,7 @@ void qemu_init(int argc, char **argv)
-                 QemuOpts *fsdev;
-                 QemuOpts *device;
-                 const char *writeout, *sock_fd, *socket, *path, *security_model,
-+                           *uid, *gid,
-                            *multidevs;
- 
-                 olist = qemu_find_opts("virtfs");
-@@ -3301,6 +3302,14 @@ void qemu_init(int argc, char **argv)
-                     qemu_opt_set(fsdev, "security_model", security_model,
-                                  &error_abort);
-                 }
-+                uid = qemu_opt_get(opts, "uid");
-+                if (uid) {
-+                    qemu_opt_set(fsdev, "uid", uid, &error_abort);
-+                }
-+                gid = qemu_opt_get(opts, "gid");
-+                if (gid) {
-+                    qemu_opt_set(fsdev, "gid", gid, &error_abort);
-+                }
-                 socket = qemu_opt_get(opts, "socket");
-                 if (socket) {
-                     qemu_opt_set(fsdev, "socket", socket, &error_abort);
---
 
