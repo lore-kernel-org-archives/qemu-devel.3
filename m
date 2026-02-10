@@ -4,38 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD25EA8107
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98254EA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmeS-00013R-NA; Tue, 10 Feb 2026 07:15:32 -0500
+	id 1vpmeF-0000w5-G9; Tue, 10 Feb 2026 07:15:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeQ-00012t-Rt; Tue, 10 Feb 2026 07:15:30 -0500
+ id 1vpme2-0000q4-Oh; Tue, 10 Feb 2026 07:15:07 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeO-0000Dk-Cd; Tue, 10 Feb 2026 07:15:29 -0500
+ id 1vpme0-0008Sa-MA; Tue, 10 Feb 2026 07:15:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 423CC187DA5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1EEA3187DA3;
  Tue, 10 Feb 2026 15:13:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D455B360CC7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AA789360CC5;
  Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Dorinda Bassey <dbassey@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Albert Esteve <aesteve@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 67/78] pcie_sriov: Fix PCI_SRIOV_* accesses in
- pcie_sriov_pf_exit()
-Date: Tue, 10 Feb 2026 15:14:20 +0300
-Message-ID: <20260210121438.67781-11-mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 65/78] virtio-dmabuf: Ensure UUID persistence for hash
+ table insertion
+Date: Tue, 10 Feb 2026 15:14:18 +0300
+Message-ID: <20260210121438.67781-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,62 +65,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Dorinda Bassey <dbassey@redhat.com>
 
-PCI_SRIOV_* are offsets into the SR-IOV capability, not into the PCI
-config space. pcie_sriov_pf_exit() erroneously takes them as the latter,
-which makes it read PCI_HEADER_TYPE and PCI_BIST when it tries to read
-PCI_SRIOV_TOTAL_VF.
+In `virtio_add_resource` function, the UUID used as a key for
+`g_hash_table_insert` was temporary, which could lead to
+invalid lookups when accessed later. This patch ensures that
+the UUID remains valid by duplicating it into a newly allocated
+memory space. The value is then inserted into the hash table
+with this persistent UUID key to ensure that the key stored in
+the hash table remains valid as long as the hash table entry
+exists.
 
-In many cases we're lucky enough that the PCI config space will be 0
-there, so we just skip the whole for loop, but this isn't guaranteed.
-For example, setting the multifunction bit on the PF and then doing a
-'device_del' on it will get a larger number and cause a segfault.
-
-Fix this and access the real PCI_SRIOV_* fields in the capability.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 19e55471d4e8 ('pcie_sriov: Allow user to create SR-IOV device')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251205145718.55136-1-kwolf@redhat.com>
-(cherry picked from commit f73e5ed9bc4cfacf041323a6b40a85e6b6459b75)
+Message-Id: <20251204162129.262745-1-dbassey@redhat.com>
+(cherry picked from commit fff77cfb8413190c6362b95203ef0973c83b50d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index c4f88f0975..d467284cbd 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -195,14 +195,17 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
- 
- void pcie_sriov_pf_exit(PCIDevice *dev)
- {
-+    uint8_t *cfg;
-+
-     if (dev->exp.sriov_cap == 0) {
-         return;
+diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+index 3dba4577ca..5e0395be77 100644
+--- a/hw/display/virtio-dmabuf.c
++++ b/hw/display/virtio-dmabuf.c
+@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, VirtioSharedObject *value)
+     if (resource_uuids == NULL) {
+         resource_uuids = g_hash_table_new_full(qemu_uuid_hash,
+                                                uuid_equal_func,
+-                                               NULL,
++                                               g_free,
+                                                g_free);
      }
-+    cfg = dev->config + dev->exp.sriov_cap;
- 
-     if (dev->exp.sriov_pf.vf_user_created) {
-         uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
--        uint16_t total_vfs = pci_get_word(dev->config + PCI_SRIOV_TOTAL_VF);
--        uint16_t vf_dev_id = pci_get_word(dev->config + PCI_SRIOV_VF_DID);
-+        uint16_t total_vfs = pci_get_word(cfg + PCI_SRIOV_TOTAL_VF);
-+        uint16_t vf_dev_id = pci_get_word(cfg + PCI_SRIOV_VF_DID);
- 
-         unregister_vfs(dev);
- 
-@@ -213,8 +216,6 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
-             pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf_dev_id);
-         }
+     if (g_hash_table_lookup(resource_uuids, uuid) == NULL) {
+-        g_hash_table_insert(resource_uuids, uuid, value);
++        g_hash_table_insert(resource_uuids,
++                            g_memdup2(uuid, sizeof(*uuid)),
++                            value);
      } else {
--        uint8_t *cfg = dev->config + dev->exp.sriov_cap;
--
-         unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+         result = false;
      }
- }
 -- 
 2.47.3
 
