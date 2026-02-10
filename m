@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBCBEA3F0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E14BEA3F0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphxt-0004sw-IH; Tue, 10 Feb 2026 02:15:18 -0500
+	id 1vphyA-00057m-F9; Tue, 10 Feb 2026 02:15:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vphxn-0004qy-3E; Tue, 10 Feb 2026 02:15:11 -0500
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphy8-00056t-Tc
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:15:32 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vphxl-0006Vy-06; Tue, 10 Feb 2026 02:15:10 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.54])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f9CWG2bW3z5vSm;
- Tue, 10 Feb 2026 07:15:06 +0000 (UTC)
-Received: from kaod.org (37.59.142.103) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphy5-0006Yk-Vt
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:15:32 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.70])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f9CWd1hxsz5w7w;
+ Tue, 10 Feb 2026 07:15:24 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 10 Feb
- 2026 08:15:05 +0100
+ 2026 08:15:23 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-103G00500093ebf-0899-468e-b51c-e80f866d328e,
+ (GARM-109S003349606d8-72e2-49b8-a129-19043621f8c0,
  013E132ABECAD38B5622F7607EFF7317793E1520) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <35909807-640e-4c9a-889e-fc87ae6cba1b@kaod.org>
-Date: Tue, 10 Feb 2026 08:15:05 +0100
+Message-ID: <4f186aa6-0a17-4a98-8682-fa03ec6d7765@kaod.org>
+Date: Tue, 10 Feb 2026 08:15:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] hw/arm/aspeed_ast27x0_evb: Add AST2700 A2 EVB
- machine
+Subject: Re: [PATCH v2 07/11] tests/functional/aarch64/test_aspeed_ast2700:
+ Rename AST2700 A1 test to reduce test runtime
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -45,7 +45,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260210051008.355149-1-jamin_lin@aspeedtech.com>
- <20260210051008.355149-5-jamin_lin@aspeedtech.com>
+ <20260210051008.355149-8-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260210051008.355149-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260210051008.355149-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: dd7e46d2-05ec-4119-a3ff-213a744df165
-X-Ovh-Tracer-Id: 15778924246242069310
+X-Ovh-Tracer-GUID: ddbadceb-b15e-451a-8aa9-2939b5808c4f
+X-Ovh-Tracer-Id: 15783990796620630846
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEeUhYMNAkoaNIVXlLdTA4InSNstz2o9jwR2abWyVLSxYt1jhpynjy3L/DyFbfM+5ijESU98Rvq1tsPYXguckmMGg8IgtpdR7X2OeFOjbDM7YsW9nh0Ev6kTUcdYHd7G6OIFY14kHpjce4E/DDeXWtdmhngmXiw53TQVnKj2se2HotgKDw8Fp4gPiKZiaYe5YuqHYDr8RHXlHSy9ohGgGgd9qzl8pn44Iub8GeYYw0yhn9Vw1xPmAUz3OmrKHo8od02S968WCa79PSMQYMEyZOMj87FYuHe13YeQQ6h0qEzM3FwbRna3OdSP21uAC5uP6zHAVBUcWi2snC1ObySKAuWDIAE3cgTbC7itukfHS2CSNg2Lq3sYzf3/qdZmmhIPQMsC6okVt4fClzeJygUgJX3YjrHh7wslTHaJX/rsmhIodN6ZlZZouGau590sG5Sc/GAuc89EJDAkIn96UDU1UWk0TXAYAX3CyQ8EDPrsBaUCm6VHqCklYl5Btcg8y4GGqDehmW8P0w5jeBzgJvGyLyRjt2Be6XprTVBuob1nS7mBtayniZqmfDQIKT0fcuMrpR2DDV7Z/fFtFm4JBVi1ZtAIw8T+cV2n4iWebNfZTFy7PoGSx0dJGljTzWL7XHOnkkFYkt4gvB+jscfR3PI0yKRN6DOT0lCm5jrbqjN0DQJGA
-DKIM-Signature: a=rsa-sha256; bh=6bTO0P8SYqPyRhLS6pG8/4DQ1TAxdMB36vk/Z5ldXpc=; 
+X-VR-SPAMCAUSE: dmFkZTFHiW2+7QZFsEYh77kjHA3/ZftvkdHr6WeZNYElZqP6GjNLvsSF5utcdWTsFmDVGMSEuVFoMr9ZGmKtEz6hwVbEzPDN+3DH3P1mgbDDV2UKVZnIcs3WYianbw5wkRQLe1JARrnvTvSbhmsvKoyESzSEICJNWwKIWxlPXkeEFrMJy/84jHoP6vF+UsROQO1+h6PapPo9hEC+0sGbBPasPvTHTUwIN+1+JbGTEwg4raMeRfc2g7N5vQIpNlnRaNIey+pX1th4z7r3jQ2WDJtFdkiXbORlA6OZalmDVd/dUdclqMvte5B2bL/MaDtCsO66oAfJhPQcFssbXo87jisIJOJLIp3ogti91ppy2tb4hw9mykgRIH04k21numT7Z1h196RLhsAr3nOfftg6YuXHkV7xza55MuilbZGmz1impUhKxYh3kdr0iw0DPpkiyWsRR9Ai0LWsggcGA6YBynzbS+Ys8PP1DLP0eYgE+kRw5Z80Ee/+Mq0U4x+8+qfRXUpcm4oI+Jh2b+z7gGN57PbOWfUbXs1YV3huChUdElGBjm10T2ferdmB6Ohs28HebUfWYfb4Hwp3eqLp7a2uiPW8ul4AuLHj7qBVMZf5auMdwIKgPDGxkllPWpC5Q7Eoan54+X6F+f3JWtnKL1c6+fq9XtdlqsDaK8TVfmzHeRducsz6Ww
+DKIM-Signature: a=rsa-sha256; bh=xkAYScyWIlVwCYgopdeq1b7auyU1k9yed+atV05xq8A=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770707706; v=1;
- b=PGArlS0Om2ZKX281lTsxVLuibnD75H9bor/Lh1iifXTlgIvag7wzqRwmdxoj0QrJQelejebk
- TDyKZsjUc6Vhh9BQh7h/OS239tlsMg2f2spuiM7mHbOA32DXJG03TJcTxyDWQE+eVKxu81s1SGg
- 4VpZgHdhnhu/KKL9X7M2YeKxkmSFpKmJ9KRQcAqc0Byf7bJ8hs65uin6G8fawEe9hyGFFPo0DHx
- K5/oDEWvZKu+mlLVXyrEUUKYr4P/ehl3rUzONwU7yX0gliPZD9P0gQUoVAlLtRkZ6pS9bbUqgwo
- b/7g1H4Nq57z8JZevdHIObbSxk9gmbNbHNYmh+xlGTE9w==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+ t=1770707726; v=1;
+ b=WzfxaYtBZO7146zS6O/3tlqvkJ0o2kuwMESkkHZLeG7uYR/P4Mp/6NaAuYmNfzapyopU2gP5
+ ltpEcl2PLctgbnep+gw8RpA1Z+zU+b8QeEP8G8CjEdzt6+tkL/rt2LdKWVButNvH7HQanYZ/l4F
+ t6WTYPnstgmdU399X+h/WBa1FRirGuByHAOfzOKf5Uu5CBjt/FWP9Xtp/rHzEktr58tpv1OU7HM
+ 2AeLYX5Ks1MdFLlzO9n2GGuu9wbWHzVtmXN7sfdwhQR5zrBDn5R04HbWsWydpP6p1aV3JBoLPIJ
+ NIPHwLxIonlgx4uHB74uKD94FFVtnKjDM98fx/6XfCUTQ==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -135,65 +135,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/10/26 06:10, Jamin Lin wrote:
-> Add a new AST2700 A2 EVB machine to model the newer A2 silicon.
+> Adding additional test cases to test_aspeed_ast2700.py makes the test
+> suite significantly larger and increases the overall test runtime.
 > 
-> The ast2700a2-evb machine is largely identical to ast2700a1-evb.
-> The only difference is the default DRAM size, which is increased
-> to 2 GB.
+> To keep testing efficient and better scoped, rename the existing test
+> to test_aspeed_ast2700a1.py and dedicate it to AST2700 A1 specific tests.
 > 
-> This change adds a dedicated ast2700a2-evb machine by copying the
-> existing ast2700a1-evb configuration and updating the DRAM size
-> accordingly.
+> A new test_aspeed_ast2700.py will be introduced later to always cover
+> the latest revision of the AST2700 SoC.
+> 
+> No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0_evb.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
+>   tests/functional/aarch64/meson.build                          | 4 ++--
+>   .../{test_aspeed_ast2700.py => test_aspeed_ast2700a1.py}      | 0
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+>   rename tests/functional/aarch64/{test_aspeed_ast2700.py => test_aspeed_ast2700a1.py} (100%)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
-> index 31f7d61117..32d944848e 100644
-> --- a/hw/arm/aspeed_ast27x0_evb.c
-> +++ b/hw/arm/aspeed_ast27x0_evb.c
-> @@ -50,12 +50,39 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
->       aspeed_machine_class_init_cpus_defaults(mc);
->   }
+> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+> index 5ad52f93e1..b5dd674bac 100644
+> --- a/tests/functional/aarch64/meson.build
+> +++ b/tests/functional/aarch64/meson.build
+> @@ -1,7 +1,7 @@
+>   # SPDX-License-Identifier: GPL-2.0-or-later
 >   
-> +static void aspeed_machine_ast2700a2_evb_class_init(ObjectClass *oc,
-> +                                                    const void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-> +
-> +    mc->desc = "Aspeed AST2700 A2 EVB (Cortex-A35)";
-> +    amc->soc_name  = "ast2700-a2";
-> +    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-> +    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-> +    amc->fmc_model = "w25q01jvq";
-> +    amc->spi_model = "w25q512jv";
-> +    amc->num_cs    = 2;
-> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-> +    amc->uart_default = ASPEED_DEV_UART12;
-> +    amc->i2c_init  = ast2700_evb_i2c_init;
-> +    amc->vbootrom = true;
-> +    mc->default_ram_size = 2 * GiB;
-> +    aspeed_machine_class_init_cpus_defaults(mc);
-> +}
-> +
->   static const TypeInfo aspeed_ast27x0_evb_types[] = {
->       {
->           .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
->           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_ast2700a1_evb_class_init,
->           .interfaces    = aarch64_machine_interfaces,
-> +    },
-> +    {
-> +        .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
-> +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_ast2700a2_evb_class_init,
-> +        .interfaces    = aarch64_machine_interfaces,
->       }
->   };
+>   test_aarch64_timeouts = {
+> -  'aspeed_ast2700' : 600,
+> +  'aspeed_ast2700a1' : 600,
+>     'aspeed_ast2700fc' : 600,
+>     'device_passthrough' : 720,
+>     'imx8mp_evk' : 240,
+> @@ -23,7 +23,7 @@ tests_aarch64_system_quick = [
+>   ]
 >   
+>   tests_aarch64_system_thorough = [
+> -  'aspeed_ast2700',
+> +  'aspeed_ast2700a1',
+>     'aspeed_ast2700fc',
+>     'device_passthrough',
+>     'hotplug_pci',
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> similarity index 100%
+> rename from tests/functional/aarch64/test_aspeed_ast2700.py
+> rename to tests/functional/aarch64/test_aspeed_ast2700a1.py
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
