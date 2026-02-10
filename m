@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32DFE9462A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A1EE9462A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpduz-0002RV-9l; Mon, 09 Feb 2026 21:56:01 -0500
+	id 1vpduz-0002SW-S4; Mon, 09 Feb 2026 21:56:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vpdux-0002QF-2f
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:55:59 -0500
+ id 1vpduy-0002RG-CS
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:56:00 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vpdut-0003wk-Tm
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:55:58 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1vpduu-0003wO-Nl
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:56:00 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxScI1noppeUoRAA--.55375S3;
- Tue, 10 Feb 2026 10:55:49 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxCMIxnoppd0oRAA--.42637S3;
+ Tue, 10 Feb 2026 10:55:45 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxD8Mtnoppm59DAA--.61278S3;
- Tue, 10 Feb 2026 10:55:48 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxD8Mtnoppm59DAA--.61278S2;
+ Tue, 10 Feb 2026 10:55:41 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Jiajie Chen <c@jia.je>
-Subject: [PULL 1/7] target/loongarch: Require atomics to be aligned
-Date: Tue, 10 Feb 2026 10:30:34 +0800
-Message-Id: <20260210023040.3507338-2-gaosong@loongson.cn>
+Subject: [PULL 0/7] loongarch-to-apply queue
+Date: Tue, 10 Feb 2026 10:30:33 +0800
+Message-Id: <20260210023040.3507338-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260210023040.3507338-1-gaosong@loongson.cn>
-References: <20260210023040.3507338-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxD8Mtnoppm59DAA--.61278S3
+X-CM-TRANSID: qMiowJDxD8Mtnoppm59DAA--.61278S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,50 +61,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiajie Chen <c@jia.je>
+The following changes since commit c4a9d49c7b23a02c646ebac756519c15a24f7ecc:
 
-Currently, all atomic instructions in LoongArch require the address to
-be aligned.
+  Merge tag 'pull-9p-20260207' of https://github.com/cschoenebeck/qemu into staging (2026-02-07 17:46:15 +0000)
 
-Signed-off-by: Jiajie Chen <c@jia.je>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index a1de389e51..b8c962b65a 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -9,7 +9,7 @@ static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv t0 = make_address_i(ctx, src1, a->imm);
- 
--    tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop);
-+    tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop | MO_ALIGN);
-     tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
-     tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
-     gen_set_gpr(a->rd, t1, EXT_NONE);
-@@ -37,7 +37,7 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     tcg_gen_mov_tl(val, src2);
-     /* generate cmpxchg */
-     tcg_gen_atomic_cmpxchg_tl(t0, cpu_lladdr, cpu_llval,
--                              val, ctx->mem_idx, mop);
-+                              val, ctx->mem_idx, mop | MO_ALIGN);
-     tcg_gen_setcond_tl(TCG_COND_EQ, dest, t0, cpu_llval);
-     gen_set_label(done);
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -63,7 +63,7 @@ static bool gen_am(DisasContext *ctx, arg_rrr *a,
- 
-     addr = make_address_i(ctx, addr, 0);
- 
--    func(dest, addr, val, ctx->mem_idx, mop);
-+    func(dest, addr, val, ctx->mem_idx, mop | MO_ALIGN);
-     gen_set_gpr(a->rd, dest, EXT_NONE);
- 
-     return true;
--- 
-2.52.0
+  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260210
+
+for you to fetch changes up to 59c8adc2830342c2cff5fe8867191d0e166abb29:
+
+  target/loongarch: Add LA v1.1 instructions to max cpu (2026-02-10 10:48:20 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-2026-02-10
+
+----------------------------------------------------------------
+Jiajie Chen (7):
+      target/loongarch: Require atomics to be aligned
+      target/loongarch: Add am{swap/add}[_db].{b/h}
+      target/loongarch: Add amcas[_db].{b/h/w/d}
+      target/loongarch: Add estimated reciprocal instructions
+      target/loongarch: Add llacq/screl instructions
+      target/loongarch: Add sc.q instructions
+      target/loongarch: Add LA v1.1 instructions to max cpu
+
+ target/loongarch/cpu.c                             |  11 +-
+ target/loongarch/cpu.h                             |   7 +
+ target/loongarch/disas.c                           |  33 +++++
+ target/loongarch/insns.decode                      |  34 +++++
+ target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 145 +++++++++++++++++++--
+ target/loongarch/tcg/insn_trans/trans_farith.c.inc |   4 +
+ target/loongarch/tcg/insn_trans/trans_memory.c.inc |  22 ++++
+ target/loongarch/tcg/insn_trans/trans_vec.c.inc    |   8 ++
+ target/loongarch/tcg/translate.c                   |   6 +-
+ target/loongarch/translate.h                       |  30 +++--
+ 10 files changed, 280 insertions(+), 20 deletions(-)
 
 
