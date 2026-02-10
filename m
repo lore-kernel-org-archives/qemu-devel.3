@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB497EB26E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 16:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF68EB26E8
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 16:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpqii-0006Wb-29; Tue, 10 Feb 2026 11:36:12 -0500
+	id 1vpqin-0006Zt-0R; Tue, 10 Feb 2026 11:36:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqig-0006TO-SY
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:10 -0500
+ id 1vpqik-0006Z9-By
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqif-00015Q-1A
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:10 -0500
+ id 1vpqii-00015w-5a
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770741368;
+ s=mimecast20190719; t=1770741371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZwRGMPoXt0M+Z2Yn/TMbbpD0yk9PsLOMxA01R6Irs90=;
- b=YBR4AdL78nbEVPreQrr1vT3aDLqprSVhr1b/KfmLgqViSX9i9n5jsnXpG6zfYteUVfdsut
- ltGgAboYWvd7IHfLDK0+SHH108tVja8Wcu5ibAvNe4aAaVq0LOhjrG7Qdm3yi6vfx0jdgO
- Pmu1YpXTHrVWP9gCpOzRpNlq8MOVp4Y=
+ bh=DVnd4yp5urBzyXI8cPlUrBT12G+Sx4CepuD96GvL6hQ=;
+ b=NGPpRnP9uerKuN1bau8WmGGm+hbcSFAm1UInvlC5ys9O5RBfSHHQ1c461aOEkAvRXHI0Fo
+ 4cTuvvZPD7luMSj9giTIu2lwAEV9jEnDrxmiwHFEeGq70u/SWuJKh3wxMpkbZ1Du3CaeAE
+ lDmE/Re2/EuxPhEDcjlThdJeXq5/3ak=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-4WwOu9D6MY-neED8eZziLg-1; Tue,
- 10 Feb 2026 11:36:05 -0500
-X-MC-Unique: 4WwOu9D6MY-neED8eZziLg-1
-X-Mimecast-MFC-AGG-ID: 4WwOu9D6MY-neED8eZziLg_1770741364
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-eYSbHM1dOceP8tlzwGzcLw-1; Tue,
+ 10 Feb 2026 11:36:08 -0500
+X-MC-Unique: eYSbHM1dOceP8tlzwGzcLw-1
+X-Mimecast-MFC-AGG-ID: eYSbHM1dOceP8tlzwGzcLw_1770741367
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19498195608E; Tue, 10 Feb 2026 16:36:04 +0000 (UTC)
+ id 25BBD19560A6; Tue, 10 Feb 2026 16:36:07 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.137])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F26F419560A3; Tue, 10 Feb 2026 16:36:01 +0000 (UTC)
+ id C6E3019560A3; Tue, 10 Feb 2026 16:36:04 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 1/4] tests/docker: improve handling of docker probes
-Date: Tue, 10 Feb 2026 16:35:53 +0000
-Message-ID: <20260210163556.713841-2-berrange@redhat.com>
+Subject: [PATCH v2 2/4] tests/docker: add support for podman remote access
+Date: Tue, 10 Feb 2026 16:35:54 +0000
+Message-ID: <20260210163556.713841-3-berrange@redhat.com>
 In-Reply-To: <20260210163556.713841-1-berrange@redhat.com>
 References: <20260210163556.713841-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,132 +87,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The docker.py script has logic to guess the container command and
-detects one of
+When a developer's environment is already within a podman container it
+is not possible to use 'podman' again to create containers. It will
+usually result in wierd errors such as:
 
-  * docker
-  * sudo -n docker
-  * podman
+  Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
 
-but the "docker.py probe" command then throws away the detected argv
-and prints a slightly different argv based solely on the detected
-argv[0]. The result is that 'probe' will print
+Podman offers the ability to talk to a daemon outside the container,
+however, which could be leveraged by QEMU.
 
-  * docker
-  * sudo docker
-  * podman
+This can be used by invoking "podman --remote", or equivalently the
+separate "podman-remote" binary:
 
-which means that if sudo was detected & the result of 'probe' were
-used directly, it would end up prompting for password interaction
-every time.
+  https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
 
-The 'configure' script, however, runs 'probe' and then throws away
-the printed argv again, reporting only 'podman' or 'docker', which
-is used to set the $(RUNC) variable for tests/docker/Makefile.include
-which is in turn used to pass --engine to docker.py. So the docker.py
-command will re-detect the need for 'sudo -n' and use it correctly
+The current 'podman version' check is insufficient to detect the
+inability to launch containers, so it is replaced with the stronger
+'podman info' check.
 
-The problem with this is that some commands in Makefile.include do
-not call docker.py at all, they invoke $(RUNC) directly. Since
-configure threw away the 'sudo' command prefix Makefile.in won't
-be adding either 'sudo' or 'sudo -n', it'll just run plain 'docker'
-which is wrong.
-
-This commit sanitizes things so that the 'docker.py probe' prints
-out the exact detected ARGV, and configure fully preserves this
-ARGV when setting $(RUNC). Since "$(RUNC)" is no longer just a bare
-engine name, however, we must now also set the $(CONTAINER_ENGINE)
-variable for Makefile.include so it can pass something sane to
-the --engine arg for docker.py
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- configure                     | 19 +++++++------------
- tests/docker/Makefile.include |  5 +++--
- tests/docker/docker.py        |  7 +------
- 3 files changed, 11 insertions(+), 20 deletions(-)
+ tests/docker/docker.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/configure b/configure
-index 4b61fd3bbf..ecb446d5f6 100755
---- a/configure
-+++ b/configure
-@@ -1311,17 +1311,11 @@ fi
- ##########################################
- # functions to probe cross compilers
- 
--container="no"
--runc=""
-+runc="no"
- if test $use_containers = "yes" && (has "docker" || has "podman"); then
--    case $($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe) in
--        *docker) container=docker ;;
--        podman) container=podman ;;
--        no) container=no ;;
--    esac
--    if test "$container" != "no"; then
--        docker_py="$python $source_path/tests/docker/docker.py --engine $container"
--        runc=$container
-+    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
-+    if test "$runc" != "no"; then
-+        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
-     fi
- fi
- 
-@@ -1441,7 +1435,7 @@ probe_target_compiler() {
-   esac
- 
-   for host in $container_hosts; do
--    test "$container" != no || continue
-+    test "$runc" != no || continue
-     test "$host" = "$cpu" || continue
-     case $target_arch in
-       # debian-all-test-cross architectures
-@@ -1771,8 +1765,9 @@ echo all: >> $config_host_mak
- echo "SRC_PATH=$source_path" >> $config_host_mak
- echo "TARGET_DIRS=$target_list" >> $config_host_mak
- echo "GDB=$gdb_bin" >> $config_host_mak
--if test "$container" != no; then
-+if test "$runc" != no; then
-     echo "RUNC=$runc" >> $config_host_mak
-+    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
- fi
- echo "SUBDIRS=$subdirs" >> $config_host_mak
- if test "$rust" != disabled; then
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 38467cca61..7d4582b6a8 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -16,8 +16,9 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
- endif
- DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
- 
--RUNC ?= $(if $(shell command -v docker), docker, podman)
--DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(RUNC)
-+CONTAINER_ENGINE = auto
-+DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
-+RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
- 
- CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
- DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
 diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index 3b8a26704d..ff68c7bf6f 100755
+index ff68c7bf6f..9e18b984f4 100755
 --- a/tests/docker/docker.py
 +++ b/tests/docker/docker.py
-@@ -618,12 +618,7 @@ class ProbeCommand(SubCommand):
-     def run(self, args, argv):
-         try:
-             docker = Docker()
--            if docker._command[0] == "docker":
--                print("docker")
--            elif docker._command[0] == "sudo":
--                print("sudo docker")
--            elif docker._command[0] == "podman":
--                print("podman")
-+            print(" ".join(docker._command))
-         except Exception:
-             print("no")
+@@ -76,14 +76,16 @@ def _guess_engine_command():
+     commands = []
  
+     if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+-        commands += [["podman"]]
++        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+     if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+         commands += [["docker"], ["sudo", "-n", "docker"]]
+     for cmd in commands:
+         try:
+-            # docker version will return the client details in stdout
+-            # but still report a status of 1 if it can't contact the daemon
+-            if subprocess.call(cmd + ["version"],
++            # 'version' is not sufficient to prove a working binary
++            # for podman. 'info' is a stronger check that is more
++            # likely to correlate with ability to create containers,
++            # and required to detect the need for podman remote
++            if subprocess.call(cmd + ["info"],
+                                stdout=DEVNULL, stderr=DEVNULL) == 0:
+                 return cmd
+         except OSError:
 -- 
 2.53.0
 
