@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF68EB26E8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A59EB26E9
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 16:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpqin-0006Zt-0R; Tue, 10 Feb 2026 11:36:17 -0500
+	id 1vpqir-0006ax-L8; Tue, 10 Feb 2026 11:36:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqik-0006Z9-By
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:15 -0500
+ id 1vpqiq-0006ag-5M
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpqii-00015w-5a
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:13 -0500
+ id 1vpqio-00016R-SY
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:36:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770741371;
+ s=mimecast20190719; t=1770741378;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DVnd4yp5urBzyXI8cPlUrBT12G+Sx4CepuD96GvL6hQ=;
- b=NGPpRnP9uerKuN1bau8WmGGm+hbcSFAm1UInvlC5ys9O5RBfSHHQ1c461aOEkAvRXHI0Fo
- 4cTuvvZPD7luMSj9giTIu2lwAEV9jEnDrxmiwHFEeGq70u/SWuJKh3wxMpkbZ1Du3CaeAE
- lDmE/Re2/EuxPhEDcjlThdJeXq5/3ak=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VkZ13fHgm0IL9s80N0RZAPnj0tJsjuKDxYVQAVbsPQw=;
+ b=SlnVxAl/T3jc8jd9n2iz/FyUTYIkG8WOrGVPGtz5oTyrittaakv5ScI6oYmCMIvJqvZ3vN
+ 02uV/l79KAVSpg03eaj8qZMyOblWjGWL7ufzdVbbipKpP/AV/VXBTF2zqCA5JPZDfmNsHG
+ RflBAb0VG1mK3WcMbbnx46/o6HW1ZbA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-eYSbHM1dOceP8tlzwGzcLw-1; Tue,
- 10 Feb 2026 11:36:08 -0500
-X-MC-Unique: eYSbHM1dOceP8tlzwGzcLw-1
-X-Mimecast-MFC-AGG-ID: eYSbHM1dOceP8tlzwGzcLw_1770741367
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-BrkMYq_VPQiJu8G5PLIK_w-1; Tue,
+ 10 Feb 2026 11:36:14 -0500
+X-MC-Unique: BrkMYq_VPQiJu8G5PLIK_w-1
+X-Mimecast-MFC-AGG-ID: BrkMYq_VPQiJu8G5PLIK_w_1770741373
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25BBD19560A6; Tue, 10 Feb 2026 16:36:07 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B442193E898; Tue, 10 Feb 2026 16:36:13 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.137])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6E3019560A3; Tue, 10 Feb 2026 16:36:04 +0000 (UTC)
+ id 0A4BA19560B4; Tue, 10 Feb 2026 16:36:10 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 2/4] tests/docker: add support for podman remote access
-Date: Tue, 10 Feb 2026 16:35:54 +0000
-Message-ID: <20260210163556.713841-3-berrange@redhat.com>
+Subject: [PATCH v2 4/4] gitlab: ensure docker output is always displayed in CI
+Date: Tue, 10 Feb 2026 16:35:56 +0000
+Message-ID: <20260210163556.713841-5-berrange@redhat.com>
 In-Reply-To: <20260210163556.713841-1-berrange@redhat.com>
 References: <20260210163556.713841-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,54 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a developer's environment is already within a podman container it
-is not possible to use 'podman' again to create containers. It will
-usually result in wierd errors such as:
+Set the new $(DOCKER_V) variable from the previous commit, so that any
+CI jobs invoking docker will show the full stdout content. This improves
+the ability to diagnose any build failures in CI that involve docker.
 
-  Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+For example, when a 'docker build' command fails, it lets us see which
+command in the Dockerfile failed and why.
 
-Podman offers the ability to talk to a daemon outside the container,
-however, which could be leveraged by QEMU.
-
-This can be used by invoking "podman --remote", or equivalently the
-separate "podman-remote" binary:
-
-  https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
-
-The current 'podman version' check is insufficient to detect the
-inability to launch containers, so it is replaced with the stronger
-'podman info' check.
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/docker/docker.py | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .gitlab-ci.d/base.yml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index ff68c7bf6f..9e18b984f4 100755
---- a/tests/docker/docker.py
-+++ b/tests/docker/docker.py
-@@ -76,14 +76,16 @@ def _guess_engine_command():
-     commands = []
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 921c562000..7640a1d52c 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -28,6 +28,9 @@ variables:
+     # we don't need. The --filter options avoid blobs and tree references we aren't going to use
+     # and we also avoid fetching tags.
+     GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune --quiet
++    # Ensure docker.py / tests/docker/Makefile.include always displays stdout
++    # from any docker commands to aid debugging of failures
++    DOCKER_V: 1
  
-     if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
--        commands += [["podman"]]
-+        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
-     if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
-         commands += [["docker"], ["sudo", "-n", "docker"]]
-     for cmd in commands:
-         try:
--            # docker version will return the client details in stdout
--            # but still report a status of 1 if it can't contact the daemon
--            if subprocess.call(cmd + ["version"],
-+            # 'version' is not sufficient to prove a working binary
-+            # for podman. 'info' is a stronger check that is more
-+            # likely to correlate with ability to create containers,
-+            # and required to detect the need for podman remote
-+            if subprocess.call(cmd + ["info"],
-                                stdout=DEVNULL, stderr=DEVNULL) == 0:
-                 return cmd
-         except OSError:
+   interruptible: true
+ 
 -- 
 2.53.0
 
