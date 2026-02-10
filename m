@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891B6EA3F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 21:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786DBEB271F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 21:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpvkP-0005OC-TB; Tue, 10 Feb 2026 16:58:17 -0500
+	id 1vpvk7-0005Ig-2E; Tue, 10 Feb 2026 16:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpvkN-0005Mt-A0
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:58:15 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpvk5-0005I6-RA
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:57:57 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpvkL-0005B0-Vq
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:58:15 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48327b8350dso39227945e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:58:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpvk0-00057j-4o
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:57:53 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43638a33157so1087150f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770760692; x=1771365492; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770760670; x=1771365470; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tcA7sn6CW4GwfOM6ayVN5Eb6f+qLKKiPpfVeslJ3rL0=;
- b=JaTUAj3POFplAiM/3hblNX+Ee0WW/Rz7iLqWE6hWayi5dzJ+Hhq7r4qjIBZhlj4ZpK
- FQ4KSG2VfM1fdL6zT9d9yLhUz+oMcIbSTy4jOHiKIuGspXwIwySh91ji47cniyQWqCHs
- A2vRA+fRhLOSy+KnzPf4WV9kaumMu77iop+xysB4egWsexSmOgKYzv2Q5jKbveiEOiwx
- iqE7QdSYsWwOedtkxsdsfqC04ATDKf+i2cdhh4H7ntRYAxnas/wAkYPGfgtP3Cwk+aDa
- jV1KwLq2Y1d++QBUvXBxXFCn8couOQco8SFixtaQ9Ox4ZWdr4TPThV0vBWF2IwCZ+g1U
- m1Yg==
+ bh=Wt4+TnDTB63oHepv/tSNeYmovpwWT8cqJplYnzyRS4A=;
+ b=liutYWSGdfkpOS+Ne9um4/9DiZSYxogdHW8yZH/fgPJ25wRXCI0p7i/JQlxoyLTk4F
+ pdIn3WzdisVKVEqPEoadASXVFBcRD9w+RPC8IpfXp3p3PD49wbCCO+atbgvn1z04savf
+ Ea9Lz5BUZsQrF6tHvGFm63EjS3UfUMGg/bgr3ifFumA6rTHqIKcDLbFyjmLw6OEevvX0
+ ngBtExybllbpiE9TV1At5I51o2aeYdFAI30UimwNOz4SDBlyLgHxkw0iG0EEyqoJeIBe
+ VUqk2C0W7XBxRo8cAU/vuGawPeUsEnxvzNVSwFL/EiRiXoEzuJdVgaFtKtk0sMj94cfV
+ HUfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770760692; x=1771365492;
+ d=1e100.net; s=20230601; t=1770760670; x=1771365470;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tcA7sn6CW4GwfOM6ayVN5Eb6f+qLKKiPpfVeslJ3rL0=;
- b=BFUY/lYPZoeY3/nE54BJfj9xR2tVtfXqLVuuvsAo+z4oTkP5QVPwwoVdRa4YZWy3f3
- IMoMaCfoI6L8OYEAYiA8YeMoUdhDgNAYjeRXackS+rzWctxQTL4gWL5ArfR9ILx4yE9O
- ioisY4TjMEHU0G2WkzMvv5aJMgMW17xXXU0rnsmCNdC53Ii4lPV3nn5hsR7F5B2krGES
- Qibfbba/sC1FreRjsl6zcGx8jhMPHXkS9Qn7OvxkYYbMsQkydzvJAUY2UFgk0crlkhJE
- 3feRDeUuOZBoyT5/7RL6GEZVjCriI0bRPVos6exb7VQddh3wjkrBvKEZ4PIV9Deo9DBF
- LzZQ==
+ bh=Wt4+TnDTB63oHepv/tSNeYmovpwWT8cqJplYnzyRS4A=;
+ b=qJn4JhLbYDQ22Hu7GBsTDdB3UNcLmKww/Bf+YFc8UD6dR7b1MXqcvJ7s5DNjfA70C/
+ zFwvjqjBHMnNCqsBVc5MTEOBiiOmN1gDLcgo1Iani/AhU6s7mLGebIjZ7aVC0vxfbGCB
+ 8jQgcz34gC6zQUghk2slvN466RmpFhnqlBe/kIu37LGBBhXwkJZGaJq9qpObuE0pPjwB
+ uvq5onkMuREq7at8//r9SU7csumsZDxESv07hOdY2QWmswirlF9r5FoG/p90xe55X5ob
+ NW0iHhwSLzgBu7iBgCNs/mDfdKPsOmvq9/3fAhtEmz0brVG6TNaf9trzj+7cYWCXuYhF
+ PmQw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9T6ZK17nC4GUc1xbL8dkbTNlczmqul0TgPurmrr5z19jzqvbpEq45u5kahRO9LFPAvKmJl2DJ8dkT@nongnu.org
-X-Gm-Message-State: AOJu0YxIPF9t9Frbv4WPp5WekXS/KT3b+TQkbFI2F6gefWHW2Jy9ULpg
- rKWhkZ4SIzbO8jCy+noBxJ8437zigOU58EsVklPWhiHI0kTOxP18e19fmIwj/S+fVgA=
-X-Gm-Gg: AZuq6aKinsenseBSLeUl0oTz+x/9JOvkO9hU/gEqyb6zHsH+s1EO86RYYkX3unx0nE1
- l786C71Me2ZmreTVKTOq+ABUF61rLbOmpvVMEFfWFQYmoKIFXhdTBLEiUV52ZXZK3MZRfiAMA8N
- 4su9pV9kUrMR3haOtpTW62Anh5WPuxPiF15g9xjK8rXL0isAEKgBnLSCGPwVbkSyN30+ZJW/DtQ
- bpB9nDd4AQlz6j0gMSj5BSWrAlyXbwPWCMvYw3ct8MywJPXk0sIDs3vCLs07DYsuVOoXTyq2efG
- 4V5TY2aA2oDBJZ3O2SNtFSzSaPMjnQoye9i4ZLsoJ9S2o46eNjde40AszGFUmPWLdw6CF1yuLAL
- g/KZfFnqst3KKAvqtjtQ7t47mLbeIt8Vay1emFGwO/W5M161YbW8SH+4vLzZFYVgY+hbZ3KKWvw
- hWcWJFqJyJmKWkZzLsbYykaVyrstZahR+hERiZSUoMOpDkoyFYL9iiWzBYVr2AuSXMWEIxI2BG8
- pSK
-X-Received: by 2002:a05:600c:64c9:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-4835b92bfa0mr5400205e9.18.1770760692509; 
- Tue, 10 Feb 2026 13:58:12 -0800 (PST)
+ AJvYcCUvlTj7qzSlGzYLrUM4nvqPiqDsv+KdHUhfGcQuj3LXdKnqF1FyMFkT3aj4+M7Kl3yxHqO8wVoiILnn@nongnu.org
+X-Gm-Message-State: AOJu0YwW/0TAUcPk+jdiW+2VcXr61z2o5C3nWFpVtK3kXzGIbvtCiXxl
+ ibL/YPZH+/b93M9p9qmrw4t3KqWfYe/aQpgD2j2PkVQvjg4GCPwoCYzyY6t46lKc2dMvAgeZqyX
+ EpAhhtw4=
+X-Gm-Gg: AZuq6aLw46q7VVh5gxG8m+WnRVdf115J7wfRH2TAjsHgLL0OpRDjFMGNbs421BR+OSp
+ xfNXsho3PCvq1FK3cXBEZ/QaKyWk6RNUL/VAuwldpgbOtiKv1xADmOYGwU5RlgWI8tw1/t7TVDB
+ +YsQH9clwT0TeGf80Bv4Qp0hu9YZIXq7vBU3ymRpf8Pf0zehMAwgHN0gcTb9e5iiffEhDtieRUq
+ GnkcvWFy+i+WeejxzZV3eZuPmi4QCPUlM7jWvciEjESY+ir4wmh0r++abmCAkaKOiJzEsVuefWM
+ FYnK5mKCccJ/7QPTv0FWls7d6fbdMo5TpbRa4nHcdIlZvDXPDz52YtJQwrvLzZab1u4wLLLj5dS
+ 7qOuRSSeg2FGEVVW/jVhwkGv0foBTd3i7+gZsRZ/MZgofzBE1rdcrYyCouCVVYolhrxw3e4V/2C
+ X7jeCm9HnpZ39Eu7VPnfVJqpNBf/4hZiVZP8ZAGJptJ18kMPz5TF/a4zI2UrAlq2pHmg==
+X-Received: by 2002:a05:6000:2304:b0:436:b87:ce5c with SMTP id
+ ffacd0b85a97d-43629237819mr24903389f8f.20.1770760670367; 
+ Tue, 10 Feb 2026 13:57:50 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d7e50casm78313765e9.8.2026.02.10.13.58.10
+ ffacd0b85a97d-43783d746a3sm3250f8f.17.2026.02.10.13.57.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 13:58:10 -0800 (PST)
-Message-ID: <48d6d5df-1a87-4cd4-82ce-5f67d8658e44@linaro.org>
-Date: Tue, 10 Feb 2026 22:58:09 +0100
+ Tue, 10 Feb 2026 13:57:49 -0800 (PST)
+Message-ID: <e76a6e53-6b8a-42fe-991f-93b9c19c8466@linaro.org>
+Date: Tue, 10 Feb 2026 22:57:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/12] target/arm/tcg/translate.h: replace target_ulong
- with vaddr
+Subject: Re: [PATCH v3 12/12] include/tcg/tcg-op.h: eradicate
+ TARGET_INSN_START_EXTRA_WORDS
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>,
@@ -80,13 +80,13 @@ Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
- <20260210201540.1405424-11-pierrick.bouvier@linaro.org>
+ <20260210201540.1405424-13-pierrick.bouvier@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260210201540.1405424-11-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260210201540.1405424-13-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,11 +110,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/2/26 21:15, Pierrick Bouvier wrote:
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> This commit removes TARGET_INSN_START_EXTRA_WORDS and force all arch to
+> call the same version of tcg_gen_insn_start, with additional 0 arguments
+> if needed. Since all arch have a single call site (in translate.c), this
+> is as good documentation as having a single define.
+> 
+> The notable exception is target/arm, which has two different translate
+> files for 32/64 bits. Since it's the only one, we accept to have two
+> call sites for this.
+> 
+> As well, we update parameter type to use uint64_t instead of
+> target_ulong, so it can be called from common code.
+> 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/arm/tcg/translate.h | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   include/tcg/tcg-op-common.h      |  8 ++++++++
+>   include/tcg/tcg-op.h             | 29 -----------------------------
+>   target/alpha/cpu-param.h         |  2 --
+>   target/arm/cpu-param.h           |  7 -------
+>   target/avr/cpu-param.h           |  2 --
+>   target/hexagon/cpu-param.h       |  2 --
+>   target/hppa/cpu-param.h          |  2 --
+>   target/i386/cpu-param.h          |  2 --
+>   target/loongarch/cpu-param.h     |  2 --
+>   target/m68k/cpu-param.h          |  2 --
+>   target/microblaze/cpu-param.h    |  2 --
+>   target/mips/cpu-param.h          |  2 --
+>   target/or1k/cpu-param.h          |  2 --
+>   target/ppc/cpu-param.h           |  2 --
+>   target/riscv/cpu-param.h         |  7 -------
+>   target/rx/cpu-param.h            |  2 --
+>   target/s390x/cpu-param.h         |  2 --
+>   target/sh4/cpu-param.h           |  2 --
+>   target/sparc/cpu-param.h         |  2 --
+>   target/tricore/cpu-param.h       |  2 --
+>   target/xtensa/cpu-param.h        |  2 --
+>   target/alpha/translate.c         |  4 ++--
+>   target/avr/translate.c           |  2 +-
+>   target/hexagon/translate.c       |  2 +-
+>   target/i386/tcg/translate.c      |  2 +-
+>   target/loongarch/tcg/translate.c |  2 +-
+>   target/m68k/translate.c          |  2 +-
+>   target/microblaze/translate.c    |  2 +-
+>   target/or1k/translate.c          |  2 +-
+>   target/ppc/translate.c           |  2 +-
+>   target/rx/translate.c            |  2 +-
+>   target/sh4/translate.c           |  4 ++--
+>   target/sparc/translate.c         |  2 +-
+>   target/tricore/translate.c       |  2 +-
+>   target/xtensa/translate.c        |  2 +-
+>   35 files changed, 24 insertions(+), 93 deletions(-)
+
+
+> diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+> index bb8d2ed86cf..5e3707d3fdf 100644
+> --- a/target/xtensa/translate.c
+> +++ b/target/xtensa/translate.c
+> @@ -1159,7 +1159,7 @@ static void xtensa_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+>   
+>   static void xtensa_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+>   {
+> -    tcg_gen_insn_start(dcbase->pc_next);
+> +    tcg_gen_insn_start(dcbase->pc_next, 0, 0);
+
+If documentation is a concern, we could define INSN_START_DUMMY = 0 and 
+use it here.
+
+>   }
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
