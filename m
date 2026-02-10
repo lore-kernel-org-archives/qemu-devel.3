@@ -4,176 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61767E94627
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88615E94627
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdPN-0002Pa-H4; Mon, 09 Feb 2026 21:23:21 -0500
+	id 1vpdPm-0002Rr-55; Mon, 09 Feb 2026 21:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpdPL-0002LN-07; Mon, 09 Feb 2026 21:23:19 -0500
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpdPI-0007CN-SA; Mon, 09 Feb 2026 21:23:18 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b/PLRCfG2v+RITqEt6kE2OSrWPI0CD2KYSCo4+cvJUpnX4suNCRmvckl8BDaMNz2p8cBvu0IGbSyEJ/rUGuA0+lE1bWD/KztHuhobPgL/h58wEirk2mCg4bIiMIl//0MVHngtjsNzUEaZVAeP1SISK3vMbhIZdSbWaBpngsCxAEJxmPOnwsFGq8I2AHlB3MeL/oHxXzSwuI8mQU9JRB6lh7GCQIpx9fmol15BmXfG0NsV7kgXNhLDvXJD9XULLl5xPDo/j4sEONoidj7e8MvnjN7hR+HJvNRb2UK2dFHP/bcsfKcmYpSCbDuVv2gcVeigh6xXxg8+5lopIFkB0Bn6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M+uAaWRqaUFL758szmIdiVpfbbPP/LctjxjQtq/L564=;
- b=ltDCMXSHwoLmhbTBkHLyfViy1vRVbtJ2gNGcWoGj9+h4egAwKaBTWoGxU4CjcsTjzBDVosNOpzUoAPmISSmr10O7mMHqsrlx/KpReIyZ3QQmXiFPe9dpR9f1EilM0bZHPOZ1V+8TMGdVFVtw60MtDQyUeH30fbHxn6Wf30V1XVIYS6WELZCgMjriBKxfzUi+wd6EBiFIjUZk9fYdO4swlKhqgKymvHxx64epKAYGm8zmcMlYNYJFiF7BcF33wOHsziYlr2deC+XHfmsW114NiKA5zyuSvcCx/nF39gyCDkTSLB9Q2/xYgwCzP/VXRX9WWu9jBTtnJy6TMPSdytfmMg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M+uAaWRqaUFL758szmIdiVpfbbPP/LctjxjQtq/L564=;
- b=In9OfuYanJrA04rgBIYXcA+cZDprS47hPnv1RkoW9qgdmwz4It8mV5W21/rlMo5KomM1JPNLBftFdq3rLQ+LTTGGrIkry3GBPg2RIkniDukt1nMCD0W7GBOaK0WwCEVgshDBd47OFgig8y09YaQMliM+GKj6X9dIiadL/lvw1Ys1CHx8ZqlIOeP4iyFPLn/Mk/g0Lcig6di0H9XW7IxfxEJrW6BXmrG/6Yl5lnuG1ueihWw7ITysTeHxEX5UDra47GdhHPNoDOvrF9QOhIWM3cVduUX2ccfhhYYt8oR72Y/R558OeML8dGQsUoPnZYeJwqLFfMfm9nYlwysqEGEI4g==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by KUZPR06MB7987.apcprd06.prod.outlook.com (2603:1096:d10:2c::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.17; Tue, 10 Feb
- 2026 02:23:07 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.017; Tue, 10 Feb 2026
- 02:23:07 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: RE: [PATCH v1] hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by using
- dynamic register array
-Thread-Topic: [PATCH v1] hw/i2c/aspeed_i2c: Fix Out-of-Bounds access by using
- dynamic register array
-Thread-Index: AQHcmWXMoUJBn9wsH0SaWe2SvMw7ULV6B4+AgAEtYJA=
-Date: Tue, 10 Feb 2026 02:23:06 +0000
-Message-ID: <TYPPR06MB820678CA1089C1C63002F2C4FC62A@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260209014540.823794-1-jamin_lin@aspeedtech.com>
- <31a22691-3b03-4ea4-bec3-79ec8aadaa99@kaod.org>
-In-Reply-To: <31a22691-3b03-4ea4-bec3-79ec8aadaa99@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KUZPR06MB7987:EE_
-x-ms-office365-filtering-correlation-id: 6c940cfa-6143-406a-4362-08de684b53c3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?Z3U1aDM5ZkgweGFHTlNSc3hiczB4Vm5lbGw0a0llSXlTUThndjIzRFJnOTJH?=
- =?utf-8?B?Qm1ncUMzNTdqSWZGWU1JZGh5ZDI5QzRwZWsrVmFUa0VtWk5XcDg2cEJvSzBM?=
- =?utf-8?B?bnFzcFplanNqcmFnNHo3SS94dDZiaTJtRTdlQVlhSWlYbEplcTFocXQzZWE4?=
- =?utf-8?B?VzUxQThSSENvRUxnRDZHbXpEWmNYQ2xhZkhURjlVR0JXVUZ3aG5uU0tJeUlt?=
- =?utf-8?B?UnM0Y2NUSDB2NTBrSzNtRmExKzdlN2lsOC9Xc3FUejZLT0VGUThDc2d4ck1l?=
- =?utf-8?B?NTRPc3NoamVwNUFYV2t1V2N3TW54RkVLcFFHRHlOZEszLzVieXFIMVNwZVYz?=
- =?utf-8?B?b0Rvb2Q4cUN3bWZVZEV2WkQ4MkZjTWZYNjFFeFpPNCs0RmFZQjQ1K29TTWl3?=
- =?utf-8?B?SWYvTEMrLzVoRS93OTBMcDNTMm1GcndqUkxCOUVyOW4yTlM1WUhhSHZuWS8w?=
- =?utf-8?B?bElYakFpNEF1eG1Bb0NuT3NZTXBYUHlhVVMzbDl0M2M0NVNtVVJqUVNiM2hR?=
- =?utf-8?B?UDZFOGJUdlZ2Uk1tTjRwTHpmbWpFZHBsM0xnZXJBL1A1RExPUXorK21KMlYr?=
- =?utf-8?B?VjJIU0lEZkpxV0tyTmZ3eTRLOUVhV1lxKzkxMGtZNzVweW5uWktIa3hPVWRG?=
- =?utf-8?B?eER1TFVkYzRJcy9wR05DTTQwa2F5RklIbGMzM1lkdjhVZFJxeWhJdytrNGor?=
- =?utf-8?B?VHY4R1JFNFcxUmpqTEI5cFcrc2JHTGlJYUtFNUhoclB2RmZ2NW5uc0h4clF0?=
- =?utf-8?B?SWVkaHJIU3ZkMHlBbU91ZDlrQjcxS1M0TWZaelBFYmpRV1BsUFpramY1UkFK?=
- =?utf-8?B?SWpMTGNUVEJTMnpYT1FXN0lqaVBEV3RPZ3hZLzFTdDRla3hINWUwVGJ6WFhX?=
- =?utf-8?B?RHZCWlNGcCtvMzNXVlhWZlF6aXlHK01JYjlHUFUxVVRhdzlSS3dyZWdWdW1C?=
- =?utf-8?B?eDh3eEp6endkeFJsTU9EcWxQdVlnMEhpd2JrZUszTEQ2b20xU0ducFhPb1pZ?=
- =?utf-8?B?QjEyYnZuNUFiQUhrNXJERnN5dHpnU3BQaXpBdVUyWHZlTjdWOUNsU2J0TGQz?=
- =?utf-8?B?d1lvcmhocERVbUNLVCtiazg2bE4rdkw5Q2ZLK1RTSzNDbnRqUTFIYmpxQUk0?=
- =?utf-8?B?czIxallpdk91L1U0L1hsWHFiWHBJQ1MxZHlRa0lkbDhVZFdnNHNCeXVYZmJU?=
- =?utf-8?B?Rm9jWENIRk92cGt4OXlkRnRVMjN5NmcyeGJXUUpXVUdjei9jbG42eVAwUWdR?=
- =?utf-8?B?MVZLN2FPS2Irbm8rd2FmTWxsYVpJQzRuV3Z6VXVlNFhRRlFMMzBFNmZLYWRX?=
- =?utf-8?B?MEhDWGxtNCtXNU9MRGl3aG00a0ZENWk3R3owM1VHT2M1VGdSVnJZK1hJU1FD?=
- =?utf-8?B?NDZXL0lSVmRpY2pwd3pNeVRJNm5ReHZPaUN5Vno0S1F0NnB5dk00UEd6OXpW?=
- =?utf-8?B?M3FCMzhyZEJ2dUEyeVArb3VFMzNyMUhwaWNxbDNRdVFLRVdVa0tRdk1PeS9G?=
- =?utf-8?B?bmlsbytwSk85UTJ3MytWUXZSWFd3QmMrRlNiVDlKYXI5THl2R096SVF3WmRY?=
- =?utf-8?B?a3ZNM1QrbmZhcWNpb2ZYYmVSS2F2dXBKalNzN3J5dG1NV0YyVE5SbEdNclFG?=
- =?utf-8?B?Q2RGU0hwOG1UWCs2dGJFbklUOGhJMWdGUjE3aXYyejFCZmxSTnJHenJLT2h0?=
- =?utf-8?B?NzM5dVBoLzBKdnF0N1o5N1U4R2RicGM2OXl1ayt1RHpXRG4xUG80MHZxRVhY?=
- =?utf-8?B?YWJaZUI1eWdzU25rZGI1WmI1MnZCK1AyMCtWQlRJODlhbzdZbkk3LysrMTFN?=
- =?utf-8?B?cUFNQ2JjUzhQYWJ0MjFtNVA3MkJsMVFnTEVvcysxbWYxUERWTE1QVXBQWWw4?=
- =?utf-8?B?MUtRR250UStIQWZZMnBZYlh1WkpCWTAvVHpTam9FSVRhRzlEOTV3clNUS09B?=
- =?utf-8?B?Nm5Hb1RaWmlWdWN0Q3FSSXIxT3lzNW55SWExNVVZakN2SWlhOU1pbjZRKy9D?=
- =?utf-8?B?M3pmUTcyV3VpWE1xV3BWbW56cy9BNXpId1oxTEllRmJURHRSeWN6dVFCdHdp?=
- =?utf-8?B?VEMyZEdWTmp1a3c0d2xQK1hlNjV1V2tldXRhWGJaTy8xalhNbzl0WXE0MEc4?=
- =?utf-8?B?UDhwQklpZVFVdklnWHlOVzZYQ2owTEhzcXdEOSt5QkRodXJHczdJdkpsQUZp?=
- =?utf-8?Q?aioMkeQEYbKWR2e3MV+QQuc=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SHg4ejBEL3pLaGxURkN1ZVU2empoMnB2SzErYkxIZWNjbncvOC9mT0huQUN2?=
- =?utf-8?B?UXZkV3MzTHpZcVc5TGNGbU1KK05CNmFGYkgyKy9uZ3dNUzJNSndQUGNRV3VI?=
- =?utf-8?B?ajgwUTIxV2phbnBMb1BySEF4Mm1yMERaaHJjOC9USjNaSENsc0dJRElTQ0dQ?=
- =?utf-8?B?T3k2OGNvK3AyQnB1UnRKVUttVjJvS2VEV2VTZDl3RmtaVU8xUWUwSytVNU5h?=
- =?utf-8?B?RE9iMUZjNDZjaFJOcFJkZHFUalprQTBQMG4vdk8vOTY1Q0ovdjVVTkd5WjBE?=
- =?utf-8?B?b2EwWklZaE9SQUlPOFMwb2V4UWhiU0JrR2VjS3R3WVo1dUw4TFBGT2xCNi8y?=
- =?utf-8?B?Z1VQOG1jeXV6QnE5T1lxY0VjUTRUWDhmUEE0ZmY1TWFRUnBnVXlJMXdiK3Vl?=
- =?utf-8?B?VFVxcHRKaDZ3ZWgvZDNSbmxRL2xkcTJOMVpTV0VKdTRFRlVxazdib2wwM0ZL?=
- =?utf-8?B?bitXbFRBUjA2T1N0cm0vaVB0cG50dUZncElyVm5zQkVHTys2KytUcHFtNnJF?=
- =?utf-8?B?eHBZM3BwSUdPanZ4dlhjWUt6MFNpbE1mbVUwS01WbmJnSFBZR285Tmp1V243?=
- =?utf-8?B?aExQU08xa29yMFFiK1Nib3RJVzlsTkQ2UzFYVzYwOEhBcjdoVFEvUFZQUi9v?=
- =?utf-8?B?d1FDV0wvMmlFRU52b2d6bnJaR2t5dFAreVdweC9Tby9yNVBhY2ZiZ1FKOXkz?=
- =?utf-8?B?ZU04cUs4aGdRSHVQVnRDTmc1ckxvNkY4QW9mWE1Tb2JlVVRvMTZjTHNQZjJ6?=
- =?utf-8?B?Z2ljY291alRKY0tmVjNIYlVOOFphOHR2RW4vNEdQWlRnenZIRTVMaXI2bmpF?=
- =?utf-8?B?SE1qbVVjL0c3MWxkdlFOdjRRZmFETzFlamtDWGJRQkFneWRseW04NFkvdk9N?=
- =?utf-8?B?bzVwamlpa3lWdW9zWjM0Zko2SHM0L3VqWGMySkFjUFYzaDRxbEs4RmF1dEo2?=
- =?utf-8?B?Q0hCUDV2Q1YxeGtYNWJqWmd1N2NrdHpDWURJSVBSaFJCaENMMVg2eGx5MkZE?=
- =?utf-8?B?dkh6MGljc0N0NCtGZDlWSFpjTnFra1RabHJUbUtiZEg2Q1ZrYW5qZGV1WDNV?=
- =?utf-8?B?M3RzanpXazBORkdHcXpmOEVERzdYRGU5N1pOOXJYR0dmbVVjRzRWL0ZTVXRI?=
- =?utf-8?B?RGJBQUJzY1FtQ2JycGx6Zm5WNHJLYWM1ZDBaaFg5R1doZXpzMmJ4bDE0N2pt?=
- =?utf-8?B?UzZMYTJDaG1BeUtBSXdPSGZ1dGVCNDNvQ2xYK0I4RlY2ZGw2N0c4YmZmUVpr?=
- =?utf-8?B?VEtGczlmdm0vRTBUUkRqaXN1K0dFRDdyWTN5eU9GRGVEQnVsSFJCVTM0M3Bj?=
- =?utf-8?B?MnZ4UHBHbUlHVkhPcm9aUnc4NHhnZTFTM3Z2LzZHV25lbjdiVHdBSlpZSW1B?=
- =?utf-8?B?dHUzU2ZmeUNBR2pmZmVnMWRYNzFJTFVsRFRCS3E5blBUV042RDlVSGtoSG5w?=
- =?utf-8?B?VllMSmFqakw1ekdJcXFVK0thd2FZWWx3RlRWUWl4SHMvQi93SERkQ21XUlFS?=
- =?utf-8?B?TzZCWnNSdS9wQ2NGWld0R1R3NG5mVnBvc3MvN1RxdHEySHJZSHN1a05aZDJN?=
- =?utf-8?B?azFsWklNN0Frc3pyZlN1MElXTXlNSkY3OSt0ZTFBZWRqcEtTdDBKSlVGaG1a?=
- =?utf-8?B?cHpXNCtBUTMyYzlmb3pncTBweTVsM05vZ0tRdUc4bnd0WTY0UHVRNUI3dFh2?=
- =?utf-8?B?NnFsSFZtM2dmMkdKbmdEWUpaeDhJUzB0ZDBzSFN6VnNKekhiVldGVUxlN0FM?=
- =?utf-8?B?MzBEeGQ3K0JtYzQyMEVqU25qemhYUkdsbGdrMXJlcDF1SjRpT1FBa1M2dTdj?=
- =?utf-8?B?cDAzUEJqZHVkRkJYcWhFY2Q3bFhtYlM0NmdrNHIwY2daVlo2cHNnSndia1ZH?=
- =?utf-8?B?Q0ZBc085OE5GKy9OalovVU5KRWVjU3llNG1naWJpdVBtM1luL25MTUs2MUc4?=
- =?utf-8?B?N01HOWZDNklBelJYYmNkK3FDbkJoQ3VrWElCUVUwaHFZWVlEeGFCbFRDWHBr?=
- =?utf-8?B?THpQMFVDdm9wUDBGR2hOS05COHRIUGgrWVl1cHlBUk1PVTFhbHQ4Z2pySWJO?=
- =?utf-8?B?Q1hJN0Q1K2NaUGJkYkZFc0o0SzVXWWdYSjdQRnduVkg0Z0pwb2RmRmJvSEhT?=
- =?utf-8?B?NzMzTTJlelJSSzY1QmVGeWUyNFhBV1QvQ0g5L1krZFo4U0VZWlhreWphN3pR?=
- =?utf-8?B?Z0JPY1BLdE9sWnFtUldXN3RlR2tuZG5RT3JWUWg4ZnhVbVA0UFk4YW9aSVZ4?=
- =?utf-8?B?eFNGN1FpZzRvUUJmRWFNZjZVNEwwVW8vbktUMmlDMkFta3pHM3docFYyclhu?=
- =?utf-8?B?WHhMTEhLaVR3R1drQ1M4NU1WMWpiSzV1SkdxcVlmbW5yTGg3dW9BQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vpdPl-0002RY-8G
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:23:45 -0500
+Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vpdPj-0007RZ-0c
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:23:44 -0500
+Received: by mail-dl1-x1241.google.com with SMTP id
+ a92af1059eb24-1270adc5121so411524c88.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 18:23:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1770690220; x=1771295020; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=iHbTzI4W1Uf0zp0qivdqURs6QFv9HXsj3KZvQu/5TCs=;
+ b=evh8EIvRm/O33fVdP+X3IE16lGkXd5mHm1EdPdzMq/Spy9+OA4OZE+yXp/NiUxpkjb
+ f4JECtZn5/+sIAHjQbT6yqHJcg8rzla+kMtFkRFum3P82yy20U5ELUHLOGGppoeKfl10
+ yuCk6qGEH0zCNIGTy6wlWxLshwkf37hWnUESCxGSgiF1ppx7CxcOwpvRs/y9WIprQyLf
+ QEFrW5Qlzwt+us5dQhrZXFwwQbfdf8vmZpzHFDuQTgYPhw78fDIfXFeXXMlcf/SdO4w1
+ q45r8FkeykkaPvcBD/xKacR4q/4ZNQiL11V2xyBehqsiktXiXdtOsPwPUweQnGnCF4jH
+ iQQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770690220; x=1771295020;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iHbTzI4W1Uf0zp0qivdqURs6QFv9HXsj3KZvQu/5TCs=;
+ b=K8RrVAoLXDxIkjDu4hcZ6dZlfj/PxUv3a4Xy1F5NTsSm0eaeMqGLAUGbsbI6VlbWnF
+ HEmxXw1O/9ZsMbDANRo7HmbR5W46EBCfMFNwJbsZE9cG72edEu/UjdM0AVOC5ZITk0RO
+ HlkGald6nW/Ktoddtg4+978GZaHieUL8juZqpsjKidevRg0Gy0pI+aHKLmtZrW671tIB
+ Yf+9qj0zvXrSJvox4gR+rpHimuy/zi8Zt0KXhUWX5y6mmwNefaHqlg1DJuXIbKAkNfDi
+ ivEjmxOAu23XOc5IxWRd5EhAOXGr/ZVyjGwmPeS0mBSzV4P+QAj40kTAOXMlL1vrf7fc
+ AcWA==
+X-Gm-Message-State: AOJu0YxPUoECb0W+SkxIOrx6apyBqI81+OKHwIUN+559By2+6Nx5huKt
+ KWXCeurUmD6jyzN2GZ0dBXyxlGeqYQ+dkZ6x75hBGn4ZCVacJzRCgtRL
+X-Gm-Gg: AZuq6aKFGd92XQcGl82vMNmOldlIIiqdjStnpeCdKP8gtE5jhCKkN2qBA7PlUlVbvjv
+ o7+gXdoFnwdIqAdbJ/BzwwdsAFgIcX2vl0BiUMagOwm0ESP2EKurLUkP3QfXvI2Qo24UeCzxDg2
+ nZoZa7htTAU6e6QsIOo3Fa+z4nDPqSQ0RSawc4/y04/WxkZtcvOWyNQp8VXVZ74Nlu+nfV019UJ
+ mr4BDjGMq3qr6R5kP/Bt/jujmU9W1mxJaySASr2ToqKn/UUfUPBMIWuJ9czMLRv8Xh8zLZK4ATv
+ y/Hp1xuhTARJTa/e0ZBhN4IlYE0t6APW5mndPe5xyvFbp+LD6ifssW0TxQr2F/jXuqhiPLnNWk1
+ vnnbC9uOXGodBRo4aDNXrSME/pPOsJ8iMG2UjC8L2MR45yld6usZ/BT+2Gx+TE+vJZ6wLnZKxcz
+ WQw1wlaf1NZ4+2RYR2JQl12TsPWTC/hSfUYaSqYmduBRMNplh40gtH4nAJZEzLde1qgAwU/GsXL
+ +yCDABcHNqJ8zMuF3kdWVw5LpA8fen2rMR/NZcBuw==
+X-Received: by 2002:a05:7022:698a:b0:124:a610:62f6 with SMTP id
+ a92af1059eb24-127040744a8mr4846461c88.44.1770690220227; 
+ Mon, 09 Feb 2026 18:23:40 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ba6cd2be9dsm4358619eec.21.2026.02.09.18.23.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Feb 2026 18:23:39 -0800 (PST)
+Date: Tue, 10 Feb 2026 10:23:22 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ hust-os-kernel-patches@googlegroups.com, devel@lists.libvirt.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [RFC PATCH v5 1/7] target/riscv: deprecate 'debug' CPU property
+Message-ID: <aYqWG2zxbq85tvwf@ZEVORN-PC.localdomain>
+References: <cover.1770104280.git.chao.liu.zevorn@gmail.com>
+ <30b51bbe85516664482caec9748baef92c99b4b6.1770104280.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c940cfa-6143-406a-4362-08de684b53c3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 02:23:06.9759 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iC6cZh3a4ZuyIhCJUqjbZTdadtFxAtcbMYX+8c6lxwkuS4OHHYV8aqAE0rysgumjTvL5buuXfNS0/L+p5MaOjSa+SEzt6ZlUgaUl0Xn/Iy4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB7987
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <30b51bbe85516664482caec9748baef92c99b4b6.1770104280.git.chao.liu.zevorn@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,50 +105,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxXSBody9pMmMvYXNwZWVkX2ky
-YzogRml4IE91dC1vZi1Cb3VuZHMgYWNjZXNzIGJ5IHVzaW5nDQo+IGR5bmFtaWMgcmVnaXN0ZXIg
-YXJyYXkNCj4gDQo+IE9uIDIvOS8yNiAwMjo0NSwgSmFtaW4gTGluIHdyb3RlOg0KPiA+IFRoZSBB
-U1BFRUQgSTJDIGNvbnRyb2xsZXIgZW11bGF0aW9uIHVzZWQgYSBmaXhlZC1zaXplIHJlZ2lzdGVy
-IGFycmF5DQo+ID4gKDI4IGR3b3JkcykgZm9yIGFsbCBTb0MgdmFyaWFudHMsIHdoaWxlIG11bHRp
-cGxlIEFTUEVFRCBTb0NzIChBU1QyNjAwLA0KPiA+IEFTVDEwMzAsIEFTVDI3MDApIGV4cG9zZSBh
-IGxhcmdlciBNTUlPIHJlZ2lzdGVyIHdpbmRvdyAoZS5nLiByZWdfc2l6ZQ0KPiA+ID0gMHg4MCku
-DQo+ID4NCj4gPiBUaGlzIG1pc21hdGNoIGFsbG93cyBNTUlPIGFjY2Vzc2VzIGJleW9uZCB0aGUg
-YWxsb2NhdGVkIHJlZ2lzdGVyDQo+ID4gYXJyYXksIGxlYWRpbmcgdG8gb3V0LW9mLWJvdW5kcyBy
-ZWFkcyBpbiB0aGUgSTJDIGNvbnRyb2xsZXIgbW9kZWwuDQo+ID4NCj4gPiBGaXggdGhpcyBieSBj
-b252ZXJ0aW5nIHRoZSByZWdpc3RlciBzdG9yYWdlIHRvIGEgZHluYW1pY2FsbHkgYWxsb2NhdGVk
-DQo+ID4gYXJyYXkgc2l6ZWQgYWNjb3JkaW5nIHRvIHRoZSBjb250cm9sbGVyIGNsYXNzIHJlZ19z
-aXplLiBUaGUgcmVnaXN0ZXINCj4gPiBhcnJheSBpcyBub3cgYWxsb2NhdGVkIGR1cmluZyBidXMg
-cmVhbGl6ZSBhbmQgZnJlZSBvbiB1bnJlYWxpemUsDQo+ID4gZW5zdXJpbmcgc2FmZSBhY2Nlc3Mg
-YWNyb3NzIGRpZmZlcmVudCBBU1BFRUQgU29DIGltcGxlbWVudGF0aW9ucy4NCj4gPg0KPiA+IFRo
-aXMgY2hhbmdlIGVsaW1pbmF0ZXMgSTJDIHJlZ2lzdGVyIG91dC1vZi1ib3VuZHMgYWNjZXNzIGNh
-dXNlZCBieQ0KPiA+IFNvQy1zcGVjaWZpYyByZWdpc3RlciBzaXplIGRpZmZlcmVuY2VzLg0KPiA+
-DQo+ID4gU2lnbmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+
-DQo+ID4gUmVzb2x2ZXM6IGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVtdS8tL2lz
-c3Vlcy8zMjkwDQo+ID4gLS0tDQo+ID4gICBpbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmggfCAg
-NCArLS0tDQo+ID4gICBody9pMmMvYXNwZWVkX2kyYy5jICAgICAgICAgfCAxOCArKysrKysrKysr
-KysrKy0tLS0NCj4gPiAgIDIgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKSwgNyBkZWxl
-dGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJj
-LmggYi9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmgNCj4gPiBpbmRleCA2OGJkMTM4MDI2Li4y
-MDVmMGE1OGQyIDEwMDY0NA0KPiA+IC0tLSBhL2luY2x1ZGUvaHcvaTJjL2FzcGVlZF9pMmMuaA0K
-PiA+ICsrKyBiL2luY2x1ZGUvaHcvaTJjL2FzcGVlZF9pMmMuaA0KPiA+IEBAIC0zNiw4ICszNiw2
-IEBAIE9CSkVDVF9ERUNMQVJFX1RZUEUoQXNwZWVkSTJDU3RhdGUsDQo+IEFzcGVlZEkyQ0NsYXNz
-LCBBU1BFRURfSTJDKQ0KPiA+ICAgI2RlZmluZSBBU1BFRURfSTJDX05SX0JVU1NFUyAxNg0KPiA+
-ICAgI2RlZmluZSBBU1BFRURfSTJDX1NIQVJFX1BPT0xfU0laRSAweDgwMA0KPiA+ICAgI2RlZmlu
-ZSBBU1BFRURfSTJDX0JVU19QT09MX1NJWkUgMHgyMCAtI2RlZmluZQ0KPiA+IEFTUEVFRF9JMkNf
-T0xEX05VTV9SRUcgMTEgLSNkZWZpbmUgQVNQRUVEX0kyQ19ORVdfTlVNX1JFRyAyOA0KPiANCj4g
-DQo+IFRoZSBBU1BFRURfSTJDX05FV19OVU1fUkVHIHZhbHVlIGNvcnJlY3RseSBjb3ZlcnMgdGhl
-IHN1cHBvcnRlZCByYW5nZQ0KPiBvZiByZWdpc3RlcnMgb2YgYm90aCAnb2xkJyBhbmQgJ25ldycg
-aW1wbGVtZW50YXRpb25zLg0KPiANCj4gSW5zdGVhZCBvZiBkeW5hbWljYWxseSBhbGxvY2F0aW5n
-IHRoZSByZWdzIGFycmF5LCB3aGljaCBpbnRyb2R1Y2VzDQo+IHZtc3RhdGUgY29tcGxleGl0eSwg
-SSB3b3VsZCBmaXggdGhlIHdheSB0aGUgYXJyYXkgaXMgYWNjZXNzZWQuDQo+IA0KPiBJbiBhc3Bl
-ZWRfaTJjX2J1c19vbGRfcmVhZCgpLCBjaGFuZ2UgOg0KPiAgICAgdWludDY0X3QgdmFsdWUgPSBi
-dXMtPnJlZ3Nbb2Zmc2V0IC8gc2l6ZW9mKCpidXMtPnJlZ3MpXTsNCj4gdG8NCj4gICAgIHVpbnQ2
-NF90IHZhbHVlID0gLTE7DQo+IA0KPiBhbmQgYWRqdXN0IGhvdyAndmFsdWUnIGlzIGFzc2lnbmVk
-IGVsc2Ugd2hlcmUuDQo+IA0KPiBTYW1lIGZvciBhc3BlZWRfaTJjX2J1c19uZXdfcmVhZCgpLg0K
-PiANCj4gSWYgeW91IHdhbnQgdG8ga2VlcCB0aGUgZHluYW1pYyBhbGxvY2F0aW9uLCB0aGUgdm1z
-dGF0ZSBuZWVkcyBhIGZpeC4NCj4gTWF5IGJlIGludHJvZHVjZSBhICdyZWdzX25yJyBhdHRyaWJ1
-dGUgZm9yIHRoYXQgYW5kIGNoZWNrIGhvdyBvdGhlcg0KPiBtb2RlbHMgc2F2ZS9sb2FkIGR5bmFt
-aWMgYXJyYXlzLg0KPiANClRoYW5rcyBmb3IgdGhlIHJldmlldyBhbmQgc3VnZ2VzdGlvbnMuDQpJ
-IHdpbGwgc2ltcGx5IGluY3JlYXNlIHRoZSBzaXplIG9mIHRoZSBzdGF0aWMgYXJyYXkgdG8gZml4
-IHRoaXMgaXNzdWUuDQoNClRoYW5rcywNCkphbWluDQo+IFRoYW5rcywNCj4gDQo+IEMuDQoNCg==
+On Tue, Feb 03, 2026 at 08:56:00PM +0800, Chao Liu wrote:
+> From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
+> Starting on commit f31ba686a9 ("target/riscv/cpu.c: add 'sdtrig' in
+> riscv,isa') the 'debug' flag has been used as an alias for 'sdtrig'.
+> 
+> We're going to add more debug trigger extensions, e.g. 'sdext' [1].  And
+> all of a sudden the existence of this flag is now weird. Do we keep it
+> as a 'sdtrig' only or do we add 'sdext'?
+> 
+> The solution proposed here is to deprecate it. The flag was introduced a
+> long time ago as a way to encapsulate support for all debug related
+> CSRs.  Today we have specific debug trigger extensions and there's no
+> more use for a generic 'debug' flag. Users should be encouraged to
+> enable/disable extensions directly instead of using "made-up" flags that
+> exists only in a QEMU context.
+> 
+> The following changes are made:
+> 
+> - 'ext_sdtrig' flag was added in cpu->cfg. 'debug' flag was removed from
+>   cpu->cfg;
+> - All occurrences of cpu->cfg.debug were replaced to 'ext_sdtrig';
+> - Two explicit getters and setters for the 'debug' property were added.
+>   The property will simply get/set ext_sdtrig;
+> - vmstate_debug was renamed to vmstate_sdtrig. We're aware that this
+>   will impact migration between QEMU 10.2 to newer versions, but we're
+>   still in a point where the migration break cost isn't big enough to
+>   justify adding migration compatibility scaffolding.
+> 
+> Finally, deprecated.rst was updated to deprecate 'debug' and encourage
+> users to use 'ext_sdtrig' instead.
+> 
+> [1] https://lore.kernel.org/qemu-devel/cover.1768622881.git.chao.liu.zevorn@gmail.com/
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Thanks,
+Chao
+> ---
+>  docs/about/deprecated.rst         |  7 +++++
+>  target/riscv/cpu.c                | 51 ++++++++++++++++++++++++++++---
+>  target/riscv/cpu_cfg_fields.h.inc |  2 +-
+>  target/riscv/csr.c                |  2 +-
+>  target/riscv/machine.c            | 24 +++++++--------
+>  target/riscv/tcg/tcg-cpu.c        |  2 +-
+>  6 files changed, 69 insertions(+), 19 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 7abb3dab59..44a6e53044 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -507,6 +507,13 @@ It was implemented as a no-op instruction in TCG up to QEMU 9.0, but
+>  only with ``-cpu max`` (which does not guarantee migration compatibility
+>  across versions).
+>  
+> +``debug=true|false`` on RISC-V CPUs (since 11.0)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +This option, since QEMU 10.1, has been a simple alias to the ``sdtrig``
+> +extension. Users are advised to enable/disable ``sdtrig`` directly instead
+> +of using ``debug``.
+> +
+>  Backwards compatibility
+>  -----------------------
+>  
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 01cb62bde4..9fa4e09f17 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -210,7 +210,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+> -    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
+> +    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
+>      ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+>      ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -782,7 +782,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>      env->vill = true;
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_reset_hold(env);
+>      }
+>  
+> @@ -945,7 +945,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+>      riscv_cpu_register_gdb_regs_for_features(cs);
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_realize(&cpu->env);
+>      }
+>  #endif
+> @@ -1124,6 +1124,14 @@ static void riscv_cpu_init(Object *obj)
+>      cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+>      cpu->cfg.max_satp_mode = -1;
+>  
+> +    /*
+> +     * 'debug' started being deprecated in 11.0, been just a proxy
+> +     * to set ext_sdtrig ever since. It has been enabled by default
+> +     * for a long time though, so we're stuck with setting set 'strig'
+> +     * by default too. At least for now ...
+> +     */
+> +    cpu->cfg.ext_sdtrig = true;
+> +
+>      if (mcc->def->profile) {
+>          mcc->def->profile->enabled = true;
+>      }
+> @@ -1238,6 +1246,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>      MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
+>      MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
+>      MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+> +    MULTI_EXT_CFG_BOOL("sdtrig", ext_sdtrig, true),
+>      MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
+>      MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
+>      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+> @@ -2649,8 +2658,42 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+>      NULL
+>  };
+>  
+> +/*
+> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
+> + */
+> +static void prop_debug_get(Object *obj, Visitor *v, const char *name,
+> +                         void *opaque, Error **errp)
+> +{
+> +    bool value = RISCV_CPU(obj)->cfg.ext_sdtrig;
+> +
+> +    visit_type_bool(v, name, &value, errp);
+> +}
+> +
+> +/*
+> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
+> + */
+> +static void prop_debug_set(Object *obj, Visitor *v, const char *name,
+> +                         void *opaque, Error **errp)
+> +{
+> +    RISCVCPU *cpu = RISCV_CPU(obj);
+> +    bool value;
+> +
+> +    visit_type_bool(v, name, &value, errp);
+> +    cpu->cfg.ext_sdtrig = value;
+> +}
+> +
+> +/*
+> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
+> + */
+> +static const PropertyInfo prop_debug = {
+> +    .type = "bool",
+> +    .description = "DEPRECATED: use 'sdtrig' instead.",
+> +    .get = prop_debug_get,
+> +    .set = prop_debug_set,
+> +};
+> +
+>  static const Property riscv_cpu_properties[] = {
+> -    DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
+> +    {.name = "debug", .info = &prop_debug},
+>  
+>      {.name = "pmu-mask", .info = &prop_pmu_mask},
+>      {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 3696f02ee0..1e9162281f 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -46,6 +46,7 @@ BOOL_FIELD(ext_zilsd)
+>  BOOL_FIELD(ext_zimop)
+>  BOOL_FIELD(ext_zcmop)
+>  BOOL_FIELD(ext_ztso)
+> +BOOL_FIELD(ext_sdtrig)
+>  BOOL_FIELD(ext_smstateen)
+>  BOOL_FIELD(ext_sstc)
+>  BOOL_FIELD(ext_smcdeleg)
+> @@ -157,7 +158,6 @@ BOOL_FIELD(ext_xmipslsp)
+>  
+>  BOOL_FIELD(mmu)
+>  BOOL_FIELD(pmp)
+> -BOOL_FIELD(debug)
+>  BOOL_FIELD(misa_w)
+>  
+>  BOOL_FIELD(short_isa_string)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 05c7ec8352..870fad87ac 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -777,7 +777,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+>  
+>  static RISCVException debug(CPURISCVState *env, int csrno)
+>  {
+> -    if (riscv_cpu_cfg(env)->debug) {
+> +    if (riscv_cpu_cfg(env)->ext_sdtrig) {
+>          return RISCV_EXCP_NONE;
+>      }
+>  
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 09c032a879..62c51c8033 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -218,14 +218,14 @@ static const VMStateDescription vmstate_kvmtimer = {
+>  };
+>  #endif
+>  
+> -static bool debug_needed(void *opaque)
+> +static bool sdtrig_needed(void *opaque)
+>  {
+>      RISCVCPU *cpu = opaque;
+>  
+> -    return cpu->cfg.debug;
+> +    return cpu->cfg.ext_sdtrig;
+>  }
+>  
+> -static int debug_post_load(void *opaque, int version_id)
+> +static int sdtrig_post_load(void *opaque, int version_id)
+>  {
+>      RISCVCPU *cpu = opaque;
+>      CPURISCVState *env = &cpu->env;
+> @@ -237,12 +237,12 @@ static int debug_post_load(void *opaque, int version_id)
+>      return 0;
+>  }
+>  
+> -static const VMStateDescription vmstate_debug = {
+> -    .name = "cpu/debug",
+> -    .version_id = 2,
+> -    .minimum_version_id = 2,
+> -    .needed = debug_needed,
+> -    .post_load = debug_post_load,
+> +static const VMStateDescription vmstate_sdtrig = {
+> +    .name = "cpu/sdtrig",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = sdtrig_needed,
+> +    .post_load = sdtrig_post_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+>          VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+> @@ -425,8 +425,8 @@ static const VMStateDescription vmstate_sstc = {
+>  
+>  const VMStateDescription vmstate_riscv_cpu = {
+>      .name = "cpu",
+> -    .version_id = 11,
+> -    .minimum_version_id = 11,
+> +    .version_id = 12,
+> +    .minimum_version_id = 12,
+>      .post_load = riscv_cpu_post_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+> @@ -492,13 +492,13 @@ const VMStateDescription vmstate_riscv_cpu = {
+>          &vmstate_kvmtimer,
+>  #endif
+>          &vmstate_envcfg,
+> -        &vmstate_debug,
+>          &vmstate_smstateen,
+>          &vmstate_jvt,
+>          &vmstate_elp,
+>          &vmstate_ssp,
+>          &vmstate_ctr,
+>          &vmstate_sstc,
+> +        &vmstate_sdtrig,
+>          NULL
+>      }
+>  };
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 378b298886..d9fbb5bf58 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -180,7 +180,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+>               ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
+>      }
+>  
+> -    if (cpu->cfg.debug && !icount_enabled()) {
+> +    if (cpu->cfg.ext_sdtrig && !icount_enabled()) {
+>          flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
+>      }
+>  #endif
+> -- 
+> 2.53.0
+> 
 
