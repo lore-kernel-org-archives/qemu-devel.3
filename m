@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BCBEA8105
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E2DEA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmdo-0000er-Fp; Tue, 10 Feb 2026 07:14:52 -0500
+	id 1vpmjT-0002eK-MN; Tue, 10 Feb 2026 07:20:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmdm-0000eN-B7; Tue, 10 Feb 2026 07:14:50 -0500
+ id 1vpmiG-0007X1-3t; Tue, 10 Feb 2026 07:19:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmdk-0008P5-Oe; Tue, 10 Feb 2026 07:14:50 -0500
+ id 1vpmiE-0001km-29; Tue, 10 Feb 2026 07:19:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6ED05187D9B;
- Tue, 10 Feb 2026 15:13:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B326F187DE0;
+ Tue, 10 Feb 2026 15:16:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0B33C360CBD;
- Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4D9CC360CF4;
+ Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Wafer Xie <wafer@jaguarmicro.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 57/78] hw/nvme: Fix bootindex suffix use-after-free
-Date: Tue, 10 Feb 2026 15:14:10 +0300
-Message-ID: <20260210121438.67781-1-mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 76/85] vdpa: fix vhost-vdpa suspended state not be
+ shared
+Date: Tue, 10 Feb 2026 15:16:40 +0300
+Message-ID: <20260210121657.69363-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
-References: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
+References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,49 +63,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Wafer Xie <wafer@jaguarmicro.com>
 
-The bootindex suffix can be used as long as the property is alive.
+When stopping a vhost-vdpa device, only the first queue pair is marked as suspended,
+while the remaining queues are not updated to the suspended state.
+As a result, when stopping a multi-queue vhost-vdpa device,
+the following error message will be printed.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit eda9baa17a2854494709a8094419ba6a6901721d)
+qemu-system-x86_64:vhost VQ 2 ring restore failed: -1: Operation not permitted (1)
+
+qemu-system-x86_64:vhost VQ 3 ring restore failed: -1: Operation not permitted (1)
+
+So move v->suspended to v->shared, and then all the vhost_vdpa devices cannot
+have different suspended states.
+
+Fixes: 0bb302a9960a ("vdpa: add vhost_vdpa_suspend")
+Suggested-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20251119132452.3117-1-wafer@jaguarmicro.com>
+(cherry picked from commit fd3a2c601ab4a1bdb669e4c584b364e00a978702)
+(Mjt: context fixup due to missing v10.0.0-1280-g494c50dcc099
+ "vdpa: move memory listener register to vhost_vdpa_init")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 58800b3414..38f86a1726 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -944,12 +944,11 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
- static void nvme_ns_instance_init(Object *obj)
- {
-     NvmeNamespace *ns = NVME_NS(obj);
--    char *bootindex = g_strdup_printf("/namespace@%d,0", ns->params.nsid);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 7efbde3d4c..51c675271e 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -890,7 +890,7 @@ static int vhost_vdpa_reset_device(struct vhost_dev *dev)
  
--    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
--                                  bootindex, DEVICE(obj));
-+    sprintf(ns->bootindex_suffix, "/namespace@%" PRIu32 ",0", ns->params.nsid);
- 
--    g_free(bootindex);
-+    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
-+                                  ns->bootindex_suffix, DEVICE(obj));
+     ret = vhost_vdpa_call(dev, VHOST_VDPA_SET_STATUS, &status);
+     trace_vhost_vdpa_reset_device(dev);
+-    v->suspended = false;
++    v->shared->suspended = false;
+     return ret;
  }
  
- static const TypeInfo nvme_ns_info = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 8f8c78c850..d66f7dc82d 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -239,6 +239,7 @@ typedef struct NvmeNamespace {
-     DeviceState  parent_obj;
-     BlockConf    blkconf;
-     int32_t      bootindex;
-+    char         bootindex_suffix[24];
-     int64_t      size;
-     int64_t      moff;
-     NvmeIdNs     id_ns;
+@@ -1339,7 +1339,7 @@ static void vhost_vdpa_suspend(struct vhost_dev *dev)
+         if (unlikely(r)) {
+             error_report("Cannot suspend: %s(%d)", g_strerror(errno), errno);
+         } else {
+-            v->suspended = true;
++            v->shared->suspended = true;
+             return;
+         }
+     }
+@@ -1461,7 +1461,7 @@ static int vhost_vdpa_get_vring_base(struct vhost_dev *dev,
+         return 0;
+     }
+ 
+-    if (!v->suspended) {
++    if (!v->shared->suspended) {
+         /*
+          * Cannot trust in value returned by device, let vhost recover used
+          * idx from guest.
+diff --git a/include/hw/virtio/vhost-vdpa.h b/include/hw/virtio/vhost-vdpa.h
+index 0a9575b469..03289d4e32 100644
+--- a/include/hw/virtio/vhost-vdpa.h
++++ b/include/hw/virtio/vhost-vdpa.h
+@@ -56,6 +56,12 @@ typedef struct vhost_vdpa_shared {
+ 
+     /* SVQ switching is in progress, or already completed? */
+     SVQTransitionState svq_switching;
++
++    /*
++     * Device suspended successfully.
++     * The vhost_vdpa devices cannot have different suspended states.
++     */
++    bool suspended;
+ } VhostVDPAShared;
+ 
+ typedef struct vhost_vdpa {
+@@ -63,8 +69,6 @@ typedef struct vhost_vdpa {
+     uint32_t address_space_id;
+     uint64_t acked_features;
+     bool shadow_vqs_enabled;
+-    /* Device suspended successfully */
+-    bool suspended;
+     VhostVDPAShared *shared;
+     GPtrArray *shadow_vqs;
+     const VhostShadowVirtqueueOps *shadow_vq_ops;
 -- 
 2.47.3
 
