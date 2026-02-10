@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCAC6EA8107
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46294EA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmei-0001FR-Pt; Tue, 10 Feb 2026 07:15:50 -0500
+	id 1vpmgH-0002wL-0z; Tue, 10 Feb 2026 07:17:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeW-000153-8d; Tue, 10 Feb 2026 07:15:36 -0500
+ id 1vpmf1-0001ez-Ek; Tue, 10 Feb 2026 07:16:08 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeU-0000Ei-Eh; Tue, 10 Feb 2026 07:15:35 -0500
+ id 1vpmex-0000Kw-DW; Tue, 10 Feb 2026 07:16:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6A706187DA7;
+ by isrv.corpit.ru (Postfix) with ESMTP id DC63D187DAC;
  Tue, 10 Feb 2026 15:13:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 04D3D360CC9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 789E9360CCE;
  Tue, 10 Feb 2026 15:14:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, zhenwei pi <pizhenwei@tensorfer.com>,
- =?UTF-8?q?=EC=9D=B4=EC=9E=AC=EC=98=81?= <nakamurajames123@gmail.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 69/78] hw/virtio/virtio-crypto: verify asym request
- size
-Date: Tue, 10 Feb 2026 15:14:22 +0300
-Message-ID: <20260210121438.67781-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 74/78] hw/cxl: Check for overflow on santize media as
+ both base and offset 64bit.
+Date: Tue, 10 Feb 2026 15:14:27 +0300
+Message-ID: <20260210121438.67781-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,44 +61,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: zhenwei pi <pizhenwei@tensorfer.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-The total lenght of request is limited by cryptodev config, verify it
-to avoid unexpected request from guest.
+The both the size and base of a media sanitize operation are both provided
+by the VM, an overflow is possible which may result in checks on valid
+range passing when they should not.  Close that by checking for overflow
+on the addition.
 
-Fixes: CVE-2025-14876
-Fixes: 0e660a6f90a ("crypto: Introduce RSA algorithm")
-Reported-by: 이재영 <nakamurajames123@gmail.com>
-Signed-off-by: zhenwei pi <zhenwei.pi@linux.dev>
+Fixes: 40ab4ed10775 ("hw/cxl/cxl-mailbox-utils: Media operations Sanitize and Write Zeros commands CXL r3.2(8.2.10.9.5.3)")
+Closes: https://lore.kernel.org/qemu-devel/CAFEAcA8Rqop+ju0fuxN+0T57NBG+bep80z45f6pY0ci2fz_G3A@mail.gmail.com/
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251221024321.143196-2-zhenwei.pi@linux.dev>
-(cherry picked from commit 91c6438caffc880e999a7312825479685d659b44)
+Message-Id: <20260102154731.474859-2-Jonathan.Cameron@huawei.com>
+(cherry picked from commit 87f8e5a71d061964c9bfa4d6e02db47f54dd61f7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 517f2089c5..b20f299937 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -767,11 +767,18 @@ virtio_crypto_handle_asym_req(VirtIOCrypto *vcrypto,
-     uint32_t len;
-     uint8_t *src = NULL;
-     uint8_t *dst = NULL;
-+    uint64_t max_len;
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 6cfdd98168..cf1d048d99 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1875,7 +1875,7 @@ static uint64_t get_dc_size(CXLType3Dev *ct3d, MemoryRegion **dc_mr)
+ static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+                              size_t length)
+ {
+-    uint64_t vmr_size, pmr_size, dc_size;
++    uint64_t vmr_size, pmr_size, dc_size, dpa_end;
  
-     asym_op_info = g_new0(CryptoDevBackendAsymOpInfo, 1);
-     src_len = ldl_le_p(&req->para.src_data_len);
-     dst_len = ldl_le_p(&req->para.dst_data_len);
+     if ((dpa_addr % CXL_CACHE_LINE_SIZE) ||
+         (length % CXL_CACHE_LINE_SIZE)  ||
+@@ -1887,7 +1887,12 @@ static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+     pmr_size = get_pmr_size(ct3d, NULL);
+     dc_size = get_dc_size(ct3d, NULL);
  
-+    max_len = (uint64_t)src_len + dst_len;
-+    if (unlikely(max_len > vcrypto->conf.max_size)) {
-+        virtio_error(vdev, "virtio-crypto asym request is too large");
-+        goto err;
+-    if (dpa_addr + length > vmr_size + pmr_size + dc_size) {
++    /* sanitize 64 bit values coming from guest */
++    if (uadd64_overflow(dpa_addr, length, &dpa_end)) {
++        return -EINVAL;
 +    }
 +
-     if (src_len > 0) {
-         src = g_malloc0(src_len);
-         len = iov_to_buf(iov, out_num, 0, src, src_len);
++    if (dpa_end > vmr_size + pmr_size + dc_size) {
+         return -EINVAL;
+     }
+ 
 -- 
 2.47.3
 
