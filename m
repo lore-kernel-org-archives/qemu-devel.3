@@ -4,53 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FD4EB2705
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26230EB2711
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vptwV-0000sg-GM; Tue, 10 Feb 2026 15:02:39 -0500
+	id 1vpu7W-0005od-TX; Tue, 10 Feb 2026 15:14:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vptwG-0000p1-At
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:02:25 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vptwE-00052E-3A
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:02:23 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 725C2596E8D;
- Tue, 10 Feb 2026 21:02:15 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id htiIWvj2qxTT; Tue, 10 Feb 2026 21:02:13 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 77808596E8E; Tue, 10 Feb 2026 21:02:13 +0100 (CET)
-Message-ID: <6573e1b154ac5123a96ec2a246fcb6a1b0407fdd.1770753117.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1770753117.git.balaton@eik.bme.hu>
-References: <cover.1770753117.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 5/6] hw/pci-host/articia: Add variable for common type cast
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpu7V-0005nj-G7
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:14:01 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vpu7T-0007na-Nw
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:14:01 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b4755f37c3eso2902060a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:13:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770754438; x=1771359238; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Uns7vUCLwr62MBErOAPukryvxRwaPsZ2c+g8wZ8a1iY=;
+ b=a8t6EHFtFl1uR4u4V9BmDy7GIim89R0cCBagB2DsOqdto0rO08r/nveJeHTydVy6BP
+ +DrckN/mmwfYLAuyRwUoL2X7iElSz1UKy/i48qACSWyd8692htfdmbei2vnb01+Y0efh
+ n2NfFrXPje2cIweu65GCLrzDDLMfOJOId0JuX7fwOpSc7M9frsxx67qR9F3esOlHl2yE
+ SX+Vs5+pIzLHXX7WpPh0uIlgDt08qKv+nRTV28pmHaQciyhDChYqap46tChxAv1SOm0Q
+ oJ4Bpfz8Vwr3Ow1H+EeqOtzvYa+vA4CBgk+4skgZPkGpmXAISIdFO2KGviqCQbNbmvmC
+ 7CnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770754438; x=1771359238;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Uns7vUCLwr62MBErOAPukryvxRwaPsZ2c+g8wZ8a1iY=;
+ b=M5gJujRl5NuqXdC5xMla5nojDlORV5l2ap5TvoZ4i3H7EvOrmaGHWvBa0okD9FhuW/
+ HLezqf8bhwMH88/tS3ytfcremkqtj5E7NjIDcgbIo0PYHCYwtENxrsSTRqqc8wjaGPEs
+ /LWKpdsytZZN7oIoBdctvBXk9w2B4hNEg8j8pEJSGvjssTiJNp1fbBqjcXiYhqoS3VeB
+ SYxE9bsaFwscsUiD7Us/sE0CQN93zd0uTnZbFw7geiqyPWZuBPba4Q4Vso8azuotFNuW
+ UcCsTh8+lYOzqs37eD9qxlJwr19BvYXZxjxKmuiSC28AfzAHMun9rn3vZiPTDDIrh0uJ
+ E5WA==
+X-Gm-Message-State: AOJu0YzdOzzLJoiVQrNKpbX2PUqTop2CU71ovdB/nHv9ziGMtP+IIQR1
+ sQL/Ma+QiToX2gh8Rn/hxRSzHTvD+yq8bByTisuom/fpLYtjjNQcmrqNCBmNscquFRTuKJVZu+q
+ /I648
+X-Gm-Gg: AZuq6aK8s4ennWLKmsGrzsbMGvJ0Q3ipSJXMTChYOeuDN1n/9dYjMheslrdgk2FW8di
+ aJJpz76CYsIEqY/mPBH3sfEFjT3nx4rZhu2yDxmvjaxDK+uwI/7EnyGO4ZJgU4Xm0eDsMBiw2UR
+ x3TYX0cSomcCMkNzikUxtyl4g+9K+ITG2SUsuR6tTBIo72LMFqfXCYxWUcHI4sH/qsquUZryf+n
+ fP2ZyIzrjxij0MiO7sdqZBTKsqwiOQpey70EFcBSnCBinAKIbr66qRUea+aAiCdHj6aFoonq4Qc
+ eaNiyxje0CGlWPuaXFKThLLnDQ+zrOgOEaQh01urxiMKDOBtpPL2kyQFg5qb7tvAeK/I8t2QxSg
+ rO9IT6ae135lc9OX3mK41vRjsg88LWnFz3/2ANPJuSPJZ6zKVLYq1W6ZnW+VsbjXAOeeulVUnfy
+ v9atR+ogaj5WpZM0jEQBDmV+a3ydMCYSagfSh4jgE91THIF1YMYkyhJ+HM41mQiTLCkFUuWpFOY
+ 7dU
+X-Received: by 2002:a05:6300:614a:b0:393:8fc:5291 with SMTP id
+ adf61e73a8af0-3942e6ba5c2mr265571637.74.1770754438273; 
+ Tue, 10 Feb 2026 12:13:58 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6dcb5e3e8csm13930031a12.21.2026.02.10.12.13.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 12:13:57 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 10 Feb 2026 21:02:13 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, alistair.francis@wdc.com,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
+ philmd@linaro.org, anjo@rev.ng, brian.cain@oss.qualcomm.com
+Subject: [PATCH 3/4] docs/about/emulation/uftrace: add info about automatic
+ tracing
+Date: Tue, 10 Feb 2026 12:13:43 -0800
+Message-ID: <20260210201344.1403613-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
+References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,52 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need the device casted to OBJECT often enough in realize to store
-it in a local variable that also makes function calls more readable.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/pci-host/articia.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ docs/about/emulation.rst | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-index 203e0646df..d7676a166f 100644
---- a/hw/pci-host/articia.c
-+++ b/hw/pci-host/articia.c
-@@ -174,24 +174,24 @@ static void articia_realize(DeviceState *dev, Error **errp)
- {
-     ArticiaState *s = ARTICIA(dev);
-     PCIHostState *h = PCI_HOST_BRIDGE(dev);
-+    Object *o = OBJECT(dev);
-     MemoryRegion *mr;
-     PCIDevice *pdev;
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index e8793b0f9ce..f547e118eef 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -849,7 +849,7 @@ Symbols must be present in ELF binaries.
+ It tracks the call stack (based on frame pointer analysis). Thus, your program
+ and its dependencies must be compiled using ``-fno-omit-frame-pointer
+ -mno-omit-leaf-frame-pointer``. In 2024, `Ubuntu and Fedora enabled it by
+-default again on x64
++default again on 64-bit platforms
+ <https://www.brendangregg.com/blog/2024-03-17/the-return-of-the-frame-pointers.html>`_.
+ On aarch64, this is less of a problem, as they are usually part of the ABI,
+ except for leaf functions. That's true for user space applications, but not
+@@ -976,7 +976,7 @@ You can follow the exact same instructions for a x64 system, combining edk2,
+ Linux, and Ubuntu, simply by switching to
+ `x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
  
-     bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
--    memory_region_init_io(&s->gpio_reg, OBJECT(s), &articia_gpio_ops, s,
-+    memory_region_init_io(&s->gpio_reg, o, &articia_gpio_ops, s,
-                           TYPE_ARTICIA, 4);
+-To build the system::
++To build and run the system::
  
--    memory_region_init(&s->mem, OBJECT(dev), "pci-mem", UINT64_MAX);
--    memory_region_init(&s->io, OBJECT(dev), "pci-io", 0xc00000);
--    memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
-+    memory_region_init(&s->mem, o, "pci-mem", UINT64_MAX);
-+    memory_region_init(&s->io, o, "pci-io", 0xc00000);
-+    memory_region_init_io(&s->reg, o, &articia_reg_ops, s,
-                           TYPE_ARTICIA, 0x1000000);
-     memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
+     # Install dependencies
+     $ sudo apt install -y podman qemu-user-static
+@@ -988,7 +988,14 @@ To build the system::
+     # system can be started using:
+     $ ./run.sh /path/to/qemu-system-aarch64
  
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
--                                 PCI_LOW_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-low", &s->mem, 0, PCI_LOW_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
--                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-high", &s->mem, PCI_HIGH_ADDR,
-+                                 PCI_HIGH_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
+-To generate a uftrace for a system boot from that::
++    # generate a uftrace for execution (collect symbols automatically)
++    $ ./trace.sh /path/to/qemu-system-aarch64
++    # show output log to read timestamps
++    $ cat uftrace.data/exec.log
++    # generate final trace (compressed) for perfetto
++    $ ./perfetto.sh <start_timestamp> <end_timestamp> ~/trace.gz
++
++To generate manually the same trace::
  
-     /* devfn_min is 8 that matches first PCI slot in AmigaOne */
+     # run true and poweroff the system
+     $ env INIT=true ./run.sh path/to/qemu-system-aarch64 \
 -- 
-2.41.3
+2.47.3
 
 
