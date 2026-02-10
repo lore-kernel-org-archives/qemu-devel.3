@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C2CEA811B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BE0EA811C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpoAD-00026N-O8; Tue, 10 Feb 2026 08:52:25 -0500
+	id 1vpoAH-0002Bs-QC; Tue, 10 Feb 2026 08:52:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA5-0001zC-NU
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:18 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1vpoAG-0002Ah-73
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:28 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA4-0006KO-3D
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:17 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4806f3fc50bso47910075e9.0
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:15 -0800 (PST)
+ id 1vpoAB-0006Ll-A7
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:27 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4801eb2c0a5so53543395e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770731534; x=1771336334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770731540; x=1771336340; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=adjSQwHk3KULK9zaYzFCqBvXl4nV3J4QFwlScJUJ8xc=;
- b=pj24DzaKM5Tn9WIc9wjzMu3u3wRgkP1ggHGUlqwxMTA6KzQPaX+Rkj7rdbXLFIgp0Y
- lEEqY1I6bnOsJNeYieNB0vf8l3qFxsJWxWVJQJ2Q6NnGFTnX65uf2yo0vAhXCEs9aTq5
- ZXvNkcDOMbaWO80avzirj3zg6hbAjs2FDwfO3a4NnK/N6qLXi3AQ8Tox+NAxQ8wXepAJ
- 7i7w5LCncRYi5TkGeNy4pjQOgr3R6mJJOR503xwGtDDs88niDURsutWgK+j8wMpXpBzE
- R2WsYSoSwOQkknILN3XkzRqpljBiUGoOW1ZqL4lPmLrnuTzITEXARlRVXVbDXdhWP4we
- cLqA==
+ :reply-to; bh=+XOcY+AOu+OcMbkxBTIZN3ikLAl892hSxYanbSLcRcg=;
+ b=fdcfF5RelNQ+39FGG0QB1Qb97q/hk7IduHRTOsneUqq4PxPB29xFNIuIGbtCNnvk5T
+ oopT6zMOup3rhKfs1jwaEzEDVVrtzF75pZsfNZ3pg8HYViEUzpNpynrLS0R6gyzJLgut
+ DoLFBliNmhvg6swf6GbxDtu8JWSxiscvIya6CFQZn4FpkjEbdoorXo7y2FjV1twNWGal
+ iW75UvhKFNKWjlqpt8SUHY1zvi4QR+9RKuP7z/C+FoukEiVMLvjD/lbTvMEcS/jXx8jX
+ UXDhnZhwTPGsbRrzTadSVtZby2mZjC3ERtZH1kO+52CgC4e9Z6wS5Rn1PqfNFGzuHInh
+ xCXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770731534; x=1771336334;
+ d=1e100.net; s=20230601; t=1770731540; x=1771336340;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=adjSQwHk3KULK9zaYzFCqBvXl4nV3J4QFwlScJUJ8xc=;
- b=HV7UdCevBpCXVOTdKYDXDflNbnAcs2L87Stf0OKahqv7mLKLsFP4PpGhV+vP6qL3kv
- 33r+MfqI6KJxDfM4iJ+JxbrDw4VFUZNOqwL7YzVB1WoxwSPNpUb3hek+YmUFOSoi/GRx
- S3qTs8ZHdukH9Hza3QM8L5Dr/nKYGTuj3zbKC7EMyJC73eSiXLUfTu7znCQE8B+YOHq4
- 2xFL2GGcOI4f20qLMChUK1/iu4MlThZIyUlK3AVs5SdT/X9P1G6Mp9dzqBjQOP/4Cdm6
- KkAFGaHJSzvmvQ8zVbrL1WEJTIFTXM/5OApzidv+yDyerNzAoB16HduuzW5bvt870obo
- K5UA==
-X-Gm-Message-State: AOJu0YwZiIhfGan2thlD8ox9bobxrGkbt+h757yJDNrkoWeqQvuGEVU3
- dnM8X9djrobQTtM4TAXmJtMlYR1OvYzSzDRyKWg3NotumhYwaJ6BzcjbaHf6+pPUAcT2eJ70J4E
- 0xsGa
-X-Gm-Gg: AZuq6aKkIjXQDojWAFHyROuzumIIeq3mCT4foucOr9weH1dQFKpJmxVRihcCRjglzqU
- Vx4PYC3ZSSFNdwC/cPVXKd6xzvUCcMZc7+U5bkIhriFNZZwDGf8kTPa4Nk1vhPy8GKmiegLq8OS
- ub8Fvx19KE5tr/HkUc6hOItYd2VHJvTgY9KdcNrM+XNgoP1I487PoEOK6HpL30Y/CKwd8j7DQ/K
- 4/o5lac6tpLBJciYtUvlT0Pm5Qq4ebjgc/sA0k9yVqdSK+HpdRTlM56Bquc/s05jbcls2g0Ovcu
- p4cnTdSrilyU5iwJiQv+gNbNGs9gus7KI6OiqNd/NojTnGAKPgDarCCRv4R4//RRJ2goWM9x8Dj
- i1j7zf8CIaUoRDmIZ0meFyW4h28k9Kc4Qh8xZdB8oM8zBtS4gGevy45h/PrVbd8PMYCy2E77tjH
- MevsKorZBJAyHpD5gtAcTqIWERACQoGq38ccAHKM3fFkT+/BavAv7xXZqfW/P9skSwplHGjcAVW
- tfh4uIx743z2Bxnl3lQNJfJ0h3NGSI=
-X-Received: by 2002:a05:600c:1e2a:b0:47e:e779:36e with SMTP id
- 5b1f17b1804b1-48320216170mr193520005e9.19.1770731534513; 
- Tue, 10 Feb 2026 05:52:14 -0800 (PST)
+ bh=+XOcY+AOu+OcMbkxBTIZN3ikLAl892hSxYanbSLcRcg=;
+ b=FS8TBlT7fC+7Rc/05uo3NOXeMtUsmG4By+OyVpSM8d4K8vM4R4U2sYkgLjiEcItOdV
+ +vXrbD2wMOBQn3LOqEnlLCUA/zQ4EKBRkeIBx8OJUljuonMs+Foyttyh7pNxQI6eHorW
+ tM2k9OVJhOaVqOfmQdCnsxwKDddUPTFRSugjjRpERTW7HvYaWK9pmKwQjmVgGna3r5N8
+ xhJN5pFrS4kuViiDYENUf+Jrq/L0nTU2jX29OH5PaTSbr0GTkE2SCSXIV3Kg8HS/2tWi
+ oGDmxh4hXKcqojjkfoIWPlWgf7qtplFQzvxiZu791moL+I9+AsNr9w0MJTiOlJsJyVJ4
+ k2aQ==
+X-Gm-Message-State: AOJu0YwArxM+VZZbR4PTEWc0WTv6A8kfu6RcY7IsgHf7HO5ABkogVWOD
+ O7lP2BY2Ti8o/2p2P2+5EWypT9Ema4D6w0XzthrTNYnYaVLuFDlb8C/KMl2iRxnWotwjowadocs
+ TdQuy
+X-Gm-Gg: AZuq6aKqwEs++E/MHTDOnuHwjk5rcAjn4wZJS+JQ/7eTZ2yPZzeD0WBFDKBJjcWZVnH
+ WhxjwTIuUT0tmNBzxA0/BNn9YiGylpMshbf871NIP/piklUqMxzMMUSUTnnc54TLGBc+JUgDk45
+ WUP3XSGyvnZCEibb2P2y7iTy9ZMOaT3F0zH2TVLX6cIj0UgLbbv0nKyAQHDyApxWf7Zcyr6Cqr1
+ ab5+rLyd2uDVJu1EUCx9njy3o8puEec9YpaZq9E0IL/L4sCiTgAcoMPcf21AbPhScMb/S2xdnY7
+ VTr/viz7AKsgvFaOZEf4GcXIiOp1o13I3WZYEXYoyDzT8MX9py9WqBr8ZWFJewlybpP8TTw+dxh
+ 0j02B2d0PFQnyd3JP3KLH4BcHRQrJ3WJBa6mDTUs/CfdKbe6qXtGzAXLr4iMtehW4Bkkn78s5g6
+ /Diwujyc348Bxr3iww7r5lVZHtX/kxPNG6OxghILqV3FvhXadpq/17CMmA4gDHS+guLfhSJJj5J
+ kv8p/e1RatPJjeEblZ4PISOByb41VQ=
+X-Received: by 2002:a05:600c:3b1e:b0:483:3380:ca0c with SMTP id
+ 5b1f17b1804b1-4835083456cmr33318915e9.35.1770731539716; 
+ Tue, 10 Feb 2026 05:52:19 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.13
+ 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:52:13 -0800 (PST)
+ Tue, 10 Feb 2026 05:52:18 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/26] docs: arm: update virt machine model description
-Date: Tue, 10 Feb 2026 13:51:48 +0000
-Message-ID: <20260210135206.229528-9-peter.maydell@linaro.org>
+Subject: [PULL 14/26] whpx: add arm64 support
+Date: Tue, 10 Feb 2026 13:51:54 +0000
+Message-ID: <20260210135206.229528-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260210135206.229528-1-peter.maydell@linaro.org>
 References: <20260210135206.229528-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,61 +103,880 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Update the documentation to match current QEMU.
-
-Remove the mention of pre-2.7 machine models as those aren't provided
-anymore.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/virt.rst | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ MAINTAINERS                 |   1 +
+ accel/whpx/whpx-common.c    |   1 +
+ target/arm/meson.build      |   1 +
+ target/arm/whpx/meson.build |   3 +
+ target/arm/whpx/whpx-all.c  | 810 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 816 insertions(+)
+ create mode 100644 target/arm/whpx/meson.build
+ create mode 100644 target/arm/whpx/whpx-all.c
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index e5570773ba..f8148b5dcf 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -41,9 +41,10 @@ The virt board supports:
- - User-creatable SMMUv3 devices (see below for example)
- - hotpluggable DIMMs
- - hotpluggable NVDIMMs
--- An MSI controller (GICv2M or ITS). GICv2M is selected by default along
--  with GICv2. ITS is selected by default with GICv3 (>= virt-2.7). Note
--  that ITS is not modeled in TCG mode.
-+- An MSI controller (GICv2m or ITS).
-+  - When using GICv3, ITS is selected by default when available on the platform.
-+  - If using GICv2, a GICv2m is provided by default instead.
-+  - When ITS is not available on a GICv3 platform, a GICv2m is provided by default.
- - 32 virtio-mmio transport devices
- - running guests using the KVM accelerator on aarch64 hardware
- - large amounts of RAM (at least 255GB, and more if using highmem)
-@@ -167,9 +168,22 @@ gic-version
-     with TCG this is currently ``3`` if ``virtualization`` is ``off`` and
-     ``4`` if ``virtualization`` is ``on``, but this may change in future)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c6af6e10bb..5cdfea7e11 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -566,6 +566,7 @@ M: Mohamed Mediouni <mohamed@unpredictable.fr>
+ S: Supported
+ F: accel/whpx/
+ F: target/i386/whpx/
++F: target/arm/whpx/
+ F: hw/intc/arm_gicv3_whpx.c
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 05f9e520b7..827f50f3e0 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -12,6 +12,7 @@
+ #include "gdbstub/helpers.h"
+ #include "qemu/accel.h"
+ #include "accel/accel-ops.h"
++#include "system/memory.h"
+ #include "system/whpx.h"
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 1a1bcde260..fe396c4318 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -59,6 +59,7 @@ arm_common_system_ss.add(files(
+ ))
  
-+msi
-+  Specify the MSI and MSI-X controller (GIC) to provide.
-+  Valid values are:
-+
-+  ``auto``
-+    Use the best available MSI-X controller option. ITS when supported, GICv2m otherwise.
-+  ``gicv2m``
-+    GICv2m. Typically used with a GICv2. Also available with a newer GIC.
-+  ``its``
-+    GICv3 ITS. This is the default option when using a GICv3 or GICv4 with a supported
-+    accelerator.
-+  ``off``
-+    Disable support for MSI/MSI-X interrupts.
-+
- its
--  Set ``on``/``off`` to enable/disable ITS instantiation. The default is ``on``
--  for machine types later than ``virt-2.7``.
-+  Set ``on``/``off`` to control ITS instantiation. This is a deprecated option, use ``msi`` instead.
+ subdir('hvf')
++subdir('whpx')
  
- iommu
-   Set the IOMMU type to create for the guest. Valid values are:
+ if 'CONFIG_TCG' in config_all_accel
+    subdir('tcg')
+diff --git a/target/arm/whpx/meson.build b/target/arm/whpx/meson.build
+new file mode 100644
+index 0000000000..1de2ef0283
+--- /dev/null
++++ b/target/arm/whpx/meson.build
+@@ -0,0 +1,3 @@
++arm_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
++  'whpx-all.c',
++))
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+new file mode 100644
+index 0000000000..192d7ec7a8
+--- /dev/null
++++ b/target/arm/whpx/whpx-all.c
+@@ -0,0 +1,810 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU Windows Hypervisor Platform accelerator (WHPX)
++ *
++ * Copyright (c) 2025 Mohamed Mediouni
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "system/address-spaces.h"
++#include "system/ioport.h"
++#include "gdbstub/helpers.h"
++#include "qemu/accel.h"
++#include "accel/accel-ops.h"
++#include "system/whpx.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
++#include "qemu/main-loop.h"
++#include "hw/core/boards.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "qapi/qapi-types-common.h"
++#include "qapi/qapi-visit-common.h"
++#include "migration/blocker.h"
++#include "accel/accel-cpu-target.h"
++#include <winerror.h>
++
++#include "syndrome.h"
++#include "cpu.h"
++#include "target/arm/cpregs.h"
++#include "internals.h"
++
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
++#include "system/whpx-all.h"
++#include "system/whpx-common.h"
++#include "hw/arm/bsa.h"
++#include "arm-powerctl.h"
++
++#include <winhvplatform.h>
++#include <winhvplatformdefs.h>
++
++typedef struct WHPXRegMatch {
++   WHV_REGISTER_NAME reg;
++   uint64_t offset;
++} WHPXRegMatch;
++
++static const WHPXRegMatch whpx_reg_match[] = {
++    { WHvArm64RegisterX0,   offsetof(CPUARMState, xregs[0]) },
++    { WHvArm64RegisterX1,   offsetof(CPUARMState, xregs[1]) },
++    { WHvArm64RegisterX2,   offsetof(CPUARMState, xregs[2]) },
++    { WHvArm64RegisterX3,   offsetof(CPUARMState, xregs[3]) },
++    { WHvArm64RegisterX4,   offsetof(CPUARMState, xregs[4]) },
++    { WHvArm64RegisterX5,   offsetof(CPUARMState, xregs[5]) },
++    { WHvArm64RegisterX6,   offsetof(CPUARMState, xregs[6]) },
++    { WHvArm64RegisterX7,   offsetof(CPUARMState, xregs[7]) },
++    { WHvArm64RegisterX8,   offsetof(CPUARMState, xregs[8]) },
++    { WHvArm64RegisterX9,   offsetof(CPUARMState, xregs[9]) },
++    { WHvArm64RegisterX10,  offsetof(CPUARMState, xregs[10]) },
++    { WHvArm64RegisterX11,  offsetof(CPUARMState, xregs[11]) },
++    { WHvArm64RegisterX12,  offsetof(CPUARMState, xregs[12]) },
++    { WHvArm64RegisterX13,  offsetof(CPUARMState, xregs[13]) },
++    { WHvArm64RegisterX14,  offsetof(CPUARMState, xregs[14]) },
++    { WHvArm64RegisterX15,  offsetof(CPUARMState, xregs[15]) },
++    { WHvArm64RegisterX16,  offsetof(CPUARMState, xregs[16]) },
++    { WHvArm64RegisterX17,  offsetof(CPUARMState, xregs[17]) },
++    { WHvArm64RegisterX18,  offsetof(CPUARMState, xregs[18]) },
++    { WHvArm64RegisterX19,  offsetof(CPUARMState, xregs[19]) },
++    { WHvArm64RegisterX20,  offsetof(CPUARMState, xregs[20]) },
++    { WHvArm64RegisterX21,  offsetof(CPUARMState, xregs[21]) },
++    { WHvArm64RegisterX22,  offsetof(CPUARMState, xregs[22]) },
++    { WHvArm64RegisterX23,  offsetof(CPUARMState, xregs[23]) },
++    { WHvArm64RegisterX24,  offsetof(CPUARMState, xregs[24]) },
++    { WHvArm64RegisterX25,  offsetof(CPUARMState, xregs[25]) },
++    { WHvArm64RegisterX26,  offsetof(CPUARMState, xregs[26]) },
++    { WHvArm64RegisterX27,  offsetof(CPUARMState, xregs[27]) },
++    { WHvArm64RegisterX28,  offsetof(CPUARMState, xregs[28]) },
++    { WHvArm64RegisterFp,   offsetof(CPUARMState, xregs[29]) },
++    { WHvArm64RegisterLr,   offsetof(CPUARMState, xregs[30]) },
++    { WHvArm64RegisterPc,   offsetof(CPUARMState, pc) },
++};
++
++static const WHPXRegMatch whpx_fpreg_match[] = {
++    { WHvArm64RegisterQ0,  offsetof(CPUARMState, vfp.zregs[0]) },
++    { WHvArm64RegisterQ1,  offsetof(CPUARMState, vfp.zregs[1]) },
++    { WHvArm64RegisterQ2,  offsetof(CPUARMState, vfp.zregs[2]) },
++    { WHvArm64RegisterQ3,  offsetof(CPUARMState, vfp.zregs[3]) },
++    { WHvArm64RegisterQ4,  offsetof(CPUARMState, vfp.zregs[4]) },
++    { WHvArm64RegisterQ5,  offsetof(CPUARMState, vfp.zregs[5]) },
++    { WHvArm64RegisterQ6,  offsetof(CPUARMState, vfp.zregs[6]) },
++    { WHvArm64RegisterQ7,  offsetof(CPUARMState, vfp.zregs[7]) },
++    { WHvArm64RegisterQ8,  offsetof(CPUARMState, vfp.zregs[8]) },
++    { WHvArm64RegisterQ9,  offsetof(CPUARMState, vfp.zregs[9]) },
++    { WHvArm64RegisterQ10, offsetof(CPUARMState, vfp.zregs[10]) },
++    { WHvArm64RegisterQ11, offsetof(CPUARMState, vfp.zregs[11]) },
++    { WHvArm64RegisterQ12, offsetof(CPUARMState, vfp.zregs[12]) },
++    { WHvArm64RegisterQ13, offsetof(CPUARMState, vfp.zregs[13]) },
++    { WHvArm64RegisterQ14, offsetof(CPUARMState, vfp.zregs[14]) },
++    { WHvArm64RegisterQ15, offsetof(CPUARMState, vfp.zregs[15]) },
++    { WHvArm64RegisterQ16, offsetof(CPUARMState, vfp.zregs[16]) },
++    { WHvArm64RegisterQ17, offsetof(CPUARMState, vfp.zregs[17]) },
++    { WHvArm64RegisterQ18, offsetof(CPUARMState, vfp.zregs[18]) },
++    { WHvArm64RegisterQ19, offsetof(CPUARMState, vfp.zregs[19]) },
++    { WHvArm64RegisterQ20, offsetof(CPUARMState, vfp.zregs[20]) },
++    { WHvArm64RegisterQ21, offsetof(CPUARMState, vfp.zregs[21]) },
++    { WHvArm64RegisterQ22, offsetof(CPUARMState, vfp.zregs[22]) },
++    { WHvArm64RegisterQ23, offsetof(CPUARMState, vfp.zregs[23]) },
++    { WHvArm64RegisterQ24, offsetof(CPUARMState, vfp.zregs[24]) },
++    { WHvArm64RegisterQ25, offsetof(CPUARMState, vfp.zregs[25]) },
++    { WHvArm64RegisterQ26, offsetof(CPUARMState, vfp.zregs[26]) },
++    { WHvArm64RegisterQ27, offsetof(CPUARMState, vfp.zregs[27]) },
++    { WHvArm64RegisterQ28, offsetof(CPUARMState, vfp.zregs[28]) },
++    { WHvArm64RegisterQ29, offsetof(CPUARMState, vfp.zregs[29]) },
++    { WHvArm64RegisterQ30, offsetof(CPUARMState, vfp.zregs[30]) },
++    { WHvArm64RegisterQ31, offsetof(CPUARMState, vfp.zregs[31]) },
++};
++
++struct whpx_sreg_match {
++    WHV_REGISTER_NAME reg;
++    uint32_t key;
++    bool global;
++    uint32_t cp_idx;
++};
++
++static struct whpx_sreg_match whpx_sreg_match[] = {
++    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) },
++
++    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) },
++    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) },
++    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) },
++    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) },
++#ifdef SYNC_NO_RAW_REGS
++    /*
++     * The registers below are manually synced on init because they are
++     * marked as NO_RAW. We still list them to make number space sync easier.
++     */
++    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
++    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
++    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
++#endif
++    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), true },
++    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), true },
++    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), true },
++    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 0), true },
++    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, 1), true },
++#ifdef SYNC_NO_MMFR0
++    /* We keep the hardware MMFR0 around. HW limits are there anyway */
++    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 0) },
++#endif
++    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), true },
++    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), true },
++    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), true },
++
++    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
++    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
++    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
++    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
++    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
++    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
++
++    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) },
++    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) },
++    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) },
++    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) },
++    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) },
++    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) },
++    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) },
++    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) },
++    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) },
++    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) },
++
++    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
++    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
++    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
++    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
++    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
++    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
++    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
++    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
++    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 1) },
++    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
++    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) },
++    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
++    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
++    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) },
++    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) },
++    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) },
++    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
++};
++
++static void flush_cpu_state(CPUState *cpu)
++{
++    if (cpu->vcpu_dirty) {
++        whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++        cpu->vcpu_dirty = false;
++    }
++}
++
++HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
++{
++    if (exceptions != 0) {
++        return E_NOTIMPL;
++    }
++    return ERROR_SUCCESS;
++}
++void whpx_apply_breakpoints(
++    struct whpx_breakpoint_collection *breakpoints,
++    CPUState *cpu,
++    bool resuming)
++{
++    /* Breakpoints aren’t supported on this platform */
++}
++void whpx_translate_cpu_breakpoints(
++    struct whpx_breakpoints *breakpoints,
++    CPUState *cpu,
++    int cpu_breakpoint_count)
++{
++    /* Breakpoints aren’t supported on this platform */
++}
++
++static void whpx_get_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE* val)
++{
++    struct whpx_state *whpx = &whpx_global;
++    HRESULT hr;
++
++    flush_cpu_state(cpu);
++
++    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(whpx->partition, cpu->cpu_index,
++         &reg, 1, val);
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to get register %08x, hr=%08lx", reg, hr);
++    }
++}
++
++static void whpx_set_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)
++{
++    struct whpx_state *whpx = &whpx_global;
++    HRESULT hr;
++    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, cpu->cpu_index,
++         &reg, 1, &val);
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to set register %08x, hr=%08lx", reg, hr);
++    }
++}
++
++static void whpx_get_global_reg(WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE *val)
++{
++    struct whpx_state *whpx = &whpx_global;
++    HRESULT hr;
++
++    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(whpx->partition, WHV_ANY_VP,
++         &reg, 1, val);
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to get register %08x, hr=%08lx", reg, hr);
++    }
++}
++
++static void whpx_set_global_reg(WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)
++{
++    struct whpx_state *whpx = &whpx_global;
++    HRESULT hr;
++    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, WHV_ANY_VP,
++         &reg, 1, &val);
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to set register %08x, hr=%08lx", reg, hr);
++    }
++}
++
++static uint64_t whpx_get_gp_reg(CPUState *cpu, int rt)
++{
++    assert(rt <= 31);
++    if (rt == 31) {
++        return 0;
++    }
++    WHV_REGISTER_NAME reg = WHvArm64RegisterX0 + rt;
++    WHV_REGISTER_VALUE val;
++    whpx_get_reg(cpu, reg, &val);
++
++    return val.Reg64;
++}
++
++static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
++{
++    assert(rt < 31);
++    WHV_REGISTER_NAME reg = WHvArm64RegisterX0 + rt;
++    WHV_REGISTER_VALUE reg_val = {.Reg64 = val};
++
++    whpx_set_reg(cpu, reg, reg_val);
++}
++
++static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
++{
++    uint64_t syndrome = ctx->Syndrome;
++
++    bool isv = syndrome & ARM_EL_ISV;
++    bool iswrite = (syndrome >> 6) & 1;
++    bool sse = (syndrome >> 21) & 1;
++    uint32_t sas = (syndrome >> 22) & 3;
++    uint32_t len = 1 << sas;
++    uint32_t srt = (syndrome >> 16) & 0x1f;
++    uint32_t cm = (syndrome >> 8) & 0x1;
++    uint64_t val = 0;
++
++    assert(!cm);
++    assert(isv);
++
++    if (iswrite) {
++        val = whpx_get_gp_reg(cpu, srt);
++        address_space_write(&address_space_memory,
++                            ctx->Gpa,
++                            MEMTXATTRS_UNSPECIFIED, &val, len);
++    } else {
++        address_space_read(&address_space_memory,
++                           ctx->Gpa,
++                           MEMTXATTRS_UNSPECIFIED, &val, len);
++        if (sse) {
++            val = sextract64(val, 0, len * 8);
++        }
++        whpx_set_gp_reg(cpu, srt, val);
++    }
++
++    return 0;
++}
++
++static void whpx_psci_cpu_off(ARMCPU *arm_cpu)
++{
++    int32_t ret = arm_set_cpu_off(arm_cpu_mp_affinity(arm_cpu));
++    assert(ret == QEMU_ARM_POWERCTL_RET_SUCCESS);
++}
++
++int whpx_vcpu_run(CPUState *cpu)
++{
++    HRESULT hr;
++    struct whpx_state *whpx = &whpx_global;
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    AccelCPUState *vcpu = cpu->accel;
++    int ret;
++
++
++    g_assert(bql_locked());
++
++    if (whpx->running_cpus++ == 0) {
++        ret = whpx_first_vcpu_starting(cpu);
++        if (ret != 0) {
++            return ret;
++        }
++    }
++
++    bql_unlock();
++
++
++    cpu_exec_start(cpu);
++    do {
++        bool advance_pc = false;
++        if (cpu->vcpu_dirty) {
++            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++            cpu->vcpu_dirty = false;
++        }
++
++        if (qatomic_read(&cpu->exit_request)) {
++            whpx_vcpu_kick(cpu);
++        }
++
++        hr = whp_dispatch.WHvRunVirtualProcessor(
++            whpx->partition, cpu->cpu_index,
++            &vcpu->exit_ctx, sizeof(vcpu->exit_ctx));
++
++        if (FAILED(hr)) {
++            error_report("WHPX: Failed to exec a virtual processor,"
++                         " hr=%08lx", hr);
++            ret = -1;
++            break;
++        }
++
++        switch (vcpu->exit_ctx.ExitReason) {
++        case WHvRunVpExitReasonGpaIntercept:
++        case WHvRunVpExitReasonUnmappedGpa:
++            advance_pc = true;
++
++            if (vcpu->exit_ctx.MemoryAccess.Syndrome & BIT(8)) {
++                error_report("WHPX: cached access to unmapped memory"
++                "Pc = 0x%llx Gva = 0x%llx Gpa = 0x%llx",
++                vcpu->exit_ctx.MemoryAccess.Header.Pc,
++                vcpu->exit_ctx.MemoryAccess.Gpa,
++                vcpu->exit_ctx.MemoryAccess.Gva);
++                break;
++            }
++
++            ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
++            break;
++        case WHvRunVpExitReasonCanceled:
++            cpu->exception_index = EXCP_INTERRUPT;
++            ret = 1;
++            break;
++        case WHvRunVpExitReasonArm64Reset:
++            switch (vcpu->exit_ctx.Arm64Reset.ResetType) {
++            case WHvArm64ResetTypePowerOff:
++                qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++                break;
++            case WHvArm64ResetTypeReboot:
++                qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            bql_lock();
++            if (arm_cpu->power_state != PSCI_OFF) {
++                whpx_psci_cpu_off(arm_cpu);
++            }
++            bql_unlock();
++            break;
++        case WHvRunVpExitReasonNone:
++        case WHvRunVpExitReasonUnrecoverableException:
++        case WHvRunVpExitReasonInvalidVpRegisterValue:
++        case WHvRunVpExitReasonUnsupportedFeature:
++        default:
++            error_report("WHPX: Unexpected VP exit code 0x%08x",
++                         vcpu->exit_ctx.ExitReason);
++            whpx_get_registers(cpu);
++            bql_lock();
++            qemu_system_guest_panicked(cpu_get_crash_info(cpu));
++            bql_unlock();
++            break;
++        }
++        if (advance_pc) {
++            WHV_REGISTER_VALUE pc;
++
++            flush_cpu_state(cpu);
++            pc.Reg64 = vcpu->exit_ctx.MemoryAccess.Header.Pc + 4;
++            whpx_set_reg(cpu, WHvArm64RegisterPc, pc);
++        }
++    } while (!ret);
++
++    cpu_exec_end(cpu);
++
++    bql_lock();
++    current_cpu = cpu;
++
++    if (--whpx->running_cpus == 0) {
++        whpx_last_vcpu_stopping(cpu);
++    }
++
++    qatomic_set(&cpu->exit_request, false);
++
++    return ret < 0;
++}
++
++static void clean_whv_register_value(WHV_REGISTER_VALUE *val)
++{
++    memset(val, 0, sizeof(WHV_REGISTER_VALUE));
++}
++
++void whpx_get_registers(CPUState *cpu)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    WHV_REGISTER_VALUE val;
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(whpx_reg_match); i++) {
++        whpx_get_reg(cpu, whpx_reg_match[i].reg, &val);
++        *(uint64_t *)((char *)env + whpx_reg_match[i].offset) = val.Reg64;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
++        whpx_get_reg(cpu, whpx_reg_match[i].reg, &val);
++        memcpy((char *)env + whpx_fpreg_match[i].offset, &val, sizeof(val.Reg128));
++    }
++
++    whpx_get_reg(cpu, WHvArm64RegisterPc, &val);
++    env->pc = val.Reg64;
++
++    whpx_get_reg(cpu, WHvArm64RegisterFpcr, &val);
++    vfp_set_fpcr(env, val.Reg32);
++
++    whpx_get_reg(cpu, WHvArm64RegisterFpsr, &val);
++    vfp_set_fpsr(env, val.Reg32);
++
++    whpx_get_reg(cpu, WHvArm64RegisterPstate, &val);
++    pstate_write(env, val.Reg32);
++
++    for (i = 0; i < ARRAY_SIZE(whpx_sreg_match); i++) {
++        if (whpx_sreg_match[i].cp_idx == -1) {
++            continue;
++        }
++
++        if (whpx_sreg_match[i].global) {
++            /* WHP disallows us from accessing global regs as a vCPU */
++            whpx_get_global_reg(whpx_sreg_match[i].reg, &val);
++        } else {
++            whpx_get_reg(cpu, whpx_sreg_match[i].reg, &val);
++        }
++        arm_cpu->cpreg_values[whpx_sreg_match[i].cp_idx] = val.Reg64;
++    }
++
++    assert(write_list_to_cpustate(arm_cpu));
++    aarch64_restore_sp(env, arm_current_el(env));
++}
++
++void whpx_set_registers(CPUState *cpu, int level)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    WHV_REGISTER_VALUE val;
++    clean_whv_register_value(&val);
++    int i;
++
++    assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
++
++    for (i = 0; i < ARRAY_SIZE(whpx_reg_match); i++) {
++        val.Reg64 = *(uint64_t *)((char *)env + whpx_reg_match[i].offset);
++        whpx_set_reg(cpu, whpx_reg_match[i].reg, val);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
++        memcpy(&val.Reg128, (char *)env + whpx_fpreg_match[i].offset, sizeof(val.Reg128));
++        whpx_set_reg(cpu, whpx_reg_match[i].reg, val);
++    }
++
++    clean_whv_register_value(&val);
++    val.Reg64 = env->pc;
++    whpx_set_reg(cpu, WHvArm64RegisterPc, val);
++
++    clean_whv_register_value(&val);
++    val.Reg32 = vfp_get_fpcr(env);
++    whpx_set_reg(cpu, WHvArm64RegisterFpcr, val);
++    val.Reg32 = vfp_get_fpsr(env);
++    whpx_set_reg(cpu, WHvArm64RegisterFpsr, val);
++    val.Reg32 = pstate_read(env);
++    whpx_set_reg(cpu, WHvArm64RegisterPstate, val);
++
++    aarch64_save_sp(env, arm_current_el(env));
++
++    assert(write_cpustate_to_list(arm_cpu, false));
++
++    /* Currently set global regs every time. */
++    for (i = 0; i < ARRAY_SIZE(whpx_sreg_match); i++) {
++        if (whpx_sreg_match[i].cp_idx == -1) {
++            continue;
++        }
++
++        val.Reg64 = arm_cpu->cpreg_values[whpx_sreg_match[i].cp_idx];
++        if (whpx_sreg_match[i].global) {
++            /* WHP disallows us from accessing global regs as a vCPU */
++            whpx_set_global_reg(whpx_sreg_match[i].reg, val);
++        } else {
++            whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
++        }
++    }
++}
++
++static uint32_t max_vcpu_index;
++
++static void whpx_cpu_update_state(void *opaque, bool running, RunState state)
++{
++}
++
++int whpx_init_vcpu(CPUState *cpu)
++{
++    HRESULT hr;
++    struct whpx_state *whpx = &whpx_global;
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++
++    uint32_t sregs_match_len = ARRAY_SIZE(whpx_sreg_match);
++    uint32_t sregs_cnt = 0;
++    WHV_REGISTER_VALUE val;
++    int i;
++
++    hr = whp_dispatch.WHvCreateVirtualProcessor(
++        whpx->partition, cpu->cpu_index, 0);
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to create a virtual processor,"
++                     " hr=%08lx", hr);
++        return -EINVAL;
++    }
++
++    /* Assumption that CNTFRQ_EL0 is the same between the VMM and the partition. */
++    asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
++
++    cpu->vcpu_dirty = true;
++    cpu->accel = g_new0(AccelCPUState, 1);
++    max_vcpu_index = MAX(max_vcpu_index, cpu->cpu_index);
++    qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
++
++    env->aarch64 = true;
++
++    /* Allocate enough space for our sysreg sync */
++    arm_cpu->cpreg_indexes = g_renew(uint64_t, arm_cpu->cpreg_indexes,
++                                     sregs_match_len);
++    arm_cpu->cpreg_values = g_renew(uint64_t, arm_cpu->cpreg_values,
++                                    sregs_match_len);
++    arm_cpu->cpreg_vmstate_indexes = g_renew(uint64_t,
++                                             arm_cpu->cpreg_vmstate_indexes,
++                                             sregs_match_len);
++    arm_cpu->cpreg_vmstate_values = g_renew(uint64_t,
++                                            arm_cpu->cpreg_vmstate_values,
++                                            sregs_match_len);
++
++    memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
++
++    /* Populate cp list for all known sysregs */
++    for (i = 0; i < sregs_match_len; i++) {
++        const ARMCPRegInfo *ri;
++        uint32_t key = whpx_sreg_match[i].key;
++
++        ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
++        if (ri) {
++            assert(!(ri->type & ARM_CP_NO_RAW));
++            whpx_sreg_match[i].cp_idx = sregs_cnt;
++            arm_cpu->cpreg_indexes[sregs_cnt++] = cpreg_to_kvm_id(key);
++        } else {
++            whpx_sreg_match[i].cp_idx = -1;
++        }
++    }
++    arm_cpu->cpreg_array_len = sregs_cnt;
++    arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
++
++    assert(write_cpustate_to_list(arm_cpu, false));
++
++    /* Set CP_NO_RAW system registers on init */
++    val.Reg64 = arm_cpu->midr;
++    whpx_set_reg(cpu, WHvArm64RegisterMidrEl1,
++                              val);
++
++    clean_whv_register_value(&val);
++
++    val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
++    whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1, val);
++
++    return 0;
++}
++
++void whpx_cpu_instance_init(CPUState *cs)
++{
++}
++
++int whpx_accel_init(AccelState *as, MachineState *ms)
++{
++    struct whpx_state *whpx;
++    int ret;
++    HRESULT hr;
++    WHV_CAPABILITY whpx_cap;
++    UINT32 whpx_cap_size;
++    WHV_PARTITION_PROPERTY prop;
++    WHV_CAPABILITY_FEATURES features;
++
++    whpx = &whpx_global;
++    /* on arm64 Windows Hypervisor Platform, vGICv3 always used */
++    whpx_irqchip_in_kernel = true;
++
++    if (!init_whp_dispatch()) {
++        ret = -ENOSYS;
++        goto error;
++    }
++
++    whpx->mem_quota = ms->ram_size;
++
++    hr = whp_dispatch.WHvGetCapability(
++        WHvCapabilityCodeHypervisorPresent, &whpx_cap,
++        sizeof(whpx_cap), &whpx_cap_size);
++    if (FAILED(hr) || !whpx_cap.HypervisorPresent) {
++        error_report("WHPX: No accelerator found, hr=%08lx", hr);
++        ret = -ENOSPC;
++        goto error;
++    }
++
++    memset(&features, 0, sizeof(features));
++    hr = whp_dispatch.WHvGetCapability(
++        WHvCapabilityCodeFeatures, &features, sizeof(features), NULL);
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to query capabilities, hr=%08lx", hr);
++        ret = -EINVAL;
++        goto error;
++    }
++
++    if (!features.Arm64Support) {
++        error_report("WHPX: host OS exposing pre-release WHPX implementation. "
++            "Please update your operating system to at least build 26100.3915");
++        ret = -EINVAL;
++        goto error;
++    }
++
++    hr = whp_dispatch.WHvCreatePartition(&whpx->partition);
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to create partition, hr=%08lx", hr);
++        ret = -EINVAL;
++        goto error;
++    }
++
++    memset(&prop, 0, sizeof(prop));
++    prop.ProcessorCount = ms->smp.cpus;
++    hr = whp_dispatch.WHvSetPartitionProperty(
++        whpx->partition,
++        WHvPartitionPropertyCodeProcessorCount,
++        &prop,
++        sizeof(prop));
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to set partition processor count to %u,"
++                     " hr=%08lx", prop.ProcessorCount, hr);
++        ret = -EINVAL;
++        goto error;
++    }
++
++    if (!whpx->kernel_irqchip_allowed) {
++        error_report("WHPX: on Arm, only kernel-irqchip=on is currently supported");
++        ret = -EINVAL;
++        goto error;
++    }
++
++    memset(&prop, 0, sizeof(prop));
++
++    hr = whp_dispatch.WHvSetupPartition(whpx->partition);
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to setup partition, hr=%08lx", hr);
++        ret = -EINVAL;
++        goto error;
++    }
++
++    whpx_memory_init();
++
++    return 0;
++
++error:
++    if (whpx->partition != NULL) {
++        whp_dispatch.WHvDeletePartition(whpx->partition);
++        whpx->partition = NULL;
++    }
++
++    return ret;
++}
 -- 
 2.43.0
 
