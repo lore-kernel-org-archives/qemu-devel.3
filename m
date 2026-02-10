@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8A0EA3F2A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C405CEA3F2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpjlt-0001TE-3i; Tue, 10 Feb 2026 04:11:01 -0500
+	id 1vpjlt-0001TS-5c; Tue, 10 Feb 2026 04:11:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpjlh-0001B8-8z; Tue, 10 Feb 2026 04:10:49 -0500
+ id 1vpjlp-0001JG-8P; Tue, 10 Feb 2026 04:10:57 -0500
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpjle-0004kR-A9; Tue, 10 Feb 2026 04:10:49 -0500
+ id 1vpjlm-0004kR-Ep; Tue, 10 Feb 2026 04:10:55 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SIoeU9rm1QlVZU20FuF1WQYyLoAsJtDEE5N0M+qZeiCCnF1FRaXwlfwJSfrvScd52azgOIg0xwNRg8Fu8Qp9S4KaiYK59beuRCIEF1i9Wqzh/1+rUzuF39nXHzzrb4r5jyCaFLmSad5CHe+OXssOFQrlhJkCRiNfdBaFTSPK7XnnQ8FV4YelVHGXn2NPlujEFY65iJpyCdEhxoTI3LcHeX8QR2mJoy/s1xktAOv94XFGs4fuuwfuwzFNBjrcL8EX9TNJdzJqPWxmp9drL2Itw1BT89l0L8uHhHtw5hINsXQfk1d6D5DgJ8rAk05ItMOPhXEU4HoDo+bUWUMufgGslQ==
+ b=nKbLdjWbWxRMKD1c4MpR17iblJAS5rl74O+3NRZDVKW4rRsW9DVX54Qfe7wFAhuDlHN0ehXzdxNNkNJt7qMxh+wdiv5hoDzGTuuf0ETQ9SOWhYo1GPe+993pAt5bUovvO1z7MfRkT2HD9jXC63FVHLSpfCGd7hoCks1d5LOIVZkcNAiIwovCwdHG+BzoB4HX3KWnU/koDABXY7V16LM6mfibefFFfaAgilGAtwKyxQDyTFMOEpObgruHz9XB7+heK5+fMnGAQ/PODN5d/Z6siLEfdt5pP0rCUTB1vHonW0VoF1ohJ+CC1NXHlSfAcKR2UgDtGOs+JCMF5IpZPwZ0Fg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SoPzQTejXFTqYoC2Du+97jQIn228t1ReBuQeEWAjZR0=;
- b=JrU1+67iDg5x/9jvRBpCSqoD0kTXCKBs63BR02ROy8g87axAD+iZxcwKtd2tBsQq9kwyc/jgiDNNtt+F3UNEPGPDCcLZWDgF3VEuNq9RJwYFFhXR1junLP9s/xz6VRj7ulibCKWO/ZlVT5SYDAaQxVBgVWPGyQIoyWQ9LkatCaIobVmHGD0PR5/4Dt1eYvA2wuy+wq2Plv8fRaZ4nGEdQwLM/lDwzm9rULffVl6FJazbOg24PC9864rzT3FdbK3PXUlSLdv9BWKCq11h4biNAf39f9sby8P/NqP8mBSyz4r9Vzuzr+sXT3ta31/wI+U07Czjq/iKKha0vy9cFwD8Rw==
+ bh=X8T4CbWyBuPs18YbU2Li2vnvCWPChLJuktsjf2Wjv/s=;
+ b=dNbSs0pE6+U3KPMcin2HsBHbE+y6kpbFtlUXVAIZLuwYKMGPoK7PwggijzIOQRkpLSF1MqCnCRZV6+trazjP/9pE3tGwlZmtaN6dbF3Q6qKsjgfxcCTUiFCpbmpleRfi3VLdY6ZovBZGyn4LJmLOtBrtt2KrKIXFdiOrw2JP7yxJz0dd3bOihLRGzTHHh4273W822Bm0smfDwpDosXDsUdrsghg9Da5oz5Mtp8WCBKmWDN5OL92WHJn3KIrunIh5vkLNi/9HVwJ3ZpjAnxn6VmG+cgpb1gdlYAaJHumJp40kgMZrt7+DH2hBpvvHPhKeSqoPJm4aktQgxzdQ04PpgA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SoPzQTejXFTqYoC2Du+97jQIn228t1ReBuQeEWAjZR0=;
- b=GehnXZ8y3BgCkyZP1L1/XWFQPsvdLCevgkzgr7ZO5YfJDHk9+QCT1kfpm1BGRW45XvDyXlWYKB0yplY+YHDSWQpD9Y2YJxR19l9HJhSLO5NkFYYBZWpQ2dz3GXg3cJkScWoW7PGpL2sbltvVxEENG6Hct1YlY6OjuGA5cj67+OQstgtYXa/waHarhzsAyCxulqRB/PrMi4n2IlHm762XCpbv7otngWPrFAERrU393dhROuMp1j7OPdCkPFlSfhlXnrxoPa1DriFBDh1yNpURbaHbPcfdcwBT87U1kEoGM+/bj4+nVqRMovYh5COJ6HWlXKtQ6iH+2R9pW/ZbvvmqnQ==
+ bh=X8T4CbWyBuPs18YbU2Li2vnvCWPChLJuktsjf2Wjv/s=;
+ b=Qdg2CY7tHhGw4koLrDfRRjeNqtalmnuoOZxpBn/ncjx+qViu1UmlPwj8QOz1IMe96/bJURYBHHkyaoSay9rPiYtKOPvYys9f3UA03kIXiqw03vWsX1XVDodRSFfUuFsfzCmrX6TcZeunnP9Cdg5P17duUbtutroJeIufZ6ra0lPkyrgXUx2+/3UlvR+CxbC/1MIGxO8DolrMHQsvLRoLErW+DCr55kQAndsmI/XkDsieYxhLaiY5/ydJYkmKDJ5J3UqUQjrVCZhPqiIcnR2xv6kaWIVag5C1SIphRqQPQCK4WuRrKlGAVelZbuV7eO0QEMJTYqboY0trjmh5Kqo/3Q==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by KUZPR06MB8268.apcprd06.prod.outlook.com (2603:1096:d10:62::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.19; Tue, 10 Feb
- 2026 09:10:26 +0000
+ 2026 09:10:37 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.017; Tue, 10 Feb 2026
- 09:10:25 +0000
+ 09:10:36 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -55,12 +55,13 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>, Joe Komlodi <komlodi@google.com>
-Subject: [PATCH v5 04/21] hw/i3c: Split DesignWare I3C out of Aspeed I3C
-Thread-Topic: [PATCH v5 04/21] hw/i3c: Split DesignWare I3C out of Aspeed I3C
-Thread-Index: AQHcmm0XrZJrXW4x6UKBgjzAoO9OEQ==
-Date: Tue, 10 Feb 2026 09:10:25 +0000
-Message-ID: <20260210091018.1553489-5-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>, Joe Komlodi <komlodi@google.com>, Patrick Venture
+ <venture@google.com>, Hao Wu <wuhaotsh@google.com>
+Subject: [PATCH v5 12/21] hw/i3c/dw-i3c: Add IRQ MMIO behavior
+Thread-Topic: [PATCH v5 12/21] hw/i3c/dw-i3c: Add IRQ MMIO behavior
+Thread-Index: AQHcmm0eCuC0tZVS9E+dtfi3Dh3drA==
+Date: Tue, 10 Feb 2026 09:10:36 +0000
+Message-ID: <20260210091018.1553489-13-jamin_lin@aspeedtech.com>
 References: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,88 +72,88 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KUZPR06MB8268:EE_
-x-ms-office365-filtering-correlation-id: d4cb56db-a406-404a-d1a8-08de68843a61
+x-ms-office365-filtering-correlation-id: 58ad769b-fdfc-4896-124d-08de688440fc
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|366016|7416014|376014|1800799024|38070700021|921020; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?xPumY522OReKHvwZq4LrDY3971+G3VBJz/EM1KhpuNE1YzVijkCHUwRWB9?=
- =?iso-8859-1?Q?D95DqISHy1H45g8IyqVP+TSt+gmUfEV16U0RM5joeVUL4fT+OUPPVL5B7e?=
- =?iso-8859-1?Q?JGWD/Z5xW8l/ymgRqa7/+z9VAJezBEnyGJbKCVkt20h1SmbVX+4CemgIc6?=
- =?iso-8859-1?Q?GsQvXavnCvVqyfXoke/KPga5CQJfT82ZrrTICtEdmv16Gtg9JauinMOXQ9?=
- =?iso-8859-1?Q?0FHAQzmdcELseq+wuPVn+y6PwKcCF9aM4Xws3gBvPlKy7y0z44vdX3mG9y?=
- =?iso-8859-1?Q?2usT995xHWYM4aq4ihLqqbRlh4ctXDHRhmENk39Ptef7Ren1DhTO2esQm7?=
- =?iso-8859-1?Q?H/UrYTt5pm3ya3R4CtrqP8wqK54WUyUeAMdr3L4DdR1GGlElJvrOPjCLZs?=
- =?iso-8859-1?Q?/ik86GhJe++xWrXWvPxELkglHiRDeNHZgQThUS4cpSZwxPbNRLPKwQcL5J?=
- =?iso-8859-1?Q?ruplTiyMhT2nAjlR6h7RMXm3cJ5s4tzqYPPUInSk7CMU8FUtjwyiefeBKz?=
- =?iso-8859-1?Q?CCv50OPGyjFURx6KjsrxRBqyIj4rYEkid7wF3E+N1KPnWCIMzVdymeHeem?=
- =?iso-8859-1?Q?9h2mB+ODE6JYWc2vs4NatapWrPYAXrXpPvBIAaKdv/jIXPkhdL3AtbLxN9?=
- =?iso-8859-1?Q?llZoUrnIqmN6rhN6+hNSPEPZhPagRZ8SaSmVRAjr92wLAT/YrVG3bhW9HG?=
- =?iso-8859-1?Q?oIvnLL/8ZhQ472hP0dV/21NkwLhaizxDP6mnwMu7PXLBVvZ6mGmqnkZpTJ?=
- =?iso-8859-1?Q?QW0KyMB4rIDOtSHLIoO91rcv5N2RUKvVplyile6WEcn39VmAl/V3mvuK/H?=
- =?iso-8859-1?Q?yXnG7TR+FsYOQQ3xRcPfxtE3Gnopia/UHyOrCx8FyUZ7Dvz5NiQM8bIczR?=
- =?iso-8859-1?Q?PVOeelcT2JBncBHyrtISGmaJWsCLdivJ68S98hFawUV1N+zThIfzrPWnel?=
- =?iso-8859-1?Q?GdINdPDco4PAAdYGhDlgYi6eXZJTbaQA7tt06NV1A0MiD0TWQ/g92HCl/x?=
- =?iso-8859-1?Q?NeDy62bnu1LemKUyGe/XoPLHyGsTogQxG3ONmppP9cY2XvhqzIyAZ/W4r5?=
- =?iso-8859-1?Q?Z5YrkhOQwuAy9Uik6rl1+wsBbkibnhcNHsJlzbQImcf51kYMl+q0X56ibh?=
- =?iso-8859-1?Q?6rhGoDHftzkOhS9kdywKwvht0Gk1R/eawW4SK9h44pEzCenmgOBu+1EK4r?=
- =?iso-8859-1?Q?sBU6+Mu34zrVEofI14KW9ToaENHmJm1c9nBAph3X9XK++uuVlbPjBSJ0T4?=
- =?iso-8859-1?Q?0TxFZjYFp+yWfVp8ao4muRVmwcUqQf02ccSgf8CjSAYWfzePFec0J/z2hS?=
- =?iso-8859-1?Q?K5SxLfGBJKtqVOBOAu5l430lvVatzFDlMr3ursdyBSZFvzXiAAzP7wErRH?=
- =?iso-8859-1?Q?WraPUeU0lADPzYfvHvMQjGWovTyXgmZ/OceNoyI2G384jjPjjRxLxdBVN+?=
- =?iso-8859-1?Q?E67/ct5VUgPcTY5U08n2KFk8KBZpm4a9aRgml4dSk4Yj14ajb0DSXpgWQb?=
- =?iso-8859-1?Q?ETjipacERn9yjkP/68KVZjxHU0oHkk78t15a+3Dp/QnEDD25x+xKeLGHOt?=
- =?iso-8859-1?Q?W5wFL7jVa1aSFBJEw429Rkb9MGy2JHF5ERKwEmH/jYECE0Gh75BhyKJ0L9?=
- =?iso-8859-1?Q?XiO8L5WaaDcL/jktbJ+NgqbfDTiuTp3zcSuZZDJDFvdEJXYQ3PS9xxxbJe?=
- =?iso-8859-1?Q?MGb0vncneFicQzCU/BI=3D?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?8C5jwcX1ycgiSb/8Yo/7IVNbafoRvxLiyaXt/xSZZtPoSmipIPWHDe7FDU?=
+ =?iso-8859-1?Q?05OVpYsK//o29FAy2naBq71p9IQbnNvrsj8xKBtqVbkm+Mfnqm6b7IytBt?=
+ =?iso-8859-1?Q?qu4R2iTmfoFYaQYPVYS9AHmzFu/kRhOIMJfDeZc6uHc0DqWlc1y4gPpJiU?=
+ =?iso-8859-1?Q?apsKSdGrgEUYNVx94hzcG4t0HUwCt/cQ//rm4p54bcRsOXpiJbtdSFf9H2?=
+ =?iso-8859-1?Q?hESO5Va96x+6WcYm9SEivgy8QhmpQOnp8HBTna89A3UB8ZZYiw53oIwq9i?=
+ =?iso-8859-1?Q?af542AWwrCoF2lgG3Yg6ArWMMxNZmtnJXR2p5ovpOQ4RWetAD2RHudEG7c?=
+ =?iso-8859-1?Q?wUTk7QqW6rRDThEy1hw7kn9pCbjm9theL5+L9V0aylVIo3f534jH0j9Lg0?=
+ =?iso-8859-1?Q?efolWQpZhjoRHtpRvRNFTX9hkSxn2+Ee3WxZzqMYdq/cvRA6q0wgnIrJ/X?=
+ =?iso-8859-1?Q?fP1Vw3XRxncIARWFH169gtC9+oON0oL6RoSKEyxQD75tXArjc1sRQPEg7p?=
+ =?iso-8859-1?Q?PIYb+FvprqlvpSAPKjFDR/XkHRE2DBBDRXByzRoVLzexE0iCJ45R17/MmI?=
+ =?iso-8859-1?Q?x91YOFbEYicQorm7sqDyU81roNrflawib/AlojGu+aB9pHtUtRJuHiZLOJ?=
+ =?iso-8859-1?Q?GNd38Zg3AYnJHASb/iRcWwQGOfM/IBU4ozezyAOVKSnqxdN03LhFNBq466?=
+ =?iso-8859-1?Q?BfNnZfHgdi/DsIxzNWDACNy/SP1TDVkIYeNhpUdQtwxHHYDaigVZcnu4mG?=
+ =?iso-8859-1?Q?56W05JIbhvTNlPoBlyQ/mvBd8YMkiHC+USjROo69t+m+UaFcrFSexFTvu8?=
+ =?iso-8859-1?Q?csMaiPQ6glyKKzB5Itqk/ikWeko0Yh6+DsGTsi0D/qEMO/SQ/ODhatepNb?=
+ =?iso-8859-1?Q?knBy6495BTLgEvXGHG6zadvikk7tl5QjOxhbqGf31ZnkrnfQawICG9EErs?=
+ =?iso-8859-1?Q?esq+8BP2y6eFcyRC8Mj8aEWYzF2bM55J9IPlrqHhg1K4mYUuNtOOxOLyCD?=
+ =?iso-8859-1?Q?dpyQmybJ4uFZcFLuDVH1lZaMlTyvpb1d9nfXKLipOAglhi2l1Orh03CnPR?=
+ =?iso-8859-1?Q?m/VWm+anGR/fvTDzz2VK0hJag908IVLxjyv6mvphPK7jHwzJIb0FbI9uEL?=
+ =?iso-8859-1?Q?/JBWZtg88e/xM3DbDMZ5bl8jW5YVWwnMyKhyZ2pfHf+uWcRPt0kqRC/dou?=
+ =?iso-8859-1?Q?Lu+lGgh7U2ReQWNGJpmJXYrHWK9b4OP+IO87dv4nnMpqLooF3csoYyE9cX?=
+ =?iso-8859-1?Q?GnQM4cLXK+K77OeJUmSJcxNQIftztNhGip4JJkiZqJu5hOnRM2vL9MdhkI?=
+ =?iso-8859-1?Q?2bhn0t9CG4hT9fp58lazGhLboG/eSYEXIVOIDYRC6jPyXE3HWpdw7L09Z5?=
+ =?iso-8859-1?Q?l+AgmoD0fO/WqqZlFQNJt/qw4q0KkoKgCzpjzeY6r4YeIqnp7e1aF/Vgn6?=
+ =?iso-8859-1?Q?sUsFEQySLvEtju7WgYjMyCBx6TiWH5jQd6p4I1FXg8EF9e2G4TRrk/tEzB?=
+ =?iso-8859-1?Q?Lk1wdsTI50GKTcyIpPYHPMxbDuQu9ohgsbMNjQvvi2XRu2OTwqBE+/vIAO?=
+ =?iso-8859-1?Q?TD8r/iHF4BJY1ov33LDVIgj1eISJpImgOletO5tejKBxLjNeXYzo70xGOm?=
+ =?iso-8859-1?Q?zd61jAMUAJgE4v+1x71cmFDw8NAgVE5t4EqeqdOWJoKgJaOURC0cg8COON?=
+ =?iso-8859-1?Q?Lc3CIny7s0JSUIr+R/pgfXQtrbFhqkE32TTlgfLd?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(7416014)(376014)(1800799024)(38070700021)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?oLukuEtxkokd7vp/6QnfQOf03lyH4htoKXafAwUTfdR6uPNb8oq1b5gjTx?=
- =?iso-8859-1?Q?t44fa0PuaDZAmrrHOD8/JLiUwrtdZGmY9OfnnSUyLYS+cS0M2AbsHoh6e/?=
- =?iso-8859-1?Q?4ah+3MFczUt3KSYM67qwQ1s1ea4A4MhQ9G10BLBE5HyQR0sQDhuaciPpmL?=
- =?iso-8859-1?Q?71Q5uhZWwboPQSbvKJMODhqHKoxHYdEM7ecDv6C99y305huk7Z2jls21Jc?=
- =?iso-8859-1?Q?v/aPeaS1//P4If/rud9PWRTKN5EtzqFcBV54fBPQU1JHA/HxlJod8kOPI2?=
- =?iso-8859-1?Q?9KWNwnHAm8FK/DHIJgyMWeWjVWQpDrPOTu398Oi3++X/w40KFJHshK3OXB?=
- =?iso-8859-1?Q?7fE6hqAqJLJNg9OfPNpSCCdwFPYwYMMC+7HPF8gKQPQc75+uwIRsIxxjyh?=
- =?iso-8859-1?Q?+HFkGS3QRYLJjD4oehktIIQvkXCpaL5B2xmegUInA82Ix4Kj483lCJSE1s?=
- =?iso-8859-1?Q?heKY2zksKaZbsKRLxPMHCW8MaqPCM5sQ+J3cokx5BcK12FqXgu786nsJOn?=
- =?iso-8859-1?Q?GnjQFUFSGZGqp9TQG7rjl1dXeh1xKHeYd6YkQP+8upvdBFgwCpEW+cwwNs?=
- =?iso-8859-1?Q?/no9SAPMKNkhU6at6irDmXGjlOGPSVcAl2+jl4lipQN3aGBT58pdtZonB4?=
- =?iso-8859-1?Q?rrMbF49y4xUVWlSbRrJhWhOvjp8fwongIJ6hilvvXNp36sxxdoa4qICQl6?=
- =?iso-8859-1?Q?uMUuq9/IRLkZl2WAK7Fp6ocLmUfx0phLRXpnbVqGPKOLxGQrCXfq2bFII8?=
- =?iso-8859-1?Q?UIMndr1C+vV9vC8Z7NzSWWL5xw9OlHsamprsZWAx8b8zfoervURm9FVu7J?=
- =?iso-8859-1?Q?6n87h4bRaxy3eDM8esa0CPAHgACIMkFmNSP/8p/OwkNAPv1w6bKG55P71F?=
- =?iso-8859-1?Q?piRygpEiWvZDztaLCUsn7fOmKfkh7wD71Myw1KQ4G1m0S0SxQPxo3XuDNQ?=
- =?iso-8859-1?Q?V0LAo9zZvHyBeY+rW/AtqKLqj+djQtOyieUani8gbjv/42Qm0lw8vjkX1f?=
- =?iso-8859-1?Q?4wlf//djdacGFOO87ecrZGi/2aLibSdDlqYw+yl4++OPcpVix2CKob7PHN?=
- =?iso-8859-1?Q?+9zebEq1rSVVXC4pmlqKIaFsggj9vbgL7kuP6WI/emHmy+yurHxo/SpZ4z?=
- =?iso-8859-1?Q?KJejKi9G0neqQWY076rOZP9VRKteU2k2N2WXyhn+nWBzy73BEzkNiK6xNG?=
- =?iso-8859-1?Q?OWciCH37kwfw7gp1xMAqn71h55ElsbDF4vfC07s28IfDdBWb9kQdA1A45O?=
- =?iso-8859-1?Q?1Lc3qDoCQlQDxSuRFLRJrSfEuIDfNw30fwYPFo+6QoQdr5OcYoTmfbdi/Q?=
- =?iso-8859-1?Q?IepdlQ0E/8i3y34IsyvdxmvlzmadvFNylkujvkBoit3Y731pMsDMiWXeXH?=
- =?iso-8859-1?Q?S4KHRQuoqMbUw0l7dSEukrdXQp9Dpu1CJSR+cXoG5GIAxFiQUQ7wAPsazX?=
- =?iso-8859-1?Q?k0VASA+1eIl0oQjUMw8679BNYUHaY2k+bjHI7OXAXL9yMmIKCPRH76RmiM?=
- =?iso-8859-1?Q?Wk2AyvIANmiHSg95873SzYMJDsTonTL2Qd4ZanyTavvpoum/jrT1UTV8W7?=
- =?iso-8859-1?Q?GG/doro2MMZFXvQuset2EnIGHhVpkOMQNG9BUROS54NnTCm3m1SWjQxT0S?=
- =?iso-8859-1?Q?12IE0hvJBMKmQzPQha1tpwA01V2/5g1kw5RaLALEfwNiaHVu1YT4M+rQBV?=
- =?iso-8859-1?Q?fWFJ0lGIlWcPzaCjF60LEd3lkZFGen9wzDquP+tnSKDM/OJ/9BZR0r2m3o?=
- =?iso-8859-1?Q?hL8qbJn5516o1K5NCzOmmhHqTcC6P4Dw9znTKwKyjzPO/4ajD+jPWoIt2J?=
- =?iso-8859-1?Q?iX7X9tCvPw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?qsxW7cYOm7FHc5YmgjRxU0aqMUZZtKX2DlDtcpctg+t6iIOe0uSiWbG/WJ?=
+ =?iso-8859-1?Q?g6tWzltZ//sV+TSaDCa5BcQ7rHKd5ihvRI7BKi4YGmU3YLfk2pk7+jdb/R?=
+ =?iso-8859-1?Q?tP2mx5BkMPc1Hb1RKm0qYa3Lu5vbNEvPcLf0qr/0iv4FaXI7j9juzpJQYF?=
+ =?iso-8859-1?Q?k+q3UB4ZhBIgNPom4OkaRRoD8Y1sCUqrcUrGwyrGn1vZ3pMoTRTubAkBjk?=
+ =?iso-8859-1?Q?rxPNlPRNoVKsRl+ACW0u9V++5k3hOxBK5NlqTHJDLKobm9vKNIVHhcxfi3?=
+ =?iso-8859-1?Q?Y/DwS9bLp5vR4KFxCthFQEk32XWJa0nhQuKeJwdgMJq/ffbUMn6mK6YT2Z?=
+ =?iso-8859-1?Q?0UlVa8dBzs+486HBWpRPVUbAuCyfkLT9VQYo5lQbX85oZWFDJFunS1lBOL?=
+ =?iso-8859-1?Q?S2/1AAivI5XcQKywlRnK554w+mkgKnZHy7diO2eDhnm1Mu1k0aahmfbi8W?=
+ =?iso-8859-1?Q?uMRyjApRGSJXjKJyMAJ80qsYnnaIkjp3KIEIAY6R4+cu1mNCOxT658uySu?=
+ =?iso-8859-1?Q?qjy70hJe7XK+/4sb2yTMBsU1FrmF83pWrIXM6rFXwYlMJW6BImEV2NDeAq?=
+ =?iso-8859-1?Q?47iFtF51vCbe8uCNtS3Lo5Pm5vxl+Iq/v3Kq5Pw13NjFe4Tguszww5aYQq?=
+ =?iso-8859-1?Q?wabAJSqLOAqN9FOeprBs4+vWQoe0z1ClsGoNEJDLY4UA1Zjz0ld29eHJ9K?=
+ =?iso-8859-1?Q?rdqBvsOawGU11dUlM6q80xXah/e9Cz1nlgirZEMsljV6UodxxQ8S1GYsJd?=
+ =?iso-8859-1?Q?VauXhGk3Yz3AMrcluTyEQ37AkR4h+ZtssXOUQfBM3zuAluHu46mcxiiRbg?=
+ =?iso-8859-1?Q?6XTlbyUxRarCSiOZu4/8ORu2H/jv6m/BRQe2sFPBCL4qGOjMy/ZJD301Rz?=
+ =?iso-8859-1?Q?nWrc0XpVcbPGdK2Wsr4fjywf9gWX8f+TtI+6ICvOD951B7xA8WwBCno3xu?=
+ =?iso-8859-1?Q?P2lkzKYm565Yx/SOwhG3YAymZoAEZNpORa8os5hLbkvMtiFkrH2YQhQqRX?=
+ =?iso-8859-1?Q?lsU9jcjAUTzCwBTrcInmkPs0FRtC5GvR90jmTyxPfBWseLEopX1KpxNiqJ?=
+ =?iso-8859-1?Q?o16oCFphIJcKnunNs+ZoHSqvcH2dOHlKkY0/8pboicvJGl3qxTJ2wWQhwU?=
+ =?iso-8859-1?Q?rNCU2SseG3l+nVvi5jQJrsKdV5HEBaaOOVtbgjTHWIXWDV1/+eQJIwvuna?=
+ =?iso-8859-1?Q?KKxP8ATPMUET+vQkNyPrpXFeRrdVw56rxjAipQZqdl8L8SFXHlSiMjorz5?=
+ =?iso-8859-1?Q?wSYBNpJkQOMGZOrlyzwhudMIeWGrTNM1StdwLXdUNV6Qzq8emiEGOMiB+1?=
+ =?iso-8859-1?Q?5gP6H0tZSJQPGdxJuCgiyZtTPg7G3RUjudv6bjTiazrTB1xUuc3iSGKRiL?=
+ =?iso-8859-1?Q?EuJDNgymIHvoeDpE/t14VAN8jZjE6j75Zyjx9qmQaUspuUtXEnTYnalnTO?=
+ =?iso-8859-1?Q?9Lrxm091xkxkvO/2/5rSKetx96VjGDO/sOF3arQ0njTX4cQVCjnfmERwAg?=
+ =?iso-8859-1?Q?tVa5dp7eu9vjpWRRAQZdx1Amm9CpkxzYml5Be5G9g9ml5SVIDppIxpi7dj?=
+ =?iso-8859-1?Q?RekpPU5mqjgJoXz6Ecoc9LNgTDLYEcFlsMrFtL9sbB31v/qUoS6cawVJAq?=
+ =?iso-8859-1?Q?JsukIfdxaoRSswoZSqyTUF77PzD/Ba8+Xvu39JQfJQgoaKq8yUDvCVsuTM?=
+ =?iso-8859-1?Q?Syq+jS9rzlN/6fBdNL09hzcDWQsPOctza4Q28/PST3lCMB12caeDv7ZG4F?=
+ =?iso-8859-1?Q?L+vrS+IlnkN9HYTKmtXcmi+UMU0DX5TNCBUrzl0mzxYYLmZFyeA7V5gkJW?=
+ =?iso-8859-1?Q?A6z5HfGgCg=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4cb56db-a406-404a-d1a8-08de68843a61
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 09:10:25.7435 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58ad769b-fdfc-4896-124d-08de688440fc
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 09:10:36.8401 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: THcIAyNfAqNCdeFj3+/RRWBIrq/h6we3ew8tPpVbwgXOHQu30rr0mv8jgPSVRqlMCFp32Rqi/yTgYe94kNtaFEujllIQ5z+OnIWzdYn8cis=
+X-MS-Exchange-CrossTenant-userprincipalname: Tyj/rlofUahwDi4Aq8ogQjDuNEN3w+rkuSaoFe2Vk7X8amSsNvgoPQbrzPxQ6M6kmiFe0lVGrdw1cmukPaLYM4tnhXzqpYx9vpaBYb+QCZI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB8268
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -178,613 +179,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed I3C IP block is technically an Aspeed IP block that manages=0A=
-6 DW I3C controllers.=0A=
-=0A=
-To help reflect this better and to make it easier for other SoCs to use=0A=
-the DW I3C model, we'll split out the DW portion from the Aspeed=0A=
-portion.=0A=
-=0A=
 Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
+Reviewed-by: Patrick Venture <venture@google.com>=0A=
+Reviewed-by: Hao Wu <wuhaotsh@google.com>=0A=
 Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/i3c/aspeed_i3c.h |  17 +--=0A=
- include/hw/i3c/dw-i3c.h     |  33 ++++++=0A=
- hw/i3c/aspeed_i3c.c         | 181 +-------------------------------=0A=
- hw/i3c/dw-i3c.c             | 202 ++++++++++++++++++++++++++++++++++++=0A=
- hw/arm/Kconfig              |   1 +=0A=
- hw/i3c/Kconfig              |   3 +=0A=
- hw/i3c/meson.build          |   1 +=0A=
- hw/i3c/trace-events         |   6 +-=0A=
- 8 files changed, 250 insertions(+), 194 deletions(-)=0A=
- create mode 100644 include/hw/i3c/dw-i3c.h=0A=
- create mode 100644 hw/i3c/dw-i3c.c=0A=
+ hw/i3c/dw-i3c.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++++=0A=
+ 1 file changed, 56 insertions(+)=0A=
 =0A=
-diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h=0A=
-index bd0ffc84ea..ade5c42d39 100644=0A=
---- a/include/hw/i3c/aspeed_i3c.h=0A=
-+++ b/include/hw/i3c/aspeed_i3c.h=0A=
-@@ -10,27 +10,15 @@=0A=
- #ifndef ASPEED_I3C_H=0A=
- #define ASPEED_I3C_H=0A=
- =0A=
-+#include "hw/i3c/dw-i3c.h"=0A=
- #include "hw/core/sysbus.h"=0A=
- =0A=
- #define TYPE_ASPEED_I3C "aspeed.i3c"=0A=
--#define TYPE_ASPEED_I3C_DEVICE "aspeed.i3c.device"=0A=
- OBJECT_DECLARE_TYPE(AspeedI3CState, AspeedI3CClass, ASPEED_I3C)=0A=
- =0A=
- #define ASPEED_I3C_NR_REGS (0x70 >> 2)=0A=
--#define ASPEED_I3C_DEVICE_NR_REGS (0x300 >> 2)=0A=
- #define ASPEED_I3C_NR_DEVICES 6=0A=
- =0A=
--OBJECT_DECLARE_SIMPLE_TYPE(AspeedI3CDevice, ASPEED_I3C_DEVICE)=0A=
--struct AspeedI3CDevice {=0A=
--    SysBusDevice parent_obj;=0A=
--=0A=
--    MemoryRegion mr;=0A=
--    qemu_irq irq;=0A=
--=0A=
--    uint8_t id;=0A=
--    uint32_t regs[ASPEED_I3C_DEVICE_NR_REGS];=0A=
--};=0A=
--=0A=
- struct AspeedI3CState {=0A=
-     SysBusDevice parent_obj;=0A=
- =0A=
-@@ -39,6 +27,7 @@ struct AspeedI3CState {=0A=
-     qemu_irq irq;=0A=
- =0A=
-     uint32_t regs[ASPEED_I3C_NR_REGS];=0A=
--    AspeedI3CDevice devices[ASPEED_I3C_NR_DEVICES];=0A=
-+    DWI3C devices[ASPEED_I3C_NR_DEVICES];=0A=
-+    uint8_t id;=0A=
- };=0A=
- #endif /* ASPEED_I3C_H */=0A=
-diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h=0A=
-new file mode 100644=0A=
-index 0000000000..7143e8ca7a=0A=
---- /dev/null=0A=
-+++ b/include/hw/i3c/dw-i3c.h=0A=
-@@ -0,0 +1,33 @@=0A=
-+/*=0A=
-+ * DesignWare I3C Controller=0A=
-+ *=0A=
-+ * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC.=0A=
-+ *=0A=
-+ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
-+ */=0A=
-+=0A=
-+#ifndef DW_I3C_H=0A=
-+#define DW_I3C_H=0A=
-+=0A=
-+#include "hw/core/sysbus.h"=0A=
-+=0A=
-+#define TYPE_DW_I3C "dw.i3c"=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(DWI3C, DW_I3C)=0A=
-+=0A=
-+#define DW_I3C_NR_REGS (0x300 >> 2)=0A=
-+=0A=
-+struct DWI3C {=0A=
-+    SysBusDevice parent_obj;=0A=
-+=0A=
-+    MemoryRegion mr;=0A=
-+    qemu_irq irq;=0A=
-+=0A=
-+    uint8_t id;=0A=
-+    uint32_t regs[DW_I3C_NR_REGS];=0A=
-+};=0A=
-+=0A=
-+/* Extern for other controllers that use DesignWare I3C. */=0A=
-+extern const VMStateDescription vmstate_dw_i3c;=0A=
-+=0A=
-+#endif /* DW_I3C_H */=0A=
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c=0A=
-index e7cdfbfdbd..647074d181 100644=0A=
---- a/hw/i3c/aspeed_i3c.c=0A=
-+++ b/hw/i3c/aspeed_i3c.c=0A=
-@@ -2,6 +2,7 @@=0A=
-  * ASPEED I3C Controller=0A=
-  *=0A=
-  * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC.=0A=
-  *=0A=
-  * This code is licensed under the GPL version 2 or later.  See=0A=
-  * the COPYING file in the top-level directory.=0A=
-@@ -43,162 +44,6 @@ REG32(I3C6_REG1, 0x64)=0A=
-     FIELD(I3C6_REG1, I2C_MODE,  0,  1)=0A=
-     FIELD(I3C6_REG1, SA_EN,     15, 1)=0A=
- =0A=
--/* I3C Device Registers */=0A=
--REG32(DEVICE_CTRL,                  0x00)=0A=
--REG32(DEVICE_ADDR,                  0x04)=0A=
--REG32(HW_CAPABILITY,                0x08)=0A=
--REG32(COMMAND_QUEUE_PORT,           0x0c)=0A=
--REG32(RESPONSE_QUEUE_PORT,          0x10)=0A=
--REG32(RX_TX_DATA_PORT,              0x14)=0A=
--REG32(IBI_QUEUE_STATUS,             0x18)=0A=
--REG32(IBI_QUEUE_DATA,               0x18)=0A=
--REG32(QUEUE_THLD_CTRL,              0x1c)=0A=
--REG32(DATA_BUFFER_THLD_CTRL,        0x20)=0A=
--REG32(IBI_QUEUE_CTRL,               0x24)=0A=
--REG32(IBI_MR_REQ_REJECT,            0x2c)=0A=
--REG32(IBI_SIR_REQ_REJECT,           0x30)=0A=
--REG32(RESET_CTRL,                   0x34)=0A=
--REG32(SLV_EVENT_CTRL,               0x38)=0A=
--REG32(INTR_STATUS,                  0x3c)=0A=
--REG32(INTR_STATUS_EN,               0x40)=0A=
--REG32(INTR_SIGNAL_EN,               0x44)=0A=
--REG32(INTR_FORCE,                   0x48)=0A=
--REG32(QUEUE_STATUS_LEVEL,           0x4c)=0A=
--REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)=0A=
--REG32(PRESENT_STATE,                0x54)=0A=
--REG32(CCC_DEVICE_STATUS,            0x58)=0A=
--REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)=0A=
--    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)=0A=
--    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)=0A=
--REG32(DEV_CHAR_TABLE_POINTER,       0x60)=0A=
--REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)=0A=
--REG32(SLV_MIPI_PID_VALUE,           0x70)=0A=
--REG32(SLV_PID_VALUE,                0x74)=0A=
--REG32(SLV_CHAR_CTRL,                0x78)=0A=
--REG32(SLV_MAX_LEN,                  0x7c)=0A=
--REG32(MAX_READ_TURNAROUND,          0x80)=0A=
--REG32(MAX_DATA_SPEED,               0x84)=0A=
--REG32(SLV_DEBUG_STATUS,             0x88)=0A=
--REG32(SLV_INTR_REQ,                 0x8c)=0A=
--REG32(DEVICE_CTRL_EXTENDED,         0xb0)=0A=
--REG32(SCL_I3C_OD_TIMING,            0xb4)=0A=
--REG32(SCL_I3C_PP_TIMING,            0xb8)=0A=
--REG32(SCL_I2C_FM_TIMING,            0xbc)=0A=
--REG32(SCL_I2C_FMP_TIMING,           0xc0)=0A=
--REG32(SCL_EXT_LCNT_TIMING,          0xc8)=0A=
--REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)=0A=
--REG32(BUS_FREE_TIMING,              0xd4)=0A=
--REG32(BUS_IDLE_TIMING,              0xd8)=0A=
--REG32(I3C_VER_ID,                   0xe0)=0A=
--REG32(I3C_VER_TYPE,                 0xe4)=0A=
--REG32(EXTENDED_CAPABILITY,          0xe8)=0A=
--REG32(SLAVE_CONFIG,                 0xec)=0A=
--=0A=
--static const uint32_t ast2600_i3c_device_resets[ASPEED_I3C_DEVICE_NR_REGS]=
- =3D {=0A=
--    [R_HW_CAPABILITY]               =3D 0x000e00bf,=0A=
--    [R_QUEUE_THLD_CTRL]             =3D 0x01000101,=0A=
--    [R_I3C_VER_ID]                  =3D 0x3130302a,=0A=
--    [R_I3C_VER_TYPE]                =3D 0x6c633033,=0A=
--    [R_DEVICE_ADDR_TABLE_POINTER]   =3D 0x00080280,=0A=
--    [R_DEV_CHAR_TABLE_POINTER]      =3D 0x00020200,=0A=
--    [A_VENDOR_SPECIFIC_REG_POINTER] =3D 0x000000b0,=0A=
--    [R_SLV_MAX_LEN]                 =3D 0x00ff00ff,=0A=
--};=0A=
--=0A=
--static uint64_t aspeed_i3c_device_read(void *opaque, hwaddr offset,=0A=
--                                       unsigned size)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(opaque);=0A=
--    uint32_t addr =3D offset >> 2;=0A=
--    uint64_t value;=0A=
--=0A=
--    switch (addr) {=0A=
--    case R_COMMAND_QUEUE_PORT:=0A=
--        value =3D 0;=0A=
--        break;=0A=
--    default:=0A=
--        value =3D s->regs[addr];=0A=
--        break;=0A=
--    }=0A=
--=0A=
--    trace_aspeed_i3c_device_read(s->id, offset, value);=0A=
--=0A=
--    return value;=0A=
--}=0A=
--=0A=
--static void aspeed_i3c_device_write(void *opaque, hwaddr offset,=0A=
--                                    uint64_t value, unsigned size)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(opaque);=0A=
--    uint32_t addr =3D offset >> 2;=0A=
--=0A=
--    trace_aspeed_i3c_device_write(s->id, offset, value);=0A=
--=0A=
--    switch (addr) {=0A=
--    case R_HW_CAPABILITY:=0A=
--    case R_RESPONSE_QUEUE_PORT:=0A=
--    case R_IBI_QUEUE_DATA:=0A=
--    case R_QUEUE_STATUS_LEVEL:=0A=
--    case R_PRESENT_STATE:=0A=
--    case R_CCC_DEVICE_STATUS:=0A=
--    case R_DEVICE_ADDR_TABLE_POINTER:=0A=
--    case R_VENDOR_SPECIFIC_REG_POINTER:=0A=
--    case R_SLV_CHAR_CTRL:=0A=
--    case R_SLV_MAX_LEN:=0A=
--    case R_MAX_READ_TURNAROUND:=0A=
--    case R_I3C_VER_ID:=0A=
--    case R_I3C_VER_TYPE:=0A=
--    case R_EXTENDED_CAPABILITY:=0A=
--        qemu_log_mask(LOG_GUEST_ERROR,=0A=
--                      "%s: write to readonly register[0x%02" HWADDR_PRIx=
-=0A=
--                      "] =3D 0x%08" PRIx64 "\n",=0A=
--                      __func__, offset, value);=0A=
--        break;=0A=
--    case R_RX_TX_DATA_PORT:=0A=
--        break;=0A=
--    case R_RESET_CTRL:=0A=
--        break;=0A=
--    default:=0A=
--        s->regs[addr] =3D value;=0A=
--        break;=0A=
--    }=0A=
--}=0A=
--=0A=
--static const VMStateDescription aspeed_i3c_device_vmstate =3D {=0A=
--    .name =3D TYPE_ASPEED_I3C,=0A=
--    .version_id =3D 1,=0A=
--    .minimum_version_id =3D 1,=0A=
--    .fields =3D (const VMStateField[]){=0A=
--        VMSTATE_UINT32_ARRAY(regs, AspeedI3CDevice, ASPEED_I3C_DEVICE_NR_R=
-EGS),=0A=
--        VMSTATE_END_OF_LIST(),=0A=
--    }=0A=
--};=0A=
--=0A=
--static const MemoryRegionOps aspeed_i3c_device_ops =3D {=0A=
--    .read =3D aspeed_i3c_device_read,=0A=
--    .write =3D aspeed_i3c_device_write,=0A=
--    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
--};=0A=
--=0A=
--static void aspeed_i3c_device_reset(DeviceState *dev)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(dev);=0A=
--=0A=
--    memcpy(s->regs, ast2600_i3c_device_resets, sizeof(s->regs));=0A=
--}=0A=
--=0A=
--static void aspeed_i3c_device_realize(DeviceState *dev, Error **errp)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(dev);=0A=
--    g_autofree char *name =3D g_strdup_printf(TYPE_ASPEED_I3C_DEVICE ".%d"=
-,=0A=
--                                            s->id);=0A=
--=0A=
--    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);=0A=
--=0A=
--    memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i3c_device_ops,=0A=
--                          s, name, ASPEED_I3C_DEVICE_NR_REGS << 2);=0A=
--}=0A=
--=0A=
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int si=
-ze)=0A=
- {=0A=
-     AspeedI3CState *s =3D ASPEED_I3C(opaque);=0A=
-@@ -275,7 +120,7 @@ static void aspeed_i3c_instance_init(Object *obj)=0A=
- =0A=
-     for (i =3D 0; i < ASPEED_I3C_NR_DEVICES; ++i) {=0A=
-         object_initialize_child(obj, "device[*]", &s->devices[i],=0A=
--                TYPE_ASPEED_I3C_DEVICE);=0A=
-+                TYPE_DW_I3C);=0A=
-     }=0A=
- }=0A=
- =0A=
-@@ -323,20 +168,6 @@ static void aspeed_i3c_realize(DeviceState *dev, Error=
- **errp)=0A=
- =0A=
- }=0A=
- =0A=
--static const Property aspeed_i3c_device_properties[] =3D {=0A=
--    DEFINE_PROP_UINT8("device-id", AspeedI3CDevice, id, 0),=0A=
--};=0A=
--=0A=
--static void aspeed_i3c_device_class_init(ObjectClass *klass, const void *d=
-ata)=0A=
--{=0A=
--    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
--=0A=
--    dc->desc =3D "Aspeed I3C Device";=0A=
--    dc->realize =3D aspeed_i3c_device_realize;=0A=
--    device_class_set_legacy_reset(dc, aspeed_i3c_device_reset);=0A=
--    device_class_set_props(dc, aspeed_i3c_device_properties);=0A=
--}=0A=
--=0A=
- static const VMStateDescription vmstate_aspeed_i3c =3D {=0A=
-     .name =3D TYPE_ASPEED_I3C,=0A=
-     .version_id =3D 1,=0A=
-@@ -344,7 +175,7 @@ static const VMStateDescription vmstate_aspeed_i3c =3D =
-{=0A=
-     .fields =3D (const VMStateField[]) {=0A=
-         VMSTATE_UINT32_ARRAY(regs, AspeedI3CState, ASPEED_I3C_NR_REGS),=0A=
-         VMSTATE_STRUCT_ARRAY(devices, AspeedI3CState, ASPEED_I3C_NR_DEVICE=
-S, 1,=0A=
--                             aspeed_i3c_device_vmstate, AspeedI3CDevice),=
-=0A=
-+                             vmstate_dw_i3c, DWI3C),=0A=
-         VMSTATE_END_OF_LIST(),=0A=
-     }=0A=
- };=0A=
-@@ -367,12 +198,6 @@ static const TypeInfo aspeed_i3c_types[] =3D {=0A=
-         .instance_size =3D sizeof(AspeedI3CState),=0A=
-         .class_init =3D aspeed_i3c_class_init,=0A=
-     },=0A=
--    {=0A=
--        .name =3D TYPE_ASPEED_I3C_DEVICE,=0A=
--        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
--        .instance_size =3D sizeof(AspeedI3CDevice),=0A=
--        .class_init =3D aspeed_i3c_device_class_init,=0A=
--    },=0A=
- };=0A=
- =0A=
- DEFINE_TYPES(aspeed_i3c_types)=0A=
 diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
-new file mode 100644=0A=
-index 0000000000..6cadc59191=0A=
---- /dev/null=0A=
+index 7ca99fb87e..0b99c7edfb 100644=0A=
+--- a/hw/i3c/dw-i3c.c=0A=
 +++ b/hw/i3c/dw-i3c.c=0A=
-@@ -0,0 +1,202 @@=0A=
-+/*=0A=
-+ * DesignWare I3C Controller=0A=
-+ *=0A=
-+ * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC=0A=
-+ *=0A=
-+ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
-+ */=0A=
-+=0A=
-+#include "qemu/osdep.h"=0A=
-+#include "qemu/log.h"=0A=
-+#include "qemu/error-report.h"=0A=
-+#include "hw/i3c/i3c.h"=0A=
-+#include "hw/i3c/dw-i3c.h"=0A=
-+#include "hw/core/registerfields.h"=0A=
-+#include "hw/core/qdev-properties.h"=0A=
-+#include "qapi/error.h"=0A=
-+#include "migration/vmstate.h"=0A=
-+#include "trace.h"=0A=
-+=0A=
-+REG32(DEVICE_CTRL,                  0x00)=0A=
-+REG32(DEVICE_ADDR,                  0x04)=0A=
-+REG32(HW_CAPABILITY,                0x08)=0A=
-+REG32(COMMAND_QUEUE_PORT,           0x0c)=0A=
-+REG32(RESPONSE_QUEUE_PORT,          0x10)=0A=
-+REG32(RX_TX_DATA_PORT,              0x14)=0A=
-+REG32(IBI_QUEUE_STATUS,             0x18)=0A=
-+REG32(IBI_QUEUE_DATA,               0x18)=0A=
-+REG32(QUEUE_THLD_CTRL,              0x1c)=0A=
-+REG32(DATA_BUFFER_THLD_CTRL,        0x20)=0A=
-+REG32(IBI_QUEUE_CTRL,               0x24)=0A=
-+REG32(IBI_MR_REQ_REJECT,            0x2c)=0A=
-+REG32(IBI_SIR_REQ_REJECT,           0x30)=0A=
-+REG32(RESET_CTRL,                   0x34)=0A=
-+REG32(SLV_EVENT_CTRL,               0x38)=0A=
-+REG32(INTR_STATUS,                  0x3c)=0A=
-+REG32(INTR_STATUS_EN,               0x40)=0A=
-+REG32(INTR_SIGNAL_EN,               0x44)=0A=
-+REG32(INTR_FORCE,                   0x48)=0A=
-+REG32(QUEUE_STATUS_LEVEL,           0x4c)=0A=
-+REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)=0A=
-+REG32(PRESENT_STATE,                0x54)=0A=
-+REG32(CCC_DEVICE_STATUS,            0x58)=0A=
-+REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)=0A=
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)=0A=
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)=0A=
-+REG32(DEV_CHAR_TABLE_POINTER,       0x60)=0A=
-+REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)=0A=
-+REG32(SLV_MIPI_PID_VALUE,           0x70)=0A=
-+REG32(SLV_PID_VALUE,                0x74)=0A=
-+REG32(SLV_CHAR_CTRL,                0x78)=0A=
-+REG32(SLV_MAX_LEN,                  0x7c)=0A=
-+REG32(MAX_READ_TURNAROUND,          0x80)=0A=
-+REG32(MAX_DATA_SPEED,               0x84)=0A=
-+REG32(SLV_DEBUG_STATUS,             0x88)=0A=
-+REG32(SLV_INTR_REQ,                 0x8c)=0A=
-+REG32(DEVICE_CTRL_EXTENDED,         0xb0)=0A=
-+REG32(SCL_I3C_OD_TIMING,            0xb4)=0A=
-+REG32(SCL_I3C_PP_TIMING,            0xb8)=0A=
-+REG32(SCL_I2C_FM_TIMING,            0xbc)=0A=
-+REG32(SCL_I2C_FMP_TIMING,           0xc0)=0A=
-+REG32(SCL_EXT_LCNT_TIMING,          0xc8)=0A=
-+REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)=0A=
-+REG32(BUS_FREE_TIMING,              0xd4)=0A=
-+REG32(BUS_IDLE_TIMING,              0xd8)=0A=
-+REG32(I3C_VER_ID,                   0xe0)=0A=
-+REG32(I3C_VER_TYPE,                 0xe4)=0A=
-+REG32(EXTENDED_CAPABILITY,          0xe8)=0A=
-+REG32(SLAVE_CONFIG,                 0xec)=0A=
-+=0A=
-+static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] =3D {=0A=
-+    [R_HW_CAPABILITY]               =3D 0x000e00bf,=0A=
-+    [R_QUEUE_THLD_CTRL]             =3D 0x01000101,=0A=
-+    [R_I3C_VER_ID]                  =3D 0x3130302a,=0A=
-+    [R_I3C_VER_TYPE]                =3D 0x6c633033,=0A=
-+    [R_DEVICE_ADDR_TABLE_POINTER]   =3D 0x00080280,=0A=
-+    [R_DEV_CHAR_TABLE_POINTER]      =3D 0x00020200,=0A=
-+    [A_VENDOR_SPECIFIC_REG_POINTER] =3D 0x000000b0,=0A=
-+    [R_SLV_MAX_LEN]                 =3D 0x00ff00ff,=0A=
-+};=0A=
-+=0A=
-+static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(opaque);=0A=
-+    uint32_t addr =3D offset >> 2;=0A=
-+    uint64_t value;=0A=
-+=0A=
-+    switch (addr) {=0A=
-+    case R_COMMAND_QUEUE_PORT:=0A=
-+        value =3D 0;=0A=
-+        break;=0A=
-+    default:=0A=
-+        value =3D s->regs[addr];=0A=
-+        break;=0A=
-+    }=0A=
-+=0A=
-+    trace_dw_i3c_read(s->id, offset, value);=0A=
-+=0A=
-+    return value;=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,=0A=
-+                         unsigned size)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(opaque);=0A=
-+    uint32_t addr =3D offset >> 2;=0A=
-+=0A=
-+    trace_dw_i3c_write(s->id, offset, value);=0A=
-+=0A=
-+    switch (addr) {=0A=
-+    case R_HW_CAPABILITY:=0A=
-+    case R_RESPONSE_QUEUE_PORT:=0A=
-+    case R_IBI_QUEUE_DATA:=0A=
-+    case R_QUEUE_STATUS_LEVEL:=0A=
-+    case R_PRESENT_STATE:=0A=
-+    case R_CCC_DEVICE_STATUS:=0A=
-+    case R_DEVICE_ADDR_TABLE_POINTER:=0A=
-+    case R_VENDOR_SPECIFIC_REG_POINTER:=0A=
-+    case R_SLV_CHAR_CTRL:=0A=
-+    case R_SLV_MAX_LEN:=0A=
-+    case R_MAX_READ_TURNAROUND:=0A=
-+    case R_I3C_VER_ID:=0A=
-+    case R_I3C_VER_TYPE:=0A=
-+    case R_EXTENDED_CAPABILITY:=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                      "%s: write to readonly register[0x%02" HWADDR_PRIx=
-=0A=
-+                      "] =3D 0x%08" PRIx64 "\n",=0A=
-+                      __func__, offset, value);=0A=
-+        break;=0A=
-+    case R_RX_TX_DATA_PORT:=0A=
-+        break;=0A=
-+    case R_RESET_CTRL:=0A=
-+        break;=0A=
-+    default:=0A=
-+        s->regs[addr] =3D value;=0A=
-+        break;=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+const VMStateDescription vmstate_dw_i3c =3D {=0A=
-+    .name =3D TYPE_DW_I3C,=0A=
-+    .version_id =3D 1,=0A=
-+    .minimum_version_id =3D 1,=0A=
-+    .fields =3D (VMStateField[]){=0A=
-+        VMSTATE_UINT32_ARRAY(regs, DWI3C, DW_I3C_NR_REGS),=0A=
-+        VMSTATE_END_OF_LIST(),=0A=
-+    }=0A=
-+};=0A=
-+=0A=
-+static const MemoryRegionOps dw_i3c_ops =3D {=0A=
-+    .read =3D dw_i3c_read,=0A=
-+    .write =3D dw_i3c_write,=0A=
-+    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
-+};=0A=
-+=0A=
-+static void dw_i3c_reset_enter(Object *obj, ResetType type)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(obj);=0A=
-+=0A=
-+    memcpy(s->regs, dw_i3c_resets, sizeof(s->regs));=0A=
-+}=0A=
-+=0A=
-+static void dw_i3c_realize(DeviceState *dev, Error **errp)=0A=
-+{=0A=
-+    DWI3C *s =3D DW_I3C(dev);=0A=
-+    g_autofree char *name =3D g_strdup_printf(TYPE_DW_I3C ".%d", s->id);=
-=0A=
-+=0A=
-+    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);=0A=
-+=0A=
-+    memory_region_init_io(&s->mr, OBJECT(s), &dw_i3c_ops, s, name,=0A=
-+                          DW_I3C_NR_REGS << 2);=0A=
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);=0A=
-+}=0A=
-+=0A=
-+static const Property dw_i3c_properties[] =3D {=0A=
-+    DEFINE_PROP_UINT8("device-id", DWI3C, id, 0),=0A=
-+};=0A=
-+=0A=
-+static void dw_i3c_class_init(ObjectClass *klass, const void *data)=0A=
-+{=0A=
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);=0A=
-+=0A=
-+    rc->phases.enter =3D dw_i3c_reset_enter;=0A=
-+=0A=
-+    dc->desc =3D "DesignWare I3C Controller";=0A=
-+    dc->realize =3D dw_i3c_realize;=0A=
-+    dc->vmsd =3D &vmstate_dw_i3c;=0A=
-+    device_class_set_props(dc, dw_i3c_properties);=0A=
-+}=0A=
-+=0A=
-+static const TypeInfo dw_i3c_types[] =3D {=0A=
-+    {=0A=
-+        .name =3D TYPE_DW_I3C,=0A=
-+        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
-+        .instance_size =3D sizeof(DWI3C),=0A=
-+        .class_init =3D dw_i3c_class_init,=0A=
-+    },=0A=
-+};=0A=
-+=0A=
-+DEFINE_TYPES(dw_i3c_types)=0A=
-+=0A=
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig=0A=
-index 8344b9769f..d545ecd712 100644=0A=
---- a/hw/arm/Kconfig=0A=
-+++ b/hw/arm/Kconfig=0A=
-@@ -546,6 +546,7 @@ config ASPEED_SOC=0A=
-     select FTGMAC100=0A=
-     select I2C=0A=
-     select I3C=0A=
-+    select DW_I3C=0A=
-     select DPS310=0A=
-     select PCA9552=0A=
-     select PCA9554=0A=
-diff --git a/hw/i3c/Kconfig b/hw/i3c/Kconfig=0A=
-index e07fe445c6..ecec77d6fc 100644=0A=
---- a/hw/i3c/Kconfig=0A=
-+++ b/hw/i3c/Kconfig=0A=
-@@ -1,2 +1,5 @@=0A=
- config I3C=0A=
-     bool=0A=
-+=0A=
-+config DW_I3C=0A=
-+    bool=0A=
-diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build=0A=
-index fb127613fe..83d75e7d5c 100644=0A=
---- a/hw/i3c/meson.build=0A=
-+++ b/hw/i3c/meson.build=0A=
-@@ -1,4 +1,5 @@=0A=
- i3c_ss =3D ss.source_set()=0A=
- i3c_ss.add(when: 'CONFIG_I3C', if_true: files('core.c'))=0A=
- i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))=0A=
-+i3c_ss.add(when: 'CONFIG_DW_I3C', if_true: files('dw-i3c.c'))=0A=
- system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)=0A=
-diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events=0A=
-index cdf7cb07f6..2d944387db 100644=0A=
---- a/hw/i3c/trace-events=0A=
-+++ b/hw/i3c/trace-events=0A=
-@@ -3,8 +3,10 @@=0A=
- # aspeed_i3c.c=0A=
- aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRI=
-x64 " data 0x%" PRIx64=0A=
- aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" P=
-RIx64 " data 0x%" PRIx64=0A=
--aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) =
-"I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
--aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data)=
- "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
-+=0A=
-+# dw-i3c,c=0A=
-+dw_i3c_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u=
-] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
-+dw_i3c_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%=
-u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
+@@ -17,6 +17,7 @@=0A=
+ #include "qapi/error.h"=0A=
+ #include "migration/vmstate.h"=0A=
+ #include "trace.h"=0A=
++#include "hw/core/irq.h"=0A=
  =0A=
- # core.c=0A=
- i3c_target_event(uint8_t address, uint8_t event) "I3C target 0x%" PRIx8 " =
-event 0x%" PRIx8=0A=
+ REG32(DEVICE_CTRL,                  0x00)=0A=
+     FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)=0A=
+@@ -335,6 +336,46 @@ static const uint32_t dw_i3c_ro[DW_I3C_NR_REGS] =3D {=
+=0A=
+     [R_SLAVE_CONFIG]                =3D 0xffffffff,=0A=
+ };=0A=
+ =0A=
++static void dw_i3c_update_irq(DWI3C *s)=0A=
++{=0A=
++    bool level =3D !!(s->regs[R_INTR_SIGNAL_EN] & s->regs[R_INTR_STATUS]);=
+=0A=
++    qemu_set_irq(s->irq, level);=0A=
++}=0A=
++=0A=
++static uint32_t dw_i3c_intr_status_r(DWI3C *s)=0A=
++{=0A=
++    /* Only return the status whose corresponding EN bits are set. */=0A=
++    return s->regs[R_INTR_STATUS] & s->regs[R_INTR_STATUS_EN];=0A=
++}=0A=
++=0A=
++static void dw_i3c_intr_status_w(DWI3C *s, uint32_t val)=0A=
++{=0A=
++    /* INTR_STATUS[13:5] is w1c, other bits are RO. */=0A=
++    val &=3D 0x3fe0;=0A=
++    s->regs[R_INTR_STATUS] &=3D ~val;=0A=
++=0A=
++    dw_i3c_update_irq(s);=0A=
++}=0A=
++=0A=
++static void dw_i3c_intr_status_en_w(DWI3C *s, uint32_t val)=0A=
++{=0A=
++    s->regs[R_INTR_STATUS_EN] =3D val;=0A=
++    dw_i3c_update_irq(s);=0A=
++}=0A=
++=0A=
++static void dw_i3c_intr_signal_en_w(DWI3C *s, uint32_t val)=0A=
++{=0A=
++    s->regs[R_INTR_SIGNAL_EN] =3D val;=0A=
++    dw_i3c_update_irq(s);=0A=
++}=0A=
++=0A=
++static void dw_i3c_intr_force_w(DWI3C *s, uint32_t val)=0A=
++{=0A=
++    /* INTR_FORCE is WO, just set the corresponding INTR_STATUS bits. */=
+=0A=
++    s->regs[R_INTR_STATUS] =3D val;=0A=
++    dw_i3c_update_irq(s);=0A=
++}=0A=
++=0A=
+ static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)=0A=
+ {=0A=
+     DWI3C *s =3D DW_I3C(opaque);=0A=
+@@ -348,6 +389,9 @@ static uint64_t dw_i3c_read(void *opaque, hwaddr offset=
+, unsigned size)=0A=
+     case R_INTR_FORCE:=0A=
+         value =3D 0;=0A=
+         break;=0A=
++    case R_INTR_STATUS:=0A=
++        value =3D dw_i3c_intr_status_r(s);=0A=
++        break;=0A=
+     default:=0A=
+         value =3D s->regs[addr];=0A=
+         break;=0A=
+@@ -392,6 +436,18 @@ static void dw_i3c_write(void *opaque, hwaddr offset, =
+uint64_t value,=0A=
+         break;=0A=
+     case R_RESET_CTRL:=0A=
+         break;=0A=
++    case R_INTR_STATUS:=0A=
++        dw_i3c_intr_status_w(s, val32);=0A=
++        break;=0A=
++    case R_INTR_STATUS_EN:=0A=
++        dw_i3c_intr_status_en_w(s, val32);=0A=
++        break;=0A=
++    case R_INTR_SIGNAL_EN:=0A=
++        dw_i3c_intr_signal_en_w(s, val32);=0A=
++        break;=0A=
++    case R_INTR_FORCE:=0A=
++        dw_i3c_intr_force_w(s, val32);=0A=
++        break;=0A=
+     default:=0A=
+         s->regs[addr] =3D val32;=0A=
+         break;=0A=
 -- =0A=
 2.43.0=0A=
 
