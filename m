@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D869EA810A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3A2EA8109
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmjB-0001rP-Ni; Tue, 10 Feb 2026 07:20:25 -0500
+	id 1vpmkG-000594-Md; Tue, 10 Feb 2026 07:21:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhn-0006f9-H9; Tue, 10 Feb 2026 07:18:59 -0500
+ id 1vpmj9-0001n5-Ua; Tue, 10 Feb 2026 07:20:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhl-0001au-JD; Tue, 10 Feb 2026 07:18:59 -0500
+ id 1vpmj7-0002C8-Nv; Tue, 10 Feb 2026 07:20:23 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 67735187DDC;
- Tue, 10 Feb 2026 15:16:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5999F187DE7;
+ Tue, 10 Feb 2026 15:16:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0208B360CF0;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E6346360CFB;
  Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Elhrj Saad <saadelhrj@gmail.com>,
+Cc: qemu-stable@nongnu.org, Honglei Huang <honghuan@amd.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 72/85] hw/adc: Fix out-of-bounds write in Aspeed ADC
- model
-Date: Tue, 10 Feb 2026 15:16:36 +0300
-Message-ID: <20260210121657.69363-3-mjt@tls.msk.ru>
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 83/85] virtio-gpu: fix error handling in
+ virgl_cmd_resource_create_blob
+Date: Tue, 10 Feb 2026 15:16:47 +0300
+Message-ID: <20260210121657.69363-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
@@ -64,39 +64,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Honglei Huang <honghuan@amd.com>
 
-The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
-memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
-function has an out-of-bounds write vulnerability when accessing
-unimplemented registers.
+Fix inverted error check in virgl_cmd_resource_create_blob() that causes
+the function to return error when virtio_gpu_create_mapping_iov() succeeds.
 
-Fix this by using 'return' instead of 'break' in the default case,
-which prevents execution from reaching the s->regs[reg] assignment for
-unimplemented registers.
+virtio_gpu_create_mapping_iov() returns 0 on success and negative values
+on error. The check 'if (!ret)' incorrectly treats success (ret=0) as an
+error condition, causing the function to fail when it should succeed.
 
-Reported-by: Elhrj Saad <saadelhrj@gmail.com>
-Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
+Change the condition to 'if (ret != 0)' to properly detect errors.
+
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260126141820.719492-1-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 4c6521296d2b6820ab1f8c59d3a80cd0c138b2d8)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260113015203.3643608-2-honghuan@amd.com>
+(cherry picked from commit 3560b51979577afc3ab937fd8b02597515bdfbae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
-index 1cc554f179..95c85a6f40 100644
---- a/hw/adc/aspeed_adc.c
-+++ b/hw/adc/aspeed_adc.c
-@@ -228,7 +228,8 @@ static void aspeed_adc_engine_write(void *opaque, hwaddr addr, uint64_t value,
-         qemu_log_mask(LOG_UNIMP, "%s: engine[%u]: "
-                       "0x%" HWADDR_PRIx " 0x%" PRIx64 "\n",
-                       __func__, s->engine_id, addr, value);
--        break;
-+        /* Do not update the regs[] array */
-+        return;
-     }
- 
-     s->regs[reg] = value;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ca34704acb..b25ddc0746 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+                                             cmd, &res->base.addrs,
+                                             &res->base.iov, &res->base.iov_cnt);
+-        if (!ret) {
++        if (ret != 0) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             return;
+         }
 -- 
 2.47.3
 
