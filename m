@@ -4,109 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C379EEA810A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5629CEA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpnGn-0008Of-QU; Tue, 10 Feb 2026 07:55:09 -0500
+	id 1vpnNl-0003vs-L4; Tue, 10 Feb 2026 08:02:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpnGl-0008JP-1Y
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:55:08 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpnGi-0001vR-1t
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:55:05 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7964f1405a0so19901077b3.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 04:55:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770728102; cv=none;
- d=google.com; s=arc-20240605;
- b=al1r1CSq6CBzKn2s7dZmP133s6w2I8skqPM68v5SeSHOPD/8d2VgrQ+t4pI/NcvdgJ
- vmsnYKALg6JQTMyZAqC+jV+OveCK9cMlu53PxR+PQ/aVO/pU6mJH/9oak6OtyCsrL89Z
- sTPggzCOgcXdAjlVxJkET7+1TYJOw63onDYcZvd/Ww7eP0E14tuE1wADHai2gjBF5ecd
- Ls3fknCpQRUA6xZ+fSDw01ZgG66KDybYGPNIaf1cTemQPswzA2vjIDW31ZHGtUbdm2an
- 0mwvER29d4Q+VrP9fo/ANKT6Yp/e0takb/nrGoQZQkXUuIlDMVisF1grkXCKHk+0L9xR
- LPCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=MxDu/SUqdsL8XdauFS4i4DsHwUTDrJAwAgHFeI9/lmE=;
- fh=jaVXKXdPtDZ9Td0ozRtoRANDtI7awvhCgjC7/yxDBPE=;
- b=Sd3gsFxhyl05kDvAsHpjLXRE9X1gNfdgb4GMpNkjfxX7cCaWjeCq3TKDJXODk149A1
- zJukX9lsoISMjapq1DzUkbGeaYkQHJoPQUqsHruGsFeYMMFrS0L0HFk1QgQu3bTWSde+
- dahbmJcp7EgWBOsTQBTBQ2pWKNTx/XYhk3CJS+d/aM9y8pX4cacn6FYCIeUdO1n9tsAb
- Y/uyB1IdrvUMTbXj73ciGNRVddawJkcl1c5VA4epahVEQlzWGFGBcIGIg7PAhRI/Q2EX
- uSR/u4J7tWcKTsO3i8nWtm1rAOEEXRD4GI4CTYR7lF0PiHZD9OFwffaoZ/Z56Eb1AIst
- Mn1Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770728102; x=1771332902; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MxDu/SUqdsL8XdauFS4i4DsHwUTDrJAwAgHFeI9/lmE=;
- b=bavYFP32LKDzeiVz3wL4N7rL2e0hrWtgmaW/b5kLzfiVAfgNYbabQqePa7SqZwSR6/
- imhg6zH+N3z7cGR7yP30bo992u1SrrAPLepwyzttXZO+Bw2tSYJabyVdiT7Ahz8/fMRf
- x5NaDsWLNgAitp2rpmgJdKZQF0iMFbMAjjaslt3+xcICZkzkOhSa1D23D3stEk3GSNkX
- F45ixMfjdSb+RTR+SDnwveOjEElI/qu9147lYH5VRoTYTFxdLIdKc9Q6UNW5aIlhYm8s
- c9sAhT/bJycSh6+pjzNcxa0kcizJRFEDgTggipp94Slh3L/jqc/J7hrEI8DL1wIbNapr
- qeXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770728102; x=1771332902;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MxDu/SUqdsL8XdauFS4i4DsHwUTDrJAwAgHFeI9/lmE=;
- b=AWA/Oc9p2RNO/roYWO/QyjBg/SVwbGuRV47shG5XkiJ61uTLMzelt1rKdDw/gleAQS
- j6xXKwb/7S8ZzeXj0H7kei0aLs9tuBUsoxHwCLrsdfGWnk6v6GrLmUCK5rY6IDwQqLM0
- ZVJw/V8GVCNbAtlyWhcM6idzX+TBaKj/fH6WxegcLk1CRVwr7plO2m4m95Qwmf4U1mc8
- G46ZUftfJLQp5solK8pVTmky64FZ8B3/CKg0acYSAKUVQOQ+2w3PZ6bX+xvuwiDdAor1
- rP5JQZVFwie3KbSK0jeV6jnZbqyYApLMsCVl9I1D9S5zjKB9Vo+0Vb8OhBQ7QCn9CkkQ
- ME8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVijGc9ZqwrQkL2ZyWZacifQ1FBYEDU8VVumnJwEBJUaa7zzM9xGN+62ftwJah0g6T7Wko2NvuYPWp3@nongnu.org
-X-Gm-Message-State: AOJu0YyNvWaSeq/OOTMJ+ktY21jvWYqWqHCFS9E0WtrfxMUDRk3VNDRb
- mwme1wIqTAm5aS+f9Kf/xW18iTltWu0Lb9hpSdOxEGlWTTd2Ef7RxW/WmwjshLAt3DXAej/Xe/C
- kofgX8knJ9B9+Xh9ZqMBILrK8UBn0giZQgEZ5AMp6DQ==
-X-Gm-Gg: AZuq6aKC6/RejNgRLQ+zda7PMVdfpE1sNgL1eo+RolI7GTLDZa+dubFc82EzxGyGXEk
- ghG2apiiFa7yQW6lCieyyiAabnCEFCDXkBetBPpx4Zy/YAVZRenKYi5zvzULsZEqGAvUn+9nhZa
- 8RuHCYUbbx6qezXtkBVOolYcwFohDRPvUOk1zHR5uk1ty6RIlwk4cWP0PievoMb662LwK9NpMFm
- +zByUi6ZCYkdgbBZY3jMyR0008ugccbzh1isauLITKH3e//btRpacy0JOrS5VOp97J6DLLjo+RJ
- i2aZWmg3+l08mxyyQmc+R25bgqnkz1ltN6NVlof9/anP18w3iZ0s1RJn22CXUO+1w3ko1SQh0mM
- oDw==
-X-Received: by 2002:a05:690c:386:b0:78f:8503:7773 with SMTP id
- 00721157ae682-7952aa746b9mr135064697b3.3.1770728102487; Tue, 10 Feb 2026
- 04:55:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNi-0003rZ-2V
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:18 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpnNe-0002qp-5d
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:02:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=q609Nmaahc8rfJBQxkAcSbnQ9Y7UQbnHzKxOCiEj8+Q=; b=c3PxCfbIsKRjIi0
+ 67g6PpLvIlIlDFYm5FnQF6wmJ7IB3PwRoPhElVnm2goerARJhZlIf0dziEZmxVp+kHsp6eAab+03Z
+ e4tRrkBQ6OQjKmLe12vQEekc6Ob6QVjeWB9zWEYH0rQ8e3GQ9uljWJXuApl5F+pbR/ry4B+SNqhtu
+ mc=;
+Date: Tue, 10 Feb 2026 14:04:55 +0100
+Subject: [PATCH 1/4] hppa: Prepare for additional CPU models
 MIME-Version: 1.0
-References: <20260205210231.888199-1-alex.bennee@linaro.org>
- <6cf4aa8f-5f1b-4145-88d3-da5abfa978ab@linaro.org>
-In-Reply-To: <6cf4aa8f-5f1b-4145-88d3-da5abfa978ab@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Feb 2026 12:54:50 +0000
-X-Gm-Features: AZwV_QgBciDobILLCboXiZnhQL0VfTJ8-uSNPgQF17sxCyxXtPvDLOxk-vI8Bfw
-Message-ID: <CAFEAcA-g+tOP4=NK8hK3vJ-WT4+dYXbiciXBpeq_2Yr6SxfH3A@mail.gmail.com>
-Subject: Re: [PATCH v3] target/arm: implement FEAT_E2H0
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260210-hppa-c3600-v1-1-a17ec58f053f@rev.ng>
+References: <20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng>
+In-Reply-To: <20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,41 +60,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Feb 2026 at 12:16, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/6/26 07:02, Alex Benn=C3=A9e wrote:
-> > @@ -3817,10 +3821,15 @@ static void do_hcr_write(CPUARMState *env, uint=
-64_t value, uint64_t valid_mask)
-> >       /* Clear RES0 bits.  */
-> >       value &=3D valid_mask;
-> >
-> > -    /* RW is RAO/WI if EL1 is AArch64 only */
-> > -    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
-> > -        !cpu_isar_feature(aa64_aa32_el1, cpu)) {
-> > -        value |=3D HCR_RW;
-> > +    if (arm_feature(env, ARM_FEATURE_AARCH64)) {
-> > +        /* RW is RAO/WI if EL1 is AArch64 only */
-> > +        if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
-> > +            value |=3D HCR_RW;
-> > +        }
-> > +        /* Strictly E2H is RES1 unless FEAT_E2H0 relaxes the requireme=
-nt */
-> > +        if (!cpu_isar_feature(aa64_e2h0, cpu)) {
-> > +            value |=3D HCR_E2H;
-> > +        }
-> >       }
->
-> Reset value of hcr_el2 should have E2H set too.
-> I think you want something like cpacr_reset().
+Current CPU model names are clarified, assuming 32-bit HPPA runs a PA-7300LC
+whereas 64-bit runs a PA-8700.  Both CPU models are made into children
+of the now abstract TYPE_HPPA_CPU base class, simplifying the addition of
+other CPU models.
 
-I wondered that when reviewing, but we already have an hcr_reset(),
-which works by calling hcr_write() to ensure that we set the RES1
-bits out of reset, so this new RES1 bit should be automatically
-applied too.
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/hppa/cpu-qom.h           |  7 ++++++-
+ hw/hppa/machine.c               | 17 +++++++++++------
+ target/hppa/cpu.c               | 19 ++++++++++++++-----
+ tests/qtest/machine-none-test.c |  2 +-
+ 4 files changed, 32 insertions(+), 13 deletions(-)
 
--- PMM
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543..c6b82dc09b 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,12 @@
+ #include "hw/core/cpu.h"
+ 
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
++
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
+ 
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 472b90aab0..6a0487c362 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -791,13 +791,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -807,13 +807,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -823,13 +823,18 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 714f3bbdaf..c8079016bf 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -207,7 +207,7 @@ static void hppa_cpu_initfn(Object *obj)
+ {
+     CPUHPPAState *env = cpu_env(CPU(obj));
+ 
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
++    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU_PA_8700);
+ }
+ 
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+@@ -236,9 +236,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
+ 
+-    return object_class_by_name(typename);
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
++
++    return oc;
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -314,12 +319,16 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+         .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_7300LC,
++        .parent = TYPE_HPPA_CPU,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
+     },
+ };
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index b6a87d27ed..f871056fa4 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -48,7 +48,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
+
+-- 
+2.52.0
+
 
