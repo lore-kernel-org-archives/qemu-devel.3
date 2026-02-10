@@ -4,108 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08A45EA813C
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 15:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38D0EA813A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 15:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpq2v-0001aO-5B; Tue, 10 Feb 2026 10:53:03 -0500
+	id 1vpq3X-00027D-Q1; Tue, 10 Feb 2026 10:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vpq2n-0001X5-1Z
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:52:53 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vpq33-0001eW-NB
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:53:15 -0500
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vpq2Z-0003hG-Pa
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:52:51 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61A3jb4p3537614; Tue, 10 Feb 2026 15:48:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=7jzwZyY+Z/N8QC5x4
- wP77+MLsBzTXVWktB+4y3hSvYw=; b=eHvw7rUcMaq2CPkoccr87aYOzCWzJHMSr
- UQ3olxThERfE1I0+DnkvYgZHlMTNs0RjXwFWqWROTsxwFgiSHwnViXmc6Bd+kioz
- KB8Ws7QxQkKIK+C+2AD7l7x1tAEwCViqk38GzYNzCPIrBX82P9tnOEPsUnCNBoBP
- 5prTv7AdOyI3EsMtB+3w8qM2wPjMmDJPaLbmiORz1gQ1qrffAPHHai+kRo7z2/Ep
- MmjfD+mmcjzqmK81+mrhOWTXj1TYIg/2/rkLF1jHbeC5XXv5H/XXBHTDgvv0VCwt
- 2w3QiCJQvsbBX5FcIFALJ/tvmi54SJdUw2UHK1+4/a6hFiztJLmeQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v2sa8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 15:48:05 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61AE1qZY008400;
- Tue, 10 Feb 2026 15:48:05 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6g3ya0u8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 15:48:05 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61AFm5d35899238
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 15:48:05 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF47C5805A;
- Tue, 10 Feb 2026 15:48:04 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5693E58054;
- Tue, 10 Feb 2026 15:48:04 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Feb 2026 15:48:04 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefan Berger <stefanb@linux.ibm.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v1 2/3] tpm_emulator: drop direct use of errno variable
-Date: Tue, 10 Feb 2026 10:48:00 -0500
-Message-ID: <20260210154801.1662032-3-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260210154801.1662032-1-stefanb@linux.ibm.com>
-References: <20260210154801.1662032-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vpq2c-0003m9-9l
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:53:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1770738662; x=1771343462; i=deller@gmx.de;
+ bh=7vVmmefgN1ZJ3H21h3UQrXUB6mMfRO+z3+O66cOk3r4=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=jr8smEiQmurqGMZUfRpIlNioZn8K5fyZkS2FDLy9LgMDwjN0A5kcil1jTfKQU3MU
+ kfL4nkyGEejiOEtxtqAxQWuYXxbnXirqnsEwnaGUNJIpE3erhYFaTpKPU0guvkpWH
+ YH5qyRQDyshnCXS7qs6RxFWycT2eZGL7jp6NBUSmYr4jQ8jKBiZztCsKoKmmzFugj
+ 7aLToopCIEgxr3pdHfv9gmzfou6CAIAgrC2ny5GkHCdr0JkcbqJI3tbGoQDpw9pH8
+ LV5clqyb9++8v6wx36B+YRSk/El6gr3llYz5aQft6PpDUYb7sBdqitOB/Hfm6FyDT
+ oc2g3XQOsmKKBj7Fhg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([109.250.51.36]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpSl-1vIgzn0ta5-00d2pa; Tue, 10
+ Feb 2026 16:51:02 +0100
+Message-ID: <62f5f22b-dc5d-4fb5-a968-ebfe6d9ef967@gmx.de>
+Date: Tue, 10 Feb 2026 16:51:01 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AHS-8QehAnS2CozD7nU6TJzF8q7utOgX
-X-Proofpoint-ORIG-GUID: AHS-8QehAnS2CozD7nU6TJzF8q7utOgX
-X-Authority-Analysis: v=2.4 cv=JdWxbEKV c=1 sm=1 tr=0 ts=698b5335 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=6R7veym_AAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=ek3WFFHKF6qGx2XKqDkA:9 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDEzMiBTYWx0ZWRfX+8fmvESlH3sr
- XPa9lTRAhEDmHaIIQm/ck3kDoZI0FHuAuvqRnu7n6O29m1q82ZWqqnAMdqwA7TBGqyg2ao0wuSq
- BlTYkFY/UVtKUTfZEuODxG1CtoLf7bfOxP9W2V8sVlTCQjQpId0OWg4U16Blv4grvhfmNglqTbV
- AzXUfirVHcsVVrtG5BW7qTn5qMhyQSFX0lRuz5GmUol7uNzFNF45StvaS4laZpYjJGjARaa+rVe
- O9bfXaJnvrNwz1XZHoljLW5ssEEYa2K6I8TLz5VVQSLMhnkLZbdF61Z83tOND2sZ96XQ/E+xL8v
- mastu0XHLJelt7nhtMIHsUKvvlorWMw8CCqAGRiSrK3y3ga/vFsBpGQY1LxNAtpagRX83DAoSqX
- Ak9jPVFJGBWanJitC8zaS3A6az9eRLsasZCdBknxjjrujeB/ffOmf5zfuLqzmqEI2acr3t7yPw+
- CXsbatRu8AVCTVVb5SQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100132
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: fix matching ioctl numbers in print_ioctl
+To: Andreas Schwab <schwab@suse.de>, Laurent Vivier <laurent@vivier.eu>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <mvmldh19bja.fsf@suse.de>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <mvmldh19bja.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fubB1+dg7dgQiuweFTXCgrelNvMgRYTIFUAZlIM5jek07coAe9t
+ P/npBv7s1OuWtq7VXRSdYMi/L+rX45DpCwJbQETh2pY8xql0A1roItclUxRB99IqGrrQK0O
+ nwY9wMlH96gOsAMm9/H/rryruttFPt9XAsnzTvMKOY3eWTQ8gwWLHwFpVORuREF5r/wTGWD
+ HLEZn1be9RMnidknnm+hw==
+UI-OutboundReport: notjunk:1;M01:P0:f5Alum9Ivdc=;Izk9xFVjTj0PQfIzlytLmtuAznA
+ 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
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,187 +194,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 2/10/26 10:46, Andreas Schwab wrote:
+> target_cmd in struct IOCTLEntry is a signed int.  Make sure the ioctl cm=
+d
+> argument in the syscall is converted to int when matching, so that it
+> works correctly with an ioctl cmd that has bit 31 set.
+>=20
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
 
-The code tends to include errno into error messages after
-tpm_util_test_tpmdev() and tpm_emulator_ctrlcmd() calls.
+Reviewed-by: Helge Deller <deller@gmx.de>
 
-Both has error paths, where errno is not set, examples:
-
-tpm_emulator_ctrlcmd()
-  qemu_chr_fe_write_all()
-    qemu_chr_write()
-      replay_char_write_event_load()
-        ...
-        *res = replay_get_dword();
-        ...
-
-tpm_util_test_tpmdev()
-  tpm_util_test()
-    tpm_util_request()
-      ...
-      if (n != requestlen) {
-          return -EFAULT;
-      }
-      ...
-
-Both doesn't document that they set errno.
-
-Let's drop these explicit usage of errno. If we need this information,
-it should be added to errp deeper in the stack.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- backends/tpm/tpm_emulator.c | 41 +++++++++++++++----------------------
- 1 file changed, 16 insertions(+), 25 deletions(-)
-
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 6d8529da3b..dc84380b13 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -225,7 +225,7 @@ static int tpm_emulator_set_locality(TPMEmulator *tpm_emu, uint8_t locty_number,
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_LOCALITY, &loc,
-                              sizeof(loc), sizeof(loc.u.resp.tpm_result),
-                              sizeof(loc)) < 0) {
--        error_setg_errno(errp, errno, "tpm-emulator: could not set locality");
-+        error_setg(errp, "tpm-emulator: could not set locality");
-         return -1;
-     }
- 
-@@ -263,7 +263,7 @@ static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_CAPABILITY, &cap_n, 0,
-                              sizeof(cap_n.u.resp.tpm_result),
-                              sizeof(cap_n)) < 0) {
--        error_report("tpm-emulator: probing failed : %s", strerror(errno));
-+        error_report("tpm-emulator: probing failed");
-         return -1;
-     }
- 
-@@ -314,7 +314,7 @@ static int tpm_emulator_stop_tpm(TPMBackend *tb, Error **errp)
- 
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_STOP, &res, 0,
-                              sizeof(ptm_res), sizeof(res)) < 0) {
--        error_setg_errno(errp, errno, "tpm-emulator: Could not stop TPM");
-+        error_setg(errp, "tpm-emulator: Could not stop TPM");
-         return -1;
-     }
- 
-@@ -342,8 +342,7 @@ static int tpm_emulator_lock_storage(TPMEmulator *tpm_emu)
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_LOCK_STORAGE, &pls, sizeof(pls.u.req),
-                              sizeof(pls.u.resp.tpm_result),
-                              sizeof(pls.u.resp)) < 0) {
--        error_report("tpm-emulator: Could not lock storage within 3 seconds: "
--                     "%s", strerror(errno));
-+        error_report("tpm-emulator: Could not lock storage within 3 seconds");
-         return -1;
-     }
- 
-@@ -375,8 +374,7 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_BUFFERSIZE, &psbs,
-                              sizeof(psbs.u.req), sizeof(psbs.u.resp.tpm_result),
-                              sizeof(psbs.u.resp)) < 0) {
--        error_setg_errno(errp, errno,
--                         "tpm-emulator: Could not set buffer size");
-+        error_setg(errp, "tpm-emulator: Could not set buffer size");
-         return -1;
-     }
- 
-@@ -424,7 +422,7 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_INIT, &init, sizeof(init),
-                              sizeof(init.u.resp.tpm_result),
-                              sizeof(init)) < 0) {
--        error_setg_errno(errp, errno, "tpm-emulator: could not send INIT");
-+        error_setg(errp, "tpm-emulator: could not send INIT");
-         goto err_exit;
-     }
- 
-@@ -479,8 +477,7 @@ static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_TPMESTABLISHED, &est, 0,
-                              sizeof(est) /* always returns resp.bit */,
-                              sizeof(est)) < 0) {
--        error_report("tpm-emulator: Could not get the TPM established flag: %s",
--                     strerror(errno));
-+        error_report("tpm-emulator: Could not get the TPM established flag");
-         return false;
-     }
-     trace_tpm_emulator_get_tpm_established_flag(est.u.resp.bit);
-@@ -508,8 +505,7 @@ static int tpm_emulator_reset_tpm_established_flag(TPMBackend *tb,
-                              &reset_est, sizeof(reset_est),
-                              sizeof(reset_est.u.resp.tpm_result),
-                              sizeof(reset_est)) < 0) {
--        error_report("tpm-emulator: Could not reset the establishment bit: %s",
--                     strerror(errno));
-+        error_report("tpm-emulator: Could not reset the establishment bit");
-         return -1;
-     }
- 
-@@ -539,8 +535,7 @@ static void tpm_emulator_cancel_cmd(TPMBackend *tb)
-     /* FIXME: make the function non-blocking, or it may block a VCPU */
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_CANCEL_TPM_CMD, &res, 0,
-                              sizeof(ptm_res), sizeof(res)) < 0) {
--        error_report("tpm-emulator: Could not cancel command: %s",
--                     strerror(errno));
-+        error_report("tpm-emulator: Could not cancel command");
-     } else if (res != 0) {
-         error_report("tpm-emulator: Failed to cancel TPM: 0x%x",
-                      be32_to_cpu(res));
-@@ -601,8 +596,7 @@ static int tpm_emulator_prepare_data_fd(TPMEmulator *tpm_emu)
- 
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_DATAFD, &res, 0,
-                              sizeof(ptm_res), sizeof(res)) < 0 || res != 0) {
--        error_report("tpm-emulator: Failed to send CMD_SET_DATAFD: %s",
--                     strerror(errno));
-+        error_report("tpm-emulator: Failed to send CMD_SET_DATAFD");
-         goto err_exit;
-     }
- 
-@@ -659,8 +653,8 @@ static int tpm_emulator_handle_device_opts(TPMEmulator *tpm_emu, QemuOpts *opts)
-      */
-     if (tpm_util_test_tpmdev(QIO_CHANNEL_SOCKET(tpm_emu->data_ioc)->fd,
-                              &tpm_emu->tpm_version)) {
--        error_report("'%s' is not emulating TPM device. Error: %s",
--                      tpm_emu->options->chardev, strerror(errno));
-+        error_report("'%s' is not emulating TPM device.",
-+                      tpm_emu->options->chardev);
-         goto err;
-     }
- 
-@@ -750,8 +744,7 @@ static int tpm_emulator_get_state_blob(TPMEmulator *tpm_emu,
-                              /* always returns up to resp.data */
-                              offsetof(ptm_getstate, u.resp.data),
-                              offsetof(ptm_getstate, u.resp.data)) < 0) {
--        error_report("tpm-emulator: could not get state blob type %d : %s",
--                     type, strerror(errno));
-+        error_report("tpm-emulator: could not get state blob type %d", type);
-         return -1;
-     }
- 
-@@ -853,9 +846,8 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
-     /* write the header only */
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_STATEBLOB, &pss,
-                              offsetof(ptm_setstate, u.req.data), 0, 0) < 0) {
--        error_setg_errno(errp, errno,
--                         "tpm-emulator: could not set state blob type %d",
--                         type);
-+        error_setg(errp, "tpm-emulator: could not set state blob type %d",
-+                   type);
-         return -1;
-     }
- 
-@@ -1037,8 +1029,7 @@ static void tpm_emulator_shutdown(TPMEmulator *tpm_emu)
- 
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SHUTDOWN, &res, 0,
-                              sizeof(ptm_res), sizeof(res)) < 0) {
--        error_report("tpm-emulator: Could not cleanly shutdown the TPM: %s",
--                     strerror(errno));
-+        error_report("tpm-emulator: Could not cleanly shutdown the TPM");
-     } else if (res != 0) {
-         error_report("tpm-emulator: TPM result for shutdown: 0x%x %s",
-                      be32_to_cpu(res), tpm_emulator_strerror(be32_to_cpu(res)));
--- 
-2.52.0
-
+Helge
 
