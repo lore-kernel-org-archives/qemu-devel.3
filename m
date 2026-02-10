@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F734EA8124
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD6C3EA8121
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpow9-0000Wg-6r; Tue, 10 Feb 2026 09:41:57 -0500
+	id 1vpoz5-0001vg-LS; Tue, 10 Feb 2026 09:45:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vpow6-0000WD-MX
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:41:54 -0500
+ id 1vpoyw-0001s1-C4
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:44:52 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vpow4-0000T7-EV
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:41:54 -0500
+ id 1vpoyp-0001pL-0Y
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:44:49 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C07D25969FF;
- Tue, 10 Feb 2026 15:41:50 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7521D596A0A;
+ Tue, 10 Feb 2026 15:44:41 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id UsHd-fdY1sAU; Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+ id 53akYCnGt378; Tue, 10 Feb 2026 15:44:39 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AD19D5969FA; Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+ id 36B105969FA; Tue, 10 Feb 2026 15:44:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AAF815969F6;
- Tue, 10 Feb 2026 15:41:48 +0100 (CET)
-Date: Tue, 10 Feb 2026 15:41:48 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 30B0D5969F6;
+ Tue, 10 Feb 2026 15:44:39 +0100 (CET)
+Date: Tue, 10 Feb 2026 15:44:39 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Zhao Liu <zhao1.liu@intel.com>
 cc: Paolo Bonzini <pbonzini@redhat.com>, 
@@ -48,12 +48,12 @@ cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>, 
  qemu-devel@nongnu.org, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 03/21] qom/object: factor out
- object_class_property_try_add()
-In-Reply-To: <20260210032348.987549-4-zhao1.liu@intel.com>
-Message-ID: <42a44ab0-feb6-6e9d-df20-2e6d8d50a30c@eik.bme.hu>
+Subject: Re: [PATCH v2 07/21] qom/object: introduce user interaction flags
+ for properties
+In-Reply-To: <20260210032348.987549-8-zhao1.liu@intel.com>
+Message-ID: <d5d64a1d-bfac-261b-b9a6-cec6a7aad7d6@eik.bme.hu>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-4-zhao1.liu@intel.com>
+ <20260210032348.987549-8-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
@@ -80,36 +80,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 10 Feb 2026, Zhao Liu wrote:
-> Similar to object_property_try_add(), factor out
-> object_class_property_try_add().
+> Introduce three new flags to `ObjectPropertyFlags` to better manage
+> property interactions with external users (CLI, QMP, HMP):
 >
-> This allows adding more arguments to the core implementation without
-> changing the signature of object_class_property_add(), avoiding the
-> need to modify the extensive number of callers distributed throughout
-> the code tree.
+> 1. OBJ_PROP_FLAG_USER_SET:
+>   Marks a property as having been modified by an external user.
 >
-> While at it, add documentation for these functions.
+>   This flag is designed to be "sticky": once set, it persists even if
+>   the property value is subsequently overwritten by internal logic.
+>   It allows the QEMU system to distinguish user intent.
 >
+>   The advantage of this design is that it is not needed to manually
+>   clear the USER_SET flag on every internal write. This simplifies the
+>   logic and decouples flag management from the current property setting
+>   path (object_property_set()).
+>
+>   This is chosen over a strict "current origin" approach (where
+>   internal writes would clear the flag) for a practical reason: QEMU
+>   code often modifies underlying struct fields (which are defined as
+>   properties) directly, bypassing the property API entirely. This makes
+>   it impossible to "accurately" track whether the *current* value truly
+>   comes from the user. Therefore, a sticky "user touched this" flag is
+>   the only meaningful and robust solution.
+>
+> 2. OBJ_PROP_FLAG_DEPRECATED:
+>   Marks a property as deprecated.
+>
+> 3. OBJ_PROP_FLAG_INTERNAL:
+>   Marks a property as internal-only, disallowing external user access.
+>
+> Additionally, update object_property_set_flags() to implement the
+> enforcement logic. When a property is flagged with
+> OBJ_PROP_FLAG_USER_SET:
+> - If the property is also marked OBJ_PROP_FLAG_DEPRECATED, report a
+>   warning.
+> - If the property is also marked OBJ_PROP_FLAG_INTERNAL, raise an error
+>   and stop the operation.
+>
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
-> include/qom/object.h | 56 ++++++++++++++++++++++++++++++++++++++++++++
-> qom/object.c         | 34 ++++++++++++++++++++-------
-> 2 files changed, 82 insertions(+), 8 deletions(-)
+> include/qom/object.h | 24 ++++++++++++++++++++++++
+> qom/object.c         | 15 +++++++++++++++
+> 2 files changed, 39 insertions(+)
 >
 > diff --git a/include/qom/object.h b/include/qom/object.h
-> index 05706d4d7e3a..060db136988b 100644
+> index 856b12e7289c..1b77429aa28b 100644
 > --- a/include/qom/object.h
 > +++ b/include/qom/object.h
-> @@ -1147,6 +1147,62 @@ ObjectProperty *object_property_add(Object *obj, const char *name,
->
-> void object_property_del(Object *obj, const char *name);
->
-> +/**
-> + * object_class_property_try_add:
+> @@ -109,6 +109,30 @@ typedef enum {
+>      * will automatically add a getter and a setter to this property.
+>      */
+>     OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+> +    /*
+> +     * The property was explicitly set by an external user.
+> +     *
+> +     * This flag is set whenever the property is modified via external interfaces
+> +     * (CLI, QMP, HMP). It allows internal code to distinguish whether the
+> +     * property has been modified by the user.
+> +     *
+> +     * Once set, this flag persists even if the property value is subsequently
+> +     * overwritten by internal logic. It is NOT automatically cleared and must
+> +     * be explicitly cleared using object_property_clear_flags().
+> +     */
+> +    OBJ_PROP_FLAG_USER_SET = BIT(2),
 
-This is renamed two patches later so maybe should be named like that here 
-and drop the renaming patch.
-
-Regards,
-BALATON Zoltan
+As this isn't strictly for user set maybe jusr call it 
+OBJ_PROP_FLAG_EXTERNAL? (Can be set by external management application or 
+global compat prop in later patches so user set is not quite right name,)
 
