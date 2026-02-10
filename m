@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DEAEB26E7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1E97EB26EB
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 16:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpqgb-0003Vv-Mt; Tue, 10 Feb 2026 11:34:01 -0500
+	id 1vpqgc-0003WV-5u; Tue, 10 Feb 2026 11:34:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpqgZ-0003Us-NB
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpqgZ-0003Uu-Py
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:33:59 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpqgX-0000Vr-SS
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vpqgX-0000Vw-Pb
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 11:33:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=W7Aeogg4CIwzLlM9lsAicNoeiOBoghUBP2imT9yVJkw=; b=p8iLAJ5gqg6fSAY
- +e3O2HXDe4ouAAOqwsmAIr+y95F4f2/WPOBhgO7WfcmvAifhfqwpci6D00xq9tuIauqtqWLYuMHgS
- 5D0r/nBC/frVkWxp31avk6kiC/HytVC22uhoJwZoyYItmYt6zouj0nivIfLgard8YIuMJZWwshHGZ
- mE=;
-Subject: [PATCH v2 0/4] hppa: Add simple C3600 machine with PA-8600 CPU
-Date: Tue, 10 Feb 2026 17:37:14 +0100
-Message-Id: <20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng>
+ List-Help; bh=loOwzRyyo/d9VKlMGe7NAT2jEGz58PYunWDzPBM1kak=; b=KUwhxrsO3xu+XPp
+ ntqFEqQzIY/d7RXcml8YMy7yV1kSR0tyi2YI3kTxaZl3bPYW82Y6XMarPgZoAMkXnJhA3FCGk9EWm
+ LkKWyF74TFH2nSELX+FOuKv/M8aqclOGOk9HVrI6yY7aN5A0nrn7e67gOA9rTpBSFtMCfwkN9CIix
+ fg=;
+Date: Tue, 10 Feb 2026 17:37:15 +0100
+Subject: [PATCH v2 1/4] hppa: Prepare for additional CPU models
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22PQQ6CMBBFr0Jmbc20tJS48h6GmApT2g1gi42Ec
- HcrLNy4fJP8N/+vECl4inApVgiUfPTjkEGcCmidGXpivssMAkWFgiNz02RYW1aIzNZYa41klNK
- QA1Mg69+77NYcHOj5ys75OP6U+QMKxTlKNrkl3k3XBfZAKzWZErk0lyTh63A+zmNY9n6J75J/V
- RJnyAzX1KraoirtNY85Dz0027Z9ACs5aJHlAAAA
-X-Change-ID: 20260210-hppa-c3600-f808770ea557
+Message-Id: <20260210-hppa-c3600-v2-1-9ca09c677012@rev.ng>
+References: <20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng>
+In-Reply-To: <20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770741450; l=2138;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1770741450; l=5931;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=RLA+Bic8QQ1BAHVQqfdUCotI28NtGvRf7H5eFZU3OQE=;
- b=hh+I/JLqdnwMD/EydGjYkECgevayDoL22zhum8mcPHjuE+i+KCvkMLqBVXJT1CZ2lnybhDah4
- gHKj/25sd89DDHHSKNDYETqs/3jyzFYeIUd4nWOzttG9X3568FNo5Bl
+ bh=yq1WtPXDthzD/Ym7wOtY9SG4ljdVy/7mvOcN9FMYl4E=;
+ b=IQyzPs/1DzPFcV+P4pQCkzB8NvTIvoQ0jz0ZKmYOlsDpYjMgasPXMvNlMrxNERL4x8FhP6gxQ
+ 6mavM9VUPkCClwbfobcVaOx6KeAQR9LhLkWtCFtcyqY63XlSNqbC/XZ
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -75,53 +72,174 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset tries to address a discrepancy between the C3700 machine
-in QEMU/SeaBIOS and the documentation (chapter 5)
+Clarifies current CPU model names, assuming 32-bit HPPA runs a PA-7300LC
+whereas 64-bit runs a PA-8700.  Both CPU models are made into children
+of the now abstract TYPE_HPPA_CPU base class, simplifying the addition of
+other CPU models.
 
-  http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
-
-where 40 bits of physical address space are used in SeaBISO compared
-to the 44 bits specified in the documentation.
-
-A PA-8600 CPU with 40 bits of physical address space is added along with
-a C3600 machine using it by default.  AFAICT there are no major
-differences from QEMUs side between the PA-8600 and 8700 aside from the
-physical address space size.  The PA-8700 machine can then be
-moved to using 44 bits.  To account for the discrepancy with SeaBIOS, the
-functional tests now run a C3700 but with a PA-8600 CPU.
-
-CPU model definitions now inherit from a TYPE_HPPA_CPU base class and
-use a HPPACPUDef sturct to provide model specifics, similar to the SPARC
-and RISCV targets.  This hopefully makes it easier to add other models,
-such as the 8800/8900.
-
-Based on:
-  PATCH v4 0/8] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
-  (20260210-phys_addr-v4-0-725a589e83c8@rev.ng)
+References to "hppa/hppa64" models in test cases are also updated.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
-Changes in v2:
-- Missed a reference to the old "hppa" CPU model, updated to
-  "pa-7300lc".
-- Link to v1: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng
+ target/hppa/cpu-qom.h           |  7 ++++++-
+ hw/hppa/machine.c               | 17 +++++++++++------
+ linux-user/hppa/elfload.c       |  2 +-
+ target/hppa/cpu.c               | 19 ++++++++++++++-----
+ tests/qtest/machine-none-test.c |  2 +-
+ 5 files changed, 33 insertions(+), 14 deletions(-)
 
----
-Anton Johansson (4):
-      hppa: Prepare for additional CPU models
-      hppa: Introduce HPPACPUDef
-      hppa: Get physical address space bits from CPUHPPADef
-      hppa: Add C3600 machine with PA-8600 CPU
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543..c6b82dc09b 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,12 @@
+ #include "hw/core/cpu.h"
+ 
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
++
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
+ 
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 472b90aab0..6a0487c362 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -791,13 +791,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -807,13 +807,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -823,13 +823,18 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 4600708702..7f7ece6dc1 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -8,7 +8,7 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return "hppa";
++    return "pa-7300lc";
+ }
+ 
+ const char *get_elf_platform(CPUState *cs)
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 714f3bbdaf..c8079016bf 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -207,7 +207,7 @@ static void hppa_cpu_initfn(Object *obj)
+ {
+     CPUHPPAState *env = cpu_env(CPU(obj));
+ 
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
++    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU_PA_8700);
+ }
+ 
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+@@ -236,9 +236,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
+ 
+-    return object_class_by_name(typename);
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
++
++    return oc;
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -314,12 +319,16 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+         .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_7300LC,
++        .parent = TYPE_HPPA_CPU,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
+     },
+ };
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index b6a87d27ed..f871056fa4 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -48,7 +48,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
 
- target/hppa/cpu-qom.h                 |  8 ++++-
- target/hppa/cpu.h                     | 35 ++++++++++++++++----
- hw/hppa/machine.c                     | 62 +++++++++++++++++++++++++++--------
- hw/pci-host/astro.c                   |  2 +-
- linux-user/hppa/elfload.c             |  2 +-
- target/hppa/cpu.c                     | 52 ++++++++++++++++++++++-------
- target/hppa/mem_helper.c              | 40 +++++++---------------
- tests/qtest/machine-none-test.c       |  2 +-
- tests/functional/hppa/test_seabios.py |  3 ++
- 9 files changed, 141 insertions(+), 65 deletions(-)
+-- 
+2.52.0
 
 
