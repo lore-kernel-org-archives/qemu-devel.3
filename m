@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D183FE9462A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 03:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D904E94625
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 03:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdyY-0000FE-Hx; Mon, 09 Feb 2026 21:59:42 -0500
+	id 1vpdyf-0000qU-F1; Mon, 09 Feb 2026 21:59:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdyN-0008AK-Sn
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:35 -0500
+ id 1vpdyX-00009z-HJ
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:41 -0500
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdyM-0004En-7G
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:31 -0500
+ id 1vpdyV-0004En-Tu
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770692370; x=1802228370;
+ t=1770692379; x=1802228379;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=LigRHQwWAD31PQTypxiGTImF+tjLtIXfRGIv8W1lHg8=;
- b=DwHXpFh0GhbX5HZ0hXff4LCTgLmPKJdtsQdN/wNrRRmxetfbCDvC6T9v
- G/MKu4Hdrcu8xGclRX2YpOgp4o3D+YXQTj7TDQwON+T9kURLSC59ldxOd
- OC8Zh0pWFYKN4FpUHCDb6tH1Iiboj/6HbsJjm8lHYMUfwlCFCCTBnIoC8
- +8gK5BT7jy/Xem8LJWytC3q1p7Zd2EfBcmz8nnsGFmuxOSSq3fDnGXN+u
- bBMdVl2/yLoDu/V+4tWat/RdEPMQE70lv/2I7rOFxKVvxMTb0BGKkdMN0
- gQlMrR2K8S7jhkia/QmNZ3CIzmonRHkC6Kp3OxZnWYpB/85Y3PWI06ixG Q==;
-X-CSE-ConnectionGUID: VuSjy6bARjGi7ElDw2IqfQ==
-X-CSE-MsgGUID: GkTlID+gQWqnR2q9eStaBA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75659971"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75659971"
+ bh=Gbu5Q9ZD3mjjaunJEzsqqpo2xtfMXEg1RIkHam+uUew=;
+ b=i8mapXvkmtQCxes2mGytcxTN0rTWPfh7yzymf69VomHGJ6Hun6YvQEX9
+ mcTakQEIrOKoY8J64ot6S2QCPzuuthnNc8SHJZQ+nrrUNLh7dCd5hUMqU
+ HKoXZ4F9LGZsZcBl6RZjz0RIFW6qLbV6XMZgDqN2kTezLT4u7D/m1+RCF
+ uLaLfS8gmlScbrLYJ2XvVgOKEbecjVViAH8rlmp+bBAw7YICwAapD3JcN
+ bZEsQqvhTQEiq0PD2FdBId95IpNks1xFtZQuOx7myrtlTzt3TYOyQ7ghy
+ qv+GTMpy7vpyhP68iW7rjJANzLqYu/zTM0D1gjDO7ofuOi33n2o+Wy507 A==;
+X-CSE-ConnectionGUID: YKnK+DlcSDij65MT1DYbDg==
+X-CSE-MsgGUID: 7dKDmAxqTXWb+DhJlXHRHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75659991"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75659991"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 18:59:29 -0800
-X-CSE-ConnectionGUID: 5rPKbzLYRgSPUbhIJMODbg==
-X-CSE-MsgGUID: 0StkaQtEQEq/BR7OB0dJ2g==
+ 09 Feb 2026 18:59:39 -0800
+X-CSE-ConnectionGUID: E4aMS0lPRXqF3lI4A2EYlA==
+X-CSE-MsgGUID: kzxe8lcBTXOkgnyCNxwFmw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800723"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800756"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:25 -0800
+ by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:34 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -61,9 +61,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: [PATCH v2 16/21] target/i386: deprecate cpuid-0xb property
-Date: Tue, 10 Feb 2026 11:23:43 +0800
-Message-Id: <20260210032348.987549-17-zhao1.liu@intel.com>
+Subject: [PATCH v2 18/21] target/i386: mark x-consistent-cache property as
+ internal-only
+Date: Tue, 10 Feb 2026 11:23:45 +0800
+Message-Id: <20260210032348.987549-19-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
@@ -94,53 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"cpuid-0xb" was previously disabled only on PC-Q35-2.6 and
-PC-I440FX-2.6 machines, but PC v2.6 machines have been deprecated and
-will be removed.
+x-consistent-cache property is a compatibility option that defaults to
+"true". For old machines, it is set to "false" to maintain the (legacy)
+inconsistent cache model for Intel CPUs.
 
-Considerring it may have external use, so deprecate it before removal.
+In fact, such wrong and inconsistent cache model should be treated as
+buggy "hardware", so that there is no valid use case for users to
+manually disable this property.
+
+Therefore, mark it as internal-only via OBJ_PROP_FLAG_INTERNAL flag,
+and prohibit all external settings.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- docs/about/deprecated.rst | 10 ++++++++++
- target/i386/cpu.c         |  3 ++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 0e8a25e37414..fed939b7f042 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -456,6 +456,16 @@ The ``fill-mtrr-mask=true`` fill the bits between 51..number-of-physical-address
- false only on PC-Q35-2.6 and PC-I440FX-2.6 machines, but PC v2.6 machines have
- been removed. Deprecate this property to stop external use.
- 
-+``cpuid-0xb`` on x86 (since 11.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``cpuid-0xb`` is used to control whether to encode CPUID 0xB leaf or not.
-+Only legacy x86 CPUs didn't have 0xB leaf, and the ```level``` property can
-+control whether CPUID exposes the 0xB leaf and emulate legacy CPUs. This
-+property was previously set to false only on PC-Q35-2.6 and PC-I440FX-2.6
-+machines, but PC v2.6 machines have been removed. Deprecate this property to
-+stop external use.
-+
- ``pmu-num=n`` on RISC-V CPUs (since 8.2)
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 13ccb1702d32..3766d453157b 100644
+index 3766d453157b..c2f99b98014a 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -10523,7 +10523,8 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
-     DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-     DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
--    DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-+    DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true,
-+                     .flags = OBJ_PROP_FLAG_DEPRECATED),
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only-v2", X86CPU, vendor_cpuid_only_v2, true),
-     DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
+@@ -10541,7 +10541,8 @@ static const Property x86_cpu_properties[] = {
+      * own cache information (see x86_cpu_load_def()).
+      */
+     DEFINE_PROP_BOOL("legacy-cache", X86CPU, legacy_cache, true),
+-    DEFINE_PROP_BOOL("x-consistent-cache", X86CPU, consistent_cache, true),
++    DEFINE_PROP_BOOL("x-consistent-cache", X86CPU, consistent_cache, true,
++                     .flags = OBJ_PROP_FLAG_INTERNAL),
+     DEFINE_PROP_BOOL("legacy-multi-node", X86CPU, legacy_multi_node, false),
+     DEFINE_PROP_BOOL("xen-vapic", X86CPU, xen_vapic, false),
+ 
 -- 
 2.34.1
 
