@@ -4,94 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB319EB2700
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03567EB2700
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpumi-0003W4-7F; Tue, 10 Feb 2026 15:56:36 -0500
+	id 1vpuov-0004Dd-3F; Tue, 10 Feb 2026 15:58:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpumf-0003Vm-H3
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:56:34 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vpumd-0007V2-VS
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:56:33 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so20122695e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:56:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770756990; x=1771361790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zx6YtEc7AuZO26GcTS5nIEmDiU7hzmE3ne+1tMZ8k6g=;
- b=Ud+oXkmqD3Jmn/QLp2/r/h0vqEsvmXebvREURSC6z4P7THCTncSKUtxQ6D5g3Rm/k1
- FZWoOhX+hOFHWdpU7MMbNoIGawIre5o8bhycpqgsebu4myJVYwlvbXSV/06kqPTWje8E
- +7SmQezF7VSOJ76k09qWAVOur2Kxqi+Pos4j22JlATTQmJZYadhQzhwb4jbpVWjGIzLF
- 1FxKFkgz+tNN9DBlgon7MQMZyaBkPWmkN/m57iK+5GzudRVu9fgIV1DDVFtuRz8b/NIV
- cY7IiSoJDNTUYNYrGzObeLJZWb45fEUPE/zTaM0k9hkhj9d6Xw+PUQOrF3UTBQDrVkZ6
- vsMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770756990; x=1771361790;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zx6YtEc7AuZO26GcTS5nIEmDiU7hzmE3ne+1tMZ8k6g=;
- b=kxrcleLIAyXJ/vS9TbJS4VW30vu+YDrsFLswrn+zFIbtg3DL+vflSWkJRQNFr29cyg
- f7s0gJuM7e1nyO4ujxUyLctGYlmk5jhwf2mInd4vJNg70YOqXh8GKk/lhIenIdzzUNlC
- cbxy2byFMqoFZYRXXIOA/frCDU7EEZKj0F4FDYbl2EEfUv/y+mWoUz+R4ZI0Jf2m9t8X
- yfctkGNT3Q6baBHn6gg7ocCm+eRaXWRXuRPnPPC6Mx1jbruuoOKhrU6ycausIzfHHieC
- p0MSp1eHIDU6WLZs4NbAfS1Tlx5oN+Bp3wKN+otl29kCpxvpFwtmhaOLRidZldmKGoJA
- fKqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCnLd9hniom/Te+IqGAGBiQdY0W9glvnxHcbjHh3AdqPoWBbT59OwnPIdu5Tb/VKmuXv/MlVgxt4U4@nongnu.org
-X-Gm-Message-State: AOJu0YzMih7xAktkQXjGPXGgHJ28gNB3H7ElSAppGfFDqIwWW6cD74ki
- lOb7n7FzX5gZgByOjnbzgc4NSbVYJgfuxaNEbIeUnX4ehtds8Vt2a93C9N1QuWM7VRM=
-X-Gm-Gg: AZuq6aKlQWod+CaPTpz9xlRSYEWeIMsRX73FsRPffWBuQ8iHe9hcaFzahkS9j0YncDo
- SaeaGdcDKQJJPOQPY2iXAKBqFWIt69BH/QybSURUIipXz48JexZR/i8SJ3AZfvEBOna9Sn8HPIj
- 3fyjCSwYD7OIf+f9W+QA/1aHTY1KXRuBQco/qh3eWAri5J9EGVXBtsEb9O1Xtpp5nC83bKEK052
- udA9TO/8J3ZQ5OEhK66fN7ZgQuiiCJEiyMo46MgQ2ysLWnFcxyiPH78xubvsyfKSzX4q6BBWSvz
- mgau7FjstZ3CCCohhUuwTLerNVhfSNLWEcSkNY1qfi7/kCZQUEmT/mfkmV1GIiTNbbpJ7Ol6Sie
- 9ZrjPND4N5UjUo9PjjKs7kCg7JVn1Ll5MW5uvUbggXnCJk/5HfBW7SC8j2CIRutC1OT+F0QgNoy
- ZNtiNo1ZVeYThEHoE/BI7yirX2zytIjAgO8fA4xAmjZUFBtgENd5CWxEY8zpIy75U=
-X-Received: by 2002:a05:600c:8215:b0:480:4c20:6a06 with SMTP id
- 5b1f17b1804b1-48320966792mr252273705e9.17.1770756990190; 
- Tue, 10 Feb 2026 12:56:30 -0800 (PST)
-Received: from [10.123.89.66] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835ba3e4b5sm1992065e9.5.2026.02.10.12.56.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 12:56:29 -0800 (PST)
-Message-ID: <def06a55-ab7f-4a2b-b43d-f9571c26a5a1@linaro.org>
-Date: Tue, 10 Feb 2026 21:56:27 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vpuot-0004C0-1T
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:58:51 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vpuoq-0008Mx-SQ
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:58:50 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EE4645969FA;
+ Tue, 10 Feb 2026 21:58:46 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id WG02CfWkoeyg; Tue, 10 Feb 2026 21:58:44 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DF2B75969F6; Tue, 10 Feb 2026 21:58:44 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DD2F55969F3;
+ Tue, 10 Feb 2026 21:58:44 +0100 (CET)
+Date: Tue, 10 Feb 2026 21:58:44 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 0/6] Implement memory_region_new_* functions
+In-Reply-To: <cover.1770753117.git.balaton@eik.bme.hu>
+Message-ID: <6fadf912-a556-1e3b-b606-54056d311a41@eik.bme.hu>
+References: <cover.1770753117.git.balaton@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] bsd-user: Remove NetBSD supprot
-Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
-References: <20260210-bsd-user-rm-openbsd-netbsd-v1-0-8b8b0f50c29d@bsdimp.com>
- <20260210-bsd-user-rm-openbsd-netbsd-v1-3-8b8b0f50c29d@bsdimp.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260210-bsd-user-rm-openbsd-netbsd-v1-3-8b8b0f50c29d@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,31 +70,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 16:06, Warner Losh wrote:
-> Remove the NetBSD specific code form bsd-user. It's not been maintained
-> in any meaningful way since it was introduced to the tree in 2008. It
-> hasn't been connected to the build since 2021, and last time (in 2023) I
-> tried to mock-up the meson support it needed, it failed to build. While
-> there were some out-of-tree work, I've not been able to connect with
-> that code.
-> 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   bsd-user/netbsd/host-os.h           |  25 ---
->   bsd-user/netbsd/os-strace.h         |   1 -
->   bsd-user/netbsd/strace.list         | 145 --------------
->   bsd-user/netbsd/syscall_nr.h        | 373 ------------------------------------
->   bsd-user/netbsd/target_os_elf.h     | 148 --------------
->   bsd-user/netbsd/target_os_siginfo.h |  82 --------
->   bsd-user/netbsd/target_os_signal.h  |  69 -------
->   bsd-user/netbsd/target_os_stack.h   |  56 ------
->   bsd-user/netbsd/target_os_thread.h  |  25 ---
->   bsd-user/qemu.h                     |   8 -
->   bsd-user/strace.c                   |  17 --
->   bsd-user/syscall_defs.h             |  13 --
->   12 files changed, 962 deletions(-)
+On Tue, 10 Feb 2026, BALATON Zoltan wrote:
+> Our documentation says that memory regions are automatically freed
+> when the owner dies and the reference counting to do this is also
+> implemented. However this relies on the QOM free funtion that can only
+> be set by creating objects with object_new but memory API only
+> provides constructors that call object_initialize which clears the
+> free function that prevents QOM to manage the memory region lifetime.
+> Implement corresponding memory_region_new_* functions that do the same
+> as the memory_region_init_* functions but create the memory region
+> with object_new so the lifetime can be automatically managed by QOM as
+> documented. The memory_region_init functions are kept because they are
+> useful for memory regions embedded in other object or managed
+> externally and not by QOM for some reason.
+>
+> v3:
+> Based-on: <cover.1770753117.git.balaton@eik.bme.hu>
 
-Typo "support" in $Subject.
+I mean
+Based-on: <cover.1770253186.git.balaton@eik.bme.hu>
+[PATCH v4 0/8] memory: Remove most _nomigrate variants
+series.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> - convert xtfpga from nomigrate as this has no migration compatibility
+> issue
+>
+> v2:
+> - rebase on master
+> - update documentation
+> - use these function to fix some leaks (there may be more, e.g. in
+> hw/pci-host/bonito but I leave that for later and/or others)
+>
+> BALATON Zoltan (6):
+>  memory: Add memory_region_new* functions
+>  memory: Update documentation for memory_region_new*()
+>  hw/ide/sii3112: Use memory_region_new to avoid leaking regions
+>  hw/pci-host/articia: Map PCI memory windows in realize
+>  hw/pci-host/articia: Add variable for common type cast
+>  hw/xtensa/xtfpga: Fix leaking memory region
+>
+> docs/devel/memory.rst   |  21 ++---
+> hw/ide/sii3112.c        |  30 +++----
+> hw/pci-host/articia.c   |  22 +++--
+> hw/ppc/amigaone.c       |  28 ++-----
+> hw/ppc/pegasos.c        |  13 ---
+> hw/xtensa/xtfpga.c      |   7 +-
+> include/system/memory.h | 179 +++++++++++++++++++++++++++++++++++++++
+> system/memory.c         | 181 ++++++++++++++++++++++++++++++++++++++++
+> 8 files changed, 407 insertions(+), 74 deletions(-)
+>
+>
 
