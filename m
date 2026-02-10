@@ -4,108 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07125EA3F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B756FEA3F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpjHL-0001Wp-S7; Tue, 10 Feb 2026 03:39:27 -0500
+	id 1vpjNL-0002xx-PR; Tue, 10 Feb 2026 03:45:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abysamross@ibm.com>)
- id 1vphcT-0002n9-As; Tue, 10 Feb 2026 01:53:09 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vpjNK-0002xp-2P
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:45:38 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abysamross@ibm.com>)
- id 1vphcR-0003s6-L1; Tue, 10 Feb 2026 01:53:09 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 619G4jjD369791; Tue, 10 Feb 2026 06:53:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=R/UV6HMEDUMIb9Q8VJA7rKMQ/NPZzRnfxT72mO0kB
- wI=; b=IPM3YP8qHKUHuSZrA14Zva7XpKWd3qXKUZZp8a9Sg54L2hp3wjLq9sior
- Fbm3GIb7tzVwmuqO//SPKPpSASuEd632MYQw8KxH5wV5OkHF5F8AgafPBiUcDNaN
- 1ExR973HABmoSPXScdSVNfvctZF9aOW6KssjjYAwwB/a/LvItMTeZkCVe3xCqpAB
- 1rnmFUcuZShooWinmbEtCsUGJOnlcN1pHxugyJrIfcheH7DD7lq67RRlIYvzaLSO
- VWEb3kNPlc4gdI8NXhXuC4MsCscGVeC+JpgqdkpVJa97A4s/ky6rC3kb0vyX95r4
- T2KLrYUfjZsmI+VwnyLhAqZ8pX8Yg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ws0cj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 06:53:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A6FXdp001815;
- Tue, 10 Feb 2026 06:53:03 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je1yxgc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 06:53:03 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61A6qxAa24773060
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 06:52:59 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F90420043;
- Tue, 10 Feb 2026 06:52:59 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B48C320040;
- Tue, 10 Feb 2026 06:52:58 +0000 (GMT)
-Received: from B02-B02RHL5-RH94-0370-9-114-17-225.pok.stglabs.ibm.com (unknown
- [9.114.17.225]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Feb 2026 06:52:58 +0000 (GMT)
-From: Aby Sam Ross <abysamross@ibm.com>
-To: qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, farman@linux.ibm.com,
- Aby Sam Ross <abysamross@ibm.com>
-Subject: [PATCH] prevent null pointer dereference during zpci hot unplug
-Date: Tue, 10 Feb 2026 01:52:14 -0500
-Message-ID: <20260210065214.2252464-1-abysamross@ibm.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vpjNH-000847-On
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:45:37 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id B8ABE400B7
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 08:45:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1770713131;
+ bh=JhPf1ybG226aQZTq7ImYK1eBak9elBdGPsDsUGanGuY=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=R7SPc0a1MzQDK3QDgxUoThfTKda+ov3X0bmFa0L2pUEKDyNelAELgfSPuihXkobGu
+ jL9TIkXLiAkRFig6CBWV52zeMAysDJKKGaAtZ4PygmH1utI63gCMqcJLTaCYrcFg9A
+ euPAzECqg0Rfy4UMT9SYNvjD2fiWZIetxd3nEV/qwXKgvpBy300KD9TS0crFEWBs3j
+ T6rep5dF0wk74U0y72ec4NMTXpn7Ck5oLGUOg8/yqejT2vzVqlt3728nd2WA8SZ8Lv
+ 0KHuCoWjFCH8EtDjNcvurjDFRfeWYpdCdtktT00hUvfT64z+Japd8giIbEtNZRl/Na
+ t7YYlkXIIt+nA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id A9C487F3D0
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 08:45:31 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=WZYBqkhX c=1 sm=1 tr=0 ts=698ad5d0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=_df3JAyxEGjRhYUhYmcA:9
-X-Proofpoint-GUID: iPFhh6fadNUuXTSWJiEXjvI4qRjRADN6
-X-Proofpoint-ORIG-GUID: iPFhh6fadNUuXTSWJiEXjvI4qRjRADN6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA1NSBTYWx0ZWRfXwTBUNrMA7p27
- 9rAVEKOIPSUZELe1gtpjoSrlVHLCJ6stBxIBCZt3M/YxXQSY79Kxa36ZSczyvfJr4Ro6u09AnD4
- /WFwhIG562mKlwRacSpQPjLD7Dg8Fkton2qlThkTbG1TLVu6rckhyF/7tVsY/e7NWMMTwv/RmBC
- qpSIG35vVY9T3/LtrCDZhUUEaXNT4eibJ3VKEM7CoOdezwxTr9KGZ/4qE/da4AAQm06oLIgk41x
- Iv1IY0ZsV8UTVcpEAN/GRVfK9R0hmWogeYtPHCHWT/IsKXVcgxwR7yGOWJKXO04vb9EoDC0YyxK
- a9JPQKZETg6kEJRWRoZDTmTeBYzfD29KftMpVTQKGOtisLtq8NOnxo00FLRlPfLogudXAS47tpx
- WoZIxwI3K+moYvsc7xmPTxT1zglyn1AXvYiZpMZAdykYU8tnHetSSNCzFJpVhzwY5iKNhnMkq4Y
- SLYGBwHnd83riCKU3cg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1011 phishscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100055
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=abysamross@ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Feb 2026 08:35:55 -0000
+From: Christian Ehrhardt <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Low; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: paelzer utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <177071255698.4180880.13912320872271662903.launchpad@juju-98d295-prod-launchpad-2>
+Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="4847db153920c8fbc330ac275b92a72279fa07a2";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 06f3372e4db41de29c45a03577fd506685f762cf
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 10 Feb 2026 03:39:27 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -114,39 +101,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio-pci hostdev realize during zpci hot plug fails (in `vfio_pci_realize()`)
-if the vfio group file in `/dev/vfio/` lacks appropriate permissions and the
-hostdev[/properties] addition doesn't reach the point where it could be
-associated with previously added zpci device (in `s390_pcihost_plug()`).
-As a result, zpci iommu pointer remains null. The zpci hot unplug following the
-failed hostdev addition assumes zpci iommu pointer was assigned and tries to
-make use of it to end the dma count resulting in a null pointer dereference.
-In the non-hotplug scenario, `qdev_unplug()` for the zpci device is not called
-after hostdev addition failure and this issue is not encountered.
+** Changed in: qemu (Ubuntu Resolute)
+     Assignee: (unassigned) =3D> Hector CAO (hectorcao)
 
-Fixes: 37fa32de7073
-Signed-off-by: Aby Sam Ross <abysamross@ibm.com>
----
- hw/s390x/s390-pci-bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+** Tags added: server-todo
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index b438d63c44..3166b91c46 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1248,7 +1248,7 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-         pbdev->fid = 0;
-         QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
-         g_hash_table_remove(s->zpci_table, &pbdev->idx);
--        if (pbdev->iommu->dma_limit) {
-+        if (pbdev->iommu && pbdev->iommu->dma_limit) {
-             s390_pci_end_dma_count(s, pbdev->iommu->dma_limit);
-         }
-         qdev_unrealize(dev);
--- 
-2.52.0
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
+
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Confirmed
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Confirmed
+Status in qemu source package in Resolute:
+  Confirmed
+
+Bug description:
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.=20
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
 
 
