@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6644AEA3F0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 06:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FEDEA3F0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 06:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphgf-0003Rs-HV; Tue, 10 Feb 2026 01:57:29 -0500
+	id 1vphh4-0003Wc-9q; Tue, 10 Feb 2026 01:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hsp.cat7@gmail.com>)
- id 1vphgb-0003LK-I5
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:27 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hsp.cat7@gmail.com>)
- id 1vphgZ-0004I1-WD
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:25 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-65939428896so7737236a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Feb 2026 22:57:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770706640; x=1771311440; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jBnF+yjCrGzOnhapfjfz8f76FPsQdLZcZppIdhgv6Kg=;
- b=jBSsPXxbcN+C1HJ91l7+oiGqamaSu+eBfAFEzYP8f/EtSPbyiQbHUh6+r2VJui2pcM
- F5uKy7ph/Yj+FRxApsIiDLausmLRF2svF9DLgOslLW0g2UGjUxlgsnIJrXk31AkKR4/W
- cKmMPTB1+BvzXlR8azf1s52FwlqLY3fX1bPVum7fpNJw2AONP0u4Is6+yBLokdR1uvbD
- 18nZ+0jIVQQmZR6FQ1oif6D1P+G59hUv8UhCA7kSjRgq5H1sot3dfva9fa9mlxlbiBgH
- KLMVinJxzdfpNtyU6QWqagm3O9JnnOIleZZffALsJvmllvidy9L+B6kV9P6qd/XjOivx
- qYAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770706640; x=1771311440;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jBnF+yjCrGzOnhapfjfz8f76FPsQdLZcZppIdhgv6Kg=;
- b=vT0CS9m0luoLnEbwv/twVRDr44yGThrPdOsBlBs+N2pG0rwkBcf48ckg3BoH4xt7N+
- jiFpSNF8kNeIDHvtnfhi1saca20yiM+RLq1O18fx5zvbKliPBuElE3q9cjQS9uD45PAQ
- ZJO1jyStvvOicwNVwWHAmAs7knXOWEUkJQlIXthsdaFQHOJhsfksNH7z6b5tTjRDMnwU
- /Mr0jeOPB3Dl/5mjwRf4VhR8JphOXnxoNYiHjK4xZpYHeatcbxPjiBcnTV7nz3/MnB3M
- TXOlwUGh5+ehnsLg4hYuibvlKLKn5uJdOH/C2Rp65J7g+5WaVSJl2CzTAjCP/ELZ9Bmn
- 6XMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/XTlrNLObyBuxLFl6BDp0Umz1HRyjxO6yIXeQ3ozFUt8ByvDEXQICiO+yFrDjKNlA+yWvA6a9eXto@nongnu.org
-X-Gm-Message-State: AOJu0Yyl/vHAaLZJVHR+G6uoQCxr7cEdDPZ/eo39v7MCccenf4Xd7HEc
- lqLmcJOVLZpugLNcYhWZSQAhEMiJ3LaTpEuNmL/0inTX2Vwy2KXHgLJW
-X-Gm-Gg: AZuq6aIGXO95KwnfmZY9aEntkqt3Cz83C73DoRIyMfmoiO1Sgv//cUkjpE/kc0myCFN
- tpDsriDuo/6049rHv8Mo+STUN0/fTXFGOs8uyOsG2CiyOT0zw5VXYTOwpUt4daAAJFH9t1lGUMJ
- z0z7FGWubTX+/raRpgy+hdbZUwhkYnHS+eUwOctwtYiPMi/jjWPw87E8C5BNAk3CdY39IMh6rrF
- pitx/gCz+DmQr5ZoY3yUXQKom9SCaZoWRhL0Bhnxxtl0kV0s/FHJ6eb6MXXkPe7dKjetL6c5Bfv
- xquDKb6xHh8FzaomiQ877oY1Fu8USYaWTNr8xK1vNo3w55F/xco1ZHRlU5egPDPEe5VG5liFmjD
- W3WPMTPVdboVWqWa4mlqal5qQWlQeh/rwEmcJfpRtmjKdN6RT+mvTgNVIrLYAXFL34cYGggkANM
- 63ssFNbSi5UiBgmrEMGNjQlt8wkNvwB9y43kugLTPvl1uaV0JQJwnGiLUXAYNhyWc4l9Oi4K6Lk
- DgOO5ET0mj+NhIswLINno7Zl/Ub4Y2BCMpGk5RUFuaPnqo4M130eO6cnCSIA+QcKKEnRvY/1VSZ
- gc+ttHSpD9SsEywOtJwoc5CoKTWaU1cJclfcEhjWX1qoJsCMVQm2JlWhAUaoHQ==
-X-Received: by 2002:a05:6402:46cd:b0:65a:1978:59f9 with SMTP id
- 4fb4d7f45d1cf-65a19785c6emr118022a12.14.1770706640311; 
- Mon, 09 Feb 2026 22:57:20 -0800 (PST)
-Received: from ?IPv6:2001:1c0f:81f:8e00:561f:8baa:54e2:9aa0?
- (2001-1c0f-081f-8e00-561f-8baa-54e2-9aa0.cable.dynamic.v6.ziggo.nl.
- [2001:1c0f:81f:8e00:561f:8baa:54e2:9aa0])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65983eaa57bsm3714159a12.5.2026.02.09.22.57.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Feb 2026 22:57:19 -0800 (PST)
-Message-ID: <098b8b01f48b4ed4624a86f6ec2db539cf8632aa.camel@gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Implement frame number overflow event
-From: Howard Spoelstra <hsp.cat7@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org
-Date: Tue, 10 Feb 2026 07:57:18 +0100
-In-Reply-To: <20260209001836.5413F5969F2@zero.eik.bme.hu>
-References: <20260209001836.5413F5969F2@zero.eik.bme.hu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vphh1-0003WJ-NK
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:51 -0500
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vphgy-0004Ig-Ok
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 01:57:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770706669; x=1802242669;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=3IVJkycU5hEphx7Ql2+tJjdu+UWIEVQMVzOp9oBWOhY=;
+ b=FqEfPWIv+IShoJnL0BxphmkHzASZWMVQ+zDxDnwhuLwWNfNU5i0K0rbI
+ 3jHpqXfrKAVDDiHQVVkb6FV0DUWGEcl3ggn7aTE/AHQvl2DEUJ3BivEW9
+ rI2A/2tBzMIhPE0o5lMrSHlr0W3E/w4ZXjhrHmz4egvJqBqM8ooHU9XtP
+ y4c4oBXlJ4DKwFaatpgm3X4qCESZZpjAyUt691tCJfkYpBysVTIpMg5kN
+ yyE1ciEni+mwcJyHhEa+/dnhcA0H2PGvw3Wz8PYhRglc74gJbHi02RpXz
+ OVQuaaV29pZJ8ewFb+DkQVYFDahGSUoVWSog0zdMOWSQGRJ5lsshIjw9d Q==;
+X-CSE-ConnectionGUID: XUMk5QJZSYSoFhNmu0PMLQ==
+X-CSE-MsgGUID: wTgoNcRTQDecMrjMDS4NQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="83198780"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="83198780"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 22:57:45 -0800
+X-CSE-ConnectionGUID: uCnxIYa7R/+7I7o3xiyebQ==
+X-CSE-MsgGUID: u3CkQEc9SL2mean7Vs3S5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211365351"
+Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
+ ([10.238.1.184])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 22:57:43 -0800
+Message-ID: <9ac55e27-7667-4b4a-a4bc-b0bdafdbb3b1@linux.intel.com>
+Date: Tue, 10 Feb 2026 14:57:41 +0800
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=hsp.cat7@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 05/11] target/i386: Increase MSR_BUF_SIZE and split
+ KVM_[GET/SET]_MSRS calls
+To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260128231003.268981-1-zide.chen@intel.com>
+ <20260128231003.268981-6-zide.chen@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260128231003.268981-6-zide.chen@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,77 +89,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-02-09 at 01:18 +0100, BALATON Zoltan wrote:
-> According to specification 6.5.6 FrameNumberOverflow Event when bit
-> 15
-> of frame count changes (either from 1 to 0 or 0 to 1) a
-> FrameNumberOverflow interrupt should be generated.
->=20
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+On 1/29/2026 7:09 AM, Zide Chen wrote:
+> Newer Intel server CPUs support a large number of PMU MSRs.  Currently,
+> QEMU allocates cpu->kvm_msr_buf as a single-page buffer, which is not
+> sufficient to hold all possible MSRs.
+>
+> Increase MSR_BUF_SIZE to 8192 bytes, providing space for up to 511 MSRs.
+> This is sufficient even for the theoretical worst case, such as
+> architectural LBR with a depth of 64.
+>
+> KVM_[GET/SET]_MSRS is limited to 255 MSRs per call.  Raising this limit
+> to 511 would require changes in KVM and would introduce backward
+> compatibility issues.  Instead, split requests into multiple
+> KVM_[GET/SET]_MSRS calls when the number of MSRs exceeds the API limit.
+>
+> Signed-off-by: Zide Chen <zide.chen@intel.com>
 > ---
-> =C2=A0hw/usb/hcd-ohci.c | 3 +++
-> =C2=A01 file changed, 3 insertions(+)
->=20
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index c7e9c71903..f8da16bc8f 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -1246,6 +1246,9 @@ static void ohci_frame_boundary(void *opaque)
-> =C2=A0=C2=A0=C2=A0=C2=A0 hcca.frame =3D cpu_to_le16(ohci->frame_number);
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* When the HC updates frame number, set pad to =
-0. Ref OHCI Spec
-> 4.4.1*/
-> =C2=A0=C2=A0=C2=A0=C2=A0 hcca.pad =3D 0;
-> +=C2=A0=C2=A0=C2=A0 if (ohci->frame_number =3D=3D 0x8000 || ohci->frame_n=
-umber =3D=3D 0) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ohci_set_interrupt(ohci, OHCI=
-_INTR_FNO);
-> +=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (ohci->done_count =3D=3D 0 && !(ohci->intr_st=
-atus &
-> OHCI_INTR_WD)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!ohci->done) {
+> V2:
+> - No changes.
+>
+>  target/i386/kvm/kvm.c | 109 +++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 92 insertions(+), 17 deletions(-)
+>
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 530f50e4b218..a2cf9b5df35d 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -98,9 +98,12 @@
+>  #define KVM_APIC_BUS_CYCLE_NS       1
+>  #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+>  
+> -/* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
+> - * 255 kvm_msr_entry structs */
+> -#define MSR_BUF_SIZE 4096
+> +/* A 8192-byte buffer can hold the 8-byte kvm_msrs header, plus
+> + * 511 kvm_msr_entry structs */
+> +#define MSR_BUF_SIZE      8192
+> +
+> +/* Maximum number of MSRs in one single KVM_[GET/SET]_MSRS call. */
+> +#define KVM_MAX_IO_MSRS   255
+>  
+>  typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
+>  typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
+> @@ -3878,23 +3881,102 @@ static void kvm_msr_entry_add_perf(X86CPU *cpu, FeatureWordArray f)
+>      }
+>  }
+>  
+> -static int kvm_buf_set_msrs(X86CPU *cpu)
+> +static int __kvm_buf_set_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
+>  {
+> -    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, cpu->kvm_msr_buf);
+> +    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, msrs);
+>      if (ret < 0) {
+>          return ret;
+>      }
+>  
+> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
+> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
+> +    if (ret < msrs->nmsrs) {
+> +        struct kvm_msr_entry *e = &msrs->entries[ret];
+>          error_report("error: failed to set MSR 0x%" PRIx32 " to 0x%" PRIx64,
+>                       (uint32_t)e->index, (uint64_t)e->data);
+>      }
+>  
+> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
+> +    assert(ret == msrs->nmsrs);
+> +    return ret;
+> +}
+> +
+> +static int __kvm_buf_get_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
+> +{
+> +    int ret;
+> +
+> +    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, msrs);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    if (ret < msrs->nmsrs) {
+> +        struct kvm_msr_entry *e = &msrs->entries[ret];
+> +        error_report("error: failed to get MSR 0x%" PRIx32,
+> +                     (uint32_t)e->index);
+> +    }
+> +
+> +    assert(ret == msrs->nmsrs);
+> +    return ret;
+> +}
+> +
+> +static int kvm_buf_set_or_get_msrs(X86CPU *cpu, bool is_write)
+> +{
+> +    struct kvm_msr_entry *entries = cpu->kvm_msr_buf->entries;
+> +    struct kvm_msrs *buf = NULL;
+> +    int current, remaining, ret = 0;
+> +    size_t buf_size;
+> +
+> +    buf_size = KVM_MAX_IO_MSRS * sizeof(struct kvm_msr_entry) +
+> +               sizeof(struct kvm_msrs);
+> +    buf = g_malloc(buf_size);
+> +
+> +    remaining = cpu->kvm_msr_buf->nmsrs;
+> +    current = 0;
+> +    while (remaining) {
+> +        size_t size;
+> +
+> +        memset(buf, 0, buf_size);
+> +
+> +        if (remaining > KVM_MAX_IO_MSRS) {
+> +            buf->nmsrs = KVM_MAX_IO_MSRS;
+> +        } else {
+> +            buf->nmsrs = remaining;
+> +        }
+> +
+> +        size = buf->nmsrs * sizeof(entries[0]);
+> +        memcpy(buf->entries, &entries[current], size);
+> +
+> +        if (is_write) {
+> +            ret = __kvm_buf_set_msrs(cpu, buf);
+> +        } else {
+> +            ret = __kvm_buf_get_msrs(cpu, buf);
+> +        }
+> +
+> +        if (ret < 0) {
+> +            goto out;
+> +        }
+> +
+> +        if (!is_write)
+> +            memcpy(&entries[current], buf->entries, size);
+> +
+> +        current += buf->nmsrs;
+> +        remaining -= buf->nmsrs;
+> +    }
+> +
+> +out:
+> +    g_free(buf);
+> +    return ret < 0 ? ret : cpu->kvm_msr_buf->nmsrs;
+> +}
+> +
+> +static int kvm_buf_set_msrs(X86CPU *cpu)
+
+Better add inline.
 
 
-While this looks enough to assure the audio stream is stable in e.g.
-Mac OS 9, Mac OS X seems to require an additional patch regarding page-
-crossing (spec 4.3.2.3.1): The start_addr > end_addr check is invalid
-when BP0 and BE are on different pages with BP0 at a higher physical
-address. So move the check inside the same-page branch.
+> +{
+> +    kvm_buf_set_or_get_msrs(cpu, true);
+>      return 0;
+
+why not directly return the return value of kvm_buf_set_or_get_msrs().
 
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index c7e9c71903..a1b2c3d4e5 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -710,16 +710,15 @@ static int ohci_service_iso_td(OHCIState *ohci,
-struct ohci_ed *ed)
-         end_addr =3D next_offset;
-     }
-=20
--    if (start_addr > end_addr) {
--        trace_usb_ohci_iso_td_bad_cc_overrun(start_addr, end_addr);
--        return 1;
--    }
--
--    if ((start_addr & OHCI_PAGE_MASK) !=3D (end_addr & OHCI_PAGE_MASK))
-{
-+    if ((start_addr & OHCI_PAGE_MASK) =3D=3D (end_addr & OHCI_PAGE_MASK))
-{
-+        if (start_addr > end_addr) {
-+            trace_usb_ohci_iso_td_bad_cc_overrun(start_addr,
-end_addr);
-+            return 1;
-+        }
-+        len =3D end_addr - start_addr + 1;
-+    } else {
-         len =3D (end_addr & OHCI_OFFSET_MASK) + 0x1001
-             - (start_addr & OHCI_OFFSET_MASK);
--    } else {
--        len =3D end_addr - start_addr + 1;
-     }
-     if (len > sizeof(buf)) {
-         len =3D sizeof(buf);
+>  }
+>  
+> +static int kvm_buf_get_msrs(X86CPU *cpu)
 
+inline.
+
+Others look good to me.
+
+
+> +{
+> +    return kvm_buf_set_or_get_msrs(cpu, false);
+> +}
+> +
+>  static void kvm_init_msrs(X86CPU *cpu)
+>  {
+>      CPUX86State *env = &cpu->env;
+> @@ -3928,7 +4010,7 @@ static void kvm_init_msrs(X86CPU *cpu)
+>      if (has_msr_ucode_rev) {
+>          kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
+>      }
+> -    assert(kvm_buf_set_msrs(cpu) == 0);
+> +    kvm_buf_set_msrs(cpu);
+>  }
+>  
+>  static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+> @@ -4746,18 +4828,11 @@ static int kvm_get_msrs(X86CPU *cpu)
+>          }
+>      }
+>  
+> -    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
+> +    ret = kvm_buf_get_msrs(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
+>  
+> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
+> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
+> -        error_report("error: failed to get MSR 0x%" PRIx32,
+> -                     (uint32_t)e->index);
+> -    }
+> -
+> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
+>      /*
+>       * MTRR masks: Each mask consists of 5 parts
+>       * a  10..0: must be zero
 
