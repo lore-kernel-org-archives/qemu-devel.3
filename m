@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFEDE9462A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449E6E94629
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 02:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdv0-0002Sl-DR; Mon, 09 Feb 2026 21:56:02 -0500
+	id 1vpduz-0002RC-9J; Mon, 09 Feb 2026 21:56:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vpdux-0002QH-4c
+ id 1vpdux-0002QG-4J
  for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:55:59 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vpduu-0003xI-H5
+ (envelope-from <gaosong@loongson.cn>) id 1vpdut-0003wn-Of
  for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:55:58 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxPMM4noppiUoRAA--.55091S3;
- Tue, 10 Feb 2026 10:55:52 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxjsM2noppf0oRAA--.55777S3;
+ Tue, 10 Feb 2026 10:55:50 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxD8Mtnoppm59DAA--.61278S9;
- Tue, 10 Feb 2026 10:55:52 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxD8Mtnoppm59DAA--.61278S5;
+ Tue, 10 Feb 2026 10:55:49 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Jiajie Chen <c@jia.je>
-Subject: [PULL 7/7] target/loongarch: Add LA v1.1 instructions to max cpu
-Date: Tue, 10 Feb 2026 10:30:40 +0800
-Message-Id: <20260210023040.3507338-8-gaosong@loongson.cn>
+Subject: [PULL 3/7] target/loongarch: Add amcas[_db].{b/h/w/d}
+Date: Tue, 10 Feb 2026 10:30:36 +0800
+Message-Id: <20260210023040.3507338-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260210023040.3507338-1-gaosong@loongson.cn>
 References: <20260210023040.3507338-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxD8Mtnoppm59DAA--.61278S9
+X-CM-TRANSID: qMiowJDxD8Mtnoppm59DAA--.61278S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,38 +66,135 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jiajie Chen <c@jia.je>
 
-Add LA v1.1 new instructinos to max cpu by enabling new features in
-CPUCFG2.
+The new instructions are introduced in LoongArch v1.1:
+
+- amcas.b
+- amcas.h
+- amcas.w
+- amcas.d
+- amcas_db.b
+- amcas_db.h
+- amcas_db.w
+- amcas_db.d
+
+The new instructions are gated by CPUCFG2.LAMCAS.
 
 Signed-off-by: Jiajie Chen <c@jia.je>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ target/loongarch/cpu.h                        |  1 +
+ target/loongarch/disas.c                      |  8 ++++++
+ target/loongarch/insns.decode                 |  8 ++++++
+ .../tcg/insn_trans/trans_atomic.c.inc         | 25 +++++++++++++++++++
+ target/loongarch/translate.h                  |  1 +
+ 5 files changed, 43 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 4fa629cb14..54dbee2554 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -417,7 +417,16 @@ static void loongarch_max_initfn(Object *obj)
-     if (tcg_enabled()) {
-         cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-         cpu->msgint = ON_OFF_AUTO_AUTO;
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, 1);
-+
-+        uint32_t data = cpu->env.cpucfg[2];
-+        data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
-+        /* Enable LA v1.1 instructions */
-+        data = FIELD_DP32(data, CPUCFG2, FRECIPE, 1);
-+        data = FIELD_DP32(data, CPUCFG2, LAM_BH, 1);
-+        data = FIELD_DP32(data, CPUCFG2, LAMCAS, 1);
-+        data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
-+        data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
-+        cpu->env.cpucfg[2] = data;
-     }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 013525bf45..a518541c54 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -139,6 +139,7 @@ FIELD(CPUCFG2, LSPW, 21, 1)
+ FIELD(CPUCFG2, LAM, 22, 1)
+ FIELD(CPUCFG2, HPTW, 24, 1)
+ FIELD(CPUCFG2, LAM_BH, 27, 1)
++FIELD(CPUCFG2, LAMCAS, 28, 1)
+ 
+ /* cpucfg[3] bits */
+ FIELD(CPUCFG3, CCDMA, 0, 1)
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 1a0f527cb1..66c0cae5a9 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -580,6 +580,14 @@ INSN(fldx_s,       frr)
+ INSN(fldx_d,       frr)
+ INSN(fstx_s,       frr)
+ INSN(fstx_d,       frr)
++INSN(amcas_b,      rrr)
++INSN(amcas_h,      rrr)
++INSN(amcas_w,      rrr)
++INSN(amcas_d,      rrr)
++INSN(amcas_db_b,   rrr)
++INSN(amcas_db_h,   rrr)
++INSN(amcas_db_w,   rrr)
++INSN(amcas_db_d,   rrr)
+ INSN(amswap_b,     rrr)
+ INSN(amswap_h,     rrr)
+ INSN(amadd_b,      rrr)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index 678ce42038..cf4123cd46 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -261,6 +261,14 @@ ll_w            0010 0000 .............. ..... .....     @rr_i14s2
+ sc_w            0010 0001 .............. ..... .....     @rr_i14s2
+ ll_d            0010 0010 .............. ..... .....     @rr_i14s2
+ sc_d            0010 0011 .............. ..... .....     @rr_i14s2
++amcas_b         0011 10000101 10000 ..... ..... .....    @rrr
++amcas_h         0011 10000101 10001 ..... ..... .....    @rrr
++amcas_w         0011 10000101 10010 ..... ..... .....    @rrr
++amcas_d         0011 10000101 10011 ..... ..... .....    @rrr
++amcas_db_b      0011 10000101 10100 ..... ..... .....    @rrr
++amcas_db_h      0011 10000101 10101 ..... ..... .....    @rrr
++amcas_db_w      0011 10000101 10110 ..... ..... .....    @rrr
++amcas_db_d      0011 10000101 10111 ..... ..... .....    @rrr
+ amswap_b        0011 10000101 11000 ..... ..... .....    @rrr
+ amswap_h        0011 10000101 11001 ..... ..... .....    @rrr
+ amadd_b         0011 10000101 11010 ..... ..... .....    @rrr
+diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+index 17e72bab47..b27c91a927 100644
+--- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+@@ -45,6 +45,23 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
+     return true;
  }
  
++static bool gen_cas(DisasContext *ctx, arg_rrr *a,
++                    void (*func)(TCGv, TCGv, TCGv, TCGv, TCGArg, MemOp),
++                    MemOp mop)
++{
++    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
++    TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
++    TCGv val = gpr_src(ctx, a->rk, EXT_NONE);
++    TCGv old = gpr_src(ctx, a->rd, EXT_NONE);
++
++    addr = make_address_i(ctx, addr, 0);
++
++    func(dest, addr, old, val, ctx->mem_idx, mop | MO_ALIGN);
++    gen_set_gpr(a->rd, dest, EXT_NONE);
++
++    return true;
++}
++
+ static bool gen_am(DisasContext *ctx, arg_rrr *a,
+                    void (*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
+                    MemOp mop)
+@@ -73,6 +90,14 @@ TRANS(ll_w, ALL, gen_ll, MO_LESL)
+ TRANS(sc_w, ALL, gen_sc, MO_LESL)
+ TRANS(ll_d, 64, gen_ll, MO_LEUQ)
+ TRANS(sc_d, 64, gen_sc, MO_LEUQ)
++TRANS(amcas_b, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_SB)
++TRANS(amcas_h, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LESW)
++TRANS(amcas_w, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LESL)
++TRANS(amcas_d, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LEUQ)
++TRANS(amcas_db_b, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_SB)
++TRANS(amcas_db_h, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LESW)
++TRANS(amcas_db_w, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LESL)
++TRANS(amcas_db_d, LAMCAS, gen_cas, tcg_gen_atomic_cmpxchg_tl, MO_LEUQ)
+ TRANS(amswap_b, LAM_BH, gen_am, tcg_gen_atomic_xchg_tl, MO_SB)
+ TRANS(amswap_h, LAM_BH, gen_am, tcg_gen_atomic_xchg_tl, MO_LESW)
+ TRANS(amadd_b, LAM_BH, gen_am, tcg_gen_atomic_fetch_add_tl, MO_SB)
+diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+index eb424bb0da..9ba3b425c1 100644
+--- a/target/loongarch/translate.h
++++ b/target/loongarch/translate.h
+@@ -27,6 +27,7 @@
+ #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+ #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+ #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
++#define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
+ #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
+ #define avail_LASX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
+ #define avail_IOCSR(C)  (FIELD_EX32((C)->cpucfg1, CPUCFG1, IOCSR))
 -- 
 2.52.0
 
