@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BBDEA811B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D578EA811B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpoAB-00020I-Cn; Tue, 10 Feb 2026 08:52:23 -0500
+	id 1vpoAD-00022r-1Z; Tue, 10 Feb 2026 08:52:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA4-0001x7-Tb
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:16 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vpoA7-000207-3Y
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:23 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA3-0006KE-EG
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:16 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47ee0291921so40445955e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:15 -0800 (PST)
+ id 1vpoA5-0006Kf-4n
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:18 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4833115090dso8111935e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770731534; x=1771336334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770731535; x=1771336335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gFf1z45G5YUmVjhRjNyUdMmLPtBu36lYSS9gfoGGAvU=;
- b=Sorr4/N+lBly7PyYXEXKE/TukDPdS24wK+zabvChqZdUhdWSXCY3PFQo4DEIwQvDlg
- VZ2qJKQNrI9P29NULi2/dMyb2xw3RUk4rO9klEV618HF2NQ9rCq3lnPpx3iialFbKR7o
- H9gOGqi/3mMUn1Jc59aoDVFlVfK9HaiXHA1s0Yhkrdvng39mJN6GCLeB0b3UsU2gLQLk
- TiD5VyYle+2D2uGXnoLHFDNQA2I95SKKB8hZvVfyLqrQwvt5xiSjKsZGGKL1RyseSw+N
- 22z5ZQueA3Asc8ecMD417zChtaj7nC4ie+naJUAVdFeaeHGWCdYz8JVwnhSDtB5R4vo3
- L1Gg==
+ :reply-to; bh=wHfh+0vLuB+ztlQ1m8l7NlaIrsfeFxV8zm0Rh6FLU2M=;
+ b=DLL7ivZ09gxN/yYYEl9fQclU8k799Ck5rkABhvyL4E53yF62ca8ZBvynkGt3xCFKm2
+ HQvb0Xruf40qaflcPV+7cdGhjrL2tMbHeWrr4fledrYbqlVciVm9AIlr/ZB8dSgT+JbX
+ wUklBfD/jbu07sL0732vlynV9DdBlp0xmMIJgHW2J8NjlaoG9AGizbvv4DELV7wU7TbV
+ CgnGfw5FTxl9CRIXhjKQyBpZyucGf5wZA3yGRIWURdFacxGCp4WDvHHzszF6YzKJdHRk
+ doFvRatZ/5Aod+kJt90QXCVYadTxjqzz1rZxdysouorzX+hpa9MMnzf1Y0l+sXZ0Jhv5
+ Gvbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770731534; x=1771336334;
+ d=1e100.net; s=20230601; t=1770731535; x=1771336335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gFf1z45G5YUmVjhRjNyUdMmLPtBu36lYSS9gfoGGAvU=;
- b=eJxDgQoGfI5D5pr5mH3mT6KxmPpw4pESeTsUj465XdCRQU6FZimmW1VEqxJ9wLChoD
- ie3BF/4cL4W8lrI9JFqKUdRpPMj7sedySvtIDAHMzqQvqxwKvdVfexwHLGZkmeV3Dsnb
- lbyO4adOxZayprNv7MkfFpVbZZrcWdv4DoRuYaHR9PeVK6c0r1r50KwG00AdwYkdL4oJ
- 2L/8PpeaFuSfr5FYApj8QYByve9NKm1LWgKBvHbbb0qEeFu0AfnUhuGeZBx1a9YLJcaS
- BHLQcsdArtL4Nx89348Kuz5AwbkTPMAXWT3aUP+S3QyiyMDL2L6PVF+g+OsazmKLZj/z
- 4h/g==
-X-Gm-Message-State: AOJu0Yw+8EGKIj3dADj13O/7RbHktX6Zdynl3n5IyqBVwo/PmQkCH4mT
- uhuh0REfudo//BvMKTmMjDOkZeQZoG9QcEO0x0ZDlypSk9ipR5EHBNrHnk+YZ2kd6cDEV5Dpjbh
- js4Rp
-X-Gm-Gg: AZuq6aLXbriVDOl0B7kB/GxZuNy0IXFBJrcjWiQfTz0AsY+ACwT5z2rOnwwm8/NCBzf
- aGL1QoJUSytpZivcr7t0Ld4FB4i5dPEvXQlefgj5zCsciRdQSkOTHOHsj2JmCy3P7I0B2HTvmEI
- FpKFaA8ULFzgrkluFVdaiKcznAwLTbbxX9aimGRV4wNPxUm/Xde3j5s+qdEnTEOaHqlG5NQ9Lq9
- fAHQYIVrwWbA7F2iVpCV0UMdcuu/OSMw/jUOwiqblkVnFIShwFRJpbcxppveGQox5/w1KrQqLvc
- hk1/I+Zv4tVy0P5hPUneftHT7zRddOyzN3wMSYAyfFL5LrBfFHyhJwGszJiPK0ff1cf/I9zUybL
- hV60b++UDExatOIQwTKjyej/Iye8Ef1DDZaX8nhn4gzU0RNJzX3TiWMRMrXKOcyLjN/LbCrlQZg
- jDtDCJ8s2VQLA9ck6939+pdwFUfTbWMHoF0Y5w+IA22YmhK531HbUX7IuF04JvE1b4sQA1qNwrN
- xiMx9oUTjqh4pU0S+shLEGoD3XtnvM=
-X-Received: by 2002:a05:600c:528b:b0:482:f12f:f35e with SMTP id
- 5b1f17b1804b1-483201e3759mr219385725e9.12.1770731533663; 
- Tue, 10 Feb 2026 05:52:13 -0800 (PST)
+ bh=wHfh+0vLuB+ztlQ1m8l7NlaIrsfeFxV8zm0Rh6FLU2M=;
+ b=ZXDujfVQXivIqXhpV+wU17UFdEhbqUKO+pCvOgN+zIvs1918iIzaUT4zHJTCUdR6Ou
+ 8a8jAi1NRCVmTMAnE1OyzmyqFmRR4Q/EvT6ouAUQPKMv1PshUKulV5n/P5gPLOgXHMHq
+ gvCgj2oi9geuTrKdm2kxz+SJnt91UCDkD2qyGRSqZGYb5WrOoTrSiFPmGCMq7/6Zybz8
+ FaVhX62swKllx54O4ceOjyKoaj/CA+zxd/2lWCx4fj94M6oOl6ApAQmjwl3l/jlADz8N
+ SPWbfnZcQzGPNOsw3v84LBRoEvgtnArnNdk5+bhNTFbycIOpFXWDml7iCLBTB76Rs7zX
+ 0D4A==
+X-Gm-Message-State: AOJu0YxNfn2++ky9BQTWKv1YM6EhnElx5sDAAXW2aYkqRZjG+Vz0UMXT
+ suAOqn54iTrq3YOWsG2NkgNdvr1/r1n5r+StbLk93zW5aesJLj5zYs/M6FDoFWV56kBCiPwd8Pm
+ 4/lFg
+X-Gm-Gg: AZuq6aIeQ2rv8Ex3WyMBOCtBLpU70QHPQE8sbaTXV0I0Zw0UBZuMhmxUXmDIBo29wr4
+ Y1OEghucO3hPqKfbzMeyx0HmvS9HAcQjsZ2aDsnQXkefzwMeDfLMb1SoJCN4dt09MwSochnnaL9
+ F2ac5Wtm0HqG7NUZckb2TQcmEBjuNs/kEqh/5j0AyuYbqlJGo4C0spMjgn4H7qeedELqYfXRvBN
+ ZQmlCf8Zo9eND/3tO0qq3iwJ5kJPuNGEIYAw32SRynqHRDD9gP8eazWBUgp5bG/w/jXerZCGHSO
+ I7t8YdWGS6ieWssiQs8Vk2ZgX7V6Aa21miiZlv0GjIAWLfY0zoGhjspa1hlz+y9enOwPslWNkD1
+ yQeVwZOiODoH/PAQdz/PpH4O3UTwvUOLZmTsGuiQfhLzIHfxhspFaz9oHMt+a6UP48K1nm3eN+2
+ +8aKyDsDlwjLsBVTELixJrm7/HIfO2ivYFdJy6u0pE1XBq+k5kH8MXyvYKzjPAbvUrZUc8XCdUI
+ CushxoB4oHbGuNildF6bCAOjvXjQHs=
+X-Received: by 2002:a05:600c:3e19:b0:483:5310:dc43 with SMTP id
+ 5b1f17b1804b1-4835310ddedmr22807635e9.32.1770731535264; 
+ Tue, 10 Feb 2026 05:52:15 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.12
+ 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:52:13 -0800 (PST)
+ Tue, 10 Feb 2026 05:52:14 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/26] qtest: hw/arm: virt: add new test case for GICv3 + GICv2m
-Date: Tue, 10 Feb 2026 13:51:47 +0000
-Message-ID: <20260210135206.229528-8-peter.maydell@linaro.org>
+Subject: [PULL 09/26] whpx: Move around files before introducing AArch64
+ support
+Date: Tue, 10 Feb 2026 13:51:49 +0000
+Message-ID: <20260210135206.229528-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260210135206.229528-1-peter.maydell@linaro.org>
 References: <20260210135206.229528-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,53 +104,168 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ MAINTAINERS                                           | 2 ++
+ accel/meson.build                                     | 1 +
+ accel/whpx/meson.build                                | 6 ++++++
+ {target/i386 => accel}/whpx/whpx-accel-ops.c          | 4 ++--
+ {target/i386/whpx => include/system}/whpx-accel-ops.h | 4 ++--
+ {target/i386/whpx => include/system}/whpx-internal.h  | 6 ++++--
+ target/i386/whpx/meson.build                          | 1 -
+ target/i386/whpx/whpx-all.c                           | 4 ++--
+ target/i386/whpx/whpx-apic.c                          | 2 +-
+ 9 files changed, 20 insertions(+), 10 deletions(-)
+ create mode 100644 accel/whpx/meson.build
+ rename {target/i386 => accel}/whpx/whpx-accel-ops.c (97%)
+ rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
+ rename {target/i386/whpx => include/system}/whpx-internal.h (97%)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index e489d94331..a5a5b8807b 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2252,6 +2252,25 @@ static void test_acpi_aarch64_virt_tcg_its_off(void)
-     free_test_data(&data);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 29f88d48f3..3a0fe1081a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -564,9 +564,11 @@ WHPX CPUs
+ M: Pedro Barbuda <pbarbuda@microsoft.com>
+ M: Mohamed Mediouni <mohamed@unpredictable.fr>
+ S: Supported
++F: accel/whpx/
+ F: target/i386/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
++F: include/system/whpx-accel-ops.h
  
-+static void test_acpi_aarch64_virt_tcg_msi_gicv2m(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .variant = ".msi_gicv2m",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+    };
+ MSHV
+ M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
+diff --git a/accel/meson.build b/accel/meson.build
+index 983dfd0bd5..289b7420ff 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -6,6 +6,7 @@ user_ss.add(files('accel-user.c'))
+ subdir('tcg')
+ if have_system
+   subdir('hvf')
++  subdir('whpx')
+   subdir('qtest')
+   subdir('kvm')
+   subdir('xen')
+diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
+new file mode 100644
+index 0000000000..7b3d6f1c1c
+--- /dev/null
++++ b/accel/whpx/meson.build
+@@ -0,0 +1,6 @@
++whpx_ss = ss.source_set()
++whpx_ss.add(files(
++  'whpx-accel-ops.c',
++))
 +
-+    test_acpi_one("-cpu cortex-a57 "
-+                  "-M gic-version=3,iommu=smmuv3,msi=gicv2m", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_q35_viot(void)
++specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
+diff --git a/target/i386/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
+similarity index 97%
+rename from target/i386/whpx/whpx-accel-ops.c
+rename to accel/whpx/whpx-accel-ops.c
+index f75886128d..c84a25c273 100644
+--- a/target/i386/whpx/whpx-accel-ops.c
++++ b/accel/whpx/whpx-accel-ops.c
+@@ -16,8 +16,8 @@
+ #include "qemu/guest-random.h"
+ 
+ #include "system/whpx.h"
+-#include "whpx-internal.h"
+-#include "whpx-accel-ops.h"
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
+ 
+ static void *whpx_cpu_thread_fn(void *arg)
  {
-     test_data data = {
-@@ -2834,6 +2853,8 @@ int main(int argc, char *argv[])
-                            test_acpi_aarch64_virt_tcg_topology);
-             qtest_add_func("acpi/virt/its_off",
-                            test_acpi_aarch64_virt_tcg_its_off);
-+            qtest_add_func("acpi/virt/msi_gicv2m",
-+                           test_acpi_aarch64_virt_tcg_msi_gicv2m);
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+diff --git a/target/i386/whpx/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
+similarity index 92%
+rename from target/i386/whpx/whpx-accel-ops.h
+rename to include/system/whpx-accel-ops.h
+index 54cfc25a14..ed9d4c49f4 100644
+--- a/target/i386/whpx/whpx-accel-ops.h
++++ b/include/system/whpx-accel-ops.h
+@@ -7,8 +7,8 @@
+  * See the COPYING file in the top-level directory.
+  */
+ 
+-#ifndef TARGET_I386_WHPX_ACCEL_OPS_H
+-#define TARGET_I386_WHPX_ACCEL_OPS_H
++#ifndef SYSTEM_WHPX_ACCEL_OPS_H
++#define SYSTEM_WHPX_ACCEL_OPS_H
+ 
+ #include "system/cpus.h"
+ 
+diff --git a/target/i386/whpx/whpx-internal.h b/include/system/whpx-internal.h
+similarity index 97%
+rename from target/i386/whpx/whpx-internal.h
+rename to include/system/whpx-internal.h
+index 2dcad1f565..041fa958b4 100644
+--- a/target/i386/whpx/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -1,11 +1,13 @@
+-#ifndef TARGET_I386_WHPX_INTERNAL_H
+-#define TARGET_I386_WHPX_INTERNAL_H
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef SYSTEM_WHPX_INTERNAL_H
++#define SYSTEM_WHPX_INTERNAL_H
+ 
+ #include <windows.h>
+ #include <winhvplatform.h>
+ #include <winhvemulation.h>
+ 
+ #include "hw/i386/apic.h"
++#include "exec/vaddr.h"
+ 
+ typedef enum WhpxBreakpointState {
+     WHPX_BP_CLEARED = 0,
+diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
+index 9c54aaad39..c3aaaff9fd 100644
+--- a/target/i386/whpx/meson.build
++++ b/target/i386/whpx/meson.build
+@@ -1,5 +1,4 @@
+ i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
+   'whpx-all.c',
+   'whpx-apic.c',
+-  'whpx-accel-ops.c',
+ ))
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index db184e1b0d..cef31fc1a8 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -31,8 +31,8 @@
+ #include "accel/accel-cpu-target.h"
+ #include <winerror.h>
+ 
+-#include "whpx-internal.h"
+-#include "whpx-accel-ops.h"
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
+ 
+ #include <winhvplatform.h>
+ #include <winhvemulation.h>
+diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
+index afcb25843b..b934fdcbe1 100644
+--- a/target/i386/whpx/whpx-apic.c
++++ b/target/i386/whpx/whpx-apic.c
+@@ -18,7 +18,7 @@
+ #include "hw/pci/msi.h"
+ #include "system/hw_accel.h"
+ #include "system/whpx.h"
+-#include "whpx-internal.h"
++#include "system/whpx-internal.h"
+ 
+ struct whpx_lapic_state {
+     struct {
 -- 
 2.43.0
 
