@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB8FEB2714
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB18EB2713
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpu7V-0005nh-Ha; Tue, 10 Feb 2026 15:14:01 -0500
+	id 1vpu7Y-0005pA-1j; Tue, 10 Feb 2026 15:14:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpu7U-0005nM-3Y
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:14:00 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vpu7W-0005oN-Kd
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:14:02 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpu7S-0007nR-Le
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:13:59 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-8230f8f27cfso2898444b3a.0
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:13:58 -0800 (PST)
+ id 1vpu7U-0007nn-MY
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:14:02 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2aaecf9c325so1268015ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:14:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770754437; x=1771359237; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770754439; x=1771359239; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TUXohQh66NEYdqhO2tX9stkTnV8Hh6W32mBAqP3BQwU=;
- b=tkNjyPCHZDGW+ayP+lnwgOUBAymzOTfluBwMtQvZ4hF/DNFrkt4K0ZYzFQmlLGrRG/
- KmKIRWilu24AeSHjEI+7JQBvkUI+RuyqH9kcO5Dbqc3FjkChOEMYl4lUBa5MnWAorRwZ
- +ikqUb7XHxJM1+H1p1CBVhdfhq1ZjVeCwn70k5u+nTH51n12LSWFh9tx2OvmF8PXj9+L
- Rlua9UvalF6iT4znge+PLeTIeVU+gueSJtOaXIokwQuvGtdVaRVCbnDBwd3uooluwQvh
- NLelRXkQE/Q4Ke2UyXQOLE3jQPH0N2zZj0RBeFFrQfpLBJ0xY3+cx69qQxblo6rEKWsW
- OhkA==
+ bh=srp3JrZ1BiVLkmTdSaWF+Z7j3MJg4Rv2VkDUwj+jfYE=;
+ b=bMely8esPODz/3NyocJ44bVdYRxn6zcNDGS2EyC8IGmbK5bYdwBjTy0WSRx5MwLTB/
+ 9B2W3tP1L+Ltu5/G/CnpcGlnbhIwx103bLHkBEJyf6y/01d73x2RJ3tEZGDH4IIZ3Lei
+ pSygoyR8EmH/pJPOcjOZSQW39wjPo6zVZKqjp0c0Z2w6DJA2ljxgyFf4ecpW3EpnFkKY
+ +GdIhgqeg/4tHjiwYtoqIofotBeh+AI+utT7DEetJTT+DlLahGIw5TWfTSxYdaQ7w/EC
+ yaq+FJL85nVrA5SWwCf7KDYYahRKaDBeu6Z5iSHfoMeKVtnDkhr54omT0hllTmDQwyCo
+ pZog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770754437; x=1771359237;
+ d=1e100.net; s=20230601; t=1770754439; x=1771359239;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TUXohQh66NEYdqhO2tX9stkTnV8Hh6W32mBAqP3BQwU=;
- b=FlnmhCETwUV6BI41siGQwQp0nEQY6dBr9a6v7zNtZbDmq1IliLMhjdQOQ8qnS09q3A
- Kp5wrO6OzB6BrXO3+rT+vku4gEws9Yw1cxeCrsEfiD4ofPQJMaQqCmYQ26T6djMzi/tm
- zFRMLp4l8A1Drd6H7AjQLnMj7xO5p4D1tNLPfKFqebX+04klbaqdIEAYl3zeetLfJElH
- Tg3VIkUpC/Yye5Oy+K1suwRrOLh/hfTODCKMnJL7dk9X0w4PZO/SaGl8Nszse4OB6lRA
- v2PDxCiGhM62Mowz6Xz56c0ydjmYF2X07iDzfOuj3a1JJLV5DwSuAtqcfXXFbK9LP5k+
- HDLg==
-X-Gm-Message-State: AOJu0YxS9vlJ6nhHbCDz2H6/AgHE+ZTuzLyf/uO0uUseUDXFgx7onZJ/
- 46BHHMmIx6EO7RgEwarRpC/zX5fOntj7vXJSBAlUxfhdE/pNgFW4bj0klnYTYDJOU+aQVukrR+b
- QtQsB
-X-Gm-Gg: AZuq6aLeteOEgs7RWgNhGEBJY8nOHqJFz5w0jKaQo7f9ggWa8beW3CMomY/WtsRqZbY
- LgiVEuT9LZ/OdTE1IxkYQLgFqwNwwYw2/pJJR+8Rd4kwy356lENpqp6riSIuyOceeYto2vR3sPV
- hWy7xPn28EAkGoofqh0LX0u1HYTA1KLSYUhAoxqhw+yA1t2MdpFYkSaEmg43D0tzrc0s85B3+I/
- 2Y8Ty6jwAuhoDY1LQNMrT6fXXpWkdJDhOhIJmzPW4b1A86IJWL2HB9c2gtXhlLGHsIYD2/oHKum
- rhK/9a+6Pk5pllaI6r/qvnWFrfNobvs0wgcKXX2cXSqGMum1Ris56FwIMk+jriOjA5IktAmrCuJ
- okbQrHt+CYL4/g5GWdc2MOCfXvY76DOrn579FyXZ19mfavd/kufUjdIK45g8MILv1q19Q23nLHT
- AZCNrky8DcVEt7jZ7T0sNMX/Dkwos3ZxIANNefgET2GqBFhDAbPPuP+pldwAZ0H94YKhkmMqmcA
- u9M
-X-Received: by 2002:a05:6a21:8202:b0:304:313a:4bcd with SMTP id
- adf61e73a8af0-39417c1fae3mr3025900637.30.1770754436624; 
- Tue, 10 Feb 2026 12:13:56 -0800 (PST)
+ bh=srp3JrZ1BiVLkmTdSaWF+Z7j3MJg4Rv2VkDUwj+jfYE=;
+ b=IyPWoJswgB2FsNDAs645fLXS3izmBeN4KaN80Yx2CDkrjiYSPtyNbEMZE2H84ww8cT
+ xeHSNkpoixjccf2/A9SC7gxC5qd0GzVO2Fr+rKCEAm32/64lBWqoFaGB2oWtHhswPhzB
+ IbBu837roO5xpeu+3zB/ZqgDj7VfwGa1M7U+ANPu14VQI6NAcz2vnCQEdYrPm4o2tram
+ qw+E2Opf71uHrGK3yGKoWeonub9xx54rFD8UAKfJkoRE8cNc3b4sn5ng05DMJbZZo4m5
+ r2NNTR2LeXZSPKFPOnjVAxniVNfUPSa0XdjJrm9cn57HOVgMF1lMGQaO+vPMebggqgtS
+ tpUw==
+X-Gm-Message-State: AOJu0YyAhBVnqVWQywOii6cme1aUr69rDXx3hlR9CRlm0cfIKeTWjMEF
+ JvWzZGLO5o0Vt+knwrlwEyNUQCv1b1tHMYLDyuzn9m3cHZZ17pHSJdWYMvonvbyscD0vTse/YXQ
+ rdqg9
+X-Gm-Gg: AZuq6aJPSl/olV48WzM4EyNFTmMhVaNgKOIMicPpThDQVxvxwSJU8Pq3e+1Knuuenrv
+ Ej1KVS0njcQ4LCAW+3Xj/mTLl9Vd+DDUrZbcH1OPyOqlfGV5CUwOBRZ4xDQ+CqCJGQ+icKFFSEj
+ ZF77b3Yq2o7/p1vv4YeUtCuGT9Uw6qOn8Px5S4hQ55pHVAk5Kh8mT1m2EmFq/0gSNNcGRZMkp5v
+ ayNJdT/MnbpGq2uE3FJwPsasKCJQy6hRxlAVaC2lVo1mu6ewBcnZG7tT48pJJNWGsmi4zBmeGB0
+ hIfxe9g97AnmZA+vAnCfEFBjmWW9sAr+9nRatVXVoc8A6S2cC1AjcBGcdA9iJTa9OPj7QTCNtDN
+ U0q+cZDRi7uwaMBPvz9GEfVjs6rWWhruQA4cZwAuUbrbdwqlGzxz0mS8L9VbBZogJdGOhWcAcvo
+ Wmzi+07xgoCgL04DFebaGdWdwadMO2e9iM7Zl76OVnMCNnY5BtG4y7Sft5Uz7iRxBGLCVu8YrFA
+ fSb
+X-Received: by 2002:a17:902:e74b:b0:2aa:e4f2:f076 with SMTP id
+ d9443c01a7336-2ab1007a93emr39343155ad.8.1770754439108; 
+ Tue, 10 Feb 2026 12:13:59 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6dcb5e3e8csm13930031a12.21.2026.02.10.12.13.56
+ 41be03b00d2f7-c6dcb5e3e8csm13930031a12.21.2026.02.10.12.13.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 12:13:56 -0800 (PST)
+ Tue, 10 Feb 2026 12:13:58 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,17 +73,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, alistair.francis@wdc.com,
  Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
  philmd@linaro.org, anjo@rev.ng, brian.cain@oss.qualcomm.com
-Subject: [PATCH 1/4] contrib/plugins/uftrace: fix infinite stack unwind
- detection
-Date: Tue, 10 Feb 2026 12:13:41 -0800
-Message-ID: <20260210201344.1403613-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH 4/4] contrib/plugins/uftrace: add riscv64 support
+Date: Tue, 10 Feb 2026 12:13:44 -0800
+Message-ID: <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
 References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,35 +105,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, we were detecting infinite stacks but not stopping unwinding
-since break only exited inner loop.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ docs/about/emulation.rst  | 10 +++--
+ contrib/plugins/uftrace.c | 87 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 94 insertions(+), 3 deletions(-)
 
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index f547e118eef..76c6ea92ca9 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -836,8 +836,8 @@ Uftrace
+ This plugin generates a binary trace compatible with
+ `uftrace <https://github.com/namhyung/uftrace>`_.
+ 
+-Plugin supports aarch64 and x64, and works in user and system mode, allowing to
+-trace a system boot, which is not something possible usually.
++Plugin supports aarch64, x64 and riscv64, and works in user and system mode,
++allowing to trace a system boot, which is not something possible usually.
+ 
+ In user mode, the memory mapping is directly copied from ``/proc/self/maps`` at
+ the end of execution. Uftrace should be able to retrieve symbols by itself,
+@@ -872,7 +872,7 @@ Performance wise, overhead compared to normal tcg execution is around x5-x15.
+     - Description
+   * - trace-privilege-level=[on|off]
+     - Generate separate traces for each privilege level (Exception Level +
+-      Security State on aarch64, Rings on x64).
++      Security State on aarch64, Privilege levels on riscv64 and Rings on x64).
+ 
+ .. list-table:: uftrace_symbols.py arguments
+   :widths: 20 80
+@@ -976,6 +976,10 @@ You can follow the exact same instructions for a x64 system, combining edk2,
+ Linux, and Ubuntu, simply by switching to
+ `x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
+ 
++You can follow the exact same instructions for a riscv64 system, combining
++opensbi, Linux, and Ubuntu, simply by switching to
++`riscv64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/riscv64>`_ branch.
++
+ To build and run the system::
+ 
+     # Install dependencies
 diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index a7e21b5b87a..1ed982999ed 100644
+index 21ac1402047..e3c65a1c930 100644
 --- a/contrib/plugins/uftrace.c
 +++ b/contrib/plugins/uftrace.c
-@@ -443,7 +443,7 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
-         /* check we don't have an infinite stack */
-         for (size_t i = 0; i < depth; ++i) {
-             if (frame_pointer == unwind[i].frame_pointer) {
--                break;
-+                goto after_unwind;
-             }
-         }
-         CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
-@@ -456,6 +456,7 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
-     } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
-     #undef UNWIND_STACK_MAX_DEPTH
+@@ -99,6 +99,19 @@ typedef struct {
+     struct qemu_plugin_register *reg_cr0;
+ } X64Cpu;
  
-+after_unwind:
-     /* push it from bottom to top */
-     while (depth) {
-         callstack_push(cpu->cs, unwind[depth - 1]);
++typedef struct {
++    struct qemu_plugin_register *reg_fp;
++    struct qemu_plugin_register *reg_priv;
++} Riscv64Cpu;
++
++typedef enum {
++    RISCV64_USER,
++    RISCV64_SUPERVISOR,
++    RISCV64_RESERVED,
++    RISCV64_MACHINE,
++    RISCV64_PRIVILEGE_LEVEL_MAX,
++} Riscv64PrivilegeLevel;
++
+ typedef struct {
+     uint64_t timestamp;
+     uint64_t data;
+@@ -681,6 +694,78 @@ static CpuOps x64_ops = {
+     .does_insn_modify_frame_pointer = x64_does_insn_modify_frame_pointer,
+ };
+ 
++static uint8_t riscv64_num_privilege_levels(void)
++{
++    return RISCV64_PRIVILEGE_LEVEL_MAX;
++}
++
++static const char *riscv64_get_privilege_level_name(uint8_t pl)
++{
++    switch (pl) {
++    case RISCV64_USER: return "User";
++    case RISCV64_SUPERVISOR: return "Supervisor";
++    case RISCV64_RESERVED: return "Unknown";
++    case RISCV64_MACHINE: return "Machine";
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint8_t riscv64_get_privilege_level(Cpu *cpu_)
++{
++    Riscv64Cpu *cpu = cpu_->arch;
++    return cpu_read_register64(cpu_, cpu->reg_priv);
++}
++
++static uint64_t riscv64_get_frame_pointer(Cpu *cpu_)
++{
++    Riscv64Cpu *cpu = cpu_->arch;
++    return cpu_read_register64(cpu_, cpu->reg_fp);
++}
++
++static uint64_t riscv64_get_next_frame_pointer(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp - 16);
++}
++
++static uint64_t riscv64_get_next_return_address(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp - 8);
++}
++
++static void riscv64_init(Cpu *cpu_)
++{
++    Riscv64Cpu *cpu = g_new0(Riscv64Cpu, 1);
++    cpu_->arch = cpu;
++    cpu->reg_fp = plugin_find_register("fp");
++    g_assert(cpu->reg_fp);
++    cpu->reg_priv = plugin_find_register("priv");
++    g_assert(cpu->reg_priv);
++}
++
++static void riscv64_end(Cpu *cpu)
++{
++    g_free(cpu->arch);
++}
++
++static bool riscv64_does_insn_modify_frame_pointer(const char *disas)
++{
++    /* fp is s0 in disassembly */
++    return strstr(disas, "s0");
++}
++
++static CpuOps riscv64_ops = {
++    .init = riscv64_init,
++    .end = riscv64_end,
++    .get_frame_pointer = riscv64_get_frame_pointer,
++    .get_next_frame_pointer = riscv64_get_next_frame_pointer,
++    .get_next_return_address = riscv64_get_next_return_address,
++    .get_privilege_level = riscv64_get_privilege_level,
++    .num_privilege_levels = riscv64_num_privilege_levels,
++    .get_privilege_level_name = riscv64_get_privilege_level_name,
++    .does_insn_modify_frame_pointer = riscv64_does_insn_modify_frame_pointer,
++};
++
+ static void track_privilege_change(unsigned int cpu_index, void *udata)
+ {
+     Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
+@@ -890,6 +975,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         arch_ops = aarch64_ops;
+     } else if (!strcmp(info->target_name, "x86_64")) {
+         arch_ops = x64_ops;
++    } else if (!strcmp(info->target_name, "riscv64")) {
++        arch_ops = riscv64_ops;
+     } else {
+         fprintf(stderr, "plugin uftrace: %s target is not supported\n",
+                 info->target_name);
 -- 
 2.47.3
 
