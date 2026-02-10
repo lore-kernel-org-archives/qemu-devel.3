@@ -4,47 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3397EA8109
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6783EEA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmiD-0007Og-O4; Tue, 10 Feb 2026 07:19:31 -0500
+	id 1vpmtO-00072W-FB; Tue, 10 Feb 2026 07:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgO-0003IQ-TL; Tue, 10 Feb 2026 07:17:35 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgN-0000nW-5w; Tue, 10 Feb 2026 07:17:32 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC5B9187DBD;
- Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 79DCB360CE2;
- Tue, 10 Feb 2026 15:15:42 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 85/95] pcie_sriov: Fix PCI_SRIOV_* accesses in
- pcie_sriov_pf_exit()
-Date: Tue, 10 Feb 2026 15:15:07 +0300
-Message-ID: <20260210121526.68598-11-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
-References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <39ySLaQkKCsAgtqkkyrkxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--ankeesler.bounces.google.com>)
+ id 1vpmtI-0006ye-Do
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:30:54 -0500
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <39ySLaQkKCsAgtqkkyrkxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--ankeesler.bounces.google.com>)
+ id 1vpmtG-0005eE-KM
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:30:52 -0500
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-7962a21167dso59134927b3.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 04:30:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1770726648; x=1771331448; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=hIumlyzfX4+LJcZKOw9TYrZzl3mGridRfp8pElfztn0=;
+ b=sqdZtqzYsZnFJmoxgma4CLtzCFT55INXmrH7fGX1qMlrxLbHjEnMs514X/XaJfp7LN
+ 9v87e8bSotf2n3y6gooQAbWFIQ3bgK9FHLfm2ewrDdk5rjvjxJZ6Rxl+iZNfzPbMQFpX
+ t3tL1OqKEA8s8BL2kuIQuq52WIfhocaDSO1njpjNYXey9jvDLCIcQPEj/+r/Ywk3WXru
+ MC4Nhrx+Anj1aRrdBFDzpuSdCQlUbtDuJubcLsLYKmHDF+cBhqh7XfmXkwg1FIuhqZ1P
+ xh3XEWBpO/IaasODzQP6h0Jc1HlQC9ePqfjsfQ/vTTA0Cb9qjQY206G+3yI760HpPffw
+ rfEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770726648; x=1771331448;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hIumlyzfX4+LJcZKOw9TYrZzl3mGridRfp8pElfztn0=;
+ b=cBB+FdI7bNiHwXpt9yoeUMKJx315GS5cADgDlLO10ZDY/wUCe8QzrVUa7i1Url0h/2
+ z4hXwllqvpWGDh6NwsoFnO9bAgQU6F2XQg2PtV4EfyE3nbFwM4awuI8ZVrDKARcWpjPw
+ e/10FYXaUr3e26ac3T6z1P+FkbYSkxpCmUXh8EhIlAiU9++a17e5rG3+CrTFrwtdOYCv
+ aUEO8gATQWwT7cTDi9BjoJ8hHFjtsvHhmhCHN9d+IdF3MVAxdO2pcAYkJmxR9oRRW63K
+ kf+BbytWt2WKkxpn8DMRpNg6c8HTyDahnjNKObwnMepPyrrt/5t1aHyEgZ1AnECohl62
+ UfPA==
+X-Gm-Message-State: AOJu0YwWY4bQp8eBdj45PBbUh30hCFH0AQCyWKXxpL6TYSZ4H2LoDlF7
+ AUSxCm6D20g87lJb4EJ38xS2yWbasiBY8k4+7PmuITjihoFdAdTg6ecA64VmnX3NURgKtRszEWs
+ Fgsb8bue6gIT2u8zx
+X-Received: from ywbeu16.prod.google.com
+ ([2002:a05:690c:2e90:b0:796:4c20:fb80])
+ (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:690c:c24c:b0:796:5b5e:f4ff with SMTP id
+ 00721157ae682-7965ef010d5mr13447687b3.23.1770726647811; 
+ Tue, 10 Feb 2026 04:30:47 -0800 (PST)
+Date: Tue, 10 Feb 2026 12:30:37 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.53.0.239.g8d8fc8a987-goog
+Message-ID: <20260210123038.2332364-1-ankeesler@google.com>
+Subject: [PATCH v5 0/1] Support per-head resolutions with virtio-gpu
+From: Andrew Keesler <ankeesler@google.com>
+To: alex.bennee@linaro.org, armbru@redhat.com
+Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=39ySLaQkKCsAgtqkkyrkxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--ankeesler.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,63 +90,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+In 454f4b0f, we started down the path of supporting separate
+configurations per display head (e.g., you have 2 heads - one with
+EDID name "AAA" and the other with EDID name "BBB").
 
-PCI_SRIOV_* are offsets into the SR-IOV capability, not into the PCI
-config space. pcie_sriov_pf_exit() erroneously takes them as the latter,
-which makes it read PCI_HEADER_TYPE and PCI_BIST when it tries to read
-PCI_SRIOV_TOTAL_VF.
+In this change, we add resolution to this configuration surface (e.g.,
+you have 2 heads - one with resolution 111x222 and the other with
+resolution 333x444).
 
-In many cases we're lucky enough that the PCI config space will be 0
-there, so we just skip the whole for loop, but this isn't guaranteed.
-For example, setting the multifunction bit on the PF and then doing a
-'device_del' on it will get a larger number and cause a segfault.
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+                 "xres":111,
+                 "yres":222
+              },
+              {
+                 "name":"BBB",
+                 "xres":333,
+                 "yres":444
+              }
+            ]}'
 
-Fix this and access the real PCI_SRIOV_* fields in the capability.
+Here is the behavior matrix of the current resolution configuration
+surface (xres/yres) with the new resolution configuration surface
+(outputs[i].xres/yres).
 
-Cc: qemu-stable@nongnu.org
-Fixes: 19e55471d4e8 ('pcie_sriov: Allow user to create SR-IOV device')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251205145718.55136-1-kwolf@redhat.com>
-(cherry picked from commit f73e5ed9bc4cfacf041323a6b40a85e6b6459b75)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Note - we use "xres" and "yres" (instead of, say, "width" and "height")
+to match analogous virtio_gpu_base_conf.xres/yres.
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index c4f88f0975..d467284cbd 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -195,14 +195,17 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
- 
- void pcie_sriov_pf_exit(PCIDevice *dev)
- {
-+    uint8_t *cfg;
-+
-     if (dev->exp.sriov_cap == 0) {
-         return;
-     }
-+    cfg = dev->config + dev->exp.sriov_cap;
- 
-     if (dev->exp.sriov_pf.vf_user_created) {
-         uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
--        uint16_t total_vfs = pci_get_word(dev->config + PCI_SRIOV_TOTAL_VF);
--        uint16_t vf_dev_id = pci_get_word(dev->config + PCI_SRIOV_VF_DID);
-+        uint16_t total_vfs = pci_get_word(cfg + PCI_SRIOV_TOTAL_VF);
-+        uint16_t vf_dev_id = pci_get_word(cfg + PCI_SRIOV_VF_DID);
- 
-         unregister_vfs(dev);
- 
-@@ -213,8 +216,6 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
-             pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf_dev_id);
-         }
-     } else {
--        uint8_t *cfg = dev->config + dev->exp.sriov_cap;
--
-         unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
-     }
- }
+Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with default xres/yres
+
+Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with xres/yres
+
+Case: outputs[i].has_xres && outputs[i].has_yres
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Case: outputs[i].has_xres != outputs[i].has_yres
+Behavior: error
+
+Changelist:
+* v5: changes after v4 review
+  * since 10.2 -> since 11.0
+  * setting only one of xres and yres is an error
+* v4: changes after dropped from pull request
+  * rebase against master (3b5fe75e2c)
+  * use @NAME (@xres/@yres) in qapi/virtio.json docs
+  * documented behavior when only one or none of @xres/@yres is set
+* v3: changes after v2 review
+  * fix new resolution configuration logic (&& instead of ||)
+  * correct use of api machinery (has_*)
+  * move documentation to QMP API
+* v2: changes after v1 review + 10.2 rebase
+  * updated code, commit message, and cover letter to match new res config logic
+  * marked new VirtIOGPUOutput fields as optional and since 10.2
+* v1: initial patch
+
+Andrew Keesler (1):
+  Support per-head resolutions with virtio-gpu
+
+ hw/display/virtio-gpu-base.c | 16 ++++++++++++++++
+ qapi/virtio.json             | 13 +++++++++++--
+ 2 files changed, 27 insertions(+), 2 deletions(-)
+
 -- 
-2.47.3
+2.53.0.rc2.204.g2597b5adb4-goog
 
 
