@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED14EA8118
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306D6EA811B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpoA2-0001wK-0M; Tue, 10 Feb 2026 08:52:14 -0500
+	id 1vpoB2-0004wi-AZ; Tue, 10 Feb 2026 08:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpoA1-0001vX-9R
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:13 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <cookieandcream560@gmail.com>)
+ id 1vpn8l-00069s-8m
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:46:51 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vpo9y-0006J5-5q
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:52:13 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4801eb2c0a5so53541425e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:52:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cookieandcream560@gmail.com>)
+ id 1vpn8i-0000s1-JU
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 07:46:51 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7d18a9d2b1aso4545265a34.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 04:46:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770727607; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Tij0zTBfuaiWRgD7CmJl6Kj4VI5FvkTNgIogja4evRSeZhZNUHOCwOvT+wQR6YKiqT
+ CMV/Q3jDQHb/QeMftu6bN3kzT0VVhXz+7OapEbvL752JOXf4BgahGOgyDKKEZ+0QK12O
+ J1BMjnuhLh6Qi8pKz8s1qquwlkQIeJHhshqblNIINCwrGWV8H6JW8GdIsZd4Q7aRZyqx
+ I0nOAnp3dJwh9IkSh3WixmhaE1NrbvFxarWkJOqu1DS5hUevzuyCy6IX8e/giN0EHU6F
+ 33oyqE7w8c6BUrq6JPGjYXIKL8qjpH/CHPOKFoSfQ+aZrP1VYy39U6dUjzfj7jhiTTgj
+ nVBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=Fz7rrm62Iai8QWAXp1Zq+zNQeQyO8M0Y60PHVEbxvy8=;
+ fh=9xG44hfyBuHuSHw1x4+i3NWKppwpIVPiAci0jLIbeQc=;
+ b=Hz7GVa18r4zZpT0iTiV4T/fiLxykfTbU7Is3QbymJOWtWbYasUfFJYOjpHUDuoKGTA
+ pHbZAxWL4eUJxUz/G9vZi95Y8krTUQ8Vd7vu+6MuVCytF0D8FyQo0GP4zHrUr6sHEtpr
+ 6KhWHBJkdbmLbu/muCWIbP9aDVU+3JDg+1+s39pJZDjiqmv2CQUOWnEDgNG1p7dOvnp6
+ Zp1SgOioNiwhLaUEosII9Y0NZPatYZ5QRy0mzvNv4IGMLjNewog905nrSvP6TCZjNncV
+ WfAPAHi1gaGYASSfOayf/yjaOEMs5hSzCwN7VvrqIP0j8gvBmU9qEVBdM4CeIQhtRFwI
+ 2P6Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770731529; x=1771336329; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uGmUMAxaPIgZzI2J5wAhB0++mAJXpnT/oS5kHIdBbGg=;
- b=wgWFHVuIqYagCgeSRVJqvGq4rNrt9QDvOBgyFDAQX1s5fHWCbh0LTbA5b6/y6hcrWE
- Jx475wcI9q9kfyGwc+SGRhWnbNk0FbWjp2PXDvbbo8kafRGW4bx+0N24q/eIDCaZT5Ou
- TP5hT4rl3laPOwizIcNIjetSEWmerHLSeqDmjmXiyXhQSTlbCV/av3NAEz4SaO3RlrRj
- FoyDmxP+/89tsmd37GiBLkslaa9Tkg+8lUUzQIhjJJzlHXAbzI/cD4kE18ry+iIySLC/
- 1bLA+znSCOTHRX7ACkqRCGyKATO2rb1QxAdY2VxUwogQ2tqlqTQZdlJFUTh3hNSPo8B+
- LoLg==
+ d=gmail.com; s=20230601; t=1770727607; x=1771332407; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Fz7rrm62Iai8QWAXp1Zq+zNQeQyO8M0Y60PHVEbxvy8=;
+ b=Ba012SY6cIvYMMIUt8tGsM/LfKBHAy7hpuw7E93kaU2hhn/jgA5MIjp74/7yDJrf+t
+ 6MJWu1Knard3+1aXfPhPPIJLV2INbGFvs/jP/k8EfnCwj4K+QLg2c+aM36ARN9NsBkZ0
+ q7ar1kxILXytXA85/uIoqWmHml25F5e850B5rwRTtLFe0noZftuqq8NHfijca8ODJB0A
+ qRS4dwMkiy9mIXA7RGX6CyXW0CgORGylPhXsjGaN/QLP/p85MtpmXQ07HwP4BvV82Cew
+ +F+y3zmulWLIeabs2GwCkAzSk6Y3oErOkz0LMftk+53s2HVtC0M21iYohFEsTPqWe3nc
+ x7BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770731529; x=1771336329;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uGmUMAxaPIgZzI2J5wAhB0++mAJXpnT/oS5kHIdBbGg=;
- b=pp0RT0YYuKmd8E8K0XgpPs01oSsZISj8CtLQoYybewDfST+zVSUgrSli0Gm3aGNZY0
- bGQ9LweWd92u6cvz5LYcGJ0Ym0qYvbYyD6i++Ikps+gNTjaZ4n4o3CqRmRLrzUVm2Jyo
- J236g9vXDySx8dGGYUszpX/0zYP01wbTMvLXdVmIdjzcKncpHRV5NNJ722wEE8ODO29v
- B2D7Ym9EgW990/zYvsl6lrQA+lmlh6CRMIyaPjZxXOVdxdXQePvh6EQsjpKNMpuDtA4L
- aB4RE1yd3pAktqNpEb93mqiJvHJ3RkDc4ovf6kLEaAxy8fWB0w4Hnw09LiSzyEYjrVXw
- KPRg==
-X-Gm-Message-State: AOJu0YwdsEXfDZzVOMEHAkYSDsttYDuBKNJ9ONKXyP3DJ7qbucazJKMs
- KB9OHQqMy1lX7vvysFh6CJkbW2LIeEijLjI+79BPShA77dhxzy5Bn40UXY2g+f86Iq3z3MCDPJh
- mT9AL
-X-Gm-Gg: AZuq6aKu+SkbNOEk09EEsSpDhNa2vVlUM0r4YHGXf9HoluV4z9hpTEDuLjAnVHkfDH4
- 0WPGpVG/iXiYPWo3CcDQ9pK5fDgzzERU7z9BjfqOJBYqcpsen1kRP5qHsWS1p8JTbvj1eWb6sJa
- a5JeccV1MJwZ80ChTOq3E8oGMJWODW1wHiZeyU9zxPG1Au2RGCGLvb1McOYuhGmBBbH4CNhDMrX
- OuKVQGGls1WfG7acvXZLKj131+SVxO9VVVHzQYbPkdOqrDt90PuvUBi985STSMSCOQI/HJzXfDR
- 5WfM6H6BnkZwUeXbytL0lu9tnchx8xiIJFcow1gAqSENmJOWpyoRjvc84/hII9iGIK82Ix0if5f
- 9uPlzS37un2uEPj26mcxbmzCBjtaNq4DyQviXmSkuXAVbKwxOdyI7468UXtTz0zWWuyNrI0ot94
- ToD1MNLFQ8w7M6oF5iMiTJWo9tZ12k3Dqfsz51QNrlm9Vz8V9IfWDaiebO8Kj5wAyCJ5Qv6zb3h
- CmgAo+ByX25culagG1m/UvhSv5sjfU=
-X-Received: by 2002:a05:600c:45cb:b0:482:ef72:5778 with SMTP id
- 5b1f17b1804b1-483507d15bbmr35436695e9.8.1770731528694; 
- Tue, 10 Feb 2026 05:52:08 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5d77f9sm64344875e9.3.2026.02.10.05.52.07
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 05:52:08 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 01/26] target/arm/kvm: add constants for new PSCI versions
-Date: Tue, 10 Feb 2026 13:51:41 +0000
-Message-ID: <20260210135206.229528-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260210135206.229528-1-peter.maydell@linaro.org>
-References: <20260210135206.229528-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1770727607; x=1771332407;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fz7rrm62Iai8QWAXp1Zq+zNQeQyO8M0Y60PHVEbxvy8=;
+ b=QGVDPBx9482/fT/G0sscAmsOIq71WSjZrwj/Ang8OkkjR5CHnvaLPq2ghEGkrV0/hA
+ n4FWUUsAK+bW2WmbOIr5eQSEQ2uyZIkZag1nEz67uZ6WtEsOI303GuqxKSqcZ5LeDvUd
+ W7V6sRQNTUz6gmhyIL5h8mFG8rm4bM+4NKiLvZ4nxu0lKqm5U3/7rn+H/zNYffiutar/
+ ISPo+H8sSzFW9A6umaSO+VJaSYa5+CTFFD/PPUNksuJ+R5PoXGdXcpxRMmYO7oESLlB6
+ icewtXxAIkkZcp0RSniBFmHRgyspHB8OkOs76Sul1oLZvRoxOtV8Vb0aIyYg7ZAjcrNm
+ YbSg==
+X-Gm-Message-State: AOJu0Ywq2W1fz9yuF5VOYDiu+csL/WeajPBxgAt2z8mzyxfYYwn65F8u
+ EyRehURvUthjGoX9NBXInUEa0EhpMID9U2XZhpNj5BSHyUqGhC9zIN8Ick5LqFhu4yAUAlTabmm
+ qdStFTvWSmjI+HyK6pd6Qn6WWR5nVt8VPT4KNmQ==
+X-Gm-Gg: AZuq6aLL7XL6+HzE8+jXoUUp8SRp3MC3zXQg/qgA90f2CEXpoUZBX++rCIBdv2fHsKF
+ 8ZuuevhqzGVOSK3l4jLNB+G/HR+PjIVosqJDdF+9fHVc73y8vOOEyUhGFdp88BCfu0rYgFAm4Y+
+ cdCrQcIpxH5YYZc36zucLa5HNHlwBR90JR8wlb02k5cc2J5YEQuy5E14llkEn5KKD8I7D6ADqe6
+ ZJC2SFQ7ASVWvJPeAZZLuygHV4JMwURsEwBU9Rk34cGtqm7NGeQ7KhPZQY3O4MnpJpzAiWdrlLE
+ 4jOBP2iA
+X-Received: by 2002:a05:6830:82be:b0:7d2:eb51:ca21 with SMTP id
+ 46e09a7af769-7d464487fd8mr10314770a34.23.1770727606711; Tue, 10 Feb 2026
+ 04:46:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+From: Oblivionsage <cookieandcream560@gmail.com>
+Date: Tue, 10 Feb 2026 13:46:34 +0100
+X-Gm-Features: AZwV_Qj7A9ZcmCzTAmz7zRyx6kLeixDnbVgS-5m_bVkhJl38RRj1mhtHzzk-ydk
+Message-ID: <CAJ9qJssSwxkmEVethg57-Ph6maEfButSaV-r07ma9_x1sp6wYg@mail.gmail.com>
+Subject: [PATCH] block/vmdk: fix OOB read in vmdk_read_extent()
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Content-Type: multipart/alternative; boundary="000000000000fdfa0e064a77a5dd"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=cookieandcream560@gmail.com; helo=mail-ot1-x335.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 10 Feb 2026 08:53:13 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,34 +113,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ott <sebott@redhat.com>
+--000000000000fdfa0e064a77a5dd
+Content-Type: text/plain; charset="UTF-8"
 
-Add constants for PSCI version 1_2 and 1_3.
+From d335821a1f814eb3059ab5e6a7cd771360b698c4 Mon Sep 17 00:00:00 2001
+From: Oblivionsage <cookieandcream560@gmail.com>
+Date: Tue, 10 Feb 2026 13:33:25 +0100
+Subject: [PATCH] block/vmdk: fix OOB read in vmdk_read_extent()
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+    qemu-stable@nongnu.org,
+    kwolf@redhat.com,
+    hreitz@redhat.com,
+    fam@euphon.net
 
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Bounds check for marker.size doesn't account for the 12-byte marker
+header, allowing zlib to read past the allocated buffer.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Move the check inside the has_marker block and subtract the marker size.
+
+Fixes: CVE-2026-2243
+Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
+Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
 ---
- target/arm/kvm-consts.h | 2 ++
- 1 file changed, 2 insertions(+)
+ block/vmdk.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
-index 54ae5da7ce..9fba3e886d 100644
---- a/target/arm/kvm-consts.h
-+++ b/target/arm/kvm-consts.h
-@@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
- #define QEMU_PSCI_VERSION_0_2                     0x00002
- #define QEMU_PSCI_VERSION_1_0                     0x10000
- #define QEMU_PSCI_VERSION_1_1                     0x10001
-+#define QEMU_PSCI_VERSION_1_2                     0x10002
-+#define QEMU_PSCI_VERSION_1_3                     0x10003
- 
- MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
- /* We don't bother to check every possible version value */
--- 
-2.43.0
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 89e89cd10e..cd8b4ec7c8 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1951,10 +1951,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t
+cluster_offset,
+         marker = (VmdkGrainMarker *)cluster_buf;
+         compressed_data = marker->data;
+         data_len = le32_to_cpu(marker->size);
+-    }
+-    if (!data_len || data_len > buf_bytes) {
+-        ret = -EINVAL;
+-        goto out;
++        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
++            ret = -EINVAL;
++            goto out;
++        }
+     }
+     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
+     if (ret != Z_OK) {
+--
+2.47.3
 
+--000000000000fdfa0e064a77a5dd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">From d335821a1f814eb3059ab5e6a7cd771360b698c4 Mon Sep 17 0=
+0:00:00 2001<br>From: Oblivionsage &lt;<a href=3D"mailto:cookieandcream560@=
+gmail.com">cookieandcream560@gmail.com</a>&gt;<br>Date: Tue, 10 Feb 2026 13=
+:33:25 +0100<br>Subject: [PATCH] block/vmdk: fix OOB read in vmdk_read_exte=
+nt()<br>To: <a href=3D"mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org<=
+/a><br>Cc: <a href=3D"mailto:qemu-block@nongnu.org">qemu-block@nongnu.org</=
+a>,<br>=C2=A0 =C2=A0 <a href=3D"mailto:qemu-stable@nongnu.org">qemu-stable@=
+nongnu.org</a>,<br>=C2=A0 =C2=A0 <a href=3D"mailto:kwolf@redhat.com">kwolf@=
+redhat.com</a>,<br>=C2=A0 =C2=A0 <a href=3D"mailto:hreitz@redhat.com">hreit=
+z@redhat.com</a>,<br>=C2=A0 =C2=A0 <a href=3D"mailto:fam@euphon.net">fam@eu=
+phon.net</a><br><br>Bounds check for marker.size doesn&#39;t account for th=
+e 12-byte marker<br>header, allowing zlib to read past the allocated buffer=
+.<br><br>Move the check inside the has_marker block and subtract the marker=
+ size.<br><br>Fixes: CVE-2026-2243<br>Reported-by: Halil Oktay (oblivionsag=
+e) &lt;<a href=3D"mailto:cookieandcream560@gmail.com">cookieandcream560@gma=
+il.com</a>&gt;<br>Signed-off-by: Halil Oktay (oblivionsage) &lt;<a href=3D"=
+mailto:cookieandcream560@gmail.com">cookieandcream560@gmail.com</a>&gt;<br>=
+---<br>=C2=A0block/vmdk.c | 8 ++++----<br>=C2=A01 file changed, 4 insertion=
+s(+), 4 deletions(-)<br><br>diff --git a/block/vmdk.c b/block/vmdk.c<br>ind=
+ex 89e89cd10e..cd8b4ec7c8 100644<br>--- a/block/vmdk.c<br>+++ b/block/vmdk.=
+c<br>@@ -1951,10 +1951,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t c=
+luster_offset,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0marker =3D (VmdkGrainMa=
+rker *)cluster_buf;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compressed_data =
+=3D marker-&gt;data;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0data_len =3D le32=
+_to_cpu(marker-&gt;size);<br>- =C2=A0 =C2=A0}<br>- =C2=A0 =C2=A0if (!data_l=
+en || data_len &gt; buf_bytes) {<br>- =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D -E=
+INVAL;<br>- =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>+ =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0if (!data_len || data_len &gt; buf_bytes - sizeof(VmdkGrainMarker)) {=
+<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D -EINVAL;<br>+ =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0}<br>=C2=A0 =C2=A0 =C2=A0}<br>=C2=A0 =C2=A0 =C2=A0ret =3D uncompress(unc=
+omp_buf, &amp;buf_len, compressed_data, data_len);<br>=C2=A0 =C2=A0 =C2=A0i=
+f (ret !=3D Z_OK) {<br>--<br>2.47.3</div>
+
+--000000000000fdfa0e064a77a5dd--
 
