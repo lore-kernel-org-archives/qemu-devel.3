@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48455EA8115
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9A5EA8115
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpo54-0007T3-41; Tue, 10 Feb 2026 08:47:07 -0500
+	id 1vpo50-0007ST-TR; Tue, 10 Feb 2026 08:47:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vpo4w-0007RQ-Vp; Tue, 10 Feb 2026 08:47:00 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vpo4v-0007RE-VM; Tue, 10 Feb 2026 08:47:00 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vpo4v-00052K-59; Tue, 10 Feb 2026 08:46:58 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1vpo4u-00052A-2d; Tue, 10 Feb 2026 08:46:57 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61A8sVcX130324; Tue, 10 Feb 2026 13:46:56 GMT
+ 61A9U6Yh169452; Tue, 10 Feb 2026 13:46:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tonqQxpDYymXiBUyk
- 0RFFwd1nyWBs1fbOrHzGLAxTyQ=; b=XtYT1a27YL47bbLb5C8vbmfe0NtjbAIDe
- 0ku/QQketosQwZ560C/Dno2OOhLsXorJD83o+JY2yIKqcNFkNVYJVQNJa3L1J0Be
- 6Qmmceph1W0cSK5DxzwW4TaJ+cA26bWM5ivexZh0115GsRt+kU5xksqC3aqaNrpG
- 8la6qb0MBL8/upeVINt2qXcYUOtJTurilylZyJZq3PLYwhYqRX8YdQVMq5bPrXdl
- hYUEKiOdhVoNBlSd8FD6cSuXtDDVykCanl/ZK8bUrOdHNVCtK8N3nMwyeGrDgmJI
- yWUdjyByadNBSbdIYe4NEpIVEB2I+aNCsJLvPSoF2KhWWS6qPxIFA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696utbfn-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Pe453rDwToRChHAO124jyqiUlaMCqYOpjOL4XdZgN
+ Mo=; b=CIpuA2tx9+Qp4d6jTRdtjNUYEndQJojMMYBXER+xYidbu3EFDWgh5QBTL
+ 9hwxeVpQHhy+mKIPy03zv5l6LLTGLm1iZ1F5UShOLeczq1WBp0nnjggivirD2WeI
+ lZ7+P4nDJxBzeeFbs5qYzwMcg5XHoWyrxcik500wnZQN50rJEz1XWYPAdhg3xxpQ
+ gJArEvu8fikZ0PmaDNcYbXnI01OYQ/KaBze72IdCL/lGN2j2/5ze/qXdICpuhS4k
+ vsGx4tNOG7AK/hE1oFXVEC2bIDSZhLtBSlSzMYFNZ9vUFe1jxdJQQS99WSujR+d3
+ /TAZxmVMxFpzZn3VwMOIz+MMRdCEw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696w4fda-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:46:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61AAeELR019277;
- Tue, 10 Feb 2026 13:46:54 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6hxk1a92-1
+ Tue, 10 Feb 2026 13:46:53 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61ABnpAK001819;
+ Tue, 10 Feb 2026 13:46:53 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je216ts-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:46:54 +0000
+ Tue, 10 Feb 2026 13:46:53 +0000
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61ADkrCC21234324
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61ADkpXt24642300
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 13:46:53 GMT
+ Tue, 10 Feb 2026 13:46:52 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E0055805E;
- Tue, 10 Feb 2026 13:46:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9D4AD58054;
+ Tue, 10 Feb 2026 13:46:51 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFA8E58045;
- Tue, 10 Feb 2026 13:46:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C564258050;
+ Tue, 10 Feb 2026 13:46:50 +0000 (GMT)
 Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Feb 2026 13:46:52 +0000 (GMT)
+ Tue, 10 Feb 2026 13:46:50 +0000 (GMT)
 From: Caleb Schlossin <calebs@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
  milesg@linux.ibm.com, chalapathi.v@linux.ibm.com,
  harshpb@linux.ibm.com, calebs@linux.ibm.com
-Subject: [PATCH v2 1/3] ppc/pnv: Support for SECURITY_SWITCH XSCOM register
- access
-Date: Tue, 10 Feb 2026 07:46:45 -0600
-Message-ID: <20260210134647.2050821-2-calebs@linux.ibm.com>
+Subject: [PATCH v2 0/3] Power10 PowerVM bringup fixes
+Date: Tue, 10 Feb 2026 07:46:44 -0600
+Message-ID: <20260210134647.2050821-1-calebs@linux.ibm.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260210134647.2050821-1-calebs@linux.ibm.com>
-References: <20260210134647.2050821-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExNiBTYWx0ZWRfX7wbsLaSdOnxx
- YC5uJ2rmz+bImplO7PFj0uG6+JryJj+tVSSuKi5BJ1k7N6a1tHYGygDaMAZ26/YWzgU2k1Dka5h
- KDLkSzmLvS8/SABuuA3NUBcVObtCDqFdFkK+G7vKu7OIohLFEIi2IaXhY1OoqIJ+++WBwtNlW8n
- Wwv3eD/oGk1/g5dZXYlt9Fa6a6cEoZHq0IG5yCF7FKpaTIBrGiRKEIRZAIVCZ5k18QwlrarlXg2
- UGnJGRBnhUP3LMC2dVacKYnOmcueQxv2zOgTKBtL0bQVeUpewCLwshDMGe3iPW7RWxQR8fKVpaF
- BsZJpiqt7FEPshZ+gCZm0nexMJ0w00Qr5Ng7cWrHYLvyy9g/v8RI3CGol0Sw6MWx2C+GbiZmUSn
- 9MNGz2m/ruICwK4eANLvScWsYoDOXMV2ZXFU4AZKdZ+/sF67WiYrB1copBzaFv781RIQBxqj6oo
- EpVRxzx7vma/gYBKFjw==
-X-Proofpoint-ORIG-GUID: V9vowU9I9BHDtQikhvkrIXerbbBGdcF_
-X-Proofpoint-GUID: C_xsFp1Wr18dDadrAuth9nyB2bIIGZGf
-X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698b36cf cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=698b36ce cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=rhZDsxdhWw0Yntd0-ucA:9
+ a=GgsMoib0sEa3-_RKJdDe:22 a=wsckn3v4uuCIM04AuRIA:9 a=zZCYzV9kfG8A:10
+X-Proofpoint-GUID: yyDA9Z72D8h9gDCGHBoNR3YH1Cfbzl3d
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExNiBTYWx0ZWRfX1B4sD2K0pysL
+ hZPPe754kctd23JBO0dV0AmB/MnSxYOaw5JPlYNJCT2vf8BoaVMNbVZjyodteCyntnASUMEP7XH
+ lOGg+i5E644UyaqnI/N/F99DbGI6Jg+/TyHyJxvMpf5/t6pMPFn4B0WKKF9VE9qJ4kVqA4bWLkU
+ PjAzzBayQAJSX4ZVuNQ5lMVguZ689jdo4/l67yj98rvlQ838DjH3La3I9M8MkAP6KEEYAWAJIzH
+ Q7pHN/paJA/iRjr+EHXaexq53QkGiPtVd+YnckFb6iwLh2gvHPyewm2XWW4mGtx//DfIAkdcMjJ
+ oQJ6UFWuw6smOD/KZeBYcN+tvds/n0DKieRNQ46X3AK94PETrXbc0RJpV9kkk5g09xXGE+3yROR
+ qzagECkKLASsHHknEvV3ASXyiGPE3D/jUvRk5JIMjwRoFDEbD9QGI6e0PkWKm9yaAl2Z/phMyZk
+ 5jUXqSCtRJqNB87N3+g==
+X-Proofpoint-ORIG-GUID: YxndTaVmiXfXXDN72hbg9-0nop8TXt2b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602100116
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -121,33 +118,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power Hypervisor code requires access to the SECURITY_SWITCH
-XSCOM register at MMIO address 0x80028 (scom address 0x10005).
-Adding basic read support for now so that is doesn't cause
-error messages to be posted.
+Updates in V3:
+- Register comments added to pnv_core.c
 
-Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
----
- hw/ppc/pnv_xscom.c | 2 ++
- 1 file changed, 2 insertions(+)
+Updates in V2:
+- Removed pnv_chiptod patch, per review comments
+- Spelling cleanup in pnv_occ.c
 
-diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
-index 8557b560ae..dc1ffc6c01 100644
---- a/hw/ppc/pnv_xscom.c
-+++ b/hw/ppc/pnv_xscom.c
-@@ -61,6 +61,8 @@ static uint32_t pnv_xscom_pcba(PnvChip *chip, uint64_t addr)
- static uint64_t xscom_read_default(PnvChip *chip, uint32_t pcba)
- {
-     switch (pcba) {
-+    case 0x10005:       /* SECURITY SWITCH */
-+        return 0;
-     case 0xf000f:
-         return PNV_CHIP_GET_CLASS(chip)->chip_cfam_id;
-     case 0x18002:       /* ECID2 */
+Tested:
+passed make check
+
+Glenn Miles (1):
+  ppc/pnv: Support for SECURITY_SWITCH XSCOM register access
+
+Chalapathi V (2):
+  ppc/pnv: Add unimplemented quad and core regs
+  ppc/pnv: Add OCC FLAG registers
+
+ hw/ppc/pnv_core.c        | 87 ++++++++++++++++++++++++++++++++++++++++
+ hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++--
+ hw/ppc/pnv_xscom.c       |  2 +
+ include/hw/ppc/pnv_occ.h |  4 ++
+ 4 files changed, 145 insertions(+), 3 deletions(-)
+
 -- 
 2.47.3
 
