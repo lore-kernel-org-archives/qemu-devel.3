@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2367EA3F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75FAEA3F2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpkTt-0005Qy-DT; Tue, 10 Feb 2026 04:56:29 -0500
+	id 1vpkVo-0005wt-Qy; Tue, 10 Feb 2026 04:58:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpkTr-0005Qb-Ng
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:56:27 -0500
+ id 1vpkVm-0005wR-Ia
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:58:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vpkTn-0007Mp-Vb
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:56:27 -0500
+ id 1vpkVj-0007cg-Hz
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 04:58:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770717381;
+ s=mimecast20190719; t=1770717501;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=WdZ2YGrZFephfISaCOKIVpwJIyxSBZYBDK23d+bngI8=;
- b=W9LxE/kG/ZmcDv+H7OVO4UZf1DliMCeBK5uDocWC7VN6dSbKTIOCVh45WBfhpscJOSrNff
- X8biVnWhpRXdPSEtXSgLfZatP3OmDIL9HD8jfAdTpkhClU+f8NkizEQ+q/KfnXuPTKV3mK
- Hggo6mQFkZSdUhbdvzxkS/P4O6dno6M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dji9kfrclLtN4gmq77u1A3KW4SD2ic4cHt2tsaJ9bmE=;
+ b=Nxz8s6jZ5HFZEi3qe1cNi0rZSs+YDw3qTSw+KCBDIIU8+FJ2jgSbLOdEwhYeLqQwiXmdfE
+ k2YDmGhkfWGrLkg6Hr+Isozm2o2IvGbSlhPLK5kaLanIlHh6AywAO/GrXC6TIgVSnS44On
+ 5zkBkPTmU4GN8cYagrW4cR3UwdvzLhk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-GsjT-Ca1N3KLZ2w6TxTjVA-1; Tue,
- 10 Feb 2026 04:56:20 -0500
-X-MC-Unique: GsjT-Ca1N3KLZ2w6TxTjVA-1
-X-Mimecast-MFC-AGG-ID: GsjT-Ca1N3KLZ2w6TxTjVA_1770717378
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-DzjGfe0uN7uo0Arob-stOQ-1; Tue,
+ 10 Feb 2026 04:58:17 -0500
+X-MC-Unique: DzjGfe0uN7uo0Arob-stOQ-1
+X-Mimecast-MFC-AGG-ID: DzjGfe0uN7uo0Arob-stOQ_1770717496
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72C11195609D; Tue, 10 Feb 2026 09:56:18 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CDCF1800282; Tue, 10 Feb 2026 09:58:15 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.34.137])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1034D19560A3; Tue, 10 Feb 2026 09:56:11 +0000 (UTC)
-Date: Tue, 10 Feb 2026 09:56:08 +0000
+ id D96AD19560AD; Tue, 10 Feb 2026 09:58:09 +0000 (UTC)
+Date: Tue, 10 Feb 2026 09:58:06 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Markus Armbruster <armbru@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -62,15 +64,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Zide Chen <zide.chen@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
- accept flags
-Message-ID: <aYsAuFNQQvwYiLPI@redhat.com>
+Subject: Re: [PATCH v2 07/21] qom/object: introduce user interaction flags
+ for properties
+Message-ID: <aYsBLtwVWgSVc_NF@redhat.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-15-zhao1.liu@intel.com>
+ <20260210032348.987549-8-zhao1.liu@intel.com>
+ <aYr_NE0c0LsVz8zx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260210032348.987549-15-zhao1.liu@intel.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aYr_NE0c0LsVz8zx@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -99,30 +103,102 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 11:23:41AM +0800, Zhao Liu wrote:
-> Update qdev property interfaces (qdev_property_add_static() and
-> qdev_class_add_property()) to accept and pass 'ObjectPropertyFlags'.
-> This enables marking qdev properties with flags such as DEPRECATED or
-> INTERNAL.
+On Tue, Feb 10, 2026 at 09:49:40AM +0000, Daniel P. Berrangé wrote:
+> On Tue, Feb 10, 2026 at 11:23:34AM +0800, Zhao Liu wrote:
+> > Introduce three new flags to `ObjectPropertyFlags` to better manage
+> > property interactions with external users (CLI, QMP, HMP):
+> > 
+> > 1. OBJ_PROP_FLAG_USER_SET:
+> >    Marks a property as having been modified by an external user.
+> > 
+> >    This flag is designed to be "sticky": once set, it persists even if
+> >    the property value is subsequently overwritten by internal logic.
+> >    It allows the QEMU system to distinguish user intent.
+> > 
+> >    The advantage of this design is that it is not needed to manually
+> >    clear the USER_SET flag on every internal write. This simplifies the
+> >    logic and decouples flag management from the current property setting
+> >    path (object_property_set()).
+> > 
+> >    This is chosen over a strict "current origin" approach (where
+> >    internal writes would clear the flag) for a practical reason: QEMU
+> >    code often modifies underlying struct fields (which are defined as
+> >    properties) directly, bypassing the property API entirely. This makes
+> >    it impossible to "accurately" track whether the *current* value truly
+> >    comes from the user. Therefore, a sticky "user touched this" flag is
+> >    the only meaningful and robust solution.
+> > 
+> > 2. OBJ_PROP_FLAG_DEPRECATED:
+> >    Marks a property as deprecated.
+> > 
+> > 3. OBJ_PROP_FLAG_INTERNAL:
+> >    Marks a property as internal-only, disallowing external user access.
+> > 
+> > Additionally, update object_property_set_flags() to implement the
+> > enforcement logic. When a property is flagged with
+> > OBJ_PROP_FLAG_USER_SET:
+> >  - If the property is also marked OBJ_PROP_FLAG_DEPRECATED, report a
+> >    warning.
+> >  - If the property is also marked OBJ_PROP_FLAG_INTERNAL, raise an error
+> >    and stop the operation.
+> > 
+> > Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >  include/qom/object.h | 24 ++++++++++++++++++++++++
+> >  qom/object.c         | 15 +++++++++++++++
+> >  2 files changed, 39 insertions(+)
+> > 
+> > diff --git a/include/qom/object.h b/include/qom/object.h
+> > index 856b12e7289c..1b77429aa28b 100644
+> > --- a/include/qom/object.h
+> > +++ b/include/qom/object.h
+> > @@ -109,6 +109,30 @@ typedef enum {
+> >       * will automatically add a getter and a setter to this property.
+> >       */
+> >      OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+> > +    /*
+> > +     * The property was explicitly set by an external user.
+> > +     *
+> > +     * This flag is set whenever the property is modified via external interfaces
+> > +     * (CLI, QMP, HMP). It allows internal code to distinguish whether the
+> > +     * property has been modified by the user.
+> > +     *
+> > +     * Once set, this flag persists even if the property value is subsequently
+> > +     * overwritten by internal logic. It is NOT automatically cleared and must
+> > +     * be explicitly cleared using object_property_clear_flags().
+> > +     */
+> > +    OBJ_PROP_FLAG_USER_SET = BIT(2),
+> > +    /*
+> > +     * The property is deprecated and will be removed in the future version.
+> > +     *
+> > +     * Any setting to this property by the user will raise a deprecation warning.
+> > +     */
+> > +    OBJ_PROP_FLAG_DEPRECATED = BIT(3),
+> > +    /*
+> > +     * The property is internal only and cannot be set by the user.
+> > +     *
+> > +     * Any setting to this property by the user will raise an error.
+> > +     */
+> > +    OBJ_PROP_FLAG_INTERNAL = BIT(4),
+> >  } ObjectPropertyFlags;
 > 
-> To facilitate this at the definition level, extend the boolean and
-> uint8_t property macros (as the examples) to accept variable arguments
-> (VA_ARGS). This allows callers to optionally specify flags in the
-> property definition.
+> I don't think this single enum design is very desirable, as it is mixing up
+> pieces of information with three distinct lifetimes / scopes.
 > 
-> Example:
+> The OBJ_PROP_FLAD_{READ,WRITE,READWRITE} values are scoped to the execution
+> of the property adder methods.
 > 
-> DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF,
->                   .flags = OBJECT_PROPERTY_DEPRECATED),
+> The OBJ_PROP_FLAG_{DEPRECATED,INTERNAL} values are scoped to the lifetime
+> of the class.
+> 
+> The OBJ_PROP_FLAG_USER_SET value is scoped to the lifetime of the instance.
 
-In other places where we track deprecation in QEMU, we have not used
-a boolean flag. Instead we have used a "const char *deprecation_note"
-internally, which lets us provide a user facing message, to be printed
-out in the warn_report, informing them what to do instead (either the
-feature is entirely removed, or there is a better alternative). IMHO
-we should be following the same pattern for properties, as it is much
-more user friendly than just printing a totally generic message
-"XXXX is deprecated, stop using it" 
+In fact, with my comment on the later patch, OBJ_PROP_FLAG_DEPRECATED should
+not be modelled as a boolean flag at all.  We need to record a const char*
+deprecation_note internally, so that warn_report can provide useful info
+to the user. We can turn that into a "bool deprecated" flag in the QAPI
+command response for querying properties.
 
 
 With regards,
