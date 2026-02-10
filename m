@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F035E94625
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 03:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8244E9462A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 03:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpdyV-0008Ap-LL; Mon, 09 Feb 2026 21:59:39 -0500
+	id 1vpdz9-0001vU-MB; Mon, 09 Feb 2026 22:00:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdyC-0007cW-78
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:23 -0500
+ id 1vpdyl-00019D-GD
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:58 -0500
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vpdy4-00049n-HP
- for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:14 -0500
+ id 1vpdyi-0004IS-Nh
+ for qemu-devel@nongnu.org; Mon, 09 Feb 2026 21:59:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770692352; x=1802228352;
+ t=1770692392; x=1802228392;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=rAeHvQ95Jt0xFH0E5qmmEaDICDO2TzPR3PyWD5EoqLc=;
- b=fm3vlcMfkhZU9o6NQkuzhrTyTK00+1ocnP7MyEIfBydKoEMgj4XRVJoi
- KQMQkc3POfKcLvzgPFIyAFqZ5B9cXGzWd72N17pza8UkQWXeosaKndnuV
- 9mphdnaUna4HTjFRd4/zYQIbNDwEqo6atPUx2GOGHTB0q6CW67X8rXJNd
- idtfXoCxALwsAyNqsSUZD7SMcYRlH8d/lrPAJrO54eXLZ3TOIZJofL+/+
- odL2x7U1kdEr+s3DphoK8Fk/NdGMXaizyn1dGCwGr3cfkU0amPDNyFVoI
- GxP9BRDMTpg9plm7c9JuoqaD/gGEnSoDKaXyEe7wF2FZIHJTx20nBWEY9 g==;
-X-CSE-ConnectionGUID: 2F4fN9u8QaOkbmtk43reYw==
-X-CSE-MsgGUID: aoMPVT5GTwytirNpUde92Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75659928"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75659928"
+ bh=rHQyqSJDlnq8AfY8ZN5U8grBknt55dcxwohK9sGr+K8=;
+ b=dJu5EPvych9Y+1rRq3F9zJrkSM50+M/moxNJT9qfh1Dras/gdRI88NfO
+ +4A1QJAr6sderusAEDLU1vfWQq1kha0ay16vhaW8Awqf//+oV08K5DbCO
+ Sr21HglSGqKkgH0t8QXG+BiMMk2kaoQ+NoqZ/7+ebyY0PSyo/O699JKTZ
+ suiXm3LbEj6lUpNy5jZGa0yqJBnTTRJTLtkejZ6WP62iNgKN2ncKisJc0
+ Wogq8y9OWXidROm1zDFYb3YqRRVoVMwpoLcDP0KBTWIP1Fe8UjvmfWOuE
+ wlKYV04C6pA7riSRz/KxEhv/dE6G++QIws2VMe6PuC8ZSNXb00pdtLcD8 A==;
+X-CSE-ConnectionGUID: fEBrZWgiTYSeQjS3D4rH0w==
+X-CSE-MsgGUID: 4AuLckFpSxatkAsXfCcGJA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="75660012"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75660012"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2026 18:59:11 -0800
-X-CSE-ConnectionGUID: mPc096nsQw6f2k2CIWWXkg==
-X-CSE-MsgGUID: uPjqpBA5TT2tIveyVnwgwQ==
+ 09 Feb 2026 18:59:49 -0800
+X-CSE-ConnectionGUID: Rj1KXFK3SZip+20rWdxCqQ==
+X-CSE-MsgGUID: qeKQ7GTIQkiQ7733GXv+RQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800661"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211800809"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:07 -0800
+ by orviesa008.jf.intel.com with ESMTP; 09 Feb 2026 18:59:43 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -61,10 +61,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org
-Subject: [PATCH v2 12/21] qom/object_interfaces: mark properties set from
- qdict & keyval as USER_SET
-Date: Tue, 10 Feb 2026 11:23:39 +0800
-Message-Id: <20260210032348.987549-13-zhao1.liu@intel.com>
+Subject: [PATCH v2 20/21] target/i386: detect user provided lbr-fmt via
+ property flag
+Date: Tue, 10 Feb 2026 11:23:47 +0800
+Message-Id: <20260210032348.987549-21-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
@@ -95,63 +95,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-object_set_properties_from_qdict() serves as the common entry point for
-parsing and setting properties from qdict (and keyval).
+At present, QEMU determines if the user has set the "lbr-fmt" property
+by checking if its value differs from a special value,
+`~PERF_CAP_LBR_FMT` (`~0x3f`).
 
-This function is primarily utilized for external user configuration:
+Relying on such a magic number to distinguish user input from the
+default state is implicit and fragile. It also prevents the helper macro
+`DEFINE_PROP_UINT64_CHECKMASK` from supporting a *valid* default value,
+as initializing the property with a valid default would make it
+impossible to distinguish from a user-provided value.
 
-1. User Creatable Objects (via user_creatable_add_type()):
-   - QMP: object-add
-   - HMP: object_add
-   - CLI: -object (qemu), --object (qemu-img * / qemu-io / qemu-nbd /
-         qemu-storage-daemon)
-  - Authz list files ("authz-list-file")
+With the introduction of `OBJ_PROP_FLAG_USER_SET`, it's possible to
+directly check this flag to determine whether the user has modified the
+property, which can help get rid of invalid "sentinel" value.
 
-2. Device and Machine creation (keyval-based):
-   - CLI: -machine / -device
-   - QMP/HMP: device_add
-   - Failover devices: virtio_net parses user's "qdict" in
-    failover_add_primary().
-
-3. Built-in default machine options (MachineClass::default_machine_opts):
-   - These hardcoded defaults simulate CLI arguments and are parsed via
-     sugar property way or keyval. Treating them as USER_SET is
-     acceptable as they emulate user behavior.
-
-There are a few internal corner cases where devices are created using an
-internal qdict:
-   - Xen USB (usbback_portid_add())
-   - Intel HDA (intel_hda_and_codec_init())
-
-Creating devices via internal qdict should be considered as legacy
-technical debt and this should be refactored in future work. For these
-cases, applying the USER_SET flag is a temporary and acceptable side
-effect.
-
-Therefor, update object_set_properties_from_qdict() to explicitly mark
-properties as USER_SET.
+Therefore, detect user-provided value by checking the USER_SET property
+flag in x86_cpu_realizefn(). The invalid initialization value will be
+dropped in subsequent work.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- qom/object_interfaces.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/cpu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 415cbee8c5cf..f0d5f9d84300 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -56,6 +56,11 @@ static void object_set_properties_from_qdict(Object *obj, const QDict *qdict,
-         if (!object_property_set(obj, e->key, v, errp)) {
-             goto out;
-         }
-+
-+        if (!object_property_set_flags(obj, e->key,
-+                                       OBJ_PROP_FLAG_USER_SET, errp)) {
-+            goto out;
-+        }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a594747f0030..a6d943c53a3f 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9779,6 +9779,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+     CPUX86State *env = &cpu->env;
+     Error *local_err = NULL;
+     unsigned requested_lbr_fmt;
++    int lbr_fmt_set;
+ 
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     /* Use pc-relative instructions in system-mode */
+@@ -9815,7 +9816,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+      * Override env->features[FEAT_PERF_CAPABILITIES].LBR_FMT
+      * with user-provided setting.
+      */
+-    if (cpu->lbr_fmt != ~PERF_CAP_LBR_FMT) {
++    lbr_fmt_set = object_property_check_flags(OBJECT(dev), "lbr-fmt",
++                                              OBJ_PROP_FLAG_USER_SET, errp);
++    if (lbr_fmt_set < 0) {
++        return;
++    } else if (lbr_fmt_set > 0) {
+         env->features[FEAT_PERF_CAPABILITIES] &= ~PERF_CAP_LBR_FMT;
+         env->features[FEAT_PERF_CAPABILITIES] |= cpu->lbr_fmt;
      }
-     visit_check_struct(v, errp);
- out:
 -- 
 2.34.1
 
