@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF74EA3F2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33319EA3F2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 09:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpjlh-00018A-HC; Tue, 10 Feb 2026 04:10:49 -0500
+	id 1vpjlo-0001Eq-Bv; Tue, 10 Feb 2026 04:10:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpjlZ-00017O-5T; Tue, 10 Feb 2026 04:10:41 -0500
+ id 1vpjle-00018I-0M; Tue, 10 Feb 2026 04:10:46 -0500
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vpjlO-0004ip-8o; Tue, 10 Feb 2026 04:10:32 -0500
+ id 1vpjla-0004ip-7u; Tue, 10 Feb 2026 04:10:44 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fDJWUK9Y/L+mT/Rl9SGtQzKw3AhtTrn5ReFbJBEjtj5ri9PxroexzNnMF1LvVRmScnLID+S6iKelFcbJi9KbLynWtYezxXbEn+AO1w8/vIowJhfSAmk8uKz3wcMmIE1hcf89VOPVMdA7ybN5y9VmhxcabvDsXwGhJqZSWq7f3u3NctIpggBQd3RCMOK82APUy51Ykq12I99VTbGPZZTFQ8DNIPES00vmaLuVmLmB6B1+3BeM7m1sDiNB63s8IE73Cjmy/ePss0iisZ9mw+zBimU+J2TDTKcYuC3RA0dMv5hg+UuFXWwj8WwXEt14aWPYvpXktoWM7OVV4IvIJt7B2A==
+ b=T8ulFWT85rSabm165dtR2mWH9pOQpJ6h6eHoATc5ASJ/sCVWijeDSylexze/bRVGeGRHZGp3ac5FQCDzoGDpC59q/faKdiXJOI30sI2GI8QNVMKmKjQEomYD1hhcNg8qK6rLHGbvdkgvS3wZ8QK6BQEv/KvqRxgz5ZjrUzRPMMctnWlQYYamwTToiHfX3RjaDpVXCp1MiNXCmqGdSpckpPNi6GCeiVbbmY9nsojpgsyh+hhQghJVceRrYt5o4FYrl2VKR7c9Vq0cewVln34endYtNhuA6V5H56fKsfZwy2ckf3TxRJGpnEgTnOhozaqomBL4m1bfDVD3HPQZH1snLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JEpfO0DLa1savDwcVNWyahHfyq1KX1vbr+n0ISgfBnE=;
- b=Fn802bxKFTNLa3jsSCQ9txgjsG77lm94NLg2guGy0eA8UC9Diz4xae1UPYIgBgUZ97Vh3roNho9B5P5q9vI2gl/v/4OVv/o5Db5eBjxOLPbhAZEH9e+qBysGpufEzjunp/gux0dFOFSowakh8VB1imra7m7kz78O+a1jMMzvZKpfpFPbxXebCl3mXPfpCRil9QZmjw8EX0wGMqne6+gSqKG2EarE3Xog1Kr1KK0rs6MLrhpbKon2rvjJpgjaeUKidiofc0t8VVpXw2u0Y31fpXikOqDzYImi7grbv07ccBlbs9fi3quE+G+5BKaM0iEG37aytB3caDgqfnSr7NiSag==
+ bh=vNJGnvv7T716ktIxUUvnlNKynsTuSSmaB6lUz0Q6bU0=;
+ b=UG71Z6FPIg5X4gNYx53cESL+nyj3FyviJhcb7IEXaY0EvfdVDiWfmmE1BAr7oJ2/Khhf0PvjJ6bn7pu0MU47tIgjHjZ8Hmh64dRY0dx9hthKTYsUNSYlX/4zPW7bu09+ciyvI1S0ENBsswgMJcxWpdQe32l81XzTMRWwpfPPFmacDVT3ULVOFEI7WtimdMM7ELC1ygrtdjN6GO7xHdfcM24sEaVec+s9QNbmPdZ+ec1fpHBCComYqurQuePJ1XPfDq0zm8qIPy5JeSNmxn1a5frrnaNGrPVnulp9Nkr4VEKATlGjtxdjZs8hC6U6WMzqHakRvjqjCd6QN3XfhVD+Pg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JEpfO0DLa1savDwcVNWyahHfyq1KX1vbr+n0ISgfBnE=;
- b=nN5cUBfe+04Bq/6t9fUlNCc6dOIxvKGQ+hQR5/JnzS/JyXxTR14RvzHqeEKDi7eLwH6DIOiGV/hQNoj7d5UG/4R5Z9REtMa52FvRR53Oj0Nfr93d4ecmhiSgY3AmJ8tOd1wlUTZyGRsc2guxuH208PNV/4EfS5s4IIqqjUpH0f+8xD+wMjZWR0pRfWi5135A3Ca5Bmd89/L6dM0xiQV3U61YQzl9YS8dGZqLVOPQOzMsYhGvp00lV3zTgFHpVojRaDpD4A7uUm62uoXgRd4O2vCUa0zN2DpK7hAcclsvRSbUjF1O5YvtiqsRCjSlO2q7rt7PWfYq1lhe8ZabyO8Dmg==
+ bh=vNJGnvv7T716ktIxUUvnlNKynsTuSSmaB6lUz0Q6bU0=;
+ b=aYC+SQFy00H5HRypgSeWD7DXUHuemYZMy0ulVd9yED+F8pdsP4GFk2zSfKIYgAnrJlKYEhDHHVQMjSlbBsUOpk2aIGxeIfbQxMMyNfIDCZiq6LnYgbwrKksRkB+qEV3+jmjwWEAwrPShmwybc73ftqZ7Y33hVmKI3TFtselmJcO1TPNuQTyHOq/iQ1AzQFkvC+UOvX6O+I39MJ7TcR5goLnM4bm4mK011FTP+lVSo2J9UY593xa02M+Ap5T6C3PUDgltUJfdSNuvU18SrJo5HsSh+PM0cAfGjU+St9wawEEmjHO8HMtPZjemaEcUWE6laqqQxLxK5vA7Z0SkpAJoNA==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by SG2PR06MB5264.apcprd06.prod.outlook.com (2603:1096:4:1dc::13) with
  Microsoft SMTP Server (version=TLS1_2,
@@ -42,7 +42,7 @@ Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9587.017; Tue, 10 Feb 2026
- 09:10:19 +0000
+ 09:10:22 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -55,12 +55,16 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>
-Subject: [PATCH v5 00/21] i3c: aspeed: Add I3C support
-Thread-Topic: [PATCH v5 00/21] i3c: aspeed: Add I3C support
-Thread-Index: AQHcmm0UcQRs4EPMvkyppE8BhlWZ8w==
-Date: Tue, 10 Feb 2026 09:10:19 +0000
-Message-ID: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>, Joe Komlodi <komlodi@google.com>, Patrick Venture
+ <venture@google.com>, Titus Rwantare <titusr@google.com>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: [PATCH v5 01/21] hw/misc/aspeed_i3c: Move to i3c directory
+Thread-Topic: [PATCH v5 01/21] hw/misc/aspeed_i3c: Move to i3c directory
+Thread-Index: AQHcmm0V0FQ1Q7fe7E6OkEWQ93tA5Q==
+Date: Tue, 10 Feb 2026 09:10:21 +0000
+Message-ID: <20260210091018.1553489-2-jamin_lin@aspeedtech.com>
+References: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -69,88 +73,88 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SG2PR06MB5264:EE_
-x-ms-office365-filtering-correlation-id: f087ddab-ed06-41f9-db9a-08de688436b8
+x-ms-office365-filtering-correlation-id: 3374e4b5-5177-4001-2b93-08de68843899
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|366016|1800799024|7416014|376014|38070700021|921020; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?ig6IkK+jGTTgpbOs+v26dq10IJlKZ/pdJMGjoFlnam9Q34bollP331z7nq?=
- =?iso-8859-1?Q?RKxJ934su/gh+/w/dTtKyb4Mi0BAbkd5Gbl0jUDeib2aVXYWU+TWXcU9Tx?=
- =?iso-8859-1?Q?MCezwaJGwx6YcLvIhIFOg2WkMuvq+uepELozDEsXt6fDLlD+Cnws5dR6Xn?=
- =?iso-8859-1?Q?PQYPoXS8fFIwBxFQ/4sRT/eoRqFOgNqcOUm49eo8iZ7eL4PEYf/Fw6Zjxq?=
- =?iso-8859-1?Q?Hs5cpRJNUCFNi2OmsLm5yEXhSHFLXatxEcd199pYAyLHzmt6eHUGt6+YdA?=
- =?iso-8859-1?Q?7bGynZhLV4h/8ZgOmrBoGu52p+bkF7qb2/7Snd/OF5uq35KSRWi37519Mb?=
- =?iso-8859-1?Q?cAvz6VPviKflKGwFeXXUCYxl3mmHVmdDrb8f4ZN9LNloH0KqwkIXAmi5wA?=
- =?iso-8859-1?Q?sno4+aX8HWDcjxeiAS9owqcAnxS+r7MgHcGCrzHfdhCwbFTCuFVhP1zGQU?=
- =?iso-8859-1?Q?fgwIoZGkFRCjMmvTwziaN5nx6idufM6n99J1/v46WmKP2IE4gCAExgZf97?=
- =?iso-8859-1?Q?Wdvv4z9rvr3Iv1KZAPPVX4EO5UmgpbigPm/PM4fvE2g+9VpuLVbT/gB7Ao?=
- =?iso-8859-1?Q?gnoIGpy4YBZ2AEvM7f5ehA9w7TvZn90t5DpRgY8QwhhREgvDOfom/aQy4Y?=
- =?iso-8859-1?Q?ceIoQgJ8+38tCHkf8suluEs15pau1VLkA+iJd7touPbLvG18bg4pEiVPnO?=
- =?iso-8859-1?Q?XX042bWNcyLwavHa/cgfypBwaawKgay9bgXoAFxjPkWN/bWDzZvoS4ls1c?=
- =?iso-8859-1?Q?soADybBi7AI3n+lGb4u5oZmiVLb1FduTM7ZSX0U0Ss0zVqakW4N2Efiqkb?=
- =?iso-8859-1?Q?LVLtQpm4qog5lkdfff7+D36+4yWkjq02WbR29xGIM32xKndHzeFq9PtFdO?=
- =?iso-8859-1?Q?srCOs3joAikGHJui8gXJ/g9ed23fLbQAsEYgeQkBikFKTCFudsbwljazHk?=
- =?iso-8859-1?Q?pqZ0thSiEtlIDbvVhapdKg/aV79+UIC8kIy6JRsClPo9egFceOtaXo0HBB?=
- =?iso-8859-1?Q?Xs48Lr/xusFfP+BIHiknA7LuVa3YB/p+tV/vQJywmtQJaY1B7G7bi6D7Xp?=
- =?iso-8859-1?Q?lZC2qMlZ8geRAaE81vInYfJ4CiJgyEueK0f/rELKffWRgH2U4mu2SE2kkF?=
- =?iso-8859-1?Q?8hCpZQJb34wp1fTshU5MGz34YP/22EC1cjJdi4M04Wd7yMMwg82Qy3Ly7e?=
- =?iso-8859-1?Q?WTKZbEIuShcnmPOsa/rfTHmDjNMBdYwRZ/YL3pjHtnBcdd7m/3aK+SiKlt?=
- =?iso-8859-1?Q?6SkyMpi28rVgGd4OrLHxLTr+6XwTrj+k0Cs5JkIEKi9K+ucLVsOxBOqrWX?=
- =?iso-8859-1?Q?nwAgAWiv1EvFgSru1PMpAo6v/oY6Pb1h0CvqlWK7fDa2nh9Q4c6IThLSWZ?=
- =?iso-8859-1?Q?Hgr+BXRgOMlTrfzPli+BirJuL2NYLZaN5DeFKlTDssfi4I3Lo8xtDlC0w/?=
- =?iso-8859-1?Q?awsCag5+N+gqNQQ0c9tYqQavFut6fewHXe4si7gUWd6/NKhmHhPxZjSRiJ?=
- =?iso-8859-1?Q?GMxRmVMFioH4xf/5qU8dCRzzxQ+2ZZnjEecaaOwVHihE1pW4vI2Y3HSfBf?=
- =?iso-8859-1?Q?c+44bfgQh3aHSyRe+7cHq8g4hODTD594cNGmn9VjqdRu51XytbVPxHad6S?=
- =?iso-8859-1?Q?pdnOmDtO5F/riAN8wMX2Ir6F1P6iXEwX+GsfpKQcwPtSr/s9Vw03Lg0fKx?=
- =?iso-8859-1?Q?+w3QjzTHvweqF3sYgTxmDJTjJrGosr72svBGjTbF?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?sqphzuDZTeM1kLWw9+B/iAasU3a5/MAm+ARyH/SYPn2dxDcVic1ZmW6Pg3?=
+ =?iso-8859-1?Q?vFu1mqzjSM4EzEpWlnD0EaCGZPvVhe78Bu2qYT9IICVzhtblq1z6iJ+m/o?=
+ =?iso-8859-1?Q?AH5zCcpFE/dFqNY/LVrwHJn3adpGvS+cQZGAVHsYt3yiPa08QOwpiMO5of?=
+ =?iso-8859-1?Q?tAEsDMWwyGp4eyxYNkxZzok0Wg2PLuZNv9jMDMZPRFjFkN/LeUzVKgyjwb?=
+ =?iso-8859-1?Q?V7ZOmwHhFNlEGOAblmTf40EdBEWsLZYFeS+8QkFJLzUDkbawi0c7Du4cHB?=
+ =?iso-8859-1?Q?/DoF9A+m8Ibg+fVhP9jvYdfhR+s0od9E8t1DrxiyUz4XQ7qO1u8SVkBaF3?=
+ =?iso-8859-1?Q?TNp/OGFSCtU09MSLJSLeyyWweCJZy8chOl3DQAl9z1lltWBmFA7K4ig+4e?=
+ =?iso-8859-1?Q?RR8pDMWpOVrutNMZJPzV0vJgWbRL3G0kDpFBPffAMcplzHdiAOCXeKaud6?=
+ =?iso-8859-1?Q?gw2tpJNRESLf/jdue/182DQ/4uHgRLS8rr7MzDhiX0pFn9SkfYxblYOYFo?=
+ =?iso-8859-1?Q?PHRrOKHSyoDqY66Z65s91C0RJv71GghI1P9yMJ48OejLjMXEO89A4o1qpA?=
+ =?iso-8859-1?Q?StKSFUV3zug5jLpjCAOOEWtzlapeTazQqyY8dw5qKpNdUIZc+rxBwObI2r?=
+ =?iso-8859-1?Q?bOHZ+VEKZXWAh67co0pDPmtrxFjaDNGovwfbDMearKonLU6V+p4x2HdNjK?=
+ =?iso-8859-1?Q?wDxvhizuHVZWcjwagjCLycj3qp7IaMkp/6UuhhPv9nbgXtM57jGLpl8nUv?=
+ =?iso-8859-1?Q?oBOT3CiUAoOKj2oMaClQ1wYCmH/TsrrIU64shDSX2GsPMZFHDwt3tV/2/4?=
+ =?iso-8859-1?Q?SRFR/EZoSQLyZUCFI6DjusK6BiWJd8sqx9+loa7R4WQ/7oeX7HSGtqz6X6?=
+ =?iso-8859-1?Q?DWy99SgtG2QDetv8okjQv2yR1LUV2wuUwHicLGE3Q1sAvOdCtDCabpUDvn?=
+ =?iso-8859-1?Q?IDUqEPuiQVuTmKBcz2sB0NbqHKfaUDMWWm3l1HNwm2v5J82QCpWXqiSSAr?=
+ =?iso-8859-1?Q?090WTiJPN7GE9IuQpkgEmqKNrp4b7TWEfWFEoqzlR7mmj6g/3r9px+ds7h?=
+ =?iso-8859-1?Q?OGT75AjXUZmsZgfwNiRgPnzPGdUER4PaNui9AXAV9ClQXOk+cTnSdV99kF?=
+ =?iso-8859-1?Q?lhy3rx8Uy/zxhtcqerl4iojeM3gA+gizsOLN/gnRNKln1I27YHAXzd/Xjx?=
+ =?iso-8859-1?Q?zZjdqNy3/yPXWEqUBITaEL2E2bENiN31AzOg1Ek9al2FlCdMiX0DM4zUcA?=
+ =?iso-8859-1?Q?OrqlRRB1VkgHafsLZQTrHTilNpi8YYEvo8HdhQpL5yiowL5Y0GxGq9S2yf?=
+ =?iso-8859-1?Q?vZRXIxKloPs89wxdkzu/xbTgkicratXOsoOdHoYr/K9LEladO2S06HcpWV?=
+ =?iso-8859-1?Q?q2mSEOZO4Y5d8wHs2QYnyNA+QTWLkh/4oIz6yw+Ny1lZixbeJzaS/AkRQ2?=
+ =?iso-8859-1?Q?QVa/tkUhqIgNYZpN1jAbOvy22lsOkZkXboMVCJWy/9br80jMKwFyMkH2XE?=
+ =?iso-8859-1?Q?CIWm2PmB1P308dCXWjl6yPXI1IpEFyfWOdI4fAPQXJY4A0FJ2EaUbmtU9J?=
+ =?iso-8859-1?Q?Ip9KRFbzbb6NEcEU+5axdckSynDp+kDeohZN/3M0kEDFA2XfB3AJ5jBGlg?=
+ =?iso-8859-1?Q?BSBA1gDV6WDfTh627EpES3VhTObw7GL2x9W5qrZHEfTT2itjItvR9RwrJq?=
+ =?iso-8859-1?Q?s5dNpw3+wUEq7bc9bDjrgfXHscg6Eb3JzMKTeDQc?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?0KhFlIXrENLixYWs+YwiCadJOikpZyBWZY8gFTnJpievZn+gByBgnXHcZU?=
- =?iso-8859-1?Q?jy/wWtw9JKk4MgXpXG6XX95NmLYTiikA7n/sxnfnuUladUXYf/sSEb7tdQ?=
- =?iso-8859-1?Q?I1a2BdgQWb+jA03Kk7SpCzxckOvRyfUZg/x4o+quuAGuQazWA8YXK2Ihr8?=
- =?iso-8859-1?Q?oyhy3/QkL4qUhrcUKcE0ETjILIC0BpPc/UFgDcPLgjRxHFf7Hx/4WLLiLt?=
- =?iso-8859-1?Q?vzp0zZ4LxxOjmU/73SajMh9hs9h/f/rJRO1bKIJRYlExzIfFYSK2CEhMjz?=
- =?iso-8859-1?Q?r+NbHFeyp3NcV2ky34LlU583fAu3CmnSyWz1YwrcREPHSvy+NuCwchdVhs?=
- =?iso-8859-1?Q?iEIN+FlgtF2b3EV5ikvOG+YoH0h1dX2asEZ82zbVsp05DHFHU6QzQ5HhLU?=
- =?iso-8859-1?Q?agiSkk3XyvgN2+4p4CJq7cBJPEDTLXcVakiEjd+F6jPkSzHXQa38eSofv4?=
- =?iso-8859-1?Q?C/R9F70dPM4VehgMiV3+nBc6SiWo3QmXqbtgjRIUnA183/A7+hnHxGm5Yj?=
- =?iso-8859-1?Q?DTZTe280YZc4xvpAphPi+tRyQkVp9OQADs9/Y/j0hJkpY8Qov4j/GQaEgL?=
- =?iso-8859-1?Q?n1ZmNMv2JGk8Dj6rV3lRyYnJ8hjRK4kUNwFluffsggo7XMuSPUUYzWuA4l?=
- =?iso-8859-1?Q?C64Jb9lsKqB+M8KEAlzqTZdOEaNQ0k2+EIvc1071UCsGvmu7E5zTYdMzzH?=
- =?iso-8859-1?Q?l52hdDw3pVs//d0eMpJf9cA8MT4lKr/QijaHR76JW8vsCKMyYF3CGl7/WC?=
- =?iso-8859-1?Q?qz5hZkiYbSS/2hO2YFdkI1LHyWNhYHZJnPz0tZPF/GTo1p91d4Jmc9zDTs?=
- =?iso-8859-1?Q?d/6cHTvMI3hG2zKbplVOZxOvFDtrsBW7qjkYJgq6pPx8BoD93mcUR1h8cz?=
- =?iso-8859-1?Q?GGNYSUwgMzY/GRTmc57214NbqFIS7X+BtKhujBXnMN6mUNd/emLdHf7pkB?=
- =?iso-8859-1?Q?uk+60YZw2YIYXLR56jubm5HsQ2n9/n/tN641hOwuUP1wjyecgskKUaODQK?=
- =?iso-8859-1?Q?jD6k9XJN1EW09R83fWTF5A+8wcRhmOmi/h8E4QSC7m5KxOBS83ix1B2/Ll?=
- =?iso-8859-1?Q?J/DfcfisW3zBnYAHw3Cj3BSlDEO/mq/M6+wI/fNKC8S4wr5NHOyapaPRhK?=
- =?iso-8859-1?Q?HMRmZL37D9jpU8SEBSZMcNWeSmZNA93hj5n+GFw7orsc94Dp8Sdwm5aGmX?=
- =?iso-8859-1?Q?pz8esJrsnczu0W/HF1v8XSCuCtUq9vul1wG/keI3zoS8/Nis6kPuqk7Ddy?=
- =?iso-8859-1?Q?3++fsKB1BMy5WNrvLRX2eN70pI7Vuy4QkYZsbn94H5ZUAkJltPyf8GgMUI?=
- =?iso-8859-1?Q?/a7qausJC1uftz9wzhkmi5B4q9qF67QUfflPQA52/75A0mUJuScbYxkJZP?=
- =?iso-8859-1?Q?srZVpmLN4fZdgKgAW43I1Lt5wSKt+jzX4TaNyeBtqpXdD8CDBYHw0Nlmn+?=
- =?iso-8859-1?Q?9all0uXxCmBplCDkeuM+jUhrR71Gm3wnd8h2YYoQICWk1gD1ADMSQK2058?=
- =?iso-8859-1?Q?fIsV4baPwCl/e5i42kMenyboEq/1rrwqt+Je3Flzge2tge481fvJudNQ8I?=
- =?iso-8859-1?Q?w1uJ2s/s00cvaO1M3Nbz5H/I5vUKdR1svpFPt6zZPs39Emy0snru7vl3Qb?=
- =?iso-8859-1?Q?ctEIOz7kyufeyTwJ80OoaD6/ANHFbW7QVI80IIJ+t7+PVcE2/hX0+yO2PM?=
- =?iso-8859-1?Q?8MBt6KMgt/Gx1SEMpoIr7EKK0AzOhmzB+63ZGQlb4kzET5/oxUkZTya603?=
- =?iso-8859-1?Q?/4JLqodNRg4lXJ+Ww+UPPHaYWfdzzdDCCWtCD8ppqqZUf3sZFcv0DKWxB/?=
- =?iso-8859-1?Q?LhQqJm9xFQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rxuYtdka6b8zInd7iTJlGMTCMJoizIdsSLIbGf6/wk3Ovspbb9K5EfXL5W?=
+ =?iso-8859-1?Q?r/ZkDEtDQLq4N1tLvOF3LTZ5drw8gEpF61LbXbxcm87n+VSrJpGJvjbNkc?=
+ =?iso-8859-1?Q?MGYZ2NzEM8i9rRSJumEQ+vTf2wST9lFvQen1ioHL+wUkgIaAnCh0/1qgrI?=
+ =?iso-8859-1?Q?a4RRDrYHa6twPxCDURvoG5oiYX+7o/38JU+BAFhfzi6GafAsNC0mrKRR5w?=
+ =?iso-8859-1?Q?IOFCW69CB209ktsgJpFrqa40jKx2GmKQJcv7FWajeOUnF4biWFQw5YV5jr?=
+ =?iso-8859-1?Q?kRw0B7JRQAV23763YeLmnolyMmGc6Gi9LjaemWD12rGEsjIhpKG9cSMc9L?=
+ =?iso-8859-1?Q?Fx9cgzFuO/lNOWcNMbiAF3DsSXrt8MXuToj1Pk8z4kGCwIEFT8dYS1YPyo?=
+ =?iso-8859-1?Q?MJfhXguOmDZFIcGiDssEW+rXS4QifPV7NMBA9ODQI2qtnQZhu2zU/J2HYy?=
+ =?iso-8859-1?Q?QBDlxWhP63wZFQnlYo2CJWVPgY7CLJksFM4aXTolv39LQxc4wwGz1fNDVW?=
+ =?iso-8859-1?Q?Jo/QbU3l/cTVajkiP7YUXSDsqr4Om8cToiKtajCkEuZXdRfI/c3JDg31Es?=
+ =?iso-8859-1?Q?ZTllnKvqiVEBniWSNYK6dYUZnNjKlx7vTMV6JRJmUor5v+k3CxfcAtM6IR?=
+ =?iso-8859-1?Q?5Ev27wCVPuvgq4ZsptB0K/Sj0VkKnQli2PSRea8yUBcaRRfJfLnqJ7VYwf?=
+ =?iso-8859-1?Q?Hs25zaPofHROaid3bVBED9nU5gCkf2g8AkcSMALsUcxY+icejciA7J8m4w?=
+ =?iso-8859-1?Q?QBLq43mBdqoSoUBCFBqkV7VQB4sEDAeGWfv1kq8VSRs3sTvRJsCTynyWg7?=
+ =?iso-8859-1?Q?fFCyfMdAhluELfTr4ivoCVA/PiowFTCSLZ+fldXvdHTtE3jhd+W2gRCIh4?=
+ =?iso-8859-1?Q?OqFSfpIXjY0Pq7dcZkqhXdUWpoGE0gNArjGeoDB0d/hxiMV5PDuQ3CZaKF?=
+ =?iso-8859-1?Q?2sUIWnq/MEVD1XLv47HQAjulGCiqs0VxSCDVe1eSPmm2FtyHWSiGCGtC8M?=
+ =?iso-8859-1?Q?gbfQAP5bInJ5dZaLhwkUJRYTV1eZRW2n4yvcC0HcyMN+ybDDIeYITms9MP?=
+ =?iso-8859-1?Q?8z1dbnwug+1i0M1XxtpBTvsnRvsoorTDd5ZPyo6QJ6WlEiy4sFPPfCCq8+?=
+ =?iso-8859-1?Q?LI+J9SN+WRd7xzfAVkJ7qvyKpcMGUA2Z8huPw7JE6r/uXHlRQGqa5hCcXj?=
+ =?iso-8859-1?Q?BTyodeYA0XbUdyvTbjVaT6ZIf2/Prjtd2AfS4GrDoHQ0j72WLGmKBdRx7E?=
+ =?iso-8859-1?Q?epuP8rdnJ9cr76SGijoA3spqEL4F/gzrAtdas+fTdw1E/Ddb0yZVM1wV9N?=
+ =?iso-8859-1?Q?+FM9oqhOFHnUkyDuYypUmdDSzzpgNqefFPU5fC++QRZ9sXWaDpblQR54v5?=
+ =?iso-8859-1?Q?jGm23d0AKwOjRF6adKlwsGuVsbv9S4xrk7WBdjd7HlW6/0+vL/kU4leM4Y?=
+ =?iso-8859-1?Q?VHOtmGTgINX9Cp9C6WmGCp5IymP3cr54p2Ch3feZ1Rdeg0YjkE2LZar8eg?=
+ =?iso-8859-1?Q?5YXYjAEg1ra49c639QEEGlgCEPNj4KIQJ/jux/WS4OMJpyES40Zy+iawqc?=
+ =?iso-8859-1?Q?Xz2LmhIQW0VrbV+T/iGv21TXxBX5ACKBxupvtH5ryqlToAoqHRT0H2Xjmz?=
+ =?iso-8859-1?Q?vvl/WJUT4D5R2CYg4c2MvfiLko7mQjAHtU00fS+UH07QGogmq1VK+MUFVg?=
+ =?iso-8859-1?Q?GeaVPj6qkf8vxe/yPrcgdUxJRv1UtwS6Ld2ZT88oQeN/UwdDSJfnwob3Qf?=
+ =?iso-8859-1?Q?sc3hnAxSmCHD7A6n+lJZwTehP87f8lOWwBfu2+LC2NlDUMjGpfjodB7oGl?=
+ =?iso-8859-1?Q?9XPYr2PraA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f087ddab-ed06-41f9-db9a-08de688436b8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 09:10:19.5872 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3374e4b5-5177-4001-2b93-08de68843899
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Feb 2026 09:10:21.1855 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5wVX1XNUeQ2YZy3noecJpt+SyXfVU1Bc8vmG/aI2Eglnxkl3FGbKMkHP9pQfHtOV7rNaAN8EeILJsKWCxpVcrnkBCvBCvuXaHZ80BDEeQV0=
+X-MS-Exchange-CrossTenant-userprincipalname: H2uXSREXNjaIQkYOEth3uZnJhehoVjTYb2lJcGbPLHNVy8Q7OFY1eDHvQHE9bMvdaLYhsS5DnsYFaJ/TrC7zbYg52GxzMqfNL3nuy0jLVwE=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5264
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -176,133 +180,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:=0A=
-  The initial patch series was based on work by Joe Komlodi <komlodi@google=
-.com>.=0A=
+Moves the Aspeed I3C model and traces into hw/i3c and creates I3C build=0A=
+files.=0A=
 =0A=
-  This series adds I3C bus support to QEMU and adds more functionality to t=
-he=0A=
-  Aspeed I3C controller.=0A=
-=0A=
-  This implementation is a basic implementation that introduces IBIs=0A=
-  (including hot-join), CCCs, and SDR data transfer. As-is, it doesn't supp=
-ort=0A=
-  multi-controller buses or HDR transfers.=0A=
-=0A=
-  First we add the I3C bus and controller model. With that added we extend=
-=0A=
-  the functionality of the Aspeed I3C controller so it can do transfers=0A=
-  and handle IBIs.=0A=
-=0A=
-  Next, we add a mock I3C target. It's intended to be a very simple target=
-=0A=
-  just to verify that I3C is working on the guest. Internally, we've used i=
-t=0A=
-  on Linux to verify that i3C devices can be probed and can send/receive da=
-ta=0A=
-  and IBIs.=0A=
-  This target is sort of like an EEPROM, and it can also send IBIs upon=0A=
-  reception of a user-defined magic number.=0A=
-=0A=
-  Lastly we add  hotplugging support. The hotplugging doesn't do anything t=
-oo=0A=
-  complicated, it just adds the device attempting to hotplug to the bus. It=
-=0A=
-  is the device's responsibility to hot-join and go through the DAA process=
-=0A=
-  to participate on the bus.=0A=
-=0A=
-v2:=0A=
-  Jamin Lin <jamin_lin@aspeedtech.com> has taken ownership of the I3C patch=
-=0A=
-  series for upstream submission.=0A=
-=0A=
-  Changes in this version include:=0A=
-=0A=
-  1. Added I3C functional tests.=0A=
-  2. Updated patch 4 to refine register field definitions.=0A=
-  3. Updated patch 7 to correct read-only register field masks.=0A=
-=0A=
-v3:=0A=
-  1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-  2. Fix a typo=0A=
-  3. Fix ASPEED mail server issue=0A=
-=0A=
-v4:=0A=
-  1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com> at the end of =
-each patch.=0A=
-=0A=
-v5:=0A=
-  1. Address review feedback by updating the I3C bus and device to use the=
-=0A=
-   DEFINE_TYPES() macro instead of an explicit type registration function.=
-=0A=
-  2. Rename variables to `parent_obj` for the parent object and `parent_cla=
-ss`=0A=
-   for the parent class to comply with QEMU QOM coding style guidelines.=0A=
-=0A=
-Jamin Lin (2):=0A=
-  hw/i3c/aspeed_i3c: Switch to DEFINE_TYPES() and align parent_obj=0A=
-    naming=0A=
-  tests/functional/arm/test_aspeed_ast2600_sdk: Add i3c functional test=0A=
-=0A=
-Joe Komlodi (19):=0A=
-  hw/misc/aspeed_i3c: Move to i3c directory=0A=
-  hw/i3c: Add bus support=0A=
-  hw/i3c: Split DesignWare I3C out of Aspeed I3C=0A=
-  hw/i3c/dw-i3c: Add more register fields=0A=
-  hw/i3c/aspeed_i3c: Add more register fields=0A=
-  hw/i3c/dw-i3c: Add more reset values=0A=
-  hw/i3c/aspeed_i3c: Add register RO field masks=0A=
-  hw/i3c/dw-i3c: Add register RO field masks=0A=
-  hw/i3c/dw-i3c: Treat more registers as read-as-zero=0A=
-  hw/i3c/dw-i3c: Use 32 bits on MMIO writes=0A=
-  hw/i3c/dw-i3c: Add IRQ MMIO behavior=0A=
-  hw/i3c/dw-i3c: Add data TX and RX=0A=
-  hw/i3c/dw-i3c: Add IBI handling=0A=
-  hw/i3c/dw-i3c: Add ctrl MMIO handling=0A=
-  hw/i3c/dw-i3c: Add controller resets=0A=
-  hw/i3c/aspeed: Add I3C bus get function=0A=
-  hw/i3c: Add Mock target=0A=
-  hw/arm/aspeed: Build with I3C_DEVICES=0A=
-  hw/i3c: Add hotplug support=0A=
-=0A=
- meson.build                                   |    1 +=0A=
- hw/i3c/trace.h                                |    2 +=0A=
- include/hw/arm/aspeed_soc.h                   |    2 +-=0A=
- include/hw/{misc =3D> i3c}/aspeed_i3c.h         |   31 +-=0A=
- include/hw/i3c/dw-i3c.h                       |  199 ++=0A=
- include/hw/i3c/i3c.h                          |  277 +++=0A=
- include/hw/i3c/mock-i3c-target.h              |   52 +=0A=
- hw/i3c/aspeed_i3c.c                           |  258 +++=0A=
- hw/i3c/core.c                                 |  664 ++++++=0A=
- hw/i3c/dw-i3c.c                               | 1862 +++++++++++++++++=0A=
- hw/i3c/mock-i3c-target.c                      |  298 +++=0A=
- hw/misc/aspeed_i3c.c                          |  383 ----=0A=
- hw/Kconfig                                    |    1 +=0A=
- hw/arm/Kconfig                                |    3 +=0A=
- hw/i3c/Kconfig                                |   15 +=0A=
- hw/i3c/meson.build                            |    6 +=0A=
- hw/i3c/trace-events                           |   48 +=0A=
- hw/meson.build                                |    1 +=0A=
- hw/misc/meson.build                           |    1 -=0A=
- hw/misc/trace-events                          |    6 -=0A=
- .../functional/arm/test_aspeed_ast2600_sdk.py |   12 +=0A=
- 21 files changed, 3710 insertions(+), 412 deletions(-)=0A=
+Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
+Reviewed-by: Patrick Venture <venture@google.com>=0A=
+Reviewed-by: Titus Rwantare <titusr@google.com>=0A=
+Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ meson.build                           | 1 +=0A=
+ hw/i3c/trace.h                        | 2 ++=0A=
+ include/hw/arm/aspeed_soc.h           | 2 +-=0A=
+ include/hw/{misc =3D> i3c}/aspeed_i3c.h | 0=0A=
+ hw/{misc =3D> i3c}/aspeed_i3c.c         | 2 +-=0A=
+ hw/Kconfig                            | 1 +=0A=
+ hw/arm/Kconfig                        | 1 +=0A=
+ hw/i3c/Kconfig                        | 2 ++=0A=
+ hw/i3c/meson.build                    | 3 +++=0A=
+ hw/i3c/trace-events                   | 7 +++++++=0A=
+ hw/meson.build                        | 1 +=0A=
+ hw/misc/meson.build                   | 1 -=0A=
+ hw/misc/trace-events                  | 6 ------=0A=
+ 13 files changed, 20 insertions(+), 9 deletions(-)=0A=
  create mode 100644 hw/i3c/trace.h=0A=
- rename include/hw/{misc =3D> i3c}/aspeed_i3c.h (53%)=0A=
- create mode 100644 include/hw/i3c/dw-i3c.h=0A=
- create mode 100644 include/hw/i3c/i3c.h=0A=
- create mode 100644 include/hw/i3c/mock-i3c-target.h=0A=
- create mode 100644 hw/i3c/aspeed_i3c.c=0A=
- create mode 100644 hw/i3c/core.c=0A=
- create mode 100644 hw/i3c/dw-i3c.c=0A=
- create mode 100644 hw/i3c/mock-i3c-target.c=0A=
- delete mode 100644 hw/misc/aspeed_i3c.c=0A=
+ rename include/hw/{misc =3D> i3c}/aspeed_i3c.h (100%)=0A=
+ rename hw/{misc =3D> i3c}/aspeed_i3c.c (99%)=0A=
  create mode 100644 hw/i3c/Kconfig=0A=
  create mode 100644 hw/i3c/meson.build=0A=
  create mode 100644 hw/i3c/trace-events=0A=
 =0A=
+diff --git a/meson.build b/meson.build=0A=
+index 8c6c0a9a32..d20ec383df 100644=0A=
+--- a/meson.build=0A=
++++ b/meson.build=0A=
+@@ -3602,6 +3602,7 @@ if have_system=0A=
+     'hw/fsi',=0A=
+     'hw/hyperv',=0A=
+     'hw/i2c',=0A=
++    'hw/i3c',=0A=
+     'hw/i386',=0A=
+     'hw/i386/xen',=0A=
+     'hw/i386/kvm',=0A=
+diff --git a/hw/i3c/trace.h b/hw/i3c/trace.h=0A=
+new file mode 100644=0A=
+index 0000000000..1e0c4eadf0=0A=
+--- /dev/null=0A=
++++ b/hw/i3c/trace.h=0A=
+@@ -0,0 +1,2 @@=0A=
++/* SPDX-License-Identifier: GPL-2.0-or-later */=0A=
++#include "trace/trace-hw_i3c.h"=0A=
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
+index b185b04186..d7b3647ca1 100644=0A=
+--- a/include/hw/arm/aspeed_soc.h=0A=
++++ b/include/hw/arm/aspeed_soc.h=0A=
+@@ -23,7 +23,7 @@=0A=
+ #include "hw/timer/aspeed_timer.h"=0A=
+ #include "hw/rtc/aspeed_rtc.h"=0A=
+ #include "hw/i2c/aspeed_i2c.h"=0A=
+-#include "hw/misc/aspeed_i3c.h"=0A=
++#include "hw/i3c/aspeed_i3c.h"=0A=
+ #include "hw/ssi/aspeed_smc.h"=0A=
+ #include "hw/misc/aspeed_hace.h"=0A=
+ #include "hw/misc/aspeed_sbc.h"=0A=
+diff --git a/include/hw/misc/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h=0A=
+similarity index 100%=0A=
+rename from include/hw/misc/aspeed_i3c.h=0A=
+rename to include/hw/i3c/aspeed_i3c.h=0A=
+diff --git a/hw/misc/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c=0A=
+similarity index 99%=0A=
+rename from hw/misc/aspeed_i3c.c=0A=
+rename to hw/i3c/aspeed_i3c.c=0A=
+index ac6db214ee..fff259ff66 100644=0A=
+--- a/hw/misc/aspeed_i3c.c=0A=
++++ b/hw/i3c/aspeed_i3c.c=0A=
+@@ -10,7 +10,7 @@=0A=
+ #include "qemu/osdep.h"=0A=
+ #include "qemu/log.h"=0A=
+ #include "qemu/error-report.h"=0A=
+-#include "hw/misc/aspeed_i3c.h"=0A=
++#include "hw/i3c/aspeed_i3c.h"=0A=
+ #include "hw/core/registerfields.h"=0A=
+ #include "hw/core/qdev-properties.h"=0A=
+ #include "qapi/error.h"=0A=
+diff --git a/hw/Kconfig b/hw/Kconfig=0A=
+index 9e6c789ae7..c53f94d96a 100644=0A=
+--- a/hw/Kconfig=0A=
++++ b/hw/Kconfig=0A=
+@@ -13,6 +13,7 @@ source fsi/Kconfig=0A=
+ source gpio/Kconfig=0A=
+ source hyperv/Kconfig=0A=
+ source i2c/Kconfig=0A=
++source i3c/Kconfig=0A=
+ source ide/Kconfig=0A=
+ source input/Kconfig=0A=
+ source intc/Kconfig=0A=
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig=0A=
+index c66c452737..8344b9769f 100644=0A=
+--- a/hw/arm/Kconfig=0A=
++++ b/hw/arm/Kconfig=0A=
+@@ -545,6 +545,7 @@ config ASPEED_SOC=0A=
+     select DS1338=0A=
+     select FTGMAC100=0A=
+     select I2C=0A=
++    select I3C=0A=
+     select DPS310=0A=
+     select PCA9552=0A=
+     select PCA9554=0A=
+diff --git a/hw/i3c/Kconfig b/hw/i3c/Kconfig=0A=
+new file mode 100644=0A=
+index 0000000000..e07fe445c6=0A=
+--- /dev/null=0A=
++++ b/hw/i3c/Kconfig=0A=
+@@ -0,0 +1,2 @@=0A=
++config I3C=0A=
++    bool=0A=
+diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build=0A=
+new file mode 100644=0A=
+index 0000000000..ebf20325cb=0A=
+--- /dev/null=0A=
++++ b/hw/i3c/meson.build=0A=
+@@ -0,0 +1,3 @@=0A=
++i3c_ss =3D ss.source_set()=0A=
++i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))=0A=
++system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)=0A=
+diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events=0A=
+new file mode 100644=0A=
+index 0000000000..3ead84eb45=0A=
+--- /dev/null=0A=
++++ b/hw/i3c/trace-events=0A=
+@@ -0,0 +1,7 @@=0A=
++# See docs/devel/tracing.rst for syntax documentation.=0A=
++=0A=
++# aspeed_i3c.c=0A=
++aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRI=
+x64 " data 0x%" PRIx64=0A=
++aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" P=
+RIx64 " data 0x%" PRIx64=0A=
++aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) =
+"I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
++aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data)=
+ "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
+diff --git a/hw/meson.build b/hw/meson.build=0A=
+index 1022bdb806..e05dc4864c 100644=0A=
+--- a/hw/meson.build=0A=
++++ b/hw/meson.build=0A=
+@@ -35,6 +35,7 @@ subdir('dma')=0A=
+ subdir('gpio')=0A=
+ subdir('hyperv')=0A=
+ subdir('i2c')=0A=
++subdir('i3c')=0A=
+ subdir('ide')=0A=
+ subdir('input')=0A=
+ subdir('intc')=0A=
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build=0A=
+index d304a98498..96b6705b7d 100644=0A=
+--- a/hw/misc/meson.build=0A=
++++ b/hw/misc/meson.build=0A=
+@@ -135,7 +135,6 @@ system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: fil=
+es('pvpanic-mmio.c'))=0A=
+ system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))=0A=
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(=0A=
+   'aspeed_hace.c',=0A=
+-  'aspeed_i3c.c',=0A=
+   'aspeed_lpc.c',=0A=
+   'aspeed_ltpi.c',=0A=
+   'aspeed_pwm.c',=0A=
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events=0A=
+index d6af2fcf85..b88accc437 100644=0A=
+--- a/hw/misc/trace-events=0A=
++++ b/hw/misc/trace-events=0A=
+@@ -293,12 +293,6 @@ armsse_mhu_write(uint64_t offset, uint64_t data, unsig=
+ned size) "SSE-200 MHU wri=0A=
+ # aspeed_xdma.c=0A=
+ aspeed_xdma_write(uint64_t offset, uint64_t data) "XDMA write: offset 0x%"=
+ PRIx64 " data 0x%" PRIx64=0A=
+ =0A=
+-# aspeed_i3c.c=0A=
+-aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRI=
+x64 " data 0x%" PRIx64=0A=
+-aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" P=
+RIx64 " data 0x%" PRIx64=0A=
+-aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) =
+"I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
+-aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data)=
+ "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
+-=0A=
+ # aspeed_pwm.c=0A=
+ aspeed_pwm_read(uint64_t offset, uint64_t data) "read: offset 0x%" PRIx64 =
+" data 0x%" PRIx64=0A=
+ aspeed_pwm_write(uint64_t offset, uint64_t data) "write: offset 0x%" PRIx6=
+4 " data 0x%" PRIx64=0A=
 -- =0A=
 2.43.0=0A=
 
