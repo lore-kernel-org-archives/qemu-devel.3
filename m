@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFB7EB2700
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F056EB2712
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpu8i-0006Tq-V0; Tue, 10 Feb 2026 15:15:18 -0500
+	id 1vpu8m-0006fe-NJ; Tue, 10 Feb 2026 15:15:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vpu8Y-0006Jr-71
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vpu8Y-0006LK-SX
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vpu8W-0007t5-0E
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:05 -0500
+ id 1vpu8W-0007t4-6t
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770754501;
+ s=mimecast20190719; t=1770754500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=7vMYHOxYpwJHtoyWqbu05RZsH7Z/JHjtBTzY/s/wBC0=;
- b=Wq42MMmkj9nGtQ7mdEsAnTEm3A08hnjkLVoG8SF/7bc1hw/NfZPNGi3TMY5DJscxVb7G5w
- p8dpq8ANqf4RF+68/GFt7JxsvWxaD352RBUPFCPvREl7yXjqw7Z2Ba0HTHeqirBcEKIWXF
- VFJM5Wbd7dwxqBLwwocdYg7MHpqx1x8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8FSuW7r2ol5AVxNO7r0TBez76OwosxUPBcHM1LPSlvY=;
+ b=hJnUHxOcftTt8vbycDVoLuIpMS58GD1SfhoPaRk46N/gnGULWGOJaZZCc7NLjjd9BtccUG
+ tmCxYgbtzAtqabb5SGAgjvtSty5lBzUbh87hZujdK/A7fHT+0DQACCSMpU8YZI09k0qpuR
+ /D2ZDfocHmkuObEW9EqTsxv4wfXK5wM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-7kXRaOL_NZeCh07wsOgF5A-1; Tue,
- 10 Feb 2026 15:14:57 -0500
-X-MC-Unique: 7kXRaOL_NZeCh07wsOgF5A-1
-X-Mimecast-MFC-AGG-ID: 7kXRaOL_NZeCh07wsOgF5A_1770754496
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-wBNJK9BXM6i1OhLDqRarJw-1; Tue,
+ 10 Feb 2026 15:14:59 -0500
+X-MC-Unique: wBNJK9BXM6i1OhLDqRarJw-1
+X-Mimecast-MFC-AGG-ID: wBNJK9BXM6i1OhLDqRarJw_1770754498
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 900081800454; Tue, 10 Feb 2026 20:14:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68FD919560A5; Tue, 10 Feb 2026 20:14:58 +0000 (UTC)
 Received: from localhost (unknown [10.2.17.130])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DDD7D18003F5; Tue, 10 Feb 2026 20:14:55 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C2D6C19560A3; Tue, 10 Feb 2026 20:14:57 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 0/1] Tracing patches
-Date: Tue, 10 Feb 2026 15:14:53 -0500
-Message-ID: <20260210201454.177202-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PULL 1/1] tracetool-test: add QEMU_TEST_KEEP_SCRATCH=1 support
+Date: Tue, 10 Feb 2026 15:14:54 -0500
+Message-ID: <20260210201454.177202-2-stefanha@redhat.com>
+In-Reply-To: <20260210201454.177202-1-stefanha@redhat.com>
+References: <20260210201454.177202-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,29 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
+It can be useful to preserve the temporary files generated by the test
+for manual inspection or diffing against expected output.
 
-  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
-
-for you to fetch changes up to 80c15bcc5eb6d30abf90b2fd120cdf01f6ed2082:
-
-  tracetool-test: add QEMU_TEST_KEEP_SCRATCH=1 support (2026-02-10 14:47:14 -0500)
-
-----------------------------------------------------------------
-Pull request
-
-----------------------------------------------------------------
-
-Stefan Hajnoczi (1):
-  tracetool-test: add QEMU_TEST_KEEP_SCRATCH=1 support
-
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20251118183915.177192-1-stefanha@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
  tests/tracetool/tracetool-test.py | 24 ++++++++++++++++++++----
  1 file changed, 20 insertions(+), 4 deletions(-)
 
+diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
+index 59e9ab3d6e..b99a0cd6d2 100755
+--- a/tests/tracetool/tracetool-test.py
++++ b/tests/tracetool/tracetool-test.py
+@@ -9,6 +9,9 @@
+ import tempfile
+ 
+ 
++DELETE_TEMPFILE = not os.getenv("QEMU_TEST_KEEP_SCRATCH", False)
++
++
+ def get_formats(backend):
+     formats = [
+         "c",
+@@ -50,7 +53,8 @@ def test_tracetool_one(tracetool, backend, fmt, src_dir, build_dir):
+         check_call(args, cwd=build_dir)
+         actual = actual_file.read_text()
+     finally:
+-        actual_file.unlink()
++        if DELETE_TEMPFILE:
++            actual_file.unlink()
+ 
+     if os.getenv("QEMU_TEST_REGENERATE", False):
+         print(f"# regenerate {expect_file}")
+@@ -85,14 +89,25 @@ def test_tracetool(tracetool, backend, source_dir, build_dir):
+             except Exception as e:
+                 print(f"# {e}")
+                 fail = True
++
++                if DELETE_TEMPFILE:
++                    tempfile_hint = (
++                        "QEMU_TEST_KEEP_SCRATCH=1 to preserve test output "
++                        + "files"
++                    )
++                else:
++                    tempfile_hint = f"check test output files in {build_dir}"
++
+                 hint = (
+                     " (set QEMU_TEST_REGENERATE=1 to recreate reference "
+-                    + "output if tracetool generator was intentionally changed)"
++                    + "output if tracetool generator was intentionally "
++                    + "changed or " + tempfile_hint + ")"
+                 )
+             finally:
+                 print(f"{status} {num} - {backend}.{fmt}{hint}")
+     finally:
+-        build_events.unlink()
++        if DELETE_TEMPFILE:
++            build_events.unlink()
+ 
+     return fail
+ 
+@@ -103,7 +118,8 @@ def test_tracetool(tracetool, backend, source_dir, build_dir):
+         print("syntax: {argv0} TRACE-TOOL BACKEND SRC-DIR BUILD-DIR", file=sys.stderr)
+         sys.exit(1)
+ 
+-    with tempfile.TemporaryDirectory(prefix=sys.argv[4]) as tmpdir:
++    with tempfile.TemporaryDirectory(prefix=sys.argv[4],
++                                     delete=DELETE_TEMPFILE) as tmpdir:
+         fail = test_tracetool(sys.argv[1], sys.argv[2], sys.argv[3], tmpdir)
+         if fail:
+             sys.exit(1)
 -- 
 2.52.0
 
