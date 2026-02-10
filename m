@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3531CEA8105
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CEAEA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmjb-0002wv-4O; Tue, 10 Feb 2026 07:20:51 -0500
+	id 1vpmjh-0003Wg-R1; Tue, 10 Feb 2026 07:20:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmiB-0007WC-UC; Tue, 10 Feb 2026 07:19:31 -0500
+ id 1vpmiK-0007Zn-LD; Tue, 10 Feb 2026 07:19:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmi9-0001c0-1v; Tue, 10 Feb 2026 07:19:23 -0500
+ id 1vpmiJ-0001of-2B; Tue, 10 Feb 2026 07:19:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8CADD187DDE;
+ by isrv.corpit.ru (Postfix) with ESMTP id CCDCF187DE1;
  Tue, 10 Feb 2026 15:16:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 29ECC360CF2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 62C83360CF5;
  Tue, 10 Feb 2026 15:17:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.8 74/85] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
- I2CM_DMA_TX/RX_ADDR set first
-Date: Tue, 10 Feb 2026 15:16:38 +0300
-Message-ID: <20260210121657.69363-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Dorinda Bassey <dbassey@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Albert Esteve <aesteve@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.8 77/85] virtio-dmabuf: Ensure UUID persistence for hash
+ table insertion
+Date: Tue, 10 Feb 2026 15:16:41 +0300
+Message-ID: <20260210121657.69363-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
 References: <qemu-stable-10.0.8-20260210151548@cover.tls.msk.ru>
@@ -62,67 +65,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Dorinda Bassey <dbassey@redhat.com>
 
-In the previous design, the I2C model would update I2CC_DMA_LEN (0x54) based on
-the value of I2CM_DMA_LEN (0x1C) when the firmware set either I2CM_DMA_TX_ADDR
-(0x30) or I2CM_DMA_RX_ADDR (0x34). However, this only worked correctly if the
-firmware set I2CM_DMA_LEN before setting I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR.
+In `virtio_add_resource` function, the UUID used as a key for
+`g_hash_table_insert` was temporary, which could lead to
+invalid lookups when accessed later. This patch ensures that
+the UUID remains valid by duplicating it into a newly allocated
+memory space. The value is then inserted into the hash table
+with this persistent UUID key to ensure that the key stored in
+the hash table remains valid as long as the hash table entry
+exists.
 
-If the firmware instead set I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR before setting
-I2CM_DMA_LEN, the value written to I2CC_DMA_LEN would be incorrect.
-
-To fix this issue, the model should be updated to set I2CC_DMA_LEN when the
-firmware writes to the I2CM_DMA_LEN register, rather than when it writes to the
-I2CM_DMA_RX_ADDR and I2CM_DMA_TX_ADDR registers.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Fixes: ba2cccd64e90 ("aspeed: i2c: Add new mode support")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260102090746.1130033-4-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 9cbd8ee7f67fceee51d3c993a282e5adc397b6b9)
+Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20251204162129.262745-1-dbassey@redhat.com>
+(cherry picked from commit fff77cfb8413190c6362b95203ef0973c83b50d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 127f8b8a0d..3f2e23f457 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -660,8 +660,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->dma_dram_offset =
-             deposit64(bus->dma_dram_offset, 0, 32,
-                       FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
--        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
--                                                     TX_BUF_LEN) + 1;
-         break;
-     case A_I2CM_DMA_RX_ADDR:
-         bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
-@@ -669,8 +667,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->dma_dram_offset =
-             deposit64(bus->dma_dram_offset, 0, 32,
-                       FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
--        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
--                                                     RX_BUF_LEN) + 1;
-         break;
-     case A_I2CM_DMA_LEN:
-         w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
-@@ -683,10 +679,16 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         if (FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T)) {
-             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, RX_BUF_LEN,
-                              FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN));
-+            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
-+                                                         I2CM_DMA_LEN,
-+                                                         RX_BUF_LEN) + 1;
-         }
-         if (FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN_W1T)) {
-             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, TX_BUF_LEN,
-                              FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN));
-+            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
-+                                                         I2CM_DMA_LEN,
-+                                                         TX_BUF_LEN) + 1;
-         }
-         break;
-     case A_I2CM_DMA_LEN_STS:
+diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+index 3dba4577ca..5e0395be77 100644
+--- a/hw/display/virtio-dmabuf.c
++++ b/hw/display/virtio-dmabuf.c
+@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, VirtioSharedObject *value)
+     if (resource_uuids == NULL) {
+         resource_uuids = g_hash_table_new_full(qemu_uuid_hash,
+                                                uuid_equal_func,
+-                                               NULL,
++                                               g_free,
+                                                g_free);
+     }
+     if (g_hash_table_lookup(resource_uuids, uuid) == NULL) {
+-        g_hash_table_insert(resource_uuids, uuid, value);
++        g_hash_table_insert(resource_uuids,
++                            g_memdup2(uuid, sizeof(*uuid)),
++                            value);
+     } else {
+         result = false;
+     }
 -- 
 2.47.3
 
