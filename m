@@ -4,121 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64782EA3F0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A618DEA3F14
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 07:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vphzQ-0007sQ-Sy; Tue, 10 Feb 2026 02:16:52 -0500
+	id 1vpiCg-00037u-Kz; Tue, 10 Feb 2026 02:30:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphzP-0007rg-VJ
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:51 -0500
-Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vpiCb-00037L-4m
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:30:29 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vphzO-0006l1-1i
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:16:51 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.249.99])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f9CYC6xWWz5vsg;
- Tue, 10 Feb 2026 07:16:47 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG14EX2.mxp5.local (172.16.2.142)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 10 Feb
- 2026 08:16:46 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S0010e58220d-c877-4a99-b6fe-9dc8f161db1c,
- 013E132ABECAD38B5622F7607EFF7317793E1520) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <10b8e006-cc94-47a6-9a98-3d54fd4116b9@kaod.org>
-Date: Tue, 10 Feb 2026 08:16:45 +0100
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vpiCX-0002t7-Hp
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 02:30:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770708626; x=1802244626;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=bkxxnCSWasqzl4BwY4SfrzYfepMb9ikusxFGVrsSAjE=;
+ b=irAuPvHzi8bO/mSQ6LvhTT6ZQFmb4A4447JB6m3O5sVizD9oDMFrH+zG
+ hQ3UQ6+4YSvGKCUPd9gQRHHvCFuLw7TfZjlO27d8T0Rml9gEUYnLUiI3Q
+ 5EvYV+sSzmNMWW9vTwTAWn9+z+S779aPqhcw+ZNF7Gd1hHGsKqrQfk8m3
+ cQqwj4RfE62U8szgRkxNxhc7fIWuj6Tq1rdnYw+j3u+IxKOjFAeHB42bS
+ R5WYFJVtWyCTvnB5C7l3Lg0d0ymAEXRyDUcz9YlJgauAmGAmtxm5n4Pux
+ a0Yigs3o4ZU0b74axB9+qr3K/6OIhmkw33mS+8/gtGJ4wyr/GpSBo9GMT A==;
+X-CSE-ConnectionGUID: dymtetLyRKOS5CWCUIbGNQ==
+X-CSE-MsgGUID: cPzJDWY6RgGrXgOU0Q49Ug==
+X-IronPort-AV: E=McAfee;i="6800,10657,11696"; a="71728961"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71728961"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:30:22 -0800
+X-CSE-ConnectionGUID: Abr3k+VpR7OjOiVPAgnZfg==
+X-CSE-MsgGUID: PTSTsl53RqmlZUhTlU6hBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211869368"
+Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
+ ([10.238.1.184])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2026 23:30:20 -0800
+Message-ID: <576b57e3-92df-4a35-ba7c-00bf12833313@linux.intel.com>
+Date: Tue, 10 Feb 2026 15:30:16 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC
- machine to A2 SoC
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260210051008.355149-1-jamin_lin@aspeedtech.com>
- <20260210051008.355149-10-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260210051008.355149-10-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG14EX2.mxp5.local
- (172.16.2.142)
-X-Ovh-Tracer-GUID: 1c386f0a-095e-4d33-9fe3-e56a1edf0a3b
-X-Ovh-Tracer-Id: 15807353219301018430
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEJxVPhl0bSn6fR0lUOxO1OawB5DXQOHomAL/eBoP5A4NXhfM/ulufRZDBfTuNwqqzh0O/Wancy6K9o4O6kJ9wEDVCQ+dwGzBay3oUDBeIkZ5GcDDQWZmGtC/YnDNxp+HrPCGPNUDmF5VF677TkyOdMrU8V6SeQV8RYKepgN3Q2KxwJjNSI1fbysLeXgRHgx/R6NxzIlWJ/+s/6/j6Eu6oIidD61hdWBMN7BWelFDNWbRNCEN7wGi56W18gEejvdrY5MCWe14o1XX+POziahmsQwEg2LZBgocgWrGXHXFHmkSpJd+2QbgvSAXJX/VS/+85eFEYq5UxCD4jFOt9BD0UgYPNeAAltKtF2rzsarzEWH9w7gbmsB+fStnfT9XB67IjDdQWkkZ+hc6xfUUJQtn6dPo5zCHHZU9yKga3Hr9NJjbNU4k8jdC+xTYsGR1WaMSgV7wR9jumz0ocgxlKu38pCpH8AyZcJMptPHN1bMtb+81WjAJuZKffq6+p/xU+Md676ieAvlF9brTWLT71WpscPBrEvQW3PU2P7QKmmP1z+riqlvW/OP9b0oEO6/6nn9XSEMD3pPEamK7FvyN6N0FxnNW6JQI5iJU+nFBhoITwe9gqYXZX8KvNkVmr7odxcT6cT8EAtBNfXKdxT9mYf6vDzFq8calYAjZt3JW0n2YSKnw
-DKIM-Signature: a=rsa-sha256; bh=hRCFRqGccOROaZZqUENOuEAlKwS5d6Gs2mspWLDPnnM=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770707808; v=1;
- b=ndVCCCbIT/RNH/qNEXlb0Apv/7hH+y3/WDGN3oDC4jtMoQpum1bLELsn/g+MlhVZTVnVy0Nu
- R3bbR4LxnNbK5NUil/qCOdm5mnvz6g99VhgtlRh2IgNbeIhg1dyhbdqTTTG/ih6LovopYKAqi5L
- GA4L8jcxUhPfG/TPgTEuitmwoBWZ885HCXz7CnyA6t+B3/YWcxObjHBWGBAQKWnGozaULe1yD7S
- +dELqwwoCh++CW1qiNpXpIDxc2zORyH5/EgTB6OrB3BhcewStVVHtoJW2Sh1z0oRbllTAzgQpAG
- kMiY19NIS9Wxgp9dkXM+UTBOM9ZI1ILlojZlz9HS9B+EA==
-Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
- helo=6.mo552.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH V2 11/11] target/i386: Disable guest PEBS capability when
+ not enabled
+To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260128231003.268981-1-zide.chen@intel.com>
+ <20260128231003.268981-12-zide.chen@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260128231003.268981-12-zide.chen@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,83 +89,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 06:10, Jamin Lin wrote:
-> Update the AST2700 FC machine to use the AST2700 A2 SoC model instead of
-> the A1-specific variant.
-> 
-> This change removes A1-specific naming and definitions from the FC
-> machine and aligns it with the newer AST2700 A2 silicon.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+On 1/29/2026 7:09 AM, Zide Chen wrote:
+> When PMU is disabled, guest CPUID must not advertise Debug Store
+> support.  Clear both CPUID.01H:EDX[21] (DS) and CPUID.01H:ECX[2]
+> (DS64) in this case.
+>
+> Set IA32_MISC_ENABLE[12] (PEBS_UNAVAILABLE) when Debug Store is not
+> exposed to the guest.
+>
+> Note: Do not infer that PEBS is unsupported from
+> IA32_PERF_CAPABILITIES[11:8] (PEBS_FMT) being 0.  A value of 0 is a
+> valid PEBS record format on some CPUs.
+>
+> Signed-off-by: Zide Chen <zide.chen@intel.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 0502a137f3..9b9bb2df75 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -24,8 +24,8 @@
->   #include "hw/arm/aspeed_coprocessor.h"
->   #include "hw/arm/machines-qom.h"
->   
-> -#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
-> -OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
-> +#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
-> +OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
->   
->   static struct arm_boot_info ast2700fc_board_info = {
->       .board_id = -1, /* device-tree-only board */
-> @@ -49,7 +49,6 @@ struct Ast2700FCState {
->   };
->   
->   #define AST2700FC_BMC_RAM_SIZE (1 * GiB)
-> -#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
->   
->   #define AST2700FC_HW_STRAP1 0x000000C0
->   #define AST2700FC_HW_STRAP2 0x00000003
-> @@ -58,7 +57,7 @@ struct Ast2700FCState {
->   
->   static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *soc;
->       AspeedSoCClass *sc;
->       const char *bios_name = NULL;
-> @@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->       DeviceState *dev = NULL;
->       uint64_t rom_size;
->   
-> -    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-> +    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a2");
->       soc = ASPEED_SOC(&s->ca35);
->       sc = ASPEED_SOC_GET_CLASS(soc);
->   
-> @@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->   
->   static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->   
->       s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-> @@ -167,7 +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->   
->   static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
->   {
-> -    Ast2700FCState *s = AST2700A1FC(machine);
-> +    Ast2700FCState *s = AST2700FC(machine);
->       AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
->   
->       s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
+> V2:
+> - New patch.
+>
+>  target/i386/cpu.c | 6 ++++++
+>  target/i386/cpu.h | 1 +
+>  2 files changed, 7 insertions(+)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index ec6f49916de3..445361ab7a06 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9180,6 +9180,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+>          env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_MWAIT;
+>      }
+>  
+> +    if (!(env->features[FEAT_1_EDX] & CPUID_DTS)) {
+> +        env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL;
+> +    }
+> +
+>      memset(env->dr, 0, sizeof(env->dr));
+>      env->dr[6] = DR6_FIXED_1;
+>      env->dr[7] = DR7_FIXED_1;
+> @@ -9474,6 +9478,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>              env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+>          }
+>  
+> +        env->features[FEAT_1_ECX] &= ~CPUID_EXT_DTES64;
+> +        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
+Strictly speaking, we need to check BTS as well before clearing DS. BTS
+also depends on DS.
 
 
+>          env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
+>      }
+>  
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 5ab107dfa29f..0fecf561173e 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -483,6 +483,7 @@ typedef enum X86Seg {
+>  /* Indicates good rep/movs microcode on some processors: */
+>  #define MSR_IA32_MISC_ENABLE_FASTSTRING    (1ULL << 0)
+>  #define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
+> +#define MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL  (1ULL << 12)
+>  #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
+>  #define MSR_IA32_MISC_ENABLE_DEFAULT    (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
+>                                           MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
 
