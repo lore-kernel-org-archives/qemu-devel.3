@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BA8EB271F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1524EA3F27
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 22:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpwZa-0003tJ-JZ; Tue, 10 Feb 2026 17:51:10 -0500
+	id 1vpwZb-0003tj-GR; Tue, 10 Feb 2026 17:51:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpwZY-0003t1-Pq
+ id 1vpwZY-0003sz-PY
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:51:08 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpwZW-0005jO-CP
+ id 1vpwZW-0005jt-Sk
  for qemu-devel@nongnu.org; Tue, 10 Feb 2026 17:51:08 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a7d98c1879so35159575ad.3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 14:51:05 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a77c1d5c3bso6239035ad.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 14:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770763864; x=1771368664; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=K1aIOziDuDsl5PmJsCFUlKmIRcmKVdsVef5jhLtgAhI=;
- b=FgADgUVQzaHKZJU+JZj5L2v3fyj5qJf3ahErUJ0mPm0q9Pipp0DSRvB9CT0/NPG5sH
- BoA71alWgqg5Ci5fUOf2W9G5+CP/JFumyTqd8euJbLtjoJxdN85ksbl8kck/9YKkgDC9
- WQ0++oiYovg/dUb2OBpPHEy4/7zWwGHsMmGruz9KxUxAy+4JkiPjqy7ezOtPShDs1Ojq
- kQT9KI+9iA6JRBJ7RRVCGRcGWTLnzUTfP1TM+VaWz9oZl3u5gC9nS+T0CcT/0v0m93Hj
- Kkn7tcDpcHtKz543MYWBOfdqNVcTkKy/yM2rLCU45ZNjZTzvkNQNUQrk5/UCwwzErcIP
- 4uFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770763864; x=1771368664;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1770763865; x=1771368665; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K1aIOziDuDsl5PmJsCFUlKmIRcmKVdsVef5jhLtgAhI=;
- b=II6lKPUlsm5mg4yEHkfVRjsvEdaRLlFngLI4QBKg25N7eJnHBQXIBU818mASj0ZL0F
- OdXG91CBSRHyxvf5qHz9X93ejzrAiHAxuOwUldqLXjZiuTDDjnRZqUTzAtQba6fPTbJP
- KGcHnPZ/TdrdviO88vOlFb/dEG4QWBnlqBQSK5+pAIJQjc4pmPdYTMOxIJKd3t9gB1vp
- apw0sv+pzTZXc29DA9N3cGhbUVj7O3TCiJmyuCzUvfpbhOCqQ7G+NfeX8poQpVBAtTzQ
- Bsn9E6hqWPe+z6Kb0Bc7ddELREaJrgaFGTm6fXVKjiqqoT/cih9j2SiK19uZrS9vPJm5
- Pvow==
-X-Gm-Message-State: AOJu0Yw36IkwrhhDo0A9IbqExWFNgyk/fD7UT6CnSuE01lc4nHIufBGy
- /4cgcQz3g3N5yXYm4Cyj9OsFY8suoHyIuQSmdo/KstBGFlAHDZt8mGzKVG3Twf1oOm+faFJQCe4
- sxhmk
-X-Gm-Gg: AZuq6aLELW/q6+2XjUiMQ/+E4nETfVUZesJoGxNtcQNW/yZsf547ekGMCPUM108s8Ij
- zm9efG3noNlRS2t78r+RlFfkW8a8PBXXVWA/Qn8yz2IVQmTEs2nB+Em35YdrEBnanu4PZ4lJhkE
- NPS/zpta45a9TrMJvVWG8w3R1qTuyswm3LfqcTUfm5k7cRighLe4KX9VLp4Y8i6oIjL98TKwZeN
- CxrGQlzdgaPHXQ8Rcfv1m7mgD2+pbOCDahm1Y/muQUCfcYFnyt28G4eMHSNfQ69Cjw0yYHb9Tgx
- h9xnetH3P8Pka9oYhudP5SenSdo4EXJyCKSg5R7MAGYJjZWpsGmavpObjTi1Hkl3qX0mNyvWgSr
- uNCs93U6eeMVBjAjHN/3y5QK+/kITwRmhzLoCHO0Yzf81EiFuijoUJqFR5fSy7F8riO3gRQyCF9
- qPW+rzQYjha5ffHoDHZejeObfHn2ffOYEBwsHVwLPyybEKIeLHvZ1c4vLZkZHcK3fme90bhnT+2
- y9z
-X-Received: by 2002:a17:902:f547:b0:2a0:b7d3:eec5 with SMTP id
- d9443c01a7336-2ab106e69e3mr37787085ad.33.1770763864475; 
- Tue, 10 Feb 2026 14:51:04 -0800 (PST)
+ bh=BkvOn4Yd5vMUv0tl4E5R3qydMJPmWHhQt3mq9OTT3LA=;
+ b=iXb34YWZcadg3k24gJHHJrAqvTbGOvHMC6LmO4vxEwjR9rdJY2ByyJ+SQw3AUN3GeL
+ SchpoXST6aQD5B+8FBoStPmlu3aVIt6wN6OQlakzbpxau+Hd6G9zgACFoyXNhe1Kxsvm
+ PNRroQv83DI0RGZ4w1hV7IcnaJvAuzU7nKAyWiGhGUgTjpFYeXKBoxur+c8csDhwaJGd
+ bf5V0EHKaAR+jXXDfF0SFhU/RvJQ/BNtjLds+OtcNBsDQ/7G2Wz2V5SKZm1PatibUpTA
+ jjAvV3nbkEj/e5jw4bEVw/TvBdh/Bx7ur3tyAC7prV3F9lgFupn/Ll/9TxXqR4yVQHKI
+ fWsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770763865; x=1771368665;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BkvOn4Yd5vMUv0tl4E5R3qydMJPmWHhQt3mq9OTT3LA=;
+ b=jek3VcQzMaAxSE9f//U+5+4Onp6jVOG+0CKgwsBGsbwvG9ZGYSGRpfDed8q2rJdd8D
+ KZuZz10Dr+qmc6nnOdms9LLGbFmzvIEKa4/Ad9NPP72qpIwUHeyMs4jTJswBdncZYGOH
+ zqS9hpoZT8/rPWc36cOPZGpIzjtKQxXza2ScGoZaCFbreEvIJcFZ/sGFlyJ6xvvy2lEx
+ Hnn92HGmgmc2FXpE5YpPqxXiN+4VSqQK0qxQl41A+nFooR3POmtQRWd6JMoHIMOCcakL
+ G2LAkKsTcPX/h5DPYD+Dlm7Ucnk7rVYxI+9o51+kkKhNCC1J/Te7Tnp8wdxJ9cogFSJS
+ kQpg==
+X-Gm-Message-State: AOJu0YwWokzpUYL6BSR9KC9YyM+fv31LtC25RPej2sDMvpq7GotDy0u5
+ tuKpuHtlYobEDyPsQI294nN25+h7yY37/5f7PyTLrp4UHPqyCtIBwG3E5jcgNAWvoldRZczeywQ
+ rJ2wq
+X-Gm-Gg: AZuq6aIPgqanTvtq04Kn9Wk+44SEOIKy9cdB4lQqi8yJX55nMSH2DN8Zv5VmeoJB+qs
+ DiHnzos2HG2kuOOS9/KWiL7nIdN2sLgIfwIWkfI2zfIhRfdqb0LEDuzE4V8rFzAj7R/Sl8dgT0U
+ lI031K5lpoC9KWTOTiDY2GJiM/Js2Tzcg3voawENsZ532y2LB7bYXSCWVzcfibMrondQ8u9IN2q
+ zoKvPcM61PJr2IPNcDGKs1yejI6XWHr/v2I25SsNC1K4PL95ZGby6zdJTrcxVgyuqaPqoKyRlRn
+ MqluIS4HopkkugNxgG/hGPJeCJWxcVccaCp3qkouyxdSEk8bJFTNc0J2XTZxgHVvsN3vaxfAP8J
+ 93RjL83yF+YSf+up07uy5xLwq1AdPfMKNi/zer9RRqnIQrg69jYpdQ73tz9sZOFra0w/kkLu1rb
+ vg8lsnVm84t1qB3MpfaeJF/CeN5IyjHeX8uNk6ZmkgG9f+/0ESouXaaBL/grHn9ab1lISgCOBX+
+ 8oG
+X-Received: by 2002:a17:903:1b04:b0:2a2:f0cb:dfa2 with SMTP id
+ d9443c01a7336-2a951625455mr144453585ad.13.1770763865252; 
+ Tue, 10 Feb 2026 14:51:05 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab29999ce2sm1197055ad.92.2026.02.10.14.51.03
+ d9443c01a7336-2ab29999ce2sm1197055ad.92.2026.02.10.14.51.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 10 Feb 2026 14:51:04 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 0/1] Plugins: fix windows cross compilation
-Date: Tue, 10 Feb 2026 14:50:59 -0800
-Message-ID: <20260210225100.1573968-1-pierrick.bouvier@linaro.org>
+Subject: [PULL 1/1] plugins: fix cross-build using LLVM for Windows targets
+Date: Tue, 10 Feb 2026 14:51:00 -0800
+Message-ID: <20260210225100.1573968-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260210225100.1573968-1-pierrick.bouvier@linaro.org>
+References: <20260210225100.1573968-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,25 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
+llvm-dlltool assumes that it's by default targeting the host architecture
+it's running on. That assumption doesn't hold true when cross-compiling.
 
-are available in the Git repository at:
-
-  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins_llvm_dlltool-20260210
-
-for you to fetch changes up to b0353beebb0c4fa4059c88362561a8362ada8b4c:
-
-  plugins: fix cross-build using LLVM for Windows targets (2026-02-10 12:58:31 -0800)
-
-----------------------------------------------------------------
-plugins: fix cross-build using LLVM for Windows targets (Mohamed Mediouni <mohamed@unpredictable.fr>)
-
-----------------------------------------------------------------
-Mohamed Mediouni (1):
-      plugins: fix cross-build using LLVM for Windows targets
-
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260210040722.11375-1-mohamed@unpredictable.fr
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
  plugins/meson.build | 9 ++++++++-
  1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 34643e2cea3..9899f166ee8 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -41,9 +41,16 @@ if host_os == 'windows'
+   # to find missing symbols in current program.
+   win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
+   if meson.get_compiler('c').get_id() == 'clang'
++    if host_machine.cpu() == 'x86_64'
++      dlltool_target = 'i386:x86-64'
++    elif host_machine.cpu() == 'aarch64'
++      dlltool_target = 'arm64'
++    else
++      error('Unknown machine')
++    endif
+     # With LLVM/lld, delaylib is specified at link time (-delayload)
+     dlltool = find_program('llvm-dlltool', required: true)
+-    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
++    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+     win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
+   else
+     # With gcc/ld, delay lib is built with a specific delay parameter.
+-- 
+2.47.3
+
 
