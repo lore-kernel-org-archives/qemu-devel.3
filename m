@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF97EB2700
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8114EB2711
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 20:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpu9J-0007lo-Ef; Tue, 10 Feb 2026 15:15:53 -0500
+	id 1vpu9f-0000Gb-UJ; Tue, 10 Feb 2026 15:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpu9G-0007Za-Ux
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:51 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1vpu9P-00081A-Du
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:59 -0500
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vpu9E-000891-8N
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:50 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-bc274b8b15bso673021a12.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:15:47 -0800 (PST)
+ id 1vpu9N-0008Cc-0a
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 15:15:58 -0500
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-2aaed195901so12617155ad.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 12:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770754546; x=1771359346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770754554; x=1771359354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h2plFct/EpqGzjEx7nOv5ScJhI5BtmBrKmQ1/sromkc=;
- b=Zqqnp3f61y7sry2qU6lK3UMOJqG0/9QW55Tj90+7gQRiHHpCgTuhj/UwIQPlL8LJ9h
- VY6ecKt4SXSoQMF9M+Vw2zFmoSmiikddRt6HlCMjoR6pLfchTBqQcYmWIP5LPmzmbAEz
- Bq+PZ09X3QCQ/imIPOxUpx3fq+GO1U0YLnIv16VgqW7PO6yB7aaIHffFxKRp5hwIYlv8
- pFXeZKh6P7M6escGlENQAhKm3U+nz5xOa6SpCmoPHuQVB/Vwt24Bf4b2n/v+GHKxUQ0P
- S6QLlnORZlibY3wJhWD3nN3LbH7g+eiuPGUdlsIDWwpfYwYndO3zFyB5seUvVzMNQEB3
- nvsw==
+ bh=pB7XVSfYiRDewWhWw/+06EtFsDlqvDtO9a2FWjRT+oU=;
+ b=irrrB2zIeJtnvCVRQfBSZiUVMIT/hKz28wY4PrNtubutckwp+TU9dT1FnPw8a008rQ
+ k/nszvbpKJjkFBBRcfUhJ4wTjeRXE4qgkrBpJKwNSjS1vkS0LDPvGtLpQUE5011JwZqw
+ 7FPb+QuKtK5MaaLMOlL4HScILRYayhJ6zpKJ4zZ+FkXRnpyLmPCl5exWVB3uVb6KS/Ud
+ cPkjojxSXiiMbsJU2HVTdpmQRJSN3tH1wNOPdQWQa1N7WheFO5ObZlqGNV+P+VV9mKrb
+ 2HkU55r+JXIizG4PsL9a5TYr3Z5fPZtbWBEP32X09+XhZr8JRpC6svmcBwT+jpQ/AMCE
+ w3PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770754546; x=1771359346;
+ d=1e100.net; s=20230601; t=1770754554; x=1771359354;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=h2plFct/EpqGzjEx7nOv5ScJhI5BtmBrKmQ1/sromkc=;
- b=F6X5/xDC4CkAI6ZiU1bsl0s0JxKPlq4h2oe8HeuzSm3ykrww2Fc4k3TNOjhEORlp8e
- Y7DiAHheF2+hn6zfrip2hhSvU44TGKPeBugVoJ1iIMCc2XLfEiBCS4Jyi+anUMYFwbHX
- kwZahJ2h74v9QZJnJgZotx9WaPGrzW6XMe8VxDZl99hUEzSqrnmaDN5IQqSNDnDai7/N
- Y1nWx92dBUHVvBI3jkpp5jn05gTHMiTTmfZjSWFlQQs2OpN0boBlKTeuSifhjSZoJdW4
- DAN0Mq/ZVBKsB8NZWZt0y7FxgLmtsugi0D2aSObqu97hiFEnJwcmWfm/aLdA3+6hQYHf
- Rbew==
-X-Gm-Message-State: AOJu0YwsPQiBuOeYy8QZ9xQUq4hfgA75d/oS2Vr8laPOA9m0Nb3xsDfR
- rpeY4k6Cg7jJWRm/Z8R7b86X+0dFKqGhnAfjOTkxIzJjyPE6tEME0fqEfPfu39IxlqU82tfOIjq
- dk9b0
-X-Gm-Gg: AZuq6aIER6ZWu5Ve7xUeah1X3xh02Dod7YGM4U+os2kx+KEYJh3jRdJuuH4COSCbG6D
- 1BvT2KpQif5CgKxcQhpEDwjtKCNUWhiScV11JAYk+yTSDPwX6GAMhykatiVMeHxn4DYjr8UCyRn
- ta7gOAiiB+78J7BiWCXXU6Z/3FBBdDyAeKmzKHZFeVQ/B261sZ4d+AMilSoKfDPfKO3k4/Q5MNd
- q9mDM0ZCDRNEx7ZH5flFK++3NIQDLlmyEhC7Y3km94X4yTOeAlO+4B6L3grYSi/VPKcsD9d3mFQ
- XkxSSe87+5UMjgkkiE3X5jhljMLR8l2Apyn+KRHgglKCadLrjUob3p3KiXYCwwGUWXWZNt3++en
- 2mgddI2/k9eRU4adQa34KP6kP2F9zMZqusZlWNdK8Bzk21o/mB5ZwyLS4WE18pA0UhHv67hyp89
- JXzr7Ffvkie+DJ+o2vQFfjhUmyILzXnjYttSKkgNTKqgInFaomidAes+TWJHvtC2JccLSCvK1Di
- Ii6
-X-Received: by 2002:a17:902:db07:b0:2a5:8c1c:7451 with SMTP id
- d9443c01a7336-2a9519f5b02mr181073635ad.58.1770754546416; 
- Tue, 10 Feb 2026 12:15:46 -0800 (PST)
+ bh=pB7XVSfYiRDewWhWw/+06EtFsDlqvDtO9a2FWjRT+oU=;
+ b=N1Gs2sd7bAMFwlAHJzbGgiQFSPuMore6wu8AUNaK3LnkhOq/03AqZyIYjSWDyxJkoG
+ H9JYBhaA4Z5e4f7WqTdd/sBIgNpJMDdUs5jWi7QVzyBLPrQ0GwPukvWqjUa4nw0n41ih
+ 8MVrdEUnJBBZdFXnZlRwlFUDm50hLl+pBLRX8tgkfkg1eSrG1Yc+gVELRQrDSghtRDEc
+ k6yb9iNxGNanfiSgl99IgdkF3Upt1Qrymo+6Nx7gbB5pH1u4CyaFZMI9U1UPU+M3cV+W
+ Y6UvfsWJ6BECdpxoLEZUQh2k0LkkLNGQHWSYwwtSZfHDDYkFwlr0AXDPD++Z6X7vOkNO
+ 8bkg==
+X-Gm-Message-State: AOJu0YysKtSzkMVGDJb0A/9AH+BAyVQoB388bLOhYnRj+5zWQQOefmUW
+ RCPgu0RtH25ZcxQGGGmwKUJRBeqAVJjTh+BreR71hrY9PC51UTrGT0AijlbHpghUtAXrxEa//eJ
+ J3jtwwJg=
+X-Gm-Gg: AZuq6aKHLCezIfW4XmAgtMP44w/alT1CPThSdracZeCfERSjg2zw817UG2cm5TDtjIm
+ D1Rbi/FIsFMT1i0C+8UBSXPObbcB6k8XWtQrU78aY5P7QNbTEysUkiv6KKCWSBNhoFmQNLEO/sk
+ gYY0ZK1pGG+23rl1ytLscCeVfD3eC68C6x1Ag+I7Ko/R94teftrWDYPNNxILAe/R9+IwJ9rVen7
+ LmLhSxRtMzNfUQxE7bEe+0TO+ggTBbpYMNaV7x9ZEkP/qAn00ZmYvLPLkqc9swc9Hh69juOdI24
+ ygZe2LVFoYHE1hy8f54hIoQoSjTWBpnTwYUyu2syvzuBY6KghU8zYUShevTJ1Y9DrQKP7f+2EtD
+ q57uqKXhreZOttR01KYxCuSPwfGQw/H4rOl1zhmbcE1HrDVTieoAzbmtTqJJ59dHRXvwS5Fj/oC
+ /2Je/jprLL+LL2EFLR5vsBF3IsH6MfLFM3xSaFez4wzz4HSzOIUxlulVe+EEpQY6LVYHLBtAnNx
+ n8O
+X-Received: by 2002:a17:903:b43:b0:2a9:e8b:5326 with SMTP id
+ d9443c01a7336-2ab1034e18dmr33560565ad.23.1770754554449; 
+ Tue, 10 Feb 2026 12:15:54 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab0b392cb5sm38523225ad.70.2026.02.10.12.15.45
+ d9443c01a7336-2ab0b392cb5sm38523225ad.70.2026.02.10.12.15.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 12:15:46 -0800 (PST)
+ Tue, 10 Feb 2026 12:15:54 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>, kvm@vger.kernel.org,
@@ -75,16 +75,18 @@ Cc: anjo@rev.ng, Jim MacArthur <jim.macarthur@linaro.org>, kvm@vger.kernel.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 01/12] target/arm: extract helper-mve.h from helper.h
-Date: Tue, 10 Feb 2026 12:15:29 -0800
-Message-ID: <20260210201540.1405424-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 11/12] target/arm/tcg/translate.h: replace target_long with
+ int64_t
+Date: Tue, 10 Feb 2026 12:15:39 -0800
+Message-ID: <20260210201540.1405424-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
 References: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,109 +109,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few points to mention:
-- We mix helper prototypes and gen_helper definitions in a single header
-for convenience and to avoid headers boilerplate.
-- We rename existing tcg/helper-mve.h to helper-mve-defs.h to avoid
-conflict when including helper-mve.h.
-- We move mve helper_info definitions to tcg/mve_helper.c
+target_long is used to represent a pc diff. Checked all call sites to
+make sure we were already passing signed values, so extending works as
+expected.
 
-We'll repeat the same for other helpers.
-This allow to get rid of TARGET_AARCH64 in target/arm/helper.h.
+Use vaddr for pc_curr and pc_save.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/helper-mve.h                            | 14 ++++++++++++++
- target/arm/helper.h                                |  2 --
- target/arm/tcg/{helper-mve.h => helper-mve-defs.h} |  0
- target/arm/tcg/mve_helper.c                        |  4 ++++
- target/arm/tcg/translate-mve.c                     |  1 +
- target/arm/tcg/translate.c                         |  1 +
- 6 files changed, 20 insertions(+), 2 deletions(-)
- create mode 100644 target/arm/helper-mve.h
- rename target/arm/tcg/{helper-mve.h => helper-mve-defs.h} (100%)
+ target/arm/tcg/translate-a32.h |  2 +-
+ target/arm/tcg/translate.h     | 12 ++++++------
+ target/arm/tcg/translate.c     | 18 +++++++++---------
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/helper-mve.h b/target/arm/helper-mve.h
-new file mode 100644
-index 00000000000..32ef3f64661
---- /dev/null
-+++ b/target/arm/helper-mve.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef HELPER_MVE_H
-+#define HELPER_MVE_H
-+
-+#include "exec/helper-proto-common.h"
-+#include "exec/helper-gen-common.h"
-+
-+#define HELPER_H "tcg/helper-mve-defs.h"
-+#include "exec/helper-proto.h.inc"
-+#include "exec/helper-gen.h.inc"
-+#undef HELPER_H
-+
-+#endif /* HELPER_MVE_H */
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index f340a49a28a..44c7f3ed751 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -7,5 +7,3 @@
- #include "tcg/helper-sve.h"
- #include "tcg/helper-sme.h"
- #endif
--
--#include "tcg/helper-mve.h"
-diff --git a/target/arm/tcg/helper-mve.h b/target/arm/tcg/helper-mve-defs.h
-similarity index 100%
-rename from target/arm/tcg/helper-mve.h
-rename to target/arm/tcg/helper-mve-defs.h
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 63ddcf3fecf..f33642df1f9 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -19,6 +19,7 @@
+diff --git a/target/arm/tcg/translate-a32.h b/target/arm/tcg/translate-a32.h
+index 0b1fa57965c..a8df364171b 100644
+--- a/target/arm/tcg/translate-a32.h
++++ b/target/arm/tcg/translate-a32.h
+@@ -40,7 +40,7 @@ void write_neon_element64(TCGv_i64 src, int reg, int ele, MemOp memop);
+ TCGv_i32 add_reg_for_lit(DisasContext *s, int reg, int ofs);
+ void gen_set_cpsr(TCGv_i32 var, uint32_t mask);
+ void gen_set_condexec(DisasContext *s);
+-void gen_update_pc(DisasContext *s, target_long diff);
++void gen_update_pc(DisasContext *s, int64_t diff);
+ void gen_lookup_tb(DisasContext *s);
+ long vfp_reg_offset(bool dp, unsigned reg);
+ long neon_full_reg_offset(unsigned reg);
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 2c8358dd7fa..3e3094a463e 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -27,8 +27,8 @@ typedef struct DisasLabel {
+ typedef struct DisasDelayException {
+     struct DisasDelayException *next;
+     TCGLabel *lab;
+-    target_long pc_curr;
+-    target_long pc_save;
++    vaddr pc_curr;
++    vaddr pc_save;
+     int condexec_mask;
+     int condexec_cond;
+     uint32_t excp;
+@@ -359,14 +359,14 @@ static inline int curr_insn_len(DisasContext *s)
  
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "helper-mve.h"
- #include "internals.h"
- #include "vec_internal.h"
- #include "exec/helper-proto.h"
-@@ -27,6 +28,9 @@
- #include "fpu/softfloat.h"
- #include "crypto/clmul.h"
- 
-+#define HELPER_H "tcg/helper-mve-defs.h"
-+#include "exec/helper-info.c.inc"
-+
- static uint16_t mve_eci_mask(CPUARMState *env)
+ #ifdef TARGET_AARCH64
+ void a64_translate_init(void);
+-void gen_a64_update_pc(DisasContext *s, target_long diff);
++void gen_a64_update_pc(DisasContext *s, int64_t diff);
+ extern const TranslatorOps aarch64_translator_ops;
+ #else
+ static inline void a64_translate_init(void)
  {
-     /*
-diff --git a/target/arm/tcg/translate-mve.c b/target/arm/tcg/translate-mve.c
-index b1a8d6a65c0..4ca88f4d3a3 100644
---- a/target/arm/tcg/translate-mve.c
-+++ b/target/arm/tcg/translate-mve.c
-@@ -18,6 +18,7 @@
-  */
+ }
  
- #include "qemu/osdep.h"
-+#include "helper-mve.h"
- #include "translate.h"
- #include "translate-a32.h"
- 
+-static inline void gen_a64_update_pc(DisasContext *s, target_long diff)
++static inline void gen_a64_update_pc(DisasContext *s, int64_t diff)
+ {
+ }
+ #endif
+@@ -377,9 +377,9 @@ void arm_gen_test_cc(int cc, TCGLabel *label);
+ MemOp pow2_align(unsigned i);
+ void unallocated_encoding(DisasContext *s);
+ void gen_exception_internal(int excp);
+-void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
++void gen_exception_insn_el(DisasContext *s, int64_t pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el);
+-void gen_exception_insn(DisasContext *s, target_long pc_diff,
++void gen_exception_insn(DisasContext *s, int64_t pc_diff,
+                         int excp, uint32_t syn);
+ TCGLabel *delay_exception_el(DisasContext *s, int excp,
+                              uint32_t syn, uint32_t target_el);
 diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 63735d97898..febb7f1532a 100644
+index 982c83ef42a..42b2785fb06 100644
 --- a/target/arm/tcg/translate.c
 +++ b/target/arm/tcg/translate.c
-@@ -28,6 +28,7 @@
- #include "cpregs.h"
- #include "exec/helper-proto.h"
- #include "exec/target_page.h"
-+#include "helper-mve.h"
+@@ -250,12 +250,12 @@ static inline int get_a32_user_mem_index(DisasContext *s)
+ }
  
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
+ /* The pc_curr difference for an architectural jump. */
+-static target_long jmp_diff(DisasContext *s, target_long diff)
++static int64_t jmp_diff(DisasContext *s, int64_t diff)
+ {
+     return diff + (s->thumb ? 4 : 8);
+ }
+ 
+-static void gen_pc_plus_diff(DisasContext *s, TCGv_i32 var, target_long diff)
++static void gen_pc_plus_diff(DisasContext *s, TCGv_i32 var, int64_t diff)
+ {
+     assert(s->pc_save != -1);
+     if (tb_cflags(s->base.tb) & CF_PCREL) {
+@@ -735,7 +735,7 @@ void gen_set_condexec(DisasContext *s)
+     }
+ }
+ 
+-void gen_update_pc(DisasContext *s, target_long diff)
++void gen_update_pc(DisasContext *s, int64_t diff)
+ {
+     gen_pc_plus_diff(s, cpu_R[15], diff);
+     s->pc_save = s->pc_curr + diff;
+@@ -1055,7 +1055,7 @@ static void gen_exception(int excp, uint32_t syndrome)
+                                        tcg_constant_i32(syndrome));
+ }
+ 
+-static void gen_exception_insn_el_v(DisasContext *s, target_long pc_diff,
++static void gen_exception_insn_el_v(DisasContext *s, int64_t pc_diff,
+                                     int excp, uint32_t syn, TCGv_i32 tcg_el)
+ {
+     if (s->aarch64) {
+@@ -1068,14 +1068,14 @@ static void gen_exception_insn_el_v(DisasContext *s, target_long pc_diff,
+     s->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+-void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
++void gen_exception_insn_el(DisasContext *s, int64_t pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el)
+ {
+     gen_exception_insn_el_v(s, pc_diff, excp, syn,
+                             tcg_constant_i32(target_el));
+ }
+ 
+-void gen_exception_insn(DisasContext *s, target_long pc_diff,
++void gen_exception_insn(DisasContext *s, int64_t pc_diff,
+                         int excp, uint32_t syn)
+ {
+     if (s->aarch64) {
+@@ -1310,7 +1310,7 @@ static void gen_goto_ptr(void)
+  * cpu_loop_exec. Any live exit_requests will be processed as we
+  * enter the next TB.
+  */
+-static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, target_long diff)
++static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, int64_t diff)
+ {
+     if (translator_use_goto_tb(&s->base, s->pc_curr + diff)) {
+         /*
+@@ -1337,7 +1337,7 @@ static void gen_goto_tb(DisasContext *s, unsigned tb_slot_idx, target_long diff)
+ }
+ 
+ /* Jump, specifying which TB number to use if we gen_goto_tb() */
+-static void gen_jmp_tb(DisasContext *s, target_long diff, int tbno)
++static void gen_jmp_tb(DisasContext *s, int64_t diff, int tbno)
+ {
+     if (unlikely(s->ss_active)) {
+         /* An indirect jump so that we still trigger the debug exception.  */
+@@ -1380,7 +1380,7 @@ static void gen_jmp_tb(DisasContext *s, target_long diff, int tbno)
+     }
+ }
+ 
+-static inline void gen_jmp(DisasContext *s, target_long diff)
++static inline void gen_jmp(DisasContext *s, int64_t diff)
+ {
+     gen_jmp_tb(s, diff, 0);
+ }
 -- 
 2.47.3
 
