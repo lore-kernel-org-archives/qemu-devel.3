@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4B7EA3F3A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8A0E9462E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vplwn-0005Kk-3N; Tue, 10 Feb 2026 06:30:25 -0500
+	id 1vplx2-0005QS-8K; Tue, 10 Feb 2026 06:30:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwl-0005KU-Or
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:23 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwt-0005NN-L3
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:31 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwk-0008JX-Cn
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:23 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwr-0008KX-SM
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=B6igatEMjsC0RKOlyW4bsYPSobRk1IZSYSyjMkpKf8o=; b=jQzsvmSaPgDQaef
- uURAyF7OjoZCrZkzCcqtiRtesqqFqM1f8soPuPq9iQFkDSBtIZip7mfiL5fo85dqP7fwvXHC878Yb
- 8u7S9QyDJtB1nenTX1LxHEiEGAbF5/GqHmNLR7S4FeQB4We6RT4yeSPBfmdaN5mpurwT7zAOm/+yS
- GQ=;
-Date: Tue, 10 Feb 2026 12:33:14 +0100
-Subject: [PATCH v4 3/8] hw/hppa: Use hppa_abs_to_phys_pa1x()
+ List-Help; bh=3305ChYpDzQijvvnIU5430Ds7+4YJl3MX19qkN2nOSM=; b=iHzlm84ha35VAP7
+ 0skHDpLBubFGSe19MXUhBfOflBkCLa/ZlEKLg+c3Vfk2dry2M+a6X6PToi8muFUDGEyCAhj3JYE2j
+ rTEuQD3W/dsDLYCEWKnwzjFVuXbp5E0IEn1Oppifl/tnVDytqDbB81XVtnl4TCUoGNp1hrLwTb3ZQ
+ Qw=;
+Date: Tue, 10 Feb 2026 12:33:17 +0100
+Subject: [PATCH v4 6/8] hw/loongarch: Use loongarch_palen_mask()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260210-phys_addr-v4-3-725a589e83c8@rev.ng>
+Message-Id: <20260210-phys_addr-v4-6-725a589e83c8@rev.ng>
 References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
 In-Reply-To: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
 To: qemu-devel@nongnu.org
@@ -68,27 +68,152 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes the physical address space conversion for 32 bit machines more
-explicit, using the translation function defined in mem_helper.c.
+Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
+runtime calls to loongarch_palen_mask() to fetch the physical
+address mask from the cpucfg PALEN field.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/loongarch/boot.h |  3 ++-
+ hw/loongarch/boot.c         | 28 ++++++++++++++++------------
+ hw/loongarch/virt.c         |  5 ++++-
+ 3 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 960aefc9e2..472b90aab0 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -181,7 +181,7 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 9819f7fbe3..4984322f75 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -113,6 +113,7 @@ struct memmap_entry {
+     uint32_t reserved;
+ };
  
- static uint64_t translate_pa10(void *dummy, uint64_t addr)
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask);
+ 
+ #endif /* HW_LOONGARCH_BOOT_H */
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 711d5ffbbc..ef8eae237c 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+ 
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
  {
--    return (uint32_t)addr;
-+    return hppa_abs_to_phys_pa1x(addr);
+-    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
++    uint64_t *phys_addr_mask = opaque;
++    return addr & *phys_addr_mask;
  }
  
- static uint64_t translate_pa20(void *dummy, uint64_t addr)
+ static int64_t load_loongarch_linux_image(const char *filename,
++                                          uint64_t phys_addr_mask,
+                                           uint64_t *kernel_entry,
+                                           uint64_t *kernel_low,
+                                           uint64_t *kernel_high)
+@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
+     }
+ 
+     /* Early kernel versions may have those fields in virtual address */
+-    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
+-                              0, TARGET_PHYS_ADDR_SPACE_BITS);
+-    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
+-                            0, TARGET_PHYS_ADDR_SPACE_BITS);
++    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
++    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
+     *kernel_high = *kernel_low + size;
+ 
+     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
+@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
+     exit(1);
+ }
+ 
+-static int64_t load_kernel_info(struct loongarch_boot_info *info)
++static int64_t load_kernel_info(struct loongarch_boot_info *info,
++                                uint64_t phys_addr_mask)
+ {
+     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
+     ssize_t kernel_size;
+ 
+     kernel_size = load_elf(info->kernel_filename, NULL,
+-                           cpu_loongarch_virt_to_phys, NULL,
++                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
+                            &kernel_entry, &kernel_low,
+                            &kernel_high, NULL, ELFDATA2LSB,
+                            EM_LOONGARCH, 1, 0);
+-    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
++    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
+     if (kernel_size < 0) {
+         kernel_size = load_loongarch_linux_image(info->kernel_filename,
++                                                 phys_addr_mask,
+                                                  &kernel_entry, &kernel_low,
+                                                  &kernel_high);
+     }
+@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
+ }
+ 
+ static void loongarch_direct_kernel_boot(MachineState *ms,
+-                                         struct loongarch_boot_info *info)
++                                         struct loongarch_boot_info *info,
++                                         uint64_t phys_addr_mask)
+ {
+     void *p, *bp;
+     int64_t kernel_addr = VIRT_FLASH0_BASE;
+     uint64_t *data;
+ 
+     if (info->kernel_filename) {
+-        kernel_addr = load_kernel_info(info);
++        kernel_addr = load_kernel_info(info, phys_addr_mask);
+     } else {
+         if (!qtest_enabled()) {
+             warn_report("No kernel provided, booting from flash drive.");
+@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+     g_free(bp);
+ }
+ 
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+ 
+@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+     if (lvms->bios_loaded) {
+         loongarch_firmware_boot(lvms, info);
+     } else {
+-        loongarch_direct_kernel_boot(ms, info);
++        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
+     }
+ }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index a75968e4c9..9e26c25c23 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -34,6 +34,7 @@
+ #include "hw/misc/unimp.h"
+ #include "hw/loongarch/fw_cfg.h"
+ #include "target/loongarch/cpu.h"
++#include "target/loongarch/cpu-mmu.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/acpi/generic_event_device.h"
+@@ -928,6 +929,7 @@ static void virt_init(MachineState *machine)
+     hwaddr base, size, ram_size = machine->ram_size;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     Object *cpuobj;
++    uint64_t phys_addr_mask = 0;
+ 
+     if (!cpu_model) {
+         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+@@ -1017,7 +1019,8 @@ static void virt_init(MachineState *machine)
+     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+ 
+     lvms->bootinfo.ram_size = ram_size;
+-    loongarch_load_kernel(machine, &lvms->bootinfo);
++    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
++    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
+ }
+ 
+ static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
 
 -- 
 2.52.0
