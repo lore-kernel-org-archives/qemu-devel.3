@@ -4,111 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45591EA8118
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51158EA8118
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpo02-00017J-Mm; Tue, 10 Feb 2026 08:41:54 -0500
+	id 1vpo04-00019I-JZ; Tue, 10 Feb 2026 08:41:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vpnzu-00012k-Ri; Tue, 10 Feb 2026 08:41:47 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpnzw-00013u-Us
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:41:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vpnzt-00033d-2N; Tue, 10 Feb 2026 08:41:46 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61A21Na43344155; Tue, 10 Feb 2026 13:41:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9gsDkv
- Od86H0ynmtHAb3sWjiyDmjvmutki8NW5vzo0M=; b=Yu8stwK8KrgMmwjCmrl5Id
- EiqM4XwMFZ90tl+E6cC9ukEJP/y5oVOHT1QycF5PEDQvNZ8RoHxxp+S1KD17IQcS
- mK2Q3QdsVwcopI4Xcby1cT9YquijzXhYvIX3mF4vy+a7J4QM/Xbe0TldFKD8YXQQ
- m0uPl8UZG/HzeFDhNlg4/yxKW9YDN6EgO0AMgUZDDcntiwsmNUrqkwHIXjx6YRS4
- Z0j2FQwzfjq+1VE7DoIaS+2QpZ9M7hK5sUCvHsV7jpEQSnZcgk8/Frv1GtcDTu88
- xoL8Wg+1JCqB1VhT/X8qs6kvoByFkwlxam3IBa9YJTf72d7NL1k6wAPhjTNwgKYw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696utavd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:41:30 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A9lJ2Y008413;
- Tue, 10 Feb 2026 13:41:29 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6g3y9k1h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Feb 2026 13:41:29 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61ADfSqM28705466
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Feb 2026 13:41:28 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0CF7458054;
- Tue, 10 Feb 2026 13:41:28 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CBAE25805C;
- Tue, 10 Feb 2026 13:41:26 +0000 (GMT)
-Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Feb 2026 13:41:26 +0000 (GMT)
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH v3 0/9] : pnv/phb4: Update PHB4 to the latest PHB5 spec
-Date: Tue, 10 Feb 2026 07:40:50 -0600
-Message-ID: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpnzt-00034T-75
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:41:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770730903;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=aRD6edhCF7wsYL5U3FgvkggYdKkWkuRaU1RW6M+8/hEOZs8yPCqKkKDSN9mfel/ecZMzhv
+ 6+BSMsjLjAG6l9MKBi5JElDJSUxZPMkxwRaQGzRlI+ZQkRMy0wout5zZZerNdDSQDqgxkb
+ EQab09CF2AagVUunmDJ3BbnYKO69Fjw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-48-Eyowjk67NsOMMKXdO-QQWw-1; Tue, 10 Feb 2026 08:41:40 -0500
+X-MC-Unique: Eyowjk67NsOMMKXdO-QQWw-1
+X-Mimecast-MFC-AGG-ID: Eyowjk67NsOMMKXdO-QQWw_1770730899
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43768e2aa4dso2111846f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 05:41:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770730899; x=1771335699; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=qc4WXrG+qW6k2uVPjgy/Y7hxw3n2VgTnYNRFO13uDVhHzfPRq4AHtO8usn3MBLOejk
+ cLKk9u0i63RMebrOpiJyW85SKM57XEXYrksnzyEnioYOlvTKU6MyUdgSA9qMSftRLJIJ
+ wUsWfCNxp6EkfxBiguzrODzutfFXL1OJBPuCWaNXrWeFX1q8PaMposnhthNiY2f8AMtD
+ mJH6KwICDOb9GZWf7pVrCqTBp3OOX7k/vcydQzq2T8PXfUsI/Nb2fKdwJvwPp1TzAGWn
+ TNjCv/ZD8idYBaAO1WpWJ7gEx541sjhOH7TPkHGim2xoMQYZ0Dg6Ye99SuHp5sw0m/ER
+ TI1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770730899; x=1771335699;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Jtf5KAXPpqS6Cyas+wALBqi2f2X6SSv4ysPS9DT9nIiNlSWz+GWtqitpvOAaMNK6Dw
+ rc+3SxDYPlK5nlpt4LJvXvaFwcTZsfIESyV7HWsWmuq8bg4lStQVi8Xbx2eRXqSA271H
+ Z01w/xnY+QJipf4fguzopyP0oBMQaB1H6OZBd+hY+d4rjMq3aKe8NA6EGj+AwkVyHiu8
+ LtLh3KvGvfc8MFfJzMyElzDQHpgZXcDlS+o76SQUhT9RB0t6Oyk1uOA4TsO4Wj7mEW+Q
+ rI8CtXqt5pqJOCQJ1LzsMZwdQznnqBVsSwYLLQk7yKdCWbn/W5oXIEYiZGV4WJ91gSuC
+ HiZQ==
+X-Gm-Message-State: AOJu0YxT4/UnaUW1jjOICna0sdMP1FauG7DLq0/dgrDXX4PqvQx7f7uE
+ vcZxKcssO9CrIsBYjnHz0mD0vwMihBg4dhq4Icas/J+bHDhPDlqrOXAK2tlFUDRdUb97d0hAIMg
+ 172dUechyJCuSYqGrfbbtIWKA7BLtFmWGVslaiKGl4jnPNSO64c6O+vBi
+X-Gm-Gg: AZuq6aIXS9bnF5OenOvwBZKkkSU5AhvNEpI41B/7jZty4KqeVy4KoBECVUATdPSSCUM
+ 635DzZlM6W6l9oTIbn7Om6UzRoyVUApzN7GD2kd44VnTa8wKZuPmUfbbf/Lpduk7TiSyeR+F4Bt
+ S41sExIHn/hCVFNFunXcHXz7cGJsuJ5tnadHiN8/aff45PHA5XiR/w4A5sM7fNxZFVPoKNa72PB
+ /t0ooaWHcZssB4T7bvR9TLuq9WuhoHPu2cs6+FUMBMhoaEzEyC1sk5bpHQxr2aJeVkDVY9vgnd8
+ CdK4EEpuvHkuUeSYX5jX1J6k+E03WOiCQh/MTem5T+e4AI732wVdjbCFhZ9P6o4eP7xeTuQSgyX
+ O4qaW+MffKHCj/jyV5hJtJJKMXLlJORuFcs/ar3R6FuEK/0g0eej5Zev8y9305YYlJMyINpmWNp
+ 7i66oPqoM2hIoO8dpUZml/r4/Ymg==
+X-Received: by 2002:a05:6000:144f:b0:437:7221:67fd with SMTP id
+ ffacd0b85a97d-4377a503c0amr4268996f8f.11.1770730899140; 
+ Tue, 10 Feb 2026 05:41:39 -0800 (PST)
+X-Received: by 2002:a05:6000:144f:b0:437:7221:67fd with SMTP id
+ ffacd0b85a97d-4377a503c0amr4268954f8f.11.1770730898758; 
+ Tue, 10 Feb 2026 05:41:38 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43629745f7asm30418576f8f.33.2026.02.10.05.41.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 05:41:37 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Bernhard Beschow <shentey@gmail.com>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH] target/i386/mshv: remove unused gpa txl optimization
+Date: Tue, 10 Feb 2026 14:41:34 +0100
+Message-ID: <20260210134134.918944-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251125120852.250149-1-magnuskulke@linux.microsoft.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDExMiBTYWx0ZWRfX8qMLXYdHSTrO
- DDUzLwnPkDDlvQOUZKH5WffZ9Scj717rUAd5I7NJgic5VtrHoLk+SGdUi9rTJGSjth7GK06WQEN
- 1HPnf3k5JSaoL8TWOKFl1nWnufg9RJbZQdlAk/V4VSprMauqQGJpG7F5Rvm/xvGW5VfP5ukOBL+
- a5bmrEWFDKoOiZzGtdjxTmLCgHW4Oj3akZU3D+t7CYgnbWm4hmOXbEQbWox3GzUnxP8MZS/uU3K
- wuk8CI2DhCtn9FmRdG4A5YEcfJZzpMtzsOXKhfSxuiChAp51OPJnIH3s2nO4GcntLRVkJKURiEi
- PU3HRocHJHu7x4wwjn3xy1c7rsSztMfwuKzzK7po9EetOLdoUgeTxCmuzUHwgwq6I07SbDiTSpG
- 2V4YBl6pp3lzv17IHWj+5LTho4Nm6FIUZO2CEp0FF1pMjYdMvxI8Qygn4oPbsyTAnUikCn4LUmI
- e1LpmDX1tg1pn6HR31w==
-X-Proofpoint-ORIG-GUID: lEB35GVerIytjcCJq1vzi9jkZJ2uYmpW
-X-Proofpoint-GUID: gOPs8SXQYPhKZT_1w2lDspMnQFu5gumx
-X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698b358a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=mDV3o1hIAAAA:8
- a=MPXgO6Mk5SgahTVVPB0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100112
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,48 +121,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Queued, thanks.
 
-Addressing the review comments for the series v2:
-https://lists.gnu.org/archive/html/qemu-devel/2025-12/msg03768.html
-
-This series updates the existing PHB4 model to the latest spec:
-"Power Systems Host Bridge 5 (PHB5) Functional Specification Version 0.5_00".
-
-Updates include the following:
-- implemented sticky reset logic
-- implemented read-only, write-only, W1C and WxC logic
-- return all 1's on read to unimplemented registers
-- update PCIE registers for link status, speed and width
-- implement IODA PCT debug table without any functionality
-- update LSI Source-ID register based on small/big PHB number of interrupts
-
-Also, a new testbench for PHB4 model is added that does XSCOM read/writes
-to various registers of interest and verifies the values.
-
-Regards.
-
-Saif Abrar (9):
-  qtest/phb4: Add testbench for PHB4
-  pnv/phb4: Add reset logic to PHB4
-  pnv/phb4: Implement sticky reset logic in PHB4
-  pnv/phb4: Implement read-only and write-only bits of registers
-  pnv/phb4: Implement write-clear and return 1's on unimplemented reg read
-  pnv/phb4: Set link-active status in HPSTAT and LMR registers
-  pnv/phb4: Set link speed and width in the DLP training control register
-  pnv/phb4: Implement IODA PCT table
-  pnv/phb4: Mask off LSI Source-ID based on number of interrupts
-
- hw/pci-host/pnv_phb.c               |   1 +
- hw/pci-host/pnv_phb4.c              | 583 +++++++++++++++++++++++++---
- include/hw/pci-host/pnv_phb4.h      |  16 +-
- include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
- tests/qtest/meson.build             |   1 +
- tests/qtest/pnv-phb4-test.c         | 228 +++++++++++
- 6 files changed, 837 insertions(+), 58 deletions(-)
- create mode 100644 tests/qtest/pnv-phb4-test.c
-
--- 
-2.47.3
+Paolo
 
 
