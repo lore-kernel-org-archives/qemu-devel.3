@@ -4,111 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F627EA3F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B616EA3F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpiu0-0006AM-EF; Tue, 10 Feb 2026 03:15:25 -0500
+	id 1vpj15-0007HE-8F; Tue, 10 Feb 2026 03:22:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vpity-0006A2-AX
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:15:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpj13-0007H4-PV
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:22:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vpitw-00034i-4k
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:15:18 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vpj11-0003wz-Il
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:22:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770711314;
+ s=mimecast20190719; t=1770711754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=faMatI6O4KZNF22lZBXDifeF+eAcosXM17IviZ1bhUE=;
- b=G8BgOnZJjaywKbi/rbTgou+KsxKwEJe+Exe6soWmL5SPBjM478afabzY4YsJkVc1LZZJAd
- KSSfrNdBU/lpiIngIZ4XW0Nq5uBt7SPuTQVJ+muaTLkEgO/cEHju/E8z5mtdej4HVKp0hv
- spQoaSJc8jZkGWmBIg2FEaQjkKhfIPc=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aTHl9hOmXKlf3mYaxTYzfMkkb3j1MOWZoF4xlzDE5KU=;
+ b=e0A/A9k3AYnqU5KxOriYlktFvWvg78fljYZgKr6XU9/Z5gf86iAXNWU1Ho1sYM7RAa+wbT
+ 5TMh+1hbATQ7+jRWye4s3B6sYI3/woAfieVHqhdj+ioblrshAeBKPmP3V8P9fT52qc8OnX
+ 2Lo7hPHsX0m0NVkfpe5e68hyxiLUDXM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-aIDIJKFpPfiPSQdqo_Xpew-1; Tue, 10 Feb 2026 03:15:10 -0500
-X-MC-Unique: aIDIJKFpPfiPSQdqo_Xpew-1
-X-Mimecast-MFC-AGG-ID: aIDIJKFpPfiPSQdqo_Xpew_1770711309
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2aaf0dbd073so21498645ad.3
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 00:15:10 -0800 (PST)
+ us-mta-628-3JxizhJHOHWL4izJUU_WmQ-1; Tue, 10 Feb 2026 03:22:32 -0500
+X-MC-Unique: 3JxizhJHOHWL4izJUU_WmQ-1
+X-Mimecast-MFC-AGG-ID: 3JxizhJHOHWL4izJUU_WmQ_1770711752
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4802bb29400so49929895e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 00:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770711309; x=1771316109; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=faMatI6O4KZNF22lZBXDifeF+eAcosXM17IviZ1bhUE=;
- b=Kxd+PPx91zjpnjjYhjUlYQsTyvtMp78vGAgfAcW+ApSjKxDy/i7UdgbJuWjnsD8eh4
- GZMqG3sP3TU5f7K9/OWA5E8h5fEt0xwF2jf1gkT422rytO9b2GMXoOfSNOAWMKCG62Mi
- x9mmQKPoJcf6nSywHqCOre1vm1ji2+MCuOXnNWOPdwbcD/TlqV0BFv5DrU5rJoxSfZPY
- 1NyHNagVvAAdrCPVnSw5jCbz9FHe7mK27yBfNWnWtRrcJJH/uhOT7aofQgO623qnDF52
- MPL+35p6cyyKRM8k8fn2K0WUGe/QfHzvV0+U7dJAX3tR6/If3C+HfdMKQoUrqCn6986N
- MRLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770711309; x=1771316109;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ d=redhat.com; s=google; t=1770711751; x=1771316551; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=faMatI6O4KZNF22lZBXDifeF+eAcosXM17IviZ1bhUE=;
- b=Awkqg5Mk3ewXXw3ZHKEMb+qbLQdiGtP9iSDyt57h3M7AESuIzH209A6bki+m1kDYKe
- QY8Nprp3WvoiCrFbsG34DhwqVjR0k3yPkohkznucGhAWrhd0Obk3rnbCEktVM6berstW
- fx8vHnA7uYwttKpl3hRyQNMFYrWpc+PZL17ythJBglukqQbjKUECp8DL+uoqQimkPGeN
- 8aZk0Gt6hVxgWPU6NEBWJU37iy8S3qdhwReMFdErVuffR6JFqWi4lehRYUAv6ybE8jSS
- PCCRDUW61miAspsIc7zCU0csIg/qob6r7xCAbJGo5m3e74bOyPifWNXJg/2KqO3jyy8y
- Aq/w==
-X-Gm-Message-State: AOJu0YwbZjV+7TFKS9cxhfaoGAauRQ1UqOJd1jLGKHpRiAbJstswjf6G
- vK6hzepN29TaUvlvFTDEpv+T876ZQtBNAK2nbPI9zMHCO/vcJnW4bF8K4pjOsLdtpUVJoI5HR1T
- d/z06dYQ+YYotLj83VWqS7jKxANa+oeyKQFRqm91GDUeOtyTCdQLklqtR
-X-Gm-Gg: AZuq6aJsI/z2s2PKvBaYxRGUzs3dWreVHf4umGecRTd1ZcdeajR4XxlB2sD+wB09VXa
- k+a/ncy+3s1afk2kC8yyDnH+p6uyoID7xpywmu+7BhPLfFTYd825mOS8ueG7qB7Pu/v/k1inOeT
- Y4/hOXF/nAWjsYb5F+aTVAbQmOuMEPX86z9372VZNrBGPjblEqwIu3XAgheyO1nBCzerv8Q8nnB
- MXgkuWGlkDv1zkTqWmLu/mFdlRr0+iaMcYG7KtTZ3U/D7jY89theIb9GuMKTLKVv3pJjRxbgY5c
- pA7QuvbBmTnFp6vEytHEviipGNdxUnwQVAEs5a1dyKR8Pi9gLvzSCxAIrAFTgSYLW6olzzm4kor
- xyHzQnTKCgKPfSCmtdBoFmg/QOu6sdtbZ5PIDm63faMLVrF7evonzyXs0QhooykpyE0paSZw=
-X-Received: by 2002:a17:902:d510:b0:2a0:c58c:fdd2 with SMTP id
- d9443c01a7336-2ab1055081emr17831675ad.26.1770711309109; 
- Tue, 10 Feb 2026 00:15:09 -0800 (PST)
-X-Received: by 2002:a17:902:d510:b0:2a0:c58c:fdd2 with SMTP id
- d9443c01a7336-2ab1055081emr17831485ad.26.1770711308767; 
- Tue, 10 Feb 2026 00:15:08 -0800 (PST)
-Received: from smtpclient.apple ([106.202.227.239])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a951c8ac5asm130172905ad.35.2026.02.10.00.15.05
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 10 Feb 2026 00:15:08 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v2 1/1] tests/data/acpi: disassemble-aml: rename and
- change interpreter line
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20260210041248.14701-1-mohamed@unpredictable.fr>
-Date: Tue, 10 Feb 2026 13:44:53 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Michael Tsirkin <mst@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Igor Mammedov <imammedo@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <16284699-7807-4D95-A9C0-405BDA4D45EC@redhat.com>
-References: <20260210041248.14701-1-mohamed@unpredictable.fr>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ bh=aTHl9hOmXKlf3mYaxTYzfMkkb3j1MOWZoF4xlzDE5KU=;
+ b=d1N9L6ST7oldL0OfpvUwNDRbiPXfITO0o+lT0ajhhzxMMHdTxgszbojnkVbOOiHS+L
+ 6mbZ1gbiuyeeWADJwBhpuQYovxcgRA3vNpBcfBGu0EnKtRSP1iZQPbbntmuOPmHlkNX9
+ iK0HZXMpsxYIB8va6ZL4p0JIOSCqSV3enby4ExDymTwna4N6L2An3KIEy2MJfv3Zx7yB
+ Xemz/KK9hWlwbSKQN33g8rKRZsLSiKQ9SLOlmGUCr/h96hJeTXp2AvQQAtEJ0j5BFUYZ
+ Vp1gfmzixlWQmbZtCMHaUp1pH4Z+3xlYx0v31QLB7N0Kx+Ruj/LYlPJFBOF0roOGwXNb
+ Bd3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770711751; x=1771316551;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aTHl9hOmXKlf3mYaxTYzfMkkb3j1MOWZoF4xlzDE5KU=;
+ b=OvhZXdDcyOwNGmsdoJPjJqfMTAoE28uMxuYXVp0YdE/pTqPKqhlTXDLjmSGYM7+IE4
+ 8ZVk09RwYbPgx+T43vpqv1uy5fnsu6zlMWZ+catb19ekodRVOyMHE9z8/qVAnOKOqLgQ
+ tQ6VwXBL4or4cIjAdabJw0wyEpzwiqr7oOQG51EhcZhEwfdBDhi9LphQI3QCtm7ZTK68
+ dMQrzJOvgudyfHDn9g6Bpw86zN0SDmXlkoq/gY5VWSdDWIocu7NNSlNy2qxs00JhydLC
+ imitSWP7U3vzuaCB7SnhAkyBzOpsG2Q9O7rY7jUK6eUQ4lS8hvXqconH4rgMJsrie+/m
+ dvlw==
+X-Gm-Message-State: AOJu0Yx9FX2oVMHHZT0DzjsMx1Po7C4WpJ2407dW0oirzDHydB0bsv/d
+ 11DN/4B2xpJDHdO5MUF1v6ArFkadEUWLc7DgDu7qaTgi4gcGqSOWffo1htXk8xbtMgrKG4BRUmU
+ SF2tOTjdbHPFGwTv344cOtrivObIsXVHH4g6r/bkE9j4TEW5zLBhSC7H10HkX2Lpb
+X-Gm-Gg: AZuq6aKCfG7io/zaESMDg1t5dgbUGq9+ELkQdQTEwfKhvBRfV1kgVNxLSzmy+pfUakf
+ bgWaPMGwv2tUGq/hrnfbwevujMzNWBuRbVuIbq9Aw4nJ0oth5i+kycUfx4d0kY0llM5GqEl5hfd
+ zc7Vqfgk53FSe0b1jINGnPKxNJYQ+jcysW8Q0PWJifkknVJ4LtpFjTH7Lk+J/zbnKEmMVvno4qg
+ g/xpz1ZMFqkoQW3fqqKEl03nvUM0UL95mL2+MLzIofqtR3AGSEOc0kzIbXShedjC7GGXsXh+4X7
+ j4m/zaoLHe9wukzKF/l0sauT+6ei5ulTRcFZKAffppG9IDXjjnWbmkwd0s/ZR4i6LOkR5PdJ1Y6
+ q2a+Cf1ArqDau4S1OvbE+ddnhZ0KbcQzquUYAmTco22IoRqH6bd7dGBsPBEdQ/eKfChDXB9fgc6
+ 5ORwNMC9aCBNLDNlIXjIKK0qzuiw==
+X-Received: by 2002:a05:600c:828e:b0:47d:6140:3284 with SMTP id
+ 5b1f17b1804b1-48350835edfmr15410315e9.37.1770711750755; 
+ Tue, 10 Feb 2026 00:22:30 -0800 (PST)
+X-Received: by 2002:a05:600c:828e:b0:47d:6140:3284 with SMTP id
+ 5b1f17b1804b1-48350835edfmr15410015e9.37.1770711750236; 
+ Tue, 10 Feb 2026 00:22:30 -0800 (PST)
+Received: from [192.168.10.81] ([151.61.26.160])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5d8df8sm47795665e9.3.2026.02.10.00.22.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Feb 2026 00:22:29 -0800 (PST)
+Message-ID: <f7e66270-9d0e-46fb-b465-0b4887287a7f@redhat.com>
+Date: Tue, 10 Feb 2026 09:22:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] json-streamer: remove token queue
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260107084840.150843-1-pbonzini@redhat.com>
+ <20260107084840.150843-4-pbonzini@redhat.com> <87v7g581xh.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <87v7g581xh.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,75 +124,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/10/26 08:58, Markus Armbruster wrote:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+> 
+>> Now fully exploit the push parser, feeding it one token at a time
+>> without having to wait until braces and brackets are balanced.
+>>
+>> While the nesting counts are retained for error recovery purposes,
+>> the system can now report the first parsing error without waiting
+>> for delimiters to be balanced.  This also means that JSON_ERROR
+>> can be handled in json-parser.c, not json-streamer.c.
+>>
+>> After reporting the error, json-streamer.c then enters an error recovery
+>> mode where subsequent errors are suppressed.  This mimics the previous
+>> error reporting behavior, but it provides prompt feedback on parsing
+>> errors.  As an example, here is an example interaction with qemu-ga.
+>>
+>> BEFORE (error reported only once braces are balanced):
+>>
+>>     >> {'execute':foo
+>>     >> }
+>>     << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+>>     >> {'execute':'somecommand'}
+>>     << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
+>>
+>> AFTER (error reported immediately, but similar error recovery as before):
+>>
+>>     >> {'execute':foo
+>>     << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+>>     >> }
+>>     >> {'execute':'qmp_capabilities'}
+>>     << {"error": {"class": "CommandNotFound", "desc": "The command qmp_capabilities has not been found"}}
+> 
+> Welcome quality of life improvement for human use of QMP, such as manual
+> testing.  The experience is still sub-par when you miss closing
+> parenthesis: you get the silent treatment.
+> 
+> Nitpick #1: Single quotes are an syntax extension made to enable more
+> readable QMP input in C strings.  Letting it leak into the external
+> interface was a mistake.  The less we show their use, the better.  Let's
+> stick to doublequotes here.
+> 
+> Nitpick #2: example input differs needlessly between BEFORE and AFTER.
+> 
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   include/qobject/json-parser.h |   5 +-
+>>   qobject/json-parser-int.h     |   1 +
+>>   qobject/json-parser.c         |  26 +++++---
+>>   qobject/json-streamer.c       | 116 ++++++++++++++--------------------
+>>   4 files changed, 68 insertions(+), 80 deletions(-)
+>>
+>> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
+>> index 05346fa816b..923eb74ca00 100644
+>> --- a/include/qobject/json-parser.h
+>> +++ b/include/qobject/json-parser.h
+>> @@ -29,11 +29,12 @@ typedef struct JSONParserContext {
+>>   typedef struct JSONMessageParser {
+>>       void (*emit)(void *opaque, QObject *json, Error *err);
+>>       void *opaque;
+>> -    va_list *ap;
+>>       JSONLexer lexer;
+>> +    JSONParserContext parser;
+>>       int brace_count;
+>>       int bracket_count;
+>> -    GQueue tokens;
+>> +    int token_count;
+>> +    bool error;
+>>       uint64_t token_size;
+>>   } JSONMessageParser;
+>>   
+>> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
+>> index 05e2e8e1831..1f435cb8eb2 100644
+>> --- a/qobject/json-parser-int.h
+>> +++ b/qobject/json-parser-int.h
+>> @@ -50,6 +50,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+>>   /* json-parser.c */
+>>   JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
+>>   void json_parser_init(JSONParserContext *ctxt, va_list *ap);
+>> +void json_parser_reset(JSONParserContext *ctxt);
+>>   QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
+>>   void json_parser_destroy(JSONParserContext *ctxt);
+>>   
+>> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+>> index 338f0c5aae6..7abdea4dacb 100644
+>> --- a/qobject/json-parser.c
+>> +++ b/qobject/json-parser.c
+>> @@ -541,21 +541,27 @@ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
+>>       return token;
+>>   }
+>>   
+>> -void json_parser_init(JSONParserContext *ctxt, va_list *ap)
+>> -{
+>> -    ctxt->err = NULL;
+>> -    ctxt->stack = g_queue_new();
+>> -    ctxt->ap = ap;
+>> -}
+>> -
+>> -void json_parser_destroy(JSONParserContext *ctxt)
+>> +void json_parser_reset(JSONParserContext *ctxt)
+>>   {
+>>       JSONParserStackEntry *entry;
+>>   
+>> +    ctxt->err = NULL;
+>>       while ((entry = g_queue_pop_tail(ctxt->stack)) != NULL) {
+>>           qobject_unref(entry->partial);
+>>           g_free(entry);
+>>       }
+>> +}
+>> +
+>> +void json_parser_init(JSONParserContext *ctxt, va_list *ap)
+>> +{
+>> +    ctxt->stack = g_queue_new();
+>> +    ctxt->ap = ap;
+>> +    json_parser_reset(ctxt);
+>> +}
+>> +
+>> +void json_parser_destroy(JSONParserContext *ctxt)
+>> +{
+>> +    json_parser_reset(ctxt);
+>>       g_queue_free(ctxt->stack);
+>>       ctxt->stack = NULL;
+>>   }
+>> @@ -566,6 +572,10 @@ QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error
+>>   
+>>       assert(!ctxt->err);
+>>       switch (token->type) {
+>> +    case JSON_ERROR:
+>> +        parse_error(ctxt, token, "JSON parse error, stray '%s'", token->str);
+>> +        break;
+>> +
+>>       case JSON_END_OF_INPUT:
+>>           /* Check for premature end of input */
+>>           if (!g_queue_is_empty(ctxt->stack)) {
+>> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
+>> index 6c93e6fd78d..a1210128ac1 100644
+>> --- a/qobject/json-streamer.c
+>> +++ b/qobject/json-streamer.c
+>> @@ -1,5 +1,5 @@
+>>   /*
+>> - * JSON streaming support
+>> + * JSON parser - callback interface and error recovery
+> 
+> "Streaming" has always been misleading.  This isn't a streaming parser,
+> and never was.  It's a conventional parser wed to a push lexer with a
+> hack before this series, and a push parser afterwards.
+> 
+>>    *
+>>    * Copyright IBM, Corp. 2009
+>>    *
+>> @@ -19,97 +19,73 @@
+>>   #define MAX_TOKEN_COUNT (2ULL << 20)
+>>   #define MAX_NESTING (1 << 10)
+>>   
+>> -static void json_message_free_tokens(JSONMessageParser *parser)
+>> -{
+>> -    JSONToken *token;
+>> -
+>> -    while ((token = g_queue_pop_head(&parser->tokens))) {
+>> -        g_free(token);
+>> -    }
+>> -}
+>> -
+>>   void json_message_process_token(JSONLexer *lexer, GString *input,
+>>                                   JSONTokenType type, int x, int y)
+>>   {
+>>       JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
+>> -    JSONParserContext ctxt;
+>> -    QObject *json = NULL;
+>> +    g_autofree JSONToken *token = json_token(type, x, y, input);
+>>       Error *err = NULL;
+>> -    JSONToken *token;
+>>   
+>> +    parser->token_size += input->len;
+>> +    parser->token_count++;
+>> +
+>> +    /* Detect message boundaries for error recovery purposes.  */
+> 
+> I like the comment.
+> 
+>>       switch (type) {
+>>       case JSON_LCURLY:
+>>           parser->brace_count++;
+>>           break;
+>>       case JSON_RCURLY:
+>> -        parser->brace_count--;
+>> +        if (parser->brace_count > 0) {
+>> +            parser->brace_count--;
+>> +        }
+> 
+> Looks like you're keeping @brace_count (here) and @bracket_count (below)
+> non-negative.  Any particular reason?
 
+Because negative brace_count/bracket_count is an insta-recovered error. 
+I could make it
 
-> On 10 Feb 2026, at 9:42=E2=80=AFAM, Mohamed Mediouni =
-<mohamed@unpredictable.fr> wrote:
->=20
-> /usr/bin/bash isn't guaranteed to be present. Switch
-> to /usr/bin/env bash.
->=20
-> Rename disassemle to disassemble in the same commit.
->=20
-> Adapt the correponding message in rebuild-expected-aml.
->=20
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+     if ((parser->brace_count <= 0 && parser->bracket_count <= 0)
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+below, or even better make this a separate patch.
 
-> ---
-> tests/data/acpi/{disassemle-aml.sh =3D> disassemble-aml.sh} | 4 ++--
-> tests/data/acpi/rebuild-expected-aml.sh                   | 2 +-
-> 2 files changed, 3 insertions(+), 3 deletions(-)
-> rename tests/data/acpi/{disassemle-aml.sh =3D> disassemble-aml.sh} =
-(92%)
->=20
-> diff --git a/tests/data/acpi/disassemle-aml.sh =
-b/tests/data/acpi/disassemble-aml.sh
-> similarity index 92%
-> rename from tests/data/acpi/disassemle-aml.sh
-> rename to tests/data/acpi/disassemble-aml.sh
-> index 89561d233d..62e1991ace 100755
-> --- a/tests/data/acpi/disassemle-aml.sh
-> +++ b/tests/data/acpi/disassemble-aml.sh
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/bash
-> +#!/usr/bin/env bash
->=20
-> outdir=3D
-> while getopts "o:" arg; do
-> @@ -7,7 +7,7 @@ while getopts "o:" arg; do
->         outdir=3D$OPTARG
->         ;;
->     \? )
-> -        echo "Usage: ./tests/data/acpi/disassemle-aml.sh [-o =
-<output-directory>]"
-> +        echo "Usage: ./tests/data/acpi/disassemble-aml.sh [-o =
-<output-directory>]"
->         exit 1
->         ;;
->=20
-> diff --git a/tests/data/acpi/rebuild-expected-aml.sh =
-b/tests/data/acpi/rebuild-expected-aml.sh
-> index cbf9ffe0dd..af45cf3007 100755
-> --- a/tests/data/acpi/rebuild-expected-aml.sh
-> +++ b/tests/data/acpi/rebuild-expected-aml.sh
-> @@ -57,7 +57,7 @@ old_allowed_dif=3D`grep -v -e 'List of =
-comma-separated changed AML files to ignore
-> echo '/* List of comma-separated changed AML files to ignore */' > =
-${SRC_PATH}/tests/qtest/bios-tables-test-allowed-diff.h
->=20
-> echo "The files were rebuilt and can be added to git."
-> -echo "You can use ${SRC_PATH}/tests/data/acpi/disassemle-aml.sh to =
-disassemble them to ASL."
-> +echo "You can use ${SRC_PATH}/tests/data/acpi/disassemble-aml.sh to =
-disassemble them to ASL."
->=20
-> if [ -z "$old_allowed_dif" ]; then
->     echo "Note! Please do not commit expected files with source =
-changes"
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
+>> +        /*
+>> +         * Security consideration, we limit total memory allocated per object
+>> +         * and the maximum recursion depth that a message can force.
+>> +         */
+> 
+> This comment now needs rephrasing: there's no recursion anymore.  In the
+> previous commit if we're feeling persnickety.
+
+s/recursion/nesting/?
+
+> Not mentioned in the commit message: before the patch, the "streamer"
+> calls json_parser_init() and json_parser_destroy() for each balanced
+> expression.  Afterwards, it calls them once, and instea calls
+> json_parser_reset() between balanced expressions.
+> 
+> I wonder whether it could be a separate patch.
+
+Sure.  I'll also try to make "brace_count"/"bracket_count" unsigned in a 
+separate patch.
+
+Paolo
 
 
