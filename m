@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDDAEA8109
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3397EA8109
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmht-0006zh-Dt; Tue, 10 Feb 2026 07:19:05 -0500
+	id 1vpmiD-0007Og-O4; Tue, 10 Feb 2026 07:19:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgK-0003E5-TP; Tue, 10 Feb 2026 07:17:31 -0500
+ id 1vpmgO-0003IQ-TL; Tue, 10 Feb 2026 07:17:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmgH-0000mm-5o; Tue, 10 Feb 2026 07:17:28 -0500
+ id 1vpmgN-0000nW-5w; Tue, 10 Feb 2026 07:17:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CAD3C187DBC;
+ by isrv.corpit.ru (Postfix) with ESMTP id DC5B9187DBD;
  Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 67629360CE1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 79DCB360CE2;
  Tue, 10 Feb 2026 15:15:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 84/95] virtio: Fix crash when sriov-pf is set for
- non-PCI-Express device
-Date: Tue, 10 Feb 2026 15:15:06 +0300
-Message-ID: <20260210121526.68598-10-mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 85/95] pcie_sriov: Fix PCI_SRIOV_* accesses in
+ pcie_sriov_pf_exit()
+Date: Tue, 10 Feb 2026 15:15:07 +0300
+Message-ID: <20260210121526.68598-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
@@ -63,63 +62,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kevin Wolf <kwolf@redhat.com>
 
-Setting the sriov-pf property on devices that aren't PCI Express causes
-an assertion failure:
+PCI_SRIOV_* are offsets into the SR-IOV capability, not into the PCI
+config space. pcie_sriov_pf_exit() erroneously takes them as the latter,
+which makes it read PCI_HEADER_TYPE and PCI_BIST when it tries to read
+PCI_SRIOV_TOTAL_VF.
 
-    $ qemu-system-x86_64 \
-        -blockdev null-co,node-name=null \
-        -blockdev null-co,node-name=null2 \
-        -device virtio-blk,drive=null,id=pf \
-        -device virtio-blk,sriov-pf=pf,drive=null2
-    qemu-system-x86_64: ../hw/pci/pcie.c:1062: void pcie_add_capability(PCIDevice *, uint16_t, uint8_t, uint16_t, uint16_t): Assertion `offset >= PCI_CONFIG_SPACE_SIZE' failed.
+In many cases we're lucky enough that the PCI config space will be 0
+there, so we just skip the whole for loop, but this isn't guaranteed.
+For example, setting the multifunction bit on the PF and then doing a
+'device_del' on it will get a larger number and cause a segfault.
 
-This is because proxy->last_pcie_cap_offset is only initialised to a
-non-zero value in virtio_pci_realize() if it's a PCI Express device, and
-then virtio_pci_device_plugged() still tries to use it.
-
-To fix this, just skip the SR-IOV code for !pci_is_express(). Then the
-next thing pci_qdev_realize() does is call pcie_sriov_register_device(),
-which returns the appropriate error.
+Fix this and access the real PCI_SRIOV_* fields in the capability.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d0c280d3fac6 ('pcie_sriov: Make a PCI device with user-created VF ARI-capable')
+Fixes: 19e55471d4e8 ('pcie_sriov: Allow user to create SR-IOV device')
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251204172657.174391-1-kwolf@redhat.com>
-(cherry picked from commit 623db856476806124e9ae45fbc39e75012261570)
+Message-Id: <20251205145718.55136-1-kwolf@redhat.com>
+(cherry picked from commit f73e5ed9bc4cfacf041323a6b40a85e6b6459b75)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 767216d795..223ed9a707 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2115,15 +2115,17 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
-     }
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index c4f88f0975..d467284cbd 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -195,14 +195,17 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
  
--    if (pci_is_vf(&proxy->pci_dev)) {
--        pcie_ari_init(&proxy->pci_dev, proxy->last_pcie_cap_offset);
--        proxy->last_pcie_cap_offset += PCI_ARI_SIZEOF;
--    } else {
--        res = pcie_sriov_pf_init_from_user_created_vfs(
--            &proxy->pci_dev, proxy->last_pcie_cap_offset, errp);
--        if (res > 0) {
--            proxy->last_pcie_cap_offset += res;
--            virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
-+    if (pci_is_express(&proxy->pci_dev)) {
-+        if (pci_is_vf(&proxy->pci_dev)) {
-+            pcie_ari_init(&proxy->pci_dev, proxy->last_pcie_cap_offset);
-+            proxy->last_pcie_cap_offset += PCI_ARI_SIZEOF;
-+        } else {
-+            res = pcie_sriov_pf_init_from_user_created_vfs(
-+                &proxy->pci_dev, proxy->last_pcie_cap_offset, errp);
-+            if (res > 0) {
-+                proxy->last_pcie_cap_offset += res;
-+                virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
-+            }
+ void pcie_sriov_pf_exit(PCIDevice *dev)
+ {
++    uint8_t *cfg;
++
+     if (dev->exp.sriov_cap == 0) {
+         return;
+     }
++    cfg = dev->config + dev->exp.sriov_cap;
+ 
+     if (dev->exp.sriov_pf.vf_user_created) {
+         uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
+-        uint16_t total_vfs = pci_get_word(dev->config + PCI_SRIOV_TOTAL_VF);
+-        uint16_t vf_dev_id = pci_get_word(dev->config + PCI_SRIOV_VF_DID);
++        uint16_t total_vfs = pci_get_word(cfg + PCI_SRIOV_TOTAL_VF);
++        uint16_t vf_dev_id = pci_get_word(cfg + PCI_SRIOV_VF_DID);
+ 
+         unregister_vfs(dev);
+ 
+@@ -213,8 +216,6 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
+             pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf_dev_id);
          }
+     } else {
+-        uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+-
+         unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
      }
  }
 -- 
