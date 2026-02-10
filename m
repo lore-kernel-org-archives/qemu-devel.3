@@ -4,53 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9AAEE6B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E83CE9462E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vplx2-0005QT-9Y; Tue, 10 Feb 2026 06:30:40 -0500
+	id 1vply6-0008Hv-0D; Tue, 10 Feb 2026 06:31:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplwy-0005P0-LO
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:38 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <siddhi.katage@oracle.com>)
+ id 1vply4-00083F-5K
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:31:44 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vplww-0008L8-FB
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:30:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=1G5C5mK8Z7iY/p02AMfuk2WS4d5n7ES5YnjTpLmvtLo=; b=HSp8SPjp34iNIdX
- 8lkZ0dd7npEaKa9K0Utbtl9wfVLxBBzbvXGylSl5GiYPyoFiEswR3a0yxxPx8i9ZOV76p/KK/5C3W
- hlOKcuYdqi2N89ZZxZ2xYcCAcm5ZMKYgm+4jDHVarIk1AVcspO7wu6cDFaDJCaoRGv5sNEt67+Miz
- OU=;
-Date: Tue, 10 Feb 2026 12:33:19 +0100
-Subject: [PATCH v4 8/8] Drop TARGET_PHYS_ADDR_SPACE_BITS
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260210-phys_addr-v4-8-725a589e83c8@rev.ng>
-References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
-In-Reply-To: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
+ (Exim 4.90_1) (envelope-from <siddhi.katage@oracle.com>)
+ id 1vply1-0008TB-3G
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:31:43 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61A9vKLO3608192; Tue, 10 Feb 2026 11:31:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=0NkNljW74GG6UBSpt6Mf0JPbzyKm1
+ 8vQQJfnSlDac6I=; b=NCD6wOrA3HXL50JE1B+iPcqUjr2gNpY38l9Ae8QDpUXBQ
+ nfMJR/ZkjaH7jpdMO3mclDiiEqQczdUjA8hiQBE6EUBaBErhl6Vu/1CGeJTj72+p
+ O8Z5poWorR2foz6vjyaIiui78CVrtXLBAmYr4TUSA7StoFX/vIeQAVMWC11bTrzK
+ ZAI0VFUdf46K4R5Xku+7e8NOr7mn1ryTZxvyfOHtm1knvx/Ct7zBnh1vnNzrkxPF
+ P2J0so2/HVRmCqV0nycVJmWrQRFa0Ajb4zLoRiUVmB/1803lA3fG4MX+Fz1xAjO0
+ nnzJRLOyIc8K3rHvob/ukCa0j/9jk+1l6OntDIkTw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4c5xh8utev-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 11:31:36 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 61AA1e23007714; Tue, 10 Feb 2026 11:31:36 GMT
+Received: from skatage-ol9.osdevelopmeniad.oraclevcn.com
+ (skatage-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.253.50])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 4c8233y16a-1; Tue, 10 Feb 2026 11:31:36 +0000
+From: Siddhi Katage <siddhi.katage@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Anton Johansson <anjo@rev.ng>, palmer@dabbelt.com, alistair.francis@wdc.com, 
- pbonzini@redhat.com, gaosong@loongson.cn, maobibo@loongson.cn, 
- deller@gmx.de, Brian Cain <brian.cain@oss.qualcomm.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: pbonzini@redhat.com, fam@euphon.net
+Subject: [PATCH 1/1] tests/functional: Add hotplug_scsi test to hotplug
+ virtio-scsi disk
+Date: Tue, 10 Feb 2026 11:31:35 +0000
+Message-ID: <20260210113135.771697-1-siddhi.katage@oracle.com>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-10_01,2026-02-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999
+ adultscore=0 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2601150000 definitions=main-2602100096
+X-Authority-Analysis: v=2.4 cv=YbOwJgRf c=1 sm=1 tr=0 ts=698b1718 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=vTr9H3xdAAAA:8 a=yPCof4ZbAAAA:8
+ a=rk2NdRIlDEXxxkLyMG4A:9
+X-Proofpoint-ORIG-GUID: nup83ons8o8pNtdyEE_6RsceMZzoDmj8
+X-Proofpoint-GUID: nup83ons8o8pNtdyEE_6RsceMZzoDmj8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA5NiBTYWx0ZWRfX2CQ91yAmEKYP
+ 6CgnM0ovifzt5KVmGXcfJuKoLi/0WEuZY0HsLkVirFBwUyFKUj0279dReyTxkqHsbLRKd5vgXJy
+ octBGFy7sWwnap6O9HmuhV2kzRaDQ4kbaAOAbiNw5wuv5B2Y25CRz5Y9DUw5nXP8h01I44AHOfd
+ sGZ4K187asK3ws6MAEa78G2JjqUeFnobjaU58E8exRkQ7MuOp/osTYI30uEhbKNunOdvfncX7CH
+ 8CGH9FPEIGbZXHRMHTNtfrc0MCk85VtB3UMdcBMHuZxU4JqbprjDvkZ+YFynUVzypRio+J4+X1v
+ Sz9SUWqpQlJNY6WgxaZ/a+7hEkLeezp9h6G4yIncf8vWwIIFs4CP8izLQutdL8U/UDTVHbC1NhB
+ KVw4PVHS67bU/1BAw0D051ba0WIFyK2PVz37k889ef/nJot3lHWvdVk1GrzZGooU/1Xn4nuICQO
+ YiuxFyqbkMxKuQRX+QQ==
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=siddhi.katage@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,344 +100,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The macro is no longer in use and can safely be dropped.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
+Signed-off-by: Siddhi Katage <siddhi.katage@oracle.com>
 ---
- include/exec/cpu-defs.h       | 3 ---
- include/exec/poison.h         | 2 --
- target/alpha/cpu-param.h      | 3 ---
- target/arm/cpu-param.h        | 2 --
- target/avr/cpu-param.h        | 1 -
- target/hexagon/cpu-param.h    | 1 -
- target/hppa/cpu-param.h       | 3 ---
- target/i386/cpu-param.h       | 2 --
- target/loongarch/cpu-param.h  | 1 -
- target/m68k/cpu-param.h       | 1 -
- target/microblaze/cpu-param.h | 2 --
- target/mips/cpu-param.h       | 2 --
- target/openrisc/cpu-param.h   | 1 -
- target/ppc/cpu-param.h        | 7 -------
- target/riscv/cpu-param.h      | 2 --
- target/rx/cpu-param.h         | 1 -
- target/s390x/cpu-param.h      | 1 -
- target/sh4/cpu-param.h        | 1 -
- target/sparc/cpu-param.h      | 2 --
- target/tricore/cpu-param.h    | 1 -
- target/xtensa/cpu-param.h     | 1 -
- 21 files changed, 40 deletions(-)
+ tests/functional/x86_64/meson.build          |  1 +
+ tests/functional/x86_64/test_hotplug_scsi.py | 86 ++++++++++++++++++++
+ 2 files changed, 87 insertions(+)
+ create mode 100755 tests/functional/x86_64/test_hotplug_scsi.py
 
-diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
-index e01acb7c90..141b5a9929 100644
---- a/include/exec/cpu-defs.h
-+++ b/include/exec/cpu-defs.h
-@@ -28,9 +28,6 @@
- #ifndef TARGET_LONG_BITS
- # error TARGET_LONG_BITS must be defined in cpu-param.h
- #endif
--#ifndef TARGET_PHYS_ADDR_SPACE_BITS
--# error TARGET_PHYS_ADDR_SPACE_BITS must be defined in cpu-param.h
--#endif
- #ifndef TARGET_VIRT_ADDR_SPACE_BITS
- # error TARGET_VIRT_ADDR_SPACE_BITS must be defined in cpu-param.h
- #endif
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index a779adbb7a..2caf2d92f1 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -43,8 +43,6 @@
- #pragma GCC poison TARGET_FMT_ld
- #pragma GCC poison TARGET_FMT_lu
- 
--#pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
--
- #pragma GCC poison CONFIG_ALPHA_DIS
- #pragma GCC poison CONFIG_HPPA_DIS
- #pragma GCC poison CONFIG_I386_DIS
-diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
-index a799f42db3..e04bfeee12 100644
---- a/target/alpha/cpu-param.h
-+++ b/target/alpha/cpu-param.h
-@@ -8,9 +8,6 @@
- #ifndef ALPHA_CPU_PARAM_H
- #define ALPHA_CPU_PARAM_H
- 
--/* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
--#define TARGET_PHYS_ADDR_SPACE_BITS  44
--
- #ifdef CONFIG_USER_ONLY
- /*
-  * Allow user-only to vary page size.  Real hardware allows only 8k and 64k,
-diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-index 8b46c7c570..08785125ad 100644
---- a/target/arm/cpu-param.h
-+++ b/target/arm/cpu-param.h
-@@ -9,10 +9,8 @@
- #define ARM_CPU_PARAM_H
- 
- #ifdef TARGET_AARCH64
--# define TARGET_PHYS_ADDR_SPACE_BITS  52
- # define TARGET_VIRT_ADDR_SPACE_BITS  52
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS  40
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #endif
- 
-diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
-index f74bfc2580..066ada1e9c 100644
---- a/target/avr/cpu-param.h
-+++ b/target/avr/cpu-param.h
-@@ -22,7 +22,6 @@
- #define AVR_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 10
--#define TARGET_PHYS_ADDR_SPACE_BITS 24
- #define TARGET_VIRT_ADDR_SPACE_BITS 24
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
-diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
-index 635d509e74..31da1a239f 100644
---- a/target/hexagon/cpu-param.h
-+++ b/target/hexagon/cpu-param.h
-@@ -20,7 +20,6 @@
- 
- #define TARGET_PAGE_BITS 16     /* 64K pages */
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 36
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
-diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
-index 9bf7ac76d0..3a874c29ee 100644
---- a/target/hppa/cpu-param.h
-+++ b/target/hppa/cpu-param.h
-@@ -9,11 +9,8 @@
- #define HPPA_CPU_PARAM_H
- 
- #if defined(CONFIG_USER_ONLY) && defined(TARGET_ABI32)
--# define TARGET_PHYS_ADDR_SPACE_BITS  32
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #else
--/* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
--# define TARGET_PHYS_ADDR_SPACE_BITS  40
- # define TARGET_VIRT_ADDR_SPACE_BITS  64
- #endif
- 
-diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
-index ebb844bcc8..9e4cb74e04 100644
---- a/target/i386/cpu-param.h
-+++ b/target/i386/cpu-param.h
-@@ -9,7 +9,6 @@
- #define I386_CPU_PARAM_H
- 
- #ifdef TARGET_X86_64
--# define TARGET_PHYS_ADDR_SPACE_BITS  52
- /*
-  * ??? This is really 48 bits, sign-extended, but the only thing
-  * accessible to userland with bit 48 set is the VSYSCALL, and that
-@@ -17,7 +16,6 @@
-  */
- # define TARGET_VIRT_ADDR_SPACE_BITS  47
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS  36
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #endif
- #define TARGET_PAGE_BITS 12
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index 58cc45a377..7779461054 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -8,7 +8,6 @@
- #ifndef LOONGARCH_CPU_PARAM_H
- #define LOONGARCH_CPU_PARAM_H
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 48
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
- 
- #define TARGET_PAGE_BITS 12
-diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
-index 256a2b5f8b..802d8fc674 100644
---- a/target/m68k/cpu-param.h
-+++ b/target/m68k/cpu-param.h
-@@ -14,7 +14,6 @@
-  * use the smallest one
-  */
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
-diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
-index e0a3794513..90a0cf2435 100644
---- a/target/microblaze/cpu-param.h
-+++ b/target/microblaze/cpu-param.h
-@@ -17,10 +17,8 @@
-  * of address space.
-  */
- #ifdef CONFIG_USER_ONLY
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- #else
--#define TARGET_PHYS_ADDR_SPACE_BITS 64
- #define TARGET_VIRT_ADDR_SPACE_BITS 64
- #endif
- 
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index 58f450827f..d62110e732 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -8,10 +8,8 @@
- #define MIPS_CPU_PARAM_H
- 
- #ifdef TARGET_ABI_MIPSN64
--#define TARGET_PHYS_ADDR_SPACE_BITS 48
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
- #else
--#define TARGET_PHYS_ADDR_SPACE_BITS 40
- # ifdef CONFIG_USER_ONLY
- #  define TARGET_VIRT_ADDR_SPACE_BITS 31
- # else
-diff --git a/target/openrisc/cpu-param.h b/target/openrisc/cpu-param.h
-index b4f57bbe69..740cf76ddd 100644
---- a/target/openrisc/cpu-param.h
-+++ b/target/openrisc/cpu-param.h
-@@ -9,7 +9,6 @@
- #define OPENRISC_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 13
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
-diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-index e4ed9080ee..2065915dc5 100644
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -9,12 +9,6 @@
- #define PPC_CPU_PARAM_H
- 
- #ifdef TARGET_PPC64
--/*
-- * Note that the official physical address space bits is 62-M where M
-- * is implementation dependent.  I've not looked up M for the set of
-- * cpus we emulate at the system level.
-- */
--#define TARGET_PHYS_ADDR_SPACE_BITS 62
- /*
-  * Note that the PPC environment architecture talks about 80 bit virtual
-  * addresses, with segmentation.  Obviously that's not all visible to a
-@@ -26,7 +20,6 @@
- #  define TARGET_VIRT_ADDR_SPACE_BITS 64
- # endif
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- 
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index cfdc67c258..b96e1ce12e 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -9,10 +9,8 @@
- #define RISCV_CPU_PARAM_H
- 
- #if defined(TARGET_RISCV64)
--# define TARGET_PHYS_ADDR_SPACE_BITS 56 /* 44-bit PPN */
- # define TARGET_VIRT_ADDR_SPACE_BITS 48 /* sv48 */
- #elif defined(TARGET_RISCV32)
--# define TARGET_PHYS_ADDR_SPACE_BITS 34 /* 22-bit PPN */
- # define TARGET_VIRT_ADDR_SPACE_BITS 32 /* sv32 */
- #endif
- #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
-diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
-index 84934f3bca..4cf6183aa0 100644
---- a/target/rx/cpu-param.h
-+++ b/target/rx/cpu-param.h
-@@ -21,7 +21,6 @@
- 
- #define TARGET_PAGE_BITS 12
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index abfae3bedf..e46e0757c6 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -9,7 +9,6 @@
- #define S390_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 64
- #define TARGET_VIRT_ADDR_SPACE_BITS 64
- 
- #define TARGET_INSN_START_EXTRA_WORDS 2
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index f328715ee8..e2632bb20f 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -9,7 +9,6 @@
- #define SH4_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12  /* 4k */
--#define TARGET_PHYS_ADDR_SPACE_BITS  32
- #ifdef CONFIG_USER_ONLY
- # define TARGET_VIRT_ADDR_SPACE_BITS 31
- #else
-diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
-index 45eea9d6ba..4c92862ea3 100644
---- a/target/sparc/cpu-param.h
-+++ b/target/sparc/cpu-param.h
-@@ -9,7 +9,6 @@
- 
- #ifdef TARGET_SPARC64
- # define TARGET_PAGE_BITS 13 /* 8k */
--# define TARGET_PHYS_ADDR_SPACE_BITS  41
- # ifdef TARGET_ABI32
- #  define TARGET_VIRT_ADDR_SPACE_BITS 32
- # else
-@@ -17,7 +16,6 @@
- # endif
- #else
- # define TARGET_PAGE_BITS 12 /* 4k */
--# define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- 
-diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
-index eb33a67c41..f260a888c2 100644
---- a/target/tricore/cpu-param.h
-+++ b/target/tricore/cpu-param.h
-@@ -9,7 +9,6 @@
- #define TRICORE_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 14
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
-diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
-index 7a0c22c900..328176281e 100644
---- a/target/xtensa/cpu-param.h
-+++ b/target/xtensa/cpu-param.h
-@@ -9,7 +9,6 @@
- #define XTENSA_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #ifdef CONFIG_USER_ONLY
- #define TARGET_VIRT_ADDR_SPACE_BITS 30
- #else
-
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index f78eec5e6c..466e9db96e 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -24,6 +24,7 @@ tests_x86_64_system_quick = [
+ tests_x86_64_system_thorough = [
+   'acpi_bits',
+   'hotplug_blk',
++  'hotplug_scsi',
+   'hotplug_cpu',
+   'intel_iommu',
+   'kvm_xen',
+diff --git a/tests/functional/x86_64/test_hotplug_scsi.py b/tests/functional/x86_64/test_hotplug_scsi.py
+new file mode 100755
+index 0000000000..10fd306616
+--- /dev/null
++++ b/tests/functional/x86_64/test_hotplug_scsi.py
+@@ -0,0 +1,86 @@
++#!/usr/bin/env python3
++#
++# Functional test that hotplugs a virtio scsi disk and checks it on a Linux
++# guest
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
++
++class HotPlugScsi(LinuxKernelTest):
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
++        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
++
++    ASSET_INITRD = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
++        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
++
++    def blockdev_add(self) -> None:
++        self.vm.cmd('blockdev-add', **{
++            'driver': 'null-co',
++            'size': 1073741824,
++            'node-name': 'disk0'
++        })
++
++    def add_scsi_controller(self) -> None:
++        self.vm.cmd('device_add', {
++            'driver': 'virtio-scsi-pci',
++            'id': 'scsi0',
++            'bus': 'pci.1',
++            'addr': '1',
++        })
++
++    def assert_sda(self) -> None:
++        exec_command_and_wait_for_pattern(self, 'while ! test -e /sys/block/sda ;'
++                                                ' do sleep 0.2 ; done', '# ')
++
++    def assert_no_sda(self) -> None:
++        exec_command_and_wait_for_pattern(self, 'while test -e /sys/block/sda ;'
++                                                ' do sleep 0.2 ; done', '# ')
++
++    def plug(self) -> None:
++        args = {
++            'driver':'scsi-hd',
++            'drive':'disk0',
++            'bus':'scsi0.0',
++            'id':'scsi-disk0',
++        }
++
++        self.assert_no_sda()
++        self.vm.cmd('device_add', args)
++        self.wait_for_console_pattern('[sda] Attached SCSI disk')
++        self.assert_sda()
++
++    def unplug(self) -> None:
++        self.vm.cmd('device_del', id='scsi-disk0')
++
++        self.vm.event_wait('DEVICE_DELETED', 1.0,
++                           match={'data': {'device': 'scsi-disk0'}})
++
++        self.assert_no_sda()
++
++    def test(self) -> None:
++        self.require_accelerator('kvm')
++        self.set_machine('q35')
++        self.vm.add_args('-accel', 'kvm')
++        self.vm.add_args('-device', 'pcie-pci-bridge,id=pci.1,bus=pcie.0')
++        self.vm.add_args('-m', '1G')
++        self.vm.add_args('-append', 'console=ttyS0 rd.rescue')
++
++        self.launch_kernel(self.ASSET_KERNEL.fetch(),
++                           self.ASSET_INITRD.fetch(),
++                           wait_for='Entering emergency mode.')
++        self.wait_for_console_pattern('# ')
++
++        self.blockdev_add()
++        self.add_scsi_controller()
++        self.plug()
++        self.unplug()
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
++
 -- 
-2.52.0
+2.47.3
 
 
