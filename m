@@ -4,38 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50685EA8105
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE652EA8105
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmj7-0001ZM-5j; Tue, 10 Feb 2026 07:20:21 -0500
+	id 1vpmhh-0006N9-Ls; Tue, 10 Feb 2026 07:18:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhg-0006Os-OU; Tue, 10 Feb 2026 07:18:53 -0500
+ id 1vpmff-0002LK-L5; Tue, 10 Feb 2026 07:16:51 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmhe-0001LR-WA; Tue, 10 Feb 2026 07:18:52 -0500
+ id 1vpmfc-0000YT-1x; Tue, 10 Feb 2026 07:16:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BA1D9187DC7;
- Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44590187DB5;
+ Tue, 10 Feb 2026 15:14:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 58A75360CEC;
- Tue, 10 Feb 2026 15:15:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3F09360CDA;
+ Tue, 10 Feb 2026 15:15:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.4 95/95] scripts/qemugdb: timers: Fix KeyError in 'qemu
- timers' command
-Date: Tue, 10 Feb 2026 15:15:17 +0300
-Message-ID: <20260210121526.68598-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Elhrj Saad <saadelhrj@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.4 77/95] hw/adc: Fix out-of-bounds write in Aspeed ADC
+ model
+Date: Tue, 10 Feb 2026 15:14:59 +0300
+Message-ID: <20260210121526.68598-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 References: <qemu-stable-10.1.4-20260210151454@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,37 +64,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Currently invoking 'qemu timers' command results into: "gdb.error: There
-is no member named last".  Let's remove the legacy 'last' field from
-QEMUClock, as it was removed in v4.2.0 by the commit 3c2d4c8aa6a
-("timer: last, remove last bits of last").
+The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
+memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
+function has an out-of-bounds write vulnerability when accessing
+unimplemented registers.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20251204105019.455060-3-andrey.drobyshev@virtuozzo.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 80c97930a93c32e2e666f5420af2d5734021a135)
+Fix this by using 'return' instead of 'break' in the default case,
+which prevents execution from reaching the s->regs[reg] assignment for
+unimplemented registers.
+
+Reported-by: Elhrj Saad <saadelhrj@gmail.com>
+Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260126141820.719492-1-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 4c6521296d2b6820ab1f8c59d3a80cd0c138b2d8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/qemugdb/timers.py b/scripts/qemugdb/timers.py
-index 46537b27cf..0538677288 100644
---- a/scripts/qemugdb/timers.py
-+++ b/scripts/qemugdb/timers.py
-@@ -37,10 +37,9 @@ def dump_timers(self, timer):
+diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
+index 3e820cae1e..5f2b8566f5 100644
+--- a/hw/adc/aspeed_adc.c
++++ b/hw/adc/aspeed_adc.c
+@@ -228,7 +228,8 @@ static void aspeed_adc_engine_write(void *opaque, hwaddr addr, uint64_t value,
+         qemu_log_mask(LOG_UNIMP, "%s: engine[%u]: "
+                       "0x%" HWADDR_PRIx " 0x%" PRIx64 "\n",
+                       __func__, s->engine_id, addr, value);
+-        break;
++        /* Do not update the regs[] array */
++        return;
+     }
  
-     def process_timerlist(self, tlist, ttype):
-         gdb.write("Processing %s timers\n" % (ttype))
--        gdb.write("  clock %s is enabled:%s, last:%s\n" % (
-+        gdb.write("  clock %s is enabled:%s\n" % (
-             tlist['clock']['type'],
--            tlist['clock']['enabled'],
--            tlist['clock']['last']))
-+            tlist['clock']['enabled']))
-         if int(tlist['active_timers']) > 0:
-             self.dump_timers(tlist['active_timers'])
- 
+     s->regs[reg] = value;
 -- 
 2.47.3
 
