@@ -4,106 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2854CEA813A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A63EA813B
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 15:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpq2e-0001MP-9X; Tue, 10 Feb 2026 10:52:44 -0500
-Received: from eggs.gnu.org ([209.51.188.92])
+	id 1vpq3H-0001gf-6w; Tue, 10 Feb 2026 10:53:25 -0500
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vpq0l-00014x-3B
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:52:40 -0500
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vppuN-0003NV-9V
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:44:13 -0500
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7cfdf7e7d19so3683705a34.2
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 07:44:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770738247; x=1771343047;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RyEGPal6sMPxAA1OJWLh+7E7jJfQjtzO8gdCkQ/32NQ=;
- b=uZQa0ufcpGGt2KRP4LxVqPrZAzj5KVjsclASC0zpi5EX0yu1s+58QPucINIL3ykwPI
- wkatdi54ZdQUJc3V+R+DMmYFyFW75Jk/ZAbqAo+jF71FgCQVIV6fFflHnHabDYCM/ns3
- JcockWiGZlqNAkNOwt5SO2sRNzcusOBCI6KPsxVAk1NgvcOa3dMWnWn+Vwf4mlcr3vG4
- fhlsDD/Sng6P//DyvlbMqO3YLKPlIczl7l7Xp1zr27mGHjd55vlJseNF2/1ct2P7K7h9
- UyZhQmReKdMo8F7TXP92kMk6+cKKMJSvFnXGm929Z3lYkwfb5C3pyo+kBY2J1a2swAqX
- VqGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770738247; x=1771343047;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RyEGPal6sMPxAA1OJWLh+7E7jJfQjtzO8gdCkQ/32NQ=;
- b=FPaLSkBqqB0D2N2t8T/Bzn4HdP8XBdJrGJFTO4nAzeODyXBkiT+nT7BhBev2fJg1pe
- E0RJTPbr16E7AhWMZwJ9cPH53pOl5PD+yepftH496C0mmHjtm9RZEyGiYKvYUBdlVmRB
- zgxl5fiIBzMiew91fPKBRjRRLJCPjjIS9xkBAORtnQgWiVAQM33Kt3bwvMXF3b0fJ+ze
- 2ZfHIQKkVlNXT3YDtwmG3BVpWEPXo1Pc1Ihod6lrhE08DdWyzUdtOURqBrShF2HftEXU
- SoMvdzU3ixM0hKuvUSuZTFlKJayFS7qf00GgDpugrcPzv+Vk1/OeysJyqdVpF+dcAN5Q
- q39A==
-X-Gm-Message-State: AOJu0Yw0snHjFayEsy3ama4jK/BgnLlmzWqsQeKygVE8wKdEJfzZO6PA
- gVWxb59Lsh78Jm24UrZAJWqGaWl62h57Bs8CVvoAPaZkB2yYkQLJ+rA3PdnhCWDJHbM=
-X-Gm-Gg: AZuq6aJjhW4HSX+vp/bczx5IXuWRti60EG8dWFsGVtilCkgrZsPervduNEw2HWiJMBk
- hW80ZdRsdS58OrW0K9mxYNjO/6j1RAhR/v9EHKdJ3Eg++pQ9OEKVhN5yQcEZjVaPAVVUp8fQc6H
- 37F52ruew0OnWF9S5BdW/RCzt0TDmCEZ63OcckRNO1gAB0UVzGE6e8hmOjhVbnSbWMBXLSOdwbF
- JSyU9kVA9kPzemvwRy2v+ps0oVhD+yHu4qnSGSgp4G7SvsCUi6Q7fk3zaFfx1ZoPqBek7m2vkbb
- 6uOY00vH6/BSk8VpbiVwC1pQ70IXnfl7PsvzRX36u+GBCEd3W1urkX0cYC54UJo3A+BRXlo/Va0
- hG7JSUikONev6JKgNiJ/z+nh6yF03ixukkFVBVqBoxiSBjIUprXOSEc8Rxq4a7wSNlMRO4M6BPy
- cuaFHpuL9DkQ==
-X-Received: by 2002:a05:6830:83a2:b0:7cf:e57f:def6 with SMTP id
- 46e09a7af769-7d4643e559fmr10186177a34.6.1770738247087; 
- Tue, 10 Feb 2026 07:44:07 -0800 (PST)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d46479964fsm9872976a34.22.2026.02.10.07.44.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Feb 2026 07:44:06 -0800 (PST)
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 10 Feb 2026 08:43:48 -0700
-Subject: [PATCH] freebsd: FreeBSD 15 has native inotify
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260210-freebsd-inotify-v1-1-009430118133@bsdimp.com>
-X-B4-Tracking: v=1; b=H4sIADNSi2kC/x3MQQqAIBBA0avErBN0iJKuEi1Sx5qNhkYU4t2Tl
- m/xf4FMiSnD3BVIdHPmGBpU34E9trCTYNcMKHGUqKTwichkJzjEi/0rtHFyMmj14BS06kzk+fm
- Py1rrB9LrUh9hAAAA
-X-Change-ID: 20260210-freebsd-inotify-8bd07b2c84d1
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vpq2u-0001bM-H1
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:53:01 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vpq2b-0003hJ-Kg
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 10:52:59 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61A8irh0111923; Tue, 10 Feb 2026 15:48:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=E8igI91UUDEav+IZ7k6eK2WQnszMLcGcT7KK7jFIT
+ wQ=; b=ZW2LfxTVfty0gVMf/VWTYbYQTcmca1H+g7l1Y9bCjUx6b43QqwqyCditR
+ kO/CsuyGEsKHFsqfVwyzZ0emGNrzfF3xz+ID0BtVF4YX3a2I1zJ+VrZlLPecrcJ/
+ RwJevEBf7n7c1c+IpOeOFVy1xMEe2Fh6EfoDcp29F59+9/wOOlH9PCj/wIAtP7Kb
+ 3p3sB7rQwLVj9PdpDoJdACHhTsf8NtbQt6rP4FfhyRnm+7BXR8trZVw9ItmcRrEx
+ nymOn9IDfYnFHea9yMLJbp3FpDHSUDsYyrDm0FKgyufu6EcAOcY9fbGuUI90F9et
+ 9kCjb/J+LsWKzB25EAtkM8f2/6Dlg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ucybr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 15:48:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61AFaw1J019221;
+ Tue, 10 Feb 2026 15:48:04 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6hxk1qrf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 15:48:04 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61AFm3el24445504
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 15:48:03 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7663F5805A;
+ Tue, 10 Feb 2026 15:48:03 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0840D58054;
+ Tue, 10 Feb 2026 15:48:03 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Feb 2026 15:48:02 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Warner Losh <imp@bsdimp.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1936; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=xEHoOvN3TkR/IWEoiMhI679mber/sRBzm2hmlAn2tXo=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpi1I3JOrFcXtzSwFREfWMs1Ql4LGVLnrSr9GZX
- KkdpgyTga2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaYtSNwAKCRBsHNEofbAR
- ADncEAC7h6hBz+GOfTIZNpPplQbRvYDi6Rv3Do82X4Yua5L63jqFEnT2i+g6144mHnA5HKoQdYV
- l0pXWNYt5ZcZmTM7EcAgROiDYwE39hnwva8vVPsYz1sBi1DwbI3XG46kKuWimEYvqVxmqJsKFP+
- W9f6uOpqAkRg8C2Pi4UQ/QSNGfuTu4J4vGwdw9LHw6PEWmEN04CoiSqCiLwQWEArlktBaLL8nz3
- vVLy8NTGMX1L0Uz0SHCTGkqRTnCx9/2iNAlyaDKjfdwOLMovvlKej8AbYXLERnLDLLj8Ao4qB96
- nzjYIhAbpbsIgovzK8m+H81vrwPzKOXXB07VWSrn+G12bq48WX8GOdbFsIEmXBh5FsO1813dlOg
- aHmI02kVThIMAjZAyrWrXplz+z+uHtCEFP0ua3ZtouWpJOiKjcL+UYpuQwuP2YyHeszs1JYNQU3
- ONjt1rf+IkUbnjWfAy2cdVBI1BuoK8f1UAwIrRk0Gs6OhbP1QKcFKTiXkppMP+T6x6DnNSMZ+pv
- d994HwmnLdoz4mW9yEwouXLKrhOYsDa0rV5UtOVc5moyFsdJFqMt+VbJVKlI8dCeg0s/KpeDiQV
- LhWRpIMXpRkm8Eh2WOH6j9mljpfHqrjT2dY2JGkPHri+8PeLAHYh+Xqskl6BA/XXVUFxKr+Z/Hf
- QJS0Ze0PjkQ92Ng==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32e;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PULL v1 0/3] Merge tpm 2026/02/10 v1
+Date: Tue, 10 Feb 2026 10:47:58 -0500
+Message-ID: <20260210154801.1662032-1-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=YZiwJgRf c=1 sm=1 tr=0 ts=698b5335 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=NEAV23lmAAAA:8 a=zQcoHlMhbyZOw7esTl0A:9
+X-Proofpoint-ORIG-GUID: xyg7bbNpgBXJsY9u-_DN1ZT2obL_IWNC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDEzMiBTYWx0ZWRfXxf19qVBWR7Y6
+ HALQt/Lblpu0qGOw+4mapLd4qIBtMqKxFuzHcHVyg9ywaU1ESNLxzQfC9oHb0+EQ+P0gAXvhQRM
+ iE9p/Gbt826hTS3OL/geKusIWwdsQwOdPZ6TO8YiAJqozLFk8J+Fsj67dB5XDK70/O0Cccj7feY
+ CWWJ21tRvfq+r5Ti7DxmZ/rkukQvGIj2zmmbilhNZG9GTJrseVvOoJHfhmiPuSjIM24qndMD9PJ
+ oFBm0pf77Auua+DPkpn7pIobpRj2v4gUnPutN6KMcmoXYvjBZmjxyyoMgkYZtgLBsJEHYbExzKK
+ I8/ZuFsAptGOLRh24E2onG0kuppMzmimo21VBih6jxV/F9nB3bFeUMB1i74dM0j2sy0s3FDPV8X
+ uoV7xGl3GS0pAVq2nnLsr/00bCsecIlMRE907U6WuFc3O3Qvpu42eWMkkb8irwbCXakSHTY4ZUJ
+ 1Rs5mF2tqJNHojlIfuw==
+X-Proofpoint-GUID: xyg7bbNpgBXJsY9u-_DN1ZT2obL_IWNC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602100132
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,60 +116,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check to make sure that we have inotify in libc, before looking for it
-in libinotify.
+Hello!
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
-FreeBSD 15 and newer now has a native inotify implementation. Check for
-it before checking for the wrapper libinotify library which is needed in
-FreeBSD 14 and earlier. Make the check dependent on symbols, not host
-version.
+This PR fixes a few issues with error reporting in the TPM code.
 
-Separate series because it's really independent of the two other
-patch series I have submitted and it is more important.
----
- meson.build | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+Regards,
+    Stefan
 
-diff --git a/meson.build b/meson.build
-index 2d114e9018..537f50283f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2662,13 +2662,15 @@ have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
- have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
- inotify = not_found
- if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
--  # libinotify-kqueue
--  inotify = cc.find_library('inotify')
--  if have_inotify_init
--    have_inotify_init = inotify.found()
--  endif
--  if have_inotify_init1
--    have_inotify_init1 = inotify.found()
-+  if not cc.has_function('inotify_init') and not cc.has_function('inotify_init1')
-+    inotify = cc.find_library('inotify')
-+    # libinotify-kqueue
-+    if have_inotify_init
-+      have_inotify_init = inotify.found()
-+    endif
-+    if have_inotify_init1
-+      have_inotify_init1 = inotify.found()
-+    endif
-   endif
- endif
- config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
+The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
 
----
-base-commit: 0b91040d23dc8820724a60c811223b777f3bc6b7
-change-id: 20260210-freebsd-inotify-8bd07b2c84d1
+  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
 
-Best regards,
+are available in the Git repository at:
+
+  https://github.com/stefanberger/qemu-tpm.git tags/pull-tpm-2026-02-10-1
+
+for you to fetch changes up to 46565a8db1fd1e41485341fcf51527047551f6a8:
+
+  tpm_emulator: tpm_emulator_set_state_blobs(): move to boolean return (2026-02-10 10:35:55 -0500)
+
+Vladimir Sementsov-Ogievskiy (3):
+  tpm_emulator: print error on error-ignore path
+  tpm_emulator: drop direct use of errno variable
+  tpm_emulator: tpm_emulator_set_state_blobs(): move to boolean return
+
+ backends/tpm/tpm_emulator.c | 59 +++++++++++++++----------------------
+ 1 file changed, 24 insertions(+), 35 deletions(-)
+
 -- 
-Warner Losh <imp@bsdimp.com>
+2.52.0
 
 
