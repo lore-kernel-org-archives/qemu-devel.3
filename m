@@ -4,86 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FFDEB2711
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 21:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80F7EB2718
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 21:11:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpuxn-0006yR-FT; Tue, 10 Feb 2026 16:08:03 -0500
+	id 1vpv14-0007qR-Um; Tue, 10 Feb 2026 16:11:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vpuxm-0006yJ-8D
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:08:02 -0500
-Received: from p-west1-cluster1-host7-snip4-5.eps.apple.com ([57.103.64.28]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vpuxj-000206-6j
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:08:01 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-3 (Postfix) with ESMTPS id
- 61EB41800347; Tue, 10 Feb 2026 21:07:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770757675; x=1773349675;
- bh=cxxiD190sElAPiSGgaOttGjH1zwGCnkmHecM0c1qR4g=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=eWVPE01R/7AYn0FqAFx8PgaOWYozohC37RBVKmbFkcHXztkTmI/GI21rS2t4dgEY4qnTMBN34QY+gIqGbc+CooviAGprZeJaa5NZoXMEt73Y4CPsn23/KyDbxf6/1gdkgkkPo7keoHMFacWzgfF5iOBpJaqnbokMnSZvEwSK5A+VRu6MA7LDkG2U/aPiS1FkMDnoMilUCrTnzVmTwWdi1oMAvEs9qwQg2ZWTvV2dCq1klQVkDEFqXqZHqViscaSbzp6vsXG/EADQEL2pMdeGkrVDFxna0IW2RANjQn8OYvXboiSDwHWtF2OcImzK5fIC+Ok9g2PW7w29XUqaBssUNw==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-3 (Postfix) with ESMTPSA id
- CFACD18007C5; Tue, 10 Feb 2026 21:07:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <A0A23422-F2F7-48B5-8A6F-F9BA15F269C2@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_8A4C9FE8-DB19-4A43-8487-0FCEDD36A0F1"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH 1/1] plugins: fix cross-build using LLVM for Windows
- targets
-Date: Tue, 10 Feb 2026 22:07:37 +0100
-In-Reply-To: <08268821-626a-4a61-b2d0-7b4c6e973ba3@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260210040722.11375-1-mohamed@unpredictable.fr>
- <508e49cd-a37e-4388-827f-9e692c5f9905@linaro.org>
- <C933BE09-BFA4-4F13-87FA-2FD2994CCEE7@unpredictable.fr>
- <08268821-626a-4a61-b2d0-7b4c6e973ba3@linaro.org>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-ORIG-GUID: rcFr4n8UrO38uqDGEi5uzTyBSvQcjYkG
-X-Proofpoint-GUID: rcFr4n8UrO38uqDGEi5uzTyBSvQcjYkG
-X-Authority-Info-Out: v=2.4 cv=O580fR9W c=1 sm=1 tr=0 ts=698b9e29
- cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=NEAV23lmAAAA:8
- a=KKAkSRfTAAAA:8 a=caOp8uj6GttcOIhbAcwA:9 a=CjuIK1q_8ugA:10
- a=aGHQF8uJNKrbnYVysgUA:9 a=5BFKGXWSHlWlNGAi:21 a=_W_S_7VecoQA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDE3NSBTYWx0ZWRfXxaYaibAmsh8n
- rocE8Cl1TzlSQuzgI2Qg269RffflBcvjyHmOXy+9J+6fxRZH4qZTshOitjnf2azRfn/T4TwZAL8
- bumqA6DNj1rPldxVJvel11jIecLau65ODdJ/vy4bT5WCYfd8r2zcWpUTQjvY0VqrVk9jrrVu096
- FybK8u31ejgQEN6Ah5Ta+t7cqXybbiBSZVchB2ravyMYjHnOjFuTlG5W+6wwOciqw1TfS2og7FZ
- 0h8ExaDvOEN3fNjVDXKVduTFmnEGLpwb+pqJw0l2DJhAiNSxtdIkJJgWvJmO0i5ql6pYULgsqR9
- fBb6h5b8cYPJa5UT4VsdqGe7gesUP2rITrYq+Nb58gHhHfVf5QcAY5OCWei3Ac=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-10_03,2026-02-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 clxscore=1030 bulkscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100175
-X-JNJ: AAAAAAABl7M5X7JSlIXMwe83SCfUmJ/xm4xfqxe9595+1pEAhf09dr9AUJOf1QGwiTMoP1cvC0VUiEzAym8oVzamPNu4pjJRo2oFymon9DgxY2sJgaWuhD766RGbI/CdMleBRRq6e9MSA/SJX5SnPfbZ3T/yVQTEKzikGmmlZGqp98IghiFaR5mGhYrtX0tEaqHnAGgCSuO0kyO8kOvbq+NNmouDQNWEHQsgriSdnyEuS1EmQuwECHvJA/dK5QX+f/vUsJJGsP3ydtDa6QWXm16iZwCpalL/ylYg9nGGotYCuMk4D0Lr8HRRFoB6kWXVIx9LcRhF/xFKuj5HRRrobZbiCdAef8TwlPw4NtZ+Eb4YM33HG+3l/ZSA5MIfJQXwMDX70R7gWmPKSDXvCAi23T7c8+44HHR7ffVVzpqQt6hfqanK5AsVyX8FhK0OQIs48vg4uqSV5QJ2msLju2qw+adLyhKhkBw4Lo1EwR6/8dsO7OM5Z+fwCys5vxZrtiXpyVU0lr8ZL5EtGINOBTNmaLTZZ240przM4YpKjyF1a5e90XCeF/yF7zNYdwVT+tIfWJrzDtbRMcNGRAChXP/Fr/q6xH5Mq8UK+Qf0xady2lt9LX+APkILeNNJV8SX6wWy8v5KWcr8I2IUW2UsQ2kwWD0W7vHAPqDpnxbxCRepV2DpOI56m9ZpXc8qKFJoW5xsT32sBQ==
-Received-SPF: pass client-ip=57.103.64.28;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vpv13-0007qJ-Ue
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:11:25 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vpv11-0002xM-IH
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 16:11:25 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-352f60d6c2fso3087258a91.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:11:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770757882; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hOkqRuV5+VNVSepQ4EOWl3MnzG+8+hnIeyMJGjads45iWGmf0YyN+cCpDchtTFxTwq
+ pcgMjQ8buqXBpu50gyIE0gomZRS0MtHGUp1mm9CpGT1V/lwE7yUSCBIubbY677szes3q
+ oO3R7LSInr++L/HFFU15x1mnIV+GUp2Ix0E40aq6ijbSU66WW/KAWsF/dI/ZPpfesC4B
+ l/GAUcVQNUSdjcFjLm9NnU3acw1KCOwjez0odao0aAQTbHk04bwX0MIdjnFelTseDAiN
+ LsQDjlHwaC83Ru+pydIAoB8d6cr+FVatjsRhAaxVIhg5IcwtqFDJnc0gGxlbzGCz02PW
+ L0Vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=c/EHen+O7kH943lmLOOgibUNCQgACgCI6BP05eOsIqc=;
+ fh=KfNA4twi5yKjZolFArD6GKxNbv+5932nte5njHWJM0I=;
+ b=YYeixeltpOIur6fisoH05W6mNcSR0ZjEYqk0dok140qXIjg8OAtPKyhDussxXi3kAn
+ f09AFcdqzcc1Gpqaaic2hO4cWKqfCTnewuFGEvgv90vk7fnn7h0x104xaVKXii4L7vV2
+ eZFV40KKjXWTRU9wlPezLO0ScQLpInb4OCTgJXpbt8fyEyRUt6XR1jlg8xtpf8xWQKXQ
+ 3XalE4wIykAkzwc/lUXT/8V2qXOmp3ih3ex58iuEmy3VGzcfj+xV5kJY9poBNYrzp9ss
+ l/ME5GQcYIfe3h1fPnu4u/UFqw2eq31+57vN1o6wzWfTuxFQFR6eIPmuy6/Svk+U303z
+ ovrA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1770757882; x=1771362682;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=c/EHen+O7kH943lmLOOgibUNCQgACgCI6BP05eOsIqc=;
+ b=JAvWQVBR1+0yfo4VyY816p2hFO4E4PVvjI/gdi1UTVjlUVFW1/E+NNJZP7H6ADfhax
+ 8oAal3X7jdy4IELJlDR3R5t5bLml3IL6CzyumA0HklWxB10miK8XJf5lY/aaOSYgOYoa
+ bgHYL7T1G8TwmT1yLdabMgKqstm92d9iLu7HtVKod7cfiKneFp6R6uhFPqHtd1QmNFin
+ 73s8MZW9IHEpnsfzPEO9nGTXnS+WruXtGaLD7ycEvZhlNSbC7pV0XFpf45IktB2Hwolr
+ 4BTmtpd1Mwu3kGNhfVRmvUTgW5KwFuJVqGIGUIc8ZalJDmWXsc6LVCpe5o4rCee99Cia
+ KsbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770757882; x=1771362682;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=c/EHen+O7kH943lmLOOgibUNCQgACgCI6BP05eOsIqc=;
+ b=YcP1y6oWaIsb4eqdjf8fsIA/tW041TvB32oo9yT5KGAen2Aw6+p5u0ZX/+PSoDMEZZ
+ RHnFVHCX/J1S8d0fpztunu++imzu/xwrsR9jmN7yoyld753heGf9r3jZMEc4aww0skch
+ UyZocIbJjAb3ufrDmd5SJ3TF9v0JpZW8LZJ/pY5O3ARZ/63Y3n7SX3sOKSO89LMSlXSH
+ ojdrU+0Zj4oQ0Z4A/3GMpc6YDQ/AfGvITE1WIFipa+Fze4YB+y62qSsc+rBtyMljYDN1
+ mJ7jEEQnBbziLlaFYA+IpuwNymf5osk869lr7LxahD+2fk0A4b63kOShwn1mJ7GWKsNU
+ OR/Q==
+X-Gm-Message-State: AOJu0YwoBbfGunLkGWqi0QceCof7yT7guT+lvwgzf6hgaWWKlzZtIqaG
+ zrER+p8h5cxSDRRoUY0j37GmXivah385F6tcxw6WoHY+h5i2OGaKRjoUXMbsly1o6OpbnKaPsW3
+ hcxT7y8SsS7TbYPC3GUizLnnO+Y5/TIS0ICdletrUTA==
+X-Gm-Gg: AZuq6aKN1xkBk6bjLyRPWGu22sCKorNv/JC6ll5t9qeoWy17eWubYZ+CLS5XBGvQ38a
+ cb28PUawxPjScIEi0iiKG+37uQmaSasKdUk5dGiMzIu44QPWdAUDsUm/KhJLtf0jbbjWNVyS5Iu
+ W/3mKmsIU7paaBSu1kWdAOA+UfOPLyldTQ3VyPGxnZIu7BrDMa9J5UnPV2WcOuS/B8MQDp9J4pI
+ /Kmz3AmQHlG9UerKfQnCfEDsGHD4N99scdCGQNURhiLax43gwChwr4dbikotslB6EbalogXpxwj
+ MXyjUYFVAzqs8pmeGA==
+X-Received: by 2002:a17:90a:d006:b0:34a:b1ea:6648 with SMTP id
+ 98e67ed59e1d1-3567afcbd67mr428117a91.2.1770757882038; Tue, 10 Feb 2026
+ 13:11:22 -0800 (PST)
+MIME-Version: 1.0
+References: <20260210-bsd-user-rm-openbsd-netbsd-v1-0-8b8b0f50c29d@bsdimp.com>
+ <20260210-bsd-user-rm-openbsd-netbsd-v1-3-8b8b0f50c29d@bsdimp.com>
+ <def06a55-ab7f-4a2b-b43d-f9571c26a5a1@linaro.org>
+In-Reply-To: <def06a55-ab7f-4a2b-b43d-f9571c26a5a1@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 10 Feb 2026 14:11:11 -0700
+X-Gm-Features: AZwV_QjeLvALypTMCXOOKMqez8-Hf0X23beYCTIdi-NNvA9C1ZcEy7XUGmAidnw
+Message-ID: <CANCZdfpcVBpLMeZ3Wpbj_g+-_NpBd=mBKLfRQjp33X3GxtD-rQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] bsd-user: Remove NetBSD supprot
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>, 
+ Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
+Content-Type: multipart/alternative; boundary="0000000000008ad9e2064a7eb2c0"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,163 +117,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---Apple-Mail=_8A4C9FE8-DB19-4A43-8487-0FCEDD36A0F1
+--0000000000008ad9e2064a7eb2c0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+
+On Tue, Feb 10, 2026 at 1:56=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
+
+> On 10/2/26 16:06, Warner Losh wrote:
+> > Remove the NetBSD specific code form bsd-user. It's not been maintained
+> > in any meaningful way since it was introduced to the tree in 2008. It
+> > hasn't been connected to the build since 2021, and last time (in 2023) =
+I
+> > tried to mock-up the meson support it needed, it failed to build. While
+> > there were some out-of-tree work, I've not been able to connect with
+> > that code.
+> >
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > ---
+> >   bsd-user/netbsd/host-os.h           |  25 ---
+> >   bsd-user/netbsd/os-strace.h         |   1 -
+> >   bsd-user/netbsd/strace.list         | 145 --------------
+> >   bsd-user/netbsd/syscall_nr.h        | 373
+> ------------------------------------
+> >   bsd-user/netbsd/target_os_elf.h     | 148 --------------
+> >   bsd-user/netbsd/target_os_siginfo.h |  82 --------
+> >   bsd-user/netbsd/target_os_signal.h  |  69 -------
+> >   bsd-user/netbsd/target_os_stack.h   |  56 ------
+> >   bsd-user/netbsd/target_os_thread.h  |  25 ---
+> >   bsd-user/qemu.h                     |   8 -
+> >   bsd-user/strace.c                   |  17 --
+> >   bsd-user/syscall_defs.h             |  13 --
+> >   12 files changed, 962 deletions(-)
+>
+> Typo "support" in $Subject.
+>
+
+<blush> OK. Will fix.
 
 
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
 
-> On 10. Feb 2026, at 21:45, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->=20
-> On 2/10/26 12:04 AM, Mohamed Mediouni wrote:
->>> On 10. Feb 2026, at 07:39, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->>>=20
->>> On 2/9/26 8:07 PM, Mohamed Mediouni wrote:
->>>> llvm-dlltool assumes that it's by default targeting the host =
-architecture
->>>> it's running on. That assumption doesn't hold true when =
-cross-compiling.
->>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->>>> ---
->>>>  plugins/meson.build | 9 ++++++++-
->>>>  1 file changed, 8 insertions(+), 1 deletion(-)
->>>> diff --git a/plugins/meson.build b/plugins/meson.build
->>>> index 34643e2cea..9899f166ee 100644
->>>> --- a/plugins/meson.build
->>>> +++ b/plugins/meson.build
->>>> @@ -41,9 +41,16 @@ if host_os =3D=3D 'windows'
->>>>    # to find missing symbols in current program.
->>>>    win32_qemu_plugin_api_link_flags =3D ['-Lplugins', =
-'-lqemu_plugin_api']
->>>>    if meson.get_compiler('c').get_id() =3D=3D 'clang'
->>>> +    if host_machine.cpu() =3D=3D 'x86_64'
->>>> +      dlltool_target =3D 'i386:x86-64'
->>>> +    elif host_machine.cpu() =3D=3D 'aarch64'
->>>> +      dlltool_target =3D 'arm64'
->>>> +    else
->>>> +      error('Unknown machine')
->>>> +    endif
->>>>      # With LLVM/lld, delaylib is specified at link time =
-(-delayload)
->>>>      dlltool =3D find_program('llvm-dlltool', required: true)
->>>> -    dlltool_cmd =3D [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', =
-'-D', 'qemu.exe']
->>>> +    dlltool_cmd =3D [dlltool, '-m', dlltool_target,'-d', =
-'@INPUT@', '- l', '@OUTPUT@', '-D', 'qemu.exe']
->>>>      win32_qemu_plugin_api_link_flags +=3D =
-['-Wl,-delayload=3Dqemu.exe']
->>>>    else
->>>>      # With gcc/ld, delay lib is built with a specific delay =
-parameter.
->>>=20
->>> Interesting, on which setup did you find this?
->>>=20
->>> Regards,
->>> Pierrick
->> Hello,
->> Was found on my macOS arm64 laptop w/ using llvm-mingw and an MXE =
-fork to build all the libs QEMU needed.
->> Cross-compiled for arm64 Windows initially from there, and came =
-across this when targeting x86_64 from that setup.
->=20
-> Ok thanks.
-> When I cross compiled windows-arm64 -> windows-x86_64, I don't =
-remember having to set it. That said, it does not hurt anyway, and =
-everything still builds fine natively with it.
->=20
-Hi,
-
-Looking at msys2, that uses a separate toolchain copy for each =
-architecture (at /clangarm64 and others)=20
-configured to target a single arch. And with separate toolchain packages =
-per architecture to correspond to that.
-
-llvm-mingw (at https://github.com/mstorsjo/llvm-mingw) uses a single =
-toolset copy for all the target architectures
-instead, with platform-specific headers and libraries in a per-arch =
-triplet folder.
-
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->=20
-> Regards,
-> Pierrick
->=20
-
-
---Apple-Mail=_8A4C9FE8-DB19-4A43-8487-0FCEDD36A0F1
+--0000000000008ad9e2064a7eb2c0
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dus-ascii"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 10. Feb 2026, at 21:45, Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On 2/10/26 12:04 AM, =
-Mohamed Mediouni wrote:<br><blockquote type=3D"cite"><blockquote =
-type=3D"cite">On 10. Feb 2026, at 07:39, Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt; wrote:<br><br>On 2/9/26 8:07 PM, =
-Mohamed Mediouni wrote:<br><blockquote type=3D"cite">llvm-dlltool =
-assumes that it's by default targeting the host architecture<br>it's =
-running on. That assumption doesn't hold true when =
-cross-compiling.<br>Signed-off-by: Mohamed Mediouni =
-&lt;mohamed@unpredictable.fr&gt;<br>---<br>&nbsp;plugins/meson.build | 9 =
-++++++++-<br>&nbsp;1 file changed, 8 insertions(+), 1 =
-deletion(-)<br>diff --git a/plugins/meson.build =
-b/plugins/meson.build<br>index 34643e2cea..9899f166ee 100644<br>--- =
-a/plugins/meson.build<br>+++ b/plugins/meson.build<br>@@ -41,9 +41,16 @@ =
-if host_os =3D=3D 'windows'<br>&nbsp;&nbsp;&nbsp;# to find missing =
-symbols in current =
-program.<br>&nbsp;&nbsp;&nbsp;win32_qemu_plugin_api_link_flags =3D =
-['-Lplugins', '-lqemu_plugin_api']<br>&nbsp;&nbsp;&nbsp;if =
-meson.get_compiler('c').get_id() =3D=3D 'clang'<br>+ =
-&nbsp;&nbsp;&nbsp;if host_machine.cpu() =3D=3D 'x86_64'<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool_target =3D 'i386:x86-64'<br>+ =
-&nbsp;&nbsp;&nbsp;elif host_machine.cpu() =3D=3D 'aarch64'<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool_target =3D 'arm64'<br>+ =
-&nbsp;&nbsp;&nbsp;else<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error('Unknown =
-machine')<br>+ =
-&nbsp;&nbsp;&nbsp;endif<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# With =
-LLVM/lld, delaylib is specified at link time =
-(-delayload)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dlltool =3D =
-find_program('llvm-dlltool', required: true)<br>- =
-&nbsp;&nbsp;&nbsp;dlltool_cmd =3D [dlltool, '-d', '@INPUT@', '-l', =
-'@OUTPUT@', '-D', 'qemu.exe']<br>+ &nbsp;&nbsp;&nbsp;dlltool_cmd =3D =
-[dlltool, '-m', dlltool_target,'-d', '@INPUT@', '- l', '@OUTPUT@', '-D', =
-'qemu.exe']<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;win32_qemu_plugin_api_link_fl=
-ags +=3D =
-['-Wl,-delayload=3Dqemu.exe']<br>&nbsp;&nbsp;&nbsp;else<br>&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;# With gcc/ld, delay lib is built with a specific delay =
-parameter.<br></blockquote><br>Interesting, on which setup did you find =
-this?<br><br>Regards,<br>Pierrick<br></blockquote>Hello,<br>Was found on =
-my macOS arm64 laptop w/ using llvm-mingw and an MXE fork to build all =
-the libs QEMU needed.<br>Cross-compiled for arm64 Windows initially from =
-there, and came across this when targeting x86_64 from that =
-setup.<br></blockquote><br>Ok thanks.<br>When I cross compiled =
-windows-arm64 -&gt; windows-x86_64, I don't remember having to set it. =
-That said, it does not hurt anyway, and everything still builds fine =
-natively with =
-it.<br><br></div></div></blockquote><div>Hi,</div><div><br></div>Looking =
-at msys2, that uses a separate toolchain copy for each architecture (at =
-/clangarm64 and others)&nbsp;</div><div>configured to target a single =
-arch. And with separate toolchain packages per architecture to =
-correspond to that.</div><div><br></div><div>llvm-mingw (at&nbsp;<a =
-href=3D"https://github.com/mstorsjo/llvm-mingw">https://github.com/mstorsj=
-o/llvm-mingw</a>) uses a single toolset copy for all the target =
-architectures</div><div>instead, with platform-specific headers and =
-libraries in a per-arch triplet folder.</div><div><br><blockquote =
-type=3D"cite"><div><div>Reviewed-by: Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt;<br>Tested-by: Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt;<br><br>Regards,<br>Pierrick<br><br></d=
-iv></div></blockquote></div><br></body></html>=
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 10,=
+ 2026 at 1:56=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
+philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On 10/2/26 16:06, Warner Losh wrote:<br=
+>
+&gt; Remove the NetBSD specific code form bsd-user. It&#39;s not been maint=
+ained<br>
+&gt; in any meaningful way since it was introduced to the tree in 2008. It<=
+br>
+&gt; hasn&#39;t been connected to the build since 2021, and last time (in 2=
+023) I<br>
+&gt; tried to mock-up the meson support it needed, it failed to build. Whil=
+e<br>
+&gt; there were some out-of-tree work, I&#39;ve not been able to connect wi=
+th<br>
+&gt; that code.<br>
+&gt; <br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/host-os.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 25 ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/os-strace.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0|=C2=A0 =C2=A01 -<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/strace.list=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0| 145 --------------<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/syscall_nr.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 | =
+373 ------------------------------------<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/target_os_elf.h=C2=A0 =C2=A0 =C2=A0| 148 -=
+-------------<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/target_os_siginfo.h |=C2=A0 82 --------<br=
+>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/target_os_signal.h=C2=A0 |=C2=A0 69 ------=
+-<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/target_os_stack.h=C2=A0 =C2=A0|=C2=A0 56 -=
+-----<br>
+&gt;=C2=A0 =C2=A0bsd-user/netbsd/target_os_thread.h=C2=A0 |=C2=A0 25 ---<br=
+>
+&gt;=C2=A0 =C2=A0bsd-user/qemu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A08 -<br>
+&gt;=C2=A0 =C2=A0bsd-user/strace.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 17 --<br>
+&gt;=C2=A0 =C2=A0bsd-user/syscall_defs.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 13 --<br>
+&gt;=C2=A0 =C2=A012 files changed, 962 deletions(-)<br>
+<br>
+Typo &quot;support&quot; in $Subject.<br></blockquote><div><br></div><div>&=
+lt;blush&gt; OK. Will fix.</div><div>=C2=A0</div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
+o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+</blockquote></div></div>
 
---Apple-Mail=_8A4C9FE8-DB19-4A43-8487-0FCEDD36A0F1--
+--0000000000008ad9e2064a7eb2c0--
 
