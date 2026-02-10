@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55219EA8109
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551D8EA8107
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 12:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpmf6-0001gh-S9; Tue, 10 Feb 2026 07:16:16 -0500
+	id 1vpmdq-0000g1-4w; Tue, 10 Feb 2026 07:14:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeX-000161-On; Tue, 10 Feb 2026 07:15:38 -0500
+ id 1vpmdn-0000ec-Iv; Tue, 10 Feb 2026 07:14:51 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vpmeV-0000I3-W1; Tue, 10 Feb 2026 07:15:37 -0500
+ id 1vpmdm-0008P7-1x; Tue, 10 Feb 2026 07:14:51 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95003187DA9;
- Tue, 10 Feb 2026 15:13:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 896FA187D9C;
+ Tue, 10 Feb 2026 15:13:51 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 30DAE360CCB;
- Tue, 10 Feb 2026 15:14:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E42D360CBE;
+ Tue, 10 Feb 2026 15:14:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joelle van Dyne <j@getutm.app>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.1 71/78] virtio-gpu-virgl: correct parent for blob
- memory region
-Date: Tue, 10 Feb 2026 15:14:24 +0300
-Message-ID: <20260210121438.67781-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.1 58/78] hw/uefi: fix size negotiation
+Date: Tue, 10 Feb 2026 15:14:11 +0300
+Message-ID: <20260210121438.67781-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
 References: <qemu-stable-10.2.1-20260210151332@cover.tls.msk.ru>
@@ -61,61 +59,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joelle van Dyne <j@getutm.app>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-When `owner` == `mr`, `object_unparent` will crash:
+Payload size is the variable request size, not the total buffer size.
+Take that into account and subtract header sizes.
 
-object_unparent(mr) ->
-object_property_del_child(mr, mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-object_finalize(mr) ->
-object_property_del_all(mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-fail on g_assert(obj->ref > 0)
-
-However, passing a different `owner` to `memory_region_init` does not
-work. `memory_region_ref` has an optimization where it takes a ref
-only on the owner. That means when flatviews are created, it does not
-take a ref on the region and you can get a UAF from `flatview_destroy`
-called from RCU.
-
-The correct fix therefore is to use `NULL` as the name which will set
-the `owner` but not the `parent` (which is still NULL). This allows us
-to use `memory_region_ref` on itself while not having to rely on unparent
-for cleanup.
-
-Signed-off-by: Joelle van Dyne <j@getutm.app>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260103214400.71694-1-j@getutm.app>
-(cherry picked from commit e27194e087aede62dbe3d2805c6f1aa30d3465df)
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260114104745.3465860-1-kraxel@redhat.com>
+(cherry picked from commit 46dee71a945d50639586ca3365be29aa9f368bfd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 07f6355ad6..6a83fb63c8 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -120,7 +120,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     vmr->g = g;
- 
-     mr = &vmr->mr;
--    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
-@@ -186,7 +186,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         /* memory region owns self res->mr object and frees it by itself */
-         memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
--        object_unparent(OBJECT(mr));
-+        object_unref(OBJECT(mr));
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 8533533ea5..5607763525 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -592,7 +592,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
      }
  
-     return 0;
+-    ps->payload_size = uv->buf_size;
++    ps->payload_size = uv->buf_size - sizeof(*mhdr) - sizeof(*mvar);
+     mvar->status = EFI_SUCCESS;
+     return length;
+ }
 -- 
 2.47.3
 
