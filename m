@@ -4,77 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34224EA810F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67693EA8113
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 13:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpnS5-0006cv-S1; Tue, 10 Feb 2026 08:06:49 -0500
+	id 1vpnVe-0007Qo-Qs; Tue, 10 Feb 2026 08:10:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpnS0-0006cQ-K4
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:06:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vpnVW-0007QO-HN; Tue, 10 Feb 2026 08:10:23 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpnRs-0003ll-FL
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 08:06:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770728794;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Zw1pLKMRRyoFXYL+yDYEacnY/yXG+UeRh6B3FmT3j4M=;
- b=fB9qKzeqYyUympH9anGvhytqh7x6I+JyRX3RPpk936zVjpdc/3NQhnAEv1Bt2EDlpn53gk
- cr9rYgSxS3vAhRfLOqx/df8+kk7kD0n8K5cSVEHpAYSZrcRG6+9JeA/LhanCL0AkfNFXDB
- I9Z8N4EBlX+rGFyg1+suHhuEbGy2nlY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-NETD3BRzPW-Isy7DmBdnxQ-1; Tue,
- 10 Feb 2026 08:06:33 -0500
-X-MC-Unique: NETD3BRzPW-Isy7DmBdnxQ-1
-X-Mimecast-MFC-AGG-ID: NETD3BRzPW-Isy7DmBdnxQ_1770728791
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 361211956095
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:06:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E76D630001A5
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 13:06:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6106421E692D; Tue, 10 Feb 2026 14:06:28 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 0/5] qobject: switch JSON parser to push
-In-Reply-To: <CABgObfYD6cLmN_qgmro-O2wUPqnqTn3ZUYntbPrFQkX0xE=8AQ@mail.gmail.com>
- (Paolo Bonzini's message of "Fri, 30 Jan 2026 14:36:40 +0100")
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <87ldhffe79.fsf@pond.sub.org>
- <CABgObfYD6cLmN_qgmro-O2wUPqnqTn3ZUYntbPrFQkX0xE=8AQ@mail.gmail.com>
-Date: Tue, 10 Feb 2026 14:06:28 +0100
-Message-ID: <87o6lw7nor.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vpnVT-0004R2-Dx; Tue, 10 Feb 2026 08:10:22 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61A9L85g402492; Tue, 10 Feb 2026 13:10:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=XPoh8Y
+ Y+1gsvGR4HxTDjBSj2Mp0dYBu7xUc+p+49rPM=; b=IX8ahuH/1xqUy9Z2gix19J
+ 9bpfwAqaOQQp0TBeTfBvyfQkkggR3G8WMIEY1AW/DL9J+n6WsAiGvJtkwsFCicNi
+ hDYrGf1nm+ctCWoBYw9vUFMepUkIgs3OqaaxGK0ldDHy+dJOKA03DeSEqZBlUgLy
+ rig0JCLu2PKY17vPGJemHusCqxj6YS2YqH9Yjbt2gkH+ZcQoR8q7uEDWLHUfhGRF
+ PQqjdk+sCIaNvYMj06X/O/1lRsSlAbN+JKmAvmU/xgiFJcUPG1qjNCTI8FbB2eTm
+ aiQ3QOudbKKdxAIGTmQZaAR6l/Q9gfPKxhEoRbzCOi6Bur6MLUPtl4ny/rLxZOCA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696uc9fp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 13:10:15 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61AAFnsk012693;
+ Tue, 10 Feb 2026 13:10:14 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6h7k98uf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 13:10:14 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61ADADLX28377784
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 13:10:13 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3527A5804B;
+ Tue, 10 Feb 2026 13:10:13 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9A0B358063;
+ Tue, 10 Feb 2026 13:10:12 +0000 (GMT)
+Received: from [9.10.80.137] (unknown [9.10.80.137])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Feb 2026 13:10:12 +0000 (GMT)
+Message-ID: <b35c4a66-05ce-4453-a259-92ee87641617@linux.ibm.com>
+Date: Tue, 10 Feb 2026 07:10:12 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] ppc/pnv: Add unimplemented quad and core regs
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com, harshpb@linux.ibm.com
+References: <20260126135507.771552-1-calebs@linux.ibm.com>
+ <20260126135507.771552-3-calebs@linux.ibm.com>
+ <aYrXdeZol4koVzYX@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US
+From: Caleb Schlossin <calebs@linux.ibm.com>
+In-Reply-To: <aYrXdeZol4koVzYX@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=YZiwJgRf c=1 sm=1 tr=0 ts=698b2e38 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=eadkP-VQdgytgM3QQfIA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: _CC7Eb-WQZ-NPFyVBjeNrsZcRDk5XhDU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDEwOCBTYWx0ZWRfX3ThThvmOmFWE
+ 5vRYjFuTGqEWKRqXxkPCXLvWLY6GwS4BX/4ovEaEn9K7mVdTYSFT23rW9P6AHU/ziCVHXWikpA9
+ s3h2EeL5Vg21s9y3zRep0XTiRuJiuX5b7QX8aMRFdFx3k7VhLVhIvQoZsjVC2dDHh7vPH2GHQzM
+ ApvMecbbzim0107xmRgm76k+0e+wwaqkBgc5MCaOAVPyYRSkSl6+mbBJiSSaYMGz6nVIxsRIVjb
+ 3I3/Lndkd0Y0/CT/EB3fCeASPL/KxIYRzU/sQPS1eylMmD8KzBmybEOtY3Uu4b+Ux24g4cfAcWV
+ AxbnzelbtDiExuqVE7aRfAX5ypjD5xsYf7r3d8fs2CPESRetF/jcL2z6+rkRoZ5JMSYfEpxHxs0
+ a6zdlu50Jj395mYtI8uh8SFFCCRgCnzyE8Zg0gAeqn+Td0jHgx4seB/J8s7UTcyqZTXunowBnez
+ P8ZUTtAAPUGR6BckcUQ==
+X-Proofpoint-GUID: Q6pp8w7wCsHrr6y_FxYjRQObcZp4mE4F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602100108
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,134 +124,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Il ven 30 gen 2026, 14:00 Markus Armbruster <armbru@redhat.com> ha scritt=
-o:
->
->> > Another benefit is that QEMU can report the first parsing error
->> > immediately, without waiting for delimiters to be balanced.
+
+On 2/10/26 1:04 AM, Aditya Gupta wrote:
+> Hello Caleb,
+> 
+> Was going through the patch again. Can we add a comment doc, about the
+> scoms for which the unimplemented warning is getting hidden ?
+> 
+> On 26/01/26 07:55AM, Caleb Schlossin wrote:
+>> <...snip...>
 >>
->> Sounds promising!  Let's see...
->>
->> Before the series:
->>
->>      $ socat "READLINE,prompt=3DQMP> " UNIX-CONNECT:$HOME/work/images/te=
-st-qmp
->>     {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 10},=
- "package": "v10.2.0-567-gfb6b66de43-dirty"}, "capabilities": ["oob"]}}
->>     QMP> [{"a"]
->>
->> Parse error not diagnosed right away, but ...
->>
->>     QMP> }
->>     {"error": {"class": "GenericError", "desc": "JSON parse error, missi=
-ng : in object pair"}}
->>
->> .... only when the streamer decides the expression is complete.
->>
->> After the series:
->>
->>     QMP> [{"a"]
->>     {"error": {"class": "GenericError", "desc": "JSON parse error at lin=
-e 1, column 6, expecting ':'"}}
->>
->> Cool!  However, if I do it again, things fall apart:
->>
->>     QMP> [{"a"
->>     QMP> }
->>     QMP> }
->>     QMP> }
->>     QMP> ]
->>     QMP> ]
->>     {"error": {"class": "GenericError", "desc": "JSON parse error at lin=
-e 7, column 1, expecting value"}}
->>
->> Parse error recovery not quite right?
->
-> Well, if you read the above very carefully :) the error is *reported*
-> immediately, but recovery still waits for delimiters to be balanced.
+>> @@ -284,6 +305,15 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+>>          }
+>>          break;
+>>  
+>> +    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
+>> +    case PNV10_XSCOM_EC_CORE_FIRMASK:
+>> +    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
+>> +    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
+>> +    case PNV10_XSCOM_EC_SPATTN_OR:
+>> +    case PNV10_XSCOM_EC_SPATTN_AND:
+>> +    case PNV10_XSCOM_EC_SPATTN:
+>> +    case PNV10_XSCOM_EC_SPATTN_MASK:
+>> +        break;
+>>      default:
+>>          qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+> 
+> Here, the unimp warning is getting skipped, by ignoring writes to those
+> scoms.
+> Similarly in other places, you return 0 as default value for few scom
+> reads.
+> 
+> A comment about the special treatment will help future developers to
+> read the code.
 
-Yes, but the recovery regressed a bit.
+Sure. I'll add that in my next patch set.
 
-Having read the entire series now, I wonder whether it's related to
-capping @brace_count and @bracket_count at zero [PATCH 3].
-
-My example input [{"a"] puts the parser in error recovery state with
-brace_count =3D=3D 1, bracket_count =3D=3D 0.  Your parser will silently th=
-row
-away further input until brace_count drops to zero.
-
-The old parser additionally snaps out of this unresponsive state when
-bracked_count goes negative.
-
-> In testing, when I got an error I just typed a long enough variant on
-> "]}]}]}" and that is enough to recover=E2=80=94just like in the old parse=
-r.
-
-With the old parser, I can park my finger on ']' or '}' for a moment,
-hit return, and be good.  With the new one, I have to park on both.
-
-More seriously, the new parser seems to break a recovery technique
-documented in docs/interop/qmp-spec.rst:
-
-    Forcing the JSON parser into known-good state
-    ---------------------------------------------
-
-    Incomplete or invalid input can leave the server's JSON parser in a
-    state where it can't parse additional commands.  To get it back into
-    known-good state, the client should provoke a lexical error.
-
-    The cleanest way to do that is sending an ASCII control character
-    other than ``\t`` (horizontal tab), ``\r`` (carriage return), or
-    ``\n`` (new line).
-
-Works with old parser:
-
-    QMP> [{"a"]
-    QMP> ^L
-    {"error": {"class": "GenericError", "desc": "JSON parse error, stray '\=
-f'"}}
-    QMP> {}
-    {"error": {"class": "GenericError", "desc": "QMP input lacks member 'ex=
-ecute'"}}
-
-Note: the ^L is a formfeed character.
-
-New parser:
-
-    QMP> [{"a"]
-    {"error": {"class": "GenericError", "desc": "JSON parse error at line 1=
-, column 6, expecting ':'"}}
-    QMP> ^L
-    QMP> {}
-
-Good: the parse error is reported immediately.
-
-Bad: the formfeed no longer forces the parser into known-good state.
-This needs fixing.
-
->                                                                     Still
-> the difference in error reporting matters, because it gives feedback that
-> is immediately useful, rather than possibly delayed forever.
-
-Reporting parse errors immediately is such a lovely quality of life
-improvement.  May I have that without regressing error recovery?
-
-> The policy is easy to change, either in v2 or in subsequent work, because
-> recovery is layered on top of json-parser and its code is nothing more th=
-an
-> "if you believe it's a good time to recover, reset the parser".
->
-> Paolo
-
->> > On top of the benefits intrinsic in the push architecture, it so happe=
-ns
->> > that it's really easy to add a location to JSON parsing errors now, so
->> > do that as well.
->> >
->> > Paolo
->>
->>
+Thanks,
+Caleb
+> 
+> Thanks,
+> - Aditya G
+> 
+> 
 
 
