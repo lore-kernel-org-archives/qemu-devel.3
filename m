@@ -4,101 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E94BEA811F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC54EA811B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 14:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpokQ-0004ap-Is; Tue, 10 Feb 2026 09:29:50 -0500
+	id 1vposH-0006k4-Jx; Tue, 10 Feb 2026 09:37:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1vpokO-0004Yv-Jj
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:29:48 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1vpokN-0006Hc-0G
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 09:29:48 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 98D5F3E716;
- Tue, 10 Feb 2026 14:29:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1770733785; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fnSQjR7mM1hhH5xrvhdRkS2zHoHfzREYpbu/R8Fkh7U=;
- b=cFi5dpY1mB/ptuFd+sfOI8PhvTSxSHt8drKSCJv8W2sCME+8o0vflWzed1gQt5oiBhT0ft
- JiugCDJR1H2i5KvA3Yt5n0PHqjcPwHKsFKEZghlyemhVJnow7ex4TfMbwYiRgGy3Eq4CX8
- enjteIF/QF9lu1vyjPUx4z7C0prVYU4=
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1770733785; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fnSQjR7mM1hhH5xrvhdRkS2zHoHfzREYpbu/R8Fkh7U=;
- b=cFi5dpY1mB/ptuFd+sfOI8PhvTSxSHt8drKSCJv8W2sCME+8o0vflWzed1gQt5oiBhT0ft
- JiugCDJR1H2i5KvA3Yt5n0PHqjcPwHKsFKEZghlyemhVJnow7ex4TfMbwYiRgGy3Eq4CX8
- enjteIF/QF9lu1vyjPUx4z7C0prVYU4=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 526763EA62;
- Tue, 10 Feb 2026 14:29:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 7P0CE9lAi2nLCgAAD6G6ig
- (envelope-from <mwilck@suse.com>); Tue, 10 Feb 2026 14:29:45 +0000
-Message-ID: <a6ba29d816211fa689798ed2f133d0f40c27d37c.camel@suse.com>
-Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
-From: Martin Wilck <mwilck@suse.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Hannes Reinecke <hare@suse.de>, "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=	
- <berrange@redhat.com>, Benjamin Marzinski <bmarzins@redhat.com>, Paolo
- Bonzini	 <pbonzini@redhat.com>, qemu-block@nongnu.org, Kevin Wolf
- <kwolf@redhat.com>, 	afaria@redhat.com, qemu-devel@nongnu.org, Mikulas
- Patocka <mpatocka@redhat.com>
-Date: Tue, 10 Feb 2026 15:29:43 +0100
-In-Reply-To: <20260210135931.GA90664@fedora>
-References: <f81a053d4507e220cc787bfda152171506949858.camel@suse.com>
- <20260204183201.GB610283@fedora>
- <d6cfd9a22c397e3811eaa73409f4ab1499e3e63f.camel@suse.com>
- <aYSGia2Zy_g5iop5@redhat.com> <20260205133930.GA36872@fedora>
- <d78fade2-484a-4866-8b5c-065ba3d28b16@suse.de>
- <20260206140809.GA68769@fedora>
- <ba99c16a-f621-49a7-bab4-c262a4f2a2e8@suse.de>
- <20260209142306.GA24854@fedora>
- <cd9c02195bcda43c4ac992c17a2a1de5d51102e7.camel@suse.com>
- <20260210135931.GA90664@fedora>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vposH-0006jm-03; Tue, 10 Feb 2026 09:37:57 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vposF-0007xl-Il; Tue, 10 Feb 2026 09:37:56 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61A90brH476050; Tue, 10 Feb 2026 14:37:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=a60M+p
+ qYej39p3Nps2Ap7htRrs1OxtGDimZ2Z5qbvJA=; b=HhV3xzeK3rT4pytxed5xca
+ Ka5lrcHVC6S8PQhlppKWUwn1zBDomCtm6Oq4C6oczsgQ6Oxjt/j7WgbVfZKumMQd
+ BqHpQQntyLn6URYKxi9vIjHRbWG5bL/Qam1hcGjgHxh8vthJGMrsFrn5QnLQxdKv
+ FziLMzFraRVPxTdseEUcrMwigQfvJrp+QrrDxhXzU93JBzNEImVn9mB6PPTxqwuU
+ H/vzeBnRyrhtKXKPDFnOzJbFnpjGQ5mXo8W+GSZhfpwma1wnBi0kVuX76HV0Udsa
+ Aq8B2y8PWUxKEY6lQIfSUFmTnhCD3SZnfGPcCvISjQSUQwiCJP/dT/ox6ciklEog
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v2ghg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 14:37:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61ADpI3a008378;
+ Tue, 10 Feb 2026 14:37:51 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6g3y9s8c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 14:37:51 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61AEboqk57213340
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 14:37:50 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 54A9358045;
+ Tue, 10 Feb 2026 14:37:50 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 293AC58050;
+ Tue, 10 Feb 2026 14:37:49 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.141.124]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Feb 2026 14:37:49 +0000 (GMT)
+Message-ID: <53579daa5965759101be36e90c4bfa93b59ed901.camel@linux.ibm.com>
+Subject: Re: [PATCH v1] s390x/pci: Fix endianness for zPCI BAR values.
+From: Eric Farman <farman@linux.ibm.com>
+To: Jaehoon Kim <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ thuth@redhat.com, richard.henderson@linaro.org, david@kernel.org,
+ iii@linux.ibm.com
+Date: Tue, 10 Feb 2026 09:37:48 -0500
+In-Reply-To: <20260206164645.1845366-1-jhkim@linux.ibm.com>
+References: <20260206164645.1845366-1-jhkim@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.com:s=susede1]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=mwilck@suse.com;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 2hQ92JagPk36S4TIV3OA8Iz8T8QgrTsE
+X-Proofpoint-ORIG-GUID: 2hQ92JagPk36S4TIV3OA8Iz8T8QgrTsE
+X-Authority-Analysis: v=2.4 cv=JdWxbEKV c=1 sm=1 tr=0 ts=698b42c0 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=Dn1iWEI3DQaagfHZ2RsA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDEyMCBTYWx0ZWRfXyyduzDULNwMw
+ L0eAJe1TOzi+JEDm+6W/ERQMXflsnjmQVVXdZtIKmH+BpXjGaXOv7fdcCl1V/RHFjAFqNZe9+su
+ KeCoDHURppspucUQhXtxaQaZzegkFJkoBqAp2+9Qb2F6XVHqUfmFUBiRW7fcBLGWWm1rX4avYcR
+ lo65EJvJJItHBKFYeFdgKpFzl7oMKIJWLKKah20dfNB7BZtdw3IdeWYKA1wRQZkP4P4alnuexme
+ ByR34979PMso1qH4JlUynxTQzaF7VEZ/FuqKsfrjkUZARdnGut2uxeHLAUFfrstRl+bTmlKZk6A
+ rg2QSrupalABMYZhiSt9K6dftn+RB5AIYbKSJpQLKdiPPbvN9pY+5QvY7n2v+n+Jiuk3gJ283Ys
+ az6xpm9EBkZIIDKoWx7SD3aieNcU5LTIhp6OCkOGpsHWh9D81zDZXJ4wwmAD6epv4IO5gR2jJVB
+ TGr0eIRgHr39LfnbiWg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-10_01,2026-02-10_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602100120
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,49 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-02-10 at 08:59 -0500, Stefan Hajnoczi wrote:
-> On Tue, Feb 10, 2026 at 11:23:51AM +0100, Martin Wilck wrote:
-> > On Mon, 2026-02-09 at 09:23 -0500, Stefan Hajnoczi wrote:
-> > > On Mon, Feb 09, 2026 at 01:50:00PM +0100, Hannes Reinecke wrote:
-> > > >=20
-> > > > My concern with opening the block device with BLK_OPEN_WRITE is
-> > > > that
-> > > > this will trigger udev to 'synthesize' (ie regenerate) an 'add'
-> > > > event
-> > > > on close, causing 'interesting' effects as this will cascade
-> > > > down
-> > > > through the udev rule chain, triggering blkid, partition scan,
-> > > > you
-> > > > name it.
-> > > > Horrible, horrible, horrible.
-> > > > Don't do it.
-> > > >=20
-> > > > Especially not as you are only interested in reading
-> > > > information,
-> > > > and not changing the disk state in any way.
-> > >=20
-> > > I see. I will send patches to change blkdev_pr_read_keys()
-> > > blkdev_pr_read_reservation() to require only BLK_OPEN_READ.
-> >=20
-> > Hm, but then if you need to make an actual reservation and call
-> > e.g.
-> > blkdev_pr_reserve(), you'll need to re-open the device r/w, and
-> > have
-> > the same problem. I'm not sure I understand the issue here ...
-> > doesn't
-> > your process have an open fd to the device in question anyway? You
-> > just
-> > need to be sure not to _close_ it, as that's what causes the
-> > uevents
-> > (udev uses an IN_CLOSE_WRITE inotify(7) event on the device node).
+On Fri, 2026-02-06 at 10:46 -0600, Jaehoon Kim wrote:
+> During zPCI scan, BAR configuration data retrieved via CLP Query was
+> misinterpreted due to an endianness mismatch between QEMU and the guest
+> kernel.
 >=20
-> Shell scripts are the most exposed to this issue because they invoke
-> blkpr(8) anew each time instead of keeping the fd open between
-> reading
-> reservation details and performing a reservation operation.
+> The guest kernel's clp_store_query_pci_fn() expects BAR values in
+> little-endian format and converts them with le32_to_cpu(). However, QEMU
+> was incorrectly sending them in big-endian format, not following the
+> architecture specification. This caused incorrect bit-swapping in the
+> kernel, leading zpci_setup_bus_resources() to perform registration checks
+> against invalid flags, making the process ineffective.
+>=20
+> Observation values for zPCI device (NVMe passthrough):
+> LPAR from real CLP:
+> [    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
+> [    0.865597]  start: 0x4000000000000000
+> [    0.865598]  end:   0x4000000000003fff
+> [    0.865600]  flags: 0x100200
+>=20
+> QEMU before fix (wrong):
+> [    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
+> [    0.601085]  start: 0x4003000000000000
+> [    0.601086]  end:   0x4003000000003fff
+> [    0.601087]  flags: 0x200
+>=20
+> QEMU after fix (correct):
+> [    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
+> [    0.601117]  start: 0x4003000000000000
+> [    0.601118]  end:   0x4003000000003fff
+> [    0.601119]  flags: 0x100200
+>=20
+> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+> ---
+>  hw/s390x/s390-pci-inst.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Right. We shouldn't do that. If we find we have to, we _must_ remove
-the "watch" udev property from the devices in question.
-
-Martin
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
