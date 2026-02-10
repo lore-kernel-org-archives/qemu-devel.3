@@ -4,95 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614C5EA3F3E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35736E94619
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 11:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpldo-0007jh-H9; Tue, 10 Feb 2026 06:10:48 -0500
+	id 1vplhi-0000GH-Gk; Tue, 10 Feb 2026 06:14:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vpldm-0007iu-Ap
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:10:46 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vpldj-0006FQ-SC
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:10:46 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id D4EB440D53
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 11:10:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1770721841;
- bh=6dGi80FmZpJg+akQqZbpN1fMkUbh5+E+97dnJgwoVrA=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=HnjWMiKMNT6cOItO2Qy13gMAlNlfXkPrbrL+91cKa/IifGgf6z3xngPXMXvdv5vXN
- nD+OX56Ct8aFbh4zihZ2N85G4xaqUHAcYthTLt+AVCrPjA4me91JlyrsnFvrzjSxba
- ccPLkQsQPJTMkZZpgjy49yWIMktX/nV9BO7m9zN0Ae3NeQTlCW/WXuVWGAfdSJYolU
- FVj6tuQKZu2rYccl8MRrrSXr308gXMTczTZvbeEVhbMqd1syuivj/lzELEK1oG7Qyh
- u/ZkZvFdypJ998w8uvIP3wad+hpNiihGdlk/OiXUSmxvjiy8JfR6dbtwQ4neMajySC
- fAeM3M2JBx/qw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id B88397F5E9
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 11:10:41 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vplhg-0000Fl-KZ
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:14:48 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vplhf-0006Qp-5c
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 06:14:48 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-79427f739b0so56393737b3.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 03:14:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770722085; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GnlLFFK0lPIq5jooMmAGU8BYcY8DUJMzc1HIU93miU4rrJcu4qF4RXrwBwj1kxpPoL
+ +vDUQaFw3XVYDWdC98vTjJyNWuLIyphpXhHdDowrVnDHJPvceKUhgExr8mFum9Vu5p5g
+ pgt/96WSaLfDUpZ3OKuxbI+513V0DxCjnqQLOvBKa3OaJJGVNGbCkRBPPkJ9Qmp1VXQV
+ FFEEjlnAnp1ZzoqVUTbGyXPhjQN+JggT49CfdDzpmJhrMYek2jM2IoZk1wLJ8Fo8wQ/R
+ aHPU8YWIiJ36/ZaHTDlNJ3AObGfVXJDbUqnOHWThF7ja/RCLG1vaSBf7ZINHPJIAiKRx
+ F4LQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2DCGukmM8r24pphdZ7HUQeUR+Y11ZrZOm6/lMJ/Hqr0=;
+ fh=F+YjXdk2W4+aI0lwX3o1Zl54R5Mf09jK+RMHNXLxIVw=;
+ b=lc0Qg5takBlVLTQx/rg5RQA5toOcET1S8pafz5W9hS7tyWr1Wi8L+6s0TP/0Nl6v4l
+ BSSvZCfBba0kWQ/GdThJnKBsUXohLIgg+TcwZ1KcSJIrTY/AkmxW7Dvo6jtfvDPKpqzJ
+ +tVzU4WLKyDvv7MMyJsy671Rkg0tCkgq2RuRkHBh2k35ucp8Onq9+jxcM3i8xemRmmYa
+ FEd1lC0bXoLT6Mbc34O2x19sjpwupaaOe+a7+pjNukmrQEQhhITvWq8Xoa5HFeIaPMwZ
+ UovpAs02KupjVzUxvVu5zukf/oYzd44ELV7xc5Cn/QrTONOAHB8FCr9AiCV3oJGRpbB/
+ oPfA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770722085; x=1771326885; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2DCGukmM8r24pphdZ7HUQeUR+Y11ZrZOm6/lMJ/Hqr0=;
+ b=t+gTD7xgQigPdEzlE7bnhnWjpziNW/8usIe9UFqjkUYbDZEHBUWgbsnJsTqCPuK5Sj
+ 5KmRITrgZYtRw2uE+XWhOkZjXhDlFyyx2T43toWS2nyX2MD1LctmEzLc7TEtwnpddh2v
+ 8V67VTIiu8ExwFGqAzfc1mfPLjN99dqbzUpVbvvBksArQedqJhD6KWfBl3t4j9WQJqYb
+ dVR9wSx/Uq1EQ9QiAzyyvZdH3QeeSJ8rYFKqU1IsAsePgaMexFxQjUGy7D3xi5X6rLij
+ k4kBcpYkxedHZQAD9vN5TwwFGJhCUbnPQ2wIUIrspLm5raIn3J0KaBTv4UtFSyy2XR2I
+ svOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770722085; x=1771326885;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2DCGukmM8r24pphdZ7HUQeUR+Y11ZrZOm6/lMJ/Hqr0=;
+ b=Ex0r1W1/4VlmGSthowLkLxgq7pEApDEpq5Z7oLQIWQYJerLmbTkauXZxRD5Ghra70o
+ tkLN/ahB5q/1pOpPyE5Pf+ck7txU1u4Ax5Ud8rzSIwlN80kFup+0rux7q/KaiSb3o25/
+ KIIXoKlmmifw/9e/Li9GFcDpymscZiyEXVy53NBLP7ftNTFw18CJx3wB+m6EUmABCesI
+ IBMmk4faHLbYi7KHIXYGoBL/Ht60SSQs60fpMlJlNyQl/JkdJNbtgxUaqYalUZgL7XH4
+ tUPDIEnMl9ei4n7KXHXl/Kkzd7b0E5tAqW4xXGsl0inATOvdQo+qUbrbnx8jWBkatmub
+ ww4Q==
+X-Gm-Message-State: AOJu0YzogIqLkGyTg4pHxGqKkVo6pojczCndKt1DTp7Dx3evL6pqeCum
+ TmqZXT9XqvUOrj7rJWaEca3DKjvH2M3GB2fjxm+32DYVUmtEEcssYvNy5SvLIX7XpCDokjl5bON
+ ch0bT+HFpQEIyHtzpyaIhj6/REBovm/ZK1FQ0Of+fIg==
+X-Gm-Gg: AZuq6aJAiAte6nLDdpfwOGDr1aWRmjnt8b5dxI4apyBURi6Lqp5nzZ+IYrPdgDc60d6
+ hrEZaRX56kdxKHyK7T6ZC5L/TAuPS40W4c/YIFGot5dH+gHj2rMZVLOFqNizKCGOCMGRbmZkBf5
+ leMV/R5tp1VM2j/KT/xPrO0Bc40dcNDsElqQB37KKapA85fX50UPOKah/e4YcHwJvNL4KFLPdbW
+ HmP3oYx9oc5GSKbiEwmVPmm26Kpgh6n2KJelppfhGbTkzdlaogVwOUNAH4Cl5FJ4gBOvLIy7mzQ
+ mnaBIvZlKIVqlAFgHI0ks1NcGxV/0+dtW3Z83b3Pyjinu8mDXWdZi+fWv7X0Libr+sE6G1p0rHL
+ KKA==
+X-Received: by 2002:a05:690c:39f:b0:794:eb40:6745 with SMTP id
+ 00721157ae682-7952ab7ea3emr146076767b3.63.1770722085162; Tue, 10 Feb 2026
+ 03:14:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+References: <20260206214448.22008-1-philmd@linaro.org>
+In-Reply-To: <20260206214448.22008-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Feb 2026 11:14:32 +0000
+X-Gm-Features: AZwV_QgJvPO36dyNCYobaltcQTSKj69S9JsoDO_uph37oSEpDTYLuFizrRm28Hs
+Message-ID: <CAFEAcA8Lx=s0hRwm-fYUwQA82C=rH+VTFdhFZisTRHM_PqyZBg@mail.gmail.com>
+Subject: Re: [PULL 00/30] Single binary patches for 2026-02-06
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Feb 2026 11:04:54 -0000
-From: Christian Ehrhardt <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Confirmed; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Low; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: mjt+launchpad-tls paelzer utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177072149433.42821.4440135037037104112.malone@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="4847db153920c8fbc330ac275b92a72279fa07a2";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: e8fab57641b38c55ada30ba91c59aa6458dbf9d8
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -101,73 +113,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Awesome, that will make the backport along the merge no effort at all -
-thanks Michael!
+On Fri, 6 Feb 2026 at 21:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> The following changes since commit cd5a79dc98e3087e7658e643bdbbb0baec77ac=
+8a:
+>
+>   Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst=
+/qemu into staging (2026-02-05 13:54:50 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/philmd/qemu.git tags/single-binary-20260206
+>
+> for you to fetch changes up to 5cab4bafbb8c635c7db6ae1cff8660f83b547c02:
+>
+>   target-info: Statically initialize target_arch (2026-02-06 22:37:54 +01=
+00)
+>
+> ----------------------------------------------------------------
+> Various patches related to single binary effort:
+>
+> - Reduce RISC-V Boston tests
+> - Prohibit target_ulong / TARGET_PAGE_SIZE uses on s390x target
+> - Build target/arm/arm-qmp-cmds once
+> - Forbid legacy native endianness & ld/st_phys APIs on SPARC targets
+> - Forbid legacy ld/st_phys APIs on x86 targets
+> - Rename OpenRISC -> or1k
+> - Avoid QAPI parsing in target_arch()
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
 
-Title:
-  QEMU does not emulate IOCTL TCGETS2
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Confirmed
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Confirmed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Confirmed
-Status in qemu source package in Resolute:
-  Confirmed
+Applied, thanks.
 
-Bug description:
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.=20
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+-- PMM
 
