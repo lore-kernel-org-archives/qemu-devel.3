@@ -4,75 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC035EA3F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07125EA3F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Feb 2026 08:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpj8w-0008Tf-Ej; Tue, 10 Feb 2026 03:30:46 -0500
+	id 1vpjHL-0001Wp-S7; Tue, 10 Feb 2026 03:39:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpj8v-0008TG-5X
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:30:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <abysamross@ibm.com>)
+ id 1vphcT-0002n9-As; Tue, 10 Feb 2026 01:53:09 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vpj8s-0004sj-QJ
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 03:30:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770712241;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oMVyhuQUhxGrEugH2MTu4rr3OlHJ8pB2w5f1Hcqbm2k=;
- b=PsnyRLWahJVlGjGme7cKoOkgYLog2SqD7zerzf5IU53CK+kO0ZDzFMYr8mIbbfqWxDwu38
- Rmjp7POPKAu74tDZF13lIdAuJXOO/Ta9sU8Czq1mg1Eh3wSLvp8kPj3PPF3tdzbQsRow2T
- bcneIW5+BjpEMivVRqFC6//ymusUziI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-2ZzEZPfIOpWnKTn9yNRKng-1; Tue,
- 10 Feb 2026 03:30:40 -0500
-X-MC-Unique: 2ZzEZPfIOpWnKTn9yNRKng-1
-X-Mimecast-MFC-AGG-ID: 2ZzEZPfIOpWnKTn9yNRKng_1770712239
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CEC318005BC
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 08:30:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B2CD30001A5
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 08:30:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8ADFB21E692D; Tue, 10 Feb 2026 09:30:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 4/5] json-streamer: do not heap-allocate JSONToken
-In-Reply-To: <20260107084840.150843-5-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Wed, 7 Jan 2026 09:48:39 +0100")
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <20260107084840.150843-5-pbonzini@redhat.com>
-Date: Tue, 10 Feb 2026 09:30:36 +0100
-Message-ID: <87pl6d80gj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <abysamross@ibm.com>)
+ id 1vphcR-0003s6-L1; Tue, 10 Feb 2026 01:53:09 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 619G4jjD369791; Tue, 10 Feb 2026 06:53:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=R/UV6HMEDUMIb9Q8VJA7rKMQ/NPZzRnfxT72mO0kB
+ wI=; b=IPM3YP8qHKUHuSZrA14Zva7XpKWd3qXKUZZp8a9Sg54L2hp3wjLq9sior
+ Fbm3GIb7tzVwmuqO//SPKPpSASuEd632MYQw8KxH5wV5OkHF5F8AgafPBiUcDNaN
+ 1ExR973HABmoSPXScdSVNfvctZF9aOW6KssjjYAwwB/a/LvItMTeZkCVe3xCqpAB
+ 1rnmFUcuZShooWinmbEtCsUGJOnlcN1pHxugyJrIfcheH7DD7lq67RRlIYvzaLSO
+ VWEb3kNPlc4gdI8NXhXuC4MsCscGVeC+JpgqdkpVJa97A4s/ky6rC3kb0vyX95r4
+ T2KLrYUfjZsmI+VwnyLhAqZ8pX8Yg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ws0cj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 06:53:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61A6FXdp001815;
+ Tue, 10 Feb 2026 06:53:03 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je1yxgc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Feb 2026 06:53:03 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61A6qxAa24773060
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Feb 2026 06:52:59 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F90420043;
+ Tue, 10 Feb 2026 06:52:59 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B48C320040;
+ Tue, 10 Feb 2026 06:52:58 +0000 (GMT)
+Received: from B02-B02RHL5-RH94-0370-9-114-17-225.pok.stglabs.ibm.com (unknown
+ [9.114.17.225]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Feb 2026 06:52:58 +0000 (GMT)
+From: Aby Sam Ross <abysamross@ibm.com>
+To: qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, farman@linux.ibm.com,
+ Aby Sam Ross <abysamross@ibm.com>
+Subject: [PATCH] prevent null pointer dereference during zpci hot unplug
+Date: Tue, 10 Feb 2026 01:52:14 -0500
+Message-ID: <20260210065214.2252464-1-abysamross@ibm.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=WZYBqkhX c=1 sm=1 tr=0 ts=698ad5d0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=_df3JAyxEGjRhYUhYmcA:9
+X-Proofpoint-GUID: iPFhh6fadNUuXTSWJiEXjvI4qRjRADN6
+X-Proofpoint-ORIG-GUID: iPFhh6fadNUuXTSWJiEXjvI4qRjRADN6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA1NSBTYWx0ZWRfXwTBUNrMA7p27
+ 9rAVEKOIPSUZELe1gtpjoSrlVHLCJ6stBxIBCZt3M/YxXQSY79Kxa36ZSczyvfJr4Ro6u09AnD4
+ /WFwhIG562mKlwRacSpQPjLD7Dg8Fkton2qlThkTbG1TLVu6rckhyF/7tVsY/e7NWMMTwv/RmBC
+ qpSIG35vVY9T3/LtrCDZhUUEaXNT4eibJ3VKEM7CoOdezwxTr9KGZ/4qE/da4AAQm06oLIgk41x
+ Iv1IY0ZsV8UTVcpEAN/GRVfK9R0hmWogeYtPHCHWT/IsKXVcgxwR7yGOWJKXO04vb9EoDC0YyxK
+ a9JPQKZETg6kEJRWRoZDTmTeBYzfD29KftMpVTQKGOtisLtq8NOnxo00FLRlPfLogudXAS47tpx
+ WoZIxwI3K+moYvsc7xmPTxT1zglyn1AXvYiZpMZAdykYU8tnHetSSNCzFJpVhzwY5iKNhnMkq4Y
+ SLYGBwHnd83riCKU3cg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1011 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602100055
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=abysamross@ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 10 Feb 2026 03:39:27 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,112 +117,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+vfio-pci hostdev realize during zpci hot plug fails (in `vfio_pci_realize()`)
+if the vfio group file in `/dev/vfio/` lacks appropriate permissions and the
+hostdev[/properties] addition doesn't reach the point where it could be
+associated with previously added zpci device (in `s390_pcihost_plug()`).
+As a result, zpci iommu pointer remains null. The zpci hot unplug following the
+failed hostdev addition assumes zpci iommu pointer was assigned and tries to
+make use of it to end the dma count resulting in a null pointer dereference.
+In the non-hotplug scenario, `qdev_unplug()` for the zpci device is not called
+after hostdev addition failure and this issue is not encountered.
 
-> This is not needed with a push parser.  Since it processes tokens
-> immediately, the JSONToken can be created directly on the stack
-> and does not need to copy the lexer's string data.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  qobject/json-parser-int.h |  8 ++++++--
->  qobject/json-parser.c     | 18 ------------------
->  qobject/json-streamer.c   |  4 ++--
->  3 files changed, 8 insertions(+), 22 deletions(-)
->
-> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
-> index 1f435cb8eb2..5a6b5c9af90 100644
-> --- a/qobject/json-parser-int.h
-> +++ b/qobject/json-parser-int.h
-> @@ -35,7 +35,12 @@ typedef enum json_token_type {
->      JSON_MAX = JSON_END_OF_INPUT
->  } JSONTokenType;
->  
-> -typedef struct JSONToken JSONToken;
-> +typedef struct JSONToken {
-> +    JSONTokenType type;
-> +    int x;
-> +    int y;
-> +    char *str;
-> +} JSONToken;
->  
->  /* json-lexer.c */
->  void json_lexer_init(JSONLexer *lexer, bool enable_interpolation);
-> @@ -48,7 +53,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->                                  JSONTokenType type, int x, int y);
->  
->  /* json-parser.c */
-> -JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
->  void json_parser_init(JSONParserContext *ctxt, va_list *ap);
->  void json_parser_reset(JSONParserContext *ctxt);
->  QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
-> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
-> index 7abdea4dacb..2fede59842f 100644
-> --- a/qobject/json-parser.c
-> +++ b/qobject/json-parser.c
-> @@ -24,13 +24,6 @@
->  #include "qobject/qstring.h"
->  #include "json-parser-int.h"
->  
-> -struct JSONToken {
-> -    JSONTokenType type;
-> -    int x;
-> -    int y;
-> -    char str[];
-> -};
-> -
->  /*
->   * Objects: { } | { members }
->   * - Empty: { -> AFTER_LCURLY -> }
-> @@ -529,17 +522,6 @@ static QObject *json_parser_parse_token(JSONParserContext *ctxt, const JSONToken
->      return NULL;
->  }
->  
-> -JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
-> -{
-> -    JSONToken *token = g_malloc(sizeof(JSONToken) + tokstr->len + 1);
-> -
-> -    token->type = type;
-> -    memcpy(token->str, tokstr->str, tokstr->len);
-> -    token->str[tokstr->len] = 0;
-> -    token->x = x;
-> -    token->y = y;
-> -    return token;
-> -}
->  
->  void json_parser_reset(JSONParserContext *ctxt)
->  {
-> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-> index a1210128ac1..07e0ef51ce3 100644
-> --- a/qobject/json-streamer.c
-> +++ b/qobject/json-streamer.c
-> @@ -23,7 +23,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->                                  JSONTokenType type, int x, int y)
->  {
->      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
-> -    g_autofree JSONToken *token = json_token(type, x, y, input);
-> +    JSONToken token = (JSONToken) { .type = type, .x = x, .y = y, .str = input->str };
+Fixes: 37fa32de7073
+Signed-off-by: Aby Sam Ross <abysamross@ibm.com>
+---
+ hw/s390x/s390-pci-bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-checkpatch points out:
-
-    0004-json-streamer-do-not-heap-allocate-JSONToken.patch:89: WARNING: line over 80 characters
-
-Easy enough to avoid.
-
->      Error *err = NULL;
->  
->      parser->token_size += input->len;
-> @@ -64,7 +64,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->          } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
->              error_setg(&err, "JSON nesting depth limit exceeded");
->          } else {
-> -            QObject *json = json_parser_feed(&parser->parser, token, &err);
-> +            QObject *json = json_parser_feed(&parser->parser, &token, &err);
->              if (json) {
->                  parser->emit(parser->opaque, json, NULL);
->              }
-
-With the long line tidied up
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index b438d63c44..3166b91c46 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1248,7 +1248,7 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         pbdev->fid = 0;
+         QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
+         g_hash_table_remove(s->zpci_table, &pbdev->idx);
+-        if (pbdev->iommu->dma_limit) {
++        if (pbdev->iommu && pbdev->iommu->dma_limit) {
+             s390_pci_end_dma_count(s, pbdev->iommu->dma_limit);
+         }
+         qdev_unrealize(dev);
+-- 
+2.52.0
 
 
