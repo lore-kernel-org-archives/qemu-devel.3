@@ -4,96 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4A4EB5948
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 00:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C468EB5949
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 01:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vpyCY-0000g1-G9; Tue, 10 Feb 2026 19:35:30 -0500
+	id 1vpyuZ-0001uu-VQ; Tue, 10 Feb 2026 20:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpyCX-0000fl-Gk
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 19:35:29 -0500
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vpyCV-0001B7-Ud
- for qemu-devel@nongnu.org; Tue, 10 Feb 2026 19:35:29 -0500
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-bc274b8b15bso772093a12.1
- for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 16:35:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770770126; x=1771374926; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N0ODTrsBoAwUoWjk2cqDOmXirToHM5QXGutlSnNP8kw=;
- b=aemKDqHHXlo/9DzmhiothQJMfyiKUheG6aV9lN8aSHZLXzjXiZwXEx5HW/Bh1FzO3g
- Pth9f+15idiauZuf6/jWckw4ruYUPhNPQ8l5nPGl+qc2CRyarJHkhyUEnCpAnNyileWc
- D4nJ6F/TKaj+ltfbzkoIn8toMI2RdTjxGEBqfw/Aj8sI0MNKcCtQXWHC9j0fo1HUnLUA
- pjFT5i6seSkgCXszLPD+pOlYPqpXgAlNJJFBwRKC5TIpANnSS05ETlPcCtn7kTxQewci
- oiKjNclPl+C0x6vLO7/h5/k4n/9aGnGd5gxzcJdevZBTF1uJkR6ZqsqshP7kVjEihEhw
- o0NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770770126; x=1771374926;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=N0ODTrsBoAwUoWjk2cqDOmXirToHM5QXGutlSnNP8kw=;
- b=qtaiAF3MzFlQFly0iDAVlSw9hvX2SWD6CuMaCVqv/DBfkdrZw93gRkJ3OAt5DgjsoA
- FX2RwieJ48h4tw9erblZpIWkFnZjkOQ1vj1ybsVtX/n1liZPr8C1HEePlFqiuG73Rcan
- 3AoF0rtVghAKo8BnT9aUoonEpt1+yeSuHv88RKznKVRm8IfOfvNjLC1ZVxTytvn7Zx79
- YEo0Ur7QmsXo3zFDB1rU5fUq3oQpfq6nyx6uc4sCBfuBVOKpwIqWqf5iR9cj4s36RTYc
- 8kKH4gzBFgIpwoSmVAz3tavmnkz5XmQTHjJgYLZqatL3rlyj/ayety3SEz1d7q2NAioy
- 15Qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2L+PBrT7jtUSFK3NWxJtAj3ac0CfVOYIRIYw3x3Pa/YgK+nOmUmroRoAxUwJcNCKvOJA5ttV2cdMY@nongnu.org
-X-Gm-Message-State: AOJu0Yz/m/K+izZ/Gy33TgN8zodx+KI9OfOS0KGhhr7IHbuD3m1MGct6
- blYYJCYW27t8OXY3EsTpuRCtxBS05S8aDLrQaSfXaO1R1d9+adtbnWNMfwjiEkABz4U=
-X-Gm-Gg: AZuq6aLH7EqBubmeadC32OnJWG5muly7q7qgYF3CauB52h2hpEJV8UJMeLJgLS4m+Q2
- FN+JRUCJ/g7o1v6u2P7rWUP32cnynr/KOpjIOhf18rQjYejKn29a6riZDLyEgl/wdg15dS+AKM/
- z3PKLioLT9f+I47cNL3HKP0oA0ygmKQ9kLr88g8i/CWVefgKMMlZ9WAwL2cu1ckp80y/hgqzs5H
- WVdIHGfOrvf5ISpF9+UJW7LvsgN7hjhNdZY3SlEVD/dILyDMFZe8v6QN0vg/oBP43bp07S4st+s
- qO6IlXQJUdosx5pJKR1J+efIS/zPyEr3MTWT/bGsp8Em+TisScuDPADamMSB1w15nnv/29hjRkq
- i45zIruTp86+WFpEPEFtwP4xcrG6u96tZGYHJpAVbr9k+A3a9/fWIksQRNdS78SYy0E0wSuMeQT
- IzvDkAhMl5cUC2C0Gelqq6k4Yt+JP/qjBd0UhYa3kBK4zZfXTPQnkIQXGaDvvIVAy9x+M6tCVZB
- lwfUHwKRAmUocV2BVxoOyGM
-X-Received: by 2002:a17:90b:2b8e:b0:34c:cb3c:f536 with SMTP id
- 98e67ed59e1d1-354b3e6d672mr13724190a91.36.1770770125911; 
- Tue, 10 Feb 2026 16:35:25 -0800 (PST)
-Received: from ?IPV6:2001:8003:e109:dd00:f8f8:2c3b:9605:55a0?
- ([2001:8003:e109:dd00:f8f8:2c3b:9605:55a0])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3567c470bedsm356956a91.1.2026.02.10.16.35.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Feb 2026 16:35:25 -0800 (PST)
-Message-ID: <606ac024-9d02-4684-b538-c01fff9d5bf7@linaro.org>
-Date: Wed, 11 Feb 2026 10:35:18 +1000
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vpyuX-0001um-S9
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 20:20:57 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vpyuT-0001Nq-Qp
+ for qemu-devel@nongnu.org; Tue, 10 Feb 2026 20:20:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1770772854; x=1802308854;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=GTJC25ubz4XMOvaytpHcgA3JefEcbnyIuSceu7bzkh0=;
+ b=W2QZQdWxjkk2pyhTc/QNxJ6/nGdCWWvv1hmnL3UTsbtk7OCugSIA1SE7
+ YSvzQ1D666HMz5/xDzZ+BWZD0JTgxCIk1y1vQLsjUhjp8nkKgjQYXKdVg
+ gVuoUgJpLfkiaLtE9oflVktfW7V/e25D6Rv8afz9NhJ0ljG3zeKjNblq7
+ W0uxtU1SmJqwv8WAiDW1lq7YjN8oHcgt7Csttv4SX0n3CsSoB0sCYhUcd
+ bw6jfKvH1wm2dEZHHpDEksG912Veh4vxCheGHMV0//XJLTXsFUm5NttUP
+ xGbAlKBzAQhZzM/3Q4s8HMzl1d3OKdLWtZC8f/c1Jb4Fan09DocRMZc8e A==;
+X-CSE-ConnectionGUID: x8xjNGrPSjmgs6Fm6VkBvw==
+X-CSE-MsgGUID: 188HHU6gSF2CPsQBzfDnfg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="71957644"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="71957644"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2026 17:20:50 -0800
+X-CSE-ConnectionGUID: x3ugIfgWSiqXZxL5GCPuIw==
+X-CSE-MsgGUID: yTiJBFF5TpyEMDoF7T9GsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="216596815"
+Received: from qianm-mobl2.ccr.corp.intel.com (HELO [10.238.1.184])
+ ([10.238.1.184])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2026 17:20:47 -0800
+Message-ID: <4e523f23-a84a-4a93-95fe-c1c00442e2c2@linux.intel.com>
+Date: Wed, 11 Feb 2026 09:20:44 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/8] target/loongarch: Introduce loongarch_palen_mask()
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- palmer@dabbelt.com, alistair.francis@wdc.com, pbonzini@redhat.com,
- gaosong@loongson.cn, maobibo@loongson.cn, deller@gmx.de
-References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
- <20260210-phys_addr-v4-5-725a589e83c8@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH V2 11/11] target/i386: Disable guest PEBS capability when
+ not enabled
+To: "Chen, Zide" <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260128231003.268981-1-zide.chen@intel.com>
+ <20260128231003.268981-12-zide.chen@intel.com>
+ <576b57e3-92df-4a35-ba7c-00bf12833313@linux.intel.com>
+ <488a2ea7-062d-4561-89ec-f053af234cdd@intel.com>
 Content-Language: en-US
-In-Reply-To: <20260210-phys_addr-v4-5-725a589e83c8@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <488a2ea7-062d-4561-89ec-f053af234cdd@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=198.175.65.18;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,23 +91,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 21:33, Anton Johansson wrote:
-> @@ -364,3 +366,9 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
->       }
->       return context.physical;
->   }
-> +
-> +uint64_t loongarch_palen_mask(CPULoongArchState *env)
-> +{
-> +    uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN);
-> +    return MAKE_64BIT_MASK(0, phys_bits);
-> +}
 
-PALEN holds bits - 1.
+On 2/11/2026 3:05 AM, Chen, Zide wrote:
+>
+> On 2/9/2026 11:30 PM, Mi, Dapeng wrote:
+>> On 1/29/2026 7:09 AM, Zide Chen wrote:
+>>> When PMU is disabled, guest CPUID must not advertise Debug Store
+>>> support.  Clear both CPUID.01H:EDX[21] (DS) and CPUID.01H:ECX[2]
+>>> (DS64) in this case.
+>>>
+>>> Set IA32_MISC_ENABLE[12] (PEBS_UNAVAILABLE) when Debug Store is not
+>>> exposed to the guest.
+>>>
+>>> Note: Do not infer that PEBS is unsupported from
+>>> IA32_PERF_CAPABILITIES[11:8] (PEBS_FMT) being 0.  A value of 0 is a
+>>> valid PEBS record format on some CPUs.
+>>>
+>>> Signed-off-by: Zide Chen <zide.chen@intel.com>
+>>> ---
+>>> V2:
+>>> - New patch.
+>>>
+>>>  target/i386/cpu.c | 6 ++++++
+>>>  target/i386/cpu.h | 1 +
+>>>  2 files changed, 7 insertions(+)
+>>>
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index ec6f49916de3..445361ab7a06 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -9180,6 +9180,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+>>>          env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_MWAIT;
+>>>      }
+>>>  
+>>> +    if (!(env->features[FEAT_1_EDX] & CPUID_DTS)) {
+>>> +        env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL;
+>>> +    }
+>>> +
+>>>      memset(env->dr, 0, sizeof(env->dr));
+>>>      env->dr[6] = DR6_FIXED_1;
+>>>      env->dr[7] = DR7_FIXED_1;
+>>> @@ -9474,6 +9478,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>>              env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+>>>          }
+>>>  
+>>> +        env->features[FEAT_1_ECX] &= ~CPUID_EXT_DTES64;
+>>> +        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
+>> Strictly speaking, we need to check BTS as well before clearing DS. BTS
+>> also depends on DS.
+> But BTS is already unconditionally disabled from the guest in patch 1/11.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yes, but from code logic, it's incomplete. We need to check both PEBS and
+BTS are unavailable, and then disable DS.
 
 
-r~
+>
+>
+>>>          env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
+>>>      }
+>>>  
+>>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>>> index 5ab107dfa29f..0fecf561173e 100644
+>>> --- a/target/i386/cpu.h
+>>> +++ b/target/i386/cpu.h
+>>> @@ -483,6 +483,7 @@ typedef enum X86Seg {
+>>>  /* Indicates good rep/movs microcode on some processors: */
+>>>  #define MSR_IA32_MISC_ENABLE_FASTSTRING    (1ULL << 0)
+>>>  #define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
+>>> +#define MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL  (1ULL << 12)
+>>>  #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
+>>>  #define MSR_IA32_MISC_ENABLE_DEFAULT    (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
+>>>                                           MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
 
