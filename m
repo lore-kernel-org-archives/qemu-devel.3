@@ -4,130 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDAFE9E305
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 13:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F16E9E308
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 13:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqAPC-0002n9-EL; Wed, 11 Feb 2026 08:37:22 -0500
+	id 1vqAS7-00049r-0k; Wed, 11 Feb 2026 08:40:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vqAPA-0002mm-G3
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 08:37:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vqAS5-00049Q-8R
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 08:40:21 -0500
+Received: from 7.mo552.mail-out.ovh.net ([188.165.59.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vqAP7-0008Rc-2i
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 08:37:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770817035;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qd7nm8qxOkE+F9KPOP3qjaaC0X9mVSTZ4G3T8UhCNAU=;
- b=Uv5ljQWk/oRk7Vj4NxZ4ORhDbf6i7XD8ZFCYUDbotMR3rTJB+EyPW3Z1lFYc5icisrhJgS
- emIIsqeAqrIQzNFu8SW784reX6HGN5V3b+bLGjkkmax7jF6JH104gfcxqAnAhsl1NUlVLd
- 4R3N/JXxkmA0UrKHGfHPJQPiigchJ/0=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-SwUEfFTJMFGJejoL7kDD6A-1; Wed, 11 Feb 2026 08:37:12 -0500
-X-MC-Unique: SwUEfFTJMFGJejoL7kDD6A-1
-X-Mimecast-MFC-AGG-ID: SwUEfFTJMFGJejoL7kDD6A_1770817032
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-352e195f662so1819684a91.2
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 05:37:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770817026; cv=none;
- d=google.com; s=arc-20240605;
- b=V6WNewh/vf6XNurQ3qc9nzvvYa0B9pKc3G7k2vHFaD8S7Xq3FYQQ3k20si2AkqelRQ
- tueG5QyPWbhoPicL+oQKI6YDDVA3al8goCEoNuJjBLeW7juBISpFpnUTJWETtCPQA9PX
- WGqaUaJMbVUXcOBp4k+GfWlQbco92CR80GTO60XcUs8Wiv5+u+Nt0PnayQ63AkAPaAnN
- rmQbsX+3Q2ZLu6sccoPUbfhRPzN5gPrq00vGal16fOcY7JRHdaNkgTGXeDdaN7Sf3OO5
- ykj3IB8Yurpsrtbdx6WmwT4v52V6Q+XtUuXCtFCHyppQlnsFKyYv/NXJ98VxqHlTPOlR
- +RLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Qd7nm8qxOkE+F9KPOP3qjaaC0X9mVSTZ4G3T8UhCNAU=;
- fh=z0j5MyrxVSGV965D58u+Eukz9LbcdxT3IRRT5ZoRgaI=;
- b=kRtWUkW4o/vh+B901w/IFSXWy4nQCGr56sL3vNBum0+N//USUHAgZf89UzbdtYYdCh
- HEgdukcyQhdXEzRW3ab7bsCF7AnHXwJUlW9vmZqFjCxH72ZqcChWryRiMzH9v/ar9PdS
- 8P0HYiRqbKrfVejxajqtMezlZjydMzYxgYqgCtDOnw2NSF/KRba3sx/uf29OpOflkooS
- crfhoWU+YV7xiYrovoGOfbxauqBmWXrs7jSuRvAiavTyScRfVM1BMaT/IhB2UC3zl29y
- 1S9ZvRceOa5uj2piOCkmuStrowX+THUVy3A2LDgfmwE3F4H7lrVSshD1gLKDAEC7KFAj
- 1BHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770817026; x=1771421826; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qd7nm8qxOkE+F9KPOP3qjaaC0X9mVSTZ4G3T8UhCNAU=;
- b=bGFJl6l3nyBFKwtfY/vQwz6jXmLnyN1CXYr8Xmwp/uQFIdkCkMDFhxifWUPFvKRH8W
- yrvMg7nFGbL95uIC7hvpbBDGauD0UoaHJbff6NAdZ9gjBdb1PfExSeDPxQAD5DciFX+8
- PbxRsrUyeJmCy9WyZDDYipMs+uHa37qBoZr++/f4eHrbmYVxkKDp7ZV3kBpU4DdVjo7k
- Fe8mIII21BFjtMJ9qs18hGunYahUAlbP1XXJzRYhUFSylVCO9hN7MpwRuWCA0uij4d//
- 9+wvP2W1nuzCy8xfwYRbJ+9PwHATQeq93HC2ux5DiszD+RUgGk1foZl/LWIqyScyuMct
- 6CPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770817026; x=1771421826;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Qd7nm8qxOkE+F9KPOP3qjaaC0X9mVSTZ4G3T8UhCNAU=;
- b=pmN5AIfAwqTib5UCyr589HGxYL99X1Z2iZLIqV+hAX0rTOI5zxdXOQ7jrj8N3ErMYC
- 2dit38DOZ110YmNmiGe2STe+53z0fcsWotwyfeFkp7yytECf68Ek8h9cfFjF1/sbvHLn
- h6KjcFUe26lep6cSPRp3NSxyZVGZuX1ANreewfDO0PKmBcdCgb+YIzUD4jtmBGlkwaoa
- rVElkxykBe4FxDEEc3Y6UaYJK6b6a6ABUs6lRFyPTiAKVvfpcgW/HDAbHZoOKIJpYLrW
- iQ/tBjP6onIwhebm5pBCixC18MQVqYFTluJ0O0rSaDhuRD427J4gkrEfjliXh8eyJwGM
- NAaQ==
-X-Gm-Message-State: AOJu0YwKzbboquL8jCBSsq+rvKD7IFWilKIUuKpcIlmn/WsCraKTmHnd
- EhgJsFa1NhqMAWmAF9rV8wmPM2nN2qF5wMaPIzSCY7zcNuXN6zfvyffGy88vOQiAeqIAToIiRGM
- KMVu/UNCpu06Xdt6qovcdVGH67jll95tvrVzBIkToOpoZQV1WWk9RFa4astx2rWgoTRRrtnCW/Y
- pisiLz3UrGA4Vu2gpXgIAUGq8Hku4ygNM0os35BW+OvByg
-X-Gm-Gg: AZuq6aIGM9EZne8NchJPOU7w8chxGkClDtOc6SwKQaBk7j7qdPSP9weopNCzkEOtYXu
- CNmfzjKIeTfQvuK664AAwfvnGS67PgIB8riHJghW2b5Fyw1wFPTjunlW8FV9n3eyyAGk+iB10Wl
- s2+SUiMAiWSW6MdPJa8mPMNJaNoWJjUcv+RZas1OehKiv2aK/yUz3yhYzru7sKrBnVvQUzbQocK
- fY1sssdSMczqx/hVhe2d2FUfb9PfDjXSUdNmA==
-X-Received: by 2002:a17:90b:4a08:b0:354:b2f6:b4e4 with SMTP id
- 98e67ed59e1d1-354b39da597mr13879217a91.0.1770817025654; 
- Wed, 11 Feb 2026 05:37:05 -0800 (PST)
-X-Received: by 2002:a17:90b:4a08:b0:354:b2f6:b4e4 with SMTP id
- 98e67ed59e1d1-354b39da597mr13879193a91.0.1770817025223; Wed, 11 Feb 2026
- 05:37:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vqARz-0000cU-Ve
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 08:40:20 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.134])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fB0174RLfz5ynv;
+ Wed, 11 Feb 2026 13:40:11 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 11 Feb
+ 2026 14:40:10 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S007b554fb87-63bf-4a2d-b794-acd0cdb9ee66,
+ 3A8D629C33260B61B1BB8F65C34560168E726884) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <93629d7d-8e27-4121-a9ba-cc6361020830@kaod.org>
+Date: Wed, 11 Feb 2026 14:40:09 +0100
 MIME-Version: 1.0
-References: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 11 Feb 2026 17:36:52 +0400
-X-Gm-Features: AZwV_Qir2RaHBkpvZhNqpXRKdUvNAJhrkTkAMwaplDprCUWzZblhGrIatsOqekc
-Message-ID: <CAMxuvay6yd0434Bv3id3gsKezxaX8C=s-RBHLR306hoE5B=SFw@mail.gmail.com>
-Subject: Re: [PULL 00/14] Char patches
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Anthony PERARD <anthony@xenproject.org>, 
- Eric Blake <eblake@redhat.com>, Samuel Thibault <samuel.thibault@ens-lyon.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 21/21] tests/functional/arm/test_aspeed_ast2600_sdk:
+ Add i3c functional test
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260210091018.1553489-1-jamin_lin@aspeedtech.com>
+ <20260210091018.1553489-22-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260210091018.1553489-22-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG15EX1.mxp5.local (172.16.2.151) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: f8c306dd-4f8f-4162-87ff-f1eb35fd3d91
+X-Ovh-Tracer-Id: 9708353422013467521
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEiMAhRmgMqBxjbBhtXP85BmkBWrf2Z4upWkkpfOKcEDmkx6jYQOSPTq7WQYXmwRjT6fpy6DGGHqnhIBTr2zfLwhNmOyIhcaCW1fjYW9VXtnYrumyfAD4LyBWgDgzzBR32eX06kIu6Zh6E+Q/Sh92bHseknKOjV4rMWaH3ASdFuZVGnc553F+1OQoVkhZy6Pf8OXIzW+MLqXm+eCbEmKvLpGBjDbXi5xBevUDgnAqOZgzw+btr2ef7BSrWnVE6HT1oLkhb8EhdptEcecc+shPySY+yy8hc9K5y6dth83yFldeWjbjJNPf9F54Oup+5nBTVXtd/j8Pxz4lHQ1pzmbp4PN650WUTZfqTmAxwCNrK3w3Wbb0BYZB4s5HOVdyGLYzw5Wpxik0Hoe1YA44Kb/tpIK70K8ciD8tGVDukL8XwPwmBxAIGPCUvvbQu/v6/3ZBSF6C5j4nxKeT1xGxYuEsr53EuevZiegRjYefGYXscJIFLL5CnYLnJwmO6+g+GCDL0HHwogn39UGsW0KC2sNNC/N+WbIRJ5TnD+oUumycBOG/dGppdvxElTboO13tQJ/48eJKRmRlkI9hdsGHO5iUjdJwDDAzTbUsawwnmjz1qnMVqV+B8Sth7o5p4dM6M9j366esKkdyPdMVBTfHwm08KKBIlgSt4UIXre7g0+kMFvww
+DKIM-Signature: a=rsa-sha256; bh=RR4siVaqlJXEHXdf3ATJamn4gePCw4XHPAbeHA4p+zg=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1770817212; v=1;
+ b=Qc8pTIuhF54UwHn1lQXRlaBEcrcuI6XI8jTrego+txxvkK2an0Y6FgzddUwtQgBCkDFJQ15J
+ epLeWVPmUzzJ4TlwYU9T2s8jkt6B85wN2xuTenJ/OfjdlIPqqxrjNZmVi6I/nIxOGDKQeHIri92
+ qqr89Pc8YI1KTzuAbDP8r1ni0IQn9EqrjHIPxmt4uabVRU8tm8yJATcrouKFGW9AUTxWEHqIT7Z
+ EJTML9ARA+/uL8IUZWzlfi/FwK6dc3gZomAs7uHk/WeeJz+5Oq7Bge46koyUvPlDi768GWVolmj
+ bnFLuMcpCfa91tgsYxUe8qx17dvpY3eoLfGRgiieWEAgQ==
+Received-SPF: pass client-ip=188.165.59.253; envelope-from=clg@kaod.org;
+ helo=7.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,97 +136,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 2/10/26 10:10, Jamin Lin wrote:
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/functional/arm/test_aspeed_ast2600_sdk.py | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+> index 6236aeb11c..3485feaf2c 100755
+> --- a/tests/functional/arm/test_aspeed_ast2600_sdk.py
+> +++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+> @@ -31,6 +31,15 @@ def do_ast2600_pcie_test(self):
+>               'ip addr show dev eth4',
+>               'inet 10.0.2.15/24')
+>   
+> +    def do_ast2600_i3c_test(self):
+> +        exec_command_and_wait_for_pattern(self,
+> +            'i3ctransfer -d /dev/bus/i3c/5-1234567890ab'
+> +            ' -w 0x12,0x34,0x56,0x78,0x90,0xab,0xcd,0xef',
+> +            'Success on message 0')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'i3ctransfer -d /dev/bus/i3c/5-1234567890ab -r 8 | grep 0x | xargs',
+> +            '0x12 0x34 0x56 0x78 0x90 0xab 0xcd 0xef')
+> +
+>       def test_arm_ast2600_evb_sdk(self):
+>           self.set_machine('ast2600-evb')
+>           self.require_netdev('user')
+> @@ -43,6 +52,8 @@ def test_arm_ast2600_evb_sdk(self):
+>               'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
+>           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.0')
+>           self.vm.add_args('-netdev', 'user,id=net1')
+> +        self.vm.add_args('-device',
+> +            'mock-i3c-target,bus=dw.i3c.5,pid=0xab9078563412')
+>           self.do_test_arm_aspeed_sdk_start(
+>               self.scratch_file("ast2600-default", "image-bmc"))
+>   
+> @@ -69,6 +80,7 @@ def test_arm_ast2600_evb_sdk(self):
+>           exec_command_and_wait_for_pattern(self,
+>                '/sbin/hwclock -f /dev/rtc1', year)
+>           self.do_ast2600_pcie_test()
+> +        self.do_ast2600_i3c_test()
+>   
+>       def test_arm_ast2600_otp_blockdev_device(self):
+>           self.vm.set_machine("ast2600-evb")
 
-On Wed, Feb 11, 2026 at 4:30=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6=
-b7:
->
->   Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qe=
-mu into staging (2026-02-10 09:12:38 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/marcandre.lureau/qemu.git tags/char-pull-request
->
-> for you to fetch changes up to 72913e8b8ef10071965d43349516d0e7f19a959d:
->
->   chardev: add logtimestamp option (2026-02-11 16:27:18 +0400)
->
-> ----------------------------------------------------------------
-> chardev patches
->
-> ----------------------------------------------------------------
->
+I am seeing these errors from Linux :
 
-self-nack, it failed win32 compilation:
-https://gitlab.com/marcandre.lureau/qemu/-/jobs/13073244313
+2026-02-10 16:50:20,812: [    5.080168] i3c i3c-0: xfer error: 4
+2026-02-10 16:50:20,818: [    5.083648] i3c i3c-0: xfer error: 4
+2026-02-10 16:50:20,818: [    5.085817] i3c i3c-0: xfer error: 4
+2026-02-10 16:50:20,818: [    5.086369] i3c i3c-0: xfer error: 4
+2026-02-10 16:50:20,870: [    5.127257] i3c i3c-1: xfer error: 4
+2026-02-10 16:50:20,873: [    5.130879] i3c i3c-1: xfer error: 4
+2026-02-10 16:50:20,874: [    5.131253] i3c i3c-1: xfer error: 4
+2026-02-10 16:50:20,874: [    5.131527] i3c i3c-1: xfer error: 4
+2026-02-10 16:50:20,909: [    5.162790] i3c i3c-2: xfer error: 4
+2026-02-10 16:50:20,913: [    5.163488] i3c i3c-2: xfer error: 4
+2026-02-10 16:50:20,949: [    5.195396] i3c i3c-3: xfer error: 4
+2026-02-10 16:50:20,952: [    5.196101] i3c i3c-3: xfer error: 4
+2026-02-10 16:50:21,018: [    5.253398] i3c i3c-5: xfer error: 4
+2026-02-10 16:50:21,042: [    5.269565] i3c i3c-0: xfer error: 9
+2026-02-10 16:50:21,043: [    5.273845] i3c-mux-imx3102 0-4cc31020000: No ownership
+2026-02-10 16:50:21,049: [    5.276017] i3c i3c-1: xfer error: 9
+2026-02-10 16:50:21,049: [    5.278757] i3c-mux-imx3102 1-4cc31020000: No ownership
 
-> Eric K (1):
->   char-udp: Fix initial backend open status
->
-> Vladimir Sementsov-Ogievskiy (13):
->   ui/spice: Require spice-server >=3D 0.15.0
->   ui/spice: drop SPICE_HAS_ATTACHED_WORKER macro
->   chardev: ChardevClass: consistent naming for handlers
->   chardev: consistent naming for ChardevClass handlers implementations
->   chardev: .chr_open(): drop be_opened parameter
->   chardev: .chr_open(): add boolean return value
->   chardev/char-pty: store pty_name into PtyChardev state
->   chardev: introduce .chr_get_pty_name() handler
->   chardev: rework filename handling
->   chardev/char: qemu_char_open(): add return value
->   char: qemu_chr_write_log() use qemu_write_full()
->   error-report: make real_time_iso8601() public
->   chardev: add logtimestamp option
->
->  meson.build                                   |   2 +-
->  qapi/char.json                                |   6 +-
->  include/chardev/char.h                        |  23 ++-
->  include/qemu/error-report.h                   |   6 +
->  include/ui/qemu-spice.h                       |   6 -
->  chardev/baum.c                                |  12 +-
->  chardev/char-console.c                        |  10 +-
->  chardev/char-fe.c                             |   8 +-
->  chardev/char-file.c                           |  26 ++--
->  chardev/char-hub.c                            |  27 ++--
->  chardev/char-mux.c                            |  30 ++--
->  chardev/char-null.c                           |   9 +-
->  chardev/char-parallel.c                       |  41 +++---
->  chardev/char-pipe.c                           |  30 ++--
->  chardev/char-pty.c                            |  56 ++++---
->  chardev/char-ringbuf.c                        |  20 +--
->  chardev/char-serial.c                         |  39 ++---
->  chardev/char-socket.c                         |  73 ++++------
->  chardev/char-stdio.c                          |  30 ++--
->  chardev/char-udp.c                            |  18 +--
->  chardev/char-win-stdio.c                      |  25 ++--
->  chardev/char.c                                | 137 ++++++++++++------
->  chardev/msmouse.c                             |  13 +-
->  chardev/spice.c                               |  52 +++----
->  chardev/wctablet.c                            |  10 +-
->  gdbstub/system.c                              |  12 +-
->  hw/char/xen_console.c                         |   7 +-
->  hw/display/qxl.c                              |  23 +--
->  hw/misc/ivshmem-pci.c                         |   7 +-
->  tests/unit/test-char.c                        |   2 +
->  ui/console-vc.c                               |  12 +-
->  ui/dbus-chardev.c                             |  16 +-
->  ui/dbus.c                                     |   4 +-
->  ui/gtk.c                                      |  14 +-
->  ui/spice-app.c                                |  18 +--
->  ui/spice-display.c                            |  19 +--
->  ui/vdagent.c                                  |  17 +--
->  util/error-report.c                           |   3 +-
->  .../codeconverter/test_regexps.py             |   2 +-
->  39 files changed, 437 insertions(+), 428 deletions(-)
->
-> --
-> 2.52.0
->
+Is that expected ?
+
+Thanks,
+
+C.
+
 
 
