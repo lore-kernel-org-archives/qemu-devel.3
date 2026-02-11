@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF9AECD6C8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B8BECD6C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqDAC-0005ml-4a; Wed, 11 Feb 2026 11:34:04 -0500
+	id 1vqDAa-00074F-9i; Wed, 11 Feb 2026 11:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqDAA-0005ls-7h
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:02 -0500
+ id 1vqDAX-0006p6-Q8
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqDA8-0003na-Po
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:01 -0500
+ id 1vqDAV-00043G-W1
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770827640;
+ s=mimecast20190719; t=1770827663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MndI2TDLfJqvtsbee96/8Sl0n8ieTPjrzvQ8vfGF7Jw=;
- b=ebMkVbTar98+P7uS/fA+2USf1K7gPGAPk46WVqZMYVIVRJ29BdexdozrCnmwr04d+Z3Gnh
- xtko0Tqte5d/RPUBBt5i0jZpmySqvmAFmVEKgp7m1pvIdhB1SMB7CpsfgyRZ6HbASIFA++
- pWPFxnUKeNz4FKokrt8ZdIkCwmCj0aI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qB6/k7UA6IieBsd3KJmGH/gwsAds52UnSOZVfNemaNA=;
+ b=gQjWYYGFQEGflUO1vZJPdz10fuTPriKzx/7svZMMwwQKxO6udcnTMr4cQ0huuMc3hga/uK
+ xdpjYMWj3RzCs4Y3EhfbDMogI+r/7C6YcYazZ63YotoUTlxbLYRBJ+gf1jN1P0vXTfvJJf
+ QJKSJpHluzlsiUE/EcfIzqLwJij+hZo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-Oy6gVLaqNwqycj0MmfxzXQ-1; Wed,
- 11 Feb 2026 11:33:56 -0500
-X-MC-Unique: Oy6gVLaqNwqycj0MmfxzXQ-1
-X-Mimecast-MFC-AGG-ID: Oy6gVLaqNwqycj0MmfxzXQ_1770827635
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-yjS8kzVONYKofoCQV7tiUg-1; Wed,
+ 11 Feb 2026 11:34:19 -0500
+X-MC-Unique: yjS8kzVONYKofoCQV7tiUg-1
+X-Mimecast-MFC-AGG-ID: yjS8kzVONYKofoCQV7tiUg_1770827658
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75A9B1955DC6; Wed, 11 Feb 2026 16:33:55 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D15671800473; Wed, 11 Feb 2026 16:34:18 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BF5B19560A7; Wed, 11 Feb 2026 16:33:51 +0000 (UTC)
+ id 513C419560B5; Wed, 11 Feb 2026 16:34:15 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -57,10 +57,9 @@ Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 08/15] docs/devel/testing: expand documentation for 'make
- check-block'
-Date: Wed, 11 Feb 2026 16:33:11 +0000
-Message-ID: <20260211163318.938776-9-berrange@redhat.com>
+Subject: [PATCH v4 14/15] gitlab: add jobs for thorough block tests
+Date: Wed, 11 Feb 2026 16:33:17 +0000
+Message-ID: <20260211163318.938776-15-berrange@redhat.com>
 In-Reply-To: <20260211163318.938776-1-berrange@redhat.com>
 References: <20260211163318.938776-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,65 +91,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explain in greater detail what 'check-block' will run for each format,
-and also document the new format specific targets.
+CI is only exercising the qcow2 'auto' tests currently. As a result we
+get no exposure of changes which cause regressions in other block format
+drivers.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This adds new CI jobs for each block format, that will run the target
+'make check-block-$FORMAT'. The jobs are separate so that we have the
+ability to make each format gating or not, depending on their level
+of reliability.
+
+There is currently an undiagnosed failure of job 185 with the qcow2 when
+run in CI that is marked to be skipped, reported at:
+
+  https://gitlab.com/qemu-project/qemu/-/issues/3270
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/testing/main.rst    | 25 ++++++++++++++++++++++---
- tests/qemu-iotests/meson.build |  2 ++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 92 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 0662766b5c..dc4f7202a5 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -221,9 +221,28 @@ same commit that alters the generator code.
- check-block
- ~~~~~~~~~~~
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index e9b5b05e6e..ffc80130a1 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -176,6 +176,98 @@ build-system-centos:
+       x86_64-softmmu rx-softmmu sh4-softmmu
+     MAKE_CHECK_ARGS: check-build
  
--``make check-block`` runs a subset of the block layer iotests (the tests that
--are in the "auto" group).
--See the "QEMU iotests" section below for more information.
-+There are a variety of ways to exercise the block layer I/O tests
-+via make targets.
++block-luks-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-luks
 +
-+A default ``make check`` or ``make check-block`` command will exercise
-+the ``qcow2`` format, using the tests tagged into the ``auto`` group
-+only.
++block-nbd-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-nbd
 +
-+These targets accept the ``SPEED`` variable to augment the set of tests
-+to run. A slightly more comprehensive test plan can be run by defining
-+``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
-+formats. The most comprehensive test plan can be run by defining
-+``SPEED=thorough``, which enables all available tests for the formats
-+``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``, ``vhdx``,
-+``vmdk``, and ``vpc``.
++block-parallels-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-parallels
 +
-+Each of formats also has its own dedicated make target, named
-+``make check-block-$FORMAT`` which will run all available tests for
-+the designated format and does not require the ``SPEED`` variable
-+to be set.
++block-qcow2-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qcow2
++    # https://gitlab.com/qemu-project/qemu/-/issues/3270
++    QEMU_TEST_IO_SKIP: qcow2:185
 +
-+See the "QEMU iotests" section below for more information on the
-+block I/O test framework that is leveraged by these ``make`` targets.
- 
- .. _qemu-iotests:
- 
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 16a5e39476..66b09d6b97 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -10,6 +10,8 @@ endif
- 
- qemu_iotests_binaries = [qemu_img, qemu_io, qemu_nbd, qsd]
- qemu_iotests_env = {'PYTHON': python.full_path()}
-+# If altering this definition, also update docs/devel/testing/main.rst
-+# section on 'check-block' targets to reflect the changes
- qemu_iotests_formats = {
-   'qcow2': 'quick',
-   'raw': 'slow',
++block-qed-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qed
++
++block-raw-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-raw
++
++block-vdi-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vdi
++
++block-vhdx-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vhdx
++
++block-vmdk-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vmdk
++
++block-vpc-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vpc
++
+ # Previous QEMU release. Used for cross-version migration tests.
+ build-previous-qemu:
+   extends: .native_build_job_template
 -- 
 2.53.0
 
