@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C096EA8125
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BBCEB5954
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 10:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq72h-0000Yl-Sf; Wed, 11 Feb 2026 05:01:55 -0500
+	id 1vq72y-0000dE-Dc; Wed, 11 Feb 2026 05:02:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vq72e-0000U3-VQ
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:01:53 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vq72c-0002v0-B9
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:01:52 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43284ed32a0so4477954f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 02:01:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770804108; x=1771408908; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YdaX87nfhFx2TkjX0IEkWUusdqHt1UqrUaA2Jx2HqGw=;
- b=ykgF7nznSVF0KilqfFlTxLBMn1GjcSBKphJGx0tB2UZk6YCoE3YID7NzDH0sLcvYGa
- YSuQJajUiNwZZh6lF1LMh4rqg46B98jGFTbgC3JEbBoguIWjhBEuyqNLYPEE1/wthIAl
- TWMKTwMbhNt+f5HSv9A0Ais/KPUuqPm3ozGd6n14QU9o2AtqHL9QUvRqE9gplHEo93mH
- oIF3qC0mVACnO37NKpoDUuv5PJoqNkx3T8iEvAIR04ra2BjxrZ/K1/dCE4Jdueuc1+N5
- QW6gtDKPx0CynNhs6IOEODaMU8Y13gvAxiEr85ygoY+mR9SK5dSNYOj+o5T6+0KWnC0/
- qOqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770804109; x=1771408909;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YdaX87nfhFx2TkjX0IEkWUusdqHt1UqrUaA2Jx2HqGw=;
- b=SNXZBwlw4xpdz7ndeS65YIIZI7QHqni+EAgolzk4fcWChdTzRjtuRRueQ+eyRo5lkJ
- PhU7R1n0inHp4oxUO4qFXJIGLjkM3tAP7M5kx1sE1ZaoVT3tbOcwlBjxsSOYtU/n8ZQT
- SRczcTsXaEq1AIz7YV1bB6HmWeDBe2eDc+zijFdjuG6Jpy/kCuH5F90nOvM/HwQxJ0Ee
- ltYASMNxjUEW8oMMtzUqhV2Wt00McDK1aLgPTJgBKLb3UghWQATBODs4Nki+LkPKdR9G
- 35bwTvyajNBnGMxCcX06is8WPhgK9biOLXV54rEwXzeSGaiQSZqyN7K9v4mke3Eo4kX+
- 4edA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqQ4pKd5btfNcSZe7Ov0LF+kpSPo0wtBQDXGG8N9egaAIcpsp2jm4o4c1VewXrq45edC/scBDq3TnZ@nongnu.org
-X-Gm-Message-State: AOJu0YxTVJBM2isddzG2YpwI6fbiuBnuIzGxc2e2kg/IiBOEdwmMt6Xn
- vRjYaWFRnF7fXgj6UxvudPbxFaJL9JLdfG/nQQNc4zPED81+01WoJAMBAOWO2tbcPYM=
-X-Gm-Gg: AZuq6aIsS9n/sqGSXQZDglQ7CIFiwDgAVDlpeVCM7uMpwcJAlDZ5TNKzBn0NNV68bKh
- eI1PxNI2ylb/q2MwaNjvcZaBdJw/56tZGrhXou1OFsQP8bTVSfT6jhkiC3BE99uCoSBworIWCSd
- pEaQDQ/QIW/BT2Z997Jd/uHDSuPeWd6EEZZ0NW8ByQa+go0mC4zRfUDxtUzlWOU1ytdWw3PaQBC
- rYrXbcRLPZHBZHZ9ajS2W+LMulFXvQJDuMbRbDc9fDeHVsDyGDDZAv43eqKnTM7ztw+QbSN6wIQ
- LUNMNcNPuJqQ1Z9UgnX6i3cB4uuHwZSVexBGLUnPCSjmIeqLNeRPGjGHlQPpSMYiUwBS641VTlZ
- lKL/15EBuW0ybgfwEn8vecQ9IwPO/OTKY+M6kDGi1ryV7HfV2aMeBNisUcjDuTdHI9x3fPrdApP
- aL8lU4VIvxyjGMP4I97GdDS6B/g+K+US/LfRmDLFyY5D8do2499/0mOUXXT3jG8Llz8Q==
-X-Received: by 2002:a05:6000:4014:b0:435:8f1b:bb32 with SMTP id
- ffacd0b85a97d-4378458f33amr2275625f8f.32.1770804108549; 
- Wed, 11 Feb 2026 02:01:48 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d30f6dsm3295998f8f.3.2026.02.11.02.01.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Feb 2026 02:01:47 -0800 (PST)
-Message-ID: <0c097e5d-ac59-4043-92d6-95682ac0b05a@linaro.org>
-Date: Wed, 11 Feb 2026 11:01:46 +0100
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vq72x-0000d2-Ij
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:02:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vq72v-0002wh-Eu
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:02:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770804127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zYJMcpz1c6Gbv/r6EaoQbjM03IU8Ig4shFnCTtqJuc4=;
+ b=iIP6WDkwV9v/pupG2yAFCOnp0hyhEvoJ7SQVArzFa0Zi4j0lfE6/BQh44Z4pb1HBYdduDd
+ dCiIa8E8LKw01trmC9JjMxtO9GssxzhJQUI6pvwaPUPgftQxP41iVHlQFLhbmu7ixKIAHg
+ M+AkXnOQDqNO2UZLcL7h0JI+x7lIWWE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-j2zrQMMtPCylWH2HCm1P9A-1; Wed,
+ 11 Feb 2026 05:02:04 -0500
+X-MC-Unique: j2zrQMMtPCylWH2HCm1P9A-1
+X-Mimecast-MFC-AGG-ID: j2zrQMMtPCylWH2HCm1P9A_1770804123
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E03861956094; Wed, 11 Feb 2026 10:02:02 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5DF0B1956053; Wed, 11 Feb 2026 10:02:00 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 0/7] Some cleanups (mostly ui/audio)
+Date: Wed, 11 Feb 2026 14:01:40 +0400
+Message-Id: <20260211-cleanups-v1-0-e63c96572389@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] target/alpha: Introduce
- alpha_phys_addr_space_bits()
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, palmer@dabbelt.com,
- alistair.francis@wdc.com, pbonzini@redhat.com, gaosong@loongson.cn,
- maobibo@loongson.cn, deller@gmx.de
-References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
- <20260210-phys_addr-v4-1-725a589e83c8@rev.ng>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260210-phys_addr-v4-1-725a589e83c8@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDI0ND3eSc1MS80oJi3SRTw5Q0c4Nk4ySjNCWg8oKi1LTMCrBR0bG1tQD
+ edeHeWgAAAA==
+X-Change-ID: 20260211-cleanups-b51df70c3b2f
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1414;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=6BfGoneTWrAgQkpi3Wg+sNCHnLhwd4FE4YCjT52Vq2w=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpjFOSEtMuE/HcNaSvgud28RkgTbo4EZsR2EdwO
+ GR+RGHlLUyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaYxTkgAKCRDa6OEJdZac
+ 5SuuD/9uM9zzedm6kDJr1u352pPAUoq5G8Wyw22mADEov4g5Qi+sPvC6w1/xyw2KTOc23YGrxWT
+ 1bUcthBLzNcy3l6Gtkcc+HwCc/0A3qRuxW3fbN1J7KGCZbOXiUn4/CUsLIpCXuFWyGp3lwhhVfU
+ FAL0b1Q5MnA/Eh2K+9K4PBsXCTWFgyWl+C/8IFYcL7KtflZ9oNXZeO2EMw4wH7lxBHuqkgiI9y0
+ 0tV4QkD8unkwhjRLFU4KtcMZG79+vuxnQ2rbrqRyHlreRXYPqQZiXTjOFIK3FEIRCOJ2aVE0Jc8
+ ZNB4eMWsiYW9VZVP+beUsT8NSm1pQWjl+lrdl4uFC6KZ0kbxhwMq/VQx95GXY9wDOWAqEh9L4Iz
+ ycRP4kdhhW/a1bnNah1QdC+AJSJhZfYhNANp5uHeBKA60XEt2BGSN9oK0uxcxhVC7FWXrAESuYF
+ +mNsYjenZfNkFC2wIZ2QCHLdYwcRU2678xam9JibIKaKBLxNw/sYkEZPkUU+uPqP+hZAo/lRbT8
+ svH99RBSJYsmQzZt1hbrwtgqR+1CWFuQuUwmzQ9EMMlgCH2SwmtzMf8yAil1G12KLxOs0p3juSU
+ 5SS7u8pR0eAj/leJny5o47rvUckjF0h6v8/OBM/A8JBPFh4GPkIy0+qBt5l/VdK8QYQlVhyBXWY
+ k2k4d7J3aBdtmLQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 12:33, Anton Johansson wrote:
-> In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, add a
-> a runtime function to correctly represent the size of the physical
-> address space for EV4-6 based on the current CPU version.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   linux-user/alpha/target_proc.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
-> index 71949d380d..6b491ffa3a 100644
-> --- a/linux-user/alpha/target_proc.h
-> +++ b/linux-user/alpha/target_proc.h
-> @@ -6,6 +6,7 @@
->   #ifndef ALPHA_TARGET_PROC_H
->   #define ALPHA_TARGET_PROC_H
->   
-> +#include "qemu/osdep.h"
->   #include "target/alpha/cpu.h"
->   
->   static uint8_t alpha_phys_addr_space_bits(CPUAlphaState *env)
-> 
+Hi,
 
-This patch can be discarded I suppose :)
+Please review those ui/audio related patches,
+thanks
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+Marc-André Lureau (7):
+      audio: fix nominal volume channel (cosmetic)
+      python/wheel: remove meson-1.9.0
+      scripts/vendor.py: add pycotap
+      audio: require pulse >= 0.9.13
+      audio: require spice >= 0.15
+      ui: drop legacy spice < 0.15 support code
+      ui: drop spice-protocol < 0.14.3 support
+
+ meson.build                                |   6 +++---
+ include/ui/qemu-spice.h                    |   6 ------
+ audio/audio.c                              |   2 +-
+ audio/paaudio.c                            |  28 ++-------------------------
+ audio/spiceaudio.c                         |  30 -----------------------------
+ chardev/spice.c                            |   6 ------
+ hw/display/qxl.c                           |  23 ++--------------------
+ ui/spice-display.c                         |  15 ---------------
+ ui/vdagent.c                               |  18 -----------------
+ python/scripts/vendor.py                   |   2 ++
+ python/wheels/meson-1.9.0-py3-none-any.whl | Bin 1029634 -> 0 bytes
+ 11 files changed, 10 insertions(+), 126 deletions(-)
+---
+base-commit: 0b91040d23dc8820724a60c811223b777f3bc6b7
+change-id: 20260211-cleanups-b51df70c3b2f
+
+Best regards,
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
