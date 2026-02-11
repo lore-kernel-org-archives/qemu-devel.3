@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75961E9E2F9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77CB3E9E2FC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq9ML-0007G3-HW; Wed, 11 Feb 2026 07:30:21 -0500
+	id 1vq9MT-0007H6-6s; Wed, 11 Feb 2026 07:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9MK-0007Fk-HE
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:20 -0500
+ id 1vq9MR-0007Gv-8c
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9MI-0000Ah-Ph
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:20 -0500
+ id 1vq9MP-0000BL-5f
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770813018;
+ s=mimecast20190719; t=1770813023;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=kzn58S0lNfEjMqYO60adMvk7cCAhn0+RWpF0wuFs9kY=;
- b=H2FBtrXvoCOE51RxyId7/cIHCABPgYz8p6+CH54f6Ks8ZTfORimwjYST4vhn+FbfaDTOtA
- M+tYzdLSzhOEeml+ERTRbVtkRSQAxauJmPJd1CjxnxQaHm6d7GplyGMufWYrwhPIA/MCEv
- ZLugnt/BKiatdK9pn429+qixr+3RzRU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LGj9xk/Pm83KB03G6LVj5ElLZzoxkSGN+CQtNgApbDQ=;
+ b=NTzxXaF/dqhF7rO7lTRBGTdc9cQth5htbc9b25uTkkiVJhpeTL2nTW2KZzjv1IIThXuK25
+ Djcmaosh72zv+ctf47a+xu8CDYy2OGhB9eid5ybLygVDPWN+CyBLDho531zQVSludb7s+Z
+ 78UxVU6uBZ/rGb8/iuq4aFHezlSYjy4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-31_9MFcgNwi-1OT-_RHVTg-1; Wed,
- 11 Feb 2026 07:30:14 -0500
-X-MC-Unique: 31_9MFcgNwi-1OT-_RHVTg-1
-X-Mimecast-MFC-AGG-ID: 31_9MFcgNwi-1OT-_RHVTg_1770813013
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-AMhWbVJWNvKZZaJjRa3M1w-1; Wed,
+ 11 Feb 2026 07:30:20 -0500
+X-MC-Unique: AMhWbVJWNvKZZaJjRa3M1w-1
+X-Mimecast-MFC-AGG-ID: AMhWbVJWNvKZZaJjRa3M1w_1770813018
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D5361800366; Wed, 11 Feb 2026 12:30:12 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 54D9918003FC; Wed, 11 Feb 2026 12:30:18 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C076619560A3; Wed, 11 Feb 2026 12:30:10 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A0C611956056; Wed, 11 Feb 2026 12:30:16 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
@@ -57,14 +58,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
  Samuel Thibault <samuel.thibault@ens-lyon.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>
-Subject: [PULL 00/14] Char patches
-Date: Wed, 11 Feb 2026 16:29:47 +0400
-Message-ID: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Eric K <erickra@cs.utexas.edu>
+Subject: [PULL 01/14] char-udp: Fix initial backend open status
+Date: Wed, 11 Feb 2026 16:29:48 +0400
+Message-ID: <20260211123007.3569932-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
+References: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -91,84 +95,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Eric K <erickra@cs.utexas.edu>
 
-The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
+This patch removes the `*be_opened = false` override for the UDP chardev
+backend. Since UDP is connectionless it never sends a `CHR_EVENT_OPENED`
+so it is never marked open. This causes some frontends (e.g. virtio-serial)
+to never perform any operations on the socket.
 
-  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2993
+Signed-off-by: Eric K <erickra@cs.utexas.edu>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20251208225849.705554-1-erickra@cs.utexas.edu>
+---
+ chardev/char-udp.c     | 2 --
+ tests/unit/test-char.c | 2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/marcandre.lureau/qemu.git tags/char-pull-request
-
-for you to fetch changes up to 72913e8b8ef10071965d43349516d0e7f19a959d:
-
-  chardev: add logtimestamp option (2026-02-11 16:27:18 +0400)
-
-----------------------------------------------------------------
-chardev patches
-
-----------------------------------------------------------------
-
-Eric K (1):
-  char-udp: Fix initial backend open status
-
-Vladimir Sementsov-Ogievskiy (13):
-  ui/spice: Require spice-server >= 0.15.0
-  ui/spice: drop SPICE_HAS_ATTACHED_WORKER macro
-  chardev: ChardevClass: consistent naming for handlers
-  chardev: consistent naming for ChardevClass handlers implementations
-  chardev: .chr_open(): drop be_opened parameter
-  chardev: .chr_open(): add boolean return value
-  chardev/char-pty: store pty_name into PtyChardev state
-  chardev: introduce .chr_get_pty_name() handler
-  chardev: rework filename handling
-  chardev/char: qemu_char_open(): add return value
-  char: qemu_chr_write_log() use qemu_write_full()
-  error-report: make real_time_iso8601() public
-  chardev: add logtimestamp option
-
- meson.build                                   |   2 +-
- qapi/char.json                                |   6 +-
- include/chardev/char.h                        |  23 ++-
- include/qemu/error-report.h                   |   6 +
- include/ui/qemu-spice.h                       |   6 -
- chardev/baum.c                                |  12 +-
- chardev/char-console.c                        |  10 +-
- chardev/char-fe.c                             |   8 +-
- chardev/char-file.c                           |  26 ++--
- chardev/char-hub.c                            |  27 ++--
- chardev/char-mux.c                            |  30 ++--
- chardev/char-null.c                           |   9 +-
- chardev/char-parallel.c                       |  41 +++---
- chardev/char-pipe.c                           |  30 ++--
- chardev/char-pty.c                            |  56 ++++---
- chardev/char-ringbuf.c                        |  20 +--
- chardev/char-serial.c                         |  39 ++---
- chardev/char-socket.c                         |  73 ++++------
- chardev/char-stdio.c                          |  30 ++--
- chardev/char-udp.c                            |  18 +--
- chardev/char-win-stdio.c                      |  25 ++--
- chardev/char.c                                | 137 ++++++++++++------
- chardev/msmouse.c                             |  13 +-
- chardev/spice.c                               |  52 +++----
- chardev/wctablet.c                            |  10 +-
- gdbstub/system.c                              |  12 +-
- hw/char/xen_console.c                         |   7 +-
- hw/display/qxl.c                              |  23 +--
- hw/misc/ivshmem-pci.c                         |   7 +-
- tests/unit/test-char.c                        |   2 +
- ui/console-vc.c                               |  12 +-
- ui/dbus-chardev.c                             |  16 +-
- ui/dbus.c                                     |   4 +-
- ui/gtk.c                                      |  14 +-
- ui/spice-app.c                                |  18 +--
- ui/spice-display.c                            |  19 +--
- ui/vdagent.c                                  |  17 +--
- util/error-report.c                           |   3 +-
- .../codeconverter/test_regexps.py             |   2 +-
- 39 files changed, 437 insertions(+), 428 deletions(-)
-
+diff --git a/chardev/char-udp.c b/chardev/char-udp.c
+index 572fab0ad13..1025f577a0d 100644
+--- a/chardev/char-udp.c
++++ b/chardev/char-udp.c
+@@ -215,8 +215,6 @@ static void qmp_chardev_open_udp(Chardev *chr,
+     g_free(name);
+ 
+     s->ioc = QIO_CHANNEL(sioc);
+-    /* be isn't opened until we get a connection */
+-    *be_opened = false;
+ }
+ 
+ static void char_udp_class_init(ObjectClass *oc, const void *data)
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index 8a98e42cad0..2869c4e09df 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -1012,6 +1012,8 @@ static void char_udp_test_internal(Chardev *reuse_chr, int sock)
+         qemu_chr_fe_init(fe, chr, &error_abort);
+     }
+ 
++    g_assert(chr->be_open);
++
+     d.chr = chr;
+     qemu_chr_fe_set_handlers(fe, socket_can_read_hello, socket_read_hello,
+                              NULL, NULL, &d, NULL, true);
 -- 
 2.52.0
 
