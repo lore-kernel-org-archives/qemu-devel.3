@@ -4,106 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81148EA3F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78E2E9E31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCBJ-0007LG-Kv; Wed, 11 Feb 2026 10:31:09 -0500
+	id 1vqC7x-0000wG-1r; Wed, 11 Feb 2026 10:27:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBE-0007K2-8u
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:05 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vqC7v-0000jk-Tt
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBC-0008Ao-2o
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:03 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vqC7t-0006Af-Vp
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823861;
+ s=mimecast20190719; t=1770823657;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
- b=ML4BygmdBp7iX8wOsQ3F6MHrutvG2CphHLe2TjV8hPJSLbGe7WfPx/A7mCaxndDREzpXyS
- QlSvB7a8kYq22wXXttK5583xlCc8O7nAnttxVwu/80KzOcpvg3QEtAuO8sGqVoD8JpXsM5
- n47FEw4UwUCSiPxaUR0nvIkLJdL3/PE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-KN8z6zOqO5afZSASDe-_xQ-1; Wed, 11 Feb 2026 10:31:00 -0500
-X-MC-Unique: KN8z6zOqO5afZSASDe-_xQ-1
-X-Mimecast-MFC-AGG-ID: KN8z6zOqO5afZSASDe-_xQ_1770823859
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4801e3aab32so37767455e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:31:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770823859; x=1771428659; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
- b=ng0p2PzXfd/P6mB5sjJBW7JDY4C3XrrjsUtAQjJHdJB9bLxnzkwk7t3LaK/S6Fm5ET
- 0gI6rPW3EyHXKN6cAuIsHMYosmNtKDaj6bRcxVJjDl8tMFZn9j8AAeLmaEhkl1SJX72z
- A7MhI95cbjjHCC7n5W3tX3SmCrevslDMMIGU4Polcv85ZK4f4pMy4DPHpwgN4UVdxcQx
- QjUSemiGu40H4emln7j2dxsL9h8fA95xekl44CA6PTYpB2stZ/MPBldHYPWElG4RNg5J
- PV7ng8ETBy3DzpQDCRwpTYMH7gUl3CA6Jg7hzwQAmlNLVlrqAHyfHa9MIcpzMDcLljeL
- D7dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770823859; x=1771428659;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
- b=Fc59xV3Tnh+D9I1yyCXG3wO4c3CRiQLgGXhJrloTTy3lV9B526qUME7ohaTTEO+QQB
- uSPEhqPNUdJUrxwnj/u6VR4jx5PNa0mN3tX54oain7uINJrA98ADaqc1sq11XNCI9GwD
- 4sB8mPgOimi4Qg75roDVgkmE9EkDksfqiUElBJEHd36TESPXV6NKOzR0anYk+MeUAoHH
- 96F1+KJOPxmp9dAUX9TYtqboD0LqVvZRFaPXtIEcbIADBNpiSnotGrIIfeLYdjk7+4Nm
- wL+1/+Am9oYuFB0xevEHLrEzYfV2zLIBln2tLXWoMJ/wEBmxjaskMTfTwXux4v8uqezg
- GsBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbBJNHIi1pWNdN08ijOAd7qGQH6gvffT0MNGMorOrCdONx+GWnKCQWCR4upXgjPjsW/DsChdyBE0xD@nongnu.org
-X-Gm-Message-State: AOJu0YwzPBlrEslOsTLMgBVCKpjhHZciL0yUHiPuhtY/meionkbg7CLy
- lol2If3MCfvDbLldJ131h4LyrLZGFSWiGC4tZDeZrBtWOdnf7eQUNI+vkvedVhm7ylUHO4PPtgD
- 6zWC4h951et4ShLlQe8s5+w8yEK0leK9x7LHlbknLi0Mf8r2TVuHSZ3LX
-X-Gm-Gg: AZuq6aJPXIPRqWDzZxspxBdTbE7fAXe4Xo7/qAkMdtLrUHigLVSrgAq1kr4qLUhk8Dc
- KStZl32SjadWXCf8nL4bNZUmx7tA3zhzEEO+qtu8ffvUth1162R0P11LqALH1KZtRUappkXIwQk
- oQylcuVT02eZIqRSTAAgSczYYMfew58mQ6ewU3u4gkAMQ19KzrW1xR57ovp3oVi54QEEYuNXc/C
- 1jAaZtHrbf+ka1DIbhAqTCthuguc46QcsWEwElQtyN3wXGft4OSZ36CTmnrRtwggDYZ1ftFEyNe
- Wa3OwGiRqwp7/KDfGnkZxx2ZcYGCEYpvKJJRJXSF2T16hjcHnotb9UeUIpR4X/6FfdAKNjXJkeS
- 1Ortnmum28pqCwuHvr/ZXViCJtQfRDTiIsqaS/w4aEwC9E3997ORcN4HtJPfpXFZ3CPQ3mGp/U6
- vwrKJOXP8w
-X-Received: by 2002:a05:600c:46cb:b0:483:ea6:8767 with SMTP id
- 5b1f17b1804b1-4835e2cd408mr35512085e9.36.1770823858850; 
- Wed, 11 Feb 2026 07:30:58 -0800 (PST)
-X-Received: by 2002:a05:600c:46cb:b0:483:ea6:8767 with SMTP id
- 5b1f17b1804b1-4835e2cd408mr35511455e9.36.1770823858114; 
- Wed, 11 Feb 2026 07:30:58 -0800 (PST)
-Received: from rh.fritz.box
- (p200300f6af2d8700b4c2d356c3fafe63.dip0.t-ipconnect.de.
- [2003:f6:af2d:8700:b4c2:d356:c3fa:fe63])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d34657sm6448511f8f.6.2026.02.11.07.30.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 07:30:57 -0800 (PST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>,
- Stefan Weil <sw@weilnetz.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 1/2] target/arm/kvm: add constants for new PSCI versions
-Date: Wed, 11 Feb 2026 16:30:31 +0100
-Message-ID: <20260211153032.19327-2-sebott@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260211153032.19327-1-sebott@redhat.com>
-References: <20260211153032.19327-1-sebott@redhat.com>
+ bh=Ife0kgX5LU9dVRlkos1BTWzRMejsgLQmrReuIHPiUu8=;
+ b=NN1mCbSpNqaXhyw9BD9BazMsAL8Ex8RbQKT1K/4s3VmNcWyDjI9/nni5Vo0B7H+8vIeiIE
+ zO1JrKdpUb0CO6vcel2UIAX0Sq+1gYDXQypLqqKvfiLdfMztR1RdsaqkY7Z3FoqZF8J3Db
+ SyoPw9ajOJ/rf0KIIbpCGgfGdIHu638=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-0HSJ2GshM8evB-fM57QhBg-1; Wed,
+ 11 Feb 2026 10:27:34 -0500
+X-MC-Unique: 0HSJ2GshM8evB-fM57QhBg-1
+X-Mimecast-MFC-AGG-ID: 0HSJ2GshM8evB-fM57QhBg_1770823652
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F6A819560B9; Wed, 11 Feb 2026 15:27:32 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.45.227.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 705C430001A8; Wed, 11 Feb 2026 15:27:27 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v6 24/27] util: add support for formatting a workload name in
+ messages
+Date: Wed, 11 Feb 2026 15:25:05 +0000
+Message-ID: <20260211152508.732487-25-berrange@redhat.com>
+In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
+References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -128,32 +96,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add constants for PSCI version 1_2 and 1_3.
+The error_report function can include the guest name in any
+messages it prints. The qemu_log function has no equivalent
+behaviour.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Stefan Weil <sw@weilnetz.de>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
+This introduces support for a "workload name" in the new
+messages API, which in the case of system emulators will
+be the guest name. The possibility of defining a workload
+name for other binaries is left as an exercise for the
+future.
+
+This change has no impact on the output of the error_report
+function, but will change the qemu_log function. This can
+be easily seen with the 'log' trace backend, and how it is
+now more closely matching error_report output.
+
+Before:
+
+  # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
+  qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
+  blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+After:
+
+  # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  blah qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
+  blah qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
+  blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- target/arm/kvm-consts.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/qemu/error-report.h |  3 ---
+ include/qemu/message.h      | 10 ++++++++++
+ system/vl.c                 |  6 ++++--
+ util/error-report.c         |  7 -------
+ util/message.c              | 12 ++++++++++++
+ 5 files changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
-index 54ae5da7ce..9fba3e886d 100644
---- a/target/arm/kvm-consts.h
-+++ b/target/arm/kvm-consts.h
-@@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
- #define QEMU_PSCI_VERSION_0_2                     0x00002
- #define QEMU_PSCI_VERSION_1_0                     0x10000
- #define QEMU_PSCI_VERSION_1_1                     0x10001
-+#define QEMU_PSCI_VERSION_1_2                     0x10002
-+#define QEMU_PSCI_VERSION_1_3                     0x10003
+diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
+index c8000778ec..ffc305f828 100644
+--- a/include/qemu/error-report.h
++++ b/include/qemu/error-report.h
+@@ -70,7 +70,4 @@ void error_init(const char *argv0);
+                               fmt, ##__VA_ARGS__);      \
+     })
  
- MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
- /* We don't bother to check every possible version value */
+-extern bool error_with_guestname;
+-extern const char *error_guest_name;
+-
+ #endif
+diff --git a/include/qemu/message.h b/include/qemu/message.h
+index 0a06421f77..cfc3c92648 100644
+--- a/include/qemu/message.h
++++ b/include/qemu/message.h
+@@ -5,6 +5,7 @@
+ 
+ enum QMessageFormatFlags {
+     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
++    QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
+ };
+ 
+ /**
+@@ -16,6 +17,15 @@ enum QMessageFormatFlags {
+  */
+ void qmessage_set_format(int flags);
+ 
++/**
++ * qmessage_set_workload_name:
++ * @name: the name of the workload
++ *
++ * Set the workload name, which for a system emulator
++ * will be the guest VM name.
++ */
++void qmessage_set_workload_name(const char *name);
++
+ /**
+  * qmessage_context_print:
+  * @fp: file to emit the prefix on
+diff --git a/system/vl.c b/system/vl.c
+index 4ef41df747..be5862e55e 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -823,7 +823,9 @@ static void configure_msg(QemuOpts *opts)
+     if (qemu_opt_get_bool(opts, "timestamp", false)) {
+         flags |= QMESSAGE_FORMAT_TIMESTAMP;
+     }
+-    error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
++    if (qemu_opt_get_bool(opts, "guest-name", false)) {
++        flags |= QMESSAGE_FORMAT_WORKLOAD_NAME;
++    }
+     qmessage_set_format(flags);
+ }
+ 
+@@ -3526,7 +3528,7 @@ void qemu_init(int argc, char **argv)
+                     exit(1);
+                 }
+                 /* Capture guest name if -msg guest-name is used later */
+-                error_guest_name = qemu_opt_get(opts, "guest");
++                qmessage_set_workload_name(qemu_opt_get(opts, "guest"));
+                 break;
+             case QEMU_OPTION_prom_env:
+                 if (nb_prom_envs >= MAX_PROM_ENVS) {
+diff --git a/util/error-report.c b/util/error-report.c
+index 1ef65a7475..3009b93c23 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -25,8 +25,6 @@ typedef enum {
+     REPORT_TYPE_INFO,
+ } report_type;
+ 
+-bool error_with_guestname;
+-const char *error_guest_name;
+ 
+ /*
+  * Print to the current human monitor if we have one, else to stderr.
+@@ -230,11 +228,6 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+         qmessage_context_print(stderr);
+     }
+ 
+-    /* Only prepend guest name if -msg guest-name and -name guest=... are set */
+-    if (error_with_guestname && error_guest_name && !cur) {
+-        fprintf(stderr, "%s ", error_guest_name);
+-    }
+-
+     print_loc(cur);
+ 
+     switch (type) {
+diff --git a/util/message.c b/util/message.c
+index 99a403f9d0..fb2c947153 100644
+--- a/util/message.c
++++ b/util/message.c
+@@ -6,12 +6,18 @@
+ #include "monitor/monitor.h"
+ 
+ static int message_format;
++static char *message_workloadname;
+ 
+ void qmessage_set_format(int flags)
+ {
+     message_format = flags;
+ }
+ 
++void qmessage_set_workload_name(const char *name)
++{
++    message_workloadname = g_strdup(name);
++}
++
+ void qmessage_context_print(FILE *fp)
+ {
+     if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
+@@ -20,4 +26,10 @@ void qmessage_context_print(FILE *fp)
+         fputs(timestr, fp);
+         fputc(' ', fp);
+     }
++
++    if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
++        message_workloadname) {
++        fputs(message_workloadname, fp);
++        fputc(' ', fp);
++    }
+ }
 -- 
-2.52.0
+2.53.0
 
 
