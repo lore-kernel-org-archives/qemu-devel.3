@@ -4,106 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41800ECD6C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24453ECD6C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCcP-0008Ah-3u; Wed, 11 Feb 2026 10:59:09 -0500
+	id 1vqCeO-0000Vr-0B; Wed, 11 Feb 2026 11:01:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vqCcO-0008AZ-4t
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:59:08 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vqCcM-0004d3-HZ
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:59:07 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-5062fc5d86aso59451191cf.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:59:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770825545; cv=none;
- d=google.com; s=arc-20240605;
- b=c0c1nBCZ/ss7FLTL9Rcungm3GrnJshxS10mrIjwOxLAr5yanMFH3INmb8yyEIGVgR9
- SYJ84fluKpilb4WpHU+VRqJ3uy44g/0LOkRUUcT6D2z6j7A/JjmrB/vWK1lMoc27nL3w
- 9r28+wYrnuEb7L8UIHVXnJSf1nLr6C+QNS038OQXxV3LpxmY2T5XO14EFVs954V8gpWk
- +j04+OirleI3la9+BCqTmBohd8S9ac6re/ZXy1Q5glOUVAuOaAGx+D5ro89kR3Z3hS/H
- XXvN5i/3Ol96ccchOe8vtnxWIZ+vNfQpnIEZflqLwMvHPT4XF/NtOF+zv2q4XwwMIPFh
- Z//Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Pl91R4CeyV88YBAQQEAdbieGUnB5uP/LcVxSz6ZdcRQ=;
- fh=816itPJgJ05r90TtzCCMjxMj438b0MmMMtWJHJey0jI=;
- b=Np2sZ3r0stCt/DPDn/JqjDU+ZMXYQGGgkvXRE66v4GOvXYdzFNrIGVcTbyirHmecIB
- qKegsbg84jO89ZcSuaoq0Zjf1XiNK08g0fTdHuQBSG2BqHIBaDdCiRktO+J/Mzf57A+y
- wT1Wyyo70VAQJ4SEtY5HuMcZvG9tWrgeKZU3M+XvmzAqDncnGWHz/STCQpxhk8/91SaJ
- CAioWKCMIU2SaVov3GUadQgeEfZzWlpfSeLwPE7OzTqVMZ9iIbFMtGdoacCQhpsT4JrK
- bavZgSNmWIQmBVM/LeQpzo9ML978wDb6vCbQEAczxL+fDnkzVcrAsesFzC/9S4KcWFVL
- 6gMA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770825545; x=1771430345; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pl91R4CeyV88YBAQQEAdbieGUnB5uP/LcVxSz6ZdcRQ=;
- b=gY4Yr6knjpZS9lgK3lWY6tZC0goH8W/Ny4glYs2tOWEB11QdfoWB2i2bd2fqfzWftU
- Zqu9zgL/YZP4ahj61X65w3Mpx+dabrglfAR4m/l75v4P18PYYJFDY/QisCL1B9szCc0H
- k6nXC9J6/0LXIQ3tjIIEHNAz5v2Ys/AGNw+5LfJqU3qwL+enIHdg3lcR/tHzWyc9tYKa
- UvPgGQrO25LRI0S3Wl4sUL1NV5jS91gtSngpziqsvn7BqKodrjcH7ewDlgi21+nwXUXu
- F/imU0hO/QOhn4YgeC9KknWuDPtu476B73rzT/xJ9jBaIph9fO7DS3CHmEECreDSunDj
- EGaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770825545; x=1771430345;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Pl91R4CeyV88YBAQQEAdbieGUnB5uP/LcVxSz6ZdcRQ=;
- b=JPVj1JgNn/HvlucVQo+QZAWC3Jh2fjKfwHRdP3zKxvMQei9WLgI5/OynqlTGdtHlm7
- SzTjDrRiu81IPajTNkM+DiWzLVNat4IH8scgEfiMgMeZ8HcPEVlqRn+0AbUWxRA6uahn
- aOqw1eQVVEXzUnDoekuYApIfan9/RvVryG3+bDE6HnglpgLIQAUARFcYXVkhpkKDdd4H
- 9K/3dbRmaRPMbWZTNl0k0qHKNf+CpaMVgqNYvROGnMUIurT0WsJ5C+4wXiUHnlQVGvq+
- l2Pl6AoZUrULa24h4uTJty1cpI5rNylQlyO5+EULk/z6nwB9mygTCn8eHK4+2yyhDAxc
- PGlg==
-X-Gm-Message-State: AOJu0YwzTF1g1CV6kEZ30fU5NmUf1bhSwdFwBaDbo7lLOPtRmiZjXAYv
- rN4ySTTCI0PUVB1QM7d26xswatPZ7K3huSr4CY9C/DgRsT2irJ6I8NEFP35juIOy5u+Z0cvZvuW
- etCgN9Bc4MVstGTz5vHie4cQ9tRtDZbs=
-X-Gm-Gg: AZuq6aKe96oqarKm267L3rHs9TzTpy84y8l0B4Ge1fjDi57n7yDDfrTAge4BhbntAe0
- QloZ4Yb7kThAuH8LJuCd7Q2i97ySZUSqJevw7+x4UUm+2b1bbPXrXf+pWw3eV5WW74cq3AS9gAr
- EheroTW7CN0zx5qHIw51R+KaEenPxnkQOS9KI3KeIUEDfZOJLDKtjig2NzgzFIH9gdBlhz8E1gY
- Aklu5fPlH4TyNFxi6dXpjDh1HsNjsdVLRPOffozWmj8bsJGYcKzfyviNLjW5+3hvilI9aMGpory
- +OnfdDwqwD5CZBu99B68KsZ3zXj0oxCBxCI30A==
-X-Received: by 2002:a05:622a:1482:b0:4f4:c080:15e5 with SMTP id
- d75a77b69052e-50673cf1eccmr87221661cf.1.1770825545151; Wed, 11 Feb 2026
- 07:59:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqCeI-0000U4-7F
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:01:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqCeF-0005BB-In
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:01:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770825662;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8OO21sgsFPBY+SdaaAgUKxdqyhk6dlodd9BDWdZQXyc=;
+ b=h2fDwkJ3IxHxoAO8IqHtHL7VH7W1wzQ8eiQR4jv0bq/zpKCrL/Mb8U17rfT037cnPGzyD0
+ LmZ9xu85THPNoOenxUi7OkXrbuzVimDqx78IveCi1KMB5Ghoeca36QEQ2t/cwUm1w0Gsct
+ rq51ObkEPr2R9EZ2SPiTe+MoqfGuG2I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-2C3fP21MOBqPUYNKO7gYqw-1; Wed,
+ 11 Feb 2026 11:00:57 -0500
+X-MC-Unique: 2C3fP21MOBqPUYNKO7gYqw-1
+X-Mimecast-MFC-AGG-ID: 2C3fP21MOBqPUYNKO7gYqw_1770825654
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83C8F19560B0; Wed, 11 Feb 2026 16:00:54 +0000 (UTC)
+Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ACE521956053; Wed, 11 Feb 2026 16:00:50 +0000 (UTC)
+Message-ID: <696de68c-6422-4a1f-a462-808a891c4aca@redhat.com>
+Date: Wed, 11 Feb 2026 17:00:49 +0100
 MIME-Version: 1.0
-References: <20260211065826.3974-1-ckeong.teo17@gmail.com>
- <53fdcc9e-53af-4a84-89a4-e15c008633c1@redhat.com>
-In-Reply-To: <53fdcc9e-53af-4a84-89a4-e15c008633c1@redhat.com>
-From: Choon Keong Teo <ckeong.teo17@gmail.com>
-Date: Wed, 11 Feb 2026 23:58:53 +0800
-X-Gm-Features: AZwV_QhYaOjY2ZmFKxoXqqVOJgPmJS1o95L-sQghItWjW3u2pVYquDP6OBdq6zk
-Message-ID: <CAOkKuiOkP50bWByZQ+QesiyL+rvbQYhUkSamPKiew88jMwzxTw@mail.gmail.com>
-Subject: Re: [PATCH] hw/i386/pc.c: add description for fd-bootchk option
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=ckeong.teo17@gmail.com; helo=mail-qt1-x835.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
+To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org
+References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,55 +135,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thank you Thomas, this is a very helpful suggestion. I will change it
-and resend the patch for review shortly.
+On 11/02/2026 15.56, Christoph Schlameuss wrote:
+> Allow propagation of the ASTFLEIE2 feature bit.
+> 
+> If the host does have the ASTFLE Interpretive Execution Facility 2 the
+> guest can enable the ASTFLE format 2 for its guests.
+> 
+> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+> ---
+...
+> diff --git a/linux-headers/asm-s390/kvm.h b/linux-headers/asm-s390/kvm.h
+> index ab5a6bce590c722452dac5aeb476bd1969d2235b..45a6d0a7406a3f1b71026c49e00ac25a6fc620ef 100644
+> --- a/linux-headers/asm-s390/kvm.h
+> +++ b/linux-headers/asm-s390/kvm.h
+> @@ -444,6 +444,7 @@ struct kvm_s390_vm_cpu_machine {
+>   #define KVM_S390_VM_CPU_FEAT_PFMFI	11
+>   #define KVM_S390_VM_CPU_FEAT_SIGPIF	12
+>   #define KVM_S390_VM_CPU_FEAT_KSS	13
+> +#define KVM_S390_VM_CPU_FEAT_ASTFLEIE2	14
+>   struct kvm_s390_vm_cpu_feat {
+>   	__u64 feat[16];
+>   };
+  Hi!
 
+Please don't send updates to linux-headers/ embedded in patches, such 
+updates should go via a separate patch instead that has been created by the 
+scripts/update-linux-headers.sh script.
 
+  Thanks,
+   Thomas
 
-Best regards,
-Choon Keong.
-
-On Wed, Feb 11, 2026 at 4:36=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> On 11/02/2026 07.58, Choon Keong wrote:
-> > The 'fd-bootchk' option for pc and q35 machines currently lacks of
-> > description in the help output. This makes it difficult for users
-> > to understand the purpose of the command.
-> >
-> > This commit solve this issue by adding description using
-> > object_class_property_set_description() in hw/i386/pc.c,
-> > adding the the description message for the option 'fd-bootchk'.
-> >
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3193
-> > Signed-off-by: Choon Keong <ckeong.teo17@gmail.com>
-> > ---
-> >   hw/i386/pc.c | 2 ++
-> >   1 file changed, 2 insertions(+)
-> >
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index 5cb074c0a0..eb39c18788 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1822,6 +1822,8 @@ static void pc_machine_class_init(ObjectClass *oc=
-, const void *data)
-> >       object_class_property_add_bool(oc, "fd-bootchk",
-> >           pc_machine_get_fd_bootchk,
-> >           pc_machine_set_fd_bootchk);
-> > +    object_class_property_set_description(oc, "fd-bootchk",
-> > +        "Enable/disable floppy disk boot check");
->
-> I'd maybe use a text based on the description from "-no-fd-bootchk" in th=
-e
-> qemu-opions.hx file:
->
->   "Enable/disable boot signature checking for floppy disks in BIOS."
->
-> ?
->
-> ... so that it is clear that this influences the behaviour in the BIOS.
->
->   Thomas
->
 
