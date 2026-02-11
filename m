@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3C1E9E311
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FD3EA3F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC8D-0002fU-SR; Wed, 11 Feb 2026 10:27:57 -0500
+	id 1vqC83-0001iH-Oi; Wed, 11 Feb 2026 10:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC8B-0002eM-Qj
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vqC80-0001NZ-Ut
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC8A-0006Ew-Bi
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:55 -0500
+ id 1vqC7y-0006CC-TI
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823673;
+ s=mimecast20190719; t=1770823662;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jDpR5NJcavAUEvfzxab8e4tcKsmv2LldTjp4RPjPjCU=;
- b=fmPZAvC7pLRgDWOjzhBn62ijJ3CReFzltQcjZBTrmjmmGqDbgs0FFg1qVDWzwgBaIcd7bK
- 3EhdQNJiDOM55825Gq9Ya5cCSrfaleTmivGlm78sA31Mnk1ucM2xPSLOQTn8cQ6MlSkOQC
- Y8x8GuceBB56V9ya2JjoIBFvUcp9Nsw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YwhZVny6ANCAea7yxq04kQyFzA8sSOUNU+TBc2DZGz8=;
+ b=SXom4KvkE1fH+GvUMGJ5XvMktLHZiCUmKMDzMLJ/BMO3TE5pyle1GHmolU9A37QkRCv1/V
+ NR0tFWRJo8kDCax1LGnAU9yuGTK25n8GGT4f77ZKAMFy3jF7sttbU/1Lij6+z0gYrfh0DY
+ tSRGDurr++6oN1QhJEfCQlH7gEFNfk4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-xWgxoQDkMaSVSJbQE2xOWA-1; Wed,
- 11 Feb 2026 10:27:50 -0500
-X-MC-Unique: xWgxoQDkMaSVSJbQE2xOWA-1
-X-Mimecast-MFC-AGG-ID: xWgxoQDkMaSVSJbQE2xOWA_1770823668
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-Jhah7hOSPkajzZak78C0cA-1; Wed,
+ 11 Feb 2026 10:27:40 -0500
+X-MC-Unique: Jhah7hOSPkajzZak78C0cA-1
+X-Mimecast-MFC-AGG-ID: Jhah7hOSPkajzZak78C0cA_1770823658
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4E1F1956053; Wed, 11 Feb 2026 15:27:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDB9019560B7; Wed, 11 Feb 2026 15:27:37 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A739330001A8; Wed, 11 Feb 2026 15:27:43 +0000 (UTC)
+ id DEC8230001A8; Wed, 11 Feb 2026 15:27:32 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -61,26 +61,26 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 27/27] util: add brackets around guest name in message
- context
-Date: Wed, 11 Feb 2026 15:25:08 +0000
-Message-ID: <20260211152508.732487-28-berrange@redhat.com>
+Subject: [PATCH v6 25/27] util: add support for formatting a program name in
+ messages
+Date: Wed, 11 Feb 2026 15:25:06 +0000
+Message-ID: <20260211152508.732487-26-berrange@redhat.com>
 In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
 References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,46 +96,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The message context can optionally include the guest name if the
-argument '-msg guest-name=on' is given. The formatting, however,
-does not look good if the guest name contains whitespace. Change
-the output to include square brackets to demarcate the name.
+The error_report function can include the program name in any
+messages it prints. The qemu_log function has no equivalent
+behaviour.
+
+This introduces support for a "program name" in the new
+messages API, which will be included by default for all
+binaries.
+
+This change tweaks the output of the error_report function,
+adding a space between the program name and the location
+info. The qemu_log function will gain the program name. This
+can be easily seen with the 'log' trace backend, and how it
+is now more closely matching error_report output.
 
 Before:
 
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
-  fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55657e94e690 dir=fish
-  fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_get_path TLS creds path creds=0x55657e94e690 filename=ca-cert.pem path=<none>
-  fish food qemu-system-x86_64: (1146846:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
+  qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
 
 After:
 
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
-  [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5604ada2c950 dir=fish
-  [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_get_path TLS creds path creds=0x5604ada2c950 filename=ca-cert.pem path=<none>
-  [fish food] qemu-system-x86_64: (1144713:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
+  qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+When adding this the '-msg program-name=on|off' option is
+introduced, so that the program name (which is enabled by
+default) can be supressed if desired. This could be useful
+if '-msg guest-name=on' is being used as a more informative
+identifier.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/message.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/qemu/message.h         |  1 +
+ qemu-options.hx                |  9 +++++++--
+ system/vl.c                    | 11 ++++++++++-
+ tests/unit/test-error-report.c |  5 +++--
+ util/error-report.c            |  4 ----
+ util/message.c                 | 10 +++++++++-
+ 6 files changed, 30 insertions(+), 10 deletions(-)
 
+diff --git a/include/qemu/message.h b/include/qemu/message.h
+index cfc3c92648..b8518d06be 100644
+--- a/include/qemu/message.h
++++ b/include/qemu/message.h
+@@ -6,6 +6,7 @@
+ enum QMessageFormatFlags {
+     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
+     QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
++    QMESSAGE_FORMAT_PROGRAM_NAME = (1 << 2),
+ };
+ 
+ /**
+diff --git a/qemu-options.hx b/qemu-options.hx
+index cdb7fa20c2..84dcbb0983 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5515,13 +5515,15 @@ ERST
+ 
+ DEF("msg", HAS_ARG, QEMU_OPTION_msg,
+     "-msg [timestamp=on|off][,guest-name=on|off]\n"
++    "     [,program-name=on|off]\n"
+     "                control error message format\n"
+     "                timestamp=on enables timestamps (default: off)\n"
+     "                guest-name=on enables guest name prefix but only if\n"
+-    "                              -name guest option is set (default: off)\n",
++    "                              -name guest option is set (default: off)\n"
++    "                program-name=off disables program name prefix (default: on)\n",
+     QEMU_ARCH_ALL)
+ SRST
+-``-msg [timestamp=on|off][,guest-name=on|off]``
++``-msg [timestamp=on|off][,guest-name=on|off][,program-name=on|off]``
+     Control error message format.
+ 
+     ``timestamp=on|off``
+@@ -5530,6 +5532,9 @@ SRST
+     ``guest-name=on|off``
+         Prefix messages with guest name but only if -name guest option is set
+         otherwise the option is ignored. Default is off.
++
++    ``program-name=on|off``
++        Prefix messages with the program name. Default is on.
+ ERST
+ 
+ DEF("dump-vmstate", HAS_ARG, QEMU_OPTION_dump_vmstate,
+diff --git a/system/vl.c b/system/vl.c
+index be5862e55e..3e79bf47e0 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -381,6 +381,12 @@ static QemuOptsList qemu_msg_opts = {
+             .help = "Prepends guest name for error messages but only if "
+                     "-name guest is set otherwise option is ignored\n",
+         },
++        {
++            .name = "program-name",
++            .type = QEMU_OPT_BOOL,
++            .help = "Prepends program name for error messages (enabled "
++                    "by default)\n",
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -819,13 +825,16 @@ static void realtime_init(void)
+ 
+ static void configure_msg(QemuOpts *opts)
+ {
+-    int flags = 0;
++    int flags = QMESSAGE_FORMAT_PROGRAM_NAME;
+     if (qemu_opt_get_bool(opts, "timestamp", false)) {
+         flags |= QMESSAGE_FORMAT_TIMESTAMP;
+     }
+     if (qemu_opt_get_bool(opts, "guest-name", false)) {
+         flags |= QMESSAGE_FORMAT_WORKLOAD_NAME;
+     }
++    if (!qemu_opt_get_bool(opts, "program-name", true)) {
++        flags &= ~QMESSAGE_FORMAT_PROGRAM_NAME;
++    }
+     qmessage_set_format(flags);
+ }
+ 
+diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
+index 9c63019694..714eafc51e 100644
+--- a/tests/unit/test-error-report.c
++++ b/tests/unit/test-error-report.c
+@@ -47,7 +47,7 @@ test_error_report_loc(void)
+     g_test_trap_subprocess(NULL, 0, 0);
+     g_test_trap_assert_passed();
+     g_test_trap_assert_stderr("\
+-test-error-report:some-file.c:7717: test error1*\
++test-error-report: some-file.c:7717: test error1*\
+ test-error-report: test error2*\
+ ");
+ }
+@@ -90,7 +90,8 @@ static void
+ test_error_report_timestamp(void)
+ {
+     if (g_test_subprocess()) {
+-        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
++        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP |
++                            QMESSAGE_FORMAT_PROGRAM_NAME);
+         warn_report("warn");
+         error_report("err");
+         return;
+diff --git a/util/error-report.c b/util/error-report.c
+index 3009b93c23..196d51618c 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -179,10 +179,6 @@ static void print_loc(Monitor *cur)
+     int i;
+     const char *const *argp;
+ 
+-    if (!cur && g_get_prgname()) {
+-        fprintf(stderr, "%s:", g_get_prgname());
+-        sep = " ";
+-    }
+     switch (cur_loc->kind) {
+     case LOC_CMDLINE:
+         argp = cur_loc->ptr;
 diff --git a/util/message.c b/util/message.c
-index 9bf640c8c4..73af8e8ca4 100644
+index fb2c947153..dd01bf7462 100644
 --- a/util/message.c
 +++ b/util/message.c
-@@ -29,8 +29,9 @@ void qmessage_context_print(FILE *fp)
+@@ -5,7 +5,7 @@
+ #include "qemu/message.h"
+ #include "monitor/monitor.h"
  
-     if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
-         message_workloadname) {
-+        fputc('[', fp);
+-static int message_format;
++static int message_format = QMESSAGE_FORMAT_PROGRAM_NAME;
+ static char *message_workloadname;
+ 
+ void qmessage_set_format(int flags)
+@@ -32,4 +32,12 @@ void qmessage_context_print(FILE *fp)
          fputs(message_workloadname, fp);
--        fputc(' ', fp);
-+        fputs("] ", fp);
+         fputc(' ', fp);
      }
- 
-     if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
++
++    if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
++        const char *pgnamestr = g_get_prgname();
++        if (pgnamestr) {
++            fputs(pgnamestr, fp);
++            fputs(": ", fp);
++        }
++    }
+ }
 -- 
 2.53.0
 
