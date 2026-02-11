@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899D5E9E2FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB088E9E2FD
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq9Hk-0005CJ-P6; Wed, 11 Feb 2026 07:25:36 -0500
+	id 1vq9LR-0006hG-TE; Wed, 11 Feb 2026 07:29:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vq9Hj-0005Bj-0k
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:25:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vq9LQ-0006gn-DD
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:29:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vq9Hg-00085f-NB
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:25:34 -0500
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vq9LO-0008Ms-Nm
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:29:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770812730;
+ s=mimecast20190719; t=1770812961;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Aefi61o6zp+6rmX8EEc23U6lF5pl+50hf2TUkblNyV0=;
- b=hjQHojZ+7RQFrEVhMCc1D5w5h+Mxhd9ZxET6tWuU6sEsZK4AZ+l+U43fjp3/twpVMN11vG
- L7416GKrHyMFXXNkfhILGYUOpr3Io2qPzM5ZPh8pqgbGUSWF6toN5OyAAwUbtGOYbQUjB+
- /GJ3gCRiD6Rt6Fp6fphH0D3q37d/2GM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
+ b=H0sA1bp0djn33arWn6vg3Z5QZwyqC/idv/ZUJtaiIVYYRbC2l5FRoCV+pIuP7cGXJtLTGl
+ +h5+UO4s8LjxgV7Kj9rfWHjDhKWpBE+jYbVc4qVhZSnQSpyM/wL02qCqkH+c/vpVJzxU21
+ tRxSegfpvpxylp8RL5Kv6Z8IT4fLPf4=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-WvAQ6zqiO-i0Kw8T658f1g-1; Wed, 11 Feb 2026 07:25:29 -0500
-X-MC-Unique: WvAQ6zqiO-i0Kw8T658f1g-1
-X-Mimecast-MFC-AGG-ID: WvAQ6zqiO-i0Kw8T658f1g_1770812728
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-437681ecd32so2116236f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 04:25:28 -0800 (PST)
+ us-mta-112-OqUUvH5aPUCrVt5xmFmitw-1; Wed, 11 Feb 2026 07:28:15 -0500
+X-MC-Unique: OqUUvH5aPUCrVt5xmFmitw-1
+X-Mimecast-MFC-AGG-ID: OqUUvH5aPUCrVt5xmFmitw_1770812894
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-354bc535546so4932130a91.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 04:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770812728; x=1771417528; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Aefi61o6zp+6rmX8EEc23U6lF5pl+50hf2TUkblNyV0=;
- b=IHPk2/lDy5bmh0U6fUwewKAEAaXnailj+GoNp1gUsU3s07IjkzrKZt6FzfTgxG3RP9
- jH8l/w1tG8UWFpVMYAVYRWoW4/1qMxYH2XZUoWRSc5E1EKCuNezG8AD084U+m28lrkPQ
- 20TNLIXZmtXpgrJxPy3IYXyKIPUH3+9/Syd5zEO7hhgXbH4sT/lRQekGnZ3I0X8b/tim
- x0K731y3fSM0jYS8/Mj9UJUGLlo0q5FP6CnoijabXinxsubbmR6C9y71n3tUxtsBoIM+
- tNeGIOnoqbwtcLDClfinpnJoJu8v4+Y12Bl+Tx/aXhgPsSXjirgisFd/j7R5XhszsoLD
- KA5g==
+ d=redhat.com; s=google; t=1770812894; x=1771417694; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
+ b=s27V1Xp8UtiwUDAGH1G2lByQ0KqXbslwK7sVHWM/Hbt2Ueb2rwvLIEyRqpy+BpG5UL
+ bsNzGBQRiJW3rSaWDMEQCTGLj+FTOE7HBOnAZcgHmhtu+gdv9CSjlgFWrRBBa5xa/OBw
+ PkvjYWhurmbrLHL3Xu+GV+vvn8yjyCkDswGnNqatoMx8LnznIQPE0AZcv+pTYMessH5O
+ d3TRmez+r4aRsusRGmjeqvk59vfmFMn+Z/MdP5r1gMNrSAKUS9rMme5bvjjmLS6zsjw0
+ yIJgG+1vil3C83J2qqj/4VPBJVcEXDTTwIO/eGIZO93jnJlRvIAsV89L/srRlf4kp/W3
+ /E+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770812728; x=1771417528;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Aefi61o6zp+6rmX8EEc23U6lF5pl+50hf2TUkblNyV0=;
- b=CBcQCXa6iqboiuY5o2gAlkLNoU4qaKGnJsgdTFkd8n7ubKcnynyUEilPqdS0MLyt+c
- hyUINXrnlx4bbh4h2J1zoSGVeSccmKoUE2yr0Tm6OjJU3prI8X015YViZe28GLtFBMZz
- IJSUEnpBZuq639e8xnl69MbsZwIS0VSvNd/1Qx6Ms9og3O5+oKHWHNoc/X6zh+i/H/RF
- pI8CO5nqzzaN/TZPnOLi4gXpARXyOqUcIlDv6ldSxVNWyuN+k+UZ7Jz7v0p8TTjuayyQ
- 3cZXnVVCZ9LFJ5HZK+/1ErzTobBWhPI/gR1mNv8kGzmjTnSHNbEorg83KTkn4iNSjk/c
- B/Pw==
-X-Gm-Message-State: AOJu0Yzm+dT94Wvr0xy+oS3xRxRhjuGt/U8y6fzQFTYY3ojc7L/2/s5y
- H2c7HiujGS/GVd/yfLg63r522DoFM2NcAb6I65ZHpSztkPdN+mHGn32X+/bDERbYr/0RV/TKeEj
- uEShPrH9r+vFOKQTPNas1amg05NA+CmQFQfmXZCEykDtEWq/3b181JR/R
-X-Gm-Gg: AZuq6aIu5LuV5KKfOk3eYxiRn9viEZ40lqhDFRcFPQKJXWpLwUSVh6cxRIS//p5IoON
- bec/zulJc1o1EPUfV6hLEcEkEQIsdIrQPDNzhAoPyWry57SUMVdCpKJzis/m/gIijPVAkilLv/l
- NxyOobVY76fHBk3U04OQ2LPTwxmo72pPBThCECUGkSa99WJNwWhp1unwjc3GWFZRQksF3UFwm4w
- 6R1ZUCRkzr49/jJD3seao5u+HedzbvjyYeM/AkYTiZkFV/+KW8qX/TwVRE6YGNSdnaT8cq20dns
- nu6n8OSN7j6zMdzM35CX1H4ThA1jFiBOo1t6s/h1QUpBMkr+Ez8VjNO15fVnKLyOfEfUSiPg4sq
- SylsmhzGowe3wxRr5mfUbSqLL
-X-Received: by 2002:a05:6000:24c8:b0:436:34b8:e139 with SMTP id
- ffacd0b85a97d-43782b1a907mr3028823f8f.9.1770812727803; 
- Wed, 11 Feb 2026 04:25:27 -0800 (PST)
-X-Received: by 2002:a05:6000:24c8:b0:436:34b8:e139 with SMTP id
- ffacd0b85a97d-43782b1a907mr3028791f8f.9.1770812727345; 
- Wed, 11 Feb 2026 04:25:27 -0800 (PST)
-Received: from leonardi-redhat ([176.206.8.97])
+ d=1e100.net; s=20230601; t=1770812894; x=1771417694;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
+ b=udvKPCoTh4vt4Qjme4f8b+1O1lyfiVUjED7r5Iw+wxHnXdU2pgEsYCG3sLPqx3Kjwj
+ e8PrPWOHTlb+bQNdPVbgdKX153yKxbWPwYQ6+4cXscXz6txdaR0+GfHEypIZ+scrSMGv
+ 8yfzjrvXfkVd4avI6XvA++dZgE5SxRHohLeAsO63M+ZtcLvAOaLOI/vaNYpfsDu9R+54
+ Phjj+r3b2vg8AXvDm7i1Z5SlSQATBzOPhosHZ724AoYuuNdipXXZw3phZxXzlc0ArGjz
+ 2z61qlTxprIjbq3Dg4p9Ce7nJyUc4FQTTlyvxRoWsMUvSAhfYtsDlwy4dWWfAHqP1ME8
+ YEQg==
+X-Gm-Message-State: AOJu0Yw0lpT0tLebf9W01Ge0BtMaUibSHBKd2q3rB7f1MgbnUD6jIbBS
+ 2rN6ePIvm4IqlJK7aGNwelA+oiik7MzMXrt1kDXdUo2dm6QAwTbc2OdRd5z7U3o++pRyu1FGXJa
+ TWneLF14C0lTMBdKuEXuyCPV0LRIP6f44avhVwsmky4pzFCqS9MbJ2B8siySgMribdT5XtNeuEq
+ Bdqk8LgEtErMX+K85IR5lU5MK83WhLxXRo5geV
+X-Gm-Gg: AZuq6aIXMXangGgw7ull0M2r3Kwo1h4kDWg6j+1YzTxNp74sK1ep2m+KMjVujtSNHOV
+ v+P/PjtdQ41wXyjVrc2Cu6tYVnQt3FIXW9bQf2+af2Ikox2Mkd4BQkPwuKdnLwL8xzp/eXStnBm
+ AwEpfiqZdPGHvem4CACj4T/z5MbB3JQFdl8zPVn8tNv0GQn7wAuqnvfD08CqjCjOpN1HRz5/bSh
+ GGx3sSDGxhHGjINP3QIH4gCVCWTRY0B4NLO5sfyfi8+vZfCti05sFNPA0zafhD4F3ZqDjI2ThLC
+ ZgUia7jIYcEPky+E4bvQhoIroJ0UYRv9Dl4x6HvqQNdzG1XoUubsappwhZJyOciC7bznHCT+v8h
+ lqj6xwk/AlnL8raznjJH+LZVvy01q94d9PMrGqGvIuthpFEs=
+X-Received: by 2002:a17:90b:4c0c:b0:34a:8c77:d37b with SMTP id
+ 98e67ed59e1d1-3567afb221bmr2753552a91.16.1770812893737; 
+ Wed, 11 Feb 2026 04:28:13 -0800 (PST)
+X-Received: by 2002:a17:90b:4c0c:b0:34a:8c77:d37b with SMTP id
+ 98e67ed59e1d1-3567afb221bmr2753516a91.16.1770812893191; 
+ Wed, 11 Feb 2026 04:28:13 -0800 (PST)
+Received: from mbawa-thinkpadt14gen5.bengluru.csb
+ ([2406:7400:51:e13a:21f1:8c60:5b7:96f5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783dfc8b9sm4145703f8f.24.2026.02.11.04.25.26
+ d2e1a72fcca58-8249e81976dsm2443786b3a.52.2026.02.11.04.28.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 04:25:27 -0800 (PST)
-Date: Wed, 11 Feb 2026 13:25:24 +0100
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Oliver Steffen <osteffen@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH 1/1] igvm: Add NULL checks for igvm_get_buffer()
-Message-ID: <aYx0Utf9FOVGP9lC@leonardi-redhat>
-References: <20260210112436.315197-1-osteffen@redhat.com>
- <20260210112436.315197-2-osteffen@redhat.com>
+ Wed, 11 Feb 2026 04:28:12 -0800 (PST)
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ alex.bennee@linaro.org, philmd@linaro.org
+Cc: cohuck@redhat.com,
+	eric.auger@redhat.com,
+	sebott@redhat.com
+Subject: [PATCH] hw/arm/virt: Add virtio-transports property
+Date: Wed, 11 Feb 2026 17:57:59 +0530
+Message-ID: <20260211122759.125094-1-mbawa@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260210112436.315197-2-osteffen@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mbawa@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,150 +118,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 12:24:36PM +0100, Oliver Steffen wrote:
->According to the documentation we are supposed to do a null-pointer
->check on the buffers returned by igvm_get_buffer() (part of the IGVM C
->library).
->Add these checks in the IGVM backend.
->
->Signed-off-by: Oliver Steffen <osteffen@redhat.com>
->---
-> backends/igvm.c | 86 ++++++++++++++++++++++++++++++++-----------------
-> 1 file changed, 56 insertions(+), 30 deletions(-)
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index b01a19ba46..049cb36891 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -152,9 +152,17 @@ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
->                 (int)header_handle);
->             return -1;
->         }
->-        header_data = igvm_get_buffer(ctx->file, header_handle) +
->-                      sizeof(IGVM_VHS_VARIABLE_HEADER);
->-        result = handlers[handler].handler(ctx, header_data, errp);
->+        header_data = igvm_get_buffer(ctx->file, header_handle);
->+        if (header_data != NULL) {
->+            header_data += sizeof(IGVM_VHS_VARIABLE_HEADER);
->+            result = handlers[handler].handler(ctx, header_data, errp);
->+        } else {
->+            error_setg(errp,
->+                    "IGVM: No buffer for handle %d: "
->+                    "(type 0x%X)",
->+                    header_handle, type);
->+            result = -1;
->+        }
->         igvm_free_buffer(ctx->file, header_handle);
->         return result;
->     }
->@@ -316,7 +324,13 @@ static int qigvm_process_mem_region(QIgvm *ctx, unsigned start_index,
->                 return -1;
->             }
->             data = igvm_get_buffer(ctx->file, data_handle);
->-            memcpy(&region[page_index * page_size], data, data_size);
->+            if (data != NULL) {
->+                memcpy(&region[page_index * page_size], data, data_size);
->+            } else {
->+                error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
->+                igvm_free_buffer(ctx->file, data_handle);
->+                return -1;
->+            }
->             igvm_free_buffer(ctx->file, data_handle);
->         }
->     }
->@@ -426,6 +440,11 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
->     }
->
->     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
->+    if (data == NULL) {
->+        error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
->+        result = -1;
->+        goto exit;
->+    }
->
->     if (ctx->machine_state->cgs) {
->         result = ctx->cgsc->set_guest_state(
->@@ -441,6 +460,7 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
->         result = -1;
->     }
->
->+exit:
->     igvm_free_buffer(ctx->file, data_handle);
->     if (result < 0) {
->         return result;
->@@ -778,33 +798,39 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
->             }
->             platform =
->                 (IGVM_VHS_SUPPORTED_PLATFORM *)(igvm_get_buffer(ctx->file,
->-                                                                header_handle) +
->-                                                sizeof(
->-                                                    IGVM_VHS_VARIABLE_HEADER));
->-            if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
->-                ctx->machine_state->cgs) {
->-                if (ctx->cgsc->check_support(
->-                        CGS_PLATFORM_SEV_ES, platform->platform_version,
->-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
->-                    compatibility_mask_sev_es = platform->compatibility_mask;
->-                }
->-            } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
->-                       ctx->machine_state->cgs) {
->-                if (ctx->cgsc->check_support(
->-                        CGS_PLATFORM_SEV, platform->platform_version,
->-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
->-                    compatibility_mask_sev = platform->compatibility_mask;
->+                                                                header_handle));
->+            if (platform != NULL) {
+Windows ARM64 guests detect virtio-mmio devices declared in ACPI
+tables even when no backend is attached. This causes "Unknown
+devices" (ACPI\LNRO0005) to appear in Device Manager.
 
-on a second thought: if you have to send a v2, what about reversing 
-if and else? With an early return, we can remove the else clause entirely.
+Until Windows fixes that by supporting, adding a new machine
+property 'virtio-transports' to control the number of
+virtio-mmio transports instantiated. The default remains
+NUM_VIRTIO_TRANSPORTS (32) for backward compatibility.
+Setting it to 0 allows users to disable virtio-mmio entirely.
 
->+                platform = (IGVM_VHS_SUPPORTED_PLATFORM *)((void *)platform
->+                                            + sizeof(IGVM_VHS_VARIABLE_HEADER));
->+                if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
->+                    ctx->machine_state->cgs) {
->+                    if (ctx->cgsc->check_support(
->+                            CGS_PLATFORM_SEV_ES, platform->platform_version,
->+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
->+                        compatibility_mask_sev_es = platform->compatibility_mask;
->+                    }
->+                } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
->+                        ctx->machine_state->cgs) {
->+                    if (ctx->cgsc->check_support(
->+                            CGS_PLATFORM_SEV, platform->platform_version,
->+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
->+                        compatibility_mask_sev = platform->compatibility_mask;
->+                    }
->+                } else if ((platform->platform_type ==
->+                            IGVM_PLATFORM_TYPE_SEV_SNP) &&
->+                        ctx->machine_state->cgs) {
->+                    if (ctx->cgsc->check_support(
->+                            CGS_PLATFORM_SEV_SNP, platform->platform_version,
->+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
->+                        compatibility_mask_sev_snp = platform->compatibility_mask;
->+                    }
->+                } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
->+                    compatibility_mask = platform->compatibility_mask;
->                 }
->-            } else if ((platform->platform_type ==
->-                        IGVM_PLATFORM_TYPE_SEV_SNP) &&
->-                       ctx->machine_state->cgs) {
->-                if (ctx->cgsc->check_support(
->-                        CGS_PLATFORM_SEV_SNP, platform->platform_version,
->-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
->-                    compatibility_mask_sev_snp = platform->compatibility_mask;
->-                }
->-            } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
->-                compatibility_mask = platform->compatibility_mask;
->+            } else {
->+                error_setg(errp, "IGVM: No buffer for handle %d: ", header_handle);
->+                igvm_free_buffer(ctx->file, header_handle);
->+                return -1;
->             }
->             igvm_free_buffer(ctx->file, header_handle);
->         }
->-- 
->2.53.0
->
->
+Usage: -machine virt,virtio-transports=0
+
+Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+---
+ hw/arm/virt-acpi-build.c |  2 +-
+ hw/arm/virt.c            | 43 ++++++++++++++++++++++++++++++++++++++--
+ include/hw/arm/virt.h    |  1 +
+ 3 files changed, 43 insertions(+), 3 deletions(-)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c145678185..27c007fd62 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -1150,7 +1150,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
+     virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base, memmap[VIRT_MMIO].size,
+                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
+-                         0, NUM_VIRTIO_TRANSPORTS);
++                         0, vms->virtio_transports);
+     acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + ARM_SPI_BASE, vms);
+     if (vms->acpi_dev) {
+         build_ged_aml(scope, "\\_SB."GED_DEVICE,
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 390845c503..0a659ba540 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1206,7 +1206,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
+      * between kernel versions). For reliable and stable identification
+      * of disks users must use UUIDs or similar mechanisms.
+      */
+-    for (i = 0; i < NUM_VIRTIO_TRANSPORTS; i++) {
++    for (i = 0; i < vms->virtio_transports; i++) {
+         int irq = vms->irqmap[VIRT_MMIO] + i;
+         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
+ 
+@@ -1221,7 +1221,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
+      * loop influences virtio device to virtio transport assignment, whereas
+      * this loop controls how virtio transports are laid out in the dtb.
+      */
+-    for (i = NUM_VIRTIO_TRANSPORTS - 1; i >= 0; i--) {
++    for (i = vms->virtio_transports - 1; i >= 0; i--) {
+         char *nodename;
+         int irq = vms->irqmap[VIRT_MMIO] + i;
+         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
+@@ -2705,6 +2705,36 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+ }
+ 
++static void virt_get_virtio_transports(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++    uint8_t transports = vms->virtio_transports;
++
++    visit_type_uint8(v, name, &transports, errp);
++}
++
++static void virt_set_virtio_transports(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++    uint8_t transports;
++
++    if (!visit_type_uint8(v, name, &transports, errp)) {
++        return;
++    }
++
++    if (transports > NUM_VIRTIO_TRANSPORTS) {
++        error_setg(errp, "virtio-transports must not exceed %d",
++                   NUM_VIRTIO_TRANSPORTS);
++        return;
++    }
++
++    vms->virtio_transports = transports;
++}
++
+ static bool virt_get_its(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+@@ -3427,6 +3457,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set the high memory region size "
+                                           "for PCI MMIO");
+ 
++    object_class_property_add(oc, "virtio-transports", "uint8",
++                                   virt_get_virtio_transports,
++                                   virt_set_virtio_transports,
++                                   NULL, NULL);
++    object_class_property_set_description(oc, "virtio-transports",
++                                          "Set the number of virtio-mmio transports to instantiate");
++
+     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
+                                   virt_set_gic_version);
+     object_class_property_set_description(oc, "gic-version",
+@@ -3540,6 +3577,8 @@ static void virt_instance_init(Object *obj)
+ 
+     vms->irqmap = a15irqmap;
+ 
++    vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
++
+     virt_flash_create(vms);
+ 
+     vms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 3b382bdf49..f898afaa6e 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -169,6 +169,7 @@ struct VirtMachineState {
+     uint32_t msi_phandle;
+     uint32_t iommu_phandle;
+     int psci_conduit;
++    uint8_t virtio_transports;
+     hwaddr highest_gpa;
+     DeviceState *gic;
+     DeviceState *acpi_dev;
+-- 
+2.53.0
 
 
