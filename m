@@ -4,103 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB088E9E2FD
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75961E9E2F9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq9LR-0006hG-TE; Wed, 11 Feb 2026 07:29:25 -0500
+	id 1vq9ML-0007G3-HW; Wed, 11 Feb 2026 07:30:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vq9LQ-0006gn-DD
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:29:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vq9MK-0007Fk-HE
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vq9LO-0008Ms-Nm
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:29:24 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vq9MI-0000Ah-Ph
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:30:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770812961;
+ s=mimecast20190719; t=1770813018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
- b=H0sA1bp0djn33arWn6vg3Z5QZwyqC/idv/ZUJtaiIVYYRbC2l5FRoCV+pIuP7cGXJtLTGl
- +h5+UO4s8LjxgV7Kj9rfWHjDhKWpBE+jYbVc4qVhZSnQSpyM/wL02qCqkH+c/vpVJzxU21
- tRxSegfpvpxylp8RL5Kv6Z8IT4fLPf4=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-OqUUvH5aPUCrVt5xmFmitw-1; Wed, 11 Feb 2026 07:28:15 -0500
-X-MC-Unique: OqUUvH5aPUCrVt5xmFmitw-1
-X-Mimecast-MFC-AGG-ID: OqUUvH5aPUCrVt5xmFmitw_1770812894
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-354bc535546so4932130a91.3
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 04:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770812894; x=1771417694; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
- b=s27V1Xp8UtiwUDAGH1G2lByQ0KqXbslwK7sVHWM/Hbt2Ueb2rwvLIEyRqpy+BpG5UL
- bsNzGBQRiJW3rSaWDMEQCTGLj+FTOE7HBOnAZcgHmhtu+gdv9CSjlgFWrRBBa5xa/OBw
- PkvjYWhurmbrLHL3Xu+GV+vvn8yjyCkDswGnNqatoMx8LnznIQPE0AZcv+pTYMessH5O
- d3TRmez+r4aRsusRGmjeqvk59vfmFMn+Z/MdP5r1gMNrSAKUS9rMme5bvjjmLS6zsjw0
- yIJgG+1vil3C83J2qqj/4VPBJVcEXDTTwIO/eGIZO93jnJlRvIAsV89L/srRlf4kp/W3
- /E+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770812894; x=1771417694;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bfo71XqCSKmxPUviffHaEkHQ6i/xi5Ji/h2hsH26RrU=;
- b=udvKPCoTh4vt4Qjme4f8b+1O1lyfiVUjED7r5Iw+wxHnXdU2pgEsYCG3sLPqx3Kjwj
- e8PrPWOHTlb+bQNdPVbgdKX153yKxbWPwYQ6+4cXscXz6txdaR0+GfHEypIZ+scrSMGv
- 8yfzjrvXfkVd4avI6XvA++dZgE5SxRHohLeAsO63M+ZtcLvAOaLOI/vaNYpfsDu9R+54
- Phjj+r3b2vg8AXvDm7i1Z5SlSQATBzOPhosHZ724AoYuuNdipXXZw3phZxXzlc0ArGjz
- 2z61qlTxprIjbq3Dg4p9Ce7nJyUc4FQTTlyvxRoWsMUvSAhfYtsDlwy4dWWfAHqP1ME8
- YEQg==
-X-Gm-Message-State: AOJu0Yw0lpT0tLebf9W01Ge0BtMaUibSHBKd2q3rB7f1MgbnUD6jIbBS
- 2rN6ePIvm4IqlJK7aGNwelA+oiik7MzMXrt1kDXdUo2dm6QAwTbc2OdRd5z7U3o++pRyu1FGXJa
- TWneLF14C0lTMBdKuEXuyCPV0LRIP6f44avhVwsmky4pzFCqS9MbJ2B8siySgMribdT5XtNeuEq
- Bdqk8LgEtErMX+K85IR5lU5MK83WhLxXRo5geV
-X-Gm-Gg: AZuq6aIXMXangGgw7ull0M2r3Kwo1h4kDWg6j+1YzTxNp74sK1ep2m+KMjVujtSNHOV
- v+P/PjtdQ41wXyjVrc2Cu6tYVnQt3FIXW9bQf2+af2Ikox2Mkd4BQkPwuKdnLwL8xzp/eXStnBm
- AwEpfiqZdPGHvem4CACj4T/z5MbB3JQFdl8zPVn8tNv0GQn7wAuqnvfD08CqjCjOpN1HRz5/bSh
- GGx3sSDGxhHGjINP3QIH4gCVCWTRY0B4NLO5sfyfi8+vZfCti05sFNPA0zafhD4F3ZqDjI2ThLC
- ZgUia7jIYcEPky+E4bvQhoIroJ0UYRv9Dl4x6HvqQNdzG1XoUubsappwhZJyOciC7bznHCT+v8h
- lqj6xwk/AlnL8raznjJH+LZVvy01q94d9PMrGqGvIuthpFEs=
-X-Received: by 2002:a17:90b:4c0c:b0:34a:8c77:d37b with SMTP id
- 98e67ed59e1d1-3567afb221bmr2753552a91.16.1770812893737; 
- Wed, 11 Feb 2026 04:28:13 -0800 (PST)
-X-Received: by 2002:a17:90b:4c0c:b0:34a:8c77:d37b with SMTP id
- 98e67ed59e1d1-3567afb221bmr2753516a91.16.1770812893191; 
- Wed, 11 Feb 2026 04:28:13 -0800 (PST)
-Received: from mbawa-thinkpadt14gen5.bengluru.csb
- ([2406:7400:51:e13a:21f1:8c60:5b7:96f5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8249e81976dsm2443786b3a.52.2026.02.11.04.28.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 04:28:12 -0800 (PST)
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- alex.bennee@linaro.org, philmd@linaro.org
-Cc: cohuck@redhat.com,
-	eric.auger@redhat.com,
-	sebott@redhat.com
-Subject: [PATCH] hw/arm/virt: Add virtio-transports property
-Date: Wed, 11 Feb 2026 17:57:59 +0530
-Message-ID: <20260211122759.125094-1-mbawa@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ bh=kzn58S0lNfEjMqYO60adMvk7cCAhn0+RWpF0wuFs9kY=;
+ b=H2FBtrXvoCOE51RxyId7/cIHCABPgYz8p6+CH54f6Ks8ZTfORimwjYST4vhn+FbfaDTOtA
+ M+tYzdLSzhOEeml+ERTRbVtkRSQAxauJmPJd1CjxnxQaHm6d7GplyGMufWYrwhPIA/MCEv
+ ZLugnt/BKiatdK9pn429+qixr+3RzRU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-31_9MFcgNwi-1OT-_RHVTg-1; Wed,
+ 11 Feb 2026 07:30:14 -0500
+X-MC-Unique: 31_9MFcgNwi-1OT-_RHVTg-1
+X-Mimecast-MFC-AGG-ID: 31_9MFcgNwi-1OT-_RHVTg_1770813013
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D5361800366; Wed, 11 Feb 2026 12:30:12 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C076619560A3; Wed, 11 Feb 2026 12:30:10 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Anthony PERARD <anthony@xenproject.org>, Eric Blake <eblake@redhat.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>
+Subject: [PULL 00/14] Char patches
+Date: Wed, 11 Feb 2026 16:29:47 +0400
+Message-ID: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mbawa@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,133 +91,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows ARM64 guests detect virtio-mmio devices declared in ACPI
-tables even when no backend is attached. This causes "Unknown
-devices" (ACPI\LNRO0005) to appear in Device Manager.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Until Windows fixes that by supporting, adding a new machine
-property 'virtio-transports' to control the number of
-virtio-mmio transports instantiated. The default remains
-NUM_VIRTIO_TRANSPORTS (32) for backward compatibility.
-Setting it to 0 allows users to disable virtio-mmio entirely.
+The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
 
-Usage: -machine virt,virtio-transports=0
+  Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
 
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
----
- hw/arm/virt-acpi-build.c |  2 +-
- hw/arm/virt.c            | 43 ++++++++++++++++++++++++++++++++++++++--
- include/hw/arm/virt.h    |  1 +
- 3 files changed, 43 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index c145678185..27c007fd62 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -1150,7 +1150,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
-     virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base, memmap[VIRT_MMIO].size,
-                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
--                         0, NUM_VIRTIO_TRANSPORTS);
-+                         0, vms->virtio_transports);
-     acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + ARM_SPI_BASE, vms);
-     if (vms->acpi_dev) {
-         build_ged_aml(scope, "\\_SB."GED_DEVICE,
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 390845c503..0a659ba540 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1206,7 +1206,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
-      * between kernel versions). For reliable and stable identification
-      * of disks users must use UUIDs or similar mechanisms.
-      */
--    for (i = 0; i < NUM_VIRTIO_TRANSPORTS; i++) {
-+    for (i = 0; i < vms->virtio_transports; i++) {
-         int irq = vms->irqmap[VIRT_MMIO] + i;
-         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
- 
-@@ -1221,7 +1221,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
-      * loop influences virtio device to virtio transport assignment, whereas
-      * this loop controls how virtio transports are laid out in the dtb.
-      */
--    for (i = NUM_VIRTIO_TRANSPORTS - 1; i >= 0; i--) {
-+    for (i = vms->virtio_transports - 1; i >= 0; i--) {
-         char *nodename;
-         int irq = vms->irqmap[VIRT_MMIO] + i;
-         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
-@@ -2705,6 +2705,36 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
- }
- 
-+static void virt_get_virtio_transports(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
-+    uint8_t transports = vms->virtio_transports;
-+
-+    visit_type_uint8(v, name, &transports, errp);
-+}
-+
-+static void virt_set_virtio_transports(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
-+    uint8_t transports;
-+
-+    if (!visit_type_uint8(v, name, &transports, errp)) {
-+        return;
-+    }
-+
-+    if (transports > NUM_VIRTIO_TRANSPORTS) {
-+        error_setg(errp, "virtio-transports must not exceed %d",
-+                   NUM_VIRTIO_TRANSPORTS);
-+        return;
-+    }
-+
-+    vms->virtio_transports = transports;
-+}
-+
- static bool virt_get_its(Object *obj, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-@@ -3427,6 +3457,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "Set the high memory region size "
-                                           "for PCI MMIO");
- 
-+    object_class_property_add(oc, "virtio-transports", "uint8",
-+                                   virt_get_virtio_transports,
-+                                   virt_set_virtio_transports,
-+                                   NULL, NULL);
-+    object_class_property_set_description(oc, "virtio-transports",
-+                                          "Set the number of virtio-mmio transports to instantiate");
-+
-     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
-@@ -3540,6 +3577,8 @@ static void virt_instance_init(Object *obj)
- 
-     vms->irqmap = a15irqmap;
- 
-+    vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
-+
-     virt_flash_create(vms);
- 
-     vms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 3b382bdf49..f898afaa6e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -169,6 +169,7 @@ struct VirtMachineState {
-     uint32_t msi_phandle;
-     uint32_t iommu_phandle;
-     int psci_conduit;
-+    uint8_t virtio_transports;
-     hwaddr highest_gpa;
-     DeviceState *gic;
-     DeviceState *acpi_dev;
+  https://gitlab.com/marcandre.lureau/qemu.git tags/char-pull-request
+
+for you to fetch changes up to 72913e8b8ef10071965d43349516d0e7f19a959d:
+
+  chardev: add logtimestamp option (2026-02-11 16:27:18 +0400)
+
+----------------------------------------------------------------
+chardev patches
+
+----------------------------------------------------------------
+
+Eric K (1):
+  char-udp: Fix initial backend open status
+
+Vladimir Sementsov-Ogievskiy (13):
+  ui/spice: Require spice-server >= 0.15.0
+  ui/spice: drop SPICE_HAS_ATTACHED_WORKER macro
+  chardev: ChardevClass: consistent naming for handlers
+  chardev: consistent naming for ChardevClass handlers implementations
+  chardev: .chr_open(): drop be_opened parameter
+  chardev: .chr_open(): add boolean return value
+  chardev/char-pty: store pty_name into PtyChardev state
+  chardev: introduce .chr_get_pty_name() handler
+  chardev: rework filename handling
+  chardev/char: qemu_char_open(): add return value
+  char: qemu_chr_write_log() use qemu_write_full()
+  error-report: make real_time_iso8601() public
+  chardev: add logtimestamp option
+
+ meson.build                                   |   2 +-
+ qapi/char.json                                |   6 +-
+ include/chardev/char.h                        |  23 ++-
+ include/qemu/error-report.h                   |   6 +
+ include/ui/qemu-spice.h                       |   6 -
+ chardev/baum.c                                |  12 +-
+ chardev/char-console.c                        |  10 +-
+ chardev/char-fe.c                             |   8 +-
+ chardev/char-file.c                           |  26 ++--
+ chardev/char-hub.c                            |  27 ++--
+ chardev/char-mux.c                            |  30 ++--
+ chardev/char-null.c                           |   9 +-
+ chardev/char-parallel.c                       |  41 +++---
+ chardev/char-pipe.c                           |  30 ++--
+ chardev/char-pty.c                            |  56 ++++---
+ chardev/char-ringbuf.c                        |  20 +--
+ chardev/char-serial.c                         |  39 ++---
+ chardev/char-socket.c                         |  73 ++++------
+ chardev/char-stdio.c                          |  30 ++--
+ chardev/char-udp.c                            |  18 +--
+ chardev/char-win-stdio.c                      |  25 ++--
+ chardev/char.c                                | 137 ++++++++++++------
+ chardev/msmouse.c                             |  13 +-
+ chardev/spice.c                               |  52 +++----
+ chardev/wctablet.c                            |  10 +-
+ gdbstub/system.c                              |  12 +-
+ hw/char/xen_console.c                         |   7 +-
+ hw/display/qxl.c                              |  23 +--
+ hw/misc/ivshmem-pci.c                         |   7 +-
+ tests/unit/test-char.c                        |   2 +
+ ui/console-vc.c                               |  12 +-
+ ui/dbus-chardev.c                             |  16 +-
+ ui/dbus.c                                     |   4 +-
+ ui/gtk.c                                      |  14 +-
+ ui/spice-app.c                                |  18 +--
+ ui/spice-display.c                            |  19 +--
+ ui/vdagent.c                                  |  17 +--
+ util/error-report.c                           |   3 +-
+ .../codeconverter/test_regexps.py             |   2 +-
+ 39 files changed, 437 insertions(+), 428 deletions(-)
+
 -- 
-2.53.0
+2.52.0
 
 
