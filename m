@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BB6ECD6C3
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5455ECD6C3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCke-0002pe-L5; Wed, 11 Feb 2026 11:07:40 -0500
+	id 1vqCkl-0002qx-4W; Wed, 11 Feb 2026 11:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1vqCXn-0007De-RH
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:54:23 -0500
+ id 1vqCY0-0007Lc-HW
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:54:36 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1vqCXl-0003Q4-KI
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:54:23 -0500
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1vqCXz-0003Ry-21
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:54:36 -0500
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.59])
- by linux.microsoft.com (Postfix) with ESMTPSA id 463AA20B7169;
- Wed, 11 Feb 2026 07:54:18 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 463AA20B7169
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4692D20B7168;
+ Wed, 11 Feb 2026 07:54:32 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4692D20B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1770825259;
- bh=j0zx57orCfjH/b4yZSBp1d3VPOTnjKE85cp35cyPnmg=;
+ s=default; t=1770825273;
+ bh=c9Cqif7Bf9HNIGMAb4KJECjwGAGpn7SzhAVsuFQtugQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Kr/QmNAqqmzKf44BjHqTEMvNMp72u28Lf58pQLMiZtGhsrqEb+hNg2TP4QJ2fzraG
- yz7kPEj/v/bMjCo7CqZ8EJpMDSWuwlo7sk+j0vmiQuwUAlNbkWZLc2wQKx3nhhxVmf
- WAr1UjSfUhxsHwluxVjz3yrfkS3NzD6hiOY75gMs=
+ b=laV4mzC5JEM0kCDYEwfuA/wWhH52A092Za0U5dHOsWsU1YIP9x1CctwgC/1fMTquX
+ CZX+0c4zgFvGoDqEVdYpchr9AurAJDzsEL5TCX9jpWbfYaXRrWUdC3t0OQNBbXGqI1
+ bZMcrhtF1nXWdWKTK5nZ6t6/0pYZdT1GkNyl1dXY=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH 02/10] include/hw/hyperv: add QEMU_PACKED to uapi structs
-Date: Wed, 11 Feb 2026 16:54:02 +0100
-Message-Id: <20260211155410.203883-3-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 08/10] target/i386: query mshv accel for supported cpuids
+Date: Wed, 11 Feb 2026 16:54:08 +0100
+Message-Id: <20260211155410.203883-9-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
 References: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
@@ -54,7 +54,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 11 Feb 2026 11:07:29 -0500
+X-Mailman-Approved-At: Wed, 11 Feb 2026 11:07:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,226 +69,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The uapi definitions are marked with __packed hints in the kernel
-headers, since we want to keep the contract of the Microsoft Hypervisor
-ABI explicit, we should also added them in our vendored files, with a
-few notable exceptions where the attribute is a noop.
+We implement mshv_get_supported_cpuid() and invoke it in
+x86_cpu_get_supported_feature_word() retrieve the cpu features that the
+host is supporting. Initially we mask the virtualization capabilitities
+potentially we might need to mask more in the future.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk_mini.h | 37 ++++++++++++++++++++++------------
- include/hw/hyperv/hvhdk.h      | 14 +++++++------
- 2 files changed, 32 insertions(+), 19 deletions(-)
+ include/system/mshv.h       |  3 +++
+ target/i386/cpu.c           |  8 ++++++++
+ target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index cb52cc9de2..7d7b2e9b36 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -7,6 +7,8 @@
- #ifndef HW_HYPERV_HVGDK_MINI_H
- #define HW_HYPERV_HVGDK_MINI_H
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 75286baf16..51b0420735 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
  
-+#include "qemu/compiler.h"
++/* cpuid */
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
 +
- #define MSHV_IOCTL  0xB8
+ #endif
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0a7b884528..b611afc21a 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -26,6 +26,7 @@
+ #include "tcg/helper-tcg.h"
+ #include "exec/translation-block.h"
+ #include "system/hvf.h"
++#include "system/mshv.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
+ #include "kvm/tdx.h"
+@@ -7958,6 +7959,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+         r = hvf_get_supported_cpuid(wi->cpuid.eax,
+                                     wi->cpuid.ecx,
+                                     wi->cpuid.reg);
++     } else if (mshv_enabled()) {
++        if (wi->type != CPUID_FEATURE_WORD) {
++            return 0;
++        }
++        r = mshv_get_supported_cpuid(wi->cpuid.eax,
++                                     wi->cpuid.ecx,
++                                     wi->cpuid.reg);
+     } else if (tcg_enabled()) {
+         r = wi->tcg_features;
+     } else {
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 38e0a045c2..bbb58461a4 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1757,6 +1757,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
+ }
  
- typedef enum hv_register_name {
-@@ -211,7 +213,7 @@ enum hv_intercept_type {
- struct hv_u128 {
-     uint64_t low_part;
-     uint64_t high_part;
--};
-+} QEMU_PACKED;
- 
- union hv_x64_xmm_control_status_register {
-     struct hv_u128 as_uint128;
-@@ -326,13 +328,13 @@ typedef struct hv_x64_segment_register {
-         };
-         uint16_t attributes;
-     };
--} hv_x64_segment_register;
-+} QEMU_PACKED hv_x64_segment_register;
- 
- typedef struct hv_x64_table_register {
-     uint16_t pad[3];
-     uint16_t limit;
-     uint64_t base;
--} hv_x64_table_register;
-+} QEMU_PACKED hv_x64_table_register;
- 
- union hv_x64_fp_control_status_register {
-     struct hv_u128 as_uint128;
-@@ -416,6 +418,10 @@ typedef union hv_register_value {
-     union hv_x64_register_sev_control sev_control;
- } hv_register_value;
- 
-+/*
-+ * This struct is __packed in the kernel. Since all members are naturally
-+ * aligned, we can omit QEMU_PACKED to avoid address-of-packed-member warnings.
-+ */
- typedef struct hv_register_assoc {
-     uint32_t name;         /* enum hv_register_name */
-     uint32_t reserved1;
-@@ -439,7 +445,7 @@ typedef struct hv_input_get_vp_registers {
-     uint8_t  rsvd_z8;
-     uint16_t rsvd_z16;
-     uint32_t names[];
--} hv_input_get_vp_registers;
-+} QEMU_PACKED hv_input_get_vp_registers;
- 
- typedef struct hv_input_set_vp_registers {
-     uint64_t partition_id;
-@@ -448,7 +454,7 @@ typedef struct hv_input_set_vp_registers {
-     uint8_t  rsvd_z8;
-     uint16_t rsvd_z16;
-     struct hv_register_assoc elements[];
--} hv_input_set_vp_registers;
-+} QEMU_PACKED hv_input_set_vp_registers;
- 
- union hv_interrupt_control {
-     uint64_t as_uint64;
-@@ -468,7 +474,7 @@ struct hv_input_assert_virtual_interrupt {
-     uint8_t target_vtl;
-     uint8_t rsvd_z0;
-     uint16_t rsvd_z1;
--};
-+} QEMU_PACKED;
- 
- /* /dev/mshv */
- #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
-@@ -487,6 +493,11 @@ struct hv_input_assert_virtual_interrupt {
-  ********************************
-  */
- 
-+/*
-+ * This struct is __packed in the kernel, but since all members are naturally
-+ * aligned, so we can omit QEMU_PACKED to avoid address-of-packed-member
-+ * warnings.
-+ */
- struct hv_local_interrupt_controller_state {
-     /* HV_X64_INTERRUPT_CONTROLLER_STATE */
-     uint32_t apic_id;
-@@ -644,7 +655,7 @@ struct hv_x64_intercept_message_header {
-     struct hv_x64_segment_register cs_segment;
-     uint64_t rip;
-     uint64_t rflags;
--};
-+} QEMU_PACKED;
- 
- union hv_x64_io_port_access_info {
-     uint8_t as_uint8;
-@@ -669,7 +680,7 @@ typedef struct hv_x64_io_port_intercept_message {
-     uint64_t rcx;
-     uint64_t rsi;
-     uint64_t rdi;
--} hv_x64_io_port_intercept_message;
-+} QEMU_PACKED hv_x64_io_port_intercept_message;
- 
- union hv_x64_memory_access_info {
-     uint8_t as_uint8;
-@@ -692,7 +703,7 @@ struct hv_x64_memory_intercept_message {
-     uint64_t guest_virtual_address;
-     uint64_t guest_physical_address;
-     uint8_t instruction_bytes[16];
--};
-+} QEMU_PACKED;
- 
- union hv_message_flags {
-     uint8_t asu8;
-@@ -711,14 +722,14 @@ struct hv_message_header {
-         uint64_t sender;
-         union hv_port_id port;
-     };
--};
-+} QEMU_PACKED;
- 
- struct hv_message {
-     struct hv_message_header header;
-     union {
-         uint64_t payload[HV_MESSAGE_PAYLOAD_QWORD_COUNT];
-     } u;
--};
-+} QEMU_PACKED;
- 
- /* From  github.com/rust-vmm/mshv-bindings/src/x86_64/regs.rs */
- 
-@@ -731,13 +742,13 @@ struct hv_cpuid_entry {
-     uint32_t ecx;
-     uint32_t edx;
-     uint32_t padding[3];
--};
-+} QEMU_PACKED;
- 
- struct hv_cpuid {
-     uint32_t nent;
-     uint32_t padding;
-     struct hv_cpuid_entry entries[0];
--};
-+} QEMU_PACKED;
- 
- #define IA32_MSR_TSC            0x00000010
- #define IA32_MSR_EFER           0xC0000080
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 866c8211bf..bf2f8cbc27 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -9,6 +9,8 @@
- #ifndef HW_HYPERV_HVHDK_H
- #define HW_HYPERV_HVHDK_H
- 
-+#include "qemu/compiler.h"
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
++{
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t ret = 0;
 +
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
- 
- struct hv_input_set_partition_property {
-@@ -16,7 +18,7 @@ struct hv_input_set_partition_property {
-     uint32_t property_code; /* enum hv_partition_property_code */
-     uint32_t padding;
-     uint64_t property_value;
--};
-+} QEMU_PACKED;
- 
- union hv_partition_synthetic_processor_features {
-     uint64_t as_uint64[HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS];
-@@ -201,12 +203,12 @@ typedef struct hv_input_translate_virtual_address {
-     uint32_t padding;
-     uint64_t control_flags;
-     uint64_t gva_page;
--} hv_input_translate_virtual_address;
-+} QEMU_PACKED hv_input_translate_virtual_address;
- 
- typedef struct hv_output_translate_virtual_address {
-     union hv_translate_gva_result translation_result;
-     uint64_t gpa_page;
--} hv_output_translate_virtual_address;
-+} QEMU_PACKED hv_output_translate_virtual_address;
- 
- typedef struct hv_register_x64_cpuid_result_parameters {
-     struct {
-@@ -226,13 +228,13 @@ typedef struct hv_register_x64_cpuid_result_parameters {
-         uint32_t edx;
-         uint32_t edx_mask;
-     } result;
--} hv_register_x64_cpuid_result_parameters;
-+} QEMU_PACKED hv_register_x64_cpuid_result_parameters;
- 
- typedef struct hv_register_x64_msr_result_parameters {
-     uint32_t msr_index;
-     uint32_t access_type;
-     uint32_t action; /* enum hv_unimplemented_msr_action */
--} hv_register_x64_msr_result_parameters;
-+} QEMU_PACKED hv_register_x64_msr_result_parameters;
- 
- union hv_register_intercept_result_parameters {
-     struct hv_register_x64_cpuid_result_parameters cpuid;
-@@ -244,6 +246,6 @@ typedef struct hv_input_register_intercept_result {
-     uint32_t vp_index;
-     uint32_t intercept_type; /* enum hv_intercept_type */
-     union hv_register_intercept_result_parameters parameters;
--} hv_input_register_intercept_result;
-+} QEMU_PACKED hv_input_register_intercept_result;
- 
- #endif /* HW_HYPERV_HVHDK_H */
++    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
++    switch (reg) {
++    case R_EAX:
++        ret = eax; break;
++    case R_EBX:
++        ret = ebx; break;
++    case R_ECX:
++        ret = ecx; break;
++    case R_EDX:
++        ret = edx; break;
++    }
++
++    /* Disable nested virtualization features not yet supported by MSHV */
++    if (func == 0x80000001 && reg == R_ECX) {
++        ret &= ~CPUID_EXT3_SVM;
++    }
++    if (func == 0x01       && reg == R_ECX) {
++        ret &= ~CPUID_EXT_VMX;
++    }
++    return ret;
++}
++
+ /*
+  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+  * fault to the guest if it tries to access it. It is possible to override
 -- 
 2.34.1
 
