@@ -4,178 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBA4ECD6CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D9DECD6D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqEHh-0001ya-Ps; Wed, 11 Feb 2026 12:45:53 -0500
+	id 1vqEKz-0002yB-4m; Wed, 11 Feb 2026 12:49:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1vqEHe-0001yO-TE
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:45:50 -0500
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqEKw-0002xa-JL
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:49:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1vqEHc-0005Kn-RP
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:45:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uYopf3zdiIkQdFEeXb1JNXYc3148kfGkz+IaEdNim2IRV9QQ3ji/RG0ojwoMR2JJ7NXJ3czIoE14XdjFLD6VE3RRqoYsBHM5qfje9CvaAurrBJpEguMXxLyzUNG75ld9qdh0SQOLgnD4xD3gBT0MS9wjbsNscSO9mc5mj0wIL4167DTjlVArCPMI9IhsXt/M0ngZvC/JGZNgtEtTHCXdh7AuJofE20YFDhIU40px9YCAmTGHGkAlcjFoF3Mq/ShIoekkW14S1RCFMwl5wquLMxZDmJlXPyQyCnucyI6liVZvPYWxYg+CEMwn57Fm5ZpoBpuzVDpvIgdPY3NYKwQ4TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RAzrazdpOZUo9RRP/V1GsrxfUeY7i1LegbsK1SGjszY=;
- b=f3CVBelT0fdWmctMU+L1BB7phej8ut/1r1u6yW/E/jRc4S7UwhKPA9uizavD8AlKH6QJBD2IcIzrQS+cj5Ma1RuWOvIyBc+CBraA+NOCAHyGLWmJY2R/dYxrupz3dLkMTGEhjL7yB7pCnkp9KbAE+1cVDt3nnZKjbimSFqdPyRLte1uzigjDAIc2z6VMThb67yz8Y+9DUkZHIBXoVa4ThiZsPN+6J4W/mLlacfQHm0VE5NOAUertZDRPXAD8plpWO8wued6lE794YqoTyNQDxIHujS9h3hlBx1CYKsXcNfWdlbSBVbC55tR70N1OpgG8XHFDGCVv4if8ZWvpxvi5kQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RAzrazdpOZUo9RRP/V1GsrxfUeY7i1LegbsK1SGjszY=;
- b=mhPgyDUSxxyiLBIRdig5nx45j45gcnx24/ydcqMUnm1IFc36n5iRi45SxK9YN5h+CLjrwAxc5cWR5NpOfuJlKTCgAxvtiEwxvXJkohXaNiXT2321ZGEHGw245BIAfSHbjJjxP4MJRHyhPKj2bpfXruwcDcOXj3/qFflH8NwyosZHf+uWL5haayXwhUX0wAHjh0c/8dijCm4xSfyxmo086cZiq0+/B9cOVdH2uv3FkSG5EbPGOFX4pLGWTXZZf18xevg7ROlVHuYp6MX1ctmTSEZKGTLIv/vOY/H6Uu/LPcnayPT5GqkAYF1hsbU83w9jjp2J8hZFuAGRrcReQ0Z76w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by DM4PR12MB8570.namprd12.prod.outlook.com (2603:10b6:8:18b::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.17; Wed, 11 Feb
- 2026 17:45:43 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%5]) with mapi id 15.20.9611.008; Wed, 11 Feb 2026
- 17:45:43 +0000
-Message-ID: <1260f024-b22a-439b-a70a-ef5429162b3e@nvidia.com>
-Date: Wed, 11 Feb 2026 19:45:38 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
- PRE_COPY_P2P transition
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
-References: <20260202173406.13979-1-avihaih@nvidia.com>
- <24ea8ccb-d904-49e4-bd27-5378aac4a56a@redhat.com> <aYIqDAdld4a41VDy@x1.local>
- <87cadb65-af45-4bb3-8090-8301a1e67103@nvidia.com>
- <a0dbd63d-30b9-4c83-851d-abaf50d4c9fc@nvidia.com>
- <aa18ad15-580e-483d-8e29-20c7e6ebb6fc@redhat.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <aa18ad15-580e-483d-8e29-20c7e6ebb6fc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR5P281CA0003.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f2::14) To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqEKu-0005yp-SE
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:49:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770832150;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1yCZLR1DLzEMSeGP2YkgCMXudyI6gzjodSS/USsCDZI=;
+ b=NVgiMXhr48Gva3n/td5o/LXIzJPUA0FoPjYbzdBzq3bM+pXfo0oMnQnLduMAj/3iDL8onm
+ atN2yDDGgue1R/7w9RtgvoB5zmnJPRw7dsHUH+er9kpF6HVAi9sxkE+NdOLaToNWqWMilY
+ e9v5g7XbcSEkDPLPZPkvjy82YaceT5g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-173-Gok3r_aLMXitOnuyGyUlNQ-1; Wed, 11 Feb 2026 12:49:08 -0500
+X-MC-Unique: Gok3r_aLMXitOnuyGyUlNQ-1
+X-Mimecast-MFC-AGG-ID: Gok3r_aLMXitOnuyGyUlNQ_1770832147
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43623cfb160so4074897f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 09:49:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770832147; x=1771436947; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=1yCZLR1DLzEMSeGP2YkgCMXudyI6gzjodSS/USsCDZI=;
+ b=VU+a7wca23UNjHG3B2M6olo6viLZ3FiAlQBkhbQM2r7ROvdiBvF+w0m9+e3qMyYeUa
+ bLsc30oD3VSKrt3g9UGCnEnUC863MgL2XqPZ1qlrVk5KXgV9MJZqM6HfHIyW6Cah7Wqq
+ jnPdQYd3+EkCkWCbjd6fc/8JJBeLSVhq86rUi5J33fvyVKAdytOLl/auYTxsHCncivKf
+ 94okrNKhyzMz6spdcm5qVF8ym2iuOTtT7q8g3oTGkAQ8qt/U2ynVdEfHzTfIBJeKWoLy
+ TxQnWEXsZpwKzE2mpFH8o5GJDPJnAcuBQxesI9jS+RNzsZOUBVl2xPdjLvbCUfTUfNKr
+ csjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770832147; x=1771436947;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1yCZLR1DLzEMSeGP2YkgCMXudyI6gzjodSS/USsCDZI=;
+ b=EyBy3I8HM0LZa6Ub8sVfjJ/06JCRALZZagQHLZ6x4JxYXKNrbX1EKQN519tduM7xtO
+ Y9SQI0VlNfcLPk4nBu+L0e8bvV/wOaKAEbxMJkQIJOdTfduoO2wU4rQEazsamcTLAOeI
+ a2OaF1/yvI95cNhCH3yxrFj3d7RJk+ETfgTSXZGYdKwB8X09T2xplZGSOf4JUnHTFBS2
+ YBgWEw0Ycq6rKPvrOF2YICKIpqVZgUkj9iat/eqnnLHS0tIcr8R9rw5Sbr6qxdHtWfSC
+ vhjX+0Cr8UkIOvef66RHOPzktpolOTG/nxCC/OxJBcPnUZK7SLXktsMbpb7HGGe+KDTI
+ szEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoeMZXP8Kj/WaSeNgQHrDHSs3BaoAQ5Jxl3CDQSGluhGB84ko927cq0Lg06R6jMn7k1wPQkON3rvOk@nongnu.org
+X-Gm-Message-State: AOJu0YyvDIKXamGsP/BYHYMMtUb6shWEMO427EgWc/D4wgaVKJkR+mKB
+ ee3rz7kFil5W2qaWV4+2Cs52FaHW0k00WngY6oCgmvRwiM4TUEY/iimr9hED6NeZNiWVawQH53G
+ 0ohHkLFTZMzVBBrOsTGTMyDWvN1fv56/Y3TD4OlB4JsOTJdLLLB/qJTDc
+X-Gm-Gg: AZuq6aIiM3gB3+VUbhTcQQCvUvCa15XX+yQSn6oPxA+kofyx1y2338Xy+qFg4jk/cM2
+ y2fTC/++GCUl1W/xxQOV7wq9LMaYsRCW9zXXyEeOfmV7K8QilIsLqpVFltSV0zEZWw39LTOMIJj
+ dyggdWwZbphRWE4GfRhUlDPXYkfTX+ZXXOY0ZZvG6gw7LnaDQ+aOD7iwONVvFR0AJIhheOe9QPo
+ h7PSbCfWtYBnyaSDZb0T27gOTZXw7jLgxAfm7cv3MqHhB5xsXlaLgJkA3I48dZ0nSWkpV99biQz
+ XBrzzNPPNCjMgFK0TqbgGZi/fqFcfLuuvtxNNmzC7FNkd2IsW+CPN8YNDlie5KGqfuXmo2fvNdf
+ wc7qBQatElDFvaDrWdx5Eh0bJsxIyhyDfhpnNLoKX3qXdPqqSH6txS+BLShZn
+X-Received: by 2002:a05:6000:4022:b0:437:675d:7620 with SMTP id
+ ffacd0b85a97d-4378ac82043mr437730f8f.35.1770832147301; 
+ Wed, 11 Feb 2026 09:49:07 -0800 (PST)
+X-Received: by 2002:a05:6000:4022:b0:437:675d:7620 with SMTP id
+ ffacd0b85a97d-4378ac82043mr437687f8f.35.1770832146840; 
+ Wed, 11 Feb 2026 09:49:06 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783dfc54csm5988604f8f.25.2026.02.11.09.49.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Feb 2026 09:49:06 -0800 (PST)
+Message-ID: <98b36726-71d1-4129-99cf-b16bea1575f1@redhat.com>
+Date: Wed, 11 Feb 2026 18:49:05 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DM4PR12MB8570:EE_
-X-MS-Office365-Filtering-Correlation-Id: 424b55ac-1f6e-498e-7d69-08de6995605e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MU56UCtjWTZHS1l2aWQwZFBwamtBNjZ5Zk9KaWt4UU5PRFJBVFhwSzM4SFJZ?=
- =?utf-8?B?cmJlcTVVc1M5b1NscjBlRVRlcGsvdU4xT1JCdU9GMEpSZFc3Y3NEVnFQYk1F?=
- =?utf-8?B?dzJMcW1adWY4Y3BHM1ZzaWgzOTVkcEVURC8rU1VGZnZyZXpJYjBqSzdnMUVW?=
- =?utf-8?B?dFgwVXdKWUwxL2xqR2VVT0s3S3ZaSHlzQ0hjbFlwV0g1S0RabzRZV0VBZEE1?=
- =?utf-8?B?amV1MEw5MjRJQ1lUTm5wMG12RHkrdlZ4VVZPKzM4RjdNUHMwaUplK2hURzR3?=
- =?utf-8?B?TEpiRGVnQjdNL05YQ0x0bk5mTlVmTU5XMlJkMGhkNXJVQnJ2eUNDSlJFcHZI?=
- =?utf-8?B?Q1Jqb29ZQ2Fnb0xrb21SS2doWnR5L1N5Mnk5a0JBZHBsSkZ2ZDM3TWt4UUk2?=
- =?utf-8?B?VFdqWFZYbWhwenBXU2V2WGN3bG1PYWJIbzFOWnFlL0tOTWFTa0Zia1VFZy9H?=
- =?utf-8?B?bGlRbnZiQ0hoUjFOMTIzc2ZqK1NOSnF2ZGZvcCsvZlBwZ2hLUlZBdHN1U252?=
- =?utf-8?B?c1lhL3JCRGlkbVVTTXFYVXZvQzBvUWNFU2ZvM1Mrbk9RZDdydXMwSVhQS2p2?=
- =?utf-8?B?d0xSc1Ywci83WTZta3JySHk0T2hmTzUrUjJYYnh1YmhQZ0NXYUZycHR2NUlE?=
- =?utf-8?B?cVprUWQ0eUh0YkRXc3BMWTEyMXhLVk55MDBQQ255T2ZWWDdwQzZFeHZqYW04?=
- =?utf-8?B?VnQ4REcrM1pLUlUybldNMnJkUERBbmNjSGg3YzMybTVMQTlQeGduSEN2NDRX?=
- =?utf-8?B?UStxZVFiRWowRktmTE9wSDVneHVieER5MHdDVis5SUlQQkpXbGtSdFlPa0tT?=
- =?utf-8?B?WkxLNWsxVmdMYTVGYVNZazFaWVJHQXdKR0lPQ1hEaTNxNEdBUmozU0NvN1JF?=
- =?utf-8?B?WnZuZlNiWlhMeC8zVStKTmNPdXhUdjFBbTRzMDlqVFoxWWU3b0NlbnlpUmkr?=
- =?utf-8?B?aWovOXZBakhBNGtNb1E3bXF5Y1c4Wi9hVGt3T2xOajdoL0VRdXA3bXpzMmpZ?=
- =?utf-8?B?ZzdTSWZJbzBFZG10TlVFOHdIeiswd0NEbGpEdGFhME1KTnd5VXlOR2x0SzI3?=
- =?utf-8?B?bUdNRXlqRDJ1b0w3V0VMTklaSGN4UE10V2grN0JucDdIbUJhNXFtT281amRr?=
- =?utf-8?B?dFpNQUY1L1NFdEtDOVo2NDNQMVRnbm9kd2RYUGcvbjk4SXZYTlVuT0xnbGtD?=
- =?utf-8?B?QUxMZWNud2xQZHZYampvQ3pwMnhxOGdhS3MrTTdxNWFVR3dFQVF6MCtRa1I5?=
- =?utf-8?B?WDl0Qi80SWJyU0M4Nm0vdzdXd0lZcnVOcmFIYnlCMURUN0FnZkJYU1JqWW1S?=
- =?utf-8?B?Y0ZnaklUWGlwc0ZpQy8wc2tjemFubjkwejZTZS9QKzlVRWN4dmc4ckVlZnk0?=
- =?utf-8?B?TTl0c0RkR0FTcW1MWlprQ2lXcmptdHdaQWxhbGwvd2x1UXJLMnVXbUtybjlm?=
- =?utf-8?B?REtKZEtsSzFNTVlnWXZibHBFLzJESS95cy9nbVQ0T3BLejY0c1phTkpWWGxY?=
- =?utf-8?B?R0xnQ0dncGg3Y1Zob1htVldSbTRxVmQ5aFNpY3lMaHRneUU4YTFGazUxLzAx?=
- =?utf-8?B?SHBvc0xSTGdETjFBNll6cytCQWJuOVk0ZG9Rcml3c0dqWGF5SkFHQTA3bXd0?=
- =?utf-8?B?MHR5U3RIUXMzQytpa3hzVTlLVUVXL3JyNk1DeHVGUVQ0TzBaaENjai9pcCsw?=
- =?utf-8?B?dlhpY2J1Z1NLaWhpYkdtME05OG1uV0M0YTFraXBPcWFkb0VOSks5ZTBxR2wx?=
- =?utf-8?B?WHZRSFZWQzZGT1Y4WldLK3FTNnJ0SXd4K2FRdDg3Z25CaytyRGZOTnZDMnhD?=
- =?utf-8?B?VWhUTTExNUtvNlA3WUpoUmlBSmpjY3FWTzRYWDZZNU9WdjJxanlxdzJPOG1l?=
- =?utf-8?B?em5OM2NCYTNhZ1RzZCtGVmJldVRJWTBHa3g0ZVZnYW1vcTRxRXkvQnBJQU9r?=
- =?utf-8?B?VjdaTjg3UlZUdFNOQWxRalFTMTNIeDlQYUIzeTNIZkJWL3NvMGxRMGFGWjFv?=
- =?utf-8?B?RjhRbHYrQVFnK25CTkxFV1h5dDBwVmhVMk9XUTJMeksvWGNzd0JHbFR5RGlw?=
- =?utf-8?B?Y2dnM1ZMSER2MlJZaW5hamRJMVBqSWlnNmdKMVRpM2s1UVlNbUVLNzViQ1M2?=
- =?utf-8?Q?FOfA=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NzhKbHlFMTBDVVE4UytqamtEaVdKc2pSUmVKUzlTdHJWZGRYbXNsdTJObXhh?=
- =?utf-8?B?TnVFYXI4TXM3NTlzdVBaa0s0aUFUa25tcStKdlA2R1AwOG45QXdhVXliaEJN?=
- =?utf-8?B?T3ZRS2Z4Ukt3T0F5MFFEWHAreUdrM2dNZWp5V0VDSWw3ZGljY3BvV3BzbGVr?=
- =?utf-8?B?amtvSHkwbXNnUzJvUWc4QndCb2xrUFg1VGFqSUlmMHNZVEZtT0E3cndoMFVy?=
- =?utf-8?B?UlQwY3Z0cU5jbEZEVlNjSkxGamhYRzM5c2p0eHpwb1NWOXhyQzZTeWN1Wkpo?=
- =?utf-8?B?ODZBY2gxcHVQTWpaZnBvNWlmWU5MMnVJb25XTzJpUFBJd093R3EwVGw1T1JL?=
- =?utf-8?B?eTMrM1M2dVVHQUNjMlVCNHBQdkNjZHNqd3JKb3l0dExLMlpGcTlIQUdVeERw?=
- =?utf-8?B?NzlDRGxESlJmK05OTk9yb2Vnems4Z3p6OXd1TjNXc3pjVEpKM3JqS0s4YURI?=
- =?utf-8?B?NWdJanE5K2RzMjRUR3plN2JHc3IyS2hlTXJRWVVEZ1V3MW9KY0kycCszZ3l5?=
- =?utf-8?B?WHJvb2JOWDF4QTYrZlVucHMxZVZKM1Y1bjQ2cUN0UHRTTzdBVDlyMU4rckJC?=
- =?utf-8?B?dWkrOTgvcFp4c2hTcW1vVWhHT1ZSTlVKU09zQjN0KzRUcVdaR2huNVoxU25V?=
- =?utf-8?B?S082VmNIdVJZRi9Fb1F2WUkyOGFnYkpyU2k5bHBQSDNCclpIN2Fibk1DaExj?=
- =?utf-8?B?UG5PMkwyOEZMT3lhQnZJVzZpY0lOVDVGaVJZSnc1QnVtbUxYelZGaDJUbEVI?=
- =?utf-8?B?ZjBXVzM4Y2JGbTZxMHErT3QrbDcwWTg5RldzM2thcHlOcmlxa3NqYm9QbWpr?=
- =?utf-8?B?UXErUUZPTFRUa28yL3lWZGsrUGlYblNmUTZvZDNBQTZpYkVSMmU2NENNRWYx?=
- =?utf-8?B?NU1iNVJFTjh4YVBzcVlMZGpJTndYZk5RdTlRSEdXZnRBdENKUHlBSzQ5NVJ6?=
- =?utf-8?B?bXBYOHpybkFxMDdReW5RTmo3dmhic2dIUi95TVg1QklRTUZIUkszSDQ1MnRL?=
- =?utf-8?B?SEg2YThFVzE5bEdnNTQ0TDNQYldwUEcvSjRGUlZ5SXh1VWM1emdKZCt1ek94?=
- =?utf-8?B?WC9JZ2p4K2dvN3lwamg2akN0aTUrbFBhZitDZllBRytQTzVMYmdCZXIyKzlY?=
- =?utf-8?B?Vk8vZW04a2dWcGlWZ3ozOHhIS1IvTWxWRlg2QWtjUlA5bGg4N1JZQXZML2U0?=
- =?utf-8?B?ZWYxMlBidk5kRU4zSkVEai9icnlycXV2aDltY0RsRmtlenMxeFBMd2piU1da?=
- =?utf-8?B?SVVmMTc1ZTdsczNuVDFGNHFpRnpSMEtpTVU5Qlhnb0hodmJnZ3o3YkNoUjY4?=
- =?utf-8?B?YTZzK2JYSXRTak83QStOUmw2Mi9PNDJ1ZlNkQVdmTDVWOVBYWTBoNGZLeEN2?=
- =?utf-8?B?VVo2QVFMbVM1d1lTalRIOGIzV1o2Z044bStsR1JUQW81eEV6c1RjTFdmSzhp?=
- =?utf-8?B?THRPRVZvUXlEWnd1RHEvZjg1L3IwS3RCbVAyOHkwMFByVTd5ak04dDIxeGpw?=
- =?utf-8?B?cWxQVytLd0RURTZNdDk2dGttWm1iR0lPRHM3ZXAxQm96cExpYkdoTnlQeTFk?=
- =?utf-8?B?V2tMQUN1YVJhbWZLMlVRV0gybHRXK2RoNm1qQ2V6eFpXdHJUaUczSWQxVHBt?=
- =?utf-8?B?NS92OURoamJqTGViVEJuL213VDA4NkhLY2RsTVhQN2h2aGNaZ3praGZHM09p?=
- =?utf-8?B?V1Q1TDhqZG1UWElTTVNoenVaVW1wM0t3aE5NbzQva1p5ZUNFOEhZcmJoK1Zm?=
- =?utf-8?B?RDNDeUhVM0pKZmpKVWpSMnVFQWVPdk96cFZ4ODcrdm1BQXREVEpGRUtXSDhn?=
- =?utf-8?B?d0VJZTA1cWdhRG9Kb3BTMnQ3L3VtMUc3Qkg4aVpQd0tzT3lIeE9WQWh0SXhJ?=
- =?utf-8?B?RUdIbzVIOG10YytWV0hITnBjWnpqaG9IdzROTWJDMzhDUnpZKy8rYmJzd3J2?=
- =?utf-8?B?VkhWQzBScCs1dlQ0eE5GUDZsbHJLNllMTlhoRVJCWjZYY1hxQXpFay85ME1S?=
- =?utf-8?B?VXhDQXZKbU1hZ0d6S21wb0xndnBWbFpXSzdIV21oWHRQKzRUb2FoclhZY3pz?=
- =?utf-8?B?R0s5SHFwaWVGMzdTOWV2N0kxNUY5NjlYa2ZRQm1pelNxRWJ0T2luMFhreGR5?=
- =?utf-8?B?S1hoRDlkbloveE90MHhjTEFLNVVLZ3BYb2xjZjRWYXoyMW5qZEcrcSt6OWxJ?=
- =?utf-8?B?VWpXR3BYSjhQY1NiRFlmS2NIQndoRWVSaVZnaktGOHNYbWRUK3AxcDcrcS92?=
- =?utf-8?B?aDJiNFhQeWNkSjllU092VDJ4SjllSTU4c2xVN0dhOXhDbnU4YXJkWXJndGFu?=
- =?utf-8?B?YisrVmkzYm9nT0gyYzI2UlZYSy9Lek1BcjVra1FQVThrc0xKeG9vQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 424b55ac-1f6e-498e-7d69-08de6995605e
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2026 17:45:43.5899 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lB24Tsv+oUH+0hYgsnFN1BDB13OuZf+weAQ9i8Z/UebAWxC/DGNCbmq9gimpv3icd9oStCRo1S68oliluTNtsA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8570
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
- envelope-from=avihaih@nvidia.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hw/vfio: sort and validate sparse mmap regions by
+ offset
+To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com, alex@shazbot.org
+Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
+ targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
+ qemu-devel@nongnu.org
+References: <20260211030615.3202-1-ankita@nvidia.com>
+ <20260211030615.3202-2-ankita@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260211030615.3202-2-ankita@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,62 +171,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/11/26 04:06, ankita@nvidia.com wrote:
+> From: Ankit Agrawal <ankita@nvidia.com>
+> 
+> Sort sparse mmap regions by offset during region setup to ensure
+> predictable mapping order, avoid overlaps and a proper handling
+> of the gaps between sub-regions.
+> 
+> Add validation to detect overlapping sparse regions early during
+> setup before any mapping operations begin.
+> 
+> The sorting is performed on the subregions ranges during
+> vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
+> mapping code can rely on subregions being in ascending offset order.
+> 
+> This is preparatory work for alignment adjustments needed to support
+> hugepfnmap on systems where device memory (e.g., Grace-based systems)
+> may have non-power-of-2 sizes.
+> 
+> cc: Alex Williamson <alex@shazbot.org>
+> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> ---
+>   hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 44 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index ab39d77574..177494c379 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
+>       },
+>   };
+>   
+> +static int vfio_mmap_compare_offset(const void *a, const void *b)
+> +{
+> +    const VFIOMmap *mmap_a = a;
+> +    const VFIOMmap *mmap_b = b;
+> +
+> +    if (mmap_a->offset < mmap_b->offset) {
+> +        return -1;
+> +    } else if (mmap_a->offset > mmap_b->offset) {
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+>   static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>                                             struct vfio_region_info *info)
+>   {
+> @@ -182,6 +195,34 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>       region->nr_mmaps = j;
+>       region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+>   
+> +    /*
+> +     * Sort sparse mmaps by offset to ensure proper handling of gaps
+> +     * and predictable mapping order in vfio_region_mmap().
+> +     */
+> +    if (region->nr_mmaps > 1) {
+> +        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),> +              vfio_mmap_compare_offset);
+> +
+> +        /*
+> +         * Validate that sparse regions dont overlap after sorting.
+> +         */
+> +        for (i = 1; i < region->nr_mmaps; i++) {
+> +            off_t prev_end = region->mmaps[i - 1].offset +
+> +                             region->mmaps[i - 1].size;
+> +            if (prev_end > region->mmaps[i].offset) {
+> +                error_report("%s: overlapping sparse mmap regions detected "
+> +                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
 
-On 2/11/2026 3:16 PM, Cédric Le Goater wrote:
-> External email: Use caution opening links or attachments
->
->
-> Hello,
->
-> On 2/11/26 14:01, Avihai Horon wrote:
->>
->> On 2/3/2026 7:25 PM, Avihai Horon wrote:
->>>
->>> On 2/3/2026 7:02 PM, Peter Xu wrote:
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> On Tue, Feb 03, 2026 at 05:48:11PM +0100, Cédric Le Goater wrote:
->>>>> Peter, Fabiano,
->>>>>
->>>>> Do you think it would be interesting to send VFIO migration events
->>>>> by default ?
->>>> No objection here.
->>>>
->>>> IIUC it's a matter of why it got introduced with default off in the 
->>>> middle
->>>> of 2024?  If it's about compatibility of any old mgmt which may be
->>>> surprised by these events, then we want to know if they're ready, 
->>>> and then
->>>> if we need a compat field for it in older machine types (or enable 
->>>> it even
->>>> with old machines).
->>>
->>> I disabled it by default back then because it was only needed for 
->>> the use case I mentioned here (specifically, it wasn't needed by 
->>> libvirt).
->>>
->>> I guess you can either leave it as is or enable it by default, it 
->>> won't matter.
->>>
->>> Thanks.
->>>
->> Hi Cedric,
->>
->> Are we good here?
-> Yes. Sorry I should have said so. It's queued. I don't have much
-> for a PR, so this will wait a bit.
+please use PRIx64
 
-Great thanks!
+An extra 'Error **' parameter to vfio_region_setup() could also be
+considered to propagate the error to vfio_pci_realize(). It shouldn't
+be too complex to add.
 
->
->
-> As for enabling the VFIO migration events by default, I guess we
-> all agree it could be done. We simply need a stakeholder to change
-> the default behavior.
+Thanks,
 
-Ack.
+C.
 
-Thanks.
+
+> +                             __func__, region->nr, region->mmaps[i - 1].offset,
+> +                             prev_end - 1, region->mmaps[i].offset,
+> +                             region->mmaps[i].offset + region->mmaps[i].size - 1);
+> +                g_free(region->mmaps);
+> +                region->mmaps = NULL;
+> +                region->nr_mmaps = 0;
+> +                return -EINVAL;
+> +            }
+> +        }
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> @@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>   
+>               ret = vfio_setup_region_sparse_mmaps(region, info);
+>   
+> -            if (ret) {
+> +            if (ret == -ENODEV) {
+>                   region->nr_mmaps = 1;
+>                   region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
+>                   region->mmaps[0].offset = 0;
+>                   region->mmaps[0].size = region->size;
+> +            } else if (ret) {
+> +                return ret;
+>               }
+>           }
+>       }
 
 
