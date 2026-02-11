@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24453ECD6C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3B4ECD6C3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCeO-0000Vr-0B; Wed, 11 Feb 2026 11:01:12 -0500
+	id 1vqChf-0001nO-V1; Wed, 11 Feb 2026 11:04:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqCeI-0000U4-7F
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:01:08 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqChd-0001ml-WB
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:04:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqCeF-0005BB-In
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:01:05 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqChb-0005sf-8W
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:04:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770825662;
+ s=mimecast20190719; t=1770825870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8OO21sgsFPBY+SdaaAgUKxdqyhk6dlodd9BDWdZQXyc=;
- b=h2fDwkJ3IxHxoAO8IqHtHL7VH7W1wzQ8eiQR4jv0bq/zpKCrL/Mb8U17rfT037cnPGzyD0
- LmZ9xu85THPNoOenxUi7OkXrbuzVimDqx78IveCi1KMB5Ghoeca36QEQ2t/cwUm1w0Gsct
- rq51ObkEPr2R9EZ2SPiTe+MoqfGuG2I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-2C3fP21MOBqPUYNKO7gYqw-1; Wed,
- 11 Feb 2026 11:00:57 -0500
-X-MC-Unique: 2C3fP21MOBqPUYNKO7gYqw-1
-X-Mimecast-MFC-AGG-ID: 2C3fP21MOBqPUYNKO7gYqw_1770825654
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83C8F19560B0; Wed, 11 Feb 2026 16:00:54 +0000 (UTC)
-Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ACE521956053; Wed, 11 Feb 2026 16:00:50 +0000 (UTC)
-Message-ID: <696de68c-6422-4a1f-a462-808a891c4aca@redhat.com>
-Date: Wed, 11 Feb 2026 17:00:49 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=5KpC7yaqnmPgfObvDWEmIArdNjIVjuTr6fFxuFr8Hdk=;
+ b=FVQus8uqgehpxXP2IYKnvBMGDF4XTCcAP8/TKS2qmaaNsAqxKjJys3OxMYn8GQfGduQ4wj
+ uDZn/u7SCVer1Ld4BOfHT5oAr4uVOgeQadZjULcrzblRFtcS45OdIaAcRX+xyANAw7a5ZM
+ qFH6Wl0Jn2UKWr1x/BEQXIv0BNoaGFU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-2ZT5EwlpM1O5EZThJ1oZOA-1; Wed, 11 Feb 2026 11:04:29 -0500
+X-MC-Unique: 2ZT5EwlpM1O5EZThJ1oZOA-1
+X-Mimecast-MFC-AGG-ID: 2ZT5EwlpM1O5EZThJ1oZOA_1770825868
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47ee432070aso51469175e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 08:04:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770825868; x=1771430668; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5KpC7yaqnmPgfObvDWEmIArdNjIVjuTr6fFxuFr8Hdk=;
+ b=VtiYefjeT/nFb/5MYTg0PJPK0zkkI4gJChMDbSxsEYeIAz6BWoFjZKOV8W3m8wbTHB
+ aEp6vglJf9g5gaCDqWZsM8GPY0vBCAOEdioTMltUGt2pYTip6TYaFSTp14vGFtlL4dsi
+ l/KqHb2y5OShm4RHbRAj5MmWz31M6GZbeNdDf/LytBO/SZ2g/dTWgAUttclapg1J5LNV
+ Y3cE4yAfMoGB5BRx8R5aaFzJJd28xIEoWHtYUca5KSesbx2vKFudPTQQ+kcAxj1JsMPz
+ NnwaY9spXj8fBAZeMUi9707fQd8BwPEzHMOTDTQt4zfCL+UEf5pz19JlXvtiimyFqNhT
+ /KjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770825868; x=1771430668;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5KpC7yaqnmPgfObvDWEmIArdNjIVjuTr6fFxuFr8Hdk=;
+ b=n/bnJSn2sC4KrJOgn4OPLL7aPidlLbx1hCxLIF2P1lmxuu1u3HQvaMJcGhtvJWTF+X
+ wWn3euxbASAqjdONXMs8TWH1wA2Da1QPUqtondF3WC8BLo+GJI9BDe488sTTZlzPcJG9
+ x26gCMm92Uaydo8EYpPQ/jxCp6MVmuBuyNFSHpCEeWdUu2wKMQwng4ND91DqUw4PFrSw
+ ywa0r0fYQ9goXhvmsKqFCAlCv4jsB83PVpcJ197ZSHs7a9ZcM4HFQIjHhrLKwLfIYNc+
+ +8FzpztJLKvkEnKCrvVb4FnroSWA1lKZS+MvcH7e3UOmMkn8DHWeV0C4d4PbpPcgH7Sl
+ Puhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMpTW7D73QyNLVjvM9a/e70r63L5Y0cQ7RjGVYZe2CcCE9ptJcVMrHvLYjPSpwuAKaZMpe9kfRuRBL@nongnu.org
+X-Gm-Message-State: AOJu0YyPG4y8JvHSWyJ6j4kXYAzK3De2elhaaYFdGRgWckriXn9G93uW
+ zDKay2jwC7xeK4VLk0isVHmEJN77upSnsOIsr/5VJTwL4+C1xiZDUWdGoxCFyOeshHeRbyV1mZz
+ QiT6IK2ShQM37OxdLphRE4H8U7XVn4EY80i5NGW2qxonz2bXvEsOpORX4
+X-Gm-Gg: AZuq6aI45q/lksVVhcHmLepf67brtnm1iCwA1bOgygiDjbP+D3psEmBUpEXBf1Fs3l8
+ eexdVdsJKkbDoVz5itMobY2wQ4p0UhhBNNiDiACc1U6audUTj+r3GAcWuAiFsI9/XvcOxnlXeNE
+ MXBsoKYGsa2vS1iaUC0yBJSMvww5ZzIHi40sqTnFo4zigJEtQCTko4S01mU0i6DI4auzIM/19Ma
+ YYoofSigZDqkVAs6tdgbNqMBSrXnxaV1k6A/kSbs61kDSzTD6EDT86mETi4PuHvnoPDVt1Ha2jW
+ K7j+WmqbdmO47kNDirdf1Yn41+ciCzy6WISHCy7+OwGAnSUcexOerR2HSZglAiFHCi4fTU6O+yP
+ qdcvE9ddEQ35AbAQHK2ByiC7+BNOkDUrscULW75/L1Thkvp0E8TOHBv6oZQX9kCF3SwugZOk=
+X-Received: by 2002:a05:600c:46d0:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-4835b96ec32mr36898565e9.28.1770825867293; 
+ Wed, 11 Feb 2026 08:04:27 -0800 (PST)
+X-Received: by 2002:a05:600c:46d0:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-4835b96ec32mr36897035e9.28.1770825865304; 
+ Wed, 11 Feb 2026 08:04:25 -0800 (PST)
+Received: from rh (p200300f6af2d8700b4c2d356c3fafe63.dip0.t-ipconnect.de.
+ [2003:f6:af2d:8700:b4c2:d356:c3fa:fe63])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835d92267bsm70932155e9.0.2026.02.11.08.04.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Feb 2026 08:04:24 -0800 (PST)
+Date: Wed, 11 Feb 2026 17:04:23 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ kvmarm@lists.linux.dev
+Subject: Re: [PATCH v4 2/2] target/arm/kvm: add kvm-psci-version vcpu property
+In-Reply-To: <CAFEAcA-A+zW=QFdCY7z==+Z=xXfhJvPeyHhbG_MpEmpkQfrmaw@mail.gmail.com>
+Message-ID: <4e9470d5-ef3e-cf5c-4117-fb589d56323c@redhat.com>
+References: <20251202160853.22560-1-sebott@redhat.com>
+ <20251202160853.22560-3-sebott@redhat.com>
+ <CAFEAcA8oi1Xs2kv66dFV9NZore+Q2vHUsgMikveVdN1c+3SBJQ@mail.gmail.com>
+ <9b04a20f-b708-208d-1e4e-466ec30b7bb9@redhat.com>
+ <CAFEAcA-A+zW=QFdCY7z==+Z=xXfhJvPeyHhbG_MpEmpkQfrmaw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
-To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org
-References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -135,34 +123,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/02/2026 15.56, Christoph Schlameuss wrote:
-> Allow propagation of the ASTFLEIE2 feature bit.
-> 
-> If the host does have the ASTFLE Interpretive Execution Facility 2 the
-> guest can enable the ASTFLE format 2 for its guests.
-> 
-> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-> ---
-...
-> diff --git a/linux-headers/asm-s390/kvm.h b/linux-headers/asm-s390/kvm.h
-> index ab5a6bce590c722452dac5aeb476bd1969d2235b..45a6d0a7406a3f1b71026c49e00ac25a6fc620ef 100644
-> --- a/linux-headers/asm-s390/kvm.h
-> +++ b/linux-headers/asm-s390/kvm.h
-> @@ -444,6 +444,7 @@ struct kvm_s390_vm_cpu_machine {
->   #define KVM_S390_VM_CPU_FEAT_PFMFI	11
->   #define KVM_S390_VM_CPU_FEAT_SIGPIF	12
->   #define KVM_S390_VM_CPU_FEAT_KSS	13
-> +#define KVM_S390_VM_CPU_FEAT_ASTFLEIE2	14
->   struct kvm_s390_vm_cpu_feat {
->   	__u64 feat[16];
->   };
-  Hi!
+On Wed, 11 Feb 2026, Peter Maydell wrote:
+> On Wed, 11 Feb 2026 at 15:37, Sebastian Ott <sebott@redhat.com> wrote:
+>>
+>> Hi Peter,
+>>
+>> On Fri, 6 Feb 2026, Peter Maydell wrote:
+>>> On Tue, 2 Dec 2025 at 16:09, Sebastian Ott <sebott@redhat.com> wrote:
+>
+>>>> +static char *kvm_get_psci_version(Object *obj, Error **errp)
+>>>> +{
+>>>> +    ARMCPU *cpu = ARM_CPU(obj);
+>>>> +    const struct psci_version *ver;
+>>>> +
+>>>> +    for (ver = psci_versions; ver->number != -1; ver++) {
+>> [...]
+>>>> +        if (ver->number == cpu->psci_version)
+>>>> +            return g_strdup(ver->str);
+>>>> +    }
+>>>> +
+>>>> +    return g_strdup_printf("Unknown PSCI-version: %x", cpu->psci_version);
+>>>
+>>> Is this ever possible?
+>>
+>> Hm, not sure actually - what if there's a new kernel/qemu implementing
+>> psci version 1.4 and then you migrate to a qemu that doesn't know about
+>> 1.4?
+>
+> Oh, I see -- we're reporting back cpu->psci_version here, which
+> indeed could be the value set by KVM. I misread and assumed
+> this was just reading back the field that the setter sets,
+> which is kvm_prop_psci_version (and which I think will only
+> be set via the setter and so isn't ever a value the setter
+> doesn't know about).
+>
+> That does flag up a bug in this patch, though: if I set
+> a QOM property via the setter function and then read its
+> value via the getter function I ought to get back what
+> I just wrote.
+>
 
-Please don't send updates to linux-headers/ embedded in patches, such 
-updates should go via a separate patch instead that has been created by the 
-scripts/update-linux-headers.sh script.
+Meaning this should be something like below?
 
-  Thanks,
-   Thomas
+static char *kvm_get_psci_version(Object *obj, Error **errp)
+{
+     ARMCPU *cpu = ARM_CPU(obj);
+
+     return g_strdup_printf("%d.%d",
+ 	(int) PSCI_VERSION_MAJOR(cpu->kvm_prop_psci_version),
+ 	(int) PSCI_VERSION_MINOR(cpu->kvm_prop_psci_version));
+}
 
 
