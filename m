@@ -4,111 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC263E9E31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7633E9E311
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCBK-0007LL-PM; Wed, 11 Feb 2026 10:31:10 -0500
+	id 1vqC7m-0007kS-6w; Wed, 11 Feb 2026 10:27:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBH-0007KE-41
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vqC73-0006jq-R3
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBF-0008BB-DV
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:06 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vqC71-0005yg-A0
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823864;
+ s=mimecast20190719; t=1770823602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KgZLxYej2+Jm/2mAtMCoJI/wRP+Se5cFtNVR14mJ03o=;
- b=DhANDHcRXKNAhk1zfPyKPsBAVJN+dj5Y1b2l+JLcy7wTmTr9tBFywwKzmLE+RwsReP3Vo+
- +yJUrW51LAbujNfZgRQxIh1BFDgRsN2/jPK2R0zpKthPcx/pFJzfaBRct4bBJY9WD7ks0U
- l+ngbRNG3nYvi99F10kbsq8B9WZr1uY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-zcy5oeLQND-MeMkzb8lSxg-1; Wed, 11 Feb 2026 10:31:03 -0500
-X-MC-Unique: zcy5oeLQND-MeMkzb8lSxg-1
-X-Mimecast-MFC-AGG-ID: zcy5oeLQND-MeMkzb8lSxg_1770823862
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4801c1056c7so13181185e9.2
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:31:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770823862; x=1771428662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KgZLxYej2+Jm/2mAtMCoJI/wRP+Se5cFtNVR14mJ03o=;
- b=qxNSZeMy2Xa+snOgS1c+/Ne31i7lbW/YnPv93gZ7IWPWClQtSoIrg1juy0reSNS0o4
- +WIff21KjqQ9mgX+h5PNVFTtiirsoFufnphEmzNtfc5VMDIQj1tPQZGF8hcPy4aKtJCm
- 8/xl7gdsQviKDM8fjsUrGk+lUTXZYhObZMqjYIl46ITVO/FfK9qG5QFPHrsmevIpc+zl
- yPHi2Gv8Xu8a3G3jtSao7686sLvzxV5pGYHxAsnMIsDi8UXnlh3NVDEYF/f5Cqz7Jbm7
- b0DcLSpJiKMmiPhfPnmqI01PeWiwaU3xH1xXf3xeY9CDsLpb6CKo31GtbXGqFC1tt8d9
- zFMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770823862; x=1771428662;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KgZLxYej2+Jm/2mAtMCoJI/wRP+Se5cFtNVR14mJ03o=;
- b=K3CcSda8FVV963jxywHCPz5CqUFXzUBJhIFtcEThFtHp3o9cyWoEQNBP2wF4roZ3Ai
- R8LBfXP7r1aCCID4mOwySIvms1jGhbMFfPCBPu7eLqau+7Dzo5KEVc8wRyNI/0sIUUhQ
- WpBzdHo9NOTx3r0t9b4GF7yHAUqHps3hqae2YJMAIzNcIq6G47eU+FYKqisZEfO1+VCp
- lRa/zK7q70J/cGZEIjWlJ0sSsJXZKOJIjnwudMCEHaP9qJU5FWHlpXXZDDz/XAZbOLNt
- UZ0Jgwlpol/QRFRJTD1AcDXrzcbxORdAxZy+MF6ZBo600nZF7TpbBaAczcR/dkNgu+2J
- 6/pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXGR4pn8SZuUzmuf5RE8k+HucIczMGeZW18DPhrMvQyOA+VFrGpkduxytW7n4D4cJH+rDV78cv3LKOH@nongnu.org
-X-Gm-Message-State: AOJu0YylzJ7Ko2a/pNFQ+qGvY9zzdjxcR4/ceDS57YqqBy5jLC6bIJ95
- rFwUCOgJIQiTCtfDZfb05QSA6cSzXxy+Cyt3fdazekHQzskGLm66d6oE3ledpj/+3ivzA+TEHct
- pGflwoHVVQV6xQv2Ms/afyODybqZq3X8SKU2DE1zevk7XuIoEP96YHBbB
-X-Gm-Gg: AZuq6aJ+6L9m1ImUOu17AFdFwBDkgZYpMA0387UkRN1RJrYMLXewe15NembctsTgzXQ
- rw9WmV0bQM94oHtfdC00vt1sCUhNL7Ygtq52/cR4uEr/PkdzzOnhUboS/6XbUpW2eCZ7ceuQaxS
- 8Xxihp6m7FqkqlJKs3jWDUOgB6cfYeBRGa7Jj5xJHed1x7IBcLPJW/HXL3PNT5fsRIwVNltjWue
- dLvcFKnoHYcwL9Z+Wy0a3HkAlr9N9K6zW+2EG1Gmhke8ZAB+qoGq8vHOpHLbuP8StMp7Gi2PKIV
- x2s1tRFECN6GvdRRNlmNZDSz1wmHpEwxl8Luz8OrjNLx0y5lkPBryFoRBruIsNycdVrrkTzzDSl
- ltHO08GWPSviEfpTUxWhFl87lCosQ0eG1JQjPN3cMepu3MMJZuqTx8456BvTtUqIk9J28QRgA91
- xJ4NoOQt1N
-X-Received: by 2002:a05:600c:c16d:b0:480:4a90:1b00 with SMTP id
- 5b1f17b1804b1-4832021605bmr226049955e9.20.1770823861888; 
- Wed, 11 Feb 2026 07:31:01 -0800 (PST)
-X-Received: by 2002:a05:600c:c16d:b0:480:4a90:1b00 with SMTP id
- 5b1f17b1804b1-4832021605bmr226049465e9.20.1770823861415; 
- Wed, 11 Feb 2026 07:31:01 -0800 (PST)
-Received: from rh.fritz.box
- (p200300f6af2d8700b4c2d356c3fafe63.dip0.t-ipconnect.de.
- [2003:f6:af2d:8700:b4c2:d356:c3fa:fe63])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d34657sm6448511f8f.6.2026.02.11.07.31.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 07:31:00 -0800 (PST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH v5 2/2] target/arm/kvm: add kvm-psci-version vcpu property
-Date: Wed, 11 Feb 2026 16:30:32 +0100
-Message-ID: <20260211153032.19327-3-sebott@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260211153032.19327-1-sebott@redhat.com>
-References: <20260211153032.19327-1-sebott@redhat.com>
+ bh=5X80YirqVbdBeezsX1Xx2uS/KBTswwOh/p3/QZ8PMc8=;
+ b=Vb9B0oAw0n/s05AC/33umOdUsof2r2YnVguyw+bhcf058qWu5Y7/xVcLWjeGxrAMWakZoM
+ mv4GPWGZQBoT1HkbeKxd4pvPt/u8TufEF4VsKrziRUfbRY+iOjp0pVq2Eii7p12QnCecI4
+ ugHPYVKauumsGcJN7Gvigr3+OvVkP20=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-z2u0O0uqMTiSltl6P3I0HQ-1; Wed,
+ 11 Feb 2026 10:26:39 -0500
+X-MC-Unique: z2u0O0uqMTiSltl6P3I0HQ-1
+X-Mimecast-MFC-AGG-ID: z2u0O0uqMTiSltl6P3I0HQ_1770823597
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E4651800370; Wed, 11 Feb 2026 15:26:37 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.45.227.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BF11A30001A8; Wed, 11 Feb 2026 15:26:32 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v6 14/27] ui: add proper error reporting for password changes
+Date: Wed, 11 Feb 2026 15:24:55 +0000
+Message-ID: <20260211152508.732487-15-berrange@redhat.com>
+In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
+References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,159 +95,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a kvm specific vcpu property to override the default
-(as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
-by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+Neither the VNC or SPICE code for password changes provides error
+reporting at source, leading the callers to report a largely useless
+generic error message.
 
-Note: in order to support PSCI v0.1 we need to drop vcpu
-initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+Fixing this removes one of the two remaining needs for the undesirable
+error_printf_unless_qmp() method.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
+While fixing this the error message hint is improved to recommend the
+'password-secret' option which allows securely passing a password at
+startup.
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/system/arm/cpu-features.rst | 11 ++++++
- target/arm/cpu.h                 |  6 +++
- target/arm/kvm.c                 | 65 +++++++++++++++++++++++++++++++-
- 3 files changed, 81 insertions(+), 1 deletion(-)
+ include/ui/console.h                 |  2 +-
+ include/ui/qemu-spice-module.h       |  3 ++-
+ tests/functional/generic/test_vnc.py |  4 ++--
+ ui/spice-core.c                      | 25 ++++++++++++++++++-------
+ ui/spice-module.c                    |  7 ++++---
+ ui/ui-qmp-cmds.c                     | 19 ++++++-------------
+ ui/vnc-stubs.c                       |  6 +++---
+ ui/vnc.c                             | 10 +++++++---
+ 8 files changed, 43 insertions(+), 33 deletions(-)
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 37d5dfd15b..50b106f2eb 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -204,6 +204,17 @@ the list of KVM VCPU features and their descriptions.
-   the guest scheduler behavior and/or be exposed to the guest
-   userspace.
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 98feaa58bd..3677a9d334 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -457,7 +457,7 @@ void qemu_display_help(void);
+ void vnc_display_init(const char *id, Error **errp);
+ void vnc_display_open(const char *id, Error **errp);
+ void vnc_display_add_client(const char *id, int csock, bool skipauth);
+-int vnc_display_password(const char *id, const char *password);
++int vnc_display_password(const char *id, const char *password, Error **errp);
+ int vnc_display_pw_expire(const char *id, time_t expires);
+ void vnc_parse(const char *str);
+ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp);
+diff --git a/include/ui/qemu-spice-module.h b/include/ui/qemu-spice-module.h
+index 1f22d557ea..072efa0c83 100644
+--- a/include/ui/qemu-spice-module.h
++++ b/include/ui/qemu-spice-module.h
+@@ -29,7 +29,8 @@ struct QemuSpiceOps {
+     void (*display_init)(void);
+     int (*migrate_info)(const char *h, int p, int t, const char *s);
+     int (*set_passwd)(const char *passwd,
+-                      bool fail_if_connected, bool disconnect_if_connected);
++                      bool fail_if_connected, bool disconnect_if_connected,
++                      Error **errp);
+     int (*set_pw_expire)(time_t expires);
+     int (*display_add_client)(int csock, int skipauth, int tls);
+ #ifdef CONFIG_SPICE
+diff --git a/tests/functional/generic/test_vnc.py b/tests/functional/generic/test_vnc.py
+index f1dd1597cf..097f858ca1 100755
+--- a/tests/functional/generic/test_vnc.py
++++ b/tests/functional/generic/test_vnc.py
+@@ -48,7 +48,7 @@ def test_no_vnc_change_password(self):
+         self.assertEqual(set_password_response['error']['class'],
+                          'GenericError')
+         self.assertEqual(set_password_response['error']['desc'],
+-                         'Could not set password')
++                         'No VNC display is present');
  
-+``kvm-psci-version``
-+  Set the Power State Coordination Interface (PSCI) firmware ABI version
-+  that KVM provides to the guest. By default KVM will use the newest
-+  version that it knows about (which is PSCI v1.3 in Linux v6.13).
-+
-+  You only need to set this if you want to be able to migrate this
-+  VM to a host machine running an older kernel that does not
-+  recognize the PSCI version that this host's kernel defaults to.
-+
-+  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
-+
- TCG VCPU Features
- =================
+     def launch_guarded(self):
+         try:
+@@ -73,7 +73,7 @@ def test_change_password_requires_a_password(self):
+         self.assertEqual(set_password_response['error']['class'],
+                          'GenericError')
+         self.assertEqual(set_password_response['error']['desc'],
+-                         'Could not set password')
++                         'VNC password authentication is disabled')
  
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e146f7e6c4..d3cfd444e8 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1036,6 +1036,12 @@ struct ArchCPU {
-     bool kvm_vtime_dirty;
-     uint64_t kvm_vtime;
- 
-+    /*
-+     * Intermediate value used during property parsing.
-+     * Once finalized, the value should be read from psci_version.
-+     */
-+    uint32_t kvm_prop_psci_version;
-+
-     /* KVM steal time */
-     OnOffAuto kvm_steal_time;
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ded582e0da..6d13cb4f3c 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -485,6 +485,46 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
-     ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+     def test_change_password(self):
+         self.set_machine('none')
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 8a6050f4ae..cdcec34f67 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -756,7 +756,7 @@ static void qemu_spice_init(void)
+                              tls_ciphers);
+     }
+     if (password) {
+-        qemu_spice.set_passwd(password, false, false);
++        qemu_spice.set_passwd(password, false, false, NULL);
+     }
+     if (qemu_opt_get_bool(opts, "sasl", 0)) {
+         if (spice_server_set_sasl(spice_server, 1) == -1) {
+@@ -919,8 +919,10 @@ int qemu_spice_add_display_interface(QXLInstance *qxlin, QemuConsole *con)
+     return qemu_spice_add_interface(&qxlin->base);
  }
  
-+typedef struct PSCIVersion {
-+    uint32_t number;
-+    const char *str;
-+} PSCIVersion;
-+
-+static const PSCIVersion psci_versions[] = {
-+    { QEMU_PSCI_VERSION_0_1, "0.1" },
-+    { QEMU_PSCI_VERSION_0_2, "0.2" },
-+    { QEMU_PSCI_VERSION_1_0, "1.0" },
-+    { QEMU_PSCI_VERSION_1_1, "1.1" },
-+    { QEMU_PSCI_VERSION_1_2, "1.2" },
-+    { QEMU_PSCI_VERSION_1_3, "1.3" },
-+};
-+
-+static char *kvm_get_psci_version(Object *obj, Error **errp)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    for (int i = 0; i < ARRAY_SIZE(psci_versions); i++) {
-+        if (psci_versions[i].number == cpu->psci_version)
-+            return g_strdup(psci_versions[i].str);
-+    }
-+
-+    return g_strdup_printf("Unknown PSCI-version: %x", cpu->psci_version);
-+}
-+
-+static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    for (int i = 0; i < ARRAY_SIZE(psci_versions); i++) {
-+        if (!strcmp(value, psci_versions[i].str)) {
-+            cpu->kvm_prop_psci_version = psci_versions[i].number;
-+            return;
-+        }
-+    }
-+
-+    error_setg(errp, "Invalid PSCI version.");
-+}
-+
- /* KVM VCPU properties should be prefixed with "kvm-". */
- void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+-static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn)
++static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn,
++                                 Error **errp)
  {
-@@ -506,6 +546,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-                              kvm_steal_time_set);
-     object_property_set_description(obj, "kvm-steal-time",
-                                     "Set off to disable KVM steal time.");
-+
-+    object_property_add_str(obj, "kvm-psci-version", kvm_get_psci_version,
-+                            kvm_set_psci_version);
-+    object_property_set_description(obj, "kvm-psci-version",
-+                                    "Set PSCI version. "
-+                                    "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3");
++    int ret;
+     time_t lifetime, now = time(NULL);
+     char *passwd;
+ 
+@@ -934,26 +936,35 @@ static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn)
+         passwd = NULL;
+         lifetime = 1;
+     }
+-    return spice_server_set_ticket(spice_server, passwd, lifetime,
+-                                   fail_if_conn, disconnect_if_conn);
++    ret = spice_server_set_ticket(spice_server, passwd, lifetime,
++                                  fail_if_conn, disconnect_if_conn);
++    if (ret < 0) {
++        error_setg(errp, "Unable to set SPICE server ticket");
++        return -1;
++    }
++    return 0;
  }
  
- bool kvm_arm_pmu_supported(void)
-@@ -1976,7 +2022,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     if (cs->start_powered_off) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
-     }
--    if (kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-+    if (cpu->kvm_prop_psci_version != QEMU_PSCI_VERSION_0_1 &&
-+        kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-+        /*
-+         * Versions >= v0.2 are backward compatible with v0.2
-+         * omit the feature flag for v0.1 .
-+         */
-         cpu->psci_version = QEMU_PSCI_VERSION_0_2;
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
-     }
-@@ -2015,6 +2066,18 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         }
+ static int qemu_spice_set_passwd(const char *passwd,
+-                                 bool fail_if_conn, bool disconnect_if_conn)
++                                 bool fail_if_conn, bool disconnect_if_conn,
++                                 Error **errp)
+ {
+     if (strcmp(auth, "spice") != 0) {
++        error_setg(errp, "SPICE authentication is disabled");
++        error_append_hint(errp,
++                          "To enable it use '-spice ...,password-secret=ID'");
+         return -1;
      }
  
-+    if (cpu->kvm_prop_psci_version) {
-+        psciver = cpu->kvm_prop_psci_version;
-+        ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
-+        if (ret) {
-+            error_report("KVM in this kernel does not support PSCI version %d.%d",
-+                         (int) PSCI_VERSION_MAJOR(psciver),
-+                         (int) PSCI_VERSION_MINOR(psciver));
-+            error_printf("Consider setting the kvm-psci-version property on the "
-+                         "migration source.\n");
-+            return ret;
-+        }
-+    }
-     /*
-      * KVM reports the exact PSCI version it is implementing via a
-      * special sysreg. If it is present, use its contents to determine
+     g_free(auth_passwd);
+     auth_passwd = g_strdup(passwd);
+-    return qemu_spice_set_ticket(fail_if_conn, disconnect_if_conn);
++    return qemu_spice_set_ticket(fail_if_conn, disconnect_if_conn, errp);
+ }
+ 
+ static int qemu_spice_set_pw_expire(time_t expires)
+ {
+     auth_expires = expires;
+-    return qemu_spice_set_ticket(false, false);
++    return qemu_spice_set_ticket(false, false, NULL);
+ }
+ 
+ static int qemu_spice_display_add_client(int csock, int skipauth, int tls)
+diff --git a/ui/spice-module.c b/ui/spice-module.c
+index 3222335872..7651c85885 100644
+--- a/ui/spice-module.c
++++ b/ui/spice-module.c
+@@ -45,14 +45,15 @@ static int qemu_spice_migrate_info_stub(const char *h, int p, int t,
+ 
+ static int qemu_spice_set_passwd_stub(const char *passwd,
+                                       bool fail_if_connected,
+-                                      bool disconnect_if_connected)
++                                      bool disconnect_if_connected,
++                                      Error **errp)
+ {
+-    return -1;
++    g_assert_not_reached();
+ }
+ 
+ static int qemu_spice_set_pw_expire_stub(time_t expires)
+ {
+-    return -1;
++    g_assert_not_reached();
+ }
+ 
+ static int qemu_spice_display_add_client_stub(int csock, int skipauth,
+diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
+index b49b636152..1173c82cf7 100644
+--- a/ui/ui-qmp-cmds.c
++++ b/ui/ui-qmp-cmds.c
+@@ -31,15 +31,14 @@
+ 
+ void qmp_set_password(SetPasswordOptions *opts, Error **errp)
+ {
+-    int rc;
+-
+     if (opts->protocol == DISPLAY_PROTOCOL_SPICE) {
+         if (!qemu_using_spice(errp)) {
+             return;
+         }
+-        rc = qemu_spice.set_passwd(opts->password,
+-                opts->connected == SET_PASSWORD_ACTION_FAIL,
+-                opts->connected == SET_PASSWORD_ACTION_DISCONNECT);
++        qemu_spice.set_passwd(opts->password,
++                              opts->connected == SET_PASSWORD_ACTION_FAIL,
++                              opts->connected == SET_PASSWORD_ACTION_DISCONNECT,
++                              errp);
+     } else {
+         assert(opts->protocol == DISPLAY_PROTOCOL_VNC);
+         if (opts->connected != SET_PASSWORD_ACTION_KEEP) {
+@@ -52,11 +51,7 @@ void qmp_set_password(SetPasswordOptions *opts, Error **errp)
+          * Note that setting an empty password will not disable login
+          * through this interface.
+          */
+-        rc = vnc_display_password(opts->u.vnc.display, opts->password);
+-    }
+-
+-    if (rc != 0) {
+-        error_setg(errp, "Could not set password");
++        vnc_display_password(opts->u.vnc.display, opts->password, errp);
+     }
+ }
+ 
+@@ -107,9 +102,7 @@ void qmp_expire_password(ExpirePasswordOptions *opts, Error **errp)
+ #ifdef CONFIG_VNC
+ void qmp_change_vnc_password(const char *password, Error **errp)
+ {
+-    if (vnc_display_password(NULL, password) < 0) {
+-        error_setg(errp, "Could not set password");
+-    }
++    vnc_display_password(NULL, password, errp);
+ }
+ #endif
+ 
+diff --git a/ui/vnc-stubs.c b/ui/vnc-stubs.c
+index a96bc86236..5de9bf9d70 100644
+--- a/ui/vnc-stubs.c
++++ b/ui/vnc-stubs.c
+@@ -2,11 +2,11 @@
+ #include "ui/console.h"
+ #include "qapi/error.h"
+ 
+-int vnc_display_password(const char *id, const char *password)
++int vnc_display_password(const char *id, const char *password, Error **errp)
+ {
+-    return -ENODEV;
++    g_assert_not_reached();
+ }
+ int vnc_display_pw_expire(const char *id, time_t expires)
+ {
+-    return -ENODEV;
++    g_assert_not_reached();
+ };
+diff --git a/ui/vnc.c b/ui/vnc.c
+index a61a4f937d..833e0e2e68 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3526,16 +3526,20 @@ static void vnc_display_close(VncDisplay *vd)
+ #endif
+ }
+ 
+-int vnc_display_password(const char *id, const char *password)
++int vnc_display_password(const char *id, const char *password, Error **errp)
+ {
+     VncDisplay *vd = vnc_display_find(id);
+ 
+     if (!vd) {
++        error_setg(errp, "No VNC display is present");
++        error_append_hint(errp,
++                          "To enable it, use '-vnc ...'");
+         return -EINVAL;
+     }
+     if (vd->auth == VNC_AUTH_NONE) {
+-        error_printf_unless_qmp("If you want use passwords please enable "
+-                                "password auth using '-vnc ${dpy},password'.\n");
++        error_setg(errp, "VNC password authentication is disabled");
++        error_append_hint(errp,
++                          "To enable it, use '-vnc ...,password-secret=ID'");
+         return -EINVAL;
+     }
+ 
 -- 
-2.52.0
+2.53.0
 
 
