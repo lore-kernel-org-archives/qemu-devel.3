@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF77FEB596B
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 06:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27810EB596B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 06:56:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq425-0006WQ-L9; Wed, 11 Feb 2026 01:49:06 -0500
+	id 1vq49C-0007ew-B6; Wed, 11 Feb 2026 01:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vq423-0006WD-Fq
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:49:03 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ id 1vq49A-0007eo-V7
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:56:24 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vq420-0006a3-T7
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:49:03 -0500
+ id 1vq499-0008Mn-6y
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:56:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770792540; x=1802328540;
+ t=1770792983; x=1802328983;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=tlOYJ6ki0dpPiBaT8jqM/qjC6/opucgq7DX08ulKuDU=;
- b=lre5wVJTNTu6FgOxo02gZxiTuXHcDWkZ0KT5D6MwK8Mx9glNGedCMWIp
- rXeZ8oqz8cst+Z/HgEnE4Sx4FaYXyDTrZsekJPqxghpZ311b+ACVXrDKe
- gr6LI0sqVV+vXccwtK0YYi0rfKXbJkT2Niwz/uBKKI0mLg7tuJu6gsyjR
- d28Ir86k6BLgm4R4bmdl6qjg7rI/0e8PAZDj7skcapj5EisyVl1d2JnYA
- l4GvxGVKR44RrayH7sjaMNNKFP4bZ35j8fKIiOZOLf8YkAInUfd3WCW2F
- LhgWMid5qS2vYmjXunHAUNcHfQwj07CVXo52Kv0JPBYXHgGZ13sjQTotI Q==;
-X-CSE-ConnectionGUID: NoTMEE12Q/uAguwkgjI0Cg==
-X-CSE-MsgGUID: 11kRlbYiRJ+EKE1QtP2YuA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="97390432"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="97390432"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2026 22:48:58 -0800
-X-CSE-ConnectionGUID: BY5hsOYFTS+3JBooxAtOGg==
-X-CSE-MsgGUID: 431lHukmT+qvvVJr2p6p4Q==
+ bh=0LyxVWvvREX0A4Hq/9c98w6MTu5CtWSzfVL9UpSuopE=;
+ b=HS2N7zc/ZLrRfgH5ryZrbbQWcku/4zfhm12tkMi+I6aRe9i+ktRX/r8w
+ kgRujkKNDq/ji4bh1+q/jpHxzswtXjT3YeKBOMQFlO6Bqc2NlU48ec+lu
+ XRJQb9+tRbggd20wzpDen3Ep1qFRIT+yOJOOzj2zyuPeHTuRHB+WJBj12
+ hwdm4qBp7Hb9VGgv5YZj+3Ts2kAhoOzDEyoAOz8PsMcIeMnX3vA/+0HXH
+ kcl2RLNmyyBFkFVPkEwkj2176DKOXYRLPsaqqyXcOfUdPJEbjDL0qZiHa
+ gC2Y6SJ129COGdGflf58Y/zlqwzL/vQYy3qaZStFxDLzYfgeQbDHuY/yJ g==;
+X-CSE-ConnectionGUID: BKthiIaORAKven60ywKRrg==
+X-CSE-MsgGUID: 342N7FLRRoS01be26RiRsA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="75780361"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="75780361"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2026 22:56:19 -0800
+X-CSE-ConnectionGUID: 4hIhQYhyTei75kwjyMVKkg==
+X-CSE-MsgGUID: nY4x91VkTcihFpBSz8XQ+w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211258541"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 10 Feb 2026 22:48:55 -0800
-Date: Wed, 11 Feb 2026 15:14:52 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 10 Feb 2026 22:56:15 -0800
+Date: Wed, 11 Feb 2026 15:22:14 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -63,17 +62,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Zide Chen <zide.chen@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 03/21] qom/object: factor out
- object_class_property_try_add()
-Message-ID: <aYwsbBgjoz9uFCzZ@intel.com>
+Subject: Re: [PATCH v2 07/21] qom/object: introduce user interaction flags
+ for properties
+Message-ID: <aYwuJsM4PgG/Nps8@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-4-zhao1.liu@intel.com>
- <42a44ab0-feb6-6e9d-df20-2e6d8d50a30c@eik.bme.hu>
+ <20260210032348.987549-8-zhao1.liu@intel.com>
+ <d5d64a1d-bfac-261b-b9a6-cec6a7aad7d6@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <42a44ab0-feb6-6e9d-df20-2e6d8d50a30c@eik.bme.hu>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <d5d64a1d-bfac-261b-b9a6-cec6a7aad7d6@eik.bme.hu>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -98,48 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 03:41:48PM +0100, BALATON Zoltan wrote:
-> Date: Tue, 10 Feb 2026 15:41:48 +0100
-> From: BALATON Zoltan <balaton@eik.bme.hu>
-> Subject: Re: [PATCH v2 03/21] qom/object: factor out
->  object_class_property_try_add()
-> 
-> On Tue, 10 Feb 2026, Zhao Liu wrote:
-> > Similar to object_property_try_add(), factor out
-> > object_class_property_try_add().
-> > 
-> > This allows adding more arguments to the core implementation without
-> > changing the signature of object_class_property_add(), avoiding the
-> > need to modify the extensive number of callers distributed throughout
-> > the code tree.
-> > 
-> > While at it, add documentation for these functions.
-> > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> > include/qom/object.h | 56 ++++++++++++++++++++++++++++++++++++++++++++
-> > qom/object.c         | 34 ++++++++++++++++++++-------
-> > 2 files changed, 82 insertions(+), 8 deletions(-)
-> > 
+Hi BALATON,
+
 > > diff --git a/include/qom/object.h b/include/qom/object.h
-> > index 05706d4d7e3a..060db136988b 100644
+> > index 856b12e7289c..1b77429aa28b 100644
 > > --- a/include/qom/object.h
 > > +++ b/include/qom/object.h
-> > @@ -1147,6 +1147,62 @@ ObjectProperty *object_property_add(Object *obj, const char *name,
-> > 
-> > void object_property_del(Object *obj, const char *name);
-> > 
-> > +/**
-> > + * object_class_property_try_add:
+> > @@ -109,6 +109,30 @@ typedef enum {
+> >      * will automatically add a getter and a setter to this property.
+> >      */
+> >     OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+> > +    /*
+> > +     * The property was explicitly set by an external user.
+> > +     *
+> > +     * This flag is set whenever the property is modified via external interfaces
+> > +     * (CLI, QMP, HMP). It allows internal code to distinguish whether the
+> > +     * property has been modified by the user.
+> > +     *
+> > +     * Once set, this flag persists even if the property value is subsequently
+> > +     * overwritten by internal logic. It is NOT automatically cleared and must
+> > +     * be explicitly cleared using object_property_clear_flags().
+> > +     */
+> > +    OBJ_PROP_FLAG_USER_SET = BIT(2),
 > 
-> This is renamed two patches later so maybe should be named like that here
-> and drop the renaming patch.
+> As this isn't strictly for user set maybe jusr call it
+> OBJ_PROP_FLAG_EXTERNAL? (Can be set by external management application or
+> global compat prop in later patches so user set is not quite right name,)
 
-Indeed, these two patches seem trivial, but I still prefer to separate the
-renaming patch. Reviewing patches related to renaming is always
-straightforward and maybe relaxing. :)
+This flag is dynamic - when external user touched a property via
+CLI/HMP/QMP, then this flag will be set.
+
+Even though later some QEMU internal logic re-set the property, this
+flag is still there.
+
+So, this flag means external user *has touched/set* the property.
 
 Thanks,
 Zhao
+
 
 
