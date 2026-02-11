@@ -4,62 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5897ECD6D6
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 22:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD8FECD6D6
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 22:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqJ5X-0003yr-80; Wed, 11 Feb 2026 17:53:39 -0500
+	id 1vqJ6S-0004B2-6C; Wed, 11 Feb 2026 17:54:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqJ5Q-0003y7-Tm
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:53:34 -0500
+ id 1vqJ6P-0004A2-Mj
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:54:34 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqJ5O-0003kh-TH
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:53:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1770850395; cv=none; 
+ id 1vqJ6M-00059A-Dt
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:54:32 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1770850461; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=DZ8q0m6Ap8BpDtIiS94U7kVED6Jg1R08cXZQhZAN65NhICLRi7sV7/yyOLaKscTDDLA7FDQc+EJf9Cd4sT8+jUihmkn6Q2MYWfKhfjHrLRPlORf7gT45xORA8EEPPyOe+YHhEz81SHS7Yq07OSOOYm3tnZDSRjSuCosYe9bk+ko=
+ b=l+W3PVv0S2d3RlUXvVhNpiAXsk14HCqZXv0iWI+zLhezpbMa7C5Lm9FI6UA8kf2fzPk7U0+HyqylQLvNLGXd1oNlLa0xyi//bxO7P57HQnoQLVCuDD/V4Ihf3HF0iXMOvXtA+CWfUnsVLswZSf/W4J3RzfXGFbH39/H2ITt1aus=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1770850395;
+ s=zohoarc; t=1770850461;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=a/wM1QFzoEAq9RRDgNO+yo/8sgy8zfaQPCYlRH6CPFE=; 
- b=IMov7nksQgWTXaq/dDY2+mPhQZSYIeQ6p/lDCbkUxbRli0k1NJFnO5I+G7bw6mIZMxe1lv0/Owxrd4A1wPUEP5YluSYUJFgQ64aLtp1rw3KlXsNSvqbafJYTxLnwKsnp/gDJnxZqTV1cfhUWLe5s3A82c9ew1AZmEao1slr00S4=
+ bh=ilqNQ8k+SIjsetXkuzMWZgG3zlPGHmgj4jntQsGubsc=; 
+ b=T0lBHFT/zGKfxCCmF8GI83u9S26vrIWaTn11FypJ1OHPGNcO65i5iJnqUUofZMGyZzvvCDWs3MYi8p5xl81z4mIhof94bt7xQrqeQafzrncJDPRqtcVI8vBZ/G3sGY3u5CHSwWlc/UbSGKmLBQqsgyFsl03ARrkaMHWuMS5/VvM=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770850395; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770850461; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=a/wM1QFzoEAq9RRDgNO+yo/8sgy8zfaQPCYlRH6CPFE=;
- b=anja0ZPctwBxc+7j/wE/qb4wc30ZDfuGYz26qvGahTRx2VQDbMKQ25f9Usxygxic
- mtdpKS4d6re4yPJvLlqN70EFYUJs8QHvnKpipLLWOrBmQOA62CTnxLW3TvK+qHBifZk
- BP8RbpEYXF5rUHa2LMhXwbHwoC5heI4uCu8hCHE8=
-Received: by mx.zohomail.com with SMTPS id 1770850393167660.1397072795886;
- Wed, 11 Feb 2026 14:53:13 -0800 (PST)
-Message-ID: <68223045-effa-4319-817b-1a31f227c081@collabora.com>
-Date: Thu, 12 Feb 2026 01:53:09 +0300
+ bh=ilqNQ8k+SIjsetXkuzMWZgG3zlPGHmgj4jntQsGubsc=;
+ b=Yse2byvmRt0nuiUbgRg1Iku6+oLr04AFxN746eQM0nz7PZY2RwAsW9QCrQ3Zc0cx
+ XWWWnfFCk7TdG4fTs9eNFsFbHiEq4LQk2IE4SP61FEnSzm+q0gG+pcbEcFUP0zDUR+p
+ gaKFoZcP8Nikfnscup9Yf3/fmtFcA3z9ALfAFt7o=
+Received: by mx.zohomail.com with SMTPS id 1770850460028810.1676919603029;
+ Wed, 11 Feb 2026 14:54:20 -0800 (PST)
+Message-ID: <ab438b58-5e7b-492e-aae6-153b42b46791@collabora.com>
+Date: Thu, 12 Feb 2026 01:54:16 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory
- region
-To: Joelle van Dyne <j@getutm.app>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH] virrtio-gpu-virgl: correct parent for blob memory region
+To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <cover.1770231744.git.mst@redhat.com>
- <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
- <4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com>
- <CA+E+eSDta5wSBs+=iuPm9yzFnxRihrOmeXrDSVJYoAAiYNQ9fA@mail.gmail.com>
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251222151259.3965-1-j@getutm.app>
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Content-Language: en-US
-In-Reply-To: <CA+E+eSDta5wSBs+=iuPm9yzFnxRihrOmeXrDSVJYoAAiYNQ9fA@mail.gmail.com>
+In-Reply-To: <20251222151259.3965-1-j@getutm.app>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-ZohoMailClient: External
@@ -88,12 +82,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/26 00:32, Joelle van Dyne wrote:
-> Yes, it does seem like v1 was picked up and not v2. v1 was broken for this
-> reason.
+On 12/22/25 18:12, Joelle van Dyne wrote:
+> When `owner` == `mr`, `object_unparent` will crash:
+> 
+> object_unparent(mr) ->
+> object_property_del_child(mr, mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> object_finalize(mr) ->
+> object_property_del_all(mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> fail on g_assert(obj->ref > 0)
+> 
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> ---
+>  hw/display/virtio-gpu-virgl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 18404be5892..4109ff7932a 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>      vmr->g = g;
+>  
+>      mr = &vmr->mr;
+> -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+>      memory_region_add_subregion(&b->hostmem, offset, mr);
+>      memory_region_set_enabled(mr, true);
+>  
 
-Thanks for the confirmation. Most likely you will need to send a new
-version of the patch fixing the applied one.
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
 -- 
 Best regards,
