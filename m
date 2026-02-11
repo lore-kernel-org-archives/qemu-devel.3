@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54905ECD6C8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82555ECD6C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqDAM-0006BL-SO; Wed, 11 Feb 2026 11:34:14 -0500
+	id 1vqDAT-0006NB-OM; Wed, 11 Feb 2026 11:34:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqDAL-00067y-Bv
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:13 -0500
+ id 1vqDAS-0006Fl-Ci
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqDAJ-0003wx-LY
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:13 -0500
+ id 1vqDAR-000419-3R
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:34:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770827650;
+ s=mimecast20190719; t=1770827658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RXnoX4lwZwm2Md4VTpbQm3mRd9HDrp/GNxUMLQ4s44g=;
- b=aEaRv192N5lQgoGdIjJ0Z6W6D5HirDn+caUAaycg+4aJWZe7HPWf64LlQ94pt7B/ZLgdlD
- aVWRPD1EC1MBWEeCdrSbs5XFSyDH9sQhjX55P9m7gO1lg+0bjo4Sz2k0IawyAw/dZFR+pQ
- tWcBer4ODuNnPq9L1OyfP8I/JDiD9kk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dSyY2gs17CHbTM/spZ5TzyaOpGRwJyz45XfDOslDrhU=;
+ b=Jvx3446vn2PbL2f2QQ/qMGfyYGL6DF771WFkanW8xVIuiCaSYiJsx1bD28KtYxZxVAPKW0
+ 2zqJwG2vg24U5wiuj6pJPPqcWK/yl1rdPCn/7OSKqR4jokTpNXQThOKfDjyjzrRnqo+ssK
+ NtIpBQ01RmVpjkO2n7buG9up+usEdn0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-80haBvJ3Pp-RCa67bDdC1A-1; Wed,
- 11 Feb 2026 11:34:05 -0500
-X-MC-Unique: 80haBvJ3Pp-RCa67bDdC1A-1
-X-Mimecast-MFC-AGG-ID: 80haBvJ3Pp-RCa67bDdC1A_1770827643
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-OnyhGyyrORK_x6qYzjA-0w-1; Wed,
+ 11 Feb 2026 11:34:13 -0500
+X-MC-Unique: OnyhGyyrORK_x6qYzjA-0w-1
+X-Mimecast-MFC-AGG-ID: OnyhGyyrORK_x6qYzjA-0w_1770827651
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18E0A1956094; Wed, 11 Feb 2026 16:34:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DADD218003F5; Wed, 11 Feb 2026 16:34:10 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A978719560A7; Wed, 11 Feb 2026 16:33:59 +0000 (UTC)
+ id 7280B19560B5; Wed, 11 Feb 2026 16:34:07 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -57,10 +57,9 @@ Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 10/15] tests: use 'driver' as collective term for either
- format or protocol
-Date: Wed, 11 Feb 2026 16:33:13 +0000
-Message-ID: <20260211163318.938776-11-berrange@redhat.com>
+Subject: [PATCH v4 12/15] tests: fix check for sudo access in LUKS I/O test
+Date: Wed, 11 Feb 2026 16:33:15 +0000
+Message-ID: <20260211163318.938776-13-berrange@redhat.com>
 In-Reply-To: <20260211163318.938776-1-berrange@redhat.com>
 References: <20260211163318.938776-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -76,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,91 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The I/O tests integration previously exclusively tested block formats
-and now also covers the NBD protocol. Replace references to 'format'
-with 'driver', as a generic term to collectively apply to either a
-format or protocol.
+The test did not cope with the possibility that 'sudo' was not installed
+at all, merely that it was not configured. This broke tests in any CI
+env which lacks 'sudo'.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/testing/main.rst    | 13 +++++++------
- tests/Makefile.include         |  4 ++--
- tests/qemu-iotests/meson.build |  6 +++---
- 3 files changed, 12 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/149 | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 8067d0a3ed..797111009a 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -222,7 +222,8 @@ check-block
- ~~~~~~~~~~~
+diff --git a/tests/qemu-iotests/149 b/tests/qemu-iotests/149
+index c13343d7ef..6dff39a28a 100755
+--- a/tests/qemu-iotests/149
++++ b/tests/qemu-iotests/149
+@@ -95,11 +95,14 @@ def verify_passwordless_sudo():
  
- There are a variety of ways to exercise the block layer I/O tests
--via make targets.
-+via make targets for a selection of formats / protocols (collectively
-+referred to as ``drivers`` below).
+     args = ["sudo", "-n", "/bin/true"]
  
- A default ``make check`` or ``make check-block`` command will exercise
- the ``qcow2`` format, using the tests tagged into the ``auto`` group
-@@ -231,14 +232,14 @@ only.
- These targets accept the ``SPEED`` variable to augment the set of tests
- to run. A slightly more comprehensive test plan can be run by defining
- ``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
--formats. The most comprehensive test plan can be run by defining
--``SPEED=thorough``, which enables all available tests for the formats
-+drivers. The most comprehensive test plan can be run by defining
-+``SPEED=thorough``, which enables all available tests for the drivers
- ``luks``, ``nbd``, ``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``,
- ``vhdx``, ``vmdk``, and ``vpc``.
+-    proc = subprocess.Popen(args,
+-                            stdin=subprocess.PIPE,
+-                            stdout=subprocess.PIPE,
+-                            stderr=subprocess.STDOUT,
+-                            universal_newlines=True)
++    try:
++        proc = subprocess.Popen(args,
++                                stdin=subprocess.PIPE,
++                                stdout=subprocess.PIPE,
++                                stderr=subprocess.STDOUT,
++                                universal_newlines=True)
++    except FileNotFoundError as e:
++        iotests.notrun('requires sudo binary: %s' % e)
  
--Each of formats also has its own dedicated make target, named
--``make check-block-$FORMAT`` which will run all available tests for
--the designated format and does not require the ``SPEED`` variable
-+Each of drivers also has its own dedicated make target, named
-+``make check-block-$DRIVER`` which will run all available tests for
-+the designated driver and does not require the ``SPEED`` variable
- to be set.
+     msg = proc.communicate()[0]
  
- See the "QEMU iotests" section below for more information on the
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index fc6fdcbbf9..63ae84f516 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -14,8 +14,8 @@ check-help:
- 	@echo " $(MAKE) check-unit               Run qobject tests"
- 	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
- 	@echo " $(MAKE) check-tracetool          Run tracetool generator tests"
--	@echo " $(MAKE) check-block              Run block tests (all formats)"
--	@echo " $(MAKE) check-block-FORMAT       Run block tests (only for FORMAT)"
-+	@echo " $(MAKE) check-block              Run block tests (all formats/protocols)"
-+	@echo " $(MAKE) check-block-DRIVER       Run block tests (only for format/protocol 'DRIVER')"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-tcg                Run TCG tests"
- 	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 744d0b6e88..5d6b0b5ed9 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -12,7 +12,7 @@ qemu_iotests_binaries = [qemu_img, qemu_io, qemu_nbd, qsd]
- qemu_iotests_env = {'PYTHON': python.full_path()}
- # If altering this definition, also update docs/devel/testing/main.rst
- # section on 'check-block' targets to reflect the changes
--qemu_iotests_formats = {
-+qemu_iotests_drivers = {
-   'qcow2': 'quick',
-   'raw': 'slow',
-   'luks': 'thorough',
-@@ -33,8 +33,8 @@ endforeach
- 
- qemu_iotests_check_cmd = files('check')
- 
--foreach format, speed: qemu_iotests_formats
--  # Formats tagged 'quick' get the subset of tests in the 'auto'
-+foreach format, speed: qemu_iotests_drivers
-+  # Drivers tagged 'quick' get the subset of tests in the 'auto'
-   # group, run by default with 'make check' / 'make check-block'
-   seen = []
-   if speed == 'quick'
 -- 
 2.53.0
 
