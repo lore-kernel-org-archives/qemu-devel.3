@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F1EE9E2FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF111E9E2FE
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq9Nd-00015i-6l; Wed, 11 Feb 2026 07:31:41 -0500
+	id 1vq9Ne-00016N-6h; Wed, 11 Feb 2026 07:31:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9NO-0000dQ-9B
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:26 -0500
+ id 1vq9NU-0000oL-V9
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9NM-0000GJ-M1
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:25 -0500
+ id 1vq9NS-0000Gs-4V
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770813084;
+ s=mimecast20190719; t=1770813089;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4feRG+PIqLPyCpVStJ7uIxka6xWW9klU080X9xA3hKo=;
- b=KLhwj8mOQsLRiz3wqlwrPv5Oj1JunlSasxi5WQpjT0nv2FQJHCM1/Njp5e7uoX/G8YX2YN
- G3ldxgsdMDemgsytA6O5vQwq4ilb+j+SKP5tynQdDM/dtQpg7zkLLW6a0wJW+pVWHjpx/C
- UY79oNVZjVjxA5ufdpimo4/1h0yFIlg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tpYjeot8p53E9hbudpSJPO+xYO8RwO13MoSHQweyb84=;
+ b=JCG7WAJNXG042yyBVm5YVFFN/Z+jbzpOgc7zl+JEHtffvq0atvsh1G4ZDvXUCmReR0d11+
+ sA5BsHCy2bqExEb3tXtISy/2gZCyEupkIa65AWpBIYQ7Y1XhbKfu4Lqh/wJFbTMYpoSskN
+ NFE1OU75Ne+ii/MCHlW23UBkiIJYn00=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-YbVOGn9zNVSxTeUqeeVBow-1; Wed,
- 11 Feb 2026 07:31:20 -0500
-X-MC-Unique: YbVOGn9zNVSxTeUqeeVBow-1
-X-Mimecast-MFC-AGG-ID: YbVOGn9zNVSxTeUqeeVBow_1770813079
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-O6N5zASFObGpSC7yEto7wA-1; Wed,
+ 11 Feb 2026 07:31:26 -0500
+X-MC-Unique: O6N5zASFObGpSC7yEto7wA-1
+X-Mimecast-MFC-AGG-ID: O6N5zASFObGpSC7yEto7wA_1770813084
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C26A1955F12; Wed, 11 Feb 2026 12:31:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65CB419560A3; Wed, 11 Feb 2026 12:31:24 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B18930001A8; Wed, 11 Feb 2026 12:31:17 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 235A318003F6; Wed, 11 Feb 2026 12:31:22 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
@@ -60,15 +60,15 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 11/14] chardev/char: qemu_char_open(): add return value
-Date: Wed, 11 Feb 2026 16:29:58 +0400
-Message-ID: <20260211123007.3569932-12-marcandre.lureau@redhat.com>
+Subject: [PULL 12/14] char: qemu_chr_write_log() use qemu_write_full()
+Date: Wed, 11 Feb 2026 16:29:59 +0400
+Message-ID: <20260211123007.3569932-13-marcandre.lureau@redhat.com>
 In-Reply-To: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 References: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -97,68 +97,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Accordingly with recommendations in include/qapi/error.h accompany
-errp by boolean return value and get rid of error propagation.
+logfd is blocking, so we don't need to care about EAGAIN.
+Let's simply use qemu_write_full().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260115144606.233252-11-vsementsov@yandex-team.ru>
+Message-ID: <20260201173633.413934-2-vsementsov@yandex-team.ru>
 ---
- chardev/char.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ chardev/char.c | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
 diff --git a/chardev/char.c b/chardev/char.c
-index 3373c9b61f8..5d00cac2f31 100644
+index 5d00cac2f31..4b285baf029 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -246,7 +246,7 @@ int qemu_chr_add_client(Chardev *s, int fd)
-         CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
+@@ -82,29 +82,17 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
+     CHARDEV_GET_CLASS(s)->chr_be_event(s, event);
  }
  
--static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+-/* Not reporting errors from writing to logfile, as logs are
+- * defined to be "best effort" only */
+ static void qemu_chr_write_log(Chardev *s, const uint8_t *buf, size_t len)
  {
-     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
-     /* Any ChardevCommon member would work */
-@@ -262,13 +262,15 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         }
-         chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
-         if (chr->logfd < 0) {
+-    size_t done = 0;
+-    ssize_t ret;
+-
+     if (s->logfd < 0) {
+         return;
+     }
+ 
+-    while (done < len) {
+-    retry:
+-        ret = write(s->logfd, buf + done, len - done);
+-        if (ret == -1 && errno == EAGAIN) {
+-            g_usleep(100);
+-            goto retry;
+-        }
+-
+-        if (ret <= 0) {
 -            return;
-+            return false;
-         }
+-        }
+-        done += ret;
++    if (qemu_write_full(s->logfd, buf, len) < len) {
++        /*
++         * qemu_write_full() is defined with G_GNUC_WARN_UNUSED_RESULT,
++         * but logging is best‑effort, we do ignore errors.
++         */
      }
- 
--    if (cc->chr_open) {
--        cc->chr_open(chr, backend, errp);
-+    if (!cc->chr_open) {
-+        return true;
-     }
-+
-+    return cc->chr_open(chr, backend, errp);
  }
  
- static void char_init(Object *obj)
-@@ -1006,7 +1008,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
- {
-     Object *obj;
-     Chardev *chr = NULL;
--    Error *local_err = NULL;
- 
-     assert(g_str_has_prefix(typename, "chardev-"));
-     assert(id);
-@@ -1017,9 +1018,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
-     chr->label = g_strdup(id);
-     chr->gcontext = gcontext;
- 
--    qemu_char_open(chr, backend, &local_err);
--    if (local_err) {
--        error_propagate(errp, local_err);
-+    if (!qemu_char_open(chr, backend, errp)) {
-         object_unref(obj);
-         return NULL;
-     }
 -- 
 2.52.0
 
