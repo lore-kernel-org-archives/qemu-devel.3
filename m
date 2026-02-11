@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E9CE9E2FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B890E9E2FB
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq93g-000894-Br; Wed, 11 Feb 2026 07:11:04 -0500
+	id 1vq9BO-0003H9-Bx; Wed, 11 Feb 2026 07:19:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93a-00085a-EQ
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:59 -0500
-Received: from 9.mo548.mail-out.ovh.net ([46.105.48.137])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vq9BM-0003Gx-VS
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:19:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93W-00050J-St
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:56 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.64])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f9y242lh2z5wBl;
- Wed, 11 Feb 2026 12:10:52 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG14EX2.mxp5.local (172.16.2.142)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 11 Feb
- 2026 13:10:51 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0021442f4bf-f3f6-48c0-a7b1-0f21a396f836,
- 3A8D629C33260B61B1BB8F65C34560168E726884) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <a1f77c37-7354-4d4f-aab8-12d86bb3d6f3@kaod.org>
-Date: Wed, 11 Feb 2026 13:10:51 +0100
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vq9BK-0007He-QW
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:19:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770812336;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ahrRLFEVaTI5eoqI6YZCEVDiIPbgPoS+pqcCElypmCA=;
+ b=MLspamxjQdphyaEcf6J/uI4S5mKqu+afQJRMpF7hQgYxSB5jF+O+zutBqjfoenjrhbnFr7
+ sZoI1Hw87GIrQTHynh37puUKpLrfCKfTXWKq1Phm48CSsUuBbJORqLrq9A6GIn79S6cvC2
+ kC09eAWemyRaTX5rmPLkh6hlxK3obSE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-513-qR-yzxMVMrOYJaIdYInOKA-1; Wed, 11 Feb 2026 07:18:53 -0500
+X-MC-Unique: qR-yzxMVMrOYJaIdYInOKA-1
+X-Mimecast-MFC-AGG-ID: qR-yzxMVMrOYJaIdYInOKA_1770812332
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48349cc9c10so14640275e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 04:18:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770812332; x=1771417132; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ahrRLFEVaTI5eoqI6YZCEVDiIPbgPoS+pqcCElypmCA=;
+ b=nN9598aAFpYU0otVa8l0nylJWK9H2/3pnOQedct9N3YLn3Bso7iLhNW+M5bFKUsKgQ
+ cuWpWsrOieS+hgVwU8SLLUq4uwLn7F2AqFqdssx8nvJ4VenP7VK8iFVTNx9p6uqUFsoc
+ YgBzz6muUIX8KKqhgu8rV+euJMQeDvqv1f7b2UAqt71mezuEZ80A5iXdz1+0F3vYwEl8
+ KBw+zKkQ4dqsdK4+AFz3iLtIzuVtMENDzmLgiofF4UPiODVXFx7tLx9ZQEmhAJ0dr2JK
+ d4zYu68VZ+cCt3J3uGAZdbbbP1NtEB6EGVbceOye8TMKMi5wNZSLZpF5j6DWS+FNXFeA
+ TKhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770812332; x=1771417132;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ahrRLFEVaTI5eoqI6YZCEVDiIPbgPoS+pqcCElypmCA=;
+ b=whDFFhZKTVR4FgxiBhGXhKGeugCMYF9HmFZZ0KGhzuWQYTCwB0tFV0ulri/GAx+4A9
+ 2NfEYQrzfAE8iNP8QetKxw1rk+a53bIM2KCI3snuGWyf8umNUhi/zHhmoN0Fo4KUc76p
+ MAWQ1yNGwHDynYRcRF0fH/b5kYfM+3vMRBm+2TZIe7pxgucGFAyUxIGTLLGsfBwPTqdr
+ 3A0ZIuSR8kBkn4H+s1wzOyDS0wFMK/WBpFENcxZOoUyDN7r/QHTH2b39+yLXhCfq6KL4
+ kBOqBslLsrTSIfI8IyFMyZFbfmqWfD5Utyh7/8Ur18WDccQUhAfrO2SRqdwn7n7VWaRh
+ a4Lw==
+X-Gm-Message-State: AOJu0YwftBcuVG9LDsdEqyj+GoPedOwwxXQqM2+U3vits/H0XEjv8eRk
+ ClLadO1BpcU4AenusVS0TSbas4+RxIkxHJd7sQJnyZ5Ib06V7uSDnQp6vuf1LTscURZvtQs6/o8
+ d6HxeD39b9uo68xBZB+xkGONbtusytmvNGHGJO1ZYeK47qnZ2Y1aV4C04
+X-Gm-Gg: AZuq6aKrlb9bTsYtRIQppJnZ/nTszbM8rlyZM3dtd3W3/T8kI0NgH23H/Hz+VVqosC8
+ 0mKYFN2zO/CBcvlbI05nAd14xnwPyDRse6Ss1rRU3xWNkcAaRQNVhr6N9wwgmw/TObtbypKtn3X
+ o79lx6pE2wlgZgahs/sPC3d/ohVdJK8V7E4s8XAdu23TCX3ppJlGjLrlAKCPSY9VG1DvW4e3HdE
+ BhwfNlgWaYUJYolXxAtszTvgNQPoTo04r561GSmwOnbWbX13CfNSlvRk8L7r01BP1bxDSidqNsJ
+ 2rqvgb9MibfHMVVDymg8oEay/zjg+nHPFUt5cLHfioFXmztKYGuXpy1uFehzVxvCCSgLl3Ju9OW
+ KQvhACQKc3h9nWsYt/8R77Vj+
+X-Received: by 2002:a05:600c:3e14:b0:47e:e4ff:e2ac with SMTP id
+ 5b1f17b1804b1-4835d55c645mr26842425e9.33.1770812331790; 
+ Wed, 11 Feb 2026 04:18:51 -0800 (PST)
+X-Received: by 2002:a05:600c:3e14:b0:47e:e4ff:e2ac with SMTP id
+ 5b1f17b1804b1-4835d55c645mr26842015e9.33.1770812331262; 
+ Wed, 11 Feb 2026 04:18:51 -0800 (PST)
+Received: from leonardi-redhat ([176.206.8.97])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d834ebesm120990435e9.13.2026.02.11.04.18.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Feb 2026 04:18:49 -0800 (PST)
+Date: Wed, 11 Feb 2026 13:18:47 +0100
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Oliver Steffen <osteffen@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH 1/1] igvm: Add NULL checks for igvm_get_buffer()
+Message-ID: <aYxzMOommn-a-yiQ@leonardi-redhat>
+References: <20260210112436.315197-1-osteffen@redhat.com>
+ <20260210112436.315197-2-osteffen@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] tests/functional: Aspeed ARM tests enhancements
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>
-References: <20260209065044.239378-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260209065044.239378-1-clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG12EX1.mxp5.local (172.16.2.121) To DAG14EX2.mxp5.local
- (172.16.2.142)
-X-Ovh-Tracer-GUID: d62d7f8a-9480-4c24-807a-e355710f131c
-X-Ovh-Tracer-Id: 8199929022980524978
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGa03sFxNnRVPHOaSb64dJiVx+Dcxb8r5G5dXUk0FuWGZSHkIx6zgAE18iwTVvTrHtSE3b+AQscFX8UqTAdtybwb5fl7eXiLq2BuB9cE9pd7+JL0I6vJTfgX6PynQ69Mry5fvF77DA29XPoHyo/IkqrY309Zv6M+h2eU9mvWaL/WWYRQy4YBn2yZvp6uIVslENdzy+pXm21LnhvuN4z8w5dylFJXA1YAN5+FwjskhUf1TfesIV8+jDDASR8qcOzK/+xHyrzM4f6M5cfqUH0ujd3JZOKQWEZj31/FK4+Jv3PM66XDdbukif4An5UfQVxh1iBUVGszOGqmw1Ayy3s/cGsFuvGFolv2A+hO4kv5r89LwP+rJ0DZUJeJ7GG/3Q7fRrnoNtxPpJ5fR2u0Q7vng3RIIvlOUHl7eqJi/RYJJElavL6kmac3VIs46EKGkKNMtFwaNF1LoLtAdSVbUoIppx+bDP8Wl6xiauP1ECUxquCHdALyX6jB8ClHmS6rOfYnnDtGQX62KlLxmAD8TkUYwUZeNDgHjIx8CWi9azyJhP46H/UdEa8nso/Hwhg1zCsr4ljBytnjwb93V6LB5uGSnKsJs8V97zLtrXhhCPw4uaTq1otwAzWH/k6zo/yD809D7IkfPV4576t+pnH/4yLgR8PjRCUt575ARzl3E1dVE33/A
-DKIM-Signature: a=rsa-sha256; bh=Vc47+M+ANr9tsr+ZWUdVXN25EshldaNbtzaFF6iEmzI=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770811852; v=1;
- b=W59VSyDZhppVHaTgPHhuhcB1M1JuZ7xIe7Z2l/fk+tnnp1EjNiVAXH9+daRcJ5E/KYIWFC0n
- byO1Tkenlf7j70Mh1CoMyEoadhZ0EtHoLveiAwIq6rSYFga6Tls2o7IRo8DPqJ2US1V6pvdsr4A
- veb8LLjGpNI3CWYhok5u5dlx+PG8eFgs68OlP86t6Ylt4nisJppb8R67LsOpXwB89Fxw5ZdQ/a+
- 8+FjABVFAMnloJlCLMEEYoanNfNbSYGwgpXixAkiaFhzVzYpYIccwINlZ8Fci4Xr9WkF0rKJAke
- zlUWWqSWKSbijnLxUngowRuDSb0aEWuMFmczImNEjJTyg==
-Received-SPF: pass client-ip=46.105.48.137; envelope-from=clg@kaod.org;
- helo=9.mo548.mail-out.ovh.net
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260210112436.315197-2-osteffen@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,46 +119,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/26 07:50, Cédric Le Goater wrote:
-> Hi,
-> 
-> This allows the functional test suite to run tests in parallel more
-> effectively and adds a new set of tests using the older Linux 5.15
-> kernel.
-> 
-> Thanks,
-> 
-> C.
-> 
-> Cédric Le Goater (2):
->    tests/functional: Split Aspeed ARM tests into separate files
->    tests/functional: Add SDK tests with Linux 5.15
-> 
->   tests/functional/arm/meson.build              | 18 ++++--
->   tests/functional/arm/test_aspeed_ast1060.py   |  0
->   ...00.py => test_aspeed_ast2500_buildroot.py} | 14 -----
->   .../functional/arm/test_aspeed_ast2500_sdk.py | 29 +++++++++
->   .../arm/test_aspeed_ast2500_sdk_515.py        | 29 +++++++++
->   .../arm/test_aspeed_ast2600_buildroot.py      | 41 +------------
->   .../arm/test_aspeed_ast2600_buildroot_tpm.py  | 60 +++++++++++++++++++
->   .../functional/arm/test_aspeed_ast2600_sdk.py | 15 -----
->   .../arm/test_aspeed_ast2600_sdk_515.py        | 29 +++++++++
->   .../arm/test_aspeed_ast2600_sdk_otp.py        | 34 +++++++++++
->   10 files changed, 196 insertions(+), 73 deletions(-)
->   mode change 100644 => 100755 tests/functional/arm/test_aspeed_ast1060.py
->   rename tests/functional/arm/{test_aspeed_ast2500.py => test_aspeed_ast2500_buildroot.py} (74%)
->   create mode 100755 tests/functional/arm/test_aspeed_ast2500_sdk.py
->   create mode 100755 tests/functional/arm/test_aspeed_ast2500_sdk_515.py
->   create mode 100755 tests/functional/arm/test_aspeed_ast2600_buildroot_tpm.py
->   create mode 100755 tests/functional/arm/test_aspeed_ast2600_sdk_515.py
->   create mode 100755 tests/functional/arm/test_aspeed_ast2600_sdk_otp.py
-> 
+On Tue, Feb 10, 2026 at 12:24:36PM +0100, Oliver Steffen wrote:
+>According to the documentation we are supposed to do a null-pointer
+>check on the buffers returned by igvm_get_buffer() (part of the IGVM C
+>library).
+>Add these checks in the IGVM backend.
+>
+>Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+>---
+> backends/igvm.c | 86 ++++++++++++++++++++++++++++++++-----------------
+> 1 file changed, 56 insertions(+), 30 deletions(-)
+>
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index b01a19ba46..049cb36891 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -152,9 +152,17 @@ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+>                 (int)header_handle);
+>             return -1;
+>         }
+>-        header_data = igvm_get_buffer(ctx->file, header_handle) +
+>-                      sizeof(IGVM_VHS_VARIABLE_HEADER);
+>-        result = handlers[handler].handler(ctx, header_data, errp);
+>+        header_data = igvm_get_buffer(ctx->file, header_handle);
+>+        if (header_data != NULL) {
+>+            header_data += sizeof(IGVM_VHS_VARIABLE_HEADER);
+>+            result = handlers[handler].handler(ctx, header_data, errp);
+>+        } else {
+>+            error_setg(errp,
+>+                    "IGVM: No buffer for handle %d: "
+>+                    "(type 0x%X)",
+>+                    header_handle, type);
+>+            result = -1;
+>+        }
+>         igvm_free_buffer(ctx->file, header_handle);
+>         return result;
+>     }
+>@@ -316,7 +324,13 @@ static int qigvm_process_mem_region(QIgvm *ctx, unsigned start_index,
+>                 return -1;
+>             }
+>             data = igvm_get_buffer(ctx->file, data_handle);
+>-            memcpy(&region[page_index * page_size], data, data_size);
+>+            if (data != NULL) {
+>+                memcpy(&region[page_index * page_size], data, data_size);
+>+            } else {
+>+                error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
 
-Applied to aspeed-next.
+nit: space and semicolon can be removed
 
-Thanks,
+>+                igvm_free_buffer(ctx->file, data_handle);
+>+                return -1;
+>+            }
+>             igvm_free_buffer(ctx->file, data_handle);
+>         }
+>     }
+>@@ -426,6 +440,11 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+>     }
+>
+>     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
+>+    if (data == NULL) {
+>+        error_setg(errp, "IGVM: No buffer for handle %d: ", data_handle);
 
-C.
+ditto
 
+>+        result = -1;
+>+        goto exit;
+>+    }
+>
+>     if (ctx->machine_state->cgs) {
+>         result = ctx->cgsc->set_guest_state(
+>@@ -441,6 +460,7 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+>         result = -1;
+>     }
+>
+>+exit:
+>     igvm_free_buffer(ctx->file, data_handle);
+>     if (result < 0) {
+>         return result;
+>@@ -778,33 +798,39 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+>             }
+>             platform =
+>                 (IGVM_VHS_SUPPORTED_PLATFORM *)(igvm_get_buffer(ctx->file,
+>-                                                                header_handle) +
+>-                                                sizeof(
+>-                                                    IGVM_VHS_VARIABLE_HEADER));
+>-            if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
+>-                ctx->machine_state->cgs) {
+>-                if (ctx->cgsc->check_support(
+>-                        CGS_PLATFORM_SEV_ES, platform->platform_version,
+>-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+>-                    compatibility_mask_sev_es = platform->compatibility_mask;
+>-                }
+>-            } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
+>-                       ctx->machine_state->cgs) {
+>-                if (ctx->cgsc->check_support(
+>-                        CGS_PLATFORM_SEV, platform->platform_version,
+>-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+>-                    compatibility_mask_sev = platform->compatibility_mask;
+>+                                                                header_handle));
+>+            if (platform != NULL) {
+>+                platform = (IGVM_VHS_SUPPORTED_PLATFORM *)((void *)platform
+>+                                            + sizeof(IGVM_VHS_VARIABLE_HEADER));
+>+                if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
+>+                    ctx->machine_state->cgs) {
+>+                    if (ctx->cgsc->check_support(
+>+                            CGS_PLATFORM_SEV_ES, platform->platform_version,
+>+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
+>+                        compatibility_mask_sev_es = platform->compatibility_mask;
+>+                    }
+>+                } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
+>+                        ctx->machine_state->cgs) {
+>+                    if (ctx->cgsc->check_support(
+>+                            CGS_PLATFORM_SEV, platform->platform_version,
+>+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
+>+                        compatibility_mask_sev = platform->compatibility_mask;
+>+                    }
+>+                } else if ((platform->platform_type ==
+>+                            IGVM_PLATFORM_TYPE_SEV_SNP) &&
+>+                        ctx->machine_state->cgs) {
+>+                    if (ctx->cgsc->check_support(
+>+                            CGS_PLATFORM_SEV_SNP, platform->platform_version,
+>+                            platform->highest_vtl, platform->shared_gpa_boundary)) {
+>+                        compatibility_mask_sev_snp = platform->compatibility_mask;
+>+                    }
+>+                } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
+>+                    compatibility_mask = platform->compatibility_mask;
+>                 }
+>-            } else if ((platform->platform_type ==
+>-                        IGVM_PLATFORM_TYPE_SEV_SNP) &&
+>-                       ctx->machine_state->cgs) {
+>-                if (ctx->cgsc->check_support(
+>-                        CGS_PLATFORM_SEV_SNP, platform->platform_version,
+>-                        platform->highest_vtl, platform->shared_gpa_boundary)) {
+>-                    compatibility_mask_sev_snp = platform->compatibility_mask;
+>-                }
+>-            } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
+>-                compatibility_mask = platform->compatibility_mask;
+>+            } else {
+>+                error_setg(errp, "IGVM: No buffer for handle %d: ", header_handle);
+
+ditto
+
+>+                igvm_free_buffer(ctx->file, header_handle);
+>+                return -1;
+>             }
+>             igvm_free_buffer(ctx->file, header_handle);
+>         }
+>-- 
+>2.53.0
+>
+>
+
+Thanks!
+
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
 
 
