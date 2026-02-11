@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D86EA3F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6180EE9E31F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC6P-0004sx-D2; Wed, 11 Feb 2026 10:26:05 -0500
+	id 1vqC7k-0007Vb-OH; Wed, 11 Feb 2026 10:27:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC6K-0004oZ-Rk
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:00 -0500
+ id 1vqC79-0006mB-FI
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC6J-0005ml-7u
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:00 -0500
+ id 1vqC77-0005zX-F4
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823558;
+ s=mimecast20190719; t=1770823607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9ZUN9qo2kVOayeNkrm7meCbsEZa6wbphY9wEaykh81U=;
- b=dU2vegMag2FHfFtpZHPLHSwUIURyjp02ifxq6SEPg+qEE6MRXCl63fMkkmSqP7QX9XVbn1
- f/itRNbxblxP2EfaneAB7cQYoQootySF/ezxnT3JpZQ2xYNEtbbZ4RJQ7ogkUlp/bjrOtn
- gn2Vem33OMqw2Qe2eDMYDK6APuAE5FM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=eK7Y9wa6E8Ejs/2GVwrT1km0ZDfxmHblP4R69ZgWde4=;
+ b=XUp4oTzlWKVQmQTqvp88QYYazUFZ7XSSTUFxJCKu4cMasw7Cw/l9UR8gKtyneANmy/Vcs5
+ Qgn2x+bbDQj8oC7W9alSb7rcZkkb1h4oHa+GG308lQSPBcUxjg0iFj7CI/r1AP4xXqkgiv
+ R3MMG/csYtX/Zwf4AiN7NTUgTb2hr7s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-vxqbIMosMR-SGpEGceCnzg-1; Wed,
- 11 Feb 2026 10:25:55 -0500
-X-MC-Unique: vxqbIMosMR-SGpEGceCnzg-1
-X-Mimecast-MFC-AGG-ID: vxqbIMosMR-SGpEGceCnzg_1770823551
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-Ay1dYe90Pda7J9D-TFZWEg-1; Wed,
+ 11 Feb 2026 10:26:44 -0500
+X-MC-Unique: Ay1dYe90Pda7J9D-TFZWEg-1
+X-Mimecast-MFC-AGG-ID: Ay1dYe90Pda7J9D-TFZWEg_1770823603
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6619C19560B2; Wed, 11 Feb 2026 15:25:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10A0E1955F20; Wed, 11 Feb 2026 15:26:43 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0057530001A8; Wed, 11 Feb 2026 15:25:45 +0000 (UTC)
+ id 09A3C30001A8; Wed, 11 Feb 2026 15:26:37 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -61,9 +61,9 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 06/27] util: fix race setting thread name on Win32
-Date: Wed, 11 Feb 2026 15:24:47 +0000
-Message-ID: <20260211152508.732487-7-berrange@redhat.com>
+Subject: [PATCH v6 15/27] ui: remove redundant use of error_printf_unless_qmp()
+Date: Wed, 11 Feb 2026 15:24:56 +0000
+Message-ID: <20260211152508.732487-16-berrange@redhat.com>
 In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
 References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -95,89 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The call to set the thread name on Win32 platforms is done by the parent
-thread, after _beginthreadex() returns. At this point the new child
-thread is potentially already executing its start method. To ensure the
-thread name is guaranteed to be set before any "interesting" code starts
-executing, it must be done in the start method of the child thread itself.
+The vnc_display_print_local_addr() method is intended to print the VNC
+listening address on the console at startup, so the user can see the
+auto-chosen port address when using the 'to=' flag. This is only called
+by vnc_display_open() which is in the QEMU startup callpath. The check
+for not being in QMP is thus redundant and can be removed.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/qemu-thread-win32.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ ui/vnc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 9595a5b090..255c88571f 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -22,6 +22,8 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
- static pSetThreadDescription SetThreadDescriptionFunc;
- static HMODULE kernel32_module;
- 
-+static void set_thread_description(const char *name);
-+
- static bool load_set_thread_description(void)
- {
-     static gsize _init_once = 0;
-@@ -225,6 +227,7 @@ struct QemuThreadData {
-     void             *arg;
-     short             mode;
-     NotifierList      exit;
-+    char             *name; /* Freed in win32_start_routine */
- 
-     /* Only used for joinable threads. */
-     bool              exited;
-@@ -266,6 +269,10 @@ static unsigned __stdcall win32_start_routine(void *arg)
-     void *(*start_routine)(void *) = data->start_routine;
-     void *thread_arg = data->arg;
- 
-+    if (data->name) {
-+        set_thread_description(data->name);
-+        g_clear_pointer(&data->name, g_free);
-+    }
-     qemu_thread_data = data;
-     qemu_thread_exit(start_routine(thread_arg));
-     abort();
-@@ -316,7 +323,7 @@ void *qemu_thread_join(QemuThread *thread)
-     return ret;
- }
- 
--static void set_thread_description(HANDLE h, const char *name)
-+static void set_thread_description(const char *name)
- {
-     g_autofree wchar_t *namew = NULL;
- 
-@@ -329,7 +336,7 @@ static void set_thread_description(HANDLE h, const char *name)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 833e0e2e68..fe020dcc4c 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3578,9 +3578,9 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
+         qapi_free_SocketAddress(addr);
          return;
      }
- 
--    SetThreadDescriptionFunc(h, namew);
-+    SetThreadDescriptionFunc(GetCurrentThread(), namew);
+-    error_printf_unless_qmp("VNC server running on %s:%s\n",
+-                            addr->u.inet.host,
+-                            addr->u.inet.port);
++    error_printf("VNC server running on %s:%s\n",
++                 addr->u.inet.host,
++                 addr->u.inet.port);
+     qapi_free_SocketAddress(addr);
  }
  
- void qemu_thread_create(QemuThread *thread, const char *name,
-@@ -344,6 +351,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     data->arg = arg;
-     data->mode = mode;
-     data->exited = false;
-+    data->name = g_strdup(name);
-     notifier_list_init(&data->exit);
- 
-     if (data->mode != QEMU_THREAD_DETACHED) {
-@@ -355,9 +363,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     if (!hThread) {
-         error_exit(GetLastError(), __func__);
-     }
--    if (name) {
--        set_thread_description(hThread, name);
--    }
-     CloseHandle(hThread);
- 
-     thread->data = data;
 -- 
 2.53.0
 
