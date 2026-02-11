@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3C1E9E31B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94466E9E311
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC7q-0008Jw-F4; Wed, 11 Feb 2026 10:27:34 -0500
+	id 1vqC7t-0000FG-EC; Wed, 11 Feb 2026 10:27:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7E-0006q1-La
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vqC7g-0007I6-EI
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7C-000612-AH
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:56 -0500
+ id 1vqC7c-00065Q-ET
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823613;
+ s=mimecast20190719; t=1770823638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6MgZnSu8FpgfVyxgsvWX6ruETMQfEejfRnUI7Ndvo2E=;
- b=Y6/3Jm9nD+Dn39XxP/S3E4azlpwL3Wn+7vtW5kzdBWBtQkmIXxnkuX/BRzaJ40T2Y9LE8z
- Bx6XCC36I0ApL4Ngr7SvvECt8WhJglsFq1aLK2iHCSgzZNet5PCz58ah6QvYuv9VPMstbX
- cn224QWUCkdB1QYyiYyZFPNZAofB2FQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=skHP4pTjXRgohkxWEwFUDHKfYizotJdlGmYSDlwigUI=;
+ b=KLyVjVCuufTs2VTjqnbldpevtfoRFMbb9RKBCWZ/44gLPK8sL5qDGpc0z33MDMBTsrMRB7
+ CpDNjQ2ZLBakEc04a2+5w2yCb872mc8txX/Kc2YBTrsT3XQFDEGD/4HQRd3I9kCkal4ulk
+ TjudKXYh8pi1meGW5AO5+ikqyoDau7I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-i8seQio8N4mPibSrxi86gA-1; Wed,
- 11 Feb 2026 10:26:50 -0500
-X-MC-Unique: i8seQio8N4mPibSrxi86gA-1
-X-Mimecast-MFC-AGG-ID: i8seQio8N4mPibSrxi86gA_1770823608
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-BRL-aCMlN9G42B_0iH0fgw-1; Wed,
+ 11 Feb 2026 10:27:17 -0500
+X-MC-Unique: BRL-aCMlN9G42B_0iH0fgw-1
+X-Mimecast-MFC-AGG-ID: BRL-aCMlN9G42B_0iH0fgw_1770823635
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91D7C180025C; Wed, 11 Feb 2026 15:26:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E74D19560B0; Wed, 11 Feb 2026 15:27:15 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F9CE30001A8; Wed, 11 Feb 2026 15:26:43 +0000 (UTC)
+ id 84B7730002D5; Wed, 11 Feb 2026 15:27:10 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -61,23 +61,23 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 16/27] monitor: remove redundant error_[v]printf_unless_qmp
-Date: Wed, 11 Feb 2026 15:24:57 +0000
-Message-ID: <20260211152508.732487-17-berrange@redhat.com>
+Subject: [PATCH v6 21/27] util: fix interleaving of error prefixes
+Date: Wed, 11 Feb 2026 15:25:02 +0000
+Message-ID: <20260211152508.732487-22-berrange@redhat.com>
 In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
 References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -95,80 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The only callers of these functions have been removed. Adding any
-new usage of them is highly undesirable, so they should be entirely
-removed.
+The vreport() function will optionally emit an prefix for error
+messages which is output to stderr incrementally. In the event
+that two vreport() calls execute concurrently, there is a risk
+that the prefix output will interleave. To address this it is
+required to take a lock on 'stderr' when outputting errors.
 
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/monitor/monitor.h |  3 ---
- monitor/monitor.c         | 24 ------------------------
- stubs/error-printf.c      |  5 -----
- 3 files changed, 32 deletions(-)
+ util/error-report.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index c3740ec616..296690e1f1 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -59,7 +59,4 @@ void monitor_register_hmp(const char *name, bool info,
- void monitor_register_hmp_info_hrt(const char *name,
-                                    HumanReadableText *(*handler)(Error **errp));
- 
--int error_vprintf_unless_qmp(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
--int error_printf_unless_qmp(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
--
- #endif /* MONITOR_H */
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index dd2c45ded0..4d26cd9496 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -281,30 +281,6 @@ int error_vprintf(const char *fmt, va_list ap)
-     return vfprintf(stderr, fmt, ap);
- }
- 
--int error_vprintf_unless_qmp(const char *fmt, va_list ap)
--{
--    Monitor *cur_mon = monitor_cur();
--
--    if (!cur_mon) {
--        return vfprintf(stderr, fmt, ap);
--    }
--    if (!monitor_cur_is_qmp()) {
--        return monitor_vprintf(cur_mon, fmt, ap);
--    }
--    return -1;
--}
--
--int error_printf_unless_qmp(const char *fmt, ...)
--{
--    va_list ap;
--    int ret;
--
--    va_start(ap, fmt);
--    ret = error_vprintf_unless_qmp(fmt, ap);
--    va_end(ap);
--    return ret;
--}
--
- static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     /* Limit guest-triggerable events to 1 per second */
-     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-diff --git a/stubs/error-printf.c b/stubs/error-printf.c
-index 0e326d8010..1afa0f62ca 100644
---- a/stubs/error-printf.c
-+++ b/stubs/error-printf.c
-@@ -16,8 +16,3 @@ int error_vprintf(const char *fmt, va_list ap)
+diff --git a/util/error-report.c b/util/error-report.c
+index 052f0f68b8..516d323ffe 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -234,6 +234,9 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+     if (monitor_cur_is_qmp()) {
+         cur = NULL;
      }
-     return vfprintf(stderr, fmt, ap);
++    if (!cur) {
++        qemu_flockfile(stderr);
++    }
+ 
+     if (message_with_timestamp && !cur) {
+         timestr = real_time_iso8601();
+@@ -261,6 +264,10 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+ 
+     error_vprintf_mon(cur, fmt, ap);
+     error_printf_mon(cur, "\n");
++
++    if (!cur) {
++        qemu_funlockfile(stderr);
++    }
  }
--
--int error_vprintf_unless_qmp(const char *fmt, va_list ap)
--{
--    return error_vprintf(fmt, ap);
--}
+ 
+ /*
 -- 
 2.53.0
 
