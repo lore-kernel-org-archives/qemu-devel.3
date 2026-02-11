@@ -4,68 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D324AECD6C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98776ECD6C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqDoZ-00026N-73; Wed, 11 Feb 2026 12:15:47 -0500
+	id 1vqDrF-0002tS-0l; Wed, 11 Feb 2026 12:18:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqDoX-00022L-WE
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:15:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqDoW-0007dQ-Gl
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:15:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770830143;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Uko6UCmz+a2a8hbej3mzweGbAfJv3JD1EXofIO9NJZg=;
- b=SfYZphfojwpQ5kupcLTICsK5qcKOQoEAgeslxX/Z0VmZ5NoUgZgvbDp4UWe0N2ZXZOAbTQ
- 2itOPBpurH90RUD0dHQlUQAHbu4rVx1Ko/A56IQg5UIhFjONpHa3ug8yEA3DwkSccKKIG2
- 6i1zOoyvdkc9MPn886lEZEvGmXQyXJU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-RdItGp5jNtOt8hCfJ4ryrg-1; Wed,
- 11 Feb 2026 12:15:40 -0500
-X-MC-Unique: RdItGp5jNtOt8hCfJ4ryrg-1
-X-Mimecast-MFC-AGG-ID: RdItGp5jNtOt8hCfJ4ryrg_1770830139
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 037561800370; Wed, 11 Feb 2026 17:15:39 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.73])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87C56180066A; Wed, 11 Feb 2026 17:15:36 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] migration/cpr: Include vfio-cpr.h instead of vfio-device.h
-Date: Wed, 11 Feb 2026 18:15:32 +0100
-Message-ID: <20260211171532.1556719-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqDrD-0002tF-Rd
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:18:31 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqDrB-0007vN-BI
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:18:31 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-8230f8f27cfso3412407b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 09:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770830307; x=1771435107; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C9wzLg3j9vDm84E/xB6HfGczLGCZB46y1PKYx4Uz5p0=;
+ b=PistyEIrKqyawEK7RbKi0SGyaJMzxsxJr/5BYnjmibutxo+ZivsBu7ffng2ynNw40E
+ Aadg95yL1pVWCIuVz7fWGJuoWBN8syEN9c7l2xC9pSuGuCMqUL56s89MMKlVy8rTLKvg
+ +8lhFbrHNv4bWAzGm0SrfUriW7Pd0MYxW33ZM/2IP97nzWZYPEn7kGUYGTVzHZsrSEHA
+ 3mA8f1Ed/RXsXWoVl4zIqTnqaAyhSwZBNxICKFkW4KtV/a3oZyxJoAIZiMXUhpXBLZVW
+ 9G9yNKv69Vw8k/QBxIsUvGxcKGvLfWSPjryFAIvwP+RRLRraBJ5qhTQhAFr2CmwRfEl8
+ bfBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770830307; x=1771435107;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=C9wzLg3j9vDm84E/xB6HfGczLGCZB46y1PKYx4Uz5p0=;
+ b=fUrqLDK0AsJpBkrA8ZKomXWR1Yp/4d1eeabiC2aDKapMS4IJ87HW1HW0kXTDDlPPPt
+ GQAXfaGr/pbXTBvdbF7tFGHD3cZ/66w7RsU84dIQ64QzkptRfyRFEh2sfr0cVYnA3BuU
+ R6otlYS1vhvrAy3RiQWZH3Lld1f6E1SYCqZ1bsISQfn6Cc9sE3cE4K5yYmZFgtNsVz4q
+ RMmJ0NsNDSk/0Jlng0QwbtMJqKyf32LbbdIn2ZZYiDMMiZnBiPAzwX8ULotuJP+cmllU
+ DrVT3NZe55oNMsU5xGso9HgsjM9wV4nbjHuDz188cyGE5rFOWPFn3V2IXRr0sAJWEFl2
+ XhqA==
+X-Gm-Message-State: AOJu0YzDvtt2PBLOHzRFVs30DAeaQAgi8SIb7ff9//v4MQe19fSG169n
+ OlsErp2ovuTTaYpmDywJd7Slef63e7R5x5LYS2sqdLOPzrcvTb5uc3jsumGaIiPDBmdfqfdOBYF
+ sZAwv
+X-Gm-Gg: AZuq6aJr/KCgE9SzN+6epb5U6Ej1k9IjTovCEG4BrsPlrJBkQ09Sozhv9m5qfFgn5dC
+ EcX8860MWNAIPuWu0M9eXtg09GEBQ0zyuuorU+gaV3WPRFy7/gWqSCqhZWdztjYRTWJI1IUZoqL
+ xmDNNBL5SSyX8vUoYP71VOEA1mJBs5pJ35O6ORX6wx+v7uxDhemp7Ytm1AWuUAMaOdM5YsiO3IZ
+ Q+C8Epqab8hfQvPTXjTT6lplFhGCV4XoGv7mlUXeC89JTNg3BsQPBfJaLaUK2yDEsOeH9UpSSPo
+ DYlRgieK5By5uMUNaxwpIUeIJGAMvkJAD02Zhi2fSo+WGfZLbyPo9KghLAdwQc15ghOlIKy6wdT
+ nHsw0K74Wzyx3yZEA9DByKjgsn6/VZfsoMi86mA7fjd9KwIPu4PeBrqi7c3stf/sMsbr0yXsCWd
+ dCF/749npWWiMPat7LZnaSEeQW+Dj5kkbbaM/pyPQu1n5Rvv8CQef5VSDH+9tdYbxQW8/ZTQAQ4
+ 3kiCmUMF3LA+pA=
+X-Received: by 2002:a05:6a20:914e:b0:38b:ecae:6718 with SMTP id
+ adf61e73a8af0-39447b66f39mr52783637.0.1770830307436; 
+ Wed, 11 Feb 2026 09:18:27 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6e197f5e17sm2730459a12.25.2026.02.11.09.18.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Feb 2026 09:18:27 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 2/2] docs/devel: fix bash-ism warning for configure
+Date: Wed, 11 Feb 2026 09:18:17 -0800
+Message-ID: <20260211171817.3089906-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260211171817.3089906-1-pierrick.bouvier@linaro.org>
+References: <20260211171817.3089906-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,31 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The file migration/cpr.c uses vmstate_cpr_vfio_devices which is
-declared in hw/vfio/vfio-cpr.h, not in hw/vfio/vfio-device.h.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Replace the include with the correct header file to avoid pulling in
-unnecessary VFIO device declarations.
+Hopefully this makes the meaning clearer.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260114101525.4039244-1-alex.bennee@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- migration/cpr.c | 2 +-
+ docs/devel/build-system.rst | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/cpr.c b/migration/cpr.c
-index adee2a919a364244867ef190fdf29bd1fe7e20e2..a0b37007f55d6dac32bd6220ffe65d32c4e6b52e 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -9,7 +9,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "hw/vfio/vfio-device.h"
-+#include "hw/vfio/vfio-cpr.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
- #include "migration/options.h"
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index e746bf81873..71331e64ac8 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -66,7 +66,7 @@ Modifying ``configure``
+ ``configure`` is a shell script; it uses ``#!/bin/sh`` and therefore
+ should be compatible with any POSIX shell. It is important to avoid
+ using bash-isms to avoid breaking development platforms where bash is
+-the primary host.
++not the default shell implementation.
+ 
+ The configure script provides a variety of functions to help writing
+ portable shell code and providing consistent behavior across architectures
 -- 
-2.53.0
+2.47.3
 
 
