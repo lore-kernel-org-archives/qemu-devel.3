@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13D2ECD6C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A68ECD6C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqD9v-0005XY-VY; Wed, 11 Feb 2026 11:33:47 -0500
+	id 1vqD9g-0005On-8k; Wed, 11 Feb 2026 11:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqD9u-0005WY-BZ
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:33:46 -0500
+ id 1vqD9f-0005OT-7j
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:33:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqD9s-0003gY-I0
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:33:46 -0500
+ id 1vqD9d-0003cl-CN
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:33:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770827623;
+ s=mimecast20190719; t=1770827608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tSTjl1rRCQTSLUmPFrvSWqmKYwXSQIbkIncGIVUNYI8=;
- b=bhdAy/uVyHiJf4tRiOu8EWi0C4jB7iXDzua2sV/uaK2wAo+BE1jBgTjT1P78VGGjUFNFlS
- 8HxpIoeDMBV69KVqYEH2ZdqDFX1qyQDKYzM6Pan5DqnHLZc8MHLYJ1vbocgbgjXi1xaME3
- U/sQVhr/jPddqMxcp/fmXnYdssaQBY0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8VTuIb/iu/VFrpnN/4uzR9CXNXuGw53PVUX5NBkfh/A=;
+ b=KBpS9zhze5Jf/YRtZc+JjGrDZUTnJPEHSgpz/MrMoaX8cW9f460yCtdMzleAQidiesjIft
+ npeXEF6TcI36rm7IjBFwgxC6FZDkceHOB2ZDTvKogyu7FuQm9mFKkoNVzZx87OknouEDaP
+ jWEjFT5TwEqpAynfkIyIbGl6cB/Vy9Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-HKGBKKxqNveKGKUL_WsyGA-1; Wed,
- 11 Feb 2026 11:33:40 -0500
-X-MC-Unique: HKGBKKxqNveKGKUL_WsyGA-1
-X-Mimecast-MFC-AGG-ID: HKGBKKxqNveKGKUL_WsyGA_1770827619
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-H25CIlUqMWCh9aXctnfJPg-1; Wed,
+ 11 Feb 2026 11:33:25 -0500
+X-MC-Unique: H25CIlUqMWCh9aXctnfJPg-1
+X-Mimecast-MFC-AGG-ID: H25CIlUqMWCh9aXctnfJPg_1770827604
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACCA1195608D; Wed, 11 Feb 2026 16:33:39 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C926419560A3; Wed, 11 Feb 2026 16:33:23 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 33FFB19560B5; Wed, 11 Feb 2026 16:33:35 +0000 (UTC)
+ id 3CD8019560A7; Wed, 11 Feb 2026 16:33:19 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -57,14 +56,11 @@ Cc: Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 04/15] tests: ensure all qcow2 I/O tests are able to be run
- via make
-Date: Wed, 11 Feb 2026 16:33:07 +0000
-Message-ID: <20260211163318.938776-5-berrange@redhat.com>
-In-Reply-To: <20260211163318.938776-1-berrange@redhat.com>
-References: <20260211163318.938776-1-berrange@redhat.com>
+Subject: [PATCH v4 00/15] tests: do more testing of block drivers
+Date: Wed, 11 Feb 2026 16:33:03 +0000
+Message-ID: <20260211163318.938776-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -92,95 +88,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For block formats marked as 'quick', only tests in the 'auto' group are
-added to the meson test suite.
+Original (very broken) v1 posting:
 
-The result of this is that qcow2 tests not in the 'auto' group cannot be
-run at all, even if passing SPEED=slow or SPEED=thorough.
+  https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg01650.html
 
-To fix this we need todo two passes over the I/O test list. First add
-all tests from 'auto' group into the 'block' suite, so they are run by
-default. Then on the second pass add any tests which were not in 'auto'
-into the 'block-slow' suite, so they get run when SPEED=slow or
-SPEED=thorough.
+The recent set of regressions identified in the LUKS block driver
+re-inforced that despite having a hugely useful set of I/O tests,
+our CI coverage is still letting through too many bugs.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/qemu-iotests/meson.build | 48 ++++++++++++++++++++++++++++++----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+The core goals of this series were/are:
 
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index bf588cc2c9..1a24d801a3 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -30,16 +30,48 @@ endforeach
- qemu_iotests_check_cmd = files('check')
- 
- foreach format, speed: qemu_iotests_formats
-+  # Formats tagged 'quick' get the subset of tests in the 'auto'
-+  # group, run by default with 'make check' / 'make check-block'
-+  seen = []
-   if speed == 'quick'
--    suites = 'block'
-+    args = ['-tap', '-' + format, '-g', 'auto']
-+    suites = ['block']
-+
-+    rc = run_command(
-+      [python, qemu_iotests_check_cmd] + args + ['-n'],
-+      check: true,
-+    )
-+
-+    foreach item: rc.stdout().strip().split()
-+      seen += item
-+      args = [qemu_iotests_check_cmd,
-+              '-tap', '-' + format, item,
-+              '--source-dir', meson.current_source_dir(),
-+              '--build-dir', meson.current_build_dir()]
-+      # Some individual tests take as long as 45 seconds
-+      # Bump the timeout to 3 minutes for some headroom
-+      # on slow machines to minimize spurious failures
-+      test('io-' + format + '-' + item,
-+           python,
-+           args: args,
-+           depends: qemu_iotests_binaries,
-+           env: qemu_iotests_env,
-+           protocol: 'tap',
-+           timeout: 180,
-+           suite: suites)
-+    endforeach
-+  endif
-+
-+  suites = []
-+  # Any format tagged quick or slow also gets added to slow
-+  # otherwise its tagged thorough
-+  if speed != 'thorough'
-+    suites += ['block-slow']
-   else
--    suites = ['block-' + speed]
-+    suites += ['block-thorough']
-   endif
- 
-   args = ['-tap', '-' + format]
--  if speed == 'quick'
--      args += ['-g', 'auto']
--  endif
- 
-   rc = run_command(
-       [python, qemu_iotests_check_cmd] + args + ['-n'],
-@@ -47,6 +79,12 @@ foreach format, speed: qemu_iotests_formats
-   )
- 
-   foreach item: rc.stdout().strip().split()
-+      # Skip any tests already added from the 'auto' group
-+      # as they're run in the 'quick' suite already
-+      if item in seen
-+          continue
-+      endif
-+
-       args = [qemu_iotests_check_cmd,
-               '-tap', '-' + format, item,
-               '--source-dir', meson.current_source_dir(),
+ * Add LUKS and NBD to the tested formats/protocols
+   integrated into "make check-block SPEED=thorough"
+
+ * Ensure that all qcow2 tests can be run with "SPEED=slow",
+   not staying limited to only the 'auto' group used by the
+   'make check-block' target in its default 'quick' mode
+
+ * Add  'make check-block-$FORMAT' to expose a standalone
+   target for running all tests for a given format (or
+   equivalently a protocol)
+
+ * Add GitLab CI jobs for exercising tests for all formats
+
+A sample pipeline for this is
+
+  https://gitlab.com/berrange/qemu/-/pipelines/2258731804/
+
+Showing the 'block-FORMAT-centos' jobs which test the 10
+block formats/protocols currently enabled.
+
+This series fixes a couple of bugs
+
+ * sendmsg generates a deprecation warning on centos
+
+ * Test 128 check for device mapper usage doesn't work
+   sufficiently well to detect gitlab's containe env
+   can't do dynamic devfs
+
+ * Test 185 is reliably failing on gitlab
+
+I'm unclear if there are other non-deterministic failures that
+would only appear if we start running the tests regularly, or
+against QEMU's private runners instead of gitlab shared runners.
+
+The ones I've fixed have been consistent across quite a few test
+pipelines so far with the shared runners.
+
+At this point it is a chicken & egg problem though.
+
+If we don't bite the bullet and enable block I/O tests in GitLab
+we'll never find out if they're stable enough to rely on.
+
+As a mitigation against instability a patch in this series adds
+a QEMU_TEST_IO_SKIP env variable that we are able to set as a
+GitLab CI env variable. This lets us skip broken tests without
+waiting for a git commit to disable them.
+
+Changed in v4:
+
+  - Remove tests from build-tcg-disabled job
+
+Changed in v3:
+
+  - Test whether dmsetup create device appeared or not, instead
+    of unconditionally skipping test 128 in GitLab
+  - Use 'driver' term instead of 'format' or 'protocol'
+  - Fix misc typos & rephrasing
+
+Daniel P. Berrangé (15):
+  Revert "python/aqmp: fix send_fd_scm for python 3.6.x"
+  tests: print reason when I/O test is skipped in TAP mode
+  tests: remove redundant meson suite for iotests
+  tests: ensure all qcow2 I/O tests are able to be run via make
+  scripts/mtest2make: ensure output has stable sorting
+  scripts/mtest2make: support optional tests grouping
+  tests: add a meson suite / make target per block I/O tests format
+  docs/devel/testing: expand documentation for 'make check-block'
+  tests: add nbd and luks to the I/O test suites
+  tests: use 'driver' as collective term for either format or protocol
+  tests: validate dmsetup result in test 128
+  tests: fix check for sudo access in LUKS I/O test
+  tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
+  gitlab: add jobs for thorough block tests
+  gitlab: remove I/O tests from build-tcg-disabled job
+
+ .gitlab-ci.d/buildtest.yml       | 101 ++++++++++++++++++++++++++++---
+ docs/devel/testing/main.rst      |  33 +++++++++-
+ python/qemu/qmp/qmp_client.py    |   9 +--
+ scripts/mtest2make.py            |  30 ++++++---
+ tests/Makefile.include           |   3 +-
+ tests/qemu-iotests/128           |   6 ++
+ tests/qemu-iotests/149           |  13 ++--
+ tests/qemu-iotests/meson.build   |  59 +++++++++++++++---
+ tests/qemu-iotests/testrunner.py |  18 +++++-
+ 9 files changed, 229 insertions(+), 43 deletions(-)
+
 -- 
 2.53.0
 
