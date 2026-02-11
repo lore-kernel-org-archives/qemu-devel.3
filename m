@@ -4,82 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7633E9E311
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E418E9E31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC7m-0007kS-6w; Wed, 11 Feb 2026 10:27:30 -0500
+	id 1vqCFP-0002Hl-PK; Wed, 11 Feb 2026 10:35:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC73-0006jq-R3
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vqCFO-0002Gb-FL
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:35:22 -0500
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC71-0005yg-A0
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823602;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5X80YirqVbdBeezsX1Xx2uS/KBTswwOh/p3/QZ8PMc8=;
- b=Vb9B0oAw0n/s05AC/33umOdUsof2r2YnVguyw+bhcf058qWu5Y7/xVcLWjeGxrAMWakZoM
- mv4GPWGZQBoT1HkbeKxd4pvPt/u8TufEF4VsKrziRUfbRY+iOjp0pVq2Eii7p12QnCecI4
- ugHPYVKauumsGcJN7Gvigr3+OvVkP20=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-z2u0O0uqMTiSltl6P3I0HQ-1; Wed,
- 11 Feb 2026 10:26:39 -0500
-X-MC-Unique: z2u0O0uqMTiSltl6P3I0HQ-1
-X-Mimecast-MFC-AGG-ID: z2u0O0uqMTiSltl6P3I0HQ_1770823597
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E4651800370; Wed, 11 Feb 2026 15:26:37 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.45.227.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF11A30001A8; Wed, 11 Feb 2026 15:26:32 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 14/27] ui: add proper error reporting for password changes
-Date: Wed, 11 Feb 2026 15:24:55 +0000
-Message-ID: <20260211152508.732487-15-berrange@redhat.com>
-In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
-References: <20260211152508.732487-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vqCFM-0000K0-CE
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:35:22 -0500
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 5CB5D7A00FF;
+ Wed, 11 Feb 2026 10:35:18 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Wed, 11 Feb 2026 10:35:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1770824118;
+ x=1770910518; bh=kRaskWVLZ+EMyQS0rHkbu8KMaevc06vYhuviQ5J8e/0=; b=
+ WNqQoEcmxb2V912Jr2vf7m4VH/wur6xUG1926Bfz2wsIuGxXXiXzoX8wmicFi/mY
+ EQP6L2GDOM1nBVjmPp6M99JlEp0SFVQrSd7BYLK2UGonqUhW2qCsVnD5CGCdqm6i
+ eZz7H7F2B7ju2e7CM7SshftiwEknAW4sNMzF+k/aMx4PcccASM7L/y8jWaU4jNpn
+ pRuuXSI5B8En7+RAaV6LOXpJqF8nAdhVuyBZa1Afd/9jKlP/571jscpuFDbjnYQ1
+ SWaU8rEcjXyCdspBQeIMHl5kSTB9Hk5Rzr5DhTnLfwqM0WBVR63+UdCiIK/M5AIM
+ VgFoKPqnN5b+5nb44KONwA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770824118; x=
+ 1770910518; bh=kRaskWVLZ+EMyQS0rHkbu8KMaevc06vYhuviQ5J8e/0=; b=e
+ PnqsrB9QdJjCpqYK2PG2025bmQEJJHJSAvQgEwzUKNTsHql6kSi/tPOKgn/s9IW7
+ K0ca7SBpbNrGe4XpjD79Pp/TvZOPYR3OGWh2kcAsmWCqjAjhSOOkLqS49qfL9lbs
+ 2siFP6scrGIw2rR4Mw13KAHvOvVCsxadfl3EeCM3MnXQXedr/wvERqk9xX1SQB/1
+ R3gFmqb9sJc+rhyVm8eOyvS0jm3PesigejEfv82MIf6r12fQItTNejgch7nvwTeH
+ 178H8z6gPLDskhIAjgTnuSDQm0/Z5B6QryoKAWeO+KTSFWG/xYUK6nbATOdXxGcZ
+ L+sPpaS4mE2DT3vebZn+g==
+X-ME-Sender: <xms:tqGMaf69tyAYkF0u2XnD2a3uh9KB7zNMC7TJ_W-pJlg733DtBwy5Sg>
+ <xme:tqGMafUmrzZvRFg3bjkMID2hV9F5I8EU1Zy3bRUWVKUsXxefh7G0mxKpHguIX7af7
+ wDQPdE_69XPExDBnTPEEtkenjyQMw2yqzuz-TZDryPPA2Jq7S9a>
+X-ME-Received: <xmr:tqGMad8y2le_8HOCfq0RNL5v07c29bgkhR8LHYOb5BUkeu2XyS_DE-DTYYA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvledvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfesthejre
+ dtredtvdenucfhrhhomheptehlvgigucghihhllhhirghmshhonhcuoegrlhgvgiesshhh
+ rgiisghothdrohhrgheqnecuggftrfgrthhtvghrnhepkeehjeeitefffeeuieetjedtje
+ ffvdelledvuedvffdvfeetgefhveekuedvfedvnecuffhomhgrihhnpehkvghrnhgvlhdr
+ ohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepudefpdhmohguvgep
+ shhmthhpohhuthdprhgtphhtthhopegrnhhkihhtrgesnhhvihguihgrrdgtohhmpdhrtg
+ hpthhtohepvhhsvghthhhisehnvhhiughirgdrtghomhdprhgtphhtthhopehjghhgsehn
+ vhhiughirgdrtghomhdprhgtphhtthhopehskhholhhothhhuhhmthhhohesnhhvihguih
+ grrdgtohhmpdhrtghpthhtoheptghlghesrhgvughhrghtrdgtohhmpdhrtghpthhtohep
+ rghnihhkvghtrgesnhhvihguihgrrdgtohhmpdhrtghpthhtoheptghjihgrsehnvhhiug
+ hirgdrtghomhdprhgtphhtthhopehkfigrnhhkhhgvuggvsehnvhhiughirgdrtghomhdp
+ rhgtphhtthhopehtrghrghhuphhtrgesnhhvihguihgrrdgtohhm
+X-ME-Proxy: <xmx:tqGMaXokIDaJLXJiuex1wNPjUrFc-3gnXg89zy-Gq04AelpOrgc3sw>
+ <xmx:tqGMaYLDWr7QEA5uR6HLPkNb5g4335_0pRQQetrAidM0483p0QMXZg>
+ <xmx:tqGMaSMVDimky4FwAZz-zrbSNQU_a_4D2Qg6DgXQR5nqUA294cyQhw>
+ <xmx:tqGMadq96gVFBcZv7u3mLfa76ewTSpX7QZEu5NSKC9tVflt-OK3b5Q>
+ <xmx:tqGMadE4WOgKN37opgItaL4E28LLEd30Y4dy6d4gooij4b2FzVQzWrSK>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 10:35:16 -0500 (EST)
+Date: Wed, 11 Feb 2026 08:35:15 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: <ankita@nvidia.com>
+Cc: <vsethi@nvidia.com>, <jgg@nvidia.com>, <skolothumtho@nvidia.com>,
+ <clg@redhat.com>, <aniketa@nvidia.com>, <cjia@nvidia.com>,
+ <kwankhede@nvidia.com>, <targupta@nvidia.com>, <zhiw@nvidia.com>,
+ <mochs@nvidia.com>, <kjaju@nvidia.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 0/2] hw/vfio: Enable hugepfnmap for non-power-of-2
+ device memory regions
+Message-ID: <20260211083515.724b64c2@shazbot.org>
+In-Reply-To: <20260211030615.3202-1-ankita@nvidia.com>
+References: <20260211030615.3202-1-ankita@nvidia.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.12.124.156; envelope-from=alex@shazbot.org;
+ helo=fhigh-b5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,264 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Neither the VNC or SPICE code for password changes provides error
-reporting at source, leading the callers to report a largely useless
-generic error message.
+On Wed, 11 Feb 2026 03:06:13 +0000
+<ankita@nvidia.com> wrote:
 
-Fixing this removes one of the two remaining needs for the undesirable
-error_printf_unless_qmp() method.
+> From: Ankit Agrawal <ankita@nvidia.com>
+> 
+> This series enables hugepfnmap support in QEMU for VFIO device memory
+> regions that have non-power-of-2 sizes. This specifically addresses the
+> needs of Grace-based systems (GB200) where device memory is exposed
+> as a BAR.
+> 
+> ## Problem
+> 
+> On Grace-based systems, device memory regions can have sizes like
+> 0x2F00F00000 (not power-of-2). The current QEMU VFIO mapping code
+> aligns each sparse mmap area independently using the trailing zeros
+> of its size (ctz64), which results in suboptimal alignment for the
+> overall VMA.
+> 
+> This prevents the kernel from using hugepfnmap that enables huge
+> page mappings for device memory. Without proper alignment, the
+> mapping falls back to PTE, significantly impacting performance
+> due to increased TLB pressure and page table overhead for large
+> memory regions.
+> 
+> ## Solution
+> 
+> Patch 1: Sort sparse mmap regions by offset during setup and validate
+>          that they don't overlap. This ensures predictable mapping
+>          order and enables gap detection.
+> 
+> Patch 2: Change the alignment strategy from per-sparse-region to
+>          whole-region alignment using pow2ceil(region->size). Create
+>          a single aligned base mapping for the entire region, then
+>          overlay sparse areas with MAP_FIXED. Gaps between sparse
+>          regions are explicitly unmapped.
+> 
+> v2:
+> * Fixed the code returning early without trace (Shameer, Alex)
+> 
+> Link: https://lore.kernel.org/all/20260130040649.42485-1-ankita@nvidia.com/ [v1]
+> 
+> Ankit Agrawal (2):
+>   hw/vfio: sort and validate sparse mmap regions by offset
+>   hw/vfio: align mmap to power-of-2 of region size for hugepfnmap
+> 
+>  hw/vfio/region.c | 126 ++++++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 98 insertions(+), 28 deletions(-)
+> 
 
-While fixing this the error message hint is improved to recommend the
-'password-secret' option which allows securely passing a password at
-startup.
-
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/ui/console.h                 |  2 +-
- include/ui/qemu-spice-module.h       |  3 ++-
- tests/functional/generic/test_vnc.py |  4 ++--
- ui/spice-core.c                      | 25 ++++++++++++++++++-------
- ui/spice-module.c                    |  7 ++++---
- ui/ui-qmp-cmds.c                     | 19 ++++++-------------
- ui/vnc-stubs.c                       |  6 +++---
- ui/vnc.c                             | 10 +++++++---
- 8 files changed, 43 insertions(+), 33 deletions(-)
-
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 98feaa58bd..3677a9d334 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -457,7 +457,7 @@ void qemu_display_help(void);
- void vnc_display_init(const char *id, Error **errp);
- void vnc_display_open(const char *id, Error **errp);
- void vnc_display_add_client(const char *id, int csock, bool skipauth);
--int vnc_display_password(const char *id, const char *password);
-+int vnc_display_password(const char *id, const char *password, Error **errp);
- int vnc_display_pw_expire(const char *id, time_t expires);
- void vnc_parse(const char *str);
- int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp);
-diff --git a/include/ui/qemu-spice-module.h b/include/ui/qemu-spice-module.h
-index 1f22d557ea..072efa0c83 100644
---- a/include/ui/qemu-spice-module.h
-+++ b/include/ui/qemu-spice-module.h
-@@ -29,7 +29,8 @@ struct QemuSpiceOps {
-     void (*display_init)(void);
-     int (*migrate_info)(const char *h, int p, int t, const char *s);
-     int (*set_passwd)(const char *passwd,
--                      bool fail_if_connected, bool disconnect_if_connected);
-+                      bool fail_if_connected, bool disconnect_if_connected,
-+                      Error **errp);
-     int (*set_pw_expire)(time_t expires);
-     int (*display_add_client)(int csock, int skipauth, int tls);
- #ifdef CONFIG_SPICE
-diff --git a/tests/functional/generic/test_vnc.py b/tests/functional/generic/test_vnc.py
-index f1dd1597cf..097f858ca1 100755
---- a/tests/functional/generic/test_vnc.py
-+++ b/tests/functional/generic/test_vnc.py
-@@ -48,7 +48,7 @@ def test_no_vnc_change_password(self):
-         self.assertEqual(set_password_response['error']['class'],
-                          'GenericError')
-         self.assertEqual(set_password_response['error']['desc'],
--                         'Could not set password')
-+                         'No VNC display is present');
- 
-     def launch_guarded(self):
-         try:
-@@ -73,7 +73,7 @@ def test_change_password_requires_a_password(self):
-         self.assertEqual(set_password_response['error']['class'],
-                          'GenericError')
-         self.assertEqual(set_password_response['error']['desc'],
--                         'Could not set password')
-+                         'VNC password authentication is disabled')
- 
-     def test_change_password(self):
-         self.set_machine('none')
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 8a6050f4ae..cdcec34f67 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -756,7 +756,7 @@ static void qemu_spice_init(void)
-                              tls_ciphers);
-     }
-     if (password) {
--        qemu_spice.set_passwd(password, false, false);
-+        qemu_spice.set_passwd(password, false, false, NULL);
-     }
-     if (qemu_opt_get_bool(opts, "sasl", 0)) {
-         if (spice_server_set_sasl(spice_server, 1) == -1) {
-@@ -919,8 +919,10 @@ int qemu_spice_add_display_interface(QXLInstance *qxlin, QemuConsole *con)
-     return qemu_spice_add_interface(&qxlin->base);
- }
- 
--static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn)
-+static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn,
-+                                 Error **errp)
- {
-+    int ret;
-     time_t lifetime, now = time(NULL);
-     char *passwd;
- 
-@@ -934,26 +936,35 @@ static int qemu_spice_set_ticket(bool fail_if_conn, bool disconnect_if_conn)
-         passwd = NULL;
-         lifetime = 1;
-     }
--    return spice_server_set_ticket(spice_server, passwd, lifetime,
--                                   fail_if_conn, disconnect_if_conn);
-+    ret = spice_server_set_ticket(spice_server, passwd, lifetime,
-+                                  fail_if_conn, disconnect_if_conn);
-+    if (ret < 0) {
-+        error_setg(errp, "Unable to set SPICE server ticket");
-+        return -1;
-+    }
-+    return 0;
- }
- 
- static int qemu_spice_set_passwd(const char *passwd,
--                                 bool fail_if_conn, bool disconnect_if_conn)
-+                                 bool fail_if_conn, bool disconnect_if_conn,
-+                                 Error **errp)
- {
-     if (strcmp(auth, "spice") != 0) {
-+        error_setg(errp, "SPICE authentication is disabled");
-+        error_append_hint(errp,
-+                          "To enable it use '-spice ...,password-secret=ID'");
-         return -1;
-     }
- 
-     g_free(auth_passwd);
-     auth_passwd = g_strdup(passwd);
--    return qemu_spice_set_ticket(fail_if_conn, disconnect_if_conn);
-+    return qemu_spice_set_ticket(fail_if_conn, disconnect_if_conn, errp);
- }
- 
- static int qemu_spice_set_pw_expire(time_t expires)
- {
-     auth_expires = expires;
--    return qemu_spice_set_ticket(false, false);
-+    return qemu_spice_set_ticket(false, false, NULL);
- }
- 
- static int qemu_spice_display_add_client(int csock, int skipauth, int tls)
-diff --git a/ui/spice-module.c b/ui/spice-module.c
-index 3222335872..7651c85885 100644
---- a/ui/spice-module.c
-+++ b/ui/spice-module.c
-@@ -45,14 +45,15 @@ static int qemu_spice_migrate_info_stub(const char *h, int p, int t,
- 
- static int qemu_spice_set_passwd_stub(const char *passwd,
-                                       bool fail_if_connected,
--                                      bool disconnect_if_connected)
-+                                      bool disconnect_if_connected,
-+                                      Error **errp)
- {
--    return -1;
-+    g_assert_not_reached();
- }
- 
- static int qemu_spice_set_pw_expire_stub(time_t expires)
- {
--    return -1;
-+    g_assert_not_reached();
- }
- 
- static int qemu_spice_display_add_client_stub(int csock, int skipauth,
-diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
-index b49b636152..1173c82cf7 100644
---- a/ui/ui-qmp-cmds.c
-+++ b/ui/ui-qmp-cmds.c
-@@ -31,15 +31,14 @@
- 
- void qmp_set_password(SetPasswordOptions *opts, Error **errp)
- {
--    int rc;
--
-     if (opts->protocol == DISPLAY_PROTOCOL_SPICE) {
-         if (!qemu_using_spice(errp)) {
-             return;
-         }
--        rc = qemu_spice.set_passwd(opts->password,
--                opts->connected == SET_PASSWORD_ACTION_FAIL,
--                opts->connected == SET_PASSWORD_ACTION_DISCONNECT);
-+        qemu_spice.set_passwd(opts->password,
-+                              opts->connected == SET_PASSWORD_ACTION_FAIL,
-+                              opts->connected == SET_PASSWORD_ACTION_DISCONNECT,
-+                              errp);
-     } else {
-         assert(opts->protocol == DISPLAY_PROTOCOL_VNC);
-         if (opts->connected != SET_PASSWORD_ACTION_KEEP) {
-@@ -52,11 +51,7 @@ void qmp_set_password(SetPasswordOptions *opts, Error **errp)
-          * Note that setting an empty password will not disable login
-          * through this interface.
-          */
--        rc = vnc_display_password(opts->u.vnc.display, opts->password);
--    }
--
--    if (rc != 0) {
--        error_setg(errp, "Could not set password");
-+        vnc_display_password(opts->u.vnc.display, opts->password, errp);
-     }
- }
- 
-@@ -107,9 +102,7 @@ void qmp_expire_password(ExpirePasswordOptions *opts, Error **errp)
- #ifdef CONFIG_VNC
- void qmp_change_vnc_password(const char *password, Error **errp)
- {
--    if (vnc_display_password(NULL, password) < 0) {
--        error_setg(errp, "Could not set password");
--    }
-+    vnc_display_password(NULL, password, errp);
- }
- #endif
- 
-diff --git a/ui/vnc-stubs.c b/ui/vnc-stubs.c
-index a96bc86236..5de9bf9d70 100644
---- a/ui/vnc-stubs.c
-+++ b/ui/vnc-stubs.c
-@@ -2,11 +2,11 @@
- #include "ui/console.h"
- #include "qapi/error.h"
- 
--int vnc_display_password(const char *id, const char *password)
-+int vnc_display_password(const char *id, const char *password, Error **errp)
- {
--    return -ENODEV;
-+    g_assert_not_reached();
- }
- int vnc_display_pw_expire(const char *id, time_t expires)
- {
--    return -ENODEV;
-+    g_assert_not_reached();
- };
-diff --git a/ui/vnc.c b/ui/vnc.c
-index a61a4f937d..833e0e2e68 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3526,16 +3526,20 @@ static void vnc_display_close(VncDisplay *vd)
- #endif
- }
- 
--int vnc_display_password(const char *id, const char *password)
-+int vnc_display_password(const char *id, const char *password, Error **errp)
- {
-     VncDisplay *vd = vnc_display_find(id);
- 
-     if (!vd) {
-+        error_setg(errp, "No VNC display is present");
-+        error_append_hint(errp,
-+                          "To enable it, use '-vnc ...'");
-         return -EINVAL;
-     }
-     if (vd->auth == VNC_AUTH_NONE) {
--        error_printf_unless_qmp("If you want use passwords please enable "
--                                "password auth using '-vnc ${dpy},password'.\n");
-+        error_setg(errp, "VNC password authentication is disabled");
-+        error_append_hint(errp,
-+                          "To enable it, use '-vnc ...,password-secret=ID'");
-         return -EINVAL;
-     }
- 
--- 
-2.53.0
-
+Reviewed-by: Alex Williamson <alex@shazbot.org>
 
