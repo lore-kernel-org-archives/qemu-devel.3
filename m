@@ -4,67 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49B52EB596B
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 07:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3201EB5979
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 07:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq4UZ-0002t6-2S; Wed, 11 Feb 2026 02:18:31 -0500
+	id 1vq4yh-0001Ag-Mr; Wed, 11 Feb 2026 02:49:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vq4UY-0002se-CR
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 02:18:30 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vq4yf-0001AG-1N
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 02:49:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vq4UW-0003ox-V6
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 02:18:30 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vq4yc-0001j8-L5
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 02:49:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770794308;
+ s=mimecast20190719; t=1770796173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i4aeXpQfh5J8RsHhlPAbJJTzYCf1RoIBW0ly5yk177A=;
- b=SwQpjWcSaeg2eJm++mSrcOzRluYl4FvCNzTCDyN7+UJx2osfaOxEMFcF18UNImARsb9Z8A
- HL8nXVSmFqvPs0JUbOhEGopCTumgBKhwdEOrvBLtN5rdf2ZS5zIkRso4ue1r33KUsmCpxS
- 7qmKjwDBPksd7SQ2fdEW503luINAqiI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-c4oheyi7PM6RQe4CmT6RjQ-1; Wed,
- 11 Feb 2026 02:18:26 -0500
-X-MC-Unique: c4oheyi7PM6RQe4CmT6RjQ-1
-X-Mimecast-MFC-AGG-ID: c4oheyi7PM6RQe4CmT6RjQ_1770794305
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 973651800259
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:18:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 577BE180066D
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:18:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B8E9721E692D; Wed, 11 Feb 2026 08:18:22 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/5] json-parser: add location to JSON parsing errors
-In-Reply-To: <f5cfed0d-3425-4bdc-90f7-1dd2fa33b448@redhat.com> (Paolo
- Bonzini's message of "Tue, 10 Feb 2026 10:44:31 +0100")
-References: <20260107084840.150843-1-pbonzini@redhat.com>
- <20260107084840.150843-6-pbonzini@redhat.com>
- <87cy2d7y3y.fsf@pond.sub.org>
- <f5cfed0d-3425-4bdc-90f7-1dd2fa33b448@redhat.com>
-Date: Wed, 11 Feb 2026 08:18:22 +0100
-Message-ID: <87seb73g01.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Szk0iBjs12Z5mTkJvcTxC6C7WGffT/RNgC6eC5iqdJ4eN7j5r/2RMmX5+jhOWoC/nbIHO4
+ NTrgqtoFne1ScoUwZtb55MDaztYDBBfwiNvxc0LBWQ6EK2rsHPAQAVODGQuqZSbbCxuu8a
+ nP/rIPqBcuqIcARRYlY3f95Eh2+AnYQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-395-FDg5cPqINEGF_9YbT3mDqw-1; Wed, 11 Feb 2026 02:49:32 -0500
+X-MC-Unique: FDg5cPqINEGF_9YbT3mDqw-1
+X-Mimecast-MFC-AGG-ID: FDg5cPqINEGF_9YbT3mDqw_1770796171
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4801bceb317so18372485e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Feb 2026 23:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770796171; x=1771400971; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=pLYPy7bfZVY40mTMwKoCmj7OLqUBf901+3ylpMW1tBfzvPkxK9/vexeipDF53eai9+
+ w+EReXWwDoG1zraWyakxhsm+orP0K3zdoEJFLtL4qhZ1aIWnkk1CT+SBtoo9seNuGJVk
+ aZwklAfUk9r1T4R/St+oh3Kmf27QiDl52aCXJZq8WFX6n5Olig7hjFaWW7+eRnGwT1vn
+ LpwE8xIgBp+t70G8sLgZJC/kFJ+Nlb4QJD+LP6XZHU/UmfRLvPeU9IlmxbkHPl18jiFf
+ fmb5TCn0y2kflYyk34DkXGUMZSCZp9XF9BPoq0LieuU/zVF+IXY4dxs6sShy5swhCxxa
+ QYHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770796171; x=1771400971;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=VusBBx+nh208b1fX5TW3yay83Aet4IAmmfdJ/7Y5XUEEpScZk9JVOdb3nYg3dFLp0p
+ KhBgrN36nkab9z1zjJxcosVs0oSNK8dU9aVHKGWWtMrWTOhIwIYixc/iLBQn7nrCoyBC
+ +f24oLg/thpmn29Y0/r4xQmGCBTmcs3WOrd+QgWBNspaKikbJ6XxnqGVWsk5RFZj+3ki
+ xRRZDWayU2eQDr/TJWMpGJ5jvQ3F5FA01UWNgce9z6q60k07HoLMjRETqnuoCD8m0JIr
+ OGyvEMhZnu2BJaZgLuH11lAMlKI3+m/XKJQIhjso8lUkUeLVjufPpWjDiEntVWMRubzd
+ /LZQ==
+X-Gm-Message-State: AOJu0Yx3QV9DoVWlnlQmSrzwu23jPVDhEpNgNUuy6ciefNUt7PN2uLZ5
+ wpHJ4w7A8JRhtaHokyocNHccOU2zc0iSXoAYFYejMB9ItvWRBkRVWuDopgTJrC8Hpn+DRO8ACad
+ U/W685GZCfApjptx0sK5ay+9HkYwBELJv2LR6RtM7/gj+nzWdxSoHIfub
+X-Gm-Gg: AZuq6aKuTRW1Es0jxOZ9G7XcWUAjDwtdCsrVbKlJjsJSXPbbP66FeJpFiV4DbDWEnz2
+ li26i+aLYyFQ7mBHtKqSr6nm/XwRHC7q37K8F8EbsWc/HUIgJYoPAXddDCg40yed55wRlW0nrSR
+ T+peZy9vxnqm5umZAberAsKspVvbOA/aASMlQKIOULPKSN0ZHueAMUpEYNf6+sQu8WJxhAmUZeh
+ Dqoy9zfvwqlph859zw8zgqvhPr/DSUTM+1D7QaMVmDma33ySnZ1FwQhXg9q6cKnuT8OSG8m6bW5
+ wZHbJwGExsD+Th9+ubhOjK3iq3GCwYHNi5jxOvAwj9/hLe73weW46sLTqlV3UWMRMrQG6Rh6N8m
+ NJNwybhKJNosrE1TFNfQ7+hFRENPq8KvKUV9mxN3pbi1lgoCcdf5uEnsSwM9K3AxS5llTA2UXWK
+ KFH18584yEJVNVBmLq/gspB3NwHg==
+X-Received: by 2002:a05:600d:6447:20b0:47e:e2ec:995b with SMTP id
+ 5b1f17b1804b1-4832020dfadmr174072205e9.9.1770796170714; 
+ Tue, 10 Feb 2026 23:49:30 -0800 (PST)
+X-Received: by 2002:a05:600d:6447:20b0:47e:e2ec:995b with SMTP id
+ 5b1f17b1804b1-4832020dfadmr174072025e9.9.1770796170350; 
+ Tue, 10 Feb 2026 23:49:30 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835dd20519sm40750005e9.15.2026.02.10.23.49.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Feb 2026 23:49:29 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Wei Liu <wei.liu@kernel.org>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>
+Subject: Re: [PATCH 0/7] whpx: x86 updates (2026-02)
+Date: Wed, 11 Feb 2026 08:49:26 +0100
+Message-ID: <20260211074926.1411965-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260211055356.44664-1-mohamed@unpredictable.fr>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,54 +128,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Queued, thanks.
 
-> On 2/10/26 10:21, Markus Armbruster wrote:
->>> - *
->>> - * 0) make errors meaningful again
->> 
->> The errors weren't meaningless, just bad.  The "again" is kind of funny,
->> considering it's the initial commit.
->> 
->> I agree with removing the line, but i wonder what exactly improved
->> beyond line and column ("geometry information").
->
-> I think it's more of a reference to the error recovery.  There's only so 
-> many ways to report errors for a grammar as simple as JSON.
-
-Point!
-
-> But just for kicks I looked at the very first implementation and the 
-> current state, and diff-ed the errors.  These are the differences:
->
-> renamed:
-> "expected separator in dict" -> "expected ',' or '}'"
-> "expected separator in list" -> "expected ',' or ']'"
-> "missing : in object pair" -> "expected ':'"
->
-> removed (merged with "expecting value" or "premature end of input"):
-> "Missing value in dict"
->
-> split (out of just "expecting value"):
-> "invalid interpolation '%s'"
-
-Improvements.
-
-> new errors:
-> "can't interpolate into string"
-> "%.*s is not a valid Unicode character"
-> "duplicate key"
-> "invalid UTF-8 sequence in string"
-> "premature end of input"
-
-Bug fixes :)
-
-Thanks!
-
-> So I don't know if they're "meaningful again", but there were some 
-> changes over the years and the current set seems good enough to me!
-
-Yes.  And further improvement, if desired, wouldn't be this series' job
-anyway.
+Paolo
 
 
