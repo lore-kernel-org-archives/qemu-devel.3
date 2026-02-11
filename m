@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF111E9E2FE
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A79E9E2FC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq9Ne-00016N-6h; Wed, 11 Feb 2026 07:31:43 -0500
+	id 1vq9NZ-0000wv-RQ; Wed, 11 Feb 2026 07:31:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9NU-0000oL-V9
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:36 -0500
+ id 1vq9NJ-0000au-PU
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vq9NS-0000Gs-4V
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:31 -0500
+ id 1vq9NH-0000G0-Lq
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:31:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770813089;
+ s=mimecast20190719; t=1770813079;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tpYjeot8p53E9hbudpSJPO+xYO8RwO13MoSHQweyb84=;
- b=JCG7WAJNXG042yyBVm5YVFFN/Z+jbzpOgc7zl+JEHtffvq0atvsh1G4ZDvXUCmReR0d11+
- sA5BsHCy2bqExEb3tXtISy/2gZCyEupkIa65AWpBIYQ7Y1XhbKfu4Lqh/wJFbTMYpoSskN
- NFE1OU75Ne+ii/MCHlW23UBkiIJYn00=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NawPSV0+R7Z6iBTNYDG41PH3COFdnG/VW+iZ15ECL/g=;
+ b=JPQqM7x1SHgUi88i87dCfJNmVWVCJgTz44mhIZCHfvF4HisQDwIUBB0FtwFkJRV5CtOcNu
+ LlM2qeBgigxbFU+GedQ9rT0r4CWxID1PxJH97MsxDsQnAi8JEYWq1NR87xPKwGrKZ1v33+
+ lE39QDgU2REkLWvT5yEZvLxNeDMOk1A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-O6N5zASFObGpSC7yEto7wA-1; Wed,
- 11 Feb 2026 07:31:26 -0500
-X-MC-Unique: O6N5zASFObGpSC7yEto7wA-1
-X-Mimecast-MFC-AGG-ID: O6N5zASFObGpSC7yEto7wA_1770813084
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-27-vuGe2ZcvOIGOm3x7YZ09mA-1; Wed,
+ 11 Feb 2026 07:31:15 -0500
+X-MC-Unique: vuGe2ZcvOIGOm3x7YZ09mA-1
+X-Mimecast-MFC-AGG-ID: vuGe2ZcvOIGOm3x7YZ09mA_1770813074
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65CB419560A3; Wed, 11 Feb 2026 12:31:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCC011800454; Wed, 11 Feb 2026 12:31:13 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 235A318003F6; Wed, 11 Feb 2026 12:31:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 738A330001A8; Wed, 11 Feb 2026 12:31:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
@@ -60,15 +60,15 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 12/14] char: qemu_chr_write_log() use qemu_write_full()
-Date: Wed, 11 Feb 2026 16:29:59 +0400
-Message-ID: <20260211123007.3569932-13-marcandre.lureau@redhat.com>
+Subject: [PULL 10/14] chardev: rework filename handling
+Date: Wed, 11 Feb 2026 16:29:57 +0400
+Message-ID: <20260211123007.3569932-11-marcandre.lureau@redhat.com>
 In-Reply-To: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 References: <20260211123007.3569932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -97,55 +97,257 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-logfd is blocking, so we don't need to care about EAGAIN.
-Let's simply use qemu_write_full().
+Instead of checking, did backend set the filename state or not, let's
+be stateless: filename is needed rarely, so, let's just have a generic
+function (with optional implementation by backends) to get it.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260201173633.413934-2-vsementsov@yandex-team.ru>
+[ Marc-André - fix leak in ivshmem-pci.c ]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20260115144606.233252-10-vsementsov@yandex-team.ru>
 ---
- chardev/char.c | 22 +++++-----------------
- 1 file changed, 5 insertions(+), 17 deletions(-)
+ include/chardev/char.h |  5 ++++-
+ chardev/char-pty.c     |  8 +++++++-
+ chardev/char-socket.c  | 31 ++++++++++++-------------------
+ chardev/char.c         | 21 +++++++++++++++------
+ hw/misc/ivshmem-pci.c  |  7 ++++---
+ 5 files changed, 42 insertions(+), 30 deletions(-)
 
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index ada5529fa6c..81bc0cbdf2a 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -62,7 +62,6 @@ struct Chardev {
+     QemuMutex chr_write_lock;
+     CharFrontend *fe;
+     char *label;
+-    char *filename;
+     int logfd;
+     int be_open;
+     /* used to coordinate the chardev-change special-case: */
+@@ -309,6 +308,9 @@ struct ChardevClass {
+ 
+     /* return PTY name if available */
+     char *(*chr_get_pty_name)(Chardev *s);
++
++    /* get filename for reporting */
++    char *(*chr_get_filename)(Chardev *s);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+@@ -324,5 +326,6 @@ void suspend_mux_open(void);
+ void resume_mux_open(void);
+ 
+ char *qemu_chr_get_pty_name(Chardev *chr);
++char *qemu_chr_get_filename(Chardev *chr);
+ 
+ #endif
+diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+index 047aade09e5..7e95132cdbb 100644
+--- a/chardev/char-pty.c
++++ b/chardev/char-pty.c
+@@ -351,7 +351,6 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         return false;
+     }
+ 
+-    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
+     qemu_printf("char device redirected to %s (label %s)\n",
+                 s->pty_name, chr->label);
+ 
+@@ -393,6 +392,12 @@ static char *pty_chr_get_pty_name(Chardev *chr)
+     return g_strdup(s->pty_name);
+ }
+ 
++static char *pty_chr_get_filename(Chardev *chr)
++{
++    PtyChardev *s = PTY_CHARDEV(chr);
++    return g_strdup_printf("pty:%s", s->pty_name);
++}
++
+ static void char_pty_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -403,6 +408,7 @@ static void char_pty_class_init(ObjectClass *oc, const void *data)
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+     cc->chr_add_watch = pty_chr_add_watch;
+     cc->chr_get_pty_name = pty_chr_get_pty_name;
++    cc->chr_get_filename = pty_chr_get_filename;
+ }
+ 
+ static const TypeInfo char_pty_type_info = {
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 908bbdbc124..5adeb908659 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -40,6 +40,7 @@
+ 
+ static gboolean socket_reconnect_timeout(gpointer opaque);
+ static void tcp_chr_telnet_init(Chardev *chr);
++static char *qemu_chr_compute_filename(SocketChardev *s);
+ 
+ static void tcp_chr_change_state(SocketChardev *s, TCPChardevState state)
+ {
+@@ -384,8 +385,6 @@ static void tcp_chr_free_connection(Chardev *chr)
+     s->sioc = NULL;
+     object_unref(OBJECT(s->ioc));
+     s->ioc = NULL;
+-    g_free(chr->filename);
+-    chr->filename = NULL;
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+ }
+ 
+@@ -439,16 +438,17 @@ static char *qemu_chr_socket_address(SocketChardev *s, const char *prefix)
+     }
+ }
+ 
+-static void update_disconnected_filename(SocketChardev *s)
++static char *tcp_chr_get_filename(Chardev *chr)
+ {
+-    Chardev *chr = CHARDEV(s);
++    SocketChardev *s = SOCKET_CHARDEV(chr);
+ 
+-    g_free(chr->filename);
+-    if (s->addr) {
+-        chr->filename = qemu_chr_socket_address(s, "disconnected:");
+-    } else {
+-        chr->filename = g_strdup("disconnected:socket");
++    if (s->state == TCP_CHARDEV_STATE_CONNECTED) {
++        return qemu_chr_compute_filename(s);
++    } else if (s->addr) {
++        return qemu_chr_socket_address(s, "disconnected:");
+     }
++
++    return g_strdup("disconnected:socket");
+ }
+ 
+ /* NB may be called even if tcp_chr_connect has not been
+@@ -468,7 +468,6 @@ static void tcp_chr_disconnect_locked(Chardev *chr)
+         qio_net_listener_set_client_func_full(s->listener, tcp_chr_accept,
+                                               chr, NULL, chr->gcontext);
+     }
+-    update_disconnected_filename(s);
+     if (emit_close) {
+         qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
+     }
+@@ -639,9 +638,6 @@ static void tcp_chr_connect(void *opaque)
+     Chardev *chr = CHARDEV(opaque);
+     SocketChardev *s = SOCKET_CHARDEV(opaque);
+ 
+-    g_free(chr->filename);
+-    chr->filename = qemu_chr_compute_filename(s);
+-
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTED);
+     update_ioc_handlers(s);
+     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
+@@ -1000,8 +996,8 @@ static void tcp_chr_accept_server_sync(Chardev *chr)
+ {
+     SocketChardev *s = SOCKET_CHARDEV(chr);
+     QIOChannelSocket *sioc;
+-    info_report("QEMU waiting for connection on: %s",
+-                chr->filename);
++    g_autofree char *filename = qemu_chr_get_filename(chr);
++    info_report("QEMU waiting for connection on: %s", filename);
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTING);
+     sioc = qio_net_listener_wait_client(s->listener);
+     tcp_chr_set_client_ioc_name(chr, sioc);
+@@ -1258,8 +1254,6 @@ static int qmp_chardev_open_socket_server(Chardev *chr,
+     s->addr = qio_net_listener_get_local_address(s->listener, 0, errp);
+ 
+ skip_listen:
+-    update_disconnected_filename(s);
+-
+     if (is_waitconnect) {
+         tcp_chr_accept_server_sync(chr);
+     } else {
+@@ -1436,8 +1430,6 @@ static bool tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+     }
+     s->registered_yank = true;
+ 
+-    update_disconnected_filename(s);
+-
+     if (s->is_listen) {
+         if (qmp_chardev_open_socket_server(chr, is_telnet || is_tn3270,
+                                            is_waitconnect, errp) < 0) {
+@@ -1593,6 +1585,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
+     cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
++    cc->chr_get_filename = tcp_chr_get_filename;
+ 
+     object_class_property_add(oc, "addr", "SocketAddress",
+                               char_socket_get_addr, NULL,
 diff --git a/chardev/char.c b/chardev/char.c
-index 5d00cac2f31..4b285baf029 100644
+index 0dc792b88f7..3373c9b61f8 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -82,29 +82,17 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
-     CHARDEV_GET_CLASS(s)->chr_be_event(s, event);
+@@ -309,7 +309,6 @@ static void char_finalize(Object *obj)
+     if (chr->fe) {
+         chr->fe->chr = NULL;
+     }
+-    g_free(chr->filename);
+     g_free(chr->label);
+     if (chr->logfd != -1) {
+         close(chr->logfd);
+@@ -796,7 +795,7 @@ static int qmp_query_chardev_foreach(Object *obj, void *data)
+     ChardevInfo *value = g_malloc0(sizeof(*value));
+ 
+     value->label = g_strdup(chr->label);
+-    value->filename = g_strdup(chr->filename);
++    value->filename = qemu_chr_get_filename(chr);
+     value->frontend_open = chr->fe && chr->fe->fe_is_open;
+ 
+     QAPI_LIST_PREPEND(*list, value);
+@@ -1025,10 +1024,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
+         return NULL;
+     }
+ 
+-    if (!chr->filename) {
+-        chr->filename = g_strdup(typename + 8);
+-    }
+-
+     return chr;
  }
  
--/* Not reporting errors from writing to logfile, as logs are
-- * defined to be "best effort" only */
- static void qemu_chr_write_log(Chardev *s, const uint8_t *buf, size_t len)
+@@ -1110,6 +1105,20 @@ char *qemu_chr_get_pty_name(Chardev *chr)
+     return NULL;
+ }
+ 
++char *qemu_chr_get_filename(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++    const char *typename;
++
++    if (cc->chr_get_filename) {
++        return cc->chr_get_filename(chr);
++    }
++
++    typename = object_get_typename(OBJECT(chr));
++    assert(g_str_has_prefix(typename, "chardev-"));
++    return g_strdup(typename + 8);
++}
++
+ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+                                   Error **errp)
  {
--    size_t done = 0;
--    ssize_t ret;
--
-     if (s->logfd < 0) {
-         return;
-     }
+diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+index b9162589a02..a3a43f53bd1 100644
+--- a/hw/misc/ivshmem-pci.c
++++ b/hw/misc/ivshmem-pci.c
+@@ -873,10 +873,11 @@ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
+         host_memory_backend_set_mapped(s->hostmem, true);
+     } else {
+         Chardev *chr = qemu_chr_fe_get_driver(&s->server_chr);
+-        assert(chr);
++        g_autofree char *filename = NULL;
  
--    while (done < len) {
--    retry:
--        ret = write(s->logfd, buf + done, len - done);
--        if (ret == -1 && errno == EAGAIN) {
--            g_usleep(100);
--            goto retry;
--        }
--
--        if (ret <= 0) {
--            return;
--        }
--        done += ret;
-+    if (qemu_write_full(s->logfd, buf, len) < len) {
-+        /*
-+         * qemu_write_full() is defined with G_GNUC_WARN_UNUSED_RESULT,
-+         * but logging is best‑effort, we do ignore errors.
-+         */
-     }
- }
+-        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n",
+-                        chr->filename);
++        assert(chr);
++        filename = qemu_chr_get_filename(chr);
++        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n", filename);
  
+         /* we allocate enough space for 16 peers and grow as needed */
+         resize_peers(s, 16);
 -- 
 2.52.0
 
