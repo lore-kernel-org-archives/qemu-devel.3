@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E679E9E31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF1DEA3F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqCNY-00054L-CV; Wed, 11 Feb 2026 10:43:48 -0500
+	id 1vqCP8-0005hV-SH; Wed, 11 Feb 2026 10:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqCNX-00052t-9z
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:43:47 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqCNV-0001dk-Qj
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:43:47 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-790884840baso66241907b3.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:43:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770824624; cv=none;
- d=google.com; s=arc-20240605;
- b=KSbyDRxx5aYN6RHy+OOlC6WsiAL3Ro/pOF24+gPOQxZWxu9RFSFVpslaHt6EJSb6K/
- gakFkn31lXRVQShe99b12jBcCQCLwSL4JR1XxCYIrocjFEs5kbZscKcsFZ/fVCRq2pNg
- CxtgCl/xHQS++X/BbmZMdiiBs6lgEtNL8tr8hre03qU679DbhMFqA5/2MpE35OVn0dxn
- UbGe6jeXvrQQWdElbUARZoRIIb70wbuM5oiF77gsuP6N55V0wrRXzU6CQ/y/l+b+Tyiq
- TKCWZ6PMfPBiK946XqqzPjiO5ONR/54VG1O0xWTgZJXC+A4YvECf/IHCE6gPPzxXBqRX
- BDRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Cwx4TMtV0+2MBlJylAWyBlGUsmVcRjrhOwzbBX1NFZs=;
- fh=wDPrO862J/o14wSOl/ZfXuBCnESuGxKC3mZZOO/MpJI=;
- b=jYtII+76pjccIy1nBxV3iXJOn7ugUwSSv6+WGWWb3feK8AJ0pafC0TLjXH1OVHcboY
- zgRCDPc44WUuaH5BtNDyZlOKcfAOZpST2mCFafKOnhzrz+NMrbI9DkZfxToTtwVLoRFe
- ypg0EX1pfOqTBCwFUJUNKXaH2vzK2LQzzl2MgFG3ik/fy3qbpT0OtXmwjXxiXM3u+y4F
- wOvkpn2svbMzOQFUojvp6OD/p7rkP+ebhJ9aB5xev6ovp7TlA9SpSRz4v6AmmAFdZJPf
- rfr0/ZHaVurRpEEbLB/QtSqVXbDo7Bto/oYHv5Q783965b4uhjG4jBthoUPfsqnqxp0M
- BnjA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770824624; x=1771429424; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Cwx4TMtV0+2MBlJylAWyBlGUsmVcRjrhOwzbBX1NFZs=;
- b=J+go+BYiUlEfq5lvKDJRYMwEuOqYkQA471J+L+Vaa8w+vwstKbRS/+q+TMQdiy27wE
- hYFNTAKX/FJfqDHQH3Z/2uIkrBA4J4VAo+BGKoxxIy1HAiqeSBZI5um30G3uKf+abF4o
- r9DLDc2HYFW/6yg0CQgPv+gCScUUE6cPg6yKQnPPoo6sfcX2SVkLilNWG8Hkytu60llQ
- AnD8UIB6s1YyZaC1j3lIEwDl7SP+7Ek2QbexteHacEoT0J80MKLFnOUyRNcoOZEgqN2X
- 73MKG54KqTsiMjU6eoEewDFXt5KfbYjh31brG5FxIUfUkCpRkfiSOLBdxY3K4Y7RPBrZ
- e/9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770824624; x=1771429424;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cwx4TMtV0+2MBlJylAWyBlGUsmVcRjrhOwzbBX1NFZs=;
- b=QQnPTuz3ufMazYxzoX573PbtFnCaccEkA+ZpA6RHv+OKmT0avhaHBbIMErlk5ov7sL
- U7CS3mVzYHSfpcxsYGiC1/pzZ0T+FXilFLMGg0+xFYZzW1yIvupQOUuan/INLzqnUFvz
- ekyXYkIIc+AJEQlmf+KvpQvVGEwrbEM6IXlFGo70c/NXHJ5QV0kBY4S8kZl2+xb8kxbT
- GPKskihJvPPPRt244w4la8PSH503SRz/zSQcPevg+adoLVXbiR3hejsn1AzN64BPK7wa
- +hjkROAVzgdR7UQ+F92jN32W2f+x0UUfzRj9Pz5q7zv+/YMWmTskIibHJc7xcU92vvIY
- aRTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9SgA1oZjeoHfx5PGdArGFmwewRNF3jG5pkt9+LgqzLVLoIuGcF2MO0ubWN2pyY5uNz6GLG11icb3e@nongnu.org
-X-Gm-Message-State: AOJu0Yy66o64dROotfhh9a16woXaFbYzS9uc6bMbhvyxYCK3yMuhe+tA
- BxAeQAI9M381EZrdil/iJ14o83VRPaWMAVqjgyLgEjMLNLhuR/GboCyK5wi4POyOVSIZpELr8QZ
- 9E2Kxe5nA0v3mIIqs4jZykQdD5ByOrk0Jp2de5Kvyyw==
-X-Gm-Gg: AZuq6aLlTdk0A5iuruOXxIDtJNA4RrQXA5FSckAA/82YuNdRwQmFOmFC+weDVfUSwWq
- FjuCnX/P0kTinr19AgOAx/2W/tJPS3TeVlqRGYvexC5g8iOsUcH2nEYqG+C9iUd0SPkpuiqgc9M
- rEN9xLp0EZee94mJFDubLdVD51yq+X7eXnWCPpLOs/y4I+JME2jnBFSn5hF3KCA7Msu3/tVwiyD
- moFMEWWAGgir+rRspFd/en7nzxTfRnHdn6fJ+yLkX6l7kjI9x4+ylu3UztZRTCzLiSbgUB7aXXp
- /1lNYOUs5Q25ccpi6FnNhaAqI3OaSAy6RjDnSY4HhLlTs5bI+fIFyTLjAVCIVkirefs=
-X-Received: by 2002:a05:690c:6006:b0:796:2ee6:3f87 with SMTP id
- 00721157ae682-7965f08a3a8mr55352367b3.67.1770824624573; Wed, 11 Feb 2026
- 07:43:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richie@linux.ibm.com>)
+ id 1vqCP7-0005hM-Ii
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:45:25 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <richie@linux.ibm.com>)
+ id 1vqCP5-00021Z-Ka
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:45:25 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61BBxPPu3145172; Wed, 11 Feb 2026 15:45:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=k4DueH5MERMADcv8bkqciwdD8JujQM81biD3ngoE/
+ s4=; b=bULdNKRaD4rG/pRl1WlBsZHI/+9LopY15sD/OuAjzyBdWvnVgMPeYOFqg
+ YFSWmyK5u3UCxVHrTMvMzeaLG6l7+hXQAttWn+dPyetBEjbGKGgHYkcxzW0NaUV9
+ y29MyfPWtNUO4U8Jw4SdO1zPdg22zlt4GHh86iTz1R0B94hGCxrXLoLCVts19nZp
+ eqbph46t4GxXauWjDnxSchT75evakbPRPdXF4eL+IR8DfcDETl1TvvVGMQDkxer7
+ P+Q+XN5uekrP9sA9+ZZ7dNcdmnOLLJW7u7bqR1fH0gjoxNDqfZVFi5H+phCWlXTj
+ qnizWeF4XpoIQ1Bw2/h6J2HIOHkJg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v7ake-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Feb 2026 15:45:10 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61BF5mgc019225;
+ Wed, 11 Feb 2026 15:45:09 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6hxk673p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Feb 2026 15:45:09 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61BFj7w427918896
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Feb 2026 15:45:07 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 96D282004B;
+ Wed, 11 Feb 2026 15:45:07 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7537D20040;
+ Wed, 11 Feb 2026 15:45:07 +0000 (GMT)
+Received: from t35lp33.lnxne.boe (unknown [9.87.84.240])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Feb 2026 15:45:07 +0000 (GMT)
+From: Richie Buturla <richie@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: groug@kaod.org, qemu_oss@crudebyte.com
+Subject: [PATCH] hw/9pfs: fix data race in v9fs_mark_fids_unreclaim()
+Date: Wed, 11 Feb 2026 16:44:50 +0100
+Message-ID: <20260211154450.254338-1-richie@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20251202160853.22560-1-sebott@redhat.com>
- <20251202160853.22560-3-sebott@redhat.com>
- <CAFEAcA8oi1Xs2kv66dFV9NZore+Q2vHUsgMikveVdN1c+3SBJQ@mail.gmail.com>
- <9b04a20f-b708-208d-1e4e-466ec30b7bb9@redhat.com>
-In-Reply-To: <9b04a20f-b708-208d-1e4e-466ec30b7bb9@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Feb 2026 15:43:32 +0000
-X-Gm-Features: AZwV_QhbMQtjgAAFsQMaNKMcmBgssEikN0rK-YFZ8G0l_cRA-hB9h8zVvJqu3SM
-Message-ID: <CAFEAcA-A+zW=QFdCY7z==+Z=xXfhJvPeyHhbG_MpEmpkQfrmaw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] target/arm/kvm: add kvm-psci-version vcpu property
-To: Sebastian Ott <sebott@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: OeQVBY1u-OXYJTORQZe9BdpFlONVYknn
+X-Proofpoint-ORIG-GUID: OeQVBY1u-OXYJTORQZe9BdpFlONVYknn
+X-Authority-Analysis: v=2.4 cv=JdWxbEKV c=1 sm=1 tr=0 ts=698ca406 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8
+ a=weyarag8D_LuGCx9tH8A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjExMDExOCBTYWx0ZWRfX3BYdtwRguRPy
+ u/JuCD1SoikGh9Qod7/lYqLkMlmQm2usuguho2Uy+QNNUTNb7DLNWf6flf5OAP3Edw1H+LBxTSN
+ mCEXoy0HTId4quIAbPEjmoIe4Nnx4PUmJB6Y4gYMUrq2VzeVy5xdSNjPmsK+2Ap+/qoeGr/bEkr
+ TDNZ1pWYBtSmRqZqsZy77iqAraG1oJ09ydGUqC43+mki9WN8IIRYA1PlNCm/s0TgEejLocC/ZSH
+ jdliBzeMi+8mMkzaSwU73s9goHrWgiOMjhqtCrSfwqHObYjIoenbYf57gL128lCmL3VkeqJkpaa
+ gcmpptGtjLD02GZZNNgRJ2Ik3E70cOyNOFZYYvUjc8YwvJbT9JbOLMLCrk+lzqeSXJPADNILTvq
+ ygZrGiTIIYBixJCgyzWZAs7aknLvuEXgQ7WG8CRUM/Y+ubXVqGaHY98ff+071iP68zisnvK+a4J
+ AIeL3T1PZ8wKOqxpjpQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-11_02,2026-02-11_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1011 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602110118
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=richie@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,44 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Feb 2026 at 15:37, Sebastian Ott <sebott@redhat.com> wrote:
->
-> Hi Peter,
->
-> On Fri, 6 Feb 2026, Peter Maydell wrote:
-> > On Tue, 2 Dec 2025 at 16:09, Sebastian Ott <sebott@redhat.com> wrote:
+A data race between v9fs_mark_fids_unreclaim() and v9fs_path_copy()
+causes an inconsistent read of fidp->path. In v9fs_path_copy(), the
+path size is set before the data pointer is allocated, creating a
+window where size is non-zero but data is NULL.
 
-> >> +static char *kvm_get_psci_version(Object *obj, Error **errp)
-> >> +{
-> >> +    ARMCPU *cpu = ARM_CPU(obj);
-> >> +    const struct psci_version *ver;
-> >> +
-> >> +    for (ver = psci_versions; ver->number != -1; ver++) {
-> [...]
-> >> +        if (ver->number == cpu->psci_version)
-> >> +            return g_strdup(ver->str);
-> >> +    }
-> >> +
-> >> +    return g_strdup_printf("Unknown PSCI-version: %x", cpu->psci_version);
-> >
-> > Is this ever possible?
->
-> Hm, not sure actually - what if there's a new kernel/qemu implementing
-> psci version 1.4 and then you migrate to a qemu that doesn't know about
-> 1.4?
+v9fs_co_open2() holds a write lock during path modifications,
+but v9fs_mark_fids_unreclaim() was not acquiring a read
+lock, allowing it to race.
 
-Oh, I see -- we're reporting back cpu->psci_version here, which
-indeed could be the value set by KVM. I misread and assumed
-this was just reading back the field that the setter sets,
-which is kvm_prop_psci_version (and which I think will only
-be set via the setter and so isn't ever a value the setter
-doesn't know about).
+Fix by holding the path read lock during FID table iteration.
 
-That does flag up a bug in this patch, though: if I set
-a QOM property via the setter function and then read its
-value via the getter function I ought to get back what
-I just wrote.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3300
+Signed-off-by: Richie Buturla <richie@linux.ibm.com>
+---
+ hw/9pfs/9p.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-thanks
--- PMM
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 6fbe604ce8..02366f43a8 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -560,6 +560,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             sizeof(V9fsFidState *), 1);
+     gint i;
+
++    v9fs_path_read_lock(s);
+     g_hash_table_iter_init(&iter, s->fids);
+
+     /*
+@@ -580,6 +581,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             g_array_append_val(to_reopen, fidp);
+         }
+     }
++    v9fs_path_unlock(s);
+
+     for (i = 0; i < to_reopen->len; i++) {
+         fidp = g_array_index(to_reopen, V9fsFidState*, i);
+--
+2.51.0
+
 
