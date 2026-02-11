@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0839EB271F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFA9E9E311
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC7s-00005H-9o; Wed, 11 Feb 2026 10:27:36 -0500
+	id 1vqC89-0002a2-25; Wed, 11 Feb 2026 10:27:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7g-0007I3-EI
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vqC87-0002Eg-9f
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7c-00065K-Bs
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:23 -0500
+ id 1vqC84-0006DF-Ub
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823638;
+ s=mimecast20190719; t=1770823668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ids8ssbjyqIGdjv1hvc90z9LCMXzQg8S2+lPCiRENwA=;
- b=OMnx2xnCLYF7s7VrESJRTU8Iu1GVUquFx0AtqFD1oAFElGEcBbF9LJ0ROs+KMxBieVTEc4
- 6UakDlJghViJl4ey9+74+WQXz4TYsDQV3rONLaqeYFVzG7AFJxs0Ym1CFy4K1ts/Ey+X8q
- YG6HWzPh/wvvqFysjYcoJlvOALRo3YA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=JQpBBosBc75GeSIQlXLH7SixAcsChLt5pjUJzSan8Nc=;
+ b=AkGvzwJIYdIBZOJ1d5iheqWrfysrBnf6Q5ooPNAYaKLQnCeZNQBWN2NXiSRdQljlVEQID6
+ 2nfbUYWO/QCbVIMBxZGGGuPFH6wCn3I1xn4NLaxNf/WN5zkW/XtlcV+le8e5ggA18vHeAH
+ pOmgaNaArHAMnn2jOxfItILXQ0io4c4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-Y2Wf5-4YO6e9Q_Wy8Qnv-g-1; Wed,
- 11 Feb 2026 10:27:14 -0500
-X-MC-Unique: Y2Wf5-4YO6e9Q_Wy8Qnv-g-1
-X-Mimecast-MFC-AGG-ID: Y2Wf5-4YO6e9Q_Wy8Qnv-g_1770823630
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-CJKlBn5tO3GyRuDNLhNnTA-1; Wed,
+ 11 Feb 2026 10:27:45 -0500
+X-MC-Unique: CJKlBn5tO3GyRuDNLhNnTA-1
+X-Mimecast-MFC-AGG-ID: CJKlBn5tO3GyRuDNLhNnTA_1770823663
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15D1D19560B2; Wed, 11 Feb 2026 15:27:10 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 373641800605; Wed, 11 Feb 2026 15:27:43 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 485AE30001A8; Wed, 11 Feb 2026 15:27:05 +0000 (UTC)
+ id 5891B30001A8; Wed, 11 Feb 2026 15:27:38 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -61,25 +61,26 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 20/27] util: don't skip error prefixes when QMP is active
-Date: Wed, 11 Feb 2026 15:25:01 +0000
-Message-ID: <20260211152508.732487-21-berrange@redhat.com>
+Subject: [PATCH v6 26/27] util: add support for formatting thread info in
+ messages
+Date: Wed, 11 Feb 2026 15:25:07 +0000
+Message-ID: <20260211152508.732487-27-berrange@redhat.com>
 In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
 References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,68 +96,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vreport() function will print to HMP if available, otherwise
-to stderr. In the event that vreport() is called during execution
-of a QMP command, it will print to stderr, but mistakenly omit the
-message prefixes (timestamp, guest name, program name).
+The message context is now extended to be able to include the
+thread ID and thread name, after the program name. On Linux
+the thread ID will match the process TID visible in /proc,
+while on other platforms it will merely be an integer repr
+of the system thread object address/ID.
 
-This new usage of monitor_is_cur_qmp() from vreport() requires that
-we add a stub to satisfy linking of non-system emulator binaries.
+This changes the output for both error_report and qemu_log,
+when running under the system emulators or the QEMU storage
+daemon. Other programs omit the thread information since
+they are largely single threaded, though potentially it
+would be useful to enable in all of them, given that the RCU
+thread will always get spawned by a constructor function.
 
+Before:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
+  qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+After:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qemu-system-x86_64: (772366:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
+  qemu-system-x86_64: (772366:main): qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: (772366:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+The '-msg thread-info=on|off' argument is introduced to allow this
+new default output to be supressed if desired.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- stubs/monitor-core.c           | 5 +++++
- tests/unit/test-util-sockets.c | 1 +
- util/error-report.c            | 8 ++++++++
- 3 files changed, 14 insertions(+)
+ include/qemu/message.h               |  1 +
+ qemu-options.hx                      | 10 +++++++---
+ storage-daemon/qemu-storage-daemon.c |  6 ++++++
+ system/vl.c                          | 17 +++++++++++++++--
+ tests/qemu-iotests/041               |  2 +-
+ tests/qemu-iotests/common.filter     |  2 +-
+ util/message.c                       |  7 +++++++
+ 7 files changed, 38 insertions(+), 7 deletions(-)
 
-diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
-index a7c32297c9..078a5012e9 100644
---- a/stubs/monitor-core.c
-+++ b/stubs/monitor-core.c
-@@ -7,6 +7,11 @@ Monitor *monitor_cur(void)
-     return NULL;
+diff --git a/include/qemu/message.h b/include/qemu/message.h
+index b8518d06be..2cc092c993 100644
+--- a/include/qemu/message.h
++++ b/include/qemu/message.h
+@@ -7,6 +7,7 @@ enum QMessageFormatFlags {
+     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
+     QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
+     QMESSAGE_FORMAT_PROGRAM_NAME = (1 << 2),
++    QMESSAGE_FORMAT_THREAD_INFO = (1 << 3),
+ };
+ 
+ /**
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 84dcbb0983..50cbecc7d7 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5515,15 +5515,16 @@ ERST
+ 
+ DEF("msg", HAS_ARG, QEMU_OPTION_msg,
+     "-msg [timestamp=on|off][,guest-name=on|off]\n"
+-    "     [,program-name=on|off]\n"
++    "     [,program-name=on|off][,thread-info=on|off]\n"
+     "                control error message format\n"
+     "                timestamp=on enables timestamps (default: off)\n"
+     "                guest-name=on enables guest name prefix but only if\n"
+     "                              -name guest option is set (default: off)\n"
+-    "                program-name=off disables program name prefix (default: on)\n",
++    "                program-name=off disables program name prefix (default: on)\n"
++    "                thread-info=off disables thread ID and name prefix (default: on)\n",
+     QEMU_ARCH_ALL)
+ SRST
+-``-msg [timestamp=on|off][,guest-name=on|off][,program-name=on|off]``
++``-msg [timestamp=on|off][,guest-name=on|off][,program-name=on|off][,thread-info=on|off]``
+     Control error message format.
+ 
+     ``timestamp=on|off``
+@@ -5535,6 +5536,9 @@ SRST
+ 
+     ``program-name=on|off``
+         Prefix messages with the program name. Default is on.
++
++    ``guest-info=on|off``
++        Prefix messages with the thread ID and name. Default is on.
+ ERST
+ 
+ DEF("dump-vmstate", HAS_ARG, QEMU_OPTION_dump_vmstate,
+diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+index eb72561358..cc44ed7848 100644
+--- a/storage-daemon/qemu-storage-daemon.c
++++ b/storage-daemon/qemu-storage-daemon.c
+@@ -47,6 +47,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
++#include "qemu/message.h"
+ #include "qemu/help_option.h"
+ #include "qemu/job.h"
+ #include "qemu/log.h"
+@@ -65,6 +66,10 @@ static const char *pid_file;
+ static char *pid_file_realpath;
+ static volatile bool exit_requested = false;
+ 
++#define QMESSAGE_FORMAT_DEFAULT \
++    (QMESSAGE_FORMAT_PROGRAM_NAME | \
++     QMESSAGE_FORMAT_THREAD_INFO)
++
+ void qemu_system_killed(int signal, pid_t pid)
+ {
+     exit_requested = true;
+@@ -399,6 +404,7 @@ int main(int argc, char *argv[])
+ #endif
+ 
+     error_init(argv[0]);
++    qmessage_set_format(QMESSAGE_FORMAT_DEFAULT);
+     qemu_init_exec_dir(argv[0]);
+     os_setup_signal_handling();
+ 
+diff --git a/system/vl.c b/system/vl.c
+index 3e79bf47e0..bedda94103 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -145,6 +145,10 @@
+ 
+ #define MAX_VIRTIO_CONSOLES 1
+ 
++#define QMESSAGE_FORMAT_DEFAULT \
++    (QMESSAGE_FORMAT_PROGRAM_NAME | \
++     QMESSAGE_FORMAT_THREAD_INFO)
++
+ typedef struct BlockdevOptionsQueueEntry {
+     BlockdevOptions *bdo;
+     Location loc;
+@@ -387,6 +391,12 @@ static QemuOptsList qemu_msg_opts = {
+             .help = "Prepends program name for error messages (enabled "
+                     "by default)\n",
+         },
++        {
++            .name = "program-name",
++            .type = QEMU_OPT_BOOL,
++            .help = "Prepends current thread ID and name for error messages "
++                    "(enabled by default)\n",
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -822,10 +832,9 @@ static void realtime_init(void)
+     }
  }
  
-+bool monitor_cur_is_qmp(void)
-+{
-+    return false;
-+}
-+
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+-
+ static void configure_msg(QemuOpts *opts)
  {
-     return NULL;
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index ee66d727c3..b9f2453e29 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -74,6 +74,7 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
- Monitor *monitor_cur(void) { return cur_mon; }
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
-+bool monitor_cur_is_qmp(void) { abort(); };
- 
- #ifndef _WIN32
- static void test_socket_fd_pass_name_good(void)
-diff --git a/util/error-report.c b/util/error-report.c
-index b34a2bc7bc..052f0f68b8 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -227,6 +227,14 @@ static void vreport(report_type type, const char *fmt, va_list ap)
-     Monitor *cur = monitor_cur();
-     gchar *timestr;
- 
-+    /*
-+     * When current monitor is QMP, messages must go to stderr
-+     * and have prefixes added
-+     */
-+    if (monitor_cur_is_qmp()) {
-+        cur = NULL;
+-    int flags = QMESSAGE_FORMAT_PROGRAM_NAME;
++    int flags = QMESSAGE_FORMAT_DEFAULT;
+     if (qemu_opt_get_bool(opts, "timestamp", false)) {
+         flags |= QMESSAGE_FORMAT_TIMESTAMP;
+     }
+@@ -835,6 +844,9 @@ static void configure_msg(QemuOpts *opts)
+     if (!qemu_opt_get_bool(opts, "program-name", true)) {
+         flags &= ~QMESSAGE_FORMAT_PROGRAM_NAME;
+     }
++    if (!qemu_opt_get_bool(opts, "thread-info", true)) {
++        flags &= ~QMESSAGE_FORMAT_THREAD_INFO;
 +    }
+     qmessage_set_format(flags);
+ }
+ 
+@@ -2903,6 +2915,7 @@ void qemu_init(int argc, char **argv)
+     module_call_init(MODULE_INIT_OPTS);
+ 
+     error_init(argv[0]);
++    qmessage_set_format(QMESSAGE_FORMAT_DEFAULT);
+     qemu_init_exec_dir(argv[0]);
+ 
+     os_setup_limits();
+diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+index 8452845f44..dc2666afe7 100755
+--- a/tests/qemu-iotests/041
++++ b/tests/qemu-iotests/041
+@@ -1102,7 +1102,7 @@ class TestRepairQuorum(iotests.QMPTestCase):
+         self.vm.shutdown()
+         log = iotests.filter_qtest(self.vm.get_log())
+         log = re.sub(r'^Formatting.*\n', '', log)
+-        log = re.sub(r'^%s: ' % os.path.basename(iotests.qemu_prog), '', log)
++        log = re.sub(r'^%s: \(\d+:\w+\): ' % os.path.basename(iotests.qemu_prog), '', log)
+ 
+         self.assertEqual(log,
+                          "Can no longer replace 'img1' by 'repair0', because " +
+diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
+index 26e6b45b04..c8cb2e860c 100644
+--- a/tests/qemu-iotests/common.filter
++++ b/tests/qemu-iotests/common.filter
+@@ -81,7 +81,7 @@ _filter_qemu_io()
+ # replace occurrences of QEMU_PROG with "qemu"
+ _filter_qemu()
+ {
+-    gsed -e "s#\\(^\\|(qemu) \\)$(basename $QEMU_PROG):#\1QEMU_PROG:#" \
++    gsed -e "s#\\(^\\|(qemu) \\)$(basename $QEMU_PROG): ([0-9]\+:[-_a-zA-Z]\+):#\1QEMU_PROG:#" \
+         -e 's#^QEMU [0-9]\+\.[0-9]\+\.[0-9]\+ monitor#QEMU X.Y.Z monitor#' \
+         -e $'s#\r##' # QEMU monitor uses \r\n line endings
+ }
+diff --git a/util/message.c b/util/message.c
+index dd01bf7462..9bf640c8c4 100644
+--- a/util/message.c
++++ b/util/message.c
+@@ -40,4 +40,11 @@ void qmessage_context_print(FILE *fp)
+             fputs(": ", fp);
+         }
+     }
 +
-     if (message_with_timestamp && !cur) {
-         timestr = real_time_iso8601();
-         fprintf(stderr, "%s ", timestr);
++    if (message_format & QMESSAGE_FORMAT_THREAD_INFO) {
++        int thid = qemu_get_thread_id();
++        const char *thname = qemu_thread_get_name();
++
++        fprintf(fp, "(%d:%s): ", thid, thname);
++    }
+ }
 -- 
 2.53.0
 
