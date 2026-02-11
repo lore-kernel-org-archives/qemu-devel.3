@@ -4,74 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EEB6EA3F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81148EA3F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC7u-0000Na-DY; Wed, 11 Feb 2026 10:27:38 -0500
+	id 1vqCBJ-0007LG-Kv; Wed, 11 Feb 2026 10:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7q-0008Lx-Q6
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:34 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBE-0007K2-8u
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC7o-00068W-QA
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:27:34 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vqCBC-0008Ao-2o
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:31:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823651;
+ s=mimecast20190719; t=1770823861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kkoiLQEbFC048zZDPRGr8W03GXiPCxPb5ynydGF78mE=;
- b=dNt8eEvQAPyKxvGuN8zzqohYoVk+X+turWrBpJvhfz1BK+cuVgdPfJI5S6GtyEvpNmv9Pc
- XrlSzAwzf9vfB/1RogGVwhDIOL98TBiZif6H9l2cE42ZDQkS6vx43/JKnj+yuWI/K0/bG9
- R8ND4o6vX6OEJlA4yJH4X383EfirpBI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-FNvOBfwkOxWRYlS6u_bf6A-1; Wed,
- 11 Feb 2026 10:27:28 -0500
-X-MC-Unique: FNvOBfwkOxWRYlS6u_bf6A-1
-X-Mimecast-MFC-AGG-ID: FNvOBfwkOxWRYlS6u_bf6A_1770823647
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F371E1800367; Wed, 11 Feb 2026 15:27:26 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.45.227.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2A71430001A8; Wed, 11 Feb 2026 15:27:21 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 23/27] util: convert error-report & log to message API for
- timestamp
-Date: Wed, 11 Feb 2026 15:25:04 +0000
-Message-ID: <20260211152508.732487-24-berrange@redhat.com>
-In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
-References: <20260211152508.732487-1-berrange@redhat.com>
+ bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
+ b=ML4BygmdBp7iX8wOsQ3F6MHrutvG2CphHLe2TjV8hPJSLbGe7WfPx/A7mCaxndDREzpXyS
+ QlSvB7a8kYq22wXXttK5583xlCc8O7nAnttxVwu/80KzOcpvg3QEtAuO8sGqVoD8JpXsM5
+ n47FEw4UwUCSiPxaUR0nvIkLJdL3/PE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-568-KN8z6zOqO5afZSASDe-_xQ-1; Wed, 11 Feb 2026 10:31:00 -0500
+X-MC-Unique: KN8z6zOqO5afZSASDe-_xQ-1
+X-Mimecast-MFC-AGG-ID: KN8z6zOqO5afZSASDe-_xQ_1770823859
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4801e3aab32so37767455e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 07:31:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770823859; x=1771428659; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
+ b=ng0p2PzXfd/P6mB5sjJBW7JDY4C3XrrjsUtAQjJHdJB9bLxnzkwk7t3LaK/S6Fm5ET
+ 0gI6rPW3EyHXKN6cAuIsHMYosmNtKDaj6bRcxVJjDl8tMFZn9j8AAeLmaEhkl1SJX72z
+ A7MhI95cbjjHCC7n5W3tX3SmCrevslDMMIGU4Polcv85ZK4f4pMy4DPHpwgN4UVdxcQx
+ QjUSemiGu40H4emln7j2dxsL9h8fA95xekl44CA6PTYpB2stZ/MPBldHYPWElG4RNg5J
+ PV7ng8ETBy3DzpQDCRwpTYMH7gUl3CA6Jg7hzwQAmlNLVlrqAHyfHa9MIcpzMDcLljeL
+ D7dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770823859; x=1771428659;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4uMBqfdZsQbe7YIFKz45QFjnUCRjbkXzgrDvDI+qPJ8=;
+ b=Fc59xV3Tnh+D9I1yyCXG3wO4c3CRiQLgGXhJrloTTy3lV9B526qUME7ohaTTEO+QQB
+ uSPEhqPNUdJUrxwnj/u6VR4jx5PNa0mN3tX54oain7uINJrA98ADaqc1sq11XNCI9GwD
+ 4sB8mPgOimi4Qg75roDVgkmE9EkDksfqiUElBJEHd36TESPXV6NKOzR0anYk+MeUAoHH
+ 96F1+KJOPxmp9dAUX9TYtqboD0LqVvZRFaPXtIEcbIADBNpiSnotGrIIfeLYdjk7+4Nm
+ wL+1/+Am9oYuFB0xevEHLrEzYfV2zLIBln2tLXWoMJ/wEBmxjaskMTfTwXux4v8uqezg
+ GsBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbBJNHIi1pWNdN08ijOAd7qGQH6gvffT0MNGMorOrCdONx+GWnKCQWCR4upXgjPjsW/DsChdyBE0xD@nongnu.org
+X-Gm-Message-State: AOJu0YwzPBlrEslOsTLMgBVCKpjhHZciL0yUHiPuhtY/meionkbg7CLy
+ lol2If3MCfvDbLldJ131h4LyrLZGFSWiGC4tZDeZrBtWOdnf7eQUNI+vkvedVhm7ylUHO4PPtgD
+ 6zWC4h951et4ShLlQe8s5+w8yEK0leK9x7LHlbknLi0Mf8r2TVuHSZ3LX
+X-Gm-Gg: AZuq6aJPXIPRqWDzZxspxBdTbE7fAXe4Xo7/qAkMdtLrUHigLVSrgAq1kr4qLUhk8Dc
+ KStZl32SjadWXCf8nL4bNZUmx7tA3zhzEEO+qtu8ffvUth1162R0P11LqALH1KZtRUappkXIwQk
+ oQylcuVT02eZIqRSTAAgSczYYMfew58mQ6ewU3u4gkAMQ19KzrW1xR57ovp3oVi54QEEYuNXc/C
+ 1jAaZtHrbf+ka1DIbhAqTCthuguc46QcsWEwElQtyN3wXGft4OSZ36CTmnrRtwggDYZ1ftFEyNe
+ Wa3OwGiRqwp7/KDfGnkZxx2ZcYGCEYpvKJJRJXSF2T16hjcHnotb9UeUIpR4X/6FfdAKNjXJkeS
+ 1Ortnmum28pqCwuHvr/ZXViCJtQfRDTiIsqaS/w4aEwC9E3997ORcN4HtJPfpXFZ3CPQ3mGp/U6
+ vwrKJOXP8w
+X-Received: by 2002:a05:600c:46cb:b0:483:ea6:8767 with SMTP id
+ 5b1f17b1804b1-4835e2cd408mr35512085e9.36.1770823858850; 
+ Wed, 11 Feb 2026 07:30:58 -0800 (PST)
+X-Received: by 2002:a05:600c:46cb:b0:483:ea6:8767 with SMTP id
+ 5b1f17b1804b1-4835e2cd408mr35511455e9.36.1770823858114; 
+ Wed, 11 Feb 2026 07:30:58 -0800 (PST)
+Received: from rh.fritz.box
+ (p200300f6af2d8700b4c2d356c3fafe63.dip0.t-ipconnect.de.
+ [2003:f6:af2d:8700:b4c2:d356:c3fa:fe63])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783d34657sm6448511f8f.6.2026.02.11.07.30.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Feb 2026 07:30:57 -0800 (PST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 1/2] target/arm/kvm: add constants for new PSCI versions
+Date: Wed, 11 Feb 2026 16:30:31 +0100
+Message-ID: <20260211153032.19327-2-sebott@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260211153032.19327-1-sebott@redhat.com>
+References: <20260211153032.19327-1-sebott@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,7 +112,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,172 +128,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both the error-report and log APIs can optional emit a timestamp
-as a prefix on messages, with the '-msg timestamp=on' command
-line flag is set.
+Add constants for PSCI version 1_2 and 1_3.
 
-Convert them to the new message API for formatting the context
-prefix, guaranteeing they will have matching behaviour going
-forward.
-
-There is no change in output format for either logs or errors
-with this conversion. There is a slight impact on logging code
-in that recording the timestamp is now potentially delayed by
-the need to acquire the logging mutex.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Stefan Weil <sw@weilnetz.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
 ---
- include/qemu/error-report.h    |  1 -
- system/vl.c                    |  7 ++++++-
- tests/unit/test-error-report.c |  3 ++-
- util/error-report.c            | 18 ++----------------
- util/log.c                     |  8 +++-----
- 5 files changed, 13 insertions(+), 24 deletions(-)
+ target/arm/kvm-consts.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
-index 3ae2357fda..c8000778ec 100644
---- a/include/qemu/error-report.h
-+++ b/include/qemu/error-report.h
-@@ -70,7 +70,6 @@ void error_init(const char *argv0);
-                               fmt, ##__VA_ARGS__);      \
-     })
+diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+index 54ae5da7ce..9fba3e886d 100644
+--- a/target/arm/kvm-consts.h
++++ b/target/arm/kvm-consts.h
+@@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
+ #define QEMU_PSCI_VERSION_0_2                     0x00002
+ #define QEMU_PSCI_VERSION_1_0                     0x10000
+ #define QEMU_PSCI_VERSION_1_1                     0x10001
++#define QEMU_PSCI_VERSION_1_2                     0x10002
++#define QEMU_PSCI_VERSION_1_3                     0x10003
  
--extern bool message_with_timestamp;
- extern bool error_with_guestname;
- extern const char *error_guest_name;
- 
-diff --git a/system/vl.c b/system/vl.c
-index d8676b3adf..4ef41df747 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -26,6 +26,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/datadir.h"
- #include "qemu/units.h"
-+#include "qemu/message.h"
- #include "qemu/module.h"
- #include "qemu/target-info.h"
- #include "exec/cpu-common.h"
-@@ -818,8 +819,12 @@ static void realtime_init(void)
- 
- static void configure_msg(QemuOpts *opts)
- {
--    message_with_timestamp = qemu_opt_get_bool(opts, "timestamp", false);
-+    int flags = 0;
-+    if (qemu_opt_get_bool(opts, "timestamp", false)) {
-+        flags |= QMESSAGE_FORMAT_TIMESTAMP;
-+    }
-     error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
-+    qmessage_set_format(flags);
- }
- 
- 
-diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
-index a8532fc58f..9c63019694 100644
---- a/tests/unit/test-error-report.c
-+++ b/tests/unit/test-error-report.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qemu/message.h"
- 
- static void
- test_error_report_simple(void)
-@@ -89,7 +90,7 @@ static void
- test_error_report_timestamp(void)
- {
-     if (g_test_subprocess()) {
--        message_with_timestamp = true;
-+        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
-         warn_report("warn");
-         error_report("err");
-         return;
-diff --git a/util/error-report.c b/util/error-report.c
-index 516d323ffe..1ef65a7475 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -13,6 +13,7 @@
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
- #include "qemu/error-report.h"
-+#include "qemu/message.h"
- 
- /*
-  * @report_type is the type of message: error, warning or
-@@ -24,8 +25,6 @@ typedef enum {
-     REPORT_TYPE_INFO,
- } report_type;
- 
--/* Prepend timestamp to messages */
--bool message_with_timestamp;
- bool error_with_guestname;
- const char *error_guest_name;
- 
-@@ -207,13 +206,6 @@ static void print_loc(Monitor *cur)
-     }
- }
- 
--static char *
--real_time_iso8601(void)
--{
--    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
--    return g_date_time_format_iso8601(dt);
--}
--
- /*
-  * Print a message to current monitor if we have one, else to stderr.
-  * @report_type is the type of message: error, warning or informational.
-@@ -225,7 +217,6 @@ G_GNUC_PRINTF(2, 0)
- static void vreport(report_type type, const char *fmt, va_list ap)
- {
-     Monitor *cur = monitor_cur();
--    gchar *timestr;
- 
-     /*
-      * When current monitor is QMP, messages must go to stderr
-@@ -236,12 +227,7 @@ static void vreport(report_type type, const char *fmt, va_list ap)
-     }
-     if (!cur) {
-         qemu_flockfile(stderr);
--    }
--
--    if (message_with_timestamp && !cur) {
--        timestr = real_time_iso8601();
--        fprintf(stderr, "%s ", timestr);
--        g_free(timestr);
-+        qmessage_context_print(stderr);
-     }
- 
-     /* Only prepend guest name if -msg guest-name and -name guest=... are set */
-diff --git a/util/log.c b/util/log.c
-index 1c9c7adb2d..b5aae22c83 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -22,6 +22,7 @@
- #include "qemu/range.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qemu/message.h"
- #include "qemu/cutils.h"
- #include "trace/control.h"
- #include "qemu/thread.h"
-@@ -148,11 +149,8 @@ FILE *qemu_log_trylock(void)
- FILE *qemu_log_trylock_with_context(void)
- {
-     FILE *f = qemu_log_trylock();
--    if (f && log_depth == 1 && message_with_timestamp) {
--        g_autofree const char *timestr = NULL;
--        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
--        timestr = g_date_time_format_iso8601(dt);
--        fprintf(f, "%s ", timestr);
-+    if (f && log_depth == 1) {
-+        qmessage_context_print(f);
-     }
-     return f;
- }
+ MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
+ /* We don't bother to check every possible version value */
 -- 
-2.53.0
+2.52.0
 
 
