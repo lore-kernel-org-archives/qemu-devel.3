@@ -4,46 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEEDE9E2FB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E9CE9E2FA
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq93F-0007ys-K3; Wed, 11 Feb 2026 07:10:37 -0500
+	id 1vq93g-000894-Br; Wed, 11 Feb 2026 07:11:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93D-0007v7-2J
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:35 -0500
-Received: from 1.mo552.mail-out.ovh.net ([178.32.96.117])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93a-00085a-EQ
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:59 -0500
+Received: from 9.mo548.mail-out.ovh.net ([46.105.48.137])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93A-0004qM-EM
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:34 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.177])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f9y1b5CzBz5vqb;
- Wed, 11 Feb 2026 12:10:27 +0000 (UTC)
-Received: from kaod.org (37.59.142.97) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93W-00050J-St
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:56 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.64])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f9y242lh2z5wBl;
+ Wed, 11 Feb 2026 12:10:52 +0000 (UTC)
+Received: from kaod.org (37.59.142.108) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 11 Feb
- 2026 13:10:26 +0100
+ 2026 13:10:51 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G0024cdb55b5-40a3-4a5e-8c68-072e0e0ebb55,
+ (GARM-108S0021442f4bf-f3f6-48c0-a7b1-0f21a396f836,
  3A8D629C33260B61B1BB8F65C34560168E726884) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <64835c35-cab5-4ead-b94c-66f527ee2efb@kaod.org>
-Date: Wed, 11 Feb 2026 13:10:25 +0100
+Message-ID: <a1f77c37-7354-4d4f-aab8-12d86bb3d6f3@kaod.org>
+Date: Wed, 11 Feb 2026 13:10:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] tests/functional/arm/aspeed_ast2600: Enhance OTP
- test with functional validation
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "kaeluno1@gmail.com"
- <kaeluno1@gmail.com>
-References: <20260211052326.430475-1-kane_chen@aspeedtech.com>
+Subject: Re: [PATCH 0/2] tests/functional: Aspeed ARM tests enhancements
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>
+References: <20260209065044.239378-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,27 +85,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260211052326.430475-1-kane_chen@aspeedtech.com>
+In-Reply-To: <20260209065044.239378-1-clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.97]
-X-ClientProxiedBy: DAG13EX2.mxp5.local (172.16.2.132) To DAG14EX2.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.108]
+X-ClientProxiedBy: DAG12EX1.mxp5.local (172.16.2.121) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 735c0af4-3778-4538-8e4e-bd8912c90eae
-X-Ovh-Tracer-Id: 8192892147810470901
+X-Ovh-Tracer-GUID: d62d7f8a-9480-4c24-807a-e355710f131c
+X-Ovh-Tracer-Id: 8199929022980524978
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFsMF2/ZQ5gxs1/YVFkwlqE+t77dJBB7DI0vFAg/XZc3oohs9l7fhbw0Z49We/oEkW1wz8DJRJw+xcTsuYmV0VghcxlDA65fmXluruU8ttOdN0skx4vre5b7JA6DjIsiQpyymTsHOfZh2nkoY2/KWoqr7I0m221x1kHbZcBLwojELYzSFnRbNnIVBquuM8urqZvN4u9Rm05YYInbiiiJVHZu+q8uePCprYzU13Fik3e6CQKiRAi51Awu7UQnREewxe+2ArWucDd8OHjGekf7xS/Xae99yNsyFB/Fdd8aIj4tgJ8zTLe7JIQEgJqdKthzrifFzp58yCw9PRHZU2SGGAlRX+XFIA23Y49FQbvCDAHFrSVU1mXitqwBlLKMc1aRkNh9p63Q5Q2L/YS7OODv/4fwnMk8oZleHvgCCKnaOp0fv0jXtyv+coE42KlRtjqlxmJ11hCirS77fFf011Cc/zVt/+Wrzo3IBxKlQABJlgDtmTVlKm4sTTxm284wimddtb6Q72ZVVGsc1HB6LSxhrKk9iORDLaexmPEQOFjVKYZH6KpsWn28at2Ehi0ApJF8S5yb+fho19/H41e7WMziWYyZAzZR5LNoVWyEQLzuTjrDaIhwm5vZqEJpTh5R/yBYFq/tzcuPm8s/dRDRIGWLgKQEBTsuImRLF5xHVU6H1DvIg
-DKIM-Signature: a=rsa-sha256; bh=W9N7e/MlDr3OWUqQCkoIp+H2NW1z4gxiZOI5W+Zzvyw=; 
+X-VR-SPAMCAUSE: dmFkZTGa03sFxNnRVPHOaSb64dJiVx+Dcxb8r5G5dXUk0FuWGZSHkIx6zgAE18iwTVvTrHtSE3b+AQscFX8UqTAdtybwb5fl7eXiLq2BuB9cE9pd7+JL0I6vJTfgX6PynQ69Mry5fvF77DA29XPoHyo/IkqrY309Zv6M+h2eU9mvWaL/WWYRQy4YBn2yZvp6uIVslENdzy+pXm21LnhvuN4z8w5dylFJXA1YAN5+FwjskhUf1TfesIV8+jDDASR8qcOzK/+xHyrzM4f6M5cfqUH0ujd3JZOKQWEZj31/FK4+Jv3PM66XDdbukif4An5UfQVxh1iBUVGszOGqmw1Ayy3s/cGsFuvGFolv2A+hO4kv5r89LwP+rJ0DZUJeJ7GG/3Q7fRrnoNtxPpJ5fR2u0Q7vng3RIIvlOUHl7eqJi/RYJJElavL6kmac3VIs46EKGkKNMtFwaNF1LoLtAdSVbUoIppx+bDP8Wl6xiauP1ECUxquCHdALyX6jB8ClHmS6rOfYnnDtGQX62KlLxmAD8TkUYwUZeNDgHjIx8CWi9azyJhP46H/UdEa8nso/Hwhg1zCsr4ljBytnjwb93V6LB5uGSnKsJs8V97zLtrXhhCPw4uaTq1otwAzWH/k6zo/yD809D7IkfPV4576t+pnH/4yLgR8PjRCUt575ARzl3E1dVE33/A
+DKIM-Signature: a=rsa-sha256; bh=Vc47+M+ANr9tsr+ZWUdVXN25EshldaNbtzaFF6iEmzI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770811829; v=1;
- b=jsMa+HedT4tVCJmkCU+fkeFkZ7Lk7IHZDaTrUDhlXnOipa/1qZ5+JX9eqQtgpYpipN0ZrpU0
- uM90BHQxL3i6t8P/FteAsNaMX8y29AdQ+TjTeh73KkjQ2pUKRlaJjF7QyiCpMwiF/jRI1MQmvys
- 7gXTbN0u8Ball9fkVTZqTAOos39yJSUMJqZhPBDnhM/u53yVMRkWYsYDu8NBfA7SMPY4OgzviZ+
- ezMQ/TyXbc2/4otekm9pF3CT4YkGFosbxvZ7VpJQMeoks/qFV8du2b4ZRyzzOnwoL1No3xn1F1V
- yZyEiabvs1UIudSYuDjSh25sUZzyO2wfTH2OcMngDR9+g==
-Received-SPF: pass client-ip=178.32.96.117; envelope-from=clg@kaod.org;
- helo=1.mo552.mail-out.ovh.net
+ t=1770811852; v=1;
+ b=W59VSyDZhppVHaTgPHhuhcB1M1JuZ7xIe7Z2l/fk+tnnp1EjNiVAXH9+daRcJ5E/KYIWFC0n
+ byO1Tkenlf7j70Mh1CoMyEoadhZ0EtHoLveiAwIq6rSYFga6Tls2o7IRo8DPqJ2US1V6pvdsr4A
+ veb8LLjGpNI3CWYhok5u5dlx+PG8eFgs68OlP86t6Ylt4nisJppb8R67LsOpXwB89Fxw5ZdQ/a+
+ 8+FjABVFAMnloJlCLMEEYoanNfNbSYGwgpXixAkiaFhzVzYpYIccwINlZ8Fci4Xr9WkF0rKJAke
+ zlUWWqSWKSbijnLxUngowRuDSb0aEWuMFmczImNEjJTyg==
+Received-SPF: pass client-ip=46.105.48.137; envelope-from=clg@kaod.org;
+ helo=9.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,7 +113,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,42 +129,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/11/26 06:23, Kane Chen wrote:
-> Hi all,
+On 2/9/26 07:50, Cédric Le Goater wrote:
+> Hi,
 > 
-> This series enhances the AST2600 OTP functional test by introducing
-> cross-stage verification. While the previous test focused on basic
-> system boot-up, this update ensures OTP data persistence and
-> correctness through various execution environments (U-Boot and Linux).
+> This allows the functional test suite to run tests in parallel more
+> effectively and adds a new set of tests using the older Linux 5.15
+> kernel.
 > 
-> The updated test logic implements the following flow:
-> 1. Boot into U-Boot and modify OTP strap settings via CLI.
-> 2. Boot into Linux to verify the consistency of these settings.
-> 3. Trigger a reboot to ensure that OTP configurations persist back
->     into the U-Boot stage.
+> Thanks,
 > 
-> Note: This series is based on the aspeed-next branch.
+> C.
 > 
-> Any feedback or suggestions are appreciated.
+> Cédric Le Goater (2):
+>    tests/functional: Split Aspeed ARM tests into separate files
+>    tests/functional: Add SDK tests with Linux 5.15
 > 
-> Best Regards,
-> Kane
-> ---
-> Changlog:
-> v3: Restore missing blank line and move require_netdev() to the top
->      of the test function.
-> 
-> v2: Change title for grouping the patch
-> 
-> v1: Initial version
-> ---
-> 
-> Kane-Chen-AS (1):
->    tests/functional/arm/aspeed_ast2600: Enhance OTP test with functional
->      validation
-> 
->   .../arm/test_aspeed_ast2600_sdk_otp.py        | 34 +++++++++++++++++--
->   1 file changed, 31 insertions(+), 3 deletions(-)
+>   tests/functional/arm/meson.build              | 18 ++++--
+>   tests/functional/arm/test_aspeed_ast1060.py   |  0
+>   ...00.py => test_aspeed_ast2500_buildroot.py} | 14 -----
+>   .../functional/arm/test_aspeed_ast2500_sdk.py | 29 +++++++++
+>   .../arm/test_aspeed_ast2500_sdk_515.py        | 29 +++++++++
+>   .../arm/test_aspeed_ast2600_buildroot.py      | 41 +------------
+>   .../arm/test_aspeed_ast2600_buildroot_tpm.py  | 60 +++++++++++++++++++
+>   .../functional/arm/test_aspeed_ast2600_sdk.py | 15 -----
+>   .../arm/test_aspeed_ast2600_sdk_515.py        | 29 +++++++++
+>   .../arm/test_aspeed_ast2600_sdk_otp.py        | 34 +++++++++++
+>   10 files changed, 196 insertions(+), 73 deletions(-)
+>   mode change 100644 => 100755 tests/functional/arm/test_aspeed_ast1060.py
+>   rename tests/functional/arm/{test_aspeed_ast2500.py => test_aspeed_ast2500_buildroot.py} (74%)
+>   create mode 100755 tests/functional/arm/test_aspeed_ast2500_sdk.py
+>   create mode 100755 tests/functional/arm/test_aspeed_ast2500_sdk_515.py
+>   create mode 100755 tests/functional/arm/test_aspeed_ast2600_buildroot_tpm.py
+>   create mode 100755 tests/functional/arm/test_aspeed_ast2600_sdk_515.py
+>   create mode 100755 tests/functional/arm/test_aspeed_ast2600_sdk_otp.py
 > 
 
 Applied to aspeed-next.
