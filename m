@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17529ECD6C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472C6ECD6C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqD1V-0002Wf-0c; Wed, 11 Feb 2026 11:25:05 -0500
+	id 1vqD1d-0002aA-U7; Wed, 11 Feb 2026 11:25:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vqD1S-0002Sh-Oz
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:02 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1vqD1a-0002Zg-2o
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:10 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vqD1R-0002ES-7e
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:02 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-65941c07e8dso8356465a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 08:25:00 -0800 (PST)
+ id 1vqD1Y-0002Q2-Jp
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:09 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b8845cb580bso898970866b.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 08:25:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770827098; x=1771431898; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770827107; x=1771431907; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KmpY1MaIiRY5Uyi5p5NnR6la0iFGmmXl5ao5qHmhhGM=;
- b=jpa5GPjhS3Tm1RVDB1zHwBJITRN77W2cLPw4KQt1d+IXBgFy6JEMYvi7wtFMsC6/6g
- h0XVqpG4CuiLsrhrID2Ea6E12tLe1Vm0x31CU1j//u8/oxXkL4SVw6tmbeGodnRLzkKo
- V5hJXJ4IqYOD3xlEhPR5pc9f8O4HYlfxTDhsKa5AnaTpihMrxc94xW2wom+DSmhVqQMN
- WYtgZr+EEFUL2d3kM3M4y1NG7edP6eTVfnB3a2PeUPboWlEpcnNIVXv1+DPwFAlQuF35
- xMWMAgv48JbuCKaY9ZbazjIz2IGp//C3ixYPmltXaow7GuBauheYQoNF3PtgLdUB4y+d
- fj8g==
+ bh=cITEBpNoeI4Fz1kFqFSiFskD7+nx2QjEUa19kz0YsgM=;
+ b=STXWGgUHtd84MtjjOf81N/mAHrBw2nuW6QkwKLSlvipDZVCBh/XxFQU+wOxbYDqAyF
+ 8bapQGTDS6BjnrATBI6AY8C9v5bT9wZ/jIGUg8o5WzrSsgjzpMa6zvOwVBHcA/HO2wH4
+ DJL3P5C7o9HuSclQOj3vHNs5rsI+0AlGTsI4TH2RkdWvccVGD4KkjNNTTozZfocrlvyt
+ Q9q+2nYcFhdaFx1iC0y4OzNyyAHY66tDkMP6x+h4hkkFpSHRbT0cY3RJTd4hTmMQlavz
+ kXSTbO0HYyBx2RX2ZB3uncpCscUHOzctTlRoKa1+aQ+YWNqLET131SayimzGtZxxxvUf
+ GWtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770827098; x=1771431898;
+ d=1e100.net; s=20230601; t=1770827107; x=1771431907;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KmpY1MaIiRY5Uyi5p5NnR6la0iFGmmXl5ao5qHmhhGM=;
- b=RS9MnSxiDBl9ln+3T09vthHBOoaNvHfh/GJIL3itfY2lWZquCXPHOha80lf3jm2mZf
- MiyvFOqQ3dmQSsfNdlI+xT8Cu1/uLuqE/tJNM666BgEo0U/XHgd/QrRuFLW/DJh6yNAt
- 4/2p5cYP56OTJb7rojJH28elLCNYMaZuCKrNlm/7yfSN/KwGfQv6lsC5AUDqsfYL//78
- 61ZRMDCTiRw2As3X1ambQpVHLK1qTqpwV3LWX1lc3jo15n1gPDRqBvPBeB5fbVKjzNi0
- 24xdP1cttuVz69i+Nkjx22tYr0g5+yjcjXc+BDDjzGBmlFwwc3WgyAEntJ1y7lx8hovF
- 8fiw==
-X-Gm-Message-State: AOJu0YwoDHHxXz2Kpd6qcEo+xIL1jvQUZQP6CILKeXY44mRHpZG8gZww
- 2KYP2i/V1FlDGMXordGgBzWeYzry151Y2DmSgyIFT4s+Ufdx2cQlDl4gzGgQk7/Dtx8=
-X-Gm-Gg: AZuq6aJRKjiFPACQRRtgWoWqvwqH4YVrUFXkemvGbefmG7+17bbYZdeSRMheXQKjBM+
- FonimtO7fJHQ09Sxp7p4zskfdxn7H14oxojwtjh588P13lmoxG/oNFhENsOot88XbriFi7/uZaI
- oeOamKRWaICS5hGfBJ+99oQXSfbqcwEIO05v0k2BgyLKlRHpca6vHBYdibU6NckE4QQklER9RLF
- cIxtcLoTc5YiNfXJYV1X5etCGibQpWbVSDU8kaHhycC5C6Vd8WgjDH7xL2vtqhMNQKGOj9fSccX
- PBCj3SqP3a9NEPQf0YXKGLzoP+ueSRQgr1HJzj7kfH/u9GvHg556+R6trk1BredHwRR20ANZHTQ
- o3KFv7MnwfJF6/jxjoSyNilydugPQgjA1AOLkh/I8AGKaX9MK/WY2uBIHeRhK6W7F9K5pb2VVPG
- DUxNfpq2zVt1azWH4hvTmms6NLajZ1HbkznQ==
-X-Received: by 2002:a05:6402:1d51:b0:659:5c6b:d280 with SMTP id
- 4fb4d7f45d1cf-65a39adc4a6mr1667600a12.10.1770827098202; 
- Wed, 11 Feb 2026 08:24:58 -0800 (PST)
+ bh=cITEBpNoeI4Fz1kFqFSiFskD7+nx2QjEUa19kz0YsgM=;
+ b=F4b/J7n6rvZ+sIV6uKGZRo4Z3Gdm0bDS6cavThatKBt8BqZzSzSJ61GXzZgHVd2mQT
+ jemXE1pVcFXxpR8xuOK/m0TOdmjHdfXWeNOLCQHEZWmEU3R9iW9kCIyQUI9lgixBOop/
+ C+XE2xjobD3gFfUcLZSNk3wMpBi1H3oIBRUVnenhhIPQ1lYoHZteRV4Ufzb7PEdMtQi5
+ 3MrRYu1yJqmUGYQeRZFoiC+KTFjSRFLyD4xtFmZ62imn1Zf3dK94F1ZBRUeP+Rq2jR8F
+ p24Vx6whx4Vyd13hAGgZU7GLY/E1MaRqExuKc7VxnYJEc39gO/MiEtIuaBH+PRtl4ziq
+ RiMQ==
+X-Gm-Message-State: AOJu0Yxzz2k2lcZHpnYabhOLFuXUr/64RxQNRijJBqCxIJnygrdIGGwu
+ I8gAE6f74Xt4gnOcirCad+9Q447NQja+tNWZkA+nm9j2lSlwVtLZjCeg7aTQiSL8EGE=
+X-Gm-Gg: AZuq6aJMntQKmIxi5eAzDBSlo4busu5uBfuVYvPrXG2NPfqSChDwSqNAGaJVk0oI81+
+ 9O8cTUcysq2bp0AweB3k+OEDQ/I7jlw+E54UswfidK99WH2ug/GKaKt+vz0fY4Z74Qy6mzLZK8m
+ PtDb6ChD6EuYNrZeHwjPtoiDkhS7Khr7yUZyCT0gZewy74BYAMPIJT3nXfpZvwvFe/b16fdKzpq
+ +oHBXt60S0G9IL4kgYJHrd7JMHHx1hrrHQcMJwOzUWS/GkCwfSXDLLS+3svnvSmaJq05ASdwFva
+ fb0EaJysF+pKbg2F+X5wX0Uyfbj2EGl0WFimnlIz3UPz60BucwUSshmnUBoYnv1YtmkVd/g1YyL
+ VptTkiadUl5pecM8qxKG/CHnF5IzkM6deGDA/1VVpB88/d32NjdqTSmRZXmQGU0Lz20nMAe1+jw
+ Onk2OGwA7recijPAum79yOAxZ7i6iFZxeB9Q==
+X-Received: by 2002:a17:907:2d24:b0:b8e:7e21:132c with SMTP id
+ a640c23a62f3a-b8f6aed3c27mr180657066b.59.1770827106782; 
+ Wed, 11 Feb 2026 08:25:06 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65a3cf38c6asm883588a12.20.2026.02.11.08.24.57
+ 4fb4d7f45d1cf-65a3cf506c8sm887111a12.32.2026.02.11.08.25.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 08:24:57 -0800 (PST)
+ Wed, 11 Feb 2026 08:25:06 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AFFE65FC4E;
- Wed, 11 Feb 2026 16:24:56 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 70A475FC4E;
+ Wed, 11 Feb 2026 16:25:05 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>, Pierrick Bouvier
  <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] docs/devel: s/most/most recent/
- ``probe_target_compiler`` call
-In-Reply-To: <20260114102522.4044591-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 14 Jan 2026 10:25:22 +0000")
-References: <20260114102522.4044591-1-alex.bennee@linaro.org>
+Subject: Re: [PATCH] docs/devel: fix bash-ism warning for configure
+In-Reply-To: <20260114101525.4039244-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 14 Jan 2026 10:15:25 +0000")
+References: <20260114101525.4039244-1-alex.bennee@linaro.org>
 User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 11 Feb 2026 16:24:56 +0000
-Message-ID: <87h5rnnt7r.fsf@draig.linaro.org>
+Date: Wed, 11 Feb 2026 16:25:05 +0000
+Message-ID: <87bjhvnt7i.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,24 +106,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
+> Hopefully this makes the meaning clearer.
+>
 > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
 >  docs/devel/build-system.rst | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-> index 35c77343914..71331e64ac8 100644
+> index b9797a374c7..35c77343914 100644
 > --- a/docs/devel/build-system.rst
 > +++ b/docs/devel/build-system.rst
-> @@ -88,7 +88,7 @@ and operating systems:
->    ``$target_ar``, etc. to non-empty values.
+> @@ -66,7 +66,7 @@ Modifying ``configure``
+>  ``configure`` is a shell script; it uses ``#!/bin/sh`` and therefore
+>  should be compatible with any POSIX shell. It is important to avoid
+>  using bash-isms to avoid breaking development platforms where bash is
+> -the primary host.
+> +not the default shell implementation.
 >=20=20
->  ``write_target_makefile``
-> -  Write a Makefile fragment to stdout, exposing the result of the most
-> +  Write a Makefile fragment to stdout, exposing the result of the most r=
-ecent
->    ``probe_target_compiler`` call as the usual Make variables (``CC``,
->    ``AR``, ``LD``, etc.).
+>  The configure script provides a variety of functions to help writing
+>  portable shell code and providing consistent behavior across architectur=
+es
 
 --=20
 Alex Benn=C3=A9e
