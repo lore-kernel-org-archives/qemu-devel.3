@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBC7E9E31F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305BDE9E311
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 15:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqC6p-0006Z4-45; Wed, 11 Feb 2026 10:26:31 -0500
+	id 1vqC6H-0004j8-3H; Wed, 11 Feb 2026 10:25:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC6o-0006WO-9X
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:30 -0500
+ id 1vqC68-0004ZL-SZ
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:25:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vqC6m-0005u9-6t
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:26:30 -0500
+ id 1vqC66-0005hn-V9
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 10:25:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770823587;
+ s=mimecast20190719; t=1770823546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=quFtc628f984Q3yp25Wk6fR4lXqtSsXdbUO1vrf3FKQ=;
- b=XGum1ddFipUAH/hYvTHdJweaOPPGUFkBf4H8jZS9gREAgHI2pkosMQ5TowJrYQWluG3591
- yx6V73SPi/Q3f+aW9MOjmMG9Mlj3VRsl+ekm14nB1y+UY/GY3qA+0qGhXyICAcMoOTm6JW
- dR3mVPHHCxiopfwnW/JvUsASRDD9TDw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kAnXty8ojb0QvYCAJwvtMMolNwPYeQ0lJZK1O5DK5TM=;
+ b=AlvWkLh2q9kvkujtvhxT6wWaNJYREeGTNSINBGVu23LwgwA316cLQA1TY+YuSRw5D1UQ9r
+ ogEC/9Dfo07iaR5hQd75LyMgGKEQdO6vg+73Tn/3KveZF+QVLk6GHclddNqyUZF8Mq8pPs
+ hd/Ba8ZLDsEOrBkjq8OhlZOMMiCYD5Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-FVN3tseiN7q5m3q1l49CNA-1; Wed,
- 11 Feb 2026 10:26:23 -0500
-X-MC-Unique: FVN3tseiN7q5m3q1l49CNA-1
-X-Mimecast-MFC-AGG-ID: FVN3tseiN7q5m3q1l49CNA_1770823581
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-uSHY1e4TMZiN01Zdm3jaxg-1; Wed,
+ 11 Feb 2026 10:25:41 -0500
+X-MC-Unique: uSHY1e4TMZiN01Zdm3jaxg-1
+X-Mimecast-MFC-AGG-ID: uSHY1e4TMZiN01Zdm3jaxg_1770823539
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 814E51955F28; Wed, 11 Feb 2026 15:26:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D93F180034A; Wed, 11 Feb 2026 15:25:39 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.227.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F3BB930001A8; Wed, 11 Feb 2026 15:26:13 +0000 (UTC)
+ id 125A130001A8; Wed, 11 Feb 2026 15:25:33 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -61,9 +61,9 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 11/27] util: introduce some API docs for logging APIs
-Date: Wed, 11 Feb 2026 15:24:52 +0000
-Message-ID: <20260211152508.732487-12-berrange@redhat.com>
+Subject: [PATCH v6 04/27] monitor: initialize global data from a constructor
+Date: Wed, 11 Feb 2026 15:24:45 +0000
+Message-ID: <20260211152508.732487-5-berrange@redhat.com>
 In-Reply-To: <20260211152508.732487-1-berrange@redhat.com>
 References: <20260211152508.732487-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -95,116 +95,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a gotcha with qemu_log() usage in a threaded process.
-If fragments of a log message are output via qemu_log() it is
-possible for messages from two threads to get mixed up. To
-prevent this qemu_log_trylock() should be used, along with
-fprintf(f) calls.
+Some monitor functions, most notably, monitor_cur() rely on global
+data being initialized by 'monitor_init_globals()'. The latter is
+called relatively late in startup. If code triggers error_report()
+before monitor_init_globals() is called, QEMU will abort when
+accessing the uninitialized monitor mutex.
 
-This is a subtle problem that needs to be explained in the
-API docs to ensure correct usage.
+The critical monitor global data must be initialized from a
+constructor function, to improve the guarantee that it is done
+before any possible calls to monitor_cur(). Not only that, but
+the constructor must be marked to run before the default
+constructor in case any of them trigger error reporting.
 
-In the Rust code, the log_mask_ln method which is conceptually
-equivalent to the C qemu_log() call will unconditionally append
-a newline so must only ever be used for complete log messages.
+Note in particular that the RCU constructor will spawn a background
+thread so we might even have non-constructor QEMU code running
+concurrently with other constructors.
 
-Reported-by: Markus Armbruster <armbru@redhat.com>
+As a general note, constructors should be extrememly careful
+about what QEMU code they invoke, as it cannot be guaranteed that
+the process is fully initialized and so not all normal QEMU API
+rules apply.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Fixes: e69ee454b5f9 (monitor: Make current monitor a per-coroutine property)
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/log-for-trace.h | 17 ++++++++++++++++-
- include/qemu/log.h           | 32 ++++++++++++++++++++++++++++++++
- rust/util/src/log.rs         |  6 ++++++
- 3 files changed, 54 insertions(+), 1 deletion(-)
+ monitor/monitor.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-index f3a8791f1d..6861a1a4b7 100644
---- a/include/qemu/log-for-trace.h
-+++ b/include/qemu/log-for-trace.h
-@@ -29,7 +29,22 @@ static inline bool qemu_loglevel_mask(int mask)
-     return (qemu_loglevel & mask) != 0;
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 1273eb7260..dd2c45ded0 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -708,18 +708,22 @@ void monitor_cleanup(void)
+     }
  }
  
--/* main logging function */
-+/**
-+ * qemu_log: report a log message
-+ * @fmt: the format string for the message
-+ * @...: the format string arguments
-+ *
-+ * This will emit a log message to the current output stream.
-+ *
-+ * The @fmt string should normally represent a complete line
-+ * of text, and thus end with a newline character.
-+ *
-+ * While it is possible to incrementally output fragments of
-+ * a complete line using qemu_log, this is inefficient and
-+ * races with other threads. For outputting fragments it is
-+ * strongly preferred to use the qemu_log_trylock() method
-+ * combined with fprintf().
+-static void monitor_qapi_event_init(void)
++/*
++ * Initialize static vars that have no deps on external
++ * module initialization, and are required for external
++ * functions to call things like monitor_cur()
 + */
- void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
++static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
++monitor_init_static(void)
+ {
++    qemu_mutex_init(&monitor_lock);
++    coroutine_mon = g_hash_table_new(NULL, NULL);
+     monitor_qapi_event_state = g_hash_table_new(qapi_event_throttle_hash,
+                                                 qapi_event_throttle_equal);
+ }
  
- #endif
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index 7effba4da4..b49a1a5fe3 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -41,7 +41,39 @@ bool qemu_log_separate(void);
- 
- /* Lock/unlock output. */
- 
-+/**
-+ * Acquires a lock on the current log output stream.
-+ * The returned FILE object should be used with the
-+ * fprintf() function to output the log message, and
-+ * then qemu_log_unlock() called to release the lock.
-+ *
-+ * The primary use case is to be able to incrementally
-+ * output fragments of a complete log message in an
-+ * efficient and race free manner.
-+ *
-+ * The simpler qemu_log() method should normally only
-+ * be used to output complete log messages, and not
-+ * within scope of a qemu_log_trylock() call.
-+ *
-+ * A typical usage pattern would be
-+ *
-+ *    FILE *f = qemu_log_trylock()
-+ *
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "The end\n");
-+ *
-+ *    qemu_log_unlock(f);
-+ *
-+ * Returns: the current FILE if available, NULL on error
-+ */
- FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
-+
-+/**
-+ * Releases the lock on the log output, previously
-+ * acquired by qemu_log_trylock().
-+ */
- void qemu_log_unlock(FILE *fd);
- 
- /* Logging functions: */
-diff --git a/rust/util/src/log.rs b/rust/util/src/log.rs
-index 0a4bc4249a..a85db804a7 100644
---- a/rust/util/src/log.rs
-+++ b/rust/util/src/log.rs
-@@ -134,6 +134,12 @@ fn drop(&mut self) {
- ///     "Address 0x{:x} out of range",
- ///     error_address,
- /// );
-+///
-+/// The `log_mask_ln` macro must only be used for emitting complete
-+/// log messages. Where it is required to incrementally output string
-+/// fragments to construct a complete message, `LogGuard::new()` must
-+/// be directly used in combination with `writeln()` to avoid output
-+/// races with other QEMU threads.
- /// ```
- #[macro_export]
- macro_rules! log_mask_ln {
+ void monitor_init_globals(void)
+ {
+-    monitor_qapi_event_init();
+-    qemu_mutex_init(&monitor_lock);
+-    coroutine_mon = g_hash_table_new(NULL, NULL);
+-
+     /*
+      * The dispatcher BH must run in the main loop thread, since we
+      * have commands assuming that context.  It would be nice to get
 -- 
 2.53.0
 
