@@ -4,148 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B416DEB597C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 08:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2C8EB597C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 08:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq5hA-0006TX-GX; Wed, 11 Feb 2026 03:35:36 -0500
+	id 1vq5iN-0000Fk-W3; Wed, 11 Feb 2026 03:36:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vq5h6-0006SI-8J; Wed, 11 Feb 2026 03:35:32 -0500
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vq5iG-0008VH-6E
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 03:36:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vq5h4-0002lO-L6; Wed, 11 Feb 2026 03:35:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hi6zLFmThWvNl0xq2kKe6aRIsLetOiyVMROnIMX2x6PYz0pMQJdDT69+ZZ5q9HnYrwwt5CC/tkVxCb148248/HMq0vrTLORCBOf0VoXIMkoSHOPxY7b2ZLe1/8e9PFAG73x0d9wUr4Z3PJz+aQ/1So+uwn2w9KvoYFnTNLI9KuSqFbq8NZZf9HFMyAsL3sUc3nt1A4k27PfS5NcYBCHc3bAr6wI945XT+xVq0VotW3/GeWpctkDxcMKkp4E9xlllc6nbfijlJYltU71AYf9uAWYD4U4DDhtOf182XiQuioMVpyZ4ee/XoEaF7+RjJtW159MV7BZMEzgQDg1o7VdtVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FOsMj8wk5JeKKPi2aU01Lhh4S0Uf2VOAllAPUWpbf0Q=;
- b=mMJg1YoQvQXC9CsK6WPXaPOYFAuvWeW1/qw0Pr8gMUA66nOlsfJ+fJefNRJRMrF5IdqVLNFqlIUlQtg159jpURxKCqGL8EXvyuEu+CGnrHdvwfwR0iiiCDuFdHgulEgoO50fcSBHlALqGDeTK7jKuJ7WCC/rS1s9G6G8SiQpWRXzC2hlSoydXP/SpZjzpMC2+OpcbVK/OFqvZWpy/Lp01VDyusVu3xRgBCD4wOaLWBHCQ2rxVbFlDcqC604FdzVNKFT6068sOL79lmKppXSmlA+k29p78HJ50fXc4bmEc3GmNR/tEeahiLoBVdS24zc95KNiKuROMRWwb4fqTHlTjA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FOsMj8wk5JeKKPi2aU01Lhh4S0Uf2VOAllAPUWpbf0Q=;
- b=BEvDoR4zcvkIwiC6yy8PKt3shy6Nm79ROwFLRlNxT009+3nKFz+1DYkO1kjx7etLLT2kSU1+h3z3a4wqLnTnaUagZxkfY4bpGiGpi+JsLn+an824Lm9L6b8pNZUSfNXNEVfwMhQP6kotX5YVpWMcl1Blb1N4xAitJl1clGPq4SpHi4hHPUeOe/9TVMTMF0CtIb4ZaRfQBguEhH/0WJC9A7uI+R+3r9x/GDYTASmHM+PqMRFiblmAt59TZZr4DBzov8bfFOBozYp0A/0UXeNYMjlYv1Knh9zEB0iVCRdFElQHtWmXk6kE2mOjlraSsDWHdg2MaeghMIdGsQUKnzUWiw==
-Received: from SA1P222CA0071.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:2c1::18)
- by PH0PR12MB7837.namprd12.prod.outlook.com (2603:10b6:510:282::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Wed, 11 Feb
- 2026 08:35:25 +0000
-Received: from SA2PEPF00003AE7.namprd02.prod.outlook.com
- (2603:10b6:806:2c1:cafe::84) by SA1P222CA0071.outlook.office365.com
- (2603:10b6:806:2c1::18) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.10 via Frontend Transport; Wed,
- 11 Feb 2026 08:35:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SA2PEPF00003AE7.mail.protection.outlook.com (10.167.248.7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9611.8 via Frontend Transport; Wed, 11 Feb 2026 08:35:24 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 11 Feb
- 2026 00:35:10 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 11 Feb
- 2026 00:35:07 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jan@nvidia.com>, <jgg@nvidia.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>,
- <skolothumtho@nvidia.com>
-Subject: [PATCH v5 2/5] hw/arm/smmuv3-accel: Add viommu free helper
-Date: Wed, 11 Feb 2026 08:34:12 +0000
-Message-ID: <20260211083415.133534-3-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260211083415.133534-1-skolothumtho@nvidia.com>
-References: <20260211083415.133534-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vq5iC-0002sH-C2
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 03:36:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770798998;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=T897lN4uZC39bb5WmXN9YWlHOJusc9fNTPVxleMSFCs=;
+ b=MBBvgvqYuUgyolSEJFRV6lhbAq989dy5Wv8Yi3CO1m0FX73sq2yp964TF3ulnmAsASUdv7
+ FLetDNAw0+xRP8NRK5c6ggNkp2xIn7wwVHj+hoIbQvAulijSzzD/52s5NWswqxPuemqT0K
+ SWuI6rgsxLQgV/QsyZNahKl9zcrvrS0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-UFiy9W_uPbOFnW1okmwUeQ-1; Wed,
+ 11 Feb 2026 03:36:33 -0500
+X-MC-Unique: UFiy9W_uPbOFnW1okmwUeQ-1
+X-Mimecast-MFC-AGG-ID: UFiy9W_uPbOFnW1okmwUeQ_1770798991
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7203818005B7; Wed, 11 Feb 2026 08:36:31 +0000 (UTC)
+Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 22DD5180066D; Wed, 11 Feb 2026 08:36:28 +0000 (UTC)
+Message-ID: <53fdcc9e-53af-4a84-89a4-e15c008633c1@redhat.com>
+Date: Wed, 11 Feb 2026 09:36:27 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00003AE7:EE_|PH0PR12MB7837:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8b1c9c09-90d7-4f52-0854-08de694880b2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?PMpGb6V0Gt+ZCc8upf0hVwBzuhcK+ilzemXHzUo8+b3qbGFB0GPhmAuSip3D?=
- =?us-ascii?Q?I7BdmTk2a+UFWPi0pUq6rHQuOLbtg7IBkS7wI/9WITxnV4rcuZI7d7YbXkgj?=
- =?us-ascii?Q?qPhyzaxRSrQq6WQzLbtJs5L+QL0jTwn05TAUmCbpam8ve1Vuhm/5SSwVZRCb?=
- =?us-ascii?Q?Ymlztaymkm2lfy5KBNXoS9aoocahmR/7HjBgDQjcdTMzdGqsjggWvfCPlfuT?=
- =?us-ascii?Q?OogIFZ2NV7QObCYAwUWh6tqNFZQljiol2DfK9vTcN3rJZVT3GJE8iC8tMQng?=
- =?us-ascii?Q?Zz44HOKJ0EIdcgNB7gFOm3RkckpZgLDB+J/zUIvJVmpVBsaNFJBVpv6i4o+Y?=
- =?us-ascii?Q?tLFQ/ONHC7MjgXimA/cMT/4S5m1YfFdID5ne3FAZsmjJGrYjqy3dhYa7VVxG?=
- =?us-ascii?Q?FudaVzTrVoZJ0Ka1dxEhd4K5NeRdkeQsdslfm1JgK362VTj0TLvXYsiqH+zT?=
- =?us-ascii?Q?wUg+jAY+1+MCLgmrEyoKuP8mqdsdA4y+3qDDVqeq+xX8CJxcO4u6iEwDKY4A?=
- =?us-ascii?Q?C7MUDhWcfIPIAal328UVLG731FvCUUR1pmhlTqtq25F1DsEVtNhoGVymYp/t?=
- =?us-ascii?Q?V9NJzfWzZiftPVtbNvjXt7rA+R+NDp8zUccBwXEuEeeeF3oqcuNBp+XU9taF?=
- =?us-ascii?Q?/6W9HD2MIqfRByrghri1mfNbEleYHFUXBo2T0d4Y5HeXPmLJ8pHPv6N3OF7v?=
- =?us-ascii?Q?A3EQDxxKapnHadj4y0DPFMO+ATgqKR4kMmtjhLR5cCENZOaqNwJbDb3zWd7F?=
- =?us-ascii?Q?THdHp/gHHRJ6Ro44kYLADbtVKxnqQPCdtAVX29IYE3bgbHxfFzfblCPyMcrl?=
- =?us-ascii?Q?XX6XzW7ckq7R7YRRLFpIkDvdV+Q7j7/pu4HRP33g1++irDC+8fdS5m+fpl6m?=
- =?us-ascii?Q?sk8BujpZtt4HPDeLa4ePMx256r7kCOEEIkk/3sB7QNl25rDR0nuEk9ldbBZe?=
- =?us-ascii?Q?Vw2iCtVwBq55ImyNMfGhSVnkfqGvZf5buXNV6gR4nkpJUfCiwjwkadRWTuJi?=
- =?us-ascii?Q?Mi6iyrYmjITa7oT6Rge7zgvZ2Abvl45c2qQ30KewOTZlJVQ7hRaNojKiwbK+?=
- =?us-ascii?Q?c9A8NT1EH/iBfqz+wE6DewADtcMc8Mx1FE4LBEhubeD8olk6XcSbGtlhKmcV?=
- =?us-ascii?Q?rU1yzMSUWnQEs7xQJNXAYb03AHlqLJWVwFewBFD6zMameWXi/rK5ieHusK1N?=
- =?us-ascii?Q?Ysqe1AOVd1JMnkXa6FbyrRO8daiT0It5ZoC+DfO3cAnfJqElsYoidVTGjrBw?=
- =?us-ascii?Q?C66FA8MoMyg8Feb3lkdytYVDKpmg7fe+S7/hHipCJOE7s6JRJVyyphOcSmeB?=
- =?us-ascii?Q?wEicYCgGgiD0fnbaTX3Ry8Bki3x+bhYGt8MDREmQ3QxoDQ4ZzJn0qieg6g4w?=
- =?us-ascii?Q?Eor40TvyYweOC8KsmOMkYCfOZJg2iykNPglhe++IEprS0vMMJvVZ4iYNF21J?=
- =?us-ascii?Q?4ub/8+9NYRBxc+66xXlyJ9oOvXmIe9ARoG8teqmT0D/8fXEvm6KEplRKku0P?=
- =?us-ascii?Q?x2C2AxcV27wmDo7TRd5Xh3153CpFTPnWdi0OvNqwK7f4qjZ93LHVco/f95rO?=
- =?us-ascii?Q?s+G2fPR4jIhuqR3CZHAicLWtlAZ7kR/IA40W9/ZYaBVeSDu79bBGKU7PnvYw?=
- =?us-ascii?Q?gWjizgFdBHtIjqRmlbNgz+rxBr+FsB4xnO4FvUdYT+8c5sIcIH5NSvRXX4PQ?=
- =?us-ascii?Q?dgq3oQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 3qsKQVnM1vOlIC/BqsovxRLKJ2nTYghMS/ct5TEDar/1q8Jfq3ovFiTjNgLxDjVVrJByis267DsmoqxUDA4EN4H3TyibWdwo5RMeHXGcaJdFNKWCMvrIqIf7Q397tEwFZDsw4GPtAHHuRkDKMXjPEh4VCF/RurPa57oJ/1Wtk2NT/ZQz6aXy1Lhk2ewlnRcX65FQPyRbixJSVl1PDY8TI1s8Q8Er0VFUt6glsLRnlm2zV5NiqgejG55GQUbX/J4MDRpAO2xgOF8mUeck/rKya+OmcAGJYfN62TubDn64zndtaYvN3ovHRudELSeQZB95Vc+GFkZkQJmUrAQmb205+x5S9mXqDjO/oEmNivz7pEsx5DOCicqB4llJG0uXMMTK8B2eJ1BZb5PSHZXMaBXocH9vN6OhjESk0wht/WS9THjKQKNomEYc90d81/TaHCrW
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2026 08:35:24.9360 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b1c9c09-90d7-4f52-0854-08de694880b2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003AE7.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7837
-Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/i386/pc.c: add description for fd-bootchk option
+To: Choon Keong <ckeong.teo17@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ mst@redhat.com, marcel.apfelbaum@gmail.com,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260211065826.3974-1-ckeong.teo17@gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260211065826.3974-1-ckeong.teo17@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,55 +128,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move viommu teardown into a helper function and use it from the
-last device removal path. No functional change.
+On 11/02/2026 07.58, Choon Keong wrote:
+> The 'fd-bootchk' option for pc and q35 machines currently lacks of
+> description in the help output. This makes it difficult for users
+> to understand the purpose of the command.
+> 
+> This commit solve this issue by adding description using
+> object_class_property_set_description() in hw/i386/pc.c,
+> adding the the description message for the option 'fd-bootchk'.
+> 
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3193
+> Signed-off-by: Choon Keong <ckeong.teo17@gmail.com>
+> ---
+>   hw/i386/pc.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 5cb074c0a0..eb39c18788 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1822,6 +1822,8 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+>       object_class_property_add_bool(oc, "fd-bootchk",
+>           pc_machine_get_fd_bootchk,
+>           pc_machine_set_fd_bootchk);
+> +    object_class_property_set_description(oc, "fd-bootchk",
+> +        "Enable/disable floppy disk boot check");
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/smmuv3-accel.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+I'd maybe use a text based on the description from "-no-fd-bootchk" in the 
+qemu-opions.hx file:
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index f5cd4df336..c19c526fca 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -390,6 +390,20 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
-                    sizeof(Cmd), &entry_num, cmd, errp);
- }
- 
-+static void smmuv3_accel_free_viommu(SMMUv3AccelState *accel)
-+{
-+    IOMMUFDViommu *viommu = accel->viommu;
-+
-+    if (!viommu) {
-+        return;
-+    }
-+    iommufd_backend_free_id(viommu->iommufd, accel->bypass_hwpt_id);
-+    iommufd_backend_free_id(viommu->iommufd, accel->abort_hwpt_id);
-+    iommufd_backend_free_id(viommu->iommufd, accel->viommu->viommu_id);
-+    g_free(viommu);
-+    accel->viommu = NULL;
-+}
-+
- static bool
- smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-                           Error **errp)
-@@ -549,12 +563,7 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-     trace_smmuv3_accel_unset_iommu_device(devfn, idev->devid);
- 
-     if (QLIST_EMPTY(&accel->device_list)) {
--        iommufd_backend_free_id(accel->viommu->iommufd, accel->bypass_hwpt_id);
--        iommufd_backend_free_id(accel->viommu->iommufd, accel->abort_hwpt_id);
--        iommufd_backend_free_id(accel->viommu->iommufd,
--                                accel->viommu->viommu_id);
--        g_free(accel->viommu);
--        accel->viommu = NULL;
-+        smmuv3_accel_free_viommu(accel);
-     }
- }
- 
--- 
-2.43.0
+  "Enable/disable boot signature checking for floppy disks in BIOS."
+
+?
+
+... so that it is clear that this influences the behaviour in the BIOS.
+
+  Thomas
 
 
