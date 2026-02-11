@@ -4,68 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23983ECD6F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 23:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F242ECD6EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 23:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqJVo-0000vP-7N; Wed, 11 Feb 2026 18:20:51 -0500
+	id 1vqJko-0003Qq-GI; Wed, 11 Feb 2026 18:36:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqJVZ-0000uY-5a
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 18:20:34 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vqJkn-0003Qh-A7
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 18:36:17 -0500
+Received: from ci-2001b-snip4-4.eps.apple.com ([57.103.91.17]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqJVW-0002bK-F2
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 18:20:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1770852019; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=GdRqMI1uTy9cksEGCHNQjABIshDgWDVE8MfuT9Pz146k0C9TogkTFow9xnon0wKJeCScwNGwcm1jQ53nGWYeGQE3lD/n8TXH1OjVD7mN0uTTUp4DY7sXI6EM9BhmVy5Q+4Ec/ZrYJIDbvWhMXZm/BMc8dLrNV3LVvwad/tlo1PU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1770852019;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=bCHmr7NIzO7kDFjl4IuroeqwYjF4yy9BY8coQf4Ugds=; 
- b=YHaKvarQc95H5nR6dv+HlztjfGWNxrRGnrhTEkEY9sriupsBmQA/Q3b1kAexBrgw8QQvGVtRg9IyyP+vu/3YJf+cMbHlJEz4Wl8NGpy4VlZANo5qTIZKz3NlA5Mzrz1iUrtTpRcK57gVttPwjI2zdxX/aRGZh01k6OQmaq7Sskg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770852019; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=bCHmr7NIzO7kDFjl4IuroeqwYjF4yy9BY8coQf4Ugds=;
- b=P+DrXBja5gT2xf9DqN46StKfiPPO9o8iwC1UTYbJIph2uKAW2dTsoMxtDyfCkkNj
- sBc2nYw5Vnxc3cs+U33xYzQBPsjKy1LVwCsNOCrwxZ+n6CZ52dm3gCcsUYsgtRltLKd
- BdDdjWOPJcLeY5IaCNmBXuYvgMn7kX5BMOVHoCP4=
-Received: by mx.zohomail.com with SMTPS id 1770852018168829.7198198843029;
- Wed, 11 Feb 2026 15:20:18 -0800 (PST)
-Message-ID: <63edf388-e076-43a3-8a3a-929063159ca0@collabora.com>
-Date: Thu, 12 Feb 2026 02:20:14 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] virtio-gpu: Force RCU when unmapping blob
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260115-force_rcu-v3-0-1f8bfaff4815@rsg.ci.i.u-tokyo.ac.jp>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20260115-force_rcu-v3-0-1f8bfaff4815@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vqJkk-00050t-UP
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 18:36:17 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPS id
+ ACEA618003E9; Wed, 11 Feb 2026 23:36:11 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1770852973; x=1773444973;
+ bh=L/pCwHCjJcYy9VdRSDSYiJPtiBnVVnoktbevrtTLAW8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=OxF8BUPAK72ZBCRBSXeRZZf1YTfHJE548bRt3yBXO+K2hh49/t8tnsn7aB1B4tk8eDx3xDw/bnhCcRqRPoYSYcyA6wVODsQkdJ5KEuLyCsFEV2nlQALCKTqCk3XP0fLOKwAykoShPc73hEhvuGozoROiLj9LCjv+nBkE0w73Kut1dIMVWBEWiHi6DusSpk9tkfLuKK0lUkdoOHMvG4YMbSBS43EctCdg5KL6sYJg8vuREiOC7QpHpMJmrhg6ywUdweGxy2+0iC8O8svMLfFBMBRkZLZXRfVltW+RVkn67Iy7aPhqVodlG5nN0tAtLSzNDeU2moJ7iE2c/BjR3iM2BQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPSA id
+ E8AF41800153; Wed, 11 Feb 2026 23:36:09 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH 08/10] target/i386: query mshv accel for supported cpuids
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260211155410.203883-9-magnuskulke@linux.microsoft.com>
+Date: Thu, 12 Feb 2026 00:35:57 +0100
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <28261EA8-97DB-400F-A85C-4066A1AC425A@unpredictable.fr>
+References: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
+ <20260211155410.203883-9-magnuskulke@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjExMDE4MyBTYWx0ZWRfX1yFuVDzEllsB
+ giOOeTv6Krm5N2loieOZcDwmOi7tl6Gn0naBFDVmQvWC/NRpgjmbsRpTgzKBS4infYCQ+JxUleE
+ 6sOySvf0Gfa5NLZjg7j2WkTyeZqPcViN+o6zz6joRxFVdyrAF3fNpaQ7V+eUa/13GIBTEM9QHA/
+ EDy9IFDe9wxuPN7NBsHWXTanrq4FSg66EIzIyxfOgK6WSmKZGf/HgtdeJb1sWjrsm6L+2KRSD7c
+ RIGchxcVUQe2MzaofYuZQ426xTyhJjd3P0d8Dw2G6MW03aAygWkAsGADQYFCmXaxWYuksSZPpul
+ VU8FJEqh6PcZ2k5+X3WQXZTAXdLWhIxNVV9Ywh93F4j8s/gQfW+/MCJdmSPpV4=
+X-Proofpoint-ORIG-GUID: yXkIP3FI5TB2ikto89pRjIUSIAwe_Th8
+X-Authority-Info-Out: v=2.4 cv=D+ZK6/Rj c=1 sm=1 tr=0 ts=698d126c
+ cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=yMhMjlubAAAA:8 a=fLMWlKUBUD3eFdo45lYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: yXkIP3FI5TB2ikto89pRjIUSIAwe_Th8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-11_03,2026-02-11_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ clxscore=1030 bulkscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602110183
+X-JNJ: AAAAAAABqlM3TjW8kaIJS5Dqjciepoar6lDXGSzGPVutO9RVHYska2Bqg7tbAZkF6sJEnB2vrIl3zr8nJ4D8Hr/4bmssYHJN/ReApkl3QPJTvdK9p1NUdIWNRIwJmU1W/miuVsqKLYxQtS57hDtbieQshMiA9qLAaVMCfY6JPi6gcTcdqJm6cPXnZIxzLzteqbgSNmj5uZftwbz4YBMnRpZT9ft1WOjI0xl5BdQIW9EBuQ9Sftu+uay77hLJGIRG5mm7tRid6iLfupGl8QAloIiR+iFoBPbLVLaI4SbxIbF5uYC/SJc9Luxl3Wgecgux5BHCCzIhdP/RwUd9Nhyj69e2tf/JPgFVrerbMIRVkM5RpOaDxu55Sql7JN/n1xJ1VJHKIlXpaqsXQh/H2E1qN0tanJmv/LmoE1qxIA2TRW3e8Gv3bS4fvA1Dmw6TeK1Z+aHORu7pgualQMtxW/GkBb+RJdCEg79Bn2sUPdx/Idk9qIA2hvdK+TK+xbCTT1owj5xKrZVwt3CwbZHcR3wDeGTsCZmTNZjI+HMCTZbmtHZOElBUU2QIs55kFcZlLLgoEMf8Dpzwa1Ib4fwwRioPHfwnLCVXfGeJk4MzmO9iwCv9zKAVwbh7eBmKQicoGxarQ1CG/QOAHAx5tRKaqkoHxivhSXO3bSV2Vo1NMUkO8BbDT8XdV7wBHpN15+gdPQ==
+Received-SPF: pass client-ip=57.103.91.17;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,69 +96,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/26 08:38, Akihiko Odaki wrote:
-> Unmapping a blob changes the memory map, which is protected with RCU.
-> RCU is designed to minimize the read-side overhead at the cost of
-> reclamation delay. While this design usually makes sense, it is
-> problematic when unmapping a blob because the operation blocks all
-> virtio-gpu commands and causes perceivable disruption.
-> 
-> Minimize such the disruption with force_rcu(), which minimizes the
-> reclamation delay at the cost of a read-side overhead.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
-> Changes in v3:
-> - Fix immediate timeout in qemu_futex_timedwait() for Windows.
-> - Dropped patch "timer: Rename init_clocks() to qemu_clock_init()".
-> - Link to v2: https://lore.kernel.org/qemu-devel/20251213-force_rcu-v2-0-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp
-> 
-> Changes in v2:
-> - Stopped overloading the call_rcu1() and force_rcu() notifications onto
->   one event. This fixes a deadlock after try_dequeue() caused by
->   incorrect masking of call_rcu1() notifications, and eliminates
->   spurious force quiescent states caused by being confused with a
->   call_rcu1() notification.
->   Tested-by: from the previous version was not collected because this
->   changes the logic significantly.
-> - Merged the rcu_call_count and forced variables into one to avoid
->   the race between them that used to require a loop to resolve.
-> - Aligned the type of the duration variable in qemu_futex_timedwait()
->   for Windows.
-> - Fixed timespec of qemu_futex_timedwait() for 32-bit Linux.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp
-> 
-> ---
-> Akihiko Odaki (5):
->       futex: Add qemu_futex_timedwait()
->       qemu-thread: Add qemu_event_timedwait()
->       rcu: Use call_rcu() in synchronize_rcu()
->       rcu: Wake the RCU thread when draining
->       virtio-gpu: Force RCU when unmapping blob
-> 
->  include/qemu/futex.h          | 36 +++++++++++++---
->  include/qemu/rcu.h            |  1 +
->  include/qemu/thread-posix.h   | 11 +++++
->  include/qemu/thread.h         |  8 +++-
->  hw/display/virtio-gpu-virgl.c |  1 +
->  util/event.c                  | 28 ++++++++++---
->  util/qemu-thread-posix.c      | 11 +----
->  util/rcu.c                    | 98 ++++++++++++++++++++++++-------------------
->  8 files changed, 131 insertions(+), 63 deletions(-)
-> ---
-> base-commit: fba5c49719875145f1dcb44fbe85f541a47805c6
-> change-id: 20251027-force_rcu-616c743373f7
-> 
-> Best regards,
-> --  
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
 
-No problems spotted
 
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> On 11. Feb 2026, at 16:54, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> We implement mshv_get_supported_cpuid() and invoke it in
+> x86_cpu_get_supported_feature_word() retrieve the cpu features that =
+the
+> host is supporting. Initially we mask the virtualization =
+capabilitities
+> potentially we might need to mask more in the future.
+>=20
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
--- 
-Best regards,
-Dmitry
+Hi,
+
+Interesting. For WHPX on Arm, what=E2=80=99s done is creating a stub =
+partition and extract CPUID info from
+it (with necessary guest stub code if necessary) but doing it this way =
+like HVF x86 does is intriguing too=E2=80=A6
+
+Is this future-proof or are there catches with this approach?
+
+Thank you,
+> ---
+> include/system/mshv.h       |  3 +++
+> target/i386/cpu.c           |  8 ++++++++
+> target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
+> 3 files changed, 38 insertions(+)
+>=20
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index 75286baf16..51b0420735 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const =
+EventNotifier *n,
+>                                         const EventNotifier *rn, int =
+virq);
+> int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int =
+virq);
+>=20
+> +/* cpuid */
+> +uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int =
+reg);
+> +
+> #endif
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 0a7b884528..b611afc21a 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -26,6 +26,7 @@
+> #include "tcg/helper-tcg.h"
+> #include "exec/translation-block.h"
+> #include "system/hvf.h"
+> +#include "system/mshv.h"
+> #include "hvf/hvf-i386.h"
+> #include "kvm/kvm_i386.h"
+> #include "kvm/tdx.h"
+> @@ -7958,6 +7959,13 @@ uint64_t =
+x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+>         r =3D hvf_get_supported_cpuid(wi->cpuid.eax,
+>                                     wi->cpuid.ecx,
+>                                     wi->cpuid.reg);
+> +     } else if (mshv_enabled()) {
+> +        if (wi->type !=3D CPUID_FEATURE_WORD) {
+> +            return 0;
+> +        }
+> +        r =3D mshv_get_supported_cpuid(wi->cpuid.eax,
+> +                                     wi->cpuid.ecx,
+> +                                     wi->cpuid.reg);
+>     } else if (tcg_enabled()) {
+>         r =3D wi->tcg_features;
+>     } else {
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 38e0a045c2..bbb58461a4 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1757,6 +1757,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+>     g_clear_pointer(&env->emu_mmio_buf, g_free);
+> }
+>=20
+> +uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int =
+reg)
+> +{
+> +    uint32_t eax, ebx, ecx, edx;
+> +    uint32_t ret =3D 0;
+> +
+> +    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
+> +    switch (reg) {
+> +    case R_EAX:
+> +        ret =3D eax; break;
+> +    case R_EBX:
+> +        ret =3D ebx; break;
+> +    case R_ECX:
+> +        ret =3D ecx; break;
+> +    case R_EDX:
+> +        ret =3D edx; break;
+> +    }
+> +
+> +    /* Disable nested virtualization features not yet supported by =
+MSHV */
+> +    if (func =3D=3D 0x80000001 && reg =3D=3D R_ECX) {
+> +        ret &=3D ~CPUID_EXT3_SVM;
+> +    }
+> +    if (func =3D=3D 0x01       && reg =3D=3D R_ECX) {
+> +        ret &=3D ~CPUID_EXT_VMX;
+> +    }
+> +    return ret;
+> +}
+> +
+> /*
+>  * Default Microsoft Hypervisor behavior for unimplemented MSR is to =
+send a
+>  * fault to the guest if it tries to access it. It is possible to =
+override
+> --=20
+> 2.34.1
+>=20
+>=20
+
 
