@@ -4,106 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50D8ECD6D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 020ECECD6D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 17:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqENc-0004ME-Q4; Wed, 11 Feb 2026 12:52:00 -0500
+	id 1vqETm-0007is-Ii; Wed, 11 Feb 2026 12:58:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqENY-0004LL-R7
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:51:56 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqETk-0007iR-Om
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:58:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqENW-0006v0-Te
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:51:56 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqETh-0000v9-Pt
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 12:58:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770832313;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1770832696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qI/qofWfZIRirg8gzjCcuh7D1eweaq0hEpcj1J2zlk4=;
- b=c5TRXIOorlKPmDU3w5yA7Znz5GHOv9ItM0su+zBBrc5T+3r/wU/Pxrc8/mqLk1WEJ1hNK5
- Wg6MaNaPwG8sU7dV+pjAZKTyHmH+oafUMTvoFKzI6J8Zb6YM2OLZXA99iaSFIra9YUcg57
- ZHJhmSagpklGXF16C0frvy0B2rOlLhQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=F9S8DzT25mTGgB+cvJanzuddH6Z1/JFd/N11Tw47kuA=;
+ b=WhUwkJXF4gFGhC3cPI7HjO5LgA/MIXFio2MM1aTIMuUlLSCWqlbZGLDv8WQekv3P/wHr+B
+ gea9waTZriCKTOy0EOv23mMcYlyK+6ck7OzGsvF0PhKY6zIN1Z8FVFy26KwNabQyTodM15
+ 2X7qZXGnkJADOZx+esUgd0rQJ43f9Mc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-265-9KB4mivTNAuPKTGQhgfPHw-1; Wed, 11 Feb 2026 12:51:52 -0500
-X-MC-Unique: 9KB4mivTNAuPKTGQhgfPHw-1
-X-Mimecast-MFC-AGG-ID: 9KB4mivTNAuPKTGQhgfPHw_1770832311
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-435a11575ecso2472352f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 09:51:51 -0800 (PST)
+ us-mta-27-yxaWJYsgMAW58ru95axd3w-1; Wed, 11 Feb 2026 12:58:15 -0500
+X-MC-Unique: yxaWJYsgMAW58ru95axd3w-1
+X-Mimecast-MFC-AGG-ID: yxaWJYsgMAW58ru95axd3w_1770832694
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4801d21c280so64413105e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 09:58:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770832694; x=1771437494; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=F9S8DzT25mTGgB+cvJanzuddH6Z1/JFd/N11Tw47kuA=;
+ b=AfH1FYyI6xr8CZnkAMSDHjZKFEcG38kQX+G096WIWV8FRNqnnk91FeiYzrzN5uIC/o
+ 4zWhVAX5Q2UcsnOSv1ka/+pZDX1cDAvwiSJkyel5eyrii8PRf8WLiCbuV1/PBVSRFsKC
+ 7Gv/Ex5vUgdoOrgvi/cynpYvnXBPCjDv0OgzyG19PNkL5EqFkHtB+3MaoQPgMgvvLCeU
+ N6TiyDM1oqgamsJjqmB6BaT7/10zIXerTVBRCBHO75sSuUzPWipFq+u0MezgT6hU30U/
+ 4tta7i4euABhzR3qllZioJEJlWQQgDwWllV7RWwXota3mnCxIxpwmf0edESDHBm4Rh1A
+ 1sbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770832311; x=1771437111;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1770832694; x=1771437494;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qI/qofWfZIRirg8gzjCcuh7D1eweaq0hEpcj1J2zlk4=;
- b=SEuAAKvQsy/UM3W7M23yy8gC1QozY8tIJlVVwyIcLnMSuUG5gNufhjvpG6kHBOwXz0
- nIg8xm7pb54wKn48YywXYDuS0YhnPNb6cTcuW4TDe6t0MPgg+8sRcSAYZcRLQ5CSpoqG
- lFJSuyT84zx5DsXalrE/+yFsfJ/SV+2F112CWcIbs2zr0xcx8MvEyHWNVC2QfBKdILJK
- borSM6gZ2EhAOPDpile3rbD8qUto+V6p9ZTPEb0V+b/uUMpFqnb5QB8iMoydTv8vr/2S
- 4rHhKzo3QQKoILjB16ycQaTBONDB3CYcEavcWQYeauv/Y/80K5gtF2tIHA4CemQVnZjt
- SqEw==
+ bh=F9S8DzT25mTGgB+cvJanzuddH6Z1/JFd/N11Tw47kuA=;
+ b=N2xAAuUklLTOquZua71rkOo11vVevkg+vzwADFwH0q1kHxEQRqcan4TFFDdRaFmTfd
+ eLLRCwHkQrYCoXcNldStG3U4LJEZKQQHpBUZGhbqiLJYCvHHlgn5A9yVAuilfIFgmewT
+ Fh5VFivnxI0f6DohLNdMZrUtREjJ3csceh+Llt63z9/SEXlI7fdqjKP0ABJzohuxdiFI
+ RSUysrcSJRLzAWgxOCqsUGUnGv+BH1250C7Ad8S0/BxZIacRMLbFvJDHJe0dq99HMTIg
+ CvTvcwK+8CsE65dwag0r7Vohtfj8zcjgJIFg1C+Ups8/0PYpJKH9wyeYRv26aPcoVh2b
+ 5AzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXtAjUhpD/Gxttzrf4ZeN55mqvuo1u5X1q6PIa6MTRDxNKeyhzZw75QoJOo34mThbw2RBrvRorLtSo@nongnu.org
-X-Gm-Message-State: AOJu0Yw99j0KZ55EWrUoGasdeD0ONm8BJEbBG7jjnRzPc23DvxSWSyK0
- ZQ52zGAmBUebMIXJys04+ktsJIx8tVQE/uZG9ah+KE8RsBzRIsgAtNH7gTXsgpt4umqcf1644XM
- OV4Lvo+dYejnyO4K5amm+bgm1CZzovo5JGXbkf9VzrPgNmTHcFXllWkDt
-X-Gm-Gg: AZuq6aJsqlWpnmoPt6BKR/3zt8R14+kbqXhMAgNAsHYP2/etsvMkMOR7E0HroHjB1fJ
- 1QzfKwS4WyEzI0HW8ZlPAC/MC4ziNa8jTquPIoS3ozTsLhseHitsBwhNr4dLTFq8frOJj6U3Gvy
- uMwySTq3dDM17+z2qcw3rVAwE9d9izemZwtcYYmsM5vhQwwRwSPe4bNKguxi5rPS86w4MWgD8zU
- e3h3L/1AdtvZU424FhGH33O8U/h45oyEd/TMB/8mxZFn2nPdTFz+y9Sn8yCMYfAkImPkXOtBfI9
- 1Wg/3oTRqloA93bc0njIfiGq1B8fsgkl6VVPX7vpB7tAAGHIXb7IMhx5U0W+YZZhQQ/dR6rSGQd
- pkJpDET9OwR8UIaf30KJXyYnCU7eraBuoV4R9uaQPxcMd9VrCbhNsI4fJXVzY2d1fKsMSrg==
-X-Received: by 2002:a05:6000:25c8:b0:436:3536:f698 with SMTP id
- ffacd0b85a97d-4378ac8417bmr386682f8f.30.1770832310763; 
- Wed, 11 Feb 2026 09:51:50 -0800 (PST)
-X-Received: by 2002:a05:6000:25c8:b0:436:3536:f698 with SMTP id
- ffacd0b85a97d-4378ac8417bmr386650f8f.30.1770832310357; 
- Wed, 11 Feb 2026 09:51:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AJvYcCUnXLg4AIrux2CVmViU3tRG+llyx0WizYNhVFt/b65+XaMUMRH4hPiSwNImICmbd4DkVt9QEVuuRdng@nongnu.org
+X-Gm-Message-State: AOJu0YxNtWB/vAAbdC+MEFb9rt0/pOcv3/ulbfBYfpRi8ODWN8zPSs14
+ Uim51kqrBy0UAXGR3QGzz8BZa+Cb+yivwdmVcOTgYtzwd6crLMVxiOCHjyUbqW1oimo2mCSIxls
+ vF0q35zQlYah3nPsNarnHPRZZSrINzxGFtVNz8EaA6Z7e2viYiAEFQs5r
+X-Gm-Gg: AZuq6aKhtFVzhTtTrJjqiT/uYSzQMzRjYmo2PCdryKP8sO1egxPr3KbcaGbmYM8Rsz1
+ ISlJjJ7WsDgEkcL3AzDZtqpviendN5DDVljKvZvkMpjo4n0oKz9b7GrcdilmFYvwAZeybLkhrX8
+ OtJY1tOPLckyHqrpihyIfM8soyu37mQWA1Z2+OgYaYeUYZjjxYIW14LFgqOAV7Ph8G6aK4YONIN
+ O3sntFbFseK+kYmvmFAOwiBDO/ua9tbVOc+8sRGLDvI3RCRoXjTJvyP64TQ8WBfwOV18owncX+V
+ 6DQBn0+ZScWzZpEuNb9hzpzJ3V/jpJrqgYl0SXbZEuMYFYylXTVg26XrwJFDrLu/7wlH4gdqYrT
+ 1iCWSB3nf6zgxJS4Zeq8gvdLLE6rWy1LXLM+X2ATk3/572ktOoRXYONBjLb0q
+X-Received: by 2002:a05:600c:c490:b0:47e:e9c9:23bc with SMTP id
+ 5b1f17b1804b1-48365719addmr135835e9.30.1770832694111; 
+ Wed, 11 Feb 2026 09:58:14 -0800 (PST)
+X-Received: by 2002:a05:600c:c490:b0:47e:e9c9:23bc with SMTP id
+ 5b1f17b1804b1-48365719addmr135455e9.30.1770832693683; 
+ Wed, 11 Feb 2026 09:58:13 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d325f7sm6196314f8f.8.2026.02.11.09.51.49
+ 5b1f17b1804b1-4834d5d77b3sm157974315e9.2.2026.02.11.09.58.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Feb 2026 09:51:49 -0800 (PST)
-Message-ID: <d988581b-b416-4141-9736-51268a3f0c40@redhat.com>
-Date: Wed, 11 Feb 2026 18:51:47 +0100
+ Wed, 11 Feb 2026 09:58:13 -0800 (PST)
+Message-ID: <7db83d35-eace-404e-a31b-fff1f6ddedf2@redhat.com>
+Date: Wed, 11 Feb 2026 18:58:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/5] hw/arm/smmuv3-accel: Read and propagate host
- vIOMMU events
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20260211083415.133534-1-skolothumtho@nvidia.com>
- <20260211083415.133534-6-skolothumtho@nvidia.com>
- <275ab451-4c37-4a78-bf5b-a76329bbf873@redhat.com>
- <CH3PR12MB7548E3A22BA52954843F1BC4AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB7548E3A22BA52954843F1BC4AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v2 2/2] hw/vfio: align mmap to power-of-2 of region size
+ for hugepfnmap
+To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com, alex@shazbot.org
+Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
+ targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
+ qemu-devel@nongnu.org
+References: <20260211030615.3202-1-ankita@nvidia.com>
+ <20260211030615.3202-3-ankita@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260211030615.3202-3-ankita@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,117 +168,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 2/11/26 04:06, ankita@nvidia.com wrote:
+> From: Ankit Agrawal <ankita@nvidia.com>
+> 
+> On Grace-based systems such as GB200, device memory is exposed as a
+> BAR but the actual mappable size is not power-of-2 aligned. The
+> previous algorithm aligned each sparse mmap area based on its
+> individual size using ctz64() which prevented efficient huge page
+> usage by the kernel.
+> 
+> Adjust VFIO region mapping alignment to use the next power-of-2 of
+> the total region size and place the sparse subregions at their
+> appropriate offset. This provides better opportunities to get huge
+> alignment allowing the kernel to use larger page sizes for the VMA.
+> 
+> This enables the use of PMD-level huge pages which can significantly
+> improve memory access performance and reduce TLB pressure for large
+> device memory regions.
 
-On 2/11/26 3:58 PM, Shameer Kolothum Thodi wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 11 February 2026 14:26
->> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
->> arm@nongnu.org; qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; Nicolin Chen <nicolinc@nvidia.com>; Nathan
->> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
->> <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
->> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
->> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
->> Subject: Re: [PATCH v5 5/5] hw/arm/smmuv3-accel: Read and propagate host
->> vIOMMU events
->>
->> External email: Use caution opening links or attachments
->>
->>
->> Hi Shameer,
->>
->> On 2/11/26 9:34 AM, Shameer Kolothum wrote:
->>> Install an event handler on the vEVENTQ fd to read and propagate host
->>> generated vIOMMU events to the guest.
->>>
->>> The handler runs in QEMU's main loop, using a non-blocking fd registered
->>> via qemu_set_fd_handler().
->>>
->>> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
->>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->>> ---
->>>  hw/arm/smmuv3-accel.c | 62
->> +++++++++++++++++++++++++++++++++++++++++++
->>>  hw/arm/smmuv3-accel.h |  2 ++
->>>  2 files changed, 64 insertions(+)
->>>
->>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->>> index d92fcb1a89..0d5dcef941 100644
->>> --- a/hw/arm/smmuv3-accel.c
->>> +++ b/hw/arm/smmuv3-accel.c
->>> @@ -390,6 +390,48 @@ bool
->> smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice
->> *sdev,
->>>                     sizeof(Cmd), &entry_num, cmd, errp);
->>>  }
->>>
->>> +static void smmuv3_accel_event_read(void *opaque)
->>> +{
->>> +    SMMUv3State *s = opaque;
->>> +    SMMUv3AccelState *accel = s->s_accel;
->>> +    struct {
->>> +        struct iommufd_vevent_header hdr;
->>> +        struct iommu_vevent_arm_smmuv3 vevent;
->>> +    } buf;
->>> +    uint32_t last_seq = accel->last_event_seq;
->>> +    ssize_t bytes;
->>> +
->>> +    bytes = read(accel->veventq->veventq_fd, &buf, sizeof(buf));
->>> +    if (bytes <= 0) {
->>> +        if (errno == EAGAIN || errno == EINTR) {
->>> +            return;
->>> +        }
->>> +        error_report_once("vEVENTQ: read failed (%m)");
->>> +        return;
->>> +    }
->>> +
->>> +    if (bytes == sizeof(buf.hdr) &&
->>> +        (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
->>> +        error_report_once("vEVENTQ has lost events");
->> in case in the future we end up with several vEVENTQs, it may be
->> relevant to log the queue id/type
->>
->> After reading the linux uapi again, this seems to record a queue
->> overflow. I would replace the
->>
->> "vEVENTQ has lost events" trace by "queue <type> <id> has overflowed". This
->> would allow differentiation with the case below.
-> Ok. Make sense. <id> is also useful with multiple SMMUv3 instances.
->
->>> +        accel->event_start = false;
->>> +        return;
->>> +    }
->>> +    if (bytes < sizeof(buf)) {
->>> +        error_report_once("vEVENTQ: incomplete read (%zd/%zd bytes)",
->>> +                          bytes, sizeof(buf));
->>> +        return;
->>> +    }
->>> +
->>> +    /* Check sequence in hdr for lost events if any */
->>> +    if (accel->event_start && (buf.hdr.sequence - last_seq != 1)) {
->> wonder if we need to handle any hypothetical wrap-up situation?
-> This should not be required. The sequence is __u32 and the delta
->  is computed using unsigned arithmetic, so wrap-around is handled
-> naturally.
-Ah that's right.
 
-With the 1st comment above taken into account, feel free to add my 
+Could you share some figures regarding the startup time of the guest
+for example ?
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Thanks,
 
-Thanks
+c.
 
-Eric
->
-> Thanks,
-> Shameer
+> With this change:
+> - Create a single aligned base mapping for the entire region
+> - Change Alignment to be based on pow2ceil(region->size), capped at 1GiB
+> - Unmap gaps between sparse regions
+> - Use MAP_FIXED to overlay sparse mmap areas at their offsets
+> 
+> Example VMA for device memory of size 0x2F00F00000 on GB200:
+> 
+> Before (misaligned, no hugepfnmap):
+> ff88ff000000-ffb7fff00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
+> 
+> After (aligned to 1GiB boundary, hugepfnmap enabled):
+> ff8ac0000000-ffb9c0f00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
+> 
+> Requires sparse regions to be sorted by offset (done in previous
+> patch) to correctly identify and handle gaps.
+> 
+> cc: Alex Williamson <alex@shazbot.org>
+> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> ---
+>   hw/vfio/region.c | 81 ++++++++++++++++++++++++++++++++----------------
+>   1 file changed, 54 insertions(+), 27 deletions(-)
+> 
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index 177494c379..3f2d72dbc5 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -341,8 +341,11 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
+>   
+>   int vfio_region_mmap(VFIORegion *region)
+>   {
+> -    int i, ret, prot = 0;
+> +    void *map_base, *map_align;
+>       Error *local_err = NULL;
+> +    int i, ret, prot = 0;
+> +    off_t map_offset = 0;
+> +    size_t align;
+>       char *name;
+>       int fd;
+>   
+> @@ -353,41 +356,56 @@ int vfio_region_mmap(VFIORegion *region)
+>       prot |= region->flags & VFIO_REGION_INFO_FLAG_READ ? PROT_READ : 0;
+>       prot |= region->flags & VFIO_REGION_INFO_FLAG_WRITE ? PROT_WRITE : 0;
+>   
+> -    for (i = 0; i < region->nr_mmaps; i++) {
+> -        size_t align = MIN(1ULL << ctz64(region->mmaps[i].size), 1 * GiB);
+> -        void *map_base, *map_align;
+> +    /*
+> +     * Align the mmap for more efficient mapping in the kernel. Ideally
+> +     * we'd know the PMD and PUD mapping sizes to use as discrete alignment
+> +     * intervals, but we don't. As of Linux v6.19, the largest PUD size
+> +     * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
+> +     * on x86_64).
+> +     *
+> +     * Align by power-of-two of the size of the entire region - capped
+> +     * by 1G - and place the sparse subregions at their appropriate offset.
+> +     * This will get maximum alignment.
+> +     *
+> +     * NB. qemu_memalign() and friends actually allocate memory, whereas
+> +     * the region size here can exceed host memory, therefore we manually
+> +     * create an oversized anonymous mapping and clean it up for alignment.
+> +     */
+>   
+> -        /*
+> -         * Align the mmap for more efficient mapping in the kernel.  Ideally
+> -         * we'd know the PMD and PUD mapping sizes to use as discrete alignment
+> -         * intervals, but we don't.  As of Linux v6.12, the largest PUD size
+> -         * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
+> -         * on x86_64).  Align by power-of-two size, capped at 1GiB.
+> -         *
+> -         * NB. qemu_memalign() and friends actually allocate memory, whereas
+> -         * the region size here can exceed host memory, therefore we manually
+> -         * create an oversized anonymous mapping and clean it up for alignment.
+> -         */
+> -        map_base = mmap(0, region->mmaps[i].size + align, PROT_NONE,
+> -                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> -        if (map_base == MAP_FAILED) {
+> -            ret = -errno;
+> -            goto no_mmap;
+> -        }
+> +    align = MIN(pow2ceil(region->size), 1 * GiB);
+>   
+> -        fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
+> +    map_base = mmap(0, region->size + align, PROT_NONE,
+> +                    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    if (map_base == MAP_FAILED) {
+> +        ret = -errno;
+> +        trace_vfio_region_mmap_fault(memory_region_name(region->mem), -1,
+> +                                     region->fd_offset,
+> +                                     region->fd_offset + region->size - 1, ret);
+> +        return ret;
+> +    }
+> +
+> +    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
+>   
+> -        map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+> -        munmap(map_base, map_align - map_base);
+> -        munmap(map_align + region->mmaps[i].size,
+> -               align - (map_align - map_base));
+> +    map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+> +    munmap(map_base, map_align - map_base);
+> +    munmap(map_align + region->size,
+> +           align - (map_align - map_base));
+>   
+> -        region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
+> +    for (i = 0; i < region->nr_mmaps; i++) {
+> +        munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
+> +        region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
+> +                                     region->mmaps[i].size, prot,
+>                                        MAP_SHARED | MAP_FIXED, fd,
+>                                        region->fd_offset +
+>                                        region->mmaps[i].offset);
+>           if (region->mmaps[i].mmap == MAP_FAILED) {
+>               ret = -errno;
+> +            /*
+> +             * Only unmap the rest of the region. Any mmaps that were successful
+> +             * will be unmapped in no_mmap.
+> +             */
+> +            munmap(map_align + region->mmaps[i].offset,
+> +                   region->size - region->mmaps[i].offset);
+>               goto no_mmap;
+>           }
+>   
+> @@ -405,6 +423,15 @@ int vfio_region_mmap(VFIORegion *region)
+>                                  region->mmaps[i].offset,
+>                                  region->mmaps[i].offset +
+>                                  region->mmaps[i].size - 1);
+> +
+> +        map_offset = region->mmaps[i].offset + region->mmaps[i].size;
+> +    }
+> +
+> +    /*
+> +     * Unmap the rest of the region not covered by sparse mmap.
+> +     */
+> +    if (map_offset < region->size) {
+> +        munmap(map_align + map_offset, region->size - map_offset);
+>       }
+>   
+>       if (!vfio_region_create_dma_buf(region, &local_err)) {
 
 
