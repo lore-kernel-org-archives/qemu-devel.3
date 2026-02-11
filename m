@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4CAEB5967
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 05:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59F5EB5961
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 05:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq3Cr-0000fg-Nu; Wed, 11 Feb 2026 00:56:09 -0500
+	id 1vq3DX-0001Tv-Oz; Wed, 11 Feb 2026 00:56:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vq3Cp-0000eX-RF
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 00:56:07 -0500
-Received: from p-west3-cluster3-host5-snip4-10.eps.apple.com ([57.103.72.141]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vq3DW-0001TD-2U
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 00:56:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vq3Co-0003LD-9t
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 00:56:07 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-9 (Postfix) with ESMTPS id
- 711361800097; Wed, 11 Feb 2026 05:56:02 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770789365; x=1773381365;
- bh=56sXoYOxPX/sVf+px2q6TZUX1B0IWIQipNS6jK0DejM=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=bBTDApaeTl1DB0a/R8dZFUv9g7jsnDNVtsBBL/ceYimhIZoOKRbqhB+GsW1qNeFiF008Ak+IJP7X3jsjyjXYLEsIMS3MOgYkYMLGqdevflexG5TCrG0C6oUIbTTQ4tnw7xF1Ewb8tNflD0bQzs7WswZV8z/xn8WWDvYLqsXoTWQZtVerimL0QdTSxj1QGxuO+aSrpdvMM9Y+iN0JRZM9cWZJlaoCk3qLpQbfcPmL59NHp2JDVfAu6imgmJaQB1ZjaAve/PZ0G5FToXMUWzF5YXw6yBAz0Q1qzjZClBqXUatYSBCygQHLK5yadPzYjVFtotUlefuLgqJ58hT0ARuM/g==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-9 (Postfix) with ESMTPSA id
- 4F058180009A; Wed, 11 Feb 2026 05:55:59 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH 0/7] whpx: x86 updates (2026-02)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260211055356.44664-1-mohamed@unpredictable.fr>
-Date: Wed, 11 Feb 2026 06:55:47 +0100
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vq3DT-0003Qn-7N
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 00:56:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770789406;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Sfvh974GGTYCys12cTpMbulPNsloShDMG9sMHy5Vrrg=;
+ b=F6TJKZopIoFCqVK1g9nWGC0Tz7Sz7l0gKhucMjbTHZITZFnHskfED1C47z0iIMcrtRmkqX
+ eNRFmt3b+hY2xqd6hKy3aMge0D/BlGeXHrqx4xBwU/0ViAGFhTndR4CWL/bWXXNzrCKgpP
+ h7hupqp7T12AcVLIcJ2EcqqqGHM76eo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-KwZcjdRyPm2oqpmJEXMdig-1; Wed,
+ 11 Feb 2026 00:56:43 -0500
+X-MC-Unique: KwZcjdRyPm2oqpmJEXMdig-1
+X-Mimecast-MFC-AGG-ID: KwZcjdRyPm2oqpmJEXMdig_1770789401
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDF711955F0E; Wed, 11 Feb 2026 05:56:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 071B91800464; Wed, 11 Feb 2026 05:56:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8F69121E692D; Wed, 11 Feb 2026 06:56:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
+ <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
+ qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
+ <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 05/24] util: expose qemu_thread_set_name
+In-Reply-To: <aYtnIT1s2pS7S4YL@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 10 Feb 2026 17:13:05 +0000")
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-6-berrange@redhat.com>
+ <87cy3dc1pl.fsf@pond.sub.org> <aYtnIT1s2pS7S4YL@redhat.com>
+Date: Wed, 11 Feb 2026 06:56:37 +0100
+Message-ID: <878qcz4ycq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <59BE8AAB-AAF6-41C7-9784-E3103A2FBB97@unpredictable.fr>
-References: <20260211055356.44664-1-mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-GUID: wrxHirdb08Y5kVTKkWv58C7XunnsUUqi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjExMDA0NiBTYWx0ZWRfX2F+AqThWVfzz
- bTIylpgbNFfHgH33n8UpYmHJs/GGaQ3sLYWDiiwDEs10iqRg1NZQ1TenS9LzGFTzAJ/UCXXGvmz
- 2gSiXvaOgb1zOvVplsVIN8VRLBOcn7ETZlAeJ7EJkzvWe9AEL97jtMH+b9Kpf7MnHWTT8CDANUU
- 9EzysCiPUNDwnNuq7hh1WgXH6lR785zWSPETai9R5+jh6Nt7ePei2gzSGAmeE0LWbyKjXDFzHTC
- wX1RJ7n+MVnOyfbNMILOKLOo950eFMSf4WegS2VCNOuUlXyteXEuHMZ39Kzfk+YW4wwBnOe4pPw
- qz7NVNY5Zox75R8SBhGOdcO1RoEbp1KCbLGhpAoF3v8Zb1+SUCKOz5YP9l/Eck=
-X-Authority-Info-Out: v=2.4 cv=Q7ffIo2a c=1 sm=1 tr=0 ts=698c19f3
- cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=haW0fTxJ24_bn6PRMP0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: wrxHirdb08Y5kVTKkWv58C7XunnsUUqi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-10_03,2026-02-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=834
- adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0
- clxscore=1030
- suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602110046
-X-JNJ: AAAAAAAB28uoKib700k3C2zToUrsphoCDpuF7aE52+PWvVfZA+XPgs55jEKUlc435bSdCO8TFgivrG0Aw2iu0/oYSn+K57fETZ9kbCO3En3/N2SLoyMKPx2K5KdaS/FdgyO6vMBdTr4V3jRHanhSn+oMEmA8wCW4aW7gJ2MYlzcq1J0RgjLWOC4RrWpUBCnUBq5x11tjm5sIacHZIgYrdHbH6pJtt+WZkQLMvejFSQE/Xe7ePxAhWxZBxnmUQC0oxDs8oetWWKMFjXMOi9xxW+IYIIfhpw7NZUsbfz2LsfZg6O9qTGyeahuQPiXTOCrG7kwanflda7N9rZ5sOKbUiCKCSoCVOS4alPHm5RI5TSRS5azrO+Ef1+9gZms821yy/c8iaaol3eXqaXr4vbgWIjqlgU+HbtA4uyOScZ4f4gTcD4fstfVT83yMxyBokJ3EYMAcwy0sDUO1bUIAkYUGm4KvRUoLvpJcwM9MibltC0C43x/spTnqwQVJoruLEMNUKW1kRNQbkGpeASjeUHA0bqs9XAgBFuo8dtbeZW7xgUODXT7zNO1wLNYj8D4Q+FUpgUlS/goVrUDV/iC4QV9fG0GPYsu6oUrAB43jTWHDUZcG2Ot2ELWtgkCDHU8o9+0wJuaGZi4+IZ9vB0b27xsuhjczwgN8wuMGx2H440NuxLOjcP0bYe0tzhM6N4YRfwtuHOKJnddWswmP2QRsxUpOJR2ge2oQwZv1i4a+Kwe3MR0cma9TREJUQJqa4Z5aopWFVSgw+ICGuiUZJA8fIc5M7RPrVLbPv32RDnhy3ik=
-Received-SPF: pass client-ip=57.103.72.141;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,47 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Oops, forgot to note:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-This is to apply on top of target-arm.next (which includes the arm64 =
-WHPX support).
-It won=E2=80=99t apply on top of current master.
+> On Tue, Jan 13, 2026 at 10:16:06AM +0100, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > The ability to set the thread name needs to be used in a number
+>> > of places, so expose the current impls as public methods.
+>> >
+>> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+>> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-> On 11. Feb 2026, at 06:53, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> x86_64 WHPX updates:
->=20
-> - fixing debug support, which was broken since around: "gdbstub: move =
-guest debug support check to ops"
-> a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
-> - switch over from winhvemulation to common x86 VM exit emulation code
-> - remove some log lines
->=20
-> Mohamed Mediouni (7):
->  whpx: re-enable guest debug support on x86
->  whpx: preparatory changes before switching over from winhvemulation
->  whpx: refactor whpx_destroy_vcpu to arch-specific function
->  whpx: move whpx_get_reg/whpx_set_reg to generic code
->  whpx: x86: switch over from winhvemulation to target/i386/emulate
->  whpx: remove remaining winhvemulation support code
->  whpx: x86: remove messages
->=20
-> accel/whpx/whpx-accel-ops.c     |   8 +
-> accel/whpx/whpx-common.c        |  62 ++++---
-> include/system/whpx-all.h       |   5 +
-> include/system/whpx-common.h    |   6 +-
-> include/system/whpx-internal.h  |  16 --
-> meson.build                     |   3 +-
-> target/arm/whpx/whpx-all.c      |  33 +---
-> target/i386/cpu.h               |   2 +-
-> target/i386/emulate/meson.build |   1 +
-> target/i386/mshv/meson.build    |   4 +
-> target/i386/whpx/whpx-all.c     | 308 ++++++++++++++++++++------------
-> 11 files changed, 252 insertions(+), 196 deletions(-)
->=20
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
+[...]
+
+>> This delays setting the thread name until the thread runs.  Fine, I
+>> guess, but I'd mention it in the commit message.
+>
+> Returning to this, the change is arguably /not/ delaying setting the
+> thread name, but in fact fixing a race condition when settnig the
+> thread name.
+>
+> This existing 'set_thread_description' call is taking place in the
+> parent thread, and at this point in the time the child thread has
+> potentially already been scheduled to run.  So if the parent thread
+> was unscheduled, it is possible the child was running without having
+> it name set. This change eliminates that race.
+>
+> This distinction is important enough that I think I'll move this
+> specific change out into its own self-contained commit.
+
+Makes sense, thanks!
+
+[...]
 
 
