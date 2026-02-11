@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DEFE9E2F9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 702C9E9E2FD
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 12:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq93c-000862-Jm; Wed, 11 Feb 2026 07:11:00 -0500
+	id 1vq93Y-00085Q-6e; Wed, 11 Feb 2026 07:10:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93V-00084f-5O
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:53 -0500
-Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vq93S-00084P-K4; Wed, 11 Feb 2026 07:10:50 -0500
+Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vq93R-0004zQ-SM
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 07:10:51 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.107])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4f9y1z3K68z5vs1;
- Wed, 11 Feb 2026 12:10:47 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vq93Q-0004zF-LR; Wed, 11 Feb 2026 07:10:50 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.52])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f9y1w0ksFz5vRx;
+ Wed, 11 Feb 2026 12:10:43 +0000 (UTC)
+Received: from kaod.org (37.59.142.107) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 11 Feb
- 2026 13:10:46 +0100
+ 2026 13:10:36 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0023108cb63-1615-487f-a788-d615686b5bd7,
+ (GARM-107S001f46e54fc-1314-4bb6-8ec7-c8bc1a171f58,
  3A8D629C33260B61B1BB8F65C34560168E726884) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <ca028364-d77c-475c-a696-171b1772fdd2@kaod.org>
-Date: Wed, 11 Feb 2026 13:10:45 +0100
+Message-ID: <02375eec-2e5a-479e-b560-9c5c425f6cc7@kaod.org>
+Date: Wed, 11 Feb 2026 13:10:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C
- MMIO
+Subject: Re: [PATCH v3 00/11] Support ASPEED AST2700 A2
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260210024331.3984696-1-jamin_lin@aspeedtech.com>
+ Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260211021527.119674-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260210024331.3984696-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260211021527.119674-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG12EX1.mxp5.local (172.16.2.121) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.107]
+X-ClientProxiedBy: DAG17EX2.mxp5.local (172.16.2.172) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 3b7c7795-9182-47f2-b5ba-7b2542de53f6
-X-Ovh-Tracer-Id: 8198521649797761970
+X-Ovh-Tracer-GUID: 1af37ce2-cced-4f11-ba5d-61331aa02989
+X-Ovh-Tracer-Id: 8195706898719607614
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGdB92Mb0accc8UO9RH2FFDSeWDkAQF4LWmF9NyVs7KefN3qwPnHSCCL8gdU/TdVPOhexh0tewWvGbhBKlQYajhsQ1yLl07ZKqkG0WDQycMuUhQWowuSHuFtTSEZvTrjjkNkY2VU9krU5ebx3O5zkCOb+OKJQKjrrwtmGCFEePAbldCgDoMvsAY2sDioJtnwuodXvSocZvmL96S1d9TEd/5QlguU6W2689TTfw0+uocVDBeEfgXAwxMTUT3hpOEx8q1VJy4ojGCVcDWueMREPepY81eyZzs6SFGwAfidm3tPZXhDvYdv9tUL2yPLGvbORJ27TP/Swlh1+T/U10OtjjyrFIrNnCXwyNZMLTPTjL+32Ts7qoJk/VeAfZ3AqgtMG94e3u88w120YvV3tkqJVUlytCf8tlSPq3Pa9VgUJpKP4eGc6z0V6wsl5SH5COmZ6si7WUo//bMEq4Xvoajydpi0iegGKgmlwwnm2nTt1AbQB/BWgdL//4DrG3hVRqx6S1p8rAlEkbdv6VC3NnULYfDI+o+VFOa2QZ/FtUAtj3DPoM2K4R0l9hyP06OoywNMvkXnthOVFE5IRtGzbWFsiEpSpMtGYRoR2NvNOIPcWrfqwYwYJjmAFAdJnctx9+Z0YK8BnlhrxEIwkw9Y1KAB1tZS4oRMH7Pna5rjIQS4X+U+w
-DKIM-Signature: a=rsa-sha256; bh=0bk9SqkH17rgcukN5tyim68cojDa02Ahq7SvqblrGqI=; 
+X-VR-SPAMCAUSE: dmFkZTF8F+qvljyKFdBDkuuwUjpm6BhuwLR4m4CZL2yAxYAiWZQaheV7UFmIcepTYEWd5LkacadcRQ8HiVAQpZJpmDfOjCuI1Ogj+C38WoqROpVpM0kXdG1pwbOJntYmJkyMJVonPp8fhp/oKMFJuQ6ymobc/jPys3j24RV5l0VDCTKv5sidThxuSxlsqLqdrWibD+yaXhcC4HlmhpbWvA6l0fOqLuaeeINgYBFoirFCh9ryyvIFimbHLNjkSr8TRpT276hYotJcb3g3jxux7Op8eSmiQpkn39v3kwL5G78h2FjV0elWQZSxmyc0AAkZG0gwiO8rLl8NrcjrFqX1VylhSj/BebjBsN23AQPlO3hmfsG9H5QWCTu2wJ/rg3z+i+u3nA1asZqj6gX0bSJlbcrgzqAUUmng+Puw0M9phu2iuRaZYYfntdJuI3084heDLsWh7oMo1wDtIVmkZ8dSzKmLE024C3Csmf1Mm55XnOMi9BaPIsK4mAbNuLa9eOaFSuBxPYjPR1IK5ioIEzk6D5aNydnSQjPUmf6vPNZm32IzPvj50QESNPu+NO63TtpbjByllTuG0NdOIsiIBXD3oDuzI7Xeovsh7lQNKae2KordP+muXYJbMiP3ULKWhVaVn9z19S79tXp0UbuN1acz6QU5tupHRAZYyCPTzPSLl6RxMSVQow
+DKIM-Signature: a=rsa-sha256; bh=pE/Mls6yO791yybTrP7CTnC030lwjwZT8XT6zNH5R28=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1770811847; v=1;
- b=HdNBKWYIImDz+t9bjSo+v2YuvVEZR6M9UJfn/JMpJV0BRE98eiJjdBer4/V0q/z/vLDIegUm
- A1RHQGXARYa2S2Tau3extkJIePVggAxScHo9ZBGK8EqURAis3/l/TrSSKpChCEjDH72hEp1VUxT
- N5uHOyab78ctX0j1l7VLfb4ks3f+jbRwzWQq5uIVmhHJgellvbQPghxVVOM1SsNJQAz80bzq4M9
- jDe1TBPxDSr2gHS/uODPVB9Md09d1LqTm2tQ9LnEVjAL4Wf2OoisrpbIJ8PeSCw9gjTGhsUnuP+
- jlaDFax40asVfFlmpj/E2+gZd/Wg7Bi2rlfzou2cD5xPg==
-Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
- helo=5.mo552.mail-out.ovh.net
+ t=1770811845; v=1;
+ b=E2hXAOKI78MOVZoj3Ggl6OlM/vBEH4NJZ7VC0Mm0fcN7N+iyY8XbzRUiwIojU3eoEZIhULHb
+ dCiJMQ8PR6+gduPwxrTGPwJmNCi+T+52D7tc2+EhE8wXyaeS8+orO0EA5yRfucksM2gmrdDl+Rc
+ zZIemzwg0nLr2T62cSXcJ17GJP5zoPt0cLUs5CBpMTYE/8vqtJ4pRCNa3Qdsi00sNnJwZEbt6B9
+ 3TFNcL0YFjqWkw8K5kQOfX+YbpoiJJmftLszkG6Q37LpgykMBiB7PSiSFkqnsmNSoCVn6bl2n8l
+ AEhA5XceYDsFbXQMgRJOox0WucfxHt2ecCZcNjW5/BObA==
+Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
+ helo=2.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,7 +116,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,21 +132,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 03:43, Jamin Lin wrote:
-> v1:
->   1. Fix Out-of-Bounds access by using dynamic register array
+On 2/11/26 03:15, Jamin Lin wrote:
+> v1
+>    1. Add AST2700 A2 SoC support
+>    2. Add AST2700 A2 EVB machine
+>    3. Alias ast2700-evb to ast2700a2-evb
+>    4. Switch AST2700 FC machine to use the A2 SoC
+>    5. Update functional tests for both AST2700 A1 and A2
+>    6. Fix I2C Fix Out-of-Bounds access issue
 > 
-> v2:
->   1. Fix Out-of-Bounds access by increasing static array size
->   2. Increase I2C device register size to 0xA0 for AST2700 A1
+> v2
+>    1. AST2700 A2 is functionally identical to AST2700 A1.
+>       There are no changes to the IRQ layout, memory map, or peripheral
+>       configuration; the only difference is the silicon revision.
+>    2. The ast2700a2-evb machine is largely identical to ast2700a1-evb.
+>       The only difference is the default DRAM size, which is increased to 2 GB.
+>    3. The I2C out-of-bounds fix has been separated into a new patch series.
+>    4. The increase of the I2C device register size to 0xA0 has been separated
+>       into a new patch series.
 > 
-> Jamin Lin (2):
->    hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C MMIO handlers
->    hw/i2c/aspeed_i2c: Increase I2C device register size to 0xA0
+> v3:
+>    1. Rename to test_aspeed_ast2700a2.py for AST2700 A2 testing
 > 
->   include/hw/i2c/aspeed_i2c.h |  3 +-
->   hw/i2c/aspeed_i2c.c         | 58 ++++++++++++++++++-------------------
->   2 files changed, 29 insertions(+), 32 deletions(-)
+> Jamin Lin (11):
+>    hw/misc/aspeed_scu: Remove unused SoC silicon revision definitions
+>    hw/misc/aspeed_scu: Add AST2700 A2 silicon revisions
+>    hw/arm/aspeed_ast27x0: Add AST2700 A2 SoC support
+>    hw/arm/aspeed_ast27x0_evb: Add AST2700 A2 EVB machine
+>    hw/arm/aspeed_ast27x0_evb: Move ast2700-evb alias to AST2700 A2 EVB
+>    tests/qtest/ast2700-hace-test: Use ast2700-evb alias for AST2700 HACE
+>      tests
+>    tests/functional/aarch64/test_aspeed_ast2700: Rename AST2700 A1 test
+>      to reduce test runtime
+>    tests/functional/aarch64/test_aspeed_ast2700a2: Add AST2700 A2 EVB
+>      functional tests
+>    hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC machine to A2 SoC
+>    hw/arm/aspeed_ast27x0-fc: Increase BMC DRAM size to 2GB for AST2700 A2
+>    tests/functional/aarch64/test_aspeed_ast2700fc: Use AST2700 A2 SDK
+>      image for FC tests
+> 
+>   include/hw/misc/aspeed_scu.h                  |  11 +-
+>   hw/arm/aspeed_ast27x0-fc.c                    |  15 +-
+>   hw/arm/aspeed_ast27x0.c                       |  36 ++++
+>   hw/arm/aspeed_ast27x0_evb.c                   |  29 ++-
+>   hw/misc/aspeed_scu.c                          |  11 +-
+>   tests/qtest/ast2700-hace-test.c               |  22 +-
+>   tests/functional/aarch64/meson.build          |   6 +-
+>   ...ed_ast2700.py => test_aspeed_ast2700a1.py} |   0
+>   .../aarch64/test_aspeed_ast2700a2.py          | 190 ++++++++++++++++++
+>   .../aarch64/test_aspeed_ast2700fc.py          |  16 +-
+>   10 files changed, 286 insertions(+), 50 deletions(-)
+>   rename tests/functional/aarch64/{test_aspeed_ast2700.py => test_aspeed_ast2700a1.py} (100%)
+>   create mode 100644 tests/functional/aarch64/test_aspeed_ast2700a2.py
 > 
 
 Applied to aspeed-next.
