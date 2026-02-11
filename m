@@ -4,65 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0289E9E30A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 13:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0655E9E308
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 14:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqAZF-0007MX-GT; Wed, 11 Feb 2026 08:47:45 -0500
+	id 1vqAs8-00058r-Mn; Wed, 11 Feb 2026 09:07:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cuichao1753@phytium.com.cn>)
- id 1vq7XR-00039i-5X
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:33:41 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <cuichao1753@phytium.com.cn>) id 1vq7XO-0001KE-94
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 05:33:40 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBHT5v1WoxpduYHBw--.791S2;
- Wed, 11 Feb 2026 18:33:25 +0800 (CST)
-Received: from localhost.localdomain (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDXMO7yWoxptIgaAA--.31566S3;
- Wed, 11 Feb 2026 18:33:23 +0800 (CST)
-From: Cui Chao <cuichao1753@phytium.com.cn>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Mike Rapoport <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- dan.j.williams@intel.com,
- Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
- Gregory Price <gourry@gourry.net>, David Hildenbrand <david@kernel.org>,
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, qemu-devel@nongnu.org,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v3 1/1] mm: numa_memblks: Identify the accurate NUMA ID of CFMW
-Date: Wed, 11 Feb 2026 18:33:20 +0800
-Message-Id: <20260211103320.2064211-2-cuichao1753@phytium.com.cn>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20260211103320.2064211-1-cuichao1753@phytium.com.cn>
-References: <20260211103320.2064211-1-cuichao1753@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vqAs5-00058a-RT
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:07:14 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vqAs3-0006Ry-3B
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:07:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=EgyE3agijo5DVtNY+eXBVcHKBt+PImr5g4uQkfOae5c=; b=qWnt1QRiRvwF/OLNl4hUwwi71A
+ bvZjvni0nEHpl43icLqGY9FKQBD1Ippey1VLT/epe9O/lt1lxxxmFoP6tnyMSlRniXvPbwaokfgtX
+ 7rQa0Dq3jZB/7MqxXsWCq+9GkdEPcJGyB8dAst1+1dZO3bpwEMRLaM8+xBqt8tYmoBWATsYA2k1sF
+ micjUjvfHlyDcDFXokpTGpdO3B1S2hUZOTtU+4HyWbBTokaTdBhEUXDAhNvbVobVQDRoUDP4ID/Ig
+ tdiY3FGhjI/tft1hq4YN+soWzOFbkMcKdVqo8CEmyvElL8c/kpER/bDTk0OkQFmqFElf41EsYZjar
+ c1U1OdvaZU1+R5qZGtv/iZZONGL8hqZZj9yluRxexxg98w6P2rDML8U4om3vuyEoDgBM+fcHricN6
+ rpin//b6X9nWlUAZoM2LcFtedy9K38Cx+6zk/ClhScTPiPEel1mdPKws+5ypPKfyY28TwPBlr4h5k
+ yZx8CHP10ZtS1EtP7sNvbnO8c/1yBTcjRyjYfgqiDE+VWd51lL5KgSV+gs/NBc9HWwkkDdX3QyF2W
+ zu8MGqtb3Q/5zwH3WU1RGqzmGFT+/f/YphrEa4ZeGGIy8p3eQ5wtDKaDbio1n7jIbuop9GKecgVC5
+ LrkXSsPPa1Jfet7odBRYLBYxpEGYzVrmouCs/eHH0=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Andrey Erokhin <language.lawyer@gmail.com>, Greg Kurz <groug@kaod.org>
+Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
+Date: Wed, 11 Feb 2026 15:07:06 +0100
+Message-ID: <12835278.O9o76ZdvQC@weasel>
+In-Reply-To: <5e904364-240a-4853-ad28-b2e3c5ac8f83@gmail.com>
+References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
+ <5961971.DvuYhMxLoT@weasel>
+ <5e904364-240a-4853-ad28-b2e3c5ac8f83@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXMO7yWoxptIgaAA--.31566S3
-X-CM-SenderInfo: pfxlux1drrlkut6sx5pwlxzhxfrphubq/1tbiAQADAGmLkQQCTwAEs8
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=cuichao175
- 3@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKw4kGF4fJw17Kr1kXw1rtFb_yoW7GFy7pa
- 1IqrZYgF4kGry7GF4kZa1DJr1Sv3ZakF43GFW7CrnxuFn0gr18ur4Sqw1YvFWkGryfC3Wr
- XF4Dtw1Yv3WDZaDanT9S1TB71UUUUjDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=cuichao1753@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 11 Feb 2026 08:47:41 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,121 +71,311 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some physical memory layout designs, the address space of CFMW (CXL
-Fixed Memory Window) resides between multiple segments of system memory
-belonging to the same NUMA node. In numa_cleanup_meminfo, these multiple
-segments of system memory are merged into a larger numa_memblk. When
-identifying which NUMA node the CFMW belongs to, it may be incorrectly
-assigned to the NUMA node of the merged system memory.
+On Tuesday, 10 February 2026 10:45:09 CET Andrey Erokhin wrote:
+> On 30/01/2026 19:30, Christian Schoenebeck wrote:
+> > On Wednesday, 28 January 2026 20:13:45 CET Andrey Erokhin wrote:
+> >>> I was trying to boot from a directory tree owned by an ordinary user,
+> >>> and some daemons weren't happy about non-root ownership of some files
+> >>>=20
+> >>> Example use:
+> >>> -virtfs
+> >>> local,path=3Drootfs,mount_tag=3Droot,security_model=3Dmapped,uid=3D0,=
+gid=3D0
+> >>=20
+> >> I personally switched from fuse-overlayfs to user namespaces+kernel
+> >> overlay
+> >> fs (for writeable overlay for rootfs) long time ago, so I do not need
+> >> uid=3D0,gid=3D0, I'm being mapped to 0:0 in the user namespace. I want=
+ed to
+> >> publish this change to support users which can't use user namespaces, =
+but
+> >> yesterday I realized I could just run QEMU (with fuse-overlayfs) under
+> >> fakeroot =F0=9F=A4=A6=E2=80=8D=E2=99=82=EF=B8=8F
+> >=20
+> > Nevertheless you already came more than half way to finish this. All it
+> > would take is adding some lines to the command line docs.
+> Do you mean smth. like this?
 
-When a CXL RAM region is created in userspace, the memory capacity of
-the newly created region is not added to the CFMW-dedicated NUMA node.
-Instead, it is accumulated into an existing NUMA node (e.g., NUMA0
-containing RAM). This makes it impossible to clearly distinguish
-between the two types of memory, which may affect memory-tiering
-applications.
+Yes, but you know the drill: top post as v2, please.
 
-Example memory layout:
+> (BTW, is it OK that there is no fmode/dmode processing in system/vl.c?)
 
-Physical address space:
-    0x00000000 - 0x1FFFFFFF  System RAM (node0)
-    0x20000000 - 0x2FFFFFFF  CXL CFMW (node2)
-    0x40000000 - 0x5FFFFFFF  System RAM (node0)
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
+You mean error handling of these options. Well, earlier error handling on o=
+ne=20
+hand might be more desirable, but OTOH it might also be more complicated to=
+ be=20
+handled in vl.c than either in 9p.c or 9p-local.c I guess.
 
-After numa_cleanup_meminfo, the two node0 segments are merged into one:
-    0x00000000 - 0x5FFFFFFF  System RAM (node0) // CFMW is inside the range
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
+/Christian
 
-So the CFMW (0x20000000-0x2FFFFFFF) will be incorrectly assigned to node0.
+>=20
+> ---
+>  fsdev/file-op-9p.h      |  4 ++++
+>  fsdev/qemu-fsdev-opts.c | 12 ++++++++++++
+>  fsdev/qemu-fsdev.c      |  2 ++
+>  hw/9pfs/9p-local.c      | 25 +++++++++++++++++++++++++
+>  hw/9pfs/9p.c            |  2 ++
+>  qemu-options.hx         | 24 ++++++++++++++++++++----
+>  system/vl.c             |  9 +++++++++
+>  7 files changed, 74 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> index b9dae8c84c..10f3a7270c 100644
+> --- a/fsdev/file-op-9p.h
+> +++ b/fsdev/file-op-9p.h
+> @@ -94,6 +94,8 @@ typedef struct FsDriverEntry {
+>      FsThrottle fst;
+>      mode_t fmode;
+>      mode_t dmode;
+> +    uid_t dflt_uid;
+> +    gid_t dflt_gid;
+>  } FsDriverEntry;
+>=20
+>  struct FsContext {
+> @@ -107,6 +109,8 @@ struct FsContext {
+>      void *private;
+>      mode_t fmode;
+>      mode_t dmode;
+> +    uid_t dflt_uid;
+> +    gid_t dflt_gid;
+>  };
+>=20
+>  struct V9fsPath {
+> diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
+> index 07a18c6e48..c99abb3de6 100644
+> --- a/fsdev/qemu-fsdev-opts.c
+> +++ b/fsdev/qemu-fsdev-opts.c
+> @@ -46,6 +46,12 @@ static QemuOptsList qemu_fsdev_opts =3D {
+>          }, {
+>              .name =3D "dmode",
+>              .type =3D QEMU_OPT_NUMBER,
+> +        }, {
+> +            .name =3D "uid",
+> +            .type =3D QEMU_OPT_NUMBER,
+> +        }, {
+> +            .name =3D "gid",
+> +            .type =3D QEMU_OPT_NUMBER,
+>          },
+>=20
+>          THROTTLE_OPTS,
+> @@ -92,6 +98,12 @@ static QemuOptsList qemu_virtfs_opts =3D {
+>          }, {
+>              .name =3D "dmode",
+>              .type =3D QEMU_OPT_NUMBER,
+> +        }, {
+> +            .name =3D "uid",
+> +            .type =3D QEMU_OPT_NUMBER,
+> +        }, {
+> +            .name =3D "gid",
+> +            .type =3D QEMU_OPT_NUMBER,
+>          },
+>=20
+>          { /*End of list */ }
+> diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
+> index 57877dad0a..faa84dc033 100644
+> --- a/fsdev/qemu-fsdev.c
+> +++ b/fsdev/qemu-fsdev.c
+> @@ -58,6 +58,8 @@ static FsDriverTable FsDrivers[] =3D {
+>              "writeout",
+>              "fmode",
+>              "dmode",
+> +            "uid",
+> +            "gid",
+>              "multidevs",
+>              "throttling.bps-total",
+>              "throttling.bps-read",
+> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> index 5ce97b76a6..f20b1c5d1a 100644
+> --- a/hw/9pfs/9p-local.c
+> +++ b/hw/9pfs/9p-local.c
+> @@ -198,6 +198,12 @@ static int local_lstat(FsContext *fs_ctx, V9fsPath
+> *fs_path, struct stat *stbuf) if (err) {
+>          goto err_out;
+>      }
+> +    if (fs_ctx->dflt_uid !=3D -1) {
+> +        stbuf->st_uid =3D fs_ctx->dflt_uid;
+> +    }
+> +    if (fs_ctx->dflt_gid !=3D -1) {
+> +        stbuf->st_gid =3D fs_ctx->dflt_gid;
+> +    }
+>      if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
+>          /* Actual credentials are part of extended attrs */
+>          uid_t tmp_uid;
+> @@ -788,6 +794,12 @@ static int local_fstat(FsContext *fs_ctx, int fid_ty=
+pe,
+> if (err) {
+>          return err;
+>      }
+> +    if (fs_ctx->dflt_uid !=3D -1) {
+> +        stbuf->st_uid =3D fs_ctx->dflt_uid;
+> +    }
+> +    if (fs_ctx->dflt_gid !=3D -1) {
+> +        stbuf->st_gid =3D fs_ctx->dflt_gid;
+> +    }
+>      if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
+>          /* Actual credentials are part of extended attrs */
+>          uid_t tmp_uid;
+> @@ -1587,6 +1599,19 @@ static int local_parse_opts(QemuOpts *opts,
+> FsDriverEntry *fse, Error **errp) }
+>      }
+>=20
+> +    if (fse->export_flags & V9FS_SM_PASSTHROUGH) {
+> +        if (qemu_opt_find(opts, "uid")) {
+> +            error_setg(errp, "uid is invalid in the passthrough security
+> mode"); +            return -1;
+> +        }
+> +        if (qemu_opt_find(opts, "gid")) {
+> +            error_setg(errp, "gid is invalid in the passthrough security
+> mode"); +            return -1;
+> +        }
+> +    }
+> +    fse->dflt_uid =3D qemu_opt_get_number(opts, "uid", -1);
+> +    fse->dflt_gid =3D qemu_opt_get_number(opts, "gid", -1);
+> +
+>      fse->path =3D g_strdup(path);
+>=20
+>      return 0;
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index acfa7db4e1..492379d361 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -4317,6 +4317,8 @@ int v9fs_device_realize_common(V9fsState *s, const
+> V9fsTransport *t,
+>=20
+>      s->ctx.fmode =3D fse->fmode;
+>      s->ctx.dmode =3D fse->dmode;
+> +    s->ctx.dflt_uid =3D fse->dflt_uid;
+> +    s->ctx.dflt_gid =3D fse->dflt_gid;
+>=20
+>      s->fids =3D g_hash_table_new(NULL, NULL);
+>      qemu_co_rwlock_init(&s->rename_lock);
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index ab23f14d21..84f108d9ad 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -1806,7 +1806,7 @@ ERST
+>=20
+>  DEF("fsdev", HAS_ARG, QEMU_OPTION_fsdev,
+>      "-fsdev
+> local,id=3Did,path=3Dpath,security_model=3Dmapped-xattr|mapped-file|passt=
+hrough|n
+> one\n" -    "
+> [,writeout=3Dimmediate][,readonly=3Don][,fmode=3Dfmode][,dmode=3Ddmode]\n=
+" +    "
+> [,writeout=3Dimmediate][,readonly=3Don][,fmode=3Dfmode][,dmode=3Ddmode][,=
+uid=3Duid][,
+> gid=3Dgid]\n" "
+> [[,throttling.bps-total=3Db]|[[,throttling.bps-read=3Dr][,throttling.bps-=
+write=3D
+> w]]]\n" "
+> [[,throttling.iops-total=3Di]|[[,throttling.iops-read=3Dr][,throttling.io=
+ps-wri
+> te=3Dw]]]\n" "
+> [[,throttling.bps-total-max=3Dbm]|[[,throttling.bps-read-max=3Drm][,throt=
+tling.
+> bps-write-max=3Dwm]]]\n" @@ -1816,7 +1816,7 @@ DEF("fsdev", HAS_ARG,
+> QEMU_OPTION_fsdev,
+>      QEMU_ARCH_ALL)
+>=20
+>  SRST
+> -``-fsdev local,id=3Did,path=3Dpath,security_model=3Dsecurity_model
+> [,writeout=3Dwriteout][,readonly=3Don][,fmode=3Dfmode][,dmode=3Ddmode]
+> [,throttling.option=3Dvalue[,throttling.option=3Dvalue[,...]]]`` +``-fsdev
+> local,id=3Did,path=3Dpath,security_model=3Dsecurity_model
+> [,writeout=3Dwriteout][,readonly=3Don][,fmode=3Dfmode][,dmode=3Ddmode][,u=
+id=3Duid][,g
+> id=3Dgid] [,throttling.option=3Dvalue[,throttling.option=3Dvalue[,...]]]`=
+` \
+>  ``-fsdev synth,id=3Did[,readonly=3Don]``
+>      Define a new file system device. Valid options are:
+> @@ -1870,6 +1870,14 @@ SRST
+>          host. Works only with security models "mapped-xattr" and
+>          "mapped-file".
+>=20
+> +    ``uid=3Duid``
+> +        Specifies the default uid for files and directories. Works with
+> +        security models "mapped-xattr", "mapped-file" and "none".
+> +
+> +    ``gid=3Dgid``
+> +        Specifies the default gid for files and directories. Works with
+> +        security models "mapped-xattr", "mapped-file" and "none".
+> +
+>      ``throttling.bps-total=3Db,throttling.bps-read=3Dr,throttling.bps-wr=
+ite=3Dw``
+> Specify bandwidth throttling limits in bytes per second, either for all
+> request types or for reads or writes only.
+> @@ -1911,12 +1919,12 @@ ERST
+>=20
+>  DEF("virtfs", HAS_ARG, QEMU_OPTION_virtfs,
+>      "-virtfs
+> local,path=3Dpath,mount_tag=3Dtag,security_model=3Dmapped-xattr|mapped-fi=
+le|passt
+> hrough|none\n" -    "      =20
+> [,id=3Did][,writeout=3Dimmediate][,readonly=3Don][,fmode=3Dfmode][,dmode=
+=3Ddmode][,mu
+> ltidevs=3Dremap|forbid|warn]\n" +    "      =20
+> [,id=3Did][,writeout=3Dimmediate][,readonly=3Don][,fmode=3Dfmode][,dmode=
+=3Ddmode][,ui
+> d=3Duid][,gid=3Dgid][,multidevs=3Dremap|forbid|warn]\n" "-virtfs
+> synth,mount_tag=3Dtag[,id=3Did][,readonly=3Don]\n",
+>      QEMU_ARCH_ALL)
+>=20
+>  SRST
+> -``-virtfs local,path=3Dpath,mount_tag=3Dmount_tag
+> ,security_model=3Dsecurity_model[,writeout=3Dwriteout][,readonly=3Don]
+> [,fmode=3Dfmode][,dmode=3Ddmode][,multidevs=3Dmultidevs]`` +``-virtfs
+> local,path=3Dpath,mount_tag=3Dmount_tag
+> ,security_model=3Dsecurity_model[,writeout=3Dwriteout][,readonly=3Don]
+> [,fmode=3Dfmode][,dmode=3Ddmode][,uid=3Duid][,gid=3Dgid][,multidevs=3Dmul=
+tidevs]`` \
+>  ``-virtfs synth,mount_tag=3Dmount_tag``
+>      Define a new virtual filesystem device and expose it to the guest us=
+ing
+> @@ -1980,6 +1988,14 @@ SRST
+>          host. Works only with security models "mapped-xattr" and
+>          "mapped-file".
+>=20
+> +    ``uid=3Duid``
+> +        Specifies the default uid for files and directories. Works with
+> +        security models "mapped-xattr", "mapped-file" and "none".
+> +
+> +    ``gid=3Dgid``
+> +        Specifies the default gid for files and directories. Works with
+> +        security models "mapped-xattr", "mapped-file" and "none".
+> +
+>      ``mount_tag=3Dmount_tag``
+>          Specifies the tag name to be used by the guest to mount this
+>          export point.
+> diff --git a/system/vl.c b/system/vl.c
+> index 3b7057e6c6..d363b046a6 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -3253,6 +3253,7 @@ void qemu_init(int argc, char **argv)
+>                  QemuOpts *fsdev;
+>                  QemuOpts *device;
+>                  const char *writeout, *sock_fd, *socket, *path,
+> *security_model, +                           *uid, *gid,
+>                             *multidevs;
+>=20
+>                  olist =3D qemu_find_opts("virtfs");
+> @@ -3301,6 +3302,14 @@ void qemu_init(int argc, char **argv)
+>                      qemu_opt_set(fsdev, "security_model", security_model,
+>                                   &error_abort);
+>                  }
+> +                uid =3D qemu_opt_get(opts, "uid");
+> +                if (uid) {
+> +                    qemu_opt_set(fsdev, "uid", uid, &error_abort);
+> +                }
+> +                gid =3D qemu_opt_get(opts, "gid");
+> +                if (gid) {
+> +                    qemu_opt_set(fsdev, "gid", gid, &error_abort);
+> +                }
+>                  socket =3D qemu_opt_get(opts, "socket");
+>                  if (socket) {
+>                      qemu_opt_set(fsdev, "socket", socket, &error_abort);
+> --
 
-To address this scenario, accurately identifying the correct NUMA node
-can be achieved by checking whether the region belongs to both
-numa_meminfo and numa_reserved_meminfo.
 
-1. Issue Impact and Backport Recommendation:
 
-This patch fixes an issue observed in QEMU emulation where, during the
-dynamic creation of a CXL RAM region, the memory capacity is not assigned
-to the correct CFMW-dedicated NUMA node. While hardware platforms could
-potentially have such memory configurations, we are not currently aware
-of any such hardware. This issue leads to:
-
-    Failure of the memory tiering mechanism: The system is designed to
-    treat System RAM as fast memory and CXL memory as slow memory. For
-    performance optimization, hot pages may be migrated to fast memory
-    while cold pages are migrated to slow memory. The system uses NUMA
-    IDs as an index to identify different tiers of memory. If the NUMA
-    ID for CXL memory is calculated incorrectly and its capacity is
-    aggregated into the NUMA node containing System RAM (i.e., the node
-    for fast memory), the CXL memory cannot be correctly identified. It
-    may be misjudged as fast memory, thereby affecting performance
-    optimization strategies.
-
-    Inability to distinguish between System RAM and CXL memory even for
-    simple manual binding: Tools like |numactl|and other NUMA policy
-    utilities cannot differentiate between System RAM and CXL memory,
-    making it impossible to perform reasonable memory binding.
-
-    Inaccurate system reporting: Tools like |numactl -H|would display
-    memory capacities that do not match the actual physical hardware
-    layout, impacting operations and monitoring.
-
-This issue affects all users utilizing the CXL RAM functionality who
-rely on memory tiering or NUMA-aware scheduling.
-
-Therefore, I recommend backporting this patch to all stable kernel
-series that support dynamic CXL region creation.
-
-2. Why a Kernel Update is Recommended Over a Firmware Update:
-
-In the scenario of dynamic CXL region creation, the association between
-the memory's HPA range and its corresponding NUMA node is established
-when the kernel driver performs the commit operation. This is a runtime,
-OS-managed operation where the platform firmware cannot intervene to
-provide a fix.
-
-Considering factors like hardware platform architecture, memory
-resources, and others, such a physical address layout can indeed occur.
-This patch does not introduce risk; it simply correctly handles the
-NUMA node assignment for CXL RAM regions within such a physical address
-layout.
-
-Thus, I believe a kernel fix is necessary.
-
-Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
-Signed-off-by: Cui Chao <cuichao1753@phytium.com.cn>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
----
- mm/numa_memblks.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/mm/numa_memblks.c b/mm/numa_memblks.c
-index 5b009a9cd8b4..0892d532908c 100644
---- a/mm/numa_memblks.c
-+++ b/mm/numa_memblks.c
-@@ -568,15 +568,16 @@ static int meminfo_to_nid(struct numa_meminfo *mi, u64 start)
- int phys_to_target_node(u64 start)
- {
- 	int nid = meminfo_to_nid(&numa_meminfo, start);
-+	int reserved_nid = meminfo_to_nid(&numa_reserved_meminfo, start);
- 
- 	/*
--	 * Prefer online nodes, but if reserved memory might be
--	 * hot-added continue the search with reserved ranges.
-+	 * Prefer online nodes unless the address is also described
-+	 * by reserved ranges, in which case use the reserved nid.
- 	 */
--	if (nid != NUMA_NO_NODE)
-+	if (nid != NUMA_NO_NODE && reserved_nid == NUMA_NO_NODE)
- 		return nid;
- 
--	return meminfo_to_nid(&numa_reserved_meminfo, start);
-+	return reserved_nid;
- }
- EXPORT_SYMBOL_GPL(phys_to_target_node);
- 
--- 
-2.33.0
 
 
