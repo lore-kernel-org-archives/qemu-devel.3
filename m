@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B38E9E30D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 14:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40AA1E9E310
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 14:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqB2p-0000X8-BR; Wed, 11 Feb 2026 09:18:19 -0500
+	id 1vqB6H-0002A6-7T; Wed, 11 Feb 2026 09:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vqB2n-0000X0-89
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:18:17 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vqB2l-000057-6w
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:18:17 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 418DE1884CF;
- Wed, 11 Feb 2026 17:17:05 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C4F47361D9B;
- Wed, 11 Feb 2026 17:18:02 +0300 (MSK)
-Message-ID: <acf01afc-bf2e-463b-8156-c02259bedffb@tls.msk.ru>
-Date: Wed, 11 Feb 2026 17:18:02 +0300
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vqB6F-00029y-OP
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:21:51 -0500
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vqB6E-00012o-1B
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 09:21:51 -0500
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-5014e1312c6so13097061cf.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 06:21:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gourry.net; s=google; t=1770819708; x=1771424508; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=dEL3esNNatCbr/bkbGQf1MBlSa4lnjGnRCnp5HwHRC4=;
+ b=JsEFS2qp3opM7Fb3ZUAVG10v/I9Y4ZiOTlWqM5+7yU9TGteOTYxl+3i/eCVNXLiYzR
+ 04mAiLd+R6rXPZ/By+ZihQnefpZJA0Xk+hG7sUA8CDF//2cZFEE/+Ts5dsPgxRFWFk1Y
+ z8V6mOJOfJffx+IKixngN6jIoBlvhwkZzMyOzlrbTqdAgwHG6Ieqh0z0aKahERwQg9hy
+ 4cXhzJvmdc6mECMNb8xykLojcON8+cwUAf9lWud8MZnxzjmDU+9M5t9mXWFWuGS5j5mG
+ zXA+2XlETfvztMKbLtndWRltAds+XTfWcYpHFONVI35T24A4R+NRedhKk7o2NkSSvhAY
+ bgaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770819708; x=1771424508;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dEL3esNNatCbr/bkbGQf1MBlSa4lnjGnRCnp5HwHRC4=;
+ b=P86PWvBS0hPtuMarnRnRrmuz9K6QAkl4FoEbzThW+xhR1DJbVgMwIrI2cXUonreSHz
+ S+Pb6xqmDyeFiP56NR7o81WldEKShbk7teHYkjvmu6cdep/5jie36SsDIRikB3AVroNp
+ CkEB3Tm3QwO+48uI1uP2h02lvAd0EFJS2Uxh2D/IxR7WOyTDUl0K1PrgxVXqe0t5Zqqw
+ V/zczBtMILW2R2xosKjLP59HRRd8cVa4g6y76Cz1LcRuQs+voQkxMYZEywC6a7apIDeQ
+ dqkvkJdvSYJIz6WEWNV3wx8Zk7PbIAYJv89ropDiEUTl8DeN3W8z2s+68hIVDtFs31y4
+ e80w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFXpky1YW6PjVYvb2KDBlAC7A4SW4lGokf/UN0OWjQrB7oCcyU8qrpgxzh8JfUrKiefuQlyGrANg6C@nongnu.org
+X-Gm-Message-State: AOJu0Yy00Q6hmVcv61i9vAzFuUr79AC2De5pnjiRyD8VmgT0FDzfIldx
+ rhtd7bN4e7iSX7JszxySPqWd2rZvjHRuETKuuDZcqt4tov1ksfzdlWM24Lw3bIAfpeNEycH3u9b
+ TcEW7
+X-Gm-Gg: AZuq6aJ9ZLBeZIYfETlSqn4vvIS+99gQxI/vKHP+f1VI5ZRfq4MQ7gIm/2TgkRhdYXK
+ aJQtN0cCTBM18gDkgIfnCrRk7iY/6LYEa94Rmwu7tL+yWPxwvhVkmPQnr8PJ1HFQsbue7c8T6ru
+ 3sh4y1o8As5+8rnu/apZVC1miSl446xO/IHZ1f4Ib9StLs81jmPRByYnAk/bvonjSASaP/hCxws
+ pB3q2ySFbX2aRBnHkDqy07zva8NL3YbOjkpGPRZtxoOmk0lBX53OlKtJkOMUvVkC/p+RZAoJuAf
+ j7M8Z2iV/XXU3zKAQYISJgekzxL2MGfFpQjVzBTQOPyVuPGNuJAuDRINxz8Od9TUeEeci/Q7UIi
+ TGWOhbhfKz6jS4Lkm4r7LUd6oSoZUmaJ7ZrmwSqg9cdx70kfYj6pKsEdRLVIY0ko9dqlC8BqGsX
+ mS+XJzkBzybQoZaLa6t5g6j7nx7Nt7viwr3iMlawFQE7ZD75p1DAYz8WWubN27ieMISAmGsapcb
+ 0GdF+42Ww==
+X-Received: by 2002:a05:622a:646:b0:502:6ed5:7b04 with SMTP id
+ d75a77b69052e-50639a199b4mr244208631cf.74.1770819707999; 
+ Wed, 11 Feb 2026 06:21:47 -0800 (PST)
+Received: from gourry-fedora-PF4VCD3F
+ (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-506847d7bdesm14877131cf.6.2026.02.11.06.21.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Feb 2026 06:21:47 -0800 (PST)
+Date: Wed, 11 Feb 2026 09:21:45 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Cui Chao <cuichao1753@phytium.com.cn>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Mike Rapoport <rppt@kernel.org>,
+ Wang Yinfeng <wangyinfeng@phytium.com.cn>, dan.j.williams@intel.com,
+ Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
+ David Hildenbrand <david@kernel.org>, linux-cxl@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/1] mm: numa_memblks: Identify the accurate NUMA ID
+ of CFMW
+Message-ID: <aYyQeSzSjBaUjMCJ@gourry-fedora-PF4VCD3F>
+References: <20260211103320.2064211-1-cuichao1753@phytium.com.cn>
+ <20260211103320.2064211-2-cuichao1753@phytium.com.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci/shpc: Do not unparent in instance_finalize()
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20251027-shpc-v1-1-00e9b20a355d@rsg.ci.i.u-tokyo.ac.jp>
- <d0135462-3b9f-47c7-bbbe-b5bbbc2cc08e@tls.msk.ru>
- <9cb0ad2d-07c3-4acc-8b67-83c8c34821c1@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <9cb0ad2d-07c3-4acc-8b67-83c8c34821c1@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260211103320.2064211-2-cuichao1753@phytium.com.cn>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=gourry@gourry.net; helo=mail-qt1-x836.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/26 06:24, Akihiko Odaki wrote:
-..
->> Is this a qemu-stable material?
+On Wed, Feb 11, 2026 at 06:33:20PM +0800, Cui Chao wrote:
+> In some physical memory layout designs, the address space of CFMW (CXL
+> Fixed Memory Window) resides between multiple segments of system memory
+> belonging to the same NUMA node. In numa_cleanup_meminfo, these multiple
+> segments of system memory are merged into a larger numa_memblk. When
+> identifying which NUMA node the CFMW belongs to, it may be incorrectly
+> assigned to the NUMA node of the merged system memory.
 > 
-> I don't think so. It's semantically incorrect but I don't see a 
-> possibility that it causes a real problem. Cherry-picking it shouldn't 
-> cause a harm though. Having this patch or not shouldn't make any 
-> behavioral change.
+> When a CXL RAM region is created in userspace, the memory capacity of
+> the newly created region is not added to the CFMW-dedicated NUMA node.
+> Instead, it is accumulated into an existing NUMA node (e.g., NUMA0
+> containing RAM). This makes it impossible to clearly distinguish
+> between the two types of memory, which may affect memory-tiering
+> applications.
+> 
+> Example memory layout:
+> 
+> Physical address space:
+>     0x00000000 - 0x1FFFFFFF  System RAM (node0)
+>     0x20000000 - 0x2FFFFFFF  CXL CFMW (node2)
+>     0x40000000 - 0x5FFFFFFF  System RAM (node0)
+>     0x60000000 - 0x7FFFFFFF  System RAM (node1)
+> 
+> After numa_cleanup_meminfo, the two node0 segments are merged into one:
+>     0x00000000 - 0x5FFFFFFF  System RAM (node0) // CFMW is inside the range
+>     0x60000000 - 0x7FFFFFFF  System RAM (node1)
+> 
+> So the CFMW (0x20000000-0x2FFFFFFF) will be incorrectly assigned to node0.
+> 
+> To address this scenario, accurately identifying the correct NUMA node
+> can be achieved by checking whether the region belongs to both
+> numa_meminfo and numa_reserved_meminfo.
+> 
 
-So I kept it in, since I already picked it up at that time,
-and there was no reason to remove it :)
+Changelog comments after this are a bit much but other than that
 
-Thank you for letting me know!
+> 
+> Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
+> Signed-off-by: Cui Chao <cuichao1753@phytium.com.cn>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-/mjt
+Reviewed-by: Gregory Price <gourry@gourry.net>
+
 
