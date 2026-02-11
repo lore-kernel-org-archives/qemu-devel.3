@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472C6ECD6C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A10ECD6C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 16:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqD1d-0002aA-U7; Wed, 11 Feb 2026 11:25:13 -0500
+	id 1vqD6n-0004g8-Lo; Wed, 11 Feb 2026 11:30:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vqD1a-0002Zg-2o
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:10 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vqD6l-0004fN-Lk
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:30:31 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vqD1Y-0002Q2-Jp
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:25:09 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b8845cb580bso898970866b.3
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 08:25:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vqD6i-0003EM-8C
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 11:30:31 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-354c67da885so3645698a91.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 08:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770827107; x=1771431907; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cITEBpNoeI4Fz1kFqFSiFskD7+nx2QjEUa19kz0YsgM=;
- b=STXWGgUHtd84MtjjOf81N/mAHrBw2nuW6QkwKLSlvipDZVCBh/XxFQU+wOxbYDqAyF
- 8bapQGTDS6BjnrATBI6AY8C9v5bT9wZ/jIGUg8o5WzrSsgjzpMa6zvOwVBHcA/HO2wH4
- DJL3P5C7o9HuSclQOj3vHNs5rsI+0AlGTsI4TH2RkdWvccVGD4KkjNNTTozZfocrlvyt
- Q9q+2nYcFhdaFx1iC0y4OzNyyAHY66tDkMP6x+h4hkkFpSHRbT0cY3RJTd4hTmMQlavz
- kXSTbO0HYyBx2RX2ZB3uncpCscUHOzctTlRoKa1+aQ+YWNqLET131SayimzGtZxxxvUf
- GWtg==
+ d=gmail.com; s=20230601; t=1770827426; x=1771432226; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7QZcWJnWVa5k+yszUH7E3DTG+Bx1A6dVCsXXTNy/HZM=;
+ b=gIwIav2Bm3L6ZeeXiGeHY3hakzKAFtscLCf/Q0iis8xCujAM16DN/Lhyy7Xrsa5t4C
+ WUFl01eUmD/W5kWzn+9V5DemIBgEt/sunN8ErWR4E0/9nN7l72jfQYZqgjE7exPW0gv/
+ f/OMPHsASRTxhr0SkUkcONpk3m6zmnoHAs5GaW2zXLm+90G7Z+T/PaTYE5rJGsBh9Vm1
+ 9V58Me/LDd6hrXpEay/FGkH1Ozz0u8lROOsNikjTRDj30ssQ0KaCrACnXCct9Yf4DXGe
+ ZjArhVBc4bPDRANPgNqC6iplpjtNfk0C7k5J0OBsa92kudOnPawMrGt0q4jNx+BIa3s1
+ LG/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770827107; x=1771431907;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cITEBpNoeI4Fz1kFqFSiFskD7+nx2QjEUa19kz0YsgM=;
- b=F4b/J7n6rvZ+sIV6uKGZRo4Z3Gdm0bDS6cavThatKBt8BqZzSzSJ61GXzZgHVd2mQT
- jemXE1pVcFXxpR8xuOK/m0TOdmjHdfXWeNOLCQHEZWmEU3R9iW9kCIyQUI9lgixBOop/
- C+XE2xjobD3gFfUcLZSNk3wMpBi1H3oIBRUVnenhhIPQ1lYoHZteRV4Ufzb7PEdMtQi5
- 3MrRYu1yJqmUGYQeRZFoiC+KTFjSRFLyD4xtFmZ62imn1Zf3dK94F1ZBRUeP+Rq2jR8F
- p24Vx6whx4Vyd13hAGgZU7GLY/E1MaRqExuKc7VxnYJEc39gO/MiEtIuaBH+PRtl4ziq
- RiMQ==
-X-Gm-Message-State: AOJu0Yxzz2k2lcZHpnYabhOLFuXUr/64RxQNRijJBqCxIJnygrdIGGwu
- I8gAE6f74Xt4gnOcirCad+9Q447NQja+tNWZkA+nm9j2lSlwVtLZjCeg7aTQiSL8EGE=
-X-Gm-Gg: AZuq6aJMntQKmIxi5eAzDBSlo4busu5uBfuVYvPrXG2NPfqSChDwSqNAGaJVk0oI81+
- 9O8cTUcysq2bp0AweB3k+OEDQ/I7jlw+E54UswfidK99WH2ug/GKaKt+vz0fY4Z74Qy6mzLZK8m
- PtDb6ChD6EuYNrZeHwjPtoiDkhS7Khr7yUZyCT0gZewy74BYAMPIJT3nXfpZvwvFe/b16fdKzpq
- +oHBXt60S0G9IL4kgYJHrd7JMHHx1hrrHQcMJwOzUWS/GkCwfSXDLLS+3svnvSmaJq05ASdwFva
- fb0EaJysF+pKbg2F+X5wX0Uyfbj2EGl0WFimnlIz3UPz60BucwUSshmnUBoYnv1YtmkVd/g1YyL
- VptTkiadUl5pecM8qxKG/CHnF5IzkM6deGDA/1VVpB88/d32NjdqTSmRZXmQGU0Lz20nMAe1+jw
- Onk2OGwA7recijPAum79yOAxZ7i6iFZxeB9Q==
-X-Received: by 2002:a17:907:2d24:b0:b8e:7e21:132c with SMTP id
- a640c23a62f3a-b8f6aed3c27mr180657066b.59.1770827106782; 
- Wed, 11 Feb 2026 08:25:06 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65a3cf506c8sm887111a12.32.2026.02.11.08.25.06
+ d=1e100.net; s=20230601; t=1770827426; x=1771432226;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7QZcWJnWVa5k+yszUH7E3DTG+Bx1A6dVCsXXTNy/HZM=;
+ b=aBT9hzRCyu8PInzV25Wc064pV9QVEdg/faNVYhwBDCGnG40jd0ZA7IEvVUg69BLm78
+ /xW8brrtne3WEZsjVCniwKsPcxxJObIdmDdkKV9CYAb5D6yPBxWvOMevcAh1AXSTaNHu
+ LP0PkdMqkVBdEC6FdX13ZABvDt9ES6/iPfxWLTb2GqwarhaTHzuUC6KVF2WHB9yGgYBK
+ TBd1fF/z1oVKORM+KOHrzjjQzf1pL6dP2F65dz/tyftqmxo9m7966GBsNUmq/bjdPoH3
+ rL3TOhot6amzKLAAIoX7V4MMKKfr66dBEpkpUXAFBDUVJhiQgr+xs67LK9wm8btejxvT
+ 8Hog==
+X-Gm-Message-State: AOJu0YxhrCJWX9pGhSosPlOuFg8TAHS9ZdLl8d3eh8zLeXHQekPVdDTe
+ KAgMx/kO9oJEoHubjdc9Q2z/oBEoBDk8GvgLlXk28Z5auGxuyYhKDYaH50GlTA==
+X-Gm-Gg: AZuq6aK2KNcgAQnooiLuqeCDarGRuzCUMcZsBWOX/zlXUD1INQn4QR+CuYMFBvmR3Fh
+ O6Gm72/vzICRddsoReEYsODMxoaxxupGKn+KzQRBDmhnYx4L4nSNhfYjHxG8nchqx0f0SvPwINt
+ s9QcyAGI2cEcj7tnYWKFx/v7gjpwKCCCRlylssOxYHf7XwkYRm9F78/KfWfeQfA2nNIe+TJbU73
+ kmvpWZRwrjrwJWw71G803gl1EFOiiFDnPvm+33zuEZw1LWOAkFElzaL31Tq+2ryLV2EOGKk2d+A
+ Q9/lGT39mfLY8OWIjNCUXHDIdnaZ7yXjuZa2XUU/wYO2TM+7y10bCLyTudSK15HG/2chSRSHcw7
+ bIHT63ekzxxL8YjBpPjOG6vSEbApS4iKQaev1kEyQzGuytOdTVkZlm5cnx5XNweAA/SGMJTQ4XU
+ Wy37wtra2TFn9ELzavE1eOD7/pdRXKN3/Ie6o4FGbJPhIpOURTI92O
+X-Received: by 2002:a17:90b:2b87:b0:356:3ba2:122c with SMTP id
+ 98e67ed59e1d1-3568f30530bmr14829a91.9.1770827425626; 
+ Wed, 11 Feb 2026 08:30:25 -0800 (PST)
+Received: from localhost.localdomain ([119.234.105.149])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-356629314fbsm6387951a91.0.2026.02.11.08.30.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 08:25:06 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 70A475FC4E;
- Wed, 11 Feb 2026 16:25:05 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Wed, 11 Feb 2026 08:30:25 -0800 (PST)
+From: Choon Keong <ckeong.teo17@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] docs/devel: fix bash-ism warning for configure
-In-Reply-To: <20260114101525.4039244-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 14 Jan 2026 10:15:25 +0000")
-References: <20260114101525.4039244-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 11 Feb 2026 16:25:05 +0000
-Message-ID: <87bjhvnt7i.fsf@draig.linaro.org>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ mst@redhat.com, marcel.apfelbaum@gmail.com,
+ Choon Keong <ckeong.teo17@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2] hw/i386/pc.c: add description for fd-bootchk option
+Date: Wed, 11 Feb 2026 16:29:09 +0000
+Message-ID: <20260211162909.6550-1-ckeong.teo17@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=ckeong.teo17@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,31 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+The 'fd-bootchk' option for pc and q35 machines currently lacks of
+description in the help output. This makes it difficult for users
+to understand the purpose of the command.
 
-> Hopefully this makes the meaning clearer.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  docs/devel/build-system.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-> index b9797a374c7..35c77343914 100644
-> --- a/docs/devel/build-system.rst
-> +++ b/docs/devel/build-system.rst
-> @@ -66,7 +66,7 @@ Modifying ``configure``
->  ``configure`` is a shell script; it uses ``#!/bin/sh`` and therefore
->  should be compatible with any POSIX shell. It is important to avoid
->  using bash-isms to avoid breaking development platforms where bash is
-> -the primary host.
-> +not the default shell implementation.
->=20=20
->  The configure script provides a variety of functions to help writing
->  portable shell code and providing consistent behavior across architectur=
-es
+This commit solve this issue by adding description using
+object_class_property_set_description() in hw/i386/pc.c,
+adding the the description message for the option 'fd-bootchk'.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3193
+Signed-off-by: Choon Keong <ckeong.teo17@gmail.com>
+---
+ hw/i386/pc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 5cb074c0a0..4687719766 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1822,6 +1822,8 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_bool(oc, "fd-bootchk",
+         pc_machine_get_fd_bootchk,
+         pc_machine_set_fd_bootchk);
++    object_class_property_set_description(oc, "fd-bootchk",
++        "Enable/disable boot signature checking for floppy disks in BIOS");
+ 
+ #if defined(CONFIG_IGVM)
+     object_class_property_add_link(oc, "igvm-cfg",
+-- 
+2.43.0
+
 
