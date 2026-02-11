@@ -4,89 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6B4E81BD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 09:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F5BAEB5954
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 09:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq6h6-0002NF-CF; Wed, 11 Feb 2026 04:39:36 -0500
+	id 1vq6oq-0004IA-S9; Wed, 11 Feb 2026 04:47:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vq6h4-0002N4-Jy
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 04:39:34 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vq6h2-0006j9-LL
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 04:39:34 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4805ef35864so55838785e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 01:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770802770; x=1771407570; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gdOC9k4KLjszsSPdQZE10FO+nuDq3jGpm6A17I3VNEc=;
- b=Ny/TZ/DTYmMgp1dQXCYhTssBUqAXn9qYCIaA44wGBt+of6CHfBCHnemsJEaiuu0efx
- q5v0qkGT1kzv3Skf/KTP54r4El7KRWa0NZgRmnjeGJUjPoa7C1wDghORzyZ9soxIDsdA
- hNlMTKRVV1UqSeMr0V8ndziiIVsxHO7yceBR+jmmjssOnHTwHNaobT14iFigmdc7smoJ
- jHhrNc4x6fOickQfa4FRk0WJEhHe5gQdU4z5xwB1l86a+7MGeZQxI0J/gjQM+gEiWax2
- nZyQX6diV9AOnLKgaJhtcrLiyVCsUKpktdgHYwJxVHBpiwnoXdA0pSAJ8Ne64SoOvriv
- 26tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770802770; x=1771407570;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gdOC9k4KLjszsSPdQZE10FO+nuDq3jGpm6A17I3VNEc=;
- b=LbeTtoC7IM+u89ahIRA/MnL6oYpklRaBWgX5FFeruqLNbwNmQxvC8hDifgZ+vCyyal
- cXBZdYuxr6bp5UydgJ5XTV1fChUxmMfNfIQNFIS/CtSsh9GEbo+Jq0thS26VwwhDAVEE
- fX3vyj8shJqubr31zJFHtcesPchqvD7kWOU8WoaLkxCuZ43sg6I3RGRC9I4QWWIMA6w+
- n1KOv6WDG4GsTlKqHAXTOuV+MPPskqEt+WhkZ91Nfcdyk3ptq63yK3Bmpp40VcfsioDT
- 54sbwD+zyo20NslCWqbRITvr5tOSKJiVcQHhLSqn+kxWzpmObIuB94JOF9R6emZlAbve
- trtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQb12H0F/S4ZxzIfsiF+xpiXtScy5K+jfKSDOmsTjlRcfvO6sf7wsiXKY90dDAqOmEyNDBiE+bc9xN@nongnu.org
-X-Gm-Message-State: AOJu0YwJtqgbJP+l6FySHgpQgXwml921pq2ACrZm+jONie0TOk0IDzka
- 2IaSTxY+YIG92YIpRDEu9LlanEi8UbFaNUDhaTLce6KC69hUp3ayI7mQW9DKhNU7scs=
-X-Gm-Gg: AZuq6aI9jmxpbrbjaSwF2p23sQZ16gGmmbIPOiUplEV/+hDFqcrkg+1/wcJ2MZdXv//
- nz4z9Emov0f1JaXmzLg3YXv/sYvWTlTBuiFiwsnrLXco7PRy1svIE6TCb5z/NT56+XDydm2/rOw
- UrxMt+PYaIAgAO21Mw36EkBlGli5SgmjxF9LDqbBqr8XrzA+xbwe6s/u6fTUlt5drzvd4XGrI+j
- Bh0h9hyQqpHYq8at903wPMBM/Cb0de6i7MmzcD3Bfbbr5OHPpSIj17Zl9GENUXG4DLXOwQfOBZn
- DshxJQCkMsd4NssqWooTkSHl4EkShqUpi8F01xnTBLs1FSP90USRtzAEiBVpTfpxFcqHbflMQmy
- e7BA8T8CaDcWvtLXe2fsb4CQGkGLUhG4r30GLCh/w56YEskEkUw/s4KpAsLJOY3HAC4V+DE77Uf
- etiP0yf2iMyxcRh7OQ6CtmN80Daq2zyJAyxayb79/QTGcPu8lsKx426MrZK6Qxaokb1A==
-X-Received: by 2002:a05:600c:34c4:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-4835dd88274mr18129015e9.7.1770802770169; 
- Wed, 11 Feb 2026 01:39:30 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835ba506cesm19173595e9.6.2026.02.11.01.39.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Feb 2026 01:39:29 -0800 (PST)
-Message-ID: <200b3a26-530b-4a6e-91ab-18636e2194a5@linaro.org>
-Date: Wed, 11 Feb 2026 10:39:28 +0100
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1vq6on-0004HW-RG
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 04:47:33 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1vq6ok-0007l4-SB
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 04:47:33 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxvsMrUIxpYqwRAA--.56484S3;
+ Wed, 11 Feb 2026 17:47:24 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBxacEoUIxpf2tEAA--.48551S3;
+ Wed, 11 Feb 2026 17:47:23 +0800 (CST)
+Subject: Re: [PATCH 3/3] target/loongarch: Add property set with
+ query-cpu-model-expansion
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20260119100702.1214764-1-maobibo@loongson.cn>
+ <20260119100702.1214764-4-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <c7a78fae-d805-9ec1-4481-7aa30ee6b4dd@loongson.cn>
+Date: Wed, 11 Feb 2026 17:48:25 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] bsd-user: Remove netbsd and open support
-Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
-References: <20260210-bsd-user-rm-openbsd-netbsd-v2-0-3dd10091d359@bsdimp.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260210-bsd-user-rm-openbsd-netbsd-v2-0-3dd10091d359@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260119100702.1214764-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxacEoUIxpf2tEAA--.48551S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGrW7ur17KF43WrWkCryrZrc_yoW5XF4Upa
+ 43XrsxJrW8tryxCF1kJ3Z5Wr15tr97Ga12g3ZIkr1UJr90vr1a9w1rK3yDAFW7A3yIgay8
+ XF48Cw4qqa18X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.384, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,22 +84,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 16:46, Warner Losh wrote:
-
+‘⁄ 2026/1/19 œ¬ŒÁ6:07, Bibo Mao –¥µ¿:
+> On LoongArch with QMP command query-cpu-model-expansion, property
+> setting is not supported witch command such as:
+>    query-cpu-model-expansion type=static model={"name":"max","props":{"lasx":false}}
+>
+> Here add property setting support with QMP command.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
-> Changes in v2:
-> - Drop build changes from this series
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260210-bsd-user-rm-openbsd-netbsd-v1-0-8b8b0f50c29d@bsdimp.com
-> 
-> ---
-> Warner Losh (2):
->        bsd-user: Remove the openbsd-specific code
->        bsd-user: Remove NetBSD supprot
+>   target/loongarch/loongarch-qmp-cmds.c | 40 +++++++++++++++++++--------
+>   1 file changed, 28 insertions(+), 12 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-(Typo "support")
-
-Per v1:
-
-Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+> index 6a95080fe4..f053f22bb8 100644
+> --- a/target/loongarch/loongarch-qmp-cmds.c
+> +++ b/target/loongarch/loongarch-qmp-cmds.c
+> @@ -50,7 +50,6 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>                                                        Error **errp)
+>   {
+>       Visitor *visitor;
+> -    bool ok;
+>       CpuModelExpansionInfo *expansion_info;
+>       QDict *qdict_out;
+>       ObjectClass *oc;
+> @@ -64,30 +63,47 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>           return NULL;
+>       }
+>   
+> +    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
+> +    if (!oc) {
+> +        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch "
+> +                         "CPU type", model->name);
+> +        return NULL;
+> +    }
+> +
+> +    obj = object_new(object_class_get_name(oc));
+>       if (model->props) {
+> +        Error *err = NULL;
+> +        const QDict *qdict_in;
+> +
+>           visitor = qobject_input_visitor_new(model->props);
+>           if (!visit_start_struct(visitor, "model.props", NULL, 0, errp)) {
+>               visit_free(visitor);
+> +            object_unref(obj);
+>               return NULL;
+>           }
+>   
+> -        ok = visit_check_struct(visitor, errp);
+> +        qdict_in = qobject_to(QDict, model->props);
+> +        i = 0;
+> +        while ((name = cpu_model_advertised_features[i++]) != NULL) {
+> +            if (qdict_get(qdict_in, name)) {
+> +                if (!object_property_set(obj, name, visitor, &err)) {
+> +                    break;
+> +                }
+> +            }
+> +        }
+> +
+> +        if (!err) {
+> +            visit_check_struct(visitor, &err);
+> +        }
+>           visit_end_struct(visitor, NULL);
+>           visit_free(visitor);
+> -        if (!ok) {
+> +        if (err) {
+> +            error_propagate(errp, err);
+> +            object_unref(obj);
+>               return NULL;
+>           }
+>       }
+>   
+> -    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
+> -    if (!oc) {
+> -        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch CPU type",
+> -                   model->name);
+> -        return NULL;
+> -    }
+> -
+> -    obj = object_new(object_class_get_name(oc));
+> -
+>       expansion_info = g_new0(CpuModelExpansionInfo, 1);
+>       expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
+>       expansion_info->model->name = g_strdup(model->name);
 
 
