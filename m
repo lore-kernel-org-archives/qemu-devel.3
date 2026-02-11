@@ -4,117 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 205A9ECD6F6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 205DFECD6F7
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 22:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqIZH-0005Np-FG; Wed, 11 Feb 2026 17:20:19 -0500
+	id 1vqIZA-0005MI-FY; Wed, 11 Feb 2026 17:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vqIZ4-0005KE-TD
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:20:08 -0500
+ id 1vqIZ4-0005K4-9D
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:20:06 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vqIZ2-0004w3-Er
+ id 1vqIZ2-0004vO-6o
  for qemu-devel@nongnu.org; Wed, 11 Feb 2026 17:20:06 -0500
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61BEV8kX1507117
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:20:01 GMT
+ 61BEVBKP1507195
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:20:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uKOLv5qOepkHTGXOvnBhr1IhMU6Wo2ariQ8B5PpV5Sc=; b=iIk4ZMpCuqHP6Gy0
- NzciPOwLY68f0TgeszJ3hzeAC6jQDyXe0Q54QZqTlDgdFK+Q2iWRxRjVki32GBt+
- 4/bVX4upd/ldjsPYkv423EfxlPe1vvtDX4lB1tQYsvIUGimG2GimFTP1XRPqvxjJ
- z75hzHnspzdwCedrrJ+vII5ku6h8cd/rJ0/77a0KvJggJyx7tg1+CyMaM1ML7jBO
- Nh0uRR6bI3C93PCCbgCMCI/hnokZtf5q30/jxbbzlj2xT6ZNE6Ag1SKpYd2RxTi1
- YekWw/3ff8vJhXd1x1dKqZCWkfUUrpFthzC01hbWrcprboc/tUHlGA7M4+ibZIQN
- RIMGOw==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c8ukt1ghb-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=t8JlQGBXQryJS+pcvQFfN2
+ X58AzUx6DXi3B5SLYmCHw=; b=Y1tnh6atIwp7e+nU8T7/zDh1DqqKOKhKJjvuU3
+ LrbwTVqeSesh4rDhBcJMlzn+Pc76Kv6VNOjxfbRkGlWNOiSx/5jOYz0d2P0rSM/1
+ mybj3YMOnY/hqcfmFODT/h+Byb7jdIiOa6K4kymyif7GEI8fzAODKvcsg7ZvpqeA
+ DMGPlELwG4GT3QzplXcbbZWugvfBtZMnOOiqR8MXI3XrtZW1HBiXzZZyEO1e3f+m
+ Wk6qYzu9dillTMMIOLhZc+S9qSEmTHmu8n0J67qxP1eVglXVdZ9kaOH8WgaKR+0G
+ l8AlMc9UqxfO2JTGNqUl5+JtV7TLepw5ZWMZmpo71K5i/hmg==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c8ukt1gh1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:20:01 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1233b81a92dso1291452c88.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 14:20:01 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:20:00 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2ba66faa692so3857161eec.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 14:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1770848401; x=1771453201; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uKOLv5qOepkHTGXOvnBhr1IhMU6Wo2ariQ8B5PpV5Sc=;
- b=Gnrc4XxPCjdgRI65q/9MZ5LrF1tPdRrNPfWbQwfIJYWMoKh/hbey/L0aIE3qw27WZS
- MPxWfM13Z55IWRFGn8KYOrS4sCx3mce7RM3M44VYLAji9TKUdktDC0HBZloiOkxSa2Uz
- wVe0Du83bsw0xe7F/4AWho0NI2o2/kW1FH1zuw2aT7Mt4ZEMEEVp+Hy042VzQ03nBZBc
- MLcw30nPTKzgmdZ+pnkBcwitU0ivRBK1RYDru9VkYt4GECqGO/cPphI9do1Y4eJmtJyV
- 2qibpoZJR/8vtQZpJInjoilP7AxycJqYe0GzO8UgaarXSKL2HKm+gF6kUdARjssYEzdC
- 7DjA==
+ d=oss.qualcomm.com; s=google; t=1770848399; x=1771453199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=t8JlQGBXQryJS+pcvQFfN2X58AzUx6DXi3B5SLYmCHw=;
+ b=dbN2vWPR/VDSJ+LfCi/nrIfGpwSKNP0OxGBv3zwany0O+VtHOqjm4VmcBJeDlUyUgE
+ CUV9B/uWTIY3gltS6xS/c2gDZOOwV9iavVaMfrng8BfYKzODnwgVWgZsG7Ev4fS3zAbn
+ bOmEp5PReAPmowMbYD1TZfcZeRhSznxnQdgK16ILFBuaVafu/5V/6bceUw4aXdXX1tEq
+ T2BzJppMgwYKD6Eeqts0GEkbNSfICQz2kHc0uM2y0mq88XgmUyAKPHCwnJyjFRVSB/du
+ Zttahp6qpGpUzeUtsatciSQ/NGI8FFwimcs7+Xa5eOR93k6E7KnfszFZB3mvRwZ1rs3C
+ FhVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770848401; x=1771453201;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uKOLv5qOepkHTGXOvnBhr1IhMU6Wo2ariQ8B5PpV5Sc=;
- b=GkESCNM8z57Yk2OnwO3+uQc8umlmLiaZ8NNxkLn719oN+wB0wxNhPQd7NUgcnGlSif
- Ika17ZCPZvtKmf4gCGIdVifBPcNlEOSn5cdE90zX1ZJou1F2egLbriOcWZtRCtcmv6rF
- FSjFwRvjbK4XOWjKUxr5r/h0c/6fv9TeEkiK3kqu1LJQ9hh96qIfkIgNOIo4zR73HJvu
- FwlC90lSI7kb8GthsPBpxGghcFoQp+vFPIFBZQRk/YX9K28q4C94ooz71DUIt7J1Lv8M
- m0FqtULUTr8K26rLLGTTG4nuO7889jR8h2/cm877LAak9BmlH7wjRfVT8D8Ai1b4BtQa
- e/GQ==
-X-Gm-Message-State: AOJu0YwLh68/FI00dY0x0Gh8MJvV7x2cEH+QlrNsO75bAhy0b4Go+EEX
- tOTH5jzN1taPoK5XaSTvBHofFOpljQCzZ8TI7pnva6ae7GozlVrWnSvx6OFzi6WFZBLSKv+ZDUY
- sMHqy3x7sLCQdqAzPdrvPyEDBL6NRngrKsprCa18mUI13OELQovenEDUQUBqgN/VOqw==
-X-Gm-Gg: AZuq6aIf52vRLEDqeAcRPeuTmRnCNEixxu4sgUQTnVmQDZbfAKcutNBI6Vd6NOxjfQF
- ZTgTY+a2kyqq7sgyQCXGJBfjHDZhU11cnRWHiHS8np3rPVI1TxFXTSMBVyConwMlx+pr/Of8OKu
- AVThAgMmK4x4BYATbgxucLRfWpvwziKSmR9MBHRDvHrKyilgLPIEPxXt98O4zJbtNp7AlShCRrp
- XnbQe58kXZMf1eBFr9NoWnfCVmBsb7t6s/fo7uPKpT7yUxlR+BGJPp3neYyIbR6ynmBqa6VQqax
- n2p8ERdrlU43vN6bA7/ZwCPiRXyY++C7AP/zba++p0dTv5LS9YF98Az893HtDG+8USRJALGmpfN
- dieDwvDwNTezkIrik+yHJzIZs980ICLj71gIegZC7Vn0VHmfHXA8Mfmc4+9wLpnj/h14VLg==
-X-Received: by 2002:a05:7022:404:b0:127:fa:7758 with SMTP id
- a92af1059eb24-1272fd73f6dmr290948c88.9.1770848400867; 
- Wed, 11 Feb 2026 14:20:00 -0800 (PST)
-X-Received: by 2002:a05:7022:404:b0:127:fa:7758 with SMTP id
- a92af1059eb24-1272fd73f6dmr290930c88.9.1770848400327; 
- Wed, 11 Feb 2026 14:20:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770848399; x=1771453199;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t8JlQGBXQryJS+pcvQFfN2X58AzUx6DXi3B5SLYmCHw=;
+ b=DY5fGLRD2IAHP6titW18b4PHETvAYRT6YA1KwfX+xEVdBFHshEHb8IKQn6uDcTte1j
+ LVHzKq8ZiE6pw8aLZd8bcU6uwtIcGrAnjkpp55RyWtmhQGGbHxrG3GUtiL8RiJmyJOET
+ hQPPh4m/w8HVY6mCh91hzLausCrw4YJww0RCnxGl+jYF+knJl5JQNxkKALocus7FDYPC
+ AEMd/d/Jv5duIz5YjCfsrsHZpGtgLgd93sPeb3PmD3YQzhtE9+7QHoRDUaXi6DjakEql
+ R5Oi18b1bes8VdE1njL8jNpGTITtkpuxFNyhGY7MFCw/V6OBPqhR7jllx1tL+KwG+3nf
+ l+eQ==
+X-Gm-Message-State: AOJu0YxrXbnqOFjoACwDCNTkzJh8ylEjUJFxUut/ghmejonSiUDT6Hza
+ O3EK5Glh+M2uvrQYs2Lp3dBN7mWH/WnDfAyts6fEXoTRT4nkvLZ1bLm+48N5xgFsR7JYLGKoXw2
+ Fj2JRO2lrxJ6sn96IS+io0eufP/FH99kFuXIsfL12KeJioHyVJZlV6i9fT2aQxPkU7g==
+X-Gm-Gg: AZuq6aKkyc5VbPbAeVFMdIeAfBJP8O+0w6wTY1X71YUVN6UCi8Q1ui+Fo42rf1wLiMA
+ g4ezm1CE5O65w9jMwmaiwuCZ0g2tybNTzqPIJQAkW2JFZhl22AqtvlaN8MLwApvOfL3TOiSzqzJ
+ fvsE+0RjrhyugTov2ERaAtZT3FM3+AZq8U6L1cQMiaPyJpvOZ6BYGYwmUu0aA1qpiD1O5iWFvtw
+ MGAwMwcGXBUpik47P+hBkgeRKX8y8aReV4wDt6vI0yNFM9jEBq0hqdAYBk3alu2Set4XsgiqhmA
+ DNKGVx++RelpPtOLnmkKZQqk3fSa1/Yvj2AsmYoK+2b0/WV+KXYiUHsxuHANKAMOBk0N3Ffinc5
+ eZg57Wpk7Yh+w+EqSMt+eXETfZGDySGmnhYgolar69nFT9SC6UeGjgqpM4UkONf1l7G3j5g==
+X-Received: by 2002:a05:7300:aca6:b0:2ba:6c66:1f0d with SMTP id
+ 5a478bee46e88-2baa7fa8458mr390835eec.14.1770848399160; 
+ Wed, 11 Feb 2026 14:19:59 -0800 (PST)
+X-Received: by 2002:a05:7300:aca6:b0:2ba:6c66:1f0d with SMTP id
+ 5a478bee46e88-2baa7fa8458mr390821eec.14.1770848398539; 
+ Wed, 11 Feb 2026 14:19:58 -0800 (PST)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ba9dbe123asm2588379eec.13.2026.02.11.14.19.59
+ 5a478bee46e88-2ba9dbe123asm2588379eec.13.2026.02.11.14.19.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 14:19:59 -0800 (PST)
+ Wed, 11 Feb 2026 14:19:58 -0800 (PST)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com, alex@alexrp.com,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 2/4] target/hexagon: Return decode failure for invalid
- non-duplex encodings
-Date: Wed, 11 Feb 2026 14:19:51 -0800
-Message-Id: <20260211221953.4099441-3-brian.cain@oss.qualcomm.com>
+Cc: brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com, alex@alexrp.com
+Subject: [PATCH v4 0/4] Handle some invalid encodings
+Date: Wed, 11 Feb 2026 14:19:49 -0800
+Message-Id: <20260211221953.4099441-1-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260211221953.4099441-1-brian.cain@oss.qualcomm.com>
-References: <20260211221953.4099441-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjExMDE3MSBTYWx0ZWRfX2NngbnLEjbdo
- q4X1vtfp0FXyEeiGNGn7+p8tt1Ztljx072zpbmcQYo0QpXCPhGbmyssXw+oxT51VHR40pZXSqaV
- E5WN/I0Bmr7xkW0g/z9jDHb4DBq+DBxlw2AfWvpu+Z7D09X2xBaFDu35PhAtNYu1BAAMvKW++QZ
- zE4KT3UrFXOMVWh4TZ2zSoCMZbTNXDX6vicTKaodADhBxbubLijX97CK4kmsbWkqg1UR5YC1Yhy
- MaVTSclgYfTsI2swFP3UgXmUzSeC9Q+CnfmN02DEXt9OmfkWMEQ8XuzxrVROT/qIFMOHyDpQaVZ
- nSFOj6SHyIkRt+zMSNvJtThApksu/nKpAvJUOUxVEki/RKYy0jWfYzWGHtR6DE4glgX+AVuc8nt
- DbYJDq/imLgUaRfRuEoMk5BNptrwecjOXgMBcvPDtPUQ0KKIZfXjsTh3Y0NPhPSWDaRw9p11Uum
- vmtuLuac1+s6lD8eeVg==
-X-Proofpoint-ORIG-GUID: cDNbEYDE-4W85JR_jgi5bksjUBPp3eUr
-X-Authority-Analysis: v=2.4 cv=INIPywvG c=1 sm=1 tr=0 ts=698d0091 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjExMDE3MSBTYWx0ZWRfX99h5oMnXKrlI
+ 5C2Wgc2/5Xy/OqQMRyW0l2NkwTHPxLE5R68GJPFALqLXaDXfYwbmNxYRD7H4i3RagkDMUq/udOJ
+ UoEQSeD2a8wCI/KzjBeONgulrBD0wf0A89FcP8nfuD5oDCdZTVpwv8ecZG0PXJWOJIVJ8H4CB0L
+ iTQm76ci9cZdpy4p3ax0AjKoKhsCGIpjMGpWtreW+YiJnvDKRFWmm672CvpyDPMLt/o/I6n6NtV
+ GDuZcbpYFDGY8LY9pSzKzv0UYFBCPclcyt6pVGaDGBf4hxTPFR3KJC7hdHCaabpLqeJEf5RV4Lm
+ YwbjUM6kSUFntZM648ht19Hihv1V2XBn/PkI5CjT5hyaZKd1UlpgMmANK0dGMwKeBz8X4eWWCAx
+ RRO4zuj2DM5HSTqdyF/MY+g75cs2qcieaz/QSyHVMBl+yTY0GAv7a0LRgeNX7djW3eYv30Gys03
+ m+cwro4AnrGG9DpKFsA==
+X-Proofpoint-ORIG-GUID: Uu_8wWHr0LNj30DZgOQDAWgMYn96vhDL
+X-Authority-Analysis: v=2.4 cv=INIPywvG c=1 sm=1 tr=0 ts=698d0090 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=D67r-eMCZ0zeLs--bqkA:9
- a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: cDNbEYDE-4W85JR_jgi5bksjUBPp3eUr
+ a=7OUETykng6pzQwdykssA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-GUID: Uu_8wWHr0LNj30DZgOQDAWgMYn96vhDL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-11_03,2026-02-11_04,2025-10-01_01
@@ -148,75 +143,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a non-duplex encoding (parse_bits != 0) fails both decode_normal()
-and decode_hvx(), the decoder hit an unreachable.  Instead, handle
-the decode failure and raise an exception.
+Fix the issues reported by Alex Rønne Petersen causing zig test suite
+failures.  The 0x0 case is a conflicting "multiple register write" - the
+handler here will cover duplexes but not the more general case of multiple
+register writes.  I'll include that in a subsequent patchset.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
----
- target/hexagon/decode.c              |  3 ++-
- tests/tcg/hexagon/invalid-encoding.c | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+v2: use a signal handler for SIGILL, combine the tests.  S-b Pierrick.
 
-diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
-index 69ba1ec96c..33ad60c5b4 100644
---- a/target/hexagon/decode.c
-+++ b/target/hexagon/decode.c
-@@ -489,7 +489,8 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t encoding)
-             insn->iclass = iclass_bits(encoding);
-             return 1;
-         }
--        g_assert_not_reached();
-+        /* Invalid non-duplex encoding */
-+        return 0;
-     } else {
-         uint32_t iclass = get_duplex_iclass(encoding);
-         unsigned int slot0_subinsn = get_slot0_subinsn(encoding);
-diff --git a/tests/tcg/hexagon/invalid-encoding.c b/tests/tcg/hexagon/invalid-encoding.c
-index 010a5eb741..639d7f2495 100644
---- a/tests/tcg/hexagon/invalid-encoding.c
-+++ b/tests/tcg/hexagon/invalid-encoding.c
-@@ -65,6 +65,30 @@ static int test_invalid_duplex(void)
-     return sig;
- }
- 
-+/*
-+ * Invalid non-duplex encoding:
-+ * The encoding 0xffffc000 has parse bits [15:14] = 0b11, making it a
-+ * non-duplex instruction and packet end.  The remaining bits do not match
-+ * any valid normal or HVX instruction encoding, so this should raise SIGILL.
-+ */
-+static int test_invalid_nonduplex(void)
-+{
-+    int sig;
-+
-+    asm volatile(
-+        "r0 = #0\n"
-+        "r1 = ##1f\n"
-+        "memw(%1) = r1\n"
-+        ".word 0xffffc000\n"
-+        "1:\n"
-+        "%0 = r0\n"
-+        : "=r"(sig)
-+        : "r"(&resume_pc)
-+        : "r0", "r1", "memory");
-+
-+    return sig;
-+}
-+
- int main()
- {
-     struct sigaction act;
-@@ -75,6 +99,7 @@ int main()
-     assert(sigaction(SIGILL, &act, NULL) == 0);
- 
-     assert(test_invalid_duplex() == SIGILL);
-+    assert(test_invalid_nonduplex() == SIGILL);
- 
-     puts("PASS");
-     return EXIT_SUCCESS;
+v3:
+  Dropped "Reject duplex encodings" and added "Detect register write
+  conflicts..." -> more general algo S-b Taylor.  This patch moved over the
+  test_zero() case covering the same 0x00000000 inst encoding R-b Alex.
+
+v4:
+  Reg write conflict moved into decode.c, S-b Taylor.
+
+Brian Cain (4):
+  target/hexagon: Fix invalid duplex decoding
+  target/hexagon: Return decode failure for invalid non-duplex encodings
+  tests/tcg/hexagon: Handle SIGILL internally in invalid-slots test
+  target/hexagon: Detect register write conflicts
+
+ linux-user/hexagon/cpu_loop.c        |   5 +
+ target/hexagon/cpu_bits.h            |   1 +
+ target/hexagon/decode.c              |  70 ++++++++++-
+ target/hexagon/gen_trans_funcs.py    |  10 ++
+ target/hexagon/insn.h                |   4 +
+ target/hexagon/translate.c           |  28 ++++-
+ tests/tcg/hexagon/Makefile.target    |   8 +-
+ tests/tcg/hexagon/invalid-encoding.c | 106 +++++++++++++++++
+ tests/tcg/hexagon/invalid-slots.c    |  76 +++++++++---
+ tests/tcg/hexagon/multiple-writes.c  | 169 +++++++++++++++++++++++++++
+ 10 files changed, 447 insertions(+), 30 deletions(-)
+ create mode 100644 tests/tcg/hexagon/invalid-encoding.c
+ create mode 100644 tests/tcg/hexagon/multiple-writes.c
+
 -- 
 2.34.1
 
