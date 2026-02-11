@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E6CEB5969
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 06:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490BDEB596B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Feb 2026 06:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vq3ts-0004BS-2O; Wed, 11 Feb 2026 01:40:36 -0500
+	id 1vq3xw-0005hw-3N; Wed, 11 Feb 2026 01:44:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vq3tq-0004BE-Vr
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:40:35 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ id 1vq3xu-0005hW-HC
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:44:46 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vq3tp-0005Fj-2r
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:40:34 -0500
+ id 1vq3xt-0005zz-12
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 01:44:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1770792033; x=1802328033;
+ t=1770792285; x=1802328285;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=nXzL3tZmJdMNCot4ccFgJN/7KHWN1OSvjX1UPSr5o5U=;
- b=Ye/qJJ9AdzXrqxFpTaIofG7AJuAUMj+Cey7Y0vnvMsy/yOFo2CZJ1BQ9
- +f/xkVsEKicyZslULNvFkidA+Bb+fHGLpNha/xFn8EYQWQPjL00T4gX7J
- l6EDFLNQyKvuaPn4ALJyNwE9wtAh1eoP2Nw2XH4e1/bSwW0VNKFHAows0
- zS1GJyz4KXi1I5u2u2lX+ASSrp8CXXByqt0tGLG04P/Ag47B/hhzW8dku
- DkhxzbnltUhlHYcc7j0Lf88fwZbHvUgCs/Idp/aKaIo0qPuX1mWwsNXBC
- 8WO0zxyOtdjAr9267urTAeEAOq0oTJKEgXTkC2ppGW5cQ6NCmrbgITshk w==;
-X-CSE-ConnectionGUID: X/A8jYbCQTGnmSdl4+WIxA==
-X-CSE-MsgGUID: a1n2tkn9SVW/xpCeTUDERg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="83372924"
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="83372924"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2026 22:40:30 -0800
-X-CSE-ConnectionGUID: z3t+kpQcS1W9YZ9o4JtBdQ==
-X-CSE-MsgGUID: dWbaOrupRra5+coQaNxhWA==
+ bh=dOo0VUiS4zbvd3z/oSl5c3+7D2hivjxEr/3ORyGQiMI=;
+ b=Os1KrnH0QCzXELAgmis6sV97d3mLCJ7DgGB641Dua+hXQzHTAQXFUiDx
+ Oy2r/x9Y7ovnKtHA2m3P8wp/DhGh+4lmOZwZd0GzWdlb6gEQpgBYb6589
+ 0pqYE9+gVyWbgF3B4Sk8vREFCFVhqNFnNeb5/xOleuNqU2flBbpRSeeGN
+ k0ADgVaJ1ybGyEJEbwGyTCoe3gBGWjz+AxODmdL2+YUjY7KYs4SE94CA4
+ AW/4YA+7qoTfOpr5b6rmMLOuWsK9Lm1Qp3y3vMPsx1ecyt/ca+nH924od
+ Vz5cJCkjsOIL/hU1BZlingywljk+1yhjzdXchyUoiR4fpzZ0+BeQEDF7d w==;
+X-CSE-ConnectionGUID: k+wJ0je3RvSKuFYNwgcUBg==
+X-CSE-MsgGUID: XfDKHeTIQrGG/mzhKjzNcQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="82570916"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="82570916"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2026 22:44:42 -0800
+X-CSE-ConnectionGUID: d1gusxO9QomwWg+qgaGyKg==
+X-CSE-MsgGUID: DlI+4qpeRYS6Rzb5D97D+g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="211256660"
+X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; d="scan'208";a="216685147"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 10 Feb 2026 22:40:26 -0800
-Date: Wed, 11 Feb 2026 15:06:23 +0800
+ by orviesa004.jf.intel.com with ESMTP; 10 Feb 2026 22:44:38 -0800
+Date: Wed, 11 Feb 2026 15:10:36 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Markus Armbruster <armbru@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -62,17 +64,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Zide Chen <zide.chen@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
  devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
- user input
-Message-ID: <aYwqb2MR+CjFfDtg@intel.com>
+Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
+ accept flags
+Message-ID: <aYwrbNFugCtUg2M9@intel.com>
 References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <aYsElqDoGXQ_xMBD@redhat.com> <aYtOh9guoiQocdjk@intel.com>
- <aYtRooiYCc8LzUUJ@redhat.com>
+ <20260210032348.987549-15-zhao1.liu@intel.com>
+ <aYr9Xnt0Qq38dDhv@angien.pipo.sk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aYtRooiYCc8LzUUJ@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <aYr9Xnt0Qq38dDhv@angien.pipo.sk>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -97,124 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> So the main thing that pushes us into using QOM for internal properties
-> is the machine type compatibility code. eg where we bulk set stuff using
+On Tue, Feb 10, 2026 at 10:41:50AM +0100, Peter Krempa wrote:
+> Date: Tue, 10 Feb 2026 10:41:50 +0100
+> From: Peter Krempa <pkrempa@redhat.com>
+> Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev
+>  properties accept flags
 > 
->     compat_props_add(m->compat_props, hw_compat_7_0, hw_compat_7_0_len);
->     compat_props_add(m->compat_props, pc_compat_7_0, pc_compat_7_0_len);
+> On Tue, Feb 10, 2026 at 11:23:41 +0800, Zhao Liu wrote:
+> > Update qdev property interfaces (qdev_property_add_static() and
+> > qdev_class_add_property()) to accept and pass 'ObjectPropertyFlags'.
+> > This enables marking qdev properties with flags such as DEPRECATED or
+> > INTERNAL.
+> > 
+> > To facilitate this at the definition level, extend the boolean and
+> > uint8_t property macros (as the examples) to accept variable arguments
+> > (VA_ARGS). This allows callers to optionally specify flags in the
+> > property definition.
+> > 
+> > Example:
+> > 
+> > DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF,
+> >                   .flags = OBJECT_PROPERTY_DEPRECATED),
 > 
-> That logic is all QOM based. Using QOM isn't our exclusive approach, as
-> we have machine types sometimes setting object fields directly. eg
+> Is there a plan to expose at least the _DEPRECATED property to be
+> introspectable (e.g. via qom-list-properties or device-list-properties)
+> ?
 > 
->   static void pc_i440fx_machine_7_0_options(MachineClass *m)
->   {
->     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
->     pc_i440fx_machine_7_1_options(m);
->     pcmc->enforce_amd_1tb_hole = false;
->     compat_props_add(m->compat_props, hw_compat_7_0, hw_compat_7_0_len);
->     compat_props_add(m->compat_props, pc_compat_7_0, pc_compat_7_0_len);
->   }
-> 
-> but that only works for properties against the machine type, not compat
-> properties against devices, since we have no direct access to the other
-> classes/instances.
+> In libvirt we try to stay proactive about adapting to deprecations and
+> this would allow our test-suite to detect deprecations programmaticaly
+> similarly to how we detect deprecations via query-qmp-schema. Although
+> with the current patchset there doesn't seem to be anything that libvirt
+> would need to adapt to.
 
-Right, and setting fields directly is only possible for machine-level
-state, not for device properties created dynamically during
-realize/init. So QOM-based compat properties are indeed inescapable
-for devices.
-
-> If we want to be able to control hardware compat, without exposing
-> something as a user facing tunable, then internal-only QOM props seems
-> inescapable.
-
-Agreed.
-
-> I do still wonder if we genuinely need internal-only QOM props for
-> machine type compat ?
-> 
-> Whether using a public 'x-' prefixed property or an internal only
-> property, we're constrained by the need to retain the behaviour
-> semantics for as long as the machine type exists. I don't see an
-> internal only property giving us significantly more freedom here.
-> We can already rename a 'x-' property however we want with no
-> notice, as long as the machine type doesn't change behaviour.
-
-Hmm, I think x- prefix is already semantically overloaded. Looking at
-the current codebase, x- carries two very different meanings:
-
- - "unstable but user-facing feature" - e.g. x-vga, x-igd-opregion
-   (documented in docs/igd-assign.rst with user-facing examples),
-   x-migration-multifd-transfer (documented in
-   docs/devel/vfio-migration.rst).
-
- - "internal compat switch to fix bug" - e.g. x-buggy-eim,
-   x-pci-express-writeable-slt-bug.
-
-These two categories have fundamentally different contracts - the
-former should be settable by users, the latter should not. But today,
-nothing prevents a user from writing something like:
-
-"-device intel-iommu,x-buggy-eim=false"
-
-QEMU will happily accept it.
-
-An INTERNAL flag can reject this at property set time with a clear
-error.
-
-And management tools use qom-list-properties to discover settable
-properties (though this series hasn't covered this but it's
-possible) - they currently have no way to distinguish "x-vga"
-(user-facing) from "x-pci-express-writeable-slt-bug" (internal
-bug-compat). An INTERNAL flag could give a clean boundary for
-introspection.
-
-> I don't think it does. Code evolution is painful as long as the machine
-> type using the prop needs to exist with fixed semantics, whether it is
-> internal or public with x- prefix.
-
-I agree the machine type lifetime constraint doesn't change.
-
-But experimental x- or normal (external) properties are by default
-exposed to users, allowing them to set values via -device or other
-entry points. This effectively treats the property as an API.
-
-Once it becomes an API, any modification to the property must consider
-whether there are external dependencies. Just as with the series
-(removing v2.6 & v2.7 PC machines) I referenced in cover letter,
-justifying whether a property can be directly removed becomes very
-complicated and unpredictable - some are definitely in use, while some
-are merely "potentially" in use.
-
-Let me take the recently added compatibility properties as another
-example - they are all x86 CPU properties:
- * x-l1-cache-per-thread: it's useful for external user to tune L1
-   cache topology (though now we have smp-cache, before smp-cache,
-   it was useful).
- * x-consistent-cache: this actually is a fix and should be
-   internal-only.
-
-While both are compatibility properties and share the x- prefix,
-their purposes differ, reflecting the confusion around x- prefix I
-mentioned earlier. It's also expected that distinct strategies will
-be required when genuinely considering the removal of these two
-categories of properties in the future. :-(
-
-So the advantage of distinguishing between internal and external
-properties is that modifications or even removal of internal
-properties can be done directly without worrying about external
-consumers. External properties, as potential API objects, require
-explicit deprecation before they can be dropped.
-
-Although it doesn't directly help with modifying existing properties,
-any newly added internal property won't increase such API concerns
-going forward.
-
-So I'm not positioning INTERNAL as a replacement for x- prefix -
-rather, it complements x- by providing runtime enforcement, clean
-introspection, and preventing accidental ABI commitment that a naming
-convention alone cannot. x- remains appropriate for
-unstable-but-user-facing features.
+Yes, this is the thing not yet covered by the current Series. I think
+the ultimate goal is to use the INTERNAL flag to filter properties that
+should not be exposed to libvirt, and to check against the DEPRECATED
+flag to make it possible to alert libvirt of their deprecated status.
 
 Thanks,
 Zhao
