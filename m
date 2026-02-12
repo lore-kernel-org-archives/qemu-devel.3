@@ -4,132 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CDBEEA871
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 23:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB99EEA86E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 23:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqgYZ-0008JQ-Dk; Thu, 12 Feb 2026 18:57:11 -0500
+	id 1vqgYz-0008Pz-JS; Thu, 12 Feb 2026 18:57:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqgYU-0008J3-Jr
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:57:06 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqgYT-0005Ui-6J
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:57:06 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c0c24d0f4ceso118534a12.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 15:57:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770940624; x=1771545424; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SolhyXajg4bZSKQlWyLn1N1ofnuI1IU75RAUQ4HV41M=;
- b=q+zBqXOmlvRH+N/c2W+pP57czS9//09xoPsAl4Gv/uShorET8Nuu5YtqewwSEVREko
- ZR2qbXVQCeVAK6PmoVI0tceyIXhc/8KTYTR5Ti/Qwj4Beg0EZELmNoLvKt2hGJmUkwwr
- 3BJubJNclhF15yD5oNmdX4RlM67svlii9GNZIKmprt5GX82LiJLq0lU2NL1N7Wr5tgjE
- uDEv2m/t9cZt3nb7BTg8gl6qGBbsDSy1/k+OyOISxKcGkE1aRV7Wt6GcIFjNkUHjxyRy
- pHwDx1NHJKhf7aNc3mb649eNS3oqCVgvWGL1cXwsFUkmIivlh6OFLPH0gqz3kWqDLAI8
- L4zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770940624; x=1771545424;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SolhyXajg4bZSKQlWyLn1N1ofnuI1IU75RAUQ4HV41M=;
- b=lMGSD67RklJFA2JLkSPwcELtPA5jWjcUtjstrV0pCvgDLqejAOcRtRJvYp3WjWGZ/F
- dROOrJc07tsnhbv5ronzBAP8AEPpItkaKB/I55ufHBgWKimBDAE6kQ1NDR+/cmtei2ML
- iymx7kY+myoGTpBTIF2eT5aIKYvcRU29d26C0jwfYS0g43TCU2a53bvj6QmAbTwsnAXF
- qvdPHr9KNgTBwG53ySanboIGqnWX1bFgCGwxIxZeYx8rdLijelsurwt1pmDymeorvCVN
- 7xzn5vv5ygiqRB4CKjYmjhdx5VI2qnrnK7Lu8gcxyVIvnY93i8oD9SwmcjnvYTePkdyE
- 3wJw==
+ (Exim 4.90_1) (envelope-from
+ <bounce.5hx5xj9npiouv80=3r8mqfjlp8ao=r2bbkg3zm1l7ou@em483429.getutm.app>)
+ id 1vqgYx-0008Pa-Bw
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:57:35 -0500
+Received: from a4i986.smtp2go.com ([158.120.83.218])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <bounce.5hx5xj9npiouv80=3r8mqfjlp8ao=r2bbkg3zm1l7ou@em483429.getutm.app>)
+ id 1vqgYv-0005Vk-JG
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:57:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1770940638; h=from : subject :
+ to : message-id : date;
+ bh=1ZqH6L8yb/rW/YvFww8z2sJQVKZ+g7gw8cwuvcC4v30=;
+ b=abjni8NeDF3VP9IbB1sXKSXckzPhDeNuDs+NX5+o2PR0JG6bIQUrWrgr7xzxEFtgBS+vy
+ nh45/Dtt3T8cOGzCACpwChiAQQYEpDUYfvbwAKBcLeKddIHTP4ZAvqRm7qQ//Xv5XRsXzDP
+ Kf6ltnY+gws1WxTwoQvxRO+tvnQrhAnQE6S9NaPeQH3th1E2f1+wjbiBbG5vH6bs9NDu+Hb
+ ZA/N+kJ9b1xfjso2Shl+eTs9Qbtq8c1UEJEYbeSPQBqbaPTogIarELOdKYJQl8WJYIWsqKD
+ pFqr/zuC7/KdCY4Ou9FuFjSCI+WfFUORi0TAjZXzyJFeaRechB1wQSMNUsEw==
+Received: from [10.159.238.187] (helo=mail-ed1-f45.google.com)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+ (Exim 4.99.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vqgYe-FnQW0hPlS5s-iZqw for qemu-devel@nongnu.org;
+ Thu, 12 Feb 2026 23:57:16 +0000
+Received: by mail-ed1-f45.google.com with SMTP id
+ 4fb4d7f45d1cf-65a11e565a9so339697a12.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 15:57:16 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNU8SBVc0LPkRRS+TmSQ6FQ1BtDc9sYoZ1LnXerSD+UWPoOt7L+sLri6SBDTyIuTkqRe8mgVw+xATn@nongnu.org
-X-Gm-Message-State: AOJu0Yx5z1dzCglwv1b9uzDOl2P+x+ACHxAuLqR66O2EcOVMbZ250DZ5
- vCbnt1HcqSz5ZaW1RL6yLHj1LrmcYqeoC5ytEptU9dyMDivikc0ZKaKdnys12qnDGzC/MLM/NrN
- m1uB2
-X-Gm-Gg: AZuq6aKI2KPzYvRoDVOk1SW2H5+GgHn6VsURYyub/Y0j3MCYn8pLQwApg4rn8VHGNtT
- QTu52WG8TMCg5tDQd3n9gMNAMoi+Rr1YSWRze0Bep9VqobpIWm57R29Nghw17M1sARRzpxg3Bz3
- rN5/u13lg9Ye7z3z0ceLRXm179SSg2oHzFy/Nkg4nMUV5vtJCBvc9HYTNXE0meqq79iSXrxIE68
- z+hCJWBHEu1DV2S6MBQ8rOZURR7nLlE8Af4M3CiNaiRCLKZEqQSTO8AvW3L9W2VNVP+FUqMVapK
- NE24zo6Sl42RcyWAHybKtXfe4/+6p7b3FZltcTKf/ULiLHpwis+neZPUclZv7PzPe/nQiMuUb3t
- ibcgMQVNdETDS92TaMfxXyjP3NFvMGvva0Yr1bMEde6PnJ3031zg/sXJ8DN9M475hnVu4n1tuhy
- jLdfWr8OYGtHHrIxfI74Kn318ZeWufiFaHfJeHTd86IyvTov8l4XtemN6pFqSZbAF6w8Vr
-X-Received: by 2002:a17:902:e804:b0:2aa:d1e1:29cb with SMTP id
- d9443c01a7336-2ab4d0ad572mr6389155ad.61.1770940623621; 
- Thu, 12 Feb 2026 15:57:03 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab2984c0d8sm76653525ad.13.2026.02.12.15.57.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 15:57:03 -0800 (PST)
-Message-ID: <d0ea25ca-5138-4874-9032-2870054e17fd@linaro.org>
-Date: Thu, 12 Feb 2026 15:57:02 -0800
+ AJvYcCWLN0xniWq41P4HAZIUL7hFri/oLYYL/Lzc6MNjnb9tAWjxtbKgJg+p6qjrLhNjazj3XcgSKSY3DRSb@nongnu.org
+X-Gm-Message-State: AOJu0YwO6WzxJKAvf3lipLsQ0nmGEvKXdfcriOUrCqnC+xgw9w3WWb7P
+ Phg0JxqcwobosKfu9HwcwfvL3KnMtsgdUaEnAsRQ1pBTWGoFolLG2peWUFmo1eBV/MQoC9We4og
+ P4WlUgRAtgONBBpwP1GQ/PWVg8mCW9Q4=
+X-Received: by 2002:a17:907:6d1b:b0:b87:4c74:b316 with SMTP id
+ a640c23a62f3a-b8face2cffdmr34585366b.50.1770940635489; Thu, 12 Feb 2026
+ 15:57:15 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] contrib/plugins/uftrace: add riscv64 support
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, alistair.francis@wdc.com,
- Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
- anjo@rev.ng, brian.cain@oss.qualcomm.com
-References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
- <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
- <14ee1f39-a8b5-44e4-b9f4-1eb08244c9cc@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <14ee1f39-a8b5-44e4-b9f4-1eb08244c9cc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+References: <cover.1770231744.git.mst@redhat.com>
+ <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
+ <4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com>
+ <CA+E+eSDta5wSBs+=iuPm9yzFnxRihrOmeXrDSVJYoAAiYNQ9fA@mail.gmail.com>
+ <68223045-effa-4319-817b-1a31f227c081@collabora.com>
+ <20260212020117-mutt-send-email-mst@kernel.org>
+ <f6d75a31-a72c-48da-a195-0a74b75b8596@collabora.com>
+In-Reply-To: <f6d75a31-a72c-48da-a195-0a74b75b8596@collabora.com>
+From: Joelle van Dyne <j@getutm.app>
+Date: Thu, 12 Feb 2026 15:57:04 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSCu93wwd_7EZ3ekjDj+URoNT+3YBJvPARfwB3xnj04EQQ@mail.gmail.com>
+X-Gm-Features: AZwV_Qi0SV2U1QgnVPjxLZuQ8JqxWNsPw44FnDqNPjW5Is1e7CFBj9iXT_ymFuA
+Message-ID: <CA+E+eSCu93wwd_7EZ3ekjDj+URoNT+3YBJvPARfwB3xnj04EQQ@mail.gmail.com>
+Subject: Re: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory
+ region
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Joelle van Dyne <j@getutm.app>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
+Feedback-ID: 483429m:483429abrvJvs:483429scVmEp7XNq
+X-smtpcorp-track: 1jneKb8ukVEd.xyBF-11i6BL9.GQxpqwApvXP
+Received-SPF: pass client-ip=158.120.83.218;
+ envelope-from=bounce.5hx5xj9npiouv80=3r8mqfjlp8ao=r2bbkg3zm1l7ou@em483429.getutm.app;
+ helo=a4i986.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,35 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/26 12:00 PM, Philippe Mathieu-Daudé wrote:
-> On 10/2/26 21:13, Pierrick Bouvier wrote:
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    docs/about/emulation.rst  | 10 +++--
->>    contrib/plugins/uftrace.c | 87 +++++++++++++++++++++++++++++++++++++++
->>    2 files changed, 94 insertions(+), 3 deletions(-)
-> 
-> 
->> +typedef enum {
->> +    RISCV64_USER,
->> +    RISCV64_SUPERVISOR,
->> +    RISCV64_RESERVED,
->> +    RISCV64_MACHINE,
->> +    RISCV64_PRIVILEGE_LEVEL_MAX,
-> 
-> Dropping the superfluous trailing comma:
+On Thu, Feb 12, 2026 at 3:00=E2=80=AFAM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
 >
+> On 2/12/26 10:01, Michael S. Tsirkin wrote:
+> > On Thu, Feb 12, 2026 at 01:53:09AM +0300, Dmitry Osipenko wrote:
+> >> On 2/12/26 00:32, Joelle van Dyne wrote:
+> >>> Yes, it does seem like v1 was picked up and not v2. v1 was broken for=
+ this
+> >>> reason.
+> >>
+> >> Thanks for the confirmation. Most likely you will need to send a new
+> >> version of the patch fixing the applied one.
+> >>
+> >> --
+> >> Best regards,
+> >> Dmitry
+> >
+> > applied one was v3 according to my records
+> > but if it crashes pls do send a fixup.
+Sorry for the confusion, I was traveling and when I originally
+reviewed this thread, the stack trace + the link to v2 caused me to
+claim that it looked like v1 (since it didn't have the NULL name
+change) but after looking at the changes properly I see that v3 was
+the patch that was picked up. There was no mistake in applying the
+wrong patch.
 
-There are many examples in codebase of enum with such style, and no 
-specific direction in docs/devel/style.rst.
-This plugin is deliberately making usage of this for structs and enum 
-definitions, so better to stay coherent.
+>
+> Alright, I previosly missed v3 and see that it's identical to v1, which
+> has the crash problem.
+v3 is not identical to v1. v1 changed the owner of the region from
+itself to the parent object. This fixed the original crash but
+introduced a new issue. v2 tried to fix the original crash a different
+way that was brittle because it involved manually writing to a field
+in the memory region struct. v3 was the proper fix which used a NULL
+name which allows the parent to be unset and then we have to use unref
+instead of unparent in cleanup.
 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
->> +} Riscv64PrivilegeLevel;
-> 
+>
+> Joelle, are you aware of this problem with the version that got applied
+> to the qemu/staging tree? If yes, could you please send patch fixing it?
+Unfortunately, this means that the patch should not have been back
+ported. It is possible that the crash which this patch was addressing
+was introduced as a result of changes elsewhere. For example
+https://lore.kernel.org/all/20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo=
+.ac.jp/
+changed some internal mechanics of finalize. I didn't raise any
+objection to the back port because it seemed like the original code
+where the object was its own parent was wrong but I guess it was
+working fine somehow. I think in the meantime the best course of
+action is to revert the patch in the stable branches.
 
-Regards,
-Pierrick
+>
+>
+> --
+> Best regards,
+> Dmitry
 
