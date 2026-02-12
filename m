@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BEEEEA86D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 22:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D41EEA86E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 23:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqfY3-0003a9-Nm; Thu, 12 Feb 2026 17:52:35 -0500
+	id 1vqgNx-0004g3-Os; Thu, 12 Feb 2026 18:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vqfY2-0003ZZ-0g
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 17:52:34 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqgNw-0004dm-7U
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:46:12 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vqfY0-0008EM-9T
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 17:52:33 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48069a48629so2858005e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 14:52:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqgNu-0008Az-4B
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 18:46:11 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-823075fed75so195444b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 15:46:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770936750; x=1771541550; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DbXcYxrj3BrGFXbpy+bSldzKZuSVVSUmgcL5W0fpdzw=;
- b=HI/HMAf/HxLBMpeKUiOp7dmmOrwTqcVRzDg353ZxcmlcEkZHbLYCLqpVG2jS+tsLeU
- +ooSzzeZatchP4CM3rDZQC8FUZAwFfX2hjxeHyfInH9SsX5Hk9JV0cIifBBMryLr/Asw
- f1qGhKO6t2UmOF0PDemM9gLwqubmuRZO196eY03Hc9Klb47imLDOiCvualpILL3NKk/c
- M7fwduGI1J6KK2bh7uxGHygT4BsLuhZUBtmdCr5egM5PB86v05h3i90qO9lMRwg6ABiR
- PIbCmWXwjXHr9OrK5JHKVx0WML0AqNyJ0Y6lziVSmLoNFloaBIBbcaEsglg/nUyDvTK/
- Fddg==
+ d=linaro.org; s=google; t=1770939968; x=1771544768; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=luaT4ogN3kuDQSmznOCyfhY3qOLWnWLi3BZPktB1v6U=;
+ b=KjgNFSkoL7TsyJDOOG0AZPHppBXYB/6kNmk4erx18AgWVrKGVk+7VgyNB1WPV7Hvqv
+ 2pSeAr/Z/83vm8T350KHsOgZqNW5sgSeWj1sWDQmQKZ8md862Gr4lgIsnhal5FuEO7Ig
+ thRJ5IMEKIAnTNo0DfafINPAppwf2CZyY6zSmZ9GEHdFqI74l4y7xgtw8wwYFwLSA6kg
+ D+E5VpCG8FkmVbsJCmZ0tysrhGXotB9ydCPJmuUbTXBbMz6tv90BIWGkrb/cGSa8TBiW
+ W6L5oj2MHw6ybPQQyWhZYvSre11Gzlq+WjK9XhIRAeEZvc+kBTwDfDtbnhcRS0N/4KAg
+ cizg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770936750; x=1771541550;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DbXcYxrj3BrGFXbpy+bSldzKZuSVVSUmgcL5W0fpdzw=;
- b=tw211hrtAxJ4B+8t5eXWLE31oB1YYK+i6u8XCmbYsNkMt9WLMTofnXTQIgw7bXi+lG
- eK0UwZMjrJ9kt8ojyfhKdzXBGCabV0oujSPTRBhtIRw2QhbL47ugiT3Xt8KX3pGnrIYi
- 04LBaOoLIHKuYF9RnwmbjhIHp2wHTdcAZH78eNUfO/ZrgJ87X05EIYtXvYeWipTF/HHT
- uiAV3lBHYxVcheWAEZNgrNXVUkab92mDPHpv7zXXAkC94GC5KlZE74hK9xJHnLMRq+sX
- bXyQpoRVSafG5FabV7VIo4ZDucJbvLAsg0vC8Br0VTnp1e0vNfIGtKzWENKZuKE5FfZP
- ygLg==
-X-Gm-Message-State: AOJu0Yw2Y0LvmBoexCtZkj/J7JXeGNTio9vmaSuaEZ8X9C/Vo2TTaQHW
- w2dHhBnvLn5Z7/yGbl17r5YJuAEK3cx+Ndjm/wmFqVQndgkId8g+raUU3JX80w==
-X-Gm-Gg: AZuq6aI0/IPWX3PzFGEHPEoNAKg4L8F2SaylslXwY8zH+qC/80wWCSZJajI23uoM8D6
- RVt1BH43L+gtMLYXBMwiL2iIq46FzPPcYNy6ES3mcmZ/R843aB7UrhAZoxNVybFvAeTB2EK2RJA
- MI/1a/t73lbXfIFG1DFPiDHhv9SGkxRiCNvpP8nedZWAvalxbG7L8U1WQKxvwW/C3G2cM5mTXA8
- m9oAkaNzoJCzLd21Ps1g7QDeGdbXYT1UouHkd9ZqrNg0YRAaeB0ad5Kx+WElqkvTgnznBuiA6gY
- Ko1rDR9rpbWFvdQKsHReHWppFJ9lAsfT9ZkRHakS5yOBlcu8yAawUStraiI643t9bWF1oZiq+d1
- SF8sTyCd0HCjSxjqHkwVjAiiYZFWKPAio60/mFAiLTsqnKUFp7HU6GgJ2COURxoDA0amEbLnbAE
- e5PKHjIZgZTIJ2NzCeCgBbNe4X6MjX+52h9WkPBZlL8s70isiwNUHH+I4f+0g16kvHpQPseF+rl
- NUShehmRjCfa9mkgFgGqR5j5CZ8uGc/SkGDaY9Chu6QhVI=
-X-Received: by 2002:a05:600c:8219:b0:480:4b59:932e with SMTP id
- 5b1f17b1804b1-48370e235a0mr10827165e9.11.1770936749710; 
- Thu, 12 Feb 2026 14:52:29 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-1982-5d00-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
- [2a02:3100:1982:5d00:f009:a6c9:39e7:d8fe])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d835f6bsm200561535e9.14.2026.02.12.14.52.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 14:52:29 -0800 (PST)
-Date: Thu, 12 Feb 2026 22:52:26 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 0/7] whpx: x86 updates (2026-02)
-In-Reply-To: <20260211055356.44664-1-mohamed@unpredictable.fr>
-References: <20260211055356.44664-1-mohamed@unpredictable.fr>
-Message-ID: <90285696-0769-4934-9861-886179CC74D6@gmail.com>
+ d=1e100.net; s=20230601; t=1770939968; x=1771544768;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=luaT4ogN3kuDQSmznOCyfhY3qOLWnWLi3BZPktB1v6U=;
+ b=WclczCwkZcGoY4j9hV2rIa2Lc02jBK7EXTSWWceBULGo5cxjOxYVmKEFvabd73Z9iV
+ MAp7F+7VXmYFPuNzoo8nTdrKqigRoCByXDq7segDcCD+8Y6NGgGLKKcmmYj+2yGCciGt
+ KoW6UpORrhbaMM9XtRRPy5XP0pvgQbq2lJth4K0rm70B0UFKodLByoM6Bshlb1KPQzU/
+ /kIWr5BtdVolI+AJiIrWTLWCExRudoBeqQ1hrEDtrpyGjK/AimQBHD3v9mAl5tMg8DSi
+ dNtBfcQt3S6hEQWbpgismOs36JlCh7DU0EFa5tWSinoipdjKpdhrbZtp3kg7/yUD0zay
+ cyZQ==
+X-Gm-Message-State: AOJu0Yzs87UX+DOg5/xvH9cAIMa2ltYTdh9Yyn7Wax78ctqs5Wrxgoin
+ y5rFzlGj7yV8h2IaX4o+0WbNEohjWUkgBjVuFAn1xIt1Fqk27IonVPV1B2DcxCRcbaCyaXleONq
+ ctxVA
+X-Gm-Gg: AZuq6aI3PsNwVEm21prVoHH1yTyCg0JXbh/aOEFoyjGSeWN3fxQvFgWra/sP/weLFXq
+ mK1/uIvZ3JcfT2XRRZabgfxqgTk8B/ItIEzjJJ9rUD5Cq4abU4U7d4X9d3WCLVbaIap9TJHTbDm
+ iS0bwI/+qRu4/BXv26CNz6cuO4Czjv+fdfKAkStNYSik/kBzseLLa/3WAcM6oZ3vRsB8t6a/LUf
+ q9bLCfoULJSdzou3HHq3Dk54INBwK5UcSyDZ85KBz5P/XD7B/YTjBW3njUD7tr6nWN2TkYh9ehD
+ ItSqUJw0ZeKueLEeU/MAQ8n0jexz+L/vo/ftqfKKWwVKNqwDxFselG9p54k0VpNWo4mq67Mv9ay
+ MJznRYej4wo8wrqoKLplqlDpr4ByMp+9U2uHOqlycCTFAqEzoLBS+NujC98mp5oQfAcVhOr4YU4
+ RqF6ugk/wJ3SuvIBLvtASNUms2KWnULN2O1G4RaDOEH+etqn9XAryFDHzCaET2jvRxYq3LBxehS
+ cBx
+X-Received: by 2002:a05:6a21:6f0d:b0:38b:dd94:936a with SMTP id
+ adf61e73a8af0-3946a886795mr28051637.24.1770939968019; 
+ Thu, 12 Feb 2026 15:46:08 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6e1ac0e004sm5609936a12.6.2026.02.12.15.46.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Feb 2026 15:46:07 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/3] hw/virtio/virtio-access.h: remove target specific code
+Date: Thu, 12 Feb 2026 15:45:59 -0800
+Message-ID: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,54 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series eliminates some target specifics in hw/virtio and replace them with
+runtime functions where needed, to be able to link virtio code in single-binary.
+After a first try on a series [0] doing this change and making all virtio files
+common, Richard asked to refactor this part, thus this independent series.
 
+By diving into virtio initialization, I noticed that device_endian is always
+storing endianness of cpu associated on device reset. The root issue, is when
+dealing with target who dynamically change their endianness during execution.
+ppc64 is the main use case, as cpu always boot in BE and most of OS use LE. arm
+use case is more limited, as big endian systems are mostly dead nowadays.
 
-Am 11=2E Februar 2026 05:53:45 UTC schrieb Mohamed Mediouni <mohamed@unpre=
-dictable=2Efr>:
->x86_64 WHPX updates:
->
->- fixing debug support, which was broken since around: "gdbstub: move gue=
-st debug support check to ops"
->a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
->- switch over from winhvemulation to common x86 VM exit emulation code
->- remove some log lines
+Because of this, initialization is tricky, and goes through different hoops to
+have the expected value. My first approach has been to try to change this, by
+simply setting endianness on the first access. However, it fell flat, because
+current_cpu is not always available at this time.
+A second approach was to set endianness to LE by default, and change it only
+when setting device features, and potentially discovering it's a legacy virtio
+device. It brought other issues, that showed that current initialization code,
+even though it's complex, does the right thing.
+Thus, I focused on refactoring virtio_access_is_big_endian, and noticed that it
+was not even needed at this point.
 
-Hi Mohamed,
+Patches 1 and 2 are refactoring names to clear some confusion.
+Patch 3 eliminates virtio_access_is_big_endian, with a lenghty commit message
+explaining the change. By doing this, we remove target specifics from
+hw/virtio/virtio-access.h.
 
-I really like this series because it replaces proprietary code with alread=
-y existing open-source one=2E So I gave it a spin=2E Unfortunately I have t=
-o report that I noticed some problematic performance regressions when booti=
-ng x86_64 Linux with Grub: Before this series it takes ~20 seconds until th=
-e first Linux output is visible, and with this series applied it takes a bi=
-t more than 2 minutes, i=2Ee=2E about 6 times as slow=2E Also, when using a=
- GUI, mouse button presses easily take a second until reaction which is rat=
-her unusable=2E So I think this series needs more work and I'm happy to hel=
-p with testing=2E
+Of course, performance has been tested, and it is on par with upstream/master.
 
-Best regards,
-Bernhard
+Results are on 20 runs and expressed in kIOPS:
+reference: mean=239.2 std_dev=3.48
+with_series: mean=238.1 std_dev=3.56
 
->
->Mohamed Mediouni (7):
->  whpx: re-enable guest debug support on x86
->  whpx: preparatory changes before switching over from winhvemulation
->  whpx: refactor whpx_destroy_vcpu to arch-specific function
->  whpx: move whpx_get_reg/whpx_set_reg to generic code
->  whpx: x86: switch over from winhvemulation to target/i386/emulate
->  whpx: remove remaining winhvemulation support code
->  whpx: x86: remove messages
->
-> accel/whpx/whpx-accel-ops=2Ec     |   8 +
-> accel/whpx/whpx-common=2Ec        |  62 ++++---
-> include/system/whpx-all=2Eh       |   5 +
-> include/system/whpx-common=2Eh    |   6 +-
-> include/system/whpx-internal=2Eh  |  16 --
-> meson=2Ebuild                     |   3 +-
-> target/arm/whpx/whpx-all=2Ec      |  33 +---
-> target/i386/cpu=2Eh               |   2 +-
-> target/i386/emulate/meson=2Ebuild |   1 +
-> target/i386/mshv/meson=2Ebuild    |   4 +
-> target/i386/whpx/whpx-all=2Ec     | 308 ++++++++++++++++++++------------
-> 11 files changed, 252 insertions(+), 196 deletions(-)
->
+---
+
+Performance has been measured with this automated fio benchmark [1], with
+original instructions from Stefan [2].
+
+Download artifacts and run benchmark with:
+$ wget https://github.com/pbo-linaro/qemu-linux-stack/releases/download/build/x86_64_io_benchmark-a55f2d6.tar.xz
+$ tar xvf x86_64_io_benchmark-a55f2d6.tar.xz
+$ ./run.sh /path/to/qemu-system-x86_64
+
+[0] https://lore.kernel.org/qemu-devel/20260206221908.1451528-1-pierrick.bouvier@linaro.org/
+[1] https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
+[2] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
+
+Pierrick Bouvier (3):
+  hw/virtio: add virtio_vdev_is_{modern, legacy}
+  hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
+  hw/virtio: remove virtio_access_is_big_endian
+
+ include/hw/virtio/virtio-access.h | 43 +++++++++----------------------
+ include/hw/virtio/virtio.h        | 14 ++++++++--
+ hw/net/virtio-net.c               |  6 ++---
+ hw/virtio/vhost.c                 |  6 ++---
+ hw/virtio/virtio-pci.c            | 10 +++----
+ hw/virtio/virtio.c                | 20 +++++++-------
+ 6 files changed, 45 insertions(+), 54 deletions(-)
+
+-- 
+2.47.3
+
 
