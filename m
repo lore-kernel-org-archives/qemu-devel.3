@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C31FEDF020
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F617EDF021
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 03:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqNTg-0007mO-4c; Wed, 11 Feb 2026 22:34:52 -0500
+	id 1vqNTe-0007lG-2x; Wed, 11 Feb 2026 22:34:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTd-0007l6-HC
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:49 -0500
-Received: from mail-oi1-x243.google.com ([2607:f8b0:4864:20::243])
+ id 1vqNTc-0007jH-Oi
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:48 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTb-0008IB-VV
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:49 -0500
-Received: by mail-oi1-x243.google.com with SMTP id
- 5614622812f47-45f0b597eb4so1694842b6e.2
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:47 -0800 (PST)
+ id 1vqNTa-0008Hx-Uk
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:48 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-45f004e7d71so1040187b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770867286; x=1771472086; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770867285; x=1771472085; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h8Lq4sOSSRMCWRXjdXH1KuRIq2HriFTB8nlfBVQIPrE=;
- b=bxPc/QP8M0sjJxb0bCwNwm0SImh1bKWcmTZzcDMT4HDT/8blM5Tb6ui5W+Tey8/6+U
- 4EKh9P3xjlKDyB0P56sk+JrGGsHtLsH8xNwcEE3thstVV0mTnv7TDwHvGAZqJXBJrWuV
- sG3hZe6fB3mwqJ5yuhmfSJPfYrTb3wQ7acUvV02gCtRmPWpAuQeHZgvh/qt7uQpFfTGB
- wE0hDDwcOgix4iLIHWeWB7vZU9BAP9xwcZqhvm+QZhmpZsUOe7FCYGAHKkh7w7ffzR9k
- Dx5GhM6iEB9tzPbY3WDQ6d9+aljf44NifnqkCcHJISzgCYZ9Ajvhx65CWVNYZsEUxnxS
- XkQQ==
+ bh=1vV/gFCM2s8n0DXOgCi7/aaN4xg+tYlUyC1onltEOpg=;
+ b=mvI3c4OMYZ5M4M0wrmXmv4aipIQszeJ8b3xXjLG13JcuhXT2GdBLS/MEdSBD/cH2Nm
+ V03eleCzMIAg3eLuctpSLFKqy4k4ZytmjAnut2b5r/iCPrvjkAKiCqa0QtQruf8hKkVJ
+ Si4JngSX+dEBnAAf2mWPeaTVCwQsX/i1EnFmjXoEOqAhNqhQOczQ6zgZPc7amEAtk5sw
+ tGalGIp3A0muZfphRD3MGN8/D/bJV6r3RYEqUEmc2xy6MaYA1AEqWBUeZieU9pfVvn10
+ lIsFGrJqxPCzbllBkv3obqdgnhbONuRv6RUm2NdY0wkv93Fbq5deyfo29sm7B3+v4nHB
+ P80Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770867286; x=1771472086;
+ d=1e100.net; s=20230601; t=1770867285; x=1771472085;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=h8Lq4sOSSRMCWRXjdXH1KuRIq2HriFTB8nlfBVQIPrE=;
- b=BT16tRvm0eMMh5fD8OO1ThM4bLMxmX7vzF9itfqHRFcydQoesbEoyvDLWmpMPYuhpl
- EKL9fXi7olugNNF6exC1RpsP6p/R2u10FnMJ/8MOnNHuA8eDySs7mE8HDvFWBjVkH67N
- LARQv8mYRGOKi7vs+6k7FN/CUi465RPWOGRHP+ATll450kU2e9JPmE0Cg6phJIqVUZDy
- CtyiTZGnmOrcGbpZRk5OomFrdM0VyPle8ad3T/iJoSW5XCjqCEXxMMnSVMlmDnd1O7NB
- YgDJ9X8PpPnXys8ozIaVHlTmUs46ufts7novdfFlcMqk0Unhk3Vi9rYO7/NxDML0QnS5
- i3cQ==
-X-Gm-Message-State: AOJu0YxzdYLYxd1HIt3GHGGCtKUbJDswvTHEogFZLDyL+1AVrQasAjfn
- DGj2zxzxGadCxRhxr0iEM4LX7gkWFy/o0YHHa7BN9PSvRVrsB8f0pA4IyOGkQz2L
-X-Gm-Gg: AZuq6aK0y/uav1Ztdip4nTZBSj+vVttspHRIvsuDz4Ug8QpvFg/lXZusyvS4Mek6SkN
- rhc2gj4FrMg+p8UqrtmOAdTTiIDv/stq54ClSMaYyMZO+2wILbzWI/eB/YYKFrhA2SXcrrUHmqa
- TfRIMqqsLgOE4EWg0a/41b0VgbMJFEkWhxxyCkjgRSiRHATUd14PcJyLy0E2EGzgRrqS0UoItaO
- 9waEgZP4VLdmQ4VdC4TVDaKhJluaQCxr7Q5Z8OxzMXGxhUAPwOV9g8jyYYtXYq3SPLnOk+Mnf6K
- 0IDfZTU6ZmQ6co4aGMGRfe5YWVQOVRmOtd4BFXUDtr/3CUr9WnjFDcJAOn+AIFLrFCdokKzibVL
- buSMqSwmxP1xnZEUOt/wOMW9HgFmiNoZ1SS8TWREtUUD8b81mvyH8pgjbFGXfP9rfIEjxhTcGRe
- L0CezRhMA7VjqsXXRcWUSgt54HqUIAI1/aQKMq02BKqXWiH66qG7x+FfINcTq+cM50B86dGcq6g
- PWBGUpI5NlmM9XWo1FpMLyG1oQ=
-X-Received: by 2002:a05:6808:1a02:b0:45c:7c9e:854f with SMTP id
- 5614622812f47-4637fc9bae1mr446701b6e.58.1770867286435; 
- Wed, 11 Feb 2026 19:34:46 -0800 (PST)
+ bh=1vV/gFCM2s8n0DXOgCi7/aaN4xg+tYlUyC1onltEOpg=;
+ b=D7vIJXFML6HbakHtN6n/Q0jltgHtg2Sp2Sd6AccudxTa7M/z9+x3O9ju8k15+C9mLl
+ q79DIbHqjLijAhI1eERx7kqISeesFPXJEmHXPdhCIt5CRS7wnJ6S17DAIMttZOr/INfL
+ HFblzj4ao0bHFM/YUHtK9pQHJiRUd6YhOGqUh16VjY5veYtHURHRp05CPau+VXGHVyus
+ SZ6SM01cTB2SKa+G2Xes9NZc0/dji1PuT7bepgHux9RaXY96eQ8HN00JPCMrX2W51kDU
+ 4i9UIgoAkp372bhtuWprBBb0xMBHLIAsZ2sIzh/fKowA5n+cKb+Ta1iAzvQV0XHbyMYd
+ Qd0Q==
+X-Gm-Message-State: AOJu0YxacakMsLGWe3+2FPfrgarUsM+zg9/hP9m6fznMopyoYahHV3DD
+ YtYm1KVoLYDLrGz8rWkKv/7ehj0TNiBuyVZ6Le0f5diW/5B9YgL+T+qtZy0JBQ==
+X-Gm-Gg: AZuq6aLjoINX+S3R7HsRQXhxgFKRTKWwrLgQwX5qIQY6HWa5E/1gxqNrpIJxSWuK36U
+ Oz1PhCxJm2lTUe6GfBBJ0Rel4HxZmMa2DBfDkS4etXnEZ8X8DP+/CR9l4WV2mTIH6KJDLIl2v4U
+ 7Qnq+mFSeIxaIvPgEJAWBGb8kFRtM9szbIpkayE5TshBQ49CyR+AODBLRjD4u6x6SWBZHjIIVzN
+ dDB5PkzJydft3Ray+pZIF8idsKVSQSaaNKDqfPD15R2JvCB/Sq/HisVgmzNtT90AfvlvXc8V/ZY
+ G8kH96YTKfmhFFZAXLiX0SSg6Fe1SrRFP2akRzYCKKKNnhHV6MWjzGppGiM6cUi5dmSuPGqOOLU
+ Edf/BPABudBPI1jdoqrUSzQGp5GzzHbYccDe26bnX58DmKq91N4TeWnb8tmD3h7a8jtrR1MxR/4
+ P+2JGg06amRwCONo9LKkxjZGZdTD92lzY4HY+b7jaVI2TY8K8gakFM7qHSuc0dcgEtmHwVY6UQt
+ nqGE4mbORPETIwW
+X-Received: by 2002:a05:6808:4fca:b0:43b:7b80:5cf2 with SMTP id
+ 5614622812f47-4637dbbb583mr786348b6e.11.1770867285460; 
+ Wed, 11 Feb 2026 19:34:45 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.45
+ 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 19:34:46 -0800 (PST)
+ Wed, 11 Feb 2026 19:34:45 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH 7/8] Hexagon (target/hexagon) Disassembly of invalid packets
-Date: Wed, 11 Feb 2026 20:34:34 -0700
-Message-ID: <20260212033435.3598-8-ltaylorsimpson@gmail.com>
+Subject: [PATCH 6/8] Hexagon (linux-user/hexagon) Convert INVALID_PACKET into
+ SIGILL
+Date: Wed, 11 Feb 2026 20:34:33 -0700
+Message-ID: <20260212033435.3598-7-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 References: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::243;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x243.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,120 +105,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We pass the Hexagon CPU version to disassemble_hexagon.  This allows
-decode_packet to know if the opcodes are supported.
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Fix the printing of invalid packets.
+tests/tcg/hexagon: Handle SIGILL internally in invalid-slots test
+
+Rewrite invalid-slots.c to catch and verify SIGILL using a sigaction
+handler that modifies the ucontext, matching the pattern used by
+invalid-encoding.c.
 
 Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- target/hexagon/cpu_bits.h |  4 +++-
- disas/hexagon.c           |  3 ++-
- target/hexagon/cpu.c      |  3 +++
- target/hexagon/decode.c   | 20 +++++++++++++++++---
- 4 files changed, 25 insertions(+), 5 deletions(-)
+ linux-user/hexagon/cpu_loop.c     |  4 ++
+ target/hexagon/translate.c        | 19 +++++++-
+ tests/tcg/hexagon/invalid-slots.c | 76 ++++++++++++++++++++++++-------
+ tests/tcg/hexagon/Makefile.target |  6 ---
+ 4 files changed, 80 insertions(+), 25 deletions(-)
 
-diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
-index ff596e2a94..ba580df3c1 100644
---- a/target/hexagon/cpu_bits.h
-+++ b/target/hexagon/cpu_bits.h
-@@ -19,6 +19,7 @@
- #define HEXAGON_CPU_BITS_H
+diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
+index 1941f4c9c1..c0e1098e3f 100644
+--- a/linux-user/hexagon/cpu_loop.c
++++ b/linux-user/hexagon/cpu_loop.c
+@@ -64,6 +64,10 @@ void cpu_loop(CPUHexagonState *env)
+             force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
+                             env->gpr[HEX_REG_R31]);
+             break;
++        case HEX_CAUSE_INVALID_PACKET:
++            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
++                            env->gpr[HEX_REG_PC]);
++            break;
+         case EXCP_ATOMIC:
+             cpu_exec_step_atomic(cs);
+             break;
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 9498cd4502..78e0d6c219 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -198,6 +198,21 @@ static void gen_exception_end_tb(DisasContext *ctx, int excp)
  
- #include "qemu/bitops.h"
-+#include "cpu-qom.h"
- 
- #define PCALIGN 4
- #define PCALIGN_MASK (PCALIGN - 1)
-@@ -64,6 +65,7 @@ static inline bool is_packet_end(uint32_t endocing)
-     return ((bits == 0x3) || (bits == 0x0));
  }
  
--int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf);
-+int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf,
-+                        HexagonVersion hex_version);
- 
- #endif
-diff --git a/disas/hexagon.c b/disas/hexagon.c
-index c1a4ffc5f6..9a18f12854 100644
---- a/disas/hexagon.c
-+++ b/disas/hexagon.c
-@@ -31,6 +31,7 @@
- 
- int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
++/*
++ * Generate exception for decode failures. Unlike gen_exception_end_tb,
++ * this is used when decode fails before ctx->next_PC is initialized.
++ */
++static void gen_exception_decode_fail(DisasContext *ctx, int nwords, int excp)
++{
++    target_ulong fail_pc = ctx->base.pc_next + nwords * sizeof(uint32_t);
++
++    gen_exec_counters(ctx);
++    tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], fail_pc);
++    gen_exception_raw(excp);
++    ctx->base.is_jmp = DISAS_NORETURN;
++    ctx->base.pc_next = fail_pc;
++}
++
+ static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+                              uint32_t words[])
  {
-+    HexagonVersion hex_version = (HexagonVersion)info->target_info;
-     uint32_t words[PACKET_WORDS_MAX];
-     bool found_end = false;
-     GString *buf;
-@@ -58,7 +59,7 @@ int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
+@@ -935,7 +950,7 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+ 
+     nwords = read_packet_words(env, ctx, words);
+     if (!nwords) {
+-        gen_exception_end_tb(ctx, HEX_CAUSE_INVALID_PACKET);
++        gen_exception_decode_fail(ctx, 0, HEX_CAUSE_INVALID_PACKET);
+         return;
      }
  
-     buf = g_string_sized_new(PACKET_BUFFER_LEN);
--    len = disassemble_hexagon(words, i, memaddr, buf);
-+    len = disassemble_hexagon(words, i, memaddr, buf, hex_version);
-     (*info->fprintf_func)(info->stream, "%s", buf->str);
-     g_string_free(buf, true);
- 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 09a0de3c2f..4b16214ace 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -314,8 +314,11 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
- static void hexagon_cpu_disas_set_info(const CPUState *cs,
-                                        disassemble_info *info)
- {
-+    CPUState *cs_nonconst = (CPUState *)cs;  /* so we can get hex_cpu */
-+    HexagonCPU *hex_cpu = env_archcpu(cpu_env(cs_nonconst));
-     info->print_insn = print_insn_hexagon;
-     info->endian = BFD_ENDIAN_LITTLE;
-+    info->target_info = (void *)HEXAGON_CPU_GET_CLASS(hex_cpu)->hex_version;
- }
- 
- static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
-diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
-index 0cff15e890..bfc769be62 100644
---- a/target/hexagon/decode.c
-+++ b/target/hexagon/decode.c
-@@ -768,19 +768,33 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
- 
- /* Used for "-d in_asm" logging */
- int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc,
--                        GString *buf)
-+                        GString *buf, HexagonVersion hex_version)
- {
-     DisasContext ctx;
-     Packet pkt;
- 
-     memset(&ctx, 0, sizeof(DisasContext));
-+    ctx.hex_version = hex_version;
-     ctx.pkt = &pkt;
- 
-     if (decode_packet(&ctx, nwords, words, &pkt, true) > 0) {
-         snprint_a_pkt_disas(buf, &pkt, words, pc);
-         return pkt.encod_pkt_size_in_bytes;
+@@ -950,7 +965,7 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+         gen_commit_packet(ctx);
+         ctx->base.pc_next += pkt.encod_pkt_size_in_bytes;
      } else {
--        g_string_assign(buf, "<invalid>");
--        return 0;
-+        for (int i = 0; i < nwords; i++) {
-+            g_string_append_printf(buf, "0x" TARGET_FMT_lx "\t", words[i]);
-+            if (i == 0) {
-+                g_string_append(buf, "{");
-+            }
-+            g_string_append(buf, "\t");
-+            g_string_append(buf, "<invalid>");
-+            if (i < nwords - 1) {
-+                pc += 4;
-+                g_string_append_printf(buf, "\n0x" TARGET_FMT_lx ": ",
-+                                       (target_ulong)pc);
-+            }
-+        }
-+        g_string_append(buf, " }");
-+        return nwords * sizeof(uint32_t);
+-        gen_exception_end_tb(ctx, HEX_CAUSE_INVALID_PACKET);
++        gen_exception_decode_fail(ctx, nwords, HEX_CAUSE_INVALID_PACKET);
      }
  }
+ 
+diff --git a/tests/tcg/hexagon/invalid-slots.c b/tests/tcg/hexagon/invalid-slots.c
+index 366ce4f42f..607027f314 100644
+--- a/tests/tcg/hexagon/invalid-slots.c
++++ b/tests/tcg/hexagon/invalid-slots.c
+@@ -1,29 +1,71 @@
+ /*
+- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * Test that invalid slot assignments are properly rejected.
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include <assert.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <unistd.h>
++
++static void *resume_pc;
++
++static void handle_sigill(int sig, siginfo_t *info, void *puc)
++{
++    ucontext_t *uc = (ucontext_t *)puc;
++
++    if (sig != SIGILL) {
++        _exit(EXIT_FAILURE);
++    }
++
++    uc->uc_mcontext.r0 = SIGILL;
++    uc->uc_mcontext.pc = (unsigned long)resume_pc;
++}
++
+ char mem[8] __attribute__((aligned(8)));
+ 
+-int main()
++/*
++ * Invalid packet with 2 instructions at slot 0:
++ * - Word 0: 0xa1804100 = memw(r0) = r1
++ * - Word 1: 0x28032804 = { r3 = #0; r4 = #0 }
++ *
++ * This should raise SIGILL due to the invalid slot assignment.
++ */
++static int test_invalid_slots(void)
+ {
++    int sig;
++
+     asm volatile(
++        "r0 = #0\n"
++        "r1 = ##1f\n"
++        "memw(%1) = r1\n"
+         "r0 = #mem\n"
+-        /* Invalid packet (2 instructions at slot 0): */
+         ".word 0xa1804100\n" /* { memw(r0) = r1;      */
+         ".word 0x28032804\n" /*   r3 = #0; r4 = #0 }  */
+-        : : : "r0", "r3", "r4", "memory");
+-    return 0;
++        "1:\n"
++        "%0 = r0\n"
++        : "=r"(sig)
++        : "r"(&resume_pc)
++        : "r0", "r1", "r3", "r4", "memory");
++
++    return sig;
++}
++
++int main()
++{
++    struct sigaction act;
++
++    memset(&act, 0, sizeof(act));
++    act.sa_sigaction = handle_sigill;
++    act.sa_flags = SA_SIGINFO;
++    assert(sigaction(SIGILL, &act, NULL) == 0);
++
++    assert(test_invalid_slots() == SIGILL);
++
++    puts("PASS");
++    return EXIT_SUCCESS;
+ }
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index e5182c01d8..8c9d48fc4d 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -53,12 +53,6 @@ HEX_TESTS += hvx_histogram
+ HEX_TESTS += invalid-slots
+ HEX_TESTS += unaligned_pc
+ 
+-run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
+-	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
+-
+-run-invalid-slots: invalid-slots
+-	$(call run-and-check-exception, 0x15, $@, $(QEMU) $(QEMU_OPTS) $<)
+-
+ HEX_TESTS += test_abs
+ HEX_TESTS += test_bitcnt
+ HEX_TESTS += test_bitsplit
 -- 
 2.43.0
 
