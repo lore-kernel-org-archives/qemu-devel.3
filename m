@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11337EEA84E
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 20:45:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ED9EEA84B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 20:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqdYK-0000xV-88; Thu, 12 Feb 2026 15:44:44 -0500
+	id 1vqdXv-0000gB-LU; Thu, 12 Feb 2026 15:44:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vqdYI-0000vF-CW; Thu, 12 Feb 2026 15:44:42 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vqdXs-0000ej-Iq; Thu, 12 Feb 2026 15:44:16 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vqdYG-0007y3-Mb; Thu, 12 Feb 2026 15:44:42 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1vqdXq-0007Va-Nh; Thu, 12 Feb 2026 15:44:16 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61CATNBx2909620; Thu, 12 Feb 2026 20:44:36 GMT
+ 61CD0fYd3344155; Thu, 12 Feb 2026 20:44:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=YK26wOI8KJ8VL+HS6
- uBGdporIfQDPpN1DKk+mG4JcTo=; b=BaDScCPzdeo2vH/rJ21Z78zcsgMJzi9HT
- XnpLVE1r252cxwYJbYkGhKIHTNVqpY/+V6zlI+gj/OYfQXAdxDHWohIIsUE43a4t
- tE9e87WN6z28tH9AhfqjJvvK8yG/EBN2cT+woBSFHzC0+57cWXkAw92OCcfGXK2N
- ZRLo/cXuGie08rYL4mNl41w1/y0LXESxrIyWmKDi86UBtTaXdWLYCZPgqOCFDFuN
- x1L/zPGEp1aAmKBKiu6V89EQuIDXr/s9J0bPAekEZ38Ity8nACvwt6Us0P16iGKw
- bmviIEirbtOfZwbEQSoOglLptLRzNrT53RRLC2f2HQq1734r4Svgg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696ur4de-1
+ :mime-version:references:subject:to; s=pp1; bh=JEqhTVSlgYZPIsMBP
+ XqqfesOYW070ykvooRDsqZWbXc=; b=BKbxvLooi4QERQSYoqzFNeE+X+EuTfOh9
+ ol9m3OYau4E9xjodUyU+F6J6dw2+FTqdhJcqlR0saWW9kgWvgetrQ2FsRa9j4p89
+ 1iBFJaftTm1BjEYNwC1EAIlFtfGJ9OZTVpj/vMSD/RLzBGsZnbiJMvPkxoCQj9Z1
+ IsuxwTOat0sgO5hpQgOuiu5dn3ro7ny4D7uSOfkAINEKZigIqHf3JVtyXH2Yz7MW
+ zAFb5ag1xOiYsQG7q0PROfRVHjrLQXJz2R7ZTydGHaGdmTkVVwWKKYnSPD/c/9+C
+ ahcdRpapW4eYpn9NSzryBvR+ou3eK/lwob9yjcy0jH7rtTiHoHbjA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v5b9u-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 20:44:36 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CI0dKS012626;
- Thu, 12 Feb 2026 20:44:35 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6h7km15b-1
+ Thu, 12 Feb 2026 20:44:10 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CKclrg008378;
+ Thu, 12 Feb 2026 20:44:10 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6g3ym7uf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 20:44:35 +0000
+ Thu, 12 Feb 2026 20:44:10 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61CKiXAC30999166
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61CKi8BP26870516
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Feb 2026 20:44:34 GMT
+ Thu, 12 Feb 2026 20:44:09 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D37BD5804E;
- Thu, 12 Feb 2026 20:44:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A0C0258054;
+ Thu, 12 Feb 2026 20:44:08 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D91558055;
- Thu, 12 Feb 2026 20:44:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E42885804E;
+ Thu, 12 Feb 2026 20:44:06 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.112.15])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Feb 2026 20:44:32 +0000 (GMT)
+ Thu, 12 Feb 2026 20:44:06 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -65,45 +65,45 @@ Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
  brueckner@linux.ibm.com
-Subject: [PATCH v8 20/30] pc-bios/s390-ccw: Add signed component address
- overlap checks
-Date: Thu, 12 Feb 2026 15:43:41 -0500
-Message-ID: <20260212204352.1044699-21-zycai@linux.ibm.com>
+Subject: [PATCH v8 07/30] s390x/diag: Implement DIAG 320 subcode 1
+Date: Thu, 12 Feb 2026 15:43:28 -0500
+Message-ID: <20260212204352.1044699-8-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212204352.1044699-1-zycai@linux.ibm.com>
 References: <20260212204352.1044699-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=YZiwJgRf c=1 sm=1 tr=0 ts=698e3bb4 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDE1NyBTYWx0ZWRfX9cq6Y/6FBldn
+ cdVlTp10hvWUmxIliJmiAj0S4EfIIL4BOnBw3Hm//CsiYmNNgaesm389F/6h9rpv+TSSF3sBT/x
+ 2Nk/ZSg+RFxVRgJmIOMP0ElRFyBjwgeoZd9ivoRlB/D5zkYWjjjHxatuFciaXHIi8ChyEAQc9aF
+ mf4ExY9/Wcv9ha5IVyz5MJxKpYo8qH6o9KGVa075BSeaxtQM/Ie7QMI78ONApfzLzLNgoghwbVo
+ JjPt6p+AO34hfgkOz1ZcQVJGuZ0Y2nSGYJwwp++/DxH5yRXn6OaeJe0HSUYuNxsa22qiR9zpyAo
+ RnYt855L3IXO4J0qoT2nilfP5IhbApvIzoCBeBZF0gyR1YVlPInYcLDkgbrJJ1XyyA8nQZrHoUw
+ 7+LrAYwv6WpdEY8vtWbWMrXdDbEuaFZGZ3kR8ibT5TcHzHq7nqIOe085AYarHPWSpt/kFKc80xc
+ miPCEFsJ80YpSSc69Fg==
+X-Proofpoint-ORIG-GUID: u8WPbZoEHhgQd18dneV4_VTDCyXGKbHw
+X-Proofpoint-GUID: u8WPbZoEHhgQd18dneV4_VTDCyXGKbHw
+X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698e3b9a cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=qRwRlr6pIYMFea3-13gA:9
-X-Proofpoint-ORIG-GUID: wrI3Ng8RA4eD50_s36-k8Yj_18d5Xg1J
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDE1NyBTYWx0ZWRfX5T4i7JMxxQBE
- lkJyoNlRJJOoKpl89g3Vkr5P5WiERrjJy9yD1ljUTzN02GipoFONJD4JBSkQy4TMcWBstZeQfMn
- uCnp8bYGLTwg9ESskyrTDr8eqSBOoI5rsuY89D5tjcOzco+naAC/mVr1S2z2iwrKGM06Fqmpyw/
- YVuwquwDT1y3cv/sWSaZ47rbyc2wkiURdaVsHPBmAkCeBJ8BG+SHYTFMRcw1/ZTuKapK7HLn0Vv
- TcDXH0+n/sSCoTRgj/rZaw+pgP75YLn5rN776mf/44S8miHE2YvILrUNBqcw5zkG0OmGXg2ihwO
- gqWNy7789JHSg1GMCg3a8yESimniqQkRU5fYvYdgCn1igusgsYFXrUvnwMNLMHUfRpzKRV3WKSv
- NEhLx9xALhsTAqTYjoxVJlxGT8QMUDq5DFr2jAlno59JbbA8uPEZFDCz9Q0ZyFS4G7mBFVTj206
- DnJyjQRyd8FRK9EcpaQ==
-X-Proofpoint-GUID: wrI3Ng8RA4eD50_s36-k8Yj_18d5Xg1J
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=vmAlfMB145uIY6ZofiUA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602120157
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602120157
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -122,111 +122,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add address range tracking and overlap checks to ensure that no
-component overlaps with a signed component during secure IPL.
+DIAG 320 subcode 1 provides information needed to determine
+the amount of storage to store one or more certificates from the
+certificate store.
+
+Upon successful completion, this subcode returns information of the current
+cert store, such as the number of certificates stored and allowed in the cert
+store, amount of space may need to be allocate to store a certificate,
+etc for verification-certificate blocks (VCBs).
+
+The subcode value is denoted by setting the left-most bit
+of an 8-byte field.
+
+The verification-certificate-storage-size block (VCSSB) contains
+the output data when the operation completes successfully. A VCSSB
+length of 4 indicates that no certificate are available in the cert
+store.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 ---
- pc-bios/s390-ccw/secure-ipl.c | 54 +++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/secure-ipl.h |  6 ++++
- 2 files changed, 60 insertions(+)
+ docs/specs/s390x-secure-ipl.rst | 12 +++++++
+ include/hw/s390x/ipl/diag320.h  | 22 ++++++++++++
+ target/s390x/diag.c             | 63 ++++++++++++++++++++++++++++++++-
+ 3 files changed, 96 insertions(+), 1 deletion(-)
 
-diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-index 1d5c2d40ce..27d2833642 100644
---- a/pc-bios/s390-ccw/secure-ipl.c
-+++ b/pc-bios/s390-ccw/secure-ipl.c
-@@ -210,6 +210,55 @@ static void init_lists(IplDeviceComponentList *comp_list,
-     cert_list->ipl_info_header.len = sizeof(cert_list->ipl_info_header);
+diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+index c2e8f7aba5..d3ece8a82d 100644
+--- a/docs/specs/s390x-secure-ipl.rst
++++ b/docs/specs/s390x-secure-ipl.rst
+@@ -26,3 +26,15 @@ Subcode 0 - query installed subcodes
+     Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+     subcodes block (ISB). This mask indicates which subcodes are currently
+     installed and available for use.
++
++Subcode 1 - query verification certificate storage information
++    Provides the information required to determine the amount of memory needed
++    to store one or more verification-certificates (VCs) from the certificate
++    store (CS).
++
++    Upon successful completion, this subcode returns various storage size values
++    for verification-certificate blocks (VCBs).
++
++    The output is returned in the verification-certificate-storage-size block
++    (VCSSB). A VCSSB length of 4 indicates that no certificates are available
++    in the CS.
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+index aa04b699c6..6e4779c699 100644
+--- a/include/hw/s390x/ipl/diag320.h
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -11,10 +11,32 @@
+ #define S390X_DIAG320_H
+ 
+ #define DIAG_320_SUBC_QUERY_ISM     0
++#define DIAG_320_SUBC_QUERY_VCSI    1
+ 
+ #define DIAG_320_RC_OK              0x0001
+ #define DIAG_320_RC_NOT_SUPPORTED   0x0102
++#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+ 
+ #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
++#define DIAG_320_ISM_QUERY_VCSI     0x40000000
++
++#define VCSSB_NO_VC     4
++#define VCSSB_MIN_LEN   128
++#define VCE_HEADER_LEN  128
++#define VCB_HEADER_LEN  64
++
++struct VCStorageSizeBlock {
++    uint32_t length;
++    uint8_t reserved0[3];
++    uint8_t version;
++    uint32_t reserved1[6];
++    uint16_t total_vc_ct;
++    uint16_t max_vc_ct;
++    uint32_t reserved3[11];
++    uint32_t max_single_vcb_len;
++    uint32_t total_vcb_len;
++    uint32_t reserved4[10];
++};
++typedef struct VCStorageSizeBlock VCStorageSizeBlock;
+ 
+ #endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index e867fc2156..3c7e64eb05 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -197,11 +197,54 @@ out:
+     }
  }
  
-+static bool is_comp_overlap(SecureIplCompAddrRange *comp_addr_range,
-+                            int addr_range_index,
-+                            uint64_t start_addr, uint64_t end_addr)
++static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
++                                     uintptr_t ra, S390IPLCertificateStore *cs)
 +{
-+    /* neither a signed nor an unsigned component can overlap with a signed component */
-+    for (int i = 0; i < addr_range_index; i++) {
-+        if ((comp_addr_range[i].start_addr < end_addr &&
-+            start_addr < comp_addr_range[i].end_addr) &&
-+            comp_addr_range[i].is_signed) {
-+            return true;
-+       }
++    g_autofree VCStorageSizeBlock *vcssb = NULL;
++
++    vcssb = g_new0(VCStorageSizeBlock, 1);
++    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
 +    }
 +
-+    return false;
-+}
-+
-+static void comp_addr_range_add(SecureIplCompAddrRange *comp_addr_range,
-+                                int addr_range_index, bool is_signed,
-+                                uint64_t start_addr, uint64_t end_addr)
-+{
-+    if (addr_range_index >= MAX_CERTIFICATES) {
-+        printf("Warning: Ignoring component address range index [%d]"
-+               " because the maximum supported index is %d\n",
-+               addr_range_index, MAX_CERTIFICATES - 1);
-+        return;
++    if (be32_to_cpu(vcssb->length) > sizeof(*vcssb)) {
++        return -1;
 +    }
 +
-+    comp_addr_range[addr_range_index].is_signed = is_signed;
-+    comp_addr_range[addr_range_index].start_addr = start_addr;
-+    comp_addr_range[addr_range_index].end_addr = end_addr;
-+}
-+
-+static void addr_overlap_check(SecureIplCompAddrRange *comp_addr_range,
-+                               int *addr_range_index,
-+                               uint64_t start_addr, uint64_t end_addr, bool is_signed)
-+{
-+    bool overlap;
-+
-+    overlap = is_comp_overlap(comp_addr_range, *addr_range_index,
-+                              start_addr, end_addr);
-+    if (overlap) {
-+        zipl_secure_handle("Component addresses overlap");
++    if (be32_to_cpu(vcssb->length) < VCSSB_MIN_LEN) {
++        return DIAG_320_RC_INVAL_VCSSB_LEN;
 +    }
 +
-+    comp_addr_range_add(comp_addr_range, *addr_range_index, is_signed,
-+                        start_addr, end_addr);
-+    *addr_range_index += 1;
++    if (!cs->count) {
++        vcssb->length = cpu_to_be32(VCSSB_NO_VC);
++    } else {
++        vcssb->version = 0;
++        vcssb->total_vc_ct = cpu_to_be16(cs->count);
++        vcssb->max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
++        vcssb->max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
++                                                cs->largest_cert_size);
++        vcssb->total_vcb_len = cpu_to_be32(VCB_HEADER_LEN + cs->count * VCE_HEADER_LEN +
++                                           cs->total_bytes);
++    }
++
++    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcssb, be32_to_cpu(vcssb->length))) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
++    }
++    return DIAG_320_RC_OK;
 +}
 +
- static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
++QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
++                   "size of VCStorageSizeBlock is wrong");
++
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
  {
-     if (zipl_load_segment(entry, sig_sec) < 0) {
-@@ -253,6 +302,8 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-      * exists for the certificate).
-      */
-     int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
-+    SecureIplCompAddrRange comp_addr_range[MAX_CERTIFICATES];
-+    int addr_range_index = 0;
-     int signed_count = 0;
+     S390CPU *cpu = env_archcpu(env);
++    S390IPLCertificateStore *cs = s390_ipl_get_certificate_store();
+     uint64_t subcode = env->regs[r3];
+     uint64_t addr = env->regs[r1];
++    int rc;
  
-     if (!secure_ipl_supported()) {
-@@ -282,6 +333,9 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-                 goto out;
-             }
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+         s390_program_interrupt(env, PGM_PRIVILEGED, ra);
+@@ -223,7 +266,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+          * but the current set of subcodes can fit within a single word
+          * for now.
+          */
+-        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES);
++        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
++                                         DIAG_320_ISM_QUERY_VCSI);
  
-+            addr_overlap_check(comp_addr_range, &addr_range_index,
-+                               comp_addr, comp_addr + comp_len, sig_len > 0);
+         if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+             s390_cpu_virt_mem_handle_exc(cpu, ra);
+@@ -232,6 +276,23 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ 
+         env->regs[r1 + 1] = DIAG_320_RC_OK;
+         break;
++    case DIAG_320_SUBC_QUERY_VCSI:
++        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock), true)) {
++            s390_program_interrupt(env, PGM_ADDRESSING, ra);
++            return;
++        }
 +
-             if (!sig_len) {
-                 break;
-             }
-diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
-index eb5ba0ed47..69edfce241 100644
---- a/pc-bios/s390-ccw/secure-ipl.h
-+++ b/pc-bios/s390-ccw/secure-ipl.h
-@@ -16,6 +16,12 @@
- VCStorageSizeBlock *zipl_secure_get_vcssb(void);
- int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
- 
-+typedef struct SecureIplCompAddrRange {
-+    bool is_signed;
-+    uint64_t start_addr;
-+    uint64_t end_addr;
-+} SecureIplCompAddrRange;
++        if (addr & 0x7) {
++            s390_program_interrupt(env, PGM_ADDRESSING, ra);
++            return;
++        }
 +
- static inline void zipl_secure_handle(const char *message)
- {
-     switch (boot_mode) {
++        rc = handle_diag320_query_vcsi(cpu, addr, r1, ra, cs);
++        if (rc == -1) {
++            return;
++        }
++        env->regs[r1 + 1] = rc;
++        break;
+     default:
+         env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+         break;
 -- 
 2.52.0
 
