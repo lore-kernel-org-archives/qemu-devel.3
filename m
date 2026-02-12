@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD99EDF04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BE2EDF04B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQAA-0008JS-Ag; Thu, 12 Feb 2026 01:26:54 -0500
+	id 1vqQHq-0003gA-Fh; Thu, 12 Feb 2026 01:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9t-00088D-Mo
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqQHV-0003fS-Bn
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:34:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9q-0005Hg-RJ
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:36 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqQHR-000732-P8
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:34:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877594;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1770878064;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N2v6djobNSdTdF+YCpvzDQ17kkQi5jILZoPxzgDYLR8=;
- b=N91RSOogkor8hu4JuMLwNZd8DlGmGkooV474rc8tsq0fIADtW7tkplXofivGA1M2CkpyWT
- vuTTVZ02JHIgY/W8l0ydUcrtNeMKmOVxxJWS3oFjRLUwk7MIuR6W47NxbW7U9bQPuACLKd
- yvwQUce9cKFYIslXQY62gYQE8q20ftc=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=niydyansRn4CVMonTmoHm0Bhb8Q7Fv00ACBhWPYs0lU=;
+ b=bHJmKE7F8gotA+3QXhO9KphVq9z/yBHJZ94iNAvM0PkV5JHwk2EfSrNrsNbxE5KoVx74Uy
+ MMvMwZzA3CsYgQjkk/eaO/Kx3S1juj/wJQ+yX8K9FLUmTLXogPl824HiwDtc2dQzSJNStE
+ r439KWyT5SoYtJtVIyzmsFWV3VJMMa8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-rl7rtaKFN32K6QnAzU6ddg-1; Thu, 12 Feb 2026 01:26:32 -0500
-X-MC-Unique: rl7rtaKFN32K6QnAzU6ddg-1
-X-Mimecast-MFC-AGG-ID: rl7rtaKFN32K6QnAzU6ddg_1770877592
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3545cc84ab1so19431821a91.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:26:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877592; x=1771482392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N2v6djobNSdTdF+YCpvzDQ17kkQi5jILZoPxzgDYLR8=;
- b=JBU0BMyzeegtxubNxyf5TWdESxO8A7/tQKZuWqCZJZmqUsnA34VpLrwvRxm2QJaSn9
- r+7bvjrZFjeCfs2JJoU6BZrwtFuPf4+1lAld8dIjr25lc49CDVIjyxiMVE2QSKbkDhva
- iz3b6tTLVx5ICRQqCCNOh+O/XdDTZzEdYTZxGXDtoA4i6NZPCe3cX04ISkgYfSPGwmXh
- Pma0fjt7tJt1La2gD7j/dHJO1OE6y7D+La+/XOc/fRd92+VW1L7ls51yvAwTLkmkYxv2
- zYkPLkN9wtrAq9YSsc4MerDpua9WmWqgTFhcNK8078iwfG01xIAWiHLGTRMhBtP7wXyP
- JR/g==
+ us-mta-499-6w48u9CKP7OR_88Qj1ToXQ-1; Thu, 12 Feb 2026 01:34:23 -0500
+X-MC-Unique: 6w48u9CKP7OR_88Qj1ToXQ-1
+X-Mimecast-MFC-AGG-ID: 6w48u9CKP7OR_88Qj1ToXQ_1770878062
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48079ae1001so60287355e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:34:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877592; x=1771482392;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N2v6djobNSdTdF+YCpvzDQ17kkQi5jILZoPxzgDYLR8=;
- b=Puyt9NFIbww/OvzdoPyLa7DRZia9zj0vW09iyireN2eA/pAOvUq1djn27VJSOJ79sT
- UCJ/bBRcQ6PQr7tjuwqoDZTvU1eqUhn6/F/fEQFc6K/AIfqpltlSunYhIc2DL/+VDXk0
- qtx5F2AeU5eRN8+uy/uDL9ydZECOj/ow1Zjk6hQbJtLjSHaa8eNnMX/Ylx9MZqAFJbUu
- 9WXFZt+f7wrunN5KcunpbilvNPASqVD2bQ5kt4DZxKBS/UftOTnoHCXeyc8JqcRNbQgw
- OIc5hPwpZUSpf35kkkGvAgkx5CflgAQvcMjfGox+KEMLN7JdWAQJSodmnsSwFBAks2Yy
- HL5g==
+ d=1e100.net; s=20230601; t=1770878062; x=1771482862;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=niydyansRn4CVMonTmoHm0Bhb8Q7Fv00ACBhWPYs0lU=;
+ b=CCs2+lKIsBeZxg7kXdkAB9yUP8tawbF2Vpp0hVLg8ZU++lPlui4zvzslxluV6h0p9x
+ RrsHBQ7l9dSHv6/iFFffCKN4t7wkaS7M4vw+727Dw4WKFw0JAiyjzCZ+ZbOACFFzccuj
+ GFKfuxEQK9MriSq/H5sOKtHoCmSuLFLBz9vR0Ycp5dViz4bNEOvDzvm2Q2PrpLYciVSD
+ J2WD7fIM8+uZ1bKIJtsRQC6rSCLmrbzqfHd4AFEY1SkUYiImGqCUrm0gTTw7YBq3Q+wA
+ vnlysGVVZgYRZhIev/ZLR8dUA/W8g3QFNd2Y3DQTFRAVKqtemepqzTbO0brhMQnN6uz+
+ FMRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEgb54NbT75TLwQZ01RwNP/dmWd+y5BUO46hGnUeTwfhJStVrjbD3nXRn/cKeBLR1aj+AwV1SMznH6@nongnu.org
-X-Gm-Message-State: AOJu0YyVUaprweKjIVM3T5ODgAF6DuM/LfGpGKjNGMo12OkHwPp1MovN
- 44UaoT6Y/gb2NbNWc7duWHiib/2uY4nh0z0DuuW7yliwlkJ+3rSoS8+O9VFq80V1mTKkihx6b3I
- RmfOuWnwZZWA+xf2EHQS4rTBYAQKSOMnQASbpjpNIfLALDc3dKWS/0nQG
-X-Gm-Gg: AZuq6aLJwJgQ4vI2aaBr8m8NtijBZbNVoh4/3ASotLWNYjBnuj9Z5hXmVQgTILx6EHF
- G0zkliNNEHD3YcSQnnsU9sJ6if8CtCqVbC3n5yeOz8DlzsPmiZ0PH4hWVR7xXJ9foJ1NxnN3w7N
- m0tdNIxUGS/2DNA/72wM0lBWn8qDS9jvEo3Gjtr99jWRQvUZsp4ZS+u4bsLESjwv88ER94HmJ1E
- bHTi2sBTVCTfXkcsIWQvA82Av/28GcxlsgvfhH0xcvDh9snlP0UfIjV8SRGFLY1TFlrae8JP1jk
- GYqcVvhzbs789CCK7L5lNaTPk3Jc6VR/pyj2gBD+OtnGKJES1hufKw+YCvLdV/ZP+xZnMIpujp/
- JOWUNMY4ZLfyMx0PAHTQhyZpFM/ClZAWloRIokaEr1C/w22Z4mhDaMS8=
-X-Received: by 2002:a17:90b:350c:b0:353:883:affc with SMTP id
- 98e67ed59e1d1-3568f3e4ccdmr1651316a91.18.1770877591667; 
- Wed, 11 Feb 2026 22:26:31 -0800 (PST)
-X-Received: by 2002:a17:90b:350c:b0:353:883:affc with SMTP id
- 98e67ed59e1d1-3568f3e4ccdmr1651305a91.18.1770877591360; 
- Wed, 11 Feb 2026 22:26:31 -0800 (PST)
-Received: from rhel9-box.lan ([122.164.27.113])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.26.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:26:31 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 18/31] i386/sev: add notifiers only once
-Date: Thu, 12 Feb 2026 11:55:02 +0530
-Message-ID: <20260212062522.99565-19-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
-References: <20260212062522.99565-1-anisinha@redhat.com>
+ AJvYcCVd4pXeXyTrDGgwDDV94AeXjpM+PY4vKNh314KgdVa4mwrPpvKISuDkcBK2LJjb21+/c/62ycDSTVtn@nongnu.org
+X-Gm-Message-State: AOJu0YxEyjzSJRNK2UxuR2tHgIYXKY2TxxHNSGgwbK2+tt6vY9yoXm83
+ bN3n3vEYZsqQoMe53EWEi6ENn3vuM9DwJjjeDNkuvO3bRoyT0GIOt5a1qbeKyLRMP7cf7KZRayU
+ DbgqoEzrGtDiMBDUeGjWyrsgNJ4nxf0dl3Z2NkK0vrNTPeI2N32FdiaKj
+X-Gm-Gg: AZuq6aIYIQueoh96VnG0m2LB0o/VbWvjLK5J4vrbjvvrecfYBVFTm3B4dK/hi4zhC5n
+ +Y3OmCz7LZiLI+Pz/NFfIxaMZZdGmXQ0tJCufjVRiM9f2AhCKio2NipQJsenGJIBdf+XLZF3jlN
+ M/S6cBjOk3WNgMxKQrOO58nosPFFSDb2JlAfizfaswNBamfuRjDtnS9fYY0X1v6dQIwmpRle+hl
+ HHsmwMonTfhASO6WIabnRW5ES6iD/ggU9TIqdHJh1qTqQ2ZJzdVrmdWHZe0rnWx7vt0tnf7YXle
+ woUbvlwkkl0ZfMXqjT5IlLHDj0MhF9qVcxK/6vJ3VZfhJTbG3+dCQgE3txTXPp8DxzkgGEj5PaQ
+ xYmjF7OKjzbM1T105wgmqkKQ8RxXpaCVZGCWw4pDsBpweNhMoz4q1E3ftZTj6c0/gUuL1Ig==
+X-Received: by 2002:a05:600c:638f:b0:477:7af8:c8ad with SMTP id
+ 5b1f17b1804b1-48365716db6mr21908585e9.31.1770878062092; 
+ Wed, 11 Feb 2026 22:34:22 -0800 (PST)
+X-Received: by 2002:a05:600c:638f:b0:477:7af8:c8ad with SMTP id
+ 5b1f17b1804b1-48365716db6mr21908295e9.31.1770878061627; 
+ Wed, 11 Feb 2026 22:34:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783e59c19sm9242366f8f.34.2026.02.11.22.34.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Feb 2026 22:34:21 -0800 (PST)
+Message-ID: <f053853e-577f-418b-9bee-e9aa8ca0ebb4@redhat.com>
+Date: Thu, 12 Feb 2026 07:34:19 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20260211083415.133534-1-skolothumtho@nvidia.com>
+ <20260211083415.133534-4-skolothumtho@nvidia.com>
+ <aYzFeMh1szhJlJJk@Asurada-Nvidia>
+ <e66e82d6-0953-49f0-9d84-bf2776e8f3ce@redhat.com>
+ <aYzJhEFg/zxtrJ8z@Asurada-Nvidia>
+ <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,75 +126,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The various notifiers that are used needs to be installed only once not on
-every initialization. This includes the vm state change notifier and others.
-This change uses 'cgs->ready' flag to install the notifiers only one time,
-the first time.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/sev.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 260d8ef88b..647f4bf63d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1920,8 +1920,9 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -1;
-     }
- 
--    qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
--
-+    if (!cgs->ready) {
-+        qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
-+    }
-     cgs->ready = true;
- 
-     return 0;
-@@ -1943,22 +1944,23 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -1;
-     }
- 
--    /*
--     * SEV uses these notifiers to register/pin pages prior to guest use,
--     * but SNP relies on guest_memfd for private pages, which has its
--     * own internal mechanisms for registering/pinning private memory.
--     */
--    ram_block_notifier_add(&sev_ram_notifier);
--
--    /*
--     * The machine done notify event is used for SEV guests to get the
--     * measurement of the encrypted images. When SEV-SNP is enabled, the
--     * measurement is part of the guest attestation process where it can
--     * be collected without any reliance on the VMM. So skip registering
--     * the notifier for SNP in favor of using guest attestation instead.
--     */
--    qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
-+    if (!cgs->ready) {
-+        /*
-+         * SEV uses these notifiers to register/pin pages prior to guest use,
-+         * but SNP relies on guest_memfd for private pages, which has its
-+         * own internal mechanisms for registering/pinning private memory.
-+         */
-+        ram_block_notifier_add(&sev_ram_notifier);
- 
-+        /*
-+         * The machine done notify event is used for SEV guests to get the
-+         * measurement of the encrypted images. When SEV-SNP is enabled, the
-+         * measurement is part of the guest attestation process where it can
-+         * be collected without any reliance on the VMM. So skip registering
-+         * the notifier for SNP in favor of using guest attestation instead.
-+         */
-+        qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
-+    }
-     return 0;
- }
- 
--- 
-2.42.0
+On 2/11/26 7:43 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Nicolin Chen <nicolinc@nvidia.com>
+>> Sent: 11 February 2026 18:25
+>> To: Eric Auger <eric.auger@redhat.com>
+>> Cc: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> Jiandi An <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+>> accelerated SMMUv3 devices
+>>
+>> On Wed, Feb 11, 2026 at 07:14:40PM +0100, Eric Auger wrote:
+>>> On 2/11/26 7:07 PM, Nicolin Chen wrote:
+>>>> On Wed, Feb 11, 2026 at 08:34:13AM +0000, Shameer Kolothum wrote:
+>>>>> For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is
+>>>>> created before the guest boots. In this case, the vEVENTQ is
+>>>>> allocated when the guest writes to SMMU_CR0 and sets EVENTQEN = 1.
+>>>> [...]
+>>>>> @@ -1605,6 +1605,10 @@ static MemTxResult
+>> smmu_writel(SMMUv3State *s, hwaddr offset,
+>>>>>          s->cr0ack = data & ~SMMU_CR0_RESERVED;
+>>>>>          /* in case the command queue has been enabled */
+>>>>>          smmuv3_cmdq_consume(s, &local_err);
+>>>>> +        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is
+>>>>> + available */
+>>>> Nit: though it is just following smmuv3_cmdq_consume(), it'd be
+>>>> likely clearer to verify the EVENTQEN in the callers.
+>>>>
+>>>>> +        if (local_err == NULL) {
+>>>> Does eventq need to rely on !local_err from cmdq?
+>>> if local_err is NULL we can safely use it, no? Or maybe I miss your
+>>> point. maybe test !local_err directly?
+>> Point is: if local_err isn't NULL, why can't we allocate vEVENTQ?
+> Technically nothing prevents that I guess.
+>
+> The only thing is we have to call error_report_err() if local_err != NULL
+> and then set local_err == NULL before calling  alloc_veventq().
+
+Besides the implementation details about Error handle usage I think we
+shall first answer the question about the relevance to allocate the
+veventq in case the smmuv3_cmdq_consume() fails.
+
+Thanks
+
+Eric
+>
+> Thanks,
+> Shameer
+>
 
 
