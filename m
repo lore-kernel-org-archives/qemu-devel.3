@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73520EDF026
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 03:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEC5EDF026
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 03:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqNTd-0007jh-2E; Wed, 11 Feb 2026 22:34:49 -0500
+	id 1vqNTZ-0007hh-3F; Wed, 11 Feb 2026 22:34:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTZ-0007iG-Nz
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:45 -0500
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1vqNTW-0007hC-R9
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:42 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTY-0008HO-9G
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:45 -0500
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-7d18dd2adf7so4491731a34.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:43 -0800 (PST)
+ id 1vqNTV-0008H0-C2
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:42 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7d195166b2cso5960797a34.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770867282; x=1771472082; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fdmJlwbRbC2WjvwLByVwTDU+h5jmM+h5HfgvxvCTvmM=;
- b=TNonaCeLv0sz0LCE+lp26ymLkyR8VnTe0byOgPIpsDD701saiIlH/YLT/Ewc7ioiVO
- iVknFQUbIlALX3KJYcKyQmjUlCjMmBOsT8tGiIuFHAVmdd1l6W24l00QYcUIMbpvJVJk
- tQ1u6U6MZPSGu/bJHigQMJ++fJvGYlwpvXSlR8/yFzC9+ty9e6/shbqeuMn2bPuuSvMH
- RRt8zUXPhnVdcBHKDY4Y+L0bNva7w8zG0rMgC1Ms9GAwNNLmdHqNjaKXrXn2X9GJcLIh
- gmLJLyYJC5JfT+WQcGlflM7NooAlebCkilwcqHNqAv7ZVIj9uk3t4c7u+Q8xa7yGEHg3
- 1cVg==
+ d=gmail.com; s=20230601; t=1770867279; x=1771472079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=d6VdigdG4QEWW+bSAsQqbS6mt2zE8Qr0C1PWJH/dBJQ=;
+ b=MpFUsBUZvoI9MKGZU23pmRA72pSjmTpnCsZ0YguLtinBNfoxtMoJw2r70wZWhQSTZ1
+ YkF2sU2j7DkfvACg+NjgWFeK7HJfCbqLWZhpm1hNEZgKgpmI5+eZI79MOR4Dvwx/H7SF
+ K4iMjmnREH+UtmLuAH4gap3843olvVwfKfXBRrUFCOonqNvOaiIaX9LtVq5OMXpzxC0n
+ 2tSWM/4vfesCtxNliVjYk0D4X+uxMJRt/IJenH6R3KMJlBP9eNZYUb958mR4fE7kHisE
+ w4Z04wWogHVHSCBXdxDNDnvgdaiyjN3QZXz0iymzWm0PTRQIRYdC6Y3iRd4YPFBE+R+W
+ GsGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770867282; x=1771472082;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fdmJlwbRbC2WjvwLByVwTDU+h5jmM+h5HfgvxvCTvmM=;
- b=T8SlLVwgwMp+iAX5fb5h4Vt0cHTrI0uQ0VhriUfterTzmixMmFS+ncLsn1pU9lJ6JJ
- 9MjQJMwuL7MaZ7mU9yGOKk3F1zZxLWMJJI25JjB1lM6fZa1PuefRoig8zEQPLAl2T+c6
- 4+xosYc1hwgHUOxcsfJYwwNxjJ36W5wd4XL9ZbPCTc++6iauaKhnHkbga3GGBAsGo120
- oYWeiAcXvqb85Q2UPQd8nXjF9nASu2xkduc7LoigGq+cRwYhizw25z1vGCFAT5SR0f5D
- NJSu499rnqWQY7jgB6+6He0VejJI4WtP72+5tgVjUQ1YJd47jsLVBNBuf9FwRvj047is
- ByCQ==
-X-Gm-Message-State: AOJu0YxZ3MS93QalqjthJG+8ap0JbsL0ut+BRqv46yHtjTEIsguUYvXM
- F9gO1xyzOuUYgnjqY6jA24YwUulhqS1gBA6veYUoo1n4F3uzvbYK5W7Ri58fWw==
-X-Gm-Gg: AZuq6aIGDmrEnHboxV5fGEZbHMeGgKaEJU0BWOpOhR1E/SqSL44FsRheg9bcnaitFCX
- m9Qm85gJazVGsImddUtAVl0XWdB1I3HJaWzKiqwyz6UBl4+eYyGu6dpIVq8QoJxLnbDJKOQFh/K
- m+jRSSj6LzC4ATvlwzUEuD1YTOwk/KUWI2e3YLZg+61ku2Vv8GI/z1YaoK7TtmuUyVTudwkdAxA
- 42aAf1NvD/cnD463kwrr/HNfdf21+jYi0wlmAXWLyfiL2Ars9qabdIz8/3DM3UL24AuC3nq5jkm
- jiqvJUGgTa4t7Fvs0pzqN0aMfl+IpCXANsmG223pslBIWjPYJ3Sfc2eRVNMibd0eFUqz4vP3a5R
- 6nouCz4N2eT9bvd3GSE/7AYzADLqPwGSwvGaIjIgg6BUU88z3LAcV1Lz15R0LMRlScZQ72ndOE2
- Cr97bXFDiIRmYKzdZ6JeKcHlw807eF8IX4v4+MRDLaVcG2iZL6VknaHgtklCPeLlQvabjEo2EC6
- XjtcH7+nkZWh4hK
-X-Received: by 2002:a05:6830:9c5:b0:7cf:e4e6:2ce9 with SMTP id
- 46e09a7af769-7d4b29df1famr784694a34.9.1770867282580; 
- Wed, 11 Feb 2026 19:34:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770867279; x=1771472079;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d6VdigdG4QEWW+bSAsQqbS6mt2zE8Qr0C1PWJH/dBJQ=;
+ b=oIkGNa3mjICI6uPVj0aMYRiEsYFiPe0bK2UfkkTV/K+dCOqoTZ0y6/prHz/ARvZSUD
+ mnwu4drU7Mu7E5YMQexUaP/2K0lJ4dJ03T8o5T1KtG8j3HHiQ6BPUzDQieTuUBgQxt/V
+ WhaJFuDlChQtA1V94NVEvQit4Q6G44t31MDRgNCXL46LZtspQYTxPyqzaf8rPljWF/s+
+ 8oih/rFntRzpUXtanZCloekPNUyh2jVqRIkj0XQOWuTN0OlzVRguhbLsbkR99yuQBhRk
+ 1EGPlYpjVqwWKYcTg1YxL0tu7RF4lcftKXf0asVhIjyqBbtCr+ZUKEsX6Twj5miBENDH
+ O07Q==
+X-Gm-Message-State: AOJu0YzuIpViN0/2eXeHEq9mfuL/8+7fEA9XFEkJwJFP84f/8PieRN19
+ LD6ohQhfdfns0fIwtJbvPso30FqN4JTZ/H1MRyiCGT6xFyiHY8ueyu4DQNCadg==
+X-Gm-Gg: AZuq6aJUXy2KyNPUe0GFYh8MEg0x5J0kkn6MkwOpJHEhStTEcYtV7b3TC0vVGfJnREm
+ cfy923tQ8Io+nbSwvezL+qruf4LqKveTOQeUjWpOrNuFY9tel7D//NGaE1zJNJ658K/DYE/5XWM
+ pO6T1KGrEwZAYmoQAaeNPWJFBbk0NgwQSyQTb4ioxgiWIBZq20tGyCvAe0t1PBVgnA11UDHyzer
+ fX3e8TiyP4MNFH7sl/LMmMuu7ZLifbP3sfonovwCVHV/UsUn/T2ciO/N/wemJi3O6P6wLl2nIaq
+ 7QPzTEU350s5G/O8vNxDfImKU/aTv07Gzv40tGofFubY/XduVIMLL+Fh2h2bK6CwgGKJ/5qL4kf
+ YwK0SILXKrEN+iiBOb7IJYKV9kMe7Qhw5d2WeAeDUGP111T0L22HdeTKFSz6ZDpHJOpaWC9poUQ
+ 7Cxq+fTmVsXEMS77yYzRBXAi68kK6PGn24FtLF6jwJoYbsrCdVWmm9EZOT8TbLBMpRGMrJyuzH1
+ uxf30E13atswax8
+X-Received: by 2002:a05:6830:4493:b0:7d1:9da9:c6c with SMTP id
+ 46e09a7af769-7d4b2a9c424mr848527a34.17.1770867279581; 
+ Wed, 11 Feb 2026 19:34:39 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.41
+ 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 19:34:42 -0800 (PST)
+ Wed, 11 Feb 2026 19:34:39 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH 3/8] Hexagon (target/hexagon) Add Hexagon version field to
- DisasContext
-Date: Wed, 11 Feb 2026 20:34:30 -0700
-Message-ID: <20260212033435.3598-4-ltaylorsimpson@gmail.com>
+Subject: [PATCH 0/8] Hexagon (target/hexagon) Check opcodes versions
+Date: Wed, 11 Feb 2026 20:34:27 -0700
+Message-ID: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
-References: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,40 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize the field in hexagon_tr_init_disas_context
+Currently, all versions of Hexagon CPU are treated the same, and all
+opcodes are able to run on any version.  This series changes the behavior
+such that only the opcodes available on the currently executing Hexagon
+CPU version can execute.
+
+Changes include:
+Mark which Hexagon CPU version is currently executing
+Check that each opcode is supported in the Hexagon CPU version
+If not, raise SIGILL
+Properly handle disassembly (-d in_asm)
+Test case added
+
+Note that this series borrows elements from Brian Cain's "Handle some
+invalid encodings" series.  Therefore, it will need slight rework after
+those patches are merged.
 
 Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
----
- target/hexagon/translate.h | 1 +
- target/hexagon/translate.c | 1 +
- 2 files changed, 2 insertions(+)
 
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index a0102b6cbd..7d4236b8b7 100644
---- a/target/hexagon/translate.h
-+++ b/target/hexagon/translate.h
-@@ -30,6 +30,7 @@ typedef struct DisasContext {
-     DisasContextBase base;
-     Packet *pkt;
-     Insn *insn;
-+    HexagonVersion hex_version;
-     uint32_t next_PC;
-     uint32_t mem_idx;
-     uint32_t num_packets;
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index e88e19cc1a..9498cd4502 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -968,6 +968,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
-     ctx->branch_cond = TCG_COND_NEVER;
-     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
-     ctx->short_circuit = hex_cpu->short_circuit;
-+    ctx->hex_version = HEXAGON_CPU_GET_CLASS(hex_cpu)->hex_version;
- }
- 
- static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+Brian Cain (2):
+  Hexagon (linux-user/hexagon) Convert INVALID_PACKET into SIGILL
+  tests/tcg/hexagon: Add test for revision-gated instruction decoding
+
+Matheus Tavares Bernardino (1):
+  Hexagon (target/hexagon) Introduce tag_rev_info.c.inc
+
+Taylor Simpson (5):
+  Hexagon (target/hexagon) Properly handle Hexagon CPU version
+  Hexagon (linux-user/hexagon) Identify Hexagon version in ELF file
+  Hexagon (target/hexagon) Add Hexagon version field to DisasContext
+  Hexagon (target/hexagon) Check each opcode against current CPU version
+  Hexagon (target/hexagon) Disassembly of invalid packets
+
+ target/hexagon/cpu-qom.h             |  21 ++++
+ target/hexagon/cpu.h                 |   2 +
+ target/hexagon/cpu_bits.h            |   4 +-
+ target/hexagon/translate.h           |   1 +
+ disas/hexagon.c                      |   3 +-
+ linux-user/hexagon/cpu_loop.c        |   4 +
+ linux-user/hexagon/elfload.c         |  43 ++++----
+ target/hexagon/cpu.c                 |  31 ++++--
+ target/hexagon/decode.c              |  43 +++++++-
+ target/hexagon/translate.c           |  20 +++-
+ tests/tcg/hexagon/check_rev_gating.c | 141 +++++++++++++++++++++++++++
+ tests/tcg/hexagon/invalid-slots.c    |  76 +++++++++++----
+ target/hexagon/tag_rev_info.c.inc    |  61 ++++++++++++
+ tests/tcg/hexagon/Makefile.target    |  12 +--
+ 14 files changed, 409 insertions(+), 53 deletions(-)
+ create mode 100644 tests/tcg/hexagon/check_rev_gating.c
+ create mode 100644 target/hexagon/tag_rev_info.c.inc
+
 -- 
 2.43.0
 
