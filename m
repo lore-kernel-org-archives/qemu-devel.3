@@ -4,94 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C02EE3684
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 13:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6A6EE3683
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 13:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqWcl-0004KP-7I; Thu, 12 Feb 2026 08:20:51 -0500
+	id 1vqWiL-0006s9-Fe; Thu, 12 Feb 2026 08:26:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vqWcj-0004Jx-Gj
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 08:20:49 -0500
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vqWch-0001rM-Ta
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 08:20:49 -0500
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-12732e6a123so1108643c88.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 05:20:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770902446; x=1771507246; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sXwtlr3atUSvJ91fbRKXBMcQsUfUfc5j5y3Arcd1Edc=;
- b=AYQFzRTZbYMb5vHORTppkxNNx0Naq7eJZDxn55OntT7tHTIb3udiZFaiPEPhvluVP8
- WTwJsKMT5Y2F6E/mm9dsufX5PiyzL5bZ8rUp+tM3tA/e//ymA2ShofkoOTjkSKUOQ4kj
- iWoMZ0a7PxkkRIE8L8PnQz/KIt9f0J2uWmip42spoFp/7FCErSUEP4BtZb7uMZ3BtexZ
- +Q1ZDmfw3jvOQ4BqXXSnDpyI7q/EZFQf0M6YhJ/mpK271PenGEjGtvtAfr+Kv4n8rmS5
- Svt8tPCcM5lytYFLFAkBiYrKREs71ITOC8E3JheAZM3Yt4QpoztDHBnpE7k8SPkRdnTK
- xBIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770902446; x=1771507246;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sXwtlr3atUSvJ91fbRKXBMcQsUfUfc5j5y3Arcd1Edc=;
- b=Z0/LM3b/Wxd+D0bvdfu8OWLp2jOxEmVC/iAu9GDcE0myxVELQ4IuGoXkCq+NUEMdaJ
- wggsYwijEGtxbaDxoEvA7AgOpdBvEMKFz4OKq3zYbYmuGNmsuHHWQvQC3Kr61o0/A/0T
- ITRs+QBRAwUbOgdzwIuPcCIgShKgZmyUws3ay2pl6AabuT2cxMLOAgyUiDmPIeykXGYa
- Su3AcHa5yyRYqO864OJovh3KBjfhOK83xxgjpR03I3iMymEEhwCgaBozfyxMFwBzcGNb
- Q3UN6yfEGxoam6jsBhWUGlJQZTpHMYllgZZGeHmGDIlnZADtICfIkjQAm56G5PNoTQ54
- nBbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6FesKDtw/3XP4ENySv1X7nbGm6/pV7R0m88jApbY15GEo3HZhvwjSYgzG75TkEqN2JhLM+uvl6ZWu@nongnu.org
-X-Gm-Message-State: AOJu0YzSMYn1UGP0/cbJu9ieDAWF3Tf1LJoGeP/N9s06F6vIjxhv5DKU
- QRceV3L14zWvWYEgoBTazxZaBEXK8tSWs0ggwrH+1DuIJysUqhuQsZLN1yngGI5F
-X-Gm-Gg: AZuq6aK5Wi0eh1Q0bmaUXuzAs8xoy0DCE3wLUeazi65Cj82g5uF2xL62kx4VELACwnS
- lvnTXkRyYBu3f7OWuKLdAMjdL2kW13/dWLZxeBHEM4+jNRVw8jjmV1KePH+66ijF3yPRwVZWLdJ
- 5jGF+D8iR9Qz/y+CrbIapEOVZsE8jd0iiUtzSTa6UJxbiIv93cIm9whjTxyeHXLezIfudUosq+0
- xXGpPfnQEiI4cNW6M3AVI0KyjqYdCxvE0ssnH3AmgzfEH0RKJ2HvOXuQEGUn/D+3LDnbNJMtIeW
- 3zvFPjX3ukGsHE6YSTnQnN7CVjOrrM7m6fFqMbeeSbT6M3iOaifI5AhHPf4KVY9gUGY5P4aucHA
- MWpxWdf/wJohvC9lZyZtGR/WSKwt+lqW6ekHaTo/toObGhLzOmxzOOPvPWwix6vRKlXfNNXoQTx
- A2NNtLQkXUPbMk+1kgyzwecC7ZbOS/Tdr5Le2GtCGULwf1Xj3gnxMOI7FhzQxFhRtow5oOPtEzZ
- v8Zp17wbN2/vP/Ixbldme6KX7GY33ka73tNqT3f7w==
-X-Received: by 2002:a05:7022:1288:b0:11e:3e9:3e8b with SMTP id
- a92af1059eb24-1272f7a190bmr1090404c88.50.1770902445480; 
- Thu, 12 Feb 2026 05:20:45 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1272a6942ccsm5083906c88.3.2026.02.12.05.20.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 05:20:44 -0800 (PST)
-Date: Thu, 12 Feb 2026 21:20:35 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Richard Henderson <richard.henderson@linaro.org>, anjo@rev.ng
-Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, palmer@dabbelt.com,
- alistair.francis@wdc.com, 
- pbonzini@redhat.com, gaosong@loongson.cn, maobibo@loongson.cn, deller@gmx.de
-Subject: Re: [PATCH v4 7/8] hw/riscv: Fix IOMMU PAS capability to 56 bits
-Message-ID: <aY3Thx7dXKKto0Ut@ZEVORN-PC.localdomain>
-References: <20260210-phys_addr-v4-0-725a589e83c8@rev.ng>
- <20260210-phys_addr-v4-7-725a589e83c8@rev.ng>
- <8bc64219-138b-45d7-b07c-bf627c2151e8@linaro.org>
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vqSRo-0007Hr-VA
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:53:16 -0500
+Received: from mail-eastusazon11021105.outbound.protection.outlook.com
+ ([52.101.52.105] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vqSRn-0001kZ-5x
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:53:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FLtclmEh8yvduL8PsDLL3sktuC2ArLF1frBqsmW47R6V0dKBXxp9sTQbG6NVXHtSNDztZctWHmTvzIE5Tiql81xOqZdLZx+wTT9/9ShYWlxdLZNnVJ9TZa5TPrV0PG52LNPrMv5uUpTSicX402gdTzdYw5dKGl/YsIBEeWlD8YL3PXyL+QQe7gNOX63B9TLv5auST2CWS3KIapTsEaIB+IxiBtvnDSZYSm8b1G+01+b3glt7y141a2UzRF9/qeQDBE1osmgt8ksy6lK54EriWToqZmIPd3dBB8DLfpHaTmiBYMHksmrMt4DVMaYsIIdlQBpIzY40xfwwREnOeBuhxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=28qb4oJTlecXhIC2DUF+bvwjDnZCqiF6SjJUV9t8OSg=;
+ b=HZD5Pp6ob8SFsA3ft25NgyzVYvtJwsDpQ1fzn7COt8rv6yUG8b0LpQ9gRWHKAz0WKlM5ujHlqLAx0sed45cfObltf6bSgEQ4kFNq97hmhtVL0+/NhqIK+EzEffbZutt5DSPRVo5mQ2zlIC+1ZBDNtnZeyR8RfBMIFj9ry1mFjmLPl183n/14mIRP5hUBEUzX+f3W81jkqL3+3Mt5mGXQOL2eJww3F/SbSjclkl7epI4a5coCL8F43P9NH1vG298rFbsaNV4AHknJ9PeR52UfN3CUWwUL4EPcxU9QPRIcl2Md0qd52Sfj1t1M8JNEJZwtsQ4GscXYyN+g26xwvBzaQA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=28qb4oJTlecXhIC2DUF+bvwjDnZCqiF6SjJUV9t8OSg=;
+ b=W/Ox/YQ/8pxd8NZfhJ91Uq0cd3RqYC6LEp+6ckNTku0chwYrfsakrG0yp7ZX9kh0pQY78nOX+Hit13j+/42fOjXH5/RIewzN3IdB8c5ddM3nd5yKsSDWvsjKp7/YkX9Dir0gptQCUKIogkmep1N1XZ4iUcx4OsKTyC7Jk1wkqJh9IwWYurb0Qjg8/k038jgmEaGfTf6BNcbEAaN3mGcd6/RiStXi4uAXS9uzsJR8tC6BXjmO1YLewWFZIeDi8nCpiZHQ1FUHVjzw/F8rUpKV0nVVqxUXl2qIQl2ane7biGf47Re0JSw9SITsAshtcYiHPFGtO9q/nmsjxKoEejUKuw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by SJ0PR18MB5040.namprd18.prod.outlook.com (2603:10b6:a03:418::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.14; Thu, 12 Feb
+ 2026 08:48:06 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::2bc8:6a5c:b10f:9e21]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::2bc8:6a5c:b10f:9e21%3]) with mapi id 15.20.9611.008; Thu, 12 Feb 2026
+ 08:48:06 +0000
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v1] hw/char/cadence_uart: Add BXRS register
+Date: Thu, 12 Feb 2026 00:47:46 -0800
+Message-Id: <20260212084746.1456927-1-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH8PR02CA0048.namprd02.prod.outlook.com
+ (2603:10b6:510:2da::16) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8bc64219-138b-45d7-b07c-bf627c2151e8@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|SJ0PR18MB5040:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b44e3dd-8078-4486-bf88-08de6a1370e1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|376014|52116014|1800799024|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ENSf56nkW/x/nUNJAT4hyX1Ot+Vvrw3h09PKF975DKsdx/uL5Lez4DRzEon8?=
+ =?us-ascii?Q?B76Uoo5XXIVGE/RyMfSutotGTe7ovm4IpKKWAllhEQrfgRVNUS53veT0030y?=
+ =?us-ascii?Q?IdVYnDB241a3m2/ljwbdofwN2qiI/n6c9xf9QVVnuAPiKOCKAlfVrcy+9t6S?=
+ =?us-ascii?Q?QjNF0rMOJaWAO8mEYa24LgVGxkXwk7vtPF32ZxYwItcOaHNkpXquGfViwFAu?=
+ =?us-ascii?Q?ZBilsVQsanrYtlY1KTH7s8RWAGLy1iRy7qUX3+RoZ0zkSs6EU1kevwT9Mwu5?=
+ =?us-ascii?Q?J7Ms1HLQRQ07isBeUXQiYXpgb3eR00XCX2B5qoIQ2LipVgHDRCmh45YApN4X?=
+ =?us-ascii?Q?06uD1F/ZnXruVVxGy6pxHRexapPzDCSQRQpjo3rVMAZCLWmxH9e11W4YCamF?=
+ =?us-ascii?Q?ust4ooIreDcaSz+R90iteufU+2W0cQuLfoPuwUxzMRWB7Qec5w9ITG9WXzzJ?=
+ =?us-ascii?Q?Q/SyNzGy0RrVK4KbmYbsKgKzusOxADzLSz649L/bt/fSoCVLGUjq0DkUmf0y?=
+ =?us-ascii?Q?G/iyZ59xL/jqDhJ28K9tWjP8nlNkfPXAxNkrZbLH37SiO70IjCx4h+SbxaB2?=
+ =?us-ascii?Q?j/ZX/2ctGIopxzdKe7d++57hBcP2bCZddqBTUM72DxuFikF5NYEZDAhPKQpR?=
+ =?us-ascii?Q?IlekqKmc+VlK7+uO+wipqQFXRd/WMluNl5vbY0VuYZtTI7+Asg/lT52prxxX?=
+ =?us-ascii?Q?6Qs6KBPepyr3RjyE1rA0DF0Y6N+TlOwq1dxYU72CBqzIBelaCCFwSI/RwOOA?=
+ =?us-ascii?Q?DLNCakOWa0dzGL7Jq690LTKXM9rhS8Xxxvr767cHl64otfPGICqK/j9oBkGz?=
+ =?us-ascii?Q?6N7y3+IHuvSyBk5px5KCwwcVhmgTohPDngGeFOfHVB9vdUxGbjg6tmAkY036?=
+ =?us-ascii?Q?LlO3BHZJF3+MvEWeGELEkC27hlazFMqsFEzQmrkdXSvpQkhI6hAFaC8cgpmE?=
+ =?us-ascii?Q?WE17zgBARvnqkbWTyFTdBsVcDg7e9JbzT/g18E+49tBI/45HahbIiT50U1tO?=
+ =?us-ascii?Q?xn4VayyuFnXPaJeGpKI4IViFOSXWOZxrXudNJu1Lh6TQeHRx6wczYkxdPQK5?=
+ =?us-ascii?Q?UBozXELedupsewXdhmEhZzUhZPddW/3A6k9o75yHPyv9LX94mZNOBPZQDloz?=
+ =?us-ascii?Q?+5J0D7NOS1mdY6gCGOKuKimN4vIEvrYFz6NlgJOSGZbNKduaphj3IxBf72t3?=
+ =?us-ascii?Q?nn73nCOUSboLZzkiBknzMfX9v5Pz+Owqd8vDCO1r5IJ0Y0wbDshtd4tV4oc6?=
+ =?us-ascii?Q?095w3jg5xd/VesEqjjZ/ZPS05KNH2YCoYq+zH/ahC7+gAeWr5yTCz87MshsJ?=
+ =?us-ascii?Q?zBsm9owrDtIYo320Hhfd0xo9jp2I/H9zKWnCi9sblaaSgXRtwfq+JsCN7J7s?=
+ =?us-ascii?Q?PQA9iWqGOnYQaKYPSZk4SQS0H1bdbvkqgZjnJksU55ZKuTlBkCUte7/UY552?=
+ =?us-ascii?Q?JG2nrX/4GyMCi6cB6DRLKmBKoYkHp0z0rI8sskv8wAPLBWQYywzv0lX96nVg?=
+ =?us-ascii?Q?Z2k8nXYatW05dwTbI7fkmDVg+022QWuISCDq3Z/9SSnedw01uv3GVjxa8JHU?=
+ =?us-ascii?Q?aQ8lMm2zKeutyd/h0Sn8kI46oCu2Gw6EBht4VZ0bjSKXB0XVdr3aO8VPBLYZ?=
+ =?us-ascii?Q?LUtnFZcFOzybo3uzdoeFLTw=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(52116014)(1800799024)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mCdhghIIvOD3RowIv2RSSNNy4vvreh+OrNke9azbheE7r4BixHJJtnOpeMcp?=
+ =?us-ascii?Q?yc4+tRU2qRRQgJQOSbxqCDrRYvRFIwYmRJlx/DRsntu9rhj7urcsQIjihTtO?=
+ =?us-ascii?Q?t2A5uCkfpTNDrjnDYOpervrX/+tc6H9rS7plN/GGIlCMB1SdKEAdr4/4KK/6?=
+ =?us-ascii?Q?jcPWKQ79HpxCCJoDaRCIih6mEcmEQjWtFbfyyQ6I5bTfEVZ1C8FcEtUiZ6Sg?=
+ =?us-ascii?Q?URJLzCm40BNVKFF+p1Wa6zSErBrmOX88YD+ngjyEGSvc+O5gWq3T8V/LX2Yx?=
+ =?us-ascii?Q?GFgEQxAThUif2VOZl5lt7PWSt54v8Uqh5eKXXZ2Ttu6Ieqz5jSqoYh16M16W?=
+ =?us-ascii?Q?gv2BErB/zzkojefu2MNeJ2X26larzrd/5lnVmJOXUcmo+AkWGTQIMXqjeOKo?=
+ =?us-ascii?Q?bdDwQXiTjJNY54T55XMMWRXb3foKWXhUAcyorfD96fkrWr/cPwYM/v1VKUGQ?=
+ =?us-ascii?Q?oaCDXI9RKORczEXL8vKMgPLbk0T1FDExH5EvJM/MKJ34CG36omOqFRDaMdax?=
+ =?us-ascii?Q?t03ofMuWmjKnwnO0cX1xDGur1DplACz+4KGKyg+YEulsuDzHwt4k7eHXbcKf?=
+ =?us-ascii?Q?xff0phudccFOf54RWYKiF/8eNbtElhvK4qGEDNn9KaWxMBmORgJUroSUm6h/?=
+ =?us-ascii?Q?kgcM8M6AlSTM01An7Z38q8gZjSJWh+qFaRGyH81RgJ88speqoPKSh+bF4616?=
+ =?us-ascii?Q?Bw4/+5UySt7oiCYnjP7rBhqVwpzvyy5v1xxUv4v2veOLBDlW2cy/sMmYWg8x?=
+ =?us-ascii?Q?xAtR56upLfeV38U2p1RJONQJ6z+CPdLG12ISEi/4MvRTJiBhxnrdI7oxMtiL?=
+ =?us-ascii?Q?8Y0v1BdJRaTliVDrttO+JFDkvtH3KdyJetl3C/WZGktiLmoSH4kcH+xTHM5r?=
+ =?us-ascii?Q?FdyUxJdKHKdYTG8ozznJc9BTItqRk/rABIUuTnCLsjLfi+dhJkyrsa0b3yZE?=
+ =?us-ascii?Q?uxG5YDk2lfTKPIW6ucvzo5fsvneW7nnNJttAflGYrx0blR2ukAFcpUY3Lo8/?=
+ =?us-ascii?Q?oTKhjZLH02TkQVc0tDZJ+MJ35nOYtKhnFnbC/NghkmUIFnNoVzz+dCR216W+?=
+ =?us-ascii?Q?osxaRsuJ1nI7PlaAaHs5EE8VqbhAtrHsj6CnNPygFXb5nAak9uFNV1Ed8xVg?=
+ =?us-ascii?Q?69J54qiTEQMB3/vueUUQYFXYr5qaHuvvtNmZ77XPLhrNzBLe8qRNgo3U54Tk?=
+ =?us-ascii?Q?cXXdJ4HQ7DGi0zFkOCzAUMCcBV29UtEo91SKhyWz4oRu5p/KW8xHiKgiYBl0?=
+ =?us-ascii?Q?fGCL/vN3H/0sEnOQ3L3A5SkymqwbjYaHzZCnHAceciXJ6MLGbqdMDlCn7iwA?=
+ =?us-ascii?Q?thy+tdXiBgkZcsBWUFnQbBdZa+ODsyUFlaOxeY1LlsGE2Gk4JpLdm+KwEWRu?=
+ =?us-ascii?Q?33w9TEqwuhn6uI86CdMT9OghIv1i0x34SCBLW8ioCEecrXmZeESS1t/XBpVW?=
+ =?us-ascii?Q?BgyjgdkDrQcIXGONWegKmoJRagzXyqVyI8WpvrfYJ5mPMnKRlTavP4ZAcF0e?=
+ =?us-ascii?Q?YxPxMTI0tInmYrexv5BNEuznSUl/yZpRsjto+VwPEsktnWKEDNVt8Sfgsllg?=
+ =?us-ascii?Q?UcTfodylBjv++MhCbwYSH6na6BII1ITEMh/80OdUD47TnahP4ZJjA5wEwTcj?=
+ =?us-ascii?Q?z3W6m9laK3/vEh7fmnMGKn4Wd4Uz8+Q3gThfcPeBRuK//YJSUiTQmSFufpTC?=
+ =?us-ascii?Q?un3O1ULkJ02gpt66cZTq2Kboe5co4C7rrHwYwXaLa1jnGmYg?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b44e3dd-8078-4486-bf88-08de6a1370e1
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2026 08:48:06.5026 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nsLDJmnGPOmxL98gA0s8P4Ly8wqkNhRlRYCEO2vfhWStD4PsuyfaAfIRYJrGtEHmUIrGUmzfLM1IKOrl82Jc9g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR18MB5040
+Received-SPF: pass client-ip=52.101.52.105; envelope-from=kchiu@axiado.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 12 Feb 2026 08:26:33 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,58 +163,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 11, 2026 at 11:59:45AM +1000, Richard Henderson wrote:
-> On 2/10/26 21:33, Anton Johansson wrote:
-> > Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
-> > with the fixed size of the riscv64 physical address space.
-> > 
-> > Better would be to somehow determine if a 32-bit or 64-bit cpu is
-> > running and set accordingly, but I'm not sure how that would be done
-> > from the device instance init function. This field is unused anyway.
-> > 
-For runtime detection, we should use riscv_cpu_is_32bit() (implemented in
-target/riscv/cpu.c, declared in target/riscv/cpu.h).
+The new CADENCE UART driver in upstream kernel access BXRS register
+This patch adds BXRS (RX FIFO byte status register) or there would be
+kernel panic if user are using the new CADENCE UART driver
 
-That said, I don't think the IOMMU device should call riscv_cpu_is_32bit()
-directly, since it does not have a reliable CPUState handle in its init path. 
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/char/cadence_uart.c         | 2 ++
+ include/hw/char/cadence_uart.h | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-Following Richard's suggestion, it would be better to add a pas-bits property
-on the IOMMU and set it from virt_machine_init() (or equivalent machine code),
-where the CPU width is already known(we can use riscv_cpu_is_32bit() fn get it).
+diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+index eff6a3c4d1..f57cad57a8 100644
+--- a/hw/char/cadence_uart.c
++++ b/hw/char/cadence_uart.c
+@@ -120,6 +120,7 @@
+ #define R_PMIN     (0x3C/4)
+ #define R_PWID     (0x40/4)
+ #define R_TTRIG    (0x44/4)
++#define R_RXBS     (0x48/4)
+ 
+ 
+ static void uart_update_status(CadenceUARTState *s)
+@@ -523,6 +524,7 @@ static void cadence_uart_reset_init(Object *obj, ResetType type)
+     s->r[R_BRGR] = 0x0000028B;
+     s->r[R_BDIV] = 0x0000000F;
+     s->r[R_TTRIG] = 0x00000020;
++    s->r[R_RXBS] = 0;
+ }
+ 
+ static void cadence_uart_reset_hold(Object *obj, ResetType type)
+diff --git a/include/hw/char/cadence_uart.h b/include/hw/char/cadence_uart.h
+index 751a751248..0f97e19112 100644
+--- a/include/hw/char/cadence_uart.h
++++ b/include/hw/char/cadence_uart.h
+@@ -29,7 +29,7 @@
+ #define CADENCE_UART_RX_FIFO_SIZE           16
+ #define CADENCE_UART_TX_FIFO_SIZE           16
+ 
+-#define CADENCE_UART_R_MAX (0x48/4)
++#define CADENCE_UART_R_MAX (0x4C/4)
+ 
+ #define TYPE_CADENCE_UART "cadence_uart"
+ OBJECT_DECLARE_SIMPLE_TYPE(CadenceUARTState, CADENCE_UART)
+-- 
+2.34.1
 
-Thanks,
-Chao
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >   hw/riscv/riscv-iommu.c | 12 +++++++++---
-> >   1 file changed, 9 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> > index b46b337375..c3d48541b7 100644
-> > --- a/hw/riscv/riscv-iommu.c
-> > +++ b/hw/riscv/riscv-iommu.c
-> > @@ -2453,9 +2453,15 @@ static void riscv_iommu_instance_init(Object *obj)
-> >       /* Enable translation debug interface */
-> >       s->cap = RISCV_IOMMU_CAP_DBG;
-> > -    /* Report QEMU target physical address space limits */
-> > -    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-> > -                       TARGET_PHYS_ADDR_SPACE_BITS);
-> > +    /*
-> > +     * Report QEMU target physical address space limits.
-> > +     *
-> > +     * Currently set to the riscv64 limit of 56 bits (44 bit PPN),
-> > +     * riscv32 would use 34 bits (22 bit PPN).
-> > +     *
-> > +     * This field is currently unused.
-> > +     */
-> > +    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, 56);
-> 
-> Probably better to make this a property.
-> 
-> The iommu object already has a number of them, set by virt_machine_init, and
-> that function already has a handle on the cpus being instantiated.
-> 
-> 
-> r~
-> 
 
