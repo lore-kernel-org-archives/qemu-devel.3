@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6828DEE368C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A1BEE3692
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvl-0006t9-Fa; Thu, 12 Feb 2026 09:44:33 -0500
+	id 1vqXyB-0001W2-Tu; Thu, 12 Feb 2026 09:47:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvX-0006LG-OF
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvW-0006Hk-3L
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=R/H8PR4Z+t+yD0VOfkreALdVOsHffEBJGMz/d0n5vsk=;
- b=SPz7Wh6EQDb2hWbaGykHQKvyyp+ujkjE4oZsr49uXGEKhfVBl6xe3xaAQ1wnnimNBtoyX/
- YyC4rXCLAVsBN2Ajl8hmKzVAOh8sic4ry+4f7uugRxFLubtw1VFFvtPyiYTmK5HyS89JyD
- /PuPYcK8S+MRBIZRxWMeeTjvPR2aELU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-Hau3JWZYMN608ED3qJ8qPA-1; Thu, 12 Feb 2026 09:44:16 -0500
-X-MC-Unique: Hau3JWZYMN608ED3qJ8qPA-1
-X-Mimecast-MFC-AGG-ID: Hau3JWZYMN608ED3qJ8qPA_1770907455
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4806cfffca6so88971185e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vqXxt-00019D-6Q
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:45 -0500
+Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vqXxG-00072S-0S
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:07 -0500
+Received: by mail-dl1-x1232.google.com with SMTP id
+ a92af1059eb24-1233b953bebso152050c88.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:46:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770907564; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eo1fOC+30hgpup45lB7FUSQjIoKt4bB0yeyDKFMcs4QiGzO0tcEGpQk8x6Ryw8Lr8J
+ mqL7TTG+suI6NRSTV98E1yK3gQ6f54kWlfjZwUVsePog8oauyaJnWe83rjZkHLto1JIx
+ IHJy0Y/uM4Ji11cVIqx8bPseHxhsM/28Py7Y8oDzb9tTMd5d+FfpvCq5q3E5Mf+NfO7V
+ KJ5mzgBuaz2cb04FXRowHsYwaPsr4gBfuCJO4fWBEN0dVWkh5PWocJ7NKPV1yCwAv8ZC
+ lt6jhLjBzKO3HSAiTtgRwKg0Y1J5vyy+TEpgL9cTiTOi8RiXRUQ2Gs9sE0oWk0zhuAhP
+ WUfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
+ fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
+ b=H2uFoPQwx71PftVFefBYUlmmWlBQx3C1DusfktT2WPwHgrgtaJNT2JE68d9y7x14VT
+ oWGS/GvkOfq3bg/U4aUiUvFDJIzX8RHl7rMhOVJlLxLhOaNfyzIzfTVCn0qJimwVsYxh
+ zEIA0DCcZvZIPyfSZZDIWf5qYXPB+t5Ej0HYMEFDZxTRdLGw8mic0YOG2/66VpCPvT4n
+ q3yeMtA9Xe8oGXi10AHVIfwEPBBs3THVN9cNg/bk683LrEIwdIXRX8/p3ETjwEy41L8Q
+ IzTglvNxnKnIeVlKuc5qtyuay/k1xIx8J5mw5R8eiCSdXLdWITh2TkZpq0Jv05i4E5ba
+ O2JQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907454; x=1771512254; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R/H8PR4Z+t+yD0VOfkreALdVOsHffEBJGMz/d0n5vsk=;
- b=UihyS6cr9sXnu/VIDEELSC9ZHDoEuEZ44V/hmb8bU6TXfJL3kz/dyA+hbmS1qzkMbe
- /2iQdMuPIuPdnncKpwwFXPi7PTusIc3EP69eC5s6zm5UlMh2e+cJ7nPNnATSHOUtEf/z
- fUI6WIElvy7BaxARdPaTZ6SH4H/lVRYcYwSStWveBmxgsObtAuxYsU1wU/JNUVGAMbIZ
- jMrLLNYmf8kySACGq43sCTJyLUTFypqNo81nWASLfSd00MPe4vX2PBedDpEsi6HnqYhu
- GZrQB4pQOqo0sxO+DTZGvejiIBJsRGQOiZzw53mBRAJfdfq68Zxcu5IDwlEA5qo/Ydm4
- kf9w==
+ d=linaro.org; s=google; t=1770907564; x=1771512364; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
+ b=fYE3Krd92hY4JWJX6N3zxO3bB/YL4XEVVJWtHs5wHEQjpH3ujnHiF0Xe7YCwc2Cmjk
+ kSVpIHsaitXv1K8w4ZBj8GItqdPloT5NvPx6CtuHyioeADlYbf3rgNzQtk1mfB+ltQ+Q
+ 1uGd0LpHJlNZgPURYhXDAuRfhThj/3jFwU4YbLndWO33aYEn/1ZfGuwM59tTnwjZ1s7u
+ 7HHbO16e+BX+3ukr4Pxqp+kZZRDr/pJWBxy5HmTzNXmQN6BZdtZ2EKCoqjp5IfpJbsIF
+ ZacnGPzX3TiUbYOyPakya1jLLowziCWEmzdD4t6SXJyhjhshHQbnCsyVIFGucUjKpIJZ
+ IpIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907454; x=1771512254;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=R/H8PR4Z+t+yD0VOfkreALdVOsHffEBJGMz/d0n5vsk=;
- b=QWgnFYZ+KNPEqXM/S3aJGJ+Eq6oYqQENLUtNWTPXdOnLZGRixvT+/K8FImZBs2ZUOP
- 9RtbcBae5l6QYPBhPhcxFMk7p1k03qPIcHJvPqzHi9uq5wtM2ZK9NHUpEUrsKudsDfZN
- CBHDp+c50+8XYMZOKuoGMUYfwZt9beJqy8voxPJ8jSYvXJF5ytTdFQKj+x3oQSsxMPQO
- QEuGgNCwQkC2U96edSeZpONDF+IzYdNGkOFpk7QM6lmgpXVrM8A8M0zlSMJ5zo5LIfjp
- ETFpMw1sQAxncm4xwz2laFrDoofxFSWV/oeknZb3SZvGGsauq9WAuUKdQ86FODCBEMA1
- XgCw==
-X-Gm-Message-State: AOJu0Yxgm8z3JHQxn26GeRMB/LB1Mrd4z/iO9nwpm20xIkj4IstJDdzE
- VbxudujfnJhOCV/efHjArDCgnngIFxTlzyKBoIfZb+E7KbErX1nDbboyUBLehgnzVRF2JJivLMy
- vXRrUGkndnX5iZroD76GvDTojK3SQCaAbZ1iL3p56WkZFKz+1lDtXHVKUnWs+HD0WaF4AQPh+ZK
- I66eC22E5K0V/9s3hNQIs4bJbJgK+EZdSiA8zzhe1n
-X-Gm-Gg: AZuq6aKYPD2AJNFcIW6T5sLHvzZ8sll6cReFWNEOZXOUXf41sNUyMZY2YsvDg+Oh51B
- JhZyFr4GzKai5f6EBnZpd+YkjIFls8++lvdWjmtQpaWL3kKlow3mTi2rdQh0oWHYJF7XzjhGi4W
- arCn+JkepuDJ3HIVpCLpVwaTCjoawfYWBoS4XmWbN6k9tdo+co7f7OD6C2UHWkLF25NGtIrTJKX
- /DSDRNHBnxJ8XQvhJY9bPuPSovXEzCSQ/6asQj00nH03vZMass73MXLY49Vaj6vU1WQ0CYcUpGE
- w2VPuxcPC9TD4tBN2uqzLwbXM9yQyHUUSCAJC9QDjEsxlTw9jUesQlnlQOTS+HDS2gcc07ueOaB
- 8t5+s/zfrYMe5yNbG0CQoDkl0LbcGMQ/UV4hC2lOV2T8DfjCnXpXit7BZqHRyTYJL9wCr4370Dj
- I1hYWKHTOHzvhLWnivpseUSJhaJd2QJPl1fffj3PQeVB3hXYNujnc=
-X-Received: by 2002:a05:600c:888b:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-48367184279mr23990745e9.32.1770907454325; 
- Thu, 12 Feb 2026 06:44:14 -0800 (PST)
-X-Received: by 2002:a05:600c:888b:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-48367184279mr23990425e9.32.1770907453808; 
- Thu, 12 Feb 2026 06:44:13 -0800 (PST)
-Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835ba1670fsm77374815e9.4.2026.02.12.06.44.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:44:10 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 38/41] qdev: make release_tpm() idempotent
-Date: Thu, 12 Feb 2026 15:42:40 +0100
-Message-ID: <20260212144244.22579-39-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
-References: <20260212144244.22579-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1770907564; x=1771512364;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
+ b=XLxFpmGHHp+NRdrmpWzfKr/VDaLy/uBOjf6rL8PgivptrOXMAvzEoaIrWfLa4M2qP1
+ ZljcI4beHX0728MR1AQMF+0aKfKFajrL/c2aBDgvNNUSw1Jt7KjtCSga8QzMlSqfhOeF
+ 3eznK+sHUaJicREGrTSh1its88sjA6G7IB2PJgOpfZPPOTOo4p5Y4CRMSRHtjAjNHSko
+ M05LJzrjRRGuy2dNeqbqdDXZUxUviTgXhIyjKCCTeZINTEutVJFHKa3IY2tdK1m3p9Vb
+ iTWdPukUZBuehkxOzlsuvryq987r2is0uIXH8jADjE5bFF1GC2YuayIk5DUIF34t4bM8
+ WugQ==
+X-Gm-Message-State: AOJu0Yzbzzry+dYlBLAHQbxjL9UgR2vSM9x1DTcYBEzNN4E6g3CBHWY6
+ /UlCU/fk6CNM93KdkiDlKqn6On6i/WyuJjzTo97I5wNf018cpU6KRZWtjxKLDfhQI4z4+lNXZjb
+ VR3x0n2lyvn8FBb1xJCUFxW9mFoBOrKRZh12LCAF37X00R4jNe3jz
+X-Gm-Gg: AZuq6aLe/3+pbxu2Q5VpWsf/TsqGy2zueXJvhLHtJMFjutiRWI/3dvbbZl57/jKUXDs
+ AssDBlY02s+PsjzE8kRKrOnBITrMnmoCWZnUqt6/hZ54JBVlyU2O+YnZbnwCMSxd4OO3+Wh8/BA
+ B0h+vHchXKpM6uf0euCT2WvaYswO8ga35EGs6vmZ9YwY3lHLwKJqMuzhCfxF2bhADmGhKmun0mv
+ nrjObqxbZKCoEAjyReOBCAF8zenG7jnlnTxbX0cdjfkZvjJkWucx/A7D4eL0zpR8OwNa2d39Jpe
+ u7JBvQ3mtM4kdTxpSMRK1Yjve+bvLJ+g/pxojSkz6iHfyQ5ZmNlrhfNARJrQnuIRIezzXvXUw5A
+ 31Q==
+X-Received: by 2002:a05:690c:6610:b0:794:ed66:86a8 with SMTP id
+ 00721157ae682-797931989femr43665947b3.35.1770906853595; Thu, 12 Feb 2026
+ 06:34:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260212114034.265498-1-thuth@redhat.com>
+In-Reply-To: <20260212114034.265498-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Feb 2026 14:33:59 +0000
+X-Gm-Features: AZwV_QiuN4dCCS579aW6JSRI9jvlT4AeQKotxgf-MYQmqcdB_iJsRv4e9IyXzCQ
+Message-ID: <CAFEAcA-v1yWyzW5fTw_ypo7XfvOur=tLuAJ_-=cbru=8Ukhqbw@mail.gmail.com>
+Subject: Re: [PULL v2 00/14] Misc patches (s390x, tests, python, docs, ...)
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-dl1-x1232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,33 +114,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Thu, 12 Feb 2026 at 11:40, Thomas Huth <thuth@redhat.com> wrote:
+>
+>  Hi Peter!
+>
+> The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
+>
+>   Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-02-12v2
+>
+> for you to fetch changes up to e44a26ba940214824b61976324058e73d9f41658:
+>
+>   python: drop uses of pkg_resources (2026-02-12 12:34:00 +0100)
+>
+> ----------------------------------------------------------------
+> * Updates to MAINTAINERS file
+> * Fix CI (broken pkg_resources in python, revert RCU change to fix alpha test)
+> * Fix endianness issue in PCI code on s390x
+> * Implement DIVIDE TO INTEGER instruction for s390x TCG emulation
+> * Bitesized documentation updates (run-tcg-tests target and fd-bootchk property)
+>
 
-So it can eventually be called multiple times safely.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250429140306.190384-4-marcandre.lureau@redhat.com
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20260108230311.584141-5-csomani@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- backends/tpm/tpm_util.c | 1 +
- 1 file changed, 1 insertion(+)
+Applied, thanks (and this does indeed bring our CI back to all green!)
 
-diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
-index a64e156f45f..264bff22a91 100644
---- a/backends/tpm/tpm_util.c
-+++ b/backends/tpm/tpm_util.c
-@@ -72,6 +72,7 @@ static void release_tpm(Object *obj, const char *name, void *opaque)
- 
-     if (*be) {
-         tpm_backend_reset(*be);
-+        *be = NULL;
-     }
- }
- 
--- 
-2.52.0
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
+-- PMM
 
