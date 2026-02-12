@@ -4,115 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9E3EDF051
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A99EEDF052
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqRLZ-0001Xo-Mj; Thu, 12 Feb 2026 02:42:45 -0500
+	id 1vqRMw-00020y-5z; Thu, 12 Feb 2026 02:44:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqRLY-0001XM-EX
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:42:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqRMt-00020T-QH
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:44:07 -0500
+Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqRLW-0005AD-Db
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:42:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770882161;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FayJAoU/TFJveidYrD/CBA635SQfEOywZsbpI6ljZ2o=;
- b=iHNE4x3la1P2ScIjGeFSQSsA0Vt8ttxrCJnZ6SyIpVmBg5zkI3y5i03BSlWiUKYsliD+oq
- R++QVzfFz5I197D0OzquxZ0/WceJHxQpjFJsCuhy+U6jABNhgtpIAhFpofUEw6FgSuntJe
- gcaqQkLv/wTl+R8HkRBd86MXpC0ei28=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-lPQ8EdYvNaWakkdzvM14uA-1; Thu,
- 12 Feb 2026 02:42:37 -0500
-X-MC-Unique: lPQ8EdYvNaWakkdzvM14uA-1
-X-Mimecast-MFC-AGG-ID: lPQ8EdYvNaWakkdzvM14uA_1770882156
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 341B318003F6; Thu, 12 Feb 2026 07:42:36 +0000 (UTC)
-Received: from [10.45.225.23] (unknown [10.45.225.23])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 322441800464; Thu, 12 Feb 2026 07:42:32 +0000 (UTC)
-Message-ID: <7a2d1bae-886f-4521-b7d0-f7c81e5588ef@redhat.com>
-Date: Thu, 12 Feb 2026 08:42:31 +0100
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqRMr-0005Fw-3x
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:44:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1770882245; x=1802418245;
+ h=message-id:subject:from:to:cc:date:in-reply-to:
+ references:content-transfer-encoding:mime-version;
+ bh=s3rTPHBPJNdZpesE6SpmN08sfwQIa3T7hMDE9/8Sk3U=;
+ b=dsJnrxE0grEMHO/u3sIaIe98KftW/c/CyE3bOwTL5TUbXl8DKU2cKATh
+ NqLiwIx7X1j3jdo/7llA34gxGaHMaqkAqWIRe1DySsWeAWW54AnMYlOsQ
+ bK1NE+OLbIfDr6EQXIRX2cp+fprDKD5mkKZPQp35b5Y6W4sgBQiE/GaZn
+ hfpc3a7AUlRYydH+94I6AWhxTZTnKZDKRUvN1T7ed9rWnDMrpppbyY82O
+ is6YpFYTqRCXZGPW6BabhdTlTV3UoEVRyivR5J49x93L4dM40e/t8Ira6
+ n/GPl2XaRSifnMzkOtzz+GxJcXz/pubnUBTm8geWucOEO/YbZzY+PHEEn Q==;
+X-CSE-ConnectionGUID: i4cK12JUTyaVzge8q80Xpg==
+X-CSE-MsgGUID: 3kpPCJu2T1yTxK9KErN4cg==
+X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208";a="825722408"
+X-MGA-submission: =?us-ascii?q?MDH7N1a44JDa6CvSJ+huGrZr7Sf8EEGFbmWR+f?=
+ =?us-ascii?q?VfvT+zMwbGlJbCAxMjPg8W0vcrqdizdcUkLDWNfkCnoIt9/Z3m+L1v6X?=
+ =?us-ascii?q?+ducFUJ1aHRSogaiIyQ1I63+yqbjU5TiArgfJMzFSGdiFLraXo/AP3ma?=
+ =?us-ascii?q?A5?=
+Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
+ by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 12 Feb 2026 08:44:00 +0100
+Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
+ [193.56.47.18])
+ by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61C7hx5Y026715
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Thu, 12 Feb 2026 08:43:59 +0100
+Received: from rocky.hd2c.dom ([129.181.244.14])
+ by smtp-hub.atos-infogerance.fr (envelope-from
+ clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
+ 61C7hxJY038576; Thu, 12 Feb 2026 08:43:59 +0100
+Received: from openbmc (unknown [10.22.85.22])
+ by rocky.hd2c.dom (Postfix) with ESMTP id 3A908256CA5;
+ Thu, 12 Feb 2026 08:43:59 +0100 (CET)
+Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
+ by openbmc (Postfix) with ESMTP id 745E98104811;
+ Thu, 12 Feb 2026 07:43:58 +0000 (UTC)
+Message-ID: <669e9b9b6fe10f797d8d9571c7327c8a5617ae3f.camel@eviden.com>
+Subject: Re: [RFC PATCH 04/14] intel_iommu: Create the nested hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, xudong.hao@intel.com
+Date: Thu, 12 Feb 2026 08:43:37 +0100
+In-Reply-To: <20260205031133.74357-5-zhenzhong.duan@intel.com>
+References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
+ <20260205031133.74357-5-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/i386/pc.c: add description for fd-bootchk option
-To: Choon Keong <ckeong.teo17@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- mst@redhat.com, marcel.apfelbaum@gmail.com,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260211162909.6550-1-ckeong.teo17@gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260211162909.6550-1-ckeong.teo17@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=193.56.114.177;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,37 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/02/2026 17.29, Choon Keong wrote:
-> The 'fd-bootchk' option for pc and q35 machines currently lacks of
-> description in the help output. This makes it difficult for users
-> to understand the purpose of the command.
-> 
-> This commit solve this issue by adding description using
-> object_class_property_set_description() in hw/i386/pc.c,
-> adding the the description message for the option 'fd-bootchk'.
-> 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3193
-> Signed-off-by: Choon Keong <ckeong.teo17@gmail.com>
-> ---
->   hw/i386/pc.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 5cb074c0a0..4687719766 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1822,6 +1822,8 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
->       object_class_property_add_bool(oc, "fd-bootchk",
->           pc_machine_get_fd_bootchk,
->           pc_machine_set_fd_bootchk);
-> +    object_class_property_set_description(oc, "fd-bootchk",
-> +        "Enable/disable boot signature checking for floppy disks in BIOS");
->   
->   #if defined(CONFIG_IGVM)
->       object_class_property_add_link(oc, "igvm-cfg",
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Ck9uIFdlZCwgMjAyNi0wMi0wNCBhdCAyMjoxMSAtMDUwMCwgWmhlbnpob25nIER1YW4gd3JvdGU6
+Cj4gV2hlbiBwYXNpZCBpcyBlbmFibGVkLCBhbnkgaHdwdCBhdHRhY2hlZCB0byBub24tUEFTSUQg
+b3IgUEFTSUQgc2hvdWxkIGJlICAKPiBJT01NVV9IV1BUX0FMTE9DX1BBU0lEIGZsYWdnZWQsIG9y
+IGVsc2UgYXR0YWNobWVudCBmYWlscy4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVh
+biA8W3poZW56aG9uZy5kdWFuQGludGVsLmNvbV0obWFpbHRvOnpoZW56aG9uZy5kdWFuQGludGVs
+LmNvbSk+ICAKPiAtLS0gIAo+IMKgaHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jIHwgMTAgKysr
+KysrLS0tLSAgCj4gwqAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9u
+cygtKQo+IAo+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMgYi9ody9p
+Mzg2L2ludGVsX2lvbW11X2FjY2VsLmMgIAo+IGluZGV4IDY3ZDU0ODQ5ZjIuLmQ2MWNmZWMxZTYg
+MTAwNjQ0ICAKPiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMgIAo+ICsrKyBiL2h3
+L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuYyAgCj4gQEAgLTY5LDExICs2OSwxMyBAQCBWVERIb3N0
+SU9NTVVEZXZpY2UgKnZ0ZF9maW5kX2hpb2RfaW9tbXVmZChWVERBZGRyZXNzU3BhY2UgKmFzKSAg
+Cj4gwqDCoMKgwqAgcmV0dXJuIE5VTEw7ICAKPiDCoH0gIAo+IMKgICAKPiAtc3RhdGljIGJvb2wg
+dnRkX2NyZWF0ZV9mc19od3B0KEhvc3RJT01NVURldmljZUlPTU1VRkQgKmlkZXYsICAKPiArc3Rh
+dGljIGJvb2wgdnRkX2NyZWF0ZV9mc19od3B0KFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2Qs
+ICAKCkRvZXMgdGhpcyBjaGFuZ2UgYnJlYWsgbmFtaW5nIGNvbnNpc3RlbmN5PwoKT3RoZXIgZnVu
+Y3Rpb25zIHVzZSB1c2UgaWRldiBmb3IgSG9zdElPTU1VRGV2aWNlSU9NTVVGRCBzdHJ1Y3R1cmVz
+Cgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIFZURFBBU0lERW50cnkgKnBlLCB1aW50MzJfdCAqZnNfaHdwdF9pZCwgIAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIEVycm9yICoqZXJycCkgIAo+IMKgeyAgCj4gK8KgwqDCoCBIb3N0SU9NTVVEZXZpY2VJT01N
+VUZEICppZGV2ID0gSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVGRCh2dGRfaGlvZC0+aGlvZCk7ICAK
+PiDCoMKgwqDCoCBzdHJ1Y3QgaW9tbXVfaHdwdF92dGRfczEgdnRkID0ge307ICAKPiArwqDCoMKg
+IHVpbnQzMl90IGZsYWdzID0gdnRkX2hpb2QtPmlvbW11X3N0YXRlLT5wYXNpZCA/IElPTU1VX0hX
+UFRfQUxMT0NfUEFTSUQgOiAwOyAgCj4gwqAgIAo+IMKgwqDCoMKgIHZ0ZC5mbGFncyA9IChWVERf
+U01fUEFTSURfRU5UUllfU1JFKHBlKSA/IElPTU1VX1ZURF9TMV9TUkUgOiAwKSB8ICAKPiDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoVlREX1NNX1BBU0lEX0VOVFJZX1dQRShwZSkg
+PyBJT01NVV9WVERfUzFfV1BFIDogMCkgfCAgCj4gQEAgLTgyLDggKzg0LDggQEAgc3RhdGljIGJv
+b2wgdnRkX2NyZWF0ZV9mc19od3B0KEhvc3RJT01NVURldmljZUlPTU1VRkQgKmlkZXYsICAKPiDC
+oMKgwqDCoCB2dGQucGd0YmxfYWRkciA9ICh1aW50NjRfdCl2dGRfcGVfZ2V0X2ZzcHRfYmFzZShw
+ZSk7ICAKPiDCoCAgCj4gwqDCoMKgwqAgcmV0dXJuIGlvbW11ZmRfYmFja2VuZF9hbGxvY19od3B0
+KGlkZXYtPmlvbW11ZmQsIGlkZXYtPmRldmlkLCBpZGV2LT5od3B0X2lkLCAgCj4gLcKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIDAsIElPTU1VX0hXUFRfREFUQV9WVERfUzEsIHNpemVvZih2dGQpLCAgCj4gLcKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgICZ2dGQsIGZzX2h3cHRfaWQsIGVycnApOyAgCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGZsYWdzLCBJT01NVV9IV1BUX0RBVEFfVlREX1MxLCAgCj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIHNpemVvZih2dGQpLCAmdnRkLCBmc19od3B0X2lkLCBlcnJwKTsgIAo+IMKgfSAgCj4gwqAg
+IAo+IMKgc3RhdGljIHZvaWQgdnRkX2Rlc3Ryb3lfb2xkX2ZzX2h3cHQoSG9zdElPTU1VRGV2aWNl
+SU9NTVVGRCAqaWRldiwgIAo+IEBAIC0xMTYsNyArMTE4LDcgQEAgc3RhdGljIGJvb2wgdnRkX2Rl
+dmljZV9hdHRhY2hfaW9tbXVmZChWVERIb3N0SU9NTVVEZXZpY2UgKnZ0ZF9oaW9kLCAgCj4gwqDC
+oMKgwqAgfSAgCj4gwqAgIAo+IMKgwqDCoMKgIGlmICh2dGRfcGVfcGd0dF9pc19mc3QocGUpKSB7
+ICAKPiAtwqDCoMKgwqDCoMKgwqAgaWYgKCF2dGRfY3JlYXRlX2ZzX2h3cHQoaWRldiwgcGUsICZo
+d3B0X2lkLCBlcnJwKSkgeyAgCj4gK8KgwqDCoMKgwqDCoMKgIGlmICghdnRkX2NyZWF0ZV9mc19o
+d3B0KHZ0ZF9oaW9kLCBwZSwgJmh3cHRfaWQsIGVycnApKSB7ICAKPiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgcmV0dXJuIGZhbHNlOyAgCj4gwqDCoMKgwqDCoMKgwqDCoCB9ICAKPiDCoMKgwqDC
+oCB9Cg==
 
 
