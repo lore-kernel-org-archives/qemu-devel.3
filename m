@@ -4,86 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6145EDF04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828E1EDF04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqRQy-0003JF-Jc; Thu, 12 Feb 2026 02:48:20 -0500
+	id 1vqRTY-0004g7-4G; Thu, 12 Feb 2026 02:51:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqRQu-0003Hi-T6
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:48:17 -0500
-Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost2.atos.net)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vqRTU-0004fs-Ax
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:50:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqRQs-0005eU-Qe
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:48:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1770882495; x=1802418495;
- h=message-id:subject:from:to:cc:date:in-reply-to:
- references:content-transfer-encoding:mime-version;
- bh=YZpqoQZYKUj1fzFZDV4/iwb1f0KnaO0vAyLx/fr3N4A=;
- b=hnRAY07NsvUDSHgVtVGhRkf96+fsqTEkdAGg7yb+Y28yQL85oofx50iJ
- bSPofpPh3hvC8fmAaoNDGXe5mzI7q7k2oM1LzeL+8NihzKFKqPbEF+Qfx
- ZDXutLFtnXt2+9jtLJAjt1ljLFrKSAR2WYs7AF0L9/SRu03HYy3g89Vq1
- Y139Ya8oL/fLVM2LDfBkKAf03Nfo2qydo7C/f/m2E14ByTYfQX2uLfMCO
- D9JwZ02ym27iWAdMqw68CG7ZuKFeFg3wrS9dYexQM1XPRqFQ9JGsdoGTm
- JLvZp2Bk2JyLo3AYTEwMOB8OXwYtMDCO5eoxSeUaXEG1wHeDIc7a3mJgp A==;
-X-CSE-ConnectionGUID: /jnEhS8eRQSm15sOZTykDg==
-X-CSE-MsgGUID: RqGu5D42Rqm7tUu+jjoufg==
-X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208";a="826654235"
-X-MGA-submission: =?us-ascii?q?MDFbfwqP3bZbX44YZINiWFw5xwsTK4kikQcf5o?=
- =?us-ascii?q?OiMA4SphJlmCH8vRxz1ww6XRH5SUp3bloXKCRJ1cFZ+9OyaEJkaFl88K?=
- =?us-ascii?q?vxwNCLM1A/auCOM0wu22SRlAfem8cs2FaH5cpPjc4zhJm2zWY6VE5dQH?=
- =?us-ascii?q?OF?=
-Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
- by smarthost2.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 12 Feb 2026 08:48:14 +0100
-Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
- [193.56.47.18])
- by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61C7mDKL027029
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Thu, 12 Feb 2026 08:48:13 +0100
-Received: from rocky.hd2c.dom ([129.181.244.14])
- by smtp-hub.atos-infogerance.fr (envelope-from
- clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
- 61C7mDQ3039045; Thu, 12 Feb 2026 08:48:13 +0100
-Received: from openbmc (unknown [10.22.85.22])
- by rocky.hd2c.dom (Postfix) with ESMTP id CE67D256CA5;
- Thu, 12 Feb 2026 08:48:12 +0100 (CET)
-Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
- by openbmc (Postfix) with ESMTP id 191E18104811;
- Thu, 12 Feb 2026 07:48:12 +0000 (UTC)
-Message-ID: <4ecdbe5bb0b3a945b3534e8535186280aa8f4f66.camel@eviden.com>
-Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property from bool
- to uint8
-From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, xudong.hao@intel.com
-Date: Thu, 12 Feb 2026 08:47:51 +0100
-In-Reply-To: <20260205031133.74357-6-zhenzhong.duan@intel.com>
-References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
- <20260205031133.74357-6-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vqRTS-00060M-8t
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:50:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770882652;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qOvRFjuhnTRc3QDh3S9/EmKKtwVyoWkoQTnGpYdJhTQ=;
+ b=ZEt9akWMfUNF6eNcjDImRbY+HPlMdVrSQ6Itsdqzb/FrqKD7a4Z0FNhK24SpIycc7KgPdl
+ TDqQREdazZKJGaY1kjZ81NkFd5FmemI7Szl6VD9cxeQWquhZbhNtuCVlHyqrUkjYs7JU7c
+ TpYLWrwGyOnSecBq66kcOf6bpO61050=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-670-dECsd7EtPCu4lzWy20YG5g-1; Thu, 12 Feb 2026 02:50:50 -0500
+X-MC-Unique: dECsd7EtPCu4lzWy20YG5g-1
+X-Mimecast-MFC-AGG-ID: dECsd7EtPCu4lzWy20YG5g_1770882649
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47edf8ba319so28636645e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 23:50:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770882649; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Djsiq0nxDQ0iyCrtAY4Mv1m4uoSEuVneEhRy5AP5yafN7Iwsz+cn+uu35hqboXuzne
+ Ya6njJP+HBgvTqPCcm9IIfAVD1njpkznkVoa/yMxFus+fHhsHJ/nEH/QLKW8xMqTC4eS
+ Rfc6OHyiBTNfWUA26UiKsxgBf3XKqa2BzN4uyv8CBTAwGw8WoeR8uGjf5cqcS3c8Vy2t
+ 9qHeP2cVnsmaVZPyE6IcHOHqyCMeLCcuxbGQYeuTB4AYRMyd+L3DkCvR8/zFSpvYMtUv
+ S5/PE5Qi2K/0QT4fx4tjoA2lj55cCdSDp9PeWyn6l4a0a1xq/ALuoOUo6qO/vL1xI+7C
+ ilxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qOvRFjuhnTRc3QDh3S9/EmKKtwVyoWkoQTnGpYdJhTQ=;
+ fh=5oOKzZrAz0d9aAIgyytgTtF15OSg2tigWcg5lE1W6xc=;
+ b=EgsaoOHoRGwb6v5YvtNRMbDvWzNbqjFsPSUlHRyo6kVb6y0SrryP15W9uqONKjOBTY
+ r92BDNBnj9QU/eBeHPmjZSiY7GwrZ7IYX8z8dYTNp5+/HehhqBPC89r0H6L0qKiazEol
+ v8Sp03014Hmg6gecNhdwyXLKtCKPWfB9s2SN2weCC2uxP3prJAuTKJ50HfPRDAtoeze3
+ rv1tgpNRWcsRxn5rUHf2SK7g4s7zdKaRnycf15K1pDvZrX9DxHN0qf0zTWDj9hLUA2MR
+ 4XjcgVm/g7uee3FSo5P6HzmqfxzUo47fRYSXU1b/imkG1CdZJh67tnSnKaHhfxQlYR8R
+ +hGQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770882649; x=1771487449; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qOvRFjuhnTRc3QDh3S9/EmKKtwVyoWkoQTnGpYdJhTQ=;
+ b=GZ1W8ltIP5xgDU8zHCBam5s00ObBIFz3PTemg0xzmL8AhoVWy+G+CDdBiukSm1yBPV
+ /iqJnd3OztFGgk2IPbKSHtNOTSty0qNRcyg7rP3Qj8aF2MWW/I6DM4IM6uTBNnUPrh9k
+ Z7EoLT3ddVP6ZFOpzf+Q9zKbt6PblCRhhtoBy8gWeXE4YexlZS4tc4x2k3ZPgY+cWw4g
+ UwVsU6wuFEFvsg56u+caKkPVbwjXnrkS0Fd+t6O44g55b4sxiP92ktRYx7RI/Ubc3guf
+ /AqMmuIDbetCFxf2Xn/gsSmFalVmZV69c+sUBSQML4kMkqAdTNZxpcDuTguNzgImaraD
+ RQpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770882649; x=1771487449;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qOvRFjuhnTRc3QDh3S9/EmKKtwVyoWkoQTnGpYdJhTQ=;
+ b=wXhQfojH0x4II5sPfJ0i9lnMLEu7Dp43kXeJetThRsTaKxIMkZDkFUhHmrfEIoqM9V
+ cAalFdbIJ9rF7J9pDgD+IBAiLF4CIAVXH15Q2WUB7hZ+ySMtyzmwvGAFV19v0plXNhlW
+ zXsWY7FC+LdV/noaRX1cM07TcQX5WQq/1M2YdVqwJB5rd70ycCTEqiSVWescRehffHHS
+ ETSFWgdFNLNzjVUxL20l6gX0UGD+ctXKzqH27VHlLvrJwhW2V0bAuj0CRbDPXiQbtx0E
+ ZORkBa3LzvPIQWezXjD5hKe0wXQOrOhmuCULm7QPiDWuHGh2msYWRwtUa1bplEOosOzj
+ Bi8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzc7f6kXM1ypbR+ptEmwMFQ3BPT0MgAqUbCzKQH68Soi9wIYGjWdhhiaHaeKT4xj3Nyw9wETcAEMK3@nongnu.org
+X-Gm-Message-State: AOJu0YyJeB0gP/ZFctgXdlly46dQZjKI6YJwiggmeDjgvG7waT4MCQZt
+ qQSDh5elDotJXe6NSsiHj36aUkzji128OdBFvdI+wf25V0C0Vg8t8lXND65muNvw78/K6fCEob/
+ hzSLFWj3hqyTVlWqG8whTWsG39nj25lqViJM9XQSz4Drf0rZnXkQCe9hEiwn6iOuk5k3Dl+cua8
+ TXm+e6CqMmzSN/0kfXXF7KAOS5+MWGk2g=
+X-Gm-Gg: AZuq6aJDvirhoap1pUjbeBNC9fDLGvrl1wpPS86WaDxGeM2UPurgYAXlN5Mi+Okbl5w
+ ZrHkmmTkhT5rqooYi8tZfGBJJyBU/px7QddVCNZE8kgYbX6UmlRcMEjw7wyn4rF0xkt4Ro6pIQU
+ sJwSiXF3jM5Azxeb85yswA+WCOLoMajTJIv8lk2Kyif1r93LSj8LDR+cPXrQh65bHbmr70Km2VU
+ MLUToB2ROp4z63Q4viIlVlY9mMdUe2jxzw2uF94YLymRZdlIYRaRhy5M6cHnYOIjmQ=
+X-Received: by 2002:a05:600c:3585:b0:480:19ed:7efa with SMTP id
+ 5b1f17b1804b1-48367178a3dmr18824655e9.36.1770882649408; 
+ Wed, 11 Feb 2026 23:50:49 -0800 (PST)
+X-Received: by 2002:a05:600c:3585:b0:480:19ed:7efa with SMTP id
+ 5b1f17b1804b1-48367178a3dmr18824355e9.36.1770882648998; Wed, 11 Feb 2026
+ 23:50:48 -0800 (PST)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=193.56.114.177;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.atos.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260212062522.99565-1-anisinha@redhat.com>
+ <20260212062522.99565-18-anisinha@redhat.com>
+In-Reply-To: <20260212062522.99565-18-anisinha@redhat.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 12 Feb 2026 13:20:32 +0530
+X-Gm-Features: AZwV_QjBRWdpW4G_f3yYhxUO7DE4LNWCUoX6PV-rLcFVJtj7YapP-US9hxJwr1U
+Message-ID: <CAE8KmOwa1M_F9Qfs-XXRhaJZx7jiwQDfwDk7U2shJi8SLa+y9Q@mail.gmail.com>
+Subject: Re: [PATCH v4 17/31] i386/sev: add migration blockers only once
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, kraxel@redhat.com, kvm@vger.kernel.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,115 +137,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 12 Feb 2026 at 11:58, Ani Sinha <anisinha@redhat.com> wrote:
+> sev_launch_finish() and sev_snp_launch_finish() could be called multiple times
+> when the confidential guest is being reset/rebooted. The migration
+> blockers should not be added multiple times, once per invocation. This change
+> makes sure that the migration blockers are added only one time by adding the
+> migration blockers to the vm state change handler when the vm transitions to
+> the running state. Subsequent reboots do not change the state of the vm.
+>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>  target/i386/sev.c | 20 +++++---------------
+>  1 file changed, 5 insertions(+), 15 deletions(-)
+>
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 66e38ca32e..260d8ef88b 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -1421,11 +1421,6 @@ sev_launch_finish(SevCommonState *sev_common)
+>      }
+>
+>      sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
+> -
+> -    /* add migration blocker */
+> -    error_setg(&sev_mig_blocker,
+> -               "SEV: Migration is not implemented");
+> -    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+>  }
+>
+>  static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
+> @@ -1608,7 +1603,6 @@ static void
+>  sev_snp_launch_finish(SevCommonState *sev_common)
+>  {
+>      int ret, error;
+> -    Error *local_err = NULL;
+>      OvmfSevMetadata *metadata;
+>      SevLaunchUpdateData *data;
+>      SevSnpGuestState *sev_snp = SEV_SNP_GUEST(sev_common);
+> @@ -1655,15 +1649,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+>
+>      kvm_mark_guest_state_protected();
+>      sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
+> -
+> -    /* add migration blocker */
+> -    error_setg(&sev_mig_blocker,
+> -               "SEV-SNP: Migration is not implemented");
+> -    ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
+> -    if (local_err) {
+> -        error_report_err(local_err);
+> -        exit(1);
+> -    }
+>  }
+>
+>
+> @@ -1676,6 +1661,11 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
+>      if (running) {
+>          if (!sev_check_state(sev_common, SEV_STATE_RUNNING)) {
+>              klass->launch_finish(sev_common);
+> +
+> +            /* add migration blocker */
+> +            error_setg(&sev_mig_blocker,
+> +                       "SEV: Migration is not implemented");
+> +            migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+>          }
+>      }
+>  }
+> --
 
-On Wed, 2026-02-04 at 22:11 -0500, Zhenzhong Duan wrote:
-> 'x-pasid-mode' is a bool property, we need an extra 'pss' property to =
-=20
-> represent PASID size supported. Because there is no any device in QEMU =
-=20
-> supporting pasid capability yet, no guest could use the pasid feature =
-=20
-> until now, 'x-pasid-mode' takes no effect.
->=20
-> So instead of an extra 'pss' property we can use a single 'pasid' =20
-> property of uint8 type to represent if pasid is supported and the PASID =
-=20
-> bits size. A value of N > 0 means pasid is supported and N - 1 is the =
-=20
-> value in PSS field in ECAP register.
->=20
-> Signed-off-by: Zhenzhong Duan <[zhenzhong.duan@intel.com](mailto:zhenzhon=
-g.duan@intel.com)> =20
-> --- =20
-> =C2=A0hw/i386/intel_iommu_internal.h | 1 - =20
-> =C2=A0include/hw/i386/intel_iommu.h=C2=A0 | 2 +- =20
-> =C2=A0hw/i386/intel_iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 4 ++-- =20
-> =C2=A03 files changed, 3 insertions(+), 4 deletions(-)
->=20
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_interna=
-l.h =20
-> index a2ca79f925..71cb3b662e 100644 =20
-> --- a/hw/i386/intel_iommu_internal.h =20
-> +++ b/hw/i386/intel_iommu_internal.h =20
-> @@ -194,7 +194,6 @@ =20
-> =C2=A0#define VTD_ECAP_PRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 29) =20
-> =C2=A0#define VTD_ECAP_MHMV=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (15ULL << 20) =20
-> =C2=A0#define VTD_ECAP_SRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 31) =20
-> -#define VTD_ECAP_PSS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (7ULL << 35) /* limit: MemTxAttrs::=
-pid */ =20
-> =C2=A0#define VTD_ECAP_PASID=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 40) =20
-> =C2=A0#define VTD_ECAP_SMTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 43) =20
-> =C2=A0#define VTD_ECAP_SSTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 46) =20
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.=
-h =20
-> index 6c61fd39c7..5e5779e460 100644 =20
-> --- a/include/hw/i386/intel_iommu.h =20
-> +++ b/include/hw/i386/intel_iommu.h =20
-> @@ -315,7 +315,7 @@ struct IntelIOMMUState { =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool buggy_eim;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Force bu=
-ggy EIM unless eim=3Doff */ =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t aw_bits;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Host/IOVA a=
-ddress width (in bits) */ =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_drain;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Whether =
-DMA r/w draining enabled */ =20
-> -=C2=A0=C2=A0=C2=A0 bool pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 /* Whether to support PASID */ =20
-> +=C2=A0=C2=A0=C2=A0 uint8_t pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* PASID su=
-pported in bits, 0 if not */ =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool fs1gp;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 /* First Stage 1-GByte Page Support */ =20
-> =C2=A0 =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* Transient Mapping, Reserved(0) since VTD spec=
- revision 3.2 */ =20
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c =20
-> index e8a6f50a5a..916eb0af5a 100644 =20
-> --- a/hw/i386/intel_iommu.c =20
-> +++ b/hw/i386/intel_iommu.c =20
-> @@ -4151,7 +4151,7 @@ static const Property vtd_properties[] =3D { =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUSt=
-ate, scalable_mode, FALSE), =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts=
-, FALSE), =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("snoop-control", IntelIOMMUStat=
-e, snoop_control, false), =20
-> -=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pas=
-id, false), =20
-> +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0)=
-, =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, d=
-ma_drain, true), =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, st=
-ale_tm, false), =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp=
-, true), =20
-> @@ -4981,7 +4981,7 @@ static void vtd_cap_init(IntelIOMMUState *s) =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 } =20
-> =C2=A0 =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (s->pasid) { =20
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap |=3D VTD_ECAP_PASID |=
- VTD_ECAP_PSS; =20
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap =3D VTD_ECAP_PASID | =
-deposit64(s->ecap, 35, 5, s->pasid - 1); =20
+* 'sev_mig_blocker' is a global static variable, so it's the same
+blocker (address) added each time, maybe add_blocker() should do a
+check to avoid duplicates.
 
-I think this is a bit dangerous, the MemTxAttrs only allow up to 8 bits. =
-=20
-We have a comment next to the definition of VTD_ECAP_PSS about this.
+* Otherwise it looks okay.
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
-> =C2=A0=C2=A0=C2=A0=C2=A0 } =20
-> =C2=A0} =20
-> =C2=A0
+Thank you.
+---
+  - Prasad
+
 
