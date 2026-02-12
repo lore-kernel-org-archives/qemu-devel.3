@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C0FEDF04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02186EDF045
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQBQ-0002MF-O2; Thu, 12 Feb 2026 01:28:13 -0500
+	id 1vqQ9e-0007ni-Eb; Thu, 12 Feb 2026 01:26:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQAm-0000k4-Cr
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:32 -0500
+ id 1vqQ9d-0007ms-Kt
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQAk-0005Pf-78
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:31 -0500
+ id 1vqQ9b-0005Fx-QP
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877649;
+ s=mimecast20190719; t=1770877579;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
- b=dlMCEED0C2JEE/YuHHetFcBo+BBpKSmaynLCtHeheNzK7ytYgaxYC2ysqL2lHPYB4Fw9i8
- FN7n2epLrlaMrG4hud2we05Pa+XLN5gJyCDPgXeAFgqDKnLNNs/XLZI3scB0rkMR6pT3e+
- /GBc6T5/ArUO/bEIbP5esvjEsPthixM=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=npi3eP36456mUDuK+ax2iLB1NMn8InaMo9diT4vHZh4=;
+ b=el2udbjHwBtLw+s7RRymsfKtnzJZm7W2n5J6btcXliF0FFTOszj/yVkFamNtDjzr8PHb+S
+ 5/Q8uNxX7GkruSEUHe05jsOEwjxwfv9N+7cRObeZih+PTKwLJzyZMFFWYAtuBGKrA4FLcI
+ VsMhbMgi1BWSNa6TIQCoim7bPP6GLXg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-G_52xn_KNfm_88sz88IbPA-1; Thu, 12 Feb 2026 01:27:27 -0500
-X-MC-Unique: G_52xn_KNfm_88sz88IbPA-1
-X-Mimecast-MFC-AGG-ID: G_52xn_KNfm_88sz88IbPA_1770877647
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3568090851aso4212252a91.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:27:27 -0800 (PST)
+ us-mta-330-gN9iWca4MP6kkyL5HZW6hA-1; Thu, 12 Feb 2026 01:26:17 -0500
+X-MC-Unique: gN9iWca4MP6kkyL5HZW6hA-1
+X-Mimecast-MFC-AGG-ID: gN9iWca4MP6kkyL5HZW6hA_1770877576
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-354c7febaefso5791843a91.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:26:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877646; x=1771482446; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770877576; x=1771482376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
- b=gVattix4+214o0Om/yDJNWbs/HaWnMsrs69adjQ/Sv9ncz8t2kb7tSBPzwmitoLaLP
- OcKICmR2SBaGt+KjJfh8WxjzwqIhvGiwZ6/BkNefXmzU0tZclpvsDhYIttEVAqbfocBY
- X6Fe9ASFL0FoxOYsZZ9Vbv3UNAWOOzgM8BMDbQoowbYJAjj1xdbW9aK3JFT7PtYV/7dK
- MBELx/Pletu/qBFd47Z5y0fbo+8kH0b72pwFf16mLGUKG2mOYTf8ayGPl7qDDJNLsdp8
- QNcieLUsjOJE4xAqBs4Ir4ZmvIpQwBiKLIlOQZUTMQj0P+W9p7afS2BEjhEmq97wEJQQ
- yguQ==
+ bh=npi3eP36456mUDuK+ax2iLB1NMn8InaMo9diT4vHZh4=;
+ b=NBTILwzf+ouWxbtQZtIcoT80Pw54q7cu76pBqOa73zrOCfrmIy7Mp2qKyHROo3LB40
+ c0WHdSpmeVlhOWbp+FC8Grr8VFpTWbnvNq+VTbBwNypQwG7wHOivq6ESUbgQ+GATzMBM
+ wccihGTfXjo7U0sRWH/C9p+ZIKBDzaYQbit2+JKH3lvwxt4xoiX5dWyx8wXBdDd+Ax5H
+ Djeb3cu6l5UqwkQXDMYwoxSVQNHbXV5AzjtZ7U0+a3e12OxG71UA/XQGF17tzf393SPz
+ vJjmdD5aeR9flBfhOxZRSP4+XOYY+VlUHjX+OUPuR2ronTQnr+eYyk2tFC/aybTgy1KN
+ Pc8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877646; x=1771482446;
+ d=1e100.net; s=20230601; t=1770877576; x=1771482376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
- b=VYt8q2lalTNzr2ifn+ZH7vcHc1Wv4qvNEcQc19mlxe/s3XoFCD2fkTaKX8+Ao4wMPY
- TsKi9zG+xvTMd/gE/zPPI/jHX5K8czbYFUlakFLi9E90Vm6/sM7vRqfSucDPZBjQaZnJ
- Baj7lsF0KsNAfblVHoZVmYMC+6RsIeKUT29PSp6jNU9ZrPHnaYp+61UBooxNxr0bGRgm
- b8dMvo7WMcuO+6hjiLRoz9Bqv3dBBMftYsvnWhxDjTOTWkEcZRuEbQL6DTDl0iowGtR8
- hROOr0+WUkjMYPSjUBcaWRme8LgV7IHOisimHpzi1lL/7ts2rnwTYNqaOpBEkoKxq2lS
- rtfQ==
+ bh=npi3eP36456mUDuK+ax2iLB1NMn8InaMo9diT4vHZh4=;
+ b=c5pkDf98FMmZwluxdiEpem0eHGpOB6CKapk551YIVVKGoQTVB95NV66AgElmXHIq9F
+ JOvk0Q3la2K4j5iFdiKT8zycUlTefutdOXlFPeHchBkfzpuPxQK+ca20689TB5LoY/tu
+ jMN7vqvkcsCA1EKktGlKjN3HSGaxdbYzLHGYmwaTnNAJaI4e4xxElIDwlqIA0bQ+cDAG
+ NSSJxA7wjMvYr4JhjvSBQaIm7vyFuBk653Clkc5K1pXBo2iR4fU8ljTK613wKMt7kHfE
+ pxtvhl9njF7NLJfsUU21x8DGox/N0RfolIXE9d4/2VOyFsc4fSojs8CqJ5e0eCSQFhAC
+ ok6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl9hDxsx4tdabkyRSPZ3Gtn61co2u+l2+ChkX+qfb5miXJnJacgJ77gg83SflDUhq+xmPswRn3zWIy@nongnu.org
-X-Gm-Message-State: AOJu0YyLZ/T5tz4b3gXQSD0Mw/ETwpoMH+3dzsDdDlqjXSzGlf7+lT5S
- CT1ktYqLvoW00Jk8QKiEUSk1oH8vn9t2fzRARvmfHbZzeLZC+ktxQ+mzbu6Wf1C8YzTNlEhng3I
- qoG1Fa8ivD2QsR1B/LwbAbrXWEmhOJPS3S/PnWvlazZaX7vI1D4xV6K1DGXCiZ2NL
-X-Gm-Gg: AZuq6aI362K9F6OCAXMyZm7ENe7uf9g4c0QdrtP3IroeZuYyfxf/5xFrMb6wkytCuVl
- jFrpo9BJMAa08YFpwJ2fRMO1y8Kn8iOKiLOkGwKRldidVSyGuQLT95w2HVWjEe5YH0Q/pu+hMaf
- Dy2WuRUltf+qBIYNGTy8bZXTRuLP4dHStBCcVTwG8W63k+27CYnod6KxiJvKFobqsN1op5MC/oJ
- 7Etiu1E4ye8XLkIFOJh1nc8k5qjPJ3U0dnSVKdlnJVn3SNXsojC+jYCyEMl9L0pBfzLpA3xvoEd
- N+nUF/iu1XzIoAFbzVbZsrUvxmOpH/i/IW5j+WRcRNExExDWqAxBH7Uh2lBIo349pl877b79cB4
- VEwqmUoOAqaAUQ+RLA6XOahGc3OrFCNi2C6ABrT/liSA7q6YHtSMNQY0=
-X-Received: by 2002:a17:90b:388e:b0:34c:2db6:578f with SMTP id
- 98e67ed59e1d1-3568f3edd72mr1657487a91.19.1770877646370; 
- Wed, 11 Feb 2026 22:27:26 -0800 (PST)
-X-Received: by 2002:a17:90b:388e:b0:34c:2db6:578f with SMTP id
- 98e67ed59e1d1-3568f3edd72mr1657473a91.19.1770877645948; 
- Wed, 11 Feb 2026 22:27:25 -0800 (PST)
+ AJvYcCXHQPd+tiDKpfrc2GC7k4x53Ks4FLg0tD6bBt4Z0i36O+Hc8syf8pVGNG5UjXrslEDMgBH+PRN/M6BU@nongnu.org
+X-Gm-Message-State: AOJu0Yz84FbipzOaMICe2ZT32xZD0Kd6ALja4wuUP2pjhpuiQlWCp+JK
+ lcfekhqHAj8x7rm86rZcc5nAf1xAscNhG2p36uSPRAfirHS1TDIdefHAYbXeHyDS0Lh6+o2dpDY
+ p54ZR7//LWZ9sTbpsPJo8QxVU+YLOI65ZgO1aX6j+7Q/X9xIfyvr06n95
+X-Gm-Gg: AZuq6aIjxwWMXQ2MJG1DruWWIjbQecMR/HY3XPNHHFZdaVqr/jfw67iQQnwOLF3ceam
+ KmirIgVAeaSJT4o1OeeiBMIp2ui28GTPbCaFTBIFNKvkF7KG2EnG6DEU3Ihme8U1TaoLB9+SV+j
+ qU1nJW7G3jcLaKIUkle+75EtHtoN0VqKvka5pXZWhicjDB+AMOsLrggUhvCo5XzYvNfmAS3HRlN
+ 7cI1XzR3joioMDzsqX223IqobpDBFWHysbiMecG6NNXRnphGjusVoBOxhzvqyxcgyTu26WP01Np
+ frdo10+PcfWw3yd3dmrbIBSRRJiQUcvlJsGX2PUf6+iPIg8Hvv0RmEleDCFyY5EOP7f8kvB1vNm
+ RSs1WvFvIX6s/Z5RCe1Kcl4hivduo9vuifGonJO6b7aNOFNHGeTUTNNI=
+X-Received: by 2002:a17:90b:5403:b0:340:c179:3657 with SMTP id
+ 98e67ed59e1d1-35693dd1630mr1151669a91.33.1770877576486; 
+ Wed, 11 Feb 2026 22:26:16 -0800 (PST)
+X-Received: by 2002:a17:90b:5403:b0:340:c179:3657 with SMTP id
+ 98e67ed59e1d1-35693dd1630mr1151648a91.33.1770877576087; 
+ Wed, 11 Feb 2026 22:26:16 -0800 (PST)
 Received: from rhel9-box.lan ([122.164.27.113])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.27.23
+ 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.26.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:27:25 -0800 (PST)
+ Wed, 11 Feb 2026 22:26:15 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Ani Sinha <anisinha@redhat.com>
-Cc: kraxel@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PATCH v4 31/31] tests/functional/x86_64: add functional test to
- exercise vm fd change on reset
-Date: Thu, 12 Feb 2026 11:55:15 +0530
-Message-ID: <20260212062522.99565-32-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v4 13/31] accel/kvm: rebind current VCPUs to the new KVM VM
+ file descriptor upon reset
+Date: Thu, 12 Feb 2026 11:54:57 +0530
+Message-ID: <20260212062522.99565-14-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
 References: <20260212062522.99565-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -125,186 +123,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new functional test is added that exercises the code changes related to
-closing of the old KVM VM file descriptor and opening a new one upon VM reset.
-This normally happens when confidential guests are reset but for
-non-confidential guests, we use a special machine specific debug/test parameter
-'x-change-vmfd-on-reset' to enable this behavior.
-Only specific code changes related to re-initialisation of SEV-ES, SEV-SNP and
-TDX platforms are not exercised in this test as they require hardware that
-supports running confidential guests.
+Confidential guests needs to generate a new KVM file descriptor upon virtual
+machine reset. Existing VCPUs needs to be reattached to this new
+KVM VM file descriptor. As a part of this, new VCPU file descriptors against
+this new KVM VM file descriptor needs to be created and re-initialized.
+Resources allocated against the old VCPU fds needs to be released. This change
+makes this happen.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- MAINTAINERS                                   |   1 +
- tests/functional/x86_64/meson.build           |   1 +
- .../x86_64/test_vmfd_change_reboot.py         | 135 ++++++++++++++++++
- 3 files changed, 137 insertions(+)
- create mode 100755 tests/functional/x86_64/test_vmfd_change_reboot.py
+ accel/kvm/kvm-all.c    | 215 +++++++++++++++++++++++++++++++++--------
+ accel/kvm/trace-events |   1 +
+ 2 files changed, 174 insertions(+), 42 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a88901a7d7..cd62cbd57a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -157,6 +157,7 @@ M: Ani Sinha <anisinha@redhat.com>
- M: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
- F: stubs/kvm.c
-+F: tests/functional/x86_64/test_vmfd_change_reboot.py
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index a6ff16a037..5e81bf8ad2 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -127,6 +127,10 @@ static NotifierList kvm_irqchip_change_notifiers =
+ static NotifierWithReturnList register_vmfd_changed_notifiers =
+     NOTIFIER_WITH_RETURN_LIST_INITIALIZER(register_vmfd_changed_notifiers);
  
- Guest CPU cores (TCG)
- ---------------------
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index f78eec5e6c..784d9791cb 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -36,4 +36,5 @@ tests_x86_64_system_thorough = [
-   'vfio_user_client',
-   'virtio_balloon',
-   'virtio_gpu',
-+  'vmfd_change_reboot',
- ]
-diff --git a/tests/functional/x86_64/test_vmfd_change_reboot.py b/tests/functional/x86_64/test_vmfd_change_reboot.py
-new file mode 100755
-index 0000000000..cb7370e465
---- /dev/null
-+++ b/tests/functional/x86_64/test_vmfd_change_reboot.py
-@@ -0,0 +1,135 @@
-+#!/usr/bin/env python3
-+#
-+# KVM VM file descriptor change on reset test
-+#
-+# Copyright © 2026 Red Hat, Inc.
-+#
-+# Author:
-+#  Ani Sinha <anisinha@redhat.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp);
++static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp);
++static int vcpu_unmap_regions(KVMState *s, CPUState *cpu);
 +
-+import os
-+from qemu.machine import machine
+ struct KVMResampleFd {
+     int gsi;
+     EventNotifier *resample_event;
+@@ -420,6 +424,90 @@ err:
+     return ret;
+ }
+ 
++static void kvm_create_vcpu_internal(CPUState *cpu, KVMState *s, int kvm_fd)
++{
++    cpu->kvm_fd = kvm_fd;
++    cpu->kvm_state = s;
++    if (!s->guest_state_protected) {
++        cpu->vcpu_dirty = true;
++    }
++    cpu->dirty_pages = 0;
++    cpu->throttle_us_per_full = 0;
 +
-+from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
++    return;
++}
 +
-+class KVMGuest(QemuSystemTest):
++static int kvm_rebind_vcpus(Error **errp)
++{
++    CPUState *cpu;
++    unsigned long vcpu_id;
++    KVMState *s = kvm_state;
++    int kvm_fd, ret = 0;
 +
-+    # ASSET UKI was generated using
-+    # https://gitlab.com/kraxel/edk2-tests/-/blob/unittest/tools/make-supermin.sh
-+    ASSET_UKI = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-+                      '-/raw/main/uki.x86-64.efi?ref_type=heads',
-+                      'e0f806bd1fa24111312e1fe849d2ee69808d4343930a5'
-+                      'dc8c1688da17c65f576')
-+    # ASSET_OVMF comes from /usr/share/edk2/ovmf/OVMF.stateless.fd of a fc43
-+    # distro which in turn comes from the edk2-ovmf-20251119-3.fc43.noarch rpm.
-+    ASSET_OVMF = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-+                       '-/raw/main/OVMF.stateless.fd?ref_type=heads',
-+                       '58a4275aafa8774bd6b1540adceae4ea434b8db75b476'
-+                       '11839ff47be88cfcf22')
++    CPU_FOREACH(cpu) {
++        vcpu_id = kvm_arch_vcpu_id(cpu);
 +
-+    def common_vm_setup(self, kvm_args=None, cpu_args=None):
-+        self.set_machine('q35')
-+        self.require_accelerator("kvm")
++        if (cpu->kvm_fd) {
++            close(cpu->kvm_fd);
++        }
 +
-+        self.vm.set_console()
-+        if kvm_args:
-+            self.vm.add_args("-accel", "kvm,%s" %kvm_args)
-+        else:
-+            self.vm.add_args("-accel", "kvm")
-+        self.vm.add_args("-smp", "2")
-+        if cpu_args:
-+            self.vm.add_args("-cpu", "host,%s" %cpu_args)
-+        else:
-+            self.vm.add_args("-cpu", "host")
-+        self.vm.add_args("-m", "2G")
-+        self.vm.add_args("-nographic", "-nodefaults")
++        ret = kvm_arch_destroy_vcpu(cpu);
++        if (ret < 0) {
++            goto err;
++        }
 +
++        if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++            s->coalesced_mmio_ring = NULL;
++        }
 +
-+        self.uki_path = self.ASSET_UKI.fetch()
-+        self.ovmf_path = self.ASSET_OVMF.fetch()
++        ret = vcpu_unmap_regions(s, cpu);
++        if (ret < 0) {
++            goto err;
++        }
 +
-+        self.vm.add_args('-kernel', self.uki_path)
-+        self.vm.add_args("-bios", self.ovmf_path)
-+        # enable KVM VMFD change on reset for a non-coco VM
-+        self.vm.add_args("-machine", "q35,x-change-vmfd-on-reset=on")
++        ret = kvm_arch_pre_create_vcpu(cpu, errp);
++        if (ret < 0) {
++            goto err;
++        }
 +
-+        # enable tracing of basic vmfd change function
-+        self.vm.add_args("--trace", "kvm_reset_vmfd")
++        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
++        if (kvm_fd < 0) {
++            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu (%s)",
++                         vcpu_id, strerror(kvm_fd));
++            return kvm_fd;
++        }
 +
-+    def launch_vm(self):
-+        try:
-+            self.vm.launch()
-+        except machine.VMLaunchFailure as e:
-+            if "Xen HVM guest support not present" in e.output:
-+                self.skipTest("KVM Xen support is not present "
-+                              "(need v5.12+ kernel with CONFIG_KVM_XEN)")
-+            elif "Property 'kvm-accel.xen-version' not found" in e.output:
-+                self.skipTest("QEMU not built with CONFIG_XEN_EMU support")
-+            else:
-+                raise e
++        kvm_create_vcpu_internal(cpu, s, kvm_fd);
 +
-+        self.log.info('VM launched')
-+        console_pattern = 'bash-5.1#'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.log.info('VM ready with a bash prompt')
++        ret = map_kvm_run(s, cpu, errp);
++        if (ret < 0) {
++            goto err;
++        }
 +
-+    def vm_console_reset(self):
-+        exec_command_and_wait_for_pattern(self, '/usr/sbin/reboot -f',
-+                                          'reboot: machine restart')
-+        console_pattern = '# --- Hello world ---'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.vm.shutdown()
++        if (s->kvm_dirty_ring_size) {
++            ret = map_kvm_dirty_gfns(s, cpu, errp);
++            if (ret < 0) {
++                goto err;
++            }
++        }
 +
-+    def vm_qmp_reset(self):
-+        self.vm.qmp('system_reset')
-+        console_pattern = '# --- Hello world ---'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.vm.shutdown()
++        ret = kvm_arch_init_vcpu(cpu);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret,
++                             "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
++                             vcpu_id);
++        }
 +
-+    def check_logs(self):
-+        self.assertRegex(self.vm.get_log(),
-+                         r'kvm_reset_vmfd')
-+        self.assertRegex(self.vm.get_log(),
-+                         r'virtual machine accel file descriptor has changed')
++        close(cpu->kvm_vcpu_stats_fd);
++        cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
++        kvm_init_cpu_signals(cpu);
++    }
++    trace_kvm_rebind_vcpus();
 +
-+    def test_reset_console(self):
-+        self.common_vm_setup()
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.check_logs()
++ err:
++    return ret;
++}
 +
-+    def test_reset_qmp(self):
-+        self.common_vm_setup()
-+        self.launch_vm()
-+        self.vm_qmp_reset()
-+        self.check_logs()
+ static void kvm_park_vcpu(CPUState *cpu)
+ {
+     struct KVMParkedVcpu *vcpu;
+@@ -483,13 +571,7 @@ static int kvm_create_vcpu(CPUState *cpu)
+         }
+     }
+ 
+-    cpu->kvm_fd = kvm_fd;
+-    cpu->kvm_state = s;
+-    if (!s->guest_state_protected) {
+-        cpu->vcpu_dirty = true;
+-    }
+-    cpu->dirty_pages = 0;
+-    cpu->throttle_us_per_full = 0;
++    kvm_create_vcpu_internal(cpu, s, kvm_fd);
+ 
+     trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
+ 
+@@ -508,19 +590,11 @@ int kvm_create_and_park_vcpu(CPUState *cpu)
+     return ret;
+ }
+ 
+-static int do_kvm_destroy_vcpu(CPUState *cpu)
++static int vcpu_unmap_regions(KVMState *s, CPUState *cpu)
+ {
+-    KVMState *s = kvm_state;
+     int mmap_size;
+     int ret = 0;
+ 
+-    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+-
+-    ret = kvm_arch_destroy_vcpu(cpu);
+-    if (ret < 0) {
+-        goto err;
+-    }
+-
+     mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+     if (mmap_size < 0) {
+         ret = mmap_size;
+@@ -548,39 +622,47 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+         cpu->kvm_dirty_gfns = NULL;
+     }
+ 
+-    kvm_park_vcpu(cpu);
+-err:
++ err:
+     return ret;
+ }
+ 
+-void kvm_destroy_vcpu(CPUState *cpu)
+-{
+-    if (do_kvm_destroy_vcpu(cpu) < 0) {
+-        error_report("kvm_destroy_vcpu failed");
+-        exit(EXIT_FAILURE);
+-    }
+-}
+-
+-int kvm_init_vcpu(CPUState *cpu, Error **errp)
++static int do_kvm_destroy_vcpu(CPUState *cpu)
+ {
+     KVMState *s = kvm_state;
+-    int mmap_size;
+-    int ret;
++    int ret = 0;
+ 
+-    trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
++    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+ 
+-    ret = kvm_arch_pre_create_vcpu(cpu, errp);
++    ret = kvm_arch_destroy_vcpu(cpu);
+     if (ret < 0) {
+         goto err;
+     }
+ 
+-    ret = kvm_create_vcpu(cpu);
++    /* If I am the CPU that created coalesced_mmio_ring, then discard it */
++    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++        s->coalesced_mmio_ring = NULL;
++    }
 +
-+    def test_reset_kvmpit(self):
-+        self.common_vm_setup()
-+        self.vm.add_args("--trace", "kvmpit_post_vmfd_change")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.assertRegex(self.vm.get_log(),
-+                         r'kvmpit_post_vmfd_change')
++    ret = vcpu_unmap_regions(s, cpu);
+     if (ret < 0) {
+-        error_setg_errno(errp, -ret,
+-                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
+-                         kvm_arch_vcpu_id(cpu));
+         goto err;
+     }
++    kvm_park_vcpu(cpu);
++err:
++    return ret;
++}
 +
-+    def test_reset_xen_emulation(self):
-+        self.common_vm_setup("xen-version=0x4000a,kernel-irqchip=split")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.check_logs()
++void kvm_destroy_vcpu(CPUState *cpu)
++{
++    if (do_kvm_destroy_vcpu(cpu) < 0) {
++        error_report("kvm_destroy_vcpu failed");
++        exit(EXIT_FAILURE);
++    }
++}
 +
-+    def test_reset_hyperv_vmbus(self):
-+        self.common_vm_setup(None, "hv-syndbg,hv-relaxed,hv_time,hv-synic,"
-+                             "hv-vpindex,hv-runtime,hv-stimer")
-+        self.vm.add_args("-device", "vmbus-bridge,irq=15")
-+        self.vm.add_args("-trace", "vmbus_handle_vmfd_change")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.assertRegex(self.vm.get_log(),
-+                         r'vmbus_handle_vmfd_change')
++static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp)
++{
++    int mmap_size, ret = 0;
+ 
+     mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+     if (mmap_size < 0) {
+@@ -605,14 +687,53 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+             (void *)cpu->kvm_run + s->coalesced_mmio * PAGE_SIZE;
+     }
+ 
++ err:
++    return ret;
++}
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp)
++{
++    int ret = 0;
++    /* Use MAP_SHARED to share pages with the kernel */
++    cpu->kvm_dirty_gfns = mmap(NULL, s->kvm_dirty_ring_bytes,
++                               PROT_READ | PROT_WRITE, MAP_SHARED,
++                               cpu->kvm_fd,
++                               PAGE_SIZE * KVM_DIRTY_LOG_PAGE_OFFSET);
++    if (cpu->kvm_dirty_gfns == MAP_FAILED) {
++        ret = -errno;
++    }
++
++    return ret;
++}
++
++int kvm_init_vcpu(CPUState *cpu, Error **errp)
++{
++    KVMState *s = kvm_state;
++    int ret;
++
++    trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
++
++    ret = kvm_arch_pre_create_vcpu(cpu, errp);
++    if (ret < 0) {
++        goto err;
++    }
++
++    ret = kvm_create_vcpu(cpu);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret,
++                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
++                         kvm_arch_vcpu_id(cpu));
++        goto err;
++    }
++
++    ret = map_kvm_run(s, cpu, errp);
++    if (ret < 0) {
++        goto err;
++    }
++
+     if (s->kvm_dirty_ring_size) {
+-        /* Use MAP_SHARED to share pages with the kernel */
+-        cpu->kvm_dirty_gfns = mmap(NULL, s->kvm_dirty_ring_bytes,
+-                                   PROT_READ | PROT_WRITE, MAP_SHARED,
+-                                   cpu->kvm_fd,
+-                                   PAGE_SIZE * KVM_DIRTY_LOG_PAGE_OFFSET);
+-        if (cpu->kvm_dirty_gfns == MAP_FAILED) {
+-            ret = -errno;
++        ret = map_kvm_dirty_gfns(s, cpu, errp);
++        if (ret < 0) {
+             goto err;
+         }
+     }
+@@ -2707,6 +2828,16 @@ static int kvm_reset_vmfd(MachineState *ms)
+     }
+     assert(!err);
+ 
++    /*
++     * rebind new vcpu fds with the new kvm fds
++     * These can only be called after kvm_arch_on_vmfd_change()
++     */
++    ret = kvm_rebind_vcpus(&err);
++    if (ret < 0) {
++        return ret;
++    }
++    assert(!err);
++
+     /* these can be only called after ram_block_rebind() */
+     memory_listener_register(&kml->listener, &address_space_memory);
+     memory_listener_register(&kvm_io_listener, &address_space_io);
+diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+index e4beda0148..4a8921c632 100644
+--- a/accel/kvm/trace-events
++++ b/accel/kvm/trace-events
+@@ -15,6 +15,7 @@ kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+ kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
+ kvm_irqchip_commit_routes(void) ""
+ kvm_reset_vmfd(void) ""
++kvm_rebind_vcpus(void) ""
+ kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s vector %d virq %d"
+ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
+ kvm_irqchip_release_virq(int virq) "virq %d"
 -- 
 2.42.0
 
