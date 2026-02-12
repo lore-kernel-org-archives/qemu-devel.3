@@ -4,36 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6198CEB4914
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EEBEB4913
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqVSk-0001Pa-OY; Thu, 12 Feb 2026 07:06:27 -0500
+	id 1vqVau-0003ju-Gm; Thu, 12 Feb 2026 07:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vqVSX-0001Kl-6B; Thu, 12 Feb 2026 07:06:17 -0500
+ id 1vqVar-0003hY-PD; Thu, 12 Feb 2026 07:14:49 -0500
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vqVSU-0002W8-Fb; Thu, 12 Feb 2026 07:06:12 -0500
+ id 1vqVaq-00044k-14; Thu, 12 Feb 2026 07:14:49 -0500
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3467444352;
- Thu, 12 Feb 2026 13:06:04 +0100 (CET)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 53AAD449D7;
+ Thu, 12 Feb 2026 13:14:44 +0100 (CET)
+Message-ID: <f61fea15-56b0-49ba-8801-55c9bcf7c513@proxmox.com>
+Date: Thu, 12 Feb 2026 13:14:43 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/mirror: disable dirty bitmap only after job init
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
  kwolf@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
  jean-louis@dupond.be, dionbosschieter@gmail.com
-Subject: [PATCH] block/mirror: disable dirty bitmap only after job init
-Date: Thu, 12 Feb 2026 13:02:18 +0100
-Message-ID: <20260212120411.369498-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260212120411.369498-1-f.ebner@proxmox.com>
+Content-Language: en-US
+In-Reply-To: <20260212120411.369498-1-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1770897960812
+X-Bm-Transport-Timestamp: 1770898481049
 Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
  helo=proxmox-new.maurer-it.com
 X-Spam_score_int: -18
@@ -57,87 +61,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the dirty bitmap is disabled too early and the following
-bad scenario is possible:
+Am 12.02.26 um 1:07 PM schrieb Fiona Ebner:
+> Cc: qemu-stable@nongnu.org
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
+Sorry, forgot to add
+Fixes: 058cfca564 ("block/mirror: move dirty bitmap to filter")
 
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
-
-Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write()
-sees that the job is set, because then:
-
-1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap
-   will be set by bdrv_mirror_top_do_write().
-
-2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
-   synchronously to the target.
-
-At least with virtio-blk using iothread-vq-mapping, mirror_run() and
-bdrv_mirror_top_do_write() might be called in different threads.
-bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap
-mutex, so the memory is synchronized between threads.
-
-Many thanks to Kevin Wolf for discussing the issue and solutions with
-me! [0]
-
-[0]: https://lore.kernel.org/qemu-devel/4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be/T/
-
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
- block/mirror.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/block/mirror.c b/block/mirror.c
-index b344182c74..eadd4501e8 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1123,6 +1123,21 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-      */
-     mirror_top_opaque->job = s;
- 
-+    /*
-+     * Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write() sees
-+     * that the job is set, because then:
-+     *
-+     * 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap will
-+     * be set by bdrv_mirror_top_do_write().
-+     *
-+     * 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
-+     * synchronously to the target.
-+     *
-+     * bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap mutex,
-+     * so the memory is synchronized between threads.
-+     */
-+    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+
-     assert(!s->dbi);
-     s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
-     for (;;) {
-@@ -2014,12 +2029,6 @@ static BlockJob *mirror_start_job(
-         goto fail;
-     }
- 
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
--- 
-2.47.3
-
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
 
