@@ -4,111 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E577FEDF04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C0FEDF04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQ9b-0007mQ-Ug; Thu, 12 Feb 2026 01:26:19 -0500
+	id 1vqQBQ-0002MF-O2; Thu, 12 Feb 2026 01:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9V-0007iu-NS
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vqQAm-0000k4-Cr
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9U-0005F5-6c
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:13 -0500
+ id 1vqQAk-0005Pf-78
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877571;
+ s=mimecast20190719; t=1770877649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f3dHz72pMGOzBjOAKTFnNPZbVkxnwyGphMFnDiAHDeY=;
- b=eEpcAihmvQn9vsatnPAL6WiQDB5jCZA1JT+hcBsjh0DCLV+HSrHnv4OzjEBwNfB1eLUkez
- 3SR9Sm3ePrSSXHahlSq5Q0a04TJk86aqiMJtT58vQRVBdJeug2D/HdpiDfAb3wgW7vLIwT
- M77EpEAU2UVVYXh2YQb0DNRq6Q/sBIE=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
+ b=dlMCEED0C2JEE/YuHHetFcBo+BBpKSmaynLCtHeheNzK7ytYgaxYC2ysqL2lHPYB4Fw9i8
+ FN7n2epLrlaMrG4hud2we05Pa+XLN5gJyCDPgXeAFgqDKnLNNs/XLZI3scB0rkMR6pT3e+
+ /GBc6T5/ArUO/bEIbP5esvjEsPthixM=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-J74VAOXYN0SG7A_8_mZs9g-1; Thu, 12 Feb 2026 01:26:08 -0500
-X-MC-Unique: J74VAOXYN0SG7A_8_mZs9g-1
-X-Mimecast-MFC-AGG-ID: J74VAOXYN0SG7A_8_mZs9g_1770877567
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2aad3380076so9723005ad.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:26:07 -0800 (PST)
+ us-mta-38-G_52xn_KNfm_88sz88IbPA-1; Thu, 12 Feb 2026 01:27:27 -0500
+X-MC-Unique: G_52xn_KNfm_88sz88IbPA-1
+X-Mimecast-MFC-AGG-ID: G_52xn_KNfm_88sz88IbPA_1770877647
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3568090851aso4212252a91.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:27:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877567; x=1771482367; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770877646; x=1771482446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f3dHz72pMGOzBjOAKTFnNPZbVkxnwyGphMFnDiAHDeY=;
- b=pN1hHD+GGixSSXlb7ldv3gDUFrjxbO8df96AfJu6bgHlXxen6/72vIj2RvR0a+JuGN
- irs7ULS397LvDOL7Bvsbam+ldXVf9Pl8iQHjQRqOX5i4+qZw9n+O53wn82ZZRxzKo8/a
- 9L2uudHT31P8L0plA/vszol50+nhm8FM2nPAtjyd6Lh8RSS3IdgEx/ZnAI4faEiccQxV
- 19l540wTm2ZzFflal4+iqEDIR5YoTagruFNqU51Oo30g5/U9DzjUQyNhUhVC1cJWx37M
- h3kR6gEft6wkGDnSqJyTo/zDWt4wNADRe6L9N7Dd3M/DVS6K14WfoNO4J5KVFiB9ekFK
- ZOsA==
+ bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
+ b=gVattix4+214o0Om/yDJNWbs/HaWnMsrs69adjQ/Sv9ncz8t2kb7tSBPzwmitoLaLP
+ OcKICmR2SBaGt+KjJfh8WxjzwqIhvGiwZ6/BkNefXmzU0tZclpvsDhYIttEVAqbfocBY
+ X6Fe9ASFL0FoxOYsZZ9Vbv3UNAWOOzgM8BMDbQoowbYJAjj1xdbW9aK3JFT7PtYV/7dK
+ MBELx/Pletu/qBFd47Z5y0fbo+8kH0b72pwFf16mLGUKG2mOYTf8ayGPl7qDDJNLsdp8
+ QNcieLUsjOJE4xAqBs4Ir4ZmvIpQwBiKLIlOQZUTMQj0P+W9p7afS2BEjhEmq97wEJQQ
+ yguQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877567; x=1771482367;
+ d=1e100.net; s=20230601; t=1770877646; x=1771482446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=f3dHz72pMGOzBjOAKTFnNPZbVkxnwyGphMFnDiAHDeY=;
- b=Y8xmWT/D2mtgN6sevfnj//v5FDONl/rlFi2pckjcm9ldH5yIuRyFQKkGGN0psyaic+
- fvvYl82Vtpe4QCU8SPsowVEptdceD+zkD8ibPtZIqlpuN//B9Pqa2zZYGMcQVhZtgc5r
- ue2s223JGM7DFLFbDWaMxQ6g69GcqV3BS/1oybafZTkt+akJFLNdgUcPAwuOsJcZt3Xn
- 5cSKiUmJy2zHLgkwpOA09xlbyta6qRaw0gpM8TDU/SKHXU/blZffTDuuk9DAFEKwzqVT
- 2apHFgDvxo95VYuPdLgtdEAqofLFXBxFCOENDnVWMHNE6d4d0RKHlCR0JkzQYRu/EsE3
- beYQ==
+ bh=dIIvsU/cmXTMQHhWbp8xpt7mJK+6PPrS2lODajVDTYo=;
+ b=VYt8q2lalTNzr2ifn+ZH7vcHc1Wv4qvNEcQc19mlxe/s3XoFCD2fkTaKX8+Ao4wMPY
+ TsKi9zG+xvTMd/gE/zPPI/jHX5K8czbYFUlakFLi9E90Vm6/sM7vRqfSucDPZBjQaZnJ
+ Baj7lsF0KsNAfblVHoZVmYMC+6RsIeKUT29PSp6jNU9ZrPHnaYp+61UBooxNxr0bGRgm
+ b8dMvo7WMcuO+6hjiLRoz9Bqv3dBBMftYsvnWhxDjTOTWkEcZRuEbQL6DTDl0iowGtR8
+ hROOr0+WUkjMYPSjUBcaWRme8LgV7IHOisimHpzi1lL/7ts2rnwTYNqaOpBEkoKxq2lS
+ rtfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMwjvSpepAVat7KJLDv9SbH2wOZNE77ZwxZYpNq57jP8brrB/UKz+JhSbMKX2v0Gc/EhIWBPpb5Xob@nongnu.org
-X-Gm-Message-State: AOJu0YzateeEFxm8+eLKL9RVB5h3htuqOyaHpd/Qz22D1Y66gXZXM4ia
- MvB9wL7zRRTKx10T+7Pf5OzFY1pPL/TiWt7QMiMGfKhRJy5i1BNBJK3gFC1d2iUd1Vqju4zbNL3
- XBqdW/aeN6qLifMBudvbwLKQMPMYRrDVoOTDmEuTrcm1GVBbcodwRjBNU
-X-Gm-Gg: AZuq6aLBIuzU+CrIcjE1/2DOwyZ5SOQOGCYXX8bbQ5bonIKDM1AbNX4YLiddxf691OI
- PXmb8L05aZlcosLehJoep9HMHd6IRbMJHqH8tomPp9OWKDQljpVpNf8ljq8qqCev4OO7L4pLoiq
- P/IgdFXXxYlf4im4fD/pppxUMkNJ5tXtEkQEzmoghLNrjIvYJ4YlU1paN+x97vsLOIiaexT2kud
- EJEc8xGYw40csFvwQVX38MThr71CjjI60RBY8Du+Q6xMBqOw2w27VmRod3qevs9seClgP/dfR2O
- 9WTqqVimUR3iYe+eYrSYNCAu2H0V9h1aDHB6SzDF4K86+7eBk7tjA+g0FnNjNVhFNQVC6PcswiO
- 1bwPXjRMakJp8pGuJxlkw30dWbvfzpBnYy+BjMSXJHJf4gWuNQRo/I8A=
-X-Received: by 2002:a17:90b:3a83:b0:340:b501:7b83 with SMTP id
- 98e67ed59e1d1-35692ca72fdmr1269136a91.10.1770877566933; 
- Wed, 11 Feb 2026 22:26:06 -0800 (PST)
-X-Received: by 2002:a17:90b:3a83:b0:340:b501:7b83 with SMTP id
- 98e67ed59e1d1-35692ca72fdmr1269119a91.10.1770877566499; 
- Wed, 11 Feb 2026 22:26:06 -0800 (PST)
+ AJvYcCWl9hDxsx4tdabkyRSPZ3Gtn61co2u+l2+ChkX+qfb5miXJnJacgJ77gg83SflDUhq+xmPswRn3zWIy@nongnu.org
+X-Gm-Message-State: AOJu0YyLZ/T5tz4b3gXQSD0Mw/ETwpoMH+3dzsDdDlqjXSzGlf7+lT5S
+ CT1ktYqLvoW00Jk8QKiEUSk1oH8vn9t2fzRARvmfHbZzeLZC+ktxQ+mzbu6Wf1C8YzTNlEhng3I
+ qoG1Fa8ivD2QsR1B/LwbAbrXWEmhOJPS3S/PnWvlazZaX7vI1D4xV6K1DGXCiZ2NL
+X-Gm-Gg: AZuq6aI362K9F6OCAXMyZm7ENe7uf9g4c0QdrtP3IroeZuYyfxf/5xFrMb6wkytCuVl
+ jFrpo9BJMAa08YFpwJ2fRMO1y8Kn8iOKiLOkGwKRldidVSyGuQLT95w2HVWjEe5YH0Q/pu+hMaf
+ Dy2WuRUltf+qBIYNGTy8bZXTRuLP4dHStBCcVTwG8W63k+27CYnod6KxiJvKFobqsN1op5MC/oJ
+ 7Etiu1E4ye8XLkIFOJh1nc8k5qjPJ3U0dnSVKdlnJVn3SNXsojC+jYCyEMl9L0pBfzLpA3xvoEd
+ N+nUF/iu1XzIoAFbzVbZsrUvxmOpH/i/IW5j+WRcRNExExDWqAxBH7Uh2lBIo349pl877b79cB4
+ VEwqmUoOAqaAUQ+RLA6XOahGc3OrFCNi2C6ABrT/liSA7q6YHtSMNQY0=
+X-Received: by 2002:a17:90b:388e:b0:34c:2db6:578f with SMTP id
+ 98e67ed59e1d1-3568f3edd72mr1657487a91.19.1770877646370; 
+ Wed, 11 Feb 2026 22:27:26 -0800 (PST)
+X-Received: by 2002:a17:90b:388e:b0:34c:2db6:578f with SMTP id
+ 98e67ed59e1d1-3568f3edd72mr1657473a91.19.1770877645948; 
+ Wed, 11 Feb 2026 22:27:25 -0800 (PST)
 Received: from rhel9-box.lan ([122.164.27.113])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.26.03
+ 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.27.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:26:06 -0800 (PST)
+ Wed, 11 Feb 2026 22:27:25 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 10/31] hw/i386: refactor x86_bios_rom_init for reuse in
- confidential guest reset
-Date: Thu, 12 Feb 2026 11:54:54 +0530
-Message-ID: <20260212062522.99565-11-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Ani Sinha <anisinha@redhat.com>
+Cc: kraxel@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PATCH v4 31/31] tests/functional/x86_64: add functional test to
+ exercise vm fd change on reset
+Date: Thu, 12 Feb 2026 11:55:15 +0530
+Message-ID: <20260212062522.99565-32-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
 References: <20260212062522.99565-1-anisinha@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,100 +125,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests, bios image must be reinitialized upon reset. This
-is because bios memory is encrypted and hence once the old confidential
-kvm context is destroyed, it cannot be decrypted. It needs to be reinitilized.
-In order to do that, this change refactors x86_bios_rom_init() code so that
-parts of it can be called during confidential guest reset.
+A new functional test is added that exercises the code changes related to
+closing of the old KVM VM file descriptor and opening a new one upon VM reset.
+This normally happens when confidential guests are reset but for
+non-confidential guests, we use a special machine specific debug/test parameter
+'x-change-vmfd-on-reset' to enable this behavior.
+Only specific code changes related to re-initialisation of SEV-ES, SEV-SNP and
+TDX platforms are not exercised in this test as they require hardware that
+supports running confidential guests.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/i386/x86-common.c | 50 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ MAINTAINERS                                   |   1 +
+ tests/functional/x86_64/meson.build           |   1 +
+ .../x86_64/test_vmfd_change_reboot.py         | 135 ++++++++++++++++++
+ 3 files changed, 137 insertions(+)
+ create mode 100755 tests/functional/x86_64/test_vmfd_change_reboot.py
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index c1c9224039..18f2e2cfb9 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1024,17 +1024,11 @@ void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-     memory_region_set_readonly(isa_bios, read_only);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a88901a7d7..cd62cbd57a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -157,6 +157,7 @@ M: Ani Sinha <anisinha@redhat.com>
+ M: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
+ F: stubs/kvm.c
++F: tests/functional/x86_64/test_vmfd_change_reboot.py
  
--void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
--                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+static int get_bios_size(X86MachineState *x86ms,
-+                         const char *bios_name, char *filename)
- {
--    const char *bios_name;
--    char *filename;
-     int bios_size;
--    ssize_t ret;
- 
--    /* BIOS load */
--    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-     if (filename) {
-         bios_size = get_image_size(filename, NULL);
-     } else {
-@@ -1044,6 +1038,21 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-         (bios_size % 65536) != 0) {
-         goto bios_error;
-     }
+ Guest CPU cores (TCG)
+ ---------------------
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index f78eec5e6c..784d9791cb 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -36,4 +36,5 @@ tests_x86_64_system_thorough = [
+   'vfio_user_client',
+   'virtio_balloon',
+   'virtio_gpu',
++  'vmfd_change_reboot',
+ ]
+diff --git a/tests/functional/x86_64/test_vmfd_change_reboot.py b/tests/functional/x86_64/test_vmfd_change_reboot.py
+new file mode 100755
+index 0000000000..cb7370e465
+--- /dev/null
++++ b/tests/functional/x86_64/test_vmfd_change_reboot.py
+@@ -0,0 +1,135 @@
++#!/usr/bin/env python3
++#
++# KVM VM file descriptor change on reset test
++#
++# Copyright © 2026 Red Hat, Inc.
++#
++# Author:
++#  Ani Sinha <anisinha@redhat.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    return bios_size;
++import os
++from qemu.machine import machine
 +
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
 +
-+static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
-+                                char *filename, int bios_size,
-+                                bool isapc_ram_fw)
-+{
-+    ssize_t ret;
++class KVMGuest(QemuSystemTest):
 +
-+    /* BIOS load */
-     if (machine_require_guest_memfd(MACHINE(x86ms))) {
-         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
-                                            bios_size, &error_fatal);
-@@ -1072,7 +1081,26 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-             goto bios_error;
-         }
-     }
--    g_free(filename);
++    # ASSET UKI was generated using
++    # https://gitlab.com/kraxel/edk2-tests/-/blob/unittest/tools/make-supermin.sh
++    ASSET_UKI = Asset('https://gitlab.com/anisinha/misc-artifacts/'
++                      '-/raw/main/uki.x86-64.efi?ref_type=heads',
++                      'e0f806bd1fa24111312e1fe849d2ee69808d4343930a5'
++                      'dc8c1688da17c65f576')
++    # ASSET_OVMF comes from /usr/share/edk2/ovmf/OVMF.stateless.fd of a fc43
++    # distro which in turn comes from the edk2-ovmf-20251119-3.fc43.noarch rpm.
++    ASSET_OVMF = Asset('https://gitlab.com/anisinha/misc-artifacts/'
++                       '-/raw/main/OVMF.stateless.fd?ref_type=heads',
++                       '58a4275aafa8774bd6b1540adceae4ea434b8db75b476'
++                       '11839ff47be88cfcf22')
 +
-+    return;
++    def common_vm_setup(self, kvm_args=None, cpu_args=None):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
 +
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
++        self.vm.set_console()
++        if kvm_args:
++            self.vm.add_args("-accel", "kvm,%s" %kvm_args)
++        else:
++            self.vm.add_args("-accel", "kvm")
++        self.vm.add_args("-smp", "2")
++        if cpu_args:
++            self.vm.add_args("-cpu", "host,%s" %cpu_args)
++        else:
++            self.vm.add_args("-cpu", "host")
++        self.vm.add_args("-m", "2G")
++        self.vm.add_args("-nographic", "-nodefaults")
 +
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-+                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+{
-+    int bios_size;
-+    const char *bios_name;
-+    g_autofree char *filename;
 +
-+    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
++        self.uki_path = self.ASSET_UKI.fetch()
++        self.ovmf_path = self.ASSET_OVMF.fetch()
 +
-+    bios_size = get_bios_size(x86ms, bios_name, filename);
-+    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
- 
-     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-         /* map the last 128KB of the BIOS in ISA space */
-@@ -1085,8 +1113,4 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                                 (uint32_t)(-bios_size),
-                                 &x86ms->bios);
-     return;
--
--bios_error:
--    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
--    exit(1);
- }
++        self.vm.add_args('-kernel', self.uki_path)
++        self.vm.add_args("-bios", self.ovmf_path)
++        # enable KVM VMFD change on reset for a non-coco VM
++        self.vm.add_args("-machine", "q35,x-change-vmfd-on-reset=on")
++
++        # enable tracing of basic vmfd change function
++        self.vm.add_args("--trace", "kvm_reset_vmfd")
++
++    def launch_vm(self):
++        try:
++            self.vm.launch()
++        except machine.VMLaunchFailure as e:
++            if "Xen HVM guest support not present" in e.output:
++                self.skipTest("KVM Xen support is not present "
++                              "(need v5.12+ kernel with CONFIG_KVM_XEN)")
++            elif "Property 'kvm-accel.xen-version' not found" in e.output:
++                self.skipTest("QEMU not built with CONFIG_XEN_EMU support")
++            else:
++                raise e
++
++        self.log.info('VM launched')
++        console_pattern = 'bash-5.1#'
++        wait_for_console_pattern(self, console_pattern)
++        self.log.info('VM ready with a bash prompt')
++
++    def vm_console_reset(self):
++        exec_command_and_wait_for_pattern(self, '/usr/sbin/reboot -f',
++                                          'reboot: machine restart')
++        console_pattern = '# --- Hello world ---'
++        wait_for_console_pattern(self, console_pattern)
++        self.vm.shutdown()
++
++    def vm_qmp_reset(self):
++        self.vm.qmp('system_reset')
++        console_pattern = '# --- Hello world ---'
++        wait_for_console_pattern(self, console_pattern)
++        self.vm.shutdown()
++
++    def check_logs(self):
++        self.assertRegex(self.vm.get_log(),
++                         r'kvm_reset_vmfd')
++        self.assertRegex(self.vm.get_log(),
++                         r'virtual machine accel file descriptor has changed')
++
++    def test_reset_console(self):
++        self.common_vm_setup()
++        self.launch_vm()
++        self.vm_console_reset()
++        self.check_logs()
++
++    def test_reset_qmp(self):
++        self.common_vm_setup()
++        self.launch_vm()
++        self.vm_qmp_reset()
++        self.check_logs()
++
++    def test_reset_kvmpit(self):
++        self.common_vm_setup()
++        self.vm.add_args("--trace", "kvmpit_post_vmfd_change")
++        self.launch_vm()
++        self.vm_console_reset()
++        self.assertRegex(self.vm.get_log(),
++                         r'kvmpit_post_vmfd_change')
++
++    def test_reset_xen_emulation(self):
++        self.common_vm_setup("xen-version=0x4000a,kernel-irqchip=split")
++        self.launch_vm()
++        self.vm_console_reset()
++        self.check_logs()
++
++    def test_reset_hyperv_vmbus(self):
++        self.common_vm_setup(None, "hv-syndbg,hv-relaxed,hv_time,hv-synic,"
++                             "hv-vpindex,hv-runtime,hv-stimer")
++        self.vm.add_args("-device", "vmbus-bridge,irq=15")
++        self.vm.add_args("-trace", "vmbus_handle_vmfd_change")
++        self.launch_vm()
++        self.vm_console_reset()
++        self.assertRegex(self.vm.get_log(),
++                         r'vmbus_handle_vmfd_change')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.42.0
 
