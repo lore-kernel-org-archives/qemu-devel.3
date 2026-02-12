@@ -4,151 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 384E4EE369D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E76EE369D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:07:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZCJ-0000NR-EV; Thu, 12 Feb 2026 11:05:43 -0500
+	id 1vqZDn-0001EB-QI; Thu, 12 Feb 2026 11:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vqZCI-0000Mz-Dh
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:05:42 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vqZDl-0001DY-3g; Thu, 12 Feb 2026 11:07:13 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vqZCE-0002BB-4W
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:05:40 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61CDRxYr1074872
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:05:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- zIWsR2lG7UVAh8h25jOMwtceovI5KP3xmkRyMRd8+E4=; b=WkrXgIT3s9Soekun
- swv6Bxyg3ON6Gy9lHGCK7OP1DoaAlNlDBVwDSwZd9xSU2n67sJQUNKywhDnQ5KTL
- vQyu7pNcZkKU424oI7XBKl0qdV8xRZmGNjoOi3IrAQ/zmglxwcSE7VwE1M3ZX1st
- 6gLNx8yn+bOoYGM3FFQebKcMcetezE9ZiB5a7hPlGA+dNEogfshwPz8geIIUiMbm
- lTuLMAOlpP4NV2wWI0/OLRb5gzZ84VZwDMo53VqlqIatF38HWZfLXBGdRwYQI6sX
- UZnOBNe66UGrFCnnpp3dMUhEa4K/08x6p8YPYS0Pnz51Suy6QukeLF/LbVMtEAbY
- njm16Q==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c8y8nunp0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:05:33 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8c70e610242so6148885a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:05:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1770912332; x=1771517132; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zIWsR2lG7UVAh8h25jOMwtceovI5KP3xmkRyMRd8+E4=;
- b=cjHhtAJvQjC8W8g4xk25tVHvd/0/4Kq5txrGgUUiEy21sU5UBpGT+gncN6vzlnVud7
- vSj6sZ90XfrEDYobKPnf24Iwr1cLkO6+eVF9S9SM7I6QJ1T5g8f6Y6K/HvNy0aNSX2gh
- Tp9iDuLou0k53VusU4aNjXbkW0xyYkPcAghVssS4nq2RWHsPNt0wdncPDnSQH06kAwJQ
- rFYWme5dA9wUTh8eG5CGURYBxIimz8OQHsgve3/z/Xs0hmRJWkpLky/a+mxNjUOvBAwK
- g3ndOpdhxGId0SfKh93JUAu1xAnc4zJpMHtygs4F8ma9+efX5XSKd+Mo02Mhq6k4Rwnm
- YMNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770912332; x=1771517132;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zIWsR2lG7UVAh8h25jOMwtceovI5KP3xmkRyMRd8+E4=;
- b=RTRdSXe6x55zEGgDgQ+U4wibe5zbp6Zt0NxRn/UFHiy8qDdFbwv04AHnfoUQINIGx0
- py7c5bIREhZbnGFotFhfgVwHMJOhRP472sAx1VqM3uJA2SDzfQXcpm6f8KiO0QK59/FY
- begmNHEIsI11Yuft1T2+j026NBkE79CFEwV5L5OCbVGE4gWD5jdbAgYoNmprh412XRV1
- gbiWpPRwPqxasKv41BPXlsEkAJGZL8WWl7RtOMuKU4c+iVCYq6vhNp0aYfpvjKYD6kX4
- h7WA/Ox7nLEJ5bttdEqJ3OxxygcZeF9h9yDMxzm/g+KhUQ/DL5AwVcxZPtSCiX2RRTdh
- JkwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMsSGHbn/HuNkmWUxDnjmLIbE+vEpsN9BtBdtAcUDitRDqDRR+oxljnZKvzUOpg/ydZcbpfpz+2cz1@nongnu.org
-X-Gm-Message-State: AOJu0Yx4AMO3cmrGam/udorllpS0SHUo07qlRkEQU1Krc5+09kyT8I3W
- W/EAJLtUklrTCbMbIk1Tei0Ahsjb4nc3YWptAlqfD2ZRfQoUUylgcfcfNQ46zuBOxt7c1x/RctZ
- pb1LgkeAyAfGUYJjkZJqwnyFOx0gs13+WYwSyJVHvLgYhcikgjBVo22MnSw==
-X-Gm-Gg: AZuq6aLUKbqPYrXGewkfUSXTUlHh6FtLfogQIHwLuD3MH/9RjvhnVq5I9pLrRC9Wf3X
- SnX2qViAvoaFEnq2r5ye5z8oUV3Z2wBsSjoVhDgiUKtVm4NZqSzZIVnW3VrhZft7YJWmcCg4pBt
- yiiLTj6D2erZqTNS0SD9fbZFVecZ4eO47GyMVRfk5yPmPqCPp5DDJrT7P9QJzb3RroJoPpNVIC9
- J8QK5TqXzLQbGWW7CGl2LQkTWKVAyerLB42gt18cSZ+zpGyWblF3XuQwmDx+X0K/sjlJwXKOOEa
- 1MbzZBIoexwamwXOIuYg6IFDlnciY185OhOYmNG6Kg70rNThpdZ03BXXuYu26iWAV/nyAoTdMpi
- +99Grp+H/GIJGcg4lmhaIrTK6lEFFxCWEiWC7zGo9kX++U3KxlT9ncE5O
-X-Received: by 2002:a05:620a:4451:b0:8c7:9e6:3a7e with SMTP id
- af79cd13be357-8cb32f188f2mr409112985a.0.1770912332228; 
- Thu, 12 Feb 2026 08:05:32 -0800 (PST)
-X-Received: by 2002:a05:620a:4451:b0:8c7:9e6:3a7e with SMTP id
- af79cd13be357-8cb32f188f2mr409106785a.0.1770912331723; 
- Thu, 12 Feb 2026 08:05:31 -0800 (PST)
-Received: from [192.168.68.103] ([179.193.9.245])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cb2b20f240sm370710185a.40.2026.02.12.08.05.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 08:05:30 -0800 (PST)
-Message-ID: <e5a3a69c-e719-4f2f-9ed3-ecd52d9597be@oss.qualcomm.com>
-Date: Thu, 12 Feb 2026 13:05:26 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: implement SBI debug console (DBCN) calls
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240425155012.581366-1-dbarboza@ventanamicro.com>
- <eb6bd3d7-c66b-4300-9573-c29830a3aff4@linaro.org>
- <102e2e67-4c4d-4912-a892-20f5136f241a@ventanamicro.com>
- <47327da2-be3c-4aaa-ab3d-36e8d0c25185@linaro.org>
- <0eb5bcf9-bc2e-46c6-9f54-1514039557e0@ventanamicro.com>
- <37e6fecd-948a-4840-9189-918d44c0be72@linaro.org>
- <c2b0fb25-8b17-4a69-a128-2f8cc9bbba76@ventanamicro.com>
- <16c45b70-23cd-4522-8ece-1c268fb72a73@linaro.org>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <16c45b70-23cd-4522-8ece-1c268fb72a73@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDEyMyBTYWx0ZWRfX7Bg/PkMq9uDu
- Q5BbIHPtD0ZuvPXPNme+CcW+NdceaPErpOJMLrEc5gBlfq+yPL7lfaJZNG1urI+Tiez0GI+s8RP
- UWwtRgmqXg0X8nsi/20FVafGGSrrU4SYZFY4x09CSFLY4m+04CCEatA5z9DJX2OQeDOnCklnU37
- WENLGQu8UCp2a25Y7zzigGX2jlUR6BgOUSJDHMxiZET9PKWyjvWgcB3WwwrlT3dKV/FKpeHXTfl
- 23bKC5XQo92V/8d3NouQ2XKEiS+3ltk5sbYLPpKWIBOa54nZSuUV/8ly8RCIVY3SMJ5VIYEhhQE
- kh7IWMvDRd93Ndl1VnoYShTdeSjgbzwjbGG503UwoPzjTOCxWje66ysLJKm4jfWh8pcr+jMHtdo
- DEh6IOYswj9GT+FxJHL70WaTAzJlaVXIJqtgX35zm5Hbftdl9vQIxHedcinCl5Nwpgae6t7J+Zz
- FxpqacNeC8q7Bmx5SzA==
-X-Authority-Analysis: v=2.4 cv=VNvQXtPX c=1 sm=1 tr=0 ts=698dfa4d cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=li3dXIDAslFm3Zus54lMNg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=bDdBU3oEAAAA:8 a=en746O6BByNCThpbw7UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=DN7SgORnOiO7RqxRx1GC:22
-X-Proofpoint-GUID: xSEblQqNgUS-iJZcsAMP0JfsoEuVujG2
-X-Proofpoint-ORIG-GUID: xSEblQqNgUS-iJZcsAMP0JfsoEuVujG2
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vqZDj-0002Zo-83; Thu, 12 Feb 2026 11:07:12 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61C5Dj7J184544; Thu, 12 Feb 2026 16:07:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=XQC14axo4OTr11GthZbSfCUlLvRSwXw10KLtHS6KXks=; b=A0owUIfCvcB4
+ 6iJHb1LBNQKiRidoY0j4fEHu3rH2jcoW7aFhWJV2253Xdfv0O7JlBNKAW1XPOknX
+ 7jcQ8IZJmPlMRNiNeDBqlylo3l7wVWBLEHTw1KODG+qzXaVNQEg4rydzoCfulpHT
+ 1BB95PLtJw7LUjD1ozE1khZujDduBh9lbe/azqG2GU2c/RFMfIlAAyG4DE24bEJH
+ fPMhYJqui5ykF/ZDhJvE+93wDIsEhe7DmxFgbIsxFR9+16KKLtyE7UL/CMSoLCfc
+ V/xfGDE2SMlYf0+jvVxx53SfHRRuiyY3TOB8bxScMEf9X3HdOM3XC1Rpc9BUnagq
+ n7OaDLtYHQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v4801-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 16:07:07 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CCUQ1q008400;
+ Thu, 12 Feb 2026 16:07:06 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6g3yk88j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 16:07:06 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61CG75oN15008474
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Feb 2026 16:07:06 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D48D458062;
+ Thu, 12 Feb 2026 16:07:05 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 753BB58056;
+ Thu, 12 Feb 2026 16:07:05 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Feb 2026 16:07:05 +0000 (GMT)
+Message-ID: <95f7845ea2bea930b54ca3893987651a4f72c388.camel@linux.ibm.com>
+Subject: Re: [PATCH] target/ppc/translate: Fix TCG debug assert translating
+ CLRBWIBC
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org, Nicholas Piggin
+ <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Richard Henderson
+ <richard.henderson@linaro.org>
+Date: Thu, 12 Feb 2026 10:07:05 -0600
+In-Reply-To: <20260212150753.1749448-1-peter.maydell@linaro.org>
+References: <20260212150753.1749448-1-peter.maydell@linaro.org>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDEyMSBTYWx0ZWRfXxJRHQs4dPj4i
+ tT7S35eSn8E2su1jSinpyXhKI+ejlzTUvCxSOQEGb/XBrHHOacNKBdCp9vQ81Z3O9A/rewemPjl
+ GVBnYCkQrkPtZpNETcuxykibSgwdrJ1xycvb7B0uBMeeW7qvKnHEmHgJevvShCFRq816rRyIGaz
+ FzKueY/C5eWSCCrR2ATu8Pom4Ox4+HL0tFnub2LQ9RQ1ObbKERSgNpxRgcb0ajsNjSOuJkINzLK
+ 1VeTAPW0VMldIHa0nricz2Y2MxHuSSpDsrfRnvu+QDpHgWCcQehCHSj5bGk9Sks42Gg0f2gWSYS
+ RwllMpAY9nY/W+ylMCVGv+TbhviD66e61rlbmawx9n+PjeGmxd6+sQSHNLvSppztW/GPWucliVj
+ /pjusVBqGrDbI/5pnBEsmYhb3s65pO96+KfhD293EEy3eUNjfSwCnU/y392hD0a1Jz4aKyVwp9b
+ Y80YotgQNj06FXYr1yA==
+X-Proofpoint-ORIG-GUID: hmFVJlS1btiPgeEi4FlIwv8hpg1eOqkT
+X-Proofpoint-GUID: v8iXzDi9hBklW1HhqNh6zQe63IOU-7LN
+X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698dfaab cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=69wJf7TsAAAA:8
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=qs_jOaNNluSvP35M9LkA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-12_04,2026-02-12_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602120123
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ definitions=main-2602120121
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,167 +123,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/12/2026 12:51 PM, Philippe Mathieu-Daudé wrote:
-> Hi Daniel,
+On Thu, 2026-02-12 at 15:07 +0000, Peter Maydell wrote:
+> The test case in the ppe42 functional test triggers a TCG debug
+> assertion, which causes the test to fail in an --enable-debug
+> build or when the sanitizers are enabled:
 > 
-> On 4/6/25 12:54, Daniel Henrique Barboza wrote:
->>
->>
->> On 6/4/25 6:38 AM, Philippe Mathieu-Daudé wrote:
->>> (+Marc-André and Paolo who I forgot to Cc first)
->>>
->>> On 4/6/25 11:17, Daniel Henrique Barboza wrote:
->>>>
->>>>
->>>> On 6/4/25 4:32 AM, Philippe Mathieu-Daudé wrote:
->>>>> On 3/6/25 20:04, Daniel Henrique Barboza wrote:
->>>>>>
->>>>>>
->>>>>> On 6/3/25 10:19 AM, Philippe Mathieu-Daudé wrote:
->>>>>>> Hi Daniel,
->>>>>>>
->>>>>>> (now merged as commit a6b53378f537)
->>>>>>>
->>>>>>> On 25/4/24 17:50, Daniel Henrique Barboza wrote:
->>>>>>>> SBI defines a Debug Console extension "DBCN" that will, in time, 
->>>>>>>> replace
->>>>>>>> the legacy console putchar and getchar SBI extensions.
->>>>>>>>
->>>>>>>> The appeal of the DBCN extension is that it allows multiple 
->>>>>>>> bytes to be
->>>>>>>> read/written in the SBI console in a single SBI call.
->>>>>>>>
->>>>>>>> As far as KVM goes, the DBCN calls are forwarded by an in-kernel 
->>>>>>>> KVM
->>>>>>>> module to userspace. But this will only happens if the KVM module
->>>>>>>> actually supports this SBI extension and we activate it.
->>>>>>>>
->>>>>>>> We'll check for DBCN support during init time, checking if get- 
->>>>>>>> reg- list
->>>>>>>> is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll 
->>>>>>>> enable it via
->>>>>>>> kvm_set_one_reg() during kvm_arch_init_vcpu().
->>>>>>>>
->>>>>>>> Finally, change kvm_riscv_handle_sbi() to handle the incoming 
->>>>>>>> calls for
->>>>>>>> SBI_EXT_DBCN, reading and writing as required.
->>>>>>>>
->>>>>>>> A simple KVM guest with 'earlycon=sbi', running in an emulated 
->>>>>>>> RISC-V
->>>>>>>> host, takes around 20 seconds to boot without using DBCN. With this
->>>>>>>> patch we're taking around 14 seconds to boot due to the speed-up 
->>>>>>>> in the
->>>>>>>> terminal output.  There's no change in boot time if the guest isn't
->>>>>>>> using earlycon.
->>>>>>>>
->>>>>>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>>>>>> ---
->>>>>>>>   target/riscv/kvm/kvm-cpu.c         | 111 +++++++++++++++++++++ 
->>>>>>>> + ++ +++++
->>>>>>>>   target/riscv/sbi_ecall_interface.h |  17 +++++
->>>>>>>>   2 files changed, 128 insertions(+)
->>>>>>>
->>>>>>>
->>>>>>>> +static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct 
->>>>>>>> kvm_run *run)
->>>>>>>> +{
->>>>>>>> +    g_autofree uint8_t *buf = NULL;
->>>>>>>> +    RISCVCPU *cpu = RISCV_CPU(cs);
->>>>>>>> +    target_ulong num_bytes;
->>>>>>>> +    uint64_t addr;
->>>>>>>> +    unsigned char ch;
->>>>>>>> +    int ret;
->>>>>>>> +
->>>>>>>> +    switch (run->riscv_sbi.function_id) {
->>>>>>>> +    case SBI_EXT_DBCN_CONSOLE_READ:
->>>>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE:
->>>>>>>> +        num_bytes = run->riscv_sbi.args[0];
->>>>>>>> +
->>>>>>>> +        if (num_bytes == 0) {
->>>>>>>> +            run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>>>> +            run->riscv_sbi.ret[1] = 0;
->>>>>>>> +            break;
->>>>>>>> +        }
->>>>>>>> +
->>>>>>>> +        addr = run->riscv_sbi.args[1];
->>>>>>>> +
->>>>>>>> +        /*
->>>>>>>> +         * Handle the case where a 32 bit CPU is running in a
->>>>>>>> +         * 64 bit addressing env.
->>>>>>>> +         */
->>>>>>>> +        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
->>>>>>>> +            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
->>>>>>>> +        }
->>>>>>>> +
->>>>>>>> +        buf = g_malloc0(num_bytes);
->>>>>>>> +
->>>>>>>> +        if (run->riscv_sbi.function_id == 
->>>>>>>> SBI_EXT_DBCN_CONSOLE_READ) {
->>>>>>>> +            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, 
->>>>>>>> num_bytes);
+> #6  0x00007ffff4a3b517 in __assert_fail
+>     (assertion=0x5555562e7589 "!temp_readonly(ots)", file=0x5555562e5b23 "../../tcg/tcg.c", line=4928, function=0x5555562e8900 <__PRETTY_FUNCTION__.23> "tcg_reg_alloc_mov") at ./assert/assert.c:105
+> #7  0x0000555555cc2189 in tcg_reg_alloc_mov (s=0x7fff60000b70, op=0x7fff600126f8) at ../../tcg/tcg.c:4928
+> #8  0x0000555555cc74e0 in tcg_gen_code (s=0x7fff60000b70, tb=0x7fffa802f540, pc_start=4294446080) at ../../tcg/tcg.c:6667
+> #9  0x0000555555d02abe in setjmp_gen_code
+>     (env=0x555556cbe610, tb=0x7fffa802f540, pc=4294446080, host_pc=0x7fffeea00c00, max_insns=0x7fffee9f9d74, ti=0x7fffee9f9d90)
+>     at ../../accel/tcg/translate-all.c:257
+> #10 0x0000555555d02d75 in tb_gen_code (cpu=0x555556cba590, s=...) at ../../accel/tcg/translate-all.c:325
+> #11 0x0000555555cf5922 in cpu_exec_loop (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:970
+> #12 0x0000555555cf5aae in cpu_exec_setjmp (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:1016
+> #13 0x0000555555cf5b4b in cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/cpu-exec.c:1042
+> #14 0x0000555555d1e7ab in tcg_cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/tcg-accel-ops.c:82
+> #15 0x0000555555d1ff97 in rr_cpu_thread_fn (arg=0x555556cba590) at ../../accel/tcg/tcg-accel-ops-rr.c:285
+> #16 0x00005555561586c9 in qemu_thread_start (args=0x555556ee3c90) at ../../util/qemu-thread-posix.c:393
+> #17 0x00007ffff4a9caa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
+> #18 0x00007ffff4b29c6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
 > 
+> This can be reproduced "by hand":
 > 
-> Still following up on that patch :) Do we have one SBI debug console
-> per system / soc / cluster / hart? Instead of calling serial_hd(0)
-> each time we should set it once when realizing the vcpu IMO. If it is
-> per hart we would add this property:
+>  ./build/clang/qemu-system-ppc -display none -vga none \
+>     -machine ppe42_machine -serial stdio \
+>     -device loader,file=$HOME/.cache/qemu/download/03c1ac0fb7f6c025102a02776a93b35101dae7c14b75e4eab36a337e39042ea8 \
+>     -device loader,addr=0xfff80040,cpu-num=0
 > 
->    DEFINE_PROP_CHR("sbi-chardev", RISCVCPU, sbi_console),
+> (assuming you have the image file from the functional test
+> in your local cache).
 > 
-> WDYT?
-
-
-We have a single SBI debug console per platform. So, using this patch 
-lingo, all CPUs will use serial_hd(0). In theory this would be a board 
-property, but that makes things messier to deal with - we don't want to 
-keep poking at board properties when initializing CPUs.
-
-So I think the CPU property you suggested works nicely. Thanks,
-
-Daniel
-
-
-
+> This happens for this input:
 > 
->>>>>>>> +            if (ret < 0) {
->>>>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_READ: error 
->>>>>>>> when "
->>>>>>>> +                             "reading chardev");
->>>>>>>> +                exit(1);
->>>>>>>> +            }
->>>>>>>> +
->>>>>>>> +            cpu_physical_memory_write(addr, buf, ret);
->>>>>>>> +        } else {
->>>>>>>> +            cpu_physical_memory_read(addr, buf, num_bytes);
->>>>>>>> +
->>>>>>>> +            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, 
->>>>>>>> num_bytes);
->>>>>>>> +            if (ret < 0) {
->>>>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error 
->>>>>>>> when "
->>>>>>>> +                             "writing chardev");
->>>>>>>> +                exit(1);
->>>>>>>> +            }
->>>>>>>> +        }
->>>>>>>> +
->>>>>>>> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>>>> +        run->riscv_sbi.ret[1] = ret;
->>>>>>>> +        break;
->>>>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
->>>>>>>> +        ch = run->riscv_sbi.args[0];
->>>>>>>> +        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, 
->>>>>>>> sizeof(ch));
->>>>>>>> +
->>>>>>>> +        if (ret < 0) {
->>>>>>>> +            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: 
->>>>>>>> error when "
->>>>>>>> +                         "writing chardev");
->>>>>>>> +            exit(1);
->>>>>>>> +        }
+> IN:
+> 0xfff80c00:  07436004  .byte    0x07, 0x43, 0x60, 0x04
+> 
+> which generates (among other things):
+> 
+>  not_i32 $0x80000,$0x80000
+> 
+> which the TCG optimization pass turns into:
+> 
+>  mov_i32 $0x80000,$0xfff7ffff             dead: 1  pref=0xffff
+> 
+> and where we then assert because we tried to write to a constant.
+> 
+> This happens for the CLRBWIBC instruction which ends up in
+> do_mask_branch() with rb_is_gpr false and invert true.  In this case
+> we will generate code that sets mask to a tcg_constant_tl() but then
+> uses it as the LHS in tcg_gen_not_tl().
+> 
+> Fix the assertion by doing the invert in the translate time C code
+> for the "mask is constant" case.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: f7ec91c23906 ("target/ppc: Add IBM PPE42 special instructions")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  target/ppc/translate/ppe-impl.c.inc | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ppe-impl.c.inc
+> index 0a0590344e..1c27facb89 100644
+> --- a/target/ppc/translate/ppe-impl.c.inc
+> +++ b/target/ppc/translate/ppe-impl.c.inc
+> @@ -424,11 +424,15 @@ static bool do_mask_branch(DisasContext *ctx, arg_FCB * a, bool invert,
+>          shift = tcg_temp_new();
+>          tcg_gen_andi_tl(shift, cpu_gpr[a->rb], 0x1f);
+>          tcg_gen_shr_tl(mask, tcg_constant_tl(0x80000000), shift);
+> +        if (invert) {
+> +            tcg_gen_not_tl(mask, mask);
+> +        }
+>      } else {
+> -        mask = tcg_constant_tl(PPC_BIT32(a->rb));
+> -    }
+> -    if (invert) {
+> -        tcg_gen_not_tl(mask, mask);
+> +        target_ulong mask_const = PPC_BIT32(a->rb);
+> +        if (invert) {
+> +            mask_const = ~mask_const;
+> +        }
+> +        mask = tcg_constant_tl(mask_const);
+>      }
+>  
+>      /* apply mask to ra */
+
+Ah, thank you for finding AND fixing my bug!  We'll have to look into
+adding this "--enable-debug" option to our internal testing in the
+future!
+
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 
